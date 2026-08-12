@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-12T00:21:19.160428+00:00",
+  "last_updated": "2026-08-12T00:08:59.420015+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -53398,8 +53398,8 @@
       "bridge_count": 0,
       "cycle_n": 1,
       "domain": "Bridges",
-      "duration_seconds": 4147.245372056961,
-      "end_time": 1786494000.3741581,
+      "duration_seconds": 3357.686705827713,
+      "end_time": 1786493210.815492,
       "files_integrated": 4,
       "job_id": "869ec8f3",
       "outcome_quality": 0.627125,
@@ -53432,7 +53432,7 @@
       "theorem_novelty_duplicate": 0,
       "theorem_novelty_new": 122,
       "theorem_novelty_strengthening": 0,
-      "timestamp": "2026-08-12T00:21:19.063502+00:00",
+      "timestamp": "2026-08-12T00:08:59.274178+00:00",
       "title": "The CRT-Split No-Go: Why N-Alone Iteration Cannot Factor in Poly(log N)"
     }
   ]

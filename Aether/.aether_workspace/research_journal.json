@@ -33,7 +33,7 @@
     {
       "cycle_id": "e9c14674",
       "domain": "Shared",
-      "key_insight": "# Future directions\n\nConjectures suggested by the formalisation in `Catalog/Shared/GilbertLattice*.lean`\nof the conditioned Gilbert model (one point per cell of `ℤ²`, two points joined when\ntheir Eucl",
+      "key_insight": "# Future directions\n\nConjectures suggested by the formalisation in `Catalog/Shared/GilbertLattice*.lean`\nof the conditioned Gilbert model (one point per cell of `\u2124\u00b2`, two points joined when\ntheir Eucl",
       "quality_score": 0.78349,
       "sorry_count": 0,
       "theorem_count": 71,
@@ -83,7 +83,7 @@
     {
       "cycle_id": "785c09ab",
       "domain": "Tropical",
-      "key_insight": "# Tropical Mathematics of Social Choice — results and future directions\n\nThis project formalizes a bridge between **tropical (min-plus) algebra** and\n**social choice theory**, and a second bridge from",
+      "key_insight": "# Tropical Mathematics of Social Choice \u2014 results and future directions\n\nThis project formalizes a bridge between **tropical (min-plus) algebra** and\n**social choice theory**, and a second bridge from",
       "quality_score": 0.7857999999999999,
       "sorry_count": 0,
       "theorem_count": 85,
@@ -103,7 +103,7 @@
     {
       "cycle_id": "413bc2f0",
       "domain": "Logic",
-      "key_insight": "# Future directions\n\nWhat is formalised (all statements proved, no `sorry`), in `Logic/Rademacher/`:\n\n* `Basic.lean` — empirical Rademacher complexity of a class of vectors: vanishing on\n  singletons,",
+      "key_insight": "# Future directions\n\nWhat is formalised (all statements proved, no `sorry`), in `Logic/Rademacher/`:\n\n* `Basic.lean` \u2014 empirical Rademacher complexity of a class of vectors: vanishing on\n  singletons,",
       "quality_score": 0.7947599999999999,
       "sorry_count": 0,
       "theorem_count": 72,
@@ -113,12 +113,12 @@
     {
       "cycle_id": "713730e2",
       "domain": "Pythagorean",
-      "key_insight": "# Future directions\n\nThis cycle settled the *uniform half-canonical existence* question for almost all\nregular degrees, and in the strongest possible form: for `k ≥ 6` with `k ≠ 7`,\n**every** simple `",
+      "key_insight": "# Future directions\n\nThis cycle settled the *uniform half-canonical existence* question for almost all\nregular degrees, and in the strongest possible form: for `k \u2265 6` with `k \u2260 7`,\n**every** simple `",
       "quality_score": 0.78748,
       "sorry_count": 0,
       "theorem_count": 47,
       "timestamp": "2026-08-06T06:55:10",
-      "title": "**Conjecture.** For every integer `k ≥ 5`, there is a threshold `N₀(k)` such tha"
+      "title": "**Conjecture.** For every integer `k \u2265 5`, there is a threshold `N\u2080(k)` such tha"
     },
     {
       "cycle_id": "39ee2889",
@@ -148,12 +148,12 @@
       "sorry_count": 0,
       "theorem_count": 182,
       "timestamp": "2026-08-07T04:13:38",
-      "title": "Hyperbolic-Pythagorean-Geodesics: Sub-Linear Trajectory Factorization in Poincaré Disk"
+      "title": "Hyperbolic-Pythagorean-Geodesics: Sub-Linear Trajectory Factorization in Poincar\u00e9 Disk"
     },
     {
       "cycle_id": "2c38bc1a",
       "domain": "Cryptography",
-      "key_insight": "# Future Directions — Universal Posets\n\nDerived from the analysis and adversarial-review stages of the two research\ncycles run on this project.  Each conjecture is falsifiable, and each is stated\nso t",
+      "key_insight": "# Future Directions \u2014 Universal Posets\n\nDerived from the analysis and adversarial-review stages of the two research\ncycles run on this project.  Each conjecture is falsifiable, and each is stated\nso t",
       "quality_score": 0.7055950000000001,
       "sorry_count": 0,
       "theorem_count": 3,
@@ -163,7 +163,7 @@
     {
       "cycle_id": "2c38bc1a",
       "domain": "Cryptography",
-      "key_insight": "# Future Directions — Universal Posets\n\nDerived from the analysis and adversarial-review stages of the two research\ncycles run on this project.  Each conjecture is falsifiable, and each is stated\nso t",
+      "key_insight": "# Future Directions \u2014 Universal Posets\n\nDerived from the analysis and adversarial-review stages of the two research\ncycles run on this project.  Each conjecture is falsifiable, and each is stated\nso t",
       "quality_score": 0.7003711194029851,
       "sorry_count": 2,
       "theorem_count": 134,
@@ -178,7 +178,7 @@
       "sorry_count": 0,
       "theorem_count": 182,
       "timestamp": "2026-08-07T05:41:42",
-      "title": "Hyperbolic-Pythagorean-Geodesics: Sub-Linear Trajectory Factorization in Poincaré Disk"
+      "title": "Hyperbolic-Pythagorean-Geodesics: Sub-Linear Trajectory Factorization in Poincar\u00e9 Disk"
     },
     {
       "cycle_id": "f3cf4755",
@@ -203,7 +203,7 @@
     {
       "cycle_id": "22e93393",
       "domain": "Combinatorics",
-      "key_insight": "# Future directions\n\nThe thread opened with two questions — the finite-key probability formula and\ncrossing-probability monotonicity — both of which are proved in\n`Catalog/Combinatorics/BernoulliThres",
+      "key_insight": "# Future directions\n\nThe thread opened with two questions \u2014 the finite-key probability formula and\ncrossing-probability monotonicity \u2014 both of which are proved in\n`Catalog/Combinatorics/BernoulliThres",
       "quality_score": 0.71348,
       "sorry_count": 0,
       "theorem_count": 557,
@@ -213,7 +213,7 @@
     {
       "cycle_id": "22e93393",
       "domain": "Combinatorics",
-      "key_insight": "# Future directions\n\nThe thread opened with two questions — the finite-key probability formula and\ncrossing-probability monotonicity — both of which are proved in\n`Catalog/Combinatorics/BernoulliThres",
+      "key_insight": "# Future directions\n\nThe thread opened with two questions \u2014 the finite-key probability formula and\ncrossing-probability monotonicity \u2014 both of which are proved in\n`Catalog/Combinatorics/BernoulliThres",
       "quality_score": 0.71348,
       "sorry_count": 0,
       "theorem_count": 557,
@@ -223,7 +223,7 @@
     {
       "cycle_id": "df8839cd",
       "domain": "Pythagorean",
-      "key_insight": "# Future directions\n\n## What this cycle settled\n\nThe previous cycle left the exact rank of a uniform divisor on a complete graph as\nits headline conjecture: the *upper* bound `r(m·1) ≤ m(m+3)/2` on `K",
+      "key_insight": "# Future directions\n\n## What this cycle settled\n\nThe previous cycle left the exact rank of a uniform divisor on a complete graph as\nits headline conjecture: the *upper* bound `r(m\u00b71) \u2264 m(m+3)/2` on `K",
       "quality_score": 0.71728,
       "sorry_count": 0,
       "theorem_count": 70,
@@ -238,7 +238,7 @@
       "sorry_count": 0,
       "theorem_count": 50,
       "timestamp": "2026-08-08T14:58:45",
-      "title": "Sharp two-sided summand asymptotics.: For every `k : ℕ`, prove"
+      "title": "Sharp two-sided summand asymptotics.: For every `k : \u2115`, prove"
     },
     {
       "cycle_id": "97241621",
@@ -263,7 +263,7 @@
     {
       "cycle_id": "48492a97",
       "domain": "Combinatorics",
-      "key_insight": "# Future directions\n\nFive falsifiable conjectures distilled from what survived (and what failed) in this cycle.\nThroughout, `F` is a finite field with `q = #F` elements and odd characteristic,\n`χ = qu",
+      "key_insight": "# Future directions\n\nFive falsifiable conjectures distilled from what survived (and what failed) in this cycle.\nThroughout, `F` is a finite field with `q = #F` elements and odd characteristic,\n`\u03c7 = qu",
       "quality_score": 0.71196,
       "sorry_count": 0,
       "theorem_count": 92,
@@ -273,7 +273,7 @@
     {
       "cycle_id": "1f345ab3",
       "domain": "Tropical",
-      "key_insight": "# Future Directions\n\nDerived from the results proved in `Catalog/Tropical/EML/` during this cycle:\ngeneral odd/even tropical `L¹` median geometry (`TropicalMedianDescent.lean`),\nperturbed and separabl",
+      "key_insight": "# Future Directions\n\nDerived from the results proved in `Catalog/Tropical/EML/` during this cycle:\ngeneral odd/even tropical `L\u00b9` median geometry (`TropicalMedianDescent.lean`),\nperturbed and separabl",
       "quality_score": 0.73286,
       "sorry_count": 0,
       "theorem_count": 96,
@@ -293,7 +293,7 @@
     {
       "cycle_id": "08217b91",
       "domain": "Novelty",
-      "key_insight": "# Future Directions — Singmaster multiplicity in Pascal's triangle\n\nDerived from the results established in this cycle: the smoothness theorem, the smoothness\nhierarchy, the sharpened logarithmic boun",
+      "key_insight": "# Future Directions \u2014 Singmaster multiplicity in Pascal's triangle\n\nDerived from the results established in this cycle: the smoothness theorem, the smoothness\nhierarchy, the sharpened logarithmic boun",
       "quality_score": 0.748155,
       "sorry_count": 0,
       "theorem_count": 85,
@@ -303,7 +303,7 @@
     {
       "cycle_id": "08217b91",
       "domain": "Novelty",
-      "key_insight": "# Future Directions — Singmaster multiplicity in Pascal's triangle\n\nDerived from the verified results in `Catalog/Novelty/`:\n`SingmasterSmoothness.lean`, `SingmasterSharpLog.lean`, `SingmasterSmoothHi",
+      "key_insight": "# Future Directions \u2014 Singmaster multiplicity in Pascal's triangle\n\nDerived from the verified results in `Catalog/Novelty/`:\n`SingmasterSmoothness.lean`, `SingmasterSharpLog.lean`, `SingmasterSmoothHi",
       "quality_score": 0.746255,
       "sorry_count": 0,
       "theorem_count": 85,
@@ -313,7 +313,7 @@
     {
       "cycle_id": "e870e995",
       "domain": "Novelty",
-      "key_insight": "# Future Directions\n\nDerived from the formal development in `Catalog/Novelty/WeightMonodromy*.lean`, which proves:\npurity of a weight grading (weight `= α ·` degree, `α > 0`) on the cohomology of a bi",
+      "key_insight": "# Future Directions\n\nDerived from the formal development in `Catalog/Novelty/WeightMonodromy*.lean`, which proves:\npurity of a weight grading (weight `= \u03b1 \u00b7` degree, `\u03b1 > 0`) on the cohomology of a bi",
       "quality_score": 0.7131,
       "sorry_count": 0,
       "theorem_count": 87,
@@ -323,7 +323,7 @@
     {
       "cycle_id": "0dcd87ee",
       "domain": "Combinatorics",
-      "key_insight": "# Future directions\n\nDerived from this cycle's results in\n\n* `Catalog/Combinatorics/PrivateAverageDistortion.lean` — the private\n  rate–distortion function `D_priv(p) = min_c E_p[d(c,X)]`, its invaria",
+      "key_insight": "# Future directions\n\nDerived from this cycle's results in\n\n* `Catalog/Combinatorics/PrivateAverageDistortion.lean` \u2014 the private\n  rate\u2013distortion function `D_priv(p) = min_c E_p[d(c,X)]`, its invaria",
       "quality_score": 0.751005,
       "sorry_count": 0,
       "theorem_count": 67,
@@ -343,27 +343,27 @@
     {
       "cycle_id": "4c1e8096",
       "domain": "Geometry",
-      "key_insight": "# Future directions — cycle 2 of the hyperbolic Gauss–Bonnet thread\n\n## What this cycle established\n\nCycle 1 left an *angle-data* theory: `hyperbolicArea κ α β γ = (π - (α+β+γ))/κ`\nwas a definition, a",
+      "key_insight": "# Future directions \u2014 cycle 2 of the hyperbolic Gauss\u2013Bonnet thread\n\n## What this cycle established\n\nCycle 1 left an *angle-data* theory: `hyperbolicArea \u03ba \u03b1 \u03b2 \u03b3 = (\u03c0 - (\u03b1+\u03b2+\u03b3))/\u03ba`\nwas a definition, a",
       "quality_score": 0.71709,
       "sorry_count": 0,
       "theorem_count": 59,
       "timestamp": "2026-08-11T01:12:41",
-      "title": "The formal development proves the algebraic Gauss–Bonnet invariant for a"
+      "title": "The formal development proves the algebraic Gauss\u2013Bonnet invariant for a"
     },
     {
       "cycle_id": "4c1e8096",
       "domain": "Geometry",
-      "key_insight": "# Future directions — cycle 2 of the hyperbolic Gauss–Bonnet thread\n\n## What this cycle established\n\nCycle 1 left an *angle-data* theory: `hyperbolicArea κ α β γ = (π - (α+β+γ))/κ`\nwas a definition, a",
+      "key_insight": "# Future directions \u2014 cycle 2 of the hyperbolic Gauss\u2013Bonnet thread\n\n## What this cycle established\n\nCycle 1 left an *angle-data* theory: `hyperbolicArea \u03ba \u03b1 \u03b2 \u03b3 = (\u03c0 - (\u03b1+\u03b2+\u03b3))/\u03ba`\nwas a definition, a",
       "quality_score": 0.71609,
       "sorry_count": 0,
       "theorem_count": 59,
       "timestamp": "2026-08-11T02:41:06",
-      "title": "The formal development proves the algebraic Gauss–Bonnet invariant for a"
+      "title": "The formal development proves the algebraic Gauss\u2013Bonnet invariant for a"
     },
     {
       "cycle_id": "6b69485b",
       "domain": "Cryptography",
-      "key_insight": "# Future directions: the radial lines of the Berggren star map\n\nThe formal results in `Catalog/Cryptography/BerggrenStars/` settle the *local* question that\nmotivated this cycle — why radial lines app",
+      "key_insight": "# Future directions: the radial lines of the Berggren star map\n\nThe formal results in `Catalog/Cryptography/BerggrenStars/` settle the *local* question that\nmotivated this cycle \u2014 why radial lines app",
       "quality_score": 0.720175,
       "sorry_count": 0,
       "theorem_count": 95,
@@ -383,7 +383,7 @@
     {
       "cycle_id": "d1971d75",
       "domain": "Combinatorics",
-      "key_insight": "# Future directions — strongly complete sets (thread th_20f13f16, cycle 2)\n\nThis cycle added two files to the catalog:\n\n* `Catalog/Combinatorics/StronglyCompleteBlocks.lean` — monotonicity, the initia",
+      "key_insight": "# Future directions \u2014 strongly complete sets (thread th_20f13f16, cycle 2)\n\nThis cycle added two files to the catalog:\n\n* `Catalog/Combinatorics/StronglyCompleteBlocks.lean` \u2014 monotonicity, the initia",
       "quality_score": 0.747205,
       "sorry_count": 0,
       "theorem_count": 40,
@@ -423,7 +423,7 @@
     {
       "cycle_id": "3bb7c316",
       "domain": "Novelty",
-      "key_insight": "# Future Directions\n\nDerived from the verified results in\n\n* `Catalog/Novelty/CollatzSpectralNormalized.lean` — limit law, modulus formula,\n  resonance classification, `3n+1` vs `5n+1` vs `7n+1` discr",
+      "key_insight": "# Future Directions\n\nDerived from the verified results in\n\n* `Catalog/Novelty/CollatzSpectralNormalized.lean` \u2014 limit law, modulus formula,\n  resonance classification, `3n+1` vs `5n+1` vs `7n+1` discr",
       "quality_score": 0.741695,
       "sorry_count": 0,
       "theorem_count": 47,
@@ -433,7 +433,7 @@
     {
       "cycle_id": "c56f6a79",
       "domain": "Applications",
-      "key_insight": "# Future Directions — Diophantine–Lattice: Spectral Bounds on Non-Homogeneous Quadratic Forms\n\nAll conjectures below are falsifiable statements about the objects formalised in\n`Catalog/Applications/Di",
+      "key_insight": "# Future Directions \u2014 Diophantine\u2013Lattice: Spectral Bounds on Non-Homogeneous Quadratic Forms\n\nAll conjectures below are falsifiable statements about the objects formalised in\n`Catalog/Applications/Di",
       "quality_score": 0.71215,
       "sorry_count": 0,
       "theorem_count": 43,
@@ -443,7 +443,7 @@
     {
       "cycle_id": "f2796053",
       "domain": "Logic",
-      "key_insight": "# Future Directions (cycle 1, thread th_ed2afa00)\n\nDerived from the verified results in `Catalog/Logic/GEBGradedLawvere.lean`:\ngraded (partial) universality, the obstruction spectrum\n(`representable ⟺",
+      "key_insight": "# Future Directions (cycle 1, thread th_ed2afa00)\n\nDerived from the verified results in `Catalog/Logic/GEBGradedLawvere.lean`:\ngraded (partial) universality, the obstruction spectrum\n(`representable \u27fa",
       "quality_score": 0.743025,
       "sorry_count": 0,
       "theorem_count": 62,
@@ -463,7 +463,7 @@
     {
       "cycle_id": "a062ecaf",
       "domain": "Novelty",
-      "key_insight": "# Future Directions — Strange Attractors as Algebraic Objects\n\nDerived from the analysis and adversarial review of this research thread.\n\n## What is established\n\n**Structure.** The orbit space of any",
+      "key_insight": "# Future Directions \u2014 Strange Attractors as Algebraic Objects\n\nDerived from the analysis and adversarial review of this research thread.\n\n## What is established\n\n**Structure.** The orbit space of any",
       "quality_score": 0.7526200000000001,
       "sorry_count": 0,
       "theorem_count": 15,
@@ -473,7 +473,7 @@
     {
       "cycle_id": "b7dba88e",
       "domain": "Tropical",
-      "key_insight": "# Future directions — the magma monoid as a transformation semigroup\n\nAll conjectures below are stated for `Bin(X)`, the monoid of all binary\noperations on a set `X` under `(f * g) a b = g (f a b) (f",
+      "key_insight": "# Future directions \u2014 the magma monoid as a transformation semigroup\n\nAll conjectures below are stated for `Bin(X)`, the monoid of all binary\noperations on a set `X` under `(f * g) a b = g (f a b) (f",
       "quality_score": 0.7419800000000001,
       "sorry_count": 0,
       "theorem_count": 115,
@@ -483,7 +483,7 @@
     {
       "cycle_id": "832153cb",
       "domain": "Physics",
-      "key_insight": "# Future Directions — Diophantine-Lattice Spectral Bounds (after cycle 11)\n\nCycles 10–11 closed three standing conjectures of the thread.  What is proved (all `sorry`-free,\nin `Catalog/Physics/Diophan",
+      "key_insight": "# Future Directions \u2014 Diophantine-Lattice Spectral Bounds (after cycle 11)\n\nCycles 10\u201311 closed three standing conjectures of the thread.  What is proved (all `sorry`-free,\nin `Catalog/Physics/Diophan",
       "quality_score": 0.715855,
       "sorry_count": 0,
       "theorem_count": 101,
@@ -525,7 +525,7 @@
     {
       "cycle_id": "be8c4b71",
       "domain": "Applications",
-      "key_insight": "# Future directions\n\n## Quantitative approximation rates\n\n`Catalog/Bridges/EMLInterpolationTheory.lean` proves the qualitative bridge supplied\nby Stone–Weierstrass: on a compact subset of `ℝⁿ`, the al",
+      "key_insight": "# Future directions\n\n## Quantitative approximation rates\n\n`Catalog/Bridges/EMLInterpolationTheory.lean` proves the qualitative bridge supplied\nby Stone\u2013Weierstrass: on a compact subset of `\u211d\u207f`, the al",
       "quality_score": 0.8084800000000001,
       "sorry_count": 0,
       "theorem_count": 14,
@@ -545,7 +545,7 @@
     {
       "cycle_id": "01a8c97a",
       "domain": "Geometry",
-      "key_insight": "# Future directions\n\nThe formal development proves the algebraic Gauss–Bonnet invariant for a\nconstant-curvature hyperbolic triangle and its extremal consequences. The next\nsteps toward a geometric, r",
+      "key_insight": "# Future directions\n\nThe formal development proves the algebraic Gauss\u2013Bonnet invariant for a\nconstant-curvature hyperbolic triangle and its extremal consequences. The next\nsteps toward a geometric, r",
       "quality_score": 0.72854,
       "sorry_count": 0,
       "theorem_count": 15,
@@ -575,7 +575,7 @@
     {
       "cycle_id": "405d388b",
       "domain": "Logic",
-      "key_insight": "# Future Directions — Gödel's Casino, Cycle 2\n\n## Completed in this cycle\n\n`Catalog/Probability/GodelCasinoAsymmetricOdds.lean` extends the finite rational\ncasino to asymmetric odds: a correct bet ear",
+      "key_insight": "# Future Directions \u2014 G\u00f6del's Casino, Cycle 2\n\n## Completed in this cycle\n\n`Catalog/Probability/GodelCasinoAsymmetricOdds.lean` extends the finite rational\ncasino to asymmetric odds: a correct bet ear",
       "quality_score": 0.8013399999999999,
       "sorry_count": 0,
       "theorem_count": 20,
@@ -595,12 +595,12 @@
     {
       "cycle_id": "111aa6d2",
       "domain": "Physics",
-      "key_insight": "# Future Directions — Parity-Sensitive Stability of Optimal Hamilton Covers\n\n## Cycle-2 advance\n\nThe local part of the proposed near-optimal stability conjecture is true in a\nstrictly sharper form.\n\nL",
+      "key_insight": "# Future Directions \u2014 Parity-Sensitive Stability of Optimal Hamilton Covers\n\n## Cycle-2 advance\n\nThe local part of the proposed near-optimal stability conjecture is true in a\nstrictly sharper form.\n\nL",
       "quality_score": 0.69767,
       "sorry_count": 0,
       "theorem_count": 8,
       "timestamp": "2026-08-02T17:23:30",
-      "title": "The deterministic incidence-capacity obstruction — that any cover of a graph by"
+      "title": "The deterministic incidence-capacity obstruction \u2014 that any cover of a graph by"
     },
     {
       "cycle_id": "c945ec38",
@@ -615,12 +615,12 @@
     {
       "cycle_id": "b0710fef",
       "domain": "Novelty",
-      "key_insight": "# Future directions\n\n## 1. Sharpen the sparse-capacity asymptotics\n\nThe proved bound `binom(N,k) ≤ N^k` is robust and directly yields the\n`log₂ N` bits-per-spike ceiling. A sharper next theorem is\n\n`b",
+      "key_insight": "# Future directions\n\n## 1. Sharpen the sparse-capacity asymptotics\n\nThe proved bound `binom(N,k) \u2264 N^k` is robust and directly yields the\n`log\u2082 N` bits-per-spike ceiling. A sharper next theorem is\n\n`b",
       "quality_score": 0.7679199999999999,
       "sorry_count": 0,
       "theorem_count": 21,
       "timestamp": "2026-08-02T17:26:14",
-      "title": "Moonshot: Brain-Computer Interface Mathematics — Neural Coding Theorems"
+      "title": "Moonshot: Brain-Computer Interface Mathematics \u2014 Neural Coding Theorems"
     },
     {
       "cycle_id": "4ae649eb",
@@ -645,7 +645,7 @@
     {
       "cycle_id": "5814a7d4",
       "domain": "Computation",
-      "key_insight": "# Future directions\n\n## Completed baseline\n\nThe accompanying Lean development settles the operator-algebraic core used by\nHuang's spectral method:\n\n- the canonical recursive signing satisfies `Aₙ² = n",
+      "key_insight": "# Future directions\n\n## Completed baseline\n\nThe accompanying Lean development settles the operator-algebraic core used by\nHuang's spectral method:\n\n- the canonical recursive signing satisfies `A\u2099\u00b2 = n",
       "quality_score": 0.74072,
       "sorry_count": 0,
       "theorem_count": 7,
@@ -695,7 +695,7 @@
     {
       "cycle_id": "17b35eaf",
       "domain": "Novelty",
-      "key_insight": "# Future Directions\n\nThe formal results delimit what remains conjectural. In particular,\n`□A → □□◇ₜA` follows from ordinary transitivity (`4`) plus reflexive time, so it does\nnot by itself prove a str",
+      "key_insight": "# Future Directions\n\nThe formal results delimit what remains conjectural. In particular,\n`\u25a1A \u2192 \u25a1\u25a1\u25c7\u209cA` follows from ordinary transitivity (`4`) plus reflexive time, so it does\nnot by itself prove a str",
       "quality_score": 0.68012,
       "sorry_count": 1,
       "theorem_count": 3,
@@ -735,7 +735,7 @@
     {
       "cycle_id": "76a9f834",
       "domain": "Cryptography",
-      "key_insight": "# Future directions\n\n1. **Finite-key probability formula.** For every finite type `V`, independent\n   uniform keys `V → [0,1]`, and `p ∈ [0,1]`, the probability that\n   `siteThresholdConfig key p = η`",
+      "key_insight": "# Future directions\n\n1. **Finite-key probability formula.** For every finite type `V`, independent\n   uniform keys `V \u2192 [0,1]`, and `p \u2208 [0,1]`, the probability that\n   `siteThresholdConfig key p = \u03b7`",
       "quality_score": 0.7250399999999999,
       "sorry_count": 0,
       "theorem_count": 8,
@@ -745,7 +745,7 @@
     {
       "cycle_id": "5bb368e2",
       "domain": "NumberTheory",
-      "key_insight": "# Wall–Sun–Sun Primes: Results and Future Directions\n\n## Status of the requested existence claim\n\nThe requested theorem cannot presently be supplied faithfully: existence of a Wall–Sun–Sun\nprime is an",
+      "key_insight": "# Wall\u2013Sun\u2013Sun Primes: Results and Future Directions\n\n## Status of the requested existence claim\n\nThe requested theorem cannot presently be supplied faithfully: existence of a Wall\u2013Sun\u2013Sun\nprime is an",
       "quality_score": 0.7482099999999999,
       "sorry_count": 0,
       "theorem_count": 10,
@@ -760,7 +760,7 @@
       "sorry_count": 0,
       "theorem_count": 9,
       "timestamp": "2026-08-03T04:04:06",
-      "title": "Existence of Dense Sets without Large t‑Fold Sumsets"
+      "title": "Existence of Dense Sets without Large t\u2011Fold Sumsets"
     },
     {
       "cycle_id": "06b881ae",
@@ -775,7 +775,7 @@
     {
       "cycle_id": "ab554343",
       "domain": "Novelty",
-      "key_insight": "# Future Directions\n\n## Causal semantics\n\n- Replace abstract cut losses with finite transition-probability kernels and formalize interventions, cause–effect repertoires, and divergence-based informati",
+      "key_insight": "# Future Directions\n\n## Causal semantics\n\n- Replace abstract cut losses with finite transition-probability kernels and formalize interventions, cause\u2013effect repertoires, and divergence-based informati",
       "quality_score": 0.79623,
       "sorry_count": 0,
       "theorem_count": 19,
@@ -825,12 +825,12 @@
     {
       "cycle_id": "f7f562cc",
       "domain": "Probability",
-      "key_insight": "# Future Directions\n\n1. **Poisson isolated-vertex limit in the connectivity window.** For every fixed `c : ℝ`, if `I_n` is the isolated-vertex count in `G(n, (log n + c)/n)`, then for every fixed `k :",
+      "key_insight": "# Future Directions\n\n1. **Poisson isolated-vertex limit in the connectivity window.** For every fixed `c : \u211d`, if `I_n` is the isolated-vertex count in `G(n, (log n + c)/n)`, then for every fixed `k :",
       "quality_score": 0.78272,
       "sorry_count": 0,
       "theorem_count": 23,
       "timestamp": "2026-08-03T15:25:39",
-      "title": "Random Graphs: Erdős-Rényi Threshold Phenomena"
+      "title": "Random Graphs: Erd\u0151s-R\u00e9nyi Threshold Phenomena"
     },
     {
       "cycle_id": "a60d1c49",
@@ -845,7 +845,7 @@
     {
       "cycle_id": "38046e56",
       "domain": "Geometry",
-      "key_insight": "# Future Directions\n\n- Construct the Khovanov chain groups and signed cube differential over an arbitrary coefficient ring, then prove `d² = 0` from commuting square faces.\n- Refine the generator-leve",
+      "key_insight": "# Future Directions\n\n- Construct the Khovanov chain groups and signed cube differential over an arbitrary coefficient ring, then prove `d\u00b2 = 0` from commuting square faces.\n- Refine the generator-leve",
       "quality_score": 0.77922,
       "sorry_count": 0,
       "theorem_count": 10,
@@ -860,12 +860,12 @@
       "sorry_count": 0,
       "theorem_count": 8,
       "timestamp": "2026-08-03T17:30:50",
-      "title": "1. **Mixed-area Bézout.** For two balanced plane tropical curves whose Newton po"
+      "title": "1. **Mixed-area B\u00e9zout.** For two balanced plane tropical curves whose Newton po"
     },
     {
       "cycle_id": "eb6ff95e",
       "domain": "Computation",
-      "key_insight": "# Future Directions\n\n1. **Full CKW inequality.** For every normalized pure three-qubit amplitude tensor `ψ : Fin 2 → Fin 2 → Fin 2 → ℂ`, the convex-roof squared concurrences of its `AB` and `AC` reduc",
+      "key_insight": "# Future Directions\n\n1. **Full CKW inequality.** For every normalized pure three-qubit amplitude tensor `\u03c8 : Fin 2 \u2192 Fin 2 \u2192 Fin 2 \u2192 \u2102`, the convex-roof squared concurrences of its `AB` and `AC` reduc",
       "quality_score": 0.7944100000000001,
       "sorry_count": 0,
       "theorem_count": 17,
@@ -925,7 +925,7 @@
     {
       "cycle_id": "28c84414",
       "domain": "Shared",
-      "key_insight": "# Future Directions\n\n1. **Additive density.** For every preadditive category `C`, every additive presheaf\n   `Cᵒᵖ ⥤+ AddCommGrpCat` is a colimit, in the category of additive functors, of additive\n   r",
+      "key_insight": "# Future Directions\n\n1. **Additive density.** For every preadditive category `C`, every additive presheaf\n   `C\u1d52\u1d56 \u2964+ AddCommGrpCat` is a colimit, in the category of additive functors, of additive\n   r",
       "quality_score": 0.73729,
       "sorry_count": 0,
       "theorem_count": 10,
@@ -935,7 +935,7 @@
     {
       "cycle_id": "8fa54bf5",
       "domain": "Tropical",
-      "key_insight": "# Future Directions\n\n1. **General tropical Helly bound.** For every `d > 0`, every finite family of normalized max-plus tropically convex subsets of `Fin d → ℝ` whose every subfamily of cardinality at",
+      "key_insight": "# Future Directions\n\n1. **General tropical Helly bound.** For every `d > 0`, every finite family of normalized max-plus tropically convex subsets of `Fin d \u2192 \u211d` whose every subfamily of cardinality at",
       "quality_score": 0.7597999999999998,
       "sorry_count": 0,
       "theorem_count": 20,
@@ -985,7 +985,7 @@
     {
       "cycle_id": "1ed3fd3a",
       "domain": "Computation",
-      "key_insight": "# Future Directions — Snake-in-the-Box\n\nThis project formalises a chain of results about snakes (chordless induced\npaths) in the hypercube `Q_n`, culminating in\n\n* a proof of the **rigidity conjecture",
+      "key_insight": "# Future Directions \u2014 Snake-in-the-Box\n\nThis project formalises a chain of results about snakes (chordless induced\npaths) in the hypercube `Q_n`, culminating in\n\n* a proof of the **rigidity conjecture",
       "quality_score": 0.686,
       "sorry_count": 0,
       "theorem_count": 96,
@@ -1025,7 +1025,7 @@
     {
       "cycle_id": "6337dbc1",
       "domain": "Bridges",
-      "key_insight": "# Future Directions\n\nDerived from the three files of this line of work:\n\n* `Catalog/Bridges/FundamentalGroupCompleteInvariant.lean` (cycle 1) — connected groupoids\n  (models of `K(G,1)`) are classifie",
+      "key_insight": "# Future Directions\n\nDerived from the three files of this line of work:\n\n* `Catalog/Bridges/FundamentalGroupCompleteInvariant.lean` (cycle 1) \u2014 connected groupoids\n  (models of `K(G,1)`) are classifie",
       "quality_score": 0.78433,
       "sorry_count": 0,
       "theorem_count": 71,
@@ -1045,7 +1045,7 @@
     {
       "cycle_id": "1d44d635",
       "domain": "Geometry",
-      "key_insight": "# Future directions\n\n## What is formalized\n\nFour Lean files, all compiling with `lake build` and free of `sorry`:\n\n* `Geometry/RomanDomination/Variants.lean` — the six Roman-type domination\n  paramete",
+      "key_insight": "# Future directions\n\n## What is formalized\n\nFour Lean files, all compiling with `lake build` and free of `sorry`:\n\n* `Geometry/RomanDomination/Variants.lean` \u2014 the six Roman-type domination\n  paramete",
       "quality_score": 0.686,
       "sorry_count": 0,
       "theorem_count": 162,
@@ -1085,7 +1085,7 @@
     {
       "cycle_id": "f993c4fa",
       "domain": "Physics",
-      "key_insight": "# Future Directions — after the affine-plane closure of the coordinate framework\n\nThis cycle closed the loop between the pivot bound for mutually orthogonal Latin squares\n(MOLS) and classical design t",
+      "key_insight": "# Future Directions \u2014 after the affine-plane closure of the coordinate framework\n\nThis cycle closed the loop between the pivot bound for mutually orthogonal Latin squares\n(MOLS) and classical design t",
       "quality_score": 0.686,
       "sorry_count": 0,
       "theorem_count": 45,
@@ -1125,7 +1125,7 @@
     {
       "cycle_id": "e9c14674",
       "domain": "Shared",
-      "key_insight": "# Future directions\n\nConjectures suggested by the formalisation in `Catalog/Shared/GilbertLattice*.lean`\nof the conditioned Gilbert model (one point per cell of `ℤ²`, two points joined when\ntheir Eucl",
+      "key_insight": "# Future directions\n\nConjectures suggested by the formalisation in `Catalog/Shared/GilbertLattice*.lean`\nof the conditioned Gilbert model (one point per cell of `\u2124\u00b2`, two points joined when\ntheir Eucl",
       "quality_score": 0.78349,
       "sorry_count": 0,
       "theorem_count": 71,
@@ -1145,7 +1145,7 @@
     {
       "cycle_id": "6a4657f8",
       "domain": "Shared",
-      "key_insight": "# Future directions\n\nThe four files in `Catalog/Shared/ZeroKnowledge/` develop, with complete proofs:\n\n* `ThreeColoringZK.lean` — the GMW protocol for graph 3-colorability: perfect\n  completeness, the",
+      "key_insight": "# Future directions\n\nThe four files in `Catalog/Shared/ZeroKnowledge/` develop, with complete proofs:\n\n* `ThreeColoringZK.lean` \u2014 the GMW protocol for graph 3-colorability: perfect\n  completeness, the",
       "quality_score": 0.686,
       "sorry_count": 0,
       "theorem_count": 82,
@@ -1160,7 +1160,7 @@
       "sorry_count": 1,
       "theorem_count": 271,
       "timestamp": "2026-08-05T09:56:52",
-      "title": "Let a compact smooth submanifold have reach at least `τ`, and let a finite sampl"
+      "title": "Let a compact smooth submanifold have reach at least `\u03c4`, and let a finite sampl"
     },
     {
       "cycle_id": "a6a59cd3",
@@ -1175,7 +1175,7 @@
     {
       "cycle_id": "9f23a455",
       "domain": "Cryptography",
-      "key_insight": "# Future directions: falsifiable conjectures from the group-model Schnorr formalization\n\nThe new files are\n\n* `Catalog/Cryptography/ZeroKnowledge/SchnorrGroupProtocol.lean` — Schnorr Σ-protocol in a",
+      "key_insight": "# Future directions: falsifiable conjectures from the group-model Schnorr formalization\n\nThe new files are\n\n* `Catalog/Cryptography/ZeroKnowledge/SchnorrGroupProtocol.lean` \u2014 Schnorr \u03a3-protocol in a",
       "quality_score": 0.686,
       "sorry_count": 0,
       "theorem_count": 68,
@@ -1215,12 +1215,12 @@
     {
       "cycle_id": "f14ecb01",
       "domain": "Probability",
-      "key_insight": "# Future directions: Erdős–Rényi threshold phenomena\n\nThis cycle proved the **sharp connectivity threshold** of `G(n,p)` at `p = log n / n`\ninside the catalog's elementary finite model\n(`ErdosRenyi.ma",
+      "key_insight": "# Future directions: Erd\u0151s\u2013R\u00e9nyi threshold phenomena\n\nThis cycle proved the **sharp connectivity threshold** of `G(n,p)` at `p = log n / n`\ninside the catalog's elementary finite model\n(`ErdosRenyi.ma",
       "quality_score": 0.686,
       "sorry_count": 0,
       "theorem_count": 113,
       "timestamp": "2026-08-05T12:26:04",
-      "title": "Deepening: Random Graphs: Erdős-Rényi Threshold Phenomena"
+      "title": "Deepening: Random Graphs: Erd\u0151s-R\u00e9nyi Threshold Phenomena"
     },
     {
       "cycle_id": "2d9904f9",
@@ -1235,7 +1235,7 @@
     {
       "cycle_id": "3664af53",
       "domain": "Applications",
-      "key_insight": "# Affine subspace statistics in `𝔽₂ⁿ` — results and future directions\n\nAll formal results live in four files, which together compile with no `sorry` and use only\nthe standard axioms (`propext`, `Class",
+      "key_insight": "# Affine subspace statistics in `\ud835\udd3d\u2082\u207f` \u2014 results and future directions\n\nAll formal results live in four files, which together compile with no `sorry` and use only\nthe standard axioms (`propext`, `Class",
       "quality_score": 0.686,
       "sorry_count": 0,
       "theorem_count": 122,
@@ -1255,7 +1255,7 @@
     {
       "cycle_id": "52648a00",
       "domain": "Bridges",
-      "key_insight": "# Future directions\n\nConcrete, falsifiable conjectures arising from the formalization in\n\n* `Catalog/Bridges/B3FreeFamilies.lean` — framework of weak/strong `P`-free families,\n  layers, `e(P)`, `La(n,",
+      "key_insight": "# Future directions\n\nConcrete, falsifiable conjectures arising from the formalization in\n\n* `Catalog/Bridges/B3FreeFamilies.lean` \u2014 framework of weak/strong `P`-free families,\n  layers, `e(P)`, `La(n,",
       "quality_score": 0.686,
       "sorry_count": 0,
       "theorem_count": 122,
@@ -1265,7 +1265,7 @@
     {
       "cycle_id": "7c424175",
       "domain": "Shared",
-      "key_insight": "# Future directions\n\nState of the formalisation of *Gilbert's disc model conditioned on the square lattice*\n(one point per cell of `ℤ²`, two points joined when at distance `< R`), files\n`Catalog/Share",
+      "key_insight": "# Future directions\n\nState of the formalisation of *Gilbert's disc model conditioned on the square lattice*\n(one point per cell of `\u2124\u00b2`, two points joined when at distance `< R`), files\n`Catalog/Share",
       "quality_score": 0.686,
       "sorry_count": 0,
       "theorem_count": 56,
@@ -1355,7 +1355,7 @@
     {
       "cycle_id": "5b6f1a1d",
       "domain": "Geometry",
-      "key_insight": "# Future directions\n\nAll notation is that of `Catalog/Applications/AffineSubspaceStats/AffineStats.lean`:\n`Vec n = 𝔽₂ⁿ`, an affine `D`-cube is a base point `c` together with `D` directions\n`v₀,…,v_{D-",
+      "key_insight": "# Future directions\n\nAll notation is that of `Catalog/Applications/AffineSubspaceStats/AffineStats.lean`:\n`Vec n = \ud835\udd3d\u2082\u207f`, an affine `D`-cube is a base point `c` together with `D` directions\n`v\u2080,\u2026,v_{D-",
       "quality_score": 0.686,
       "sorry_count": 0,
       "theorem_count": 122,
@@ -1375,7 +1375,7 @@
     {
       "cycle_id": "785c09ab",
       "domain": "Tropical",
-      "key_insight": "# Tropical Mathematics of Social Choice — results and future directions\n\nThis project formalizes a bridge between **tropical (min-plus) algebra** and\n**social choice theory**, and a second bridge from",
+      "key_insight": "# Tropical Mathematics of Social Choice \u2014 results and future directions\n\nThis project formalizes a bridge between **tropical (min-plus) algebra** and\n**social choice theory**, and a second bridge from",
       "quality_score": 0.7857999999999999,
       "sorry_count": 0,
       "theorem_count": 85,
@@ -1385,12 +1385,12 @@
     {
       "cycle_id": "fc0b5c3a",
       "domain": "Bridges",
-      "key_insight": "# Future directions\n\n## What is proved\n\n`Bridges/DeltaDenseSumsetAvoidance.lean` proves, for every fixed `0 < δ < 1` and every\nsufficiently large `n`, the existence of `S ⊆ [n]` with `|S| ≥ δn` such t",
+      "key_insight": "# Future directions\n\n## What is proved\n\n`Bridges/DeltaDenseSumsetAvoidance.lean` proves, for every fixed `0 < \u03b4 < 1` and every\nsufficiently large `n`, the existence of `S \u2286 [n]` with `|S| \u2265 \u03b4n` such t",
       "quality_score": 0.686,
       "sorry_count": 0,
       "theorem_count": 118,
       "timestamp": "2026-08-06T00:18:07",
-      "title": "Existence of δ‑dense sets avoiding large sumsets"
+      "title": "Existence of \u03b4\u2011dense sets avoiding large sumsets"
     },
     {
       "cycle_id": "10a6c20b",
@@ -1420,7 +1420,7 @@
       "sorry_count": 0,
       "theorem_count": 123,
       "timestamp": "2026-08-06T03:44:43",
-      "title": "Deepening: Moonshot: Brain-Computer Interface Mathematics — Neural Coding Theorems"
+      "title": "Deepening: Moonshot: Brain-Computer Interface Mathematics \u2014 Neural Coding Theorems"
     },
     {
       "cycle_id": "059cccbd",
@@ -1455,7 +1455,7 @@
     {
       "cycle_id": "413bc2f0",
       "domain": "Logic",
-      "key_insight": "# Future directions\n\nWhat is formalised (all statements proved, no `sorry`), in `Logic/Rademacher/`:\n\n* `Basic.lean` — empirical Rademacher complexity of a class of vectors: vanishing on\n  singletons,",
+      "key_insight": "# Future directions\n\nWhat is formalised (all statements proved, no `sorry`), in `Logic/Rademacher/`:\n\n* `Basic.lean` \u2014 empirical Rademacher complexity of a class of vectors: vanishing on\n  singletons,",
       "quality_score": 0.7947599999999999,
       "sorry_count": 0,
       "theorem_count": 72,
@@ -1465,17 +1465,17 @@
     {
       "cycle_id": "66bb09ac",
       "domain": "Novelty",
-      "key_insight": "# Future directions\n\nFormal results live in\n\n* `Catalog/Novelty/MindToolsBoundedApprehension.lean` — bounded apprehension,\n  counting certificates, concrete ordinal ranks, well-founded ≠ linear;\n* `Ca",
+      "key_insight": "# Future directions\n\nFormal results live in\n\n* `Catalog/Novelty/MindToolsBoundedApprehension.lean` \u2014 bounded apprehension,\n  counting certificates, concrete ordinal ranks, well-founded \u2260 linear;\n* `Ca",
       "quality_score": 0.686,
       "sorry_count": 0,
       "theorem_count": 128,
       "timestamp": "2026-08-06T05:23:07",
-      "title": "The phrase “directly apprehended by a human brain” is not presently a mathematic"
+      "title": "The phrase \u201cdirectly apprehended by a human brain\u201d is not presently a mathematic"
     },
     {
       "cycle_id": "31b96673",
       "domain": "Pythagorean",
-      "key_insight": "# Future Directions\n\nEstablished in `Catalog/Pythagorean/EMLBerggrenEnergyNeuron.lean`: the Berggren\n(Barning–Hall) ternary tree of primitive Pythagorean triples is driven by a\n*single* exponential–lo",
+      "key_insight": "# Future Directions\n\nEstablished in `Catalog/Pythagorean/EMLBerggrenEnergyNeuron.lean`: the Berggren\n(Barning\u2013Hall) ternary tree of primitive Pythagorean triples is driven by a\n*single* exponential\u2013lo",
       "quality_score": 0.686,
       "sorry_count": 0,
       "theorem_count": 29,
@@ -1485,22 +1485,22 @@
     {
       "cycle_id": "2784f3be",
       "domain": "Pythagorean",
-      "key_insight": "# Tower weights `Wₖ₊₁ = 2^Wₖ · Wₖ`: what is now proved, and what remains\n\nTwo self-contained Lean files carry the development:\n\n* `Catalog/Pythagorean/TowerRadix.lean` — the tower weights `W`, the pos",
+      "key_insight": "# Tower weights `W\u2096\u208a\u2081 = 2^W\u2096 \u00b7 W\u2096`: what is now proved, and what remains\n\nTwo self-contained Lean files carry the development:\n\n* `Catalog/Pythagorean/TowerRadix.lean` \u2014 the tower weights `W`, the pos",
       "quality_score": 0.686,
       "sorry_count": 0,
       "theorem_count": 124,
       "timestamp": "2026-08-06T05:23:19",
-      "title": "Let `W₀ = 1`, `Wₖ₊₁ = 2^Wₖ · Wₖ`, and let `K(n)` be the least `k` such that `n <"
+      "title": "Let `W\u2080 = 1`, `W\u2096\u208a\u2081 = 2^W\u2096 \u00b7 W\u2096`, and let `K(n)` be the least `k` such that `n <"
     },
     {
       "cycle_id": "713730e2",
       "domain": "Pythagorean",
-      "key_insight": "# Future directions\n\nThis cycle settled the *uniform half-canonical existence* question for almost all\nregular degrees, and in the strongest possible form: for `k ≥ 6` with `k ≠ 7`,\n**every** simple `",
+      "key_insight": "# Future directions\n\nThis cycle settled the *uniform half-canonical existence* question for almost all\nregular degrees, and in the strongest possible form: for `k \u2265 6` with `k \u2260 7`,\n**every** simple `",
       "quality_score": 0.78748,
       "sorry_count": 0,
       "theorem_count": 47,
       "timestamp": "2026-08-06T06:55:10",
-      "title": "**Conjecture.** For every integer `k ≥ 5`, there is a threshold `N₀(k)` such tha"
+      "title": "**Conjecture.** For every integer `k \u2265 5`, there is a threshold `N\u2080(k)` such tha"
     },
     {
       "cycle_id": "39ee2889",
@@ -1545,7 +1545,7 @@
     {
       "cycle_id": "6c07c4d0",
       "domain": "Shared",
-      "key_insight": "# Future directions\n\nDerived from seven research cycles on the paper *\"Chebotarev geodesic theorem: non-split\ncase\"*, carried out in\n\n* `Catalog/Shared/ChebotarevGeodesic.lean` — the exponent calculus",
+      "key_insight": "# Future directions\n\nDerived from seven research cycles on the paper *\"Chebotarev geodesic theorem: non-split\ncase\"*, carried out in\n\n* `Catalog/Shared/ChebotarevGeodesic.lean` \u2014 the exponent calculus",
       "quality_score": 0.6858792756539236,
       "sorry_count": 2,
       "theorem_count": 994,
@@ -1555,7 +1555,7 @@
     {
       "cycle_id": "68319f3d",
       "domain": "Computation",
-      "key_insight": "# Future Directions\n\nDerived from the analysis and adversarial review of cycles 1–9\n(`Catalog/Computation/FourierFunctor/`), where we proved: `pontryagin : FinAb ≌\nFinAbᵒᵖ`, `fourierNatIso` (Fourier i",
+      "key_insight": "# Future Directions\n\nDerived from the analysis and adversarial review of cycles 1\u20139\n(`Catalog/Computation/FourierFunctor/`), where we proved: `pontryagin : FinAb \u224c\nFinAb\u1d52\u1d56`, `fourierNatIso` (Fourier i",
       "quality_score": 0.686,
       "sorry_count": 0,
       "theorem_count": 133,
@@ -1575,7 +1575,7 @@
     {
       "cycle_id": "68319f3d",
       "domain": "Computation",
-      "key_insight": "# Future Directions\n\nDerived from the analysis and adversarial review of cycles 1–9\n(`Catalog/Computation/FourierFunctor/`), where we proved: `pontryagin : FinAb ≌\nFinAbᵒᵖ`, `fourierNatIso` (Fourier i",
+      "key_insight": "# Future Directions\n\nDerived from the analysis and adversarial review of cycles 1\u20139\n(`Catalog/Computation/FourierFunctor/`), where we proved: `pontryagin : FinAb \u224c\nFinAb\u1d52\u1d56`, `fourierNatIso` (Fourier i",
       "quality_score": 0.646,
       "sorry_count": 0,
       "theorem_count": 1088,
@@ -1585,7 +1585,7 @@
     {
       "cycle_id": "a95dbc85",
       "domain": "Pythagorean",
-      "key_insight": "# Future Directions — Fitness Landscapes of Mathematical Theories (cycle 1)\n\nThe cycle-1 development (`Catalog/Pythagorean/TheoryFitness/`) fixes a\nreproducible cost model — a finite corpus, a source-",
+      "key_insight": "# Future Directions \u2014 Fitness Landscapes of Mathematical Theories (cycle 1)\n\nThe cycle-1 development (`Catalog/Pythagorean/TheoryFitness/`) fixes a\nreproducible cost model \u2014 a finite corpus, a source-",
       "quality_score": 0.686,
       "sorry_count": 0,
       "theorem_count": 112,
@@ -1595,7 +1595,7 @@
     {
       "cycle_id": "a95dbc85",
       "domain": "Cryptography",
-      "key_insight": "# Future Directions — Fitness Landscapes of Mathematical Theories (cycle 1)\n\nThe cycle-1 development (`Catalog/Pythagorean/TheoryFitness/`) fixes a\nreproducible cost model — a finite corpus, a source-",
+      "key_insight": "# Future Directions \u2014 Fitness Landscapes of Mathematical Theories (cycle 1)\n\nThe cycle-1 development (`Catalog/Pythagorean/TheoryFitness/`) fixes a\nreproducible cost model \u2014 a finite corpus, a source-",
       "quality_score": 0.686,
       "sorry_count": 0,
       "theorem_count": 112,
@@ -1605,7 +1605,7 @@
     {
       "cycle_id": "3744942f",
       "domain": "Probability",
-      "key_insight": "# Future Directions — Hadwiger's Conjecture (cycle v19c, continuation pass)\n\nWhat is now formalised (all statements below are `sorry`-free theorems in\n`Catalog/Probability/Hadwiger*.lean`):\n\n* transit",
+      "key_insight": "# Future Directions \u2014 Hadwiger's Conjecture (cycle v19c, continuation pass)\n\nWhat is now formalised (all statements below are `sorry`-free theorems in\n`Catalog/Probability/Hadwiger*.lean`):\n\n* transit",
       "quality_score": 0.6546236561723476,
       "sorry_count": 0,
       "theorem_count": 666,
@@ -1630,12 +1630,12 @@
       "sorry_count": 0,
       "theorem_count": 182,
       "timestamp": "2026-08-07T04:13:38",
-      "title": "Hyperbolic-Pythagorean-Geodesics: Sub-Linear Trajectory Factorization in Poincaré Disk"
+      "title": "Hyperbolic-Pythagorean-Geodesics: Sub-Linear Trajectory Factorization in Poincar\u00e9 Disk"
     },
     {
       "cycle_id": "2c38bc1a",
       "domain": "Cryptography",
-      "key_insight": "# Future Directions — Universal Posets\n\nDerived from the analysis and adversarial-review stages of the two research\ncycles run on this project.  Each conjecture is falsifiable, and each is stated\nso t",
+      "key_insight": "# Future Directions \u2014 Universal Posets\n\nDerived from the analysis and adversarial-review stages of the two research\ncycles run on this project.  Each conjecture is falsifiable, and each is stated\nso t",
       "quality_score": 0.7055950000000001,
       "sorry_count": 0,
       "theorem_count": 3,
@@ -1645,7 +1645,7 @@
     {
       "cycle_id": "0e033e47",
       "domain": "Bridges",
-      "key_insight": "# Future directions\n\nDerived from the formalisation in `Catalog/Bridges/InfiniteCubicMatchings.lean`,\n`…Compactness.lean`, `…Ladder.lean`, `…ParitySharp.lean`, `…Covers.lean`,\n`…PetersenLift.lean`, `…",
+      "key_insight": "# Future directions\n\nDerived from the formalisation in `Catalog/Bridges/InfiniteCubicMatchings.lean`,\n`\u2026Compactness.lean`, `\u2026Ladder.lean`, `\u2026ParitySharp.lean`, `\u2026Covers.lean`,\n`\u2026PetersenLift.lean`, `\u2026",
       "quality_score": 0.648859294871795,
       "sorry_count": 0,
       "theorem_count": 228,
@@ -1655,7 +1655,7 @@
     {
       "cycle_id": "768360e4",
       "domain": "Bridges",
-      "key_insight": "# Future Directions\n\nBold, falsifiable conjectures arising from the results proved in\n\n* `Catalog/Bridges/DerivedHomotopyBridge.lean` — homotopy/derived-category hom-groups\n  out of a single complex c",
+      "key_insight": "# Future Directions\n\nBold, falsifiable conjectures arising from the results proved in\n\n* `Catalog/Bridges/DerivedHomotopyBridge.lean` \u2014 homotopy/derived-category hom-groups\n  out of a single complex c",
       "quality_score": 0.6509097115384616,
       "sorry_count": 0,
       "theorem_count": 130,
@@ -1665,17 +1665,17 @@
     {
       "cycle_id": "b95b0e68",
       "domain": "Novelty",
-      "key_insight": "# Future directions\n\nBold, falsifiable conjectures arising from the formalisation of the analytic skeleton of\n*\"On the Second Moment of `L(1/2, As(f) × φ)`\"* in `Catalog/Novelty/AsaiLargeSieve.lean`,",
+      "key_insight": "# Future directions\n\nBold, falsifiable conjectures arising from the formalisation of the analytic skeleton of\n*\"On the Second Moment of `L(1/2, As(f) \u00d7 \u03c6)`\"* in `Catalog/Novelty/AsaiLargeSieve.lean`,",
       "quality_score": 0.6609054304347827,
       "sorry_count": 0,
       "theorem_count": 116,
       "timestamp": "2026-08-07T04:27:57",
-      "title": "ArXiv paper: On the Second Moment of $ L (1/2, \\mathrm{As}(f) \\times φ)$"
+      "title": "ArXiv paper: On the Second Moment of $ L (1/2, \\mathrm{As}(f) \\times \u03c6)$"
     },
     {
       "cycle_id": "786dcda9",
       "domain": "Novelty",
-      "key_insight": "# Future Directions — arithmetic mirror symmetry, after cycle 4\n\nCycle 1 adjudicated the five assigned conjectures and spun off follow-ups A–D.  **Cycle 2\nclosed all four.**  Cycle 3 closed the divisi",
+      "key_insight": "# Future Directions \u2014 arithmetic mirror symmetry, after cycle 4\n\nCycle 1 adjudicated the five assigned conjectures and spun off follow-ups A\u2013D.  **Cycle 2\nclosed all four.**  Cycle 3 closed the divisi",
       "quality_score": 0.6520853,
       "sorry_count": 0,
       "theorem_count": 246,
@@ -1685,7 +1685,7 @@
     {
       "cycle_id": "8d2025bd",
       "domain": "NumberTheory",
-      "key_insight": "# Future directions — Möbius arithmetic\n\nThis file is the live research thread of the project.  Part I records the state\nof the five conjectures posed after cycle 1; three of them have since been\nsett",
+      "key_insight": "# Future directions \u2014 M\u00f6bius arithmetic\n\nThis file is the live research thread of the project.  Part I records the state\nof the five conjectures posed after cycle 1; three of them have since been\nsett",
       "quality_score": 0.627125,
       "sorry_count": 0,
       "theorem_count": 225,
@@ -1695,7 +1695,7 @@
     {
       "cycle_id": "2c38bc1a",
       "domain": "Cryptography",
-      "key_insight": "# Future Directions — Universal Posets\n\nDerived from the analysis and adversarial-review stages of the two research\ncycles run on this project.  Each conjecture is falsifiable, and each is stated\nso t",
+      "key_insight": "# Future Directions \u2014 Universal Posets\n\nDerived from the analysis and adversarial-review stages of the two research\ncycles run on this project.  Each conjecture is falsifiable, and each is stated\nso t",
       "quality_score": 0.7003711194029851,
       "sorry_count": 2,
       "theorem_count": 134,
@@ -1705,7 +1705,7 @@
     {
       "cycle_id": "edfd57dd",
       "domain": "Novelty",
-      "key_insight": "# Future directions\n\nThis file is the live end-of-cycle record of the research thread on the\nBekenstein–Hawking area law from microstate counting.  It states what the previous cycles\nconjectured, what",
+      "key_insight": "# Future directions\n\nThis file is the live end-of-cycle record of the research thread on the\nBekenstein\u2013Hawking area law from microstate counting.  It states what the previous cycles\nconjectured, what",
       "quality_score": 0.627125,
       "sorry_count": 0,
       "theorem_count": 30,
@@ -1720,12 +1720,12 @@
       "sorry_count": 0,
       "theorem_count": 182,
       "timestamp": "2026-08-07T05:41:42",
-      "title": "Hyperbolic-Pythagorean-Geodesics: Sub-Linear Trajectory Factorization in Poincaré Disk"
+      "title": "Hyperbolic-Pythagorean-Geodesics: Sub-Linear Trajectory Factorization in Poincar\u00e9 Disk"
     },
     {
       "cycle_id": "3590d6fa",
       "domain": "Algebra",
-      "key_insight": "# Future Directions — Reciprocal-Zero Harmonics (after cycle 1)\n\nCycle 1 formalised, with complete Lean proofs and no `sorry`, the following: the\nmultiplicity-sensitive, conjugate-symmetric window sum",
+      "key_insight": "# Future Directions \u2014 Reciprocal-Zero Harmonics (after cycle 1)\n\nCycle 1 formalised, with complete Lean proofs and no `sorry`, the following: the\nmultiplicity-sensitive, conjugate-symmetric window sum",
       "quality_score": 0.6546970930232558,
       "sorry_count": 0,
       "theorem_count": 60,
@@ -1735,7 +1735,7 @@
     {
       "cycle_id": "8dc4e6e3",
       "domain": "Algebra",
-      "key_insight": "# Future directions — tropical linear algebra\n\nThis file is the live research thread of the project.  The Lean development lives in\n`Catalog/Algebra/TropicalLinearAlgebra/` and every result cited belo",
+      "key_insight": "# Future directions \u2014 tropical linear algebra\n\nThis file is the live research thread of the project.  The Lean development lives in\n`Catalog/Algebra/TropicalLinearAlgebra/` and every result cited belo",
       "quality_score": 0.6583992433823346,
       "sorry_count": 0,
       "theorem_count": 196,
@@ -1785,7 +1785,7 @@
     {
       "cycle_id": "2def9e1c",
       "domain": "Physics",
-      "key_insight": "# Future Directions — Lorentzian Singularity Theorems\n\nStatus of the formalization in `Catalog/Physics/Spacetime/`.  All eleven files compile\nagainst mathlib4 / Lean 4.28.0 with **zero `sorry`s**, no",
+      "key_insight": "# Future Directions \u2014 Lorentzian Singularity Theorems\n\nStatus of the formalization in `Catalog/Physics/Spacetime/`.  All eleven files compile\nagainst mathlib4 / Lean 4.28.0 with **zero `sorry`s**, no",
       "quality_score": 0.661958698156682,
       "sorry_count": 0,
       "theorem_count": 605,
@@ -1795,7 +1795,7 @@
     {
       "cycle_id": "8a90ae7b",
       "domain": "Shared",
-      "key_insight": "# Future Directions\n\nThis file continues the research thread on the Chebotarev geodesic theorem in the non-split\ncase.  It first records the fate of the five conjectures C1–C5 of the previous cycle —",
+      "key_insight": "# Future Directions\n\nThis file continues the research thread on the Chebotarev geodesic theorem in the non-split\ncase.  It first records the fate of the five conjectures C1\u2013C5 of the previous cycle \u2014",
       "quality_score": 0.640478157722513,
       "sorry_count": 0,
       "theorem_count": 659,
@@ -1815,7 +1815,7 @@
     {
       "cycle_id": "4152b805",
       "domain": "Geometry",
-      "key_insight": "# Future Directions — Rigorous Foundations for Schubert Calculus\n\n## What is now formalised\n\nAll statements below are `sorry`-free, compile against mathlib4 (Lean v4.28.0) and depend only\non the stand",
+      "key_insight": "# Future Directions \u2014 Rigorous Foundations for Schubert Calculus\n\n## What is now formalised\n\nAll statements below are `sorry`-free, compile against mathlib4 (Lean v4.28.0) and depend only\non the stand",
       "quality_score": 0.6697667517006802,
       "sorry_count": 0,
       "theorem_count": 631,
@@ -1825,7 +1825,7 @@
     {
       "cycle_id": "22e93393",
       "domain": "Combinatorics",
-      "key_insight": "# Future directions\n\nThe thread opened with two questions — the finite-key probability formula and\ncrossing-probability monotonicity — both of which are proved in\n`Catalog/Combinatorics/BernoulliThres",
+      "key_insight": "# Future directions\n\nThe thread opened with two questions \u2014 the finite-key probability formula and\ncrossing-probability monotonicity \u2014 both of which are proved in\n`Catalog/Combinatorics/BernoulliThres",
       "quality_score": 0.71348,
       "sorry_count": 0,
       "theorem_count": 557,
@@ -1835,7 +1835,7 @@
     {
       "cycle_id": "22e93393",
       "domain": "Combinatorics",
-      "key_insight": "# Future directions\n\nThe thread opened with two questions — the finite-key probability formula and\ncrossing-probability monotonicity — both of which are proved in\n`Catalog/Combinatorics/BernoulliThres",
+      "key_insight": "# Future directions\n\nThe thread opened with two questions \u2014 the finite-key probability formula and\ncrossing-probability monotonicity \u2014 both of which are proved in\n`Catalog/Combinatorics/BernoulliThres",
       "quality_score": 0.71348,
       "sorry_count": 0,
       "theorem_count": 557,
@@ -1845,7 +1845,7 @@
     {
       "cycle_id": "af44a08e",
       "domain": "Computation",
-      "key_insight": "# Future Directions — thread `th_55fc6157`\n\nAll Lean artefacts referenced here live in `Catalog/Computation/` (with the shared base\ndefinitions in `Catalog/Novelty/ThermodynamicsOfProof.lean`) and com",
+      "key_insight": "# Future Directions \u2014 thread `th_55fc6157`\n\nAll Lean artefacts referenced here live in `Catalog/Computation/` (with the shared base\ndefinitions in `Catalog/Novelty/ThermodynamicsOfProof.lean`) and com",
       "quality_score": 0.659818701923077,
       "sorry_count": 0,
       "theorem_count": 201,
@@ -1885,7 +1885,7 @@
     {
       "cycle_id": "558c6b54",
       "domain": "Novelty",
-      "key_insight": "# Future Directions — Diophantine-Lattice Spectral Bounds\n\nDerived from the nine research cycles formalised in `Catalog/Novelty/DiophantineLattice*.lean`.\nAll statements below are phrased in the vocab",
+      "key_insight": "# Future Directions \u2014 Diophantine-Lattice Spectral Bounds\n\nDerived from the nine research cycles formalised in `Catalog/Novelty/DiophantineLattice*.lean`.\nAll statements below are phrased in the vocab",
       "quality_score": 0.6345760413043479,
       "sorry_count": 0,
       "theorem_count": 152,
@@ -1895,7 +1895,7 @@
     {
       "cycle_id": "df8839cd",
       "domain": "Pythagorean",
-      "key_insight": "# Future directions\n\n## What this cycle settled\n\nThe previous cycle left the exact rank of a uniform divisor on a complete graph as\nits headline conjecture: the *upper* bound `r(m·1) ≤ m(m+3)/2` on `K",
+      "key_insight": "# Future directions\n\n## What this cycle settled\n\nThe previous cycle left the exact rank of a uniform divisor on a complete graph as\nits headline conjecture: the *upper* bound `r(m\u00b71) \u2264 m(m+3)/2` on `K",
       "quality_score": 0.71728,
       "sorry_count": 0,
       "theorem_count": 70,
@@ -1915,7 +1915,7 @@
     {
       "cycle_id": "100d7a9d",
       "domain": "Novelty",
-      "key_insight": "# Future directions — idempotent probability and max-plus large deviations\n\n## Status of the thread\n\nEverything below is formalized in Lean 4 (Mathlib v4.28.0) with **0 sorries**, and every\nmain theor",
+      "key_insight": "# Future directions \u2014 idempotent probability and max-plus large deviations\n\n## Status of the thread\n\nEverything below is formalized in Lean 4 (Mathlib v4.28.0) with **0 sorries**, and every\nmain theor",
       "quality_score": 0.6599028963414636,
       "sorry_count": 0,
       "theorem_count": 106,
@@ -1925,7 +1925,7 @@
     {
       "cycle_id": "0ed998a7",
       "domain": "Logic",
-      "key_insight": "# Future Directions — after Cycle 4\n\n## Where the thread stands\n\nFive files now carry the three-qubit programme.  All of them are inside the catalog build,\nall are `sorry`-free, and every main theorem",
+      "key_insight": "# Future Directions \u2014 after Cycle 4\n\n## Where the thread stands\n\nFive files now carry the three-qubit programme.  All of them are inside the catalog build,\nall are `sorry`-free, and every main theorem",
       "quality_score": 0.6603294191919192,
       "sorry_count": 0,
       "theorem_count": 276,
@@ -1935,7 +1935,7 @@
     {
       "cycle_id": "52a6f28b",
       "domain": "Combinatorics",
-      "key_insight": "# Future Directions — Tropical Curves, Chip-Firing, and Riemann–Roch\n\nThe formalization in `Catalog/Combinatorics/TropicalRiemannRoch/` now contains a complete,\n`sorry`-free chain\n\n```\nLaplacian / lin",
+      "key_insight": "# Future Directions \u2014 Tropical Curves, Chip-Firing, and Riemann\u2013Roch\n\nThe formalization in `Catalog/Combinatorics/TropicalRiemannRoch/` now contains a complete,\n`sorry`-free chain\n\n```\nLaplacian / lin",
       "quality_score": 0.627125,
       "sorry_count": 0,
       "theorem_count": 193,
@@ -1945,7 +1945,7 @@
     {
       "cycle_id": "8643e3f8",
       "domain": "MachineLearning",
-      "key_insight": "# Future Directions — Exact Piecewise-Linear Partition Bounds for ReLU Networks\n\nThe formal development in `Catalog/MachineLearning/ReLUPartition/` establishes,\nwith 0 sorries and only the standard ax",
+      "key_insight": "# Future Directions \u2014 Exact Piecewise-Linear Partition Bounds for ReLU Networks\n\nThe formal development in `Catalog/MachineLearning/ReLUPartition/` establishes,\nwith 0 sorries and only the standard ax",
       "quality_score": 0.6592476265822785,
       "sorry_count": 0,
       "theorem_count": 394,
@@ -1955,7 +1955,7 @@
     {
       "cycle_id": "436f9275",
       "domain": "Probability",
-      "key_insight": "# Future Directions — Sums of Three Cubes\n\nThe cycle closed the \"local half\" of the problem completely: `x³ + y³ + z³ = n` is solvable\nmodulo every modulus, and has `ℤ_p`-points for every prime `p`, e",
+      "key_insight": "# Future Directions \u2014 Sums of Three Cubes\n\nThe cycle closed the \"local half\" of the problem completely: `x\u00b3 + y\u00b3 + z\u00b3 = n` is solvable\nmodulo every modulus, and has `\u2124_p`-points for every prime `p`, e",
       "quality_score": 0.627125,
       "sorry_count": 0,
       "theorem_count": 164,
@@ -1975,7 +1975,7 @@
     {
       "cycle_id": "fdb5367b",
       "domain": "Probability",
-      "key_insight": "# Future Directions — EML exp–log duality\n\nDerived from the analysis and adversarial review of the results now proved in\n`Catalog/Probability/EMLExpLogDuality.lean` and\n`Catalog/Probability/EMLScaling",
+      "key_insight": "# Future Directions \u2014 EML exp\u2013log duality\n\nDerived from the analysis and adversarial review of the results now proved in\n`Catalog/Probability/EMLExpLogDuality.lean` and\n`Catalog/Probability/EMLScaling",
       "quality_score": 0.6513313973675711,
       "sorry_count": 0,
       "theorem_count": 165,
@@ -1985,7 +1985,7 @@
     {
       "cycle_id": "3f42ae3f",
       "domain": "Novelty",
-      "key_insight": "# Future directions — snakes and coils in the hypercube (cycle 4)\n\nAll Lean files of this thread live in `Catalog/Novelty/` (plus the base chain in\n`Catalog/Computation/SnakeInTheBox.lean` and `Catalo",
+      "key_insight": "# Future directions \u2014 snakes and coils in the hypercube (cycle 4)\n\nAll Lean files of this thread live in `Catalog/Novelty/` (plus the base chain in\n`Catalog/Computation/SnakeInTheBox.lean` and `Catalo",
       "quality_score": 0.6544111491354468,
       "sorry_count": 0,
       "theorem_count": 239,
@@ -2010,12 +2010,12 @@
       "sorry_count": 0,
       "theorem_count": 50,
       "timestamp": "2026-08-08T14:58:45",
-      "title": "Sharp two-sided summand asymptotics.: For every `k : ℕ`, prove"
+      "title": "Sharp two-sided summand asymptotics.: For every `k : \u2115`, prove"
     },
     {
       "cycle_id": "344e2e8a",
       "domain": "Combinatorics",
-      "key_insight": "# Future directions — Singmaster's problem\n\nDerived from the analysis and adversarial review of the results now formalised in\n\n* `Catalog/Combinatorics/SingmasterOccurrences.lean`\n* `Catalog/Combinato",
+      "key_insight": "# Future directions \u2014 Singmaster's problem\n\nDerived from the analysis and adversarial review of the results now formalised in\n\n* `Catalog/Combinatorics/SingmasterOccurrences.lean`\n* `Catalog/Combinato",
       "quality_score": 0.627125,
       "sorry_count": 0,
       "theorem_count": 585,
@@ -2045,7 +2045,7 @@
     {
       "cycle_id": "48492a97",
       "domain": "Combinatorics",
-      "key_insight": "# Future directions\n\nFive falsifiable conjectures distilled from what survived (and what failed) in this cycle.\nThroughout, `F` is a finite field with `q = #F` elements and odd characteristic,\n`χ = qu",
+      "key_insight": "# Future directions\n\nFive falsifiable conjectures distilled from what survived (and what failed) in this cycle.\nThroughout, `F` is a finite field with `q = #F` elements and odd characteristic,\n`\u03c7 = qu",
       "quality_score": 0.71196,
       "sorry_count": 0,
       "theorem_count": 92,
@@ -2055,7 +2055,7 @@
     {
       "cycle_id": "1f345ab3",
       "domain": "Tropical",
-      "key_insight": "# Future Directions\n\nDerived from the results proved in `Catalog/Tropical/EML/` during this cycle:\ngeneral odd/even tropical `L¹` median geometry (`TropicalMedianDescent.lean`),\nperturbed and separabl",
+      "key_insight": "# Future Directions\n\nDerived from the results proved in `Catalog/Tropical/EML/` during this cycle:\ngeneral odd/even tropical `L\u00b9` median geometry (`TropicalMedianDescent.lean`),\nperturbed and separabl",
       "quality_score": 0.73286,
       "sorry_count": 0,
       "theorem_count": 96,
@@ -2075,7 +2075,7 @@
     {
       "cycle_id": "08217b91",
       "domain": "Novelty",
-      "key_insight": "# Future Directions — Singmaster multiplicity in Pascal's triangle\n\nDerived from the results established in this cycle: the smoothness theorem, the smoothness\nhierarchy, the sharpened logarithmic boun",
+      "key_insight": "# Future Directions \u2014 Singmaster multiplicity in Pascal's triangle\n\nDerived from the results established in this cycle: the smoothness theorem, the smoothness\nhierarchy, the sharpened logarithmic boun",
       "quality_score": 0.748155,
       "sorry_count": 0,
       "theorem_count": 85,
@@ -2085,7 +2085,7 @@
     {
       "cycle_id": "08217b91",
       "domain": "Novelty",
-      "key_insight": "# Future Directions — Singmaster multiplicity in Pascal's triangle\n\nDerived from the verified results in `Catalog/Novelty/`:\n`SingmasterSmoothness.lean`, `SingmasterSharpLog.lean`, `SingmasterSmoothHi",
+      "key_insight": "# Future Directions \u2014 Singmaster multiplicity in Pascal's triangle\n\nDerived from the verified results in `Catalog/Novelty/`:\n`SingmasterSmoothness.lean`, `SingmasterSharpLog.lean`, `SingmasterSmoothHi",
       "quality_score": 0.746255,
       "sorry_count": 0,
       "theorem_count": 85,
@@ -2095,7 +2095,7 @@
     {
       "cycle_id": "e870e995",
       "domain": "Novelty",
-      "key_insight": "# Future Directions\n\nDerived from the formal development in `Catalog/Novelty/WeightMonodromy*.lean`, which proves:\npurity of a weight grading (weight `= α ·` degree, `α > 0`) on the cohomology of a bi",
+      "key_insight": "# Future Directions\n\nDerived from the formal development in `Catalog/Novelty/WeightMonodromy*.lean`, which proves:\npurity of a weight grading (weight `= \u03b1 \u00b7` degree, `\u03b1 > 0`) on the cohomology of a bi",
       "quality_score": 0.7131,
       "sorry_count": 0,
       "theorem_count": 87,
@@ -2105,7 +2105,7 @@
     {
       "cycle_id": "0dcd87ee",
       "domain": "Combinatorics",
-      "key_insight": "# Future directions\n\nDerived from this cycle's results in\n\n* `Catalog/Combinatorics/PrivateAverageDistortion.lean` — the private\n  rate–distortion function `D_priv(p) = min_c E_p[d(c,X)]`, its invaria",
+      "key_insight": "# Future directions\n\nDerived from this cycle's results in\n\n* `Catalog/Combinatorics/PrivateAverageDistortion.lean` \u2014 the private\n  rate\u2013distortion function `D_priv(p) = min_c E_p[d(c,X)]`, its invaria",
       "quality_score": 0.751005,
       "sorry_count": 0,
       "theorem_count": 67,
@@ -2135,7 +2135,7 @@
     {
       "cycle_id": "2c070abd",
       "domain": "Tropical",
-      "key_insight": "# Future Directions — Tropical Convexity, Helly and Optimization\n\nThis cycle proved, with zero `sorry`s:\n\n* the **tropical Cramer dependence theorem** (`trop_dependence_fin`): any `d + 1`\n  vectors of",
+      "key_insight": "# Future Directions \u2014 Tropical Convexity, Helly and Optimization\n\nThis cycle proved, with zero `sorry`s:\n\n* the **tropical Cramer dependence theorem** (`trop_dependence_fin`): any `d + 1`\n  vectors of",
       "quality_score": 0.627125,
       "sorry_count": 0,
       "theorem_count": 68,
@@ -2145,7 +2145,7 @@
     {
       "cycle_id": "23bf86f8",
       "domain": "Shared",
-      "key_insight": "# FUTURE DIRECTIONS — rainbow arithmetic-progression thresholds\n\nAll conjectures below are falsifiable, are stated for the objects formalised in\n`Catalog/Shared/RainbowAP*.lean`, and are *strictly str",
+      "key_insight": "# FUTURE DIRECTIONS \u2014 rainbow arithmetic-progression thresholds\n\nAll conjectures below are falsifiable, are stated for the objects formalised in\n`Catalog/Shared/RainbowAP*.lean`, and are *strictly str",
       "quality_score": 0.6376340955882351,
       "sorry_count": 0,
       "theorem_count": 61,
@@ -2155,7 +2155,7 @@
     {
       "cycle_id": "2db5094c",
       "domain": "Pythagorean",
-      "key_insight": "# Future directions: the rational star pencils of the Berggren tree\n\nThis cycle established that the radial lines seen when the Berggren tree is plotted in the\nPoincaré half-plane are not confined to",
+      "key_insight": "# Future directions: the rational star pencils of the Berggren tree\n\nThis cycle established that the radial lines seen when the Berggren tree is plotted in the\nPoincar\u00e9 half-plane are not confined to",
       "quality_score": 0.6298458474603094,
       "sorry_count": 0,
       "theorem_count": 80,
@@ -2165,7 +2165,7 @@
     {
       "cycle_id": "2db5094c",
       "domain": "Pythagorean",
-      "key_insight": "# Future directions: the rational star pencils of the Berggren tree\n\nThis cycle established that the radial lines seen when the Berggren tree is plotted in the\nPoincaré half-plane are not confined to",
+      "key_insight": "# Future directions: the rational star pencils of the Berggren tree\n\nThis cycle established that the radial lines seen when the Berggren tree is plotted in the\nPoincar\u00e9 half-plane are not confined to",
       "quality_score": 0.6288458474603094,
       "sorry_count": 0,
       "theorem_count": 80,
@@ -2175,12 +2175,12 @@
     {
       "cycle_id": "4c1e8096",
       "domain": "Geometry",
-      "key_insight": "# Future directions — cycle 2 of the hyperbolic Gauss–Bonnet thread\n\n## What this cycle established\n\nCycle 1 left an *angle-data* theory: `hyperbolicArea κ α β γ = (π - (α+β+γ))/κ`\nwas a definition, a",
+      "key_insight": "# Future directions \u2014 cycle 2 of the hyperbolic Gauss\u2013Bonnet thread\n\n## What this cycle established\n\nCycle 1 left an *angle-data* theory: `hyperbolicArea \u03ba \u03b1 \u03b2 \u03b3 = (\u03c0 - (\u03b1+\u03b2+\u03b3))/\u03ba`\nwas a definition, a",
       "quality_score": 0.71709,
       "sorry_count": 0,
       "theorem_count": 59,
       "timestamp": "2026-08-11T01:12:41",
-      "title": "The formal development proves the algebraic Gauss–Bonnet invariant for a"
+      "title": "The formal development proves the algebraic Gauss\u2013Bonnet invariant for a"
     },
     {
       "cycle_id": "e69eca5d",
@@ -2195,17 +2195,17 @@
     {
       "cycle_id": "de149d0f",
       "domain": "Applications",
-      "key_insight": "# Future Directions — Doppelgänger Phase-Lock\n\nDerived from the analysis and adversarial review of the results now formalized in\n`Catalog/Applications/DoppelgangerPhaseLock/` (Core, Finite, Boundary,",
+      "key_insight": "# Future Directions \u2014 Doppelg\u00e4nger Phase-Lock\n\nDerived from the analysis and adversarial review of the results now formalized in\n`Catalog/Applications/DoppelgangerPhaseLock/` (Core, Finite, Boundary,",
       "quality_score": 0.6301902500000001,
       "sorry_count": 0,
       "theorem_count": 104,
       "timestamp": "2026-08-11T02:37:32",
-      "title": "Doppelgänger-Phase-Lock: Quantum Telepathic Synchronization of Dual Agents"
+      "title": "Doppelg\u00e4nger-Phase-Lock: Quantum Telepathic Synchronization of Dual Agents"
     },
     {
       "cycle_id": "94177336",
       "domain": "Applications",
-      "key_insight": "# Future Directions — Zero-Knowledge Theorem Proving\n\nFour full research cycles were run in this session; everything below is derived\nfrom results that are now formalised, sorry-free, in\n`Catalog/Appl",
+      "key_insight": "# Future Directions \u2014 Zero-Knowledge Theorem Proving\n\nFour full research cycles were run in this session; everything below is derived\nfrom results that are now formalised, sorry-free, in\n`Catalog/Appl",
       "quality_score": 0.6348185595414201,
       "sorry_count": 0,
       "theorem_count": 96,
@@ -2215,17 +2215,17 @@
     {
       "cycle_id": "4c1e8096",
       "domain": "Geometry",
-      "key_insight": "# Future directions — cycle 2 of the hyperbolic Gauss–Bonnet thread\n\n## What this cycle established\n\nCycle 1 left an *angle-data* theory: `hyperbolicArea κ α β γ = (π - (α+β+γ))/κ`\nwas a definition, a",
+      "key_insight": "# Future directions \u2014 cycle 2 of the hyperbolic Gauss\u2013Bonnet thread\n\n## What this cycle established\n\nCycle 1 left an *angle-data* theory: `hyperbolicArea \u03ba \u03b1 \u03b2 \u03b3 = (\u03c0 - (\u03b1+\u03b2+\u03b3))/\u03ba`\nwas a definition, a",
       "quality_score": 0.71609,
       "sorry_count": 0,
       "theorem_count": 59,
       "timestamp": "2026-08-11T02:41:06",
-      "title": "The formal development proves the algebraic Gauss–Bonnet invariant for a"
+      "title": "The formal development proves the algebraic Gauss\u2013Bonnet invariant for a"
     },
     {
       "cycle_id": "6b69485b",
       "domain": "Cryptography",
-      "key_insight": "# Future directions: the radial lines of the Berggren star map\n\nThe formal results in `Catalog/Cryptography/BerggrenStars/` settle the *local* question that\nmotivated this cycle — why radial lines app",
+      "key_insight": "# Future directions: the radial lines of the Berggren star map\n\nThe formal results in `Catalog/Cryptography/BerggrenStars/` settle the *local* question that\nmotivated this cycle \u2014 why radial lines app",
       "quality_score": 0.720175,
       "sorry_count": 0,
       "theorem_count": 95,
@@ -2245,7 +2245,7 @@
     {
       "cycle_id": "d1971d75",
       "domain": "Combinatorics",
-      "key_insight": "# Future directions — strongly complete sets (thread th_20f13f16, cycle 2)\n\nThis cycle added two files to the catalog:\n\n* `Catalog/Combinatorics/StronglyCompleteBlocks.lean` — monotonicity, the initia",
+      "key_insight": "# Future directions \u2014 strongly complete sets (thread th_20f13f16, cycle 2)\n\nThis cycle added two files to the catalog:\n\n* `Catalog/Combinatorics/StronglyCompleteBlocks.lean` \u2014 monotonicity, the initia",
       "quality_score": 0.747205,
       "sorry_count": 0,
       "theorem_count": 40,
@@ -2255,7 +2255,7 @@
     {
       "cycle_id": "fadf9a22",
       "domain": "Combinatorics",
-      "key_insight": "# Future directions\n\nConcrete, falsifiable conjectures arising from this cycle's formalization in\n\n* `Catalog/Combinatorics/B3FreeKSperner.lean` — the Lubell function, Erdős' `k`-Sperner\n  theorem, th",
+      "key_insight": "# Future directions\n\nConcrete, falsifiable conjectures arising from this cycle's formalization in\n\n* `Catalog/Combinatorics/B3FreeKSperner.lean` \u2014 the Lubell function, Erd\u0151s' `k`-Sperner\n  theorem, th",
       "quality_score": 0.6286056450320513,
       "sorry_count": 0,
       "theorem_count": 106,
@@ -2295,7 +2295,7 @@
     {
       "cycle_id": "a55e871b",
       "domain": "Physics",
-      "key_insight": "# Future directions — adjacency-degree algebras and moment rigidity\n\nThe formal development lives in `Catalog/Physics/AdjacencyDegree/` (13 files, all compiling,\nno `sorry`, axioms `propext`, `Classic",
+      "key_insight": "# Future directions \u2014 adjacency-degree algebras and moment rigidity\n\nThe formal development lives in `Catalog/Physics/AdjacencyDegree/` (13 files, all compiling,\nno `sorry`, axioms `propext`, `Classic",
       "quality_score": 0.627125,
       "sorry_count": 0,
       "theorem_count": 163,
@@ -2315,7 +2315,7 @@
     {
       "cycle_id": "fb9255eb",
       "domain": "Geometry",
-      "key_insight": "# Future directions (thread `th_576aa37a`, cycle 1)\n\nThis cycle closed four of the six targets left by cycle 0 — the CSS dictionary\n(`Catalog/Geometry/CSSDictionary.lean`), CSS distance\n(`Catalog/Geom",
+      "key_insight": "# Future directions (thread `th_576aa37a`, cycle 1)\n\nThis cycle closed four of the six targets left by cycle 0 \u2014 the CSS dictionary\n(`Catalog/Geometry/CSSDictionary.lean`), CSS distance\n(`Catalog/Geom",
       "quality_score": 0.627125,
       "sorry_count": 0,
       "theorem_count": 87,
@@ -2325,7 +2325,7 @@
     {
       "cycle_id": "3bb7c316",
       "domain": "Novelty",
-      "key_insight": "# Future Directions\n\nDerived from the verified results in\n\n* `Catalog/Novelty/CollatzSpectralNormalized.lean` — limit law, modulus formula,\n  resonance classification, `3n+1` vs `5n+1` vs `7n+1` discr",
+      "key_insight": "# Future Directions\n\nDerived from the verified results in\n\n* `Catalog/Novelty/CollatzSpectralNormalized.lean` \u2014 limit law, modulus formula,\n  resonance classification, `3n+1` vs `5n+1` vs `7n+1` discr",
       "quality_score": 0.741695,
       "sorry_count": 0,
       "theorem_count": 47,
@@ -2345,7 +2345,7 @@
     {
       "cycle_id": "2d369115",
       "domain": "Shared",
-      "key_insight": "# FUTURE DIRECTIONS — Algorithmic Immune Systems\n\nDerived from the verified results in `Catalog/Shared/Immune*.lean` (Parts I–IX:\nparasite calculus and attestation, semantics, the diagonal parasite, q",
+      "key_insight": "# FUTURE DIRECTIONS \u2014 Algorithmic Immune Systems\n\nDerived from the verified results in `Catalog/Shared/Immune*.lean` (Parts I\u2013IX:\nparasite calculus and attestation, semantics, the diagonal parasite, q",
       "quality_score": 0.627125,
       "sorry_count": 0,
       "theorem_count": 143,
@@ -2355,7 +2355,7 @@
     {
       "cycle_id": "c56f6a79",
       "domain": "Applications",
-      "key_insight": "# Future Directions — Diophantine–Lattice: Spectral Bounds on Non-Homogeneous Quadratic Forms\n\nAll conjectures below are falsifiable statements about the objects formalised in\n`Catalog/Applications/Di",
+      "key_insight": "# Future Directions \u2014 Diophantine\u2013Lattice: Spectral Bounds on Non-Homogeneous Quadratic Forms\n\nAll conjectures below are falsifiable statements about the objects formalised in\n`Catalog/Applications/Di",
       "quality_score": 0.71215,
       "sorry_count": 0,
       "theorem_count": 43,
@@ -2365,7 +2365,7 @@
     {
       "cycle_id": "f2796053",
       "domain": "Logic",
-      "key_insight": "# Future Directions (cycle 1, thread th_ed2afa00)\n\nDerived from the verified results in `Catalog/Logic/GEBGradedLawvere.lean`:\ngraded (partial) universality, the obstruction spectrum\n(`representable ⟺",
+      "key_insight": "# Future Directions (cycle 1, thread th_ed2afa00)\n\nDerived from the verified results in `Catalog/Logic/GEBGradedLawvere.lean`:\ngraded (partial) universality, the obstruction spectrum\n(`representable \u27fa",
       "quality_score": 0.743025,
       "sorry_count": 0,
       "theorem_count": 62,
@@ -2385,7 +2385,7 @@
     {
       "cycle_id": "6225a932",
       "domain": "MachineLearning",
-      "key_insight": "# Future Directions — the 2-adic spectral theory of the Collatz map\n\nThis cycle established the following chain, entirely in Lean 4 with no `sorry`\n(files in `Catalog/MachineLearning/CollatzSpectral/`",
+      "key_insight": "# Future Directions \u2014 the 2-adic spectral theory of the Collatz map\n\nThis cycle established the following chain, entirely in Lean 4 with no `sorry`\n(files in `Catalog/MachineLearning/CollatzSpectral/`",
       "quality_score": 0.627125,
       "sorry_count": 0,
       "theorem_count": 82,
@@ -2395,7 +2395,7 @@
     {
       "cycle_id": "a062ecaf",
       "domain": "Novelty",
-      "key_insight": "# Future Directions — Strange Attractors as Algebraic Objects\n\nDerived from the analysis and adversarial review of this research thread.\n\n## What is established\n\n**Structure.** The orbit space of any",
+      "key_insight": "# Future Directions \u2014 Strange Attractors as Algebraic Objects\n\nDerived from the analysis and adversarial review of this research thread.\n\n## What is established\n\n**Structure.** The orbit space of any",
       "quality_score": 0.7526200000000001,
       "sorry_count": 0,
       "theorem_count": 15,
@@ -2405,7 +2405,7 @@
     {
       "cycle_id": "ea23936f",
       "domain": "Tropical",
-      "key_insight": "# Future Directions\n\nThis cycle deepened the tropical scheme/Gröbner thread by adding the *matroidal*\nlayer that the previous cycle's purely submodule-theoretic notion of tropical\nideal was missing: t",
+      "key_insight": "# Future Directions\n\nThis cycle deepened the tropical scheme/Gr\u00f6bner thread by adding the *matroidal*\nlayer that the previous cycle's purely submodule-theoretic notion of tropical\nideal was missing: t",
       "quality_score": 0.627125,
       "sorry_count": 0,
       "theorem_count": 96,
@@ -2425,7 +2425,7 @@
     {
       "cycle_id": "6db0a277",
       "domain": "Computation",
-      "key_insight": "# Future Directions — Thermodynamics of Mathematical Proof (thread `th_e10b0054`, after cycle 1)\n\nCycle 1 closed three of the five directions inherited from the previous cycle:\n\n* **Direction 1 (fiber",
+      "key_insight": "# Future Directions \u2014 Thermodynamics of Mathematical Proof (thread `th_e10b0054`, after cycle 1)\n\nCycle 1 closed three of the five directions inherited from the previous cycle:\n\n* **Direction 1 (fiber",
       "quality_score": 0.6345797888127854,
       "sorry_count": 0,
       "theorem_count": 15,
@@ -2435,7 +2435,7 @@
     {
       "cycle_id": "b7dba88e",
       "domain": "Tropical",
-      "key_insight": "# Future directions — the magma monoid as a transformation semigroup\n\nAll conjectures below are stated for `Bin(X)`, the monoid of all binary\noperations on a set `X` under `(f * g) a b = g (f a b) (f",
+      "key_insight": "# Future directions \u2014 the magma monoid as a transformation semigroup\n\nAll conjectures below are stated for `Bin(X)`, the monoid of all binary\noperations on a set `X` under `(f * g) a b = g (f a b) (f",
       "quality_score": 0.7419800000000001,
       "sorry_count": 0,
       "theorem_count": 115,
@@ -2445,7 +2445,7 @@
     {
       "cycle_id": "ea50968d",
       "domain": "Algebra",
-      "key_insight": "# Future directions (thread `th_ac518134`, cycle 3)\n\nThis cycle proved, in `Catalog/Algebra/`:\n\n* **`DepthDominationCriterion.lean`** — a tag-indexed criterion `DepthDominates` for\n  inclusion of the",
+      "key_insight": "# Future directions (thread `th_ac518134`, cycle 3)\n\nThis cycle proved, in `Catalog/Algebra/`:\n\n* **`DepthDominationCriterion.lean`** \u2014 a tag-indexed criterion `DepthDominates` for\n  inclusion of the",
       "quality_score": 0.627125,
       "sorry_count": 0,
       "theorem_count": 81,
@@ -2455,7 +2455,7 @@
     {
       "cycle_id": "832153cb",
       "domain": "Physics",
-      "key_insight": "# Future Directions — Diophantine-Lattice Spectral Bounds (after cycle 11)\n\nCycles 10–11 closed three standing conjectures of the thread.  What is proved (all `sorry`-free,\nin `Catalog/Physics/Diophan",
+      "key_insight": "# Future Directions \u2014 Diophantine-Lattice Spectral Bounds (after cycle 11)\n\nCycles 10\u201311 closed three standing conjectures of the thread.  What is proved (all `sorry`-free,\nin `Catalog/Physics/Diophan",
       "quality_score": 0.715855,
       "sorry_count": 0,
       "theorem_count": 101,
@@ -2475,7 +2475,7 @@
     {
       "cycle_id": "9cee3a4c",
       "domain": "MachineLearning",
-      "key_insight": "# Future Directions — Certified Adversarial Robustness via Sheaf Cohomology\n\nDerived from the analysis and adversarial review of this cycle.  All five\nconjectures are falsifiable and each has a concre",
+      "key_insight": "# Future Directions \u2014 Certified Adversarial Robustness via Sheaf Cohomology\n\nDerived from the analysis and adversarial review of this cycle.  All five\nconjectures are falsifiable and each has a concre",
       "quality_score": 0.627125,
       "sorry_count": 0,
       "theorem_count": 122,
@@ -2495,11 +2495,11 @@
     {
       "cycle_id": "869ec8f3",
       "domain": "Bridges",
-      "key_insight": "# Future Directions — the CRT-Split No-Go\n\nThree research cycles have been run on this thread.\n\n* **Cycle 1** produced Parts I–VI: the reveal mechanism (Facts 1 and 2), the three regimes, the\n  closur",
+      "key_insight": "# Future Directions \u2014 the CRT-Split No-Go\n\nThree research cycles have been run on this thread.\n\n* **Cycle 1** produced Parts I\u2013VI: the reveal mechanism (Facts 1 and 2), the three regimes, the\n  closur",
       "quality_score": 0.627125,
       "sorry_count": 0,
       "theorem_count": 135,
-      "timestamp": "2026-08-12T00:21:18",
+      "timestamp": "2026-08-12T00:08:59",
       "title": "The CRT-Split No-Go: Why N-Alone Iteration Cannot Factor in Poly(log N)"
     }
   ],
@@ -2805,31 +2805,31 @@
       "quality": 0.7516700000000001
     }
   ],
-  "last_updated": "2026-08-12T00:21:18",
+  "last_updated": "2026-08-12T00:08:59",
   "open_questions": [
     {
-      "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
+      "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr \u27e8hn, hnupper\u27e9)",
       "cycle_id": "2f321176",
       "domain": "NumberTheory",
       "sorry_count": 1,
       "timestamp": "2026-07-20T20:48:31"
     },
     {
-      "context": "-    sorry+  have hchecked := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
+      "context": "-    sorry+  have hchecked := primPart_check n (Finset.mem_Icc.mpr \u27e8hn, hnupper\u27e9)",
       "cycle_id": "1a27f9f3",
       "domain": "Combinatorics",
       "sorry_count": 1,
       "timestamp": "2026-07-20T20:48:35"
     },
     {
-      "context": "+unproved infinite tail as a `sorry`.  The computational certificate; -    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
+      "context": "+unproved infinite tail as a `sorry`.  The computational certificate; -    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr \u27e8hn, hnupper\u27e9)",
       "cycle_id": "0a1b5635",
       "domain": "Shared",
       "sorry_count": 2,
       "timestamp": "2026-07-22T16:54:21"
     },
     {
-      "context": "(sieve mechanism) form a coherent, sorry-free slice of the Maynard–Tao framework.; +    `fib_carmichael_large` — which relied on an unproven (`sorry`-backed) tail of; -    sorry+  -- Extract from the ",
+      "context": "(sieve mechanism) form a coherent, sorry-free slice of the Maynard\u2013Tao framework.; +    `fib_carmichael_large` \u2014 which relied on an unproven (`sorry`-backed) tail of; -    sorry+  -- Extract from the ",
       "cycle_id": "b648d8e5",
       "domain": "Applications",
       "sorry_count": 3,
@@ -2864,14 +2864,14 @@
       "timestamp": "2026-07-24T23:24:45"
     },
     {
-      "context": "-    sorry+  have hchecked := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
+      "context": "-    sorry+  have hchecked := primPart_check n (Finset.mem_Icc.mpr \u27e8hn, hnupper\u27e9)",
       "cycle_id": "905765f9",
       "domain": "Shared",
       "sorry_count": 1,
       "timestamp": "2026-07-25T10:53:08"
     },
     {
-      "context": "-    sorry+  have hchecked := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hn2⟩)",
+      "context": "-    sorry+  have hchecked := primPart_check n (Finset.mem_Icc.mpr \u27e8hn, hn2\u27e9)",
       "cycle_id": "9f0b015d",
       "domain": "Logic",
       "sorry_count": 1,
@@ -2892,35 +2892,35 @@
       "timestamp": "2026-07-26T06:19:11"
     },
     {
-      "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hupper⟩)",
+      "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr \u27e8hn, hupper\u27e9)",
       "cycle_id": "1ba7b435",
       "domain": "NumberTheory",
       "sorry_count": 1,
       "timestamp": "2026-07-26T09:31:46"
     },
     {
-      "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hupper⟩)",
+      "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr \u27e8hn, hupper\u27e9)",
       "cycle_id": "c6b3a18e",
       "domain": "Physics",
       "sorry_count": 1,
       "timestamp": "2026-07-26T14:03:58"
     },
     {
-      "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hn2⟩)",
+      "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr \u27e8hn, hn2\u27e9)",
       "cycle_id": "346c1c9a",
       "domain": "Shared",
       "sorry_count": 1,
       "timestamp": "2026-07-26T14:26:26"
     },
     {
-      "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hn2⟩)",
+      "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr \u27e8hn, hn2\u27e9)",
       "cycle_id": "c3aad27b",
       "domain": "Cryptography",
       "sorry_count": 1,
       "timestamp": "2026-07-26T18:21:12"
     },
     {
-      "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hn2⟩)",
+      "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr \u27e8hn, hn2\u27e9)",
       "cycle_id": "b3e5f77d",
       "domain": "MachineLearning",
       "sorry_count": 1,
@@ -2934,14 +2934,14 @@
       "timestamp": "2026-07-27T00:19:54"
     },
     {
-      "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hn2⟩)",
+      "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr \u27e8hn, hn2\u27e9)",
       "cycle_id": "e4773f49",
       "domain": "NumberTheory",
       "sorry_count": 1,
       "timestamp": "2026-07-27T00:20:01"
     },
     {
-      "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hn2⟩)",
+      "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr \u27e8hn, hn2\u27e9)",
       "cycle_id": "27eaed26",
       "domain": "Logic",
       "sorry_count": 1,
@@ -3024,7 +3024,7 @@
         "cycle_id": "e4843e14",
         "quality": 0.7439399999999999,
         "theorems": 8,
-        "title": "1. **Mixed-area Bézout.** For two balanced plane tropical curves whose Newton po"
+        "title": "1. **Mixed-area B\u00e9zout.** For two balanced plane tropical curves whose Newton po"
       },
       {
         "cycle_id": "a65c164b",
@@ -3128,7 +3128,7 @@
         "cycle_id": "de149d0f",
         "quality": 0.6301902500000001,
         "theorems": 104,
-        "title": "Doppelgänger-Phase-Lock: Quantum Telepathic Synchronization of Dual Agents"
+        "title": "Doppelg\u00e4nger-Phase-Lock: Quantum Telepathic Synchronization of Dual Agents"
       },
       {
         "cycle_id": "94177336",
@@ -3148,7 +3148,7 @@
         "cycle_id": "f96004ff",
         "quality": 0.686,
         "theorems": 271,
-        "title": "Let a compact smooth submanifold have reach at least `τ`, and let a finite sampl"
+        "title": "Let a compact smooth submanifold have reach at least `\u03c4`, and let a finite sampl"
       },
       {
         "cycle_id": "a6a59cd3",
@@ -3184,7 +3184,7 @@
         "cycle_id": "fc0b5c3a",
         "quality": 0.686,
         "theorems": 118,
-        "title": "Existence of δ‑dense sets avoiding large sumsets"
+        "title": "Existence of \u03b4\u2011dense sets avoiding large sumsets"
       },
       {
         "cycle_id": "0e033e47",
@@ -3438,13 +3438,13 @@
         "cycle_id": "4c1e8096",
         "quality": 0.71709,
         "theorems": 59,
-        "title": "The formal development proves the algebraic Gauss–Bonnet invariant for a"
+        "title": "The formal development proves the algebraic Gauss\u2013Bonnet invariant for a"
       },
       {
         "cycle_id": "4c1e8096",
         "quality": 0.71609,
         "theorems": 59,
-        "title": "The formal development proves the algebraic Gauss–Bonnet invariant for a"
+        "title": "The formal development proves the algebraic Gauss\u2013Bonnet invariant for a"
       },
       {
         "cycle_id": "fb9255eb",
@@ -3458,7 +3458,7 @@
         "cycle_id": "cb10fc42",
         "quality": 0.7388999999999999,
         "theorems": 10,
-        "title": "ArXiv paper: Strongly complete sets and a conjecture of Erdős"
+        "title": "ArXiv paper: Strongly complete sets and a conjecture of Erd\u0151s"
       },
       {
         "cycle_id": "405d388b",
@@ -3588,7 +3588,7 @@
         "cycle_id": "339ae990",
         "quality": 0.71899,
         "theorems": 50,
-        "title": "Sharp two-sided summand asymptotics.: For every `k : ℕ`, prove"
+        "title": "Sharp two-sided summand asymptotics.: For every `k : \u2115`, prove"
       },
       {
         "cycle_id": "97241621",
@@ -3712,7 +3712,7 @@
         "cycle_id": "111aa6d2",
         "quality": 0.69767,
         "theorems": 8,
-        "title": "The deterministic incidence-capacity obstruction — that any cover of a graph by"
+        "title": "The deterministic incidence-capacity obstruction \u2014 that any cover of a graph by"
       },
       {
         "cycle_id": "06b881ae",
@@ -3774,7 +3774,7 @@
         "cycle_id": "f7f562cc",
         "quality": 0.78272,
         "theorems": 23,
-        "title": "Random Graphs: Erdős-Rényi Threshold Phenomena"
+        "title": "Random Graphs: Erd\u0151s-R\u00e9nyi Threshold Phenomena"
       },
       {
         "cycle_id": "60e2b23a",
@@ -3786,7 +3786,7 @@
         "cycle_id": "f14ecb01",
         "quality": 0.686,
         "theorems": 113,
-        "title": "Deepening: Random Graphs: Erdős-Rényi Threshold Phenomena"
+        "title": "Deepening: Random Graphs: Erd\u0151s-R\u00e9nyi Threshold Phenomena"
       },
       {
         "cycle_id": "10a6c20b",
@@ -3842,13 +3842,13 @@
         "cycle_id": "2784f3be",
         "quality": 0.686,
         "theorems": 124,
-        "title": "Let `W₀ = 1`, `Wₖ₊₁ = 2^Wₖ · Wₖ`, and let `K(n)` be the least `k` such that `n <"
+        "title": "Let `W\u2080 = 1`, `W\u2096\u208a\u2081 = 2^W\u2096 \u00b7 W\u2096`, and let `K(n)` be the least `k` such that `n <"
       },
       {
         "cycle_id": "713730e2",
         "quality": 0.78748,
         "theorems": 47,
-        "title": "**Conjecture.** For every integer `k ≥ 5`, there is a threshold `N₀(k)` such tha"
+        "title": "**Conjecture.** For every integer `k \u2265 5`, there is a threshold `N\u2080(k)` such tha"
       },
       {
         "cycle_id": "a95dbc85",

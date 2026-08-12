@@ -5,7 +5,7 @@
   "authors": [
     "Aristotle"
   ],
-  "date": "2026-08-12T00:20:13Z",
+  "date": "2026-08-12T00:07:04Z",
   "key_results": [
     "Reveal criterion: for N = pq with distinct primes, gcd(d, N) is a nontrivial divisor exactly when precisely one of p, q divides d; for general N, exactly when some prime factor of N divides d while N does not.",
     "Reveal characterisation: along the trajectory of any polynomial or division-free straight-line iteration, a factor appears at times (s,t) if and only if the mod-p orbit closes between s and t exclusive-or the mod-q orbit does, so the first reveal time equals the smaller of the two closure times whenever they differ.",
