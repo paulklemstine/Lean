@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "6ffc84c2",
-      "domain": "Combinatorics",
-      "key_insight": "# Future directions\n\n## What is now formally proved\n\n`Catalog/Combinatorics/BernoulliThresholdCoupling.lean`,\n`Catalog/Combinatorics/FiniteRussoFormula.lean` and (new in this cycle)\n`Catalog/Combinato",
-      "quality_score": 0.7892299999999999,
-      "sorry_count": 0,
-      "theorem_count": 114,
-      "timestamp": "2026-08-05T06:52:39",
-      "title": "1. **Finite-key probability formula.** For every finite type `V`, independent"
-    },
-    {
       "cycle_id": "e9c14674",
       "domain": "Shared",
       "key_insight": "# Future directions\n\nConjectures suggested by the formalisation in `Catalog/Shared/GilbertLattice*.lean`\nof the conditioned Gilbert model (one point per cell of `ℤ²`, two points joined when\ntheir Eucl",
@@ -499,19 +489,19 @@
       "theorem_count": 56,
       "timestamp": "2026-08-12T16:18:37",
       "title": "Three Structural Barrier Theorems for Integer Factorization"
+    },
+    {
+      "cycle_id": "f566f199",
+      "domain": "Computation",
+      "key_insight": "# Future Directions — bold, testable conjectures from the QBOUND cycle\n\nDerived from what survived Stages 3–4 of this cycle. Each is falsifiable, and\neach names the Lean artefact it would extend.\n\n---",
+      "quality_score": 0.84,
+      "sorry_count": 0,
+      "theorem_count": 62,
+      "timestamp": "2026-08-12T17:19:36",
+      "title": "The Quantum-Classical Boundary in Integer Factorization"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "be8c4b71",
-      "domain": "Applications",
-      "key_insight": "# Future directions\n\n## Quantitative approximation rates\n\n`Catalog/Bridges/EMLInterpolationTheory.lean` proves the qualitative bridge supplied\nby Stone–Weierstrass: on a compact subset of `ℝⁿ`, the al",
-      "quality_score": 0.8084800000000001,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-08-02T09:31:08",
-      "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
-    },
     {
       "cycle_id": "e801d98f",
       "domain": "Tropical",
@@ -2501,21 +2491,19 @@
       "theorem_count": 56,
       "timestamp": "2026-08-12T16:18:37",
       "title": "Three Structural Barrier Theorems for Integer Factorization"
+    },
+    {
+      "cycle_id": "f566f199",
+      "domain": "Computation",
+      "key_insight": "# Future Directions — bold, testable conjectures from the QBOUND cycle\n\nDerived from what survived Stages 3–4 of this cycle. Each is falsifiable, and\neach names the Lean artefact it would extend.\n\n---",
+      "quality_score": 0.84,
+      "sorry_count": 0,
+      "theorem_count": 62,
+      "timestamp": "2026-08-12T17:19:36",
+      "title": "The Quantum-Classical Boundary in Integer Factorization"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "4c1e8096",
-      "domain": "Geometry",
-      "name": "mobius_im",
-      "quality": 0.71709
-    },
-    {
-      "cycle_id": "4c1e8096",
-      "domain": "Geometry",
-      "name": "mobius_mapsTo_upperHalfPlane",
-      "quality": 0.71709
-    },
     {
       "cycle_id": "4c1e8096",
       "domain": "Geometry",
@@ -2803,9 +2791,21 @@
       "domain": "Pythagorean",
       "name": "entire_factor_of_two_zeros",
       "quality": 0.78
+    },
+    {
+      "cycle_id": "f566f199",
+      "domain": "Computation",
+      "name": "needs",
+      "quality": 0.84
+    },
+    {
+      "cycle_id": "f566f199",
+      "domain": "Computation",
+      "name": "combState_dft",
+      "quality": 0.84
     }
   ],
-  "last_updated": "2026-08-12T16:18:37",
+  "last_updated": "2026-08-12T17:19:36",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3269,12 +3269,6 @@
     ],
     "Computation": [
       {
-        "cycle_id": "1ed3fd3a",
-        "quality": 0.686,
-        "theorems": 96,
-        "title": "**Conjecture.** There is an absolute constant `c > 0` such that every sufficient"
-      },
-      {
         "cycle_id": "63e5c24f",
         "quality": 0.7934299999999999,
         "theorems": 50,
@@ -3327,6 +3321,12 @@
         "quality": 0.6345797888127854,
         "theorems": 15,
         "title": "For every finite terminating normalization system equipped with a probability la"
+      },
+      {
+        "cycle_id": "f566f199",
+        "quality": 0.84,
+        "theorems": 62,
+        "title": "The Quantum-Classical Boundary in Integer Factorization"
       }
     ],
     "Cryptography": [

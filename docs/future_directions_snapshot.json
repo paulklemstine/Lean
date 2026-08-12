@@ -2,25 +2,6 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "f566f199",
-    "description": "**Summary.** Why classical factoring is hard while Shor's quantum algorithm is\npolynomial, located precisely. Two INDEPENDENT classical barriers to\nperiod-finding (experiment QBOUND):\n\n**Barrier 1 (information-theoretic, rigorous).** Resolving period r from K\nclassical samples via DFT requires K ≥ r (frequency resolution 1/K ≤ 1/r).\nFor random base a, the expected multiplicative order is Θ(N), so K = Θ(N) —\nexponential in log N.\n\n**Barrier 2 (structural, 112/112 trials).** Even at K ≥ r, a^x mod N is\npseudorandom: the period is NOT a single dominant DFT peak (the fundamental bin\nranks ~358th out of 458). The period is spectrally hidden in the harmonics.\n\n**Why Shor evades both.** The quantum circuit does not sample f classically. A\nHadamard layer creates a superposition over all x; modular exponentiation\nproduces a periodic comb state |x0⟩,|x0+r⟩,...; the QFT acts on this COHERENT\ncomb — by the same character orthogonality underlying the classical DFT\n(root_orthogonality in FourierTransformInversion.lean) — yielding a SHARP peak.\nThe Fourier mathematics is identical; the physics of the input state differs.\n\n**Honest scope.** No proof that classical factoring needs superpolynomial time\n(open problem). What is established: which classical resource is missing and\nexactly which quantum resource (coherent superposition) fills the gap.\n\n---\n\n*Factoring Lab paper. Status: proven theorem / verified / framework. This is a research deliverable, not a factoring breakthrough claim.*",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1100",
-    "lineage_refs": [],
-    "priority_score": 1000.0,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-11T19:35:11.985040+00:00",
-    "title": "The Quantum-Classical Boundary in Integer Factorization"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
     "consumed_by_exp_id": "a055589e",
     "description": "**Summary.** The full synthesis of 284 computational experiments into eight\nstructural barriers that explain the uniform failure of all tested classical\nfactoring hypotheses.\n\n**Three proven theorems:** polynomial barrier (LLL), symmetry barrier (MMM),\nholomorphic rigidity barrier (HRB).\n\n**Five computational patterns:** free-witness aggregation, structural\northogonality (core — any computable function of N alone is N-only),\ncomputational circularity (TTT), \"rational escape is illusory\" (WWW),\nknown-method-in-disguise (ZZZ).\n\n**The near-equal-N test.** Group semiprimes by size band (N//40); if an\ninvariant varies across the band but correlates ≈0 with p, q after controlling\nfor N, it is N-only. Applied to 284 invariants across 60+ paradigms: every\ninvariant computable from N alone is N-only. The barriers explain why.\n\n**Conclusion.** No classical algorithm beats GNFS complexity L_N[1/3, 1.923].\nThe only poly(log N) factoring known is Shor's (quantum).\n\n---\n\n*Factoring Lab paper. Status: proven theorem / verified / framework. This is a research deliverable, not a factoring breakthrough claim.*",
     "domain_bridges": [],
@@ -1009,7 +990,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "37b40f0f",
     "description": "## UNIT-ENERGY (exp 393, round-15 #2): the additive energy of the units is the Ramanujan 4th moment — pointwise-flat on gcd-level sets, a trace-only witness\n\n**Hypothesis tested.** E(U) = #{u₁+u₂ ≡ u₃+u₄ : u_i ∈ (Z/NZ)^×}, the additive energy of the unit group, is the Ramanujan 4th moment with an FFT-verifiable closed form. Does it leak any asymmetric factor content?\n\n**Result: CONFIRMED negative for factoring** (script: `/tmp/exp_unitenergy.py`; verified 10/10 semiprimes three ways — direct count, Ramanujan moment, closed form — plus 14/14 generic N, and symbolic expansion).\n\n**1. Exact closed semiprime form.** With a = p−1, b = q−1:\n> E(U) = (1/N) Σ_{x=0}^{N−1} |c_N(x)|⁴ = **((p−1)(q−1)/N)·(1+(p−1)³)(1+(q−1)³)**\n\nVia σ₁ = a+b = s−2, σ₂ = ab = N−s+1 = φ(N): E·N = σ₂(1+σ₁³−3σ₁σ₂+σ₂³) = N⁴−4N³s+4N³+6N²s²−15N²s+12N²−3Ns³+12Ns²−18Ns+9N — a symmetric polynomial in (p,q), a function of **(N, s) alone**.\n\n**2. Pointwise flatness (the sharpest statement of the family).** The unit-pair-sum profile r_A(x) = #{(u,v)∈U² : u+v≡x} depends only on gcd(x,N) — flat on all 4 gcd-level sets (e.g. N=899: r = 783/812/810/840 on gcd-levels 1/29/31/899; E-from-levels = direct exactly). Since r̂_A = c_N² is gcd-invariant, **even the full additive distribution of the units is N-symmetric — zero asymmetric factor content, not even pointwise.**\n\n**3. Recovery: cleanest of the family.** E·N − P(s) = 0 is a **cubic** in s (the σ₂⁴ and σ₂σ₁³ quartic terms cancel), and s = p+q is its **unique real root** (15/15 samples — no spurious roots at all, unlike the gcd-moments' {N−1−s, N−1, N+1}).\n\n**4. Barriers: 2/4/6/8.**\n- **Barrier 2 (symmetry):** E(U) = F(N, s); the pointwise profile is flat on gcd-level sets. s alone never splits N.\n- **Barrier 4 (free-witness aggregation):** O(N) Ramanujan sweep / FFT.\n- **Barrier 6 (circular):** closed form needs s; gcd-level grouping needs the divisor set = the factorization.\n- **Barrier 8 (known method):** E(U) = (1/N)Σ|c_N|⁴ is the classical Fourier identity; the unit-pair-sum profile is the modular-hyperbola / Cilleruelo–Garaev–Shparlinski subject.\n\n**Reconfirms** TRACEPROFILE/QUERYWIT/GCD-MOMENT: the trace s = p+q is the ceiling of what a symmetric free witness — aggregate or pointwise — can carry, and s does not factor.\n\n**Recorded:** notebook Part 139, assessment v169 (393 experiments), paper 58 `58_UnitEnergy_Ramanujan4thMoment.md` (NewMathematics/).\n",
     "domain_bridges": [],
     "domains": [
@@ -1021,14 +1002,14 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-12T15:22:34.668452+00:00",
     "title": "Exp 393 UNIT-ENERGY: additive energy of the units = Ramanujan 4th moment, closed form ((p−1)(q−1)/N)(1+(p−1)³)(1+(q−1)³), pointwise-flat on gcd-level sets — trace-only, never a factor (barriers 2/4/6/8)"
   },
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "eaebe17a",
     "description": "## GCD-MOMENT (exp 392, round-15 #1): the semiprime gcd-moments M_k = Σ_{x≤N} gcd(x,N)^k are a closed trace-witness family\n\n**Hypothesis tested.** The brainstorm's S2 = N²+3N+1+(N−1)s−s² recovers the trace s = p+q via an O(N) prefix mean. Does any moment k escape the free-witness barriers?\n\n**Result: CONFIRMED negative for factoring** (script: `/tmp/exp_gcdmoment.py`, verified by full enumeration 48/48 at k=1..4, 12/12 at k=5,6, plus symbolic expansion).\n\n**1. Exact closed forms in (N, s) alone (verified).** Via the Newton power sums P_j = p^j+q^j = s·P_{j−1} − N·P_{j−2}:\n> M_k = Σ_{x≤N} gcd(x,N)^k = Σ_{d|N} d^k φ(N/d) = **N^k + N·P_{k−1} − P_k + N − s + 1**\n\n| k | M_k |\n|---|-----|\n| 1 | 4N − 2s + 1 |\n| 2 | N² + 3N + 1 + (N−1)s − s² (= S2) |\n| 3 | N³ − 2N² + N s² + 3N s + N − s³ − s + 1 |\n| 4 | N⁴ − 3N²s − 2N² + N s³ + 4N s² + N − s⁴ − s + 1 |\n\n**2. Trace recovery is unique at every k.** Roots of P_k(s)−M_k = 0: k=1 {s}; k=2 {s, N−1−s}; k=3 {1−s, s, N−1}; k=4 {s, N+1}+complex. s is ALWAYS the unique root in (0, N/2] — all spurious roots are ≥ N−1−s > N/2 or negative, so the size cut s < N/2 disambiguates trivially. (The \"root ambiguity grows with k\" worry resolves to a non-issue; the cost is computing M_k.)\n\n**3. The genuine hierarchy is cost: N^{2k−1} samples to pin s.** Var(gcd(U,N)^k) ~ N^{2k−1} (the 1/N chance of gcd=N contributes N^k). Measured samples for s±1: k=1 ~4N (= the barrier-4 Ω(N) floor), k=2 ~N³, k=3 ~N⁵, k=4 ~N⁷. **k=1 = M1 = 4N−2s+1, an O(N) gcd-scan, is the optimal moment** — higher k are exponentially worse.\n\n**4. Barriers: 2/4/6/8.**\n- **Barrier 2 (symmetry):** M_k = F_k(N, s) for all k — p,q enter only through s and N. s alone never splits N; the trace is the ceiling of what a symmetric free witness can carry.\n- **Barrier 4 (free-witness aggregation):** Ω(N) gcd evaluations; sampling no better (k=1 ~4N).\n- **Barrier 6 (circular):** divisor form needs the factorization; closed form needs s; enumeration is Ω(N).\n- **Barrier 8 (known method):** M1 = Σ_{d|N} d·φ(N/d) is the classical gcd-sum / Jordan-totient identity; the whole family is a known-arithmetic-function specialization.\n\n**Reconfirms** TRACEPROFILE (\"trace least-hidden\") and QUERYWIT (threshold = Θ(p+q)): the trace s = p+q is the least-hidden — and here provably the ceiling — symmetric free witness, and it does not factor.\n\n**Recorded:** notebook Part 138, assessment v168 (392 experiments), paper 57 `57_GCDMoment_TraceWitnessHierarchy.md` (NewMathematics/).\n",
     "domain_bridges": [],
     "domains": [
@@ -1040,7 +1021,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-12T15:22:34.668786+00:00",
     "title": "Exp 392 GCD-MOMENT: the semiprime gcd-moments M_k = sum gcd(x,N)^k are a closed trace-witness family — trace recoverable, never a factor (barriers 2/4/6/8)"
   },
@@ -1176,6 +1157,82 @@
     "status": "available",
     "timestamp": "2026-08-12T16:19:41.782329+00:00",
     "title": "Experiment 395: ZERO-DIVISOR-GRAPH — Γ(Z/pq) = K_{p−1,q−1} exactly; bipartition IS the factorization"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "## ECM-PARITY (round-18 #1, experiment 404, assessment v180, paper 69)\n\nThe parity face of the generic ECM order — the even-ℓ complement of ECM-ORDER-NULL (paper 66, which tested only odd ℓ): **2 | #E0(F_p) ⟺ the S₃ cubic x³+x+1 has a root mod p ⟺ the Frobenius is NOT a 3-cycle**. **Verdict: CONFIRMED null (factor-useless)** with three positive structural findings.\n\n### (1) The exact parity structure\nP(2|#E0) = 0.6493 (theory 2/3 = 1 − P(3-cycle)). The transposition face (density 1/2) is (Δ|p)-pinned: P(2|#E | (Δ|p)=−1) = **1.0000 EXACTLY** (a transposition fixes exactly one root, r=1, 2|#E with #E ≡ 2 mod 4). On (Δ|p)=+1 the Frobenius ∈ A₃ = {1, 3-cycles}: P(2|#E) = P(identity|A₃) = 1/3 (measured 0.3187). 4 | #E ALWAYS on the [1,1,1] face (full rational 2-torsion), never on [3].\n\n### (2) Headline — the first positive symmetric residue shadow on the GENERIC elliptic order\nSYM I(N mod 31; \"2|#E0(F_p) OR 2|#E0(F_q)\") = **0.1468 bits = 42× the null max (0.0035)** — carried EXACTLY by the Jacobi character: I((Δ|N); OR) = 0.1463, residual 0.0004. P(OR | (Δ|N)=−1) = **1.0000** (the −1 factor is a transposition, 2|#E forced); P(OR | (Δ|N)=+1) = 0.7358. Here (Δ|N) = (p mod 31 | 31)(q mod 31 | 31) by quadratic reciprocity ((−31|p) = (p mod 31 | 31)).\n\n### (3) The fork is NOT flat (qualifies paper 65)\nThe [1,1,1]-vs-[3] fork at (Δ|p)=+1 is residue-pinned: per-class rates 0.124–0.594 over the 15 QR-classes mod 31 (I = 0.0742); **93.3% of the fork entropy H(1/3)=0.918 determined by p mod 31²** (I = 0.8562). The fork's variance compresses the union via Jensen concavity — P(OR|(Δ|N)=+1) = 0.7358 BELOW the flat-fork 7/9 — which is why B1 = 0.147, not 0.25.\n\n### (4) Exact classical mechanism — Hilbert class field\n[1,1,1] ⟺ 4p = A²+31B² (A≡B mod 2) on **2900/2900 EXACT**, and 4p = A²+23B² on **2911/2911 EXACT**. Q(√−31) and Q(√−23) both have class number 3; their Hilbert class fields ARE the S₃-closures of x³+x+1 / x³−x+1, so [1,1,1] ⟺ ℘ principal ⟺ p splits completely in the Hilbert class field.\n\n### (5) Ray-class semiprime dial\nI(N mod 31²; OR) = 0.1811 (null max 0.0719) vs Jacobi 0.1444 — the ray-class dial thickens the channel but is which-factor-scrambled (N carries only the product).\n\n### Seals / barriers\nSymmetric only (asym 0.0012 at null — which-factor lost, barrier 2); a Jacobi/quadratic-reciprocity residue dial (barrier 5); exact order sealed behind the CRT split (barrier 6); all of it Jacobi (1801) + Hilbert class fields (class number 3) + ECM (1987) — known methods (barrier 8). Robustness: Δ=−23 gives 0.1230 (45× null max 0.0027); p−1 machinery control live (0.3052). Round-18 1/1 done. Barriers 2/5/6/8.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_1170",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-12T17:19:53.175571+00:00",
+    "title": "ECM-PARITY: first positive symmetric residue shadow on the GENERIC elliptic order (2|#E ⟺ cubic root ⟺ Frobenius not 3-cycle) — round-18 #1, exp 404"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "## CM-ECM-GENERAL (round-17 #2, experiment 403, assessment v179, paper 68)\n\nGeneralization + stress-test of the CM-ECM-ORDER shadow (paper 67) on the second CM field Q(√−3) — the j=0 curve y²=x³+1 (End=ℤ[ω], bad primes 2, 3), which has RATIONAL 3-torsion ((0,±1) over Q). **Verdict: CONFIRMED null (factor-useless)** with three measured refinements.\n\n### (1) Rational-torsion degeneracy (headline)\n3 | #E_j0(F_p) UNCONDITIONALLY (2000/2000), so the ℓ=3 ECM-order OR event is a CONSTANT — SYM I(N mod 3; 3|#E_j0 OR) = **0.0000 EXACTLY** (null max 0.0000) — even though the inert class (0.311) and split class (0.316) each individually carry a p−1-strength class-OR channel. A curve can carry a fully residue-visible, abelian, p+1-sourced congruence on its elliptic order that reveals exactly zero bits: the shadow is real only when the event is CONDITIONAL.\n\n### (2) Union-dilution law\nThe CM shadow ≤ the inert-class OR channel always: ℓ=9 FULL 0.0120 fires at 7.1× the null max yet sits 1.45× BELOW the inert-class reference 0.0174 (the split-half base rate raises the union's unconditional probability, compressing conditional variation); ℓ=5 FULL 0.0030 (3.8×) ≈ ref 0.0032; ℓ=7/11 at null. Q(i) reproduces it (ℓ=3: FULL 0.0048 vs ref 0.0143 — matching paper 67's 0.0048 exactly). Field-independent mechanism.\n\n### (3) 3-adic Hecke visibility\nThe split-half Hecke term is residue-INVISIBLE at good primes (ℓ=5: z=−0.31) but VISIBLE at powers of the CM field's RAMIFIED prime (ℓ=9=3²: z=+24.5; ℓ=27=3³: z=+2.6) — ramification shrinks the Hecke conductor's 3-adic part, pinning a_p mod 3^k by a small modulus. Refines paper 67's \"split-half GL₂-hidden\" to \"hidden at good primes\".\n\n### Structure / seals\nExact inert collapse a_p=0 on 2018/2018 primes p ≡ 2 mod 3 (P(a_p=0)=0.504); atomic trace law (P(x=0)=0.504, P(|x|<0.5)=0.670, mean-sq=0.244). Asym (which-factor) wall null (0.0002/0.0012 at ℓ=5/7); smoothness OR sealed (0.0006/0.0011); generic control null. On the inert half #E=p+1 EXACTLY so ECM-on-j0 IS the p+1 method (1982); the visible ℓ=9 channel is a residue dial on class 8 mod 9 (QRLEAK family). All Gauss/Eisenstein (1801), ECM (1987), p+1 (1982). Barriers 2/5/6/8. Round-17 COMPLETE 2/2.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_1171",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-12T17:19:53.176046+00:00",
+    "title": "CM-ECM-GENERAL: rational-torsion degeneracy, union-dilution law, 3-adic Hecke visibility (Q(sqrt(-3)) j=0 curve) — round-17 #2, exp 403"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "**Experiment 402 / assessment v178 / paper 67 — CM-ECM-ORDER (cron loop round-17 #1).**\n\nA qualification of ECM-ORDER-NULL (round-16 #4): the total residue-invisibility of the elliptic group order is a NON-CM (GL₂-generic) phenomenon. For the CM curve E: y² = x³ + x (End = ℤ[i], Gauss 1801):\n\n**1. The CM structure is exact.** a_p = 0 EXACTLY on inert primes p ≡ 3 mod 4 (2027/2027) → #E_cm(F_p) = p + 1 there (P(a_p=0) = 0.507 vs 0.004 generic); on the split half |a_p| = 2a with p = a²+b², a odd (1973/1973, Gauss); ATOMIC trace law (P(|x|<0.5) = 0.683, P(x=0) = 0.507 vs semicircle 0.607/0.004); universal 4 | #E_cm (1000/1000 vs 458/1000).\n\n**2. The FIRST positive residue shadow on an elliptic order — restored by CM, symmetric only, weak.** SYM I(N mod ℓ; ℓ|#E_cm(F_p) OR ℓ|#E_cm(F_q)) = 0.0048/0.0062 bits at ℓ = 3/5, each 4.8× the null max (p < 0.002), vs the generic curve's 0.0000/0.0003 (null) on the same 6000 semiprimes; p−1 control live (0.3167, known 0.313); ℓ=7 inside null. Mechanism: the visible event is the inert-half p+1 condition \"a factor ≡ 3 mod 4 AND ≡ −1 mod ℓ\" (≡ 11 mod 12 for ℓ=3), diluted ~40× vs p−1's 0.313 by the mod-4 inertness being invisible from N mod ℓ; decomposition P(ℓ|#E_cm(F_p)) = 0.515·0.515 + 0.484·0.117 at ℓ=3 (inert·P(ℓ|p+1|inert) + split·Hecke) — the split-half Hecke term is GL₂-hidden.\n\n**3. Yet factor-useless (the null):** (a) symmetric only — asym I(N mod ℓ; ℓ|#E_cm(F_p)) = 0.0000/0.0005/0.0009 at ℓ=3/5/7, all at the null, the which-factor bit lost (barrier 2); (b) the abelian p+1 channel, a known method; (c) full stage-1 smoothness M | #E_cm(F_p) (P = 0.619, size-driven) has zero residue MI (all null); (d) the four-way stage-1 contrast re-partitions a KNOWN target set — inert p+1-weak fires 40/40 (gate 40/40, IS the p+1 method), inert p+1-hard 0/40, split CM-weak (p+1−2a | M) 40/40 (gate 40/40, ECM-on-CM-curve's own target, which p+1 misses), split p+1-weak-but-CM-hard 4/40 (gate 0/4 — spurious ladder fires; the genuine p+1 method's primes are MISSED by CM-ECM).\n\n**Verdict: CONFIRMED null** (negative for factoring). The ECM-order invisibility is robust — even choosing the curve so its order degenerates to p+1 on half the primes leaks only the abelian channel already closed at round-16 #2 (PLUSONE-SMOOTH-NULL). Everything is Gauss (1801)/ECM (1987)/p+1 (1982). Barriers 2/5/6/8.\n\nScript: /tmp/exp_cmecmorder.py. Paper: ResearchOutput/NewMathematics/67_CmEcmOrder_CmShadowIsP1Channel.md.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_1172",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-12T17:19:53.176451+00:00",
+    "title": "CM-ECM-ORDER (round-17 #1): the ECM order of a CM curve collapses to p+1 on the inert half — a residue shadow that carries no factoring leverage"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "**Experiment ECM-ORDER-NULL (factoring lab, cron loop round-16 #4).**\n\n**Hypothesis (null).** The ECM group order #E(F_p) = p + 1 − a_p (Frobenius trace / Hasse middle term) — the quantity ECM (1987) actually exploits, bracketed but never probed by the p±1 closures — is invisible from N alone in a STRICTLY STRONGER sense than p±1: ℓ | #E(F_p) is a non-abelian GL₂(F_ℓ) Chebotarev condition with no residue-class shadow, so residue-invisible BOTH asymmetrically and symmetrically (the p−1 symmetric OR is visible, 0.313 bit at ℓ=3). Barriers 2/5/6/8.\n\n**Findings (machine-verified).**\n1. **Positive control EXACT** (after the point-at-infinity fix): #E(F_p) = p + S + 1 (affine count is p + S), a_p = −S — the initial affine-count class mislabeled weak instances (p=9643: affine 9504, true order 9505 = 5·1901 ∤ M; ECM correctly refused). ECM stage-1 (M = lcm(1..97), E0: y²=x³+x+1, CRT base points) factors the ECMORDER class (#E0(F_p)|M, p±1 general) **40/40** vs GENERAL (both #E0 have a prime factor > 97) **2/40** (the 2 genuine: a random point's order drops the big prime). Sato–Tate: mean −0.032, mean-square 0.260 (semicircle 0, 1/4).\n2. **Headline — invisible BOTH asym AND sym:** I(N mod ℓ; ℓ|#E0(F_p)) = 0.0005/0.0011/0.0018 at ℓ=3/5/7 AND the SYM OR = 0.0031/0.0009/0.0005, all at the 500-shuffle null (most extreme ℓ=3 SYM, I=0.0031 < null max 0.0039, is sample noise: 2000-shuffle fresh-sample check p=0.33), while the p−1 machinery control is live (SYM = 0.3145, known 0.313). Mechanism: ℓ|#E(F_p) ⇔ tr(Frob_p) ≡ 1+p mod ℓ — a NON-abelian GL₂(F_ℓ) Chebotarev condition with no residue shadow, unlike the abelian split conditions ℓ|p±1 (visible OR). Full B-smoothness P(#E0|M) = 0.502 invisible too.\n3. **Size-orthogonal:** raw corr(a_p/(2√p), gap/√N) = −0.097 (p=0.003) is a PURE size confound — corr(x,p)=+0.147, corr(gapn,p)=−0.717, residualized-on-p corr = **+0.008 (p=0.735)**.\n4. **Symmetric + sealed:** a_p ≠ a_q on 1492/1500 (split lost); Σ_{x mod N} J_N(x³+x+1) = a_p·a_q = a_N EXACTLY (N=247: 4=4; N=493: 0=0 — the Hecke eigenvalue is N-computable) yet #E(Z/NZ) needs the cross terms a_p(q+1)+a_q(p+1), swap-ambiguous (−94 vs −76; −108 vs −180) and unrecoverable; sqrt_mod mod composite N RAISES TypeError = the factorization (barriers 4/6).\n\n**Verdict:** CONFIRMED null (negative for factoring). The ECM group order is strictly more hidden than p±1 (no residue shadow at all, barrier 2), Sato–Tate-orthogonal to size (barrier 5), symmetric + computationally sealed (barriers 4/6), and the only exploitation is running ECM (1987, known method, barrier 8). Closes the ECM-order face of the weakness program. Round-16 4/4.\n\nAssessment v177. Paper 66 (ResearchOutput/NewMathematics/66_EcmOrderNull_EllipticTraceInvisibleAndSealed.md). Notebook Part 147. Script: /tmp/exp_ecmordernull.py.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_1173",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-12T17:19:53.176859+00:00",
+    "title": "Record ECM-ORDER-NULL (401 experiments, assessment v177); paper 66"
   },
   {
     "ambition_level": "grand_challenge",
@@ -2058,6 +2115,25 @@
     "status": "available",
     "timestamp": "2026-07-24T14:34:16.697733+00:00",
     "title": "Riemann Zeta: Zero-Free Regions and Density Estimates"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle f566f199 (Q=0.840), which proved 62 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Summary.** Why classical factoring is hard while Shor's quantum algorithm is\npolynomial, located precisely. Two INDEPENDENT classical barriers to\nperiod-finding (experiment QBOUND):\n\n**Barrier 1 (information-theoretic, rigorous).** Resolving period r from K\nclassical samples via DFT requires K ≥ r",
+    "domain_bridges": [],
+    "domains": [
+      "Computation"
+    ],
+    "id": "push_f566f199_8a2dbbca",
+    "lineage_refs": [],
+    "priority_score": 0.94,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "f566f199",
+    "status": "available",
+    "timestamp": "2026-08-12T17:19:36.287972+00:00",
+    "title": "Deepening: The Quantum-Classical Boundary in Integer Factorization"
   },
   {
     "ambition_level": "grand_challenge",
@@ -17144,6 +17220,26 @@
     "status": "available",
     "timestamp": "2026-08-12T16:18:30.616700+00:00",
     "title": "All results referenced below are fully proved (0 sorries) in"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — bold, testable conjectures from the QBOUND cycle\n\nDerived from what survived Stages 3–4 of this cycle. Each is falsifiable, and\neach names the Lean artefact it would extend.\n\n---\n\n## C1. Uncertainty-extremality characterises the Shor input state\n\n**Conjecture.** Let `n = m·r` and let `v : Fin n → ℂ` be nonzero with\n`#supp v · #supp (DFT v) = n` (equality in `dft_support_uncertainty`). Then\n`supp v` is a coset of a subgroup of `ℤ/n` and `v` is constant in modulus on its\nsupport; i.e. `v` is a phase-modulated comb. Consequently the state Shor's\ncircuit prepares is, up to phases and translation, the *only* extremal input.\n\n**The key insight is** that the two inequalities used in the Donoho–Stark proof\n(triangle inequality for `DFT`, and again for the inverse) are simultaneously\ntight exactly when all contributing phases align, which forces the support to be\nan arithmetic progression closed under translation — a subgroup coset.\n\n**Why now?** `dft_support_uncertainty` and `comb_saturates_uncertainty` are\nalready formalised in `Catalog/Computation/QuantumClassicalBoundary/Boundary.lean`;\nthe equality analysis is a finite-dimensional rigidity argument that needs no new\nanalytic input. A counterexample would be equally interesting: it would exhibit a\nnon-comb state as sharp as the comb.\n\n---\n\n## C2. Peak-picking failure is generic, not exceptional\n\n**Conjecture.** For every `r ≥ 4` the density of pairs `(N, a)` with\n`ord_N(a) = r` for which the fundamental bin is *not* the largest non-DC bin of\nthe value signal is bounded away from `0` as `N → ∞`; in fact the fundamental's\nrank grows like `Θ(r)`.\n\n**The key insight is** that the residues `aˣ mod N` behave like an equidistributed\nsequence with respect to the additive characters of `ℤ/r`, so the value signal's\nspectrum is asymptotically flat and the fundamental has no structural advantage —\nit is the *comb*, not the exponential, that produces sharpness.\n\n**Why now?** The order-4 slice is already exactly solvable\n(`|V̂(1)|² = (v₀-v₂)²+(v₁-v₃)²` versus `|V̂(2)|² = (v₀-v₁+v₂-v₃)²`, formalised for\n`N = 15, a = 7` in `SpectralHiding.lean`), and the measured density there is\n`0.366` over `N < 500` (see `ComputationalEvidence.md`). The general statement\nneeds only Weyl-sum bounds for exponential sequences modulo `N`.\n\n---\n\n## C3. A nonlinear-estimator version of Barrier 1\n\n**Conjecture.** The bound `K ≥ r` survives dropping linearity: any (possibly\nadaptive, possibly nonlinear) classical estimator that recovers the period of an\narbitrary period-`r` signal from `K` evaluations of its Fourier transform at\nchosen frequencies must have `K ≥ r`.\n\n**The key insight is** that the linear-algebra proof\n(`FactoringBarriers.dft_sample_count_ge_period`) should be replaceable by a\ntwo-point argument: exhibit, for each frequency set of size `< r`, an explicit\n*pair* of signals with distinct periods but identical samples — which the\nkernel-dimension argument already provides non-constructively.\n\n**Why now?** The linear case is proved and imported by\n`Catalog/Computation/QuantumClassicalBoundary/SampleBarrier.lean`; making the\nwitnesses explicit converts a dimension count into an adversary argument that\nadaptivity cannot defeat.\n\n---\n\n## C4. Order statistics: from `> √p` to `> p^{1-ε}`\n\n**Conjecture.** For every `ε > 0` the number of bases `a` modulo a prime `p`\nwith `ord_p(a) ≤ p^{1-ε}` is `O(p^{1-ε})`, hence a `1 - o(1)` fraction of bases\nhave order `> p^{1-ε}`; the classical Fourier-sample requirement is therefore\n`N^{1-o(1)}`, not merely `√N`.\n\n**The key insight is** that the covering bound `#{ord ≤ B} ≤ B²` used in\n`card_small_order_le` is wasteful: in a cyclic group `#{ord ≤ B}` is exactly\n`∑_{d ∣ n, d ≤ B} φ(d) ≤ B·(number of divisors)`, which is `B^{1+o(1)}`.\n\n**Why now?** `card_small_order_le` is formalised and its only ingredient is\n`IsCyclic.card_pow_eq_one_le`; upgrading `∑_{d ≤ B} d` to\n`∑_{d ∣ n, d ≤ B} φ(d)` is a purely combinatorial refinement that immediately\nsharpens `classical_sampling_barrier`.\n\n*Status after cycle 3:* the divisor-indexed form\n`#{ord ≤ B} ≤ B · #{d ∣ |G| : d ≤ B}` is now **proved** in\n`Catalog/Computation/QuantumClassicalBoundary/OrderStatistics.lean`\n(`card_small_order_le_divisors`, `exists_base_large_order_divisor`). What remains\nopen is the analytic input `τ(n) = n^{o(1)}` needed to convert it into the clean\n`p^{1-ε}` statement.\n\n---\n\n## C5. Rigidity of coherence: approximate combs and `r ∤ n`\n\n**Conjecture.** If `r ∤ n` (the realistic Shor setting) the spectrum of the comb\nis a Dirichlet kernel whose mass within distance `1/2` of the ideal peaks is at\nleast `4/π² ≈ 0.405`, and `periodic_of_peak_supported` has a stability version:\na signal whose off-peak spectral energy is `≤ δ` fraction of the total is\n`O(√δ)`-close in `ℓ²` to an exactly `r`-periodic signal.\n\n**The key insight is** that both the exact statements proved here\n(`combDFT_norm`, `periodic_of_peak_supported`) are the `δ = 0` corner of a\nstability principle, and the constant `4/π²` is precisely what makes Shor's\nalgorithm work with `r ∤ n`.\n\n**Why now?** The exact case is fully formalised in `CoherentComb.lean` and\n`Separation.lean`, so the approximate case can be attacked as a perturbation of\na verified identity rather than from scratch.\n\n---\n\n## C6. A closed-form hiding criterion for every period, not just `r = 4`\n\n**Conjecture.** For every `r` there is an explicit polynomial criterion in the\nresidues `vᵢ = aⁱ mod N`, with coefficients in the real subfield of the `r`-th\ncyclotomic field, deciding whether the fundamental bin `k = 1` is the largest\nnon-DC bin of the value signal; and for `r ≥ 5` the set of `(N, a)` failing the\ncriterion has positive density.\n\n**The key insight is** that at `r = 4` the two competing bins have the closed\nforms `√((v₀-v₂)²+(v₁-v₃)²)` and `|v₀-v₁+v₂-v₃|`\n(`norm_dft_order_four_one`, `norm_dft_order_four_two`), i.e. the comparison is a\nrational inequality; for general `r` the analogous comparison is an inequality\nbetween norms of cyclotomic integers, still decidable instance by instance.\n\n**Why now?** The `r = 4` criterion is proved and instance-checked in\n`Catalog/Computation/QuantumClassicalBoundary/HarmonicCriterion.lean`; extending\nit needs cyclotomic norm computations rather than any new conceptual input.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Physics"
+    ],
+    "id": "fd_1169",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "f566f199",
+    "status": "available",
+    "timestamp": "2026-08-12T17:19:29.136819+00:00",
+    "title": "Derived from what survived Stages 3–4 of this cycle. Each is falsifiable, and"
   },
   {
     "ambition_level": "extension",
