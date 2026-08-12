@@ -110,22 +110,11 @@ def load_all_git_creation_dates(catalog_root, target_dir="Packages"):
     return dates
 
 def get_creation_date(filename, catalog_root):
-    """Get the date a file was first committed to git, falling back to mtime."""
+    """Get file modification time fallback without running individual git subprocesses."""
     try:
-        import subprocess
-        # Path relative to git root
-        rel_path = os.path.relpath(os.path.abspath(filename), catalog_root)
-        result = subprocess.run(
-            ["git", "log", "--diff-filter=A", "--format=%aI", "--", rel_path],
-            capture_output=True, text=True, cwd=catalog_root
-        )
-        if result.returncode == 0 and result.stdout.strip():
-            date_iso = result.stdout.strip().split('\n')[0]
-            return normalize_iso_date(date_iso)
+        return time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime(os.path.getmtime(filename)))
     except Exception:
-        pass
-    # Fallback to file modification time
-    return time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime(os.path.getmtime(filename)))
+        return "1970-01-01T00:00:00Z"
 
 def load_quality_scores():
     """Load quality scores from autoresearch.jsonl, keyed by exp_id.
@@ -210,7 +199,24 @@ def update_index():
     # Load all git creation dates in batch for 100% stability and speed
     git_creation_dates = load_all_git_creation_dates(catalog_root, "Packages")
 
-    for f in json_files:
+    # Pre-build lean file cache once to avoid O(N) repository traversals inside loop
+    lean_file_cache = {}
+    for root, dirs, files in os.walk(catalog_root):
+        dirs[:] = [d for d in dirs if d not in ('.git', '.lake', 'node_modules', '.aether_workspace', 'build', 'dist', 'visualizations')]
+        for fname in files:
+            if fname.endswith('.lean') and fname not in lean_file_cache:
+                lean_file_cache[fname] = os.path.join(root, fname)
+
+    total_files = len(json_files)
+    print(f"Updating index for {total_files} package JSON files...")
+    start_time = time.time()
+
+    for idx, f in enumerate(json_files, 1):
+        if idx % 25 == 0 or idx == total_files or idx == 1:
+            elapsed = time.time() - start_time
+            rate = idx / elapsed if elapsed > 0 else 0
+            print(f"  [{idx}/{total_files}] Processing package files ({idx*100//total_files}% complete | {rate:.1f} pkgs/sec)...")
+
         try:
             with open(f, 'r', encoding='utf-8-sig') as file:
                 data = json.load(file)
@@ -299,13 +305,13 @@ def update_index():
             lp = data["lean_proofs"]
             normalized_lp = []
             if isinstance(lp, list):
-                for idx, entry in enumerate(lp):
+                for idx_lp, entry in enumerate(lp):
                     if isinstance(entry, str):
                         if entry.endswith('.lean') or '/' in entry:
                             fpath = entry
                             code = ""
                         else:
-                            fpath = f"Proof_{idx+1}.lean"
+                            fpath = f"Proof_{idx_lp+1}.lean"
                             code = entry
                         entry = {"file": fpath, "name": fpath, "code": code}
                     if isinstance(entry, dict):
@@ -325,25 +331,22 @@ def update_index():
                                             break
                                     if entry.get("code"):
                                         break
-                                if not entry.get("code"):
-                                    for root, dirs, files in os.walk(catalog_root):
-                                        if basename in files:
-                                            full_path = os.path.join(root, basename)
-                                            with open(full_path, 'r', encoding='utf-8', errors='ignore') as lf:
-                                                entry["code"] = lf.read()
-                                            break
+                                if not entry.get("code") and basename in lean_file_cache:
+                                    full_path = lean_file_cache[basename]
+                                    if os.path.isfile(full_path):
+                                        with open(full_path, 'r', encoding='utf-8', errors='ignore') as lf:
+                                            entry["code"] = lf.read()
                         normalized_lp.append(entry)
                 data["lean_proofs"] = normalized_lp
             elif isinstance(lp, str):
                 if lp.endswith('.lean') or '/' in lp:
                     entry = {"file": lp, "name": lp, "code": ""}
                     basename = os.path.basename(lp)
-                    for root, dirs, files in os.walk(catalog_root):
-                        if basename in files:
-                            full_path = os.path.join(root, basename)
+                    if basename in lean_file_cache:
+                        full_path = lean_file_cache[basename]
+                        if os.path.isfile(full_path):
                             with open(full_path, 'r', encoding='utf-8', errors='ignore') as lf:
                                 entry["code"] = lf.read()
-                            break
                     data["lean_proofs"] = [entry]
 
         # Rewrite the individual JSON file with extracted viz paths
