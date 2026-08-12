@@ -1,54 +1,3 @@
-import Mathlib
-
-/-!
-# Effect algebras (Hilbert's sixth problem: axiomatisation of physics)
-
-An *effect algebra* is the standard order-theoretic axiomatisation of the
-"unsharp" observables (effects) of a physical system: a set with a partial
-commutative, associative addition `⊕ₑ`, a zero, a unit, and an orthosupplement
-`ortho a` characterised by `a ⊕ₑ ortho a = eone`.
-
-This file develops the basic theory: cancellation, involutivity of the
-orthosupplement, transitivity and antitonicity of the induced order, the
-two-element Boolean example, and the behaviour of morphisms.
--/
-
-/-- An effect algebra: a partial commutative monoid with orthosupplements. -/
-class EffectAlgebra (E : Type*) where
-  /-- The partial addition; `oplus a b = none` means `a ⊕ b` is undefined. -/
-  oplus : E → E → Option E
-  /-- The zero effect. -/
-  ezero : E
-  /-- The unit effect. -/
-  eone : E
-  /-- The orthosupplement. -/
-  ortho : E → E
-  oplus_comm : ∀ a b, oplus a b = oplus b a
-  oplus_assoc : ∀ a b c d e, oplus a b = some d → oplus d c = some e →
-    ∃ f, oplus b c = some f ∧ oplus a f = some e
-  oplus_ezero : ∀ a, oplus a ezero = some a
-  oplus_ortho : ∀ a, oplus a (ortho a) = some eone
-  oplus_eone_eq_ezero : ∀ a b, oplus a eone = some b → a = ezero
-  ortho_unique : ∀ a b, oplus a b = some eone → b = ortho a
-
-@[inherit_doc] infixl:65 " ⊕ₑ " => EffectAlgebra.oplus
-
-namespace EffectAlgebra
-
-variable {E : Type*} [EffectAlgebra E]
-
-/-- The order induced by the partial addition: `a ≤ b` iff `a ⊕ₑ c = b` for some `c`. -/
-def ele (a b : E) : Prop := ∃ c, a ⊕ₑ c = some b
-
-/-- A morphism of effect algebras: it preserves the unit and all defined sums. -/
-structure EffectHom (E F : Type*) [EffectAlgebra E] [EffectAlgebra F] where
-  /-- The underlying function. -/
-  toFun : E → F
-  /-- The unit is preserved. -/
-  map_eone : toFun (eone : E) = (eone : F)
-  /-- Defined sums are preserved. -/
-  map_oplus : ∀ a b c, a ⊕ₑ b = some c → toFun a ⊕ₑ toFun b = some (toFun c)
-
 theorem cancel_left (a b c d : E)
     (h1 : a ⊕ₑ b = some d) (h2 : a ⊕ₑ c = some d) : b = c := by
   obtain ⟨ f, hf1, hf2 ⟩ := ( ‹EffectAlgebra E›.oplus_assoc a b ( ‹EffectAlgebra E›.ortho d ) d ( ‹EffectAlgebra E›.eone ) ) h1 ( ‹EffectAlgebra E›.oplus_ortho d );
@@ -173,16 +122,15 @@ structure UnitInterval where
 namespace UnitInterval
 
 @[ext]
-theorem ext {x y : UnitInterval} (h : x.val = y.val) : x = y := by
-  cases x; cases y; simpa using h
-
-end UnitInterval
 
 theorem EffectHom.map_ortho {E F : Type*} [EffectAlgebra E] [EffectAlgebra F]
     (f : EffectHom E F) (a : E) : f.toFun (ortho a) = ortho (f.toFun a) := by
-  refine ortho_unique _ _ ?_
-  have h := f.map_oplus a (ortho a) eone (oplus_ortho a)
-  simpa [f.map_eone] using h
+  rename_i h;
+  obtain ⟨ _, h₁, h₂ ⟩ := f;
+  rename_i f hf;
+  rename_i h₃;
+  have := h₃.oplus_ortho a;
+  exact h.ortho_unique _ _ ( by simpa [ h₂ ] using hf _ _ _ this )
 
 end EffectAlgebra
 
@@ -209,3 +157,4 @@ end EffectAlgebra
    is isomorphic to a Boolean effect algebra. Conjecture: Every finite
    commutative effect algebra is isomorphic to a power set EA 2^n.
 -/
+end UnitInterval

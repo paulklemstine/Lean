@@ -21,25 +21,6 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "219576b7",
-    "description": "**Summary.** The Alexander polynomial of the torus knot T(2,N) provably encodes\nthe factorization of N.\n\n**Theorem (knot-number bridge, proven).** For N = pq and\nA_N(X) = (X^N+1)/(X+1) (Alexander polynomial of T(2,N)):\n  A_N(X) = Φ_{2p}(X) · Φ_{2q}(X) · Φ_{2N}(X),\nwith irreducible factor degrees {p-1, q-1, (p-1)(q-1)}. From these,\nφ(N) = (p-1)(q-1) and p+q = N+1-φ(N) recover p, q.\nVerified on all 6 test semiprimes (e.g. N=143 → {10,12,120} → 11,13 ✓).\n\n**The catch.** A_N has degree N-1, so writing it down costs O(N) = exp(log N),\nand factoring a degree-(N-1) polynomial over Q requires the divisors of N (the\nfactoring problem itself). The factor degrees are symmetric in p, q.\n\nA mathematically beautiful bridge between knot theory and number theory, of\nindependent interest regardless of factoring applications.\n\n---\n\n*Factoring Lab paper. Status: proven theorem / verified / framework. This is a research deliverable, not a factoring breakthrough claim.*",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1103",
-    "lineage_refs": [],
-    "priority_score": 1000.0,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-11T19:35:11.985809+00:00",
-    "title": "A Knot-Number Theory Bridge (Alexander polynomial)"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
     "consumed_by_exp_id": "ab9891cb",
     "description": "**Summary.** 3SUM mod-p reveals factors, and collision-based factoring methods\nform a hierarchy all hitting the same √N barrier.\n\n**Observation (3SUM mod-p factor reveal).** For N = pq and triples with\na+b+c ≡ 0 (mod p) but ≢ 0 (mod q): gcd(a+b+c, N) = p. Verified: 19 mod-p-only\ntriples vs. 0 mod-both for N = 143.\n\n**The birthday-bound hierarchy:**\n| Collision type | Search space | Cost to collision | Net cost |\n| Sumset (a+b ≡ c+d) | k² pairs | k ~ p^{1/2} | O(√N) |\n| 3SUM (a+b+c ≡ 0) | k³ triples | k ~ p^{1/3} | O(√N) |\n| Singular moduli | k evaluations | k ~ p/h | O(√N) |\n\nThe exponent improves (1/2 → 1/3) but the exponential dependence on p ≈ √N\npersists. This is a new structural connection between two canonical problems\n(3SUM and factoring) through the birthday bound.\n\n---\n\n*Factoring Lab paper. Status: proven theorem / verified / framework. This is a research deliverable, not a factoring breakthrough claim.*",
     "domain_bridges": [],
@@ -1123,7 +1104,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3961a498",
     "description": "## Factoring research loop — round-15 #4 (experiment 395, assessment v171, paper 60)\n\n**Hypothesis (brainstorm).** The zero-divisor graph Γ(Z/NZ) — vertices = nonzero x with gcd(x,N) > 1, edge x~y iff xy ≡ 0 mod N — is exactly K_{p−1,q−1} for a semiprime. Does its bipartition leak asymmetric factor content?\n\n**Result: CONFIRMED exact structure, negative for factoring.**\n\n1. **Γ(Z/NZ) = K_{p−1,q−1} exactly, 10/10 semiprimes.** |V| = p+q−2, |E| = (p−1)(q−1); the bipartition is the q−1 multiples of p ∪ the p−1 multiples of q; every cross pair is an edge, no within-part pair is; degree distribution {p−1: q−1 times, q−1: p−1 times}.\n2. **Degree identity:** graph-degree(x) = gcd(x,N) − 1 on 62/62 zero-divisors (squarefree N). The degree sequence over the zero-divisors = the multiset {p,…,p,q,…,q} = the two factors written twice.\n3. **Classification (proper bipartiteness test):** complete-bipartite exactly for products of two primes (even 2p → star K_{p−1,1}; small exceptions 8→K_{1,2}, 9→K_2); complete graph K_{p−1} for prime squares; neither for p³/p⁴ or ≥3-prime products. Matches the Anderson–Livingston zero-divisor-graph classification (barrier 8).\n\n**Why it cannot factor — barriers 2/4/8:**\n- The bipartition IS the factorization (which residues are ≡ 0 mod p vs ≡ 0 mod q).\n- Reconstruction from N = finding the zero-divisors = Ω(N) gcd-scan; its first hit is the smallest prime factor (19 gcds for 703, 29 for 899) — trial division in disguise.\n- Everything is N-computable hence symmetric in (p,q): swapping the factors merely swaps the two parts of K_{p−1,q−1}.\n\n**Verdict:** the zero-divisor graph is a complete, exact, classical description of the zero-divisors whose asymmetric content coincides with the answer. No route to the graph avoids already knowing the factorization. Reconfirms the trace/free-witness ceiling.\n\nScript: /tmp/exp_zerodivisorgraph.py. Notebook Part 141. Assessment v171 (395 experiments). Paper 60. Round-15 4/6 done.",
     "domain_bridges": [],
     "domains": [
@@ -1135,14 +1116,14 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-12T16:19:41.782329+00:00",
     "title": "Experiment 395: ZERO-DIVISOR-GRAPH — Γ(Z/pq) = K_{p−1,q−1} exactly; bipartition IS the factorization"
   },
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "295ca744",
     "description": "## ECM-PARITY (round-18 #1, experiment 404, assessment v180, paper 69)\n\nThe parity face of the generic ECM order — the even-ℓ complement of ECM-ORDER-NULL (paper 66, which tested only odd ℓ): **2 | #E0(F_p) ⟺ the S₃ cubic x³+x+1 has a root mod p ⟺ the Frobenius is NOT a 3-cycle**. **Verdict: CONFIRMED null (factor-useless)** with three positive structural findings.\n\n### (1) The exact parity structure\nP(2|#E0) = 0.6493 (theory 2/3 = 1 − P(3-cycle)). The transposition face (density 1/2) is (Δ|p)-pinned: P(2|#E | (Δ|p)=−1) = **1.0000 EXACTLY** (a transposition fixes exactly one root, r=1, 2|#E with #E ≡ 2 mod 4). On (Δ|p)=+1 the Frobenius ∈ A₃ = {1, 3-cycles}: P(2|#E) = P(identity|A₃) = 1/3 (measured 0.3187). 4 | #E ALWAYS on the [1,1,1] face (full rational 2-torsion), never on [3].\n\n### (2) Headline — the first positive symmetric residue shadow on the GENERIC elliptic order\nSYM I(N mod 31; \"2|#E0(F_p) OR 2|#E0(F_q)\") = **0.1468 bits = 42× the null max (0.0035)** — carried EXACTLY by the Jacobi character: I((Δ|N); OR) = 0.1463, residual 0.0004. P(OR | (Δ|N)=−1) = **1.0000** (the −1 factor is a transposition, 2|#E forced); P(OR | (Δ|N)=+1) = 0.7358. Here (Δ|N) = (p mod 31 | 31)(q mod 31 | 31) by quadratic reciprocity ((−31|p) = (p mod 31 | 31)).\n\n### (3) The fork is NOT flat (qualifies paper 65)\nThe [1,1,1]-vs-[3] fork at (Δ|p)=+1 is residue-pinned: per-class rates 0.124–0.594 over the 15 QR-classes mod 31 (I = 0.0742); **93.3% of the fork entropy H(1/3)=0.918 determined by p mod 31²** (I = 0.8562). The fork's variance compresses the union via Jensen concavity — P(OR|(Δ|N)=+1) = 0.7358 BELOW the flat-fork 7/9 — which is why B1 = 0.147, not 0.25.\n\n### (4) Exact classical mechanism — Hilbert class field\n[1,1,1] ⟺ 4p = A²+31B² (A≡B mod 2) on **2900/2900 EXACT**, and 4p = A²+23B² on **2911/2911 EXACT**. Q(√−31) and Q(√−23) both have class number 3; their Hilbert class fields ARE the S₃-closures of x³+x+1 / x³−x+1, so [1,1,1] ⟺ ℘ principal ⟺ p splits completely in the Hilbert class field.\n\n### (5) Ray-class semiprime dial\nI(N mod 31²; OR) = 0.1811 (null max 0.0719) vs Jacobi 0.1444 — the ray-class dial thickens the channel but is which-factor-scrambled (N carries only the product).\n\n### Seals / barriers\nSymmetric only (asym 0.0012 at null — which-factor lost, barrier 2); a Jacobi/quadratic-reciprocity residue dial (barrier 5); exact order sealed behind the CRT split (barrier 6); all of it Jacobi (1801) + Hilbert class fields (class number 3) + ECM (1987) — known methods (barrier 8). Robustness: Δ=−23 gives 0.1230 (45× null max 0.0027); p−1 machinery control live (0.3052). Round-18 1/1 done. Barriers 2/5/6/8.\n",
     "domain_bridges": [],
     "domains": [
@@ -1154,7 +1135,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-12T17:19:53.175571+00:00",
     "title": "ECM-PARITY: first positive symmetric residue shadow on the GENERIC elliptic order (2|#E ⟺ cubic root ⟺ Frobenius not 3-cycle) — round-18 #1, exp 404"
   },
@@ -1506,6 +1487,25 @@
     "status": "available",
     "timestamp": "2026-07-24T14:34:16.697712+00:00",
     "title": "Goldbach Verification Framework"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 219576b7 (Q=0.900), which proved 7 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Summary.** The Alexander polynomial of the torus knot T(2,N) provably encodes\nthe factorization of N.\n\n**Theorem (knot-number bridge, proven).** For N = pq and\nA_N(X) = (X^N+1)/(X+1) (Alexander polynomial of T(2,N)):\n  A_N(X) = Φ_{2p}(X) · Φ_{2q}(X) · Φ_{2N}(X),\nwith irreducible factor degrees {p-",
+    "domain_bridges": [],
+    "domains": [
+      "Computation"
+    ],
+    "id": "push_219576b7_76a1b670",
+    "lineage_refs": [],
+    "priority_score": 0.95,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "219576b7",
+    "status": "available",
+    "timestamp": "2026-08-12T23:09:13.363386+00:00",
+    "title": "Deepening: A Knot-Number Theory Bridge (Alexander polynomial)"
   },
   {
     "ambition_level": "extension",
@@ -17488,6 +17488,26 @@
     "status": "available",
     "timestamp": "2026-08-12T22:09:45.616205+00:00",
     "title": "*Finalized after research cycle 3.*  Cycle 1 stated five conjectures; cycle 2"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — the knot–number bridge after fifteen cycles\n\n## What is now proved (all sorry-free, `Catalog/Computation/AlexanderTorusKnot/`)\n\n1. **General torus knots** (`GeneralTorus.lean`). `Δ_{a,b} = ∏_{d ∣ ab, d ∤ a, d ∤ b} Φ_d`\n   satisfies `(X^{ab}−1)(X−1) = Δ_{a,b}(X^a−1)(X^b−1)`, has degree `(a−1)(b−1)`,\n   `(τa−1)(τb−1)` irreducible factors, and `Δ_{a,b}(1) = 1`. For `a = 2` it *is* the\n   catalog's `A_N`, recovering the semiprime degree data `{p−1, q−1, (p−1)(q−1)}`.\n2. **Meet half of the lattice bridge** (`GcdBridge.lean`). `gcd(A_M, A_N) = A_{gcd(M,N)}`\n   in `ℚ[X]`, with degree readout `deg gcd + 1 = gcd(M,N)`.\n3. **Completeness** (`Completeness.lean`). `Φ_d ∣ Δ_{a,b} ↔ d ∈ S(a,b)`, and `Δ_{a,b}`\n   determines `(a,b)`.\n4. **Irreducibility = double primality**, the `T(p,q)` pipeline and its cost\n   (`Primality.lean`); **palindromicity** (`Palindromic.lean`).\n5. **Join half with defect** and **squarefreeness** (`JoinAndSquarefree.lean`).\n6. **Cyclotomic reciprocity** (`CyclotomicReciprocity.lean`): `Φ_n.reverse = Φ_n`, `n ≥ 2`.\n7. **Determinants** (`Determinant.lean`, `EvenDeterminant.lean`): `Φ_n(−1) = 1` for odd\n   `n > 1`; the cancelled identity `Δ_{a,b}(X^a−1) = (∑_{i<a}X^{bi})(X−1)`; and the complete\n   law `det T(a,b) = 1` if `ab` is odd, `= ` the odd parameter otherwise.\n8. **Semigroup gaps** (`SemigroupGaps.lean`): `Δ_{a,b} = 1 − (1−X)·G` where `G` is the gap\n   generating polynomial of `⟨a,b⟩`; `coeff_n Δ = [n ∈ ⟨a,b⟩] − [n−1 ∈ ⟨a,b⟩]`; all\n   coefficients are `0, ±1`; **`⟨a,b⟩` is a symmetric semigroup**, proved *from* the\n   palindromicity of the knot invariant; and `2·#gaps = (a−1)(b−1)` (Sylvester's genus).\n9. **Cheap readout** (`Readout.lean`): `min(a,b)` is the least positive index with\n   coefficient `+1`, and `deg Δ/(min−1) + 1 = max(a,b)`.\n10. **Jones vs Alexander** (`JonesComparison.lean`): `(1−X²)J_{a,b} = 1 − X^{a+1} − X^{b+1}\n    + X^{a+b}`, `J(1) = 1`, `J_{a,b} = J_{b,a}`, `deg J = a+b−2`, and the Vieta pair\n    `a+b = deg J + 2`, `ab = deg Δ + deg J + 1`.\n11. **The support law** (`SupportLaw.lean`, Cycle 12 — *this closes former Conjecture 1*).\n    `coeff_n Δ = [n ∈ S] − [n−1 ∈ S]` turns the support into a boundary count of the\n    semigroup: with `upJumps` (entering `S`) and `downJumps` (leaving `S`),\n    `#upJumps = #downJumps` by the telescoping identity `∑_{n≥1} coeff_n Δ = Δ(1) − 1 = 0`,\n    `supp Δ_{a,b} = {0} ∪ upJumps ∪ downJumps`, and hence\n    **`#supp Δ_{a,b} = 2·β(a,b) + 1`** with `β = #downJumps` the number of maximal gap runs.\n    For the catalog pencil, `β(2,N) = (N−1)/2`, i.e. `#supp A_N = N`.\n12. **The support lower bound** (`SupportLowerBound.lean`, Cycle 13 — *new*). Among any `a`\n    consecutive integers one is a multiple of `a`, so no gap run of `⟨a,b⟩` is longer than\n    `a−1`; mapping each gap `g` to `(runStart g, g − runStart g)` injects `gaps` into\n    `downJumps ×ˢ range (a−1)`, giving `#gaps ≤ β·(a−1)`. With Sylvester's genus formula\n    `2·#gaps = (a−1)(b−1)` this yields `b−1 ≤ 2β`, and with the support law\n    **`#supp Δ_{a,b} ≥ max(a,b)`** (using `Δ_{a,b} = Δ_{b,a}`). This is the general,\n    unconditional form of the catalog's exponential barrier: the coefficient vector of the\n    Alexander polynomial of a knot specified by `O(log ab)` bits has `Ω(max(a,b))` nonzero\n    entries. The bound is **attained**: `downJumps ⊆ gaps` gives `β ≤ #gaps` in general, and\n    for `a = 2` the run-length bound forces `β = #gaps = (N−1)/2`, so\n    `#supp A_N = N` exactly (`torusAlexander_two_support_card`).\n13. **The staircase family** (`Staircase.lean`, Cycle 15 — *new*). For the neighbouring\n    parameters `b = a+1` the semigroup has a closed membership test,\n    `n ∈ ⟨a, a+1⟩ ↔ n % a ≤ n / a` (`isRep_succ_iff`): writing `n = a·q + r` with `r < a`,\n    membership means \"the quotient pays for the remainder\". The gap runs are then explicit —\n    their starting points are exactly the `a−1` numbers `q·(a+1) + 1`, `0 ≤ q < a−1`\n    (`downJumps_succ`) — so `β(a, a+1) = a−1` and\n    **`#supp Δ_{a,a+1} = 2a − 1`** (`torusAlexander_staircase_support`). This settles the\n    `β(a,a+1)` half of Conjecture 1 below, and it shows the Cycle 13 bound is *strict* here:\n    for `a ≥ 3` one has `2a − 1 > a + 1 = max(a, a+1)`\n    (`torusAlexander_staircase_support_gt`). Both families with an exactly known support —\n    the pencil `T(2,N)` and the staircase `T(a,a+1)` — realise the common value `a + b − 2`\n    (`torusAlexander_staircase_support_eq_add_sub_two`).\n\nConjectures closed inside the project so far: the corrected join identity (the naive\n`lcm(A_M,A_N) = A_{lcm}` is **false**), squarefreeness, full cyclotomic reciprocity, the odd-\nand even-parameter determinants, the numerical-semigroup gap description, the support law and\nits quantitative lower bound, and — negatively — the claim that the Jones polynomial of\n`T(a,b)` has `O(1)` nonzero coefficients (**refuted**: `J_{5,7} = 1 + X² + X⁴ − X⁸ − X^{10}`;\nonly the numerator is four-term).\n\n---\n\n## Conjecture 1 (bold, new). An Apéry closed form for the run count `β(a,b)`\n\nCycle 13 bounds `β(a,b)` from below by `(b−1)/2` but leaves its exact value opaque. Let\n`b* = b^{-1} mod a` and, for `0 ≤ j < a`, put `σ(j) = (j − b*) mod a`. Then\n\n  `β(a,b) = −1 + Σ_{j : σ(j) > j} ( ⌊ b·(σ(j) − j) / a ⌋ + 1 )`.\n\nNumerically this holds for **all 69 coprime pairs `2 ≤ a < b ≤ 19`** (checked by direct\nenumeration of `⟨a,b⟩`; the Lean development currently proves only the inequality\n`b−1 ≤ 2β ≤ (a−1)(b−1)`, so the identity above is evidence, not yet a theorem). Two\nconsequences to test: `β` is *not* a quasi-polynomial in `b` for fixed `a` (its jumps track\nthe continued-fraction expansion of `b/a`), and `β(a, a+1) = a−1` exactly. The second of\nthese is **now a theorem** (Cycle 15, `card_downJumps_succ`), and it shows the lower bound\n`#supp ≥ max(a,b)` is *not* tight on the staircase family. The refined form of the bound to\naim at is therefore\n\n  `#supp Δ_{a,b} = 2β(a,b) + 1 ≥ a + b − 2`,\n\nwith equality exactly on the two families whose support is now known in closed form,\n`(2,N)` and `(a,a+1)`; equivalently `2β(a,b) ≥ (a−1) + (b−1) − 1`, which is strictly stronger\nthan the proved `2β ≥ b−1` whenever `a > 2`.\n\n**The key insight is** that a run start is an element `n = bj + ka` of the Apéry set stratum\n`j` whose predecessor is a gap, and `n−1 ∉ ⟨a,b⟩` is equivalent to `n − 1 < b·σ(j)`, so each\nApéry stratum contributes an interval of `k`'s whose length is an explicit floor.\n\n**Why now?** `SemigroupGaps.lean` already carries the uniqueness of reduced representations\n(`rep_lt_unique`), which is exactly the input needed to turn \"least element of a residue\nclass\" into the Apéry threshold `b·σ(j)`; nothing analytic is required.\n\n## Conjecture 2 (bold, cross-domain). Symmetric semigroups characterize torus-knot Alexander polynomials\n\nA monic palindromic `f ∈ ℤ[X]` with `f(1) = 1` and coefficients in `{0,±1}` is the Alexander\npolynomial of a torus knot **iff** the set `S_f = {n : ∑_{k ≤ n} coeff_k f = 1}` is a\nnumerical semigroup generated by two coprime integers. Equivalently: the \"gap function\"\nconstruction of Cycle 9 is a bijection between two-generated symmetric numerical semigroups\nand torus-knot Alexander polynomials.\n\n**The key insight is** that partial sums invert the difference operator\n`coeff_n = [n ∈ S] − [n−1 ∈ S]`, so the semigroup is *recoverable* from the polynomial by an\n`O(deg)` prefix scan; the content of the conjecture is that closure under addition is exactly\nwhat pins down the two generators.\n\n**Why now?** Both directions of the dictionary are half-built: `SemigroupGaps.lean` gives\nsemigroup `→` polynomial, `Readout.lean` recovers `(a,b)` from two coefficients, and Cycle 12\nidentifies the support with the run boundaries; the missing step is that an arbitrary\nprefix-sum set closed under addition is `⟨a,b⟩`.\n\n## Conjecture 3 (grand challenge, cross-domain). Three generators and cable knots\n\nFor pairwise coprime `a, b, c` the iterated torus (cable) knot `T((a,b),c)` has Alexander\npolynomial `Δ = 1 − (1−X)·G` with `G` the gap polynomial of the *three-generated* numerical\nsemigroup `⟨ab, ac, bc⟩`, and the analogue of Sylvester's formula computes its genus. Since\nthe Frobenius number of three generators has no closed form (Curtis' theorem), this would\nexhibit a knot invariant with provably no closed-form determinant.\n\n**The key insight is** that the plane-curve-singularity picture behind Cycle 9 (`Δ` is the\nPoincaré series of the local ring of `x^a = y^b`) survives for cables, where the value\nsemigroup acquires a third generator, so the \"no closed form\" phenomenon of the Frobenius\nproblem becomes a statement about knot invariants.\n\n**Why now?** Cycle 9 proves the two-generator case by pure polynomial algebra\n(`gapPoly_identity`), which never used `|{a,b}| = 2` beyond the uniqueness of reduced\nrepresentations — exactly the step that fails, controllably, for three generators.\n\n## Conjecture 4 (bold, complexity). Reading is `Θ(1)` queries but `Ω(ab)` materialization\n\nAny algorithm that, given oracle access to individual coefficients of `Δ_{a,b}`, outputs\n`{a,b}` needs `O(1)` queries, while any algorithm that must first *materialize* `Δ_{a,b}` uses\n`Ω(max(a,b))` time — now a theorem (`torusAlexander_support_card_ge`), and conjecturally\n`Ω(ab / log ab)` once the run-count formula of Conjecture 1 is available. Formally: the\nreadout of Cycle 10 is query-optimal, the factorization of `Δ_{a,b}` over `ℤ` (Cycle 3) is\nnot, and the gap between them is exactly the \"catch\" of the knot–number bridge.\n\n**The key insight is** that Cycle 10 separates *information* from *representation*: two\ncoefficient queries suffice, so no information-theoretic obstruction exists — the entire\nhardness lives in producing the object, which is a statement about encoding size, not about\nnumber theory.\n\n**Why now?** `torusAlexander_cheap_readout` supplies the upper bound and Cycle 13 supplies an\nunconditional materialization lower bound for *every* torus knot, not just the `T(2,N)`\npencil; formalizing a query model over `Finset` oracles is the only missing ingredient.\n\n## Conjecture 5 (next-cycle sub-conjecture). Defect valuations beyond the identity function\n\n`deg C_{M,N} = gcd(M,N) + lcm(M,N) − M − N` (proved) is the `f = id` case of a general law:\nfor every arithmetic function `f` obtained by summing a fixed weight over divisor sets,\n`f(M) + f(N) + f_defect = f(gcd) + f(lcm)`, with `f_defect = 0` exactly on nested pairs. The\ntotient weight gives the degree law; the constant weight gives the factor-count law\n`(τ(M)−1) + (τ(N)−1) + defect = (τ(gcd)−1) + (τ(lcm)−1)`.\n\n**The key insight is** that the Alexander functor sends the divisor lattice to a lattice of\nsquarefree cyclotomic products, so every inclusion–exclusion identity of divisor sets becomes\na polynomial identity and the defect is a Möbius-type error term of the join.\n\n**Why now?** `alexander_gcd_lcm_identity` and `joinDefect_natDegree` give the `f = id` case,\nand `torusAlexander_card_factors` gives the constant-weight case for a single knot; the\ngeneral one needs the same union/intersection bookkeeping over divisor `Finset`s.\n",
+    "domain_bridges": [],
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_1187",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "219576b7",
+    "status": "available",
+    "timestamp": "2026-08-12T23:09:06.174776+00:00",
+    "title": "1. **General torus knots** (`GeneralTorus.lean`). `Δ_{a,b} = ∏_{d ∣ ab, d ∤ a, d"
   },
   {
     "ambition_level": "extension",

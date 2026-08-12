@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "5357ee14",
-      "domain": "Shared",
-      "key_insight": "# Future directions\n\nDerived from the results now proved in `Catalog/Shared/DreamRevisionNormalForm.lean`\n(last-occurrence normalization `mem_reviseSeq`, extensional rigidity `reviseSeq_ext_iff`,\nnorm",
-      "quality_score": 0.79609,
-      "sorry_count": 0,
-      "theorem_count": 37,
-      "timestamp": "2026-08-05T06:55:48",
-      "title": "**Conjecture.** Every finite sequence of signed-literal revisions has a unique n"
-    },
-    {
       "cycle_id": "8dd43c13",
       "domain": "Applications",
       "key_insight": "# Future directions\n\nThe file `Applications/EML/ActivationMonotonicityTropicalBridge.lean` proves:\n\n* the exact derivative and second-derivative formulas for the generalized EML\n  activation `E_{a,b}(",
@@ -499,19 +489,19 @@
       "theorem_count": 6,
       "timestamp": "2026-08-12T22:09:52",
       "title": "The Structural Orthogonality Framework (8 barriers)"
+    },
+    {
+      "cycle_id": "219576b7",
+      "domain": "Computation",
+      "key_insight": "# Future Directions — the knot–number bridge after fifteen cycles\n\n## What is now proved (all sorry-free, `Catalog/Computation/AlexanderTorusKnot/`)\n\n1. **General torus knots** (`GeneralTorus.lean`).",
+      "quality_score": 0.9,
+      "sorry_count": 0,
+      "theorem_count": 7,
+      "timestamp": "2026-08-12T23:09:13",
+      "title": "A Knot-Number Theory Bridge (Alexander polynomial)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "01a8c97a",
-      "domain": "Geometry",
-      "key_insight": "# Future directions\n\nThe formal development proves the algebraic Gauss–Bonnet invariant for a\nconstant-curvature hyperbolic triangle and its extremal consequences. The next\nsteps toward a geometric, r",
-      "quality_score": 0.72854,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-08-02T09:33:21",
-      "title": "Cosmic-Horror-Geometry: Non-Euclidean Spatial Invariants of Mad Architectures"
-    },
     {
       "cycle_id": "ffa9af78",
       "domain": "Algebra",
@@ -2501,27 +2491,19 @@
       "theorem_count": 6,
       "timestamp": "2026-08-12T22:09:52",
       "title": "The Structural Orthogonality Framework (8 barriers)"
+    },
+    {
+      "cycle_id": "219576b7",
+      "domain": "Computation",
+      "key_insight": "# Future Directions — the knot–number bridge after fifteen cycles\n\n## What is now proved (all sorry-free, `Catalog/Computation/AlexanderTorusKnot/`)\n\n1. **General torus knots** (`GeneralTorus.lean`).",
+      "quality_score": 0.9,
+      "sorry_count": 0,
+      "theorem_count": 7,
+      "timestamp": "2026-08-12T23:09:13",
+      "title": "A Knot-Number Theory Bridge (Alexander polynomial)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "4c1e8096",
-      "domain": "Geometry",
-      "name": "mobius_mapsTo_upperHalfPlane",
-      "quality": 0.71609
-    },
-    {
-      "cycle_id": "4c1e8096",
-      "domain": "Geometry",
-      "name": "hasDerivAt_mobiusC",
-      "quality": 0.71609
-    },
-    {
-      "cycle_id": "6b69485b",
-      "domain": "Cryptography",
-      "name": "ray_param_eq",
-      "quality": 0.720175
-    },
     {
       "cycle_id": "6b69485b",
       "domain": "Cryptography",
@@ -2803,9 +2785,27 @@
       "domain": "Probability",
       "name": "ManyOneReduces",
       "quality": 0.85
+    },
+    {
+      "cycle_id": "219576b7",
+      "domain": "Computation",
+      "name": "cyclotomic_prime_int",
+      "quality": 0.9
+    },
+    {
+      "cycle_id": "219576b7",
+      "domain": "Computation",
+      "name": "cyclotomic_dvd_torusAlexander_iff",
+      "quality": 0.9
+    },
+    {
+      "cycle_id": "219576b7",
+      "domain": "Computation",
+      "name": "spectrum_eq_of_torusAlexander_eq",
+      "quality": 0.9
     }
   ],
-  "last_updated": "2026-08-12T22:09:52",
+  "last_updated": "2026-08-12T23:09:13",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3269,12 +3269,6 @@
     ],
     "Computation": [
       {
-        "cycle_id": "63e5c24f",
-        "quality": 0.7934299999999999,
-        "theorems": 50,
-        "title": "ArXiv paper: Finding Nearly-Periodic Components in Digraphs and Markov Chains fr"
-      },
-      {
         "cycle_id": "0763cd86",
         "quality": 0.686,
         "theorems": 536,
@@ -3327,6 +3321,12 @@
         "quality": 0.84,
         "theorems": 62,
         "title": "The Quantum-Classical Boundary in Integer Factorization"
+      },
+      {
+        "cycle_id": "219576b7",
+        "quality": 0.9,
+        "theorems": 7,
+        "title": "A Knot-Number Theory Bridge (Alexander polynomial)"
       }
     ],
     "Cryptography": [
