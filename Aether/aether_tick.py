@@ -1498,6 +1498,7 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
                         elif getattr(job, "status", None) in ("dispatch_queued", "retry_queued"):
                             print(f"[Tick] Queued injected issue {job.job_id[:8]}: {job.concept.title[:60]} (at max_inflight)")
                             extractor._save_inflight()
+                            break
                         else:
                             extractor._release_direction(job)
                             print(f"[Tick] Dispatch failed for injected issue {job.concept.title[:60]}, direction released")
@@ -1505,6 +1506,7 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
                         print(f"[Tick] Inner error dispatching injected issue: {inner_e}")
                         import traceback
                         traceback.print_exc()
+                        break
         except Exception as e:
             print(f"[Tick] Failed to dispatch injected issues: {e}")
 

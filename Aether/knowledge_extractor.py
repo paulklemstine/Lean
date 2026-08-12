@@ -257,7 +257,7 @@ class KnowledgeExtractor:
         self.inflight_path = self.workspace / "inflight_jobs.json"
         self.max_retries = self.config.get("autoresearch", {}).get("max_retries", 2)
         self.phase_b_min_score = self.config.get("phase_b", {}).get("min_score", 0.25)
-        self.max_inflight = self.config.get("autoresearch", {}).get("max_inflight", 9)
+        self.max_inflight = self.config.get("autoresearch", {}).get("max_inflight", 6)
 
         
         self._load_inflight()
@@ -1552,7 +1552,7 @@ Research mode: {concept.research_mode}
         errors still retry with escalating backoff.
         """
         if max_inflight is None:
-            max_inflight = getattr(self, "max_inflight", 9)
+            max_inflight = getattr(self, "max_inflight", 6)
         current_active = await self.get_capacity_used_async()
         if current_active >= max_inflight:
             raise RuntimeError(f"Aristotle capacity limit reached ({current_active}/{max_inflight}). Dispatch blocked.")
