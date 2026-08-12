@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-11T22:14:09.521920+00:00",
+  "last_updated": "2026-08-12T00:21:19.160428+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -53390,6 +53390,50 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-08-11T22:14:09.382153+00:00",
       "title": "A Conditional-Impossibility Framework for Classical Factoring"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.225,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Bridges",
+      "duration_seconds": 4147.245372056961,
+      "end_time": 1786494000.3741581,
+      "files_integrated": 4,
+      "job_id": "869ec8f3",
+      "outcome_quality": 0.627125,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.6494310724006533,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.62,
+        "applications": 0.92,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.865,
+        "cross_domain": 1.0,
+        "grade": "world_class",
+        "importance": 0.9081,
+        "novelty": 0.9379,
+        "proof_depth": 0.8954,
+        "usefulness": 0.9477
+      },
+      "quality_score": 0.627125,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1786489853.128786,
+      "strategy_count": 0,
+      "theorem_count": 135,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 122,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-08-12T00:21:19.063502+00:00",
+      "title": "The CRT-Split No-Go: Why N-Alone Iteration Cannot Factor in Poly(log N)"
     }
   ]
 }
