@@ -1,4 +1,4 @@
-import Catalog.Computation.FourierFunctor.Duality
+import Computation.FourierFunctor.Duality
 
 /-!
 # The Fourier transform as a natural isomorphism of functors

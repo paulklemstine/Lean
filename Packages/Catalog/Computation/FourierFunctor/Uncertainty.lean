@@ -1,4 +1,4 @@
-import Catalog.Computation.FourierFunctor.Transform
+import Computation.FourierFunctor.Transform
 
 /-!
 # The uncertainty principle for the Fourier functor

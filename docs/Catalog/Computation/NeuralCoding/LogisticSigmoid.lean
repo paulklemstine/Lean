@@ -6,10 +6,6 @@ import Shared.Logic.One_plus_exp_pos
 Auto-generated from theorem catalog database.
 Domain: Shared
 Declarations: 6
-
-The declarations below were reordered so that each one appears after the
-results it uses, and the import supplying `one_plus_exp_pos` was added; the
-statements and proofs are unchanged.
 -/
 
 noncomputable section
@@ -20,8 +16,8 @@ def logisticSigmoid (x : ℝ) : ℝ := Real.exp x / (1 + Real.exp x)
 /-- Sigmoid at zero equals 1/2 -/
 theorem logisticSigmoid_zero : logisticSigmoid 0 = 1 / 2 := by
   unfold logisticSigmoid
-  simp [Real.exp_zero]
-  ring
+  rw [Real.exp_zero]
+  norm_num
 
 /-- The logistic sigmoid is strictly positive -/
 lemma logisticSigmoid_pos (x : ℝ) : logisticSigmoid x > 0 := by

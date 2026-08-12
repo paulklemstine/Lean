@@ -1,4 +1,4 @@
-import Catalog.Computation.FourierFunctor.Uncertainty
+import Computation.FourierFunctor.Uncertainty
 
 /-!
 # Convolution, Plancherel, and the fourth-power identity
