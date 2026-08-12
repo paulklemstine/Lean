@@ -103,6 +103,8 @@ class ResearchJob:
     aristotle_self_score: Optional[float] = None  # Aristotle's self-assessed overall score
     aristotle_self_metrics: Optional[Dict[str, float]] = None  # Detailed evaluation dimensions
     aristotle_self_rationale: Optional[str] = None  # Rationale for the self-scores
+    result_self_evaluation: Optional[str] = None  # Raw SELF_EVALUATION.json content (set during integrate)
+    self_evaluation: Optional[str] = None  # Legacy alias for result_self_evaluation
     decomposition_depth: int = 0
     prompt_version: str = "v1"  # Which prompt version was used: v1, v2, v3
     prod_count: int = 0  # How many times Aristotle was explicitly prodded to continue
@@ -308,21 +310,23 @@ class KnowledgeExtractor:
         path = self.workspace / "inflight_jobs.json"
         if not path.exists():
             return
-        # Fields removed from ResearchJob — strip from saved data to avoid errors
-        removed_fields = {
-        }
+        # Build set of valid ResearchJob __init__ parameter names once
+        import inspect
+        _rj_params = set(inspect.signature(ResearchJob.__init__).parameters.keys()) - {"self"}
+        _rc_params = set(inspect.signature(ResearchConcept.__init__).parameters.keys()) - {"self"}
         try:
             data = json.loads(path.read_text())
             for pid, d in data.items():
                 if d.get('status') in ('failed', 'integrated', 'rejected'):
                     continue
                 concept_dict = d.pop('concept', {})
+                concept_dict = {k: v for k, v in concept_dict.items() if k in _rc_params}
                 concept = ResearchConcept(**concept_dict)
                 d['concept'] = concept
                 if 'project_dir' in d and d['project_dir']:
                     d['project_dir'] = Path(d['project_dir'])
-                for f in removed_fields:
-                    d.pop(f, None)
+                # Strip any keys not accepted by ResearchJob.__init__
+                d = {k: v for k, v in d.items() if k in _rj_params}
                 self.inflight[pid] = ResearchJob(**d)
             if self.inflight:
                 print(f"[Aether] Recovered {len(self.inflight)} inflight jobs from previous run")
