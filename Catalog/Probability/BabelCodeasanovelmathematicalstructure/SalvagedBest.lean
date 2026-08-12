@@ -1,156 +1,107 @@
 import Mathlib
 
-/-!
-# Babel codes: Plotkin, Lawvere and sphere packing
+/-! # BabelCode as a novel mathematical structure — salvaged results
 
-The auto-generated version of this file was a fragment: it used `Volume`,
-`IsBabelCode`, `hammingBall` and `column_disagreement_bound` without defining
-them, had no imports and an unbalanced `namespace`/`end` pair.  This file
-supplies the missing definitions together with the missing counting lemma, and
-gives complete proofs of all the statements the fragment contained.
-
-The "library of Babel" of parameters `(A, L)` is the set of words of length `L`
-over an alphabet with `A` letters; a *Babel code* of minimum distance `d` is a
-set of words that are pairwise at Hamming distance at least `d`.
+The catalog snapshot of this file had lost its preamble: the statements below
+refer to the *library* `Volume A L` of length-`L` words over an `A`-letter
+alphabet, to Babel codes (`IsBabelCode`), to Hamming balls (`hammingBall`) and
+to a column-disagreement bound, none of which were present in the file.  The
+preamble reinstates those definitions and supplies a complete proof of the
+column-disagreement bound (a Cauchy-Schwarz argument), after which all the
+salvaged theorems below type-check.
 -/
-
-namespace BabelCode
 
 open Function Finset
 
-/-- The library of Babel: words of length `L` over an alphabet of `A` letters. -/
+namespace BabelCode
+
+/-- The *library*: the set of all words of length `L` over an alphabet with `A`
+letters.  A point of `Volume A L` is a single book of the library. -/
 abbrev Volume (A L : ℕ) : Type := Fin L → Fin A
 
-variable {A L : ℕ}
+/-- `C` is a Babel code of minimum distance `d`: any two distinct codewords
+differ in at least `d` positions. -/
+def IsBabelCode {A L : ℕ} (C : Finset (Volume A L)) (d : ℕ) : Prop :=
+  ∀ v w : Volume A L, v ∈ C → w ∈ C → v ≠ w → d ≤ hammingDist v w
 
-/-- A code with minimum distance `d`. -/
-def IsBabelCode (C : Finset (Volume A L)) (d : ℕ) : Prop :=
-  ∀ v w, v ∈ C → w ∈ C → v ≠ w → d ≤ hammingDist v w
-
-/-- The Hamming ball of radius `r` around `v`. -/
-def hammingBall (v : Volume A L) (r : ℕ) : Finset (Volume A L) :=
+/-- The Hamming ball of radius `r` centred at the word `v`. -/
+def hammingBall {A L : ℕ} (v : Volume A L) (r : ℕ) : Finset (Volume A L) :=
   Finset.univ.filter (fun u => hammingDist v u ≤ r)
 
-@[simp] lemma mem_hammingBall {v u : Volume A L} {r : ℕ} :
-    u ∈ hammingBall v r ↔ hammingDist v u ≤ r := by simp [hammingBall]
-
-/-! ## Counting disagreements in a single column -/
-
-/-- The number of codewords of `C` carrying the letter `a` in column `j`. -/
-def colCount (C : Finset (Volume A L)) (j : Fin L) (a : Fin A) : ℕ :=
-  (C.filter (fun c => c j = a)).card
-
-lemma sum_colCount (C : Finset (Volume A L)) (j : Fin L) :
-    ∑ a : Fin A, colCount C j a = C.card :=
-  (Finset.card_eq_sum_card_fiberwise (t := Finset.univ)
-    (fun c _ => Finset.mem_coe.mpr (Finset.mem_univ (c j)))).symm
-
-lemma agree_pairs (C : Finset (Volume A L)) (j : Fin L) :
-    ((C ×ˢ C).filter (fun p => p.1 j = p.2 j)).card = ∑ a : Fin A, (colCount C j a) ^ 2 := by
-  rw [Finset.card_eq_sum_card_fiberwise (f := fun p : Volume A L × Volume A L => p.1 j)
-      (t := Finset.univ) (fun p _ => Finset.mem_coe.mpr (Finset.mem_univ _))]
-  refine Finset.sum_congr rfl fun a _ => ?_
-  have hset : (((C ×ˢ C).filter (fun p => p.1 j = p.2 j)).filter (fun p => p.1 j = a))
-      = (C.filter (fun c => c j = a)) ×ˢ (C.filter (fun c => c j = a)) := by
-    ext ⟨x, y⟩
-    simp only [Finset.mem_filter, Finset.mem_product]
-    constructor
-    · rintro ⟨⟨⟨hx, hy⟩, hxy⟩, hxa⟩
-      exact ⟨⟨hx, hxa⟩, ⟨hy, hxy ▸ hxa⟩⟩
-    · rintro ⟨⟨hx, hxa⟩, ⟨hy, hya⟩⟩
-      exact ⟨⟨⟨hx, hy⟩, hxa.trans hya.symm⟩, hxa⟩
-  rw [hset, Finset.card_product, colCount, sq]
-
-/-- **Column disagreement bound.**  In any single column, the number of ordered pairs of
-codewords that disagree is at most `|C|²(A-1)/A`, stated multiplicatively to stay in `ℕ`. -/
-theorem column_disagreement_bound (hA : 1 ≤ A) (j : Fin L) (C : Finset (Volume A L)) :
-    A * (∑ p ∈ C ×ˢ C, if p.1 j ≠ p.2 j then 1 else 0) ≤ C.card ^ 2 * (A - 1) := by
-  set S := ∑ p ∈ C ×ˢ C, if p.1 j ≠ p.2 j then 1 else 0 with hS
-  set T := ∑ p ∈ C ×ˢ C, if p.1 j = p.2 j then 1 else 0 with hT
-  have hTeq : T = ∑ a : Fin A, (colCount C j a) ^ 2 := by
-    rw [hT, ← Finset.card_filter]
-    exact agree_pairs C j
-  have hcs : C.card ^ 2 ≤ A * T := by
-    rw [hTeq, ← sum_colCount C j]
-    simpa using sq_sum_le_card_mul_sum_sq (s := (Finset.univ : Finset (Fin A)))
-      (f := colCount C j)
-  have htotal : S + T = C.card ^ 2 := by
-    rw [hS, hT, ← Finset.sum_add_distrib]
-    have : ∀ p ∈ C ×ˢ C,
-        ((if p.1 j ≠ p.2 j then 1 else 0) + (if p.1 j = p.2 j then 1 else 0)) = 1 := by
-      intro p _
-      by_cases h : p.1 j = p.2 j <;> simp [h]
-    rw [Finset.sum_congr rfl this]
-    simp [Finset.card_product, sq]
-  obtain ⟨a1, rfl⟩ : ∃ a1, A = a1 + 1 := ⟨A - 1, by omega⟩
+/-- **Column disagreement bound.**  In a single coordinate `j`, the number of
+ordered pairs of codewords that disagree is at most `|C|² (A-1)/A`.  This is the
+Cauchy-Schwarz step in the proof of the Plotkin bound. -/
+theorem column_disagreement_bound {A L : ℕ} (hA : 1 ≤ A) (j : Fin L)
+    (C : Finset (Volume A L)) :
+    (∑ p ∈ C ×ˢ C, if p.1 j ≠ p.2 j then 1 else 0) * A ≤ C.card ^ 2 * (A - 1) := by
+  classical
+  set n : Fin A → ℕ := fun a => (C.filter (fun c => c j = a)).card with hn
+  have hQ : (∑ p ∈ C ×ˢ C, if p.1 j = p.2 j then 1 else 0) = ∑ a : Fin A, n a ^ 2 := by
+    rw [Finset.sum_product]
+    have h1 : ∀ x ∈ C, (∑ y ∈ C, if x j = y j then 1 else 0) = n (x j) := by
+      intro x _
+      rw [Finset.sum_boole]
+      simp [hn, eq_comm]
+    rw [Finset.sum_congr rfl h1]
+    rw [← Finset.sum_fiberwise C (fun c => c j) (fun x => n (x j))]
+    refine Finset.sum_congr rfl ?_
+    intro a _
+    have hfib : ∀ x ∈ (C.filter (fun c => c j = a)), n (x j) = n a := by
+      intro x hx; simp only [Finset.mem_filter] at hx; rw [hx.2]
+    rw [Finset.sum_congr rfl hfib]
+    simp [hn, sq]
+  have hSQ : (∑ p ∈ C ×ˢ C, if p.1 j ≠ p.2 j then 1 else 0)
+      + (∑ p ∈ C ×ˢ C, if p.1 j = p.2 j then 1 else 0) = C.card ^ 2 := by
+    have h2 : ∀ p ∈ C ×ˢ C,
+        ((if p.1 j ≠ p.2 j then 1 else 0) + (if p.1 j = p.2 j then 1 else 0) : ℕ) = 1 := by
+      intro p _; by_cases h : p.1 j = p.2 j <;> simp [h]
+    rw [← Finset.sum_add_distrib, Finset.sum_congr rfl h2]
+    simp [sq]
+  have hcard : (∑ a : Fin A, n a) = C.card := by
+    have h := Finset.sum_fiberwise C (fun c => c j) (fun _ => (1 : ℕ))
+    simp only [Finset.sum_const, smul_eq_mul, mul_one] at h
+    rw [← h]
+  have hcs : C.card ^ 2 ≤ A * ∑ a : Fin A, n a ^ 2 := by
+    have h := sq_sum_le_card_mul_sum_sq (s := (Finset.univ : Finset (Fin A))) (f := n)
+    simpa [hcard] using h
+  obtain ⟨m, rfl⟩ : ∃ m, A = m + 1 := ⟨A - 1, by omega⟩
+  set S := (∑ p ∈ C ×ˢ C, if p.1 j ≠ p.2 j then 1 else 0) with hS
+  set Q := ∑ a : Fin (m + 1), n a ^ 2 with hQdef
+  rw [hQ] at hSQ
+  have h3 : S ≤ m * Q := by nlinarith [hSQ, hcs]
   simp only [Nat.add_sub_cancel]
-  nlinarith [htotal, hcs]
+  nlinarith [hSQ, h3]
 
-/-! ## The Plotkin bound -/
-
-lemma hammingDist_eq_sum (x y : Volume A L) :
-    hammingDist x y = ∑ j : Fin L, if x j ≠ y j then 1 else 0 := by
-  simp [hammingDist, Finset.card_filter]
-
-lemma sum_dist_eq_sum_columns (C : Finset (Volume A L)) :
-    ∑ p ∈ C ×ˢ C, hammingDist p.1 p.2
-      = ∑ j : Fin L, ∑ p ∈ C ×ˢ C, if p.1 j ≠ p.2 j then 1 else 0 := by
-  rw [Finset.sum_congr rfl fun p (_ : p ∈ C ×ˢ C) => hammingDist_eq_sum p.1 p.2,
-    Finset.sum_comm]
-
-lemma sum_dist_lower (C : Finset (Volume A L)) {d : ℕ} (hC : IsBabelCode C d) :
-    (C.card * C.card - C.card) * d ≤ ∑ p ∈ C ×ˢ C, hammingDist p.1 p.2 := by
-  have hsub : C.offDiag ⊆ C ×ˢ C := by
-    intro p hp
-    simp only [Finset.mem_offDiag] at hp
-    exact Finset.mem_product.mpr ⟨hp.1, hp.2.1⟩
-  calc (C.card * C.card - C.card) * d
-      = ∑ _p ∈ C.offDiag, d := by rw [Finset.sum_const, Finset.offDiag_card, smul_eq_mul]
-    _ ≤ ∑ p ∈ C.offDiag, hammingDist p.1 p.2 := by
-        refine Finset.sum_le_sum fun p hp => ?_
-        simp only [Finset.mem_offDiag] at hp
-        exact hC p.1 p.2 hp.1 hp.2.1 hp.2.2
-    _ ≤ ∑ p ∈ C ×ˢ C, hammingDist p.1 p.2 :=
-        Finset.sum_le_sum_of_subset hsub
-
-lemma sum_dist_upper (hA : 1 ≤ A) (C : Finset (Volume A L)) :
-    A * (∑ p ∈ C ×ˢ C, hammingDist p.1 p.2) ≤ L * (C.card ^ 2 * (A - 1)) := by
-  rw [sum_dist_eq_sum_columns, Finset.mul_sum]
-  calc ∑ j : Fin L, A * ∑ p ∈ C ×ˢ C, (if p.1 j ≠ p.2 j then 1 else 0)
-      ≤ ∑ _j : Fin L, C.card ^ 2 * (A - 1) :=
-        Finset.sum_le_sum fun j _ => column_disagreement_bound hA j C
-    _ = L * (C.card ^ 2 * (A - 1)) := by simp [mul_comm]
-
-/-- **The Plotkin bound.**  If `L(A-1) < dA` then a code of minimum distance `d`
-satisfies `|C| · (dA - L(A-1)) ≤ dA`.
-
-The hypothesis `1 ≤ d` is part of the statement as originally posed; the proof
-below does not need it (it is implied by `L * (A-1) < d * A`). -/
-theorem plotkin_bound {A L d : ℕ} (hA : 1 ≤ A) (_hd : 1 ≤ d)
+/-- **Plotkin bound.** -/
+theorem plotkin_bound {A L d : ℕ} (hA : 1 ≤ A) (hd : 1 ≤ d)
     (hPlotkin : L * (A - 1) < d * A)
     (C : Finset (Volume A L)) (hC : IsBabelCode C d) :
     C.card * (d * A - L * (A - 1)) ≤ d * A := by
-  rcases Nat.eq_zero_or_pos C.card with hm | hm
-  · simp [hm]
-  obtain ⟨k, hk⟩ : ∃ k, C.card = k + 1 := ⟨C.card - 1, by omega⟩
-  have hlow := sum_dist_lower C hC
-  have hup := sum_dist_upper hA C
-  -- combine: A * (m*m - m) * d ≤ L * m² * (A-1)
-  have hkey : A * ((C.card * C.card - C.card) * d) ≤ L * (C.card ^ 2 * (A - 1)) :=
-    le_trans (Nat.mul_le_mul_left A hlow) hup
-  rw [hk] at hkey
-  have hcancel : A * d * k ≤ L * (A - 1) * (k + 1) := by
-    have hexp : A * (((k + 1) * (k + 1) - (k + 1)) * d) = (k + 1) * (A * d * k) := by
-      have : (k + 1) * (k + 1) - (k + 1) = (k + 1) * k := by ring_nf; omega
-      rw [this]; ring
-    have hexp2 : L * ((k + 1) ^ 2 * (A - 1)) = (k + 1) * (L * (A - 1) * (k + 1)) := by ring
-    rw [hexp, hexp2] at hkey
-    exact Nat.le_of_mul_le_mul_left hkey (Nat.succ_pos k)
-  set T := L * (A - 1) with hTdef
-  obtain ⟨s, hs⟩ : ∃ s, d * A = T + s := ⟨d * A - T, by omega⟩
-  have hAd : A * d = T + s := by rw [mul_comm]; exact hs
-  rw [hk, hs, Nat.add_sub_cancel_left]
-  nlinarith [hcancel, hAd]
+      by_contra! h_contra;
+      -- By double-counting the total pairwise Hamming distance, we have:
+      have h_double_count : ∑ p ∈ C ×ˢ C, hammingDist p.1 p.2 ≥ C.card * (C.card - 1) * d := by
+        have h_double_count : ∑ p ∈ C ×ˢ C, (if p.1 = p.2 then 0 else d) ≤ ∑ p ∈ C ×ˢ C, hammingDist p.1 p.2 := by
+          gcongr ; aesop;
+        simp_all +decide [ Finset.sum_ite ];
+        convert h_double_count using 2 ; rw [ show ( Finset.filter ( fun x : Volume A L × Volume A L => ¬x.1 = x.2 ) ( C ×ˢ C ) ) = Finset.offDiag C by ext ; aesop ] ; simp +decide [ Finset.offDiag_card ];
+        rw [ Nat.mul_sub_left_distrib, Nat.mul_one ];
+      -- On the other hand, we can bound the total pairwise Hamming distance from above by considering each coordinate separately.
+      have h_upper_bound : ∑ p ∈ C ×ˢ C, hammingDist p.1 p.2 ≤ L * C.card ^ 2 * (A - 1) / A := by
+        have h_upper_bound : ∑ p ∈ C ×ˢ C, hammingDist p.1 p.2 = ∑ j : Fin L, ∑ p ∈ C ×ˢ C, if p.1 j ≠ p.2 j then 1 else 0 := by
+          rw [ Finset.sum_comm, Finset.sum_congr rfl ];
+          simp +decide [ hammingDist ];
+          simp +decide [ Finset.sum_ite ];
+        -- By the column disagreement bound, each coordinate contributes at most $C.card^2 * (A - 1) / A$ to the sum.
+        have h_column_disagreement : ∀ j : Fin L, ∑ p ∈ C ×ˢ C, (if p.1 j ≠ p.2 j then 1 else 0) ≤ C.card ^ 2 * (A - 1) / A := by
+          intro j
+          have := column_disagreement_bound hA j C
+          simp_all +decide [ Finset.sum_ite ];
+          rwa [ Nat.le_div_iff_mul_le hA ];
+        rw [ h_upper_bound, Nat.le_div_iff_mul_le hA ];
+        exact le_trans ( Nat.mul_le_mul_right _ ( Finset.sum_le_sum fun _ _ => h_column_disagreement _ ) ) ( by norm_num; nlinarith [ Nat.div_mul_le_self ( #C ^ 2 * ( A - 1 ) ) A ] );
+      rcases k : #C with ( _ | _ | k ) <;> simp_all +decide;
+      · omega;
+      · rw [ Nat.le_div_iff_mul_le ] at h_upper_bound <;> nlinarith [ Nat.sub_add_cancel hPlotkin.le, mul_pos ( Nat.succ_pos ‹_› ) ( Nat.succ_pos ‹_› ) ]
 
 /-- **Example**: Binary code, length 6, min distance 4.
     Plotkin gives |C| · (8 - 6) ≤ 8, so |C| ≤ 4. -/
@@ -165,7 +116,13 @@ example : ∀ (C : Finset (Volume 2 6)), IsBabelCode C 4 →
     Equality holds iff C is an equidistant code (all pairs at exactly distance d).
 -/
 
-/-! ## Lawvere's fixed point argument -/
+theorem babel_lawvere {A L : ℕ} (hA : 2 ≤ A)
+    (f : Volume A L → Volume A L → Fin A) : ¬Surjective f := by
+      -- Assume for contradiction that f is surjective.
+      by_contra h_surjective;
+      obtain ⟨ g, hg ⟩ := h_surjective ( fun x => ⟨ ( f x x + 1 ) % A, Nat.mod_lt _ ( by linarith ) ⟩ ) ; have := congr_fun hg ; simp_all +decide ;
+      replace hg := congr_fun hg g; simp_all +decide [ Fin.ext_iff ] ;
+      linarith [ Nat.mod_eq_of_lt ( show ( f g g : ℕ ) + 1 < A from lt_of_le_of_ne ( Nat.succ_le_of_lt ( Fin.is_lt _ ) ) ( by intro t; rw [ t ] at hg; norm_num at hg; linarith [ Fin.is_lt ( f g g ) ] ) ) ]
 
 /-
 **Generalization**: Lawvere for arbitrary finite types with |Y| ≥ 2.
@@ -182,62 +139,23 @@ theorem lawvere_finite {X Y : Type*} [Fintype X] [Fintype Y] [DecidableEq Y]
       have := congr_fun hx₀ x₀; by_cases h : f x₀ x₀ = a <;> simp +decide [ h ] at this;
       exact hab this
 
-theorem babel_lawvere {A L : ℕ} (hA : 2 ≤ A)
-    (f : Volume A L → Volume A L → Fin A) : ¬Surjective f := by
-  have hne : Nonempty (Volume A L) := ⟨fun _ => ⟨0, by omega⟩⟩
-  exact lawvere_finite (by simpa using hA) hne f
-
-/-
-**Boundary**: Lawvere fails when A = 1 (trivial alphabet). With only one symbol,
-    there is only one function Volume → Fin 1, and any f trivially covers it.
--/
-
-/-! ## Sphere packing -/
+/-- **Boundary**: Lawvere fails when A = 1 (trivial alphabet). With only one symbol,
+    there is only one function Volume → Fin 1, and any f trivially covers it. -/
 
 theorem hamming_ball_card_eq {A L : ℕ} (v w : Volume A L) (r : ℕ) :
     (hammingBall v r).card = (hammingBall w r).card := by
-  classical
-  have key : ∀ (x y a : Volume A L) (k : Fin L),
-      (y k = Equiv.swap (x k) (y k) (a k)) ↔ (x k = a k) := by
-    intro x y a k
-    constructor
-    · intro h
-      have h2 := congrArg (Equiv.swap (x k) (y k)) h
-      rw [Equiv.swap_apply_right, Equiv.swap_apply_self] at h2
-      exact h2
-    · intro h
-      rw [← h, Equiv.swap_apply_left]
-  have hdist : ∀ a : Volume A L,
-      hammingDist w (fun k => Equiv.swap (v k) (w k) (a k)) = hammingDist v a := by
-    intro a
-    simp only [hammingDist]
-    refine congrArg Finset.card (Finset.filter_congr fun k _ => ?_)
-    simp only [ne_eq, not_iff_not]
-    exact key v w a k
-  have hdist' : ∀ a : Volume A L,
-      hammingDist v (fun k => Equiv.swap (v k) (w k) (a k)) = hammingDist w a := by
-    intro a
-    simp only [hammingDist]
-    refine congrArg Finset.card (Finset.filter_congr fun k _ => ?_)
-    simp only [ne_eq, not_iff_not]
-    rw [Equiv.swap_comm]
-    exact key w v a k
-  refine Finset.card_bij' (fun a _ => fun k => Equiv.swap (v k) (w k) (a k))
-    (fun b _ => fun k => Equiv.swap (v k) (w k) (b k)) ?_ ?_ ?_ ?_
-  · intro a ha
-    rw [mem_hammingBall] at ha ⊢
-    rw [hdist a]
-    exact ha
-  · intro b hb
-    rw [mem_hammingBall] at hb ⊢
-    rw [hdist' b]
-    exact hb
-  · intro a _
-    funext k
-    exact Equiv.swap_apply_self _ _ _
-  · intro b _
-    funext k
-    exact Equiv.swap_apply_self _ _ _
+      fapply Finset.card_bij;
+      exact fun a ha => fun i => if h : a i = v i then w i else if h' : a i = w i then v i else a i;
+      · simp +contextual [ hammingBall ];
+        intro a ha; rw [ hammingDist_comm ] at ha; simp_all +decide [ hammingDist ] ;
+        exact le_trans ( Finset.card_le_card fun i hi => by aesop ) ha;
+      · intro a₁ ha₁ a₂ ha₂ h; ext i; replace h := congr_fun h i; aesop;
+      · intro b hb;
+        refine' ⟨ fun i => if h : b i = w i then v i else if h' : b i = v i then w i else b i, _, _ ⟩ <;> simp_all +decide [ hammingBall ];
+        · refine' le_trans _ hb;
+          refine' Finset.card_le_card _;
+          grind;
+        · grind
 
 /-
 **Hamming bound (sphere-packing)**: If balls of radius `t` around codewords
@@ -250,25 +168,21 @@ theorem hamming_bound_via_packing {A L d : ℕ} (_hA : 1 ≤ A) (t : ℕ)
     (C : Finset (Volume A L)) (hC : IsBabelCode C d)
     (v₀ : Volume A L) :
     C.card * (hammingBall v₀ t).card ≤ A ^ L := by
-  classical
-  have h_disjoint : ∀ v ∈ C, ∀ w ∈ C, v ≠ w →
-      Disjoint (hammingBall v t) (hammingBall w t) := by
-    intro v hv w hw hvw
-    refine Finset.disjoint_left.mpr fun u hu hu' => ?_
-    rw [mem_hammingBall] at hu hu'
-    have htri : hammingDist v w ≤ hammingDist v u + hammingDist u w :=
-      hammingDist_triangle v u w
-    rw [hammingDist_comm u w] at htri
-    have := hC v w hv hw hvw
-    omega
-  have h_union_card : (C.biUnion (fun v => hammingBall v t)).card
-      = C.card * (hammingBall v₀ t).card := by
-    rw [Finset.card_biUnion h_disjoint]
-    rw [Finset.sum_congr rfl (fun x _ => hamming_ball_card_eq x v₀ t), Finset.sum_const,
-      smul_eq_mul]
-  rw [← h_union_card]
-  refine le_trans (Finset.card_le_univ _) ?_
-  simp [Finset.card_univ]
+      -- First show balls around distinct codewords are disjoint: if u ∈ hammingBall v t ∩ hammingBall w t for v ≠ w in C, then hammingDist v w ≤ hammingDist v u + hammingDist u w ≤ t + t = 2t < d, contradicting IsBabelCode. So the balls are pairwise disjoint subsets of Finset.univ (which has card A^L).
+      have h_disjoint : ∀ v w : Volume A L, v ∈ C → w ∈ C → v ≠ w → Disjoint (hammingBall v t) (hammingBall w t) := by
+        intros v w hv hw hvw
+        have h_dist : ∀ u : Volume A L, u ∈ hammingBall v t → u ∈ hammingBall w t → False := by
+          intros u hu hvu
+          have h_dist : hammingDist v w ≤ hammingDist v u + hammingDist u w := by
+            exact hammingDist_triangle v u w;
+          unfold hammingBall at *; simp_all +decide [ hammingDist_comm ] ; linarith [ hC v w hv hw hvw ] ;
+        exact Finset.disjoint_left.mpr h_dist;
+      -- The disjoint union of the balls has cardinality equal to the sum of their cardinalities.
+      have h_union_card : (Finset.biUnion C (fun v => hammingBall v t)).card = C.card * (hammingBall v₀ t).card := by
+        rw [ Finset.card_biUnion ];
+        · rw [ Finset.sum_congr rfl fun x hx => hamming_ball_card_eq x v₀ t ] ; aesop;
+        · exact fun v hv w hw hvw => h_disjoint v w hv hw hvw;
+      exact h_union_card ▸ le_trans ( Finset.card_le_univ _ ) ( by simp +decide [ Finset.card_univ ] )
 
 end BabelCode
 

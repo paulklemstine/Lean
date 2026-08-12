@@ -1,19 +1,24 @@
-import Probability.ThreeCubes.Basic
-import Probability.ThreeCubes.LocalSolvability
-import Probability.ThreeCubes.Padic
-import Probability.ThreeCubes.Moduli
-import Probability.ThreeCubes.Geometry
-import Probability.ThreeCubes.Counting
-import Probability.ThreeCubes.Density
-import Probability.ThreeCubes.Witnesses
-import Probability.ThreeCubes.Rational
-import Probability.ThreeCubes.RationalWitnessesA
-import Probability.ThreeCubes.RationalWitnessesB
-import Probability.ThreeCubes.RationalWindow
-import Probability.ThreeCubes.LowerBounds
-import Probability.ThreeCubes.LowerBoundsSharp
-import Probability.ThreeCubes.FourCubes
-import Probability.ThreeCubes.FourCubesExtended
+import Probability.Basic
+import Probability.LocalSolvability
+import Probability.Padic
+import Probability.Moduli
+import Probability.Geometry
+import Probability.Counting
+import Probability.Density
+import Probability.Witnesses
+import Probability.Rational
+-- The certified rational-witness banks `RationalWitnessesA` / `RationalWitnessesB`
+-- (1001 witnesses for `0 ≤ n ≤ 1000`) are not present in this catalog snapshot,
+-- and `Probability.RationalWindow` depends on them, so the three imports below
+-- cannot be resolved and are commented out.  Everything else in the development
+-- is imported and builds.
+-- import Probability.RationalWitnessesA
+-- import Probability.RationalWitnessesB
+-- import Probability.RationalWindow
+import Probability.LowerBounds
+import Probability.LowerBoundsSharp
+import Probability.FourCubes
+import Probability.FourCubesExtended
 
 /-!
 # Sums of three cubes — index module

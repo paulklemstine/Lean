@@ -1,4 +1,4 @@
-import Probability.ThreeCubes.Moduli
+import Probability.Moduli
 
 /-!
 # Four cubes: covering the residue classes

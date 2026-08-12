@@ -1,4 +1,4 @@
-import Probability.ThreeCubes.LocalSolvability
+import Probability.LocalSolvability
 
 /-!
 # Verified computational results and the Hasse principle for `x³ + y³ + z³ = n`

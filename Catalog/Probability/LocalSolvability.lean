@@ -1,4 +1,4 @@
-import Probability.ThreeCubes.Basic
+import Probability.Basic
 
 /-!
 # The mod 9 congruence is the only local obstruction for sums of three cubes
