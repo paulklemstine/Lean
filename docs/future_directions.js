@@ -798,6 +798,21 @@ window.FUTURE_DIRECTIONS = [
     "title": "SMOOTH-SELFHINT-DENSITY: the p-1/ECM weakness is residue-invisible \u2014 asymmetric/symmetric divisibility dichotomy, self-hint program closed"
   },
   {
+    "consumed_by_exp_id": "ff2b27c9",
+    "description": "**GENERIC-RECOVERY (round-14 #11, experiment 390, assessment v166, paper 55).**\n\nHypothesis: recovery of p from a t-bit external hint is bounded by the hint's usable information. Verified on exact k-bit-prime sets (k=14-25) and random semiprimes (k=16-20):\n\n1. **Generic hints information-exact**: t-bit random GF(2) linear form of p's bits partitions P_k into classes |P_k|/2^t EXACTLY (k=16: 1515/759/190/48.6/12.8 vs 1515/757.5/189.4/47.3/11.8 at t=1..8); recovery cost = |P_k|/2^t (median steps = candidates). No anomalous class = no super-resolution.\n2. **Value-hints parity-constrained** (new mini-finding): mod-2^t multiplicative c\u00b7p and XOR-mask hashes output only 2^(t-1) values (p odd) \u2014 class 378.9 vs 189.4 at k=16,t=4. Bit-vector forms are the only full-2^t generic hints.\n3. **Trace hint sub-bit by recovery cost** (new positive): s mod 2^t pins p mod 2^t to C_t = O(1) roots (median saturating 4-8), but recovery tries all C_t: cost C_t\u00b7|P_k|/2^(t-1), measured 399 vs 47.3 (k=16,t=6), 354 vs 42.0 (k=18,t=8) \u2014 ~4.5-5x worse per bit; log2(C_t) ~ 3 bits lost to the root ambiguity.\n4. **Only amplification = position**: crossing with pi(sqrt N) at t ~ k/2-3 for every family; the unique amplification is Coppersmith's contiguous top-half >= k/2 LLL (a known method, barrier 8). The Coppersmith condition is about POSITION, not the dial (DIAL-THRESHOLD revisited).\n\n**Verdict**: CONFIRMED, sharpened. Hint taxonomy CLOSED: a t-bit external hint reduces the prime search by exactly 2^t, never more, never position-free; N-checkable hints are sealed at the trace-set floor (INTERVAL-HINT); hints must be genuinely external and worth their bits at face value. Barriers 4/8/2.\n\nScript: /tmp/exp_genericrecovery.py. Paper: ResearchOutput/NewMathematics/55_GenericRecovery_HintTaxonomy.md",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_1157",
+    "phase": "A",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "in_progress",
+    "timestamp": "2026-08-12T13:54:18.959882+00:00",
+    "title": "Exp 390 GENERIC-RECOVERY: recovery-from-hint = 2^(k-1-t_eff) \u2014 hint taxonomy closed"
+  },
+  {
     "consumed_by_exp_id": "",
     "description": "Formalizes a quantum random walk on the Berggren Pythagorean tree where constructive interference at energy spectrum minima collapses the state onto factors of N.",
     "domains": [
@@ -4540,17 +4555,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Hilbert 6: Axiomatization of Physics"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e9c5938e",
     "description": "Prove that the Euler-Mascheroni constant \u03b3 \u2248 0.5772 is irrational (or transcendental). Formalize continued fraction expansions and connect to the theory of special values of L-functions.",
     "domains": [
       "Analysis",
       "NumberTheory"
     ],
     "id": "seed_027",
+    "phase": "A",
     "priority_score": 0.82,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Euler-Mascheroni Constant Irrationality"
   },
