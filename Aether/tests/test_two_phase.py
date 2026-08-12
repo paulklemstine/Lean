@@ -242,10 +242,10 @@ def test_adaptive_threshold_warm(temp_workspace):
     ext = KnowledgeExtractor.__new__(KnowledgeExtractor)
     ext.workspace = temp_workspace
     threshold = ext._adaptive_phase_b_threshold()
-    # p70 of last 50 (which are 0.10 to 0.59): index int(0.70 * 49) = 34
-    expected = sorted(r["quality_score"] for r in records[-50:])[int(0.70 * 49)]
-    # Clamp to [0.25, 0.70]
-    expected = max(0.25, min(0.70, expected))
+    # p50 of last 50 (which are 0.10 to 0.59): index int(0.50 * 49) = 24
+    expected = sorted(r["quality_score"] for r in records[-50:])[int(0.50 * 49)]
+    # Clamp to [0.25, 0.55]
+    expected = max(0.25, min(0.55, expected))
     assert abs(threshold - expected) < 0.01, f"Expected ~{expected}, got {threshold}"
 
 

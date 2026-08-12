@@ -412,6 +412,23 @@ class KnowledgeExtractor:
 
         return threshold
 
+    @staticmethod
+    def _rule_prunable(d, quality_score: float = 0.0) -> bool:
+        """Rules-first pruning predicate for directions."""
+        if quality_score >= 0.20:
+            return False
+        if d.domains and "Novelty" in d.domains:
+            return False
+        if d.source_path and d.source_path.startswith("seed:"):
+            return False
+        if d.priority_score >= 0.80:
+            return False
+        desc = (d.description or "").strip()
+        title = (d.title or "").strip()
+        if not desc or len(desc) < 15 or desc == title:
+            return True
+        return False
+
     def _a_only_integration_floor(self) -> float:
         """Quality floor for integrating A_only Lean into the Catalog.
 
@@ -2115,40 +2132,40 @@ Research mode: {concept.research_mode}
                 elif f.endswith(".py"):
                     python_files.append(fp)
                 elif f.endswith(".json") and f != "knowledge_data.json":
-                    # Check if this is Aristotle's self-score file
-                    if f in ("self_score.json", "quality_score.json", "aristotle_score.json"):
+                    fname_lower = f.lower()
+                    # Check if this is Aristotle's self-score / self-evaluation file
+                    if any(kw in fname_lower for kw in ("self_evaluation", "self_eval", "self-eval", "self_score", "quality_score", "aristotle_score")):
                         try:
                             import json as _json
-                            data = _json.loads(fp.read_text(encoding="utf-8"))
-                            if "metrics" in data and isinstance(data["metrics"], dict):
-                                job.aristotle_self_metrics = data["metrics"]
-                                job.aristotle_self_rationale = data.get("rationale")
-                                # Try to find an overall score in the metrics block
-                                for k in ("overall_score", "score", "self_score"):
-                                    if k in data["metrics"]:
-                                        job.aristotle_self_score = float(data["metrics"][k])
-                                        break
-                                # Fallback: calculate average of metrics if overall_score is missing
+                            raw_content = fp.read_text(encoding="utf-8", errors="ignore")
+                            job.result_self_evaluation = raw_content
+                            job.self_evaluation = raw_content
+                            data = _json.loads(raw_content)
+                            if isinstance(data, dict):
+                                if "metrics" in data and isinstance(data["metrics"], dict):
+                                    job.aristotle_self_metrics = data["metrics"]
+                                    job.aristotle_self_rationale = data.get("rationale")
+                                    for k in ("overall_score", "score", "self_score", "quality_score"):
+                                        if k in data["metrics"]:
+                                            job.aristotle_self_score = float(data["metrics"][k])
+                                            break
+                                    if job.aristotle_self_score is None:
+                                        vals = [v for v in data["metrics"].values() if isinstance(v, (int, float))]
+                                        if vals:
+                                            job.aristotle_self_score = sum(vals) / len(vals)
+                                    print(f"[Extract] Found rich Aristotle self-metrics. Overall: {job.aristotle_self_score}")
+                                
                                 if job.aristotle_self_score is None:
-                                    vals = [v for v in data["metrics"].values() if isinstance(v, (int, float))]
-                                    if vals:
-                                        job.aristotle_self_score = sum(vals) / len(vals)
-                                print(f"[Extract] Found rich Aristotle self-metrics. Overall: {job.aristotle_self_score}")
-                            
-                            # Legacy parsing fallback if no metrics dictionary
-                            if job.aristotle_self_score is None:
-                                for k in ("self_score", "quality_score", "score", "overall_score"):
-                                    if k in data:
-                                        job.aristotle_self_score = float(data[k])
-                                        print(f"[Extract] Found legacy Aristotle self-score: {job.aristotle_self_score:.3f}")
-                                        break
+                                    for k in ("quality_score", "self_score", "score", "overall_score"):
+                                        if k in data:
+                                            job.aristotle_self_score = float(data[k])
+                                            print(f"[Extract] Found Aristotle self-score: {job.aristotle_self_score:.3f}")
+                                            break
                         except Exception as e:
                             print(f"[Extract] Failed to parse Aristotle self-score file {f}: {e}")
                         continue  # Don't treat self-score files as package deliverables
 
-                    # Capture the Direction Tournament results file. It is a
-                    # plain {"winners":[...],"rejections":[...]} dict with no
-                    # "title", so it must be handled before the title check.
+                    # Capture the Direction Tournament results file.
                     if f == "tournament_results.json":
                         try:
                             job.tournament_results_json = fp.read_text(encoding="utf-8", errors="ignore")
@@ -2157,13 +2174,14 @@ Research mode: {concept.research_mode}
                             print(f"[Tournament] Failed to read {f}: {e}")
                         continue
 
-                    # Verify that the JSON file has a 'title' field or is a list (future directions)
+                    # Process JSON file without skipping if title is missing
                     try:
                         import json as _json
                         data = _json.loads(fp.read_text(encoding="utf-8", errors="ignore"))
                         if isinstance(data, dict) and "title" not in data:
-                            print(f"[Extract] Skipping JSON file {f} because it lacks a 'title' field")
-                            continue
+                            # Process without a title by providing a fallback title from the job concept or filename
+                            print(f"[Extract] Processing JSON file {f} without explicit 'title' field")
+                            data["title"] = getattr(job.concept, 'title', f.replace('.json', ''))
                     except Exception as e:
                         print(f"[Extract] Failed to verify JSON file {f}: {e}")
 
