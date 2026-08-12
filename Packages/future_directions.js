@@ -3,7 +3,7 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "consumed_by_exp_id": "972fb843",
+    "consumed_by_exp_id": "f0474d01",
     "description": "**Summary.** Why classical factoring is hard while Shor's quantum algorithm is\npolynomial, located precisely. Two INDEPENDENT classical barriers to\nperiod-finding (experiment QBOUND):\n\n**Barrier 1 (information-theoretic, rigorous).** Resolving period r from K\nclassical samples via DFT requires K \u2265 r (frequency resolution 1/K \u2264 1/r).\nFor random base a, the expected multiplicative order is \u0398(N), so K = \u0398(N) \u2014\nexponential in log N.\n\n**Barrier 2 (structural, 112/112 trials).** Even at K \u2265 r, a^x mod N is\npseudorandom: the period is NOT a single dominant DFT peak (the fundamental bin\nranks ~358th out of 458). The period is spectrally hidden in the harmonics.\n\n**Why Shor evades both.** The quantum circuit does not sample f classically. A\nHadamard layer creates a superposition over all x; modular exponentiation\nproduces a periodic comb state |x0\u27e9,|x0+r\u27e9,...; the QFT acts on this COHERENT\ncomb \u2014 by the same character orthogonality underlying the classical DFT\n(root_orthogonality in FourierTransformInversion.lean) \u2014 yielding a SHARP peak.\nThe Fourier mathematics is identical; the physics of the input state differs.\n\n**Honest scope.** No proof that classical factoring needs superpolynomial time\n(open problem). What is established: which classical resource is missing and\nexactly which quantum resource (coherent superposition) fills the gap.\n\n---\n\n*Factoring Lab paper. Status: proven theorem / verified / framework. This is a research deliverable, not a factoring breakthrough claim.*",
     "domains": [
       "Novelty"
@@ -8859,17 +8859,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "The present development proves an exact theorem for a finite exhaustive-verifica"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fb3018c5",
     "description": "# Future directions\n\nThe formalization makes the speculative claim precise for a finite formal library: gravitational weight is the number of direct users, proof length is a natural-number cost, and dependency reachability induces an Alexandrov topology. In that topology, density is exactly dependency-cofinality: every theorem must support a theorem in the distinguished class.\n\nFurther work could:\n\n1. Extract dependency graphs and kernel-term sizes from concrete Lean environments, then evaluate weight and proof-length thresholds empirically.\n2. Replace direct-user weight by transitive influence, discounted path counts, centrality, or downstream declaration counts and compare the resulting notions.\n3. Study invariance under refactoring. Adding wrapper lemmas can change both dependency counts and proof lengths, so a robust statistic should quotient or penalize such transformations.\n4. Identify structural hypotheses on library growth that imply dependency-cofinality of short, high-weight declarations.\n5. Test bounded charging maps in real libraries. The proved counting theorem shows that a ten-to-one charging certificate is sufficient for a ten-percent lower bound.\n6. Develop asymptotic versions for increasing sequences of finite libraries, using lower density rather than a fixed finite proportion.\n\nThe unconditional ten-percent prediction cannot hold for arbitrary formal libraries: the verified edgeless ten-theorem library has no theorem of positive weight. Any empirical or universal replacement therefore needs explicit assumptions on dependency structure and threshold choice.",
     "domains": [
       "Algebra",
       "Logic"
     ],
     "id": "fd_0556",
+    "phase": "A",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "95b84694",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-21T14:31:37.953468+00:00",
     "title": "The formalization makes the speculative claim precise for a finite formal librar"
   },
