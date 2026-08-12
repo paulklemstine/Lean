@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "18622a4a",
-      "domain": "Applications",
-      "key_insight": "# Future directions\n\nThe exact compiler in `Catalog/Applications/EML/SingleOperatorCompilation.lean`\nsettles the equivalence of the catalog's finite `{exp, log, field operations}`\ngrammar and its sing",
-      "quality_score": 0.77537,
-      "sorry_count": 0,
-      "theorem_count": 22,
-      "timestamp": "2026-08-02T06:55:55",
-      "title": "EML Single Operator Church-Turing Thesis"
-    },
-    {
       "cycle_id": "2bc344f1",
       "domain": "Cryptography",
       "key_insight": "# Future Directions\n\nThe following conjectures are concrete extensions of the formal reduction layer.\nEach can be falsified by a finite counterexample to its stated bound.\n\n1. **Randomized-distinguish",
@@ -2501,6 +2491,16 @@
       "theorem_count": 64,
       "timestamp": "2026-08-11T22:14:09",
       "title": "A Conditional-Impossibility Framework for Classical Factoring"
+    },
+    {
+      "cycle_id": "869ec8f3",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions — the CRT-Split No-Go\n\nThree research cycles have been run on this thread.\n\n* **Cycle 1** produced Parts I–VI: the reveal mechanism (Facts 1 and 2), the three regimes, the\n  closur",
+      "quality_score": 0.627125,
+      "sorry_count": 0,
+      "theorem_count": 135,
+      "timestamp": "2026-08-12T00:08:59",
+      "title": "The CRT-Split No-Go: Why N-Alone Iteration Cannot Factor in Poly(log N)"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7516700000000001
     }
   ],
-  "last_updated": "2026-08-11T22:14:09",
+  "last_updated": "2026-08-12T00:08:59",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3145,12 +3145,6 @@
     ],
     "Bridges": [
       {
-        "cycle_id": "6337dbc1",
-        "quality": 0.78433,
-        "theorems": 71,
-        "title": "Deepening: Topological-Algebraic Bridge: Fundamental Group as a Complete Invaria"
-      },
-      {
         "cycle_id": "f96004ff",
         "quality": 0.686,
         "theorems": 271,
@@ -3203,6 +3197,12 @@
         "quality": 0.6509097115384616,
         "theorems": 130,
         "title": "Bridge: Homological Algebra Connecting Algebra and Topology"
+      },
+      {
+        "cycle_id": "869ec8f3",
+        "quality": 0.627125,
+        "theorems": 135,
+        "title": "The CRT-Split No-Go: Why N-Alone Iteration Cannot Factor in Poly(log N)"
       }
     ],
     "Combinatorics": [
