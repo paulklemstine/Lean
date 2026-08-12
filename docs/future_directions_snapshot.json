@@ -1028,7 +1028,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a1fe4956",
     "description": "**BERGGREN-PRICE-INTERLOCK (direct analysis request, experiment 391, assessment v167, paper 56).**\n\nHypothesis (refining the prior hypotenuse-N probe): the correct factoring-relevant embedding of N is not m^2+n^2 = N but ODD-LEG-N — the node (m,n) = ((p+q)/2, (q-p)/2), the Fermat pair. Verified on all valid (m,n) (BFS to L=11 both trees), 1020/1020 random semiprime pairs, and random 14-23-bit primes:\n\n1. **N-NODE IDENTITY (new, exact, 1020/1020):** every odd semiprime N = pq is a valid node of BOTH the Berggren and Price trees at (m,n) = ((p+q)/2,(q-p)/2), with odd leg m^2-n^2 = (m-n)(m+n) = pq = N EXACTLY (hyp (p^2+q^2)/2, even leg (q^2-p^2)/2; p = m-n, q = m+n). Both trees enumerate all Fermat decompositions exactly once (3^L levels, parents invert with 0 failures). Factoring N == finding the N-node.\n2. **Interlock = inequivalence over a shared vertex set:** Berggren child-map dets {+1,-1,+1} (subtract-2/reflect CF descent) vs Price {+2,-2,+2} (halving/binary-GCD descent) — no conjugacy (|det| invariant). Leg swap a<->b IS an automorphism of Berggren (S·B·S permutes {B1,B2,B3}, 3/3) but NOT of Price (0/3) — asymmetric. B-parent = P-parent on exactly 2/455,736 nodes.\n3. **Depth duality:** dB (Berggren) ratio/CF-driven, erratic — N-node at 20-bit primes: mean 78.5, range [19,1135]; dP (Price) size-driven, tight — ~1.4·log2(p+q), sd ~2.4 (means 17.7/21.4/25.8/30.1 at 14/17/20/23-bit primes); corr(dB,dP) = -0.16 (independent orderings).\n4. **Factoring verdict (decisive negative):** tree-work to find the N-node = 3^dB beat Fermat's scan in 0/209 trials at 20-bit primes (Fermat mean 6,630 steps; min case 3^19 ~ 1.2e9). dB correlates NEGATIVELY with Fermat cost (r = -0.31) — the trees measure the OPPOSITE of Fermat hardness (the ratio (p+q)/(q-p); Fermat cost ~ (q-p)^2/(8·sqrt N)); dP is size-blind (corr ~ 0). The root->N path string IS the factorization; no N-only branch rule; no pruning (odd legs ~constant along staircase branches); leg-only descent not closed. Hypotenuse density m^2+n^2 == 0 mod N in both trees <= 4/N, exactly 0 for N=15,21,35,77,91 (primitive pairs).\n\n**Verdict:** CONFIRMED negative for factoring. The Pythagorean-tree line closes with exact statements: every odd semiprime sits at its Fermat pair in both trees (odd leg = N exactly — the correct embedding), the interlock is two inequivalent Euclidean descents over one vertex set, and traversal to the N-node costs 3^d >> Fermat's d_F (0/209). The trees organize the RATIO (p+q)/(q-p) — Fermat's ease coordinate — not the product pq; the ratio<->product map is the factorization step. Barriers 5/8 (structural orthogonality sharpened; the tree is Fermat in a different order). Scripts: /tmp/exp_berggrenprice.py, _3, _4.",
     "domain_bridges": [],
     "domains": [
@@ -1040,14 +1040,14 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-12T15:22:34.669093+00:00",
     "title": "Exp 391 BERGGREN-PRICE-INTERLOCK: every semiprime is a node of both Pythagorean trees — the N-node identity is exact, the interlock is factoring-orthogonal"
   },
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "394df4e1",
     "description": "## Experiment 400 — FROBENIUS-TYPE-NULL (cron loop round-16 #3)\n\n**Hypothesis (null).** The mod-N splitting type of a fixed polynomial f — the factorization pattern of f mod N — is the lab's first NON-abelian symmetric N-computable channel. It is genuinely richer than the abelian (Dirichlet) battery closed by QRLEAK (the id-vs-3-cycle fork at (Δ|p)=+1 is pinned by NO abelian character), yet carries zero factor leverage.\n\n**Result: CONFIRMED null (negative for factoring). Barriers 2/5/6/8.**\n\n### 1. The channel is REAL and non-abelian (positive control)\nS₃ cubic x³−x−1 (disc −23), over 3000 primes:\n- types [1,1,1] : [1,2] : [3] = 0.169 : 0.507 : 0.324 (Chebotarev 1/6 : 1/2 : 1/3)\n- **fork at (−23|p)=+1: [1,1,1] = 0.342 vs [3] = 0.658 (Cheb 1/3 : 2/3)** — identity vs 3-cycle, both EVEN (A₃), pinned by no Dirichlet character\n- at (−23|p)=−1: [1,2] forced 1.000 (transposition = odd)\nS₄ quartic x⁴−x−1 (disc −283) confirms: A₄ fork [1,1,1,1]/[2,2]/[1,3] = 0.069/0.247/0.684 (Cheb 1/12 : 3/12 : 8/12).\n\n### 2. Yet factor-orthogonal (null)\nThe mod-N type is the UNTAGGED union of the mod-p and mod-q types (S₃ six patterns AA…CC). All 16 (bit-length, (Δ|N))-grouped F-tests of type→gap and type→trace at chance:\n- S₃: gap F ≤ 1.59 (p ≥ 0.224), trace F ≤ 1.61 (p ≥ 0.218)\n- S₄: gap F ≤ 2.03 (p ≥ 0.064), trace F ≤ 1.89 (p ≥ 0.090)\n\n### 3. Privacy\nH(union) = 2.295 bits of structure, but the p/q labeling is lost on 892/1500 = 59% of semiprimes — symmetric (barrier 2).\n\n### 4. Computationally sealed\nsympy factor_list(f, modulus=N) fails 200/200; the classical reduction \"factoring a polynomial mod composite n is as hard as factoring n\" holds. The exact type is N-determined but not poly-computable (barriers 4/6). All Chebotarev (1922), never a factoring move (barrier 8).\n\n**Verdict:** The non-abelian richness of N is the richness of N's own prime-splitting structure, not a window onto p and q. Round-16 3/3 done.\n\nPaper: ResearchOutput/NewMathematics/65_FrobeniusTypeNull_NonAbelianChannelSealed.md\nNotebook: Part 146. Assessment v176 / 400 experiments. Script: /tmp/exp_frobeniustype.py.",
     "domain_bridges": [],
     "domains": [
@@ -1059,7 +1059,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-12T16:19:41.780222+00:00",
     "title": "Exp 400 FROBENIUS-TYPE-NULL (round-16 #3): the splitting type of N in a non-abelian extension is symmetric, factor-orthogonal, and computationally sealed"
   },
@@ -1233,6 +1233,44 @@
     "status": "available",
     "timestamp": "2026-08-12T17:19:53.176859+00:00",
     "title": "Record ECM-ORDER-NULL (401 experiments, assessment v177); paper 66"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "## CYCLIC-CUBIC-FORK (round-19 #1, experiment 406, assessment v182, paper 71)\n\n**The fork-pinning criterion — machine-verified on three Galois groups:** a binary splitting fork of a number field is congruence-pinned by a Dirichlet character **iff it factors through the abelianization G^ab of the Galois closure**.\n\n### (1) Cyclic cubic fields (G = C₃ abelian): fork pinned at **100%** of its entropy\n- cond 7 (x³+x²−2x−1, real subfield of ℚ(ζ₇)): **[1,1,1] ⟺ p mod 7 ∈ {1,6} on 6541/6541 = 100% EXACT**, no [1,2]-type ever (Galois).\n- **I(p mod 7; fork) = 0.9182 = H(1/3) EXACTLY**; pinned at m = 49 too (42 classes × 7k primes — deterministic, not sparsity); **flat at the coprime control m = 5** (I = 0.0000, z = −1.3) — pinning is specifically the conductor's cubic-residue character.\n- cond 9 (x³−3x+1): [1,1,1] ⟺ p mod 9 ∈ {1,8}, I = 0.9181, same structure.\n\n### (2) S₃ closure (x³+x+1, G^ab = C₂): only the sign is pinned\n- **I(p mod 31; fork) = 0.1906 = I(sign; fork) EXACTLY** (residual +0.0000) — the unconditioned [1,1,1]-fork's congruence content is entirely the Jacobi sign (the quadratic-subfield character).\n- The A₃-face fork [1,1,1]-vs-[3] on the QR face: I = 0.0000 (z = −2.37) — **FLAT** (paper 70 re-verified at 2^22).\n\n### (3) S₄ closure (x⁴−x−1, disc −283): the field is S₄; only the sign is pinned; every within-face fork flat\n- Verified S₄ (disc −283 not a square): nroots 4:2:1:0 = 1:6:8:9/24 EXACT. Paper 65's \"A₄ fork\" is the **even-face fork of this S₄ field** (densities 1/12:3/12:8/12 reproduced: 0.0798/0.2501/0.6701).\n- Sign pinned: I(sign; hasroot) = 0.0483 ≈ theory 0.0488. Beyond-sign residual I(p mod 283; hasroot) − I(sign; hasroot) = +0.0131 = **conditional-null mean EXACTLY** (z = +1.00).\n- Every within-face fork (even [1,1,1,1]/[2,2]/[1,3], odd [1,1,2]/[4]): observed = null mean exactly (z = −1.00) — the only congruence structure in the whole S₄ splitting is the sign.\n\n### (4) Explains paper 70's failed positive control\nx³−2 has S₃ closure (L = ℚ(∛2,√−3), G^ab = C₂) ⇒ its fork is **flat by construction**. Flatness is \"fork outside G^ab\", not \"h=1 vs h=3\". The correct positive control is a cyclic cubic (abelian closure) — pins at 100%.\n\n### (5) Semiprime level is factor-useless (barriers 2/5/6/8)\nOR = [p split OR q split] for the cond-7 cyclic cubic: P(OR|N mod 7) = 1/3 on {1,6}, 2/3 on {2,3,4,5}; **I(N mod 7; OR) = 0.0718 ≈ theory 0.0728**; which-factor wall 0.0001. Even a 100%-pinned prime-level fork collapses to a 0.073-bit symmetric residue dial at the N level. Cubic reciprocity (1801/1844), cyclotomic fields, Chebotarev (1922), Artin (1927) — all known methods.\n\n**Verdict:** criterion CONFIRMED on C₃/S₃/S₄. Round-19 #1 done. Barriers 2/5/6/8.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_1174",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-12T18:13:27.200171+00:00",
+    "title": "CYCLIC-CUBIC-FORK: fork-pinning ⟺ fork in the abelianization of the Galois closure (criterion verified on C3/S3/S4, paper 71)"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "## FORK-FLATNESS (round-18 #2, experiment 405, assessment v181, paper 70)\n\nThe S₃ fork [1,1,1]-vs-[3] of **any** cubic is **Chebotarev-FLAT**: I(p mod m; fork) = 0 in the limit for **every** modulus m — the fork carries zero integer-congruence information. This **refutes paper 69's Part C** (\"ray-class pinning\": per-class rates 0.124–0.594, I(p mod 31; fork) = 0.0742, I(p mod 31²; fork) = 0.8562 = \"93.3% of fork entropy by p mod 31²\"; \"ray-class semiprime dial\" 0.1811) as sparse-cell plug-in-MI artifacts.\n\n### (1) The theorem (fiber-product / Chebotarev)\nIn Gal(L·ℚ(ζ_m)/ℚ) = {(σ,u): σ|_K = u|_K} the three A₃-elements each pair with the **unique** residue u=c on every QR class c (c|_K = id), so **P(Frob = id | p ≡ c mod m) = 1/3 EXACTLY, all c, all m**. Needs only L ∩ ℚ(ζ_m) = K, not unramifiedness.\n\n### (2) Machine-verified at 2^24 (n = 538,641 eligible primes per cubic)\n- x³+x+1 (h=3): m=31 I=0.0000 (z=−2.55); m=961 I=0.0003 (null 0.0008, **z=−6.88**); m=29791 I=0.0204 = null mean/max (pure sparsity, 14,415 classes × 37 primes, rate sd 0.079 = binomial).\n- x³−x+1 (h=3): m=23/529/713 all z ≤ −1.98.\n- **Positive control REFUTED**: x³−2 (h=1, Kummer, ramified) is **also flat** — I = 0.0000 at m=9/27/108/216 (n=147,867). Flatness is universal S₃ structure; the which-prime ambiguity kills the cubic-residue pinning at the integer level.\n\n### (3) Paper 69 Part C is a sparse-cell artifact\nOn the paper's own 11/12-bit factor range (206 eligible primes): m=961 I = **0.8660** (reproduces paper's 0.8562) but the **shuffled null max is 0.8951** — observed sits INSIDE null. The \"93.3%\" measures ~0.4-prime-per-class cells (rates 0.0–1.0), not a law.\n\n### (4) Jensen compression real but finite-sample; the dial is noise\nP(OR|(Δ|N)=+1) = **0.7354** at 11/12-bit (reproduces paper 69's 0.7358) rising monotonically to **7/9 = 0.7778** at scale (0.7806 → 0.7671 → 0.7738 at 17/18 → 24/25 → 31/32 bit; equilibrium by 17-bit) — bias ∝ class-variance of the fork rate via concavity of 1−(1−r)², → 0 on equidistributed primes. **Conditional-null test** (400 shuffles permuting the fork within fixed (Δ|p),(Δ|q) faces, preserving the Jacobi structure): dial excess I(N mod 961; OR) − I((Δ|N); OR) = 0.0113 vs null mean 0.0111, **z = +0.37** — the ray-class dial is noise (paper 69's C4 null was wrong: shuffling all of OR kills the Jacobi part).\n\n### (5) The ℓ=2 OR channel survives at its true value\nI(N mod 31; OR) = 0.1243 at 31/32-bit (≈36× null max), carried exactly by Jacobi (I((Δ|N); OR) = 0.1240, residual 0.0003) → **0.1216** in the limit. The paper-69 B1 = 0.1468 headline was small-prime Jensen inflation; the channel itself is real, symmetric, factor-useless.\n\n### Seals / barriers\nSymmetric (which-factor lost — barrier 2); a Jacobi/quadratic-reciprocity residue dial (barrier 5); exact type sealed behind CRT split (barrier 6); all quadratic reciprocity (1801) + Chebotarev (1922) + Hilbert class fields + ECM (1987) — known methods (barrier 8). The only surviving positive is the ℓ=2 Jacobi OR channel at 0.1216 bits, factor-useless. Round-18 2/2 done. Barriers 2/5/6/8.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_1175",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-12T18:13:27.200556+00:00",
+    "title": "FORK-FLATNESS: the S₃ fork is Chebotarev-flat — paper 69's ray-class pinning/dial were sparse-cell artifacts; ℓ=2 Jacobi OR channel survives at 0.1216"
   },
   {
     "ambition_level": "grand_challenge",
