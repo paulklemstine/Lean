@@ -3,16 +3,17 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f4922950",
     "description": "**Summary.** Why classical factoring is hard while Shor's quantum algorithm is\npolynomial, located precisely. Two INDEPENDENT classical barriers to\nperiod-finding (experiment QBOUND):\n\n**Barrier 1 (information-theoretic, rigorous).** Resolving period r from K\nclassical samples via DFT requires K \u2265 r (frequency resolution 1/K \u2264 1/r).\nFor random base a, the expected multiplicative order is \u0398(N), so K = \u0398(N) \u2014\nexponential in log N.\n\n**Barrier 2 (structural, 112/112 trials).** Even at K \u2265 r, a^x mod N is\npseudorandom: the period is NOT a single dominant DFT peak (the fundamental bin\nranks ~358th out of 458). The period is spectrally hidden in the harmonics.\n\n**Why Shor evades both.** The quantum circuit does not sample f classically. A\nHadamard layer creates a superposition over all x; modular exponentiation\nproduces a periodic comb state |x0\u27e9,|x0+r\u27e9,...; the QFT acts on this COHERENT\ncomb \u2014 by the same character orthogonality underlying the classical DFT\n(root_orthogonality in FourierTransformInversion.lean) \u2014 yielding a SHARP peak.\nThe Fourier mathematics is identical; the physics of the input state differs.\n\n**Honest scope.** No proof that classical factoring needs superpolynomial time\n(open problem). What is established: which classical resource is missing and\nexactly which quantum resource (coherent superposition) fills the gap.\n\n---\n\n*Factoring Lab paper. Status: proven theorem / verified / framework. This is a research deliverable, not a factoring breakthrough claim.*",
     "domains": [
       "Novelty"
     ],
     "id": "fd_1100",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-11T19:35:11.985040+00:00",
     "title": "The Quantum-Classical Boundary in Integer Factorization"
   },
@@ -47,16 +48,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Singular Moduli Factoring and the \u221aN Barrier"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2bd44a5d",
     "description": "**Summary.** The Alexander polynomial of the torus knot T(2,N) provably encodes\nthe factorization of N.\n\n**Theorem (knot-number bridge, proven).** For N = pq and\nA_N(X) = (X^N+1)/(X+1) (Alexander polynomial of T(2,N)):\n  A_N(X) = \u03a6_{2p}(X) \u00b7 \u03a6_{2q}(X) \u00b7 \u03a6_{2N}(X),\nwith irreducible factor degrees {p-1, q-1, (p-1)(q-1)}. From these,\n\u03c6(N) = (p-1)(q-1) and p+q = N+1-\u03c6(N) recover p, q.\nVerified on all 6 test semiprimes (e.g. N=143 \u2192 {10,12,120} \u2192 11,13 \u2713).\n\n**The catch.** A_N has degree N-1, so writing it down costs O(N) = exp(log N),\nand factoring a degree-(N-1) polynomial over Q requires the divisors of N (the\nfactoring problem itself). The factor degrees are symmetric in p, q.\n\nA mathematically beautiful bridge between knot theory and number theory, of\nindependent interest regardless of factoring applications.\n\n---\n\n*Factoring Lab paper. Status: proven theorem / verified / framework. This is a research deliverable, not a factoring breakthrough claim.*",
     "domains": [
       "Novelty"
     ],
     "id": "fd_1103",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-11T19:35:11.985809+00:00",
     "title": "A Knot-Number Theory Bridge (Alexander polynomial)"
   },
@@ -91,16 +93,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Jacobi Gauss-Sum Phase Collapse"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1e0488ce",
     "description": "**Summary.** The conjecture that for E_N: y\u00b2 = x\u00b3 + N with N = pq, the\ndenominators of x(nP) are divisible only by {2, 3, p, q} (the primes dividing\n\u0394 = -432N\u00b2) is mathematically FALSE.\n\n**Counterexample.** N = 55 = 5\u00b711, P = (9,28) \u2208 E_55(Q):\n  x(2P) = (9^4 - 8\u00b755\u00b79) / (4(9^3 + 55)) = 2601/3136, and 3136 = 2^6 \u00b7 7^2.\nThe prime 7 divides the denominator but 7 \u2224 \u0394 (7 is a prime of good reduction).\n\n**Mechanism.** \u2113 | denom(x(nP)) iff nP \u2261 O (mod \u2113); good-reduction primes divide\ndenominators whenever the point reduces to torsion \u2014 infinitely many such primes.\n\n**Survey (11 semiprimes):** p appears in some denominator 54.5%, q appears 0%,\nonly-{2,3,p,q} holds 0% of the time. The denominator structure is a function of\nN alone (barrier 5) and does not cleanly reveal p, q.\n\n---\n\n*Factoring Lab paper. Status: proven theorem / verified / framework. This is a research deliverable, not a factoring breakthrough claim.*",
     "domains": [
       "Novelty"
     ],
     "id": "fd_1106",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-11T19:35:11.986561+00:00",
     "title": "The 'Only Bad Primes' Conjecture is False (elliptic curve denominators)"
   },
@@ -120,16 +123,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Three Structural Barrier Theorems for Integer Factorization"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "26fa3f14",
     "description": "**Summary.** Let F(k) = sum_{a=1}^{N} a^k. Then gcd(F(k), N) reveals a factor\nat k = p-1: for N = pq, gcd(F(p-1), N) = q (provided (q-1) does not divide (p-1)).\n\n**Key results (proven):**\n- **Theorem 1 (power-sum factor reveal):** Mod p the residues cover each nonzero\n  residue q times, so F(k) \u2261 q\u00b7(sum of k-th powers mod p); by FLT this is -q mod p\n  at k=p-1. Mod q it vanishes when (q-1) \u2224 (p-1). Hence gcd = q.\n- **Theorem 2 (robustness):** The power sum aggregates ALL bases a=1..N\n  simultaneously, so it cannot suffer Pollard p-1's \"bad base\" failure.\n- **Theorem 3 (Carmichael periodicity):** g(k) = gcd(F(k), N) has period\n  \u03bb(N) = lcm(p-1, q-1), so \u03bb(N) is readable from the period and the factors\n  follow from p+q = N - \u03bb(N) + 1.\n\n**Complexity.** First hit at k* = min(p-1,q-1) \u2248 \u221aN; cost per F(k) is O(N);\ntotal O(N^{3/2}) \u2014 worse than trial division. This is the SAME structure Shor's\nalgorithm exploits, made classically hard by the period-finding barrier.\nVerified on all 8 test semiprimes up to N \u2248 10^4.\n\n---\n\n*Factoring Lab paper. Status: proven theorem / verified / framework. This is a research deliverable, not a factoring breakthrough claim.*",
     "domains": [
       "Novelty"
     ],
     "id": "fd_1108",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-11T19:35:11.987052+00:00",
     "title": "Power-Sum GCD Factoring & Carmichael Periodicity"
   },
@@ -254,16 +258,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Round-7 Hypothesis Closures: Scoping the Noise-Floor Principle and the Trace-Lemma Frontier"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "24fc63f3",
     "description": "**Paper (factor3):** [ResearchOutput/NewMathematics/21_Program_Synthesis.md](https://github.com/paulklemstine/factor3/blob/main/ResearchOutput/NewMathematics/21_Program_Synthesis.md)\n\n---\n\n# The Factor3 Program: A Definitive Synthesis of the Barrier Framework\n\n**Program:** Factoring research lab \u2014 full-program synthesis (analysis subagent)\n**Date:** 2026-08-11\n**Status:** Capstone synthesis \u2014 the program's state of the frontier\n\n---\n\n## Abstract\n\nAfter 324 computational experiments across 60+ mathematical paradigms, six\nsubagent rounds (~32 hypotheses), and 20 papers, this synthesis records the\nprogram's definitive assessment: its most significant novel finding, the state\nof the barrier framework as a body of knowledge, the most valuable next step,\nand its most publishable results. The single most significant finding is the\nCRT-multiplicative free-witness classification and its trace lemma \u2014 a\npredictive theory, validated by a successful falsifiable prediction (SIGK),\nwith the noise-floor principle as its sharpest quantitative form: the\nfree-witness aggregation barrier and the trial-division birthday bound are the\nsame obstruction.\n\n---\n\n## 1. The most significant finding\n\n**The CRT-multiplicative free-witness classification + trace lemma** (Paper 16),\nsharpened by the noise-floor principle (Paper 20).\n\nNine structurally unrelated experiments \u2014 CIRC (circle-count), KROOT\n(root-count), BQF (binary-quadratic-form counts), HEISENBERG-CLASS,\nCUSP-INDEX, ZETA-LP, RS-MIND (Reed-Solomon distance), CONG-DIV, SIGK \u2014 are one\nmechanism:\n\n> A counting aggregate over a CRT-separable domain, whose local weights are\n> non-polynomial and CRT-multiplicative, jointly encodes both factors (dodging\n> the symmetry barrier), is non-polynomial in N (dodging the polynomial\n> barrier), and is sealed only by the Omega(N) aggregation cost (barrier 4).\n\nWhy it is the program's most significant finding:\n- **The trace lemma**: every recoverable witness collapses to one factor-secret\n  coordinate \u2014 p+q, max(p,q), or a residue/order vector \u2014 so knowing the witness\n  is knowing the factorization.\n- **Validated by a falsifiable prediction**: the theory predicted sigma_k(N) =\n  (1+p^k)(1+q^k) is a free witness; experiment SIGK confirmed it, recovering p,q\n  from p^2+q^2 \u2014 the only time the program PREDICTED new mathematics rather than\n  discovered it by search.\n- **The characters-only boundary lemma** (WIGNER-CUBIC) delimits the class:\n  exponential phase functions do not decompose through CRT; only group\n  characters do.\n\nThe **noise-floor principle** is the sharpest quantitative form: factor-bearing\nsamples in any N-computable aggregate occur at density <= c/sqrt(N), so the\naggregation barrier and the trial-division birthday bound are the SAME\nobstruction \u2014 witnessed independently in SCHINZEL (~4/sqrt(N) leak), PRIMEDOM\n(Povlya-Vinogradov error), DIVSUM (divisor error), the Berggren tree\n(density = random), and the birthday bound.\n\n---\n\n## 2. The framework's state as a body of knowledge\n\n**Scale:** 324 experiments, 60+ paradigms, ~32 subagent hypotheses in 6 rounds,\n20 papers. No classical poly(log N) algorithm found; Shor's remains the only\nknown poly(log N) factoring.\n\n**Proven (theorems):** the three barrier theorems (two machine-checked in Lean),\nthe power-sum GCD result, the Gauss-sum phase collapse, the knot-number bridge,\nthe \"only bad primes\" refutation, the DFT sample lower bound K >= r, the BQF\ncount family, exact composite Frobenius counts.\n\n**Empirical (computationally supported):** the noise-floor principle, barriers\n4-8 as general obstructions, the free-witness classification, pseudorandom\nspectral hiding, the CRT-split no-go mechanism, the Schinzel leak density.\n\n**Open:** the famous factoring-hardness problem (explicitly disclaimed); whether\nan unclassified classical resource exists; the trace-lemma exhaustiveness; the\nbarrier-4-equivalence proof; the noise-floor principle as a theorem.\n\n---\n\n## 3. The most valuable next step\n\n**Prove the trace-lemma exhaustiveness** \u2014 turn the classification into a\ntheorem. Define the class of CRT-respecting, poly-computable counting functions\n(already sharply delimited by the characters-only boundary lemma) and prove the\ndichotomy: any member is either factorization-insensitive (N-only, barrier 5) or\nreduces to a factor-secret coordinate with poly-time recovery. This is the\nprogram's declared frontier; the strongest version would be a Lean\nformalization, giving the program its first non-trivial machine-checked theorem\nbeyond the elementary barriers.\n\n---\n\n## 4. The most publishable results\n\n1. **The free-witness classification + trace lemma + noise-floor principle** \u2014\n   a falsifiable, validated theory unifying nine settings. (Journal of Number\n   Theory / Mathematics of Computation \u2014 computational number theory with a\n   genuine structural theorem.)\n2. **The Gauss-sum phase collapse** (Paper 04) \u2014 a clean, exact, self-contained\n   theorem; the most peer-review-ready piece. (Journal of Number Theory or\n   American Mathematical Monthly.)\n3. **The knot-number theory bridge** (Paper 06) \u2014 a genuinely new cross-field\n   observation. (Journal of Knot Theory and Its Ramifications or Monthly.)\n\n---\n\n## 5. Honest bottom line\n\nThe Factor3 program has established a predictive theory of why classical\nfactoring is hard: the free-witness aggregation barrier, classified and\nquantified, is the same obstruction as the birthday bound. No poly(log N)\nalgorithm emerged; the framework is robust across six subagent rounds and 324\nexperiments. The frontier is the trace-lemma exhaustiveness \u2014 the path to\nmaking barrier 4 equivalent to factoring hardness.\n\n---\n\n*Related:* `00_CONSOLIDATED_BREAKTHROUGH_REPORT.md`, `16_FreeWitness_Classification.md`,\n`18_Schinzel_Circle.md`, `20_Round6_Closures.md`, `Factoring_Lab_Notebook.md`.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_1118",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-11T23:11:29.676616+00:00",
     "title": "The Factor3 Program: A Definitive Synthesis of the Barrier Framework"
   },
@@ -10586,17 +10591,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "`Catalog/Geometry/PerfectCuboid/AlgebraicSurface.lean` provides a self-contained"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e345e278",
     "description": "# Future Directions\n\nThe formal results delimit what remains conjectural. In particular,\n`\u25a1A \u2192 \u25a1\u25a1\u25c7\u209cA` follows from ordinary transitivity (`4`) plus reflexive time, so it does\nnot by itself prove a strict extension of GL. The following are concrete, falsifiable\nnext claims.\n\n1. **Finite-frame completeness for a specified TGL calculus.** Define a Hilbert\n   calculus with GL, temporal S4, persistence `\u25a1A \u2192 G\u25a1A`, and explicit interaction\n   axioms. Conjecture: every formula valid on all finite `TempFrame`s is derivable in\n   that calculus. A finite counterframe to any derivable formula, or a valid\n   underivable formula, refutes the claim.\n\n2. **Finite model property with an explicit bound.** Conjecture: every\n   non-derivable formula `A` of the calculus above has a `TempFrame` countermodel with\n   at most `2^(2 * subformulaCount A)` worlds. This can be tested by filtration and\n   exhaustive bounded model search.\n\n3. **Decidability via bounded countermodel search.** Conjecture: derivability in the\n   specified calculus is decidable by searching the bound in Conjecture 2 with an\n   executable finite-frame model checker. Termination plus verified soundness and\n   completeness of this algorithm would prove the claim.\n\n4. **Non-refutability of proof gain.** Conjecture: no sound calculus for all\n   `TempFrame`s proves the negation of \u201cnot provable now and provable at some later\n   stage.\u201d The two-world model underlying `proof_gain_is_satisfiable` is a concrete\n   countermodel to any such proposed refutation.\n\n5. **Arithmetical completeness requires a precise clock.** Fix a recursively\n   axiomatized increasing sequence of PA fragments `(PA_t)` and interpret `\u25a1_t A` as\n   `Prov_{PA_t}(\u231cA\u231d)`. Conjecture: after specifying a recursively enumerable modal\n   calculus for these indexed operators, its theorems are exactly the formulas valid\n   under every arithmetical substitution. A single modal formula separating the two\n   sets refutes this conjecture for that clock and calculus.\n",
     "domains": [
       "Logic",
       "Computation"
     ],
     "id": "fd_0920",
+    "phase": "A",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "17b35eaf",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-02T23:20:56.712551+00:00",
     "title": "The formal results delimit what remains conjectural. In particular,"
   },
