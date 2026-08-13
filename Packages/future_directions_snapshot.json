@@ -3674,6 +3674,442 @@
     "title": "ABC Conjecture: Consequences and Partial Results"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Formalizes Voiculescu's free probability: the free central limit theorem showing that normalized sums of freely independent identically distributed bounded random variables converge in distribution to the semicircle law, developed through the R-transform and free cumulants.",
+    "domain_bridges": [],
+    "domains": [
+      "Probability",
+      "Algebra"
+    ],
+    "id": "fd_1194",
+    "lineage_refs": [],
+    "priority_score": 0.9,
+    "proof_strategy": "Build non-commutative probability spaces, define free cumulants via the R-transform, and prove free CLT by the moment/Catalan argument parallel to the classical CLT.",
+    "research_mode": "team",
+    "source_exp_id": "human_brainstorm_2026-08-12",
+    "status": "available",
+    "timestamp": "2026-08-13T03:21:12.964834+00:00",
+    "title": "Free-Probability: Semicircle Law and the Free Central Limit Theorem"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Proves Talagrand's concentration inequality for functions on product probability spaces with the weighted Hamming metric, giving exponential bounds on large deviations of 1-Lipschitz functionals of independent random variables.",
+    "domain_bridges": [],
+    "domains": [
+      "Probability",
+      "Computation"
+    ],
+    "id": "fd_1195",
+    "lineage_refs": [],
+    "priority_score": 0.9,
+    "proof_strategy": "Approximate the functional by the supremum of a family of linear tests; use the martingale/induction argument over the product space and the Hamming metric covering number.",
+    "research_mode": "team",
+    "source_exp_id": "human_brainstorm_2026-08-12",
+    "status": "available",
+    "timestamp": "2026-08-13T03:21:13.183114+00:00",
+    "title": "Martingale-Concentration: Talagrand's Inequality on Product Spaces"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Proves the Green-Tao theorem that the primes contain arbitrarily long arithmetic progressions, formalizing the relative Szemerédi theorem via a transference principle and the pseudorandomness (W-trick) of the von Mangoldt function.",
+    "domain_bridges": [],
+    "domains": [
+      "NumberTheory",
+      "Combinatorics"
+    ],
+    "id": "fd_1196",
+    "lineage_refs": [],
+    "priority_score": 0.9,
+    "proof_strategy": "Transference principle: decompose the prime measure into a dense model plus a uniformly distributed error; reduce to the unconditional Szemerédi theorem on the model set.",
+    "research_mode": "team",
+    "source_exp_id": "human_brainstorm_2026-08-12",
+    "status": "available",
+    "timestamp": "2026-08-13T03:21:13.389917+00:00",
+    "title": "Green-Tao: Arbitrarily Long Arithmetic Progressions in the Primes"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Formalizes the Mordell conjecture (Faltings' theorem) that a smooth projective curve of genus at least two over a number field has only finitely many rational points, approached through Néron-Tate heights and Vojta's inequality on the self-product of the curve.",
+    "domain_bridges": [],
+    "domains": [
+      "NumberTheory",
+      "Geometry"
+    ],
+    "id": "fd_1197",
+    "lineage_refs": [],
+    "priority_score": 0.9,
+    "proof_strategy": "Height machinery (Néron-Tate), the canonical height pairing, and Vojta's inequality to show rational points on the self-product have bounded height; conclude finiteness via heights.",
+    "research_mode": "team",
+    "source_exp_id": "human_brainstorm_2026-08-12",
+    "status": "available",
+    "timestamp": "2026-08-13T03:21:13.608325+00:00",
+    "title": "Faltings-Mordell: Finiteness of Rational Points on Genus ≥ 2 Curves"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Proves Iwasawa's growth theorem for p-primary ideal class groups in the cyclotomic Z_p-extension of a number field, showing the p-exponent of the class group in layer n grows like μ p^n + λ n + ν, and formalizes the setup of the Iwasawa main conjecture.",
+    "domain_bridges": [],
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_1198",
+    "lineage_refs": [],
+    "priority_score": 0.9,
+    "proof_strategy": "Control theorem for class groups in Z_p-extensions, the Iwasawa algebra module structure, and the λ-μ-ν invariant decomposition of the projective limit.",
+    "research_mode": "team",
+    "source_exp_id": "human_brainstorm_2026-08-12",
+    "status": "available",
+    "timestamp": "2026-08-13T03:21:13.827875+00:00",
+    "title": "Iwasawa-Main: Growth of Ideal Class Groups in Cyclotomic Z_p Extensions"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Proves quantum unique ergodicity for Hecke-Maass eigenforms on arithmetic surfaces: the microlocal lifts of these eigenforms equidistribute to the uniform measure, formalizing the ergodic framework behind Lindenstrauss' result.",
+    "domain_bridges": [],
+    "domains": [
+      "NumberTheory",
+      "Physics"
+    ],
+    "id": "fd_1199",
+    "lineage_refs": [],
+    "priority_score": 0.9,
+    "proof_strategy": "Ergodic theory on the space of lattices: analyze the distribution of microlocal lifts under the geodesic flow, with entropy arguments ruling out other limit measures.",
+    "research_mode": "team",
+    "source_exp_id": "human_brainstorm_2026-08-12",
+    "status": "available",
+    "timestamp": "2026-08-13T03:21:14.063195+00:00",
+    "title": "Arithmetic-Quantum-Chaos: Equidistribution of Hecke-Maass Eigenforms"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Attacks the Erdős-Graham conjecture that every finite coloring of the integers greater than one admits a subset whose reciprocals sum to exactly one, formalizing the combinatorial structure of Egyptian fraction decompositions and the known proofs for small colorings.",
+    "domain_bridges": [],
+    "domains": [
+      "NumberTheory",
+      "Combinatorics"
+    ],
+    "id": "fd_1200",
+    "lineage_refs": [],
+    "priority_score": 0.9,
+    "proof_strategy": "Crandall's density argument plus Davenport-Erdős-style induction on the coloring; construct exact Egyptian fraction covers with the reciprocal-sum density machinery.",
+    "research_mode": "team",
+    "source_exp_id": "human_brainstorm_2026-08-12",
+    "status": "available",
+    "timestamp": "2026-08-13T03:21:14.300445+00:00",
+    "title": "Erdos-Graham: Exact Coverings by Distinct Unit Fractions"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Proves Szemerédi's theorem that any subset of the integers with positive upper density contains arbitrarily long arithmetic progressions, formalizing the density-increment strategy via Szemerédi regularity and Fourier analysis on Z/NZ.",
+    "domain_bridges": [],
+    "domains": [
+      "Combinatorics",
+      "NumberTheory"
+    ],
+    "id": "fd_1201",
+    "lineage_refs": [],
+    "priority_score": 0.9,
+    "proof_strategy": "Density increment: split the set into a structured (regular) part and a pseudorandom part; find an arithmetic subprogression where the density increases until an energy argument forces termination.",
+    "research_mode": "team",
+    "source_exp_id": "human_brainstorm_2026-08-12",
+    "status": "available",
+    "timestamp": "2026-08-13T03:21:14.521722+00:00",
+    "title": "Szemeredi: Density Increment for Long Arithmetic Progressions"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Formalizes the structural foundations of the graph minor theory: Wagner's decomposition theorem and the characterization of minor-closed classes via tree-width, building toward the Robertson-Seymour result that finite graphs are well-quasi-ordered under the minor relation.",
+    "domain_bridges": [],
+    "domains": [
+      "Combinatorics",
+      "Logic"
+    ],
+    "id": "fd_1202",
+    "lineage_refs": [],
+    "priority_score": 0.9,
+    "proof_strategy": "Well-quasi-order machinery: minimal bad sequences, the minor relation on tree decompositions, and grid-minor/bramble characterizations of tree-width.",
+    "research_mode": "team",
+    "source_exp_id": "human_brainstorm_2026-08-12",
+    "status": "available",
+    "timestamp": "2026-08-13T03:21:14.742676+00:00",
+    "title": "Graph-Minors: Structural Theory of the Minor Partial Order"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Formalizes Regev's worst-case to average-case reduction showing that a polynomial-time algorithm for the decision Learning With Errors problem over a lattice with polynomial modulus implies a polynomial-time quantum algorithm for the worst-case shortest-vector / GapSVP problem.",
+    "domain_bridges": [],
+    "domains": [
+      "Cryptography",
+      "Computation"
+    ],
+    "id": "fd_1203",
+    "lineage_refs": [],
+    "priority_score": 0.9,
+    "proof_strategy": "Construct a quantum Gaussian sampler from an LWE oracle via the reduction lemma, then invoke the classical reduction from GapSVP to the discrete Gaussian sampler.",
+    "research_mode": "team",
+    "source_exp_id": "human_brainstorm_2026-08-12",
+    "status": "available",
+    "timestamp": "2026-08-13T03:21:14.974523+00:00",
+    "title": "LWE-Hardness: Worst-Case to Average-Case Reductions for Lattices"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Proves the security of the BB84 quantum key distribution protocol against collective attacks using entropic uncertainty relations, formalizing the complementarity argument that bounds the eavesdropper's smooth min-entropy on the raw key.",
+    "domain_bridges": [],
+    "domains": [
+      "Cryptography",
+      "Computation"
+    ],
+    "id": "fd_1204",
+    "lineage_refs": [],
+    "priority_score": 0.9,
+    "proof_strategy": "Entropic uncertainty relation for complementary bases, the leftover-hash lemma for privacy amplification, and a de-Finetti style reduction for collective attacks.",
+    "research_mode": "team",
+    "source_exp_id": "human_brainstorm_2026-08-12",
+    "status": "available",
+    "timestamp": "2026-08-13T03:21:15.174582+00:00",
+    "title": "Quantum-Key-Distribution: BB84 Security via Entropic Uncertainty"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Proves the Kolmogorov-Arnold representation theorem that every continuous multivariate function on the unit cube can be represented as a finite superposition of continuous univariate functions and additions, with quantitative trade-offs between inner and outer functions.",
+    "domain_bridges": [],
+    "domains": [
+      "MachineLearning",
+      "Computation"
+    ],
+    "id": "fd_1205",
+    "lineage_refs": [],
+    "priority_score": 0.9,
+    "proof_strategy": "Lorentz's refinement via uniformly monotone outer functions and the constructive inner-function family; prove the representation exists for the space of continuous functions on the cube.",
+    "research_mode": "team",
+    "source_exp_id": "human_brainstorm_2026-08-12",
+    "status": "available",
+    "timestamp": "2026-08-13T03:21:15.377667+00:00",
+    "title": "Kolmogorov-Arnold: Superposition of Multivariate Continuous Functions"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Proves sharp generalization bounds for minimum-norm interpolating least-squares estimators in overparameterized regression, characterizing when interpolation generalizes (benign overfitting) versus fails, in terms of the eigenvalue decay of the design matrix.",
+    "domain_bridges": [],
+    "domains": [
+      "MachineLearning",
+      "Probability"
+    ],
+    "id": "fd_1206",
+    "lineage_refs": [],
+    "priority_score": 0.9,
+    "proof_strategy": "Spectrally decompose the minimum-norm interpolant; bound excess risk by signal-vs-noise projections on the tail eigenvectors and compare to the Bayes risk.",
+    "research_mode": "team",
+    "source_exp_id": "human_brainstorm_2026-08-12",
+    "status": "available",
+    "timestamp": "2026-08-13T03:21:15.592908+00:00",
+    "title": "Benign-Overfitting: Sharp Risk Bounds for Interpolating Least Squares"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Formalizes the connection between the Deligne-Mumford compactification of the moduli space of smooth curves and the tropical moduli space of stable tropical curves, including the tropicalization of boundary strata and tropical Gromov-Witten invariants.",
+    "domain_bridges": [],
+    "domains": [
+      "Tropical",
+      "Geometry"
+    ],
+    "id": "fd_1207",
+    "lineage_refs": [],
+    "priority_score": 0.9,
+    "proof_strategy": "Degeneration: associate to a smooth curve over a non-Archimedean field its tropical skeleton; identify stable tropical curves with the boundary of M̄_g via weight data.",
+    "research_mode": "team",
+    "source_exp_id": "human_brainstorm_2026-08-12",
+    "status": "available",
+    "timestamp": "2026-08-13T03:21:15.795280+00:00",
+    "title": "Tropical-Moduli: Compactification of M_g via Tropical Curves"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Develops the formal theory of non-Archimedean tropicalization: the valuation-induced tropicalization map on Berkovich analytifications of algebraic subvarieties, the polyhedral structure of its fibers, and the structure theorem for tropical varieties.",
+    "domain_bridges": [],
+    "domains": [
+      "Tropical",
+      "NumberTheory"
+    ],
+    "id": "fd_1208",
+    "lineage_refs": [],
+    "priority_score": 0.9,
+    "proof_strategy": "Berkovich analytic spaces and the tropicalization of the analytification; use the formal model and the fundamental theorem of tropical geometry for the fiber description.",
+    "research_mode": "team",
+    "source_exp_id": "human_brainstorm_2026-08-12",
+    "status": "available",
+    "timestamp": "2026-08-13T03:21:16.028827+00:00",
+    "title": "Nonarchimedean-Tropicalization: Berkovich Fibers of Subvarieties"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Formalizes the foundations of Teichmüller theory: the Teichmüller space of marked Riemann surfaces, the Teichmüller metric defined by extremal quasi-conformal maps, and the action of the mapping class group whose quotient is the moduli space.",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_1209",
+    "lineage_refs": [],
+    "priority_score": 0.9,
+    "proof_strategy": "Quasi-conformal mapping theory, Beltrami differentials, the extremal mapping existence theorem, and the conformal modulus of annuli for the Teichmüller metric.",
+    "research_mode": "team",
+    "source_exp_id": "human_brainstorm_2026-08-12",
+    "status": "available",
+    "timestamp": "2026-08-13T03:21:16.243998+00:00",
+    "title": "Teichmuller-Moduli: Analytic Structure of Riemann Surface Space"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Unifies the Eynard-Orantin topological recursion with enumerative geometry: proves that simple Hurwitz numbers satisfy the topological recursion on a rational spectral curve and computes their wave-function expansion, connecting matrix models to Hurwitz theory.",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry",
+      "Combinatorics"
+    ],
+    "id": "fd_1210",
+    "lineage_refs": [],
+    "priority_score": 0.9,
+    "proof_strategy": "Place the Hurwitz generating functions on the spectral curve; verify the loop equations and the recursion's validity order-by-order in the Euler characteristic.",
+    "research_mode": "team",
+    "source_exp_id": "human_brainstorm_2026-08-12",
+    "status": "available",
+    "timestamp": "2026-08-13T03:21:16.450106+00:00",
+    "title": "Topological-Recursion: Eynard-Orantin Invariants and Hurwitz Numbers"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Formalizes the algebraic structure of conformal field theory: vertex operator algebras and their representation theory, proving the modular invariance of the genus-one partition function and the Verlinde formula expressing fusion rules through the modular S-matrix.",
+    "domain_bridges": [],
+    "domains": [
+      "Physics",
+      "Algebra"
+    ],
+    "id": "fd_1211",
+    "lineage_refs": [],
+    "priority_score": 0.9,
+    "proof_strategy": "Zhu's theory of VOA modules and the modularity of characters of rational VOAs; prove the S-matrix unitarity and the Verlinde formula for the fusion coefficients.",
+    "research_mode": "team",
+    "source_exp_id": "human_brainstorm_2026-08-12",
+    "status": "available",
+    "timestamp": "2026-08-13T03:21:16.661615+00:00",
+    "title": "VOA-CFT: Modular Invariance of the Conformal Partition Function"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Formalizes the Nash existence theorem for normal-form games via Brouwer's fixed point theorem applied to the product of mixed-strategy simplices, and proves the computational hardness that finding an approximate Nash equilibrium is PPAD-complete.",
+    "domain_bridges": [],
+    "domains": [
+      "Applications",
+      "Computation"
+    ],
+    "id": "fd_1212",
+    "lineage_refs": [],
+    "priority_score": 0.9,
+    "proof_strategy": "Build the Nash map as a continuous self-map of the mixed-strategy polytope and apply Brouwer; for hardness, reduce from Sperner's lemma via the PPAD definition.",
+    "research_mode": "team",
+    "source_exp_id": "human_brainstorm_2026-08-12",
+    "status": "available",
+    "timestamp": "2026-08-13T03:21:16.880129+00:00",
+    "title": "Nash-Equilibrium: Existence via Brouwer and Computation Complexity"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Formally proves the semicircle law for Wigner ensembles: the empirical spectral distribution of a random Hermitian matrix with independent entries converges in probability to the semicircle distribution as the dimension grows, establishing the universality of bulk eigenvalue statistics for random matrices.",
+    "domain_bridges": [],
+    "domains": [
+      "Probability"
+    ],
+    "id": "fd_1213",
+    "lineage_refs": [],
+    "priority_score": 0.9,
+    "proof_strategy": "Moment method for Gaussian Wigner matrices: compute E[tr(H^k)/n], bound the variance, and identify the moment sequence with Catalan numbers (free cumulants).",
+    "research_mode": "team",
+    "source_exp_id": "human_brainstorm_2026-08-12",
+    "status": "available",
+    "timestamp": "2026-08-13T03:21:12.263241+00:00",
+    "title": "Wigner-Semicircle: Universality of the Spectral Distribution"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Constructs standard Brownian motion from a countable family of Gaussian increments, proves existence of a version with almost-surely continuous paths, and establishes almost-sure Hölder continuity of every exponent below 1/2 together with almost-sure nowhere differentiability.",
+    "domain_bridges": [],
+    "domains": [
+      "Probability"
+    ],
+    "id": "fd_1214",
+    "lineage_refs": [],
+    "priority_score": 0.9,
+    "proof_strategy": "Kolmogorov-Daniell extension plus Kolmogorov-Chentsov continuity criterion; prove modulus-of-continuity bounds on dyadic rationals.",
+    "research_mode": "team",
+    "source_exp_id": "human_brainstorm_2026-08-12",
+    "status": "available",
+    "timestamp": "2026-08-13T03:21:12.542387+00:00",
+    "title": "Brownian-Motion: Wiener's Existence Construction and Path Continuity"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Develops Stein's method of exchangeable pairs to prove quantitative normal approximation bounds, controlling Wasserstein and bounded-Lipschitz distances between a target random variable and the standard normal in terms of an explicit coupling identity and concentration constant.",
+    "domain_bridges": [],
+    "domains": [
+      "Probability"
+    ],
+    "id": "fd_1215",
+    "lineage_refs": [],
+    "priority_score": 0.9,
+    "proof_strategy": "Characterize normality by the Stein equation f'(x) - x f(x) = h(x) - N(h); bound the exchangeable-pair generator and solve the Stein equation with Lipschitz right-hand sides.",
+    "research_mode": "team",
+    "source_exp_id": "human_brainstorm_2026-08-12",
+    "status": "available",
+    "timestamp": "2026-08-13T03:21:12.748859+00:00",
+    "title": "Stein-Method: Quantitative Normal Approximation Bounds"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
