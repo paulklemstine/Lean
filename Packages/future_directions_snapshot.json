@@ -1085,7 +1085,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "2468bda5",
+    "consumed_by_exp_id": "7ba7f15b",
     "description": "## OR-DIAL-MAXIMUM (round-20 #1, experiment 408, assessment v184, paper 73)\n\n**A global cap on the semiprime OR dial.** Papers 69–72 measured specific OR channels (S₃ identity-rate ≈ 0.12; order-n character events exactly g(n) ≤ 0.3113). Here is the variational principle: for ANY class-rate profile r: (Z/m)^× → [0,1] (r(c) = P(fork event | p ≡ c mod m)), the semiprime OR channel obeys\n\n**max_r I(N mod m; [E(p) OR E(q)]) = g(2) = H(3/4) − ½H(1/2) = 0.3113 bits, attained exactly by the quadratic-character kernel profiles (r = 1 on an index-2 subgroup of the units, 0 elsewhere) and their complement/AND transforms.**\n\n### Machine-verified by EXACT enumeration (no sampling)\n\nThe counting identity over unit pairs ab ≡ N mod m gives P(OR|N≡c) = 1 − (1/φ)Σ_a (1−r(a))(1−r(ca⁻¹)). Enumerating ALL 2^φ 0/1 profiles on nine moduli (m = 3,4,5,7,8,9,11,16,21 — prime/composite conductors, cyclic and non-cyclic unit groups C₂×C₂, C₂×C₄, C₂×C₆):\n\n| m | unit group | global max I | argmax |\n|---|---|---|---|\n| 3, 4, 5, 7 | C₂/C₄/C₆ | 0.3113 = g(2) on every modulus | QR kernel + complement |\n| 8 | C₂×C₂ | 0.3113 | three quadratic chars of conductor 8 |\n| 9, 11 | C₆/C₁₀ | 0.3113 | QR kernel + complement |\n| 16, 21 | C₂×C₄/C₂×C₆ | 0.3113 | three index-2 kernels each |\n\nNo 0/1 profile on any modulus exceeds the cap. Every subgroup-kernel profile re-derives paper 72's law EXACTLY (30 subgroups, I = g(index) to 10⁻⁹). Continuous coordinate ascent over [0,1]^φ (m=7,11,16) never exceeds g(2).\n\n### Realizable forks: quadratic kernels hit the cap, everything else is below\n\nQ(√5) m=5, Q(i) m=4, Q(√−11) m=11, (8|p) m=8 (non-cyclic units) — **all I = 0.3113 = g(2)**, P(OR)=3/4. Cyclic cubic m=7: g(3)=0.0728. Q(ζ₅): g(4)=0.0359. S₃ cubic x³+x+1 mod 31 variable profile (per-QR-class identity rates 0.287–0.349, 1.0 on non-QR): Φ = 0.1230, direct MC 0.1284, which-factor wall 0.0024.\n\n### Structure\n\n- Complement of a character event: **identical Φ** (0.3113 on m=5,8,11).\n- AND event: exact companion law Φ_AND(n) = H(1/n²) − (1/n)H(1/n), verified (n=2: 0.3113 = g(2); n=3: 0.1972 > g(3); n=4: 0.1345 > g(4)); capped at g(2).\n- XOR of a quadratic kernel = DETERMINISTIC function of N (χ(N)=−1): I = 1.0000 bit exactly, N-computable, factor-useless — the sharpest proof that raw MI is not factor information.\n\n### Unification & factor-uselessness\n\nPaper 54's p−1 ℓ=3 OR (0.313) IS the cap (g(2), f=3); papers 69–70's S₃ profile (0.12) is a variable profile below the cap; paper 72's order-n events are the subgroup kernels, of which the index-2 are the global maximizers. Symmetric (barrier 2), residue dial (barrier 5), sealed behind the CRT (barrier 6), all classical reciprocity (barrier 8). The OR/residue-dial line is now closed by a single global maximum.\n\n**Verdict:** variational principle CONFIRMED (machine-verified). Round-20 1/1 done. Barriers 2/5/6/8.\n",
     "domain_bridges": [],
     "domains": [
@@ -1104,7 +1104,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "f2bb5930",
+    "consumed_by_exp_id": "70d03dec",
     "description": "## CYCLIC-TYPE-CHANNEL (round-22 #2, experiment 413, assessment v189, paper 78)\n\n**The complete splitting-type channel of a cyclic field exceeds the 1-bit binary-fork cap. Papers 72–74 capped every BINARY symmetric semiprime fork at 1.0 bit; the cyclic splitting type is multi-state, and its type-pair channel carries 1.2500 (C₄) / 1.4739 (C₆) bits — strictly above the cap.**\n\n### The type channel\n\nFor Q(ζ_f), f prime, Gal = (Z/f)^× = C_n (n = f−1), the Frobenius order T(p) = ord_f(p) (the residue degree) is the complete splitting type — a deterministic function of p mod f, so **I(p mod f; T) = H(T) EXACT**: C₄ = Q(ζ₅) → 3 states {1,2,4} rates {1/4,1/4,1/2}, H = 1.5 bits (measured 1.4989); C₆ = Q(ζ₇) → 4 states {1,2,3,6} rates {1/6,1/6,1/3,1/3}, H = 1.9183.\n\n- **[T=1] splits-completely = H(1/n)**: C₄ 0.8098 = H(1/4) = 0.8113 EXACT — the **FIRST prime-level QUARTIC-character pinning**; C₆ 0.6497 = H(1/6). Every type face equally pinned ([T=2] 0.8110 = H(1/4), [T=4] 1.0000 = H(1/2)).\n- **Thickening zero**: I(p mod f²; T) = I(p mod f; T) EXACT (T depends only on p mod f). Coprime controls flat.\n- **Root-count readout is LOSSY**: nr collapses [2,2]/[4] (and [2,2,2]/[3,3]/[6]) to nr=0 — the nr-channel is BINARY (C₄ 0.8109, C₆ 0.6498) strictly below H(T). **The type, not the root count, is the complete object.**\n\n### The semiprime law — exact, and above the 1-bit cap\n\nThe unordered type-pair {T(p),T(q)} obeys the exact law **I_pair = H(Π) − (1/φ(f))Σ_c H(Π_c)**, Π_c the pair law under N ≡ c mod f, computable by exact enumeration over the unit group. Machine-verified (30k semiprimes):\n\n| field | H(T) | H(pair) | H(pair\\|N) | I_pair (exact) | I_pair (MC) |\n|---|---|---|---|---|---|\n| C₂ Q(√5) | 1.0000 | 1.5000 | 0.5000 | **1.0000** | 1.0000 |\n| C₄ Q(ζ₅) | 1.5000 | 2.3750 | 1.1250 | **1.2500** | 1.2452 |\n| C₆ Q(ζ₇) | 1.9183 | 3.1144 | 1.6405 | **1.4739** | 1.4711 |\n\nC₂ reproduces the paper-74 cap exactly (the quadratic type pair IS the split-count); **C₄ and C₆ both EXCEED 1.0 bit**. Which-factor wall 0.0001 (symmetric, factor-useless); coprime controls flat. The s-projection recovers Is(n) EXACTLY (C₄ 0.2896 vs Is(4)=0.2947; C₆ 0.1445 vs Is(6)=0.1487) — the split-count is ONE face of the richer type channel.\n\n### Growth law: no 1-bit cap\n\n| n | field | #states | H(T) | I_pair | above 1 bit? |\n|---|---|---|---|---|---|\n| 2 | Q(√5) | 2 | 1.0000 | 1.0000 | at cap |\n| 4 | Q(ζ₅) | 3 | 1.5000 | 1.2500 | **YES** |\n| 6 | Q(ζ₇) | 4 | 1.9183 | 1.4739 | **YES** |\n| 10 | Q(ζ₁₁) | 4 | 1.7219 | 1.2027 | **YES** |\n| 12 | Q(ζ₁₃) | 6 | 2.4183 | 1.7239 | **YES** |\n| 16 | Q(ζ₁₇) | 5 | 1.8750 | 1.3281 | **YES** |\n\nEvery n ≥ 4 exceeds 1.0 bit; the value is governed by the **divisor structure of the cyclic order** (n=12, six states, richest at 1.7239).\n\n### Verdict\n\nCONFIRMED. New exact objects: the type-pair law I_pair = H(Π) − (1/φ)ΣH(Π_c) (first symmetric channels above the binary-fork cap), the C₄ prime-level quartic pinning, root-count lossiness (type multi-state, nr binary), and Is(n) as the s-projection of the type channel. Factor-useless: symmetric (which-factor wall 0.0001, barrier 2), a pure p-mod-f residue dial (barrier 5), N-computable only behind the CRT split (barrier 6), cyclotomic fields + Dirichlet characters + CRT + Chebotarev 1922 (barrier 8). Unifies papers 54/71/72/74. Barriers 2/5/6/8.\n\n*Script:* /tmp/exp_typechan.py.\n",
     "domain_bridges": [],
     "domains": [
@@ -1119,25 +1119,6 @@
     "status": "in_progress",
     "timestamp": "2026-08-12T20:10:55.541631+00:00",
     "title": "CYCLIC-TYPE-CHANNEL (round-22 #2, experiment 413, assessment v189, paper 78)"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "**Network/LLM research lab — round-net-9 (depth axis, round 7). Machine-verified. Paper: ResearchOutput/NetworkMathematics/9_BoundedStack_Scaling.md. Script: /tmp/exp_net_dyck2_scale.py.**\n\n## Hypothesis\nAfter NET-8 refuted the load-bearing premise at s=12/dm48, find where a single layer finally breaks: (1) context scaling — at larger semilength the balance spans more levels and closes route to opens at distance up to 2s−1; (2) width scaling — one layer must hold BOTH the balance prefix-sum AND the balance-conditioned position routing, so at dm=16/12, d=2 (stack the subtasks) should win.\n\n## Part A — depth FLAT across context scaling (s∈{16,32}, dm=48, d∈{1,2}×2 seeds, 6000 steps)\nALL 8 models: test=1.0000, close_all=1.0000, close_b4+=1.0000. **d=1 is perfect even at semilength 32 (context 64) — closes route to matching opens up to 63 tokens back.** Context length is NOT the boundary.\n\n## Part B — depth FLAT across width scaling (dm∈{16,12}, s=12, d∈{1,2}×2 seeds)\nALL 8 models: test=1.0000 at every metric. **d=1 is perfect even at dm=12 (head dim 3).** Width is NOT the boundary either.\n\n## Part C — non-flat screen\nNo config with d=1 < d=2 (close_all gap > 0.01) — every pair equal at 1.0000; the shared-head exit branch correctly not triggered (no depth-using model to exit).\n\n## Mechanism\nSingle-layer soft attention implements a **bounded stack**: the stack-top STATE is the scalar running balance (one head's prefix-sum); the stack-top CONTENT is positionally stored (attention routes each close query to the matching open at balance-depth balance_before−1 via balance-conditioned key match + recency, reads the stored type). No second layer needed because the state is scalar and the content is at a computable position. Boundary needs: balance range exceeding dm precision (s≫64), unbounded nesting/length-gen (NET-4's wall), or **NON-POSITIONAL stack content** (content computed from multiple distant positions — the genuinely hard case, natural next load-bearing target).\n\n## Barriers\n(a) no circularity (fresh random words, iid types, test seed+77); (b) related circuits acknowledged (attention-as-bounded-stack is mech-interp folklore; the scaling-sweep negative + five-class × context × width flatness are new; Catalog 698 packages no prior work); (c) toy-scale AND the finding — boundary not reached at context ≤64/width ≥12; (d) no leakage (held-out 1.0000 before probing); (e) 2 seeds × every config, 16/16 consistent; (f) documented; two post-data script bugs fixed (SUMMARY 4-vs-3 tuple unpack after all models done; Part C RA 4-tuple lookup fell to RB arm — the (16,48)/(32,48) pairs verified EQUAL by direct inspection, automated screen covered dm∈{16,12}, verdict correct over all 16); (g) inherited from NET-8 (windowed baseline −25pp); (h) honest negative with a target: depth gives nothing on bounded-stack grammar at every affordable scale.\n\n## Verdict\nThe load-bearing boundary is NOT found at context ≤64 / width ≥12 — flat-depth law now covers five task classes AND holds across context and width scaling on the non-regular grammar. Next load-bearing candidates: non-positional stack content, s≫64, unbounded nesting; and rotate axes to real-scale checks (exit law / PR law on a small LM — the depth axis has had 7 iterations).",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1224",
-    "lineage_refs": [],
-    "priority_score": 1000.0,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-13T08:51:37.174146+00:00",
-    "title": "NET-9: Load-bearing boundary NOT found — depth flat across context (s≤32) and width (dm≥12) scaling of Dyck-2; single-layer soft attention implements a bounded stack"
   },
   {
     "ambition_level": "grand_challenge",
@@ -1176,6 +1157,25 @@
     "status": "available",
     "timestamp": "2026-08-13T10:37:22.620216+00:00",
     "title": "NET-10: The toy depth law's 1.0000s were a full-attention future-peek artifact (ceiling 0.7609 < 1.0000), and the exit law does not transfer to a real causal LM (0/4 lossless at crossover)"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "## NET-12 — Joint-aware bit allocation on a real causal LM (compression axis; the confirmed real target from NET-11)\n\n**Paper:** `ResearchOutput/NetworkMathematics/12_JointAllocSmallLM.md` · Notebook Part 12 · Assessment v12. Scripts `/tmp/exp_net_joint.py`, `/tmp/exp_net_joint_partC.py`, `/tmp/exp_net_joint_partC2.py`.\n\n**Setup:** the same real causal word LM (5 Gutenberg novels, dm=64, vocab 4097, ctx 128, causal masking, d=4, 2000 steps) — full acc reproduces 0.1571 a third time; lossless bar 0.98·full = 0.1540. Every eval is a **joint** quantization of an independent model copy.\n\n### Part A — joint-marginal map\nWith everything else at the role schedule (4/3/2): attention projections (all 16) are **exactly indifferent at 2 bits** (retained flat at 0.878); **embed 3-bit jointly retains 0.849** (isolation ≈0.95 — compounding is real, ~11 points); readout **un 2-bit collapses to 0.280** (most fragile matrix, jointly); MLP 2-bit 0.80–0.85, 3-bit fine.\n\n### Part B — per-tensor greedy strict-lossless frontier = **5.31 avg bits**\nGreedy from all-6 keeping retained ≥ 0.98·full: **interface (embed/pos/un, 73% of params) pinned at 6**, MLP mostly 4, attention 2–3, lnf 2; retained 0.982. Even **all-4 misses the bar per-tensor (0.979 vs 0.980)**. Per-tensor static RTN cannot get under ≈5.3 bits losslessly on real text.\n\n### Part C — per-channel (per-row) RTN is the fix\nUniform all-4 per-row is **lossless at 4.00 bits (retained 0.987)** — 1.3 bits below the per-tensor frontier. Per-row uniform-3 still fails (0.947); the **4-bit interface is irreducible under both primitives**; uniform-2 hopeless (0.588); the per-tensor-optimized frontier scores **worse per-row (0.973)** — allocation is primitive-dependent.\n\n### Part C2 — the rotation's question, answered no\n\"4-bit interface + all interior 2\": **0.733** @ 3.46 bits. \"4-bit interface + MLP 4 + attention 2\": **0.907** @ 3.82 bits. Uniform-4: 0.987. The 8-point gap between the last two is almost all attention 2→4 ⇒ **\"attention is 2-bit free\" is an operating-point artifact** — true in isolation and at the degraded 0.878 baseline, but 2-bit attention costs ~8 points in a clean joint network.\n\n### Answers\n- **Any data-free schedule reach lossless?** YES — per-channel uniform-4 (4.0 bits).\n- **Is 4-bit interface + 2-bit interior enough?** NO (0.733 / 0.907).\n- **Correction to NET-11:** \"no static RTN schedule ≤3.7 bits lossless\" was about the *per-tensor* primitive; per-channel uniform-4 is lossless. The practical lever is the per-channel primitive, not smarter per-tensor allocation.\n\n### Barriers (8)\n(a) joint evals on independent loaded copy, greedy = pure allocation search — no injection · (b) per-channel/group quantization is standard (rescue = known-primitive confirmation), but the joint-damage quantification is new; Catalog 2094 packages, no prior work · (c) real causal LM, causal masking, 4097 vocab — confronted head-on, toy uniform-3 fails again · (d) causal masking + contiguous split + data-free quantization · (e) 1 seed, 4 config families × 4–5 bit levels × ≤51 greedy steps, each a full joint eval; 0.1571 reproduced exactly 3× · (f) 0.98 bar throughout, all-4 knife-edge called out, eval noise ≈0.15%, greedy stopping verified, PART C 1-D-lnf crash fixed + re-run clean · (g) uniform-2/3 + role + all-4/6 + full-precision baselines at the same bar · (h) practical lever = per-channel primitive (uniform-4, data-free); 2-bit-attention \"wins\" measured at degraded operating points do not survive a clean net.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_1228",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-13T12:07:19.363217+00:00",
+    "title": "NET-12: Joint-aware bit allocation on a real causal LM — per-tensor floor ~5.3 bits, per-channel uniform-4 is lossless, 'attention is 2-bit free' was an operating-point artifact"
   },
   {
     "ambition_level": "grand_challenge",
@@ -1264,25 +1264,6 @@
     "status": "available",
     "timestamp": "2026-07-23T20:10:45.914797+00:00",
     "title": "EML-Pythagorean-Operator: Single-Neuron Neural Energy Guided Tree Traversal"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 0c649bb1 (Q=0.850), which proved 109 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Paper:** `ResearchOutput/NewMathematics/40_DerivedModulus_NoGo.md` (factor3)\n**Experiment:** MULTIMOD (#375), assessment v151.\n\n## Finding\nTest whether invariants of derived moduli M = poly(N) (N±1, N²±1, Φ₃(N), 2N±1)\ncarry factor signal about N = pq. Verified:\n1. **gcd(N, M) = 1 for every derived",
-    "domain_bridges": [],
-    "domains": [
-      "Physics"
-    ],
-    "id": "push_0c649bb1_dbdc7ff5",
-    "lineage_refs": [],
-    "priority_score": 0.95,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "0c649bb1",
-    "status": "available",
-    "timestamp": "2026-08-13T10:37:02.697812+00:00",
-    "title": "Deepening: The Derived-Modulus Corner, Closed"
   },
   {
     "ambition_level": "extension",
@@ -2218,64 +2199,7 @@
     "title": "Navier-Stokes: 2D Regularity and Partial 3D Results"
   },
   {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle a3466461 (Q=0.820), which proved 65 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Paper:** `ResearchOutput/NewMathematics/46_SymmetryBreaking_Cost.md` (factor3)\n**Experiment:** ISOLATION-COST (#381), assessment v157.\n\n## Finding\nThe residues are INFORMATION-sufficient but COMPUTATION-sealed. Verified:\n1. **Oracle isolation = log₂(π(√N)) exactly** (ratio 0.96–1.03 across 15–33 b",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_a3466461_5814d025",
-    "lineage_refs": [],
-    "priority_score": 0.9199999999999999,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "a3466461",
-    "status": "available",
-    "timestamp": "2026-08-13T06:53:16.711358+00:00",
-    "title": "Deepening: The Symmetry-Breaking Cost of Factoring, Measured"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle d8dbb938 (Q=0.820), which proved 70 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Paper:** `ResearchOutput/NewMathematics/45_DialThreshold_NoAmplification.md` (factor3)\n**Experiment:** DIAL-THRESHOLD (#380), assessment v156.\n\n## Finding\nCan the free-witness residue dials (Kronecker (D_i|p) over fundamental\ndiscriminants) amplify a Coppersmith partial-key hint (p mod m, m = N^{1",
-    "domain_bridges": [],
-    "domains": [
-      "Combinatorics"
-    ],
-    "id": "push_d8dbb938_1d7b19a3",
-    "lineage_refs": [],
-    "priority_score": 0.9199999999999999,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "d8dbb938",
-    "status": "available",
-    "timestamp": "2026-08-13T06:53:29.133886+00:00",
-    "title": "Deepening: Residue Dials Cannot Amplify a Coppersmith Hint, Closed"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 66e718fe (Q=0.813), which proved 28 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Develop a proof theory where the validity of a theorem can be established not just by deriving it from axioms, but by verifying that its logical consequences form a coherent, self-consistent structure. Conjecture: There exists a class of consequence-stable propositions P such that if P implies Q1 an",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_66e718fe_de040f40",
-    "lineage_refs": [],
-    "priority_score": 0.9129599999999999,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "66e718fe",
-    "status": "available",
-    "timestamp": "2026-08-01T17:25:26.405776+00:00",
-    "title": "Deepening: Retrocausal Proof Theory: Proving Theorems by Their Consequences"
-  },
-  {
-    "ambition_level": "extension",
+    "ambition_level": "grand_challenge",
     "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Building on cycle f1303b99 (Q=0.811), which proved 21 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove Conway's Game of Life is Turing complete via a direct constructive embedding. Formalize cellular automata in Lean 4 and establish complexity bounds on the simulation overhead.",
