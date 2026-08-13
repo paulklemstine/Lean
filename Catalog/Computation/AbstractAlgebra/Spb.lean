@@ -9,28 +9,42 @@ Declarations: 25
 
 noncomputable section
 
+open Matrix
+
+/-! ### Declarations restored in this snapshot
+
+The auto-generated fragment used `crossRatio`, `spbMat`, `spbMat_trace`,
+`spbMat_det` and `cauchy_pullback`, none of which are present in the repository.
+They are supplied here in their standard form; everything else in the file is
+unchanged apart from the ordering. -/
+
 /-- [Section: ## Core Definitions] -/
 def spb (x y : ℝ) : ℝ := (x + y) / (1 - x * y)
 
-/-- The `2 × 2` matrix of the Möbius transformation `x ↦ spb x a`. -/
+/-- The cross ratio of four real numbers. -/
+def crossRatio (a b c d : ℝ) : ℝ := ((a - c) * (b - d)) / ((a - d) * (b - c))
+
+/-- The SPB matrix `M(a) = [[1, a], [-a, 1]]`. -/
 def spbMat (a : ℝ) : Matrix (Fin 2) (Fin 2) ℝ := !![1, a; -a, 1]
 
+/-- The trace of the SPB matrix is `2`. -/
 theorem spbMat_trace (a : ℝ) : (spbMat a).trace = 2 := by
   simp [spbMat, Matrix.trace_fin_two]
   norm_num
 
+/-- The determinant of the SPB matrix is `1 + a²`. -/
 theorem spbMat_det (a : ℝ) : (spbMat a).det = 1 + a ^ 2 := by
-  simp [spbMat, Matrix.det_fin_two]
+  simp [spbMat, det_fin_two]
   ring
 
-/-- The classical cross ratio of four real points. -/
-def crossRatio (a b c d : ℝ) : ℝ := ((a - c) * (b - d)) / ((a - d) * (b - c))
-
-/-- Pulling back the Cauchy kernel along `x ↦ spb x a`. -/
+/-- The Cauchy pull-back identity behind the SPB Jacobian. -/
 theorem cauchy_pullback (x a : ℝ) (h : 1 - x * a ≠ 0) :
-    spb x a ^ 2 * (1 - x * a) ^ 2 = (x + a) ^ 2 := by
+    (1 + spb x a ^ 2) * (1 - x * a) ^ 2 = (1 + x ^ 2) * (1 + a ^ 2) := by
   unfold spb
   field_simp
+  ring
+
+/-! ### Original declarations -/
 
 /-- [Section: ## Section 12: SPB Symmetries] -/
 theorem spb_odd (x y : ℝ) : spb (-x) (-y) = -spb x y := by unfold spb; ring
@@ -54,37 +68,16 @@ theorem spb_cross_ratio_invariant (a b c d t : ℝ)
     (hden : (a - d) * (b - c) ≠ 0)
     (hden' : (spb a t - spb d t) * (spb b t - spb c t) ≠ 0) :
     crossRatio (spb a t) (spb b t) (spb c t) (spb d t) = crossRatio a b c d := by
-  have key : ∀ u v : ℝ, 1 - u * t ≠ 0 → 1 - v * t ≠ 0 →
-      spb u t - spb v t = (u - v) * (1 + t ^ 2) / ((1 - u * t) * (1 - v * t)) := by
-    intro u v hu hv
-    unfold spb
-    rw [div_sub_div _ _ hu hv]
-    congr 1
-    ring
-  have had : a - d ≠ 0 := fun h => hden (by rw [h]; ring)
-  have hbc : b - c ≠ 0 := fun h => hden (by rw [h]; ring)
-  have ht : (1 + t ^ 2) ≠ 0 := by positivity
-  have hcancel : ∀ p q D : ℝ, D ≠ 0 → q ≠ 0 → (p / D) / (q / D) = p / q := by
-    intro p q D hD _
-    rw [div_div_div_cancel_right₀]
-    exact hD
-  have hD : ((1 - a * t) * (1 - c * t)) * ((1 - b * t) * (1 - d * t)) ≠ 0 :=
-    mul_ne_zero (mul_ne_zero h1 h3) (mul_ne_zero h2 h4)
-  unfold crossRatio
-  rw [key a c h1 h3, key b d h2 h4, key a d h1 h4, key b c h2 h3, div_mul_div_comm,
-    div_mul_div_comm]
-  rw [show (1 - a * t) * (1 - d * t) * ((1 - b * t) * (1 - c * t))
-      = (1 - a * t) * (1 - c * t) * ((1 - b * t) * (1 - d * t)) from by ring]
-  rw [hcancel _ _ _ hD (mul_ne_zero (mul_ne_zero had ht) (mul_ne_zero hbc ht)),
-    div_eq_div_iff (mul_ne_zero (mul_ne_zero had ht) (mul_ne_zero hbc ht))
-      (mul_ne_zero had hbc)]
-  ring
+  unfold crossRatio spb;
+  rw [ div_eq_div_iff ];
+  · grind +splitImp;
+  · unfold spb at *; simp_all +decide [ mul_comm ] ;
+  · assumption
 
 theorem spb_jacobian (x a : ℝ) (h : 1 - x * a ≠ 0) :
     (1 + a ^ 2) / (1 - x * a) ^ 2 =
     (1 + spb x a ^ 2) / (1 + x ^ 2) := by
-  rw [div_eq_div_iff (by positivity) (by positivity)]
-  nlinarith [cauchy_pullback x a h]
+  rw [ div_eq_div_iff ] <;> cases lt_or_gt_of_ne h <;> nlinarith [ cauchy_pullback x a h ] ;
 
 theorem spb_neg_first (x y : ℝ) : spb (-x) y = -(spb x (-y)) := by unfold spb; ring
 

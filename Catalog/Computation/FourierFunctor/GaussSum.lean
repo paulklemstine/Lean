@@ -1,4 +1,4 @@
-import Computation.FourierFunctor.Rigidity
+import Catalog.Computation.FourierFunctor.Rigidity
 
 /-!
 # Quadratic Gauss sums: the flat extreme of the uncertainty principle

@@ -1,5 +1,5 @@
-import Computation.FourierFunctor.Duality
-import Computation.FourierFunctor.Transform
+import Catalog.Computation.FourierFunctor.Duality
+import Catalog.Computation.FourierFunctor.Transform
 
 /-!
 # Pontryagin duality is a self-adjunction, and the Fourier kernel is its unit
