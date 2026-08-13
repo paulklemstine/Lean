@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "f3cf4755",
-      "domain": "MachineLearning",
-      "key_insight": "# Future directions\n\nDerived from the three research cycles carried out in\n`Catalog/MachineLearning/GrokkingDelayedTransition/`\n(`SaddleNodeLocal.lean`, `GradientFlowThreshold.lean`, `VectorMargin.lea",
-      "quality_score": 0.7422650000000001,
-      "sorry_count": 2,
-      "theorem_count": 137,
-      "timestamp": "2026-08-07T09:24:12",
-      "title": "The completed formalization deliberately studies the smallest non-trivial model:"
-    },
-    {
       "cycle_id": "14cda033",
       "domain": "Computation",
       "key_insight": "# Future directions\n\nBold, falsifiable conjectures growing out of the eight research cycles in\n\n* `Catalog/Computation/BerggrenHyperbolicGeodesics.lean` (cycle 1: the metric/arithmetic dictionary),\n*",
@@ -499,19 +489,19 @@
       "theorem_count": 939,
       "timestamp": "2026-08-13T15:21:48",
       "title": "The Quantum Register Cannot Be Shrunk: QUBIT-TRADE, Closed"
+    },
+    {
+      "cycle_id": "6753d65f",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions — next-cycle conjectures from the residue-leakage thread\n\nThe closed results of this cycle (all proved in `Catalog/Bridges/`):\n\n* `dirichlet_no_pruning` — every candidate prime sur",
+      "quality_score": 0.89,
+      "sorry_count": 2,
+      "theorem_count": 92,
+      "timestamp": "2026-08-13T15:22:02",
+      "title": "The Residue-Leakage Curve and the Dirichlet No-Pruning Theorem, Closed"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "f15cd85a",
-      "domain": "Geometry",
-      "key_insight": "# Future directions\n\n## What is formalized\n\n`Catalog/Geometry/PerfectCuboid/AlgebraicSurface.lean` provides a self-contained\nformal development with no assumption that a perfect cuboid exists:\n\n1. def",
-      "quality_score": 0.76837,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-08-02T22:20:26",
-      "title": "Perfect Cuboid (Euler Brick)"
-    },
     {
       "cycle_id": "17b35eaf",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 939,
       "timestamp": "2026-08-13T15:21:48",
       "title": "The Quantum Register Cannot Be Shrunk: QUBIT-TRADE, Closed"
+    },
+    {
+      "cycle_id": "6753d65f",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions — next-cycle conjectures from the residue-leakage thread\n\nThe closed results of this cycle (all proved in `Catalog/Bridges/`):\n\n* `dirichlet_no_pruning` — every candidate prime sur",
+      "quality_score": 0.89,
+      "sorry_count": 2,
+      "theorem_count": 92,
+      "timestamp": "2026-08-13T15:22:02",
+      "title": "The Residue-Leakage Curve and the Dirichlet No-Pruning Theorem, Closed"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "646c7606",
-      "domain": "Novelty",
-      "name": "is",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "64ac4ffd",
-      "domain": "Pythagorean",
-      "name": "entire_dslope",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "64ac4ffd",
-      "domain": "Pythagorean",
-      "name": "entire_factor_of_zero",
-      "quality": 0.78
-    },
     {
       "cycle_id": "64ac4ffd",
       "domain": "Pythagorean",
@@ -2803,17 +2785,28 @@
       "domain": "Algebra",
       "name": "eml_compose_left",
       "quality": 0.87
+    },
+    {
+      "cycle_id": "6753d65f",
+      "domain": "Bridges",
+      "name": "Fifth",
+      "quality": 0.89
+    },
+    {
+      "cycle_id": "6753d65f",
+      "domain": "Bridges",
+      "name": "supplies",
+      "quality": 0.89
+    },
+    {
+      "cycle_id": "6753d65f",
+      "domain": "Bridges",
+      "name": "abelian_channel_no_pruning",
+      "quality": 0.89
     }
   ],
-  "last_updated": "2026-08-13T15:21:48",
+  "last_updated": "2026-08-13T15:22:02",
   "open_questions": [
-    {
-      "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
-      "cycle_id": "2f321176",
-      "domain": "NumberTheory",
-      "sorry_count": 1,
-      "timestamp": "2026-07-20T20:48:31"
-    },
     {
       "context": "-    sorry+  have hchecked := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
       "cycle_id": "1a27f9f3",
@@ -3016,6 +3009,13 @@
       "domain": "MachineLearning",
       "sorry_count": 2,
       "timestamp": "2026-08-07T09:24:12"
+    },
+    {
+      "context": "All statements are proved; no `sorry`, no `axiom`, no `native_decide`.; fails\" to \"no sieve of this shape can exist\".  No `sorry`, no `axiom`,",
+      "cycle_id": "6753d65f",
+      "domain": "Bridges",
+      "sorry_count": 2,
+      "timestamp": "2026-08-13T15:22:02"
     }
   ],
   "research_threads": {
@@ -3145,12 +3145,6 @@
     ],
     "Bridges": [
       {
-        "cycle_id": "f96004ff",
-        "quality": 0.686,
-        "theorems": 271,
-        "title": "Let a compact smooth submanifold have reach at least `τ`, and let a finite sampl"
-      },
-      {
         "cycle_id": "a6a59cd3",
         "quality": 0.686,
         "theorems": 307,
@@ -3203,6 +3197,12 @@
         "quality": 0.627125,
         "theorems": 135,
         "title": "The CRT-Split No-Go: Why N-Alone Iteration Cannot Factor in Poly(log N)"
+      },
+      {
+        "cycle_id": "6753d65f",
+        "quality": 0.89,
+        "theorems": 92,
+        "title": "The Residue-Leakage Curve and the Dirichlet No-Pruning Theorem, Closed"
       }
     ],
     "Combinatorics": [
