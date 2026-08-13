@@ -453,21 +453,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Residue-Leakage Curve and the Dirichlet No-Pruning Theorem, Closed"
   },
   {
-    "consumed_by_exp_id": "0c649bb1",
-    "description": "**Paper:** `ResearchOutput/NewMathematics/40_DerivedModulus_NoGo.md` (factor3)\n**Experiment:** MULTIMOD (#375), assessment v151.\n\n## Finding\nTest whether invariants of derived moduli M = poly(N) (N\u00b11, N\u00b2\u00b11, \u03a6\u2083(N), 2N\u00b11)\ncarry factor signal about N = pq. Verified:\n1. **gcd(N, M) = 1 for every derived modulus** \u2014 they share nothing with N.\n2. **C(M) is a function of N** (corr 0.66\u20130.95 with N); the apparent corr with\n   p, p+q is the N-confound (p \u2248 \u221aN varies with N over a wide batch).\n3. **Factor-specific coordinate is noise:** corr(C(M), |p\u2212q|) inside permutation\n   null everywhere (n=40 residual control: obs \u2264 0.26 vs 95th \u2248 0.29\u20130.31).\n4. **Degeneracy:** N\u00b11 always even \u2192 lpf = 2.\n5. Computing C(M) for N\u00b2+1/\u03a6\u2083 needs M's fresh factorization (barrier 4).\n\n## Why it collapses (barrier 1 + 5 + 4)\nThe polynomial barrier (LLL) predicts exactly this: N-explicit moduli share only\nfinitely many primes with N, so their invariants are N-only (barrier 1/5). The\nlarge-M invariants need M's fresh factorization (barrier 4). The only way a\nsecond modulus helps is an EXTERNAL hint sharing a prime with N \u2014 the\nhint-amplification frontier.\n\n## Verdict\nREFUTED. Multi-modulus corner closed. Round-13 nearly complete (HALFPLANE,\nRANDOM-BQF, FETQ, CONDORDER, JACSIGN, KPOWER, MULTIMOD tested). Classical uniform\nhint-free surface remains exhausted.\n\n\ud83e\udd16 Generated with [Claude Code](https://claude.com/claude-code)",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1148",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-12T05:10:44.748176+00:00",
-    "title": "The Derived-Modulus Corner, Closed"
-  },
-  {
     "consumed_by_exp_id": "45ac3b9d",
     "description": "**Paper:** `ResearchOutput/NewMathematics/39_PowerResidue_Circularity.md` (factor3)\n**Experiment:** KPOWER (#374), assessment v150.\n\n## Finding\nTest whether cubic (Z[\u03c9]) / quartic (Z[i]) power-residue symbols provide residue\ndials that escape the quadratic channel. Verified:\n1. **Cubic symbols escape the residue dial:** (a|p)\u2083 = a^{(p\u22121)/3} mod p varies\n   within p mod 9 \u2014 cubic reciprocity depends on 4p = A\u00b2+27B\u00b2 (p's fine\n   arithmetic), echoing JACSIGN's W(p).\n2. **But circular:** the definition uses the exponent p; the reciprocity route\n   needs the A\u00b2+27B\u00b2 rep = factoring (barrier 6). The N-computable symmetric\n   (a/N)\u2083 is symmetric (barrier 2) and non-dial.\n3. **Leakage saturates like quadratic:** over 68 primes p\u2208[1000,2000], cubic and\n   quadratic fingerprints both give 68/68 distinct \u2014 identical rate. The \"few\n   symbols pin p\" power is illusory: computing the symbols requires p.\n\n## Why it collapses (barrier 6 + 2 + 5)\nComputing (a|p)\u2083 requires p or the A\u00b2+27B\u00b2 representation (barrier 6); the\nN-computable version is symmetric (barrier 2); leakage same as quadratic\n(barrier 5 / trace-lemma consistency). Confirms NSPLIT's barrier-2 finding from\nthe fingerprint angle.\n\n## Verdict\nREFUTED. The residue channel's information content is: dial (N-determined) +\nfine-arithmetic noise (circular), nothing more. Higher-power reciprocity adds no\npoly(log N) handle. Classical uniform hint-free surface remains exhausted.\n\n\ud83e\udd16 Generated with [Claude Code](https://claude.com/claude-code)",
     "domains": [
@@ -873,7 +858,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "SPLIT-COUNT-LAW: the complete symmetric fork channel is the split-count s ~ Bin(2,1/n), I(N mod f; s) = Is(n) \u2014 beats the OR cap (Is(2)=1.0, Is(3)=0.474), still factor-useless"
   },
   {
-    "consumed_by_exp_id": "35640655",
+    "consumed_by_exp_id": "2468bda5",
     "description": "## OR-DIAL-MAXIMUM (round-20 #1, experiment 408, assessment v184, paper 73)\n\n**A global cap on the semiprime OR dial.** Papers 69\u201372 measured specific OR channels (S\u2083 identity-rate \u2248 0.12; order-n character events exactly g(n) \u2264 0.3113). Here is the variational principle: for ANY class-rate profile r: (Z/m)^\u00d7 \u2192 [0,1] (r(c) = P(fork event | p \u2261 c mod m)), the semiprime OR channel obeys\n\n**max_r I(N mod m; [E(p) OR E(q)]) = g(2) = H(3/4) \u2212 \u00bdH(1/2) = 0.3113 bits, attained exactly by the quadratic-character kernel profiles (r = 1 on an index-2 subgroup of the units, 0 elsewhere) and their complement/AND transforms.**\n\n### Machine-verified by EXACT enumeration (no sampling)\n\nThe counting identity over unit pairs ab \u2261 N mod m gives P(OR|N\u2261c) = 1 \u2212 (1/\u03c6)\u03a3_a (1\u2212r(a))(1\u2212r(ca\u207b\u00b9)). Enumerating ALL 2^\u03c6 0/1 profiles on nine moduli (m = 3,4,5,7,8,9,11,16,21 \u2014 prime/composite conductors, cyclic and non-cyclic unit groups C\u2082\u00d7C\u2082, C\u2082\u00d7C\u2084, C\u2082\u00d7C\u2086):\n\n| m | unit group | global max I | argmax |\n|---|---|---|---|\n| 3, 4, 5, 7 | C\u2082/C\u2084/C\u2086 | 0.3113 = g(2) on every modulus | QR kernel + complement |\n| 8 | C\u2082\u00d7C\u2082 | 0.3113 | three quadratic chars of conductor 8 |\n| 9, 11 | C\u2086/C\u2081\u2080 | 0.3113 | QR kernel + complement |\n| 16, 21 | C\u2082\u00d7C\u2084/C\u2082\u00d7C\u2086 | 0.3113 | three index-2 kernels each |\n\nNo 0/1 profile on any modulus exceeds the cap. Every subgroup-kernel profile re-derives paper 72's law EXACTLY (30 subgroups, I = g(index) to 10\u207b\u2079). Continuous coordinate ascent over [0,1]^\u03c6 (m=7,11,16) never exceeds g(2).\n\n### Realizable forks: quadratic kernels hit the cap, everything else is below\n\nQ(\u221a5) m=5, Q(i) m=4, Q(\u221a\u221211) m=11, (8|p) m=8 (non-cyclic units) \u2014 **all I = 0.3113 = g(2)**, P(OR)=3/4. Cyclic cubic m=7: g(3)=0.0728. Q(\u03b6\u2085): g(4)=0.0359. S\u2083 cubic x\u00b3+x+1 mod 31 variable profile (per-QR-class identity rates 0.287\u20130.349, 1.0 on non-QR): \u03a6 = 0.1230, direct MC 0.1284, which-factor wall 0.0024.\n\n### Structure\n\n- Complement of a character event: **identical \u03a6** (0.3113 on m=5,8,11).\n- AND event: exact companion law \u03a6_AND(n) = H(1/n\u00b2) \u2212 (1/n)H(1/n), verified (n=2: 0.3113 = g(2); n=3: 0.1972 > g(3); n=4: 0.1345 > g(4)); capped at g(2).\n- XOR of a quadratic kernel = DETERMINISTIC function of N (\u03c7(N)=\u22121): I = 1.0000 bit exactly, N-computable, factor-useless \u2014 the sharpest proof that raw MI is not factor information.\n\n### Unification & factor-uselessness\n\nPaper 54's p\u22121 \u2113=3 OR (0.313) IS the cap (g(2), f=3); papers 69\u201370's S\u2083 profile (0.12) is a variable profile below the cap; paper 72's order-n events are the subgroup kernels, of which the index-2 are the global maximizers. Symmetric (barrier 2), residue dial (barrier 5), sealed behind the CRT (barrier 6), all classical reciprocity (barrier 8). The OR/residue-dial line is now closed by a single global maximum.\n\n**Verdict:** variational principle CONFIRMED (machine-verified). Round-20 1/1 done. Barriers 2/5/6/8.\n",
     "domains": [
       "Novelty"
@@ -888,7 +873,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "OR-DIAL-MAXIMUM: the semiprime OR dial has a global cap g(2)=0.3113 bits over every class-rate profile (paper 73, round-20 #1)"
   },
   {
-    "consumed_by_exp_id": "3f06530b",
+    "consumed_by_exp_id": "f2bb5930",
     "description": "## CYCLIC-TYPE-CHANNEL (round-22 #2, experiment 413, assessment v189, paper 78)\n\n**The complete splitting-type channel of a cyclic field exceeds the 1-bit binary-fork cap. Papers 72\u201374 capped every BINARY symmetric semiprime fork at 1.0 bit; the cyclic splitting type is multi-state, and its type-pair channel carries 1.2500 (C\u2084) / 1.4739 (C\u2086) bits \u2014 strictly above the cap.**\n\n### The type channel\n\nFor Q(\u03b6_f), f prime, Gal = (Z/f)^\u00d7 = C_n (n = f\u22121), the Frobenius order T(p) = ord_f(p) (the residue degree) is the complete splitting type \u2014 a deterministic function of p mod f, so **I(p mod f; T) = H(T) EXACT**: C\u2084 = Q(\u03b6\u2085) \u2192 3 states {1,2,4} rates {1/4,1/4,1/2}, H = 1.5 bits (measured 1.4989); C\u2086 = Q(\u03b6\u2087) \u2192 4 states {1,2,3,6} rates {1/6,1/6,1/3,1/3}, H = 1.9183.\n\n- **[T=1] splits-completely = H(1/n)**: C\u2084 0.8098 = H(1/4) = 0.8113 EXACT \u2014 the **FIRST prime-level QUARTIC-character pinning**; C\u2086 0.6497 = H(1/6). Every type face equally pinned ([T=2] 0.8110 = H(1/4), [T=4] 1.0000 = H(1/2)).\n- **Thickening zero**: I(p mod f\u00b2; T) = I(p mod f; T) EXACT (T depends only on p mod f). Coprime controls flat.\n- **Root-count readout is LOSSY**: nr collapses [2,2]/[4] (and [2,2,2]/[3,3]/[6]) to nr=0 \u2014 the nr-channel is BINARY (C\u2084 0.8109, C\u2086 0.6498) strictly below H(T). **The type, not the root count, is the complete object.**\n\n### The semiprime law \u2014 exact, and above the 1-bit cap\n\nThe unordered type-pair {T(p),T(q)} obeys the exact law **I_pair = H(\u03a0) \u2212 (1/\u03c6(f))\u03a3_c H(\u03a0_c)**, \u03a0_c the pair law under N \u2261 c mod f, computable by exact enumeration over the unit group. Machine-verified (30k semiprimes):\n\n| field | H(T) | H(pair) | H(pair\\|N) | I_pair (exact) | I_pair (MC) |\n|---|---|---|---|---|---|\n| C\u2082 Q(\u221a5) | 1.0000 | 1.5000 | 0.5000 | **1.0000** | 1.0000 |\n| C\u2084 Q(\u03b6\u2085) | 1.5000 | 2.3750 | 1.1250 | **1.2500** | 1.2452 |\n| C\u2086 Q(\u03b6\u2087) | 1.9183 | 3.1144 | 1.6405 | **1.4739** | 1.4711 |\n\nC\u2082 reproduces the paper-74 cap exactly (the quadratic type pair IS the split-count); **C\u2084 and C\u2086 both EXCEED 1.0 bit**. Which-factor wall 0.0001 (symmetric, factor-useless); coprime controls flat. The s-projection recovers Is(n) EXACTLY (C\u2084 0.2896 vs Is(4)=0.2947; C\u2086 0.1445 vs Is(6)=0.1487) \u2014 the split-count is ONE face of the richer type channel.\n\n### Growth law: no 1-bit cap\n\n| n | field | #states | H(T) | I_pair | above 1 bit? |\n|---|---|---|---|---|---|\n| 2 | Q(\u221a5) | 2 | 1.0000 | 1.0000 | at cap |\n| 4 | Q(\u03b6\u2085) | 3 | 1.5000 | 1.2500 | **YES** |\n| 6 | Q(\u03b6\u2087) | 4 | 1.9183 | 1.4739 | **YES** |\n| 10 | Q(\u03b6\u2081\u2081) | 4 | 1.7219 | 1.2027 | **YES** |\n| 12 | Q(\u03b6\u2081\u2083) | 6 | 2.4183 | 1.7239 | **YES** |\n| 16 | Q(\u03b6\u2081\u2087) | 5 | 1.8750 | 1.3281 | **YES** |\n\nEvery n \u2265 4 exceeds 1.0 bit; the value is governed by the **divisor structure of the cyclic order** (n=12, six states, richest at 1.7239).\n\n### Verdict\n\nCONFIRMED. New exact objects: the type-pair law I_pair = H(\u03a0) \u2212 (1/\u03c6)\u03a3H(\u03a0_c) (first symmetric channels above the binary-fork cap), the C\u2084 prime-level quartic pinning, root-count lossiness (type multi-state, nr binary), and Is(n) as the s-projection of the type channel. Factor-useless: symmetric (which-factor wall 0.0001, barrier 2), a pure p-mod-f residue dial (barrier 5), N-computable only behind the CRT split (barrier 6), cyclotomic fields + Dirichlet characters + CRT + Chebotarev 1922 (barrier 8). Unifies papers 54/71/72/74. Barriers 2/5/6/8.\n\n*Script:* /tmp/exp_typechan.py.\n",
     "domains": [
       "Novelty"
@@ -904,20 +889,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "**Network/LLM research lab \u2014 round-net-8 (depth axis, round 6). Machine-verified. Paper: ResearchOutput/NetworkMathematics/8_LoadBearingDepth_Dyck2.md. Script: /tmp/exp_net_dyck2.py.**\n\n## Hypothesis\nThe load-bearing-depth test via the canonical NON-REGULAR context-free language. Dyck-2 (two bracket types '(' vs '[') next-token close prediction requires recovering the TYPE of the top of the stack (the last unmatched open's bracket type; chance 0.5 given only the balance) \u2014 a history-dependent discrete state. Natural construction: L1 computes balance, L2 selects+reads the last open, so d=1 should FAIL at close-type positions while d\u22652 succeeds \u2014 the first genuinely load-bearing depth regime and the exit law's first potential boundary.\n\n## Part A \u2014 depth is FLAT on Dyck-2\nAll 10 models (d\u2208{1,2,4,8,16}\u00d72 seeds, 8000 AdamW steps, dm=48/4 heads, 100k train/20k fresh held-out) reach test=**1.0000 at every metric**: overall, b0\u2013b4+, close_all, close_b4+. **d=1 alone recovers the stack-top type** at every depth and every close number, including closes whose matching open sits 11+ tokens back. The flat-depth law now covers **FIVE task classes**: lookups (NET-2), composition (NET-3), decomposable-error arithmetic (NET-4/5), Dyck-1 regular grammar (NET-7), Dyck-2 non-regular CFG (NET-8). Load-bearing premise refuted a third time.\n\n## Part B \u2014 exit law holds on a 3rd task class; exit* is depth-saturated\n| d | s | exit* | l=exit*\u22121\u2192l=exit* | crossover | d/2 | lossless@cross | saving |\n|---|---|---|---|---|---|---|---|\n| 4 | 0 | 3 | 0.6903\u21921.0000 | 3 | 2 | True | 25% |\n| 4 | 1 | 3 | 0.6477\u21920.9654 | 4 | 2 | True | 25% |\n| 8 | 0 | 5 | 0.8875\u21920.9988 | 5 | 4 | True | 37.5% |\n| 8 | 1 | 4 | 0.6097\u21920.9901 | 4 | 4 | True | 50% |\n| 16 | 0 | 5 | 0.9237\u21920.9843 | 2 | 8 | False | 69% |\n| 16 | 1 | 3 | 0.6314\u21920.9725 | 2 | 8 | False | 81% |\n\nexit* \u2208 {3,4,5} (does NOT scale with d); |exit*\u2212crossover| \u2264 1 in 5/6 (**22/24 across all three task classes**); exit* \u2265 crossover 5/6; lossless-at-crossover 4/6, failing exactly on the two d=16 models whose crossover fires at l=2 \u2014 confirming NET-7's refinement (the FIXED 0.95 bar, not the norm, is the reliable trigger when the crossover fires very early). **69\u201381% lossless inference-depth saving at d=16.**\n\n## Part C \u2014 single-layer success is GENUINE (barrier g, quantified)\nWindowed linear baselines (last-K tokens + balance + position, K\u2208{4,8,12}, 3 epochs): close_all = 0.7322/0.7544/0.7518 \u2014 never 1.0 even when the matching open is inside the window, because a linear map cannot route the CONDITIONAL index 'k-th close \u2192 open at distance 2k\u22121' (needs gating); attention can. Transformer 1.0 vs best baseline 0.7544 = **+25pp genuine long-range content**. Honest caveat: deep-balance bins rise on baselines because they're dominated by first-closes of deep runs (locally covered) \u2014 close_all is the honest hard-close diagnostic.\n\n## Barriers\n(a) no circularity (fresh random words, iid per-pair types, test seed+77); (b) flat/exit laws extended to non-regular CFG \u2014 new content is the 5-class flat law + depth-saturated exit + quantified baseline margin (Catalog scan: no prior work); (c) toy-scale AND the finding \u2014 load-bearing boundary not reached, next = semilength scaling / width-starved Dyck; (d) no leakage (held-out 1.0000 before probing); (e) 2\u00d75 + 2\u00d73 seeds, +3 outlier and 2/6 lossless failures reported not averaged; (f) documented metrics + close-bin caveat; (g) strongest windowed linear baseline loses by +25pp; (h) real lever: 69\u201381% lossless inference-depth cut on non-regular grammar + genuine caution that single-layer transformers solve canonical stack recovery at this scale.\n\n## Verdict\n(1) Load-bearing test fails THIRD time \u2014 depth flat on the canonical non-regular CFG; (2) exit law holds on 3rd task class (22/24 within \u00b11 of crossover, depth-saturated exit, lossless); (3) single-layer stack-top recovery is genuine (linear windows can't conditionally index; attention can). **Next:** semilength scaling (where does d=1 break \u2014 the actual load-bearing boundary), width-starved Dyck (dm=16/1 head), unbounded nesting, exit law at real-LM/BERT scale.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1222",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-13T06:53:57.528267+00:00",
-    "title": "NET-8: Depth is FLAT on Dyck-2 (non-regular CFG) \u2014 load-bearing test fails 3rd time; exit law holds on 3rd task class; single-layer stack-top recovery is genuine"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "**Network/LLM research lab \u2014 round-net-9 (depth axis, round 7). Machine-verified. Paper: ResearchOutput/NetworkMathematics/9_BoundedStack_Scaling.md. Script: /tmp/exp_net_dyck2_scale.py.**\n\n## Hypothesis\nAfter NET-8 refuted the load-bearing premise at s=12/dm48, find where a single layer finally breaks: (1) context scaling \u2014 at larger semilength the balance spans more levels and closes route to opens at distance up to 2s\u22121; (2) width scaling \u2014 one layer must hold BOTH the balance prefix-sum AND the balance-conditioned position routing, so at dm=16/12, d=2 (stack the subtasks) should win.\n\n## Part A \u2014 depth FLAT across context scaling (s\u2208{16,32}, dm=48, d\u2208{1,2}\u00d72 seeds, 6000 steps)\nALL 8 models: test=1.0000, close_all=1.0000, close_b4+=1.0000. **d=1 is perfect even at semilength 32 (context 64) \u2014 closes route to matching opens up to 63 tokens back.** Context length is NOT the boundary.\n\n## Part B \u2014 depth FLAT across width scaling (dm\u2208{16,12}, s=12, d\u2208{1,2}\u00d72 seeds)\nALL 8 models: test=1.0000 at every metric. **d=1 is perfect even at dm=12 (head dim 3).** Width is NOT the boundary either.\n\n## Part C \u2014 non-flat screen\nNo config with d=1 < d=2 (close_all gap > 0.01) \u2014 every pair equal at 1.0000; the shared-head exit branch correctly not triggered (no depth-using model to exit).\n\n## Mechanism\nSingle-layer soft attention implements a **bounded stack**: the stack-top STATE is the scalar running balance (one head's prefix-sum); the stack-top CONTENT is positionally stored (attention routes each close query to the matching open at balance-depth balance_before\u22121 via balance-conditioned key match + recency, reads the stored type). No second layer needed because the state is scalar and the content is at a computable position. Boundary needs: balance range exceeding dm precision (s\u226b64), unbounded nesting/length-gen (NET-4's wall), or **NON-POSITIONAL stack content** (content computed from multiple distant positions \u2014 the genuinely hard case, natural next load-bearing target).\n\n## Barriers\n(a) no circularity (fresh random words, iid types, test seed+77); (b) related circuits acknowledged (attention-as-bounded-stack is mech-interp folklore; the scaling-sweep negative + five-class \u00d7 context \u00d7 width flatness are new; Catalog 698 packages no prior work); (c) toy-scale AND the finding \u2014 boundary not reached at context \u226464/width \u226512; (d) no leakage (held-out 1.0000 before probing); (e) 2 seeds \u00d7 every config, 16/16 consistent; (f) documented; two post-data script bugs fixed (SUMMARY 4-vs-3 tuple unpack after all models done; Part C RA 4-tuple lookup fell to RB arm \u2014 the (16,48)/(32,48) pairs verified EQUAL by direct inspection, automated screen covered dm\u2208{16,12}, verdict correct over all 16); (g) inherited from NET-8 (windowed baseline \u221225pp); (h) honest negative with a target: depth gives nothing on bounded-stack grammar at every affordable scale.\n\n## Verdict\nThe load-bearing boundary is NOT found at context \u226464 / width \u226512 \u2014 flat-depth law now covers five task classes AND holds across context and width scaling on the non-regular grammar. Next load-bearing candidates: non-positional stack content, s\u226b64, unbounded nesting; and rotate axes to real-scale checks (exit law / PR law on a small LM \u2014 the depth axis has had 7 iterations).",
     "domains": [
       "Novelty"
@@ -929,6 +900,34 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-13T08:51:37.174146+00:00",
     "title": "NET-9: Load-bearing boundary NOT found \u2014 depth flat across context (s\u226432) and width (dm\u226512) scaling of Dyck-2; single-layer soft attention implements a bounded stack"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**Round-net-11 (compression-axis real-scale rotation). Paper:** ResearchOutput/NetworkMathematics/11_PRlawSmallLM.md\n\n**Setup:** real causal LMs on 5 Gutenberg novels (dm=64, vocab 4097, ctx 128, causal masking), d=4 and d=8, 2000 AdamW steps \u2014 full held-out acc reproduces NET-10 exactly (0.1571/0.1619). For every matrix: PR=(\u03a3s\u00b2)\u00b2/\u03a3s\u2074 and b* = min per-tensor RTN bits retaining \u22650.98\u00b7full (isolated); then joint uniform-2/3 and role-schedule joint.\n\n**Result 1 \u2014 role structure survives, PR predictor fails.** Identical on both depths (28/52 matrices): attention projections (PR 19\u201332) 2-bit lossless; MLP projections (PR 31\u201352) need 3 bits; embed (PR 63) + pos (PR 40) need 4 bits; the readout un (PR 14.9\u201315.3, the LOWEST PR) needs 4 bits with catastrophic 2-bit collapse (27\u201332% retained); lnf (PR=1) 2-bit lossless. Low-PR readout \u2192 most bits, and same-PR attention-vs-MLP differ \u21d2 corr(PR,b*)=+0.58/+0.67 is role-grouping in disguise, NOT a monotone law.\n\n**Result 2 \u2014 NET-1's practical schedule refuted at real scale.** Joint uniform-2 collapses (retained 0.16/0.05); **joint uniform-3 is NOT lossless** (retained 0.83 d=4 / 0.73 d=8, worse with depth \u2014 per-layer isolation says \u226595% everywhere at 3 bits, but compounding costs 17\u201327 points, amplified by residual-stream norm growth through depth). Role schedule (embed/pos/un=4, MLP=3, attn=2): retained **0.878 at 3.64 avg bits** \u2014 +5pts over uniform-3 at +21% bits, still 12% short of lossless. **No static RTN schedule \u22643.7 avg bits is lossless on real text.**\n\n**Verdict:** NET-1's monotone b*(PR) law and its toy practical schedule (uniform-3 lossless) do NOT transfer to a real causal LM. Surviving: coarse role structure (interface fragile / interior robust). Live compression target: joint/activation-aware allocation, not data-free per-matrix PR.\n\n**Barriers:** (a) no injection, PR/b* independent, RTN data-free; (b) sensitivity-based mixed precision known, the real-scale negatives new (Catalog 2094 packages no prior work); (c) confronted \u2014 this IS the real-scale check and the toy law/schedule fail it; (d) causal masking + contiguous split, no leakage; (e) 2 models \u00d7 every matrix, identical structure both depths; (f) 0.98\u00b7full bar with full retained fractions, exact NET-10 reproduction; (g) uniform-2/3 + full-precision baselines; (h) the negative is the win \u2014 don't ship uniform-2/3 on toy/isolated measurements.\n\n**Scripts:** /tmp/exp_net_pr_lm.py, /tmp/exp_net_pr_role.py",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_1226",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-13T10:37:22.619660+00:00",
+    "title": "NET-11: The PR quantization law does NOT transfer to a real causal LM \u2014 role-structured bit-need survives (interface fragile/interior robust), but no static RTN schedule \u22643.7 avg bits is lossless (uniform-3 retains only 0.83/0.73, worse with depth)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**Round-net-10 (network/LLM lab, real-scale rotation).** Two results, both machine-verified.\n\n## 1. Part A \u2014 the toy depth line leaked: full attention put the answer in the input\n\nThe toy TF class uses FULL (bidirectional) attention on next-token tasks: at position t the model attends to position t+1 \u2014 the very token it must output. A copy-the-future circuit yields 100% on any deterministic next-token task. The leak is PROVEN by an information bound: on Dyck-2, new-open types are iid random and 47.8% of next-tokens are opens, so the best causal accuracy is **0.7609 overall** \u2014 full-attention's recorded 1.0000 is impossible causally.\n\nCausal re-runs (same architecture/budget, is_causal=True, 6000 steps, dm=48):\n- Dyck-2 d=1: overall 0.557 / close_all 0.917 (d=2: 0.563/0.926) vs recorded 1.0000; extended budget asymptotes close_all \u22480.92 (0.9105\u21920.9135\u21920.9207 at 6k/12k/18k), still \u22128pts at 3\u00d7 budget.\n- Lookup (deterministic, ceiling 1.0): d\u22481\u2248d\u22482 \u2248 0.89 vs NET-2's 1.0000 \u2014 the artifact is NOT limited to random-type tasks.\n\n**Survives the honesty fix:** the flat-depth SHAPE (d=1 \u2248 d=2 on both classes) and transformer-beats-linear on close recovery (+17pp over the causal windowed-linear baseline \u2014 the NET-8 +25pp was a causal-baseline vs full-attention-transformer mismatch). **Corrected:** NET-8/9 'd=1 = 1.0000 / load-bearing-boundary-not-found' absolute claims withdrawn.\n\n## 2. Part B \u2014 the exit law does NOT transfer to a real LM (0/4 lossless at crossover)\n\nReal causal GPT on 5 Gutenberg novels (dm=64, vocab 4097, ctx 128, d\u2208{4,8}\u00d72 seeds, teacc 0.157\u20130.162). Norm profile is **reset-then-grow** (dip then growth, crossover l=2\u20134), NOT the toy's flat-\u2248d/2-then-grow. Shared-head acc climbs monotonically through the full depth; the crossover marks the ONSET of decodability growth, not its completion. |exit*\u2212cross| = 2/2/5/3, lossless@cross=False in 4/4. The calibration-free dynamic-depth-schedule idea is not supported at real-LM scale.\n\nFull paper: ResearchOutput/NetworkMathematics/10_CausalityScreen_ExitLawRealLM.md. Scripts: /tmp/exp_net_lm.py, /tmp/exp_net_lookup_causal.py. Barriers all checked (paper \u00a75). Assessment v10. Now 10 network experiments.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_1227",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-13T10:37:22.620216+00:00",
+    "title": "NET-10: The toy depth law's 1.0000s were a full-attention future-peek artifact (ceiling 0.7609 < 1.0000), and the exit law does not transfer to a real causal LM (0/4 lossless at crossover)"
   },
   {
     "consumed_by_exp_id": "",
@@ -992,17 +991,17 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle 219576b7 (Q=0.900), which proved 7 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Summary.** The Alexander polynomial of the torus knot T(2,N) provably encodes\nthe factorization of N.\n\n**Theorem (knot-number bridge, proven).** For N = pq and\nA_N(X) = (X^N+1)/(X+1) (Alexander polynomial of T(2,N)):\n  A_N(X) = \u03a6_{2p}(X) \u00b7 \u03a6_{2q}(X) \u00b7 \u03a6_{2N}(X),\nwith irreducible factor degrees {p-",
+    "description": "Building on cycle 0c649bb1 (Q=0.850), which proved 109 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Paper:** `ResearchOutput/NewMathematics/40_DerivedModulus_NoGo.md` (factor3)\n**Experiment:** MULTIMOD (#375), assessment v151.\n\n## Finding\nTest whether invariants of derived moduli M = poly(N) (N\u00b11, N\u00b2\u00b11, \u03a6\u2083(N), 2N\u00b11)\ncarry factor signal about N = pq. Verified:\n1. **gcd(N, M) = 1 for every derived",
     "domains": [
-      "Computation"
+      "Physics"
     ],
-    "id": "push_219576b7_76a1b670",
+    "id": "push_0c649bb1_dbdc7ff5",
     "priority_score": 0.95,
     "research_mode": "team",
-    "source_exp_id": "219576b7",
+    "source_exp_id": "0c649bb1",
     "status": "available",
-    "timestamp": "2026-08-12T23:09:13.363386+00:00",
-    "title": "Deepening: A Knot-Number Theory Bridge (Alexander polynomial)"
+    "timestamp": "2026-08-13T10:37:02.697812+00:00",
+    "title": "Deepening: The Derived-Modulus Corner, Closed"
   },
   {
     "consumed_by_exp_id": "",
@@ -1691,63 +1690,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-24T14:34:16.697769+00:00",
     "title": "Navier-Stokes: 2D Regularity and Partial 3D Results"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove that a positive proportion of zeros of the Riemann zeta function lie on the critical line. Formalize Selberg's result (positive proportion on), Conrey's 2/5 result, and explore connections to random matrix theory and the moment problem.",
-    "domains": [
-      "NumberTheory",
-      "Analysis"
-    ],
-    "id": "seed_203",
-    "priority_score": 0.93,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Riemann Hypothesis: Zero-Free Regions"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 579ae41a (Q=0.820), which proved 407 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Paper:** `ResearchOutput/NewMathematics/37_OrderJacobi_JointLaw.md` (factor3)\n**Experiment:** CONDORDER (#372), assessment v148.\n\n## Finding\nThe order \u00d7 residue joint-quadrant of the combination grid (SCALECASCADE =\nresidue+order; SPECTRUNC = order+spectral; this = the JOINT LAW of ord_N(b) |\n(b/N",
-    "domains": [
-      "Computation"
-    ],
-    "id": "push_579ae41a_76887b3c",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "579ae41a",
-    "status": "available",
-    "timestamp": "2026-08-13T05:11:54.433175+00:00",
-    "title": "Deepening: The Order x Jacobi Joint Law is N-Determined, Closed"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 6092c7cd (Q=0.820), which proved 36 theorems in Algebra. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Paper:** `ResearchOutput/NewMathematics/43_FreeWitness_TraceThreshold.md` (factor3)\n**Experiment:** QUERYWIT (#378), assessment v154.\n\n## Finding\nQuantify barrier 4's boundary: how much of the free witness sigma_2(N) = (1+p\u00b2)(1+q\u00b2)\nis NEEDED to factor? Verified:\n1. **Full sigma_2 factors N** (s=(p",
-    "domains": [
-      "Algebra"
-    ],
-    "id": "push_6092c7cd_3cab9595",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "6092c7cd",
-    "status": "available",
-    "timestamp": "2026-08-13T08:51:14.840238+00:00",
-    "title": "Deepening: The Partial Free-Witness Threshold is the Trace, Closed"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 646c7606 (Q=0.820), which proved 42 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Summary.** The Jacobi Gauss sum \u03c4(N) = sum_n (n/N) e^{2\u03c0in/N} has |\u03c4(N)| = \u221aN.\nA priori its phase could encode (p mod 4, q mod 4) separately \u2014 a genuine\nfactor-revealing candidate. It does not.\n\n**Theorem (phase collapse, proven).**\n  arg \u03c4(N) = 0  when p \u2261 q (mod 4),  and  \u03c0/2 when p \u2262 q (mod 4).",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_646c7606_db3e55b4",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "646c7606",
-    "status": "available",
-    "timestamp": "2026-08-12T15:22:01.479509+00:00",
-    "title": "Deepening: Jacobi Gauss-Sum Phase Collapse"
   },
   {
     "consumed_by_exp_id": "",
@@ -18932,6 +18874,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-13T08:51:06.170158+00:00",
     "title": "Everything below is derived from the verified results in"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 after the derived-modulus corner\n\nThe formal results in `Catalog/Physics/DerivedModulus*.lean` close the\npolynomial (N-explicit) multi-modulus corner in a strong, classified form:\n\n* `universally_coprime_iff_transparent` \u2014 a polynomial modulus is universally\n  coprime to `N` **iff** its constant term is a unit (exact classification, not\n  a one-sided barrier);\n* `closure_no_go` \u2014 the whole multiplicative/substitutional closure of the\n  tested family stays transparent, so no combination escapes;\n* `sqSucc_spectrum_N_independent`, `cyc3_spectrum_N_independent` \u2014 the prime\n  spectra of the quadratic moduli are *fixed sets of split primes*, determined\n  by the polynomial's splitting field, never by the factorisation of `N`;\n* `useful_hint_count` / `useful_hint_density` \u2014 the external-hint frontier has\n  measure `(p+q-1)/pq \u2264 2/B`;\n* `gcd_eval_dvd_resultant` / `multi_modulus_bounded` \u2014 any two polynomial\n  derived moduli overlap in a divisor of their resultant, so a whole finite\n  family carries only `O(1)` common arithmetic, uniformly in `N`;\n* `transport_coprime_iff` / `transport_boundary` \u2014 the barrier and its exact\n  classification hold for *every* congruence-transporting modulus, and the\n  exponential modulus `2^N - 1` is provably outside that class;\n* `polynomial_hypothesis_necessary` \u2014 and outside the class the no-go really\n  fails: `gcd(253, 2^253 - 1) = 23` factors `253 = 11\u00b723`.\n\nFive falsifiable follow-up conjectures.\n\n---\n\n## C1 (Galois superselection). The spectrum of any derived modulus is a union of Chebotarev classes, and this is *equivalent* to the no-go.\n\n**Statement.** For irreducible `f \u2208 \u2124[X]` with splitting field `K_f` and Galois\ngroup `G`, the set `S_f = {p prime : \u2203 N, p \u2223 f(N)}` equals, up to finitely\nmany primes, the set of `p` whose Frobenius class in `G` fixes at least one\nroot; and `p \u2208 S_f` is decidable from `p` alone. Consequently, *no* invariant\nof `f(N)` distinguishes two semiprimes with the same `N`.\n\n**The key insight is** that our two proved spectra (`p = 2 \u2228 p \u2261 1 mod 4` and\n`p = 3 \u2228 p \u2261 1 mod 3`) are the abelian, cyclotomic shadow of the general\nFrobenius criterion \u2014 the spectrum is a property of the *apparatus* `f`, never\nof the *state* `N`.\n\n**Why now?** The abelian cases are now fully formalised here; Mathlib has\n`NumberField`, Frobenius elements and the machinery for splitting behaviour, so\nthe non-abelian case (e.g. `f = X\u00b3 - X - 1`, `G = S\u2083`) is the natural next\nformalisation target and would be falsified by exhibiting any `f` whose\nspectrum depends on more than the residue class of `p`.\n\n## C2 (Sharp resultant law for the multi-modulus lattice). *(divisibility half now proved)*\n\n**Status.** The divisibility half is proved in\n`Catalog/Physics/DerivedModulusResultant.lean`\n(`gcd_eval_dvd_resultant`, with the uniform bound `gcd_eval_le_resultant` and\nthe finite-family version `multi_modulus_bounded`). What remains open is the\nattainment half.\n\n**Remaining statement.** For coprime `f, g \u2208 \u2124[X]` with `Res(f,g) \u2260 \u00b11`, the\nbound `gcd(f(N), g(N)) = |Res(f,g)|` is attained for infinitely many `N`, and\nthe set of such `N` is a union of congruence classes modulo `Res(f,g)`.\n\n**The key insight is** that our fifteen hand-built B\u00e9zout certificates\n(constants `1, 2, 3, 5, 7`) are exactly the resultants of the corresponding\npairs, so the uniform pairwise bound of `family_pairwise_gcd_le_seven` is an\ninstance of a single resultant identity `u f + v g = Res(f,g)`.\n\n**Why now?** Mathlib's `Polynomial.exists_mul_add_mul_eq_C_resultant` supplied\nthe Sylvester\u2013B\u00e9zout identity, which is exactly what the divisibility half\nneeded; the attainment half requires a Chinese-remainder construction of `N` in\nthe right classes modulo the resultant, which is elementary but not yet\nformalised. Falsifiable: exhibit coprime `f, g` with `|Res| > 1` whose overlap\nis bounded strictly below `|Res|` for all `N`.\n\n## C3 (Quantitative hint-amplification threshold).\n\n**Statement.** Let `H` be an external hint distribution on `[0, N)` and let\n`\u03b5 = Pr[gcd(N, H) \u2209 {1, N}]`. Then any gcd-based factoring procedure using one\nsample from `H` succeeds with probability exactly `\u03b5`, and amplification to\nconstant success requires `\u0398(1/\u03b5)` independent samples \u2014 with no speed-up from\ncombining the hint with any polynomial derived modulus.\n\n**The key insight is** that `useful_hint_count` pins `\u03b5 = (p+q-1)/pq` for the\nuniform hint, and `derived_hints_useless` shows the derived data adds a\ndeterministic function of `N`, hence zero information; so the whole gain must\ncome from the hint's own structure.\n\n**Why now?** Both halves are already formal here; what is missing is the\nsampling lemma (a Chernoff/independence argument over `Finset`), which Mathlib's\nprobability library supports. Falsifiable: exhibit a hint distribution with\n`\u03b5` small where a derived modulus provably improves success probability.\n\n## C4 (Transparency is the *only* obstruction \u2014 an effective converse).\n\n**Statement.** For non-transparent `f` with `|f(0)| = c > 1`, the set of `N \u2264 X`\nfor which `gcd(N, f(N)) > 1` has density exactly `1 - \u220f_{r \u2223 c, r prime}(1-1/r)`,\nand for each such `N` the gcd reveals a divisor of `c` only \u2014 never a factor of\n`N` outside `c`.\n\n**The key insight is** that `exists_common_factor_of_not_transparent` already\nproduces the witness `N = minFac(|f(0)|)`; upgrading a single witness to a\ndensity statement converts the classification into a quantitative dichotomy\n(\"leaky but useless\" vs. \"transparent\").\n\n**Why now?** The witness construction is formal; the density step is a finite\ninclusion\u2013exclusion over the divisors of a *fixed* integer `c`, well within\nreach of Mathlib's `Nat.ArithmeticFunction` and counting API.\n\n## C5 (Order-sieve frontier: which semiprimes does the exponential modulus factor?).\n\n*(Superseding the earlier C5, whose congruence-transporting form is now proved\nas `transport_coprime_iff` and whose unrestricted form is refuted by\n`polynomial_hypothesis_necessary`.)*\n\n**Statement.** There are infinitely many semiprimes `N = p\u00b7q` with\n`p < q` for which `gcd(N, 2^N - 1) = p`; equivalently, infinitely many prime\npairs with `ord_p(2) = q` and `q \u2223 p - 1`. Moreover the counting function of\nsuch `N` up to `X` is `X^{1/2+o(1)}`, so the exponential leak has density `0`\namong all semiprimes and does **not** threaten randomly generated RSA moduli.\n\n**The key insight is** that `prime_dvd_mersenne_iff` reduces the leak to an\norder condition, `ord_p(2) \u2223 N`, and for a semiprime this forces\n`ord_p(2) \u2208 {1, q}`; so the leaking moduli are exactly those built from a prime\n`p` whose order of `2` is the *other* prime factor \u2014 a condition of\nArtin/Wieferich type, verified here at `p = 23`, `q = 11`, `N = 253`.\n\n**Why now?** The order criterion and one explicit witness are already\nformalised; what is missing is an infinitude argument (a Zsygmondy-style\nprimitive-divisor input: for each prime `q`, a primitive prime divisor `p` of\n`2^q - 1` has `ord_p(2) = q`, and one needs `p \u2261 1 mod q` together with\n`N = pq` in the required range). Falsifiable in either direction: a proof that\nonly finitely many such pairs exist would be equally interesting, and a density\nabove `X^{1/2+\u03b5}` would make the exponential modulus a genuine cryptanalytic\nconcern.\n",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_1225",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "0c649bb1",
+    "status": "available",
+    "timestamp": "2026-08-13T10:36:54.302806+00:00",
+    "title": "The formal results in `Catalog/Physics/DerivedModulus*.lean` close the"
   },
   {
     "consumed_by_exp_id": "",

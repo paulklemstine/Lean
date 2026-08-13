@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "b2707824",
-      "domain": "Geometry",
-      "key_insight": "# Future Directions\n\nDerived from the analysis and adversarial review of\n`Catalog/Geometry/HyperbolicBerggrenGeodesics.lean`.\n\n## What survived, what failed\n\n**Survived (proved, 0 sorries).**\nThe Berg",
-      "quality_score": 0.73419,
-      "sorry_count": 0,
-      "theorem_count": 182,
-      "timestamp": "2026-08-07T04:13:38",
-      "title": "Hyperbolic-Pythagorean-Geodesics: Sub-Linear Trajectory Factorization in Poincaré Disk"
-    },
-    {
       "cycle_id": "2c38bc1a",
       "domain": "Cryptography",
       "key_insight": "# Future Directions — Universal Posets\n\nDerived from the analysis and adversarial-review stages of the two research\ncycles run on this project.  Each conjecture is falsifiable, and each is stated\nso t",
@@ -499,19 +489,19 @@
       "theorem_count": 36,
       "timestamp": "2026-08-13T08:51:14",
       "title": "The Partial Free-Witness Threshold is the Trace, Closed"
+    },
+    {
+      "cycle_id": "0c649bb1",
+      "domain": "Physics",
+      "key_insight": "# Future Directions — after the derived-modulus corner\n\nThe formal results in `Catalog/Physics/DerivedModulus*.lean` close the\npolynomial (N-explicit) multi-modulus corner in a strong, classified form",
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "theorem_count": 109,
+      "timestamp": "2026-08-13T10:37:02",
+      "title": "The Derived-Modulus Corner, Closed"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "5814a7d4",
-      "domain": "Computation",
-      "key_insight": "# Future directions\n\n## Completed baseline\n\nThe accompanying Lean development settles the operator-algebraic core used by\nHuang's spectral method:\n\n- the canonical recursive signing satisfies `Aₙ² = n",
-      "quality_score": 0.74072,
-      "sorry_count": 0,
-      "theorem_count": 7,
-      "timestamp": "2026-08-02T21:20:01",
-      "title": "Sensitivity Conjecture Extensions"
-    },
     {
       "cycle_id": "064bb153",
       "domain": "Geometry",
@@ -2501,27 +2491,19 @@
       "theorem_count": 36,
       "timestamp": "2026-08-13T08:51:14",
       "title": "The Partial Free-Witness Threshold is the Trace, Closed"
+    },
+    {
+      "cycle_id": "0c649bb1",
+      "domain": "Physics",
+      "key_insight": "# Future Directions — after the derived-modulus corner\n\nThe formal results in `Catalog/Physics/DerivedModulus*.lean` close the\npolynomial (N-explicit) multi-modulus corner in a strong, classified form",
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "theorem_count": 109,
+      "timestamp": "2026-08-13T10:37:02",
+      "title": "The Derived-Modulus Corner, Closed"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "a062ecaf",
-      "domain": "Novelty",
-      "name": "and_gate_tt",
-      "quality": 0.7526200000000001
-    },
-    {
-      "cycle_id": "a062ecaf",
-      "domain": "Novelty",
-      "name": "and_gate_tf",
-      "quality": 0.7526200000000001
-    },
-    {
-      "cycle_id": "a062ecaf",
-      "domain": "Novelty",
-      "name": "and_gate_ft",
-      "quality": 0.7526200000000001
-    },
     {
       "cycle_id": "b7dba88e",
       "domain": "Tropical",
@@ -2803,9 +2785,27 @@
       "domain": "Algebra",
       "name": "sum_prod_determines",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "0c649bb1",
+      "domain": "Physics",
+      "name": "isTransparent_iff_natAbs",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "0c649bb1",
+      "domain": "Physics",
+      "name": "coprime_of_transparent",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "0c649bb1",
+      "domain": "Physics",
+      "name": "exists_common_factor_of_not_transparent",
+      "quality": 0.85
     }
   ],
-  "last_updated": "2026-08-13T08:51:14",
+  "last_updated": "2026-08-13T10:37:02",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3703,12 +3703,6 @@
     ],
     "Physics": [
       {
-        "cycle_id": "647e3d96",
-        "quality": 0.7752299999999999,
-        "theorems": 10,
-        "title": "Observer-Dependent-Reality: Collapse Dynamics in Perceptual State Fields"
-      },
-      {
         "cycle_id": "111aa6d2",
         "quality": 0.69767,
         "theorems": 8,
@@ -3761,6 +3755,12 @@
         "quality": 0.715855,
         "theorems": 101,
         "title": "Derived from the nine research cycles formalised in `Catalog/Novelty/Diophantine"
+      },
+      {
+        "cycle_id": "0c649bb1",
+        "quality": 0.85,
+        "theorems": 109,
+        "title": "The Derived-Modulus Corner, Closed"
       }
     ],
     "Probability": [
