@@ -133,7 +133,7 @@ Aether is fully self-managing: it detects its own code changes via mtime watchdo
 | File | Purpose |
 |------|---------|
 | `Packages/index.html` | Web viewer for all research packages |
-| `Packages/update_index.py` | Bundles packages into `packages_db.js`, adds quality scores |
+| `Packages/update_index.py` | Regenerates the website index from `Packages/*.json` — `package_index.js`, `future_directions.js`, `catalog_tree.json` — and cache-busts `index.html` |
 | `Packages/js/packages.js` | Frontend rendering — tabbed views, interactive demos, light/dark themes |
 | `Packages/style.css` | Frontend styling — fixed sidebar layout, gradient titles, responsive design |
 
@@ -194,9 +194,9 @@ When Phase A produces Lean files with errors (e.g., `sorry` usage), `knowledge_e
 
 ### Valid Domains (DOMAIN_DIRS)
 
-`Algebra`, `Applications`, `Bridges`, `Combinatorics`, `Computation`, `Cryptography`, `EML`, `Geometry`, `Logic`, `MachineLearning`, `Novelty`, `NumberTheory`, `Physics`, `Probability`, `Pythagorean`, `Shared`, `Tropical`
+`Algebra`, `Applications`, `Bridges`, `Combinatorics`, `Computation`, `Cryptography`, `Geometry`, `Logic`, `MachineLearning`, `Novelty`, `NumberTheory`, `Physics`, `Probability`, `Pythagorean`, `Shared`, `Tropical`
 
-Novelty is a first-class domain. Speculative is **not** a valid Catalog domain — sub-domains map to real domains via `normalize_domain()`.
+Novelty is a first-class domain. `EML` and `Speculative` are deprecated: `normalize_domain()` routes them to `Applications` and `Novelty` respectively (the `EML/` and `Speculative/` Catalog dirs exist only for legacy content). Unknown or unrecognized sub-domains also fall through to `Novelty`.
 
 ### Domain Routing
 
