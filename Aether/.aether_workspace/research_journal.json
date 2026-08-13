@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "b2707824",
-      "domain": "Geometry",
-      "key_insight": "# Future Directions\n\nDerived from the analysis and adversarial review of\n`Catalog/Geometry/HyperbolicBerggrenGeodesics.lean`.\n\n## What survived, what failed\n\n**Survived (proved, 0 sorries).**\nThe Berg",
-      "quality_score": 0.73319,
-      "sorry_count": 0,
-      "theorem_count": 182,
-      "timestamp": "2026-08-07T05:41:42",
-      "title": "Hyperbolic-Pythagorean-Geodesics: Sub-Linear Trajectory Factorization in Poincaré Disk"
-    },
-    {
       "cycle_id": "f3cf4755",
       "domain": "MachineLearning",
       "key_insight": "# Future directions\n\nDerived from the three research cycles carried out in\n`Catalog/MachineLearning/GrokkingDelayedTransition/`\n(`SaddleNodeLocal.lean`, `GradientFlowThreshold.lean`, `VectorMargin.lea",
@@ -499,19 +489,19 @@
       "theorem_count": 55,
       "timestamp": "2026-08-13T13:55:47",
       "title": "INTERVAL-HINT: the trace-set filter is exact (2^-omega pruning) but does not amplify — residue filte"
+    },
+    {
+      "cycle_id": "9e8cd1f4",
+      "domain": "Algebra",
+      "key_insight": "# FUTURE DIRECTIONS — after QUBIT-TRADE (register threshold, closed)\n\nAll Lean files of this thread live in `Catalog/Algebra/QubitTrade/` and compile\nagainst mathlib4 (Lean 4.28.0) with **0 `sorry`s**",
+      "quality_score": 0.87,
+      "sorry_count": 0,
+      "theorem_count": 939,
+      "timestamp": "2026-08-13T15:21:48",
+      "title": "The Quantum Register Cannot Be Shrunk: QUBIT-TRADE, Closed"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "5907c59d",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\n- Extend the real coefficient-matrix model to complex amplitudes and prove the same reduced-density and concurrence results.\n- Define von Neumann entropy for finite density matric",
-      "quality_score": 0.78678,
-      "sorry_count": 0,
-      "theorem_count": 22,
-      "timestamp": "2026-08-02T22:19:35",
-      "title": "Emergent Spacetime from Quantum Entanglement"
-    },
     {
       "cycle_id": "f15cd85a",
       "domain": "Geometry",
@@ -2501,27 +2491,19 @@
       "theorem_count": 55,
       "timestamp": "2026-08-13T13:55:47",
       "title": "INTERVAL-HINT: the trace-set filter is exact (2^-omega pruning) but does not amplify — residue filte"
+    },
+    {
+      "cycle_id": "9e8cd1f4",
+      "domain": "Algebra",
+      "key_insight": "# FUTURE DIRECTIONS — after QUBIT-TRADE (register threshold, closed)\n\nAll Lean files of this thread live in `Catalog/Algebra/QubitTrade/` and compile\nagainst mathlib4 (Lean 4.28.0) with **0 `sorry`s**",
+      "quality_score": 0.87,
+      "sorry_count": 0,
+      "theorem_count": 939,
+      "timestamp": "2026-08-13T15:21:48",
+      "title": "The Quantum Register Cannot Be Shrunk: QUBIT-TRADE, Closed"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "5ac3c62c",
-      "domain": "NumberTheory",
-      "name": "card_hom_pi",
-      "quality": 0.7516700000000001
-    },
-    {
-      "cycle_id": "5ac3c62c",
-      "domain": "NumberTheory",
-      "name": "mobiusWeight_pi",
-      "quality": 0.7516700000000001
-    },
-    {
-      "cycle_id": "5ac3c62c",
-      "domain": "NumberTheory",
-      "name": "mobiusWeight_congr_of_card_hom_eq",
-      "quality": 0.7516700000000001
-    },
     {
       "cycle_id": "646c7606",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "mem_sqrtSet",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "9e8cd1f4",
+      "domain": "Algebra",
+      "name": "catalog",
+      "quality": 0.87
+    },
+    {
+      "cycle_id": "9e8cd1f4",
+      "domain": "Algebra",
+      "name": "eml_generates_neg_one",
+      "quality": 0.87
+    },
+    {
+      "cycle_id": "9e8cd1f4",
+      "domain": "Algebra",
+      "name": "eml_compose_left",
+      "quality": 0.87
     }
   ],
-  "last_updated": "2026-08-13T13:55:47",
+  "last_updated": "2026-08-13T15:21:48",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3021,12 +3021,6 @@
   "research_threads": {
     "Algebra": [
       {
-        "cycle_id": "a65c164b",
-        "quality": 0.78643,
-        "theorems": 78,
-        "title": "Homological Algebra: Derived Functors"
-      },
-      {
         "cycle_id": "3652ac9b",
         "quality": 0.686,
         "theorems": 679,
@@ -3079,6 +3073,12 @@
         "quality": 0.82,
         "theorems": 36,
         "title": "The Partial Free-Witness Threshold is the Trace, Closed"
+      },
+      {
+        "cycle_id": "9e8cd1f4",
+        "quality": 0.87,
+        "theorems": 939,
+        "title": "The Quantum Register Cannot Be Shrunk: QUBIT-TRADE, Closed"
       }
     ],
     "Applications": [
