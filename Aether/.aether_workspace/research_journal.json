@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "713730e2",
-      "domain": "Pythagorean",
-      "key_insight": "# Future directions\n\nThis cycle settled the *uniform half-canonical existence* question for almost all\nregular degrees, and in the strongest possible form: for `k ≥ 6` with `k ≠ 7`,\n**every** simple `",
-      "quality_score": 0.78748,
-      "sorry_count": 0,
-      "theorem_count": 47,
-      "timestamp": "2026-08-06T06:55:10",
-      "title": "**Conjecture.** For every integer `k ≥ 5`, there is a threshold `N₀(k)` such tha"
-    },
-    {
       "cycle_id": "39ee2889",
       "domain": "Combinatorics",
       "key_insight": "# Future directions\n\nConcrete, falsifiable conjectures arising from the results proved this cycle, on top of the\nframework of weak and strong $B_d$-free families, layers, level families and the extrem",
@@ -499,19 +489,19 @@
       "theorem_count": 407,
       "timestamp": "2026-08-13T05:11:54",
       "title": "The Order x Jacobi Joint Law is N-Determined, Closed"
+    },
+    {
+      "cycle_id": "a3466461",
+      "domain": "Novelty",
+      "key_insight": "# Future directions — measuring the symmetry-breaking cost of factoring\n\nThe four files `Catalog/Novelty/SymmetryBreakingCost{Factoring,Kernel,Adaptive,Witness}.lean`\nturn the ISOLATION-COST experimen",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 65,
+      "timestamp": "2026-08-13T06:53:16",
+      "title": "The Symmetry-Breaking Cost of Factoring, Measured"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "b0710fef",
-      "domain": "Novelty",
-      "key_insight": "# Future directions\n\n## 1. Sharpen the sparse-capacity asymptotics\n\nThe proved bound `binom(N,k) ≤ N^k` is robust and directly yields the\n`log₂ N` bits-per-spike ceiling. A sharper next theorem is\n\n`b",
-      "quality_score": 0.7679199999999999,
-      "sorry_count": 0,
-      "theorem_count": 21,
-      "timestamp": "2026-08-02T17:26:14",
-      "title": "Moonshot: Brain-Computer Interface Mathematics — Neural Coding Theorems"
-    },
     {
       "cycle_id": "4ae649eb",
       "domain": "MachineLearning",
@@ -2501,27 +2491,19 @@
       "theorem_count": 407,
       "timestamp": "2026-08-13T05:11:54",
       "title": "The Order x Jacobi Joint Law is N-Determined, Closed"
+    },
+    {
+      "cycle_id": "a3466461",
+      "domain": "Novelty",
+      "key_insight": "# Future directions — measuring the symmetry-breaking cost of factoring\n\nThe four files `Catalog/Novelty/SymmetryBreakingCost{Factoring,Kernel,Adaptive,Witness}.lean`\nturn the ISOLATION-COST experimen",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 65,
+      "timestamp": "2026-08-13T06:53:16",
+      "title": "The Symmetry-Breaking Cost of Factoring, Measured"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "c56f6a79",
-      "domain": "Applications",
-      "name": "QF_diagonal",
-      "quality": 0.71215
-    },
-    {
-      "cycle_id": "c56f6a79",
-      "domain": "Applications",
-      "name": "hasSpectralBounds_diagonal",
-      "quality": 0.71215
-    },
-    {
-      "cycle_id": "c56f6a79",
-      "domain": "Applications",
-      "name": "hasSpectralBounds_one",
-      "quality": 0.71215
-    },
     {
       "cycle_id": "f2796053",
       "domain": "Logic",
@@ -2803,9 +2785,27 @@
       "domain": "Computation",
       "name": "euclid_parametrization",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "a3466461",
+      "domain": "Novelty",
+      "name": "and_gate_tt",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "a3466461",
+      "domain": "Novelty",
+      "name": "and_gate_tf",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "a3466461",
+      "domain": "Novelty",
+      "name": "and_gate_ft",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-13T05:11:54",
+  "last_updated": "2026-08-13T06:53:16",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "339ae990",
-        "quality": 0.71899,
-        "theorems": 50,
-        "title": "Sharp two-sided summand asymptotics.: For every `k : ℕ`, prove"
-      },
-      {
         "cycle_id": "97241621",
         "quality": 0.743405,
         "theorems": 49,
@@ -3637,6 +3631,12 @@
         "quality": 0.82,
         "theorems": 42,
         "title": "Jacobi Gauss-Sum Phase Collapse"
+      },
+      {
+        "cycle_id": "a3466461",
+        "quality": 0.82,
+        "theorems": 65,
+        "title": "The Symmetry-Breaking Cost of Factoring, Measured"
       }
     ],
     "NumberTheory": [
