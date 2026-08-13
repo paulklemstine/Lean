@@ -176,8 +176,11 @@ def update_index():
             break
         catalog_root = os.path.dirname(catalog_root)
     else:
-        # Fallback if not found
-        catalog_root = os.path.abspath(os.path.join(script_dir, "..", ".."))
+        # Not inside a git/Aether repo (e.g. a bare copy of Packages/ or a test
+        # temp dir). Index the packages in this directory itself. The previous
+        # fallback of script_dir/../.. collapsed to "/" for a shallow path and
+        # made the .lean scan below walk the entire filesystem (hang).
+        catalog_root = script_dir
 
     json_files = sorted(f for f in glob.glob("*.json") if f not in ("index.json", "package.json", "lineage.json", "future_directions.json", "statement.json", "future_directions_snapshot.json", "catalog_tree.json"))
 

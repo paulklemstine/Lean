@@ -1142,26 +1142,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "**Experiment ECM-ORDER-NULL (factoring lab, cron loop round-16 #4).**\n\n**Hypothesis (null).** The ECM group order #E(F_p) = p + 1 − a_p (Frobenius trace / Hasse middle term) — the quantity ECM (1987) actually exploits, bracketed but never probed by the p±1 closures — is invisible from N alone in a STRICTLY STRONGER sense than p±1: ℓ | #E(F_p) is a non-abelian GL₂(F_ℓ) Chebotarev condition with no residue-class shadow, so residue-invisible BOTH asymmetrically and symmetrically (the p−1 symmetric OR is visible, 0.313 bit at ℓ=3). Barriers 2/5/6/8.\n\n**Findings (machine-verified).**\n1. **Positive control EXACT** (after the point-at-infinity fix): #E(F_p) = p + S + 1 (affine count is p + S), a_p = −S — the initial affine-count class mislabeled weak instances (p=9643: affine 9504, true order 9505 = 5·1901 ∤ M; ECM correctly refused). ECM stage-1 (M = lcm(1..97), E0: y²=x³+x+1, CRT base points) factors the ECMORDER class (#E0(F_p)|M, p±1 general) **40/40** vs GENERAL (both #E0 have a prime factor > 97) **2/40** (the 2 genuine: a random point's order drops the big prime). Sato–Tate: mean −0.032, mean-square 0.260 (semicircle 0, 1/4).\n2. **Headline — invisible BOTH asym AND sym:** I(N mod ℓ; ℓ|#E0(F_p)) = 0.0005/0.0011/0.0018 at ℓ=3/5/7 AND the SYM OR = 0.0031/0.0009/0.0005, all at the 500-shuffle null (most extreme ℓ=3 SYM, I=0.0031 < null max 0.0039, is sample noise: 2000-shuffle fresh-sample check p=0.33), while the p−1 machinery control is live (SYM = 0.3145, known 0.313). Mechanism: ℓ|#E(F_p) ⇔ tr(Frob_p) ≡ 1+p mod ℓ — a NON-abelian GL₂(F_ℓ) Chebotarev condition with no residue shadow, unlike the abelian split conditions ℓ|p±1 (visible OR). Full B-smoothness P(#E0|M) = 0.502 invisible too.\n3. **Size-orthogonal:** raw corr(a_p/(2√p), gap/√N) = −0.097 (p=0.003) is a PURE size confound — corr(x,p)=+0.147, corr(gapn,p)=−0.717, residualized-on-p corr = **+0.008 (p=0.735)**.\n4. **Symmetric + sealed:** a_p ≠ a_q on 1492/1500 (split lost); Σ_{x mod N} J_N(x³+x+1) = a_p·a_q = a_N EXACTLY (N=247: 4=4; N=493: 0=0 — the Hecke eigenvalue is N-computable) yet #E(Z/NZ) needs the cross terms a_p(q+1)+a_q(p+1), swap-ambiguous (−94 vs −76; −108 vs −180) and unrecoverable; sqrt_mod mod composite N RAISES TypeError = the factorization (barriers 4/6).\n\n**Verdict:** CONFIRMED null (negative for factoring). The ECM group order is strictly more hidden than p±1 (no residue shadow at all, barrier 2), Sato–Tate-orthogonal to size (barrier 5), symmetric + computationally sealed (barriers 4/6), and the only exploitation is running ECM (1987, known method, barrier 8). Closes the ECM-order face of the weakness program. Round-16 4/4.\n\nAssessment v177. Paper 66 (ResearchOutput/NewMathematics/66_EcmOrderNull_EllipticTraceInvisibleAndSealed.md). Notebook Part 147. Script: /tmp/exp_ecmordernull.py.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1173",
-    "lineage_refs": [],
-    "priority_score": 1000.0,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-12T17:19:53.176859+00:00",
-    "title": "Record ECM-ORDER-NULL (401 experiments, assessment v177); paper 66"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "beb0e52b",
     "description": "## CYCLIC-CUBIC-FORK (round-19 #1, experiment 406, assessment v182, paper 71)\n\n**The fork-pinning criterion — machine-verified on three Galois groups:** a binary splitting fork of a number field is congruence-pinned by a Dirichlet character **iff it factors through the abelianization G^ab of the Galois closure**.\n\n### (1) Cyclic cubic fields (G = C₃ abelian): fork pinned at **100%** of its entropy\n- cond 7 (x³+x²−2x−1, real subfield of ℚ(ζ₇)): **[1,1,1] ⟺ p mod 7 ∈ {1,6} on 6541/6541 = 100% EXACT**, no [1,2]-type ever (Galois).\n- **I(p mod 7; fork) = 0.9182 = H(1/3) EXACTLY**; pinned at m = 49 too (42 classes × 7k primes — deterministic, not sparsity); **flat at the coprime control m = 5** (I = 0.0000, z = −1.3) — pinning is specifically the conductor's cubic-residue character.\n- cond 9 (x³−3x+1): [1,1,1] ⟺ p mod 9 ∈ {1,8}, I = 0.9181, same structure.\n\n### (2) S₃ closure (x³+x+1, G^ab = C₂): only the sign is pinned\n- **I(p mod 31; fork) = 0.1906 = I(sign; fork) EXACTLY** (residual +0.0000) — the unconditioned [1,1,1]-fork's congruence content is entirely the Jacobi sign (the quadratic-subfield character).\n- The A₃-face fork [1,1,1]-vs-[3] on the QR face: I = 0.0000 (z = −2.37) — **FLAT** (paper 70 re-verified at 2^22).\n\n### (3) S₄ closure (x⁴−x−1, disc −283): the field is S₄; only the sign is pinned; every within-face fork flat\n- Verified S₄ (disc −283 not a square): nroots 4:2:1:0 = 1:6:8:9/24 EXACT. Paper 65's \"A₄ fork\" is the **even-face fork of this S₄ field** (densities 1/12:3/12:8/12 reproduced: 0.0798/0.2501/0.6701).\n- Sign pinned: I(sign; hasroot) = 0.0483 ≈ theory 0.0488. Beyond-sign residual I(p mod 283; hasroot) − I(sign; hasroot) = +0.0131 = **conditional-null mean EXACTLY** (z = +1.00).\n- Every within-face fork (even [1,1,1,1]/[2,2]/[1,3], odd [1,1,2]/[4]): observed = null mean exactly (z = −1.00) — the only congruence structure in the whole S₄ splitting is the sign.\n\n### (4) Explains paper 70's failed positive control\nx³−2 has S₃ closure (L = ℚ(∛2,√−3), G^ab = C₂) ⇒ its fork is **flat by construction**. Flatness is \"fork outside G^ab\", not \"h=1 vs h=3\". The correct positive control is a cyclic cubic (abelian closure) — pins at 100%.\n\n### (5) Semiprime level is factor-useless (barriers 2/5/6/8)\nOR = [p split OR q split] for the cond-7 cyclic cubic: P(OR|N mod 7) = 1/3 on {1,6}, 2/3 on {2,3,4,5}; **I(N mod 7; OR) = 0.0718 ≈ theory 0.0728**; which-factor wall 0.0001. Even a 100%-pinned prime-level fork collapses to a 0.073-bit symmetric residue dial at the N level. Cubic reciprocity (1801/1844), cyclotomic fields, Chebotarev (1922), Artin (1927) — all known methods.\n\n**Verdict:** criterion CONFIRMED on C₃/S₃/S₄. Round-19 #1 done. Barriers 2/5/6/8.\n",
     "domain_bridges": [],
     "domains": [
@@ -1173,33 +1154,14 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-12T18:13:27.200171+00:00",
     "title": "CYCLIC-CUBIC-FORK: fork-pinning ⟺ fork in the abelianization of the Galois closure (criterion verified on C3/S3/S4, paper 71)"
   },
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "## FORK-FLATNESS (round-18 #2, experiment 405, assessment v181, paper 70)\n\nThe S₃ fork [1,1,1]-vs-[3] of **any** cubic is **Chebotarev-FLAT**: I(p mod m; fork) = 0 in the limit for **every** modulus m — the fork carries zero integer-congruence information. This **refutes paper 69's Part C** (\"ray-class pinning\": per-class rates 0.124–0.594, I(p mod 31; fork) = 0.0742, I(p mod 31²; fork) = 0.8562 = \"93.3% of fork entropy by p mod 31²\"; \"ray-class semiprime dial\" 0.1811) as sparse-cell plug-in-MI artifacts.\n\n### (1) The theorem (fiber-product / Chebotarev)\nIn Gal(L·ℚ(ζ_m)/ℚ) = {(σ,u): σ|_K = u|_K} the three A₃-elements each pair with the **unique** residue u=c on every QR class c (c|_K = id), so **P(Frob = id | p ≡ c mod m) = 1/3 EXACTLY, all c, all m**. Needs only L ∩ ℚ(ζ_m) = K, not unramifiedness.\n\n### (2) Machine-verified at 2^24 (n = 538,641 eligible primes per cubic)\n- x³+x+1 (h=3): m=31 I=0.0000 (z=−2.55); m=961 I=0.0003 (null 0.0008, **z=−6.88**); m=29791 I=0.0204 = null mean/max (pure sparsity, 14,415 classes × 37 primes, rate sd 0.079 = binomial).\n- x³−x+1 (h=3): m=23/529/713 all z ≤ −1.98.\n- **Positive control REFUTED**: x³−2 (h=1, Kummer, ramified) is **also flat** — I = 0.0000 at m=9/27/108/216 (n=147,867). Flatness is universal S₃ structure; the which-prime ambiguity kills the cubic-residue pinning at the integer level.\n\n### (3) Paper 69 Part C is a sparse-cell artifact\nOn the paper's own 11/12-bit factor range (206 eligible primes): m=961 I = **0.8660** (reproduces paper's 0.8562) but the **shuffled null max is 0.8951** — observed sits INSIDE null. The \"93.3%\" measures ~0.4-prime-per-class cells (rates 0.0–1.0), not a law.\n\n### (4) Jensen compression real but finite-sample; the dial is noise\nP(OR|(Δ|N)=+1) = **0.7354** at 11/12-bit (reproduces paper 69's 0.7358) rising monotonically to **7/9 = 0.7778** at scale (0.7806 → 0.7671 → 0.7738 at 17/18 → 24/25 → 31/32 bit; equilibrium by 17-bit) — bias ∝ class-variance of the fork rate via concavity of 1−(1−r)², → 0 on equidistributed primes. **Conditional-null test** (400 shuffles permuting the fork within fixed (Δ|p),(Δ|q) faces, preserving the Jacobi structure): dial excess I(N mod 961; OR) − I((Δ|N); OR) = 0.0113 vs null mean 0.0111, **z = +0.37** — the ray-class dial is noise (paper 69's C4 null was wrong: shuffling all of OR kills the Jacobi part).\n\n### (5) The ℓ=2 OR channel survives at its true value\nI(N mod 31; OR) = 0.1243 at 31/32-bit (≈36× null max), carried exactly by Jacobi (I((Δ|N); OR) = 0.1240, residual 0.0003) → **0.1216** in the limit. The paper-69 B1 = 0.1468 headline was small-prime Jensen inflation; the channel itself is real, symmetric, factor-useless.\n\n### Seals / barriers\nSymmetric (which-factor lost — barrier 2); a Jacobi/quadratic-reciprocity residue dial (barrier 5); exact type sealed behind CRT split (barrier 6); all quadratic reciprocity (1801) + Chebotarev (1922) + Hilbert class fields + ECM (1987) — known methods (barrier 8). The only surviving positive is the ℓ=2 Jacobi OR channel at 0.1216 bits, factor-useless. Round-18 2/2 done. Barriers 2/5/6/8.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1175",
-    "lineage_refs": [],
-    "priority_score": 1000.0,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-12T18:13:27.200556+00:00",
-    "title": "FORK-FLATNESS: the S₃ fork is Chebotarev-flat — paper 69's ray-class pinning/dial were sparse-cell artifacts; ℓ=2 Jacobi OR channel survives at 0.1216"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9a499c4d",
     "description": "## OR-COLLAPSE-LAW (round-19 #2, experiment 407, assessment v183, paper 72)\n\n**An exact universal law of the semiprime OR collapse.** Paper 71 proved the fork-pinning criterion (a fork is congruence-pinned iff it factors through G^ab) and measured one collapse (cond-7 cubic OR = 0.0728 bits). Here is the general law: for any abelian field whose split-completely event is pinned by an order-n Dirichlet character (split ⟺ χ(p)=1, P(split)=1/n), the semiprime OR [split(p) OR split(q)] obeys, for gcd(N,f)=1,\n\n**P(OR | χ(N)=1) = 1/n, P(OR | χ(N)≠1) = 2/n, P(OR) = (2n−1)/n², I(N mod f; OR) = g(n) = H((2n−1)/n²) − (1/n)H(1/n) − ((n−1)/n)H(2/n)** — universal in the order n, independent of field, degree, and conductor structure.\n\n### Machine-verified on 7 fields (2^22, 30k semiprimes, split sets empirically confirmed by nroots==deg)\n\n| field | n | f | I(N mod f; OR) | g(n) |\n|---|---|---|---|---|\n| x²−x−1 (Q(√5)) | 2 | 5 | 0.3076 | 0.3113 |\n| x³+x²−2x−1 (cyclic cubic) | 3 | 7 | 0.0704 | 0.0728 |\n| x³−3x+1 (cyclic cubic) | 3 | 9=3² | 0.0735 | 0.0728 |\n| x⁴−4x²+2 (Q(ζ₁₆)+, units C₂×C₄) | 4 | 16=2⁴ | 0.0384 | 0.0359 |\n| x⁵+x⁴−4x³−3x²+3x+1 (Q(ζ₁₁)+) | 5 | 11 | 0.0222 | 0.0215 |\n| Φ₇ (Q(ζ₇)) | 6 | 7 | 0.0146 | 0.0144 |\n| cyclic cubic (character-only) | 3 | 21=3·7 | 0.0700 | 0.0728 |\n\nPer-class conditional rates match 1/n and 2/n within 1–2% everywhere; coprime modulus FLAT; m=f² invariant.\n\n### UNIFICATION — the two biggest residue channels of the lab are two points of one law\n\n- **The p−1 ℓ=3 symmetric OR (paper 54: 0.313) IS the n=2 case** with f=3 (split = p ≡ 1 mod 3, χ the quadratic character of Q(√−3)): reproduced I(N mod 3; OR) = **0.3126** including the N≡0 class, P(OR|N≡1)=0.4942 (law 1/2), P(OR|N≡2)=**1.0000** (law 2/n).\n- **Paper 71's cond-7 cubic OR (0.0728) is the n=3 case.**\n\n### The decay law\n\ng(n) monotone → 0: 0.3113/0.0728/0.0359/0.0215/0.0144/0.0103/0.0077/0.0060 (n=2..9). The MORE the prime-level fork pins (H(1/n) ≈ 1 bit), the LESS its OR shows — no order-n Dirichlet fork ever yields more than g(n) ≤ 0.3113 symmetric OR bits.\n\n### Factor-useless (barriers 2/5/6/8)\n\nSymmetric (which-factor wall 0.0001–0.0002), a Dirichlet residue dial (QRLEAK family), sealed behind the CRT split, all classical (quadratic 1801 / cubic 1844 / higher reciprocity + Dirichlet characters + CRT). The residue-fork line is now quantitatively CLOSED at the semiprime level.\n\n**Verdict:** exact law CONFIRMED on 7 fields spanning prime/composite conductors and cyclic/non-cyclic unit groups. Round-19 2/2 done. Barriers 2/5/6/8.\n",
     "domain_bridges": [],
     "domains": [
@@ -1211,7 +1173,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-12T18:27:34.950152+00:00",
     "title": "OR-COLLAPSE-LAW: semiprime OR of a cyclic split-complete fork = g(n) = H((2n-1)/n^2) - (1/n)H(1/n) - ((n-1)/n)H(2/n) bits (round-19 #2, exp 407, v183, paper 72)"
   },
@@ -1404,6 +1366,25 @@
     "status": "available",
     "timestamp": "2026-08-13T00:05:54.675326+00:00",
     "title": "NET-3: The composition-depth trichotomy — why the depth law is flat on both sides of task difficulty"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "**Round-net-4 (network lab, depth axis — testing NET-3's constructive corollary).** Paper: `ResearchOutput/NetworkMathematics/4_CopySelfBasin_StochasticEscape.md`. Notebook Part 4, assessment v4, network exp 4.\n\n## Hypothesis (NET-3's corollary, taken in)\nThe ONE regime a non-flat depth law could live in: a task whose error signal decomposes over steps — digit addition with carries, each output digit its own supervision token. At fixed budget B, deeper should beat shallower; a carry-free control should stay flat; length-gen should widen the gap.\n\n## Task\nLSB-first base-10 `a+b=c`, n=6 columns, per-digit cross-entropy, teacher-forced decoding with a GO-token shift (copy shortcut adversarial at init: untrained per-digit ≈ 0.08 < chance 0.1). Pre-LN transformer, 4 heads, tied embedding, d_model matched per depth to B≈100k±6% (d=1: dm=88, d=2: dm=64, d=4: dm=44).\n\n## Part A — copy-self basin + flat escape law\nEvery config sits in the same basin (per-digit ≈ 0.22–0.24, full 0.0, loss ≈ 2.0), identical across depths to three decimals — a shared flat-loss attractor where the tied-embedding readout reproduces the previous teacher-forced digit. Escape is abrupt (0.23→0.98 within one 1000-step interval) and stochastic.\n\n**Depth law: FLAT in distribution.** Escape steps d=1 [5000,3000,6000] median 5000; d=2 [3000,5000,5000] median 5000; d=4 [3000,4000,3000] median 3000. Non-monotone at seed level (d=1 s1 escapes at 3000, earlier than d=4 s1's 4000); within-depth spread up to 2× exceeds between-depth differences. Full-mastery reliability mildly favors d=4 (3/3 vs 2/3 for d=1,d=2) but is under-powered (3 seeds). Decisive failure = the CARRY CHAIN, not the digit map: both stuck seeds are per-digit-high/full-low (d=1 s2: per 0.7402/full 0.0068; d=2 s0: per 0.8663/full 0.0991) with correlated errors (per=0.87 ⇒ full ≈ 0.38 if independent; observed 0.09).\n\n## Part C — carry-free control fails its job, informatively\nCarry-free is ALSO basin-trapped (d=2 both seeds per 0.4874/full≈0). The basin is task-independent — a property of tied-embedding per-digit teacher-forced decoding, not of carries. Refutes \"carries are the depth-relevant ingredient\".\n\n## Part D — scale gates escape, not mastery\n4× budget moves the per-digit escape 2–3× earlier (d=1@400k: st=1000 per 0.24–0.36 already above plateau, st=3000 0.87–0.94) but full-number mastery at 400k is LOWER (d=1: 0.4011±0.31 vs 0.9553±0.04 at 100k), again with correlated carry errors (d=1 s1@400k per 0.8703/full 0.0923; 0.8703⁷≈0.38≫0.09). Width rescues the digit map, not the carry chain.\n\n## Part B — length-gen wall on arithmetic\nd=2 and d=4 reach train n=3 full=1.0000 (both seeds) yet test n=4/5/6 full=0.0000, per-digit ≈ 0.09–0.16 ≈ chance at EVERY depth. Carries do not rescue length generalization; memorize-without-composition (NET-3 leg-2 wall) reproduced on the task class that was supposed to break it.\n\n## Law\n**COPY-SELF BASIN + STOCHASTIC ESCAPE.** On per-digit-supervised tied-embedding arithmetic, training is a two-state system: a depth-independent copy-self basin (per-digit ≈ 0.22–0.24, identical across depths) followed by an abrupt phase-transition escape that is flat in depth in distribution and gated by scale. The carry chain is the width/depth-immune bottleneck (correlated-error signature per^n ≫ full). Length-gen is chance at every depth even after perfect train memorization.\n\n## Verdict\nNET-3's clean prediction — decomposable error makes depth pay — is **REFUTED in its clean form**. The flat depth law now covers lookups (NET-2), composition (NET-3), and decomposable-error arithmetic (NET-4); the single-peaked depth picture fails everywhere; the binding constraint is optimization (a flat-loss copy attractor), never capacity. New objects: the copy-self basin (exact plateau, depth- and task-independent), the phase-transition escape, the per-digit/carry-chain dissociation, and scale-gates-escape-not-mastery.\n\n## Barriers\n(a) no circularity (GO-shift makes copy adversarial at init); (b) partial — copy shortcuts known, the per-digit copy-self basin + escape law + dissociation new (Catalog: no prior work); (c) toy-scale (n=6, ~100k params); (d) clean held-out batches; (e) 3/2/2/2 seeds with escape-spread reported; (f) per/full separated, chance=0.1, correlated-error diagnostic; (g) carry-free + width + length-gen controls; (h) honest negative + three diagnostics (check per≈0.23 plateau before judging a task unlearnable; high-per/low-full = chain failing; train-mastery + chance length-gen = memorize-without-compose).\n\nScript: /tmp/exp_net_add.py (parts A–D; summary-print variable-shadowing bug fixed after the run — all data already in the log, no re-run needed).",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_1191",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-13T02:16:32.162276+00:00",
+    "title": "NET-4: The copy-self basin + stochastic escape — the decomposable-error regime also fails to break the flat depth law"
   },
   {
     "ambition_level": "grand_challenge",
