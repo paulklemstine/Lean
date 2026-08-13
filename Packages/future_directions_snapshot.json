@@ -40,7 +40,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "032d68e5",
+    "consumed_by_exp_id": "aeab7c87",
     "description": "**Summary.** The conjecture that for E_N: y² = x³ + N with N = pq, the\ndenominators of x(nP) are divisible only by {2, 3, p, q} (the primes dividing\nΔ = -432N²) is mathematically FALSE.\n\n**Counterexample.** N = 55 = 5·11, P = (9,28) ∈ E_55(Q):\n  x(2P) = (9^4 - 8·55·9) / (4(9^3 + 55)) = 2601/3136, and 3136 = 2^6 · 7^2.\nThe prime 7 divides the denominator but 7 ∤ Δ (7 is a prime of good reduction).\n\n**Mechanism.** ℓ | denom(x(nP)) iff nP ≡ O (mod ℓ); good-reduction primes divide\ndenominators whenever the point reduces to torsion — infinitely many such primes.\n\n**Survey (11 semiprimes):** p appears in some denominator 54.5%, q appears 0%,\nonly-{2,3,p,q} holds 0% of the time. The denominator structure is a function of\nN alone (barrier 5) and does not cleanly reveal p, q.\n\n---\n\n*Factoring Lab paper. Status: proven theorem / verified / framework. This is a research deliverable, not a factoring breakthrough claim.*",
     "domain_bridges": [],
     "domains": [
@@ -59,7 +59,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "b7770452",
+    "consumed_by_exp_id": "1107999c",
     "description": "**Summary.** Let F(k) = sum_{a=1}^{N} a^k. Then gcd(F(k), N) reveals a factor\nat k = p-1: for N = pq, gcd(F(p-1), N) = q (provided (q-1) does not divide (p-1)).\n\n**Key results (proven):**\n- **Theorem 1 (power-sum factor reveal):** Mod p the residues cover each nonzero\n  residue q times, so F(k) ≡ q·(sum of k-th powers mod p); by FLT this is -q mod p\n  at k=p-1. Mod q it vanishes when (q-1) ∤ (p-1). Hence gcd = q.\n- **Theorem 2 (robustness):** The power sum aggregates ALL bases a=1..N\n  simultaneously, so it cannot suffer Pollard p-1's \"bad base\" failure.\n- **Theorem 3 (Carmichael periodicity):** g(k) = gcd(F(k), N) has period\n  λ(N) = lcm(p-1, q-1), so λ(N) is readable from the period and the factors\n  follow from p+q = N - λ(N) + 1.\n\n**Complexity.** First hit at k* = min(p-1,q-1) ≈ √N; cost per F(k) is O(N);\ntotal O(N^{3/2}) — worse than trial division. This is the SAME structure Shor's\nalgorithm exploits, made classically hard by the period-finding barrier.\nVerified on all 8 test semiprimes up to N ≈ 10^4.\n\n---\n\n*Factoring Lab paper. Status: proven theorem / verified / framework. This is a research deliverable, not a factoring breakthrough claim.*",
     "domain_bridges": [],
     "domains": [
@@ -97,7 +97,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "726361d5",
     "description": "**Paper (factor3):** [ResearchOutput/NewMathematics/13_FreeWitness_Family.md](https://github.com/paulklemstine/factor3/blob/main/ResearchOutput/NewMathematics/13_FreeWitness_Family.md)\n\n---\n\n# The Binary-Quadratic-Form Count Family: A Canonical Free-Witness for Barrier 4\n\n**Program:** Factoring research lab — free-witness synthesis (experiments CIRC, KROOT, BQF)\n**Date:** 2026-08-11\n**Status:** Negative-result paper — a unified family of factoring witnesses, all barrier-4 blocked\n\n---\n\n## Abstract\n\nThe free-witness aggregation barrier (barrier 4) states that informative\nwitnesses exist but aggregating them costs O(N), exponential in log N. Three\nexperiments (CIRC, KROOT, BQF) uncovered a clean, unified family of such\nwitnesses: the count of solutions to a binary quadratic form Q(x,y) ≡ 1 mod N.\nFor a form of discriminant D, this count is\n$$C_D(N) = (p - \\chi_D(p))(q - \\chi_D(q)),$$\nwhere χ_D is the Kronecker symbol. The discriminant D is a \"residue dial\":\nD = −4 leaks (p mod 4, q mod 4), D = −3 leaks (p mod 3, q mod 3), D = −8 leaks\np mod 8, D = −20 leaks p mod 5. For D = −4 the count fully determines p + q and\np − q, so it recovers the complete factorization. Every member is a genuine\nfree-witness: it is NOT a polynomial in N (it encodes p, q individually through\nthe Kronecker symbols, evading barrier 1) and it encodes the factorization\njointly (evading the symmetry barrier 2) — yet computing it requires O(N²)\nenumeration or the factorization itself (barrier 4). This paper records the\nunified family and the recovery algorithms.\n\n---\n\n## 1. The free-witness concept\n\nBarrier 4 (free-witness aggregation) is the least \"theorem-like\" of the eight\nbarriers: free witnesses exist (they are plentiful), but aggregating them over\nall of Z/NZ costs O(N), which is exponential in log N. The lab's cleanest\nexamples before this family were the power-sum GCD (sums over all bases) and\nthe circle-method counts. The binary-quadratic-form family is the cleanest\nformulation yet: a SINGLE scalar that IS the factorization, with explicit\nrecovery.\n\n---\n\n## 2. The family: C_D(N) = (p − χ_D(p))(q − χ_D(q))\n\nFor a primitive binary quadratic form Q(x,y) = ax² + bxy + cy² of discriminant\nD = b² − 4ac, let\n$$C_D(N) = \\#\\{(x,y) \\in (\\mathbb{Z}/N\\mathbb{Z})^2 : Q(x,y) \\equiv 1 \\pmod N\\}.$$\n\nBy the Chinese remainder theorem, C_D(N) = C_D(p) · C_D(q). By genus theory\n(counting solutions to Q ≡ c mod p via the character sum), C_D(p) = p − χ_D(p),\nwhere χ_D is the Kronecker symbol (for p ∤ D). Hence:\n\n**Theorem (verified computationally).** For a semiprime N = pq with p, q ∤ D:\n$$C_D(N) = (p - \\chi_D(p))(q - \\chi_D(q)) = N - p\\,\\chi_D(q) - q\\,\\chi_D(p) + \\chi_D(N).$$\n\nThe count is a complete or partial witness for the factorization, depending on\nD. The recovery algorithms (verified for all four sign cases):\n\n| (χ_D(p), χ_D(q)) | identity from C_D(N) | recovery |\n|------------------|---------------------|----------|\n| (1, 1) | p + q = N + 1 − C | roots of x² − (p+q)x + N |\n| (1, −1) | q − p = N − 1 − C | roots of x² − (q−p)x − N |\n| (−1, 1) | p − q = N − 1 − C | roots of x² − (p−q)x − N |\n| (−1, −1) | p + q = C − N − 1 | roots of x² − (p+q)x + N |\n\nFor D = −4 (Q = x² + y²), χ_{−4}(p) = χ_p(−1) = (−1)^{(p−1)/2}, and the count\nrecovers (p, q) in all four sign cases — a COMPLETE factoring witness.\n\n---\n\n## 3. The residue dial: what each discriminant leaks\n\nThe Kronecker symbol χ_D(p) selects a residue class of p modulo |D| (or a divisor\nof it):\n\n| D | form | χ_D(p) detects |\n|---|------|-----------------|\n| −4 | x² + y² | p mod 4 (ε_p = ±1) — full recovery of p, q |\n| −3 | x² + xy + y² | p mod 3 (χ_{−3}(p) = 1 iff p ≡ 1 mod 3) |\n| −8 | x² + 2y² | p mod 8 (1,3 vs 5,7) |\n| −12 | x² + 3y² | p mod 3 |\n| −20 | x² + 5y² | p mod 5 (χ_{−20}) |\n\nVerified: C_D(N) = (p − χ_D(p))(q − χ_D(q)) holds EXACTLY for D = −4, −3, −8,\n−12, −20 across the tested semiprimes.\n\n---\n\n## 4. Connection to the earlier experiments\n\n- **CIRC (D = −4).** The count of solutions to x² + y² ≡ 1 mod N. Recovers\n  (p, q) from C(N) and N in all four sign cases (experiment 293). Its low-order\n  bits were shown to leak p mod 8, q mod 8 — but those bits are exactly the\n  non-computable ones (the count mod 2^k still needs O(N²) or the factors).\n- **KROOT.** The k-th root count R_k(N) = #{x : x^k ≡ 1 mod N} =\n  gcd(k, p−1) · gcd(k, q−1). This is the multiplicative-group analog: it leaks\n  p mod k (the k = 3 case connects to the D = −3 Eisenstein form). It lives in\n  the group-order family (p − 1, q − 1), tied to the Carmichael/Fibonacci\n  primitive-divisor theory.\n- **BQF.** The unifying family above.\n\nThe three experiments are members of one structure: **multiplicative counts\nwhose closed form separates the factors through a character or order function.**\n\n---\n\n## 5. Why this evades barriers 1, 2, 3 — and hits barrier 4\n\n- **Not barrier 1 (polynomial):** C_D(N) involves p and q individually through\n  χ_D(p), χ_D(q) — it is NOT a polynomial (nor rational) function of N alone.\n  The power-sum GCD was polynomial-in-the-limit; the count family is genuinely\n  non-polynomial.\n- **Not barrier 2 (symmetry):** C_D(N) is a single scalar encoding BOTH factors\n  jointly (via p ± q or χ_D(p), χ_D(q)); it does not need to \"distinguish p from\n  q\" — it encodes the whole pair. The antisymmetry obstruction does not apply.\n- **Not barrier 3 (holomorphic):** the count is an arithmetic object, not a\n  holomorphic construction.\n- **Barrier 4 (free-witness aggregation):** the ONLY obstruction. Computing\n  C_D(N) requires enumerating O(N²) pairs (counting solutions) or knowing the\n  factorization (the closed form uses p, q). No poly(log N) route to C_D(N)\n  avoids the factors.\n\nThe family is therefore a precise instance of barrier 4: a witness that is\nmathematically complete, structurally immune to barriers 1-3, and\ncomputationally sealed by aggregation cost.\n\n---\n\n## 6. Honest statement\n\n**Established (verified computationally):**\n1. C_D(N) = (p − χ_D(p))(q − χ_D(q)) for D = −4, −3, −8, −12, −20.\n2. Recovery of (p, q) from C_D(N) and N in all four sign cases (for D = −4).\n3. R_k(N) = gcd(k, p−1) gcd(k, q−1) (KROOT).\n4. C_D(N) is not polynomial in N and encodes the factors jointly.\n5. No poly(log N) computation of C_D(N) avoids the factors (aggregation).\n\n**Not established (and not claimed):**\n- A proof that no clever closed form for C_D(N) exists (that would be a\n  factoring algorithm — none found).\n- Any complexity-class improvement. The family reinforces barrier 4 but does\n  not break it.\n\n---\n\n## 7. Conclusion\n\nThe binary-quadratic-form count family C_D(N) = (p − χ_D(p))(q − χ_D(q)) is the\ncanonical free-witness: a single scalar, non-polynomial in N, encoding the\nfactorization through the Kronecker symbols, with D as a residue dial — and\nsealed by aggregation cost. CIRC, KROOT, and BQF are members of this one\nstructure. The family gives barrier 4 its sharpest form yet: the witness is\ncomplete and reachable only at exponential cost.\n\n---\n\n*Related:* `Factoring_Lab_Notebook.md` Parts 39-41 (CIRC, KROOT, BQF experiments),\n`00_CONSOLIDATED_BREAKTHROUGH_REPORT.md` (the barrier framework),\n`10_Conditional_Impossibility_Framework.md` (resource classification).\n",
     "domain_bridges": [],
     "domains": [
@@ -109,7 +109,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-11T21:13:58.496534+00:00",
     "title": "The Binary-Quadratic-Form Count Family: A Canonical Free-Witness for Barrier 4"
   },
@@ -610,7 +610,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "c80347ac",
+    "consumed_by_exp_id": "",
     "description": "**Paper 53 (NewMathematics) — Experiment 388, assessment v164. Round-14 #12.**\n\n**Hypothesis:** f_j(N) = bit j of the smaller k-bit factor p, over the exact k-bit-prime semiprime support, has no low-degree GF(2) parity of N approximating it — the Walsh/spectral face of superdensity (BITPROFILE, barrier 1/2 probe).\n\n**Experiment (restricted Walsh spectrum W(S) = sum_x f_j(x)(-1)^(S.x) by vectorized FWHT at k=10,12; targeted degree<=3 scans at k=14; m = 276/2850/32640/380628; random-sign null calibrated per size):**\n\n1. **Spectral flatness CONFIRMED:** at k=14 every information-bearing bit below the top ~6 has max degree<=3 correlation <= 0.021 vs all-parity noise 0.0101 and degree<=3 null max 0.0065. No parity of <=3 bits of N approximates any factor bit.\n2. **The only non-flat structure is the symmetric top-bit magnitude/carry family:** corr(p_{k-d}, N_{2k-1}) converges to ~0.285 (carry-out), 0.310, 0.132, 0.065, 0.026 for d=2..6 — the Walsh face of the BITPROFILE top-2 sliver, N-computable, symmetric in (p,q), a size correlation, non-factor-revealing.\n3. **The round-1 \"j=2 anomaly\" (0.166 at k=10, ~1.7x noise) RESOLVED:** single-bit winner = N_{2k-1} (product-magnitude indicator); corr(p_2, N_{2k-1}) = 0.254/0.166/0.013/0.006 at k=8/10/12/14 — a small-k fluctuation of the symmetric top-bit family decaying into the noise floor.\n4. **Low-half cubics decay:** corr(f_3,{1,2,3}) = 0.203->0.013, corr(f_4,{1,3,4}) = 0.145->0.009 across k=8..14 — finite-prime equidistribution effects at the 1/sqrt(#primes) scale (~1e-3 bits), qualifying the zero-block theorem over the prime-restricted support (exact over the full-odd support).\n5. **Controls calibrate:** null (deg<=3) max 0.074/0.0213/0.0065 at k=10/12/14; constants j=0,k-1 trivially 1.0; carry-out j=k-2 reproduces at 0.51 linear/0.79 quadratic.\n\n**Verdict:** CONFIRMED negative with positive content — the factoring function is as far from a low-degree parity approximator as a random function on its support, except for the symmetric size/carry structure N itself reveals. The k=10 j=2 anomaly and low-half cubics are small-k finite-prime fluctuations decaying with k. Barriers 1/2 (no low-degree GF(2) approximator; all N-computable structure symmetric). Closes the Walsh/GF(2) face of the barrier framework.\n\nFull paper: ResearchOutput/NewMathematics/53_EmpiricalDegree_SpectralFlatness.md",
     "domain_bridges": [],
     "domains": [
@@ -622,7 +622,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-12T13:10:07.990772+00:00",
     "title": "EMPIRICAL-DEGREE: the factoring function is spectrally flat — no low-degree parity of N approximates any factor bit; the j=2 anomaly resolves as a symmetric top-bit fluctuation"
   },
@@ -2274,6 +2274,25 @@
     "title": "Deepening: INTERVAL-HINT: the trace-set filter is exact (2^-omega pruning) but does not amp"
   },
   {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 560413ae (Q=0.820), which proved 131 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Proves that logarithmic negativity is a strict entanglement monotone under Local Operations and Classical Communication (LOCC).",
+    "domain_bridges": [],
+    "domains": [
+      "Physics"
+    ],
+    "id": "push_560413ae_6f99ea56",
+    "lineage_refs": [],
+    "priority_score": 0.9199999999999999,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "560413ae",
+    "status": "available",
+    "timestamp": "2026-08-13T17:19:09.572305+00:00",
+    "title": "Deepening: Entanglement-Monotone: Formalization of Logarithmic Negativity Bounds"
+  },
+  {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
     "consumed_by_exp_id": "",
@@ -3166,25 +3185,6 @@
     "status": "available",
     "timestamp": "2026-07-23T20:05:24.351664+00:00",
     "title": "Quantum-Codes: Surface Code Fault-Tolerance Threshold Verification"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Proves that logarithmic negativity is a strict entanglement monotone under Local Operations and Classical Communication (LOCC).",
-    "domain_bridges": [],
-    "domains": [
-      "Physics"
-    ],
-    "id": "dir_50_42_412cc517",
-    "lineage_refs": [],
-    "priority_score": 0.9,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "batch_50_injection",
-    "status": "available",
-    "timestamp": "2026-07-23T20:05:24.403391+00:00",
-    "title": "Entanglement-Monotone: Formalization of Logarithmic Negativity Bounds"
   },
   {
     "ambition_level": "extension",
@@ -19476,7 +19476,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "b7a22960",
+    "consumed_by_exp_id": "",
     "description": "# Future Directions: Multiverse Truth and Forcing Branches\n\n## 1. Internal Boolean-Valued Realization\n\nConstruct a Boolean-valued universe whose generic quotients instantiate the abstract frame, with forcing closure, directedness, and opposite Continuum Hypothesis branches derived rather than assumed. This is falsifiable: the construction must supply one satisfaction relation for which every frame law and both branch conditions hold.\n\nThe key insight is that the abstract theory identifies the exact interface a model construction must satisfy, so Boolean-valued semantics can be developed independently and connected through a small number of preservation theorems.\n\nWhy now? The modal consequences have been separated cleanly from model construction, exposing the precise obligations needed for a semantic realization.\n\n## 2. Exact S4.2 Completeness for Finite Control Frames\n\nProve that every modal formula outside S4.2 fails on a finite pre-Boolean forcing frame assembled from independent buttons and switches, while every S4.2 theorem is valid on all directed preorders. This is falsifiable by either a formula valid on all proposed finite frames but not derivable in S4.2, or a purported S4.2 principle failing on one frame.\n\nThe key insight is that CH branching behaves like a switch, whereas persistent forcing assertions behave like buttons; finite products of these controls should realize the canonical countermodels.\n\nWhy now? Directedness has already been isolated as the semantic source of `.2`, and asymmetric catalog examples separate it from the stronger axiom `5`.\n\n## 3. Multiverse-Invariant Fragment Theorem\n\nCharacterize a syntactic fragment of set theory whose sentences are preserved under both forcing extensions and grounds, and prove that its members are multiverse-true whenever they hold in one universe of a sufficiently connected multiverse. This is falsifiable by a sentence in the proposed fragment that changes truth value along an allowed extension or ground relation.\n\nThe key insight is that invariance requires bidirectional control: extension preservation alone yields necessity above a world, not truth throughout all branches and grounds.\n\nWhy now? The distinction between global multiverse truth and local forcing necessity is explicit, making it possible to state the missing connectivity and preservation conditions without conflation.\n\n## 4. Large-Cardinal Calibration of Branching\n\nFor each selected large-cardinal assertion, determine the weakest preservation hypotheses under which forcing can vary CH while retaining that assertion in both branches. The conjecture is that a uniform preparation principle yields CH and non-CH branches preserving every assertion in a fixed finite hierarchy of indestructible large cardinals. It is falsifiable by a preservation obstruction at a specified level of the hierarchy.\n\nThe key insight is that independent branching should be parameterized by invariants that forcing must preserve, rather than represented by unconstrained propositional switches.\n\nWhy now? The abstract frame supports arbitrary background theories, so preservation can be expressed as background soundness while branch constructions are refined separately.\n\n## 5. Ground–Extension Modal Bimodality\n\nDevelop a bimodal semantics with one modality for forcing extensions and another for grounds, and determine the interaction logic generated by upward directedness, downward directedness, and mantle-like common cores. Conjecturally, neither modality alone determines the mixed validities. This is falsifiable by deriving every mixed validity from the two unimodal theories, or by exhibiting two frames with identical unimodal logics but distinct mixed validities.\n\nThe key insight is that “truth in all universes” ranges across both upward and downward movement, whereas ordinary forcing necessity sees only extensions.\n\nWhy now? The current separation between membership, accessibility, and global truth gives a natural foundation for adding a second relation without changing the satisfaction interface.\n",
     "domain_bridges": [],
     "domains": [
@@ -19489,7 +19489,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "3e9a9a06",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-22T09:46:18.771154+00:00",
     "title": "Construct a Boolean-valued universe whose generic quotients instantiate the abst"
   },
@@ -25287,6 +25287,26 @@
     "status": "available",
     "timestamp": "2026-08-13T15:21:55.482264+00:00",
     "title": "The closed results of this cycle (all proved in `Catalog/Bridges/`):"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nFive falsifiable conjectures distilled from what survived, and what resisted, in this cycle.\nEach is stated so that it can be written down as a Lean 4 theorem on top of the definitions\nalready in `Catalog/Physics/EntanglementMonotone/`.\n\nBackground actually established (all sorry-free): the variational trace norm\n`‖X‖₁ = inf {tr P + tr Q : X = P − Q, P,Q ⪰ 0}` equals `∑ᵢ|λᵢ|`; both the primal infimum and\nthe dual supremum `sup {Re tr(XW) : −1 ⪯ W ⪯ 1}` are attained; `E_N = log‖Γρ‖₁` is monotone\nunder PPT operations (hence under LOCC), strongly monotone under PPT instruments, vanishes\nexactly on PPT states, is additive under tensor products, is bounded by `½ log(d_A d_B)`, and\nattains that bound only at the maximally entangled state.\n\n---\n\n## Conjecture 1 (Exact duality formula for the monotone)\n\n`E_N(ρ) = log (max {Re tr(Γρ · W) : W Hermitian, −1 ⪯ W ⪯ 1})`, and the maximising `W` may\nalways be taken of the form `Γ(entanglement witness)`; consequently `E_N` extends to a\nPPT-monotone functional on the whole real vector space of Hermitian operators, not just\nstates, that is *concave along the PPT boundary*.\n\n**The key insight is** that strong duality — proved here in the form\n`exists_contraction_traceNorm_eq` — turns the monotone from an infimum (hard to bound from\nbelow) into a maximum over a *compact convex* set of certificates, so every lower bound on\nentanglement becomes an explicit finite-dimensional witness, and witness geometry (a convex\ngeometry question) becomes directly available to the trace-norm theory (an operator-algebra\nquestion).\n\n**Why now?** The attainment statement, which is the analytic obstruction, is now formalised;\nwhat remains is convex geometry of the contraction ball, for which Mathlib's convexity and\ncompactness libraries are already adequate.\n\n## Conjecture 2 (Rigidity of the maximiser)\n\nOn `ℂ^d ⊗ ℂ^d`, `E_N(ρ) = log d` **only** for maximally entangled states: if `E_N(ρ) = log d`\nthen `ρ = (U ⊗ V) Φ_d (U ⊗ V)ᴴ` for local unitaries `U, V`.\n\n**The key insight is** that the Cauchy–Schwarz step `∑|λᵢ| ≤ √N √(∑λᵢ²)` used in\n`logNeg_le_log_dim` is an equality only when all `|λᵢ|` coincide, and the purity step\n`tr ρ² ≤ 1` is an equality only for pure states; chaining the two equality cases forces the\npartial transpose to have flat spectrum `±1/d`, which is a rigidity statement about the\nswap operator.\n\n**Why now?** The inequality chain is already formalised as a chain of named lemmas, so the\nconjecture reduces to the equality analysis of two standard inequalities — no new analytic\ninput is required, only the equality conditions.\n\n## Conjecture 3 (Asymptotic distillation and irreversibility)\n\nFor every state `ρ`, and every `n, m` with an *exact* PPT protocol `Λ` mapping `ρ^{⊗n}` to\n`Φ_{2^m}`, one has `m log 2 ≤ n E_N(ρ)`; moreover there exist states (PPT-entangled ones) for\nwhich the entanglement *cost* under PPT operations is strictly positive while this\ndistillation rate is `0`, so the PPT theory of entanglement is irreversible.\n\n**The key insight is** that additivity plus monotonicity already give the single-shot rate\nbound (formalised here for two copies as\n`log_card_le_logNeg_of_exact_two_copy_distillation`), so irreversibility becomes a *separation*\nstatement between two quantities that both sandwich `E_N`, rather than a new asymptotic\nanalysis.\n\n**Why now?** The `n = 2` case is proved; the general `n` case needs only a coherent\nformalisation of iterated tensor regrouping (an `Equiv`-bookkeeping problem), which the\n`regroup`/`tensorBipartite` machinery of this cycle already makes routine.\n\n## Conjecture 4 (Continuity with an explicit modulus)\n\n`|E_N(ρ) − E_N(σ)| ≤ log(1 + d‖ρ − σ‖₁)`, and this modulus is optimal up to a constant; in\nparticular `E_N` is continuous but *not* asymptotically continuous with a dimension-free\nmodulus.\n\n**The key insight is** that `Γ` is an isometry for the Hilbert–Schmidt norm (proved here as\n`trace_ptrans_sq`) but only a `d`-bounded map for the trace norm, and the logarithm converts\nthis multiplicative distortion into an additive modulus; the failure of dimension-free\ncontinuity is therefore traceable to a single norm-equivalence constant.\n\n**Why now?** Both norms and their comparison are already formalised in this development, and\nthe estimate `|log x − log y| ≤ |x − y| / min(x,y)` with `‖Γρ‖₁ ≥ 1` closes the gap with\nMathlib's existing logarithm lemmas.\n\n## Conjecture 5 (Multipartite monogamy)\n\nFor a tripartite state on `ℂ^A ⊗ ℂ^B ⊗ ℂ^C`, the negativities across the three bipartite cuts\nsatisfy a monogamy inequality `N_{A|BC}² ≥ N_{A|B}² + N_{A|C}²`, with equality exactly for\ngeneralised GHZ-type states.\n\n**The key insight is** that the covariance identity `Γ((A⊗B)X(A⊗B)ᴴ) = (A⊗B̄)(ΓX)(A⊗B̄)ᴴ`\nproved here for the bipartite cut applies verbatim to each cut of a multipartite system once\ntensor factors are regrouped, so monogamy becomes a statement about how three different\npartial transposes of the *same* matrix constrain each other — a genuinely combinatorial\nconstraint on a single spectrum.\n\n**Why now?** The regrouping equivalences (`regroup`, `tensorBipartite`) and the spectral\nidentification of the trace norm make each cut computable from a common spectral object, so\nthe conjecture can be tested exhaustively on small dimensions with the exact rational\n`#eval` methodology already used in `ComputationalEvidence.md` before any proof attempt.\n\n---\n\n### Three concrete next-cycle sub-conjectures\n\n1. **(N1)** `‖X ⊗ Y‖₁ = ‖X‖₁‖Y‖₁` extends from Hermitian to arbitrary complex matrices once\n   the trace norm is defined through `√(XᴴX)`; the variational definition used here is the\n   Hermitian shadow of that statement.\n2. **(N2)** The set `{ρ : E_N(ρ) = 0}` is exactly the PPT cone intersected with the state\n   space and is *strictly larger* than the separable set in every dimension `d_A d_B ≥ 6`\n   (existence of bound entanglement).\n3. **(N3)** Selective monotonicity (`logNeg_strong_mono`) is tight: for every `ε > 0` there is\n   a PPT instrument whose average output negativity is within `ε` of the input's, so no\n   strictly-decreasing refinement of the monotone exists on the whole state space.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_1240",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "560413ae",
+    "status": "available",
+    "timestamp": "2026-08-13T17:19:04.106895+00:00",
+    "title": "Five falsifiable conjectures distilled from what survived, and what resisted, in"
   },
   {
     "ambition_level": "extension",

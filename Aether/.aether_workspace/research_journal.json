@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "14cda033",
-      "domain": "Computation",
-      "key_insight": "# Future directions\n\nBold, falsifiable conjectures growing out of the eight research cycles in\n\n* `Catalog/Computation/BerggrenHyperbolicGeodesics.lean` (cycle 1: the metric/arithmetic dictionary),\n*",
-      "quality_score": 0.71918,
-      "sorry_count": 0,
-      "theorem_count": 186,
-      "timestamp": "2026-08-07T11:15:59",
-      "title": "[Your Title]"
-    },
-    {
       "cycle_id": "22e93393",
       "domain": "Combinatorics",
       "key_insight": "# Future directions\n\nThe thread opened with two questions — the finite-key probability formula and\ncrossing-probability monotonicity — both of which are proved in\n`Catalog/Combinatorics/BernoulliThres",
@@ -499,19 +489,19 @@
       "theorem_count": 92,
       "timestamp": "2026-08-13T15:22:02",
       "title": "The Residue-Leakage Curve and the Dirichlet No-Pruning Theorem, Closed"
+    },
+    {
+      "cycle_id": "560413ae",
+      "domain": "Physics",
+      "key_insight": "# Future Directions\n\nFive falsifiable conjectures distilled from what survived, and what resisted, in this cycle.\nEach is stated so that it can be written down as a Lean 4 theorem on top of the defini",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 131,
+      "timestamp": "2026-08-13T17:19:09",
+      "title": "Entanglement-Monotone: Formalization of Logarithmic Negativity Bounds"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "17b35eaf",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\nThe formal results delimit what remains conjectural. In particular,\n`□A → □□◇ₜA` follows from ordinary transitivity (`4`) plus reflexive time, so it does\nnot by itself prove a str",
-      "quality_score": 0.68012,
-      "sorry_count": 1,
-      "theorem_count": 3,
-      "timestamp": "2026-08-02T23:21:00",
-      "title": "Temporal Logic of Proofs: When You Prove Something Matters"
-    },
     {
       "cycle_id": "5c8fc610",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 92,
       "timestamp": "2026-08-13T15:22:02",
       "title": "The Residue-Leakage Curve and the Dirichlet No-Pruning Theorem, Closed"
+    },
+    {
+      "cycle_id": "560413ae",
+      "domain": "Physics",
+      "key_insight": "# Future Directions\n\nFive falsifiable conjectures distilled from what survived, and what resisted, in this cycle.\nEach is stated so that it can be written down as a Lean 4 theorem on top of the defini",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 131,
+      "timestamp": "2026-08-13T17:19:09",
+      "title": "Entanglement-Monotone: Formalization of Logarithmic Negativity Bounds"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "64ac4ffd",
-      "domain": "Pythagorean",
-      "name": "entire_factor_of_two_zeros",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "f566f199",
-      "domain": "Computation",
-      "name": "needs",
-      "quality": 0.84
-    },
-    {
-      "cycle_id": "f566f199",
-      "domain": "Computation",
-      "name": "combState_dft",
-      "quality": 0.84
-    },
     {
       "cycle_id": "a055589e",
       "domain": "Probability",
@@ -2803,9 +2785,27 @@
       "domain": "Bridges",
       "name": "abelian_channel_no_pruning",
       "quality": 0.89
+    },
+    {
+      "cycle_id": "560413ae",
+      "domain": "Physics",
+      "name": "jordanPair_conj_diagonal",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "560413ae",
+      "domain": "Physics",
+      "name": "trace_jordanPair_conj_diagonal",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "560413ae",
+      "domain": "Physics",
+      "name": "re_trace_mul_signOfSpectrum",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-13T15:22:02",
+  "last_updated": "2026-08-13T17:19:09",
   "open_questions": [
     {
       "context": "-    sorry+  have hchecked := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3703,12 +3703,6 @@
     ],
     "Physics": [
       {
-        "cycle_id": "111aa6d2",
-        "quality": 0.69767,
-        "theorems": 8,
-        "title": "The deterministic incidence-capacity obstruction — that any cover of a graph by"
-      },
-      {
         "cycle_id": "06b881ae",
         "quality": 0.78433,
         "theorems": 19,
@@ -3761,6 +3755,12 @@
         "quality": 0.85,
         "theorems": 109,
         "title": "The Derived-Modulus Corner, Closed"
+      },
+      {
+        "cycle_id": "560413ae",
+        "quality": 0.82,
+        "theorems": 131,
+        "title": "Entanglement-Monotone: Formalization of Logarithmic Negativity Bounds"
       }
     ],
     "Probability": [
