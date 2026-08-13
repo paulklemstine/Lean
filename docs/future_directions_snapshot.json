@@ -40,7 +40,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "67cbe98c",
+    "consumed_by_exp_id": "83dd48d5",
     "description": "**Summary.** The conjecture that for E_N: y² = x³ + N with N = pq, the\ndenominators of x(nP) are divisible only by {2, 3, p, q} (the primes dividing\nΔ = -432N²) is mathematically FALSE.\n\n**Counterexample.** N = 55 = 5·11, P = (9,28) ∈ E_55(Q):\n  x(2P) = (9^4 - 8·55·9) / (4(9^3 + 55)) = 2601/3136, and 3136 = 2^6 · 7^2.\nThe prime 7 divides the denominator but 7 ∤ Δ (7 is a prime of good reduction).\n\n**Mechanism.** ℓ | denom(x(nP)) iff nP ≡ O (mod ℓ); good-reduction primes divide\ndenominators whenever the point reduces to torsion — infinitely many such primes.\n\n**Survey (11 semiprimes):** p appears in some denominator 54.5%, q appears 0%,\nonly-{2,3,p,q} holds 0% of the time. The denominator structure is a function of\nN alone (barrier 5) and does not cleanly reveal p, q.\n\n---\n\n*Factoring Lab paper. Status: proven theorem / verified / framework. This is a research deliverable, not a factoring breakthrough claim.*",
     "domain_bridges": [],
     "domains": [
@@ -59,7 +59,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "d8041840",
+    "consumed_by_exp_id": "3ce74e62",
     "description": "**Summary.** Let F(k) = sum_{a=1}^{N} a^k. Then gcd(F(k), N) reveals a factor\nat k = p-1: for N = pq, gcd(F(p-1), N) = q (provided (q-1) does not divide (p-1)).\n\n**Key results (proven):**\n- **Theorem 1 (power-sum factor reveal):** Mod p the residues cover each nonzero\n  residue q times, so F(k) ≡ q·(sum of k-th powers mod p); by FLT this is -q mod p\n  at k=p-1. Mod q it vanishes when (q-1) ∤ (p-1). Hence gcd = q.\n- **Theorem 2 (robustness):** The power sum aggregates ALL bases a=1..N\n  simultaneously, so it cannot suffer Pollard p-1's \"bad base\" failure.\n- **Theorem 3 (Carmichael periodicity):** g(k) = gcd(F(k), N) has period\n  λ(N) = lcm(p-1, q-1), so λ(N) is readable from the period and the factors\n  follow from p+q = N - λ(N) + 1.\n\n**Complexity.** First hit at k* = min(p-1,q-1) ≈ √N; cost per F(k) is O(N);\ntotal O(N^{3/2}) — worse than trial division. This is the SAME structure Shor's\nalgorithm exploits, made classically hard by the period-finding barrier.\nVerified on all 8 test semiprimes up to N ≈ 10^4.\n\n---\n\n*Factoring Lab paper. Status: proven theorem / verified / framework. This is a research deliverable, not a factoring breakthrough claim.*",
     "domain_bridges": [],
     "domains": [
@@ -135,7 +135,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "a1e10693",
+    "consumed_by_exp_id": "",
     "description": "**Paper (factor3):** [ResearchOutput/NewMathematics/15_Round3_Closures.md](https://github.com/paulklemstine/factor3/blob/main/ResearchOutput/NewMathematics/15_Round3_Closures.md)\n\n---\n\n# Round-3 Hypothesis Closures: Five Novel Classical Factoring Hypotheses, Tested and Closed\n\n**Program:** Factoring research lab — round-3 subagent batch synthesis\n**Date:** 2026-08-11\n**Status:** Negative-results synthesis — 5 hypotheses closed; three subagent rounds complete (19 hypotheses)\n\n---\n\n## Abstract\n\nA third brainstorm subagent proposed five hypotheses targeting the least-mined\nterritory: coding theory (Reed-Solomon over Z/N), decision-tree lower bounds for\na divisor-parity primitive, true non-abelian structures (braid groups), the\naverage-case subfamily question, and multi-party game theory. All five were\nimplemented, run, and closed (experiments 303-308). The batch extended the\nfree-witness family to a sixth setting (code distance), confirmed that true\nnon-abelian structure reduces to the multiplicative-order problem, closed the\naverage-case and decision-tree loopholes, and showed the game-theoretic\nrestatement is circular. With all three subagent rounds complete (19 hypotheses),\nthe barrier framework has now survived 308 experiments.\n\n---\n\n## 1. The batch at a glance\n\n| # | Hypothesis | Object | Verdict |\n|---|-----------|--------|---------|\n| 1 | RS-MIND | Reed-Solomon code over Z/N | refuted — code-theoretic free-witness (barrier 4) |\n| 2 | MODPAR-CERT | divisor-count-parity oracle | refuted — decision-tree closure (barriers 6/4) |\n| 3 | BURAU-ORD | reduced Burau image of B_3 mod N | refuted — reduces to order-finding (barrier 6/8) |\n| 4 | DENS-SUB | average-case fast subfamily | refuted — no N-detectable class (barrier 5/8) |\n| 5 | CONG-DIV | divisor congestion game | refuted — equilibrium IS the factorization (barrier 6/4) |\n\n---\n\n## 2. RS-MIND (experiment 303): the sixth free-witness setting\n\nC_k(N) = {(f(0),...,f(N-1)) : f in (Z/N)[x], deg < k} is, by CRT, the product of\nReed-Solomon codes over F_p and F_q. The minimum Hamming weight (min distance)\nis d(C) = N - (k-1)*max(p,q), verified exactly for N = 15, 21, 33 at k = 2, 3\n(with the zero codeword excluded). The minimum distance leaks max(p,q) — a\nfree-witness that is provably NOT N-only. Computing it needs p,q (the formula)\nor >= N^k brute-force weight search (barrier 4). The zero-set spacing confirms\nthe residue-class structure: f = q*h with h mod p having k-1 roots vanishes on\n(k-1) residue classes mod p, each with q lifts.\n\n---\n\n## 3. MODPAR-CERT (experiment 304): decision-tree closure\n\nP(N,a,m) = (# proper divisors d of N with d == a mod m) mod 2. For N=pq the\nparity pattern over a = 0..m-1 encodes where {1,p,q} land mod m; subtracting the\nknown classes {1, N} recovers {p mod m, q mod m} in all NON-COLLISION cases (the\nfailures are exactly the merged-class cases, which are genuinely unresolvable,\ne.g. q == 0 == N mod m). Evaluating P requires the divisors (= factoring, barrier\n6); the special-class density is 2-4/m, so Omega(m) queries are needed (barrier\n4). A decision-tree closure for a new atomic primitive, in the spirit of ADAPT.\n\n---\n\n## 4. BURAU-ORD (experiment 305): true non-abelian structure reduces to order-finding\n\nThe reduced Burau representation of B_3 specialized at t = a (unit mod N) gives\nH_a = <r(s1), r(s2)> <= GL(2, Z/N). Verified: |H_a| SEPARATES the individual\nmultiplicative orders — for N = 21, both a = 2 and a = 5 give\nlcm(ord_3, ord_7) = 6, yet |H_a| = 336 vs 24. So |H_a| depends on (ord_p(a),\nord_q(a)) individually, not just N and the lcm. Computing it is therefore\norder-finding mod N = the Pollard p-1 / Shor core (barrier 6/8). The braid\nrepresentation is a faithful repackaging of the multiplicative-order problem.\nThe genuine non-abelian hook (the p<->q swap is not a braid) does not escape:\nthe order invariant is still CRT-separated and factor-secret.\n\n---\n\n## 5. DENS-SUB (experiment 306): no density-1 poly-detectable fast subfamily\n\nThe average-case question: is there a density-1 family of semiprimes,\nrecognizable from N alone in poly time, factoring below the sqrt(N) floor by a\nnon-smoothness mechanism? Verified (200 semiprimes): rho step counts are\nstatistically equal across all N-only classes — N mod 4 (N==1: 332 vs N==3:\n333), N mod 8 (306-358), (2/N) (312 vs 355). No N-only statistic predicts ease\n(barrier 5). The genuinely fast subfamily (small |p-q| -> Fermat, decile mean 0\nvs 29) is a factor property, not N-computable. The fast families (p-1 smooth,\n|p-q| small) are each measure-zero and known methods in disguise (barrier 8).\nNo density-1 poly-detectable fast subfamily exists.\n\n---\n\n## 6. CONG-DIV (experiment 308): the game equilibrium is the factorization\n\nThe divisor congestion game: players bid d in {2..N-1}, payoff w(d) = N/d if\nd | N else -N. The unique Nash equilibrium: all bid the smallest proper divisor\np (verified for all tested N). The equilibrium IS the factorization — but a\nplayer's best response requires enumerating all N-2 candidate bids to evaluate\npayoffs = trial division (barrier 6 circularity; per-move O(N), barrier 4). The\ngame is a poly-checkable restatement of the problem, not an algorithm; no\nequilibrium shortcut avoids enumerating divisors.\n\n---\n\n## 7. Meta-lessons\n\n1. **The free-witness theme is now dominant.** Six structurally distinct\n   settings produce the same barrier-4 witness: norm-counts (CIRC), group-order\n   counts (KROOT), quadratic-form counts (BQF), group-class counts\n   (HEISENBERG), modular indices (CUSP-INDEX/ZETA-LP), and code distances\n   (RS-MIND). A scalar that IS the factorization, reachable only at O(N) or\n   worse.\n2. **Non-abelian structure does not escape.** BURAU-ORD confirmed that even a\n   genuinely non-abelian action (braids) yields an order invariant that is\n   CRT-separated and factor-secret.\n3. **Game-theoretic and average-case loopholes are closed.** CONG-DIV's\n   equilibrium is the witness (circular); DENS-SUB shows no N-detectable fast\n   subfamily.\n4. **Decision-tree lower bounds extend.** MODPAR-CERT closes the divisor-parity\n   primitive the way ADAPT closed the multiple-of-p primitive.\n5. **The honest frontier.** 308 experiments, three subagent rounds (19\n   hypotheses), a six-setting free-witness family, and one alethean.org idea\n   tested (PYFAC): the barrier framework is intact. No classical poly(log N)\n   factoring algorithm has emerged; the only poly(log N) route remains Shor's.\n\n---\n\n*Related:* `12_Subagent_Batch_Closures.md` (round 1), `14_Round2_Closures.md`\n(round 2), `13_FreeWitness_Family.md`, `Factoring_Lab_Notebook.md` Parts 49-54,\n`00_CONSOLIDATED_BREAKTHROUGH_REPORT.md`.\n",
     "domain_bridges": [],
     "domains": [
@@ -147,7 +147,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-11T22:14:34.147720+00:00",
     "title": "Round-3 Hypothesis Closures: Five Novel Classical Factoring Hypotheses, Tested and Closed"
   },
@@ -610,7 +610,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "299127cc",
     "description": "**GENERIC-RECOVERY (round-14 #11, experiment 390, assessment v166, paper 55).**\n\nHypothesis: recovery of p from a t-bit external hint is bounded by the hint's usable information. Verified on exact k-bit-prime sets (k=14-25) and random semiprimes (k=16-20):\n\n1. **Generic hints information-exact**: t-bit random GF(2) linear form of p's bits partitions P_k into classes |P_k|/2^t EXACTLY (k=16: 1515/759/190/48.6/12.8 vs 1515/757.5/189.4/47.3/11.8 at t=1..8); recovery cost = |P_k|/2^t (median steps = candidates). No anomalous class = no super-resolution.\n2. **Value-hints parity-constrained** (new mini-finding): mod-2^t multiplicative c·p and XOR-mask hashes output only 2^(t-1) values (p odd) — class 378.9 vs 189.4 at k=16,t=4. Bit-vector forms are the only full-2^t generic hints.\n3. **Trace hint sub-bit by recovery cost** (new positive): s mod 2^t pins p mod 2^t to C_t = O(1) roots (median saturating 4-8), but recovery tries all C_t: cost C_t·|P_k|/2^(t-1), measured 399 vs 47.3 (k=16,t=6), 354 vs 42.0 (k=18,t=8) — ~4.5-5x worse per bit; log2(C_t) ~ 3 bits lost to the root ambiguity.\n4. **Only amplification = position**: crossing with pi(sqrt N) at t ~ k/2-3 for every family; the unique amplification is Coppersmith's contiguous top-half >= k/2 LLL (a known method, barrier 8). The Coppersmith condition is about POSITION, not the dial (DIAL-THRESHOLD revisited).\n\n**Verdict**: CONFIRMED, sharpened. Hint taxonomy CLOSED: a t-bit external hint reduces the prime search by exactly 2^t, never more, never position-free; N-checkable hints are sealed at the trace-set floor (INTERVAL-HINT); hints must be genuinely external and worth their bits at face value. Barriers 4/8/2.\n\nScript: /tmp/exp_genericrecovery.py. Paper: ResearchOutput/NewMathematics/55_GenericRecovery_HintTaxonomy.md",
     "domain_bridges": [],
     "domains": [
@@ -622,14 +622,14 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-12T13:54:18.959882+00:00",
     "title": "Exp 390 GENERIC-RECOVERY: recovery-from-hint = 2^(k-1-t_eff) — hint taxonomy closed"
   },
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "fb90b21b",
+    "consumed_by_exp_id": "",
     "description": "## MULT-TABLE-RANK (exp 394, round-15 #3): the mod-N multiplication table has rank ⌊(N+2τ(N)−3)/2⌋ — universal semiprime law rank(pq)=(N+5)/2, a divisor-count certificate only\n\n**Hypothesis tested.** The N×N table M[i][j] = (i·j mod N) has rank defect (N−5)/2 + \"type classifier\" (brainstorm). Does the rank/null structure leak any asymmetric factor content?\n\n**Result: CONFIRMED negative for factoring** (script: `/tmp/exp_multtablerank.py`; verified 79/79 modular rank over two large primes N=2..80 + spot to 495, 19/19 exact sympy rational elimination N=3..39, exact==modular on all overlap).\n\n**1. Exact closed form (machine-verified).** For all N:\n> rank = **⌊(N + 2τ(N) − 3)/2⌋**,  defect = **⌈(N − 2τ(N) + 3)/2⌉**,  τ(N) = divisor count.\n\nThe brainstorm's type classifier: c(N) = defect − (N−5)/2 = **4 − τ(N)** (primes c=2, prime squares c=1, prime cubes & products c≤0).\n\n**2. Universal semiprime law.** τ(pq) = 4 ⟹ **rank(pq) = (N+5)/2, defect = (N−5)/2 for every semiprime** (verified 15,21,35,55,77,91,221,341). The table cannot even distinguish two semiprimes except by size — blind to p vs q, the gap, smoothness, everything.\n\n**3. Barriers: 2/4/6/8.**\n- **Barrier 2 (symmetry):** rank/null space are functions of N alone ⟹ symmetric in (p,q); the information content is the divisor-count class τ(N) at most — a type/compositeness certificate, never p or q.\n- **Barrier 4 (free-witness aggregation):** rank = O(N³) exact/matrix elimination, super-polynomial in log N.\n- **Barrier 6 (circular):** closed form needs τ(N) = the divisor structure = the factorization.\n- **Barrier 8 (known method):** the table (ij mod n) is classical — M. Bueno (Involve) studies its kernel for prime n (prime rank (p+1)/2 known); the τ(N)-composite closed form is machine-verified here.\n\n**Recorded:** notebook Part 140, assessment v170 (394 experiments), paper 59 `59_MultTableRank_DivisorCountCertificate.md` (NewMathematics/).\n",
     "domain_bridges": [],
     "domains": [
@@ -641,7 +641,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-12T15:22:34.667993+00:00",
     "title": "Exp 394 MULT-TABLE-RANK: mod-N multiplication table rank = floor((N+2τ(N)−3)/2), universal semiprime law rank(pq)=(N+5)/2 — divisor-count certificate, never a factor (barriers 2/4/6/8)"
   },
@@ -2291,6 +2291,25 @@
     "status": "available",
     "timestamp": "2026-08-13T18:15:00.040305+00:00",
     "title": "Deepening: EMPIRICAL-DEGREE: the factoring function is spectrally flat — no low-degree pari"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle f3293094 (Q=0.820), which proved 65 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Paper (factor3):** [ResearchOutput/NewMathematics/17_Round4_Closures.md](https://github.com/paulklemstine/factor3/blob/main/ResearchOutput/NewMathematics/17_Round4_Closures.md)\n\n---\n\n# Round-4 Hypothesis Closures: Five Novel Attacks via Exotic Resources, Tested and Closed\n\n**Program:** Factoring r",
+    "domain_bridges": [],
+    "domains": [
+      "Tropical"
+    ],
+    "id": "push_f3293094_ea44d3d9",
+    "lineage_refs": [],
+    "priority_score": 0.9199999999999999,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "f3293094",
+    "status": "available",
+    "timestamp": "2026-08-13T21:10:03.741906+00:00",
+    "title": "Deepening: Round-4 Hypothesis Closures: Five Novel Attacks via Exotic Resources, Tested and"
   },
   {
     "ambition_level": "grand_challenge",
@@ -4857,6 +4876,25 @@
     "status": "available",
     "timestamp": "2026-08-12T16:18:37.975803+00:00",
     "title": "Deepening: Three Structural Barrier Theorems for Integer Factorization"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle ab9891cb (Q=0.780), which proved 57 theorems in Logic. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Summary.** 3SUM mod-p reveals factors, and collision-based factoring methods\nform a hierarchy all hitting the same √N barrier.\n\n**Observation (3SUM mod-p factor reveal).** For N = pq and triples with\na+b+c ≡ 0 (mod p) but ≢ 0 (mod q): gcd(a+b+c, N) = p. Verified: 19 mod-p-only\ntriples vs. 0 mod-bo",
+    "domain_bridges": [],
+    "domains": [
+      "Logic"
+    ],
+    "id": "push_ab9891cb_06bb9eac",
+    "lineage_refs": [],
+    "priority_score": 0.88,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "ab9891cb",
+    "status": "available",
+    "timestamp": "2026-08-13T21:10:17.113889+00:00",
+    "title": "Deepening: The 3SUM-Birthday-Bound Hierarchy"
   },
   {
     "ambition_level": "extension",
@@ -8976,6 +9014,25 @@
     "status": "available",
     "timestamp": "",
     "title": "Moonshot: The Last Theorem — Formalizing the Heat Death of Mathematics"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Cycle ab9891cb (Q=0.780) proved 57 theorems in Logic but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: **Summary.** 3SUM mod-p reveals factors, and collision-based factoring methods\nform a hierarchy all hitting the same √N barrier.\n\n**Observation (3SUM mod-p factor reveal).** For N = pq and triples wit",
+    "domain_bridges": [],
+    "domains": [
+      "Logic"
+    ],
+    "id": "sorry_fill_ab9891cb_d70be22f",
+    "lineage_refs": [],
+    "priority_score": 0.8300000000000001,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "ab9891cb",
+    "status": "available",
+    "timestamp": "2026-08-13T21:10:17.402579+00:00",
+    "title": "Close Proofs: The 3SUM-Birthday-Bound Hierarchy"
   },
   {
     "ambition_level": "extension",
@@ -25327,6 +25384,26 @@
     "status": "available",
     "timestamp": "2026-08-13T18:15:07.067307+00:00",
     "title": "The results of this cycle are in"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — tropical reading of the round-4 closures\n\nDerived from the analysis and adversarial review of the four Lean files in\n`Catalog/Tropical/` (`TropicalTorsionCensus`, `TropicalCensusMulti`,\n`TorsionProfileAmbiguity`, `FactorLocationBarriers`).\n\nWhat the formalisation established, in one sentence: *for a squarefree modulus the\nwhole `KROOT` free-witness family (`d ↦ #{x : x^d = 1 mod N}`) is a tropical\npolynomial whose data is the per-prime multiset of tropical roots, and that data is\ninvariant under shuffling roots between the prime factors — which is exactly why it\ncannot locate a factor.* The conjectures below push on the three places where the\nproofs were tight.\n\n---\n\n## Conjecture 1 (Tropical Sealing Conjecture). Every multiplicative \"spectral\" statistic of `(ℤ/Nℤ)ˣ` is root-shuffling invariant, hence cannot locate.\n\n**Statement.** Let `F` be any function of `N` computable from the isomorphism class of\nthe abelian group `(ℤ/Nℤ)ˣ` alone. Then for squarefree `N = ∏ p`, `F(N)` is invariant\nunder any permutation of the local valuation multisets `{v_ℓ(p-1)}_{p | N}` that\npreserves the multiset at each prime `ℓ`. Consequently there exist, for every\n`B`, two `B`-bit semiprimes with equal `F` and coprime factorisations.\n\n*The key insight is* that `TropicalTorsionCensus.gcd_profile_eq_of_valuations` already\nproves the invariance for the torsion profile, and the torsion profile is a complete\nisomorphism invariant of a finite abelian group; so the conjecture reduces to a purely\ntropical statement about shuffling roots of one-variable min-plus polynomials, with the\nopen part being the *density* claim (existence of shuffled pairs at every bit size,\nwhich needs a Linnik/Bombieri–Vinogradov type input on primes in progressions).\n\n*Why now?* The invariance half is formalised and machine-checked; only the\nprime-density half remains, and it is a statement about primes `p ≡ 1 + 2^a·u`, an area\nwhere effective results exist.\n\n---\n\n## Conjecture 2 (Tropical Corner Barrier). No `poly(log N)`-time algorithm can evaluate the census exponent `k ↦ min(k, v₂(p-1)) + min(k, v₂(q-1))` at any `k ≥ 1` for adversarial semiprimes.\n\n**Statement.** Evaluating `T(k)` for one `k ∈ [1, log N]` is as hard as factoring, in the\nsense that an oracle returning `T(2)` for arbitrary semiprimes yields a probabilistic\npolynomial-time factoring algorithm.\n\n*The key insight is* that `T(2) = 2^{min(2,a)+min(2,b)}` distinguishes `a = 1` from\n`a ≥ 2`, i.e. it reveals `p mod 4`-type information about the *unordered* pair, and\ncombining this with the classical square-root-of-1 factoring reduction (which our\n`energyGroundSet_eq` four-point ground space makes explicit) should upgrade the oracle\ninto a factorisation, showing that the *sealing* result of\n`census_cannot_locate` is tight rather than an artefact.\n\n*Why now?* The exact formula `torsionCensus_eq` is now a theorem, so the reduction can\nbe attempted symbolically rather than experimentally.\n\n---\n\n## Conjecture 3 (Level-0 invisibility is the only obstruction). The census exponent function determines the multiset `{v₂(p-1) : p | N}` completely once the number of prime factors is known.\n\n**Statement.** For squarefree `s, t` with `s.card = t.card`,\n`(∀ k, censusExponentMulti s k = censusExponentMulti t k)` implies the multisets\n`{v₂(p-1) : p ∈ s}` and `{v₂(p-1) : p ∈ t}` are equal, *including* the level-0 part.\n\n*The key insight is* that `census_determines_root_multiplicities` already gives equality\nat every level `≥ 1`; the level-0 multiplicity is then forced by the cardinality\nconstraint, so the conjecture should follow from a counting argument — but our current\nproof does not carry `s.card = t.card`, and making it do so requires a\ntropical-degree statement (`deg` of a min-plus polynomial = number of roots with\nmultiplicity, including roots at `0`).\n\n*Why now?* It is a two-lemma addition on top of the existing multiplicity theorem and\nwould complete the classification of exactly what the free-witness family sees.\n\n---\n\n## Conjecture 4 (Tropical hypersurface form of the factorisation problem). The set of factorisations of `N` is the corner locus of the two-variable tropical polynomial `P(X,Y) = (X ⊙ Y) ⊕ N`, and locating a corner point requires `Ω(√N)` queries in the min-plus query model.\n\n**Statement.** In the min-plus model where a query at `(x, y)` returns\n`min(x + y, log N)` plus the indicator of equality, any deterministic algorithm needs\n`Ω(√N)` queries to output a nontrivial corner point of `P`.\n\n*The key insight is* the straddle theorem `divisor_pair_straddles_corner`: every divisor\npair meets the corner `√N` from both sides, so a query at `(x,y)` only reveals which\nside of the tropical line the point lies on — one bit — while the number of candidate\ncorner points below the corner is `√N` and exactly one is nontrivial\n(`nontrivial_witness_below_corner`).\n\n*Why now?* Both ingredients are proved; what remains is to formalise the query model\nand run an adversary argument, which is a finite combinatorial statement well suited to\nLean.\n\n---\n\n## Conjecture 5 (Zero-entanglement is generic for algebraic witness Hamiltonians). Any energy of the form `E(a,b) = g(ab)` with `g(N) = 0` has a ground space that is a union of `τ(N)` product states, hence entanglement entropy exactly `0` and no descent gradient.\n\n**Statement.** Formalise \"product state\" and \"zero entanglement\" for the divisor-pair\nground space and prove that the ground space of every `ab`-mediated energy is a disjoint\nunion of `τ(N)` rank-one tensors, so no tensor-network ansatz with bond dimension `> 1`\ncan help.\n\n*The key insight is* that `energyGroundSet_eq` shows the ground space is a finite set of\n*points* (not a correlated subspace), and `energy_gap` shows the landscape is a delta:\nthe search cost is therefore the counting `4/N²`, independent of the representation.\n\n*Why now?* The ground-space computation is done; the remaining step is a definition of\nthe Schmidt rank of a finitely supported state, which Mathlib's tensor-product API can\nsupport directly.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Physics"
+    ],
+    "id": "fd_1243",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "f3293094",
+    "status": "available",
+    "timestamp": "2026-08-13T21:09:56.679620+00:00",
+    "title": "Derived from the analysis and adversarial review of the four Lean files in"
   },
   {
     "ambition_level": "extension",
