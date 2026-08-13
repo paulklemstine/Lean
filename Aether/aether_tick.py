@@ -196,262 +196,7 @@ from pi_agent_client import ResearchConcept
 
 REPO_ROOT = Path(__file__).parent.parent
 
-# All known Phase A prompt versions — used for A/B stats printing.
-# Extend this when new variants are added.
-PHASE_A_VERSIONS = ("v19",)
 PACKAGES_DIR = REPO_ROOT / "Packages"
-
-
-def _print_prompt_version_stats(extractor: "KnowledgeExtractor") -> None:
-    """Print prompt version A/B test summary from cycle_analytics.json.
-
-    Shows avg quality, world_class rate, duration, and the winner per version.
-    Also shows Phase A/B split stats.
-    """
-    try:
-        import json as _json
-        analytics_path = extractor.workspace / "cycle_analytics.json"
-        if not analytics_path.exists():
-            return
-        data = _json.loads(analytics_path.read_text())
-        records = data.get("records", [])
-        if not records:
-            return
-        by_ver = {}
-        for r in records:
-            v = r.get("prompt_version", "unknown")
-            by_ver.setdefault(v, []).append(r)
-        lines = ["[A/B] Prompt version stats:"]
-        for v in PHASE_A_VERSIONS:
-            rs = by_ver.get(v, [])
-            if not rs:
-                continue
-            n = len(rs)
-            avg_q = sum(r.get("quality_score", 0) for r in rs) / n
-            avg_qa = sum(r.get("phase_a_quality_score") or r.get("quality_score", 0) for r in rs) / n
-            wc = sum(1 for r in rs if r.get("quality_breakdown", {}).get("grade") == "world_class")
-            durs = [r.get("duration_seconds", 0) / 60 for r in rs if r.get("duration_seconds")]
-            avg_dur = sum(durs) / len(durs) if durs else 0
-            lines.append(f"  {v}: n={n:3d} avg_Q_A={avg_qa:.3f} avg_Q={avg_q:.3f} wc={wc}/{n} ({100*wc/n:.0f}%) avg_dur={avg_dur:.0f}min")
-        # Last 20 only, to keep it fresh
-        recent = [r for r in records[-20:] if r.get("prompt_version") in PHASE_A_VERSIONS]
-        if recent:
-            scores = {}
-            for v in PHASE_A_VERSIONS:
-                vrs = [r for r in recent if r.get("prompt_version") == v]
-                if vrs:
-                    scores[v] = sum(r.get("quality_score", 0) for r in vrs) / len(vrs)
-            if scores:
-                leader = max(scores, key=scores.get)
-                score_str = " ".join(f"{v}={q:.3f}" for v, q in scores.items())
-                lines.append(f"  Last 20: {score_str} -> {leader} leading")
-
-        # Phase B prompt version stats
-        by_pb = {}
-        for r in records:
-            v = r.get("phase_b_prompt_version", "unknown")
-            by_pb.setdefault(v, []).append(r)
-        pb_lines = []
-        for v in ("v1", "v1.1", "v2"):
-            rs = by_pb.get(v, [])
-            if not rs:
-                continue
-            n = len(rs)
-            avg_q = sum(r.get("quality_score", 0) for r in rs) / n
-            pb_lines.append(f"  {v}: n={n:3d} avg_Q={avg_q:.3f}")
-        if pb_lines:
-            lines.append("")
-            lines.append("[A/B] Phase B prompt version stats:")
-            lines.extend(pb_lines)
-
-        # Phase A/B split stats
-        try:
-            from cycle_analytics import CycleAnalytics
-            ca = CycleAnalytics(extractor.workspace)
-            ps = ca.get_phase_split_stats()
-            threshold = extractor._adaptive_phase_b_threshold()
-            lines.append("")
-            lines.append(f"[Phase] Two-phase split (threshold={threshold:.3f}):")
-            lines.append(f"  Total cycles: {ps['n_total']} (packaged={ps['n_complete']}, A_only={ps['n_a_only']}, "
-                         f"packaged_pct={ps['pct_packaged']}%)")
-            lines.append(f"  Avg Q: packaged={ps['avg_q_packaged']}  A_only={ps['avg_q_a_only']}")
-            if ps['skip_reasons']:
-                lines.append(f"  Skip reasons: {ps['skip_reasons']}")
-            lines.append(f"  p70 quality (recent): {ps['p70_quality_recent']}")
-        except Exception as e:
-            lines.append(f"  [Phase] stats error (non-fatal): {e}")
-
-        print("\n".join(lines))
-    except Exception as e:
-        # Non-critical — don't break the tick
-        print(f"[A/B] Stats error (non-fatal): {e}")
-
-
-def _print_quality_metrics(extractor: "KnowledgeExtractor") -> None:
-    """Print rolling quality metrics: sorry%, theorem density, proof depth by version.
-
-    Tracks whether output quality is improving, flat, or regressing.
-    """
-    try:
-        import json as _json
-        analytics_path = extractor.workspace / "cycle_analytics.json"
-        if not analytics_path.exists():
-            return
-        data = _json.loads(analytics_path.read_text())
-        records = data.get("records", [])
-        if not records:
-            return
-
-        # Last 100 records for rolling metrics
-        recent = [r for r in records if not r.get("failed")]
-        if not recent:
-            return
-        recent = recent[-100:]
-        by_ver = {}
-        for r in recent:
-            v = r.get("prompt_version", "unknown")
-            by_ver.setdefault(v, []).append(r)
-
-        lines = ["[Quality] Rolling metrics (last 100 cycles):"]
-        all_vers = list(PHASE_A_VERSIONS)
-        for v in by_ver:
-            if v not in all_vers:
-                all_vers.append(v)
-                
-        for v in all_vers:
-            rs = by_ver.get(v, [])
-            if not rs:
-                continue
-            n = len(rs)
-            # Sorry rate: fraction of cycles with any sorry
-            sorry_cycles = sum(1 for r in rs if r.get("sorry_count", 0) > 0)
-            sorry_rate = sorry_cycles / n * 100 if n else 0
-            # Avg sorry count per cycle
-            avg_sorry = sum(r.get("sorry_count", 0) for r in rs) / n
-            # Avg theorem count per cycle
-            avg_theorems = sum(r.get("theorem_count", 0) for r in rs) / n
-            # Avg quality score
-            avg_q = sum(r.get("quality_score", 0) for r in rs) / n
-            avg_qa = sum(r.get("phase_a_quality_score") or r.get("quality_score", 0) for r in rs) / n
-            # Theorem novelty: new vs strengthening vs duplicate vs disproof
-            total_new = sum(r.get("theorem_novelty_new", 0) for r in rs)
-            total_strength = sum(r.get("theorem_novelty_strengthening", 0) for r in rs)
-            total_dup = sum(r.get("theorem_novelty_duplicate", 0) for r in rs)
-            total_disproof = sum(r.get("theorem_novelty_disproof", 0) for r in rs)
-            lines.append(f"  {v}: n={n} avg_Q_A={avg_qa:.3f} avg_Q={avg_q:.3f} sorry_rate={sorry_rate:.0f}% "
-                         f"avg_sorry={avg_sorry:.1f} avg_theorems={avg_theorems:.0f} "
-                         f"novelty=[new={total_new} +{total_strength} dup={total_dup} ¬={total_disproof}]")
-
-        # Trend: compare halves of recent
-        if len(recent) >= 20:
-            first_half = recent[:len(recent)//2]
-            second_half = recent[len(recent)//2:]
-            q1 = sum(r.get("quality_score", 0) for r in first_half) / len(first_half)
-            q2 = sum(r.get("quality_score", 0) for r in second_half) / len(second_half)
-            qa1 = sum(r.get("phase_a_quality_score") or r.get("quality_score", 0) for r in first_half) / len(first_half)
-            qa2 = sum(r.get("phase_a_quality_score") or r.get("quality_score", 0) for r in second_half) / len(second_half)
-            trend = "improving" if q2 > q1 + 0.01 else "declining" if q2 < q1 - 0.01 else "flat"
-            lines.append(f"  Trend: {trend} (Q_A: {qa1:.3f} → {qa2:.3f}, Q: {q1:.3f} → {q2:.3f})")
-
-        print("\n".join(lines))
-    except Exception as e:
-        print(f"[Quality] Metrics error (non-fatal): {e}")
-
-
-def _print_tick_report(extractor: "KnowledgeExtractor", completed_jobs, remaining: int, queued_remaining: int) -> None:
-    """Consolidated end-of-tick telemetry + diagnostics report.
-
-    Gathers every stat block (state, LLM accounting, A/B version stats, Phase
-    split, rolling quality, package/lineage counts) into ONE section so the
-    tick log ends with a single scannable summary.
-    """
-    import json as _json
-    from collections import Counter
-    print("\n" + "=" * 72)
-    print("AETHER TICK REPORT")
-    print("=" * 72)
-
-    # --- State ---
-    try:
-        from research_memory import FutureDirectionsManager as _FD
-        _if = Counter(j.status for j in extractor.inflight.values())
-        _fd = _FD(extractor.workspace)
-        _dir = Counter(d.status for d in _fd._directions)
-        _active = sum(1 for j in extractor.inflight.values()
-                      if j.status in ("preparing", "dispatched", "retry_queued"))
-        print(f"[State]   inflight={dict(_if)} | directions={dict(_dir)} "
-              f"| active_jobs={_active} in_progress={_dir.get('in_progress', 0)}")
-    except Exception as _e:
-        print(f"[State]   state check failed: {_e}")
-
-    # --- LLM accounting ---
-    try:
-        _s = getattr(getattr(extractor, "pi_agent", None), "llm_stats", None)
-        if _s:
-            _c = _s["calls"]
-            _sk = _s["skipped"]
-            _skt = sum(_sk.values())
-            print(f"[LLM]     calls={_c['total']} "
-                  f"(eval={_c.get('eval', 0)} breakthrough={_c.get('breakthrough', 0)} "
-                  f"critic={_c.get('critic', 0)}+{_c.get('critic_tiebreak', 0)}tie "
-                  f"lint={_c.get('lint', 0)} pruning={_c.get('pruning', 0)} "
-                  f"other={_c.get('other', 0)}) | skipped={_skt} "
-                  f"(eval={_sk.get('eval', 0)} critic={_sk.get('critic', 0)} "
-                  f"lint={_sk.get('lint', 0)} pruning={_sk.get('pruning', 0)})")
-    except Exception as _e:
-        print(f"[LLM]     stats failed: {_e}")
-
-    # --- Integration summary ---
-    print(f"[Done]    {len(completed_jobs)} integrated, {remaining} still inflight, "
-          f"{queued_remaining} retry-queued")
-
-    # --- A/B + Phase split + Rolling quality (existing sub-reports) ---
-    _print_prompt_version_stats(extractor)
-    _print_quality_metrics(extractor)
-
-    # --- Packages + lineage (knowledge graph) ---
-    try:
-        import glob as _g
-        _skip_stems = {"index", "package", "lineage", "future_directions",
-                       "future_directions_snapshot", "catalog_tree", "statement"}
-        _pkgs = [f for f in _g.glob(str(PACKAGES_DIR / "*.json"))
-                 if Path(f).stem not in _skip_stems]
-        _lf = PACKAGES_DIR / "lineage.json"
-        _ln = _le = _lb = 0
-        if _lf.exists():
-            _ld = _json.loads(_lf.read_text())
-            _ln = len(_ld.get("nodes", []))
-            _le = len(_ld.get("edges", []))
-            _lb = len(_ld.get("domain_bridges", []))
-        _mismatch = "" if _ln == len(_pkgs) else f" (⚠ lineage stale: {len(_pkgs) - _ln} unindexed)"
-        print(f"[Packages] index={len(_pkgs)} | lineage={_ln} nodes, {_le} edges, "
-              f"{_lb} bridges{_mismatch}")
-    except Exception as _e:
-        print(f"[Packages] report failed: {_e}")
-
-    # --- Bandit state (Thompson sampling) ---
-    try:
-        _bs_path = extractor.workspace / "prompt_bandit_state.json"
-        if _bs_path.exists():
-            _bs = json.loads(_bs_path.read_text())
-            if _bs:
-                _sorted = sorted(_bs.items(), key=lambda x: x[1].get("alpha",1)/(x[1].get("alpha",1)+x[1].get("beta",1)), reverse=True)
-                print("[Bandit]   Thompson sampling posterior (sorted by mean):")
-                for _arm, _st in _sorted[:5]:
-                    _a = _st.get("alpha", 1.0)
-                    _b = _st.get("beta", 1.0)
-                    _mean = _a / (_a + _b) if (_a + _b) > 0 else 0
-                    _n = _st.get("n", 0) if isinstance(_st.get("n"), (int, float)) else _st.get("count", 0)
-                    _q = _st.get("avg_Q", _st.get("avg_quality", 0.0))
-                    print(f"[Bandit]   {_arm:6s}: \u03b1={_a:.1f} \u03b2={_b:.1f} mean={_mean:.3f} n={_n} avg_Q={_q:.3f}")
-                if _sorted:
-                    _leader = _sorted[0][0]
-                    _lm = _sorted[0][1].get("alpha",1) / (_sorted[0][1].get("alpha",1) + _sorted[0][1].get("beta",1))
-                    print(f"[Bandit]   -> leader: {_leader} (posterior mean {_lm:.3f})")
-    except Exception:
-        pass
-
-    print("=" * 72)
 
 
 def _signal_dashboard_update(job_id: str = "", action: str = "update") -> None:
@@ -611,6 +356,36 @@ async def _safe_get_active_jobs_count(aristotle_client) -> int:
         return -1
 
 
+def _print_running_jobs(extractor: "KnowledgeExtractor") -> None:
+    """List currently-running (active or queued) jobs with their research phase.
+
+    Phase indicates whether the job is producing Phase A math (A) or a Phase B
+    research package (B). Shown at the top of each tick so the operator can see
+    what's in flight at a glance.
+    """
+    _RUNNING_STATUSES = ("preparing", "dispatched", "B_dispatched",
+                         "retry_queued", "dispatch_queued", "queued")
+    running = [j for j in extractor.inflight.values()
+               if getattr(j, "status", "") in _RUNNING_STATUSES]
+    if not running:
+        print("[Tick]   (no running jobs)")
+        return
+    # Phase B jobs first, then active, then queued, oldest-first
+    running.sort(key=lambda j: (
+        0 if getattr(j, "phase", "A") in ("B", "B_dispatched") else 1,
+        0 if getattr(j, "status", "") in ("preparing", "dispatched") else 1,
+        getattr(j, "dispatch_time", 0.0) or getattr(j, "retry_queued_time", 0.0) or 0.0,
+    ))
+    for j in running:
+        phase = getattr(j, "phase", "A")
+        badge = "B" if phase in ("B", "B_dispatched") else "A"
+        title = ""
+        if getattr(j, "concept", None) is not None:
+            title = getattr(j.concept, "title", "") or ""
+        print(f"[Tick]   [{badge}] {getattr(j, 'job_id', '?')[:8]:>8} "
+              f"{getattr(j, 'status', '?'):<15} {title[:64]}")
+
+
 async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_slots: int = 0) -> None:
     """Run one tick inside a single event loop.
 
@@ -633,7 +408,10 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
         if getattr(j, "status", None) in ("dispatch_queued", "retry_queued", "queued")
     ])
 
-    print(f"[Tick] Job memory: {len(extractor.inflight)} total jobs tracked ({effective_count} active on Aristotle server, {queued_count} queued locally)")
+    print(f"[Tick] Job memory: {len(extractor.inflight)} total jobs tracked "
+          f"({effective_count} active on Aristotle server, {queued_count} queued locally)")
+    print("[Tick] Running jobs:")
+    _print_running_jobs(extractor)
 
     if effective_count > max_inflight:
         print(f"[Guard] WARNING: {effective_count} active jobs detected (local={local_count_at_start}, "
@@ -1623,11 +1401,10 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
     except Exception as _e:
         print(f"[Tick] in_progress reconcile failed: {_e}")
 
-    # Consolidated end-of-tick report (state, LLM, A/B, phase split, quality,
-    # packages/lineage). Replaces the previously-scattered stat blocks.
+    # End-of-tick summary (the detailed stats report was removed 2026-08-12 —
+    # not used anymore; running jobs + phase are shown at tick start instead).
     remaining = extractor._count_inflight_dispatched()
-    queued_remaining = len([j for j in extractor.inflight.values() if j.status == "retry_queued"])
-    _print_tick_report(extractor, completed_jobs, remaining, queued_remaining)
+    print(f"[Done]    {len(completed_jobs)} integrated, {remaining} still inflight")
 
 
 def _merge_direction_objects(d_ours: dict, d_theirs: dict) -> dict:

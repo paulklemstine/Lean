@@ -380,8 +380,9 @@ class PiAgentClient:
         """Record an LLM call avoided by a static gate or cache (Phase 0).
 
         category is one of "eval"/"critic"/"lint"/"pruning" — the call that
-        would have happened. Incremented alongside llm_stats["calls"] so the
-        tick-end [LLM] line shows both actual calls and avoided calls.
+        would have happened. Incremented alongside llm_stats["calls"]; the
+        tallies are still tracked per-tick even though they are no longer
+        printed in the tick output.
         """
         try:
             self.llm_stats["skipped"][category] = self.llm_stats["skipped"].get(category, 0) + 1

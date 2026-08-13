@@ -187,10 +187,10 @@ research throughput/quality. Config-gated under `llm_reduction`.
 ### Per-tick accounting (Phase 0)
 `pi_agent.llm_stats` counts every `_call_ollama` dispatch by category
 (`eval`/`breakthrough`/`critic`/`critic_tiebreak`/`lint`/`pruning`/`other`) plus
-calls avoided by gates/caches (`skipped`). Reset each tick; printed at tick end
-as a `[LLM] calls=... | skipped=...` line next to `[State]`. Use it to verify
-call reduction against quality drift (quality_score distribution is in the
-existing `[Quality]` rolling metrics).
+calls avoided by gates/caches (`skipped`). Reset each tick. The tallies are
+tracked per-tick for inspection/debugging but are no longer printed at tick end
+(the end-of-tick `[LLM]`/`[State]`/`[Quality]` stats report was removed
+2026-08-12; running jobs + phase are shown at tick start instead).
 
 ### Levers (v1.0 final state)
 - **Static quality gate (Phase 1)** — **REMOVED for v1.0.** The count-based
