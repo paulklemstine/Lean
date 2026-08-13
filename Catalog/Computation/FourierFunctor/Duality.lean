@@ -1,4 +1,4 @@
-import Computation.FourierFunctor.Category
+import Catalog.Computation.FourierFunctor.Category
 
 /-!
 # Pontryagin duality as an equivalence of categories

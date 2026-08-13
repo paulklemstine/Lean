@@ -1,4 +1,4 @@
-import Computation.FourierFunctor.Uncertainty
+import Catalog.Computation.FourierFunctor.Uncertainty
 
 /-!
 # The uncertainty principle is a property of the kernel, not of the Fourier transform

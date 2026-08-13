@@ -1,4 +1,4 @@
-import Computation.FourierFunctor.Poisson
+import Catalog.Computation.FourierFunctor.Poisson
 
 /-!
 # The equality case of the uncertainty principle
