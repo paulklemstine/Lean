@@ -1,15 +1,15 @@
-import Computation.FourierFunctor.Category
-import Computation.FourierFunctor.Duality
-import Computation.FourierFunctor.Transform
-import Computation.FourierFunctor.Uncertainty
-import Computation.FourierFunctor.Convolution
-import Computation.FourierFunctor.Exactness
-import Computation.FourierFunctor.Poisson
-import Computation.FourierFunctor.Sharpness
-import Computation.FourierFunctor.Rigidity
-import Computation.FourierFunctor.GaussSum
-import Computation.FourierFunctor.AbstractUncertainty
-import Computation.FourierFunctor.SelfDuality
+import Catalog.Computation.FourierFunctor.Category
+import Catalog.Computation.FourierFunctor.Duality
+import Catalog.Computation.FourierFunctor.Transform
+import Catalog.Computation.FourierFunctor.Uncertainty
+import Catalog.Computation.FourierFunctor.Convolution
+import Catalog.Computation.FourierFunctor.Exactness
+import Catalog.Computation.FourierFunctor.Poisson
+import Catalog.Computation.FourierFunctor.Sharpness
+import Catalog.Computation.FourierFunctor.Rigidity
+import Catalog.Computation.FourierFunctor.GaussSum
+import Catalog.Computation.FourierFunctor.AbstractUncertainty
+import Catalog.Computation.FourierFunctor.SelfDuality
 
 /-!
 # Fourier analysis as a functor

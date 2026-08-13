@@ -318,21 +318,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Round-9 Hypothesis Closures: The Completeness of the Trace Lemma"
   },
   {
-    "consumed_by_exp_id": "579ae41a",
-    "description": "**Paper:** `ResearchOutput/NewMathematics/37_OrderJacobi_JointLaw.md` (factor3)\n**Experiment:** CONDORDER (#372), assessment v148.\n\n## Finding\nThe order \u00d7 residue joint-quadrant of the combination grid (SCALECASCADE =\nresidue+order; SPECTRUNC = order+spectral; this = the JOINT LAW of ord_N(b) |\n(b/N)). The QR-order coupling (b/p)=1 \u27fa ord_p(b) | (p\u22121)/2 is EXACT (7000/7000\nverified) and the conditional bias is real (E[ord|J=+1]/E[ord|J=\u22121] \u2208 0.68\u20131.01).\n\n**Verified (14 primes, 30 near-equal-N semiprimes ~5\u00d710\u2076, 1500 samples each):**\n1. Coupling exact \u2014 a unit is a QR iff its order lies in the half-group.\n2. Conditional bias real \u2014 both-QR case forces both orders into half-groups.\n3. **BUT the law is N-determined:** corr of E[ord|J=\u00b11] and ratio with\n   p, q, p+q, |p\u2212q| all inside the permutation null (obs \u2264 0.31, 95th \u2248 0.34\u20130.41).\n4. Only structure = (p mod 4, q mod 4)-type residue dial = function of N mod 4.\n5. Computing the law requires ord_p, ord_q = the factors (barrier 6).\n\n## Why it collapses (barrier 5 + 6 + 8)\nThe joint law is a residue dial (barrier 5), circular to compute (barrier 6),\nand its bias mechanism is the p\u22121/q\u22121 order structure (barrier 8). Order \u00d7\nresidue joint law adds nothing beyond N mod 4.\n\n## Verdict\nREFUTED. Combination grid now closed in the tested quadrants (SPECTRES,\nresidue+spectral, remains but predicted to collapse the same way). Classical\nuniform hint-free surface remains exhausted.\n\n\ud83e\udd16 Generated with [Claude Code](https://claude.com/claude-code)",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1131",
-    "phase": "B",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-12T04:00:21.971556+00:00",
-    "title": "The Order x Jacobi Joint Law is N-Determined, Closed"
-  },
-  {
     "consumed_by_exp_id": "677413db",
     "description": "**Paper:** `ResearchOutput/NewMathematics/35_ClassGroup_ResidueDial.md` (factor3)\n**Experiment:** RANDOM-BQF (#370), assessment v146.\n\n## Finding\nThe round-13 brainstorm's most-plausible-positive path: attach an extrinsic\ndiscriminant D, compute Cl(D) (poly|D|, no factoring), measure the representation\nvector r_Q(N) = #{(x,y): Q(x,y)=N} over all reduced forms. Hypothesis: individual\ncounts depend on (D/p), (D/q) separately, so the vector might separate\nfactorization class-types beyond N mod |D|.\n\n**Verified (D=\u221220, h=2; D=\u221284, h=4; 2400 + 5626 semiprimes):**\n1. Class-splitting theory exact: p\u22611,9 mod 20 \u2192 x\u00b2+5y\u00b2 (r=4); p\u22613,7 \u2192 2x\u00b2+2xy+3y\u00b2\n   (r=4); p\u226111,13,17,19 \u2192 inert.\n2. **The vector is a PURE RESIDUE DIAL:** exactly constant per N mod |D| \u2014 (8,0)\n   for N\u22611,9; (0,8) for N\u22613,7 (D=\u221220); constant per N mod 84 conditioned on\n   (D/N)=1 (D=\u221284).\n3. **PP vs NN factorization types at the same N mod 20 give IDENTICAL vectors** \u2014\n   the class of N=pq in Cl(D) is N-determined (Cl\u2245Z/2 makes PP and NN both\n   principal).\n\n## Why it collapses (barrier 5 + 8)\nThe vector is a function of N's residue structure (N mod |D|, (D/N) via\nquadratic reciprocity) \u2014 factor-blind at the individual (D/p), (D/q) level.\nIt is the BQF-family repackaged (\"each D is a residue dial\"). Extrinsic\nalgebraic structure gives no asymmetric handle on N.\n\n## Verdict\nREFUTED. Closes the extrinsic-discriminant corner of the free-witness taxonomy.\nClassical uniform hint-free surface remains exhausted; frontiers: barrier-4\nproof, quantum channel, hint amplification.\n\n\ud83e\udd16 Generated with [Claude Code](https://claude.com/claude-code)",
     "domains": [
@@ -918,30 +903,32 @@ window.FUTURE_DIRECTIONS = [
     "title": "A4-FORK-PINNING: first cubic-pinned non-abelian fork (A4 V4-order, I = H(1/3) exact) \u2014 paper 75, exp 410, v186"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c94236ec",
     "description": "## SPLIT-COUNT-LAW (round-20 #2, experiment 409, assessment v185, paper 74)\n\n**The complete symmetric fork channel is the split-count, and it beats the OR cap.** Papers 71\u201373 characterized the OR projection of a character-pinned fork: the semiprime OR collapse I(N mod f; [split(p) OR split(q)]) = g(n), with the global cap g(2) = 0.3113 over every class-rate profile (paper 73). The full question is: what does a fork carry at all? Since \u03c7(p), \u03c7(q) are independent uniform over the n character values, the ordered pair of split-events (E(p), E(q)) is two independent Bernoulli(1/n) draws, and the entire symmetric information of a fork at the semiprime level is carried by the **split-count**\n\n**s = [split(p)] + [split(q)] \u2208 {0,1,2} ~ Binomial(2, 1/n)**\n\nwith the exact order-universal channel\n\n**I(N mod f; s) = Is(n) = H(Bin(2,1/n)) \u2212 (1/n)H((n\u22121)/n, 0, 1/n) \u2212 ((n\u22121)/n)H((n\u22122)/n, 2/n, 0),**\n\nP(s | \u03c7(N)=1) = {(n\u22121)/n, 0, 1/n} and P(s | \u03c7(N)\u22601) = {(n\u22122)/n, 2/n, 0}. Every Boolean projection (OR/AND/XOR) is a function of s, so Is(n) dominates them all \u2014 **and paper 73's OR cap is a PROJECTION artifact: the full channel reaches Is(2) = 1.0000 bits (the p\u22121 \u2113=3 story's complete content, vs its celebrated 0.313 OR projection) and Is(3) = 0.4739 bits \u2014 the largest nondeterministic residue channel in the lab.**\n\n### Machine-verified (8 fields, MC + exhaustive enumeration)\n\nPart A \u2014 all four channels match the closed forms on 8 fields (2^22, 30k semiprimes): f=5/f=3 n=2 Is = **1.0000** exact (OR 0.3076/0.3131 = g(2); XOR 1.0000 = deterministic); f=7/f=9/f=21 n=3 Is = 0.4731/0.4718/0.4755 vs 0.4739; f=16 n=4: 0.2894 vs 0.2947; f=11 n=5: 0.2060 vs 0.2027; f=7 n=6: 0.1482 vs 0.1487. s-dist matches Bin(2,1/n) everywhere; which-factor wall 0.0000\u20130.0003.\n\nPart B \u2014 exact tables n=2..12, with the **honest hierarchy correction**: the naive Is \u2265 X \u2265 A \u2265 g FAILS from n=8 (X(8)=0.0480 < A(8)=0.0482). The correct universals: Is \u2265 each projection at every order (data processing), A \u2265 g at every order (AND beats OR for all n), X \u2265 A \u27fa n \u2264 7.\n\nPart C \u2014 EXACT enumeration of all 0/1 profiles on nine moduli (incl. non-cyclic C\u2082\u00d7C\u2082/C\u2082\u00d7C\u2084/C\u2082\u00d7C\u2086): **max Is = max I_XOR = 1.0000 bits on every modulus, achieved EXCLUSIVELY by the quadratic-character kernels** \u2014 the full symmetric fork channel is capped at 1.0 bit over every profile, the 0.3113 OR cap being its OR projection's cap.\n\nPart D \u2014 controls clean (coprime flat 0.0001\u20130.0003; m=f\u00b2 invariant at Is(n)). Unification f=3 n=2: I(N mod 3; s) = 1.0000 with P(s|N\u22611) = [1/2,0,1/2], P(s|N\u22612) = [0,1,0] EXACT \u2014 **paper 54's p\u22121 \u2113=3 channel is a 1-bit split-count channel whose 0.313 OR is one projection.**\n\n### Verdict\n\nCONFIRMED exact law. The split-count is the complete N-level information content of any character-pinned fork: Is(n) \u2265 every Boolean face, Is(2) = 1.0, Is(3) = 0.4739 (largest nondeterministic residue channel in the lab), capped at 1.0 bit at the quadratic characters. Still symmetric (barrier 2), a residue dial (barrier 5), sealed behind the CRT (barrier 6), all classical reciprocity (barrier 8) \u2014 factor-useless. Unifies papers 54, 71\u201373. Barriers 2/5/6/8. Round-20 2/2 done.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_1179",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-12T19:27:59.013616+00:00",
     "title": "SPLIT-COUNT-LAW: the complete symmetric fork channel is the split-count s ~ Bin(2,1/n), I(N mod f; s) = Is(n) \u2014 beats the OR cap (Is(2)=1.0, Is(3)=0.474), still factor-useless"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ee08574a",
     "description": "## OR-DIAL-MAXIMUM (round-20 #1, experiment 408, assessment v184, paper 73)\n\n**A global cap on the semiprime OR dial.** Papers 69\u201372 measured specific OR channels (S\u2083 identity-rate \u2248 0.12; order-n character events exactly g(n) \u2264 0.3113). Here is the variational principle: for ANY class-rate profile r: (Z/m)^\u00d7 \u2192 [0,1] (r(c) = P(fork event | p \u2261 c mod m)), the semiprime OR channel obeys\n\n**max_r I(N mod m; [E(p) OR E(q)]) = g(2) = H(3/4) \u2212 \u00bdH(1/2) = 0.3113 bits, attained exactly by the quadratic-character kernel profiles (r = 1 on an index-2 subgroup of the units, 0 elsewhere) and their complement/AND transforms.**\n\n### Machine-verified by EXACT enumeration (no sampling)\n\nThe counting identity over unit pairs ab \u2261 N mod m gives P(OR|N\u2261c) = 1 \u2212 (1/\u03c6)\u03a3_a (1\u2212r(a))(1\u2212r(ca\u207b\u00b9)). Enumerating ALL 2^\u03c6 0/1 profiles on nine moduli (m = 3,4,5,7,8,9,11,16,21 \u2014 prime/composite conductors, cyclic and non-cyclic unit groups C\u2082\u00d7C\u2082, C\u2082\u00d7C\u2084, C\u2082\u00d7C\u2086):\n\n| m | unit group | global max I | argmax |\n|---|---|---|---|\n| 3, 4, 5, 7 | C\u2082/C\u2084/C\u2086 | 0.3113 = g(2) on every modulus | QR kernel + complement |\n| 8 | C\u2082\u00d7C\u2082 | 0.3113 | three quadratic chars of conductor 8 |\n| 9, 11 | C\u2086/C\u2081\u2080 | 0.3113 | QR kernel + complement |\n| 16, 21 | C\u2082\u00d7C\u2084/C\u2082\u00d7C\u2086 | 0.3113 | three index-2 kernels each |\n\nNo 0/1 profile on any modulus exceeds the cap. Every subgroup-kernel profile re-derives paper 72's law EXACTLY (30 subgroups, I = g(index) to 10\u207b\u2079). Continuous coordinate ascent over [0,1]^\u03c6 (m=7,11,16) never exceeds g(2).\n\n### Realizable forks: quadratic kernels hit the cap, everything else is below\n\nQ(\u221a5) m=5, Q(i) m=4, Q(\u221a\u221211) m=11, (8|p) m=8 (non-cyclic units) \u2014 **all I = 0.3113 = g(2)**, P(OR)=3/4. Cyclic cubic m=7: g(3)=0.0728. Q(\u03b6\u2085): g(4)=0.0359. S\u2083 cubic x\u00b3+x+1 mod 31 variable profile (per-QR-class identity rates 0.287\u20130.349, 1.0 on non-QR): \u03a6 = 0.1230, direct MC 0.1284, which-factor wall 0.0024.\n\n### Structure\n\n- Complement of a character event: **identical \u03a6** (0.3113 on m=5,8,11).\n- AND event: exact companion law \u03a6_AND(n) = H(1/n\u00b2) \u2212 (1/n)H(1/n), verified (n=2: 0.3113 = g(2); n=3: 0.1972 > g(3); n=4: 0.1345 > g(4)); capped at g(2).\n- XOR of a quadratic kernel = DETERMINISTIC function of N (\u03c7(N)=\u22121): I = 1.0000 bit exactly, N-computable, factor-useless \u2014 the sharpest proof that raw MI is not factor information.\n\n### Unification & factor-uselessness\n\nPaper 54's p\u22121 \u2113=3 OR (0.313) IS the cap (g(2), f=3); papers 69\u201370's S\u2083 profile (0.12) is a variable profile below the cap; paper 72's order-n events are the subgroup kernels, of which the index-2 are the global maximizers. Symmetric (barrier 2), residue dial (barrier 5), sealed behind the CRT (barrier 6), all classical reciprocity (barrier 8). The OR/residue-dial line is now closed by a single global maximum.\n\n**Verdict:** variational principle CONFIRMED (machine-verified). Round-20 1/1 done. Barriers 2/5/6/8.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_1180",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-12T19:27:59.013980+00:00",
     "title": "OR-DIAL-MAXIMUM: the semiprime OR dial has a global cap g(2)=0.3113 bits over every class-rate profile (paper 73, round-20 #1)"
   },
@@ -1003,45 +990,45 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "**Round-net-2 (network lab, depth axis).** Paper: `ResearchOutput/NetworkMathematics/2_ResidualStream_TwoPhaseLaw.md`. Notebook Part 2, assessment v2, network exp 2.\n\n## LAW-A \u2014 the fixed-budget depth law is FLAT on attention-solvable tasks\nAt fixed total budget B \u2208 {100k, 400k} \u00d7 depths d \u2208 {1,2,4,8} \u00d7 2 seeds (order-4 = 1296-state automaton, exact parameter match \u00b12%): **every config reaches held-out test \u2265 0.98 at the first 100-step checkpoint and ends at test = 1.0000** \u2014 the narrowest deepest (dm=32, 8 layers) ties the widest shallow (dm=180, 1 layer). The single-peaked depth hypothesis is REFUTED: one full-attention layer already reads the whole context, so at fixed budget depth is pure parameter overhead on attention-solvable tasks. Corollary: depth can only pay where tasks need sequential composition beyond one-hop attention.\n\n## LAW-B \u2014 the residual-stream two-phase norm law (dm=40, order-3, all test=1.0000)\n1. **Two phases:** \u2016x_l\u2016 is stationary for the first \u2248d/2 layers (d=16: 8.3\u21927.9 over layers 0\u20136), then grows monotonically with *increasing* per-layer ratio in the second half (d=16: 1.06\u21921.20 across layers 8\u201315); crossover at l\u2248d/2 in every seed.\n2. **Bounded, depth-independent total inflation:** end/start = 2.2\u20133.3\u00d7 across d=4\u202616 \u2014 extra depth is absorbed as a longer plateau, not more growth (\u2016x_l\u2016\u2248A\u00b7l^a, a\u22480.3\u20130.4, sub-exponential; the \"exponential residual growth\" intuition is wrong on this class).\n3. **Logit-scale invariance:** final logits 7.8\u00b10.1 across d=4\u202616 \u2014 the final LayerNorm strips Phase-II growth; the readout is numerically depth-safe.\n4. **Update orthogonality:** cos(x_{l-1}, dx_l)\u22480, Phase-I slightly anti-aligned (holds norm), Phase-II aligned (drives growth); accumulation ratio \u2016x_end\u2016\u00b2/\u03a3\u2016dx\u2016\u00b2 grows 1.27\u21922.59 with depth.\n\n**Barriers:** (a) clean \u2014 nothing injected; (b) partial \u2014 mech-interp residual-stream picture known, the two-phase/crossover-d/2/depth-independent-inflation objects are new (Catalog scan of 2067 packages found no prior work); (c) toy-scale, real-scale next; (d) clean held-out; (e) 2 seeds Part A / 3 seeds Part B; (f) 100-step speed resolution + batch-mean norms documented; (g) exact parameter match; (h) negative LAW-A + norm-budget diagnostic.\n\n**Next:** a task that genuinely needs composition (digit addition with carries / recursion) to test whether the depth law becomes single-peaked; real-scale (small BERT) check of LAW-B.\n\nScripts: /tmp/exp_net_depth.py, /tmp/exp_net_depth_b.py, /tmp/exp_net_depth_c.py.",
+    "description": "**Round:** round-net-7 \u00b7 **Speed axis, round 2** \u2014 the load-bearing-depth test of NET-6.\n**Paper:** ResearchOutput/NetworkMathematics/7_ExitLaw_UnderLoad_Dyck.md \u00b7 **Script:** /tmp/exp_net_speed2.py\n**Verdict:** REFUTED (load-bearing premise) + CORRECTED (exit \u2248 crossover, crossover task-dependent).\n\n## Hypothesis\nNET-6's exit*\u2248crossover\u2248d/2 was measured on attention-solvable automata (flat depth). Does the law hold \u2014 or fail (lossless exit impossible) \u2014 on a task where depth is genuinely load-bearing? Task: Dyck-1 balanced-paren next-token (semilength 12, nesting \u226412), the classic grammar where shallow transformers are expected to fail at deep nesting. (1) Does depth pay? (2) Is the exit law universal or bounded?\n\n## Part A \u2014 depth is FLAT on Dyck-1 (grammar): d=1 solves all nesting \u2264 12\nAll 10 models (d\u2208{1,2,4,8,16}\u00d72 seeds, dm=48, 4 heads, untied head, 6000 AdamW steps, 100k train/20k fresh held-out) reach test=1.0000 at **every balance bin including b4+** (nesting 4\u201310). The balance is a cumulative sum; one head computes it while another conditions the next token. \"Shallow fails at deep nesting\" is a width/context-starved artifact, not this scale. The flat-depth law now covers four task classes: lookups (NET-2), composition (NET-3), arithmetic (NET-4/5), grammar (NET-7). Load-bearing-depth regime NOT achieved \u2014 genuinely open.\n\n## Part B \u2014 the exit layer tracks task difficulty, not d/2\nShared-head exit (trained final lnf+un on frozen LN(x_l)); exit* = first layer \u2265 0.95 (=0.95\u00b7full, all full=1.0):\n\n| d | seed | exit* | l=exit*\u22121 \u2192 l=exit* | crossover | d/2 | saving |\n|---|---|---|---|---|---|---|\n| 4 | 0 | 3 | 0.7075 \u2192 1.0000 | 3 | 2 | 25% |\n| 4 | 1 | 2 | 0.6733 \u2192 0.9613 | 3 | 2 | 50% |\n| 8 | 0 | 3 | 0.5942 \u2192 1.0000 | 2 | 4 | 62.5% |\n| 8 | 1 | 2 | 0.6409 \u2192 0.9737 | 2 | 4 | 75% |\n| 16 | 0 | 4 | 0.7806 \u2192 0.9927 | 3 | 8 | 75% |\n| 16 | 1 | 4 | 0.8130 \u2192 0.9814 | 1 | 8 | 75% |\n\nexit* is **depth-INDEPENDENT {2,3,4}** across d=4..16 (\u226a d/2 = {2,4,8}); crossover \u2208 {1,2,3} (also \u226a d/2). The computation finishes in 2\u20134 layers regardless of total depth. **Saving: 25\u201350% at d=4 \u2192 62.5\u201375% at d=8 \u2192 75% at d=16** (vs \u224850% on automata). exit*\u2212crossover = {0,\u22121,+1,0,+1,+3} \u2192 |\u00b7|\u22641 in 5/6 (17/18 combined with NET-6), one +3 outlier (d=16 s1). REFINEMENT: lossless-at-crossover holds only 3/6 here (crossover earlier, exit* lags 1\u20133 layers); the reliable trigger is the fixed 0.95 usability bar.\n\n## Law\n**EXIT-TRACKS-TASK-DIFFICULTY** (correcting NET-6): the universal object is exit* \u2248 crossover with the crossover TASK-DEPENDENT (\u2248d/2 on harder automata whose compute fills Phase I, \u22481\u20133 on easy grammar). On easy-to-moderate sequential tasks a trained transformer's inference depth can be cut ~75% (exit at layer 2\u20134 of 16) losslessly, no confidence gate.\n\n## Barriers\n(b) early-exit mature, but task-difficulty dependence of the exit layer + correction of the \u2248d/2 claim + grammar-flatness new (Catalog scan 2067 packages: no prior work connecting norm crossover to a task-dependent exit); (c) toy-scale AND the finding \u2014 load-bearing test needs Dyck-2 / width-starved / unbounded nesting; (d) fresh held-out strings seed+77, all 1.0000 before probing; (e) 2 seeds\u00d75 depths + 2\u00d73 exit, +3 outlier reported not averaged; (f) exit acc = shared-head next-token acc, bar 0.95 = 0.95\u00b7full (full=1.0), crossover sustained-2 \u22651.02, by-balance exit moot (every bin 1.0000 at every depth); (g) full-model baseline at 1.0000, exit* gap \u2264 0.04; (h) real lever: up to 75% lossless inference-depth cut on easy sequential tasks.\n\n**Next (round-net-8 candidates):** load-bearing-depth test via Dyck-2 (multi-type matching, genuinely non-regular) / width-starved / unbounded nesting; exit law at real small-LM/BERT scale; small-BERT PR + joint-aware allocation (compression); carry chain at larger scale.",
     "domains": [
       "Novelty"
     ],
-    "id": "fd_1186",
+    "id": "fd_1217",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
     "status": "available",
-    "timestamp": "2026-08-12T22:10:09.464876+00:00",
-    "title": "NET-2: The depth law is flat on attention-solvable tasks; residual stream has a two-phase norm law"
+    "timestamp": "2026-08-13T05:12:19.806596+00:00",
+    "title": "NET-7: EXIT-TRACKS-TASK-DIFFICULTY \u2014 depth is flat on the canonical grammar task (Dyck-1, d=1 perfect at all nesting), and the exit layer is depth-independent {2,3,4} across d=4..16 (up to 75% lossless inference saving)"
   },
   {
     "consumed_by_exp_id": "",
-    "description": "**Round-net-3 (network lab, depth axis).** Paper: `ResearchOutput/NetworkMathematics/3_CompositionDepth_Trichotomy.md`. Notebook Part 3, assessment v3, network exp 3.\n\n## Hypothesis\nOn a task requiring genuine sequential composition with hidden intermediates, the fixed-budget depth law becomes non-flat \u2014 depth buys composition steps width cannot substitute. Task: input [x0, o1..ok, END] -> x_k = op_k\u2218..\u2218op_1(x0), 3 fixed random op-permutations on a 64-alphabet, intermediates NOT in context, test = held-out op-strings \u00d7 fresh x0 (only a stepwise solution generalizes).\n\n## The trichotomy (measured, all regimes depth-FLAT)\n| regime | result |\n|---|---|\n| **L1 hidden + sparse** (k=6, 529 train/200 held-out strings) | UNLEARNABLE \u2014 d=6 train 0.90\u20130.94 at 8000 steps (2 seeds) = memorizing seen strings; held-out-string test stays at chance (0.023/0.028 vs 1/64=0.0156). Final-token loss does not decompose over the 6 random-permutation steps. |\n| **L2 hidden + small** (train k\u22643 \u2192 test k=6 length-gen) | MEMORIZED WITHOUT COMPOSITION \u2014 every depth d=1..8 reaches train(k\u22643)=1.0000 but length-gen to k=6 = chance (0.0156) at EVERY depth; the model fits the 39-string lookup and never learns per-op maps. |\n| **L3 intermediates given** (chain-in-context, k=6) | LEARNABLE AND DEPTH-FLAT \u2014 d=1 alone reaches held-out test=1.0000 (both seeds); once intermediates are context tokens, composition is one-step-per-token and depth is free. |\n\n## The law\nOn the task class where depth is supposed to matter, the three achievable training regimes are all depth-flat: unlearnable, memorized-without-composition, or solvable at d=1. **Depth is gated by error-signal decomposability (credit assignment), not representational capacity** \u2014 the network has the depth to represent the stepwise solution but gradient descent cannot discover it from a non-decomposable final-token loss, and the only routes to learnability (small input space / exposed intermediates) both erase the depth requirement. This extends NET-2's flat law to BOTH sides of difficulty (easy lookups flat via attention-reads-context; hard composition flat via unlearnable/memorized/depth-free regimes) \u2014 the single-peaked depth picture fails to materialize anywhere; the binding constraint is optimization.\n\n**Constructive corollary:** a task whose error signal decomposes over steps (digit addition with carries \u2014 each digit its own supervision token) is the one regime where a non-flat depth law could live (next target). Diagnostic: when a deep model is stuck, check error-signal decomposability before buying more depth.\n\n**Barriers:** (a) clean, nothing injected; (b) partial \u2014 memorize-without-compose / length-gen failure known, the trichotomy-as-depth-law + credit-assignment mechanism + both-sides framing are new (Catalog scan 2067 packages, no prior work); (c) toy-scale, real-scale next; (d) clean held-out strings; (e) 2 seeds on decisive runs, 5-depth chance wall in L2; (f) final-token accuracy, chance=1/64 documented; (g) regime comparison only; (h) honest negative + diagnostic + decomposable-error pointer.\n\nScripts: /tmp/exp_net_comp.py (L1), /tmp/exp_net_comp2.py (L2), /tmp/exp_net_comp3.py (L3), /tmp/exp_net_comp4.py (L1 robustness).",
+    "description": "# NET-6: DECODABILITY-CROSSOVER EXIT LAW (speed axis, first speed iteration)\n\n**Program:** Network/LLM research lab, round-net-6. Paper: ResearchOutput/NetworkMathematics/6_SpeedExit_DecodabilityCrossover.md. Script: /tmp/exp_net_speed.py.\n\n## Hypothesis\nNET-2's residual-stream two-phase law (\u2016x_l\u2016 stationary for l<\u2248d/2, then growth; final LayerNorm strips the growth) marks a compute/amplify boundary: Phase I = compute-in-place (NOT decodable by the trained head), Phase II = amplification (decodable from the crossover). Prediction: the network can be exited at the norm-predicted crossover layer with zero loss \u2014 a-priori-predictable ~50% inference-depth saving, no confidence gate.\n\n## Experiment\nOrder-4 (1296-state) and order-3 (216-state) automata, dm=40, 4 heads, ctx=12, d\u2208{4,8,16}\u00d72 seeds = 12 models, all trained to held-out test 1.0000. Per model: per-layer stream norms, Phase-II onset (crossover), shared-head exit accuracy (trained final lnf+un on each frozen LN(x_l)); exit* = first layer \u22650.98.\n\n## Results\n1. **exit* \u2248 d/2, predictable a priori**: |exit*\u2212crossover| \u2264 1 in 12/12 (exit*\u2212crossover \u2208 {\u22121,0,+1}, mean \u22120.25); exit*\u2212d/2 \u2208 {\u22121,0,+1}. Sharp cliff: exit*\u22121 acc 0.767\u20130.978 (always <0.98), exit* acc 0.980\u20131.000.\n2. **Real, depth-growing saving**: compute fraction exit*/d = 0.75 (d=4, 25%), 0.50\u20130.62 (d=8, 38\u201350%), 0.44\u20130.56 (d=16, 44\u201356%, median ~50%). Lossless: gap to full (1.0000) \u2264 0.02, usually 0.0000.\n3. **NEW NEGATIVE**: confidence-threshold dynamic exit is NOT the lever \u2014 mean per-token max-softmax-prob at the decodable layer is 0.70\u20130.96 (mean 0.80); a 0.999 gate fires only after the exit layer. The fixed norm-predicted exit is the artifact.\n\n## Law\n**DECODABILITY-CROSSOVER EXIT LAW.** The layer where the trained readout becomes linearly decodable (\u22650.98) coincides with the residual-stream Phase-I/II boundary within one layer and is a-priori predictable (exit* \u2248 d/2). Exiting at the crossover is lossless, saves ~50% inference depth at scale, needs no gate. Mechanism pinned: Phase I builds the representation in place (signal crosses the usability bar exactly at the boundary); Phase II is readout-amplification \u2014 why the final LayerNorm strips the growth and the second half is skippable.\n\n## Barriers\n(a) no circularity (exit measured with trained head on frozen streams), (b) partial \u2014 early-exit nets/probes known; exit-predicted-by-norm-crossover + fixed-beats-dynamic + depth-scaling new (Catalog 2067 packages: no prior work on the norm-crossover/decodability link), (c) toy-scale acknowledged, (d) clean held-out, all test 1.0, (e) 2\u00d72\u00d73 seeds, \u00b11 spread reported honestly, (f) exit acc = shared-head next-token acc, 0.98 bar consistent with NET-2, crossover = sustained-2 \u22651.02, (g) full-model baseline + measured confidence-gate baseline that fails, (h) real lever: halve inference depth on sequential tasks, predictor computable in training.\n\n**Verdict.** CONFIRMED (exit \u2248 d/2 predictable, lossless, saving 25%\u219250%); REFUTED at both extremes (\"not decodable before crossover\" \u2014 3/12 exit*<crossover; \"already decodable near layer 1\" \u2014 exit* never near 1). Speed axis opened with a positive, exact, transferable law. Now 6 network experiments, assessment v6. Round-net-6 done.\n\nCo-Authored-By: Claude Opus 5 <noreply@anthropic.com>",
     "domains": [
       "Novelty"
     ],
-    "id": "fd_1190",
+    "id": "fd_1218",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
     "status": "available",
-    "timestamp": "2026-08-13T00:05:54.675326+00:00",
-    "title": "NET-3: The composition-depth trichotomy \u2014 why the depth law is flat on both sides of task difficulty"
+    "timestamp": "2026-08-13T05:12:19.807270+00:00",
+    "title": "NET-6: DECODABILITY-CROSSOVER EXIT LAW \u2014 the residual-stream two-phase boundary predicts where a transformer becomes linearly decodable (exit at ~d/2, lossless, ~50% inference saving)"
   },
   {
     "consumed_by_exp_id": "",
-    "description": "**Round-net-4 (network lab, depth axis \u2014 testing NET-3's constructive corollary).** Paper: `ResearchOutput/NetworkMathematics/4_CopySelfBasin_StochasticEscape.md`. Notebook Part 4, assessment v4, network exp 4.\n\n## Hypothesis (NET-3's corollary, taken in)\nThe ONE regime a non-flat depth law could live in: a task whose error signal decomposes over steps \u2014 digit addition with carries, each output digit its own supervision token. At fixed budget B, deeper should beat shallower; a carry-free control should stay flat; length-gen should widen the gap.\n\n## Task\nLSB-first base-10 `a+b=c`, n=6 columns, per-digit cross-entropy, teacher-forced decoding with a GO-token shift (copy shortcut adversarial at init: untrained per-digit \u2248 0.08 < chance 0.1). Pre-LN transformer, 4 heads, tied embedding, d_model matched per depth to B\u2248100k\u00b16% (d=1: dm=88, d=2: dm=64, d=4: dm=44).\n\n## Part A \u2014 copy-self basin + flat escape law\nEvery config sits in the same basin (per-digit \u2248 0.22\u20130.24, full 0.0, loss \u2248 2.0), identical across depths to three decimals \u2014 a shared flat-loss attractor where the tied-embedding readout reproduces the previous teacher-forced digit. Escape is abrupt (0.23\u21920.98 within one 1000-step interval) and stochastic.\n\n**Depth law: FLAT in distribution.** Escape steps d=1 [5000,3000,6000] median 5000; d=2 [3000,5000,5000] median 5000; d=4 [3000,4000,3000] median 3000. Non-monotone at seed level (d=1 s1 escapes at 3000, earlier than d=4 s1's 4000); within-depth spread up to 2\u00d7 exceeds between-depth differences. Full-mastery reliability mildly favors d=4 (3/3 vs 2/3 for d=1,d=2) but is under-powered (3 seeds). Decisive failure = the CARRY CHAIN, not the digit map: both stuck seeds are per-digit-high/full-low (d=1 s2: per 0.7402/full 0.0068; d=2 s0: per 0.8663/full 0.0991) with correlated errors (per=0.87 \u21d2 full \u2248 0.38 if independent; observed 0.09).\n\n## Part C \u2014 carry-free control fails its job, informatively\nCarry-free is ALSO basin-trapped (d=2 both seeds per 0.4874/full\u22480). The basin is task-independent \u2014 a property of tied-embedding per-digit teacher-forced decoding, not of carries. Refutes \"carries are the depth-relevant ingredient\".\n\n## Part D \u2014 scale gates escape, not mastery\n4\u00d7 budget moves the per-digit escape 2\u20133\u00d7 earlier (d=1@400k: st=1000 per 0.24\u20130.36 already above plateau, st=3000 0.87\u20130.94) but full-number mastery at 400k is LOWER (d=1: 0.4011\u00b10.31 vs 0.9553\u00b10.04 at 100k), again with correlated carry errors (d=1 s1@400k per 0.8703/full 0.0923; 0.8703\u2077\u22480.38\u226b0.09). Width rescues the digit map, not the carry chain.\n\n## Part B \u2014 length-gen wall on arithmetic\nd=2 and d=4 reach train n=3 full=1.0000 (both seeds) yet test n=4/5/6 full=0.0000, per-digit \u2248 0.09\u20130.16 \u2248 chance at EVERY depth. Carries do not rescue length generalization; memorize-without-composition (NET-3 leg-2 wall) reproduced on the task class that was supposed to break it.\n\n## Law\n**COPY-SELF BASIN + STOCHASTIC ESCAPE.** On per-digit-supervised tied-embedding arithmetic, training is a two-state system: a depth-independent copy-self basin (per-digit \u2248 0.22\u20130.24, identical across depths) followed by an abrupt phase-transition escape that is flat in depth in distribution and gated by scale. The carry chain is the width/depth-immune bottleneck (correlated-error signature per^n \u226b full). Length-gen is chance at every depth even after perfect train memorization.\n\n## Verdict\nNET-3's clean prediction \u2014 decomposable error makes depth pay \u2014 is **REFUTED in its clean form**. The flat depth law now covers lookups (NET-2), composition (NET-3), and decomposable-error arithmetic (NET-4); the single-peaked depth picture fails everywhere; the binding constraint is optimization (a flat-loss copy attractor), never capacity. New objects: the copy-self basin (exact plateau, depth- and task-independent), the phase-transition escape, the per-digit/carry-chain dissociation, and scale-gates-escape-not-mastery.\n\n## Barriers\n(a) no circularity (GO-shift makes copy adversarial at init); (b) partial \u2014 copy shortcuts known, the per-digit copy-self basin + escape law + dissociation new (Catalog: no prior work); (c) toy-scale (n=6, ~100k params); (d) clean held-out batches; (e) 3/2/2/2 seeds with escape-spread reported; (f) per/full separated, chance=0.1, correlated-error diagnostic; (g) carry-free + width + length-gen controls; (h) honest negative + three diagnostics (check per\u22480.23 plateau before judging a task unlearnable; high-per/low-full = chain failing; train-mastery + chance length-gen = memorize-without-compose).\n\nScript: /tmp/exp_net_add.py (parts A\u2013D; summary-print variable-shadowing bug fixed after the run \u2014 all data already in the log, no re-run needed).",
+    "description": "# NET-5: READOUT-UNTIE \u2014 the copy-self basin is a tied-readout artifact; the carry chain is readout-independent\n\n**Program:** Network/LLM research lab, round-net-5 (depth axis, NET-4 follow-up). Paper: ResearchOutput/NetworkMathematics/5_CopyBasin_IsReadoutArtifact.md. Script: /tmp/exp_net_untie.py.\n\n## Hypothesis\nNET-4 identified the copy-self basin (per-digit \u2248 0.22\u20130.24, depth-independent) as a flat-loss attractor where the tied readout reproduces the previous teacher-forced digit (\u2016emb\u2016\u00b2-dominated logit). If the basin is caused by the tied readout, an UNTIED head (Linear(dm, VOCAB), no weight sharing) should eliminate it, making the decomposable-error depth law measurable without the stochastic-escape confound.\n\n## Experiment\nIdentical to NET-4 except readout untied: pre-LN transformer, 4 heads, d_mlp=4\u00b7d_model, LSB-first base-10 a+b=c, n=6, per-digit cross-entropy, GO-shift teacher forcing, d_model matched to B\u2248100k\u00b16% including the extra head weights. Part A: d\u2208{1,2,4}\u00d73 seeds, 8000 steps. Part B: tied control 4000 steps (basin reproduces). Part C: untied length-gen train n=3\u2192test n=4/5/6.\n\n## Results\n1. **Basin GONE**: escape steps untied [1000,1000,1000]/[2000,2000,1000]/[2000,3000,2000] vs tied [3000\u20136000]; per-digit at st=1000 already 0.60\u20131.00 vs tied 0.22\u20130.24 plateau. \u2016emb\u2016\u00b2 mechanism CONFIRMED.\n2. **Carry chain READOUT-INDEPENDENT**: 3/9 untied configs still per-high/full-low (d1s0 0.8735/0.1143, d2s0 0.7499/0.0112, d2s2 0.8727/0.1089), all correlated-error (per^7=0.39/0.13/0.39 \u226b observed full).\n3. **Depth law stays FLAT**: full-mastery d=4 3/3, d=1 2/3, d=2 1/3 \u2014 non-monotone, under-powered; escape now trivially depth-flat.\n4. **Length-gen stays CHANCE**: untied d=2/d=4 train n=3 full=1.0000 both seeds, test n=4/5/6 full=0.0000 per\u22480.09\u20130.18 at every depth.\n\n## Law\n**READOUT-UNTIE DECOMPOSITION.** The copy-self basin is a **tied-readout artifact** (untie \u21d2 immediate depth-flat escape \u2014 first positive architectural cure in the depth series). The carry-chain dissociation is **readout-independent** (persists with untied head, correlated-error signature). Removing the basin does **not** expose a non-flat depth law \u2014 the carry chain is the same width/depth-immune bottleneck in both readout settings. Length-gen unaffected. The decomposable-error regime is now fully decomposed: a removable readout basin layered on an irreducible carry-chain credit-assignment wall \u2014 neither depth, width, nor readout-untying makes depth pay at this scale.\n\n## Barriers\n(a) no circularity (architectural treatment, measured; within-run tied control), (b) partial \u2014 untied embeddings are standard; NEW = the cure-for-copy-basin, readout-independence of the carry dissociation, untying-doesn't-unlock-depth negative (Catalog 2067 packages: no prior work on the decomposition), (c) toy-scale acknowledged, (d) clean held-out, (e) 3/2/2 seeds with spreads, (f) per/full separated, chance=0.1, correlated-error diagnostic, budget matched with extra head weights, (g) tied control at equal budget/same seeds, (h) real diagnostic (stuck tied model \u21d2 untie first) + honest negative.\n\n**Verdict.** Mechanism hypothesis CONFIRMED (basin is a readout artifact, removed by untying); the deeper hope REFUTED (carry chain, not the basin, was the binding constraint; depth stays flat). Now 5 network experiments, assessment v5. Round-net-5 done.\n\nCo-Authored-By: Claude Opus 5 <noreply@anthropic.com>",
     "domains": [
       "Novelty"
     ],
-    "id": "fd_1191",
+    "id": "fd_1219",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
     "status": "available",
-    "timestamp": "2026-08-13T02:16:32.162276+00:00",
-    "title": "NET-4: The copy-self basin + stochastic escape \u2014 the decomposable-error regime also fails to break the flat depth law"
+    "timestamp": "2026-08-13T05:12:19.807878+00:00",
+    "title": "NET-5: READOUT-UNTIE \u2014 the copy-self basin is a tied-readout artifact; the carry chain is readout-independent; depth stays flat"
   },
   {
     "consumed_by_exp_id": "",
@@ -1102,21 +1089,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-23T20:10:45.914797+00:00",
     "title": "EML-Pythagorean-Operator: Single-Neuron Neural Energy Guided Tree Traversal"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize Goldbach's conjecture in Lean 4. Prove the conjecture holds for all even n \u2264 10^6 computationally, formalize Vinogradov's theorem (every sufficiently large odd number is the sum of three primes), and construct the Hardy-Littlewood circle method framework for additive problems. Deliver a working Lean verification tactic.",
-    "domains": [
-      "NumberTheory",
-      "Algebra"
-    ],
-    "id": "fd_0645",
-    "priority_score": 0.95,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-24T14:34:16.697712+00:00",
-    "title": "Goldbach Verification Framework"
   },
   {
     "consumed_by_exp_id": "",
@@ -1921,6 +1893,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Riemann Hypothesis: Zero-Free Regions"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 579ae41a (Q=0.820), which proved 407 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Paper:** `ResearchOutput/NewMathematics/37_OrderJacobi_JointLaw.md` (factor3)\n**Experiment:** CONDORDER (#372), assessment v148.\n\n## Finding\nThe order \u00d7 residue joint-quadrant of the combination grid (SCALECASCADE =\nresidue+order; SPECTRUNC = order+spectral; this = the JOINT LAW of ord_N(b) |\n(b/N",
+    "domains": [
+      "Computation"
+    ],
+    "id": "push_579ae41a_76887b3c",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "579ae41a",
+    "status": "available",
+    "timestamp": "2026-08-13T05:11:54.433175+00:00",
+    "title": "Deepening: The Order x Jacobi Joint Law is N-Determined, Closed"
   },
   {
     "consumed_by_exp_id": "",
@@ -2769,6 +2755,332 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-24T14:34:16.697749+00:00",
     "title": "ABC Conjecture: Consequences and Partial Results"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalizes Voiculescu's free probability: the free central limit theorem showing that normalized sums of freely independent identically distributed bounded random variables converge in distribution to the semicircle law, developed through the R-transform and free cumulants.",
+    "domains": [
+      "Probability",
+      "Algebra"
+    ],
+    "id": "fd_1194",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "human_brainstorm_2026-08-12",
+    "status": "available",
+    "timestamp": "2026-08-13T03:21:12.964834+00:00",
+    "title": "Free-Probability: Semicircle Law and the Free Central Limit Theorem"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Proves Talagrand's concentration inequality for functions on product probability spaces with the weighted Hamming metric, giving exponential bounds on large deviations of 1-Lipschitz functionals of independent random variables.",
+    "domains": [
+      "Probability",
+      "Computation"
+    ],
+    "id": "fd_1195",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "human_brainstorm_2026-08-12",
+    "status": "available",
+    "timestamp": "2026-08-13T03:21:13.183114+00:00",
+    "title": "Martingale-Concentration: Talagrand's Inequality on Product Spaces"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Proves the Green-Tao theorem that the primes contain arbitrarily long arithmetic progressions, formalizing the relative Szemer\u00e9di theorem via a transference principle and the pseudorandomness (W-trick) of the von Mangoldt function.",
+    "domains": [
+      "NumberTheory",
+      "Combinatorics"
+    ],
+    "id": "fd_1196",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "human_brainstorm_2026-08-12",
+    "status": "available",
+    "timestamp": "2026-08-13T03:21:13.389917+00:00",
+    "title": "Green-Tao: Arbitrarily Long Arithmetic Progressions in the Primes"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalizes the Mordell conjecture (Faltings' theorem) that a smooth projective curve of genus at least two over a number field has only finitely many rational points, approached through N\u00e9ron-Tate heights and Vojta's inequality on the self-product of the curve.",
+    "domains": [
+      "NumberTheory",
+      "Geometry"
+    ],
+    "id": "fd_1197",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "human_brainstorm_2026-08-12",
+    "status": "available",
+    "timestamp": "2026-08-13T03:21:13.608325+00:00",
+    "title": "Faltings-Mordell: Finiteness of Rational Points on Genus \u2265 2 Curves"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Proves Iwasawa's growth theorem for p-primary ideal class groups in the cyclotomic Z_p-extension of a number field, showing the p-exponent of the class group in layer n grows like \u03bc p^n + \u03bb n + \u03bd, and formalizes the setup of the Iwasawa main conjecture.",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_1198",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "human_brainstorm_2026-08-12",
+    "status": "available",
+    "timestamp": "2026-08-13T03:21:13.827875+00:00",
+    "title": "Iwasawa-Main: Growth of Ideal Class Groups in Cyclotomic Z_p Extensions"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Proves quantum unique ergodicity for Hecke-Maass eigenforms on arithmetic surfaces: the microlocal lifts of these eigenforms equidistribute to the uniform measure, formalizing the ergodic framework behind Lindenstrauss' result.",
+    "domains": [
+      "NumberTheory",
+      "Physics"
+    ],
+    "id": "fd_1199",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "human_brainstorm_2026-08-12",
+    "status": "available",
+    "timestamp": "2026-08-13T03:21:14.063195+00:00",
+    "title": "Arithmetic-Quantum-Chaos: Equidistribution of Hecke-Maass Eigenforms"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Attacks the Erd\u0151s-Graham conjecture that every finite coloring of the integers greater than one admits a subset whose reciprocals sum to exactly one, formalizing the combinatorial structure of Egyptian fraction decompositions and the known proofs for small colorings.",
+    "domains": [
+      "NumberTheory",
+      "Combinatorics"
+    ],
+    "id": "fd_1200",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "human_brainstorm_2026-08-12",
+    "status": "available",
+    "timestamp": "2026-08-13T03:21:14.300445+00:00",
+    "title": "Erdos-Graham: Exact Coverings by Distinct Unit Fractions"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Proves Szemer\u00e9di's theorem that any subset of the integers with positive upper density contains arbitrarily long arithmetic progressions, formalizing the density-increment strategy via Szemer\u00e9di regularity and Fourier analysis on Z/NZ.",
+    "domains": [
+      "Combinatorics",
+      "NumberTheory"
+    ],
+    "id": "fd_1201",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "human_brainstorm_2026-08-12",
+    "status": "available",
+    "timestamp": "2026-08-13T03:21:14.521722+00:00",
+    "title": "Szemeredi: Density Increment for Long Arithmetic Progressions"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalizes the structural foundations of the graph minor theory: Wagner's decomposition theorem and the characterization of minor-closed classes via tree-width, building toward the Robertson-Seymour result that finite graphs are well-quasi-ordered under the minor relation.",
+    "domains": [
+      "Combinatorics",
+      "Logic"
+    ],
+    "id": "fd_1202",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "human_brainstorm_2026-08-12",
+    "status": "available",
+    "timestamp": "2026-08-13T03:21:14.742676+00:00",
+    "title": "Graph-Minors: Structural Theory of the Minor Partial Order"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalizes Regev's worst-case to average-case reduction showing that a polynomial-time algorithm for the decision Learning With Errors problem over a lattice with polynomial modulus implies a polynomial-time quantum algorithm for the worst-case shortest-vector / GapSVP problem.",
+    "domains": [
+      "Cryptography",
+      "Computation"
+    ],
+    "id": "fd_1203",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "human_brainstorm_2026-08-12",
+    "status": "available",
+    "timestamp": "2026-08-13T03:21:14.974523+00:00",
+    "title": "LWE-Hardness: Worst-Case to Average-Case Reductions for Lattices"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Proves the security of the BB84 quantum key distribution protocol against collective attacks using entropic uncertainty relations, formalizing the complementarity argument that bounds the eavesdropper's smooth min-entropy on the raw key.",
+    "domains": [
+      "Cryptography",
+      "Computation"
+    ],
+    "id": "fd_1204",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "human_brainstorm_2026-08-12",
+    "status": "available",
+    "timestamp": "2026-08-13T03:21:15.174582+00:00",
+    "title": "Quantum-Key-Distribution: BB84 Security via Entropic Uncertainty"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Proves the Kolmogorov-Arnold representation theorem that every continuous multivariate function on the unit cube can be represented as a finite superposition of continuous univariate functions and additions, with quantitative trade-offs between inner and outer functions.",
+    "domains": [
+      "MachineLearning",
+      "Computation"
+    ],
+    "id": "fd_1205",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "human_brainstorm_2026-08-12",
+    "status": "available",
+    "timestamp": "2026-08-13T03:21:15.377667+00:00",
+    "title": "Kolmogorov-Arnold: Superposition of Multivariate Continuous Functions"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Proves sharp generalization bounds for minimum-norm interpolating least-squares estimators in overparameterized regression, characterizing when interpolation generalizes (benign overfitting) versus fails, in terms of the eigenvalue decay of the design matrix.",
+    "domains": [
+      "MachineLearning",
+      "Probability"
+    ],
+    "id": "fd_1206",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "human_brainstorm_2026-08-12",
+    "status": "available",
+    "timestamp": "2026-08-13T03:21:15.592908+00:00",
+    "title": "Benign-Overfitting: Sharp Risk Bounds for Interpolating Least Squares"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalizes the connection between the Deligne-Mumford compactification of the moduli space of smooth curves and the tropical moduli space of stable tropical curves, including the tropicalization of boundary strata and tropical Gromov-Witten invariants.",
+    "domains": [
+      "Tropical",
+      "Geometry"
+    ],
+    "id": "fd_1207",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "human_brainstorm_2026-08-12",
+    "status": "available",
+    "timestamp": "2026-08-13T03:21:15.795280+00:00",
+    "title": "Tropical-Moduli: Compactification of M_g via Tropical Curves"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Develops the formal theory of non-Archimedean tropicalization: the valuation-induced tropicalization map on Berkovich analytifications of algebraic subvarieties, the polyhedral structure of its fibers, and the structure theorem for tropical varieties.",
+    "domains": [
+      "Tropical",
+      "NumberTheory"
+    ],
+    "id": "fd_1208",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "human_brainstorm_2026-08-12",
+    "status": "available",
+    "timestamp": "2026-08-13T03:21:16.028827+00:00",
+    "title": "Nonarchimedean-Tropicalization: Berkovich Fibers of Subvarieties"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalizes the foundations of Teichm\u00fcller theory: the Teichm\u00fcller space of marked Riemann surfaces, the Teichm\u00fcller metric defined by extremal quasi-conformal maps, and the action of the mapping class group whose quotient is the moduli space.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_1209",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "human_brainstorm_2026-08-12",
+    "status": "available",
+    "timestamp": "2026-08-13T03:21:16.243998+00:00",
+    "title": "Teichmuller-Moduli: Analytic Structure of Riemann Surface Space"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Unifies the Eynard-Orantin topological recursion with enumerative geometry: proves that simple Hurwitz numbers satisfy the topological recursion on a rational spectral curve and computes their wave-function expansion, connecting matrix models to Hurwitz theory.",
+    "domains": [
+      "Geometry",
+      "Combinatorics"
+    ],
+    "id": "fd_1210",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "human_brainstorm_2026-08-12",
+    "status": "available",
+    "timestamp": "2026-08-13T03:21:16.450106+00:00",
+    "title": "Topological-Recursion: Eynard-Orantin Invariants and Hurwitz Numbers"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalizes the algebraic structure of conformal field theory: vertex operator algebras and their representation theory, proving the modular invariance of the genus-one partition function and the Verlinde formula expressing fusion rules through the modular S-matrix.",
+    "domains": [
+      "Physics",
+      "Algebra"
+    ],
+    "id": "fd_1211",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "human_brainstorm_2026-08-12",
+    "status": "available",
+    "timestamp": "2026-08-13T03:21:16.661615+00:00",
+    "title": "VOA-CFT: Modular Invariance of the Conformal Partition Function"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalizes the Nash existence theorem for normal-form games via Brouwer's fixed point theorem applied to the product of mixed-strategy simplices, and proves the computational hardness that finding an approximate Nash equilibrium is PPAD-complete.",
+    "domains": [
+      "Applications",
+      "Computation"
+    ],
+    "id": "fd_1212",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "human_brainstorm_2026-08-12",
+    "status": "available",
+    "timestamp": "2026-08-13T03:21:16.880129+00:00",
+    "title": "Nash-Equilibrium: Existence via Brouwer and Computation Complexity"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formally proves the semicircle law for Wigner ensembles: the empirical spectral distribution of a random Hermitian matrix with independent entries converges in probability to the semicircle distribution as the dimension grows, establishing the universality of bulk eigenvalue statistics for random matrices.",
+    "domains": [
+      "Probability"
+    ],
+    "id": "fd_1213",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "human_brainstorm_2026-08-12",
+    "status": "available",
+    "timestamp": "2026-08-13T03:21:12.263241+00:00",
+    "title": "Wigner-Semicircle: Universality of the Spectral Distribution"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Constructs standard Brownian motion from a countable family of Gaussian increments, proves existence of a version with almost-surely continuous paths, and establishes almost-sure H\u00f6lder continuity of every exponent below 1/2 together with almost-sure nowhere differentiability.",
+    "domains": [
+      "Probability"
+    ],
+    "id": "fd_1214",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "human_brainstorm_2026-08-12",
+    "status": "available",
+    "timestamp": "2026-08-13T03:21:12.542387+00:00",
+    "title": "Brownian-Motion: Wiener's Existence Construction and Path Continuity"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Develops Stein's method of exchangeable pairs to prove quantitative normal approximation bounds, controlling Wasserstein and bounded-Lipschitz distances between a target random variable and the standard normal in terms of an explicit coupling identity and concentration constant.",
+    "domains": [
+      "Probability"
+    ],
+    "id": "fd_1215",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "human_brainstorm_2026-08-12",
+    "status": "available",
+    "timestamp": "2026-08-13T03:21:12.748859+00:00",
+    "title": "Stein-Method: Quantitative Normal Approximation Bounds"
   },
   {
     "consumed_by_exp_id": "",
@@ -18705,6 +19017,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-13T00:05:30.953316+00:00",
     "title": "What is now proved (all in `Catalog/Cryptography/AsymmetricExponent/`, no"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 after the Order \u00d7 Jacobi Joint Law\n\nThe verified results (all in `Catalog/Computation/OrderJacobiJointLaw.lean`,\n0 sorries) are:\n\n1. the QR\u2013order coupling is an exact equivalence at each prime;\n2. its lift to a semiprime is exact **iff** `v\u2082((p\u22121)/2) = v\u2082((q\u22121)/2)` \u2014 a\n   single 2-adic dial, whose bottom rung is `p \u2261 q \u2261 3 (mod 4)`;\n3. on that dial the four order/Jacobi quadrants are equinumerous (`\u03c6(N)/4` each);\n4. the complete joint laws of `35 = 5\u00b77` and `39 = 3\u00b713` coincide, so no\n   function of the joint law can output a factor;\n5. joint-law collisions are transported by any Jacobi-preserving isomorphism of\n   unit groups.\n\nFive bold, testable conjectures follow.\n\n## C1 (Collision density). Almost every semiprime has a joint-law twin.\n\n**Statement.** The number of `N \u2264 X` that are products of two distinct odd\nprimes and admit a coprime semiprime `N' \u2264 X^{1+o(1)}` with\n`jointLaw N = jointLaw N'` is `(1 \u2212 o(1))` times the number of semiprimes up\nto `X`.\n\n**The key insight is** that the joint law only remembers the pair\n(abelian group `Z_{p\u22121} \u00d7 Z_{q\u22121}`, quadratic character), and the number of such\nisomorphism classes with `\u03c6(N) \u2264 Y` grows far more slowly than the number of\nsemiprimes \u2014 a pigeonhole in a quotient category, not in the integers.\n\n**Why now?** Item 5 above makes the transport mechanism a theorem, so the\nconjecture reduces to counting isomorphism classes of pairs (group, character),\nwhich is a tractable multiplicative-number-theory problem (Erd\u0151s\u2013Pomerance-style\ncounts of `\u03c6`-fibres).\n\n## C2 (Universality of the dial). Every \"order \u2297 character\" statistic collapses to `v\u2082`.\n\n**Statement.** Let `\u03c7` be any real Dirichlet character mod `N = pq` and consider\nthe statistic `u \u21a6 (orderOf u, \u03c7(u))`. Then the analogue of item 2 holds with\n`v\u2082` replaced by `v_\u2113` for the order `\u2113` of `\u03c7`: the divisibility test\n`orderOf u \u2223 lcm((p\u22121)/\u2113, (q\u22121)/\u2113)` is equivalent to \"`\u03c7` trivial at both\ncomponents\" **iff** `v_\u2113((p\u22121)/\u2113) = v_\u2113((q\u22121)/\u2113)`.\n\n**The key insight is** that the proof of the dichotomy used nothing about\nquadraticity beyond `gcd(2\u00b7x, lcm(x,y)) = x \u27fa v\u2082(y) \u2264 v\u2082(x)`; the same lattice\nidentity holds prime-by-prime for any `\u2113`.\n\n**Why now?** The arithmetic core is already isolated as\n`dvd_of_dvd_two_mul_of_dvd_lcm`; generalising it to `\u2113` is a self-contained\nfactorisation-lattice lemma.\n\n## C3 (Hardness of the inverse problem). Reconstructing `N` from its joint law is as hard as factoring.\n\n**Statement.** There is a polynomial-time reduction from factoring semiprimes to\nthe problem: given the multiset `jointLaw N` (as an explicit list) and `N`,\noutput a nontrivial factor of `N`. Conversely, given the factorisation the law\nis computable in polynomial time.\n\n**The key insight is** that the law's `+1`-fibre determines the multiset of\n`lcm` values of pairs of divisors of `(p\u22121)/2` and `(q\u22121)/2`, which is a\n\"divisor-lattice tomography\" problem whose difficulty can be pinned to the\nhardness of recovering `p\u22121` from `\u03c6(N)`-type data.\n\n**Why now?** Item 4 shows the law alone is insufficient, so the only remaining\nquestion is the *relative* hardness \u2014 precisely the shape of statement a\nreduction can settle.\n\n## C4 (Quadrant equidistribution off the dial). The unbalanced case has a computable defect.\n\n**Statement.** For `v\u2082(H p) = s < t = v\u2082(H q)`, the number of units with\n`orderOf u \u2223 lcm(H p, H q)` equals `2^{min(t\u2212s,1)} \u00b7 H p \u00b7 H q / 1` \u2014 more\nprecisely `#{u : ord u \u2223 L} = gcd(2 H p, L) \u00b7 gcd(2 H q, L)`, and this exceeds\n`\u03c6(N)/4` by exactly the factor `2^{[s<t]}\u00b72^{[t<s]}`.\n\n**The key insight is** that the count is a product of two gcds because the CRT\nprojection is an isomorphism (proved) and, in a cyclic group of order `n`, the\nnumber of solutions of `x^d = 1` is `gcd(d, n)`.\n\n**Why now?** `card_both_squares` and `projPair_bijective` already reduce the\ncount to a two-factor cyclic computation; the missing ingredient is the standard\n`gcd` root-count, which Mathlib is close to supplying.\n\n## C5 (No character-order statistic factors). A general barrier template.\n\n**Statement.** For every fixed `k`, the \"`k`-th order \u2297 residue\" statistic\n`u \u21a6 (orderOf u, \u03c7\u2081(u), \u2026, \u03c7_k(u))` over the real characters mod `N` has\ncoprime collisions: there exist coprime semiprimes with identical statistics.\nHence no bounded family of character-order statistics can factor.\n\n**The key insight is** that all such statistics are invariants of the pair\n(unit group, finite set of characters), and the number of such pairs with a\ngiven `\u03c6(N)` is bounded independently of the factorisation, so the transport\ntheorem (item 5) applies verbatim with a tuple of characters.\n\n**Why now?** The Lean transport theorem is already stated for one character; the\ngeneralisation to a tuple is a mechanical strengthening, and each new collision\ninstance is a finite, kernel-checkable computation of the kind already carried\nout for `35` versus `39`.\n",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_1216",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "579ae41a",
+    "status": "available",
+    "timestamp": "2026-08-13T05:11:46.284039+00:00",
+    "title": "The verified results (all in `Catalog/Computation/OrderJacobiJointLaw.lean`,"
   },
   {
     "consumed_by_exp_id": "",

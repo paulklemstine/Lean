@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "413bc2f0",
-      "domain": "Logic",
-      "key_insight": "# Future directions\n\nWhat is formalised (all statements proved, no `sorry`), in `Logic/Rademacher/`:\n\n* `Basic.lean` — empirical Rademacher complexity of a class of vectors: vanishing on\n  singletons,",
-      "quality_score": 0.7947599999999999,
-      "sorry_count": 0,
-      "theorem_count": 72,
-      "timestamp": "2026-08-06T03:47:31",
-      "title": "Generalization Bounds via Rademacher Complexity"
-    },
-    {
       "cycle_id": "713730e2",
       "domain": "Pythagorean",
       "key_insight": "# Future directions\n\nThis cycle settled the *uniform half-canonical existence* question for almost all\nregular degrees, and in the strongest possible form: for `k ≥ 6` with `k ≠ 7`,\n**every** simple `",
@@ -499,19 +489,19 @@
       "theorem_count": 252,
       "timestamp": "2026-08-13T02:55:04",
       "title": "De-Quantizing Quantum Mechanics: Mathematical Frameworks for Classical Emulation of Quantum Algorith"
+    },
+    {
+      "cycle_id": "579ae41a",
+      "domain": "Computation",
+      "key_insight": "# Future Directions — after the Order × Jacobi Joint Law\n\nThe verified results (all in `Catalog/Computation/OrderJacobiJointLaw.lean`,\n0 sorries) are:\n\n1. the QR–order coupling is an exact equivalence",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 407,
+      "timestamp": "2026-08-13T05:11:54",
+      "title": "The Order x Jacobi Joint Law is N-Determined, Closed"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "c945ec38",
-      "domain": "Novelty",
-      "key_insight": "# Future directions\n\n1. **Finite partition formula.** For every finite pairwise-disjoint family of finite--cofinite\n   events, the probability of its union equals the finite sum of its probabilities.",
-      "quality_score": 0.77894,
-      "sorry_count": 0,
-      "theorem_count": 29,
-      "timestamp": "2026-08-02T17:24:52",
-      "title": "Deepening: Non-Archimedean Probability via Surreal Numbers"
-    },
     {
       "cycle_id": "b0710fef",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 252,
       "timestamp": "2026-08-13T02:55:04",
       "title": "De-Quantizing Quantum Mechanics: Mathematical Frameworks for Classical Emulation of Quantum Algorith"
+    },
+    {
+      "cycle_id": "579ae41a",
+      "domain": "Computation",
+      "key_insight": "# Future Directions — after the Order × Jacobi Joint Law\n\nThe verified results (all in `Catalog/Computation/OrderJacobiJointLaw.lean`,\n0 sorries) are:\n\n1. the QR–order coupling is an exact equivalence",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 407,
+      "timestamp": "2026-08-13T05:11:54",
+      "title": "The Order x Jacobi Joint Law is N-Determined, Closed"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "3bb7c316",
-      "domain": "Novelty",
-      "name": "E_add",
-      "quality": 0.741695
-    },
-    {
-      "cycle_id": "3bb7c316",
-      "domain": "Novelty",
-      "name": "E_zero",
-      "quality": 0.741695
-    },
-    {
-      "cycle_id": "3bb7c316",
-      "domain": "Novelty",
-      "name": "norm_E",
-      "quality": 0.741695
-    },
     {
       "cycle_id": "c56f6a79",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Computation",
       "name": "spbMat_det",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "579ae41a",
+      "domain": "Computation",
+      "name": "catalog",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "579ae41a",
+      "domain": "Computation",
+      "name": "catalog",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "579ae41a",
+      "domain": "Computation",
+      "name": "euclid_parametrization",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-13T02:55:04",
+  "last_updated": "2026-08-13T05:11:54",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3269,12 +3269,6 @@
     ],
     "Computation": [
       {
-        "cycle_id": "ffc2840e",
-        "quality": 0.686,
-        "theorems": 154,
-        "title": "Group actions and orbit relations.: Instantiate `InvariantPattern` with th"
-      },
-      {
         "cycle_id": "68319f3d",
         "quality": 0.686,
         "theorems": 133,
@@ -3327,6 +3321,12 @@
         "quality": 0.82,
         "theorems": 252,
         "title": "De-Quantizing Quantum Mechanics: Mathematical Frameworks for Classical Emulation"
+      },
+      {
+        "cycle_id": "579ae41a",
+        "quality": 0.82,
+        "theorems": 407,
+        "title": "The Order x Jacobi Joint Law is N-Determined, Closed"
       }
     ],
     "Cryptography": [

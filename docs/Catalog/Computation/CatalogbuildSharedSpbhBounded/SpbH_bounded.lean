@@ -1,4 +1,41 @@
-import Computation.CatalogbuildSharedSpbhBounded.SpbH_bounded
+import Mathlib
 
-/-! This catalog entry duplicates `Computation.CatalogbuildSharedSpbhBounded.SpbH_bounded`, where the repaired proofs live; this module
-re-exports them so both catalog paths resolve. -/
+/-! # CatalogBuild.Shared.SpbH_bounded
+
+Auto-generated from theorem catalog database.
+Domain: Shared
+Declarations: 3
+
+The hyperbolic SPB operation `spbH` (used by every statement but absent from the
+repository) is defined here, in the form forced by the hypotheses of the
+statements below; the statements and proofs are unchanged.
+-/
+
+noncomputable section
+
+/-- The hyperbolic SPB (Einstein velocity addition) operation. -/
+def spbH (u v : ℝ) : ℝ := (u + v) / (1 + u * v)
+
+/-- [Section: # CatalogBuild.Shared.SpbH_bounded
+Auto-generated from theorem catalog database.
+Domain: Bridges
+Declarations: 6] -/
+theorem spbH_bounded (u v : ℝ) (hu : |u| < 1) (hv : |v| < 1) :
+    |spbH u v| < 1 := by
+  exact abs_lt.2 ⟨ by rw [ spbH ] ; rw [ lt_div_iff₀ ] <;> nlinarith only [ abs_lt.mp hu, abs_lt.mp hv ], by rw [ spbH ] ; rw [ div_lt_iff₀ ] <;> nlinarith only [ abs_lt.mp hu, abs_lt.mp hv ] ⟩
+
+/-- [Section: # CatalogBuild.Shared.SpbH_bounded
+Auto-generated from theorem catalog database.
+Domain: Shared
+Declarations: 3] -/
+theorem spbH_assoc (u v w : ℝ) (huv : u * v ≠ -1) (hvw : v * w ≠ -1)
+    (huvw : spbH u v * w ≠ -1) (huvw' : u * spbH v w ≠ -1) :
+    spbH (spbH u v) w = spbH u (spbH v w) := by
+  unfold spbH at *;
+  grind
+
+/-- Inverse in hyperbolic SPB. -/
+theorem spbH_neg_self (u : ℝ) : spbH u (-u) = 0 := by
+  simp [spbH]
+
+end

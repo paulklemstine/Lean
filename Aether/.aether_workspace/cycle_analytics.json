@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-13T02:55:08.229888+00:00",
+  "last_updated": "2026-08-13T05:12:03.086953+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -53866,6 +53866,50 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-08-13T02:55:08.061065+00:00",
       "title": "De-Quantizing Quantum Mechanics: Mathematical Frameworks for Classical Emulation of Quantum Algorith"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 28,
+      "domain": "Computation",
+      "duration_seconds": 10547.24069571495,
+      "end_time": 1786597892.6788661,
+      "error_message": "Queue full: Aristotle capacity limit reached (9/9). Dispatch blocked.",
+      "files_integrated": 67,
+      "job_id": "579ae41a",
+      "outcome_quality": 0.82,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.82,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.544,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.82,
+        "novelty": 0.82,
+        "proof_depth": 0.82,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1786587345.4381704,
+      "strategy_count": 0,
+      "theorem_count": 407,
+      "theorem_novelty_disproof": 4,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 366,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-08-13T05:12:02.914841+00:00",
+      "title": "The Order x Jacobi Joint Law is N-Determined, Closed"
     }
   ]
 }

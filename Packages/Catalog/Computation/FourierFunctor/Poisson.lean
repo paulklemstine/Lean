@@ -1,4 +1,4 @@
-import Computation.FourierFunctor.Exactness
+import Catalog.Computation.FourierFunctor.Exactness
 
 /-!
 # Poisson summation from annihilator duality
