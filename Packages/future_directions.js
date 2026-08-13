@@ -33,7 +33,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The 3SUM-Birthday-Bound Hierarchy"
   },
   {
-    "consumed_by_exp_id": "ac45a9d9",
+    "consumed_by_exp_id": "79242ce3",
     "description": "**Summary.** The conjecture that for E_N: y\u00b2 = x\u00b3 + N with N = pq, the\ndenominators of x(nP) are divisible only by {2, 3, p, q} (the primes dividing\n\u0394 = -432N\u00b2) is mathematically FALSE.\n\n**Counterexample.** N = 55 = 5\u00b711, P = (9,28) \u2208 E_55(Q):\n  x(2P) = (9^4 - 8\u00b755\u00b79) / (4(9^3 + 55)) = 2601/3136, and 3136 = 2^6 \u00b7 7^2.\nThe prime 7 divides the denominator but 7 \u2224 \u0394 (7 is a prime of good reduction).\n\n**Mechanism.** \u2113 | denom(x(nP)) iff nP \u2261 O (mod \u2113); good-reduction primes divide\ndenominators whenever the point reduces to torsion \u2014 infinitely many such primes.\n\n**Survey (11 semiprimes):** p appears in some denominator 54.5%, q appears 0%,\nonly-{2,3,p,q} holds 0% of the time. The denominator structure is a function of\nN alone (barrier 5) and does not cleanly reveal p, q.\n\n---\n\n*Factoring Lab paper. Status: proven theorem / verified / framework. This is a research deliverable, not a factoring breakthrough claim.*",
     "domains": [
       "Novelty"
@@ -48,7 +48,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The 'Only Bad Primes' Conjecture is False (elliptic curve denominators)"
   },
   {
-    "consumed_by_exp_id": "2555fa57",
+    "consumed_by_exp_id": "61beb7f6",
     "description": "**Summary.** Let F(k) = sum_{a=1}^{N} a^k. Then gcd(F(k), N) reveals a factor\nat k = p-1: for N = pq, gcd(F(p-1), N) = q (provided (q-1) does not divide (p-1)).\n\n**Key results (proven):**\n- **Theorem 1 (power-sum factor reveal):** Mod p the residues cover each nonzero\n  residue q times, so F(k) \u2261 q\u00b7(sum of k-th powers mod p); by FLT this is -q mod p\n  at k=p-1. Mod q it vanishes when (q-1) \u2224 (p-1). Hence gcd = q.\n- **Theorem 2 (robustness):** The power sum aggregates ALL bases a=1..N\n  simultaneously, so it cannot suffer Pollard p-1's \"bad base\" failure.\n- **Theorem 3 (Carmichael periodicity):** g(k) = gcd(F(k), N) has period\n  \u03bb(N) = lcm(p-1, q-1), so \u03bb(N) is readable from the period and the factors\n  follow from p+q = N - \u03bb(N) + 1.\n\n**Complexity.** First hit at k* = min(p-1,q-1) \u2248 \u221aN; cost per F(k) is O(N);\ntotal O(N^{3/2}) \u2014 worse than trial division. This is the SAME structure Shor's\nalgorithm exploits, made classically hard by the period-finding barrier.\nVerified on all 8 test semiprimes up to N \u2248 10^4.\n\n---\n\n*Factoring Lab paper. Status: proven theorem / verified / framework. This is a research deliverable, not a factoring breakthrough claim.*",
     "domains": [
       "Novelty"
@@ -153,32 +153,30 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Factor3 Program: A Definitive Synthesis of the Barrier Framework"
   },
   {
-    "consumed_by_exp_id": "5ddbfca0",
+    "consumed_by_exp_id": "",
     "description": "",
     "domains": [
       "Novelty"
     ],
     "id": "fd_1119",
-    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-11T23:11:29.676935+00:00",
     "title": "Round-6 Hypothesis Closures: The Noise-Floor Principle and the Trace-Lemma Frontier"
   },
   {
-    "consumed_by_exp_id": "50444eab",
+    "consumed_by_exp_id": "",
     "description": "**Paper (factor3):** [ResearchOutput/NewMathematics/19_Round5_Closures.md](https://github.com/paulklemstine/factor3/blob/main/ResearchOutput/NewMathematics/19_Round5_Closures.md)\n\n---\n\n# Round-5 Hypothesis Closures: Four Attacks on the Structural Gaps, Tested and Closed\n\n**Program:** Factoring research lab \u2014 round-5 subagent batch synthesis\n**Date:** 2026-08-11\n**Status:** Negative-results synthesis \u2014 4 hypotheses closed; five subagent rounds complete (28 hypotheses)\n\n---\n\n## Abstract\n\nA fifth brainstorm subagent attacked the deepest structural gaps: the\nnon-CRT-separable domain (challenging the free-witness classification), the\nnon-multiplicative sublinear aggregate, the p,q-primality-residue structure, and\npure-cubic unit groups. All four were implemented, run, and closed (experiments\n316-320). The batch sharpened the framework: barrier 4 survives even when its\nCRT-separability hypothesis fails (noise-floor arguments), the divisor-summatory\nerror is N-only, the Euler-pseudoprime count is essentially constant, and pure\nunit groups are exponentially large and useless. With five subagent rounds\ncomplete (28 hypotheses), the barrier framework has survived 320 experiments.\n\n---\n\n## 1. The batch at a glance\n\n| # | Hypothesis | Attack | Verdict |\n|---|-----------|--------|---------|\n| 1 | PRIMEDOM | prime-domain Jacobi aggregate (non-CRT-separable) | refuted \u2014 Povlya-Vinogradov noise floor |\n| 2 | DIVSUM | divisor-summatory hyperbola (O(sqrt N), non-multiplicative) | refuted \u2014 error is N-only |\n| 3 | EULER | Euler-pseudoprime base count = gcd(p-1,q-1)^2 | refuted \u2014 essentially constant (g=2) |\n| 4 | CUBICUNIT | pure-cubic Voronoi fundamental units | refuted \u2014 exponentially large, useless |\n\n---\n\n## 2. PRIMEDOM (experiment 319): the non-CRT-separable domain fails\n\nW(M) = sum_{x <= M, x prime} (x/N). The prime domain is NOT CRT-separable, so\nthe free-witness decomposition does not apply \u2014 a candidate barrier-4\ncounterexample. Verified (100 semiprimes, M = 8192): residual corr of W with\np+q = -0.005, q-p = -0.103, at the 52nd percentile of the permutation null.\nW is pure noise. The Povlya-Vinogradov bound keeps the p,q-dependent part of the\ncharacter sum inside the ~sqrt(N) log N error \u2014 unrecoverable without exact\nsummation, which costs O(M) with no CRT shortcut. The classification's spirit\nsurvives: the gap closes via the noise-floor argument.\n\n---\n\n## 3. DIVSUM (experiment 317): the non-multiplicative sublinear aggregate is N-only\n\nD(N) = sum_{d<=N} floor(N/d), computable in O(sqrt N) via the hyperbola trick \u2014\nsublinear, non-polynomial, NOT CRT-multiplicative (the classification does not\nliterally cover it). D(N) = N + p + q + 1 + (other terms). Verified: an initial\npermutation test looked suggestive (residual |corr| 0.506 above null), but the\nDECISIVE near-equal-N test resolved it: the divisor error Delta(N) is N-only\n(within-band partial correlations low; the permutation signal was a nonlinear-N\nconfound). D(N) mod 2 = floor(sqrt N) mod 2 \u2014 smooth, no factor residue. Barrier 4\nsurvives even without multiplicativity: the sparse p,q witness terms are sealed.\n\n---\n\n## 4. EULER (experiment 318): the pseudoprime count is essentially constant\n\nE(N) = #{a in (Z/NZ)* : a^{N-1} == 1 mod N} = gcd(p-1,q-1)^2 = g^2, exploiting\nthat p and q are both prime. Verified by sampling (fraction of Euler-pseudoprime\nbases = g^2/phi(N)). The kill-shot: g = gcd(p-1,q-1) = 2 for random primes\n(E = 4, ~0 bits about p). The only useful case (large g) is exactly the p-1\nmethod weakness (a known-method condition). The reduced search p = 1 + kg with\ng=2 still gives ~sqrt(N)/2 candidates = trial division. Barrier 4 + trace lemma\n+ barrier 8.\n\n---\n\n## 5. CUBICUNIT (experiment 320): pure-cubic units are exponentially large and useless\n\nK = Q(cuberoot N) has unit group rank 1; the fundamental unit e satisfies the\nnorm equation a^3 + N b^3 + N^2 c^3 - 3Nabc = +-1. Verified: minimal units\nfound for small N (coefficients 1-6), but the regulator is Theta(sqrt N), so e\nhas ~sqrt N digits and cannot be materialized in poly(log N). The unit's\narithmetic is period-3 order-finding (CYCLOTOWER/BURAU-ORD territory). Given e,\nthe norm equation re-encodes the unit group, giving p,q nothing. Barrier 8 + 5.\n\n---\n\n## 6. Meta-lessons\n\n1. **Barrier 4 survives its own falsification attempts.** The free-witness\n   classification's CRT-separability hypothesis failed (PRIMEDOM), and the\n   non-multiplicative route failed (DIVSUM) \u2014 in both cases via noise-floor /\n   N-only arguments. The classification's spirit is robust even where its letter\n   does not apply.\n2. **The p,q-primality structure yields essentially constant or known-method\n   quantities.** The Euler-pseudoprime count is g^2 with g=2 almost always; the\n   useful case is p-1 method.\n3. **Algebraic unit groups are exponentially large and factor-blind.** The pure\n   cubic regulator is Theta(sqrt N); the unit equation re-encodes the group,\n   not the factors.\n4. **Five rounds, 28 hypotheses, 320 experiments.** The barrier framework is\n   intact. The empirical picture is now nearly complete: the free-witness\n   aggregation barrier dominates, is classified, and survives non-multiplicative\n   and non-CRT-separable generalizations.\n\n---\n\n*Related:* `12_Subagent_Batch_Closures.md` (round 1), `14_Round2_Closures.md`,\n`15_Round3_Closures.md`, `17_Round4_Closures.md`,\n`16_FreeWitness_Classification.md`, `Factoring_Lab_Notebook.md` Parts 63-66.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_1120",
-    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-11T23:11:29.677222+00:00",
     "title": "Round-5 Hypothesis Closures: Four Attacks on the Structural Gaps, Tested and Closed"
   },
@@ -483,16 +481,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Exp 394 MULT-TABLE-RANK: mod-N multiplication table rank = floor((N+2\u03c4(N)\u22123)/2), universal semiprime law rank(pq)=(N+5)/2 \u2014 divisor-count certificate, never a factor (barriers 2/4/6/8)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "37b40f0f",
     "description": "## UNIT-ENERGY (exp 393, round-15 #2): the additive energy of the units is the Ramanujan 4th moment \u2014 pointwise-flat on gcd-level sets, a trace-only witness\n\n**Hypothesis tested.** E(U) = #{u\u2081+u\u2082 \u2261 u\u2083+u\u2084 : u_i \u2208 (Z/NZ)^\u00d7}, the additive energy of the unit group, is the Ramanujan 4th moment with an FFT-verifiable closed form. Does it leak any asymmetric factor content?\n\n**Result: CONFIRMED negative for factoring** (script: `/tmp/exp_unitenergy.py`; verified 10/10 semiprimes three ways \u2014 direct count, Ramanujan moment, closed form \u2014 plus 14/14 generic N, and symbolic expansion).\n\n**1. Exact closed semiprime form.** With a = p\u22121, b = q\u22121:\n> E(U) = (1/N) \u03a3_{x=0}^{N\u22121} |c_N(x)|\u2074 = **((p\u22121)(q\u22121)/N)\u00b7(1+(p\u22121)\u00b3)(1+(q\u22121)\u00b3)**\n\nVia \u03c3\u2081 = a+b = s\u22122, \u03c3\u2082 = ab = N\u2212s+1 = \u03c6(N): E\u00b7N = \u03c3\u2082(1+\u03c3\u2081\u00b3\u22123\u03c3\u2081\u03c3\u2082+\u03c3\u2082\u00b3) = N\u2074\u22124N\u00b3s+4N\u00b3+6N\u00b2s\u00b2\u221215N\u00b2s+12N\u00b2\u22123Ns\u00b3+12Ns\u00b2\u221218Ns+9N \u2014 a symmetric polynomial in (p,q), a function of **(N, s) alone**.\n\n**2. Pointwise flatness (the sharpest statement of the family).** The unit-pair-sum profile r_A(x) = #{(u,v)\u2208U\u00b2 : u+v\u2261x} depends only on gcd(x,N) \u2014 flat on all 4 gcd-level sets (e.g. N=899: r = 783/812/810/840 on gcd-levels 1/29/31/899; E-from-levels = direct exactly). Since r\u0302_A = c_N\u00b2 is gcd-invariant, **even the full additive distribution of the units is N-symmetric \u2014 zero asymmetric factor content, not even pointwise.**\n\n**3. Recovery: cleanest of the family.** E\u00b7N \u2212 P(s) = 0 is a **cubic** in s (the \u03c3\u2082\u2074 and \u03c3\u2082\u03c3\u2081\u00b3 quartic terms cancel), and s = p+q is its **unique real root** (15/15 samples \u2014 no spurious roots at all, unlike the gcd-moments' {N\u22121\u2212s, N\u22121, N+1}).\n\n**4. Barriers: 2/4/6/8.**\n- **Barrier 2 (symmetry):** E(U) = F(N, s); the pointwise profile is flat on gcd-level sets. s alone never splits N.\n- **Barrier 4 (free-witness aggregation):** O(N) Ramanujan sweep / FFT.\n- **Barrier 6 (circular):** closed form needs s; gcd-level grouping needs the divisor set = the factorization.\n- **Barrier 8 (known method):** E(U) = (1/N)\u03a3|c_N|\u2074 is the classical Fourier identity; the unit-pair-sum profile is the modular-hyperbola / Cilleruelo\u2013Garaev\u2013Shparlinski subject.\n\n**Reconfirms** TRACEPROFILE/QUERYWIT/GCD-MOMENT: the trace s = p+q is the ceiling of what a symmetric free witness \u2014 aggregate or pointwise \u2014 can carry, and s does not factor.\n\n**Recorded:** notebook Part 139, assessment v169 (393 experiments), paper 58 `58_UnitEnergy_Ramanujan4thMoment.md` (NewMathematics/).\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_1159",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-12T15:22:34.668452+00:00",
     "title": "Exp 393 UNIT-ENERGY: additive energy of the units = Ramanujan 4th moment, closed form ((p\u22121)(q\u22121)/N)(1+(p\u22121)\u00b3)(1+(q\u22121)\u00b3), pointwise-flat on gcd-level sets \u2014 trace-only, never a factor (barriers 2/4/6/8)"
   },
@@ -3642,6 +3641,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-13T21:10:17.113889+00:00",
     "title": "Deepening: The 3SUM-Birthday-Bound Hierarchy"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle c7164926 (Q=0.780), which proved 72 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Paper (factor3):** [ResearchOutput/NewMathematics/22_Round7_Closures.md](https://github.com/paulklemstine/factor3/blob/main/ResearchOutput/NewMathematics/22_Round7_Closures.md)\n\n---\n\n# Round-7 Hypothesis Closures: Scoping the Noise-Floor Principle and the Trace-Lemma Frontier\n\n**Program:** Factori",
+    "domains": [
+      "Tropical"
+    ],
+    "id": "push_c7164926_8a993165",
+    "priority_score": 0.88,
+    "research_mode": "team",
+    "source_exp_id": "c7164926",
+    "status": "available",
+    "timestamp": "2026-08-13T23:09:59.921663+00:00",
+    "title": "Deepening: Round-7 Hypothesis Closures: Scoping the Noise-Floor Principle and the Trace-Lem"
   },
   {
     "consumed_by_exp_id": "",
@@ -18978,6 +18991,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-13T22:10:00.805895+00:00",
     "title": "The five round-3 hypotheses (RS-MIND, MODPAR-CERT, BURAU-ORD, DENS-SUB,"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# FUTURE DIRECTIONS \u2014 after the round-7 closures\n\nThe five Lean files added in `Catalog/Tropical/` make the round-7 verdicts\nprecise: the AGREEMENT aggregate collapses to `\u03c6(N)/2` and to the Jacobi level\nset; the zero-divisor graph is exactly `K_{q-1,p-1}` and its degree sequence is\nthe trace witness; the rho sample set escapes the density floor but only through\npigeonhole correlation plus quadratic aggregation; and the digit-convolution\nrelaxation carries an `O(1)`-norm kernel vector, so no factorisation target is\nisolated. Each closure suggests a sharper, falsifiable successor.\n\n## Conjecture A (structural-witness dichotomy)\n\n*For every prime `p \u2260 q`, any graph invariant of the zero-divisor graph of\n`\u2124/pq\u2124` that is computable in time `polylog N` from `N` alone is a function of\n`N` alone; equivalently, every invariant that separates two semiprimes of equal\nsize requires `\u03a9(min(p,q))` vertex queries.*\n\n**The key insight is** that `Round7ZDG.vertex_gives_factor` shows a *single*\nvertex already yields a factor, so an invariant is either blind (a function of\n`N`) or its evaluation embeds trial division \u2014 there is no middle regime.\n**Why now?** The graph is now a formal `SimpleGraph` with a proven bipartite\nadjacency and degree sequence, so query-complexity statements about it can be\nformalised directly on top of `Round7ZDGDegrees`.\n\n## Conjecture B (atomic-uniform noise floor as a theorem, not a principle)\n\n*Let `D` be any distribution on `[1, N)` whose density is computable from `N` in\n`polylog N` time and is `\u03b5`-close to uniform in total variation. Then a single\nsample from `D` reveals a nontrivial factor with probability at most\n`2/min(p,q) + \u03b5`.*\n\n**The key insight is** that `Round7ZDG.atomic_uniform_success_le` already proves\nthe uniform case with the exact constant `2/p`, and the perturbation term is\nforced by the total-variation bound; the content is that `polylog`-computability\nprevents any density from concentrating on the `p + q - 2` zero divisors.\n**Why now?** The uniform bound is formalised and the vertex set is exactly\ncharacterised, so only the TV-perturbation layer remains.\n\n## Conjecture C (aggregation lower bound for correlated samplers)\n\n*Any algorithm that factors `N = pq` using only pairwise gcds of iterates of a\ndegree-`d` polynomial map mod `N` must perform `\u03a9(\u221ap)` gcd operations, and the\n`p + 1` pigeonhole bound of `exists_collision_mod_p` is tight up to the birthday\nsquare root.*\n\n**The key insight is** that the collision structure proved in\n`Round7RhoNoiseFloor` is purely a statement about the reduced walk on `\u2124/p\u2124`;\nthe birthday bound should therefore be provable as a counting statement about\nfunctional graphs, independently of any randomness assumption.\n**Why now?** The correlation lemma (`rhoZ_iterate_modEq`) and the extraction\nlemma (`gcd_extract_of_dvd_sub`) are both formal, so the remaining step is a\npurely combinatorial estimate on the rho-shaped functional graph.\n\n## Conjecture D (lattice non-isolation in all dimensions)\n\n*For every base `b` and every digit length `n \u2265 2`, the kernel of the digit\nfunctional `w \u21a6 \u03a3 w_{ij} b^{i+j}` on `n \u00d7 n` integer matrices contains\n`(n-1)\u00b2`-many independent vectors of squared norm `2`, and consequently every\nrank-one target has a non-rank-one companion solution at squared distance `\u2264 8`.*\n\n**The key insight is** that the `2 \u00d7 2` commutator `[[0,1],[-1,0]]` generalises to\nall \"anti-diagonal transpositions\" `E_{i,j+1} - E_{i+1,j}`, whose count grows\nquadratically while their norm stays constant \u2014 the target's norm grows, the\nnoise does not.\n**Why now?** The `2 \u00d7 2` case is fully proved in `Round7DigitLattice`\n(`exists_spurious_solution`); the general case is the same identity indexed by a\nlarger family, and it would turn the \"target sits at the Gaussian heuristic\"\nmeasurement into a theorem for all dimensions.\n\n## Conjecture E (tropical corner rigidity)\n\n*In min-plus coordinates the divisor pairs of `N` are exactly the lattice points\nof the tropical line `X \u2299 Y = log N`, and the number of such points within\ndistance `\u03b4` of the corner is `O(N^{\u03b4'})` for explicit `\u03b4'` \u2014 i.e. the corner\nneighbourhood is as sparse as the balanced noise floor predicts.*\n\n**The key insight is** that `corner_straddle` and `trop_mul_log_le` already place\nevery divisor pair on opposite sides of the corner; the missing ingredient is a\ncounting bound for divisors in a short interval around `\u221aN`.\n**Why now?** With the tropical statements in place, the corner-counting question\nbecomes an interval-divisor problem that can be attacked with the existing\n`Nat.divisors` API rather than with new tropical machinery.\n",
+    "domains": [
+      "Computation",
+      "Combinatorics"
+    ],
+    "id": "fd_1245",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "c7164926",
+    "status": "available",
+    "timestamp": "2026-08-13T23:09:51.249888+00:00",
+    "title": "The five Lean files added in `Catalog/Tropical/` make the round-7 verdicts"
   },
   {
     "consumed_by_exp_id": "",

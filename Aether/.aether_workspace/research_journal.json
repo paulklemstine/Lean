@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "36710bef",
-      "domain": "NumberTheory",
-      "key_insight": "# Future directions\n\n## What is now settled\n\nThe previous cycle left six open directions. Five of them are now proved\noutright, and the sixth is settled in part together with an explicit\nobstruction t",
-      "quality_score": 0.7451150000000001,
-      "sorry_count": 0,
-      "theorem_count": 43,
-      "timestamp": "2026-08-09T13:11:42",
-      "title": "The scalar-log unit-circle conjecture is now proved with a certified parameter"
-    },
-    {
       "cycle_id": "48492a97",
       "domain": "Combinatorics",
       "key_insight": "# Future directions\n\nFive falsifiable conjectures distilled from what survived (and what failed) in this cycle.\nThroughout, `F` is a finite field with `q = #F` elements and odd characteristic,\n`χ = qu",
@@ -499,19 +489,19 @@
       "theorem_count": 83,
       "timestamp": "2026-08-13T22:10:10",
       "title": "Round-3 Hypothesis Closures: Five Novel Classical Factoring Hypotheses, Tested and Closed"
+    },
+    {
+      "cycle_id": "c7164926",
+      "domain": "Tropical",
+      "key_insight": "# FUTURE DIRECTIONS — after the round-7 closures\n\nThe five Lean files added in `Catalog/Tropical/` make the round-7 verdicts\nprecise: the AGREEMENT aggregate collapses to `φ(N)/2` and to the Jacobi le",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 72,
+      "timestamp": "2026-08-13T23:09:59",
+      "title": "Round-7 Hypothesis Closures: Scoping the Noise-Floor Principle and the Trace-Lemma Frontier"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "bffb7591",
-      "domain": "Pythagorean",
-      "key_insight": "# Future Directions\n\nThe Lean development proves the sharp deterministic cardinal-growth obstruction and a linear-threshold avoidance theorem.  The following are concrete conjectures extending it.\n\n1.",
-      "quality_score": 0.77061,
-      "sorry_count": 0,
-      "theorem_count": 9,
-      "timestamp": "2026-08-03T04:04:06",
-      "title": "Existence of Dense Sets without Large t‑Fold Sumsets"
-    },
     {
       "cycle_id": "06b881ae",
       "domain": "Physics",
@@ -2501,27 +2491,19 @@
       "theorem_count": 83,
       "timestamp": "2026-08-13T22:10:10",
       "title": "Round-3 Hypothesis Closures: Five Novel Classical Factoring Hypotheses, Tested and Closed"
+    },
+    {
+      "cycle_id": "c7164926",
+      "domain": "Tropical",
+      "key_insight": "# FUTURE DIRECTIONS — after the round-7 closures\n\nThe five Lean files added in `Catalog/Tropical/` make the round-7 verdicts\nprecise: the AGREEMENT aggregate collapses to `φ(N)/2` and to the Jacobi le",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 72,
+      "timestamp": "2026-08-13T23:09:59",
+      "title": "Round-7 Hypothesis Closures: Scoping the Noise-Floor Principle and the Trace-Lemma Frontier"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "83939baf",
-      "domain": "Pythagorean",
-      "name": "with",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "83939baf",
-      "domain": "Pythagorean",
-      "name": "peaks_inter",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "83939baf",
-      "domain": "Pythagorean",
-      "name": "tv_comb_comb",
-      "quality": 0.82
-    },
     {
       "cycle_id": "a46abb10",
       "domain": "Computation",
@@ -2803,9 +2785,27 @@
       "domain": "Computation",
       "name": "bm_cube",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "c7164926",
+      "domain": "Tropical",
+      "name": "redP_ne_zero",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "c7164926",
+      "domain": "Tropical",
+      "name": "redQ_ne_zero",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "c7164926",
+      "domain": "Tropical",
+      "name": "chiP_mul",
+      "quality": 0.78
     }
   ],
-  "last_updated": "2026-08-13T22:10:10",
+  "last_updated": "2026-08-13T23:09:59",
   "open_questions": [
     {
       "context": "+unproved infinite tail as a `sorry`.  The computational certificate; -    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3951,12 +3951,6 @@
     ],
     "Tropical": [
       {
-        "cycle_id": "0f65effc",
-        "quality": 0.7809699999999999,
-        "theorems": 24,
-        "title": "Tropical Scheme Theory: Groebner Bases over the Tropical Semiring"
-      },
-      {
         "cycle_id": "e801d98f",
         "quality": 0.76179,
         "theorems": 29,
@@ -4009,6 +4003,12 @@
         "quality": 0.82,
         "theorems": 65,
         "title": "Round-4 Hypothesis Closures: Five Novel Attacks via Exotic Resources, Tested and"
+      },
+      {
+        "cycle_id": "c7164926",
+        "quality": 0.78,
+        "theorems": 72,
+        "title": "Round-7 Hypothesis Closures: Scoping the Noise-Floor Principle and the Trace-Lem"
       }
     ]
   }
