@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "8dd43c13",
-      "domain": "Applications",
-      "key_insight": "# Future directions\n\nThe file `Applications/EML/ActivationMonotonicityTropicalBridge.lean` proves:\n\n* the exact derivative and second-derivative formulas for the generalized EML\n  activation `E_{a,b}(",
-      "quality_score": 0.79294,
-      "sorry_count": 0,
-      "theorem_count": 32,
-      "timestamp": "2026-08-05T12:25:58",
-      "title": "EML-Activation-Monotonicity: Global Convexity Conditions for EML Transcendentals"
-    },
-    {
       "cycle_id": "63e5c24f",
       "domain": "Computation",
       "key_insight": "# Rotated Laplacians and periodicity ratios: results and future directions\n\nTwo self-contained Lean files were produced, both building with no `sorry` and\ndepending only on the standard axioms (`prope",
@@ -499,19 +489,19 @@
       "theorem_count": 7,
       "timestamp": "2026-08-12T23:09:13",
       "title": "A Knot-Number Theory Bridge (Alexander polynomial)"
+    },
+    {
+      "cycle_id": "24da7a57",
+      "domain": "Combinatorics",
+      "key_insight": "# Future Directions — bold, testable conjectures from the Round-11 closures\n\nDerived from what survived, and from what the proofs actually needed, in\n`Catalog/Combinatorics/Round11CycleIndexFingerprin",
+      "quality_score": 0.84,
+      "sorry_count": 0,
+      "theorem_count": 69,
+      "timestamp": "2026-08-13T00:05:25",
+      "title": "Round-11 Closures: The Definitive Closure of the Classical Surface"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "ffa9af78",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions\n\nThe exact interior-fiber theorem reduces several follow-up questions to explicit properties of the two inverse branches. The following are concrete, falsifiable conjectures.\n\n1. *",
-      "quality_score": 0.74086,
-      "sorry_count": 0,
-      "theorem_count": 12,
-      "timestamp": "2026-08-02T11:44:14",
-      "title": "Exact fiber cardinality.: Upgrade the explicit injection of `2^n` seeds to"
-    },
     {
       "cycle_id": "8e0a0c8a",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 7,
       "timestamp": "2026-08-12T23:09:13",
       "title": "A Knot-Number Theory Bridge (Alexander polynomial)"
+    },
+    {
+      "cycle_id": "24da7a57",
+      "domain": "Combinatorics",
+      "key_insight": "# Future Directions — bold, testable conjectures from the Round-11 closures\n\nDerived from what survived, and from what the proofs actually needed, in\n`Catalog/Combinatorics/Round11CycleIndexFingerprin",
+      "quality_score": 0.84,
+      "sorry_count": 0,
+      "theorem_count": 69,
+      "timestamp": "2026-08-13T00:05:25",
+      "title": "Round-11 Closures: The Definitive Closure of the Classical Surface"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "6b69485b",
-      "domain": "Cryptography",
-      "name": "sum_eq_ray",
-      "quality": 0.720175
-    },
-    {
-      "cycle_id": "6b69485b",
-      "domain": "Cryptography",
-      "name": "isCoprime_ray_iff",
-      "quality": 0.720175
-    },
-    {
-      "cycle_id": "2c80b5b7",
-      "domain": "Shared",
-      "name": "lengths",
-      "quality": 0.727445
-    },
     {
       "cycle_id": "d1971d75",
       "domain": "Combinatorics",
@@ -2803,9 +2785,27 @@
       "domain": "Computation",
       "name": "spectrum_eq_of_torusAlexander_eq",
       "quality": 0.9
+    },
+    {
+      "cycle_id": "24da7a57",
+      "domain": "Combinatorics",
+      "name": "prime_dvd_pow_sub_one_iff",
+      "quality": 0.84
+    },
+    {
+      "cycle_id": "24da7a57",
+      "domain": "Combinatorics",
+      "name": "gcd_prime_eq",
+      "quality": 0.84
+    },
+    {
+      "cycle_id": "24da7a57",
+      "domain": "Combinatorics",
+      "name": "fpr_eq_indicator",
+      "quality": 0.84
     }
   ],
-  "last_updated": "2026-08-12T23:09:13",
+  "last_updated": "2026-08-13T00:05:25",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3207,12 +3207,6 @@
     ],
     "Combinatorics": [
       {
-        "cycle_id": "39ee2889",
-        "quality": 0.7010699999999999,
-        "theorems": 34,
-        "title": "Concrete, falsifiable conjectures arising from the formalization in"
-      },
-      {
         "cycle_id": "09b12514",
         "quality": 0.6640958333333333,
         "theorems": 721,
@@ -3265,6 +3259,12 @@
         "quality": 0.6286056450320513,
         "theorems": 106,
         "title": "Deepening: Concrete, falsifiable conjectures arising from the formalization in"
+      },
+      {
+        "cycle_id": "24da7a57",
+        "quality": 0.84,
+        "theorems": 69,
+        "title": "Round-11 Closures: The Definitive Closure of the Classical Surface"
       }
     ],
     "Computation": [
