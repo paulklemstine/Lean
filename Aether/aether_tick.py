@@ -2104,7 +2104,7 @@ def rebuild_commit_push() -> bool:
     status_dir = docs_dir / "aether_status"
     try:
         status_dir.mkdir(parents=True, exist_ok=True)
-        for status_file in ["inflight_jobs.json", "insights.json", "tick_counter.json", "cycle_analytics.json"]:
+        for status_file in ["inflight_jobs.json", "insights.json", "cycle_analytics.json"]:
             src = workspace / status_file
             if src.exists():
                 import shutil
@@ -2219,7 +2219,6 @@ def rebuild_commit_push() -> bool:
             "Aether/.aether_workspace/research_threads.json",
             "Aether/.aether_workspace/inflight_jobs.json",
             "Aether/.aether_workspace/insights.json",
-            "Aether/.aether_workspace/tick_counter.json",
             "Aether/.aether_workspace/exp_id_map.json",
             "Aether/.aether_workspace/prune_state.json",
             "Aether/.aether_workspace/phase_b_threshold_cache.json",

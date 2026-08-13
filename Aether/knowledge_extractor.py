@@ -4601,7 +4601,6 @@ Research mode: {concept.research_mode}
                 "Aether/.aether_workspace/research_threads.json",
                 "Aether/.aether_workspace/inflight_jobs.json",
                 "Aether/.aether_workspace/insights.json",
-                "Aether/.aether_workspace/tick_counter.json",
                 "Aether/.aether_workspace/exp_id_map.json",
                 "Aether/.aether_workspace/prune_state.json",
                 "Aether/.aether_workspace/phase_b_threshold_cache.json",
