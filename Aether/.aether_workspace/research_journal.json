@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "df8839cd",
-      "domain": "Pythagorean",
-      "key_insight": "# Future directions\n\n## What this cycle settled\n\nThe previous cycle left the exact rank of a uniform divisor on a complete graph as\nits headline conjecture: the *upper* bound `r(m·1) ≤ m(m+3)/2` on `K",
-      "quality_score": 0.71728,
-      "sorry_count": 0,
-      "theorem_count": 70,
-      "timestamp": "2026-08-07T19:26:07",
-      "title": "This cycle settled the *uniform half-canonical existence* question for almost al"
-    },
-    {
       "cycle_id": "339ae990",
       "domain": "Novelty",
       "key_insight": "# Future directions (next cycle)\n\nThis cycle closed all five directions carried over from the previous cycle; the\nresults live in `Catalog/Novelty/EulerMascheroniSharpTails.lean` and are proved\nwithou",
@@ -499,19 +489,19 @@
       "theorem_count": 127,
       "timestamp": "2026-08-13T18:15:13",
       "title": "Construct a Boolean-valued universe whose generic quotients instantiate the abst"
+    },
+    {
+      "cycle_id": "f3293094",
+      "domain": "Tropical",
+      "key_insight": "# Future Directions — tropical reading of the round-4 closures\n\nDerived from the analysis and adversarial review of the four Lean files in\n`Catalog/Tropical/` (`TropicalTorsionCensus`, `TropicalCensus",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 65,
+      "timestamp": "2026-08-13T21:10:03",
+      "title": "Round-4 Hypothesis Closures: Five Novel Attacks via Exotic Resources, Tested and Closed"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "d7c83314",
-      "domain": "NumberTheory",
-      "key_insight": "# Future directions\n\n## Verified outcome of this phase\n\nThe formal development in `Catalog/Geometry/StereographicCapacity/Contrarian.lean`\nproves the finite-measure packing principle and specializes i",
-      "quality_score": 0.7814599999999999,
-      "sorry_count": 0,
-      "theorem_count": 11,
-      "timestamp": "2026-08-03T00:21:55",
-      "title": "Stereographic Capacity Theory: Packing Bounds on Spheres via Plane Geometry"
-    },
     {
       "cycle_id": "76a9f834",
       "domain": "Cryptography",
@@ -2501,27 +2491,19 @@
       "theorem_count": 127,
       "timestamp": "2026-08-13T18:15:13",
       "title": "Construct a Boolean-valued universe whose generic quotients instantiate the abst"
+    },
+    {
+      "cycle_id": "f3293094",
+      "domain": "Tropical",
+      "key_insight": "# Future Directions — tropical reading of the round-4 closures\n\nDerived from the analysis and adversarial review of the four Lean files in\n`Catalog/Tropical/` (`TropicalTorsionCensus`, `TropicalCensus",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 65,
+      "timestamp": "2026-08-13T21:10:03",
+      "title": "Round-4 Hypothesis Closures: Five Novel Attacks via Exotic Resources, Tested and Closed"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "24da7a57",
-      "domain": "Combinatorics",
-      "name": "prime_dvd_pow_sub_one_iff",
-      "quality": 0.84
-    },
-    {
-      "cycle_id": "24da7a57",
-      "domain": "Combinatorics",
-      "name": "gcd_prime_eq",
-      "quality": 0.84
-    },
-    {
-      "cycle_id": "24da7a57",
-      "domain": "Combinatorics",
-      "name": "fpr_eq_indicator",
-      "quality": 0.84
-    },
     {
       "cycle_id": "fb76e61b",
       "domain": "Cryptography",
@@ -2803,9 +2785,27 @@
       "domain": "Logic",
       "name": "bval_fls",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "f3293094",
+      "domain": "Tropical",
+      "name": "divisors_semiprime",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "f3293094",
+      "domain": "Tropical",
+      "name": "card_divisors_semiprime",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "f3293094",
+      "domain": "Tropical",
+      "name": "tau_cannot_locate",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-13T18:15:13",
+  "last_updated": "2026-08-13T21:10:03",
   "open_questions": [
     {
       "context": "-    sorry+  have hchecked := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3951,12 +3951,6 @@
     ],
     "Tropical": [
       {
-        "cycle_id": "9fb19498",
-        "quality": 0.79021,
-        "theorems": 11,
-        "title": "Tropical Intersection Theory"
-      },
-      {
         "cycle_id": "0f65effc",
         "quality": 0.7809699999999999,
         "theorems": 24,
@@ -4009,6 +4003,12 @@
         "quality": 0.86,
         "theorems": 75,
         "title": "The Jacobi-Signed Circle Count Escapes the Residue Dial, at the Weil Floor"
+      },
+      {
+        "cycle_id": "f3293094",
+        "quality": 0.82,
+        "theorems": 65,
+        "title": "Round-4 Hypothesis Closures: Five Novel Attacks via Exotic Resources, Tested and"
       }
     ]
   }
