@@ -515,44 +515,6 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "a3466461",
-    "description": "**Paper:** `ResearchOutput/NewMathematics/46_SymmetryBreaking_Cost.md` (factor3)\n**Experiment:** ISOLATION-COST (#381), assessment v157.\n\n## Finding\nThe residues are INFORMATION-sufficient but COMPUTATION-sealed. Verified:\n1. **Oracle isolation = log₂(π(√N)) exactly** (ratio 0.96–1.03 across 15–33 bits,\n   31–7894 candidates): with an oracle revealing [(a_i|p₀)], p₀ is isolated among\n   ALL primes < √N in poly(log N) queries; divisibility then factors N. The\n   residue vector carries ~½log₂N bits of factor information.\n2. **Zero pruning from N alone** (QRLEAK/COMPENSATING-PARTNER): the symmetric\n   battery [(a_i|N)] leaves every candidate surviving.\n3. The gap = barrier 4's aggregation = the symmetry-breaking cost.\n\n## The measurement\n| resource | cost to isolate p₀ |\n|----------|-------------------|\n| residue oracle | log₂(π(√N)) |\n| N alone (symmetric) | ∞ (zero pruning) |\n| free-witness aggregation | Ω(N) (barrier 4) |\n| quantum (Shor) | poly(log N) — asymmetric order-readout |\n\nBarrier 4's aggregation is the price of the asymmetry. Shor's QFT is a different\npayment: an asymmetric readout in superposition. Both are symmetry-breaking\nresources.\n\n## Verdict\nREFUTED as a tool (barrier 2/4/6), but unifies frontiers (i) and (ii): the\nquantum channel is a symmetry-breaking resource whose value is the aggregation it\nbypasses. Classical uniform hint-free surface remains exhausted.\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1142",
-    "lineage_refs": [],
-    "priority_score": 1000.0,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-12T05:10:44.745913+00:00",
-    "title": "The Symmetry-Breaking Cost of Factoring, Measured"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
-    "consumed_by_exp_id": "d8dbb938",
-    "description": "**Paper:** `ResearchOutput/NewMathematics/45_DialThreshold_NoAmplification.md` (factor3)\n**Experiment:** DIAL-THRESHOLD (#380), assessment v156.\n\n## Finding\nCan the free-witness residue dials (Kronecker (D_i|p) over fundamental\ndiscriminants) amplify a Coppersmith partial-key hint (p mod m, m = N^{1/4})?\nVerified with the precise condition **M* | m** (dial conductor-lcm divides the\nhint modulus):\n1. **Regime 1 (M* | m): zero pinning.** N=808M (m=168, M*=12,84,168 all divide\n   m): the vector is computable from the hint but CONSTANT on the candidate set —\n   dials add nothing beyond the hint.\n2. **Regime 2 (M* ∤ m): not computable.** N=340M (m=135, 12 ∤ 135): even K=1\n   needs p mod 12, which the hint p mod 135 doesn't determine. Pinning dials need\n   p mod M* > m — unavailable from the hint.\n\n## Why it collapses (barrier 2 + 4 + 6)\nInformation-sufficient dials (K ≈ Θ(log N), M* ≫ N^{1/4}) are computationally\ninaccessible (asymmetric residues of p — barrier 2; sealed behind Ω(N)-aggregated\nC_D(N) — barrier 4; need p mod M* beyond the hint — barrier 6). Computable dials\n(M* | m) are constant on candidates — information-useless.\n\n## Verdict\nREFUTED. The partial-key hint must be genuinely external — self-generated residue\namplification is impossible. Settles the frontier-iii combination question.\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1143",
-    "lineage_refs": [],
-    "priority_score": 1000.0,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-12T05:10:44.746301+00:00",
-    "title": "Residue Dials Cannot Amplify a Coppersmith Hint, Closed"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
     "consumed_by_exp_id": "c98081c2",
     "description": "**Paper:** `ResearchOutput/NewMathematics/44_NoPinning_Lemma.md` (factor3)\n**Experiment:** COMPENSATING-PARTNER (#379), assessment v155.\n\n## Finding\nGeneralize QRLEAK's Dirichlet no-pruning to the FULL class of poly(log N)-\ncomputable predicates: N mod m (m ≤ B), Jacobi symbols (a|N), gcd(f(N), N).\nVerified (36/36):\n1. For any target N₀ and candidate prime p′ (coprime to L = lcm(1..B)), a\n   compensating prime q′ ≡ N₀·p′⁻¹ mod L exists (Dirichlet) and the ENTIRE\n   battery agrees on N′=p′q′ — residues AND Jacobi symbols.\n2. **The pinned set = primes dividing L = O(poly(log N))** — 3.4% at B=12,\n   vanishing as B grows (~√N/log N candidates).\n3. gcd(N+k, N) = gcd(k, N) — polynomial gcds are functions of N (barrier 1),\n   adding no pinning power.\n\n## The lemma\n**No poly(log N)-computable congruence battery can pin an individual factor.**\nThis is the unconditional half of the barrier-4 proof program: \"poly-computable\n⇒ no-pinning ⇒ cannot factor\" is verified exhaustively. The open half is the\nconverse: \"factor-revealing ⇒ Ω(N)-sealed.\"\n\n## Why it collapses (barrier 2 + 5)\nPoly-computable predicates are symmetric functions of (p,q); symmetric\npredicates leave every candidate consistent. Only the asymmetric sealed\nfree-witness coordinates pin — and they are barrier 4's territory.\n\n## Verdict\nREFUTED as a factoring tool, but a theorem-shaped frontier-i result: the\nclass-wide no-pinning lemma. Classical uniform hint-free surface remains\nexhausted.\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)",
     "domain_bridges": [],
@@ -1161,7 +1123,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "ee08574a",
+    "consumed_by_exp_id": "76bc5d99",
     "description": "## OR-DIAL-MAXIMUM (round-20 #1, experiment 408, assessment v184, paper 73)\n\n**A global cap on the semiprime OR dial.** Papers 69–72 measured specific OR channels (S₃ identity-rate ≈ 0.12; order-n character events exactly g(n) ≤ 0.3113). Here is the variational principle: for ANY class-rate profile r: (Z/m)^× → [0,1] (r(c) = P(fork event | p ≡ c mod m)), the semiprime OR channel obeys\n\n**max_r I(N mod m; [E(p) OR E(q)]) = g(2) = H(3/4) − ½H(1/2) = 0.3113 bits, attained exactly by the quadratic-character kernel profiles (r = 1 on an index-2 subgroup of the units, 0 elsewhere) and their complement/AND transforms.**\n\n### Machine-verified by EXACT enumeration (no sampling)\n\nThe counting identity over unit pairs ab ≡ N mod m gives P(OR|N≡c) = 1 − (1/φ)Σ_a (1−r(a))(1−r(ca⁻¹)). Enumerating ALL 2^φ 0/1 profiles on nine moduli (m = 3,4,5,7,8,9,11,16,21 — prime/composite conductors, cyclic and non-cyclic unit groups C₂×C₂, C₂×C₄, C₂×C₆):\n\n| m | unit group | global max I | argmax |\n|---|---|---|---|\n| 3, 4, 5, 7 | C₂/C₄/C₆ | 0.3113 = g(2) on every modulus | QR kernel + complement |\n| 8 | C₂×C₂ | 0.3113 | three quadratic chars of conductor 8 |\n| 9, 11 | C₆/C₁₀ | 0.3113 | QR kernel + complement |\n| 16, 21 | C₂×C₄/C₂×C₆ | 0.3113 | three index-2 kernels each |\n\nNo 0/1 profile on any modulus exceeds the cap. Every subgroup-kernel profile re-derives paper 72's law EXACTLY (30 subgroups, I = g(index) to 10⁻⁹). Continuous coordinate ascent over [0,1]^φ (m=7,11,16) never exceeds g(2).\n\n### Realizable forks: quadratic kernels hit the cap, everything else is below\n\nQ(√5) m=5, Q(i) m=4, Q(√−11) m=11, (8|p) m=8 (non-cyclic units) — **all I = 0.3113 = g(2)**, P(OR)=3/4. Cyclic cubic m=7: g(3)=0.0728. Q(ζ₅): g(4)=0.0359. S₃ cubic x³+x+1 mod 31 variable profile (per-QR-class identity rates 0.287–0.349, 1.0 on non-QR): Φ = 0.1230, direct MC 0.1284, which-factor wall 0.0024.\n\n### Structure\n\n- Complement of a character event: **identical Φ** (0.3113 on m=5,8,11).\n- AND event: exact companion law Φ_AND(n) = H(1/n²) − (1/n)H(1/n), verified (n=2: 0.3113 = g(2); n=3: 0.1972 > g(3); n=4: 0.1345 > g(4)); capped at g(2).\n- XOR of a quadratic kernel = DETERMINISTIC function of N (χ(N)=−1): I = 1.0000 bit exactly, N-computable, factor-useless — the sharpest proof that raw MI is not factor information.\n\n### Unification & factor-uselessness\n\nPaper 54's p−1 ℓ=3 OR (0.313) IS the cap (g(2), f=3); papers 69–70's S₃ profile (0.12) is a variable profile below the cap; paper 72's order-n events are the subgroup kernels, of which the index-2 are the global maximizers. Symmetric (barrier 2), residue dial (barrier 5), sealed behind the CRT (barrier 6), all classical reciprocity (barrier 8). The OR/residue-dial line is now closed by a single global maximum.\n\n**Verdict:** variational principle CONFIRMED (machine-verified). Round-20 1/1 done. Barriers 2/5/6/8.\n",
     "domain_bridges": [],
     "domains": [
@@ -1180,26 +1142,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "## ABELIAN-TYPE-CHANNEL (round-23 #1, experiment 414, assessment v190, paper 79)\n\n**The type-pair law is universal over all abelian cyclotomic conductors — and the >1-bit threshold is multi-stateness, not cyclicity (cyclicity amplifies). The motivating hypothesis is honestly refuted at the threshold: non-cyclic abelian groups DO exceed 1 bit when they have ≥3 type states.**\n\n### Universality\n\nPaper 78 proved I_pair = H(Π) − (1/φ(f))Σ_c H(Π_c) for cyclic fields (f prime). The same exact law holds on ALL abelian conductors — cyclic primes (5,7,13), cyclic prime powers (9=3², 25=5²), and non-cyclic abelian unit groups (C₂×C₂ f=8,12; C₂×C₂×C₂ f=24; C₂×C₄ f=15,20; C₂×C₂×C₄ f=40). Exact enumeration + 30k semiprime MC agree within 0.01 (f=8 0.2914 vs 0.2947; f=9 1.4749 vs 1.4739; f=15 1.0712 vs 1.0737; f=40 1.0216 vs 1.0226).\n\n### Prime level on composite conductors\n\nI(p mod f; T) = H(T) EXACT — first measured on non-cyclic abelian groups: C₂×C₄ (f=15) carries a **1.40-bit** multi-state type channel (1.4030 vs H(T)=1.4056), C₂×C₂×C₄ (f=40) 1.2700 vs 1.2718. **[T=1] splits-completely pins at H(1/φ(f)) EXACTLY for every composite f**: f=8 0.8092 = H(1/4) (= paper 77's V₄ = Q(ζ₈)); f=15 0.5397 = H(1/8) — the **FIRST C₂×C₄ pinning**; f=40 0.3352 = H(1/16) — the **FIRST C₂×C₂×C₄ pinning**. Thickening zero (f=15: I(p mod 225; T) = I(p mod 15; T)); coprime controls flat.\n\n### Corrected structure law\n\nThe claim \"non-cyclic ⟹ ≤ 1 bit\" is FALSE: C₂×C₄ (f=15,20) I_pair = **1.0737** and C₂×C₂×C₄ (f=40) = **1.0226**, both exceeding the binary-fork cap. The true threshold is TYPE-STATE COUNT:\n\n- **2 states ⟹ I_pair = Is(φ(f)) EXACTLY** (the type pair IS the split count): f=8 0.2947 = Is(4) — the full type channel of Q(ζ₈) is exactly paper 77's split-count; f=24 0.0906 = Is(8). Paper 74's Is(n) is the 2-state face.\n- **≥ 3 states ⟹ I_pair > 1 bit**, cyclic and non-cyclic alike.\n\nBut **cyclicity amplifies** — a clean 1D > 2D > 3D character law among 3-state groups:\n\n| group | I_pair |\n|---|---|\n| C₄ (cyclic, 1D) | 1.2500 |\n| C₂×C₄ (2D) | 1.0737 |\n| C₂×C₂×C₄ (3D) | 1.0226 |\n\nA cyclic (1-dimensional) character concentrates the N-conditioning best; each extra generator erodes the channel.\n\n### Two exact identities\n\n- **Prime-power identity**: Q(ζ₉) (3², C₆) has EXACTLY the same type law as Q(ζ₇) (p, C₆) — I_pair = 1.4739 both. The type law of a cyclic field depends only on the cyclic order φ(f), not the conductor.\n- **2-state identity**: for any 2-state type, I_pair = Is(φ(f)) EXACT (verified to 1e-9 on f = 8, 12, 24).\n\nSemiprime checks: which-factor wall 0.0000–0.0002 (symmetric, factor-useless); coprime controls flat; s-projection recovers Is(φ) (f=15 0.0888 vs Is(8)=0.0906; f=40 0.0257 vs Is(16)=0.0267).\n\n### Verdict\n\nCONFIRMED (universal law + corrected threshold). New exact objects: the type-pair law on non-cyclic abelian groups, the composite-conductor [T=1] pinnings (first C₂×C₄ and C₂×C₂×C₄), the prime-power identity, the 2-state identity, and the 1D>2D>3D amplification law. Factor-useless: symmetric (barrier 2), pure p-mod-f residue dial (barrier 5), N-computable only behind the CRT split (barrier 6), cyclotomic fields + Dirichlet characters + CRT + Chebotarev 1922 (barrier 8). Unifies papers 74 (Is(n) = 2-state face), 77 (Q(ζ₈) = the 2-state type channel), 78 (cyclic prime type channel). Barriers 2/5/6/8.\n\n*Script:* /tmp/exp_abeltype.py.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1181",
-    "lineage_refs": [],
-    "priority_score": 1000.0,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-12T20:10:55.541099+00:00",
-    "title": "ABELIAN-TYPE-CHANNEL (round-23 #1, experiment 414, assessment v190, paper 79)"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1b55f202",
     "description": "## CYCLIC-TYPE-CHANNEL (round-22 #2, experiment 413, assessment v189, paper 78)\n\n**The complete splitting-type channel of a cyclic field exceeds the 1-bit binary-fork cap. Papers 72–74 capped every BINARY symmetric semiprime fork at 1.0 bit; the cyclic splitting type is multi-state, and its type-pair channel carries 1.2500 (C₄) / 1.4739 (C₆) bits — strictly above the cap.**\n\n### The type channel\n\nFor Q(ζ_f), f prime, Gal = (Z/f)^× = C_n (n = f−1), the Frobenius order T(p) = ord_f(p) (the residue degree) is the complete splitting type — a deterministic function of p mod f, so **I(p mod f; T) = H(T) EXACT**: C₄ = Q(ζ₅) → 3 states {1,2,4} rates {1/4,1/4,1/2}, H = 1.5 bits (measured 1.4989); C₆ = Q(ζ₇) → 4 states {1,2,3,6} rates {1/6,1/6,1/3,1/3}, H = 1.9183.\n\n- **[T=1] splits-completely = H(1/n)**: C₄ 0.8098 = H(1/4) = 0.8113 EXACT — the **FIRST prime-level QUARTIC-character pinning**; C₆ 0.6497 = H(1/6). Every type face equally pinned ([T=2] 0.8110 = H(1/4), [T=4] 1.0000 = H(1/2)).\n- **Thickening zero**: I(p mod f²; T) = I(p mod f; T) EXACT (T depends only on p mod f). Coprime controls flat.\n- **Root-count readout is LOSSY**: nr collapses [2,2]/[4] (and [2,2,2]/[3,3]/[6]) to nr=0 — the nr-channel is BINARY (C₄ 0.8109, C₆ 0.6498) strictly below H(T). **The type, not the root count, is the complete object.**\n\n### The semiprime law — exact, and above the 1-bit cap\n\nThe unordered type-pair {T(p),T(q)} obeys the exact law **I_pair = H(Π) − (1/φ(f))Σ_c H(Π_c)**, Π_c the pair law under N ≡ c mod f, computable by exact enumeration over the unit group. Machine-verified (30k semiprimes):\n\n| field | H(T) | H(pair) | H(pair\\|N) | I_pair (exact) | I_pair (MC) |\n|---|---|---|---|---|---|\n| C₂ Q(√5) | 1.0000 | 1.5000 | 0.5000 | **1.0000** | 1.0000 |\n| C₄ Q(ζ₅) | 1.5000 | 2.3750 | 1.1250 | **1.2500** | 1.2452 |\n| C₆ Q(ζ₇) | 1.9183 | 3.1144 | 1.6405 | **1.4739** | 1.4711 |\n\nC₂ reproduces the paper-74 cap exactly (the quadratic type pair IS the split-count); **C₄ and C₆ both EXCEED 1.0 bit**. Which-factor wall 0.0001 (symmetric, factor-useless); coprime controls flat. The s-projection recovers Is(n) EXACTLY (C₄ 0.2896 vs Is(4)=0.2947; C₆ 0.1445 vs Is(6)=0.1487) — the split-count is ONE face of the richer type channel.\n\n### Growth law: no 1-bit cap\n\n| n | field | #states | H(T) | I_pair | above 1 bit? |\n|---|---|---|---|---|---|\n| 2 | Q(√5) | 2 | 1.0000 | 1.0000 | at cap |\n| 4 | Q(ζ₅) | 3 | 1.5000 | 1.2500 | **YES** |\n| 6 | Q(ζ₇) | 4 | 1.9183 | 1.4739 | **YES** |\n| 10 | Q(ζ₁₁) | 4 | 1.7219 | 1.2027 | **YES** |\n| 12 | Q(ζ₁₃) | 6 | 2.4183 | 1.7239 | **YES** |\n| 16 | Q(ζ₁₇) | 5 | 1.8750 | 1.3281 | **YES** |\n\nEvery n ≥ 4 exceeds 1.0 bit; the value is governed by the **divisor structure of the cyclic order** (n=12, six states, richest at 1.7239).\n\n### Verdict\n\nCONFIRMED. New exact objects: the type-pair law I_pair = H(Π) − (1/φ)ΣH(Π_c) (first symmetric channels above the binary-fork cap), the C₄ prime-level quartic pinning, root-count lossiness (type multi-state, nr binary), and Is(n) as the s-projection of the type channel. Factor-useless: symmetric (which-factor wall 0.0001, barrier 2), a pure p-mod-f residue dial (barrier 5), N-computable only behind the CRT split (barrier 6), cyclotomic fields + Dirichlet characters + CRT + Chebotarev 1922 (barrier 8). Unifies papers 54/71/72/74. Barriers 2/5/6/8.\n\n*Script:* /tmp/exp_typechan.py.\n",
     "domain_bridges": [],
     "domains": [
@@ -1211,47 +1154,9 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-12T20:10:55.541631+00:00",
     "title": "CYCLIC-TYPE-CHANNEL (round-22 #2, experiment 413, assessment v189, paper 78)"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "## C2XC2-PINNING-CONTRAST (round-22 #1, experiment 412, assessment v188, paper 77)\n\n**The first 2-dimensional abelianization G^ab = C₂×C₂, tested on the control pair of Q(√2,i) = Q(ζ₈) (Gal = V₄, ABELIAN) and Q(∜2,i) (Gal = D₄, non-abelian) — identical character lattice, same abelianization, differing only in abelian-ness. The paper-71 criterion in its cleanest form: abelian V₄ pins the identity; non-abelian D₄ cannot.**\n\n### The control pair\n\nBoth fields share the three quadratic subfields Q(√2), Q(i), Q(√−2) ⟹ the identical character lattice — (2|p) cond 8, (−1|p) cond 4, (−2|p) cond 8, all N-computable via p mod 8 — and the same G^ab = C₂×C₂. Only abelian-ness differs: V₄ (x⁴−2x²+9, disc 384²) is abelian; D₄ (x⁴−2, disc −2¹¹, [D₄,D₄]=⟨r²⟩≅C₂) is not. Histograms over 22,997 primes (2^18): V₄ nr=4 0.2487 (1/4), nr=0 0.7513; D₄ nr=4 0.1238 (1/8), nr=0 0.6257 (5/8), nr=2 0.2505 (1/4) — the exact signatures.\n\n### The criterion on the 2D abelianization\n\n- **V₄ (abelian) ⟹ every fork pins**: [nr=4] ⟺ p≡1 mod 8, I = 0.8092 = H(1/4) = 0.8113 EXACT.\n- **D₄ (non-abelian) ⟹ only the ⟨r²⟩-coset forks pin**: [nr=2] (rate 1/4) ⟺ p≡7 mod 8, I = 0.8120 = H(1/4) EXACT — the first **JOINT-AND 2D fork** (AND of (2|p)=+1 with (−1|p)=−1; no character mod 8 has {7} as a level set); complement [nr∈{4,0}] ⟺ p∈{1,3,5} mod 8 equally pinned.\n- **The identity [nr=4] = {e} (rate 1/8) CANNOT pin**: e shares the commutator coset {e,r²} with r² (same C₂×C₂ fibre (+1,+1)) ⟹ **LEAKAGE** I = 0.2916 = H(1/8) − (1/4)H(1/2) = 0.29356 EXACT, CAPPED at every m (ladder m=4 0.1379, m=8/16 0.2936, coprime m=5 0). Large partner [nr=0] (rate 5/8) leaks 0.70443 EXACT.\n\n### Within-coset: the e-vs-r² commutator coin\n\nP([e] | p≡1 mod 8) = **0.4980** (D₄: e vs r² a fair coin in the commutator fibre) vs **1.0000** (V₄: pinned). I(p mod 16; [e] | p≡1 mod 8) = 0.0000 (z = −0.61) — the beyond-the-dial refinement invisible to every modulus. Cap check I(m=8)=I(m=16)=0.2916 < H(1/8) = 0.5436.\n\n### Semiprime (30k)\n\nThe paper-74 order-4 split-count law holds EXACTLY on BOTH rate-1/4 forks, including the D₄ joint-AND 2D event on a non-abelian field: V₄ [split] s 0.2892 vs Is(4)=0.2947, OR 0.0349 vs g(4)=0.0359, AND 0.1323 vs A(4)=0.1345, XOR 0.1994 vs X(4)=0.2044; D₄ [nr=2] s 0.3003, OR 0.0363, AND 0.1376, XOR 0.2087. The D₄ [e] leakage fork — the SEMIPRIME COLLAPSE of prime-level leakage: s 0.0421 (law 0.0428), OR 0.0034 (0.0030), AND 0.0306 (0.0318), XOR 0.0138 (0.0135). Which-factor wall 0.0000 for all three forks.\n\n### Classification table (C₂×C₂ row closed)\n\nC₂→quadratic (54/72); C₃→cubic H(1/3) (71); C₅→order-5 H(1/5) (76); S₃/S₄→sign-only (65–71); A₄→cubic+within-V₄ flat (75); A₅→absolutely flat (76); **V₄→every fork pins [e]=H(1/4) EXACT; D₄→coset-forks pin ([nr=2] joint-AND H(1/4)), [e] leaks 0.2936 capped, [nr=0] leaks 0.7044** (this paper). The 2D abelianization adds pinning CONTENT but the e-vs-r² refinement stays commutator-invisible.\n\n### Verdict\n\nCONFIRMED. The paper-71 criterion holds on the first 2-dimensional abelianization; the control pair is its cleanest statement. Factor-useless: symmetric class functions with residue content only at the N-computable abelianization (barrier 2), a full 2D residue dial with invisible beyond-dial refinement (barrier 5), the C₂×C₂ fibre IS the quadratic-reciprocity content — computing the coset IS computing (χ₂(p),χ₄(p)) (barrier 6), all Galois 1832 + cyclotomic fields + quadratic/octic reciprocity + Chebotarev 1922 (barrier 8). Unifies papers 71, 74, 75, 76. Barriers 2/5/6/8.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1183",
-    "lineage_refs": [],
-    "priority_score": 1000.0,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-12T20:10:55.542082+00:00",
-    "title": "C2XC2-PINNING-CONTRAST (round-22 #1, exp 412, v188): 2D abelianization — abelian V4 pins [e], non-abelian D4 cannot"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Network lab iteration 1 (compression axis). Hypothesis: per-layer quantization sensitivity is governed by each weight matrix's participation ratio (effective rank) PR=(Σσ²)²/Σσ⁴.\n\n**Laws measured (3 seeds × 2 model classes, RTN per-row quantization, clean held-out):**\n\n**MLP (5-layer, smooth 2D classification — generalizes, no grokking):** the minimal bits b* to keep ≥98% held-out accuracy is a MONOTONE step function of PR — high-rank bottleneck (PR≈5.4) needs 6 bits every seed, rank-1 readout (PR=1.0) needs 2 bits every seed. corr(PR, 3-bit damage) = −0.80/−0.92/−0.90; corr(PR, b*) = +0.87/+0.58/+0.94. PR-proportional equal-budget allocation beats uniform-4 on 2/3 seeds (+2.9/+3.5 pp at equal-or-fewer bits). PR is a DATA-FREE, BACKWARD-FREE sensitivity estimate (one SVD per layer).\n\n**Transformer LM (2-layer, 2nd-order automaton, test=1.0 — perfectly generalizing):** the law REVERSES — every interior matrix (PR 12–25) is robust at 2 bits, while the LOW-PR input embeddings (PR≈4.4, 9.4) are the fragile layers (b*=3). Mechanism: per-row RTN at 2 bits has 1 level → collapses the 5-row embedding to ±max sign patterns. Joint quantization compounds: uniform-2 fails (0.59–0.91), uniform-3 lossless (0.98–1.0) → per-layer isolation undercounts joint damage.\n\n**Verdict:** CONFIRMED within class, REFUTED as blanket transfer. Honest domain boundary: a data-free spectral law with a documented non-transfer; joint-aware allocation and real-scale (small BERT) validation are the next steps.\n\nBarriers: (a) no, (b) sensitivity-based mixed precision is a known family (HAWQ/OBS/GPTQ) — new = data-free PR law + domain reversal, (c) toy-scale acknowledged, (d) clean held-out, (e) 3 seeds, (f) joint-compounding documented, (g) equal budgets (1 seed overshoot reported), (h) +2–3.5pp on MLP, no win on toy LM.\n\nScript: /tmp/exp_net_quant.py. Paper: ResearchOutput/NetworkMathematics/1_SpectralQuantization_LawAndDomain.md. Round-net-1. Network exp 1, assessment v1.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1184",
-    "lineage_refs": [],
-    "priority_score": 1000.0,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-12T21:10:39.166917+00:00",
-    "title": "NET-1 SPECTRAL-QUANTIZATION: participation-ratio bit-need law holds on MLPs, reverses on tiny attention LMs"
   },
   {
     "ambition_level": "grand_challenge",
@@ -1309,6 +1214,25 @@
     "status": "available",
     "timestamp": "2026-08-13T05:12:19.807878+00:00",
     "title": "NET-5: READOUT-UNTIE — the copy-self basin is a tied-readout artifact; the carry chain is readout-independent; depth stays flat"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "**Network/LLM research lab — round-net-8 (depth axis, round 6). Machine-verified. Paper: ResearchOutput/NetworkMathematics/8_LoadBearingDepth_Dyck2.md. Script: /tmp/exp_net_dyck2.py.**\n\n## Hypothesis\nThe load-bearing-depth test via the canonical NON-REGULAR context-free language. Dyck-2 (two bracket types '(' vs '[') next-token close prediction requires recovering the TYPE of the top of the stack (the last unmatched open's bracket type; chance 0.5 given only the balance) — a history-dependent discrete state. Natural construction: L1 computes balance, L2 selects+reads the last open, so d=1 should FAIL at close-type positions while d≥2 succeeds — the first genuinely load-bearing depth regime and the exit law's first potential boundary.\n\n## Part A — depth is FLAT on Dyck-2\nAll 10 models (d∈{1,2,4,8,16}×2 seeds, 8000 AdamW steps, dm=48/4 heads, 100k train/20k fresh held-out) reach test=**1.0000 at every metric**: overall, b0–b4+, close_all, close_b4+. **d=1 alone recovers the stack-top type** at every depth and every close number, including closes whose matching open sits 11+ tokens back. The flat-depth law now covers **FIVE task classes**: lookups (NET-2), composition (NET-3), decomposable-error arithmetic (NET-4/5), Dyck-1 regular grammar (NET-7), Dyck-2 non-regular CFG (NET-8). Load-bearing premise refuted a third time.\n\n## Part B — exit law holds on a 3rd task class; exit* is depth-saturated\n| d | s | exit* | l=exit*−1→l=exit* | crossover | d/2 | lossless@cross | saving |\n|---|---|---|---|---|---|---|---|\n| 4 | 0 | 3 | 0.6903→1.0000 | 3 | 2 | True | 25% |\n| 4 | 1 | 3 | 0.6477→0.9654 | 4 | 2 | True | 25% |\n| 8 | 0 | 5 | 0.8875→0.9988 | 5 | 4 | True | 37.5% |\n| 8 | 1 | 4 | 0.6097→0.9901 | 4 | 4 | True | 50% |\n| 16 | 0 | 5 | 0.9237→0.9843 | 2 | 8 | False | 69% |\n| 16 | 1 | 3 | 0.6314→0.9725 | 2 | 8 | False | 81% |\n\nexit* ∈ {3,4,5} (does NOT scale with d); |exit*−crossover| ≤ 1 in 5/6 (**22/24 across all three task classes**); exit* ≥ crossover 5/6; lossless-at-crossover 4/6, failing exactly on the two d=16 models whose crossover fires at l=2 — confirming NET-7's refinement (the FIXED 0.95 bar, not the norm, is the reliable trigger when the crossover fires very early). **69–81% lossless inference-depth saving at d=16.**\n\n## Part C — single-layer success is GENUINE (barrier g, quantified)\nWindowed linear baselines (last-K tokens + balance + position, K∈{4,8,12}, 3 epochs): close_all = 0.7322/0.7544/0.7518 — never 1.0 even when the matching open is inside the window, because a linear map cannot route the CONDITIONAL index 'k-th close → open at distance 2k−1' (needs gating); attention can. Transformer 1.0 vs best baseline 0.7544 = **+25pp genuine long-range content**. Honest caveat: deep-balance bins rise on baselines because they're dominated by first-closes of deep runs (locally covered) — close_all is the honest hard-close diagnostic.\n\n## Barriers\n(a) no circularity (fresh random words, iid per-pair types, test seed+77); (b) flat/exit laws extended to non-regular CFG — new content is the 5-class flat law + depth-saturated exit + quantified baseline margin (Catalog scan: no prior work); (c) toy-scale AND the finding — load-bearing boundary not reached, next = semilength scaling / width-starved Dyck; (d) no leakage (held-out 1.0000 before probing); (e) 2×5 + 2×3 seeds, +3 outlier and 2/6 lossless failures reported not averaged; (f) documented metrics + close-bin caveat; (g) strongest windowed linear baseline loses by +25pp; (h) real lever: 69–81% lossless inference-depth cut on non-regular grammar + genuine caution that single-layer transformers solve canonical stack recovery at this scale.\n\n## Verdict\n(1) Load-bearing test fails THIRD time — depth flat on the canonical non-regular CFG; (2) exit law holds on 3rd task class (22/24 within ±1 of crossover, depth-saturated exit, lossless); (3) single-layer stack-top recovery is genuine (linear windows can't conditionally index; attention can). **Next:** semilength scaling (where does d=1 break — the actual load-bearing boundary), width-starved Dyck (dm=16/1 head), unbounded nesting, exit law at real-LM/BERT scale.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_1222",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-13T06:53:57.528267+00:00",
+    "title": "NET-8: Depth is FLAT on Dyck-2 (non-regular CFG) — load-bearing test fails 3rd time; exit law holds on 3rd task class; single-layer stack-top recovery is genuine"
   },
   {
     "ambition_level": "grand_challenge",
@@ -1416,44 +1340,6 @@
     "status": "available",
     "timestamp": "2026-08-12T23:09:13.363386+00:00",
     "title": "Deepening: A Knot-Number Theory Bridge (Alexander polynomial)"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle a055589e (Q=0.850), which proved 6 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Summary.** The full synthesis of 284 computational experiments into eight\nstructural barriers that explain the uniform failure of all tested classical\nfactoring hypotheses.\n\n**Three proven theorems:** polynomial barrier (LLL), symmetry barrier (MMM),\nholomorphic rigidity barrier (HRB).\n\n**Five com",
-    "domain_bridges": [],
-    "domains": [
-      "Probability"
-    ],
-    "id": "push_a055589e_8d2a3717",
-    "lineage_refs": [],
-    "priority_score": 0.95,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "a055589e",
-    "status": "available",
-    "timestamp": "2026-08-12T22:09:52.984545+00:00",
-    "title": "Deepening: The Structural Orthogonality Framework (8 barriers)"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle fb76e61b (Q=0.850), which proved 84 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Paper:** `ResearchOutput/NewMathematics/36_Asymmetric_Exponent_FactorBlind.md` (factor3)\n**Experiment:** FETQ (#371), assessment v147.\n\n## Finding\nQ(a) = a^{N−1} mod N is computable in poly(log N) (no aggregation) and is\ninternally ASYMMETRIC: Q(a) mod p = a^{q−1} mod p, Q(a) mod q = a^{p−1} mod q",
-    "domain_bridges": [],
-    "domains": [
-      "Cryptography"
-    ],
-    "id": "push_fb76e61b_f2de2e25",
-    "lineage_refs": [],
-    "priority_score": 0.95,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "fb76e61b",
-    "status": "available",
-    "timestamp": "2026-08-13T00:05:37.540810+00:00",
-    "title": "Deepening: The Asymmetric CRT-Split of a^{N-1} is Factor-Blind, Closed"
   },
   {
     "ambition_level": "extension",
@@ -2349,28 +2235,6 @@
     "title": "Existential-Risk-Optimization: Absolute Bounds on AI Alignment Failure Probabilities"
   },
   {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Einstein showed that gravity is the curvature of spacetime. But WHY does spacetime curve? Conjecture: Spacetime IS a quantum error-correcting code, and gravity IS the syndrome of that code. The code is a [[n,k,d]] stabilizer code where n = number of Planck areas on a spatial slice, k = number of logical qubits (which equals the Bekenstein-Hawking entropy S = A/4G in natural units), and d = code distance (which equals the minimal geodesic length through the bulk). The key identity: S(A) = Area(gamma_A) / (4G) is EXACTLY the quantum Singleton bound n - k <= 2(d-1) rearranged as k = n - 2d + 2 = A/(4G) when n = A/l_P^2 and d = L/(2l_P). This means the Bekenstein-Hawking entropy formula is a quantum coding theorem, and the holographic principle is a coding constraint. Test: for AdS_3 with boundary CFT_2, the code is a [[n, k, d]] = [[L/l_P, S, L/(2l_P)]] code. Verify that the Singleton bound n - k <= 2(d-1) becomes L/l_P - S <= L/l_P - 1, which simplifies to S >= 1 (trivially true). The NON-TRIVIAL content is that the Ryu-Takayanagi formula S = A/(4G) is the exact quantum information identity. Impact: spacetime is not curved by matter — spacetime IS a code, and matter IS a syndrome. Gravity is not a force; it's error correction.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Physics",
-      "Computation",
-      "Cryptography"
-    ],
-    "id": "seed_128",
-    "lineage_refs": [],
-    "priority_score": 0.95,
-    "proof_strategy": "Define the spacetime code: qubits = Planck areas on a spatial slice, stabilizers = boundary terms of the Einstein-Hilbert action, logical operators = bulk geodesics. Prove the Bekenstein-Hawking identity: S = A/(4G) equals the quantum coding bound k = n - 2d + 2. Derive: n = A/l_P^2 (number of Planck areas), k = S = A/(4G) (logical qubits from Bekenstein-Hawking), d = L/(2l_P) (distance from minimal geodesic). Check: k = n - 2d + 2 = A/l_P^2 - L/l_P + 2. For AdS_3, A = 2*pi*R and L = 2*pi*R, so k = 2*pi*R/l_P^2 - 2*pi*R/l_P + 2 = 2*pi*R/(l_P^2) * (1 - l_P/R) + 2. For R >> l_P, this gives k ≈ 2*pi*R/l_P^2 = A/l_P^2 which matches S = A/(4G). The correction terms are quantum corrections of order l_P/R. Test: verify for AdS_3 with BTZ black holes.",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Gravity from Information: Spacetime as a Quantum Error-Correcting Code"
-  },
-  {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
     "consumed_by_exp_id": "",
@@ -2524,6 +2388,44 @@
     "status": "available",
     "timestamp": "2026-08-12T15:22:01.479509+00:00",
     "title": "Deepening: Jacobi Gauss-Sum Phase Collapse"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle a3466461 (Q=0.820), which proved 65 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Paper:** `ResearchOutput/NewMathematics/46_SymmetryBreaking_Cost.md` (factor3)\n**Experiment:** ISOLATION-COST (#381), assessment v157.\n\n## Finding\nThe residues are INFORMATION-sufficient but COMPUTATION-sealed. Verified:\n1. **Oracle isolation = log₂(π(√N)) exactly** (ratio 0.96–1.03 across 15–33 b",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_a3466461_5814d025",
+    "lineage_refs": [],
+    "priority_score": 0.9199999999999999,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "a3466461",
+    "status": "available",
+    "timestamp": "2026-08-13T06:53:16.711358+00:00",
+    "title": "Deepening: The Symmetry-Breaking Cost of Factoring, Measured"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle d8dbb938 (Q=0.820), which proved 70 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Paper:** `ResearchOutput/NewMathematics/45_DialThreshold_NoAmplification.md` (factor3)\n**Experiment:** DIAL-THRESHOLD (#380), assessment v156.\n\n## Finding\nCan the free-witness residue dials (Kronecker (D_i|p) over fundamental\ndiscriminants) amplify a Coppersmith partial-key hint (p mod m, m = N^{1",
+    "domain_bridges": [],
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "push_d8dbb938_1d7b19a3",
+    "lineage_refs": [],
+    "priority_score": 0.9199999999999999,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "d8dbb938",
+    "status": "available",
+    "timestamp": "2026-08-13T06:53:29.133886+00:00",
+    "title": "Deepening: Residue Dials Cannot Amplify a Coppersmith Hint, Closed"
   },
   {
     "ambition_level": "extension",
@@ -25441,6 +25343,46 @@
     "status": "available",
     "timestamp": "2026-08-13T05:11:46.284039+00:00",
     "title": "The verified results (all in `Catalog/Computation/OrderJacobiJointLaw.lean`,"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future directions — measuring the symmetry-breaking cost of factoring\n\nThe four files `Catalog/Novelty/SymmetryBreakingCost{Factoring,Kernel,Adaptive,Witness}.lean`\nturn the ISOLATION-COST experiment into theorems: the residue oracle isolates the hidden factor\nat a cost of exactly `⌈log₂ |S|⌉` queries (adaptively or not), the public Jacobi battery of `N`\nis provably blind beyond the squarefree kernel, and a factoring witness always exists but is\nnever pointed at by the public data.  The following conjectures are the next cycle.\n\n## Conjecture 1 — the cost is `⌈log₂ |S|⌉` for *every* multiplicative-character battery\n\nReplace the quadratic symbol by the `m`-th power residue symbol for arbitrary `m ≥ 2` (or by an\narbitrary family of Dirichlet characters of bounded conductor).  Conjecture: the least battery\nsize isolating a candidate set `S` of primes `≡ 1 mod m` is exactly `Nat.clog m |S|` — the\nalphabet size, not the arithmetic, sets the price; and the corresponding symmetric battery\n(characters evaluated at `N`) again determines only the \"kernel\" of `N` in the character group.\n\n*The key insight is* that both halves of `isolationCost_isLeast` are alphabet-counting plus\nChinese remainder surjectivity, and neither step uses quadraticity: CRT supplies an arbitrary\nprescribed local symbol at each prime, and pigeonhole caps the number of separable candidates\nat `(alphabet)^k`.\n\n*Why now?* The quadratic case is fully formalised here (`exists_prescribed_signature`,\n`info_lower_bound` is already stated for an arbitrary finite alphabet `β`), so the `m`-th power\ncase needs only the local surjectivity of the `m`-th power residue symbol.\n\n## Conjecture 2 — a *randomised* battery is no cheaper than `log₂ |S| − O(1)`\n\nModel a randomised strategy as a distribution over decision trees that identifies each candidate\nwith probability `≥ 2/3`.  Conjecture: the expected depth is still `log₂ |S| − O(1)`, i.e. the\n`isolationCost` measurement is robust to randomisation, and the constant loss is at most `2`.\n\n*The key insight is* that Yao's principle turns the randomised bound into a distributional\ndeterministic bound, and the uniform distribution on `S` is already hard because\n`exists_prescribed_signature` makes every answer pattern equally realisable — the query answers\ncarry no more than one bit each no matter how the test integer is chosen.\n\n*Why now?* `QTree` and `QTree.card_le_two_pow_depth` in `SymmetryBreakingCostAdaptive.lean`\ngive the deterministic decision-tree infrastructure; only an averaging layer is missing.\n\n## Conjecture 3 — kernel faithfulness at the prime 2\n\n`jacobiSym_battery_eq_iff` is guarded by `Odd M`, `Odd N` because there is no quadratic\nnonresidue mod `2`.  Conjecture: with the Kronecker symbol in place of the Jacobi symbol, the\nstatement extends to *all* nonzero `M, N` provided the kernels are compared in\n`ℚˣ / (ℚˣ)²` — i.e. `J(· | M) = J(· | N)` on all coprime numerators iff `M` and `N` differ by a\nsquare, with the classes of `−1` and `2` accounted for by `χ₄` and `χ₈`.\n\n*The key insight is* that the residual freedom at `2` is exactly the two characters `χ₄, χ₈`\nthat Mathlib already isolates in `jacobiSym.at_neg_one` and `jacobiSym.at_two`, so the corrected\ninvariant is the class of `M` in the group generated by the odd primes together with `χ₄, χ₈`.\n\n*Why now?* The odd case is proved (`exists_separating_numerator`), and the missing ingredient is\na finite computation at the prime `2` rather than new theory.\n\n## Conjecture 4 — no polynomial-size *arithmetic* certificate replaces the oracle\n\nFormalise \"free witness aggregation\" as: a polynomial `F ∈ ℤ[x₁ … x_t]` of degree `d` evaluated\nat Jacobi symbols `J(a_i | N)` computable from `N` alone.  Conjecture: for every `d` and every\n`t = poly(log N)`, the value of `F` is a function of `sqKernel N` only, hence cannot isolate a\ncandidate — the `Ω(N)` aggregation barrier is a corollary of kernel-factorisation rather than a\nseparate obstruction.\n\n*The key insight is* `jacobiSym_eq_prod_sqKernel`: every public quantity built from Jacobi\nsymbols of `N` factors through the kernel, so an aggregation of public data cannot distinguish\n`N` from `N r²`, and `zero_pruning_sharp` already exhibits the confusing partner for every\ncandidate `r`.\n\n*Why now?* Cycle 2 proves the kernel factorisation for a single symbol; extending it to a\nclosure of arithmetic combinations is a bookkeeping induction over the algebra generated by the\npublic symbols.\n\n## Conjecture 5 — the order-finding channel is exactly one \"kernel-breaking\" bit\n\n`factor_of_any_nontrivial_sqrt` shows every nontrivial square root of `1` factors `pq`, and\n`gcd_witness_eq_prime` shows one always exists.  Conjecture: the map sending a unit `u` of\n`(ZMod N)ˣ` to the pair of local signs `(u mod p, u mod q) ∈ {±1}²` is surjective for every odd\nsemiprime, so exactly half of the square roots of `1` factor `N`; and any classical algorithm\ncomputing that sign pair for a *single* `u` of even order already factors `N` in polynomial\ntime.  Hence Shor's speed-up is precisely the ability to read one local sign.\n\n*The key insight is* that the four square roots of `1` mod `pq` are the CRT lifts of\n`(±1, ±1)`, so \"which of the four\" is one bit of local (asymmetric) information — the same one\nbit that the symmetric battery provably cannot supply.\n\n*Why now?* The four-element classification is already reduced here to divisibility statements in\n`ℤ` (`factor_of_any_nontrivial_sqrt`), so the counting statement is a CRT cardinality argument\nover `ZMod p × ZMod q`.\n",
+    "domain_bridges": [],
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_1220",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "a3466461",
+    "status": "available",
+    "timestamp": "2026-08-13T06:53:08.588111+00:00",
+    "title": "The four files `Catalog/Novelty/SymmetryBreakingCost{Factoring,Kernel,Adaptive,W"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\nThe results close the question the investigation asked: a residue-dial family with conductor\nlcm `M*` adds at most a factor `M*/gcd(M*, m)` to a partial-key hint `p mod m`, that factor is\nexactly attained, and pinning a window `[0, X)` forces `X ≤ lcm(m, M*)`. Computable dials\n(`M* | m`) are constant on the candidate set; informative dials are not computable from the\nhint.\n\nWhat follows are the conjectures that the closure itself suggests. Each is falsifiable, and\neach is stated so that a counterexample would be a finite computation.\n\n## Conjecture A (Conductor-budget conservation for *all* periodic side channels)\n\n**Statement.** Let `T : ℕ → β` be any statistic that is eventually periodic with period `P`\n(not necessarily a character: think of `p mod P`, of Hamming weights of residues, of any table\nlookup). Then on a hint class mod `m` the statistic takes at most `P / gcd(P, m)` values, and\nevery attacker strategy combining the hint with `T` has candidate-set shrink factor at most\n`P/gcd(P, m)`; the *only* way to break the bound is aperiodicity.\n\n**The key insight is** that the master bound never used multiplicativity, Kronecker\nreciprocity, or even that the dial values are `±1` — only periodicity — so the barrier is a\nstatement about *conductors*, not about characters.\n\n**Why now?** The master bound and its sharpness are already established for an abstract\nperiodic dial; the remaining work is to replace \"periodic\" by \"eventually periodic\" and to\nquantify over the attacker's strategy as a decision tree, which is exactly the finitary\nzero-information machinery already available.\n\n## Conjecture B (Aperiodic dials are the only escape, and they are as hard as factoring)\n\n**Statement.** Let `T` be a statistic of `p` computable in time `poly(log N)` from `N` and\n`p mod m` alone. Then `T` is hint-computable, hence information-free on the candidate set.\nEquivalently: any dial with a genuine `Ω(N^{1/4})`-scale conductor that is *evaluable* from\npublic data yields a factoring algorithm.\n\n**The key insight is** that the no-self-amplification theorem already kills every statistic of\nthe form `g(N, p mod m)`; the open part is the converse — that a non-hint-computable but\nefficiently evaluable statistic must leak `p` itself.\n\n**Why now?** The formal notion of hint-computability is exactly the hypothesis a reduction\nwould need, and the pinning-window bound supplies the quantitative target\n`lcm(m, M*) ≥ N^{1/2}`.\n\n## Conjecture C (Class-number dials obey the same threshold)\n\n**Statement.** Replace the Kronecker sign `(D | p)` by the finer datum `h(D) mod ℓ` for\nfundamental discriminants `D` in a family, evaluated through the class-number formula.\nConjecturally the resulting statistic is *still* periodic in `p` modulo `lcm_i(4|D_i|)`, so the\nsame master bound applies verbatim; no class-group refinement escapes the conductor budget.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_1221",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "d8dbb938",
+    "status": "available",
+    "timestamp": "2026-08-13T06:53:23.111052+00:00",
+    "title": "The results close the question the investigation asked: a residue-dial family wi"
   },
   {
     "ambition_level": "extension",

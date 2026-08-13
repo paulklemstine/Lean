@@ -3,16 +3,6 @@
     {
       "cycle_id": "39ee2889",
       "domain": "Combinatorics",
-      "key_insight": "# Future directions\n\nConcrete, falsifiable conjectures arising from the results proved this cycle, on top of the\nframework of weak and strong $B_d$-free families, layers, level families and the extrem",
-      "quality_score": 0.79707,
-      "sorry_count": 0,
-      "theorem_count": 34,
-      "timestamp": "2026-08-06T07:55:36",
-      "title": "Concrete, falsifiable conjectures arising from the formalization in"
-    },
-    {
-      "cycle_id": "39ee2889",
-      "domain": "Combinatorics",
       "key_insight": "# Future directions\n\nConcrete, falsifiable conjectures arising from the results proved this cycle in\n`Catalog/Combinatorics/B3FreeAntichainMonotone.lean`, on top of the framework of\n`Catalog/Bridges/B",
       "quality_score": 0.7010699999999999,
       "sorry_count": 0,
@@ -499,19 +489,19 @@
       "theorem_count": 65,
       "timestamp": "2026-08-13T06:53:16",
       "title": "The Symmetry-Breaking Cost of Factoring, Measured"
+    },
+    {
+      "cycle_id": "d8dbb938",
+      "domain": "Combinatorics",
+      "key_insight": "# Future directions\n\nThe results close the question the investigation asked: a residue-dial family with conductor\nlcm `M*` adds at most a factor `M*/gcd(M*, m)` to a partial-key hint `p mod m`, that f",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 70,
+      "timestamp": "2026-08-13T06:53:28",
+      "title": "Residue Dials Cannot Amplify a Coppersmith Hint, Closed"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "4ae649eb",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions\n\nThe present development establishes a finite, discrete chain:\n\n1. a pointwise code-length bound on information density;\n2. mutual information bounded by expected description lengt",
-      "quality_score": 0.79196,
-      "sorry_count": 0,
-      "theorem_count": 35,
-      "timestamp": "2026-08-02T18:22:37",
-      "title": "PAC-Bayes Bounds: Information-Theoretic Generalization"
-    },
     {
       "cycle_id": "2acb9b42",
       "domain": "Shared",
@@ -2501,27 +2491,19 @@
       "theorem_count": 65,
       "timestamp": "2026-08-13T06:53:16",
       "title": "The Symmetry-Breaking Cost of Factoring, Measured"
+    },
+    {
+      "cycle_id": "d8dbb938",
+      "domain": "Combinatorics",
+      "key_insight": "# Future directions\n\nThe results close the question the investigation asked: a residue-dial family with conductor\nlcm `M*` adds at most a factor `M*/gcd(M*, m)` to a partial-key hint `p mod m`, that f",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 70,
+      "timestamp": "2026-08-13T06:53:28",
+      "title": "Residue Dials Cannot Amplify a Coppersmith Hint, Closed"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "f2796053",
-      "domain": "Logic",
-      "name": "of",
-      "quality": 0.743025
-    },
-    {
-      "cycle_id": "f2796053",
-      "domain": "Logic",
-      "name": "of",
-      "quality": 0.743025
-    },
-    {
-      "cycle_id": "f2796053",
-      "domain": "Logic",
-      "name": "and",
-      "quality": 0.743025
-    },
     {
       "cycle_id": "30b679f8",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "and_gate_ft",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "d8dbb938",
+      "domain": "Combinatorics",
+      "name": "joint_resolution_cap",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "d8dbb938",
+      "domain": "Combinatorics",
+      "name": "pinning_window_le_lcm",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "d8dbb938",
+      "domain": "Combinatorics",
+      "name": "condLcm_ge_of_pinning",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-13T06:53:16",
+  "last_updated": "2026-08-13T06:53:28",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3207,12 +3207,6 @@
     ],
     "Combinatorics": [
       {
-        "cycle_id": "09b12514",
-        "quality": 0.6640958333333333,
-        "theorems": 721,
-        "title": "ArXiv paper: Bipartite Extremal Numbers of Trees"
-      },
-      {
         "cycle_id": "22e93393",
         "quality": 0.71348,
         "theorems": 557,
@@ -3265,6 +3259,12 @@
         "quality": 0.84,
         "theorems": 69,
         "title": "Round-11 Closures: The Definitive Closure of the Classical Surface"
+      },
+      {
+        "cycle_id": "d8dbb938",
+        "quality": 0.82,
+        "theorems": 70,
+        "title": "Residue Dials Cannot Amplify a Coppersmith Hint, Closed"
       }
     ],
     "Computation": [
