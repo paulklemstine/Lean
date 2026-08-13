@@ -318,21 +318,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Round-9 Hypothesis Closures: The Completeness of the Trace Lemma"
   },
   {
-    "consumed_by_exp_id": "24da7a57",
-    "description": "**Paper (factor3):** [ResearchOutput/NewMathematics/29_Round11_Closures.md](https://github.com/paulklemstine/factor3/blob/main/ResearchOutput/NewMathematics/29_Round11_Closures.md)\n\n---\n\n# Round-11 Closures: The Definitive Closure of the Classical Surface\n\n**Program:** Factoring research lab \u2014 round-11 subagent batch synthesis\n**Date:** 2026-08-11\n**Status:** Negative-results synthesis \u2014 round-11 attacks closed; eleven rounds complete (~50 hypotheses)\n\n---\n\n## Abstract\n\nAn eleventh brainstorm subagent attacked the deepest remaining possibilities\nafter the spectral extension: per-coefficient spectral objects, the\nhint-amplification feed, topological re-encodings, and constant-factor\noptimization. All four were tested and closed (experiments 348-351). The round\ndelivered the DEFINITIVE closure: the fingerprint carries ~0 mutual information\nwith (p+q) mod ell, so Coppersmith's hint-amplification channel has NO\nN-computable source (CFSIGMA). Combined with the spectral-wall sharpening\n(CIFINGER) and the topological seal (GROUPOID), the classical uniform\nhint-free attack surface is confirmed closed. Eleven subagent rounds (~50\nhypotheses) are now closed.\n\n---\n\n## 1. The batch at a glance\n\n| # | Hypothesis | Attack | Verdict |\n|---|-----------|--------|---------|\n| 1 | CIFINGER | cycle-index fingerprint (per-coefficient spectral) | refuted \u2014 informative entry at the order scale (~sqrt N) |\n| 2 | CFSIGMA | fingerprint -> Coppersmith feed (MI test) | refuted \u2014 feed STARVED (atomic-uniform) |\n| 3 | GROUPOID | orbit-count / homotopy cardinality | refuted \u2014 computing it requires phi(N) and the ords |\n| 4 | DRHO | Dickman-policy rho | refuted \u2014 no asymptotic gain, likely folklore |\n\n---\n\n## 2. CIFINGER (experiment 348): the spectral wall, per-coefficient\n\nThe cycle-index fingerprint M_d = (1/d) sum_{c|d} mu(d/c) F(c), F(c) =\ngcd(b^c - 1, N), is per-coefficient poly-log computable (NOT O(N)-sealed). But\nthe informative coefficient sits at d* = min(ord_p(b), ord_q(b)) ~ sqrt(N) for\ngeneric b (verified exactly; small only in the p-1-smoothness case). The Mobius\nstructure is genuinely new but relocates no information \u2014 the sqrt floor /\norder-seal. This is the sharpest statement of the spectral wall.\n\n---\n\n## 3. CFSIGMA (experiment 349): the hint feed is starved \u2014 the definitive closure\n\nCoppersmith amplifies any sigma-hat with |sigma-hat - (p+q)| < N^{1/4} in poly\ntime (the real unpriced channel), but it needs a source. Tested: the\nCI-fingerprint carries ~0 mutual information with (p+q) mod ell (correlations\n-0.27 to +0.08 across ell = 3..13, within noise). ord_p(b) and the induced\nstructure are empirically independent of p mod ell (atomic-uniform). The\nhint-amplification channel EXISTS but has NO N-computable source. This is the\nDEFINITIVE closure test: the classical surface is closed.\n\n---\n\n## 4. GROUPOID (experiment 350): topological re-encoding is as hard as factoring\n\nThe orbit-count identity C(b) = 1 + phi(N)/ord_N(b) + (p-1)/ord_p(b) +\n(q-1)/ord_q(b) is verified exactly, but computing C(b) requires phi(N) and the\nords (= factoring). Burnside's lemma re-sums the same sealed data.\nTopology/category theory gives re-encodings, not new computation \u2014 a clean\nnegative result for the topological school (barrier 4 / trace-lemma seal).\n\n---\n\n## 5. DRHO (experiment 351): no constant-factor gain\n\nDickman-policy rho (early-abort batch) gives a mean ratio ~1.95, not\nconsistently better than classic rho \u2014 no asymptotic gain, likely already in\nthe QS/MPQS/NFS early-abort folklore (barrier 2).\n\n---\n\n## 6. The definitive closure\n\nEleven subagent rounds (~50 hypotheses), 351 experiments, 29 papers: the\nclassical uniform hint-free attack surface is CONFIRMED closed. The round-11\nbatch closed the last unpriced channel's feed (CFSIGMA), sharpened the spectral\nwall (CIFINGER), sealed the topological school (GROUPOID), and priced the\nconstant-factor folklore (DRHO). The open frontier remains purely theoretical:\nthe barrier-4 proof, the quantum exception (localized to barrier 4), and hint\namplification (which requires an external hint no N-computable source provides).\n\n---\n\n*Related:* `25_Round10_Closures.md`, `26_Frontiers_Open_Problems.md`,\n`28_Spectral_FreeWitness.md`, `Factoring_Lab_Notebook.md` Parts 95-98.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1128",
-    "phase": "B",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-12T00:55:57.842032+00:00",
-    "title": "Round-11 Closures: The Definitive Closure of the Classical Surface"
-  },
-  {
     "consumed_by_exp_id": "579ae41a",
     "description": "**Paper:** `ResearchOutput/NewMathematics/37_OrderJacobi_JointLaw.md` (factor3)\n**Experiment:** CONDORDER (#372), assessment v148.\n\n## Finding\nThe order \u00d7 residue joint-quadrant of the combination grid (SCALECASCADE =\nresidue+order; SPECTRUNC = order+spectral; this = the JOINT LAW of ord_N(b) |\n(b/N)). The QR-order coupling (b/p)=1 \u27fa ord_p(b) | (p\u22121)/2 is EXACT (7000/7000\nverified) and the conditional bias is real (E[ord|J=+1]/E[ord|J=\u22121] \u2208 0.68\u20131.01).\n\n**Verified (14 primes, 30 near-equal-N semiprimes ~5\u00d710\u2076, 1500 samples each):**\n1. Coupling exact \u2014 a unit is a QR iff its order lies in the half-group.\n2. Conditional bias real \u2014 both-QR case forces both orders into half-groups.\n3. **BUT the law is N-determined:** corr of E[ord|J=\u00b11] and ratio with\n   p, q, p+q, |p\u2212q| all inside the permutation null (obs \u2264 0.31, 95th \u2248 0.34\u20130.41).\n4. Only structure = (p mod 4, q mod 4)-type residue dial = function of N mod 4.\n5. Computing the law requires ord_p, ord_q = the factors (barrier 6).\n\n## Why it collapses (barrier 5 + 6 + 8)\nThe joint law is a residue dial (barrier 5), circular to compute (barrier 6),\nand its bias mechanism is the p\u22121/q\u22121 order structure (barrier 8). Order \u00d7\nresidue joint law adds nothing beyond N mod 4.\n\n## Verdict\nREFUTED. Combination grid now closed in the tested quadrants (SPECTRES,\nresidue+spectral, remains but predicted to collapse the same way). Classical\nuniform hint-free surface remains exhausted.\n\n\ud83e\udd16 Generated with [Claude Code](https://claude.com/claude-code)",
     "domains": [
@@ -346,21 +331,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-08-12T04:00:21.971556+00:00",
     "title": "The Order x Jacobi Joint Law is N-Determined, Closed"
-  },
-  {
-    "consumed_by_exp_id": "fb76e61b",
-    "description": "**Paper:** `ResearchOutput/NewMathematics/36_Asymmetric_Exponent_FactorBlind.md` (factor3)\n**Experiment:** FETQ (#371), assessment v147.\n\n## Finding\nQ(a) = a^{N\u22121} mod N is computable in poly(log N) (no aggregation) and is\ninternally ASYMMETRIC: Q(a) mod p = a^{q\u22121} mod p, Q(a) mod q = a^{p\u22121} mod q\n(verified 24/24). A cheap quantity whose CRT structure genuinely uses the other\nfactor's exponent \u2014 a breakthrough candidate if it carried signal.\n\n**Verified:**\n1. Asymmetric CRT decomposition exact (N=15..3599, a\u2208{2,3,5}).\n2. **Q(a) is factor-blind:** across 80 near-equal-N semiprimes (~10\u2077), corr(Q, p),\n   corr(Q, q), corr(Q, p+q), corr(Q, |p\u2212q|) all inside the 300-shuffle permutation\n   null for a=2,3,5 (obs \u2264 0.19, 95th \u2248 0.22). Q(a) is pseudorandom mod N.\n3. The gcd variant gcd(a^{N\u22121}\u22121, N) fires when ord_p(a) | q\u22121 \u2014 the EULERGAP\n   structure (reveal density g/p+g/q, g=gcd(p\u22121,q\u22121)), measured tracking g.\n\n## Why it collapses (barrier 5 + 6 + 8)\nThe asymmetry is real but locked inside the CRT: reading a^{q\u22121} mod p out of\nQ(a) requires the CRT idempotent = factoring (barrier 6). As a residue mod N,\nQ(a) is an N-only function, uncorrelated with factors at near-equal N (barrier\n5). The only usable handle reduces to p\u22121/q\u22121 smoothness (barrier 8).\n\n## Verdict\nREFUTED. Sharpest form yet of \"asymmetry without the split is invisible\": the\nfactor-dependence of Q(a) lives entirely in the CRT components, and the\ncomponents are the factorization itself. Classical uniform hint-free surface\nremains exhausted; frontiers: barrier-4 proof, quantum channel, hint\namplification.\n\n\ud83e\udd16 Generated with [Claude Code](https://claude.com/claude-code)",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1132",
-    "phase": "B",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-12T04:00:21.972074+00:00",
-    "title": "The Asymmetric CRT-Split of a^{N-1} is Factor-Blind, Closed"
   },
   {
     "consumed_by_exp_id": "677413db",
@@ -903,30 +873,32 @@ window.FUTURE_DIRECTIONS = [
     "title": "ECM-PARITY: first positive symmetric residue shadow on the GENERIC elliptic order (2|#E \u27fa cubic root \u27fa Frobenius not 3-cycle) \u2014 round-18 #1, exp 404"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8590e003",
     "description": "## CM-ECM-GENERAL (round-17 #2, experiment 403, assessment v179, paper 68)\n\nGeneralization + stress-test of the CM-ECM-ORDER shadow (paper 67) on the second CM field Q(\u221a\u22123) \u2014 the j=0 curve y\u00b2=x\u00b3+1 (End=\u2124[\u03c9], bad primes 2, 3), which has RATIONAL 3-torsion ((0,\u00b11) over Q). **Verdict: CONFIRMED null (factor-useless)** with three measured refinements.\n\n### (1) Rational-torsion degeneracy (headline)\n3 | #E_j0(F_p) UNCONDITIONALLY (2000/2000), so the \u2113=3 ECM-order OR event is a CONSTANT \u2014 SYM I(N mod 3; 3|#E_j0 OR) = **0.0000 EXACTLY** (null max 0.0000) \u2014 even though the inert class (0.311) and split class (0.316) each individually carry a p\u22121-strength class-OR channel. A curve can carry a fully residue-visible, abelian, p+1-sourced congruence on its elliptic order that reveals exactly zero bits: the shadow is real only when the event is CONDITIONAL.\n\n### (2) Union-dilution law\nThe CM shadow \u2264 the inert-class OR channel always: \u2113=9 FULL 0.0120 fires at 7.1\u00d7 the null max yet sits 1.45\u00d7 BELOW the inert-class reference 0.0174 (the split-half base rate raises the union's unconditional probability, compressing conditional variation); \u2113=5 FULL 0.0030 (3.8\u00d7) \u2248 ref 0.0032; \u2113=7/11 at null. Q(i) reproduces it (\u2113=3: FULL 0.0048 vs ref 0.0143 \u2014 matching paper 67's 0.0048 exactly). Field-independent mechanism.\n\n### (3) 3-adic Hecke visibility\nThe split-half Hecke term is residue-INVISIBLE at good primes (\u2113=5: z=\u22120.31) but VISIBLE at powers of the CM field's RAMIFIED prime (\u2113=9=3\u00b2: z=+24.5; \u2113=27=3\u00b3: z=+2.6) \u2014 ramification shrinks the Hecke conductor's 3-adic part, pinning a_p mod 3^k by a small modulus. Refines paper 67's \"split-half GL\u2082-hidden\" to \"hidden at good primes\".\n\n### Structure / seals\nExact inert collapse a_p=0 on 2018/2018 primes p \u2261 2 mod 3 (P(a_p=0)=0.504); atomic trace law (P(x=0)=0.504, P(|x|<0.5)=0.670, mean-sq=0.244). Asym (which-factor) wall null (0.0002/0.0012 at \u2113=5/7); smoothness OR sealed (0.0006/0.0011); generic control null. On the inert half #E=p+1 EXACTLY so ECM-on-j0 IS the p+1 method (1982); the visible \u2113=9 channel is a residue dial on class 8 mod 9 (QRLEAK family). All Gauss/Eisenstein (1801), ECM (1987), p+1 (1982). Barriers 2/5/6/8. Round-17 COMPLETE 2/2.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_1171",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-12T17:19:53.176046+00:00",
     "title": "CM-ECM-GENERAL: rational-torsion degeneracy, union-dilution law, 3-adic Hecke visibility (Q(sqrt(-3)) j=0 curve) \u2014 round-17 #2, exp 403"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c76c12ee",
     "description": "**Experiment 402 / assessment v178 / paper 67 \u2014 CM-ECM-ORDER (cron loop round-17 #1).**\n\nA qualification of ECM-ORDER-NULL (round-16 #4): the total residue-invisibility of the elliptic group order is a NON-CM (GL\u2082-generic) phenomenon. For the CM curve E: y\u00b2 = x\u00b3 + x (End = \u2124[i], Gauss 1801):\n\n**1. The CM structure is exact.** a_p = 0 EXACTLY on inert primes p \u2261 3 mod 4 (2027/2027) \u2192 #E_cm(F_p) = p + 1 there (P(a_p=0) = 0.507 vs 0.004 generic); on the split half |a_p| = 2a with p = a\u00b2+b\u00b2, a odd (1973/1973, Gauss); ATOMIC trace law (P(|x|<0.5) = 0.683, P(x=0) = 0.507 vs semicircle 0.607/0.004); universal 4 | #E_cm (1000/1000 vs 458/1000).\n\n**2. The FIRST positive residue shadow on an elliptic order \u2014 restored by CM, symmetric only, weak.** SYM I(N mod \u2113; \u2113|#E_cm(F_p) OR \u2113|#E_cm(F_q)) = 0.0048/0.0062 bits at \u2113 = 3/5, each 4.8\u00d7 the null max (p < 0.002), vs the generic curve's 0.0000/0.0003 (null) on the same 6000 semiprimes; p\u22121 control live (0.3167, known 0.313); \u2113=7 inside null. Mechanism: the visible event is the inert-half p+1 condition \"a factor \u2261 3 mod 4 AND \u2261 \u22121 mod \u2113\" (\u2261 11 mod 12 for \u2113=3), diluted ~40\u00d7 vs p\u22121's 0.313 by the mod-4 inertness being invisible from N mod \u2113; decomposition P(\u2113|#E_cm(F_p)) = 0.515\u00b70.515 + 0.484\u00b70.117 at \u2113=3 (inert\u00b7P(\u2113|p+1|inert) + split\u00b7Hecke) \u2014 the split-half Hecke term is GL\u2082-hidden.\n\n**3. Yet factor-useless (the null):** (a) symmetric only \u2014 asym I(N mod \u2113; \u2113|#E_cm(F_p)) = 0.0000/0.0005/0.0009 at \u2113=3/5/7, all at the null, the which-factor bit lost (barrier 2); (b) the abelian p+1 channel, a known method; (c) full stage-1 smoothness M | #E_cm(F_p) (P = 0.619, size-driven) has zero residue MI (all null); (d) the four-way stage-1 contrast re-partitions a KNOWN target set \u2014 inert p+1-weak fires 40/40 (gate 40/40, IS the p+1 method), inert p+1-hard 0/40, split CM-weak (p+1\u22122a | M) 40/40 (gate 40/40, ECM-on-CM-curve's own target, which p+1 misses), split p+1-weak-but-CM-hard 4/40 (gate 0/4 \u2014 spurious ladder fires; the genuine p+1 method's primes are MISSED by CM-ECM).\n\n**Verdict: CONFIRMED null** (negative for factoring). The ECM-order invisibility is robust \u2014 even choosing the curve so its order degenerates to p+1 on half the primes leaks only the abelian channel already closed at round-16 #2 (PLUSONE-SMOOTH-NULL). Everything is Gauss (1801)/ECM (1987)/p+1 (1982). Barriers 2/5/6/8.\n\nScript: /tmp/exp_cmecmorder.py. Paper: ResearchOutput/NewMathematics/67_CmEcmOrder_CmShadowIsP1Channel.md.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_1172",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-12T17:19:53.176451+00:00",
     "title": "CM-ECM-ORDER (round-17 #1): the ECM order of a CM curve collapses to p+1 on the inert half \u2014 a residue shadow that carries no factoring leverage"
   },
@@ -1114,6 +1086,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "**Round-net-3 (network lab, depth axis).** Paper: `ResearchOutput/NetworkMathematics/3_CompositionDepth_Trichotomy.md`. Notebook Part 3, assessment v3, network exp 3.\n\n## Hypothesis\nOn a task requiring genuine sequential composition with hidden intermediates, the fixed-budget depth law becomes non-flat \u2014 depth buys composition steps width cannot substitute. Task: input [x0, o1..ok, END] -> x_k = op_k\u2218..\u2218op_1(x0), 3 fixed random op-permutations on a 64-alphabet, intermediates NOT in context, test = held-out op-strings \u00d7 fresh x0 (only a stepwise solution generalizes).\n\n## The trichotomy (measured, all regimes depth-FLAT)\n| regime | result |\n|---|---|\n| **L1 hidden + sparse** (k=6, 529 train/200 held-out strings) | UNLEARNABLE \u2014 d=6 train 0.90\u20130.94 at 8000 steps (2 seeds) = memorizing seen strings; held-out-string test stays at chance (0.023/0.028 vs 1/64=0.0156). Final-token loss does not decompose over the 6 random-permutation steps. |\n| **L2 hidden + small** (train k\u22643 \u2192 test k=6 length-gen) | MEMORIZED WITHOUT COMPOSITION \u2014 every depth d=1..8 reaches train(k\u22643)=1.0000 but length-gen to k=6 = chance (0.0156) at EVERY depth; the model fits the 39-string lookup and never learns per-op maps. |\n| **L3 intermediates given** (chain-in-context, k=6) | LEARNABLE AND DEPTH-FLAT \u2014 d=1 alone reaches held-out test=1.0000 (both seeds); once intermediates are context tokens, composition is one-step-per-token and depth is free. |\n\n## The law\nOn the task class where depth is supposed to matter, the three achievable training regimes are all depth-flat: unlearnable, memorized-without-composition, or solvable at d=1. **Depth is gated by error-signal decomposability (credit assignment), not representational capacity** \u2014 the network has the depth to represent the stepwise solution but gradient descent cannot discover it from a non-decomposable final-token loss, and the only routes to learnability (small input space / exposed intermediates) both erase the depth requirement. This extends NET-2's flat law to BOTH sides of difficulty (easy lookups flat via attention-reads-context; hard composition flat via unlearnable/memorized/depth-free regimes) \u2014 the single-peaked depth picture fails to materialize anywhere; the binding constraint is optimization.\n\n**Constructive corollary:** a task whose error signal decomposes over steps (digit addition with carries \u2014 each digit its own supervision token) is the one regime where a non-flat depth law could live (next target). Diagnostic: when a deep model is stuck, check error-signal decomposability before buying more depth.\n\n**Barriers:** (a) clean, nothing injected; (b) partial \u2014 memorize-without-compose / length-gen failure known, the trichotomy-as-depth-law + credit-assignment mechanism + both-sides framing are new (Catalog scan 2067 packages, no prior work); (c) toy-scale, real-scale next; (d) clean held-out strings; (e) 2 seeds on decisive runs, 5-depth chance wall in L2; (f) final-token accuracy, chance=1/64 documented; (g) regime comparison only; (h) honest negative + diagnostic + decomposable-error pointer.\n\nScripts: /tmp/exp_net_comp.py (L1), /tmp/exp_net_comp2.py (L2), /tmp/exp_net_comp3.py (L3), /tmp/exp_net_comp4.py (L1 robustness).",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_1190",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-13T00:05:54.675326+00:00",
+    "title": "NET-3: The composition-depth trichotomy \u2014 why the depth law is flat on both sides of task difficulty"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Formalizes a quantum random walk on the Berggren Pythagorean tree where constructive interference at energy spectrum minima collapses the state onto factors of N.",
     "domains": [
       "Pythagorean",
@@ -1214,6 +1200,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-12T22:09:52.984545+00:00",
     "title": "Deepening: The Structural Orthogonality Framework (8 barriers)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle fb76e61b (Q=0.850), which proved 84 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Paper:** `ResearchOutput/NewMathematics/36_Asymmetric_Exponent_FactorBlind.md` (factor3)\n**Experiment:** FETQ (#371), assessment v147.\n\n## Finding\nQ(a) = a^{N\u22121} mod N is computable in poly(log N) (no aggregation) and is\ninternally ASYMMETRIC: Q(a) mod p = a^{q\u22121} mod p, Q(a) mod q = a^{p\u22121} mod q",
+    "domains": [
+      "Cryptography"
+    ],
+    "id": "push_fb76e61b_f2de2e25",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "fb76e61b",
+    "status": "available",
+    "timestamp": "2026-08-13T00:05:37.540810+00:00",
+    "title": "Deepening: The Asymmetric CRT-Split of a^{N-1} is Factor-Blind, Closed"
   },
   {
     "consumed_by_exp_id": "",
@@ -1904,6 +1904,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-24T14:34:16.697733+00:00",
     "title": "Riemann Zeta: Zero-Free Regions and Density Estimates"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 24da7a57 (Q=0.840), which proved 69 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Paper (factor3):** [ResearchOutput/NewMathematics/29_Round11_Closures.md](https://github.com/paulklemstine/factor3/blob/main/ResearchOutput/NewMathematics/29_Round11_Closures.md)\n\n---\n\n# Round-11 Closures: The Definitive Closure of the Classical Surface\n\n**Program:** Factoring research lab \u2014 round",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "push_24da7a57_8ad48b46",
+    "priority_score": 0.94,
+    "research_mode": "team",
+    "source_exp_id": "24da7a57",
+    "status": "available",
+    "timestamp": "2026-08-13T00:05:25.438222+00:00",
+    "title": "Deepening: Round-11 Closures: The Definitive Closure of the Classical Surface"
   },
   {
     "consumed_by_exp_id": "",
@@ -18686,6 +18700,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-12T23:09:06.174776+00:00",
     "title": "1. **General torus knots** (`GeneralTorus.lean`). `\u0394_{a,b} = \u220f_{d \u2223 ab, d \u2224 a, d"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 bold, testable conjectures from the Round-11 closures\n\nDerived from what survived, and from what the proofs actually needed, in\n`Catalog/Combinatorics/Round11CycleIndexFingerprint.lean`,\n`Round11OrbitCountSeal.lean`, `Round11FingerprintInformation.lean` and\n`Round11DickmanConstantFactor.lean`.\n\nNotation: `N = p\u00b7q` a semiprime, `b` coprime to `N`, `d_p = ord_p b`,\n`d_q = ord_q b`, `d* = min(d_p, d_q)`, `n = ord_N b = lcm(d_p, d_q)`,\n`F(c) = gcd(b^c \u2212 1, N)`, `M_d = \u03a3_{c \u2223 d} \u03bc(d/c) F(c)`.\n\n---\n\n## C1 (Spectral rigidity). The four-atom spectrum characterises semiprimes.\n\n**Conjecture.** Let `N` be odd, `b` coprime to `N`. Then the raw M\u00f6bius spectrum\n`d \u21a6 M_d` has at most four nonzero coefficients for *every* base `b` if and only\nif `N` is a prime power or a semiprime; and for `N` with `k` distinct prime\nfactors the number of atoms of `M` is `2^k` for generic `b`, with masses\n`\u220f_{p \u2208 S}(p \u2212 1)` indexed by the subsets `S` of the prime divisors, located at\n`lcm_{p \u2208 S} ord_p b`.\n\n*The key insight is* that `Round11.mobRaw_eq` is really a statement about the\ninclusion\u2013exclusion expansion of `F = \u220f_p p^{[ord_p b \u2223 c]}`, so the atom set is\nthe lattice of subsets of the prime divisors under `lcm`, not anything special to\ntwo primes. *Why now?* The two-prime case is fully proved here, and the general\nexpansion needs only a multiplicative version of `Round11.mob_detect`, so this is\na finite amount of formal work with an immediately checkable prediction: an\n`N`-computable *count of spectral atoms* would be a primality-structure oracle.\n\n## C2 (Order-scale barrier as an information dichotomy).\n\n**Conjecture.** For every `D` and every finite instance family `\u03a9` on which\n`d* > D`, *any* statistic computable from `(N, b, F(1), \u2026, F(D))` has zero\ninformation about `(p+q) mod \u2113`; and conversely, for every family on which\n`d* \u2264 D` there exists `\u2113` and a statistic with strictly positive information.\n\n*The key insight is* that `Round11.cfsigma_starved` +\n`Round11.cfsigma_starved_postprocessed` already give the first half for the\nfingerprint window, and `Round11.cifinger_informative_at_order_scale` gives a\nwitness for the second half; the missing step is to close the \"any statistic\"\nquantifier by proving the window is a *sufficient statistic* for the pair\n`(N, b)` below the order scale. *Why now?* The counting notion `ZeroInfo` used\nhere is finitary and composes under post-processing, so the general statement is\na lemma about fibres of an explicitly constant map \u2014 no probability theory\nrequired.\n\n## C3 (Burnside seal, general form).\n\n**Conjecture.** For any finite abelian group `G` and any `g \u2208 G` acting on a\n`G`-set built functorially from `\u2124/N`, the orbit count is a `\u2124`-linear functional\nof the fixed-point sequence `k \u21a6 #Fix(g^k)`, and every such functional is\ncomputable from `(N, ord_N b)` alone precisely when the local orders coincide.\n\n*The key insight is* `Round11.card_fix_eq_fpr` together with\n`Round11.groupoid_balanced_no_leak`: the topological invariant is an average of\nthe fingerprint, and in the balanced case the average collapses to `(d + N \u2212 1)/d`,\na function of `N` and `ord_N b` only. *Why now?* Both ingredients are proved; the\ngeneral form needs only Burnside plus the CRT decomposition already formalised.\n\n## C4 (Unbalanced orbit counts are a factoring oracle).\n\n**Conjecture.** If `d_p \u2260 d_q` then the orbit count `C(b)`, together with `N` and\n`n`, determines `{p, q}` in polynomial time; consequently an `N`-computable\norbit-count oracle is *equivalent* to factoring, not merely implied by it.\n\n*The key insight is* that `Round11.groupoid_affine_hint` already expresses the\norbit count as the affine observation `(n/d_p - 1)p + (n/d_q - 1)q = known`, and\n`Round11.weighted_sum_prod_inversion` already shows that such an observation,\ntogether with `pq = N`, leaves at most two candidates. *Why now?* Both halves are\nproved here; what remains is only the bookkeeping that the two coefficients do\nnot both vanish outside the balanced case, plus a model of \"polynomial time\" in\nwhich to state the equivalence.\n\n## C5 (Exponent rigidity of early-abort policies).\n\n**Conjecture.** No early-abort policy whose per-candidate abort probability\ndepends only on `poly(log N)` bits of the candidate can beat the baseline by more\nthan a constant factor; hence `log T / log T' \u2192 1` for every such policy.\n\n*The key insight is* `Round11.drho_exponent_invariance` plus\n`Round11.exponent_gain_of_power_speedup`: constant factors are provably free and\npolynomial factors provably are not, so the whole content of a DRHO-style claim\nis a lower bound on the abort statistic's information \u2014 exactly the quantity that\n`ZeroInfo` measures. *Why now?* This is the first place where the pricing side\n(analysis) and the starvation side (combinatorics) are formalised in the same\nproject, so the two halves can finally be composed into one statement.\n",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_1188",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "24da7a57",
+    "status": "available",
+    "timestamp": "2026-08-13T00:05:18.218520+00:00",
+    "title": "Derived from what survived, and from what the proofs actually needed, in"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 after the Euler-gap collapse of `Q(a) = a^(N-1) mod N`\n\nWhat is now proved (all in `Catalog/Cryptography/AsymmetricExponent/`, no\n`sorry`, no extra axioms):\n\n* the asymmetric CRT split `Q(a) \u2261 a^(q-1) (mod p)`, `Q(a) \u2261 a^(p-1) (mod q)`,\n  together with its uniqueness (`Core.lean`);\n* every multiplicative consequence of `Q` factors through the Euler gap\n  `g = gcd(p-1, q-1)`: the Fermat test *is* the `g`-th power test, the liar\n  count is `g\u00b2`, the liar group is `(\u2124/g) \u00d7 (\u2124/g)`, the image of the power map\n  has size `\u03c6(N)/g\u00b2`, and the map is bijective iff `g = 1`\n  (`FermatLiars.lean`);\n* isolating one CRT component of `Q` is *equivalent* to factoring, as is any\n  nontrivial idempotent or any nontrivial square root of `1`\n  (`CRTBarrier.lean`);\n* the gcd variant `gcd(a^(N-1) - 1, N)` returns a factor for exactly\n  `g(q-1) + g(p-1) - 2g\u00b2` bases \u2014 the measured `g/p + g/q` reveal law\n  (`RevealDensity.lean`);\n* `Q` costs `O(log N)` (verified square-and-multiply, `PolyTime.lean`), while\n  the totient \u2014 an equally cheap-looking hint \u2014 factors in closed form\n  (`HintHierarchy.lean`);\n* the numerical rows behind all of this are re-checked by the Lean kernel\n  (`LabNotes.lean`).\n\nThe conjectures below are the next falsifiable steps.\n\n---\n\n## Conjecture 1 (Euler-gap sufficiency, barrier-5 in exact form)\n\n*Every* function of `N` obtained from the power surface\n`{(a, a^{k(N)} mod N) : a \u2208 (\u2124/N)*}` that is invariant under multiplicative\nautomorphisms of the unit group is a function of `(N, g)` only.\n\n**The key insight is** that the whole surface is the endomorphism\n`u \u21a6 u^{N-1}`, whose kernel and cokernel are already proved to be\n`(\u2124/g) \u00d7 (\u2124/g)` and of size `\u03c6(N)/g\u00b2`; an isomorphism-invariant statistic\ncannot see more than the isomorphism type.\n\n**Why now?** `liarGroupEquiv` and `card_range_pow` supply the invariants; what\nremains is to formalise \"isomorphism-invariant statistic\" and derive the\nsimulation. Falsifiable: exhibit an isomorphism-invariant statistic of the\npower surface separating `33 = 3\u00b711` from `35 = 5\u00b77`, whose liar groups this\nproject proves isomorphic.\n\n## Conjecture 2 (the gap hint is a factoring hint)\n\nKnowing `g = gcd(p-1, q-1)` together with `N` yields the factorisation of `N`\nin randomised polynomial time whenever `g > 1`.\n\n**The key insight is** that a random unit `u` has `u^{(N-1)/g'}` landing in the\n`g`-torsion for suitable `g' | g`, and that `g`-torsion elements which are\n`1` in exactly one CRT component are precisely the nontrivial square roots and\nidempotents that `nontrivial_idempotent_splits` and\n`nontrivial_sqrt_one_splits` already turn into factors.\n\n**Why now?** Both split theorems are proved and `card_revealing` already gives\nthe exact success count of the naive sampler, so only the *amplification* step\nis open. Falsifiable in either direction: prove the sampling probability bound, or\nexhibit a family with `g > 1` for which the induced distribution never leaves\nthe diagonal.\n\n## Conjecture 3 (hint hierarchy is strict)\n\nThere is a strict hierarchy of hints for semiprimes:\n`\u03c6(N)` \u27f9 factorisation (proved) \u27f9 `\u03bb(N)` \u27f9 ... \u27f9 `g` \u27f9 nothing,\nand `g` sits strictly below `\u03bb(N) = lcm(p-1,q-1)` in the sense that there are\ninfinitely many pairs of semiprimes with equal `g` and different `\u03bb`.\n\n**The key insight is** that `g` and `\u03bb` differ exactly by the \"non-common\" part\nof `p-1` and `q-1`, and `factor_from_totient` shows that recovering that part\nrecovers the factorisation.\n\n**Why now?** `eulerGap_33_eq_35` gives the first collision and\n`liarGroupIsoOfEulerGapEq` promotes any such collision to an isomorphism of the\nwhole liar structure; producing an infinite family is a sieve-level statement.\n\n## Conjecture 4 (quantum visibility of the asymmetry)\n\nThe asymmetry that is invisible classically becomes visible to a single\nperiod-finding call: the order of `a` modulo `N` together with the value\n`Q(a)` determines `gcd(ord(a), q-1)` and hence, over a few `a`, the pair\n`(p-1, q-1)` up to a bounded ambiguity.\n\n**The key insight is** `gcd_variant_fires_left`: `p | gcd(Q(a)-1, N)` holds\n*exactly* when `ord_p(a) | q-1`, so an order oracle converts the CRT asymmetry\ninto a divisibility test about the *other* prime.\n\n**Why now?** The firing criterion is proved, so the conjecture is a purely\ncombinatorial statement about how many `a` are needed to pin down `q-1` from\nthe tests \u2014 testable by simulation before any formalisation.\n\n## Conjecture 5 (density sharpness)\n\nThe bound `2\u00b7(#liars) \u2264 \u03c6(N)` proved here is attained exactly when\n`p - 1 | q - 1` and `q - 1 = 2(p-1)`, and for all other semiprimes the true\nconstant is at most `1/4`.\n\n**The key insight is** that the proof of `fermatLiar_density_le_half` loses\nonly in the step `2g \u2264 q-1`, which is tight precisely for that divisibility\npattern.\n\n**Why now?** The general bound is proved and the extremal cases (`N = 15`,\n`N = 91`) are already in the lab notes; the refinement is a finite case\nanalysis on the divisor `c = (q-1)/g`.\n",
+    "domains": [
+      "NumberTheory",
+      "Combinatorics"
+    ],
+    "id": "fd_1189",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "fb76e61b",
+    "status": "available",
+    "timestamp": "2026-08-13T00:05:30.953316+00:00",
+    "title": "What is now proved (all in `Catalog/Cryptography/AsymmetricExponent/`, no"
   },
   {
     "consumed_by_exp_id": "",

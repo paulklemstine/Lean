@@ -655,7 +655,7 @@
       "depth_estimate": 3,
       "description": "Formally proves perfect completeness, knowledge soundness, and zero-knowledge properties of Quadratic Arithmetic Program (QAP) based zk-SNARKs.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Cryptography"
       ],
@@ -1135,7 +1135,7 @@
       "depth_estimate": 3,
       "description": "Formally proves upper bounds on ciphertext noise growth during homomorphic evaluation and bootstrapping steps in BGV/BFV FHE schemes.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Cryptography"
       ],
@@ -1175,7 +1175,7 @@
       "depth_estimate": 3,
       "description": "Establishes formal security reduction for multilinear Diffie-Hellman assumptions in graded encoding schemes.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Cryptography"
       ],
@@ -1215,7 +1215,7 @@
       "depth_estimate": 3,
       "description": "Derives proven soundness error upper bounds for the Fast Reed-Solomon Interactive Oracle Proof of Proximity (FRI) protocol in zk-STARKs.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Cryptography"
       ],
@@ -7021,7 +7021,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Alternating adjacent-sum polytopes: transfer matrices and Ehrhart series' and formalize its key results. Abstract: We study a period-two family of adjacent-sum lattice polytopes whose consecutive-coordinate bounds alternate between $s$ and $s+1$. This provides a simple non-uniform deformation of the classical uniform model while retaining an explicit transfer-matrix structure. The lattice-point counts exhibit a parity split: the odd- and even-dimensional sequences have distinct rational generating functions with a common denominator. The odd-dimensional series satisfies a Möbius recurrence and admits an arctangent closed form, whereas the even-dimensional series obeys a coupled recurrence. Their common dominant pole determines the exponential growth in both parity classes. For the cyclic model obtained by adding a constraint between the first and last coordinates, the count becomes a matrix trace. The two cyclic parity classes again have rational generating functions with the same denominator; the even-dimensional numerator has a Jacobi-derivative form, while the odd-dimensional one is given by an ",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Cryptography"
       ],
@@ -12186,7 +12186,7 @@
       "depth_estimate": 3,
       "description": "# Future directions\n\n## Formal consequences established\n\n`Catalog/Pythagorean/TropicalCryptography/EigenvalueLeakage.lean` proves the exact power law for a min-plus eigenpair:\n\n- if `A ⊗ v = λ + v`, then `A^[k] ⊗ v = (k+1)λ + v` for the positive-power convention `A^[0] = A`;\n- when `λ ≠ 0`, positive powers of `A` are injective in the exponent;\n- a collision between distinct positive powers forces every represented eigenvalue to be zero;\n- observing the eigenvalue of a public power on the same eigenvector determines its exponent scaling exactly;\n- uniformly shifting matrix entries by `c` changes `λ` to `c+λ`, so every shift except `c=-λ` has injective positive powers.\n\nThese are mathematical identifiability results, not an implementation of an eigenvalue algorithm and not a complexity or security proof. They show that the proposed eigenvalue relation is a potential leakage channel rather than evidence for one-wayness.\n\n## Next formal targets\n\n1. Connect `IsEigenpair` to the minimum cycle mean and formalize a certified cycle-mean algorithm over rational or integer weights.\n2. Prove that every finite irreducible min-plus matrix admits an eigenpair, including the extended value `∞` needed for sparse graphs.\n3. Define binary exponentiation and prove that it computes `positivePower`, with an explicit count of min-plus products.\n4. Formalize exponent recovery from two certified nonzero eigenvalues, including divisibility and uniqueness over integer/rational weights.\n5. Characterize the zero-eigenvalue case: eventual periodicity, collisions, and what auxiliary normalizations still reveal the exponent.\n6. Model the proposed key exchange carefully. In any single-base power semigroup, `(A^[a])^[b] = A^[(a+1)(b+1)-1]`; this exponent convention and associativity should be proved before making protocol claims.\n7. Implement small certified examples and benchmark only after proving correspondence between executable arrays and the matrix definitions used here.\n8. Study masking schemes and whether conjugation, scalar normalization, or projectivization actually removes cycle-mean leakage.\n\nNo claim of post-quantum security follows from the present algebraic results. A security statement would require a precise distribution, adversarial model, parameterization, and reduction or attack analysis.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Algebra",
         "Computation"
@@ -23055,7 +23055,7 @@
       "depth_estimate": 3,
       "description": "# Future directions\n\n- Extend the two-state Cayley–Hamilton recurrence to the full `(s + 2)`-state adjacent-sum matrices used by the lattice-polytope model.\n- Define the open and cyclic lattice-point sets and prove bijections between their elements and the corresponding matrix products and traces.\n- Derive formal-power-series identities from the proved recurrences, including the shared characteristic denominator for both parity classes.\n- Formalize the Möbius recurrence and arctangent closed form for the odd-dimensional series.\n- Identify the dominant real pole under positivity and irreducibility hypotheses and prove the resulting exponential-growth statements.\n- Develop the Jacobi derivative identity for the even cyclic numerator and the corresponding odd cyclic numerator formula.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Cryptography"
       ],
@@ -23340,7 +23340,7 @@
       "depth_estimate": 3,
       "description": "# Future directions\n\nThe completed development isolates the exact obligations required for a\nconcrete Ring-LWE FHE instantiation.  Natural next steps are:\n\n1. **Concrete quotient polynomial ring.** Instantiate the message and\n   ciphertext rings as quotients such as `(ZMod q)[X]/(X^n+1)`, and connect the\n   symbolic `encryptWith` definition to sampled Ring-LWE errors.\n2. **Executable rounding decoder.** Define coefficientwise centered lifting and\n   rounding, then prove `CorrectBelow` from explicit constraints on `q`, the\n   scaling factor, and coefficient norms.\n3. **Multiplicative ciphertext operation.** Add tensor-product multiplication,\n   relinearization/key switching, and prove the corresponding phase and noise\n   formulas.\n4. **Distribution-level Ring-LWE games.** Replace abstract finite PMFs with\n   executable samplers and prove each public-key and challenge-ciphertext game\n   hop from a formally stated decisional Ring-LWE assumption.  The current\n   `indCPA_of_decisional_ringLWE` theorem is the final reduction step and does\n   not claim an unconditional proof that Ring-LWE is hard.\n5. **Bootstrappable decryption circuit.** Formalize a bounded-depth decryption\n   circuit and show that the somewhat homomorphic evaluator can evaluate it on\n   encrypted secret-key bits.  This would discharge the abstract\n   `refresh_correct` field from concrete cryptographic hypotheses.\n6. **Sharper noise accounting.** Track coefficient norms, additions,\n   multiplications, key switching, and modulus switching separately.  The\n   current `B^(2^d)` recurrence is intentionally conservative.\n7. **Parameter-derived depth.** For concrete `B` and threshold `T`, define and\n   compute the largest supported depth, proving maximality rather than only a\n   selected numerical instance.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Cryptography",
         "Algebra"
@@ -24568,7 +24568,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\nThe proposed mixed-area formula needs a normalization correction. For standard degree triangles, normalized lattice area satisfies\n\n\\[\nA((d+e)\\Delta)-A(d\\Delta)-A(e\\Delta)=2de.\n\\]\n\nThus the raw polarization of normalized lattice area is twice the plane Bézout number. In particular, two tropical lines give area difference `2`, while their stable intersection number is `1`. The corrected convention is\n\n\\[\nI(P,Q)=\\frac{A(P+Q)-A(P)-A(Q)}{2}\n\\]\n\nwhen `A` denotes normalized lattice area. Equivalently, one may use Euclidean area without the factor `1/2` in the polarization formula.\n\n`Catalog/Tropical/MixedAreaNormalization.lean` proves the degree-triangle identity, its positive-degree incompatibility with the uncorrected formula, the corrected Bézout identity, symmetry, and additivity in one argument. The explicit `(1,1)` theorem supplies the decisive small-case counterexample computationally inside Lean.\n\nA next step is to define finite lattice polygons and normalized area, prove the full Minkowski polarization law for polygons, and connect that invariant to determinant-weighted stable intersections of balanced fans.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Tropical",
         "Cryptography"
@@ -24813,7 +24813,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Lattice point sumsets and asymptotic approximate groups' and formalize its key results. Abstract: We establish new quantitative bounds for asymptotic approximate groups arising from finite subsets of lattices and, more generally, semi-linear subsets of abelian groups. Our approach combines Khovanskii's theorem on sumsets with Rogers and Zong bounds for the covering numbers.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Algebra",
         "Cryptography"
@@ -24854,7 +24854,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'The equality case of Ehrhart's volume conjecture' and formalize its key results. Abstract: We prove that every full-dimensional compact convex body in $\\mathbb R^n$ whose barycenter is its unique interior lattice point and whose volume is $(n+1)^n/n!$ is a unimodular image of the simplex $(n+1)Δ_n-(1,\\dots,1)$. This resolves the equality case of Ehrhart's volume conjecture, as a counterpart of the inequality part recently proved by OpenAI. The main result of this paper is obtained by generative AI, particularly GPT-5.6-sol, Fable 5, and the Danus system.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Geometry",
         "Cryptography"
@@ -26576,7 +26576,7 @@
       "depth_estimate": 3,
       "description": "# Future directions\n\nConcrete, falsifiable conjectures arising from the results proved this cycle, on top of the\nframework of weak and strong $B_d$-free families, layers, level families and the extremal\nnumbers $\\mathrm{La}$ and $\\mathrm{La}^*$.\n\nNotation: $B_d$ is the Boolean lattice on $d$ atoms, $n$ the size of the ground set,\n$\\mathrm{La}(n,P)$ and $\\mathrm{La}^*(n,P)$ the weak and strong extremal numbers, and\n$\\mathcal L(S)$ the family of all subsets whose size lies in $S$.\n\n## Resolved this cycle (no longer conjectures)\n\n* **Strict monotonicity, qualitative part, in full.** $\\mathrm{La}(n,B_d) < \\mathrm{La}(n,B_{d+1})$\n  for *every* $n \\ge d$ — previously known only for $n = d+1$ — and the same for the strong\n  extremal number. Sharpened to an equivalence: strictness holds precisely when $d \\le n$,\n  since for $d > n$ both sides equal $2^n$. Iterating,\n  $\\mathrm{La}(n,B_d) + k \\le \\mathrm{La}(n,B_{d+k})$ whenever $d + k \\le n+1$.\n* **A quantitative version.** $2^n + n\\,\\mathrm{La}(n,B_d) \\le (n+1)\\,\\mathrm{La}(n,B_{d+1})$ for\n  all $n$ and $d$; equivalently, the gain $\\mathrm{La}(n,B_{d+1}) - \\mathrm{La}(n,B_d)$ is at\n  least $(2^n - \\mathrm{La}(n,B_d))/(n+1)$. (The conjectured gain of a full central binomial\n  coefficient remains open; see **F2**.)\n* **The mechanism behind both**: adjoining *any* antichain to a weak $B_d$-free family produces\n  a weak $B_{d+1}$-free family, and likewise for strong copies. The proof constructs, for every\n  antichain $A$ of $B_{d+1}$, an order embedding $B_d \\hookrightarrow B_{d+1}$ avoiding $A$ —\n  adjoin the last atom exactly on an up-set.\n* **Height criteria.** Any family with no chain of $d+1$ sets is weak $B_d$-free — a\n  generalisation of the layer construction beyond layer families — and any family whose\n  members realise at most $d$ distinct sizes is weak $B_d$-free, with no completeness or\n  permutation-invariance hypothesis. Combined with the converse, weak $B_d$-freeness is\n  sandwiched between height $\\le d$ and height $\\le 2^d - 1$.\n* **Both height thresholds are sharp**: there is a family of height $d+1$ containing a copy of\n  $B_d$ (for $n \\ge d$), and a weak $B_d$-free family containing a chain of $2^d - 1$ sets\n  (for $2^d \\le n+2$), the latter simply because a copy of $B_d$ needs $2^d$ sets.\n\n## F1. Subadditivity of the free dimension\n\n**Conjecture.** If $\\mathcal F$ is weak $B_d$-free and $\\mathcal G$ is weak $B_e$-free, then\n$\\mathcal F \\cup \\mathcal G$ is weak $B_{d+e}$-free; likewise for strong freeness.\n\n*Status.* The case $e = 1$ is the Antichain Union Theorem proved this cycle (a weak $B_1$-free\nfamily is exactly an antichain). Exhaustively verified with no counterexample for $n = 3$ and\n$(d,e) \\in \\{(1,1),(1,2),(2,1)\\}$, and for $n = 4$ with $d = e = 1$. Equivalently, in poset\nform: for every subset $A \\subseteq B_{d+e}$ containing no weak copy of $B_e$, there is an\norder embedding $B_d \\hookrightarrow B_{d+e}$ whose image avoids $A$.\n\n## F2. A full central binomial coefficient of gain\n\n**Conjecture.** $\\mathrm{La}(n,B_{d+1}) - \\mathrm{La}(n,B_d) \\ge \\binom{n}{\\lfloor n/2\\rfloor}$\nfor all $n \\ge d+1$.\n\n*Status.* Open. The pigeonhole bound above gives $2^n/(n+1)$, short by a factor of order\n$\\sqrt n$ exactly in the regime where the extremal number is already a constant times the\ncentral binomial coefficient. For the level-restricted problem the quantitative form is a\ntheorem: the level optima for consecutive $d$ differ by exactly one central binomial\ncoefficient. *Falsifiable* by one pair $(n,d)$ with a smaller gain.\n\n## F3. The headline bound: an $\\varepsilon$-gain for the three-atom cube\n\n**Conjecture.** There are $\\varepsilon > 0$ and $n_0$ such that for all $n \\ge n_0$ there is a\nweak $B_3$-free family $\\mathcal F \\subseteq 2^{[n]}$ with\n$|\\mathcal F| \\ge (3+\\varepsilon)\\binom{n}{\\lfloor n/2\\rfloor}$, and likewise a strong\n$B_3$-free family of that size.\n\n*Status.* The framework pins down what has to be beaten: three consecutive layers, and nothing\nelse of a symmetric nature. The improvement cannot come from adding sets to a layer family\n(layer families are maximal: adjoining any set whose size lies outside the window creates a\nstrong copy), and cannot come from a level family or from a permutation-invariant family at\nall. Hence such a construction must break the symmetry of the cube. *Falsifiable*: a proof of\n$\\mathrm{La}(n,B_3) \\le 3\\binom{n}{\\lfloor n/2\\rfloor} + o\\bigl(\\binom{n}{\\lfloor n/2\\rfloor}\\bigr)$\nrefutes it.\n\n## F4. Sharpening the chain upper bound from $2^d - 1$ to $O(d)$\n\n**Conjecture.** The factor $2^d - 1$ in the chain bound is far from optimal:\n$\\mathrm{La}(n,B_d) \\le (d+c)\\binom{n}{\\lfloor n/2\\rfloor}$ for an absolute constant $c$\nindependent of $d$ and $n$. Concretely for $d = 3$:\n$\\mathrm{La}(n,B_3) \\le 4\\binom{n}{\\lfloor n/2\\rfloor}$ for all $n$.\n\n*Status.* Open. Proved: $\\le 7\\binom{n}{\\lfloor n/2\\rfloor}$ for $d = 3$, and the exact value\n$\\binom{n}{\\lfloor n/2\\rfloor}$ for $d = 1$. *Falsifiable* by a construction beating\n$4\\binom{n}{\\lfloor n/2\\rfloor}$ for some $n$; F3 only asks for $3+\\varepsilon$, so F3 and F4\nare compatible.\n\n## F5. Weak and strong extremal numbers differ\n\n**Conjecture.** For every $d \\ge 2$ there is $n_0$ with\n$\\mathrm{La}(n,B_d) < \\mathrm{La}^*(n,B_d)$ for all $n \\ge n_0$: the proved inequality\n$\\mathrm{La} \\le \\mathrm{La}^*$ is eventually strict, even though the layer invariants coincide.\n\n*Status.* Open; the first cases go the other way. Equality is proved for $n = d$, for\n$n = d+1$, for all $n$ when $d = 1$, and on level families for all $n$ and $d$. So any such\n$n_0$ must exceed $d+1$, and the separating families cannot be level families. *Falsifiable*\nby showing that some extremal strong $B_d$-free family is always weak $B_d$-free.\n\n## F6. Stability: an $\\varepsilon$-gain forces a large distance from every level family\n\n**Conjecture.** There is an absolute constant $c > 0$ such that for all $\\varepsilon > 0$ and\nall large $n$, every weak $B_3$-free family $\\mathcal F \\subseteq 2^{[n]}$ with\n$|\\mathcal F| \\ge (3+\\varepsilon)\\binom{n}{\\lfloor n/2\\rfloor}$ satisfies\n$\\min_S |\\mathcal F \\,\\triangle\\, \\mathcal L(S)| \\ge c\\,\\varepsilon\\binom{n}{\\lfloor n/2\\rfloor}$,\nthe minimum being over all sets $S$ of levels. More generally the same should hold with\n$\\mathcal L(S)$ replaced by any permutation-invariant family.\n\n*Status.* The degenerate case $\\mathcal F = \\mathcal L(S)$ is a theorem (a level family never\nexceeds the central-layer bound), so the conjecture is precisely a robust, quantitative version\nof it: an $\\varepsilon$-gain must not merely break the symmetry of the cube, it must break it on\na positive proportion of the middle layer. *Falsifiable* by a weak $B_3$-free family of size\n$(3+\\varepsilon)\\binom{n}{\\lfloor n/2\\rfloor}$ that differs from some level family in\n$o\\bigl(\\binom{n}{\\lfloor n/2\\rfloor}\\bigr)$ sets.\n\n*Remark (a related claim we deliberately do not conjecture).* One might guess that no gain is\npossible from families of *bounded width*, i.e. contained in $d+t$ consecutive layers for\nconstant $t$. Since the known $\\varepsilon$-constructions for $B_d$ with $d \\ge 4$ appear to\nlive on a bounded number of layers, we expect that guess to be false, and record it only as a\nquestion: for which $t$ is the maximum size of a weak $B_d$-free family inside $d+t$\nconsecutive layers equal to the sum of the $d$ largest of those binomial coefficients? The case\n$t = 0$ is the layer construction; the case \"$t = 1$, one extra set\" is the maximality of layer\nfamilies.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Combinatorics",
         "Cryptography"
@@ -26660,7 +26660,7 @@
       "depth_estimate": 3,
       "description": "# Future directions\n\nDerived from the five Lean files of this thread, all of which compile against\nmathlib4 (Lean 4.28.0) with no `sorry` and use only the standard axioms\n`propext`, `Classical.choice`, `Quot.sound`:\n\n* `Catalog/Applications/WallpaperRhythm/QuotientEntropy.lean` — the abstract\n  `InvariantPattern` capacity theorem (earlier cycle);\n* `Catalog/Computation/WallpaperRhythm/OrbitCounting.lean` — instantiation of\n  that setoid by a group action, Burnside evaluation, exact counts on the\n  toroidal grids `ZMod p × ZMod q`;\n* `Catalog/Computation/WallpaperRhythm/OrbitEntropy.lean` — probabilistic\n  entropy, strict monotonicity of capacity, the `IsCanonAt` predicate with its\n  onset-count obstruction, the quarter-turn descent criterion;\n* `Catalog/Computation/WallpaperRhythm/QuarterTurnCapacity.lean` — realizability\n  of symmetry groups, the exact quarter-turn capacity of every square torus, and\n  the point-group descent dichotomy;\n* `Catalog/Computation/WallpaperRhythm/BernoulliEntropy.lean` — the exact entropy\n  of the orbit-Bernoulli model and the per-orbit entropy deficit;\n* `Catalog/Computation/WallpaperRhythm/CanonSharpness.lean` — the complete onset\n  spectrum of canons;\n* `Catalog/Computation/WallpaperRhythm/GlideCapacity.lean` — glide reflections of\n  a torus: fixed-point freeness and the capacity `2 ^ (p q / 2)`.\n\n## Status of the conjectures posed in the previous cycle\n\nAll five are now **theorems**.\n\n* **C1. Realizability of symmetry types — proved, and in greater generality.**\n  `symmetryGroup_subgroupPattern`: for the translation action of any group `G` on\n  itself, every subgroup `H ≤ G` is *exactly* the symmetry group of the indicator\n  pattern of `H`.  `symmetryGroup_torusSubgroupPattern` transports this to the\n  cyclic time-shift action on the `p × q` torus, so on a drum grid every\n  symmetry type is realized by an explicit pattern.\n* **C2. Sharpness of the canon onset obstruction — proved.**\n  `isCanonAt_onsetCount_iff`: a number `k` is the onset count of some canon at\n  time distance `g` on the `p × q` torus **iff** `addOrderOf g ∣ k` and\n  `k ≤ p * q`.  The divisibility obstruction of the previous cycle is therefore\n  complete, not merely necessary.  The general mechanism is\n  `exists_invariant_finset_card` (a free action of a finite group has an\n  invariant subset of every size `|Γ| · j` with `j` at most the orbit count).\n  Worked instance: `canon_onsetCount_four_one` (`{0, 2, 4}` on the four-beat\n  grid).\n* **C3. Quarter-turn capacity — proved, and extended to even side lengths.**\n  `card_pattern_quarterTurn`: the number of quarter-turn invariant patterns on\n  the `p × p` torus is `2 ^ ((p² + 2t + t²) / 4)` with `t = twoTorsionCard p`.\n  For odd `p` this is the conjectured `2 ^ ((p² + 3) / 4)`; for even `p` it is\n  `2 ^ ((p² + 8) / 4)`, because the quarter turn then fixes two diagonal cells\n  and the half turn four.  Numeric instances: `8` (3×3), `128` (5×5), `8` (2×2),\n  `64` (4×4).\n* **C4. Which point groups descend to a rectangular torus — proved.**\n  `signedDiag_mapsTo_torusLattice` (diagonal sign changes always preserve\n  `pℤ × qℤ`) together with `signedSwap_mapsTo_torusLattice_iff` (a signed\n  coordinate swap preserves it iff `p = q`) determines the subgroup of the\n  order-eight point group `D₄` descending to the `p × q` torus: the order-four\n  diagonal subgroup when `p ≠ q`, all of `D₄` when `p = q`.\n* **C5. Entropy deficit as a measure of stylistic constraint — proved.**\n  `entropyBits_orbitBernoulli`: the orbit-Bernoulli distribution (switch each of\n  the `m` orbits on independently with probability `θ`) has entropy exactly\n  `m · H₂(θ)` bits, so by `entropyDeficit_orbitBernoulli` the deficit is\n  `m · (1 - H₂(θ))` — a fixed cost per orbit — nonnegative\n  (`entropyDeficit_nonneg`) and zero exactly at `θ = 1/2`\n  (`entropyDeficit_eq_zero_iff`).\n\n## New conjectures\n\nEach is stated so that a single Lean counterexample refutes it.\n\n### N1. Capacity of a rectangular torus under its full descended point group\n\nBy C4 the point group descending to the `p × q` torus with `p ≠ q` is the Klein\nfour-group `{diag(±1, ±1)}`.  Conjecture: the number of patterns invariant under\nall four of its elements is\n\n    2 ^ ( (p + t(p)) * (q + t(q)) / 4 ),   t(n) = twoTorsionCard n = gcd(2, n),\n\nsince Burnside adds `p*q`, `q*t(p)`, `p*t(q)` and `t(p)*t(q)` fixed cells.\n*Refutation:* a pair `(p, q)` where a brute-force count differs — equivalently a\ncell fixed by a coordinate sign change that the parity bookkeeping misses.\nThis is the rectangular counterpart of the proved `card_pattern_quarterTurn`, and\nwould complete the capacity table for every planar point group that descends.\n\n### N2. Capacity under the full dihedral group of a square torus\n\nFor `p` odd let `D₄` act on `ZMod p × ZMod p` by the four rotations of\n`QuarterTurns` together with the four reflections `(t,n) ↦ (n,t)`,\n`(t,n) ↦ (-n,-t)`, `(t,n) ↦ (-t,n)`, `(t,n) ↦ (t,-n)`.  Each reflection should\nfix exactly `p` cells, so Burnside predicts `(p + 1)(p + 3) / 8` orbits and\n\n    capacity = 2 ^ ((p + 1) * (p + 3) / 8).\n\n*Refutation:* an odd `p` (say `p = 7`, predicted `2 ^ 10`) where the count\ndiffers.  Note the prediction agrees with the proved rotation-only value at\n`p = 3` (both give `8`) but is strictly smaller from `p = 5` on, so the two\nstatements are independent.\n\n### N3. Realizability for a non-free action\n\n`symmetryGroup_subgroupPattern` realizes every subgroup for a *free* translation\naction.  Conjecture: realizability survives the loss of freeness for the\nquarter-turn action — for every `p ≥ 3` and every subgroup `H ≤ QuarterTurns`\nthere is a pattern `f : ZMod p × ZMod p → Bool` with\n`symmetryGroup QuarterTurns f = H`.  *Refutation:* a `p ≥ 3` and a subgroup\n(necessarily one of `⊥`, the half-turn subgroup, `⊤`) realized by no pattern.\nFailure at `p = 1` is immediate — the single cell forces `⊤` — so the bound\n`p ≥ 3` is part of the claim.\n\n### N4. Capacity of the toroidal \"pg\" group\n\n`card_pattern_glide` counts the patterns invariant under a single glide\nreflection `γ(t, n) = (t + p/2, -n)` on the `p × q` torus with `p` even: there\nare `2 ^ (p q / 2)`, since `γ` is fixed-point free\n(`fixedBy_glide_eq_empty`).  Conjecture: for the larger group generated by `γ`\ntogether with *every* time shift — the toroidal analogue of the wallpaper group\n`pg` — the orbits are exactly the pitch pairs `{n, -n}`, so the capacity is\n\n    2 ^ ((q + t(q)) / 2),   t(n) = gcd(2, n),\n\nindependently of `p`.  *Refutation:* an even `p` and a `q` where a brute-force\ncount differs, i.e. where the glide and the shifts fail to merge two cells with\nthe same pitch class.  For `q = 3` the prediction is `4` patterns for every even\n`p`.\n\n### N5. Maximum entropy at fixed onset density\n\nThe orbit-Bernoulli model is the natural biased model, but is it the *only*\nextremal one?  Conjecture: among all probability distributions `P` on\n`GroupInvariantPattern G α` whose expected number of \"on\" orbits is `m θ`, the\nentropy `entropyBits P` is maximized precisely by `orbitBernoulli θ`, with value\n`m · H₂(θ)`.  *Refutation:* a group action, a `θ` and a distribution with the\nsame expected onset density and strictly larger entropy.  Together with the\nproved deficit law this would make `m · (1 - H₂(θ))` the exact information cost\nof a stylistic onset density, rather than merely the cost of one particular\nmodel.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Combinatorics",
         "NumberTheory",
@@ -31190,7 +31190,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'A Fourier-analytic Uniqueness Theorem for Lattice-point Enumerators' and formalize its key results. Abstract: We consider a bounded set $P \\subset \\mathbb{R}^d$ and the lattice-point enumerator $L_P(t) = |tP \\cap \\mathbb{Z}^d|$ for real $t > 0$. We show that if two bounded measurable sets with boundary of measure zero have the same real-parameter lattice-point enumerators for all integer translates, then their indicator functions agree almost everywhere. As a corollary, any convex body is uniquely determined by this data. Our proof is short and Fourier-analytic, where the key device is a periodic point-counting function whose Fourier coefficients recover the Fourier transform of the indicator function on a dense set. This recovers and extends, with a unified argument, the uniqueness results for rational polytopes and symmetric convex bodies established by Royer [arXiv:1712.01973, arXiv:1712.03937], whose proofs relied on intricate case-specific geometric constructions.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Geometry",
         "Cryptography"
@@ -32823,11 +32823,11 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "8590e003",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -32839,7 +32839,7 @@
       ],
       "github_issue": 84,
       "id": "fd_1171",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-08-13T00:05:56.910211+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -32854,7 +32854,7 @@
       "source": "github_injection",
       "source_exp_id": "github",
       "source_path": "github",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-08-12T17:19:53.176046+00:00",
       "title": "CM-ECM-GENERAL: rational-torsion degeneracy, union-dilution law, 3-adic Hecke visibility (Q(sqrt(-3)) j=0 curve) — round-17 #2, exp 403"
@@ -32863,11 +32863,11 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "c76c12ee",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -32879,7 +32879,7 @@
       ],
       "github_issue": 83,
       "id": "fd_1172",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-08-13T00:06:00.671386+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -32894,7 +32894,7 @@
       "source": "github_injection",
       "source_exp_id": "github",
       "source_path": "github",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-08-12T17:19:53.176451+00:00",
       "title": "CM-ECM-ORDER (round-17 #1): the ECM order of a CM curve collapses to p+1 on the inert half — a residue shadow that carries no factoring leverage"
@@ -33556,7 +33556,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions — after the Euler-gap collapse of `Q(a) = a^(N-1) mod N`\n\nWhat is now proved (all in `Catalog/Cryptography/AsymmetricExponent/`, no\n`sorry`, no extra axioms):\n\n* the asymmetric CRT split `Q(a) ≡ a^(q-1) (mod p)`, `Q(a) ≡ a^(p-1) (mod q)`,\n  together with its uniqueness (`Core.lean`);\n* every multiplicative consequence of `Q` factors through the Euler gap\n  `g = gcd(p-1, q-1)`: the Fermat test *is* the `g`-th power test, the liar\n  count is `g²`, the liar group is `(ℤ/g) × (ℤ/g)`, the image of the power map\n  has size `φ(N)/g²`, and the map is bijective iff `g = 1`\n  (`FermatLiars.lean`);\n* isolating one CRT component of `Q` is *equivalent* to factoring, as is any\n  nontrivial idempotent or any nontrivial square root of `1`\n  (`CRTBarrier.lean`);\n* the gcd variant `gcd(a^(N-1) - 1, N)` returns a factor for exactly\n  `g(q-1) + g(p-1) - 2g²` bases — the measured `g/p + g/q` reveal law\n  (`RevealDensity.lean`);\n* `Q` costs `O(log N)` (verified square-and-multiply, `PolyTime.lean`), while\n  the totient — an equally cheap-looking hint — factors in closed form\n  (`HintHierarchy.lean`);\n* the numerical rows behind all of this are re-checked by the Lean kernel\n  (`LabNotes.lean`).\n\nThe conjectures below are the next falsifiable steps.\n\n---\n\n## Conjecture 1 (Euler-gap sufficiency, barrier-5 in exact form)\n\n*Every* function of `N` obtained from the power surface\n`{(a, a^{k(N)} mod N) : a ∈ (ℤ/N)*}` that is invariant under multiplicative\nautomorphisms of the unit group is a function of `(N, g)` only.\n\n**The key insight is** that the whole surface is the endomorphism\n`u ↦ u^{N-1}`, whose kernel and cokernel are already proved to be\n`(ℤ/g) × (ℤ/g)` and of size `φ(N)/g²`; an isomorphism-invariant statistic\ncannot see more than the isomorphism type.\n\n**Why now?** `liarGroupEquiv` and `card_range_pow` supply the invariants; what\nremains is to formalise \"isomorphism-invariant statistic\" and derive the\nsimulation. Falsifiable: exhibit an isomorphism-invariant statistic of the\npower surface separating `33 = 3·11` from `35 = 5·7`, whose liar groups this\nproject proves isomorphic.\n\n## Conjecture 2 (the gap hint is a factoring hint)\n\nKnowing `g = gcd(p-1, q-1)` together with `N` yields the factorisation of `N`\nin randomised polynomial time whenever `g > 1`.\n\n**The key insight is** that a random unit `u` has `u^{(N-1)/g'}` landing in the\n`g`-torsion for suitable `g' | g`, and that `g`-torsion elements which are\n`1` in exactly one CRT component are precisely the nontrivial square roots and\nidempotents that `nontrivial_idempotent_splits` and\n`nontrivial_sqrt_one_splits` already turn into factors.\n\n**Why now?** Both split theorems are proved and `card_revealing` already gives\nthe exact success count of the naive sampler, so only the *amplification* step\nis open. Falsifiable in either direction: prove the sampling probability bound, or\nexhibit a family with `g > 1` for which the induced distribution never leaves\nthe diagonal.\n\n## Conjecture 3 (hint hierarchy is strict)\n\nThere is a strict hierarchy of hints for semiprimes:\n`φ(N)` ⟹ factorisation (proved) ⟹ `λ(N)` ⟹ ... ⟹ `g` ⟹ nothing,\nand `g` sits strictly below `λ(N) = lcm(p-1,q-1)` in the sense that there are\ninfinitely many pairs of semiprimes with equal `g` and different `λ`.\n\n**The key insight is** that `g` and `λ` differ exactly by the \"non-common\" part\nof `p-1` and `q-1`, and `factor_from_totient` shows that recovering that part\nrecovers the factorisation.\n\n**Why now?** `eulerGap_33_eq_35` gives the first collision and\n`liarGroupIsoOfEulerGapEq` promotes any such collision to an isomorphism of the\nwhole liar structure; producing an infinite family is a sieve-level statement.\n\n## Conjecture 4 (quantum visibility of the asymmetry)\n\nThe asymmetry that is invisible classically becomes visible to a single\nperiod-finding call: the order of `a` modulo `N` together with the value\n`Q(a)` determines `gcd(ord(a), q-1)` and hence, over a few `a`, the pair\n`(p-1, q-1)` up to a bounded ambiguity.\n\n**The key insight is** `gcd_variant_fires_left`: `p | gcd(Q(a)-1, N)` holds\n*exactly* when `ord_p(a) | q-1`, so an order oracle converts the CRT asymmetry\ninto a divisibility test about the *other* prime.\n\n**Why now?** The firing criterion is proved, so the conjecture is a purely\ncombinatorial statement about how many `a` are needed to pin down `q-1` from\nthe tests — testable by simulation before any formalisation.\n\n## Conjecture 5 (density sharpness)\n\nThe bound `2·(#liars) ≤ φ(N)` proved here is attained exactly when\n`p - 1 | q - 1` and `q - 1 = 2(p-1)`, and for all other semiprimes the true\nconstant is at most `1/4`.\n\n**The key insight is** that the proof of `fermatLiar_density_le_half` loses\nonly in the step `2g ≤ q-1`, which is tight precisely for that divisibility\npattern.\n\n**Why now?** The general bound is proved and the extremal cases (`N = 15`,\n`N = 91`) are already in the lab notes; the refinement is a finite case\nanalysis on the divisor `c = (q-1)/g`.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "NumberTheory",
         "Combinatorics"
@@ -33584,6 +33584,46 @@
       "title": "What is now proved (all in `Catalog/Cryptography/AsymmetricExponent/`, no"
     },
     {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "**Round-net-3 (network lab, depth axis).** Paper: `ResearchOutput/NetworkMathematics/3_CompositionDepth_Trichotomy.md`. Notebook Part 3, assessment v3, network exp 3.\n\n## Hypothesis\nOn a task requiring genuine sequential composition with hidden intermediates, the fixed-budget depth law becomes non-flat — depth buys composition steps width cannot substitute. Task: input [x0, o1..ok, END] -> x_k = op_k∘..∘op_1(x0), 3 fixed random op-permutations on a 64-alphabet, intermediates NOT in context, test = held-out op-strings × fresh x0 (only a stepwise solution generalizes).\n\n## The trichotomy (measured, all regimes depth-FLAT)\n| regime | result |\n|---|---|\n| **L1 hidden + sparse** (k=6, 529 train/200 held-out strings) | UNLEARNABLE — d=6 train 0.90–0.94 at 8000 steps (2 seeds) = memorizing seen strings; held-out-string test stays at chance (0.023/0.028 vs 1/64=0.0156). Final-token loss does not decompose over the 6 random-permutation steps. |\n| **L2 hidden + small** (train k≤3 → test k=6 length-gen) | MEMORIZED WITHOUT COMPOSITION — every depth d=1..8 reaches train(k≤3)=1.0000 but length-gen to k=6 = chance (0.0156) at EVERY depth; the model fits the 39-string lookup and never learns per-op maps. |\n| **L3 intermediates given** (chain-in-context, k=6) | LEARNABLE AND DEPTH-FLAT — d=1 alone reaches held-out test=1.0000 (both seeds); once intermediates are context tokens, composition is one-step-per-token and depth is free. |\n\n## The law\nOn the task class where depth is supposed to matter, the three achievable training regimes are all depth-flat: unlearnable, memorized-without-composition, or solvable at d=1. **Depth is gated by error-signal decomposability (credit assignment), not representational capacity** — the network has the depth to represent the stepwise solution but gradient descent cannot discover it from a non-decomposable final-token loss, and the only routes to learnability (small input space / exposed intermediates) both erase the depth requirement. This extends NET-2's flat law to BOTH sides of difficulty (easy lookups flat via attention-reads-context; hard composition flat via unlearnable/memorized/depth-free regimes) — the single-peaked depth picture fails to materialize anywhere; the binding constraint is optimization.\n\n**Constructive corollary:** a task whose error signal decomposes over steps (digit addition with carries — each digit its own supervision token) is the one regime where a non-flat depth law could live (next target). Diagnostic: when a deep model is stuck, check error-signal decomposability before buying more depth.\n\n**Barriers:** (a) clean, nothing injected; (b) partial — memorize-without-compose / length-gen failure known, the trichotomy-as-depth-law + credit-assignment mechanism + both-sides framing are new (Catalog scan 2067 packages, no prior work); (c) toy-scale, real-scale next; (d) clean held-out strings; (e) 2 seeds on decisive runs, 5-depth chance wall in L2; (f) final-token accuracy, chance=1/64 documented; (g) regime comparison only; (h) honest negative + diagnostic + decomposable-error pointer.\n\nScripts: /tmp/exp_net_comp.py (L1), /tmp/exp_net_comp2.py (L2), /tmp/exp_net_comp3.py (L3), /tmp/exp_net_comp4.py (L1 robustness).",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Novelty"
+      ],
+      "github_issue": 98,
+      "id": "fd_1190",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 1000.0,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "github_injection",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-08-13T00:05:54.675326+00:00",
+      "title": "NET-3: The composition-depth trichotomy — why the depth law is flat on both sides of task difficulty"
+    },
+    {
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
@@ -33597,7 +33637,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 03b10997 (Q=0.770), which proved 17 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the Learning With Errors (LWE) problem and prove its reduction from worst-case lattice problems (GapSVP). Show that the Regev encryption scheme is IND-CPA secure under LWE. Prove that key exchange based on LWE achieves forward secrecy. Compute concrete security parameters for 128-bit secur",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Cryptography"
       ],
@@ -34197,7 +34237,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 2bc344f1 (Q=0.807), which proved 20 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Establishes formal security reduction for multilinear Diffie-Hellman assumptions in graded encoding schemes.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Cryptography"
       ],
@@ -34437,7 +34477,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 3e30c45d (Q=0.769), which proved 23 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalizes radical isogeny evaluation algorithms on supersingular Montgomery elliptic curves over quadratic finite fields.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Cryptography"
       ],
@@ -34597,7 +34637,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 50db037d (Q=0.772), which proved 13 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that Shamir's secret sharing scheme is information-theoretically secure: any t-1 shares reveal zero information about the secret. Formalize Feldman's verifiable secret sharing and prove that cheating dealers are caught. Show that the reconstruction threshold equals the degree of the polynomial",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Cryptography"
       ],
@@ -36077,7 +36117,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle a68d3b50 (Q=0.767), which proved 11 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the Learning With Errors (LWE) problem. Prove Regev's quantum reduction: LWE is as hard as worst-case lattice problems (GapSVP). Construct the Dual-Regev encryption scheme and prove CPA security. Formalize the ring-LWE variant.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Cryptography"
       ],
@@ -36157,7 +36197,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle b080b405 (Q=0.789), which proved 13 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Investigate the ArXiv paper 'Alternating adjacent-sum polytopes: transfer matrices and Ehrhart series' and formalize its key results. Abstract: We study a period-two family of adjacent-sum lattice polytopes whose consecutive-coordinate bounds alternate between $s$ and $s+1$. This provides a simple n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Cryptography"
       ],
@@ -37342,6 +37382,46 @@
       "thread_id": "",
       "timestamp": "2026-07-19T04:29:12.043456+00:00",
       "title": "Deepening: **Conjecture.** There is a natural joint scaling of the prime cutoff `x`, occupa"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Building on cycle fb76e61b (Q=0.850), which proved 84 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Paper:** `ResearchOutput/NewMathematics/36_Asymmetric_Exponent_FactorBlind.md` (factor3)\n**Experiment:** FETQ (#371), assessment v147.\n\n## Finding\nQ(a) = a^{N−1} mod N is computable in poly(log N) (no aggregation) and is\ninternally ASYMMETRIC: Q(a) mod p = a^{q−1} mod p, Q(a) mod q = a^{p−1} mod q",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Cryptography"
+      ],
+      "github_issue": 0,
+      "id": "push_fb76e61b_f2de2e25",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.95,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "fb76e61b",
+      "source_path": "The Asymmetric CRT-Split of a^{N-1} is Factor-Blind, Closed",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-08-13T00:05:37.540810+00:00",
+      "title": "Deepening: The Asymmetric CRT-Split of a^{N-1} is Factor-Blind, Closed"
     },
     {
       "ambition_level": "extension",
@@ -42601,7 +42681,7 @@
       "depth_estimate": 3,
       "description": "Zero-knowledge proofs let you convince someone a statement is true without revealing WHY. Apply this to mathematics: a zero-knowledge proof of a theorem T convinces the verifier that T is provable in PA without revealing any step of the proof. Conjecture: Every theorem provable in Peano Arithmetic has a zero-knowledge proof whose communication complexity is polynomial in the length of the theorem statement (not the proof). This follows from the PCP theorem combined with the fact that PA-proofs can be arithmetized. The zero-knowledge protocol: (1) Prover commits to each proof step using a collision-resistant hash. (2) Verifier randomly challenges one proof step. (3) Prover opens that step and shows it follows from the axioms. Repeating O(k) times gives soundness error 2^{-k}. The proof is zero-knowledge because the verifier only sees one random step per challenge. Test: implement a zero-knowledge proof system for propositional tautologies and prove that a verifier learns nothing beyond the validity of the tautology. Impact: mathematicians can certify results without revealing their methods — a mathematical equivalent of sealed-bid auctions for proof strategies.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Novelty",
         "Cryptography",
@@ -49986,7 +50066,7 @@
       "depth_estimate": 3,
       "description": "Construct and prove correct a zero-knowledge proof system for graph 3-colorability. Prove completeness, soundness, and zero-knowledge. Formalize the simulation paradigm and show that the simulator produces indistinguishable transcripts.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Cryptography",
         "Logic"
@@ -50027,7 +50107,7 @@
       "depth_estimate": 3,
       "description": "Formalize fully homomorphic encryption (FHE) schemes based on the ring-LWE problem. Prove correctness: Dec(Enc(m) + Enc(m')) = m + m'. Prove security under ring-LWE. Show that the Gentry bootstrapping procedure converts a somewhat homomorphic scheme into an FHE scheme. Compute the multiplicative depth before bootstrapping is needed.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Cryptography",
         "Computation"
@@ -51547,7 +51627,7 @@
       "depth_estimate": 3,
       "description": "Formalize the Learning With Errors (LWE) problem and prove its reduction from worst-case lattice problems (GapSVP). Show that the Regev encryption scheme is IND-CPA secure under LWE. Prove that key exchange based on LWE achieves forward secrecy. Compute concrete security parameters for 128-bit security.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Cryptography",
         "Computation"
@@ -51670,7 +51750,7 @@
       "depth_estimate": 3,
       "description": "Prove that Shamir's secret sharing scheme is information-theoretically secure: any t-1 shares reveal zero information about the secret. Formalize Feldman's verifiable secret sharing and prove that cheating dealers are caught. Show that the reconstruction threshold equals the degree of the polynomial plus one.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Cryptography",
         "Algebra"
@@ -53890,7 +53970,7 @@
       "depth_estimate": 3,
       "description": "Cycle 2c38bc1a (Q=0.700) proved 134 theorems in Cryptography but left 2 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Investigate the ArXiv paper 'Even smaller universal posets' and formalize its key results. Abstract: We show that for every $η>0$ and sufficiently large $n$, there exists a poset of size $2^{(1+η)n/2}",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Cryptography"
       ],
