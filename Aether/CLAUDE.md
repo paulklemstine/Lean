@@ -41,13 +41,13 @@ pytest tests/test_future_directions.py -v
 
 ### Valid Domains (DOMAIN_DIRS)
 
-`Algebra`, `Applications`, `Bridges`, `Computation`, `Cryptography`, `EML`, `Geometry`, `Logic`, `MachineLearning`, `Novelty`, `Physics`, `Pythagorean`, `Shared`, `Tropical`
+`Algebra`, `Applications`, `Bridges`, `Combinatorics`, `Computation`, `Cryptography`, `Geometry`, `Logic`, `MachineLearning`, `Novelty`, `NumberTheory`, `Physics`, `Probability`, `Pythagorean`, `Shared`, `Tropical`
 
-Novelty is a first-class domain for wild/exploratory directions. Speculative is **not** a valid Catalog domain — sub-domains like TDA, Arithmetic Geometry, etc. map to real domains via `normalize_domain()`.
+Novelty is a first-class domain for wild/exploratory directions. `EML` and `Speculative` are **not** valid routing domains — `normalize_domain()` sends them to `Applications` and `Novelty` respectively (the `EML/` and `Speculative/` Catalog dirs exist only for legacy content). Other sub-domains like TDA, Arithmetic Geometry, etc. map to real domains via `normalize_domain()`.
 
 ### Domain Normalization
 
-`output_organizer.normalize_domain()` maps ~90 domain name variants (including sub-domains like "Arithmetic Geometry"→"Algebra", "TDA"→"Computation", "Novelty"→"Novelty") to the 14 valid Catalog directories. Any unrecognized domain falls through to "Speculative" as a last resort, but most known sub-domains are now mapped.
+`output_organizer.normalize_domain()` maps ~90 domain name variants (including sub-domains like "Arithmetic Geometry"→"Algebra", "TDA"→"Computation", "Novelty"→"Novelty") to the 16 active Catalog directories. Any unrecognized domain falls through to "Novelty" as a last resort, but most known sub-domains are now mapped.
 
 ### Domain Routing
 
@@ -123,7 +123,7 @@ The research prompt has multiple versions, dispatched via A/B/C split:
 All versions share:
 - **Anti-Triviality Rules**: Rejects commutativity proofs, wrapper theorems, simp-only proofs, definitions without insight
 - **No cross-domain mandate**: Removed — the LLM naturally connects domains when relevant
-- **No Speculative in classification**: Classification uses 14 real domains including Novelty
+- **No Speculative in classification**: Classification uses 16 real domains including Novelty
 - **No FILE RICHNESS MANDATE**: Removed line-count incentives that caused bloat
 - **Novelty from direction metrics**: `novelty_estimate` comes from `priority_score`, not hardcoded 0.85
 
