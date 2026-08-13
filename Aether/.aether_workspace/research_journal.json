@@ -4,16 +4,6 @@
       "cycle_id": "2c38bc1a",
       "domain": "Cryptography",
       "key_insight": "# Future Directions — Universal Posets\n\nDerived from the analysis and adversarial-review stages of the two research\ncycles run on this project.  Each conjecture is falsifiable, and each is stated\nso t",
-      "quality_score": 0.7055950000000001,
-      "sorry_count": 0,
-      "theorem_count": 3,
-      "timestamp": "2026-08-07T04:15:17",
-      "title": "ArXiv paper: Even smaller universal posets"
-    },
-    {
-      "cycle_id": "2c38bc1a",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions — Universal Posets\n\nDerived from the analysis and adversarial-review stages of the two research\ncycles run on this project.  Each conjecture is falsifiable, and each is stated\nso t",
       "quality_score": 0.7003711194029851,
       "sorry_count": 2,
       "theorem_count": 134,
@@ -499,19 +489,19 @@
       "theorem_count": 109,
       "timestamp": "2026-08-13T10:37:02",
       "title": "The Derived-Modulus Corner, Closed"
+    },
+    {
+      "cycle_id": "db97959f",
+      "domain": "Tropical",
+      "key_insight": "# FUTURE DIRECTIONS — after the Jacobi-signed Weil floor\n\nThe formal results in `Catalog/Tropical/JacobiSigned*.lean` settle the JACSIGN\nexperiment: the Jacobi-signed circle count `W(N) = ∑_{x²+y²=1}",
+      "quality_score": 0.86,
+      "sorry_count": 0,
+      "theorem_count": 75,
+      "timestamp": "2026-08-13T13:55:33",
+      "title": "The Jacobi-Signed Circle Count Escapes the Residue Dial, at the Weil Floor"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "064bb153",
-      "domain": "Geometry",
-      "key_insight": "# Future Directions: Quaternionic Hopf Concurrence\n\n## Result of this cycle\n\nThe new Lean development `Catalog/Geometry/QuaternionicConcurrence.lean` defines\n\n\\[\nH(\\psi)=\\begin{cases}\n0,&\\|\\psi\\|^2=0,",
-      "quality_score": 0.75976,
-      "sorry_count": 0,
-      "theorem_count": 12,
-      "timestamp": "2026-08-02T22:17:55",
-      "title": "There exists a canonically normalized real-valued functional on the quaternionic"
-    },
     {
       "cycle_id": "3c45e0b1",
       "domain": "MachineLearning",
@@ -2501,27 +2491,19 @@
       "theorem_count": 109,
       "timestamp": "2026-08-13T10:37:02",
       "title": "The Derived-Modulus Corner, Closed"
+    },
+    {
+      "cycle_id": "db97959f",
+      "domain": "Tropical",
+      "key_insight": "# FUTURE DIRECTIONS — after the Jacobi-signed Weil floor\n\nThe formal results in `Catalog/Tropical/JacobiSigned*.lean` settle the JACSIGN\nexperiment: the Jacobi-signed circle count `W(N) = ∑_{x²+y²=1}",
+      "quality_score": 0.86,
+      "sorry_count": 0,
+      "theorem_count": 75,
+      "timestamp": "2026-08-13T13:55:33",
+      "title": "The Jacobi-Signed Circle Count Escapes the Residue Dial, at the Weil Floor"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "b7dba88e",
-      "domain": "Tropical",
-      "name": "isCentral_leftZero",
-      "quality": 0.7419800000000001
-    },
-    {
-      "cycle_id": "b7dba88e",
-      "domain": "Tropical",
-      "name": "isCentral_rightZero",
-      "quality": 0.7419800000000001
-    },
-    {
-      "cycle_id": "b7dba88e",
-      "domain": "Tropical",
-      "name": "IsCentral",
-      "quality": 0.7419800000000001
-    },
     {
       "cycle_id": "832153cb",
       "domain": "Physics",
@@ -2803,9 +2785,27 @@
       "domain": "Physics",
       "name": "exists_common_factor_of_not_transparent",
       "quality": 0.85
+    },
+    {
+      "cycle_id": "db97959f",
+      "domain": "Tropical",
+      "name": "turns",
+      "quality": 0.86
+    },
+    {
+      "cycle_id": "db97959f",
+      "domain": "Tropical",
+      "name": "jchar_mul",
+      "quality": 0.86
+    },
+    {
+      "cycle_id": "db97959f",
+      "domain": "Tropical",
+      "name": "jchar_cast",
+      "quality": 0.86
     }
   ],
-  "last_updated": "2026-08-13T10:37:02",
+  "last_updated": "2026-08-13T13:55:33",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3951,12 +3951,6 @@
     ],
     "Tropical": [
       {
-        "cycle_id": "0e1eb0cb",
-        "quality": 0.80043,
-        "theorems": 26,
-        "title": "Tropical Matroid Theory: Bergman Fans and Tropical Linear Spaces"
-      },
-      {
         "cycle_id": "9fb19498",
         "quality": 0.79021,
         "theorems": 11,
@@ -4009,6 +4003,12 @@
         "quality": 0.7419800000000001,
         "theorems": 115,
         "title": "Deepening: ArXiv paper: Transformation Semigroup Perspective on the Magma Monoid"
+      },
+      {
+        "cycle_id": "db97959f",
+        "quality": 0.86,
+        "theorems": 75,
+        "title": "The Jacobi-Signed Circle Count Escapes the Residue Dial, at the Weil Floor"
       }
     ]
   }

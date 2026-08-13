@@ -1793,5 +1793,6 @@
   "d8dbb938": "residue_dials_cannot_amplify_a_coppersmith_hint_cl.json",
   "6092c7cd": "the_partial_free_witness_threshold_is_the_trace_cl.json",
   "0c649bb1": "the_derived_modulus_corner_closed.json",
-  "db97959f": "the_jacobi_signed_circle_count_escapes_the_residue.json"
+  "db97959f": "the_jacobi_signed_circle_count_escapes_the_residue.json",
+  "20cf0514": "interval_hint_the_trace_set_filter_is_exact_2_omeg.json"
 }
