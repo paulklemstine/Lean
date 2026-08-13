@@ -40,7 +40,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "43f9870f",
+    "consumed_by_exp_id": "67cbe98c",
     "description": "**Summary.** The conjecture that for E_N: y² = x³ + N with N = pq, the\ndenominators of x(nP) are divisible only by {2, 3, p, q} (the primes dividing\nΔ = -432N²) is mathematically FALSE.\n\n**Counterexample.** N = 55 = 5·11, P = (9,28) ∈ E_55(Q):\n  x(2P) = (9^4 - 8·55·9) / (4(9^3 + 55)) = 2601/3136, and 3136 = 2^6 · 7^2.\nThe prime 7 divides the denominator but 7 ∤ Δ (7 is a prime of good reduction).\n\n**Mechanism.** ℓ | denom(x(nP)) iff nP ≡ O (mod ℓ); good-reduction primes divide\ndenominators whenever the point reduces to torsion — infinitely many such primes.\n\n**Survey (11 semiprimes):** p appears in some denominator 54.5%, q appears 0%,\nonly-{2,3,p,q} holds 0% of the time. The denominator structure is a function of\nN alone (barrier 5) and does not cleanly reveal p, q.\n\n---\n\n*Factoring Lab paper. Status: proven theorem / verified / framework. This is a research deliverable, not a factoring breakthrough claim.*",
     "domain_bridges": [],
     "domains": [
@@ -59,7 +59,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "754e6b9d",
+    "consumed_by_exp_id": "d8041840",
     "description": "**Summary.** Let F(k) = sum_{a=1}^{N} a^k. Then gcd(F(k), N) reveals a factor\nat k = p-1: for N = pq, gcd(F(p-1), N) = q (provided (q-1) does not divide (p-1)).\n\n**Key results (proven):**\n- **Theorem 1 (power-sum factor reveal):** Mod p the residues cover each nonzero\n  residue q times, so F(k) ≡ q·(sum of k-th powers mod p); by FLT this is -q mod p\n  at k=p-1. Mod q it vanishes when (q-1) ∤ (p-1). Hence gcd = q.\n- **Theorem 2 (robustness):** The power sum aggregates ALL bases a=1..N\n  simultaneously, so it cannot suffer Pollard p-1's \"bad base\" failure.\n- **Theorem 3 (Carmichael periodicity):** g(k) = gcd(F(k), N) has period\n  λ(N) = lcm(p-1, q-1), so λ(N) is readable from the period and the factors\n  follow from p+q = N - λ(N) + 1.\n\n**Complexity.** First hit at k* = min(p-1,q-1) ≈ √N; cost per F(k) is O(N);\ntotal O(N^{3/2}) — worse than trial division. This is the SAME structure Shor's\nalgorithm exploits, made classically hard by the period-finding barrier.\nVerified on all 8 test semiprimes up to N ≈ 10^4.\n\n---\n\n*Factoring Lab paper. Status: proven theorem / verified / framework. This is a research deliverable, not a factoring breakthrough claim.*",
     "domain_bridges": [],
     "domains": [
@@ -112,25 +112,6 @@
     "status": "in_progress",
     "timestamp": "2026-08-11T21:13:58.496534+00:00",
     "title": "The Binary-Quadratic-Form Count Family: A Canonical Free-Witness for Barrier 4"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
-    "consumed_by_exp_id": "f3293094",
-    "description": "**Paper (factor3):** [ResearchOutput/NewMathematics/17_Round4_Closures.md](https://github.com/paulklemstine/factor3/blob/main/ResearchOutput/NewMathematics/17_Round4_Closures.md)\n\n---\n\n# Round-4 Hypothesis Closures: Five Novel Attacks via Exotic Resources, Tested and Closed\n\n**Program:** Factoring research lab — round-4 subagent batch synthesis\n**Date:** 2026-08-11\n**Status:** Negative-results synthesis — 5 hypotheses closed; four subagent rounds complete (24 hypotheses)\n\n---\n\n## Abstract\n\nA fourth brainstorm subagent attacked the least-mined territory: exotic\ncomputational resources and structural gaps. Its five hypotheses — compressed\nsensing, holographic algorithms, the 2-Sylow torsion census, tensor-network\nparent Hamiltonians, and optical/Ising machines — were all implemented, run, and\nclosed (experiments 308-314). The batch confirmed three meta-facts: (1) every\n\"free-to-specify\" measurement or resource is the free-witness aggregation in\ndisguise (SPARSEREC, OPO-FAC); (2) factor-encoding states and partition functions\ncarry zero information, with hardness living in locating rather than counting\n(MPS-PARENT, HOLOG-MARGIN); (3) the torsion census is a specialization of the\nclassified free-witness family (TORCEN). With four subagent rounds complete\n(24 hypotheses), the barrier framework has survived 314 experiments.\n\n---\n\n## 1. The batch at a glance\n\n| # | Hypothesis | Resource | Verdict |\n|---|-----------|----------|---------|\n| 1 | SPARSEREC | compressed sensing | refuted — measurement cost IS aggregation (barrier 4) |\n| 2 | HOLOG-MARGIN | holographic matchgates | refuted — counting trivial, locating circular (barrier 6/8) |\n| 3 | TORCEN | 2-Sylow torsion census | refuted — torsion free-witness for 2-adic valuations (barrier 4) |\n| 4 | MPS-PARENT | tensor networks / parent Hamiltonians | refuted — zero entanglement, no search gradient (barrier 4/5) |\n| 5 | OPO-FAC | optical Ising machine | refuted — 2^L modes are the witnesses (barrier 4/5) |\n\n---\n\n## 2. SPARSEREC (experiment 313): compressed sensing does not escape\n\nW(x) = [x | N] on [1, sqrt(N)] is a 2-spike vector (support {1, p}).\nCompressed-sensing theory promises recovery from O(log N) random measurements.\nVerified: W is 2-sparse, BUT the \"O(log N) measurements\" hides an\nO(sqrt(N) log N) specification cost for the random measurement matrix — the\nfree-witness aggregation in disguise. Structured N-computable measurements\n(residue-class probes, characters) require knowing the divisors (circular).\nThe measurement count never materializes because each measurement costs\nO(sqrt(N)). Barrier 4, sharpened: measurement specification cost IS aggregation.\n\n---\n\n## 3. HOLOG-MARGIN (experiment 314): holographic collapse counts, not locates\n\nModeling factorization as a #CSP over p's bits, the partition function\nZ = #divisor pairs = tau(N) = 4 is CONSTANT across all semiprimes — zero\ninformation. The factor-revealing scalar is the witness's ADDRESS (marginals\nlike P(divisor == 1 mod 4)), which depends on p,q mod 4 and requires knowing\nthe divisors (circular). Holographic matchgate collapse applies to counting;\nlocating is the hard part, and any N-computable marginal is N-only.\nBarrier 6/8.\n\n---\n\n## 4. TORCEN (experiment 310): the torsion census is a classified free-witness\n\n(Z/NZ)^* ~= C_{p-1} x C_{q-1} has 2-Sylow C_{2^a} x C_{2^b},\na = v2(p-1), b = v2(q-1). The torsion census T(k) = #{x : x^{2^k} == 1 mod N} =\n2^{min(k,a)+min(k,b)} is verified exactly, and the fingerprint {a,b} is\nrecoverable from the jump points. This is a SPECIALIZATION of the classified\nfree-witness family (KROOT at k = 2^k), sealed by O(N) census (barrier 4).\nThe 2-Sylow framing exploits p,q primality directly.\n\n---\n\n## 5. MPS-PARENT (experiment 312): factor states have zero entanglement\n\nThe ground space of E(a,b) = (N - ab)^2 is exactly the divisor set\n{(1,N),(p,q),(q,p),(N,1)} — a 4-point delta with no gradient. |p>|q> is a\nproduct state (rank-1 tensor), entanglement EXACTLY 0. Random descent succeeds\nat the random density 2/N^2. Tensor networks are a representation tool, not a\nsearch tool; the aggregation cost reappears unchanged as ground-state search.\nBarrier 4/5.\n\n---\n\n## 6. OPO-FAC (experiment 311): the analog resource does not change counting\n\nAn optical/Ising machine's phase space of 2^L ~ sqrt(N) modes encoding p's bits:\nrandom-restart success matches the random divisor density 2/2^L = 2/sqrt(N) at\nevery tested bit-size (14-bit: 0.01425 vs 0.01562; 26-bit: 0.00025 vs 0.00024).\nThe device's 2^L modes ARE the free witnesses in quadrature (mode volume =\nwitness count). The analog resource changes the physics, not the counting.\nBarrier 4/5.\n\n---\n\n## 7. Meta-lessons\n\n1. **Every exotic resource reduces to the free-witness aggregation.** Compressed\n   sensing's measurement matrix, the optical machine's phase space, the tensor\n   network's bond dimension, and the torsion census all carry the O(N) or\n   O(sqrt(N)) witness count in some disguised form. The resource changes the\n   physics; the counting is invariant.\n2. **Counting is trivial; locating is hard.** Holographic partition functions\n   count factor pairs (always 4) and carry zero information; the factor\n   information lives in the address, which is circular. This is the deepest\n   structural point of the round.\n3. **The classification (paper 16) is predictive.** TORCEN was a predicted\n   specialization of the free-witness family; SPARSEREC and OPO-FAC confirmed\n   the classification's \"sealing\" in new computational models.\n4. **Four rounds, 24 hypotheses, 314 experiments.** The barrier framework is\n   intact. No classical poly(log N) factoring algorithm has emerged; every\n   exotic resource — optical, tensor, holographic, compressed-sensing,\n   non-abelian, game-theoretic — collapses to a known barrier.\n\n---\n\n*Related:* `12_Subagent_Batch_Closures.md` (round 1), `14_Round2_Closures.md`,\n`15_Round3_Closures.md`, `16_FreeWitness_Classification.md`,\n`Factoring_Lab_Notebook.md` Parts 56-60.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1112",
-    "lineage_refs": [],
-    "priority_score": 1000.0,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-11T22:14:34.146654+00:00",
-    "title": "Round-4 Hypothesis Closures: Five Novel Attacks via Exotic Resources, Tested and Closed"
   },
   {
     "ambition_level": "grand_challenge",
@@ -629,7 +610,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "299127cc",
+    "consumed_by_exp_id": "",
     "description": "**GENERIC-RECOVERY (round-14 #11, experiment 390, assessment v166, paper 55).**\n\nHypothesis: recovery of p from a t-bit external hint is bounded by the hint's usable information. Verified on exact k-bit-prime sets (k=14-25) and random semiprimes (k=16-20):\n\n1. **Generic hints information-exact**: t-bit random GF(2) linear form of p's bits partitions P_k into classes |P_k|/2^t EXACTLY (k=16: 1515/759/190/48.6/12.8 vs 1515/757.5/189.4/47.3/11.8 at t=1..8); recovery cost = |P_k|/2^t (median steps = candidates). No anomalous class = no super-resolution.\n2. **Value-hints parity-constrained** (new mini-finding): mod-2^t multiplicative c·p and XOR-mask hashes output only 2^(t-1) values (p odd) — class 378.9 vs 189.4 at k=16,t=4. Bit-vector forms are the only full-2^t generic hints.\n3. **Trace hint sub-bit by recovery cost** (new positive): s mod 2^t pins p mod 2^t to C_t = O(1) roots (median saturating 4-8), but recovery tries all C_t: cost C_t·|P_k|/2^(t-1), measured 399 vs 47.3 (k=16,t=6), 354 vs 42.0 (k=18,t=8) — ~4.5-5x worse per bit; log2(C_t) ~ 3 bits lost to the root ambiguity.\n4. **Only amplification = position**: crossing with pi(sqrt N) at t ~ k/2-3 for every family; the unique amplification is Coppersmith's contiguous top-half >= k/2 LLL (a known method, barrier 8). The Coppersmith condition is about POSITION, not the dial (DIAL-THRESHOLD revisited).\n\n**Verdict**: CONFIRMED, sharpened. Hint taxonomy CLOSED: a t-bit external hint reduces the prime search by exactly 2^t, never more, never position-free; N-checkable hints are sealed at the trace-set floor (INTERVAL-HINT); hints must be genuinely external and worth their bits at face value. Barriers 4/8/2.\n\nScript: /tmp/exp_genericrecovery.py. Paper: ResearchOutput/NewMathematics/55_GenericRecovery_HintTaxonomy.md",
     "domain_bridges": [],
     "domains": [
@@ -641,7 +622,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-12T13:54:18.959882+00:00",
     "title": "Exp 390 GENERIC-RECOVERY: recovery-from-hint = 2^(k-1-t_eff) — hint taxonomy closed"
   },
