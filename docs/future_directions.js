@@ -324,7 +324,7 @@ window.FUTURE_DIRECTIONS = [
       "Novelty"
     ],
     "id": "fd_1131",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
@@ -348,21 +348,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Extrinsic Class-Group Representation Vector is a Residue Dial, Closed"
   },
   {
-    "consumed_by_exp_id": "5b29bc32",
-    "description": "**Paper:** `ResearchOutput/NewMathematics/34_HalfPlane_NonSeparable.md` (factor3)\n**Experiment:** HALFPLANE (#369), assessment v145.\n\n## Finding\nThe free-witness classification (paper 16) covers CRT-separable counts \u220fg(p)g(q).\nThis probes the classification's BOUNDARY: condition the circle x\u00b2+y\u00b2\u22611 mod N on\na **non-CRT-separable** cut (half-plane x+y < N/2) and count. H(N) cannot be a\nproduct of local factors.\n\n**Verified (full enumeration, N = 15\u202662879):**\n1. **Dominant term N-determined:** H \u2248 C(N)/8 where C(N) = (p\u2212\u03c7_p(\u22121))(q\u2212\u03c7_q(\u22121))\n   is a function of N mod 4. Reduction: H = #{(u_p,u_q) \u2208 U_p\u00d7U_q : CRT(u_p,u_q) < N/2}\n   with |U_p| = (p\u2212\u03c7_p)/2 + {0,1}.\n2. **Factor-specific correction is REAL:** \u03b5 = H \u2212 C/8 varies across near-equal-N\n   factorizations (+41 vs +128 in a \u00b10.4% N-band) \u2014 genuinely non-separable.\n3. **BUT \u03b5 is O(\u221aN) noise:** measured \u221288..+128 at \u221aN\u2248239 (0.2% of C), and\n   uncorrelated with p, q, p+q, |p\u2212q| (all permutation nulls pass: obs \u2264 0.191\n   vs 95th \u2248 0.36).\n4. **Computing H costs O(N)** \u2014 enumerate the C(N) circle solutions.\n\n## Why it collapses (barrier 4 + 5 + noise floor)\nThe dominant term is N-only (barrier 5); H needs the O(N) enumeration (barrier 4);\nthe factor-signal sits at the O(\u221aN) noise floor with no trace-coordinate\ncorrelation. **The classification boundary is real: crossing it creates factor-\nvariation only at the noise-floor scale, sealed by aggregation.** The seal does\nnot depend on CRT-separability \u2014 it is intrinsic to the set's enumeration.\n\n## Verdict\nREFUTED as a method. Together with PERMORD (asymmetric permutation readout\ncollapses), confirms: even new non-classified objects cannot escape aggregation.\nClassical uniform hint-free surface remains exhausted; frontiers: barrier-4\nproof, quantum channel, hint amplification.\n\n\ud83e\udd16 Generated with [Claude Code](https://claude.com/claude-code)",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1134",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-12T04:00:21.972957+00:00",
-    "title": "The Non-CRT-Separable Half-Plane Circle Count, Closed"
-  },
-  {
     "consumed_by_exp_id": "e0db545b",
     "description": "**Paper:** `ResearchOutput/NewMathematics/33_Permutation_Readout_Asymmetry.md` (factor3)\n**Experiment:** PERMORD (#368), assessment v144.\n\n## Finding\nThe free order-probes only ever see `ord_N(a) = lcm(ord_p(a), ord_q(a))` \u2014 a\nsymmetric data loss. This paper closes that \"lcm-blindness\" loophole: the\npermutation `x \u21a6 a\u00b7x mod N` on Z/NZ has a cycle structure that encodes\n`ord_p(a)` and `ord_q(a)` as **distinct cycle lengths** \u2014 a fully asymmetric\nreadout, strictly richer than the lcm.\n\n**Exact structure (verified 35/35):** for d | N, stratum S_d = {x : gcd(x,N)=d}\nhas size \u03c6(N/d) and every element lies on a cycle of length `ord_{N/d}(a)`. For\nN = pq this gives cycle lengths `{ord_N(a), ord_p(a), ord_q(a), 1}` on strata of\nsizes `{\u03c6(N), q\u22121, p\u22121, 1}`, cycle count = `1 + \u03c6(N)/ord_N + (q\u22121)/ord_q +\n(p\u22121)/ord_p` (exact).\n\n**It is a valid factoring algorithm:** for primitive a, the recovered unordered\npair {p\u22121, q\u22121} \u2192 {p,q} (verified: N=143 a=2 \u2192 {11,13}; 221 a=7 \u2192 {13,17};\n899 a=3 \u2192 {29,31}; 3127 a=2 \u2192 {53,59}).\n\n## Why it collapses (barrier 4 + 2 + 8)\n1. **O(\u03c6(N)) \u2248 O(N) enumeration** \u2014 a permutation on N elements requires\n   visiting all elements (measured: N=3127 \u2192 3018 \u2248 \u03c6; N=34571 \u2192 34202). Worse\n   than \u221aN trial division, worse than rho's N^{1/4}.\n2. **Circular entry** \u2014 cannot start on a non-unit cycle without a multiple of p\n   or q; having one factors N immediately.\n3. **Exponential order-finding** \u2014 reading ord_p(a) individually is the paper-9\n   DFT-sample bound.\n\n## Verdict\nREFUTED as a method. Even fully separating ord_p(a) from ord_q(a) does not help:\nthe object carrying the asymmetry is exactly the O(N) enumeration of the ring.\nCompletes the order-family characterization (ORDDIV \u2192 PROBESMOOTH \u2192 SMOOTHCLASS\n\u2192 PERMORD): orders are free as probes, partial as smooth-part constraints, sealed\nas readouts. Classical uniform hint-free surface remains exhausted; frontiers:\nbarrier-4 proof, quantum channel, hint amplification.\n\n\ud83e\udd16 Generated with [Claude Code](https://claude.com/claude-code)",
     "domains": [
@@ -378,21 +363,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Permutation Readout of Individual Orders, Closed"
   },
   {
-    "consumed_by_exp_id": "83939baf",
-    "description": "**Paper (factor3):** [ResearchOutput/NewMathematics/32_Dequant_Frontier_Closed.md](https://github.com/paulklemstine/factor3/blob/main/ResearchOutput/NewMathematics/32_Dequant_Frontier_Closed.md)\n\n---\n\n# The De-Quantization Frontier, Closed\n\n**Program:** Factoring research lab \u2014 de-quantization frontier assessment\n**Date:** 2026-08-11\n**Status:** Decisive negative result \u2014 every de-quantization route to Shor's order-finding collapses to barrier 4\n\n---\n\n## Abstract\n\nFollowing the user's de-quantization directive, this paper records the\ncomprehensive assessment: a 20-idea brainstorm across four angles (sparse\ntransforms, l1/l2 asymmetry, lattice/Regev, information-theoretic), three judged\nand tested candidates, plus the earlier tensor-network result (paper 31). EVERY\nde-quantization route to Shor's order-finding collapses to barrier 4 (O(N)/O(r)-\nsealed aggregation). The comb's incompressible structure (Schmidt rank r, flat\nspectrum), the informative frequencies at multiples of Q/gcd(r,Q), the free\nr|t probes with O(r)-sealed extraction, and the r-parameterized output\ndistributions together imply: **de-quantizing Shor = P = factoring**. The\nquantum exception is maximally bounded.\n\n---\n\n## 1. The routes assessed\n\n**Tensor networks (paper 31):** the comb and full Shor state have Schmidt rank\nexactly r, flat incompressible spectra, entropy log2(r). MPS-QFT emulation fails\n(TV ~ 0.5 at any poly bond dimension). Low-rank regimes coincide with\nclassically-easy orders.\n\n**Sparse / structured transforms:** the comb's DFT peaks at multiples of\nQ/gcd(r,Q). Computing the DFT at one frequency is a free geometric sum IF the\ncomb is known \u2014 but the comb is the sealed object. Locating the informative\nfrequencies costs O(Q/gcd(r,Q)) = exponential or requires r (circular).\n\n**Fixed-point gcd probe:** gcd(b^t - 1, N) answers \"does r divide t\" for FREE\n(5440/5440 exact, a theorem), but recovering r from these probes costs Theta(r)\nnaive, sqrt(r) via BSGS, or poly only with the factorization of lambda(N)\n(circular for RSA). Free observation, O(N)-sealed extraction.\n\n**Regev's output distribution:** the exact distribution is the diagonal comb\nP(y) = 1/r on the peak lattice (r-parameterized). Every r-free classical sampler\nsits at TV >= 0.94 (r|M) / TV >= 0.5 (r not | M). Recovering r from samples\nneeds O(r log r) draws \u2014 O(N)-sealed.\n\n**l1/l2 asymmetry (heat kernel):** the l1 Markovian diffusion recovers ord_N(b)\nin O(log^2 N) steps but each step is O(r)-sealed (barrier 4); the l1 readout is\nan aggregate over all r eigenvalues.\n\n---\n\n## 2. The unifying seal\n\nEvery de-quantization route hits the same structure: the factor-revealing\ninformation lives in the order r, which parameterizes an INCOMPRESSIBLE object\n(the comb: rank r, flat spectrum; the informative frequencies: multiples of\nQ/gcd(r,Q); the output distribution: r-parameterized). Observation can be free\n(the r|t probe), but EXTRACTION is O(r) = O(N)-sealed. No classical poly(log N)\nsampler or extractor reproduces or recovers r without the O(N) aggregation that\nis barrier 4.\n\n---\n\n## 3. The equivalence\n\nA poly-time classical sampler of Shor's (or Regev's) output distribution would\ngive a poly-time factoring algorithm (sample -> continued fractions -> r ->\nfactor). Hence **de-quantizing Shor = P = factoring** \u2014 a statement the lab's\ntests render concrete: every de-quantization mechanism proposed (20 ideas)\nreduces to the O(N)-sealed extraction of r.\n\n---\n\n## 4. Honest verdict\n\nThe de-quantization frontier is closed. Tensor networks, sparse transforms,\nl1 diffusions, lattice post-processing, and frequency-selective probes all fail\nto recover the order classically in poly(log N) without O(N) aggregation. The\nquantum exception \u2014 Shor's QFT bypassing barrier 4's aggregation via coherent\nsuperposition \u2014 STANDS and is now maximally bounded: it is the unique classical-\nirreducible route to order-finding. The research program's exhaustion verdict\nis further reinforced from the quantum side.\n\n---\n\n*Related:* `31_Dequantization_Assessed.md`, `09_Quantum_Classical_Boundary.md`,\n`Factoring_Lab_Notebook.md` Parts 106-107. (User de-quantization paper: issue\n#46; the frontier assessment: issue #47.)\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1136",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-12T04:00:21.973783+00:00",
-    "title": "The De-Quantization Frontier, Closed"
-  },
-  {
     "consumed_by_exp_id": "83c80b79",
     "description": "**Paper (factor3):** [ResearchOutput/NewMathematics/31_Dequantization_Assessed.md](https://github.com/paulklemstine/factor3/blob/main/ResearchOutput/NewMathematics/31_Dequantization_Assessed.md)\n\n---\n\n# De-Quantization Assessed: Shor's QFT Is Irreducible\n\n**Program:** Factoring research lab \u2014 user-provided de-quantization angle, assessed\n**Date:** 2026-08-11\n**Status:** Decisive negative result \u2014 Shor cannot be de-quantized for factoring-relevant orders\n\n---\n\n## Abstract\n\nA user-provided research paper proposed classical emulation of quantum algorithms\nvia tensor networks (MPS, tensor-train QFT emulation, Theorem 3: O(n D^2)\nclassical QFT on low-rank states). This paper reports the rigorous assessment:\nShor's periodic comb state \u2014 and the full Shor circuit state \u2014 have Schmidt rank\nexactly r with FLAT, incompressible spectra (entanglement entropy log2(r)), so\nthe tensor-train QFT emulation's low-rank precondition fails at both endpoints\nof the QFT. Truncated-MPS emulation fails catastrophically (TV ~ 0.5 at any\npolynomial bond dimension). Every low-rank regime coincides with a\nclassically-EASY order (the p-1 method weakness). De-quantizing Shor is\nequivalent to P = factoring. The quantum exception stands.\n\n---\n\n## 1. The de-quantization proposal\n\nThe paper's Theorem 3: if a quantum state has a low-rank tensor-train\nrepresentation (bond dimension D), its QFT can be executed classically via\nalternating tensor contractions in O(n D^2). The question for the lab: is\nShor's state low-rank?\n\n---\n\n## 2. The comb is exponentially entangled\n\nThe comb state c_x = [x == x0 mod r] (the QFT input after modular\nexponentiation) has MPS bond dimension:\nD = Theta(min(r, Q/r)),\nwhere Q = 2^(2n) is Shor's register size. For realistic orders r ~ 2^n ~ N,\nD ~ r ~ N \u2014 O(N)-sealed (barrier 4). The Schmidt spectrum is FLAT\n(incompressible): all singular values equal when r >= B and gcd(r,B)=1 \u2014 there\nis NO decaying tail to truncate. Participation ratio = rank (0.94-1.0).\n\n---\n\n## 3. The full circuit is entangled at both endpoints\n\n- **Uniform superposition (QFT input-pre-mod-exp):** rank 1 (product state),\n  but it is not the QFT input \u2014 irrelevant.\n- **Comb (QFT input):** D ~ r, exponential.\n- **Peaked state (QFT output, PRE-measurement):** D ~ r as well (correcting the\n  'nearly a single basis state' assumption \u2014 only the post-measurement collapse\n  is a basis state, and you need the QFT to get there).\n- **Full Shor state** |psi> = (1/sqrt Q) sum_x |x>|a^x mod N>: Schmidt rank\n  across the register cut = r exactly, entropy S = log2(r). The complete\n  algorithm's state is exponentially entangled.\n\n---\n\n## 4. No computational low-cost emulation exists\n\n- **Automaton structure:** the comb is recognized by an r-state DFA; the MPS\n  bond dimension equals the Schmidt rank \u2014 r states, exponential, no gain.\n- **Fourier decomposition:** the comb decomposes as (1/r) sum_j w^{-jx0}|wave_j>\n  with |wave_j> product states; the QFT maps each to a basis state, so the\n  output is a sum of r basis states \u2014 writing it down costs O(r).\n- **Truncated-MPS emulation (direct test of Theorem 3):** at any D' < r, the\n  emulated output has TV distance ~ 0.5 (total failure); state fidelity =\n  (D'/r)^2. A poly-cost emulation is hopeless.\n- **The only poly-time 'QFT of the comb'** is handed (r, x0) \u2014 baking in the\n  answer. Handed only (a, N), the simulator must find r, which is Shor's hard\n  step.\n\n---\n\n## 5. The decisive equivalence\n\nEvery ideal QFT-output sample reduces (continued fractions) to r, then factors N.\nA poly-time classical sampler of Shor's output distribution would give a\npoly-time factoring algorithm. **De-quantizing Shor = P = factoring.** Every\npoly-low-rank regime (small odd-part order, r near Q) coincides with a\nclassically-EASY order (found by repeated squaring / p-1 style) \u2014 no quantum\nexception exists there either.\n\n---\n\n## 6. Honest verdict\n\nShor's QFT cannot be de-quantized by tensor networks for factoring-relevant\norders. The coherent superposition in the QFT is genuinely irreducible; barrier 4\n(O(N) aggregation) is not bypassed classically. The user's de-quantization paper\n(Theorem 3) is mathematically real but inapplicable to Shor's factoring case.\nThe quantum exception stands.\n\n---\n\n*Related:* `09_Quantum_Classical_Boundary.md`, `28_Spectral_FreeWitness.md`,\n`Factoring_Lab_Notebook.md` Parts 105-106. (User paper published as issue #46.)\n",
     "domains": [
@@ -406,21 +376,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-08-12T04:00:21.974197+00:00",
     "title": "De-Quantization Assessed: Shor's QFT Is Irreducible"
-  },
-  {
-    "consumed_by_exp_id": "a46abb10",
-    "description": "**External research input \u2014 de-quantization via tensor networks (MPS, tensor trains, low-rank sampling).**\n\n## Abstract\n\nFor decades, quantum computing has promised exponential speedups via superposition and entanglement. However, recent breakthroughs in numerical linear algebra, tensor network theory, and randomized algorithms reveal that many quantum algorithms can be de-quantized or efficiently emulated classically under specific structural conditions. This paper formalizes tensor train decompositions, Matrix Product States (MPS), and low-rank sampling that permit classical processors to simulate quantum transformations in polynomial time.\n\n## Key theorems (relevant to the Factoring Lab's quantum-classical boundary)\n\n**Theorem 1 (Polynomial complexity of bounded-entanglement states).** An n-qubit state with bounded entanglement entropy S_max can be represented by an MPS with bond dimension D = O(e^{S_max}), reducing storage from O(2^n) to O(n D^2 d).\n\n**Theorem 2 (Classical de-quantization of low-rank matrix inversion).** An SPD matrix A with numerical rank r << N can be inverted classically via randomized sketching in O(r^3 log N / eps^2), bypassing HHL's quantum phase estimation.\n\n**Theorem 3 (Tensor-train QFT emulation).** If the input state has a low-rank tensor-train representation, the QFT can be executed classically via alternating tensor contractions with local rotation operators in O(n D^2) operations \u2014 with single-qubit phase gates applied to core tensors and SVD truncation.\n\n## Connection to the Factoring Lab\n\nThe lab localized the quantum exception: Shor's QFT bypasses barrier 4 (O(N) aggregation) by acting on a coherent superposition. The critical question: **is Shor's periodic comb state (after modular exponentiation) low-rank / MPS-representable with small bond dimension?** If yes, the QFT could be classically emulated (de-quantizing order-finding). If the comb requires bond dimension ~ r (the order), de-quantization fails for the factoring-relevant case.\n\nThe lab's MPS-PARENT experiment showed factor-encoding states are product states (zero entanglement) \u2014 but that does not help (the ground-state search is the hard part). This paper's Theorem 3 probes a different question: the EMULATION of the QFT itself on low-rank states.\n\n## Honest open question\n\nFor the comb state |comb> = sum_j |x0 + jr> (period r), what is the minimal MPS bond dimension? If it scales with r (the order, ~ N), the tensor-train QFT emulation is O(r)-sealed (barrier 4). If it scales with log r or is bounded, Shor could be de-quantized. This is a concrete, testable question for the lab.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1138",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-12T04:00:21.974619+00:00",
-    "title": "De-Quantizing Quantum Mechanics: Mathematical Frameworks for Classical Emulation of Quantum Algorithms"
   },
   {
     "consumed_by_exp_id": "dc008fd4",
@@ -933,30 +888,32 @@ window.FUTURE_DIRECTIONS = [
     "title": "OR-COLLAPSE-LAW: semiprime OR of a cyclic split-complete fork = g(n) = H((2n-1)/n^2) - (1/n)H(1/n) - ((n-1)/n)H(2/n) bits (round-19 #2, exp 407, v183, paper 72)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e1f1500e",
     "description": "## A5-PERFECT-FLATNESS (round-21 #2, experiment 411, assessment v187, paper 76)\n\n**The splitting fork of a Gal(A\u2085) field is ABSOLUTELY unpinnable \u2014 closing paper 75's predicted A\u2085 row.** Papers 65\u201371 established: a binary splitting fork is congruence-pinned by a Dirichlet character IFF it factors through the abelianization G^ab of the Galois closure. Every group tested had G^ab \u2260 {1}. This experiment tests the final prediction: **A\u2085 perfect \u27f9 absolutely flat.**\n\n### The theorem (provable a priori)\n\nA\u2085 is perfect ([A\u2085,A\u2085]=A\u2085, A\u2085^ab={1}), so the only quotients of A\u2085 are A\u2085 and {e} \u2014 the splitting field L has NO nontrivial abelian subextension, hence **L \u2229 Q(\u03b6_m) = Q for EVERY modulus m**, Gal(L\u00b7Q(\u03b6_m)/Q) = **A\u2085 \u00d7 (Z/m)^\u00d7** (direct product), and by Chebotarev P(Frob_p \u2208 F | p \u2261 c mod m) = |F|/60 for every fork F and residue c \u27f9 **I(p mod m; fork) = 0 exactly in the limit, all forks, all m.** No pinning (no character exists); no leakage (paper 75's leakage needs a pinned super-channel). **A\u2085 realizes only the flat state.**\n\n### Machine-verified on x\u2075 + 20x + 16 (disc 32000\u00b2 = 2\u00b9\u2076\u00b75\u2076, Gal = A\u2085)\n\nPart A \u2014 exact A\u2085 signature over 22,997 primes: nr=5 0.0163 (id, 1/60), nr=2 0.3334 (3-cycles, 1/3), nr=1 0.2496 ([2,2], 1/4), nr=0 0.4007 (5-cycles, 2/5), **nr=3/nr=4 ZERO** (no transpositions \u27f9 G \u2286 A\u2085; distinguishes A\u2085 from D\u2085/C\u2085).\n\nPart B \u2014 ABSOLUTE FLATNESS: all 5 forks \u00d7 12 moduli (3,4,7,8,9,11,13,16,25,31,59,101, incl. the discriminant's 16/25 and the C\u2085 control's 11) at the **shuffled-null** (300 shuffles, paper-70 honest test): **GLOBAL max |z| = 2.00.** The strongest residue-invisibility in the lab, provable a priori.\n\nPart C \u2014 positive control: the abelian C\u2085 field Q(\u03b6\u2081\u2081)+ pins EXACTLY \u2014 I(p mod 11; [nr=5]) = **0.7198 = H(1/5) = 0.7219**, P=1.0000 on p\u2261\u00b11 mod 11, coprime m=13 flat \u2014 the pipeline detects pinning when it exists, so the A\u2085 flatness is real.\n\nPart D \u2014 semiprime (30k, 2^16 pool): C\u2085 obeys the paper-74 order-5 split-count law EXACTLY (s 0.2028 vs Is(5)=0.2027; OR 0.0203 vs 0.0215; AND 0.0995 vs 0.0979; XOR 0.1262 vs 0.1276; s-dist [0.64,0.32,0.04]), while A\u2085 forks give EVERY channel at null (|z|\u22640.9) \u2014 no character to carry s.\n\n### Verdict\n\nCONFIRMED. The pinning-content classification table is **CLOSED**: abelian \u27f9 pinned at H(1/n) (n=order), solvable non-abelian \u27f9 pinned at the abelianization, **perfect \u27f9 absolutely flat**. The three-state picture (pinned/flat/leakage) is exhausted. Factor-useless: symmetric class functions with zero residue content (barrier 2), the strongest structural-orthogonality seal (barrier 5), L\u2229Q(\u03b6_m)=Q behind the direct product (barrier 6), all Galois 1832 + A\u2085 simplicity + Chebotarev 1922 + cyclotomic fields (barrier 8). Unifies papers 71, 74, 75. Barriers 2/5/6/8. Round-21 COMPLETE 2/2.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_1177",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-12T19:27:59.012808+00:00",
     "title": "A5-PERFECT-FLATNESS: the A5 splitting fork is absolutely unpinnable (perfect \u27f9 flat, all forks \u00d7 all m) \u2014 paper 76, exp 411, v187"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "50be6807",
     "description": "## A4-FORK-PINNING (round-21 #1, experiment 410, assessment v186, paper 75)\n\n**The first cubic-pinned NON-abelian fork: A\u2084's V\u2084-order fork pins at H(1/3), exactly like the abelian cyclic cubic.** Papers 65\u201371 established the pinning-content criterion: a binary splitting fork is congruence-pinned by a Dirichlet character IFF it factors through the abelianization G^ab of the Galois closure. Every pinned fork so far was S\u2083/S\u2084 **sign** (G^ab = C\u2082) or the **abelian** cyclic cubic C\u2083 (paper 71, I = H(1/3)). This experiment asks the structurally new question: can a **non-abelian** field pin a fork by a **cubic** character? Smallest such group: **A\u2084** (V\u2084 = [A\u2084,A\u2084] normal, A\u2084/V\u2084 = C\u2083).\n\n### The A\u2084 field (x\u2074 + 8x + 12, disc = 576\u00b2)\n\nOver 22,996 unramified primes (2^18 sieve): 4-root 0.0826 (e, 1/12), 1-root 0.6661 (3-cycles, 2/3), 0-root 0.2513 ([2,2], 1/4), **2-root 0.0000** (no transpositions \u27f9 G \u2286 A\u2084). Square disc + no transpositions + order-3 + transitive \u27f9 **Gal = A\u2084**. Note the root-count mapping: a [2,2] double transposition fixes NO root \u2014 A\u2084 signature is [4,1,0]-roots, NOT the naive 2-root guess.\n\n### The cubic pinning (EXACT)\n\nF\u2080 = [Frob \u2208 V\u2084] = [nr \u2208 {4,0}], rate 1/3, factors through G^ab = C\u2083 \u27f9 pinned by the cubic character of K = L^{V\u2084}. Klein resolvent y\u00b3 \u2212 48y \u2212 64, disc 2\u00b9\u00b2\u00b73\u2074; generator \u03b1 = r\u2081r\u2082+r\u2083r\u2084 non-integral (index 64) \u27f9 disc(K) = 81 = 9\u00b2 \u27f9 **conductor 9**:\n\n**F\u2080 \u27fa p \u2261 cube mod 9 \u27fa p \u2208 {1, 8} mod 9 \u2014 P = 1.0000 / 0.0000 on 22,996 primes, I(p mod 9; F\u2080) = 0.9188 = H(1/3) = 0.9183 EXACT. FIRST CUBIC-PINNED NON-ABELIAN FORK.**\n\nMinimality: mod 3 and coprime mod 5 flat (I = 0).\n\n### Within-V\u2084 flatness given the coset\n\ne and the three [2,2]'s lie in the same V\u2084-coset = same G^ab fibre, so no modulus can separate them: P(e | p\u22611 mod 9) = 0.2426, P(e | p\u22618 mod 9) = 0.2523 (both 1/4); conditional I(p mod 9; e-vs-[2,2] | F\u2080=1) = 0.0001. The commutator-subgroup flatness, transplanted to non-abelian A\u2084 where the commutator V\u2084 is nontrivial.\n\n### The marginal [e] fork: exact leakage law (a third state)\n\nF\u2081 = [Frob = e] (rate 1/12) is neither pinned nor flat: F\u2081 \u2282 F\u2080 leaks the F\u2080 channel with the exact closed form **I(p mod 9; F\u2081) = H(1/12) \u2212 (1/3)H(1/4) = 0.1434 bits** (measured 0.1419), while I < H(F\u2081) = H(1/12) = 0.4138 (e and [2,2] share the coset \u27f9 never fully pinned). Distinguishes **leakage** from pinned and flat.\n\n### Semiprime level: order-3 channel on a non-abelian field\n\n30k semiprimes: split-count s ~ Bin(2,1/3) measured 0.4710 vs Is(3) = 0.4739; OR 0.0688 vs g(3) = 0.0728; AND 0.1997 vs A(3) = 0.1972; XOR 0.3736 vs X(3) = 0.3789; which-factor wall 0.0001; coprime mod 5 flat. **The paper-74 order-3 split-count law holds on a non-abelian field \u2014 it needs only the character, not abelian-ness.**\n\n### Verdict\n\nCONFIRMED. The abelianization criterion now has a non-abelian witness: A\u2084's V\u2084-order fork pins at exactly the same H(1/3) as the abelian cyclic cubic \u2014 the content is the character of G^ab, not abelian-ness. Closes the pinning-content table (C\u2082/C\u2083/S\u2083/S\u2084/A\u2084 tested; A\u2085 perfect \u27f9 absolutely unpinnable predicted). Still symmetric (barrier 2), a residue dial (barrier 5), sealed behind the CRT (barrier 6), all classical \u2014 Eisenstein 1844 cubic reciprocity, Klein resolvent, Takagi 1920 class field theory, Chebotarev 1922 (barrier 8) \u2014 factor-useless. Unifies papers 71 and 74. Barriers 2/5/6/8. Round-21 1/2 done.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_1178",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-12T19:27:59.013260+00:00",
     "title": "A4-FORK-PINNING: first cubic-pinned non-abelian fork (A4 V4-order, I = H(1/3) exact) \u2014 paper 75, exp 410, v186"
   },
@@ -11149,6 +11106,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-12T02:52:12.133657+00:00",
     "title": "ArXiv paper: A Fourier-analytic Uniqueness Theorem for Lattice-point Enumerators"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'A Multiplicative Fourier Proof of the Length-Four Index Conjecture' and formalize its key results. Abstract: Let $C_n$ be a cyclic group of order $n$. The index conjecture in zero-sum theory asserts that if $(n,6)=1$, then every minimal zero-sum sequence of length four over $C_n$ has index one. Ge proved the conjecture for all sufficiently large $n$, and Pendleton reduced the known explicit threshold to $4.6\\cdot 10^{13}$. We give a different argument based on multiplicative Fourier analysis on $(\\mathbb{Z}/n\\mathbb{Z})^\\times$. Starting from the exact index-two residue identity, we take its multiplicative Fourier transform and express the odd Fourier coefficients through first moments of Dirichlet characters. The imprimitive characters for which this moment vanishes form an exceptional spectrum of cardinality at most $157\\varphi(n)/1440$, hence strictly less than $\\varphi(n)/9$. A finite-group support uncertainty inequality then forces the four-term multiset to be invariant under negation, contradicting minimality. We also give a minimal-modulus reduction, using the theorem of Shen-Xia-Li, f",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_1192",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2608.12310v1",
+    "status": "available",
+    "timestamp": "2026-08-13T02:55:24.316793+00:00",
+    "title": "ArXiv paper: A Multiplicative Fourier Proof of the Length-Four Index Conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'The finite basis problem for the flat semirings $S(W)$' and formalize its key results. Abstract: We focus on the finite basis problem for flat semirings of the form $S(W)$, where $W$ is an arbitrary set of nonempty words. We prove that $S(W)$ generates a Cross variety (and hence is finitely based) whenever every word in $W$ has length at most $3$, whereas it is nonfinitely based whenever there exists $k \\geq 3$ such that $W$ is $x^{k+2}$-free but not $x^{k+1}$-free. In particular, if $W_k$ denotes the set of all words of length $k$, then $S(W_k)$ is finitely based if and only if $k \\leq 3$. Moreover, $S(W)$ is nonfinitely based whenever $W$ is finite and not $x^4$-free. These results provide a partial answer to an open problem raised by Jackson et al.~(J Algebra 611: 211--245, 2022).",
+    "domains": [
+      "Algebra",
+      "Tropical"
+    ],
+    "id": "fd_1193",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2608.12284v1",
+    "status": "available",
+    "timestamp": "2026-08-13T02:55:27.767571+00:00",
+    "title": "ArXiv paper: The finite basis problem for the flat semirings $S(W)$"
   },
   {
     "consumed_by_exp_id": "",
