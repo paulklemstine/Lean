@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "785c09ab",
-      "domain": "Tropical",
-      "key_insight": "# Tropical Mathematics of Social Choice — results and future directions\n\nThis project formalizes a bridge between **tropical (min-plus) algebra** and\n**social choice theory**, and a second bridge from",
-      "quality_score": 0.7857999999999999,
-      "sorry_count": 0,
-      "theorem_count": 85,
-      "timestamp": "2026-08-05T22:30:27",
-      "title": "**Conjecture.** Every normalized, translation-equivariant, coordinatewise-minimu"
-    },
-    {
       "cycle_id": "9f1ee483",
       "domain": "Algebra",
       "key_insight": "# Future directions\n\nThis cycle proved a cross-domain bridge, formalized in\n`Catalog/Bridges/SubmultiplicativeSearchEntropy.lean`:\n\n> **Bridge.** For a nonnegative transition matrix `A` of a finite-st",
@@ -499,19 +489,19 @@
       "theorem_count": 98,
       "timestamp": "2026-08-13T02:54:40",
       "title": "The Non-CRT-Separable Half-Plane Circle Count, Closed"
+    },
+    {
+      "cycle_id": "83939baf",
+      "domain": "Pythagorean",
+      "key_insight": "# Future directions — Barrier IV (the de-quantization frontier)\n\nDerived from the formalisation in\n`Catalog/Pythagorean/FactoringBarriers/Dequant/`.  Each conjecture is falsifiable\nand stated so that",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 63,
+      "timestamp": "2026-08-13T02:54:52",
+      "title": "The De-Quantization Frontier, Closed"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "ef4982e9",
-      "domain": "Bridges",
-      "key_insight": "# Future directions\n\n1. **Canonical versus merely available topologies.** The upper Alexandrov topology makes every monotone map continuous, hence both adjoints of every Galois connection. A sharper c",
-      "quality_score": 0.78888,
-      "sorry_count": 0,
-      "theorem_count": 11,
-      "timestamp": "2026-08-02T15:29:38",
-      "title": "Bridge: Galois Connections Between Order Theory and Topology"
-    },
     {
       "cycle_id": "111aa6d2",
       "domain": "Physics",
@@ -2501,27 +2491,19 @@
       "theorem_count": 98,
       "timestamp": "2026-08-13T02:54:40",
       "title": "The Non-CRT-Separable Half-Plane Circle Count, Closed"
+    },
+    {
+      "cycle_id": "83939baf",
+      "domain": "Pythagorean",
+      "key_insight": "# Future directions — Barrier IV (the de-quantization frontier)\n\nDerived from the formalisation in\n`Catalog/Pythagorean/FactoringBarriers/Dequant/`.  Each conjecture is falsifiable\nand stated so that",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 63,
+      "timestamp": "2026-08-13T02:54:52",
+      "title": "The De-Quantization Frontier, Closed"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "04a5f386",
-      "domain": "Probability",
-      "name": "holds",
-      "quality": 0.718325
-    },
-    {
-      "cycle_id": "04a5f386",
-      "domain": "Probability",
-      "name": "overlapDefect_le_one",
-      "quality": 0.718325
-    },
-    {
-      "cycle_id": "04a5f386",
-      "domain": "Probability",
-      "name": "overlapDefect_eq_zero_iff",
-      "quality": 0.718325
-    },
     {
       "cycle_id": "5bbe180d",
       "domain": "MachineLearning",
@@ -2803,9 +2785,27 @@
       "domain": "MachineLearning",
       "name": "two_ne_zero_zmod",
       "quality": 0.86
+    },
+    {
+      "cycle_id": "83939baf",
+      "domain": "Pythagorean",
+      "name": "with",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "83939baf",
+      "domain": "Pythagorean",
+      "name": "peaks_inter",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "83939baf",
+      "domain": "Pythagorean",
+      "name": "tv_comb_comb",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-13T02:54:40",
+  "last_updated": "2026-08-13T02:54:52",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3827,12 +3827,6 @@
     ],
     "Pythagorean": [
       {
-        "cycle_id": "31b96673",
-        "quality": 0.686,
-        "theorems": 29,
-        "title": "EML-Pythagorean-Operator: Single-Neuron Neural Energy Guided Tree Traversal"
-      },
-      {
         "cycle_id": "2784f3be",
         "quality": 0.686,
         "theorems": 124,
@@ -3885,6 +3879,12 @@
         "quality": 0.78,
         "theorems": 56,
         "title": "Three Structural Barrier Theorems for Integer Factorization"
+      },
+      {
+        "cycle_id": "83939baf",
+        "quality": 0.82,
+        "theorems": 63,
+        "title": "The De-Quantization Frontier, Closed"
       }
     ],
     "Shared": [
