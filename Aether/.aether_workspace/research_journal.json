@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "2c38bc1a",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions — Universal Posets\n\nDerived from the analysis and adversarial-review stages of the two research\ncycles run on this project.  Each conjecture is falsifiable, and each is stated\nso t",
-      "quality_score": 0.7003711194029851,
-      "sorry_count": 2,
-      "theorem_count": 134,
-      "timestamp": "2026-08-07T05:10:38",
-      "title": "ArXiv paper: Even smaller universal posets"
-    },
-    {
       "cycle_id": "b2707824",
       "domain": "Geometry",
       "key_insight": "# Future Directions\n\nDerived from the analysis and adversarial review of\n`Catalog/Geometry/HyperbolicBerggrenGeodesics.lean`.\n\n## What survived, what failed\n\n**Survived (proved, 0 sorries).**\nThe Berg",
@@ -499,19 +489,19 @@
       "theorem_count": 75,
       "timestamp": "2026-08-13T13:55:33",
       "title": "The Jacobi-Signed Circle Count Escapes the Residue Dial, at the Weil Floor"
+    },
+    {
+      "cycle_id": "20cf0514",
+      "domain": "Applications",
+      "key_insight": "# Future directions — bold, testable conjectures from the interval-hint round\n\nThis round formalised the negative verdict for the trace-set (TRACEPROFILE)\nfilter: it is *exact* (`TraceSetFilter.add_me",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 55,
+      "timestamp": "2026-08-13T13:55:47",
+      "title": "INTERVAL-HINT: the trace-set filter is exact (2^-omega pruning) but does not amplify — residue filte"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "3c45e0b1",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions\n\nThe formalized uniqueness theorem isolates the combinatorial core of error-correcting Shamir reconstruction. The following are concrete next conjectures.\n\n1. **Sharpness of the de",
-      "quality_score": 0.73575,
-      "sorry_count": 0,
-      "theorem_count": 4,
-      "timestamp": "2026-08-02T22:18:45",
-      "title": "1. **Uniform-distribution privacy.** For every finite field `F`, threshold `t > "
-    },
     {
       "cycle_id": "5907c59d",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 75,
       "timestamp": "2026-08-13T13:55:33",
       "title": "The Jacobi-Signed Circle Count Escapes the Residue Dial, at the Weil Floor"
+    },
+    {
+      "cycle_id": "20cf0514",
+      "domain": "Applications",
+      "key_insight": "# Future directions — bold, testable conjectures from the interval-hint round\n\nThis round formalised the negative verdict for the trace-set (TRACEPROFILE)\nfilter: it is *exact* (`TraceSetFilter.add_me",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 55,
+      "timestamp": "2026-08-13T13:55:47",
+      "title": "INTERVAL-HINT: the trace-set filter is exact (2^-omega pruning) but does not amplify — residue filte"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "832153cb",
-      "domain": "Physics",
-      "name": "form_binMat",
-      "quality": 0.715855
-    },
-    {
-      "cycle_id": "832153cb",
-      "domain": "Physics",
-      "name": "binMat_value",
-      "quality": 0.715855
-    },
-    {
-      "cycle_id": "832153cb",
-      "domain": "Physics",
-      "name": "bq_half",
-      "quality": 0.715855
-    },
     {
       "cycle_id": "5ac3c62c",
       "domain": "NumberTheory",
@@ -2803,9 +2785,27 @@
       "domain": "Tropical",
       "name": "jchar_cast",
       "quality": 0.86
+    },
+    {
+      "cycle_id": "20cf0514",
+      "domain": "Applications",
+      "name": "and",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "20cf0514",
+      "domain": "Applications",
+      "name": "mem_traceSet",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "20cf0514",
+      "domain": "Applications",
+      "name": "mem_sqrtSet",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-13T13:55:33",
+  "last_updated": "2026-08-13T13:55:47",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "18622a4a",
-        "quality": 0.77537,
-        "theorems": 22,
-        "title": "EML Single Operator Church-Turing Thesis"
-      },
-      {
         "cycle_id": "be8c4b71",
         "quality": 0.8084800000000001,
         "theorems": 14,
@@ -3141,6 +3135,12 @@
         "quality": 0.71215,
         "theorems": 43,
         "title": "Diophantine-Lattice: Spectral Bounds on Non-Homogeneous Quadratic Forms"
+      },
+      {
+        "cycle_id": "20cf0514",
+        "quality": 0.82,
+        "theorems": 55,
+        "title": "INTERVAL-HINT: the trace-set filter is exact (2^-omega pruning) but does not amp"
       }
     ],
     "Bridges": [

@@ -2,7 +2,6 @@ import Pythagorean.FactoringBarriers.Dequant.CombSpectrum
 import Pythagorean.FactoringBarriers.Dequant.OrderToFactor
 import Pythagorean.FactoringBarriers.Dequant.SchmidtRank
 import Pythagorean.FactoringBarriers.Dequant.ProbeComplexity
-import Pythagorean.FactoringBarriers.Dequant.Sharpness
 import Pythagorean.FactoringBarriers.Dequant.CombDistance
 
 /-!

@@ -5,26 +5,24 @@ import Mathlib
 Auto-generated from theorem catalog database.
 Domain: Shared
 Declarations: 3
+
+Repaired: the hyperbolic SPB operation `spbH` is defined here.
 -/
 
 noncomputable section
 
-/-- [Section: # CatalogBuild.Shared.SpbH_bounded
-Auto-generated from theorem catalog database.
-Domain: Bridges
-Declarations: 6] -/
-theorem spbH_bounded (u v : ℝ) (hu : |u| < 1) (hv : |v| < 1) :
-    |spbH u v| < 1 := by
-  exact abs_lt.2 ⟨ by rw [ spbH ] ; rw [ lt_div_iff₀ ] <;> nlinarith only [ abs_lt.mp hu, abs_lt.mp hv ], by rw [ spbH ] ; rw [ div_lt_iff₀ ] <;> nlinarith only [ abs_lt.mp hu, abs_lt.mp hv ] ⟩
+/-- The hyperbolic SPB operation `spbH u v = (u + v) / (1 + u * v)`. -/
+def spbH (u v : ℝ) : ℝ := (u + v) / (1 + u * v)
 
-/-- [Section: # CatalogBuild.Shared.SpbH_bounded
-Auto-generated from theorem catalog database.
-Domain: Shared
-Declarations: 3] -/
+theorem spbH_bounded (u v : ℝ) (hu : |u| < 1) (hv : |v| < 1) :
+    |spbH u v| < 1 :=
+  abs_lt.2 ⟨by rw [spbH]; rw [lt_div_iff₀] <;> nlinarith only [abs_lt.mp hu, abs_lt.mp hv],
+    by rw [spbH]; rw [div_lt_iff₀] <;> nlinarith only [abs_lt.mp hu, abs_lt.mp hv]⟩
+
 theorem spbH_assoc (u v w : ℝ) (huv : u * v ≠ -1) (hvw : v * w ≠ -1)
     (huvw : spbH u v * w ≠ -1) (huvw' : u * spbH v w ≠ -1) :
     spbH (spbH u v) w = spbH u (spbH v w) := by
-  unfold spbH at *;
+  unfold spbH at *
   grind
 
 /-- Inverse in hyperbolic SPB. -/

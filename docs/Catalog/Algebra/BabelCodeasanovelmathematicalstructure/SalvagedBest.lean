@@ -1,3 +1,18 @@
+/-
+# Babel codes: superseded extract
+
+This file is an *extract* of the development `Shared.BabelCodeasanovelmathematicalstructure.SalvagedBest`:
+it repeats a handful of its theorems but not the definitions, structures and
+imports they depend on, so it could never elaborate on its own (every statement
+referred to identifiers that the file does not declare).
+
+The complete, compiling development is `Shared.BabelCodeasanovelmathematicalstructure.SalvagedBest`,
+which is imported below; the original extract is preserved verbatim in the
+comment that follows, rather than deleted.
+-/
+import Shared.BabelCodeasanovelmathematicalstructure.SalvagedBest
+
+/-
 theorem plotkin_bound {A L d : ℕ} (hA : 1 ≤ A) (hd : 1 ≤ d)
     (hPlotkin : L * (A - 1) < d * A)
     (C : Finset (Volume A L)) (hC : IsBabelCode C d) :
@@ -28,18 +43,18 @@ theorem plotkin_bound {A L d : ℕ} (hA : 1 ≤ A) (hd : 1 ≤ d)
       · omega;
       · rw [ Nat.le_div_iff_mul_le ] at h_upper_bound <;> nlinarith [ Nat.sub_add_cancel hPlotkin.le, mul_pos ( Nat.succ_pos ‹_› ) ( Nat.succ_pos ‹_› ) ]
 
-/-- **Example**: Binary code, length 6, min distance 4.
-    Plotkin gives |C| · (8 - 6) ≤ 8, so |C| ≤ 4. -/
+/ -- **Example**: Binary code, length 6, min distance 4.
+    Plotkin gives |C| · (8 - 6) ≤ 8, so |C| ≤ 4. - /
 example : ∀ (C : Finset (Volume 2 6)), IsBabelCode C 4 →
     C.card ≤ 4 := by
   intro C hC
   have h := plotkin_bound (by norm_num) (by norm_num) (by norm_num) C hC
   omega
 
-/-
+/ -
 **Generalization (stated)**: Plotkin bound with equality characterization.
     Equality holds iff C is an equidistant code (all pairs at exactly distance d).
--/
+- /
 
 theorem babel_lawvere {A L : ℕ} (hA : 2 ≤ A)
     (f : Volume A L → Volume A L → Fin A) : ¬Surjective f := by
@@ -49,9 +64,9 @@ theorem babel_lawvere {A L : ℕ} (hA : 2 ≤ A)
       replace hg := congr_fun hg g; simp_all +decide [ Fin.ext_iff ] ;
       linarith [ Nat.mod_eq_of_lt ( show ( f g g : ℕ ) + 1 < A from lt_of_le_of_ne ( Nat.succ_le_of_lt ( Fin.is_lt _ ) ) ( by intro t; rw [ t ] at hg; norm_num at hg; linarith [ Fin.is_lt ( f g g ) ] ) ) ]
 
-/-
+/ -
 **Generalization**: Lawvere for arbitrary finite types with |Y| ≥ 2.
--/
+- /
 
 theorem lawvere_finite {X Y : Type*} [Fintype X] [Fintype Y] [DecidableEq Y]
     (hcard : Fintype.card Y ≥ 2) (_hX : Nonempty X)
@@ -64,8 +79,8 @@ theorem lawvere_finite {X Y : Type*} [Fintype X] [Fintype Y] [DecidableEq Y]
       have := congr_fun hx₀ x₀; by_cases h : f x₀ x₀ = a <;> simp +decide [ h ] at this;
       exact hab this
 
-/-- **Boundary**: Lawvere fails when A = 1 (trivial alphabet). With only one symbol,
-    there is only one function Volume → Fin 1, and any f trivially covers it. -/
+/ -- **Boundary**: Lawvere fails when A = 1 (trivial alphabet). With only one symbol,
+    there is only one function Volume → Fin 1, and any f trivially covers it. - /
 
 theorem hamming_ball_card_eq {A L : ℕ} (v w : Volume A L) (r : ℕ) :
     (hammingBall v r).card = (hammingBall w r).card := by
@@ -82,11 +97,11 @@ theorem hamming_ball_card_eq {A L : ℕ} (v w : Volume A L) (r : ℕ) :
           grind;
         · grind
 
-/-
+/ -
 **Hamming bound (sphere-packing)**: If balls of radius `t` around codewords
     are disjoint (which holds when min distance ≥ 2t+1), the number of
     codewords times the ball size cannot exceed the library size.
--/
+- /
 
 theorem hamming_bound_via_packing {A L d : ℕ} (_hA : 1 ≤ A) (t : ℕ)
     (hdt : 2 * t + 1 ≤ d)
@@ -111,7 +126,7 @@ theorem hamming_bound_via_packing {A L d : ℕ} (_hA : 1 ≤ A) (t : ℕ)
 
 end BabelCode
 
-/-!
+/ -!
 ## FUTURE DIRECTIONS
 
 1. **Harper's vertex isoperimetric inequality**: Among all subsets of {0,1}^n of
@@ -136,4 +151,5 @@ end BabelCode
    forms a lattice. The meet is intersection (with adjusted distance), the join
    requires recomputing minimum distance. *Testable*: enumerate all BabelCodes
    over {0,1}^3 and verify the lattice axioms.
+- /
 -/
