@@ -1796,5 +1796,6 @@
   "db97959f": "the_jacobi_signed_circle_count_escapes_the_residue.json",
   "20cf0514": "interval_hint_the_trace_set_filter_is_exact_2_omeg.json",
   "9e8cd1f4": "the_quantum_register_cannot_be_shrunk_qubit_trade_.json",
-  "6753d65f": "the_residue_leakage_curve_and_the_dirichlet_no_pru.json"
+  "6753d65f": "the_residue_leakage_curve_and_the_dirichlet_no_pru.json",
+  "560413ae": "entanglement_monotone_formalization_of_logarithmic.json"
 }
