@@ -3,16 +3,6 @@
     {
       "cycle_id": "08217b91",
       "domain": "Novelty",
-      "key_insight": "# Future Directions — Singmaster multiplicity in Pascal's triangle\n\nDerived from the results established in this cycle: the smoothness theorem, the smoothness\nhierarchy, the sharpened logarithmic boun",
-      "quality_score": 0.748155,
-      "sorry_count": 0,
-      "theorem_count": 85,
-      "timestamp": "2026-08-09T15:01:26",
-      "title": "occurrences of certain numbers in pascals triangle"
-    },
-    {
-      "cycle_id": "08217b91",
-      "domain": "Novelty",
       "key_insight": "# Future Directions — Singmaster multiplicity in Pascal's triangle\n\nDerived from the verified results in `Catalog/Novelty/`:\n`SingmasterSmoothness.lean`, `SingmasterSharpLog.lean`, `SingmasterSmoothHi",
       "quality_score": 0.746255,
       "sorry_count": 0,
@@ -499,19 +489,19 @@
       "theorem_count": 106,
       "timestamp": "2026-08-14T05:10:05",
       "title": "Exp 391 BERGGREN-PRICE-INTERLOCK: every semiprime is a node of both Pythagorean trees — the N-node i"
+    },
+    {
+      "cycle_id": "9cc9a6e9",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions — Spectral Free-Witness, next cycle\n\nDerived from the analysis and adversarial review of this cycle's verified results\n(`Catalog/Algebra/SpectralFreeWitness.lean`, `…Walk.lean`, `…",
+      "quality_score": 0.82,
+      "sorry_count": 4,
+      "theorem_count": 42,
+      "timestamp": "2026-08-14T06:50:29",
+      "title": "The Spectral Free-Witness: Heat-Kernel Order Recovery"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "362b8901",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\nThe following conjectures sharpen the boundary of the normalized development in\n`Catalog/Applications/EML/RischAlgorithm.lean`. Each is intended as a concrete,\nfalsifiable extensi",
-      "quality_score": 0.7657699999999998,
-      "sorry_count": 0,
-      "theorem_count": 44,
-      "timestamp": "2026-08-03T11:53:32",
-      "title": "EML Integration in Finite Terms: The Risch Algorithm"
-    },
     {
       "cycle_id": "2125bb42",
       "domain": "Combinatorics",
@@ -2501,27 +2491,19 @@
       "theorem_count": 106,
       "timestamp": "2026-08-14T05:10:05",
       "title": "Exp 391 BERGGREN-PRICE-INTERLOCK: every semiprime is a node of both Pythagorean trees — the N-node i"
+    },
+    {
+      "cycle_id": "9cc9a6e9",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions — Spectral Free-Witness, next cycle\n\nDerived from the analysis and adversarial review of this cycle's verified results\n(`Catalog/Algebra/SpectralFreeWitness.lean`, `…Walk.lean`, `…",
+      "quality_score": 0.82,
+      "sorry_count": 4,
+      "theorem_count": 42,
+      "timestamp": "2026-08-14T06:50:29",
+      "title": "The Spectral Free-Witness: Heat-Kernel Order Recovery"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "a3466461",
-      "domain": "Novelty",
-      "name": "and_gate_tt",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "a3466461",
-      "domain": "Novelty",
-      "name": "and_gate_tf",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "a3466461",
-      "domain": "Novelty",
-      "name": "and_gate_ft",
-      "quality": 0.82
-    },
     {
       "cycle_id": "d8dbb938",
       "domain": "Combinatorics",
@@ -2803,17 +2785,28 @@
       "domain": "Algebra",
       "name": "node_map_parity",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "9cc9a6e9",
+      "domain": "Algebra",
+      "name": "cdist_pos_of_ne",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "9cc9a6e9",
+      "domain": "Algebra",
+      "name": "two_mul_mod",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "9cc9a6e9",
+      "domain": "Algebra",
+      "name": "cdist_double",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-14T05:10:05",
+  "last_updated": "2026-08-14T06:50:29",
   "open_questions": [
-    {
-      "context": "+unproved infinite tail as a `sorry`.  The computational certificate; -    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
-      "cycle_id": "0a1b5635",
-      "domain": "Shared",
-      "sorry_count": 2,
-      "timestamp": "2026-07-22T16:54:21"
-    },
     {
       "context": "(sieve mechanism) form a coherent, sorry-free slice of the Maynard–Tao framework.; +    `fib_carmichael_large` — which relied on an unproven (`sorry`-backed) tail of; -    sorry+  -- Extract from the ",
       "cycle_id": "b648d8e5",
@@ -3016,16 +3009,17 @@
       "domain": "Logic",
       "sorry_count": 1,
       "timestamp": "2026-08-13T21:10:16"
+    },
+    {
+      "context": "Everything is unconditional; no `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.",
+      "cycle_id": "9cc9a6e9",
+      "domain": "Algebra",
+      "sorry_count": 4,
+      "timestamp": "2026-08-14T06:50:29"
     }
   ],
   "research_threads": {
     "Algebra": [
-      {
-        "cycle_id": "9f1ee483",
-        "quality": 0.79301,
-        "theorems": 36,
-        "title": "**Conjecture.** Let `N(n)` be the number of successful prefixes of length `n` in"
-      },
       {
         "cycle_id": "3590d6fa",
         "quality": 0.6546970930232558,
@@ -3079,6 +3073,12 @@
         "quality": 0.82,
         "theorems": 106,
         "title": "Exp 391 BERGGREN-PRICE-INTERLOCK: every semiprime is a node of both Pythagorean "
+      },
+      {
+        "cycle_id": "9cc9a6e9",
+        "quality": 0.82,
+        "theorems": 42,
+        "title": "The Spectral Free-Witness: Heat-Kernel Order Recovery"
       }
     ],
     "Applications": [
