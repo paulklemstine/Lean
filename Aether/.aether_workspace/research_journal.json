@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "2c80b5b7",
-      "domain": "Shared",
-      "key_insight": "# Future Directions: Critical Geometry of Counted Proof Spaces (next cycle)\n\nThis cycle settled three of the five directions carried over from the previous\none, and it refuted the first of them in the",
-      "quality_score": 0.727445,
-      "sorry_count": 0,
-      "theorem_count": 55,
-      "timestamp": "2026-08-11T04:50:50",
-      "title": "Let two prefix-free encodings of the same deductive system translate into one an"
-    },
-    {
       "cycle_id": "d1971d75",
       "domain": "Combinatorics",
       "key_insight": "# Future directions — strongly complete sets (thread th_20f13f16, cycle 2)\n\nThis cycle added two files to the catalog:\n\n* `Catalog/Combinatorics/StronglyCompleteBlocks.lean` — monotonicity, the initia",
@@ -499,19 +489,19 @@
       "theorem_count": 85,
       "timestamp": "2026-08-14T13:50:06",
       "title": "Experiment 397: SEQSMOOTH-NULL — mod-exp sequence stats are smoothness-blind (AUC 0.500); p-1 weakne"
+    },
+    {
+      "cycle_id": "64406111",
+      "domain": "Geometry",
+      "key_insight": "# Future directions\n\nThe results of this cycle turn four informal verdicts into theorems: the trace lemma\n`R_k(N) = gcd(k, p-1)·gcd(k, q-1)`, the joint-closure / no-aggregator barrier, the sterility o",
+      "quality_score": 0.85,
+      "sorry_count": 1,
+      "theorem_count": 72,
+      "timestamp": "2026-08-14T15:14:21",
+      "title": "Round-10 Closures: The Exhaustion of the Classical Attack Surface"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "92412bd6",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\nThe formal development now identifies the recursively defined time-`t` dependency cone exactly with the radius-`t` Chebyshev ball and proves its exact cardinality `(2t+1)^2`. The",
-      "quality_score": 0.686,
-      "sorry_count": 0,
-      "theorem_count": 32,
-      "timestamp": "2026-08-03T21:38:53",
-      "title": "Deepening: Game of Life Universality"
-    },
     {
       "cycle_id": "18ab6902",
       "domain": "Bridges",
@@ -2501,27 +2491,19 @@
       "theorem_count": 85,
       "timestamp": "2026-08-14T13:50:06",
       "title": "Experiment 397: SEQSMOOTH-NULL — mod-exp sequence stats are smoothness-blind (AUC 0.500); p-1 weakne"
+    },
+    {
+      "cycle_id": "64406111",
+      "domain": "Geometry",
+      "key_insight": "# Future directions\n\nThe results of this cycle turn four informal verdicts into theorems: the trace lemma\n`R_k(N) = gcd(k, p-1)·gcd(k, q-1)`, the joint-closure / no-aggregator barrier, the sterility o",
+      "quality_score": 0.85,
+      "sorry_count": 1,
+      "theorem_count": 72,
+      "timestamp": "2026-08-14T15:14:21",
+      "title": "Round-10 Closures: The Exhaustion of the Classical Attack Surface"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "560413ae",
-      "domain": "Physics",
-      "name": "jordanPair_conj_diagonal",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "560413ae",
-      "domain": "Physics",
-      "name": "trace_jordanPair_conj_diagonal",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "560413ae",
-      "domain": "Physics",
-      "name": "re_trace_mul_signOfSpectrum",
-      "quality": 0.82
-    },
     {
       "cycle_id": "c80347ac",
       "domain": "Novelty",
@@ -2803,17 +2785,28 @@
       "domain": "Bridges",
       "name": "modExp_eq_iff",
       "quality": 0.86
+    },
+    {
+      "cycle_id": "64406111",
+      "domain": "Geometry",
+      "name": "for",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "64406111",
+      "domain": "Geometry",
+      "name": "below",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "64406111",
+      "domain": "Geometry",
+      "name": "round10_exhaustion",
+      "quality": 0.85
     }
   ],
-  "last_updated": "2026-08-14T13:50:06",
+  "last_updated": "2026-08-14T15:14:21",
   "open_questions": [
-    {
-      "context": "(sieve mechanism) form a coherent, sorry-free slice of the Maynard–Tao framework.; +    `fib_carmichael_large` — which relied on an unproven (`sorry`-backed) tail of; -    sorry+  -- Extract from the ",
-      "cycle_id": "b648d8e5",
-      "domain": "Applications",
-      "sorry_count": 3,
-      "timestamp": "2026-07-24T04:50:24"
-    },
     {
       "context": "-    sorry+  -- Finite case: extract from computational verification",
       "cycle_id": "29ba074c",
@@ -3016,6 +3009,13 @@
       "domain": "Algebra",
       "sorry_count": 4,
       "timestamp": "2026-08-14T06:50:29"
+    },
+    {
+      "context": "This file gives a complete, sorry-free proof of that formula, together with the",
+      "cycle_id": "64406111",
+      "domain": "Geometry",
+      "sorry_count": 1,
+      "timestamp": "2026-08-14T15:14:21"
     }
   ],
   "research_threads": {
@@ -3393,12 +3393,6 @@
     ],
     "Geometry": [
       {
-        "cycle_id": "069d69dc",
-        "quality": 0.686,
-        "theorems": 130,
-        "title": "**Conjecture.** For every finite connected two-dimensional cell complex and ever"
-      },
-      {
         "cycle_id": "5b6f1a1d",
         "quality": 0.686,
         "theorems": 122,
@@ -3451,6 +3445,12 @@
         "quality": 0.627125,
         "theorems": 87,
         "title": "State the CSS dictionary with two classical codes precisely.: The mission"
+      },
+      {
+        "cycle_id": "64406111",
+        "quality": 0.85,
+        "theorems": 72,
+        "title": "Round-10 Closures: The Exhaustion of the Classical Attack Surface"
       }
     ],
     "Logic": [
