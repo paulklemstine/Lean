@@ -40,7 +40,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "325dad4d",
+    "consumed_by_exp_id": "ca137aa4",
     "description": "**Summary.** The conjecture that for E_N: y² = x³ + N with N = pq, the\ndenominators of x(nP) are divisible only by {2, 3, p, q} (the primes dividing\nΔ = -432N²) is mathematically FALSE.\n\n**Counterexample.** N = 55 = 5·11, P = (9,28) ∈ E_55(Q):\n  x(2P) = (9^4 - 8·55·9) / (4(9^3 + 55)) = 2601/3136, and 3136 = 2^6 · 7^2.\nThe prime 7 divides the denominator but 7 ∤ Δ (7 is a prime of good reduction).\n\n**Mechanism.** ℓ | denom(x(nP)) iff nP ≡ O (mod ℓ); good-reduction primes divide\ndenominators whenever the point reduces to torsion — infinitely many such primes.\n\n**Survey (11 semiprimes):** p appears in some denominator 54.5%, q appears 0%,\nonly-{2,3,p,q} holds 0% of the time. The denominator structure is a function of\nN alone (barrier 5) and does not cleanly reveal p, q.\n\n---\n\n*Factoring Lab paper. Status: proven theorem / verified / framework. This is a research deliverable, not a factoring breakthrough claim.*",
     "domain_bridges": [],
     "domains": [
@@ -59,7 +59,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "2ad5d563",
+    "consumed_by_exp_id": "3690ac3a",
     "description": "**Summary.** Let F(k) = sum_{a=1}^{N} a^k. Then gcd(F(k), N) reveals a factor\nat k = p-1: for N = pq, gcd(F(p-1), N) = q (provided (q-1) does not divide (p-1)).\n\n**Key results (proven):**\n- **Theorem 1 (power-sum factor reveal):** Mod p the residues cover each nonzero\n  residue q times, so F(k) ≡ q·(sum of k-th powers mod p); by FLT this is -q mod p\n  at k=p-1. Mod q it vanishes when (q-1) ∤ (p-1). Hence gcd = q.\n- **Theorem 2 (robustness):** The power sum aggregates ALL bases a=1..N\n  simultaneously, so it cannot suffer Pollard p-1's \"bad base\" failure.\n- **Theorem 3 (Carmichael periodicity):** g(k) = gcd(F(k), N) has period\n  λ(N) = lcm(p-1, q-1), so λ(N) is readable from the period and the factors\n  follow from p+q = N - λ(N) + 1.\n\n**Complexity.** First hit at k* = min(p-1,q-1) ≈ √N; cost per F(k) is O(N);\ntotal O(N^{3/2}) — worse than trial division. This is the SAME structure Shor's\nalgorithm exploits, made classically hard by the period-finding barrier.\nVerified on all 8 test semiprimes up to N ≈ 10^4.\n\n---\n\n*Factoring Lab paper. Status: proven theorem / verified / framework. This is a research deliverable, not a factoring breakthrough claim.*",
     "domain_bridges": [],
     "domains": [
@@ -287,21 +287,21 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "75a4bebb",
-    "description": "**Paper 48 (NewMathematics) — Experiment 383, assessment v159. Frontier ii (quantum channel / classical side-information).**\n\n**Hypothesis (round-14 #5):** Can classical conditioning on poly-computable statistics of N shrink Shor's quantum register?\n\n**Experiment (10 000 semiprimes, N in [2^23, 2^28], base a=2; permutation-null mutual information over a battery of N-computable statistics — N mod m, Jacobi symbols, possible-trace sets, digit predicates; targets log2(r) binned and r mod ℓ for ℓ=2,3,5,7):**\n\n1. **Magnitude channel EMPTY:** I(combined fingerprint; log2 r) excess ≈ 0; best R² of log2 r on N mod m = 0.017. The register-sizing quantity is orthogonal to every poly-computable statistic (barrier 5).\n2. **Divisibility channel real but minuscule:** I(N mod ℓ; [ℓ|r]) = 0.082 (ℓ=3), 0.018 (ℓ=5), 0.012 (ℓ=7), decaying ~1/ℓ². **TOTAL capacity over all primes ≤ 500 = 0.173 bits** vs H(r) ≥ 13.3 bits. H(r|F(N)) ≈ H(r) − 0.2.\n3. **Mechanism — divisibility lift:** ℓ|r ⟹ ℓ|p−1 or ℓ|q−1; N mod ℓ constrains (p,q) mod ℓ. N's residues leak only the small-prime divisibility PROFILE of the order, never its value (barriers 2, 6).\n4. **Chebotarev content:** N≡2 mod 3 lifts P(3|r) to 0.76 vs 0.43 for N≡1 (consistent a=2,3,5), measuring P(3|ord_p(a) | p≡1 mod 3) ≈ 0.75 — the cube-residue density.\n\n**Verdict:** Strong \"I≈0\" form REFUTED (the divisibility channel exists); refined claim CONFIRMED and QUANTIFIED. No factor-revealing content; no register shrink. Combined with QUBIT-TRADE, the quantum channel is doubly sealed — neither truncation nor classical conditioning reduces its ~2·log2(N)-qubit register.\n\nFull paper: ResearchOutput/NewMathematics/48_CondRank_ClassicalConditioning.md",
+    "consumed_by_exp_id": "dc008fd4",
+    "description": "**Paper (factor3):** [ResearchOutput/NewMathematics/30_Moonshot_Sweep.md](https://github.com/paulklemstine/factor3/blob/main/ResearchOutput/NewMathematics/30_Moonshot_Sweep.md)\n\n---\n\n# The Moonshot Sweep: Five-Angle arXiv Mining, Judged and Tested\n\n**Program:** Factoring research lab — ultracode workflow synthesis\n**Date:** 2026-08-11\n**Status:** Survey + testing — the state-of-the-art confirmed the closure; the quantum exception refined\n\n---\n\n## Abstract\n\nAn ultracode-orchestrated workflow fanned out 9 agents: 5 parallel arXiv miners\n(quantum simulation, new classical, lattice-crypto transfer, ML/AI,\nspectral-analytic), a judge, and 3 experiment agents. The sweep mined 25 fresh\nfindings, ranked the 3 strongest candidates, and tested all 3 — every one\nconsistent-with-framework. No candidate bypasses a barrier. The genuinely new\ncontent is a refinement of the QUANTUM exception: orbit-concentrated modular\nexponentiation (forgiving truncation), internal S-unit hint generation, and a\nformal quantum lower bound on class-group DLP that bounds where the exception\nstops. The classical uniform hint-free surface is confirmed closed.\n\n---\n\n## 1. The workflow\n\n9 agents (5 mine + 1 judge + 3 test), 344 tool calls, mining arXiv from 5\nangles: quantum simulation, new classical, lattice/crypto transfer, ML/AI,\nspectral/analytic number theory. 25 findings gathered; the judge ranked the\nstrongest 3; experiments tested them.\n\n---\n\n## 2. The tested candidates (all consistent-with-framework)\n\n**1. Kernel-subspace adiabatic factorization (2602.04740) -> barrier 6.** The\nproduct-kernel ker(H_LP) = {(p,q), (q,p)} IS the answer set — circularity. No\nencoding family pushes factor-carrying density above c/sqrt(N); protocol\nfidelity tracks 2/sqrt(N).\n\n**2. Hyperbolic-sieve union sizes as elliptic Frobenius traces (2606.13018) ->\nbarrier 4.** Cross-modulus O(N) aggregation; the per-prime value rigorously\ncorroborates the trace-lemma residue classification (3530/3530 exact).\n\n**3. Transformer modular-exponentiation transfer (2506.23679) -> the\norder-recovery seal (barrier 5 / HKW heat-kernel).** A trained circuit cannot\nproduce ord_m(g) for unseen m; the order->factor reduction gains nothing over\nuninformed baselines. Residual signal is only the p-1/barrier-8 smoothness\nweakness.\n\n---\n\n## 3. The refined quantum exception (the genuinely new content)\n\nThree findings refine where and how the quantum channel operates:\n\n**Forgiving quantum modular exponentiation (2405.17021).** Because the work\nregister starts in |1>, the modular-exponentiation operator acts only on the\nperiodic orbit {b^x mod N}; heavily truncated operators (fewer than half the\nlevels, wrong on generic inputs) still factor. The state is ORBIT-CONCENTRATED,\nnot atomic-uniform — a quantum-specific resource with no classical counterpart.\nIt directly attacks the noise-floor principle's atomic-uniform hypothesis.\n\n**Quantum S-unit computation as internal hint generation (2510.02280).**\nBiasse-Song compute the S-unit group in quantum polynomial time, yielding short\ngenerators of principal ideals — exactly the Coppersmith hints, generated\nINTERNALLY by the computation rather than supplied externally. This reframes\nthe 'external hint' requirement of the hint-amplification channel: the quantum\nroute generates its own Coppersmith fuel.\n\n**Quantum lower bound for class-group DLP (2506.07640).** Under GRH, Stark-\nColeman invariants classify real-quadratic class groups, and a first\nexplicit-constant quantum lower bound exp(Omega(log D / (log log D)^2)) bounds\nthe class-group DLP. This formally bounds where the quantum exception stops:\nfull STRUCTURE (class group, regulator, order) is computable, but DLP-style\nextraction stays exponentially hard even quantumly. This matches the program's\n'structure sealed, aggregation O(N)' picture with an independent quantum-\ncomplexity justification.\n\n---\n\n## 4. Honest verdict\n\nThe moonshot sweep confirms the exhaustion from 5 fresh angles. The classical\nuniform hint-free attack surface is closed; every mined candidate collapses to a\nknown barrier. The quantum exception is now better understood: it covers\norbit-concentrated period/order/structure computation (including internal hint\ngeneration) but not DLP-style extraction. The open frontier remains the\nbarrier-4 proof and the precise boundary of the quantum exception.\n\n---\n\n*Related:* `27_ArXiv_Mining.md`, `28_Spectral_FreeWitness.md`,\n`29_Round11_Closures.md`, `26_Frontiers_Open_Problems.md`,\n`Factoring_Lab_Notebook.md` Part 101.\n",
     "domain_bridges": [],
     "domains": [
       "Novelty"
     ],
-    "id": "fd_1140",
+    "id": "fd_1139",
     "lineage_refs": [],
     "priority_score": 1000.0,
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
     "status": "in_progress",
-    "timestamp": "2026-08-12T05:10:44.745094+00:00",
-    "title": "COND-RANK: classical conditioning capacity on the order is ~0.2 bits — quantum register cannot be shrunk by conditioning"
+    "timestamp": "2026-08-12T04:00:21.975064+00:00",
+    "title": "The Moonshot Sweep: Five-Angle arXiv Mining, Judged and Tested"
   },
   {
     "ambition_level": "grand_challenge",
@@ -534,7 +534,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "295ca744",
+    "consumed_by_exp_id": "",
     "description": "## ECM-PARITY (round-18 #1, experiment 404, assessment v180, paper 69)\n\nThe parity face of the generic ECM order — the even-ℓ complement of ECM-ORDER-NULL (paper 66, which tested only odd ℓ): **2 | #E0(F_p) ⟺ the S₃ cubic x³+x+1 has a root mod p ⟺ the Frobenius is NOT a 3-cycle**. **Verdict: CONFIRMED null (factor-useless)** with three positive structural findings.\n\n### (1) The exact parity structure\nP(2|#E0) = 0.6493 (theory 2/3 = 1 − P(3-cycle)). The transposition face (density 1/2) is (Δ|p)-pinned: P(2|#E | (Δ|p)=−1) = **1.0000 EXACTLY** (a transposition fixes exactly one root, r=1, 2|#E with #E ≡ 2 mod 4). On (Δ|p)=+1 the Frobenius ∈ A₃ = {1, 3-cycles}: P(2|#E) = P(identity|A₃) = 1/3 (measured 0.3187). 4 | #E ALWAYS on the [1,1,1] face (full rational 2-torsion), never on [3].\n\n### (2) Headline — the first positive symmetric residue shadow on the GENERIC elliptic order\nSYM I(N mod 31; \"2|#E0(F_p) OR 2|#E0(F_q)\") = **0.1468 bits = 42× the null max (0.0035)** — carried EXACTLY by the Jacobi character: I((Δ|N); OR) = 0.1463, residual 0.0004. P(OR | (Δ|N)=−1) = **1.0000** (the −1 factor is a transposition, 2|#E forced); P(OR | (Δ|N)=+1) = 0.7358. Here (Δ|N) = (p mod 31 | 31)(q mod 31 | 31) by quadratic reciprocity ((−31|p) = (p mod 31 | 31)).\n\n### (3) The fork is NOT flat (qualifies paper 65)\nThe [1,1,1]-vs-[3] fork at (Δ|p)=+1 is residue-pinned: per-class rates 0.124–0.594 over the 15 QR-classes mod 31 (I = 0.0742); **93.3% of the fork entropy H(1/3)=0.918 determined by p mod 31²** (I = 0.8562). The fork's variance compresses the union via Jensen concavity — P(OR|(Δ|N)=+1) = 0.7358 BELOW the flat-fork 7/9 — which is why B1 = 0.147, not 0.25.\n\n### (4) Exact classical mechanism — Hilbert class field\n[1,1,1] ⟺ 4p = A²+31B² (A≡B mod 2) on **2900/2900 EXACT**, and 4p = A²+23B² on **2911/2911 EXACT**. Q(√−31) and Q(√−23) both have class number 3; their Hilbert class fields ARE the S₃-closures of x³+x+1 / x³−x+1, so [1,1,1] ⟺ ℘ principal ⟺ p splits completely in the Hilbert class field.\n\n### (5) Ray-class semiprime dial\nI(N mod 31²; OR) = 0.1811 (null max 0.0719) vs Jacobi 0.1444 — the ray-class dial thickens the channel but is which-factor-scrambled (N carries only the product).\n\n### Seals / barriers\nSymmetric only (asym 0.0012 at null — which-factor lost, barrier 2); a Jacobi/quadratic-reciprocity residue dial (barrier 5); exact order sealed behind the CRT split (barrier 6); all of it Jacobi (1801) + Hilbert class fields (class number 3) + ECM (1987) — known methods (barrier 8). Robustness: Δ=−23 gives 0.1230 (45× null max 0.0027); p−1 machinery control live (0.3052). Round-18 1/1 done. Barriers 2/5/6/8.\n",
     "domain_bridges": [],
     "domains": [
@@ -546,7 +546,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-12T17:19:53.175571+00:00",
     "title": "ECM-PARITY: first positive symmetric residue shadow on the GENERIC elliptic order (2|#E ⟺ cubic root ⟺ Frobenius not 3-cycle) — round-18 #1, exp 404"
   },
@@ -1074,6 +1074,25 @@
     "status": "available",
     "timestamp": "2026-08-14T08:45:35.522800+00:00",
     "title": "Deepening: SMOOTH-SELFHINT-DENSITY: the p-1/ECM weakness is residue-invisible — asymmetric/"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 83c80b79 (Q=0.860), which proved 129 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Paper (factor3):** [ResearchOutput/NewMathematics/31_Dequantization_Assessed.md](https://github.com/paulklemstine/factor3/blob/main/ResearchOutput/NewMathematics/31_Dequantization_Assessed.md)\n\n---\n\n# De-Quantization Assessed: Shor's QFT Is Irreducible\n\n**Program:** Factoring research lab — user-p",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_83c80b79_e4c1233a",
+    "lineage_refs": [],
+    "priority_score": 0.95,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "83c80b79",
+    "status": "available",
+    "timestamp": "2026-08-14T15:14:33.793464+00:00",
+    "title": "Deepening: De-Quantization Assessed: Shor's QFT Is Irreducible"
   },
   {
     "ambition_level": "extension",
@@ -8098,6 +8117,25 @@
     "status": "available",
     "timestamp": "",
     "title": "Moonshot: Brain-Computer Interface Mathematics — Neural Coding Theorems"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Cycle 64406111 (Q=0.850) proved 72 theorems in Geometry but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: **Paper (factor3):** [ResearchOutput/NewMathematics/25_Round10_Closures.md](https://github.com/paulklemstine/factor3/blob/main/ResearchOutput/NewMathematics/25_Round10_Closures.md)\n\n---\n\n# Round-10 Cl",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry"
+    ],
+    "id": "sorry_fill_64406111_5c5b78c0",
+    "lineage_refs": [],
+    "priority_score": 0.85,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "64406111",
+    "status": "available",
+    "timestamp": "2026-08-14T15:14:21.519032+00:00",
+    "title": "Close Proofs: Round-10 Closures: The Exhaustion of the Classical Attack Surface"
   },
   {
     "ambition_level": "extension",
@@ -25646,6 +25684,46 @@
     "status": "available",
     "timestamp": "2026-08-14T13:49:57.482590+00:00",
     "title": "What the formal round established (all in"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\nThe results of this cycle turn four informal verdicts into theorems: the trace lemma\n`R_k(N) = gcd(k, p-1)·gcd(k, q-1)`, the joint-closure / no-aggregator barrier, the sterility of the\nsmooth-step walk, the constructive sufficiency of the residue/order coordinate, and the closed-form\namplification of the additive hint. Three further cycles added the *quantitative* form of the\naggregation barrier (the least complete exponent is exactly `lcm(p-1, q-1)`), the squarefree trace\nlemma (`2^ω(N)` square roots of unity), and the identification of the aggregation depth of an\narbitrary odd modulus with its Carmichael exponent. The following are the sharpest open questions\nthose proofs expose.\n\n## C1 (resolved, now generalised). The Carmichael threshold\n\nThe original conjecture — that the completeness threshold is `Θ(N)` rather than `Θ(√N)` — is now a\ntheorem: the least positive exponent with `R_k(N) = φ(N)` is exactly\n`lcm(p-1, q-1) = φ(N)/gcd(p-1, q-1)`, and this extends to every squarefree modulus, where the\nthreshold is the Carmichael exponent `lcm_{r | N}(r-1)`.\n\nA later cycle went further: `R_k(N) = ∏_{p | N} gcd(φ(p^{v_p(N)}), k)` for *every* odd `N`, which\nidentifies the aggregation depth of an arbitrary odd modulus as its Carmichael exponent\n`λ(N) = lcm_{p | N} φ(p^{v_p(N)})`.\n\n**Successor conjecture (the 2-adic case).** For `N = 2^e · M` with `M` odd and `e ≥ 3`,\n`R_k(N) = gcd(2, k) · gcd(2^{e-2}, k) · ∏_{p | M} gcd(φ(p^{v_p}), k)`, and the least complete\nexponent is `lcm(2^{e-2}, λ(M))` — strictly smaller than `φ(N)`, so the even part *shortens* the\naggregation depth by a factor of two without ever making it polynomial.\n\n*The key insight is* that the proof for odd moduli needed only multiplicativity of the witness over\ncoprime factors plus cyclicity of each local unit group, and cyclicity fails exactly at `2^e`,\n`e ≥ 3`, where the local group is `Z/2 × Z/2^{e-2}`; the missing ingredient is a root count in a\nproduct of two cyclic groups, which the multiplicativity of root counts over direct products already\nsupplies.\n\n*Why now?* Multiplicativity of the witness over coprime factors and the product root count are both\nestablished, and the `Z/2 × Z/2^{e-2}` structure of the unit group modulo `2^e` is standard, so only\nthe transport step is missing.\n\n## C2. Joint closure survives unbounded but sparse exponent sets\n\n**Conjecture.** For every infinite set `S ⊆ ℕ` of exponents with `#(S ∩ [1, X]) = O(X^{1-ε})` and\nevery prime `q`, there are still two distinct primes `p ≠ p'` with `R_k(pq) = R_k(p'q)` for all\n`k ∈ S ∩ [1, N]`.\n\n*The key insight is* that the Dirichlet argument used for finite `S` only needs the primes to be\n`≡ 1` modulo `lcm(S ∩ [1, X])`, and for sparse `S` that lcm is still small enough for a prime of the\nright size to exist under standard prime-gap heuristics — so sparsity, not finiteness, is the\noperative hypothesis.\n\n## C3. An unconditional lower bound\n\nCan the exponent-depth lower bound be promoted from \"algorithms restricted to free witnesses\" to\n\"algorithms with black-box access to arithmetic modulo `N`\"? A generic-group-model result of this\nshape would be the strongest available formal evidence that factoring is classically hard, and it is\nthe precise open problem the framework isolates.\n\n## C4. Beyond gcd channels for random walks\n\nThe sterility theorem closes the greatest-common-divisor channel for multiplicative walks. Whether\n*any* efficiently samplable classical stochastic process on `Z/N` can have provably useful randomness\nbeyond the birthday floor of its orbit remains open; all known candidates reduce either to smoothness\n(subexponential, governed by the Dickman–de Bruijn density) or to order finding (currently quantum).\n\n## C5. Pricing hints properly\n\nHint amplification in the Coppersmith tradition converts roughly half the bits of `p` into the full\nfactorisation in polynomial time. The framework's scope must therefore be stated as \"extraction from\n`N` alone\" rather than \"factoring\", and a companion theory that prices *partial* hints — how many\nbits of `p+q`, or of `φ(N)`, suffice — is entirely open.\n",
+    "domain_bridges": [],
+    "domains": [
+      "NumberTheory",
+      "Computation"
+    ],
+    "id": "fd_1260",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "64406111",
+    "status": "available",
+    "timestamp": "2026-08-14T15:14:14.465613+00:00",
+    "title": "The results of this cycle turn four informal verdicts into theorems: the trace l"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — De-Quantization Assessed: Shor's QFT Is Irreducible\n\nThe formalized results (`Catalog/Novelty/Shor*.lean`) establish, with zero\n`sorry`s:\n\n* the full Shor state has Schmidt rank **exactly** `r` and a **flat** spectrum,\n  entanglement entropy `log r`, mutual information `2 log r`\n  (`schmidtRank_shorState`, `entanglementEntropy_shorState`,\n  `flatSchmidtSpectrum_shorState`);\n* the QFT *input* comb has Schmidt rank **exactly** `min C (r / gcd(r,B))`\n  across the cut `x = b + B·c` (`schmidtRank_combCut_sharp`) — an exact bond\n  dimension, sharper than the folklore `Θ(min(r, Q/r))`;\n* the QFT *output* is again a comb up to diagonal phases, hence carries the same\n  kind of exponential rank (`schmidtRank_outputCut`);\n* every small-support classical sampler is at total-variation distance\n  `≥ 1 − |S|/r` from the ideal output (`tvDist_qftComb_ge`);\n* one ideal sample determines the order and hence factors `N`\n  (`exists_factor_of_peak_sample`, `exists_factor_of_orderOf_even`), while a\n  polynomially small bond dimension *forces* a polynomially small order, i.e. a\n  classically easy instance (`exists_pow_eq_one_le_of_bondDim`);\n* **fidelity of truncation**: any state of Schmidt rank `≤ D` has squared\n  overlap at most `D / r` with a flat rank-`r` state (`fidelity_flat_le`,\n  `fidelity_shorState_le`), the bound being attained\n  (`fidelity_flat_truncation_eq`), with a matching Frobenius-error bound\n  `‖M − A‖² ≥ 2 − 2√(D/r)` (`frobSq_sub_flat_ge`);\n* the two endpoint ranks obey an **lcm law**,\n  `min(C, lcm(r,m)/gcd(lcm(r,m),B)) ≤ rank_in · rank_out` (`schmidtRank_mul_ge`),\n  and both collapse to one only on cuts aligned with `lcm(r,m)`\n  (`lcm_dvd_of_both_rank_one`), which never happens for a power-of-two cut of an\n  odd order (`not_dvd_pow_two_of_odd`).\n\n## Settled since the previous cycle\n\n* **Flat-spectrum Eckart–Young (was Conjecture 3): PROVED.** The truncation\n  fidelity of a flat rank-`r` state at bond dimension `D` is exactly `D/r`, not\n  the `(D/r)²` quoted informally in the source assessment\n  (`fidelity_flat_le` + `fidelity_flat_truncation_eq`).\n* **Corrected complementarity (was Conjecture 2′): PROVED.** The cut period is an\n  order (`dvd_mul_iff_cutPeriod_dvd`), the joint cut period is the *lcm* of the\n  two endpoint cut periods (`cutPeriod_lcm`), hence\n  `min(C, lcm(r,m)/gcd(lcm(r,m),B)) ≤ rank_in · rank_out`\n  (`schmidtRank_mul_ge`) and a cut compresses both endpoints only if\n  `lcm(r,m) ∣ B` (`lcm_dvd_of_both_rank_one`).\n* **Input/output complementarity (was Conjecture 2): REFUTED.** For `Q = 36`,\n  `r = m = 6` and the cut `B = C = 6`, *both* endpoints of the QFT are product\n  states (`not_complementary_ranks`). The escape hatch is exactly an *aligned*\n  cut, `r ∣ B` and `m ∣ B` (`schmidtRank_eq_one_of_aligned`) — and for an odd\n  order no power-of-two block size is aligned\n  (`not_dvd_pow_two_of_odd`), so every qubit cut of an odd-order comb has the\n  full rank `min C r` (`schmidtRank_combCut_pow_two_of_odd`). The refutation\n  therefore lives entirely inside the classically easy regime.\n\nFive bold, testable conjectures follow.\n\n---\n\n## Conjecture 1 (Rank–arithmetic duality at every cut of every factorization)\n\nFor every factorization `Q = B·C` and every `r`, the Schmidt rank of the comb\nacross the cut equals the number of residues of the interval `[0,B)` that are\nhit by the coset `x₀ − ⟨B⟩` in `ℤ/r`, i.e.\n`#((image of [0,B) mod r) ∩ (x₀ − ⟨B⟩))`, which in the unrestricted regime\n`B < r` is a two-term interval-versus-coset lattice count rather than\n`min(C, r/gcd(r,B))`.\n\n**The key insight is** that the Schmidt rank of a periodic state is a purely\n*arithmetic* intersection number between an interval and a cyclic subgroup\ncoset, not an analytic property of the amplitude profile — so tensor-network\ncompressibility of comb states is decided by lattice-point counting.\n\n**Why now?** The `r ≤ B` case is already a theorem\n(`schmidtRank_combCut_sharp`); only the interval-versus-coset count is missing,\nand `ShorMatchRank` reduces the whole question to `#(image u ∩ image v)`, which\nis finite combinatorics.\n\n---\n\n## Conjecture 2″ (Tightness of the lcm law)\n\nThe corrected law `min(C, cutPeriod(lcm(r,m), B)) ≤ rank_in · rank_out` (now a\ntheorem) is *tight* exactly on coprime cut periods: for `C ≥ cutPeriod r B ·\ncutPeriod m B` equality holds if and only if\n`gcd(r/gcd(r,B), m/gcd(m,B)) = 1`; otherwise the product exceeds the joint\nperiod by exactly that gcd.\n\n**The key insight is** that `lcm a b · gcd a b = a · b`, so the *defect* of the\ninequality is itself an arithmetic invariant of the cut — the gcd of the two\nendpoint orders of `B` — and vanishes precisely in the coprime case.\n\n**Why now?** `cutPeriod_lcm` reduces the whole question to\n`Nat.gcd_mul_lcm`, and the truncation step `min_mul_le_mul_min` already isolates\nthe only other source of slack (the `min C` clipping).\n\n---\n\n## Conjecture 3′ (General Eckart–Young in the Schmidt-form model)\n\nFor a target `M = L·diag w·Rᴴ` and any approximant `A` of Schmidt rank `≤ D`\nwith `‖A‖_F ≤ 1`, the squared overlap is bounded by the sum of the `D` largest\n`w_j²`, and the bound is attained by the corresponding truncation. The flat case\n`D/r` proved here is the special case of a constant `w`.\n\n**The key insight is** that the proof given here — Bessel's inequality on both\nisometries, then Cauchy–Schwarz on the retained coefficients — never uses\nflatness beyond the uniform bound `|w_j| ≤ max w`; replacing that step by a\nrearrangement inequality should give the ordered-spectrum version without any\nsingular value decomposition.\n\n**Why now?** `norm_frobInner_le_of_schmidtForms` already isolates the exact\ninequality `|⟪M,A⟫| ≤ (max_j |w_j|)·∑_k |s_k|`; only the rearrangement step is\nmissing, and Mathlib has `MonovaryOn`/rearrangement machinery.\n\n---\n\n## Conjecture 4 (Sampling-hardness dichotomy for periodic states)\n\nLet `A` be any classical algorithm which, on input `(a, N)` and in time `T`,\noutputs a frequency `y`. If the output law of `A` is within total variation\n`1/4` of the ideal Shor distribution for a constant fraction of `(a,N)`, then\n`T` is superpolynomial unless factoring is in `P`. Formally: an emulator whose\nsupport is polynomial *fails* (this direction is the theorem\n`tvDist_qftComb_ge_half`), and an emulator whose support is superpolynomial has\nsuperpolynomial write-out cost.\n\n**The key insight is** that support size, not amplitude accuracy, is the binding\nresource: the ideal distribution is *uniform on `r` points*, so any sampler is\npenalized by exactly the mass it cannot reach.\n\n**Why now?** `tvDist_ge_sum_sub` gives an event-wise lower bound for arbitrary\noutput laws, so the only missing step is a formal cost model for \"writing down\nthe support\" — a finite, combinatorial notion.\n\n---\n\n## Conjecture 5 (Entanglement is exactly the classical-hardness order parameter)\n\nFor the family of modular-exponentiation states, the entanglement entropy across\nthe register cut equals `log r` (proved), and the minimal bond dimension of any\nmatrix-product representation is exactly `r`: `χ ≥ r` is necessary\n(`not_hasBondDim_shorState`) and `χ = r` is achievable, so\n`log(minimal bond dimension) = entanglement entropy` on this family. Sharpened\nform: any tensor-network contraction scheme over the register cut costs `Ω(r)`,\nand `orderOf a ≤ χ` whenever a bond-dimension-`χ` representation exists (this\nlast implication is proved: `exists_pow_eq_one_le_of_bondDim`).\n\n**The key insight is** that the bound and its converse coincide, so the entropy\nis not merely an obstruction but the precise cost.\n\n**Why now?** The exact rank and exact entropy are both theorems here, and the\nachievability direction is a short explicit MPS construction (the Schmidt form\n`matchMatrix_schmidtForm` already exhibits it), so the conjecture reduces to\nformalizing the cost model.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "NumberTheory"
+    ],
+    "id": "fd_1261",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "83c80b79",
+    "status": "available",
+    "timestamp": "2026-08-14T15:14:27.991152+00:00",
+    "title": "The formalized results (`Catalog/Novelty/Shor*.lean`) establish, with zero"
   },
   {
     "ambition_level": "extension",
