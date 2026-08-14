@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "756b62a7",
-      "domain": "Pythagorean",
-      "key_insight": "# Future directions\n\nDerived from the formalization in `Catalog/Pythagorean/SchurIdempotentGammaTwo.lean`, `SchurIdempotentGap.lean`,\n`SchurIdempotentAlgebra.lean` and `SchurIdempotentEQCost.lean`.\n\nW",
-      "quality_score": 0.7084450000000001,
-      "sorry_count": 0,
-      "theorem_count": 86,
-      "timestamp": "2026-08-09T14:12:45",
-      "title": "ArXiv paper: Towards a characterization of idempotent Schur multipliers"
-    },
-    {
       "cycle_id": "08217b91",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Singmaster multiplicity in Pascal's triangle\n\nDerived from the results established in this cycle: the smoothness theorem, the smoothness\nhierarchy, the sharpened logarithmic boun",
@@ -499,19 +489,19 @@
       "theorem_count": 72,
       "timestamp": "2026-08-14T02:53:30",
       "title": "The CRT-Multiplicative Free-Witness Classification and the Trace Lemma"
+    },
+    {
+      "cycle_id": "a1fe4956",
+      "domain": "Algebra",
+      "key_insight": "# FUTURE DIRECTIONS — after Experiment 391 (Berggren–Price interlock)\n\nThe Pythagorean-tree line for factoring is now closed with exact statements\n(`Catalog/Algebra/BerggrenPriceInterlock/`, five file",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 106,
+      "timestamp": "2026-08-14T05:10:05",
+      "title": "Exp 391 BERGGREN-PRICE-INTERLOCK: every semiprime is a node of both Pythagorean trees — the N-node i"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "4db4579d",
-      "domain": "Shared",
-      "key_insight": "# Future directions\n\n1. **Subobject-frame realization.** For every Mathlib category `C` equipped with finite limits,\n   arbitrary coproducts satisfying the Grothendieck-topos axioms, and a subobject c",
-      "quality_score": 0.80477,
-      "sorry_count": 0,
-      "theorem_count": 26,
-      "timestamp": "2026-08-03T08:07:06",
-      "title": "Bridge: Category Theory as Universal Language for Mathematics"
-    },
     {
       "cycle_id": "362b8901",
       "domain": "Applications",
@@ -2501,21 +2491,19 @@
       "theorem_count": 72,
       "timestamp": "2026-08-14T02:53:30",
       "title": "The CRT-Multiplicative Free-Witness Classification and the Trace Lemma"
+    },
+    {
+      "cycle_id": "a1fe4956",
+      "domain": "Algebra",
+      "key_insight": "# FUTURE DIRECTIONS — after Experiment 391 (Berggren–Price interlock)\n\nThe Pythagorean-tree line for factoring is now closed with exact statements\n(`Catalog/Algebra/BerggrenPriceInterlock/`, five file",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 106,
+      "timestamp": "2026-08-14T05:10:05",
+      "title": "Exp 391 BERGGREN-PRICE-INTERLOCK: every semiprime is a node of both Pythagorean trees — the N-node i"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "579ae41a",
-      "domain": "Computation",
-      "name": "catalog",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "579ae41a",
-      "domain": "Computation",
-      "name": "euclid_parametrization",
-      "quality": 0.82
-    },
     {
       "cycle_id": "a3466461",
       "domain": "Novelty",
@@ -2803,9 +2791,21 @@
       "domain": "MachineLearning",
       "name": "sum_split",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "a1fe4956",
+      "domain": "Algebra",
+      "name": "dvd_det_of_dvd_image",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "a1fe4956",
+      "domain": "Algebra",
+      "name": "node_map_parity",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-14T02:53:30",
+  "last_updated": "2026-08-14T05:10:05",
   "open_questions": [
     {
       "context": "+unproved infinite tail as a `sorry`.  The computational certificate; -    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3021,12 +3021,6 @@
   "research_threads": {
     "Algebra": [
       {
-        "cycle_id": "3652ac9b",
-        "quality": 0.686,
-        "theorems": 679,
-        "title": "ArXiv paper: Learning the Graphical Nature of Symmetries"
-      },
-      {
         "cycle_id": "9f1ee483",
         "quality": 0.79301,
         "theorems": 36,
@@ -3079,6 +3073,12 @@
         "quality": 0.87,
         "theorems": 939,
         "title": "The Quantum Register Cannot Be Shrunk: QUBIT-TRADE, Closed"
+      },
+      {
+        "cycle_id": "a1fe4956",
+        "quality": 0.82,
+        "theorems": 106,
+        "title": "Exp 391 BERGGREN-PRICE-INTERLOCK: every semiprime is a node of both Pythagorean "
       }
     ],
     "Applications": [

@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-14T02:53:36.409527+00:00",
+  "last_updated": "2026-08-14T05:10:18.161948+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -54641,6 +54641,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-08-14T02:53:36.230207+00:00",
       "title": "The CRT-Multiplicative Free-Witness Classification and the Trace Lemma"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Algebra",
+      "duration_seconds": 8169.0625240802765,
+      "end_time": 1786684184.1577399,
+      "files_integrated": 4,
+      "job_id": "a1fe4956",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.82,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.544,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.82,
+        "novelty": 0.82,
+        "proof_depth": 0.82,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1786676015.0952158,
+      "strategy_count": 0,
+      "theorem_count": 106,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 82,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-08-14T05:10:17.981488+00:00",
+      "title": "Exp 391 BERGGREN-PRICE-INTERLOCK: every semiprime is a node of both Pythagorean trees \u2014 the N-node i"
     }
   ]
 }
