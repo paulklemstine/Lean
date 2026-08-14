@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "04a5f386",
-      "domain": "Probability",
-      "key_insight": "# Future Directions (thread th_ffe6cbbf)\n\nState of the thread after the present cycle.  Every statement marked \"**settled**\"\nis a sorry-free Lean 4 theorem in `Catalog/Probability/`, checked against t",
-      "quality_score": 0.718325,
-      "sorry_count": 0,
-      "theorem_count": 119,
-      "timestamp": "2026-08-11T07:49:22",
-      "title": "**Conjecture.** For every finite relational signature and finite model, there is"
-    },
-    {
       "cycle_id": "5bbe180d",
       "domain": "MachineLearning",
       "key_insight": "# Future directions: bold, testable conjectures from the symmetry dichotomy\n\nThe cycle established, in\n`Catalog/MachineLearning/TransformerUniversality/PermutationDichotomy.lean` (0 sorries):\n\n* `grou",
@@ -499,19 +489,19 @@
       "theorem_count": 79,
       "timestamp": "2026-08-14T16:15:07",
       "title": "ECM-PARITY: first positive symmetric residue shadow on the GENERIC elliptic order (2|#E ⟺ cubic root"
+    },
+    {
+      "cycle_id": "e0db545b",
+      "domain": "Physics",
+      "key_insight": "# Future directions — from the permutation readout to the next barrier\n\nThe formal results of this project (`Catalog/Physics/PermutationReadout*.lean`)\nsettle the PERMORD question: the permutation `x",
+      "quality_score": 0.91,
+      "sorry_count": 0,
+      "theorem_count": 202,
+      "timestamp": "2026-08-14T17:18:51",
+      "title": "The Permutation Readout of Individual Orders, Closed"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "c0621a16",
-      "domain": "Novelty",
-      "key_insight": "# Future directions\n\nThe following are concrete formalization conjectures extending the verified finite optimization and arithmetic-progression bookkeeping in `Catalog/Novelty/TwinPrimeGaps/MaynardTao",
-      "quality_score": 0.686,
-      "sorry_count": 0,
-      "theorem_count": 33,
-      "timestamp": "2026-08-03T23:27:46",
-      "title": "Twin Prime Gaps: Zhang-Maynard Formalization"
-    },
     {
       "cycle_id": "f8e43caa",
       "domain": "MachineLearning",
@@ -2501,27 +2491,19 @@
       "theorem_count": 79,
       "timestamp": "2026-08-14T16:15:07",
       "title": "ECM-PARITY: first positive symmetric residue shadow on the GENERIC elliptic order (2|#E ⟺ cubic root"
+    },
+    {
+      "cycle_id": "e0db545b",
+      "domain": "Physics",
+      "key_insight": "# Future directions — from the permutation readout to the next barrier\n\nThe formal results of this project (`Catalog/Physics/PermutationReadout*.lean`)\nsettle the PERMORD question: the permutation `x",
+      "quality_score": 0.91,
+      "sorry_count": 0,
+      "theorem_count": 202,
+      "timestamp": "2026-08-14T17:18:51",
+      "title": "The Permutation Readout of Individual Orders, Closed"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "f3293094",
-      "domain": "Tropical",
-      "name": "divisors_semiprime",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "f3293094",
-      "domain": "Tropical",
-      "name": "card_divisors_semiprime",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "f3293094",
-      "domain": "Tropical",
-      "name": "tau_cannot_locate",
-      "quality": 0.82
-    },
     {
       "cycle_id": "ab9891cb",
       "domain": "Logic",
@@ -2803,9 +2785,27 @@
       "domain": "Algebra",
       "name": "E0Card_mod_four_ne_two_of_form",
       "quality": 0.86
+    },
+    {
+      "cycle_id": "e0db545b",
+      "domain": "Physics",
+      "name": "iterate_conj",
+      "quality": 0.91
+    },
+    {
+      "cycle_id": "e0db545b",
+      "domain": "Physics",
+      "name": "orbIter_conj",
+      "quality": 0.91
+    },
+    {
+      "cycle_id": "e0db545b",
+      "domain": "Physics",
+      "name": "cycleCountOf_conj",
+      "quality": 0.91
     }
   ],
-  "last_updated": "2026-08-14T16:15:07",
+  "last_updated": "2026-08-14T17:18:51",
   "open_questions": [
     {
       "context": "-    sorry+  -- Finite case: extract from computational verification",
@@ -3703,12 +3703,6 @@
     ],
     "Physics": [
       {
-        "cycle_id": "06b881ae",
-        "quality": 0.78433,
-        "theorems": 19,
-        "title": "Inverse Stereographic Neural Field Theory"
-      },
-      {
         "cycle_id": "f993c4fa",
         "quality": 0.686,
         "theorems": 45,
@@ -3761,6 +3755,12 @@
         "quality": 0.82,
         "theorems": 131,
         "title": "Entanglement-Monotone: Formalization of Logarithmic Negativity Bounds"
+      },
+      {
+        "cycle_id": "e0db545b",
+        "quality": 0.91,
+        "theorems": 202,
+        "title": "The Permutation Readout of Individual Orders, Closed"
       }
     ],
     "Probability": [

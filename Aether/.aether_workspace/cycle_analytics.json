@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-14T16:15:10.388741+00:00",
+  "last_updated": "2026-08-14T17:18:55.001348+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -55158,6 +55158,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-08-14T16:15:10.209410+00:00",
       "title": "ECM-PARITY: first positive symmetric residue shadow on the GENERIC elliptic order (2|#E \u27fa cubic root"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 32,
+      "domain": "Physics",
+      "duration_seconds": 3818.961254835129,
+      "end_time": 1786727911.5942981,
+      "files_integrated": 4,
+      "job_id": "e0db545b",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.91,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.5845,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.91,
+        "novelty": 0.91,
+        "proof_depth": 0.91,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.91,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1786724092.6330433,
+      "strategy_count": 0,
+      "theorem_count": 202,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 195,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-08-14T17:18:54.820872+00:00",
+      "title": "The Permutation Readout of Individual Orders, Closed"
     }
   ]
 }
