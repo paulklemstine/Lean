@@ -40,7 +40,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "79242ce3",
+    "consumed_by_exp_id": "e2234061",
     "description": "**Summary.** The conjecture that for E_N: y² = x³ + N with N = pq, the\ndenominators of x(nP) are divisible only by {2, 3, p, q} (the primes dividing\nΔ = -432N²) is mathematically FALSE.\n\n**Counterexample.** N = 55 = 5·11, P = (9,28) ∈ E_55(Q):\n  x(2P) = (9^4 - 8·55·9) / (4(9^3 + 55)) = 2601/3136, and 3136 = 2^6 · 7^2.\nThe prime 7 divides the denominator but 7 ∤ Δ (7 is a prime of good reduction).\n\n**Mechanism.** ℓ | denom(x(nP)) iff nP ≡ O (mod ℓ); good-reduction primes divide\ndenominators whenever the point reduces to torsion — infinitely many such primes.\n\n**Survey (11 semiprimes):** p appears in some denominator 54.5%, q appears 0%,\nonly-{2,3,p,q} holds 0% of the time. The denominator structure is a function of\nN alone (barrier 5) and does not cleanly reveal p, q.\n\n---\n\n*Factoring Lab paper. Status: proven theorem / verified / framework. This is a research deliverable, not a factoring breakthrough claim.*",
     "domain_bridges": [],
     "domains": [
@@ -59,7 +59,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "61beb7f6",
+    "consumed_by_exp_id": "198294c8",
     "description": "**Summary.** Let F(k) = sum_{a=1}^{N} a^k. Then gcd(F(k), N) reveals a factor\nat k = p-1: for N = pq, gcd(F(p-1), N) = q (provided (q-1) does not divide (p-1)).\n\n**Key results (proven):**\n- **Theorem 1 (power-sum factor reveal):** Mod p the residues cover each nonzero\n  residue q times, so F(k) ≡ q·(sum of k-th powers mod p); by FLT this is -q mod p\n  at k=p-1. Mod q it vanishes when (q-1) ∤ (p-1). Hence gcd = q.\n- **Theorem 2 (robustness):** The power sum aggregates ALL bases a=1..N\n  simultaneously, so it cannot suffer Pollard p-1's \"bad base\" failure.\n- **Theorem 3 (Carmichael periodicity):** g(k) = gcd(F(k), N) has period\n  λ(N) = lcm(p-1, q-1), so λ(N) is readable from the period and the factors\n  follow from p+q = N - λ(N) + 1.\n\n**Complexity.** First hit at k* = min(p-1,q-1) ≈ √N; cost per F(k) is O(N);\ntotal O(N^{3/2}) — worse than trial division. This is the SAME structure Shor's\nalgorithm exploits, made classically hard by the period-finding barrier.\nVerified on all 8 test semiprimes up to N ≈ 10^4.\n\n---\n\n*Factoring Lab paper. Status: proven theorem / verified / framework. This is a research deliverable, not a factoring breakthrough claim.*",
     "domain_bridges": [],
     "domains": [
@@ -116,7 +116,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "d99b7790",
+    "consumed_by_exp_id": "",
     "description": "**Paper (factor3):** [ResearchOutput/NewMathematics/16_FreeWitness_Classification.md](https://github.com/paulklemstine/factor3/blob/main/ResearchOutput/NewMathematics/16_FreeWitness_Classification.md)\n\n---\n\n# The CRT-Multiplicative Free-Witness Classification and the Trace Lemma\n\n**Program:** Factoring research lab — unification of the free-witness family\n**Date:** 2026-08-11\n**Status:** Classification theorem (supported by 9+ experiments, validated by a successful falsifiable prediction)\n\n---\n\n## Abstract\n\nNine structurally distinct experiments — CIRC, KROOT, BQF, HEISENBERG-CLASS,\nCUSP-INDEX, ZETA-LP, RS-MIND, CONG-DIV, and SIGK — collapse to ONE mechanism.\nA free-witness is a counting aggregate over a CRT-separable domain whose local\nweights are non-polynomial and CRT-multiplicative. Such a scalar jointly encodes\nboth factors (escaping the symmetry barrier), is non-polynomial in N (escaping\nthe polynomial barrier), and is sealed by Ω(N) aggregation (barrier 4). This\npaper states the classification, the trace-reduction lemma (every recoverable\nwitness reduces to p+q, max(p,q), or a residue/order vector), the\ncharacters-only boundary lemma, and the successful falsifiable prediction that\nvalidated the theorem (sigma_k(N), k>=2).\n\n---\n\n## 1. The unifying mechanism\n\nEvery experiment in the free-witness family has three layers:\n\n1. **CRT decomposition.** The witness counts solutions over an ambient set that\n   is CRT-separable (S_N ~= S_p x S_q) with a CRT-multiplicative weight. The\n   count factors as a product (C_D(N) = C_D(p) C_D(q)).\n\n2. **Non-polynomial local factor.** Each local piece depends on ONE prime through\n   a non-polynomial function: the Kronecker symbol chi_D(p) (CIRC, BQF), the\n   order gcd(k, p-1) (KROOT), the divisor sum sigma(p) = 1+p (CUSP-INDEX,\n   ZETA-LP, SIGK), the class count (HEISENBERG), the code distance\n   (RS-MIND), the order ord_p(a) (BURAU-ORD). This is why the scalar is not a\n   polynomial in N: it is a function of p and q SEPARATELY.\n\n3. **Sealing (barrier 4).** The closed form requires the factors (circular,\n   barrier 6); the only factor-free route is enumerating the CRT-product domain\n   — O(N) or O(N^2). Recovery from the scalar is poly-time.\n\n**Classification theorem (supported, not yet proven).** A counting function over\na CRT-separable domain whose local weights are non-polynomial and\nCRT-multiplicative is a free-witness — factoring-complete, O(1) from the factors,\nΩ(N) otherwise.\n\n---\n\n## 2. The trace lemma\n\nEvery recoverable free-witness reduces to one of:\n- the trace s = p + q (CIRC, BQF, HEISENBERG-CLASS, CUSP-INDEX, ZETA-LP),\n- the larger factor max(p,q) (RS-MIND), or\n- a residue/order vector (KROOT, MODPAR-CERT, BURAU-ORD).\n\nOnce s = p+q is known, p and q are the roots of x^2 - s x + N. Once max(p,q) is\nknown, the other factor is N/max. The information content of every witness is\none factor-secret coordinate.\n\n---\n\n## 3. The characters-only boundary lemma\n\nWIGNER-CUBIC showed the boundary of this class: its claimed CRT factorization is\nFALSE because exponential phase functions e^{2 pi i f(y)/N} do NOT decompose\nthrough CRT — only GROUP CHARACTERS do. The free-witness family works precisely\nbecause its local weights (Kronecker symbols, orders, divisor sums) ARE\ncharacter-like / CRT-multiplicative. Non-character phase functions fall outside\nthe class. This delimits exactly why the six+ settings work and where the\nmechanism cannot extend.\n\n---\n\n## 4. The falsifiable prediction (validated)\n\nThe classification predicts: ANY non-polynomial CRT-multiplicative local count\nyields another free-witness. The divisor-power-sum sigma_k(N) = prod(1 + p_i^k)\nhas local weight (1 + p^k), non-polynomial and CRT-multiplicative. Tested\n(experiment SIGK): sigma_2(N) = (1+p^2)(1+q^2) verified exactly, and\np^2 + q^2 = sigma_2 - 1 - N^2 recovers p,q in every case. This is the FIRST\nfree-witness PREDICTED by the theory rather than found by search — a successful\nfalsifiable test. Other predicted members: Ramanujan sums (already shown\nfactor-secret in FOU), class numbers, the psi-function (already = CUSP-INDEX).\n\n---\n\n## 5. The sealing, precisely\n\nThe CIRC mod-2^k addendum showed truncated counts still leak factor residues\n(p mod 8) but remain sealed. This is empirical; a proof direction: find N1 == N2\nmod 2^k with C(N1) not congruent C(N2) mod 2^k. Since p,q mod 2^k are\nunderdetermined by N mod 2^k, such a pair would prove no poly formula exists\n(any poly formula depends only on N's residues), upgrading the addendum to a\ntheorem and giving barrier 4 its sharpest form.\n\n---\n\n## 6. Honest statement\n\n**Established (computationally verified):** the classification holds across\nnine+ structurally distinct settings; sigma_k(N) (k>=2) confirmed as a predicted\nmember; recovery is poly-time from any witness; sealing is Ω(N) in every case.\n**Not established:** a PROOF that barrier 4's aggregation is necessary (that is\nequivalent to factoring hardness — a famous open problem). The classification\ncharacterizes the mechanism precisely but does not prove it unconditionally.\n\n---\n\n## 7. Conclusion\n\nThe free-witness family is understood as ONE mechanism: non-polynomial\nCRT-multiplicative local counts over CRT-separable domains. Nine settings,\none information channel (the trace s = p+q, or max(p,q), or a residue/order\nvector), all sealed by Ω(N) aggregation. The classification is falsifiable and\nwas validated by a successful prediction (SIGK). Barrier 4 remains the dominant\n— and now precisely characterized — obstruction to classical factoring.\n\n---\n\n*Related:* `13_FreeWitness_Family.md` (the family), `15_Round3_Closures.md`\n(BURAU-ORD separation test), `Factoring_Lab_Notebook.md` Parts 39-55.\n",
     "domain_bridges": [],
     "domains": [
@@ -128,7 +128,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-11T22:14:34.147213+00:00",
     "title": "The CRT-Multiplicative Free-Witness Classification and the Trace Lemma"
   },
@@ -192,26 +192,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1119",
-    "lineage_refs": [],
-    "priority_score": 1000.0,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-11T23:11:29.676935+00:00",
-    "title": "Round-6 Hypothesis Closures: The Noise-Floor Principle and the Trace-Lemma Frontier"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "50444eab",
     "description": "**Paper (factor3):** [ResearchOutput/NewMathematics/19_Round5_Closures.md](https://github.com/paulklemstine/factor3/blob/main/ResearchOutput/NewMathematics/19_Round5_Closures.md)\n\n---\n\n# Round-5 Hypothesis Closures: Four Attacks on the Structural Gaps, Tested and Closed\n\n**Program:** Factoring research lab — round-5 subagent batch synthesis\n**Date:** 2026-08-11\n**Status:** Negative-results synthesis — 4 hypotheses closed; five subagent rounds complete (28 hypotheses)\n\n---\n\n## Abstract\n\nA fifth brainstorm subagent attacked the deepest structural gaps: the\nnon-CRT-separable domain (challenging the free-witness classification), the\nnon-multiplicative sublinear aggregate, the p,q-primality-residue structure, and\npure-cubic unit groups. All four were implemented, run, and closed (experiments\n316-320). The batch sharpened the framework: barrier 4 survives even when its\nCRT-separability hypothesis fails (noise-floor arguments), the divisor-summatory\nerror is N-only, the Euler-pseudoprime count is essentially constant, and pure\nunit groups are exponentially large and useless. With five subagent rounds\ncomplete (28 hypotheses), the barrier framework has survived 320 experiments.\n\n---\n\n## 1. The batch at a glance\n\n| # | Hypothesis | Attack | Verdict |\n|---|-----------|--------|---------|\n| 1 | PRIMEDOM | prime-domain Jacobi aggregate (non-CRT-separable) | refuted — Povlya-Vinogradov noise floor |\n| 2 | DIVSUM | divisor-summatory hyperbola (O(sqrt N), non-multiplicative) | refuted — error is N-only |\n| 3 | EULER | Euler-pseudoprime base count = gcd(p-1,q-1)^2 | refuted — essentially constant (g=2) |\n| 4 | CUBICUNIT | pure-cubic Voronoi fundamental units | refuted — exponentially large, useless |\n\n---\n\n## 2. PRIMEDOM (experiment 319): the non-CRT-separable domain fails\n\nW(M) = sum_{x <= M, x prime} (x/N). The prime domain is NOT CRT-separable, so\nthe free-witness decomposition does not apply — a candidate barrier-4\ncounterexample. Verified (100 semiprimes, M = 8192): residual corr of W with\np+q = -0.005, q-p = -0.103, at the 52nd percentile of the permutation null.\nW is pure noise. The Povlya-Vinogradov bound keeps the p,q-dependent part of the\ncharacter sum inside the ~sqrt(N) log N error — unrecoverable without exact\nsummation, which costs O(M) with no CRT shortcut. The classification's spirit\nsurvives: the gap closes via the noise-floor argument.\n\n---\n\n## 3. DIVSUM (experiment 317): the non-multiplicative sublinear aggregate is N-only\n\nD(N) = sum_{d<=N} floor(N/d), computable in O(sqrt N) via the hyperbola trick —\nsublinear, non-polynomial, NOT CRT-multiplicative (the classification does not\nliterally cover it). D(N) = N + p + q + 1 + (other terms). Verified: an initial\npermutation test looked suggestive (residual |corr| 0.506 above null), but the\nDECISIVE near-equal-N test resolved it: the divisor error Delta(N) is N-only\n(within-band partial correlations low; the permutation signal was a nonlinear-N\nconfound). D(N) mod 2 = floor(sqrt N) mod 2 — smooth, no factor residue. Barrier 4\nsurvives even without multiplicativity: the sparse p,q witness terms are sealed.\n\n---\n\n## 4. EULER (experiment 318): the pseudoprime count is essentially constant\n\nE(N) = #{a in (Z/NZ)* : a^{N-1} == 1 mod N} = gcd(p-1,q-1)^2 = g^2, exploiting\nthat p and q are both prime. Verified by sampling (fraction of Euler-pseudoprime\nbases = g^2/phi(N)). The kill-shot: g = gcd(p-1,q-1) = 2 for random primes\n(E = 4, ~0 bits about p). The only useful case (large g) is exactly the p-1\nmethod weakness (a known-method condition). The reduced search p = 1 + kg with\ng=2 still gives ~sqrt(N)/2 candidates = trial division. Barrier 4 + trace lemma\n+ barrier 8.\n\n---\n\n## 5. CUBICUNIT (experiment 320): pure-cubic units are exponentially large and useless\n\nK = Q(cuberoot N) has unit group rank 1; the fundamental unit e satisfies the\nnorm equation a^3 + N b^3 + N^2 c^3 - 3Nabc = +-1. Verified: minimal units\nfound for small N (coefficients 1-6), but the regulator is Theta(sqrt N), so e\nhas ~sqrt N digits and cannot be materialized in poly(log N). The unit's\narithmetic is period-3 order-finding (CYCLOTOWER/BURAU-ORD territory). Given e,\nthe norm equation re-encodes the unit group, giving p,q nothing. Barrier 8 + 5.\n\n---\n\n## 6. Meta-lessons\n\n1. **Barrier 4 survives its own falsification attempts.** The free-witness\n   classification's CRT-separability hypothesis failed (PRIMEDOM), and the\n   non-multiplicative route failed (DIVSUM) — in both cases via noise-floor /\n   N-only arguments. The classification's spirit is robust even where its letter\n   does not apply.\n2. **The p,q-primality structure yields essentially constant or known-method\n   quantities.** The Euler-pseudoprime count is g^2 with g=2 almost always; the\n   useful case is p-1 method.\n3. **Algebraic unit groups are exponentially large and factor-blind.** The pure\n   cubic regulator is Theta(sqrt N); the unit equation re-encodes the group,\n   not the factors.\n4. **Five rounds, 28 hypotheses, 320 experiments.** The barrier framework is\n   intact. The empirical picture is now nearly complete: the free-witness\n   aggregation barrier dominates, is classified, and survives non-multiplicative\n   and non-CRT-separable generalizations.\n\n---\n\n*Related:* `12_Subagent_Batch_Closures.md` (round 1), `14_Round2_Closures.md`,\n`15_Round3_Closures.md`, `17_Round4_Closures.md`,\n`16_FreeWitness_Classification.md`, `Factoring_Lab_Notebook.md` Parts 63-66.\n",
     "domain_bridges": [],
     "domains": [
@@ -223,7 +204,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-11T23:11:29.677222+00:00",
     "title": "Round-5 Hypothesis Closures: Four Attacks on the Structural Gaps, Tested and Closed"
   },
@@ -667,7 +648,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "394df4e1",
+    "consumed_by_exp_id": "",
     "description": "## Experiment 400 — FROBENIUS-TYPE-NULL (cron loop round-16 #3)\n\n**Hypothesis (null).** The mod-N splitting type of a fixed polynomial f — the factorization pattern of f mod N — is the lab's first NON-abelian symmetric N-computable channel. It is genuinely richer than the abelian (Dirichlet) battery closed by QRLEAK (the id-vs-3-cycle fork at (Δ|p)=+1 is pinned by NO abelian character), yet carries zero factor leverage.\n\n**Result: CONFIRMED null (negative for factoring). Barriers 2/5/6/8.**\n\n### 1. The channel is REAL and non-abelian (positive control)\nS₃ cubic x³−x−1 (disc −23), over 3000 primes:\n- types [1,1,1] : [1,2] : [3] = 0.169 : 0.507 : 0.324 (Chebotarev 1/6 : 1/2 : 1/3)\n- **fork at (−23|p)=+1: [1,1,1] = 0.342 vs [3] = 0.658 (Cheb 1/3 : 2/3)** — identity vs 3-cycle, both EVEN (A₃), pinned by no Dirichlet character\n- at (−23|p)=−1: [1,2] forced 1.000 (transposition = odd)\nS₄ quartic x⁴−x−1 (disc −283) confirms: A₄ fork [1,1,1,1]/[2,2]/[1,3] = 0.069/0.247/0.684 (Cheb 1/12 : 3/12 : 8/12).\n\n### 2. Yet factor-orthogonal (null)\nThe mod-N type is the UNTAGGED union of the mod-p and mod-q types (S₃ six patterns AA…CC). All 16 (bit-length, (Δ|N))-grouped F-tests of type→gap and type→trace at chance:\n- S₃: gap F ≤ 1.59 (p ≥ 0.224), trace F ≤ 1.61 (p ≥ 0.218)\n- S₄: gap F ≤ 2.03 (p ≥ 0.064), trace F ≤ 1.89 (p ≥ 0.090)\n\n### 3. Privacy\nH(union) = 2.295 bits of structure, but the p/q labeling is lost on 892/1500 = 59% of semiprimes — symmetric (barrier 2).\n\n### 4. Computationally sealed\nsympy factor_list(f, modulus=N) fails 200/200; the classical reduction \"factoring a polynomial mod composite n is as hard as factoring n\" holds. The exact type is N-determined but not poly-computable (barriers 4/6). All Chebotarev (1922), never a factoring move (barrier 8).\n\n**Verdict:** The non-abelian richness of N is the richness of N's own prime-splitting structure, not a window onto p and q. Round-16 3/3 done.\n\nPaper: ResearchOutput/NewMathematics/65_FrobeniusTypeNull_NonAbelianChannelSealed.md\nNotebook: Part 146. Assessment v176 / 400 experiments. Script: /tmp/exp_frobeniustype.py.",
     "domain_bridges": [],
     "domains": [
@@ -679,7 +660,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-12T16:19:41.780222+00:00",
     "title": "Exp 400 FROBENIUS-TYPE-NULL (round-16 #3): the splitting type of N in a non-abelian extension is symmetric, factor-orthogonal, and computationally sealed"
   },
@@ -2215,6 +2196,25 @@
     "status": "available",
     "timestamp": "2026-08-13T17:19:09.572305+00:00",
     "title": "Deepening: Entanglement-Monotone: Formalization of Logarithmic Negativity Bounds"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 5ddbfca0 (Q=0.820), which proved 92 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ",
+    "domain_bridges": [],
+    "domains": [
+      "MachineLearning"
+    ],
+    "id": "push_5ddbfca0_e5a69303",
+    "lineage_refs": [],
+    "priority_score": 0.9199999999999999,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "5ddbfca0",
+    "status": "available",
+    "timestamp": "2026-08-14T00:06:44.114509+00:00",
+    "title": "Deepening: Round-6 Hypothesis Closures: The Noise-Floor Principle and the Trace-Lemma Front"
   },
   {
     "ambition_level": "extension",
@@ -25425,6 +25425,26 @@
     "status": "available",
     "timestamp": "2026-08-13T23:09:51.249888+00:00",
     "title": "The five Lean files added in `Catalog/Tropical/` make the round-7 verdicts"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# FUTURE DIRECTIONS — after Round-6: the Noise-Floor Principle and the Trace-Lemma Frontier\n\nRound 6 closed the scalar and matrix theory of the noise floor: the minimum\nexcess risk of *every* spectral filter equals `b · tr(A(A+b·1)⁻¹)`\n(`isLeast_filterRisk`, `trace_resolvent_eq_effDim`, `isLeast_filterRisk_matrix`),\nthe minimiser is unique (`filterRisk_eq_noiseFloor_iff`), ridge attains it only\nunder an exact isotropy relation (`ridge_optimal_iff_self_similar`) and misses it\nby at least `4/3` otherwise (`ridge_strict_gap_two_modes`), the floor is squeezed\nby a head/tail count and by a log-determinant capacity\n(`half_minSum_le_noiseFloor`, `noiseFloor_le_capacity`), maximised at the\nisotropic spectrum (`isGreatest_noiseFloor_of_energy`), early stopping\ndominates matched ridge one-sidedly (`gradFlow_le_four_mul_ridge`,\n`ridge_can_be_arbitrarily_worse`), and — for a geometric spectrum — the\nlog-corrected `1/N` scaling law is now derived rather than assumed\n(`geometric_scaling_law`).\n\nThe following conjectures are the natural next cycle.  Each is falsifiable, and\neach is stated so that a single Lean theorem would settle it.\n\n---\n\n## Conjecture D1 (Loewner monotonicity of the noise floor)\n\nFor real positive semidefinite `A ≼ B` (Loewner order) and `b > 0`,\n\n```\ntr (A (A + b•1)⁻¹)  ≤  tr (B (B + b•1)⁻¹).\n```\n\n**The key insight is** that `x ↦ x/(x+b) = 1 - b/(x+b)` is operator monotone, so\nthe statement reduces to the antitonicity of the matrix inverse on the positive\ncone, `A ≼ B ⟹ (B+b·1)⁻¹ ≼ (A+b·1)⁻¹`, followed by taking traces — turning an\nanalytic inequality into a congruence-transformation argument with\n`PosSemidef.sqrt`.\n\n**Why now?** Round 6 already provides the exact resolvent diagonalisation\n(`resolvent_eq`) and the identification of the trace with `effDim`, so the only\nmissing ingredient is the operator-inverse antitonicity, which is a\nself-contained matrix lemma; with D1 the entire Part I–VI theory upgrades from\n\"fixed spectrum\" to \"monotone in the data covariance\", i.e. *more data in the\nLoewner sense never lowers the effective dimension.*\n\n**Falsifier:** a pair `A ≼ B` of `2×2` PSD matrices with\n`tr(A(A+b)⁻¹) > tr(B(B+b)⁻¹)`.\n\n---\n\n## Conjecture D2 (Sharp early-stopping constant)\n\nThe constant `4` in `gradFlow_le_four_mul_ridge` can be replaced by\n\n```\nκ* = sup_{u ≥ 0}  [ e^{-2u} + (1-e^{-u})² ] / [ (1+u)^{-2} + u²(1+u)^{-2} ]  <  2,\n```\n\nand `κ*` is attained at a unique interior `u* ≈ 2.2`; moreover no constant below\n`κ*` works for any signal-to-noise ratio.\n\n**The key insight is** that the ratio of the two per-mode risks depends on the\nspectrum only through `u = μτ`, so the whole comparison collapses to a\none-dimensional extremal problem in `u` — a genuine calculus-of-one-variable\nstatement hidden inside a statistical folklore claim.\n\n**Why now?** The per-mode reduction (`mode_gradFlow_le_four_ridge`) is already\nformal; only the sharp scalar optimisation over `u` remains, and the numerics of\n§6 of `ComputationalEvidence.md` localise the maximiser to `1.68 ≤ κ* < 2`.\n\n**Falsifier:** a mode `u` where the ratio exceeds `2`.\n\n---\n\n## Conjecture D3 (Power-law scaling law)\n\n*(The exponential case is now closed: `geometric_scaling_law` proves\n`b(m+1)/2 ≤ noiseFloor ≤ b(m+1) + b/(1-r)` at the natural cut\n`r^{m+1} ≤ b ≤ r^m`, i.e. `noiseFloor ≍ b·log(1/b)/log(1/r)`.  What remains is\nthe power-law case, where the counting function is polynomial rather than\nlogarithmic.)*\n\nFor the power-law spectrum `aᵢ = (i+1)^{-β}` with `β > 1`, truncated at any\n`n ≥ b^{-1/β}`, there are constants `0 < c_β ≤ C_β` with\n\n```\nc_β · b^{1 - 1/β}  ≤  noiseFloor(a, b)  ≤  C_β · b^{1 - 1/β}.\n```\n\n**The key insight is** that the head/tail sandwich of Part IV converts the\nanalytic scaling law into pure counting: `#{i : aᵢ ≥ b}` plus a tail energy, so\nthe exponent `1 - 1/β` is a statement about the *counting function of the\nspectrum*, not about any optimisation.\n\n**Why now?** `half_minSum_le_noiseFloor` and `minSum_head_tail` reduce the\nproblem to two elementary sums, both of which have closed forms (geometric) or\nstandard integral comparisons (power law); this would give the first fully\nformal derivation of a neural-scaling-law exponent from a variational principle.\n\n**Falsifier:** a `β` for which the two-sided bound fails for arbitrarily small\n`b`.\n\n---\n\n## Conjecture D4 (Capacity is the exact price of adaptivity)\n\nLet `A_S = {a : Σ aᵢ ≤ S}`.  Then the *regret of the best single ridge parameter*\nagainst the Wiener optimum, in the worst case over `A_S`, is governed by the\ncapacity gap:\n\n```\nsup_{a ∈ A_S}  [ inf_λ filterRisk(a,b,ridge λ) - noiseFloor(a,b) ]\n      ≍  b · ( logDet(a*, b) - effDim(a*, b) )   for the maximising a*.\n```\n\n**The key insight is** that both the ridge deficiency and the capacity gap\nmeasure the same thing — the spread of the numbers `aᵢ/(aᵢ+b)` around their mean\n— so an inequality between two symmetric concave functionals should be provable\nby the same tangent-line technique used in `noiseFloor_le_flat`.\n\n**Why now?** Round 6 supplies all three quantities in formal form (`filterRisk`\nfor ridge, `noiseFloor`, `logDet`) plus the tangent-line machinery\n(`tangent_identity`); the conjecture is the first quantitative link between\ninformation-theoretic capacity and the *suboptimality of a hyperparameter\nfamily*, rather than of an estimator.\n\n**Falsifier:** a spectrum with a large capacity gap but ridge-optimal risk (or\nvice versa), e.g. found by optimising over `Fin 3` spectra numerically.\n\n---\n\n## Conjecture D5 (Noise floor of a random covariance: Marchenko–Pastur regime)\n\nFor `A = (1/N) XᵀX` with `X` an `N × n` matrix of i.i.d. standard Gaussians and\n`n/N → γ ∈ (0,1)`,\n\n```\n(1/n) · tr (A (A + b•1)⁻¹)  →  1 - b · m_γ(-b),\n```\n\nwhere `m_γ` is the Stieltjes transform of the Marchenko–Pastur law; consequently\nthe noise floor per parameter converges to `b (1 - b m_γ(-b))`.\n\n**The key insight is** that the trace lemma turns the noise floor into a linear\nspectral statistic of the sample covariance, precisely the class of quantities\ncontrolled by the Stieltjes transform — so a random-matrix limit theorem\ntransfers verbatim to a learning-theoretic constant.\n\n**Why now?** The catalog already contains a Wigner semicircle development\n(`Catalog/MachineLearning/WignerSemicircle/`), and Round 6 supplies the exact\nidentity `tr(A(A+b)⁻¹) = Σ μᵢ/(μᵢ+b)` needed to phrase the limit as convergence\nof an empirical spectral integral; joining the two files is the shortest path to\na formally verified \"double descent\"-style curve.\n\n**Falsifier:** a mismatch between the finite-`n` numerics of\n`tr(A(A+b)⁻¹)/n` and `1 - b m_γ(-b)` beyond `O(n^{-1/2})`.\n\n---\n\n### Three concrete next-cycle sub-conjectures (recursive abduction)\n\n1. **D1a (scalar shadow of D1):** if `a ≤ a'` pointwise *after sorting*, then\n   `effDim a b ≤ effDim a' b` — already true for the unsorted case\n   (`effDim_mono_spectrum`); the sorted version is what Weyl's inequalities\n   deliver from `A ≼ B`.\n2. **D2a:** `(1-e^{-u})(1+u) ≤ 3u/2` for all `u ≥ 0` (would immediately improve\n   the early-stopping constant from `4` to `9/4`).\n3. **D3a:** for antitone spectra the head set is an initial segment:\n   `{i : b ≤ aᵢ} = Iio k` with `k = #head` — the missing combinatorial step in\n   front of every scaling-law computation.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_1246",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "5ddbfca0",
+    "status": "available",
+    "timestamp": "2026-08-14T00:06:36.308443+00:00",
+    "title": "Round 6 closed the scalar and matrix theory of the noise floor: the minimum"
   },
   {
     "ambition_level": "extension",

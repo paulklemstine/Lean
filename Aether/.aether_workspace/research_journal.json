@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "48492a97",
-      "domain": "Combinatorics",
-      "key_insight": "# Future directions\n\nFive falsifiable conjectures distilled from what survived (and what failed) in this cycle.\nThroughout, `F` is a finite field with `q = #F` elements and odd characteristic,\n`χ = qu",
-      "quality_score": 0.71196,
-      "sorry_count": 0,
-      "theorem_count": 92,
-      "timestamp": "2026-08-09T14:09:21",
-      "title": "Formalizing Modular Bounds on Elliptic Curves over Finite Fields"
-    },
-    {
       "cycle_id": "1f345ab3",
       "domain": "Tropical",
       "key_insight": "# Future Directions\n\nDerived from the results proved in `Catalog/Tropical/EML/` during this cycle:\ngeneral odd/even tropical `L¹` median geometry (`TropicalMedianDescent.lean`),\nperturbed and separabl",
@@ -499,19 +489,19 @@
       "theorem_count": 72,
       "timestamp": "2026-08-13T23:09:59",
       "title": "Round-7 Hypothesis Closures: Scoping the Noise-Floor Principle and the Trace-Lemma Frontier"
+    },
+    {
+      "cycle_id": "5ddbfca0",
+      "domain": "MachineLearning",
+      "key_insight": "# FUTURE DIRECTIONS — after Round-6: the Noise-Floor Principle and the Trace-Lemma Frontier\n\nRound 6 closed the scalar and matrix theory of the noise floor: the minimum\nexcess risk of *every* spectral",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 92,
+      "timestamp": "2026-08-14T00:06:43",
+      "title": "Round-6 Hypothesis Closures: The Noise-Floor Principle and the Trace-Lemma Frontier"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "06b881ae",
-      "domain": "Physics",
-      "key_insight": "# Future Directions\n\n## Scope and computational-evidence justification\n\nA separate computational-evidence stage was not used. The results developed here are exact\nsymbolic identities over the real and",
-      "quality_score": 0.78433,
-      "sorry_count": 0,
-      "theorem_count": 19,
-      "timestamp": "2026-08-03T04:05:34",
-      "title": "Inverse Stereographic Neural Field Theory"
-    },
     {
       "cycle_id": "ab554343",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 72,
       "timestamp": "2026-08-13T23:09:59",
       "title": "Round-7 Hypothesis Closures: Scoping the Noise-Floor Principle and the Trace-Lemma Frontier"
+    },
+    {
+      "cycle_id": "5ddbfca0",
+      "domain": "MachineLearning",
+      "key_insight": "# FUTURE DIRECTIONS — after Round-6: the Noise-Floor Principle and the Trace-Lemma Frontier\n\nRound 6 closed the scalar and matrix theory of the noise floor: the minimum\nexcess risk of *every* spectral",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 92,
+      "timestamp": "2026-08-14T00:06:43",
+      "title": "Round-6 Hypothesis Closures: The Noise-Floor Principle and the Trace-Lemma Frontier"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "a46abb10",
-      "domain": "Computation",
-      "name": "catalog",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "a46abb10",
-      "domain": "Computation",
-      "name": "spbMat_trace",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "a46abb10",
-      "domain": "Computation",
-      "name": "spbMat_det",
-      "quality": 0.82
-    },
     {
       "cycle_id": "579ae41a",
       "domain": "Computation",
@@ -2803,9 +2785,27 @@
       "domain": "Tropical",
       "name": "chiP_mul",
       "quality": 0.78
+    },
+    {
+      "cycle_id": "5ddbfca0",
+      "domain": "MachineLearning",
+      "name": "mode_log_sandwich",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "5ddbfca0",
+      "domain": "MachineLearning",
+      "name": "effDim_le_logDet",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "5ddbfca0",
+      "domain": "MachineLearning",
+      "name": "logDet_le_trace_div",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-13T23:09:59",
+  "last_updated": "2026-08-14T00:06:43",
   "open_questions": [
     {
       "context": "+unproved infinite tail as a `sorry`.  The computational certificate; -    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3517,12 +3517,6 @@
     ],
     "MachineLearning": [
       {
-        "cycle_id": "a60d1c49",
-        "quality": 0.78167,
-        "theorems": 8,
-        "title": "ML Attention Mechanism: Formal Properties of Transformers"
-      },
-      {
         "cycle_id": "f8e43caa",
         "quality": 0.77257,
         "theorems": 12,
@@ -3575,6 +3569,12 @@
         "quality": 0.86,
         "theorems": 98,
         "title": "The Non-CRT-Separable Half-Plane Circle Count, Closed"
+      },
+      {
+        "cycle_id": "5ddbfca0",
+        "quality": 0.82,
+        "theorems": 92,
+        "title": "Round-6 Hypothesis Closures: The Noise-Floor Principle and the Trace-Lemma Front"
       }
     ],
     "Novelty": [
