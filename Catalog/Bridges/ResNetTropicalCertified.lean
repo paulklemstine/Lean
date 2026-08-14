@@ -1,5 +1,5 @@
 import Mathlib
-import Bridges.ResNetLipschitz
+import MachineLearning.SelfImproving.ResNetLipschitz
 
 /-! # Certified L∞ Robustness for Residual Networks
 

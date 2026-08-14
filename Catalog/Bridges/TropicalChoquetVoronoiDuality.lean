@@ -2,7 +2,7 @@
 Copyright (c) 2025 Harmonic. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 -/
-import Bridges.TropicalChoquetCore
+import Logic.GraphTheory.Defs
 
 /-!
 # Tropical Choquet–Voronoi Duality via Idempotent Convex Semimodules

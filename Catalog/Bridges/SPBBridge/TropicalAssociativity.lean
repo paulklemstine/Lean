@@ -1,6 +1,5 @@
 import Mathlib
 import Logic.StrangeLoops.Core
-import Pythagorean.TropicalAlgebra.TropicalSPB
 
 /-!
 # Tropical SPB Associativity: Resolution of Open Question
@@ -23,7 +22,7 @@ Associativity follows from an identity on absolute values, provable by case anal
 -/
 
 noncomputable section
-open Real
+open Real SPBResearch
 
 namespace TropicalAssoc
 

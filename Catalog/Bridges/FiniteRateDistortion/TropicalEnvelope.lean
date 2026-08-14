@@ -1,6 +1,5 @@
 import Mathlib
 import Logic.StrangeLoops.Core
-import Bridges.FiniteRateDistortion.Core
 
 /-!
 # Tropical Envelope Structure of Finite Rate-Distortion
@@ -23,7 +22,7 @@ Blahut-Arimoto algorithm does. Under sign change, the supremum of affine
 functions becomes a min-plus combination: a tropical polynomial.
 -/
 
-open Finset BigOperators Real FiniteRateDistortion
+open Finset BigOperators Real
 
 noncomputable section
 
