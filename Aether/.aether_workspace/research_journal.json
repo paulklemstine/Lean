@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "0dcd87ee",
-      "domain": "Combinatorics",
-      "key_insight": "# Future directions\n\nDerived from this cycle's results in\n\n* `Catalog/Combinatorics/PrivateAverageDistortion.lean` — the private\n  rate–distortion function `D_priv(p) = min_c E_p[d(c,X)]`, its invaria",
-      "quality_score": 0.751005,
-      "sorry_count": 0,
-      "theorem_count": 67,
-      "timestamp": "2026-08-09T19:10:06",
-      "title": "The new file `Catalog/Applications/SurveillanceNetworks/PrivacyThreshold.lean`"
-    },
-    {
       "cycle_id": "78f0a7c3",
       "domain": "NumberTheory",
       "key_insight": "# Future directions after cycle XI (density of the metric growth spectrum)\n\nCycle XI is `Catalog/NumberTheory/BerggrenSpectrumDense.lean`, built on cycle X's\n`Catalog/NumberTheory/BerggrenSilverExtrem",
@@ -499,19 +489,19 @@
       "theorem_count": 14,
       "timestamp": "2026-08-14T08:45:51",
       "title": "Exp 392 GCD-MOMENT: the semiprime gcd-moments M_k = sum gcd(x,N)^k are a closed trace-witness family"
+    },
+    {
+      "cycle_id": "13788cf3",
+      "domain": "Tropical",
+      "key_insight": "# FUTURE DIRECTIONS — after PLUSONE-SMOOTH-NULL (round 16 #2)\n\nThe formal results in `Catalog/Tropical/PlusOneWilliamsCore.lean` and\n`Catalog/Tropical/PlusOneSmoothNull.lean` isolate one mechanism beh",
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "theorem_count": 470,
+      "timestamp": "2026-08-14T08:46:05",
+      "title": "Exp 399 PLUSONE-SMOOTH-NULL (round-16 #2): the Williams p+1 weakness is residue-invisible, Lucas-seq"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "f7f562cc",
-      "domain": "Probability",
-      "key_insight": "# Future Directions\n\n1. **Poisson isolated-vertex limit in the connectivity window.** For every fixed `c : ℝ`, if `I_n` is the isolated-vertex count in `G(n, (log n + c)/n)`, then for every fixed `k :",
-      "quality_score": 0.78272,
-      "sorry_count": 0,
-      "theorem_count": 23,
-      "timestamp": "2026-08-03T15:25:39",
-      "title": "Random Graphs: Erdős-Rényi Threshold Phenomena"
-    },
     {
       "cycle_id": "a60d1c49",
       "domain": "MachineLearning",
@@ -2501,27 +2491,19 @@
       "theorem_count": 14,
       "timestamp": "2026-08-14T08:45:51",
       "title": "Exp 392 GCD-MOMENT: the semiprime gcd-moments M_k = sum gcd(x,N)^k are a closed trace-witness family"
+    },
+    {
+      "cycle_id": "13788cf3",
+      "domain": "Tropical",
+      "key_insight": "# FUTURE DIRECTIONS — after PLUSONE-SMOOTH-NULL (round 16 #2)\n\nThe formal results in `Catalog/Tropical/PlusOneWilliamsCore.lean` and\n`Catalog/Tropical/PlusOneSmoothNull.lean` isolate one mechanism beh",
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "theorem_count": 470,
+      "timestamp": "2026-08-14T08:46:05",
+      "title": "Exp 399 PLUSONE-SMOOTH-NULL (round-16 #2): the Williams p+1 weakness is residue-invisible, Lucas-seq"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "0c649bb1",
-      "domain": "Physics",
-      "name": "isTransparent_iff_natAbs",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "0c649bb1",
-      "domain": "Physics",
-      "name": "coprime_of_transparent",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "0c649bb1",
-      "domain": "Physics",
-      "name": "exists_common_factor_of_not_transparent",
-      "quality": 0.85
-    },
     {
       "cycle_id": "db97959f",
       "domain": "Tropical",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "factorisationEuler_nil",
       "quality": 0.9
+    },
+    {
+      "cycle_id": "13788cf3",
+      "domain": "Tropical",
+      "name": "add_lipschitz",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "13788cf3",
+      "domain": "Tropical",
+      "name": "certified_radius_bound",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "13788cf3",
+      "domain": "Tropical",
+      "name": "resnet_certified_lipschitz",
+      "quality": 0.85
     }
   ],
-  "last_updated": "2026-08-14T08:45:51",
+  "last_updated": "2026-08-14T08:46:05",
   "open_questions": [
     {
       "context": "(sieve mechanism) form a coherent, sorry-free slice of the Maynard–Tao framework.; +    `fib_carmichael_large` — which relied on an unproven (`sorry`-backed) tail of; -    sorry+  -- Extract from the ",
@@ -3951,12 +3951,6 @@
     ],
     "Tropical": [
       {
-        "cycle_id": "8fa54bf5",
-        "quality": 0.7597999999999998,
-        "theorems": 20,
-        "title": "Tropical Convexity and Helly Theorem"
-      },
-      {
         "cycle_id": "785c09ab",
         "quality": 0.7857999999999999,
         "theorems": 85,
@@ -4009,6 +4003,12 @@
         "quality": 0.85,
         "theorems": 501,
         "title": "SMOOTH-SELFHINT-DENSITY: the p-1/ECM weakness is residue-invisible — asymmetric/"
+      },
+      {
+        "cycle_id": "13788cf3",
+        "quality": 0.85,
+        "theorems": 470,
+        "title": "Exp 399 PLUSONE-SMOOTH-NULL (round-16 #2): the Williams p+1 weakness is residue-"
       }
     ]
   }
