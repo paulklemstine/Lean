@@ -40,7 +40,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "99e6f198",
+    "consumed_by_exp_id": "281947e9",
     "description": "**Summary.** The conjecture that for E_N: y² = x³ + N with N = pq, the\ndenominators of x(nP) are divisible only by {2, 3, p, q} (the primes dividing\nΔ = -432N²) is mathematically FALSE.\n\n**Counterexample.** N = 55 = 5·11, P = (9,28) ∈ E_55(Q):\n  x(2P) = (9^4 - 8·55·9) / (4(9^3 + 55)) = 2601/3136, and 3136 = 2^6 · 7^2.\nThe prime 7 divides the denominator but 7 ∤ Δ (7 is a prime of good reduction).\n\n**Mechanism.** ℓ | denom(x(nP)) iff nP ≡ O (mod ℓ); good-reduction primes divide\ndenominators whenever the point reduces to torsion — infinitely many such primes.\n\n**Survey (11 semiprimes):** p appears in some denominator 54.5%, q appears 0%,\nonly-{2,3,p,q} holds 0% of the time. The denominator structure is a function of\nN alone (barrier 5) and does not cleanly reveal p, q.\n\n---\n\n*Factoring Lab paper. Status: proven theorem / verified / framework. This is a research deliverable, not a factoring breakthrough claim.*",
     "domain_bridges": [],
     "domains": [
@@ -59,7 +59,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "20c456e7",
+    "consumed_by_exp_id": "da59d1c4",
     "description": "**Summary.** Let F(k) = sum_{a=1}^{N} a^k. Then gcd(F(k), N) reveals a factor\nat k = p-1: for N = pq, gcd(F(p-1), N) = q (provided (q-1) does not divide (p-1)).\n\n**Key results (proven):**\n- **Theorem 1 (power-sum factor reveal):** Mod p the residues cover each nonzero\n  residue q times, so F(k) ≡ q·(sum of k-th powers mod p); by FLT this is -q mod p\n  at k=p-1. Mod q it vanishes when (q-1) ∤ (p-1). Hence gcd = q.\n- **Theorem 2 (robustness):** The power sum aggregates ALL bases a=1..N\n  simultaneously, so it cannot suffer Pollard p-1's \"bad base\" failure.\n- **Theorem 3 (Carmichael periodicity):** g(k) = gcd(F(k), N) has period\n  λ(N) = lcm(p-1, q-1), so λ(N) is readable from the period and the factors\n  follow from p+q = N - λ(N) + 1.\n\n**Complexity.** First hit at k* = min(p-1,q-1) ≈ √N; cost per F(k) is O(N);\ntotal O(N^{3/2}) — worse than trial division. This is the SAME structure Shor's\nalgorithm exploits, made classically hard by the period-finding barrier.\nVerified on all 8 test semiprimes up to N ≈ 10^4.\n\n---\n\n*Factoring Lab paper. Status: proven theorem / verified / framework. This is a research deliverable, not a factoring breakthrough claim.*",
     "domain_bridges": [],
     "domains": [
@@ -363,7 +363,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "078b9d63",
+    "consumed_by_exp_id": "",
     "description": "**Paper 52 (NewMathematics) — Experiment 387, assessment v163. Round-14 #8.**\n\n**Hypothesis (brainstorm #4):** s_x = a^x mod N has GF(2) linear complexity ~ r = ord_N(a), and the floor-quotient sequence t_x = floor(a^x/N) is as incompressible — a dequantization obstruction (the QFT input cannot be classically simulated cheaply).\n\n**Experiment (120 semiprimes, N in [2^10,2^16], odd a=3, r in [260,49506]; Berlekamp–Massey + substring complexity vs random/LFSR/geometric controls; t-stream via exact recurrence verified against direct floor(a^x/N)):**\n\n1. **Full-period lambda_s(r) ~ r/2 (0.498–0.506)** — REFUTES the predicted ~r; the cleaner random-string value.\n2. **Maximal prefix complexity:** lambda_s(n) ~ n/2 for every n (128–1024) — NOT LFSR-compressible (control: LFSR holds lambda = m = 15 constant).\n3. **Floor defect equally incompressible:** lambda_t(n) ~ n/2 — no closed-form shortcut through floor(a^x/N), the exact difference between Shor's QFT peak and a geometric sum.\n4. **Substring complexity c(L) ~ 2^L up to the period**, random-like, both streams.\n5. **Controls calibrate:** random ~n/2, LFSR = m constant, geometric mod prime ~n/2.\n\n**Verdict:** refuted in the precise value (lambda ~ r), confirmed as the operative obstruction: the QFT input and its floor twin are random-level incompressible at every prefix and full period — no low-complexity classical simulation. Arms DEQUANT/QUBIT-TRADE/COND-RANK (barriers 4/8 as sequence complexity).\n\nFull paper: ResearchOutput/NewMathematics/52_SeqState_RandomLevelIncompressible.md",
     "domain_bridges": [],
     "domains": [
@@ -375,7 +375,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-12T05:49:32.575941+00:00",
     "title": "SEQSTATE: modular-exponential sequence is random-level incompressible — a quantitative dequantization obstruction"
   },
@@ -534,7 +534,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "beb0e52b",
+    "consumed_by_exp_id": "",
     "description": "## CYCLIC-CUBIC-FORK (round-19 #1, experiment 406, assessment v182, paper 71)\n\n**The fork-pinning criterion — machine-verified on three Galois groups:** a binary splitting fork of a number field is congruence-pinned by a Dirichlet character **iff it factors through the abelianization G^ab of the Galois closure**.\n\n### (1) Cyclic cubic fields (G = C₃ abelian): fork pinned at **100%** of its entropy\n- cond 7 (x³+x²−2x−1, real subfield of ℚ(ζ₇)): **[1,1,1] ⟺ p mod 7 ∈ {1,6} on 6541/6541 = 100% EXACT**, no [1,2]-type ever (Galois).\n- **I(p mod 7; fork) = 0.9182 = H(1/3) EXACTLY**; pinned at m = 49 too (42 classes × 7k primes — deterministic, not sparsity); **flat at the coprime control m = 5** (I = 0.0000, z = −1.3) — pinning is specifically the conductor's cubic-residue character.\n- cond 9 (x³−3x+1): [1,1,1] ⟺ p mod 9 ∈ {1,8}, I = 0.9181, same structure.\n\n### (2) S₃ closure (x³+x+1, G^ab = C₂): only the sign is pinned\n- **I(p mod 31; fork) = 0.1906 = I(sign; fork) EXACTLY** (residual +0.0000) — the unconditioned [1,1,1]-fork's congruence content is entirely the Jacobi sign (the quadratic-subfield character).\n- The A₃-face fork [1,1,1]-vs-[3] on the QR face: I = 0.0000 (z = −2.37) — **FLAT** (paper 70 re-verified at 2^22).\n\n### (3) S₄ closure (x⁴−x−1, disc −283): the field is S₄; only the sign is pinned; every within-face fork flat\n- Verified S₄ (disc −283 not a square): nroots 4:2:1:0 = 1:6:8:9/24 EXACT. Paper 65's \"A₄ fork\" is the **even-face fork of this S₄ field** (densities 1/12:3/12:8/12 reproduced: 0.0798/0.2501/0.6701).\n- Sign pinned: I(sign; hasroot) = 0.0483 ≈ theory 0.0488. Beyond-sign residual I(p mod 283; hasroot) − I(sign; hasroot) = +0.0131 = **conditional-null mean EXACTLY** (z = +1.00).\n- Every within-face fork (even [1,1,1,1]/[2,2]/[1,3], odd [1,1,2]/[4]): observed = null mean exactly (z = −1.00) — the only congruence structure in the whole S₄ splitting is the sign.\n\n### (4) Explains paper 70's failed positive control\nx³−2 has S₃ closure (L = ℚ(∛2,√−3), G^ab = C₂) ⇒ its fork is **flat by construction**. Flatness is \"fork outside G^ab\", not \"h=1 vs h=3\". The correct positive control is a cyclic cubic (abelian closure) — pins at 100%.\n\n### (5) Semiprime level is factor-useless (barriers 2/5/6/8)\nOR = [p split OR q split] for the cond-7 cyclic cubic: P(OR|N mod 7) = 1/3 on {1,6}, 2/3 on {2,3,4,5}; **I(N mod 7; OR) = 0.0718 ≈ theory 0.0728**; which-factor wall 0.0001. Even a 100%-pinned prime-level fork collapses to a 0.073-bit symmetric residue dial at the N level. Cubic reciprocity (1801/1844), cyclotomic fields, Chebotarev (1922), Artin (1927) — all known methods.\n\n**Verdict:** criterion CONFIRMED on C₃/S₃/S₄. Round-19 #1 done. Barriers 2/5/6/8.\n",
     "domain_bridges": [],
     "domains": [
@@ -546,7 +546,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-12T18:13:27.200171+00:00",
     "title": "CYCLIC-CUBIC-FORK: fork-pinning ⟺ fork in the abelianization of the Galois closure (criterion verified on C3/S3/S4, paper 71)"
   },
@@ -591,25 +591,6 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "## A4-FORK-PINNING (round-21 #1, experiment 410, assessment v186, paper 75)\n\n**The first cubic-pinned NON-abelian fork: A₄'s V₄-order fork pins at H(1/3), exactly like the abelian cyclic cubic.** Papers 65–71 established the pinning-content criterion: a binary splitting fork is congruence-pinned by a Dirichlet character IFF it factors through the abelianization G^ab of the Galois closure. Every pinned fork so far was S₃/S₄ **sign** (G^ab = C₂) or the **abelian** cyclic cubic C₃ (paper 71, I = H(1/3)). This experiment asks the structurally new question: can a **non-abelian** field pin a fork by a **cubic** character? Smallest such group: **A₄** (V₄ = [A₄,A₄] normal, A₄/V₄ = C₃).\n\n### The A₄ field (x⁴ + 8x + 12, disc = 576²)\n\nOver 22,996 unramified primes (2^18 sieve): 4-root 0.0826 (e, 1/12), 1-root 0.6661 (3-cycles, 2/3), 0-root 0.2513 ([2,2], 1/4), **2-root 0.0000** (no transpositions ⟹ G ⊆ A₄). Square disc + no transpositions + order-3 + transitive ⟹ **Gal = A₄**. Note the root-count mapping: a [2,2] double transposition fixes NO root — A₄ signature is [4,1,0]-roots, NOT the naive 2-root guess.\n\n### The cubic pinning (EXACT)\n\nF₀ = [Frob ∈ V₄] = [nr ∈ {4,0}], rate 1/3, factors through G^ab = C₃ ⟹ pinned by the cubic character of K = L^{V₄}. Klein resolvent y³ − 48y − 64, disc 2¹²·3⁴; generator α = r₁r₂+r₃r₄ non-integral (index 64) ⟹ disc(K) = 81 = 9² ⟹ **conductor 9**:\n\n**F₀ ⟺ p ≡ cube mod 9 ⟺ p ∈ {1, 8} mod 9 — P = 1.0000 / 0.0000 on 22,996 primes, I(p mod 9; F₀) = 0.9188 = H(1/3) = 0.9183 EXACT. FIRST CUBIC-PINNED NON-ABELIAN FORK.**\n\nMinimality: mod 3 and coprime mod 5 flat (I = 0).\n\n### Within-V₄ flatness given the coset\n\ne and the three [2,2]'s lie in the same V₄-coset = same G^ab fibre, so no modulus can separate them: P(e | p≡1 mod 9) = 0.2426, P(e | p≡8 mod 9) = 0.2523 (both 1/4); conditional I(p mod 9; e-vs-[2,2] | F₀=1) = 0.0001. The commutator-subgroup flatness, transplanted to non-abelian A₄ where the commutator V₄ is nontrivial.\n\n### The marginal [e] fork: exact leakage law (a third state)\n\nF₁ = [Frob = e] (rate 1/12) is neither pinned nor flat: F₁ ⊂ F₀ leaks the F₀ channel with the exact closed form **I(p mod 9; F₁) = H(1/12) − (1/3)H(1/4) = 0.1434 bits** (measured 0.1419), while I < H(F₁) = H(1/12) = 0.4138 (e and [2,2] share the coset ⟹ never fully pinned). Distinguishes **leakage** from pinned and flat.\n\n### Semiprime level: order-3 channel on a non-abelian field\n\n30k semiprimes: split-count s ~ Bin(2,1/3) measured 0.4710 vs Is(3) = 0.4739; OR 0.0688 vs g(3) = 0.0728; AND 0.1997 vs A(3) = 0.1972; XOR 0.3736 vs X(3) = 0.3789; which-factor wall 0.0001; coprime mod 5 flat. **The paper-74 order-3 split-count law holds on a non-abelian field — it needs only the character, not abelian-ness.**\n\n### Verdict\n\nCONFIRMED. The abelianization criterion now has a non-abelian witness: A₄'s V₄-order fork pins at exactly the same H(1/3) as the abelian cyclic cubic — the content is the character of G^ab, not abelian-ness. Closes the pinning-content table (C₂/C₃/S₃/S₄/A₄ tested; A₅ perfect ⟹ absolutely unpinnable predicted). Still symmetric (barrier 2), a residue dial (barrier 5), sealed behind the CRT (barrier 6), all classical — Eisenstein 1844 cubic reciprocity, Klein resolvent, Takagi 1920 class field theory, Chebotarev 1922 (barrier 8) — factor-useless. Unifies papers 71 and 74. Barriers 2/5/6/8. Round-21 1/2 done.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1178",
-    "lineage_refs": [],
-    "priority_score": 1000.0,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-12T19:27:59.013260+00:00",
-    "title": "A4-FORK-PINNING: first cubic-pinned non-abelian fork (A4 V4-order, I = H(1/3) exact) — paper 75, exp 410, v186"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
     "consumed_by_exp_id": "c94236ec",
     "description": "## SPLIT-COUNT-LAW (round-20 #2, experiment 409, assessment v185, paper 74)\n\n**The complete symmetric fork channel is the split-count, and it beats the OR cap.** Papers 71–73 characterized the OR projection of a character-pinned fork: the semiprime OR collapse I(N mod f; [split(p) OR split(q)]) = g(n), with the global cap g(2) = 0.3113 over every class-rate profile (paper 73). The full question is: what does a fork carry at all? Since χ(p), χ(q) are independent uniform over the n character values, the ordered pair of split-events (E(p), E(q)) is two independent Bernoulli(1/n) draws, and the entire symmetric information of a fork at the semiprime level is carried by the **split-count**\n\n**s = [split(p)] + [split(q)] ∈ {0,1,2} ~ Binomial(2, 1/n)**\n\nwith the exact order-universal channel\n\n**I(N mod f; s) = Is(n) = H(Bin(2,1/n)) − (1/n)H((n−1)/n, 0, 1/n) − ((n−1)/n)H((n−2)/n, 2/n, 0),**\n\nP(s | χ(N)=1) = {(n−1)/n, 0, 1/n} and P(s | χ(N)≠1) = {(n−2)/n, 2/n, 0}. Every Boolean projection (OR/AND/XOR) is a function of s, so Is(n) dominates them all — **and paper 73's OR cap is a PROJECTION artifact: the full channel reaches Is(2) = 1.0000 bits (the p−1 ℓ=3 story's complete content, vs its celebrated 0.313 OR projection) and Is(3) = 0.4739 bits — the largest nondeterministic residue channel in the lab.**\n\n### Machine-verified (8 fields, MC + exhaustive enumeration)\n\nPart A — all four channels match the closed forms on 8 fields (2^22, 30k semiprimes): f=5/f=3 n=2 Is = **1.0000** exact (OR 0.3076/0.3131 = g(2); XOR 1.0000 = deterministic); f=7/f=9/f=21 n=3 Is = 0.4731/0.4718/0.4755 vs 0.4739; f=16 n=4: 0.2894 vs 0.2947; f=11 n=5: 0.2060 vs 0.2027; f=7 n=6: 0.1482 vs 0.1487. s-dist matches Bin(2,1/n) everywhere; which-factor wall 0.0000–0.0003.\n\nPart B — exact tables n=2..12, with the **honest hierarchy correction**: the naive Is ≥ X ≥ A ≥ g FAILS from n=8 (X(8)=0.0480 < A(8)=0.0482). The correct universals: Is ≥ each projection at every order (data processing), A ≥ g at every order (AND beats OR for all n), X ≥ A ⟺ n ≤ 7.\n\nPart C — EXACT enumeration of all 0/1 profiles on nine moduli (incl. non-cyclic C₂×C₂/C₂×C₄/C₂×C₆): **max Is = max I_XOR = 1.0000 bits on every modulus, achieved EXCLUSIVELY by the quadratic-character kernels** — the full symmetric fork channel is capped at 1.0 bit over every profile, the 0.3113 OR cap being its OR projection's cap.\n\nPart D — controls clean (coprime flat 0.0001–0.0003; m=f² invariant at Is(n)). Unification f=3 n=2: I(N mod 3; s) = 1.0000 with P(s|N≡1) = [1/2,0,1/2], P(s|N≡2) = [0,1,0] EXACT — **paper 54's p−1 ℓ=3 channel is a 1-bit split-count channel whose 0.313 OR is one projection.**\n\n### Verdict\n\nCONFIRMED exact law. The split-count is the complete N-level information content of any character-pinned fork: Is(n) ≥ every Boolean face, Is(2) = 1.0, Is(3) = 0.4739 (largest nondeterministic residue channel in the lab), capped at 1.0 bit at the quadratic characters. Still symmetric (barrier 2), a residue dial (barrier 5), sealed behind the CRT (barrier 6), all classical reciprocity (barrier 8) — factor-useless. Unifies papers 54, 71–73. Barriers 2/5/6/8. Round-20 2/2 done.\n",
     "domain_bridges": [],
@@ -648,7 +629,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "70d03dec",
+    "consumed_by_exp_id": "1b55f202",
     "description": "## CYCLIC-TYPE-CHANNEL (round-22 #2, experiment 413, assessment v189, paper 78)\n\n**The complete splitting-type channel of a cyclic field exceeds the 1-bit binary-fork cap. Papers 72–74 capped every BINARY symmetric semiprime fork at 1.0 bit; the cyclic splitting type is multi-state, and its type-pair channel carries 1.2500 (C₄) / 1.4739 (C₆) bits — strictly above the cap.**\n\n### The type channel\n\nFor Q(ζ_f), f prime, Gal = (Z/f)^× = C_n (n = f−1), the Frobenius order T(p) = ord_f(p) (the residue degree) is the complete splitting type — a deterministic function of p mod f, so **I(p mod f; T) = H(T) EXACT**: C₄ = Q(ζ₅) → 3 states {1,2,4} rates {1/4,1/4,1/2}, H = 1.5 bits (measured 1.4989); C₆ = Q(ζ₇) → 4 states {1,2,3,6} rates {1/6,1/6,1/3,1/3}, H = 1.9183.\n\n- **[T=1] splits-completely = H(1/n)**: C₄ 0.8098 = H(1/4) = 0.8113 EXACT — the **FIRST prime-level QUARTIC-character pinning**; C₆ 0.6497 = H(1/6). Every type face equally pinned ([T=2] 0.8110 = H(1/4), [T=4] 1.0000 = H(1/2)).\n- **Thickening zero**: I(p mod f²; T) = I(p mod f; T) EXACT (T depends only on p mod f). Coprime controls flat.\n- **Root-count readout is LOSSY**: nr collapses [2,2]/[4] (and [2,2,2]/[3,3]/[6]) to nr=0 — the nr-channel is BINARY (C₄ 0.8109, C₆ 0.6498) strictly below H(T). **The type, not the root count, is the complete object.**\n\n### The semiprime law — exact, and above the 1-bit cap\n\nThe unordered type-pair {T(p),T(q)} obeys the exact law **I_pair = H(Π) − (1/φ(f))Σ_c H(Π_c)**, Π_c the pair law under N ≡ c mod f, computable by exact enumeration over the unit group. Machine-verified (30k semiprimes):\n\n| field | H(T) | H(pair) | H(pair\\|N) | I_pair (exact) | I_pair (MC) |\n|---|---|---|---|---|---|\n| C₂ Q(√5) | 1.0000 | 1.5000 | 0.5000 | **1.0000** | 1.0000 |\n| C₄ Q(ζ₅) | 1.5000 | 2.3750 | 1.1250 | **1.2500** | 1.2452 |\n| C₆ Q(ζ₇) | 1.9183 | 3.1144 | 1.6405 | **1.4739** | 1.4711 |\n\nC₂ reproduces the paper-74 cap exactly (the quadratic type pair IS the split-count); **C₄ and C₆ both EXCEED 1.0 bit**. Which-factor wall 0.0001 (symmetric, factor-useless); coprime controls flat. The s-projection recovers Is(n) EXACTLY (C₄ 0.2896 vs Is(4)=0.2947; C₆ 0.1445 vs Is(6)=0.1487) — the split-count is ONE face of the richer type channel.\n\n### Growth law: no 1-bit cap\n\n| n | field | #states | H(T) | I_pair | above 1 bit? |\n|---|---|---|---|---|---|\n| 2 | Q(√5) | 2 | 1.0000 | 1.0000 | at cap |\n| 4 | Q(ζ₅) | 3 | 1.5000 | 1.2500 | **YES** |\n| 6 | Q(ζ₇) | 4 | 1.9183 | 1.4739 | **YES** |\n| 10 | Q(ζ₁₁) | 4 | 1.7219 | 1.2027 | **YES** |\n| 12 | Q(ζ₁₃) | 6 | 2.4183 | 1.7239 | **YES** |\n| 16 | Q(ζ₁₇) | 5 | 1.8750 | 1.3281 | **YES** |\n\nEvery n ≥ 4 exceeds 1.0 bit; the value is governed by the **divisor structure of the cyclic order** (n=12, six states, richest at 1.7239).\n\n### Verdict\n\nCONFIRMED. New exact objects: the type-pair law I_pair = H(Π) − (1/φ)ΣH(Π_c) (first symmetric channels above the binary-fork cap), the C₄ prime-level quartic pinning, root-count lossiness (type multi-state, nr binary), and Is(n) as the s-projection of the type channel. Factor-useless: symmetric (which-factor wall 0.0001, barrier 2), a pure p-mod-f residue dial (barrier 5), N-computable only behind the CRT split (barrier 6), cyclotomic fields + Dirichlet characters + CRT + Chebotarev 1922 (barrier 8). Unifies papers 54/71/72/74. Barriers 2/5/6/8.\n\n*Script:* /tmp/exp_typechan.py.\n",
     "domain_bridges": [],
     "domains": [
@@ -2158,6 +2139,25 @@
     "status": "available",
     "timestamp": "2026-08-13T13:55:47.738633+00:00",
     "title": "Deepening: INTERVAL-HINT: the trace-set filter is exact (2^-omega pruning) but does not amp"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 50be6807 (Q=0.820), which proved 171 theorems in Algebra. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## A4-FORK-PINNING (round-21 #1, experiment 410, assessment v186, paper 75)\n\n**The first cubic-pinned NON-abelian fork: A₄'s V₄-order fork pins at H(1/3), exactly like the abelian cyclic cubic.** Papers 65–71 established the pinning-content criterion: a binary splitting fork is congruence-pinned by ",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "push_50be6807_ce9badd8",
+    "lineage_refs": [],
+    "priority_score": 0.9199999999999999,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "50be6807",
+    "status": "available",
+    "timestamp": "2026-08-14T20:53:04.045031+00:00",
+    "title": "Deepening: A4-FORK-PINNING: first cubic-pinned non-abelian fork (A4 V4-order, I = H(1/3) ex"
   },
   {
     "ambition_level": "extension",
@@ -25919,6 +25919,26 @@
     "status": "available",
     "timestamp": "2026-08-14T20:05:22.645766+00:00",
     "title": "The verified core of this cycle (all in `Catalog/Novelty/NoPinning*.lean`, 0 sor"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future directions — bold, testable conjectures from the A₄ fork-pinning cycle\n\nThe formal cycle established: (i) the pinned/flat/leaking **trichotomy** for an\narbitrary finite dial (`info_trichotomy`), (ii) the **exact leakage law**\n`I = H(pq) − p·H(q)` and its `k`-factor version, (iii) the group side\n`V₄ = [A₄,A₄]`, `|A₄^ab| = 3`, within-`V₄` flatness, (iv) the arithmetic side\n(Klein resolvent `y³−48y−64 = 64((y/4)³−3(y/4)−1)`, conductor `9`, cubes mod 9),\n(v) the abelianisation criterion `FactorsThroughAb ↔ commutator-invariance`, with\n`A₅` absolutely unpinnable.  The following are the next falsifiable steps.\n\n## C1. The conductor–order dictionary: `I = H(1/m)` iff the fork is a fibre of an order-`m` quotient\n\n**Conjecture.** Let `L/ℚ` be Galois with group `G`, let `N ⊴ G` with `G/N` cyclic\nof order `m`, and let `F = [Frob ∈ N]`.  Then `F` is pinned by the character of\nconductor `f(G/N)` and `I(p mod f ; F) = H(1/m)` exactly; conversely, if a fork\nof rate `1/m` attains `I = H(1/m)` for some modulus, its defining set is a union\nof fibres of a cyclic quotient of order `m`.\n\n*The key insight is* that the entropy value `H(1/m)` is not a coincidence of the\ncubic case: it is the entropy of the uniform distribution on the fibres of\n`G ↠ G^ab ↠ C_m`, and the trichotomy theorem already forces saturation to be\nequivalent to determinism, so only the *rate* survives as an invariant.\n*Why now?* Both halves are now formal objects: `info_eq_top_iff` supplies the\nconverse direction abstractly, and `factorsThroughAb_iff` supplies the group\nside; only the Artin/Chebotarev bridge remains to be axiomatised or imported.\n\n## C2. Universal leakage spectrum of a Galois group\n\n**Conjecture.** For a fixed `G`, the set of achievable pairs\n`(rate, information)` over *all* conjugation-stable forks and *all* moduli is the\nfinite set `{(|S|/|G|, H(pq) − p·H(q)) : S a union of G^ab-fibres thinned by a\nG-orbit}` — in particular it is contained in the curve family\n`I = H(pq) − p·H(q)` with `p ∈ (1/[G:G'])·ℤ` and `q ∈ (1/|G'|)·ℤ`.\n\n*The key insight is* that every fork factors as (pinned part) ∘ (flat thinning),\nbecause the commutator subgroup acts transitively on the ambiguity: the leakage\nlaw is not one example but a normal form.\n*Why now?* `info_leak`, `info_leak_strict` and `abelian_hom_eq_one_on_V4` give\nthe two extremes; the missing step is a decomposition lemma \"every fork is a\n`q`-thinning of its `G^ab`-saturation\", which is a finite-group statement.\n\n## C3. `A₅` gives an unconditional information wall\n\n**Conjecture.** For the splitting field of a quintic with `Gal = A₅` and *any*\nmodulus `m`, *every* splitting fork satisfies `I(p mod m ; F) = 0`, i.e. the\nfactorisation type of `p` is statistically independent of every congruence class.\n\n*The key insight is* that `A₅` is perfect, so the only abelian data attached to\n`Frob` is trivial — already proved here as `A5_absolutely_unpinnable`; what\nremains is to convert \"no abelian character sees it\" into \"zero mutual\ninformation\", i.e. equidistribution of Frobenius within each ray class.\n*Why now?* `A5_fork_factors_iff_constant` shows the group side is closed; the\nanalytic side is exactly Chebotarev for the compositum with `ℚ(ζ_m)`.\n\n## C4. Collapse rate of the multiplicative channel\n\n**Conjecture.** For `N` a product of `k` unramified primes of the `A₄`-field,\nthe mutual information between `N mod 9` and the full split-vector satisfies\n`I_k = Θ(k·3^{-k})` for the \"all split\" fork and `I_k → H(Bin-class)` for the\ncount fork; in particular the *per-factor* information tends to `0`\ngeometrically, quantifying \"factor-useless\".\n\n*The key insight is* that thinning by `3^{-(k-1)}` sends the leakage law into the\nregime `H(pq) − pH(q) ≈ pq·log₂(1/p)`, which is linear in `q`; the proved limit\n`info_all_split_tendsto_zero` is the qualitative shadow of that asymptotic.\n*Why now?* The exact `k`-dependent closed form `H(3^{-(k+1)}) − (1/3)H(3^{-k})`\nis already formal, so the conjecture is now a pure asymptotic analysis exercise\nabout `H` near `0`.\n\n## C5. Minimal conductor is detected by information alone\n\n**Conjecture.** For a pinned fork with cyclic quotient of order `m` and conductor\n`f`, the function `m' ↦ I(p mod m' ; F)` is `0` for every `m'` with `f ∤ m'`, and\nequals `H(1/m)` for every multiple of `f`: the information profile is a\n*characteristic function of the divisibility relation*, so the conductor is\nrecoverable from entropy measurements without any algebraic input.\n\n*The key insight is* that a non-multiple of the conductor intersects every fibre\nof the ray-class group in equal proportion, which is exactly the \"flat\" branch of\nthe trichotomy — the mod-3 blindness proved in `mod_three_flat` is the smallest\ninstance.\n*Why now?* `info_of_flat` and `info_of_pinned` are proved, and `mod_three_flat`\nshows the CRT mechanism at the conductor's own prime; the general statement is a\nfinite computation in `(ℤ/lcm)ˣ`.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "NumberTheory"
+    ],
+    "id": "fd_1270",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "50be6807",
+    "status": "available",
+    "timestamp": "2026-08-14T20:52:56.373237+00:00",
+    "title": "The formal cycle established: (i) the pinned/flat/leaking **trichotomy** for an"
   },
   {
     "ambition_level": "extension",
