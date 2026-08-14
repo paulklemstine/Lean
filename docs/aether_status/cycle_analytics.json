@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-14T12:04:22.717289+00:00",
+  "last_updated": "2026-08-14T13:50:13.542856+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -54986,6 +54986,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-08-14T12:04:22.531516+00:00",
       "title": "The Extrinsic Class-Group Representation Vector is a Residue Dial, Closed"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 2,
+      "domain": "Bridges",
+      "duration_seconds": 6338.619483947754,
+      "end_time": 1786715383.6853292,
+      "files_integrated": 4,
+      "job_id": "53eb02be",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.86,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.562,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.86,
+        "novelty": 0.86,
+        "proof_depth": 0.86,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.86,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1786709045.0658453,
+      "strategy_count": 0,
+      "theorem_count": 85,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 75,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-08-14T13:50:13.358879+00:00",
+      "title": "Experiment 397: SEQSMOOTH-NULL \u2014 mod-exp sequence stats are smoothness-blind (AUC 0.500); p-1 weakne"
     }
   ]
 }
