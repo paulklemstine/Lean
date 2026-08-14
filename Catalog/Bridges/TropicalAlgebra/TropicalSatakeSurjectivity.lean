@@ -34,7 +34,7 @@ turning the tropical Satake transform into a concrete equivalence between
 the tropical Hecke algebra and an explicitly described cone of support functions.
 -/
 import Mathlib
-import Logic.GraphTheory.Defs
+import Bridges.TropicalAlgebra.GL3TropicalSatakeCore
 
 open GL3TropicalSatake
 

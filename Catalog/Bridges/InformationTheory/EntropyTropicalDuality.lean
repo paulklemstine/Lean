@@ -9,6 +9,11 @@ Declarations: 30
 
 noncomputable section
 
+open Real
+
+/-- LogSumExp of two arguments: `lse2 x y = log (exp x + exp y)`. -/
+def lse2 (x y : ℝ) : ℝ := Real.log (Real.exp x + Real.exp y)
+
 /-- LogSumExp is associative. -/
 theorem lse2_assoc (x y z : ℝ) :
     lse2 (lse2 x y) z = lse2 x (lse2 y z) := by

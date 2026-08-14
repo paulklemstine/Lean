@@ -49,6 +49,7 @@ theorem padic_val_gcd {p : ℕ} (hp : Nat.Prime p) {a b : ℕ}
   · assumption;
   · assumption
 
+theorem padic_val_lcm {p : ℕ} (hp : Nat.Prime p) {a b : ℕ}
     (ha : 0 < a) (hb : 0 < b) :
     padicValNat p (Nat.lcm a b) = max (padicValNat p a) (padicValNat p b) := by
   have := @Nat.factorization_lcm a b;

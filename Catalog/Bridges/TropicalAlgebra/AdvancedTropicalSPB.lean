@@ -1,6 +1,7 @@
 import Mathlib
 import Logic.StrangeLoops.Core
-import Pythagorean.Pythagorean.TropicalAssociativity_1
+import Bridges.SPBBridge.TropicalSPB
+import Bridges.SPBBridge.TropicalAssociativity
 import Pythagorean.TropicalAlgebra.TropicalSPB
 
 /-! # CatalogBuild.Bridges.AdvancedTropicalSPB

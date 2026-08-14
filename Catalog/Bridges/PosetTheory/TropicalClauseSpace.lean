@@ -32,6 +32,7 @@ coincides with the maximal clause load under natural separation and saturation h
 -/
 import Mathlib
 import Logic.GraphTheory.Defs
+import Logic.SAT.ClauseConfig
 
 open Finset
 
