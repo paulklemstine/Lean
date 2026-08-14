@@ -1,18 +1,3 @@
-/-
-# Hilbert's sixth problem (effect algebras): superseded extract
-
-This file is an *extract* of the development `Shared.Hilbert6AxiomatizationofPhysics.SalvagedBest`:
-it repeats a handful of its theorems but not the definitions, structures and
-imports they depend on, so it could never elaborate on its own (every statement
-referred to identifiers that the file does not declare).
-
-The complete, compiling development is `Shared.Hilbert6AxiomatizationofPhysics.SalvagedBest`,
-which is imported below; the original extract is preserved verbatim in the
-comment that follows, rather than deleted.
--/
-import Shared.Hilbert6AxiomatizationofPhysics.SalvagedBest
-
-/-
 theorem cancel_left (a b c d : E)
     (h1 : a ⊕ₑ b = some d) (h2 : a ⊕ₑ c = some d) : b = c := by
   obtain ⟨ f, hf1, hf2 ⟩ := ( ‹EffectAlgebra E›.oplus_assoc a b ( ‹EffectAlgebra E›.ortho d ) d ( ‹EffectAlgebra E›.eone ) ) h1 ( ‹EffectAlgebra E›.oplus_ortho d );
@@ -32,7 +17,7 @@ theorem cancel_left (a b c d : E)
 
 -- Example: cancellation holds trivially for Bool (see boolEffectAlgebra below)
 
-/ -! ## Theorem 2: Orthocomplement is an involution
+/-! ## Theorem 2: Orthocomplement is an involution
 
 **PEGB**:
 - **P**roof: From a ⊕ ortho(a) = eone by commutativity ortho(a) ⊕ a = eone,
@@ -41,22 +26,22 @@ theorem cancel_left (a b c d : E)
 - **G**eneralization: In any algebra with unique complements, the complement
   operation is an involution.
 - **B**oundary: Fails without uniqueness — multiple complements break involutivity.
-- /
+-/
 
-/ -
+/-
 The orthocomplement is an involution: ortho(ortho(a)) = a.
-- /
+-/
 
 theorem ortho_involutive (a : E) : ortho (ortho a) = a := by
   rename_i h;
   cases h;
   grind
 
-/ -! ## Theorem 3: ortho(eone) = ezero and ortho(ezero) = eone - /
+/-! ## Theorem 3: ortho(eone) = ezero and ortho(ezero) = eone -/
 
-/ -
+/-
 ortho(eone) = ezero.
-- /
+-/
 
 theorem ele_trans (a b c : E)
     (h1 : ele a b) (h2 : ele b c) : ele a c := by
@@ -65,7 +50,7 @@ theorem ele_trans (a b c : E)
   obtain ⟨ f, hf₁, hf₂ ⟩ := (‹EffectAlgebra E›.oplus_assoc a c₁ c₂ b c hc₁ hc₂)
   use f
 
-/ -! ## Theorem 5: Orthocomplement is order-reversing
+/-! ## Theorem 5: Orthocomplement is order-reversing
 
 **PEGB**:
 - **P**roof: If a ≤ b, i.e. a ⊕ c = b for some c, then ortho(b) ⊕ c is
@@ -75,11 +60,11 @@ theorem ele_trans (a b c : E)
   (antitone involution) on any effect algebra.
 - **B**oundary: Requires the full effect algebra structure; fails for
   partial commutative monoids without orthocomplement.
-- /
+-/
 
-/ -
+/-
 Orthocomplement reverses the natural order.
-- /
+-/
 
 theorem ortho_antitone (a b : E) (h : ele a b) :
     ele (ortho b) (ortho a) := by
@@ -89,16 +74,16 @@ theorem ortho_antitone (a b : E) (h : ele a b) :
     exact h.oplus_ortho b );
   exact ⟨ c, by rw [ h.oplus_comm, hf.1, h.ortho_unique _ _ hf.2 ] ⟩
 
-/ -! ## Theorem 6: Two-element Boolean effect algebra (Bool)
+/-! ## Theorem 6: Two-element Boolean effect algebra (Bool)
 
 **PEGB**:
 - **P**roof: Direct construction with ⊕ = XOR (undefined on true+true).
 - **E**xample: false ⊕ true = some true, true ⊕ true = none.
 - **G**eneralization: Every Boolean algebra yields an effect algebra.
 - **B**oundary: Non-distributive orthomodular lattices give non-Boolean EAs.
-- /
+-/
 
-/ -- Partial addition on Bool: XOR with partiality. - /
+/-- Partial addition on Bool: XOR with partiality. -/
 def boolOplus : Bool → Bool → Option Bool
   | false, b => some b
   | b, false => some b
@@ -124,11 +109,11 @@ instance boolEffectAlgebra : EffectAlgebra Bool where
 example : boolOplus false true = some true := rfl
 example : boolOplus true true = none := rfl
 
-/ -! ## Theorem 7: Unit interval effect algebra [0,1] ⊂ ℝ
+/-! ## Theorem 7: Unit interval effect algebra [0,1] ⊂ ℝ
 
-The standard quantum effect algebra. - /
+The standard quantum effect algebra. -/
 
-/ -- Elements of the unit interval [0, 1]. - /
+/-- Elements of the unit interval [0, 1]. -/
 structure UnitInterval where
   val : ℝ
   ge_zero : 0 ≤ val
@@ -149,7 +134,7 @@ theorem EffectHom.map_ortho {E F : Type*} [EffectAlgebra E] [EffectAlgebra F]
 
 end EffectAlgebra
 
-/ -!
+/-!
 ## FUTURE DIRECTIONS
 
 1. **Orthomodular lattice embedding**: Every orthomodular lattice gives rise
@@ -171,6 +156,5 @@ end EffectAlgebra
 5. **Quantum-to-classical collapse**: Prove every commutative effect algebra
    is isomorphic to a Boolean effect algebra. Conjecture: Every finite
    commutative effect algebra is isomorphic to a power set EA 2^n.
-- /
-end UnitInterval
 -/
+end UnitInterval

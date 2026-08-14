@@ -1,28 +1,11 @@
-import Mathlib
-
 /-! # CatalogBuild.Shared.Sublevel_full
 
 Auto-generated from theorem catalog database.
 Domain: Speculative
 Declarations: 5
-
-Repaired: the statistic `E` used by `sublevel` is defined here.
 -/
 
-/-- The remainder statistic `E N x = N % x` on which the sublevel sets are
-based (it was used but never declared in the generated file). -/
-def E (N x : ℕ) : ℕ := N % x
-
-/-- The sublevel set of the remainder statistic. -/
-def sublevel (N t : ℕ) : Finset ℕ :=
-  (Finset.Icc 1 N).filter (fun x => E N x ≤ t)
-
-/-- Sublevel sets are monotone in the threshold. -/
-theorem sublevel_mono (N s t : ℕ) (hst : s ≤ t) :
-    sublevel N s ⊆ sublevel N t := by
-  intro x hx
-  simp only [sublevel, Finset.mem_filter] at hx ⊢
-  exact ⟨hx.1, le_trans hx.2 hst⟩
+import Mathlib
 
 /-- The sublevel set at threshold N-1 is all of [1, N]. -/
 theorem sublevel_full (N : ℕ) (hN : 0 < N) :
@@ -37,6 +20,19 @@ theorem sublevel_full (N : ℕ) (hN : 0 < N) :
     have : x ≤ N := hx.2
     omega
 
+
+/-- Sublevel sets are monotone in the threshold. -/
+theorem sublevel_mono (N s t : ℕ) (hst : s ≤ t) :
+    sublevel N s ⊆ sublevel N t := by
+  intro x hx
+  simp only [sublevel, Finset.mem_filter] at hx ⊢
+  exact ⟨hx.1, le_trans hx.2 hst⟩
+
+
+def sublevel (N t : ℕ) : Finset ℕ :=
+  (Finset.Icc 1 N).filter (fun x => E N x ≤ t)
+
+
 /-- Card of sublevel at 0 equals number of divisors. -/
 theorem sublevel_zero_card_eq_tau (N : ℕ) (hN : 0 < N) :
     (sublevel N 0).card = N.divisors.card := by
@@ -48,8 +44,9 @@ theorem sublevel_zero_card_eq_tau (N : ℕ) (hN : 0 < N) :
   · rintro ⟨hdvd, _⟩
     exact ⟨⟨Nat.pos_of_dvd_of_pos hdvd hN, Nat.le_of_dvd hN hdvd⟩, Nat.mod_eq_zero_of_dvd hdvd⟩
 
+
 /-- The sublevel set at threshold 0 is exactly the set of divisors of N in [1,N]. -/
-theorem sublevel_zero_is_divisors (N : ℕ) :
+theorem sublevel_zero_is_divisors (N : ℕ) (hN : 0 < N) :
     sublevel N 0 = (Finset.Icc 1 N).filter (fun x => x ∣ N) := by
   ext x
   simp only [sublevel, Finset.mem_filter, Finset.mem_Icc, E, Nat.le_zero]

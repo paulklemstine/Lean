@@ -5,14 +5,9 @@ import Mathlib
 Auto-generated from theorem catalog database.
 Domain: Shared
 Declarations: 8
-
-Repaired: `open Matrix` added so that `det_fin_two`, `mul_apply` and `det_mul`
-resolve.
 -/
 
 noncomputable section
-
-open Matrix
 
 /-- The SPB matrix: M(a) = [[1, a], [-a, 1]]. -/
 def spbMatrix (a : ℝ) : Matrix (Fin 2) (Fin 2) ℝ :=
@@ -26,11 +21,15 @@ theorem spbMatrix_det (a : ℝ) : (spbMatrix a).det = 1 + a ^ 2 := by
 theorem spbMatrix_det_pos (a : ℝ) : (spbMatrix a).det > 0 := by
   rw [spbMatrix_det]; positivity
 
+/-- [Section: # CatalogBuild.Shared.SpbMatrix
+Auto-generated from theorem catalog database.
+Domain: EML
+Declarations: 8] -/
 theorem spbMatrix_mul_eq_scaled (a b : ℝ) (h : 1 - a * b ≠ 0) :
     spbMatrix a * spbMatrix b = (1 - a * b) • spbMatrix ((a + b) / (1 - a * b)) := by
-  unfold spbMatrix
-  ext i j; fin_cases i <;> fin_cases j <;> norm_num [div_eq_inv_mul, Matrix.mul_apply] <;> ring_nf
-  · grind
+  unfold spbMatrix;
+  ext i j ; fin_cases i <;> fin_cases j <;> norm_num [ div_eq_inv_mul, Matrix.mul_apply ] <;> ring_nf;
+  · grind;
   · grind +revert
 
 /-- The SPB matrix product, entry by entry:

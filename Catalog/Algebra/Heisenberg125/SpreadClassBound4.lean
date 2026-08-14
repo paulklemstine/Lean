@@ -1,22 +1,4 @@
 /-
-# `d(H_125) ≤ 20` — DISABLED (missing dependency)
-
-This module was written against `Algebra.Heisenberg125.SpreadExclusion4`, a
-module that does not exist anywhere in this repository: the four-class spread
-exclusion `Heis.spread_exclusion4` it applies was never committed, and the
-three-class exclusion `Heis.spread_exclusion` of
-`Algebra.Heisenberg125.SpreadExclusion` is strictly weaker (for `p = 5` and a
-class of size `4` its numerical side condition
-`(4 - n₂) + (4 - n₃) + 1 < min 5 (n₁ - 4 + 1)` is unsatisfiable), so the file
-cannot be repaired by re-routing the import.
-
-Consequently the file could never compile.  Its content is preserved verbatim in
-the comment below rather than deleted; reconstructing `spread_exclusion4`
-belongs to the Heisenberg thread, not to the QUBIT-TRADE thread.
--/
-
-/-
-/ -
 # `d(H_125) ≤ 20`
 
 The four-class spread exclusion `Heis.spread_exclusion4` adds five new
@@ -32,7 +14,7 @@ least `k` entries of a product-one-free sequence over `Heis 5`:
 Together with the constraints of `Algebra.Heisenberg125.SpreadClassBound` the
 integer program now has optimum `20`, attained for instance by six classes of
 three entries each together with two central entries.  Hence `d(H_125) ≤ 20`.
-- /
+-/
 import Algebra.Heisenberg125.SpreadClassBound
 import Algebra.Heisenberg125.SpreadExclusion4
 
@@ -50,8 +32,8 @@ private lemma hodd5' : Odd 5 := by decide
 
 include hfree
 
-/ -- Level form of the four-class spread exclusion `(4; 3,3,3)`: a class with
-`4` entries forbids three further classes with `3` entries. - /
+/-- Level form of the four-class spread exclusion `(4; 3,3,3)`: a class with
+`4` entries forbids three further classes with `3` entries. -/
 theorem level4_four_three (h4 : 1 ≤ levelCard L 4) : levelCard L 3 ≤ 3 := by
   by_contra hcon
   push_neg at hcon
@@ -74,7 +56,7 @@ theorem level4_four_three (h4 : 1 ≤ levelCard L 4) : levelCard L 3 ≤ 3 := by
   exact spread_exclusion4 hodd5' hfree (Ne.symm hd2ne) (Ne.symm hd3ne1) (Ne.symm hd4ne1)
     (Ne.symm hd3ne2) (Ne.symm hd4ne2) (Ne.symm hd4ne3) (by omega) (by omega)
 
-/ -- Level form of the four-class spread exclusion `(4; 4,3,2)`. - /
+/-- Level form of the four-class spread exclusion `(4; 4,3,2)`. -/
 theorem level4_four_four_three_two (h4 : 2 ≤ levelCard L 4) (h3 : 3 ≤ levelCard L 3) :
     levelCard L 2 ≤ 3 := by
   by_contra hcon
@@ -98,7 +80,7 @@ theorem level4_four_four_three_two (h4 : 2 ≤ levelCard L 4) (h3 : 3 ≤ levelC
   exact spread_exclusion4 hodd5' hfree (Ne.symm hd2ne) (Ne.symm hd3ne1) (Ne.symm hd4ne1)
     (Ne.symm hd3ne2) (Ne.symm hd4ne2) (Ne.symm hd4ne3) (by omega) (by omega)
 
-/ -- Level form of the four-class spread exclusion `(5; 3,3,2)`. - /
+/-- Level form of the four-class spread exclusion `(5; 3,3,2)`. -/
 theorem level4_five_three_three_two (h5 : 1 ≤ levelCard L 5) (h3 : 3 ≤ levelCard L 3) :
     levelCard L 2 ≤ 3 := by
   by_contra hcon
@@ -122,7 +104,7 @@ theorem level4_five_three_three_two (h5 : 1 ≤ levelCard L 5) (h3 : 3 ≤ level
   exact spread_exclusion4 hodd5' hfree (Ne.symm hd2ne) (Ne.symm hd3ne1) (Ne.symm hd4ne1)
     (Ne.symm hd3ne2) (Ne.symm hd4ne2) (Ne.symm hd4ne3) (by omega) (by omega)
 
-/ -- Level form of the four-class spread exclusion `(5; 4,2,2)`. - /
+/-- Level form of the four-class spread exclusion `(5; 4,2,2)`. -/
 theorem level4_five_four_two_two (h5 : 1 ≤ levelCard L 5) (h4 : 2 ≤ levelCard L 4) :
     levelCard L 2 ≤ 3 := by
   by_contra hcon
@@ -146,7 +128,7 @@ theorem level4_five_four_two_two (h5 : 1 ≤ levelCard L 5) (h4 : 2 ≤ levelCar
   exact spread_exclusion4 hodd5' hfree (Ne.symm hd2ne) (Ne.symm hd3ne1) (Ne.symm hd4ne1)
     (Ne.symm hd3ne2) (Ne.symm hd4ne2) (Ne.symm hd4ne3) (by omega) (by omega)
 
-/ -- Level form of the four-class spread exclusion `(5; 4,3,1)`. - /
+/-- Level form of the four-class spread exclusion `(5; 4,3,1)`. -/
 theorem level4_five_four_three_one (h5 : 1 ≤ levelCard L 5) (h4 : 2 ≤ levelCard L 4)
     (h3 : 3 ≤ levelCard L 3) : levelCard L 1 ≤ 3 := by
   by_contra hcon
@@ -179,10 +161,10 @@ open Heis
 local instance factPrimeFive₄ : Fact (Nat.Prime 5) := ⟨by norm_num⟩
 
 set_option maxHeartbeats 2000000 in
-/ -- The integer program behind the bound `20`: the level counts `s_k` of a
+/-- The integer program behind the bound `20`: the level counts `s_k` of a
 product-one-free sequence, subject to antitonicity, the bound `s₁ ≤ 6`, at most
 `4` central entries, the class exclusions and the mixed block count, force the
-total length to be at most `20`. - /
+total length to be at most `20`. -/
 private lemma level_count_bound (s1 s2 s3 s4 s5 s6 s7 s8 c N : ℕ)
     (hN : N = c + (s1 + s2 + s3 + s4 + s5 + s6 + s7 + s8))
     (m21 : s2 ≤ s1) (m32 : s3 ≤ s2) (m43 : s4 ≤ s3) (m54 : s5 ≤ s4)
@@ -206,8 +188,8 @@ private lemma level_count_bound (s1 s2 s3 s4 s5 s6 s7 s8 c N : ℕ)
     · omega
     · omega
 
-/ -- **Upper bound `20` for `H_125`.**  A product-one-free sequence over the
-Heisenberg group of order `125` has length at most `20`. - /
+/-- **Upper bound `20` for `H_125`.**  A product-one-free sequence over the
+Heisenberg group of order `125` has length at most `20`. -/
 theorem length_le_20_heis_five {L : List (Heis 5)} (hfree : ProductOneFree L) :
     L.length ≤ 20 := by
   classical
@@ -287,17 +269,16 @@ theorem length_le_20_heis_five {L : List (Heis 5)} (hfree : ProductOneFree L) :
     (classList L none).length L.length (by omega) h21 h32 h43 h54 h65 h76 h87 hsix hcentral
     e4 e5 e6 e7 e8 f1 f2 f3 f4 f5 hmixed
 
-/ -- `d(H_125) ≤ 20`. - /
+/-- `d(H_125) ≤ 20`. -/
 theorem smallDavenport_heis_five_le_20 : smallDavenport (Heis 5) ≤ 20 := by
   refine csSup_le ⟨0, ⟨[], rfl, productOneFree_nil⟩⟩ ?_
   rintro n ⟨L, rfl, hL⟩
   exact length_le_20_heis_five hL
 
-/ -- The sharpest two-sided bound proved in this project for the Heisenberg
-group of order `125`: `12 ≤ d(H_125) ≤ 20`. - /
+/-- The sharpest two-sided bound proved in this project for the Heisenberg
+group of order `125`: `12 ≤ d(H_125) ≤ 20`. -/
 theorem smallDavenport_heis_five_four_class_bounds :
     12 ≤ smallDavenport (Heis 5) ∧ smallDavenport (Heis 5) ≤ 20 :=
   ⟨twelve_le_smallDavenport_heis_five, smallDavenport_heis_five_le_20⟩
 
 end Heisenberg125
--/

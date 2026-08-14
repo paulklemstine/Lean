@@ -6,9 +6,6 @@ import Shared.CatalogbuildSharedE.E
 Auto-generated from theorem catalog database.
 Domain: Shared
 Declarations: 5
-
-The import of `Shared.CatalogbuildSharedE.E` (supplying the energy function `E`)
-was added; the statements and proofs are unchanged.
 -/
 
 /-- [Section: # CatalogBuild.Shared.Sublevel
