@@ -40,7 +40,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "8448cbc4",
+    "consumed_by_exp_id": "6b6da09d",
     "description": "**Summary.** The conjecture that for E_N: y² = x³ + N with N = pq, the\ndenominators of x(nP) are divisible only by {2, 3, p, q} (the primes dividing\nΔ = -432N²) is mathematically FALSE.\n\n**Counterexample.** N = 55 = 5·11, P = (9,28) ∈ E_55(Q):\n  x(2P) = (9^4 - 8·55·9) / (4(9^3 + 55)) = 2601/3136, and 3136 = 2^6 · 7^2.\nThe prime 7 divides the denominator but 7 ∤ Δ (7 is a prime of good reduction).\n\n**Mechanism.** ℓ | denom(x(nP)) iff nP ≡ O (mod ℓ); good-reduction primes divide\ndenominators whenever the point reduces to torsion — infinitely many such primes.\n\n**Survey (11 semiprimes):** p appears in some denominator 54.5%, q appears 0%,\nonly-{2,3,p,q} holds 0% of the time. The denominator structure is a function of\nN alone (barrier 5) and does not cleanly reveal p, q.\n\n---\n\n*Factoring Lab paper. Status: proven theorem / verified / framework. This is a research deliverable, not a factoring breakthrough claim.*",
     "domain_bridges": [],
     "domains": [
@@ -59,7 +59,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "7c080da3",
+    "consumed_by_exp_id": "0e9b0d11",
     "description": "**Summary.** Let F(k) = sum_{a=1}^{N} a^k. Then gcd(F(k), N) reveals a factor\nat k = p-1: for N = pq, gcd(F(p-1), N) = q (provided (q-1) does not divide (p-1)).\n\n**Key results (proven):**\n- **Theorem 1 (power-sum factor reveal):** Mod p the residues cover each nonzero\n  residue q times, so F(k) ≡ q·(sum of k-th powers mod p); by FLT this is -q mod p\n  at k=p-1. Mod q it vanishes when (q-1) ∤ (p-1). Hence gcd = q.\n- **Theorem 2 (robustness):** The power sum aggregates ALL bases a=1..N\n  simultaneously, so it cannot suffer Pollard p-1's \"bad base\" failure.\n- **Theorem 3 (Carmichael periodicity):** g(k) = gcd(F(k), N) has period\n  λ(N) = lcm(p-1, q-1), so λ(N) is readable from the period and the factors\n  follow from p+q = N - λ(N) + 1.\n\n**Complexity.** First hit at k* = min(p-1,q-1) ≈ √N; cost per F(k) is O(N);\ntotal O(N^{3/2}) — worse than trial division. This is the SAME structure Shor's\nalgorithm exploits, made classically hard by the period-finding barrier.\nVerified on all 8 test semiprimes up to N ≈ 10^4.\n\n---\n\n*Factoring Lab paper. Status: proven theorem / verified / framework. This is a research deliverable, not a factoring breakthrough claim.*",
     "domain_bridges": [],
     "domains": [
@@ -344,25 +344,6 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "**Paper:** `ResearchOutput/NewMathematics/39_PowerResidue_Circularity.md` (factor3)\n**Experiment:** KPOWER (#374), assessment v150.\n\n## Finding\nTest whether cubic (Z[ω]) / quartic (Z[i]) power-residue symbols provide residue\ndials that escape the quadratic channel. Verified:\n1. **Cubic symbols escape the residue dial:** (a|p)₃ = a^{(p−1)/3} mod p varies\n   within p mod 9 — cubic reciprocity depends on 4p = A²+27B² (p's fine\n   arithmetic), echoing JACSIGN's W(p).\n2. **But circular:** the definition uses the exponent p; the reciprocity route\n   needs the A²+27B² rep = factoring (barrier 6). The N-computable symmetric\n   (a/N)₃ is symmetric (barrier 2) and non-dial.\n3. **Leakage saturates like quadratic:** over 68 primes p∈[1000,2000], cubic and\n   quadratic fingerprints both give 68/68 distinct — identical rate. The \"few\n   symbols pin p\" power is illusory: computing the symbols requires p.\n\n## Why it collapses (barrier 6 + 2 + 5)\nComputing (a|p)₃ requires p or the A²+27B² representation (barrier 6); the\nN-computable version is symmetric (barrier 2); leakage same as quadratic\n(barrier 5 / trace-lemma consistency). Confirms NSPLIT's barrier-2 finding from\nthe fingerprint angle.\n\n## Verdict\nREFUTED. The residue channel's information content is: dial (N-determined) +\nfine-arithmetic noise (circular), nothing more. Higher-power reciprocity adds no\npoly(log N) handle. Classical uniform hint-free surface remains exhausted.\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1149",
-    "lineage_refs": [],
-    "priority_score": 1000.0,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-12T05:10:44.748552+00:00",
-    "title": "The Higher-Power Reciprocity Channel, Closed"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
     "consumed_by_exp_id": "078b9d63",
     "description": "**Paper 52 (NewMathematics) — Experiment 387, assessment v163. Round-14 #8.**\n\n**Hypothesis (brainstorm #4):** s_x = a^x mod N has GF(2) linear complexity ~ r = ord_N(a), and the floor-quotient sequence t_x = floor(a^x/N) is as incompressible — a dequantization obstruction (the QFT input cannot be classically simulated cheaply).\n\n**Experiment (120 semiprimes, N in [2^10,2^16], odd a=3, r in [260,49506]; Berlekamp–Massey + substring complexity vs random/LFSR/geometric controls; t-stream via exact recurrence verified against direct floor(a^x/N)):**\n\n1. **Full-period lambda_s(r) ~ r/2 (0.498–0.506)** — REFUTES the predicted ~r; the cleaner random-string value.\n2. **Maximal prefix complexity:** lambda_s(n) ~ n/2 for every n (128–1024) — NOT LFSR-compressible (control: LFSR holds lambda = m = 15 constant).\n3. **Floor defect equally incompressible:** lambda_t(n) ~ n/2 — no closed-form shortcut through floor(a^x/N), the exact difference between Shor's QFT peak and a geometric sum.\n4. **Substring complexity c(L) ~ 2^L up to the period**, random-like, both streams.\n5. **Controls calibrate:** random ~n/2, LFSR = m constant, geometric mod prime ~n/2.\n\n**Verdict:** refuted in the precise value (lambda ~ r), confirmed as the operative obstruction: the QFT input and its floor twin are random-level incompressible at every prefix and full period — no low-complexity classical simulation. Arms DEQUANT/QUBIT-TRADE/COND-RANK (barriers 4/8 as sequence complexity).\n\nFull paper: ResearchOutput/NewMathematics/52_SeqState_RandomLevelIncompressible.md",
     "domain_bridges": [],
@@ -610,7 +591,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "1b55f202",
+    "consumed_by_exp_id": "70d03dec",
     "description": "## CYCLIC-TYPE-CHANNEL (round-22 #2, experiment 413, assessment v189, paper 78)\n\n**The complete splitting-type channel of a cyclic field exceeds the 1-bit binary-fork cap. Papers 72–74 capped every BINARY symmetric semiprime fork at 1.0 bit; the cyclic splitting type is multi-state, and its type-pair channel carries 1.2500 (C₄) / 1.4739 (C₆) bits — strictly above the cap.**\n\n### The type channel\n\nFor Q(ζ_f), f prime, Gal = (Z/f)^× = C_n (n = f−1), the Frobenius order T(p) = ord_f(p) (the residue degree) is the complete splitting type — a deterministic function of p mod f, so **I(p mod f; T) = H(T) EXACT**: C₄ = Q(ζ₅) → 3 states {1,2,4} rates {1/4,1/4,1/2}, H = 1.5 bits (measured 1.4989); C₆ = Q(ζ₇) → 4 states {1,2,3,6} rates {1/6,1/6,1/3,1/3}, H = 1.9183.\n\n- **[T=1] splits-completely = H(1/n)**: C₄ 0.8098 = H(1/4) = 0.8113 EXACT — the **FIRST prime-level QUARTIC-character pinning**; C₆ 0.6497 = H(1/6). Every type face equally pinned ([T=2] 0.8110 = H(1/4), [T=4] 1.0000 = H(1/2)).\n- **Thickening zero**: I(p mod f²; T) = I(p mod f; T) EXACT (T depends only on p mod f). Coprime controls flat.\n- **Root-count readout is LOSSY**: nr collapses [2,2]/[4] (and [2,2,2]/[3,3]/[6]) to nr=0 — the nr-channel is BINARY (C₄ 0.8109, C₆ 0.6498) strictly below H(T). **The type, not the root count, is the complete object.**\n\n### The semiprime law — exact, and above the 1-bit cap\n\nThe unordered type-pair {T(p),T(q)} obeys the exact law **I_pair = H(Π) − (1/φ(f))Σ_c H(Π_c)**, Π_c the pair law under N ≡ c mod f, computable by exact enumeration over the unit group. Machine-verified (30k semiprimes):\n\n| field | H(T) | H(pair) | H(pair\\|N) | I_pair (exact) | I_pair (MC) |\n|---|---|---|---|---|---|\n| C₂ Q(√5) | 1.0000 | 1.5000 | 0.5000 | **1.0000** | 1.0000 |\n| C₄ Q(ζ₅) | 1.5000 | 2.3750 | 1.1250 | **1.2500** | 1.2452 |\n| C₆ Q(ζ₇) | 1.9183 | 3.1144 | 1.6405 | **1.4739** | 1.4711 |\n\nC₂ reproduces the paper-74 cap exactly (the quadratic type pair IS the split-count); **C₄ and C₆ both EXCEED 1.0 bit**. Which-factor wall 0.0001 (symmetric, factor-useless); coprime controls flat. The s-projection recovers Is(n) EXACTLY (C₄ 0.2896 vs Is(4)=0.2947; C₆ 0.1445 vs Is(6)=0.1487) — the split-count is ONE face of the richer type channel.\n\n### Growth law: no 1-bit cap\n\n| n | field | #states | H(T) | I_pair | above 1 bit? |\n|---|---|---|---|---|---|\n| 2 | Q(√5) | 2 | 1.0000 | 1.0000 | at cap |\n| 4 | Q(ζ₅) | 3 | 1.5000 | 1.2500 | **YES** |\n| 6 | Q(ζ₇) | 4 | 1.9183 | 1.4739 | **YES** |\n| 10 | Q(ζ₁₁) | 4 | 1.7219 | 1.2027 | **YES** |\n| 12 | Q(ζ₁₃) | 6 | 2.4183 | 1.7239 | **YES** |\n| 16 | Q(ζ₁₇) | 5 | 1.8750 | 1.3281 | **YES** |\n\nEvery n ≥ 4 exceeds 1.0 bit; the value is governed by the **divisor structure of the cyclic order** (n=12, six states, richest at 1.7239).\n\n### Verdict\n\nCONFIRMED. New exact objects: the type-pair law I_pair = H(Π) − (1/φ)ΣH(Π_c) (first symmetric channels above the binary-fork cap), the C₄ prime-level quartic pinning, root-count lossiness (type multi-state, nr binary), and Is(n) as the s-projection of the type channel. Factor-useless: symmetric (which-factor wall 0.0001, barrier 2), a pure p-mod-f residue dial (barrier 5), N-computable only behind the CRT split (barrier 6), cyclotomic fields + Dirichlet characters + CRT + Chebotarev 1922 (barrier 8). Unifies papers 54/71/72/74. Barriers 2/5/6/8.\n\n*Script:* /tmp/exp_typechan.py.\n",
     "domain_bridges": [],
     "domains": [
@@ -4914,6 +4895,25 @@
     "status": "available",
     "timestamp": "2026-07-25T15:47:33.250380+00:00",
     "title": "Deepening: The repaired repeated-summand rule is now completely classified: its unique traj"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 45ac3b9d (Q=0.780), which proved 58 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Paper:** `ResearchOutput/NewMathematics/39_PowerResidue_Circularity.md` (factor3)\n**Experiment:** KPOWER (#374), assessment v150.\n\n## Finding\nTest whether cubic (Z[ω]) / quartic (Z[i]) power-residue symbols provide residue\ndials that escape the quadratic channel. Verified:\n1. **Cubic symbols escap",
+    "domain_bridges": [],
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "push_45ac3b9d_e503e8e8",
+    "lineage_refs": [],
+    "priority_score": 0.88,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "45ac3b9d",
+    "status": "available",
+    "timestamp": "2026-08-14T22:48:13.363443+00:00",
+    "title": "Deepening: The Higher-Power Reciprocity Channel, Closed"
   },
   {
     "ambition_level": "extension",
@@ -25978,6 +25978,26 @@
     "status": "available",
     "timestamp": "2026-08-14T21:47:56.276650+00:00",
     "title": "The verified core is: for the uniform measure on a finite Galois group `G`, a fo"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# FUTURE DIRECTIONS — after closing the higher-power reciprocity channel\n\nWhat this cycle established, formally and sorry-free\n(`Catalog/Combinatorics/PowerResidueCriterion.lean`,\n`PowerResidueCircularity.lean`, `PowerResidueNoAmplification.lean`,\n`PowerResidueSharpness.lean`):\n\n1. the `k`-th power criterion in any finite cyclic group, and its transfer to\n   `(ZMod p)ˣ` — the algebraic definition of the cubic/quartic symbol;\n2. the cubic and quartic residuacity bits of `2` are **not** computable from any\n   congruence datum `p % M` with `M ∣ lcm(1,…,16)`, for any value type and any\n   decision rule, while the quadratic bit *is* computable from `p % 8`;\n3. every `K`-symbol residuacity fingerprint has capacity exactly `2^K`,\n   independently of the exponent `k`, and that ceiling is attained at `K = 2`;\n4. `k`-th powers are `1/k` of the units, so the cubic bit is strictly *sparser*\n   (hence individually less informative) than the quadratic bit;\n5. a hybrid bound: hint + `L` dials + `K` higher-power bits still leave a class\n   of at least `|Ω| / ((M*/gcd(M*,m))·2^K)` indistinguishable candidates.\n\nThe five conjectures below are the sharpest open questions this leaves.\n\n---\n\n## Conjecture A (unbounded escape). *For every modulus `M`, cubic residuacity of `2` is not `M`-periodic on primes.*\n\nFormally: for every `M ≥ 1` there are primes `p ≡ q (mod M)`, both `≡ 1 (mod 3)`,\nwith `2` a cube mod `p` and not mod `q`.  We proved this for every `M ∣ 720720`;\nthe general case is stated but not settled.\n\n**The key insight is** that `2` is a cube mod `p` exactly when `p = x² + 27y²`,\na *splitting* condition in the non-abelian field `ℚ(∛2, ω)`, and a congruence\ncondition would force the splitting set of a degree-3 non-normal field to be a\nunion of ray classes — contradicting the non-abelian Galois group `S₃`.\n\n**Why now?** Mathlib now has Dirichlet's theorem on primes in arithmetic\nprogressions and a usable class-field-theoretic vocabulary; the remaining gap is\na Chebotarev-free argument: it suffices to exhibit, for each `M`, a *pair* of\nprimes in one class with different splitting behaviour, and the `x² + 27y²`\nparametrisation makes such pairs constructible rather than merely dense.\n\n## Conjecture B (exact channel capacity, not just the ceiling). *For bases `a₁,…,a_K` multiplicatively independent modulo cubes, the cubic residuacity fingerprint attains all `2^K` patterns on primes below `exp(O(K))`.*\n\nWe proved attainment for `K = 2` with the explicit set `{7, 31, 61, 307}`; the\nconjecture asserts attainment in general with a singly-exponential search bound.\n\n**The key insight is** that the joint distribution of cubic bits should be\ngoverned by the Galois group of the compositum `ℚ(ω, ∛a₁, …, ∛a_K)`, which is\n`(ℤ/3)^K ⋊ ℤ/2` when the bases are independent modulo cubes; equidistribution\nthen forces every pattern to appear with density `3^{-K}`.\n\n**Why now?** The `2^K` upper bound is already formal, so a matching constructive\nlower bound would turn the capacity statement into an exact theorem — the first\n*sharp* information-theoretic statement about a residue channel in this catalog.\n\n## Conjecture C (bias beats count). *A `K`-bit cubic fingerprint separates strictly fewer candidates on average than a `K`-bit quadratic one, by a factor `(3/4)^{K/2+o(K)}`.*\n\nMotivated by the proved sparsity `(p−1)/3` versus `(p−1)/2` and by the measured\n`23` versus `31` distinct patterns on the 68 primes of `[1000,2000]`.\n\n**The key insight is** that capacity is not the number of readings but the\nentropy of their distribution: a bit that is `1` with probability `1/3` carries\n`H(1/3) ≈ 0.918` bits, so `K` cubic bits carry `0.918·K` bits against the\nquadratic `K` — the higher reciprocity law is *strictly worse per symbol*.\n\n**Why now?** The counting lemma `card_powerResidue_units` is the only analytic\ninput needed; the remaining step is a Chernoff/entropy estimate over a candidate\nset, entirely inside Mathlib's `Probability` library.\n\n## Conjecture D (transversality is generic). *For every pair of exponents `k ≠ l` with `k, l ≥ 2` and every base `a` that is neither a `k`-th nor an `l`-th power in `ℤ`, all four combinations of `k`-th and `l`-th power residuacity of `a` occur among primes.*\n\nProved here for `(k, l) = (2, 3)`, `a = 2`, with the witnesses `7, 13, 31, 43`.\n\n**The key insight is** that the two residuacity conditions are splitting\nconditions in linearly disjoint Kummer extensions, so their bits are\nindependent; failure would exhibit an unexpected containment of number fields.\n\n**Why now?** Transversality is exactly the property that makes a channel\n*combinable*; a general theorem would let the hybrid bound\n`hybrid_no_amplification` be proved *tight*, closing the loop from upper bound to\nexact rate.\n\n## Conjecture E (circularity is intrinsic). *Any algorithm that outputs the cubic bit of `a` at a secret prime `p`, given only `N = p·q` and `poly(log N)` congruence data, can be converted into a factoring algorithm with polynomial overhead.*\n\nThis is the barrier-6 statement the experiment asserts informally.  Our CRT\ntheorem `isPowerResidue_mul_moduli` is its algebraic half: the `N`-computable\nresiduacity datum is the *conjunction* of the two local data, hence symmetric in\n`p` and `q`.\n\n**The key insight is** that a symmetric datum plus one asymmetric bit yields the\nfactorisation: knowing the cubic bit at `p` but not at `q` breaks the symmetry\nthat `ZMod N` arithmetic imposes, and the CRT isomorphism turns that asymmetry\ninto an explicit idempotent, i.e. into a factor.\n\n**Why now?** With the CRT half formalised, the missing step is a reduction, and\nthe catalog already contains a reduction calculus in the `Round11` and\n`DialThreshold` files; formalising Conjecture E would upgrade \"we could not find\na use\" into \"a use would be a factoring algorithm\".\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "NumberTheory"
+    ],
+    "id": "fd_1273",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "45ac3b9d",
+    "status": "available",
+    "timestamp": "2026-08-14T22:48:04.755584+00:00",
+    "title": "What this cycle established, formally and sorry-free"
   },
   {
     "ambition_level": "extension",

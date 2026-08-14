@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "a062ecaf",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Strange Attractors as Algebraic Objects\n\nDerived from the analysis and adversarial review of this research thread.\n\n## What is established\n\n**Structure.** The orbit space of any",
-      "quality_score": 0.7526200000000001,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-08-11T16:22:30",
-      "title": "Deepening: Strange Attractors as Algebraic Objects"
-    },
-    {
       "cycle_id": "b7dba88e",
       "domain": "Tropical",
       "key_insight": "# Future directions — the magma monoid as a transformation semigroup\n\nAll conjectures below are stated for `Bin(X)`, the monoid of all binary\noperations on a set `X` under `(f * g) a b = g (f a b) (f",
@@ -499,19 +489,19 @@
       "theorem_count": 254,
       "timestamp": "2026-08-14T21:48:03",
       "title": "CYCLIC-CUBIC-FORK: fork-pinning ⟺ fork in the abelianization of the Galois closure (criterion verifi"
+    },
+    {
+      "cycle_id": "45ac3b9d",
+      "domain": "Combinatorics",
+      "key_insight": "# FUTURE DIRECTIONS — after closing the higher-power reciprocity channel\n\nWhat this cycle established, formally and sorry-free\n(`Catalog/Combinatorics/PowerResidueCriterion.lean`,\n`PowerResidueCircula",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 58,
+      "timestamp": "2026-08-14T22:48:13",
+      "title": "The Higher-Power Reciprocity Channel, Closed"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "94d22408",
-      "domain": "Pythagorean",
-      "key_insight": "# Future directions\n\nDerived from the formal development in `Catalog/Pythagorean/NumberTheory/`\n(`CyclotomicFrobenius.lean`, `HilbertClassField.lean`).\n\n## What this cycle established\n\nThe previous cy",
-      "quality_score": 0.7906299999999999,
-      "sorry_count": 0,
-      "theorem_count": 31,
-      "timestamp": "2026-08-04T03:45:32",
-      "title": "Existence of Hilbert class fields.: For every number field `K`, construct"
-    },
     {
       "cycle_id": "a5f7aac5",
       "domain": "NumberTheory",
@@ -2501,21 +2491,19 @@
       "theorem_count": 254,
       "timestamp": "2026-08-14T21:48:03",
       "title": "CYCLIC-CUBIC-FORK: fork-pinning ⟺ fork in the abelianization of the Galois closure (criterion verifi"
+    },
+    {
+      "cycle_id": "45ac3b9d",
+      "domain": "Combinatorics",
+      "key_insight": "# FUTURE DIRECTIONS — after closing the higher-power reciprocity channel\n\nWhat this cycle established, formally and sorry-free\n(`Catalog/Combinatorics/PowerResidueCriterion.lean`,\n`PowerResidueCircula",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 58,
+      "timestamp": "2026-08-14T22:48:13",
+      "title": "The Higher-Power Reciprocity Channel, Closed"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "a1fe4956",
-      "domain": "Algebra",
-      "name": "dvd_det_of_dvd_image",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "a1fe4956",
-      "domain": "Algebra",
-      "name": "node_map_parity",
-      "quality": 0.82
-    },
     {
       "cycle_id": "9cc9a6e9",
       "domain": "Algebra",
@@ -2803,9 +2791,21 @@
       "domain": "Probability",
       "name": "negMulLog_sub_half_le",
       "quality": 0.91
+    },
+    {
+      "cycle_id": "45ac3b9d",
+      "domain": "Combinatorics",
+      "name": "legendre_eq_kron",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "45ac3b9d",
+      "domain": "Combinatorics",
+      "name": "quadratic_two_is_dial",
+      "quality": 0.78
     }
   ],
-  "last_updated": "2026-08-14T21:48:03",
+  "last_updated": "2026-08-14T22:48:13",
   "open_questions": [
     {
       "context": "-    sorry+  -- Finite case: extract from computational verification",
@@ -3213,12 +3213,6 @@
         "title": "Deepening: 1. **Finite-key probability formula.** For every finite type `V`, ind"
       },
       {
-        "cycle_id": "22e93393",
-        "quality": 0.71348,
-        "theorems": 557,
-        "title": "Deepening: 1. **Finite-key probability formula.** For every finite type `V`, ind"
-      },
-      {
         "cycle_id": "52a6f28b",
         "quality": 0.627125,
         "theorems": 193,
@@ -3265,6 +3259,12 @@
         "quality": 0.82,
         "theorems": 70,
         "title": "Residue Dials Cannot Amplify a Coppersmith Hint, Closed"
+      },
+      {
+        "cycle_id": "45ac3b9d",
+        "quality": 0.78,
+        "theorems": 58,
+        "title": "The Higher-Power Reciprocity Channel, Closed"
       }
     ],
     "Computation": [
