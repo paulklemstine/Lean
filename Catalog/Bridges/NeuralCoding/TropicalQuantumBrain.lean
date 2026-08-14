@@ -15,6 +15,9 @@ def tropAdd' (a b : ℝ) : ℝ := max a b
 /-- Tropical multiplication is ordinary addition -/
 def tropMul' (a b : ℝ) : ℝ := a + b
 
+/-- ReLU, in tropical form: `relu' x = x ⊕ 0 = max x 0`. -/
+def relu' (x : ℝ) : ℝ := max x 0
+
 /-- Tropical addition is commutative -/
 theorem tropAdd'_comm (a b : ℝ) : tropAdd' a b = tropAdd' b a := by
   unfold tropAdd'; exact max_comm a b
@@ -209,6 +212,6 @@ theorem consciousness_positive {beta beta_c sigma : ℝ}
     (hbeta : 0 < beta) :
     0 < consciousnessFunctional beta beta_c sigma := by
   unfold consciousnessFunctional
-  exact mul_pos hbeta (exp_pos _)
+  exact mul_pos hbeta (Real.exp_pos _)
 
 end

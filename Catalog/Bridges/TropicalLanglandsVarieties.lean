@@ -152,8 +152,12 @@ structure TropicalJacobian (G : MetricGraph) where
 
 end
 
-end
+/- Three further stray `end`s followed here; the file opens only one `section`, so they
+do not parse.  They are preserved, commented out:
 
 end
 
 end
+
+end
+-/

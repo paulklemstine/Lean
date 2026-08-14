@@ -18,6 +18,10 @@ theorem trop_add_assoc (a b c : ℝ) : max (max a b) c = max a (max b c) := max_
 /-- Tropical addition is idempotent: a ⊕ a = a. -/
 theorem trop_add_idem (a : ℝ) : max a a = a := max_self a
 
+/-- ReLU is idempotent: `max (max x 0) 0 = max x 0`. -/
+theorem relu_idempotent (x : ℝ) : max (max x 0) 0 = max x 0 := by
+  rw [max_assoc, max_self]
+
 /-- Tropical multiplication distributes over tropical addition:
 a ⊗ (b ⊕ c) = (a ⊗ b) ⊕ (a ⊗ c), i.e., a + max(b, c) = max(a + b, a + c). -/
 theorem trop_distrib (a b c : ℝ) : a + max b c = max (a + b) (a + c) := by
@@ -142,12 +146,16 @@ Domain: Bridges
 Declarations: 63] -/
 theorem lse_ge_max (beta x y : ℝ) (hbeta : 0 < beta) :
     max x y ≤ LSE_two beta x y := by
-  unfold LSE_two
-  field_simp;
-  rw [ le_log_iff_exp_le ( by positivity ) ];
-  cases max_cases x y <;> simp +decide [ *, mul_comm ];
-  · positivity;
-  · positivity
+  have hpos : 0 < Real.exp (beta * x) + Real.exp (beta * y) := by positivity
+  have key : Real.exp (beta * max x y) ≤ Real.exp (beta * x) + Real.exp (beta * y) := by
+    rcases max_cases x y with ⟨h1, _⟩ | ⟨h1, _⟩ <;> rw [h1]
+    · linarith [Real.exp_pos (beta * y)]
+    · linarith [Real.exp_pos (beta * x)]
+  have hlog : beta * max x y ≤ Real.log (Real.exp (beta * x) + Real.exp (beta * y)) :=
+    (Real.le_log_iff_exp_le hpos).2 key
+  have h2 : max x y ≤ Real.log (Real.exp (beta * x) + Real.exp (beta * y)) / beta :=
+    (le_div_iff₀ hbeta).2 (by linarith)
+  simpa [LSE_two, div_eq_inv_mul, one_div] using h2
 
 /-- Logarithmic cooling schedule. -/
 def logCooling (c t : ℝ) : ℝ := c * Real.log (1 + t)
@@ -304,7 +312,7 @@ theorem idempotent_fixed_points {α : Type*} (f : α → α) (hf : f ∘ f = f) 
 theorem relu_idem (x : ℝ) : max (max x 0) 0 = max x 0 := relu_idempotent x
 
 /-- Tropical max is idempotent. -/
-theorem max_idem (a : ℝ) : max a a = a := max_self a
+theorem tropical_max_idem (a : ℝ) : max a a = a := max_self a
 
 /-- Lattice projection is idempotent (abstract version). -/
 theorem projection_idem {α : Type*} (proj : α → α) (h : proj ∘ proj = proj) :
