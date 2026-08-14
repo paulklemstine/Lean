@@ -4,16 +4,6 @@
       "cycle_id": "4c1e8096",
       "domain": "Geometry",
       "key_insight": "# Future directions — cycle 2 of the hyperbolic Gauss–Bonnet thread\n\n## What this cycle established\n\nCycle 1 left an *angle-data* theory: `hyperbolicArea κ α β γ = (π - (α+β+γ))/κ`\nwas a definition, a",
-      "quality_score": 0.71709,
-      "sorry_count": 0,
-      "theorem_count": 59,
-      "timestamp": "2026-08-11T01:12:41",
-      "title": "The formal development proves the algebraic Gauss–Bonnet invariant for a"
-    },
-    {
-      "cycle_id": "4c1e8096",
-      "domain": "Geometry",
-      "key_insight": "# Future directions — cycle 2 of the hyperbolic Gauss–Bonnet thread\n\n## What this cycle established\n\nCycle 1 left an *angle-data* theory: `hyperbolicArea κ α β γ = (π - (α+β+γ))/κ`\nwas a definition, a",
       "quality_score": 0.71609,
       "sorry_count": 0,
       "theorem_count": 59,
@@ -499,19 +489,19 @@
       "theorem_count": 47,
       "timestamp": "2026-08-14T11:18:04",
       "title": "Experiment 398: CFPERIOD-NULL — the continued-fraction period of sqrt(N) is a non-polynomial symmetr"
+    },
+    {
+      "cycle_id": "43e7ffcb",
+      "domain": "Tropical",
+      "key_insight": "The declared frontier is to **prove the trace-lemma exhaustiveness** — to turn\nthe classification into a theorem in full generality. Define the class of\nCRT-respecting, polynomial-time-computable coun",
+      "quality_score": 0.72697,
+      "sorry_count": 0,
+      "theorem_count": 37,
+      "timestamp": "2026-08-14T11:18:19",
+      "title": "The Factor3 Program: A Definitive Synthesis of the Barrier Framework"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "38046e56",
-      "domain": "Geometry",
-      "key_insight": "# Future Directions\n\n- Construct the Khovanov chain groups and signed cube differential over an arbitrary coefficient ring, then prove `d² = 0` from commuting square faces.\n- Refine the generator-leve",
-      "quality_score": 0.77922,
-      "sorry_count": 0,
-      "theorem_count": 10,
-      "timestamp": "2026-08-03T15:28:39",
-      "title": "Knot-Jones: Quantum Group Verification of Khovanov Invariants"
-    },
     {
       "cycle_id": "e4843e14",
       "domain": "Algebra",
@@ -2501,27 +2491,19 @@
       "theorem_count": 47,
       "timestamp": "2026-08-14T11:18:04",
       "title": "Experiment 398: CFPERIOD-NULL — the continued-fraction period of sqrt(N) is a non-polynomial symmetr"
+    },
+    {
+      "cycle_id": "43e7ffcb",
+      "domain": "Tropical",
+      "key_insight": "The declared frontier is to **prove the trace-lemma exhaustiveness** — to turn\nthe classification into a theorem in full generality. Define the class of\nCRT-respecting, polynomial-time-computable coun",
+      "quality_score": 0.72697,
+      "sorry_count": 0,
+      "theorem_count": 37,
+      "timestamp": "2026-08-14T11:18:19",
+      "title": "The Factor3 Program: A Definitive Synthesis of the Barrier Framework"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "20cf0514",
-      "domain": "Applications",
-      "name": "and",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "20cf0514",
-      "domain": "Applications",
-      "name": "mem_traceSet",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "20cf0514",
-      "domain": "Applications",
-      "name": "mem_sqrtSet",
-      "quality": 0.82
-    },
     {
       "cycle_id": "9e8cd1f4",
       "domain": "Algebra",
@@ -2803,9 +2785,27 @@
       "domain": "Shared",
       "name": "pell_value",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "43e7ffcb",
+      "domain": "Tropical",
+      "name": "dichotomy",
+      "quality": 0.72697
+    },
+    {
+      "cycle_id": "43e7ffcb",
+      "domain": "Tropical",
+      "name": "of",
+      "quality": 0.72697
+    },
+    {
+      "cycle_id": "43e7ffcb",
+      "domain": "Tropical",
+      "name": "says",
+      "quality": 0.72697
     }
   ],
-  "last_updated": "2026-08-14T11:18:04",
+  "last_updated": "2026-08-14T11:18:19",
   "open_questions": [
     {
       "context": "(sieve mechanism) form a coherent, sorry-free slice of the Maynard–Tao framework.; +    `fib_carmichael_large` — which relied on an unproven (`sorry`-backed) tail of; -    sorry+  -- Extract from the ",
@@ -3951,12 +3951,6 @@
     ],
     "Tropical": [
       {
-        "cycle_id": "785c09ab",
-        "quality": 0.7857999999999999,
-        "theorems": 85,
-        "title": "**Conjecture.** Every normalized, translation-equivariant, coordinatewise-minimu"
-      },
-      {
         "cycle_id": "1f345ab3",
         "quality": 0.73286,
         "theorems": 96,
@@ -4009,6 +4003,12 @@
         "quality": 0.85,
         "theorems": 470,
         "title": "Exp 399 PLUSONE-SMOOTH-NULL (round-16 #2): the Williams p+1 weakness is residue-"
+      },
+      {
+        "cycle_id": "43e7ffcb",
+        "quality": 0.72697,
+        "theorems": 37,
+        "title": "The Factor3 Program: A Definitive Synthesis of the Barrier Framework"
       }
     ]
   }
