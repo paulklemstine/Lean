@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "610f4688",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions (cycle 1 of thread th_2130c620)\n\nThe five conjectures inherited from cycle 0 have now been formalised and proved in a precise\nmodel (see `Catalog/Novelty/MultiwaySortingRadix.lean`",
-      "quality_score": 0.71196,
-      "sorry_count": 0,
-      "theorem_count": 52,
-      "timestamp": "2026-08-11T06:17:22",
-      "title": "**Conjecture.** For a comparator network implemented by reversible gates with a"
-    },
-    {
       "cycle_id": "04a5f386",
       "domain": "Probability",
       "key_insight": "# Future Directions (thread th_ffe6cbbf)\n\nState of the thread after the present cycle.  Every statement marked \"**settled**\"\nis a sorry-free Lean 4 theorem in `Catalog/Probability/`, checked against t",
@@ -499,19 +489,19 @@
       "theorem_count": 129,
       "timestamp": "2026-08-14T15:14:33",
       "title": "De-Quantization Assessed: Shor's QFT Is Irreducible"
+    },
+    {
+      "cycle_id": "295ca744",
+      "domain": "Algebra",
+      "key_insight": "# FUTURE DIRECTIONS — ECM-PARITY (round-18 #1, experiment 404)\n\nThe cycle proved, with zero `sorry`s:\n\n| face | theorem |\n|---|---|\n| parity dichotomy | `ECMParity.two_dvd_curveCard_iff` |\n| Stickelbe",
+      "quality_score": 0.86,
+      "sorry_count": 0,
+      "theorem_count": 79,
+      "timestamp": "2026-08-14T16:15:07",
+      "title": "ECM-PARITY: first positive symmetric residue shadow on the GENERIC elliptic order (2|#E ⟺ cubic root"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "60e2b23a",
-      "domain": "Probability",
-      "key_insight": "# Future Directions\n\n- Instantiate the measure-preserving symmetry theorem for finite planar bond-percolation configurations, with primal crossing and dual crossing proved complementary by a discrete",
-      "quality_score": 0.72259,
-      "sorry_count": 0,
-      "theorem_count": 8,
-      "timestamp": "2026-08-03T21:41:00",
-      "title": "Deepening: Percolation Threshold"
-    },
     {
       "cycle_id": "c0621a16",
       "domain": "Novelty",
@@ -2501,21 +2491,19 @@
       "theorem_count": 129,
       "timestamp": "2026-08-14T15:14:33",
       "title": "De-Quantization Assessed: Shor's QFT Is Irreducible"
+    },
+    {
+      "cycle_id": "295ca744",
+      "domain": "Algebra",
+      "key_insight": "# FUTURE DIRECTIONS — ECM-PARITY (round-18 #1, experiment 404)\n\nThe cycle proved, with zero `sorry`s:\n\n| face | theorem |\n|---|---|\n| parity dichotomy | `ECMParity.two_dvd_curveCard_iff` |\n| Stickelbe",
+      "quality_score": 0.86,
+      "sorry_count": 0,
+      "theorem_count": 79,
+      "timestamp": "2026-08-14T16:15:07",
+      "title": "ECM-PARITY: first positive symmetric residue shadow on the GENERIC elliptic order (2|#E ⟺ cubic root"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "b7a22960",
-      "domain": "Logic",
-      "name": "bval_atom",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "b7a22960",
-      "domain": "Logic",
-      "name": "bval_fls",
-      "quality": 0.82
-    },
     {
       "cycle_id": "f3293094",
       "domain": "Tropical",
@@ -2803,9 +2791,21 @@
       "domain": "Novelty",
       "name": "schmidtRank_combCut_le",
       "quality": 0.86
+    },
+    {
+      "cycle_id": "295ca744",
+      "domain": "Algebra",
+      "name": "isSquare_neg31_of_form",
+      "quality": 0.86
+    },
+    {
+      "cycle_id": "295ca744",
+      "domain": "Algebra",
+      "name": "E0Card_mod_four_ne_two_of_form",
+      "quality": 0.86
     }
   ],
-  "last_updated": "2026-08-14T15:14:33",
+  "last_updated": "2026-08-14T16:15:07",
   "open_questions": [
     {
       "context": "-    sorry+  -- Finite case: extract from computational verification",
@@ -3021,12 +3021,6 @@
   "research_threads": {
     "Algebra": [
       {
-        "cycle_id": "8dc4e6e3",
-        "quality": 0.6583992433823346,
-        "theorems": 196,
-        "title": "Tropical Linear Algebra: Eigenvalues and Determinants"
-      },
-      {
         "cycle_id": "6e948588",
         "quality": 0.6542925496031746,
         "theorems": 600,
@@ -3079,6 +3073,12 @@
         "quality": 0.83,
         "theorems": 93,
         "title": "The Extrinsic Class-Group Representation Vector is a Residue Dial, Closed"
+      },
+      {
+        "cycle_id": "295ca744",
+        "quality": 0.86,
+        "theorems": 79,
+        "title": "ECM-PARITY: first positive symmetric residue shadow on the GENERIC elliptic orde"
       }
     ],
     "Applications": [

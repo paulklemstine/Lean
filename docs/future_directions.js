@@ -3,7 +3,7 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "consumed_by_exp_id": "d06bd3a9",
+    "consumed_by_exp_id": "e80744f3",
     "description": "**Summary.** Singular moduli factoring WORKS but its scaling is provably\nexponential.\n\n**The method (confirmed).** Try gcd(H_D(j_0), N) for discriminants D and\nevaluation points j_0, where H_D is the Hilbert class polynomial. All 8 test\nsemiprimes (up to N = 5183) factored, using 1-42 evaluations.\n\n**Theorem (\u221aN scaling, proven).** For balanced p \u2248 q \u2248 \u221aN and class number h,\nexpected evaluations = \u221aN/(4h).\nProof: H_D mod p has h roots in F_p; P(random j_0 is a root mod exactly one of\np, q) \u2248 h/p + h/q \u2248 4h/\u221aN; expected trials \u221aN/(4h). \u220e\nVerified: evals/\u221aN \u2248 0.3-0.8 (constant across two orders of magnitude).\n\n**The circularity bottleneck.** The structured set (roots of H_D mod p) is\ndefined in terms of the unknown factor p. Searching it by brute force costs \u221aN\n(barrier 6). This places singular moduli factoring in the \u221aN family alongside\nPollard rho and Pollard p-1.\n\n---\n\n*Factoring Lab paper. Status: proven theorem / verified / framework. This is a research deliverable, not a factoring breakthrough claim.*",
     "domains": [
       "Novelty"
@@ -18,7 +18,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Singular Moduli Factoring and the \u221aN Barrier"
   },
   {
-    "consumed_by_exp_id": "ed381d4e",
+    "consumed_by_exp_id": "327e30f2",
     "description": "**Summary.** 3SUM mod-p reveals factors, and collision-based factoring methods\nform a hierarchy all hitting the same \u221aN barrier.\n\n**Observation (3SUM mod-p factor reveal).** For N = pq and triples with\na+b+c \u2261 0 (mod p) but \u2262 0 (mod q): gcd(a+b+c, N) = p. Verified: 19 mod-p-only\ntriples vs. 0 mod-both for N = 143.\n\n**The birthday-bound hierarchy:**\n| Collision type | Search space | Cost to collision | Net cost |\n| Sumset (a+b \u2261 c+d) | k\u00b2 pairs | k ~ p^{1/2} | O(\u221aN) |\n| 3SUM (a+b+c \u2261 0) | k\u00b3 triples | k ~ p^{1/3} | O(\u221aN) |\n| Singular moduli | k evaluations | k ~ p/h | O(\u221aN) |\n\nThe exponent improves (1/2 \u2192 1/3) but the exponential dependence on p \u2248 \u221aN\npersists. This is a new structural connection between two canonical problems\n(3SUM and factoring) through the birthday bound.\n\n---\n\n*Factoring Lab paper. Status: proven theorem / verified / framework. This is a research deliverable, not a factoring breakthrough claim.*",
     "domains": [
       "Novelty"
@@ -213,17 +213,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "Round-9 Hypothesis Closures: The Completeness of the Trace Lemma"
   },
   {
-    "consumed_by_exp_id": "e0db545b",
+    "consumed_by_exp_id": "",
     "description": "**Paper:** `ResearchOutput/NewMathematics/33_Permutation_Readout_Asymmetry.md` (factor3)\n**Experiment:** PERMORD (#368), assessment v144.\n\n## Finding\nThe free order-probes only ever see `ord_N(a) = lcm(ord_p(a), ord_q(a))` \u2014 a\nsymmetric data loss. This paper closes that \"lcm-blindness\" loophole: the\npermutation `x \u21a6 a\u00b7x mod N` on Z/NZ has a cycle structure that encodes\n`ord_p(a)` and `ord_q(a)` as **distinct cycle lengths** \u2014 a fully asymmetric\nreadout, strictly richer than the lcm.\n\n**Exact structure (verified 35/35):** for d | N, stratum S_d = {x : gcd(x,N)=d}\nhas size \u03c6(N/d) and every element lies on a cycle of length `ord_{N/d}(a)`. For\nN = pq this gives cycle lengths `{ord_N(a), ord_p(a), ord_q(a), 1}` on strata of\nsizes `{\u03c6(N), q\u22121, p\u22121, 1}`, cycle count = `1 + \u03c6(N)/ord_N + (q\u22121)/ord_q +\n(p\u22121)/ord_p` (exact).\n\n**It is a valid factoring algorithm:** for primitive a, the recovered unordered\npair {p\u22121, q\u22121} \u2192 {p,q} (verified: N=143 a=2 \u2192 {11,13}; 221 a=7 \u2192 {13,17};\n899 a=3 \u2192 {29,31}; 3127 a=2 \u2192 {53,59}).\n\n## Why it collapses (barrier 4 + 2 + 8)\n1. **O(\u03c6(N)) \u2248 O(N) enumeration** \u2014 a permutation on N elements requires\n   visiting all elements (measured: N=3127 \u2192 3018 \u2248 \u03c6; N=34571 \u2192 34202). Worse\n   than \u221aN trial division, worse than rho's N^{1/4}.\n2. **Circular entry** \u2014 cannot start on a non-unit cycle without a multiple of p\n   or q; having one factors N immediately.\n3. **Exponential order-finding** \u2014 reading ord_p(a) individually is the paper-9\n   DFT-sample bound.\n\n## Verdict\nREFUTED as a method. Even fully separating ord_p(a) from ord_q(a) does not help:\nthe object carrying the asymmetry is exactly the O(N) enumeration of the ring.\nCompletes the order-family characterization (ORDDIV \u2192 PROBESMOOTH \u2192 SMOOTHCLASS\n\u2192 PERMORD): orders are free as probes, partial as smooth-part constraints, sealed\nas readouts. Classical uniform hint-free surface remains exhausted; frontiers:\nbarrier-4 proof, quantum channel, hint amplification.\n\n\ud83e\udd16 Generated with [Claude Code](https://claude.com/claude-code)",
     "domains": [
       "Novelty"
     ],
     "id": "fd_1135",
-    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-12T04:00:21.973370+00:00",
     "title": "The Permutation Readout of Individual Orders, Closed"
   },
@@ -241,6 +240,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-08-12T04:00:21.975064+00:00",
     "title": "The Moonshot Sweep: Five-Angle arXiv Mining, Judged and Tested"
+  },
+  {
+    "consumed_by_exp_id": "75a4bebb",
+    "description": "**Paper 48 (NewMathematics) \u2014 Experiment 383, assessment v159. Frontier ii (quantum channel / classical side-information).**\n\n**Hypothesis (round-14 #5):** Can classical conditioning on poly-computable statistics of N shrink Shor's quantum register?\n\n**Experiment (10 000 semiprimes, N in [2^23, 2^28], base a=2; permutation-null mutual information over a battery of N-computable statistics \u2014 N mod m, Jacobi symbols, possible-trace sets, digit predicates; targets log2(r) binned and r mod \u2113 for \u2113=2,3,5,7):**\n\n1. **Magnitude channel EMPTY:** I(combined fingerprint; log2 r) excess \u2248 0; best R\u00b2 of log2 r on N mod m = 0.017. The register-sizing quantity is orthogonal to every poly-computable statistic (barrier 5).\n2. **Divisibility channel real but minuscule:** I(N mod \u2113; [\u2113|r]) = 0.082 (\u2113=3), 0.018 (\u2113=5), 0.012 (\u2113=7), decaying ~1/\u2113\u00b2. **TOTAL capacity over all primes \u2264 500 = 0.173 bits** vs H(r) \u2265 13.3 bits. H(r|F(N)) \u2248 H(r) \u2212 0.2.\n3. **Mechanism \u2014 divisibility lift:** \u2113|r \u27f9 \u2113|p\u22121 or \u2113|q\u22121; N mod \u2113 constrains (p,q) mod \u2113. N's residues leak only the small-prime divisibility PROFILE of the order, never its value (barriers 2, 6).\n4. **Chebotarev content:** N\u22612 mod 3 lifts P(3|r) to 0.76 vs 0.43 for N\u22611 (consistent a=2,3,5), measuring P(3|ord_p(a) | p\u22611 mod 3) \u2248 0.75 \u2014 the cube-residue density.\n\n**Verdict:** Strong \"I\u22480\" form REFUTED (the divisibility channel exists); refined claim CONFIRMED and QUANTIFIED. No factor-revealing content; no register shrink. Combined with QUBIT-TRADE, the quantum channel is doubly sealed \u2014 neither truncation nor classical conditioning reduces its ~2\u00b7log2(N)-qubit register.\n\nFull paper: ResearchOutput/NewMathematics/48_CondRank_ClassicalConditioning.md",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_1140",
+    "phase": "A",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "in_progress",
+    "timestamp": "2026-08-12T05:10:44.745094+00:00",
+    "title": "COND-RANK: classical conditioning capacity on the order is ~0.2 bits \u2014 quantum register cannot be shrunk by conditioning"
   },
   {
     "consumed_by_exp_id": "c98081c2",
@@ -423,20 +437,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Experiment 395: ZERO-DIVISOR-GRAPH \u2014 \u0393(Z/pq) = K_{p\u22121,q\u22121} exactly; bipartition IS the factorization"
   },
   {
-    "consumed_by_exp_id": "",
-    "description": "## ECM-PARITY (round-18 #1, experiment 404, assessment v180, paper 69)\n\nThe parity face of the generic ECM order \u2014 the even-\u2113 complement of ECM-ORDER-NULL (paper 66, which tested only odd \u2113): **2 | #E0(F_p) \u27fa the S\u2083 cubic x\u00b3+x+1 has a root mod p \u27fa the Frobenius is NOT a 3-cycle**. **Verdict: CONFIRMED null (factor-useless)** with three positive structural findings.\n\n### (1) The exact parity structure\nP(2|#E0) = 0.6493 (theory 2/3 = 1 \u2212 P(3-cycle)). The transposition face (density 1/2) is (\u0394|p)-pinned: P(2|#E | (\u0394|p)=\u22121) = **1.0000 EXACTLY** (a transposition fixes exactly one root, r=1, 2|#E with #E \u2261 2 mod 4). On (\u0394|p)=+1 the Frobenius \u2208 A\u2083 = {1, 3-cycles}: P(2|#E) = P(identity|A\u2083) = 1/3 (measured 0.3187). 4 | #E ALWAYS on the [1,1,1] face (full rational 2-torsion), never on [3].\n\n### (2) Headline \u2014 the first positive symmetric residue shadow on the GENERIC elliptic order\nSYM I(N mod 31; \"2|#E0(F_p) OR 2|#E0(F_q)\") = **0.1468 bits = 42\u00d7 the null max (0.0035)** \u2014 carried EXACTLY by the Jacobi character: I((\u0394|N); OR) = 0.1463, residual 0.0004. P(OR | (\u0394|N)=\u22121) = **1.0000** (the \u22121 factor is a transposition, 2|#E forced); P(OR | (\u0394|N)=+1) = 0.7358. Here (\u0394|N) = (p mod 31 | 31)(q mod 31 | 31) by quadratic reciprocity ((\u221231|p) = (p mod 31 | 31)).\n\n### (3) The fork is NOT flat (qualifies paper 65)\nThe [1,1,1]-vs-[3] fork at (\u0394|p)=+1 is residue-pinned: per-class rates 0.124\u20130.594 over the 15 QR-classes mod 31 (I = 0.0742); **93.3% of the fork entropy H(1/3)=0.918 determined by p mod 31\u00b2** (I = 0.8562). The fork's variance compresses the union via Jensen concavity \u2014 P(OR|(\u0394|N)=+1) = 0.7358 BELOW the flat-fork 7/9 \u2014 which is why B1 = 0.147, not 0.25.\n\n### (4) Exact classical mechanism \u2014 Hilbert class field\n[1,1,1] \u27fa 4p = A\u00b2+31B\u00b2 (A\u2261B mod 2) on **2900/2900 EXACT**, and 4p = A\u00b2+23B\u00b2 on **2911/2911 EXACT**. Q(\u221a\u221231) and Q(\u221a\u221223) both have class number 3; their Hilbert class fields ARE the S\u2083-closures of x\u00b3+x+1 / x\u00b3\u2212x+1, so [1,1,1] \u27fa \u2118 principal \u27fa p splits completely in the Hilbert class field.\n\n### (5) Ray-class semiprime dial\nI(N mod 31\u00b2; OR) = 0.1811 (null max 0.0719) vs Jacobi 0.1444 \u2014 the ray-class dial thickens the channel but is which-factor-scrambled (N carries only the product).\n\n### Seals / barriers\nSymmetric only (asym 0.0012 at null \u2014 which-factor lost, barrier 2); a Jacobi/quadratic-reciprocity residue dial (barrier 5); exact order sealed behind the CRT split (barrier 6); all of it Jacobi (1801) + Hilbert class fields (class number 3) + ECM (1987) \u2014 known methods (barrier 8). Robustness: \u0394=\u221223 gives 0.1230 (45\u00d7 null max 0.0027); p\u22121 machinery control live (0.3052). Round-18 1/1 done. Barriers 2/5/6/8.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1170",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-12T17:19:53.175571+00:00",
-    "title": "ECM-PARITY: first positive symmetric residue shadow on the GENERIC elliptic order (2|#E \u27fa cubic root \u27fa Frobenius not 3-cycle) \u2014 round-18 #1, exp 404"
-  },
-  {
     "consumed_by_exp_id": "8590e003",
     "description": "## CM-ECM-GENERAL (round-17 #2, experiment 403, assessment v179, paper 68)\n\nGeneralization + stress-test of the CM-ECM-ORDER shadow (paper 67) on the second CM field Q(\u221a\u22123) \u2014 the j=0 curve y\u00b2=x\u00b3+1 (End=\u2124[\u03c9], bad primes 2, 3), which has RATIONAL 3-torsion ((0,\u00b11) over Q). **Verdict: CONFIRMED null (factor-useless)** with three measured refinements.\n\n### (1) Rational-torsion degeneracy (headline)\n3 | #E_j0(F_p) UNCONDITIONALLY (2000/2000), so the \u2113=3 ECM-order OR event is a CONSTANT \u2014 SYM I(N mod 3; 3|#E_j0 OR) = **0.0000 EXACTLY** (null max 0.0000) \u2014 even though the inert class (0.311) and split class (0.316) each individually carry a p\u22121-strength class-OR channel. A curve can carry a fully residue-visible, abelian, p+1-sourced congruence on its elliptic order that reveals exactly zero bits: the shadow is real only when the event is CONDITIONAL.\n\n### (2) Union-dilution law\nThe CM shadow \u2264 the inert-class OR channel always: \u2113=9 FULL 0.0120 fires at 7.1\u00d7 the null max yet sits 1.45\u00d7 BELOW the inert-class reference 0.0174 (the split-half base rate raises the union's unconditional probability, compressing conditional variation); \u2113=5 FULL 0.0030 (3.8\u00d7) \u2248 ref 0.0032; \u2113=7/11 at null. Q(i) reproduces it (\u2113=3: FULL 0.0048 vs ref 0.0143 \u2014 matching paper 67's 0.0048 exactly). Field-independent mechanism.\n\n### (3) 3-adic Hecke visibility\nThe split-half Hecke term is residue-INVISIBLE at good primes (\u2113=5: z=\u22120.31) but VISIBLE at powers of the CM field's RAMIFIED prime (\u2113=9=3\u00b2: z=+24.5; \u2113=27=3\u00b3: z=+2.6) \u2014 ramification shrinks the Hecke conductor's 3-adic part, pinning a_p mod 3^k by a small modulus. Refines paper 67's \"split-half GL\u2082-hidden\" to \"hidden at good primes\".\n\n### Structure / seals\nExact inert collapse a_p=0 on 2018/2018 primes p \u2261 2 mod 3 (P(a_p=0)=0.504); atomic trace law (P(x=0)=0.504, P(|x|<0.5)=0.670, mean-sq=0.244). Asym (which-factor) wall null (0.0002/0.0012 at \u2113=5/7); smoothness OR sealed (0.0006/0.0011); generic control null. On the inert half #E=p+1 EXACTLY so ECM-on-j0 IS the p+1 method (1982); the visible \u2113=9 channel is a residue dial on class 8 mod 9 (QRLEAK family). All Gauss/Eisenstein (1801), ECM (1987), p+1 (1982). Barriers 2/5/6/8. Round-17 COMPLETE 2/2.",
     "domains": [
@@ -482,17 +482,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "CYCLIC-CUBIC-FORK: fork-pinning \u27fa fork in the abelianization of the Galois closure (criterion verified on C3/S3/S4, paper 71)"
   },
   {
-    "consumed_by_exp_id": "9a499c4d",
+    "consumed_by_exp_id": "",
     "description": "## OR-COLLAPSE-LAW (round-19 #2, experiment 407, assessment v183, paper 72)\n\n**An exact universal law of the semiprime OR collapse.** Paper 71 proved the fork-pinning criterion (a fork is congruence-pinned iff it factors through G^ab) and measured one collapse (cond-7 cubic OR = 0.0728 bits). Here is the general law: for any abelian field whose split-completely event is pinned by an order-n Dirichlet character (split \u27fa \u03c7(p)=1, P(split)=1/n), the semiprime OR [split(p) OR split(q)] obeys, for gcd(N,f)=1,\n\n**P(OR | \u03c7(N)=1) = 1/n, P(OR | \u03c7(N)\u22601) = 2/n, P(OR) = (2n\u22121)/n\u00b2, I(N mod f; OR) = g(n) = H((2n\u22121)/n\u00b2) \u2212 (1/n)H(1/n) \u2212 ((n\u22121)/n)H(2/n)** \u2014 universal in the order n, independent of field, degree, and conductor structure.\n\n### Machine-verified on 7 fields (2^22, 30k semiprimes, split sets empirically confirmed by nroots==deg)\n\n| field | n | f | I(N mod f; OR) | g(n) |\n|---|---|---|---|---|\n| x\u00b2\u2212x\u22121 (Q(\u221a5)) | 2 | 5 | 0.3076 | 0.3113 |\n| x\u00b3+x\u00b2\u22122x\u22121 (cyclic cubic) | 3 | 7 | 0.0704 | 0.0728 |\n| x\u00b3\u22123x+1 (cyclic cubic) | 3 | 9=3\u00b2 | 0.0735 | 0.0728 |\n| x\u2074\u22124x\u00b2+2 (Q(\u03b6\u2081\u2086)+, units C\u2082\u00d7C\u2084) | 4 | 16=2\u2074 | 0.0384 | 0.0359 |\n| x\u2075+x\u2074\u22124x\u00b3\u22123x\u00b2+3x+1 (Q(\u03b6\u2081\u2081)+) | 5 | 11 | 0.0222 | 0.0215 |\n| \u03a6\u2087 (Q(\u03b6\u2087)) | 6 | 7 | 0.0146 | 0.0144 |\n| cyclic cubic (character-only) | 3 | 21=3\u00b77 | 0.0700 | 0.0728 |\n\nPer-class conditional rates match 1/n and 2/n within 1\u20132% everywhere; coprime modulus FLAT; m=f\u00b2 invariant.\n\n### UNIFICATION \u2014 the two biggest residue channels of the lab are two points of one law\n\n- **The p\u22121 \u2113=3 symmetric OR (paper 54: 0.313) IS the n=2 case** with f=3 (split = p \u2261 1 mod 3, \u03c7 the quadratic character of Q(\u221a\u22123)): reproduced I(N mod 3; OR) = **0.3126** including the N\u22610 class, P(OR|N\u22611)=0.4942 (law 1/2), P(OR|N\u22612)=**1.0000** (law 2/n).\n- **Paper 71's cond-7 cubic OR (0.0728) is the n=3 case.**\n\n### The decay law\n\ng(n) monotone \u2192 0: 0.3113/0.0728/0.0359/0.0215/0.0144/0.0103/0.0077/0.0060 (n=2..9). The MORE the prime-level fork pins (H(1/n) \u2248 1 bit), the LESS its OR shows \u2014 no order-n Dirichlet fork ever yields more than g(n) \u2264 0.3113 symmetric OR bits.\n\n### Factor-useless (barriers 2/5/6/8)\n\nSymmetric (which-factor wall 0.0001\u20130.0002), a Dirichlet residue dial (QRLEAK family), sealed behind the CRT split, all classical (quadratic 1801 / cubic 1844 / higher reciprocity + Dirichlet characters + CRT). The residue-fork line is now quantitatively CLOSED at the semiprime level.\n\n**Verdict:** exact law CONFIRMED on 7 fields spanning prime/composite conductors and cyclic/non-cyclic unit groups. Round-19 2/2 done. Barriers 2/5/6/8.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_1176",
-    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-12T18:27:34.950152+00:00",
     "title": "OR-COLLAPSE-LAW: semiprime OR of a cyclic split-complete fork = g(n) = H((2n-1)/n^2) - (1/n)H(1/n) - ((n-1)/n)H(2/n) bits (round-19 #2, exp 407, v183, paper 72)"
   },
@@ -784,6 +783,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-14T08:46:05.909306+00:00",
     "title": "Deepening: Exp 399 PLUSONE-SMOOTH-NULL (round-16 #2): the Williams p+1 weakness is residue-"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 295ca744 (Q=0.860), which proved 79 theorems in Algebra. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## ECM-PARITY (round-18 #1, experiment 404, assessment v180, paper 69)\n\nThe parity face of the generic ECM order \u2014 the even-\u2113 complement of ECM-ORDER-NULL (paper 66, which tested only odd \u2113): **2 | #E0(F_p) \u27fa the S\u2083 cubic x\u00b3+x+1 has a root mod p \u27fa the Frobenius is NOT a 3-cycle**. **Verdict: CONFIRM",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "push_295ca744_eca059c2",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "295ca744",
+    "status": "available",
+    "timestamp": "2026-08-14T16:15:07.446774+00:00",
+    "title": "Deepening: ECM-PARITY: first positive symmetric residue shadow on the GENERIC elliptic orde"
   },
   {
     "consumed_by_exp_id": "",
@@ -19218,6 +19231,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-14T15:14:27.991152+00:00",
     "title": "The formalized results (`Catalog/Novelty/Shor*.lean`) establish, with zero"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# FUTURE DIRECTIONS \u2014 ECM-PARITY (round-18 #1, experiment 404)\n\nThe cycle proved, with zero `sorry`s:\n\n| face | theorem |\n|---|---|\n| parity dichotomy | `ECMParity.two_dvd_curveCard_iff` |\n| Stickelberger, 3-cycle | `ECMParity.disc_isSquare_of_no_root` |\n| parity law | `ECMParity.disc_not_isSquare_iff_card_eq_one` |\n| `(\u0394\\|p)`-pinned face | `ECMParity.two_dvd_curveCard_of_disc_not_isSquare` |\n| symmetric Jacobi shadow | `ECMParity.or_two_dvd_E0Card_of_jacobi`, general `ECMParity.or_two_dvd_cubicCardZ_of_jacobi` |\n| split face mod 4 | `ECMParity.four_dvd_curveCard_of_three_roots` |\n| **corrected** transposition face mod 4 | `ECMParity.curveCard_mod_four_of_unique_root` |\n| class-field face | `ECMParity.E0Card_mod_four_ne_two_of_form` |\n| Jensen deficit | `ECMParity.jensen_union_deficit` |\n\nThe single *negative* result of the cycle: the experiment's claim that the\ntransposition face forces `#E \u2261 2 (mod 4)` is **false** (kernel-checked\ncounterexample `#E\u2080(\ud835\udd3d\u2082\u2083) = 28` with a unique root `x = 4`), and the correct law\nis `#E \u2261 2 (mod 4) \u27fa 3a\u00b2 + A` is a non-square.  The conjectures below start\nfrom that correction.\n\n---\n\n## Conjecture 1 \u2014 the `2`-adic valuation is a *two-symbol* dial\n\nFor a separable depressed cubic over `\ud835\udd3d_p` with root set of size `r`,\n\n* `r = 0` \u21d2 `v\u2082(#E) = 0`;\n* `r = 1` \u21d2 `v\u2082(#E) = 1 \u27fa (k|p) = -1` where `k = 3a\u00b2 + A` (proved), and\n  **conjecturally** `v\u2082(#E) = 2 + v\u2082(m)` where `m` is the number of `x` with\n  `f(x)` a nonzero square lying in a single `\u03c4_a`-orbit class;\n* `r = 3` \u21d2 `v\u2082(#E) \u2265 2`, with `v\u2082(#E) = 2 \u27fa` none of the three quantities\n  `(b-a)(c-a)`, `(a-b)(c-b)`, `(a-c)(b-c)` is a square mod `p`.\n\n**The key insight is** that the mod-4 information is carried entirely by the\nquadratic characters of the *tangent slopes* `k_a = f'(a)` at the rational\n`2`-torsion points, because `\u03c4_a` has a fixed point exactly when `k_a` is a\nsquare \u2014 which is the classical \"`(a,0)` is divisible by `2` in `E(\ud835\udd3d_p)`\"\ncriterion in involution form.  **Why now?**  The involution machinery\n(`ECMParity.tw`, `ECMParity.card_mod_two_eq_card_fixed`) is now formalized, so\n`v\u2082` statements become finite fixed-point computations rather than group-law\narguments.\n\n## Conjecture 2 \u2014 the `4 \u2223 #E` face is *not* a residue dial\n\n`2 \u2223 #E\u2080(\ud835\udd3d_p)` is pinned by `p mod 31` on half of the primes (proved).  We\nconjecture that `4 \u2223 #E\u2080(\ud835\udd3d_p)` is **not** determined by `p mod M` for any fixed\nmodulus `M`: the criterion `(3a\u00b2 + 1 | p) = 1` involves the root `a`, which is\nan algebraic function of `p` of degree 3, so the condition cuts out a\nnon-abelian (degree-12, `S\u2083 \u00d7 C\u2082` type) Chebotarev class.\n\n**The key insight is** that the corrected mod-4 law is a *conditional* Legendre\nsymbol of a quantity living in the cubic field, hence a Frobenius condition in a\nnon-abelian extension, invisible to any congruence.  **Why now?**  The exact\ncriterion is now a theorem, so the conjecture is a clean statement about the\nsplitting field of `x\u00b3+x+1` and `\u221a(3a\u00b2+1)`, testable by counting.\n\n## Conjecture 3 \u2014 sharpening the Jensen deficit into an information bound\n\nFor a fork with class-wise rates `\u03b8_i` and mean `m`, the mutual information\nbetween the residue class and the union event is bounded by the variance:\n\n  `I(class ; OR) \u2264 C \u00b7 Var(\u03b8) / (m(1-m))` for an absolute constant `C`.\n\nTogether with `ECMParity.jensen_union_deficit` this would convert the observed\n`0.1468` bits into a *provable* ceiling from the measured spread `0.124\u20130.594`\nof the per-class rates.\n\n**The key insight is** that the union-probability deficit is *exactly* the\nvariance (now a theorem), so any information bound of Pinsker type applied to\nthe two-point channel factors through that same variance.  **Why now?**  The\nidentity is available in Lean and the remaining step is a purely analytic\ninequality on `[0,1]`.\n\n## Conjecture 4 \u2014 the class-field face is an equivalence, and it is mod-4 visible\n\nWe proved `4p = A\u00b2 + 31B\u00b2 \u21d2 #E\u2080(\ud835\udd3d_p) % 4 \u2260 2`.  Conjecture: the converse holds\nin the sharp form\n\n  `4p = A\u00b2 + 31B\u00b2 \u27fa p splits completely in the Hilbert class field of \u211a(\u221a-31)\n  \u27fa #E\u2080(\ud835\udd3d_p) \u2261 0 (mod 4) and (-31|p) = 1`.\n\n**The key insight is** that the `[1,1,1]` face is simultaneously the principal\nform class and the `4 \u2223 #E` face *inside* `(\u0394|p) = +1`, so the mod-4 valuation\nof the elliptic order becomes a computable test for principality in a class\ngroup of order 3.  **Why now?**  Both halves are already formalized in one\nplace: `disc_not_isSquare_iff_card_eq_one` for the `(\u0394|p)` split and\n`four_dvd_curveCard_of_three_roots` for the mod-4 half; only the class-field\nequivalence (Cox, Thm 9.4-style) remains.\n\n## Conjecture 5 \u2014 the shadow survives to arbitrary class number 3 discriminants\n\nFor every prime `\u2113 \u2261 3 (mod 4)` such that `-\u2113` is the discriminant of an\nintegral depressed cubic (`-4a\u00b3 - 27b\u00b2 = -\u2113`), the symmetric Jacobi shadow of\n`ECMParity.or_two_dvd_cubicCardZ_of_jacobi` holds, and its information content\nis exactly `H(1/2) - E[H(\u03b8)]` with `\u03b8` the per-class root density.  Conjecture:\nthe number of such `\u2113 \u2264 X` grows like `c\u00b7X^{5/6}` (counting integral points on\n`4a\u00b3 + 27b\u00b2 = \u2113` \u2014 a Mordell curve family).\n\n**The key insight is** that \"cubic with prime discriminant `-\u2113`\" is an integral\npoint count on the Mordell curves `y\u00b2 = x\u00b3 - k`, so the *supply* of ECM-parity\ndials is itself a Diophantine quantity.  **Why now?**  The dial theorem is\nproved uniformly in `\u2113` (`or_two_dvd_cubicCardZ_of_jacobi`), so the only\nremaining variable is how many `\u2113` feed it.\n",
+    "domains": [
+      "Algebra",
+      "NumberTheory"
+    ],
+    "id": "fd_1262",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "295ca744",
+    "status": "available",
+    "timestamp": "2026-08-14T16:14:58.444075+00:00",
+    "title": "The cycle proved, with zero `sorry`s:"
   },
   {
     "consumed_by_exp_id": "",
