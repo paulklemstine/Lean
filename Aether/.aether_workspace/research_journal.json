@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "1f345ab3",
-      "domain": "Tropical",
-      "key_insight": "# Future Directions\n\nDerived from the results proved in `Catalog/Tropical/EML/` during this cycle:\ngeneral odd/even tropical `L¹` median geometry (`TropicalMedianDescent.lean`),\nperturbed and separabl",
-      "quality_score": 0.73286,
-      "sorry_count": 0,
-      "theorem_count": 96,
-      "timestamp": "2026-08-09T14:11:03",
-      "title": "1. **Odd-sample extension.** For every odd sample size `2k+1`, clipped unit-step"
-    },
-    {
       "cycle_id": "756b62a7",
       "domain": "Pythagorean",
       "key_insight": "# Future directions\n\nDerived from the formalization in `Catalog/Pythagorean/SchurIdempotentGammaTwo.lean`, `SchurIdempotentGap.lean`,\n`SchurIdempotentAlgebra.lean` and `SchurIdempotentEQCost.lean`.\n\nW",
@@ -499,19 +489,19 @@
       "theorem_count": 92,
       "timestamp": "2026-08-14T00:06:43",
       "title": "Round-6 Hypothesis Closures: The Noise-Floor Principle and the Trace-Lemma Frontier"
+    },
+    {
+      "cycle_id": "d99b7790",
+      "domain": "MachineLearning",
+      "key_insight": "# Future directions: five falsifiable conjectures\n\nDerived from the analysis and adversarial review of the formalised results in\n`Catalog/MachineLearning/FreeWitnessTraceLemma.lean`,\n`FreeWitnessClass",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 72,
+      "timestamp": "2026-08-14T02:53:30",
+      "title": "The CRT-Multiplicative Free-Witness Classification and the Trace Lemma"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "ab554343",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\n## Causal semantics\n\n- Replace abstract cut losses with finite transition-probability kernels and formalize interventions, cause–effect repertoires, and divergence-based informati",
-      "quality_score": 0.79623,
-      "sorry_count": 0,
-      "theorem_count": 19,
-      "timestamp": "2026-08-03T08:05:21",
-      "title": "Consciousness as Integrated Information"
-    },
     {
       "cycle_id": "4db4579d",
       "domain": "Shared",
@@ -2501,15 +2491,19 @@
       "theorem_count": 92,
       "timestamp": "2026-08-14T00:06:43",
       "title": "Round-6 Hypothesis Closures: The Noise-Floor Principle and the Trace-Lemma Frontier"
+    },
+    {
+      "cycle_id": "d99b7790",
+      "domain": "MachineLearning",
+      "key_insight": "# Future directions: five falsifiable conjectures\n\nDerived from the analysis and adversarial review of the formalised results in\n`Catalog/MachineLearning/FreeWitnessTraceLemma.lean`,\n`FreeWitnessClass",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 72,
+      "timestamp": "2026-08-14T02:53:30",
+      "title": "The CRT-Multiplicative Free-Witness Classification and the Trace Lemma"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "579ae41a",
-      "domain": "Computation",
-      "name": "catalog",
-      "quality": 0.82
-    },
     {
       "cycle_id": "579ae41a",
       "domain": "Computation",
@@ -2803,9 +2797,15 @@
       "domain": "MachineLearning",
       "name": "logDet_le_trace_div",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "d99b7790",
+      "domain": "MachineLearning",
+      "name": "sum_split",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-14T00:06:43",
+  "last_updated": "2026-08-14T02:53:30",
   "open_questions": [
     {
       "context": "+unproved infinite tail as a `sorry`.  The computational certificate; -    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
@@ -3517,12 +3517,6 @@
     ],
     "MachineLearning": [
       {
-        "cycle_id": "f8e43caa",
-        "quality": 0.77257,
-        "theorems": 12,
-        "title": "Grokking: Phase Transitions in Learning"
-      },
-      {
         "cycle_id": "d6f1fad6",
         "quality": 0.6536503144654089,
         "theorems": 177,
@@ -3575,6 +3569,12 @@
         "quality": 0.82,
         "theorems": 92,
         "title": "Round-6 Hypothesis Closures: The Noise-Floor Principle and the Trace-Lemma Front"
+      },
+      {
+        "cycle_id": "d99b7790",
+        "quality": 0.82,
+        "theorems": 72,
+        "title": "The CRT-Multiplicative Free-Witness Classification and the Trace Lemma"
       }
     ],
     "Novelty": [

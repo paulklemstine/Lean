@@ -93,16 +93,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Binary-Quadratic-Form Count Family: A Canonical Free-Witness for Barrier 4"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6a9d3bbc",
     "description": "**Paper (factor3):** [ResearchOutput/NewMathematics/16_FreeWitness_Classification.md](https://github.com/paulklemstine/factor3/blob/main/ResearchOutput/NewMathematics/16_FreeWitness_Classification.md)\n\n---\n\n# The CRT-Multiplicative Free-Witness Classification and the Trace Lemma\n\n**Program:** Factoring research lab \u2014 unification of the free-witness family\n**Date:** 2026-08-11\n**Status:** Classification theorem (supported by 9+ experiments, validated by a successful falsifiable prediction)\n\n---\n\n## Abstract\n\nNine structurally distinct experiments \u2014 CIRC, KROOT, BQF, HEISENBERG-CLASS,\nCUSP-INDEX, ZETA-LP, RS-MIND, CONG-DIV, and SIGK \u2014 collapse to ONE mechanism.\nA free-witness is a counting aggregate over a CRT-separable domain whose local\nweights are non-polynomial and CRT-multiplicative. Such a scalar jointly encodes\nboth factors (escaping the symmetry barrier), is non-polynomial in N (escaping\nthe polynomial barrier), and is sealed by \u03a9(N) aggregation (barrier 4). This\npaper states the classification, the trace-reduction lemma (every recoverable\nwitness reduces to p+q, max(p,q), or a residue/order vector), the\ncharacters-only boundary lemma, and the successful falsifiable prediction that\nvalidated the theorem (sigma_k(N), k>=2).\n\n---\n\n## 1. The unifying mechanism\n\nEvery experiment in the free-witness family has three layers:\n\n1. **CRT decomposition.** The witness counts solutions over an ambient set that\n   is CRT-separable (S_N ~= S_p x S_q) with a CRT-multiplicative weight. The\n   count factors as a product (C_D(N) = C_D(p) C_D(q)).\n\n2. **Non-polynomial local factor.** Each local piece depends on ONE prime through\n   a non-polynomial function: the Kronecker symbol chi_D(p) (CIRC, BQF), the\n   order gcd(k, p-1) (KROOT), the divisor sum sigma(p) = 1+p (CUSP-INDEX,\n   ZETA-LP, SIGK), the class count (HEISENBERG), the code distance\n   (RS-MIND), the order ord_p(a) (BURAU-ORD). This is why the scalar is not a\n   polynomial in N: it is a function of p and q SEPARATELY.\n\n3. **Sealing (barrier 4).** The closed form requires the factors (circular,\n   barrier 6); the only factor-free route is enumerating the CRT-product domain\n   \u2014 O(N) or O(N^2). Recovery from the scalar is poly-time.\n\n**Classification theorem (supported, not yet proven).** A counting function over\na CRT-separable domain whose local weights are non-polynomial and\nCRT-multiplicative is a free-witness \u2014 factoring-complete, O(1) from the factors,\n\u03a9(N) otherwise.\n\n---\n\n## 2. The trace lemma\n\nEvery recoverable free-witness reduces to one of:\n- the trace s = p + q (CIRC, BQF, HEISENBERG-CLASS, CUSP-INDEX, ZETA-LP),\n- the larger factor max(p,q) (RS-MIND), or\n- a residue/order vector (KROOT, MODPAR-CERT, BURAU-ORD).\n\nOnce s = p+q is known, p and q are the roots of x^2 - s x + N. Once max(p,q) is\nknown, the other factor is N/max. The information content of every witness is\none factor-secret coordinate.\n\n---\n\n## 3. The characters-only boundary lemma\n\nWIGNER-CUBIC showed the boundary of this class: its claimed CRT factorization is\nFALSE because exponential phase functions e^{2 pi i f(y)/N} do NOT decompose\nthrough CRT \u2014 only GROUP CHARACTERS do. The free-witness family works precisely\nbecause its local weights (Kronecker symbols, orders, divisor sums) ARE\ncharacter-like / CRT-multiplicative. Non-character phase functions fall outside\nthe class. This delimits exactly why the six+ settings work and where the\nmechanism cannot extend.\n\n---\n\n## 4. The falsifiable prediction (validated)\n\nThe classification predicts: ANY non-polynomial CRT-multiplicative local count\nyields another free-witness. The divisor-power-sum sigma_k(N) = prod(1 + p_i^k)\nhas local weight (1 + p^k), non-polynomial and CRT-multiplicative. Tested\n(experiment SIGK): sigma_2(N) = (1+p^2)(1+q^2) verified exactly, and\np^2 + q^2 = sigma_2 - 1 - N^2 recovers p,q in every case. This is the FIRST\nfree-witness PREDICTED by the theory rather than found by search \u2014 a successful\nfalsifiable test. Other predicted members: Ramanujan sums (already shown\nfactor-secret in FOU), class numbers, the psi-function (already = CUSP-INDEX).\n\n---\n\n## 5. The sealing, precisely\n\nThe CIRC mod-2^k addendum showed truncated counts still leak factor residues\n(p mod 8) but remain sealed. This is empirical; a proof direction: find N1 == N2\nmod 2^k with C(N1) not congruent C(N2) mod 2^k. Since p,q mod 2^k are\nunderdetermined by N mod 2^k, such a pair would prove no poly formula exists\n(any poly formula depends only on N's residues), upgrading the addendum to a\ntheorem and giving barrier 4 its sharpest form.\n\n---\n\n## 6. Honest statement\n\n**Established (computationally verified):** the classification holds across\nnine+ structurally distinct settings; sigma_k(N) (k>=2) confirmed as a predicted\nmember; recovery is poly-time from any witness; sealing is \u03a9(N) in every case.\n**Not established:** a PROOF that barrier 4's aggregation is necessary (that is\nequivalent to factoring hardness \u2014 a famous open problem). The classification\ncharacterizes the mechanism precisely but does not prove it unconditionally.\n\n---\n\n## 7. Conclusion\n\nThe free-witness family is understood as ONE mechanism: non-polynomial\nCRT-multiplicative local counts over CRT-separable domains. Nine settings,\none information channel (the trace s = p+q, or max(p,q), or a residue/order\nvector), all sealed by \u03a9(N) aggregation. The classification is falsifiable and\nwas validated by a successful prediction (SIGK). Barrier 4 remains the dominant\n\u2014 and now precisely characterized \u2014 obstruction to classical factoring.\n\n---\n\n*Related:* `13_FreeWitness_Family.md` (the family), `15_Round3_Closures.md`\n(BURAU-ORD separation test), `Factoring_Lab_Notebook.md` Parts 39-55.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_1113",
+    "phase": "B",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-11T22:14:34.147213+00:00",
     "title": "The CRT-Multiplicative Free-Witness Classification and the Trace Lemma"
   },
@@ -512,16 +513,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Exp 391 BERGGREN-PRICE-INTERLOCK: every semiprime is a node of both Pythagorean trees \u2014 the N-node identity is exact, the interlock is factoring-orthogonal"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "76955127",
     "description": "## Experiment 400 \u2014 FROBENIUS-TYPE-NULL (cron loop round-16 #3)\n\n**Hypothesis (null).** The mod-N splitting type of a fixed polynomial f \u2014 the factorization pattern of f mod N \u2014 is the lab's first NON-abelian symmetric N-computable channel. It is genuinely richer than the abelian (Dirichlet) battery closed by QRLEAK (the id-vs-3-cycle fork at (\u0394|p)=+1 is pinned by NO abelian character), yet carries zero factor leverage.\n\n**Result: CONFIRMED null (negative for factoring). Barriers 2/5/6/8.**\n\n### 1. The channel is REAL and non-abelian (positive control)\nS\u2083 cubic x\u00b3\u2212x\u22121 (disc \u221223), over 3000 primes:\n- types [1,1,1] : [1,2] : [3] = 0.169 : 0.507 : 0.324 (Chebotarev 1/6 : 1/2 : 1/3)\n- **fork at (\u221223|p)=+1: [1,1,1] = 0.342 vs [3] = 0.658 (Cheb 1/3 : 2/3)** \u2014 identity vs 3-cycle, both EVEN (A\u2083), pinned by no Dirichlet character\n- at (\u221223|p)=\u22121: [1,2] forced 1.000 (transposition = odd)\nS\u2084 quartic x\u2074\u2212x\u22121 (disc \u2212283) confirms: A\u2084 fork [1,1,1,1]/[2,2]/[1,3] = 0.069/0.247/0.684 (Cheb 1/12 : 3/12 : 8/12).\n\n### 2. Yet factor-orthogonal (null)\nThe mod-N type is the UNTAGGED union of the mod-p and mod-q types (S\u2083 six patterns AA\u2026CC). All 16 (bit-length, (\u0394|N))-grouped F-tests of type\u2192gap and type\u2192trace at chance:\n- S\u2083: gap F \u2264 1.59 (p \u2265 0.224), trace F \u2264 1.61 (p \u2265 0.218)\n- S\u2084: gap F \u2264 2.03 (p \u2265 0.064), trace F \u2264 1.89 (p \u2265 0.090)\n\n### 3. Privacy\nH(union) = 2.295 bits of structure, but the p/q labeling is lost on 892/1500 = 59% of semiprimes \u2014 symmetric (barrier 2).\n\n### 4. Computationally sealed\nsympy factor_list(f, modulus=N) fails 200/200; the classical reduction \"factoring a polynomial mod composite n is as hard as factoring n\" holds. The exact type is N-determined but not poly-computable (barriers 4/6). All Chebotarev (1922), never a factoring move (barrier 8).\n\n**Verdict:** The non-abelian richness of N is the richness of N's own prime-splitting structure, not a window onto p and q. Round-16 3/3 done.\n\nPaper: ResearchOutput/NewMathematics/65_FrobeniusTypeNull_NonAbelianChannelSealed.md\nNotebook: Part 146. Assessment v176 / 400 experiments. Script: /tmp/exp_frobeniustype.py.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_1163",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-12T16:19:41.780222+00:00",
     "title": "Exp 400 FROBENIUS-TYPE-NULL (round-16 #3): the splitting type of N in a non-abelian extension is symmetric, factor-orthogonal, and computationally sealed"
   },
@@ -11227,6 +11229,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-13T02:55:27.767571+00:00",
     "title": "ArXiv paper: The finite basis problem for the flat semirings $S(W)$"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'A Dense Weisfeiler-Leman Algorithm for Deciding Bounded-Cliquewidth Homomorphism Indistinguishability' and formalize its key results. Abstract: Two graphs $G$ and $H$ are homomorphism indistinguishable over a graph class $\\mathcal{F}$ if they admit the same number of homomorphisms from every graph in $\\mathcal{F}$. A wide range of relaxations of graph isomorphism arise this way: isomorphism itself over the class of all graphs [Lov\u00e1sz, Acta Math. Hung. 1967], equivalence under the $k$-dimensional Weisfeiler-Leman algorithm over the graphs of treewidth $\\leq k$ [Dvo\u0159\u00e1k, J. Graph Theory 2010], and quantum isomorphism over planar graphs [Man\u010dinska-Roberson, FOCS 2020]. Since the class $\\mathcal{F}$ is typically infinite, it is not clear a priori whether homomorphism indistinguishability over $\\mathcal{F}$ is decidable; for planar graphs it is undecidable. Every class for which decidability was previously known is sparse. We give the first decidability results for dense graph classes: We introduce the dense Weisfeiler-Leman algorithm that decides homomorphism indistinguishability over the class of graphs of cliquewidth $\\leq k$, th",
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_1247",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2608.13382v1",
+    "status": "available",
+    "timestamp": "2026-08-14T02:53:45.969089+00:00",
+    "title": "ArXiv paper: A Dense Weisfeiler-Leman Algorithm for Deciding Bounded-Cliquewidth Homomorphism Indistinguishability"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Gross vectors modulo 2 and elliptic curves of prime conductor' and formalize its key results. Abstract: Let p > 3 be a prime, and let S_p denote the geometric isomorphism classes of supersingular elliptic curves in characteristic p whose j-invariants lie in F_p. For each negative fundamental discriminant -D for which p is inert in Q(sqrt(-D)), let m_i(D), i in S_p, be the integral coefficients of the corresponding Gross vector. We prove that the vectors (m_i(D) mod 2)_{i in S_p} span F_2^{S_p}. The key step reduces the parity of the representation numbers of Gross's ternary lattices to representation by rank-two sublattices perpendicular to Frobenius. Using Ibukiyama's explicit maximal orders, the resulting primitive binary forms are identified with those occurring in the Xiao--Zhou--Deng--Qu parametrization of supersingular elliptic curves over F_p. Class field theory and Chebotarev's theorem then allow the individual supersingular coordinates to be isolated. As a consequence, if E/Q has prime conductor p and positive Mordell--Weil rank, then every coefficient of its Brandt eigenvector ",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1248",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2608.13371v1",
+    "status": "available",
+    "timestamp": "2026-08-14T02:53:49.163890+00:00",
+    "title": "ArXiv paper: Gross vectors modulo 2 and elliptic curves of prime conductor"
   },
   {
     "consumed_by_exp_id": "",
