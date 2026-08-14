@@ -1,6 +1,5 @@
 import Mathlib
 import Logic.StrangeLoops.Core
-import Pythagorean.TropicalAlgebra.TropicalSPB
 
 /-!
 # Tropical SPB: Structure and Properties
@@ -18,7 +17,7 @@ tspb(x,y) = max(x,y) - max(0, x+y).
 -/
 
 noncomputable section
-open Real
+open Real SPBResearch
 
 namespace TropicalSPBResults
 

@@ -49,7 +49,7 @@
 
 import Mathlib
 import Bridges.PosetTheory.ArithmeticVCDimension
-import Bridges.CategoricalTropicalUltrametric
+import Bridges.PosetTheory.CategoricalTropicalUltrametric
 
 open Function
 

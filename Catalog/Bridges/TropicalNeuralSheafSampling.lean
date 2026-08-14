@@ -517,12 +517,6 @@ theorem message_passing_converges {α : Type*} [Fintype α] [PartialOrder α]
 end Applications
 
 end TropicalSheafSampling
-
-/- The following lines were a corrupted fragment of an earlier docstring together with
-two stray `end`s (all sections and namespaces are already closed above); they are kept
-here, commented out, because they do not parse:
-
 end in the kernel of restriction must be zero. This is the core of the
 
 end TheoremA
--/

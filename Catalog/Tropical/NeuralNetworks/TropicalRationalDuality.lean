@@ -1,5 +1,5 @@
 import Mathlib
-import Shared.NeuralCoding.Relu
+import Tropical.Relu.Relu
 
 /-! # Tropical rational representation of feedforward ReLU networks
 

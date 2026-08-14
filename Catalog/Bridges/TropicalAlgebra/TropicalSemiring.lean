@@ -1,5 +1,4 @@
 import Mathlib
-import Shared.NeuralCoding.Relu
 
 /-! # CatalogBuild.Tropical.Core.TropicalSemiring
 
@@ -9,11 +8,6 @@ Declarations: 14
 -/
 
 noncomputable section
-
-/-- The log-sum-exp aggregate of a finite family: the smooth (positive-temperature)
-substitute for the tropical `max`. -/
-def logSumExpFinset {ι : Type*} (s : Finset ι) (f : ι → ℝ) : ℝ :=
-  Real.log (∑ j ∈ s, Real.exp (f j))
 
 /-- ReLU is definitionally max(x, 0) -/
 theorem relu_eq_max (x : ℝ) : relu x = max x 0 := rfl
@@ -30,12 +24,12 @@ Auto-generated from theorem catalog database.
 Domain: Tropical/Core
 Declarations: 14] -/
 theorem le_logSumExp {ι : Type*} {s : Finset ι} {f : ι → ℝ} {i : ι}
-    (hi : i ∈ s) : f i ≤ logSumExpFinset s f := by
+    (hi : i ∈ s) : f i ≤ logSumExp s f := by
   exact Real.le_log_iff_exp_le ( Finset.sum_pos ( fun _ _ => Real.exp_pos _ ) ⟨ i, hi ⟩ ) |>.2 ( Finset.single_le_sum ( fun j _ => Real.exp_nonneg ( f j ) ) hi )
 
 theorem logSumExp_le_sup_add_log {ι : Type*} [DecidableEq ι] {s : Finset ι}
     {f : ι → ℝ} (hs : s.Nonempty) :
-    logSumExpFinset s f ≤ s.sup' hs f + Real.log (s.card : ℝ) := by
+    logSumExp s f ≤ s.sup' hs f + Real.log (s.card : ℝ) := by
   -- Applying the logarithm to both sides of the inequality $\sum_{j \in s} \exp(f j) \leq \text{card}(s) \cdot \exp(\sup(f))$.
   have h_log : Real.log (∑ j ∈ s, Real.exp (f j)) ≤ Real.log (↑(Finset.card s) * Real.exp (s.sup' hs f)) := by
     gcongr;

@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "e870e995",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\nDerived from the formal development in `Catalog/Novelty/WeightMonodromy*.lean`, which proves:\npurity of a weight grading (weight `= α ·` degree, `α > 0`) on the cohomology of a bi",
-      "quality_score": 0.7131,
-      "sorry_count": 0,
-      "theorem_count": 87,
-      "timestamp": "2026-08-09T17:55:19",
-      "title": "ArXiv paper: Formality for rigid-analytic spaces satisfying the weight-monodromy conjecture"
-    },
-    {
       "cycle_id": "0dcd87ee",
       "domain": "Combinatorics",
       "key_insight": "# Future directions\n\nDerived from this cycle's results in\n\n* `Catalog/Combinatorics/PrivateAverageDistortion.lean` — the private\n  rate–distortion function `D_priv(p) = min_c E_p[d(c,X)]`, its invaria",
@@ -499,19 +489,19 @@
       "theorem_count": 501,
       "timestamp": "2026-08-14T08:45:35",
       "title": "SMOOTH-SELFHINT-DENSITY: the p-1/ECM weakness is residue-invisible — asymmetric/symmetric divisibili"
+    },
+    {
+      "cycle_id": "eaebe17a",
+      "domain": "Novelty",
+      "key_insight": "# Future directions — gcd moments as a trace-witness family\n\nDerived from what survived five full research cycles (seven Lean files, all `sorry`-free, all\naxioms standard: `propext`, `Classical.choice",
+      "quality_score": 0.9,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-08-14T08:45:51",
+      "title": "Exp 392 GCD-MOMENT: the semiprime gcd-moments M_k = sum gcd(x,N)^k are a closed trace-witness family"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "1343d96e",
-      "domain": "NumberTheory",
-      "key_insight": "# Future directions\n\n- Prove sharpness by constructing a regular simplex of `N` unit vectors in dimension `N - 1` whose distinct inner products are exactly `-1/(N-1)`.\n- Translate the chordal bound in",
-      "quality_score": 0.65648,
-      "sorry_count": 0,
-      "theorem_count": 4,
-      "timestamp": "2026-08-03T11:55:03",
-      "title": "Deepening: Stereographic Capacity Theory: Packing Bounds on Spheres via Plane Geometry"
-    },
     {
       "cycle_id": "f7f562cc",
       "domain": "Probability",
@@ -2501,27 +2491,19 @@
       "theorem_count": 501,
       "timestamp": "2026-08-14T08:45:35",
       "title": "SMOOTH-SELFHINT-DENSITY: the p-1/ECM weakness is residue-invisible — asymmetric/symmetric divisibili"
+    },
+    {
+      "cycle_id": "eaebe17a",
+      "domain": "Novelty",
+      "key_insight": "# Future directions — gcd moments as a trace-witness family\n\nDerived from what survived five full research cycles (seven Lean files, all `sorry`-free, all\naxioms standard: `propext`, `Classical.choice",
+      "quality_score": 0.9,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-08-14T08:45:51",
+      "title": "Exp 392 GCD-MOMENT: the semiprime gcd-moments M_k = sum gcd(x,N)^k are a closed trace-witness family"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "6092c7cd",
-      "domain": "Algebra",
-      "name": "sigma_semiprime",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "6092c7cd",
-      "domain": "Algebra",
-      "name": "factor_pairs",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "6092c7cd",
-      "domain": "Algebra",
-      "name": "sum_prod_determines",
-      "quality": 0.82
-    },
     {
       "cycle_id": "0c649bb1",
       "domain": "Physics",
@@ -2803,9 +2785,27 @@
       "domain": "Tropical",
       "name": "resnet_certified_lipschitz",
       "quality": 0.85
+    },
+    {
+      "cycle_id": "eaebe17a",
+      "domain": "Novelty",
+      "name": "three_le_part",
+      "quality": 0.9
+    },
+    {
+      "cycle_id": "eaebe17a",
+      "domain": "Novelty",
+      "name": "one_le_part",
+      "quality": 0.9
+    },
+    {
+      "cycle_id": "eaebe17a",
+      "domain": "Novelty",
+      "name": "factorisationEuler_nil",
+      "quality": 0.9
     }
   ],
-  "last_updated": "2026-08-14T08:45:35",
+  "last_updated": "2026-08-14T08:45:51",
   "open_questions": [
     {
       "context": "(sieve mechanism) form a coherent, sorry-free slice of the Maynard–Tao framework.; +    `fib_carmichael_large` — which relied on an unproven (`sorry`-backed) tail of; -    sorry+  -- Extract from the ",
@@ -3580,12 +3580,6 @@
     "Novelty": [
       {
         "cycle_id": "08217b91",
-        "quality": 0.748155,
-        "theorems": 85,
-        "title": "occurrences of certain numbers in pascals triangle"
-      },
-      {
-        "cycle_id": "08217b91",
         "quality": 0.746255,
         "theorems": 85,
         "title": "occurrences of certain numbers in pascals triangle"
@@ -3637,6 +3631,12 @@
         "quality": 0.82,
         "theorems": 73,
         "title": "EMPIRICAL-DEGREE: the factoring function is spectrally flat — no low-degree pari"
+      },
+      {
+        "cycle_id": "eaebe17a",
+        "quality": 0.9,
+        "theorems": 14,
+        "title": "Exp 392 GCD-MOMENT: the semiprime gcd-moments M_k = sum gcd(x,N)^k are a closed "
       }
     ],
     "NumberTheory": [
