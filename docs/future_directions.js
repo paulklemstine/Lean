@@ -33,7 +33,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The 3SUM-Birthday-Bound Hierarchy"
   },
   {
-    "consumed_by_exp_id": "8b8fda15",
+    "consumed_by_exp_id": "df66f7bb",
     "description": "**Summary.** The conjecture that for E_N: y\u00b2 = x\u00b3 + N with N = pq, the\ndenominators of x(nP) are divisible only by {2, 3, p, q} (the primes dividing\n\u0394 = -432N\u00b2) is mathematically FALSE.\n\n**Counterexample.** N = 55 = 5\u00b711, P = (9,28) \u2208 E_55(Q):\n  x(2P) = (9^4 - 8\u00b755\u00b79) / (4(9^3 + 55)) = 2601/3136, and 3136 = 2^6 \u00b7 7^2.\nThe prime 7 divides the denominator but 7 \u2224 \u0394 (7 is a prime of good reduction).\n\n**Mechanism.** \u2113 | denom(x(nP)) iff nP \u2261 O (mod \u2113); good-reduction primes divide\ndenominators whenever the point reduces to torsion \u2014 infinitely many such primes.\n\n**Survey (11 semiprimes):** p appears in some denominator 54.5%, q appears 0%,\nonly-{2,3,p,q} holds 0% of the time. The denominator structure is a function of\nN alone (barrier 5) and does not cleanly reveal p, q.\n\n---\n\n*Factoring Lab paper. Status: proven theorem / verified / framework. This is a research deliverable, not a factoring breakthrough claim.*",
     "domains": [
       "Novelty"
@@ -48,7 +48,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The 'Only Bad Primes' Conjecture is False (elliptic curve denominators)"
   },
   {
-    "consumed_by_exp_id": "6dd4f188",
+    "consumed_by_exp_id": "67af3898",
     "description": "**Summary.** Let F(k) = sum_{a=1}^{N} a^k. Then gcd(F(k), N) reveals a factor\nat k = p-1: for N = pq, gcd(F(p-1), N) = q (provided (q-1) does not divide (p-1)).\n\n**Key results (proven):**\n- **Theorem 1 (power-sum factor reveal):** Mod p the residues cover each nonzero\n  residue q times, so F(k) \u2261 q\u00b7(sum of k-th powers mod p); by FLT this is -q mod p\n  at k=p-1. Mod q it vanishes when (q-1) \u2224 (p-1). Hence gcd = q.\n- **Theorem 2 (robustness):** The power sum aggregates ALL bases a=1..N\n  simultaneously, so it cannot suffer Pollard p-1's \"bad base\" failure.\n- **Theorem 3 (Carmichael periodicity):** g(k) = gcd(F(k), N) has period\n  \u03bb(N) = lcm(p-1, q-1), so \u03bb(N) is readable from the period and the factors\n  follow from p+q = N - \u03bb(N) + 1.\n\n**Complexity.** First hit at k* = min(p-1,q-1) \u2248 \u221aN; cost per F(k) is O(N);\ntotal O(N^{3/2}) \u2014 worse than trial division. This is the SAME structure Shor's\nalgorithm exploits, made classically hard by the period-finding barrier.\nVerified on all 8 test semiprimes up to N \u2248 10^4.\n\n---\n\n*Factoring Lab paper. Status: proven theorem / verified / framework. This is a research deliverable, not a factoring breakthrough claim.*",
     "domains": [
       "Novelty"
@@ -226,20 +226,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-08-12T00:10:39.075383+00:00",
     "title": "Round-9 Hypothesis Closures: The Completeness of the Trace Lemma"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "**Paper:** `ResearchOutput/NewMathematics/35_ClassGroup_ResidueDial.md` (factor3)\n**Experiment:** RANDOM-BQF (#370), assessment v146.\n\n## Finding\nThe round-13 brainstorm's most-plausible-positive path: attach an extrinsic\ndiscriminant D, compute Cl(D) (poly|D|, no factoring), measure the representation\nvector r_Q(N) = #{(x,y): Q(x,y)=N} over all reduced forms. Hypothesis: individual\ncounts depend on (D/p), (D/q) separately, so the vector might separate\nfactorization class-types beyond N mod |D|.\n\n**Verified (D=\u221220, h=2; D=\u221284, h=4; 2400 + 5626 semiprimes):**\n1. Class-splitting theory exact: p\u22611,9 mod 20 \u2192 x\u00b2+5y\u00b2 (r=4); p\u22613,7 \u2192 2x\u00b2+2xy+3y\u00b2\n   (r=4); p\u226111,13,17,19 \u2192 inert.\n2. **The vector is a PURE RESIDUE DIAL:** exactly constant per N mod |D| \u2014 (8,0)\n   for N\u22611,9; (0,8) for N\u22613,7 (D=\u221220); constant per N mod 84 conditioned on\n   (D/N)=1 (D=\u221284).\n3. **PP vs NN factorization types at the same N mod 20 give IDENTICAL vectors** \u2014\n   the class of N=pq in Cl(D) is N-determined (Cl\u2245Z/2 makes PP and NN both\n   principal).\n\n## Why it collapses (barrier 5 + 8)\nThe vector is a function of N's residue structure (N mod |D|, (D/N) via\nquadratic reciprocity) \u2014 factor-blind at the individual (D/p), (D/q) level.\nIt is the BQF-family repackaged (\"each D is a residue dial\"). Extrinsic\nalgebraic structure gives no asymmetric handle on N.\n\n## Verdict\nREFUTED. Closes the extrinsic-discriminant corner of the free-witness taxonomy.\nClassical uniform hint-free surface remains exhausted; frontiers: barrier-4\nproof, quantum channel, hint amplification.\n\n\ud83e\udd16 Generated with [Claude Code](https://claude.com/claude-code)",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1133",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-12T04:00:21.972526+00:00",
-    "title": "The Extrinsic Class-Group Representation Vector is a Residue Dial, Closed"
   },
   {
     "consumed_by_exp_id": "e0db545b",
@@ -452,46 +438,45 @@ window.FUTURE_DIRECTIONS = [
     "title": "Exp 400 FROBENIUS-TYPE-NULL (round-16 #3): the splitting type of N in a non-abelian extension is symmetric, factor-orthogonal, and computationally sealed"
   },
   {
-    "consumed_by_exp_id": "53eb02be",
+    "consumed_by_exp_id": "",
     "description": "## Factoring research loop \u2014 round-15 #6, final (experiment 397, assessment v173, paper 62)\n\n**Hypothesis.** Does the p\u22121 smoothness class (ECM-weak smaller factor) leak into the statistics of a short window of the mod-exponential sequence {a^x mod N}?\n\n**Result: CONFIRMED null \u2014 the mod-exp sequence is smoothness-blind.**\n\n1. **Controlled contrast (real):** 36 matched pairs, p,q bit-lengths matched (18/20), only p\u22121 smoothness differs (SMOOTH = smooth-p\u00b7general-q, GENERAL = general-p\u00b7general-q). The Pollard p\u22121 method (B=100) factors SMOOTH **35/36** vs GENERAL **0/36** \u2014 the ECM-weakness is genuine and the classes truly differ.\n2. **Sequence stats (null):** 42 windowed features (m=256 \u226a B) over bases {2,3,5}, on both s_x = a^x mod N and the floor twin (distinct count, self-collision gap, top-bit balance, adjacent-diff, autocorr, spectral flatness, max run) separate NOTHING: observed max std-diff **0.473** at the permutation null (mean 0.495, 95th pct 0.734, **p = 0.502**); 5-fold logistic **AUC = 0.500** (exactly chance).\n3. **Mechanism:** the values s_x carry no residue of ord_p(a) | p\u22121 \u2014 the walk in the subgroup is pseudorandom regardless of group-order smoothness; exploiting the weakness requires computing a^M mod N for M = lcm(1..B) (the p\u22121 method itself), unreachable by any finite window.\n\n**Barriers 2/4/8:** N-computable hence symmetric, and class-independent incompressible (barrier 2/4); the only computation that sees the weakness is the p\u22121 method, a known method (barrier 8).\n\n**Verdict:** the p\u22121/ECM weakness is real but exploitable only by running the p\u22121 method \u2014 never by inspecting the sequence. Closes the sequence-level face of the self-hint program. **Round-15 COMPLETE (6/6).**\n\nScript: /tmp/exp_seqsmoothnull.py. Notebook Part 143. Assessment v173 (397 experiments). Paper 62.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_1166",
-    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-12T16:19:41.781546+00:00",
     "title": "Experiment 397: SEQSMOOTH-NULL \u2014 mod-exp sequence stats are smoothness-blind (AUC 0.500); p-1 weakness only via running the p-1 method"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "94d955c4",
     "description": "## Factoring research loop \u2014 round-15 #5 (experiment 396, assessment v172, paper 61)\n\n**Hypothesis.** The round-15 aggregates \u2014 gcd-moments M_k, unit energy E(U), mult-table rank, zero-divisor-graph part sizes \u2014 are each symmetric in (p,q); by the fundamental theorem of symmetric polynomials each is a function of (N, s) alone. Then the JOINT family has reach exactly {(N, s)}.\n\n**Result: CONFIRMED negative for factoring \u2014 the trace is the joint ceiling, the family is redundant.**\n\n1. **Joint closed forms verified 86/86 (+ E(U) 3/3 to N=10403):** every aggregate equals an explicit F(N,s) \u2014 M_k = N^k + N\u00b7P_{k\u22121} \u2212 P_k + N \u2212 s + 1, E\u00b7N = \u03c3\u2082(1+\u03c3\u2081\u00b3\u22123\u03c3\u2081\u03c3\u2082+\u03c3\u2082\u00b3), rank = (N+5)/2, graph parts {p\u22121,q\u22121}.\n2. **M_1 recovers s exactly (19/19, 60/60 at scale):** M_1 = 4N\u22122s+1 is linear \u2192 s = (4N+1\u2212M_1)/2.\n3. **(N,s) \u2192 {p,q} (19/19, 60/60):** the roots of x\u00b2\u2212sx+N are exactly the unordered factors.\n4. **Injective yet REDUNDANT:** joint vector distinguishes every pair, but 114/114 entries are predictable from (N,s) alone \u2014 so (N, M_1) already reaches the ENTIRE barrier-2 ceiling; M_2, M_3, E, rank, graph add zero reach.\n5. **Asymmetric labels unreachable (114/114):** \u03c6, \u03c3\u2081, p\u00b2+q\u00b2, p\u00b3+q\u00b3, \u03c4 all = F(N,s); (N,s) never labels which root is p (both labelings identical to every aggregate).\n6. **Cost-sealed:** exact M_1 = O(N) gcd-sum (linear wall time); s does not factor (given s you still solve a quadratic).\n\n**Barriers 2/4/8:** the reach theorem is the aggregate-level barrier-2 statement (any symmetric function of (p,q) = F(N,s)); the reach is \u03a9(N)-sealed (barrier 4); the symmetric-function theorem is classical (barrier 8).\n\n**Verdict:** the round-15 aggregate family is fully mapped \u2014 trace-carrying, symmetric, cost-sealed \u2014 and adds no factoring leverage. Round-15 #5 done (5/6).\n\nScript: /tmp/exp_traceexhaustion.py. Notebook Part 142. Assessment v172 (396 experiments). Paper 61.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_1167",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-12T16:19:41.781944+00:00",
-    "title": "Experiment 396: TRACE-EXHAUSTION \u2014 barrier-2 reach of the round-15 aggregates is exactly {(N,s)}; (N, M_1) reaches the whole ceiling"
-  },
-  {
-    "consumed_by_exp_id": "3961a498",
-    "description": "## Factoring research loop \u2014 round-15 #4 (experiment 395, assessment v171, paper 60)\n\n**Hypothesis (brainstorm).** The zero-divisor graph \u0393(Z/NZ) \u2014 vertices = nonzero x with gcd(x,N) > 1, edge x~y iff xy \u2261 0 mod N \u2014 is exactly K_{p\u22121,q\u22121} for a semiprime. Does its bipartition leak asymmetric factor content?\n\n**Result: CONFIRMED exact structure, negative for factoring.**\n\n1. **\u0393(Z/NZ) = K_{p\u22121,q\u22121} exactly, 10/10 semiprimes.** |V| = p+q\u22122, |E| = (p\u22121)(q\u22121); the bipartition is the q\u22121 multiples of p \u222a the p\u22121 multiples of q; every cross pair is an edge, no within-part pair is; degree distribution {p\u22121: q\u22121 times, q\u22121: p\u22121 times}.\n2. **Degree identity:** graph-degree(x) = gcd(x,N) \u2212 1 on 62/62 zero-divisors (squarefree N). The degree sequence over the zero-divisors = the multiset {p,\u2026,p,q,\u2026,q} = the two factors written twice.\n3. **Classification (proper bipartiteness test):** complete-bipartite exactly for products of two primes (even 2p \u2192 star K_{p\u22121,1}; small exceptions 8\u2192K_{1,2}, 9\u2192K_2); complete graph K_{p\u22121} for prime squares; neither for p\u00b3/p\u2074 or \u22653-prime products. Matches the Anderson\u2013Livingston zero-divisor-graph classification (barrier 8).\n\n**Why it cannot factor \u2014 barriers 2/4/8:**\n- The bipartition IS the factorization (which residues are \u2261 0 mod p vs \u2261 0 mod q).\n- Reconstruction from N = finding the zero-divisors = \u03a9(N) gcd-scan; its first hit is the smallest prime factor (19 gcds for 703, 29 for 899) \u2014 trial division in disguise.\n- Everything is N-computable hence symmetric in (p,q): swapping the factors merely swaps the two parts of K_{p\u22121,q\u22121}.\n\n**Verdict:** the zero-divisor graph is a complete, exact, classical description of the zero-divisors whose asymmetric content coincides with the answer. No route to the graph avoids already knowing the factorization. Reconfirms the trace/free-witness ceiling.\n\nScript: /tmp/exp_zerodivisorgraph.py. Notebook Part 141. Assessment v171 (395 experiments). Paper 60. Round-15 4/6 done.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1168",
     "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
     "status": "in_progress",
+    "timestamp": "2026-08-12T16:19:41.781944+00:00",
+    "title": "Experiment 396: TRACE-EXHAUSTION \u2014 barrier-2 reach of the round-15 aggregates is exactly {(N,s)}; (N, M_1) reaches the whole ceiling"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## Factoring research loop \u2014 round-15 #4 (experiment 395, assessment v171, paper 60)\n\n**Hypothesis (brainstorm).** The zero-divisor graph \u0393(Z/NZ) \u2014 vertices = nonzero x with gcd(x,N) > 1, edge x~y iff xy \u2261 0 mod N \u2014 is exactly K_{p\u22121,q\u22121} for a semiprime. Does its bipartition leak asymmetric factor content?\n\n**Result: CONFIRMED exact structure, negative for factoring.**\n\n1. **\u0393(Z/NZ) = K_{p\u22121,q\u22121} exactly, 10/10 semiprimes.** |V| = p+q\u22122, |E| = (p\u22121)(q\u22121); the bipartition is the q\u22121 multiples of p \u222a the p\u22121 multiples of q; every cross pair is an edge, no within-part pair is; degree distribution {p\u22121: q\u22121 times, q\u22121: p\u22121 times}.\n2. **Degree identity:** graph-degree(x) = gcd(x,N) \u2212 1 on 62/62 zero-divisors (squarefree N). The degree sequence over the zero-divisors = the multiset {p,\u2026,p,q,\u2026,q} = the two factors written twice.\n3. **Classification (proper bipartiteness test):** complete-bipartite exactly for products of two primes (even 2p \u2192 star K_{p\u22121,1}; small exceptions 8\u2192K_{1,2}, 9\u2192K_2); complete graph K_{p\u22121} for prime squares; neither for p\u00b3/p\u2074 or \u22653-prime products. Matches the Anderson\u2013Livingston zero-divisor-graph classification (barrier 8).\n\n**Why it cannot factor \u2014 barriers 2/4/8:**\n- The bipartition IS the factorization (which residues are \u2261 0 mod p vs \u2261 0 mod q).\n- Reconstruction from N = finding the zero-divisors = \u03a9(N) gcd-scan; its first hit is the smallest prime factor (19 gcds for 703, 29 for 899) \u2014 trial division in disguise.\n- Everything is N-computable hence symmetric in (p,q): swapping the factors merely swaps the two parts of K_{p\u22121,q\u22121}.\n\n**Verdict:** the zero-divisor graph is a complete, exact, classical description of the zero-divisors whose asymmetric content coincides with the answer. No route to the graph avoids already knowing the factorization. Reconfirms the trace/free-witness ceiling.\n\nScript: /tmp/exp_zerodivisorgraph.py. Notebook Part 141. Assessment v171 (395 experiments). Paper 60. Round-15 4/6 done.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_1168",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
     "timestamp": "2026-08-12T16:19:41.782329+00:00",
     "title": "Experiment 395: ZERO-DIVISOR-GRAPH \u2014 \u0393(Z/pq) = K_{p\u22121,q\u22121} exactly; bipartition IS the factorization"
   },
@@ -1587,6 +1572,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-24T14:34:16.697733+00:00",
     "title": "Riemann Zeta: Zero-Free Regions and Density Estimates"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 677413db (Q=0.830), which proved 93 theorems in Algebra. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Paper:** `ResearchOutput/NewMathematics/35_ClassGroup_ResidueDial.md` (factor3)\n**Experiment:** RANDOM-BQF (#370), assessment v146.\n\n## Finding\nThe round-13 brainstorm's most-plausible-positive path: attach an extrinsic\ndiscriminant D, compute Cl(D) (poly|D|, no factoring), measure the representat",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "push_677413db_af9ef4e5",
+    "priority_score": 0.9299999999999999,
+    "research_mode": "team",
+    "source_exp_id": "677413db",
+    "status": "available",
+    "timestamp": "2026-08-14T12:04:19.688440+00:00",
+    "title": "Deepening: The Extrinsic Class-Group Representation Vector is a Residue Dial, Closed"
   },
   {
     "consumed_by_exp_id": "",
@@ -19162,6 +19161,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-14T11:18:14.019803+00:00",
     "title": "The declared frontier is to **prove the trace-lemma exhaustiveness** \u2014 to turn"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 after the extrinsic class-group corner\n\nCycle 1 proved the collapse at `D = -20` and `D = -84`; cycle 2 located its\nboundary at `D = -23`; cycle 3 proved the collapse is closed under stacking\ndiscriminants.  The following conjectures are the concrete next steps.  Each is\nfalsifiable, and each comes with the shape of the Lean statement that would\nsettle it.\n\n---\n\n## C1. The Idoneal Dichotomy\n\n**Conjecture.**  Let `D < 0` be a discriminant and let `r_D(N)` be the\nrepresentation vector over the reduced forms of discriminant `D`.  Exactly one\nof the following holds:\n\n1. `D` has **one class per genus** (idoneal-type).  Then `r_D` restricted to\n   integers coprime to `D` and represented at all is a function of `N mod |D|`\n   \u2014 a residue dial, computable in `poly(|D|, log N)` and factor-blind.\n2. `D` has **more than one class per genus**.  Then `r_D` is *not* a function of\n   `N mod |D|`, and no algorithm computing `r_D(N)` in time `poly(|D|, log N)`\n   is known; a poly-time algorithm would yield the splitting behaviour of `N` in\n   the Hilbert class field of `\u211a(\u221aD)`.\n\n*The key insight is* that genus theory is exactly the part of the class group\nthat is visible in congruences, so \"readable \u21d4 idoneal\" is not a coincidence but\nan equivalence: the residue dial is the abelianised, ramified shadow of the\nclass field, and everything beyond it is non-abelian over `\u211a`.\n\n*Why now?*  Cycle 2 proves the two halves are non-empty (`dial20_factor_blind`\nvs `dial_fails_at_23`).  Formalising half (1) in general needs Mathlib's\ngenus theory of binary quadratic forms, which is within reach of the existing\n`ZMod`/`QuadraticForm` API; half (2) needs a counterexample generator, which is\nalready implemented here for `D = -23`.\n\n**Lean shape.**\n`theorem dial_iff_one_class_per_genus (D : \u2124) (hD : D < 0) : (\u2203 \u03b9 (d : ResidueDial |D|.toNat \u03b9), \u2026) \u2194 classNumber D = genusNumber D`.\n\n---\n\n## C2. The Hardness Dial (converse of the refutation)\n\n**Conjecture.**  For every non-idoneal `D`, computing a single entry `r_Q(N)` of\nthe representation vector for a semiprime `N` is as hard as factoring `N`:\nthere is a randomised poly-time reduction `FACTOR \u2264 r_Q`.\n\n*The key insight is* that for non-idoneal `D` the entry `r_Q(N)` distinguishes\nthe ideal classes `[\ud835\udd2d][\ud835\udd2e]` from `[\ud835\udd2d][\ud835\udd2e\u0304]`, and the difference between those two\nis precisely the choice of a prime above `p` \u2014 a choice that, for `N = pq`,\nencodes the splitting of `N` in a non-abelian extension.\n\n*Why now?*  Cycle 1 shows the *only* discriminants for which the vector is\ncheap are exactly the ones for which it is useless; C2 asserts that the trade is\nexact, upgrading \"REFUTED for these `D`\" to \"REFUTED for all `D`\", and closing\nthe extrinsic corner unconditionally.\n\n**Lean shape.**  A formal reduction is out of reach, but the algebraic core is\nnot: `theorem class_of_prime_not_residue_determined (D : \u2124) (h : \u00ac OneClassPerGenus D) : \u2203 p q : \u2115, p.Prime \u2227 q.Prime \u2227 (p : ZMod |D|.toNat) = q \u2227 classOf p \u2260 classOf q`.\n\n---\n\n## C3. Dial Algebra: the closure of factor-blind observables\n\n**Conjecture.**  The class of \"residue-dial observables\" is closed under\nproducts (proved: `ResidueDial.prod`), under composition with any function of\nthe readout, and under *conditioning on a polynomial-time computable predicate\nof `N`* \u2014 and it is exactly the class of observables invariant under the action\nof `(\u2124/|D|)\u02e3`-preserving bijections of the semiprime family.  In particular no\nfinite or `poly(log N)`-sized family of extrinsic discriminants gives a\nfactoring advantage.\n\n*The key insight is* that the tensor closure proved in cycle 3 turns a family of\nindividually weak observables into a single weak observable, so amplification\narguments (majority vote over many `D`) cannot work: the amplified statistic is\nstill a dial.\n\n*Why now?*  `ResidueDial.prod` is already formalised; the remaining step is a\n\"dial \u21d2 no advantage\" theorem stated over a probability space of semiprimes,\nfor which Mathlib's `PMF`/`Finset` machinery suffices.\n\n**Lean shape.**\n`theorem no_advantage (d : ResidueDial m \u03b9) (A : \u03b9 \u2192 Bool) : \u2200 N M, sameResidue N M \u2192 A (readout N) = A (readout M)` and its amplified version over `Finset` families.\n\n---\n\n## C4. Quantitative collapse: how many bits does a dial destroy?\n\n**Conjecture.**  For a class group `G` and semiprimes `N = pq` drawn with\nclasses `([\ud835\udd2d], [\ud835\udd2e])` uniform in `G \u00d7 G`, the observation `[\ud835\udd2d][\ud835\udd2e]` has exactly\n`log\u2082|G|` bits of Shannon information about the pair, while the pair carries\n`2 log\u2082|G|` bits: the dial destroys exactly half of the class information, and\nnone of the destroyed half is recoverable from `N mod |D|`.\n\n*The key insight is* the fibre count `product_fiber_card`: every observed class\nis compatible with exactly `|G|` ordered pairs, uniformly \u2014 so the loss is not\nmerely typical but exact and distribution-independent.\n\n*Why now?*  `product_fiber_card` is proved here; converting an exact fibre count\ninto an entropy statement is a finite computation with Mathlib's\n`Finset`-based entropy or a direct counting argument.\n\n**Lean shape.**\n`theorem dial_entropy_loss (G) [Group G] [Fintype G] : H(pair | product) = Real.logb 2 (Fintype.card G)`.\n\n---\n\n## C5. Beyond quadratic: cubic dials\n\n**Conjecture.**  Replace binary quadratic forms by binary *cubic* forms of\ndiscriminant `\u0394` (Davenport\u2013Heilbronn / Bhargava cubic rings).  Then the vector\nof representation numbers of `N` by the reduced cubic forms of discriminant `\u0394`\nis **not** a residue dial for any `\u0394` with more than one `GL\u2082(\u2124)`-class, because\nthe associated `S\u2083`-extension is non-abelian \u2014 yet it is still factor-blind in\nthe sense that the observation depends only on the ideal class of `N`, not on the\nindividual factors.\n\n*The key insight is* that the collapse proved here has two independent causes:\nabelianness (which makes the dial readable) and multiplicativity (which makes it\nblind); cubic forms remove the first but not the second, so they should provide a\nclean separation of the two barriers.\n\n*Why now?*  The `ResidueDial` abstraction of this project is stated for an\narbitrary index type and an arbitrary family of predicates on `\u2124`, so it applies\nverbatim to cubic forms; only the finite `decide` computations change.\n\n**Lean shape.**\n`def cubicRepr (a b c d : \u2124) : \u2124 \u2192 Prop := fun N => \u2203 x y, a*x^3 + b*x^2*y + c*x*y^2 + d*y^3 = N`, then `theorem cubic_not_dial : \u00ac \u2203 (d : ResidueDial m \u03b9), \u2026` in the style of `no_residueDial_23`.\n",
+    "domains": [
+      "Algebra",
+      "NumberTheory"
+    ],
+    "id": "fd_1257",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "677413db",
+    "status": "available",
+    "timestamp": "2026-08-14T12:04:12.090943+00:00",
+    "title": "Cycle 1 proved the collapse at `D = -20` and `D = -84`; cycle 2 located its"
   },
   {
     "consumed_by_exp_id": "",
