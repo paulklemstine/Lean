@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-14T20:53:07.259839+00:00",
+  "last_updated": "2026-08-14T21:48:06.046530+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -55373,6 +55373,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-08-14T20:53:07.073764+00:00",
       "title": "A4-FORK-PINNING: first cubic-pinned non-abelian fork (A4 V4-order, I = H(1/3) exact) \u2014 paper 75, exp"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Probability",
+      "duration_seconds": 3294.5446903705597,
+      "end_time": 1786744064.657374,
+      "files_integrated": 4,
+      "job_id": "beb0e52b",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.91,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.5845,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.91,
+        "novelty": 0.91,
+        "proof_depth": 0.91,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.91,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1786740770.1126835,
+      "strategy_count": 0,
+      "theorem_count": 254,
+      "theorem_novelty_disproof": 60,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 179,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-08-14T21:48:05.864878+00:00",
+      "title": "CYCLIC-CUBIC-FORK: fork-pinning \u27fa fork in the abelianization of the Galois closure (criterion verifi"
     }
   ]
 }
