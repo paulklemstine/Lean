@@ -33,7 +33,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The 3SUM-Birthday-Bound Hierarchy"
   },
   {
-    "consumed_by_exp_id": "f11031d1",
+    "consumed_by_exp_id": "99e6f198",
     "description": "**Summary.** The conjecture that for E_N: y\u00b2 = x\u00b3 + N with N = pq, the\ndenominators of x(nP) are divisible only by {2, 3, p, q} (the primes dividing\n\u0394 = -432N\u00b2) is mathematically FALSE.\n\n**Counterexample.** N = 55 = 5\u00b711, P = (9,28) \u2208 E_55(Q):\n  x(2P) = (9^4 - 8\u00b755\u00b79) / (4(9^3 + 55)) = 2601/3136, and 3136 = 2^6 \u00b7 7^2.\nThe prime 7 divides the denominator but 7 \u2224 \u0394 (7 is a prime of good reduction).\n\n**Mechanism.** \u2113 | denom(x(nP)) iff nP \u2261 O (mod \u2113); good-reduction primes divide\ndenominators whenever the point reduces to torsion \u2014 infinitely many such primes.\n\n**Survey (11 semiprimes):** p appears in some denominator 54.5%, q appears 0%,\nonly-{2,3,p,q} holds 0% of the time. The denominator structure is a function of\nN alone (barrier 5) and does not cleanly reveal p, q.\n\n---\n\n*Factoring Lab paper. Status: proven theorem / verified / framework. This is a research deliverable, not a factoring breakthrough claim.*",
     "domains": [
       "Novelty"
@@ -48,7 +48,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The 'Only Bad Primes' Conjecture is False (elliptic curve denominators)"
   },
   {
-    "consumed_by_exp_id": "487070cf",
+    "consumed_by_exp_id": "20c456e7",
     "description": "**Summary.** Let F(k) = sum_{a=1}^{N} a^k. Then gcd(F(k), N) reveals a factor\nat k = p-1: for N = pq, gcd(F(p-1), N) = q (provided (q-1) does not divide (p-1)).\n\n**Key results (proven):**\n- **Theorem 1 (power-sum factor reveal):** Mod p the residues cover each nonzero\n  residue q times, so F(k) \u2261 q\u00b7(sum of k-th powers mod p); by FLT this is -q mod p\n  at k=p-1. Mod q it vanishes when (q-1) \u2224 (p-1). Hence gcd = q.\n- **Theorem 2 (robustness):** The power sum aggregates ALL bases a=1..N\n  simultaneously, so it cannot suffer Pollard p-1's \"bad base\" failure.\n- **Theorem 3 (Carmichael periodicity):** g(k) = gcd(F(k), N) has period\n  \u03bb(N) = lcm(p-1, q-1), so \u03bb(N) is readable from the period and the factors\n  follow from p+q = N - \u03bb(N) + 1.\n\n**Complexity.** First hit at k* = min(p-1,q-1) \u2248 \u221aN; cost per F(k) is O(N);\ntotal O(N^{3/2}) \u2014 worse than trial division. This is the SAME structure Shor's\nalgorithm exploits, made classically hard by the period-finding barrier.\nVerified on all 8 test semiprimes up to N \u2248 10^4.\n\n---\n\n*Factoring Lab paper. Status: proven theorem / verified / framework. This is a research deliverable, not a factoring breakthrough claim.*",
     "domains": [
       "Novelty"
@@ -692,6 +692,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-14T19:21:53.355022+00:00",
     "title": "NET-23: RoPE Does Not Unlock Length-General Carry \u2014 the position-scheme test of the carry-chain length wall; pos-emb-extrapolation caveat RETIRED"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**Program:** Network/LLM lab \u2014 round-net-24 (performance axis; recurrence / stateful-carry-cell test of the carry-chain length wall). Machine-verified (ALL_DONE_NET24). Paper: ResearchOutput/NetworkMathematics/24_StatefulCarryCell.md (paper 68). Script /tmp/exp_net_stateful.py, log /tmp/net24.log.\n\n## Claim\nThe carry-chain length wall (transformer masters n-digit addition, computes n+1/n+2 at chance \u2014 immune to depth/scale/schedule/task-remodeling/position-scheme, NET-4/5/19/21/22/23) is a **fixed-depth, STATE-FREE, position-parameterized ANSWER-FUNCTION expressivity limit**. Adding a length-general stateful answer cell (GRU carrying the carry in hidden state) over the walled transformer's per-column features unlocks length-general composition.\n\n## Result (plain n=5 training, eval n=5/6/7/8, 2048 fresh draws each, teacher-forced, dm=192, bs=256, 12000 steps)\n| Arm | n=5 | n=6 | n=7 | n=8 |\n|---|---|---|---|---|\n| pure GRU s=0 (raw one-hot columns) | 1.0000 | 0.9980 | 0.7021 | 0.0806 |\n| pure GRU s=1 | 1.0000 | 1.0000 | 0.9854 | 0.6997 |\n| **hybrid-RoPE s=0 (walled encoder \u2192 GRU readout)** | **1.0000** | **1.0000** | **1.0000** | **1.0000** |\n| **hybrid-RoPE s=1** | **1.0000** | **1.0000** | **1.0000** | **1.0000** |\n| hybrid-abs s=0 (learned pos encoder \u2192 GRU) | 1.0000 | 0.9834 | 0.9634 | 0.9624 |\n| NET-23 reference: RoPE transformer (state-free readout) | 1.0000 | **0.0000** | **0.0000** | **0.0000** |\n\n## Laws\n1. **STATEFUL-CARRY-CELL-UNLOCKS-LENGTH-GEN \u2014 the FIRST positive cure in the program.** Same encoder, budget, causal mask; the readout's STATE is the only difference from NET-23 and it flips beyond-max 0.0000 \u2192 1.0000 (both seeds, zero errors on 18.4k fresh n=8 digit predictions).\n2. **THE-WALL-WAS-THE-ANSWER-FUNCTION, NOT THE ENCODER.** NET-22's GIVEN-CARRIES-STILL-FAIL is explained: carries as INPUT tokens are useless to a state-free readout; the same carries as recurrent STATE are exactly the cure.\n3. **THE-CURE-IS-POSITION-SCHEME-INDEPENDENT** (abs-pos hybrid also length-gens, n=8 full=0.9624; uniform thin column-error tail = feature-quality noise from untrained table entries, not a structural wall; RoPE gives the clean 1.0000).\n4. **NEW \u2014 RAW-STATE-ALONE-HITS-A-STATE-HORIZON.** The textbook pure GRU extends ~1\u20132 steps past its training unroll (carry TRANSITION length-general, digit READOUT misfires) \u2014 recurrence alone is not a clean cure; state + the encoder's content-rich column features are. Capacity caveat (125k vs 782k) flagged.\n\n## Barriers\n(a) clean (eval n=6/7/8 fresh, never trained; encoder causal at all lengths, mask verified); (b) RNNs are textbook but the controlled decomposition isolating the wall to the answer function is new; (c) same dm=192 scale as the established wall; (d) clean (teacher-forced on input only); (e) strong on the central claim \u2014 2 seeds both 1.0000 (0\u21921); pure-GRU state-horizon seed-dependent (honest); (f) per/full/per-position + mask identity verified; (g) NET-23 config byte-identical as the 0.0000 reference + pure-GRU solvability control; (h) mechanism-level: length-general sequential composition in an attention architecture requires STATE in the answer path \u2014 the real-LM transfer question is now the frontier.\n\nAssessment v24, 24 experiments. Round-net-24 (1/1 done).",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_1269",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-14T20:05:56.857986+00:00",
+    "title": "NET-24: A Stateful Carry Cell Unlocks Length-General Carry \u2014 The Wall Was the Answer Function (first positive cure)"
   },
   {
     "consumed_by_exp_id": "",
@@ -1719,6 +1733,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-13T18:15:00.040305+00:00",
     "title": "Deepening: EMPIRICAL-DEGREE: the factoring function is spectrally flat \u2014 no low-degree pari"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle c98081c2 (Q=0.820), which proved 73 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Paper:** `ResearchOutput/NewMathematics/44_NoPinning_Lemma.md` (factor3)\n**Experiment:** COMPENSATING-PARTNER (#379), assessment v155.\n\n## Finding\nGeneralize QRLEAK's Dirichlet no-pruning to the FULL class of poly(log N)-\ncomputable predicates: N mod m (m \u2264 B), Jacobi symbols (a|N), gcd(f(N), N).\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_c98081c2_b4afdd6f",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "c98081c2",
+    "status": "available",
+    "timestamp": "2026-08-14T20:05:36.214016+00:00",
+    "title": "Deepening: The Class-Wide No-Pinning Lemma, Verified"
   },
   {
     "consumed_by_exp_id": "",
@@ -19316,6 +19344,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-14T19:21:21.343964+00:00",
     "title": "* **Rational 3-torsion degeneracy.** `3 \u2223 #E_{j0}(\ud835\udd3d_p)` for every prime `p > 3`,"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 after the Class-Wide No-Pinning Lemma\n\nThe verified core of this cycle (all in `Catalog/Novelty/NoPinning*.lean`, 0 sorries):\n\n* **No-pinning (class-wide).** For a target `N\u2080` and a candidate `p`, both coprime\n  to `L`, infinitely many primes `q` make *every* observable of modulus `L`\n  agree on `p\u00b7q` and `N\u2080` (`no_pinning_universal`).  This covers the whole\n  poly(log N) battery: residues, Jacobi symbols, gcds (`fullBattery_no_pinning`).\n* **The pinned set is exactly the primes dividing `L`** (`compensable_iff_not_dvd`),\n  which at level `B` are exactly the primes `\u2264 B` (`prime_dvd_modLevel_iff`), at\n  most `log\u2082 L` of them (`pinnedPrimes_card_le_log`).\n* **Sealing.** Excluding `k` candidates forces `2^k \u2264 L`; excluding everything\n  below `X` forces `L \u2265 2^(\u03c0(X)\u22122)` (`sealing_bound_semiprime`).\n* **No factoring from congruence data**, for arbitrary `L` (`no_congruence_factoring`).\n* **Uniformity.** The product map of a group is a perfectly uniform hash:\n  every value has exactly `|G|` ordered factorisations (`card_factor_pairs`).\n\nBelow are the next-cycle conjectures, each falsifiable and stated so that a\ncounterexample or a Lean proof would settle it.\n\n---\n\n## Conjecture 1 (Short-interval no-pinning; bold)\n\n*For every even modulus `L`, every target `N\u2080` coprime to `L` and every prime\ncandidate `p \u2224 L`, there is a compensating prime `q` with `q \u2264 L^{C}` for an\nabsolute constant `C`; consequently the ambiguous partner `N' = p\u00b7q` can be\nfound with the same bit-length as `N\u2080` up to `O(log L)` bits.*\n\n**The key insight is** that our no-pinning lemma is currently *qualitative in\nsize*: Dirichlet gives infinitely many partners but no bound, so an adversary\ncould in principle try to pin a factor using the *size* of `N` in addition to\nits residue.  Linnik's theorem already gives `q \u226a L^{5}` unconditionally, so the\nconjecture is provable in Lean once an effective Linnik-type input is\nformalised; the falsifiable part is the claim that size data adds nothing, i.e.\nthat one can additionally demand `p\u00b7q` to lie in a prescribed dyadic window.\n\n**Why now?** Linnik's constant is now known to be `\u2264 5`, and mathlib's Dirichlet\nmachinery (`Nat.infinite_setOf_prime_and_eq_mod`, Dirichlet characters,\n`ZMod` unit groups) is the same infrastructure our proof already uses.\n\n## Conjecture 2 (Beyond congruences: Euler-witness batteries)\n\n*Let `E_a(N) = a^{(N\u22121)/2} mod N` for `a \u2264 B`.  Then for every semiprime target\n`N\u2080` and every candidate prime `p \u2224 2N\u2080`, there are infinitely many primes `q`\nwith `E_a(p q) = E_a(N\u2080)` for all `a \u2264 B` \u2014 the Euler-witness battery is also\nno-pinning.*\n\n**The key insight is** that `E_a(pq)` is determined by `a` modulo the two\nLegendre symbols plus a CRT gluing, so the battery is again a function of a\n*symmetric* datum of `(p, q)`; the obstruction is that the relevant modulus is\n`N` itself, so the compensation must be found in a progression modulo `4\u00b7\u220fa`\ntogether with a prescribed pair of Legendre symbols \u2014 precisely the setting our\n`IsModObs` framework handles once Legendre data is added as extra coordinates.\nFalsified if some `a` makes `E_a` asymmetric in `(p,q)`.\n\n**Why now?** This is the first observable class outside the congruence world\nthat is still poly(log N)-computable; settling it decides whether \"no-pinning\"\nis a statement about congruences or about poly-time information as such.\n\n## Conjecture 3 (Converse / \u03a9(N)-sealing, the open half)\n\n*Any observable `f` whose value determines a nontrivial factor of every\nsemiprime `N \u2264 X` \u2014 in the sense that some map `A` satisfies `A(f(N)) \u2223 N`,\n`1 < A(f(N)) < N` \u2014 has range of size at least `X^{1/2\u2212o(1)}` on the semiprimes\nbelow `X`.*\n\n**The key insight is** that `no_congruence_factoring` already proves the\nqualitative version for congruence observables by exhibiting two coprime\nsemiprimes with equal readouts; the quantitative version should follow from a\ncounting argument: each readout value can \"serve\" only the semiprimes sharing a\nprime factor, and there are `~X/log\u00b2X` semiprimes but only `~\u221aX/log X` primes,\nso a small range forces a collision between coprime semiprimes.\n\n**Why now?** The collision argument needs only elementary counting plus the\nprime-counting bounds already in mathlib (`Nat.primesBelow`, Chebyshev-type\nestimates), so it is within formalisation reach and would complete the\n\"factor-revealing \u21d2 sealed\" half of the programme.\n\n## Conjecture 4 (Entropy form of no-pinning)\n\n*Let `p, q` be independent uniform primes in `[X, 2X]` and let `R = pq mod L`.\nThen `I(p ; R) = O(L / X^{1/2})`: the mutual information between a factor and\nthe congruence readout tends to `0` as `X \u2192 \u221e` for `L = poly(log X)`.*\n\n**The key insight is** that `card_factor_pairs` already proves the exact\nstatement \"conditioned on the product class, the factor class is uniform\"; what\nremains is the sampling error between \"uniform prime in `[X,2X]`\" and \"uniform\nunit class\", i.e. a Siegel\u2013Walfisz input.\n\n**Why now?** Formal information theory (`ProbabilityTheory` entropy API) is\nmature enough in mathlib to state `I(p;R)` precisely, and the group-theoretic\nhalf of the argument is already verified here.\n\n## Conjecture 5 (Pinned set characterises the modulus)\n\n*Two even moduli `L\u2081, L\u2082` induce the same family of consistent-candidate sets\n(for all targets) if and only if `rad(L\u2081) = rad(L\u2082)`.*\n\n**The key insight is** that `compensable_iff_not_dvd` shows the consistent set\ndepends on `L` only through its prime support, so the \"if\" direction is nearly\nproved; the \"only if\" direction needs a target separating two different radicals,\nwhich the residue channel mod `p` supplies.  This would show that the *only*\ninvariant of a congruence battery that matters for pinning is its radical \u2014 a\nstrong rigidity statement, and easily falsifiable by exhibiting `L\u2081, L\u2082` with\ndifferent radicals and identical consistent sets.\n\n**Why now?** All ingredients (`pinned_of_dvd`, `compensable_iff_not_dvd`,\n`pinnedPrimes`) are already formalised in this cycle; the remaining work is a\nsingle separating-target construction.\n",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_1268",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "c98081c2",
+    "status": "available",
+    "timestamp": "2026-08-14T20:05:22.645766+00:00",
+    "title": "The verified core of this cycle (all in `Catalog/Novelty/NoPinning*.lean`, 0 sor"
   },
   {
     "consumed_by_exp_id": "",

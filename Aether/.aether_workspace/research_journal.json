@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "c56f6a79",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Diophantine–Lattice: Spectral Bounds on Non-Homogeneous Quadratic Forms\n\nAll conjectures below are falsifiable statements about the objects formalised in\n`Catalog/Applications/Di",
-      "quality_score": 0.71215,
-      "sorry_count": 0,
-      "theorem_count": 43,
-      "timestamp": "2026-08-11T10:24:47",
-      "title": "Diophantine-Lattice: Spectral Bounds on Non-Homogeneous Quadratic Forms"
-    },
-    {
       "cycle_id": "f2796053",
       "domain": "Logic",
       "key_insight": "# Future Directions (cycle 1, thread th_ed2afa00)\n\nDerived from the verified results in `Catalog/Logic/GEBGradedLawvere.lean`:\ngraded (partial) universality, the obstruction spectrum\n(`representable ⟺",
@@ -499,19 +489,19 @@
       "theorem_count": 122,
       "timestamp": "2026-08-14T19:21:28",
       "title": "CM-ECM-GENERAL: rational-torsion degeneracy, union-dilution law, 3-adic Hecke visibility (Q(sqrt(-3)"
+    },
+    {
+      "cycle_id": "c98081c2",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — after the Class-Wide No-Pinning Lemma\n\nThe verified core of this cycle (all in `Catalog/Novelty/NoPinning*.lean`, 0 sorries):\n\n* **No-pinning (class-wide).** For a target `N₀` an",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 73,
+      "timestamp": "2026-08-14T20:05:36",
+      "title": "The Class-Wide No-Pinning Lemma, Verified"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "8fa54bf5",
-      "domain": "Tropical",
-      "key_insight": "# Future Directions\n\n1. **General tropical Helly bound.** For every `d > 0`, every finite family of normalized max-plus tropically convex subsets of `Fin d → ℝ` whose every subfamily of cardinality at",
-      "quality_score": 0.7597999999999998,
-      "sorry_count": 0,
-      "theorem_count": 20,
-      "timestamp": "2026-08-03T23:30:54",
-      "title": "Tropical Convexity and Helly Theorem"
-    },
     {
       "cycle_id": "87f6aef5",
       "domain": "Shared",
@@ -2501,27 +2491,19 @@
       "theorem_count": 122,
       "timestamp": "2026-08-14T19:21:28",
       "title": "CM-ECM-GENERAL: rational-torsion degeneracy, union-dilution law, 3-adic Hecke visibility (Q(sqrt(-3)"
+    },
+    {
+      "cycle_id": "c98081c2",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — after the Class-Wide No-Pinning Lemma\n\nThe verified core of this cycle (all in `Catalog/Novelty/NoPinning*.lean`, 0 sorries):\n\n* **No-pinning (class-wide).** For a target `N₀` an",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 73,
+      "timestamp": "2026-08-14T20:05:36",
+      "title": "The Class-Wide No-Pinning Lemma, Verified"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "a1e10693",
-      "domain": "Computation",
-      "name": "bm_eq",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "a1e10693",
-      "domain": "Computation",
-      "name": "bm_cube",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "c7164926",
-      "domain": "Tropical",
-      "name": "redP_ne_zero",
-      "quality": 0.78
-    },
     {
       "cycle_id": "c7164926",
       "domain": "Tropical",
@@ -2803,9 +2785,27 @@
       "domain": "Probability",
       "name": "empMI_perfect_correlation_pos",
       "quality": 0.87
+    },
+    {
+      "cycle_id": "c98081c2",
+      "domain": "Novelty",
+      "name": "lcmUpTo_ne_zero",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "c98081c2",
+      "domain": "Novelty",
+      "name": "dvd_lcmUpTo",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "c98081c2",
+      "domain": "Novelty",
+      "name": "modLevel_ne_zero",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-14T19:21:28",
+  "last_updated": "2026-08-14T20:05:36",
   "open_questions": [
     {
       "context": "-    sorry+  -- Finite case: extract from computational verification",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "610f4688",
-        "quality": 0.71196,
-        "theorems": 52,
-        "title": "**Conjecture.** For a comparator network implemented by reversible gates with a"
-      },
-      {
         "cycle_id": "3bb7c316",
         "quality": 0.741695,
         "theorems": 47,
@@ -3637,6 +3631,12 @@
         "quality": 0.82,
         "theorems": 76,
         "title": "CM-ECM-ORDER (round-17 #1): the ECM order of a CM curve collapses to p+1 on the "
+      },
+      {
+        "cycle_id": "c98081c2",
+        "quality": 0.82,
+        "theorems": 73,
+        "title": "The Class-Wide No-Pinning Lemma, Verified"
       }
     ],
     "NumberTheory": [
