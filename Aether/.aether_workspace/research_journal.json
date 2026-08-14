@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "b7dba88e",
-      "domain": "Tropical",
-      "key_insight": "# Future directions — the magma monoid as a transformation semigroup\n\nAll conjectures below are stated for `Bin(X)`, the monoid of all binary\noperations on a set `X` under `(f * g) a b = g (f a b) (f",
-      "quality_score": 0.7419800000000001,
-      "sorry_count": 0,
-      "theorem_count": 115,
-      "timestamp": "2026-08-11T19:28:43",
-      "title": "Deepening: ArXiv paper: Transformation Semigroup Perspective on the Magma Monoid"
-    },
-    {
       "cycle_id": "832153cb",
       "domain": "Physics",
       "key_insight": "# Future Directions — Diophantine-Lattice Spectral Bounds (after cycle 11)\n\nCycles 10–11 closed three standing conjectures of the thread.  What is proved (all `sorry`-free,\nin `Catalog/Physics/Diophan",
@@ -499,19 +489,19 @@
       "theorem_count": 58,
       "timestamp": "2026-08-14T22:48:13",
       "title": "The Higher-Power Reciprocity Channel, Closed"
+    },
+    {
+      "cycle_id": "1b55f202",
+      "domain": "Computation",
+      "key_insight": "# Future directions: the cyclic splitting-type channel\n\nEach conjecture below is falsifiable by a single counterexample in the finite cyclic model\n`ℤ/n`, `T(x) = n / gcd(n, x)`, and each is already ve",
+      "quality_score": 0.79,
+      "sorry_count": 0,
+      "theorem_count": 145,
+      "timestamp": "2026-08-14T23:43:25",
+      "title": "CYCLIC-TYPE-CHANNEL (round-22 #2, experiment 413, assessment v189, paper 78)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "a5f7aac5",
-      "domain": "NumberTheory",
-      "key_insight": "# Future directions\n\n## What is now proved\n\nThe conditional Hilbert-class-field interface in `Catalog/NumberTheory/` contains a complete\ndescent and classification theory. For a number field `K`, a fi",
-      "quality_score": 0.6853135011441648,
-      "sorry_count": 5,
-      "theorem_count": 437,
-      "timestamp": "2026-08-04T06:48:36",
-      "title": "Deepening: Hilbert 12: Kronecker-Weber Generalization"
-    },
     {
       "cycle_id": "1ed3fd3a",
       "domain": "Computation",
@@ -2501,15 +2491,19 @@
       "theorem_count": 58,
       "timestamp": "2026-08-14T22:48:13",
       "title": "The Higher-Power Reciprocity Channel, Closed"
+    },
+    {
+      "cycle_id": "1b55f202",
+      "domain": "Computation",
+      "key_insight": "# Future directions: the cyclic splitting-type channel\n\nEach conjecture below is falsifiable by a single counterexample in the finite cyclic model\n`ℤ/n`, `T(x) = n / gcd(n, x)`, and each is already ve",
+      "quality_score": 0.79,
+      "sorry_count": 0,
+      "theorem_count": 145,
+      "timestamp": "2026-08-14T23:43:25",
+      "title": "CYCLIC-TYPE-CHANNEL (round-22 #2, experiment 413, assessment v189, paper 78)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "9cc9a6e9",
-      "domain": "Algebra",
-      "name": "cdist_pos_of_ne",
-      "quality": 0.82
-    },
     {
       "cycle_id": "9cc9a6e9",
       "domain": "Algebra",
@@ -2803,9 +2797,15 @@
       "domain": "Combinatorics",
       "name": "quadratic_two_is_dial",
       "quality": 0.78
+    },
+    {
+      "cycle_id": "1b55f202",
+      "domain": "Computation",
+      "name": "sum_terms",
+      "quality": 0.79
     }
   ],
-  "last_updated": "2026-08-14T22:48:13",
+  "last_updated": "2026-08-14T23:43:25",
   "open_questions": [
     {
       "context": "-    sorry+  -- Finite case: extract from computational verification",
@@ -3269,12 +3269,6 @@
     ],
     "Computation": [
       {
-        "cycle_id": "68319f3d",
-        "quality": 0.646,
-        "theorems": 1088,
-        "title": "Deepening: Bridge: Fourier Analysis as a Functor"
-      },
-      {
         "cycle_id": "14cda033",
         "quality": 0.71918,
         "theorems": 186,
@@ -3327,6 +3321,12 @@
         "quality": 0.82,
         "theorems": 83,
         "title": "Round-3 Hypothesis Closures: Five Novel Classical Factoring Hypotheses, Tested a"
+      },
+      {
+        "cycle_id": "1b55f202",
+        "quality": 0.79,
+        "theorems": 145,
+        "title": "CYCLIC-TYPE-CHANNEL (round-22 #2, experiment 413, assessment v189, paper 78)"
       }
     ],
     "Cryptography": [

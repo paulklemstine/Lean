@@ -33,7 +33,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The 3SUM-Birthday-Bound Hierarchy"
   },
   {
-    "consumed_by_exp_id": "6b6da09d",
+    "consumed_by_exp_id": "82f4929c",
     "description": "**Summary.** The conjecture that for E_N: y\u00b2 = x\u00b3 + N with N = pq, the\ndenominators of x(nP) are divisible only by {2, 3, p, q} (the primes dividing\n\u0394 = -432N\u00b2) is mathematically FALSE.\n\n**Counterexample.** N = 55 = 5\u00b711, P = (9,28) \u2208 E_55(Q):\n  x(2P) = (9^4 - 8\u00b755\u00b79) / (4(9^3 + 55)) = 2601/3136, and 3136 = 2^6 \u00b7 7^2.\nThe prime 7 divides the denominator but 7 \u2224 \u0394 (7 is a prime of good reduction).\n\n**Mechanism.** \u2113 | denom(x(nP)) iff nP \u2261 O (mod \u2113); good-reduction primes divide\ndenominators whenever the point reduces to torsion \u2014 infinitely many such primes.\n\n**Survey (11 semiprimes):** p appears in some denominator 54.5%, q appears 0%,\nonly-{2,3,p,q} holds 0% of the time. The denominator structure is a function of\nN alone (barrier 5) and does not cleanly reveal p, q.\n\n---\n\n*Factoring Lab paper. Status: proven theorem / verified / framework. This is a research deliverable, not a factoring breakthrough claim.*",
     "domains": [
       "Novelty"
@@ -48,7 +48,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The 'Only Bad Primes' Conjecture is False (elliptic curve denominators)"
   },
   {
-    "consumed_by_exp_id": "0e9b0d11",
+    "consumed_by_exp_id": "9d48857d",
     "description": "**Summary.** Let F(k) = sum_{a=1}^{N} a^k. Then gcd(F(k), N) reveals a factor\nat k = p-1: for N = pq, gcd(F(p-1), N) = q (provided (q-1) does not divide (p-1)).\n\n**Key results (proven):**\n- **Theorem 1 (power-sum factor reveal):** Mod p the residues cover each nonzero\n  residue q times, so F(k) \u2261 q\u00b7(sum of k-th powers mod p); by FLT this is -q mod p\n  at k=p-1. Mod q it vanishes when (q-1) \u2224 (p-1). Hence gcd = q.\n- **Theorem 2 (robustness):** The power sum aggregates ALL bases a=1..N\n  simultaneously, so it cannot suffer Pollard p-1's \"bad base\" failure.\n- **Theorem 3 (Carmichael periodicity):** g(k) = gcd(F(k), N) has period\n  \u03bb(N) = lcm(p-1, q-1), so \u03bb(N) is readable from the period and the factors\n  follow from p+q = N - \u03bb(N) + 1.\n\n**Complexity.** First hit at k* = min(p-1,q-1) \u2248 \u221aN; cost per F(k) is O(N);\ntotal O(N^{3/2}) \u2014 worse than trial division. This is the SAME structure Shor's\nalgorithm exploits, made classically hard by the period-finding barrier.\nVerified on all 8 test semiprimes up to N \u2248 10^4.\n\n---\n\n*Factoring Lab paper. Status: proven theorem / verified / framework. This is a research deliverable, not a factoring breakthrough claim.*",
     "domains": [
       "Novelty"
@@ -302,17 +302,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "TRACEPROFILE: the trace s=p+q is the least-hidden symmetric invariant \u2014 1 bit per prime exactly, s1=1-N1 theorem"
   },
   {
-    "consumed_by_exp_id": "b6ed20ed",
+    "consumed_by_exp_id": "",
     "description": "**Paper 49 (NewMathematics) \u2014 Experiment 384, assessment v160. Round-14 #6.**\n\n**Hypothesis (from brainstorm agent):** the per-bit channel map I(p_i; N_j) has a provable zero bottom-left block and a readable MIDDLE bump carrying ~(1/2)log N \u2212 log log N bits.\n\n**Experiment (exact k-bit-prime semiprime enumeration, k=8\u201314, up to 380 628 pairs; full k x 2k pairwise MI matrix + idealized uniform-odd control + permutation nulls):**\n\n1. **ZERO-BLOCK THEOREM (proved):** I(p; N mod 2^(k-1)) = 0. The bottom half of N is informationally EMPTY about the factor \u2014 for fixed odd r = p mod 2^(k-1), the map q -> rq is a bijection on odd residues mod 2^(k-1). Whole bottom-left block at the noise floor.\n2. **TOP-2-BIT SLIVER:** the only pairwise-visible info is N's top two bits (~0.46 bits total; max cell 0.21\u20130.22 bits at (p_{k-2}, N_{2k-1})). Everything else ~0.\n3. **SUPERDENSITY:** total pairwise I ~ 0.46 bits vs joint I(p;N) = H(p) ~ 9.5 bits \u2014 ~95% of the factor information is invisible to every single-bit probe (fraction 6.0% -> 4.8% as k grows).\n4. **JOINT-ONLY RECOVERABILITY:** p is a function of the full N but of NEITHER half alone (top half ambiguous for ~90% of classes).\n5. **Agent's middle-bump prediction REFUTED:** no middle band; pairwise sliver is ~5% of the channel, not k \u2212 log2(k) bits.\n\n**Verdict:** not a factoring tool (no decoder reads a bounded subword); a decisive structural result \u2014 the information-theoretic face of barriers 2/5. Multiplication is a near-perfect nonlinear bit-mixer: the factor is provably empty from the low half of N, 95% pairwise-invisible, recoverable only from the full joint (which is exactly factoring).\n\nFull paper: ResearchOutput/NewMathematics/49_BitProfile_SuperdenseFactors.md",
     "domains": [
       "Novelty"
     ],
     "id": "fd_1154",
-    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-12T05:49:32.577201+00:00",
     "title": "BITPROFILE: factor information is superdense in N \u2014 zero-block theorem, 95% pairwise-invisible, top-2-bit sliver"
   },
@@ -467,13 +466,13 @@ window.FUTURE_DIRECTIONS = [
     "title": "OR-DIAL-MAXIMUM: the semiprime OR dial has a global cap g(2)=0.3113 bits over every class-rate profile (paper 73, round-20 #1)"
   },
   {
-    "consumed_by_exp_id": "70d03dec",
+    "consumed_by_exp_id": "f2bb5930",
     "description": "## CYCLIC-TYPE-CHANNEL (round-22 #2, experiment 413, assessment v189, paper 78)\n\n**The complete splitting-type channel of a cyclic field exceeds the 1-bit binary-fork cap. Papers 72\u201374 capped every BINARY symmetric semiprime fork at 1.0 bit; the cyclic splitting type is multi-state, and its type-pair channel carries 1.2500 (C\u2084) / 1.4739 (C\u2086) bits \u2014 strictly above the cap.**\n\n### The type channel\n\nFor Q(\u03b6_f), f prime, Gal = (Z/f)^\u00d7 = C_n (n = f\u22121), the Frobenius order T(p) = ord_f(p) (the residue degree) is the complete splitting type \u2014 a deterministic function of p mod f, so **I(p mod f; T) = H(T) EXACT**: C\u2084 = Q(\u03b6\u2085) \u2192 3 states {1,2,4} rates {1/4,1/4,1/2}, H = 1.5 bits (measured 1.4989); C\u2086 = Q(\u03b6\u2087) \u2192 4 states {1,2,3,6} rates {1/6,1/6,1/3,1/3}, H = 1.9183.\n\n- **[T=1] splits-completely = H(1/n)**: C\u2084 0.8098 = H(1/4) = 0.8113 EXACT \u2014 the **FIRST prime-level QUARTIC-character pinning**; C\u2086 0.6497 = H(1/6). Every type face equally pinned ([T=2] 0.8110 = H(1/4), [T=4] 1.0000 = H(1/2)).\n- **Thickening zero**: I(p mod f\u00b2; T) = I(p mod f; T) EXACT (T depends only on p mod f). Coprime controls flat.\n- **Root-count readout is LOSSY**: nr collapses [2,2]/[4] (and [2,2,2]/[3,3]/[6]) to nr=0 \u2014 the nr-channel is BINARY (C\u2084 0.8109, C\u2086 0.6498) strictly below H(T). **The type, not the root count, is the complete object.**\n\n### The semiprime law \u2014 exact, and above the 1-bit cap\n\nThe unordered type-pair {T(p),T(q)} obeys the exact law **I_pair = H(\u03a0) \u2212 (1/\u03c6(f))\u03a3_c H(\u03a0_c)**, \u03a0_c the pair law under N \u2261 c mod f, computable by exact enumeration over the unit group. Machine-verified (30k semiprimes):\n\n| field | H(T) | H(pair) | H(pair\\|N) | I_pair (exact) | I_pair (MC) |\n|---|---|---|---|---|---|\n| C\u2082 Q(\u221a5) | 1.0000 | 1.5000 | 0.5000 | **1.0000** | 1.0000 |\n| C\u2084 Q(\u03b6\u2085) | 1.5000 | 2.3750 | 1.1250 | **1.2500** | 1.2452 |\n| C\u2086 Q(\u03b6\u2087) | 1.9183 | 3.1144 | 1.6405 | **1.4739** | 1.4711 |\n\nC\u2082 reproduces the paper-74 cap exactly (the quadratic type pair IS the split-count); **C\u2084 and C\u2086 both EXCEED 1.0 bit**. Which-factor wall 0.0001 (symmetric, factor-useless); coprime controls flat. The s-projection recovers Is(n) EXACTLY (C\u2084 0.2896 vs Is(4)=0.2947; C\u2086 0.1445 vs Is(6)=0.1487) \u2014 the split-count is ONE face of the richer type channel.\n\n### Growth law: no 1-bit cap\n\n| n | field | #states | H(T) | I_pair | above 1 bit? |\n|---|---|---|---|---|---|\n| 2 | Q(\u221a5) | 2 | 1.0000 | 1.0000 | at cap |\n| 4 | Q(\u03b6\u2085) | 3 | 1.5000 | 1.2500 | **YES** |\n| 6 | Q(\u03b6\u2087) | 4 | 1.9183 | 1.4739 | **YES** |\n| 10 | Q(\u03b6\u2081\u2081) | 4 | 1.7219 | 1.2027 | **YES** |\n| 12 | Q(\u03b6\u2081\u2083) | 6 | 2.4183 | 1.7239 | **YES** |\n| 16 | Q(\u03b6\u2081\u2087) | 5 | 1.8750 | 1.3281 | **YES** |\n\nEvery n \u2265 4 exceeds 1.0 bit; the value is governed by the **divisor structure of the cyclic order** (n=12, six states, richest at 1.7239).\n\n### Verdict\n\nCONFIRMED. New exact objects: the type-pair law I_pair = H(\u03a0) \u2212 (1/\u03c6)\u03a3H(\u03a0_c) (first symmetric channels above the binary-fork cap), the C\u2084 prime-level quartic pinning, root-count lossiness (type multi-state, nr binary), and Is(n) as the s-projection of the type channel. Factor-useless: symmetric (which-factor wall 0.0001, barrier 2), a pure p-mod-f residue dial (barrier 5), N-computable only behind the CRT split (barrier 6), cyclotomic fields + Dirichlet characters + CRT + Chebotarev 1922 (barrier 8). Unifies papers 54/71/72/74. Barriers 2/5/6/8.\n\n*Script:* /tmp/exp_typechan.py.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_1182",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
@@ -676,6 +675,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-14T21:48:23.767618+00:00",
     "title": "NET-25 (paper 69): DENSE-FINAL-STEP-IS-THE-CURE \u2014 the stateful-carry-cell cure was the dense EOS (final-carry) input, not the encoder's content"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## Summary\n\nRound-net-26 resolves NET-25's flagged EOS-width threshold (28\u2013384) on the carry-wall cure. Thirty arms on the plain n=5 task (GRUCell(384\u2192192), learned E-d EOS zero-padded to 384, ONLY E varies):\n\n- **Sweep** (E \u2208 {20,28,64,96,128,192,256,384} \u00d7 2 seeds): E=20 {0.9990, 0.0166} fragile; **E\u226528 cures 14/14 at 1.0000**.\n- **Construction-order verify** (E=20, s0): after-seed 0.9990 = before-seed 0.9990 \u2192 NET-25's pad384/pad384-zeroEOS drew DIFFERENT init streams (\"identical-weights\" control **INVALID**) but timing is immaterial (the 0/2 was 2 unlucky draws from P(cure|E20)\u2248\u00bc).\n- **Endpoint distribution** (E=20/384 \u00d7 seeds 2\u20137): E20 {0.0107, 0.1240, 0.0576, 0.0054, 0.0063, 0.0308}; E384 1.0000 \u00d76.\n\n## The law\n\n**EOS-WIDTH-DISTRIBUTION-SHIFT** \u2014 EOS width gates P(cure) one-sided, not a sharp boundary:\n\n- Merged E=20 (12 samples): {0.999\u00d73, 0.744, 0.124, 0.058, 0.031, 0.026, 0.017, 0.011, 0.006, 0.005} \u2192 **P(clean cure) = 3/12 = 25%**, median 0.044.\n- Merged E\u226528 (20 samples): **all 1.0000, 0/20 failures**.\n- **Control variable = representational distinctness, not width**: E=20's EOS occupies exactly the digit subspace (dims 0\u201319, no exclusive dims) \u2192 boundary ambiguous with a digit step \u2192 seed-fragile; E\u226528 adds exclusive dims \u2192 robust. pos28 (full-input-width EOS, no exclusive dims) is consistent.\n- **NET-25 corrections**: \"28-d fails (pos28 0.0049)\" was a GRUCell(28)-architecture artifact (E28 cures 2/2 on the 384-d cell); \"20-d fails 0/2\" was a small unlucky draw. NET-25's mechanism (dense boundary input keeps hidden state in-distribution at depth) **SURVIVES** on stronger ground (20/20 vs 3/12).\n\n## Evidence\n\n- Failure mode: smooth progressive-unroll collapse (n=5 1.0000 \u2192 n=6 0.9556 \u2192 n=7 0.1445 \u2192 n=8 0.0166), column-clustered errors.\n- Probe discriminator: cure = flat hidden-norm (\u0394<0.2) + maxconf 1.000; failure = norm drift (\u0394+2.2) + maxconf dips 0.945\u20130.984.\n- Determinism exact: after-seed s0 = 0.9990 reproduced byte-identical twice.\n\n## Barriers\n\nVariance (e) is the central barrier of the round, now closed: 12-sample E20 distribution + 20-sample E\u226528 distribution; the invalid control is demonstrated invalid AND immaterial. All other barriers clean/confronted (see paper).\n\n## Files\n\n- Paper 70: `ResearchOutput/NetworkMathematics/26_EOSWidthDistributionShift.md`\n- Notebook: `ResearchOutput/Network_Lab_Notebook.md` Part 26\n- Assessment: v26 (26 experiments, NET-26)\n- Scripts: /tmp/exp_net_eos_sweep.py (ALL_DONE_NET26), /tmp/exp_net_eos_verify.py (ALL_DONE_NET26_VER), /tmp/exp_net_eos_dist.py (ALL_DONE_NET26_DIST)\n\nOpen: shape of the 20\u219228 shift (E=24 untested); real-scale transfer with an exclusive-dimension boundary input.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_1275",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-14T23:43:44.067784+00:00",
+    "title": "NET-26 (paper 70): EOS-WIDTH-DISTRIBUTION-SHIFT \u2014 the EOS-width \"threshold\" is a one-sided P(cure) distribution shift, not a sharp boundary; CORRECTS NET-25"
   },
   {
     "consumed_by_exp_id": "",
@@ -3183,6 +3196,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-01T19:43:12.027506+00:00",
     "title": "Deepening: Tropical Intersection Theory"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 1b55f202 (Q=0.790), which proved 145 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## CYCLIC-TYPE-CHANNEL (round-22 #2, experiment 413, assessment v189, paper 78)\n\n**The complete splitting-type channel of a cyclic field exceeds the 1-bit binary-fork cap. Papers 72\u201374 capped every BINARY symmetric semiprime fork at 1.0 bit; the cyclic splitting type is multi-state, and its type-pai",
+    "domains": [
+      "Computation"
+    ],
+    "id": "push_1b55f202_bddb30b9",
+    "priority_score": 0.89,
+    "research_mode": "team",
+    "source_exp_id": "1b55f202",
+    "status": "available",
+    "timestamp": "2026-08-14T23:43:25.883780+00:00",
+    "title": "Deepening: CYCLIC-TYPE-CHANNEL (round-22 #2, experiment 413, assessment v189, paper 78)"
   },
   {
     "consumed_by_exp_id": "",
@@ -19416,6 +19443,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-14T22:48:04.755584+00:00",
     "title": "What this cycle established, formally and sorry-free"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions: the cyclic splitting-type channel\n\nEach conjecture below is falsifiable by a single counterexample in the finite cyclic model\n`\u2124/n`, `T(x) = n / gcd(n, x)`, and each is already verified on the range that was\nenumerated. Notation as in `Catalog/Computation/CyclicTypeChannel.lean`:\n`I_pair(n)` is the mutual information between the unordered type pair `{T(x), T(y)}`\nand the norm class `x + y`, for `x, y` independent and uniform.\n\n## C1. The CRT-additivity theorem (general form)\n\n**Conjecture.** For all coprime `m, n \u2265 1`: `I_pair(mn) = I_pair(m) + I_pair(n)`.\n\n*Status:* proved here for `12 = 4\u00b73`, `10 = 2\u00b75`, `15 = 3\u00b75`, `14 = 2\u00b77`, `20 = 4\u00b75`,\n`18 = 2\u00b79`; verified numerically for every coprime splitting with `mn \u2264 40`.\n\n**The key insight is** that the type map factors through the CRT isomorphism\n`\u2124/mn \u2245 \u2124/m \u00d7 \u2124/n` as `T = T_m \u00b7 T_n` with `gcd(T_m, T_n) = 1`, so the *unordered*\ntype pair of a semiprime is recoverable from the two component unordered pairs together\nwith the matching data, and the matching ambiguity is exactly cancelled by the\nconditioning on the norm class in each factor.\n\n**Why now?** All the pieces are in place: the Euler-\u03c6 type law is proved in general\n(`typeCount_eq_totient`), the entropy of a counting distribution has a closed counting\nform (`Hlist_eq`), and the conjecture is an equality of two finite sums that only needs a\nmeasure-preserving bijection \u2014 no analysis.\n\n## C2. The 2-adic growth law and its limit\n\n**Conjecture.** For all `k \u2265 1`: `I_pair(2^k) = (4/3)(1 \u2212 4^{\u2212k})`; in particular the\ncapacity of a cyclic 2-group channel is bounded by `4/3` bits and converges to it.\n\n*Status:* proved for `k \u2264 4` (`Ipair_two_pow_law`), numerically confirmed to `k = 6`.\n\n**The key insight is** that for `n = 2^k` the type is the 2-adic valuation, and the\nvaluation of a sum is `min(v(x), v(y))` unless the valuations agree \u2014 so the conditional\nlaw `\u03a0_c` depends on `c` only through `v(c)`, giving a self-similar recursion between\nlevel `k` and level `k \u2212 1` whose fixed point is `4/3`.\n\n**Why now?** The recursion is visible in the enumerated occupation tables (each level\nreproduces the previous one with one extra state of half the mass), so the induction step\nis a finite identity between two explicit dyadic entropies.\n\n## C3. The even/odd dichotomy of the one-bit cap\n\n**Conjecture.** `I_pair(n) > 1` if and only if `n` is even (`n \u2265 2`), and\n`I_pair(n) < 1` for every odd `n \u2265 3`; equivalently the cap is broken exactly when the\ncyclic order admits the quadratic (`C\u2082`) quotient.\n\n*Status:* proved for `n \u2208 {2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,18,20}`; verified for `n \u2264 40`.\n\n**The key insight is** that `C\u2082` is the unique quotient whose type pair *is* the norm\nclass (the split-count fork saturating exactly 1 bit), so by C1 an even order carries\n`1 + I_pair(odd part) \u2265 1` bits while an odd order carries only the strictly sub-critical\n`I_pair` of its odd factors.\n\n**Why now?** C3 follows from C1 plus the single inequality `I_pair(odd) < 1`, which is\nitself a statement about the two-state Frobenius law `P(T = 1) = 1/n` and should follow\nfrom a concavity estimate on `x \u21a6 x log x`.\n\n## C4. Divisor-lattice control of the capacity\n\n**Conjecture.** `I_pair(n) \u2264 H(T_n) \u2212 H(T_n | pair)` is not tight, but the sharper law\n`I_pair(n) < log\u2082(number of divisors of n)` holds for all `n`, with the maximum of\n`I_pair` over `n \u2264 N` attained at the `n \u2264 N` maximising `\u03c4(n)` weighted by `2`-adic depth\n(e.g. `n = 12` and `n = 24` dominate their neighbourhoods).\n\n*Status:* consistent with all enumerated data (`n \u2264 40`); no proof.\n\n**The key insight is** that the number of type states equals `\u03c4(n)`, so the pair alphabet\nhas `\u03c4(n)(\u03c4(n)+1)/2` letters and the whole channel is a quotient of the divisor lattice of\n`n` \u2014 the capacity should therefore be governed by lattice invariants, not by `n` itself.\n\n**Why now?** `HT_divisor_formula` already expresses the marginal entropy purely in terms\nof the divisor lattice; the same technique applied to the *pair* law reduces the\nconjecture to an inequality between two divisor sums.\n\n## C5. Non-cyclic Galois groups: the abelian type channel\n\n**Conjecture.** For `Gal = (\u2124/f)\u02e3` non-cyclic (composite `f`), the splitting type\n`T(p) = ord_f(p)` still gives `I(p mod f ; T) = H(T)` exactly, but the pair capacity is\n*strictly smaller* than the cyclic value of the same order: `I_pair(G) < I_pair(C_{|G|})`\nwhenever `G` is abelian non-cyclic.\n\n*Status:* untested here \u2014 the present development covers the cyclic case only.\n\n**The key insight is** that in a non-cyclic group many elements share the same order, so\nthe type map has larger fibres and the pair channel loses the discriminating power that\nthe cyclic order-lattice provides.\n\n**Why now?** The Lean development is stated for an arbitrary finite index set of\noccupation numbers (`Hlist`, `Ipair_eval`), so switching the underlying group from `\u2124/n`\nto `\u2124/a \u00d7 \u2124/b` requires only a new enumeration, not new theory.\n",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_1274",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "1b55f202",
+    "status": "available",
+    "timestamp": "2026-08-14T23:43:19.189528+00:00",
+    "title": "Each conjecture below is falsifiable by a single counterexample in the finite cy"
   },
   {
     "consumed_by_exp_id": "",
