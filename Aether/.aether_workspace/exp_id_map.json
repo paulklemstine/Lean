@@ -1819,5 +1819,6 @@
   "83c80b79": "de_quantization_assessed_shors_qft_is_irreducible.json",
   "295ca744": "ecm_parity_first_positive_symmetric_residue_shadow.json",
   "e0db545b": "the_permutation_readout_of_individual_orders_close.json",
-  "c76c12ee": "cm_ecm_order_round_17_1_the_ecm_order_of_a_cm_curv.json"
+  "c76c12ee": "cm_ecm_order_round_17_1_the_ecm_order_of_a_cm_curv.json",
+  "8590e003": "cm_ecm_general_rational_torsion_degeneracy_union_d.json"
 }
