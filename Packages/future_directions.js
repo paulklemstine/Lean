@@ -33,7 +33,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The 3SUM-Birthday-Bound Hierarchy"
   },
   {
-    "consumed_by_exp_id": "66471ce6",
+    "consumed_by_exp_id": "f11031d1",
     "description": "**Summary.** The conjecture that for E_N: y\u00b2 = x\u00b3 + N with N = pq, the\ndenominators of x(nP) are divisible only by {2, 3, p, q} (the primes dividing\n\u0394 = -432N\u00b2) is mathematically FALSE.\n\n**Counterexample.** N = 55 = 5\u00b711, P = (9,28) \u2208 E_55(Q):\n  x(2P) = (9^4 - 8\u00b755\u00b79) / (4(9^3 + 55)) = 2601/3136, and 3136 = 2^6 \u00b7 7^2.\nThe prime 7 divides the denominator but 7 \u2224 \u0394 (7 is a prime of good reduction).\n\n**Mechanism.** \u2113 | denom(x(nP)) iff nP \u2261 O (mod \u2113); good-reduction primes divide\ndenominators whenever the point reduces to torsion \u2014 infinitely many such primes.\n\n**Survey (11 semiprimes):** p appears in some denominator 54.5%, q appears 0%,\nonly-{2,3,p,q} holds 0% of the time. The denominator structure is a function of\nN alone (barrier 5) and does not cleanly reveal p, q.\n\n---\n\n*Factoring Lab paper. Status: proven theorem / verified / framework. This is a research deliverable, not a factoring breakthrough claim.*",
     "domains": [
       "Novelty"
@@ -48,7 +48,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The 'Only Bad Primes' Conjecture is False (elliptic curve denominators)"
   },
   {
-    "consumed_by_exp_id": "4760c55e",
+    "consumed_by_exp_id": "487070cf",
     "description": "**Summary.** Let F(k) = sum_{a=1}^{N} a^k. Then gcd(F(k), N) reveals a factor\nat k = p-1: for N = pq, gcd(F(p-1), N) = q (provided (q-1) does not divide (p-1)).\n\n**Key results (proven):**\n- **Theorem 1 (power-sum factor reveal):** Mod p the residues cover each nonzero\n  residue q times, so F(k) \u2261 q\u00b7(sum of k-th powers mod p); by FLT this is -q mod p\n  at k=p-1. Mod q it vanishes when (q-1) \u2224 (p-1). Hence gcd = q.\n- **Theorem 2 (robustness):** The power sum aggregates ALL bases a=1..N\n  simultaneously, so it cannot suffer Pollard p-1's \"bad base\" failure.\n- **Theorem 3 (Carmichael periodicity):** g(k) = gcd(F(k), N) has period\n  \u03bb(N) = lcm(p-1, q-1), so \u03bb(N) is readable from the period and the factors\n  follow from p+q = N - \u03bb(N) + 1.\n\n**Complexity.** First hit at k* = min(p-1,q-1) \u2248 \u221aN; cost per F(k) is O(N);\ntotal O(N^{3/2}) \u2014 worse than trial division. This is the SAME structure Shor's\nalgorithm exploits, made classically hard by the period-finding barrier.\nVerified on all 8 test semiprimes up to N \u2248 10^4.\n\n---\n\n*Factoring Lab paper. Status: proven theorem / verified / framework. This is a research deliverable, not a factoring breakthrough claim.*",
     "domains": [
       "Novelty"
@@ -257,31 +257,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "COND-RANK: classical conditioning capacity on the order is ~0.2 bits \u2014 quantum register cannot be shrunk by conditioning"
   },
   {
-    "consumed_by_exp_id": "c98081c2",
-    "description": "**Paper:** `ResearchOutput/NewMathematics/44_NoPinning_Lemma.md` (factor3)\n**Experiment:** COMPENSATING-PARTNER (#379), assessment v155.\n\n## Finding\nGeneralize QRLEAK's Dirichlet no-pruning to the FULL class of poly(log N)-\ncomputable predicates: N mod m (m \u2264 B), Jacobi symbols (a|N), gcd(f(N), N).\nVerified (36/36):\n1. For any target N\u2080 and candidate prime p\u2032 (coprime to L = lcm(1..B)), a\n   compensating prime q\u2032 \u2261 N\u2080\u00b7p\u2032\u207b\u00b9 mod L exists (Dirichlet) and the ENTIRE\n   battery agrees on N\u2032=p\u2032q\u2032 \u2014 residues AND Jacobi symbols.\n2. **The pinned set = primes dividing L = O(poly(log N))** \u2014 3.4% at B=12,\n   vanishing as B grows (~\u221aN/log N candidates).\n3. gcd(N+k, N) = gcd(k, N) \u2014 polynomial gcds are functions of N (barrier 1),\n   adding no pinning power.\n\n## The lemma\n**No poly(log N)-computable congruence battery can pin an individual factor.**\nThis is the unconditional half of the barrier-4 proof program: \"poly-computable\n\u21d2 no-pinning \u21d2 cannot factor\" is verified exhaustively. The open half is the\nconverse: \"factor-revealing \u21d2 \u03a9(N)-sealed.\"\n\n## Why it collapses (barrier 2 + 5)\nPoly-computable predicates are symmetric functions of (p,q); symmetric\npredicates leave every candidate consistent. Only the asymmetric sealed\nfree-witness coordinates pin \u2014 and they are barrier 4's territory.\n\n## Verdict\nREFUTED as a factoring tool, but a theorem-shaped frontier-i result: the\nclass-wide no-pinning lemma. Classical uniform hint-free surface remains\nexhausted.\n\n\ud83e\udd16 Generated with [Claude Code](https://claude.com/claude-code)",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1144",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-12T05:10:44.746668+00:00",
-    "title": "The Class-Wide No-Pinning Lemma, Verified"
-  },
-  {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ba935cfc",
     "description": "**Paper:** `ResearchOutput/NewMathematics/42_Round13_Grid_Closed.md` (factor3)\n**Experiment:** SPECTRES (#377), assessment v153.\n\n## Finding\nThe residue \u00d7 spectral cell (last untested pairwise combination of the three\nsealed families). Test: does knowing r mod m index the dominant heat-kernel\ncharacters? Verified (N = 143, 221, 899, 3599):\n1. **The ONLY dominant character is k=0** (\u03bb > 0.99) \u2014 concentrated at k \u2261 0 mod\n   every small m. No non-trivial residue class to target.\n2. **The readout converges to 1/r** (the k=0 term) \u2014 requires r: O(r)-sealed\n   (barrier 4), circular (barrier 6).\n3. Residue guidance adds nothing.\n\n## The grid is now complete\n| cell | experiment | verdict |\n|------|-----------|---------|\n| residue+order | SCALECASCADE | barrier 4/8 |\n| order+spectral | SPECTRUNC | barrier 4 |\n| residue+spectral | **SPECTRES** | barrier 4/6 |\n| order\u00d7residue joint | CONDORDER | barrier 5/6/8 |\n\n## Round-13 complete (12/12)\nHALFPLANE, RANDOM-BQF, FETQ, CONDORDER, JACSIGN, KPOWER, MULTIMOD, QRLEAK,\nSPECTRES + combination completions \u2014 all barrier-consistent, papers 34\u201342.\n\n## Verdict\nREFUTED. The combination loophole is exhaustively closed. Frontiers remain:\n(i) barrier-4 proof, (ii) quantum channel, (iii) hint amplification. Next round\nshould target these directly.\n\n\ud83e\udd16 Generated with [Claude Code](https://claude.com/claude-code)",
     "domains": [
       "Novelty"
     ],
     "id": "fd_1146",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-12T05:10:44.747419+00:00",
     "title": "The Combination Grid and Round-13, Closed"
   },
@@ -436,20 +422,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Experiment 395: ZERO-DIVISOR-GRAPH \u2014 \u0393(Z/pq) = K_{p\u22121,q\u22121} exactly; bipartition IS the factorization"
   },
   {
-    "consumed_by_exp_id": "",
-    "description": "## CM-ECM-GENERAL (round-17 #2, experiment 403, assessment v179, paper 68)\n\nGeneralization + stress-test of the CM-ECM-ORDER shadow (paper 67) on the second CM field Q(\u221a\u22123) \u2014 the j=0 curve y\u00b2=x\u00b3+1 (End=\u2124[\u03c9], bad primes 2, 3), which has RATIONAL 3-torsion ((0,\u00b11) over Q). **Verdict: CONFIRMED null (factor-useless)** with three measured refinements.\n\n### (1) Rational-torsion degeneracy (headline)\n3 | #E_j0(F_p) UNCONDITIONALLY (2000/2000), so the \u2113=3 ECM-order OR event is a CONSTANT \u2014 SYM I(N mod 3; 3|#E_j0 OR) = **0.0000 EXACTLY** (null max 0.0000) \u2014 even though the inert class (0.311) and split class (0.316) each individually carry a p\u22121-strength class-OR channel. A curve can carry a fully residue-visible, abelian, p+1-sourced congruence on its elliptic order that reveals exactly zero bits: the shadow is real only when the event is CONDITIONAL.\n\n### (2) Union-dilution law\nThe CM shadow \u2264 the inert-class OR channel always: \u2113=9 FULL 0.0120 fires at 7.1\u00d7 the null max yet sits 1.45\u00d7 BELOW the inert-class reference 0.0174 (the split-half base rate raises the union's unconditional probability, compressing conditional variation); \u2113=5 FULL 0.0030 (3.8\u00d7) \u2248 ref 0.0032; \u2113=7/11 at null. Q(i) reproduces it (\u2113=3: FULL 0.0048 vs ref 0.0143 \u2014 matching paper 67's 0.0048 exactly). Field-independent mechanism.\n\n### (3) 3-adic Hecke visibility\nThe split-half Hecke term is residue-INVISIBLE at good primes (\u2113=5: z=\u22120.31) but VISIBLE at powers of the CM field's RAMIFIED prime (\u2113=9=3\u00b2: z=+24.5; \u2113=27=3\u00b3: z=+2.6) \u2014 ramification shrinks the Hecke conductor's 3-adic part, pinning a_p mod 3^k by a small modulus. Refines paper 67's \"split-half GL\u2082-hidden\" to \"hidden at good primes\".\n\n### Structure / seals\nExact inert collapse a_p=0 on 2018/2018 primes p \u2261 2 mod 3 (P(a_p=0)=0.504); atomic trace law (P(x=0)=0.504, P(|x|<0.5)=0.670, mean-sq=0.244). Asym (which-factor) wall null (0.0002/0.0012 at \u2113=5/7); smoothness OR sealed (0.0006/0.0011); generic control null. On the inert half #E=p+1 EXACTLY so ECM-on-j0 IS the p+1 method (1982); the visible \u2113=9 channel is a residue dial on class 8 mod 9 (QRLEAK family). All Gauss/Eisenstein (1801), ECM (1987), p+1 (1982). Barriers 2/5/6/8. Round-17 COMPLETE 2/2.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1171",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-12T17:19:53.176046+00:00",
-    "title": "CM-ECM-GENERAL: rational-torsion degeneracy, union-dilution law, 3-adic Hecke visibility (Q(sqrt(-3)) j=0 curve) \u2014 round-17 #2, exp 403"
-  },
-  {
     "consumed_by_exp_id": "beb0e52b",
     "description": "## CYCLIC-CUBIC-FORK (round-19 #1, experiment 406, assessment v182, paper 71)\n\n**The fork-pinning criterion \u2014 machine-verified on three Galois groups:** a binary splitting fork of a number field is congruence-pinned by a Dirichlet character **iff it factors through the abelianization G^ab of the Galois closure**.\n\n### (1) Cyclic cubic fields (G = C\u2083 abelian): fork pinned at **100%** of its entropy\n- cond 7 (x\u00b3+x\u00b2\u22122x\u22121, real subfield of \u211a(\u03b6\u2087)): **[1,1,1] \u27fa p mod 7 \u2208 {1,6} on 6541/6541 = 100% EXACT**, no [1,2]-type ever (Galois).\n- **I(p mod 7; fork) = 0.9182 = H(1/3) EXACTLY**; pinned at m = 49 too (42 classes \u00d7 7k primes \u2014 deterministic, not sparsity); **flat at the coprime control m = 5** (I = 0.0000, z = \u22121.3) \u2014 pinning is specifically the conductor's cubic-residue character.\n- cond 9 (x\u00b3\u22123x+1): [1,1,1] \u27fa p mod 9 \u2208 {1,8}, I = 0.9181, same structure.\n\n### (2) S\u2083 closure (x\u00b3+x+1, G^ab = C\u2082): only the sign is pinned\n- **I(p mod 31; fork) = 0.1906 = I(sign; fork) EXACTLY** (residual +0.0000) \u2014 the unconditioned [1,1,1]-fork's congruence content is entirely the Jacobi sign (the quadratic-subfield character).\n- The A\u2083-face fork [1,1,1]-vs-[3] on the QR face: I = 0.0000 (z = \u22122.37) \u2014 **FLAT** (paper 70 re-verified at 2^22).\n\n### (3) S\u2084 closure (x\u2074\u2212x\u22121, disc \u2212283): the field is S\u2084; only the sign is pinned; every within-face fork flat\n- Verified S\u2084 (disc \u2212283 not a square): nroots 4:2:1:0 = 1:6:8:9/24 EXACT. Paper 65's \"A\u2084 fork\" is the **even-face fork of this S\u2084 field** (densities 1/12:3/12:8/12 reproduced: 0.0798/0.2501/0.6701).\n- Sign pinned: I(sign; hasroot) = 0.0483 \u2248 theory 0.0488. Beyond-sign residual I(p mod 283; hasroot) \u2212 I(sign; hasroot) = +0.0131 = **conditional-null mean EXACTLY** (z = +1.00).\n- Every within-face fork (even [1,1,1,1]/[2,2]/[1,3], odd [1,1,2]/[4]): observed = null mean exactly (z = \u22121.00) \u2014 the only congruence structure in the whole S\u2084 splitting is the sign.\n\n### (4) Explains paper 70's failed positive control\nx\u00b3\u22122 has S\u2083 closure (L = \u211a(\u221b2,\u221a\u22123), G^ab = C\u2082) \u21d2 its fork is **flat by construction**. Flatness is \"fork outside G^ab\", not \"h=1 vs h=3\". The correct positive control is a cyclic cubic (abelian closure) \u2014 pins at 100%.\n\n### (5) Semiprime level is factor-useless (barriers 2/5/6/8)\nOR = [p split OR q split] for the cond-7 cyclic cubic: P(OR|N mod 7) = 1/3 on {1,6}, 2/3 on {2,3,4,5}; **I(N mod 7; OR) = 0.0718 \u2248 theory 0.0728**; which-factor wall 0.0001. Even a 100%-pinned prime-level fork collapses to a 0.073-bit symmetric residue dial at the N level. Cubic reciprocity (1801/1844), cyclotomic fields, Chebotarev (1922), Artin (1927) \u2014 all known methods.\n\n**Verdict:** criterion CONFIRMED on C\u2083/S\u2083/S\u2084. Round-19 #1 done. Barriers 2/5/6/8.\n",
     "domains": [
@@ -495,17 +467,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "A5-PERFECT-FLATNESS: the A5 splitting fork is absolutely unpinnable (perfect \u27f9 flat, all forks \u00d7 all m) \u2014 paper 76, exp 411, v187"
   },
   {
-    "consumed_by_exp_id": "50be6807",
+    "consumed_by_exp_id": "",
     "description": "## A4-FORK-PINNING (round-21 #1, experiment 410, assessment v186, paper 75)\n\n**The first cubic-pinned NON-abelian fork: A\u2084's V\u2084-order fork pins at H(1/3), exactly like the abelian cyclic cubic.** Papers 65\u201371 established the pinning-content criterion: a binary splitting fork is congruence-pinned by a Dirichlet character IFF it factors through the abelianization G^ab of the Galois closure. Every pinned fork so far was S\u2083/S\u2084 **sign** (G^ab = C\u2082) or the **abelian** cyclic cubic C\u2083 (paper 71, I = H(1/3)). This experiment asks the structurally new question: can a **non-abelian** field pin a fork by a **cubic** character? Smallest such group: **A\u2084** (V\u2084 = [A\u2084,A\u2084] normal, A\u2084/V\u2084 = C\u2083).\n\n### The A\u2084 field (x\u2074 + 8x + 12, disc = 576\u00b2)\n\nOver 22,996 unramified primes (2^18 sieve): 4-root 0.0826 (e, 1/12), 1-root 0.6661 (3-cycles, 2/3), 0-root 0.2513 ([2,2], 1/4), **2-root 0.0000** (no transpositions \u27f9 G \u2286 A\u2084). Square disc + no transpositions + order-3 + transitive \u27f9 **Gal = A\u2084**. Note the root-count mapping: a [2,2] double transposition fixes NO root \u2014 A\u2084 signature is [4,1,0]-roots, NOT the naive 2-root guess.\n\n### The cubic pinning (EXACT)\n\nF\u2080 = [Frob \u2208 V\u2084] = [nr \u2208 {4,0}], rate 1/3, factors through G^ab = C\u2083 \u27f9 pinned by the cubic character of K = L^{V\u2084}. Klein resolvent y\u00b3 \u2212 48y \u2212 64, disc 2\u00b9\u00b2\u00b73\u2074; generator \u03b1 = r\u2081r\u2082+r\u2083r\u2084 non-integral (index 64) \u27f9 disc(K) = 81 = 9\u00b2 \u27f9 **conductor 9**:\n\n**F\u2080 \u27fa p \u2261 cube mod 9 \u27fa p \u2208 {1, 8} mod 9 \u2014 P = 1.0000 / 0.0000 on 22,996 primes, I(p mod 9; F\u2080) = 0.9188 = H(1/3) = 0.9183 EXACT. FIRST CUBIC-PINNED NON-ABELIAN FORK.**\n\nMinimality: mod 3 and coprime mod 5 flat (I = 0).\n\n### Within-V\u2084 flatness given the coset\n\ne and the three [2,2]'s lie in the same V\u2084-coset = same G^ab fibre, so no modulus can separate them: P(e | p\u22611 mod 9) = 0.2426, P(e | p\u22618 mod 9) = 0.2523 (both 1/4); conditional I(p mod 9; e-vs-[2,2] | F\u2080=1) = 0.0001. The commutator-subgroup flatness, transplanted to non-abelian A\u2084 where the commutator V\u2084 is nontrivial.\n\n### The marginal [e] fork: exact leakage law (a third state)\n\nF\u2081 = [Frob = e] (rate 1/12) is neither pinned nor flat: F\u2081 \u2282 F\u2080 leaks the F\u2080 channel with the exact closed form **I(p mod 9; F\u2081) = H(1/12) \u2212 (1/3)H(1/4) = 0.1434 bits** (measured 0.1419), while I < H(F\u2081) = H(1/12) = 0.4138 (e and [2,2] share the coset \u27f9 never fully pinned). Distinguishes **leakage** from pinned and flat.\n\n### Semiprime level: order-3 channel on a non-abelian field\n\n30k semiprimes: split-count s ~ Bin(2,1/3) measured 0.4710 vs Is(3) = 0.4739; OR 0.0688 vs g(3) = 0.0728; AND 0.1997 vs A(3) = 0.1972; XOR 0.3736 vs X(3) = 0.3789; which-factor wall 0.0001; coprime mod 5 flat. **The paper-74 order-3 split-count law holds on a non-abelian field \u2014 it needs only the character, not abelian-ness.**\n\n### Verdict\n\nCONFIRMED. The abelianization criterion now has a non-abelian witness: A\u2084's V\u2084-order fork pins at exactly the same H(1/3) as the abelian cyclic cubic \u2014 the content is the character of G^ab, not abelian-ness. Closes the pinning-content table (C\u2082/C\u2083/S\u2083/S\u2084/A\u2084 tested; A\u2085 perfect \u27f9 absolutely unpinnable predicted). Still symmetric (barrier 2), a residue dial (barrier 5), sealed behind the CRT (barrier 6), all classical \u2014 Eisenstein 1844 cubic reciprocity, Klein resolvent, Takagi 1920 class field theory, Chebotarev 1922 (barrier 8) \u2014 factor-useless. Unifies papers 71 and 74. Barriers 2/5/6/8. Round-21 1/2 done.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_1178",
-    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-12T19:27:59.013260+00:00",
     "title": "A4-FORK-PINNING: first cubic-pinned non-abelian fork (A4 V4-order, I = H(1/3) exact) \u2014 paper 75, exp 410, v186"
   },
@@ -710,6 +681,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "## NET-23 \u2014 RoPE vs the carry-chain length wall (position-representation axis)\n\n**Paper:** ResearchOutput/NetworkMathematics/23_RopeCarryChain.md (paper 67). **Verdict: NEGATIVE \u2014 the positive horn is refuted.**\n\n### Hypothesis\nNET-22's GIVEN-CARRIES-STILL-FAIL proved the wall is a position-specific answer-COMPUTATION failure \u2014 but every length-gen eval in the program (NET-4/5/19/21/22) used **learned ABSOLUTE pos embeddings**, so beyond-max positions 25..36 were UNTRAINED table entries. Test: replace the pos table with **RoPE** (rotary q/k, no table, smooth extrapolatable positions \u2014 the scheme of essentially all modern LLMs) and re-run the wall.\n\n### Setup\nPlain n=5 LSB-first a+b=c, d=1/dm=192/untied/bs=256/12000 steps, identical arch/budget across arms \u2014 the `rope` flag is the ONLY difference. Arms: **abs-pos control (s=0)** + **rope s=0, s=1**. Eval n=5/6/7/8 teacher-forced, 2048 fresh draws, with per-position breakdown.\n\n### Results (full chance 1e-7/1e-8/1e-9 at n=6/7/8)\n| arm | n=5 full/per | n=6 | n=7 | n=8 | MSB pos n=6/7/8 |\n|---|---|---|---|---|---|\n| abs-pos (s=0) | 1.0000 / 1.0000 | 0.0000 | 0.0000 | 0.0000 | 0.198/0.307/0.109 |\n| **rope s=0** | **1.0000 / 1.0000 by st=1000** | 0.0000 | 0.0000 | 0.0000 | **0.587/0.571/0.565** |\n| rope s=1 | 0.1040 / 0.8507 (permanently dissociated) | 0.0000 | 0.0000 | 0.0000 | 0.521/0.552/0.208 |\n\n### The law\n1. **ROPE-DOES-NOT-UNLOCK-LENGTH-GEN** \u2014 beyond-max full=0.0000 in BOTH RoPE seeds despite clean in-range mastery (s=0 perfect by step 1000, faster than any prior arm).\n2. **THE-POS-EMB-CAVEAT-IS-RETIRED** \u2014 the first length-gen eval with NO position table. The wall survives smooth, training-consistent, extrapolatable rotary positions \u21d2 it is a GENUINE fixed-depth expressivity limit, NOT a pos-emb extrapolation artifact.\n3. **NEW \u2014 MSB/FINAL-CARRY-MARGINAL-TRANSFERS**: RoPE's beyond-max MSB accuracy (0.565\u20130.587 \u2248 the P(carry-out\u22481)\u22480.5 prior) vs the abs-pos control's 0.11\u20130.31 on untrained entries. The final-carry DISTRIBUTION transfers; the computation does not \u2014 the cleanest separation yet of statistical-prior vs algorithm transfer.\n4. **NEW \u2014 ROPE-DISSOCIATION-IS-SEED-DEPENDENT** with a ONE-COLUMN per-position shape (s=1 n=5 [0.107,1,1,1,1,1]: interior + final-carry columns perfect, only the LSB digit wrong \u2014 distinct from NET-4/5's carry-cascade, single-seed).\n\n### Why it matters\nThe carry wall is now characterized on FIVE axes \u2014 depth (NET-4/5/19), scale (NET-19), schedule (NET-21), task-remodeling (NET-22), position representation (this round) \u2014 all negative for length-general composition. Scratchpad AND position encoding are both closed. Surviving levers (down from 3 to 2) change the STATE, not the position scheme: **recurrence / a stateful carry cell** (the only length-general state device) or an explicit **length-parameterized readout**. RoPE speeds in-range learning and transfers the beyond-max marginal, but not the composition \u2014 a caution against the \"RoPE improves length generalization\" framing for sequential arithmetic.\n\nAll 8 network barriers checked (see paper). 23 experiments, assessment v23. Script /tmp/exp_net_rope.py (ALL_DONE_NET23), log /tmp/net23.log.\n\n\ud83e\udd16 Generated with [Claude Code](https://claude.com/claude-code)",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_1267",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-14T19:21:53.355022+00:00",
+    "title": "NET-23: RoPE Does Not Unlock Length-General Carry \u2014 the position-scheme test of the carry-chain length wall; pos-emb-extrapolation caveat RETIRED"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Formalizes a quantum random walk on the Berggren Pythagorean tree where constructive interference at energy spectrum minima collapses the state onto factors of N.",
     "domains": [
       "Pythagorean",
@@ -851,6 +836,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-14T15:14:33.793464+00:00",
     "title": "Deepening: De-Quantization Assessed: Shor's QFT Is Irreducible"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 8590e003 (Q=0.870), which proved 122 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## CM-ECM-GENERAL (round-17 #2, experiment 403, assessment v179, paper 68)\n\nGeneralization + stress-test of the CM-ECM-ORDER shadow (paper 67) on the second CM field Q(\u221a\u22123) \u2014 the j=0 curve y\u00b2=x\u00b3+1 (End=\u2124[\u03c9], bad primes 2, 3), which has RATIONAL 3-torsion ((0,\u00b11) over Q). **Verdict: CONFIRMED null (f",
+    "domains": [
+      "Probability"
+    ],
+    "id": "push_8590e003_d1be6378",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "8590e003",
+    "status": "available",
+    "timestamp": "2026-08-14T19:21:29.086881+00:00",
+    "title": "Deepening: CM-ECM-GENERAL: rational-torsion degeneracy, union-dilution law, 3-adic Hecke vi"
   },
   {
     "consumed_by_exp_id": "",
@@ -19302,6 +19301,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-14T18:13:40.781536+00:00",
     "title": "Derived from the three verified files"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# FUTURE DIRECTIONS \u2014 CM-ECM-GENERAL (`j = 0` curve over `\u211a(\u221a\u22123)`)\n\n## What this cycle established\n\n* **Rational 3-torsion degeneracy.** `3 \u2223 #E_{j0}(\ud835\udd3d_p)` for every prime `p > 3`,\n  proved by realising translation by the rational 3-torsion point `(0,1)` as an\n  explicit fixed-point-free order-3 self-map of the point set.\n* **Full 6-torsion degeneracy.** `6 \u2223 #E_{j0}(\ud835\udd3d_p)` and the resulting pinning\n  `a_p \u2261 p + 1 (mod 6)`.\n* **Exact inert collapse.** `#E = p+1`, `a_p = 0` for `p \u2261 2 (mod 3)`, the `\u2113 = 9`\n  residue dial `9 \u2223 #E \u2194 p \u2261 8 (mod 9)`, and the general dial\n  `\u2113 \u2223 #E \u2194 p \u2261 \u2113 \u2212 1 (mod \u2113)`.\n* **Zero-bit law.** A constant event carries exactly `0` bits, hence the\n  `\u2113 \u2208 {2,3,6}` ECM-order channels are silent on *every* sample and against\n  *every* class statistic.\n* **Non-vacuity.** The same information functional attains `log 2`, and the\n  `\u2113 = 5` channel on the same curve attains `log 2` on an explicit two-prime\n  sample \u2014 so the null is a degeneracy of the *event*, not of the statistic.\n* **Union-dilution law** with its exact factor, its strict form, and its\n  monotonicity in the class-blind mass.\n* **Field independence.** The same inert collapse `#E = p + 1` for the Gaussian\n  CM curve `y\u00b2 = x\u00b3 + x` on `p \u2261 3 (mod 4)`.\n* **Atomic trace law.** The exact trace dichotomy `a_p = 0 \u2194 p` inert for both CM\n  curves, hence an exact sample identity between the count of vanishing traces\n  and the count of inert primes.\n* **Split-half invisibility.** The `\u2113 = 9` dial exists only on the inert half:\n  `13` and `31` are both `\u2261 4 (mod 9)` and split, but only `31` has `9 \u2223 #E`.\n\n## Closed in the follow-up cycle\n\n* **C1 (for the `j = 0` curve): closed.** The ECM-order event `\u2113 \u2223 #E_{j0}(\ud835\udd3d_p)`\n  is unconditionally true on the good primes **iff** `\u2113 \u2223 6`, so the zero-bit\n  locus is exactly `{1,2,3,6}`. This upgrades to an all-or-nothing information\n  dichotomy: either `\u2113 \u2223 6` and the channel carries `0` bits on every sample and\n  every class statistic, or `\u2113 \u2224 6` and any good prime realising the\n  divisibility already gives a two-prime sample on which the channel carries a\n  full `log 2`. What remains open is the *curve-uniform* version, i.e. the same\n  statement for an arbitrary `E/\u211a` in place of `E_{j0}`.\n* **C2 (inert half): closed at every modulus.**\n  `\u2113 \u2223 #E_{j0}(\ud835\udd3d_p) \u2194 p \u2261 \u2113 \u2212 1 (mod \u2113)` for all `\u2113 \u2265 1` and all `p \u2261 2 (mod 3)`,\n  specialised to `\u2113 = 3^m` and stated as genuine residue visibility (two inert\n  primes in the same class mod `\u2113` have the same `\u2113`-divisibility). The split\n  half stays open (see C2\u2032 below); the mod-`9` counterexample shows no such dial\n  can exist there at that modulus.\n* **C3: closed.** Union dilution is sharp \u2014 every dilution factor `c \u2208 (0,1)` is\n  attained exactly by an honest two-class binary channel with a class-blind\n  admixture, so the achievable factor set is precisely `(0,1]`: the inequality\n  \"CM shadow \u2264 inert-class channel\" is universal, and no constant `< 1` improves\n  it.\n\n## Open\n\n* **C1\u2032 (curve-uniform silent set).** Is the silent set of an arbitrary `E/\u211a`\n  exactly the divisor set of `#E(\u211a)_tors`? One inclusion is the curve-uniform\n  torsion-silence principle (a free order-`n` translation on every reduction\n  forces `n \u2223 #E(\ud835\udd3d_p)`, hence zero bits); the converse needs, for each `\u2113` not\n  dividing the torsion order, a single good prime whose order avoids `\u2113` \u2014\n  plausibly an effective Chebotarev statement about the mod-`\u2113` representation.\n* **C2\u2032 (split-half dials).** Is there any modulus `m` and level `\u2113` for which\n  the split-half event `\u2113 \u2223 #E_{j0}(\ud835\udd3d_p)` is a function of `p mod m`? The\n  classical parameterisation `4p = L\u00b2 + 27M\u00b2` suggests not; a proof should\n  follow from equidistribution of `(L, M)` in congruence classes.\n* **C3\u2032 (higher-arity dilution).** Sharp analogues for a union of several\n  mutually disjoint class-blind events, and for non-binary observables measured\n  by an `r`-ary correlation ratio. Monotonicity in the total admixed mass\n  suggests a clean generalisation.\n* **C4\u2032 (torsion silence beyond elliptic curves).** The free-iterate counting\n  argument applies verbatim to any family of finite sets carrying a free\n  order-`n` self-map: Jacobians of higher genus, algebraic tori, class groups\n  with a distinguished element of known order. Which known factoring or\n  discrete-log heuristics are silent for exactly this reason?\n* **C5\u2032 (quantifying the non-silent levels).** For a random good prime, what is\n  the mutual information between `p mod m` and `[\u2113 \u2223 #E_{j0}(\ud835\udd3d_p)]`? The inert\n  half is answered exactly by the dial; the split half should be governed by CM\n  equidistribution, with the two halves combining as the dilution law predicts.\n* **C6\u2032 (a ramification principle).** Formulate and prove: for a CM elliptic\n  curve with CM field `K`, the trace `a_p` modulo `\u03bb^k` is a function of `p`\n  modulo a small modulus precisely when `\u03bb` ramifies in `K`. The two curves\n  treated here are the class-number-one cases; higher class-number CM curves\n  over number fields would test the principle properly.\n",
+    "domains": [
+      "Algebra",
+      "NumberTheory"
+    ],
+    "id": "fd_1266",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "8590e003",
+    "status": "available",
+    "timestamp": "2026-08-14T19:21:21.343964+00:00",
+    "title": "* **Rational 3-torsion degeneracy.** `3 \u2223 #E_{j0}(\ud835\udd3d_p)` for every prime `p > 3`,"
   },
   {
     "consumed_by_exp_id": "",

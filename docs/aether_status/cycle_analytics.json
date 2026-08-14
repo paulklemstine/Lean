@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-14T18:13:52.604910+00:00",
+  "last_updated": "2026-08-14T19:21:34.933735+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -55244,6 +55244,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-08-14T18:13:52.417483+00:00",
       "title": "CM-ECM-ORDER (round-17 #1): the ECM order of a CM curve collapses to p+1 on the inert half \u2014 a resid"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Probability",
+      "duration_seconds": 4051.9458022117615,
+      "end_time": 1786735266.3273532,
+      "files_integrated": 4,
+      "job_id": "8590e003",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.87,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.5665,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.87,
+        "novelty": 0.87,
+        "proof_depth": 0.87,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.87,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1786731214.381551,
+      "strategy_count": 0,
+      "theorem_count": 122,
+      "theorem_novelty_disproof": 4,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 95,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-08-14T19:21:34.753610+00:00",
+      "title": "CM-ECM-GENERAL: rational-torsion degeneracy, union-dilution law, 3-adic Hecke visibility (Q(sqrt(-3)"
     }
   ]
 }
