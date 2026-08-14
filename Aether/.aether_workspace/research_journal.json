@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "08217b91",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Singmaster multiplicity in Pascal's triangle\n\nDerived from the verified results in `Catalog/Novelty/`:\n`SingmasterSmoothness.lean`, `SingmasterSharpLog.lean`, `SingmasterSmoothHi",
-      "quality_score": 0.746255,
-      "sorry_count": 0,
-      "theorem_count": 85,
-      "timestamp": "2026-08-09T15:02:31",
-      "title": "occurrences of certain numbers in pascals triangle"
-    },
-    {
       "cycle_id": "e870e995",
       "domain": "Novelty",
       "key_insight": "# Future Directions\n\nDerived from the formal development in `Catalog/Novelty/WeightMonodromy*.lean`, which proves:\npurity of a weight grading (weight `= α ·` degree, `α > 0`) on the cohomology of a bi",
@@ -499,19 +489,19 @@
       "theorem_count": 42,
       "timestamp": "2026-08-14T06:50:29",
       "title": "The Spectral Free-Witness: Heat-Kernel Order Recovery"
+    },
+    {
+      "cycle_id": "7477e654",
+      "domain": "Tropical",
+      "key_insight": "# Future directions — after the asymmetric/symmetric divisibility dichotomy\n\nThe formal results of this run (all in `Catalog/Tropical/SmoothSelfHint*.lean`, 0\nsorries, only the standard axioms) are:",
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "theorem_count": 501,
+      "timestamp": "2026-08-14T08:45:35",
+      "title": "SMOOTH-SELFHINT-DENSITY: the p-1/ECM weakness is residue-invisible — asymmetric/symmetric divisibili"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "2125bb42",
-      "domain": "Combinatorics",
-      "key_insight": "# Future directions\n\nThe spectral-projection decomposition in `SignedCubeSpectralProjections.lean` suggests the following concrete, falsifiable next claims.\n\n1. **Equal eigenspace dimensions.** For ev",
-      "quality_score": 0.71783,
-      "sorry_count": 0,
-      "theorem_count": 9,
-      "timestamp": "2026-08-03T11:54:59",
-      "title": "The accompanying Lean development settles the operator-algebraic core used by"
-    },
     {
       "cycle_id": "1343d96e",
       "domain": "NumberTheory",
@@ -2501,27 +2491,19 @@
       "theorem_count": 42,
       "timestamp": "2026-08-14T06:50:29",
       "title": "The Spectral Free-Witness: Heat-Kernel Order Recovery"
+    },
+    {
+      "cycle_id": "7477e654",
+      "domain": "Tropical",
+      "key_insight": "# Future directions — after the asymmetric/symmetric divisibility dichotomy\n\nThe formal results of this run (all in `Catalog/Tropical/SmoothSelfHint*.lean`, 0\nsorries, only the standard axioms) are:",
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "theorem_count": 501,
+      "timestamp": "2026-08-14T08:45:35",
+      "title": "SMOOTH-SELFHINT-DENSITY: the p-1/ECM weakness is residue-invisible — asymmetric/symmetric divisibili"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "d8dbb938",
-      "domain": "Combinatorics",
-      "name": "joint_resolution_cap",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "d8dbb938",
-      "domain": "Combinatorics",
-      "name": "pinning_window_le_lcm",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "d8dbb938",
-      "domain": "Combinatorics",
-      "name": "condLcm_ge_of_pinning",
-      "quality": 0.82
-    },
     {
       "cycle_id": "6092c7cd",
       "domain": "Algebra",
@@ -2803,9 +2785,27 @@
       "domain": "Algebra",
       "name": "cdist_double",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "7477e654",
+      "domain": "Tropical",
+      "name": "add_lipschitz",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "7477e654",
+      "domain": "Tropical",
+      "name": "certified_radius_bound",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "7477e654",
+      "domain": "Tropical",
+      "name": "resnet_certified_lipschitz",
+      "quality": 0.85
     }
   ],
-  "last_updated": "2026-08-14T06:50:29",
+  "last_updated": "2026-08-14T08:45:35",
   "open_questions": [
     {
       "context": "(sieve mechanism) form a coherent, sorry-free slice of the Maynard–Tao framework.; +    `fib_carmichael_large` — which relied on an unproven (`sorry`-backed) tail of; -    sorry+  -- Extract from the ",
@@ -3951,12 +3951,6 @@
     ],
     "Tropical": [
       {
-        "cycle_id": "e801d98f",
-        "quality": 0.76179,
-        "theorems": 29,
-        "title": "ArXiv paper: Transformation Semigroup Perspective on the Magma Monoid"
-      },
-      {
         "cycle_id": "8fa54bf5",
         "quality": 0.7597999999999998,
         "theorems": 20,
@@ -4009,6 +4003,12 @@
         "quality": 0.78,
         "theorems": 72,
         "title": "Round-7 Hypothesis Closures: Scoping the Noise-Floor Principle and the Trace-Lem"
+      },
+      {
+        "cycle_id": "7477e654",
+        "quality": 0.85,
+        "theorems": 501,
+        "title": "SMOOTH-SELFHINT-DENSITY: the p-1/ECM weakness is residue-invisible — asymmetric/"
       }
     ]
   }
