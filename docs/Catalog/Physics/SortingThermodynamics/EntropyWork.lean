@@ -103,29 +103,38 @@ theorem redundant_comparisons_preserve_sorting (t : ComparisonTree) (n r : ℕ)
 bound; irreversible sorting erases exactly `log₂(n!)` bits; and every reversible
 implementation needs at least `n!` history states.
 -/
+/-- `sorting_info_erased` without the hypothesis `1 ≤ n`: for `n = 0` both sides vanish. -/
+theorem sorting_info_erased_all (n : ℕ) :
+    infoErased (sortingFunction n) = Real.logb 2 n.factorial := by
+  rcases Nat.eq_zero_or_pos n with rfl | hn
+  · simp [infoErased, sortingFunction, Fintype.card_perm]
+  · exact sorting_info_erased n hn
+
 theorem factorial_controls_comparisons_entropy_and_history
-    (t : ComparisonTree) (n : ℕ) (hn : 1 ≤ n) (hs : SortsOrderings t n)
+    (t : ComparisonTree) (n : ℕ) (hs : SortsOrderings t n)
     (Aux : Type*) [Fintype Aux]
     (e : Equiv.Perm (Fin n) ≃ Unit × Aux)
     (hc : ∀ σ, (e σ).1 = sortingFunction n σ) :
     Nat.clog 2 n.factorial ≤ t.height ∧
     infoErased (sortingFunction n) = Real.logb 2 n.factorial ∧
     n.factorial ≤ Fintype.card Aux := by
-  refine ⟨comparison_lower_bound t n hs, sorting_info_erased n hn, ?_⟩
-  have h := sorting_history_lower_bound n Aux e hc
-  simpa [Fintype.card_perm] using h
+      refine' ⟨ comparison_lower_bound t n hs, _, _ ⟩;
+      · exact sorting_info_erased_all n
+      · convert sorting_history_lower_bound n Aux e hc using 1;
+        simp +decide [ Fintype.card_perm ]
 
 /-
 **Exact Landauer scale for sorting.** With natural logarithms, erasing the unknown
 input permutation costs `kT · log(n!)`.  The factor `log 2` in the per-bit cost cancels
 the change of base in `log₂(n!)`.
 -/
-theorem sorting_landauer_gap_exact (n : ℕ) (hn : 1 ≤ n) (kT : ℝ) :
+theorem sorting_landauer_gap_exact (n : ℕ) (kT : ℝ) :
     landauerGap (sortingFunction n) kT = kT * Real.log n.factorial := by
-  have hlog : Real.log 2 ≠ 0 := ne_of_gt (Real.log_pos (by norm_num))
-  unfold landauerGap landauerCost
-  rw [sorting_info_erased n hn, Real.logb]
-  field_simp
+      have h2 : Real.log 2 ≠ 0 := by
+        have : (0 : ℝ) < Real.log 2 := Real.log_pos (by norm_num)
+        exact ne_of_gt this
+      rw [landauerGap, sorting_info_erased_all n, landauerCost, Real.logb]
+      field_simp
 
 /-
 The Landauer work assigned to irreversible sorting is unchanged when redundant

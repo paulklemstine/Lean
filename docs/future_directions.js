@@ -9,7 +9,7 @@ window.FUTURE_DIRECTIONS = [
       "Novelty"
     ],
     "id": "fd_1102",
-    "phase": "B",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
@@ -33,7 +33,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The 3SUM-Birthday-Bound Hierarchy"
   },
   {
-    "consumed_by_exp_id": "7e91abfc",
+    "consumed_by_exp_id": "7c66bd57",
     "description": "**Summary.** The conjecture that for E_N: y\u00b2 = x\u00b3 + N with N = pq, the\ndenominators of x(nP) are divisible only by {2, 3, p, q} (the primes dividing\n\u0394 = -432N\u00b2) is mathematically FALSE.\n\n**Counterexample.** N = 55 = 5\u00b711, P = (9,28) \u2208 E_55(Q):\n  x(2P) = (9^4 - 8\u00b755\u00b79) / (4(9^3 + 55)) = 2601/3136, and 3136 = 2^6 \u00b7 7^2.\nThe prime 7 divides the denominator but 7 \u2224 \u0394 (7 is a prime of good reduction).\n\n**Mechanism.** \u2113 | denom(x(nP)) iff nP \u2261 O (mod \u2113); good-reduction primes divide\ndenominators whenever the point reduces to torsion \u2014 infinitely many such primes.\n\n**Survey (11 semiprimes):** p appears in some denominator 54.5%, q appears 0%,\nonly-{2,3,p,q} holds 0% of the time. The denominator structure is a function of\nN alone (barrier 5) and does not cleanly reveal p, q.\n\n---\n\n*Factoring Lab paper. Status: proven theorem / verified / framework. This is a research deliverable, not a factoring breakthrough claim.*",
     "domains": [
       "Novelty"
@@ -48,7 +48,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The 'Only Bad Primes' Conjecture is False (elliptic curve denominators)"
   },
   {
-    "consumed_by_exp_id": "6a57e5c1",
+    "consumed_by_exp_id": "a648f2c0",
     "description": "**Summary.** Let F(k) = sum_{a=1}^{N} a^k. Then gcd(F(k), N) reveals a factor\nat k = p-1: for N = pq, gcd(F(p-1), N) = q (provided (q-1) does not divide (p-1)).\n\n**Key results (proven):**\n- **Theorem 1 (power-sum factor reveal):** Mod p the residues cover each nonzero\n  residue q times, so F(k) \u2261 q\u00b7(sum of k-th powers mod p); by FLT this is -q mod p\n  at k=p-1. Mod q it vanishes when (q-1) \u2224 (p-1). Hence gcd = q.\n- **Theorem 2 (robustness):** The power sum aggregates ALL bases a=1..N\n  simultaneously, so it cannot suffer Pollard p-1's \"bad base\" failure.\n- **Theorem 3 (Carmichael periodicity):** g(k) = gcd(F(k), N) has period\n  \u03bb(N) = lcm(p-1, q-1), so \u03bb(N) is readable from the period and the factors\n  follow from p+q = N - \u03bb(N) + 1.\n\n**Complexity.** First hit at k* = min(p-1,q-1) \u2248 \u221aN; cost per F(k) is O(N);\ntotal O(N^{3/2}) \u2014 worse than trial division. This is the SAME structure Shor's\nalgorithm exploits, made classically hard by the period-finding barrier.\nVerified on all 8 test semiprimes up to N \u2248 10^4.\n\n---\n\n*Factoring Lab paper. Status: proven theorem / verified / framework. This is a research deliverable, not a factoring breakthrough claim.*",
     "domains": [
       "Novelty"
@@ -1129,6 +1129,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle aeab7c87 (Q=0.880), which proved 60 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Summary.** The conjecture that for E_N: y\u00b2 = x\u00b3 + N with N = pq, the\ndenominators of x(nP) are divisible only by {2, 3, p, q} (the primes dividing\n\u0394 = -432N\u00b2) is mathematically FALSE.\n\n**Counterexample.** N = 55 = 5\u00b711, P = (9,28) \u2208 E_55(Q):\n  x(2P) = (9^4 - 8\u00b755\u00b79) / (4(9^3 + 55)) = 2601/3136, an",
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_aeab7c87_2893015c",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "aeab7c87",
+    "status": "available",
+    "timestamp": "2026-08-15T11:41:25.126685+00:00",
+    "title": "Deepening: The 'Only Bad Primes' Conjecture is False (elliptic curve denominators)"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle beb0e52b (Q=0.910), which proved 254 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## CYCLIC-CUBIC-FORK (round-19 #1, experiment 406, assessment v182, paper 71)\n\n**The fork-pinning criterion \u2014 machine-verified on three Galois groups:** a binary splitting fork of a number field is congruence-pinned by a Dirichlet character **iff it factors through the abelianization G^ab of the Gal",
     "domains": [
       "Probability"
@@ -1995,6 +2009,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-14T05:10:05.994618+00:00",
     "title": "Deepening: Exp 391 BERGGREN-PRICE-INTERLOCK: every semiprime is a node of both Pythagorean "
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle a9efa47b (Q=0.820), which proved 14 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Summary.** Let F(k) = sum_{a=1}^{N} a^k. Then gcd(F(k), N) reveals a factor\nat k = p-1: for N = pq, gcd(F(p-1), N) = q (provided (q-1) does not divide (p-1)).\n\n**Key results (proven):**\n- **Theorem 1 (power-sum factor reveal):** Mod p the residues cover each nonzero\n  residue q times, so F(k) \u2261 q\u00b7",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_a9efa47b_fdf5d3de",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "a9efa47b",
+    "status": "available",
+    "timestamp": "2026-08-15T11:41:08.201786+00:00",
+    "title": "Deepening: Power-Sum GCD Factoring & Carmichael Periodicity"
   },
   {
     "consumed_by_exp_id": "",
@@ -19869,6 +19897,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-15T10:46:53.974257+00:00",
     "title": "The formalisation in `Catalog/Cryptography/SingularModuli/` settles the basic"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Power-Sum GCD Factoring and Carmichael Periodicity\n\nDerived from what survived (and what broke) in the formalisation pass; every item is\nstated so that it can be refuted by a single counterexample or closed by a Lean proof.\n\n## What the cycle established (context)\n\nFor squarefree `N` and `k > 0`,\n`gcd(F(N,k), N) = \u220f { r prime : r \u2223 N, (r-1) \u2224 k }` (`gcd_powerSum_squarefree`), with the\nrefinements: the trivial locus is exactly the multiples of `\u03bb(N)`; `\u03bb(N)` is the *minimal*\nperiod; the first informative exponent for a semiprime is exactly `min(p-1,q-1)`; the\nread-out is a lattice anti-homomorphism `g_N(gcd(k,k')) = lcm(g_N(k), g_N(k'))`; and the\nresidue itself is pinned down by the Giuga closed form\n`F(N,k) \u2261 -\u2211_{(r-1)\u2223k} N/r (mod N)`.\n\n**Failure recorded.** The informal claim `p + q = N - \u03bb(N) + 1` is *false* for every\nproduct of two distinct odd primes (`naive_recovery_strict_lt`): the correct identity is\n`p + q + \u03bb(N)\u00b7gcd(p-1,q-1) = N + 1`. The obstruction, `gcd(p-1,q-1) \u2265 2`, is exactly the\nquantity that period-finding does not deliver.\n\n## Conjecture 1 (gcd-lattice reconstruction of the factorisation)\n\nFor squarefree `N`, the family `{ gcd(F(N,k), N) : 1 \u2264 k \u2264 \u03bb(N) }` is closed under `lcm`\nand its set of *minimal* nontrivial members is exactly `{ N/r : r prime, r \u2223 N }`; hence\nthe full factorisation of `N` is a lattice-theoretic invariant of the single sequence\n`k \u21a6 gcd(F(N,k),N)`.\n\n*The key insight is* that `g_N` is an order-reversing morphism from the gcd-lattice of\nexponents to the divisor lattice of `N` (`gcd_powerSum_gcd_eq_lcm`), so the atoms of the\nimage lattice must be the co-atoms of the divisor lattice.\n*Why now?* The anti-homomorphism law and the product formula are already formalised, so\nthe conjecture reduces to a finite lattice argument plus a Dirichlet-type statement that\neach residue class `r-1 \u2223 k`, `(r'-1) \u2224 k` is nonempty below `\u03bb(N)`.\n\n## Conjecture 2 (the gcd(p\u22121,q\u22121) barrier is intrinsic)\n\nThere is no function `\u03a6` computable in time `polylog(N)` from the pair `(N, \u03bb(N))` alone\nthat outputs `p + q` for all semiprimes `N = pq`: infinitely many pairs `N \u2260 N'` share the\nsame `(N, \u03bb)` profile modulo the ambiguity `g = gcd(p-1,q-1)`.\n\n*The key insight is* that `\u03bb(N)` determines `(p-1)(q-1)` only up to the factor `g`, and\n`g` ranges over an unbounded set as `p, q` vary, so the map `(N, \u03bb) \u21a6 p+q` is\ninformation-theoretically underdetermined rather than merely hard.\n*Why now?* `sum_primes_recovery` isolates `g` as the *only* missing quantity, turning a\nvague \"period-finding barrier\" into a concrete counting question about `g`.\n\n## Conjecture 3 (Giuga/Agoh from the power-sum read-out)\n\n`N > 1` is prime if and only if `F(N,k) \u2261 -1 (mod N)` for some (equivalently, every)\n`k` divisible by `\u03bb(N)`.\n\n*The key insight is* the closed form `F(N,k) \u2261 -\u2211_{(r-1)\u2223k} N/r`: when `\u03bb(N) \u2223 k` the sum\nis `\u2211_{r \u2223 N} N/r`, so the criterion becomes `\u2211_{r \u2223 N} N/r \u2261 1 (mod N)` \u2014 precisely\nGiuga's condition, which is known to force `N` squarefree and each `r \u2223 (N/r - 1)`.\n*Why now?* `powerSum_modEq_giuga` and `powerSum_giuga_iff_neg_one` are formalised, so the\nopen half of the conjecture is now a self-contained statement about Giuga numbers rather\nthan about power sums.\n\n## Conjecture 4 (sub-quadratic first hit is impossible for the plain search)\n\nFor every semiprime `N = pq` with `p < q`, every algorithm that only queries the oracle\n`k \u21a6 gcd(F(N,k), N)` must make at least `min(p-1, q-1)` queries before receiving a value\ndifferent from `N`; consequently the plain power-sum search is `\u03a9(\u221aN)` queries and\n`\u03a9(N^{3/2})` arithmetic operations in the balanced case.\n\n*The key insight is* `gcd_powerSum_eq_self_of_lt_min`: the oracle is *constant* `= N`\nbelow `min(p-1,q-1)`, so no adaptive strategy can extract information there.\n*Why now?* The constancy statement is proved; what remains is only the (standard)\nadversary argument, which can be formalised as a statement about the query set.\n\n## Conjecture 5 (higher-moment / character generalisation)\n\nFor a nontrivial Dirichlet character `\u03c7` mod `m` and squarefree `N` coprime to `m`, the\ntwisted sum `F_\u03c7(N,k) = \u2211_{a=1}^{N} \u03c7(a) a^k` satisfies a product formula in which the\ncondition `(r-1) \u2224 k` is replaced by `\u03c7|_{(Z/r)^*} \u2260 (\u00b7)^{-k}`, giving a read-out that can\nseparate primes `r` with the *same* `r-1`.\n\n*The key insight is* that the untwisted proof is nothing but orthogonality of the trivial\ncharacter over `(Z/r)^*`; a nontrivial twist replaces the `-1`/`0` dichotomy by a Gauss-sum\ndichotomy, adding a second, independent coordinate to the read-out.\n*Why now?* The whole untwisted pipeline (block covering, finite-field power sum, CRT\nassembly) is formalised and is character-agnostic; only the orthogonality input changes.\n",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_1304",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "a9efa47b",
+    "status": "available",
+    "timestamp": "2026-08-15T11:41:01.115355+00:00",
+    "title": "Derived from what survived (and what broke) in the formalisation pass; every ite"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions: denominators of rational points on Mordell curves\n\nDerived from cycles 3\u20139\n(`Catalog/Applications/MordellDenominator{Squares,Filtration,Orbits,LocalLaw}.lean`,\n`Catalog/Applications/MordellKernelSubgroup.lean`,\n`Catalog/Applications/MordellApparitionIndex.lean`,\n`Catalog/Applications/MordellInfiniteOrbit.lean`), which established, all sorry-free:\n\n* the square-denominator law `den x = e\u00b2`, `den y = e\u00b3` for every rational point of\n  `y\u00b2 = x\u00b3 + N` (`N \u2208 \u2124`);\n* exact invariance of the `\u2113`-part of `den x` under doubling for odd `\u2113`, and `\u00d74` growth at\n  `\u2113 = 2`;\n* the complete local law `\u2113 \u2223 den x(2P) \u2194 \u2113 \u2223 den x(P) \u2228 \u2113 \u2223 num y(P)` at good primes `\u2113 \u2265 5`;\n* **closure of the denominator kernel under the chord** (`kernel_stable_add`), hence\n  `\u2113 \u2223 den x(kP)` for all `k \u2208 \u2124` once it holds for `k = 1`, at *every* prime;\n* the **apparition index law** (`den_apparition_index`): the set of `k \u2208 \u2124` at which a prime\n  appears in the denominator is exactly `m\u2124` for some `m \u2208 \u2115`, with `m(7) = 2` and `m(13) = 3`\n  on `E_55, P = (9,28)`;\n* the exact `2`-adic growth `v\u2082(den x(2^k Q)) = v\u2082(den x(Q)) + 2k`, and its consequences:\n  `P = (9,28)` has infinite order and `E_55(\u211a)` is infinite;\n* infinitely many *distinct* multiples of `P` whose denominator carries the good prime `7`.\n\nTwo conjectures of the previous cycle (old C1 closure, old C5 exact `2`-adic jump) are therefore\nnow theorems. The list below is the refreshed one; each conjecture is falsifiable by a single\nexplicit rational point or by one finite computation.\n\n## C1. Ultrametric valuation law for the chord\n\n**Statement.** Let `N \u2208 \u2124`, let `\u2113` be an odd prime and let `P\u2081, P\u2082` be rational points of\n`E_N` lying in the denominator kernel at `\u2113`, with `v_\u2113(den x(P\u2081)) \u2260 v_\u2113(den x(P\u2082))`. If\n`P\u2081 + P\u2082` is affine with `x`-coordinate `x\u2083`, then\n`v_\u2113(den x\u2083) = min(v_\u2113(den x(P\u2081)), v_\u2113(den x(P\u2082)))`; and if the two valuations agree, then\n`v_\u2113(den x\u2083) \u2265 v_\u2113(den x(P\u2081))`, with equality unless `\u2113 \u2223` an explicit resultant.\n\n**The key insight is** that `kernel_stable_add` already produces the chord `x`-coordinate as an\nexplicit ratio `A/B` of integers in the coprime parametrisation `x = a/e\u00b2`, `y = b/e\u00b3`, so the\n`min` law is a statement about the `\u2113`-adic sizes of the three summands of `A` \u2014 no formal-group\nmachinery is needed, only a term-by-term valuation count.\n\n**Why now?** The closure statement is proved, so the qualitative half of the ultrametric picture\nis settled; what remains is exactly the quantitative refinement, and the integer identity that\ncarries it is already in the file as `chord_den_not_dvd_of_kernel`.\n\n## C2. Every good prime appears in the orbit of one non-torsion point\n\n**Statement.** Fix `N = 55` and `P = (9,28)`. For every prime `\u2113 \u2209 {2,3,5,11}` there is `k \u2265 1`\nwith `\u2113 \u2223 den x(kP)`, and the apparition index `m(\u2113)` of `den_apparition_index` equals the order\nof the reduction `P\u0304` in the finite group `E_55(\ud835\udd3d_\u2113)`; in particular `m(\u2113) \u2223 #E_55(\ud835\udd3d_\u2113)` and\n`m(\u2113) \u2264 \u2113 + 1 + 2\u221a\u2113`.\n\n**The key insight is** that `\u2113 \u2223 den x(kP)` says exactly that `kP` reduces to the point at\ninfinity mod `\u2113`, so the index produced abstractly by the subgroup argument must coincide with\nthe order of the reduced point \u2014 turning an existence statement into a computable quantity\nbounded by Hasse.\n\n**Why now?** The index `m(\u2113)` now exists as a theorem rather than a heuristic, and two of its\nvalues are pinned down (`m(7) = 2`, `m(13) = 3`); identifying it with the order of `P\u0304` is the\nsingle missing bridge between the elementary denominator theory here and reduction mod `\u2113`.\n\n## C3. The denominators form an elliptic divisibility sequence\n\n**Statement.** For an integral point `P` of `E_N` there are integers `d_k > 0` with\n`den x(kP) = d_k\u00b2`, `den y(kP) = d_k\u00b3`, and `(d_k)` satisfies\n`d_{m+n} d_{m\u2212n} d\u2081\u00b2 = d_{m+1} d_{m\u22121} d_n\u00b2 \u2212 d_{n+1} d_{n\u22121} d_m\u00b2`. In particular\n`d_m \u2223 d_n` whenever `m \u2223 n`.\n\n**The key insight is** that `mordell_den_pow_structure` already produces the single integer\nsequence `d_k` unconditionally, and the divisibility `d_m \u2223 d_n` for `m \u2223 n` is precisely the\napparition-index law refined from \"which primes\" to \"with which multiplicity\".\n\n**Why now?** The apparition index law gives the prime-by-prime shadow of `d_m \u2223 d_n`; Mathlib\ncarries division polynomials for Weierstrass curves, so the full recurrence can be attacked\ndirectly instead of through `\u2113`-adic estimates.\n\n## C4. Quadratic growth of the denominators, and density one\n\n**Statement.** With `P = (9,28)` on `E_55`, `log den x(kP) \u223c 2 \u0125(P) k\u00b2`, and consequently the\nset `S(P) = {\u2113 prime : \u2203 k, \u2113 \u2223 den x(kP)}` has natural density one among the primes.\n\n**The key insight is** that the exact `2`-adic law already proves *linear* growth of one\nvaluation along one sub-orbit (`v\u2082 = v + 2k`), which is the degenerate case of the canonical\nheight asymptotic; upgrading `k \u21a6 2^k` to all `k` is what converts linear growth in `log` into\nthe quadratic law.\n\n**Why now?** `mordell_55_point_infinite_order` removes the only hypothesis such a statement\nneeds (non-torsion), and it is proved here without heights \u2014 so the height asymptotic is now a\nstatement about an object already known to be infinite rather than a conditional one.\n\n## C5. Denominator data cannot recover the factorisation of `N`\n\n**Statement.** For semiprime `N = pq`, the multiset of primes dividing `den x(kP)` for\n`k \u2264 K` is, for every fixed `K`, computable from `N` alone in time polynomial in `log N` *given\noracle access to the points* \u2014 and contains no subsequence that isolates `p` or `q` more often\nthan the trivial guess. Concretely: there is no function of `{den x(kP) : k \u2264 K}` that outputs a\nnontrivial factor of `N` for a positive proportion of semiprimes.\n\n**The key insight is** that the apparition index law makes the appearance of *every* prime \u2014 good\nor bad \u2014 governed by the same mechanism (the order of the reduced point), so the primes dividing\n`N` enjoy no structural distinction inside the denominators; the survey data (`p` present 54.5%,\n`q` present 0%) is exactly what this predicts.\n\n**Why now?** With closure, the index law and the infinite-orbit theorem in place, the barrier can\nbe stated as a theorem about the index function `\u2113 \u21a6 m(\u2113)` rather than as a collection of\ncounterexamples; the missing step is a uniform bound showing `m(p)` and `m(q)` are not\ndistinguishable from `m(\u2113)` for good `\u2113`.\n",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_1305",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "aeab7c87",
+    "status": "available",
+    "timestamp": "2026-08-15T11:41:19.276792+00:00",
+    "title": "Derived from cycles 3\u20139"
   },
   {
     "consumed_by_exp_id": "",

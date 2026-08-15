@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "fb76e61b",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions — after the Euler-gap collapse of `Q(a) = a^(N-1) mod N`\n\nWhat is now proved (all in `Catalog/Cryptography/AsymmetricExponent/`, no\n`sorry`, no extra axioms):\n\n* the asymmetric CRT",
-      "quality_score": 0.85,
-      "sorry_count": 0,
-      "theorem_count": 84,
-      "timestamp": "2026-08-13T00:05:37",
-      "title": "The Asymmetric CRT-Split of a^{N-1} is Factor-Blind, Closed"
-    },
-    {
       "cycle_id": "5b29bc32",
       "domain": "MachineLearning",
       "key_insight": "# Future Directions — the non-CRT-separable half-plane count\n\nEverything below is derived from the theorems proved in\n`Catalog/MachineLearning/HalfPlane*.lean` (all sorry-free).  Established facts,\nfo",
@@ -499,19 +489,19 @@
       "theorem_count": 14,
       "timestamp": "2026-08-15T11:41:08",
       "title": "Power-Sum GCD Factoring & Carmichael Periodicity"
+    },
+    {
+      "cycle_id": "aeab7c87",
+      "domain": "Applications",
+      "key_insight": "# Future directions: denominators of rational points on Mordell curves\n\nDerived from cycles 3–9\n(`Catalog/Applications/MordellDenominator{Squares,Filtration,Orbits,LocalLaw}.lean`,\n`Catalog/Applicatio",
+      "quality_score": 0.88,
+      "sorry_count": 0,
+      "theorem_count": 60,
+      "timestamp": "2026-08-15T11:41:24",
+      "title": "The 'Only Bad Primes' Conjecture is False (elliptic curve denominators)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "a08998f9",
-      "domain": "Combinatorics",
-      "key_insight": "# Future directions\n\nThese conjectures are derived from the results proved this cycle in\n`Catalog/Combinatorics/RamseyExponentialBounds.lean` (Part II of that file).\nEach is stated so that a single Le",
-      "quality_score": 0.686,
-      "sorry_count": 0,
-      "theorem_count": 41,
-      "timestamp": "2026-08-04T23:25:49",
-      "title": "1. **Catalog-level CGMS input.** For the catalog's eventual diagonal Ramsey-numb"
-    },
     {
       "cycle_id": "3a707635",
       "domain": "Applications",
@@ -2501,21 +2491,19 @@
       "theorem_count": 14,
       "timestamp": "2026-08-15T11:41:08",
       "title": "Power-Sum GCD Factoring & Carmichael Periodicity"
+    },
+    {
+      "cycle_id": "aeab7c87",
+      "domain": "Applications",
+      "key_insight": "# Future directions: denominators of rational points on Mordell curves\n\nDerived from cycles 3–9\n(`Catalog/Applications/MordellDenominator{Squares,Filtration,Orbits,LocalLaw}.lean`,\n`Catalog/Applicatio",
+      "quality_score": 0.88,
+      "sorry_count": 0,
+      "theorem_count": 60,
+      "timestamp": "2026-08-15T11:41:24",
+      "title": "The 'Only Bad Primes' Conjecture is False (elliptic curve denominators)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "677413db",
-      "domain": "Algebra",
-      "name": "reprQ23_13",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "53eb02be",
-      "domain": "Bridges",
-      "name": "isOfFinOrder_cast",
-      "quality": 0.86
-    },
     {
       "cycle_id": "53eb02be",
       "domain": "Bridges",
@@ -2803,9 +2791,21 @@
       "domain": "Novelty",
       "name": "fib_periodic_mod",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "aeab7c87",
+      "domain": "Applications",
+      "name": "xCoord_neg",
+      "quality": 0.88
+    },
+    {
+      "cycle_id": "aeab7c87",
+      "domain": "Applications",
+      "name": "mem_den_kernel_add",
+      "quality": 0.88
     }
   ],
-  "last_updated": "2026-08-15T11:41:08",
+  "last_updated": "2026-08-15T11:41:24",
   "open_questions": [
     {
       "context": "-    sorry+  -- Extract a witness from the computational verification of the primitive part.",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "be8c4b71",
-        "quality": 0.8084800000000001,
-        "theorems": 14,
-        "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
-      },
-      {
         "cycle_id": "362b8901",
         "quality": 0.7657699999999998,
         "theorems": 44,
@@ -3141,6 +3135,12 @@
         "quality": 0.82,
         "theorems": 55,
         "title": "INTERVAL-HINT: the trace-set filter is exact (2^-omega pruning) but does not amp"
+      },
+      {
+        "cycle_id": "aeab7c87",
+        "quality": 0.88,
+        "theorems": 60,
+        "title": "The 'Only Bad Primes' Conjecture is False (elliptic curve denominators)"
       }
     ],
     "Bridges": [
