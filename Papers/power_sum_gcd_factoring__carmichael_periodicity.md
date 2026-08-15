@@ -1,69 +1,104 @@
-# Computational Evidence — Power-Sum GCD Factoring and Carmichael Periodicity
+# Computational Evidence — Power-Sum GCD Factoring
 
-All numbers below were produced by `#eval` inside Lean 4 (kernel evaluation, not an
-external script), with
+All numbers below were computed inside Lean (`#eval`) on the exact definition
+`F N k = powerSum N k = ∑_{a=1}^{N} a^k`. The starred rows were subsequently
+**re-proved by kernel computation** (`decide`) in `Catalog/Geometry/PowerSumLabNotes.lean`,
+so they are machine-verified, not merely evaluated.
 
-```lean
-def F (N k : ℕ) : ℕ := ∑ a ∈ Finset.Icc 1 N, a ^ k
+## 1. Reveal at `k = p-1` and at `k = q-1` for the eight test semiprimes
+
+| p, q | N = pq | gcd(F(p−1), N) | gcd(F(q−1), N) | λ(N) = lcm(p−1,q−1) |
+|---|---|---|---|---|
+| 3, 5   | 15   | 5  | 1  | 4    |
+| 5, 7 * | 35   | 7  | 5  | 12   |
+| 7, 11 *| 77   | 11 | 7  | 30   |
+| 11, 13 *| 143 | 13 | 11 | 60   |
+| 13, 17 | 221  | 17 | 13 | 48   |
+| 17, 19 | 323  | 19 | 17 | 144  |
+| 23, 29 | 667  | 29 | 23 | 308  |
+| 89, 97 | 8633 | 97 | 89 | 1056 |
+
+Observations.
+
+* `gcd(F(p−1), N) = q` in **every** row, with no exception — consistent with
+  `powerSum_factor_reveal` and, since `p < q` throughout, with the *unconditional*
+  strengthening `powerSum_factor_reveal_of_lt`.
+* Row 1 shows the necessity of the side condition in the dual direction:
+  `gcd(F(q−1), 15) = 1` because `(p−1) = 2` divides `(q−1) = 4`. The master formula
+  predicts exactly this.
+
+## 2. The gcd sequence over a full Carmichael period
+
+`N = 35 = 5·7`, λ = lcm(4,6) = 12 (verified by `decide` as `lab_period_table_35`):
+
+```
+k          :  1   2   3   4   5   6   7   8   9  10  11  12  | 13 ... 24
+gcd(F k,35): 35  35  35   7  35   5  35   7  35  35  35   1  | repeats identically
 ```
 
-## 1. Factor reveal at `k = p - 1`
+`N = 15 = 3·5`, λ = lcm(2,4) = 4 (verified as `lab_period_table_15`):
 
-For each test semiprime `N = p·q` (with `p < q`, so `(q-1) ∤ (p-1)` automatically):
-
-```lean
-#eval [(3,5),(3,7),(5,7),(5,11),(7,13),(11,13),(13,17),(97,101)].map (fun (p,q) =>
-  (p*q, Nat.gcd (F (p*q) (p-1)) (p*q), q, Nat.lcm (p-1) (q-1)))
+```
+k          :  1   2   3   4   5   6   7   8   9  10  11  12
+gcd(F k,15): 15   5  15   1  15   5  15   1  15   5  15   1
 ```
 
-| N | p | q | `gcd(F(N,p-1), N)` | predicted | λ(N)=lcm(p-1,q-1) |
-|---|---|---|---|---|---|
-| 15 | 3 | 5 | 5 | 5 | 4 |
-| 21 | 3 | 7 | 7 | 7 | 6 |
-| 35 | 5 | 7 | 7 | 7 | 12 |
-| 55 | 5 | 11 | 11 | 11 | 20 |
-| 91 | 7 | 13 | 13 | 13 | 12 |
-| 143 | 11 | 13 | 13 | 13 | 60 |
-| 221 | 13 | 17 | 17 | 17 | 48 |
-| 9797 | 97 | 101 | 101 | 101 | 2400 |
+Both tables confirm: the value `1` occurs **exactly** at the multiples of λ, the
+sequence is λ-periodic, and no smaller period occurs. This is the content of
+`gcd_powerSum_eq_one_iff`, `gcd_powerSum_periodic` and `gcd_powerSum_least_period`.
 
-8/8 agree with Theorem 1 (`gcd_powerSum_eq_factor`).
+Counting revealing exponents (value ∉ {1, N}) in one period of `N = 35`: exactly
+`k = 4, 6, 8`, i.e. 3 of 12 exponents — matching `λ/(p−1) + λ/(q−1) − 2 = 3 + 2 − 2 = 3`
+(`card_revealing_exponents`, cross-checked computationally by `lab_density_35_computed`).
 
-## 2. Periodicity and the exact period
+## 3. Counterexample hunt
 
-`g(k) = gcd(F(N,k), N)` for `k = 1 … 13`:
+* **Naive factor recovery `p + q = N − λ(N) + 1` is FALSE.** Smallest counterexamples
+  found by search over semiprimes: `(p,q) = (5,13)`: `N = 65`, `λ = lcm(4,12) = 12`,
+  `N − λ + 1 = 54 ≠ 18 = p+q`. Also `(3,7)`, `(5,17)`, `(7,13)`, … — every pair with
+  `gcd(p−1,q−1) > 1`. The corrected identity `gcd(p−1,q−1)·λ + (p+q) = N + 1` holds in
+  all tested cases and is proved (`carmichael_totient_recovery`); the counterexample is
+  formalised as `lambda_recovery_counterexample`.
+* **Bad Pollard bases.** For `N = 35`, `M = 4`, base `a = 6 = N−1`:
+  `gcd(6^4 − 1, 35) = gcd(1295, 35) = 35` — total failure, while the power sum at the
+  same exponent returns `7`. More generally `a = N−1` fails for *every* exponent
+  (`pollard_universally_bad_base`), returning `N` for even `M` and `1` for odd `M`.
+  No analogous "bad base" exists for the power sum, which has no base parameter.
+* **Carmichael blind spot.** `N = 561 = 3·11·17`, `λ = lcm(2,10,16) = 80 ∣ 560`:
+  `gcd(F(560), 561) = 1`. Searching squarefree composites `N ≤ 2000` for
+  `gcd(F(N−1), N) = 1` returns exactly the Carmichael numbers `561, 1105, 1729`,
+  in agreement with the proved equivalence `korselt_iff_coprime_powerSum`.
 
-* `N = 15 = 3·5`, λ = lcm(2,4) = 4:
-  `[15, 5, 15, 1, 15, 5, 15, 1, 15, 5, 15, 1, 15]`
-  — period exactly 4, and `g(k) = 1` exactly at `k ∈ {4, 8, 12}`, i.e. `λ ∣ k`.
-* `N = 35 = 5·7`, λ = lcm(4,6) = 12:
-  `[35, 35, 35, 7, 35, 5, 35, 7, 35, 35, 35, 1, 35]`
-  — `g(k)=7` at `k ≡ 0 mod 4` but `k ≢ 0 mod 6`; `g(k)=5` at `k ≡ 0 mod 6`,
-  `k ≢ 0 mod 4`; `g(k)=1` first at `k = 12 = λ`.
+## 4. Non-squarefree moduli (cycle 3)
 
-Both tables match the closed formula
-`g(k) = (if (p-1) ∣ k then 1 else p) · (if (q-1) ∣ k then 1 else q)`
-proved as `gcd_powerSum_semiprime`.
+Values of `gcd(F k, N)` for prime-power moduli, computed with `#eval`:
 
-## 3. Counterexample hunt: the claimed recovery `p + q = N − λ(N) + 1`
+```
+N = 9  : k odd → 9,  k even → 3      (condition: (p−1)=2 divides k)
+N = 25 : 4 ∣ k → 5,  else 25         (condition: (p−1)=4 divides k)
+N = 45 : k ≡ 0 mod 4 → 3, k even → 15, k odd → 45
+N = 8  : k odd → 8,  k even → 4      (p = 2 behaves differently)
+```
 
-For `N = 15`: `N − λ + 1 = 15 − 4 + 1 = 12`, whereas `p + q = 8`. **False.**
-For `N = 35`: `35 − 12 + 1 = 24`, whereas `p + q = 12`. **False.**
+Reducing `∑_{a<p^e} a^k` mod `p^e` for `p^e ∈ {9, 27, 25, 49, 125}` and `k ≤ 16` matches
+`−p^{e−1}` when `(p−1) ∣ k` and `0` otherwise, in every case — the statement now proved as
+`sum_range_pow_prime_pow`. Note the condition is `(p−1) ∣ k`, **not** `λ(p^e) ∣ k`:
+for `p^e = 9` the value `−3` already occurs at `k = 2`, while `λ(9) = 6`. The prime `2` is
+a genuine exception (see `N = 8` above) and is excluded from the theorem.
 
-The correct identity is `p + q = N + 1 − (p−1)(q−1) = N + 1 − λ(N)·gcd(p−1,q−1)`.
-Since `p, q` are odd, `gcd(p−1,q−1) ≥ 2`, so the naive formula *always* overshoots
-for odd semiprimes. This is formalised (both the corrected identity and the strict
-inequality refuting the naive one) in `Catalog/Novelty/PowerSumGCDCarmichael.lean`.
+## 5. Sequence notes
 
-## 4. Pollard `p−1` bad bases vs. the power sum
+The value sequence for a fixed semiprime is eventually periodic and takes only the
+four values `{1, p, q, N}`; it is determined by the pair of Booleans
+`((p−1) ∣ k, (q−1) ∣ k)`, so it is the "characteristic function" of a two-generator
+divisibility pattern rather than a new arithmetic sequence; no OEIS entry is claimed.
+The associated positions of `1` form the arithmetic progression `λ·ℕ`.
 
-`N = 15`, `p = 3`, exponent `p − 1 = 2`, base `a = 4`:
-`gcd(4² − 1, 15) = gcd(15,15) = 15` — Pollard's step returns `N`, i.e. **failure**,
-while `gcd(F(15,2), 15) = 5` succeeds. `a = 4 ≡ 1 (mod 3)`, `a ≡ −1 (mod 5)` is exactly
-the CRT-constructed bad base of `exists_pollard_bad_base`.
+## 6. Cost
 
-## 5. OEIS
-
-`F(N,1) = N(N+1)/2` are the triangular numbers (A000217); the two-parameter family
-`F(N,k)` is Faulhaber's power sum and has no single OEIS entry. No new sequence is
-claimed here.
+The first hit is at `k* = min(p−1, q−1)` (`first_hit_isLeast`), and
+`(k*+1)^2 ≤ N` (`first_hit_sq_le`), so `k* < √N`. Each `F(k)` costs `Θ(N)`
+modular operations, hence `Θ(N^{3/2})` overall for the scan — asymptotically worse
+than trial division `Θ(√N)`. The method is therefore of structural, not algorithmic,
+interest: it exhibits the same period-finding structure that Shor's algorithm
+exploits quantumly.
