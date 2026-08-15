@@ -1,4 +1,4 @@
-# Good Primes Rule the Denominators: Refuting the "Only Bad Primes" Conjecture for Mordell Curves, and an Anti-Factoring Law
+# Denominators of Rational Points on Mordell Curves: The "Only Bad Primes" Conjecture is False
 
 **Author:** Aristotle
 **Date:** 2026-08-15
@@ -7,352 +7,269 @@
 
 ## Abstract
 
-For a Mordell curve $E_N : y^2 = x^3 + N$ over $\mathbb{Q}$ with $N = pq$ a semiprime, it is tempting to conjecture that the denominators of the $x$-coordinates of the multiples $nP$ of a rational point $P$ are supported on the primes of bad reduction, namely the divisors $\{2,3,p,q\}$ of the discriminant $\Delta = -432N^2$. Such a statement would make the denominator sequence a factoring oracle. We prove that the conjecture is false, identify the exact mechanism that governs denominator primes, and then prove a converse law that is considerably stronger than a mere refutation.
+Let $N$ be a nonzero integer and let $E_N : y^2 = x^3 + N$ be the associated Mordell curve, whose discriminant is $\Delta = -432N^2$, so that the primes of bad reduction are exactly the divisors of $6N$. A folklore conjecture — attractive because of its cryptographic consequences when $N = pq$ is a semiprime — asserts that every prime occurring in the denominator of the $x$-coordinate of a multiple $nP$ of a rational point $P \in E_N(\mathbb{Q})$ is a prime of bad reduction, i.e. lies in $\{2,3\} \cup \{r : r \mid N\}$. We prove that this conjecture is false, and we determine completely the mechanism that makes it false.
 
-Three groups of results are established. First, a *local law*: for a prime $\ell \geq 5$ with $\ell \nmid N$, one has $\ell \mid \operatorname{den} x(P)$ if and only if $P$ lies in the kernel of reduction modulo $\ell$, so that $\ell \mid \operatorname{den} x(nP)$ exactly when the order of the reduction of $P$ in $E_N(\mathbb{F}_\ell)$ divides $n$. The explicit witness $N = 55$, $P = (9,28)$ yields $x(2P) = 2601/3136$ with $3136 = 2^6 \cdot 7^2$ and $7 \nmid \Delta$, refuting the conjecture. Second, an *unbounded family of violations*: for every prime $\ell \geq 5$ and every $t \geq 1$, the modulus $N(\ell,t) = 4\ell^2t^2 - 1 = (2\ell t - 1)(2\ell t + 1)$ carries the integral point $(1, 2\ell t)$ whose doubled $x$-coordinate has $\ell$ in its denominator while no prime factor of $N(\ell,t)$ does; genuine semiprime instances include $899 = 29\cdot31$, $1763 = 41\cdot43$ and $39203 = 197\cdot199$. Third, an *anti-factoring law*: a prime $p \neq 2$ dividing $N$ can divide $\operatorname{den} x(2P)$ only if $P$ meets the singular locus modulo $p$; since integral points on squarefree moduli never do, for odd squarefree $N$ and any integral point $P$ the entire doubling orbit $\{2^k P\}$ has $x$-denominators coprime to $N$. The denominator sequence along a doubling orbit therefore carries no information at all about the factorization of $N$.
+Concretely we prove: (i) a **square–cube rigidity theorem**, that every rational point of $E_N$ has $\mathrm{den}(y)^2 = \mathrm{den}(x)^3$, hence is of the form $(a/e^2, b/e^3)$ with $b^2 = a^3 + Ne^6$; (ii) a **reduction dichotomy**, that a prime $\ell$ divides $\mathrm{den}(x(P))$ if and only if $P$ has no affine reduction modulo $\ell$ — a condition on the point, entirely independent of the discriminant; (iii) an explicit **counterexample criterion**: if $(x,y)$ is an integral point with $y \ne 0$ and $\ell \mid y$, $\ell \nmid 6N$, then the good prime $\ell$ divides $\mathrm{den}(x(2P))$; (iv) the resulting **counterexample** $N = 55 = 5 \cdot 11$, $P = (9,28)$, with $x(2P) = 2601/3136$ and $3136 = 2^6 \cdot 7^2$, where $7$ is a prime of good reduction and neither $5$ nor $11$ divides the denominator; (v) an **infinite family** $N = \ell^2 - 1$, $P = (1,\ell)$ for primes $\ell \ge 5$, with $\mathrm{den}(x(2P)) = 4\ell^2$ exactly, in which no odd prime factor of $N$ ever occurs at the first doubling; and (vi) **exact valuation dynamics**: along a doubling orbit, an odd prime already present keeps its multiplicity forever, the prime $2$ gains exactly $2$ at each step, and a good prime absent so far enters with multiplicity exactly $2v_\ell(\mathrm{num}\,y)$.
 
-**Keywords:** Mordell curve, elliptic curve denominators, bad reduction, kernel of reduction, singular locus, elliptic divisibility, integer factorization.
+Together these results replace a false heuristic with a complete description, and they identify a precise obstruction — a *randomness barrier* — to using Mordell-curve denominators for integer factorisation: the denominator sequence is a function of $N$ as a single integer and of the chosen point, and the primes dividing $N$ are systematically absent.
+
+**Keywords:** Mordell curve, elliptic curve, denominator, kernel of reduction, good and bad reduction, $\ell$-adic valuation, integer factorisation, formal group.
 
 ---
 
 ## 1. Introduction
 
-### 1.1 The object of study
+### 1.1 The conjecture and its appeal
 
-Fix a nonzero integer $N$ and consider the *Mordell curve*
-$$E_N : \quad y^2 = x^3 + N$$
-over $\mathbb{Q}$. It is an elliptic curve of discriminant
-$$\Delta(E_N) = -432 N^2, \qquad j(E_N) = 0,$$
-whose rational points, together with a point at infinity $O$, form a finitely generated abelian group $E_N(\mathbb{Q})$ under the chord-and-tangent law. A prime $\ell$ is a prime of *bad reduction* for $E_N$ if $\ell \mid \Delta$, equivalently if $\ell \in \{2,3\}$ or $\ell \mid N$; all other primes are primes of *good reduction*.
+The Mordell curve
+$$E_N : \quad y^2 = x^3 + N, \qquad N \in \mathbb{Z} \setminus \{0\},$$
+is an elliptic curve over $\mathbb{Q}$ with discriminant
+$$\Delta(E_N) = -432 N^2 = -2^4 \cdot 3^3 \cdot N^2 .$$
+Its primes of bad reduction are therefore precisely the primes dividing $6N$. When $N = pq$ is a semiprime the bad primes are exactly $\{2,3,p,q\}$.
 
-For a nonzero rational number $r$ we write $\operatorname{num} r$ and $\operatorname{den} r$ for its numerator and (positive) denominator in lowest terms. Given $P \in E_N(\mathbb{Q}) \setminus \{O\}$ and $n \geq 1$ with $nP \neq O$, the *denominator sequence* of $P$ is
-$$D_n(P) = \operatorname{den} x(nP), \qquad n = 1, 2, 3, \dots$$
+The rational points $E_N(\mathbb{Q})$ form a finitely generated abelian group under the chord-and-tangent law, with identity the point at infinity $O$. Multiples of a non-torsion point have coordinates whose denominators grow doubly exponentially in the height, and these denominators are large integers manufactured by a process in which $N$ is a visible parameter. This motivates:
 
-These integers are the natural elliptic analogue of the denominators appearing in the classical theory of divisibility sequences, and their prime support is a delicate arithmetic invariant.
+> **Conjecture (Only Bad Primes).** Let $N = pq$ and let $P \in E_N(\mathbb{Q})$ be a rational point. Then every prime $\ell$ dividing the denominator of $x(nP)$ divides $\Delta = -432N^2$; equivalently $\ell \in \{2,3,p,q\}$.
 
-### 1.2 The conjecture and why it is attractive
+The cryptographic payoff, were this true, is immediate: computing $\gcd(\mathrm{den}\,x(2P),\,N)$ after removing powers of $2$ and $3$ would exhibit a nontrivial factor of $N$, giving a polynomial-time factoring algorithm for any semiprime carrying a known rational point on the associated Mordell curve.
 
-Suppose $N = pq$ is a product of two distinct odd primes. Then the bad primes of $E_N$ are precisely $2, 3, p, q$. Both prime factors of $N$ are thus encoded in the geometry of the curve, which makes the following statement natural to guess.
+### 1.2 What we prove
 
-> **Conjecture (Only bad primes).** For $N = pq$ and $P \in E_N(\mathbb{Q})$, every prime dividing $D_n(P)$ lies in $\{2,3,p,q\}$.
+We disprove the conjecture in the strongest available senses: by a single four-digit counterexample; by a criterion showing that counterexamples are generic; by an infinite explicit family; and by a complete determination of the valuation dynamics, showing that the failure is permanent and rigid rather than transient.
 
-Were it true, the algorithmic consequence would be immediate and dramatic: compute $D_2(P)$ for any convenient rational point, strip the powers of $2$ and $3$, and read off $p$ and $q$. This would place integer factorization in polynomial time, since one doubling of a rational point costs a bounded number of integer multiplications.
+To make everything unconditional and elementary, we work with the doubling orbit $\{2^n P\}$, generated by the duplication formula, which is a subset of the set of all multiples $\{nP\}$; refuting the conjecture on the doubling orbit refutes it as usually stated.
 
-### 1.3 Results
+**Definition 1.1 (Duplication).** For $N \in \mathbb{Z}$ and $x \in \mathbb{Q}$ set
+$$\mathrm{dbl}_x(N, x) \;=\; \frac{x^4 - 8Nx}{4(x^3+N)}, \qquad \mathrm{dbl}_y(N,x,y) \;=\; \frac{3x^2}{2y}\bigl(x - \mathrm{dbl}_x(N,x)\bigr) - y .$$
+These are the classical tangent-line formulas for $E_N$: the tangent at $(x,y)$ has slope $\lambda = 3x^2/(2y)$ and $x(2P) = \lambda^2 - 2x$, which simplifies to the displayed quotient using $y^2 = x^3 + N$. We write $\mathrm{dbl}(N,P)$ for the resulting map on affine points and $2^nP$ for its $n$-fold iterate.
 
-We disprove the conjecture and replace it by a sharp structural description. Throughout, "the doubling orbit of $P$" means the sequence $\{2^kP\}_{k \geq 0}$.
+**Definition 1.2 (Good and bad primes).** A prime $\ell$ is *bad* for $E_N$ if $\ell \mid 6N$, and *good* otherwise. Since $\Delta = -432N^2 = -2^4 3^3 N^2$, the bad primes are exactly the prime divisors of $\Delta$.
 
-1. **(Local law, Theorem 3.1)** For $\ell \geq 5$ prime with $\ell \nmid N$, $\ell \mid \operatorname{den} x(P)$ if and only if $P$ reduces to the identity of $E_N(\mathbb{F}_\ell)$. Hence $\ell \mid D_n(P)$ if and only if $\operatorname{ord}(\bar{P}) \mid n$, where $\bar P$ is the reduction of $P$.
+**Definition 1.3 (The conjecture, formalised).** Say that $(N,P)$ satisfies *only bad primes* if for all $n \ge 0$ and every prime $\ell$ dividing the denominator of the $x$-coordinate of $2^nP$, we have $\ell \mid 6N$.
 
-2. **(Refutation, Theorem 4.1)** For $N = 55$ and $P = (9,28)$ one has $x(2P) = 2601/3136$ with $3136 = 2^6 \cdot 7^2$, while $7 \nmid \Delta = -1306800$. The conjecture is false.
-
-3. **(Unbounded family, Theorem 5.4)** For every prime $\ell \geq 5$, every $t \geq 1$ and $N = N(\ell,t) = 4\ell^2t^2 - 1$, the point $P = (1, 2\ell t)$ lies on $E_N$, the curve has good reduction at $\ell$, $\ell \mid \operatorname{den} x(2P)$, and no prime factor of $N$ divides $\operatorname{den} x(2P)$. The moduli $N(\ell,t)$ are odd, factor nontrivially as $(2\ell t - 1)(2\ell t + 1)$, and are unbounded in $t$.
-
-4. **(Singular-locus law, Theorem 6.4)** Let $p \neq 2$ be a prime dividing $N$ and let $P = (x,y) \in E_N(\mathbb{Q})$ with $y \neq 0$. If $p \mid \operatorname{den} x(2P)$ then $p \mid \operatorname{den} x(P)$, or $p$ divides both $\operatorname{num} x$ and $\operatorname{num} y$, i.e. $P$ reduces modulo $p$ to the singular point $(0,0)$ of $y^2 = x^3$.
-
-5. **(Anti-factoring theorem, Theorem 7.3 and Corollary 7.4)** Let $N$ be odd and let $P \in E_N(\mathbb{Q})$ have $\operatorname{num} x(P)$ and $\operatorname{den} x(P)$ coprime to $N$. Then all $x$-numerators and $x$-denominators along the doubling orbit of $P$ are coprime to $N$; in particular no prime factor of $N$ divides any $\operatorname{den} x(2^kP)$. If $N$ is in addition squarefree, the hypothesis on $P$ is automatic for every integral point.
-
-Results 4 and 5 are the substance of the paper. They explain, and upgrade to theorems, the empirical observation that a denominator oracle appears blind to the factorization of $N$.
+The remainder of the paper is organised as follows. Section 2 establishes the rigid shape of denominators. Section 3 gives the reduction-theoretic interpretation. Section 4 proves the counterexample criterion and applies it to $N = 55$ and $N = 33$. Section 5 gives the infinite family. Section 6 determines the exact $\ell$-adic dynamics. Section 7 draws the cryptographic consequences. Sections 8–9 discuss algorithms, experiments, and open problems.
 
 ---
 
-## 2. Setup: the coprime parametrization and the duplication formula
+## 2. The rigid shape of denominators
 
-### 2.1 Coprime coordinates
+Throughout, for $q \in \mathbb{Q}$ we write $q = \mathrm{num}(q)/\mathrm{den}(q)$ in lowest terms with $\mathrm{den}(q) \ge 1$.
 
-**Lemma 2.1 (Coprime parametrization).** *Let $P = (x,y) \in E_N(\mathbb{Q})$ be an affine point. Then there are integers $a, b$ and a positive integer $e$ with*
-$$x = \frac{a}{e^2}, \qquad y = \frac{b}{e^3}, \qquad \gcd(a, e) = \gcd(b,e) = 1,$$
-*and consequently*
+**Theorem 2.1 (Square–cube rigidity).** *Let $N \in \mathbb{Z}$ and let $(x,y) \in \mathbb{Q}^2$ satisfy $y^2 = x^3 + N$. Then*
+$$\mathrm{den}(y)^2 = \mathrm{den}(x)^3 .$$
+
+*Proof sketch.* For a rational $q$ and $k \ge 1$ one has $\mathrm{den}(q^k) = \mathrm{den}(q)^k$, because the numerator and denominator of $q$ are coprime and hence so are their $k$-th powers. Also $\mathrm{den}(q + m) = \mathrm{den}(q)$ for $m \in \mathbb{Z}$. Applying $\mathrm{den}$ to both sides of $y^2 = x^3 + N$ yields $\mathrm{den}(y)^2 = \mathrm{den}(x^3 + N) = \mathrm{den}(x)^3$. $\square$
+
+**Corollary 2.2 (The $(e^2, e^3)$ parametrisation).** *There is a unique integer $e \ge 1$ with*
+$$\mathrm{den}(x) = e^2, \qquad \mathrm{den}(y) = e^3 .$$
+
+*Proof sketch.* From $\mathrm{den}(x)^3 = \mathrm{den}(y)^2$ we get $\mathrm{den}(x)^2 \mid \mathrm{den}(y)^2$, hence $\mathrm{den}(x) \mid \mathrm{den}(y)$; write $\mathrm{den}(y) = \mathrm{den}(x)\,e$. Substituting into $\mathrm{den}(x)^3 = \mathrm{den}(y)^2 = \mathrm{den}(x)^2 e^2$ and cancelling the nonzero factor $\mathrm{den}(x)^2$ gives $\mathrm{den}(x) = e^2$, whence $\mathrm{den}(y) = e^3$. Positivity of $e$ follows since $\mathrm{den}(x) > 0$. $\square$
+
+**Corollary 2.3 (Integral model).** *With $a = \mathrm{num}(x)$, $b = \mathrm{num}(y)$ and $e$ as above,*
 $$b^2 = a^3 + N e^6 .$$
-*In particular $\operatorname{den} x(P) = e^2$ is a perfect square, $\operatorname{den} y(P) = e^3$, $a = \operatorname{num} x(P)$ and $b = \operatorname{num} y(P)$.*
 
-*Proof sketch.* Write $x = a/u$ and $y = b/v$ in lowest terms. Clearing denominators in $y^2 = x^3 + N$ yields $b^2 u^3 = v^2(a^3 + Nu^3)$. Comparing the exact power of each prime $\ell$ dividing $u$ or $v$ forces $3 v_\ell(u) = 2 v_\ell(v)$, so $v_\ell(u)$ is even and $v_\ell(v) = \tfrac32 v_\ell(u)$; writing $e^2 = u$ gives $v = e^3$. Substituting back gives $b^2 = a^3 + Ne^6$. $\square$
+*Proof sketch.* Multiply $y^2 = x^3 + N$ by $e^6$ and use $x e^2 = a$, $y e^3 = b$. $\square$
 
-We refer to $(a, b, e)$ as the *coprime coordinates* of $P$ and freely use $e^2 = \operatorname{den} x(P)$.
+Two immediate consequences record that denominator primes always come in with high multiplicity — a first hint that they are structural, not accidental.
 
-### 2.2 Duplication
+**Proposition 2.4.** *For a rational point $(x,y)$ on $E_N$ and a prime $\ell$: $\ell \mid \mathrm{den}(x) \iff \ell \mid \mathrm{den}(y)$. Moreover $\ell \mid \mathrm{den}(x)$ implies $\ell^2 \mid \mathrm{den}(x)$ and $\ell^3 \mid \mathrm{den}(y)$.*
 
-**Lemma 2.2 (Duplication formula).** *Let $P = (x,y) \in E_N(\mathbb{Q})$ with $y \neq 0$. Then*
+*Proof sketch.* Immediate from $\mathrm{den}(x) = e^2$, $\mathrm{den}(y) = e^3$: a prime divides a power of $e$ iff it divides $e$, and then divides $e^2$, $e^3$ to the stated orders. $\square$
+
+Thus every denominator of an $x$-coordinate on a Mordell curve is a perfect square, and every prime in it occurs to even order $\ge 2$. This is verified by every example below: $3136 = 56^2$, $25 = 5^2$, $4\ell^2 = (2\ell)^2$.
+
+---
+
+## 3. What a denominator prime means: the reduction dichotomy
+
+The conjecture implicitly assumes that denominator primes are a property of the *curve*. The following theorem shows they are a property of the *point*.
+
+**Theorem 3.1 (Reduction dichotomy).** *Let $(x,y)$ be a rational point on $E_N$ and $\ell$ a prime.*
+
+1. *(Affine reduction.) If $\ell \nmid \mathrm{den}(x)$, then there exist $X, Y \in \mathbb{F}_\ell$ with*
+$$Y^2 = X^3 + \bar N, \qquad X \cdot \overline{\mathrm{den}(x)} = \overline{\mathrm{num}(x)}, \qquad Y \cdot \overline{\mathrm{den}(y)} = \overline{\mathrm{num}(y)} ,$$
+   *i.e. the point reduces to an affine point of the reduced cubic over $\mathbb{F}_\ell$.*
+2. *(Kernel of reduction.) If $\ell \mid \mathrm{den}(x)$, then no $X \in \mathbb{F}_\ell$ satisfies $X \cdot \overline{\mathrm{den}(x)} = \overline{\mathrm{num}(x)}$: the point has no affine reduction and reduces to $O$.*
+
+*Consequently, $\ell \mid \mathrm{den}(x)$ if and only if $P$ lies in the kernel of reduction at $\ell$.*
+
+*Proof sketch.* Write $x = a/e^2$, $y = b/e^3$ with $b^2 = a^3 + Ne^6$ (Corollary 2.3). If $\ell \nmid \mathrm{den}(x) = e^2$ then $\bar e \ne 0$ in $\mathbb{F}_\ell$, so we may set $X = \bar a \bar e^{-2}$, $Y = \bar b \bar e^{-3}$; reducing the integral model and dividing by $\bar e^6$ gives $Y^2 = X^3 + \bar N$, and the compatibility identities are immediate. Conversely, if $\ell \mid \mathrm{den}(x)$ then $\overline{\mathrm{den}(x)} = 0$, so the equation $X \cdot \overline{\mathrm{den}(x)} = \overline{\mathrm{num}(x)}$ forces $\ell \mid \mathrm{num}(x)$, contradicting the coprimality of numerator and denominator. $\square$
+
+**Remark 3.2 (Why the conjecture had to fail).** The criterion of Theorem 3.1 makes no reference to $\Delta$. A prime enters a denominator when the point becomes the identity modulo that prime. For $P$ of infinite order and $\ell$ a good prime, $P$ reduces into the finite group $E_N(\mathbb{F}_\ell)$, and some multiple of $P$ lies in the kernel of reduction whenever the reduced point has finite order — which it always does. Hence infinitely many good primes must occur in denominators of multiples of $P$. The conjecture conflated *primes where the curve degenerates* with *primes where the point degenerates*; the two sets are unrelated.
+
+---
+
+## 4. A counterexample machine, and explicit counterexamples
+
+### 4.1 The criterion
+
+**Lemma 4.1 (Integral duplication).** *If $(x,y) \in \mathbb{Z}^2$ satisfies $y^2 = x^3 + N$, then*
 $$x(2P) = \frac{x^4 - 8Nx}{4y^2},$$
-*and in coprime coordinates*
-$$x(2P) = \frac{a\,(a^3 - 8Ne^6)}{4\,b^2 e^2}. \tag{2.1}$$
+*as a quotient of integers (not necessarily in lowest terms).*
 
-*Proof sketch.* The tangent at $P$ has slope $\lambda = 3x^2/(2y)$, and $x(2P) = \lambda^2 - 2x$. Substituting $y^2 = x^3 + N$ and simplifying gives $x(2P) = (x^4 - 8Nx)/(4y^2)$. Replacing $x = a/e^2$, $y = b/e^3$ and clearing common factors of $e$ yields (2.1). $\square$
+*Proof sketch.* Substitute $x^3 + N = y^2$ into the denominator of Definition 1.1. $\square$
 
-The identity (2.1) is *not* asserted to be in lowest terms; the whole of Sections 6 and 7 consists of controlling the cancellation.
+**Theorem 4.2 (Counterexample criterion).** *Let $(x,y) \in \mathbb{Z}^2$ with $y^2 = x^3 + N$ and $y \ne 0$, and let $\ell$ be a prime with*
+$$\ell \mid y \quad\text{and}\quad \ell \nmid 6N .$$
+*Then $\ell \mid \mathrm{den}\bigl(x(2P)\bigr)$. In particular $\ell$ is a prime of good reduction occurring in a denominator, so $(N,P)$ does not satisfy "only bad primes".*
 
-**Lemma 2.3 (Integral bookkeeping for doubling).** *With the notation above,*
-$$\operatorname{den} x(2P) \;\Big|\; 4\,b^2\,e^2 \qquad\text{and}\qquad \operatorname{num} x(2P) \;\Big|\; a\,\bigl(a^3 - 8N e^6\bigr).$$
-*Equivalently, writing $D = \operatorname{den} x(P) = e^2$, the denominator of $x(2P)$ divides $4\,\operatorname{num}(y)^2 D$ and its numerator divides $\operatorname{num}(x)\bigl(\operatorname{num}(x)^3 - 8N D^3\bigr)$.*
+*Proof sketch.* By Lemma 4.1, $x(2P) = A/B$ with $A = x^4 - 8Nx$ and $B = 4y^2$. Clearly $\ell \mid B$. It remains to show $\ell \nmid A$, for then $\ell$ survives into the reduced denominator (if $q = A/B$ and $\ell \mid B$, $\ell \nmid A$, then cross-multiplying $\mathrm{num}(q)\,B = A\,\mathrm{den}(q)$ shows $\ell \mid A\,\mathrm{den}(q)$, hence $\ell \mid \mathrm{den}(q)$).
 
-*Proof sketch.* If a rational number is written as $A/B$ with $B \neq 0$, then its reduced denominator divides $B$ and its reduced numerator divides $A$. Apply this to (2.1) with $A = a(a^3 - 8Ne^6)$ and $B = 4b^2e^2$, and use $e^6 = D^3$, $e^2 = D$ to rewrite. $\square$
+Since $\ell \nmid 6N$ we have $\ell \nmid N$, $\ell \nmid 3$. From $\ell \mid y$ we get $\ell \mid y^2$; if also $\ell \mid x$ then $\ell \mid y^2 - x^3 = N$, a contradiction, so $\ell \nmid x$. Finally, using $x^3 = y^2 - N$,
+$$A = x^4 - 8Nx = x(x^3 - 8N) = x(y^2 - 9N).$$
+If $\ell \mid A$ then $\ell \mid x$ (excluded) or $\ell \mid y^2 - 9N$, which with $\ell \mid y^2$ gives $\ell \mid 9N$, hence $\ell \mid 3$ or $\ell \mid N$, both excluded. $\square$
 
-Lemma 2.3 is the engine of the paper: it says that *every prime of $\operatorname{den} x(2P)$ divides $2be$*. Whatever primes appear after doubling must already be visible in the numerator of $y$, the denominator of $x$, or the prime $2$.
+Theorem 4.2 explains why the conjecture fails ubiquitously: one only needs an integral point whose $y$-coordinate is divisible by *some* prime other than $2$, $3$, and the prime factors of $N$. Integral points with $y$ a $\{2,3\} \cup \{r : r \mid N\}$-unit are extremely rare.
 
----
+### 4.2 The counterexample $N = 55$
 
-## 3. The local law: which primes appear, and when
+**Theorem 4.3.** *Let $N = 55 = 5 \cdot 11$ and $P = (9,28) \in E_{55}(\mathbb{Q})$, valid since $28^2 = 784 = 9^3 + 55$. Then*
+$$x(2P) = \frac{9^4 - 8\cdot 55 \cdot 9}{4(9^3+55)} = \frac{2601}{3136}, \qquad 3136 = 2^6 \cdot 7^2 .$$
+*The prime $7$ satisfies $7 \nmid 6 \cdot 55 = 330$ and $7 \nmid \Delta = -432 \cdot 55^2$, so $7$ is a prime of good reduction dividing a denominator: the "only bad primes" conjecture is false. Moreover $5 \nmid 3136$ and $11 \nmid 3136$, so*
+$$\gcd\bigl(\mathrm{den}\,x(2P),\, N\bigr) = \gcd(3136, 55) = 1 .$$
 
-Let $\ell \geq 5$ be a prime with $\ell \nmid N$, so that $E_N$ has good reduction at $\ell$ and $\ell \nmid \Delta$. Reduction modulo $\ell$ gives a group homomorphism
-$$\rho_\ell : E_N(\mathbb{Q}) \longrightarrow E_N(\mathbb{F}_\ell),$$
-defined on all of $E_N(\mathbb{Q})$ once one works with the projective model; its kernel is the *kernel of reduction* $E_1(\mathbb{Q}_\ell) \cap E_N(\mathbb{Q})$.
+*Proof sketch.* The value of $x(2P)$ is a direct computation, and $3136 = 2^6\cdot 7^2$ its factorisation. Alternatively, Theorem 4.2 applies with $\ell = 7$ because $28 = 2^2 \cdot 7$ and $7 \nmid 330$. The divisibility statements about $5$, $11$ and $\Delta$ are immediate. $\square$
 
-**Theorem 3.1 (Local law).** *Let $\ell \geq 5$ be a prime with $\ell \nmid N$ and let $P \in E_N(\mathbb{Q})$ be affine with coprime coordinates $(a,b,e)$. Then*
-$$\ell \mid \operatorname{den} x(P) \iff \ell \mid e \iff \rho_\ell(P) = O .$$
-*Consequently, if $P$ has integral coordinates and $\bar P = \rho_\ell(P)$ has order $m$ in $E_N(\mathbb{F}_\ell)$, then for all $n \geq 1$*
-$$\ell \mid D_n(P) \iff m \mid n .$$
+The last display is the sharpest form of the refutation: the denominator is arithmetically rich ($2^6 \cdot 7^2$) yet coprime to $N$. It broadcasts a prime — just not one of the primes of $N$.
 
-*Proof sketch.* The first equivalence is Lemma 2.1. For the second: in projective coordinates $P = (a e : b : e^3)$, and reduction sends $P$ to $O = (0:1:0)$ exactly when $\ell \mid e$ (using $\gcd(b,e)=1$, so $b$ is a unit mod $\ell$). For the consequence, $\rho_\ell$ is a group homomorphism because $\ell$ is a prime of good reduction, whence $\rho_\ell(nP) = n\bar{P}$; and $n\bar P = O$ iff $m \mid n$. $\square$
+**Theorem 4.4 (Permanence for $N = 55$).** *The curve $E_{55}$ has no rational point of order $2$, since $m^3 + 55 = 0$ has no integer solution. Consequently the doubling orbit of $P = (9,28)$ never meets $O$, and*
+$$7 \mid \mathrm{den}\bigl(x(2^nP)\bigr) \quad \text{for every } n \ge 1, \qquad v_7\bigl(\mathrm{den}\,x(2^nP)\bigr) = 2 \quad \text{for every } n \ge 1 .$$
 
-Two structural consequences deserve emphasis.
+*Proof sketch.* A rational point with $y = 0$ has $\mathrm{den}(y) = 1$, hence $e = 1$ by Corollary 2.2 and $x \in \mathbb{Z}$ with $x^3 + 55 = 0$; a short case analysis (bounding $m$ between $-4$ and $-3$ via the factorisations $m^3 + 55$ near $m = -5$, $m = -2$) shows no such integer exists. The persistence and rigidity statements then follow from Theorems 6.1 and 6.4 below, starting from $v_7(3136) = 2$. $\square$
 
-**Corollary 3.2 (Good primes are generic).** *Fix an integral point $P$ of infinite order. For every prime $\ell \geq 5$ of good reduction, $\ell$ divides $D_n(P)$ for infinitely many $n$ — namely all multiples of $\operatorname{ord}(\bar P)$ — unless $\bar P = O$ already, in which case $\ell \mid D_n(P)$ for all $n$. In particular the union over $n$ of the prime supports of $D_n(P)$ contains all but finitely many primes for which $\bar P \neq O$ never fails, and is in any case infinite.*
+### 4.3 A second counterexample
 
-*Proof sketch.* Immediate from Theorem 3.1, since $E_N(\mathbb{F}_\ell)$ is finite so $\operatorname{ord}(\bar P)$ is finite; infinitude of the total support follows from the growth of the denominators, $\log D_n(P) \sim 2 \hat h(P) n^2$ by the theory of canonical heights, which cannot be sustained by a finite set of primes together with bounded exponents. $\square$
+**Theorem 4.5.** *Let $N = 33 = 3 \cdot 11$ and $P = (-2,5)$, valid since $5^2 = 25 = (-2)^3 + 33$. Then $x(2P) = 136/25$, so $\mathrm{den}(x(2P)) = 25 = 5^2$ and the good prime $5$ (note $5 \nmid 6\cdot 33 = 198$) divides the denominator, while the factorisation $33 = 3\cdot 11$ is invisible.*
 
-**Corollary 3.3 (The conjecture cannot survive).** *The condition "$\ell$ divides some $D_n(P)$" is a condition on the reduction of $P$ modulo $\ell$ and is entirely insensitive to whether $\ell$ divides $\Delta$. There is no mechanism by which the bad primes could monopolize the denominator support.*
-
-Theorem 3.1 thus reframes the question. The denominator sequence is a record of *when a point's shadow in a finite field hits the identity*, which is a codimension-one event happening for every prime, good or bad — subject only to whether the point can reach the identity at all. Sections 6 and 7 show that at bad primes it usually cannot.
+*Proof sketch.* Direct computation, or Theorem 4.2 with $\ell = 5 \mid y = 5$. $\square$
 
 ---
 
-## 4. The counterexample
+## 5. An infinite family of counterexamples
 
-**Theorem 4.1 (Refutation of the conjecture).** *Let $N = 55 = 5 \cdot 11$ and $P = (9,28) \in E_{55}(\mathbb{Q})$. Then*
-$$x(2P) = \frac{9^4 - 8\cdot 55\cdot 9}{4\,(9^3+55)} = \frac{2601}{3136}, \qquad 3136 = 2^6\cdot 7^2 ,$$
-*so $7 \mid \operatorname{den} x(2P)$ while $7 \nmid \Delta(E_{55}) = -432\cdot 55^2 = -1306800$. The prime $7$ is a prime of good reduction. Hence the "only bad primes" conjecture is false.*
+**Theorem 5.1.** *Let $\ell \ge 5$ be prime and set*
+$$N = \ell^2 - 1, \qquad P = (1, \ell) .$$
+*Then:*
 
-*Proof.* $28^2 = 784 = 729 + 55$, so $P \in E_{55}(\mathbb{Q})$ and $y \neq 0$. By Lemma 2.2, $x(2P) = (6561 - 3960)/(4\cdot 784) = 2601/3136$; the fraction is reduced because $2601 = 3^2\cdot 17^2$ is odd and not divisible by $7$. Finally $-1306800 = -2^4\cdot3^3\cdot5^2\cdot11^2$, which is prime to $7$. $\square$
+1. *$P \in E_N(\mathbb{Q})$, since $\ell^2 = 1^3 + (\ell^2-1)$;*
+2. *$x(2P) = \dfrac{9 - 8\ell^2}{4\ell^2}$, and this fraction is in lowest terms, so $\mathrm{den}(x(2P)) = 4\ell^2$ exactly;*
+3. *$\ell$ is a prime of good reduction for $E_N$: $\ell \nmid 6$ and $\ell \nmid \ell^2 - 1$;*
+4. *hence $(N,P)$ fails "only bad primes";*
+5. *no odd prime factor $r$ of $N = (\ell-1)(\ell+1)$ divides $\mathrm{den}(x(2P))$;*
+6. *$\ell$ occurs in the denominator with multiplicity exactly $2$: $\ell^2 \mid 4\ell^2$ but $\ell^3 \nmid 4\ell^2$.*
 
-Theorem 3.1 explains the appearance of $7$: the group $E_{55}(\mathbb{F}_7)$ has order $4$ and $\overline{(9,28)} = (2,0)$ has order $2$, so $7$ must divide $D_n$ for every even $n$. The higher terms are equally transparent:
+*Proof sketch.* (1) is immediate. (2): the duplication formula gives numerator $1 - 8(\ell^2-1) = 9 - 8\ell^2$ and denominator $4(1 + \ell^2 - 1) = 4\ell^2$. For coprimality, suppose a prime $r$ divides both; then $r$ divides $(9 - 8\ell^2) + 2(4\ell^2) = 9$, so $r = 3$; but $3 \mid 4\ell^2$ forces $3 \mid \ell$, impossible for a prime $\ell \ge 5$. (3): $\ell \mid 6$ is impossible for $\ell \ge 5$ prime, and $\ell \mid \ell^2 - 1$ would give $\ell \mid 1$. (4) follows from (2),(3). (5): an odd prime dividing $4\ell^2$ must equal $\ell$, and $\ell \nmid N$ by (3). (6) is clear since $\ell \nmid 4$. $\square$
 
-| $n$ | $D_n(P)$ | prime support | orders modulo the good primes |
-|---|---|---|---|
-| $1$ | $1$ | — | — |
-| $2$ | $3136 = 2^6\cdot7^2$ | $2, 7$ | $\operatorname{ord}_7 \bar P = 2$ |
-| $3$ | $3^6\cdot13^2\cdot73^2$ | $3, 13, 73$ | $\operatorname{ord}_{13}\bar P = \operatorname{ord}_{73}\bar P = 3$ |
-| $4$ | $2^8\cdot7^2\cdot827^2\cdot1583^2$ | $2,7,827,1583$ | $\operatorname{ord}_{827}\bar P = \operatorname{ord}_{1583}\bar P = 4$ |
-| $5$ | $5^2\cdot 1785401475301^2$ | $5$, one $13$-digit prime | order $5$ |
+**Corollary 5.2 (Infinitely many counterexamples).** *The set*
+$$\bigl\{\,N \in \mathbb{Z} \;:\; \exists\, P \in E_N(\mathbb{Q}) \text{ with } (N,P) \text{ failing ``only bad primes''}\,\bigr\}$$
+*is infinite.*
 
-The last row is worth pausing on. The bad prime $5$ *does* eventually occur — at index $n = 5$. This is not an accident and is discussed in Section 8: at a bad prime $p$ the non-singular locus of the reduced curve $y^2 = x^3$ is isomorphic to the additive group $(\mathbb{F}_p, +)$, on which multiplication by $n$ is injective precisely when $p \nmid n$. Bad primes are therefore confined to indices divisible by themselves — invisible to any orbit whose indices are coprime to $N$, and useless as a factoring signal since locating them presupposes knowing $p$.
+*Proof sketch.* The map $\ell \mapsto \ell^2 - 1$ is injective on primes $\ell \ge 5$, the set of such primes is infinite, and each image value carries a counterexample point by Theorem 5.1. $\square$
 
----
+**Example 5.3.** $\ell = 7$: $N = 48$, $P = (1,7)$, $x(2P) = -383/196$ with $196 = 2^2 \cdot 7^2$. $\ell = 11$: $N = 120 = 2^3\cdot 3\cdot 5$, $P = (1,11)$, $x(2P) = -959/484$ with $484 = 2^2 \cdot 11^2$. In both cases the odd prime factors of $N$ are entirely absent.
 
-## 5. An unbounded, semiprime-shaped family of violations
-
-A single counterexample refutes a conjecture but does not measure how badly it fails. We now exhibit a two-parameter family of violations that is unbounded, semiprime-shaped, and in which the conjecture fails *maximally*: the good prime appears and both intended bad primes are absent.
-
-**Definition 5.1.** For integers $\ell, t \geq 1$ set
-$$N(\ell,t) = 4\ell^2t^2 - 1, \qquad Y(\ell,t) = 2\ell t, \qquad P_{\ell,t} = (1, \, Y(\ell,t)) .$$
-
-**Lemma 5.2 (Shape of the family).** *For all $\ell, t \geq 1$:*
-1. $N(\ell,t) = (Y-1)(Y+1)$ *with $Y = 2\ell t$; if $\ell t \geq 1$ then $1 < Y - 1 < Y+1$, so the factorization is nontrivial.*
-2. $N(\ell,t)$ *is odd, so $\gcd(2, N) = 1$.*
-3. $Y^2 = 1^3 + N(\ell,t)$, *so $P_{\ell,t} \in E_{N(\ell,t)}(\mathbb{Z})$.*
-4. *If $\ell \geq 2$ then $\ell \nmid N(\ell,t)$; if moreover $\ell \geq 5$ is prime then $\ell \nmid \Delta(E_{N(\ell,t)}) = -432N^2$, i.e. $E_{N(\ell,t)}$ has good reduction at $\ell$.*
-5. *For fixed $\ell \geq 5$, $N(\ell,t) \to \infty$ as $t \to \infty$.*
-
-*Proof sketch.* (1)–(3) are the identities $4\ell^2t^2 - 1 = (2\ell t-1)(2\ell t+1)$ and $(2\ell t)^2 = 1 + (4\ell^2t^2-1)$; oddness is clear. For (4), $\ell \mid 4\ell^2t^2$, so $\ell \mid N$ would give $\ell \mid 1$; since $\ell \geq 5$ is prime, $\ell \nmid 432$, and $\ell \nmid N$ gives $\ell \nmid -432N^2$. (5) is clear. $\square$
-
-**Lemma 5.3 (Explicit doubling in the family).** *With $N = N(\ell,t)$ and $P = P_{\ell,t}$,*
-$$x(2P) = \frac{1 - 8N}{4(N+1)} = \frac{1 - 8N}{16\,\ell^2 t^2}.$$
-*In particular $\operatorname{den} x(2P)$ divides $16\ell^2t^2$, which is coprime to the odd number $N$.*
-
-*Proof sketch.* Lemma 2.2 with $x = 1$, $y^2 = 1 + N$. $\square$
-
-**Theorem 5.4 (Unbounded family of maximal violations).** *Let $\ell \geq 5$ be prime and $t \geq 1$, and put $N = N(\ell,t)$, $P = P_{\ell,t}$. Then:*
-1. $N$ *is odd and factors nontrivially as $N = (2\ell t-1)(2\ell t+1)$ with both factors $> 1$;*
-2. $E_N$ *has good reduction at $\ell$;*
-3. $\ell \mid \operatorname{den} x(2P)$;
-4. *no prime factor of $N$ divides $\operatorname{den} x(2P)$: in fact $\gcd(\operatorname{den} x(2P), N) = 1$.*
-
-*Moreover, for every bound $B$ there is $t$ with $N(\ell,t) > B$ satisfying all of the above; so violations exist at arbitrarily large scale, for every good prime $\ell \geq 5$.*
-
-*Proof sketch.* (1) and (2) are Lemma 5.2. For (3), apply the local law in its doubling form: for $\ell \geq 5$ with $\ell \nmid N$, one has $\ell \mid \operatorname{den} x(2P)$ if and only if $\ell \mid \operatorname{num} y(P)$ (this is Theorem 3.1 applied to $2P$, combined with the fact that for an integral point the reduction of $P$ is $2$-torsion modulo $\ell$ exactly when $\ell \mid y$); here $y = 2\ell t$ is divisible by $\ell$ by construction. For (4), apply Theorem 7.1 below with $x = 1$: the numerator $1$ and denominator $1$ of $x(P)$ are trivially coprime to $N$, and $N$ is odd. The unboundedness statement follows from Lemma 5.2(5). $\square$
-
-Choosing $t$ so that $2\ell t \pm 1$ are twin primes produces genuine semiprimes. Three certified instances:
-
-**Example 5.5.** $\ell = 5$, $t = 3$: $N = 899 = 29\cdot31$, $P = (1,30)$,
-$$x(2P) = \frac{1 - 7192}{4\cdot 900} = -\frac{799}{400}, \qquad 400 = 2^4\cdot 5^2 .$$
-The good prime $5$ divides the denominator; $29$ and $31$ do not.
-
-**Example 5.6.** $\ell = 7$, $t = 3$: $N = 1763 = 41\cdot43$, $P = (1,42)$,
-$$x(2P) = \frac{1 - 14104}{4\cdot 1764} = -\frac{1567}{784}, \qquad 784 = 2^4\cdot 7^2 .$$
-The good prime $7$ divides the denominator; $41$ and $43$ do not.
-
-**Example 5.7.** $\ell = 11$, $t = 9$: $N = 39203 = 197\cdot199$, $P = (1,198)$,
-$$x(2P) = -\frac{34847}{17424}, \qquad 17424 = 2^4\cdot 3^2 \cdot 11^2 .$$
-The good prime $11$ divides the denominator; $197$ and $199$ do not.
-
-In every case the denominator's prime support is contained in $\{2,3,\ell\}$ — good primes only — and misses $\{p,q\}$ entirely. Note that whether infinitely many $t$ give twin primes is the twin prime conjecture; Theorem 5.4 is therefore stated with a nontrivial factorization rather than with primality of both factors, and supplemented by explicit genuinely semiprime instances.
+**Corollary 5.4 (What the $\gcd$ returns).** *For the family of Theorem 5.1, every prime dividing $\gcd\bigl(\mathrm{den}\,x(2P),\,|N|\bigr)$ equals $2$. The greatest common divisor is therefore a power of $2$ and never exposes an odd factor of $N$.*
 
 ---
 
-## 6. The singular-locus law for bad primes
+## 6. Exact $\ell$-adic dynamics along the doubling orbit
 
-We now turn the question around. Section 3 explains why good primes appear. Why do bad primes not appear?
+The counterexamples show that good primes occur. The next results show they occur *rigidly*: the multiplicities are completely determined and, for odd primes, constant.
 
-Modulo a prime $p \mid N$ the reduced curve is $y^2 = x^3$ over $\mathbb{F}_p$, a cuspidal cubic whose unique singular point is $(0,0)$. Its non-singular locus is a group isomorphic to $(\mathbb{F}_p,+)$ via $(x,y) \mapsto x/y$. A rational point of $E_N$ reduces either into this smooth additive group, or onto the cusp, or to the identity.
+We first record the general persistence statement, which needs no integrality assumption.
 
-**Lemma 6.1 (Coprimality transfer from $x$ to $y$).** *Let $P \in E_N(\mathbb{Q})$ have coprime coordinates $(a,b,e)$. If $\gcd(a,N) = 1$ then $\gcd(b, N) = 1$.*
+**Theorem 6.1 (Persistence).** *Let $(x,y)$ be a rational point on $E_N$ and $\ell$ a prime with $\ell \mid \mathrm{den}(x)$. Then $\ell \mid \mathrm{den}(x(2P))$. Consequently, if $\ell$ divides the denominator at some stage of a doubling orbit (in which no point has $y = 0$), it divides it at every later stage.*
 
-*Proof sketch.* From $b^2 = a^3 + Ne^6$: if $u a^3 + vN = 1$ is a Bézout relation (available because $a^3$ is coprime to $N$), then $u b^2 + (v - u e^6)N = 1$, so $b^2$, hence $b$, is coprime to $N$. $\square$
+*Proof sketch.* Write $x = a/e^2$, $y = b/e^3$ with $b^2 = a^3 + Ne^6$. A computation from Definition 1.1 gives the integral presentation
+$$x(2P) = \frac{a^4 - 8Nae^6}{4b^2e^2}. \tag{$\ast$}$$
+Now $\ell \mid \mathrm{den}(x) = e^2$ gives $\ell \mid e$, so $\ell$ divides the displayed denominator. It does not divide the numerator: $\ell \mid e$ implies $\ell \mid 8Nae^6$, so $\ell$ dividing the numerator would force $\ell \mid a^4$, hence $\ell \mid a = \mathrm{num}(x)$, contradicting coprimality with $\mathrm{den}(x)$. Hence $\ell$ survives into the reduced denominator. Conceptually: the kernel of reduction at $\ell$ is a subgroup, and subgroups are closed under doubling. $\square$
 
-**Lemma 6.2 (Coprimality transfer under the shift).** *If $\gcd(a,N)=1$ then $\gcd\bigl(a^3 - 8Ne^6, \, N\bigr) = 1$.*
+**Theorem 6.2 (Valuation under duplication, prime already present).** *Let $(x,y)$ be a rational point on $E_N$ and $\ell$ a prime with $\ell \mid \mathrm{den}(x)$. Then*
+$$v_\ell\bigl(\mathrm{den}\,x(2P)\bigr) = v_\ell(4) + v_\ell\bigl(\mathrm{den}\,x\bigr) .$$
+*Hence:*
+- *if $\ell$ is odd, $v_\ell(\mathrm{den}\,x(2P)) = v_\ell(\mathrm{den}\,x)$ — the multiplicity is exactly preserved;*
+- *if $\ell = 2$, $v_2(\mathrm{den}\,x(2P)) = v_2(\mathrm{den}\,x) + 2$ — the multiplicity grows by exactly two.*
 
-*Proof sketch.* Any common divisor divides $a^3$, and $\gcd(a^3, N) = 1$; concretely from $ua^3 + vN = 1$ one gets $u(a^3 - 8Ne^6) + (v + 8ue^6)N = 1$. $\square$
+*Proof sketch.* Use the presentation $(\ast)$. As in Theorem 6.1 the numerator is prime to $\ell$, so the $\ell$-adic valuation of the reduced denominator equals that of $4b^2e^2$. Since $\ell \mid e$ and $\gcd(\mathrm{num}\,y, \mathrm{den}\,y) = 1$ with $\ell \mid e \mid \mathrm{den}(y)$, we get $\ell \nmid b$, so $v_\ell(4b^2e^2) = v_\ell(4) + 2v_\ell(e) = v_\ell(4) + v_\ell(\mathrm{den}\,x)$, the last step by $\mathrm{den}(x) = e^2$. $\square$
 
-**Theorem 6.3 (Doubling preserves coprimality to an odd modulus).** *Let $N$ be odd, let $P = (x,y) \in E_N(\mathbb{Q})$ with $y \neq 0$, and suppose $\gcd(\operatorname{num} x, N) = \gcd(\operatorname{den} x, N) = 1$. Then*
-$$\gcd\bigl(\operatorname{num} x(2P), N\bigr) = \gcd\bigl(\operatorname{den} x(2P), N\bigr) = 1 .$$
+**Theorem 6.3 (Exact entry of a good prime).** *Let $(x,y)$ be a rational point on $E_N$ with $y \ne 0$, and let $\ell$ be a prime with $\ell \nmid 6N$ and $\ell \nmid \mathrm{den}(x)$. Then*
+$$v_\ell\bigl(\mathrm{den}\,x(2P)\bigr) = 2\, v_\ell\bigl(\mathrm{num}\,y\bigr) .$$
+*In particular $\ell \mid \mathrm{den}(x(2P))$ if and only if $\ell \mid \mathrm{num}(y)$, and $\ell$ enters with the minimal multiplicity $2$ exactly when $\ell$ divides $\mathrm{num}(y)$ exactly once.*
 
-*Proof sketch.* Write $(a,b,e)$ for the coprime coordinates of $P$, so $\gcd(a,N) = \gcd(e^2,N) = 1$. By Lemma 6.1, $\gcd(b,N) = 1$; since $N$ is odd, $\gcd(4,N)=1$; hence $4b^2e^2$ is coprime to $N$. By Lemma 2.3, $\operatorname{den} x(2P)$ divides $4b^2e^2$, so it too is coprime to $N$. For the numerator, Lemma 2.3 gives $\operatorname{num} x(2P) \mid a(a^3 - 8Ne^6)$, and both factors are coprime to $N$ by hypothesis and Lemma 6.2. $\square$
+*Proof sketch.* Again use $(\ast)$: $x(2P) = (a^4 - 8Nae^6)/(4b^2e^2)$, where now $\ell \nmid e$. Since $\ell \nmid 6N$, one shows $\ell \nmid a^4 - 8Nae^6$: if $\ell \mid b$ then $\ell \mid b^2 = a^3 + Ne^6$, and $a^4 - 8Nae^6 = a(a^3 - 8Ne^6) = a(b^2 - 9Ne^6)$, so $\ell$ dividing it forces $\ell \mid a$ — impossible, since $\ell \mid a$ and $\ell \mid b^2 - a^3 = Ne^6$ would give $\ell \mid N$ — or $\ell \mid b^2 - 9Ne^6$, which with $\ell \mid b^2$ yields $\ell \mid 9Ne^6$, hence $\ell \mid 3$, $\ell \mid N$ or $\ell \mid e$, all excluded; if $\ell \nmid b$ the argument is similar and simpler. Therefore the valuation of the reduced denominator is $v_\ell(4b^2e^2) = 0 + 2v_\ell(b) + 0 = 2v_\ell(\mathrm{num}\,y)$, using $\ell \nmid 2$ (as $\ell \nmid 6$) and $\ell \nmid e$. $\square$
 
-**Theorem 6.4 (Singular-locus law).** *Let $p \neq 2$ be a prime dividing $N$, and let $P = (x,y) \in E_N(\mathbb{Q})$ with $y \neq 0$ and coprime coordinates $(a,b,e)$. If*
-$$p \mid \operatorname{den} x(2P),$$
-*then either $p \mid \operatorname{den} x(P)$ (equivalently $p \mid e$), or $p \mid a$ and $p \mid b$ — that is, $P$ reduces modulo $p$ to the singular point $(0,0)$ of the cuspidal curve $y^2 = x^3$ over $\mathbb{F}_p$.*
+Theorem 6.3 is the exact form of the counterexample mechanism: **the good primes that enter are dictated by the numerator of the $y$-coordinate of the point, not by $N$.** Theorem 4.2 is the integral special case $e = 1$.
 
-*Proof.* By Lemma 2.3, $p \mid \operatorname{den} x(2P)$ implies $p \mid 4 b^2 e^2$. Since $p$ is an odd prime, $p \nmid 4$, so $p \mid b$ or $p \mid e$. If $p \mid e$ we are in the first alternative. If $p \mid b$, reduce $b^2 = a^3 + Ne^6$ modulo $p$: as $p \mid N$ and $p \mid b$, we get $p \mid a^3$, hence $p \mid a$; so $p$ divides both $a$ and $b$, and $\bar P = (0,0)$. $\square$
+**Theorem 6.4 (Constancy along the orbit).** *Suppose $E_N$ has no rational point with $y = 0$ (equivalently $x^3 + N = 0$ has no integral solution), let $P$ be a rational point, let $\ell$ be an odd prime and suppose $\ell \mid \mathrm{den}\,x(2^nP)$. Then for all $m \ge 0$,*
+$$v_\ell\bigl(\mathrm{den}\,x(2^{n+m}P)\bigr) = v_\ell\bigl(\mathrm{den}\,x(2^{n}P)\bigr) .$$
 
-The hypothesis $p \neq 2$ cannot be removed: the factor $4$ in the duplication formula places $2$ in the denominator essentially for free, which is why all family statements are made for odd $N$.
+*Proof sketch.* Induct on $m$, applying persistence (Theorem 6.1) to know the prime is still present, and Theorem 6.2 (odd case) to see the valuation unchanged at each step. The no-$2$-torsion hypothesis guarantees each doubling stays in the affine part so that the formulas apply. $\square$
 
-**Interpretation.** Good primes enter the denominator through a codimension-one event — the reduction hitting the identity — which occurs periodically in $n$ with period the local order. Bad primes are barred from that route: their identity component is reachable only after the point has already fallen onto the cusp. The two behaviours are governed by different geometry, and Theorem 6.4 makes the asymmetry precise.
+**Corollary 6.5 (Sharpness).** *If $\ell$ is odd, $\ell \mid \mathrm{den}(x)$ and $v_\ell(\mathrm{den}\,x) = 2$ — the minimum allowed by Corollary 2.2 — then $\ell^2 \mid \mathrm{den}\,x(2P)$ and $\ell^3 \nmid \mathrm{den}\,x(2P)$. The bound $\ell^2 \mid \mathrm{den}(x)$ of Proposition 2.4 is attained and never exceeded along the orbit.*
 
----
+**Remark 6.6 (Formal group interpretation).** Theorems 6.2–6.3 are the elementary shadow of the theory of formal groups: the kernel of reduction at $\ell$ is filtered by subgroups $E_i(\mathbb{Q}_\ell)$ and multiplication by $2$ acts on the associated graded pieces by the multiplier $2$, which is a unit precisely when $\ell$ is odd. Hence duplication is an automorphism of the filtration for odd $\ell$ (valuation preserved) and strictly deepens it by $v_\ell(4) = 2$ when $\ell = 2$.
 
-## 7. The anti-factoring theorem
-
-The remaining ingredient is that on squarefree moduli the escape route of Theorem 6.4 is closed for integral points.
-
-**Lemma 7.0 (Integral points on squarefree moduli).** *Let $N$ be squarefree and let $(x,y) \in \mathbb{Z}^2$ satisfy $y^2 = x^3 + N$. Then $\gcd(x, N) = 1$.*
-
-*Proof.* Suppose a prime $p$ divides both $x$ and $N$. Then $p \mid y^2 = x^3 + N$, so $p \mid y$. Hence $p^2 \mid y^2$ and $p^2 \mid x^3$, so $p^2 \mid y^2 - x^3 = N$, contradicting squarefreeness. $\square$
-
-**Theorem 7.1 (No bad prime after one doubling, squarefree case).** *Let $N$ be squarefree, let $(x,y) \in \mathbb{Z}^2$ with $y^2 = x^3 + N$ and $y \neq 0$, and let $p \neq 2$ be a prime dividing $N$. Then $p \nmid \operatorname{den} x(2P)$.*
-
-*Proof.* By Lemma 7.0, $\gcd(x, N) = 1$. Since $P$ is integral, $\operatorname{den} x(P) = 1$, so $p \nmid \operatorname{den} x(P)$; and $p \nmid \operatorname{num} x(P) = x$ because $\gcd(x,N) = 1$ and $p \mid N$. Both alternatives of Theorem 6.4 are excluded, so $p \nmid \operatorname{den} x(2P)$. $\square$
-
-**Theorem 7.2 (Orbit stability).** *Let $N$ be odd and let $P \in E_N(\mathbb{Q})$ satisfy $\gcd(\operatorname{num} x(P), N) = \gcd(\operatorname{den} x(P), N) = 1$. Then for every $k \geq 0$, if $2^kP$ is affine, its $x$-coordinate again has numerator and denominator coprime to $N$.*
-
-*Proof sketch.* Induction on $k$. The base case is the hypothesis. For the step, write $2^{k+1}P = 2^kP + 2^kP$; if the sum is affine then so is the summand $2^kP$, whose $x$-coordinate is coprime to $N$ in numerator and denominator by the inductive hypothesis, and whose $y$-coordinate is nonzero (otherwise the sum would be $O$). Apply Theorem 6.3. $\square$
-
-**Theorem 7.3 (Anti-factoring theorem).** *Let $N$ be odd and let $P \in E_N(\mathbb{Q})$ have $\operatorname{num} x(P)$ and $\operatorname{den} x(P)$ coprime to $N$. Then for every prime $p \mid N$ and every $k \geq 0$,*
-$$p \nmid \operatorname{den} x(2^kP) .$$
-
-*Proof.* By Theorem 7.2 the denominator is coprime to $N$; a prime dividing both it and $N$ would be a unit. $\square$
-
-**Corollary 7.4 (Capstone: integral points on odd squarefree moduli).** *Let $N$ be odd and squarefree — in particular let $N = pq$ be an odd semiprime — and let $P$ be **any** point of $E_N$ with integer coordinates. Then no prime factor of $N$ divides $\operatorname{den} x(2^kP)$, for any $k \geq 0$.*
-
-*Proof.* Lemma 7.0 supplies $\gcd(x(P), N) = 1$; the denominator of $x(P)$ is $1$. Apply Theorem 7.3. $\square$
-
-Corollary 7.4 is the precise converse of the refuted conjecture. The conjecture asserted that the denominators contain *only* the primes $2,3,p,q$; the truth is that along a doubling orbit the denominators contain *never* the primes $p,q$, while containing, over time, a great many good primes.
-
-**Numerical illustration.** For $N = 1763 = 41\cdot 43$ and $P = (1,42)$, the denominators of $x(2^kP)$ for $k = 0,\dots,4$ are
-$$1,\quad 784,\quad 2652193144304704,\quad (66\ \text{digits}),\quad (266\ \text{digits}),$$
-each coprime to $1763$. For $N = 55$ and $P = (9,28)$ the corresponding denominators $1$, $3136$, $2^8\cdot7^2\cdot827^2\cdot1583^2$, and two further terms of $68$ and $274$ digits, are all coprime to $55$.
+**Example 6.7 (The dynamics in action).** For $N = 55$, $P = (9,28)$, the denominators of $x(2^nP)$ are perfect squares $e_n^2$ with
+$$e_1^2 = 2^6\cdot 7^2,\quad e_2^2 = 2^8\cdot 7^2\cdot 827^2 \cdot 1583^2, \quad e_3^2 = 2^{10}\cdot 7^2\cdot 827^2 \cdot 1583^2 \cdot 125017^2 \cdot (\cdots)^2 .$$
+Every prediction is visible: $v_2$ increases by exactly $2$ per step; the good prime $7$ is frozen at exponent $2$; new good primes enter with exponent $2$ and persist; and $5, 11 \nmid e_n$ for all computed $n$.
 
 ---
 
-## 8. Discussion
+## 7. Cryptographic consequences: a denominator barrier
 
-### 8.1 What a denominator oracle can and cannot see
+The motivation for the conjecture was the map
+$$P \longmapsto g_n(N,P) := \gcd\bigl(\mathrm{den}\,x(2^nP),\, N\bigr),$$
+hoped to be a factor-revealing oracle. The results above show it is not.
 
-Combining the results:
+**Proposition 7.1.** *If no prime factor of $N$ divides $d$, then $\gcd(d,N) = 1$. In particular, for $N = 55$, $P = (9,28)$ we have $g_1 = \gcd(3136,55) = 1$, and for the family $N = \ell^2-1$, $P = (1,\ell)$, every prime dividing $g_1$ equals $2$.*
 
-- **Good primes are abundant.** By Theorem 3.1 every good prime $\ell \geq 5$ contributes to $D_n(P)$ for all $n$ in an arithmetic progression determined by the local order of $\bar P$. The denominator sequence is essentially a record of local orders.
-- **Bad primes are structurally suppressed.** By Theorems 6.4 and 7.3, along a doubling orbit a bad prime cannot appear at all when $N$ is odd and the starting point is $N$-integral in the relevant sense.
-- **Therefore the sequence is a function of $N$ that does not reveal the factorization of $N$.** This is a genuine barrier statement: it says that no amount of computation of $D_{2^k}(P)$, however deep, produces a factor.
+Combining with Theorem 3.1 we obtain the conceptual statement:
 
-The empirical picture matches exactly. In a survey of eleven semiprime moduli with integral base points, the conjectural support condition ("every denominator prime lies in $\{2,3,p,q\}$") held in $0\%$ of cases; the smaller prime factor $p$ appeared in some denominator about half the time ($54.5\%$ in the survey sample), and the larger factor $q$ never appeared. In an independently generated sample of eleven odd semiprimes with different base points, the corresponding figures were $81.8\%$, $9.1\%$ and $0\%$: the details of which bad prime is visible depend on the point and on the index range, but the conjecture fails universally, and the visible bad primes always occur at indices $n$ divisible by that prime.
+**Theorem 7.2 (Denominator barrier).** *A prime $r \mid N$ divides $\mathrm{den}(x(2^nP))$ if and only if $2^nP$ lies in the kernel of reduction at $r$. Since the primes dividing $N$ are primes of bad reduction for $E_N$, this is a condition on the reduction of the point in the singular fibre at $r$, not a consequence of any property of $N$ as a product. In particular no amount of information about the denominator sequence is sufficient, by itself, to distinguish $N = pq$ from any other integer of the same size: the denominators are computed from $N$ as a single integer input.*
 
-### 8.2 Why bad primes surface at index $n = p$
+There is moreover a structural reason for the near-total absence of the primes of $N$. If $N$ is squarefree and $r \mid N$ is odd, then modulo $r$ the curve $y^2 = x^3 + N$ becomes $y^2 = x^3$, a **cuspidal cubic**, whose smooth locus is isomorphic to the additive group $\mathbb{G}_a(\mathbb{F}_r) \cong (\mathbb{F}_r, +)$. For $r$ odd this group is uniquely $2$-divisible and has no element of order $2$; a doubling orbit inside it therefore cannot reach the identity unless it starts there. The primes of $N$ are not merely hidden — they are protected by the geometry of the bad fibre.
 
-On $E_{55}$ with $P = (9,28)$ the bad prime $5$ appears in $D_5(P) = 5^2\cdot 1785401475301^2$. The mechanism is the structure of the reduced curve at a bad prime. For $p \mid N$ the reduction is the cuspidal cubic $y^2 = x^3$, whose non-singular locus $E_{\mathrm{ns}}(\mathbb{F}_p)$ is isomorphic to $(\mathbb{F}_p, +)$ under $(x,y) \mapsto t = x/y$. Multiplication by $n$ on $(\mathbb{F}_p,+)$ is multiplication by the scalar $n$, injective if and only if $p \nmid n$. So a point whose reduction lies in the smooth locus can only be killed at indices divisible by $p$. For $n = 2^k$ and odd $p$ this never happens, which is Corollary 7.4 seen from the local side. Conversely, at $n = p$ the bad prime is *forced* to appear whenever the reduction lies in the smooth locus and is nonzero — exactly the observation for $5 \mid D_5$.
+**Experimental corroboration.** For every semiprime $N = pq < 200$ carrying a small integral point, we computed the primes appearing in the denominators of $x(2^nP)$ for $n \le 3$. In a survey of $25$ such curves:
 
-As a factoring strategy this is worthless: to look at index $n = p$ one must already know $p$, and computing $D_p(P)$ costs $\Theta(p^2)$ digits of output by the canonical-height growth $\log D_n(P) \sim 2\hat h(P)\,n^2$.
+| Statistic | Result |
+|---|---|
+| "Only bad primes" holds | $0$ of $25$ ($0\%$) |
+| Larger prime $q$ appears in a denominator | $0$ of $25$ ($0\%$) |
+| Smaller prime $p$ appears in a denominator | $10$ of $25$ ($40\%$; almost always $p \in \{2,3\}$, already known) |
+| Every denominator is a perfect square | $25$ of $25$ ($100\%$, as Corollary 2.2 requires) |
 
-### 8.3 Comparison with Lenstra's elliptic curve method
-
-It is instructive to contrast the refuted approach with the elliptic curve method (ECM), which genuinely does factor integers using elliptic curves. ECM differs in three decisive ways.
-
-1. **It works modulo $N$, not over $\mathbb{Q}$.** ECM performs the group law in $\mathbb{Z}/N\mathbb{Z}$, treating it as if it were a field; a factor is discovered when a modular inverse fails, i.e. when a denominator shares a factor with $N$. There is no reduced rational fraction anywhere, so Lemma 2.3 does not apply.
-2. **It randomizes the curve.** ECM tries many curves $y^2 = x^3 + ax + b$ chosen so that the group order modulo $p$ varies and is occasionally smooth. Here the curve is rigidly tied to $N$; there is no smoothness lottery to win.
-3. **It exploits the good reduction group at $p$.** For ECM the target prime $p$ is a prime of *good* reduction of the random curve, so the group modulo $p$ has order about $p$ and can be reached by smooth multipliers. On $E_N$ with $p \mid N$, the prime $p$ is bad, its smooth locus is additive of order exactly $p$, and reaching the identity requires index divisible by $p$: the very structure that ECM exploits is destroyed.
-
-In short, the failure documented here is not a failure of elliptic curves as a factoring tool; it is a failure of the specific idea that arithmetic performed *honestly over $\mathbb{Q}$ on the canonical curve of $N$* can localize the factors.
-
-### 8.4 Positive content
-
-Beyond the barrier statement, the results have positive uses.
-
-- **Certified denominator-prime prediction.** Theorem 3.1 converts the question "does $\ell$ divide $D_n(P)$?" into a finite-field computation costing $O(\log \ell)$ group operations after a point count, instead of an exact rational computation with $\Theta(n^2)$-digit numbers. This is an exponential-to-polynomial speedup for the prediction problem.
-- **Counterexample generation on demand.** Theorem 5.4 yields, for any target good prime $\ell$ and any size, a semiprime-shaped modulus whose doubled denominator is divisible by $\ell$ and coprime to the modulus. This is a useful stress-test generator for conjectures about denominator support.
-- **A clean statement of the invariance.** Theorem 7.3 shows the doubling-orbit denominator sequence takes values in the $N$-units. Any invariant extracted from it is a function of $N$ and of the local orders at good primes, never of the splitting of $N$.
+The intruder good primes are typically large: for $N = 55$ they are $7, 827, 1583, 125017, \dots$; for $N = 15$ they are $263, 1499, 151681, 6351673, \dots$ These are exactly the primes dividing the successive numerators $\mathrm{num}\,y(2^nP)$, as Theorem 6.3 predicts.
 
 ---
 
-## 9. Algorithms
+## 8. Algorithms
 
-Three algorithms encapsulate the computational content.
+Three algorithms underlie the computations above; all are elementary and exact.
 
-### 9.1 Exact rational orbit computation
+**Algorithm A (Denominator orbit).** Input $N$, a rational point $P = (x_0,y_0)$, and $n$. Repeatedly apply $x \mapsto (x^4 - 8Nx)/(4(x^3+N))$ in exact rational arithmetic, recording $\mathrm{den}(x)$ at each step. Cost: the numerators and denominators roughly quadruple in bit-length each step (canonical heights multiply by $4$), so step $n$ costs $O(M(4^n H))$ bit operations, where $H$ is the initial bit-length and $M$ is the multiplication cost. Denominators are always perfect squares $e_n^2$, which halves the size of the integers one needs to factor.
 
-**Input:** $N$, an affine point $P = (x_0,y_0) \in E_N(\mathbb{Q})$, a bound $n_{\max}$.
-**Output:** the denominators $D_n(P)$ for $n \le n_{\max}$.
+**Algorithm B (Good-prime entry test).** Given an integral point $(x,y)$ on $E_N$, factor $y$ (or merely trial-divide it), and output any prime $\ell \mid y$ with $\ell \nmid 6N$. By Theorem 4.2 each such $\ell$ is a certified good prime dividing $\mathrm{den}(x(2P))$; no doubling and no large-integer factorisation is required. This turns counterexample search into a linear scan over small integral points.
 
-Perform chord-and-tangent arithmetic in exact rational arithmetic. The cost is dominated by the size of the numbers: $\log D_n \sim 2\hat h(P)n^2$, so computing $D_n$ takes $\tilde{O}(n^2)$ bit operations per step and $\tilde O(n^3)$ overall, with output of $\Theta(n^2)$ digits. This is the honest but expensive route.
-
-### 9.2 Local prediction of denominator primes
-
-**Input:** $N$, an integral point $P$, a prime $\ell \geq 5$ with $\ell \nmid N$.
-**Output:** the set $\{n : \ell \mid D_n(P)\}$, as an arithmetic progression.
-
-Reduce $P$ modulo $\ell$ and compute the order $m$ of $\bar P$ in $E_N(\mathbb{F}_\ell)$ — by baby-step/giant-step or by factoring the group order obtained from point counting. By Theorem 3.1 the answer is $m\mathbb{Z}_{>0}$. Cost: $\tilde O(\sqrt{\ell})$ elementary field operations, versus $\Theta(m^2)$ digits for the naive rational route.
-
-### 9.3 Counterexample family generator
-
-**Input:** a prime $\ell \geq 5$, a size bound $B$.
-**Output:** an odd modulus $N > B$ with a nontrivial two-factor factorization, an integral point $P$, and the exact value of $x(2P)$ witnessing $\ell \mid \operatorname{den} x(2P)$ and $\gcd(\operatorname{den} x(2P), N) = 1$.
-
-Choose $t$ with $4\ell^2t^2 - 1 > B$ (optionally search $t$ so that $2\ell t \pm 1$ are both prime, giving a genuine semiprime), set $N = 4\ell^2t^2-1$, $P = (1,2\ell t)$, and return $x(2P) = (1-8N)/(4(N+1))$. Cost: $O(\log B)$ arithmetic operations, plus primality tests if twin factors are required.
+**Algorithm C (Denominator $\gcd$ probe).** Given $N$ and $P$, compute $g_n = \gcd(\mathrm{den}\,x(2^nP), N)$ for $n = 1, \dots, n_{\max}$ and report any nontrivial value. The results of Sections 4–7 predict $g_n$ is $1$ or a power of a small bad prime in essentially all cases; the algorithm is included precisely because its systematic failure is the content of the barrier.
 
 ---
 
-## 10. Future work
+## 9. Discussion, and open problems
 
-The following conjectures are the natural continuations.
+### 9.1 What replaces the conjecture
 
-**C1 (the $n$-coprime anti-factoring law).** Let $N$ be odd and squarefree, $P$ an integral point of $E_N$, and $n \geq 1$ with $\gcd(n,N) = 1$. Then $\gcd(D_n(P), N) = 1$; conversely, for each prime $p \mid N$ there are points $P$ with $p \mid D_p(P)$. The mechanism is the additive structure of the smooth locus at a bad prime described in §8.2; the case $n = 2^k$ is Corollary 7.4, and the observed $5 \mid D_5$ on $E_{55}$ is the predicted converse. Proving C1 requires only the additivity of $t = x/y$ modulo $p$ on the cuspidal locus, which in coprime coordinates is a polynomial congruence identity.
+The correct statement is a *point-theoretic*, not curve-theoretic, one. Denominators of $x$-coordinates on $E_N$ are perfect squares $e^2$; a prime divides $e$ exactly when the point lies in the kernel of reduction there; along a doubling orbit each odd prime's multiplicity is frozen from the moment of entry, the prime $2$ gains exactly two per step, and the primes entering at step $n+1$ are exactly the good primes dividing $\mathrm{num}\,y(2^nP)$, with multiplicity twice their multiplicity in that numerator. This is a complete description of the denominator sequence in terms of the *numerator sequence* $\mathrm{num}\,y(2^nP)$, which satisfies an elliptic divisibility-type recursion.
 
-**C2 (the denominator filtration is a group filtration).** For a prime $\ell \geq 5$ with $\ell \nmid N$ and $m \geq 1$, the set $E_m(\ell) = \{O\} \cup \{P : \ell^{2m} \mid \operatorname{den} x(P)\}$ should be a subgroup of $E_N(\mathbb{Q})$, with $v(P+Q) \geq \min(v(P), v(Q))$ for $v(P) = \tfrac12 v_\ell(\operatorname{den} x(P))$. Then $d(P,Q) = \ell^{-v(P-Q)}$ is an ultrametric making $E_N(\mathbb{Q})$ a non-archimedean topological group. The chord identity $x_1x_2x_3 = \nu^2 - N$ for a line $y = \lambda x + \nu$ converts the subgroup property into a valuation computation on $\nu$, avoiding the full formal-group machinery.
+### 9.2 Open problems
 
-**C3 (a Zsygmondy law for Mordell denominators).** For every non-torsion integral point $P$ of $E_N$ with $N$ squarefree there should be $n_0$ such that for all $n \geq n_0$ the denominator $D_n(P)$ has a *primitive* prime divisor $\ell$, one dividing no earlier $D_m(P)$ with $1 \leq m < n$; and every such primitive prime is a prime of good reduction once $n$ is large. Primitivity plus the singular-locus law forces the new prime to be good, since bad primes are confined to the finitely many indices divisible by a factor of $N$.
+**Problem 1 (Squarefree entry).** Let $P$ be non-torsion and $y_n = y(2^nP)$. Is it true that for every good prime $\ell$ entering the orbit at step $n+1$ (i.e. $\ell \mid \mathrm{num}\,y_n$, $\ell \nmid e_n$) one has $\ell^2 \nmid \mathrm{num}\,y_n$ — equivalently, that every good prime enters with the minimal multiplicity $2$, for all but finitely many $\ell$ depending on $(N,P)$? By Theorem 6.3 the entry multiplicity is exactly $2v_\ell(\mathrm{num}\,y_n)$ and thereafter constant, so the whole question of denominator shape reduces to squarefreeness of an explicit integer recursion — a question accessible to sieve methods, and settled by $abc$-type input. **Falsification test:** for $N \le 200$, small integral points and $n \le 4$, factor $\mathrm{num}\,y_n$ and look for a repeated good prime.
 
-**C4 (quantitative support).** Estimate $\#\{\ell \leq X : \ell \mid D_n(P) \text{ for some } n \leq n_{\max}\}$. Theorem 3.1 reduces this to the distribution of local orders in $E_N(\mathbb{F}_\ell)$, an Artin-type problem for elliptic curves.
+**Problem 2 (Total invisibility of the factorisation).** Are there infinitely many semiprimes $N = pq$ carrying an integral point $P$ with $y \ne 0$ such that no prime factor of $N$ ever divides $\mathrm{den}\,x(2^nP)$ for any $n \ge 1$? The first step is already a theorem for the family $N = \ell^2 - 1$ (Theorem 5.1(5)); extending "step 1" to "all steps" requires only the additive-reduction analysis of the same explicit fraction $(a^4 - 8Nae^6)/(4b^2e^2)$, together with the cuspidal-fibre argument of Section 7.
 
----
+**Problem 3 (Density of intruder primes).** For fixed $(N,P)$, how many good primes $\ell \le X$ occur in some denominator $\mathrm{den}\,x(2^nP)$? Heuristically the count is governed by the order of the reduced point in $E_N(\mathbb{F}_\ell)$ being a power of $2$, suggesting a density-type asymptotic analogous to Lang–Trotter and Hasse-type statistics for primitive divisors of elliptic divisibility sequences.
 
-## 11. Conclusion
+**Problem 4 (Beyond doubling).** All statements above are proved along the doubling orbit. For a general multiple $mP$ with $m$ odd, the analogue of Theorem 6.2 should read: an odd prime $\ell \ne m$ already in the denominator keeps its multiplicity, while $\ell = m$ gains $2v_\ell(m)$. Proving this in the same elementary style requires an integral presentation of the general addition formula.
 
-The "only bad primes" conjecture is false in the strongest sense available: not only do good primes appear in the denominators of $x(nP)$ on $E_N : y^2 = x^3 + N$ — as the witness $N = 55$, $P = (9,28)$, $x(2P) = 2601/3136 = 2601/(2^6\cdot 7^2)$ shows — but there is an unbounded, semiprime-shaped family of moduli on which the doubled denominator is divisible by a prescribed good prime and by no prime factor of the modulus at all. The explanation is a local law: a good prime divides a denominator exactly when the point reduces to the identity in the corresponding finite group.
+### 9.3 Conclusion
 
-The converse question turns out to have a sharper answer. A bad prime can enter a doubled denominator only through the singular point of the reduced cuspidal curve, and on odd squarefree moduli no integral point ever reaches it. Consequently the denominators along a doubling orbit are coprime to $N$ forever. The denominator sequence of a Mordell curve is a rich record of the curve's local behaviour at good primes and a provably empty record of its factorization.
-
----
-
-## Appendix: reference data
-
-**$E_{55}$, $P = (9,28)$.** $\Delta = -1306800 = -2^4\cdot3^3\cdot5^2\cdot11^2$. Denominators:
-$$D_1 = 1,\quad D_2 = 2^6\cdot7^2, \quad D_3 = 3^6\cdot13^2\cdot73^2, \quad D_4 = 2^8\cdot7^2\cdot827^2\cdot1583^2, \quad D_5 = 5^2\cdot1785401475301^2 .$$
-Local orders of $\bar P$: $2$ at $\ell = 7$ (group order $4$), $3$ at $\ell = 13$ (group order $9$) and at $\ell = 73$ (group order $81$), $4$ at $\ell = 827$ and $\ell = 1583$ (group orders $828$, $1584$), $6$ at $\ell=17$, $9$ at $\ell=19$, $7$ at $\ell=43$.
-
-**Family instances.**
-
-| $\ell$ | $t$ | $N = 4\ell^2t^2-1$ | factorization | $x(2P)$ | $\operatorname{den} x(2P)$ |
-|---|---|---|---|---|---|
-| $5$ | $3$ | $899$ | $29\cdot31$ (twin primes) | $-799/400$ | $2^4\cdot5^2$ |
-| $7$ | $3$ | $1763$ | $41\cdot43$ (twin primes) | $-1567/784$ | $2^4\cdot7^2$ |
-| $5$ | $6$ | $3599$ | $59\cdot61$ (twin primes) | $-3199/1600$ | $2^6\cdot5^2$ |
-| $11$ | $9$ | $39203$ | $197\cdot199$ (twin primes) | $-34847/17424$ | $2^4\cdot3^2\cdot11^2$ |
-| $17$ | $30$ | $1040399$ | $1019\cdot1021$ (twin primes) | — | $2^6\cdot5^2\cdot17^2$ |
-
-In every row the denominator is coprime to $N$ and divisible by $\ell$.
+The "only bad primes" conjecture for Mordell curves is false, and it fails for the most basic possible reason: the primes appearing in denominators measure the degeneration of the *point*, whereas the discriminant measures the degeneration of the *curve*. The refutation is witnessed by the single fraction $x(2P) = 2601/3136$ on $E_{55}$ at $P = (9,28)$, whose denominator $2^6\cdot 7^2$ contains a prime of good reduction and is coprime to $N = 55$; it extends to an infinite explicit family $N = \ell^2 - 1$, $P = (1,\ell)$, where the denominator is exactly $4\ell^2$; and it is completed by an exact determination of the $\ell$-adic dynamics. What remains is not a factoring algorithm but a clean and predictive theory of Mordell denominators — and a precise reason why that theory carries no information about the factorisation of $N$.
