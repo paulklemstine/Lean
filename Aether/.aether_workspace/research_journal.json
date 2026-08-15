@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "e9c14674",
-      "domain": "Shared",
-      "key_insight": "# Future directions\n\nConjectures suggested by the formalisation in `Catalog/Shared/GilbertLattice*.lean`\nof the conditioned Gilbert model (one point per cell of `ℤ²`, two points joined when\ntheir Eucl",
-      "quality_score": 0.78349,
-      "sorry_count": 0,
-      "theorem_count": 71,
-      "timestamp": "2026-08-05T06:54:14",
-      "title": "ArXiv paper: Gilbert's disc model conditioned on the square lattice"
-    },
-    {
       "cycle_id": "5357ee14",
       "domain": "Shared",
       "key_insight": "# Future directions\n\nDerived from the results now proved in `Catalog/Shared/DreamRevisionNormalForm.lean`\n(last-occurrence normalization `mem_reviseSeq`, extensional rigidity `reviseSeq_ext_iff`,\nnorm",
@@ -2501,6 +2491,16 @@
       "theorem_count": 41,
       "timestamp": "2026-08-15T17:43:29",
       "title": "The 'Only Bad Primes' Conjecture is False (elliptic curve denominators)"
+    },
+    {
+      "cycle_id": "67cbe98c",
+      "domain": "Applications",
+      "key_insight": "# Future directions — Mordell denominators, cycle 6\n\nCycles 1–5 refuted the \"only bad primes\" conjecture for `E_N : y² = x³ + N` and identified the\nmechanism (a prime divides `den x(nP)` exactly when",
+      "quality_score": 0.55,
+      "sorry_count": 0,
+      "theorem_count": 31,
+      "timestamp": "2026-08-15T18:55:39",
+      "title": "The 'Only Bad Primes' Conjecture is False (elliptic curve denominators)"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.85
     }
   ],
-  "last_updated": "2026-08-15T17:43:29",
+  "last_updated": "2026-08-15T18:55:39",
   "open_questions": [
     {
       "context": "-    sorry+  -- On the certified range, extract the primitive divisor from the",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "362b8901",
-        "quality": 0.7657699999999998,
-        "theorems": 44,
-        "title": "EML Integration in Finite Terms: The Risch Algorithm"
-      },
-      {
         "cycle_id": "8d083ef6",
         "quality": 0.686,
         "theorems": 37,
@@ -3140,6 +3134,12 @@
         "cycle_id": "aeab7c87",
         "quality": 0.88,
         "theorems": 60,
+        "title": "The 'Only Bad Primes' Conjecture is False (elliptic curve denominators)"
+      },
+      {
+        "cycle_id": "67cbe98c",
+        "quality": 0.55,
+        "theorems": 31,
         "title": "The 'Only Bad Primes' Conjecture is False (elliptic curve denominators)"
       }
     ],
