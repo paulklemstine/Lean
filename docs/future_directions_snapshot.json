@@ -40,7 +40,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "1c55dd35",
+    "consumed_by_exp_id": "b918c0d4",
     "description": "**Summary.** The conjecture that for E_N: y² = x³ + N with N = pq, the\ndenominators of x(nP) are divisible only by {2, 3, p, q} (the primes dividing\nΔ = -432N²) is mathematically FALSE.\n\n**Counterexample.** N = 55 = 5·11, P = (9,28) ∈ E_55(Q):\n  x(2P) = (9^4 - 8·55·9) / (4(9^3 + 55)) = 2601/3136, and 3136 = 2^6 · 7^2.\nThe prime 7 divides the denominator but 7 ∤ Δ (7 is a prime of good reduction).\n\n**Mechanism.** ℓ | denom(x(nP)) iff nP ≡ O (mod ℓ); good-reduction primes divide\ndenominators whenever the point reduces to torsion — infinitely many such primes.\n\n**Survey (11 semiprimes):** p appears in some denominator 54.5%, q appears 0%,\nonly-{2,3,p,q} holds 0% of the time. The denominator structure is a function of\nN alone (barrier 5) and does not cleanly reveal p, q.\n\n---\n\n*Factoring Lab paper. Status: proven theorem / verified / framework. This is a research deliverable, not a factoring breakthrough claim.*",
     "domain_bridges": [],
     "domains": [
@@ -59,7 +59,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "84106e6d",
+    "consumed_by_exp_id": "62d77959",
     "description": "**Summary.** Let F(k) = sum_{a=1}^{N} a^k. Then gcd(F(k), N) reveals a factor\nat k = p-1: for N = pq, gcd(F(p-1), N) = q (provided (q-1) does not divide (p-1)).\n\n**Key results (proven):**\n- **Theorem 1 (power-sum factor reveal):** Mod p the residues cover each nonzero\n  residue q times, so F(k) ≡ q·(sum of k-th powers mod p); by FLT this is -q mod p\n  at k=p-1. Mod q it vanishes when (q-1) ∤ (p-1). Hence gcd = q.\n- **Theorem 2 (robustness):** The power sum aggregates ALL bases a=1..N\n  simultaneously, so it cannot suffer Pollard p-1's \"bad base\" failure.\n- **Theorem 3 (Carmichael periodicity):** g(k) = gcd(F(k), N) has period\n  λ(N) = lcm(p-1, q-1), so λ(N) is readable from the period and the factors\n  follow from p+q = N - λ(N) + 1.\n\n**Complexity.** First hit at k* = min(p-1,q-1) ≈ √N; cost per F(k) is O(N);\ntotal O(N^{3/2}) — worse than trial division. This is the SAME structure Shor's\nalgorithm exploits, made classically hard by the period-finding barrier.\nVerified on all 8 test semiprimes up to N ≈ 10^4.\n\n---\n\n*Factoring Lab paper. Status: proven theorem / verified / framework. This is a research deliverable, not a factoring breakthrough claim.*",
     "domain_bridges": [],
     "domains": [
@@ -363,25 +363,6 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "**GENERIC-RECOVERY (round-14 #11, experiment 390, assessment v166, paper 55).**\n\nHypothesis: recovery of p from a t-bit external hint is bounded by the hint's usable information. Verified on exact k-bit-prime sets (k=14-25) and random semiprimes (k=16-20):\n\n1. **Generic hints information-exact**: t-bit random GF(2) linear form of p's bits partitions P_k into classes |P_k|/2^t EXACTLY (k=16: 1515/759/190/48.6/12.8 vs 1515/757.5/189.4/47.3/11.8 at t=1..8); recovery cost = |P_k|/2^t (median steps = candidates). No anomalous class = no super-resolution.\n2. **Value-hints parity-constrained** (new mini-finding): mod-2^t multiplicative c·p and XOR-mask hashes output only 2^(t-1) values (p odd) — class 378.9 vs 189.4 at k=16,t=4. Bit-vector forms are the only full-2^t generic hints.\n3. **Trace hint sub-bit by recovery cost** (new positive): s mod 2^t pins p mod 2^t to C_t = O(1) roots (median saturating 4-8), but recovery tries all C_t: cost C_t·|P_k|/2^(t-1), measured 399 vs 47.3 (k=16,t=6), 354 vs 42.0 (k=18,t=8) — ~4.5-5x worse per bit; log2(C_t) ~ 3 bits lost to the root ambiguity.\n4. **Only amplification = position**: crossing with pi(sqrt N) at t ~ k/2-3 for every family; the unique amplification is Coppersmith's contiguous top-half >= k/2 LLL (a known method, barrier 8). The Coppersmith condition is about POSITION, not the dial (DIAL-THRESHOLD revisited).\n\n**Verdict**: CONFIRMED, sharpened. Hint taxonomy CLOSED: a t-bit external hint reduces the prime search by exactly 2^t, never more, never position-free; N-checkable hints are sealed at the trace-set floor (INTERVAL-HINT); hints must be genuinely external and worth their bits at face value. Barriers 4/8/2.\n\nScript: /tmp/exp_genericrecovery.py. Paper: ResearchOutput/NewMathematics/55_GenericRecovery_HintTaxonomy.md",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1157",
-    "lineage_refs": [],
-    "priority_score": 1000.0,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-12T13:54:18.959882+00:00",
-    "title": "Exp 390 GENERIC-RECOVERY: recovery-from-hint = 2^(k-1-t_eff) — hint taxonomy closed"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
     "consumed_by_exp_id": "fb90b21b",
     "description": "## MULT-TABLE-RANK (exp 394, round-15 #3): the mod-N multiplication table has rank ⌊(N+2τ(N)−3)/2⌋ — universal semiprime law rank(pq)=(N+5)/2, a divisor-count certificate only\n\n**Hypothesis tested.** The N×N table M[i][j] = (i·j mod N) has rank defect (N−5)/2 + \"type classifier\" (brainstorm). Does the rank/null structure leak any asymmetric factor content?\n\n**Result: CONFIRMED negative for factoring** (script: `/tmp/exp_multtablerank.py`; verified 79/79 modular rank over two large primes N=2..80 + spot to 495, 19/19 exact sympy rational elimination N=3..39, exact==modular on all overlap).\n\n**1. Exact closed form (machine-verified).** For all N:\n> rank = **⌊(N + 2τ(N) − 3)/2⌋**,  defect = **⌈(N − 2τ(N) + 3)/2⌉**,  τ(N) = divisor count.\n\nThe brainstorm's type classifier: c(N) = defect − (N−5)/2 = **4 − τ(N)** (primes c=2, prime squares c=1, prime cubes & products c≤0).\n\n**2. Universal semiprime law.** τ(pq) = 4 ⟹ **rank(pq) = (N+5)/2, defect = (N−5)/2 for every semiprime** (verified 15,21,35,55,77,91,221,341). The table cannot even distinguish two semiprimes except by size — blind to p vs q, the gap, smoothness, everything.\n\n**3. Barriers: 2/4/6/8.**\n- **Barrier 2 (symmetry):** rank/null space are functions of N alone ⟹ symmetric in (p,q); the information content is the divisor-count class τ(N) at most — a type/compositeness certificate, never p or q.\n- **Barrier 4 (free-witness aggregation):** rank = O(N³) exact/matrix elimination, super-polynomial in log N.\n- **Barrier 6 (circular):** closed form needs τ(N) = the divisor structure = the factorization.\n- **Barrier 8 (known method):** the table (ij mod n) is classical — M. Bueno (Involve) studies its kernel for prime n (prime rank (p+1)/2 known); the τ(N)-composite closed form is machine-verified here.\n\n**Recorded:** notebook Part 140, assessment v170 (394 experiments), paper 59 `59_MultTableRank_DivisorCountCertificate.md` (NewMathematics/).\n",
     "domain_bridges": [],
@@ -401,7 +382,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "37b40f0f",
     "description": "## UNIT-ENERGY (exp 393, round-15 #2): the additive energy of the units is the Ramanujan 4th moment — pointwise-flat on gcd-level sets, a trace-only witness\n\n**Hypothesis tested.** E(U) = #{u₁+u₂ ≡ u₃+u₄ : u_i ∈ (Z/NZ)^×}, the additive energy of the unit group, is the Ramanujan 4th moment with an FFT-verifiable closed form. Does it leak any asymmetric factor content?\n\n**Result: CONFIRMED negative for factoring** (script: `/tmp/exp_unitenergy.py`; verified 10/10 semiprimes three ways — direct count, Ramanujan moment, closed form — plus 14/14 generic N, and symbolic expansion).\n\n**1. Exact closed semiprime form.** With a = p−1, b = q−1:\n> E(U) = (1/N) Σ_{x=0}^{N−1} |c_N(x)|⁴ = **((p−1)(q−1)/N)·(1+(p−1)³)(1+(q−1)³)**\n\nVia σ₁ = a+b = s−2, σ₂ = ab = N−s+1 = φ(N): E·N = σ₂(1+σ₁³−3σ₁σ₂+σ₂³) = N⁴−4N³s+4N³+6N²s²−15N²s+12N²−3Ns³+12Ns²−18Ns+9N — a symmetric polynomial in (p,q), a function of **(N, s) alone**.\n\n**2. Pointwise flatness (the sharpest statement of the family).** The unit-pair-sum profile r_A(x) = #{(u,v)∈U² : u+v≡x} depends only on gcd(x,N) — flat on all 4 gcd-level sets (e.g. N=899: r = 783/812/810/840 on gcd-levels 1/29/31/899; E-from-levels = direct exactly). Since r̂_A = c_N² is gcd-invariant, **even the full additive distribution of the units is N-symmetric — zero asymmetric factor content, not even pointwise.**\n\n**3. Recovery: cleanest of the family.** E·N − P(s) = 0 is a **cubic** in s (the σ₂⁴ and σ₂σ₁³ quartic terms cancel), and s = p+q is its **unique real root** (15/15 samples — no spurious roots at all, unlike the gcd-moments' {N−1−s, N−1, N+1}).\n\n**4. Barriers: 2/4/6/8.**\n- **Barrier 2 (symmetry):** E(U) = F(N, s); the pointwise profile is flat on gcd-level sets. s alone never splits N.\n- **Barrier 4 (free-witness aggregation):** O(N) Ramanujan sweep / FFT.\n- **Barrier 6 (circular):** closed form needs s; gcd-level grouping needs the divisor set = the factorization.\n- **Barrier 8 (known method):** E(U) = (1/N)Σ|c_N|⁴ is the classical Fourier identity; the unit-pair-sum profile is the modular-hyperbola / Cilleruelo–Garaev–Shparlinski subject.\n\n**Reconfirms** TRACEPROFILE/QUERYWIT/GCD-MOMENT: the trace s = p+q is the ceiling of what a symmetric free witness — aggregate or pointwise — can carry, and s does not factor.\n\n**Recorded:** notebook Part 139, assessment v169 (393 experiments), paper 58 `58_UnitEnergy_Ramanujan4thMoment.md` (NewMathematics/).\n",
     "domain_bridges": [],
     "domains": [
@@ -413,7 +394,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-12T15:22:34.668452+00:00",
     "title": "Exp 393 UNIT-ENERGY: additive energy of the units = Ramanujan 4th moment, closed form ((p−1)(q−1)/N)(1+(p−1)³)(1+(q−1)³), pointwise-flat on gcd-level sets — trace-only, never a factor (barriers 2/4/6/8)"
   },
@@ -1271,6 +1252,25 @@
     "status": "available",
     "timestamp": "2026-08-15T13:07:10.902155+00:00",
     "title": "NET-37: The Attention-Cost Law's Knee Survives 8× Context — k*=d·ctx/32 Holds at ctx=1024 and the Margin-Erosion Caveat Is Resolved"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "**Program:** Network/LLM research lab — round-net-38 (speed-axis round 11). Paper 82.\n\n## Hypothesis\n\nThe attention-cost law **k\\* = d·ctx/32** (data-free top-k key/value pruning, per-query/per-head by trained weight at inference, renormalized; k\\* = smallest k with retained ≥ 0.98·full) holds at every measured grid cell (NET-15/16/17/20/33/34/35/36/37), but never at a cell where the three candidate rules ALL disagree. At **(d=8, ctx=512)** the depth leg (4d) predicts **32**, the context leg at d=4 (ctx/8) predicts **64**, and the unified product law predicts **128** — three values separated by 2× each. A single measurement discriminates the *multiplicative* form (depth and context act together) from a *single-lever dominant* rule.\n\n- **P1** k\\* = 128 (d·ctx/32) → product form holds at the discriminating corner.\n- **P2** k\\* = 32 (4d) or 64 (ctx/8) → single-lever rule dominates; multiplicative form breaks here.\n- **P3** k\\* = 128 but thin margin / shifted concentration → report both.\n\n## Setup (byte-identical harness)\n\nCausalTF d=8, seed=1, ctx=512 (dm=64, 4 heads, 5 Gutenberg novels, vocab 4097, contiguous 90/10 split, 2000 AdamW steps, 3889s train; 1171 windows, 10% held out). Eval via explicit causal-attention forward; top-k mask from each eval input's own trained attention; random-k control (rng seed 12345). Sweep {16,32,64,96,128,192,256,384} — the 96 point added inside the 2× grid to resolve the region between the ctx/8 and product knees. Script /tmp/exp_net_attncost_d8_ctx512.py, log /tmp/net38.log.\n\n## Result\n\n**k\\* = 96 — NONE of the three predictions.** Full acc 0.1568 (bar 0.1536), loss 5.1355.\n\n| k | retained | verdict |\n|---|---|---|\n| 16 | 0.915 | ✗ |\n| 32 (**4d**) | 0.952 | ✗ depth-only rule REFUTED (18 SE below bar) |\n| 64 (**ctx/8**) | **0.979** | ✗ context-only rule marginal (~1 SE below bar) |\n| **96** | **0.990** | ✓ **k\\* = 96** |\n| 128 (**d·ctx/32**) | 0.995 | ✓ passes but is NOT minimal |\n| 192/256/384 | 0.995/0.999/0.998 | ✓ (384: loss 5.1356 ≈ full) |\n\nRandom-k: k=64 0.915 (gap +6.4), k=128 0.958 (gap +3.7). Concentration: eff support 177.80 (d=8: 50.16→91.49→177.80, ×1.82/×1.94), top-64 0.634, top-128 0.806, per-position 23.09/156.01/332.15 — no bounded working set.\n\n## What this decides\n\n1. **Single-lever rules REFUTED** — k=32 fails by 18 SE, k=64 sits on the bar. Depth demonstrably raises the required k above the d=4 context-only value (64): the levers act **multiplicatively**.\n2. **But the exact product value 128 is not the minimum** — the knee lands at 96, 25% below d·ctx/32. The law is a **proven-safe upper bound** at high (depth × context): over-pruneable, never under (512/96 = **5.3×** actually available vs the guaranteed 4×).\n3. **Sub-linear depth leg at long context** — at ctx=512, doubling d (4→8) raises k\\* 64→96 = ×1.5, not the ×2.0 linear law (exact at ctx=128 across d=4/8/16). Cross-depth retained shift confirms the direction robustly: at k=64, retained drops 0.983/0.985 (d=4 ctx=512, two seeds) → 0.979 (d=8), ≈3 SE. Mechanism: retrieval load shared across the deeper stack at long context.\n\n## Barriers\n\n(a) clean — prediction stated before the run; the result DEVIATES, so it cannot be self-fulfilling; (b) clean — Catalog re-scan: no depth×context product-form/knee/top-k prior work (closest pkg 677, orthogonal); (c) confronted — high corner of the law's grid, real causal word LM, 4097 vocab, held-out loss+acc; (d) clean (held-out last-10%, data-free top-k); (e) **honest limit** — single-seed AND soft knee (k=64 ~1 SE below bar): the ROBUST claims are the single-lever refutation (−18 SE) and the depth right-shift of the retained curve (≈3 SE), NOT the exact coefficient 96; the sub-linear-depth claim needs a second seed at this corner; (f) clean — same metrics/protocol, k=384 converges to full loss, binom SE ≈0.15%; (g) fair — full-attention reference + random-k at same k, same bar; (h) strengthened — the deployable ≥4×-at-d=8 claim holds with margin (5.3× actually available).\n\n## Verdict\n\n**PRODUCT FORM CONFIRMED, EXACT KNEE REVISED** — the discriminating corner refutes both single-lever rules and confirms the levers multiply, but the exact knee (96) is 25% below d·ctx/32: the law is a safe upper bound at high (depth × context), and its depth leg is sub-linear at long context. Next (highest value): **d=8 ctx=512 second seed** — closes the sub-linear-depth claim's single-seed status.\n\nRound-net-38. Now 38 network experiments. Assessment v38. Paper 82.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_1309",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-15T14:47:59.904999+00:00",
+    "title": "NET-38: The attention-cost law at the discriminating corner — product form confirmed, depth leg sub-linear at long context (k*=96 vs predicted 128)"
   },
   {
     "ambition_level": "grand_challenge",
@@ -2576,6 +2576,25 @@
     "status": "available",
     "timestamp": "2026-08-13T13:55:47.738633+00:00",
     "title": "Deepening: INTERVAL-HINT: the trace-set filter is exact (2^-omega pruning) but does not amp"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 299127cc (Q=0.820), which proved 59 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **GENERIC-RECOVERY (round-14 #11, experiment 390, assessment v166, paper 55).**\n\nHypothesis: recovery of p from a t-bit external hint is bounded by the hint's usable information. Verified on exact k-bit-prime sets (k=14-25) and random semiprimes (k=16-20):\n\n1. **Generic hints information-exact**: t-",
+    "domain_bridges": [],
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "push_299127cc_8c2fb89c",
+    "lineage_refs": [],
+    "priority_score": 0.9199999999999999,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "299127cc",
+    "status": "available",
+    "timestamp": "2026-08-15T14:47:41.656616+00:00",
+    "title": "Deepening: Exp 390 GENERIC-RECOVERY: recovery-from-hint = 2^(k-1-t_eff) — hint taxonomy clo"
   },
   {
     "ambition_level": "extension",
@@ -26749,6 +26768,26 @@
     "status": "available",
     "timestamp": "2026-08-15T13:50:59.486295+00:00",
     "title": "Five bold, testable conjectures generated by this cycle's analysis of denominato"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# FUTURE DIRECTIONS — GENERIC-RECOVERY, next cycle\n\nThree cycles of the loop produced: (I) the master bound and the exact fibre\ncount of generic hints, (II) sharpness, an average-case strengthening and the\nexact `t−3` bit value of the trace hint, (III) the structural explanation —\nevery deficit observed is the order of an invariance group of candidate\nsymmetries.  The conjectures below are the open ends of that thread.  Each is\nfalsifiable by a finite computation and each has a formalisable statement.\n\n## C1. Deficit = order of the invariance group, exactly (not merely `≥`)\n\n**Conjecture.**  Let `S` be a finite candidate set and `h` a hint.  Define the\ninvariance group `Γ_h = { σ ∈ Sym(S) : h ∘ σ = h }`.  Then the number of\nreadings satisfies `#readings = |S| / |Γ_h|` **iff** `Γ_h` acts freely and\ntransitively on every class; and in general `#readings · min_orbit ≤ |S|`, with\nequality exactly when all orbits are of equal size.  Cycle III proves the\ninequality (`card_image_mul_le`); the conjecture is the equality case and its\ncharacterisation.\n\n*The key insight is* that a hint is not a function but a partition, and a\npartition with a group of symmetries can only be as fine as the coarsest orbit\ndecomposition — so the \"wasted bits\" of every hint family in the taxonomy are a\nsingle group-theoretic invariant, not four separate accidents.\n\n*Why now?*  Cycles I–III already give the two extreme cases in Lean (trivial\ngroup: exact `2^t`; Klein four-group: exact `2^{t-3}`), so the general statement\ncan be attacked with the existing `cost_ge_of_family` / `card_image_mul_le`\nmachinery plus Mathlib's `MulAction` orbit-counting API.\n\n## C2. The 2-adic root explosion is governed by `v₂(p − q)`\n\n**Conjecture.**  For odd `p ≠ q`, `N = pq`, `s = p + q`, the number of solutions\nof `x² − s x + N ≡ 0 (mod 2^t)` equals `2^{min(v₂(p−q)+1, ⌊t/2⌋)+1}` for\n`t` large, in particular it saturates at `2^{v₂(p−q)+2}` and never grows with\n`t` beyond that.  The computed table (`ComputationalEvidence.md` §6) shows\nsaturation at `8` for `v₂(p−q)=2` and `16` for `v₂(p−q)=3`.\n\n*The key insight is* that the trace hint's sub-bit behaviour is not a constant\n`3`-bit tax but a function of a single 2-adic invariant of the secret pair, so\nthe \"hint deficit\" of a family can depend on the secret and not only on the\nhint — a genuinely new axis in the taxonomy.\n\n*Why now?*  `sq_congr_iff` (cycle I) already reduces the whole question to a\n2-adic valuation bookkeeping over `ℤ`, which `omega` plus induction on `t` can\ncarry.\n\n## C3. No hint family is position-sensitive at the counting level\n\n**Conjecture.**  For every `k`, `t` and every pair of position sets\n`A, B ⊆ {0,…,k−1}` with `|A| = |B|`, and every candidate set `S` that is a\nunion of residue classes mod `2^k`, the two bit-leak hints have identical class\nsize *multisets*, not merely identical sizes on the full cube.  Consequently a\nCoppersmith-style advantage of contiguous top-half leakage is invisible to any\ncounting argument and must be charged entirely to lattice reduction.\n\n*The key insight is* that \"position\" is an algorithmic resource, not an\ninformational one; the Coppersmith condition `t ≥ k/2` cannot be recovered from\nany cardinality bound, which is why every attempt to beat it by re-arranging\nthe leaked bits has failed.\n\n*Why now?*  `card_fiber_coordRestrict_congr` proves the full-cube case in three\nlines; the general case is the statement that the two coordinate subgroups are\nconjugate under a permutation of the cube, which is within reach of Mathlib's\n`Equiv.Perm` API.\n\n## C4. Composite hints: is the bit budget exactly additive on symmetric sets?\n\n**Conjecture.**  If two hints `h₁, h₂` have invariance groups `Γ₁, Γ₂` then the\njoint hint `(h₁,h₂)` has invariance group `Γ₁ ∩ Γ₂` and usable bits\n`log₂(|S|/|Γ₁ ∩ Γ₂|)`; in particular two `t`-bit hints with the same invariance\ngroup are worth `t` bits together, not `2t`.  Cycle I proves only the upper\nbound `t₁ + t₂` (`worstCost_pair_ge`).\n\n*The key insight is* that hint composition is intersection of symmetry groups,\nso redundancy between hints is measurable *a priori* — a designer can tell\nwhether a second leak is free before measuring anything.\n\n*Why now?*  It is the direct group-theoretic dual of `worstCost_pair_ge` and\nneeds only the orbit machinery of C1.\n\n## C5. A trace-set floor for `N`-checkable hints\n\n**Conjecture.**  Let `h(p)` be any hint computable from `(N, p mod m)` alone.\nThen on the set `S_N` of candidates consistent with `N`, `h` cannot cut the\nsearch below the \"trace-set floor\" `|S_N| / m`; in particular no `N`-checkable\nhint of unbounded length beats a `log₂ m`-bit external hint.  Cycle I proves the\ndegenerate case (hint depending on `N` only: zero information,\n`worstCost_of_public`).\n\n*The key insight is* that checkability against public data is exactly\nfactorisation through a public quotient, and factorisation through a quotient is\nthe same phenomenon that makes public hints worthless — the floor is a fibre\ncount, not a cryptographic assumption.\n\n*Why now?*  `worstCost_of_public` gives the mechanism; the general version needs\nonly the product-of-quotients bound already used in `worstCost_pair_ge`.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_1308",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "299127cc",
+    "status": "available",
+    "timestamp": "2026-08-15T14:47:31.798314+00:00",
+    "title": "Three cycles of the loop produced: (I) the master bound and the exact fibre"
   },
   {
     "ambition_level": "extension",

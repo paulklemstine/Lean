@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "a46abb10",
-      "domain": "Computation",
-      "key_insight": "# Future directions — de-quantizing quantum mechanics via tensor networks\n\nDerived from the verified results in `Catalog/Computation/DeQuantization/`\n(`CombSchmidtRank.lean`, `CombRankGeneral.lean`, `",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 252,
-      "timestamp": "2026-08-13T02:55:04",
-      "title": "De-Quantizing Quantum Mechanics: Mathematical Frameworks for Classical Emulation of Quantum Algorith"
-    },
-    {
       "cycle_id": "579ae41a",
       "domain": "Computation",
       "key_insight": "# Future Directions — after the Order × Jacobi Joint Law\n\nThe verified results (all in `Catalog/Computation/OrderJacobiJointLaw.lean`,\n0 sorries) are:\n\n1. the QR–order coupling is an exact equivalence",
@@ -499,19 +489,19 @@
       "theorem_count": 77,
       "timestamp": "2026-08-15T13:51:06",
       "title": "The 'Only Bad Primes' Conjecture is False (elliptic curve denominators)"
+    },
+    {
+      "cycle_id": "299127cc",
+      "domain": "Combinatorics",
+      "key_insight": "# FUTURE DIRECTIONS — GENERIC-RECOVERY, next cycle\n\nThree cycles of the loop produced: (I) the master bound and the exact fibre\ncount of generic hints, (II) sharpness, an average-case strengthening an",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 59,
+      "timestamp": "2026-08-15T14:47:41",
+      "title": "Exp 390 GENERIC-RECOVERY: recovery-from-hint = 2^(k-1-t_eff) — hint taxonomy closed"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "caed44fe",
-      "domain": "Combinatorics",
-      "key_insight": "# Future directions\n\n## What is now proved in Lean (sorry-free)\n\nAll statements below are formalized and proved in this repository; every theorem checks with\nonly the standard axioms `propext`, `Class",
-      "quality_score": 0.686,
-      "sorry_count": 0,
-      "theorem_count": 121,
-      "timestamp": "2026-08-05T06:49:32",
-      "title": "`Catalog/Bridges/GraphTheory/K2UnionIndependentFree.lean` now gives a self-conta"
-    },
     {
       "cycle_id": "6077433a",
       "domain": "Geometry",
@@ -2501,27 +2491,19 @@
       "theorem_count": 77,
       "timestamp": "2026-08-15T13:51:06",
       "title": "The 'Only Bad Primes' Conjecture is False (elliptic curve denominators)"
+    },
+    {
+      "cycle_id": "299127cc",
+      "domain": "Combinatorics",
+      "key_insight": "# FUTURE DIRECTIONS — GENERIC-RECOVERY, next cycle\n\nThree cycles of the loop produced: (I) the master bound and the exact fibre\ncount of generic hints, (II) sharpness, an average-case strengthening an",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 59,
+      "timestamp": "2026-08-15T14:47:41",
+      "title": "Exp 390 GENERIC-RECOVERY: recovery-from-hint = 2^(k-1-t_eff) — hint taxonomy closed"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "83c80b79",
-      "domain": "Novelty",
-      "name": "card_matchSet_comb_le_order",
-      "quality": 0.86
-    },
-    {
-      "cycle_id": "83c80b79",
-      "domain": "Novelty",
-      "name": "schmidtRank_combCut_le",
-      "quality": 0.86
-    },
-    {
-      "cycle_id": "295ca744",
-      "domain": "Algebra",
-      "name": "isSquare_neg31_of_form",
-      "quality": 0.86
-    },
     {
       "cycle_id": "295ca744",
       "domain": "Algebra",
@@ -2803,9 +2785,27 @@
       "domain": "Combinatorics",
       "name": "stated",
       "quality": 0.84
+    },
+    {
+      "cycle_id": "299127cc",
+      "domain": "Combinatorics",
+      "name": "behind",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "299127cc",
+      "domain": "Combinatorics",
+      "name": "div_eq_iff_block",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "299127cc",
+      "domain": "Combinatorics",
+      "name": "filter_blockHint",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-15T13:51:06",
+  "last_updated": "2026-08-15T14:47:41",
   "open_questions": [
     {
       "context": "-    sorry+  -- On the certified range, extract the primitive divisor from the",
@@ -3207,12 +3207,6 @@
     ],
     "Combinatorics": [
       {
-        "cycle_id": "52a6f28b",
-        "quality": 0.627125,
-        "theorems": 193,
-        "title": "Tropical Curves and Chip-Firing Games"
-      },
-      {
         "cycle_id": "344e2e8a",
         "quality": 0.627125,
         "theorems": 585,
@@ -3265,6 +3259,12 @@
         "quality": 0.84,
         "theorems": 77,
         "title": "The 'Only Bad Primes' Conjecture is False (elliptic curve denominators)"
+      },
+      {
+        "cycle_id": "299127cc",
+        "quality": 0.82,
+        "theorems": 59,
+        "title": "Exp 390 GENERIC-RECOVERY: recovery-from-hint = 2^(k-1-t_eff) — hint taxonomy clo"
       }
     ],
     "Computation": [
