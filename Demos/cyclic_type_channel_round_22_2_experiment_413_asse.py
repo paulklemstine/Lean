@@ -1,53 +1,83 @@
 """
-demo.py -- The cyclic splitting-type channel: numerical demonstrations.
+The splitting-type channel of a cyclic field: numerical demonstration.
+======================================================================
 
-Self-contained (standard library only).  Run with:  python3 demo.py
+For a prime f, the Galois group of Q(zeta_f)/Q is cyclic of order n = f - 1.
+Writing the Frobenius of an unramified prime p as g^a for a fixed generator g,
+the splitting type (residue degree) of p is
 
-What this script demonstrates
------------------------------
-1.  The Euler-totient law of the splitting type T(x) = n / gcd(n, x) on a cyclic
-    Galois order n, and its entropy H_T(n).
-2.  The binary "root count" readout nr = 1[T = 1], its entropy h2(1/n), the
-    data-processing inequality H_nr <= H_T, and the lossiness dichotomy
-    (equality exactly at prime orders).
-3.  The semiprime type-pair channel
-        I_pair(n) = H(Pi) - (1/n) sum_c H(Pi_c),
-    the mutual information between the product class N = x + y and the unordered
-    type pair {T(x), T(y)}, by exhaustive enumeration over the group.
-4.  The exact closed form at prime cyclic order,
-        I_pair(p) = log2 p
-                    - ((p-1)(2p-1)/p^2) log2(p-1)
-                    + ((p-1)(p-2)/p^2) log2(p-2),
-    validated against enumeration, together with the sub-cap theorem
-    I_pair(p) < 1 for odd p (equality exactly at p = 2) and the quadratic
-    two-sided envelope 1/(p^2 ln 2) <= I_pair(p) <= (log2 p + 5)/p^2.
-5.  The breaking of the one-bit binary-fork cap at composite even orders.
-6.  Coprime additivity of H_T (a theorem) and of I_pair (observed exactly).
-7.  The 2-adic laws H_T(2^k) = 2 - 2^{1-k} (a theorem) and
-    I_pair(2^k) = (4/3)(1 - 4^{-k}) (observed).
-8.  The divisor-lattice sandwich H_nr <= H_T <= log2 d(n).
-9.  The arithmetic realisation: real primes in the cyclotomic field Q(zeta_f),
-    with T(p) = ord_f(p), reproducing the model densities and the pair channel.
-10. The incompatibility between coprime additivity of the pair channel and the
-    naive claim that every odd order stays below one bit.
+        T(a) = n / gcd(a, n),
+
+and p factors into n / T(a) primes of degree T(a).  For a semiprime N = p q the
+Frobenius exponents add, so the visible datum is c = (a + b) mod n while the
+hidden datum is the unordered type pair {T(a), T(b)}.  The type-pair channel is
+
+        I_pair(n) = H({T(a),T(b)}) - H({T(a),T(b)} | a + b).
+
+This script verifies, by exact enumeration in exact rational/float arithmetic:
+
+  1. the Euler-totient law for the type distribution, rate(d) = phi(d)/n;
+  2. losslessness of the residue -> type channel and "thickening zero";
+  3. the exact closed forms of I_pair for n = 2,3,4,5,6,8,9,10,12,15,16,27,32;
+  4. the failure of the one-bit binary-fork cap for every even order >= 4;
+  5. CRT additivity  I_pair(mn) = I_pair(m) + I_pair(n)  for coprime m, n;
+  6. the prime closed form and the fact that I_pair(p) = 1 exactly at p = 2;
+  7. the 2-adic ladder I_pair(2^k) = (4/3)(1 - 4^-k) and its 3-adic analogue;
+  8. an ODD cyclic order above the cap, M = 300840735195, via additivity;
+  9. lossiness of the binary root-count readout and of the split-count
+     projection, both of which stay below one bit where the type does not.
+
+Run with:  python3 demo.py
 """
 
 from __future__ import annotations
 
 from collections import Counter
-from itertools import product
-from math import gcd, log, log2
+from math import gcd, log2
 from typing import Dict, Iterable, List, Tuple
 
-Key = Tuple[int, int]
+Pair = Tuple[int, int]
+
+# ----------------------------------------------------------------------------
+# 1. Core arithmetic
+# ----------------------------------------------------------------------------
+
+
+def splitting_type(n: int, a: int) -> int:
+    """The residue degree T(a) = n / gcd(a, n) of the exponent a in C_n."""
+    return n // gcd(a, n)
+
+
+def euler_phi(m: int) -> int:
+    """Euler's totient function, by trial division."""
+    result: int = m
+    d: int = 2
+    k: int = m
+    while d * d <= k:
+        if k % d == 0:
+            while k % d == 0:
+                k //= d
+            result -= result // d
+        d += 1
+    if k > 1:
+        result -= result // k
+    return result
+
+
+def divisors(n: int) -> List[int]:
+    """All positive divisors of n, in increasing order."""
+    small: List[int] = [d for d in range(1, int(n**0.5) + 1) if n % d == 0]
+    large: List[int] = [n // d for d in reversed(small) if d * d != n]
+    return small + large
 
 
 # ----------------------------------------------------------------------------
-# Entropy helpers
+# 2. Counting entropy
 # ----------------------------------------------------------------------------
 
-def entropy_from_counts(counts: Iterable[int]) -> float:
-    """Shannon entropy (bits) of the empirical law given by occupation numbers."""
+
+def entropy_of_counts(counts: Iterable[int]) -> float:
+    """Shannon entropy in bits of the distribution proportional to `counts`."""
     cs: List[int] = [c for c in counts if c > 0]
     total: int = sum(cs)
     if total == 0:
@@ -55,364 +85,298 @@ def entropy_from_counts(counts: Iterable[int]) -> float:
     return -sum((c / total) * log2(c / total) for c in cs)
 
 
-def binary_entropy(q: float) -> float:
-    """Binary entropy h2(q) in bits."""
-    if q <= 0.0 or q >= 1.0:
-        return 0.0
-    return -q * log2(q) - (1.0 - q) * log2(1.0 - q)
+def type_entropy(n: int) -> float:
+    """H(T): entropy of the splitting type of a single prime."""
+    return entropy_of_counts(Counter(splitting_type(n, a) for a in range(n)).values())
+
+
+def type_entropy_totient_law(n: int) -> float:
+    """H(T) computed from the Euler-totient law sum_{d|n} (phi(d)/n) log2(n/phi(d))."""
+    return sum((euler_phi(d) / n) * log2(n / euler_phi(d)) for d in divisors(n))
 
 
 # ----------------------------------------------------------------------------
-# The splitting type and its single-prime channel
+# 3. The type-pair channel
 # ----------------------------------------------------------------------------
 
-def splitting_type(n: int, x: int) -> int:
-    """T_n(x) = n / gcd(n, x): the order of x in C_n, i.e. the residue degree."""
-    return n // gcd(n, x)
 
-
-def type_law(n: int) -> Dict[int, int]:
-    """Occupation numbers of T_n over the whole group (the Euler-totient law)."""
-    return Counter(splitting_type(n, x) for x in range(n))
-
-
-def H_type(n: int) -> float:
-    """H_T(n): entropy of the splitting type."""
-    return entropy_from_counts(type_law(n).values())
-
-
-def H_rootcount(n: int) -> float:
-    """H_nr(n): entropy of the binary 'splits completely or not' readout."""
-    return entropy_from_counts([1, n - 1])
-
-
-def divisor_count(n: int) -> int:
-    return sum(1 for d in range(1, n + 1) if n % d == 0)
-
-
-def totient(n: int) -> int:
-    return sum(1 for a in range(1, n + 1) if gcd(a, n) == 1)
-
-
-def H_type_totient_formula(n: int) -> float:
-    """H_T(n) = log2 n - (1/n) sum_{d | n} phi(d) log2 phi(d)."""
-    s = 0.0
-    for d in range(1, n + 1):
-        if n % d == 0:
-            t = totient(d)
-            s += t * log2(t) if t > 1 else 0.0
-    return log2(n) - s / n
-
-
-def H_type_sylow(n: int) -> float:
-    """H_T(n) via the Sylow decomposition H_T(n) = sum_p H_T(p^{v_p(n)})."""
-    total = 0.0
-    m = n
-    p = 2
-    while p * p <= m:
-        if m % p == 0:
-            q = 1
-            while m % p == 0:
-                m //= p
-                q *= p
-            total += H_type(q)
-        p += 1
-    if m > 1:
-        total += H_type(m)
-    return total
-
-
-# ----------------------------------------------------------------------------
-# The semiprime type-pair channel
-# ----------------------------------------------------------------------------
-
-def pair_tables(n: int) -> Tuple[Counter, List[Counter]]:
-    """Global table Pi and the n conditional tables Pi_c of the unordered type pair."""
-    global_table: Counter = Counter()
-    conditional: List[Counter] = [Counter() for _ in range(n)]
-    types: List[int] = [splitting_type(n, x) for x in range(n)]
-    for x, y in product(range(n), repeat=2):
-        a, b = types[x], types[y]
-        key: Key = (a, b) if a <= b else (b, a)
-        global_table[key] += 1
-        conditional[(x + y) % n][key] += 1
-    return global_table, conditional
+def pair_channel_parts(n: int) -> Tuple[float, float, float]:
+    """Return (H(pair), H(pair | N mod f), I_pair) by exact box enumeration."""
+    types: List[int] = [splitting_type(n, a) for a in range(n)]
+    joint: Counter = Counter()
+    slices: Dict[int, Counter] = {c: Counter() for c in range(n)}
+    for a in range(n):
+        ta: int = types[a]
+        for b in range(n):
+            tb: int = types[b]
+            tau: Pair = (min(ta, tb), max(ta, tb))
+            joint[tau] += 1
+            slices[(a + b) % n][tau] += 1
+    h_pair: float = entropy_of_counts(joint.values())
+    # every residue class has exactly n preimages, so the weights are uniform
+    h_cond: float = sum(entropy_of_counts(s.values()) for s in slices.values()) / n
+    return h_pair, h_cond, h_pair - h_cond
 
 
 def I_pair(n: int) -> float:
-    """I_pair(n) = H(Pi) - (1/n) sum_c H(Pi_c), by exhaustive enumeration."""
-    global_table, conditional = pair_tables(n)
-    h_global = entropy_from_counts(global_table.values())
-    h_cond = sum(entropy_from_counts(t.values()) for t in conditional) / n
-    return h_global - h_cond
+    """The type-pair channel I({T(p),T(q)} ; N mod f) in bits."""
+    return pair_channel_parts(n)[2]
 
 
-def I_pair_prime_closed_form(p: int) -> float:
-    """Exact closed form of the pair channel at prime cyclic order p."""
-    if p == 2:
-        return 1.0
-    a = (p - 1) * (2 * p - 1) / p ** 2
-    b = (p - 1) * (p - 2) / p ** 2
-    return log2(p) - a * log2(p - 1) + b * log2(p - 2)
+def I_pair_prime_formula(p: int) -> float:
+    """Closed form of I_pair at a prime cyclic order p (0 log 0 = 0 at p = 2)."""
+    term_1: float = (p - 1) * (2 * p - 1) * log2(p - 1) / p**2 if p > 2 else 0.0
+    term_2: float = (p - 1) * (p - 2) * log2(p - 2) / p**2 if p > 2 else 0.0
+    return log2(p) - term_1 + term_2
 
 
-def I_pair_bounds(p: int) -> Tuple[float, float]:
-    """Proved two-sided envelope for odd primes: (lower, upper)."""
-    return 1.0 / (p ** 2 * log(2.0)), (log2(p) + 5.0) / p ** 2
-
-
-def I_rootcount_pair(n: int) -> float:
-    """The split-count face: the same channel built from the binary readout."""
-    global_table: Counter = Counter()
-    conditional: List[Counter] = [Counter() for _ in range(n)]
-    nr: List[int] = [1 if splitting_type(n, x) == 1 else 0 for x in range(n)]
-    for x, y in product(range(n), repeat=2):
-        key = (min(nr[x], nr[y]), max(nr[x], nr[y]))
-        global_table[key] += 1
-        conditional[(x + y) % n][key] += 1
-    return entropy_from_counts(global_table.values()) - sum(
-        entropy_from_counts(t.values()) for t in conditional
-    ) / n
-
-
-# ----------------------------------------------------------------------------
-# Arithmetic realisation: real primes in Q(zeta_f)
-# ----------------------------------------------------------------------------
-
-def primes_up_to(limit: int) -> List[int]:
-    sieve = bytearray([1]) * (limit + 1)
-    sieve[0:2] = b"\x00\x00"
-    i = 2
-    while i * i <= limit:
-        if sieve[i]:
-            sieve[i * i:: i] = bytearray(len(sieve[i * i:: i]))
-        i += 1
-    return [i for i in range(2, limit + 1) if sieve[i]]
-
-
-def multiplicative_order(a: int, f: int) -> int:
-    """ord_f(a): the residue degree of a prime p == a (mod f) in Q(zeta_f)."""
-    a %= f
-    k, cur = 1, a
-    while cur != 1:
-        cur = (cur * a) % f
-        k += 1
-    return k
-
-
-def empirical_type_law(f: int, limit: int) -> Counter:
-    """Empirical frequencies of the splitting type over the primes p < limit."""
-    return Counter(
-        multiplicative_order(p, f) for p in primes_up_to(limit) if p % f != 0
+def root_count_entropy(n: int) -> float:
+    """H of the binary readout 'does the prime split completely?' (= H(1/n))."""
+    return entropy_of_counts(
+        Counter(1 if splitting_type(n, a) == 1 else 0 for a in range(n)).values()
     )
 
 
-def empirical_pair_channel(f: int, limit: int, sample: int) -> float:
-    """Plug-in estimate of I_pair from genuine semiprimes N = p*q."""
-    ps = [p for p in primes_up_to(limit) if p % f != 0]
-    types = {p: multiplicative_order(p, f) for p in ps}
-    global_table: Counter = Counter()
-    conditional: Dict[int, Counter] = {}
-    seed = 1234567891
-    for _ in range(sample):
-        seed = (1103515245 * seed + 12345) % (1 << 31)
-        p = ps[seed % len(ps)]
-        seed = (1103515245 * seed + 12345) % (1 << 31)
-        q = ps[seed % len(ps)]
-        a, b = types[p], types[q]
-        key: Key = (a, b) if a <= b else (b, a)
-        c = (p * q) % f
-        global_table[key] += 1
-        conditional.setdefault(c, Counter())[key] += 1
-    total = sum(global_table.values())
-    h_cond = sum(
-        (sum(t.values()) / total) * entropy_from_counts(t.values())
-        for t in conditional.values()
+def split_count_channel(n: int) -> float:
+    """I_s(n): the channel of the 3-state split-count projection s in {0,1,2}."""
+    types: List[int] = [splitting_type(n, a) for a in range(n)]
+    joint: Counter = Counter()
+    slices: Dict[int, Counter] = {c: Counter() for c in range(n)}
+    for a in range(n):
+        for b in range(n):
+            s: int = int(types[a] == 1) + int(types[b] == 1)
+            joint[s] += 1
+            slices[(a + b) % n][s] += 1
+    h: float = entropy_of_counts(joint.values())
+    h_cond: float = sum(entropy_of_counts(sl.values()) for sl in slices.values()) / n
+    return h - h_cond
+
+
+def residue_type_mutual_information(n: int, thickening: int = 1) -> float:
+    """I(residue ; T) where the residue is observed modulo n * thickening."""
+    joint: Counter = Counter()
+    for a in range(n * thickening):
+        joint[(a, splitting_type(n, a % n))] += 1
+    h_x: float = log2(n * thickening)
+    h_t: float = entropy_of_counts(
+        Counter(splitting_type(n, a % n) for a in range(n * thickening)).values()
     )
-    return entropy_from_counts(global_table.values()) - h_cond
+    h_xt: float = entropy_of_counts(joint.values())
+    return h_x + h_t - h_xt
 
 
 # ----------------------------------------------------------------------------
-# Demonstrations
+# 4. Reporting helpers
 # ----------------------------------------------------------------------------
 
-def demo_type_law() -> None:
+
+def rule(title: str) -> None:
+    print("\n" + "=" * 78)
+    print(title)
     print("=" * 78)
-    print("1. THE SPLITTING TYPE AND ITS ENTROPY  (Euler-totient law)")
-    print("=" * 78)
-    print(f"{'n':>4} {'type law (d: count)':<34} {'H_T':>8} {'H_nr':>8} "
-          f"{'log2 d(n)':>10}")
-    for n in [2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 16]:
-        law = dict(sorted(type_law(n).items()))
-        print(f"{n:>4} {str(law):<34} {H_type(n):>8.4f} {H_rootcount(n):>8.4f} "
-              f"{log2(divisor_count(n)):>10.4f}")
-    print("\nThe divisor-lattice sandwich  H_nr <= H_T <= log2 d(n) holds above,")
-    print("strictly whenever n >= 3 is composite.  Cross-check of the closed")
-    print("formula H_T(n) = log2 n - (1/n) sum_{d|n} phi(d) log2 phi(d):")
-    worst = max(abs(H_type(n) - H_type_totient_formula(n)) for n in range(1, 40))
-    print(f"  max |enumeration - formula| over n <= 40 : {worst:.2e}")
 
 
-def demo_lossiness() -> None:
-    print()
-    print("=" * 78)
-    print("2. ROOT-COUNT LOSSINESS:  H_nr < H_T  EXACTLY AT COMPOSITE ORDERS")
-    print("=" * 78)
-    print(f"{'n':>4} {'prime?':>7} {'H_T':>9} {'H_nr':>9} {'loss':>9}")
-    for n in range(2, 19):
-        is_prime = all(n % d for d in range(2, int(n ** 0.5) + 1))
-        loss = H_type(n) - H_rootcount(n)
-        print(f"{n:>4} {str(is_prime):>7} {H_type(n):>9.4f} "
-              f"{H_rootcount(n):>9.4f} {loss:>9.4f}")
-    print("\n2-adic tower: H_T(2^k) = 2 - 2^(1-k) (theorem), while H_nr -> 0,")
-    print("so the loss converges to the full two bits.")
-    print(f"{'k':>3} {'H_T(2^k)':>10} {'2-2^(1-k)':>11} {'H_nr':>9} {'loss':>9}")
-    for k in range(1, 8):
-        n = 2 ** k
-        print(f"{k:>3} {H_type(n):>10.6f} {2 - 2.0 ** (1 - k):>11.6f} "
-              f"{H_rootcount(n):>9.6f} {H_type(n) - H_rootcount(n):>9.6f}")
+def close(x: float, y: float, tol: float = 1e-9) -> str:
+    return "OK " if abs(x - y) < tol else "!! "
 
 
-def demo_pair_channel() -> None:
-    print()
-    print("=" * 78)
-    print("3. THE SEMIPRIME TYPE-PAIR CHANNEL AND THE ONE-BIT CAP")
-    print("=" * 78)
-    print(f"{'n':>4} {'#types':>7} {'H(Pi)':>9} {'H(Pi|N)':>9} {'I_pair':>9} "
-          f"{'split-count face':>17} {'above 1 bit?':>13}")
-    for n in [2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 14, 16]:
-        table, cond = pair_tables(n)
-        h_global = entropy_from_counts(table.values())
-        h_cond = sum(entropy_from_counts(t.values()) for t in cond) / n
-        ip = h_global - h_cond
-        flag = "YES" if ip > 1.0 + 1e-12 else ("at cap" if abs(ip - 1) < 1e-12
-                                               else "no")
-        print(f"{n:>4} {len(type_law(n)):>7} {h_global:>9.4f} {h_cond:>9.4f} "
-              f"{ip:>9.4f} {I_rootcount_pair(n):>17.4f} {flag:>13}")
-    print("\nThe quadratic order n = 2 reproduces the binary-fork cap exactly.")
-    print("Every even composite order tested strictly exceeds one bit, while the")
-    print("split-count face of the same channel stays far below it.")
+# ----------------------------------------------------------------------------
+# 5. The demonstrations
+# ----------------------------------------------------------------------------
 
 
-def demo_closed_form() -> None:
-    print()
-    print("=" * 78)
-    print("4. THE EXACT PRIME-ORDER CLOSED FORM AND THE SUB-CAP THEOREM")
-    print("=" * 78)
-    print("   I_pair(p) = log2 p - ((p-1)(2p-1)/p^2) log2(p-1)")
-    print("                       + ((p-1)(p-2)/p^2) log2(p-2)")
-    print()
-    print(f"{'p':>4} {'enumerated':>13} {'closed form':>13} {'|diff|':>10} "
-          f"{'lower bd':>10} {'upper bd':>10}")
-    for p in [2, 3, 5, 7, 11, 13, 17, 19, 23]:
-        enum = I_pair(p)
-        cf = I_pair_prime_closed_form(p)
-        lo, hi = I_pair_bounds(p)
-        print(f"{p:>4} {enum:>13.9f} {cf:>13.9f} {abs(enum - cf):>10.2e} "
-              f"{lo:>10.6f} {hi:>10.6f}")
-    print("\nEvery odd prime satisfies 0 < I_pair(p) < 1 (indeed I_pair(p) < 3/(p-1)),")
-    print("and p = 2 is the unique prime attaining the cap exactly.")
+def demo_totient_law() -> None:
+    rule("1. The splitting type is totient-distributed:  rate(d) = phi(d)/n")
+    for n in (2, 4, 6, 10, 12, 16):
+        counts: Counter = Counter(splitting_type(n, a) for a in range(n))
+        states: str = ", ".join(f"T={d}: {counts[d]}/{n}" for d in sorted(counts))
+        direct: float = type_entropy(n)
+        law: float = type_entropy_totient_law(n)
+        print(f"  n = {n:2d} | {states}")
+        print(
+            f"         | H(T) = {direct:.6f}   totient law = {law:.6f}  "
+            f"{close(direct, law)}"
+        )
 
 
-def demo_multiplicativity() -> None:
-    print()
-    print("=" * 78)
-    print("5. MULTIPLICATIVE STRUCTURE:  CRT, ADDITIVITY, SYLOW DECOMPOSITION")
-    print("=" * 78)
-    print("Type map:  T_{mn}(a) = T_m(a) * T_n(a) = lcm(T_m(a), T_n(a))  (coprime m,n)")
-    ok = all(
-        splitting_type(m * n, a) == splitting_type(m, a) * splitting_type(n, a)
-        for m in range(1, 13) for n in range(1, 13) if gcd(m, n) == 1
-        for a in range(m * n)
-    )
-    print(f"  verified for all coprime m,n <= 12 and all a : {ok}")
-    print("\nEntropy additivity H_T(mn) = H_T(m) + H_T(n) (theorem), and the")
-    print("observed additivity of the pair channel I_pair(mn) = I_pair(m)+I_pair(n):")
-    print(f"{'m':>4} {'n':>4} {'H_T(mn)':>10} {'sum':>10} "
-          f"{'I_pair(mn)':>12} {'sum':>12} {'|diff|':>10}")
-    for m, n in [(3, 4), (2, 5), (3, 5), (4, 5), (3, 8), (5, 7), (9, 5), (3, 7),
-                 (2, 9), (4, 7)]:
-        a, b = I_pair(m * n), I_pair(m) + I_pair(n)
-        print(f"{m:>4} {n:>4} {H_type(m * n):>10.6f} "
-              f"{H_type(m) + H_type(n):>10.6f} {a:>12.6f} {b:>12.6f} "
-              f"{abs(a - b):>10.2e}")
-    print("\nSylow evaluation of H_T (factor first, never enumerate the group):")
-    print(f"{'n':>5} {'enumerated':>12} {'Sylow sum':>12}")
-    for n in [12, 24, 36, 60, 105, 210]:
-        print(f"{n:>5} {H_type(n):>12.6f} {H_type_sylow(n):>12.6f}")
-    print("\n2-adic pair law, observed:  I_pair(2^k) = (4/3)(1 - 4^(-k))")
-    print(f"{'k':>3} {'I_pair(2^k)':>13} {'(4/3)(1-4^-k)':>15}")
+def demo_losslessness() -> None:
+    rule("2. Residue -> type is lossless, and thickening the modulus adds nothing")
+    for n in (4, 6, 12):
+        h_t: float = type_entropy(n)
+        for thick in (1, 2, 5):
+            info: float = residue_type_mutual_information(n, thick)
+            print(
+                f"  n = {n:2d}, residue mod {n*thick:3d} : I(residue;T) = {info:.6f}"
+                f"   H(T) = {h_t:.6f}  {close(info, h_t)}"
+            )
+
+
+def demo_exact_values() -> None:
+    rule("3. Exact closed forms of the type-pair channel")
+    L3, L5 = log2(3), log2(5)
+    closed: Dict[int, Tuple[str, float]] = {
+        2: ("1", 1.0),
+        3: ("log2(3) - 10/9", L3 - 10 / 9),
+        4: ("5/4", 5 / 4),
+        5: ("log2(5) + (12/25) log2(3) - 72/25", L5 + 12 / 25 * L3 - 72 / 25),
+        6: ("log2(3) - 1/9", L3 - 1 / 9),
+        8: ("21/16", 21 / 16),
+        9: ("(10/9) log2(3) - 100/81", 10 / 9 * L3 - 100 / 81),
+        10: ("log2(5) + (12/25) log2(3) - 47/25", L5 + 12 / 25 * L3 - 47 / 25),
+        12: ("log2(3) + 5/36", L3 + 5 / 36),
+        15: ("(37/25) log2(3) + log2(5) - 898/225", 37 / 25 * L3 + L5 - 898 / 225),
+        16: ("85/64", 85 / 64),
+        27: ("(91/81) log2(3) - 910/729", 91 / 81 * L3 - 910 / 729),
+        32: ("341/256", 341 / 256),
+    }
+    print(f"  {'n':>3} {'H(T)':>9} {'H(pair)':>9} {'H(pair|N)':>10} "
+          f"{'I_pair':>9} {'closed form':>36} {'cap?':>6}")
+    for n in sorted(closed):
+        h_pair, h_cond, info = pair_channel_parts(n)
+        name, value = closed[n]
+        verdict: str = "ABOVE" if info > 1 + 1e-12 else ("AT" if abs(info - 1) < 1e-12 else "below")
+        print(
+            f"  {n:>3} {type_entropy(n):9.4f} {h_pair:9.4f} {h_cond:10.4f} "
+            f"{info:9.6f} {name:>36} {verdict:>6}  {close(info, value)}"
+        )
+
+
+def demo_cap_failure() -> None:
+    rule("4. The one-bit binary-fork cap fails for every even order >= 4")
+    for n in (2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 32):
+        info: float = I_pair(n)
+        print(f"  I_pair({n:2d}) = {info:.6f}   {'>' if info > 1 else '='} 1 bit")
+    print("\n  Richness of the divisor lattice, not size, governs the channel:")
+    print(f"    n = 12 has {len(divisors(12))} divisors, I_pair = {I_pair(12):.6f}")
+    print(f"    n = 16 has {len(divisors(16))} divisors, I_pair = {I_pair(16):.6f}")
+
+
+def demo_crt_additivity() -> None:
+    rule("5. CRT additivity:  I_pair(m n) = I_pair(m) + I_pair(n)  for coprime m, n")
+    factorisations: List[Tuple[int, int]] = [
+        (4, 3), (2, 5), (3, 5), (2, 7), (2, 9), (4, 5), (8, 3), (3, 7)
+    ]
+    for m, n in factorisations:
+        lhs: float = I_pair(m * n)
+        rhs: float = I_pair(m) + I_pair(n)
+        print(
+            f"  I_pair({m*n:3d}) = {lhs:.9f}   I_pair({m}) + I_pair({n}) = {rhs:.9f}"
+            f"   {close(lhs, rhs)}"
+        )
+    print("\n  Doubling law  I_pair(2m) = I_pair(m) + 1  for odd m:")
+    for m in (3, 5, 7, 9, 15):
+        print(
+            f"    I_pair({2*m:2d}) - I_pair({m:2d}) = {I_pair(2*m) - I_pair(m):.9f}"
+            f"   {close(I_pair(2*m) - I_pair(m), 1.0)}"
+        )
+
+
+def demo_prime_formula() -> None:
+    rule("6. The prime closed form, and the cap attained only at p = 2")
+    print("     I_pair(p) = log2 p - (p-1)(2p-1) log2(p-1) / p^2"
+          " + (p-1)(p-2) log2(p-2) / p^2")
+    for p in (2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31):
+        enumerated: float = I_pair(p)
+        formula: float = I_pair_prime_formula(p)
+        envelope: float = (log2(p) + 3 * p) / p**2
+        print(
+            f"  p = {p:2d} : enumerated {enumerated:.9f}   formula {formula:.9f}"
+            f"   envelope {envelope:.6f}  {close(enumerated, formula)}"
+        )
+    print("\n  Only p = 2 reaches the cap; every odd prime order is strictly below,")
+    print("  hence any order above one bit must be composite.")
+
+
+def demo_ladders() -> None:
+    rule("7. Geometric prime-power ladders")
+    print("  2-adic:  I_pair(2^k) = (4/3)(1 - 4^-k),  increments 4^-k,  sup = 4/3")
+    previous: float = 0.0
     for k in range(1, 6):
-        print(f"{k:>3} {I_pair(2 ** k):>13.9f} "
-              f"{(4.0 / 3.0) * (1 - 4.0 ** (-k)):>15.9f}")
+        value: float = I_pair(2**k)
+        predicted: float = (4 / 3) * (1 - 4.0 ** (-k))
+        print(
+            f"    k = {k} : I_pair({2**k:2d}) = {value:.9f}  predicted {predicted:.9f}"
+            f"  increment {value - previous:.9f}  {close(value, predicted)}"
+        )
+        previous = value
+    print("\n  3-adic:  I_pair(3^k) = (1 - 9^-k) (9/8) I_pair(3)")
+    base: float = I_pair(3)
+    for k in range(1, 4):
+        value = I_pair(3**k)
+        predicted = (1 - 9.0 ** (-k)) * (9 / 8) * base
+        print(
+            f"    k = {k} : I_pair({3**k:2d}) = {value:.9f}  predicted {predicted:.9f}"
+            f"  {close(value, predicted)}"
+        )
 
 
-def demo_arithmetic() -> None:
-    print()
-    print("=" * 78)
-    print("6. THE ARITHMETIC REALISATION:  REAL PRIMES IN Q(zeta_f)")
-    print("=" * 78)
-    limit = 200000
-    for f in [5, 7, 11, 13]:
-        n = f - 1
-        law = empirical_type_law(f, limit)
-        total = sum(law.values())
-        emp = {d: round(law[d] / total, 4) for d in sorted(law)}
-        model = {d: round(c / n, 4) for d, c in sorted(type_law(n).items())}
-        print(f"\nQ(zeta_{f}):  Galois order n = {n}")
-        print(f"  model type densities      : {model}")
-        print(f"  empirical over primes<{limit} : {emp}")
-        print(f"  H_T model = {H_type(n):.4f}   "
-              f"H_T empirical = {entropy_from_counts(law.values()):.4f}")
-    print("\nPair channel from genuine semiprimes N = p*q (plug-in estimate):")
-    print(f"{'f':>4} {'n':>4} {'I_pair model':>14} {'I_pair sampled':>16}")
-    for f in [3, 5, 7, 11, 13]:
-        est = empirical_pair_channel(f, 20000, 60000)
-        print(f"{f:>4} {f - 1:>4} {I_pair(f - 1):>14.4f} {est:>16.4f}")
+def demo_odd_above_cap() -> None:
+    rule("8. An ODD cyclic order above the cap (evenness is NOT the cause)")
+    atoms: List[int] = [9, 5, 7, 11, 13, 17, 19, 23, 29, 31]
+    total: float = 0.0
+    modulus: int = 1
+    for atom in atoms:
+        contribution: float = I_pair(atom)
+        total += contribution
+        modulus *= atom
+        print(f"    + I_pair({atom:2d}) = {contribution:.9f}   running total {total:.9f}")
+    print(f"\n  M = {modulus} (odd), I_pair(M) = {total:.9f} > 1 by CRT additivity.")
+    print("  Direct enumeration would need about "
+          f"{modulus**2:.3e} box entries; additivity needs ten small boxes.")
 
 
-def demo_incompatibility() -> None:
-    print()
-    print("=" * 78)
-    print("7. ADDITIVITY vs. THE NAIVE 'ODD ORDERS STAY BELOW THE CAP' CLAIM")
-    print("=" * 78)
-    print("Under coprime additivity, a squarefree odd order n = p1...pk carries")
-    print("I_pair(n) = sum_i I_pair(p_i), each term given by the exact closed form.")
-    running = 0.0
-    crossing = None
-    odd_primes = [p for p in primes_up_to(20000) if p > 2]
-    for p in odd_primes:
-        running += I_pair_prime_closed_form(p)
-        if crossing is None and running > 1.0:
-            crossing = p
-    partial = 0.0
-    print(f"\n{'p':>6} {'I_pair(p)':>13} {'running sum':>14}")
-    for p in odd_primes:
-        partial += I_pair_prime_closed_form(p)
-        if p <= 19 or p in (139, 149, 1000, 9973):
-            print(f"{p:>6} {I_pair_prime_closed_form(p):>13.9f} {partial:>14.9f}")
-        if p > 9973:
-            break
-    print(f"\nThe running sum first exceeds one bit at p = {crossing}.")
-    print(f"Total over all odd primes below 20000 : {running:.6f} > 1.")
-    print("Hence additivity forces the ODD squarefree order")
-    print("  n = 3 * 5 * 7 * ... * 139")
-    print("to break the one-bit cap: the naive parity dichotomy and coprime")
-    print("additivity cannot both hold.")
+def demo_lossy_readouts() -> None:
+    rule("9. Binary readouts are lossy: the type, not the root count, is complete")
+    for n in (4, 6):
+        h_nr: float = root_count_entropy(n)
+        h_t: float = type_entropy(n)
+        binary: float = -(1 / n) * log2(1 / n) - (1 - 1 / n) * log2(1 - 1 / n)
+        print(
+            f"  n = {n}: H(root count) = {h_nr:.6f} = H(1/{n}) = {binary:.6f}"
+            f"  {close(h_nr, binary)}   vs H(T) = {h_t:.6f}"
+        )
+    print("\n  The split-count projection recovers only a small face of the channel:")
+    for n in (4, 6):
+        print(
+            f"    n = {n}: I_s = {split_count_channel(n):.6f}  <  "
+            f"I_pair = {I_pair(n):.6f}   (and I_s < 1 while I_pair > 1)"
+        )
+    print("\n  Which-factor wall: the unordered channel equals the ordered channel.")
+    for n in (4, 6, 12):
+        ordered_joint: Counter = Counter()
+        ordered_slices: Dict[int, Counter] = {c: Counter() for c in range(n)}
+        for a in range(n):
+            for b in range(n):
+                key: Pair = (splitting_type(n, a), splitting_type(n, b))
+                ordered_joint[key] += 1
+                ordered_slices[(a + b) % n][key] += 1
+        ordered: float = entropy_of_counts(ordered_joint.values()) - sum(
+            entropy_of_counts(s.values()) for s in ordered_slices.values()
+        ) / n
+        print(
+            f"    n = {n:2d}: ordered {ordered:.9f}   unordered {I_pair(n):.9f}"
+            f"   wall = {abs(ordered - I_pair(n)):.2e}"
+        )
 
 
 def main() -> None:
-    demo_type_law()
-    demo_lossiness()
-    demo_pair_channel()
-    demo_closed_form()
-    demo_multiplicativity()
-    demo_arithmetic()
-    demo_incompatibility()
-    print()
-    print("=" * 78)
-    print("Done.  The type, not the root count, is the complete object.")
-    print("=" * 78)
+    print(__doc__)
+    demo_totient_law()
+    demo_losslessness()
+    demo_exact_values()
+    demo_cap_failure()
+    demo_crt_additivity()
+    demo_prime_formula()
+    demo_ladders()
+    demo_odd_above_cap()
+    demo_lossy_readouts()
+    rule("Summary")
+    print("  The splitting type is a complete multi-state invariant with")
+    print("  totient rates; its semiprime pair channel is additive over coprime")
+    print("  factorisations, closed-form at prime atoms, geometric along")
+    print("  prime-power ladders, and strictly above one bit on infinitely many")
+    print("  cyclic orders -- including odd ones.  The one-bit cap was a law")
+    print("  about two-state readouts, not about semiprimes.")
 
 
 if __name__ == "__main__":
