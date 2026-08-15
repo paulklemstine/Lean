@@ -9,6 +9,15 @@ Declarations: 9
 
 noncomputable section
 
+/-- Auxiliary positivity fact used by the statements below. -/
+lemma one_plus_exp_pos (x : ℝ) : (0 : ℝ) < 1 + Real.exp x := by positivity
+
+/-- Softplus, the smooth approximation to ReLU: `σ(x) = log (1 + eˣ)`. -/
+def softplus (x : ℝ) : ℝ := Real.log (1 + Real.exp x)
+
+/-- The logistic sigmoid function `S(x) = eˣ / (1 + eˣ)`, the derivative of softplus. -/
+def logisticSigmoid (x : ℝ) : ℝ := Real.exp x / (1 + Real.exp x)
+
 /-- [Section: # CatalogBuild.Shared.Softplus_convex
 Auto-generated from theorem catalog database.
 Domain: Shared

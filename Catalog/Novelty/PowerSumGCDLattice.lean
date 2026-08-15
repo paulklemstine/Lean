@@ -1,0 +1,96 @@
+import Novelty.PowerSumGCDGeneral
+
+/-!
+# The power-sum gcd is a lattice anti-homomorphism
+
+Write `g_N(k) = gcd(F(N,k), N)`.  For squarefree `N` the product formula
+`gcd_powerSum_squarefree` says that `g_N(k)` is the product of the primes `r ∣ N` whose
+"order condition" `(r-1) ∣ k` **fails**.  Since `(r-1) ∣ gcd(k,k')` iff `(r-1)` divides
+both, the failure set of `gcd(k,k')` is the *union* of the two failure sets, and unions of
+sets of distinct primes correspond to `lcm`s of their products.  Hence
+
+  `g_N(gcd(k,k')) = lcm(g_N(k), g_N(k'))`,
+
+i.e. `g_N` carries the gcd-lattice of exponents to the lcm-lattice of divisors of `N` —
+an order-reversing lattice morphism.  A first corollary is monotonicity: refining the
+exponent (`k ∣ k'`) can only shrink the revealed factor.
+
+## Main results
+
+* `prod_union_eq_lcm_prod` : for finsets of primes, `∏ (s ∪ t) = lcm (∏ s) (∏ t)`;
+* `gcd_powerSum_gcd_eq_lcm` : the anti-homomorphism law;
+* `gcd_powerSum_dvd_of_dvd` : `k ∣ k'` (both positive) implies `g_N(k') ∣ g_N(k)`;
+* `gcd_powerSum_gcd_eq_one` : the trivial locus of `g_N` is closed under `gcd`;
+* `gcd_powerSum_pairwise_lcm_eq_self` : if `g_N(gcd(k,k')) = N` then
+  `lcm(g_N(k), g_N(k')) = N`.
+-/
+
+open Finset
+
+namespace PowerSumGCD
+
+/-- The product over a union of finsets of primes is the `lcm` of the two products. -/
+theorem prod_union_eq_lcm_prod {s t : Finset ℕ} (hprime : ∀ r ∈ s ∪ t, r.Prime) :
+    ∏ r ∈ s ∪ t, r = Nat.lcm (∏ r ∈ s, r) (∏ r ∈ t, r) := by
+  classical
+  refine Nat.dvd_antisymm ?_ ?_
+  · refine Finset.prod_primes_dvd _ (fun a ha => (hprime a ha).prime) fun a ha => ?_
+    rcases Finset.mem_union.mp ha with h | h
+    · exact dvd_trans (Finset.dvd_prod_of_mem _ h) (Nat.dvd_lcm_left _ _)
+    · exact dvd_trans (Finset.dvd_prod_of_mem _ h) (Nat.dvd_lcm_right _ _)
+  · exact Nat.lcm_dvd (Finset.prod_dvd_prod_of_subset _ _ _ Finset.subset_union_left)
+      (Finset.prod_dvd_prod_of_subset _ _ _ Finset.subset_union_right)
+
+/-- **The anti-homomorphism law.**  For squarefree `N` and positive exponents,
+`g_N(gcd(k,k')) = lcm(g_N(k), g_N(k'))`. -/
+theorem gcd_powerSum_gcd_eq_lcm {N k k' : ℕ} (hN : Squarefree N) (hk : 0 < k) (hk' : 0 < k') :
+    Nat.gcd (powerSum N (Nat.gcd k k')) N
+      = Nat.lcm (Nat.gcd (powerSum N k) N) (Nat.gcd (powerSum N k') N) := by
+  classical
+  have hg : 0 < Nat.gcd k k' := Nat.gcd_pos_of_pos_left _ hk
+  rw [gcd_powerSum_squarefree hN hg, gcd_powerSum_squarefree hN hk,
+    gcd_powerSum_squarefree hN hk']
+  have hfil : N.primeFactors.filter (fun r => ¬ (r - 1) ∣ Nat.gcd k k')
+      = N.primeFactors.filter (fun r => ¬ (r - 1) ∣ k)
+        ∪ N.primeFactors.filter (fun r => ¬ (r - 1) ∣ k') := by
+    rw [← Finset.filter_or]
+    refine Finset.filter_congr fun r _ => ?_
+    constructor
+    · intro h
+      by_contra hcon
+      push_neg at hcon
+      exact h (Nat.dvd_gcd hcon.1 hcon.2)
+    · rintro (h | h) hcon
+      · exact h (hcon.trans (Nat.gcd_dvd_left k k'))
+      · exact h (hcon.trans (Nat.gcd_dvd_right k k'))
+  rw [hfil]
+  refine prod_union_eq_lcm_prod fun r hr => ?_
+  rcases Finset.mem_union.mp hr with h | h <;>
+    exact Nat.prime_of_mem_primeFactors (Finset.mem_filter.mp h).1
+
+/-- **Monotonicity.**  Refining the exponent can only shrink the revealed divisor. -/
+theorem gcd_powerSum_dvd_of_dvd {N k k' : ℕ} (hN : Squarefree N) (hk : 0 < k) (hk' : 0 < k')
+    (hkk' : k ∣ k') :
+    Nat.gcd (powerSum N k') N ∣ Nat.gcd (powerSum N k) N := by
+  classical
+  rw [gcd_powerSum_squarefree hN hk, gcd_powerSum_squarefree hN hk']
+  refine Finset.prod_dvd_prod_of_subset _ _ _ fun r hr => ?_
+  rw [Finset.mem_filter] at hr ⊢
+  exact ⟨hr.1, fun hd => hr.2 (hd.trans hkk')⟩
+
+/-- If two exponents individually reveal nothing (`g_N(k) = g_N(k') = 1`), then their gcd
+reveals nothing either — the trivial locus is closed under `gcd`. -/
+theorem gcd_powerSum_gcd_eq_one {N k k' : ℕ} (hN : Squarefree N) (hk : 0 < k) (hk' : 0 < k')
+    (h1 : Nat.gcd (powerSum N k) N = 1) (h2 : Nat.gcd (powerSum N k') N = 1) :
+    Nat.gcd (powerSum N (Nat.gcd k k')) N = 1 := by
+  rw [gcd_powerSum_gcd_eq_lcm hN hk hk', h1, h2, Nat.lcm_self]
+
+/-- Dually: if the gcd of two exponents already exposes all of `N`, then at least one of
+the two exponents was uninformative in every prime — the read-outs `g_N(k)`, `g_N(k')`
+have `lcm` equal to `N`. -/
+theorem gcd_powerSum_pairwise_lcm_eq_self {N k k' : ℕ} (hN : Squarefree N) (hk : 0 < k)
+    (hk' : 0 < k') (h : Nat.gcd (powerSum N (Nat.gcd k k')) N = N) :
+    Nat.lcm (Nat.gcd (powerSum N k) N) (Nat.gcd (powerSum N k') N) = N := by
+  rw [← gcd_powerSum_gcd_eq_lcm hN hk hk', h]
+
+end PowerSumGCD

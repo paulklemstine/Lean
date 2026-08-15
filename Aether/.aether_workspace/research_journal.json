@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "646c7606",
-      "domain": "Novelty",
-      "key_insight": "# Future directions\n\nDerived from the analysis and adversarial review of\n`Catalog/Novelty/JacobiGaussPhaseCollapse.lean` (Jacobi Gauss-sum phase collapse).\nEvery conjecture below is falsifiable: each",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 42,
-      "timestamp": "2026-08-12T15:22:01",
-      "title": "Jacobi Gauss-Sum Phase Collapse"
-    },
-    {
       "cycle_id": "64ac4ffd",
       "domain": "Pythagorean",
       "key_insight": "# Future directions: bold, testable conjectures from the barrier programme\n\nAll results referenced below are fully proved (0 sorries) in\n`Catalog/Pythagorean/FactoringBarriers/`. The conjectures here",
@@ -499,19 +489,19 @@
       "theorem_count": 54,
       "timestamp": "2026-08-15T03:13:27",
       "title": "TRACEPROFILE: the trace s=p+q is the least-hidden symmetric invariant — 1 bit per prime exactly, s1="
+    },
+    {
+      "cycle_id": "70d03dec",
+      "domain": "Physics",
+      "key_insight": "# Future Directions — the cyclic splitting-type channel\n\nDerived from what survived and what failed in this cycle.  Each conjecture is falsifiable by a\nsingle computation on a cyclic order `n`; each i",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 75,
+      "timestamp": "2026-08-15T07:05:08",
+      "title": "CYCLIC-TYPE-CHANNEL (round-22 #2, experiment 413, assessment v189, paper 78)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "6ef351e2",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions\n\nStatus of the conjectures suggested by the formalisation in `Catalog/Bridges/`\n(`OrdinalAnalysisBridge.lean`, `OrdinalAnalysisBridgeExtras.lean` and\n`OrdinalAnalysisBridgeContinui",
-      "quality_score": 0.686,
-      "sorry_count": 0,
-      "theorem_count": 145,
-      "timestamp": "2026-08-04T15:42:16",
-      "title": "Proof-Theoretic Bridge: Ordinal Analysis Across Systems"
-    },
     {
       "cycle_id": "3652ac9b",
       "domain": "Algebra",
@@ -2501,27 +2491,19 @@
       "theorem_count": 54,
       "timestamp": "2026-08-15T03:13:27",
       "title": "TRACEPROFILE: the trace s=p+q is the least-hidden symmetric invariant — 1 bit per prime exactly, s1="
+    },
+    {
+      "cycle_id": "70d03dec",
+      "domain": "Physics",
+      "key_insight": "# Future Directions — the cyclic splitting-type channel\n\nDerived from what survived and what failed in this cycle.  Each conjecture is falsifiable by a\nsingle computation on a cyclic order `n`; each i",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 75,
+      "timestamp": "2026-08-15T07:05:08",
+      "title": "CYCLIC-TYPE-CHANNEL (round-22 #2, experiment 413, assessment v189, paper 78)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "eaebe17a",
-      "domain": "Novelty",
-      "name": "one_le_part",
-      "quality": 0.9
-    },
-    {
-      "cycle_id": "eaebe17a",
-      "domain": "Novelty",
-      "name": "factorisationEuler_nil",
-      "quality": 0.9
-    },
-    {
-      "cycle_id": "13788cf3",
-      "domain": "Tropical",
-      "name": "add_lipschitz",
-      "quality": 0.85
-    },
     {
       "cycle_id": "13788cf3",
       "domain": "Tropical",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "two_mul_card_traceSet_eq_add_legendreSym",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "70d03dec",
+      "domain": "Physics",
+      "name": "keyOf_prime",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "70d03dec",
+      "domain": "Physics",
+      "name": "sum_ite_eq_zero",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "70d03dec",
+      "domain": "Physics",
+      "name": "sum_ite_ne_zero",
+      "quality": 0.78
     }
   ],
-  "last_updated": "2026-08-15T03:13:27",
+  "last_updated": "2026-08-15T07:05:08",
   "open_questions": [
     {
       "context": "-    sorry+  -- Extract a witness from the computational verification of the primitive part.",
@@ -3703,12 +3703,6 @@
     ],
     "Physics": [
       {
-        "cycle_id": "f993c4fa",
-        "quality": 0.686,
-        "theorems": 45,
-        "title": "This project formalizes, in Lean 4 (Mathlib), the quantitative and logical core"
-      },
-      {
         "cycle_id": "70c10cae",
         "quality": 0.686,
         "theorems": 61,
@@ -3761,6 +3755,12 @@
         "quality": 0.91,
         "theorems": 202,
         "title": "The Permutation Readout of Individual Orders, Closed"
+      },
+      {
+        "cycle_id": "70d03dec",
+        "quality": 0.78,
+        "theorems": 75,
+        "title": "CYCLIC-TYPE-CHANNEL (round-22 #2, experiment 413, assessment v189, paper 78)"
       }
     ],
     "Probability": [

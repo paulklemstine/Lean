@@ -1,11 +1,21 @@
+import Mathlib
+import Shared.CatalogbuildSharedE.E
+
 /-! # CatalogBuild.Shared.Sublevel_full
 
 Auto-generated from theorem catalog database.
 Domain: Speculative
 Declarations: 5
+
+Repaired: the `import` lines now head the file and the definition `sublevel`
+precedes the statements that use it (the underlying energy function `E` lives in
+`Shared.CatalogbuildSharedE.E`).
 -/
 
-import Mathlib
+
+def sublevel (N t : ℕ) : Finset ℕ :=
+  (Finset.Icc 1 N).filter (fun x => E N x ≤ t)
+
 
 /-- The sublevel set at threshold N-1 is all of [1, N]. -/
 theorem sublevel_full (N : ℕ) (hN : 0 < N) :
@@ -27,10 +37,6 @@ theorem sublevel_mono (N s t : ℕ) (hst : s ≤ t) :
   intro x hx
   simp only [sublevel, Finset.mem_filter] at hx ⊢
   exact ⟨hx.1, le_trans hx.2 hst⟩
-
-
-def sublevel (N t : ℕ) : Finset ℕ :=
-  (Finset.Icc 1 N).filter (fun x => E N x ≤ t)
 
 
 /-- Card of sublevel at 0 equals number of divisors. -/

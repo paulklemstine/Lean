@@ -1,4 +1,4 @@
-import Catalog.Computation.CyclicTypeChannel
+import Computation.CyclicTypeChannel
 
 /-!
 # Exact values of the cyclic splitting-type channel

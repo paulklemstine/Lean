@@ -1,5 +1,7 @@
 import Mathlib
 
+open Matrix
+
 /-! # CatalogBuild.Shared.SpbMatrix
 
 Auto-generated from theorem catalog database.

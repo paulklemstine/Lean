@@ -335,7 +335,7 @@
       "depth_estimate": 3,
       "description": "Establishes a non-zero spectrum lower bound for the quantum Yang-Mills Hamiltonian on four-dimensional spherical manifolds.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Physics"
       ],
@@ -375,7 +375,7 @@
       "depth_estimate": 3,
       "description": "Formalizes boundary conditions under which trapped surfaces in spacetime guarantee geodesic incompleteness.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Physics"
       ],
@@ -415,7 +415,7 @@
       "depth_estimate": 3,
       "description": "Derives the thermodynamic entropy of isolated horizons in stationary black hole spacetimes from quantum microstate counting.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Physics"
       ],
@@ -455,7 +455,7 @@
       "depth_estimate": 3,
       "description": "Proves the Kolmogorov-Arnold-Moser (KAM) theorem on the persistence of quasi-periodic invariant tori under small Hamiltonian perturbations.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Physics"
       ],
@@ -495,7 +495,7 @@
       "depth_estimate": 3,
       "description": "Constructs an explicit non-trivial Hilbert space operator model satisfying the Wightman axioms for self-interacting scalar quantum fields in two dimensions.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Physics"
       ],
@@ -1375,7 +1375,7 @@
       "depth_estimate": 3,
       "description": "Formally proves lower bounds on error thresholds for topological surface codes under depolarizing noise models.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Physics"
       ],
@@ -1455,7 +1455,7 @@
       "depth_estimate": 3,
       "description": "Proves Hastings' theorem establishing efficient Matrix Product State (MPS) approximations for ground states of gapped 1D quantum spin chains.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Physics"
       ],
@@ -1495,7 +1495,7 @@
       "depth_estimate": 3,
       "description": "Proves necessary and sufficient conditions for quantum EPR steering under uncharacterized local measurements.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Physics"
       ],
@@ -1535,7 +1535,7 @@
       "depth_estimate": 3,
       "description": "Formalizes the Lloyd-Shor-Devetak (LSD) theorem for quantum channel capacity defined by regularized coherent information.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Physics"
       ],
@@ -2712,7 +2712,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Claw-free cubic graphs and zero forcing' and formalize its key results. Abstract: A claw-free cubic graph is a cubic graph with no induced subgraph isomorphic to $K_{1,3}$. The zero forcing process begins with an initial set $S$ of colored vertices. At each step, a colored vertex with exactly one uncolored neighbor forces that neighbor to become colored. If repeated applications of this rule color every vertex of $G$, then $S$ is called a zero forcing set. The minimum cardinality of a zero forcing set is the zero forcing number, denoted by $Z(G)$. In this paper, we answer three open questions posed by Davila and Henning concerning upper bounds on the zero forcing number of claw-free cubic graphs. We characterize the connected claw-free cubic graphs satisfying $Z(G)=α(G)+1$, where $α(G)$ is the independence number. In addition, we establish the improved upper bound $Z(G)\\leq \\frac{T}{2}+D+2$ for claw-free cubic graphs with Hamiltonian contraction multigraphs, where $D$ is the number of diamonds and $T$ is the number of triangles in $G$.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Physics"
       ],
@@ -17234,7 +17234,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions — Optimal Hamilton Covers\n\nThe deterministic incidence-capacity obstruction — that any cover of a graph by\ntwo-regular spanning layers uses at least `⌈Δ/2⌉` layers, with a per-vertex\nparity defect of `Δ mod 2` at the optimum — pins down the exact local target\nthat every achievability result must hit. The following conjectures build on\nthat equality case.\n\n## 1. Optimal-cover hitting time in the random graph process\n\n**Conjecture.** In the random graph process, with probability tending to one,\nthe first graph whose minimum degree reaches two is simultaneously the first\ngraph whose edges admit a two-regular cover of size `⌈Δ/2⌉`.\n\nThe key insight is that the incidence-capacity obstruction is already sharp\nvertex by vertex, so the only remaining question is global: whether the process\nhas supplied enough connectivity to extend every controlled forest system at\nonce. Once minimum degree two removes the last local obstruction, the parity\ndefect that a completion must absorb is uniformly zero or one, leaving no room\nfor a second bottleneck.\n\n**Why now?** The parity law isolates the incidence defect as exactly `Δ mod 2`,\nreducing a delicate hitting-time statement to a single structured global\ncompletion problem with a known local budget.\n\n## 2. Punctured optimal covers realize linear arboricity\n\n**Conjecture.** Throughout the Hamiltonian range of the binomial random graph,\nevery minimum-size two-regular cover admits a choice of one edge per cycle such\nthat the resulting paths, together with at most one extra linear forest, form an\noptimal linear-forest decomposition.\n\nThe key insight is that puncturing a cycle removes coverage only along a chosen\ntransversal, and the optimal cover's parity-controlled slack — at most one unit\nper vertex — is exactly enough to reroute the transversal edges without adding a\nlayer beyond the asymptotically sharp count.\n\n**Why now?** The equality case shows precisely which edges carry the unit of\nslack, turning the decomposition question into a concrete transversal-selection\nand rerouting problem rather than an open-ended optimization.\n\n## 3. Spectral reserved-structure criterion\n\n**Conjecture.** There are absolute constants `c, C > 0` such that every\nsufficiently large graph with minimum degree at least `C log n`, normalized\nsecond eigenvalue at most `c`, and robust sparse-cut expansion admits a\ntwo-regular cover of size `⌈Δ/2⌉`.\n\nThe key insight is that a spectral reservoir can replace probabilistic edge\nexposure in the forest-extension argument: expansion guarantees the simultaneous\nglobal extensions that randomness usually provides, while the incidence bound\nsupplies the exact local completion target.\n\n**Why now?** Because the local target is now an exact equality with a `0/1`\nparity defect, a spectral criterion need only certify simultaneous global\nextension, converting a probabilistic completion into a deterministic one.\n\n## 4. Stability of near-optimal covers\n\n**Conjecture.** If a family of two-regular spanning layers covers a graph using\n`⌈Δ/2⌉ + k` layers, then at every maximum-degree vertex the total repeated\nincidence multiplicity is at most `2k + 1`; for pseudorandom graphs this local\nbound forces the cover to differ from an optimal one in only `O(kn)` edge-layer\nincidences.\n\nThe key insight is that excess layer count translates linearly into local coding\nslack: each extra layer buys exactly two additional incidences per vertex, so\nthe global edit distance to optimality is controlled by the total slack.\n\n**Why now?** The proved equality case fixes the zero-excess baseline and the\nexact `2` incidences contributed per layer, giving the precise linear error term\nexpected to govern the near-optimal regime.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Computation",
         "Physics"
@@ -19333,7 +19333,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Adjacency-degree algebras and spectral determination of graphs' and formalize its key results. Abstract: McKay proved that the spectra of all polynomial functions of the adjacency matrix $A$ and the diagonal degree matrix $D$ determine a tree. We prove a principal version of this theorem. Let $\\mathcal A(G)=\\langle I,A_G,D_G\\rangle$ and let $M_G=\\mathcal A(G)\\mathbf1$ be the cyclic module generated by the all-ones vector. For connected graphs the ideal $\\mathcal A(G)J\\mathcal A(G)$, where $J=\\mathbf1\\mathbf1^T$, acts on $M_G$ as the full endomorphism algebra. We show that every forest satisfies $M_G=U_G$, the automorphism-orbit module, and that the induced algebra on the orbit quotient of a tree is a full matrix algebra. It follows that the scalar moments $\\mathbf1^Tw(A_T,D_T)\\mathbf1$ determine every tree. For general graphs these moments are degree-decorated caterpillar homomorphism counts. The resulting moment-rigidity class lies inside the amenable, compact, refinable hierarchy of color refinement, and its first small-order failures are ten-vertex integral switchings invisible to $M_G",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Algebra",
         "Physics"
@@ -24364,7 +24364,7 @@
       "depth_estimate": 3,
       "description": "# Future directions\n\nThe spectral-projection decomposition in `SignedCubeSpectralProjections.lean` suggests the following concrete, falsifiable next claims.\n\n1. **Equal eigenspace dimensions.** For every `n > 0` and every real `r ≠ 0` with `r² = n`, the images of `positiveSpectralPart n r` and `negativeSpectralPart n r` each have real vector-space dimension `2^(n-1)`.\n\n2. **Characteristic polynomial.** After representing `signedAdj n` as an endomorphism of the finite-dimensional space `Cube n → ℝ`, its characteristic polynomial is `(X^2 - n)^(2^(n-1))` for every `n > 0`.\n\n3. **Trace cancellation under restriction.** For every nonempty proper vertex subset `S` of `Cube n`, the principal restriction of the canonical signed adjacency matrix has trace zero; moreover, if `|S| > 2^(n-1)`, that restriction has a positive eigenvalue at least `1`.\n\n4. **Face-cancellation characterization.** A symmetric `{−1,1}` edge signing of the Boolean cube has adjacency square equal to `nI` if and only if the product of its four edge signs around every two-dimensional face is `−1`.\n\n5. **Switching uniqueness.** Any two symmetric cube-edge signings satisfying the negative face-product condition differ by vertex switching: there is a vertex labeling by `{−1,1}` whose endpoint products transform one signing into the other.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Physics"
       ],
@@ -29531,7 +29531,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\nDerived from the verified results in\n\n* `Catalog/Novelty/CollatzSpectralNormalized.lean` — limit law, modulus formula,\n  resonance classification, `3n+1` vs `5n+1` vs `7n+1` discriminator, `L²` mean;\n* `Catalog/Novelty/CollatzSpectralUniform.lean` — explicit `O((1+|ω| log N)/N)`\n  error bound, uniform convergence on compact frequency sets, and the\n  density-zero blindness no-go;\n* `Catalog/Novelty/CollatzSpectralResonance.lean` — arithmetic of the resonance\n  sets and pairwise separation of the three classical multipliers.\n\nWhat this cycle settled. The one-step phase `T(n)/n` splits into a constant even\nbranch `1/2` and an odd branch `a + 1/n`; the odd perturbation `1/n` is summable\nafter Cesàro averaging, so `F_N(ω)/N → (e(ω/2)+e(aω))/2` with modulus\n`|cos(π(a−½)ω)|`.  Every question about \"cancellation for the `an+1` map at a\nfixed frequency\" is therefore *completely answered* at the level of the one-step\nsum, and the answer contains no dynamical information whatsoever\n(`spectral_blind_to_finite_modification`).  The following conjectures push into\nthe regimes where information can survive.\n\n---\n\n## Conjecture 1 (Second-order spectral law: the `log N` term is a genuine invariant)\n\nFor every `a ≥ 1` and every `ω ≠ 0`,\n`F a ω N − N · limitAmp a ω − c(a,ω) · log N` converges as `N → ∞`, with\n`c(a,ω) = π i ω e(aω)` (the coefficient produced by the odd-branch expansion\n`e(ω/n) = 1 + 2πiω/n + O(ω²/n²)` summed against the odd harmonic series).\nEquivalently, `(F a ω N − N·limitAmp a ω)/log N → c(a,ω)`.\n\n**The key insight is** that the first-order term erases the multiplier's\narithmetic (it depends only on `e(aω)` through a modulus that is a single\ncosine), while the *second*-order term is an honest half-harmonic sum whose\ncoefficient is linear in `ω` and carries the branch phase `e(aω)` undamped —\nso the subleading spectrum sees strictly more than the leading one.\n\n**Why now?** `norm_F_div_sub_limitAmp_le` already isolates the deviation sum\n`Σ dseq` and bounds it by `2π|ω|(1+log N)`; the conjecture asserts that this\nbound is attained with an explicit constant.  The Lean infrastructure\n(`dseq_eq`, `sum_one_div_le_one_add_log`) needs only a matching *lower* bound\nplus `Real.log` asymptotics for the odd harmonic sum, both of which are in reach\nof the existing `harmonic` API.\n\n---\n\n## Conjecture 2 (Iterated transforms are not blind)\n\nDefine the `m`-step transform `F^{(m)} a ω N = Σ_{n≤N} e(ω · T_a^m(n)/n)`.\nThen for each fixed `m`, `F^{(m)} a ω N / N` converges to an explicit finite\ncombination `Σ_{j} 2^{−m} · (multiplicity) · e(ω · r_j)`, where `r_j` ranges over\nthe finitely many limiting `m`-step ratios `a^{k} / 2^{m−k}` (`k` = number of odd\nsteps), weighted by the density of residue classes mod `2^m` following that\nparity pattern.  Moreover, for `m ≥ 2` the resonance set of `F^{(m)}` is **not**\na coset of a lattice, and its zero set determines `a` uniquely.\n\n**The key insight is** that one step gives two branches and hence a cosine, i.e.\none Diophantine condition; `m` steps give `2^m` branches with ratios\n`a^k/2^{m−k}`, so the limiting amplitude becomes an exponential polynomial in\n`ω` whose zero set is an intersection of many conditions — rigid enough to\nrecover `a`, and no longer invariant under sparse modification of the map.\n\n**Why now?** The proof template is exactly the one verified here: split by the\nparity pattern of the first `m` steps (a residue class mod `2^m` of known\ndensity), show the ratio converges on each class, and Cesàro-average.\n`summand_eq` + `dseq_eq` + `Filter.Tendsto.cesaro_smul` generalize verbatim.\n\n---\n\n## Conjecture 3 (A density-zero blindness threshold)\n\n`spectral_blind_to_density_zero` is sharp in the following strong sense: for\nevery function `h : ℕ → ℝ` with `h N / N → 0` and `h N → ∞` there exist a\nmultiplier `a` and a modification of `ratio a` supported on a set `S` with\n`#(S ∩ [1,N]) ≍ h N` such that the modified transform still satisfies\n`F̃/N → limitAmp a ω` for all `ω`, yet the modified map has an orbit structure\n(e.g. an extra cycle of length `≍ h N` at scale `N`) that differs from the\noriginal.  Conversely, any modification on a set of positive upper density\nchanges the limit for a set of frequencies of positive measure.\n\n**The key insight is** that \"invisible to the normalized spectrum\" is exactly\n\"supported on a density-zero set\", so the spectral method has a precise\ninformation-theoretic ceiling: it can only ever certify statements that are\nthemselves invariant under density-zero surgery — and cycle existence is not.\n\n**Why now?** The forward half is already proved (`norm_Fgen_sub_le` gives the\n`2·#S/N` bound, which is the whole content).  The converse needs a lower bound\non `‖Σ_{k ∈ S} (e(ω r₁) − e(ω r₂))‖` after averaging in `ω`, i.e. a Plancherel\nargument on `[0,2]` for which `meanSquare_limitAmp` is the model computation.\n\n---\n\n## Conjecture 4 (Resonance sets classify the multiplier, and pairwise\nintersections are governed by `gcd(2a−1, 2b−1)`)\n\nFor all `a, b ≥ 1`, the common resonance set\n`R a ∩ R b = {ω : (2a−1)ω and (2b−1)ω are both odd integers}` equals\n`{ω = (2m+1)·g / ((2a−1)(2b−1)/g') ...}` — precisely, writing\n`d = gcd(2a−1, 2b−1)`, `R a ∩ R b = (d / ((2a−1)(2b−1))) · (2ℤ+1) ∩ R a`, and in\nparticular `R a ∩ R b ⊆ 2ℤ+1` exactly when `d = 1`.  Hence `R a = R b` iff\n`a = b`, and the map `a ↦ R a` is a complete invariant of the multiplier.\n\n**The key insight is** that the resonance sets are cosets of the lattices\n`(1/(2a−1))(2ℤ+1)`, so their intersection theory is pure elementary number\ntheory of the odd numbers `2a−1` — an arithmetic invariant hiding inside a\npurely analytic (Fourier) statistic.\n\n**Why now?** The three instances `d = gcd(5,9) = gcd(5,13) = gcd(9,13) = 1` are\nalready proved in `common_resonance_three_five`, `common_resonance_three_seven`,\n`common_resonance_five_seven`, each via a two-line `omega` certificate.  The\ngeneral statement is the same argument with `d` carried symbolically, and\n`limitAmp_eq_zero_iff` reduces it entirely to `ℤ`.\n\n---\n\n## Conjecture 5 (Orbit transforms: a genuine spectral–dynamical bridge)\n\nLet `σ(n)` be the stopping time of `n` under `T_3` and define the *orbit\ntransform* `G ω N = Σ_{n≤N} e(ω σ(n)/log n)`.  Then `G ω N / N` converges for\nevery `ω` to the characteristic function of the limiting distribution of\n`σ(n)/log n`, and the Collatz conjecture restricted to `[1,N]` is *equivalent*\nto `σ` being everywhere finite, i.e. to `G` being well defined — whereas no\nstatement about `F a ω N` has this property (by Conjecture 3 / the proved\nblindness theorem).\n\n**The key insight is** that spectral information about a dynamical system can\nonly be dynamical if the *phase itself* is an orbit functional; replacing the\none-step ratio `T(n)/n` by the normalized stopping time turns the transform into\nthe characteristic function of the (conjecturally log-normal) stopping-time\ndistribution, where cancellation genuinely encodes orbit behaviour.\n\n**Why now?** The present cycle proves the negative half rigorously — the\none-step transform is provably blind — which is precisely the justification for\nmoving the phase from one step to the whole orbit.  The positive half is a\nLévy-continuity statement, and Mathlib now has the characteristic-function and\nweak-convergence API needed to state it.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Pythagorean",
         "Physics"
@@ -30257,11 +30257,11 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 33,
+      "attempt_count": 34,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "8946952b",
+      "consumed_by_exp_id": "48913a94",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -30273,7 +30273,7 @@
       ],
       "github_issue": 18,
       "id": "fd_1106",
-      "last_attempt_time": "2026-08-15T05:50:07.974928+00:00",
+      "last_attempt_time": "2026-08-15T07:05:30.795775+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -30297,11 +30297,11 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 33,
+      "attempt_count": 34,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "7a7f9e41",
+      "consumed_by_exp_id": "7bdd1f73",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -30313,7 +30313,7 @@
       ],
       "github_issue": 16,
       "id": "fd_1108",
-      "last_attempt_time": "2026-08-15T05:50:15.318394+00:00",
+      "last_attempt_time": "2026-08-15T07:05:35.522844+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -30362,7 +30362,7 @@
       "priority_score": 1000.0,
       "proof_strategy": "",
       "prune_reason": "tournament_rejected: ",
-      "pruned_at": "2026-08-15T04:54:12Z",
+      "pruned_at": "2026-08-15T07:05:09Z",
       "quarantined_until": "",
       "research_mode": "team",
       "source": "github_injection",
@@ -30381,7 +30381,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "726361d5",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -30408,7 +30408,7 @@
       "source": "github_injection",
       "source_exp_id": "github",
       "source_path": "github",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-08-11T21:13:58.496534+00:00",
       "title": "The Binary-Quadratic-Form Count Family: A Canonical Free-Witness for Barrier 4"
@@ -30803,7 +30803,7 @@
       "priority_score": 1000.0,
       "proof_strategy": "",
       "prune_reason": "tournament_rejected: ",
-      "pruned_at": "2026-08-15T04:54:12Z",
+      "pruned_at": "2026-08-15T07:05:09Z",
       "quarantined_until": "",
       "research_mode": "team",
       "source": "github_injection",
@@ -30964,7 +30964,7 @@
       "priority_score": 1000.0,
       "proof_strategy": "",
       "prune_reason": "tournament_rejected: ",
-      "pruned_at": "2026-08-15T04:54:12Z",
+      "pruned_at": "2026-08-15T07:05:09Z",
       "quarantined_until": "",
       "research_mode": "team",
       "source": "github_injection",
@@ -31084,7 +31084,7 @@
       "priority_score": 1000.0,
       "proof_strategy": "",
       "prune_reason": "tournament_rejected: ",
-      "pruned_at": "2026-08-15T04:54:12Z",
+      "pruned_at": "2026-08-15T07:05:09Z",
       "quarantined_until": "",
       "research_mode": "team",
       "source": "github_injection",
@@ -31566,7 +31566,7 @@
       "priority_score": 1000.0,
       "proof_strategy": "",
       "prune_reason": "tournament_rejected: ",
-      "pruned_at": "2026-08-15T04:54:12Z",
+      "pruned_at": "2026-08-15T07:05:09Z",
       "quarantined_until": "",
       "research_mode": "team",
       "source": "github_injection",
@@ -31606,7 +31606,7 @@
       "priority_score": 1000.0,
       "proof_strategy": "",
       "prune_reason": "tournament_rejected: ",
-      "pruned_at": "2026-08-15T04:54:12Z",
+      "pruned_at": "2026-08-15T07:05:09Z",
       "quarantined_until": "",
       "research_mode": "team",
       "source": "github_injection",
@@ -32752,7 +32752,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions — bold, testable conjectures from the QBOUND cycle\n\nDerived from what survived Stages 3–4 of this cycle. Each is falsifiable, and\neach names the Lean artefact it would extend.\n\n---\n\n## C1. Uncertainty-extremality characterises the Shor input state\n\n**Conjecture.** Let `n = m·r` and let `v : Fin n → ℂ` be nonzero with\n`#supp v · #supp (DFT v) = n` (equality in `dft_support_uncertainty`). Then\n`supp v` is a coset of a subgroup of `ℤ/n` and `v` is constant in modulus on its\nsupport; i.e. `v` is a phase-modulated comb. Consequently the state Shor's\ncircuit prepares is, up to phases and translation, the *only* extremal input.\n\n**The key insight is** that the two inequalities used in the Donoho–Stark proof\n(triangle inequality for `DFT`, and again for the inverse) are simultaneously\ntight exactly when all contributing phases align, which forces the support to be\nan arithmetic progression closed under translation — a subgroup coset.\n\n**Why now?** `dft_support_uncertainty` and `comb_saturates_uncertainty` are\nalready formalised in `Catalog/Computation/QuantumClassicalBoundary/Boundary.lean`;\nthe equality analysis is a finite-dimensional rigidity argument that needs no new\nanalytic input. A counterexample would be equally interesting: it would exhibit a\nnon-comb state as sharp as the comb.\n\n---\n\n## C2. Peak-picking failure is generic, not exceptional\n\n**Conjecture.** For every `r ≥ 4` the density of pairs `(N, a)` with\n`ord_N(a) = r` for which the fundamental bin is *not* the largest non-DC bin of\nthe value signal is bounded away from `0` as `N → ∞`; in fact the fundamental's\nrank grows like `Θ(r)`.\n\n**The key insight is** that the residues `aˣ mod N` behave like an equidistributed\nsequence with respect to the additive characters of `ℤ/r`, so the value signal's\nspectrum is asymptotically flat and the fundamental has no structural advantage —\nit is the *comb*, not the exponential, that produces sharpness.\n\n**Why now?** The order-4 slice is already exactly solvable\n(`|V̂(1)|² = (v₀-v₂)²+(v₁-v₃)²` versus `|V̂(2)|² = (v₀-v₁+v₂-v₃)²`, formalised for\n`N = 15, a = 7` in `SpectralHiding.lean`), and the measured density there is\n`0.366` over `N < 500` (see `ComputationalEvidence.md`). The general statement\nneeds only Weyl-sum bounds for exponential sequences modulo `N`.\n\n---\n\n## C3. A nonlinear-estimator version of Barrier 1\n\n**Conjecture.** The bound `K ≥ r` survives dropping linearity: any (possibly\nadaptive, possibly nonlinear) classical estimator that recovers the period of an\narbitrary period-`r` signal from `K` evaluations of its Fourier transform at\nchosen frequencies must have `K ≥ r`.\n\n**The key insight is** that the linear-algebra proof\n(`FactoringBarriers.dft_sample_count_ge_period`) should be replaceable by a\ntwo-point argument: exhibit, for each frequency set of size `< r`, an explicit\n*pair* of signals with distinct periods but identical samples — which the\nkernel-dimension argument already provides non-constructively.\n\n**Why now?** The linear case is proved and imported by\n`Catalog/Computation/QuantumClassicalBoundary/SampleBarrier.lean`; making the\nwitnesses explicit converts a dimension count into an adversary argument that\nadaptivity cannot defeat.\n\n---\n\n## C4. Order statistics: from `> √p` to `> p^{1-ε}`\n\n**Conjecture.** For every `ε > 0` the number of bases `a` modulo a prime `p`\nwith `ord_p(a) ≤ p^{1-ε}` is `O(p^{1-ε})`, hence a `1 - o(1)` fraction of bases\nhave order `> p^{1-ε}`; the classical Fourier-sample requirement is therefore\n`N^{1-o(1)}`, not merely `√N`.\n\n**The key insight is** that the covering bound `#{ord ≤ B} ≤ B²` used in\n`card_small_order_le` is wasteful: in a cyclic group `#{ord ≤ B}` is exactly\n`∑_{d ∣ n, d ≤ B} φ(d) ≤ B·(number of divisors)`, which is `B^{1+o(1)}`.\n\n**Why now?** `card_small_order_le` is formalised and its only ingredient is\n`IsCyclic.card_pow_eq_one_le`; upgrading `∑_{d ≤ B} d` to\n`∑_{d ∣ n, d ≤ B} φ(d)` is a purely combinatorial refinement that immediately\nsharpens `classical_sampling_barrier`.\n\n*Status after cycle 3:* the divisor-indexed form\n`#{ord ≤ B} ≤ B · #{d ∣ |G| : d ≤ B}` is now **proved** in\n`Catalog/Computation/QuantumClassicalBoundary/OrderStatistics.lean`\n(`card_small_order_le_divisors`, `exists_base_large_order_divisor`). What remains\nopen is the analytic input `τ(n) = n^{o(1)}` needed to convert it into the clean\n`p^{1-ε}` statement.\n\n---\n\n## C5. Rigidity of coherence: approximate combs and `r ∤ n`\n\n**Conjecture.** If `r ∤ n` (the realistic Shor setting) the spectrum of the comb\nis a Dirichlet kernel whose mass within distance `1/2` of the ideal peaks is at\nleast `4/π² ≈ 0.405`, and `periodic_of_peak_supported` has a stability version:\na signal whose off-peak spectral energy is `≤ δ` fraction of the total is\n`O(√δ)`-close in `ℓ²` to an exactly `r`-periodic signal.\n\n**The key insight is** that both the exact statements proved here\n(`combDFT_norm`, `periodic_of_peak_supported`) are the `δ = 0` corner of a\nstability principle, and the constant `4/π²` is precisely what makes Shor's\nalgorithm work with `r ∤ n`.\n\n**Why now?** The exact case is fully formalised in `CoherentComb.lean` and\n`Separation.lean`, so the approximate case can be attacked as a perturbation of\na verified identity rather than from scratch.\n\n---\n\n## C6. A closed-form hiding criterion for every period, not just `r = 4`\n\n**Conjecture.** For every `r` there is an explicit polynomial criterion in the\nresidues `vᵢ = aⁱ mod N`, with coefficients in the real subfield of the `r`-th\ncyclotomic field, deciding whether the fundamental bin `k = 1` is the largest\nnon-DC bin of the value signal; and for `r ≥ 5` the set of `(N, a)` failing the\ncriterion has positive density.\n\n**The key insight is** that at `r = 4` the two competing bins have the closed\nforms `√((v₀-v₂)²+(v₁-v₃)²)` and `|v₀-v₁+v₂-v₃|`\n(`norm_dft_order_four_one`, `norm_dft_order_four_two`), i.e. the comparison is a\nrational inequality; for general `r` the analogous comparison is an inequality\nbetween norms of cyclotomic integers, still decidable instance by instance.\n\n**Why now?** The `r = 4` criterion is proved and instance-checked in\n`Catalog/Computation/QuantumClassicalBoundary/HarmonicCriterion.lean`; extending\nit needs cyclotomic norm computations rather than any new conceptual input.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Algebra",
         "Physics"
@@ -33267,7 +33267,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "f2bb5930",
+      "consumed_by_exp_id": "3f06530b",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -33283,7 +33283,7 @@
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
-      "outcome_quality": 0.79,
+      "outcome_quality": 0.78,
       "parent_direction": "",
       "priority_score": 1000.0,
       "proof_strategy": "",
@@ -33964,7 +33964,7 @@
       "depth_estimate": 3,
       "description": "Proves quantum unique ergodicity for Hecke-Maass eigenforms on arithmetic surfaces: the microlocal lifts of these eigenforms equidistribute to the uniform measure, formalizing the ergodic framework behind Lindenstrauss' result.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "NumberTheory",
         "Physics"
@@ -34455,7 +34455,7 @@
       "depth_estimate": 3,
       "description": "Formalizes the algebraic structure of conformal field theory: vertex operator algebras and their representation theory, proving the modular invariance of the genus-one partition function and the Verlinde formula expressing fusion rules through the modular S-matrix.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Physics",
         "Algebra"
@@ -35021,7 +35021,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions — after the derived-modulus corner\n\nThe formal results in `Catalog/Physics/DerivedModulus*.lean` close the\npolynomial (N-explicit) multi-modulus corner in a strong, classified form:\n\n* `universally_coprime_iff_transparent` — a polynomial modulus is universally\n  coprime to `N` **iff** its constant term is a unit (exact classification, not\n  a one-sided barrier);\n* `closure_no_go` — the whole multiplicative/substitutional closure of the\n  tested family stays transparent, so no combination escapes;\n* `sqSucc_spectrum_N_independent`, `cyc3_spectrum_N_independent` — the prime\n  spectra of the quadratic moduli are *fixed sets of split primes*, determined\n  by the polynomial's splitting field, never by the factorisation of `N`;\n* `useful_hint_count` / `useful_hint_density` — the external-hint frontier has\n  measure `(p+q-1)/pq ≤ 2/B`;\n* `gcd_eval_dvd_resultant` / `multi_modulus_bounded` — any two polynomial\n  derived moduli overlap in a divisor of their resultant, so a whole finite\n  family carries only `O(1)` common arithmetic, uniformly in `N`;\n* `transport_coprime_iff` / `transport_boundary` — the barrier and its exact\n  classification hold for *every* congruence-transporting modulus, and the\n  exponential modulus `2^N - 1` is provably outside that class;\n* `polynomial_hypothesis_necessary` — and outside the class the no-go really\n  fails: `gcd(253, 2^253 - 1) = 23` factors `253 = 11·23`.\n\nFive falsifiable follow-up conjectures.\n\n---\n\n## C1 (Galois superselection). The spectrum of any derived modulus is a union of Chebotarev classes, and this is *equivalent* to the no-go.\n\n**Statement.** For irreducible `f ∈ ℤ[X]` with splitting field `K_f` and Galois\ngroup `G`, the set `S_f = {p prime : ∃ N, p ∣ f(N)}` equals, up to finitely\nmany primes, the set of `p` whose Frobenius class in `G` fixes at least one\nroot; and `p ∈ S_f` is decidable from `p` alone. Consequently, *no* invariant\nof `f(N)` distinguishes two semiprimes with the same `N`.\n\n**The key insight is** that our two proved spectra (`p = 2 ∨ p ≡ 1 mod 4` and\n`p = 3 ∨ p ≡ 1 mod 3`) are the abelian, cyclotomic shadow of the general\nFrobenius criterion — the spectrum is a property of the *apparatus* `f`, never\nof the *state* `N`.\n\n**Why now?** The abelian cases are now fully formalised here; Mathlib has\n`NumberField`, Frobenius elements and the machinery for splitting behaviour, so\nthe non-abelian case (e.g. `f = X³ - X - 1`, `G = S₃`) is the natural next\nformalisation target and would be falsified by exhibiting any `f` whose\nspectrum depends on more than the residue class of `p`.\n\n## C2 (Sharp resultant law for the multi-modulus lattice). *(divisibility half now proved)*\n\n**Status.** The divisibility half is proved in\n`Catalog/Physics/DerivedModulusResultant.lean`\n(`gcd_eval_dvd_resultant`, with the uniform bound `gcd_eval_le_resultant` and\nthe finite-family version `multi_modulus_bounded`). What remains open is the\nattainment half.\n\n**Remaining statement.** For coprime `f, g ∈ ℤ[X]` with `Res(f,g) ≠ ±1`, the\nbound `gcd(f(N), g(N)) = |Res(f,g)|` is attained for infinitely many `N`, and\nthe set of such `N` is a union of congruence classes modulo `Res(f,g)`.\n\n**The key insight is** that our fifteen hand-built Bézout certificates\n(constants `1, 2, 3, 5, 7`) are exactly the resultants of the corresponding\npairs, so the uniform pairwise bound of `family_pairwise_gcd_le_seven` is an\ninstance of a single resultant identity `u f + v g = Res(f,g)`.\n\n**Why now?** Mathlib's `Polynomial.exists_mul_add_mul_eq_C_resultant` supplied\nthe Sylvester–Bézout identity, which is exactly what the divisibility half\nneeded; the attainment half requires a Chinese-remainder construction of `N` in\nthe right classes modulo the resultant, which is elementary but not yet\nformalised. Falsifiable: exhibit coprime `f, g` with `|Res| > 1` whose overlap\nis bounded strictly below `|Res|` for all `N`.\n\n## C3 (Quantitative hint-amplification threshold).\n\n**Statement.** Let `H` be an external hint distribution on `[0, N)` and let\n`ε = Pr[gcd(N, H) ∉ {1, N}]`. Then any gcd-based factoring procedure using one\nsample from `H` succeeds with probability exactly `ε`, and amplification to\nconstant success requires `Θ(1/ε)` independent samples — with no speed-up from\ncombining the hint with any polynomial derived modulus.\n\n**The key insight is** that `useful_hint_count` pins `ε = (p+q-1)/pq` for the\nuniform hint, and `derived_hints_useless` shows the derived data adds a\ndeterministic function of `N`, hence zero information; so the whole gain must\ncome from the hint's own structure.\n\n**Why now?** Both halves are already formal here; what is missing is the\nsampling lemma (a Chernoff/independence argument over `Finset`), which Mathlib's\nprobability library supports. Falsifiable: exhibit a hint distribution with\n`ε` small where a derived modulus provably improves success probability.\n\n## C4 (Transparency is the *only* obstruction — an effective converse).\n\n**Statement.** For non-transparent `f` with `|f(0)| = c > 1`, the set of `N ≤ X`\nfor which `gcd(N, f(N)) > 1` has density exactly `1 - ∏_{r ∣ c, r prime}(1-1/r)`,\nand for each such `N` the gcd reveals a divisor of `c` only — never a factor of\n`N` outside `c`.\n\n**The key insight is** that `exists_common_factor_of_not_transparent` already\nproduces the witness `N = minFac(|f(0)|)`; upgrading a single witness to a\ndensity statement converts the classification into a quantitative dichotomy\n(\"leaky but useless\" vs. \"transparent\").\n\n**Why now?** The witness construction is formal; the density step is a finite\ninclusion–exclusion over the divisors of a *fixed* integer `c`, well within\nreach of Mathlib's `Nat.ArithmeticFunction` and counting API.\n\n## C5 (Order-sieve frontier: which semiprimes does the exponential modulus factor?).\n\n*(Superseding the earlier C5, whose congruence-transporting form is now proved\nas `transport_coprime_iff` and whose unrestricted form is refuted by\n`polynomial_hypothesis_necessary`.)*\n\n**Statement.** There are infinitely many semiprimes `N = p·q` with\n`p < q` for which `gcd(N, 2^N - 1) = p`; equivalently, infinitely many prime\npairs with `ord_p(2) = q` and `q ∣ p - 1`. Moreover the counting function of\nsuch `N` up to `X` is `X^{1/2+o(1)}`, so the exponential leak has density `0`\namong all semiprimes and does **not** threaten randomly generated RSA moduli.\n\n**The key insight is** that `prime_dvd_mersenne_iff` reduces the leak to an\norder condition, `ord_p(2) ∣ N`, and for a semiprime this forces\n`ord_p(2) ∈ {1, q}`; so the leaking moduli are exactly those built from a prime\n`p` whose order of `2` is the *other* prime factor — a condition of\nArtin/Wieferich type, verified here at `p = 23`, `q = 11`, `N = 253`.\n\n**Why now?** The order criterion and one explicit witness are already\nformalised; what is missing is an infinitude argument (a Zsygmondy-style\nprimitive-divisor input: for each prime `q`, a primitive prime divisor `p` of\n`2^q - 1` has `ord_p(2) = q`, and one needs `p ≡ 1 mod q` together with\n`N = pq` in the required range). Falsifiable in either direction: a proof that\nonly finitely many such pairs exist would be equally interesting, and a density\nabove `X^{1/2+ε}` would make the exponential modulus a genuine cryptanalytic\nconcern.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "NumberTheory",
         "Algebra"
@@ -35749,7 +35749,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions — tropical reading of the round-4 closures\n\nDerived from the analysis and adversarial review of the four Lean files in\n`Catalog/Tropical/` (`TropicalTorsionCensus`, `TropicalCensusMulti`,\n`TorsionProfileAmbiguity`, `FactorLocationBarriers`).\n\nWhat the formalisation established, in one sentence: *for a squarefree modulus the\nwhole `KROOT` free-witness family (`d ↦ #{x : x^d = 1 mod N}`) is a tropical\npolynomial whose data is the per-prime multiset of tropical roots, and that data is\ninvariant under shuffling roots between the prime factors — which is exactly why it\ncannot locate a factor.* The conjectures below push on the three places where the\nproofs were tight.\n\n---\n\n## Conjecture 1 (Tropical Sealing Conjecture). Every multiplicative \"spectral\" statistic of `(ℤ/Nℤ)ˣ` is root-shuffling invariant, hence cannot locate.\n\n**Statement.** Let `F` be any function of `N` computable from the isomorphism class of\nthe abelian group `(ℤ/Nℤ)ˣ` alone. Then for squarefree `N = ∏ p`, `F(N)` is invariant\nunder any permutation of the local valuation multisets `{v_ℓ(p-1)}_{p | N}` that\npreserves the multiset at each prime `ℓ`. Consequently there exist, for every\n`B`, two `B`-bit semiprimes with equal `F` and coprime factorisations.\n\n*The key insight is* that `TropicalTorsionCensus.gcd_profile_eq_of_valuations` already\nproves the invariance for the torsion profile, and the torsion profile is a complete\nisomorphism invariant of a finite abelian group; so the conjecture reduces to a purely\ntropical statement about shuffling roots of one-variable min-plus polynomials, with the\nopen part being the *density* claim (existence of shuffled pairs at every bit size,\nwhich needs a Linnik/Bombieri–Vinogradov type input on primes in progressions).\n\n*Why now?* The invariance half is formalised and machine-checked; only the\nprime-density half remains, and it is a statement about primes `p ≡ 1 + 2^a·u`, an area\nwhere effective results exist.\n\n---\n\n## Conjecture 2 (Tropical Corner Barrier). No `poly(log N)`-time algorithm can evaluate the census exponent `k ↦ min(k, v₂(p-1)) + min(k, v₂(q-1))` at any `k ≥ 1` for adversarial semiprimes.\n\n**Statement.** Evaluating `T(k)` for one `k ∈ [1, log N]` is as hard as factoring, in the\nsense that an oracle returning `T(2)` for arbitrary semiprimes yields a probabilistic\npolynomial-time factoring algorithm.\n\n*The key insight is* that `T(2) = 2^{min(2,a)+min(2,b)}` distinguishes `a = 1` from\n`a ≥ 2`, i.e. it reveals `p mod 4`-type information about the *unordered* pair, and\ncombining this with the classical square-root-of-1 factoring reduction (which our\n`energyGroundSet_eq` four-point ground space makes explicit) should upgrade the oracle\ninto a factorisation, showing that the *sealing* result of\n`census_cannot_locate` is tight rather than an artefact.\n\n*Why now?* The exact formula `torsionCensus_eq` is now a theorem, so the reduction can\nbe attempted symbolically rather than experimentally.\n\n---\n\n## Conjecture 3 (Level-0 invisibility is the only obstruction). The census exponent function determines the multiset `{v₂(p-1) : p | N}` completely once the number of prime factors is known.\n\n**Statement.** For squarefree `s, t` with `s.card = t.card`,\n`(∀ k, censusExponentMulti s k = censusExponentMulti t k)` implies the multisets\n`{v₂(p-1) : p ∈ s}` and `{v₂(p-1) : p ∈ t}` are equal, *including* the level-0 part.\n\n*The key insight is* that `census_determines_root_multiplicities` already gives equality\nat every level `≥ 1`; the level-0 multiplicity is then forced by the cardinality\nconstraint, so the conjecture should follow from a counting argument — but our current\nproof does not carry `s.card = t.card`, and making it do so requires a\ntropical-degree statement (`deg` of a min-plus polynomial = number of roots with\nmultiplicity, including roots at `0`).\n\n*Why now?* It is a two-lemma addition on top of the existing multiplicity theorem and\nwould complete the classification of exactly what the free-witness family sees.\n\n---\n\n## Conjecture 4 (Tropical hypersurface form of the factorisation problem). The set of factorisations of `N` is the corner locus of the two-variable tropical polynomial `P(X,Y) = (X ⊙ Y) ⊕ N`, and locating a corner point requires `Ω(√N)` queries in the min-plus query model.\n\n**Statement.** In the min-plus model where a query at `(x, y)` returns\n`min(x + y, log N)` plus the indicator of equality, any deterministic algorithm needs\n`Ω(√N)` queries to output a nontrivial corner point of `P`.\n\n*The key insight is* the straddle theorem `divisor_pair_straddles_corner`: every divisor\npair meets the corner `√N` from both sides, so a query at `(x,y)` only reveals which\nside of the tropical line the point lies on — one bit — while the number of candidate\ncorner points below the corner is `√N` and exactly one is nontrivial\n(`nontrivial_witness_below_corner`).\n\n*Why now?* Both ingredients are proved; what remains is to formalise the query model\nand run an adversary argument, which is a finite combinatorial statement well suited to\nLean.\n\n---\n\n## Conjecture 5 (Zero-entanglement is generic for algebraic witness Hamiltonians). Any energy of the form `E(a,b) = g(ab)` with `g(N) = 0` has a ground space that is a union of `τ(N)` product states, hence entanglement entropy exactly `0` and no descent gradient.\n\n**Statement.** Formalise \"product state\" and \"zero entanglement\" for the divisor-pair\nground space and prove that the ground space of every `ab`-mediated energy is a disjoint\nunion of `τ(N)` rank-one tensors, so no tensor-network ansatz with bond dimension `> 1`\ncan help.\n\n*The key insight is* that `energyGroundSet_eq` shows the ground space is a finite set of\n*points* (not a correlated subspace), and `energy_gap` shows the landscape is a delta:\nthe search cost is therefore the counting `4/N²`, independent of the representation.\n\n*Why now?* The ground-space computation is done; the remaining step is a definition of\nthe Schmidt rank of a finitely supported state, which Mathlib's tensor-product API can\nsupport directly.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Algebra",
         "Physics"
@@ -36567,7 +36567,7 @@
       "depth_estimate": 3,
       "description": "# Future directions — from the permutation readout to the next barrier\n\nThe formal results of this project (`Catalog/Physics/PermutationReadout*.lean`)\nsettle the PERMORD question: the permutation `x ↦ a·x` of the *whole ring*\n`Z/NZ` does separate `ord_p(a)` from `ord_q(a)` (cycle lengths `ord_{N/d}(a)`\non the strata `S_d`, `|S_d| = φ(N/d)`), it does factor `N` for a primitive\nmultiplier — and it is still useless, because\n\n* the free stratum is lcm-blind (`free_stratum_lcm_blind`),\n* every informative point already *is* a factor (`factor_of_nontrivial_stratum`),\n* the enumeration costs `> √N` (`sqrt_lt_totient`), and the informative points\n  have density `≤ 6/√N` for balanced semiprimes (`informative_density_sqrt`),\n* `ord_N(a)·#cycles = ∑_{k<ord_N(a)} gcd(N, a^k − 1)`\n  (`orderOf_mul_cycleCount_eq_sum_gcd`): the cycle count is the *sum of the\n  classical Pollard `p−1` probes*, and it exceeds its trivial value exactly when\n  one of those probes already succeeds\n  (`cycleCount_minimal_iff_no_pollard_hit`),\n* the surplus of the composite readout over the two prime readouts is exactly\n  `(gcd(ord_p a, ord_q a) − 1)·i_p·i_q` (`cycleCount_excess`) — so the *only*\n  new datum beyond the lcm is the gcd, and\n* the coarsest global summary of the whole spectrum, the permutation sign, is a\n  factorisation-free quantity **at every modulus** (see below).\n\n## Resolved in earlier cycles\n\n**Old conjecture C1 (Zolotarev–Frobenius for the full stratified readout) is now\na theorem**, and in fact the classification has been completed for *all* moduli:\n\n* `index_prime_pow_parity` — `i_{p^k} ≡ i_p (mod 2)` for odd `p`: the order can\n  only grow by a power of `p` when the modulus is raised\n  (`orderOf_prime_pow_dvd`), so `i_{p^k} = p^{k−1−j}·i_p` with an odd cofactor.\n* `sum_idx_divisors` — `∑_{e ∣ N} i_e ≡ 1 + ∑_{p ∈ primeFactorsList N} i_p\n  (mod 2)` for odd `N`: every divisor with two coprime factors `> 2` is\n  parity-dead.\n* `zolotarev_general` — for **every** odd `N` and every `a` coprime to `N`,\n  `J(a | N) = 1 ⟺ N − #cycles` is even.\n* `parity_readout_even` — at an even modulus `N = 2^s·m` the sign sees only the\n  stratum `4`: the permutation is always even when `N ≡ 2 (mod 4)`, and is odd\n  exactly when `4 ∣ N` and `a ≡ 3 (mod 4)`.  The odd part of `N` is invisible.\n* `permutation_sign_law` — the two halves combined: a single sign law valid for\n  every modulus, whose value is computable in polynomial time from `a` and `N`\n  alone.\n\nThe affine extension was opened and has now been **completely closed**\n(`Catalog/Physics/PermutationReadout{Affine,Sign,AffineClass}.lean`):\n\n* `cycleCountOf` — a cycle count for *arbitrary* self-maps of `ZMod N`, shown\n  compatible with the multiplicative one (`cycleCountOf_mul`), together with its\n  conjugation invariance (`cycleCountOf_conj`).\n* `cycleCountOf_affine` — whenever `1 − a` is invertible mod `N`, the shift is a\n  conjugating translation, so `#cycles(x ↦ a·x + b) = #cycles(x ↦ a·x)` for\n  every `b`.\n* `cycleCountOf_add` — the complementary extreme `a = 1`: the translation\n  `x ↦ x + b` has exactly `gcd(N, b)` cycles, i.e. the free gcd probe.\n\n## Resolved in this cycle\n\n**The sign bridge.**  `sign_eq_neg_one_pow_sub_numOrbits` proves, for every\npermutation `σ` of a finite type, that `sign σ = (−1)^(card − #orbits σ)`, and\n`cycleCountOf_eq_numOrbits` identifies the concrete cycle count of this project\nwith that orbit count.  The parity readout used everywhere above is therefore\nliterally the permutation signature — and hence *multiplicative*.\n\n**Old conjecture C1 (the affine sign law) is now a theorem, in all regimes.**\n\n* `affine_sign_law` — for every modulus `N`, every `a` coprime to `N` and every\n  shift `b`,\n  `N − #cycles(x ↦ a·x + b) ≡ (N − #cycles(x ↦ a·x)) + (N − gcd(N, b)) (mod 2)`.\n  The previously open regime `1 < gcd(a − 1, N) < N` is included.\n* `zolotarev_affine_all` — consequently, at an odd modulus the shift is always\n  invisible to the sign and the affine sign is the Jacobi symbol `J(a | N)` for\n  every coprime `a` and every `b`; the invertibility hypothesis of\n  `zolotarev_affine` is gone.\n\n**The affine cycle count itself is classified**\n(`Catalog/Physics/PermutationReadoutAffineClass.lean`).  With\n`g = gcd(N, a − 1)`:\n\n* `cycleCountOf_affine_unit`, `cycleCountOf_affine_shift` — the two conjugations\n  acting on the affine family (rescaling the shift by a unit, moving it by a\n  multiple of `a − 1`);\n* `gcd_eq_mul_sub_one` — Bézout puts `g` inside the ideal generated by `a − 1`;\n* `cycleCountOf_affine_of_dvd` — if `g ∣ b` the shift is invisible and the count\n  is exactly `cycleCount N a` (this contains `cycleCountOf_affine`, the case\n  `g = 1`);\n* `cycleCountOf_affine_of_gcd_eq` — **the whole affine readout depends on the\n  shift only through the single number `gcd(g, b)`**.  Enlarging the attack\n  surface from `x ↦ a·x` to `x ↦ a·x + b` therefore buys exactly one extra gcd\n  probe, computable in polynomial time and factorisation-free.\n\n**The power readout at a prime is the multiplicative readout one level down**\n(`Catalog/Physics/PermutationReadoutPowerMap.lean`).  Transport machinery for\nthe orbit count (`numOrbits_permCongr`: invariance under conjugation by any\nbijection, even between different types; `numOrbits_optionCongr`: adjoining a\nfixed point adds one orbit) plus the discrete logarithm give\n\n* `cycleCountOf_pow_prime` — `#cycles(x ↦ x^k on ZMod p) = cycleCount(p−1, k) + 1`\n  for `gcd(k, p − 1) = 1`, and\n* `power_readout_sign_law` — `x ↦ x^k` is an even permutation of `ZMod p`\n  exactly when `4 ∣ p − 1 → k ≡ 1 (mod 4)`: once again a factorisation-free\n  sign.\n\nThe five conjectures below are the concrete, falsifiable continuations.\n\n---\n\n## C1. The power readout stays factorisation-free at composite moduli\n\n**Conjecture.** Let `N` be odd and squarefree and let `k` be coprime to `λ(N)`,\nso that `x ↦ x^k` permutes `Z/NZ`.  Then\n\n`N − #cycles(x ↦ x^k)` is odd  ⟺  `k ≡ 3 (mod 4)` and `#{p ∣ N : p ≡ 1 (mod 4)}`\nis odd.\n\nIn particular the sign of every power permutation is computable in polynomial\ntime from `N` and `k` *given the factorisation-free data alone*, so the power\nfamily — the natural non-affine enlargement of the attack surface — leaks\nnothing either.\n\n*The key insight is* that a CRT product of permutations of odd-cardinality\nfactors has sign equal to the product of the signs\n(`sign(σ₁ × σ₂) = sign(σ₁)^{|X₂|}·sign(σ₂)^{|X₁|}` with both exponents odd), so\nthe composite sign is the product of the prime signs, and the prime sign is\nalready a theorem here (`power_readout_sign_law`): it is nontrivial exactly for\n`p ≡ 1 (mod 4)` and `k ≡ 3 (mod 4)`.\n\n*Why now?* The prime case and the whole orbit-count transport theory are proved\n(`cycleCountOf_pow_prime`, `numOrbits_permCongr`, `numOrbits_optionCongr`); only\nthe CRT step is missing.  Exploratory enumeration of all odd squarefree `N < 200`\nand all `k < 30` for which `x ↦ x^k` is a permutation found no violation (this is\nexploratory computation, not a verified check).  A single counterexample pair\n`(N, k)` would refute it.\n\n## C2. The Burnside identity is the *complete* accounting of every polynomial map\n\n**Conjecture.** For every polynomial `f ∈ Z[X]` inducing a permutation `σ_f` of\n`Z/NZ`, the cycle count satisfies\n`#cycles(σ_f) = (1/L) ∑_{k<L} #Fix(f^{∘k})` with\n`#Fix(f^{∘k}) = #{x : N ∣ f^{∘k}(x) − x}`, and each fixed-point count is\ncomputable from the resultants `Res(f^{∘k}(X) − X, ·)` — so *no* polynomial\npermutation readout can carry information beyond a family of gcds of the form\n`gcd(N, g(a))` with `g` a fixed integer polynomial, i.e. beyond the\nderived-modulus barrier already established in\n`Physics/DerivedModulusNoGo.lean`.\n\n*The key insight is* that `card_fixedPoints_eq_gcd` is not special to\nmultiplication: it says the fixed-point count of any map is a gcd with `N`, and\norbit counting then turns every \"cycle-structure attack\" into an average of gcd\nprobes.\n\n*Why now?* Both halves already exist formally in this catalogue: the Burnside\nhalf is proved here, the resultant/derived-modulus half in\n`DerivedModulusResultant.lean`. Only the interface is missing.\n\n## C3. Cycle-count spectroscopy determines `gcd(p−1, q−1)` and nothing more\n\n**Conjecture.** For `N = pq` and `a` ranging over all primitive multipliers, the\nmap `a ↦ #cycles(σ_a)` is *constant*, equal to `gcd(p−1, q−1) + 3`; for general\n`a`, `#cycles(σ_a)` is determined by `(ord_p(a), ord_q(a), N)` alone, and by\n`cycleCount_excess` the only datum it adds to the free lcm is\n`gcd(ord_p a, ord_q a)`.  Conjecturally, an oracle returning\n`gcd(ord_p a, ord_q a)` for chosen `a` does **not** give a polynomial-time\nfactoring algorithm — the pair `(lcm, gcd)` does not determine the unordered\npair `{ord_p a, ord_q a}` (e.g. `{1,6}` and `{2,3}` share `lcm = 6`,\n`gcd = 1`).\n\n*The key insight is* the collapse proved here as `cycleCount_primitive`\n(`φ(N)/lcm(p−1,q−1) = gcd(p−1,q−1)`) together with\n`cycleCount_eq_prod_iff_coprime_orders`: the readout's surplus is a single\ndivisor-theoretic invariant, not a two-dimensional readout.\n\n*Why now?* `cycleCount_primitive`, `cycleCount_semiprime` and\n`cycleCount_excess` are proved; the open half is the *hardness* claim, which can\nbe formalised as a reduction: \"factoring with a `gcd(ord_p a, ord_q a)` oracle\"\nis the right next formal target.\n\n## C4. A quantitative barrier-4 theorem: cycle readout needs Ω(N/ log N) probes\n\n**Conjecture.** Any algorithm that determines `#cycles(σ_a)` for adversarially\nchosen `N = pq` while querying the permutation only through evaluations\n`x ↦ a·x` must make `Ω(N / log N)` queries; in particular the readout can never\nbeat trial division, uniformly in `a`.\n\n*The key insight is* that the informative points number exactly `p + q − 1`\n(`card_informative_semiprime`), a set of density `≤ 2/p` and `≤ 6/√N` for\nbalanced semiprimes (`informative_density`, `informative_density_sqrt`), and\nhitting it is equivalent to factoring (`factor_of_nontrivial_stratum`) — so a\nquery lower bound should follow from a standard hitting-set/adversary argument\nrather than from any number theory.\n\n*Why now?* The combinatorial input (exact size and density of the informative\nset) is now a theorem; only the query-complexity model has to be formalised.\n\n## C5. The quantum channel is exactly the missing enumeration\n\n**Conjecture.** Shor's period-finding applied to `k ↦ a^k mod N` recovers\n`ord_N(a)` in polynomial time but *provably cannot* recover any individual\n`ord_p(a)`: the reduced-modulus data `{ord_{N/d}(a)}` is accessible to a quantum\nsampler only through states supported on the strata `S_d`, whose total weight is\n`(p+q−1)/N = O(N^{-1/2})` for balanced semiprimes. Formally: preparing a\nuniform superposition over a non-unit stratum requires a factor of `N`.\n\n*The key insight is* that the asymmetry proved here lives entirely on a set of\nmeasure `O(N^{-1/2})`, so the quantum advantage in period finding does not\ntransfer to the asymmetric readout without a state-preparation oracle that is\nitself as hard as factoring.\n\n*Why now?* The density statements are proved (`informative_density`,\n`informative_density_sqrt`), and the stratum decomposition is available as a\nLean-level partition (`sum_stratum_card`), which is exactly the decomposition a\nquantum register would need.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "NumberTheory",
         "Algebra"
@@ -37842,6 +37842,87 @@
       "thread_id": "",
       "timestamp": "2026-08-15T05:50:03.464588+00:00",
       "title": "Compression Research A1: Price of universality — minimax redundancy of universal decompressors"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "# Future Directions — the cyclic splitting-type channel\n\nDerived from what survived and what failed in this cycle.  Each conjecture is falsifiable by a\nsingle computation on a cyclic order `n`; each is currently supported by exhaustive enumeration\nin `ComputationalEvidence.md` but *not* proved.\n\nNotation: for a cyclic Galois order `n`, `T(x) = n / gcd(n, x)` is the splitting type,\n`H(T)(n)` its entropy, `nr` the binary \"splits completely or not\" readout, and\n`I_pair(n) = H(Π) − (1/n)Σ_c H(Π_c)` the unordered type-pair / product-residue channel of the\ncatalog model.\n\n---\n\n## Conjecture 1 (parity dichotomy of the cap)\n\n**For every `n ≥ 2`: `I_pair(n) > 1` if and only if `n` is even and `n ≥ 4`; `I_pair(2) = 1`;\nand `I_pair(n) < 1` for every odd `n ≥ 3`.**\n\n*Status.* Proved for prime orders in both directions (`Ipair_prime_lt_one`,\n`Ipair_prime_eq_one_iff_two`); verified by exhaustive enumeration for every `2 ≤ n ≤ 24`;\nopen for general composite `n` (in particular for every odd composite `n ≥ 9`).\n\n*The key insight is* that the cap is a statement about the **2-torsion of the Galois group**,\nnot about the number of splitting types: the product residue `N ≡ pq` determines the pair type\nonly through the quotient by squares, so exactly one bit of pair information — the parity bit —\nis unconditionally recoverable, and everything above one bit must come from a further even\nlevel of the divisor lattice.\n\n*Why now?* The prime case is now closed in Lean with an exact closed form, so the remaining\ncontent is precisely the composite case; and the coprime additivity of `H(T)`\n(`HT_mul_coprime`) plus the Sylow decomposition (`HT_eq_sum_primePow`) give the algebraic\nscaffolding that was missing before.\n\n---\n\n## Conjecture 2 (CRT additivity of the pair channel)\n\n**For coprime `m, n > 0`: `I_pair(mn) = I_pair(m) + I_pair(n)`.**\n\n*Status.* The analogous statement for the single-prime channel is a theorem\n(`HT_mul_coprime`), and the type map itself is CRT-multiplicative (`typNat_mul_coprime`).\nThe pair statement is confirmed exactly on all nine tested coprime pairs, including\n`I_pair(12) = I_pair(3) + I_pair(4)` and `I_pair(45) = I_pair(9) + I_pair(5)`.\n\n*The key insight is* that the pair channel of `C_{mn}` is the *product channel* of the pair\nchannels of `C_m` and `C_n`: CRT splits both the type variable and the conditioning residue\ninto independent coordinates, and mutual information is additive over independent products.\n\n*Why now?* All the ingredients are formalized — the CRT multiplicativity of the type map, the\nadditivity of `H(T)`, and a general evaluation scheme for `I_pair`.  What is missing is a\nproduct decomposition of the conditional tables `Π_c`, a purely combinatorial step.\n\nConjecture 1 follows from Conjecture 2 together with the 2-adic law of Conjecture 3 and the\nproved bound `I_pair(p) < 1` for odd primes, so this is the highest-leverage target.\n\n---\n\n## Conjecture 3 (the 2-adic pair law)\n\n**For every `k ≥ 1`: `I_pair(2^k) = (4/3)(1 − 4^{−k})`, hence the 2-primary pair channel\nsaturates at exactly `4/3` bits.**\n\n*Status.* Verified exactly for `k = 1,…,6`.  The corresponding *type* statement is now a\ntheorem: `H(T)(2^k) = 2 − 2^{1−k}` with `H(T)(2^k) ↑ 2` (`HT_two_pow`,\n`HT_two_pow_tendsto`).\n\n*The key insight is* that along the 2-adic tower the conditional pair tables are self-similar:\nthe table at level `k+1` is the table at level `k` refined by one extra binary square-class\nbit, which produces a geometric series with ratio `1/4` — the same self-similarity that gives\nthe exact type law `2 − 2^{1−k}`.\n\n*Why now?* The type-side geometric law is proved, and its proof (an induction over the divisor\ntower `1, 2, …, 2^k` with `φ(2^j) = 2^{j−1}`) is exactly the recursion the pair side needs.\n\n---\n\n## Conjecture 4 (sharp second-order asymptotics of the prime channel)\n\n**`p² · I_pair(p) − log₂ p → 2·log₂ e = 2/ln 2 = 2.885390…` as `p → ∞` along the primes;\nin particular `I_pair(p) = (log₂ p + 2 log₂ e + o(1))/p²`.**\n\n*Status.* The two-sided bound `1/(p² log 2) ≤ I_pair(p) ≤ (log₂ p + 5)/p²` is proved\n(`Ipair_prime_lower`, `Ipair_prime_upper_sq`); the sharp constant is not.  Evaluating the\nproved closed form: `p² I_pair(p) − log₂ p` = 2.7458 (p=5), 2.7838 (p=7), 2.8301 (p=13),\n2.8541 (p=23), 2.8782 (p=101), 2.8847 (p=1009) — monotonically approaching `2/ln 2`.\n\n*The key insight is* that in the closed form the `log₂ p` coefficients\n`1 − (p−1)(2p−1)/p² + (p−1)(p−2)/p²` cancel to exactly `1/p²`, so the entire remaining channel\nis the second-order part of the `log(1 − 1/p)` and `log(1 − 2/p)` expansions, whose `1/p` terms\ncancel as well and whose `1/p²` terms combine to `2/ln 2`.\n\n*Why now?* An exact closed form for `I_pair(p)` now exists in Lean, so the asymptotic question\nis a pure real-analysis exercise with no combinatorics left in it — a good target for a\nTaylor-expansion formalization.\n\n---\n\n## Conjecture 5 (divisor-lattice extremality)\n\n**Among all cyclic orders with exactly `D` divisors, `H(T)(n)` is maximized by the orders whose\ntype law is closest to uniform on the divisor lattice, and `sup_n (log₂ d(n) − H(T)(n)) = ∞`\nwhile `inf_n (log₂ d(n) − H(T)(n)) = 0` is attained only at `n ≤ 2`.**\n\n*Status.* The upper bound `H(T)(n) ≤ log₂ d(n)` and its strictness for `n ≥ 3` are proved\n(`HT_le_logb_card_divisors`, `HT_lt_logb_card_divisors`); the extremal analysis is open.\nNumerically the gap is 0.085 at `n = 4`, 0.081 at `n = 6`, 0.36 at `n = 9`, 0.45 at `n = 16`.\n\n*The key insight is* that the deficit `log₂ d(n) − H(T)(n)` is exactly a Kullback–Leibler\ndivergence between the Euler-φ law `φ(d)/n` and the uniform law on divisors, so the extremal\nproblem is a KL-minimization over the divisor lattice — a convex problem whose solution should\nbe dictated by the multiplicities in the prime factorization.\n\n*Why now?* The Gibbs estimate used to prove the bound already exhibits the deficit as a sum of\nper-divisor relative-entropy terms, so the KL reformulation is one refactoring away, and the\nSylow decomposition reduces the extremal problem to prime powers.\n",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "NumberTheory"
+      ],
+      "github_issue": 0,
+      "id": "fd_1295",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.75,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "70d03dec",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/70d03dec",
+      "status": "available",
+      "thread_id": "th_cdd6a1d8",
+      "timestamp": "2026-08-15T07:05:01.077981+00:00",
+      "title": "Derived from what survived and what failed in this cycle.  Each conjecture is fa"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "## NET-32 — THE-INTERNALIZATION-TRAIT-IS-A-TRAINING-SOLUTION-PROPERTY-NOT-SEED-INTRINSIC\n\n**Program:** Network/LLM research lab, round-net-32 (mechanism axis). Constructive test of NET-31's \"seed-fixed trait\": is the eval-load-bearingness of the exclusive boundary block INTRINSIC to the seed, or a TRAINING ARTIFACT of the converged solution?\n\n**Method (ALL_DONE_NET32, /tmp/exp_net_eos_ftune.py):** 6 arms at E=23 (k=3), byte-identical EOSWidthGRU — the complete known-dependent population {13,14,15,17} + controls {16,18}. Standard 12000-step training → stage-0 ctl+zeroN (exact same-seed replication of NET-31 labels) → fine-tune T∈{300,1000,3000} steps with the exclusive block ZEROED at the EOS step (the zeroN eval condition made a TRAINING condition), eval at each stage.\n\n**Results (n=8 full):**\n- Stage-0 replication EXACT: zeroN {0.7041, 0.9014, 0.7104, 0.9932, 0.7437, 0.9995} = NET-31 to 4 decimals.\n- Conversion: zeroN T=300 {0.9980, 1.0000, 1.0000, 0.7163, 1.0000, 1.0000}; T=1000 {0.9746, 1.0000, 0.9390, 0.6763, 0.9980, 0.9150}; T=3000 all 1.0000.\n- T=3000 final: ctl/zeroN/zero1@0/flip1@0/scale0.1 = 1.0000 in all 6 arms × 5 interventions.\n\n**Laws:**\n1. The trait is a property of the converged SOLUTION, not the seed — 4/4 dependent seeds convert to self-sufficient in ≤3000 steps (≤2.5% of the training budget). INTRINSIC-TRAIT refuted.\n2. Exact same-seed replication = the control (conversion measured on the identical solutions NET-31 labeled).\n3. Fast onset: ≥0.99 at T=300 in 5/6 arms.\n4. NON-MONOTONE in 4/6 arms (transient n=8 reorganization dip: s=13 T=1000 0.975, s=15 T=1000 0.939, s=16 T=300/1000 0.716/0.676, s=18 T=1000 0.915), always recovering by T=3000 — deploy only at full convergence.\n5. Cure preserved: ctl ends 1.0000 in 6/6.\n6. Post-conversion the block is INERT: zero1@0/flip/scale (never training conditions) are exact no-ops — the trained block-gated solution path (which needed all coords, zero1=0% at k≥2) is GONE.\n7. Mechanism = dynamic stop-routing (block present at ~full magnitude, weight-decay-bounded ~0.97×; EOSCOORD-AFTER |0.06| was a scale0.1 measurement artifact, honestly corrected).\n\n**Design rule upgrade:** ≥3 exclusive dims ⇒ reliable success; then a ≤3000-step no-boundary final fine-tune makes the block OPTIONAL seed-independently — the ~60% internalization lottery and verify-per-instance caveat are gone.\n\n**Barriers:** (a) clean — ctl at full magnitude preserved, untrained interventions inert, n=6-8 length-gen survives; (b) confronted — no-boundary fine-tuning is a known qualitative family, the exact T-law + dip + inertia + trait-not-intrinsic are the novel content (Catalog: closest pkg 693/35 certified adversarial robustness, orthogonal); (c) toy-scale confronted (REAL-SCALE = frontier); (d) clean; (e) complete known-dependent population tested; (f) clean after honest correction of the EOSCOORD-AFTER artifact; (g) same-arm T=0 control; (h) high — one-time protocol replaces per-instance verification.\n\n**Paper 76.** Script /tmp/exp_net_eos_ftune.py; log /tmp/net32.log.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Novelty"
+      ],
+      "github_issue": 139,
+      "id": "fd_1296",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 1000.0,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "github_injection",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-08-15T07:05:27.502521+00:00",
+      "title": "NET-32: The internalization trait is a training artifact, not seed-intrinsic — a no-boundary final fine-tune converts 4/4 known-dependent seeds {13,14,15,17} to self-sufficient (exact same-seed replication; cure preserved; block left inert)"
     },
     {
       "ambition_level": "extension",
@@ -39257,7 +39338,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 560413ae (Q=0.820), which proved 131 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Proves that logarithmic negativity is a strict entanglement monotone under Local Operations and Classical Communication (LOCC).",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Physics"
       ],
@@ -39817,7 +39898,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 647e3d96 (Q=0.775), which proved 10 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Proves that a physical system's observable geometric state is strictly conditioned on the topological complexity of the observing neural network (Twilight Zone / Perceptual Reality).",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Physics"
       ],
@@ -42217,7 +42298,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle e0db545b (Q=0.910), which proved 202 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Paper:** `ResearchOutput/NewMathematics/33_Permutation_Readout_Asymmetry.md` (factor3)\n**Experiment:** PERMORD (#368), assessment v144.\n\n## Finding\nThe free order-probes only ever see `ord_N(a) = lcm(ord_p(a), ord_q(a))` — a\nsymmetric data loss. This paper closes that \"lcm-blindness\" loophole: the",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Physics"
       ],
@@ -42297,7 +42378,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle e3e9c821 (Q=0.792), which proved 15 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize Noether's theorem in Lean 4: every continuous symmetry of the action yields a conserved quantity. Prove energy conservation from time-translation, momentum from space-translation, angular momentum from rotational symmetry. Apply to Kepler problem.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Physics"
       ],
@@ -42337,7 +42418,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle e722c646 (Q=0.771), which proved 10 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The renormalization group in physics zooms out by integrating out high-energy modes. Formalize this as an inverse stereographic projection on the energy sphere: RG flow equals iterated stereographic projection with varying pole. Conjecture: The beta function beta(g) in phi^4 theory equals the deriva",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Physics"
       ],
@@ -43349,7 +43430,7 @@
       "depth_estimate": 3,
       "description": "Formally proves conditions under which information can exist purely within a closed timelike curve loop without ever having an initial origin (Ontological Paradox).",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Physics"
       ],
@@ -43389,7 +43470,7 @@
       "depth_estimate": 3,
       "description": "Derives non-signaling boundary conditions allowing superluminal tachyon pulses to modulate past quantum states without triggering fatal temporal paradoxes.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Physics"
       ],
@@ -43429,7 +43510,7 @@
       "depth_estimate": 3,
       "description": "Proves that entropy strictly decreases along retro-geodesics within intense Kerr black hole ergospheres.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Physics"
       ],
@@ -43549,7 +43630,7 @@
       "depth_estimate": 3,
       "description": "Derives upper bound on thermodynamic energy extraction from mega-scale orbital solar collection swarms encircling main-sequence stars.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Physics"
       ],
@@ -43589,7 +43670,7 @@
       "depth_estimate": 3,
       "description": "Proves exact minimum exotic negative energy density requirements necessary to maintain a stable superluminal Alcubierre warp bubble without collapse.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Physics"
       ],
@@ -43709,7 +43790,7 @@
       "depth_estimate": 3,
       "description": "Proves that a physical system's observable geometric state is strictly conditioned on the topological complexity of the observing neural network (Twilight Zone / Perceptual Reality).",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Physics"
       ],
@@ -43949,7 +44030,7 @@
       "depth_estimate": 3,
       "description": "Formalizes Giulio Tononi's Integrated Information Theory (Phi) as a continuous scalar field over spacetime manifolds.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Physics"
       ],
@@ -44269,7 +44350,7 @@
       "depth_estimate": 3,
       "description": "Formalizes theoretical probability bounds for macroscopic quantum tunneling between decohered Everett multiverse branches.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Physics"
       ],
@@ -44309,7 +44390,7 @@
       "depth_estimate": 3,
       "description": "Calculates maximum divergence rate of macroscopic physical observables following a single quantum measurement event.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Physics"
       ],
@@ -44349,7 +44430,7 @@
       "depth_estimate": 3,
       "description": "Formalizes the Ekpyrotic universe model where big bang singularities are produced by periodic collisions of 4D branes in 5D bulk space.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Physics"
       ],
@@ -44389,7 +44470,7 @@
       "depth_estimate": 3,
       "description": "Proves the mathematical signature of gravitational energy leaking from our universe into neighboring extra-dimensional branes.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Physics"
       ],
@@ -44469,7 +44550,7 @@
       "depth_estimate": 3,
       "description": "Proves the existence of a non-zero net directional force generated by asymmetric Casimir cavity geometry in quantum vacuum.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Physics"
       ],
@@ -44549,7 +44630,7 @@
       "depth_estimate": 3,
       "description": "Formally proves that Hawking radiation carries complete quantum information out of an evaporating black hole via subtle page curve correlations.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Physics"
       ],
@@ -44589,7 +44670,7 @@
       "depth_estimate": 3,
       "description": "Proves absolute bounds on power extraction rates from zero-point quantum field fluctuations without violating global conservation laws.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Physics"
       ],
@@ -46043,7 +46124,7 @@
       "depth_estimate": 3,
       "description": "Derive an analytic form for the square site percolation threshold. Formalize bond vs site percolation, prove known exact thresholds for triangular lattices, and connect to conformal invariance.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Probability",
         "Physics"
@@ -60110,7 +60191,7 @@
       "depth_estimate": 3,
       "description": "Cycle c6b3a18e (Q=0.629) proved 102 theorems in Physics but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: In the far future (10^100 years), all stars burn out and computation ceases. Formalize: a 'theorem' is a finite string provable in ZFC. Prove: the set of all theorems is countably infinite, so in prin",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Physics"
       ],
@@ -60380,40 +60461,45 @@
   "pruned": [],
   "recent_domain_counts": {
     "Logic": 1,
-    "Novelty": 44,
+    "Novelty": 45,
     "Physics": 1,
     "Pythagorean": 1
   },
   "recent_theme_keywords": {
+    "**1.2500**": 1,
+    "**[t=1": 1,
     "**experiment:**": 12,
     "**paper:**": 12,
     "**summary.**": 12,
     "**theorem": 8,
     "*factoring": 12,
+    "0.8110": 1,
+    "1/φ(f))σ_c": 1,
     "across": 5,
     "algorithm": 4,
-    "assessment": 29,
+    "assessment": 30,
     "asymmetric": 6,
-    "barrier": 30,
-    "barriers": 17,
+    "barrier": 31,
+    "barriers": 18,
     "beyond": 2,
-    "binary": 3,
+    "binary": 4,
     "breakthrough": 13,
     "candidates": 3,
     "cannot": 9,
-    "channel": 7,
+    "channel": 8,
     "claim.*": 12,
     "classical": 23,
     "claude": 11,
     "closed": 17,
     "cm-ecm-order": 2,
     "code](https://claude.com/claude-code": 12,
-    "collapses": 14,
-    "computable": 4,
-    "confirmed": 11,
+    "collapses": 15,
+    "computable": 5,
+    "confirmed": 12,
     "deliverable": 12,
-    "exactly": 26,
+    "exactly": 27,
     "exhausted": 11,
+    "experiment": 1,
     "exponential": 8,
     "factor": 21,
     "factor3": 13,
@@ -60421,12 +60507,13 @@
     "factorization": 11,
     "factors": 15,
     "family": 2,
-    "fields": 2,
+    "fields": 3,
     "finding": 15,
     "flatness": 2,
     "framework": 15,
-    "function": 8,
+    "function": 9,
     "generated": 9,
+    "governed": 1,
     "honest": 4,
     "hypothesis": 3,
     "independent": 10,
@@ -60434,21 +60521,18 @@
     "inside": 5,
     "integer": 2,
     "jacsign": 2,
-    "low-bit": 1,
-    "matrix):**": 1,
+    "lossiness": 1,
     "mechanism": 2,
     "methods": 5,
     "moduli": 8,
-    "n-computable": 5,
+    "n-computable": 6,
     "non-polynomial": 2,
     "orthogonality": 4,
-    "p_1+q_1": 1,
-    "paper": 25,
+    "paper": 26,
     "permutation": 7,
     "pollard": 7,
     "polynomial": 12,
     "primes": 11,
-    "profile": 1,
     "program": 4,
     "proof": 10,
     "proven": 12,
@@ -60457,34 +60541,31 @@
     "remains": 14,
     "requires": 10,
     "research": 17,
-    "researchoutput/newmathematics/50_traceprofile_leasthiddeninvariant.md": 1,
-    "residue": 19,
+    "residue": 20,
     "residues": 3,
     "search": 4,
-    "semiprimes": 20,
+    "semiprimes": 21,
     "sharpest": 5,
     "shor's": 6,
     "signal": 2,
+    "split-count": 1,
     "status": 12,
     "structural": 11,
-    "structure": 14,
+    "structure": 15,
     "surface": 12,
-    "symmetric": 20,
+    "symmetric": 21,
     "symmetry": 4,
     "synthesis": 4,
     "tested": 7,
     "theorem": 18,
     "theory": 9,
-    "trace": 1,
-    "trace-set": 1,
     "trials": 5,
-    "unifies": 2,
+    "unifies": 3,
     "uniform": 15,
-    "verdict": 18,
+    "verdict": 19,
     "verified": 28,
     "within": 6,
-    "witness": 4,
-    "|s_{m#}|/m#": 1
+    "witness": 4
   },
   "selection_log": [
     "famous_subtask",
