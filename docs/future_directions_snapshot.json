@@ -78,25 +78,6 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "e9be7e31",
-    "description": "**Part of:** Research plan — *Compression Beyond the Pigeonhole Bound* (Phase B, Question 2: can random number generators help?).\n\n## Research question\nPigeonhole governs *exact* decoding for *all* strings. Relax to: **decoder fails with probability ≤ ε** (almost-lossless). Random codebooks (Shannon's random-coding argument) then reach near-optimal rates — the counting bound relaxes by an ε-dependent factor.\n\n## Approach\n- Constructive almost-lossless schemes with small failure probability.\n- The real obstacle is **decoder search complexity** (naive random coding is exponential), not the rate — tackle that.\n- Error detection (checksums) so failures are **never silent**.\n\n## Deliverable\nA scheme plus a proof that decode succeeds with probability ≥ 1−ε, and its exact decoding complexity.\n\n## Falsifiability / gate\nFor each scheme: bound on P(failure) and an explicit decoder-complexity figure. No silent corruption allowed.\n\n**Milestone:** M9.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1287",
-    "lineage_refs": [],
-    "priority_score": 1000.0,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-15T05:50:03.460213+00:00",
-    "title": "Compression Research B3: Almost-lossless / Monte Carlo compression"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
     "consumed_by_exp_id": "e67b8bbc",
     "description": "**Part of:** Research plan — *Compression Beyond the Pigeonhole Bound* (Phase B, Question 2: can random number generators help?).\n\n## Claim (negative result)\nA deterministic PRNG **cannot** help compress arbitrary data.\n\n## Proof sketch\nA fixed function seed → stream is deterministic: `2^s` seeds produce at most `2^s` distinct streams, so representing an arbitrary n-bit string still needs `s ≥ n − c`. A PRNG creates **no entropy** — the \"compress to the seed\" trick only works when the data was *already* PRNG-generated (i.e., it always had low Kolmogorov complexity and the PRNG is just the right decompressor).\n\n## Deliverable\nA crisp, citable proof plus a working demo (e.g., a seeded generator whose outputs appear \"compressible\" while a true random file stays at n bits).\n\n## Purpose\nKill this dead end with evidence **before** anyone spends a year hunting \"the seed that contains my file.\" Calibrates the team on exactly what randomness can and cannot do.\n\n**Milestone:** M1 (days).\n",
     "domain_bridges": [],
@@ -116,83 +97,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "**Part of:** Research plan — *Compression Beyond the Pigeonhole Bound* (Phase B, Question 2: can random number generators help?).\n\n## Research question\nIn **distributed** compression (Slepian–Wolf / Wyner–Ziv), the encoder and decoder each see correlated but different observations. Shared randomness between them does **not** count toward rate and provably achieves the joint-entropy bound the encoder alone couldn't reach. A PRNG is the practical vehicle for that shared randomness.\n\n## Approach\n- Practical codes exploiting common randomness (linear codes + random cosets).\n- The **seeding protocol**: how the PRNG seed is established out-of-band without counting against rate.\n- Identify the regime where the PRNG-backed common source shrinks rate vs. the encoder's own side information.\n\n## Deliverable\nConstructive schemes with rate proofs and a seeding protocol.\n\n## Falsifiability / gate\nFor each scheme: achievable rate vs. joint-entropy bound, with the seed demonstrably not counted as transmitted bits.\n\n**Milestone:** M6. **This is the honest home for \"PRNG helps compression\" — it's about the setting, not the message.**\n",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1289",
-    "lineage_refs": [],
-    "priority_score": 1000.0,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-15T05:50:03.461442+00:00",
-    "title": "Compression Research B2: Common randomness in distributed compression (Slepian-Wolf / Wyner-Ziv)"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "**Part of:** Research plan — *Compression Beyond the Pigeonhole Bound* (Phase A, Question 1: separating the decompressor from the data).\n\n## Why this exists\nEvery compression result in the plan must be judged against the field standard, or it is **cheating, not compression**. This is a mandatory process / infrastructure issue for all other items.\n\n## The standard (Hutter Prize rules)\n- Decoded output must **exactly** match the input (lossless).\n- Decoding must run under a **16 GB memory limit**.\n- No precomputed dictionaries or hidden side channels.\n- The decompressor must be reconstructible from the transmitted message + the *public, fixed* substrate.\n\n## Deliverable\nA verification harness enforcing this standard across all plan items — including the check that any model delta is counted as transmitted bits.\n\n**Gate for every other issue:** if a result can't pass this harness, it's not a compression breakthrough — it's a trick.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1290",
-    "lineage_refs": [],
-    "priority_score": 1000.0,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-15T05:50:03.462046+00:00",
-    "title": "Compression Research A5: Verification discipline — 16GB decode standard"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "**Part of:** Research plan — *Compression Beyond the Pigeonhole Bound* (Phase A, Question 1: separating the decompressor from the data).\n\n## Research question\nWhat if the transmitted program itself contains a decompressor? `U(p)` where `p = (U', p')` — a **recursive / hierarchical** scheme. Does the overhead grow sublinearly across levels? Likely 2 levels capture nearly all the gain.\n\n## Approach\n- Analyze overhead growth per level analytically.\n- Implement a 2-level demo and measure on corpora.\n\n## Deliverable\nA definitive result (positive or negative) on whether hierarchical decompressors pay for themselves.\n\n## Falsifiability / gate\nMust show per-message overhead vanishes or is absorbed across levels, under exact-match decoding.\n\n**Milestone:** M7 (cheap, ~1 week).\n",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1291",
-    "lineage_refs": [],
-    "priority_score": 1000.0,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-15T05:50:03.462664+00:00",
-    "title": "Compression Research A4: Meta-compression — recursive decompressors"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "**Part of:** Research plan — *Compression Beyond the Pigeonhole Bound* (Phase A, Question 1: separating the decompressor from the data).\n\n## Research question\nInstead of a fixed model, **search a space of programs** for the shortest one that emits `x`. This is a direct attack on Kolmogorov complexity `K(x)`. The interpreter is the shared decompressor (free, constant); the program is the message; the search is where cleverness goes.\n\n## Approach\n- Build a **compression substrate**: a small Turing-complete interpreter with cheap built-in primitives for patterns real data has (rep-patterns, LZ matches, arithmetic loops, tables).\n- Apply modern heuristic search over the program space: MCTS, genetic programming, gradient-guided program synthesis.\n- Tame the exponential search with *data-structured* program spaces and strong priors; budgeted search with early gating.\n\n## Deliverable\nThe substrate + search loop, with measured compression on text and structured corpora.\n\n## Falsifiability / gate\nMust beat SOTA lossless baselines exactly, under the 16 GB decode standard. **This is the single most promising structural direction for decompressor separation.**\n\n**Milestone:** M3. Related: [[B4]] (randomized search as the engine for this).\n",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1292",
-    "lineage_refs": [],
-    "priority_score": 1000.0,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-15T05:50:03.463273+00:00",
-    "title": "Compression Research A3: Program search as compression — Kolmogorov-approximation substrate"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8da3e793",
     "description": "**Part of:** Research plan — *Compression Beyond the Pigeonhole Bound* (Phase A, Question 1: separating the decompressor from the data).\n\n## Research question\nA fixed pretrained model (e.g., an LLM) used as the shared decompressor + arithmetic-coded residual beats classical compressors on text by a wide margin. The open problem: **the transmitted model delta costs bits** — how do we amortize it?\n\n## Approach\n- Benchmark LLM-as-decompressor against gzip/bz2/context-mixing baselines (enwik8/9).\n- Investigate sparse / low-rank parameter patches (LoRA-style) as the transmitted program — how many bits to shift a shared decoder to a specific domain?\n- Design an amortized protocol: decompressor adapts across a *stream* of messages, paying the delta once.\n\n## Deliverable\nSOTA text-compression baseline under the 16 GB decode standard, plus an amortized model-delta protocol.\n\n## Falsifiability / gate\nMust beat classical baselines *losslessly* (decoded output exactly matches input) with the decoder fixed at deploy time. Any delta is part of the transmitted message.\n\n**Milestone:** M4.\n",
     "domain_bridges": [],
     "domains": [
@@ -204,14 +109,14 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-15T05:50:03.463912+00:00",
     "title": "Compression Research A2: Learnable shared decompressors — model is free, model delta is not"
   },
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ced84d0b",
     "description": "**Part of:** Research plan — *Compression Beyond the Pigeonhole Bound* (Phase A, Question 1: separating the decompressor from the data).\n\n## Research question\nOne shared decompressor `U` must serve all inputs. A decompressor specialized to a *class* of data does better per class. What is the **price of universality** — the minimax redundancy a universal scheme must pay over a per-distribution scheme?\n\n## Approach\n- Derive closed-form / tight bounds on universal redundancy for natural source classes: stationary sources, finite-state, Markov.\n- Express redundancy as a function of message length `n` and class complexity.\n\n## Deliverable\nRigorous bounds on universal vs. per-distribution redundancy, and a conclusion on whether specialized decompressors are theoretically worth pursuing.\n\n## Falsifiability / gate\nBounds must match or beat known minimax rates from the literature (Rissanen-style redundancy). If specialization doesn't move bits from *message* to *shared*, the direction is dead.\n\n**Milestone:** M5 (theory, ~2 weeks).\n",
     "domain_bridges": [],
     "domains": [
@@ -223,7 +128,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-15T05:50:03.464588+00:00",
     "title": "Compression Research A1: Price of universality — minimax redundancy of universal decompressors"
   },
@@ -416,6 +321,25 @@
     "status": "available",
     "timestamp": "2026-08-15T19:41:34.486059+00:00",
     "title": "NET-41: The affine law's third rung is NOT two-seed-exact — k*=144 at (d=16, ctx=512, s2) vs 160 at s1; the deepest-rung knee is seed-fluctuating in (144, 160]"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "## NET-42 — Round 42 of the network/LLM lab (speed axis): DEPTH-LEG-AT-LONG-CONTEXT-IS-CONCAVE-POWER\n\n**Question (the discriminating rung):** NET-40/41 measured the d=16 ctx=512 knee at 160 (s1) and 144 (s2) — seed-fluctuating in (144, 160], exactly bracketing the affine-law prediction (8d+32 = 160) and a concave power-law continuation (k* ≈ 28.3·d^0.585 ≈ 144). The exact functional form at the deepest rung was UNDECIDED at two seeds. This round measures d=32 at ctx=512 — the one cell where the two candidate forms separate by ~34% (far beyond the ±1-grid-step knee fuzz), so a SINGLE seed discriminates robustly.\n\n**Prediction stated BEFORE the run:** k* = 288 if affine; ≈224 if concave power; 512 if the product form d·ctx/32 recovers at depth.\n\n**Setup:** Byte-identical harness to NET-40/41 — CausalTF dm=64, 4 heads, d=32, seed=1, ctx=512, 5 Gutenberg novels (vocab 4097), contiguous 90/10 split, 2000 AdamW steps, 11113s train. Full acc 0.1353, bar 0.1326, loss 5.6281.\n\n**Result — k\\* = 256, NEITHER horn:**\n\n| k | retained | verdict |\n|---|---|---|\n| 96 | 0.916 | ✗ |\n| 128 | 0.948 | ✗ |\n| 160 | 0.964 | ✗ (d=16's two-seed knee region fails ~1.5 SE at d=32 — depth right-shift continues) |\n| 192 | 0.975 | ✗ |\n| 224 | 0.977 | ✗ knife-edge — fail by 0.003 ≈ 0.3 SE |\n| **256** | **0.987** | ✓ **k\\* = 256** |\n| 288 (8d+32) | 0.989 | ✓ affine passes but is NOT minimal — over-predicts by 11% |\n| 320 | 0.993 | ✓ |\n| 384 | 0.995 | ✓ |\n| 512 (d·ctx/32) | 1.000 | ✓ product passes (loss 5.6281 = full exactly) but is refuted by 2× |\n\n**The four-rung shape settles the form — k\\* ≈ 24.7·d^(2/3):**\n\n| d | k* (ctx=512) | affine 8d+32 | power 24.7·d^(2/3) | product d·ctx/32 |\n|---|---|---|---|---|\n| 4 | 64 | 64 | 62 | 64 |\n| 8 | 96 | 96 | 99 | 128 |\n| 16 | 160/144 | 160 | 157 | 256 |\n| 32 | **256** | **288** | **249** | 512 |\n\nA log-log regression over the four ctx=512 rungs fits all four to ≤3% (62/99/157/249); the exponent is ROBUST to which d=16 seed anchors it (0.666 with s2's 144, 0.673 with s1's 160 — both ≈ 2/3). **The affine law 8d+32 — exact at d=4/8/16-s1 — was a 3-point LOCAL LINEAR approximation of this concave power curve and breaks at d=32.** NET-40/41's naive power fit (28.3·d^0.585) was biased by anchoring on a single noisy s2 d=16 reading. So NET-40/41's indecision RESOLVES cleanly: affine was the local form, the GLOBAL form is concave power ≈ 2/3.\n\n**Sub-linear depth leg continues at every rung:** per-doubling ratio 1.50 → 1.58 → 1.68, approaching but never reaching 2.0 through d=32 — the product law does NOT recover at depth (256 = exactly half of 512).\n\n**Practical:** deployable speedup at ctx=512: d=4 → 8.0×, d=8 → 5.33×, d=16 → 3.2–3.56×, d=32 → **2.0×** (guarantee 4×/4×/2×/**1×** — the product law gives NO speedup at d=32; the actual knee gives 2.0×, the largest over-pruneable factor yet).\n\n**Concentration:** eff support **218.46** (depth diffusion continues; 199.84 → 218.46, ×1.09 on the doubling — the rate saturates while the diffusion continues); top-256 mass 0.921 (below d=16's 0.934/0.935 — at d=32 even the knee-k captures only 92% of the attention mass); per-position 27.81/190.90/409.08 — NO bounded working set.\n\n**Honest limits (documented):**\n- **Barrier (e):** the d=32 cell is SINGLE-SEED (every new rung starts single-seed), but the knee is bracketed (k=224 fails 0.3 SE, k=256 passes 0.7 SE) and the exponent-2/3 fit rests on FOUR rungs robust to the d=16 seed — the affine-vs-power discrimination at d=32 is a ~34% separation, far beyond the knee fuzz.\n- **Barrier (f) — HONEST CRASH LOG:** the k=768 sweep point threw `RuntimeError: selected index k out of range` (topk(768) on a 512-wide causal attention row — my sweep-design bug; 768 is only valid at ctx ≥ 768), killing the run before Part B2 and the KSTAR/ALL_DONE prints. The point was REDUNDANT (k=512 already = 1.000, exact full loss), so the k\\* verdict is UNAFFECTED.\n- **Barrier (g):** the random-k control at (d=32, ctx=512) is UNMEASURED due to the crash (standing evidence: selection gap positive in every prior cell, +2.3 to +11.7).\n\n**Verdict:** DEPTH-LEG-AT-LONG-CONTEXT-IS-CONCAVE-POWER — k\\* ≈ 24.7·d^(2/3) at ctx=512, with k\\* = 256 at (d=32, ctx=512) refuting BOTH the affine prediction (288, over by 11%) and the naive concave-power prediction (≈215, under by ~16%); the product law (512) refuted by 2×. The affine law was a 3-point local linearization that breaks at d=32; the concave-power-with-2/3 is the global form. Deployable speedup at (d=32, ctx=512) = 2.0× vs the 1.0× guarantee.\n\n**Next (highest value):** **d=32 ctx=512 second seed** — closes the deepest rung's single-seed status AND repairs the missing random-k control (the script must drop k=768 / clamp to min(k, L)); then ctx=1024 second seed; d=8 @ ctx=256 s0 corner; carry chain at scale (the frontier).\n\nPaper 86; notebook Part 42; assessment v42 (42 experiments). Script: /tmp/exp_net_attncost_d32_ctx512.py; log: /tmp/net42.log.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_1317",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-15T23:42:41.791503+00:00",
+    "title": "NET-42: The depth leg at long context is CONCAVE POWER — k*=256 at (d=32, ctx=512) refutes BOTH the affine prediction (8d+32 = 288) and the naive power prediction (≈215); the affine law was a 3-point local linearization of k* ≈ 24.7·d^(2/3)"
   },
   {
     "ambition_level": "grand_challenge",
