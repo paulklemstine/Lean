@@ -1,113 +1,120 @@
-# The Primes That Weren't Supposed to Be There
+# The Primes That Shouldn't Be There
 
-## A conjecture about elliptic curves, a fraction with a $7$ in the wrong place, and why it matters
+## A tempting conjecture about elliptic curves, a small counterexample, and a theorem that closes the door on an entire approach to factoring
 
-### A denominator with a story
+### A curve, a point, and a sequence of fractions
 
-Take the curve
-$$E_{55} : \quad y^2 = x^3 + 55,$$
-and the point $P = (9, 28)$ sitting on it — you can check it in your head: $28^2 = 784$ and $9^3 + 55 = 729 + 55 = 784$.
+Take the equation
 
-Elliptic curves have a magical property: you can *add* their points. Draw the tangent line at $P$, see where it meets the curve again, reflect across the $x$-axis, and you land on a new rational point called $2P$. Do it again to get $3P$, $4P$, and so on. This is the group law, and it is the engine behind elliptic-curve cryptography, Wiles's proof of Fermat's Last Theorem, and a large part of modern number theory.
+$$E_N : \quad y^2 = x^3 + N,$$
 
-The new points are rational, but they are not pretty. For our curve the doubling formula gives
-$$x(2P) = \frac{x^4 - 8Nx}{4(x^3 + N)} \Big|_{x = 9,\, N = 55} = \frac{9^4 - 8 \cdot 55 \cdot 9}{4(9^3 + 55)} = \frac{2601}{3136}.$$
+where $N$ is a whole number. Curves of this shape are called *Mordell curves*, and they have been studied since the nineteenth century. What makes them — and elliptic curves generally — special is that their rational solutions form a *group*: given two rational points on the curve you can produce a third by drawing the line through them and taking the third intersection point, then reflecting across the $x$-axis. Add a point to itself using the tangent line instead of a chord, and you can *double* a point. Doing this repeatedly gives you a sequence
 
-Now factor that denominator:
-$$3136 = 2^6 \cdot 7^2.$$
+$$P, \; 2P, \; 3P, \; 4P, \; \dots$$
 
-And there is the anomaly. A **$7$**.
+of rational points, and each of them has an $x$-coordinate which is a fraction in lowest terms.
 
-### Why a $7$ is surprising
+Here is the phenomenon that this article is about. Start with $N = 55$ and the point $P = (9, 28)$, which really is on the curve: $28^2 = 784 = 9^3 + 55$. Now double it. The tangent-line formula for these curves gives a beautifully compact recipe,
 
-Every elliptic curve has a *discriminant*, a single integer that records where the curve misbehaves. For the family $E_N : y^2 = x^3 + N$ it is
-$$\Delta = -432 N^2.$$
-The primes dividing $\Delta$ are called the **bad primes** of the curve; for $N = 55 = 5 \cdot 11$ they are exactly $2$, $3$, $5$, and $11$ (since $432 = 2^4 \cdot 3^3$). Every other prime is a **good prime**: modulo such a prime the curve stays a genuine smooth curve, and everything about it behaves as nicely as one could ask.
+$$x(2P) = \frac{x^4 - 8Nx}{4y^2},$$
 
-There is a long-standing piece of folklore — and, in the factoring-algorithm community, an occasionally stated *conjecture* — that the denominators appearing in the orbit $P, 2P, 3P, \dots$ should be built only out of bad primes. The intuition is seductive: denominators are where a point "blows up", blowing up is a form of degeneracy, and degeneracy should only happen where the curve is degenerate. If true, this would be spectacular news for cryptanalysis: given a semiprime $N = pq$, you would only need to compute a single denominator and factor a number whose prime divisors are forced to be $\{2, 3, p, q\}$ — you would read $p$ and $q$ straight off the page.
+so
 
-The $7$ in $3136$ kills that hope. Seven does not divide $-432 \cdot 55^2$. Seven is a prime of **good** reduction, and it is sitting inside the denominator of the very first doubling of the very first point you would try.
+$$x(2P) = \frac{9^4 - 8 \cdot 55 \cdot 9}{4(9^3 + 55)} = \frac{6561 - 3960}{3136} = \frac{2601}{3136}.$$
 
-That is a counterexample. What follows is the theory that explains why counterexamples are not an accident but the rule — in fact, why *every* good prime is a counterexample, why it shows up *early*, and why it shows up *often*.
+The numbers grow fast; keep going and they explode. The interesting object is not the size but the *arithmetic* of the denominators:
 
-### The right way to think about denominators
+$$\operatorname{den} x(P) = 1, \quad \operatorname{den} x(2P) = 3136 = 2^6 \cdot 7^2, \quad \operatorname{den} x(3P) = 3^6 \cdot 13^2 \cdot 73^2,$$
+$$\operatorname{den} x(4P) = 2^8 \cdot 7^2 \cdot 827^2 \cdot 1583^2, \quad \operatorname{den} x(5P) = 5^2 \cdot 1785401475301^2 .$$
 
-Here is the key reframing. A prime $\ell$ divides the denominator of $x(Q)$ precisely when the point $Q$, viewed modulo $\ell$, is the **point at infinity**.
+Two things jump out. The denominators are always perfect squares — that is a general fact, not an accident. And a shifting cast of primes appears and disappears: $7$, then $13$ and $73$, then $827$ and $1583$, then a thirteen-digit monster.
 
-Why? A rational point $Q = (a/d, b/f)$ in lowest terms sits on the curve, and if $\ell \nmid d$ we can simply reduce all its coordinates modulo $\ell$ and get an honest point of the curve over the finite field $\mathbb{F}_\ell$. But if $\ell \mid d$, the $x$-coordinate has a pole: in the projective picture the point runs off to infinity, and reduction sends it to $O$, the identity of the group.
+### The conjecture: only bad primes should appear
 
-So the question "which primes divide which denominators?" becomes a question about group theory:
+Every elliptic curve has a *discriminant*, a single integer that records where the curve degenerates. For $E_N$ it is
 
-> **For which $n$ does $nP$ reduce to the identity modulo $\ell$?**
+$$\Delta = -432 N^2 .$$
 
-And group theory answers instantly. Reduction modulo $\ell$ is a group homomorphism; the points that reduce to the identity form a subgroup; the set of integers $k$ with $kP$ in that subgroup is a subgroup of $\mathbb{Z}$; and every subgroup of $\mathbb{Z}$ is $m\mathbb{Z}$ for a single integer $m$.
+A prime $\ell$ is called *bad* for $E_N$ if $\ell \mid \Delta$ — equivalently, if $\ell \in \{2, 3\} $ or $\ell \mid N$ — and *good* otherwise. Reducing the curve modulo a good prime leaves a perfectly respectable elliptic curve over the finite field with $\ell$ elements; modulo a bad prime the reduced curve acquires a singularity.
 
-This is the **apparition law**: for each prime $\ell$ there is a modulus $m$ such that
-$$\ell \mid \operatorname{den} x(kP) \iff m \mid k.$$
-The number $m$ is the *apparition index* of $\ell$: the first index at which $\ell$ appears, after which it reappears with perfect periodicity, forever.
+Now suppose $N = pq$ is a *semiprime*, the product of two large unknown primes — the situation in cryptography, where recovering $p$ and $q$ from $N$ is the hard problem underlying much of public-key encryption. The bad primes of $E_{pq}$ are exactly $2, 3, p, q$. The prime factors of $N$ are *built into the geometry of the curve*. That makes the following guess almost irresistible:
 
-Two things now become obvious that were invisible before. First, whether $\ell$ appears has nothing to do with whether $\ell$ divides $\Delta$; it depends only on whether the reduced point $\bar{P}$ has finite order in the group $E(\mathbb{F}_\ell)$ — and over a finite field, *every* element has finite order. Second, once $\ell$ appears at all, it appears infinitely often, at a fixed arithmetic progression of indices.
+> **The "only bad primes" conjecture.** For $N = pq$ and a rational point $P$ on $E_N$, the denominators of $x(nP)$ are divisible only by the primes $2, 3, p, q$.
 
-For $E_{55}$ with $P = (9,28)$, the prime $7$ has apparition index $2$. That is exactly the $7$ in $3136$. It will reappear in the denominators of $x(4P)$, $x(6P)$, $x(8P)$, $\dots$, and it does.
+If it were true, it would be spectacular: compute one denominator, factor out the powers of $2$ and $3$, and what remains hands you $p$ and $q$. Factoring, solved.
 
-### Every good prime, and soon
+The very first example above already kills it. The denominator $3136 = 2^6 \cdot 7^2$ contains the prime $7$, and $7$ does not divide $\Delta = -432 \cdot 55^2 = -1306800$. The prime $7$ is a prime of *good* reduction. It has no business being there, and there it is.
 
-The apparition law says the violations are periodic *if they happen at all*. The heart of the matter is showing that they always happen, and quickly. That is the following theorem.
+**Theorem (Refutation).** *On $E_{55} : y^2 = x^3 + 55$ with $P = (9,28)$, one has $x(2P) = 2601/3136$ with $3136 = 2^6 \cdot 7^2$. The prime $7$ divides the denominator and does not divide the discriminant. The "only bad primes" conjecture is false.*
 
-> **Effective Apparition Theorem.** Let $N \neq 0$ be an integer, let $\ell \geq 5$ be a prime not dividing $N$ — that is, any good prime beyond $2$ and $3$ — and let $P$ be any rational point of $E_N : y^2 = x^3 + N$. Then there is an index $n$ with $0 < n \leq 4\ell$ such that $\ell$ divides the denominator of $x(nP)$ (or $nP$ is the point at infinity, which cannot happen if $P$ has infinite order).
+One might hope this is a fluke of a small example. It is not. It is the tip of a mechanism.
 
-The proof is a two-line idea dressed in careful algebra. Suppose no index in $\{1, 2, \dots, 2\ell + 1\}$ works. Then all of $P, 2P, \dots, (2\ell+1)P$ have denominators prime to $\ell$, so all of them reduce to honest points of the curve over $\mathbb{F}_\ell$. But that curve has at most $2\ell$ points: each of the $\ell$ possible $x$-values admits at most two square roots for $y$. Pigeonhole: two of our $2\ell+1$ reductions must coincide, say $mP$ and $nP$ with $m < n$.
+### Why good primes must appear
 
-Now the punchline — call it the **Collision Lemma**:
+The reason denominators contain primes at all is a piece of local arithmetic that deserves to be better known.
 
-> **Collision Lemma.** If two rational points $P_1, P_2$ of $E_N$ have denominators prime to $\ell$ and reduce to the *same* point modulo $\ell \geq 5$ (with $\ell \nmid N$), then $2(P_1 - P_2)$ reduces to the point at infinity — that is, $\ell$ divides the denominator of $x\big(2(P_1-P_2)\big)$, unless that point is at infinity outright.
+Write a rational point in its canonical form
+$$x = \frac{a}{e^2}, \qquad y = \frac{b}{e^3}, \qquad \gcd(a,e) = \gcd(b,e) = 1 .$$
+(That the denominators are a square and a cube of the *same* integer $e$ is forced by the curve equation; substituting gives $b^2 = a^3 + N e^6$.) A prime $\ell$ divides the denominator of $x$ exactly when $\ell \mid e$.
 
-Applying this to $P_1 = nP$ and $P_2 = mP$ gives $\ell$ in the denominator at index $2(n-m) \le 4\ell$, contradicting our assumption. So a good index $n \le 4\ell$ exists after all.
+What does $\ell \mid e$ mean geometrically? Divide the curve equation through and look modulo $\ell$: as $e$ becomes divisible by $\ell$, the point runs off to infinity in the reduction — it collides with the identity element of the group.
 
-Why is the Collision Lemma true? Pure chord arithmetic. If $P_1 = (x_1, y_1)$ and $P_2 = (x_2, y_2)$ have $x_1 \neq x_2$, then the group law gives the elegant formula
-$$x(P_1 - P_2) = \frac{x_1 x_2 (x_1 + x_2) + 2N + 2y_1y_2}{(x_1 - x_2)^2}.$$
-If the two points have the same reduction $(\bar{x}, \bar{y})$ modulo $\ell$, then the denominator $(x_1 - x_2)^2$ is divisible by $\ell^2$. What about the numerator? Reduce it: it becomes
-$$\bar{x}\cdot\bar{x}\cdot 2\bar{x} + 2N + 2\bar{y}^2 = 2(\bar{x}^3 + N) + 2\bar{y}^2 = 4\bar{y}^2,$$
-using the curve equation $\bar y^2 = \bar x^3 + N$ itself. So the numerator reduces to $4\bar{y}^2$ — nonzero as long as $\ell \geq 5$ (so that $4$ is invertible) and $\bar y \ne 0$. Denominator divisible by $\ell$, numerator not: the fraction has $\ell$ in its denominator, exactly as claimed. And if $\bar{y} = 0$ instead, the doubling formula $x(2Q) = (x^4 - 8Nx)/(4y^2)$ handles it — the denominator $4y^2$ picks up the $\ell$ hidden in $y$, while the numerator reduces to $-9N\bar{x} \neq 0$. That last case is why the lemma has a factor of $2$ in front.
+**Theorem (The local law).** *Let $\ell \geq 5$ be a prime not dividing $N$. A rational point $P$ of $E_N$ has $\ell \mid \operatorname{den} x(P)$ if and only if $P$ reduces to the identity of the group $E_N(\mathbb{F}_\ell)$ of points modulo $\ell$. Consequently, for a fixed point $P$ with integral coordinates, $\ell$ divides $\operatorname{den} x(nP)$ precisely when $n$ is a multiple of the order of $P$ modulo $\ell$.*
 
-The whole argument is elementary: no deep machinery, no Hasse bound, nothing but the addition formula and a counting argument. It also explains the shape of the constant. The bound $4\ell$ is $2 \times 2\ell$: the $2\ell$ is the crude point count on the reduced curve, and the extra $2$ is the price of the $\bar y = 0$ branch.
+Suddenly the mystery cast of primes has a script. Reduce $P = (9,28)$ modulo $7$: the group $E_{55}(\mathbb{F}_7)$ has $4$ elements and the reduction of $P$ has order $2$ — so $7$ must appear at $n = 2$, and again at $n = 4$, $6$, $8$, and so on. Modulo $13$ the order is $3$, so $13$ appears first at $n = 3$; modulo $73$ the order is also $3$; modulo $827$ and modulo $1583$ the order is $4$. Every single prime in the list above is explained, and the explanation involves *nothing* about the factorization of $N$. Reduction modulo a good prime is a condition of codimension one: as $n$ grows, the point $nP$ is asked to hit a single specified target in a group of size about $\ell$, and it succeeds for infinitely many $(\ell, n)$. Good primes are not exceptions to be explained away; they are the generic content of the denominator.
 
-### From "sometimes" to "half the time"
+And there is no shortage of them. There is a two-parameter machine that produces violations as large as you like:
 
-Combine the apparition law with the effective bound and something quantitative falls out. The apparition index $m$ of a good prime $\ell$ is positive and at most $4\ell$. Therefore, among the first $K$ multiples of $P$, the number of indices at which $\ell$ pollutes the denominator is *exactly* $\lfloor K/m \rfloor$, and hence at least $\lfloor K/(4\ell) \rfloor$.
+**Theorem (Unbounded violations).** *Let $\ell \geq 5$ be prime and $t \geq 1$. Put*
+$$N(\ell,t) = 4\ell^2 t^2 - 1 = (2\ell t - 1)(2\ell t + 1), \qquad P = (1, \, 2\ell t) .$$
+*Then $N(\ell,t)$ is odd, is a product of two factors both bigger than $1$, and grows without bound in $t$; the point $P$ lies on $E_{N(\ell,t)}$; the curve has good reduction at $\ell$; and $\ell$ divides $\operatorname{den} x(2P)$, while **no** prime factor of $N(\ell,t)$ divides it.*
 
-> **Density Theorem.** For every good prime $\ell \geq 5$ and every rational point $P$ of $E_N$, the set of indices $n$ at which $\ell$ divides $\operatorname{den} x(nP)$ is an arithmetic progression of modulus $m \le 4\ell$, and so has density $1/m \geq 1/(4\ell) > 0$.
+The construction is transparent once seen. At the point $(1, y)$ with $y^2 = 1 + N$, the duplication formula collapses to
+$$x(2P) = \frac{1 - 8N}{4(N+1)},$$
+so the denominator divides $4(N+1)$ — and $N+1 = 4\ell^2t^2$ is manifestly divisible by $\ell$ and manifestly coprime to the odd number $N$. Choosing $t$ so that $2\ell t \pm 1$ are twin primes gives genuine semiprimes:
 
-The conjecture doesn't merely fail on a sparse, exotic set of indices. It fails at a *positive proportion* of them, for *every* good prime, with an explicit lower bound on the proportion.
+- $\ell = 5$, $t = 3$: $N = 899 = 29 \cdot 31$, $x(2P) = -799/400$, denominator $400 = 2^4 \cdot 5^2$;
+- $\ell = 7$, $t = 3$: $N = 1763 = 41 \cdot 43$, $x(2P) = -1567/784$, denominator $784 = 2^4 \cdot 7^2$;
+- $\ell = 11$, $t = 9$: $N = 39203 = 197 \cdot 199$, $x(2P) = -34847/17424$, denominator $17424 = 2^4 \cdot 3^2 \cdot 11^2$.
 
-For $E_{55}$ and $P = (9,28)$: the prime $7$ has index $2$, so it appears in half of all denominators. The prime $13$ has index $3$: a third. The prime $17$: index $6$. The prime $73$: index $3$. The prime $43$: index $7$. None of them is anywhere near the theoretical worst case $4\ell$ — the bound is a guarantee, not a prediction.
+In each case the conjecture fails twice over: a good prime is present, and both of the primes it predicted are absent.
 
-And these violations conspire. Because different primes have coprime-or-not but independent progressions, a whole finite set of good primes will appear *simultaneously* along the progression given by the least common multiple of the individual indices.
+### The real surprise: the factors are not merely rare, they are forbidden
 
-> **Simultaneous Apparition Theorem.** For any finite set $S$ of good primes $\ell \geq 5$, there is a modulus $M \le \prod_{\ell \in S} 4\ell$ such that $\prod_{\ell \in S} \ell$ divides $\operatorname{den} x(kP)$ exactly when $M \mid k$.
+That last observation is the heart of the story. The conjecture guessed the wrong primes appear. What is actually true is stronger and stranger: on a doubling orbit the *right* primes — the factors of $N$ — cannot appear at all.
 
-On $E_{55}$: since $7$ has index $2$ and $13$ has index $3$, the composite $91 = 7 \cdot 13$ divides $\operatorname{den} x(kP)$ precisely when $6 \mid k$. And indeed the denominator of $x(6P)$ factors as $2^6 \cdot 3^6 \cdot 7^2 \cdot 13^2 \cdot 17^4 \cdot 73^2 \cdot 179^2 \cdots$ — a parade of good primes, none of which was supposed to be there.
+Follow the algebra. In the coprime coordinates $x = a/e^2$, $y = b/e^3$, the duplication formula becomes
+$$x(2P) = \frac{a\,(a^3 - 8Ne^6)}{4\,b^2 e^2}.$$
+So the denominator of $x(2P)$ divides $4b^2e^2$: every prime of the new denominator divides $2be$. Now suppose $p$ is an odd prime dividing $N$ — a bad prime, one of the two we are hunting for — and suppose $p$ shows up in $\operatorname{den} x(2P)$. Then $p$ divides $2be$, hence $p \mid b$ or $p \mid e$. But if $p \mid b$, then reading $b^2 = a^3 + Ne^6$ modulo $p$ gives $p \mid a^3$, hence $p \mid a$. So the only way in is through the door marked "$p$ divides $e$" (the point was already $p$-singular) or the door marked "$p$ divides both $a$ and $b$" — which says exactly that $P$ reduces modulo $p$ to the point $(0,0)$, the *singular point* of the degenerate curve $y^2 = x^3$.
 
-### The verdict on the conjecture
+**Theorem (Singular-locus law).** *Let $p \neq 2$ be a prime dividing $N$, and let $P = (x,y)$ be a rational point of $E_N$ with $y \neq 0$. If $p$ divides $\operatorname{den} x(2P)$, then either $p$ already divides $\operatorname{den} x(P)$, or $P$ reduces modulo $p$ to the singular point $(0,0)$.*
 
-Pushing this to its conclusion, the refutation is total rather than anecdotal.
+Bad primes are confined to the singular locus. And for the moduli that matter, the singular locus is empty:
 
-> **Refutation Theorem.** Let $N \neq 0$ and let $P$ be a rational point of $E_N : y^2 = x^3 + N$ of infinite order. Then there exist a prime $\ell \geq 5$ with $\ell \nmid N$, an index $n > 0$, and an affine point $nP$ whose $x$-coordinate has $\ell$ in its denominator. In fact infinitely many such good primes occur, and the denominators grow unboundedly on account of good primes alone.
+**Lemma.** *If $N$ is squarefree — in particular if $N = pq$ with $p \neq q$ prime — and $(x,y)$ is a point of $E_N$ with integer coordinates, then $x$ is automatically coprime to $N$.*
 
-And here is the pleasing reversal. The conjecture claimed an inclusion:
-$$\{\text{primes dividing some denominator}\} \subseteq \{2, 3\} \cup \{p : p \mid N\}.$$
-The truth is the *opposite* inclusion:
-$$\{\text{primes dividing } \textbf{no} \text{ denominator}\} \subseteq \{2, 3\} \cup \{p : p \mid N\}.$$
-Every prime other than $2$, $3$, and the divisors of $N$ *must* occur. The bad primes are not the ones that show up; they are the only ones with permission to hide.
+The proof is three lines: a common prime factor $p$ of $x$ and $N$ divides $y^2 = x^3 + N$, hence divides $y$, hence $p^2$ divides $y^2 - x^3 = N$, contradicting squarefreeness. The two hypotheses that make the theory bite — odd and squarefree — are exactly the hypotheses satisfied by a cryptographic modulus.
+
+Putting the pieces together and iterating the doubling step gives the punchline.
+
+**Theorem (Anti-factoring theorem).** *Let $N$ be odd and squarefree and let $P$ be any point of $E_N$ with integer coordinates. Then for every $k \geq 0$, the denominator of the $x$-coordinate of $2^k P$ is coprime to $N$. No prime factor of $N$ ever appears in the doubling orbit's denominators.*
+
+Take the semiprime $N = 1763 = 41 \cdot 43$ with $P = (1,42)$. The denominators along $P, 2P, 4P, 8P, 16P$ are
+$$1, \quad 784, \quad 2652193144304704, \quad \text{a 66-digit number}, \quad \text{a 266-digit number},$$
+and every one of them is coprime to $1763$. It is not that $41$ and $43$ are hiding in the enormous later terms. They are structurally excluded, forever, for every integral starting point, on every odd squarefree modulus.
 
 ### What this means for factoring
 
-The original motivation was cryptanalytic. Given a semiprime $N = pq$, could the denominators of a Mordell-curve orbit hand you $p$ and $q$? The theory above says no, and computational surveys confirm it in the bluntest terms. Across samples of a dozen semiprimes with rational points of infinite order, whether a given factor of $N$ shows up in the early denominators is erratic — the smaller factor appears in roughly half to five-sixths of the cases depending on which point one starts from, the larger factor much more rarely — while the property the conjecture asserts, that *only* $\{2,3,p,q\}$ occur, held in $0\%$ of the cases examined. Each denominator is a jumble of good primes, and picking out the two that matter is no easier than factoring $N$ directly.
+There is a famous algorithm that *does* factor integers using elliptic curves: Lenstra's elliptic curve method. It is worth being precise about why that works and this does not, because the difference is instructive.
 
-There is a deeper structural reason. The apparition index of a prime $\ell$ is the order of the reduced point $\bar{P}$ in $E(\mathbb{F}_\ell)$ — an object that depends on $N$ and $P$ only through their reductions modulo $\ell$. Nothing in this data knows about the *multiplicative decomposition* $N = pq$. The denominator sequence is a function of $N$ as a whole; it is not sensitive to how $N$ splits. That is a genuine barrier, and identifying it precisely is worth more than a hundred failed attempts at the same idea.
+Lenstra's method never works over the rational numbers. It picks a *random* curve, works with coordinates modulo $N$ — pretending $\mathbb{Z}/N$ is a field — and waits for an inversion to fail. A failure means some intermediate quantity shares a factor with $N$, and a $\gcd$ then reveals $p$. The randomness is essential: one tries many curves until one of them has a group order modulo $p$ that is smooth, so that a modest amount of arithmetic reaches the identity modulo $p$ but not modulo $q$.
 
-### The consolation prize is a theorem
+The approach refuted here is the opposite: fix the single curve $E_N$ built canonically from $N$, work honestly over the rationals, and read the factors out of the denominators. The theorems say the denominators are a very rich source of primes — every prime of good reduction whose local group order cooperates — but they are *never* a source of $p$ or $q$ along doubling orbits. The denominator sequence is a function of $N$, faithfully, and yet it tells you nothing about how $N$ splits. In the language of the research programme this closes off, it converts an empirical wall into a theorem: a survey of eleven semiprime moduli found the conjectural support condition holding in exactly $0\%$ of cases, the larger factor $q$ appearing in essentially none, and the smaller factor only sporadically — and the sporadic appearances, we now know, come from indices $n$ that are *not* powers of two.
 
-What began as a hoped-for factoring shortcut ends as a clean, complete description of a natural arithmetic phenomenon: the denominators of an elliptic orbit are governed by the orders of reductions, every good prime appears with positive density within an explicit window of length $4\ell$, arbitrary finite sets of good primes appear together along arithmetic progressions, and the only primes allowed to be absent are the bad ones.
+That last point is where the story continues rather than ends. On $E_{55}$ the bad prime $5$ does eventually surface, at index $n = 5$: the denominator of $x(5P)$ is $5^2 \cdot 1785401475301^2$. The index and the prime coincide, and that is not a coincidence. Modulo a bad prime $p$, the degenerate curve $y^2 = x^3$ has a smooth part which is isomorphic to the additive group of the field with $p$ elements — and multiplication by $n$ on an additive group of order $p$ is injective exactly when $p \nmid n$. So a bad prime can only enter at indices divisible by itself. That is invisible in a doubling orbit for odd $p$, and it is useless for factoring, since you would have to guess $p$ to know where to look.
 
-There is a satisfying analogy in the classical world. In the Fibonacci sequence $1, 1, 2, 3, 5, 8, 13, \dots$, every prime $\ell$ divides some Fibonacci number, and the indices at which it does form the multiples of a single number — its *rank of apparition*. The story here is the same story, told for elliptic curves: an elliptic divisibility sequence with its own law of apparition, its own periodicity, and its own effective bound. The $7$ hiding in $3136$ isn't a bug in the conjecture. It is the first visible term of a beautiful and completely deterministic pattern.
+### The moral
+
+The "only bad primes" conjecture is a good conjecture in the sense that matters: it is precise, it is natural, it would have been important, and its refutation teaches you the right way to think about the object. The denominators of an elliptic curve orbit are not reading off the singularities of the curve. They are reading off, prime by prime, the moment when the point's shadow in a finite field falls onto the identity. Good primes get infinitely many chances at this; bad primes get almost none, because at a bad prime the identity is guarded by a singular point that integral points on squarefree moduli can never reach.
+
+Denominators know an enormous amount about the local behaviour of a curve. What they do not know — provably, permanently — is how to factor.
