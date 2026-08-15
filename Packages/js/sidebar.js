@@ -6,7 +6,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const mobileMenuBtn = document.getElementById('mobile-menu-btn');
     const sidebarOverlay = document.getElementById('sidebar-overlay');
     const mobileToggle = document.getElementById('mobile-toggle');
-    const sortMode = document.getElementById('sort-mode');
     const pageHome = document.getElementById('page-home');
     const pagePrev = document.getElementById('page-prev');
     const pageNext = document.getElementById('page-next');
@@ -14,7 +13,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const PAGE_SIZE = 10;
     let currentPage = 1;
-    let currentSort = 'date-desc';
     let filteredPackages = [];
 
     function scrollSidebarToTop() {
@@ -64,28 +62,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    function sortPackages(pkgs, mode) {
-        const sorted = [...pkgs];
-        switch (mode) {
-            case 'date-desc':
-                sorted.sort((a, b) => (b.date || '').localeCompare(a.date || ''));
-                break;
-            case 'date-asc':
-                sorted.sort((a, b) => (a.date || '').localeCompare(b.date || ''));
-                break;
-            case 'alpha':
-                sorted.sort((a, b) => (a.title || '').localeCompare(b.title || ''));
-                break;
-            case 'score-desc':
-                sorted.sort((a, b) => (b.quality_score ?? -1) - (a.quality_score ?? -1));
-                break;
-            case 'score-asc':
-                sorted.sort((a, b) => (a.quality_score ?? 999) - (b.quality_score ?? 999));
-                break;
-        }
-        return sorted;
-    }
-
     function updatePagination() {
         const totalPages = Math.max(1, Math.ceil(filteredPackages.length / PAGE_SIZE));
         if (currentPage > totalPages) currentPage = totalPages;
@@ -109,15 +85,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 : base;
             currentPage = 1;
             window.renderSidebar(filtered);
-        });
-    }
-
-    // Sort mode change
-    if (sortMode) {
-        sortMode.addEventListener('change', (e) => {
-            currentSort = e.target.value;
-            currentPage = 1;
-            window.renderSidebar(filteredPackages);
         });
     }
 
@@ -161,7 +128,8 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        const sorted = sortPackages(pkgArray, currentSort);
+        // Fixed ordering: newest first
+        const sorted = [...pkgArray].sort((a, b) => (b.date || '').localeCompare(a.date || ''));
         const totalPages = Math.ceil(sorted.length / PAGE_SIZE);
         if (currentPage > totalPages) currentPage = totalPages;
         const start = (currentPage - 1) * PAGE_SIZE;
@@ -245,7 +213,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Navigate to the page containing a slug and highlight it
     window.highlightSidebarItem = function(slug) {
         if (!slug || !filteredPackages.length) return;
-        const sorted = sortPackages(filteredPackages, currentSort);
+        const sorted = [...filteredPackages].sort((a, b) => (b.date || '').localeCompare(a.date || ''));
         const idx = sorted.findIndex(p => p.filename.replace('.json', '') === slug);
         if (idx === -1) return;
         // Navigate to the page containing this item
