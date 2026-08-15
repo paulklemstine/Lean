@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "6092c7cd",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions — Free-Witness Thresholds after the Separation Principle\n\nEverything below is derived from the verified results in\n`Catalog/Algebra/FreeWitnessTraceThreshold.lean`.  The organising",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 36,
-      "timestamp": "2026-08-13T08:51:14",
-      "title": "The Partial Free-Witness Threshold is the Trace, Closed"
-    },
-    {
       "cycle_id": "0c649bb1",
       "domain": "Physics",
       "key_insight": "# Future Directions — after the derived-modulus corner\n\nThe formal results in `Catalog/Physics/DerivedModulus*.lean` close the\npolynomial (N-explicit) multi-modulus corner in a strong, classified form",
@@ -499,19 +489,19 @@
       "theorem_count": 78,
       "timestamp": "2026-08-15T19:41:15",
       "title": "The 'Only Bad Primes' Conjecture is False (elliptic curve denominators)"
+    },
+    {
+      "cycle_id": "603eb18a",
+      "domain": "NumberTheory",
+      "key_insight": "# Future directions — carry chains, state, and length generalisation\n\nDerived from the theorems in `Catalog/NumberTheory/CarryChainStatefulCell.lean` and\n`Catalog/NumberTheory/CarryChainDepthBound.lea",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 59,
+      "timestamp": "2026-08-15T22:46:22",
+      "title": "NET-24: A Stateful Carry Cell Unlocks Length-General Carry — The Wall Was the Answer Function (first"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "6a4657f8",
-      "domain": "Shared",
-      "key_insight": "# Future directions\n\nThe four files in `Catalog/Shared/ZeroKnowledge/` develop, with complete proofs:\n\n* `ThreeColoringZK.lean` — the GMW protocol for graph 3-colorability: perfect\n  completeness, the",
-      "quality_score": 0.686,
-      "sorry_count": 0,
-      "theorem_count": 82,
-      "timestamp": "2026-08-05T06:55:53",
-      "title": "Zero-Knowledge Proofs in Lean: Verifiable Computation"
-    },
     {
       "cycle_id": "f96004ff",
       "domain": "Bridges",
@@ -2501,27 +2491,19 @@
       "theorem_count": 78,
       "timestamp": "2026-08-15T19:41:15",
       "title": "The 'Only Bad Primes' Conjecture is False (elliptic curve denominators)"
+    },
+    {
+      "cycle_id": "603eb18a",
+      "domain": "NumberTheory",
+      "key_insight": "# Future directions — carry chains, state, and length generalisation\n\nDerived from the theorems in `Catalog/NumberTheory/CarryChainStatefulCell.lean` and\n`Catalog/NumberTheory/CarryChainDepthBound.lea",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 59,
+      "timestamp": "2026-08-15T22:46:22",
+      "title": "NET-24: A Stateful Carry Cell Unlocks Length-General Carry — The Wall Was the Answer Function (first"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "c98081c2",
-      "domain": "Novelty",
-      "name": "dvd_lcmUpTo",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "c98081c2",
-      "domain": "Novelty",
-      "name": "modLevel_ne_zero",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "50be6807",
-      "domain": "Algebra",
-      "name": "chiA4Hom_ker",
-      "quality": 0.82
-    },
     {
       "cycle_id": "50be6807",
       "domain": "Algebra",
@@ -2803,9 +2785,27 @@
       "domain": "Cryptography",
       "name": "den_sq_eq_den_cube",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "603eb18a",
+      "domain": "NumberTheory",
+      "name": "LocalCircuit",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "603eb18a",
+      "domain": "NumberTheory",
+      "name": "LocalCircuit",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "603eb18a",
+      "domain": "NumberTheory",
+      "name": "no_fixed_depth_local_circuit",
+      "quality": 0.78
     }
   ],
-  "last_updated": "2026-08-15T19:41:15",
+  "last_updated": "2026-08-15T22:46:22",
   "open_questions": [
     {
       "context": "-    sorry+  -- On the certified range, extract the primitive divisor from the",
@@ -3641,12 +3641,6 @@
     ],
     "NumberTheory": [
       {
-        "cycle_id": "d7c83314",
-        "quality": 0.7814599999999999,
-        "theorems": 11,
-        "title": "Stereographic Capacity Theory: Packing Bounds on Spheres via Plane Geometry"
-      },
-      {
         "cycle_id": "5bb368e2",
         "quality": 0.7482099999999999,
         "theorems": 10,
@@ -3699,6 +3693,12 @@
         "quality": 0.7516700000000001,
         "theorems": 39,
         "title": "The formalization in `Catalog/Shared/SolomonZeta/` (mirrored in the buildable li"
+      },
+      {
+        "cycle_id": "603eb18a",
+        "quality": 0.78,
+        "theorems": 59,
+        "title": "NET-24: A Stateful Carry Cell Unlocks Length-General Carry — The Wall Was the An"
       }
     ],
     "Physics": [
