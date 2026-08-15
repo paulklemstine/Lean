@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "a055589e",
-      "domain": "Probability",
-      "key_insight": "# FUTURE DIRECTIONS — Structural Orthogonality Framework\n\n*Finalized after research cycle 3.*  Cycle 1 stated five conjectures; cycle 2\nclosed four of them (fully or in their reduction form); cycle 3",
-      "quality_score": 0.85,
-      "sorry_count": 0,
-      "theorem_count": 6,
-      "timestamp": "2026-08-12T22:09:52",
-      "title": "The Structural Orthogonality Framework (8 barriers)"
-    },
-    {
       "cycle_id": "219576b7",
       "domain": "Computation",
       "key_insight": "# Future Directions — the knot–number bridge after fifteen cycles\n\n## What is now proved (all sorry-free, `Catalog/Computation/AlexanderTorusKnot/`)\n\n1. **General torus knots** (`GeneralTorus.lean`).",
@@ -499,19 +489,19 @@
       "theorem_count": 2,
       "timestamp": "2026-08-15T08:56:05",
       "title": "OR-DIAL-MAXIMUM: the semiprime OR dial has a global cap g(2)=0.3113 bits over every class-rate profi"
+    },
+    {
+      "cycle_id": "ed381d4e",
+      "domain": "Shared",
+      "key_insight": "# Future Directions — collision factoring beyond the birthday bound\n\nDerived from the verified results in\n\n* `Catalog/Shared/ThreeSumFactorReveal.lean`\n* `Catalog/Shared/BirthdayBoundHierarchy.lean`\n*",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 48,
+      "timestamp": "2026-08-15T08:56:17",
+      "title": "The 3SUM-Birthday-Bound Hierarchy"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "52522972",
-      "domain": "Cryptography",
-      "key_insight": "# Future directions\n\n## State of the development\n\nEvery Lean file in the repository compiles end-to-end against Mathlib (`lake\nbuild` from the repository root builds all declared libraries), and no fi",
-      "quality_score": 0.686,
-      "sorry_count": 0,
-      "theorem_count": 525,
-      "timestamp": "2026-08-04T23:25:31",
-      "title": "Isogeny-Based Cryptography: Supersingular Isogeny Diffie-Hellman"
-    },
     {
       "cycle_id": "1d44d635",
       "domain": "Geometry",
@@ -2501,27 +2491,19 @@
       "theorem_count": 2,
       "timestamp": "2026-08-15T08:56:05",
       "title": "OR-DIAL-MAXIMUM: the semiprime OR dial has a global cap g(2)=0.3113 bits over every class-rate profi"
+    },
+    {
+      "cycle_id": "ed381d4e",
+      "domain": "Shared",
+      "key_insight": "# Future Directions — collision factoring beyond the birthday bound\n\nDerived from the verified results in\n\n* `Catalog/Shared/ThreeSumFactorReveal.lean`\n* `Catalog/Shared/BirthdayBoundHierarchy.lean`\n*",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 48,
+      "timestamp": "2026-08-15T08:56:17",
+      "title": "The 3SUM-Birthday-Bound Hierarchy"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "8c90b348",
-      "domain": "Shared",
-      "name": "step_inv",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "8c90b348",
-      "domain": "Shared",
-      "name": "pell_value",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "43e7ffcb",
-      "domain": "Tropical",
-      "name": "dichotomy",
-      "quality": 0.72697
-    },
     {
       "cycle_id": "43e7ffcb",
       "domain": "Tropical",
@@ -2803,9 +2785,27 @@
       "domain": "Shared",
       "name": "lb5_lower",
       "quality": 0.72
+    },
+    {
+      "cycle_id": "ed381d4e",
+      "domain": "Shared",
+      "name": "of",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "ed381d4e",
+      "domain": "Shared",
+      "name": "exists_collision_of_card_lt",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "ed381d4e",
+      "domain": "Shared",
+      "name": "exists_collision_of_image_card_lt",
+      "quality": 0.78
     }
   ],
-  "last_updated": "2026-08-15T08:56:05",
+  "last_updated": "2026-08-15T08:56:17",
   "open_questions": [
     {
       "context": "-    sorry+  -- Extract a witness from the computational verification of the primitive part.",
@@ -3889,12 +3889,6 @@
     ],
     "Shared": [
       {
-        "cycle_id": "7c424175",
-        "quality": 0.686,
-        "theorems": 56,
-        "title": "Deepening: ArXiv paper: Gilbert's disc model conditioned on the square lattice"
-      },
-      {
         "cycle_id": "f52c2f13",
         "quality": 0.686,
         "theorems": 52,
@@ -3947,6 +3941,12 @@
         "quality": 0.72,
         "theorems": 15,
         "title": "CYCLIC-TYPE-CHANNEL (round-22 #2, experiment 413, assessment v189, paper 78)"
+      },
+      {
+        "cycle_id": "ed381d4e",
+        "quality": 0.78,
+        "theorems": 48,
+        "title": "The 3SUM-Birthday-Bound Hierarchy"
       }
     ],
     "Tropical": [
