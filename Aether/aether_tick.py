@@ -398,6 +398,17 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
         print(f"[Tick] Error polling inflight jobs: {poll_e}")
         completed_jobs = []
 
+    # 1b. Purge queued jobs stuck too long to ever dispatch (zombie retries).
+    # These inflate the local inflight count and saturate the queue view,
+    # blocking fresh dispatches. Each is released so its direction re-enters
+    # the pool (where the injected-issue gate then filters closed-issue ones).
+    try:
+        purged_queued = extractor.purge_stale_queued_jobs(max_age_hours=6)
+        if purged_queued:
+            print(f"[Tick] Purged {purged_queued} stale queued job(s) that could not dispatch")
+    except Exception as e:
+        print(f"[Tick] Warning: queued job purge failed: {e}")
+
     # 2. Ground-truth capacity check: query Aristotle server for active job count
     server_count_at_start = await _safe_get_active_jobs_count(extractor.aristotle)
     local_count_at_start = extractor._count_inflight_dispatched()
@@ -427,6 +438,39 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
     recovered = fd_manager.recover_stale_directions()
     if recovered:
         print(f"[Tick] Recovered {recovered} stale direction(s)")
+
+    # Prune closed-issue injected zombies and drop their queued jobs, so the
+    # queue drain below never re-dispatches work whose GitHub issue closed
+    # (the re-publish loop). Runs at tick start because the drain loop is
+    # earlier than the injected-dispatch gate.
+    try:
+        import github_injector
+        open_issues = github_injector.fetch_injected_directions()
+        open_nums = {int(i.get("number", 0)) for i in open_issues if i.get("number")}
+        if open_nums:
+            pruned_inj = fd_manager.prune_closed_issue_directions(open_nums)
+            if pruned_inj:
+                print(f"[Tick] Pruned {pruned_inj} closed-issue injected direction(s)")
+            pruned_ids = {
+                d.id for d in fd_manager._directions
+                if d.status == "pruned" and d.source == "github_injection"
+            }
+            dropped = 0
+            for pid, job in list(extractor.inflight.items()):
+                if getattr(job, "status", None) not in ("retry_queued", "dispatch_queued", "queued"):
+                    continue
+                if getattr(job, "direction_id", None) in pruned_ids:
+                    try:
+                        extractor._release_direction(job)
+                    except Exception as rel_e:
+                        print(f"[Tick] Warning: could not release zombie job {job.job_id[:8]}: {rel_e}")
+                    del extractor.inflight[pid]
+                    dropped += 1
+            if dropped:
+                extractor._save_inflight()
+                print(f"[Tick] Dropped {dropped} queued job(s) for closed-issue injected directions")
+    except Exception as e:
+        print(f"[Tick] Warning: injected-issue zombie cleanup failed: {e}")
 
     # Auto-refill novelty pool if it's running low
     available_novelty = len([d for d in fd_manager._directions
@@ -1257,10 +1301,26 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
 
         # Dispatch injected issues (respecting max_inflight)
         try:
-            from research_memory import FutureDirectionsManager
-            local_fd = FutureDirectionsManager(extractor.workspace)
-            injected = [d for d in local_fd._directions if d.status == "available" and getattr(d, "source", "") == "github_injection"]
-            if injected:
+            import github_injector
+            # Only directions whose GitHub issue is still OPEN may be dispatched;
+            # a closed issue means the work was already handled, so re-dispatching
+            # it every tick was the re-publish loop.
+            open_issues = github_injector.fetch_injected_directions()
+            open_issue_numbers = {int(i.get("number", 0)) for i in open_issues if i.get("number")}
+            if not open_issue_numbers:
+                # gh unavailable or no open approved-direction issues: do not
+                # dispatch AND do not prune (we cannot verify issue state).
+                print("[Tick] No open approved-direction issues (or gh unavailable); skipping injected dispatch")
+            else:
+                from research_memory import FutureDirectionsManager
+                local_fd = FutureDirectionsManager(extractor.workspace)
+                # Self-heal: prune non-terminal github_injection zombies whose
+                # issue closed (kept being re-dispatched by stale clobbers).
+                pruned_issue_dirs = local_fd.prune_closed_issue_directions(open_issue_numbers)
+                if pruned_issue_dirs:
+                    print(f"[Tick] Pruned {pruned_issue_dirs} closed-issue injected direction(s)")
+                injected = local_fd.dispatchable_injected_directions(
+                    open_issue_numbers, max_attempts=3)
                 for fd in injected:
                     local_inflight = extractor._count_inflight_dispatched()
                     server_running = await _safe_get_active_jobs_count(extractor.aristotle)

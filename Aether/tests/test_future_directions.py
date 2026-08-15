@@ -1486,3 +1486,143 @@ class TestThreadLinkage:
         loaded = FutureDirectionsManager(fd_manager.workspace).get_direction_by_id("thread_002")
         assert loaded is not None
         assert loaded.thread_id == "th_deadbeef"
+
+
+# ── Re-publish loop fixes: injected-issue dispatch gating ──
+
+def _injected_dir(idx, **kw):
+    """Build a unique github_injection direction for gating tests."""
+    desc = _UNIQUE_DESCRIPTIONS[idx % len(_UNIQUE_DESCRIPTIONS)]
+    base = dict(
+        id=f"ginj_{idx:03d}",
+        title=f"Injected Direction {idx}",
+        description=desc,
+        source_exp_id="github",
+        source_path="github",
+        domains=["Novelty"],
+        priority_score=1000.0,
+        source="github_injection",
+        github_issue=100 + idx,
+        attempt_count=0,
+        status="available",
+    )
+    base.update(kw)
+    return FutureDirection(**base)
+
+
+class TestInjectedDispatchGating:
+    """github_injection directions must only be re-dispatched while their
+    GitHub issue is open and the attempt cap is not exhausted."""
+
+    def test_open_issue_available_is_dispatchable(self, fd_manager):
+        fd_manager.add_direction(_injected_dir(1, github_issue=10, attempt_count=0))
+        candidates = fd_manager.dispatchable_injected_directions(
+            open_issue_numbers={10}, max_attempts=3)
+        assert [c.id for c in candidates] == ["ginj_001"]
+
+    def test_closed_issue_excluded(self, fd_manager):
+        fd_manager.add_direction(_injected_dir(2, github_issue=10, attempt_count=0))
+        # Issue no longer open (e.g. closed on integration) — must NOT re-dispatch
+        candidates = fd_manager.dispatchable_injected_directions(
+            open_issue_numbers={11}, max_attempts=3)
+        assert candidates == []
+
+    def test_missing_issue_number_excluded(self, fd_manager):
+        fd_manager.add_direction(_injected_dir(3, github_issue=0))
+        candidates = fd_manager.dispatchable_injected_directions(
+            open_issue_numbers={0}, max_attempts=3)
+        assert candidates == []
+
+    def test_attempt_cap_excluded(self, fd_manager):
+        fd_manager.add_direction(_injected_dir(4, github_issue=10, attempt_count=3))
+        fd_manager.add_direction(_injected_dir(5, github_issue=10, attempt_count=2))
+        candidates = fd_manager.dispatchable_injected_directions(
+            open_issue_numbers={10}, max_attempts=3)
+        assert [c.id for c in candidates] == ["ginj_005"]
+
+    def test_completed_excluded(self, fd_manager):
+        fd_manager.add_direction(_injected_dir(6, github_issue=10))
+        fd_manager.mark_direction_completed("ginj_006")
+        candidates = fd_manager.dispatchable_injected_directions(
+            open_issue_numbers={10}, max_attempts=3)
+        assert candidates == []
+
+    def test_in_progress_excluded(self, fd_manager):
+        fd_manager.add_direction(_injected_dir(7, github_issue=10))
+        fd_manager.mark_direction_consumed("ginj_007", "job_x")
+        candidates = fd_manager.dispatchable_injected_directions(
+            open_issue_numbers={10}, max_attempts=3)
+        assert candidates == []
+
+    def test_non_injection_source_ignored(self, fd_manager):
+        fd_manager.add_direction(_injected_dir(8, source="", github_issue=10))
+        candidates = fd_manager.dispatchable_injected_directions(
+            open_issue_numbers={10}, max_attempts=3)
+        assert candidates == []
+
+
+class TestPruneClosedIssueDirections:
+    """One-time + self-healing cleanup: non-terminal github_injection directions
+    whose issue is closed are zombies and should be pruned."""
+
+    def test_available_closed_issue_pruned(self, fd_manager):
+        fd_manager.add_direction(_injected_dir(10, github_issue=10, status="available"))
+        pruned = fd_manager.prune_closed_issue_directions(open_issue_numbers={})
+        assert pruned == 1
+        d = fd_manager.get_direction_by_id("ginj_010")
+        assert d.status == "pruned"
+        assert d.prune_reason
+
+    def test_in_progress_closed_issue_pruned(self, fd_manager):
+        fd_manager.add_direction(_injected_dir(11, github_issue=10))
+        fd_manager.mark_direction_consumed("ginj_011", "job_y")
+        pruned = fd_manager.prune_closed_issue_directions(open_issue_numbers={})
+        assert pruned == 1
+        assert fd_manager.get_direction_by_id("ginj_011").status == "pruned"
+
+    def test_open_issue_kept(self, fd_manager):
+        fd_manager.add_direction(_injected_dir(12, github_issue=10))
+        pruned = fd_manager.prune_closed_issue_directions(open_issue_numbers={10})
+        assert pruned == 0
+        assert fd_manager.get_direction_by_id("ginj_012").status == "available"
+
+    def test_terminal_closed_issue_left_alone(self, fd_manager):
+        fd_manager.add_direction(_injected_dir(13, github_issue=10))
+        fd_manager.mark_direction_completed("ginj_013")
+        pruned = fd_manager.prune_closed_issue_directions(open_issue_numbers={})
+        assert pruned == 0
+        assert fd_manager.get_direction_by_id("ginj_013").status == "completed"
+
+    def test_non_injection_closed_issue_untouched(self, fd_manager):
+        fd_manager.add_direction(_injected_dir(14, source="", github_issue=10))
+        pruned = fd_manager.prune_closed_issue_directions(open_issue_numbers={})
+        assert pruned == 0
+        assert fd_manager.get_direction_by_id("ginj_014").status == "available"
+
+
+class TestStaleQueuedJobPurge:
+    """Queued jobs stuck past max_age_hours are zombies that inflate the local
+    inflight count and block fresh dispatch — they must be identified for purge."""
+
+    def test_old_retry_queued_identified(self):
+        from types import SimpleNamespace
+        from knowledge_extractor import _stale_queued_jobs_to_purge
+        now = 1_000_000.0
+        old = SimpleNamespace(status="retry_queued", retry_queued_time=now - 10 * 3600,
+                              dispatch_time=0.0, job_id="job_old")
+        recent = SimpleNamespace(status="retry_queued", retry_queued_time=now - 60,
+                                 dispatch_time=0.0, job_id="job_recent")
+        stale = _stale_queued_jobs_to_purge({"a": old, "b": recent}, max_age_hours=6, now=now)
+        assert [pid for pid, _ in stale] == ["a"]
+
+    def test_active_and_recent_jobs_not_purged(self):
+        from types import SimpleNamespace
+        from knowledge_extractor import _stale_queued_jobs_to_purge
+        now = 1_000_000.0
+        dispatched = SimpleNamespace(status="dispatched", retry_queued_time=0.0,
+                                     dispatch_time=now - 100, job_id="job_d")
+        fresh_queued = SimpleNamespace(status="dispatch_queued", retry_queued_time=0.0,
+                                       dispatch_time=now - 5, job_id="job_f")
+        stale = _stale_queued_jobs_to_purge(
+            {"d": dispatched, "f": fresh_queued}, max_age_hours=6, now=now)
+        assert stale == []

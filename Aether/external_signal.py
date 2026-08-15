@@ -44,6 +44,11 @@ class ExternalSignalFeed:
 
     def refresh(self, domain: str = "", count_per_source: int = 2) -> int:
         """Fetch signals from all sources and add directions. Returns number added."""
+        # Re-sync the manager from disk before touching anything. The feed's
+        # manager is constructed at extractor init and otherwise holds a stale
+        # snapshot; if integration marked directions completed mid-tick, saving
+        # against that snapshot would clobber the newer state (re-publish loop).
+        self.fd_manager = FutureDirectionsManager(self.workspace)
         added = 0
         try:
             added += self._add_directions(self.fetch_arxiv_directions(domain, count=count_per_source))
@@ -57,6 +62,9 @@ class ExternalSignalFeed:
 
     def _add_directions(self, directions: List[FutureDirection]) -> int:
         added = 0
+        # Guard against stale-manager clobber even when _add_directions is
+        # called directly: always write against the current on-disk state.
+        self.fd_manager = FutureDirectionsManager(self.workspace)
         for d in directions:
             if not d.title or not d.description:
                 continue

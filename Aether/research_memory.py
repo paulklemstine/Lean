@@ -1317,6 +1317,66 @@ class FutureDirectionsManager:
         if released:
             self._save()
 
+    def dispatchable_injected_directions(
+        self, open_issue_numbers, max_attempts: int = 3
+    ) -> List["FutureDirection"]:
+        """Filter github_injection directions to those safe to (re-)dispatch.
+
+        A direction is only dispatchable when all of:
+          - status == 'available'
+          - source == 'github_injection'
+          - it references a GitHub issue that is currently OPEN (github_issue
+            non-zero and present in open_issue_numbers) — a closed issue means
+            the work was already handled, so it must never be re-dispatched
+          - attempt_count < max_attempts — retried to the cap is dead
+
+        This breaks the re-publish loop where closed-issue directions were
+        re-dispatched every tick regardless of completion or issue state.
+        """
+        open_set = {int(n) for n in open_issue_numbers}
+        candidates: List["FutureDirection"] = []
+        for d in self._directions:
+            if d.status != "available":
+                continue
+            if getattr(d, "source", "") != "github_injection":
+                continue
+            if not d.github_issue or int(d.github_issue) not in open_set:
+                continue
+            if d.attempt_count >= max_attempts:
+                continue
+            candidates.append(d)
+        return candidates
+
+    def prune_closed_issue_directions(
+        self, open_issue_numbers, reason: str = None
+    ) -> int:
+        """Prune non-terminal github_injection directions whose issue is closed.
+
+        These are zombies: their GitHub issue was closed (integration succeeded
+        or the request was retired), yet the direction never reached a terminal
+        state — stale-manager clobbers or failed cleanups kept re-dispatching
+        them. Any 'available'/'in_progress' direction whose github_issue is not
+        in open_issue_numbers is marked pruned. Returns the number pruned.
+        """
+        open_set = {int(n) for n in open_issue_numbers}
+        pruned_count = 0
+        for d in self._directions:
+            if getattr(d, "source", "") != "github_injection":
+                continue
+            if d.status not in ("available", "in_progress"):
+                continue
+            if d.github_issue and int(d.github_issue) in open_set:
+                continue
+            d.status = "pruned"
+            d.prune_reason = reason or (
+                f"github issue #{d.github_issue} closed; direction superseded"
+            )
+            d.pruned_at = datetime.now(timezone.utc).isoformat()
+            pruned_count += 1
+        if pruned_count:
+            self._save()
+        return pruned_count
+
     def quarantine_direction(self, direction_id: str, days: int = 30) -> None:
         """Quarantine a direction: prevent dispatch for N days.
 

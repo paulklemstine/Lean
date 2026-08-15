@@ -143,6 +143,29 @@ class ResearchJob:
 MAX_RESUME_BUDGET = 2
 
 
+def _stale_queued_jobs_to_purge(inflight, max_age_hours: int = 6, now: float = None):
+    """Return [(pid, job)] for queued jobs stuck longer than max_age_hours.
+
+    Queued (retry_queued/dispatch_queued/queued) jobs that cannot reach
+    Aristotle within max_age_hours are dead weight: they inflate the local
+    inflight count, saturate the queue view, and block fresh dispatches (and
+    the injected-issue loop kept piling new ones onto already-closed issues).
+    Age is measured from retry_queued_time, falling back to dispatch_time.
+    """
+    import time as _time
+    now = now if now is not None else _time.time()
+    cutoff = now - max_age_hours * 3600
+    stale = []
+    for pid, job in inflight.items():
+        if getattr(job, "status", None) not in ("retry_queued", "dispatch_queued", "queued"):
+            continue
+        ts = getattr(job, "retry_queued_time", 0.0) or getattr(job, "dispatch_time", 0.0) or 0.0
+        if not ts or ts >= cutoff:
+            continue
+        stale.append((pid, job))
+    return stale
+
+
 class KnowledgeExtractor:
     """The core Aether pipeline: Pi brain + Aristotle worker.
 
@@ -304,6 +327,34 @@ class KnowledgeExtractor:
                     d[k] = v
             data[pid] = d
         path.write_text(json.dumps(data, indent=2))
+
+    def purge_stale_queued_jobs(self, max_age_hours: int = 6) -> int:
+        """Drop queued jobs that have been stuck too long to ever dispatch.
+
+        Each stale queued job is released (its direction returns to available)
+        and removed from local tracking, so it stops inflating the inflight
+        count and saturating the queue view. Returns the number purged.
+        """
+        import time as _time
+        stale = _stale_queued_jobs_to_purge(self.inflight, max_age_hours=max_age_hours)
+        purged = 0
+        for pid, job in stale:
+            title = ""
+            if getattr(job, "concept", None) is not None:
+                title = getattr(job.concept, "title", "") or ""
+            queued_ts = getattr(job, "retry_queued_time", 0.0) or getattr(job, "dispatch_time", 0.0) or 0.0
+            age_secs = (_time.time() - queued_ts) if queued_ts else 0.0
+            print(f"[Purge] Dropping stale queued job {getattr(job, 'job_id', '?')[:8]} "
+                  f"({title[:50]}...) queued {age_secs:.0f}s")
+            try:
+                self._release_direction(job)
+            except Exception as e:
+                print(f"[Purge] Warning: could not release direction for {getattr(job, 'job_id', '?')[:8]}: {e}")
+            del self.inflight[pid]
+            purged += 1
+        if purged:
+            self._save_inflight()
+        return purged
 
     def _load_inflight(self):
         """Load the inflight jobs from disk on startup."""
