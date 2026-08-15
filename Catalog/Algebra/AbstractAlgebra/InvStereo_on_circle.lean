@@ -5,16 +5,11 @@ import Mathlib
 Auto-generated from theorem catalog database.
 Domain: Shared
 Declarations: 3
+
+Repaired: declarations reordered so that `invStereo` precedes its use.
 -/
 
 noncomputable section
-
-/-- The encoding maps to S¹. -/
-theorem invStereo_on_circle (t : ℝ) :
-    (invStereo t).1 ^ 2 + (invStereo t).2 ^ 2 = 1 := by
-  unfold invStereo
-  have h : (1 : ℝ) + t ^ 2 ≠ 0 := by positivity
-  field_simp; ring
 
 /-- Inverse stereographic projection: ℝ → S¹ ⊂ ℝ².
 The encoding: a massive particle's state t maps to a photon state on S¹. -/
@@ -23,5 +18,12 @@ def invStereo (t : ℝ) : ℝ × ℝ :=
 
 /-- The denominator 1 + t² is always positive. -/
 lemma invStereo_denom_pos (t : ℝ) : (0 : ℝ) < 1 + t ^ 2 := by positivity
+
+/-- The encoding maps to S¹. -/
+theorem invStereo_on_circle (t : ℝ) :
+    (invStereo t).1 ^ 2 + (invStereo t).2 ^ 2 = 1 := by
+  unfold invStereo
+  have h : (1 : ℝ) + t ^ 2 ≠ 0 := by positivity
+  field_simp; ring
 
 end

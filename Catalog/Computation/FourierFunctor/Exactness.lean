@@ -1,4 +1,4 @@
-import Computation.FourierFunctor.Convolution
+import Catalog.Computation.FourierFunctor.Convolution
 
 /-!
 # Exactness of Pontryagin duality, and the character extension theorem

@@ -5,12 +5,15 @@ import Mathlib
 Auto-generated from theorem catalog database.
 Domain: Shared
 Declarations: 5
+
+Repaired: the statistic `E` used by `sublevel` is defined here.
 -/
 
-/-- [Section: # CatalogBuild.Shared.Sublevel
-Auto-generated from theorem catalog database.
-Domain: Speculative
-Declarations: 5] -/
+/-- The remainder statistic `E N x = N % x` on which the sublevel sets are
+based (it was used but never declared in the generated file). -/
+def E (N x : ℕ) : ℕ := N % x
+
+/-- The sublevel set of the remainder statistic. -/
 def sublevel (N t : ℕ) : Finset ℕ :=
   (Finset.Icc 1 N).filter (fun x => E N x ≤ t)
 
@@ -46,7 +49,7 @@ theorem sublevel_zero_card_eq_tau (N : ℕ) (hN : 0 < N) :
     exact ⟨⟨Nat.pos_of_dvd_of_pos hdvd hN, Nat.le_of_dvd hN hdvd⟩, Nat.mod_eq_zero_of_dvd hdvd⟩
 
 /-- The sublevel set at threshold 0 is exactly the set of divisors of N in [1,N]. -/
-theorem sublevel_zero_is_divisors (N : ℕ) (hN : 0 < N) :
+theorem sublevel_zero_is_divisors (N : ℕ) :
     sublevel N 0 = (Finset.Icc 1 N).filter (fun x => x ∣ N) := by
   ext x
   simp only [sublevel, Finset.mem_filter, Finset.mem_Icc, E, Nat.le_zero]
