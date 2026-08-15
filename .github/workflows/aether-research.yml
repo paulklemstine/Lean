@@ -44,32 +44,6 @@ jobs:
       - name: Install dependencies
         run: pip install -r Aether/requirements.txt
 
-      - name: Cache elan toolchain
-        uses: actions/cache@v4
-        with:
-          path: ~/.elan
-          key: ${{ runner.os }}-elan-${{ hashFiles('Catalog/lean-toolchain') }}
-
-      - name: Cache Mathlib build artifacts
-        uses: actions/cache@v4
-        with:
-          path: |
-            Catalog/.lake/build
-            Catalog/.lake/packages
-          key: ${{ runner.os }}-lake-${{ hashFiles('Catalog/lean-toolchain', 'Catalog/lake-manifest.json') }}
-          restore-keys: |
-            ${{ runner.os }}-lake-
-
-      - name: Install elan and fetch Lean cache
-        run: |
-          if [ ! -d "$HOME/.elan/bin" ]; then
-            curl https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -sSf | sh -s -- -y --default-toolchain none
-          fi
-          echo "$HOME/.elan/bin" >> $GITHUB_PATH
-          export PATH="$HOME/.elan/bin:$PATH"
-          cd Catalog
-          lake exe cache get || true
-
       - name: Create workspace directories
         run: mkdir -p Aether/.aether_workspace/projects Aether/.aether_workspace/logs
 
