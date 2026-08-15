@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "5b29bc32",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions — the non-CRT-separable half-plane count\n\nEverything below is derived from the theorems proved in\n`Catalog/MachineLearning/HalfPlane*.lean` (all sorry-free).  Established facts,\nfo",
-      "quality_score": 0.86,
-      "sorry_count": 0,
-      "theorem_count": 98,
-      "timestamp": "2026-08-13T02:54:40",
-      "title": "The Non-CRT-Separable Half-Plane Circle Count, Closed"
-    },
-    {
       "cycle_id": "83939baf",
       "domain": "Pythagorean",
       "key_insight": "# Future directions — Barrier IV (the de-quantization frontier)\n\nDerived from the formalisation in\n`Catalog/Pythagorean/FactoringBarriers/Dequant/`.  Each conjecture is falsifiable\nand stated so that",
@@ -499,19 +489,19 @@
       "theorem_count": 60,
       "timestamp": "2026-08-15T11:41:24",
       "title": "The 'Only Bad Primes' Conjecture is False (elliptic curve denominators)"
+    },
+    {
+      "cycle_id": "032d68e5",
+      "domain": "Bridges",
+      "key_insight": "# Future directions\n\nDerived from the verified results in\n\n* `Catalog/Bridges/MordellDenominatorBadPrimes.lean` — the `n = 2` layer: mechanism theorem\n  `prime_dvd_den_dblX_iff`, reduction/torsion bri",
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "theorem_count": 92,
+      "timestamp": "2026-08-15T13:06:49",
+      "title": "The 'Only Bad Primes' Conjecture is False (elliptic curve denominators)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "3a707635",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\nThe three files\n\n* `Catalog/Applications/EML/EMLDifferentialEquations.lean`\n* `Catalog/Applications/EML/AiryRationalObstruction.lean`\n* `Catalog/Applications/EML/AiryKovacicCaseTw",
-      "quality_score": 0.7555699999999999,
-      "sorry_count": 0,
-      "theorem_count": 13,
-      "timestamp": "2026-08-05T03:41:15",
-      "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
-    },
     {
       "cycle_id": "f993c4fa",
       "domain": "Physics",
@@ -2501,27 +2491,19 @@
       "theorem_count": 60,
       "timestamp": "2026-08-15T11:41:24",
       "title": "The 'Only Bad Primes' Conjecture is False (elliptic curve denominators)"
+    },
+    {
+      "cycle_id": "032d68e5",
+      "domain": "Bridges",
+      "key_insight": "# Future directions\n\nDerived from the verified results in\n\n* `Catalog/Bridges/MordellDenominatorBadPrimes.lean` — the `n = 2` layer: mechanism theorem\n  `prime_dvd_den_dblX_iff`, reduction/torsion bri",
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "theorem_count": 92,
+      "timestamp": "2026-08-15T13:06:49",
+      "title": "The 'Only Bad Primes' Conjecture is False (elliptic curve denominators)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "53eb02be",
-      "domain": "Bridges",
-      "name": "mexpOrd_pos",
-      "quality": 0.86
-    },
-    {
-      "cycle_id": "53eb02be",
-      "domain": "Bridges",
-      "name": "modExp_eq_iff",
-      "quality": 0.86
-    },
-    {
-      "cycle_id": "64406111",
-      "domain": "Geometry",
-      "name": "for",
-      "quality": 0.85
-    },
     {
       "cycle_id": "64406111",
       "domain": "Geometry",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "mem_den_kernel_add",
       "quality": 0.88
+    },
+    {
+      "cycle_id": "032d68e5",
+      "domain": "Bridges",
+      "name": "mordellC_equation_iff",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "032d68e5",
+      "domain": "Bridges",
+      "name": "mordellC_negY",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "032d68e5",
+      "domain": "Bridges",
+      "name": "mordellC_Δ",
+      "quality": 0.85
     }
   ],
-  "last_updated": "2026-08-15T11:41:24",
+  "last_updated": "2026-08-15T13:06:49",
   "open_questions": [
     {
       "context": "-    sorry+  -- Extract a witness from the computational verification of the primitive part.",
@@ -3145,12 +3145,6 @@
     ],
     "Bridges": [
       {
-        "cycle_id": "52648a00",
-        "quality": 0.686,
-        "theorems": 122,
-        "title": "ArXiv paper: On the maximum size of $B_3$-free families"
-      },
-      {
         "cycle_id": "018a4d2d",
         "quality": 0.686,
         "theorems": 73,
@@ -3203,6 +3197,12 @@
         "quality": 0.89,
         "theorems": 2,
         "title": "OR-DIAL-MAXIMUM: the semiprime OR dial has a global cap g(2)=0.3113 bits over ev"
+      },
+      {
+        "cycle_id": "032d68e5",
+        "quality": 0.85,
+        "theorems": 92,
+        "title": "The 'Only Bad Primes' Conjecture is False (elliptic curve denominators)"
       }
     ],
     "Combinatorics": [
