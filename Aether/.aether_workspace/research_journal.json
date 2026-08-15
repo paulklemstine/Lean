@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "24da7a57",
-      "domain": "Combinatorics",
-      "key_insight": "# Future Directions — bold, testable conjectures from the Round-11 closures\n\nDerived from what survived, and from what the proofs actually needed, in\n`Catalog/Combinatorics/Round11CycleIndexFingerprin",
-      "quality_score": 0.84,
-      "sorry_count": 0,
-      "theorem_count": 69,
-      "timestamp": "2026-08-13T00:05:25",
-      "title": "Round-11 Closures: The Definitive Closure of the Classical Surface"
-    },
-    {
       "cycle_id": "fb76e61b",
       "domain": "Cryptography",
       "key_insight": "# Future Directions — after the Euler-gap collapse of `Q(a) = a^(N-1) mod N`\n\nWhat is now proved (all in `Catalog/Cryptography/AsymmetricExponent/`, no\n`sorry`, no extra axioms):\n\n* the asymmetric CRT",
@@ -499,19 +489,19 @@
       "theorem_count": 74,
       "timestamp": "2026-08-15T10:47:01",
       "title": "Singular Moduli Factoring and the √N Barrier"
+    },
+    {
+      "cycle_id": "a9efa47b",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Power-Sum GCD Factoring and Carmichael Periodicity\n\nDerived from what survived (and what broke) in the formalisation pass; every item is\nstated so that it can be refuted by a sin",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-08-15T11:41:08",
+      "title": "Power-Sum GCD Factoring & Carmichael Periodicity"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "8d083ef6",
-      "domain": "Applications",
-      "key_insight": "# Future directions\n\nThe new file `Catalog/Applications/SurveillanceNetworks/PrivacyThreshold.lean`\nsettles the \"sharp privacy threshold\" direction for binary network histories:\nperfectly private chan",
-      "quality_score": 0.686,
-      "sorry_count": 0,
-      "theorem_count": 37,
-      "timestamp": "2026-08-04T23:25:44",
-      "title": "**Conjecture.** For a nonuniform distribution on finite network histories and an"
-    },
     {
       "cycle_id": "a08998f9",
       "domain": "Combinatorics",
@@ -2501,15 +2491,19 @@
       "theorem_count": 74,
       "timestamp": "2026-08-15T10:47:01",
       "title": "Singular Moduli Factoring and the √N Barrier"
+    },
+    {
+      "cycle_id": "a9efa47b",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Power-Sum GCD Factoring and Carmichael Periodicity\n\nDerived from what survived (and what broke) in the formalisation pass; every item is\nstated so that it can be refuted by a sin",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-08-15T11:41:08",
+      "title": "Power-Sum GCD Factoring & Carmichael Periodicity"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "677413db",
-      "domain": "Algebra",
-      "name": "reprP23_59",
-      "quality": 0.83
-    },
     {
       "cycle_id": "677413db",
       "domain": "Algebra",
@@ -2803,9 +2797,15 @@
       "domain": "Cryptography",
       "name": "singularModuli_no_precomputation",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "a9efa47b",
+      "domain": "Novelty",
+      "name": "fib_periodic_mod",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-15T10:47:01",
+  "last_updated": "2026-08-15T11:41:08",
   "open_questions": [
     {
       "context": "-    sorry+  -- Extract a witness from the computational verification of the primitive part.",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "a062ecaf",
-        "quality": 0.7526200000000001,
-        "theorems": 15,
-        "title": "Deepening: Strange Attractors as Algebraic Objects"
-      },
-      {
         "cycle_id": "646c7606",
         "quality": 0.82,
         "theorems": 42,
@@ -3637,6 +3631,12 @@
         "quality": 0.82,
         "theorems": 54,
         "title": "TRACEPROFILE: the trace s=p+q is the least-hidden symmetric invariant — 1 bit pe"
+      },
+      {
+        "cycle_id": "a9efa47b",
+        "quality": 0.82,
+        "theorems": 14,
+        "title": "Power-Sum GCD Factoring & Carmichael Periodicity"
       }
     ],
     "NumberTheory": [
