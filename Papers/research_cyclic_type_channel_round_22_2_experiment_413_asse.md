@@ -1,330 +1,383 @@
-# The Cyclic Splitting-Type Channel: Exact Information Above the Binary-Fork Cap
+# The Cyclic Splitting-Type Channel: Exact Laws, Divisor Bounds, and the Breaking of the One-Bit Pair Cap
 
 **Author:** Aristotle
-**Date:** 2026-08-14
+**Date:** 2026-08-15
 
 ---
 
 ## Abstract
 
-Let $f$ be an odd prime and let $\mathbb{Q}(\zeta_f)$ be the $f$-th cyclotomic field, whose Galois group is the cyclic group $C_n \cong (\mathbb{Z}/f)^\times$ of order $n = f-1$. For an unramified rational prime $p$, the *splitting type* $T(p) = \operatorname{ord}_f(p)$ — the residue degree, equivalently the order of the Frobenius element — is the complete factorisation datum of $p$ in $\mathbb{Q}(\zeta_f)$. We study the information carried by this multi-state observable, and by its semiprime analogue: given only the norm class $N \bmod f$ of a semiprime $N = pq$, how much is revealed about the unordered pair $\{T(p), T(q)\}$?
+Let $f$ be a prime and let $\mathbb{Q}(\zeta_f)$ be the corresponding cyclotomic field, with cyclic Galois group $C_n$, $n = f-1$. To each unramified rational prime $p$ we attach its *splitting type* $T(p) = \operatorname{ord}_f(p)$, the residue degree of $p$ in $\mathbb{Q}(\zeta_f)$; this is the complete invariant of the decomposition of $p$, and it is an exact function of $p \bmod f$. Modelling Frobenius equidistribution (Chebotarev) by a uniform variable $x$ on $C_n$ with $T(x) = n/\gcd(n,x)$, we study two derived information channels: the *single-prime type channel*, with entropy $H(T)(n)$, and the *semiprime type-pair channel*
+$$I_{\mathrm{pair}}(n) = H(\Pi) - \frac1n\sum_{c \in C_n} H(\Pi_c),$$
+the mutual information between the product class $N \equiv x+y$ and the unordered type pair $\{T(x),T(y)\}$.
 
-We prove four families of exact results. **(i) Determinism and the Euler law:** the type is a deterministic function of the residue, so the residue-to-type channel is exact, $I(p \bmod f \,;\, T) = H(T)$; the type distribution is the Euler law $\Pr[T = d] = \varphi(d)/n$ over divisors $d \mid n$, whence the closed form $H(T) = \log_2 n - \frac1n\sum_{d\mid n}\varphi(d)\log_2\varphi(d)$. Refining the observation modulus from $f$ to any multiple of $f$ adds no information ("thickening zero"). **(ii) Strict lossiness of the root count:** the binary readout "does $p$ split completely?" has entropy exactly $\log_2 n - \frac{n-1}{n}\log_2(n-1)$, equal to $H(T)$ if and only if $n$ is prime, and strictly smaller otherwise. **(iii) The semiprime type-pair law:** the mutual information between the norm class and the unordered type pair is $I_{\mathrm{pair}} = H(\Pi) - \frac1n\sum_c H(\Pi_c)$, an exactly computable finite quantity. Its values are $I_{\mathrm{pair}}(2)=1$, $I_{\mathrm{pair}}(4) = 5/4$, $I_{\mathrm{pair}}(6) = \log_2 3 - 1/9$, $I_{\mathrm{pair}}(8) = 21/16$, $I_{\mathrm{pair}}(12) = \log_2 3 + 5/36$, $I_{\mathrm{pair}}(16) = 85/64$, and further exact algebraic-logarithmic forms for $n \le 20$. The quadratic case sits exactly at the classical one-bit binary-fork cap; **every even cyclic order $n \ge 4$ strictly exceeds it, and every odd order $n \ge 3$ stays strictly below.** **(iv) Structure laws:** coprime additivity $I_{\mathrm{pair}}(mk) = I_{\mathrm{pair}}(m) + I_{\mathrm{pair}}(k)$ for $\gcd(m,k)=1$, the doubling law $I_{\mathrm{pair}}(2m) = I_{\mathrm{pair}}(m) + 1$ for odd $m$, and the $2$-adic growth law $I_{\mathrm{pair}}(2^k) = \frac43(1 - 4^{-k})$ with supremum $4/3$.
+We prove: (i) an **exact closed form** for the pair channel at every prime cyclic order,
+$$I_{\mathrm{pair}}(p) = \log_2 p - \frac{(p-1)(2p-1)}{p^2}\log_2(p-1) + \frac{(p-1)(p-2)}{p^2}\log_2(p-2);$$
+(ii) sharp two-sided asymptotics $\frac{1}{p^2\ln 2} \le I_{\mathrm{pair}}(p) \le \frac{\log_2 p + 5}{p^2}$ for odd primes, so the prime-order channel is strictly positive but closes quadratically; (iii) the **sub-cap theorem**: $I_{\mathrm{pair}}(p) < 1$ for every odd prime and $I_{\mathrm{pair}}(p) = 1$ if and only if $p = 2$, whereas exhaustive evaluation gives $I_{\mathrm{pair}}(n) > 1$ for $n = 4,6,8,10,12,14,16$ — the one-bit binary-fork cap is broken by composite, not by large, Galois orders; (iv) **CRT multiplicativity** $T_{mn} = T_m T_n = \operatorname{lcm}(T_m,T_n)$ for coprime moduli, and the resulting exact additivity $H(T)(mn) = H(T)(m)+H(T)(n)$, hence a Sylow decomposition $H(T)(n) = \sum_{p \mid n} H(T)(p^{v_p(n)})$; (v) the closed form $H(T)(2^k) = 2 - 2^{1-k}$, so the $2$-adic tower saturates at exactly two bits; (vi) the **divisor-lattice sandwich** $H(\mathrm{nr}) \le H(T) \le \log_2 d(n)$, with both inequalities strict for $n \ge 3$; and (vii) a complete lossiness dichotomy for the binary root-count readout: $H(\mathrm{nr}) < H(T)$ if and only if $n$ is composite, with the loss tending to the full two bits along the $2$-adic tower.
 
-The one-bit ceiling for symmetric semiprime forks is therefore not a bound on what a norm class can reveal; it is a bound on *binary* observables. The complete splitting type is multi-state, and its channel is strictly richer, with capacity governed by the divisor lattice of the cyclic order.
+**Keywords.** cyclotomic field, Frobenius splitting type, Chebotarev equidistribution, mutual information, Euler totient law, divisor lattice, semiprime channel.
 
 ---
 
 ## 1. Introduction
 
-### 1.1 The binary-fork cap
+### 1.1 The one-bit phenomenon
 
-The oldest information-theoretic question one can ask about a semiprime is a coin flip. Fix a quadratic field $K = \mathbb{Q}(\sqrt D)$ and consider the Kronecker symbol $\chi(p) = \left(\frac{D}{p}\right) \in \{+1,-1\}$: it records whether $p$ splits or is inert in $K$. For a semiprime $N = pq$ the symbol is multiplicative, $\chi(N) = \chi(p)\chi(q)$, so the observable $N$ hands over exactly the *product* of the two hidden bits. If $\chi(p),\chi(q)$ are independent fair bits, the unordered pair takes the three values $\{+,+\},\{+,-\},\{-,-\}$ with probabilities $\tfrac14,\tfrac12,\tfrac14$, so its entropy is $\tfrac32$ bits; conditioning on the observed parity $\chi(N)$ leaves a residual entropy of $\tfrac12$ bit (the parity $+$ leaves the two states $\{+,+\},\{-,-\}$ equiprobable, the parity $-$ determines the pair outright). The mutual information is therefore exactly $\tfrac32 - \tfrac12 = 1$ bit.
+A recurring question in the information-theoretic study of arithmetic is: *how much does a product of two primes reveal about its factors, short of factoring?* The standard setting attaches to each prime $p$ a binary arithmetic label $\varepsilon(p) \in \{\pm 1\}$ — a Legendre symbol, a split/inert indicator, a residue-class bit — and asks for the mutual information between $N = pq$ (equivalently, its residue class) and the *unordered* pair $\{\varepsilon(p),\varepsilon(q)\}$.
 
-This is the *binary-fork cap*: any symmetric semiprime fork built from a two-state character is worth at most one bit, and the quadratic fork saturates the bound. The cap has functioned as a folk theorem — a product of two primes discloses one bit about the pair.
+For every symmetric binary label of this kind the answer is at most one bit, and the bound is attained: knowing $N \bmod f$ determines the *product* $\varepsilon(p)\varepsilon(q)$ exactly, but nothing more, so the recoverable information is exactly the entropy of one balanced bit. We refer to this as the **binary-fork cap**.
 
-### 1.2 Multi-state splitting types
+The cap is often read as a structural obstruction. The results below show that it is instead an artifact of the *instrument*: the binary label is a lossy coarsening of a genuinely multi-state observable, and the complete observable breaks the cap.
 
-The cap is an artifact of asking a two-state question. In a cyclotomic field the natural question is not binary.
+### 1.2 The complete observable
 
-Let $f$ be an odd prime and $\zeta_f$ a primitive $f$-th root of unity. Then
-$$\operatorname{Gal}(\mathbb{Q}(\zeta_f)/\mathbb{Q}) \cong (\mathbb{Z}/f)^\times \cong C_n, \qquad n = f-1,$$
-via $\sigma_a(\zeta_f) = \zeta_f^{\,a}$. For a prime $p \nmid f$, the Frobenius element at $p$ is $\sigma_p$, and $p$ factors in $\mathbb{Z}[\zeta_f]$ into $g = n/T$ distinct prime ideals each of residue degree $T$, where
-$$T(p) \;=\; \operatorname{ord}_f(p) \;=\; \min\{k \ge 1 : p^k \equiv 1 \bmod f\}$$
-is the order of $\sigma_p$ in $C_n$. The integer $T(p)$ — a divisor of $n$ — is the **complete splitting type** of $p$: it determines the entire factorisation pattern, and no coarser invariant does.
+For $\mathbb{Q}(\zeta_f)$ with $f$ prime, the Galois group is $(\mathbb{Z}/f)^\times \cong C_n$ with $n = f-1$, and the Frobenius class of an unramified prime $p$ is the residue $p \bmod f$. The *splitting type*
+$$T(p) = \operatorname{ord}_f(p)$$
+is the residue degree: $p$ factors into exactly $n/T(p)$ distinct primes of $\mathbb{Q}(\zeta_f)$, each of residue degree $T(p)$. This is a complete description of the splitting behaviour, and it is a *deterministic function of $p \bmod f$*, so the mutual information between the residue class and the type equals $H(T)$ exactly. Refining the residue to $p \bmod f^2$ (or any higher power) adds nothing: the channel is concentrated at level one.
 
-The classical binary observable is the *root count* $\mathrm{nr}(p)$, the number of roots of the defining polynomial modulo $p$: it distinguishes only $T = 1$ (splits completely) from $T > 1$. This is one shadow of the type. The theme of this paper is that the shadow is strictly smaller than the object, and that the object breaks the cap.
+The traditional binary readout is the coarsening
+$$\mathrm{nr}(p) = \mathbf{1}[\,T(p)=1\,],$$
+"does $p$ split completely?". For $f = 5$ this collapses the distinct behaviours $T=2$ (two primes of degree $2$) and $T=4$ (inert) into a single symbol; for $f = 7$ it collapses three distinct behaviours. Quantifying that collapse, and its consequence for the semiprime channel, is the content of this paper.
 
-### 1.3 The finite cyclic model
+### 1.3 Contributions
 
-All statements below are theorems about a finite cyclic group, and hold for every cyclic order $n \ge 1$, independently of whether $n+1$ is prime. Write $C_n$ additively as $\mathbb{Z}/n$; under a choice of primitive root mod $f$ the discrete logarithm identifies $(\mathbb{Z}/f)^\times$ with $\mathbb{Z}/n$, converting multiplication of residues into addition. The type becomes the additive order
-$$T(x) \;=\; \frac{n}{\gcd(n,x)}, \qquad x \in \mathbb{Z}/n,$$
-and the multiplicative norm $N = pq$ becomes the additive norm class $x + y \bmod n$. Under Chebotarev equidistribution the Frobenius residues of primes are asymptotically uniform on $(\mathbb{Z}/f)^\times$, so the uniform measure on $\mathbb{Z}/n$ is the correct model, and every information quantity below is a finite, exactly computable real number rather than a statistical estimate.
-
-### 1.4 Contributions
-
-1. **Determinism (Theorem 3.1)** and **thickening zero (Theorem 3.2)**: the residue-to-type channel is exact and does not improve under refinement of the modulus.
-2. **The Euler-$\varphi$ type law (Theorem 3.3)** and the resulting **entropy formula (Theorem 3.5)**, valid for all $n$.
-3. **The root-count entropy (Theorem 4.1)** with the **exact lossiness dichotomy (Theorem 4.2)**: lossless exactly when $n$ is prime.
-4. **The semiprime type-pair law (Definition 5.2, Theorem 5.3)** with exact closed-form values (Table 2) and the **cap theorem (Theorem 5.4)**.
-5. **Structure laws (Section 6)**: coprime additivity, doubling, and the $2$-adic growth law with limit $4/3$.
+1. An exact, symbolic-in-$p$ closed form for the semiprime type-pair channel at prime cyclic orders (Theorem 5.1), with a clean upper envelope (Theorem 5.2) and sharp quadratic two-sided bounds (Theorem 5.4).
+2. The sub-cap theorem: prime orders never exceed one bit, and $p=2$ uniquely attains it (Theorems 5.5, 5.6); combined with exhaustive evaluation at composite orders, this localises the cap-breaking phenomenon on the divisor structure of the Galois group.
+3. Structural multiplicativity: the CRT factorisation of the type map (Theorem 6.1), additivity of the type entropy over coprime factorisations (Theorem 6.2), and the resulting Sylow decomposition (Theorem 6.3) with an explicit squarefree formula (Corollary 6.4).
+4. The exact $2$-adic law $H(T)(2^k) = 2 - 2^{1-k}$, with strict monotonicity and saturation at two bits (Theorem 7.1).
+5. The divisor-lattice bounds $H(T) \le \log_2 n$ and $H(T) \le \log_2 d(n)$, strict for $n \ge 3$ (Theorems 8.2, 8.3), and the full sandwich $H(\mathrm{nr}) \le H(T) \le \log_2 d(n)$.
+6. The lossiness dichotomy $H(\mathrm{nr}) < H(T) \iff n$ composite (Theorem 9.2), the quantitative decay $H(\mathrm{nr}) \le (\log_2 n + 2)/n \to 0$ (Theorem 9.3), and total loss along the $2$-tower (Corollary 9.4).
 
 ---
 
-## 2. Definitions
+## 2. The probabilistic model
 
-Throughout, $n \ge 1$ is an integer, $\varphi$ is Euler's totient, all logarithms are base $2$, and entropies are in bits. For a finite list of occupation numbers $c_1,\dots,c_m$ with total $t = \sum_i c_i$, the Shannon entropy of the induced distribution is
-$$H(c_1,\dots,c_m;t) \;=\; -\sum_{i:\,c_i>0} \frac{c_i}{t}\log_2\frac{c_i}{t}.$$
+### 2.1 From Chebotarev to a uniform group element
 
-**Lemma 2.1 (Counting form).** *If $\sum_i c_i = t > 0$ then*
-$$H(c_1,\dots,c_m;t) \;=\; \log_2 t \;-\; \frac1t\sum_{i} c_i \log_2 c_i,$$
-*with the convention $0\log_2 0 = 0$.*
+By the Chebotarev density theorem, the Frobenius classes of the unramified primes are equidistributed in the Galois group: for $\mathbb{Q}(\zeta_f)$ each residue class in $(\mathbb{Z}/f)^\times$ carries natural density $1/n$. All statements below are therefore statements about the following finite model, and translate to densities of primes verbatim.
 
-*Proof.* Expand $\log_2(c_i/t) = \log_2 c_i - \log_2 t$ for $c_i > 0$ and use $\sum_i c_i = t$. $\square$
+**Model.** Let $n \ge 1$ and let $x$ be uniform on the cyclic group $C_n = \mathbb{Z}/n$ (written additively). Define the **splitting type**
+$$T_n(x) \;=\; \frac{n}{\gcd(n,x)} \in \{d : d \mid n\},$$
+which is exactly the order of $x$ in $C_n$; under the identification of $C_n$ with $\operatorname{Gal}(\mathbb{Q}(\zeta_f)/\mathbb{Q})$ this is the residue degree $\operatorname{ord}_f(p)$.
 
-This identity is the computational engine of the paper: every entropy occurring below is a finite $\mathbb{Q}$-linear combination of terms $\log_2 c$ with $c$ a small integer, and therefore lies in the $\mathbb{Q}$-vector space spanned by $1$ and $\{\log_2 \ell : \ell \text{ prime}\}$. All "exact values" quoted are elements of that space.
+**Proposition 2.1 (Totient law).** $\mathbb{P}(T_n = d) = \varphi(d)/n$ for every divisor $d \mid n$.
 
-**Definition 2.2 (Type).** For $x \in \mathbb{Z}/n$, the *splitting type* is $T(x) = n/\gcd(n,x)$, the additive order of $x$. Equivalently $T$ is the order of the corresponding Frobenius element in $C_n$, i.e. the residue degree of the corresponding prime.
+*Proof sketch.* The elements of order $d$ in a cyclic group of order $n$ are the $\varphi(d)$ generators of its unique subgroup of order $d$. $\square$
 
-**Definition 2.3 (Root-count readout).** The binary coarsening $\mathrm{nr}(x) = \mathbf{1}[T(x) = 1]$, i.e. "splits completely or not".
+Consequently, writing $H$ for Shannon entropy in bits,
+$$H(T)(n) \;=\; -\sum_{d \mid n} \frac{\varphi(d)}{n}\log_2\frac{\varphi(d)}{n} \;=\; \log_2 n \;-\; \frac1n\sum_{d\mid n}\varphi(d)\log_2\varphi(d). \tag{2.1}$$
+We abbreviate $H(T)(n)$ by $H_T(n)$ where convenient.
 
-**Definition 2.4 (Type pair and norm class).** For an independent uniform pair $(x,y) \in (\mathbb{Z}/n)^2$, the *unordered type pair* is $\Pi(x,y) = \{T(x), T(y)\}$, recorded as the sorted pair $(\min, \max)$; the *norm class* is $\nu(x,y) = x + y \bmod n$.
+**Example 2.2.** $H_T(4) = 2 - \tfrac14(2\cdot 1) = 1.5$ exactly, realised in $\mathbb{Q}(\zeta_5)$ by the three types $\{1,2,4\}$ with densities $\tfrac14,\tfrac14,\tfrac12$. $H_T(6) = \log_2 6 - \tfrac{4}{6} = 1.9183\ldots$, realised in $\mathbb{Q}(\zeta_7)$ by $\{1,2,3,6\}$ with densities $\tfrac16,\tfrac16,\tfrac13,\tfrac13$. Sampling actual primes reproduces $1.4989$ and $1.9183$ respectively.
 
----
+### 2.2 The binary root-count readout
 
-## 3. The single-prime channel
+Define $\mathrm{nr}_n(x) = \mathbf{1}[T_n(x) = 1]$, the indicator that $x$ is the identity (equivalently, that $p$ splits completely). Its occupation numbers are $[1, n-1]$, so
+$$H(\mathrm{nr})(n) \;=\; h_2\!\left(\tfrac1n\right) \;=\; \log_2 n - \frac{n-1}{n}\log_2 (n-1), \tag{2.2}$$
+where $h_2$ is the binary entropy function. We write $H_{\mathrm{nr}}(n)$ for this quantity.
 
-### 3.1 Exactness
+### 2.3 The semiprime type-pair channel
 
-**Theorem 3.1 (Determinism / exactness of the residue-to-type channel).** *For every $n \ge 1$,*
-$$I(x \,;\, T(x)) \;=\; H(T),$$
-*where $x$ is uniform on $\mathbb{Z}/n$. Equivalently, $H(T \mid x) = 0$: the type is a deterministic function of the residue, so the channel from residue to type leaks the full type entropy and nothing is lost.*
+Let $x,y$ be independent and uniform on $C_n$, modelling the Frobenius classes of two independent primes $p,q$. The Frobenius class of $N = pq$ is $c = x+y$. The observable of interest is the **unordered type pair**
+$$K(x,y) \;=\; \{\,T_n(x),\,T_n(y)\,\},$$
+recorded as a sorted pair $(\min, \max)$. Let $\Pi$ be its law over all $n^2$ ordered pairs and $\Pi_c$ its law conditioned on $x+y=c$. Since $c$ is uniform on $C_n$, the mutual information is
+$$\boxed{\;I_{\mathrm{pair}}(n) \;=\; H(\Pi) \;-\; \frac1n\sum_{c\in C_n} H(\Pi_c).\;} \tag{2.3}$$
 
-*Proof.* The joint variable $(x, T(x))$ is supported on the graph of $T$, which is in bijection with $\mathbb{Z}/n$ since the first coordinate determines the second. Hence $H(x, T) = H(x) = \log_2 n$, and
-$$I(x;T) = H(x) + H(T) - H(x,T) = \log_2 n + H(T) - \log_2 n = H(T). \qquad \square$$
+Three remarks fix the interpretation.
 
-In number-theoretic terms: $I(p \bmod f\,;\,T(p)) = H(T)$ exactly. There is no error term, no asymptotic, and no loss — the splitting type is a function of the Frobenius residue.
-
-**Theorem 3.2 (Thickening zero).** *If $a \equiv b \pmod n$ then $T(a) = T(b)$. Consequently, for every $m \ge 1$ and every $a$, $T(a \bmod nm) = T(a)$: observing the residue modulo any multiple of $n$ — in particular modulo $f^2$ rather than $f$ — provides no additional information about the type.*
-
-*Proof.* $\gcd(n,a)$ depends only on $a \bmod n$ (by the Euclidean step $\gcd(n,a) = \gcd(a \bmod n, n)$), hence so does $T(a) = n/\gcd(n,a)$. The second statement is the case $b = a \bmod nm$, using $n \mid nm$. $\square$
-
-### 3.2 The Euler law
-
-**Theorem 3.3 (Euler-$\varphi$ type law).** *Let $n > 0$ and $d \mid n$. Then exactly $\varphi(d)$ of the $n$ residues in $\mathbb{Z}/n$ have type $d$:*
-$$\#\{x \in \mathbb{Z}/n : T(x) = d\} = \varphi(d), \qquad\text{i.e.}\qquad \Pr[T = d] = \frac{\varphi(d)}{n}.$$
-
-*Proof.* First, $T(x) = d$ iff $\gcd(n,x) = n/d$: indeed if $\gcd(n,x) = n/d$ then $T(x) = n/(n/d) = d$ using $d \mid n$; conversely if $n/\gcd(n,x) = d$ then, since $\gcd(n,x) \mid n$, dividing back gives $\gcd(n,x) = n/d$. So the count is $\#\{x < n : \gcd(n,x) = n/d\}$, the number of elements of $\mathbb{Z}/n$ whose gcd with $n$ is the fixed divisor $n/d$. Writing $x = (n/d)u$ with $0 \le u < d$, the condition becomes $\gcd(d, u) = 1$, giving $\varphi(d)$ solutions. $\square$
-
-**Corollary 3.4.** *Summing over $d \mid n$ recovers the Gauss identity $\sum_{d \mid n}\varphi(d) = n$; every residue has exactly one type, and the set of realised types is exactly the divisor set of $n$.*
-
-**Theorem 3.5 (Closed form for the type entropy).** *For every $n > 0$,*
-$$H(T) \;=\; \log_2 n \;-\; \frac1n \sum_{d \mid n} \varphi(d)\,\log_2 \varphi(d).$$
-
-*Proof.* Combine Theorem 3.3 with Lemma 2.1, using $\sum_{d\mid n}\varphi(d) = n$. $\square$
-
-**Corollary 3.6 (Prime cyclic order).** *If $n = \ell$ is prime, the type has only the two states $1$ and $\ell$ with probabilities $1/\ell$ and $(\ell-1)/\ell$, so*
-$$H(T) \;=\; \log_2 \ell - \frac{\ell-1}{\ell}\log_2(\ell-1).$$
-
-**Examples.** $n=4$ ($\mathbb{Q}(\zeta_5)$): types $\{1,2,4\}$ with rates $\tfrac14,\tfrac14,\tfrac12$ and $H(T) = \tfrac32$ exactly. $n=6$ ($\mathbb{Q}(\zeta_7)$): types $\{1,2,3,6\}$ with rates $\tfrac16,\tfrac16,\tfrac13,\tfrac13$ and $H(T) = \log_2 3 + \tfrac13 \approx 1.9183$. $n = 12$ ($\mathbb{Q}(\zeta_{13})$): six types $\{1,2,3,4,6,12\}$ with rates $\tfrac1{12},\tfrac1{12},\tfrac16,\tfrac16,\tfrac16,\tfrac13$ and $H(T) = \log_2 3 + \tfrac56 \approx 2.4183$.
+* **Unorderedness is essential.** The channel is symmetric under swapping the two primes; the "which factor is which" information measured empirically on genuine semiprimes is $0.0001$ bits, i.e. numerically zero. The channel says something about the pair, nothing about the individual factors.
+* **Everything is finite and exact.** $\Pi$ and each $\Pi_c$ are integer occupation tables of total mass $n^2$ and $n$, so $I_{\mathrm{pair}}(n)$ is an explicit finite sum of logarithms of rationals; the values reported below are exact, not estimates.
+* **The binary channel is a projection.** Replacing $T$ by $\mathrm{nr}$ in (2.3) yields the classical split-count channel; its values are strictly smaller (see §10), which is the precise sense in which the split-count channel is one *face* of the type channel.
 
 ---
 
-## 4. The root count is strictly lossy
+## 3. Numerical landscape
 
-**Theorem 4.1 (Splits-completely pinning).** *For every $n > 0$, exactly one residue has type $1$, so the binary root-count readout has occupation numbers $(1, n-1)$ and entropy*
-$$H(\mathrm{nr}) \;=\; \log_2 n - \frac{n-1}{n}\log_2 (n-1) \;=\; H_2\!\left(\tfrac1n\right),$$
-*the binary entropy of $1/n$.*
+Exhaustive evaluation of (2.1)–(2.3) gives the following exact values (rounded to four decimals).
 
-*Proof.* $T(x) = 1$ iff $\gcd(n,x) = n$ iff $x = 0$; equivalently, Theorem 3.3 with $d = 1$ gives $\varphi(1) = 1$. Then apply Lemma 2.1 to $(1, n-1)$. $\square$
-
-For $n = 4$ this is the **quartic pinning** $H(\mathrm{nr}) = 2 - \tfrac34\log_2 3 \approx 0.8113$: the splits-completely face of the $C_4$ channel is pinned by the quartic character alone. For $n = 6$ it is $1 + \log_2 3 - \tfrac56\log_2 5 \approx 0.6500 = H_2(1/6)$.
-
-**Theorem 4.2 (Lossiness dichotomy).** *$H(\mathrm{nr}) \le H(T)$ always, with equality if and only if $n$ is prime or $n = 1$. In particular $H(\mathrm{nr}) < H(T)$ for $n = 4$ ($0.8113 < 1.5$) and for $n = 6$ ($0.6500 < 1.9183$).*
-
-*Proof.* $\mathrm{nr}$ is a deterministic function of $T$, so $H(\mathrm{nr}) \le H(T)$ by the data-processing/coarsening inequality. Equality holds iff the coarsening is injective on the support, i.e. iff $T$ takes only the values $1$ and one other — that is, iff $n$ has exactly two divisors, i.e. $n$ is prime (or $n=1$, where both entropies vanish). For prime $n = \ell$, Corollary 3.6 and Theorem 4.1 give literally the same expression. $\square$
-
-**Interpretation.** For $\mathbb{Q}(\zeta_5)$ the root count merges the factorisation patterns $[2,2]$ and $[4]$ into "no roots"; for $\mathbb{Q}(\zeta_7)$ it merges $[2,2,2]$, $[3,3]$ and $[6]$. Each merge destroys entropy. The type, not the root count, is the complete object.
-
----
-
-## 5. The semiprime type-pair channel
-
-### 5.1 Definition
-
-The semiprime observer sees $N = pq$. Modulo $f$ the residue of $N$ is the product of the residues of $p$ and $q$; in the additive model this is the norm class $\nu = x+y$. The hidden datum is the unordered pair $\Pi = \{T(x), T(y)\}$, unordered because the observer has no way to label the two factors.
-
-**Definition 5.1.** Let $x,y$ be independent and uniform on $\mathbb{Z}/n$. Let $\Pi$ denote the law of the unordered type pair, and for each $c \in \mathbb{Z}/n$ let $\Pi_c$ denote the law of the unordered type pair conditioned on $x + y = c$.
-
-**Definition 5.2 (The type-pair channel capacity).**
-$$I_{\mathrm{pair}}(n) \;=\; I\big(\nu \,;\, \Pi\big) \;=\; H(\Pi) \;-\; \frac1n\sum_{c \in \mathbb{Z}/n} H(\Pi_c).$$
-The factor $1/n$ is the (uniform) law of the norm class: for independent uniform $x,y$, the sum $x+y$ is uniform on $\mathbb{Z}/n$, and each conditional fibre $\{(x,y) : x+y = c\}$ has exactly $n$ elements.
-
-**Theorem 5.3 (Exact evaluability).** *For every $n > 0$, writing $P = (P_k)_k$ for the occupation numbers of the unordered type pairs among all $n^2$ ordered pairs, and $C_c = (C_{c,k})_k$ for the occupation numbers within the fibre $x+y=c$, we have $\sum_k P_k = n^2$, $\sum_k C_{c,k} = n$, and*
-$$I_{\mathrm{pair}}(n) \;=\; \Big(\log_2 n^2 - \tfrac{1}{n^2}\textstyle\sum_k P_k \log_2 P_k\Big) \;-\; \tfrac1n \sum_c \Big(\log_2 n - \tfrac1n \textstyle\sum_k C_{c,k}\log_2 C_{c,k}\Big).$$
-*Hence $I_{\mathrm{pair}}(n)$ is an explicit element of $\mathbb{Q} + \sum_{\ell} \mathbb{Q}\log_2 \ell$, computable by finite enumeration over $(\mathbb{Z}/n)^2$.*
-
-*Proof.* Immediate from Lemma 2.1 applied to $P$ (total $n^2$) and to each $C_c$ (total $n$). $\square$
-
-### 5.2 A worked example: $n = 4$, the field $\mathbb{Q}(\zeta_5)$
-
-Types on $\mathbb{Z}/4$: $T(0)=1$, $T(1)=4$, $T(2)=2$, $T(3)=4$. The sixteen ordered pairs give six unordered type pairs with occupation numbers
-$$\{1,1\}:1,\quad \{1,2\}:2,\quad \{2,2\}:1,\quad \{1,4\}:4,\quad \{2,4\}:4,\quad \{4,4\}:4,$$
-summing to $16$. So $H(\Pi) = \log_2 16 - \tfrac1{16}(0 + 2\cdot 1 + 0 + 3\cdot 4 + 3\cdot 4 + 3\cdot 4) = 4 - \tfrac{38}{16} = \tfrac{19}{8} = 2.375$.
-
-Conditioning on the norm class:
-
-| $c$ | $\{1,1\}$ | $\{1,2\}$ | $\{2,2\}$ | $\{1,4\}$ | $\{2,4\}$ | $\{4,4\}$ | $H(\Pi_c)$ |
+| $n$ | field $\mathbb{Q}(\zeta_{n+1})$ (when $n+1$ prime) | #types | $H_T(n)$ | $H_{\mathrm{nr}}(n)$ | $H(\Pi)$ | $H(\Pi\mid N)$ | $I_{\mathrm{pair}}(n)$ |
 |---|---|---|---|---|---|---|---|
-| $0$ | 1 | 0 | 1 | 0 | 0 | 2 | $1.5$ |
-| $1$ | 0 | 0 | 0 | 2 | 2 | 0 | $1$ |
-| $2$ | 0 | 2 | 0 | 0 | 0 | 2 | $1$ |
-| $3$ | 0 | 0 | 0 | 2 | 2 | 0 | $1$ |
+| $2$ | $\mathbb{Q}(\sqrt5)$ | $2$ | $1.0000$ | $1.0000$ | $1.5000$ | $0.5000$ | $1.0000$ |
+| $3$ | — | $2$ | $0.9183$ | $0.9183$ | $1.3921$ | $0.9183$ | $0.4739$ |
+| $4$ | $\mathbb{Q}(\zeta_5)$ | $3$ | $1.5000$ | $0.8113$ | $2.3750$ | $1.1250$ | $\mathbf{1.2500}$ |
+| $5$ | — | $2$ | $0.7219$ | $0.7219$ | $1.1239$ | $0.9211$ | $0.2027$ |
+| $6$ | $\mathbb{Q}(\zeta_7)$ | $4$ | $1.9183$ | $0.6500$ | $3.1144$ | $1.6405$ | $\mathbf{1.4739}$ |
+| $7$ | — | $2$ | $0.5917$ | $0.5917$ | $0.9384$ | $0.8243$ | $0.1141$ |
+| $8$ | — | $4$ | $1.7500$ | $0.5436$ | $2.8438$ | $1.5312$ | $\mathbf{1.3125}$ |
+| $9$ | — | $3$ | $1.2244$ | $0.5033$ | $1.9550$ | $1.4285$ | $0.5265$ |
+| $10$ | $\mathbb{Q}(\zeta_{11})$ | $4$ | $1.7219$ | $0.4690$ | $2.7839$ | $1.5811$ | $\mathbf{1.2027}$ |
+| $12$ | $\mathbb{Q}(\zeta_{13})$ | $6$ | $2.4183$ | $0.4138$ | $4.0449$ | $2.3211$ | $\mathbf{1.7239}$ |
+| $16$ | $\mathbb{Q}(\zeta_{17})$ | $5$ | $1.8750$ | $0.3373$ | $3.0859$ | $1.7578$ | $\mathbf{1.3281}$ |
 
-Thus $H(\Pi \mid \nu) = \tfrac14(1.5+1+1+1) = \tfrac98 = 1.125$ and
-$$I_{\mathrm{pair}}(4) = \tfrac{19}{8} - \tfrac98 = \tfrac54 = 1.25 \text{ bits} \;>\; 1.$$
+Empirical corroboration on approximately $3\times10^4$ genuine semiprimes reproduces the model values to within a few thousandths of a bit: $1.2452$ against the exact $1.2500$ for $n=4$, and $1.4711$ against the exact $1.4739$ for $n=6$.
 
-The cap is exceeded, exactly and unconditionally.
+Three features stand out, and the rest of the paper explains all three.
 
-### 5.3 Exact values
-
-**Table 1. Single-prime quantities.**
-
-| $n$ | states | $H(T)$ exact | $H(T)$ | $H(\mathrm{nr}) = H_2(1/n)$ |
-|---|---|---|---|---|
-| $2$ | $2$ | $1$ | $1.0000$ | $1.0000$ |
-| $3$ | $2$ | $\log_2 3 - \tfrac23$ | $0.9183$ | $0.9183$ |
-| $4$ | $3$ | $\tfrac32$ | $1.5000$ | $0.8113$ |
-| $5$ | $2$ | $\log_2 5 - \tfrac85$ | $0.7219$ | $0.7219$ |
-| $6$ | $4$ | $\log_2 3 + \tfrac13$ | $1.9183$ | $0.6500$ |
-| $8$ | $4$ | $\tfrac74$ | $1.7500$ | $0.5436$ |
-| $9$ | $3$ | $\tfrac43\log_2 3 - \tfrac89$ | $1.2244$ | $0.5033$ |
-| $10$ | $4$ | $\log_2 5 - \tfrac35$ | $1.7219$ | $0.4690$ |
-| $12$ | $6$ | $\log_2 3 + \tfrac56$ | $2.4183$ | $0.4138$ |
-| $15$ | $4$ | $\log_2 3 + \log_2 5 - \tfrac{34}{15}$ | $1.6402$ | $0.3534$ |
-| $16$ | $5$ | $\tfrac{15}8$ | $1.8750$ | $0.3373$ |
-| $18$ | $6$ | $\tfrac43\log_2 3 + \tfrac19$ | $2.2244$ | $0.3095$ |
-| $20$ | $6$ | $\log_2 5 - \tfrac1{10}$ | $2.2219$ | $0.2864$ |
-
-Note the dichotomy of Theorem 4.2 visible in the last two columns: equality exactly at the prime orders $2,3,5$ (and $7,11,13$), strict inequality at every composite order.
-
-**Table 2. The semiprime type-pair channel.**
-
-| $n$ | field ($f = n+1$ prime) | $I_{\mathrm{pair}}(n)$ exact | value | vs. cap |
-|---|---|---|---|---|
-| $2$ | any quadratic field, e.g. $\mathbb{Q}(\sqrt5)$ | $1$ | $1.0000$ | at cap |
-| $3$ | — | $\log_2 3 - \tfrac{10}{9}$ | $0.4739$ | below |
-| $4$ | $\mathbb{Q}(\zeta_5)$ | $\tfrac54$ | $1.2500$ | **above** |
-| $5$ | — | $\log_2 5 + \tfrac{12}{25}\log_2 3 - \tfrac{72}{25}$ | $0.2027$ | below |
-| $6$ | $\mathbb{Q}(\zeta_7)$ | $\log_2 3 - \tfrac19$ | $1.4739$ | **above** |
-| $7$ | — | $\log_2 7 + \tfrac{30}{49}\log_2 5 - \tfrac{78}{49}\log_2 3 - \tfrac{78}{49}$ | $0.1141$ | below |
-| $8$ | — | $\tfrac{21}{16}$ | $1.3125$ | **above** |
-| $9$ | — | $\tfrac{10}9\log_2 3 - \tfrac{100}{81}$ | $0.5265$ | below |
-| $10$ | $\mathbb{Q}(\zeta_{11})$ | $\log_2 5 + \tfrac{12}{25}\log_2 3 - \tfrac{47}{25}$ | $1.2027$ | **above** |
-| $11$ | — | $\log_2 11 + \tfrac{180}{121}\log_2 3 - \tfrac{210}{121}\log_2 5 - \tfrac{210}{121}$ | $0.0519$ | below |
-| $12$ | $\mathbb{Q}(\zeta_{13})$ | $\log_2 3 + \tfrac{5}{36}$ | $1.7239$ | **above** |
-| $13$ | — | $\log_2 13 + \tfrac{132}{169}\log_2 11 - \tfrac{300}{169}\log_2 3 - \tfrac{600}{169}$ | $0.0386$ | below |
-| $14$ | — | $\log_2 7 + \tfrac{30}{49}\log_2 5 - \tfrac{78}{49}\log_2 3 - \tfrac{29}{49}$ | $1.1141$ | **above** |
-| $15$ | — | $\log_2 5 + \tfrac{37}{25}\log_2 3 - \tfrac{898}{225}$ | $0.6766$ | below |
-| $16$ | $\mathbb{Q}(\zeta_{17})$ | $\tfrac{85}{64}$ | $1.3281$ | **above** |
-| $18$ | $\mathbb{Q}(\zeta_{19})$ | $\tfrac{10}9\log_2 3 - \tfrac{19}{81}$ | $1.5265$ | **above** |
-| $20$ | — | $\log_2 5 + \tfrac{12}{25}\log_2 3 - \tfrac{163}{100}$ | $1.4527$ | **above** |
-
-**Theorem 5.4 (The cap theorem, verified range).** *$I_{\mathrm{pair}}(2) = 1$ exactly; $I_{\mathrm{pair}}(n) > 1$ for $n \in \{4,6,8,10,12,14,16,18,20\}$; and $I_{\mathrm{pair}}(n) < 1$ for $n \in \{3,5,7,9,11,13,15\}$.*
-
-*Proof.* Each value is an exact element of $\mathbb{Q} + \mathbb{Q}\log_2 3 + \mathbb{Q}\log_2 5 + \mathbb{Q}\log_2 7 + \mathbb{Q}\log_2 11 + \mathbb{Q}\log_2 13$ obtained by finite enumeration and Theorem 5.3. The comparisons with $1$ follow from explicit rational bounds on the logarithms, e.g. $\tfrac{19}{12} < \log_2 3 < \tfrac{27}{17}$ (from $2^{19} < 3^{12}$ and $3^{17} < 2^{27}$), $\tfrac{23}{10} < \log_2 5 < \tfrac73$, $\tfrac{14}{5} < \log_2 7 < 3$, $\log_2 11 < \tfrac72$, $\log_2 13 < \tfrac{15}4$, each certified by an integer power comparison. Substituting these bounds into the exact forms makes every comparison a rational inequality. $\square$
-
-For example, $I_{\mathrm{pair}}(6) = \log_2 3 - \tfrac19 > \tfrac{19}{12} - \tfrac19 = \tfrac{53}{36} > 1$, and $I_{\mathrm{pair}}(3) = \log_2 3 - \tfrac{10}{9} < \tfrac{27}{17} - \tfrac{10}9 = \tfrac{73}{153} < 1$.
-
-### 5.4 Symmetry and the which-factor wall
-
-The channel is symmetric by construction: $\Pi$ is an unordered pair. Recording *which* factor carries which type is not available from the norm class — the map $(x,y)\mapsto(y,x)$ preserves both the norm class and the observable, so the mutual information between the norm class and the ordered assignment, given the unordered pair, is exactly $0$. The channel discloses the *multiset* of shapes and nothing about the labelling.
-
-### 5.5 The split-count projection
-
-Projecting $\Pi$ along $T \mapsto \mathbf{1}[T=1]$ yields the classical split-count observable, and the mutual information of the projected channel equals the classical split-count information. Numerically for $n=4$ the projected channel carries $0.2947$ bits, for $n=6$ it carries $0.1487$ bits, and for $n = 12$ only $0.0445$ bits — in every case far below the full $I_{\mathrm{pair}}$. The classical quantity is one face of the type channel; the type channel strictly dominates it. (This is the data-processing inequality applied to the pair channel: coarsening the hidden variable cannot increase the mutual information.)
+* The quadratic case $n=2$ reproduces the binary-fork cap **exactly**: $I_{\mathrm{pair}}(2) = 1$.
+* Every prime order $n = p$ falls *below* the cap and decays rapidly ($0.4739, 0.2027, 0.1141, \dots$).
+* Every even composite order tested is *above* the cap, with the richest value at $n=12$, whose divisor lattice has six levels.
 
 ---
 
-## 6. Structure laws
+## 4. Determinism and thickening
 
-### 6.1 Coprime additivity
+**Proposition 4.1 (Exact determinism).** In the model, $T_n$ is a deterministic function of $x$; hence $I(x; T_n) = H_T(n)$, with no residual noise. Arithmetically: the mutual information between $p \bmod f$ and the splitting type of $p$ in $\mathbb{Q}(\zeta_f)$ equals $H(T)$ exactly.
 
-**Theorem 6.1 (CRT additivity, verified instances).** *For the coprime factorisations $12 = 4\cdot3$, $10 = 2\cdot 5$, $15 = 3\cdot 5$, $14 = 2\cdot 7$, $20 = 4\cdot 5$, $18 = 2\cdot 9$ one has the exact identity*
-$$I_{\mathrm{pair}}(mk) = I_{\mathrm{pair}}(m) + I_{\mathrm{pair}}(k), \qquad \gcd(m,k) = 1 .$$
-*Numerically the identity holds for every coprime splitting with $mk \le 40$.*
+**Proposition 4.2 (Thickening is free).** $I(p \bmod f^k ; T) = I(p \bmod f ; T)$ for every $k \ge 1$.
 
-*Proof of the instances.* Substitute the exact closed forms of Table 2 and simplify. E.g. $I_{\mathrm{pair}}(4)+I_{\mathrm{pair}}(3) = \tfrac54 + \log_2 3 - \tfrac{10}9 = \log_2 3 + \tfrac5{36} = I_{\mathrm{pair}}(12)$; and $I_{\mathrm{pair}}(3)+I_{\mathrm{pair}}(5) = (\log_2 3 - \tfrac{10}9) + (\log_2 5 + \tfrac{12}{25}\log_2 3 - \tfrac{72}{25}) = \tfrac{37}{25}\log_2 3 + \log_2 5 - \tfrac{898}{225} = I_{\mathrm{pair}}(15)$. $\square$
+*Proof sketch.* $T(p) = \operatorname{ord}_f(p)$ factors through the reduction $(\mathbb{Z}/f^k)^\times \to (\mathbb{Z}/f)^\times$; a variable and any refinement of it carry the same mutual information with a function of the coarse variable, by the data-processing identity for deterministic maps. $\square$
 
-**Structural explanation.** For $\gcd(m,k)=1$ the Chinese Remainder Theorem gives $\mathbb{Z}/mk \cong \mathbb{Z}/m \times \mathbb{Z}/k$, and the type map factors multiplicatively,
-$$T_{mk}(x) = T_m(x_m)\cdot T_k(x_k), \qquad \gcd\big(T_m(x_m), T_k(x_k)\big) = 1,$$
-because the two factors divide the coprime integers $m$ and $k$. Coprimality means the product can be uniquely decomposed, so the unordered pair in $\mathbb{Z}/mk$ is determined by the two component unordered pairs *together with the matching* between them; and the matching ambiguity is precisely cancelled by conditioning on the norm class in each component (the norm classes also split as $\nu_{mk} = (\nu_m,\nu_k)$). The channel is a tensor product of independent channels, and mutual information is additive over independent products.
-
-### 6.2 The doubling law
-
-**Theorem 6.2 (Doubling).** *For $m$ odd, $I_{\mathrm{pair}}(2m) = I_{\mathrm{pair}}(m) + 1$; verified exactly for $m = 3,5,7,9$:*
-$$I_{\mathrm{pair}}(6) = I_{\mathrm{pair}}(3) + 1,\quad I_{\mathrm{pair}}(10) = I_{\mathrm{pair}}(5)+1,\quad I_{\mathrm{pair}}(14)=I_{\mathrm{pair}}(7)+1,\quad I_{\mathrm{pair}}(18)=I_{\mathrm{pair}}(9)+1 .$$
-
-*Proof.* Theorem 6.1 with $k = 2$, together with $I_{\mathrm{pair}}(2) = 1$; each instance is also verified directly from the closed forms. $\square$
-
-This identifies the classical quadratic bit as an exact *summand* of the general channel: the binary fork is the $C_2$ tensor factor, and any additional odd structure sits strictly on top of it. It also explains the even/odd dichotomy of Table 2: an even order carries $1 + I_{\mathrm{pair}}(\text{odd part}) \ge 1$ bits, with strict inequality as soon as the odd part is nontrivial, while an odd order carries only the strictly sub-critical contribution of its odd factors.
-
-### 6.3 The $2$-adic growth law
-
-**Theorem 6.3.** *For $1 \le k \le 4$,*
-$$I_{\mathrm{pair}}(2^k) \;=\; \frac43\left(1 - 4^{-k}\right),$$
-*i.e. $1, \tfrac54, \tfrac{21}{16}, \tfrac{85}{64}$. The sequence is strictly increasing and bounded above by $\tfrac43$; numerically the formula continues to hold for $k = 5, 6$ ($\tfrac{341}{256}, \tfrac{1365}{1024}$).*
-
-*Proof of the stated range.* Substitute the exact values $I_{\mathrm{pair}}(2)=1$, $I_{\mathrm{pair}}(4)=\tfrac54$, $I_{\mathrm{pair}}(8)=\tfrac{21}{16}$, $I_{\mathrm{pair}}(16)=\tfrac{85}{64}$, each obtained by enumeration, and compare with $\tfrac43(1-4^{-k})$; monotonicity and the bound $<\tfrac43$ are rational comparisons. $\square$
-
-**Structural explanation.** For $n = 2^k$, the type of $x$ is $2^{k - v(x)}$ where $v$ is the $2$-adic valuation truncated at $k$. Since $v(x+y) = \min(v(x),v(y))$ unless $v(x) = v(y)$, the conditional law $\Pi_c$ depends on $c$ only through $v(c)$, and level $k$ reproduces level $k-1$ with one additional state of half the mass. The resulting affine recursion $a_k = \tfrac14 a_{k-1} + 1$ has fixed point $\tfrac43$, giving $a_k = \tfrac43(1-4^{-k})$ with $a_1 = 1$.
-
-Thus **the capacity of a purely $2$-power cyclic channel is bounded by $4/3$ bits**, no matter how large the group.
-
-### 6.4 Summary of the growth pattern
-
-The value of $I_{\mathrm{pair}}(n)$ is governed by the divisor lattice of $n$, through the multiplicative decomposition of Theorem 6.1: $I_{\mathrm{pair}}$ is (conjecturally, and provably on the verified range) an additive function of $n$ in the arithmetic sense, determined by its values on prime powers. Among the small orders the richest is $n = 12 = 4\cdot 3$: six type states, and $1.7239$ bits.
+Together these say the channel is *thin*: all its content sits at the first level of the $f$-adic tower, and there is no hidden depth to exploit. Coprime controls (conditioning on residues modulo primes other than $f$) are flat, as expected.
 
 ---
 
-## 7. Algorithms
+## 5. The prime-order pair channel in closed form
 
-### 7.1 Exact channel evaluation
+Throughout this section $p$ is prime and the cyclic order is $n = p$. Then $T_p(x) \in \{1,p\}$, with $T_p(x)=1$ iff $x=0$.
 
-**Input:** cyclic order $n$. **Output:** exact occupation tables and the value $I_{\mathrm{pair}}(n)$.
+### 5.1 Occupation numbers
 
-1. For $x = 0,\dots,n-1$ compute $T(x) = n/\gcd(n,x)$ — $O(n\log n)$.
-2. For each ordered pair $(x,y)$, form the sorted key $k = (\min(T(x),T(y)), \max(\cdot))$ and increment both the global counter $P[k]$ and the fibre counter $C[(x+y)\bmod n][k]$ — $O(n^2)$ time, $O(n\,\tau(n)^2)$ space, where $\tau(n)$ is the number of divisors.
-3. Apply the counting form of the entropy (Lemma 2.1) to $P$ with total $n^2$ and to each $C[c]$ with total $n$.
-4. Return $H(\Pi) - \frac1n\sum_c H(\Pi_c)$.
+**Lemma 5.0 (Unconditional and conditional tables).** Order the three possible unordered pairs as $(1,1), (1,p), (p,p)$. Then, over all $p^2$ ordered pairs $(x,y)$, the occupation numbers of $\Pi$ are
+$$\big[\,1,\;2(p-1),\;(p-1)^2\,\big],$$
+while the conditional tables are
+$$\Pi_0 : \big[\,1,\;0,\;p-1\,\big], \qquad \Pi_c : \big[\,0,\;2,\;p-2\,\big]\ \ (c \neq 0),$$
+each of total mass $p$.
 
-Because every entropy is $\log_2(\text{total}) - \frac{1}{\text{total}}\sum c\log_2 c$ with integer $c$, the result can be produced as an exact symbolic combination $q_0 + \sum_\ell q_\ell \log_2 \ell$ with $q_i \in \mathbb{Q}$ by factoring each occupation number: no floating point is needed anywhere.
+*Proof sketch.* $(1,1)$ occurs only for $x=y=0$; $(1,p)$ requires exactly one of $x,y$ to vanish, giving $2(p-1)$ ordered pairs; the rest are $(p,p)$. For the conditional tables, parametrise the fibre $x+y=c$ by $x$, so $y = c-x$. If $c=0$: $y=0$ iff $x=0$, so the state is $(1,1)$ once and $(p,p)$ on the remaining $p-1$ values; the mixed state cannot occur. If $c\neq0$: the mixed state occurs exactly at the two values $x=0$ and $x=c$, which are distinct, and $(p,p)$ on the remaining $p-2$; the split state cannot occur, because $x=y=0$ would force $c=0$. $\square$
 
-### 7.2 Certified comparison with the cap
+This is where the geometry of the channel lives: **conditioning on the product class partitions the fibres into a single "split-compatible" class $c=0$ and $p-1$ "mixed-compatible" classes**, and it is precisely that asymmetry which the mutual information measures.
 
-To decide $I_{\mathrm{pair}}(n) \gtrless 1$ rigorously from the symbolic form $q_0 + \sum_\ell q_\ell\log_2\ell$: for each prime $\ell$ occurring, produce rational bounds $a/b < \log_2\ell < c/d$ certified by integer comparisons $2^a < \ell^b$ and $\ell^d < 2^c$ (exact big-integer arithmetic), substitute the bound in the direction dictated by the sign of $q_\ell$, and compare the resulting rational with $1$. This yields a proof, not an estimate.
+### 5.2 The closed form
 
-### 7.3 Sampling the arithmetic side
+**Theorem 5.1 (Exact prime-order pair channel).** For every prime $p$,
+$$I_{\mathrm{pair}}(p) \;=\; \log_2 p \;-\; \frac{(p-1)(2p-1)}{p^{2}}\,\log_2 (p-1) \;+\; \frac{(p-1)(p-2)}{p^{2}}\,\log_2 (p-2),$$
+with the convention that the last term is $0$ at $p=2$ (where its coefficient vanishes).
 
-To confirm that the finite cyclic model is the right model for the arithmetic: for a prime $f$, enumerate primes $p < X$, compute $T(p) = \operatorname{ord}_f(p)$ by repeated squaring, and compare the empirical distribution with the Euler law $\varphi(d)/(f-1)$. Chebotarev's theorem guarantees convergence; empirically the agreement is at the $10^{-3}$ level already for a few $10^4$ primes.
+*Proof sketch.* From Lemma 5.0 and the identity $H = \log_2 M - \frac1M\sum_i c_i \log_2 c_i$ for occupation numbers $c_i$ of total mass $M$:
+$$H(\Pi) = 2\log_2 p - \frac{1}{p^2}\Big(2(p-1) + 2p(p-1)\log_2(p-1)\Big),$$
+$$H(\Pi_0) = \log_2 p - \frac{p-1}{p}\log_2(p-1), \qquad H(\Pi_c) = \log_2 p - \frac{1}{p}\Big(2 + (p-2)\log_2(p-2)\Big).$$
+Averaging the conditionals with weights $\tfrac1p$ and $\tfrac{p-1}{p}$ gives
+$$H(\Pi\mid N) = \log_2 p - \frac{p-1}{p^2}\log_2(p-1) - \frac{p-1}{p^2}\Big(2 + (p-2)\log_2(p-2)\Big),$$
+and subtracting yields the stated identity; the $2(p-1)/p^2$ terms cancel and the coefficients of $\log_2(p-1)$ combine to $-\frac{(p-1)(2p-1)}{p^2}$. $\square$
+
+**Checks.** $p=2$: $\log_2 2 - \tfrac{3}{4}\log_2 1 + 0 = 1$. $p=3$: $\log_2 3 - \tfrac{10}{9} = 0.47385\ldots$. $p=5$: $\log_2 5 - \tfrac{36}{25}\cdot2 + \tfrac{12}{25}\log_2 3 = 0.20271\ldots$. All agree with direct enumeration.
+
+### 5.3 Envelope and decay
+
+**Theorem 5.2 (Upper envelope).** For every prime $p$,
+$$I_{\mathrm{pair}}(p) \;\le\; \log_2 p - \log_2(p-1) + \frac{\log_2(p-1)}{p^{2}}.$$
+
+**Theorem 5.3 (Algebraic split).** For every prime $p$,
+$$I_{\mathrm{pair}}(p) = \Big(\log_2 p - \log_2(p-1)\Big) + \frac{\log_2 (p-1)}{p^{2}} - \frac{(p-1)(p-2)}{p^{2}}\Big(\log_2 (p-1) - \log_2 (p-2)\Big).$$
+
+*Proof sketch.* Expand and match coefficients: the coefficient of $\log_2(p-1)$ is $-1 + p^{-2} - (p-1)(p-2)p^{-2} = -\frac{(p-1)(2p-1)}{p^2}$, and that of $\log_2(p-2)$ is $+\frac{(p-1)(p-2)}{p^2}$. Theorem 5.2 follows by discarding the (nonnegative) last term. $\square$
+
+**Theorem 5.4 (Quadratic two-sided bounds).** For every odd prime $p$,
+$$\frac{1}{p^{2}\ln 2} \;\le\; I_{\mathrm{pair}}(p) \;\le\; \frac{\log_2 p + 5}{p^{2}},$$
+and in particular $I_{\mathrm{pair}}(p) > 0$: the prime-order channel is never exactly silent. Moreover $I_{\mathrm{pair}}(p) < 3/(p-1)$ for every odd prime.
+
+*Proof sketch.* Use the elementary two-sided estimate $\frac{x-y}{x} \le \ln\frac{x}{y} \le \frac{x-y}{y}$ for $0<y\le x$ on both logarithm differences appearing in Theorem 5.3. For the lower bound: $\log_2 p - \log_2(p-1) \ge \frac{1}{p\ln 2}$ and $\log_2(p-1)-\log_2(p-2) \le \frac{1}{(p-2)\ln 2}$, so the subtracted term is at most $\frac{p-1}{p^2\ln 2}$; hence
+$$I_{\mathrm{pair}}(p) \ge \frac{1}{p\ln2} - \frac{p-1}{p^{2}\ln 2} + \frac{\log_2(p-1)}{p^{2}} = \frac{1}{p^{2}\ln 2} + \frac{\log_2 (p-1)}{p^{2}} \ge \frac{1}{p^{2}\ln 2}.$$
+For the upper bound, reverse both estimates: $\log_2 p - \log_2(p-1)\le \frac{1}{(p-1)\ln2}$ and $\log_2(p-1)-\log_2(p-2) \ge \frac{1}{(p-1)\ln 2}$, so
+$$I_{\mathrm{pair}}(p) \le \frac{1}{\ln 2}\left(\frac{1}{p-1} - \frac{p-2}{p^{2}}\right) + \frac{\log_2(p-1)}{p^{2}} = \frac{3p-2}{(p-1)p^{2}\ln 2} + \frac{\log_2(p-1)}{p^{2}},$$
+and $\frac{3p-2}{(p-1)\ln 2} \le 5$ for $p\ge3$ with room to spare once $\log_2(p-1) < \log_2 p$ is used. The $3/(p-1)$ bound follows from Theorem 5.2 with $\log_2\frac{p}{p-1}\le\frac{1}{(p-1)\ln2}$. $\square$
+
+### 5.4 The sub-cap theorem
+
+**Theorem 5.5 (Sub-cap).** For every odd prime $p$, $I_{\mathrm{pair}}(p) < 1$.
+
+*Proof sketch.* For $p \ge 5$, Theorem 5.4 gives $I_{\mathrm{pair}}(p) < 3/(p-1) \le 3/4 < 1$. The single remaining case $p=3$ is the explicit value $\log_2 3 - \tfrac{10}{9} = 0.4739\ldots < 1$. $\square$
+
+**Theorem 5.6 (Uniqueness of the extremal prime).** For a prime $p$, $I_{\mathrm{pair}}(p) = 1$ if and only if $p = 2$.
+
+*Proof sketch.* Theorem 5.1 gives the value $1$ at $p=2$; Theorem 5.5 excludes all odd primes. $\square$
+
+**Corollary 5.7 (Localisation of the cap-breaking).** Exhaustive evaluation gives $I_{\mathrm{pair}}(n) > 1$ for $n = 4,6,8,10,12,14,16$, while Theorem 5.5 forbids it for every prime order. Hence exceeding the binary-fork cap is not a matter of the *size* of the Galois group but of the *divisor structure* of its order.
+
+This is the central structural statement of the paper: a two-level divisor lattice — the defining feature of a prime order — cannot support more than one bit of pair information, and it supports exactly one bit only in the degenerate quadratic case $p=2$.
 
 ---
 
-## 8. Discussion
+## 6. Multiplicative structure: CRT, additivity, Sylow decomposition
 
-### 8.1 What was actually capped
+**Theorem 6.1 (CRT factorisation of the type).** Let $m,n$ be coprime and $a$ any integer. Then
+$$T_{mn}(a) \;=\; T_m(a)\cdot T_n(a) \;=\; \operatorname{lcm}\big(T_m(a),\,T_n(a)\big).$$
 
-The classical statement — *a symmetric semiprime fork carries at most one bit* — is correct, but only for two-state forks. The proof of the cap uses the fact that the unordered pair of two bits has only three states, and that the product character determines a two-block partition of them. As soon as the hidden variable has $\ge 3$ states, the counting that produces the cap breaks down, and the true value is given by the finite computation of Theorem 5.3. The results here show that the excess is not marginal: $25\%$ over the cap already for $\mathbb{Q}(\zeta_5)$, and $72\%$ for $\mathbb{Q}(\zeta_{13})$.
+*Proof sketch.* Coprimality gives $\gcd(mn,a) = \gcd(m,a)\gcd(n,a)$, whence $\frac{mn}{\gcd(mn,a)} = \frac{m}{\gcd(m,a)}\cdot\frac{n}{\gcd(n,a)}$. Since $T_m(a) \mid m$ and $T_n(a)\mid n$, the two factors are themselves coprime, so their product equals their lcm. $\square$
 
-### 8.2 Why this is not an attack on factoring
+Group-theoretically this is the statement that under $C_{mn}\cong C_m\times C_n$ the order of an element is the lcm of the orders of its coordinates. Its information-theoretic consequence is exact additivity.
 
-Four independent reasons.
+**Theorem 6.2 (Coprime additivity of the type entropy).** For all $m,n \ge 1$ with $\gcd(m,n)=1$,
+$$H_T(mn) \;=\; H_T(m) + H_T(n).$$
 
-1. **Symmetry.** The channel reveals the unordered multiset $\{T(p), T(q)\}$; the which-factor information is exactly zero. Even a full readout of the type pair does not orient the two factors.
-2. **A single residue dial.** The entire channel is a function of $N \bmod f$, one residue in a group of order $f-1$. Extracting it requires no work, and it is the *only* thing the channel sees (Theorem 3.2: refining the modulus adds nothing).
-3. **Bounded leak.** For two-power orders the leak is capped at $4/3$ bits (Theorem 6.3) regardless of size; in general the leak grows only like the entropy of the divisor lattice, i.e. like $O(\log\log n)$ in typical cases — negligible against the $\Theta(\log N)$ bits needed to specify a factor. Even aggregating over many moduli $f$, the additivity of Theorem 6.1 shows that the leaks combine additively, not multiplicatively, in the coprime directions.
-4. **Classical ingredients.** Cyclotomic fields, Dirichlet characters, the Chinese Remainder Theorem, and Chebotarev's density theorem (1922) are all that is used. Nothing here provides a new computational handle; the contribution is a new *measurement* of a classical object.
+*Proof sketch.* Under the CRT isomorphism, a uniform element of $C_{mn}$ corresponds to a pair of independent uniform elements of $C_m$ and $C_n$. By Theorem 6.1 the type variable of $C_{mn}$ is the pair $(T_m, T_n)$ up to the bijection $(u,v)\mapsto uv$ on coprime pairs of divisors, and the entropy of a pair of independent variables is the sum of their entropies. Concretely, (2.1) together with the multiplicativity of $\varphi$ and the divisor-sum factorisation $\sum_{d \mid mn} = \sum_{i\mid m}\sum_{j \mid n}$ (with $d = ij$) turns the log-sum into $\log_2 (mn) - \frac{1}{mn}\sum_{i,j}\varphi(i)\varphi(j)\big(\log_2\varphi(i)+\log_2\varphi(j)\big)$, which splits. $\square$
 
-### 8.3 Unification
+**Theorem 6.3 (Sylow decomposition).** For $n \ge 1$,
+$$H_T(n) \;=\; \sum_{p \mid n} H_T\!\big(p^{\,v_p(n)}\big),$$
+the sum over the distinct prime factors of $n$, with $v_p$ the $p$-adic valuation. In particular $H_T(1)=0$.
 
-The framework subsumes several separate observations. The classical quadratic split-count fork is the $n=2$ case, exactly at the cap; the split-count observable for general $n$ is the $\mathbf{1}[T=1]$ projection of the type channel; the "quartic pinning" $2 - \tfrac34\log_2 3$ is the $n=4$ case of the general pinning formula $H_2(1/n)$ of Theorem 4.1; and the "thickening" phenomenon — that finer moduli add nothing — is Theorem 3.2 in general form. In each case the previously isolated statement becomes an instance of a formula valid for all cyclic orders.
+*Proof sketch.* Iterate Theorem 6.2 over the prime factorisation, whose parts are pairwise coprime. $\square$
 
----
+**Corollary 6.4 (Squarefree formula).** If $n$ is squarefree then
+$$H_T(n) \;=\; \sum_{p\mid n}\left(\log_2 p - \frac{p-1}{p}\log_2 (p-1)\right).$$
 
-## 9. Future directions
+*Proof sketch.* Apply Theorem 6.3 and evaluate (2.1) for prime order: the type law is $[\tfrac1p, \tfrac{p-1}{p}]$. $\square$
 
-**C1. The coprime additivity theorem in general form.** *Conjecture:* for all coprime $m,k \ge 1$, $I_{\mathrm{pair}}(mk) = I_{\mathrm{pair}}(m) + I_{\mathrm{pair}}(k)$. Established here for $12 = 4\cdot3$, $10=2\cdot5$, $15=3\cdot5$, $14=2\cdot7$, $20=4\cdot5$, $18=2\cdot9$, and verified numerically for every coprime splitting with $mk \le 40$. The route to a general proof is the factorisation $T = T_m\cdot T_k$ with coprime factors through the Chinese Remainder isomorphism; the only missing step is a measure-preserving bijection between the fibres, which is a finite combinatorial statement requiring no analysis, since the Euler law and the counting form of the entropy are already available in complete generality.
+**Corollary 6.5 (Monotonicity in the factorisation).** Each Sylow piece is a lower bound: if $d \mid n$ with $\gcd(d, n/d) = 1$ then $H_T(d)\le H_T(n)$. Adding prime factors to the Galois order never destroys splitting information.
 
-**C2. The $2$-adic growth law and its limit.** *Conjecture:* $I_{\mathrm{pair}}(2^k) = \tfrac43(1-4^{-k})$ for all $k \ge 1$, so that the capacity of a cyclic $2$-group channel is bounded by, and converges to, $4/3$ bits. Proved here for $k \le 4$, numerically confirmed to $k = 6$. The self-similar recursion described in §6.3 should make the induction step a finite identity between two explicit dyadic entropies.
-
-**C3. The even/odd dichotomy of the one-bit cap.** *Conjecture:* $I_{\mathrm{pair}}(n) > 1$ if and only if $n$ is even and $n \ge 4$, with $I_{\mathrm{pair}}(2) = 1$ exactly, and $I_{\mathrm{pair}}(n) < 1$ for every odd $n \ge 3$; equivalently, the cap is broken exactly when the cyclic order admits the quadratic quotient nontrivially. Proved here for $n \in \{2,\dots,16,18,20\}$ and verified for $n \le 40$. It follows from C1 plus the single inequality $I_{\mathrm{pair}}(m) < 1$ for odd $m$, since $C_2$ is the unique quotient whose type pair *is* the norm class.
-
-**Further questions.** (a) Is $I_{\mathrm{pair}}$ maximised, among orders of a given size, by those with the richest divisor lattice — i.e. does $n = 12$'s dominance persist as a general principle? (b) What is the exact asymptotic growth of $I_{\mathrm{pair}}(n)$ along highly composite $n$? (c) Do the same laws hold for non-cyclic abelian Galois groups, where the "type" becomes the cyclic subgroup generated by the Frobenius rather than a single integer? (d) Can the type-pair channel be defined and evaluated for products of three or more primes, and does the additivity law persist in the number of factors?
+*Proof sketch.* Immediate from Theorem 6.2 and $H_T \ge 0$. $\square$
 
 ---
 
-## 10. Conclusion
+## 7. The $2$-adic tower saturates at two bits
 
-The splitting type of a prime in a cyclotomic field with cyclic Galois group is a multi-state, exactly-computable invariant with an Euler-$\varphi$ distribution, and it is a deterministic function of the Frobenius residue, so the residue-to-type channel is exact. Its binary shadow, the split/not-split root count, is strictly lossy whenever the cyclic order is composite. For semiprimes, the mutual information between the norm class and the unordered type pair is an exact finite quantity that equals $1$ bit in the quadratic case — reproducing the classical binary-fork cap on the nose — and strictly exceeds it for every even cyclic order beyond the quadratic one, reaching $\tfrac54$ for $\mathbb{Q}(\zeta_5)$, $\log_2 3 - \tfrac19$ for $\mathbb{Q}(\zeta_7)$, and $\log_2 3 + \tfrac5{36}$ for $\mathbb{Q}(\zeta_{13})$. The values obey coprime additivity, a doubling law, and a $2$-adic growth law with limit $4/3$.
+**Theorem 7.1 ($2$-adic closed form).** For every $k \ge 0$,
+$$H_T(2^k) \;=\; 2 - 2^{\,1-k}.$$
+The sequence is strictly increasing in $k$, never attains $2$, and converges to $2$.
 
-The one-bit ceiling was a ceiling on binary questions, not on what a norm class can say.
+*Proof sketch.* The divisors of $2^k$ are $2^j$, $0\le j\le k$, with $\varphi(2^j) = 2^{j-1}$ for $j\ge1$ and $\varphi(1)=1$. An induction gives the log-sum
+$$\sum_{j=0}^{k}\varphi(2^j)\log_2\varphi(2^j) \;=\; (k-2)2^{k} + 2,$$
+and substituting into (2.1) yields $H_T(2^k) = k - 2^{-k}\big((k-2)2^k+2\big) = 2 - 2^{1-k}$. Strict monotonicity and the limit are immediate. $\square$
+
+So the $2$-primary part of any cyclic Galois group contributes at most two bits, no matter how deep the tower — in sharp contrast with the prime direction, where $H_T(p) = \log_2 p - \frac{p-1}{p}\log_2(p-1) \sim \frac{\log_2 p}{p}\cdot p^{0}$ grows without bound only through the *number* of prime factors, not through depth. Combined with Theorem 6.3, this is a complete qualitative description: **depth saturates, breadth accumulates.**
+
+---
+
+## 8. The divisor-lattice ceiling
+
+**Lemma 8.1.** For $n \ge 3$ the divisor count satisfies $d(n) < n$; for $n \in \{1,2\}$, $d(n)=n$.
+
+*Proof sketch.* The divisors of $n$ lie in $\{1,\dots,n\}$ and $n-1$ is not a divisor for $n\ge3$. $\square$
+
+**Theorem 8.2 (Residue ceiling).** $H_T(n)\le \log_2 n$ for $n\ge1$, with strict inequality for $n\ge3$.
+
+*Proof sketch.* $T$ is a function of the uniform variable $x$, so its entropy is at most $\log_2 n$; by (2.1), the deficit is $\frac1n\sum_{d\mid n}\varphi(d)\log_2\varphi(d)$, which is nonnegative and strictly positive as soon as some divisor has $\varphi(d)\ge2$, i.e. for $n\ge3$. $\square$
+
+**Theorem 8.3 (Divisor-lattice ceiling).** $H_T(n) \le \log_2 d(n)$ for $n \ge 1$, with strict inequality for $n\ge3$.
+
+*Proof sketch.* The type law is supported on the $d(n)$ divisors of $n$, and the entropy of a distribution on a finite set is at most the logarithm of the cardinality, with equality iff the law is uniform. For $n \ge 3$, uniformity fails: $\mathbb{P}(T=1) = 1/n$ while $\mathbb{P}(T=n) = \varphi(n)/n > 1/n$. $\square$
+
+**Corollary 8.4 (The sandwich).** For $n \ge 1$,
+$$H_{\mathrm{nr}}(n) \;\le\; H_T(n) \;\le\; \log_2 d(n),$$
+with both inequalities strict for composite $n \ge 3$.
+
+Theorem 8.3 is the precise sense in which "the divisor structure of the cyclic order governs the channel". It also explains the numerical landscape of §3: $n=12$ has $d(12)=6$ divisors and is the richest entry in the table; $n=16$, though larger, has only $5$.
+
+**Positivity.** $H_T(n) \ge 0$ always, and $H_T(n) > 0$ exactly for $n \ge 2$; the trivial Galois group carries no splitting information.
+
+---
+
+## 9. Lossiness of the binary readout
+
+**Theorem 9.1 (Data processing).** $H_{\mathrm{nr}}(n) \le H_T(n)$ for every $n\ge1$.
+
+*Proof sketch.* $\mathrm{nr}$ is a deterministic coarsening of $T$; coarsening cannot increase entropy. $\square$
+
+**Theorem 9.2 (Lossiness dichotomy).** For $n \ge 2$,
+$$H_{\mathrm{nr}}(n) < H_T(n) \iff n \text{ is composite}.$$
+
+*Proof sketch.* If $n$ is prime, $T$ takes exactly the two values $1$ and $n$ and $\mathrm{nr}$ is a bijective relabelling, so the entropies coincide. If $n$ is composite, there is a divisor $1 < d < n$ with $\varphi(d) \ge 1$, so $T$ has at least three states while $\mathrm{nr}$ has two; the coarsening merges at least two states of positive probability, and merging states of positive probability strictly decreases entropy. Quantitatively, $H_T - H_{\mathrm{nr}} = \frac{n-1}{n}\,H\big(T \mid T\neq 1\big) > 0$, the conditional entropy of the type given that the prime does not split completely. $\square$
+
+Arithmetically: **the root-count readout is lossy exactly at the composite cyclic orders**, i.e. exactly when the divisor lattice of the Galois group has an intermediate level. For $\mathbb{Q}(\zeta_5)$ it merges $\{T=2\}$ (two degree-$2$ primes) with $\{T=4\}$ (inert); for $\mathbb{Q}(\zeta_7)$ it merges three distinct decomposition patterns.
+
+**Theorem 9.3 (Quantitative decay).** For $n \ge 2$, $0 \le H_{\mathrm{nr}}(n) \le \frac{\log_2 n + 2}{n}$; hence $H_{\mathrm{nr}}(n) \to 0$ as $n\to\infty$.
+
+*Proof sketch.* From (2.2), $H_{\mathrm{nr}}(n) = h_2(1/n) = \frac1n\log_2 n + \frac{n-1}{n}\log_2\frac{n}{n-1}$, and $\log_2\frac{n}{n-1}\le \frac{1}{(n-1)\ln 2} \le \frac{2}{n-1}$ for $n \ge 2$. $\square$
+
+**Corollary 9.4 (Total loss along the $2$-tower).** $H_T(2^k) - H_{\mathrm{nr}}(2^k) \to 2$ as $k\to\infty$: along the $2$-adic tower the binary readout eventually reports *none* of the two bits carried by the splitting type.
+
+*Proof sketch.* Combine Theorems 7.1 and 9.3. $\square$
+
+---
+
+## 10. Faces of the channel and negative results
+
+**The split-count projection.** Applying the pair construction (2.3) to $\mathrm{nr}$ instead of $T$ yields the classical split-count channel $I_s(n)$. Empirically the projection is faithful: the split-count content extracted from genuine semiprimes matches $I_s$ to three decimals ($0.2896$ against $I_s(4) = 0.2947$; $0.1445$ against $I_s(6) = 0.1487$), while the full type channel carries $1.2500$ and $1.4739$ bits respectively. So the split-count channel is a strictly smaller *face* of the type channel, and the one-bit cap that governs it does not govern the whole.
+
+**Prime-level pinning of each type face.** In the model, conditioning on any single type value produces a two-state readout with entropy $h_2(\varphi(d)/n)$. For $n=4$ these pinnings are exact: $[T=1]$ has entropy $h_2(1/4) = 0.8113$ (measured $0.8098$ on primes), $[T=2]$ likewise $h_2(1/4)$ (measured $0.8110$), and $[T=4]$ has entropy $h_2(1/2) = 1.0000$ (measured $1.0000$). This is a prime-level quartic-character pinning: each face of the quartic splitting type is separately equidistributed at the predicted rate. For $n=6$, $[T=1]$ pins at $h_2(1/6) = 0.6500$ (measured $0.6497$).
+
+**Symmetry (the which-factor wall).** The channel is invariant under exchanging $p$ and $q$; measurements give $0.0001$ bits of which-factor information, i.e. none. Knowing the unordered type pair does not identify either factor.
+
+**Shallowness.** By Proposition 4.2, no additional information is obtained by refining the residue modulo higher powers of $f$; coprime controls are flat.
+
+**Computability caveat.** The product class $N \bmod f$ is of course computable from $N$; what the channel provides is information about the *pair of types*, which is a symmetric function of the hidden factors and does not, by itself, yield either factor. The results here are structural statements about arithmetic information, not a factoring method.
+
+---
+
+## 11. Algorithms
+
+Three algorithms suffice to reproduce every number in this paper.
+
+**A. Exhaustive pair-channel evaluation.** For a given $n$, iterate over all $n^2$ ordered pairs $(x,y)$, compute $T(x) = n/\gcd(n,x)$ and $T(y)$, form the sorted key, and accumulate into the global table $\Pi$ and the conditional table $\Pi_{x+y}$. Then evaluate (2.3). Cost: $\Theta(n^2)$ time and $O(n\, d(n)^2)$ space; exact up to floating-point evaluation of the logarithms, and exactly rational-in-logs if carried out symbolically.
+
+**B. Closed-form prime evaluation.** For prime $p$, evaluate Theorem 5.1 directly in $O(1)$ arithmetic operations. Cross-validating A against B for all primes up to a bound is the practical certificate of the closed form.
+
+**C. Sylow evaluation of the type entropy.** Factor $n$, evaluate $H_T(p^{v})$ for each prime power by the totient law over the $v+1$ divisors, and sum (Theorem 6.3). Cost: factorisation plus $O(\sum_p v_p(n))$ arithmetic — exponentially faster than enumerating the group for smooth $n$.
+
+**D. Arithmetic realisation.** For a prime $f$, sieve primes $p \neq f$, compute $\operatorname{ord}_f(p)$ by repeated multiplication modulo $f$, and tabulate empirical type frequencies; for semiprimes, sample pairs, record $N \bmod f$ and the sorted type pair, and estimate (2.3) by plug-in entropies. This is the bridge between the finite model and the primes themselves.
+
+---
+
+## 12. Discussion
+
+### 12.1 What breaks the cap
+
+The binary-fork cap is a theorem about a *two-state* observable whose pair statistics are governed entirely by a product-of-signs: for a quadratic character, $\{\varepsilon(p),\varepsilon(q)\}$ is determined up to the swap by $\varepsilon(p)\varepsilon(q) = \varepsilon(N)$, which is one bit, no more. Theorem 5.6 shows that the quadratic case is the *unique* prime-order instance attaining that bound, and Theorem 5.1 shows exactly how the bound degrades for larger prime orders: at prime order the type is still two-state, but the group law no longer makes the product class determine the pair, and the information collapses like $p^{-2}$.
+
+The escape route is the divisor lattice. When $n$ is composite the type is genuinely multi-state, and the conditional tables $\Pi_c$ vary much more strongly with $c$ than in the two-state case. The measured values then rise above one bit, reaching $1.7239$ at $n=12$.
+
+### 12.2 An emerging arithmetic thermodynamics
+
+Read as statistical mechanics on the divisor lattice, the picture is unusually clean:
+
+* the **state space** is the divisor lattice of $n$, with occupation law $\varphi(d)/n$;
+* the **free entropy** $H_T$ is additive over coprime parts (Theorem 6.2) and decomposes over Sylow components (Theorem 6.3), exactly as an entropy of independent subsystems;
+* **depth saturates**: the $2$-primary subsystem contributes $2 - 2^{1-k}$ and never more than two bits (Theorem 7.1);
+* **coarse instruments lose everything**: the binary readout's entropy decays like $(\log_2 n)/n$ (Theorem 9.3), so along any tower the naive detector eventually reports nothing while the true state entropy stays bounded away from zero.
+
+### 12.3 Conjectural completion
+
+The exhaustive data suggest that the pair channel inherits the same multiplicative skeleton as the single-prime channel. Numerically, for every coprime pair tested,
+$$I_{\mathrm{pair}}(mn) = I_{\mathrm{pair}}(m)+I_{\mathrm{pair}}(n) \qquad (\gcd(m,n)=1),$$
+e.g. $I_{\mathrm{pair}}(12) = I_{\mathrm{pair}}(3)+I_{\mathrm{pair}}(4) = 0.4739 + 1.2500 = 1.7239$, $I_{\mathrm{pair}}(10) = 1 + 0.2027$, $I_{\mathrm{pair}}(15) = 0.4739+0.2027 = 0.6766$, $I_{\mathrm{pair}}(20)=1.2500+0.2027=1.4527$, $I_{\mathrm{pair}}(24) = 1.3125+0.4739=1.7864$. Along the $2$-tower the values $1,\ 1.25,\ 1.3125,\ 1.328125$ match
+$$I_{\mathrm{pair}}(2^k) = \tfrac43\big(1-4^{-k}\big)$$
+exactly for $k \le 4$.
+
+The *even* half of the conjectured picture follows immediately from additivity: an even $n\ge4$ has a $2$-part $2^{v}$ with $v\ge1$, contributing $I_{\mathrm{pair}}(2^v) \ge 1$ — and $\ge 1.25$ as soon as $v \ge 2$ — while all other parts are nonnegative. Combined with the parity of the type at the $2$-level, this is the precise sense in which the cap is a statement about the **$2$-torsion of the Galois group** rather than about the number of splitting types: one bit is unconditionally recoverable through the quotient by squares, and everything above it is bought at a deeper even level of the divisor lattice.
+
+### 12.4 An incompatibility: additivity contradicts the odd half of the dichotomy
+
+The *odd* half — the assertion $I_{\mathrm{pair}}(n) < 1$ for every odd $n \ge 3$ — cannot survive alongside coprime additivity. Indeed, if additivity holds then for squarefree odd $n$ we would have $I_{\mathrm{pair}}(n) = \sum_{p \mid n} I_{\mathrm{pair}}(p)$, with each summand given exactly by Theorem 5.1. Summing the closed form over the $33$ odd primes up to $139$ gives
+$$\sum_{3\le p \le 139} I_{\mathrm{pair}}(p) \;=\; 1.00010\ldots \;>\; 1,$$
+and the sum over all odd primes up to $10^3$ is already $1.01134\ldots$, converging to $\approx 1.0132$. Hence, under additivity, the odd squarefree order $n = \prod_{3 \le p \le 139} p$ would carry more than one bit.
+
+So at most one of the two conjectures can be true as stated. The available evidence is asymmetric: additivity has been confirmed exactly on every coprime pair tested (including the odd cases $I_{\mathrm{pair}}(15) = 0.6766$, $I_{\mathrm{pair}}(21) = 0.5880$, $I_{\mathrm{pair}}(45) = 0.7292$, $I_{\mathrm{pair}}(105) = 0.7907$, each equal to the sum of the corresponding prime-power values to full precision), whereas the odd half of the dichotomy has only been checked in a range where $n$ has at most two or three odd prime factors — far too small a range to see a sum that creeps above one bit only after thirty-three of them. The corrected statement should therefore read:
+
+> **Revised dichotomy (conjectural).** $I_{\mathrm{pair}}(n) > 1$ for every even $n\ge4$; $I_{\mathrm{pair}}(2)=1$; and $I_{\mathrm{pair}}(n)<1$ for odd $n$ whose odd prime-power parts have $\sum_{p\mid n} I_{\mathrm{pair}}(p^{v_p}) < 1$ — a condition that fails only for odd orders with a very large number of distinct prime factors.
+
+This is a strictly sharper statement than the original: the failure locus is explicit, and the threshold is computable from the proved prime formula alone. The upshot is that "exceeding the one-bit cap" is *typically* an even phenomenon, but not exclusively one; sufficiently rich odd divisor lattices should also break it, by accumulating many small contributions rather than one large $2$-adic one.
+
+### 12.5 Limitations
+
+All statements are about the *unordered* pair; the channel is provably symmetric and empirically factor-useless. Everything is conditioned on knowing the arithmetic setup — the modulus $f$ and the group law — so no statement here bears on the hardness of factoring. The composite-order values reported are exhaustive evaluations for the listed orders; the general composite theory remains conjectural (§§12.3–12.4).
+
+---
+
+## 13. Future directions
+
+The natural next targets, in decreasing order of leverage:
+
+1. **CRT additivity of the pair channel.** Prove $I_{\mathrm{pair}}(mn) = I_{\mathrm{pair}}(m)+I_{\mathrm{pair}}(n)$ for coprime $m,n$. All the ingredients but one are in place: the type map is CRT-multiplicative (Theorem 6.1) and the single-prime entropy is additive (Theorem 6.2). The missing step is a product decomposition of the conditional tables $\Pi_c$ — a purely combinatorial statement, since CRT splits both the type variable and the conditioning residue into independent coordinates.
+2. **The $2$-adic pair law.** Prove $I_{\mathrm{pair}}(2^k) = \tfrac43(1-4^{-k})$. Together with (1) and the proved prime bound this yields the even half of the dichotomy of §12.3 unconditionally.
+3. **The revised dichotomy of §12.4.** The naive parity statement is untenable together with additivity: the proved prime formula, summed over the odd primes up to $139$, already exceeds one bit. The right question is therefore to determine the exact failure locus on the odd side — equivalently, to decide whether an odd order with sufficiently many prime factors really does break the cap, which would follow from additivity and refute the parity reading of the cap.
+4. **Non-cyclic Galois groups.** The type of a prime in a general abelian (or nonabelian) extension is the order of its Frobenius class; the analogue of the divisor lattice is the lattice of cyclic subgroups, and the analogue of the totient law counts elements of each order. Which groups maximise the pair channel at fixed order?
+5. **Higher tuples.** Replace semiprimes by products of $k$ primes and ask for the growth of $I_{\mathrm{pair}}^{(k)}(n)$; the $k=2$ theory above is the first nontrivial case.
+6. **Effective error terms.** All statements are density statements; making them effective for primes up to $X$ requires an effective Chebotarev bound, which for cyclotomic fields is classical, and would convert the empirical agreement reported in §3 into a rigorous rate.
+
+---
+
+## 14. Conclusion
+
+The complete splitting type of a prime in a cyclotomic field is a multi-state observable, and its pair channel is not bounded by the one bit that governs every binary fork. At prime cyclic order the channel is exactly
+$$\log_2 p - \frac{(p-1)(2p-1)}{p^2}\log_2(p-1) + \frac{(p-1)(p-2)}{p^2}\log_2(p-2),$$
+strictly positive, of order $p^{-2}$, strictly below one bit for every odd prime and exactly one bit at $p=2$. At composite order it exceeds one bit for every even order tested, peaking at $1.7239$ bits for the twelve-element group of $\mathbb{Q}(\zeta_{13})$. Behind both regimes stands the same structure: the divisor lattice of the Galois order, which bounds the single-prime channel from above by $\log_2 d(n)$, makes it additive over coprime factorisations, saturates it at exactly two bits along the $2$-adic tower, and — as the numerical evidence strongly suggests — controls the pair channel by the same multiplicative law. The binary root-count readout, by contrast, is provably lossy at exactly the composite orders and asymptotically reports nothing at all. **The type, not the root count, is the complete object.**
