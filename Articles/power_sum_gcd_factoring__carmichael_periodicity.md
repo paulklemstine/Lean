@@ -1,145 +1,332 @@
-# The Sum That Knows Your Secret
+# The Number That Counts Itself: How a Single Sum Betrays a Secret Factor
 
-## How adding up powers of every number below $N$ quietly betrays its prime factors
+## A very old question, asked a very new way
 
-Take a number $N$ that you believe is the product of two large primes — the kind of number that guards a bank transfer. Now do something that looks utterly naive: add up the $k$-th powers of *every* number from $1$ to $N$,
+Take a number. Say $35$. You know instantly that it is $5 \times 7$. Now take
+$8633$. A little slower, but you get there: $89 \times 97$. Now take a number
+with six hundred digits, formed by multiplying two three-hundred-digit primes
+that nobody has written down. Suddenly there is no "a little slower." There is
+only silence. The security of a great deal of the world's digital
+infrastructure rests on exactly that silence.
 
-$$F(N,k) \;=\; 1^k + 2^k + 3^k + \cdots + N^k,$$
+The usual way to attack the problem is to *probe*. You pick a number $a$, raise
+it to some enormous power modulo $N$, and see whether the result accidentally
+collides with something that betrays a factor. Pollard's classic $p-1$ method
+works this way: pick a base $a$, compute $\gcd(a^M - 1, N)$, and hope. The
+"hope" is doing real work in that sentence. A bad base tells you nothing, and
+you must try again.
 
-and compute the greatest common divisor of that gargantuan sum with $N$ itself.
+This article is about a different kind of probe — one with no base to choose at
+all. Instead of interrogating one residue, we interrogate *all of them at
+once*, by adding them up.
 
-You would expect noise. What you get is a clean, deterministic read-out of the arithmetic of $N$'s hidden prime factors — a sequence that is *periodic*, whose period is a famous secret quantity, and whose values are always exact divisors of $N$. Nothing is random, nothing is heuristic, and no lucky choices are required.
+Define, for a modulus $N$ and an exponent $k$, the **power sum**
 
-This is the story of what that sum knows, why it knows it, and why — despite knowing so much — it still cannot break your bank transfer.
+$$F(k) \;=\; \sum_{a=1}^{N} a^{k}.$$
 
----
+That is: take every number from $1$ to $N$, raise each to the $k$-th power, and
+add. Then compute $\gcd(F(k), N)$.
 
-## A first experiment
+What comes out is not noise. It is a clean, completely predictable signal whose
+rhythm encodes the factorization of $N$.
 
-Let $N = 15 = 3 \times 5$. Compute $g(k) = \gcd(F(15,k), 15)$ for $k = 1, 2, 3, \dots$:
+## The signal
 
-$$15,\; 5,\; 15,\; 1,\; 15,\; 5,\; 15,\; 1,\; 15,\; 5,\; 15,\; 1,\; \dots$$
+Let us look at $N = 35$. Compute $\gcd(F(k), 35)$ for $k = 1, 2, 3, \dots$ and
+you get:
 
-Two things leap out. First, at $k = 2$ the answer is $5$ — a genuine prime factor of $15$, handed over without a search. Second, the whole sequence repeats with period $4$.
+$$35,\ 35,\ 35,\ \mathbf{7},\ 35,\ \mathbf{5},\ 35,\ \mathbf{7},\ 35,\ 35,\ 35,\ \mathbf{1},\ 35,\ 35, \dots$$
 
-Try $N = 35 = 5 \times 7$:
+Look at position $4$. The answer is $7$ — a genuine, nontrivial factor of $35$,
+handed over without ceremony. Look at position $6$: the other factor, $5$. And
+look at position $12$: the value collapses to $1$, and then the whole pattern
+repeats from the beginning, forever, with period exactly $12$.
 
-$$35,\; 35,\; 35,\; 7,\; 35,\; 5,\; 35,\; 7,\; 35,\; 35,\; 35,\; 1,\; 35,\; \dots$$
+Now notice: $35 = 5 \times 7$, and $4 = 5 - 1$, and $6 = 7 - 1$, and
+$12 = \operatorname{lcm}(4, 6)$. Every landmark of the sequence is a shadow of
+the factorization.
 
-Again the factors appear — $7$ at $k=4$, $5$ at $k=6$ — and the pattern repeats with period $12$. Those periods, $4$ and $12$, are not accidents: $4 = \mathrm{lcm}(3-1, 5-1)$ and $12 = \mathrm{lcm}(5-1,7-1)$. They are the *Carmichael exponents* $\lambda(N)$, the smallest exponent $L$ for which $a^{L} \equiv 1 \pmod N$ for every $a$ coprime to $N$ — a quantity that is, for a cryptographic modulus, exactly as secret as the factorisation itself.
+Here is $N = 15 = 3 \times 5$:
 
-So the sum is not merely leaking a factor now and then. It is displaying the full multiplicative skeleton of $N$.
+$$15,\ \mathbf{5},\ 15,\ \mathbf{1},\ 15,\ \mathbf{5},\ 15,\ \mathbf{1}, \dots$$
 
----
+Same story: the factor $5$ appears at $k = 2 = 3-1$, and the period is
+$\operatorname{lcm}(2, 4) = 4$.
 
-## Why it happens: counting residues
+This is not a coincidence, and it is not a heuristic. It is a theorem, and the
+theorem gives the value of $\gcd(F(k), N)$ for *every* $k$ with no exceptions.
 
-The mechanism is disarmingly simple, and it fits in a paragraph.
+## The master formula
 
-Fix a prime $p$ dividing $N$, and write $N = pq$ (for the moment, $q$ need not be prime; it just must not be divisible by $p$). The numbers $1, 2, \dots, N$ sweep through the residues modulo $p$ in perfect rotation: each residue class $0, 1, \dots, p-1$ is hit exactly $q$ times. So modulo $p$,
+**Theorem (the value table).** Let $N = pq$ where $p$ and $q$ are distinct
+primes, and let $k \ge 1$. Then
 
-$$F(N,k) \;\equiv\; q \cdot \big(0^k + 1^k + \cdots + (p-1)^k\big) \pmod p .$$
+$$\gcd\!\big(F(k),\, N\big) \;=\; \Big(\text{$1$ if $(p-1) \mid k$, else $p$}\Big)\;\times\;\Big(\text{$1$ if $(q-1) \mid k$, else $q$}\Big).$$
 
-Now the bracket is a classical object: the complete power sum over the field with $p$ elements. Its value is a strict dichotomy. If $p-1$ divides $k$, then by Fermat's little theorem every nonzero $x$ satisfies $x^k = 1$, so the bracket is $p - 1 \equiv -1$. If $p-1$ does *not* divide $k$, the nonzero $x^k$ run over the values of a nontrivial character-like map and cancel exactly: the bracket is $0$. In symbols, for $k > 0$,
+Read that carefully, because it says something startling: the gcd depends on
+the exponent $k$ **only through two yes/no questions** — does $p-1$ divide $k$,
+and does $q-1$ divide $k$? Four possible answers, four possible values of the
+gcd: $N$, $p$, $q$, or $1$. Nothing else can ever happen.
 
-$$\sum_{x \in \mathbb{F}_p} x^k \;=\; \begin{cases} -1, & (p-1) \mid k, \\ 0, & \text{otherwise.}\end{cases}$$
+The four cases:
 
-Substituting, we get the whole theory in one line:
+- Neither divides $k$: the gcd is $N$ itself. Useless — the sum is divisible by
+  everything.
+- Exactly one divides $k$: the gcd is the *other* prime. **A factor falls out.**
+- Both divide $k$: the gcd is $1$. Also useless — but, as we will see, this is
+  where the deepest information hides.
 
-$$F(N,k) \;\equiv\; \begin{cases} -q \pmod p, & (p-1)\mid k,\\ \;\;\;0 \pmod p, & (p-1)\nmid k.\end{cases}$$
+## Why it is true: residues in ranks, then Fermat
 
-Since $p \nmid q$, the first case is *nonzero*. So we obtain a perfect criterion — no error term, no probability:
+The proof is two moves, and both are the kind of thing you can see in your head.
 
-> **The Divisibility Criterion.** Let $p$ be a prime with $p \mid N$ and $p^2 \nmid N$, and let $k > 0$. Then $p$ divides $F(N,k)$ **if and only if** $p - 1$ does not divide $k$.
+**Move one: the residues march in formation.** The numbers $1, 2, \dots, N$
+with $N = pq$ hit every residue class modulo $p$ exactly $q$ times. So when we
+reduce $F(k)$ modulo $p$, the sum collapses:
 
-The prime $p$ "switches off" the moment $k$ becomes a multiple of $p-1$. The power sum is a bank of switches, one per prime factor of $N$, each toggled by its own order condition.
+$$F(k) \;\equiv\; q \cdot \sum_{x \bmod p} x^{k} \pmod p.$$
 
----
+All the arithmetic complexity of the interval $[1, N]$ evaporates; what is left
+is a single sum over the residues mod $p$, weighted by how many times the
+interval wraps around.
 
-## Reading the switches: the product formula
+**Move two: Fermat's little theorem decides the inner sum.** For a prime $p$
+and any $k \ge 1$,
 
-Once you see the switches, the general theorem writes itself. Suppose $N$ is squarefree (no repeated prime factors — the case of an RSA-style modulus). Then for every $k > 0$,
+$$\sum_{x \bmod p} x^{k} \;=\; \begin{cases} -1 & \text{if } (p-1) \mid k,\\[2pt] 0 & \text{otherwise.}\end{cases}$$
 
-$$\gcd\big(F(N,k),\,N\big) \;=\; \prod_{\substack{r \text{ prime},\; r \mid N \\ (r-1)\,\nmid\, k}} r .$$
+The reason is beautifully simple. The nonzero residues form a cyclic group of
+order $p-1$. If $(p-1) \mid k$, then $x^k = 1$ for every one of them, so the sum
+is $p - 1 \equiv -1$. If not, pick a generator $g$; multiplying the whole sum by
+$g^k \neq 1$ permutes the terms and so leaves the sum unchanged, which forces
+the sum to be $0$.
 
-The gcd is the product of exactly those primes of $N$ that have *not* yet switched off. Everything observed in the experiments is a corollary.
+Put the moves together. Since $p \nmid q$, we get $p \mid F(k)$ exactly when
+$(p-1) \nmid k$. Symmetrically for $q$. And $\gcd$ splits across the coprime
+factors $p$ and $q$. That is the master formula, complete.
 
-**The factor reveal.** Take $N = pq$ with $p, q$ distinct primes, and set $k = p-1$. Then $p$ switches off (it divides $p-1$, trivially) but $q$ stays on, provided $q-1$ does not divide $p-1$. The formula gives
+Specialising to $k = p-1$ gives the headline: **one gcd computation at exponent
+$p-1$ returns the factor $q$**, provided $(q-1) \nmid (p-1)$. And when $p < q$
+that side condition is *automatic* — a number bigger than $p-1$ cannot divide
+$p-1$ — so for $p < q$ the reveal is unconditional:
 
-$$\gcd\big(F(pq,\,p-1),\, pq\big) \;=\; q .$$
+$$\gcd\Big(\textstyle\sum_{a=1}^{N} a^{\,p-1},\; N\Big) \;=\; q \qquad (p < q).$$
 
-A prime factor of $N$, produced by a single gcd, with no search, no randomness, and no base to choose. On the eight test semiprimes examined — $15, 21, 35, 55, 91, 143, 221$ and $9797 = 97 \times 101$ — this returns $5, 7, 7, 11, 13, 13, 17, 101$ every time.
+## No bad bases, ever
 
-**The trivial locus.** The gcd equals $1$ exactly when *all* primes have switched off, i.e. when $(r-1)\mid k$ for every prime $r \mid N$. That condition says precisely $\lambda(N) \mid k$, where $\lambda(N) = \mathrm{lcm}_{r \mid N}(r-1)$. So the $1$'s in the sequence sit exactly on the multiples of the Carmichael exponent — that is the $k=4,8,12$ pattern for $N=15$ and the lone $k=12$ for $N=35$.
+Pollard's $p-1$ method can be defeated by an unlucky base. Can the power sum?
 
-**Periodicity, and its exactness.** Because the switches depend on $k$ only through the divisibilities $(r-1)\mid k$, the sequence $g(k) = \gcd(F(N,k),N)$ satisfies $g(k+\lambda(N)) = g(k)$ for all $k>0$. Something stronger is true term-wise: $F(N, k+\lambda(N)) \equiv F(N,k) \pmod N$, which is nothing but Korselt's criterion — the congruence $a^{k+\lambda} \equiv a^k \pmod N$ behind Carmichael numbers — summed over all $a$. And the period is not merely *a* period; it is *the* period: if $g(k+d) = g(k)$ for every $k>0$, then $\lambda(N)$ divides $d$. The proof is a one-liner once you have the trivial locus: at $k = \lambda(N)$ the value is $1$, so at $k = \lambda(N)+d$ it is also $1$, so $\lambda(N)$ divides $\lambda(N)+d$, so $\lambda(N) \mid d$.
+It cannot, and the contrast is sharp enough to state as a theorem. Consider the
+base $a = N - 1$. It is a perfectly respectable base: it satisfies
+$1 < N-1 < N$, and it is coprime to $N$. But $N - 1 \equiv -1$ modulo every
+prime factor of $N$, so $(N-1)^M - 1$ is congruent to $0$ modulo *every* factor
+when $M$ is even, and to $-2$ modulo every odd prime factor when $M$ is odd.
+Therefore:
 
-The secret exponent $\lambda(N)$ is therefore not hidden inside the sequence in some subtle statistical sense. It is the sequence's minimal period, plain as a heartbeat.
+**Theorem (a universally bad base).** For $N = pq$ with $p \ne q$ distinct odd
+primes, and *every* exponent $M$,
 
----
+$$\gcd\big((N-1)^M - 1,\ N\big) = \begin{cases} N & M \text{ even},\\ 1 & M \text{ odd}.\end{cases}$$
 
-## No bad bases
+It is never a proper factor. Not for one exponent. Not for any exponent. This
+base is a dead end forever.
 
-There is a classical algorithm that lives in the same neighbourhood: **Pollard's $p-1$ method**. Choose a base $a$, choose a smooth exponent $M$, and compute $\gcd(a^M - 1, N)$. When it works, it works for the same reason as ours: $a^M \equiv 1$ modulo one prime factor but not the other.
+Now take $N = 35$ and the exponent $M = 4$. Pollard with base $6 = N-1$ returns
+$35$: total failure. The power sum at the same exponent returns $7$: total
+success. The power sum cannot have a bad base for the simple reason that it has
+no base — it averages over all of them simultaneously, and the averaging is
+exactly what Fermat's theorem knows how to evaluate.
 
-But Pollard's method has a base to choose, and choices can be wrong. If $a^M \equiv 1$ modulo *both* factors, the gcd returns $N$ and nothing is learned. Such bad bases are not exotic; they always exist. For any two distinct odd primes $p, q$ and any even exponent $M$, take the number $a$ with
+## The rhythm: Carmichael periodicity
 
-$$a \equiv 1 \pmod p, \qquad a \equiv -1 \pmod q$$
+Return to the sequence $k \mapsto \gcd(F(k), N)$. Because the master formula
+depends only on the divisibility of $k$ by $p-1$ and by $q-1$, the sequence is
+*periodic*, and its period is the least common multiple
 
-(the Chinese Remainder Theorem supplies one with $1 < a < pq$). Then $a^M \equiv 1^M = 1$ modulo $p$, and $a^M \equiv (-1)^M = 1$ modulo $q$ because $M$ is even, so $\gcd(a^M-1, N) = N$ exactly. For $N = 15$ and $M = 2$ the witness is $a = 4$: $\gcd(4^2-1,15) = \gcd(15,15) = 15$, a total failure — while at that same exponent $k=2$ the power sum hands over $\gcd(F(15,2),15) = 5$.
+$$\lambda(N) \;=\; \operatorname{lcm}(p-1,\, q-1),$$
 
-This is the robustness theorem: **at every exponent where the power-sum method succeeds, Pollard's method has a base that fails.** The reason is structural. The power sum has no base parameter at all. It aggregates *every* residue $a = 1, \dots, N$ simultaneously, so there is nothing to choose badly. Where Pollard samples the multiplicative group at one point, the power sum integrates over the whole of it.
+the **Carmichael function** of $N$: the exponent of the group of units modulo
+$N$.
 
----
+More than that, the period is *exactly* $\lambda(N)$ — nothing smaller works —
+and there is a clean way to see it in the data:
 
-## The exact residue: a Giuga-type formula
+**Theorem (periodicity and its sharpness).** For $k \ge 1$,
+$\gcd(F(k+\lambda(N)), N) = \gcd(F(k), N)$; and
+$$\gcd(F(k), N) = 1 \iff \lambda(N) \mid k.$$
+Consequently $\lambda(N)$ is the *least* positive $k$ at which the sequence
+takes the value $1$, and no positive integer smaller than $\lambda(N)$ is a
+period of the sequence.
 
-The criterion above says *whether* a prime divides the sum. One can say more: what the sum actually *is*, modulo $N$. For squarefree $N$ and $k > 0$,
+So $\lambda(N)$ is not merely a period; it is legible. Read down the sequence
+until you see your first $1$, and the position where it occurs *is* the
+Carmichael number of $N$. For $N=35$ the first $1$ appears at $k=12$, and
+indeed $\lambda(35)=\operatorname{lcm}(4,6)=12$.
 
-$$F(N,k) \;\equiv\; -\!\!\sum_{\substack{r \text{ prime},\, r\mid N \\ (r-1) \mid k}} \frac{N}{r} \pmod N .$$
+## A tempting formula, and why it is wrong
 
-The proof is the same residue count performed one prime at a time: modulo a prime $r_0 \mid N$, every term $N/r$ with $r \neq r_0$ is divisible by $r_0$ and dies, while the surviving term $N/r_0$ cancels the Fermat contribution $-N/r_0$ from the $r_0$-block. The formula is verified in the experiments: $F(35,12) \equiv 23 \equiv -(7+5) \pmod{35}$.
+Suppose you have read off $\lambda(N)$. Do you now know the factorization?
 
-Specialising to $N = p$ prime and $k = p-1$ recovers a classical fact: $1^{p-1} + \cdots + (p-1)^{p-1} \equiv -1 \pmod p$. That congruence is the heart of **Giuga's conjecture**, which asserts that $N > 1$ is prime if and only if $\sum_{a=1}^{N-1} a^{N-1} \equiv -1 \pmod N$. Our closed form says that the power-sum read-out is a Giuga statement in disguise: when $\lambda(N)\mid k$, the criterion "$F(N,k) \equiv -1$" becomes "$\sum_{r \mid N} N/r \equiv 1 \pmod N$", which is exactly Giuga's condition. A primality test and a factoring probe turn out to be the same object viewed from two angles.
+The tempting move is: "$\lambda(N)$ is essentially the totient, and
+$\varphi(N) = (p-1)(q-1) = N - (p+q) + 1$, so $p + q = N - \lambda(N) + 1$, and
+knowing the sum and product of $p$ and $q$ we recover them by solving a
+quadratic." Clean, quick, and false.
 
----
+The error is the word "essentially." The Carmichael function is the *least
+common multiple* of $p-1$ and $q-1$; the totient is their *product*. They agree
+only when $p-1$ and $q-1$ are coprime.
 
-## A lattice hiding in the exponents
+**Counterexample.** Take $p = 5$, $q = 13$, so $N = 65$. Then
+$\lambda(65) = \operatorname{lcm}(4, 12) = 12$, and the tempting formula
+predicts $p + q = 65 - 12 + 1 = 54$. The truth is $p+q = 18$. The formula is off
+by a factor that is not small.
 
-Here is an unexpected piece of structure. The read-out map $g_N(k) = \gcd(F(N,k),N)$ turns the gcd of exponents into the lcm of divisors:
+Where did it go? Into the greatest common divisor. Since
+$\gcd(m,n)\cdot\operatorname{lcm}(m,n) = mn$ always, the honest identity is:
 
-$$g_N\big(\gcd(k,k')\big) \;=\; \mathrm{lcm}\big(g_N(k),\, g_N(k')\big).$$
+**Theorem (corrected recovery identity).** For all integers $p, q \ge 1$, with
+$\lambda = \operatorname{lcm}(p-1, q-1)$,
 
-Why? A prime $r$ survives in $g_N(\gcd(k,k'))$ iff $(r-1) \nmid \gcd(k,k')$, i.e. iff $(r-1)$ fails to divide $k$ *or* fails to divide $k'$. Survival sets combine by *union*, and unions of sets of distinct primes correspond to lcm's of their products. So $g_N$ is an order-reversing morphism from the divisibility lattice of exponents to the divisor lattice of $N$. One immediate corollary: if $k \mid k'$ then $g_N(k') \mid g_N(k)$ — refining the exponent can only shrink the revealed factor, never enlarge it.
+$$\gcd(p-1,\,q-1)\;\cdot\;\lambda \;+\; (p+q) \;=\; pq \;+\; 1.$$
 
-This means the whole factorisation of $N$ is a *lattice-theoretic invariant* of the single sequence $k \mapsto g_N(k)$: the minimal nontrivial values of the read-out ought to be exactly the co-factors $N/r$, one for each prime $r \mid N$.
+Check it on the counterexample: $\gcd(4,12) = 4$, and $4 \cdot 12 + 18 = 66 = 65 + 1$. ✓
 
----
+The naive formula is the special case $\gcd(p-1, q-1) = 1$ — and under exactly
+that guard, recovery does work:
 
-## The catch, and an honest correction
+**Theorem (recovery under the coprimality guard).** Let $N = pq$ with $p < q$
+distinct primes and $\gcd(p-1, q-1) = 1$. If $(a, b)$ is any ordered pair of
+non-negative integers with $a \le b$, $ab = N$, and
+$a + b = N + 1 - \lambda(N)$, then $a = p$ and $b = q$.
 
-If the sequence displays $\lambda(N)$ so plainly, why is $N$ not broken?
+The uniqueness is Vieta's: two numbers are determined by their sum and product
+once you fix which is which. So under the guard, the *period alone* determines
+the factorization.
 
-Because computing a single term is expensive. Evaluating $F(N,k)$ naively costs $O(N)$ modular operations, and the first informative exponent for a balanced semiprime is not small: for $N = pq$ the gcd is *the whole of $N$* — no information — for every $0 < k < \min(p-1, q-1)$, and drops below $N$ for the first time exactly at $k = \min(p-1,q-1) \approx \sqrt{N}$. Multiplying, one pays about $O(N^{3/2})$ to reach the first hit: dramatically worse than trial division, which finishes in $O(\sqrt N)$.
+That is the arc: the sequence's values leak factors directly, and the
+sequence's *period* leaks the factorization wholesale. This is not an
+approximation or a heuristic. It is an exact structural statement about a
+completely explicit sequence of integers.
 
-The barrier is precisely a *period-finding* barrier — the same barrier that Shor's quantum algorithm demolishes. Shor's algorithm also factors by finding the period of a function built from modular exponentiation; the quantum Fourier transform reads the period out of a superposition in polynomial time. The power-sum sequence is the classical shadow of the same object: same structure, same secret encoded as a period, but with the period accessible only by walking the sequence one costly step at a time.
+## So why is $N$ still safe?
 
-And there is a cautionary tale in the arithmetic. Once you know $N$ and $\lambda(N)$, is the factorisation free? The tempting identity is
+Here is the honest accounting, and it is the most interesting part of the story.
 
-$$p + q \;=\; N - \lambda(N) + 1,$$
+The first exponent at which anything interesting happens is
+$k^* = \min(p-1, q-1)$. It is a theorem that this is *exactly* the least $k \ge 1$
+at which the gcd departs from the trivial value $N$, and that at that exponent
+the gcd is already a proper factor. It is also a theorem that
+$(k^*+1)^2 \le N$, i.e. $k^* < \sqrt{N}$. So the first hit occurs below the
+square root of $N$ — and no sooner, in general.
 
-which would come from $\lambda(N) = (p-1)(q-1)$, whereupon $p+q$ and $pq$ give $p$ and $q$ by a quadratic. But $\lambda(N) = \mathrm{lcm}(p-1,q-1)$, not the product. The correct identity is
+Meanwhile, computing $F(k)$ from its definition costs $O(N)$ modular
+operations. Total work to reach the first hit: $O(N^{3/2})$. Trial division
+finds the factor in $O(\sqrt{N})$. The power-sum method is, as an algorithm on
+a classical computer, *worse than the most naive method there is*.
 
-$$p + q + \lambda(N)\cdot\gcd(p-1,q-1) \;=\; N + 1,$$
+And the periodicity does not rescue it. Inside one period $\lambda$, the number
+of exponents that reveal a proper factor is exactly
 
-which follows from $\mathrm{lcm}(a,b)\cdot\gcd(a,b) = ab$ with $a = p-1$, $b = q-1$. Since $p-1$ and $q-1$ are both even whenever $p$ and $q$ are odd primes, $\gcd(p-1,q-1) \geq 2$ *always*, and the naive formula *always* strictly overshoots. For $N = 15$: $\lambda = 4$, the naive prediction is $15 - 4 + 1 = 12$, while the truth is $3 + 5 = 8$. Knowing $N$ and $\lambda(N)$ leaves exactly one unknown, $g = \gcd(p-1,q-1)$ — and that residual ambiguity, not the difficulty of period-finding alone, is what stands between the read-out and the factorisation.
+$$\frac{\lambda}{p-1} + \frac{\lambda}{q-1} - 2,$$
 
----
+a $\big(\tfrac{1}{p-1} + \tfrac{1}{q-1}\big)$-fraction of the period. For
+cryptographic sizes, that fraction is astronomically tiny. Blind search is
+hopeless; you must *know where to look*, and knowing where to look means
+knowing $p-1$ or $q-1$, which means knowing the answer.
+
+This is worth dwelling on, because it is exactly the shape of the modern
+theory of factoring. The information is *there*, sitting in plain sight in an
+explicitly defined integer sequence, perfectly structured, perfectly periodic.
+The obstruction is not secrecy. The obstruction is that finding the period of a
+sequence you can only sample point by point is expensive — and each sample is
+itself expensive.
+
+That is precisely the wall a quantum computer walks through. Shor's algorithm
+is, at heart, a period-finding machine: it extracts the period of a
+modular-exponential sequence in polynomial time using the quantum Fourier
+transform. The power-sum sequence is a different sequence with the same
+signature — an explicit function of $k$ whose period is the Carmichael number
+and whose period therefore yields the factorization. The mathematics here makes
+the classical/quantum boundary unusually vivid: same structure, same
+period-encodes-the-secret phenomenon, and the entire difficulty concentrated in
+one operation.
+
+## Beyond semiprimes
+
+The story does not stop at $N = pq$. Nothing in the argument used the number of
+prime factors:
+
+**Theorem (squarefree case).** Let $N$ be squarefree, $p$ a prime factor, and
+$k \ge 1$. Then $p \mid F(k)$ if and only if $(p-1) \nmid k$. Consequently
+$\gcd(F(k), N) = 1$ exactly when $\lambda(N) \mid k$, where now
+$\lambda(N) = \operatorname{lcm}_{p \mid N}(p-1)$.
+
+This produces an unexpected connection to a classical object. A **Carmichael
+number** is a composite $N$ that fools the Fermat primality test: $a^{N-1}
+\equiv a \pmod N$ for all $a$. Korselt's criterion says a squarefree $N$ is
+Carmichael exactly when $(p-1) \mid (N-1)$ for every prime $p \mid N$. That
+condition is *precisely* the condition $\lambda(N) \mid N - 1$. So:
+
+**Theorem (Korselt bridge).** A squarefree $N \ge 2$ satisfies Korselt's
+criterion if and only if $\gcd(F(N-1), N) = 1$.
+
+In words: **Carmichael numbers are exactly the squarefree moduli on which the
+power-sum reveal, at the one exponent you would naturally try, tells you
+absolutely nothing.** The smallest, $561 = 3 \cdot 11 \cdot 17$, has
+$\lambda = \operatorname{lcm}(2, 10, 16) = 80$, which divides $560$; and indeed
+$\gcd(F(560), 561) = 1$. Carmichael numbers are the blind spot of this method
+for exactly the reason they are the blind spot of the Fermat test — the same
+divisibility condition, seen from a new angle.
+
+## When squares creep in
+
+What if $N$ is not squarefree? Here a genuine surprise appears, and it is worth
+telling because the *obvious* guess is wrong.
+
+You would expect the relevant exponent condition at a prime power $p^e$ to
+involve $\lambda(p^e) = p^{e-1}(p-1)$, the exponent of the unit group. It does
+not. Consider $p^e = 9$: the sum $\sum_{a<9} a^k$ is $\equiv -3 \pmod 9$ for
+*every even* $k$, not just for $k$ divisible by $\lambda(9) = 6$. The $p$-part
+of the unit group is invisible to the power sum.
+
+**Theorem (prime-power evaluation).** Let $p$ be an odd prime, $e \ge 1$,
+$k \ge 1$. Then
+
+$$\sum_{a < p^{e}} a^{k} \;\equiv\; \begin{cases} -p^{\,e-1} \pmod{p^{e}} & \text{if } (p-1) \mid k,\\[2pt] 0 \pmod{p^{e}} & \text{otherwise.}\end{cases}$$
+
+Consequently, if $N = p^e m$ with $p \nmid m$, then
+
+$$\gcd\big(F(k),\, p^{e}\big) = \begin{cases} p^{\,e-1} & \text{if } (p-1) \mid k,\\ p^{e} & \text{otherwise.}\end{cases}$$
+
+So a prime power dividing $N$ is revealed *in full* unless $(p-1) \mid k$, in
+which case exactly one power of $p$ is lost — never more.
+
+The proof turns on a lift-the-exponent trick. Write each $a < p^e$ as
+$a = p^{e-1} j + r$ with $r < p^{e-1}$ and $j < p$. Expanding
+$(r + p^{e-1}j)^k$ binomially, every term with $(p^{e-1})^2$ dies modulo $p^e$,
+so only the constant and linear terms survive. Summing the linear terms over
+$j$ produces the Gauss sum $\sum_{j<p} j = p(p-1)/2$, which is divisible by $p$
+— and this is the one and only place oddness of $p$ is used. What remains is
+the clean recursion $\sum_{a<p^e} a^k \equiv p \sum_{a<p^{e-1}} a^k \pmod{p^e}$,
+which unwinds to the stated formula by induction with the Fermat evaluation as
+the base case.
+
+The prime $2$ genuinely is exceptional. For $N = 8$, and $k \ge 2$, the gcd is $4$ when $k$ is even and $8$ when $k$ is
+odd; pinning down the $2$-part of the answer in general remains open.
 
 ## What to take away
 
-A sum of powers over all residues below $N$ is a spectral instrument. Point it at $N$ and it deletes, one at a time, each prime $r \mid N$ for which the exponent $k$ is a multiple of $r-1$. What remains — the gcd — is a divisor of $N$ that names exactly the primes still standing.
+We started with an algorithm and ended with a structure theorem. The
+computation $\gcd\big(\sum_{a=1}^{N} a^k,\, N\big)$ is not a heuristic that
+sometimes works; it is a function of $k$ whose value is known in closed form,
+whose zeros and ones are dictated by Fermat's little theorem, whose period is
+the Carmichael function, and whose blind spots are precisely the Carmichael
+numbers. It repairs a false folklore recovery formula along the way and shows
+what the correct one is.
 
-Three theorems summarise the picture. **The factor reveal:** for distinct primes $p,q$ with $(q-1)\nmid(p-1)$, $\gcd(F(pq,p-1),pq)= q$ exactly. **Robustness:** at that very exponent Pollard's $p-1$ method has a base that returns no information, whereas the power sum, having no base, cannot fail this way. **Carmichael periodicity:** the read-out sequence is periodic with least period exactly $\lambda(N)$, and its trivial values sit exactly on the multiples of $\lambda(N)$.
+As a factoring algorithm it loses to trial division. As a lens, it is
+excellent. It shows the secret is not hidden — it is written down, in order, in
+an integer sequence anyone can define in one line. It is just written in a
+rhythm too slow to hear.
 
-It is not a faster way to factor — the cost is $O(N^{3/2})$, and honest bookkeeping shows that even a free $\lambda(N)$ leaves the quantity $\gcd(p-1,q-1)$ unaccounted for. But it is a strikingly clean picture of *where the secret lives*. The factorisation of $N$ is not hidden in the values of some arithmetic function; it is hidden in the *period* of a function that anyone can write down in a single line. The whole difficulty of factoring, in this account, is the difficulty of getting at a period. That is a good sentence to keep in mind the next time somebody says that factoring is hard "because multiplication is easy to do and hard to undo." Undoing multiplication, here, is undoing a rhythm.
+That gap between *encoded* and *accessible* is the whole subject.
