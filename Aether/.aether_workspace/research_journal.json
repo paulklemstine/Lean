@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "579ae41a",
-      "domain": "Computation",
-      "key_insight": "# Future Directions — after the Order × Jacobi Joint Law\n\nThe verified results (all in `Catalog/Computation/OrderJacobiJointLaw.lean`,\n0 sorries) are:\n\n1. the QR–order coupling is an exact equivalence",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 407,
-      "timestamp": "2026-08-13T05:11:54",
-      "title": "The Order x Jacobi Joint Law is N-Determined, Closed"
-    },
-    {
       "cycle_id": "a3466461",
       "domain": "Novelty",
       "key_insight": "# Future directions — measuring the symmetry-breaking cost of factoring\n\nThe four files `Catalog/Novelty/SymmetryBreakingCost{Factoring,Kernel,Adaptive,Witness}.lean`\nturn the ISOLATION-COST experimen",
@@ -499,19 +489,19 @@
       "theorem_count": 59,
       "timestamp": "2026-08-15T14:47:41",
       "title": "Exp 390 GENERIC-RECOVERY: recovery-from-hint = 2^(k-1-t_eff) — hint taxonomy closed"
+    },
+    {
+      "cycle_id": "3ce74e62",
+      "domain": "Geometry",
+      "key_insight": "# Future Directions — Power-Sum GCD Factoring & Carmichael Periodicity\n\nDerived from the Stage-3 analysis and Stage-4 critique of the results now proved in\n`Catalog/Geometry/PowerSum*.lean`. Each conj",
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "theorem_count": 72,
+      "timestamp": "2026-08-15T16:48:51",
+      "title": "Power-Sum GCD Factoring & Carmichael Periodicity"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "6077433a",
-      "domain": "Geometry",
-      "key_insight": "# Future directions\n\nThe Lean development consists of three files, all of which compile with no `sorry` and\ndepend only on the standard axioms (`propext`, `Classical.choice`, `Quot.sound`):\n\n* `Geomet",
-      "quality_score": 0.78776,
-      "sorry_count": 0,
-      "theorem_count": 87,
-      "timestamp": "2026-08-05T06:51:05",
-      "title": "ArXiv paper: Magnitude homology of tope graphs"
-    },
     {
       "cycle_id": "6ffc84c2",
       "domain": "Combinatorics",
@@ -2501,27 +2491,19 @@
       "theorem_count": 59,
       "timestamp": "2026-08-15T14:47:41",
       "title": "Exp 390 GENERIC-RECOVERY: recovery-from-hint = 2^(k-1-t_eff) — hint taxonomy closed"
+    },
+    {
+      "cycle_id": "3ce74e62",
+      "domain": "Geometry",
+      "key_insight": "# Future Directions — Power-Sum GCD Factoring & Carmichael Periodicity\n\nDerived from the Stage-3 analysis and Stage-4 critique of the results now proved in\n`Catalog/Geometry/PowerSum*.lean`. Each conj",
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "theorem_count": 72,
+      "timestamp": "2026-08-15T16:48:51",
+      "title": "Power-Sum GCD Factoring & Carmichael Periodicity"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "295ca744",
-      "domain": "Algebra",
-      "name": "E0Card_mod_four_ne_two_of_form",
-      "quality": 0.86
-    },
-    {
-      "cycle_id": "e0db545b",
-      "domain": "Physics",
-      "name": "iterate_conj",
-      "quality": 0.91
-    },
-    {
-      "cycle_id": "e0db545b",
-      "domain": "Physics",
-      "name": "orbIter_conj",
-      "quality": 0.91
-    },
     {
       "cycle_id": "e0db545b",
       "domain": "Physics",
@@ -2803,9 +2785,27 @@
       "domain": "Combinatorics",
       "name": "filter_blockHint",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "3ce74e62",
+      "domain": "Geometry",
+      "name": "this",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "3ce74e62",
+      "domain": "Geometry",
+      "name": "carmichael_pos",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "3ce74e62",
+      "domain": "Geometry",
+      "name": "dvd_carmichael_left",
+      "quality": 0.85
     }
   ],
-  "last_updated": "2026-08-15T14:47:41",
+  "last_updated": "2026-08-15T16:48:51",
   "open_questions": [
     {
       "context": "-    sorry+  -- On the certified range, extract the primitive divisor from the",
@@ -3393,12 +3393,6 @@
     ],
     "Geometry": [
       {
-        "cycle_id": "5b6f1a1d",
-        "quality": 0.686,
-        "theorems": 122,
-        "title": "All formal results live in four files, which together compile with no `sorry` an"
-      },
-      {
         "cycle_id": "b2707824",
         "quality": 0.73419,
         "theorems": 182,
@@ -3451,6 +3445,12 @@
         "quality": 0.85,
         "theorems": 72,
         "title": "Round-10 Closures: The Exhaustion of the Classical Attack Surface"
+      },
+      {
+        "cycle_id": "3ce74e62",
+        "quality": 0.85,
+        "theorems": 72,
+        "title": "Power-Sum GCD Factoring & Carmichael Periodicity"
       }
     ],
     "Logic": [

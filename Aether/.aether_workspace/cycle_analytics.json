@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-15T14:47:44.916134+00:00",
+  "last_updated": "2026-08-15T16:48:55.010649+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -56018,6 +56018,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-08-15T14:47:44.727152+00:00",
       "title": "Exp 390 GENERIC-RECOVERY: recovery-from-hint = 2^(k-1-t_eff) \u2014 hint taxonomy closed"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 2,
+      "domain": "Geometry",
+      "duration_seconds": 3955.819633245468,
+      "end_time": 1786812509.9454558,
+      "files_integrated": 4,
+      "job_id": "3ce74e62",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.85,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.5575,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.85,
+        "novelty": 0.85,
+        "proof_depth": 0.85,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1786808554.1258225,
+      "strategy_count": 0,
+      "theorem_count": 72,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 67,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-08-15T16:48:54.824189+00:00",
+      "title": "Power-Sum GCD Factoring & Carmichael Periodicity"
     }
   ]
 }

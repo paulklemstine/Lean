@@ -1,100 +1,80 @@
-# Computational evidence
+# Computational evidence — "only bad primes" thread, cycles 6–7
 
-All numbers below were produced with `#eval` inside the project's Lean environment (exact
-integer arithmetic).  Everything that is *claimed as a theorem* is proved separately and
-sorry-free in `Catalog/Combinatorics/MordellDenominator{PointCount,Tripling,Barrier}.lean`;
-the tables here are exploratory data that motivated those statements.
+All statements marked **[Lean]** are machine-checked in
+`Catalog/Novelty/MordellApparitionEffective.lean` and
+`Catalog/Novelty/MordellApparitionDensity.lean` (no `sorry`).
+The tables below are *exploratory* computations (exact rational / modular arithmetic run
+outside Lean); they are **not** verified artifacts and are reported only as evidence that
+motivated the theorems.
 
-Setting: the Mordell curve `E_N : y² = x³ + N`, an integral point `P = (x, y)`, and a prime
-`ℓ ≥ 5` of good reduction (`ℓ ∤ 6N`).
+## 1. Denominators along the orbit of `P = (9,28)` on `E_55 : y² = x³ + 55`
 
-* layer 2 criterion : `ℓ ∣ den x(2P) ↔ ℓ ∣ x³ + N` (equivalently `ℓ ∣ y`);
-* layer 3 criterion : `ℓ ∣ den x(3P) ↔ ℓ ∣ ψ₃(x) = 3x⁴ + 12Nx`.
+`den x(nP)` factors as a perfect square (`e_n²`); the small-prime part is listed as `(p, v_p)`.
 
-## 1. The counting law for `N = 55`
+| n | digits of `den x(nP)` | primes `p < 50` in the denominator |
+|---|---|---|
+| 1 | 1 | — (x = 9 is an integer) |
+| 2 | 4 | (2,6), (7,2) |
+| 3 | 9 | (3,6), (13,2) |
+| 4 | 17 | (2,8), (7,2) |
+| 5 | 26 | (5,2) |
+| 6 | 37 | (2,6), (3,6), (7,2), (13,2), (17,4) |
+| 7 | 51 | (43,2) |
+| 8 | 68 | (2,10), (7,2) |
+| 9 | 86 | (3,8), (13,2), (19,2) |
+| 10 | 107 | (2,6), (5,2), (7,2) |
+| 11 | 129 | (11,2) |
+| 12 | 154 | (2,8), (3,6), (7,2), (13,2), (17,4) |
 
-`#roots₂(ℓ)` = number of `x mod ℓ` with `x³ + 55 ≡ 0`; `#roots₃(ℓ)` = number with
-`3x⁴ + 12·55·x ≡ 0`.
+Observations.
 
-| ℓ | ℓ mod 3 | #roots₂ | #roots₃ |
-|---|---------|---------|---------|
-| 5 | 2 | 1 | 1 |
-| 7 | 1 | 3 | 1 |
-| 11 | 2 | 1 | 1 |
-| 13 | 1 | 0 | 4 |
-| 17 | 2 | 1 | 2 |
-| 19 | 1 | 0 | 4 |
-| 23 | 2 | 1 | 2 |
-| 29 | 2 | 1 | 2 |
-| 31 | 1 | 0 | 1 |
-| 37 | 1 | 0 | 1 |
-| 41 | 2 | 1 | 2 |
-| 43 | 1 | 0 | 1 |
-| 47 | 2 | 1 | 2 |
-| 53 | 2 | 1 | 2 |
-| 59 | 2 | 1 | 2 |
+* `7` appears exactly at even `n`, `13` exactly at multiples of `3`, `17` at multiples of `6`.
+  Both patterns are arithmetic progressions through `0` — the apparition law.
+* `7 · 13 = 91` divides `den x(nP)` exactly when `6 ∣ n`, i.e. the joint locus is the
+  progression with modulus `lcm(2,3)`. **[Lean]** `joint_apparition_91_55`.
+* Good primes (`7, 13, 17, 19, 43, …`) dominate the small-prime part, while the "allowed"
+  primes `5, 11` occur rarely — the conjecture's predicted support is not what happens.
 
-Observations, each of which is now a theorem:
+## 2. First apparition index vs. the proved bound `4ℓ`
 
-* `ℓ ≡ 2 (mod 3)` ⟹ `#roots₂ = 1` (`card_vanishingClasses_of_two_mod_three`).
-* `ℓ ≡ 1 (mod 3)`, `ℓ ∤ N` ⟹ `#roots₂ ∈ {0, 3}` (`card_vanishingClasses_of_one_mod_three`).
-* `ℓ ≡ 2 (mod 3)`, `ℓ ∤ N` ⟹ `#roots₃ = 2` (`card_vanishingClasses3_of_two_mod_three`);
-  the rows `ℓ = 5, 11` have `#roots₃ = 1` precisely because `5, 11 ∣ 55` — the hypothesis
-  `ℓ ∤ N` is necessary.
-* `ℓ ≡ 1 (mod 3)`, `ℓ ∤ N` ⟹ `#roots₃ ∈ {1, 4}` (`card_vanishingClasses3_of_one_mod_three`).
+For each good prime `ℓ` the first `n` with `ℓ ∣ den x(nP)` was computed two ways and agrees:
+(i) exactly over `ℚ` for `n ≤ 24`, (ii) as the order of the reduction `P mod ℓ` in `E(F_ℓ)`.
 
-## 2. Averages
+| ℓ | first index m | proved bound `4ℓ` **[Lean]** | Hasse bound `ℓ+1+2√ℓ` |
+|---|---|---|---|
+| 7 | 2 | 28 | 12 |
+| 13 | 3 | 52 | 20 |
+| 17 | 6 | 68 | 26 |
+| 19 | 9 | 76 | 28 |
+| 23 | 24 | 92 | 32 |
+| 29 | 15 | 116 | 40 |
+| 31 | 43 | 124 | 42 |
+| 37 | 37 | 148 | 50 |
+| 41 | 14 | 164 | 54 |
+| 43 | 7 | 172 | 56 |
+| 47 | 16 | 188 | 60 |
+| 53 | 54 | 212 | 68 |
+| 61 | 61 | 244 | 76 |
+| 73 | 3 | 292 | 90 |
+| 83 | 12 | 332 | 102 |
+| 101 | 102 | 404 | 122 |
+| 113 | 57 | 452 | 134 |
 
-`∑_{N mod ℓ} #roots₂(N, ℓ)` for `ℓ = 5, 7, 11, 13, 17, 19, 23, 29, 31, 37` gives
-`5, 7, 11, 13, 17, 19, 23, 29, 31, 37` — exactly `ℓ` in each case, i.e. the average number of
-denominator-producing classes is exactly `1` (`sum_card_vanishingClasses`).
+No good prime `ℓ < 120` fails to appear, and every observed index is well below `4ℓ`; several
+(`31, 37, 53, 61, 101`) sit just under the Hasse bound, so a bound of the shape `ℓ + O(√ℓ)`
+is the true limit and `4ℓ` cannot be improved to anything below `ℓ + 1`.
 
-## 3. The counterexample point `P = (9, 28)` on `E_55`
+## 3. Counterexample hunt against the theorems
 
-* `y = 28 = 2²·7`, so the only good prime at layer 2 is `7`; indeed
-  `x(2P) = 2601/3136 = 2601/(2⁶·7²)`.  The producing classes mod `7` are `{1, 2, 4}` and
-  `9 ≡ 2 (mod 7)` — the point sits in one of the three classes.
-* `ψ₃(9) = 3·9⁴ + 12·55·9 = 25623 = 3³ · 13 · 73`, so the good primes at layer 3 are `13` and
-  `73`; indeed `x(3P) = -2302089191/(3⁶·13²·73²)`.
-* Consistency with the counting law: `roots₃(55, 13) = {0, 1, 3, 9}` and
-  `roots₃(55, 73) = {0, 9, 65, 72}` — both contain `9`, and both have `4` elements
-  (`13 ≡ 73 ≡ 1 mod 3`).
-* `roots₂(55, 13) = ∅`, which is why `13` does **not** divide `den x(2P)` although it divides
-  `den x(3P)`: each layer has its own cubic.
+* Searched all primes `5 ≤ ℓ < 120` with `ℓ ∤ 55` for a violation of the effective bound
+  (an apparition index exceeding `4ℓ`, or a prime never appearing): none found — consistent
+  with **[Lean]** `exists_small_multiple_dvd_den` and `non_appearing_primes_finite`.
+* Searched for a collision of reductions whose difference escapes the kernel (the hypothesis of
+  the collision lemma): none found; the `2`-torsion branch (`ℓ ∣ num y`) is genuinely needed and
+  occurs, e.g. for `ℓ = 7`, `n = 1`: `y(P) = 28 = 4·7`, which is exactly why `7` enters at `n = 2`.
 
-## 4. Counterexample hunt for the "only bad primes" claim
+## 4. Sequence data
 
-The claim "every prime dividing `den x(nP)` divides `Δ = -432N²`" fails already at `n = 2` for
-`N = 55`, `P = (9,28)` (prime `7`), and the failure is not sporadic:
-
-* every prime `ℓ ≥ 5` is realised as a good denominator prime at layer 2 (`N = ℓ² - 1`,
-  `P = (1, ℓ)`) and at layer 3 (`N = 1 - ℓ³`, `P = (ℓ, 1)`);
-* for every fixed `N`, all primes `ℓ ≡ 2 (mod 3)` are "active" at layer 2, an infinite set by
-  Dirichlet.
-
-No sequence from this data appeared in a form worth an OEIS lookup: the class counts are the
-elementary sequences `1` (supersingular) and `0/3` (ordinary), determined by whether `-N` is a
-cube mod `ℓ`.
-
-## 5. Cycle 2: how many residues of `N` are active? (layer-2 vs layer-3 densities)
-
-Exhaustive enumeration over all residues `c = N mod ℓ`, counting the residues for which the
-layer has at least one producing `x`-class, and the total number of producing classes:
-
-| `ℓ` | `ℓ mod 3` | `#{c : layer 2 active}` | `∑_c #V₂(c)` | `#{c : layer 3 active}` | `∑_c #V₃(c)` |
-|-----|-----------|-------------------------|--------------|--------------------------|--------------|
-| 5   | 2         | 5                       | 5            | 5                        | 9            |
-| 7   | 1         | 3                       | 7            | 7                        | 13           |
-| 11  | 2         | 11                      | 11           | 11                       | 21           |
-| 13  | 1         | 5                       | 13           | 13                       | 25           |
-| 19  | 1         | 7                       | 19           | 19                       | 37           |
-| 31  | 1         | 11                      | 31           | 31                       | 61           |
-
-The two patterns `#active₂ = (ℓ+2)/3` at ordinary primes (`= ℓ` at supersingular ones) and
-`∑_c #V₃(c) = 2ℓ - 1` are now theorems
-(`three_mul_card_activeResidues2_of_one_mod_three`, `activeResidues2_of_two_mod_three`,
-`sum_card_V3` in `Catalog/Combinatorics/MordellDenominatorDensity.lean`); the rows `ℓ = 7, 13`
-are additionally machine-checked inside Lean by exhaustive enumeration
-(`counts_at_7_and_13`).  Interpretation: doubling has a positive density (`≈ 2/3`) of blind
-residue classes at ordinary primes, while tripling has none — the free root `x ≡ 0` of
-`ψ₃ = 3x(x³ + 4N)` is active for every `N`.
+The square roots `e_n` of the denominators (`den x(nP) = e_n²`) begin
+`1, 56, 25623, …` (e.g. `den x(3P) = 3⁶·13²·73² = 656538129 = 25623²`); this is the elliptic divisibility sequence of `(E_55, P)`. No OEIS
+entry was consulted for this run, so no OEIS identifier is claimed.
