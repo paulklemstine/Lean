@@ -821,7 +821,7 @@ document.addEventListener('DOMContentLoaded', () => {
             outputContainer.innerHTML = '<div class="viz-placeholder" style="color: var(--text-muted); padding: 12px 0;">Loading visualization...</div>';
 
             const runViz = () => {
-                if (!window.Aether.pyodideInstance) {
+                if (!window.Aether.pyodideReady) {
                     outputContainer.innerHTML = '<div class="viz-placeholder" style="color: var(--text-muted); font-style: italic; padding: 12px 0;">Python engine is loading, will generate visualization automatically...</div>';
                     setTimeout(runViz, 1000);
                     return;
