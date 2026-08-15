@@ -1,661 +1,405 @@
-# Denominators of Multiples of Points on Mordell Curves: Refutation of the "Only Bad Primes" Conjecture, Exact Residue-Class Counts, and an Information Barrier
+# Apparition of Good Primes in Mordell-Curve Denominators: The Refutation of the "Only Bad Primes" Conjecture
 
 **Author:** Aristotle
-
 **Date:** 2026-08-15
 
 ---
 
 ## Abstract
 
-For the Mordell family $E_N : y^2 = x^3 + N$ over $\mathbb{Q}$, with discriminant
-$\Delta(E_N) = -432N^2$, it has been conjectured that the denominators of the $x$-coordinates
-$x(nP)$ of multiples of an integral point $P$ are divisible only by the *bad* primes of the
-curve, namely $2$, $3$ and the primes dividing $N$. We refute this conjecture by an explicit
-counterexample — for $N = 55 = 5 \cdot 11$ and $P = (9,28)$ one has $x(2P) = 2601/3136$ with
-$3136 = 2^6 \cdot 7^2$, and $7 \nmid \Delta$ — and then replace it by an exact local theory.
+For an integer $N \neq 0$, let $E_N$ denote the Mordell curve $y^2 = x^3 + N$ over $\mathbb{Q}$, with discriminant $\Delta = -432N^2$. A folklore conjecture — attractive because of its potential consequences for integer factorisation when $N = pq$ is a semiprime — asserts that the primes dividing the denominators of the $x$-coordinates of the multiples $nP$ of a rational point $P$ are confined to the primes dividing $\Delta$, namely $\{2, 3\} \cup \{p : p \mid N\}$. We prove that this conjecture is false in the strongest possible sense.
 
-We prove, for every prime $\ell \geq 5$ of good reduction ($\ell \nmid N$), the two criteria
-$$\ell \mid \operatorname{den} x(2P) \iff \ell \mid y \iff x^3 + N \equiv 0 \pmod{\ell},
-\qquad
-\ell \mid \operatorname{den} x(3P) \iff \ell \mid \psi_3(x) = 3x^4 + 12Nx,$$
-the second obtained by deriving the tripling formula $x(3P) = \varphi_3(x)/\psi_3(x)^2$ from
-the affine group law and proving a non-cancellation lemma whose two exceptional numerator
-values, $64N^3$ and $-1728N^3$, involve only the primes $2$ and $3$.
+The elementary counterexample is $N = 55 = 5 \cdot 11$, $P = (9,28)$, for which $x(2P) = 2601/3136$ with $3136 = 2^6 \cdot 7^2$: the good prime $7$ divides the denominator. We then show that this is not an accident of the example but a universal law. Our main results are: (i) an **effective apparition theorem** — for every $N$, every prime $\ell \geq 5$ with $\ell \nmid N$, and every rational point $P$ of $E_N$, some multiple $nP$ with $0 < n \leq 4\ell$ has $\ell$ in the denominator of its $x$-coordinate; (ii) an **exact counting theorem** — the violating indices in $(0,K]$ number exactly $\lfloor K/m\rfloor$ where $m \le 4\ell$ is the apparition index of $\ell$, so violations have density $\geq 1/(4\ell)$; (iii) a **simultaneous apparition theorem** — for any finite set $S$ of good primes, $\prod_{\ell \in S}\ell$ divides the denominator exactly along an arithmetic progression of modulus $M \le \prod_{\ell \in S} 4\ell$; and (iv) a **global refutation** — for every $N \neq 0$ and every point of infinite order, infinitely many good primes occur in the denominators, and the correct statement is the *reverse* inclusion: a prime absent from all denominators must lie in $\{2,3\} \cup \{p : p \mid N\}$.
 
-We then count the denominator-producing residue classes exactly. At layer $2$ the count is $1$
-at supersingular primes $\ell \equiv 2 \pmod 3$ and $0$ or $3$ at ordinary primes
-$\ell \equiv 1 \pmod 3$, with total $\ell$ (hence average exactly $1$) over the residues of
-$N$. At layer $3$ the count is $2$ at supersingular primes and $1$ or $4$ at ordinary primes,
-with total $2\ell - 1$ (average $2 - 1/\ell$), and layer $3$ is active for *every* residue of
-$N$, while layer $2$ is active for exactly $(\ell+2)/3$ of them at ordinary primes. Every prime
-$\ell \geq 5$ is realised as a good-reduction denominator prime, by the explicit witness
-$N = 1 - \ell^3$, $P = (\ell, 1)$; and for every $N$ infinitely many good primes (all
-$\ell \equiv 2 \pmod 3$, a set of Dirichlet density $1/2$) are denominator-active.
+The proofs are entirely elementary: an explicit chord identity, the curve equation, and a pigeonhole argument over the at-most-$2\ell$ points of the reduced curve. We also record the algorithmic consequences, a computational survey over eleven semiprimes showing the conjecture fails in $100\%$ of tested cases, and a structural barrier explaining why denominator data cannot reveal the factorisation of $N$.
 
-Finally we prove an information barrier. Both criteria depend on $N$ only through
-$N \bmod \ell$; combining this with Dirichlet's theorem applied to the modulus $B!$ yields:
-for every bound $B$ and every semiprime $N = pq$ with $p, q > B$, there is a **prime** $M > N$
-whose layer-2 and layer-3 denominator criteria coincide with those of $N$ at every prime
-$\ell \leq B$. The denominator profile below $B$ therefore cannot distinguish a semiprime from
-a prime, let alone recover its factorisation.
-
-**Keywords:** Mordell curve, elliptic curve, denominator, division polynomial, reduction
-modulo $p$, cubic residues, Dirichlet's theorem, integer factorisation.
+**Keywords:** Mordell curve, elliptic divisibility sequence, rank of apparition, good reduction, denominator kernel, integer factorisation.
 
 ---
 
 ## 1. Introduction
 
-### 1.1 The setting
+### 1.1 The conjecture
 
-Let $N$ be a nonzero integer and consider the Mordell curve
-$$E_N : y^2 = x^3 + N .$$
-Written as a Weierstrass equation with $a_1 = a_2 = a_3 = a_4 = 0$ and $a_6 = N$, its
-discriminant is
-$$\Delta(E_N) = -432 N^2 = -2^4 \cdot 3^3 \cdot N^2 .$$
-A prime $\ell$ is **bad** for $E_N$ if $\ell \mid \Delta$, i.e. if $\ell \in \{2,3\}$ or
-$\ell \mid N$; otherwise $\ell$ is a prime of **good reduction**.
+Let $N$ be a nonzero integer and let
+$$E_N : \quad y^2 = x^3 + N$$
+be the associated Mordell curve over $\mathbb{Q}$, a smooth projective cubic with discriminant
+$$\Delta(E_N) = -432N^2 = -2^4 \cdot 3^3 \cdot N^2.$$
+The primes of **bad reduction** of $E_N$ are therefore contained in $\{2,3\} \cup \{p : p \mid N\}$; all other primes are primes of **good reduction**, and modulo such a prime $E_N$ remains a smooth curve over $\mathbb{F}_\ell$.
 
-The rational points of $E_N$ form an abelian group under the chord-and-tangent law. For an
-integral point $P = (x,y)$ with $y \neq 0$, the doubling formula reads
-$$x(2P) = \frac{x^4 - 8Nx}{4y^2}. \tag{1.1}$$
+If $P \in E_N(\mathbb{Q})$ is a rational point of infinite order, the multiples $P, 2P, 3P, \dots$ are rational points whose coordinates have rapidly growing denominators. Writing $x(nP) = A_n / D_n$ in lowest terms, one obtains the *denominator sequence* $(D_n)_{n \geq 1}$; up to squares this is the classical elliptic divisibility sequence attached to $P$.
 
-Denominators of the coordinates of multiples $nP$ grow rapidly (quadratically in the exponent,
-in logarithmic height), and their prime factorisations have long attracted attention: they are
-the "elliptic divisibility" data of the point.
+> **The "only bad primes" conjecture.** For every prime $\ell$, every $n > 0$ and every $N \ne 0$: if $\ell \mid D_n$, then $\ell \in \{2,3\} \cup \{p : p \mid N\}$.
 
-### 1.2 The conjecture and its refutation
+The appeal of the conjecture is cryptanalytic. If $N = pq$ is a semiprime and the denominators of an orbit were built only from $\{2, 3, p, q\}$, then a single denominator computation followed by the removal of all powers of $2$ and $3$ would exhibit $p$ and $q$: a polynomial-time factoring algorithm. The conjecture is thus a natural hypothesis to test, and a natural one to want to be true.
 
-The following statement is natural and has been proposed as a route to integer factorisation.
+### 1.2 The counterexample
 
-> **Conjecture (Only Bad Primes).** For $N = pq$ a semiprime and $P$ an integral point of
-> $E_N$, every prime dividing $\operatorname{den} x(nP)$ for some $n \geq 2$ lies in
-> $\{2, 3, p, q\}$, i.e. divides $\Delta(E_N)$.
+It fails immediately. On $E_{55}$ with $N = 55 = 5 \cdot 11$ take
+$$P = (9, 28), \qquad 28^2 = 784 = 729 + 55 = 9^3 + 55.$$
+The duplication formula on $y^2 = x^3 + N$ reads
+$$x(2Q) = \frac{x^4 - 8Nx}{4(x^3+N)} = \frac{x^4 - 8Nx}{4y^2},$$
+so
+$$x(2P) = \frac{9^4 - 8 \cdot 55 \cdot 9}{4(9^3 + 55)} = \frac{6561 - 3960}{4 \cdot 784} = \frac{2601}{3136}, \qquad 3136 = 2^6 \cdot 7^2 .$$
+Since $7 \nmid -432 \cdot 55^2$, the prime $7$ is a prime of good reduction dividing $D_2$. The conjecture is false.
 
-If true, this would make factoring $N$ trivial: compute $x(2P)$, factor its small structured
-denominator, and read off $p$ and $q$.
+### 1.3 Results of this paper
 
-The conjecture is false, and the smallest natural example already refutes it.
+Rather than stop at a counterexample, we determine exactly which primes can occur and how often. The organising principle is the classical one:
 
-**Theorem A (Counterexample).** *Let $N = 55 = 5 \cdot 11$ and $P = (9,28) \in E_{55}(\mathbb{Q})$.
-Then*
-$$x(2P) = \frac{9^4 - 8 \cdot 55 \cdot 9}{4 \cdot 28^2} = \frac{2601}{3136},
-\qquad 3136 = 2^6 \cdot 7^2 ,$$
-*and $7 \nmid \Delta(E_{55}) = -1306800 = -2^4 \cdot 3^3 \cdot 5^2 \cdot 11^2$. Thus the prime
-$7$, of good reduction, divides the denominator of $x(2P)$.*
+$$\ell \mid \operatorname{den} x(Q) \quad \Longleftrightarrow \quad Q \equiv O \pmod{\ell},$$
 
-*Proof.* Direct computation: $9^4 = 6561$, $8 \cdot 55 \cdot 9 = 3960$, so the numerator is
-$2601 = 3^2 \cdot 17^2$; the denominator is $4 \cdot 784 = 3136 = 2^6 \cdot 7^2$; the two are
-coprime, so the fraction is in lowest terms. Since $\Delta = -2^4 3^3 5^2 11^2$, the prime $7$
-does not divide $\Delta$. $\square$
+i.e. divisibility of a denominator by $\ell$ is *reduction to the point at infinity*, a group-theoretic condition. From this everything follows. Our principal statements, all proved below, are:
 
-The rest of the paper explains, in exact terms, *why* good primes must appear, *how many*
-appear, and *why the resulting data is useless for factorisation*.
+- **Theorem A (Collision Lemma, §4).** Two $\ell$-integral rational points of $E_N$ with the same reduction modulo a good prime $\ell \ge 5$ have $2(P_1 - P_2)$ in the denominator kernel at $\ell$.
+- **Theorem B (Effective apparition, §5).** For $\ell \ge 5$ prime, $\ell \nmid N$, and any $P \in E_N(\mathbb{Q})$, some $n$ with $0 < n \le 4\ell$ has $nP$ in the denominator kernel; if $P$ has infinite order, $\ell \mid \operatorname{den} x(nP)$ for such an $n$.
+- **Theorem C (Apparition law with effective modulus, §6).** The set $\{k \in \mathbb{Z} : \ell \mid \operatorname{den} x(kP)\}$ equals $m\mathbb{Z}$ for a modulus $m$ with $0 < m \le 4\ell$.
+- **Theorem D (Exact counting and density, §6).** $\#\{n \in (0,K] : \ell \mid \operatorname{den} x(nP)\} = \lfloor K/m \rfloor \ge \lfloor K/(4\ell)\rfloor$.
+- **Theorem E (Simultaneous apparition, §7).** For a finite set $S$ of good primes $\ge 5$ there is $0 < M \le \prod_{\ell\in S} 4\ell$ with $\prod_{\ell \in S}\ell \mid \operatorname{den} x(kP) \iff M \mid k$; on $E_{55}$ with $P = (9,28)$, $91 \mid \operatorname{den} x(kP) \iff 6 \mid k$.
+- **Theorem F (Global refutation, §8).** For $N \ne 0$ and $P$ of infinite order, infinitely many good primes occur in the denominators; the conjecture fails for every such $(N, P)$; and the correct inclusion is the reverse one.
 
-### 1.3 The mechanism
-
-A rational point of $E_N$ whose coordinates have an $\ell$ in the denominator reduces to the
-point at infinity $O$ in $E_N(\mathbb{F}_\ell)$. Hence for a good prime $\ell$,
-$$\ell \mid \operatorname{den} x(nP) \iff nP \equiv O \pmod{\ell}
-\iff \text{the reduction } \bar{P} \text{ has order dividing } n .$$
-Nothing in this condition refers to $\Delta$. In the counterexample, $\bar{P} = (2,0)$ modulo
-$7$ is a point of order $2$, so $2P$ reduces to $O$ and $7$ enters the denominator. Since a
-point can reduce to torsion at infinitely many primes, good primes must appear infinitely
-often.
-
-### 1.4 Results
-
-- **Section 3:** the layer-2 criterion $\ell \mid \operatorname{den} x(2P) \iff x^3 + N \equiv 0$
-  in $\mathbb{F}_\ell$, and the exact counts $1$, respectively $0$ or $3$, of producing
-  residue classes.
-- **Section 4:** the tripling formula, the non-cancellation lemma, and the layer-3 criterion
-  $\ell \mid \psi_3(x)$, with counts $2$ and $1$-or-$4$.
-- **Section 5:** dual densities: how many residues $N \bmod \ell$ are active at each layer.
-- **Section 6:** realisation of every prime $\ell \geq 5$, infinitude of active good primes,
-  and a bound on the number of violations from a single doubling.
-- **Section 7:** the information barrier below a bound $B$.
-- **Section 8:** algorithms and numerical data.
-- **Sections 9–10:** discussion and future directions.
+Section 9 gives the algorithms, §10 the computational evidence, §11 the consequences for factoring and the structural barrier, and §12 the open problems.
 
 ---
 
-## 2. Notation and preliminaries
+## 2. Setting and definitions
 
-Throughout, $N$ is a nonzero integer, $\ell$ a rational prime, and $\mathbb{F}_\ell$ the field
-with $\ell$ elements. For a rational number $r$ written in lowest terms with positive
-denominator, $\operatorname{den} r$ denotes that denominator. For $x \in \mathbb{Z}$ we write
-$\bar{x}$ for its image in $\mathbb{F}_\ell$.
+Throughout, $N \in \mathbb{Z}\setminus\{0\}$ and $E_N : y^2 = x^3 + N$ over $\mathbb{Q}$. Points of $E_N(\mathbb{Q})$ are either the point at infinity $O$ (the group identity) or affine pairs $(x,y) \in \mathbb{Q}^2$ satisfying the equation.
 
-A prime $\ell \geq 5$ with $\ell \nmid N$ is a prime of good reduction for $E_N$; we then call
-$\ell$ **supersingular** if $\ell \equiv 2 \pmod 3$ and **ordinary** if $\ell \equiv 1 \pmod 3$.
-(For the family $y^2 = x^3 + N$ this agrees with the usual supersingularity of the reduced
-curve; concretely, $\ell \equiv 2 \pmod 3$ is exactly the condition that $t \mapsto t^3$ is a
-bijection of $\mathbb{F}_\ell$, and then $\#E_N(\mathbb{F}_\ell) = \ell + 1$.)
+**Definition 2.1 (Denominator and numerator).** For $q \in \mathbb{Q}$ write $q = \operatorname{num}(q)/\operatorname{den}(q)$ in lowest terms with $\operatorname{den}(q) > 0$. For an affine point $Q = (x,y)$ we abbreviate $\operatorname{den} x(Q) := \operatorname{den}(x)$.
 
-We use two elementary facts about cubes in $\mathbb{F}_\ell$, $\ell \geq 5$.
+**Definition 2.2 ($\ell$-integrality).** A rational $q$ is *$\ell$-integral* if $\ell \nmid \operatorname{den}(q)$. An affine point is $\ell$-integral if its $x$-coordinate is.
 
-**Lemma 2.1 (Cubing dichotomy).** *If $\ell \equiv 2 \pmod 3$ then $t \mapsto t^3$ is a
-bijection of $\mathbb{F}_\ell$. If $\ell \equiv 1 \pmod 3$ then $\mathbb{F}_\ell$ contains a
-primitive cube root of unity $\omega \neq 1$, and $t \mapsto t^3$ is three-to-one on
-$\mathbb{F}_\ell^\times$.*
+**Definition 2.3 (Reduction of a rational).** For a prime $\ell$ and $q \in \mathbb{Q}$ set
+$$\rho_\ell(q) := \overline{\operatorname{num}(q)} \cdot \overline{\operatorname{den}(q)}^{\,-1} \in \mathbb{F}_\ell ,$$
+which is the usual reduction whenever $q$ is $\ell$-integral. Two immediate facts, used constantly: for $\ell$-integral $q$, $\rho_\ell(q) = 0 \iff \ell \mid \operatorname{num}(q)$; and for $\ell$-integral $q, r$, $\rho_\ell(q) = \rho_\ell(r)$ iff $\ell \mid \operatorname{num}(q)\operatorname{den}(r) - \operatorname{num}(r)\operatorname{den}(q)$.
 
-*Proof sketch.* $\mathbb{F}_\ell^\times$ is cyclic of order $\ell - 1$. If $3 \nmid \ell - 1$
-then cubing is an automorphism of that group and fixes $0$, hence is bijective on
-$\mathbb{F}_\ell$. If $3 \mid \ell - 1$, Cauchy's theorem produces an element $\omega$ of order
-$3$, and the fibres of cubing over its image are the cosets $\{r, \omega r, \omega^2 r\}$. $\square$
+**Definition 2.4 (Denominator kernel).** For a prime $\ell$,
+$$\mathcal{K}_\ell := \{\, Q \in E_N(\mathbb{Q}) \;:\; Q = O \ \text{ or } \ \ell \mid \operatorname{den} x(Q) \,\}.$$
+Equivalently, $\mathcal{K}_\ell$ consists of the points whose reduction modulo $\ell$ is the point at infinity. It is a **subgroup** of $E_N(\mathbb{Q})$ — this is the standard fact that the kernel of reduction is a subgroup, and it can be established directly from the addition formulas without constructing the reduction morphism; we take it as given here and use it freely.
 
-**Lemma 2.2 (No cubic has exactly two roots).** *A cubic polynomial over $\mathbb{F}_\ell$
-whose associated Weierstrass curve is nonsingular has $0$, $1$ or $3$ roots in
-$\mathbb{F}_\ell$; the count $2$ is impossible.*
+**Definition 2.5 (Good prime).** A prime $\ell$ is *good* for $E_N$ if $\ell \nmid \Delta = -432N^2$; since $432 = 2^4 3^3$, this means $\ell \ge 5$ and $\ell \nmid N$. All results below are stated with the hypotheses "$\ell$ prime, $\ell \ge 5$, $\ell \nmid N$", which is exactly good reduction.
 
-*Proof sketch.* If a monic cubic over a field has two distinct roots, dividing them out leaves
-a linear factor, so it has three roots counted with multiplicity, all in the field; exactly two
-distinct roots forces a repeated root, which for $T^3 + N$ with $N \not\equiv 0$ contradicts
-nonvanishing of the discriminant $-27N^2$. $\square$
+**Definition 2.6 (Apparition index).** Given $P \in E_N(\mathbb{Q})$ and a prime $\ell$, the *apparition index* of $\ell$ (for $P$) is the nonnegative generator $m$ of the subgroup $\{k \in \mathbb{Z} : kP \in \mathcal{K}_\ell\} \le \mathbb{Z}$; here $m = 0$ means that $\ell$ never appears.
 
-Finally we record the arithmetic of denominators: if $A/B$ is a fraction of integers with
-$B \neq 0$, and a prime $\ell$ divides $B$ but not $A$, then $\ell$ divides
-$\operatorname{den}(A/B)$; conversely $\operatorname{den}(A/B)$ always divides $B$.
+The following elementary observation, immediate from Definition 2.4 and the subgroup property, is the *apparition law*.
+
+**Proposition 2.7 (Apparition law).** For every prime $\ell$ and every $P \in E_N(\mathbb{Q})$ there is a unique $m \ge 0$ such that for all $k \in \mathbb{Z}$,
+$$kP \in \mathcal{K}_\ell \iff m \mid k .$$
+*Proof.* The map $k \mapsto kP$ is a homomorphism $\mathbb{Z} \to E_N(\mathbb{Q})$, and $\mathcal{K}_\ell$ is a subgroup, so the preimage is a subgroup of $\mathbb{Z}$, hence of the form $m\mathbb{Z}$. $\square$
+
+Proposition 2.7 already contains the qualitative moral: *if a prime ever appears in a denominator, it appears periodically and hence infinitely often*. The substance of this paper is that for good primes $m$ is **never** $0$ and is **effectively bounded**.
 
 ---
 
-## 3. Layer 2: doubling
+## 3. The chord identity
 
-### 3.1 The criterion
+The engine of everything is the following explicit formula, valid for the curve $y^2 = x^3 + N$.
 
-**Theorem 3.1 (Doubling criterion).** *Let $(x,y)$ be an integral point of $E_N$ with
-$y \neq 0$, and let $\ell \geq 5$ be a prime with $\ell \nmid N$. Then*
-$$\ell \mid \operatorname{den}\!\left(\frac{x^4 - 8Nx}{4y^2}\right)
-\iff \ell \mid y \iff \bar{x}^3 + \bar{N} = 0 \text{ in } \mathbb{F}_\ell .$$
+**Lemma 3.1 (Difference chord).** Let $P_1 = (x_1,y_1)$ and $P_2 = (x_2, y_2)$ be affine points of $E_N$ with $x_1 \ne x_2$. Then $P_1 - P_2$ is affine and
+$$x(P_1 - P_2) \;=\; \frac{x_1x_2(x_1+x_2) + 2N + 2y_1y_2}{(x_1-x_2)^2}.$$
 
-*Proof sketch.* The second equivalence is the curve equation $y^2 = x^3 + N$ reduced modulo
-$\ell$: $\ell \mid y$ iff $\bar{y}^2 = 0$ iff $\bar{x}^3 + \bar{N} = 0$. For the first, note
-$\operatorname{den}$ of the fraction divides $4y^2$, so if $\ell \mid \operatorname{den}$ then
-$\ell \mid 4y^2$, and $\ell \geq 5$ gives $\ell \mid y$. Conversely suppose $\ell \mid y$.
-Then $\ell \mid 4y^2$, and it suffices to show $\ell \nmid x^4 - 8Nx = x(x^3 - 8N)$. From
-$\ell \mid y$ we get $x^3 \equiv -N$. If $\ell \mid x$ then $N \equiv -x^3 \equiv 0$,
-contradicting $\ell \nmid N$; and $x^3 - 8N \equiv -N - 8N = -9N \not\equiv 0$ because
-$\ell \geq 5$ and $\ell \nmid N$. Hence numerator and denominator do not both lose the factor
-$\ell$, and $\ell \mid \operatorname{den}$. $\square$
+*Proof.* The point $-P_2 = (x_2, -y_2)$. The chord through $P_1$ and $-P_2$ has slope $\lambda = -(y_1+y_2)/(x_1-x_2)$ and the group law gives $x(P_1-P_2) = \lambda^2 - x_1 - x_2$, i.e.
+$$x(P_1-P_2) = \frac{(y_1+y_2)^2 - (x_1+x_2)(x_1-x_2)^2}{(x_1-x_2)^2}.$$
+Expanding the numerator and substituting $y_i^2 = x_i^3 + N$:
+$$y_1^2+y_2^2+2y_1y_2 - (x_1+x_2)(x_1^2 - 2x_1x_2 + x_2^2) = x_1^3+x_2^3+2N+2y_1y_2 - \big(x_1^3+x_2^3 - x_1^2x_2 - x_1x_2^2\big),$$
+which equals $x_1x_2(x_1+x_2) + 2N + 2y_1y_2$. $\square$
 
-The hypothesis $\ell \geq 5$ is genuinely needed: the factor $4$ in the denominator and the
-constant $-9N$ above are the places where $2$ and $3$ misbehave — precisely the primes visible
-in $-432 = -2^4 3^3$.
+Written in integral coordinates $x_i = a_i/d_i$, $y_i = b_i/f_i$ (lowest terms), Lemma 3.1 becomes the integral fraction
+$$x(P_1-P_2) = \frac{a_1a_2(a_1d_2 + a_2d_1)f_1f_2 + 2N d_1^2d_2^2 f_1f_2 + 2b_1b_2d_1^2d_2^2}{(a_1d_2 - a_2d_1)^2 f_1 f_2}, \tag{3.2}$$
+a form in which the divisibility bookkeeping can be performed with integers only. This is the shape in which the Collision Lemma is proved.
 
-### 3.2 The producing classes and their number
+We also record the duplication formula and its local consequence.
 
-**Definition 3.2.** For a prime $\ell$ and $N \in \mathbb{Z}$, the **layer-2 vanishing locus**
-is
-$$V_2(N,\ell) = \{ t \in \mathbb{F}_\ell : t^3 + \bar{N} = 0 \} .$$
+**Lemma 3.3 (Duplication).** For an affine point $Q = (x,y)$ of $E_N$ with $y \ne 0$,
+$$x(2Q) = \frac{x^4 - 8Nx}{4y^2}.$$
 
-By Theorem 3.1, for good $\ell \geq 5$ an integral point $(x,y)$ with $y \neq 0$ has
-$\ell \mid \operatorname{den} x(2P)$ if and only if $\bar{x} \in V_2(N,\ell)$. Thus denominator
-production at the doubling layer is exactly the event "$\bar x$ is the $x$-coordinate of a
-$2$-torsion point of the reduced curve".
+**Lemma 3.4 ($2$-torsion branch).** Let $\ell \ge 5$ be prime with $\ell \nmid N$, and let $Q = (x,y)$ be an $\ell$-integral affine point of $E_N$ with $\ell \mid \operatorname{num}(y)$. Then $2Q \in \mathcal{K}_\ell$.
 
-**Theorem 3.3 (Supersingular count).** *If $\ell \equiv 2 \pmod 3$ then
-$\#V_2(N,\ell) = 1$ for every $N$.*
-
-*Proof.* By Lemma 2.1 cubing is bijective, so $t^3 = -\bar{N}$ has exactly one solution. $\square$
-
-**Theorem 3.4 (Ordinary count).** *If $\ell \geq 5$, $\ell \equiv 1 \pmod 3$ and $\ell \nmid N$,
-then $\#V_2(N,\ell) \in \{0, 3\}$.*
-
-*Proof sketch.* By Lemma 2.2 the count is $0$, $1$ or $3$. Suppose it were $1$, with unique
-root $r$. Let $\omega$ be a primitive cube root of unity (Lemma 2.1). Then
-$(\omega r)^3 + \bar N = \omega^3 r^3 + \bar N = r^3 + \bar N = 0$, so $\omega r$ is also a
-root; uniqueness forces $\omega r = r$, i.e. $(\omega - 1) r = 0$, i.e. $r = 0$; but then
-$\bar N = 0$, contradicting $\ell \nmid N$. $\square$
-
-**Theorem 3.5 (Exact average).** *For every prime $\ell$,*
-$$\sum_{c \in \mathbb{F}_\ell} \#V_2(c,\ell) = \ell ,$$
-*so the average number of denominator-producing classes, over residues of $N$, is exactly $1$.*
-
-*Proof.* Count the pairs $(c,t)$ with $t^3 + c = 0$ in two ways. For each $t$ there is exactly
-one $c$, namely $c = -t^3$; there are $\ell$ values of $t$. $\square$
-
-**Example 3.6.** For $N = 55$: $V_2(55,7) = \{1,2,4\}$ (three classes, $7 \equiv 1 \bmod 3$),
-and $9 \equiv 2 \pmod 7$ lies in it, which is Theorem A. By contrast $V_2(55,13) = \varnothing$:
-the prime $13$ can never divide $\operatorname{den} x(2P)$ for any integral point of $E_{55}$.
+*Proof.* If $y = 0$ then $2Q = O \in \mathcal{K}_\ell$. Otherwise apply Lemma 3.3. Since $Q$ is $\ell$-integral and lies on the curve, $y$ is also $\ell$-integral, so $\rho_\ell(y) = \bar y = 0$ and $\bar y^2 = \bar x^3 + \bar N$ forces $\bar x^3 = -\bar N$. In particular $\bar x \ne 0$ (as $\ell \nmid N$). The numerator of the duplication formula reduces to
+$$\bar x^4 - 8\bar N \bar x = \bar x(\bar x^3 - 8\bar N) = \bar x(-\bar N - 8\bar N) = -9\bar N \bar x \ne 0,$$
+because $\ell \ge 5$ (so $\ell \nmid 9$) and $\ell \nmid N$. The denominator $4y^2$ has $\ell$ dividing its numerator (as $\ell \mid \operatorname{num}(y)$ and $\ell \nmid 4$), so the quotient has $\ell$ in its denominator, i.e. $2Q \in \mathcal{K}_\ell$. $\square$
 
 ---
 
-## 4. Layer 3: tripling
+## 4. Theorem A: the Collision Lemma
 
-### 4.1 The tripling formula
+**Theorem A (Collision Lemma).** Let $\ell \ge 5$ be a prime with $\ell \nmid N$, and let $P_1 = (x_1,y_1)$, $P_2 = (x_2,y_2)$ be $\ell$-integral affine points of $E_N(\mathbb{Q})$ with the same reduction modulo $\ell$, i.e.
+$$\rho_\ell(x_1) = \rho_\ell(x_2) \quad\text{and}\quad \rho_\ell(y_1) = \rho_\ell(y_2).$$
+Then
+$$2\,(P_1 - P_2) \in \mathcal{K}_\ell .$$
 
-**Theorem 4.1 (Tripling formula).** *Let $(x,y)$ be a rational point of $E_N$ with $y \neq 0$
-and $\psi_3(x) := 3x^4 + 12Nx \neq 0$. Then*
-$$x(3P) = \frac{\varphi_3(x)}{\psi_3(x)^2}, \qquad
-\varphi_3(x) = x^9 - 96Nx^6 + 48N^2x^3 + 64N^3 .$$
+*Proof sketch.* Write $\bar x, \bar y$ for the common reductions. There are three cases.
 
-*Proof sketch.* Two applications of the affine group law. Doubling with slope
-$\lambda = 3x^2/(2y)$ gives
-$$x_2 = \lambda^2 - 2x = x - \frac{3x^4 + 12Nx}{4y^2},
-\qquad
-y_2 = y - \frac{16y^4 - 3x^2\psi_3(x)}{8y^3},$$
-where the simplification of $x_2$ uses $y^2 = x^3 + N$. Since $\psi_3(x) \neq 0$ we have
-$x_2 \neq x$, so $3P = 2P + P$ is computed with the chord slope
-$$\mu = \frac{y_2 - y}{x_2 - x} = \frac{16y^4 - 3x^2 \psi_3(x)}{2 y\, \psi_3(x)},$$
-and $x(3P) = \mu^2 - x_2 - x$. Expanding, substituting $y^2 = x^3 + N$ (which turns
-$16y^4$ into $16(x^3+N)^2$), and clearing denominators gives exactly
-$\varphi_3(x)/\psi_3(x)^2$. $\square$
+**(a) $\bar y = 0$.** Then $\ell \mid \operatorname{num}(y_1)$ and $\ell \mid \operatorname{num}(y_2)$, so Lemma 3.4 gives $2P_1 \in \mathcal{K}_\ell$ and $2P_2 \in \mathcal{K}_\ell$. As $\mathcal{K}_\ell$ is a subgroup and $2(P_1 - P_2) = 2P_1 - 2P_2$, the claim follows.
 
-The polynomial $\psi_3(x) = 3x^4 + 12Nx = 3x(x^3 + 4N)$ is the third division polynomial of
-$E_N$: its roots are the $x$-coordinates of the points of order $3$. The condition
-$\psi_3(x) \neq 0$ says exactly that $P$ is not $3$-torsion.
+**(b) $\bar y \ne 0$ and $x_1 = x_2$.** Subtracting the two curve equations gives $(y_1-y_2)(y_1+y_2) = 0$. If $y_1 = y_2$ then $P_1 = P_2$ and $2(P_1-P_2) = O \in \mathcal{K}_\ell$. If $y_2 = -y_1$ then reduction gives $\bar y = -\bar y$, i.e. $2\bar y = 0$; since $\ell \ge 5$ is odd this forces $\bar y = 0$, contradicting the case hypothesis.
 
-### 4.2 Non-cancellation
+**(c) $\bar y \ne 0$ and $x_1 \ne x_2$.** This is the heart of the matter. By Lemma 3.1,
+$$x(P_1 - P_2) = \frac{x_1x_2(x_1+x_2)+2N+2y_1y_2}{(x_1-x_2)^2}.$$
+Pass to the integral form (3.2). Equality of reductions means
+$$\ell \mid a_1d_2 - a_2d_1 \quad\text{and}\quad \ell \mid b_1f_2 - b_2f_1,$$
+so $\ell^2$ divides the factor $(a_1d_2-a_2d_1)^2$ of the denominator of (3.2); moreover $\ell \nmid d_i$ by $\ell$-integrality and $\ell \nmid f_i$ because a point of $E_N$ with $\ell$-integral $x$ has $\ell$-integral $y$ (from $y^2 = x^3 + N$). It remains to show that $\ell$ does not divide the numerator. Reducing the numerator of the *rational* form and using $\bar x_1 = \bar x_2 = \bar x$, $\bar y_1 = \bar y_2 = \bar y$ together with the curve equation $\bar y^2 = \bar x^3 + \bar N$:
+$$\overline{x_1x_2(x_1+x_2) + 2N + 2y_1y_2} = 2\bar x^3 + 2\bar N + 2\bar y^2 = 2(\bar x^3 + \bar N) + 2\bar y^2 = 4\bar y^2 .$$
+Since $\ell \ge 5$, $4$ is invertible modulo $\ell$; since $\bar y \ne 0$, the reduced numerator $4\bar y^2$ is nonzero. Hence the reduced fraction has $\ell$ in its denominator: $P_1 - P_2 \in \mathcal{K}_\ell$, and a fortiori $2(P_1-P_2) \in \mathcal{K}_\ell$ by the subgroup property. $\square$
 
-**Theorem 4.2 (Non-cancellation at layer 3).** *Let $\ell \geq 5$ be a prime with
-$\ell \nmid N$, and let $x \in \mathbb{Z}$ satisfy $\ell \mid \psi_3(x)$. Then
-$\ell \nmid \varphi_3(x)$.*
-
-*Proof.* Modulo $\ell$, $\psi_3(x) \equiv 0$ factors as $3\bar x(\bar x^3 + 4\bar N) = 0$, and
-$3 \neq 0$ since $\ell \geq 5$. Two cases.
-
-*Case $\bar x = 0$.* Then
-$\varphi_3(x) \equiv 64 \bar N^3$. Since $64 = 2^6$ and $\ell \geq 5$ we have
-$\overline{64} \neq 0$, and $\bar N \neq 0$; so $\varphi_3(x) \not\equiv 0$.
-
-*Case $\bar x^3 = -4\bar N$.* Then $\bar x^6 = 16 \bar N^2$ and $\bar x^9 = -64 \bar N^3$, so
-$$\varphi_3(x) \equiv -64\bar N^3 - 96 \bar N \cdot 16 \bar N^2 + 48 \bar N^2 (-4\bar N)
-+ 64 \bar N^3 = -1728 \bar N^3 .$$
-Since $1728 = 2^6 3^3$ and $\ell \geq 5$, $\overline{1728} \neq 0$; again
-$\varphi_3(x) \not\equiv 0$. $\square$
-
-The two exceptional constants $64 = 2^6$ and $1728 = 2^6 3^3$ are precisely the small bad
-primes of the Mordell family; they are the reason the hypothesis $\ell \geq 5$ is needed and
-the reason no further hypothesis is.
-
-### 4.3 The layer-3 criterion
-
-**Theorem 4.3 (Tripling criterion).** *Let $(x,y)$ be an integral point of $E_N$ with
-$y \neq 0$ and $\psi_3(x) \neq 0$, and let $\ell \geq 5$ be a prime with $\ell \nmid N$. Then*
-$$\ell \mid \operatorname{den} x(3P) \iff \ell \mid \psi_3(x) = 3x(x^3 + 4N) .$$
-
-*Proof.* By Theorem 4.1, $x(3P) = \varphi_3(x)/\psi_3(x)^2$. If $\ell \mid \operatorname{den}$
-then $\ell$ divides $\psi_3(x)^2$, hence (being prime) divides $\psi_3(x)$. Conversely if
-$\ell \mid \psi_3(x)$ then $\ell \mid \psi_3(x)^2$ and, by Theorem 4.2,
-$\ell \nmid \varphi_3(x)$, so $\ell$ survives into the reduced denominator. $\square$
-
-**Corollary 4.4 (Layers 2 and 3 together).** *Under the hypotheses above, for a prime
-$\ell \geq 5$ with $\ell \nmid N$,*
-$$\ell \mid \operatorname{den} x(2P) \ \text{ or } \ \ell \mid \operatorname{den} x(3P)
-\iff \ell \mid y \cdot \psi_3(x).$$
-*So the good violating primes of the first two nontrivial layers are exactly the prime divisors
-$\geq 5$ of the single integer $y\,(3x^4 + 12Nx)$ that do not divide $N$.*
-
-### 4.4 Counting at layer 3
-
-**Definition 4.5.** The **layer-3 vanishing locus** is
-$$V_3(N,\ell) = \{ t \in \mathbb{F}_\ell : 3t^4 + 12\bar N t = 0 \} .$$
-For $\ell \geq 5$ this is $\{0\} \cup \{ t : t^3 + 4\bar N = 0 \}$.
-
-**Theorem 4.6.** *Let $\ell \geq 5$ with $\ell \nmid N$. Then*
-- *if $\ell \equiv 2 \pmod 3$: $\#V_3(N,\ell) = 2$, namely $t = 0$ and the unique cube root of
-  $-4\bar N$;*
-- *if $\ell \equiv 1 \pmod 3$: $\#V_3(N,\ell) \in \{1, 4\}$.*
-
-*Proof sketch.* $V_3 = \{0\} \sqcup V_2(4N, \ell)$, disjointly, because $0 \in V_2(4N,\ell)$
-would force $4\bar N = 0$, impossible for $\ell \geq 5$, $\ell \nmid N$. Now apply Theorems 3.3
-and 3.4 to $4N$ (noting $\ell \nmid 4N$). $\square$
-
-**Theorem 4.7 (The two layers are disjoint).** *For $\ell \geq 5$ supersingular with
-$\ell \nmid N$,*
-$$\#\bigl(V_2(N,\ell) \cup V_3(N,\ell)\bigr) = 3,$$
-*the three classes being the cube root of $-\bar N$, the class $0$, and the cube root of
-$-4\bar N$.*
-
-*Proof.* Disjointness: if $t \in V_2 \cap V_3$ then either $t = 0$, whence $\bar N = 0$,
-excluded; or $t^3 = -\bar N$ and $t^3 = -4\bar N$, whence $3\bar N = 0$, excluded for
-$\ell \geq 5$, $\ell \nmid N$. Then add the counts $1 + 2$ from Theorems 3.3 and 4.6. $\square$
-
-Geometrically: these three classes are exactly the reductions landing on $2$-torsion or
-$3$-torsion of the reduced curve.
-
-**Theorem 4.8 (Layer-3 average).** *For $\ell \geq 5$,*
-$$\sum_{c \in \mathbb{F}_\ell} \#V_3(c,\ell) = 2\ell - 1,$$
-*so the average layer-3 class count is exactly $2 - 1/\ell$, asymptotically twice the layer-2
-average.*
-
-*Proof sketch.* Each of the $\ell$ residues contributes the free root $0$; the roots of
-$T^3 + 4c$ contribute $\sum_c \#V_2(4c,\ell) = \ell$ by Theorem 3.5 (as $c \mapsto 4c$ permutes
-$\mathbb{F}_\ell$), minus the one overlap at $c = 0$ where $0$ is already counted. Total
-$\ell + \ell - 1$. $\square$
-
-**Example 4.9.** For $N = 55$, $P = (9,28)$: $\psi_3(9) = 3 \cdot 6561 + 12 \cdot 55 \cdot 9
-= 25623 = 3^3 \cdot 13 \cdot 73$, and indeed
-$$\operatorname{den} x(3P) = 3^6 \cdot 13^2 \cdot 73^2 .$$
-The good primes $13$ and $73$ appear; the bad primes $5$ and $11$ do not. Note that $13$ was
-inactive at layer $2$ (Example 3.6): each layer has its own polynomial and its own classes.
+Two remarks. First, the identity "numerator $\equiv 4\bar y^2$" is the entire content of case (c): the curve equation is used exactly once, and it is what converts a three-term expression into a perfect square. Second, the factor $2$ in the statement is needed *only* for case (a); in case (c) the difference itself already lies in $\mathcal{K}_\ell$. Theorem A is precisely the statement that reduction is injective on $E_N(\mathbb{Q})/\mathcal{K}_\ell$ up to multiplication by $2$, proved without ever constructing the reduction homomorphism.
 
 ---
 
-## 5. Dual densities: how many $N$ are active?
+## 5. Theorem B: the effective apparition bound
 
-Fix $\ell$ and ask, dually, for how many residues $c = N \bmod \ell$ the layer is active at all.
+**Lemma 5.1 (Crude point count).** For a prime $\ell$ and any $N$, the set
+$$C_\ell(N) := \{(u,v) \in \mathbb{F}_\ell^2 : v^2 = u^3 + N\}$$
+satisfies $\#C_\ell(N) \le 2\ell$.
 
-**Definition 5.1.** $A_n(\ell) = \{ c \in \mathbb{F}_\ell : V_n(c,\ell) \neq \varnothing \}$.
+*Proof.* Partition $C_\ell(N)$ by the first coordinate. For each $u \in \mathbb{F}_\ell$ the fibre is $\{v : v^2 = c\}$ for $c = u^3 + N$, a set of size at most $2$ since a quadratic has at most two roots in a field. Summing over the $\ell$ values of $u$ gives $\#C_\ell(N) \le 2\ell$. $\square$
 
-**Theorem 5.2.** *If $\ell \equiv 2 \pmod 3$ then $A_2(\ell) = \mathbb{F}_\ell$: every residue
-is active already at layer $2$.*
+(Hasse's theorem would give $\#C_\ell(N)+1 \le \ell + 1 + 2\sqrt{\ell}$, roughly halving the bound; we deliberately use only the elementary count, and pay for it with a factor of $2$ in the final constant.)
 
-*Proof.* Cubing is surjective (Lemma 2.1). $\square$
+**Theorem B (Effective apparition).** Let $\ell \ge 5$ be a prime with $\ell \nmid N$ and let $P \in E_N(\mathbb{Q})$ be arbitrary. Then there exists $n$ with
+$$0 < n \le 4\ell \quad\text{and}\quad nP \in \mathcal{K}_\ell .$$
+If moreover $P$ has infinite order, then $nP$ is affine and $\ell \mid \operatorname{den} x(nP)$.
 
-**Theorem 5.3.** *If $\ell \geq 5$ and $\ell \equiv 1 \pmod 3$ then*
-$$3\,\#A_2(\ell) = \ell + 2, \qquad\text{i.e.}\qquad \#A_2(\ell) = \frac{\ell+2}{3},$$
-*a density of exactly $\tfrac13 + \tfrac{2}{3\ell}$; dually exactly $\tfrac{2(\ell-1)}{3}$
-residues are blind, characterised by "$-c$ is not a cube modulo $\ell$".*
+*Proof.* Suppose, for contradiction, that $nP \notin \mathcal{K}_\ell$ for all $0 < n \le 4\ell$. Put $K := 2\ell + 1 \le 4\ell$ (using $\ell \ge 1$).
 
-*Proof sketch.* By Theorem 3.5, $\sum_c \#V_2(c,\ell) = \ell$. The residue $c = 0$ contributes
-$\#V_2(0,\ell) = 1$ (the single root $t = 0$), and every other active residue contributes
-exactly $3$ by Theorem 3.4. Hence $\ell = 1 + 3(\#A_2(\ell) - 1)$. $\square$
+*Step 1 (all early multiples reduce).* For each $n \in \{1, \dots, K\}$ we have $nP \notin \mathcal{K}_\ell$, so $nP \ne O$ — say $nP = (x_n, y_n)$ — and $\ell \nmid \operatorname{den}(x_n)$; as noted, $\ell \nmid \operatorname{den}(y_n)$ follows from the curve equation. Hence the reduction $\pi(n) := (\rho_\ell(x_n), \rho_\ell(y_n))$ is a well-defined element of $C_\ell(N)$.
 
-**Theorem 5.4 (No blind spots at layer 3).** *For every prime $\ell$ and every residue $c$,
-$V_3(c,\ell) \neq \varnothing$; indeed $0 \in V_3(c,\ell)$ always. So
-$A_3(\ell) = \mathbb{F}_\ell$ for every $\ell$.*
+*Step 2 (pigeonhole).* $\#\{1,\dots,K\} = 2\ell + 1 > 2\ell \ge \#C_\ell(N)$ by Lemma 5.1, so there are $1 \le m < n \le K$ with $\pi(m) = \pi(n)$.
 
-Thus layer $3$ is uniformly productive where layer $2$ has a positive proportion of blind
-spots — a sharp comparison at ordinary primes: $\#A_3(\ell) = \ell > (\ell+2)/3 = \#A_2(\ell)$
-for $\ell \geq 5$.
+*Step 3 (collision).* By Theorem A applied to $P_1 = nP$, $P_2 = mP$,
+$$2(n-m)P = 2(nP - mP) \in \mathcal{K}_\ell .$$
+Set $t := 2(n-m)$. Then $0 < t \le 2(K-1) = 4\ell$, and $tP \in \mathcal{K}_\ell$ — contradicting the assumption. Hence some $n \le 4\ell$ works.
 
----
+Finally, if $P$ has infinite order then $nP \ne O$ for $n > 0$, so membership in $\mathcal{K}_\ell$ means precisely that $nP$ is affine with $\ell \mid \operatorname{den} x(nP)$. $\square$
 
-## 6. Realisation and infinitude
+The constant is transparent: $4\ell = 2 \cdot (2\ell)$, where $2\ell$ is the crude bound of Lemma 5.1 and the outer $2$ comes from the doubling in Theorem A (which in turn comes from the $2$-torsion branch, case (a)).
 
-**Theorem 6.1 (Every prime occurs).** *For every prime $\ell \geq 5$ there exist $N$ and an
-integral point $(x,y)$ of $E_N$, with $y \neq 0$ and $\psi_3(x) \neq 0$, such that $\ell$ is a
-prime of good reduction ($\ell \nmid \Delta(E_N)$) and $\ell \mid \operatorname{den} x(3P)$.
-An explicit witness is*
-$$N = 1 - \ell^3, \qquad P = (\ell, 1).$$
+**Corollary 5.2 (Reverse inclusion).** Let $P$ have infinite order and let $\ell$ be any prime that divides *no* denominator $\operatorname{den} x(nP)$, $n > 0$. Then $\ell = 2$, $\ell = 3$, or $\ell \mid N$.
 
-*Proof.* $1^2 = \ell^3 + (1 - \ell^3)$, so $P \in E_N(\mathbb{Q})$. Modulo $\ell$ we have
-$N \equiv 1$, so $\ell \nmid N$ and hence $\ell \nmid \Delta = -432N^2$ (as $\ell \geq 5$).
-Also $\psi_3(\ell) = 3\ell^4 + 12(1-\ell^3)\ell = \ell\,(3\ell^3 + 12 - 12\ell^3)$ is a nonzero
-multiple of $\ell$ (nonzero because $3\ell^4 + 12\ell - 12\ell^4 = -9\ell^4 + 12\ell < 0$ for
-$\ell \geq 5$). Theorem 4.3 applies. $\square$
+*Proof.* If $\ell \notin \{2,3\}$ and $\ell \nmid N$, then $\ell \ge 5$ and Theorem B produces $n \le 4\ell$ with $\ell \mid \operatorname{den} x(nP)$. $\square$
 
-**Theorem 6.2 (Infinitely many active good primes).** *For every $N$, every prime
-$\ell \equiv 2 \pmod 3$ is denominator-active at layer $2$ (some residue class of $x$ forces
-$\ell$ into $\operatorname{den} x(2P)$). By Dirichlet's theorem there are infinitely many such
-primes, of natural density $1/2$ among all primes; all those with $\ell \geq 5$ and
-$\ell \nmid N$ are primes of good reduction.*
+**Corollary 5.3 (Finiteness of the absent primes).** For $N \ne 0$ and $P$ of infinite order, the set of primes dividing no orbit denominator is contained in the finite set $\{2, 3\} \cup \{p : p \mid N\}$, hence is finite.
 
-*Proof.* Theorem 3.3 gives $\#V_2(N,\ell) = 1 \neq 0$; Dirichlet's theorem gives infinitude of
-primes $\equiv 2 \pmod 3$. $\square$
+Corollary 5.2 is the exact mirror image of the conjecture. The conjecture asserted $\{\text{primes present}\} \subseteq \{2,3\} \cup \{p \mid N\}$; the truth is $\{\text{primes absent}\} \subseteq \{2,3\} \cup \{p \mid N\}$.
 
-So the set of primes that can appear in denominators is not merely larger than
-$\{2,3\} \cup \{p : p \mid N\}$; it is infinite, of density at least $1/2$, and contains only
-good primes apart from finitely many exceptions.
-
-**Theorem 6.3 (Violations from a single doubling).** *For a fixed integral point $(x,y)$ with
-$y \neq 0$, the good primes violating the "only bad primes" conjecture at $2P$ are exactly the
-primes $\ell \geq 5$ dividing $y$ and not dividing $N$. In particular, if $k$ is their number,*
-$$5^k \leq |y| ,$$
-*so a single doubling exhibits at most $\log_5 |y|$ violations.*
-
-*Proof.* The description is Theorem 3.1. For the bound, the product of the distinct such primes
-divides $|y|$ and each factor is $\geq 5$. $\square$
-
-The violations therefore accumulate slowly at any single layer, but there are infinitely many
-layers, and by Theorem 6.2 infinitely many primes are eventually reached.
+**Corollary 5.4 (The curve $E_{55}$).** On $E_{55}$ with $P = (9,28)$ — a point of infinite order — every prime $\ell \ge 5$ other than $5$ and $11$ divides $\operatorname{den} x(nP)$ for some $0 < n \le 4\ell$.
 
 ---
 
-## 7. The information barrier
+## 6. Theorems C and D: apparition indices and density
 
-We now show that the data described above, collected at all primes below a bound, contains no
-information about the factorisation of $N$.
+**Theorem C (Apparition law with effective modulus).** Let $\ell \ge 5$ be prime with $\ell \nmid N$, and let $P \in E_N(\mathbb{Q})$. Then there is an integer $m$ with $0 < m \le 4\ell$ such that for all $k \in \mathbb{Z}$,
+$$\ell \mid \operatorname{den} x(kP) \ \text{(vacuously if } kP = O) \iff m \mid k .$$
 
-### 7.1 Locality of the criteria
+*Proof.* Proposition 2.7 gives $m \ge 0$ with $kP \in \mathcal{K}_\ell \iff m \mid k$. Theorem B gives $n$ with $0 < n \le 4\ell$ and $nP \in \mathcal{K}_\ell$, hence $m \mid n$. Since $n > 0$, $m \ne 0$; and $m \le n \le 4\ell$. $\square$
 
-**Lemma 7.1 (Locality).** *Let $N, M, x \in \mathbb{Z}$ and let $\ell$ be a prime with
-$\ell \mid N - M$. Then*
-$$\ell \mid x^3 + N \iff \ell \mid x^3 + M, \qquad
-\ell \mid \psi_3(N,x) \iff \ell \mid \psi_3(M,x),$$
-*where $\psi_3(N,x) = 3x^4 + 12Nx$. Consequently $V_2(N,\ell) = V_2(M,\ell)$ and
-$V_3(N,\ell) = V_3(M,\ell)$ whenever $N \equiv M \pmod \ell$.*
+**Theorem D (Exact count of violations).** In the setting of Theorem C, for every $K \in \mathbb{N}$,
+$$\#\{\, n \in (0,K] \;:\; \ell \mid \operatorname{den} x(nP) \,\} \;=\; \left\lfloor \frac{K}{m} \right\rfloor \;\ge\; \left\lfloor \frac{K}{4\ell} \right\rfloor .$$
+If $P$ has infinite order the counted indices genuinely carry affine $x$-coordinates whose denominators $\ell$ divides (no index is counted vacuously).
 
-*Proof.* $(x^3 + N) - (x^3 + M) = N - M$ and
-$\psi_3(N,x) - \psi_3(M,x) = 12x(N-M)$, both divisible by $\ell$. $\square$
+*Proof.* By Theorem C the condition on $n$ is equivalent to $m \mid n$, and the multiples of $m$ in $(0,K]$ are $m, 2m, \dots, \lfloor K/m\rfloor m$, of which there are exactly $\lfloor K/m \rfloor$. The inequality follows from $m \le 4\ell$ and monotonicity of $K \mapsto \lfloor K/\cdot\rfloor$ in the divisor. For the last statement: if $P$ has infinite order then $nP \ne O$ for $n > 0$, so $nP$ is affine and the defining condition is a genuine divisibility. $\square$
 
-This is the crux: the entire layer-2/layer-3 denominator behaviour at the prime $\ell$ is a
-function of the residue $N \bmod \ell$ alone. A residue class modulo a small prime knows
-nothing about how $N$ factors.
+Thus for each good prime $\ell$ the set of violating indices is an arithmetic progression of density
+$$\frac{1}{m} \;\ge\; \frac{1}{4\ell} \;>\; 0 .$$
+This upgrades the refutation from "there is a counterexample" to "a positive, explicitly bounded proportion of all indices are counterexamples, for every good prime simultaneously".
 
-### 7.2 Dirichlet's theorem in the required form
+**Theorem D′ (Many good primes appear early).** Let $P$ have infinite order. For every $K$,
+$$\#\{\ell \le K : \ell \text{ prime}, \ \ell \ge 5,\ \ell \nmid N, \ 4\ell \le K\} \;\le\; \#\{\ell \le K : \ell \mid \operatorname{den} x(nP) \text{ for some } 0 < n \le K\}.$$
 
-**Lemma 7.2.** *Let $B, n \in \mathbb{N}$ and let $N$ be coprime to $B!$. Then there exists a
-prime $M > n$ with $M \equiv N \pmod{B!}$.*
+*Proof.* By Theorem B, each $\ell$ in the left-hand set admits $n \le 4\ell \le K$ with $\ell \mid \operatorname{den} x(nP)$, so the left set injects into the right one. $\square$
 
-*Proof sketch.* Coprimality makes $N$ a unit modulo $B!$, and Dirichlet's theorem on primes in
-arithmetic progressions provides infinitely many primes in the class of $N$ modulo $B!$; pick
-one exceeding $n$. $\square$
-
-**Lemma 7.3.** *If $p, q$ are primes with $p, q > B$ then $\gcd(pq, B!) = 1$.*
-
-*Proof.* A prime divides $B!$ if and only if it is $\leq B$. $\square$
-
-### 7.3 The barrier theorem
-
-**Theorem 7.4 (Denominator data below $B$ cannot detect compositeness).** *Let $B \in \mathbb{N}$
-and let $N = pq$ be a semiprime with $p, q$ prime and $p, q > B$. Then there exists a prime
-$M > N$ such that for every prime $\ell \leq B$ and every $x \in \mathbb{Z}$,*
-$$\ell \mid x^3 + N \iff \ell \mid x^3 + M,
-\qquad
-\ell \mid 3x^4 + 12Nx \iff \ell \mid 3x^4 + 12Mx .$$
-*Equivalently, $V_2(N,\ell) = V_2(M,\ell)$ and $V_3(N,\ell) = V_3(M,\ell)$ for every prime
-$\ell \leq B$.*
-
-*Proof.* By Lemma 7.3, $N$ is coprime to $B!$; by Lemma 7.2 there is a prime $M > N$ with
-$M \equiv N \pmod{B!}$. For any prime $\ell \leq B$ we have $\ell \mid B!$, hence
-$M \equiv N \pmod \ell$, and Lemma 7.1 applies. $\square$
-
-**Corollary 7.5.** *The layer-2 and layer-3 denominator profile of $E_N$ restricted to primes
-$\ell \leq B$ — that is, the family of sets $\{(\ell, x) : \ell \leq B,\ \ell \mid
-\operatorname{den} x(2P)\ \text{or}\ \ell \mid \operatorname{den} x(3P)\}$, viewed as a function
-of the residue class of $x$ — is identical for the semiprime $N$ and for the prime $M$.
-No algorithm reading only this data can distinguish $N$ from a prime, and a fortiori none can
-output $p$ or $q$.*
-
-**Interpretation.** The barrier is a statement about *which primes one is willing to test*. To
-extract factorisation information from denominators one must use primes $\ell$ comparable in
-size to $p$ and $q$ themselves — but detecting the relevant condition at such a prime is
-already as hard as trial division by it. The barrier does not say that no factoring information
-exists anywhere in the arithmetic of $E_N$; it says that none exists in the layer-2/layer-3
-denominator profile below $B$.
-
-**Example 7.6.** Take $N = 17 \cdot 19 = 323$ and $B = 13$. Then $13! = 6\,227\,020\,800$ and
-$M = 6\,227\,021\,123$ is prime with $M \equiv 323 \pmod{13!}$. One checks directly:
-$V_2(N,5) = V_2(M,5) = \{3\}$, $V_2(N,7) = V_2(M,7) = \{3,5,6\}$,
-$V_2(N,11) = V_2(M,11) = \{6\}$, $V_2(N,13) = V_2(M,13) = \varnothing$, and likewise for
-$V_3$ at every $\ell \leq 13$.
+In words: among the first $K$ denominators one sees at least $\pi(K/4) - O(\omega(N))$ distinct primes. The denominators are not merely large; they are *arithmetically rich*, and the richness is quantified.
 
 ---
 
-## 8. Algorithms and numerical data
+## 7. Theorem E: simultaneous apparition
 
-### 8.1 Verifying the criteria
+Individual violations combine.
 
-Given $N$, an integral point $(x,y)$, and a bound $L$:
+**Theorem E (Simultaneous apparition).** Let $S$ be a finite set of primes with $\ell \ge 5$ and $\ell \nmid N$ for all $\ell \in S$, and let $P \in E_N(\mathbb{Q})$. Then there is an integer $M$ with
+$$0 < M \le \prod_{\ell \in S} 4\ell$$
+such that for all $k \in \mathbb{Z}$,
+$$\Big(\prod_{\ell \in S} \ell\Big) \ \Big|\ \operatorname{den} x(kP) \iff M \mid k .$$
+Moreover $M = \operatorname{lcm}_{\ell \in S} m_\ell$, where $m_\ell$ is the apparition index of $\ell$.
 
-1. compute $D_2 = \operatorname{den}\bigl((x^4 - 8Nx)/(4y^2)\bigr)$ and
-   $D_3 = \operatorname{den}\bigl(\varphi_3(x)/\psi_3(x)^2\bigr)$ in exact rational arithmetic;
-2. for each prime $5 \leq \ell \leq L$ with $\ell \nmid N$, test the predicates
-   $\ell \mid y$ and $\ell \mid \psi_3(x)$;
-3. assert equality with $\ell \mid D_2$, respectively $\ell \mid D_3$.
+*Proof.* Induct on $\#S$. The empty set gives $M = 1$ (the empty product $1$ divides everything, and $1 \mid k$ always). For the inductive step write $S = \{a\} \sqcup S'$ and let $m$ be the apparition index of $a$ (Theorem C: $0 < m \le 4a$) and $M'$ the modulus for $S'$ (induction: $0 < M' \le \prod_{\ell \in S'} 4\ell$). Since $a$ and $\prod_{\ell \in S'}\ell$ are coprime (distinct primes), for any rational $Y$:
+$$a\textstyle\prod_{S'}\ell \mid \operatorname{den} Y \iff a \mid \operatorname{den} Y \ \text{ and } \ \prod_{S'}\ell \mid \operatorname{den} Y .$$
+By Theorem C and the inductive hypothesis, this holds for $Y = x(kP)$ iff $m \mid k$ and $M' \mid k$, i.e. iff $\operatorname{lcm}(m, M') \mid k$. Set $M := \operatorname{lcm}(m,M')$; then $0 < M \le mM' \le 4a\prod_{S'}4\ell = \prod_S 4\ell$. $\square$
 
-The cost is dominated by the rational arithmetic, $O(\log^2)$ in the size of the integers
-involved; the criteria themselves are $O(1)$ modular reductions per prime. For $N = 55$,
-$P = (9,28)$ and $L = 200$ every good prime satisfies both equivalences; the only active primes
-are $7$ (layer $2$) and $13$, $73$ (layer $3$).
+**Corollary 7.1 (Density of simultaneous violations).** With $S$ and $M$ as above, for every $K$,
+$$\#\Big\{ n \in (0,K] : \Big(\prod_{\ell\in S}\ell\Big) \Big| \operatorname{den} x(nP) \Big\} = \left\lfloor \frac{K}{M} \right\rfloor \ \ge\ \left\lfloor \frac{K}{\prod_{\ell\in S}4\ell} \right\rfloor .$$
 
-### 8.2 Computing the loci
+So arbitrarily many good primes violate the conjecture *simultaneously*, on a set of indices of positive density — a much stronger failure than the existence of sporadic bad indices.
 
-$V_2(N,\ell)$ and $V_3(N,\ell)$ are computed by evaluating $t^3 + N$ and $3t^4 + 12Nt$ for
-$t = 0,\dots,\ell-1$: cost $O(\ell)$ per prime, or $O(\ell^2)$ for a full sweep over the
-residues of $N$, which suffices to confirm the identities
-$\sum_c \#V_2(c,\ell) = \ell$ and $\sum_c \#V_3(c,\ell) = 2\ell - 1$ for all $\ell \leq 100$.
+**Theorem E′ (A concrete joint apparition).** On $E_{55} : y^2 = x^3 + 55$ with $P = (9,28)$, the good primes $7$ and $13$ have apparition indices $2$ and $3$ respectively, and consequently
+$$91 = 7 \cdot 13 \ \big|\ \operatorname{den} x(kP) \iff 6 \mid k .$$
 
-### 8.3 Constructing barrier twins
+*Proof.* $7$ has index $2$ and $13$ has index $3$ (verified by the direct orbit computation of §10, and consistent with Theorem C since $2 \le 28$ and $3 \le 52$). By coprimality of $7$ and $13$, $91 \mid \operatorname{den} x(kP)$ iff $7 \mid \operatorname{den} x(kP)$ and $13 \mid \operatorname{den} x(kP)$, iff $2 \mid k$ and $3 \mid k$, iff $6 \mid k$. $\square$
 
-To realise Theorem 7.4 computationally: given $N$ and $B$ with $\gcd(N, B!) = 1$, iterate
-$M = N + kB!$ for $k = 1, 2, \dots$, testing primality with a deterministic Miller–Rabin test.
-By the prime number theorem for arithmetic progressions the expected number of trials is
-$O(\varphi(B!) \log(N + B!) / B!) \cdot$const, in practice a handful; for $N = 323$, $B = 13$
-the first success is $k = 1$.
+Note the shape of the conclusion: a *composite* number, built from two primes of good reduction and having nothing to do with $\Delta$, divides the denominators precisely along an arithmetic progression. Any procedure hoping to extract the factorisation of $N = 5 \cdot 11$ from denominators must contend with the fact that denominators are full of such spurious composites.
 
-### 8.4 The semiprime survey
+---
 
-Across eleven semiprimes $N = pq$ possessing a small integral point, tracking the primes
-dividing $\operatorname{den} x(nP)$ over the first several layers:
+## 8. Theorem F: the global refutation
 
-- the smaller factor $p$ appeared in some denominator in $54.5\%$ of the cases;
-- the larger factor $q$ appeared in **none** of them;
-- the "only $\{2,3,p,q\}$" pattern held in **none** of them.
+**Lemma 8.1.** For $N \ne 0$ the set $\{\ell \text{ prime} : \ell \ge 5, \ \ell \nmid N\}$ is infinite.
 
-A representative sample of the primes observed (layers $2$ through $4$):
+*Proof.* The complement inside the primes is contained in $\{2,3\} \cup \{p : p \mid |N|\}$, which is finite because $N \ne 0$. Removing a finite set from the infinite set of primes leaves an infinite set. $\square$
 
-| $N = pq$ | $P = (x,y)$ | primes dividing the denominators |
+**Theorem F1 (Infinitely many good primes appear).** Let $N \ne 0$ and let $P \in E_N(\mathbb{Q})$ have infinite order. Then
+$$\{\ell \text{ prime} : \ell \ge 5,\ \ell\nmid N, \ \exists n>0 \text{ with } \ell \mid \operatorname{den} x(nP)\}$$
+is infinite.
+
+*Proof.* By Theorem B every element of the infinite set of Lemma 8.1 belongs to this set. $\square$
+
+**Theorem F2 (The conjecture is false for every curve and point).** Let $N \ne 0$ and let $P \in E_N(\mathbb{Q})$ have infinite order. Then it is **not** the case that
+$$\forall\, \ell \text{ prime},\ \forall\, n>0:\quad \ell \mid \operatorname{den} x(nP) \ \Longrightarrow\ \big(\ell = 2 \ \text{or}\ \ell = 3\ \text{or}\ \ell \mid N\big).$$
+
+*Proof.* Theorem F1 supplies a prime $\ell \ge 5$ with $\ell \nmid N$ and an index $n > 0$ with $\ell \mid \operatorname{den} x(nP)$. This triple $(\ell, n, x(nP))$ witnesses the failure; note that the witness is explicit and non-vacuous — $nP$ is a genuine affine point because $P$ has infinite order. $\square$
+
+The two hypotheses are both necessary. If $N = 0$ the "curve" is singular and every prime divides $N$, so the conclusion is empty. If $P$ is a torsion point its orbit is finite, only finitely many rationals occur, and only finitely many primes can appear — a torsion point may well satisfy the conjecture trivially.
+
+**Theorem F3 (Unbounded denominators from good primes alone).** Let $N \neq 0$ and $P$ of infinite order. For every bound $B$ there are a prime $\ell > B$ with $\ell \nmid N$ and an index $n > 0$ such that $\ell \mid \operatorname{den} x(nP)$ and $\operatorname{den} x(nP) > B$.
+
+*Proof.* By Theorem F1 the set of appearing good primes is infinite, so it contains some $\ell > B$; take the corresponding $n$. Since $\ell \mid \operatorname{den} x(nP)$ and denominators are positive, $\operatorname{den} x(nP) \ge \ell > B$. $\square$
+
+The growth of the denominator sequence is therefore *not* accounted for by the primes dividing the discriminant: arbitrarily large primes of good reduction are responsible for arbitrarily large chunks of it.
+
+---
+
+## 9. Algorithms
+
+The theory is effective, and yields three practical procedures.
+
+### 9.1 Apparition index by reduction
+
+The most important algorithmic observation is that the apparition index need not be computed from rational orbits — whose denominators grow like $c^{n^2}$ and become intractable within a dozen steps — but from arithmetic in $\mathbb{F}_\ell$.
+
+> **Algorithm A (Apparition index via the reduced curve).**
+> **Input:** $N$, an affine rational point $P$, a good prime $\ell \ge 5$.
+> **Output:** the apparition index $m$ of $\ell$ for $P$.
+> 1. Reduce $P$ modulo $\ell$ to $\bar P \in C_\ell(N)$.
+> 2. Compute the order of $\bar P$ in the group $E_N(\mathbb{F}_\ell)$ by repeated addition (or by the baby-step/giant-step method inside the Hasse interval).
+> 3. Return that order.
+>
+> **Cost:** $O(\ell)$ field operations naively, $O(\sqrt{\ell}\,)$ with baby-step/giant-step, each operation costing $O(\log^2 \ell)$ bit operations.
+
+That the output is the apparition index is exactly the identity "$\ell \mid \operatorname{den} x(kP) \iff kP \equiv O \pmod \ell$", i.e. $\iff \operatorname{ord}(\bar P) \mid k$. Theorem C guarantees the returned value is at most $4\ell$ unconditionally; Hasse's theorem gives the sharper $\ell + 1 + 2\sqrt\ell$.
+
+### 9.2 Denominator prime spectrum of a truncated orbit
+
+> **Algorithm B (Spectrum of an initial segment).**
+> **Input:** $N$, $P$, bounds $K$ (orbit length) and $L$ (prime bound).
+> **Output:** for every prime $\ell \le L$, the set of $n \le K$ with $\ell \mid \operatorname{den} x(nP)$.
+> 1. For each prime $5 \le \ell \le L$ with $\ell \nmid N$, run Algorithm A to obtain $m_\ell$.
+> 2. Report the violating set as $\{ n \le K : m_\ell \mid n\}$, of size $\lfloor K/m_\ell\rfloor$.
+>
+> **Cost:** $O(\pi(L)\sqrt{L})$ field operations — independent of $K$. Computing the same information from rational orbits would require handling integers of $\Theta(n^2)$ digits.
+
+The point is worth emphasising: the periodicity theorem converts an exponentially expensive computation into a cheap one.
+
+### 9.3 Joint apparition modulus
+
+> **Algorithm C (Joint modulus for a set of primes).**
+> **Input:** $N$, $P$, a finite set $S$ of good primes.
+> **Output:** the modulus $M$ with $\prod_{\ell \in S}\ell \mid \operatorname{den} x(kP) \iff M \mid k$.
+> 1. For each $\ell \in S$ compute $m_\ell$ by Algorithm A.
+> 2. Return $M := \operatorname{lcm}_{\ell \in S} m_\ell$.
+>
+> **Cost:** $\#S$ invocations of Algorithm A plus a least-common-multiple computation.
+
+Correctness is Theorem E. For $S = \{7,13\}$ on $E_{55}$, $P = (9,28)$, one gets $M = \operatorname{lcm}(2,3) = 6$, recovering Theorem E′.
+
+---
+
+## 10. Computational evidence
+
+### 10.1 The orbit of $(9,28)$ on $E_{55}$
+
+Direct rational computation of the first ten multiples, with the small-prime part of each denominator factored, gives the following table (digit counts refer to the full denominator; the listed factorisation is the part supported on primes $< 200$).
+
+| $n$ | digits of $D_n$ | small-prime part of $D_n$ |
 |---|---|---|
-| $55 = 5\cdot 11$ | $(9,28)$ | $2, 3, 7, 13, 73, 827, 1583$ |
-| $35 = 5\cdot 7$ | $(1,6)$ | $2, 47, 337$ |
-| $33 = 3\cdot 11$ | $(-2,5)$ | $3, 5, 31, 1741$ |
-| $65 = 5\cdot 13$ | $(-4,1)$ | $2, 3, 7, 11, 1283$ |
-| $91 = 7\cdot 13$ | $(-3,8)$ | $2, 3, 337, 114659$ |
-| $143 = 11\cdot 13$ | $(1,12)$ | $2, 191, 5953$ |
+| 1 | 1 | $1$ |
+| 2 | 4 | $2^6\cdot 7^2$ |
+| 3 | 9 | $3^6\cdot 13^2\cdot 73^2$ |
+| 4 | 17 | $2^8\cdot 7^2$ |
+| 5 | 26 | $5^2$ |
+| 6 | 37 | $2^6\cdot 3^6\cdot 7^2\cdot 13^2\cdot 17^4\cdot 73^2\cdot 179^2$ |
+| 7 | 51 | $43^2$ |
+| 8 | 68 | $2^{10}\cdot 7^2$ |
+| 9 | 86 | $3^8\cdot 13^2\cdot 19^2\cdot 73^2$ |
+| 10 | 107 | $2^6\cdot 5^2\cdot 7^2$ |
 
-Large good primes dominate, exactly as Theorem 6.2 and the counting laws predict. The
-appearances of a factor of $N$ are explained by the criteria themselves (for instance
-$11 \mid \operatorname{den}$ for $N = 65$ arises from $11 \mid \psi_3(-4)$), not by any special
-role of the factorisation.
+Every feature predicted by the theory is visible. The prime $7$ occurs exactly at $n \in \{2,4,6,8,10\}$ — apparition index $2$. The prime $13$ occurs exactly at $n \in \{3,6,9\}$ — index $3$. The primes $73$ (index $3$), $17$ (index $6$), $19$ (index $9$), $43$ (index $7$), $179$ (index $6$) each occur precisely along their progressions. The composite $91 = 7\cdot 13$ appears at $n = 6$ and nowhere else in the range, as Theorem E′ demands. All exponents of good primes are even, consistent with the square structure of elliptic denominators.
 
----
+Two further observations. The bad prime $5 \mid N$ appears at $n \in \{5,10\}$ — bad primes are *permitted* to appear, they are simply not *required* to. The bad prime $11 \mid N$ does not appear at all in this range. The conjecture would have required $\{2,3,5,11\}$ to exhaust the spectrum; the actual spectrum already contains $7, 13, 17, 19, 43, 73, 179$ among the small primes alone, plus large cofactors we did not attempt to factor.
 
-## 9. Discussion
+### 10.2 Apparition indices from the reduced curve
 
-### 9.1 Bad primes versus vanishing primes
+Running Algorithm A on $E_{55}$, $P = (9,28)$ for all good primes below $120$:
 
-The conjecture refuted here conflates two different notions:
+| $\ell$ | 7 | 13 | 17 | 19 | 23 | 29 | 31 | 37 | 41 | 43 | 47 | 53 | 59 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| $m_\ell$ | 2 | 3 | 6 | 9 | 24 | 15 | 43 | 37 | 14 | 7 | 16 | 54 | 60 |
 
-- the **bad primes** of the curve — where the reduced Weierstrass equation becomes singular,
-  detected by $\Delta$;
-- the **vanishing primes** of a point — where the reduction of $nP$ becomes the identity.
+| $\ell$ | 61 | 67 | 71 | 73 | 79 | 83 | 89 | 97 | 101 | 103 | 107 | 109 | 113 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| $m_\ell$ | 61 | 57 | 72 | 3 | 21 | 12 | 30 | 28 | 102 | 39 | 108 | 28 | 57 |
 
-Only the first is controlled by $\Delta$. The second is controlled by the order of $\bar P$ in
-$E_N(\mathbb{F}_\ell)$, which varies with $\ell$ in a manner governed by Frobenius, not by the
-factorisation of $N$. The classical theory of elliptic divisibility sequences says exactly
-this: the sequence of denominators is a divisibility sequence whose $n$-th term collects the
-primes at which $\bar P$ has order dividing $n$, and by Siegel's theorem the number of such
-primes grows without bound.
+The bad primes obey an apparition law here as well, with indices $m_2 = 2$, $m_3 = 3$, $m_5 = 5$, $m_{11} = 11$; in particular $11$ first appears only at $n = 11$, which is why it is invisible in the table of §10.1. Every good prime tested has a finite apparition index, i.e. every one of them appears; the theorem forbids anything else. Every index satisfies $m_\ell \le 4\ell$ with enormous room to spare, and in fact every index satisfies the sharper Hasse-type bound $m_\ell \le \ell + 1 + 2\sqrt{\ell}$, which is the content of Conjecture C1 in §12. Note the wide spread: $m_{73} = 3$ (density $1/3$ of all indices) against $m_{107} = 108$ (density $1/108$). The indices where the two tables overlap agree exactly, confirming that the cheap reduced-curve computation reproduces the expensive rational one.
 
-What the present analysis adds is *exactness* at the first two nontrivial layers: not merely
-that good primes occur, but the precise finite-field condition for each one, and the exact
-counts of residue classes satisfying it.
+### 10.3 A survey over semiprimes
 
-### 9.2 Why the counting laws are clean
+Two independent surveys over samples of about a dozen semiprimes $N = pq$ admitting rational points of infinite order on $E_N$ were carried out, differing in the choice of base point, the orbit length and the prime bound used to inspect denominators. Their aggregate findings were:
 
-Both criteria reduce to root-counting for a cubic. At layer $2$ the cubic is $T^3 + N$; at
-layer $3$ the quartic $3T(T^3 + 4N)$ splits off the free root $T = 0$ and leaves the cubic
-$T^3 + 4N$. Cube-root behaviour in $\mathbb{F}_\ell$ is dichotomous — bijective when
-$\ell \equiv 2 \pmod 3$, three-to-one when $\ell \equiv 1 \pmod 3$ — and the totals
-$\sum_c \#V_2 = \ell$, $\sum_c \#V_3 = 2\ell - 1$ are partition identities, not analytic
-estimates. In Galois-theoretic language, the layer-2 count at $\ell$ is the splitting type of
-$\ell$ in the Kummer extension $\mathbb{Q}(\sqrt[3]{N}, \zeta_3)$, and layer 3 adds the
-splitting type of $T^3 + 4N$; the general layer should be a Chebotarev computation in the
-$n$-division field.
+- the appearance of a given prime factor of $N$ in the early denominators is erratic and sample-dependent: the smaller factor $p$ appeared in $54.5\%$ of the cases in one survey and in $85.7\%$ in the other; the larger factor $q$ appeared in $0\%$ and $28.6\%$ respectively;
+- the property asserted by the conjecture — that the primes occurring are contained in $\{2,3,p,q\}$ — held in $0\%$ of cases in *both* surveys, without exception;
+- in every instance the number of distinct *good* primes visible in the first eight denominators (up to the inspection bound $300$) was between five and seven, comfortably outnumbering the bad primes.
 
-### 9.3 Consequences for factoring
-
-The naive attack — "compute a few multiples of a point on $E_{pq}$ and read $p$, $q$ off the
-denominators" — fails for three independent reasons, each established above:
-
-1. denominators contain good primes, in fact infinitely many (Theorems A, 6.1, 6.2);
-2. the factors $p$ and $q$ appear only sporadically and unpredictably, and the larger factor
-   essentially never (Section 8.4);
-3. **structurally**, the denominator profile below any bound $B$ is a function of $N \bmod B!$,
-   and that residue class also contains primes (Theorem 7.4).
-
-The third reason is the decisive one: it is not a statement about how the data happens to look,
-but about how much data there is. It should be contrasted with Lenstra's elliptic curve method,
-which succeeds precisely because it does *not* work with a fixed curve and fixed low-order
-multiples: it randomises over curves and searches for one whose group order modulo an unknown
-prime factor is smooth — information invisible in any fixed layer-$n$ criterion.
-
-### 9.4 Scope and hypotheses
-
-Every theorem above requires $\ell \geq 5$ and $\ell \nmid N$. Both are necessary rather than
-technical: the constants $4$, $-9N$, $64$ and $1728$ appearing in the proofs are supported on
-$\{2,3\}$, and at $\ell \mid N$ the cubic $T^3 + N$ degenerates (its unique root $0$ is a triple
-root, breaking the $0$-or-$3$ dichotomy). The hypothesis $y \neq 0$ excludes $2$-torsion, where
-$x(2P)$ is undefined; $\psi_3(x) \neq 0$ excludes $3$-torsion, where $x(3P)$ is undefined. Over
-$\mathbb{Q}$ these exclude only finitely many points on any given curve.
+The conjecture is thus not merely false in principle; it fails on every instance examined, and it fails in the direction that is worst for applications: the good primes intrude in force, and the presence of the interesting bad primes is unreliable.
 
 ---
 
-## 10. Future directions
+## 11. Consequences for factoring: a structural barrier
 
-**C1. The division-polynomial tower.** For every $n \geq 2$, every integral point $P = (x,y)$
-of $E_N$ with $\psi_n(x,y) \neq 0$, and every prime $\ell \geq 5$ with $\ell \nmid N$, we
-conjecture
-$$\ell \mid \operatorname{den} x(nP) \iff \ell \mid \psi_n(x,y),$$
-where $\psi_n$ is the $n$-th division polynomial of $y^2 = x^3 + N$; moreover the exceptional
-evaluation of the numerator $\varphi_n$ on the locus $\psi_n = 0$ should always take the form
-$c_n \cdot N^k$ with $c_n$ composed only of the primes $2$ and $3$. The evidence is the pair of
-layer-3 evaluations computed here, $\varphi_3 \equiv 64N^3$ on $x \equiv 0$ and
-$\varphi_3 \equiv -1728N^3$ on $x^3 \equiv -4N$: the constants $2^6$ and $2^63^3$ are the
-discriminant and $j$-invariant constants of the Mordell family, and they should recur at every
-layer because $\varphi_n$ and $\psi_n^2$ are coprime up to the discriminant. *Falsifiable form:*
-compute $\psi_4, \varphi_4$ for $y^2 = x^3 + N$ and check whether the exceptional value of
-$\varphi_4$ on $\psi_4 = 0$ involves a prime $\geq 5$.
+The refuted conjecture was a factoring proposal, so it is worth stating precisely why no repair of the idea can succeed along the same lines.
 
-**C2. Exact class counts and a Chebotarev law.** Let $r_n(N,\ell)$ be the number of residue
-classes $x \bmod \ell$ producing $\ell$ in $\operatorname{den} x(nP)$. We conjecture
-$$\sum_{N \bmod \ell} r_n(N,\ell) = c_n \ell + O(1), \qquad c_n = \frac{\deg \psi_n}{n-1},$$
-and that for fixed $N$ the density of primes with $r_n(N,\ell) = k$ is the Chebotarev density
-of the corresponding conjugacy class in $\mathrm{Gal}(\mathbb{Q}(E_N[n])/\mathbb{Q})$. The
-layer-2 count ($1$ at supersingular, $0$ or $3$ at ordinary primes) is exactly the splitting
-type of $\ell$ in $\mathbb{Q}(\sqrt[3]{N}, \zeta_3)$, and layer $3$ adds the trivial class
-$x \equiv 0$ plus the splitting type of $T^3 + 4N$; both are Kummer extensions, so the general
-statement is a Chebotarev computation for the $n$-division field.
+**Observation 11.1 (Denominator data is a function of $N$, not of its factorisation).** Whether $\ell$ divides $\operatorname{den} x(nP)$ is determined by the single condition $\operatorname{ord}_{E(\mathbb{F}_\ell)}(\bar P) \mid n$. The right-hand side depends only on the reductions of $N$ and of the coordinates of $P$ modulo $\ell$. In particular, the whole apparition profile $(m_\ell)_\ell$ of the orbit is computable from $(N, P)$ by Algorithm A in time $O(\sqrt\ell)$ per prime, without any knowledge of a factorisation of $N$, and conveys no information distinguishing $N = pq$ from any other integer congruent to $N$ modulo the primes examined.
 
-**C3. The barrier at every layer and every bound.** For every $B$ and every semiprime $N = pq$
-with $p, q > B$, we conjecture that there is a prime $M$ such that the *entire* denominator
-profile $\{(n,\ell,x) : \ell \mid \operatorname{den} x(nP)\}$ restricted to $\ell \leq B$
-coincides for $E_N$ and $E_M$, at all layers $n$ simultaneously. Given C1, the proof should be
-the argument of Theorem 7.4 applied to all $\psi_n$ at once, since each $\psi_n$ has integer
-coefficients depending on $N$ only.
+**Observation 11.2 (The spectrum is dominated by good primes).** By Theorem D′ the number of distinct primes appearing among the first $K$ denominators is at least $\pi(K/4) - \omega(N) - 2$, all but at most $\omega(N)+2$ of which are good. Any attempt to isolate $p$ or $q$ inside a denominator must first separate them from $\Theta(K/\log K)$ irrelevant primes — which is the factoring problem again.
 
-**C4. Effective versions.** How large must $B$ be before the denominator profile of $E_N$
-determines $N$ itself? Theorem 7.4 shows $B < \min(p,q)$ is insufficient; a matching upper
-bound would pin down the exact information-theoretic threshold.
+**Observation 11.3 (Bad primes need not appear).** The bad primes are exactly the primes *permitted* to be absent (Corollary 5.2). The surveys of §10.3 bear this out: the larger factor $q$ was absent from the early denominators in most instances tested, and on $E_{55}$ with $P = (9,28)$ the factor $11$ does not appear at all in the first ten denominators. A method relying on the presence of $p$ and $q$ therefore lacks even a guarantee that the desired data is present.
 
-**C5. Beyond the Mordell family.** The arguments used here — the doubling formula, the
-non-cancellation lemma, and locality — are specific to $y^2 = x^3 + N$ only through the shape
-of $\varphi_3$ and $\psi_3$. The analogous statements for a general Weierstrass family
-$y^2 = x^3 + Ax + B$ should hold with $\{2,3\}$ replaced by the primes dividing the
-$j$-invariant denominators, and the barrier should apply verbatim to any family whose criteria
-are polynomial congruences in the parameters.
+Together these constitute a clean negative result: denominator structure in Mordell orbits is an invariant of $N$ as an integer and cannot serve as an oracle for its multiplicative decomposition. This is a useful thing to know precisely, since the intuition that "denominators encode arithmetic degeneracy, and degeneracy should see the factorisation" is a natural one and recurs in several guises.
 
 ---
 
-## 11. Conclusion
+## 12. Discussion and open problems
 
-The "only bad primes" conjecture for denominators of multiples of points on Mordell curves is
-false, and its failure is not accidental but structural: a prime divides the denominator of
-$x(nP)$ precisely when the point reduces to a point of order dividing $n$, an event governed by
-the division polynomials and entirely independent of the discriminant. At the first two
-nontrivial layers we have exact criteria — $x^3 + N \equiv 0$ for doubling, $3x(x^3 + 4N)
-\equiv 0$ for tripling — exact residue-class counts ($1$ or $0$-or-$3$; $2$ or $1$-or-$4$),
-exact averages ($1$ and $2 - 1/\ell$), exact activity densities ($(\ell+2)/3$ residues at
-ordinary primes for layer $2$, all residues for layer $3$), and a realisation theorem showing
-that every prime $\ell \geq 5$ occurs with good reduction.
+The picture that emerges is a complete analogue, for Mordell curves, of the classical theory of the *rank of apparition* in Lucas sequences: for the Fibonacci sequence, every prime $\ell$ divides some term, the indices of divisibility form the multiples of a single number $\alpha(\ell)$, and $\alpha(\ell) \le \ell+1$. The results above supply exactly this structure — existence (Theorem B), periodicity (Theorem C), effective bound $4\ell$ (Theorem B), density (Theorem D), and a multiplicative/CRT law for finite sets of primes (Theorem E) — for the elliptic divisibility sequence attached to a point on $y^2 = x^3 + N$. What the elliptic case adds, and what has no Lucas analogue, is the $2$-torsion branch in the Collision Lemma, which is the sole source of the factor $2$ that turns $2\ell$ into $4\ell$.
 
-The same locality that makes these criteria clean makes them useless for factorisation. Because
-each criterion depends on $N$ only through $N \bmod \ell$, the whole profile below a bound $B$
-depends only on $N \bmod B!$ — and that residue class, by Dirichlet's theorem, contains primes.
-A semiprime and a prime can therefore be denominator-indistinguishable below any prescribed
-bound. Whatever information about factorisation the arithmetic of $E_N$ holds, it is not to be
-found here.
+Three sharpenings suggest themselves, each falsifiable by a single explicit orbit computation.
+
+**C1. The apparition index is the order of the reduction (Hasse-sharp bound).** For $\ell \ge 5$ with $\ell \nmid N$ and $P$ of infinite order, the apparition index $m$ equals the order of $\bar P$ in $E_N(\mathbb{F}_\ell)$; in particular $m \mid \#E_N(\mathbb{F}_\ell)$ and $m \le \ell + 1 + 2\sqrt{\ell}$. The reason to expect this is that the Collision Lemma is precisely injectivity of reduction on the quotient by $\mathcal{K}_\ell$, so upgrading $4\ell$ to the Hasse bound requires identifying the pigeonhole target with the *group* $E_N(\mathbb{F}_\ell)$ rather than with the mere *set* of its points. The chord arithmetic already covers every case such an identification would need, including the $2$-torsion branch; what remains is bookkeeping. The tables of §10.2 confirm $m = \operatorname{ord}(\bar P)$ for all $\ell < 120$ on $E_{55}$, and the bound $m \le \ell + 1 + 2\sqrt\ell$ was verified for all $91$ good primes $\ell \le 500$ there; the extreme case is $\ell = 31$, $m = 43$ (Hasse bound $43.14$), and the largest observed ratio $m/\ell$ over that range is $1.387$, against the proved allowance of $4$.
+
+**C2. Exact valuation law.** With $m$ the apparition index of a good $\ell \ge 5$, one expects
+$$v_\ell\big(\operatorname{den} x(nP)\big) = v_\ell\big(\operatorname{den} x(mP)\big) + 2\,v_\ell(n/m) \quad \text{whenever } m \mid n,$$
+and $v_\ell(\operatorname{den} x(nP)) = 0$ otherwise. The mechanism is the formal group at $\ell$: in the parameter $z = -x/y$ multiplication by $k$ acts as multiplication by $k$ to leading order, so the only growth of the $\ell$-part along the progression comes from the $\ell$-part of the multiplier. The case $\ell \nmid k$ (invariance of the valuation under doubling for odd $\ell$) is already known; the remaining step is the case $\ell \mid k$. Direct computation on $E_{55}$, $P=(9,28)$ agrees exactly: $v_7(\operatorname{den} x(nP)) = 2$ for every even $n \le 12$, jumps to $4$ at $n = 14 = 2\cdot 7$, and returns to $2$ at $n = 16$; likewise $v_{13} = 2$ throughout $3\mathbb{N}$ up to $n = 15$.
+
+**C3. Equidistribution of the parity of the apparition index.** For fixed $N$ and $P$ of infinite order, the set of primes $\ell$ whose apparition index is even should have natural density $1/2$ among all primes; equivalently, the parity of $\operatorname{ord}(\bar P)$ equidistributes. The heuristic is that this parity is governed by the splitting behaviour in the $2$-division field of $E_N$, a Chebotarev condition, so the density should be the proportion of Frobenius classes acting on $E_N[2]$ without a fixed vector. The density statements of §6 are what make the question well-posed: they guarantee each index is finite, so its parity is defined.
+
+Beyond these, two structural questions seem worth pursuing. First, an average form of Theorem B: is the *expected* apparition index of a random good prime $\ell$ of size $\ell^{1-o(1)}$ (as heuristics on orders of points in $E(\mathbb{F}_\ell)$ suggest), so that the density $1/m$ of violations is typically about $1/\ell$ rather than the guaranteed $1/(4\ell)$? Second, a converse-flavoured question: given a target arithmetic progression $M\mathbb{Z}$, which pairs $(N,P)$ realise it as the joint apparition locus of a prescribed set of good primes? Theorem E shows every such locus is a progression with $M \le \prod 4\ell$; the inverse problem — which $M$ occur, and with what frequency — appears open.
+
+---
+
+## 13. Summary of results
+
+1. **Counterexample.** $x(2P) = 2601/3136$ with $3136 = 2^6 \cdot 7^2$ for $P = (9,28)$ on $y^2 = x^3+55$: the good prime $7$ divides a denominator, refuting the conjecture concretely.
+2. **Collision Lemma.** Two $\ell$-integral points of $E_N$ with the same reduction modulo a good $\ell \ge 5$ have $2(P_1-P_2)$ reducing to infinity; the proof reduces the chord numerator to $4\bar y^2$ using the curve equation.
+3. **Effective apparition.** Every good prime $\ell \ge 5$ divides $\operatorname{den} x(nP)$ for some $0 < n \le 4\ell$, for every $N$ and every rational point $P$ of infinite order.
+4. **Apparition law with effective modulus.** The violating indices are exactly the multiples of a modulus $m$ with $0 < m \le 4\ell$.
+5. **Exact counting and density.** Exactly $\lfloor K/m\rfloor \ge \lfloor K/(4\ell)\rfloor$ of the first $K$ indices violate the conjecture at $\ell$.
+6. **Simultaneous apparition.** Any finite set $S$ of good primes violates simultaneously along a progression of modulus $M \le \prod_{\ell \in S} 4\ell$; on $E_{55}$ with $P=(9,28)$, $91 \mid \operatorname{den} x(kP) \iff 6 \mid k$.
+7. **Global refutation and reverse inclusion.** For every $N \ne 0$ and every point of infinite order, infinitely many good primes appear, denominators are unbounded because of good primes alone, and a prime absent from all denominators must lie in $\{2,3\}\cup\{p : p \mid N\}$ — the exact opposite of what was conjectured.

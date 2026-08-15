@@ -1,472 +1,467 @@
 """
-Denominators on Mordell curves: the failure of the "only bad primes" conjecture,
-the local criteria at the doubling and tripling layers, the exact residue-class
-counts, and the information barrier below a bound B.
+Apparition of good primes in Mordell-curve denominators.
+=========================================================
 
-Curve family:      E_N : y^2 = x^3 + N          (N a nonzero integer)
-Discriminant:      Delta(E_N) = -432 * N^2      (bad primes: 2, 3 and the primes of N)
+Numerical demonstration of the refutation of the "only bad primes" conjecture
+for the curves E_N : y^2 = x^3 + N over the rationals.
 
-Everything here is exact: rational arithmetic via `fractions.Fraction`, integer
-factorisation by trial division, and finite field work by brute force over Z/ell.
+The conjecture asserted that the primes dividing the denominators of the
+x-coordinates of the multiples nP of a rational point P are confined to the
+primes dividing the discriminant Delta = -432 N^2, i.e. to {2, 3} together with
+the prime divisors of N.  It is false.  This script demonstrates, with exact
+arithmetic:
 
-Run:  python3 demo.py
+  1.  The counterexample: on E_55 with P = (9, 28) one has
+      x(2P) = 2601/3136 and 3136 = 2^6 * 7^2, so the good prime 7 occurs.
+  2.  The apparition law: the indices n at which a prime L divides the
+      denominator of x(nP) are exactly the multiples of a single modulus m,
+      the apparition index of L.
+  3.  The identification m = order of the reduced point in E_N(F_L), which
+      turns an intractable rational computation into a cheap finite-field one.
+  4.  The effective bound 0 < m <= 4L for every prime L >= 5 with L not
+      dividing N (every prime of good reduction beyond 2 and 3).
+  5.  Positive density: exactly floor(K/m) >= floor(K/(4L)) of the first K
+      indices violate the conjecture at L.
+  6.  Simultaneous apparition: for a finite set S of good primes, the product
+      of S divides the denominator exactly along the progression of modulus
+      lcm of the individual indices.  On E_55, 91 = 7 * 13 divides
+      den x(kP) if and only if 6 divides k.
+  7.  The reverse inclusion: the primes ABSENT from all denominators are
+      contained in {2, 3} union {p : p | N}, the exact opposite of the
+      conjectured inclusion.
+
+Pure standard library; no dependencies.
 """
 
 from __future__ import annotations
 
 from fractions import Fraction
-from math import factorial, gcd
+from math import gcd, isqrt
 from typing import Dict, List, Optional, Sequence, Tuple
 
-# --------------------------------------------------------------------------- #
-# Basic integer utilities
-# --------------------------------------------------------------------------- #
+# ----------------------------------------------------------------------------
+# Types
+# ----------------------------------------------------------------------------
+
+RatPoint = Optional[Tuple[Fraction, Fraction]]   # None is the point at infinity
+FinPoint = Optional[Tuple[int, int]]             # None is the point at infinity
 
 
-def is_prime(n: int) -> bool:
-    """Deterministic Miller-Rabin primality test (exact for all 64-bit inputs and beyond)."""
-    if n < 2:
-        return False
-    small_primes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37]
-    for p in small_primes:
-        if n % p == 0:
-            return n == p
-    d, s = n - 1, 0
-    while d % 2 == 0:
-        d //= 2
-        s += 1
-    for a in small_primes:
-        z = pow(a, d, n)
-        if z in (1, n - 1):
-            continue
-        for _ in range(s - 1):
-            z = z * z % n
-            if z == n - 1:
-                break
-        else:
-            return False
-    return True
+# ----------------------------------------------------------------------------
+# 1.  Exact group law on E_N : y^2 = x^3 + N over Q
+# ----------------------------------------------------------------------------
 
+def rat_add(P: RatPoint, Q: RatPoint, N: int) -> RatPoint:
+    """Add two points of E_N : y^2 = x^3 + N over the rationals.
 
-def _pollard_rho(n: int) -> int:
-    """Return a nontrivial factor of the composite n (Brent's variant of Pollard's rho)."""
-    if n % 2 == 0:
-        return 2
-    c = 1
-    while True:
-        x, y, d = 2, 2, 1
-        while d == 1:
-            x = (x * x + c) % n
-            y = (y * y + c) % n
-            y = (y * y + c) % n
-            d = gcd(abs(x - y), n)
-        if d != n:
-            return d
-        c += 1
-
-
-def factorize(n: int) -> Dict[int, int]:
-    """Prime factorisation of |n| (trial division on small primes, then Pollard rho)."""
-    n = abs(n)
-    out: Dict[int, int] = {}
-    if n <= 1:
-        return out
-    for d in [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47]:
-        while n % d == 0:
-            out[d] = out.get(d, 0) + 1
-            n //= d
-    stack = [n] if n > 1 else []
-    while stack:
-        m = stack.pop()
-        if m == 1:
-            continue
-        if is_prime(m):
-            out[m] = out.get(m, 0) + 1
-            continue
-        f = _pollard_rho(m)
-        stack.extend([f, m // f])
-    return out
-
-
-def primes_up_to(bound: int) -> List[int]:
-    """All primes <= bound, by a simple sieve of Eratosthenes."""
-    if bound < 2:
-        return []
-    sieve = [True] * (bound + 1)
-    sieve[0] = sieve[1] = False
-    for i in range(2, int(bound**0.5) + 1):
-        if sieve[i]:
-            for j in range(i * i, bound + 1, i):
-                sieve[j] = False
-    return [i for i, ok in enumerate(sieve) if ok]
-
-
-def bad_primes(nn: int) -> List[int]:
-    """The primes dividing Delta(E_N) = -432 N^2, i.e. {2, 3} union primes of N."""
-    return sorted({2, 3} | set(factorize(nn)))
-
-
-# --------------------------------------------------------------------------- #
-# The group law on E_N : y^2 = x^3 + N over Q
-# --------------------------------------------------------------------------- #
-
-Point = Optional[Tuple[Fraction, Fraction]]  # None is the point at infinity O
-
-
-def on_curve(nn: int, p: Point) -> bool:
-    """Test whether p lies on E_N (the point at infinity always does)."""
-    if p is None:
-        return True
-    x, y = p
-    return y * y == x * x * x + nn
-
-
-def add_points(nn: int, p: Point, q: Point) -> Point:
-    """Chord-and-tangent addition on E_N : y^2 = x^3 + N."""
-    if p is None:
-        return q
-    if q is None:
-        return p
-    x1, y1 = p
-    x2, y2 = q
-    if x1 == x2 and y1 == -y2:
-        return None
-    if p == q:
-        if y1 == 0:
-            return None
-        lam = Fraction(3 * x1 * x1, 2 * y1)
+    `None` denotes the point at infinity (the group identity).
+    """
+    if P is None:
+        return Q
+    if Q is None:
+        return P
+    x1, y1 = P
+    x2, y2 = Q
+    if x1 == x2:
+        if y1 != y2 or y1 == 0:
+            return None                      # P = -Q, so P + Q = O
+        lam = (3 * x1 * x1) / (2 * y1)       # duplication
     else:
-        lam = Fraction(y2 - y1, x2 - x1)
+        lam = (y2 - y1) / (x2 - x1)          # chord
     x3 = lam * lam - x1 - x2
     y3 = lam * (x1 - x3) - y1
     return (x3, y3)
 
 
-def multiply_point(nn: int, p: Point, k: int) -> Point:
-    """Compute k*P by double-and-add."""
-    result: Point = None
-    base = p
-    m = k
-    while m > 0:
-        if m & 1:
-            result = add_points(nn, result, base)
-        base = add_points(nn, base, base)
-        m >>= 1
-    return result
+def rat_orbit(P: Tuple[Fraction, Fraction], N: int, length: int) -> List[RatPoint]:
+    """Return [P, 2P, 3P, ..., (length)P] computed with exact rationals."""
+    out: List[RatPoint] = []
+    Q: RatPoint = None
+    for _ in range(length):
+        Q = rat_add(Q, P, N)
+        out.append(Q)
+        if Q is None:
+            break
+    return out
 
 
-def x_denominator(p: Point) -> int:
-    """Denominator of the x-coordinate of a finite point, in lowest terms."""
-    assert p is not None, "the point at infinity has no x-coordinate"
-    return p[0].denominator
+def x_denominator(Q: RatPoint) -> Optional[int]:
+    """Denominator of the x-coordinate in lowest terms; None at infinity."""
+    return None if Q is None else Q[0].denominator
 
 
-# --------------------------------------------------------------------------- #
-# Division-polynomial data at layers 2 and 3
-# --------------------------------------------------------------------------- #
+def small_prime_part(n: int, bound: int = 200) -> Tuple[Dict[int, int], int]:
+    """Factor out all primes <= `bound`; return (factorisation, cofactor)."""
+    factors: Dict[int, int] = {}
+    p = 2
+    while p <= bound:
+        while n % p == 0:
+            factors[p] = factors.get(p, 0) + 1
+            n //= p
+        p += 1
+    return factors, n
 
 
-def psi3(nn: int, x: int) -> int:
-    """Third division polynomial of y^2 = x^3 + N:  psi_3(x) = 3x^4 + 12Nx = 3x(x^3+4N)."""
-    return 3 * x**4 + 12 * nn * x
+# ----------------------------------------------------------------------------
+# 2.  Group law on the reduced curve E_N(F_L)  (L prime, L >= 5, L not | N)
+# ----------------------------------------------------------------------------
+
+def fin_add(P: FinPoint, Q: FinPoint, N: int, L: int) -> FinPoint:
+    """Add two points of E_N over the finite field with L elements."""
+    if P is None:
+        return Q
+    if Q is None:
+        return P
+    x1, y1 = P
+    x2, y2 = Q
+    if x1 == x2:
+        if (y1 + y2) % L == 0:
+            return None
+        lam = (3 * x1 * x1) * pow(2 * y1, -1, L) % L
+    else:
+        lam = (y2 - y1) * pow(x2 - x1, -1, L) % L
+    x3 = (lam * lam - x1 - x2) % L
+    y3 = (lam * (x1 - x3) - y1) % L
+    return (x3, y3)
 
 
-def phi3(nn: int, x: int) -> int:
-    """Numerator of x(3P):  phi_3(x) = x^9 - 96Nx^6 + 48N^2x^3 + 64N^3."""
-    return x**9 - 96 * nn * x**6 + 48 * nn**2 * x**3 + 64 * nn**3
+def reduce_point(P: Tuple[Fraction, Fraction], L: int) -> FinPoint:
+    """Reduce an L-integral rational point modulo L."""
+    x, y = P
+    if x.denominator % L == 0 or y.denominator % L == 0:
+        return None                                  # already at infinity mod L
+    xr = x.numerator * pow(x.denominator, -1, L) % L
+    yr = y.numerator * pow(y.denominator, -1, L) % L
+    return (xr, yr)
 
 
-def double_x(nn: int, x: int, y: int) -> Fraction:
-    """x(2P) = (x^4 - 8Nx) / (4y^2) for an integral point (x, y) of E_N."""
-    return Fraction(x**4 - 8 * nn * x, 4 * y**2)
+def apparition_index(P: Tuple[Fraction, Fraction], N: int, L: int) -> int:
+    """ALGORITHM A.  The apparition index of the good prime L for the point P:
+    the least m > 0 with L | den x(mP), equivalently the order of the reduction
+    of P in E_N(F_L).  Cost: O(L) field operations (naive), each O(log^2 L).
+    """
+    Pbar = reduce_point(P, L)
+    if Pbar is None:
+        return 1
+    Q: FinPoint = Pbar
+    m = 1
+    limit = 4 * L + 1                       # the proved bound: m <= 4L
+    while Q is not None and m <= limit:
+        Q = fin_add(Q, Pbar, N, L)
+        m += 1
+    if Q is not None:
+        raise RuntimeError(f"apparition index of {L} exceeded the proved bound 4L")
+    return m
 
 
-def triple_x(nn: int, x: int) -> Fraction:
-    """x(3P) = phi_3(x) / psi_3(x)^2 for an integral point with psi_3(x) != 0."""
-    return Fraction(phi3(nn, x), psi3(nn, x) ** 2)
+def joint_apparition_modulus(P: Tuple[Fraction, Fraction], N: int,
+                             S: Sequence[int]) -> int:
+    """ALGORITHM C.  Modulus M with (prod S) | den x(kP)  <=>  M | k.
+    By the simultaneous apparition theorem, M = lcm of the individual indices.
+    """
+    M = 1
+    for L in S:
+        m = apparition_index(P, N, L)
+        M = M * m // gcd(M, m)
+    return M
 
 
-# --------------------------------------------------------------------------- #
-# Residue-class loci mod ell
-# --------------------------------------------------------------------------- #
+# ----------------------------------------------------------------------------
+# 3.  Small helpers
+# ----------------------------------------------------------------------------
+
+def primes_up_to(n: int) -> List[int]:
+    sieve = bytearray([1]) * (n + 1)
+    sieve[0:2] = b"\x00\x00"
+    for p in range(2, isqrt(n) + 1):
+        if sieve[p]:
+            sieve[p * p:: p] = bytearray(len(sieve[p * p:: p]))
+    return [i for i in range(n + 1) if sieve[i]]
 
 
-def vanishing_classes_2(nn: int, ell: int) -> List[int]:
-    """V_2(N, ell) = { t in F_ell : t^3 + N = 0 }, the layer-2 producing classes."""
-    return [t for t in range(ell) if (t**3 + nn) % ell == 0]
+def is_good_prime(L: int, N: int) -> bool:
+    """L is a prime of good reduction for E_N beyond 2 and 3: L >= 5, L not | N."""
+    return L >= 5 and N % L != 0
 
 
-def vanishing_classes_3(nn: int, ell: int) -> List[int]:
-    """V_3(N, ell) = { t in F_ell : 3t^4 + 12Nt = 0 }, the layer-3 producing classes."""
-    return [t for t in range(ell) if (3 * t**4 + 12 * nn * t) % ell == 0]
+def hasse_bound(L: int) -> float:
+    return L + 1 + 2 * (L ** 0.5)
 
 
-# --------------------------------------------------------------------------- #
-# Demonstration 1: the counterexample N = 55, P = (9, 28)
-# --------------------------------------------------------------------------- #
+def rule(title: str) -> None:
+    print()
+    print("=" * 78)
+    print(title)
+    print("=" * 78)
 
+
+# ----------------------------------------------------------------------------
+# Demonstration 1 — the counterexample
+# ----------------------------------------------------------------------------
 
 def demo_counterexample() -> None:
-    print("=" * 74)
-    print("1.  The counterexample:  N = 55 = 5 * 11,  P = (9, 28) on y^2 = x^3 + 55")
-    print("=" * 74)
-    nn, x, y = 55, 9, 28
-    assert y * y == x**3 + nn
-    print(f"    Delta(E_55) = -432 * 55^2 = {-432 * nn**2}")
-    print(f"    bad primes  = {bad_primes(nn)}")
+    rule("1.  THE COUNTEREXAMPLE:  N = 55 = 5 * 11,  P = (9, 28)  on  y^2 = x^3 + 55")
+    N = 55
+    P = (Fraction(9), Fraction(28))
+    assert P[1] ** 2 == P[0] ** 3 + N, "P must lie on the curve"
+    print(f"  P = (9, 28) lies on the curve:  28^2 = {28**2} = 9^3 + 55 = {9**3 + 55}")
 
-    x2 = double_x(nn, x, y)
-    print(f"\n    x(2P) = (9^4 - 8*55*9) / (4*28^2) = {x2.numerator}/{x2.denominator}")
-    print(f"    denominator {x2.denominator} = {factorize(x2.denominator)}")
-    print(f"    7 divides the denominator, and 7 does not divide Delta:"
-          f" {x2.denominator % 7 == 0 and (-432 * nn**2) % 7 != 0}")
-    print("    ==> the 'only bad primes' conjecture is FALSE.")
+    # duplication formula  x(2P) = (x^4 - 8Nx) / (4y^2)
+    x, y = P
+    x2_formula = (x ** 4 - 8 * N * x) / (4 * y ** 2)
+    two_P = rat_add(P, P, N)
+    assert two_P is not None and two_P[0] == x2_formula
+    num, den = two_P[0].numerator, two_P[0].denominator
+    print(f"  x(2P) = (9^4 - 8*55*9) / (4*(9^3 + 55)) = {num}/{den}")
+    print(f"  denominator {den} factors as {small_prime_part(den)[0]}")
 
-    print(f"\n    Mechanism:  y = 28 = 2^2 * 7, and 7 | y forces 7^2 | 4y^2 while")
-    print(f"    the numerator x^4 - 8Nx = 2601 = 3^2 * 17^2 is prime to 7.")
-    print(f"    Equivalently 9^3 + 55 = 784 = 2^4 * 7^2, so P reduces to a point")
-    print(f"    of order 2 modulo 7 and 2P reduces to the identity.")
-
-    x3 = triple_x(nn, x)
-    print(f"\n    x(3P) = {x3.numerator}/{x3.denominator}")
-    print(f"    psi_3(9) = {psi3(nn, 9)} = {factorize(psi3(nn, 9))}")
-    print(f"    denominator factorisation: {factorize(x3.denominator)}")
-    print("    the good primes 13 and 73 appear; the bad primes 5 and 11 do not.")
+    disc = -432 * N * N
+    bad = sorted({p for p in primes_up_to(100) if disc % p == 0})
+    print(f"  discriminant Delta = -432 * 55^2 = {disc}")
+    print(f"  bad primes (dividing Delta): {bad}")
+    print("  BUT 7 divides the denominator and 7 is NOT among them:")
+    print(f"      Delta mod 7 = {disc % 7}  ->  7 is a prime of GOOD reduction.")
+    print("  The 'only bad primes' conjecture is false.")
 
 
-# --------------------------------------------------------------------------- #
-# Demonstration 2: the local criteria, checked against the true denominators
-# --------------------------------------------------------------------------- #
+# ----------------------------------------------------------------------------
+# Demonstration 2 — the denominator spectrum of an initial segment
+# ----------------------------------------------------------------------------
 
-
-def demo_criteria(nn: int = 55, x: int = 9, y: int = 28, bound: int = 200) -> None:
+def demo_spectrum(N: int = 55, length: int = 10) -> None:
+    rule("2.  THE DENOMINATOR SPECTRUM OF THE ORBIT (exact rational arithmetic)")
+    P = (Fraction(9), Fraction(28))
+    print(f"  n | digits |  small-prime part of den x(nP)   (primes < 200)")
+    print("  --+--------+--------------------------------------------------")
+    for n, Q in enumerate(rat_orbit(P, N, length), start=1):
+        d = x_denominator(Q)
+        assert d is not None
+        fac, _ = small_prime_part(d)
+        pretty = " * ".join(f"{p}^{e}" for p, e in sorted(fac.items())) or "1"
+        print(f" {n:2d} | {len(str(d)):6d} |  {pretty}")
     print()
-    print("=" * 74)
-    print(f"2.  Local criteria at layers 2 and 3 (N = {nn}, P = ({x}, {y}), primes <= {bound})")
-    print("=" * 74)
-    d2 = double_x(nn, x, y).denominator
-    d3 = triple_x(nn, x).denominator
-    print("    layer 2:  ell | den x(2P)  <=>  ell | y  <=>  x^3 + N = 0 in F_ell")
-    print("    layer 3:  ell | den x(3P)  <=>  ell | psi_3(x) = 3x(x^3 + 4N)")
+    print("  The good primes 7, 13, 17, 19, 43, 73, 179 all occur.")
+    print("  The bad prime 5 occurs at n = 5, 10; the bad prime 11 does not occur")
+    print("  at all in this range: bad primes are PERMITTED to be absent, good")
+    print("  primes are not.")
+
+
+# ----------------------------------------------------------------------------
+# Demonstration 3 — the apparition law, verified two independent ways
+# ----------------------------------------------------------------------------
+
+def demo_apparition_law(N: int = 55, length: int = 10) -> None:
+    rule("3.  THE APPARITION LAW:  L | den x(nP)  <=>  m_L | n")
+    P = (Fraction(9), Fraction(28))
+    orbit = rat_orbit(P, N, length)
+    dens = [x_denominator(Q) for Q in orbit]
+
+    print("  L  | index m (from E_N(F_L)) | indices n <= %d with L | den x(nP)"
+          % length)
+    print("  ---+------------------------+---------------------------------")
+    for L in [7, 13, 17, 19, 43, 73, 179]:
+        m = apparition_index(P, N, L)
+        hits = [n for n, d in enumerate(dens, start=1) if d is not None and d % L == 0]
+        predicted = [n for n in range(1, length + 1) if n % m == 0]
+        assert hits == predicted, (L, hits, predicted)
+        print(f" {L:3d} | {m:22d} | {hits}   (= multiples of {m})")
     print()
-    print("    ell   good?   den2?  crit2   den3?  crit3")
-    for ell in primes_up_to(bound):
-        if ell < 5 or nn % ell == 0:
+    print("  The cheap finite-field computation reproduces the expensive rational")
+    print("  one exactly.  Denominators grow like c^(n^2); apparition indices do not.")
+
+
+# ----------------------------------------------------------------------------
+# Demonstration 4 — the effective bound 4L, and the sharper Hasse bound
+# ----------------------------------------------------------------------------
+
+def demo_effective_bound(N: int = 55, prime_bound: int = 200) -> None:
+    rule("4.  EVERY GOOD PRIME APPEARS, AND APPEARS BEFORE STEP 4L")
+    P = (Fraction(9), Fraction(28))
+    worst_ratio = 0.0
+    worst_L = 0
+    rows: List[Tuple[int, int]] = []
+    for L in primes_up_to(prime_bound):
+        if not is_good_prime(L, N):
             continue
-        c2 = (y % ell == 0)
-        c3 = (psi3(nn, x) % ell == 0)
-        a2 = (d2 % ell == 0)
-        a3 = (d3 % ell == 0)
-        assert a2 == c2 and a3 == c3, f"criterion failed at ell = {ell}"
-        if a2 or a3:
-            print(f"    {ell:>4}   good     {str(a2):>5}  {str(c2):>5}   "
-                  f"{str(a3):>5}  {str(c3):>5}")
-    print("    (all primes 5 <= ell <= %d of good reduction verified; only the" % bound)
-    print("     denominator-active ones are listed)")
-
-
-# --------------------------------------------------------------------------- #
-# Demonstration 3: the residue-class counting laws
-# --------------------------------------------------------------------------- #
-
-
-def demo_counting(bound: int = 60) -> None:
+        m = apparition_index(P, N, L)
+        assert 0 < m <= 4 * L, "effective apparition bound violated"
+        assert m <= hasse_bound(L), "Hasse-sharp bound (conjecture C1) violated"
+        rows.append((L, m))
+        if m / L > worst_ratio:
+            worst_ratio, worst_L = m / L, L
+    print(f"  Tested all {len(rows)} good primes L <= {prime_bound}.")
+    print("  Every one has a finite apparition index: every one appears.")
+    print(f"  Every index satisfies the proved bound m <= 4L,")
+    print(f"  and also the sharper conjectural bound m <= L + 1 + 2*sqrt(L).")
+    print(f"  Worst observed ratio m/L = {worst_ratio:.3f}  (at L = {worst_L});")
+    print("  the proved bound allows 4.000, so the guarantee is far from tight.")
     print()
-    print("=" * 74)
-    print("3.  Counting the denominator-producing residue classes")
-    print("=" * 74)
-    print("    supersingular ell = 2 mod 3 : #V2 = 1 and #V3 = 2, always")
-    print("    ordinary      ell = 1 mod 3 : #V2 in {0,3} and #V3 in {1,4}")
+    print("  L :  m   |" * 1)
+    line = ""
+    for i, (L, m) in enumerate(rows[:26]):
+        line += f" {L:3d}:{m:4d} "
+        if (i + 1) % 6 == 0:
+            print("   " + line)
+            line = ""
+    if line:
+        print("   " + line)
+
+
+# ----------------------------------------------------------------------------
+# Demonstration 5 — positive density of the violations
+# ----------------------------------------------------------------------------
+
+def demo_density(N: int = 55) -> None:
+    rule("5.  POSITIVE DENSITY:  #{n <= K : L | den x(nP)} = floor(K/m) >= floor(K/4L)")
+    P = (Fraction(9), Fraction(28))
+    print("   L  |  m  | density 1/m | guarantee 1/(4L) |  count for K = 10000")
+    print("  ----+-----+-------------+------------------+---------------------")
+    K = 10_000
+    for L in [7, 13, 17, 43, 73, 101, 179]:
+        m = apparition_index(P, N, L)
+        exact = K // m
+        guaranteed = K // (4 * L)
+        assert exact >= guaranteed
+        print(f"  {L:3d} | {m:3d} |   {1/m:9.6f} |      {1/(4*L):11.6f} |"
+              f"  {exact:6d}  (>= {guaranteed})")
     print()
-    print("    ell  ell%3   #V2(55)  #V3(55)   sum_c #V2 = ell   sum_c #V3 = 2ell-1")
-    for ell in primes_up_to(bound):
-        if ell < 5:
-            continue
-        v2 = len(vanishing_classes_2(55, ell))
-        v3 = len(vanishing_classes_3(55, ell))
-        s2 = sum(len(vanishing_classes_2(c, ell)) for c in range(ell))
-        s3 = sum(len(vanishing_classes_3(c, ell)) for c in range(ell))
-        assert s2 == ell and s3 == 2 * ell - 1
-        if ell % 3 == 2:
-            assert v2 == 1 and (55 % ell == 0 or v3 == 2)
-        elif 55 % ell != 0:
-            assert v2 in (0, 3) and v3 in (1, 4)
-        print(f"    {ell:>3}    {ell % 3}       {v2}        {v3}          "
-              f"{s2:>4} = {ell:<4}      {s3:>4} = {2 * ell - 1}")
+    print("  The conjecture does not fail on a thin exceptional set: for every")
+    print("  good prime it fails at a positive proportion of ALL indices.")
+
+
+# ----------------------------------------------------------------------------
+# Demonstration 6 — simultaneous apparition
+# ----------------------------------------------------------------------------
+
+def demo_simultaneous(N: int = 55, length: int = 12) -> None:
+    rule("6.  SIMULTANEOUS APPARITION:  91 = 7 * 13 divides den x(kP) iff 6 | k")
+    P = (Fraction(9), Fraction(28))
+    M = joint_apparition_modulus(P, N, [7, 13])
+    print(f"  apparition index of  7 : {apparition_index(P, N, 7)}")
+    print(f"  apparition index of 13 : {apparition_index(P, N, 13)}")
+    print(f"  joint modulus M = lcm  : {M}")
+    orbit = rat_orbit(P, N, length)
+    hits = [n for n, Q in enumerate(orbit, start=1)
+            if (d := x_denominator(Q)) is not None and d % 91 == 0]
+    assert hits == [n for n in range(1, length + 1) if n % M == 0]
+    print(f"  indices n <= {length} with 91 | den x(nP): {hits}  (= multiples of {M})")
     print()
-    print("    N = 55:  V2 mod 7  =", vanishing_classes_2(55, 7),
-          " (and 9 = 2 mod 7, hence 7 is active)")
-    print("    N = 55:  V2 mod 13 =", vanishing_classes_2(55, 13),
-          " (13 is blind at layer 2)")
-    print("    N = 55:  V3 mod 13 =", vanishing_classes_3(55, 13),
-          " (but active at layer 3: 9 = 9 mod 13)")
-
-
-def demo_active_densities(bound: int = 100) -> None:
+    for S in ([7, 13], [7, 13, 17], [7, 13, 17, 19], [7, 13, 17, 19, 43]):
+        M = joint_apparition_modulus(P, N, S)
+        prod = 1
+        for L in S:
+            prod *= L
+        bound = 1
+        for L in S:
+            bound *= 4 * L
+        print(f"  S = {S}: product {prod} divides den x(kP) iff {M} | k"
+              f"   (proved bound on the modulus: {bound})")
     print()
-    print("=" * 74)
-    print("4.  How many residues N mod ell are denominator-active?")
-    print("=" * 74)
-    print("    layer 2, ell = 2 mod 3 : all ell residues")
-    print("    layer 2, ell = 1 mod 3 : exactly (ell + 2)/3 residues")
-    print("    layer 3               : all ell residues, for every prime")
+    print("  Arbitrarily many good primes conspire, simultaneously, along an")
+    print("  arithmetic progression of positive density.")
+
+
+# ----------------------------------------------------------------------------
+# Demonstration 7 — the reverse inclusion
+# ----------------------------------------------------------------------------
+
+def demo_reverse_inclusion(N: int = 55, length: int = 10,
+                           prime_bound: int = 200) -> None:
+    rule("7.  THE REVERSE INCLUSION:  absent primes lie in {2, 3} u {p : p | N}")
+    P = (Fraction(9), Fraction(28))
+    orbit = rat_orbit(P, N, length)
+    dens = [x_denominator(Q) for Q in orbit]
+    present: List[int] = []
+    absent: List[int] = []
+    for L in primes_up_to(prime_bound):
+        if any(d is not None and d % L == 0 for d in dens):
+            present.append(L)
+        else:
+            absent.append(L)
+    print(f"  primes <= {prime_bound} present in the first {length} denominators:")
+    print(f"    {present}")
+    print(f"  good primes L <= {prime_bound} absent so far (they must appear by 4L):")
+    late = [L for L in absent if is_good_prime(L, N)]
+    print(f"    {len(late)} of them; each has apparition index > {length}:")
+    print("    " + ", ".join(f"{L}(m={apparition_index(P, N, L)})" for L in late[:12])
+          + (" ..." if len(late) > 12 else ""))
     print()
-    print("    ell  ell%3   active2   predicted   density2      active3")
-    for ell in primes_up_to(bound):
-        if ell < 5:
-            continue
-        a2 = sum(1 for c in range(ell) if vanishing_classes_2(c, ell))
-        a3 = sum(1 for c in range(ell) if vanishing_classes_3(c, ell))
-        pred = ell if ell % 3 == 2 else (ell + 2) // 3
-        assert a2 == pred and a3 == ell
-        print(f"    {ell:>3}    {ell % 3}      {a2:>5}      {pred:>5}     "
-              f"{a2 / ell:0.4f}        {a3:>4}")
+    print("  Enlarging the orbit to K = 4L captures each of them; the primes that")
+    print("  are absent FOREVER are contained in {2, 3} u {5, 11} -- exactly the")
+    print("  reverse of the conjectured inclusion.")
 
 
-# --------------------------------------------------------------------------- #
-# Demonstration 5: every prime >= 5 occurs at layer 3
-# --------------------------------------------------------------------------- #
+# ----------------------------------------------------------------------------
+# Demonstration 8 — the factoring barrier over a family of semiprimes
+# ----------------------------------------------------------------------------
 
-
-def demo_realisation(primes: Sequence[int] = (5, 7, 11, 13, 17, 19, 23, 29, 31)) -> None:
-    print()
-    print("=" * 74)
-    print("5.  Every prime ell >= 5 is a good-reduction denominator prime")
-    print("      witness:  N = 1 - ell^3,  P = (ell, 1),  layer 3")
-    print("=" * 74)
-    print("    ell        N = 1 - ell^3   ell | Delta?   ell | den x(3P)?")
-    for ell in primes:
-        nn = 1 - ell**3
-        assert 1 == ell**3 + nn
-        divides_delta = (-432 * nn**2) % ell == 0
-        d3 = triple_x(nn, ell).denominator
-        assert not divides_delta and d3 % ell == 0
-        print(f"    {ell:>3}   {nn:>16}        {str(divides_delta):>5}"
-              f"            {str(d3 % ell == 0):>5}")
-
-
-# --------------------------------------------------------------------------- #
-# Demonstration 6: the semiprime survey
-# --------------------------------------------------------------------------- #
-
-
-def find_integral_point(nn: int, x_bound: int = 400) -> Optional[Tuple[int, int]]:
-    """Search for a small integral point (x, y) on E_N with y != 0."""
-    for x in range(-x_bound, x_bound + 1):
-        v = x**3 + nn
+def find_rational_point(N: int, search: int = 200) -> Optional[Tuple[Fraction, Fraction]]:
+    """Search for a small integral point (x, y) on y^2 = x^3 + N."""
+    for x in range(-search, search + 1):
+        v = x ** 3 + N
         if v <= 0:
             continue
-        r = int(round(v ** 0.5))
-        for cand in (r - 1, r, r + 1):
-            if cand > 0 and cand * cand == v:
-                return (x, cand)
+        r = isqrt(v)
+        if r * r == v and r != 0:
+            return (Fraction(x), Fraction(r))
     return None
 
 
-def demo_survey(layers: int = 4) -> None:
-    print()
-    print("=" * 74)
-    print("6.  Survey of semiprimes: which primes actually show up in denominators?")
-    print("=" * 74)
-    semiprimes = [(5, 11), (3, 7), (5, 7), (7, 11), (3, 11), (5, 13),
-                  (7, 13), (3, 13), (11, 13), (5, 17), (3, 17)]
-    print("    N=pq   P=(x,y)     denominator primes of x(nP), 2 <= n <= %d" % layers)
-    hits_p = hits_q = only_bad = total = 0
-    for p, q in semiprimes:
-        nn = p * q
-        pt = find_integral_point(nn)
-        if pt is None:
+def demo_factoring_barrier(length: int = 8) -> None:
+    rule("8.  THE FACTORING BARRIER:  denominators do not reveal p and q")
+    semiprimes = [15, 21, 33, 35, 55, 65, 77, 85, 91, 115, 143]
+    header = "   N=p*q |  P found   | p in dens? | q in dens? | only {2,3,p,q}? | #good primes seen"
+    print(header)
+    print("  " + "-" * (len(header) - 2))
+    saw_p = saw_q = only_bad = tested = 0
+    for N in semiprimes:
+        P = find_rational_point(N)
+        if P is None:
             continue
-        total += 1
-        x, y = pt
-        seen: set[int] = set()
-        base: Point = (Fraction(x), Fraction(y))
-        for n in range(2, layers + 1):
-            r = multiply_point(nn, base, n)
-            if r is None:
-                continue
-            seen |= set(factorize(x_denominator(r)))
-        if p in seen:
-            hits_p += 1
-        if q in seen:
-            hits_q += 1
-        if seen <= {2, 3, p, q}:
-            only_bad += 1
-        print(f"    {nn:>4}   ({x:>3},{y:>4})   {sorted(seen)}")
+        factors, _ = small_prime_part(N, N)
+        ps = sorted(factors)
+        if len(ps) != 2:
+            continue
+        p, q = ps[0], ps[-1]
+        dens = [d for d in (x_denominator(Q) for Q in rat_orbit(P, N, length))
+                if d is not None]
+        occurs = {L for L in primes_up_to(300)
+                  if any(d % L == 0 for d in dens)}
+        good_seen = {L for L in occurs if is_good_prime(L, N)}
+        has_p, has_q = p in occurs, q in occurs
+        clean = occurs <= {2, 3, p, q}
+        tested += 1
+        saw_p += has_p
+        saw_q += has_q
+        only_bad += clean
+        print(f"  {N:6d} | ({str(P[0]):>4},{str(P[1]):>5}) |"
+              f"    {'yes' if has_p else ' no':>3}     |    {'yes' if has_q else ' no':>3}     |"
+              f"       {'yes' if clean else 'NO':>3}       | {len(good_seen)}")
     print()
-    print(f"    smaller factor p appears : {hits_p}/{total} = {100 * hits_p / total:0.1f}%")
-    print(f"    larger  factor q appears : {hits_q}/{total} = {100 * hits_q / total:0.1f}%")
-    print(f"    only {{2,3,p,q}} appear     : {only_bad}/{total} = "
-          f"{100 * only_bad / total:0.1f}%")
+    print(f"  Over {tested} semiprimes: smaller factor present in "
+          f"{100*saw_p/tested:.1f}% of cases, larger factor in "
+          f"{100*saw_q/tested:.1f}%,")
+    print(f"  and the conjectured property 'only {{2,3,p,q}} occur' holds in "
+          f"{100*only_bad/tested:.1f}% of cases.")
+    print("  Whether L divides a denominator depends only on the order of the")
+    print("  reduced point in E_N(F_L) -- a quantity computable from N without")
+    print("  knowing its factorisation.  The denominator sequence is a function")
+    print("  of N as an integer, not of how N splits.")
 
 
-# --------------------------------------------------------------------------- #
-# Demonstration 7: the information barrier
-# --------------------------------------------------------------------------- #
-
-
-def barrier_twin(nn: int, bound: int, search_limit: int = 10_000_000) -> Optional[int]:
-    """
-    Find a prime M > N with M = N (mod B!), so that the layer-2 and layer-3
-    criteria of E_M agree with those of E_N at every prime ell <= B.
-    """
-    modulus = factorial(bound)
-    if gcd(nn, modulus) != 1:
-        return None
-    m = nn + modulus
-    while m < nn + search_limit * modulus:
-        if is_prime(m):
-            return m
-        m += modulus
-    return None
-
-
-def demo_barrier(nn: int = 17 * 19, bound: int = 13) -> None:
-    print()
-    print("=" * 74)
-    print(f"7.  The information barrier at B = {bound}")
-    print("=" * 74)
-    m = barrier_twin(nn, bound)
-    assert m is not None and is_prime(m)
-    print(f"    N = {nn} = {factorize(nn)}  (a semiprime, both factors > B)")
-    print(f"    M = {m}  (prime),  M = N mod {bound}! = {factorial(bound)}")
-    print()
-    print("    ell   V2(N)                V2(M)                V3(N) = V3(M)?")
-    for ell in primes_up_to(bound):
-        v2n, v2m = vanishing_classes_2(nn, ell), vanishing_classes_2(m, ell)
-        v3n, v3m = vanishing_classes_3(nn, ell), vanishing_classes_3(m, ell)
-        assert v2n == v2m and v3n == v3m
-        print(f"    {ell:>3}   {str(v2n):<20} {str(v2m):<20} {v3n == v3m}")
-    print("    every criterion below B agrees: the data cannot tell the semiprime")
-    print("    N apart from the prime M, let alone reveal the factors of N.")
-
-    print()
-    print("    A larger example:")
-    nn2 = 10007 * 10009
-    b2 = 11
-    m2 = barrier_twin(nn2, b2)
-    assert m2 is not None
-    print(f"    N = 10007 * 10009 = {nn2},   B = {b2}")
-    print(f"    M = {m2} is prime and congruent to N modulo {b2}! = {factorial(b2)}")
-    agree = all(vanishing_classes_2(nn2, ell) == vanishing_classes_2(m2, ell)
-                and vanishing_classes_3(nn2, ell) == vanishing_classes_3(m2, ell)
-                for ell in primes_up_to(b2))
-    print(f"    all layer-2 and layer-3 loci at primes <= {b2} agree: {agree}")
-
-
-# --------------------------------------------------------------------------- #
-
+# ----------------------------------------------------------------------------
 
 def main() -> None:
+    print(__doc__)
     demo_counterexample()
-    demo_criteria()
-    demo_counting()
-    demo_active_densities()
-    demo_realisation()
-    demo_survey()
-    demo_barrier()
-    print()
-    print("All assertions passed.")
+    demo_spectrum()
+    demo_apparition_law()
+    demo_effective_bound()
+    demo_density()
+    demo_simultaneous()
+    demo_reverse_inclusion()
+    demo_factoring_barrier()
+    rule("ALL ASSERTIONS PASSED")
 
 
 if __name__ == "__main__":
