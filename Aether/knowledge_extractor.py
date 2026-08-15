@@ -1665,11 +1665,10 @@ Research mode: {concept.research_mode}
             if not job.project_dir or not Path(job.project_dir).is_dir():
                 raise ValueError(f"Failed to build project directory for job {job.job_id[:8]}: {job.project_dir}")
 
-        # Retain .lake build-cache dirs! The Aristotle SDK automatically strips
-        # massive source directories (like packages/mathlib), but keeping the
-        # lightweight skeleton structure (e.g., manifest, minimal packages, and
-        # local build oleans) silences SDK warnings and drastically speeds up
-        # remote compilation times.
+        # Keep the .lake skeleton dirs (empty) to satisfy the SDK's expected
+        # project layout and silence upload warnings. Compiled artifacts
+        # (.olean/.ilean, build caches) are stripped by the SDK on upload and
+        # are never sent, so no Lean toolchain or lake build is needed here.
 
         last_error = None
         try:
