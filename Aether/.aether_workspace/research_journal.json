@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "d8dbb938",
-      "domain": "Combinatorics",
-      "key_insight": "# Future directions\n\nThe results close the question the investigation asked: a residue-dial family with conductor\nlcm `M*` adds at most a factor `M*/gcd(M*, m)` to a partial-key hint `p mod m`, that f",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 70,
-      "timestamp": "2026-08-13T06:53:28",
-      "title": "Residue Dials Cannot Amplify a Coppersmith Hint, Closed"
-    },
-    {
       "cycle_id": "6092c7cd",
       "domain": "Algebra",
       "key_insight": "# Future Directions — Free-Witness Thresholds after the Separation Principle\n\nEverything below is derived from the verified results in\n`Catalog/Algebra/FreeWitnessTraceThreshold.lean`.  The organising",
@@ -499,19 +489,19 @@
       "theorem_count": 41,
       "timestamp": "2026-08-15T17:43:29",
       "title": "The 'Only Bad Primes' Conjecture is False (elliptic curve denominators)"
+    },
+    {
+      "cycle_id": "79242ce3",
+      "domain": "Cryptography",
+      "key_insight": "# Future directions\n\nDerived from the verified results in\n`Catalog/Cryptography/MordellDenominators/` (all statements there are proved in\nLean 4 with no `sorry`), together with the exploratory data in",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 78,
+      "timestamp": "2026-08-15T19:41:15",
+      "title": "The 'Only Bad Primes' Conjecture is False (elliptic curve denominators)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "5357ee14",
-      "domain": "Shared",
-      "key_insight": "# Future directions\n\nDerived from the results now proved in `Catalog/Shared/DreamRevisionNormalForm.lean`\n(last-occurrence normalization `mem_reviseSeq`, extensional rigidity `reviseSeq_ext_iff`,\nnorm",
-      "quality_score": 0.79609,
-      "sorry_count": 0,
-      "theorem_count": 37,
-      "timestamp": "2026-08-05T06:55:48",
-      "title": "**Conjecture.** Every finite sequence of signed-literal revisions has a unique n"
-    },
     {
       "cycle_id": "6a4657f8",
       "domain": "Shared",
@@ -2501,27 +2491,19 @@
       "theorem_count": 31,
       "timestamp": "2026-08-15T18:55:39",
       "title": "The 'Only Bad Primes' Conjecture is False (elliptic curve denominators)"
+    },
+    {
+      "cycle_id": "79242ce3",
+      "domain": "Cryptography",
+      "key_insight": "# Future directions\n\nDerived from the verified results in\n`Catalog/Cryptography/MordellDenominators/` (all statements there are proved in\nLean 4 with no `sorry`), together with the exploratory data in",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 78,
+      "timestamp": "2026-08-15T19:41:15",
+      "title": "The 'Only Bad Primes' Conjecture is False (elliptic curve denominators)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "8590e003",
-      "domain": "Probability",
-      "name": "empMI_perfect_correlation",
-      "quality": 0.87
-    },
-    {
-      "cycle_id": "8590e003",
-      "domain": "Probability",
-      "name": "empMI_perfect_correlation_pos",
-      "quality": 0.87
-    },
-    {
-      "cycle_id": "c98081c2",
-      "domain": "Novelty",
-      "name": "lcmUpTo_ne_zero",
-      "quality": 0.82
-    },
     {
       "cycle_id": "c98081c2",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "card_good_primes_appearing_ge",
       "quality": 0.85
+    },
+    {
+      "cycle_id": "79242ce3",
+      "domain": "Cryptography",
+      "name": "num_mul_den_eq",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "79242ce3",
+      "domain": "Cryptography",
+      "name": "prime_dvd_den_of_eq_div",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "79242ce3",
+      "domain": "Cryptography",
+      "name": "den_sq_eq_den_cube",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-15T18:55:39",
+  "last_updated": "2026-08-15T19:41:15",
   "open_questions": [
     {
       "context": "-    sorry+  -- On the certified range, extract the primitive divisor from the",
@@ -3331,12 +3331,6 @@
     ],
     "Cryptography": [
       {
-        "cycle_id": "9f23a455",
-        "quality": 0.686,
-        "theorems": 68,
-        "title": "Zero-Knowledge Proofs: Schnorr Protocol"
-      },
-      {
         "cycle_id": "2e6f6f76",
         "quality": 0.686,
         "theorems": 100,
@@ -3389,6 +3383,12 @@
         "quality": 0.82,
         "theorems": 74,
         "title": "Singular Moduli Factoring and the √N Barrier"
+      },
+      {
+        "cycle_id": "79242ce3",
+        "quality": 0.82,
+        "theorems": 78,
+        "title": "The 'Only Bad Primes' Conjecture is False (elliptic curve denominators)"
       }
     ],
     "Geometry": [

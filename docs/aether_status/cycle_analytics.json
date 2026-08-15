@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-15T18:55:42.320311+00:00",
+  "last_updated": "2026-08-15T19:41:18.093709+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -56146,6 +56146,49 @@
       "theorem_novelty_new": 28,
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-08-15T18:55:42.133347+00:00",
+      "title": "The 'Only Bad Primes' Conjecture is False (elliptic curve denominators)"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Cryptography",
+      "duration_seconds": 2729.4698173999786,
+      "end_time": 1786822854.8500571,
+      "files_integrated": 5,
+      "job_id": "79242ce3",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.82,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.544,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.82,
+        "novelty": 0.82,
+        "proof_depth": 0.82,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1786820125.3802397,
+      "strategy_count": 0,
+      "theorem_count": 78,
+      "theorem_novelty_disproof": 9,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 59,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-08-15T19:41:17.904153+00:00",
       "title": "The 'Only Bad Primes' Conjecture is False (elliptic curve denominators)"
     }
   ]
