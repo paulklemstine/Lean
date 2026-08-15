@@ -1,3 +1,4 @@
+import Mathlib
 /-
 Copyright (c) 2026 Harmonic. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
@@ -18,8 +19,7 @@ also produces dense sets containing no `t`-fold sumset with all parts of size
 * `exists_dense_set_avoiding_polylog_multifold_sumsets` — the resulting
   polylogarithmic, all-`t`-at-once, dense-set theorem.
 -/
-import Bridges.DenseSumsetFree.Main
-
+-- MISSING MODULE (not present in this repository): import Bridges.DenseSumsetFree.Main
 open Finset Pointwise
 
 namespace DenseSumsetFree

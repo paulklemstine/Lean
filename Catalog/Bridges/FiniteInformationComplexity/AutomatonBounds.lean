@@ -29,8 +29,7 @@ proof compression, automata semantics, coding complexity, semantic capacity.
 
 import Mathlib
 import Logic.GraphTheory.Defs
-import Bridges.FiniteInformationComplexity.EntropyBounds
-
+import Bridges.EntropyBounds
 open scoped BigOperators
 open Finset Real Classical
 

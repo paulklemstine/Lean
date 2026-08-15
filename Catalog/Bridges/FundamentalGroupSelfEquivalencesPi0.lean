@@ -18,8 +18,7 @@ Combined with the connected case this exhibits the two extremes of the general a
 `π₀` contributes permutations, each vertex group contributes its outer automorphisms.
 -/
 import Mathlib
-import Catalog.Bridges.FundamentalGroupOuterAutomorphisms
-
+import Bridges.FundamentalGroupOuterAutomorphisms
 open CategoryTheory
 open FundamentalGroupOut
 

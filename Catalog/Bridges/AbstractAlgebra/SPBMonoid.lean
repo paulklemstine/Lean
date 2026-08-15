@@ -1,5 +1,8 @@
 import Mathlib
 import Logic.StrangeLoops.Core
+import Bridges.SPBBridge.AlgebraicIdentities
+open SPBResearch
+open Real
 
 /-! # CatalogBuild.Bridges.SPBMonoid
 
@@ -68,7 +71,8 @@ theorem tan_add_is_spb (α β : ℝ)
     (hβ : ∀ k : ℤ, β ≠ (2 * ↑k + 1) * π / 2)
     (h : 1 - Real.tan α * Real.tan β ≠ 0) :
     Real.tan (α + β) = spb (Real.tan α) (Real.tan β) := by
-  rw [ Real.tan_add, spb ];
-  grind +splitImp
+  rw [Real.tan_add (Or.inl ⟨hα, hβ⟩)]
+  unfold spb
+  rfl
 
 end

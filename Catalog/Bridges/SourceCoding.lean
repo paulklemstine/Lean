@@ -13,8 +13,7 @@ classical source coding theorem.
 -/
 
 import Mathlib
-import Bridges.IdempotentInfoTheory.MinEntropy
-
+import Bridges.MinEntropy
 open Finset Real BigOperators NonArchInfoTheory
 
 namespace NonArchInfoTheory

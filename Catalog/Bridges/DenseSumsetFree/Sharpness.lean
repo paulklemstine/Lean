@@ -1,3 +1,4 @@
+import Mathlib
 /-
 Copyright (c) 2026 Harmonic. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
@@ -23,8 +24,7 @@ threshold cannot be lowered to a constant.
   hypotheses of the counting theorem are satisfiable (`n = 1024`, density `1/2`,
   `l = 21`), so the machinery is not vacuous.
 -/
-import Bridges.DenseSumsetFree.Main
-
+-- MISSING MODULE (not present in this repository): import Bridges.DenseSumsetFree.Main
 open Finset Pointwise
 
 namespace DenseSumsetFree

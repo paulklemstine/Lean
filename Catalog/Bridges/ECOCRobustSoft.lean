@@ -27,8 +27,7 @@ built from tropical Satake score gaps. The central results are:
 These results show that tropical Hecke score certificates are compositional: per-bit
 certified margins aggregate through an ECOC decoder according to weighted Hamming separation.
 -/
-import Bridges.TropicalAlgebra.ECOCDefs
-
+import Bridges.ECOCDefs
 open scoped BigOperators
 open Finset
 

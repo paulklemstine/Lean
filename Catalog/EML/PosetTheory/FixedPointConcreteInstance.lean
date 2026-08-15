@@ -1,5 +1,5 @@
 import Mathlib
-import EML.NeuralCoding.FixedPointConvergence
+import EML.FixedPointConvergence
 import EML.PosetTheory.FixedPointRate
 
 /-!

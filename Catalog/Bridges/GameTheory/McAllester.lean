@@ -34,6 +34,42 @@ noncomputable section
 
 namespace PACBayes
 
+/-! ## Section 0: The data of a McAllester bound
+
+The record below packages the four numerical ingredients of a PAC-Bayes bound
+(sample size, confidence level, KL divergence of posterior against prior, empirical
+Gibbs risk) together with their admissibility constraints, and defines the McAllester
+bound itself.  It was referenced throughout this file but was missing from the
+project, so the file did not elaborate. -/
+
+/-- The data entering a McAllester PAC-Bayes bound. -/
+structure PACBayesBound where
+  /-- Sample size. -/
+  n : ℕ
+  /-- Confidence parameter. -/
+  δ : ℝ
+  /-- KL divergence of the posterior against the prior. -/
+  kl : ℝ
+  /-- Empirical Gibbs risk. -/
+  empRisk : ℝ
+  /-- At least one sample. -/
+  hn : 1 ≤ n
+  /-- The confidence parameter is positive. -/
+  hδ0 : 0 < δ
+  /-- The confidence parameter is less than one. -/
+  hδ1 : δ < 1
+  /-- KL divergences are nonnegative. -/
+  hkl : 0 ≤ kl
+  /-- The empirical risk is nonnegative. -/
+  hemp0 : 0 ≤ empRisk
+  /-- The loss is bounded by one, hence so is the empirical risk. -/
+  hemp1 : empRisk ≤ 1
+
+/-- The McAllester bound
+`L̂(Q) + √((KL(Q‖P) + log (2√n/δ)) / (2n))`. -/
+def PACBayesBound.mcAllesterBound (b : PACBayesBound) : ℝ :=
+  b.empRisk + Real.sqrt ((b.kl + Real.log (2 * Real.sqrt b.n / b.δ)) / (2 * b.n))
+
 /-! ## Section 1: Concentration for Bounded Losses -/
 
 /-- For bounded loss ℓ ∈ [0,1], the expected exponential of the gap
@@ -100,7 +136,7 @@ theorem mcallester_gen_gap (b : PACBayesBound)
     (hpos : 0 ≤ b.kl + Real.log (2 * Real.sqrt b.n / b.δ)) :
     b.mcAllesterBound - b.empRisk =
       Real.sqrt ((b.kl + Real.log (2 * Real.sqrt b.n / b.δ)) / (2 * b.n)) := by
-  exact?
+  simp [PACBayesBound.mcAllesterBound]
 
 /-! ## Section 4: Comparison with Hoeffding -/
 

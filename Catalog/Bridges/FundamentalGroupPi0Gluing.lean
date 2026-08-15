@@ -19,8 +19,7 @@ of connected components (`componentsSigmaEquiv`), this says exactly that the pai
 such a 1-type.
 -/
 import Mathlib
-import Catalog.Bridges.FundamentalGroupK1Deepening
-
+import Bridges.FundamentalGroupK1Deepening
 open CategoryTheory
 open FundamentalGroupCompleteInvariant (ConnectedAt
   connectedGroupoids_equivalent_of_aut_mulEquiv connectedGroupoids_equivalent_iff_aut_mulEquiv)

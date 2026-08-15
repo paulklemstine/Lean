@@ -21,8 +21,7 @@ up to behavioral equivalence.
 -/
 
 import Mathlib
-import Bridges.LogicComputation.CausalClosure
-
+import Bridges.CausalClosure
 open Finset Function
 
 /-! ## Finite Reversible Transition Systems -/

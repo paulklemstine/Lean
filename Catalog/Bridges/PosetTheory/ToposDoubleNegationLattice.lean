@@ -1,6 +1,5 @@
 import Mathlib
-import Bridges.PosetTheory.KnasterTarskiBridge
-
+import Bridges.KnasterTarskiBridge
 /-! # The Subobject Lattice of a Topos: Double Negation as a Nucleus
 
 This file is the **logic ↔ topology** facet of the category-theory bridge.

@@ -1,6 +1,5 @@
-import Novelty.RamseyTheory.StrongChromaticBipartite
-import Novelty.PosetTheory.RiordanRowSumFibonacci
-
+import Bridges.StrongChromaticBipartite
+import Novelty.RiordanRowSumFibonacci
 /-!
 # Bridge: the strong chromatic index of Fibonacci-sized complete bipartite graphs
 

@@ -16,8 +16,7 @@ bijection of their sets of connected components matching the fundamental groups 
 corresponding components.  This settles conjecture N2 of `FUTURE_DIRECTIONS.md`.
 -/
 import Mathlib
-import Catalog.Bridges.FundamentalGroupPi0Gluing
-
+import Bridges.FundamentalGroupPi0Gluing
 open CategoryTheory
 open FundamentalGroupCompleteInvariant (ConnectedAt)
 open FundamentalGroupK1Deep (Components isoSetoid)

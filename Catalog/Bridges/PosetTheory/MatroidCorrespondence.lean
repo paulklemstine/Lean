@@ -1,6 +1,5 @@
 import Mathlib
-import Bridges.PosetTheory.MatroidMinorFiniteBasis
-
+import Bridges.MatroidMinorFiniteBasis
 /-!
 # Matroid correspondences as order-theoretic functors
 

@@ -30,8 +30,7 @@ This file extends the sheaf-theoretic framework for tropical persistence with:
 -/
 
 import Mathlib
-import Bridges.LFunctions.SheafPersistence
-
+import Bridges.SheafPersistence
 open Finset BigOperators Classical
 
 set_option linter.unusedSectionVars false

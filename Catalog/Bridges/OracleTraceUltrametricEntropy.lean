@@ -11,8 +11,7 @@
   Keywords: ultrametric, entropy, capacity, certified_robustness,
             post_quantum_security, lattice_crypto, thermodynamic
 -/
-import Bridges.AlgebraSpeculative.LongestCommonValuedPrefix
-
+import Bridges.LongestCommonValuedPrefix
 open List Finset OracleTrace
 
 namespace OracleTrace

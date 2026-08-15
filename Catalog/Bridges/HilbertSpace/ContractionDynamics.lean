@@ -33,7 +33,7 @@ on β-equivalence classes with respect to the `eqPathDist` pseudometric.
 -/
 
 import Mathlib
-import Pythagorean.Pythagorean.BoundedBetaDefs
+import Pythagorean.BoundedBetaDefs
 import Pythagorean.DifferentialGeometry.NormalizationBisimDistance
 
 open Classical

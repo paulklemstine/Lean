@@ -8,8 +8,7 @@
   normal forms as thermodynamic ground states.
 -/
 import Mathlib
-import Bridges.QuantumSystems.ProofThermodynamicsCore
-
+import Bridges.ProofThermodynamicsCore
 open Real BigOperators Finset
 
 namespace ProofThermodynamics

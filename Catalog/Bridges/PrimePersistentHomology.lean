@@ -60,8 +60,7 @@ and the twin prime conjecture is the assertion that the length-`2` bar recurs
 forever.
 -/
 import Mathlib
-import Novelty.NumberTheory.BoundedGaps
-
+import Novelty.BoundedGaps
 open Relation
 
 namespace PrimePH

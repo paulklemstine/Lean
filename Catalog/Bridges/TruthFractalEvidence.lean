@@ -1,5 +1,4 @@
-import Bridges.ProbabilityAndStochastics.TruthFractal
-
+import Bridges.TruthFractal
 /-!
 # Finite computational evidence
 

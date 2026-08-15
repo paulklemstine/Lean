@@ -43,10 +43,9 @@ and, for the full wreath-product description, `FundamentalGroupWreathProduct.lea
 for pairwise inequivalent components none is.
 -/
 import Mathlib
-import Catalog.Bridges.FundamentalGroupOuterAutomorphisms
-import Catalog.Bridges.FundamentalGroupPi0Gluing
-import Catalog.Bridges.FundamentalGroupMapsClassification
-
+import Bridges.FundamentalGroupOuterAutomorphisms
+import Bridges.FundamentalGroupPi0Gluing
+import Bridges.FundamentalGroupMapsClassification
 open CategoryTheory
 open FundamentalGroupCompleteInvariant (ConnectedAt)
 open FundamentalGroupK1

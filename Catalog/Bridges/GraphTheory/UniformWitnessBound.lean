@@ -1,7 +1,6 @@
 import Mathlib
 import Logic.HoTT.Foundations
-import Bridges.CombinatorialBridge.CombinatorialBridge
-
+import Bridges.CombinatorialBridge
 /-! # The Uniform Witness Bound (corrected)
 
 This file formalizes the *uniform witness bound* for `(d+1)`-uniform set families

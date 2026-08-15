@@ -1,4 +1,7 @@
 import Mathlib
+import Bridges.SPBBridge.AlgebraicIdentities
+open Finset
+open SPBResearch
 
 /-! # CatalogBuild.Algebra.AnalysisInequalities
 

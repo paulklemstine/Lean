@@ -1,3 +1,4 @@
+import Mathlib
 /-
 Copyright (c) 2026 Harmonic. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
@@ -16,8 +17,7 @@ statement "dense subsets of `[n]` avoiding all sumsets with summands of size
 * `logScaleTarget_imp_log_cubed` — the target is indeed stronger than what we
   prove, so the development is consistent with, and a step towards, it.
 -/
-import Bridges.DenseSumsetFree.Main
-
+-- MISSING MODULE (not present in this repository): import Bridges.DenseSumsetFree.Main
 open Finset Pointwise
 
 namespace DenseSumsetFree

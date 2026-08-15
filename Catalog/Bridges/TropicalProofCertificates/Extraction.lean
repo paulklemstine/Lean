@@ -24,8 +24,7 @@ controlled by spectral geometry.
 
 import Mathlib
 import Logic.BasicMonotoneCircuit.Basic
-import output-final_aristotle.output-final_aristotle.Incomplete.MachineLearning.DepthHierarchy.Separation
-
+-- MISSING MODULE (not present in this repository): import output-final_aristotle...Tropical.Representation
 open Finset Function Set
 
 noncomputable section

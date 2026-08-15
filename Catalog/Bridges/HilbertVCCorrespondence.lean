@@ -5,8 +5,7 @@
   to MachineLearning (VC dimension, shattering, polynomial classifiers).
 -/
 import Mathlib
-import Bridges.HilbertSpace.RingTheoreticLearning
-
+import Bridges.RingTheoreticLearning
 open Finset BigOperators MvPolynomial
 
 noncomputable section
