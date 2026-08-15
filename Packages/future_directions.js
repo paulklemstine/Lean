@@ -24,7 +24,7 @@ window.FUTURE_DIRECTIONS = [
       "Novelty"
     ],
     "id": "fd_1104",
-    "phase": "B",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
@@ -33,7 +33,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The 3SUM-Birthday-Bound Hierarchy"
   },
   {
-    "consumed_by_exp_id": "24d606f0",
+    "consumed_by_exp_id": "356991ed",
     "description": "**Summary.** The conjecture that for E_N: y\u00b2 = x\u00b3 + N with N = pq, the\ndenominators of x(nP) are divisible only by {2, 3, p, q} (the primes dividing\n\u0394 = -432N\u00b2) is mathematically FALSE.\n\n**Counterexample.** N = 55 = 5\u00b711, P = (9,28) \u2208 E_55(Q):\n  x(2P) = (9^4 - 8\u00b755\u00b79) / (4(9^3 + 55)) = 2601/3136, and 3136 = 2^6 \u00b7 7^2.\nThe prime 7 divides the denominator but 7 \u2224 \u0394 (7 is a prime of good reduction).\n\n**Mechanism.** \u2113 | denom(x(nP)) iff nP \u2261 O (mod \u2113); good-reduction primes divide\ndenominators whenever the point reduces to torsion \u2014 infinitely many such primes.\n\n**Survey (11 semiprimes):** p appears in some denominator 54.5%, q appears 0%,\nonly-{2,3,p,q} holds 0% of the time. The denominator structure is a function of\nN alone (barrier 5) and does not cleanly reveal p, q.\n\n---\n\n*Factoring Lab paper. Status: proven theorem / verified / framework. This is a research deliverable, not a factoring breakthrough claim.*",
     "domains": [
       "Novelty"
@@ -48,7 +48,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The 'Only Bad Primes' Conjecture is False (elliptic curve denominators)"
   },
   {
-    "consumed_by_exp_id": "f9676350",
+    "consumed_by_exp_id": "e25c5e1e",
     "description": "**Summary.** Let F(k) = sum_{a=1}^{N} a^k. Then gcd(F(k), N) reveals a factor\nat k = p-1: for N = pq, gcd(F(p-1), N) = q (provided (q-1) does not divide (p-1)).\n\n**Key results (proven):**\n- **Theorem 1 (power-sum factor reveal):** Mod p the residues cover each nonzero\n  residue q times, so F(k) \u2261 q\u00b7(sum of k-th powers mod p); by FLT this is -q mod p\n  at k=p-1. Mod q it vanishes when (q-1) \u2224 (p-1). Hence gcd = q.\n- **Theorem 2 (robustness):** The power sum aggregates ALL bases a=1..N\n  simultaneously, so it cannot suffer Pollard p-1's \"bad base\" failure.\n- **Theorem 3 (Carmichael periodicity):** g(k) = gcd(F(k), N) has period\n  \u03bb(N) = lcm(p-1, q-1), so \u03bb(N) is readable from the period and the factors\n  follow from p+q = N - \u03bb(N) + 1.\n\n**Complexity.** First hit at k* = min(p-1,q-1) \u2248 \u221aN; cost per F(k) is O(N);\ntotal O(N^{3/2}) \u2014 worse than trial division. This is the SAME structure Shor's\nalgorithm exploits, made classically hard by the period-finding barrier.\nVerified on all 8 test semiprimes up to N \u2248 10^4.\n\n---\n\n*Factoring Lab paper. Status: proven theorem / verified / framework. This is a research deliverable, not a factoring breakthrough claim.*",
     "domains": [
       "Novelty"
@@ -414,7 +414,7 @@ window.FUTURE_DIRECTIONS = [
       "Novelty"
     ],
     "id": "fd_1180",
-    "phase": "B",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
@@ -926,6 +926,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-15T08:56:41.210989+00:00",
     "title": "NET-34: The depth leg of the attention-cost law (k*=4d) is seed-robust \u2014 k*=d\u00b7ctx/32 holds at every grid point at a second seed"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## Program\nNetwork/LLM research lab \u2014 round-net-35 (speed-axis round 8). Context-extrapolation of the attention-cost law beyond [128,256].\n\n## Question\nThe law k* = d\u00b7ctx/32 (\u2192 speedup 32/d, context-invariant) was established at a second seed in every cell of the (d\u2208{4,8} \u00d7 ctx\u2208{128,256}) grid (NET-15/16/20/33/34) \u2014 but the context leg rested on exactly ONE doubling (128\u2192256) and the whole ctx=512 regime was unmeasured. Does the law extrapolate to 4\u00d7 the longest measured context, or does k* break (superlinear k* would kill the context-invariant speedup \u2014 the economically important direction)?\n\n## Method\nByte-identical harness to NET-15/20/33 \u2014 CausalTF **d=4**, dm=64, 4 heads, 5 Gutenberg novels, vocab 4097, contiguous 90/10 split, 2000 AdamW steps \u2014 at **seed=1**, at **ctx=512** (1171 windows, 10% held out; train 2854s). Full-acc eval \u2192 Part A concentration \u2192 Part B top-k sweep {16,32,64,128,256,384} \u2192 Part B2 random-k control (seed 12345). k* = smallest k with retained \u2265 0.98\u00b7full. Prediction stated before the run: **k* = 64** (d\u00b7ctx/32 = 4\u00b7512/32).\n\n## Results (retained = acc/full vs 0.98 bar)\n\n| ctx | full acc | k sweep (retained) | k* | predicted |\n|---|---|---|---|---|\n| 128 (s0/s1) | 0.1571/0.1577 | 16\u21920.984/0.987 \u2713 | **16** | 16 |\n| 256 (s0/s1) | 0.1612/0.1599 | 32\u21920.989/0.990 \u2713 | **32** | 32 |\n| **512 (s1)** | 0.1616 | 16\u21920.940 \u2717 32\u21920.964 \u2717 64\u2192**0.983** \u2713 128\u21920.992 256\u21920.999 384\u21921.000 | **64** | 64 |\n\n1. **k* = 64 \u2014 EXACT.** The law holds across a 4\u00d7 context range at a second seed; the lever speedup = 32/d = 8\u00d7 at d=4 is context-invariant over the quadrupled range (NET-20's core claim \u2014 longer context buys no extra relative saving \u2014 now tested to 512). k=384 recovers full loss exactly (5.0827 = full).\n2. **NEW P3 CAVEAT (long-context margin erosion):** the k* pass clears the bar by only 0.003 (\u22482 SE) vs ~0.007\u20130.010 at 128/256, and retained is uniformly ~0.01 lower at every k. The knee is real (k=32 fails ~10 SE below bar; 0.964\u21920.983 is a 12 SE jump) \u2014 the law's KNEE stays exact but its margin erodes with context. Re-check at ctx=1024.\n3. **Concentration diffusion continues:** eff support 152.11 (46.4 \u2192 80.6 \u2192 152.1 across doublings, \u00d71.74/\u00d71.89); per-position 20.41/133.37/281.20 \u2014 NO bounded working set at 512.\n4. **Selection importance survives the longest context:** random-k gaps +5.3 (k=32) / +4.6 (k=64) \u2014 same family as 6.0\u20138.7 at 128/256.\n5. **Seven-model full-acc set 0.1571\u20130.1616**, k*-irrelevant.\n\n## Verdict\n**CONTEXT-EXTRAPOLATION CONFIRMED.** k* = d\u00b7ctx/32 holds exactly at ctx=512 (k* = 64 = 4\u00b7512/32) \u2014 the law's first point at 4\u00d7 the longest measured context \u2014 with the context-invariant lever intact and no bounded working set. The economically important claim (longer context buys no extra relative saving; 8\u00d7 absolute at d=4) survives a quadrupled context range, with a documented long-context margin erosion as the honest caveat.\n\n## Barriers (all 8 checked)\n(a) circularity: no \u2014 prediction stated before the run from the law; (b) known-method: no \u2014 context-extrapolation verification (Catalog re-scan: no context-scaling/top-k-pruning result at any context length); (c) toy-scale: confronted \u2014 longest context the testbed has used, real causal word LM, 4097 vocab; (d) leakage: none; (e) variance: the extrapolation cell is EXACT but single-seed \u2014 remaining single-seed: d=16 @ ctx=128, ctx=512 at d=8/16; (f) measurement: documented \u2014 k=384 recovers full loss exactly, retained 1.000 = re-normalization saturation as every prior context, the thin pass margin reported as the P3 caveat not hidden; (g) baselines: fair; (h) relevance: strengthened \u2014 context-invariance now holds across 4\u00d7 context.\n\n## Open\nctx=512 second seed; ctx=1024 (margin-erosion check); d=16 second seed @ ctx=128; ctx=512 at d=8/16; carry chain at scale (the frontier).\n\nPaper 79. Now 35 network experiments. Assessment v35. Script: /tmp/exp_net_attncost_ctx512.py; log: /tmp/net35.log.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_1301",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-15T09:48:24.870295+00:00",
+    "title": "NET-35: The attention-cost law extrapolates to 4x context \u2014 k*=d\u00b7ctx/32 holds at ctx=512 (k*=64), first point outside [128,256]"
   },
   {
     "consumed_by_exp_id": "",
