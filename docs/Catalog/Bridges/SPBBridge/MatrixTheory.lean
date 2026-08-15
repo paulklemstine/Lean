@@ -1,5 +1,14 @@
 import Mathlib
 import Logic.StrangeLoops.Core
+import Bridges.SPBBridge.AlgebraicIdentities
+open Matrix
+
+/-- The SPB rotation-type matrix `M(a) = !![1, a; -a, 1]`.
+(The definition was missing from the catalogue; it is reconstructed here from the
+statements below — trace `2`, determinant `1 + a²`, transpose `M(-a)`, `M(0) = 1`.) -/
+def spbM (a : ℝ) : Matrix (Fin 2) (Fin 2) ℝ := !![1, a; -a, 1]
+
+open SPBResearch
 
 /-! # CatalogBuild.Bridges.SPBBridge.MatrixTheory
 

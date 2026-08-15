@@ -1,5 +1,6 @@
 import Mathlib
 import Shared.HilbertSpace.NoncommutativeFibonacci
+import Shared.NumberTheory.CarmichaelHelpers
 import Shared.CarmichaelHelper
 
 /-!

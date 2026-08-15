@@ -1,76 +1,72 @@
-# Computational Evidence
+# Computational Evidence — 3SUM / birthday-bound factoring hierarchy
 
-All numbers below were produced with Lean `#eval` and the load-bearing ones are
-re-proved by kernel-checked `decide` inside `Catalog/Logic/*.lean`, so they are
-verified, not merely computed.
+All numbers below were produced by evaluation inside Lean (`#eval`) before the
+corresponding theorems were formalized.  The items marked **[formalized]** are
+now machine-checked theorems in `Catalog/Shared/`.
 
-## 1. 3SUM mod-p factor reveal, `N = 143 = 11 · 13`
+## 1. The `N = 143 = 11 · 13` census
 
-Enumeration of all triples `1 ≤ a < b < c ≤ 11` (165 triples):
+Triples `1 ≤ a < b < c ≤ n`, counting those whose sum is divisible by `11`
+("mod-p") and by `13` as well ("mod-both").
 
-| quantity | value |
-| total triples | 165 |
-| triples with `11 ∣ a+b+c` (mod-`p`-only) | **15** |
-| triples with `143 ∣ a+b+c` (mod-both) | **0** |
-| triples with `gcd(a+b+c, 143) = 11` | **15** |
+| `n`  | mod-11 only | mod-both |
+|-----:|------------:|---------:|
+| 10   | 10          | 0        |
+| 11   | 15          | 0        |
+| 12   | 20          | 0        |
 
-Formal counterparts (kernel-checked by `decide`):
-`ThreeSumBirthday.count_modP_143`, `count_modBoth_143`, `all_modP_triples_reveal`
-in `Catalog/Logic/ThreeSumBirthdayHierarchy.lean`.
+Unordered-with-repetition variants (`1 ≤ a ≤ b ≤ c ≤ n`, sum divisible by 11)
+give 20 (`n = 10`), 26 (`n = 11`), 33 (`n = 12`).
 
-*Note on the source claim.* The mission statement quotes "19 mod-p-only triples
-vs 0 mod-both for `N = 143`".  We could not reproduce 19 under any of the
-natural enumeration conventions we tried (`a<b<c` or `a≤b≤c`, ranges starting at
-0 or 1, ranges of length 8–15); e.g. `1 ≤ a<b<c ≤ 11` gives 15, `1 ≤ a<b<c ≤ 12`
-gives 20, `0 ≤ a<b<c ≤ 11` gives 15.  The *qualitative* claim (many mod-`p`-only
-triples, zero mod-both, every mod-`p`-only triple reveals `11`) is confirmed and
-formalised; we report our own verified count of 15 rather than the unreproduced 19.
+*Remark on the reported count 19.*  The source note reports "19 mod-p-only
+triples" without specifying the range; no natural range reproduces 19 exactly.
+The census actually verified in Lean is the `n = 12` row above (20 and 0).
+**[formalized]** `ThreeSumReveal.census_143_modp_only`,
+`ThreeSumReveal.census_143_mod_both`.
 
-Other semiprimes (same convention, range `1..n`):
+The empty mod-both column is not an accident of the range: every triple sum here
+is `< 143`, and no positive integer below `p·q` is divisible by both `p` and `q`.
+**[formalized]** `ThreeSumReveal.census_143_mod_both_reason`.
 
-| `N` | `n` | total | `p ∣ s` | `N ∣ s` | reveal `p` |
-| `143 = 11·13` | 11 | 165 | 15 | 0 | 15 |
-| `391 = 17·23` | 20 | 1140 | 67 | 0 | 67 |
-| `143 = 11·13` | 30 | 4060 | 369 | 0 | 369 |
-| `15 = 3·5` | 10 | 120 | 42 | 10 | 32 |
+## 2. Counterexample hunt for the reveal claim
 
-The last row is the informative one: as soon as the range exceeds `N`, the
-mod-both triples appear (10 of them) and exactly those fail to reveal —
-matching the density theorem `count_revealing_witnesses`
-(`q - 1` of every `q` mod-`p` witnesses per period reveal; here `42 - 10 = 32`).
+The claim tested was: `p ∣ s`, `0 < s < N = p·q` ⟹ `gcd(s, N) = p`, *without*
+assuming `q ∤ s`.  Exhaustive search over `N = 143, 221, 10403` and all
+`0 < s < N` divisible by the small factor found no counterexample; the reason is
+that `q ∣ s` would force `N ∣ s`.  **[formalized]**
+`ThreeSumReveal.Nat.gcd_eq_prime_of_dvd_of_lt` (the hypothesis `q ∤ s` is
+redundant).
 
-## 2. Reveal density
+## 3. The amplitude barrier, measured
 
-For `N = p·q` and `0 < s ≤ N`: exactly `q` values satisfy `p ∣ s` and exactly
-one of them (`s = N`) fails.  For `N = 143`: 13 witnesses, 12 reveals — proved
-as `reveal_density_143`.
+For `A = {1, …, M}` and 3-tuples, the smallest `M` for which some pair of triple
+sums has a difference `d` with `gcd(d, N) = p`:
 
-## 3. Threshold table (minimal search-set size `k` with `p < C(k,r)`)
+| `N`      | `p`  | smallest working `M` | prediction `⌈(p+3)/3⌉` |
+|---------:|-----:|---------------------:|-----------------------:|
+| `143`    | 11   | 5                    | 5                      |
+| `10403`  | 101  | 35                   | 35                     |
 
-| `p` | arity `r = 1` | `r = 2` | `r = 3` |
-| 100 | 101 | 15 | 10 |
-| 1000 | 1001 | 46 | 20 |
+The measured thresholds match the predicted amplitude bound exactly: the sums
+live in `[3, 3M]`, so a nontrivial congruence mod `p` needs `3M - 3 ≥ p`.
+**[formalized]** `CollisionFactoring.all_collisions_trivial_of_small`,
+`CollisionFactoring.sumset_card_le_amplitude`,
+`CollisionFactoring.rsum_needs_both_barriers` (`p ≤ r · M`).
 
-The search set shrinks like `p^{1/r}`, but the number of enumerated tuples
-`C(k,r)` stays above `p` in every row (`101`, `105`, `120` for `p = 100`).
-Formalised as `threshold_arity_one/two/three` and `cost_invariance_table`.
+## 4. The exponent gap, measured at `p = 997`
 
-## 4. Counterexample hunt
+| scheme | smallest `k` with `k^r > 997` | tuples inspected |
+|--------|------------------------------:|-----------------:|
+| sumset (`r = 2`) | 32 | 1024 |
+| 3SUM (`r = 3`)   | 10 | 1000 |
 
-* *Is `gcd(a+b+c, N) = p` automatic once `p ∣ a+b+c`?*  No: the row `N = 15`,
-  `n = 10` above exhibits 10 explicit failures (`s` divisible by 15), so the
-  hypothesis `q ∤ s` is necessary.  This is why the classification theorem
-  `gcd_semiprime_classification` covers all four cases.
-* *Is the deterministic `> p` cost bound also a randomised bound?*  No — this is
-  the one place where the source table overstates.  Counting shows the collision
-  probability with `m` tuples is `≤ C(m,2)/p`, so at `p = 10007`, `m = 100`
-  already leaves a majority of evaluations collision-free while `m ≈ √p`
-  suffices for constant success probability.  Formalised as
-  `randomized_barrier` / `barrier_gap_10007`.
+Storage drops from 32 to 10 (`p^{1/2} → p^{1/3}`), but the number of inspected
+tuples stays just above `p` in both cases.  **[formalized]**
+`BirthdayHierarchy.square_threshold_997`, `BirthdayHierarchy.cube_threshold_997`,
+`BirthdayHierarchy.exponent_gap_997`.
 
 ## 5. OEIS
 
-The counts of mod-`p` triples in an initial range are the "number of triples
-`a<b<c ≤ n` with `p ∣ a+b+c`" quasi-polynomials (`15, 20, 26, 33, 41, 51, …` for
-`p = 11`, `n = 11, 12, …`); we found no distinctive OEIS entry for this
-`p`-parametrised family and make no OEIS claim.
+The census counts (10, 15, 20, …) are the standard "number of triples with sum
+divisible by 11" counts and depend on the chosen range; no distinctive sequence
+was identified, and no OEIS match is claimed.

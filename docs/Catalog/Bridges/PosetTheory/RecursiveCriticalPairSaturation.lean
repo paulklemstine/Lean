@@ -1,5 +1,5 @@
 import Mathlib
-import Pythagorean.PosetTheory.HOCriticalPairs
+import Pythagorean.HOCriticalPairs
 import Pythagorean.PosetTheory.HigherOrderCompletion
 
 /-!

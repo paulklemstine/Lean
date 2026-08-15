@@ -1,7 +1,6 @@
 import Mathlib
 import Logic.BasicMonotoneCircuit.Basic
-import output-final_aristotle.output-final_aristotle.Incomplete.Tropical.Representation
-
+-- MISSING MODULE (not present in this repository): import output-final_aristotle...Tropical.Representation
 /-! # Minimality and Uniqueness of Tropical Representations
 
 **Theorem C:** Minimal finite tropical realizations are unique up to

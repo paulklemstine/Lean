@@ -25,9 +25,8 @@ This file supplies the first **nonabelian** examples (item 2 of `FUTURE_DIRECTIO
   union of two copies has `6² · 2 = 72` of them.
 -/
 import Mathlib
-import Catalog.Bridges.FundamentalGroupOuterAutomorphisms
-import Catalog.Bridges.FundamentalGroupWreathProduct
-
+import Bridges.FundamentalGroupOuterAutomorphisms
+import Bridges.FundamentalGroupWreathProduct
 open CategoryTheory
 open FundamentalGroupCompleteInvariant (ConnectedAt)
 open FundamentalGroupOut

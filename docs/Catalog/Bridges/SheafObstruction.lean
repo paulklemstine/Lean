@@ -24,8 +24,7 @@ comprehensive ladder of supporting lemmas.
 * 20+ supporting lemmas with diverse proof tactics
 -/
 
-import Bridges.PosetTheory.PrimeClosureLocale
-
+import Bridges.PrimeClosureLocale
 set_option maxHeartbeats 800000
 
 universe u v w

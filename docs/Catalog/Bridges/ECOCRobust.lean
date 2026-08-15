@@ -28,8 +28,7 @@ The formulation is motivated by the tropical geometry / representation theory pr
 connecting GL₃ Hecke algebras to robust classification via tropical Satake transforms.
 -/
 import Mathlib
-import Bridges.Combinatorics.HammingCode
-
+import Bridges.HammingCode
 open Finset ECOC
 
 namespace ECOC

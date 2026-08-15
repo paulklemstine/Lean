@@ -1,7 +1,6 @@
 import Mathlib
 import Bridges.ToposTheoreticML.Foundations
-import Bridges.PosetTheory.VCCompactness
-
+import Bridges.VCCompactness
 /-! # Topos-Theoretic Machine Learning: Hypothesis Topos Structure
 
 This file establishes topos-theoretic properties of presheaf categories

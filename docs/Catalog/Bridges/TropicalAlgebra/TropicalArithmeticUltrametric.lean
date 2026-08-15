@@ -49,8 +49,7 @@
 
 import Mathlib
 import Bridges.PosetTheory.ArithmeticVCDimension
-import Bridges.PosetTheory.CategoricalTropicalUltrametric
-
+import Bridges.CategoricalTropicalUltrametric
 open Function
 
 noncomputable section

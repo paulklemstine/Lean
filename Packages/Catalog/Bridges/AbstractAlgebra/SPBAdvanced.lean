@@ -1,4 +1,7 @@
 import Mathlib
+import Bridges.SPBBridge.AlgebraicIdentities
+open Real
+open SPBResearch
 
 /-! # CatalogBuild.Bridges.SPBAdvanced
 

@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-15T07:05:11.165582+00:00",
+  "last_updated": "2026-08-15T07:52:30.046346+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -55630,6 +55630,49 @@
       "theorem_novelty_new": 67,
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-08-15T07:05:10.942708+00:00",
+      "title": "CYCLIC-TYPE-CHANNEL (round-22 #2, experiment 413, assessment v189, paper 78)"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 2,
+      "domain": "Shared",
+      "duration_seconds": 2827.420357465744,
+      "end_time": 1786780318.715557,
+      "files_integrated": 7,
+      "job_id": "f2bb5930",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.72,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.499,
+        "cross_domain": 0.5,
+        "grade": "partial",
+        "importance": 0.72,
+        "novelty": 0.72,
+        "proof_depth": 0.72,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1786777491.2951996,
+      "strategy_count": 0,
+      "theorem_count": 15,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 10,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-08-15T07:52:29.795997+00:00",
       "title": "CYCLIC-TYPE-CHANNEL (round-22 #2, experiment 413, assessment v189, paper 78)"
     }
   ]

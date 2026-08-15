@@ -12,8 +12,7 @@ New theorems extending the Sheffer function program, including:
 import Mathlib
 -- import ShefferAI.Lean.SoftplusBasic
 import MachineLearning.ShefferFunction.Lean.ShefferAlgebra
-import ShefferAI.Lean.FutureTheorems
-
+import Bridges.FutureTheorems
 open Real
 
 noncomputable section

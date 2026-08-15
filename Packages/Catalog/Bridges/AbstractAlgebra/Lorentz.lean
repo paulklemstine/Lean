@@ -1,8 +1,33 @@
+import Mathlib
+import Shared.CatalogbuildSharedIspythquad.IsPythQuad
+open Matrix
 /- Original: LorentzCausalStructure.lean -/
 
 
 
 noncomputable section
+
+/-! ## Reconstructed definitions
+
+The catalogue file that carried these definitions is not present in the
+repository; they are reconstructed here from the statements proved below
+(Minkowski signature `(+,-,-,-)` and a boost in the `x`-direction). -/
+
+/-- The Minkowski inner product on `ℝ⁴` with signature `(+,-,-,-)`. -/
+def minkowskiInner (u v : Fin 4 → ℝ) : ℝ :=
+  u 0 * v 0 - (u 1 * v 1 + u 2 * v 2 + u 3 * v 3)
+
+/-- A vector is timelike when its Minkowski square is positive. -/
+def isTimelike (v : Fin 4 → ℝ) : Prop := 0 < minkowskiInner v v
+
+/-- A vector is null (lightlike) when its Minkowski square vanishes. -/
+def isNull (v : Fin 4 → ℝ) : Prop := minkowskiInner v v = 0
+
+/-- The Lorentz boost of rapidity `phi` in the `x`-direction. -/
+def lorentzBoostX (phi : ℝ) (v : Fin 4 → ℝ) : Fin 4 → ℝ := fun i =>
+  if i = 0 then Real.cosh phi * v 0 - Real.sinh phi * v 1
+  else if i = 1 then -(Real.sinh phi) * v 0 + Real.cosh phi * v 1
+  else v i
 
 /-- [Section: # CatalogBuild.Physics.Spacetime.LorentzCausalStructure
 Auto-generated from theorem catalog database.
@@ -42,7 +67,7 @@ theorem lorentz_boost_preserves_inner (phi : ℝ) (u v : Fin 4 → ℝ) :
   simp only [h01, h02, h03, h10, h12, h20, h21, h30, h31, ite_true, ite_false,
              if_neg, Ne, not_false_eq_true]
   have hcs := Real.cosh_sq_sub_sinh_sq phi
-  linear_combination -(u 0 * v 0) * hcs + u 1 * v 1 * hcs
+  linear_combination (u 0 * v 0 - u 1 * v 1) * hcs
 
 theorem lorentz_preserves_timelike (phi : ℝ) (v : Fin 4 → ℝ)
     (h : isTimelike v) : isTimelike (lorentzBoostX phi v) := by

@@ -8,8 +8,7 @@
   MUST converge, and the convergence is witnessed by finite generation.
 -/
 import Mathlib
-import Bridges.HilbertSpace.RingTheoreticLearning
-
+import Bridges.RingTheoreticLearning
 open Finset BigOperators
 
 noncomputable section

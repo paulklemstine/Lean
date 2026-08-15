@@ -1,7 +1,6 @@
 import Mathlib
 import Bridges.TreeCut.Decomposition
-import Novelty.PosetTheory.SequenceLemmas
-
+import Bridges.SequenceLemmas
 /-!
 # Degree-normalized linked tree-cut decompositions: the ray-level conclusion
 

@@ -1,3 +1,4 @@
+import Mathlib
 /-
 # Bisimulation-Minimized FTS as Semantic Canonical Forms
 
@@ -11,7 +12,7 @@ strong normalization, bisimulation quotient, typed lambda calculus,
 finite-state abstraction, semantic compression, model reduction
 -/
 
-import Pythagorean.Pythagorean.StrongNormBisimulation
+-- MISSING MODULE (not present in this repository): import Pythagorean.Pythagorean.StrongNormBisimulation
 import Pythagorean.ProofTheoryAndLogic.BoundedBetaTheorems
 
 /-! ## BetaStarStep decomposition -/

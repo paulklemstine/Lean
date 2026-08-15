@@ -1,6 +1,5 @@
 import Mathlib
-import EML.NeuralCoding.FixedPointConvergence
-
+import EML.FixedPointConvergence
 /-!
 # EML Fixed-Point Theorem: Certified Geometric Convergence Rate
 

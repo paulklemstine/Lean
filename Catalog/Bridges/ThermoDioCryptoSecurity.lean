@@ -8,8 +8,7 @@ spectral data to collision and preimage bounds for triple-based one-way maps.
 Keywords: entropy, post_quantum_security, certified_robustness, lattice_crypto, quantum_walk
 -/
 import Mathlib
-import Bridges.NeuralCoding.ThermoDioCryptoDefs
-
+import Bridges.ThermoDioCryptoDefs
 open Finset Real BigOperators
 
 namespace BerggrenCrypto

@@ -1,6 +1,5 @@
 import Bridges.PosetTheory.GaloisConnectionFixedPoints
-import Bridges.PosetTheory.KnasterTarskiBridge
-
+import Bridges.KnasterTarskiBridge
 /-!
 # Bridging the Galois-connection fixed points to Knaster–Tarski
 

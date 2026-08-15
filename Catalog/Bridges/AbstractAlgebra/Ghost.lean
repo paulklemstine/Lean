@@ -1,8 +1,108 @@
+import Mathlib
+open Matrix
+
+/-! ## Reconstructed definitions
+
+Several catalogue files that carried the definitions used below are missing from
+this repository; they are reconstructed here from the statements that are proved
+in this file.  `p`, `q` are the legs of the ghost triple (rows of the Barning–Hall
+matrix), `syndrome` is its Lorentz form, `ghostMatrix` the integer matrix
+implementing `(a,b,c) ↦ (p,q,h)`, and `pellNum`/`compPell` the Pell and
+half-companion Pell sequences. -/
+
+/-- First leg of the ghost triple. -/
+def p (a b c : ℤ) : ℤ := a + 2*b - 2*c
+
+/-- Second leg of the ghost triple. -/
+def q (a b c : ℤ) : ℤ := 2*a + b - 2*c
+
+/-- The Pell numbers `0, 1, 2, 5, 12, 29, …`. -/
+def pellNum : ℕ → ℤ
+  | 0 => 0
+  | 1 => 1
+  | (n + 2) => 2 * pellNum (n + 1) + pellNum n
+
+/-- The half-companion Pell numbers `1, 1, 3, 7, 17, 41, …`. -/
+def compPell : ℕ → ℤ
+  | 0 => 1
+  | 1 => 1
+  | (n + 2) => 2 * compPell (n + 1) + compPell n
+
+theorem pellNum_rec (n : ℕ) : pellNum (n + 2) = 2 * pellNum (n + 1) + pellNum n := rfl
+
+theorem compPell_rec (n : ℕ) : compPell (n + 2) = 2 * compPell (n + 1) + compPell n := rfl
+
+/-- The two coupled one-step relations for the Pell pair. -/
+theorem pell_steps_aux (n : ℕ) :
+    pellNum (n + 1) = pellNum n + compPell n ∧
+      compPell (n + 1) = compPell n + 2 * pellNum n := by
+  induction n with
+  | zero => exact ⟨rfl, rfl⟩
+  | succ k ih =>
+    obtain ⟨hP, hH⟩ := ih
+    refine ⟨?_, ?_⟩
+    · rw [pellNum_rec, hH]; linarith [hP]
+    · rw [compPell_rec, hP]; linarith [hH]
+
+/-- The Pell square identity `H n ^ 2 - 2 * P n ^ 2 = (-1) ^ n`. -/
+theorem pell_sq_identity (n : ℕ) :
+    compPell n ^ 2 - 2 * pellNum n ^ 2 = (-1 : ℤ) ^ n := by
+  induction n with
+  | zero => decide
+  | succ k ih =>
+    obtain ⟨hP, hH⟩ := pell_steps_aux k
+    rw [hP, hH, pow_succ]
+    linear_combination -ih
+
 /- Original: GhostAlgebra.lean -/
 
 
 
 def hParam (a b c : ℤ) : ℤ := 3*c - 2*(a + b)
+
+/-- The Lorentz syndrome `p² + q² − h²` of a ghost triple. -/
+def syndrome (a b c : ℤ) : ℤ := p a b c ^ 2 + q a b c ^ 2 - hParam a b c ^ 2
+
+/-- The integer matrix implementing the ghost map `(a, b, c) ↦ (p, q, h)`. -/
+def ghostMatrix : Matrix (Fin 3) (Fin 3) ℤ := !![1, 2, -2; 2, 1, -2; -2, -2, 3]
+
+/-- The ghost matrix, under its short name. -/
+def M : Matrix (Fin 3) (Fin 3) ℤ := ghostMatrix
+
+/-- First Barning–Hall matrix. -/
+def B₁ : Matrix (Fin 3) (Fin 3) ℤ := !![1, -2, 2; 2, -1, 2; 2, -2, 3]
+
+/-- Second Barning–Hall matrix (the inverse of the ghost matrix). -/
+def B₂ : Matrix (Fin 3) (Fin 3) ℤ := !![1, 2, 2; 2, 1, 2; 2, 2, 3]
+
+/-- Third Barning–Hall matrix. -/
+def B₃ : Matrix (Fin 3) (Fin 3) ℤ := !![-1, 2, 2; -2, 1, 2; -2, 2, 3]
+
+/-- Inverse of `B₁`. -/
+def B₁_inv : Matrix (Fin 3) (Fin 3) ℤ := !![1, 2, -2; -2, -1, 2; -2, -2, 3]
+
+/-- Inverse of `B₃`. -/
+def B₃_inv : Matrix (Fin 3) (Fin 3) ℤ := !![-1, -2, 2; 2, 1, -2; -2, -2, 3]
+
+/-- Closed form of the `n`-th power of the ghost matrix in Pell numbers. -/
+def ghostMatrix_closed (n : ℕ) : Matrix (Fin 3) (Fin 3) ℤ :=
+  !![compPell n ^ 2, 2 * pellNum n ^ 2, -2 * pellNum n * compPell n;
+     2 * pellNum n ^ 2, compPell n ^ 2, -2 * pellNum n * compPell n;
+     -2 * pellNum n * compPell n, -2 * pellNum n * compPell n,
+       compPell n ^ 2 + 2 * pellNum n ^ 2]
+
+/-- The closed form is correct at the first two exponents. -/
+theorem ghostMatrix_closed_verified :
+    ghostMatrix ^ 0 = ghostMatrix_closed 0 ∧ ghostMatrix ^ 1 = ghostMatrix_closed 1 := by
+  constructor <;>
+    · ext i j
+      fin_cases i <;> fin_cases j <;>
+        simp [ghostMatrix, ghostMatrix_closed, pellNum, compPell, Matrix.one_apply]
+
+/-- The ghost matrix preserves the Lorentz form `a² + b² − c²`. -/
+theorem ghostMatrix_lorentz (a b c : ℤ) :
+    p a b c ^ 2 + q a b c ^ 2 - hParam a b c ^ 2 = a ^ 2 + b ^ 2 - c ^ 2 := by
+  simp only [p, q, hParam]; ring
 
 def fourthGhost (a b c : ℤ) : ℤ × ℤ × ℤ := (-p a b c, -q a b c, hParam a b c)
 
@@ -370,10 +470,12 @@ theorem pellNum_compPell_step (n : ℕ) :
 /-- [Section: ### The matrix recurrence] -/
 theorem ghostMatrix_closed_mul_step (n : ℕ) :
     ghostMatrix_closed n * ghostMatrix = ghostMatrix_closed (n + 1) := by
-  unfold ghostMatrix_closed;
-  unfold ghostMatrix;
-  ext i j; fin_cases i <;> fin_cases j <;> norm_num [ Matrix.mul_apply, Fin.sum_univ_succ ] <;> ring;
-  all_goals rw [ Nat.add_comm 1 n ] ; simp +decide [ compPell_sq_step, pellNum_compPell_step ] ; ring;
+  obtain ⟨hP, hH⟩ := pell_steps_aux n
+  unfold ghostMatrix_closed ghostMatrix
+  rw [hP, hH]
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    simp [Matrix.mul_apply, Fin.sum_univ_succ] <;> ring
 
 /-- **Main theorem**: M^n = ghostMatrix_closed n for all n ∈ ℕ. -/
 theorem ghostMatrix_pow_eq_closed (n : ℕ) :

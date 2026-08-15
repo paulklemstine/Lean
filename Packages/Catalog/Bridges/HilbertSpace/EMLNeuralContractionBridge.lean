@@ -1,8 +1,7 @@
 import Mathlib
-import EML.NeuralCoding.FixedPointConvergence
+import EML.FixedPointConvergence
 import EML.PosetTheory.FixedPointConcreteInstance
-import MachineLearning.TropicalAlgebra.ResNetLipschitz
-
+import MachineLearning.ResNetLipschitz
 /-!
 # Bridge: EML Fixed-Point Contraction ↔ ResNet Residual-Block Lipschitz Growth
 

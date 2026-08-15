@@ -31,6 +31,30 @@ def spb (x y : ℝ) : ℝ := (x + y) / (1 - x * y)
 /-- The hyperbolic bracket `spbH u v = (u + v) / (1 + u v)`. -/
 def spbH (u v : ℝ) : ℝ := (u + v) / (1 + u * v)
 
+/-- `spb` is commutative. -/
+theorem spb_comm (x y : ℝ) : spb x y = spb y x := by
+  unfold spb; rw [add_comm, mul_comm]
+
+/-- `0` is a right unit for `spb`. -/
+@[simp] theorem spb_zero (x : ℝ) : spb x 0 = x := by
+  unfold spb; norm_num
+
+/-- `0` is a left unit for `spb`. -/
+@[simp] theorem zero_spb (y : ℝ) : spb 0 y = y := by
+  unfold spb; norm_num
+
+/-- The `spb`-inverse of `x` is `-x`. -/
+@[simp] theorem spb_neg (x : ℝ) : spb x (-x) = 0 := by
+  unfold spb; norm_num
+
+/-- `spbH` is commutative. -/
+theorem spbH_comm (u v : ℝ) : spbH u v = spbH v u := by
+  unfold spbH; rw [add_comm, mul_comm]
+
+/-- `0` is a right unit for `spbH`. -/
+@[simp] theorem spbH_zero (u : ℝ) : spbH u 0 = u := by
+  unfold spbH; norm_num
+
 end SPBResearch
 
 open Real SPBResearch

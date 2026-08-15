@@ -15,8 +15,7 @@ Bridge: connects quantum_timeRev_normalization to effective symbolic computation
 * `post_quantum_trace_canonicalization_bound` — normal form size ≤ 2^size
 -/
 
-import Bridges.PosetTheory.ChronometricCore
-
+import Bridges.ChronometricCore
 set_option maxHeartbeats 800000
 
 universe u v

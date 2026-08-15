@@ -1,4 +1,8 @@
 import Mathlib
+import Bridges.SPBBridge.AlgebraicIdentities
+import Shared.CatalogbuildSharedCayley.Cayley
+open Real
+open SPBResearch
 
 /-! # CatalogBuild.Bridges.SPBNewTheorems
 

@@ -7,11 +7,10 @@
   existential transport statements, and computational complexity bounds.
 -/
 import Mathlib
-import Bridges.ClosureMorita.ClosureCore
-import Bridges.ClosureMorita.ClosureSemimodule
-import Bridges.ClosureMorita.ClosurePressure
-import Bridges.ClosureMorita.PrimeSpectrum
-
+import Bridges.ClosureCore
+import Bridges.ClosureSemimodule
+import Bridges.ClosurePressure
+import Bridges.PrimeSpectrum
 namespace ClosureMorita
 
 /-! ## 1. Closure Semimodule Equivalence -/

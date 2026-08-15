@@ -16,9 +16,8 @@ concrete examples.
   permutation of the components is realised by a self-equivalence.
 -/
 import Mathlib
-import Catalog.Bridges.FundamentalGroupHeterogeneousWreath
-import Catalog.Bridges.FundamentalGroupCyclicSelfEquivalences
-
+import Bridges.FundamentalGroupHeterogeneousWreath
+import Bridges.FundamentalGroupCyclicSelfEquivalences
 open CategoryTheory
 open FundamentalGroupCompleteInvariant (ConnectedAt)
 open FundamentalGroupOut

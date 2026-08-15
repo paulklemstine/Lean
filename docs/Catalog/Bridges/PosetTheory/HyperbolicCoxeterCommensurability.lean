@@ -1,6 +1,5 @@
 import Mathlib
-import Bridges.PosetTheory.ExponentialBoundBridge
-
+import Bridges.ExponentialBoundBridge
 /-!
 # Commensurability invariants and exponential growth of commensurability classes
 

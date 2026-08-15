@@ -5,8 +5,7 @@ Bridge theorems connecting Berggren orbit rigidity to quantum coding,
 post-quantum security, and certified robustness.
 -/
 import Mathlib
-import Pythagorean.Pythagorean.BerggrenGroupoid
-
+-- MISSING MODULE (not present in this repository): import Pythagorean.Pythagorean.BerggrenGroupoid
 open Matrix
 
 /-- Chronometric energy = hypotenuse. Bridge: Diophantine → physics. -/

@@ -1,5 +1,8 @@
 import Mathlib
 import Logic.StrangeLoops.Core
+import Bridges.SPBBridge.AlgebraicIdentities
+open Real
+open SPBResearch
 
 /-! # CatalogBuild.Bridges.SPBAnalysis
 
@@ -43,7 +46,7 @@ theorem cauchy_invariance_identity (x a : ℝ) (h : 1 - x * a ≠ 0) :
   unfold spb; field_simp; ring
 
 /-- Orbit is trivially periodic when a = 0. -/
-theorem spb_iterate_zero_period (x : ℝ) : spb (spb x 0) 0 = x := by simp [spb_zero]
+theorem spb_iterate_zero_period (x : ℝ) : spb (spb x 0) 0 = x := by simp [spb]
 
 /-- spb(x,a) - a = x(1+a²)/(1-xa). -/
 theorem spb_minus_a (x a : ℝ) (h : 1 - x * a ≠ 0) :

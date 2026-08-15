@@ -38,8 +38,7 @@
 -/
 
 import Mathlib
-import Bridges.PosetTheory.CategoricalTropicalUltrametric
-
+import Bridges.CategoricalTropicalUltrametric
 open scoped Classical
 open CategoricalTropicalUltrametric
 

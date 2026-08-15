@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "64ac4ffd",
-      "domain": "Pythagorean",
-      "key_insight": "# Future directions: bold, testable conjectures from the barrier programme\n\nAll results referenced below are fully proved (0 sorries) in\n`Catalog/Pythagorean/FactoringBarriers/`. The conjectures here",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 56,
-      "timestamp": "2026-08-12T16:18:37",
-      "title": "Three Structural Barrier Theorems for Integer Factorization"
-    },
-    {
       "cycle_id": "f566f199",
       "domain": "Computation",
       "key_insight": "# Future Directions — bold, testable conjectures from the QBOUND cycle\n\nDerived from what survived Stages 3–4 of this cycle. Each is falsifiable, and\neach names the Lean artefact it would extend.\n\n---",
@@ -499,19 +489,19 @@
       "theorem_count": 75,
       "timestamp": "2026-08-15T07:05:08",
       "title": "CYCLIC-TYPE-CHANNEL (round-22 #2, experiment 413, assessment v189, paper 78)"
+    },
+    {
+      "cycle_id": "f2bb5930",
+      "domain": "Shared",
+      "key_insight": "# Future directions: the cyclic splitting-type channel\n\nFive falsifiable conjectures distilled from the current cycle.  Everything cited\nas *proved* below is a `sorry`-free Lean theorem in `Catalog/Sh",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 15,
+      "timestamp": "2026-08-15T07:52:25",
+      "title": "CYCLIC-TYPE-CHANNEL (round-22 #2, experiment 413, assessment v189, paper 78)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "3652ac9b",
-      "domain": "Algebra",
-      "key_insight": "# Future directions\n\n## What is in the repository\n\nThree Lean files carry the mathematics of this mission (all of them compile and\ncontain no `sorry`):\n\n* `Catalog/Bridges/GraphTheory/CayleyCharacterS",
-      "quality_score": 0.686,
-      "sorry_count": 0,
-      "theorem_count": 679,
-      "timestamp": "2026-08-04T20:07:45",
-      "title": "ArXiv paper: Learning the Graphical Nature of Symmetries"
-    },
     {
       "cycle_id": "6337dbc1",
       "domain": "Bridges",
@@ -2501,27 +2491,19 @@
       "theorem_count": 75,
       "timestamp": "2026-08-15T07:05:08",
       "title": "CYCLIC-TYPE-CHANNEL (round-22 #2, experiment 413, assessment v189, paper 78)"
+    },
+    {
+      "cycle_id": "f2bb5930",
+      "domain": "Shared",
+      "key_insight": "# Future directions: the cyclic splitting-type channel\n\nFive falsifiable conjectures distilled from the current cycle.  Everything cited\nas *proved* below is a `sorry`-free Lean theorem in `Catalog/Sh",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 15,
+      "timestamp": "2026-08-15T07:52:25",
+      "title": "CYCLIC-TYPE-CHANNEL (round-22 #2, experiment 413, assessment v189, paper 78)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "13788cf3",
-      "domain": "Tropical",
-      "name": "certified_radius_bound",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "13788cf3",
-      "domain": "Tropical",
-      "name": "resnet_certified_lipschitz",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "8c90b348",
-      "domain": "Shared",
-      "name": "inv_init",
-      "quality": 0.82
-    },
     {
       "cycle_id": "8c90b348",
       "domain": "Shared",
@@ -2803,9 +2785,27 @@
       "domain": "Physics",
       "name": "sum_ite_ne_zero",
       "quality": 0.78
+    },
+    {
+      "cycle_id": "f2bb5930",
+      "domain": "Shared",
+      "name": "lb3_lower",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "f2bb5930",
+      "domain": "Shared",
+      "name": "lb3_upper",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "f2bb5930",
+      "domain": "Shared",
+      "name": "lb5_lower",
+      "quality": 0.72
     }
   ],
-  "last_updated": "2026-08-15T07:05:08",
+  "last_updated": "2026-08-15T07:52:25",
   "open_questions": [
     {
       "context": "-    sorry+  -- Extract a witness from the computational verification of the primitive part.",
@@ -3889,12 +3889,6 @@
     ],
     "Shared": [
       {
-        "cycle_id": "6a4657f8",
-        "quality": 0.686,
-        "theorems": 82,
-        "title": "Zero-Knowledge Proofs in Lean: Verifiable Computation"
-      },
-      {
         "cycle_id": "7c424175",
         "quality": 0.686,
         "theorems": 56,
@@ -3947,6 +3941,12 @@
         "quality": 0.82,
         "theorems": 47,
         "title": "Experiment 398: CFPERIOD-NULL — the continued-fraction period of sqrt(N) is a no"
+      },
+      {
+        "cycle_id": "f2bb5930",
+        "quality": 0.72,
+        "theorems": 15,
+        "title": "CYCLIC-TYPE-CHANNEL (round-22 #2, experiment 413, assessment v189, paper 78)"
       }
     ],
     "Tropical": [

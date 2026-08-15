@@ -1,5 +1,6 @@
 import Mathlib
 import Logic.StrangeLoops.Core
+import Bridges.SPBBridge.AlgebraicIdentities
 
 /-!
 # SPB as a Formal Group Law

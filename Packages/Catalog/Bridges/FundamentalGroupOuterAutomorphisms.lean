@@ -34,9 +34,8 @@ Consequences developed here:
   (centreless with only inner automorphisms) is homotopy-rigid.
 -/
 import Mathlib
-import Catalog.Bridges.FundamentalGroupK1Classification
-import Catalog.Bridges.FundamentalGroupK1Deepening
-
+import Bridges.FundamentalGroupK1Classification
+import Bridges.FundamentalGroupK1Deepening
 open CategoryTheory
 open FundamentalGroupCompleteInvariant (ConnectedAt)
 open FundamentalGroupK1

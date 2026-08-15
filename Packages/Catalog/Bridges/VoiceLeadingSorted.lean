@@ -29,8 +29,7 @@ minimizes Wasserstein-1 cost in one dimension.
 -/
 
 import Mathlib
-import Bridges.MongeUncrossingLemma.VoiceLeadingMonge
-
+import Bridges.VoiceLeadingMonge
 open Finset Equiv
 
 /-! ## Definitions -/

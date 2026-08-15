@@ -6,8 +6,7 @@
   monotonicity, transport, and quantitative chain-bound theorems.
 -/
 import Mathlib
-import Bridges.ClosureMorita.ClosureSemimodule
-
+import Bridges.ClosureSemimodule
 namespace ClosureMorita
 
 /-! ## 1. Closure Pressure Functional -/

@@ -16,8 +16,7 @@ The key results are:
 2. **Hard score preservation** (`hard_ecoc_robust_of_bit_sign_stability`): Under a
    uniform sign-stability condition, every class's hard score is constant on the ball.
 -/
-import Bridges.TropicalAlgebra.ECOCDefs
-
+import Bridges.ECOCDefs
 open scoped BigOperators
 open Finset
 

@@ -30,8 +30,7 @@
   SYNTHESIS: foundations support the C1–C5 follow-ups in the companion file.
 -/
 import Mathlib
-import Bridges.PosetTheory.CategoricalTropicalUltrametric
-
+import Bridges.CategoricalTropicalUltrametric
 namespace ValuationDepthTropical
 
 open CategoricalTropicalUltrametric

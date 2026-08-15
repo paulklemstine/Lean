@@ -17,9 +17,8 @@ to the symmetric group S_n, using the classical generators
 -/
 import Mathlib
 import Logic.GraphTheory.Defs
-import Novelty.QuantumSystems.Connectivity
-import Pythagorean.CayleyExpander.SpectralGap
-
+import Bridges.Connectivity
+import Bridges.LFunctions.SpectralGap
 open Finset BigOperators Equiv.Perm
 
 /-! ## Standard generators of S_n -/

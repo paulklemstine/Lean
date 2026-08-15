@@ -1,5 +1,7 @@
 import Mathlib
 import Logic.StrangeLoops.Core
+import Bridges.SPBBridge.AlgebraicIdentities
+open SPBResearch
 
 /-! # CatalogBuild.Bridges.NumberTheoreticSPB
 

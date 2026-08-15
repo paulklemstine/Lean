@@ -20,7 +20,7 @@ Index file: imports the whole development.
 import Bridges.DenseSumsetFree.Basic
 import Bridges.DenseSumsetFree.Extraction
 import Bridges.DenseSumsetFree.Counting
-import Bridges.DenseSumsetFree.Main
+-- MISSING MODULE (not present in this repository): import Bridges.DenseSumsetFree.Main
 import Bridges.DenseSumsetFree.Sharpness
 import Bridges.DenseSumsetFree.MultiFold
 import Bridges.DenseSumsetFree.Triple

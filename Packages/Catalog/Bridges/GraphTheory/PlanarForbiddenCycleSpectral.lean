@@ -1,6 +1,5 @@
 import Mathlib
-import Bridges.AbstractAlgebra.InnerProductBridge
-
+import Bridges.InnerProductBridge
 /-! # Sparse graph spectra and forbidden-cycle extremal problems
 
 The spectral extremal problem for planar and outerplanar graphs begins with a

@@ -1,6 +1,5 @@
 import Mathlib
-import MachineLearning.SelfImproving.ResNetLipschitz
-
+import MachineLearning.ResNetLipschitz
 /-! # Discrete Gronwall Bridge
 
 Proves discrete Gronwall inequalities connecting iterative bounds to

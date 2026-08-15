@@ -1,5 +1,7 @@
 import Mathlib
 import Logic.StrangeLoops.Core
+import Bridges.SPBBridge.AlgebraicIdentities
+import Pythagorean.TropicalAlgebra.TropicalSPB
 
 /-!
 # Tropical SPB Associativity: Resolution of Open Question

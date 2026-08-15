@@ -1,6 +1,5 @@
 import Mathlib
-import Bridges.CombinatorialBridge.CombinatorialBridge
-
+import Bridges.CombinatorialBridge
 /-!
 # Database Cell Counts via the Combinatorial Catalog
 

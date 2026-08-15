@@ -20,9 +20,8 @@ on connectedness of the target; changing that path conjugates the homomorphism
 (`inducedHomOf_conj_of_natIso`).
 -/
 import Mathlib
-import Catalog.Bridges.FundamentalGroupK1Classification
-import Catalog.Bridges.FundamentalGroupK1Deepening
-
+import Bridges.FundamentalGroupK1Classification
+import Bridges.FundamentalGroupK1Deepening
 open CategoryTheory
 open FundamentalGroupCompleteInvariant (ConnectedAt)
 open FundamentalGroupK1

@@ -1,7 +1,6 @@
 import Mathlib
 import Bridges.ToposTheoreticML.Foundations
-import Bridges.PosetTheory.VCCompactness
-
+import Bridges.VCCompactness
 /-! # Topos-Theoretic Machine Learning: Quantum Dagger Structures
 
 This file formalizes quantum hypothesis toposes via dagger structures.

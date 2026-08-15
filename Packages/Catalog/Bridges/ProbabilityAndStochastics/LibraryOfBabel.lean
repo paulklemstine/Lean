@@ -1,6 +1,5 @@
 import Mathlib
-import EML.InformationTheory.KolmogorovComplexityBound
-
+import EML.KolmogorovComplexityBound
 /-!
 # The Library of Babel: finite information capacity
 

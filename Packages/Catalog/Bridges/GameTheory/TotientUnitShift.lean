@@ -60,8 +60,7 @@ ingredient for the full theorem is the (open/analytic) production of a dense
 infinite family — recorded in FUTURE_DIRECTIONS.md.
 -/
 import Mathlib
-import Bridges.GameTheory.TotientShiftWitnesses
-
+import Bridges.TotientShiftWitnesses
 open Nat Finset
 
 set_option maxRecDepth 100000

@@ -1,5 +1,6 @@
 import Mathlib
 import Logic.StrangeLoops.Core
+import Bridges.SPBBridge.AlgebraicIdentities
 
 /-!
 # New SPB Discoveries and Deep Identities

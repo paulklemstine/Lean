@@ -18,8 +18,7 @@ the Dirichlet energy form, and prove L² contraction.
 -/
 import Mathlib
 import Logic.GraphTheory.Defs
-import Novelty.QuantumSystems.Connectivity
-
+import Bridges.Connectivity
 open Finset BigOperators
 
 /-! ## Cauchy–Schwarz for finite sums -/

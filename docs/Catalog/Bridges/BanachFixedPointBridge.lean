@@ -1,6 +1,5 @@
 import Mathlib
-import MachineLearning.SelfImproving.ResNetLipschitz
-
+import MachineLearning.ResNetLipschitz
 /-! # Banach Contraction and Neural Network Convergence
 
 Proves contraction mapping properties for neural network training:

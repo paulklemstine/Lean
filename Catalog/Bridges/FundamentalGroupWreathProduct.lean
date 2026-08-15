@@ -44,10 +44,9 @@ Corollaries: the two extreme cases (`ι` a point, `G` trivial) are recovered, an
 order of `hAut(⊔_{Fin n} K(G,1))` is `|Out G| ^ n * n !`.
 -/
 import Mathlib
-import Catalog.Bridges.FundamentalGroupOuterAutomorphisms
-import Catalog.Bridges.FundamentalGroupPi0Gluing
-import Catalog.Bridges.FundamentalGroupPi0Action
-
+import Bridges.FundamentalGroupOuterAutomorphisms
+import Bridges.FundamentalGroupPi0Gluing
+import Bridges.FundamentalGroupPi0Action
 open CategoryTheory
 open FundamentalGroupCompleteInvariant (ConnectedAt)
 open FundamentalGroupOut

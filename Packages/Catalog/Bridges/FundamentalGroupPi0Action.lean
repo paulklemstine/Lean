@@ -19,9 +19,8 @@ Together these are the two halves of the conjectural wreath-product description 
 `hAut` of a general 1-type.
 -/
 import Mathlib
-import Catalog.Bridges.FundamentalGroupOuterAutomorphisms
-import Catalog.Bridges.FundamentalGroupPi0Gluing
-
+import Bridges.FundamentalGroupOuterAutomorphisms
+import Bridges.FundamentalGroupPi0Gluing
 open CategoryTheory
 open FundamentalGroupCompleteInvariant (ConnectedAt)
 open FundamentalGroupK1

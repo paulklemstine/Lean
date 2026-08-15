@@ -2,6 +2,7 @@ import Mathlib
 import Bridges.NeuralCoding.MaxPlusDefs
 import Bridges.NeuralCoding.MaxPlusLemmas
 import Bridges.TropicalAlgebra.EigenvectorIteration
+import Speculative.AutoResearch.TropicalPerronCore
 
 /-!
 # Tropical Perron-Frobenius Theorem
@@ -92,41 +93,22 @@ theorem exists_eigenvector_dim2
 
 /-! ### General eigenvector existence -/
 
-/- **Tropical Perron-Frobenius Theorem (general case)**:
+/-- **Tropical Perron-Frobenius Theorem (general case)**:
     For any `n × n` matrix over `ℝ` with `n > 0`, there exist `μ` and `v`
     satisfying the max-plus eigenvector equation `(M ⊗ v)ᵢ = μ + vᵢ`.
 
-    The proof requires a multi-dimensional intermediate value argument
-    (compactness of the normalized vector space + optimization of the
-    minimum surplus function). The 1×1 and 2×2 cases are proved above
-    by direct construction and IVT respectively.
-
-    For a complete proof of the general case, one would use the
-    Cuninghame-Green construction: define `μ` as the maximal cycle mean,
-    construct `v` via Bellman-Ford shortest paths in the reduced graph,
-    and verify the eigenvector equation using the no-positive-cycle property. -/
-/-
-The original unrestricted declaration is retained here for reference.  Its proposed
-proof depends on a finite maximum-cycle-mean/Bellman-path development that this file
-does not provide, so asserting it here would leave the file incomplete.
-
+    The proof is the Cuninghame-Green construction, carried out in
+    `Speculative.AutoResearch.TropicalPerronCore`: `μ` is the maximal cycle mean
+    `TropPerron.lam`, and `v` is the longest-path potential to a critical node in the
+    matrix shifted by `μ`, which is finite because cycle removal shows that no walk
+    beats a walk of length at most `n`.  The `1×1` and `2×2` cases above remain as
+    direct constructions. -/
 theorem exists_maxPlusMul_eigenvector (hn : 0 < n)
     (M : Matrix (Fin n) (Fin n) ℝ) :
     ∃ (mu : ℝ) (v : Fin n → ℝ),
       (∀ i, maxPlusMul M v hn i = mu + v i) := by
-  -- Requires the general finite max-plus Perron--Frobenius construction.
--/
-
-/-- Max-plus eigenvectors exist in every dimension covered by the direct
-one- and two-dimensional constructions above. -/
-theorem exists_maxPlusMul_eigenvector_small (hn : 0 < n) (hn2 : n ≤ 2)
-    (M : Matrix (Fin n) (Fin n) ℝ) :
-    ∃ (mu : ℝ) (v : Fin n → ℝ),
-      ∀ i, maxPlusMul M v hn i = mu + v i := by
-  have hn_cases : n = 1 ∨ n = 2 := by omega
-  rcases hn_cases with rfl | rfl
-  · simpa using exists_eigenvector_dim1 M
-  · simpa using exists_eigenvector_dim2 M
+  obtain ⟨v, hv⟩ := TropPerron.exists_eigen_potential hn M
+  exact ⟨TropPerron.lam hn M, v, fun i => hv i⟩
 
 /-! ### Conditional bounded defect growth
 

@@ -1,3 +1,4 @@
+import Mathlib
 /-
 # β-Class Structural Canonicity via Bisimulation Quotient Isomorphism
 
@@ -23,7 +24,7 @@ canonical representatives, observational equivalence, coalgebraic semantics,
 λ-calculus, program equivalence, finite automata, structural canonicity
 -/
 
-import Pythagorean.Pythagorean.StrongNormBisimulation
+-- MISSING MODULE (not present in this repository): import Pythagorean.Pythagorean.StrongNormBisimulation
 import Pythagorean.ProofTheoryAndLogic.BoundedBetaTheorems
 
 /-! ## Auxiliary lemmas -/

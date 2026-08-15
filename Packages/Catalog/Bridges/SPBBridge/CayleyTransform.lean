@@ -1,5 +1,7 @@
 import Mathlib
 import Logic.StrangeLoops.Core
+import Bridges.SPBBridge.AlgebraicIdentities
+import Shared.CatalogbuildSharedCayley.Cayley
 
 /-!
 # Cayley Transform: Deep Properties

@@ -1,7 +1,6 @@
 import Mathlib
 import Bridges.ToposTheoreticML.Foundations
-import Bridges.PosetTheory.VCCompactness
-
+import Bridges.VCCompactness
 /-! # Topos-Theoretic Machine Learning: Transfer Learning via Geometric Morphisms
 
 This file formalizes transfer learning as geometric morphisms between

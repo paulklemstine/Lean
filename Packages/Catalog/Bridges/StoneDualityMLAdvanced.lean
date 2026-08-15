@@ -9,8 +9,7 @@ Bridge: Topology (CB rank, Stone spaces) ↔ Machine Learning
 -/
 
 import Mathlib
-import Bridges.AbstractAlgebra.StoneDualityMLCore
-
+import Bridges.StoneDualityMLCore
 open Set Function Finset StoneDualityML
 
 namespace StoneDualityMLAdv

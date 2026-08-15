@@ -9,8 +9,7 @@
   The height of p measures the information cost of this focus.
 -/
 import Mathlib
-import Bridges.HilbertSpace.RingTheoreticLearning
-
+import Bridges.RingTheoreticLearning
 open Finset BigOperators
 
 noncomputable section

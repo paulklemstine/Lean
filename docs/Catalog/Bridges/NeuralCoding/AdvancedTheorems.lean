@@ -1,4 +1,4 @@
-import MachineLearning.ShefferFunction.Lean.FutureTheorems
+import Bridges.FutureTheorems
 import MachineLearning.ShefferFunction.Lean.ShefferAlgebra
 -- import EML.Lean.SoftplusBasic
 import Mathlib

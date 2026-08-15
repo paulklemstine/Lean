@@ -1,6 +1,5 @@
 import Mathlib
-import MachineLearning.TropicalAlgebra.ResNetLipschitz
-
+import MachineLearning.ResNetLipschitz
 /-! # Certified L∞ Robustness for Residual Networks
 
 Proves certified adversarial robustness bounds for ResNets:

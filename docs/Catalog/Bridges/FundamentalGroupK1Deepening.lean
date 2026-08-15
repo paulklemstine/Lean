@@ -27,8 +27,7 @@ conjectures recorded in `FUTURE_DIRECTIONS.md`:
   of the fundamental group to classify recorded in the previous cycle.
 -/
 import Mathlib
-import Catalog.Bridges.FundamentalGroupK1Classification
-
+import Bridges.FundamentalGroupK1Classification
 open CategoryTheory
 open FundamentalGroupCompleteInvariant (ConnectedAt)
 open FundamentalGroupK1

@@ -21,8 +21,7 @@ and decoding under closure-preserving maps.
 
 import Mathlib
 import Logic.BasicMonotoneCircuit.Basic
-import Bridges.TropicalClosureCoding.Decoder
-
+import Bridges.Decoder
 open Classical in
 noncomputable section
 

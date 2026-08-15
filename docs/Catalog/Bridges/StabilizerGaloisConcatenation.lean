@@ -1,6 +1,5 @@
 import Mathlib
-import Bridges.PosetTheory.QuantumStabilizerClosure
-
+import Bridges.QuantumStabilizerClosure
 /-!
 # Stabilizer-Galois Concatenation: Advanced Results
 

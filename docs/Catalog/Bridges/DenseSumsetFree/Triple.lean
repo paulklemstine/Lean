@@ -1,3 +1,4 @@
+import Mathlib
 /-
 Copyright (c) 2026 Harmonic. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
@@ -36,8 +37,7 @@ distinct-sums triple needs the parts to have `≳ l⁵` elements, so the thresho
 * `exists_dense_set_avoiding_triple_sumsets_min` — the same theorem phrased with
   `min(|A|, |B|, |C|)`.
 -/
-import Bridges.DenseSumsetFree.Main
-
+-- MISSING MODULE (not present in this repository): import Bridges.DenseSumsetFree.Main
 open Finset Pointwise
 
 namespace DenseSumsetFree

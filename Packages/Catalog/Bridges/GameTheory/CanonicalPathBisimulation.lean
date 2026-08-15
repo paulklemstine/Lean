@@ -1,3 +1,4 @@
+import Mathlib
 /-
 # Full-State Strong Bisimulation via Normalization-Path Synchronization
 
@@ -31,7 +32,7 @@ Hennessy-Milner, process equivalence, operational semantics, finite transition s
 standardization, rewriting systems, semantic synchronization, behavioral equivalence certificate
 -/
 
-import Pythagorean.Pythagorean.StrongNormBisimulation
+-- MISSING MODULE (not present in this repository): import Pythagorean.Pythagorean.StrongNormBisimulation
 import Pythagorean.ProofTheoryAndLogic.BoundedBetaTheorems
 
 /-! ## Canonical Normalization Infrastructure -/

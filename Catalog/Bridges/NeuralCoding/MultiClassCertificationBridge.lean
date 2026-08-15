@@ -1,6 +1,5 @@
 import Mathlib
-import MachineLearning.TropicalAlgebra.ResNetLipschitz
-
+import MachineLearning.ResNetLipschitz
 /-! # Multi-Class Certified Robustness for Neural Networks
 
 Proves certified adversarial robustness guarantees for multi-class classifiers

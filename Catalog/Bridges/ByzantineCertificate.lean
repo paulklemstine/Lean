@@ -1,6 +1,5 @@
 import Mathlib
-import Bridges.HilbertSpace.GaloisCohomologicalConsensus
-
+import Bridges.GaloisCohomologicalConsensus
 /-!
 # Byzantine Certificate: Computational Verification of Cohomological Consensus
 

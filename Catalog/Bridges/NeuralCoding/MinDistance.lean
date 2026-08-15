@@ -4,9 +4,8 @@ Released under Apache 2.0 license as described in the file LICENSE.
 -/
 import Mathlib
 import Logic.GraphTheory.Defs
-import Bridges.ReedMuller.ExtremalPoly
-import Bridges.ReedMuller.FiberRestriction
-
+import Bridges.ExtremalPoly
+import Bridges.FiberRestriction
 /-!
 # Reed–Muller base distance bound
 

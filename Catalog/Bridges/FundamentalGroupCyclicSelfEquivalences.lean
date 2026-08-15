@@ -16,8 +16,7 @@ We also record the additive/multiplicative dictionary `mulAutMultiplicativeMulEq
 identifying `Aut(Multiplicative A)` with `Aut(A)` for an additive group `A`.
 -/
 import Mathlib
-import Catalog.Bridges.FundamentalGroupOuterAutomorphisms
-
+import Bridges.FundamentalGroupOuterAutomorphisms
 open CategoryTheory
 open FundamentalGroupOut
 

@@ -15,8 +15,7 @@ Along the way we record the dictionary `addAutMulEquivLinearEquiv` between addit
 automorphisms of an abelian group and its `ℤ`-linear automorphisms.
 -/
 import Mathlib
-import Catalog.Bridges.FundamentalGroupCyclicSelfEquivalences
-
+import Bridges.FundamentalGroupCyclicSelfEquivalences
 open CategoryTheory
 open FundamentalGroupOut
 open FundamentalGroupCyclic (mulAutMultiplicativeMulEquivAddAut)

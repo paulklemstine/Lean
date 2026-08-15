@@ -1,6 +1,6 @@
 import Mathlib
 import Pythagorean.PosetTheory.CertificatePosetWQO
-import Pythagorean.Pythagorean.SandwichDefs
+import Pythagorean.SandwichDefs
 import Pythagorean.PosetTheory.PolynomialWidth
 
 /-!

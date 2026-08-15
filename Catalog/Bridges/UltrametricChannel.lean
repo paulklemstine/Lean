@@ -13,8 +13,7 @@ non-Archimedean fields.
 -/
 
 import Mathlib
-import Bridges.IdempotentInfoTheory.MinEntropy
-
+import Bridges.MinEntropy
 open Finset Real BigOperators NonArchInfoTheory
 
 namespace NonArchInfoTheory

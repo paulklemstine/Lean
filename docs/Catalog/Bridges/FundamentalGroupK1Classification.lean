@@ -23,8 +23,7 @@ and we prove the sharpness of the hypotheses:
   strengthening the `π₁`-only counterexample of the previous cycle.
 -/
 import Mathlib
-import Catalog.Bridges.FundamentalGroupCompleteInvariant
-
+import Bridges.FundamentalGroupCompleteInvariant
 open CategoryTheory
 open scoped ContinuousMap
 open FundamentalGroupCompleteInvariant (ConnectedAt)
