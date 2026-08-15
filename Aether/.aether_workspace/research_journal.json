@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "a3466461",
-      "domain": "Novelty",
-      "key_insight": "# Future directions — measuring the symmetry-breaking cost of factoring\n\nThe four files `Catalog/Novelty/SymmetryBreakingCost{Factoring,Kernel,Adaptive,Witness}.lean`\nturn the ISOLATION-COST experimen",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 65,
-      "timestamp": "2026-08-13T06:53:16",
-      "title": "The Symmetry-Breaking Cost of Factoring, Measured"
-    },
-    {
       "cycle_id": "d8dbb938",
       "domain": "Combinatorics",
       "key_insight": "# Future directions\n\nThe results close the question the investigation asked: a residue-dial family with conductor\nlcm `M*` adds at most a factor `M*/gcd(M*, m)` to a partial-key hint `p mod m`, that f",
@@ -499,19 +489,19 @@
       "theorem_count": 72,
       "timestamp": "2026-08-15T16:48:51",
       "title": "Power-Sum GCD Factoring & Carmichael Periodicity"
+    },
+    {
+      "cycle_id": "ac45a9d9",
+      "domain": "Novelty",
+      "key_insight": "# Future directions — \"only bad primes\" thread (after cycles 6–7)\n\nCycle 6 proved that a good prime cannot avoid an orbit: for every `N`, every prime `ℓ ≥ 5`\nwith `ℓ ∤ N` and every rational point `P`",
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "theorem_count": 41,
+      "timestamp": "2026-08-15T17:43:29",
+      "title": "The 'Only Bad Primes' Conjecture is False (elliptic curve denominators)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "6ffc84c2",
-      "domain": "Combinatorics",
-      "key_insight": "# Future directions\n\n## What is now formally proved\n\n`Catalog/Combinatorics/BernoulliThresholdCoupling.lean`,\n`Catalog/Combinatorics/FiniteRussoFormula.lean` and (new in this cycle)\n`Catalog/Combinato",
-      "quality_score": 0.7892299999999999,
-      "sorry_count": 0,
-      "theorem_count": 114,
-      "timestamp": "2026-08-05T06:52:39",
-      "title": "1. **Finite-key probability formula.** For every finite type `V`, independent"
-    },
     {
       "cycle_id": "e9c14674",
       "domain": "Shared",
@@ -2501,27 +2491,19 @@
       "theorem_count": 72,
       "timestamp": "2026-08-15T16:48:51",
       "title": "Power-Sum GCD Factoring & Carmichael Periodicity"
+    },
+    {
+      "cycle_id": "ac45a9d9",
+      "domain": "Novelty",
+      "key_insight": "# Future directions — \"only bad primes\" thread (after cycles 6–7)\n\nCycle 6 proved that a good prime cannot avoid an orbit: for every `N`, every prime `ℓ ≥ 5`\nwith `ℓ ∤ N` and every rational point `P`",
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "theorem_count": 41,
+      "timestamp": "2026-08-15T17:43:29",
+      "title": "The 'Only Bad Primes' Conjecture is False (elliptic curve denominators)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "e0db545b",
-      "domain": "Physics",
-      "name": "cycleCountOf_conj",
-      "quality": 0.91
-    },
-    {
-      "cycle_id": "c76c12ee",
-      "domain": "Novelty",
-      "name": "Finset",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "8590e003",
-      "domain": "Probability",
-      "name": "is",
-      "quality": 0.87
-    },
     {
       "cycle_id": "8590e003",
       "domain": "Probability",
@@ -2803,9 +2785,27 @@
       "domain": "Geometry",
       "name": "dvd_carmichael_left",
       "quality": 0.85
+    },
+    {
+      "cycle_id": "ac45a9d9",
+      "domain": "Novelty",
+      "name": "card_orbit_violations_eq",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "ac45a9d9",
+      "domain": "Novelty",
+      "name": "card_orbit_violations_ge",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "ac45a9d9",
+      "domain": "Novelty",
+      "name": "card_good_primes_appearing_ge",
+      "quality": 0.85
     }
   ],
-  "last_updated": "2026-08-15T16:48:51",
+  "last_updated": "2026-08-15T17:43:29",
   "open_questions": [
     {
       "context": "-    sorry+  -- On the certified range, extract the primitive divisor from the",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "646c7606",
-        "quality": 0.82,
-        "theorems": 42,
-        "title": "Jacobi Gauss-Sum Phase Collapse"
-      },
-      {
         "cycle_id": "a3466461",
         "quality": 0.82,
         "theorems": 65,
@@ -3637,6 +3631,12 @@
         "quality": 0.82,
         "theorems": 14,
         "title": "Power-Sum GCD Factoring & Carmichael Periodicity"
+      },
+      {
+        "cycle_id": "ac45a9d9",
+        "quality": 0.85,
+        "theorems": 41,
+        "title": "The 'Only Bad Primes' Conjecture is False (elliptic curve denominators)"
       }
     ],
     "NumberTheory": [
