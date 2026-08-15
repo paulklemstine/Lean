@@ -40,7 +40,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "356991ed",
+    "consumed_by_exp_id": "7e91abfc",
     "description": "**Summary.** The conjecture that for E_N: y² = x³ + N with N = pq, the\ndenominators of x(nP) are divisible only by {2, 3, p, q} (the primes dividing\nΔ = -432N²) is mathematically FALSE.\n\n**Counterexample.** N = 55 = 5·11, P = (9,28) ∈ E_55(Q):\n  x(2P) = (9^4 - 8·55·9) / (4(9^3 + 55)) = 2601/3136, and 3136 = 2^6 · 7^2.\nThe prime 7 divides the denominator but 7 ∤ Δ (7 is a prime of good reduction).\n\n**Mechanism.** ℓ | denom(x(nP)) iff nP ≡ O (mod ℓ); good-reduction primes divide\ndenominators whenever the point reduces to torsion — infinitely many such primes.\n\n**Survey (11 semiprimes):** p appears in some denominator 54.5%, q appears 0%,\nonly-{2,3,p,q} holds 0% of the time. The denominator structure is a function of\nN alone (barrier 5) and does not cleanly reveal p, q.\n\n---\n\n*Factoring Lab paper. Status: proven theorem / verified / framework. This is a research deliverable, not a factoring breakthrough claim.*",
     "domain_bridges": [],
     "domains": [
@@ -59,7 +59,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "e25c5e1e",
+    "consumed_by_exp_id": "6a57e5c1",
     "description": "**Summary.** Let F(k) = sum_{a=1}^{N} a^k. Then gcd(F(k), N) reveals a factor\nat k = p-1: for N = pq, gcd(F(p-1), N) = q (provided (q-1) does not divide (p-1)).\n\n**Key results (proven):**\n- **Theorem 1 (power-sum factor reveal):** Mod p the residues cover each nonzero\n  residue q times, so F(k) ≡ q·(sum of k-th powers mod p); by FLT this is -q mod p\n  at k=p-1. Mod q it vanishes when (q-1) ∤ (p-1). Hence gcd = q.\n- **Theorem 2 (robustness):** The power sum aggregates ALL bases a=1..N\n  simultaneously, so it cannot suffer Pollard p-1's \"bad base\" failure.\n- **Theorem 3 (Carmichael periodicity):** g(k) = gcd(F(k), N) has period\n  λ(N) = lcm(p-1, q-1), so λ(N) is readable from the period and the factors\n  follow from p+q = N - λ(N) + 1.\n\n**Complexity.** First hit at k* = min(p-1,q-1) ≈ √N; cost per F(k) is O(N);\ntotal O(N^{3/2}) — worse than trial division. This is the SAME structure Shor's\nalgorithm exploits, made classically hard by the period-finding barrier.\nVerified on all 8 test semiprimes up to N ≈ 10^4.\n\n---\n\n*Factoring Lab paper. Status: proven theorem / verified / framework. This is a research deliverable, not a factoring breakthrough claim.*",
     "domain_bridges": [],
     "domains": [
@@ -1233,6 +1233,25 @@
     "status": "available",
     "timestamp": "2026-08-15T09:48:24.870295+00:00",
     "title": "NET-35: The attention-cost law extrapolates to 4x context — k*=d·ctx/32 holds at ctx=512 (k*=64), first point outside [128,256]"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "## Question\n\nNET-15/16/17/20/33/34 established k* = d·ctx/32 at a second seed in most of the (d × ctx) grid. Two cells remained single-seed, at the grid's extreme corners: **d=16 @ ctx=128** (NET-17, s0 only, predicting k*=4d=64) and **ctx=512 @ d=4** (NET-35, s1 only, predicting k*=d·ctx/32=64). Do both land exactly at fresh second seeds, making the measured grid two-seed everywhere?\n\n## Method\n\nByte-identical harness to NET-15/17/20/33/34/35 — CausalTF dm=64, 4 heads, 5 Gutenberg novels, vocab 4097, contiguous 90/10 split, 2000 AdamW steps — at **d=16 seed=1 @ ctx=128** (1078s train) AND **d=4 seed=2 @ ctx=512** (2706s train). Per cell: full-acc eval → concentration (eff support) → top-k sweep → random-k control (seed 12345). k* = smallest k with retained ≥ 0.98·full. **Predictions stated before the run: k* = 64 both** (4d and d·ctx/32). Script /tmp/exp_net_attncost_grid.py; log /tmp/net36.log.\n\n## Results\n\n| cell | predicted | k sweep (retained) | k* | verdict |\n|---|---|---|---|---|\n| d=16, ctx=128, s1 | 4d = 64 | 8→0.858 16→0.922 32→0.970 ✗ 64→**0.996** ✓ 96→0.999 128→1.000 | **64** | EXACT |\n| d=4, ctx=512, s2 | d·ctx/32 = 64 | 16→0.965 ✗ 32→0.976 ✗ 64→**0.985** ✓ 128→0.993 256→0.998 384→1.000 | **64** | EXACT |\n\n- **Both cells land EXACT on k* = 64.** The depth leg k*=4d now holds at **all three depths × two seeds** (16/32/64 at d=4/8/16 @ ctx=128); the context leg holds to **4× context at two seeds** (64 @ ctx=512 d=4 s1+s2). **Every measured cell of the (d × ctx) grid is now two-seed**; the deployable lever speedup = 32/d (8× at d=4) is seed-independent at every measured corner.\n- **P3 refinement — NET-35's long-context margin erosion does NOT reproduce at s2:** the ctx=512 pass is 0.985 (margin 0.005 — healthy) vs s1's 0.983 (margin 0.003 ≈ 2 SE). The margin at 512 is **seed-fluctuating ±0.002**, not systematically eroding; the retained curve is still ~0.005–0.01 below 128/256 at both seeds (mild long-context depression, knee unaffected). Re-check at ctx=1024.\n- **Concentration reproduces to three significant figures:** eff support 152.11 = 152.11 (s1 vs s2), top-32 0.533/0.532, per-position 20.41–20.45 / 133.23–133.37 / 281.20–281.46. Depth-drift continues at d=16 (eff 52.73; 46.6→50.2→52.7).\n- **Selection importance survives:** random-k gaps cell A +10.0/+6.0 (largest yet), cell B +7.6/+5.2.\n- Eight-model full-acc set 0.1571–0.1620, k*-irrelevant.\n\n## Barriers\n\n(a) circularity — no, both predictions stated before the run, k* from each model's own trained attention; (b) known-method — no, two-seed grid-completion of an established law (Catalog re-scan: no prior work); (c) toy-scale — confronted, the grid's extreme corners (deepest d=16, longest ctx=512), real causal word LM, 4097 vocab, held-out loss+acc; (d) leakage — none, held-out last-10%, data-free top-k; (e) variance — the round's content, both last single-seed cells closed, concentration reproduces to 0.001; remaining non-threatening: ctx=512 at d=8/16, d=8 @ ctx=256 s0 corner, ctx=1024; (f) measurement — clean, k=384 recovers full loss exactly, retained 1.000 = re-normalization MC saturation, seed-2 margins exceed binom SE; (g) baselines — fair, full-attention reference + random-k control at same k, same bar; (h) relevance — strengthened, the speedup lever is seed-independent at every measured corner.\n\n## Verdict\n\n**GRID-COMPLETION CONFIRMED** — every measured cell of the (d × ctx) grid is now two-seed. The attention-cost law k* = d·ctx/32 (speedup 32/d, context-invariant) is seed-independent at every measured corner; no per-instance re-measurement needed within the measured grid.\n\nOpen: ctx=1024 (margin-erosion re-check, ~3.2h); ctx=512 at d=8/16; d=8 @ ctx=256 s0 corner. Paper 80. Round-net-36, assessment v36.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_1303",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-15T10:47:21.208244+00:00",
+    "title": "NET-36: The Attention-Cost Grid Is Now Two-Seed Everywhere — k*=d·ctx/32 Holds at Every Measured (depth × context) Cell"
   },
   {
     "ambition_level": "grand_challenge",
@@ -2576,6 +2595,25 @@
     "status": "available",
     "timestamp": "2026-08-14T00:06:44.114509+00:00",
     "title": "Deepening: Round-6 Hypothesis Closures: The Noise-Floor Principle and the Trace-Lemma Front"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 67289c0d (Q=0.820), which proved 74 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Summary.** Singular moduli factoring WORKS but its scaling is provably\nexponential.\n\n**The method (confirmed).** Try gcd(H_D(j_0), N) for discriminants D and\nevaluation points j_0, where H_D is the Hilbert class polynomial. All 8 test\nsemiprimes (up to N = 5183) factored, using 1-42 evaluations.\n\n",
+    "domain_bridges": [],
+    "domains": [
+      "Cryptography"
+    ],
+    "id": "push_67289c0d_c38d1f4a",
+    "lineage_refs": [],
+    "priority_score": 0.9199999999999999,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "67289c0d",
+    "status": "available",
+    "timestamp": "2026-08-15T10:47:01.448051+00:00",
+    "title": "Deepening: Singular Moduli Factoring and the √N Barrier"
   },
   {
     "ambition_level": "extension",
@@ -26555,6 +26593,26 @@
     "status": "available",
     "timestamp": "2026-08-15T08:55:54.797700+00:00",
     "title": "The verified state of the thread (all in `Catalog/Bridges/ORDial*.lean`, 0 sorri"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# FUTURE DIRECTIONS — Singular Moduli Factoring after the √N Theorem\n\nThe formalisation in `Catalog/Cryptography/SingularModuli/` settles the basic\nquestion: the gcd-of-class-polynomial-values method is exactly a `√N` method,\nits success set has density `≤ 4h/√N`, the class-number speed-up is cancelled by\nthe evaluation cost, and no precomputed table of evaluation points works for\nmore than logarithmically many primes. The following conjectures are the natural\nnext targets. Each is falsifiable, and each is stated so that a counterexample\nor a proof would be recognisable in Lean.\n\n---\n\n## Conjecture 1 (Degree–density duality: the barrier is a conservation law)\n\n*For every family of integer polynomials `H_k` with `deg H_k = h_k` and every\nfamily of evaluation strategies, the product (density of useful points) × (cost\nof one evaluation) is `O(1/√N)` — the two factors trade off exactly.*\n\nFormally: if `W(H)` denotes any cost measure with `W(H) ≥ deg H` (Horner is\noptimal up to constants for a generic polynomial) then\n`W(H) · S(H, N) / N ≤ 4·W(H)·h/√N` cannot be improved to `o(1/√N)` by any choice\nof `H`, because `S ≤ h(p+q)` is sharp (`successCount_add_two_sq_eq`).\n\n**The key insight is** that `h` appears in the numerator of the density bound\nand in the denominator of the per-evaluation cost with the same exponent, so the\n`√N` rate is a *conservation law of the construction*, not a limitation of the\ncounting technique. **Why now?** `total_work_ge` already proves the `√N/4` lower\nbound for a single monic `H`; the missing step is a cost model in Lean\n(`WorkModel` structure with `W(H) ≥ natDegree H`) and the corresponding\n`∀ H, W(H) · N / S(H,N) ≥ √N / 4`, which is a routine generalisation of the\nproof already in `Sharpness.lean`.\n\n---\n\n## Conjecture 2 (Elliptic escape: CM torsion evades the counting bound)\n\n*Replacing \"evaluate `H_D` at `j₀`\" by \"compute the `ℓ`-division polynomial of a\nrandom curve `E/ℤ_N` and gcd its value\" gives a success density bounded by\n`c·ℓ²/√N`, i.e. the same `√N` rate but with `h` replaced by the degree\n`(ℓ²−1)/2` — hence still no gain; but the density is achieved for a positive\nproportion of curves rather than a proportion `≈ h/p`.*\n\n**The key insight is** that both methods are instances of one scheme: a fixed\ninteger polynomial whose roots mod `p` encode an arithmetic property of `p`, and\nthe counting theorem `successCount_eq` applies verbatim, since it never uses\nanything about `H_D` beyond its degree. **Why now?** `successCount_eq` and\n`successDensity_le` in this repository are already stated for an arbitrary monic\n`H ∈ ℤ[X]`, so the whole of ECM-style analysis can be plugged in by instantiating\n`H` with division polynomials; only the sharpness direction (existence of roots)\nneeds new input, namely Hasse's bound.\n\n---\n\n## Conjecture 3 (Adaptive search does not beat uniform search)\n\n*For every adaptive deterministic algorithm that may choose its next evaluation\npoint as a function of all previously observed gcds, the number of steps needed\nto factor a balanced semiprime `N = pq` is at least `√N/(4h)` in the worst case\nover `p, q`.*\n\nThe results here prove this for *oblivious* (precomputed) strategies\n(`finite_family_table_fails`) and bound the *average-case* rate for uniform\nsampling (`successDensity_le_balanced`). The adaptive case needs the observation\nthat a failed trial returns `gcd = 1`, i.e. one bit, so after `k` failures the\nadversary's set of consistent `(p,q)` shrinks by at most `k·h(p+q)` residues.\n\n**The key insight is** that a failing gcd query is information-theoretically\nalmost free for the adversary: it excludes only the `h(p+q)` residues counted by\n`successCount_le`, so an adversary argument in the style of\n`RandomnessBarrier.arithmetic_trajectory_blind` should give the matching\nworst-case bound. **Why now?** The exact criterion (`evalGcd_nontrivialDivisor_iff`)\nturns the transcript of an adaptive attack into a purely combinatorial object —\na sequence of residues avoiding two unknown root sets — which is exactly the\nsetting where a Lean adversary argument is feasible.\n\n---\n\n## Conjecture 4 (Class number cannot be pushed to `√N`)\n\n*For discriminants `|D| ≤ B` the class number satisfies `h(D) = O(√B log B)`,\nwhile the bit size of `H_D` grows like `h(D)^{2+o(1)}`; consequently the\n\"use a huge class number\" strategy has total cost at least `N^{1/2−o(1)}` even\nunder the most optimistic assumption that a single evaluation costs\n`Õ(deg H_D)`.*\n\n**The key insight is** that the barrier proved here is `√N/(4h)` *evaluations*,\nso the only way to reach polynomial time is `h ≈ √N`, which forces\n`|D| ≳ N/ log² N` and a class polynomial with more than `N^{1/2}` coefficients —\nthe polynomial itself becomes the exponential object. **Why now?** The Lean\nstatement needs only the Brauer–Siegel-type upper bound `h(D) = O(√|D| log|D|)`\nas an explicit hypothesis; the rest is arithmetic on the bounds already proved,\nso the conjecture can be formalised as a conditional theorem today and made\nunconditional when Mathlib gains class-number asymptotics.\n\n---\n\n## Conjecture 5 (Universality of the `√N` rung for \"algebraic-set\" methods)\n\n*Let `f ∈ ℤ[X₁,…,X_m]` be any fixed polynomial and consider the method\n\"pick `x ∈ (ℤ/N)^m`, output `gcd(f(x), N)`\". Then the density of successful `x`\nis at most `deg f · (1/p + 1/q)`, so every such method is a `√N` method.*\n\nThis is the multivariate generalisation of `successDensity_le`; the substitute\nfor \"at most `deg` roots\" is the Schwartz–Zippel bound `#Z(f) ≤ deg f · p^{m−1}`\nover `F_p`.\n\n**The key insight is** that the entire barrier rests on one inequality — a\nnonzero polynomial has few zeros modulo `p` — so any method whose useful set is\ncut out by fixed algebraic equations lands on the same rung, regardless of the\ngeometry (elliptic curves, abelian surfaces, Drinfeld modules) used to motivate\nit. **Why now?** Mathlib has the machinery for Schwartz–Zippel-style counting,\nand the CRT transfer lemma proved here (`card_range_filter_crt`) is already\nstated for an arbitrary predicate on `ZMod p × ZMod q`, so only the root-count\nstep needs replacing.\n\n---\n\n### Three concrete next-cycle sub-conjectures\n\n1. **(3a)** Every adaptive strategy making `k` queries factors a uniformly\n   random balanced semiprime with probability at most `4kh/√N` (union bound over\n   the transcript) — provable from `successCount_le` alone.\n2. **(1a)** `successCount H (p*q) = h(p+q) − 2h²` occurs for infinitely many\n   primes `p` for each fixed `D` (Chebotarev density for the ring class field),\n   making the upper bound attained infinitely often.\n3. **(5a)** For `f(X,Y) = Y² − X³ − aX − b` the density of `(x,y)` with\n   `gcd(f(x,y), N)` nontrivial is `Θ(1/p + 1/q)`, exhibiting a two-variable\n   instance of Conjecture 5 with matching upper and lower bounds.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1302",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "67289c0d",
+    "status": "available",
+    "timestamp": "2026-08-15T10:46:53.974257+00:00",
+    "title": "The formalisation in `Catalog/Cryptography/SingularModuli/` settles the basic"
   },
   {
     "ambition_level": "extension",

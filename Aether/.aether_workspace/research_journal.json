@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "219576b7",
-      "domain": "Computation",
-      "key_insight": "# Future Directions — the knot–number bridge after fifteen cycles\n\n## What is now proved (all sorry-free, `Catalog/Computation/AlexanderTorusKnot/`)\n\n1. **General torus knots** (`GeneralTorus.lean`).",
-      "quality_score": 0.9,
-      "sorry_count": 0,
-      "theorem_count": 7,
-      "timestamp": "2026-08-12T23:09:13",
-      "title": "A Knot-Number Theory Bridge (Alexander polynomial)"
-    },
-    {
       "cycle_id": "24da7a57",
       "domain": "Combinatorics",
       "key_insight": "# Future Directions — bold, testable conjectures from the Round-11 closures\n\nDerived from what survived, and from what the proofs actually needed, in\n`Catalog/Combinatorics/Round11CycleIndexFingerprin",
@@ -499,19 +489,19 @@
       "theorem_count": 48,
       "timestamp": "2026-08-15T08:56:17",
       "title": "The 3SUM-Birthday-Bound Hierarchy"
+    },
+    {
+      "cycle_id": "67289c0d",
+      "domain": "Cryptography",
+      "key_insight": "# FUTURE DIRECTIONS — Singular Moduli Factoring after the √N Theorem\n\nThe formalisation in `Catalog/Cryptography/SingularModuli/` settles the basic\nquestion: the gcd-of-class-polynomial-values method",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 74,
+      "timestamp": "2026-08-15T10:47:01",
+      "title": "Singular Moduli Factoring and the √N Barrier"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "1d44d635",
-      "domain": "Geometry",
-      "key_insight": "# Future directions\n\n## What is formalized\n\nFour Lean files, all compiling with `lake build` and free of `sorry`:\n\n* `Geometry/RomanDomination/Variants.lean` — the six Roman-type domination\n  paramete",
-      "quality_score": 0.686,
-      "sorry_count": 0,
-      "theorem_count": 162,
-      "timestamp": "2026-08-04T23:25:37",
-      "title": "ArXiv paper: Roman-Type Domination on Convex and Chordal Bipartite Graphs: Algorithms and Hardness"
-    },
     {
       "cycle_id": "8d083ef6",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 48,
       "timestamp": "2026-08-15T08:56:17",
       "title": "The 3SUM-Birthday-Bound Hierarchy"
+    },
+    {
+      "cycle_id": "67289c0d",
+      "domain": "Cryptography",
+      "key_insight": "# FUTURE DIRECTIONS — Singular Moduli Factoring after the √N Theorem\n\nThe formalisation in `Catalog/Cryptography/SingularModuli/` settles the basic\nquestion: the gcd-of-class-polynomial-values method",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 74,
+      "timestamp": "2026-08-15T10:47:01",
+      "title": "Singular Moduli Factoring and the √N Barrier"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "43e7ffcb",
-      "domain": "Tropical",
-      "name": "of",
-      "quality": 0.72697
-    },
-    {
-      "cycle_id": "43e7ffcb",
-      "domain": "Tropical",
-      "name": "says",
-      "quality": 0.72697
-    },
-    {
-      "cycle_id": "677413db",
-      "domain": "Algebra",
-      "name": "genus23_no_separation",
-      "quality": 0.83
-    },
     {
       "cycle_id": "677413db",
       "domain": "Algebra",
@@ -2803,9 +2785,27 @@
       "domain": "Shared",
       "name": "exists_collision_of_image_card_lt",
       "quality": 0.78
+    },
+    {
+      "cycle_id": "67289c0d",
+      "domain": "Cryptography",
+      "name": "here",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "67289c0d",
+      "domain": "Cryptography",
+      "name": "singularModuli_capstone",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "67289c0d",
+      "domain": "Cryptography",
+      "name": "singularModuli_no_precomputation",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-15T08:56:17",
+  "last_updated": "2026-08-15T10:47:01",
   "open_questions": [
     {
       "context": "-    sorry+  -- Extract a witness from the computational verification of the primitive part.",
@@ -3331,12 +3331,6 @@
     ],
     "Cryptography": [
       {
-        "cycle_id": "52522972",
-        "quality": 0.686,
-        "theorems": 525,
-        "title": "Isogeny-Based Cryptography: Supersingular Isogeny Diffie-Hellman"
-      },
-      {
         "cycle_id": "9f23a455",
         "quality": 0.686,
         "theorems": 68,
@@ -3389,6 +3383,12 @@
         "quality": 0.85,
         "theorems": 84,
         "title": "The Asymmetric CRT-Split of a^{N-1} is Factor-Blind, Closed"
+      },
+      {
+        "cycle_id": "67289c0d",
+        "quality": 0.82,
+        "theorems": 74,
+        "title": "Singular Moduli Factoring and the √N Barrier"
       }
     ],
     "Geometry": [

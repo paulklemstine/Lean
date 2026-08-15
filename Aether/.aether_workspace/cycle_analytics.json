@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-15T08:56:21.044236+00:00",
+  "last_updated": "2026-08-15T10:47:04.656580+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -55760,6 +55760,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-08-15T08:56:20.823292+00:00",
       "title": "The 3SUM-Birthday-Bound Hierarchy"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Cryptography",
+      "duration_seconds": 3511.297202348709,
+      "end_time": 1786790802.2264307,
+      "files_integrated": 4,
+      "job_id": "67289c0d",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.82,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.544,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.82,
+        "novelty": 0.82,
+        "proof_depth": 0.82,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1786787290.9292283,
+      "strategy_count": 0,
+      "theorem_count": 74,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 73,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-08-15T10:47:04.469592+00:00",
+      "title": "Singular Moduli Factoring and the \u221aN Barrier"
     }
   ]
 }
