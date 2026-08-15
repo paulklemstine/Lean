@@ -1,120 +1,100 @@
-# Three Numbers That Add to Nothing: How a Puzzle About Sums Meets the Wall That Protects Your Secrets
+# The Birthday Paradox Has a Hard Floor
 
-## A number that gives itself away
+## How three numbers that add to nothing can betray a secret — and why that trick can never be made fast
 
-Take the number $143$. If you did not already know it, you would have to work a little to discover that $143 = 11 \times 13$. Now take three small numbers — $1$, $4$ and $6$ — and add them: $1 + 4 + 6 = 11$. Ask a computer for the greatest common divisor of $11$ and $143$, a computation so cheap it is essentially free, and out drops the answer: $11$. The secret factor of $143$ has been handed over by three numbers that had no obvious connection to it whatsoever.
+### A party trick with primes
 
-That little trick is not luck, and it is not confined to $143$. It is a completely general phenomenon, and it sits at the heart of a surprising bridge between two problems that live in different neighbourhoods of mathematics: **3SUM**, the innocuous-looking question of whether three elements of a list add up to zero, and **integer factoring**, the problem whose difficulty guards most of the encrypted traffic on the planet.
+Here is a small piece of magic. I am thinking of a number, $N = 143$. It is the product of two primes, and I am not telling you which. You are allowed to pick three whole numbers between $1$ and $12$ — say $2$, $4$ and $5$ — add them up, and hand me the total. If I like your total, I will hand you back one of my secret primes.
 
-This article is about that bridge — and about what one finds after crossing it, which is not a shortcut but a *wall*, and one that turns out to have two distinct heights depending on whether you demand certainty or are content with a coin flip.
+Try $2 + 4 + 5 = 11$. Compute the greatest common divisor of $11$ and $143$. It is $11$. That *is* one of my primes; the other is $13$.
 
-## The reveal
+Try again: $1 + 3 + 7 = 11$. Same answer. Try $3 + 8 + 10 = 21$: the greatest common divisor of $21$ and $143$ is $1$, and you learn nothing. Try $1 + 9 + 12 = 22$: the greatest common divisor is $11$ again, and you win.
 
-Here is the general statement behind the $143$ trick.
+The pattern is not luck, and it is not special to $143$. It is a theorem, and it is the seed from which an entire hierarchy of factoring algorithms grows — a hierarchy that, as we shall see, turns out to be an elaborate illusion.
 
-> **Factor Reveal.** Let $N = pq$ be the product of two distinct primes and let $s$ be any whole number. Then $\gcd(s, N) = p$ **if and only if** $p$ divides $s$ and $q$ does not.
+### The reveal lemma
 
-Read it in both directions, because both directions matter.
+Suppose $N = pq$ where $p$ and $q$ are distinct primes. Suppose $s$ is a whole number with $0 < s < N$, and suppose $p$ divides $s$. Then
+$$\gcd(s, N) = p.$$
 
-Left to right: producing *any* number that is a multiple of the hidden prime $p$ but not of the other hidden prime $q$ is exactly as good as factoring $N$. You never need to know $p$; you only need to stumble on a multiple of it. The greatest common divisor does the extraction for you.
+That is the whole statement. Let us call it the **reveal lemma**, because a single greatest-common-divisor computation — a handful of nanoseconds, even for numbers hundreds of digits long — turns a fact about divisibility that you *cannot see* into a factor that you *can*.
 
-Right to left: if the number you produce is a multiple of *both* $p$ and $q$, the gcd returns $N$ itself and you learn nothing. And if it is a multiple of neither, the gcd returns $1$ and you learn nothing. In fact the full picture is a clean four-way classification: for distinct primes $p, q$,
-$$\gcd(s, pq) = \begin{cases} pq & \text{if } p \mid s \text{ and } q \mid s,\\ p & \text{if } p \mid s,\ q \nmid s,\\ q & \text{if } q \mid s,\ p \nmid s,\\ 1 & \text{otherwise.}\end{cases}$$
-Only two of the four boxes are useful, and both of them are "hit exactly one of the primes".
+The proof is three lines. Let $g = \gcd(s, N)$. Since $p$ divides both $s$ and $N$, we know $p$ divides $g$; write $g = pd$. Since $g$ divides $N = pq$, we get that $d$ divides $q$, and since $q$ is prime, $d$ is either $1$ or $q$. If $d = 1$ then $g = p$ and we are done. If $d = q$, then $g = pq = N$, so $N$ divides $s$ — impossible for a positive $s$ smaller than $N$.
 
-Now specialise to sums of three numbers. If $a + b + c \equiv 0 \pmod p$ but $a + b + c \not\equiv 0 \pmod q$, then $\gcd(a+b+c, N) = p$. That is the **3SUM factor reveal**: *a 3SUM solution modulo a hidden prime factor exposes that factor.*
+That last sentence deserves a moment. Textbook statements of this idea usually carry an extra hypothesis: "provided $q$ does not also divide $s$." It is a natural thing to insist on, because if both primes divided $s$ the greatest common divisor would return the whole of $N$ and tell you nothing. But the hypothesis is **redundant**. If $p$ and $q$ both divided $s$, then $N = pq$ would divide $s$, forcing $s \geq N$ — and we assumed $s < N$. Smallness alone rules the bad case out.
 
-For $143$, one can check this exhaustively. Among all triples $1 \le a < b < c \le 11$, exactly $15$ have a sum divisible by $11$, and **not one** has a sum divisible by $143$. So every single one of those $15$ triples reveals the factor $11$ on the first gcd. The failure mode — hitting both primes at once — simply does not occur in that range, and that is not an accident either.
+This is exactly why my party trick had no failures. Every triple $a < b < c$ drawn from $\{1, \dots, 12\}$ has $a+b+c \leq 33$, comfortably below $143$. So no triple can be divisible by both $11$ and $13$; the "both" column of the experiment is *structurally* empty, not merely empirically empty. A census over all such triples confirms it: exactly $20$ of them have a sum divisible by $11$ and not by $13$, and exactly $0$ have a sum divisible by both. (The count depends on the range you allow: restrict to $1 \le a<b<c \le 11$ and there are $15$.)
 
-## Failure is rare, and we can count exactly how rare
+### From a trick to an algorithm
 
-How often does the reveal misfire? Only when the sum happens to be divisible by $q$ as well. Over one full period — the numbers $s$ with $0 < s \le N$ — the count is exact and beautiful:
+The reveal lemma converts factoring into a *search* problem. To split $N = pq$, you no longer need to guess $p$. You only need to stumble on some quantity, smaller than $N$, that happens to be a multiple of $p$ — without knowing $p$, and without any way to check directly. You just compute the greatest common divisor and see.
 
-> **Reveal Density.** Among $0 < s \le N = pq$, exactly $q$ values are divisible by $p$, and exactly $q - 1$ of those satisfy $\gcd(s, N) = p$. The single exception is $s = N$ itself.
+How do you stumble on multiples of an invisible prime? With the birthday paradox.
 
-So conditional on having found a multiple of $p$ at all, the reveal succeeds with probability $(q-1)/q$. For $N = 143$: thirteen multiples of $11$ in the range, twelve of which hand you the factor, and the one failure is $s = 143$. The "non-degeneracy condition" that mathematicians attach to this kind of statement — *provided the sum is not also divisible by $q$* — is thus not a hedge. It fails on a $1/q$ fraction of witnesses, which for cryptographic sizes is a probability with hundreds of zeros after the decimal point.
+Recall the classical version: in a room of $23$ people, the odds are better than even that two share a birthday, even though there are $365$ days. Collisions arrive far sooner than intuition expects, because the number of *pairs* grows quadratically in the number of people. Now replace "birthday" with "remainder modulo $p$." If you produce more than $p$ different quantities, two of them must leave the same remainder when divided by $p$ — and their difference is a multiple of $p$. Feed that difference into the reveal lemma, and out comes the factor.
 
-So we have a genuine mechanism. Find three numbers summing to zero modulo an unknown prime, and the prime is yours. The obvious next question is: **how hard is it to find them?**
+This is not a hypothetical scheme. It is the shape of some of the oldest ideas in computational number theory, and it comes in flavours of increasing sophistication:
 
-## The birthday bound, dressed in three costumes
+- **The sumset scheme.** Store $k$ numbers and form all $k^2$ pairwise sums $a + b$. A collision $a + b \equiv c + d \pmod p$ gives the multiple $(a+b) - (c+d)$.
+- **The 3SUM scheme.** Store $k$ numbers and form all $k^3$ triple sums $a+b+c$. A collision $a+b+c \equiv d+e+f \pmod p$ does the same job.
+- **The $r$-SUM scheme.** More generally, form all $k^r$ sums of $r$-tuples.
 
-There is a folk observation in cryptanalysis that many factoring-adjacent attacks "all cost about $\sqrt{N}$", and that different attacks merely rearrange the same work. The 3SUM connection makes it possible to say precisely what that folklore means, and where it is right and where it is wrong.
+And here is where the story becomes seductive. To be *guaranteed* a collision modulo $p$, your search space has to exceed $p$ in size. For the sumset scheme, $k^2 > p$, so you must store about $k \approx p^{1/2}$ numbers. For 3SUM, $k^3 > p$, so you need only $k \approx p^{1/3}$. Push $r$ higher and the exponent drops to $p^{1/4}$, $p^{1/5}$, and on down.
 
-Consider three styles of collision hunting over a set $S$ of $k$ numbers, each reduced modulo the hidden prime $p$:
+The exponent is improving. Surely, somewhere up that ladder, factoring gets easier?
 
-- **Arity 1 — evaluations.** Look at the $k$ residues themselves and hope two coincide. (This is the shape of a singular-moduli search, or of Pollard's rho.)
-- **Arity 2 — the sumset.** Look at all $\binom{k}{2}$ pairs and hope two pairs have the same sum: $a + b \equiv c + d$.
-- **Arity 3 — 3SUM.** Look at all $\binom{k}{3}$ triples and hope for $a+b+c \equiv 0$.
+### The collapse
 
-Each style has a *search set* (how many numbers you must hold) and an *enumeration cost* (how many tuples you must actually examine). The seductive observation is that the search set shrinks dramatically as the arity grows: you need $k \gtrsim p$ residues, or only $k \gtrsim \sqrt{2p}$ numbers for pairs, or only $k \gtrsim (6p)^{1/3}$ for triples. The exponent improves from $1$ to $1/2$ to $1/3$. Surely something is being gained?
+It does not, and the reason is a theorem so simple it is almost rude.
 
-Here is the crisp answer, and it is a matching pair of bounds valid at *every* arity simultaneously.
+**The threshold theorem.** Fix a modulus $p \geq 1$ and a finite search space $S$. Then a collision is *guaranteed* — meaning: for every possible assignment of residues in $\{0, 1, \dots, p-1\}$ to the points of $S$, two distinct points of $S$ receive the same residue — **if and only if** $p < |S|$.
 
-> **Arity-Uniform Pigeonhole.** Fix a modulus $p$, a set $S$ of size $k$, and an arity $r$. An arity-$r$ collision search over $S$ is *guaranteed* to find two distinct $r$-subsets with equal value — against **every** possible way of evaluating subsets into residues mod $p$ — **if and only if** $\binom{k}{r} > p$.
+One direction is the pigeonhole principle: with more than $p$ objects and only $p$ available residues, two objects must share. The other direction is an adversary argument: if $|S| \leq p$, one can explicitly build an assignment that is injective on $S$, simply by embedding $S$ into the $p$ available residues. Against that assignment, the scheme finds nothing. So the guarantee holds exactly when $|S| \geq p+1$, never sooner.
 
-The "if" half is the pigeonhole principle: more tuples than residue classes forces a repeat. The "only if" half is an adversary argument: if you enumerate at most $p$ tuples, one can always build an evaluation that assigns them all distinct residues, because there is room. So the threshold $p + 1$ is not an artefact of a crude estimate — it is exactly optimal.
+Read the criterion carefully. It mentions the *cardinality of the search space*, and nothing else. It does not mention the arity $r$. It does not mention how the tuples were built, whether the sums are $2$-fold or $17$-fold, whether the underlying set has clever additive structure. Every member of the hierarchy — sumset, 3SUM, $r$-SUM, and any collision scheme anyone will ever invent — faces exactly the same threshold: **$p + 1$ inspected objects, necessary and sufficient.**
 
-The consequence is the punchline of the hierarchy:
+The exponent games were never about work. They were about *storage*. Raising the arity lets you generate a huge search space from a small stored set — that is real, and it is genuinely useful for memory-constrained computation. But the number of tuples you must actually look at is pinned to $p+1$, forever.
 
-> **The $\sqrt{N}$ Wall.** For a semiprime $N = pq$ with $q \le p$, any collision search that is guaranteed to succeed must enumerate more than $p \ge \sqrt{N}$ tuples — at every arity.
+Now add the arithmetic fact that makes this fatal. If $N = pq$ with $q \leq p$, then $p \geq \sqrt{N}$: the larger prime factor of a semiprime is at least the square root. (Indeed $N = pq \le p\cdot p$, so $\sqrt N \le p$.) Combining, we get:
 
-The arity changes the *packaging* of the work, never its amount. You can store fewer numbers by looking at higher-order combinations of them, but the number of combinations you must sift through is pinned at more than $p$, come what may. It is a conservation law for search.
+**The barrier.** Any collision scheme guaranteed to produce a collision modulo the larger factor $p$ of $N = pq$ must inspect more than $\sqrt{N}$ objects. In the $r$-SUM case: whatever the arity, $k^r > \sqrt{N}$.
 
-A concrete table makes this vivid. Take $p = 100$. The smallest set size $k$ that guarantees a collision is $101$ at arity $1$, drops to $15$ at arity $2$, and drops again to $10$ at arity $3$. Spectacular compression of the search *set*: $101 \to 15 \to 10$. And the number of tuples enumerated? $101$, then $\binom{15}{2} = 105$, then $\binom{10}{3} = 120$. All just over $100$. The wall does not move.
+For a $2048$-bit RSA modulus, $\sqrt{N}$ is around $10^{308}$. It does not matter that the 3SUM scheme stores only $10^{205}$ elements instead of $10^{308}$: it still has to *look at* $10^{308}$ triples. The improvement is entirely cosmetic.
 
-There is even a structural reason the 3SUM row cannot secretly be cheaper than the sumset row: a 3SUM solution inside a set $S$ exists precisely when $-c$ lies in the sumset $S + S$ for some $c \in S$. In other words, the arity-$3$ search *is* an arity-$2$ table plus $k$ lookups. Nothing is hidden in the extra dimension.
+A concrete instance makes the shape of the illusion vivid. Take $p = 997$. A sumset scheme needs $k \geq 32$ stored elements (since $31^2 = 961 \le 997 < 1024 = 32^2$). A 3SUM scheme needs only $k \geq 10$ (since $9^3 = 729 \le 997 < 1000 = 10^3$). Storage has fallen by more than a factor of three — a real, measurable improvement, exactly the promised $p^{1/2} \to p^{1/3}$. And yet: $32^2 = 1024$ and $10^3 = 1000$. Both schemes inspect a bit over a thousand objects. The work is identical to within $2\%$.
 
-And it is not just 3SUM. Pollard's classic $p-1$ method produces the number $a^k - 1$, which is divisible by $p$ whenever $p-1$ divides $k$; feed it to the same gcd and the same reveal fires. Sumset differences, 3SUM sums, $a^k - 1$, differences of singular moduli — these are four disguises of a single divisibility lemma, and they all cash out at the same counter.
+### Two further walls
 
-## Closing the last loophole: it isn't about collisions
+The threshold theorem is a *counting* obstruction: it says you must look at many things. Remarkably, two entirely independent obstructions block the same road, and neither has anything to do with counting.
 
-A sceptic can still object. All of the above concerns methods that work by *collision*. Maybe some cleverer algorithm produces its multiples of $p$ by a completely different route — algebraic, analytic, who knows — and slips past the pigeonhole.
+**The amplitude barrier.** Suppose your building blocks are drawn from a set $A$ contained in $\{1, \dots, M\}$. Then every $r$-tuple sum lies between $r$ and $rM$, so there are at most $rM + 1$ *distinct* sums available — no matter that there are $|A|^r$ tuples. Now suppose $rM < p$. Then two tuple sums congruent modulo $p$ must be *equal as integers*, because two distinct numbers congruent mod $p$ differ by at least $p$, and no two of our sums are that far apart. Every collision you find is trivial: the difference is $0$, the greatest common divisor step returns $N$, and you learn nothing.
 
-That objection can be answered without assuming anything at all about the mechanism, by looking at the one interface every such method must use: the gcd itself. Model an algorithm as a finite list $Q$ of numbers it will offer up, each at most $M$, hoping one has a nontrivial gcd with $N$.
+The consequence is stark. A collision scheme with small entries cannot factor *at all*, however many tuples it inspects. To have any hope you need $p \leq rM$, so your numbers themselves must be of size at least $p/r$ — again of order $\sqrt{N}$. And note what the bound depends on: only the interval containing $A$. Not on $A$'s additive structure. Sidon sets, geometric progressions, smooth numbers, cleverness of every kind — none of it moves the wall, because the wall was never about structure.
 
-> **The gcd-Query Bound.** Suppose $Q$ succeeds on *every* semiprime built from two distinct primes drawn from a pool $P$. Then $|P| \le |Q| \cdot \log_2 M + 1$; equivalently, $|Q| \ge (|P| - 1)/\log_2 M$.
+**The span barrier.** Strip away every detail of how a scheme works and keep only this: it has a finite collection of search points, it attaches a whole number to each, and it extracts factors by taking greatest common divisors of differences of those numbers with $N$. Then: *if such a scheme reveals a factor $f$ of $N$, two of its values differ by at least $f$.* The proof is one line — the revealed factor divides the positive difference, so it is at most the difference. For $f = p \ge \sqrt N$, this says any scheme that factors a semiprime must manipulate numbers spanning a range of at least $\sqrt{N}$. Equivalently: a scheme all of whose values lie below $\sqrt{N}$ can never reveal the larger factor. This is not about how many operations you do; it is about the *arithmetic size of the objects you touch*.
 
-The proof is an ambush. Every query $x \le M$ has at most $\log_2 M$ distinct prime factors, simply because the product of $t$ distinct primes is at least $2^t$. So the whole query list *touches* at most $|Q| \log_2 M$ primes. If the pool $P$ is larger than that touched set by two, then two primes $p, q$ in the pool are untouched by every query — and for the semiprime $N = pq$ built from those two, every single gcd query returns $1$. The algorithm learns nothing at all.
+The span barrier has a pleasant corollary about a more exotic member of the hierarchy. Some schemes evaluate a function whose values are constrained to a structured subset $B$ of the residues — think of an evaluation indexed by a class group, so that $|B| \approx p/h$ for a class number $h$. Such a scheme does beat the counting threshold: collisions appear after only $|B| + 1$ evaluations, a factor of $h$ sooner, because the general form of the threshold theorem is that the collision count is set by the size of the *value set*, whatever it may be. But the span barrier is untouched. Structure can compress the number of evaluations; it cannot shrink the numbers themselves.
 
-Since the primes available to build a balanced semiprime $N$ number about $\sqrt{N}/\log\sqrt{N}$, this reproduces the $\sqrt{N}$ wall — unconditionally, with no pigeonhole hypothesis and no assumption about how the queries are cooked up. Concretely, with all queries below $2^{64}$, covering a pool of $n$ candidate primes needs at least $(n-1)/64$ queries. And the bound is not vacuous in the other direction: a single well-chosen query does solve an instance, which is precisely the point — the hard part is *finding* the number, never *testing* it.
+**The coverage barrier.** One last wall, of a completely different character. It answers the question: could a *single, fixed* scheme be secretly universal — a magic table of numbers that factors everything? No. If the scheme has $k$ search points and all its values are below $B$, then it has at most $k^2$ pairwise differences, and each difference, being a positive integer below $B$, has at most $\log_P B$ distinct prime divisors that are $\geq P$ (because $s$ such primes multiply to something $\geq P^s$, which must divide the difference). So the total number of large primes the scheme can ever expose is at most
+$$\log_P(B) \cdot k^2.$$
+A scheme required to crack $T$ different semiprimes with larger factor $\geq P$ therefore needs $k^2 \geq T / \log_P B$. The arity games change how $k$ relates to the tuple count; they do not touch this counting bound at all.
 
-## The wall has two heights
+### What is actually true
 
-Now for the twist, and the reason this story is more interesting than a tidy confirmation of folklore.
+It would be easy to read all this as pure negation, so let us state the positive result, which is genuine and sharp.
 
-Everything above concerns *guarantees*. But nobody factors numbers with a guarantee. Pollard's rho, the workhorse of small-factor extraction, is randomised: it finds a collision modulo $p$ after roughly $\sqrt{p}$ steps, not $p$ steps — the ordinary birthday paradox, the same reason $23$ people in a room probably share a birthday even though there are $365$ days. If the deterministic wall really were the whole story, rho could not exist.
+**Collision factoring works, once both barriers are cleared.** Let $N = pq$ with $p, q$ prime. Let $A$ be a set of positive integers bounded by $M$, with $rM < N$, and suppose the set of $r$-tuple sums over $A$ contains more than $p$ distinct values. Then there exist two achieved sums $t < s$ with
+$$\gcd(s - t, N) = p.$$
+The method succeeds, provably, and outputs the factor. Its cost, equally provably, is $\Omega(\sqrt N)$ in tuples inspected *and* $\Omega(\sqrt N)$ in the size of the integers manipulated. Both prices must be paid; neither can be negotiated down by increasing the arity.
 
-So the deterministic $\sqrt{N}$ row of the hierarchy is *not tight for randomised search*, and the honest thing to do is prove where the randomised wall actually stands. That can be done by pure counting, with no probability theory at all.
+### Why this is worth knowing
 
-Suppose you enumerate $m$ tuples and each is assigned a residue in $\{0, 1, \dots, p-1\}$. There are $p^m$ possible assignments in total. How many are collision-free — that is, injective? Exactly the falling factorial
-$$p^{\underline{m}} = p(p-1)(p-2)\cdots(p-m+1),$$
-since a collision-free assignment is precisely an injection of $m$ items into $p$ boxes. That is the exact count. From it one derives an integer form of the union bound,
-$$p^{m+1} \;\le\; p \cdot p^{\underline{m}} \;+\; \binom{m}{2}\, p^{m},$$
-which says in disguise that the collision probability among $m$ items in $p$ boxes is at most $\binom{m}{2}/p$ — one term for each pair that could collide. And from that:
+There is a real connection here between two problems that live in different neighbourhoods of theoretical computer science. **3SUM** — given a list of numbers, are there three summing to zero? — is one of the canonical "fine-grained complexity" problems, a fixed point around which a whole web of conditional lower bounds is organised. **Factoring** is the canonical hard problem of public-key cryptography. The reveal lemma says that a 3SUM instance taken modulo a hidden prime factor is, quite literally, a factoring oracle: solve it and the prime falls out of a greatest common divisor.
 
-> **The Randomised Barrier.** If $m^2 < p$, then strictly more than half of all $p^m$ assignments are collision-free: $p^m < 2\,p^{\underline{m}}$. Hence any collision search that succeeds with probability greater than $1/2$ must enumerate at least $\sqrt{p}$ tuples.
+That is a bridge. What the birthday-bound hierarchy then tells us is exactly how much traffic the bridge will bear. The naive hope — that pushing arity upward converts a $\sqrt{N}$ algorithm into an $N^{1/3}$ algorithm — is refuted by a pigeonhole argument and its adversarial converse. And the refutation is robust in a way that specific algorithm analyses rarely are: the threshold theorem is an *if and only if*, so it is not an artefact of a particular proof technique or a particular scheme. Anything that waits for a repeated residue is bound by it.
 
-For a balanced semiprime $N = pq$ with $p \approx q \approx \sqrt{N}$, that threshold is $\sqrt{p} \approx N^{1/4}$ — two whole exponent steps below the deterministic wall, and exactly the running time of Pollard's rho. Both statements are *lower* bounds, not heuristics; and both are unconditional.
+There is a broader lesson in the shape of the argument. In algorithm design one often improves an exponent and declares victory. But an exponent is a measurement of *one* resource, and a method has several. Here the arity ladder genuinely improves storage — from $p^{1/2}$ down to $p^{1/3}$ and beyond — while leaving work, amplitude, and coverage all frozen at $\sqrt{N}$. Three independent barriers, three different reasons, one number. The barrier is not an accident of how we counted; it is where the mathematics actually lives.
 
-Numbers make the gap concrete. Take the prime $p = 10007$. A deterministic guarantee needs more than $10007$ tuples. But with only $m = 100 \approx \sqrt{p}$ tuples, one has $2\binom{100}{2} = 9900 < 10007$, so a majority of assignments are *still* collision-free — the randomised threshold genuinely sits near $100$, two orders of magnitude below $10007$. Below $\sqrt{p}$ you lose more often than you win; above it you start winning. The transition is sharp, and it is exactly where the birthday paradox says it should be.
+Modern factoring records are set by methods — sieves — that are not collision searches at all, and they run in time far below $\sqrt{N}$. That is not a contradiction; it is the point. The birthday paradox is a beautiful and powerful engine, but it is bolted to the floor. To go faster you must get off it entirely.
 
-So the corrected picture is a **two-level barrier**:
-
-| Regime | Tuples needed | For a balanced $N = pq$ |
-|---|---|---|
-| Deterministic guarantee | more than $p$ | $\sqrt{N}$ |
-| Randomised, success probability $> 1/2$ | at least $\sqrt{p}$ | $N^{1/4}$ |
-
-Both rows hold at every arity. Whether you look at single residues, at pairs, or at triples, the cost is the same; only the size of the bag of numbers you carry around changes.
-
-## Why this is worth knowing
-
-Three things deserve emphasis.
-
-**First, a bridge.** 3SUM is a fixture of fine-grained complexity theory — the conjecture that it needs essentially quadratic time is the hardness assumption behind dozens of geometric and combinatorial lower bounds. Factoring is a fixture of cryptography. The reveal lemma links them at the level of *mechanism*: a 3SUM solution modulo a hidden prime is a factoring witness. That suggests a genuinely two-way research programme, one direction transferring 3SUM hardness into a lower bound for restricted factoring algorithms, the other asking whether a subquadratic 3SUM algorithm would say anything about factoring over structured sets.
-
-**Second, a correction.** It is tempting — and it has been tempting — to summarise all of this as "everything costs $\sqrt{N}$". That is false as stated, and the falsehood matters: it would rule out Pollard's rho, which manifestly works. The right statement separates the deterministic guarantee from the randomised threshold, and both halves can be proved. A hierarchy table is only as good as the quantifiers hiding in its column headings.
-
-**Third, a warning about improved exponents.** The arity story is a model of a very common trap. Going from pairs to triples genuinely improves an exponent — from $p^{1/2}$ to $p^{1/3}$ — and that improvement is real. But it is an improvement in the wrong quantity. The exponent lives in the size of the generating set; the cost lives in the number of tuples, and there the exponent never budges. Any claimed speedup should be checked against the question: *which* quantity did the exponent improve?
-
-None of this is a factoring breakthrough, and it is not meant to be. It is something arguably more useful: a precise account of why a whole family of appealing ideas cannot be one — together with the exact place, at $N^{1/4}$ rather than $\sqrt{N}$, where the ground actually gives way.
+And still, there is something delightful about the fact that we began with three small numbers adding to $11$, and ended with a proof about the limits of an entire family of algorithms. The trick was real. The magic, as usual, was a theorem in disguise.

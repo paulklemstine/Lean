@@ -1,409 +1,404 @@
-# The 3SUM–Birthday-Bound Hierarchy: Collision Structure, gcd Queries, and a Two-Level Barrier for Semiprime Factoring
+# The 3SUM–Birthday-Bound Hierarchy: Collision Factoring and Three Independent $\sqrt{N}$ Barriers
 
 **Author:** Aristotle
-**Date:** 2026-08-13
+**Date:** 2026-08-15
 
 ---
 
 ## Abstract
 
-We study the precise sense in which collision-based factoring methods for a semiprime $N = pq$ all pay the same price, and the precise sense in which they do not. Our starting point is an exact *factor-reveal* characterisation: for distinct primes $p, q$ and any integer $s$, one has $\gcd(s, pq) = p$ if and only if $p \mid s$ and $q \nmid s$. Specialised to $s = a + b + c$ this makes a 3SUM solution modulo a hidden prime factor into a factoring witness, connecting two canonical problems — 3SUM and integer factoring — through a single divisibility lemma that also subsumes sumset differences and Pollard's $p-1$ values.
+We establish a structural bridge between two canonical computational problems — the $3$SUM problem of fine-grained complexity and integer factoring — and then determine, exactly, how much that bridge can carry.
 
-We then quantify the cost of producing such a witness. We prove an *arity-uniform* pigeonhole theorem: for every arity $r$, a collision search over an $r$-uniform family of subsets of a $k$-set is guaranteed to succeed against every evaluation into $\mathbb{Z}/p\mathbb{Z}$ if and only if $\binom{k}{r} > p$. Sufficiency is the pigeonhole principle; necessity is an adversary construction, so the threshold $p+1$ is exactly optimal. Consequently, although the required *search-set size* improves with arity ($k \gtrsim p$, $k \gtrsim \sqrt{2p}$, $k \gtrsim (6p)^{1/3}$ at arities $1, 2, 3$), the *enumeration cost* is pinned at more than $p \ge \sqrt{N}$ for every arity.
+The bridge is a *reveal lemma*: if $N = pq$ is a semiprime and $s$ is any integer with $0 < s < N$ and $p \mid s$, then $\gcd(s, N) = p$. The side condition $q \nmid s$ that is customarily imposed is redundant: it follows from $s < N$. Applied to $s = a + b + c$, this says that a $3$SUM instance solved modulo an unknown prime factor of $N$ yields that factor by one greatest-common-divisor computation.
 
-We close two loopholes. First, we prove an unconditional lower bound for the only interface these methods use — the gcd — with no hypothesis on how queries are generated: a query multiset $Q$ of nonzero integers bounded by $M$ that reveals a factor of every semiprime built from a prime pool $P$ must satisfy $|P| \le |Q| \log_2 M + 1$. Second, we prove that the deterministic $\sqrt{N}$ row is *not* tight for randomised search: an exact count of collision-free evaluations, $p^{\underline{m}} = p(p-1)\cdots(p-m+1)$ out of $p^m$, combined with an integer union bound $p^{m+1} \le p\,p^{\underline{m}} + \binom{m}{2} p^m$, yields that $m^2 < p$ forces a strict majority of evaluations to be collision-free. Hence any search succeeding with probability exceeding $1/2$ needs $m \ge \sqrt{p}$ tuples, i.e. $N^{1/4}$ for a balanced semiprime.
+We then analyse the family of collision-based factoring schemes that the reveal lemma makes available — sumset collisions ($a+b \equiv c+d$), $3$SUM collisions ($a+b+c \equiv d+e+f$), general $r$-SUM collisions, and evaluation schemes with structured value sets. These form an apparent hierarchy: guaranteeing an $r$-SUM collision modulo $p$ requires only $k \approx p^{1/r}$ *stored* elements, so the exponent improves from $1/2$ to $1/3$ and beyond.
 
-The resulting picture is a two-level barrier — deterministic $\sqrt{N}$, randomised $N^{1/4}$ — with both levels established as unconditional lower bounds and both independent of the arity.
+Our main theorem shows that the hierarchy collapses. For a finite search space $S$ and modulus $p \ge 1$, a collision is guaranteed against every residue map into $\{0, \dots, p-1\}$ **if and only if** $p < |S|$. The criterion mentions only $|S|$ — the number of inspected objects — and never the arity. The threshold is exactly $p+1$ for every scheme in the family, and since the larger factor of $N = pq$ satisfies $p \geq \sqrt{N}$, every such scheme must inspect more than $\sqrt{N}$ objects.
 
-**Keywords:** 3SUM, birthday bound, integer factoring, semiprime, pigeonhole principle, gcd queries, falling factorial, query complexity.
+We prove two further, logically independent obstructions with the same $\sqrt N$ magnitude. The **amplitude barrier**: $r$-tuples drawn from $A \subseteq [1, M]$ realise at most $rM + 1$ distinct sums, so if $rM < p$ then *every* modular collision is trivial and the scheme cannot factor regardless of how many tuples it inspects; success therefore forces $p \leq rM$. The **span barrier**: any scheme extracting factors as $\gcd$ of differences of its values, if it reveals a factor $f$, must produce two values differing by at least $f$; hence the numbers manipulated span at least $\sqrt N$. The **coverage barrier**: a fixed scheme with $k$ search points and values below $B$ reveals at most $\log_P(B) \cdot k^2$ primes $\geq P$, so no fixed scheme is universal.
+
+Finally we give a positive master theorem: once the counting and amplitude barriers are cleared, $r$-SUM collision factoring provably outputs the factor $p$. The consequence is a sharp trichotomy of costs — inspected tuples, integer amplitude, and prime coverage — all pinned at $\Omega(\sqrt N)$ by three different arguments.
+
+**Keywords:** $3$SUM, birthday bound, integer factoring, pigeonhole principle, semiprimes, collision search, sumsets, fine-grained complexity.
 
 ---
 
 ## 1. Introduction
 
-### 1.1 Two problems, one witness
+### 1.1 Two problems, one bridge
 
-The **3SUM problem** asks whether a set of $n$ integers contains three elements summing to zero. It is a cornerstone of fine-grained complexity: the conjecture that 3SUM requires $n^{2-o(1)}$ time underwrites a large body of conditional lower bounds in computational geometry and string algorithms.
+The **$3$SUM problem** asks, given a finite set $A$ of integers, whether there exist $a, b, c \in A$ with $a + b + c = 0$. It occupies a distinguished position in fine-grained complexity: a large family of problems in computational geometry and string algorithms is known to be $3$SUM-hard, and the $3$SUM conjecture — no truly subquadratic algorithm exists — anchors a web of conditional lower bounds.
 
-**Integer factoring** asks for the prime decomposition of $N$, and in the semiprime case $N = pq$ it is the assumption underlying widely deployed public-key cryptography.
+**Integer factoring** asks, given $N$, for a nontrivial divisor. For $N = pq$ a product of two primes of comparable size, it is the canonical hardness assumption of public-key cryptography.
 
-These two problems are not usually discussed together. The observation driving this paper is that they meet at a single elementary lemma. Suppose $N = pq$ with $p \ne q$ prime, and suppose one has produced integers $a, b, c$ with
-$$a + b + c \equiv 0 \pmod p, \qquad a + b + c \not\equiv 0 \pmod q.$$
-Then $\gcd(a+b+c, N) = p$ exactly. The 3SUM solution *modulo the hidden factor* is a factoring witness, and extracting the factor from it costs one Euclidean algorithm.
+These problems are not usually discussed together. This paper connects them, in a direction that is elementary to state and, we believe, has not been articulated as a hierarchy before: *a $3$SUM instance taken modulo an unknown prime factor of $N$ is a factoring oracle.* The connection runs through a lemma of two lines and a greatest-common-divisor computation, and the interesting mathematics lies not in the bridge itself but in the precise accounting of what crossing it costs.
 
-This is not a factoring algorithm — one cannot search modulo $p$ without knowing $p$ — but it is a structural bridge, and it invites the natural quantitative question: **how expensive is it to produce such a witness, and does the arity $3$ buy anything over arity $2$ or arity $1$?**
+### 1.2 The seductive hierarchy
 
-### 1.2 The hierarchy and its folklore
+Once one accepts the reveal lemma, factoring $N = pq$ reduces to producing a quantity below $N$ that is divisible by $p$. The birthday bound supplies such quantities: generate more than $p$ integers, and two of them are congruent modulo $p$; their difference is a nonzero multiple of $p$.
 
-Collision-based factoring methods come in a natural hierarchy graded by arity:
+The design space is then: how do we generate many integers cheaply? Natural answers form a ladder of increasing arity.
 
-| Arity | Collision type | Search set | Tuples enumerated |
+| Collision type | Search space size | Stored elements for a guarantee | Objects inspected |
 |---|---|---|---|
-| $1$ | single evaluations coincide | $k \gtrsim p$ | $k$ |
-| $2$ | sumset: $a+b \equiv c+d$ | $k \gtrsim \sqrt{2p}$ | $\binom{k}{2}$ |
-| $3$ | 3SUM: $a+b+c \equiv 0$ | $k \gtrsim (6p)^{1/3}$ | $\binom{k}{3}$ |
+| Sumset, $a + b \equiv c + d$ | $k^2$ | $k \sim p^{1/2}$ | $> p \ge \sqrt N$ |
+| $3$SUM, $a+b+c \equiv d+e+f$ | $k^3$ | $k \sim p^{1/3}$ | $> p \ge \sqrt N$ |
+| $r$-SUM | $k^r$ | $k \sim p^{1/r}$ | $> p \ge \sqrt N$ |
+| Structured evaluation, value set $B$, $\lvert B\rvert \approx p/h$ | $k$ | $k \sim p/h$ | $> \lvert B \rvert$ |
 
-Folklore says: the exponent in the search-set size improves ($1 \to 1/2 \to 1/3$), but the net cost is always $\Theta(\sqrt{N})$. We prove that the first clause is right, that the second clause is right *for deterministic guarantees* and provably optimal there, and that it is *wrong* for randomised search, where the correct threshold is $\Theta(\sqrt{p}) = \Theta(N^{1/4})$.
+The third column is the seduction: the exponent genuinely improves. The fourth column is the content of this paper: it does not.
 
 ### 1.3 Contributions
 
-1. **Exact factor reveal** (Section 2): a complete four-case classification of $\gcd(s, pq)$ and the iff-characterisation $\gcd(s, pq) = p \iff p \mid s \wedge q \nmid s$; the 3SUM specialisation; a verified exhaustive instance at $N = 143$.
-2. **Reveal density** (Section 3): in one period $0 < s \le N$ there are exactly $q$ multiples of $p$, of which exactly $q-1$ reveal; the reveal fails on a $1/q$ fraction of its own witnesses.
-3. **Arity-uniform pigeonhole** (Section 4): guaranteed collision $\iff \binom{k}{r} > p$, with a matching adversary; the resulting $\sqrt{N}$ wall, uniform in $r$; a verified threshold table at $p = 100$.
-4. **Arity reduction** (Section 5): a 3SUM solution in $S \subseteq \mathbb{Z}/p\mathbb{Z}$ exists iff $-c \in S + S$ for some $c \in S$, so arity $3$ is an arity-$2$ table plus $|S|$ lookups; Pollard's $p-1$ as the same reveal lemma.
-5. **Unconditional gcd-query lower bound** (Section 6): $|P| \le |Q|\log_2 M + 1$ by an adversary that hides two untouched primes.
-6. **Counting birthday bound and the randomised barrier** (Section 7): exact count $p^{\underline{m}}$ of collision-free evaluations, integer union bound, and the conclusion that $m^2 < p$ implies a strict majority of collision-free evaluations.
-
-Sections 8–10 discuss algorithms, applications and open problems.
-
-Throughout, $p$ and $q$ denote distinct primes, $N = pq$, $\mathbb{Z}_p := \mathbb{Z}/p\mathbb{Z}$, $\binom{n}{r}$ is the binomial coefficient, and $p^{\underline{m}} := p(p-1)\cdots(p-m+1)$ denotes the falling factorial (with $p^{\underline{0}} = 1$).
+1. **A hypothesis-free reveal lemma** (Section 3), together with its $3$SUM, $r$-SUM, and collision-difference forms, and a complete census for $N = 143$ illustrating why the failure mode of the method is structurally impossible in the relevant range.
+2. **The collapse theorem** (Section 4): a collision is guaranteed exactly when the search space exceeds $p$, an arity-free criterion. Both directions are proved — pigeonhole and an explicit adversary — so the threshold $p+1$ is sharp, not merely an upper bound on some analysis.
+3. **The $\sqrt N$ barrier in arity-free form** (Section 5).
+4. **Two independent further barriers** (Sections 6 and 7): amplitude and span, plus the coverage bound limiting the universality of any fixed scheme.
+5. **A positive master theorem** (Section 8) certifying that the method works once the barriers are cleared.
 
 ---
 
-## 2. The factor reveal
+## 2. Notation and standing conventions
 
-### 2.1 Statement and classification
+All variables denote natural numbers unless stated otherwise. For a finite set $S$ we write $|S|$ for its cardinality. We write $a \equiv b \pmod p$, and for natural numbers we freely use the equivalence
 
-**Lemma 2.1 (One-sided divisibility reveals).** *Let $p, q$ be primes and $s$ an integer with $p \mid s$ and $q \nmid s$. Then $\gcd(s, pq) = p$.*
+$$ a \equiv b \pmod p \quad\text{with}\quad b \le a \qquad \Longleftrightarrow \qquad p \mid a - b, $$
 
-*Proof sketch.* Since $p \mid s$ and $p \mid pq$, we have $p \mid \gcd(s, pq)$; write $\gcd(s,pq) = pt$. From $pt \mid pq$ we get $t \mid q$, so $t = 1$ or $t = q$ by primality of $q$. If $t = q$ then $q \mid \gcd(s, pq) \mid s$, contradicting $q \nmid s$. Hence $t = 1$. $\square$
+with $a - b$ the ordinary (nonnegative) difference. We write $\lfloor\sqrt N\rfloor$ for the integer square root; all our inequalities involving square roots are stated in this integer form and are therefore exact, not asymptotic.
 
-The symmetric statement, with the roles of $p$ and $q$ exchanged, follows by commutativity of the product.
+A **semiprime** is $N = pq$ with $p, q$ prime. Where a *larger factor* is referred to, we assume $q \le p$, so that $\lfloor\sqrt N\rfloor \le p$.
 
-**Theorem 2.2 (Complete classification).** *Let $p \ne q$ be primes and $s$ any integer. Then*
-$$\gcd(s, pq) = \begin{cases} pq, & p \mid s \text{ and } q \mid s,\\ p, & p \mid s \text{ and } q \nmid s,\\ q, & q \mid s \text{ and } p \nmid s,\\ 1, & p \nmid s \text{ and } q \nmid s.\end{cases}$$
+**Definition 2.1 (Residue map).** Given a finite *search space* $S$ (a finite set of arbitrary objects: integers, tuples, ideal classes) and a modulus $p \ge 1$, a **residue map** is a function $f$ from the ambient type into $\{0, 1, \dots, p-1\}$. A **collision** for $f$ on $S$ is a pair $x, y \in S$ with $x \neq y$ and $f(x) = f(y)$.
 
-*Proof sketch.* Case 1: $p, q$ coprime and both dividing $s$ give $pq \mid s$, so the gcd is $pq$. Cases 2 and 3 are Lemma 2.1 and its mirror. Case 4: the gcd divides $pq$; if it exceeded $1$ it would have a prime divisor $r$, and $r \mid pq$ forces $r \in \{p, q\}$ while $r \mid \gcd(s, pq) \mid s$ contradicts the hypothesis. $\square$
-
-**Corollary 2.3 (Exact characterisation).** *For distinct primes $p \ne q$,*
-$$\gcd(s, pq) = p \iff \big(p \mid s \ \text{ and } \ q \nmid s\big).$$
-
-*Proof sketch.* ($\Leftarrow$) is Lemma 2.1. ($\Rightarrow$): $\gcd(s,pq) = p$ gives $p \mid s$; if also $q \mid s$ then $pq \mid s$, so the gcd would be $pq > p$, a contradiction since $q > 1$. $\square$
-
-The four-case classification is the reason the reveal is *sharp*: exactly two of the four cases are informative, and they are precisely the cases where the witness hits exactly one of the two hidden primes.
-
-### 2.2 The 3SUM specialisation
-
-**Theorem 2.4 (3SUM factor reveal).** *Let $N = pq$ with $p \ne q$ prime. If $a, b, c$ are integers with $p \mid a+b+c$ and $q \nmid a+b+c$, then $\gcd(a+b+c, N) = p$. In particular the revealed divisor is a proper nontrivial factor: $1 < \gcd(a+b+c, N) < N$.*
-
-*Proof sketch.* Immediate from Lemma 2.1 with $s = a+b+c$; properness follows from $1 < p$ and $p < pq$, using $q > 1$. $\square$
-
-The same statement holds verbatim for a congruence stated in $\mathbb{Z}_p$: if $(\bar a + \bar b + \bar c) = 0$ in $\mathbb{Z}_p$ for the reductions of natural numbers $a,b,c$, then $p \mid a+b+c$ and the reveal applies.
-
-### 2.3 An exhaustive verified instance: $N = 143$
-
-Take $N = 143 = 11 \cdot 13$ and enumerate all triples $1 \le a < b < c \le 11$.
-
-- Exactly $15$ of these triples satisfy $11 \mid a+b+c$.
-- Exactly $0$ satisfy $143 \mid a+b+c$.
-- Consequently all $15$ mod-$p$ triples satisfy $\gcd(a+b+c, 143) = 11$; each reveals the factor.
-
-A concrete witness: $1 + 4 + 6 = 11$, and $\gcd(11, 143) = 11$. The absence of mod-both triples in this range is forced: the largest sum available is $9 + 10 + 11 = 30 < 143$, so no sum can be a multiple of $143$. This is the smallest interesting illustration of the general density statement of the next section.
+**Definition 2.2 (Guaranteed collision).** We say $S$ *guarantees collisions modulo $p$* if **every** residue map $f$ into $\{0, \dots, p-1\}$ admits a collision on $S$. This universal quantification is the correct notion for a lower bound: an algorithm designer who does not know $p$ cannot rely on a favourable $f$.
 
 ---
 
-## 3. Reveal density: how often the witness misfires
+## 3. The reveal lemma
 
-The reveal has one failure mode, $q \mid s$. We count it exactly.
+### 3.1 Statement and proof
 
-**Theorem 3.1 (Witness count).** *For $p > 0$, the number of $s$ with $0 < s \le pq$ and $p \mid s$ is exactly $q$.*
+**Theorem 3.1 (Factor reveal).** *Let $p$ and $q$ be primes and $N = pq$. Let $s$ satisfy $0 < s < N$ and $p \mid s$. Then $\gcd(s, N) = p$.*
 
-*Proof sketch.* The multiples of $p$ in $(0, pq]$ are $p, 2p, \dots, qp$; there are $\lfloor pq/p \rfloor = q$ of them. $\square$
+*Proof.* Put $g = \gcd(s, N)$. Since $p \mid s$ and $p \mid N$, we have $p \mid g$; write $g = pd$. Since $g \mid N = pq$ we get $pd \mid pq$, and as $p \neq 0$ this gives $d \mid q$. As $q$ is prime, $d = 1$ or $d = q$.
 
-**Theorem 3.2 (Failure count).** *For $p, q > 0$, the number of $s$ with $0 < s \le pq$ and $pq \mid s$ is exactly $1$, namely $s = pq$.*
+If $d = 1$ then $g = p$, as claimed. If $d = q$ then $g = pq = N$, and since $g \mid s$ we get $N \mid s$; with $s > 0$ this forces $s \geq N$, contradicting $s < N$. $\square$
 
-**Theorem 3.3 (Reveal density).** *Let $p \ne q$ be primes and $N = pq$. Then*
-$$\#\{\, s : 0 < s \le N,\ \gcd(s, N) = p \,\} = q - 1.$$
+**Remark 3.2 (A redundant hypothesis).** The literature customarily states this with the extra hypothesis $q \nmid s$, to exclude the case where the greatest common divisor returns $N$. The proof above shows the hypothesis is *implied by* $s < N$: if both $p \mid s$ and $q \mid s$ then, since $p$ and $q$ are distinct primes and hence coprime, $pq \mid s$, so $s \geq N$. We record this separately, since it is the structural reason the empirical "divisible by both" column of any experiment in range is empty.
 
-*Proof sketch.* By Corollary 2.3, the set in question is $\{s : p \mid s\} \setminus \{s: p \mid s \text{ and } q \mid s\}$ within the period, and by coprimality the subtracted set is $\{s : pq \mid s\}$, which is contained in the former. Apply Theorems 3.1 and 3.2 and take the difference: $q - 1$. $\square$
+**Proposition 3.3 (No double divisibility below $N$).** *Let $p \neq q$ be primes and $0 < s < pq$. Then it is not the case that both $p \mid s$ and $q \mid s$.*
 
-**Corollary 3.4.** *Conditional on having produced a multiple of $p$ in one period, the reveal succeeds with probability exactly $(q-1)/q$. For $N = 143$ this is $12/13$: of the $13$ multiples of $11$ in $(0,143]$, exactly $12$ satisfy $\gcd(s,143) = 11$, the exception being $s = 143$.*
+*Proof.* Coprimality of $p$ and $q$ upgrades the two divisibilities to $pq \mid s$, whence $s \geq pq$, contradiction. $\square$
 
-The practical reading: the non-degeneracy hypothesis $q \nmid s$ attached to every reveal theorem is a genuine but negligible restriction. Its failure probability is $1/q$, which for cryptographic parameters is astronomically small; and when it does fail one learns $N$ itself, i.e. nothing, at no cost beyond one gcd.
+### 3.2 The forms in which the lemma is used
 
----
+**Corollary 3.4 ($3$SUM reveal).** *If $p, q$ are prime, $0 < a+b+c < pq$, and $p \mid a+b+c$, then $\gcd(a+b+c,\, pq) = p$.*
 
-## 4. The arity-uniform birthday bound
+**Corollary 3.5 ($r$-SUM reveal).** *Let $I$ be a finite index set and $f : I \to \mathbb{N}$. If $0 < \sum_{i \in I} f(i) < pq$ and $p \mid \sum_{i \in I} f(i)$, then $\gcd\bigl(\sum_{i\in I} f(i),\, pq\bigr) = p$.*
 
-### 4.1 The model
+The reveal phenomenon is thus not special to triples; the arity plays no role whatsoever in the reveal step. This is the first hint of the paper's theme.
 
-Fix a modulus $p > 0$ and a finite set $S$ of size $k$. An **arity-$r$ collision search over $S$** enumerates the family $\binom{S}{r}$ of all $r$-element subsets of $S$, evaluates each subset $A$ by some function $v : \binom{S}{r} \to \mathbb{Z}_p$, and succeeds if $v(A) = v(B)$ for some $A \ne B$. The canonical evaluation is the subset sum modulo $p$; the arity-$1$ case is a plain evaluation search, arity $2$ the sumset search, arity $3$ the 3SUM search.
+**Corollary 3.6 (Collision reveal).** *Let $p, q$ be prime and $t < s < pq$ with $p \mid s - t$. Then $\gcd(s - t,\, pq) = p$.*
 
-We say the search is **guaranteed** if it succeeds *for every* evaluation $v$. This is the deterministic worst-case notion: no assumption whatsoever on the structure of $v$.
+*Proof.* Apply Theorem 3.1 to the quantity $s - t$, which is positive by $t < s$ and satisfies $s - t \le s < pq$. $\square$
 
-### 4.2 Sufficiency and necessity
+This is the shape actually produced by every search: not a sum divisible by $p$ (we have no way to arrange that) but a *difference of two sums* that is divisible by $p$, arising from a congruence.
 
-**Theorem 4.1 (Sufficiency — pigeonhole).** *If $p < \binom{k}{r}$, then for the subset-sum evaluation there exist distinct $r$-subsets $A \ne B$ of $S$ with $\sum_{a \in A} a \equiv \sum_{b \in B} b \pmod p$.*
+**Corollary 3.7 (Sumset collision).** *If $c + d < a + b < pq$ and $(a+b) \equiv (c+d) \pmod p$, then $\gcd\bigl((a+b)-(c+d),\, pq\bigr) = p$.*
 
-*Proof sketch.* The family $\binom{S}{r}$ has $\binom{k}{r} > p$ members and the map $A \mapsto (\sum A) \bmod p$ lands in a set of size $p$; a map from a larger finite set to a smaller one is not injective. $\square$
+**Theorem 3.8 ($3$SUM collision dichotomy).** *Let $p, q$ be prime and let two triples satisfy $a+b+c < pq$, $a'+b'+c' < pq$, and $(a+b+c) \equiv (a'+b'+c') \pmod p$. Then exactly one of the following holds:*
 
-**Theorem 4.2 (Necessity — adversary).** *If a family $T$ of subsets satisfies $|T| \le p$, then there exists an evaluation $v : T \to \mathbb{Z}_p$ that is injective, i.e. produces no collision at all.*
+1. *$a+b+c = a'+b'+c'$ — the collision is trivial and yields no information; or*
+2. *$\gcd\bigl(\max - \min,\; pq\bigr) = p$, where $\max$ and $\min$ are the larger and smaller of the two integer sums.*
 
-*Proof sketch.* $|T| \le p = |\mathbb{Z}_p|$, so an injection $T \hookrightarrow \mathbb{Z}_p$ exists; extend arbitrarily. $\square$
+*Proof.* Trichotomy on the two integer sums. If they are equal we are in case 1. Otherwise the smaller is strictly less than the larger, both are below $pq$, and their congruence gives $p \mid \max - \min$; apply Corollary 3.6. $\square$
 
-**Theorem 4.3 (Exact threshold, uniform in arity).** *For every $p > 0$, every finite $S$ with $|S| = k$, and every arity $r$:*
-$$\Big(\text{for every } v:\ \exists A \ne B \in \tbinom{S}{r},\ v(A) = v(B)\Big) \iff p < \binom{k}{r}.$$
+Theorem 3.8 is the precise statement of what a search can hope for, and it already isolates the enemy: **trivial collisions**. A modular collision between two tuples whose integer sums coincide is worthless. Section 6 shows this failure mode is not a nuisance but a barrier.
 
-*Proof sketch.* ($\Leftarrow$) $|\binom{S}{r}| = \binom{k}{r} > p = |\mathbb{Z}_p|$, so no $v$ is injective. ($\Rightarrow$) contrapositive: if $\binom{k}{r} \le p$, Theorem 4.2 supplies an injective $v$, defeating the guarantee. $\square$
+### 3.3 A complete census: $N = 143$
 
-Theorem 4.3 is the technical heart of the hierarchy. The threshold $p+1$ enumerated tuples is not an upper estimate obtained by a lossy pigeonhole argument: it is exactly optimal, at every arity, because the adversary construction matches it.
+Take $N = 143 = 11 \cdot 13$ and consider all ordered triples $1 \le a < b < c \le 12$. Every such triple has $a+b+c \le 10+11+12 = 33 < 143$, so Theorem 3.1 applies to every one of them.
 
-### 4.3 The search-set exponents
+**Proposition 3.9 (Census).** *Among the triples $1 \le a<b<c\le 12$:*
 
-The improvement claimed by the hierarchy lives in $k$, not in $\binom{k}{r}$.
+- *exactly $20$ have $11 \mid a+b+c$ and $13 \nmid a+b+c$;*
+- *exactly $0$ have both $11 \mid a+b+c$ and $13 \mid a+b+c$.*
 
-**Proposition 4.4.** *If $p < \binom{k}{r}$ then $p < k^r$; hence $k > p^{1/r}$.*
+The second count is not a coincidence of the range: by Proposition 3.3 it is $0$ for **every** range in which the triple sums stay below $143$ — in particular for all $1 \le a<b<c\le n$ with $3n < 143$. The first count is genuinely range-dependent: restricting to $1 \le a<b<c\le 11$ leaves $15$ such triples.
 
-*Proof sketch.* $\binom{k}{r} \le k^r$. $\square$
+**Corollary 3.10.** *For every triple with $0 < a+b+c < 143$ and $11 \mid a+b+c$, one has $\gcd(a+b+c, 143) = 11$.*
 
-**Proposition 4.5 (Arity 2).** *If $p < \binom{k}{2}$ then $2p < k^2$, i.e. $k > \sqrt{2p}$.*
-
-*Proof sketch.* $\binom{k}{2} = k(k-1)/2 \le k^2/2$. $\square$
-
-**Proposition 4.6 (Arity 3).** *If $p < \binom{k}{3}$ then $6p < k^3$, i.e. $k > (6p)^{1/3}$.*
-
-*Proof sketch.* One shows $6\binom{n}{3} \le n^3$ for all $n$ by induction using Pascal's rule $\binom{n+1}{3} = \binom{n}{3} + \binom{n}{2}$ together with $2\binom{n}{2} \le n^2$ and the expansion $(n+1)^3 = n^3 + 3n^2 + 3n + 1$. $\square$
-
-**Proposition 4.7 (Higher arity never hurts).** *If $r < k/2$ and $p < \binom{k}{r}$ then $p < \binom{k}{r+1}$.*
-
-*Proof sketch.* Below the midpoint the binomial coefficients increase in $r$. $\square$
-
-Proposition 4.7 orders the hierarchy: in the regime $r < k/2$, whatever arity-$r$ guarantees, arity $r+1$ guarantees too. The hierarchy is a genuine chain, not a list of incomparable methods.
-
-### 4.4 The $\sqrt{N}$ wall
-
-**Theorem 4.8 (Barrier).** *Let $N = pq$ with $q \le p$, and let $C > p$. Then $\lfloor \sqrt{N} \rfloor < C$.*
-
-*Proof sketch.* $pq \le p^2$, so $\lfloor\sqrt{pq}\rfloor \le \lfloor\sqrt{p^2}\rfloor = p < C$. $\square$
-
-**Corollary 4.9 (Hierarchy barrier).** *For every arity $r$: if an arity-$r$ collision search over $S$ modulo $p$ is guaranteed to succeed, then it enumerates $\binom{|S|}{r} > p \ge \lfloor \sqrt{N} \rfloor$ tuples, where $N = pq$ is any semiprime with $q \le p$.*
-
-*Proof sketch.* Combine Theorem 4.3 with Theorem 4.8. $\square$
-
-This is the precise content of "all rows of the table cost $\sqrt{N}$", and Theorem 4.3 shows it cannot be improved for deterministic guarantees.
-
-### 4.5 A verified threshold table
-
-Take $p = 100$. The minimal set size $k$ guaranteeing a collision at each arity, and the resulting enumeration, are:
-
-| Arity $r$ | Minimal $k$ | $k$ insufficient | Tuples $\binom{k}{r}$ |
-|---|---|---|---|
-| $1$ | $101$ | $100$ | $101$ |
-| $2$ | $15$ | $14$ | $105$ |
-| $3$ | $10$ | $9$ | $120$ |
-
-All three entries were checked exhaustively: $\binom{101}{1} = 101 > 100$ while $\binom{100}{1} = 100 \not> 100$; $\binom{15}{2} = 105 > 100$ while $\binom{14}{2} = 91$; $\binom{10}{3} = 120 > 100$ while $\binom{9}{3} = 84$. The search-set sizes strictly decrease, $101 > 15 > 10$, while the tuple counts $101, 105, 120$ all exceed $p = 100$ — and hence all exceed $\lfloor\sqrt{100q}\rfloor$ for every $q \le 100$.
-
-The table exhibits, in miniature, the whole phenomenon: a tenfold compression of the search set with no reduction whatever in the work.
+Thus every one of the $20$ triples in the census factors $143$ on the spot: e.g. $2+4+5 = 11$, $1+9+12 = 22$, $3+8+11 = 22$, $10+11+12 = 33$, each with $\gcd(\cdot, 143) = 11$. The method's failure mode — accidentally hitting a multiple of $N$ — has zero instances, provably.
 
 ---
 
-## 5. Arity reduction and the unity of the reveal mechanisms
+## 4. The collapse of the hierarchy
 
-### 5.1 3SUM is a sumset table plus lookups
+We now leave the reveal step behind and analyse the search step in the abstract.
 
-For $S \subseteq \mathbb{Z}_p$ finite, write $S + S := \{x + y : x, y \in S\}$ for the sumset, so that $|S+S| \le |S|^2$.
+### 4.1 The upper side: pigeonhole
 
-**Theorem 5.1 (Arity reduction).** *For any finite $S \subseteq \mathbb{Z}_p$,*
-$$\big(\exists\, a, b, c \in S:\ a + b + c = 0\big) \iff \big(\exists\, c \in S:\ -c \in S + S\big).$$
+**Theorem 4.1 (Birthday bound, upper side).** *Let $p \ge 1$, let $S$ be a finite search space with $p < |S|$, and let $f$ be any residue map with $f(x) < p$ for all $x$. Then there exist $x, y \in S$ with $x \neq y$ and $f(x) = f(y)$.*
 
-*Proof sketch.* ($\Rightarrow$) From $a+b+c = 0$ we get $a + b = -c$ with $a, b \in S$, so $-c \in S+S$. ($\Leftarrow$) If $-c = a + b$ with $a, b \in S$ and $c \in S$, then $a+b+c = 0$. $\square$
+*Proof.* $f$ maps $S$ into the $p$-element set $\{0, \dots, p-1\}$ and $|S| > p$, so $f$ is not injective on $S$. $\square$
 
-The algorithmic reading is the important one. Building the sumset table costs $|S|^2$ additions and yields a set of size at most $|S|^2$; the 3SUM search then costs $|S|$ additional membership queries. So the arity-$3$ search does not access a fundamentally richer structure than the arity-$2$ search: it *is* the arity-$2$ structure, interrogated $|S|$ more times. This is a structural explanation, complementary to Theorem 4.3, of why raising the arity cannot lower the cost.
+**Theorem 4.2 (Structured value sets).** *Let $S$ be a finite search space, $B$ a finite set of naturals, and $f$ a map with $f(x) \in B$ for all $x \in S$. If $|B| < |S|$, then $f$ has a collision on $S$.*
 
-### 5.2 Pollard's $p-1$ is the same lemma
+Theorem 4.2 is the general form: the collision threshold is the size of the **value set**, whatever it happens to be. Theorem 4.1 is the case $B = \{0,\dots,p-1\}$. The "structured evaluation" row of the hierarchy — schemes whose values are confined to a set of size roughly $p/h$ for some structural parameter $h$ (for example an evaluation indexed by a class group of class number $h$) — is the case $|B| \approx p/h$, and Theorem 4.2 says such a scheme collides after only $|B| + 1$ evaluations, a genuine factor-$h$ improvement in *evaluation count*. Section 7 shows why this improvement is nonetheless confined.
 
-**Lemma 5.2 (Fermat step).** *Let $p$ be prime, $p \nmid a$, and $(p-1) \mid k$. Then $p \mid a^k - 1$.*
+### 4.2 The lower side: an adversary
 
-*Proof sketch.* Write $k = (p-1)m$. In $\mathbb{Z}_p$, $a \ne 0$ gives $a^{p-1} = 1$ by Fermat's little theorem, so $a^k = (a^{p-1})^m = 1$; lift the congruence back to $\mathbb{Z}$. $\square$
+**Theorem 4.3 (Birthday bound, lower side).** *Let $p \ge 1$ and let $S$ be a finite search space with $|S| \le p$. Then there exists a residue map $f$ with $f(x) < p$ for all $x$, which is injective on $S$.*
 
-**Theorem 5.3 (Pollard $p-1$ reveal).** *Let $p \ne q$ be primes, $p \nmid a$, $(p-1) \mid k$ and $q \nmid a^k - 1$. Then $\gcd(a^k - 1, pq) = p$.*
+*Proof.* Since $|S| \le p$, there is an injection $e$ from $S$ into a $p$-element set, which we identify with $\{0, \dots, p-1\}$. Define $f(x) = e(x)$ for $x \in S$ and $f(x) = 0$ otherwise. Then $f(x) < p$ everywhere (using $p \ge 1$ for the default value), and $f$ restricted to $S$ is $e$, hence injective. $\square$
 
-*Proof sketch.* Lemma 5.2 supplies $p \mid a^k-1$; apply Lemma 2.1. $\square$
+The importance of Theorem 4.3 is methodological. Without it, "the scheme needs more than $p$ tuples" would be a statement about one particular analysis. With it, the statement becomes a theorem about *all possible* schemes of this shape: for $|S| \le p$ there is a concrete residue assignment defeating the scheme.
 
-**Theorem 5.4 (Collision reveal).** *Let $p \ne q$ be primes and let $x \ge y$ satisfy $x \equiv y \pmod p$ and $q \nmid x - y$. Then $\gcd(x-y, pq) = p$.*
+### 4.3 The collapse
 
-*Proof sketch.* $x \equiv y \pmod p$ with $y \le x$ gives $p \mid x - y$; apply Lemma 2.1. $\square$
+**Theorem 4.4 (Collapse of the birthday-bound hierarchy).** *Let $p \ge 1$ and let $S$ be a finite search space. Then*
+$$ S \text{ guarantees collisions modulo } p \qquad \Longleftrightarrow \qquad p < |S|. $$
 
-Theorems 2.4, 5.3 and 5.4 are three faces of Lemma 2.1. Sumset differences, 3SUM sums, Pollard $p-1$ values and differences of singular moduli all feed the same divisibility test. This unification is what licenses treating them as *one hierarchy* rather than four unrelated tricks.
+*Proof.* ($\Leftarrow$) is Theorem 4.1. ($\Rightarrow$): suppose the guarantee holds but $|S| \le p$. By Theorem 4.3 there is a residue map $f$ into $\{0,\dots,p-1\}$ injective on $S$. By the guarantee, $f$ has a collision $x \ne y$ on $S$ with $f(x)=f(y)$; injectivity gives $x = y$, a contradiction. $\square$
 
-### 5.3 The end-to-end pipeline
+**Corollary 4.5 (Exact threshold).** *$S$ guarantees collisions modulo $p$ if and only if $|S| \ge p+1$.*
 
-**Theorem 5.5 (Collision search factors, at every arity).** *Let $p \ne q$ be primes, $S$ a finite set of naturals, $r$ an arity with $p < \binom{|S|}{r}$. Then there exist distinct $r$-subsets $A \ne B$ of $S$ such that, writing $d$ for the absolute difference of their sums, $p \mid d$; and if additionally $q \nmid d$, then $\gcd(d, pq) = p$.*
+**Discussion.** Theorem 4.4 is deliberately unimpressive as a piece of mathematics and consequential as a piece of accounting. Its criterion is a statement about $|S|$ alone. It is blind to:
 
-*Proof sketch.* Theorem 4.1 gives the sum collision; the modular equality with $y \le x$ gives $p \mid x - y$; Theorem 5.4 finishes. $\square$
+- the **arity** $r$ of the scheme;
+- the way $S$ is *generated* — as $A^r$ for a stored set $A$, as a class-group orbit, as anything;
+- the **additive structure** of the underlying numbers;
+- the particular residue map, since the criterion quantifies over all of them.
 
-For $r = 3$ this is exactly the 3SUM factor reveal in its search form: enumerate more than $p$ triples, obtain a sum collision modulo the unknown prime, and cash it in with one gcd.
+Consequently every row of the hierarchy table has the same entry in the "objects inspected" column: $p+1$. What differs between rows is only the *generation cost*: how few stored elements suffice to name a search space of that size. Arity $r$ buys storage $|A| \approx p^{1/r}$, and nothing else.
 
----
+### 4.4 The $r$-SUM instance
 
-## 6. An unconditional gcd-query lower bound
+**Definition 4.6 (Tuple space).** For $r \ge 0$ and a finite set $A$ of naturals, the *$r$-tuple space* $T_r(A)$ is the set of all functions from $\{1,\dots,r\}$ to $A$. Its cardinality is $|A|^r$.
 
-Sections 4–5 bound one *mechanism* (collision by pigeonhole). A sceptic may ask whether some entirely different mechanism produces multiples of $p$ more cheaply. We now bound not the mechanism but the *interface*.
+**Theorem 4.7 ($r$-SUM collision).** *Let $p \ge 1$, let $A$ be finite with $|A| = k$, and suppose $p < k^r$. Then there exist distinct $u, v \in T_r(A)$ with*
+$$ \sum_{i=1}^r u_i \;\equiv\; \sum_{i=1}^r v_i \pmod p. $$
 
-### 6.1 The model
+*Proof.* Apply Theorem 4.1 with $S = T_r(A)$, of cardinality $k^r > p$, and the residue map $u \mapsto \bigl(\sum_i u_i\bigr) \bmod p$. $\square$
 
-A **gcd-query algorithm** produces a finite set $Q$ of nonzero integers, each at most $M$, and computes $\gcd(x, N)$ for each $x \in Q$. It **solves** $N$ if some query has a nontrivial gcd with $N$. Every method discussed so far is of this shape: 3SUM sums, sumset differences, $a^k - 1$, singular-moduli differences.
+For $r = 2$ this is the sumset collision $a + b \equiv c+d$; for $r=3$ the $3$SUM collision $a+b+c \equiv d+e+f$.
 
-Define the **touched set** of $Q$ to be the set of primes dividing at least one query:
-$$U(Q) := \bigcup_{x \in Q} \{\, \pi \text{ prime} : \pi \mid x \,\}.$$
+**Theorem 4.8 ($r$-SUM adversary).** *If $k^r \le p$ there is a residue map into $\{0,\dots,p-1\}$ injective on $T_r(A)$: no $r$-SUM scheme with $|A| = k$ can be guaranteed to collide.*
 
-### 6.2 Counting touched primes
+**Corollary 4.9 (Storage monotonicity).** *If $k \ge 1$, $r \le r'$, and $p < k^r$, then $p < k^{r'}$. Raising the arity never increases the storage requirement.*
 
-**Lemma 6.1.** *Every nonzero $x$ has at most $\log_2 x$ distinct prime factors.*
+Corollary 4.9 is the *only* sense in which the hierarchy is real, and we state it explicitly to make the contrast exact.
 
-*Proof sketch.* If $x$ has $t$ distinct prime factors, their product divides $x$ and is at least $2^t$; hence $2^t \le x$, i.e. $t \le \log_2 x$. $\square$
+### 4.5 A quantitative snapshot: $p = 997$
 
-**Lemma 6.2.** *If every $x \in Q$ satisfies $x \le M$, then $|U(Q)| \le |Q| \cdot \log_2 M$.*
+**Proposition 4.10.** *For every natural $k$:*
+$$ 997 < k^3 \iff k \ge 10, \qquad\qquad 997 < k^2 \iff k \ge 32. $$
 
-*Proof sketch.* $|U(Q)| \le \sum_{x \in Q} |\{\pi : \pi \mid x\}| \le \sum_{x\in Q} \log_2 M = |Q|\log_2 M$, using Lemma 6.1 and monotonicity of $\log$. $\square$
+*Proof.* $9^3 = 729 \le 997 < 1000 = 10^3$ and $31^2 = 961 \le 997 < 1024 = 32^2$; monotonicity of $k \mapsto k^m$ does the rest. $\square$
 
-### 6.3 The adversary
+**Corollary 4.11 (The exponent gap, and its emptiness).** *At $p = 997$ the $3$SUM scheme requires $10$ stored elements where the sumset scheme requires $32$ — a $3.2\times$ improvement in storage, the promised $p^{1/2} \to p^{1/3}$. Yet the inspected search spaces are $10^3 = 1000$ and $32^2 = 1024$, both exceeding $997$ by the smallest possible margin, and differing from each other by $2.4\%$.*
 
-**Lemma 6.3.** *If $p, q$ are distinct primes with $p, q \notin U(Q)$, then $\gcd(x, pq) = 1$ for every nonzero $x \in Q$.*
-
-*Proof sketch.* $p \notin U(Q)$ means $p \nmid x$; likewise $q \nmid x$. Theorem 2.2, case 4, gives $\gcd(x, pq) = 1$. $\square$
-
-**Lemma 6.4.** *If $|P| > |U(Q)| + 1$, then $P$ contains two distinct primes both outside $U(Q)$.*
-
-*Proof sketch.* $|P \setminus U(Q)| \ge |P| - |U(Q)| > 1$. $\square$
-
-**Theorem 6.5 (gcd-query lower bound).** *Let $Q$ be a finite set of nonzero integers, each $\le M$, and $P$ a finite set of primes. If for all distinct $p, q \in P$ some $x \in Q$ has $\gcd(x, pq) \ne 1$, then*
-$$|P| \le |Q| \cdot \log_2 M + 1, \qquad\text{equivalently}\qquad |Q| \ge \frac{|P| - 1}{\log_2 M}.$$
-
-*Proof sketch.* Suppose $|P| > |Q|\log_2 M + 1$. By Lemma 6.2, $|P| > |U(Q)| + 1$, so by Lemma 6.4 there are distinct $p, q \in P$ outside $U(Q)$. By Lemma 6.3 every query has trivial gcd with $pq$, contradicting the solving hypothesis. $\square$
-
-**Corollary 6.6 (64-bit instance).** *If all queries are below $2^{64}$, covering a pool of $n$ candidate primes requires at least $(n-1)/64$ queries.*
-
-**Proposition 6.7 (Non-vacuity).** *If $p \mid x$ and $q \nmid x$ for distinct primes $p, q$, then $\gcd(x, pq) = p \ne 1$, so a single revealing query does solve the instance.*
-
-Proposition 6.7 is essential for interpretation: the bound of Theorem 6.5 does not say gcd testing is expensive — testing is one Euclidean algorithm. It says the *search* for a query touching the right prime is expensive, because each query can touch only $\log_2 M$ primes and there are many candidates.
-
-### 6.4 Recovering the $\sqrt{N}$ wall unconditionally
-
-For a balanced semiprime $N \approx p^2$, the candidate primes near $\sqrt{N}$ number about $\sqrt{N}/\log\sqrt{N}$ by the prime number theorem. Applying Theorem 6.5 with $|P| \approx \sqrt{N}/\log\sqrt{N}$ and $\log_2 M = O(\log N)$ gives
-$$|Q| \;\ge\; \Omega\!\left(\frac{\sqrt{N}}{\log^2 N}\right),$$
-a $\tilde\Omega(\sqrt{N})$ lower bound *for the non-adaptive worst-case guarantee*, obtained with no pigeonhole hypothesis and no assumption on how queries are generated. It is a query-complexity statement, and it is the strongest unconditional form of the hierarchy's headline claim.
+The two schemes do the same work. One of them merely remembers less while doing it.
 
 ---
 
-## 7. The counting birthday bound and the randomised barrier
+## 5. The $\sqrt N$ barrier
 
-### 7.1 The objection
+**Lemma 5.1.** *If $q \le p$ then $\lfloor\sqrt{pq}\rfloor \le p$.*
 
-The $\sqrt{N}$ wall concerns *guarantees*. Real collision-based factoring is randomised: Pollard's rho finds a collision modulo $p$ after about $\sqrt{p} \approx N^{1/4}$ values. If the deterministic wall were the whole truth, rho could not work. The hierarchy table is therefore incomplete, and this section supplies the missing row — again as a proved lower bound, not a heuristic.
+*Proof.* $pq \le p^2$, so $\lfloor\sqrt{pq}\rfloor \le \lfloor\sqrt{p^2}\rfloor = p$. $\square$
 
-### 7.2 Exact counting
+**Theorem 5.2 (Arity-independent cost barrier).** *Let $N = pq$ with $q \le p$ and $p \ge 1$. If a search space $S$ guarantees collisions modulo $p$, then*
+$$ |S| > \lfloor\sqrt{N}\rfloor. $$
 
-Model the enumeration of $m$ distinct tuples as an assignment of residues, i.e. a function $\{1,\dots,m\} \to \mathbb{Z}_p$. There are $p^m$ such assignments. Call one **collision-free** if it is injective.
+*Proof.* Theorem 4.4 gives $|S| > p$, and Lemma 5.1 gives $p \ge \lfloor\sqrt N\rfloor$. $\square$
 
-**Theorem 7.1 (Exact count of collision-free evaluations).** *The number of collision-free assignments of $m$ tuples into $\mathbb{Z}_p$ is the falling factorial*
-$$p^{\underline{m}} \;=\; p(p-1)(p-2)\cdots(p-m+1).$$
+**Corollary 5.3 ($r$-SUM barrier).** *For any arity $r$ and any $A$ with $p < |A|^r$ and $q \le p$, we have $|A|^r > \lfloor\sqrt{pq}\rfloor$: a guaranteed $r$-SUM scheme inspects more than $\sqrt N$ tuples.*
 
-*Proof sketch.* A collision-free assignment is precisely an injection $\{1,\dots,m\} \hookrightarrow \mathbb{Z}_p$, and the number of injections from an $m$-set into an $n$-set is the falling factorial $n^{\underline{m}}$. Here $|\mathbb{Z}_p| = p$. $\square$
+This is the paper's headline negative result, and it is worth being precise about what it does and does not say.
 
-**Theorem 7.2 (Total count).** *The number of all assignments is $p^m$.*
+*It does say:* no scheme in this family — of any arity, over any set of integers, with any generation rule — can be *guaranteed* to find a collision modulo the larger prime factor of $N$ while inspecting at most $\sqrt N$ objects. The bound is unconditional, non-asymptotic and non-probabilistic.
 
-### 7.3 The union bound in integer form
-
-**Theorem 7.3 (Integer union bound).** *For all $p$ and all $m \le p$:*
-$$p^{\,m+1} \;\le\; p \cdot p^{\underline{m}} \;+\; \binom{m}{2}\, p^{\,m}.$$
-
-*Proof sketch.* By induction on $m$. The base case $m=0$ reads $p \le p$. For the step, multiply the inductive hypothesis by $p$ to obtain
-$$p^{m+2} \le p\big(p \cdot p^{\underline m}\big) + \tbinom{m}{2} p^{m+1}.$$
-Then split $p = (p - m) + m$ in the leading term and use $p^{\underline m} \le p^m$:
-$$p \big(p \cdot p^{\underline m}\big) = (p-m)\,p\,p^{\underline m} + m\, p\, p^{\underline m} \le p\big((p-m) p^{\underline m}\big) + m\,p^{m+1}.$$
-Since $(p-m)p^{\underline m} = p^{\underline{m+1}}$ and $\binom{m}{2} + m = \binom{m+1}{2}$, collecting terms yields the statement for $m+1$. $\square$
-
-Dividing by $p^{m+1}$ turns Theorem 7.3 into the familiar probabilistic form: for a uniformly random assignment of $m$ items into $p$ boxes,
-$$\Pr[\text{some collision}] \;=\; 1 - \frac{p^{\underline m}}{p^m} \;\le\; \frac{\binom{m}{2}}{p},$$
-one term per pair that could collide. Theorem 7.3 is exactly this inequality cleared of denominators, so no real-number probability theory is needed.
-
-### 7.4 The barrier
-
-**Theorem 7.4 (Majority collision-free).** *Let $0 < p$ and $m \le p$ with $2\binom{m}{2} < p$. Then $p^m < 2\, p^{\underline m}$: strictly more than half of all assignments are collision-free.*
-
-*Proof sketch.* Suppose instead $2p^{\underline m} \le p^m$. Multiplying by $p$ and combining with Theorem 7.3 in the form $p \cdot p^m \le p\,p^{\underline m} + \binom{m}{2}p^m$ gives
-$$p \cdot p^m \le \tfrac12 p \cdot p^m + \tbinom{m}{2} p^m,$$
-whence $p \le 2\binom{m}{2}$, contradicting the hypothesis. (In integer arithmetic the same chain is carried out without halving, by combining $p(2p^{\underline m}) \le p\cdot p^m$ with the union bound.) $\square$
-
-**Theorem 7.5 (Randomised $\sqrt{p}$ barrier).** *Let $0 < p$ and suppose $m^2 < p$. Then $p^m < 2\,p^{\underline m}$. Consequently, any collision search that enumerates fewer than $\sqrt{p}$ tuples fails on a strict majority of evaluations, so a success probability exceeding $1/2$ requires at least $\sqrt{p}$ tuples.*
-
-*Proof sketch.* From $m^2 < p$ we get $m \le p$, and $2\binom{m}{2} = m(m-1) \le m^2 < p$; apply Theorem 7.4. $\square$
-
-**Corollary 7.6 (Two-level barrier).** *For a balanced semiprime $N = pq$ with $p \approx q \approx \sqrt{N}$:*
-
-| Regime | Tuples needed | In terms of $N$ |
-|---|---|---|
-| Deterministic guarantee | $> p$ | $\sqrt{N}$ |
-| Randomised, success probability $> 1/2$ | $\ge \sqrt{p}$ | $N^{1/4}$ |
-
-*Both rows are lower bounds, and both are independent of the arity $r$.*
-
-### 7.5 A numeric instance of the gap
-
-Take $p = 10007$ (prime) and $m = 100 \approx \sqrt{p}$. Then $2\binom{100}{2} = 9900 < 10007$, so by Theorem 7.4
-$$10007^{100} \;<\; 2 \cdot 10007^{\underline{100}} :$$
-with only $100$ tuples enumerated, a strict majority of all $10007^{100}$ evaluations remain collision-free. Meanwhile a deterministic guarantee at the same modulus requires more than $10007$ tuples. The two thresholds differ by two orders of magnitude at this modulus, and the gap widens as $\sqrt{p}$.
-
-This is the honest correction to the folklore: **the hierarchy table is tight only for deterministic guarantees.** The randomised threshold is $\Theta(\sqrt{p})$, precisely the classical birthday exponent, and precisely the running time of Pollard's rho.
+*It does not say:* that factoring requires $\sqrt N$ work. It says that *this family of methods* does. Sieve methods do not proceed by waiting for a residue collision in a search space, and are not subject to Theorem 5.2. The theorem's value is precisely that it draws the boundary of the collision paradigm sharply enough to say where one must leave it.
 
 ---
 
-## 8. Algorithms
+## 6. The amplitude barrier
 
-Three algorithmic procedures are implicit in the results above.
+Theorem 5.2 counts objects. We now show a completely different quantity is also stuck at $\sqrt N$: the *arithmetic size* of the integers a scheme manipulates. This obstruction is invisible to the counting analysis, and it applies even to schemes that inspect infinitely many tuples.
 
-### 8.1 Witness-to-factor extraction
+**Definition 6.1 (Sum set of a tuple space).** For $r \ge 0$ and finite $A$, let
+$$ \Sigma_r(A) \;=\; \Bigl\{ \textstyle\sum_{i=1}^r u_i \;:\; u \in T_r(A) \Bigr\}, $$
+the set of *distinct integer values* achieved as $r$-tuple sums.
 
-**Input:** $N$, a candidate witness $s$. **Output:** a nontrivial factor of $N$, or `FAIL`.
+**Lemma 6.2.** *If every $a \in A$ satisfies $a \le M$, then every $s \in \Sigma_r(A)$ satisfies $s \le rM$.*
 
-Compute $g = \gcd(s \bmod N, N)$. If $1 < g < N$ return $g$, else return `FAIL`. Correctness is Theorem 2.2; cost is $O(\log^2 N)$ bit operations by the Euclidean algorithm. Theorem 3.3 says that if $s$ was drawn uniformly from the multiples of $p$ in one period, this succeeds with probability $(q-1)/q$.
+**Theorem 6.3 (Amplitude bound).** *If $A \subseteq [1, M]$, then $|\Sigma_r(A)| \le rM + 1$, however large $|A|^r$ may be.*
 
-### 8.2 Arity-$r$ collision search
+*Proof.* By Lemma 6.2, $\Sigma_r(A) \subseteq \{0,1,\dots,rM\}$. $\square$
 
-**Input:** a set $S$, an arity $r$, a modulus context $N$. **Output:** a factor of $N$, or `FAIL`.
+**Theorem 6.4 (All collisions trivial when entries are small).** *Let $A \subseteq [1,M]$ and suppose $rM < p$. Then for any $u, v \in T_r(A)$ with $\sum_i u_i \equiv \sum_i v_i \pmod p$, one has $\sum_i u_i = \sum_i v_i$.*
 
-Enumerate the $\binom{|S|}{r}$ subsets, keep a dictionary keyed by the subset sum reduced modulo $N$ — one cannot reduce modulo the unknown $p$, so the reduction is done modulo $N$ and the *difference* of two colliding sums is offered to the gcd. On any repeated key, extract the difference and call the routine of 8.1. Theorem 4.1 guarantees a collision once $\binom{|S|}{r} > p$; Theorem 4.3 says nothing smaller can guarantee it. Time and space are $\Theta(\binom{|S|}{r})$, i.e. $\Omega(p) = \Omega(\sqrt{N})$ for guaranteed success — the wall in algorithmic form.
+*Proof.* Suppose without loss of generality $\sum u_i < \sum v_i$. The congruence gives $p \mid \sum v_i - \sum u_i$, and this difference is positive, hence $\ge p$. But both sums lie in $[0, rM]$, so the difference is at most $rM < p$ — contradiction. $\square$
 
-### 8.3 Arity reduction for 3SUM
+**Corollary 6.5 (Amplitude barrier).** *A scheme with $A \subseteq [1,M]$ and $rM < p$ cannot factor $N = pq$ by collision, no matter how many tuples it inspects: every collision it finds has difference $0$, and the reveal step returns $\gcd(0, N) = N$, never a proper factor. Success therefore requires $p \le rM$, i.e. entries of size at least $p/r \ge \sqrt N / r$.*
 
-**Input:** $S \subseteq \mathbb{Z}_p$. **Output:** a 3SUM triple, or `NONE`.
+**Remark 6.6 (Structure cannot help).** Theorem 6.3 depends only on the interval $[1,M]$ containing $A$ — never on $A$'s additive structure. Sidon sets, geometric progressions, smooth-number sets, and any other additive-combinatorial device produce sums confined to the same interval and are therefore subject to the same bound. This is a sharp limitation on a natural line of attack: one cannot arrange for a small-entry set to have an unusually rich modular image, because the *integer* image is capped by amplitude alone.
 
-Build the sumset table $\{a + b : a, b \in S\}$ as a hash map from value to a witnessing pair, in $|S|^2$ operations. Then for each $c \in S$ look up $-c$: a hit yields $(a, b, c)$ with $a+b+c=0$. Correctness is Theorem 5.1. Total time $O(|S|^2)$, space $O(|S|^2)$ — so the arity-$3$ search costs the arity-$2$ table plus $|S|$ lookups, never less.
-
----
-
-## 9. Applications and interpretation
-
-**Reading the hierarchy correctly.** The single most useful consequence is a template for auditing claimed speedups. The arity story features a real exponent improvement — the required set size drops from $\Theta(p)$ to $\Theta(\sqrt{p})$ to $\Theta(p^{1/3})$ — and yet the cost is unchanged. The improvement is in the *generating set*, and the cost lives in the *tuple count*. Any proposal that improves an exponent should be asked which quantity it improved.
-
-**A bridge for fine-grained complexity.** Theorem 2.4 makes a 3SUM solution modulo a hidden prime a factoring witness, and Theorem 5.1 places 3SUM exactly one layer above the sumset. This is the raw material for hardness transfer in both directions: from 3SUM lower bounds to lower bounds on restricted factoring algorithms, and from hypothetical subquadratic 3SUM algorithms to structured factoring attacks.
-
-**Query complexity as the right abstraction.** Theorem 6.5 shows that the interesting bound does not depend on collisions at all. Because every method in the family ultimately consults $\gcd(\cdot, N)$, the information-theoretic cost can be charged to the queries, which each touch at most $\log_2 M$ primes. This is a robust way to argue that a whole design space is a dead end, without enumerating the designs.
-
-**Cryptographic reading.** Nothing here threatens any deployed parameter set; on the contrary, both barriers are lower bounds and thus reassurances. The $N^{1/4}$ randomised level is exactly the classical rho threshold, and is the reason balanced semiprimes are used: an unbalanced $N = pq$ with small $p$ collapses the randomised barrier to $\sqrt{p}$, which is small.
+**Remark 6.7 (The bound is nearly attained).** Theorem 6.3 gives the necessary condition $p \le rM$. For the full interval $A = \{1,\dots,M\}$ the sum set is exactly $\{r, r+1, \dots, rM\}$, of size $r(M-1)+1$, so the counting condition $p < |\Sigma_r(A)|$ holds precisely when $M \ge p/r + 1$. The two conditions differ by a single additive step, so the amplitude bound is essentially attained rather than lossy. For $r = 3$ this predicts the smallest workable entry bound $M = \lceil p/3\rceil + 1$, i.e. $M = 5$ at $p = 11$ and $M = 35$ at $p = 101$ — values confirmed by direct enumeration.
 
 ---
 
-## 10. Limitations and future directions
+## 7. The span and coverage barriers
 
-**Limitations.** (i) The barriers are stated for the *search* step; they say nothing about algorithms exploiting algebraic structure beyond the gcd interface, such as the number field sieve, which is subexponential and lies entirely outside this model. (ii) Theorem 6.5 is non-adaptive: $Q$ is fixed in advance. Adaptive gcd queries are a natural and open strengthening. (iii) The randomised barrier is stated for uniform evaluations; extending it to arbitrary evaluation distributions with bounded collision entropy is open.
+The previous sections analysed specific generation rules. We now abstract entirely.
 
-**Conjecture 1 (arity-independence as an information-theoretic law).** For every arity $r$ and every family $F$ of $r$-subsets of a $k$-set, a search guaranteeing a sum collision modulo $p$ must satisfy $|F| > p$, and for randomised search with success probability $\varepsilon$ the requirement is $|F| \ge \sqrt{2\varepsilon p}$ — with *no dependence on $r$ in either bound*. The insight is that the arity merely repackages the same $|F|$ residue evaluations, so the entropy available to the searcher is $\log|F|$ however the tuples are structured; the exponent $1/r$ lives in the *size of the generating set*, never in the *cost*. Both endpoints are already established here for subset-sum evaluations; the remaining step is to replace "subset sum" by an arbitrary evaluation, which the adversary construction of Theorem 4.2 already supports.
+**Definition 7.1 (Abstract collision scheme).** A *scheme* consists of a finite **search space** $S$ (whose cardinality $k = |S|$ is the scheme's cost) together with a **value map** $v : S \to \mathbb{N}$. Its **difference set** is
+$$ D \;=\; \{\, v(x) - v(y) \;:\; x, y \in S,\; v(x)\ge v(y) \,\}, $$
+and the scheme **reveals** $f$ from $N$ if some $d \in D$ has $d > 0$ and $\gcd(d, N) = f$.
 
-**Conjecture 2 (the gcd-query barrier is tight up to logarithms).** For every $n$ there is a query set $Q$ with $|Q| = O(n\log n/\log M)$ revealing a factor of every semiprime built from the first $n$ primes below $M$; combined with Theorem 6.5 this pins the gcd-query complexity of factoring over a prime pool of size $n$ at $\tilde\Theta(n/\log M)$. The insight is that the lower bound counts *touched primes*, so a matching upper bound is a packing problem — pack primes into products of size $\le M$ — a covering-design question rather than a number-theoretic one. The lower bound is unconditional; the upper bound is a finite combinatorial construction (product trees), hence falsifiable by an explicit $Q$ for small $n$.
+**Lemma 7.2.** *$|D| \le k^2$.*
 
-**Conjecture 3 (3SUM-hardness transfer).** If 3SUM over $n$ integers requires $n^{2-o(1)}$ time, then any factoring algorithm that only inspects sums of at most $3$ elements of an adaptively chosen set $S \subseteq \mathbb{Z}_p$, together with gcds thereof, requires $p^{2/3-o(1)}$ operations; conversely a truly subquadratic 3SUM algorithm would yield a corresponding speedup for such structured searches.
+This definition is deliberately permissive. It covers sumset, $3$SUM, $r$-SUM, structured evaluation schemes, and anything else whose output is "take a $\gcd$ of a difference of two computed numbers with $N$". Whatever is proved about it applies to all of them at once.
 
-**Further questions.** Does the two-level barrier persist for evaluations with algebraic structure (polynomial maps, as in rho's $x \mapsto x^2+1$)? Can the union bound of Theorem 7.3 be sharpened to a matching upper bound, giving a *threshold* rather than a barrier at $\sqrt{p}$? And is there a arity-graded analogue of the reveal density of Theorem 3.3, counting revealing $r$-tuples rather than revealing residues?
+### 7.1 Span
+
+**Theorem 7.3 (Span barrier).** *If a scheme reveals $f$ from $N$, then some $d \in D$ satisfies $d \ge f$.*
+
+*Proof.* Take $d \in D$ with $d > 0$ and $\gcd(d, N) = f$. Then $f \mid d$ and $d > 0$, so $f \le d$. $\square$
+
+**Corollary 7.4 ($\sqrt N$ form).** *If $N = pq$ with $q \le p$ and a scheme reveals $p$, then two of its values differ by at least $\lfloor\sqrt N\rfloor$; in particular its largest value is at least $\lfloor \sqrt N\rfloor$.*
+
+**Corollary 7.5 (Small values never factor).** *If all values of a scheme are $< B$ and $B \le p$, the scheme cannot reveal $p$ from $N = pq$.*
+
+*Proof.* All differences are $< B \le p$, contradicting Theorem 7.3. $\square$
+
+A cleaner special case, in the same spirit but stated for integer value sets directly:
+
+**Theorem 7.6 (Interval span barrier).** *If all values of a scheme lie in an interval $[L, L+p)$, then any two congruent values modulo $p$ are equal. Consequently no useful collision exists, and the value range must be at least $p$.*
+
+**Remark 7.7 (Structure improves counting, never span).** Return to the structured-evaluation row. By Theorem 4.2, confining values to a set $B$ with $|B| \approx p/h$ makes collisions appear after only $|B| + 1$ evaluations — a genuine factor-$h$ saving over the generic $p+1$. But Theorem 7.3 is untouched by this: the revealed factor $p$ still forces two *integer values at distance at least $p$*. Structure compresses the number of objects; it cannot compress the objects. This is a clean separation between two resources that the naive cost accounting conflates.
+
+### 7.2 Coverage
+
+Could a single fixed scheme — a fixed table of numbers, computed once — factor many different semiprimes? The next bound says no, by pure counting on prime divisors.
+
+**Lemma 7.8.** *Let $Q$ be a finite set of distinct primes, all $\ge P$, all dividing a positive integer $d$. Then $P^{|Q|} \le d$.*
+
+*Proof.* The primes are distinct, so their product divides $d$; the product is at least $P^{|Q|}$; and $d > 0$. $\square$
+
+**Corollary 7.9.** *If $P > 1$ and $d > 0$, then $d$ has at most $\log_P d$ distinct prime divisors $\ge P$.*
+
+**Theorem 7.10 (Coverage barrier).** *Let a scheme have $k$ search points and let $Q$ be a set of primes such that every $p \in Q$ satisfies $p \ge P > 1$ and divides some difference $d \in D$ with $0 < d \le B$. Then*
+$$ |Q| \;\le\; \log_P(B)\cdot k^2. $$
+
+*Proof sketch.* Choose for each $p \in Q$ a witnessing difference $g(p) \in D$ with $0 < g(p) \le B$ and $p \mid g(p)$. The image $g(Q)$ is contained in $D$, so $|g(Q)| \le k^2$ by Lemma 7.2. Each fibre $g^{-1}(b)$ consists of distinct primes $\ge P$ all dividing the single positive integer $b \le B$, so by Corollary 7.9 and monotonicity of the logarithm, $|g^{-1}(b)| \le \log_P b \le \log_P B$. Summing over fibres, $|Q| \le \log_P(B)\cdot|g(Q)| \le \log_P(B)\cdot k^2$. $\square$
+
+**Corollary 7.11 (Cost form).** *A scheme required to reveal each of $T$ distinct primes $\ge P$, with all differences bounded by $B$, must have search space size $k$ satisfying $T \le \log_P(B)\cdot k^2$, i.e.*
+$$ k \;\ge\; \sqrt{T / \log_P B}. $$
+
+The significance of Theorem 7.10 is that it is a *non-uniformity* bound: it limits what precomputation can achieve. Whereas Theorem 5.2 says a scheme is slow on each input, Theorem 7.10 says a scheme cannot be reused across inputs. Together they close the two obvious escape routes.
 
 ---
 
-## 11. Conclusion
+## 8. The positive theorem: collision factoring, certified
 
-A single divisibility lemma — $\gcd(s, pq) = p$ exactly when $p \mid s$ and $q \nmid s$ — unifies 3SUM sums, sumset differences, Pollard $p-1$ values and singular-moduli differences into one family of factoring witnesses, and makes 3SUM modulo a hidden prime a structural neighbour of factoring. Quantifying the cost of producing such a witness yields a matching pair of bounds valid at every arity: guaranteed success requires more than $p$ enumerated tuples, and this threshold is exactly optimal. The arity improves the search-set exponent from $1$ to $1/2$ to $1/3$ while leaving the cost untouched.
+We now assemble the pieces. The following says that the two barriers are not merely necessary but, once cleared, sufficient.
 
-Two further results delimit the picture. Unconditionally, and independently of any collision mechanism, a gcd-query algorithm covering a pool of $n$ primes with queries bounded by $M$ needs at least $(n-1)/\log_2 M$ queries — recovering the $\sqrt{N}$ wall as a query-complexity statement. And by exact counting, fewer than $\sqrt{p}$ enumerated tuples leave a strict majority of evaluations collision-free, so the randomised threshold is $\Theta(\sqrt{p}) = \Theta(N^{1/4})$, strictly below the deterministic wall.
+**Theorem 8.1 (Master theorem for $r$-SUM collision factoring).** *Let $N = pq$ with $p, q$ prime. Let $A$ be a finite set of positive integers with $a \le M$ for all $a \in A$, and suppose*
 
-The final picture is a two-level barrier — $\sqrt{N}$ deterministic, $N^{1/4}$ randomised, both unconditional, both arity-uniform. It is not a factoring breakthrough; it is a precise account of why a natural family of ideas cannot become one, and of exactly where the boundary lies.
+1. *(amplitude) $rM < N$, and*
+2. *(counting) $p < |\Sigma_r(A)|$.*
+
+*Then there exist $s, t \in \Sigma_r(A)$ with $t < s$ and*
+$$ \gcd(s - t,\, N) \;=\; p. $$
+
+*Proof.* Since $|\Sigma_r(A)| > p$, the map $x \mapsto x \bmod p$ cannot be injective on $\Sigma_r(A)$; pick $s \ne t$ in $\Sigma_r(A)$ with $s \equiv t \pmod p$ and, relabelling, $t < s$. Then $p \mid s - t$. Also $s \le rM < N$ by Lemma 6.2 and hypothesis 1. Corollary 3.6 gives $\gcd(s-t, N) = p$. $\square$
+
+**Corollary 8.2 ($3$SUM instance).** *With $r = 3$: if $A \subseteq [1,M]$ with $3M < N$ and the triple-sum set $\Sigma_3(A)$ has more than $p$ elements, then two achieved triple sums differ by a quantity whose $\gcd$ with $N$ is exactly $p$.*
+
+**Theorem 8.3 (Both barriers are necessary).** *Let $q \le p$, let $A \subseteq [1, M]$, and suppose $p < |\Sigma_r(A)|$ (so that a useful collision is guaranteed). Then*
+
+1. $p \le rM$ *— the entries must have size at least $p/r$; and*
+2. $|A|^r > \lfloor\sqrt{pq}\rfloor$ *— the tuple count exceeds $\sqrt N$.*
+
+*Proof.* (1) By Theorem 6.3, $|\Sigma_r(A)| \le rM+1$; combined with $p < |\Sigma_r(A)|$ this gives $p < rM+1$, i.e. $p \le rM$. (2) $\Sigma_r(A)$ is an image of $T_r(A)$, so $|\Sigma_r(A)| \le |A|^r$, whence $p < |A|^r$; now apply Corollary 5.3. $\square$
+
+**Corollary 8.4 ($3$SUM cost profile).** *A $3$SUM scheme against $N = pq$ with $q \le p$ requires entries of size at least $p/3$ and inspects more than $\lfloor\sqrt N\rfloor$ triples. Both costs are $\Omega(\sqrt N)$.*
+
+This is the final accounting. The exponent improvement $p^{1/2} \to p^{1/3}$ is real, it is confined to storage, and every other resource stays at $\sqrt N$.
+
+---
+
+## 9. Algorithms
+
+We record the two procedures the theory certifies, with their complexities.
+
+### 9.1 Sum-set collision factoring
+
+**Input:** a semiprime $N$, an arity $r$, an entry bound $M$.
+**Output:** a nontrivial factor of $N$, or failure.
+
+1. Choose $A \subseteq [1, M]$.
+2. Enumerate $\Sigma_r(A)$, maintaining a dictionary from residues modulo a *guessed* modulus — or, in practice, maintain the achieved sums themselves and sort.
+3. For each pair of achieved sums $t < s$, compute $g = \gcd(s - t, N)$.
+4. If $1 < g < N$, output $g$.
+
+By Theorem 8.1, if $rM < N$ and $|\Sigma_r(A)| > p$, step 4 succeeds. By Theorem 8.3, this requires $M \ge p/r$ and more than $\sqrt N$ inspected tuples, so the procedure is $\Omega(\sqrt N)$ and — with sorting — $O(k^r \log k^r)$ where $k = |A|$.
+
+Note a subtlety the theory clarifies: one does not need to know $p$ to run the algorithm. The residue structure modulo $p$ is invisible; only the $\gcd$ test at the end reveals whether a difference happened to be a multiple of $p$. The birthday bound guarantees that *some* pair works once the sum set exceeds $p$ in size.
+
+### 9.2 Threshold and barrier calculator
+
+Given $p$ (or a target $N$) and an arity $r$, one computes:
+
+- the **storage threshold** $k^\ast(p, r) = \min\{k : k^r > p\} = \lfloor p^{1/r}\rfloor + 1$;
+- the **work** $\bigl(k^\ast\bigr)^r$, which always exceeds $p$ and is within a small factor of it;
+- the **amplitude threshold** $M^\ast(p,r) = \lceil p/r\rceil$ (necessary), attained by the full interval at $\lceil p/r\rceil + 1$;
+- the **span requirement** $\lfloor\sqrt N\rfloor$.
+
+The output is the hierarchy table for that instance, exhibiting the collapse numerically. This is the computation performed in the accompanying numerical study.
+
+---
+
+## 10. Applications and interpretation
+
+**A bridge between problem families.** Corollary 3.4 makes precise the sense in which $3$SUM modulo an unknown prime is a factoring primitive. This is a bridge in the fine-grained complexity sense: an efficient algorithm for the modular variant of $3$SUM against adversarially hidden moduli would break factoring. The bridge is one-directional and, as our barriers show, load-limited; but it identifies a modular $3$SUM variant whose hardness is at least that of factoring at the $\sqrt N$ scale.
+
+**A design principle for cost accounting.** The clearest methodological lesson is Corollary 4.11: an improvement in one resource (storage, $p^{1/2} \to p^{1/3}$) may be exactly compensated by no improvement at all in another (work, always $> p$). Because the collapse theorem is an *equivalence*, this is not a limitation of an analysis but a fact about the problem. Whenever a family of algorithms is parameterised by "how cleverly the search space is generated," it is worth asking whether the acceptance criterion depends on generation at all. Here it does not.
+
+**Three barriers of different type.** It is unusual for a single $\Omega(\sqrt N)$ bound to be provable in three independent ways:
+
+- *counting* (Theorem 5.2) — you must inspect many objects;
+- *amplitude/span* (Corollary 6.5, Corollary 7.4) — the objects must themselves be large;
+- *coverage* (Theorem 7.10) — one fixed set of objects cannot serve many inputs.
+
+Each of these could in principle be circumvented separately; none of them can be circumvented by arity. That robustness is the reason we regard $\sqrt N$ as the true home of the collision paradigm rather than an artefact.
+
+**What is not claimed.** None of this bears on the complexity of factoring itself. Sub-exponential methods exist and are not collision searches. The results here delimit a paradigm, and delimiting a paradigm crisply is useful precisely because it tells the algorithm designer where not to look.
+
+---
+
+## 11. Future directions
+
+The framework above suggests three falsifiable conjectures.
+
+**C1. Every $\gcd$-extraction scheme obeys a span–coverage trade-off.** For an abstract scheme with $k$ search points and values bounded by $B$ that reveals the larger factor of *every* semiprime $N = pq$ with $\sqrt N \in [P, 2P)$, one should have
+$$ k^2 \cdot \log_P B \;\ge\; \pi(2P) - \pi(P), $$
+hence $k \ge P^{1/2 - o(1)}$ — a $\sqrt N$ lower bound with no probabilistic or oracle assumptions. The coverage barrier (Theorem 7.10) already bounds the number of large primes a fixed value set can expose by $\log_P(B)\cdot k^2$; only a prime-counting input is needed to convert this into an unconditional cost bound.
+
+**C2. Non-uniform sets do not beat the amplitude barrier.** For every finite $A \subseteq [1,M]$ and every arity $r$, the number of distinct residues modulo $p$ realised by $r$-tuple sums over $A$ should be at most $\min(rM+1,\, p)$, and the requirement $p \le rM$ for a guaranteed factor-revealing collision should be unimprovable by any choice of $A$ — Sidon sets, geometric progressions and smooth-number sets included. The amplitude bound depends only on the interval containing $A$, never on its additive structure, so additive-combinatorial cleverness cannot help. Because the measured interval thresholds match the predicted values exactly at small $p$ ($M = 5$ at $p = 11$, $M = 35$ at $p = 101$, both with $r = 3$), the conjecture is sharp and would be falsified by a single counterexample set.
+
+**C3. Modular structure can beat the counting threshold but never the span.** For any scheme whose values are constrained to a structured residue set $B$ with $|B| \approx p/h$, collisions appear after $|B|+1$ evaluations, yet the revealed factor still forces two integer values at distance $\ge p$. Structure should therefore improve the collision *count* by the factor $h$ while leaving the arithmetic size of the manipulated objects untouched, since the span barrier constrains numerical values alone and is invariant under any change of indexing.
+
+Beyond these, two directions seem worth pursuing. First, a *probabilistic* refinement: the collapse theorem is a worst-case guarantee, and the average-case birthday behaviour (collisions after $\Theta(\sqrt{p})$ random samples) deserves the same arity-independence analysis — we expect the same collapse, with $\sqrt p$ in place of $p$, and with the amplitude barrier unchanged. Second, an examination of whether any *non*-collision extraction rule (something other than $\gcd$ of a difference) evades Theorem 7.3, which would identify precisely which feature of the paradigm the span barrier punishes.
+
+---
+
+## 12. Conclusion
+
+A single greatest-common-divisor computation converts a $3$SUM solution modulo a hidden prime into that prime, with no side conditions beyond smallness. This makes a family of collision-based factoring schemes available, apparently arranged in a hierarchy in which higher arity means a better exponent.
+
+The hierarchy collapses. A collision is guaranteed exactly when the search space exceeds the modulus — a criterion in which the arity does not appear — so all schemes share the threshold $p+1$, and hence exceed $\sqrt N$. Two independent barriers reach the same magnitude for different reasons: the amplitude/span obstruction forces the manipulated integers to be of size $\sqrt N$, and the coverage obstruction forbids a fixed scheme from serving many inputs. Once both barriers are cleared, the method provably works.
+
+The improvement from $p^{1/2}$ to $p^{1/3}$ is real, and it is an improvement in storage alone. The barrier does not move.

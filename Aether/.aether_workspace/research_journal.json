@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "f566f199",
-      "domain": "Computation",
-      "key_insight": "# Future Directions — bold, testable conjectures from the QBOUND cycle\n\nDerived from what survived Stages 3–4 of this cycle. Each is falsifiable, and\neach names the Lean artefact it would extend.\n\n---",
-      "quality_score": 0.84,
-      "sorry_count": 0,
-      "theorem_count": 62,
-      "timestamp": "2026-08-12T17:19:36",
-      "title": "The Quantum-Classical Boundary in Integer Factorization"
-    },
-    {
       "cycle_id": "a055589e",
       "domain": "Probability",
       "key_insight": "# FUTURE DIRECTIONS — Structural Orthogonality Framework\n\n*Finalized after research cycle 3.*  Cycle 1 stated five conjectures; cycle 2\nclosed four of them (fully or in their reduction form); cycle 3",
@@ -499,19 +489,19 @@
       "theorem_count": 15,
       "timestamp": "2026-08-15T07:52:25",
       "title": "CYCLIC-TYPE-CHANNEL (round-22 #2, experiment 413, assessment v189, paper 78)"
+    },
+    {
+      "cycle_id": "35640655",
+      "domain": "Bridges",
+      "key_insight": "# FUTURE DIRECTIONS — after the OR-dial maximum and its multi-prime extension\n\nThe verified state of the thread (all in `Catalog/Bridges/ORDial*.lean`, 0 sorries, no added\naxioms, no `native_decide`):",
+      "quality_score": 0.89,
+      "sorry_count": 0,
+      "theorem_count": 2,
+      "timestamp": "2026-08-15T08:56:05",
+      "title": "OR-DIAL-MAXIMUM: the semiprime OR dial has a global cap g(2)=0.3113 bits over every class-rate profi"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "6337dbc1",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions\n\nDerived from the three files of this line of work:\n\n* `Catalog/Bridges/FundamentalGroupCompleteInvariant.lean` (cycle 1) — connected groupoids\n  (models of `K(G,1)`) are classifie",
-      "quality_score": 0.78433,
-      "sorry_count": 0,
-      "theorem_count": 71,
-      "timestamp": "2026-08-04T20:08:49",
-      "title": "Deepening: Topological-Algebraic Bridge: Fundamental Group as a Complete Invariant"
-    },
     {
       "cycle_id": "52522972",
       "domain": "Cryptography",
@@ -2501,6 +2491,16 @@
       "theorem_count": 15,
       "timestamp": "2026-08-15T07:52:25",
       "title": "CYCLIC-TYPE-CHANNEL (round-22 #2, experiment 413, assessment v189, paper 78)"
+    },
+    {
+      "cycle_id": "35640655",
+      "domain": "Bridges",
+      "key_insight": "# FUTURE DIRECTIONS — after the OR-dial maximum and its multi-prime extension\n\nThe verified state of the thread (all in `Catalog/Bridges/ORDial*.lean`, 0 sorries, no added\naxioms, no `native_decide`):",
+      "quality_score": 0.89,
+      "sorry_count": 0,
+      "theorem_count": 2,
+      "timestamp": "2026-08-15T08:56:05",
+      "title": "OR-DIAL-MAXIMUM: the semiprime OR dial has a global cap g(2)=0.3113 bits over every class-rate profi"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.72
     }
   ],
-  "last_updated": "2026-08-15T07:52:25",
+  "last_updated": "2026-08-15T08:56:05",
   "open_questions": [
     {
       "context": "-    sorry+  -- Extract a witness from the computational verification of the primitive part.",
@@ -3145,12 +3145,6 @@
     ],
     "Bridges": [
       {
-        "cycle_id": "b369f029",
-        "quality": 0.686,
-        "theorems": 248,
-        "title": "Combinatorial-Categorical Bridge: Species of Structures as Functors"
-      },
-      {
         "cycle_id": "52648a00",
         "quality": 0.686,
         "theorems": 122,
@@ -3203,6 +3197,12 @@
         "quality": 0.86,
         "theorems": 85,
         "title": "Experiment 397: SEQSMOOTH-NULL — mod-exp sequence stats are smoothness-blind (AU"
+      },
+      {
+        "cycle_id": "35640655",
+        "quality": 0.89,
+        "theorems": 2,
+        "title": "OR-DIAL-MAXIMUM: the semiprime OR dial has a global cap g(2)=0.3113 bits over ev"
       }
     ],
     "Combinatorics": [
