@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "5ac3c62c",
-      "domain": "NumberTheory",
-      "key_insight": "# Future directions (Solomon zeta functions over arithmetic orders)\n\n## What this cycle added\n\nAll statements below are machine-checked and free of `sorry`; they live in\n`Catalog/NumberTheory/` and bu",
-      "quality_score": 0.7516700000000001,
-      "sorry_count": 0,
-      "theorem_count": 39,
-      "timestamp": "2026-08-11T19:33:15",
-      "title": "The formalization in `Catalog/Shared/SolomonZeta/` (mirrored in the buildable li"
-    },
-    {
       "cycle_id": "646c7606",
       "domain": "Novelty",
       "key_insight": "# Future directions\n\nDerived from the analysis and adversarial review of\n`Catalog/Novelty/JacobiGaussPhaseCollapse.lean` (Jacobi Gauss-sum phase collapse).\nEvery conjecture below is falsifiable: each",
@@ -499,19 +489,19 @@
       "theorem_count": 226,
       "timestamp": "2026-08-15T03:13:13",
       "title": "SPLIT-COUNT-LAW: the complete symmetric fork channel is the split-count s ~ Bin(2,1/n), I(N mod f; s"
+    },
+    {
+      "cycle_id": "fefb96cd",
+      "domain": "Novelty",
+      "key_insight": "# FUTURE DIRECTIONS — TRACEPROFILE (Paper 50 / Experiment 385)\n\nThe verified results of this cycle are in `Catalog/Novelty/TraceProfile*.lean`:\n\n* `TraceProfileLowBits.lean` — the exact low bit `s₁ =",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 54,
+      "timestamp": "2026-08-15T03:13:27",
+      "title": "TRACEPROFILE: the trace s=p+q is the least-hidden symmetric invariant — 1 bit per prime exactly, s1="
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "a65c164b",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions\n\nConcrete, falsifiable conjectures suggested by the formalisation in\n`Catalog/Algebra/DerivedFunctors/`. Each one is stated so that a single Lean statement would\nsettle it, and eac",
-      "quality_score": 0.78643,
-      "sorry_count": 0,
-      "theorem_count": 78,
-      "timestamp": "2026-08-04T12:27:50",
-      "title": "Homological Algebra: Derived Functors"
-    },
     {
       "cycle_id": "6ef351e2",
       "domain": "Bridges",
@@ -2501,27 +2491,19 @@
       "theorem_count": 226,
       "timestamp": "2026-08-15T03:13:13",
       "title": "SPLIT-COUNT-LAW: the complete symmetric fork channel is the split-count s ~ Bin(2,1/n), I(N mod f; s"
+    },
+    {
+      "cycle_id": "fefb96cd",
+      "domain": "Novelty",
+      "key_insight": "# FUTURE DIRECTIONS — TRACEPROFILE (Paper 50 / Experiment 385)\n\nThe verified results of this cycle are in `Catalog/Novelty/TraceProfile*.lean`:\n\n* `TraceProfileLowBits.lean` — the exact low bit `s₁ =",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 54,
+      "timestamp": "2026-08-15T03:13:27",
+      "title": "TRACEPROFILE: the trace s=p+q is the least-hidden symmetric invariant — 1 bit per prime exactly, s1="
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "7477e654",
-      "domain": "Tropical",
-      "name": "certified_radius_bound",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "7477e654",
-      "domain": "Tropical",
-      "name": "resnet_certified_lipschitz",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "eaebe17a",
-      "domain": "Novelty",
-      "name": "three_le_part",
-      "quality": 0.9
-    },
     {
       "cycle_id": "eaebe17a",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "phi_apply",
       "quality": 0.92
+    },
+    {
+      "cycle_id": "fefb96cd",
+      "domain": "Novelty",
+      "name": "of",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "fefb96cd",
+      "domain": "Novelty",
+      "name": "mem_traceSet_iff_isSquare_discrim",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "fefb96cd",
+      "domain": "Novelty",
+      "name": "two_mul_card_traceSet_eq_add_legendreSym",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-15T03:13:13",
+  "last_updated": "2026-08-15T03:13:27",
   "open_questions": [
     {
       "context": "-    sorry+  -- Extract a witness from the computational verification of the primitive part.",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "30b679f8",
-        "quality": 0.7355200000000001,
-        "theorems": 87,
-        "title": "ArXiv paper: Various Bialgebras Of Representative Functions On Free Monoids"
-      },
-      {
         "cycle_id": "a062ecaf",
         "quality": 0.7526200000000001,
         "theorems": 15,
@@ -3637,6 +3631,12 @@
         "quality": 0.92,
         "theorems": 226,
         "title": "SPLIT-COUNT-LAW: the complete symmetric fork channel is the split-count s ~ Bin("
+      },
+      {
+        "cycle_id": "fefb96cd",
+        "quality": 0.82,
+        "theorems": 54,
+        "title": "TRACEPROFILE: the trace s=p+q is the least-hidden symmetric invariant — 1 bit pe"
       }
     ],
     "NumberTheory": [
