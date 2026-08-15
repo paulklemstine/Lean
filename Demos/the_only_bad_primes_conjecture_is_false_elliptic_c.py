@@ -1,62 +1,153 @@
 """
-Denominators of rational points on Mordell curves y^2 = x^3 + N.
+Denominators of multiples of integral points on Mordell curves E_N : y^2 = x^3 + N.
 
-This self-contained script demonstrates, numerically and exactly (no floating point
-in the arithmetic), every result of the accompanying paper:
+This script demonstrates, numerically, the results of the accompanying paper
+"Good Primes in Bad Places".  Everything is exact rational arithmetic
+(fractions.Fraction), so nothing here depends on floating point.
 
-  1.  The counterexample to the "only bad primes" conjecture:
-      on E_55 : y^2 = x^3 + 55 with P = (9, 28),
-          x(2P) = 2601/3136,  3136 = 2^6 * 7^2,
-      and 7 does not divide the discriminant  Delta = -432 * 55^2,
-      so the good prime 7 divides a denominator.
+Contents
+--------
+ 1. The duplication formula and the counterexample N = 55, P = (9,28).
+ 2. The mechanism theorem:  for a prime l not dividing 6N,
+        l | den x(2P)   <=>   l | y   ( <=> 2*Pbar = O over F_l ).
+ 3. The exact exponent:  v_l(den x(2P)) = 2 v_l(y) at every good prime l.
+ 4. Triplication:  l | den x(3P)  <=>  l | psi_3(P) = 3x^4 + 12Nx.
+ 5. The doubling tower: rigidity at odd primes, +2 per level at the prime 2.
+ 6. Universality: every prime l >= 5 is extraneous for a suitable N,
+    and arbitrarily many extraneous primes can occur in one denominator.
+ 7. A survey over semiprime N = p q.
 
-  2.  The square-denominator law:  den x = e^2 and den y = e^3 for a single
-      integer e, for every rational point of every integral Mordell curve.
-
-  3.  The complete local law at a good prime l >= 5 with l not dividing N:
-          l | den x(2P)  <=>  l | den x(P)  or  l | num y(P).
-
-  4.  The exact filtration law:
-          v_l(den x(2P)) = v_l(den x(P))       for odd l dividing den x(P),
-          v_2(den x(2P)) = v_2(den x(P)) + 2.
-
-  5.  The apparition index law: the set of k with l | den x(kP) is exactly the
-      set of multiples of one natural number m(l, P), which at a good prime
-      equals the order of the reduced point in E_N(F_l).
-      On E_55 with P = (9,28):  m(7) = 2,  m(13) = 3.
-
-  6.  The 2-adic growth law forcing an infinite orbit, hence infinite E_55(Q).
-
-  7.  A survey over semiprime Mordell curves showing that the "only bad primes"
-      property essentially never holds.
-
-Run with:  python3 demo.py
+Run:  python3 demo.py
 """
 
 from __future__ import annotations
 
 from fractions import Fraction
-from typing import Dict, List, Optional, Set, Tuple
+from typing import Dict, Iterable, List, Optional, Sequence, Tuple
 
-# A rational affine point, or None for the point at infinity.
-Point = Optional[Tuple[Fraction, Fraction]]
-
-
-# ---------------------------------------------------------------------------
-# Exact group law on y^2 = x^3 + N over Q
-# ---------------------------------------------------------------------------
+# --------------------------------------------------------------------------- #
+# Elementary number theory helpers
+# --------------------------------------------------------------------------- #
 
 
-def on_curve(P: Point, N: int) -> bool:
-    """Test whether P lies on y^2 = x^3 + N (the point at infinity always does)."""
+def is_prime(n: int) -> bool:
+    """Deterministic primality test, adequate for the sizes used here."""
+    if n < 2:
+        return False
+    for p in (2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37):
+        if n % p == 0:
+            return n == p
+    d, s = n - 1, 0
+    while d % 2 == 0:
+        d //= 2
+        s += 1
+    for a in (2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37):
+        x = pow(a, d, n)
+        if x in (1, n - 1):
+            continue
+        for _ in range(s - 1):
+            x = x * x % n
+            if x == n - 1:
+                break
+        else:
+            return False
+    return True
+
+
+def factorize(n: int) -> Dict[int, int]:
+    """Prime factorisation of |n| as {prime: exponent} (trial division + Pollard rho)."""
+    n = abs(n)
+    factors: Dict[int, int] = {}
+    if n <= 1:
+        return factors
+    for p in range(2, 100000):
+        if p * p > n:
+            break
+        while n % p == 0:
+            factors[p] = factors.get(p, 0) + 1
+            n //= p
+    if n > 1:
+        for q in _rho_factor(n):
+            factors[q] = factors.get(q, 0) + 1
+    return factors
+
+
+def _rho_factor(n: int) -> List[int]:
+    """Return the multiset of prime factors of n > 1 via Pollard's rho."""
+    if n == 1:
+        return []
+    if is_prime(n):
+        return [n]
+    from math import gcd
+
+    c = 1
+    while True:
+        x, y, d = 2, 2, 1
+        while d == 1:
+            x = (x * x + c) % n
+            y = (y * y + c) % n
+            y = (y * y + c) % n
+            d = gcd(abs(x - y), n)
+        if d != n:
+            return sorted(_rho_factor(d) + _rho_factor(n // d))
+        c += 1
+
+
+def valuation(n: int, p: int) -> int:
+    """The exponent of the prime p in the integer n (0 if p does not divide n)."""
+    if n == 0:
+        raise ValueError("valuation of 0 is undefined")
+    v = 0
+    n = abs(n)
+    while n % p == 0:
+        n //= p
+        v += 1
+    return v
+
+
+def pretty_factorization(n: int) -> str:
+    """Human-readable factorisation string, e.g. 3136 -> '2^6 * 7^2'."""
+    if n in (0, 1):
+        return str(n)
+    if n > 10 ** 24:  # keep the demo fast: do not attempt to factor huge integers
+        return str(n)
+    parts = [f"{p}^{e}" if e > 1 else f"{p}" for p, e in sorted(factorize(n).items())]
+    return " * ".join(parts)
+
+
+# --------------------------------------------------------------------------- #
+# The Mordell curve E_N : y^2 = x^3 + N  --  explicit multiplication formulas
+# --------------------------------------------------------------------------- #
+
+Point = Optional[Tuple[Fraction, Fraction]]  # None denotes the point at infinity O
+
+
+def on_curve(N: int, P: Point) -> bool:
+    """Is P a point of E_N : y^2 = x^3 + N?  (The point at infinity always is.)"""
     if P is None:
         return True
     x, y = P
     return y * y == x * x * x + N
 
 
-def add(P: Point, Q: Point, N: int) -> Point:
-    """Chord-and-tangent addition on y^2 = x^3 + N, exact rational arithmetic."""
+def dbl_x(N: int, x: Fraction) -> Fraction:
+    """The classical duplication value x(2P) = (x^4 - 8Nx) / (4(x^3 + N))."""
+    return (x**4 - 8 * N * x) / (4 * (x**3 + N))
+
+
+def psi3(N: int, x: Fraction) -> Fraction:
+    """The third division polynomial psi_3 = 3x^4 + 12Nx of E_N."""
+    return 3 * x**4 + 12 * N * x
+
+
+def tri_x(N: int, x: Fraction, y: Fraction) -> Fraction:
+    """The classical triplication value x(3P) = x - psi_2 psi_4 / psi_3^2."""
+    u = psi3(N, x)
+    return (x * u**2 - 8 * y**2 * (x**6 + 20 * N * x**3 - 8 * N**2)) / u**2
+
+
+def add(N: int, P: Point, Q: Point) -> Point:
+    """The group law on E_N : y^2 = x^3 + N over the rationals."""
     if P is None:
         return Q
     if Q is None:
@@ -64,439 +155,357 @@ def add(P: Point, Q: Point, N: int) -> Point:
     x1, y1 = P
     x2, y2 = Q
     if x1 == x2 and y1 == -y2:
-        return None                       # P + (-P) = O
+        return None
     if P == Q:
         if y1 == 0:
-            return None                   # 2-torsion
-        lam = (3 * x1 * x1) / (2 * y1)    # tangent
+            return None
+        lam = 3 * x1 * x1 / (2 * y1)
     else:
-        lam = (y2 - y1) / (x2 - x1)       # chord
+        lam = (y2 - y1) / (x2 - x1)
     x3 = lam * lam - x1 - x2
     y3 = lam * (x1 - x3) - y1
     return (x3, y3)
 
 
-def multiple(P: Point, k: int, N: int) -> Point:
-    """Compute k * P by double-and-add; negative k allowed."""
-    if k < 0:
-        R = multiple(P, -k, N)
+def mul(N: int, n: int, P: Point) -> Point:
+    """The n-th multiple nP, computed by double-and-add."""
+    if n < 0:
+        R = mul(N, -n, P)
         return None if R is None else (R[0], -R[1])
-    result: Point = None
-    base = P
-    while k > 0:
-        if k & 1:
-            result = add(result, base, N)
-        base = add(base, base, N)
-        k >>= 1
-        if base is None and k > 0:
-            break
-    return result
-
-
-def orbit(P: Point, n: int, N: int) -> List[Point]:
-    """Return [P, 2P, ..., nP] by repeated addition."""
-    out: List[Point] = []
+    R: Point = None
     Q: Point = P
-    for _ in range(n):
-        out.append(Q)
-        Q = add(Q, P, N)
-    return out
+    while n:
+        if n & 1:
+            R = add(N, R, Q)
+        Q = add(N, Q, Q)
+        n >>= 1
+    return R
 
 
-# ---------------------------------------------------------------------------
-# Elementary number theory helpers
-# ---------------------------------------------------------------------------
+def denominator_of_x(N: int, n: int, P: Point) -> Optional[int]:
+    """The denominator of the x-coordinate of nP (None if nP is the point at infinity)."""
+    R = mul(N, n, P)
+    return None if R is None else R[0].denominator
 
 
-def factor(n: int, trial_bound: int = 200_000) -> Dict[int, int]:
-    """Trial-division factorization; a leftover cofactor is reported as one 'prime'."""
-    n = abs(n)
-    f: Dict[int, int] = {}
-    d = 2
-    while d * d <= n and d < trial_bound:
-        while n % d == 0:
-            f[d] = f.get(d, 0) + 1
-            n //= d
-        d += 1 if d == 2 else 2
-    if n > 1:
-        f[n] = f.get(n, 0) + 1
-    return f
+def bad_primes(N: int) -> List[int]:
+    """The primes of bad reduction of E_N: the primes dividing Delta = -432 N^2."""
+    return sorted({2, 3} | set(factorize(N)))
 
 
-def valuation(n: int, ell: int) -> int:
-    """The ell-adic valuation v_ell(n) of a nonzero integer n."""
-    v = 0
-    n = abs(n)
-    while n % ell == 0:
-        n //= ell
-        v += 1
-    return v
-
-
-def is_square(n: int) -> bool:
-    r = int(round(n ** 0.5))
-    for c in (r - 1, r, r + 1):
-        if c >= 0 and c * c == n:
-            return True
-    return False
-
-
-def integer_sqrt(n: int) -> int:
-    r = int(round(n ** 0.5))
-    for c in (r - 1, r, r + 1):
-        if c >= 0 and c * c == n:
-            return c
-    raise ValueError(f"{n} is not a perfect square")
-
-
-def is_prime(n: int) -> bool:
-    if n < 2:
-        return False
-    d = 2
-    while d * d <= n:
-        if n % d == 0:
-            return False
-        d += 1
-    return True
-
-
-def bad_primes(N: int) -> Set[int]:
-    """Primes dividing Delta = -432 N^2, i.e. {2, 3} together with the primes of N."""
-    return {2, 3} | set(factor(N).keys())
-
-
-def find_small_point(N: int, bound: int = 200) -> Point:
-    """Search for a rational (in fact integral) point with |x| <= bound."""
-    for x in range(-bound, bound + 1):
-        s = x ** 3 + N
-        if s <= 0:
+def integral_points(N: int, x_bound: int = 400) -> List[Tuple[int, int]]:
+    """All integral points (x,y) with |x| <= x_bound and y > 0 on y^2 = x^3 + N."""
+    pts: List[Tuple[int, int]] = []
+    for x in range(-x_bound, x_bound + 1):
+        t = x**3 + N
+        if t <= 0:
             continue
-        if is_square(s):
-            return (Fraction(x), Fraction(integer_sqrt(s)))
-    return None
+        r = int(round(t ** 0.5))
+        for cand in (r - 1, r, r + 1):
+            if cand > 0 and cand * cand == t:
+                pts.append((x, cand))
+                break
+    return pts
 
 
-# ---------------------------------------------------------------------------
-# Reduction modulo a good prime, and the apparition index
-# ---------------------------------------------------------------------------
+# --------------------------------------------------------------------------- #
+# 1.  The counterexample N = 55, P = (9,28)
+# --------------------------------------------------------------------------- #
 
 
-def reduce_point(P: Point, ell: int) -> Optional[Tuple[int, int]]:
-    """Reduce an affine rational point mod ell; None means it hits infinity."""
-    if P is None:
-        return None
-    x, y = P
-    if x.denominator % ell == 0 or y.denominator % ell == 0:
-        return None
-    inv_dx = pow(x.denominator % ell, ell - 2, ell)
-    inv_dy = pow(y.denominator % ell, ell - 2, ell)
-    return ((x.numerator % ell) * inv_dx % ell, (y.numerator % ell) * inv_dy % ell)
-
-
-def add_mod(P: Optional[Tuple[int, int]], Q: Optional[Tuple[int, int]],
-            N: int, ell: int) -> Optional[Tuple[int, int]]:
-    """Group law of y^2 = x^3 + N over the field with ell elements."""
-    if P is None:
-        return Q
-    if Q is None:
-        return P
-    x1, y1 = P
-    x2, y2 = Q
-    if x1 == x2 and (y1 + y2) % ell == 0:
-        return None
-    if P == Q:
-        lam = 3 * x1 * x1 % ell * pow(2 * y1 % ell, ell - 2, ell) % ell
-    else:
-        lam = (y2 - y1) % ell * pow((x2 - x1) % ell, ell - 2, ell) % ell
-    x3 = (lam * lam - x1 - x2) % ell
-    y3 = (lam * (x1 - x3) - y1) % ell
-    return (x3, y3)
-
-
-def order_mod(P: Point, N: int, ell: int) -> int:
-    """Order of the reduction of P in E_N(F_ell); equals the apparition index."""
-    R = reduce_point(P, ell)
-    if R is None:
-        return 1
-    S = R
-    k = 1
-    while S is not None:
-        S = add_mod(S, R, N, ell)
-        k += 1
-        if k > 4 * ell:                    # far beyond the Hasse bound: safety net
-            raise RuntimeError("order computation failed")
-    return k
-
-
-def apparition_index_by_orbit(P: Point, N: int, ell: int, search: int = 12) -> Optional[int]:
-    """Smallest k >= 1 with ell | den x(kP), found by walking the orbit."""
-    Q: Point = P
-    for k in range(1, search + 1):
-        if Q is None:
-            return k
-        if Q[0].denominator % ell == 0:
-            return k
-        Q = add(Q, P, N)
-    return None
-
-
-# ---------------------------------------------------------------------------
-# The individual demonstrations
-# ---------------------------------------------------------------------------
-
-
-def demo_counterexample() -> None:
-    print("=" * 78)
-    print("1.  THE COUNTEREXAMPLE:  a good prime inside a denominator")
-    print("=" * 78)
-    N = 55
-    P = (Fraction(9), Fraction(28))
-    assert on_curve(P, N)
-    Delta = -432 * N * N
-    P2 = add(P, P, N)
-    assert P2 is not None
-    x2 = P2[0]
-    print(f"  curve      E_{N} : y^2 = x^3 + {N}")
-    print(f"  point      P  = (9, 28),   28^2 = {28**2} = 9^3 + 55 = {9**3+55}")
-    print(f"  discriminant Delta = -432 * {N}^2 = {Delta} = {factor(Delta)}")
-    print(f"  bad primes  {sorted(bad_primes(N))}")
-    print(f"  x(2P)      = {x2}")
-    print(f"  den x(2P)  = {x2.denominator} = {factor(x2.denominator)}")
-    assert x2 == Fraction(2601, 3136)
-    assert x2.denominator == 2 ** 6 * 7 ** 2
-    assert Delta % 7 != 0
-    print("  ==> 7 divides the denominator, and 7 does NOT divide Delta:")
-    print("      7 is a prime of GOOD reduction.  The conjecture is false.")
-
-    P3 = add(P2, P, N)
-    assert P3 is not None
-    x3 = P3[0]
+def demo_counterexample_55() -> None:
+    print("=" * 74)
+    print("1.  THE COUNTEREXAMPLE:  N = 55 = 5 * 11,  P = (9, 28)")
+    print("=" * 74)
+    N, x, y = 55, Fraction(9), Fraction(28)
+    assert on_curve(N, (x, y)), "P must lie on the curve"
+    print(f"  curve            E_55 : y^2 = x^3 + 55,   Delta = -432 * 55^2")
+    print(f"  bad primes       {bad_primes(N)}          (the primes dividing Delta)")
+    x2 = dbl_x(N, x)
+    print(f"  duplication      x(2P) = (9^4 - 8*55*9) / (4*(9^3+55)) = {x2}")
+    d = x2.denominator
+    print(f"  denominator      {d} = {pretty_factorization(d)}")
+    print(f"  group law check  x(2P) via chord-tangent = {mul(N, 2, (x, y))[0]}")
     print()
-    print(f"  x(3P)      = {x3}")
-    print(f"  den x(3P)  = {x3.denominator} = {factor(x3.denominator)}"
-          f" = {integer_sqrt(x3.denominator)}^2")
-    dp = set(factor(x3.denominator))
-    assert 13 in dp and 73 in dp and 5 not in dp and 11 not in dp
-    print("  ==> good primes 13 and 73 are present; neither 5 nor 11 is.")
-    print("      Failure in BOTH directions at one multiple of one point.")
+    print("  The prime 7 divides the denominator, yet 7 does not divide")
+    print(f"  Delta = {-432 * 55**2} : indeed {-432 * 55**2} mod 7 = {(-432 * 55**2) % 7}.")
+    print("  So 7 is a prime of GOOD reduction appearing in a denominator:")
+    print("  the 'only bad primes' conjecture is false.")
+    assert d % 7 == 0 and (-432 * N**2) % 7 != 0
+    print()
+    print("  Second counterexample:  N = 899 = 29 * 31 (twin primes), P = (1, 30)")
+    x2b = dbl_x(899, Fraction(1))
+    print(f"    x(2P) = {x2b},  denominator {x2b.denominator}"
+          f" = {pretty_factorization(x2b.denominator)}")
+    print(f"    bad primes of E_899 : {bad_primes(899)};  5 is extraneous.")
+    assert x2b.denominator % 5 == 0 and 5 not in bad_primes(899)
     print()
 
 
-def demo_square_law() -> None:
-    print("=" * 78)
-    print("2.  THE SQUARE-DENOMINATOR LAW:  den x = e^2,  den y = e^3")
-    print("=" * 78)
-    cases = [(55, (9, 28)), (35, (1, 6)), (17, (4, 9)), (-2, (3, 5)), (1, (2, 3))]
-    print(f"  {'N':>4} {'n':>2}  {'den x':>28}  {'e':>14}  den y = e^3 ?")
-    for N, (px, py) in cases:
-        P = (Fraction(px), Fraction(py))
-        assert on_curve(P, N)
-        for n, Q in enumerate(orbit(P, 4, N), start=1):
-            if Q is None:
-                continue
-            dx, dy = Q[0].denominator, Q[1].denominator
-            assert is_square(dx), "den x must be a perfect square"
-            e = integer_sqrt(dx)
-            assert dy == e ** 3, "den y must be the cube of the same e"
-            print(f"  {N:>4} {n:>2}  {dx:>28}  {e:>14}  {'yes'}")
-    print("  ==> in every case den x is a perfect square e^2 and den y = e^3,")
-    print("      so every prime occurs to an EVEN exponent in den x.")
-    print("      Consequence: at most sqrt(X)+1 integers below X are achievable")
-    print("      denominators, a set of density zero.")
-    print()
+# --------------------------------------------------------------------------- #
+# 2.  The mechanism theorem
+# --------------------------------------------------------------------------- #
 
 
-def demo_local_law() -> None:
-    print("=" * 78)
-    print("3.  THE COMPLETE LOCAL LAW AT A GOOD PRIME  l >= 5,  l not dividing N")
-    print("=" * 78)
-    N = 55
-    P = (Fraction(9), Fraction(28))
-    primes = [7, 13, 17, 19, 23, 29, 31, 37, 41, 43, 73]
-    print(f"  {'l':>4} {'n':>3}  {'l|den x(P)':>11} {'l|num y(P)':>11}"
-          f" {'predicted':>10} {'observed':>9}")
-    for ell in primes:
-        if N % ell == 0 or ell < 5:
-            continue
-        for n, Q in enumerate(orbit(P, 6, N), start=1):
-            if Q is None:
-                continue
-            R = add(Q, Q, N)
-            if R is None:
-                continue
-            lhs_a = Q[0].denominator % ell == 0
-            lhs_b = Q[1].numerator % ell == 0
-            predicted = lhs_a or lhs_b
-            observed = R[0].denominator % ell == 0
-            assert predicted == observed, (ell, n)
-            if predicted:
-                print(f"  {ell:>4} {n:>3}  {str(lhs_a):>11} {str(lhs_b):>11}"
-                      f" {str(predicted):>10} {str(observed):>9}")
-    print("  ==> in every tested case (all l, all n, both outcomes) the law")
-    print("      l | den x(2P)  <=>  l | den x(P) or l | num y(P)  holds.")
-    print("      The criterion never mentions the factorization of N.")
-    print()
-
-
-def demo_filtration() -> None:
-    print("=" * 78)
-    print("4.  THE EXACT FILTRATION LAW:  odd primes freeze, the prime 2 grows by 2")
-    print("=" * 78)
-    N = 55
-    P = (Fraction(9), Fraction(28))
-    Q = add(P, P, N)                       # 2P has even denominator
-    assert Q is not None
-    print("  sub-orbit 2P, 4P, 8P, 16P on E_55:")
-    print(f"  {'k':>2} {'v_2(den x)':>11} {'v_7(den x)':>11}")
-    R: Point = Q
-    v2_prev = None
-    for k in range(0, 4):
-        assert R is not None
-        d = R[0].denominator
-        v2, v7 = valuation(d, 2), valuation(d, 7)
-        print(f"  {k:>2} {v2:>11} {v7:>11}")
-        if v2_prev is not None:
-            assert v2 == v2_prev + 2, "v_2 must grow by exactly 2 per doubling"
-        assert v7 == 2, "v_7 must be constant along the 2-power sub-orbit"
-        v2_prev = v2
-        R = add(R, R, N)
-    print("  ==> v_2 increases by exactly 2 at each doubling (6, 8, 10, 12),")
-    print("      while the odd prime 7 keeps its exponent 2 forever.")
-    print()
-
-
-def demo_apparition_index() -> None:
-    print("=" * 78)
-    print("5.  THE APPARITION INDEX LAW")
-    print("=" * 78)
-    N = 55
-    P = (Fraction(9), Fraction(28))
-    print("  v_l(den x(nP)) for the first multiples of P = (9,28) on E_55:")
-    header = "   n |" + "".join(f"{ell:>6}" for ell in (2, 3, 5, 7, 13, 17, 73))
-    print(header)
-    print("  " + "-" * (len(header) - 2))
-    for n, Q in enumerate(orbit(P, 7, N), start=1):
-        assert Q is not None
-        d = Q[0].denominator
-        row = f"  {n:>2} |" + "".join(f"{valuation(d, ell):>6}"
-                                      for ell in (2, 3, 5, 7, 13, 17, 73))
-        print(row)
-    print()
-    print("  Support of each row is a set of multiples of one index m(l):")
-    print(f"  {'l':>5} {'m by orbit search':>19} {'order of reduction':>20} {'good?':>7}")
-    for ell in (7, 13, 17, 73, 19, 23, 29):
-        m_orbit = apparition_index_by_orbit(P, N, ell, search=12)
-        m_red = order_mod(P, N, ell) if ell not in bad_primes(N) else None
-        good = ell not in bad_primes(N)
-        if m_orbit is not None and m_red is not None:
-            assert m_orbit == m_red, (ell, m_orbit, m_red)
-        print(f"  {ell:>5} {str(m_orbit):>19} {str(m_red):>20} {str(good):>7}")
-    print("  ==> the two computations agree: the apparition index equals the order")
-    print("      of the reduced point in E_N(F_l).  In particular m(7) = 2 and")
-    print("      m(13) = 3, so 7 divides den x(kP) exactly for even k, and 13")
-    print("      exactly for k divisible by 3.")
-    print()
-    # The index law as an iff, checked over a range of k (both directions).
-    for ell, m in ((7, 2), (13, 3)):
-        for k in range(1, 10):
-            Q = multiple(P, k, N)
-            assert Q is not None
-            divides = Q[0].denominator % ell == 0
-            assert divides == (k % m == 0), (ell, k)
-        print(f"  verified for 1 <= k <= 9:  {ell} | den x(kP)  <=>  {m} | k")
-    print()
-
-
-def demo_infinite_orbit() -> None:
-    print("=" * 78)
-    print("6.  UNBOUNDED 2-ADIC GROWTH FORCES AN INFINITE ORBIT")
-    print("=" * 78)
-    N = 55
-    P = (Fraction(9), Fraction(28))
-    Q = add(P, P, N)
-    assert Q is not None
-    v0 = valuation(Q[0].denominator, 2)
-    seen = set()
-    R: Point = Q
-    for k in range(0, 5):
-        assert R is not None
-        v = valuation(R[0].denominator, 2)
-        assert v == v0 + 2 * k
-        assert R[0] not in seen, "the points must be pairwise distinct"
-        seen.add(R[0])
-        R = add(R, R, N)
-    print(f"  v_2(den x(2^k * 2P)) = {v0} + 2k for k = 0..4:  strictly increasing,")
-    print("  hence the points 2^k * 2P are pairwise distinct.")
-    print("  ==> (9,28) has INFINITE ORDER and E_55(Q) is an infinite group,")
-    print("      proved by watching denominators, with no descent or heights.")
-    print("  ==> infinitely many distinct rational points of E_55 carry the")
-    print("      good prime 7 in the denominator of their x-coordinate.")
-    print()
-
-
-def demo_semiprime_survey() -> None:
-    print("=" * 78)
-    print("7.  SURVEY OVER SEMIPRIME MORDELL CURVES  N = p q")
-    print("=" * 78)
-    pairs: List[Tuple[int, int]] = [
-        (3, 5), (5, 7), (5, 11), (3, 7), (7, 11), (3, 11),
-        (5, 13), (7, 13), (3, 13), (11, 13), (5, 17),
+def demo_mechanism() -> None:
+    print("=" * 74)
+    print("2.  MECHANISM THEOREM:   l | den x(2P)  <=>  l | y   (for l not dividing 6N)")
+    print("=" * 74)
+    cases: Sequence[Tuple[int, int, int]] = [
+        (55, 9, 28),
+        (899, 1, 30),
+        (17, -2, 3),
+        (24, 1, 5),
+        (225, 4, 17),
+        (-2, 3, 5),
     ]
-    n_multiples = 6
-    tested = p_hits = q_hits = only_bad = 0
-    print(f"  {'N':>5} {'p':>3} {'q':>3} {'point':>14}  denominator primes (first"
-          f" {n_multiples} multiples)")
-    for p, q in pairs:
-        N = p * q
-        P = find_small_point(N)
-        if P is None:
-            print(f"  {N:>5} {p:>3} {q:>3}   (no small rational point found)")
-            continue
-        tested += 1
-        primes: Set[int] = set()
-        for Q in orbit(P, n_multiples, N):
-            if Q is None:
-                continue
-            primes |= set(factor(Q[0].denominator).keys())
-        shown = sorted(x for x in primes if x < 10_000)
-        p_in, q_in = p in primes, q in primes
-        only = primes <= {2, 3, p, q}
-        p_hits += int(p_in)
-        q_hits += int(q_in)
-        only_bad += int(only)
-        pt = f"({P[0]},{P[1]})"
-        print(f"  {N:>5} {p:>3} {q:>3} {pt:>14}  {shown}"
-              f"{' ...' if len(shown) < len(primes) else ''}")
-        print(f"        p present: {p_in};  q present: {q_in};"
-              f"  only {{2,3,p,q}}: {only}")
+    for N, xi, yi in cases:
+        assert yi * yi == xi**3 + N
+        den = dbl_x(N, Fraction(xi)).denominator
+        good = [l for l in range(5, 200) if is_prime(l) and (6 * N) % l != 0]
+        ok = all(((den % l == 0) == (yi % l == 0)) for l in good)
+        appear = sorted(l for l in good if den % l == 0)
+        print(f"  N={N:>5}  P=({xi},{yi})   den x(2P) = {pretty_factorization(den)}")
+        print(f"          good primes in the denominator: {appear or '(none)'}"
+              f"   |  primes dividing y = {sorted(set(factorize(abs(yi))))}")
+        print(f"          equivalence verified for all good primes < 200: {ok}")
+        assert ok
     print()
-    print(f"  curves tested                            : {tested}")
-    print(f"  'only bad primes' held                   : {only_bad}"
-          f"  ({100.0 * only_bad / tested:.1f}%)")
-    print(f"  smaller factor p appeared                : {p_hits}"
-          f"  ({100.0 * p_hits / tested:.1f}%)")
-    print(f"  larger  factor q appeared                : {q_hits}"
-          f"  ({100.0 * q_hits / tested:.1f}%)")
-    print("  ==> denominators do not reveal the factorization of N: they are")
-    print("      governed by the order of the reduced point in E_N(F_l), which")
-    print("      is blind to how N factors.")
+    print("  Reduction-theoretic reading:  l | y means the reduction of P modulo l")
+    print("  is a point of order dividing 2, i.e. 2*Pbar = O in E_N(F_l).")
+    print("  Doubling then sends Pbar to the origin of the formal group, which is")
+    print("  precisely what a denominator divisible by l records.")
+    print()
+
+
+# --------------------------------------------------------------------------- #
+# 3.  The exact exponent  v_l(den x(2P)) = 2 v_l(y)
+# --------------------------------------------------------------------------- #
+
+
+def demo_exact_exponent() -> None:
+    print("=" * 74)
+    print("3.  EXACT EXPONENT:   v_l(den x(2P)) = 2 v_l(y)   at every good prime l")
+    print("=" * 74)
+    cases: Sequence[Tuple[int, int, int]] = [
+        (55, 9, 28),
+        (899, 1, 30),
+        (25 * 49 - 1, 1, 35),
+        (121 * 4 - 1, 1, 22),
+    ]
+    for N, xi, yi in cases:
+        assert yi * yi == xi**3 + N
+        den = dbl_x(N, Fraction(xi)).denominator
+        row = []
+        for l in sorted(factorize(abs(yi))):
+            if (6 * N) % l == 0:
+                continue
+            lhs = valuation(den, l) if den % l == 0 else 0
+            rhs = 2 * valuation(yi, l)
+            row.append(f"l={l}: v(den)={lhs}, 2v(y)={rhs}")
+            assert lhs == rhs
+        print(f"  N={N:>6}  P=({xi},{yi})   den = {pretty_factorization(den)}")
+        print(f"          {'; '.join(row) if row else '(no good prime divides y)'}")
+    print()
+
+
+# --------------------------------------------------------------------------- #
+# 4.  Triplication
+# --------------------------------------------------------------------------- #
+
+
+def demo_triplication() -> None:
+    print("=" * 74)
+    print("4.  TRIPLICATION:   l | den x(3P)  <=>  l | psi_3(P) = 3x^4 + 12Nx")
+    print("=" * 74)
+    N, xi, yi = 55, 9, 28
+    x3 = tri_x(N, Fraction(xi), Fraction(yi))
+    assert x3 == mul(N, 3, (Fraction(xi), Fraction(yi)))[0]
+    d3 = x3.denominator
+    print(f"  N=55, P=(9,28):  x(3P) = {x3}")
+    print(f"  denominator      {d3} = {pretty_factorization(d3)}")
+    u = psi3(N, Fraction(xi))
+    print(f"  psi_3(P)         3*9^4 + 12*55*9 = {u} = {pretty_factorization(int(u))}")
+    print(f"  and indeed den x(3P) = psi_3(P)^2 : {int(u) ** 2 == d3}")
+    assert int(u) ** 2 == d3
+    print()
+    print("  So 13 and 73 are good-reduction primes in the denominator of x(3P),")
+    print("  while the level-2 extraneous prime 7 has vanished:")
+    d2 = dbl_x(N, Fraction(xi)).denominator
+    print(f"    7  | den x(2P): {d2 % 7 == 0}      7  | den x(3P): {d3 % 7 == 0}")
+    print(f"    13 | den x(2P): {d2 % 13 == 0}     13 | den x(3P): {d3 % 13 == 0}")
+    print(f"    73 | den x(2P): {d2 % 73 == 0}     73 | den x(3P): {d3 % 73 == 0}")
+    print("  The extraneous primes MOVE with n: they read off the division")
+    print("  polynomials psi_n(P), not any fixed set attached to N.")
+    good = [l for l in range(5, 500) if is_prime(l) and (6 * N) % l != 0]
+    ok = all(((d3 % l == 0) == (int(u) % l == 0)) for l in good)
+    print(f"  equivalence l | den x(3P) <=> l | psi_3(P) verified for l < 500: {ok}")
+    assert ok
+    print()
+
+
+# --------------------------------------------------------------------------- #
+# 5.  The doubling tower: rigidity at odd primes, growth at 2
+# --------------------------------------------------------------------------- #
+
+
+def dbl_iter(N: int, k: int, x: Fraction) -> Fraction:
+    """The k-fold iterated duplication value x(2^k P)."""
+    for _ in range(k):
+        x = dbl_x(N, x)
+    return x
+
+
+def demo_tower() -> None:
+    print("=" * 74)
+    print("5.  THE DOUBLING TOWER:  frozen good primes, linear growth at 2")
+    print("=" * 74)
+    N, xi, yi = 55, 9, 28
+    x = Fraction(xi)
+    print("   k   x(2^k P) denominator factorised          v_7   v_2")
+    for k in range(0, 3):
+        xk = dbl_iter(N, k, x)
+        d = xk.denominator
+        v7 = valuation(d, 7) if d % 7 == 0 else 0
+        v2 = valuation(d, 2) if d % 2 == 0 else 0
+        s = pretty_factorization(d)
+        if len(s) > 40:
+            s = s[:37] + "..."
+        print(f"  {k:>2}   {s:<40} {v7:>4}  {v2:>4}")
+    print()
+    print("  From level 1 onwards v_7 is frozen at 2 = 2*v_7(28), exactly as the")
+    print("  persistence theorem predicts, while v_2 increases by exactly 2 per step.")
+    d1 = dbl_iter(N, 1, x).denominator
+    d2 = dbl_iter(N, 2, x).denominator
+    assert valuation(d1, 7) == valuation(d2, 7) == 2
+    assert valuation(d2, 2) == valuation(d1, 2) + 2
+    print(f"  Level four:  den x(4P) = {d2}")
+    print(f"                        = {pretty_factorization(d2)}")
+    print("  Two brand-new good-reduction primes 827 and 1583 have appeared, and")
+    print("  none of 7, 827, 1583 divides Delta = -432 * 55^2.")
+    assert d2 % 827 == 0 and d2 % 1583 == 0
+    for l in (7, 827, 1583):
+        assert (6 * N) % l != 0
+    print()
+
+
+# --------------------------------------------------------------------------- #
+# 6.  Universality: every prime >= 5 is extraneous somewhere
+# --------------------------------------------------------------------------- #
+
+
+def demo_universality() -> None:
+    print("=" * 74)
+    print("6.  UNIVERSALITY:  every prime l >= 5 is extraneous for a suitable N")
+    print("=" * 74)
+    print("  Take N = l^2 m^2 - 1 and the integral point P = (1, l m).")
+    print("  Then l does not divide 6N (so l is a prime of good reduction) and")
+    print("  l divides y, hence l divides den x(2P).")
+    print()
+    print("    l     m       N = l^2 m^2 - 1     den x(2P) factorised")
+    for l in (5, 7, 11, 13, 101):
+        for m in (1, 2):
+            N = l * l * m * m - 1
+            den = dbl_x(N, Fraction(1)).denominator
+            assert (6 * N) % l != 0 and den % l == 0
+            s = pretty_factorization(den)
+            if len(s) > 34:
+                s = s[:31] + "..."
+            print(f"  {l:>5} {m:>5} {N:>17}     {s}")
+    print()
+    print("  Arbitrarily many extraneous primes at once:  put K = product of a")
+    print("  finite set S of primes >= 5, N = K^2 m^2 - 1, P = (1, K m).")
+    S = [5, 7, 11, 13]
+    K = 1
+    for p in S:
+        K *= p
+    N = K * K - 1
+    den = dbl_x(N, Fraction(1)).denominator
+    print(f"    S = {S},  K = {K},  N = {N}")
+    print(f"    den x(2P) = {pretty_factorization(den)}")
+    for l in S:
+        assert (6 * N) % l != 0 and den % l == 0
+    print(f"    every element of S is a good prime dividing the denominator: True")
+    print()
+
+
+# --------------------------------------------------------------------------- #
+# 7.  A survey over semiprimes
+# --------------------------------------------------------------------------- #
+
+
+def demo_survey() -> None:
+    print("=" * 74)
+    print("7.  SURVEY OVER SEMIPRIMES N = p*q  (does the denominator reveal p or q?)")
+    print("=" * 74)
+    print("  For each semiprime N = p q we take every integral point (x,y) with")
+    print("  |x| <= 200, y > 0, and look at the denominators of x(2P) and x(3P).")
+    print()
+    semiprimes = [
+        (5, 11), (3, 5), (5, 7), (7, 11), (3, 11), (29, 31),
+        (5, 13), (11, 13), (3, 7), (13, 17), (7, 13),
+    ]
+    n_total = 0
+    n_p_seen = 0
+    n_q_seen = 0
+    n_only_bad = 0
+    n_extraneous = 0
+    header = "      N = p*q   points   primes met in den x(2P), x(3P)   p?     q?     only-bad?"
+    print(header)
+    for p, q in semiprimes:
+        N = p * q
+        pts = [(a, b) for (a, b) in integral_points(N, 200) if b != 0]
+        if not pts:
+            continue
+        met: set = set()
+        for xi, yi in pts:
+            for n in (2, 3):
+                R = mul(N, n, (Fraction(xi), Fraction(yi)))
+                if R is None:
+                    continue
+                met |= set(factorize(R[0].denominator))
+        n_total += 1
+        p_seen = p in met
+        q_seen = q in met
+        only_bad = met <= set(bad_primes(N))
+        n_p_seen += p_seen
+        n_q_seen += q_seen
+        n_only_bad += only_bad
+        n_extraneous += not only_bad
+        shown = sorted(met)
+        pr = ",".join(map(str, shown[:6])) + ("..." if len(shown) > 6 else "")
+        print(f"  {N:>8} = {p}*{q}".ljust(20)
+              + f"{len(pts):>4}   {pr:<32}"
+              + f"{str(p_seen):<7}{str(q_seen):<7}{only_bad}")
+    print()
+    print(f"  sample size (semiprimes with an integral point) : {n_total}")
+    print(f"  smaller factor p met in some denominator        : "
+          f"{n_p_seen}/{n_total} = {100.0 * n_p_seen / n_total:.1f}%")
+    print(f"  larger factor q met in some denominator         : "
+          f"{n_q_seen}/{n_total} = {100.0 * n_q_seen / n_total:.1f}%")
+    print(f"  'only bad primes' survives                      : "
+          f"{n_only_bad}/{n_total} = {100.0 * n_only_bad / n_total:.1f}%")
+    print(f"  at least one extraneous good prime occurs       : "
+          f"{n_extraneous}/{n_total} = {100.0 * n_extraneous / n_total:.1f}%")
+    print()
+    print("  Conclusion: the denominators are governed by the point, through the")
+    print("  division polynomials, not by the factorisation of N.  They neither")
+    print("  exclude good primes nor reliably exhibit the factors p and q, so they")
+    print("  carry no usable factoring signal.")
     print()
 
 
 def main() -> None:
-    print()
-    print("DENOMINATORS OF RATIONAL POINTS ON MORDELL CURVES  y^2 = x^3 + N")
-    print("The 'only bad primes' conjecture, its refutation, and the laws that"
-          " replace it")
-    print()
-    demo_counterexample()
-    demo_square_law()
-    demo_local_law()
-    demo_filtration()
-    demo_apparition_index()
-    demo_infinite_orbit()
-    demo_semiprime_survey()
+    demo_counterexample_55()
+    demo_mechanism()
+    demo_exact_exponent()
+    demo_triplication()
+    demo_tower()
+    demo_universality()
+    demo_survey()
+    print("=" * 74)
     print("All assertions passed.")
+    print("=" * 74)
 
 
 if __name__ == "__main__":
