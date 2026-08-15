@@ -1,77 +1,124 @@
-# Computational evidence: the cyclic splitting-type channel
+# Computational Evidence — Cyclic splitting-type channel
 
-All numbers below were first produced by direct enumeration over the finite cyclic model
-(`ℤ/n` with `T(x) = ord(x) = n / gcd(n, x)`, the residue degree of a Frobenius element of
-`Gal(ℚ(ζ_f)/ℚ) ≅ C_{f-1}`), and then **re-derived as exact closed forms inside Lean** by
-finite enumeration over `Fin n × Fin n` (see `Catalog/Computation/CyclicTypeChannelValues.lean`).
-Every entry marked *exact* is backed by a `sorry`-free Lean theorem.
+All numbers below were produced by an independent Python re-implementation of the catalog
+definitions in `Catalog/Computation/CyclicTypeChannel.lean`
+(`typ n x = n / gcd(n,x)`, `HT`, `Hnr`, `Hpair`, `HpairGivenN`, `Ipair = Hpair − HpairGivenN`),
+by exhaustive enumeration of the unit group `Z/n` and of all ordered pairs.  They are
+*evidence*, not verification: every claim that appears as a theorem in `Catalog/Physics/` is
+proved in Lean with 0 sorries, and the two agree everywhere they overlap
+(e.g. the Lean closed form gives `HT 16 = 15/8 = 1.875`, matching the table below and the
+independently enumerated catalog value `HT_sixteen`).
 
-## 1. Small-case calculations
+## 1. Small-case table
 
-`I_pair(n) = H(Π) − (1/n) Σ_c H(Π_c)`, where `Π` is the law of the unordered type pair
-`{T(x), T(y)}` and `Π_c` is its law conditioned on the norm class `x + y = c`.
-
-| n | #type states | H(T) | H(Π) | H(Π\|N) | I_pair (decimal) | I_pair (exact, Lean) |
+| n | H(T) | H(nr) | log₂ d(n) | log₂ n | I_pair | n prime |
 |---|---|---|---|---|---|---|
-| 2 | 2 | 1.0000 | 1.5000 | 0.5000 | 1.000000 | `1` |
-| 3 | 2 | 0.9183 | — | — | 0.473851 | `log₂3 − 10/9` |
-| 4 | 3 | 1.5000 | 2.3750 | 1.1250 | 1.250000 | `5/4` |
-| 5 | 2 | 0.7219 | — | — | 0.202710 | `log₂5 + (12/25)log₂3 − 72/25` |
-| 6 | 4 | 1.9183 | 3.1144 | 1.6405 | 1.473851 | `log₂3 − 1/9` |
-| 7 | 2 | 0.5917 | — | — | 0.114105 | `log₂7 + (30/49)log₂5 − (78/49)log₂3 − 78/49` |
-| 8 | 4 | 1.7500 | — | — | 1.312500 | `21/16` |
-| 9 | 3 | 1.2244 | — | — | 0.526502 | `(10/9)log₂3 − 100/81` |
-| 10 | 4 | 1.7219 | — | — | 1.202710 | `log₂5 + (12/25)log₂3 − 47/25` |
-| 11 | 2 | 0.4395 | — | — | 0.051897 | `log₂11 + (180/121)log₂3 − (210/121)log₂5 − 210/121` |
-| 12 | 6 | 2.4183 | — | — | 1.723851 | `log₂3 + 5/36` |
-| 13 | 2 | 0.3912 | — | — | 0.038642 | `log₂13 − (300/169)log₂3 + (132/169)log₂11 − 600/169` |
-| 14 | 4 | 1.5917 | — | — | 1.114105 | `log₂7 + (30/49)log₂5 − (78/49)log₂3 − 29/49` |
-| 15 | 4 | 1.6402 | — | — | 0.676561 | `(37/25)log₂3 + log₂5 − 898/225` |
-| 16 | 5 | 1.8750 | — | — | 1.328125 | `85/64` |
-| 18 | 6 | 2.2244 | — | — | 1.526502 | `(10/9)log₂3 − 19/81` |
-| 20 | 6 | 2.2219 | — | — | 1.452710 | `log₂5 + (12/25)log₂3 − 163/100` |
+| 1 | 0.0000 | 0.0000 | 0.0000 | 0.0000 | 0.0000 | no |
+| 2 | 1.0000 | 1.0000 | 1.0000 | 1.0000 | 1.0000 | yes |
+| 3 | 0.9183 | 0.9183 | 1.0000 | 1.5850 | 0.4739 | yes |
+| 4 | 1.5000 | 0.8113 | 1.5850 | 2.0000 | 1.2500 | no |
+| 5 | 0.7219 | 0.7219 | 1.0000 | 2.3219 | 0.2027 | yes |
+| 6 | 1.9183 | 0.6500 | 2.0000 | 2.5850 | 1.4739 | no |
+| 7 | 0.5917 | 0.5917 | 1.0000 | 2.8074 | 0.1141 | yes |
+| 8 | 1.7500 | 0.5436 | 2.0000 | 3.0000 | 1.3125 | no |
+| 9 | 1.2244 | 0.5033 | 1.5850 | 3.1699 | 0.5265 | no |
+| 10 | 1.7219 | 0.4690 | 2.0000 | 3.3219 | 1.2027 | no |
+| 11 | 0.4395 | 0.4395 | 1.0000 | 3.4594 | 0.0519 | yes |
+| 12 | 2.4183 | 0.4138 | 2.5850 | 3.5850 | 1.7239 | no |
+| 13 | 0.3912 | 0.3912 | 1.0000 | 3.7004 | 0.0386 | yes |
+| 14 | 1.5917 | 0.3712 | 2.0000 | 3.8074 | 1.1141 | no |
+| 15 | 1.6402 | 0.3534 | 2.0000 | 3.9069 | 0.6766 | no |
+| 16 | 1.8750 | 0.3373 | 2.3219 | 4.0000 | 1.3281 | no |
+| 17 | 0.3228 | 0.3228 | 1.0000 | 4.0875 | 0.0240 | yes |
+| 18 | 2.2244 | 0.3095 | 2.5850 | 4.1699 | 1.5265 | no |
+| 19 | 0.2975 | 0.2975 | 1.0000 | 4.2479 | 0.0197 | yes |
+| 20 | 2.2219 | 0.2864 | 2.5850 | 4.3219 | 1.4527 | no |
 
-The decimal column reproduces the reported measurements
-(C₄ 1.2500, C₆ 1.4739, C₁₀ 1.2027, C₁₂ 1.7239, C₁₆ 1.3281) to all printed digits.
+Observations, each of which became a Lean theorem:
 
-## 2. Counterexample hunt for "every `n ≥ 4` exceeds 1 bit"
+* `H(nr) ≤ H(T) ≤ log₂ d(n) ≤ log₂ n` holds on the whole range, with equality in the first
+  slot exactly at the primes and equality in the last two exactly for `n ≤ 2`
+  → `Hnr_lt_HT_iff`, `HT_le_logb_card_divisors`, `HT_lt_logb_card_divisors`,
+  `HT_le_logb_self`, `HT_lt_logb_self`.
+* `H(T)` is positive from `n = 2` on → `HT_pos`.
 
-Enumeration for all `2 ≤ n ≤ 40` gives an immediate **counterexample to the unrestricted
-claim**: every *odd* order lies strictly below the cap.
+## 2. The prime type-pair channel: closed form
 
-```
-n :  2     3     4     5     6     7     8     9    10    11    12
-I : 1.000 0.474 1.250 0.203 1.474 0.114 1.313 0.527 1.203 0.052 1.724
-n : 13    14    15    16    17    18    19    20    21    22    23
-I : 0.039 1.114 0.677 1.328 0.024 1.527 0.020 1.453 0.588 1.052 0.014
-```
+Exact enumeration versus the Lean closed form
+`I_pair(p) = log₂p − ((p−1)(2p−1)/p²)·log₂(p−1) + ((p−1)(p−2)/p²)·log₂(p−2)`
+(`CyclicType.Ipair_prime`):
 
-Pattern over `2 ≤ n ≤ 40`: `I_pair(n) > 1` **iff** `n` is even; `I_pair(n) < 1` for all odd `n`.
-The corrected statement — even orders above the cap, odd orders below — is what is
-formalised (`one_lt_Ipair_*` and `Ipair_*_lt_one` in `CyclicTypeChannelLaws.lean`).
+| p | enumerated | closed form | agree to 1e−9 |
+|---|---|---|---|
+| 2 | 1.000000 | 1.000000 | yes |
+| 3 | 0.473851 | 0.473851 | yes |
+| 5 | 0.202710 | 0.202710 | yes |
+| 7 | 0.114105 | 0.114105 | yes |
+| 11 | 0.051897 | 0.051897 | yes |
+| 13 | 0.038642 | 0.038642 | yes |
+| 17 | 0.023981 | 0.023981 | yes |
+| 19 | 0.019655 | 0.019655 | yes |
+| 23 | 0.013946 | 0.013946 | yes |
 
-## 3. Structural laws found in the data (and then proved for instances)
+The values decay like `p⁻²` (0.2027·25 = 5.07, 0.1141·49 = 5.59, 0.0519·121 = 6.28,
+0.0139·529 = 7.38 — growing slowly, consistent with the proved sandwich
+`1/(p² log 2) ≤ I_pair(p) ≤ (log₂p + 5)/p²`).
 
-* **CRT additivity.** `I_pair(mn) = I_pair(m) + I_pair(n)` whenever `gcd(m,n) = 1`.
-  Checked for all coprime splittings with `mn ≤ 40`; exact Lean instances:
-  `12 = 4·3`, `10 = 2·5`, `15 = 3·5`, `14 = 2·7`, `20 = 4·5`, `18 = 2·9`.
-* **Doubling law.** `I_pair(2m) = I_pair(m) + 1` for odd `m` (the special case `m` odd of the
-  above, since `I_pair(2) = 1`). Exact Lean instances `m = 3, 5, 7, 9`.
-* **2-adic growth law.** `I_pair(2^k) = (4/3)(1 − 4^{−k})`:
-  `1, 5/4, 21/16, 85/64, 341/256, 1365/1024, …`, numerators `(4^k − 1)/3`
-  (OEIS A002450), strictly increasing with supremum `4/3`.
-  Proved in Lean for `1 ≤ k ≤ 4`; verified numerically to `k = 6`.
-* **Euler-φ type law.** `P(T = d) = φ(d)/n` on the divisor lattice of `n`; proved in general
-  (`typeCount_eq_totient`), and yielding the general entropy formula
-  `H(T) = log₂ n − (1/n) Σ_{d ∣ n} φ(d) log₂ φ(d)` (`HT_divisor_formula`).
-* **Root-count lossiness.** `H(nr)` (binary: splits completely or not) is
-  `2 − (3/4)log₂3 = 0.8113` for `C₄` and `1 + log₂3 − (5/6)log₂5 = 0.6500` for `C₆`,
-  strictly below `H(T) = 1.5` and `1.9183`.
+## 3. Counterexample hunt
 
-## 4. Sanity checks
+* **Sub-cap claim for primes.** No odd prime `p ≤ 23` reaches 1 bit; the maximum is
+  `p = 3` at 0.4739.  Proved for all odd primes (`Ipair_prime_lt_one`), with
+  `p = 2` the unique prime attaining the cap (`Ipair_prime_eq_one_iff_two`).
+* **Cap-breaking hunt.** For `2 ≤ n ≤ 24`, `I_pair(n) > 1` holds **exactly** for the even
+  `n ≥ 4`; every odd `n` stays below (max over odd: `n = 15` at 0.6766), and `n = 2` sits
+  exactly at the cap.  No counterexample found to "even ≥ 4 ⇔ above the cap"; this is
+  Conjecture 1 of `FUTURE_DIRECTIONS.md` (currently proved only for prime orders and the
+  enumerated even instances `n = 4,…,16`).
+* **Sylow decomposition.** `H(T)(n) = Σ_p H(T)(p^{v_p(n)})` was checked for every
+  `2 ≤ n ≤ 40` — no failure.  Proved in general (`HT_eq_sum_primePow`).
+* **I_pair coprime additivity (open).** Checked on
+  (3,4),(4,5),(3,5),(2,9),(5,7),(3,8),(7,4),(9,5),(4,11) — exact agreement to 1e−9 in every
+  case, e.g. `I_pair(12) = 1.723851 = I_pair(3) + I_pair(4)`.  No counterexample found;
+  this is Conjecture 2 of `FUTURE_DIRECTIONS.md`.
 
-* `H(T)` from the general divisor formula agrees with the enumerated values, e.g.
-  `n = 6`: `log₂6 − (1/6)(2·1 + 2·1) = 1/3 + log₂3 = 1.9183`.
-* `I_pair(2) = 1` reproduces the quadratic (binary) fork cap exactly.
-* The type is a function of the residue, so `I(residue ; T) = H(T)` exactly, and refining
-  the modulus from `n` to `n·m` changes nothing (`typ_thickening`).
+## 4. The 2-adic tower
+
+| k | I_pair(2^k) | (4/3)(1 − 4^{−k}) | H(T)(2^k) | 2 − 2^{1−k} |
+|---|---|---|---|---|
+| 1 | 1.000000 | 1.000000 | 1.0000 | 1.0000 |
+| 2 | 1.250000 | 1.250000 | 1.5000 | 1.5000 |
+| 3 | 1.312500 | 1.312500 | 1.7500 | 1.7500 |
+| 4 | 1.328125 | 1.328125 | 1.8750 | 1.8750 |
+| 5 | 1.332031 | 1.332031 | 1.9375 | 1.9375 |
+| 6 | 1.333008 | 1.333008 | 1.9688 | 1.9688 |
+
+The entropy column is now a theorem (`HT_two_pow`, with saturation `HT_two_pow_tendsto`);
+the `I_pair` column matches `(4/3)(1 − 4^{−k})` on every tested `k` and remains open
+(Conjecture 3).
+
+## 5. Decay of the binary readout
+
+The proved bound `H(nr)(n) ≤ (log₂ n + 2)/n` against the enumerated values of column
+`H(nr)` above:
+
+| n | H(nr) | (log₂ n + 2)/n |
+|---|---|---|
+| 4 | 0.8113 | 1.0000 |
+| 8 | 0.5436 | 0.6250 |
+| 12 | 0.4138 | 0.4654 |
+| 16 | 0.3373 | 0.3750 |
+| 20 | 0.2864 | 0.3161 |
+
+The bound holds throughout and both sides tend to `0`, which is the content of
+`Hnr_tendsto_zero`; combined with `HT_two_pow_tendsto` this gives
+`H(T)(2^k) − H(nr)(2^k) → 2` (`HT_sub_Hnr_two_pow_tendsto`): asymptotically the root count
+reports none of the two bits carried by the 2-primary splitting type.
+
+## 6. Sequence notes
+
+The type-state counts `d(n)` (number of splitting types of `C_n`) are the divisor-count
+sequence, and the occupation numbers `φ(d)` are Euler's totient — both classical; no new
+integer sequence arises from the entropies themselves, which are transcendental-looking
+combinations of `log₂` of small integers.  The rational sub-sequences that *do* appear —
+`H(T)(2^k) = 2 − 2^{1−k}` and the conjectured `I_pair(2^k) = (4/3)(1 − 4^{−k})` — are
+elementary geometric families rather than OEIS entries in their own right.

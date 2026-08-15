@@ -33,7 +33,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The 3SUM-Birthday-Bound Hierarchy"
   },
   {
-    "consumed_by_exp_id": "1eccae12",
+    "consumed_by_exp_id": "8946952b",
     "description": "**Summary.** The conjecture that for E_N: y\u00b2 = x\u00b3 + N with N = pq, the\ndenominators of x(nP) are divisible only by {2, 3, p, q} (the primes dividing\n\u0394 = -432N\u00b2) is mathematically FALSE.\n\n**Counterexample.** N = 55 = 5\u00b711, P = (9,28) \u2208 E_55(Q):\n  x(2P) = (9^4 - 8\u00b755\u00b79) / (4(9^3 + 55)) = 2601/3136, and 3136 = 2^6 \u00b7 7^2.\nThe prime 7 divides the denominator but 7 \u2224 \u0394 (7 is a prime of good reduction).\n\n**Mechanism.** \u2113 | denom(x(nP)) iff nP \u2261 O (mod \u2113); good-reduction primes divide\ndenominators whenever the point reduces to torsion \u2014 infinitely many such primes.\n\n**Survey (11 semiprimes):** p appears in some denominator 54.5%, q appears 0%,\nonly-{2,3,p,q} holds 0% of the time. The denominator structure is a function of\nN alone (barrier 5) and does not cleanly reveal p, q.\n\n---\n\n*Factoring Lab paper. Status: proven theorem / verified / framework. This is a research deliverable, not a factoring breakthrough claim.*",
     "domains": [
       "Novelty"
@@ -48,7 +48,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The 'Only Bad Primes' Conjecture is False (elliptic curve denominators)"
   },
   {
-    "consumed_by_exp_id": "c8fdc3d0",
+    "consumed_by_exp_id": "7a7f9e41",
     "description": "**Summary.** Let F(k) = sum_{a=1}^{N} a^k. Then gcd(F(k), N) reveals a factor\nat k = p-1: for N = pq, gcd(F(p-1), N) = q (provided (q-1) does not divide (p-1)).\n\n**Key results (proven):**\n- **Theorem 1 (power-sum factor reveal):** Mod p the residues cover each nonzero\n  residue q times, so F(k) \u2261 q\u00b7(sum of k-th powers mod p); by FLT this is -q mod p\n  at k=p-1. Mod q it vanishes when (q-1) \u2224 (p-1). Hence gcd = q.\n- **Theorem 2 (robustness):** The power sum aggregates ALL bases a=1..N\n  simultaneously, so it cannot suffer Pollard p-1's \"bad base\" failure.\n- **Theorem 3 (Carmichael periodicity):** g(k) = gcd(F(k), N) has period\n  \u03bb(N) = lcm(p-1, q-1), so \u03bb(N) is readable from the period and the factors\n  follow from p+q = N - \u03bb(N) + 1.\n\n**Complexity.** First hit at k* = min(p-1,q-1) \u2248 \u221aN; cost per F(k) is O(N);\ntotal O(N^{3/2}) \u2014 worse than trial division. This is the SAME structure Shor's\nalgorithm exploits, made classically hard by the period-finding barrier.\nVerified on all 8 test semiprimes up to N \u2248 10^4.\n\n---\n\n*Factoring Lab paper. Status: proven theorem / verified / framework. This is a research deliverable, not a factoring breakthrough claim.*",
     "domains": [
       "Novelty"
@@ -423,7 +423,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "OR-DIAL-MAXIMUM: the semiprime OR dial has a global cap g(2)=0.3113 bits over every class-rate profile (paper 73, round-20 #1)"
   },
   {
-    "consumed_by_exp_id": "70d03dec",
+    "consumed_by_exp_id": "f2bb5930",
     "description": "## CYCLIC-TYPE-CHANNEL (round-22 #2, experiment 413, assessment v189, paper 78)\n\n**The complete splitting-type channel of a cyclic field exceeds the 1-bit binary-fork cap. Papers 72\u201374 capped every BINARY symmetric semiprime fork at 1.0 bit; the cyclic splitting type is multi-state, and its type-pair channel carries 1.2500 (C\u2084) / 1.4739 (C\u2086) bits \u2014 strictly above the cap.**\n\n### The type channel\n\nFor Q(\u03b6_f), f prime, Gal = (Z/f)^\u00d7 = C_n (n = f\u22121), the Frobenius order T(p) = ord_f(p) (the residue degree) is the complete splitting type \u2014 a deterministic function of p mod f, so **I(p mod f; T) = H(T) EXACT**: C\u2084 = Q(\u03b6\u2085) \u2192 3 states {1,2,4} rates {1/4,1/4,1/2}, H = 1.5 bits (measured 1.4989); C\u2086 = Q(\u03b6\u2087) \u2192 4 states {1,2,3,6} rates {1/6,1/6,1/3,1/3}, H = 1.9183.\n\n- **[T=1] splits-completely = H(1/n)**: C\u2084 0.8098 = H(1/4) = 0.8113 EXACT \u2014 the **FIRST prime-level QUARTIC-character pinning**; C\u2086 0.6497 = H(1/6). Every type face equally pinned ([T=2] 0.8110 = H(1/4), [T=4] 1.0000 = H(1/2)).\n- **Thickening zero**: I(p mod f\u00b2; T) = I(p mod f; T) EXACT (T depends only on p mod f). Coprime controls flat.\n- **Root-count readout is LOSSY**: nr collapses [2,2]/[4] (and [2,2,2]/[3,3]/[6]) to nr=0 \u2014 the nr-channel is BINARY (C\u2084 0.8109, C\u2086 0.6498) strictly below H(T). **The type, not the root count, is the complete object.**\n\n### The semiprime law \u2014 exact, and above the 1-bit cap\n\nThe unordered type-pair {T(p),T(q)} obeys the exact law **I_pair = H(\u03a0) \u2212 (1/\u03c6(f))\u03a3_c H(\u03a0_c)**, \u03a0_c the pair law under N \u2261 c mod f, computable by exact enumeration over the unit group. Machine-verified (30k semiprimes):\n\n| field | H(T) | H(pair) | H(pair\\|N) | I_pair (exact) | I_pair (MC) |\n|---|---|---|---|---|---|\n| C\u2082 Q(\u221a5) | 1.0000 | 1.5000 | 0.5000 | **1.0000** | 1.0000 |\n| C\u2084 Q(\u03b6\u2085) | 1.5000 | 2.3750 | 1.1250 | **1.2500** | 1.2452 |\n| C\u2086 Q(\u03b6\u2087) | 1.9183 | 3.1144 | 1.6405 | **1.4739** | 1.4711 |\n\nC\u2082 reproduces the paper-74 cap exactly (the quadratic type pair IS the split-count); **C\u2084 and C\u2086 both EXCEED 1.0 bit**. Which-factor wall 0.0001 (symmetric, factor-useless); coprime controls flat. The s-projection recovers Is(n) EXACTLY (C\u2084 0.2896 vs Is(4)=0.2947; C\u2086 0.1445 vs Is(6)=0.1487) \u2014 the split-count is ONE face of the richer type channel.\n\n### Growth law: no 1-bit cap\n\n| n | field | #states | H(T) | I_pair | above 1 bit? |\n|---|---|---|---|---|---|\n| 2 | Q(\u221a5) | 2 | 1.0000 | 1.0000 | at cap |\n| 4 | Q(\u03b6\u2085) | 3 | 1.5000 | 1.2500 | **YES** |\n| 6 | Q(\u03b6\u2087) | 4 | 1.9183 | 1.4739 | **YES** |\n| 10 | Q(\u03b6\u2081\u2081) | 4 | 1.7219 | 1.2027 | **YES** |\n| 12 | Q(\u03b6\u2081\u2083) | 6 | 2.4183 | 1.7239 | **YES** |\n| 16 | Q(\u03b6\u2081\u2087) | 5 | 1.8750 | 1.3281 | **YES** |\n\nEvery n \u2265 4 exceeds 1.0 bit; the value is governed by the **divisor structure of the cyclic order** (n=12, six states, richest at 1.7239).\n\n### Verdict\n\nCONFIRMED. New exact objects: the type-pair law I_pair = H(\u03a0) \u2212 (1/\u03c6)\u03a3H(\u03a0_c) (first symmetric channels above the binary-fork cap), the C\u2084 prime-level quartic pinning, root-count lossiness (type multi-state, nr binary), and Is(n) as the s-projection of the type channel. Factor-useless: symmetric (which-factor wall 0.0001, barrier 2), a pure p-mod-f residue dial (barrier 5), N-computable only behind the CRT split (barrier 6), cyclotomic fields + Dirichlet characters + CRT + Chebotarev 1922 (barrier 8). Unifies papers 54/71/72/74. Barriers 2/5/6/8.\n\n*Script:* /tmp/exp_typechan.py.\n",
     "domains": [
       "Novelty"
@@ -702,6 +702,188 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-15T04:54:25.029697+00:00",
     "title": "NET-30: INTERNALIZATION-SATURATES-AT-K=2 (k=2 freeze test \u2014 the missing middle; NET-29's \u221d-quality law corrected)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**Program:** Network/LLM research lab \u2014 round-net-31 (mechanism axis; seed-trait-vs-width-trait test). Paper 75. ALL_DONE_NET31, 12 arms.\n\n**Design:** SEED-FIXED, WIDTH-SWEPT freeze. Part A = E=23 (k=3) \u00d7 seeds 14\u201319 (7 interventions/arm: ctl/zeroN/zero1@0,1,2/flip1@0/scale0.1); Part B = E=22 (k=2) \u00d7 seeds 14\u201319 (6 interventions/arm). The published E=21 (k=1) arms for the same seeds (NET-28 outcomes + NET-29 k=1 zero1 reads) are the k=1 rung, so every seed 14\u201319 now has internalization reads at k=1/2/3 \u2014 seed-fixed, byte-identical EOSWidthGRU, same-seed training, inference-only interventions, fresh eval draws per arm \u00d7 manipulation.\n\n**Headline law \u2014 INTERNALIZATION-IS-A-SEED-FIXED-TRAIT-AMONG-CURES:** the boundary-dependence set is the SAME at k=2 and k=3 \u2014 {13, 14, 15, 17} (this round: k=3 zeroN 0.9014/0.7104/0.7437, k=2 0.9141/0.8037/0.9067 for s=14/15/17; s=13 from NET-29/30 = 0.7041/0.7544) \u2014 and the same seven seeds are self-sufficient at both widths \u21d2 internalization is ~60/40 (7/11 cures) and WIDTH-INDEPENDENT. Width sets P(cure); the seed sets internalization.\n\n**Honest correction:** NET-29's \"5/6 self-sufficient at k=3\" was a SEED-SET-SPECIFIC HIGH (seeds 8\u201313: 1/6 dependent; seeds 14\u201319: 3/6 dependent + 1/6 marginal). Pooled k=3 over seeds 8\u201319 = 7/12 self-sufficient/marginal.\n\n**Seed-trait confirmed, width-trait refuted:** s=14/15 (the k=1-dependent cures) stay ensemble-dependent at EVERY width and dependence GROWS with k (s=14: \u22122.8%\u2192\u22129%\u2192\u221210%; s=15: \u22121\u2026\u22125%\u2192\u221220%\u2192\u221229%; s=13: \u221225%\u2192\u221230%; s=17: \u22129%\u2192\u221226%). But the trait has NO k=1 predictor (s=13 k=1-fail-no-op and s=17 k=1-partial-no-op are dependent at k\u22652; s=16/18 k=1-fail-no-ops are self-sufficient) \u2014 it only manifests at widths where the seed cures.\n\n**New markers:** (1) k=2 sign-sensitivity = clean dependence marker \u2014 flip costs \u22127 to \u221225% in 4/4 dependent k=2 arms (sign-opposition required in the two coords) and is flip-free in self-sufficient arms; at k=3 flip = 0% in all 12 arms across both seed sets. (2) NET-29's magnitude\u2192dependence hint REFUTED (self-sufficient s=18 has larger coords than dependent s=14/17). (3) P(cure)=100% at k=3 extends to a SECOND seed set (12/12 merged).\n\n**Mechanism:** at k\u22652 the boundary block is used COLLECTIVELY (zero1 = 0% in every arm); dependent seeds gate the answer path on the aggregate block norm (zeroN 9\u201329%, scale0.1 1\u20135%).\n\n**Design rule (sharpened):** \u22653 exclusive dims in a final-step boundary token \u21d2 reliable training SUCCESS (12/12 cures at k=3, both seed sets), but only ~60% self-sufficient internalization \u2014 ~40% of seeds' answer paths lean on the boundary ensemble at eval, so keep re-serving the boundary token or verify internalization per instance.\n\n**Barriers:** (a) clean (new E=22/E=23 solutions with own ctl baselines; k=1 rung = published same-seed arms; inference-only), (b) clean (Catalog no prior), (c) confronted \u2014 \u22653 dims = reliable success but ~60% self-sufficient; real-scale remains the frontier, (d) clean, (e) THE round's content (seed-set-heterogeneous rate reported pooled 7/12; the same-4-seeds trait is a within-seed-across-width reproducibility statement), (f) clean (exact writes, SEs, no-op = |\u0394|\u22641.2 SE), (g) strong (SEED-FIXED design \u2014 width the only training variable), (h) design rule + per-instance verification caution.\n\n**Open:** REAL-SCALE transfer (frontier); a trained-WEIGHT predictor of the seed trait; pad384-vs-NET-24-hybrid parity; why dependence grows with k.\n\nScript /tmp/exp_net_eos_freezek13.py. Log /tmp/net31.log.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_1282",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-15T05:50:03.457054+00:00",
+    "title": "NET-31: Internalization is a seed-fixed trait among cures \u2014 same 4 seeds dependent at k=2 and k=3; NET-29's 5/6 was a seed-set-specific high; dependent seeds stay dependent at every width"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**Part of:** Research plan \u2014 *Compression Beyond the Pigeonhole Bound* (capstone).\n\n## The grand view\nEvery compression scheme = **(shared decompressor) + (message bits)**. The pigeonhole bound governs the message bits over *all* strings; breakthroughs come from:\n\n1. Making the shared decompressor dramatically more powerful while keeping its cost **amortized** (Phase A: [[A1]]\u2013[[A5]]).\n2. Changing the *setting* so some bits stop counting \u2014 common randomness, distributed, almost-lossless \u2014 or making the search for short messages cheap (Phase B: [[B1]]\u2013[[B6]]).\n\n## Deliverable\nA **unified evaluation harness** covering text (enwik8/9), binary/code, structured numeric/simulation output, and PRNG-generated data \u2014 measuring *total effective bits* including any amortized model delta, under the 16 GB decode-memory standard (see [[A5]]).\n\n## Gate\nEvery result that moves bits from *message* to *shared* \u2014 and survives the decode standard \u2014 counts. Anything else is a trick.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_1283",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-15T05:50:03.457665+00:00",
+    "title": "Compression Research C: Unified framework \u2014 shared decompressor + message bits"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**Part of:** Research plan \u2014 *Compression Beyond the Pigeonhole Bound* (Phase B, Question 2: can random number generators help?).\n\n## Research question\nWorst-case short-program-finding is **provably hard under standard assumptions**: roughly, if you could always find a short description for every `x` quickly, you could invert one-way functions. Compression \u21cb computational hardness.\n\n## Approach\n- State precisely **which compression tasks are equivalent to inverting OWFs** (distinguishable / polynomial-time Kolmogorov complexity literature).\n- Derive what that implies for achievable worst-case bounds.\n\n## Deliverable\nA precise characterization mapping compression tasks to cryptographic assumptions.\n\n## Purpose\nCalibrates the whole plan: **randomness helps compression exactly up to the computational-hardness boundary, and no further.** Converts the intuition \"randomness should help\" into a quantified expectation.\n\n**Milestone:** M8 (theory, 3\u20136 weeks).\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_1284",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-15T05:50:03.458302+00:00",
+    "title": "Compression Research B6: Compression \u2194 one-way functions (the cryptography link)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**Part of:** Research plan \u2014 *Compression Beyond the Pigeonhole Bound* (Phase B, Question 2: can random number generators help?).\n\n## Research question\nA surprising amount of real-world data **is** PRNG output: game worlds, simulations, certain file formats, crypto keys. Detect it and recover the seed \u2192 compress to ~0 bits beyond the seed.\n\n## Approach\n- Robust **PRNG fingerprinting**: which generator family produced this stream?\n- **Seed recovery**: Berlekamp\u2013Massey for LFSRs; solver-based inversion for other families.\n- A classifier that routes each file to *seed-compressible* vs. *model-compressible*.\n\n## Deliverable\nDetection + seed-recovery tooling and a benchmark of seed-compressible files found in real corpora.\n\n## Falsifiability / gate\nFor a recovered seed: decompressed output must exactly reproduce the file. Measures what fraction of real data is seed-compressible.\n\n**Milestone:** M2 (cheap, warm-up infrastructure). Related: [[B1]].\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_1285",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-15T05:50:03.458968+00:00",
+    "title": "Compression Research B5: PRNG-generated real-world data \u2014 detection and seed recovery"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**Part of:** Research plan \u2014 *Compression Beyond the Pigeonhole Bound* (Phase B, Question 2: can random number generators help?).\n\n## Research question\nThe expensive part of program-search compression ([[A3]]) is *finding* the short program. **Randomized search is the right tool** \u2014 randomness helps compression the way it helps every hard combinatorial problem: in the search, not in the code.\n\n## Approach\n- MCTS / stochastic beam search / simulated annealing over the program space; randomized restarts.\n- Randomized hashing to test whether a generated prefix agrees with the target \u2014 far cheaper than full comparison.\n- Integrate with the A3 substrate as its search engine.\n\n## Deliverable\nA randomized search loop with measured search-effort vs. compression-quality tradeoffs.\n\n## Falsifiability / gate\nMust demonstrate concrete wall-clock / compute savings over deterministic search on the same program space.\n\n**Milestone:** part of M3.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_1286",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-15T05:50:03.459611+00:00",
+    "title": "Compression Research B4: Randomness as the search engine for program-space search"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**Part of:** Research plan \u2014 *Compression Beyond the Pigeonhole Bound* (Phase B, Question 2: can random number generators help?).\n\n## Research question\nPigeonhole governs *exact* decoding for *all* strings. Relax to: **decoder fails with probability \u2264 \u03b5** (almost-lossless). Random codebooks (Shannon's random-coding argument) then reach near-optimal rates \u2014 the counting bound relaxes by an \u03b5-dependent factor.\n\n## Approach\n- Constructive almost-lossless schemes with small failure probability.\n- The real obstacle is **decoder search complexity** (naive random coding is exponential), not the rate \u2014 tackle that.\n- Error detection (checksums) so failures are **never silent**.\n\n## Deliverable\nA scheme plus a proof that decode succeeds with probability \u2265 1\u2212\u03b5, and its exact decoding complexity.\n\n## Falsifiability / gate\nFor each scheme: bound on P(failure) and an explicit decoder-complexity figure. No silent corruption allowed.\n\n**Milestone:** M9.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_1287",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-15T05:50:03.460213+00:00",
+    "title": "Compression Research B3: Almost-lossless / Monte Carlo compression"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**Part of:** Research plan \u2014 *Compression Beyond the Pigeonhole Bound* (Phase B, Question 2: can random number generators help?).\n\n## Claim (negative result)\nA deterministic PRNG **cannot** help compress arbitrary data.\n\n## Proof sketch\nA fixed function seed \u2192 stream is deterministic: `2^s` seeds produce at most `2^s` distinct streams, so representing an arbitrary n-bit string still needs `s \u2265 n \u2212 c`. A PRNG creates **no entropy** \u2014 the \"compress to the seed\" trick only works when the data was *already* PRNG-generated (i.e., it always had low Kolmogorov complexity and the PRNG is just the right decompressor).\n\n## Deliverable\nA crisp, citable proof plus a working demo (e.g., a seeded generator whose outputs appear \"compressible\" while a true random file stays at n bits).\n\n## Purpose\nKill this dead end with evidence **before** anyone spends a year hunting \"the seed that contains my file.\" Calibrates the team on exactly what randomness can and cannot do.\n\n**Milestone:** M1 (days).\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_1288",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-15T05:50:03.460816+00:00",
+    "title": "Compression Research B1: Negative result \u2014 PRNGs cannot beat pigeonhole (proof + demo)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**Part of:** Research plan \u2014 *Compression Beyond the Pigeonhole Bound* (Phase B, Question 2: can random number generators help?).\n\n## Research question\nIn **distributed** compression (Slepian\u2013Wolf / Wyner\u2013Ziv), the encoder and decoder each see correlated but different observations. Shared randomness between them does **not** count toward rate and provably achieves the joint-entropy bound the encoder alone couldn't reach. A PRNG is the practical vehicle for that shared randomness.\n\n## Approach\n- Practical codes exploiting common randomness (linear codes + random cosets).\n- The **seeding protocol**: how the PRNG seed is established out-of-band without counting against rate.\n- Identify the regime where the PRNG-backed common source shrinks rate vs. the encoder's own side information.\n\n## Deliverable\nConstructive schemes with rate proofs and a seeding protocol.\n\n## Falsifiability / gate\nFor each scheme: achievable rate vs. joint-entropy bound, with the seed demonstrably not counted as transmitted bits.\n\n**Milestone:** M6. **This is the honest home for \"PRNG helps compression\" \u2014 it's about the setting, not the message.**\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_1289",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-15T05:50:03.461442+00:00",
+    "title": "Compression Research B2: Common randomness in distributed compression (Slepian-Wolf / Wyner-Ziv)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**Part of:** Research plan \u2014 *Compression Beyond the Pigeonhole Bound* (Phase A, Question 1: separating the decompressor from the data).\n\n## Why this exists\nEvery compression result in the plan must be judged against the field standard, or it is **cheating, not compression**. This is a mandatory process / infrastructure issue for all other items.\n\n## The standard (Hutter Prize rules)\n- Decoded output must **exactly** match the input (lossless).\n- Decoding must run under a **16 GB memory limit**.\n- No precomputed dictionaries or hidden side channels.\n- The decompressor must be reconstructible from the transmitted message + the *public, fixed* substrate.\n\n## Deliverable\nA verification harness enforcing this standard across all plan items \u2014 including the check that any model delta is counted as transmitted bits.\n\n**Gate for every other issue:** if a result can't pass this harness, it's not a compression breakthrough \u2014 it's a trick.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_1290",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-15T05:50:03.462046+00:00",
+    "title": "Compression Research A5: Verification discipline \u2014 16GB decode standard"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**Part of:** Research plan \u2014 *Compression Beyond the Pigeonhole Bound* (Phase A, Question 1: separating the decompressor from the data).\n\n## Research question\nWhat if the transmitted program itself contains a decompressor? `U(p)` where `p = (U', p')` \u2014 a **recursive / hierarchical** scheme. Does the overhead grow sublinearly across levels? Likely 2 levels capture nearly all the gain.\n\n## Approach\n- Analyze overhead growth per level analytically.\n- Implement a 2-level demo and measure on corpora.\n\n## Deliverable\nA definitive result (positive or negative) on whether hierarchical decompressors pay for themselves.\n\n## Falsifiability / gate\nMust show per-message overhead vanishes or is absorbed across levels, under exact-match decoding.\n\n**Milestone:** M7 (cheap, ~1 week).\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_1291",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-15T05:50:03.462664+00:00",
+    "title": "Compression Research A4: Meta-compression \u2014 recursive decompressors"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**Part of:** Research plan \u2014 *Compression Beyond the Pigeonhole Bound* (Phase A, Question 1: separating the decompressor from the data).\n\n## Research question\nInstead of a fixed model, **search a space of programs** for the shortest one that emits `x`. This is a direct attack on Kolmogorov complexity `K(x)`. The interpreter is the shared decompressor (free, constant); the program is the message; the search is where cleverness goes.\n\n## Approach\n- Build a **compression substrate**: a small Turing-complete interpreter with cheap built-in primitives for patterns real data has (rep-patterns, LZ matches, arithmetic loops, tables).\n- Apply modern heuristic search over the program space: MCTS, genetic programming, gradient-guided program synthesis.\n- Tame the exponential search with *data-structured* program spaces and strong priors; budgeted search with early gating.\n\n## Deliverable\nThe substrate + search loop, with measured compression on text and structured corpora.\n\n## Falsifiability / gate\nMust beat SOTA lossless baselines exactly, under the 16 GB decode standard. **This is the single most promising structural direction for decompressor separation.**\n\n**Milestone:** M3. Related: [[B4]] (randomized search as the engine for this).\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_1292",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-15T05:50:03.463273+00:00",
+    "title": "Compression Research A3: Program search as compression \u2014 Kolmogorov-approximation substrate"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**Part of:** Research plan \u2014 *Compression Beyond the Pigeonhole Bound* (Phase A, Question 1: separating the decompressor from the data).\n\n## Research question\nA fixed pretrained model (e.g., an LLM) used as the shared decompressor + arithmetic-coded residual beats classical compressors on text by a wide margin. The open problem: **the transmitted model delta costs bits** \u2014 how do we amortize it?\n\n## Approach\n- Benchmark LLM-as-decompressor against gzip/bz2/context-mixing baselines (enwik8/9).\n- Investigate sparse / low-rank parameter patches (LoRA-style) as the transmitted program \u2014 how many bits to shift a shared decoder to a specific domain?\n- Design an amortized protocol: decompressor adapts across a *stream* of messages, paying the delta once.\n\n## Deliverable\nSOTA text-compression baseline under the 16 GB decode standard, plus an amortized model-delta protocol.\n\n## Falsifiability / gate\nMust beat classical baselines *losslessly* (decoded output exactly matches input) with the decoder fixed at deploy time. Any delta is part of the transmitted message.\n\n**Milestone:** M4.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_1293",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-15T05:50:03.463912+00:00",
+    "title": "Compression Research A2: Learnable shared decompressors \u2014 model is free, model delta is not"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**Part of:** Research plan \u2014 *Compression Beyond the Pigeonhole Bound* (Phase A, Question 1: separating the decompressor from the data).\n\n## Research question\nOne shared decompressor `U` must serve all inputs. A decompressor specialized to a *class* of data does better per class. What is the **price of universality** \u2014 the minimax redundancy a universal scheme must pay over a per-distribution scheme?\n\n## Approach\n- Derive closed-form / tight bounds on universal redundancy for natural source classes: stationary sources, finite-state, Markov.\n- Express redundancy as a function of message length `n` and class complexity.\n\n## Deliverable\nRigorous bounds on universal vs. per-distribution redundancy, and a conclusion on whether specialized decompressors are theoretically worth pursuing.\n\n## Falsifiability / gate\nBounds must match or beat known minimax rates from the literature (Rissanen-style redundancy). If specialization doesn't move bits from *message* to *shared*, the direction is dead.\n\n**Milestone:** M5 (theory, ~2 weeks).\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_1294",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-15T05:50:03.464588+00:00",
+    "title": "Compression Research A1: Price of universality \u2014 minimax redundancy of universal decompressors"
   },
   {
     "consumed_by_exp_id": "",
