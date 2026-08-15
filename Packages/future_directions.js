@@ -63,86 +63,32 @@ window.FUTURE_DIRECTIONS = [
     "title": "NET-31: Internalization is a seed-fixed trait among cures \u2014 same 4 seeds dependent at k=2 and k=3; NET-29's 5/6 was a seed-set-specific high; dependent seeds stay dependent at every width"
   },
   {
-    "consumed_by_exp_id": "",
-    "description": "**Part of:** Research plan \u2014 *Compression Beyond the Pigeonhole Bound* (capstone).\n\n## The grand view\nEvery compression scheme = **(shared decompressor) + (message bits)**. The pigeonhole bound governs the message bits over *all* strings; breakthroughs come from:\n\n1. Making the shared decompressor dramatically more powerful while keeping its cost **amortized** (Phase A: [[A1]]\u2013[[A5]]).\n2. Changing the *setting* so some bits stop counting \u2014 common randomness, distributed, almost-lossless \u2014 or making the search for short messages cheap (Phase B: [[B1]]\u2013[[B6]]).\n\n## Deliverable\nA **unified evaluation harness** covering text (enwik8/9), binary/code, structured numeric/simulation output, and PRNG-generated data \u2014 measuring *total effective bits* including any amortized model delta, under the 16 GB decode-memory standard (see [[A5]]).\n\n## Gate\nEvery result that moves bits from *message* to *shared* \u2014 and survives the decode standard \u2014 counts. Anything else is a trick.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1283",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-15T05:50:03.457665+00:00",
-    "title": "Compression Research C: Unified framework \u2014 shared decompressor + message bits"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "**Part of:** Research plan \u2014 *Compression Beyond the Pigeonhole Bound* (Phase B, Question 2: can random number generators help?).\n\n## Research question\nWorst-case short-program-finding is **provably hard under standard assumptions**: roughly, if you could always find a short description for every `x` quickly, you could invert one-way functions. Compression \u21cb computational hardness.\n\n## Approach\n- State precisely **which compression tasks are equivalent to inverting OWFs** (distinguishable / polynomial-time Kolmogorov complexity literature).\n- Derive what that implies for achievable worst-case bounds.\n\n## Deliverable\nA precise characterization mapping compression tasks to cryptographic assumptions.\n\n## Purpose\nCalibrates the whole plan: **randomness helps compression exactly up to the computational-hardness boundary, and no further.** Converts the intuition \"randomness should help\" into a quantified expectation.\n\n**Milestone:** M8 (theory, 3\u20136 weeks).\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1284",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-15T05:50:03.458302+00:00",
-    "title": "Compression Research B6: Compression \u2194 one-way functions (the cryptography link)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "**Part of:** Research plan \u2014 *Compression Beyond the Pigeonhole Bound* (Phase B, Question 2: can random number generators help?).\n\n## Research question\nA surprising amount of real-world data **is** PRNG output: game worlds, simulations, certain file formats, crypto keys. Detect it and recover the seed \u2192 compress to ~0 bits beyond the seed.\n\n## Approach\n- Robust **PRNG fingerprinting**: which generator family produced this stream?\n- **Seed recovery**: Berlekamp\u2013Massey for LFSRs; solver-based inversion for other families.\n- A classifier that routes each file to *seed-compressible* vs. *model-compressible*.\n\n## Deliverable\nDetection + seed-recovery tooling and a benchmark of seed-compressible files found in real corpora.\n\n## Falsifiability / gate\nFor a recovered seed: decompressed output must exactly reproduce the file. Measures what fraction of real data is seed-compressible.\n\n**Milestone:** M2 (cheap, warm-up infrastructure). Related: [[B1]].\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1285",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-15T05:50:03.458968+00:00",
-    "title": "Compression Research B5: PRNG-generated real-world data \u2014 detection and seed recovery"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "**Part of:** Research plan \u2014 *Compression Beyond the Pigeonhole Bound* (Phase B, Question 2: can random number generators help?).\n\n## Research question\nThe expensive part of program-search compression ([[A3]]) is *finding* the short program. **Randomized search is the right tool** \u2014 randomness helps compression the way it helps every hard combinatorial problem: in the search, not in the code.\n\n## Approach\n- MCTS / stochastic beam search / simulated annealing over the program space; randomized restarts.\n- Randomized hashing to test whether a generated prefix agrees with the target \u2014 far cheaper than full comparison.\n- Integrate with the A3 substrate as its search engine.\n\n## Deliverable\nA randomized search loop with measured search-effort vs. compression-quality tradeoffs.\n\n## Falsifiability / gate\nMust demonstrate concrete wall-clock / compute savings over deterministic search on the same program space.\n\n**Milestone:** part of M3.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1286",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-15T05:50:03.459611+00:00",
-    "title": "Compression Research B4: Randomness as the search engine for program-space search"
-  },
-  {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e9be7e31",
     "description": "**Part of:** Research plan \u2014 *Compression Beyond the Pigeonhole Bound* (Phase B, Question 2: can random number generators help?).\n\n## Research question\nPigeonhole governs *exact* decoding for *all* strings. Relax to: **decoder fails with probability \u2264 \u03b5** (almost-lossless). Random codebooks (Shannon's random-coding argument) then reach near-optimal rates \u2014 the counting bound relaxes by an \u03b5-dependent factor.\n\n## Approach\n- Constructive almost-lossless schemes with small failure probability.\n- The real obstacle is **decoder search complexity** (naive random coding is exponential), not the rate \u2014 tackle that.\n- Error detection (checksums) so failures are **never silent**.\n\n## Deliverable\nA scheme plus a proof that decode succeeds with probability \u2265 1\u2212\u03b5, and its exact decoding complexity.\n\n## Falsifiability / gate\nFor each scheme: bound on P(failure) and an explicit decoder-complexity figure. No silent corruption allowed.\n\n**Milestone:** M9.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_1287",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-15T05:50:03.460213+00:00",
     "title": "Compression Research B3: Almost-lossless / Monte Carlo compression"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e67b8bbc",
     "description": "**Part of:** Research plan \u2014 *Compression Beyond the Pigeonhole Bound* (Phase B, Question 2: can random number generators help?).\n\n## Claim (negative result)\nA deterministic PRNG **cannot** help compress arbitrary data.\n\n## Proof sketch\nA fixed function seed \u2192 stream is deterministic: `2^s` seeds produce at most `2^s` distinct streams, so representing an arbitrary n-bit string still needs `s \u2265 n \u2212 c`. A PRNG creates **no entropy** \u2014 the \"compress to the seed\" trick only works when the data was *already* PRNG-generated (i.e., it always had low Kolmogorov complexity and the PRNG is just the right decompressor).\n\n## Deliverable\nA crisp, citable proof plus a working demo (e.g., a seeded generator whose outputs appear \"compressible\" while a true random file stays at n bits).\n\n## Purpose\nKill this dead end with evidence **before** anyone spends a year hunting \"the seed that contains my file.\" Calibrates the team on exactly what randomness can and cannot do.\n\n**Milestone:** M1 (days).\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_1288",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-15T05:50:03.460816+00:00",
     "title": "Compression Research B1: Negative result \u2014 PRNGs cannot beat pigeonhole (proof + demo)"
   },
@@ -3459,6 +3405,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 603eb18a (Q=0.780), which proved 59 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Program:** Network/LLM lab \u2014 round-net-24 (performance axis; recurrence / stateful-carry-cell test of the carry-chain length wall). Machine-verified (ALL_DONE_NET24). Paper: ResearchOutput/NetworkMathematics/24_StatefulCarryCell.md (paper 68). Script /tmp/exp_net_stateful.py, log /tmp/net24.log.\n\n",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "push_603eb18a_0b216f1e",
+    "priority_score": 0.88,
+    "research_mode": "team",
+    "source_exp_id": "603eb18a",
+    "status": "available",
+    "timestamp": "2026-08-15T22:46:22.527013+00:00",
+    "title": "Deepening: NET-24: A Stateful Carry Cell Unlocks Length-General Carry \u2014 The Wall Was the An"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 64ac4ffd (Q=0.780), which proved 56 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Summary.** Three proven theorems classify why broad classes of structural\nfactoring approaches are impossible. All three are now machine-checked in Lean\n(the polynomial barrier at `Catalog/NumberTheory/PolynomialBarrier.lean`).\n\n**Theorem 1 (polynomial barrier / LLL).** For f \u2208 Z[x] and N = pq:\np ",
     "domains": [
       "Pythagorean"
@@ -3498,6 +3458,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-13T23:09:59.921663+00:00",
     "title": "Deepening: Round-7 Hypothesis Closures: Scoping the Noise-Floor Principle and the Trace-Lem"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle f0c2b697 (Q=0.780), which proved 41 theorems in Logic. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Program:** Network/LLM research lab \u2014 round-net-25 (performance axis; mechanism dissection of the NET-24 stateful-carry-cell cure). **Paper:** ResearchOutput/NetworkMathematics/25_StatefulCarryCellMechanism.md. **Status:** Machine-verified (ALL_DONE_NET25, _PAD, _SWEEP, _EOS). **Assessment v25, ex",
+    "domains": [
+      "Logic"
+    ],
+    "id": "push_f0c2b697_223f520d",
+    "priority_score": 0.88,
+    "research_mode": "team",
+    "source_exp_id": "f0c2b697",
+    "status": "available",
+    "timestamp": "2026-08-15T22:46:35.482523+00:00",
+    "title": "Deepening: NET-25 (paper 69): DENSE-FINAL-STEP-IS-THE-CURE \u2014 the stateful-carry-cell cure w"
   },
   {
     "consumed_by_exp_id": "",
@@ -19430,6 +19404,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-15T18:55:31.969218+00:00",
     "title": "Cycles 1\u20135 refuted the \"only bad primes\" conjecture for `E_N : y\u00b2 = x\u00b3 + N` and "
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions \u2014 carry chains, state, and length generalisation\n\nDerived from the theorems in `Catalog/NumberTheory/CarryChainStatefulCell.lean` and\n`Catalog/NumberTheory/CarryChainDepthBound.lean`. Each conjecture is falsifiable: it can\nbe settled by a Lean proof or by an explicit counterexample construction.\n\n## Conjecture 1 (Sharp state-size threshold: two states suffice and are necessary in every base)\n\nFor every base `b \u2265 2`, a cell `C : Cell S` that emits the base-`b` addition digits at\nevery column induces a surjection from the reachable states onto `Bool` given by the\ncarry, and conversely a two-element state type suffices; hence `min |S| = 2`,\n*independently of `b`*.\n\n*The key insight is* that `cell_must_encode_carry` already shows the carry is a function\nof the state, so what remains is reachability of both carry values plus the explicit\n`carryCell` witness \u2014 the base enters the readout, never the state.\n\n*Why now?* Both halves are in place (`carryCell_correct`, `cell_must_encode_carry`); only\nthe reachability argument and the packaging as a cardinality statement are missing.\n\n## Conjecture 2 (Depth\u2013radius\u2013length trade-off is tight)\n\n`depth_lower_bound` says a radius-`r`, depth-`d` local circuit correct on all columns\n`< n` needs `n \u2264 d\u00b7r + 1`. Conjecture: this is tight \u2014 for every `n`, `r` there is an\nexplicit circuit of depth `\u2308(n-1)/r\u2309` computing all digits of `n`-digit base-`b` addition\n(prefix-scan over the `Signal` monoid, with `r`-ary composition per layer).\n\n*The key insight is* that `Signal.comp_assoc` makes the carry chain a monoid scan, and a\nmonoid scan of length `n` with `r`-ary associative combination has depth `\u2308log_r n\u2309` for\nthe *balanced* schedule \u2014 so the conjecture also predicts that allowing global (not local)\nmixing collapses the linear bound to a logarithmic one, isolating *locality*, not depth,\nas the operative constraint.\n\n*Why now?* The lower bound is proved; a constructive upper bound would turn the\none-sided wall into an exact complexity characterisation of the task.\n\n## Conjecture 3 (Nontriviality of the carry cohomology class governs the wall)\n\n`carryOf_cocycle` exhibits the carry as a `2`-cocycle of `\u2124/b`. Conjecture: for a general\nfinite abelian group extension `0 \u2192 A \u2192 E \u2192 Q \u2192 0` with cocycle `c`, a state-free\nbounded-window readout can compute the `E`-multiplication of `n` factors *iff* the class\n`[c] \u2208 H\u00b2(Q, A)` is trivial; the carry chain is walled exactly because `[c] \u2260 0` for\n`\u2124/b\u00b2 \u2192 \u2124/b`.\n\n*The key insight is* that a coboundary `c = \u03b4f` can be absorbed into a per-column\nrelabelling, which is precisely a state-free position-wise transformation, whereas a\nnontrivial class cannot.\n\n*Why now?* The cocycle is already formalised and the state-free failure criterion is\nalready a theorem, so the two sides can be joined without new machinery.\n\n## Conjecture 4 (Sensitivity dichotomy: the wall is exactly \u03a9(n) sensitivity)\n\nFor a family of \"column tasks\" `T : (\u2115\u2192\u2115) \u2192 (\u2115\u2192\u2115) \u2192 \u2115 \u2192 \u2115` computed by *some* finite-state\ncell, the following are equivalent: (i) `T` admits a bounded-window state-free readout;\n(ii) the corresponding automaton has trivial (aperiodic, one-state-per-column) Nerode\nstructure; (iii) `T` has bounded block sensitivity in the sense of\n`carry_sensitive_to_lowest_column`.\n\n*The key insight is* that the witness pair used for the carry (differ in one column, flip\nevery later output) is the generic obstruction: unbounded sensitivity is exactly the\nfailure mode a fixed receptive field cannot absorb.\n\n*Why now?* All three notions are now available in the same formal vocabulary\n(`IsLocalReadout`, `Cell`, `cell_must_encode_carry`).\n\n## Conjecture 5 (Non-commutativity is necessary, not just sufficient)\n\n`no_commutative_pooling_readout` rules out commutative-monoid pooling of *position-blind*\nfeatures. Conjecture: it fails as soon as features are allowed to depend on position \u2014\ni.e. there is a commutative monoid `M`, a position-dependent `\u03c6 : \u2115 \u2192 \u2115 \u2192 \u2115 \u2192 M` and a\ndecoder computing the carry \u2014 but every such construction requires `|M|` to grow with the\nnumber of columns, and `|M| \u2265 2^n` for `n` columns.\n\n*The key insight is* that position-dependent features can serialise the input into a free\ncommutative structure, so commutativity is only a barrier under a size budget; the\ninteresting theorem is therefore a *size* lower bound, not an impossibility.\n\n*Why now?* The impossibility for the position-blind case is proved, which pins down\nexactly which hypothesis has to be traded for a quantitative bound.\n",
+    "domains": [
+      "Computation",
+      "Algebra"
+    ],
+    "id": "fd_1315",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "603eb18a",
+    "status": "available",
+    "timestamp": "2026-08-15T22:46:15.179407+00:00",
+    "title": "Derived from the theorems in `Catalog/NumberTheory/CarryChainStatefulCell.lean` "
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# FUTURE DIRECTIONS \u2014 after NET-25 (DENSE-FINAL-STEP-IS-THE-CURE)\n\nThe three catalog files\n(`Catalog/Logic/DenseFinalStepCarryChain.lean`,\n`Catalog/Logic/DenseFinalStepBoundaryConditioning.lean`,\n`Catalog/Logic/DenseFinalStepStateHorizon.lean`)\nestablish, with no `sorry`:\n\n1. the carry **transition** admits an exactly length-general finite solution, and\n   local correctness on the finitely many reachable triples forces correctness at\n   every depth (so the wall is not an expressivity obstruction);\n2. EOS **width is invisible to the function class** but changes the gradient-flow\n   geometry, with a gain that is linear in the width, an exponential contraction\n   rate `2 d c\u00b2`, and a sufficient training budget scaling like `1 / d`;\n3. a contractive cell has a provable **state horizon** for every bounded linear\n   readout, and a final-step gain `m` extends the usable depth by\n   `k \u2248 log m / log(1/lam)` \u2014 logarithmically.\n\nThe following conjectures are the falsifiable continuations.\n\n## C1 \u2014 Logarithmic-depth law for boundary richness\n\n**Conjecture.** For the round-net-25 architecture family with EOS width `d`, the\nmaximal unroll depth at which teacher-forced full accuracy stays above `1 - \u03b4`\ngrows like `a + b \u00b7 log d` (with `b = 1 / log(1/lam)` given by the cell's\ncontraction factor), rather than exhibiting a sharp threshold between 28 and 384.\n\n*The key insight is* that boundary gain enters the readout margin multiplicatively\nwhile depth enters it exponentially, so richness can only buy depth through a\nlogarithm \u2014 this is exactly `Logic.StateHorizon.horizon_shift_log`.\n\n*Why now?* The round leaves the interval 28\u2013384 untested; the log law makes a\npointed prediction for a cheap sweep (`d \u2208 {20, 28, 40, 64, 96, 160, 256, 384}`\nshould be equally spaced in usable depth on a log-`d` axis).\n\n## C2 \u2014 The scale-invariance counter-prediction\n\n**Conjecture.** If the EOS vector is initialised at per-coordinate scale\n`c / \u221ad` (so that `\u2016e\u2016\u00b2` is held constant as `d` grows), the pad384 cure\ndisappears: the wide-EOS arm should fall back into the raw20 distribution.\n\n*The key insight is* that the proved gain bound depends on `\u2016e\u2016\u00b2 = d c\u00b2`, not on\n`d` as such, so the cure must track the *norm* of the EOS input and not its\ndimension.\n\n*Why now?* This is the single sharpest test of the mechanism claim and it is a\none-line change to the initialiser; it separates \"richness\" from \"dimension\" and\nwould either confirm or destroy the DENSE-FINAL-STEP law as stated.\n\n## C3 \u2014 Boundary conditioning in the discrete-time optimiser\n\n**Conjecture.** The continuous-time contraction rate `2 d c\u00b2`\n(`dense_eos_exp_decay`) survives discretisation for step sizes\n`\u03b7 < 1 / (d c\u00b2 + \u2016W\u2016\u00b2)`, and fails \u2014 with a divergence rather than a slowdown \u2014\nabove it; i.e. wide EOS should show a *narrower* stable learning-rate window,\ndetectable as an optimal-\u03b7 shift by a factor `\u2248 20/384`.\n\n*The key insight is* that the same preconditioner `\u2016e\u2016\u00b2 I + W W\u1d40` which\naccelerates the flow also determines the stability threshold of the Euler\ndiscretisation.\n\n*Why now?* AdamW's effective step is measurable per arm; a predicted \u03b7-window\nshift is a falsifier that needs no new architecture.\n\n## C4 \u2014 From one-bit carry to k-bit state horizons\n\n**Conjecture.** For a recurrent answer path whose exact solution needs a\n`k`-state (rather than 2-state) transition, the horizon depth of a contractive\ncell scales like `log(\u03b3 / (\u0394 R)) / log lam \u2212 log k / log(1/lam)`, i.e. each extra\nbit of required state costs a constant number of depth steps, and the required\nboundary gain grows polynomially in `k`.\n\n*The key insight is* that state separation must be shared among `k` classes, so\nthe minimal pairwise margin shrinks like `1/k` before contraction is applied.\n\n*Why now?* Base-`b` addition with `b > 10`, and multi-carry tasks (e.g. base-2\nmultiplication), give a controlled `k`-sweep on the same rig as NET-24/25.\n\n## C5 \u2014 Non-contractive cures\n\n**Conjecture.** Any architectural change that removes the contraction hypothesis\n`\u2016A z\u2016 \u2264 lam \u2016z\u2016` with `lam < 1` on the reachable state manifold (orthogonal or\nunitary recurrent maps, gated identity paths, layer-normed states) cures the\ndepth wall *without* needing a dense boundary input at all \u2014 pad20 + orthogonal\nGRU should reach 1.0000 at `n = 8`.\n\n*The key insight is* that `exists_state_horizon` is driven entirely by\ncontraction; a norm-preserving recurrence has no finite horizon, so the boundary\ngain becomes unnecessary rather than merely cheaper.\n\n*Why now?* It converts the NET-25 design lesson (\"make the boundary rich\") into a\nstrictly stronger, cheaper competitor (\"make the recurrence norm-preserving\"),\nand the two can be run head-to-head in the existing 6-arm harness.\n",
+    "domains": [
+      "Geometry",
+      "MachineLearning"
+    ],
+    "id": "fd_1316",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "f0c2b697",
+    "status": "available",
+    "timestamp": "2026-08-15T22:46:28.787672+00:00",
+    "title": "The three catalog files"
   },
   {
     "consumed_by_exp_id": "",

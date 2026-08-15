@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "0c649bb1",
-      "domain": "Physics",
-      "key_insight": "# Future Directions — after the derived-modulus corner\n\nThe formal results in `Catalog/Physics/DerivedModulus*.lean` close the\npolynomial (N-explicit) multi-modulus corner in a strong, classified form",
-      "quality_score": 0.85,
-      "sorry_count": 0,
-      "theorem_count": 109,
-      "timestamp": "2026-08-13T10:37:02",
-      "title": "The Derived-Modulus Corner, Closed"
-    },
-    {
       "cycle_id": "db97959f",
       "domain": "Tropical",
       "key_insight": "# FUTURE DIRECTIONS — after the Jacobi-signed Weil floor\n\nThe formal results in `Catalog/Tropical/JacobiSigned*.lean` settle the JACSIGN\nexperiment: the Jacobi-signed circle count `W(N) = ∑_{x²+y²=1}",
@@ -499,19 +489,19 @@
       "theorem_count": 59,
       "timestamp": "2026-08-15T22:46:22",
       "title": "NET-24: A Stateful Carry Cell Unlocks Length-General Carry — The Wall Was the Answer Function (first"
+    },
+    {
+      "cycle_id": "f0c2b697",
+      "domain": "Logic",
+      "key_insight": "# FUTURE DIRECTIONS — after NET-25 (DENSE-FINAL-STEP-IS-THE-CURE)\n\nThe three catalog files\n(`Catalog/Logic/DenseFinalStepCarryChain.lean`,\n`Catalog/Logic/DenseFinalStepBoundaryConditioning.lean`,\n`Cat",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 41,
+      "timestamp": "2026-08-15T22:46:35",
+      "title": "NET-25 (paper 69): DENSE-FINAL-STEP-IS-THE-CURE — the stateful-carry-cell cure was the dense EOS (fi"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "f96004ff",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions (thread th_995e2be3)\n\nThe thread attacks *quantitative sphere detection from finite data*: which explicitly\ncomputable, perturbation-stable quantities of a finite sample certify th",
-      "quality_score": 0.686,
-      "sorry_count": 1,
-      "theorem_count": 271,
-      "timestamp": "2026-08-05T09:56:52",
-      "title": "Let a compact smooth submanifold have reach at least `τ`, and let a finite sampl"
-    },
     {
       "cycle_id": "a6a59cd3",
       "domain": "Bridges",
@@ -2501,27 +2491,19 @@
       "theorem_count": 59,
       "timestamp": "2026-08-15T22:46:22",
       "title": "NET-24: A Stateful Carry Cell Unlocks Length-General Carry — The Wall Was the Answer Function (first"
+    },
+    {
+      "cycle_id": "f0c2b697",
+      "domain": "Logic",
+      "key_insight": "# FUTURE DIRECTIONS — after NET-25 (DENSE-FINAL-STEP-IS-THE-CURE)\n\nThe three catalog files\n(`Catalog/Logic/DenseFinalStepCarryChain.lean`,\n`Catalog/Logic/DenseFinalStepBoundaryConditioning.lean`,\n`Cat",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 41,
+      "timestamp": "2026-08-15T22:46:35",
+      "title": "NET-25 (paper 69): DENSE-FINAL-STEP-IS-THE-CURE — the stateful-carry-cell cure was the dense EOS (fi"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "50be6807",
-      "domain": "Algebra",
-      "name": "chiA4Hom_surjective",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "50be6807",
-      "domain": "Algebra",
-      "name": "mem_cubes9",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "beb0e52b",
-      "domain": "Probability",
-      "name": "prb_true_add_false",
-      "quality": 0.91
-    },
     {
       "cycle_id": "beb0e52b",
       "domain": "Probability",
@@ -2803,9 +2785,27 @@
       "domain": "NumberTheory",
       "name": "no_fixed_depth_local_circuit",
       "quality": 0.78
+    },
+    {
+      "cycle_id": "f0c2b697",
+      "domain": "Logic",
+      "name": "boundaryBias_surjective",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "f0c2b697",
+      "domain": "Logic",
+      "name": "boundaryBias_range_eq",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "f0c2b697",
+      "domain": "Logic",
+      "name": "eos_dimension_no_expressivity_gain",
+      "quality": 0.78
     }
   ],
-  "last_updated": "2026-08-15T22:46:22",
+  "last_updated": "2026-08-15T22:46:35",
   "open_questions": [
     {
       "context": "-    sorry+  -- On the certified range, extract the primitive divisor from the",
@@ -3455,12 +3455,6 @@
     ],
     "Logic": [
       {
-        "cycle_id": "36894b52",
-        "quality": 0.686,
-        "theorems": 45,
-        "title": "These conjectures are derived from the results proved this cycle in"
-      },
-      {
         "cycle_id": "413bc2f0",
         "quality": 0.7947599999999999,
         "theorems": 72,
@@ -3513,6 +3507,12 @@
         "quality": 0.78,
         "theorems": 57,
         "title": "The 3SUM-Birthday-Bound Hierarchy"
+      },
+      {
+        "cycle_id": "f0c2b697",
+        "quality": 0.78,
+        "theorems": 41,
+        "title": "NET-25 (paper 69): DENSE-FINAL-STEP-IS-THE-CURE — the stateful-carry-cell cure w"
       }
     ],
     "MachineLearning": [
