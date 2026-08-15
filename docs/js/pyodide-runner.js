@@ -693,9 +693,10 @@ _viz_result
 
             let result;
             try {
-                result = await runInWorker([{ code: fullCode, tolerant: false }], (status) => {
+                const runOut = await runInWorker([{ code: fullCode, tolerant: false }], (status) => {
                     outputContainer.innerHTML = `<div class="viz-loading">${window.escapeHtml(status)}</div>`;
                 });
+                result = runOut.result;
             } finally {
                 clearTimeout(warnTimer);
             }
