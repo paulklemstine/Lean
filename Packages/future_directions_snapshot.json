@@ -40,7 +40,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "82f4929c",
+    "consumed_by_exp_id": "2cadf3c4",
     "description": "**Summary.** The conjecture that for E_N: y² = x³ + N with N = pq, the\ndenominators of x(nP) are divisible only by {2, 3, p, q} (the primes dividing\nΔ = -432N²) is mathematically FALSE.\n\n**Counterexample.** N = 55 = 5·11, P = (9,28) ∈ E_55(Q):\n  x(2P) = (9^4 - 8·55·9) / (4(9^3 + 55)) = 2601/3136, and 3136 = 2^6 · 7^2.\nThe prime 7 divides the denominator but 7 ∤ Δ (7 is a prime of good reduction).\n\n**Mechanism.** ℓ | denom(x(nP)) iff nP ≡ O (mod ℓ); good-reduction primes divide\ndenominators whenever the point reduces to torsion — infinitely many such primes.\n\n**Survey (11 semiprimes):** p appears in some denominator 54.5%, q appears 0%,\nonly-{2,3,p,q} holds 0% of the time. The denominator structure is a function of\nN alone (barrier 5) and does not cleanly reveal p, q.\n\n---\n\n*Factoring Lab paper. Status: proven theorem / verified / framework. This is a research deliverable, not a factoring breakthrough claim.*",
     "domain_bridges": [],
     "domains": [
@@ -59,7 +59,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "9d48857d",
+    "consumed_by_exp_id": "dfc44cbb",
     "description": "**Summary.** Let F(k) = sum_{a=1}^{N} a^k. Then gcd(F(k), N) reveals a factor\nat k = p-1: for N = pq, gcd(F(p-1), N) = q (provided (q-1) does not divide (p-1)).\n\n**Key results (proven):**\n- **Theorem 1 (power-sum factor reveal):** Mod p the residues cover each nonzero\n  residue q times, so F(k) ≡ q·(sum of k-th powers mod p); by FLT this is -q mod p\n  at k=p-1. Mod q it vanishes when (q-1) ∤ (p-1). Hence gcd = q.\n- **Theorem 2 (robustness):** The power sum aggregates ALL bases a=1..N\n  simultaneously, so it cannot suffer Pollard p-1's \"bad base\" failure.\n- **Theorem 3 (Carmichael periodicity):** g(k) = gcd(F(k), N) has period\n  λ(N) = lcm(p-1, q-1), so λ(N) is readable from the period and the factors\n  follow from p+q = N - λ(N) + 1.\n\n**Complexity.** First hit at k* = min(p-1,q-1) ≈ √N; cost per F(k) is O(N);\ntotal O(N^{3/2}) — worse than trial division. This is the SAME structure Shor's\nalgorithm exploits, made classically hard by the period-finding barrier.\nVerified on all 8 test semiprimes up to N ≈ 10^4.\n\n---\n\n*Factoring Lab paper. Status: proven theorem / verified / framework. This is a research deliverable, not a factoring breakthrough claim.*",
     "domain_bridges": [],
     "domains": [
@@ -363,7 +363,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "fefb96cd",
+    "consumed_by_exp_id": "",
     "description": "**Paper 50 (NewMathematics) — Experiment 385, assessment v161. Round-14 #7.**\n\n**Hypothesis:** the trace s = p+q (minimal factor-bearing witness) has a different information profile than the factor p — congruence-visible where p is congruence-invisible.\n\n**Experiment (k=12,14; 32 640–380 628 semiprime pairs; mod-m MI, CRT trace-set sizes, full pairwise bit matrix):**\n\n1. **Factor invisible, trace constrained EXACTLY:** I(p mod m; N mod m) ~ 0 for all m (zero-block extends to odd m); I(s mod m; N mod m) = 1.0000 bits at m=3, ~1.03–1.06 per odd prime, because s mod m is pinned to the trace-set {x+y mod m : xy=N} of size (m+1)/2.\n2. **JOINT LAW: exactly one bit per prime.** |S_{M#}|/M# = 2^{-omega(M#)} exactly (0.5011, 0.2509, 0.1260, ... each prime halves it) -> I(s mod M#; N) = omega(M#) bits, additively independent.\n3. **EXACT LOW-BIT THEOREM: s_1 = 1 - N_1** (holds 300000/300000 pairs; N_1 = p_1+q_1 mod 2, s_1 = p_1+q_1+1 mod 2). Partial: s_2 != N_2 with prob 0.754.\n4. **Trace is less superdense:** pairwise 2.32 bits vs H(s) = 12.6 -> 18.5–21.9% visible (factor: 5%), in exact low-bit relations + top-2 carry-out sliver.\n\n**Verdict:** the trace is the least-hidden symmetric invariant — the most accessible residue target — yet its visible bits are symmetric, cannot scale to pin s (needs M# >> e^{2^k}), and never isolate p or q. Barrier 2 + trace lemma confirmed at the information level. Not a factoring tool.\n\nFull paper: ResearchOutput/NewMathematics/50_TraceProfile_LeastHiddenInvariant.md",
     "domain_bridges": [],
     "domains": [
@@ -375,14 +375,14 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-12T05:49:32.576822+00:00",
     "title": "TRACEPROFILE: the trace s=p+q is the least-hidden symmetric invariant — 1 bit per prime exactly, s1=1-N1 theorem"
   },
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b6ed20ed",
     "description": "**Paper 49 (NewMathematics) — Experiment 384, assessment v160. Round-14 #6.**\n\n**Hypothesis (from brainstorm agent):** the per-bit channel map I(p_i; N_j) has a provable zero bottom-left block and a readable MIDDLE bump carrying ~(1/2)log N − log log N bits.\n\n**Experiment (exact k-bit-prime semiprime enumeration, k=8–14, up to 380 628 pairs; full k x 2k pairwise MI matrix + idealized uniform-odd control + permutation nulls):**\n\n1. **ZERO-BLOCK THEOREM (proved):** I(p; N mod 2^(k-1)) = 0. The bottom half of N is informationally EMPTY about the factor — for fixed odd r = p mod 2^(k-1), the map q -> rq is a bijection on odd residues mod 2^(k-1). Whole bottom-left block at the noise floor.\n2. **TOP-2-BIT SLIVER:** the only pairwise-visible info is N's top two bits (~0.46 bits total; max cell 0.21–0.22 bits at (p_{k-2}, N_{2k-1})). Everything else ~0.\n3. **SUPERDENSITY:** total pairwise I ~ 0.46 bits vs joint I(p;N) = H(p) ~ 9.5 bits — ~95% of the factor information is invisible to every single-bit probe (fraction 6.0% -> 4.8% as k grows).\n4. **JOINT-ONLY RECOVERABILITY:** p is a function of the full N but of NEITHER half alone (top half ambiguous for ~90% of classes).\n5. **Agent's middle-bump prediction REFUTED:** no middle band; pairwise sliver is ~5% of the channel, not k − log2(k) bits.\n\n**Verdict:** not a factoring tool (no decoder reads a bounded subword); a decisive structural result — the information-theoretic face of barriers 2/5. Multiplication is a near-perfect nonlinear bit-mixer: the factor is provably empty from the low half of N, 95% pairwise-invisible, recoverable only from the full joint (which is exactly factoring).\n\nFull paper: ResearchOutput/NewMathematics/49_BitProfile_SuperdenseFactors.md",
     "domain_bridges": [],
     "domains": [
@@ -394,7 +394,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-12T05:49:32.577201+00:00",
     "title": "BITPROFILE: factor information is superdense in N — zero-block theorem, 95% pairwise-invisible, top-2-bit sliver"
   },
@@ -553,7 +553,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "c94236ec",
+    "consumed_by_exp_id": "",
     "description": "## SPLIT-COUNT-LAW (round-20 #2, experiment 409, assessment v185, paper 74)\n\n**The complete symmetric fork channel is the split-count, and it beats the OR cap.** Papers 71–73 characterized the OR projection of a character-pinned fork: the semiprime OR collapse I(N mod f; [split(p) OR split(q)]) = g(n), with the global cap g(2) = 0.3113 over every class-rate profile (paper 73). The full question is: what does a fork carry at all? Since χ(p), χ(q) are independent uniform over the n character values, the ordered pair of split-events (E(p), E(q)) is two independent Bernoulli(1/n) draws, and the entire symmetric information of a fork at the semiprime level is carried by the **split-count**\n\n**s = [split(p)] + [split(q)] ∈ {0,1,2} ~ Binomial(2, 1/n)**\n\nwith the exact order-universal channel\n\n**I(N mod f; s) = Is(n) = H(Bin(2,1/n)) − (1/n)H((n−1)/n, 0, 1/n) − ((n−1)/n)H((n−2)/n, 2/n, 0),**\n\nP(s | χ(N)=1) = {(n−1)/n, 0, 1/n} and P(s | χ(N)≠1) = {(n−2)/n, 2/n, 0}. Every Boolean projection (OR/AND/XOR) is a function of s, so Is(n) dominates them all — **and paper 73's OR cap is a PROJECTION artifact: the full channel reaches Is(2) = 1.0000 bits (the p−1 ℓ=3 story's complete content, vs its celebrated 0.313 OR projection) and Is(3) = 0.4739 bits — the largest nondeterministic residue channel in the lab.**\n\n### Machine-verified (8 fields, MC + exhaustive enumeration)\n\nPart A — all four channels match the closed forms on 8 fields (2^22, 30k semiprimes): f=5/f=3 n=2 Is = **1.0000** exact (OR 0.3076/0.3131 = g(2); XOR 1.0000 = deterministic); f=7/f=9/f=21 n=3 Is = 0.4731/0.4718/0.4755 vs 0.4739; f=16 n=4: 0.2894 vs 0.2947; f=11 n=5: 0.2060 vs 0.2027; f=7 n=6: 0.1482 vs 0.1487. s-dist matches Bin(2,1/n) everywhere; which-factor wall 0.0000–0.0003.\n\nPart B — exact tables n=2..12, with the **honest hierarchy correction**: the naive Is ≥ X ≥ A ≥ g FAILS from n=8 (X(8)=0.0480 < A(8)=0.0482). The correct universals: Is ≥ each projection at every order (data processing), A ≥ g at every order (AND beats OR for all n), X ≥ A ⟺ n ≤ 7.\n\nPart C — EXACT enumeration of all 0/1 profiles on nine moduli (incl. non-cyclic C₂×C₂/C₂×C₄/C₂×C₆): **max Is = max I_XOR = 1.0000 bits on every modulus, achieved EXCLUSIVELY by the quadratic-character kernels** — the full symmetric fork channel is capped at 1.0 bit over every profile, the 0.3113 OR cap being its OR projection's cap.\n\nPart D — controls clean (coprime flat 0.0001–0.0003; m=f² invariant at Is(n)). Unification f=3 n=2: I(N mod 3; s) = 1.0000 with P(s|N≡1) = [1/2,0,1/2], P(s|N≡2) = [0,1,0] EXACT — **paper 54's p−1 ℓ=3 channel is a 1-bit split-count channel whose 0.313 OR is one projection.**\n\n### Verdict\n\nCONFIRMED exact law. The split-count is the complete N-level information content of any character-pinned fork: Is(n) ≥ every Boolean face, Is(2) = 1.0, Is(3) = 0.4739 (largest nondeterministic residue channel in the lab), capped at 1.0 bit at the quadratic characters. Still symmetric (barrier 2), a residue dial (barrier 5), sealed behind the CRT (barrier 6), all classical reciprocity (barrier 8) — factor-useless. Unifies papers 54, 71–73. Barriers 2/5/6/8. Round-20 2/2 done.\n",
     "domain_bridges": [],
     "domains": [
@@ -565,7 +565,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-12T19:27:59.013616+00:00",
     "title": "SPLIT-COUNT-LAW: the complete symmetric fork channel is the split-count s ~ Bin(2,1/n), I(N mod f; s) = Is(n) — beats the OR cap (Is(2)=1.0, Is(3)=0.474), still factor-useless"
   },
@@ -891,6 +891,25 @@
     "status": "available",
     "timestamp": "2026-08-14T23:43:44.067784+00:00",
     "title": "NET-26 (paper 70): EOS-WIDTH-DISTRIBUTION-SHIFT — the EOS-width \"threshold\" is a one-sided P(cure) distribution shift, not a sharp boundary; CORRECTS NET-25"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "## Summary\n\nRound-net-27 fills NET-26's flagged open gap: the shape of the EOS-width P(cure) shift inside (20,28]. Twenty-four arms on the byte-identical NET-26 EOSWidthGRU (GRUCell(384→192), learned E-d EOS zero-padded to 384, ONLY E varies): E ∈ {21,22,24,28} × 6 FRESH seeds (8–13) — every sample an independent draw, merged anchors stay independent.\n\n## Results (n=8 full)\n\n| E (exclusive dims k) | 6 fresh seeds | P(≥0.99) | min |\n|---|---|---|---|\n| 21 (k=1) | 1.0000, 0.7715, 0.1567, 0.8926, 1.0000, 0.2656 | 2/6 | 0.1567 |\n| 22 (k=2) | 1.0000, 0.9912, 0.9482, 1.0000, 1.0000, 0.9990 | 5/6 | 0.9482 |\n| 24 (k=4) | 1.0000 ×6 | 6/6 | 1.0000 |\n| 28 (k=8) | 1.0000 ×6 (8/8 combined) | 6/6 | 1.0000 |\n\n## The law\n\n**EOS-WIDTH-SHIFT-IS-A-MONOTONE-RAMP** — merges with NET-26's anchors into a full reliability curve:\n\n- Failure mass vs E: **75% (E=20) → 67% (E=21) → 17% (E=22, worst case a near-cure 0.948) → 0 (E=24) → 0 (E≥28)**.\n- Worst case n=8 full: 0.005 → 0.157 → 0.948 → 1.0000 → 1.0000; medians 0.044 → 0.83 → 1.0 → 1.0 → 1.0.\n- **NO sharp critical width in (20,28]**: E=21 produces both a full cure (1.0000) and a hard failure (0.1567) among fresh draws.\n- **The first exclusive dim is NOT sufficient** (the naive \"any exclusive dim suffices\" reading of NET-26's distinctness law is REFUTED). The benefit is SUBLINEAR — a reliability/optimization-fragility curve, not a capacity cliff.\n- Failure mechanism is width-independent: same progressive-unroll collapse (n=5 1.0 → n=7 ~0.82 → n=8 0.16–0.27) and same probe signature (‖h‖ drift + maxconf dips at beyond-training cols) as E=20.\n- E≥28 merged is now **26/26 clean cures**.\n\n## Design rule\n\nA real-LM final-step boundary token should reserve **≥4 exclusive dims in its own parameter subspace** (k=2 near-robust, k=1 fragile). Single-seed \"thresholds\" in toy mechanism studies should be read as draws from such a curve.\n\n## Honest limits\n\nn=6 per width makes the E21→E22 P-jump alone not significant (Fisher ≈0.24); the law rests on the monotone ordering across four widths plus the much larger merged anchors (12 at E=20, 26 at E≥28). E=23/25 untested (knee inside (21,24)). Barriers a–h checked in the paper.\n\n## Files\n\n- Paper 71: `ResearchOutput/NetworkMathematics/27_EOSWidthShiftRamp.md`\n- Notebook: `ResearchOutput/Network_Lab_Notebook.md` Part 27\n- Assessment: v27 (27 experiments, NET-27)\n- Script: /tmp/exp_net_eos_shape.py (ALL_DONE_NET27); log /tmp/net27.log\n\nOpen: knee inside (21,24) — E=23/25; mechanistic read of k=1 (measure the learned EOS exclusive-dim coordinate at cure vs fail); real-scale transfer with an exclusive-dimension boundary input.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_1276",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-15T01:59:12.639788+00:00",
+    "title": "NET-27 (paper 71): EOS-WIDTH-SHIFT-IS-A-MONOTONE-RAMP — P(cure) ramps 25→33→83→100→100% as exclusive dims go 0→1→2→4→8; no sharp width, first exclusive dim NOT sufficient; refines NET-26"
   },
   {
     "ambition_level": "grand_challenge",
