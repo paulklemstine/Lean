@@ -3,7 +3,7 @@ window.Aether = {
     packages: [],
     currentPackage: null,
     directionsVisible: false,
-    pyodideInstance: null,
+    pyodideReady: false,
     isPyodideLoading: false,
     currentVizIndex: 0,
 };
