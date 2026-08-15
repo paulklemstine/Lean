@@ -1,4 +1,4 @@
-import Catalog.Computation.CyclicTypeChannelLaws
+import Computation.CyclicTypeChannelLaws
 
 /-!
 # Determinism and the general Euler-φ entropy law for the cyclic type channel

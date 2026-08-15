@@ -1,1 +1,4 @@
-../../Shared/BabelCodeasanovelmathematicalstructure/SalvagedBest.lean
+-- This file is a leftover symbolic-link stub from the catalog import: its
+-- content was the relative path below, not Lean source.  It is kept (commented
+-- out) so that the module is empty but well-formed.
+-- ../../Shared/BabelCodeasanovelmathematicalstructure/SalvagedBest.lean

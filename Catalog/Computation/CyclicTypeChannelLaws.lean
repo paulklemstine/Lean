@@ -1,4 +1,4 @@
-import Catalog.Computation.CyclicTypeChannelValues
+import Computation.CyclicTypeChannelValues
 
 /-!
 # Laws of the cyclic splitting-type channel

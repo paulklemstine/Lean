@@ -1,5 +1,7 @@
 import Mathlib
 
+open Set
+
 /-! # CatalogBuild.Shared.EmlDiag
 
 Auto-generated from theorem catalog database.
@@ -8,6 +10,9 @@ Declarations: 3
 -/
 
 noncomputable section
+
+/-- The diagonal of `eml`: `emlDiag z = exp z - log z`. -/
+def emlDiag (z : ℝ) : ℝ := Real.exp z - Real.log z
 
 /-- [Section: # CatalogBuild.Shared.EmlDiag
 Auto-generated from theorem catalog database.
