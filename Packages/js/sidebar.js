@@ -9,11 +9,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const topSentinel = document.getElementById('package-list-status-top');
     const bottomSentinel = document.getElementById('package-list-status');
     const markerEl = document.getElementById('package-list-marker');
+    const jumpBtn = document.getElementById('jump-btn');
+    const pagePrev = document.getElementById('page-prev');
+    const pageNext = document.getElementById('page-next');
 
     const BATCH_SIZE = 20;        // items loaded per lazy-load batch (each direction)
+    const SKIP_SIZE = 25;         // packages skipped per Prev/Next
     let filteredPackages = [];    // full (sorted newest-first) dataset
     let startIndex = 0;           // first index currently in the DOM
     let endIndex = 0;             // one past the last index currently in the DOM
+    let targetIndex = 0;          // package Jump will scroll to (0-based)
+    let topObserverArmed = true;  // top sentinel may lazy-load (paused right after a Jump)
+    let lastScrollTop = 0;        // last scrollTop seen, to detect scroll-up for re-arming
 
     const supportsIO = 'IntersectionObserver' in window;
     const scrollContainer = packageList ? packageList.closest('.package-list-container') : null;
@@ -154,7 +161,7 @@ document.addEventListener('DOMContentLoaded', () => {
             topSentinel.style.display = 'none';
         } else {
             topSentinel.style.display = '';
-            if (observer) observer.observe(topSentinel);
+            if (observer && topObserverArmed) observer.observe(topSentinel);
         }
         if (endIndex >= total) {
             bottomSentinel.textContent = (startIndex <= 0 && total > BATCH_SIZE) ? '— end of list —' : '';
@@ -166,26 +173,40 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Live position marker: "firstVisiblePosition / total" for the current view.
-    // "total" reflects the current filtered list, so it matches the visible set.
+    // Enable/disable the Prev / Next / Jump buttons for the current target.
+    function updateControls() {
+        if (!pagePrev || !pageNext || !jumpBtn) return;
+        const total = filteredPackages.length;
+        pagePrev.disabled = total === 0 || targetIndex <= 0;
+        pageNext.disabled = total === 0 || targetIndex >= total - 1;
+        jumpBtn.disabled = total === 0;
+        if (jumpBtn) jumpBtn.title = `Scroll the list to package ${total ? targetIndex + 1 : 0}`;
+    }
+
+    // Marker: "target / total" — the package Jump will scroll to.
+    function renderMarker() {
+        if (!markerEl) return;
+        const total = filteredPackages.length;
+        markerEl.textContent = total ? `${targetIndex + 1} / ${total}` : '';
+        updateControls();
+    }
+
+    // Sync the target to the first visible package (on render, lazy-load, scroll).
     function updateMarker() {
         if (!markerEl) return;
         const total = filteredPackages.length;
-        if (!total) { markerEl.textContent = ''; return; }
+        if (!total) { renderMarker(); return; }
         const items = packageList.querySelectorAll('.nav-item');
-        if (!items.length || !scrollContainer) {
-            markerEl.textContent = `${Math.max(1, startIndex + 1)} / ${total}`;
-            return;
-        }
-        const containerTop = scrollContainer.getBoundingClientRect().top;
-        let pos = startIndex + 1;
-        for (const it of items) {
-            if (it.getBoundingClientRect().bottom >= containerTop) {
-                pos = Number(it.dataset.idx) + 1;
-                break;
+        if (items.length && scrollContainer) {
+            const containerTop = scrollContainer.getBoundingClientRect().top;
+            for (const it of items) {
+                if (it.getBoundingClientRect().bottom >= containerTop) {
+                    targetIndex = Math.min(Math.max(1, Number(it.dataset.idx) + 1), total) - 1;
+                    break;
+                }
             }
         }
-        markerEl.textContent = `${Math.min(Math.max(1, pos), total)} / ${total}`;
+        renderMarker();
     }
 
     // Rebuild the whole visible window (initial render, search, refresh, highlight).
@@ -275,12 +296,67 @@ document.addEventListener('DOMContentLoaded', () => {
     let markerRaf = 0;
     if (scrollContainer) {
         scrollContainer.addEventListener('scroll', () => {
+            const st = scrollContainer.scrollTop;
+            // Re-enable top-side lazy loading once the user genuinely scrolls up.
+            if (!topObserverArmed && observer && topSentinel && st < lastScrollTop) {
+                observer.observe(topSentinel);
+                topObserverArmed = true;
+            }
+            lastScrollTop = st;
             if (markerRaf) return;
             markerRaf = requestAnimationFrame(() => {
                 markerRaf = 0;
                 updateMarker();
             });
         }, { passive: true });
+    }
+
+    // Move the jump target by +/- SKIP_SIZE packages (no scrolling yet — Jump does that).
+    function setTarget(index) {
+        const total = filteredPackages.length;
+        if (!total) return;
+        targetIndex = Math.max(0, Math.min(total - 1, index));
+        renderMarker();
+    }
+
+    if (pagePrev) {
+        pagePrev.addEventListener('click', () => setTarget(targetIndex - SKIP_SIZE));
+    }
+    if (pageNext) {
+        pageNext.addEventListener('click', () => setTarget(targetIndex + SKIP_SIZE));
+    }
+
+    // Jump: scroll the list so the target package becomes the first visible item.
+    // Top-side lazy loading is paused until the user scrolls up, so the target
+    // stays pinned at the top — the top sentinel would otherwise immediately
+    // load a batch above it and push the target out of the first position.
+    function jumpTo(index) {
+        const total = filteredPackages.length;
+        if (!total) return;
+        const idx = Math.max(0, Math.min(total - 1, index));
+        if (observer && topSentinel) observer.unobserve(topSentinel);
+        topObserverArmed = false;
+        startIndex = idx;
+        endIndex = Math.min(idx + BATCH_SIZE, total);
+        renderWindow();
+        const item = packageList.querySelector(`.nav-item[data-idx="${idx}"]`);
+        if (item) {
+            document.querySelectorAll('.nav-item.graph-highlight').forEach(el => el.classList.remove('graph-highlight'));
+            item.classList.add('graph-highlight');
+            if (scrollContainer) {
+                const itemTop = item.getBoundingClientRect().top;
+                const contTop = scrollContainer.getBoundingClientRect().top;
+                // Instant positioning — a smooth animation races with the
+                // lazy-load sentinels and can land the view unpredictably.
+                scrollContainer.scrollTop += itemTop - contTop;
+            }
+        }
+        lastScrollTop = scrollContainer ? scrollContainer.scrollTop : 0;
+        updateMarker();
+    }
+
+    if (jumpBtn) {
+        jumpBtn.addEventListener('click', () => jumpTo(targetIndex));
     }
 
     window.renderSidebar = function(pkgArray) {
@@ -290,6 +366,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (startIndex === 0 && endIndex === 0) {
             // First render (or search reset) — start from the top batch.
             initWindow();
+            topObserverArmed = true;
         } else {
             // Data refresh (60s polling): keep the current window, clamped to the new length.
             if (endIndex > filteredPackages.length) endIndex = filteredPackages.length;

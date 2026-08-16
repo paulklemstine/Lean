@@ -2520,12 +2520,47 @@ body.light-theme #aether-toast .toast-body {
     min-height: 18px;
 }
 
-/* Sidebar scroll-position marker: "firstVisible / total" for the current list */
+/* Sticky control bar: Jump / Prev / position-marker / Next */
+.sidebar-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 24px;
+    border-top: 1px solid var(--border-color);
+    background: var(--bg-panel);
+    position: sticky;
+    bottom: 0;
+    z-index: 5;
+}
+
+.page-btn {
+    background: var(--bg-elevated);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 6px 12px;
+    cursor: pointer;
+    font-size: 0.82rem;
+    white-space: nowrap;
+}
+
+.page-btn:disabled {
+    opacity: 0.4;
+    cursor: default;
+}
+
+.page-btn:hover:not(:disabled) {
+    background: var(--accent);
+    color: #fff;
+}
+
+/* Position marker: "target / total" — the package Jump will scroll to */
 .package-list-marker {
+    min-width: 64px;
     text-align: center;
     color: var(--text-muted);
-    font-size: 0.78rem;
-    padding: 0 24px 4px;
-    min-height: 1.1em;
+    font-size: 0.8rem;
     user-select: none;
+    white-space: nowrap;
 }

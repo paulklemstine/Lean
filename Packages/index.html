@@ -100,12 +100,17 @@
                     </a>
                 </div>
                 <h3 class="nav-section-title">Research Packages</h3>
-                <div id="package-list-marker" class="package-list-marker" title="Package the list is scrolled to"></div>
                 <div id="package-list-status-top" class="nav-list-status"></div>
                 <ul id="package-list" class="nav-list">
                     <!-- Package links populated by JS -->
                 </ul>
                 <div id="package-list-status" class="nav-list-status"></div>
+                <div class="sidebar-pagination" id="sidebar-pagination" aria-label="Package navigation">
+                    <button id="jump-btn" class="page-btn" title="Scroll the list to the package shown">Jump</button>
+                    <button id="page-prev" class="page-btn" title="Skip back 25 packages" disabled>&larr; Prev</button>
+                    <span id="package-list-marker" class="package-list-marker" title="Package Jump will scroll to"></span>
+                    <button id="page-next" class="page-btn" title="Skip forward 25 packages" disabled>Next &rarr;</button>
+                </div>
             </div>
         </nav>
 
