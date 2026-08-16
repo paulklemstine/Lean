@@ -1,5 +1,4 @@
-import ToricCode.Distance
-
+import Geometry.ToricCode.Distance
 /-!
 # The dual (`X`-type) toric code, and the total code distance
 

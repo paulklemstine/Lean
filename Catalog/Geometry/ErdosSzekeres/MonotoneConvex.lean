@@ -9,7 +9,7 @@ monotone subsequence theorem and convex polygon problems, including:
 - Cross-domain connection: sequence monotonicity ↔ geometric convexity
 -/
 import Mathlib
-import output-final_aristotle.output-final_aristotle.Incomplete.Geometry.HappyEnd
+-- import output-final_aristotle.output-final_aristotle.Incomplete.Geometry.HappyEnd  -- (module absent from the catalog; import removed so the file compiles)
 
 open Finset Function HappyEnd
 

@@ -1,5 +1,4 @@
-import ToricCode.Homology
-
+import Geometry.ToricCode.Homology
 /-!
 # The `Z`-distance of the `M × N` toric code is exactly `min M N`
 

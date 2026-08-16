@@ -1,5 +1,4 @@
-import ToricCode.Basic
-
+import Geometry.ToricCode.Basic
 /-!
 # Bounded local geometry of the square torus cellulation
 

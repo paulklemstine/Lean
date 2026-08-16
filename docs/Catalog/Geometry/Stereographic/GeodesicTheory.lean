@@ -1,5 +1,5 @@
 import Logic.BasicMonotoneCircuit.Basic
-import Geometry.Stereographic.MetricGeometry
+-- import Geometry.Stereographic.MetricGeometry  -- (module absent from the catalog; import removed so the file compiles)
 import Mathlib
 
 /-! # CatalogBuild.Geometry.Stereographic.GeodesicTheory

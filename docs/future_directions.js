@@ -1741,41 +1741,12 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle 63e5c24f (Q=0.793), which proved 50 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Investigate the ArXiv paper 'Finding Nearly-Periodic Components in Digraphs and Markov Chains from the Spectrum of Rotated Laplacian Matrices' and formalize its key results. Abstract: Inspired by recent advances in notions of spectral approximation of digraphs [Ahm+20], we study spectral algorithms ",
-    "domains": [
-      "Computation"
-    ],
-    "id": "push_63e5c24f_8857bbb8",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "63e5c24f",
-    "status": "available",
-    "timestamp": "2026-08-05T17:02:26.736199+00:00",
-    "title": "Deepening: ArXiv paper: Finding Nearly-Periodic Components in Digraphs and Markov Chains fr"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove that the k-Local Hamiltonian Problem is QMA-complete for k >= 2. Formalize the Kitaev reduction from quantum circuit satisfiability to the local Hamiltonian problem. Analyze the promise gap and its effect on complexity.",
-    "domains": [
-      "Computation",
-      "Physics"
-    ],
-    "id": "seed_324",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Quantum Hamiltonian Complexity: QMA-Completeness of the Local Hamiltonian Problem"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Building on cycle 4ae649eb (Q=0.792), which proved 35 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that PAC-Bayes generalization bounds can be expressed in terms of the mutual information between the training data and the learned hypothesis. Formalize the connection between compression, information, and generalization. Show that shorter description lengths imply better generalization.",
     "domains": [
       "MachineLearning"
     ],
     "id": "push_4ae649eb_c81b44fe",
-    "priority_score": 0.89196,
+    "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "4ae649eb",
     "status": "available",
@@ -1789,7 +1760,7 @@ window.FUTURE_DIRECTIONS = [
       "Physics"
     ],
     "id": "push_e3e9c821_a543f97d",
-    "priority_score": 0.89196,
+    "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "e3e9c821",
     "status": "available",
@@ -7270,7 +7241,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean"
     ],
     "id": "fd_0035",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.12120v1",
@@ -13973,17 +13944,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "The certified census of fundamental discriminants with `|D| \u2264 1000` \u2014 exactly `6"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2ce26220",
     "description": "# Future Directions: Taxicab Number Generalizations\n\nDerived from the current cycle's findings on Hardy\u2013Ramanujan taxicab numbers.\n\n## 1. Unbounded representation counts (existence of Taxicab(n) for all n)\n\n**Conjecture.** For every `n` there exists a positive integer expressible as a\nsum of two positive cubes in at least `n` distinct ways.\n\nThe key insight is that the affine Fermat cubic `x\u00b3 + y\u00b3 = N` is an elliptic\ncurve, and a single rational point of infinite order generates infinitely many\nrational representations; clearing denominators by a common cube collapses `n`\nof them onto a single integer that inherits `n` integer representations.\n\nWhy now? The cycle established the exact provable boundary: the elementary\nscaling map multiplies a fixed representation set by a cube but never *creates*\nnew representations, so genuine growth in the count must come from the group law\non the cubic. Isolating this obstruction pinpoints precisely the arithmetic\ninput \u2014 a non-torsion rational point \u2014 that any full proof must supply.\n\n## 2. Sharp growth rate of Taxicab(n)\n\n**Conjecture.** The cubic floor is far from optimal: `Taxicab(n)` grows faster\nthan any fixed polynomial in `n`, and in fact `log Taxicab(n) / n \u2192 \u221e`.\n\nThe key insight is that representations correspond to lattice-like points on the\ncubic curve whose heights grow at least geometrically under repeated application\nof the chord-and-tangent construction, forcing the smallest number carrying `n`\nrepresentations to grow super-polynomially rather than at the elementary cubic\nrate proved here.\n\nWhy now? Having proved a clean lower bound `Taxicab(n) > n\u00b3` by pigeonhole on\ndistinct smaller summands, the natural next question is how loose it is; the\nobserved values (`1729`, `8.7\u00b710\u2077`, `7.0\u00b710\u00b9\u00b2`) already grow far faster than\n`n\u00b3`, quantitatively motivating a super-polynomial lower bound.\n\n## 3. Multiplicative obstruction and a cube-free core\n\n**Conjecture.** Every taxicab number `N` factors as `N = m\u00b3 \u00b7 N\u2080` with `N\u2080`\ncube-free, and the representation count of `N` equals that of its cube-free core\n`N\u2080`; consequently the *primitive* taxicab numbers (cube-free `N\u2080`) already carry\nall the representation-count information.\n\nThe key insight is that the scaling map proved in this cycle is a bijection\nbetween representations of `N\u2080` and representations of `m\u00b3 N\u2080` that preserves the\nordering `a \u2264 b`, so cube factors contribute nothing new and can be stripped.\n\nWhy now? The scaling theorem `scaled_reps_card` supplies exactly the injection\nneeded for the easy direction; the open content is the reverse inclusion \u2014 that\nscaling by a cube produces *no additional* representations \u2014 which would reduce\nthe whole theory to cube-free numbers.\n\n## 4. Cabtaxi numbers (cubes with signs)\n\n**Conjecture.** Allowing one summand to be negative (differences of cubes)\nstrictly lowers the least number with `n` representations for every `n \u2265 2`, and\nthe signed and unsigned growth exponents nevertheless coincide.\n\nThe key insight is that the signed cubic `x\u00b3 + y\u00b3 = N` with `x, y \u2208 \u2124` has\nstrictly more rational points available to the chord-and-tangent process than its\npositive-orthant restriction, so signed representations are strictly cheaper to\naccumulate while remaining governed by the same elliptic-curve height growth.\n\nWhy now? The pigeonhole lower bound in this cycle used only positivity and the\nordering `a \u2264 b`; relaxing positivity isolates how much of the growth is forced\nby arithmetic geometry versus by the sign restriction, a clean comparative test.\n",
     "domains": [
       "Geometry",
       "Pythagorean"
     ],
     "id": "fd_0711",
+    "phase": "A",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "78cd863a",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-24T21:32:19.516529+00:00",
     "title": "Derived from the current cycle's findings on Hardy\u2013Ramanujan taxicab numbers."
   },

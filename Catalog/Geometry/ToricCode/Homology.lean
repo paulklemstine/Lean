@@ -1,5 +1,4 @@
-import ToricCode.Basic
-
+import Geometry.ToricCode.Basic
 /-!
 # First homology of the square torus: rank exactly two
 

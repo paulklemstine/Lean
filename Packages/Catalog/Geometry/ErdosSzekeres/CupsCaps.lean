@@ -11,7 +11,7 @@ and convex position in the plane. Key results include:
 -/
 import Mathlib
 import Logic.GraphTheory.Defs
-import Geometry.ErdosSzekeres.Orient
+import Geometry.Orient
 -- Note: Orient was in Geometry.Orient in Catalog; now at Geometry.ErdosSzekeres.Orient
 
 namespace ErdosSzekeres

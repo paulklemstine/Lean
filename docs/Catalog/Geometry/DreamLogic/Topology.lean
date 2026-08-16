@@ -1,8 +1,7 @@
 import Mathlib
 import Logic.GraphTheory.Defs
 import Novelty.AFLMatching.Bounds
-import Geometry.InformationTheory.Convergence
-
+import Geometry.Convergence
 /-!
 # Benford Reduction and Torus Dynamics
 
