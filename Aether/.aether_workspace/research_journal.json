@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "13788cf3",
-      "domain": "Tropical",
-      "key_insight": "# FUTURE DIRECTIONS — after PLUSONE-SMOOTH-NULL (round 16 #2)\n\nThe formal results in `Catalog/Tropical/PlusOneWilliamsCore.lean` and\n`Catalog/Tropical/PlusOneSmoothNull.lean` isolate one mechanism beh",
-      "quality_score": 0.85,
-      "sorry_count": 0,
-      "theorem_count": 470,
-      "timestamp": "2026-08-14T08:46:05",
-      "title": "Exp 399 PLUSONE-SMOOTH-NULL (round-16 #2): the Williams p+1 weakness is residue-invisible, Lucas-seq"
-    },
-    {
       "cycle_id": "8c90b348",
       "domain": "Shared",
       "key_insight": "# FUTURE DIRECTIONS — after CFPERIOD-NULL (Experiment 398)\n\nWhat is now formally settled in `Catalog/Shared/CFPeriodNull.lean`:\n\n1. the PQa state machine of `√N` and its four integral invariants\n   (`",
@@ -499,19 +489,19 @@
       "theorem_count": 83,
       "timestamp": "2026-08-16T16:43:01",
       "title": "NET-44: The Last Context-Extrapolation Cell Is Two-Seed and the Knee Fluctuates (k\\*=96 at (d=4, ctx"
+    },
+    {
+      "cycle_id": "b3704634",
+      "domain": "Geometry",
+      "key_insight": "# Future directions\n\nDerived from the analysis and adversarial review of the verified results in\n`Catalog/Geometry/Teichmuller/`:\n\n* `LinearQC.lean` — the algebra of quasiconformal dilatations of real",
+      "quality_score": 0.91,
+      "sorry_count": 0,
+      "theorem_count": 884,
+      "timestamp": "2026-08-16T19:33:55",
+      "title": "Teichmuller-Moduli: Analytic Structure of Riemann Surface Space"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "08d2b371",
-      "domain": "Bridges",
-      "key_insight": "# Future directions\n\nThis line of work studies **when the fundamental group is a complete invariant**, in the\nalgebraic model where a homotopy 1-type is a groupoid and a `K(G,1)` is a connected\ngroupo",
-      "quality_score": 0.79196,
-      "sorry_count": 0,
-      "theorem_count": 202,
-      "timestamp": "2026-08-05T20:54:51",
-      "title": "Deepening: Topological-Algebraic Bridge: Fundamental Group as a Complete Invariant"
-    },
     {
       "cycle_id": "0763cd86",
       "domain": "Computation",
@@ -2501,27 +2491,19 @@
       "theorem_count": 83,
       "timestamp": "2026-08-16T16:43:01",
       "title": "NET-44: The Last Context-Extrapolation Cell Is Two-Seed and the Knee Fluctuates (k\\*=96 at (d=4, ctx"
+    },
+    {
+      "cycle_id": "b3704634",
+      "domain": "Geometry",
+      "key_insight": "# Future directions\n\nDerived from the analysis and adversarial review of the verified results in\n`Catalog/Geometry/Teichmuller/`:\n\n* `LinearQC.lean` — the algebra of quasiconformal dilatations of real",
+      "quality_score": 0.91,
+      "sorry_count": 0,
+      "theorem_count": 884,
+      "timestamp": "2026-08-16T19:33:55",
+      "title": "Teichmuller-Moduli: Analytic Structure of Riemann Surface Space"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "f0c2b697",
-      "domain": "Logic",
-      "name": "eos_dimension_no_expressivity_gain",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "9c680c24",
-      "domain": "Tropical",
-      "name": "score_mono",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "9c680c24",
-      "domain": "Tropical",
-      "name": "separable_mono",
-      "quality": 0.78
-    },
     {
       "cycle_id": "9c680c24",
       "domain": "Tropical",
@@ -2803,9 +2785,27 @@
       "domain": "Logic",
       "name": "margin_s1_96_lt_spread",
       "quality": 0.8
+    },
+    {
+      "cycle_id": "b3704634",
+      "domain": "Geometry",
+      "name": "geomFrac_gt_of_indep_ratio",
+      "quality": 0.91
+    },
+    {
+      "cycle_id": "b3704634",
+      "domain": "Geometry",
+      "name": "clusterGraph_indep_card_le",
+      "quality": 0.91
+    },
+    {
+      "cycle_id": "b3704634",
+      "domain": "Geometry",
+      "name": "clusterGraph_indepNum_le",
+      "quality": 0.91
     }
   ],
-  "last_updated": "2026-08-16T16:43:01",
+  "last_updated": "2026-08-16T19:33:55",
   "open_questions": [
     {
       "context": "This file gives a **complete, self-contained proof** of that theorem (0 `sorry`s).",
@@ -3394,12 +3394,6 @@
     "Geometry": [
       {
         "cycle_id": "b2707824",
-        "quality": 0.73419,
-        "theorems": 182,
-        "title": "Hyperbolic-Pythagorean-Geodesics: Sub-Linear Trajectory Factorization in Poincar"
-      },
-      {
-        "cycle_id": "b2707824",
         "quality": 0.73319,
         "theorems": 182,
         "title": "Hyperbolic-Pythagorean-Geodesics: Sub-Linear Trajectory Factorization in Poincar"
@@ -3451,6 +3445,12 @@
         "quality": 0.85,
         "theorems": 72,
         "title": "Power-Sum GCD Factoring & Carmichael Periodicity"
+      },
+      {
+        "cycle_id": "b3704634",
+        "quality": 0.91,
+        "theorems": 884,
+        "title": "Teichmuller-Moduli: Analytic Structure of Riemann Surface Space"
       }
     ],
     "Logic": [
