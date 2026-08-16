@@ -129,6 +129,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Building on cycle ade8206b (Q=0.850), which proved 105 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Explore what theorems hold in non-standard models of arithmetic. Formalize ultrapower constructions, transfer principles, and prove which classical theorems survive in non-Archimedean settings.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_ade8206b_599d4c51",
+    "lineage_refs": [],
+    "priority_score": 0.95,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "ade8206b",
+    "status": "available",
+    "timestamp": "2026-08-16T13:01:16.214557+00:00",
+    "title": "Deepening: Alien Mathematics: Non-Standard Arithmetic"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Formally proves conditions under which information can exist purely within a closed timelike curve loop without ever having an initial origin (Ontological Paradox).",
     "domain_bridges": [],
     "domains": [
@@ -1039,7 +1058,7 @@
     "title": "Riemann Zeta: Zero-Free Regions and Density Estimates"
   },
   {
-    "ambition_level": "extension",
+    "ambition_level": "grand_challenge",
     "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Building on cycle 3b29df87 (Q=0.820), which proved 110 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the Weil pairing on an elliptic curve and prove its bilinearity. Show that the BLS signature scheme is existentially unforgeable under the computational Diffie-Hellman assumption in the pairing group. Prove that the pairing allows short aggregate signatures.",
@@ -1080,25 +1099,6 @@
     "ambition_level": "grand_challenge",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "Building on cycle 6c98f572 (Q=0.805), which proved 21 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the Fourier transform as a natural transformation between the category of locally compact abelian groups and the category of their dual groups. Prove Pontryagin duality as an equivalence of categories. Show that the uncertainty principle is a categorical statement: the functor Hom(-,R/Z) i",
-    "domain_bridges": [],
-    "domains": [
-      "Computation"
-    ],
-    "id": "push_6c98f572_c4dd1d3a",
-    "lineage_refs": [],
-    "priority_score": 0.90505,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "6c98f572",
-    "status": "available",
-    "timestamp": "2026-08-01T18:22:53.127464+00:00",
-    "title": "Deepening: Bridge: Fourier Analysis as a Functor"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "Building on cycle 0e1eb0cb (Q=0.800), which proved 26 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that the Bergman fan of a matroid M equals the tropical linear space of the matroid's circuit ideal. Formalize the connection between matroid connectivity and the topology of the Bergman fan. Show that nested matroids give tropical linear subspaces.",
     "domain_bridges": [],
     "domains": [
@@ -1132,25 +1132,6 @@
     "status": "available",
     "timestamp": "2026-08-01T11:45:24.562037+00:00",
     "title": "Deepening: ML Universal Approximation: Width vs Depth Trade-offs"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle e86cdc26 (Q=0.800), which proved 9 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For every integer k ≥ 5, there exists a constant C_k > 0 such that for a uniformly random simple k-regular graph G on n vertices (with n → ∞ through admissible values), with probability tending to 1, G satisfies the following asymptotic Brill-Noether existence property at half-canonical degree: for ",
-    "domain_bridges": [],
-    "domains": [
-      "Computation"
-    ],
-    "id": "push_e86cdc26_46af663c",
-    "lineage_refs": [],
-    "priority_score": 0.9002199999999999,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "e86cdc26",
-    "status": "available",
-    "timestamp": "2026-07-31T23:26:34.723598+00:00",
-    "title": "Deepening: Asymptotic Brill-Noether Existence for Random Regular Graphs at Half-Canonical D"
   },
   {
     "ambition_level": "extension",
@@ -2368,7 +2349,7 @@
     "title": "Stein-Method: Quantitative Normal Approximation Bounds"
   },
   {
-    "ambition_level": "extension",
+    "ambition_level": "grand_challenge",
     "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Prove that every loopless graph requiring k+1 colors for a proper coloring contains K_{k+1} as a minor. Formalize known cases (k ≤ 5), the Wagner equivalence, and the connection to the Four Color Theorem.",
@@ -2388,27 +2369,7 @@
     "title": "Hadwiger's Conjecture"
   },
   {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Prove the Baum-Connes conjecture relating K-theory of reduced C*-algebras to equivariant K-homology. Formalize known cases and the connection to Novikov.",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "seed_224",
-    "lineage_refs": [],
-    "priority_score": 0.9,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Baum-Connes Conjecture"
-  },
-  {
-    "ambition_level": "extension",
+    "ambition_level": "grand_challenge",
     "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Formalize the lattice of cryptographic hardness assumptions: one-way functions → pseudorandom generators → pseudorandom functions → secure encryption. Prove separation results.",
@@ -9882,7 +9843,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "12195e06",
     "description": "Investigate the ArXiv paper 'Kleber's conjecture and complementary products of symmetric functions' and formalize its key results. Abstract: We prove Kleber's rectangular-complement conjecture for Schur functions over an arbitrary commutative ring $R$, showing that, for a fixed rectangle, the products $s_λs_{λ^\\vee}$, indexed by unordered complementary pairs, are linearly independent in $Λ_R$. The proof rests on a general independence theorem for componentwise splittings, which asserts that for every partition $θ$, the products $s_αs_β$ are linearly independent as $\\{α,β\\}$ ranges over unordered pairs of partitions satisfying $α+β=θ$. The independence of the products $s_λs_{λ^\\vee}$ also yields linear independence of the Koike--Terada universal-character products over any field, answering a question of Gao--Orelowitz--Yong. We also prove the analogous result for monomial symmetric functions over fields of characteristic zero, as well as integral linear independence over $\\mathbb{Z}$.",
     "domain_bridges": [],
     "domains": [
@@ -9895,7 +9856,7 @@
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
     "research_mode": "team",
     "source_exp_id": "2607.12120v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-15T21:02:35.937376+00:00",
     "title": "ArXiv paper: Kleber's conjecture and complementary products of symmetric functions"
   },
@@ -14736,27 +14697,6 @@
     "status": "available",
     "timestamp": "",
     "title": "Percolation Threshold"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "ade8206b",
-    "description": "Explore what theorems hold in non-standard models of arithmetic. Formalize ultrapower constructions, transfer principles, and prove which classical theorems survive in non-Archimedean settings.",
-    "domain_bridges": [],
-    "domains": [
-      "Speculative",
-      "Logic",
-      "Algebra"
-    ],
-    "id": "seed_058",
-    "lineage_refs": [],
-    "priority_score": 0.76,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Alien Mathematics: Non-Standard Arithmetic"
   },
   {
     "ambition_level": "extension",
@@ -25098,6 +25038,26 @@
     "status": "available",
     "timestamp": "2026-08-16T11:34:59.325561+00:00",
     "title": "Derived from what survived, and from what broke, in this cycle.  Each conjecture"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nConjectures generated by the results in `Catalog/Novelty/Nonstandard*.lean`.\nEach is falsifiable: it is either provable in Lean or refutable by an explicit\ngerm-level counterexample.\n\n## Conjecture 1 (Saturation ⇒ nonstandard compactness for internal families)\n\n*Every countable family of internal subsets of `HyperNat` with the finite\nintersection property has an internal set contained in all of them* — not just\na common element, as proved in `countable_saturation`.  Equivalently, the\ninternal sets form a countably compact family closed under internal\nintersections indexed by a hypernatural.\n\n**The key insight is** that the diagonal depth function `Nat.findGreatest` used\nin `countable_saturation` already produces an *internal* object, namely the\ngerm of the finite intersections `⋂_{k ≤ depth i} A_k(i)`; making this precise\nturns countable saturation into a statement about internal families indexed by\nan unlimited hypernatural, i.e. into genuine \"hyperfinite compactness\".\n\n**Why now?** The diagonal witness and the internal-set API already exist in the\nproject; only the indexing by an unlimited element is missing, and\n`exists_mem_iInter_of_decreasing` shows the decreasing case is already in reach.\n\n## Conjecture 2 (Primes are dense on the *multiplicative* scale) — *twice revised*\n\nTwo successive versions of this conjecture are now **refuted** in\n`Catalog/Novelty/NonstandardPrimeGaps.lean`: \"every galaxy contains a\nhyperprime\" fails (`exists_primeFree_galaxy`), and even \"prime-carrying\ngalaxies are dense\" fails (`no_prime_galaxy_between`: no galaxy strictly\nbetween `[i!]` and `[i! + i]` carries a prime).  Additive scales are therefore\nthe wrong invariant.  The surviving conjecture is multiplicative:\n\n*Call `H` and `K` **commensurable** when `H ≤ K ^ n` and `K ≤ H ^ n` for some\nstandard `n`.  Then every commensurability class of unlimited hypernaturals\ncontains a hyperprime.*\n\n**The key insight is** that Bertrand's postulate produces a prime in every\ninterval `(x, 2x)` pointwise, and `[x]` and `[2x]` are always commensurable\neven though they are typically in different galaxies — so the multiplicative\nscale is exactly the resolution at which the prime distribution becomes\nuniform, while the additive (galaxy) scale is too fine.\n\n**Why now?** Mathlib has Bertrand's postulate, the germ-level machinery for\ncommensurability is a direct variant of `SameGalaxy`, and the two refutations\nabove pin down precisely why the additive version fails.\n\n## Conjecture 3 (Galaxy order type is that of a nonstandard model of PA)\n\n*The quotient of `HyperNat` by `SameGalaxy` is a dense linear order without\nendpoints above its least element, and it is order-isomorphic to a quotient of\nsize exactly `𝔠`.*  We proved density (`far_dense`), unboundedness\n(`far_no_max`, `exists_far_below_of_isUnlimited`) and least element\n(`far_standard_iff_isUnlimited`); what remains is the cardinality of the\nquotient and, under CH, the isomorphism type `ℕ + η·𝔠`.\n\n**The key insight is** that `mk_hyperNat = 𝔠` bounds the quotient from above,\nwhile the slope family `floorSlope r` already realises pairwise-far germs for\nmultiplicatively independent slopes, giving a continuum-sized antichain of\ngalaxies directly.\n\n**Why now?** Both ingredients (`floorSlope_lt` and the galaxy API) exist; the\nonly new work is proving `Far (floorSlope r) (floorSlope s)` fails for\n`s/r` bounded and holds otherwise.\n\n## Conjecture 4 (Nonstandard proof of infinite Ramsey)\n\n*Ramsey's theorem for pairs has a nonstandard proof of the same shape as\n`infinite_pigeonhole`: fix an unlimited `H`, colour each standard `n` by the\ncolour of the pair `{n, H}`, apply the finite pigeonhole for ultrafilters\n(`hyperfilter_eventually_const`), and iterate.*\n\n**The key insight is** that `hyperfilter_eventually_const` converts a colouring\ninto an eventually constant one, which is precisely the \"type of `H` over the\nstandard part\" — the nonstandard substitute for the usual recursive\nconstruction of a homogeneous set.\n\n**Why now?** The two ingredients used in the classical nonstandard proof\n(`infinite_iff_exists_unlimited_mem` and `hyperfilter_eventually_const`) are\nnow available and were exactly what made `infinite_pigeonhole` a three-line\nargument.\n\n## Conjecture 5 (Internal sets are exactly the ones satisfying transfer)\n\n*A subset `S ⊆ HyperNat` is internal if and only if both quantifier transfer\nlaws hold for it, i.e. iff `S` and its complement satisfy the conclusion of\n`forall_internalMem_iff`/`exists_internalMem_iff` relative to every internal\nfamily.*  Combined with `standard_not_internal` and `unlimited_not_internal`\nthis would give a purely combinatorial test for internality.\n\n**The key insight is** that the choice-based counterexample germ built in\n`forall_internalMem_iff` is canonical: it produces, from any non-internal\nfamily, a germ witnessing the failure of transfer, so failure of transfer\nshould be *equivalent* to non-internality rather than merely implied by it.\n\n**Why now?** The two transfer laws are proved, and the two known external sets\n(the standard cut, the unlimited part) provide immediate test cases for a\nfalsification attempt.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Combinatorics",
+      "NumberTheory"
+    ],
+    "id": "fd_1333",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "ade8206b",
+    "status": "available",
+    "timestamp": "2026-08-16T13:01:03.187772+00:00",
+    "title": "Conjectures generated by the results in `Catalog/Novelty/Nonstandard*.lean`."
   },
   {
     "ambition_level": "extension",
