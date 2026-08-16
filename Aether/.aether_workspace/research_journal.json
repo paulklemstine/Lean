@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "ab9891cb",
-      "domain": "Logic",
-      "key_insight": "# Future Directions\n\nDerived from the verified results in\n`Catalog/Logic/ThreeSumBirthdayHierarchy.lean`,\n`Catalog/Logic/ThreeSumRevealDensity.lean`,\n`Catalog/Logic/GcdQueryLowerBound.lean` and\n`Catal",
-      "quality_score": 0.78,
-      "sorry_count": 1,
-      "theorem_count": 57,
-      "timestamp": "2026-08-13T21:10:16",
-      "title": "The 3SUM-Birthday-Bound Hierarchy"
-    },
-    {
       "cycle_id": "a1e10693",
       "domain": "Computation",
       "key_insight": "# FUTURE DIRECTIONS — next-cycle conjectures from the round-3 closures\n\nThe five round-3 hypotheses (RS-MIND, MODPAR-CERT, BURAU-ORD, DENS-SUB,\nCONG-DIV) are now closed with machine-checked Lean proof",
@@ -499,19 +489,19 @@
       "theorem_count": 104,
       "timestamp": "2026-08-16T07:46:03",
       "title": "NET-43: The Deepest Rung Is Two-Seed 256 (k\\*=256 reproduces EXACTLY at seed=2; both honest limits c"
+    },
+    {
+      "cycle_id": "6c757940",
+      "domain": "Computation",
+      "key_insight": "# Future Directions — Sheaf-Theoretic Data Integration\n\nAll results below are in `Catalog/Computation/`, compile against Mathlib\n(Lean 4, toolchain `v4.28.0`) with **zero `sorry`** and only the standa",
+      "quality_score": 0.89,
+      "sorry_count": 0,
+      "theorem_count": 152,
+      "timestamp": "2026-08-16T09:42:56",
+      "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "b369f029",
-      "domain": "Bridges",
-      "key_insight": "# Future directions\n\nThe files in `Bridges/` develop Joyal's combinatorial species as transport-of-structure\nfunctors and connect them to generating series.  Everything listed below is fully proved:\n`",
-      "quality_score": 0.686,
-      "sorry_count": 0,
-      "theorem_count": 248,
-      "timestamp": "2026-08-05T14:51:14",
-      "title": "Combinatorial-Categorical Bridge: Species of Structures as Functors"
-    },
     {
       "cycle_id": "52648a00",
       "domain": "Bridges",
@@ -2501,27 +2491,19 @@
       "theorem_count": 104,
       "timestamp": "2026-08-16T07:46:03",
       "title": "NET-43: The Deepest Rung Is Two-Seed 256 (k\\*=256 reproduces EXACTLY at seed=2; both honest limits c"
+    },
+    {
+      "cycle_id": "6c757940",
+      "domain": "Computation",
+      "key_insight": "# Future Directions — Sheaf-Theoretic Data Integration\n\nAll results below are in `Catalog/Computation/`, compile against Mathlib\n(Lean 4, toolchain `v4.28.0`) with **zero `sorry`** and only the standa",
+      "quality_score": 0.89,
+      "sorry_count": 0,
+      "theorem_count": 152,
+      "timestamp": "2026-08-16T09:42:56",
+      "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "67289c0d",
-      "domain": "Cryptography",
-      "name": "singularModuli_no_precomputation",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "a9efa47b",
-      "domain": "Novelty",
-      "name": "fib_periodic_mod",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "aeab7c87",
-      "domain": "Applications",
-      "name": "xCoord_neg",
-      "quality": 0.88
-    },
     {
       "cycle_id": "aeab7c87",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Bridges",
       "name": "seq_telescope",
       "quality": 0.84
+    },
+    {
+      "cycle_id": "6c757940",
+      "domain": "Computation",
+      "name": "term_nonneg",
+      "quality": 0.89
+    },
+    {
+      "cycle_id": "6c757940",
+      "domain": "Computation",
+      "name": "term_zero",
+      "quality": 0.89
+    },
+    {
+      "cycle_id": "6c757940",
+      "domain": "Computation",
+      "name": "term_one",
+      "quality": 0.89
     }
   ],
-  "last_updated": "2026-08-16T07:46:03",
+  "last_updated": "2026-08-16T09:42:56",
   "open_questions": [
     {
       "context": "This file gives a **complete, self-contained proof** of that theorem (0 `sorry`s).",
@@ -3269,12 +3269,6 @@
     ],
     "Computation": [
       {
-        "cycle_id": "14cda033",
-        "quality": 0.71918,
-        "theorems": 186,
-        "title": "[Your Title]"
-      },
-      {
         "cycle_id": "af44a08e",
         "quality": 0.659818701923077,
         "theorems": 201,
@@ -3327,6 +3321,12 @@
         "quality": 0.79,
         "theorems": 145,
         "title": "CYCLIC-TYPE-CHANNEL (round-22 #2, experiment 413, assessment v189, paper 78)"
+      },
+      {
+        "cycle_id": "6c757940",
+        "quality": 0.89,
+        "theorems": 152,
+        "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
       }
     ],
     "Cryptography": [

@@ -1,453 +1,396 @@
-# Finite-Termination Gradient Descent for a Tropical Translation Model
+# Gradient Descent in the Tropical Limit: Sharpness, Dequantization, and Linear Convergence for Max-Plus Learning
 
-**Aristotle**  
-**August 1, 2026**
+**Aristotle**
+
+**Date:** 2026-08-16
+
+---
 
 ## Abstract
 
-We study fixed-step training of a scalar tropical translation model under three-sample absolute loss. For ordered reduced targets $a\le m\le c$, the model $f_\theta(z)=z+\theta$ has empirical objective $L(\theta)=|\theta-a|+|\theta-m|+|\theta-c|$, whose unique minimizer is the median $m$. We define clipped tropical descent by moving from an initial value $x$ toward $m$ with cumulative travel budget $n\eta$ after $n$ updates. The resulting iterate admits an exact error formula,
+We develop a complete first-order learning theory for exp–log (EML) neural units in their tropical, or large-weight, limit. Three strands are combined. First, we quantify Maslov dequantization: a smooth log-sum-exp aggregator at temperature $T$ over $k$ terms differs from the corresponding max-plus fold by at most $T\log k$, uniformly in the input, so that an EML neuron converges to a tropical polynomial as $T\to 0^{+}$ (equivalently as the weight scale $s = 1/T \to \infty$). Second, we prove an exact dictionary in one variable: a function $\mathbb{R}\to\mathbb{R}$ is a tropical rational function — a difference of two finite maxima of affine functions — if and only if it is computed by a feed-forward rectifier network of arbitrary depth; both inclusions are given by explicit constructions in which each tropical monomial costs exactly one rectifier unit. Third, we analyse training. The tropical absolute-error empirical risk of a max-plus monomial is itself a tropical polynomial in the parameter, convex, $N$-Lipschitz, and — crucially — **sharp**: on an ordered odd sample of size $N=2m+1$ it satisfies $R(\theta) \ge R(\theta^\star) + |\theta-\theta^\star|$ with $\theta^\star$ the median residual, which is therefore the unique empirical risk minimizer. Fixed-step subgradient descent then attains the optimal general rate $O(DG/\sqrt n)$ in risk, and by sharpness the same rate in parameter error, with $G=N$. Sharpness further yields a genuinely faster regime: subgradient descent with Polyak steps contracts the squared distance to the optimum by the factor $1-\mu^2/G^2$ per iteration, giving $(\theta_n-\theta^\star)^2 \le (1-1/N^2)^n(\theta_0-\theta^\star)^2$ for tropical training, together with convergence of the trained model to a tropical rational minimizer. We show the boundary of the theory is sharp in the other sense too: an explicit three-sample instance exhibits an exact two-cycle under a fixed step, so that the iterates never come within distance $2$ of the unique minimizer. Finally, a risk-landscape equivalence shows that a function is tropical rational precisely when some rectifier network has the same empirical risk on *every* data set; hence tropical and rectifier training see literally identical landscapes and all rates transfer verbatim. The speed of first-order training is thus governed not by the parameterization but by two tropical invariants: the maximal slope $G$ and the sharpness constant $\mu$.
 
-$$
-|\theta_n-m|=\max\{0,|x-m|-n\eta\}.
-$$
+**Keywords:** tropical geometry, max-plus algebra, Maslov dequantization, rectifier networks, subgradient methods, sharpness / error bounds, Polyak step size, piecewise-linear optimization.
 
-For every positive step size, the method therefore terminates at the optimizer after at most $\lceil |x-m|/\eta\rceil$ iterations. Parameter convergence transfers exactly to pointwise prediction convergence because $|f_\theta(z)-f_m(z)|=|\theta-m|$. We also derive the excess-risk certificate
-
-$$
-0\le L(\theta_n)-L(m)\le 3\max\{0,|x-m|-n\eta\},
-$$
-
-and show that every clipped tropical update has an exact width-two rectified-linear representation. These results give a complete convergence and representation analysis for a basic large-weight, piecewise-linear learning model and expose a direct bridge between tropical optimization, robust median estimation, and ReLU networks.
+---
 
 ## 1. Introduction
 
-The tropical limit replaces smooth nonlinear structure by max-plus, min-plus, and piecewise-linear operations. In learning theory this limit is useful not only as an approximation regime but also as an analytic lens: optimization trajectories that are difficult to describe in a general network may become exact combinations of affine pieces. This paper develops that perspective for the simplest nontrivial tropical learning problem, a scalar translation neuron trained on three samples with absolute loss.
+### 1.1 Motivation
 
-The model is intentionally elementary. Its input-output map is $z\mapsto z+\theta$, with a single trainable parameter $\theta$. Nevertheless, it contains four ingredients that recur in larger piecewise-linear systems: a nonsmooth empirical objective, a robust location statistic, a clipped descent rule, and a representation by rectified linear units. Because the system is one-dimensional, each ingredient can be characterized exactly.
+Neural networks built from rectifier nonlinearities compute piecewise-linear functions. This is not an approximation; it is an identity. Consequently the entire apparatus of smooth optimization — gradients, Hessians, strong convexity, smoothness constants — sits uneasily on the actual object being optimized, which has no second derivative anywhere and no first derivative on a codimension-one set.
 
-Our first result is an identity for the distance remaining after a travel budget $t$ toward the median. It states that the initial distance $|x-m|$ is reduced by exactly $t$ until it reaches zero. Specializing $t$ to $n\eta$ yields a closed form for every discrete iterate. This provides both an exact rate and finite termination. Unlike estimates of the form $O(1/n)$ or $O(\rho^n)$, the formula predicts the complete trajectory and the first iteration after which no further change occurs.
+Tropical geometry supplies the native language. In the max-plus semiring $(\mathbb{R}\cup\{-\infty\}, \oplus, \odot)$ with $a \oplus b = \max(a,b)$ and $a\odot b = a + b$, a polynomial is a finite maximum of affine functions and a rational function is a difference of two such maxima. The class of tropical rational functions in one variable is exactly the class of continuous piecewise-linear functions with finitely many pieces. That the class of rectifier networks coincides with it is folklore; what we supply here are explicit, constructive translations in both directions, with a tight accounting of cost (one rectifier per tropical monomial), and — more importantly — a *training theory* stated entirely in tropical invariants.
 
-Our second result transfers convergence from parameter space to function space. Translation by a scalar is an isometry with respect to pointwise output difference: changing the parameter by $\delta$ changes every prediction by exactly $|\delta|$. Hence the entire trained tropical rational function becomes equal to the optimal function at the same finite stopping time.
+The second motivation is the appearance of smooth exp–log aggregators throughout modern architectures. Write
 
-Our third result controls empirical risk. Absolute value is $1$-Lipschitz, so a sum of three absolute losses is $3$-Lipschitz. Combining this observation with median optimality and the exact parameter trajectory produces a nonnegative, explicit bound on excess loss.
+$$\mathrm{LSE}_T(u_1,\dots,u_k) \;=\; T\log\Bigl(\sum_{j=1}^k e^{u_j/T}\Bigr).$$
 
-Finally, we connect the tropical flow to ordinary ReLU networks. A signed pair of shifted rectifiers represents the clipped motion exactly. The tropical and ReLU descriptions are therefore not merely analogous; for this model they define the same real-valued map.
+At $T=1$ this is the log-partition function; softmax attention, mixture gating, and energy-based blending are all instances. The parameter $T$ is a temperature, and $s=1/T$ is the overall weight scale. In the *large-weight* regime $s\to\infty$ the aggregator degenerates to $\max_j u_j$. This degeneration is Maslov dequantization, the semiring-level shadow of the zero-temperature limit in statistical mechanics. Our first task is to make it quantitative and uniform.
 
-The remainder of the paper introduces the model, establishes the median characterization, derives the trajectory and convergence theorems, proves the loss bound and ReLU identity, presents algorithms and examples, and discusses extensions and limitations.
+### 1.2 Contributions
 
-## 2. Tropical translation and empirical loss
+1. **Quantitative dequantization (Section 3).** Two-sided bounds $\max_j u_j \le \mathrm{LSE}_T \le \max_j u_j + T\log k$, hence a uniform-in-input approximation of an EML neuron by a tropical polynomial with error $T\log k$, and convergence as $T\to 0^+$ and as $s\to\infty$.
+2. **The tropical/rectifier dictionary (Section 4).** A function $f:\mathbb{R}\to\mathbb{R}$ is tropical rational iff a rectifier expression computes it. Both directions are constructive; the forward direction is a structural induction establishing that tropical rational functions form a lattice-ordered vector space closed under $\mathrm{relu}$, and the reverse is the identity $\max(u,v)=v+\mathrm{relu}(u-v)$ applied monomial by monomial.
+3. **Sharpness of the tropical risk (Section 5).** For ordered residuals of odd sample size, $R(\theta) \ge R(\theta^\star) + |\theta-\theta^\star|$ with $\theta^\star$ the median. Uniqueness of the minimizer is an immediate corollary.
+4. **Rates (Sections 6–7).** The classical $O(DG/\sqrt n)$ best-iterate bound for fixed steps, specialized to $G=N$; the automatic transfer to parameter error via sharpness; and a geometric rate $1-\mu^2/G^2$ per step for Polyak steps, instantiated as $1-1/N^2$.
+5. **Negative result (Section 8).** An exact two-cycle for a fixed step, showing that "gradient descent converges" is false as literally stated in the tropical regime.
+6. **Landscape equivalence (Section 9).** Tropical rationality is equivalent to having the same empirical risk as some rectifier network on every data set; the speed-up therefore comes from tropical geometry, not from parameterization.
 
-### 2.1. Max-plus monomials
+---
 
-In max-plus algebra, tropical addition is maximum and tropical multiplication is ordinary addition. A one-variable max-plus monomial with coefficient $\theta$ acts on $z\in\mathbb R$ by ordinary addition.
+## 2. Setting and definitions
 
-**Definition 2.1 (Tropical translation model).** For a parameter $\theta\in\mathbb R$, define
+Throughout, $\mathrm{relu}(u) = \max(u,0)$.
 
-$$
-f_\theta(z)=z+\theta.
-$$
+**Definition 2.1 (Max-plus fold).** For $b \in \mathbb{R}$ and a finite list $\ell = [y_1,\dots,y_r]$ of reals, define
+$$\mathrm{tmax}(b;\ell) \;=\; \max\{b, y_1, \dots, y_r\},$$
+with $\mathrm{tmax}(b;[\,]) = b$. This is the tropical sum $b \oplus y_1 \oplus \cdots \oplus y_r$ of a nonempty family; the base $b$ guarantees nonemptiness, so no $-\infty$ is needed.
 
-This function is a tropical monomial. In particular, it belongs to the class of tropical polynomials and therefore to the broader class of tropical rational functions.
+**Definition 2.2 (Tropical polynomial function).** For a base pair $b=(b_1,b_2)\in\mathbb{R}^2$ and a finite list $\ell$ of pairs $t = (t_1,t_2) \in \mathbb{R}^2$, define
+$$P_{b,\ell}(x) \;=\; \mathrm{tmax}\bigl(b_1 x + b_2;\; [\,t_1 x + t_2 : t \in \ell\,]\bigr) \;=\; \max\Bigl(b_1x+b_2,\ \max_{t\in\ell}(t_1x+t_2)\Bigr).$$
+Each pair $(t_1,t_2)$ is a *tropical monomial* with slope $t_1$ and coefficient $t_2$. A function $f:\mathbb{R}\to\mathbb{R}$ **is a tropical polynomial** if $f = P_{b,\ell}$ for some $b,\ell$.
 
-The model may be read as a residual correction: all inputs receive the same learned offset. If a raw supervised problem has observations $(z_i,y_i)$, then the reduced targets are $r_i=y_i-z_i$, and the absolute prediction error is $|f_\theta(z_i)-y_i|=|\theta-r_i|$. Thus training the translation parameter amounts to estimating a robust center of the residuals.
+**Definition 2.3 (Tropical rational function).** $f:\mathbb{R}\to\mathbb{R}$ is *tropical rational* if $f = P - Q$ pointwise for tropical polynomials $P,Q$. (In the semiring, $P-Q$ is the tropical quotient $P \oslash Q$.)
 
-### 2.2. Three-point absolute loss
+**Definition 2.4 (Rectifier expressions).** The set of rectifier expressions is generated inductively by
+$$e \;::=\; \mathrm{affine}(a,b) \;\mid\; e_1 + e_2 \;\mid\; c\cdot e \;\mid\; \mathrm{act}(e),$$
+with semantics $\mathrm{affine}(a,b)(x) = ax+b$, $(e_1+e_2)(x) = e_1(x)+e_2(x)$, $(c\cdot e)(x) = c\,e(x)$, and $\mathrm{act}(e)(x) = \mathrm{relu}(e(x))$. Depth and width are unrestricted and weights are arbitrary reals; this is exactly the class of one-dimensional feed-forward rectifier networks.
 
-Fix three ordered reduced targets
+**Definition 2.5 (Subgradient oracle).** A map $g:\mathbb{R}\to\mathbb{R}$ is a *subgradient oracle* for $f:\mathbb{R}\to\mathbb{R}$ if for all $x,y$,
+$$f(x) + g(x)(y-x) \;\le\; f(y).$$
+This affine-minorant property is all that the convergence analysis uses; in particular it entails convexity of $f$ and needs no differentiability.
 
-$$
-a\le m\le c.
-$$
+**Definition 2.6 (Fixed-step subgradient descent).** $\theta_0 = x_0$ and $\theta_{k+1} = \theta_k - \eta\,g(\theta_k)$.
 
-**Definition 2.2 (Three-point tropical absolute loss).** The empirical loss is
+**Definition 2.7 (Polyak step).** Given the optimal value $f^\star$,
+$$\mathrm{PS}(x) \;=\; \begin{cases} x, & g(x)=0,\\[2pt] x - \dfrac{f(x)-f^\star}{g(x)^2}\,g(x), & g(x)\neq 0,\end{cases}$$
+and $\theta_{k+1} = \mathrm{PS}(\theta_k)$.
 
-$$
-L_{a,m,c}(\theta)=|\theta-a|+|\theta-m|+|\theta-c|.
-$$
+**Definition 2.8 (Tropical $L^1$ training problem).** For residual targets $y_0,\dots,y_{N-1}$,
+$$R(x) \;=\; \sum_{i=0}^{N-1}|x - y_i|, \qquad g(x) \;=\; \sum_{i=0}^{N-1}\mathrm{sgn}^{+}(x-y_i), \quad \mathrm{sgn}^{+}(u) = \begin{cases}+1,& u\ge 0\\ -1,& u<0.\end{cases}$$
 
-We often write $L(\theta)$ when the data are fixed. The objective is convex and piecewise affine, with possible corners at $a$, $m$, and $c$. Its slopes on the four open regions are $-3$, $-1$, $1$, and $3$, respectively, when repeated sample values are absent; coincident values merge adjacent regions without affecting the conclusions below.
+**Definition 2.9 (Tropical model and empirical risk).** The trainable max-plus monomial is $M_\theta(z) = z \odot \theta = z + \theta$, and for data $(X_i,Y_i)_{i<N}$ the empirical risk of a hypothesis $f$ is $\mathcal{R}(f) = \sum_{i<N}|f(X_i)-Y_i|$. Setting $y_i = Y_i - X_i$ gives $\mathcal{R}(M_\theta) = R(\theta)$ exactly.
 
-**Lemma 2.3 (Median optimality and uniqueness).** If $a\le m\le c$, then
+**Definition 2.10 (Sharpness).** $f$ is *sharp with constant $\mu>0$ at $z$* with optimal value $f^\star = f(z)$ if
+$$f^\star + \mu|x-z| \;\le\; f(x) \quad\text{for all } x.$$
 
-$$
-L(m)\le L(\theta)
-$$
+---
 
-for every $\theta\in\mathbb R$. Moreover, if a parameter $\theta$ globally minimizes $L$, then $\theta=m$. Hence $m$ is the unique empirical-risk minimizer.
+## 3. Quantitative Maslov dequantization
 
-**Proof sketch.** Consider the position of $\theta$ relative to $m$. If $\theta\ge m$, then
+**Definition 3.1 (Smooth EML aggregator).** For $T>0$, $b\in\mathbb{R}$ and a list $\ell$,
+$$\mathrm{LSE}_T(b;\ell) \;=\; T\log\Bigl(e^{b/T} + \sum_{y\in\ell} e^{y/T}\Bigr).$$
 
-$$
-|\theta-a|-|m-a|=\theta-m,
-$$
+This is generated by the exp–log primitive $\mathrm{eml}(x,y) = e^{x} - \log y$: exponentials are $\mathrm{eml}(\cdot,1)$ and logarithms are $1 - \mathrm{eml}(0,\cdot)$, so that
+$$\mathrm{LSE}_T(b;\ell) = T\Bigl(1 - \mathrm{eml}\bigl(0,\ \mathrm{eml}(b/T,1) + \textstyle\sum_{y\in\ell}\mathrm{eml}(y/T,1)\bigr)\Bigr).$$
+Thus the smooth aggregator is an EML expression in the strict sense, not merely an analogy.
 
-and
+**Theorem 3.2 (Lower dequantization bound).** For $T>0$, $\mathrm{tmax}(b;\ell) \le \mathrm{LSE}_T(b;\ell)$.
 
-$$
-|\theta-m|=\theta-m.
-$$
+*Proof sketch.* Let $M = \mathrm{tmax}(b;\ell)$. The maximum is attained either by $b$ or by some element of $\ell$, so $e^{M/T}$ occurs among the summands; the remaining summands are positive. Hence $e^{M/T} \le e^{b/T} + \sum_{y\in\ell}e^{y/T}$. Apply $T\log(\cdot)$, which is increasing for $T>0$, and use $M = T\cdot(M/T)$. $\square$
 
-For the third term, the reverse triangle inequality gives
+**Theorem 3.3 (Upper dequantization bound with explicit error).** For $T>0$ and a list $\ell$ of length $r$,
+$$\mathrm{LSE}_T(b;\ell) \;\le\; \mathrm{tmax}(b;\ell) + T\log(r+1).$$
 
-$$
-|\theta-c|-|m-c|\ge-(\theta-m).
-$$
+*Proof sketch.* Every summand is at most $e^{M/T}$ with $M = \mathrm{tmax}(b;\ell)$, and there are $r+1$ of them, so the sum is at most $(r+1)e^{M/T}$. Apply $T\log(\cdot)$ and $\log(ab) = \log a + \log b$. $\square$
 
-Adding yields $L(\theta)-L(m)\ge\theta-m\ge0$, with strict positivity when $\theta>m$. The case $\theta\le m$ is symmetric and gives $L(\theta)-L(m)\ge m-\theta$, again strict away from $m$. Therefore $m$ is the unique minimizer. $\square$
+**Corollary 3.4 (Two-sided error).** $\bigl|\mathrm{LSE}_T(b;\ell) - \mathrm{tmax}(b;\ell)\bigr| \le T\log(r+1)$, and hence
+$$\lim_{T\to 0^{+}} \mathrm{LSE}_T(b;\ell) = \mathrm{tmax}(b;\ell).$$
 
-This is the odd-sample median principle in its smallest informative form. The optimization target is determined by the data, not imposed externally.
+The convergence follows by squeezing between the constant $\mathrm{tmax}(b;\ell)$ and $\mathrm{tmax}(b;\ell)+T\log(r+1)$, both of which tend to $\mathrm{tmax}(b;\ell)$.
 
-## 3. Clipped tropical descent
+**Definition 3.5 (EML neuron).** $\;\mathcal{N}_T^{b,\ell}(x) = \mathrm{LSE}_T\bigl(b_1x+b_2;\ [t_1x+t_2 : t\in\ell]\bigr)$.
 
-### 3.1. Continuous travel-budget form
+**Theorem 3.6 (Uniform approximation rate for a neuron).** For $T>0$ and every $x\in\mathbb{R}$,
+$$\bigl|\mathcal{N}_T^{b,\ell}(x) - P_{b,\ell}(x)\bigr| \;\le\; T\log k, \qquad k = |\ell| + 1 .$$
+Consequently $\mathcal{N}_T^{b,\ell} \to P_{b,\ell}$ pointwise as $T\to 0^{+}$, and the limit object is a tropical polynomial, hence tropical rational, hence exactly computable by a rectifier network (Section 4).
 
-The nonsmooth loss points toward the median. To prevent a fixed step from crossing the optimizer, we clip the final movement at the median.
+The bound is *uniform in $x$*: the error constant does not depend on the input, only on the number of tropical monomials, and only logarithmically. A layer of $k=1000$ units at $T=10^{-3}$ is within $6.9\times 10^{-3}$ of its tropical shadow everywhere on the line.
 
-**Definition 3.1 (Clipped tropical flow).** For a target $m$, travel budget $t\in\mathbb R$, and starting point $x\in\mathbb R$, define
+**Definition 3.7 (Large-weight scaling).** $\;\mathrm{LW}_s(b;\ell) = s^{-1}\log\bigl(e^{sb} + \sum_{y\in\ell}e^{sy}\bigr)$.
 
-$$
-G_m(t,x)=
-\begin{cases}
-\min\{m,x+t\},&x<m,\\
-\max\{m,x-t\},&x\ge m.
-\end{cases}
-$$
+**Theorem 3.8 (Tropical limit in the large-weight regime).** For $s>0$, $\mathrm{LW}_s(b;\ell) = \mathrm{LSE}_{1/s}(b;\ell)$, and therefore
+$$\lim_{s\to\infty}\mathrm{LW}_s(b;\ell) = \mathrm{tmax}(b;\ell),$$
+with error at most $s^{-1}\log(r+1)$ for every $s>0$.
 
-For optimization we use $t\ge0$. The extension to arbitrary real $t$ is algebraically harmless, while nonnegative $t$ has the interpretation of elapsed time or cumulative step length.
+*Proof sketch.* The substitution $T = 1/s$ turns $y/T$ into $sy$ and $T\log(\cdot)$ into $s^{-1}\log(\cdot)$, identifying the two expressions; then squeeze between $\mathrm{tmax}(b;\ell)$ and $\mathrm{tmax}(b;\ell)+s^{-1}\log(r+1)$ along $s\to\infty$. $\square$
 
-If $x<m$, the flow moves right with unit speed until it reaches $m$. If $x\ge m$, it moves left with unit speed until it reaches $m$. The min and max operations enforce absorption at the target.
+This is the regime relevant to learning: scaling all weights of an exp–log unit by a common large factor drives it to a max-plus unit at rate $O(1/s)$, with a constant that grows only logarithmically in the width.
 
-**Theorem 3.2 (Exact distance law).** For all real $m$, $t$, and $x$,
+---
 
-$$
-|G_m(t,x)-m|=\max\{0,|x-m|-t\}.
-$$
+## 4. The tropical/rectifier dictionary in one variable
 
-**Proof sketch.** Split according to whether $x<m$. In that case, either $x+t\ge m$, so the minimum is $m$ and both sides are zero, or $x+t<m$, so $G_m(t,x)=x+t$ and
+### 4.1 The tropical product rule
 
-$$
-|G_m(t,x)-m|=m-x-t=|x-m|-t>0.
-$$
+**Lemma 4.1 (Pairwise-sum product rule).** For reals $b,b'$ and lists $\ell,\ell'$,
+$$\mathrm{tmax}(b;\ell) + \mathrm{tmax}(b';\ell') \;=\; \mathrm{tmax}\bigl(b+b';\ \mathcal{S}\bigr),$$
+where $\mathcal{S}$ is the list of all pairwise sums $u+v$ with $u \in \{b\}\cup\ell$, $v\in\{b'\}\cup\ell'$, excluding the base pair $b+b'$.
 
-If $x\ge m$, either $x-t\le m$, giving zero on both sides, or $x-t>m$, giving
+*Proof sketch.* Both sides are bounded above by each other. For $\le$: the two maxima are attained at some $u^\star, v^\star$, and $u^\star+v^\star$ is a member of the pairwise-sum family. For $\ge$: any pairwise sum $u+v$ satisfies $u \le \mathrm{tmax}(b;\ell)$ and $v\le \mathrm{tmax}(b';\ell')$. $\square$
 
-$$
-|G_m(t,x)-m|=x-m-t=|x-m|-t>0.
-$$
+In tropical language this is the statement that the tropical product of two tropical polynomials is a tropical polynomial whose monomials are the pairwise products (i.e. sums of exponent–coefficient data) of the factors. Combined with $c\max(u,v) = \max(cu,cv)$ for $c\ge0$, it gives:
 
-The maximum combines the reached and unreached cases. $\square$
+**Proposition 4.2 (Closure of tropical polynomials).** Tropical polynomial functions are closed under pointwise addition (tropical multiplication), pointwise maximum (tropical addition), and multiplication by nonnegative scalars. They contain all affine functions and all constants.
 
-This theorem is the central identity. It says that clipping is precisely the positive-part operation applied to the remaining distance.
+### 4.2 Tropical rational functions form a lattice-ordered vector space
 
-### 3.2. Fixed-step iterates
+**Proposition 4.3.** The class of tropical rational functions is closed under: addition, negation, multiplication by arbitrary real scalars, pointwise $\max$, pointwise $\min$, and $f\mapsto \mathrm{relu}\circ f$.
 
-**Definition 3.3 (Discrete clipped descent).** Given a step size $\eta\in\mathbb R$, define the parameter after $n\in\mathbb N$ updates by
+*Proof sketch.* Write $f = P-Q$, $h = P'-Q'$ with all four factors tropical polynomials.
+- **Addition:** $f + h = (P+P') - (Q+Q')$, and sums of tropical polynomials are tropical polynomials by Lemma 4.1.
+- **Negation:** $-f = Q - P$.
+- **Scalars:** for $c\ge 0$ use $cf = cP - cQ$ and Proposition 4.2; for $c<0$ use $cf = -((-c)f)$.
+- **Maximum:** $\max(P-Q,\,P'-Q') = \max(P+Q',\,P'+Q) - (Q+Q')$; the first term is a max of tropical polynomials, hence tropical polynomial.
+- **Minimum:** $\min(f,h) = -\max(-f,-h)$.
+- **Rectifier:** $\mathrm{relu}(f) = \max(f, 0)$ and constants are tropical polynomials. $\square$
 
-$$
-\theta_n=G_m(n\eta,x).
-$$
+**Theorem 4.4 (Networks compute tropical rational functions).** Every rectifier expression evaluates to a tropical rational function.
 
-For $\eta\ge0$, this closed form agrees with repeatedly moving at most $\eta$ toward $m$. Equivalently, the recurrence is
+*Proof sketch.* Structural induction on the expression, using Proposition 4.3 at each constructor: affine leaves are tropical rational; the three constructors correspond to addition, scalar multiplication, and the rectifier. $\square$
 
-$$
-\theta_{n+1}=
-\begin{cases}
-\min\{m,\theta_n+\eta\},&\theta_n<m,\\
-\max\{m,\theta_n-\eta\},&\theta_n\ge m,
-\end{cases}
-$$
+### 4.3 The converse construction
 
-with $\theta_0=x$. The closed form is preferable for analysis because it exposes cumulative progress directly.
+**Lemma 4.5 (Max as one rectifier).** $\max(u,v) = v + \mathrm{relu}(u-v)$ for all $u,v\in\mathbb{R}$.
 
-**Corollary 3.4 (Exact discrete convergence rate).** For every $n\in\mathbb N$,
+*Proof.* If $u\le v$ both sides equal $v$; if $u\ge v$ both sides equal $u$. $\square$
 
-$$
-|\theta_n-m|=\max\{0,|x-m|-n\eta\}.
-$$
+**Construction 4.6.** Define a rectifier expression $E_{b,\ell}$ by recursion on $\ell$:
+$$E_{b,[\,]} = \mathrm{affine}(b_1,b_2), \qquad E_{b,\,t::\ell} \;=\; E_{b,\ell} \;+\; \mathrm{act}\bigl(\mathrm{affine}(t_1,t_2) + (-1)\cdot E_{b,\ell}\bigr).$$
 
-**Proof sketch.** Substitute $t=n\eta$ into Theorem 3.2. $\square$
+**Theorem 4.7.** $E_{b,\ell}(x) = P_{b,\ell}(x)$ for all $x$. Hence the tropical polynomial with $k$ monomials is computed by a rectifier expression with exactly $k-1$ rectifier units.
 
-**Corollary 3.5 (Capture criterion).** If
+*Proof sketch.* Induction on $\ell$, applying Lemma 4.5 with $u = t_1x+t_2$ and $v = P_{b,\ell}(x)$ at each step. $\square$
 
-$$
-|x-m|\le n\eta,
-$$
+**Theorem 4.8 (Every tropical rational function is a network).** If $f = P - Q$ with $P = P_{b,\ell}$, $Q = P_{b',\ell'}$, then the expression $E_{b,\ell} + (-1)\cdot E_{b',\ell'}$ computes $f$ exactly, with $|\ell| + |\ell'|$ rectifier units.
 
-then $\theta_n=m$.
+**Theorem 4.9 (Tropical/rectifier dictionary).** For $f:\mathbb{R}\to\mathbb{R}$:
+$$f \text{ is tropical rational} \iff \exists\ \text{rectifier expression } e \text{ with } e(x)=f(x) \ \forall x.$$
 
-**Proof sketch.** Under the stated inequality, the positive part in Corollary 3.4 is zero. Zero absolute distance implies equality. $\square$
+*Proof.* $(\Rightarrow)$ Theorem 4.8. $(\Leftarrow)$ Theorem 4.4 plus the fact that tropical rationality is invariant under pointwise equality of functions. $\square$
 
-### 3.3. Finite termination
+The correspondence is exact and cost-preserving: **one rectifier per tropical monomial**. Depth in the network is traded for length of the monomial list, and the algebraic complexity of the tropical representation is the architectural size of the network.
 
-**Theorem 3.6 (Finite termination).** Let $\eta>0$. Then there exists $N\in\mathbb N$ such that
+### 4.4 Quantitative structure
 
-$$
-\theta_n=m
-$$
+**Proposition 4.10 (Slope-Lipschitz bound).** If all slopes of $P_{b,\ell}$ satisfy $|t_1| \le L$ (including the base), then $|P_{b,\ell}(x) - P_{b,\ell}(y)| \le L|x-y|$.
 
-for every $n\ge N$. More precisely, one may choose
+*Proof sketch.* Every affine piece $t_1x+t_2$ satisfies $t_1x + t_2 \le t_1y+t_2 + L|x-y| \le P_{b,\ell}(y) + L|x-y|$; take the maximum over pieces, then symmetrize in $x,y$. $\square$
 
-$$
-N=\left\lceil\frac{|x-m|}{\eta}\right\rceil.
-$$
+**Proposition 4.11 (Convexity).** $P_{b,\ell}$ is convex on $\mathbb{R}$, being a pointwise maximum of affine functions.
 
-**Proof sketch.** Positivity of $\eta$ permits division by the step size. By the defining property of the ceiling,
+These two facts identify the analytic invariants that will control training: the **largest absolute tropical slope** is the Lipschitz constant, hence the subgradient bound $G$; and convexity places the problem inside nonsmooth convex optimization, where the subgradient oracle of Definition 2.5 is the correct primitive.
 
-$$
-|x-m|\le N\eta.
-$$
+---
 
-For $n\ge N$, one also has $N\eta\le n\eta$. The capture criterion then gives $\theta_n=m$. $\square$
+## 5. Sharpness of the tropical $L^1$ risk
 
-**Corollary 3.7 (Convergence to the median).** If $\eta>0$, then
+The tropical risk $R(x)=\sum_{i<N}|x-y_i|$ is the natural loss for a max-plus model: it is built from the same piecewise-linear vocabulary and it stays inside the tropical category.
 
-$$
-\lim_{n\to\infty}\theta_n=m.
-$$
+**Proposition 5.1 (The loss is itself tropical).** $R$ is a tropical polynomial function of the parameter. Consequently $R$ is convex, piecewise linear with breakpoints at the $y_i$, and Lipschitz with constant $N$.
 
-**Proof sketch.** The sequence is eventually equal to $m$, which is stronger than ordinary convergence. $\square$
+*Proof sketch.* $|x-y| = \max(x-y,\,y-x)$ is a tropical polynomial with two monomials, and tropical polynomials are closed under sums by Lemma 4.1; induct on $N$, with the empty sum equal to the constant $0$. Expanding, $R$ is a maximum of $2^N$ affine functions with slopes in $\{-N,-N+2,\dots,N\}$. $\square$
 
-The positivity assumption is essential. If $\eta=0$, then $\theta_n=x$ for all $n$, so convergence occurs only when $x=m$. Negative step sizes move away from the target under the given formula and have no descent interpretation.
+**Proposition 5.2 (Subgradient oracle and bound).** The sign sum $g(x) = \sum_{i<N}\mathrm{sgn}^{+}(x-y_i)$ is a subgradient oracle for $R$, and $|g(x)| \le N$ for all $x$.
 
-## 4. Convergence of the learned tropical function
+*Proof sketch.* Termwise: if $y_i \le x$ then $|x-y_i| + (u-x) = u - y_i \le |u-y_i|$; if $y_i > x$ then $|x-y_i| - (u-x) = y_i - u \le |u-y_i|$. Sum over $i$. The bound is the triangle inequality with each term of modulus $1$. $\square$
 
-Parameter convergence does not always imply a simple form of function convergence. For tropical translations, however, the relation is exact.
+**Lemma 5.3 (Betweenness).** If $v$ lies between $u$ and $w$ (in either order) then for all $x$,
+$$|v-u| + |v-w| \;\le\; |x-u| + |x-w| .$$
 
-**Lemma 4.1 (Parameter-prediction isometry).** For all $\theta,m,z\in\mathbb R$,
+*Proof sketch.* If $u \le v \le w$ then the left side is $w-u$, and the right side is at least $(x-u) + (w-x) = w-u$ by $\pm$-versions of $t\le|t|$. The other order is symmetric. $\square$
 
-$$
-|f_\theta(z)-f_m(z)|=|\theta-m|.
-$$
+**Lemma 5.4 (Reflection identity).** For $N = 2m+1$,
+$$2R(x) \;=\; \sum_{i=0}^{2m}\bigl(|x-y_i| + |x - y_{2m-i}|\bigr).$$
 
-**Proof sketch.** The input cancels:
+*Proof.* The index reflection $i \mapsto 2m-i$ is an involution of $\{0,\dots,2m\}$, so the second sum equals the first. $\square$
 
-$$
-f_\theta(z)-f_m(z)=(z+\theta)-(z+m)=\theta-m.
-$$
+**Theorem 5.5 (Sharpness / error bound).** Let $N = 2m+1$ and suppose $y_0 \le y_1 \le \cdots \le y_{2m}$. Put $\theta^\star = y_m$ (the median). Then for every $x\in\mathbb{R}$,
+$$R(\theta^\star) + |x - \theta^\star| \;\le\; R(x).$$
+That is, $R$ is sharp at $\theta^\star$ with constant $\mu = 1$.
 
-Taking absolute values proves the claim. $\square$
+*Proof.* For each $i \in \{0,\dots,2m\}$ set
+$$G_i \;=\; \bigl(|x-y_i| + |x-y_{2m-i}|\bigr) - \bigl(|y_m-y_i| + |y_m-y_{2m-i}|\bigr).$$
+Monotonicity of the sample gives that $y_m$ lies between $y_i$ and $y_{2m-i}$: if $i\le m$ then $y_i \le y_m \le y_{2m-i}$, and if $i \ge m$ then $y_{2m-i}\le y_m \le y_i$. Lemma 5.3 therefore yields $G_i \ge 0$ for every $i$. The diagonal index $i=m$ gives $G_m = 2|x-y_m| - 0 = 2|x-\theta^\star|$. Since all terms are nonnegative, retaining only the diagonal one,
+$$2|x-\theta^\star| \;=\; G_m \;\le\; \sum_{i=0}^{2m}G_i \;=\; 2R(x) - 2R(\theta^\star)$$
+by Lemma 5.4 applied at $x$ and at $y_m$. Divide by $2$. $\square$
 
-The equality is uniform in $z$. Although the principal conclusion below is pointwise convergence, the same identity also shows uniform convergence over every subset of $\mathbb R$, because the supremum of the prediction difference is the same constant $|\theta-m|$.
+**Corollary 5.6 (Median optimality and uniqueness).** $R(\theta^\star)\le R(x)$ for all $x$, and any minimizer equals $\theta^\star$.
 
-**Theorem 4.2 (Pointwise convergence of trained tropical rational functions).** If $\eta>0$, then for every $z\in\mathbb R$,
+*Proof.* Optimality is Theorem 5.5 with $|x-\theta^\star|\ge0$ dropped. If $x$ is a minimizer, then $R(x)\le R(\theta^\star)$, so Theorem 5.5 forces $|x-\theta^\star|\le 0$, whence $x=\theta^\star$. $\square$
 
-$$
-\lim_{n\to\infty}f_{\theta_n}(z)=f_m(z)=z+m.
-$$
+**Remark 5.7.** Sharpness is the piecewise-linear replacement for strong convexity. A $\mu$-strongly convex function obeys $f(x)\ge f^\star + \tfrac{\mu}{2}\|x-z\|^2$; the tropical loss obeys the *linear* lower bound $f(x) \ge f^\star + \mu\|x-z\|$, which is strictly stronger near the optimum. It is exactly this linear growth that a nonsmooth first-order method can exploit, and the reason a landscape with no curvature at all is nevertheless benign.
 
-Moreover, for every $n$ and every $z$,
+**Remark 5.8 (Sharpness is bounded by the slope).** For any $f$ with subgradient oracle $g$ bounded by $G$ and sharp with constant $\mu$ at $z$: evaluating sharpness at $x = z+1$ gives $f^\star + \mu \le f(z+1)$, while the affine minorant at $z+1$ evaluated at $z$ gives $f(z+1) \le f^\star + g(z+1) \le f^\star + G$. Hence $\mu \le G$, and the ratio $\mu/G \in (0,1]$ is a well-defined *tropical condition number*.
 
-$$
-|f_{\theta_n}(z)-f_m(z)|
-=\max\{0,|x-m|-n\eta\}.
-$$
+---
 
-**Proof sketch.** Apply Lemma 4.1 with $\theta=\theta_n$ and then use Corollary 3.4. Finite termination implies that the prediction difference vanishes for all $z$ once $n\ge\lceil|x-m|/\eta\rceil$. $\square$
+## 6. Fixed-step subgradient descent: the $O(1/\sqrt n)$ regime
 
-Thus the learned object remains a tropical rational function throughout training, and its limit is the uniquely minimizing tropical translation.
+**Theorem 6.1 (One-step energy inequality).** Let $g$ be a subgradient oracle for $f$ with $|g|\le G$, let $\eta\ge0$, and let $z,x\in\mathbb{R}$. Then
+$$(x - \eta g(x) - z)^2 \;\le\; (x-z)^2 - 2\eta\bigl(f(x)-f(z)\bigr) + \eta^2G^2 .$$
 
-## 5. Explicit empirical-loss rate
+*Proof sketch.* Expand the square: $(x-\eta g(x)-z)^2 = (x-z)^2 - 2\eta g(x)(x-z) + \eta^2 g(x)^2$. The affine-minorant property at $(x,z)$ gives $f(x)-f(z) \le g(x)(x-z)$, and $g(x)^2 \le G^2$. $\square$
 
-### 5.1. Lipschitz control
+**Theorem 6.2 (Telescoped bound).** With $\theta_k$ the fixed-step iterates from $\theta_0=x_0$,
+$$2\eta\sum_{k=0}^{n-1}\bigl(f(\theta_k)-f(z)\bigr) + (\theta_n - z)^2 \;\le\; (x_0-z)^2 + n\eta^2G^2 .$$
 
-**Lemma 5.1 (Three-sample loss stability).** For every $a,m,c,\theta\in\mathbb R$,
+*Proof sketch.* Induction on $n$, adding Theorem 6.1 at $x=\theta_n$ to the inductive hypothesis. $\square$
 
-$$
-L_{a,m,c}(\theta)-L_{a,m,c}(m)\le3|\theta-m|.
-$$
+**Theorem 6.3 (Best-iterate bound).** For $\eta>0$ and $n\ge1$ there exists $k<n$ with
+$$f(\theta_k) - f(z) \;\le\; \frac{(x_0-z)^2 + n\eta^2G^2}{2\eta n}.$$
 
-No ordering assumption is required for this upper bound.
+*Proof sketch.* If every one of the $n$ gaps exceeded the right-hand side $B$, summing would give $nB < \sum_{k<n}(f(\theta_k)-f(z))$, contradicting Theorem 6.2 together with $(\theta_n-z)^2\ge0$ and $2\eta n B = (x_0-z)^2 + n\eta^2G^2$. $\square$
 
-**Proof sketch.** For any fixed $r\in\mathbb R$, the reverse triangle inequality gives
+**Theorem 6.4 (Optimal fixed step).** Let $D = |x_0-z| > 0$, $G>0$, $n \ge 1$, and take $\eta = D/(G\sqrt n)$. Then some iterate $k<n$ satisfies
+$$f(\theta_k) \;\le\; f(z) + \frac{DG}{\sqrt n}.$$
 
-$$
-|\theta-r|-|m-r|\le|\theta-m|.
-$$
+*Proof sketch.* Substituting $\eta$ into Theorem 6.3: the numerator becomes $D^2 + n\cdot \frac{D^2}{G^2n}\cdot G^2 = 2D^2$, and the denominator becomes $2Dn/(G\sqrt n) = 2D\sqrt n/G$. The quotient is $DG/\sqrt n$. $\square$
 
-Apply this inequality with $r=a$, $r=m$, and $r=c$, then sum the three estimates. $\square$
+**Corollary 6.5 (Tropical instance).** For the tropical $L^1$ loss with $N$ samples, $G=N$ and the step $\eta = |x_0-z|/(N\sqrt n)$ gives an iterate before time $n$ with
+$$R(\theta_k) \;\le\; R(z) + \frac{|x_0-z|\,N}{\sqrt n}$$
+for *any* comparison parameter $z$.
 
-The constant $3$ follows directly from the number of summands. The argument generalizes to a sum of $q$ unweighted absolute losses with Lipschitz constant $q$.
+**Theorem 6.6 (Parameter rate from sharpness).** For an ordered odd sample with median $\theta^\star$ and $\theta_0 \ne \theta^\star$, with $D = |\theta_0-\theta^\star|$ and step $\eta = D/(N\sqrt n)$, some $k<n$ satisfies simultaneously
+$$R(\theta_k) \le R(\theta^\star) + \frac{DN}{\sqrt n} \qquad\text{and}\qquad |\theta_k - \theta^\star| \le \frac{DN}{\sqrt n}.$$
 
-### 5.2. Excess-risk certificate
+*Proof.* Take $z=\theta^\star$ in Corollary 6.5 and combine with Theorem 5.5, which converts a risk gap of $\varepsilon$ into a parameter error of at most $\varepsilon$. $\square$
 
-**Theorem 5.2 (Explicit tropical training-loss rate).** Suppose $a\le m\le c$. For every initial value $x$, step size $\eta$, and iteration $n$,
+The transfer in Theorem 6.6 is worth pausing on. For a general convex nonsmooth loss, small risk gap says nothing about proximity to the argmin: the landscape may have a long flat valley. Sharpness forbids valleys, and hence upgrades every risk guarantee into a parameter guarantee at no cost.
 
-$$
-0\le L_{a,m,c}(\theta_n)-L_{a,m,c}(m)
-\le3\max\{0,|x-m|-n\eta\}.
-$$
+---
 
-For $\eta>0$, the excess loss is exactly zero for every
+## 7. Polyak steps: geometric convergence
 
-$$
-n\ge\left\lceil\frac{|x-m|}{\eta}\right\rceil.
-$$
+Section 6's $1/\sqrt n$ rate is optimal for *general* nonsmooth convex objectives, but tropical losses are not general. The Polyak rule converts sharpness into a linear rate.
 
-**Proof sketch.** Median optimality supplies the nonnegative lower bound. Lemma 5.1 gives
+**Theorem 7.1 (One-step contraction).** Let $g$ be a subgradient oracle for $f$ with $|g|\le G$, $G>0$, and suppose $f$ is sharp with constant $\mu>0$ at $z$, with $f^\star = f(z)$. Then for every $x$,
+$$\bigl(\mathrm{PS}(x) - z\bigr)^2 \;\le\; \Bigl(1 - \frac{\mu^2}{G^2}\Bigr)(x-z)^2 .$$
 
-$$
-L(\theta_n)-L(m)\le3|\theta_n-m|.
-$$
+*Proof.* By Remark 5.8, $\mu\le G$, so the factor $1-\mu^2/G^2$ lies in $[0,1)$.
 
-Substitute the exact distance formula from Corollary 3.4. The finite-termination statement follows when the positive part vanishes. $\square$
+*Degenerate case $g(x)=0$.* The minorant property gives $f(x) \le f(z) = f^\star$, while sharpness gives $f^\star + \mu|x-z|\le f(x)$. Hence $\mu|x-z|\le0$ and $x=z$; then $\mathrm{PS}(x) = x = z$ and both sides vanish.
 
-The upper bound need not equal the actual excess loss at every point; it is a certificate obtained from global Lipschitz continuity. By contrast, the underlying parameter and prediction error formulas are exact.
+*Main case $g(x)\neq0$.* Write $d = f(x)-f^\star \ge \mu|x-z| \ge 0$ and $t = d/g(x)^2 \ge 0$, so $\mathrm{PS}(x) = x - t\,g(x)$ and $t\,g(x)^2 = d$. Expanding,
+$$\bigl(x - t g(x) - z\bigr)^2 = (x-z)^2 - 2t\,g(x)(x-z) + t^2g(x)^2 .$$
+Convexity gives $d \le g(x)(x-z)$, and $t^2 g(x)^2 = t\,d$, so
+$$\bigl(\mathrm{PS}(x)-z\bigr)^2 \;\le\; (x-z)^2 - 2td + td \;=\; (x-z)^2 - t\,d .$$
+Finally, sharpness gives $d^2 \ge \mu^2(x-z)^2$ and $g(x)^2 \le G^2$, so
+$$t\,d \;=\; \frac{d^2}{g(x)^2} \;\ge\; \frac{\mu^2(x-z)^2}{G^2}. \qquad\square$$
 
-## 6. Exact representation by two ReLU units
+**Theorem 7.2 (Geometric convergence).** Under the hypotheses of Theorem 7.1, the Polyak iterates from $\theta_0$ satisfy
+$$(\theta_n - z)^2 \;\le\; \Bigl(1-\frac{\mu^2}{G^2}\Bigr)^{n}(\theta_0 - z)^2 \qquad\text{for all } n\ge0 .$$
 
-Define the standard rectified linear unit by
+*Proof.* Induction on $n$, applying Theorem 7.1 at $\theta_n$ and multiplying the inductive hypothesis by the nonnegative factor $1-\mu^2/G^2$. $\square$
 
-$$
-\operatorname{ReLU}(u)=\max\{0,u\}.
-$$
+**Theorem 7.3 (Convergence).** $\theta_n \to z$ as $n\to\infty$.
 
-A clipped map has a central plateau and two affine tails. Two shifted hinges are exactly sufficient to describe this shape.
+*Proof sketch.* With $r = 1-\mu^2/G^2 \in [0,1)$, Theorem 7.2 gives $(\theta_n-z)^2 \le r^n(\theta_0-z)^2 \to 0$; a squeeze on $|\theta_n - z|$ finishes. $\square$
 
-**Theorem 6.1 (Two-ReLU representation of the tropical flow).** For $t\ge0$ and all $m,x\in\mathbb R$,
+**Theorem 7.4 (Linear rate for tropical training).** Let $N = 2m+1$ with ordered residuals and median $\theta^\star = y_m$. Polyak-step subgradient descent on the tropical $L^1$ risk, initialized at $\theta_0$, satisfies for every $n$
+$$(\theta_n - \theta^\star)^2 \;\le\; \Bigl(1 - \frac{1}{N^2}\Bigr)^{n}(\theta_0-\theta^\star)^2,$$
+and $\theta_n \to \theta^\star$. Consequently the trained model converges pointwise, $M_{\theta_n}(z) \to M_{\theta^\star}(z)$ for every input $z$, to a tropical rational function that minimizes the tropical risk — and, by Theorem 4.9, to a function computed exactly by a rectifier network.
 
-$$
-G_m(t,x)=m+\operatorname{ReLU}(x-m-t)
--\operatorname{ReLU}(m-x-t).
-$$
+*Proof.* Apply Theorems 7.1–7.3 with $\mu = 1$ (Theorem 5.5) and $G = N$ (Proposition 5.2). Pointwise convergence of the model is continuity of $z + \cdot$. $\square$
 
-**Proof sketch.** There are three regions. If $x>m+t$, then the first rectifier equals $x-m-t$ and the second is zero, so the expression is $x-t$, matching motion from above. If $m-t\le x\le m+t$, both rectifiers vanish and the output is $m$, matching capture by the target. If $x<m-t$, then the first rectifier is zero and the second equals $m-x-t$, so the expression is $x+t$, matching motion from below. These regions exhaust the real line. $\square$
+**Comparison.** To reach parameter accuracy $\varepsilon$ from distance $D$:
 
-**Corollary 6.2 (ReLU realization of every iterate).** If $\eta\ge0$, then for every $n\in\mathbb N$,
+| Method | Iterations needed |
+|---|---|
+| Fixed step $\eta = D/(N\sqrt n)$ | $n \gtrsim D^2N^2/\varepsilon^2$ |
+| Polyak step | $n \gtrsim 2N^2\log(D/\varepsilon)$ |
 
-$$
-\theta_n=m+\operatorname{ReLU}(x-m-n\eta)
--\operatorname{ReLU}(m-x-n\eta).
-$$
+The dependence on $\varepsilon$ collapses from polynomial to logarithmic. The dependence on the sample size is $N^2$ in both, reflecting that $G = N$ while $\mu = 1$: the tropical condition number is $\mu/G = 1/N$.
 
-**Proof sketch.** Apply Theorem 6.1 with $t=n\eta$, which is nonnegative. $\square$
+**Worked instance.** With samples $y = (0,1,2)$ so $N=3$, $\theta^\star = 1$, and $\theta_0 = 0$: the risk is $R(0)=3$, the optimum is $R(1)=2$, the subgradient at $0$ is $g(0) = 1 - 1 - 1 = -1$, so the Polyak step is $0 - \frac{3-2}{1}\cdot(-1) = 1$. One step lands exactly on the optimum. This is the extreme case of the geometric bound; the contraction factor $1-1/9$ is a worst-case guarantee, not a typical one.
 
-The two units have equal positive input slope before their output weights are applied, opposite shifts around $m$, and output weights $+1$ and $-1$. The representation supplies an exact bridge between a max/min optimizer and a width-two piecewise-linear network.
+---
 
-## 7. Main learning theorem
+## 8. The boundary: fixed steps can fail forever
 
-The preceding results combine into a single statement.
+The theory of Section 6 is a *best-iterate* theory with a shrinking step. It is natural to ask whether that caution is necessary. It is.
 
-**Theorem 7.1 (Convergence and optimality of tropical translation training).** Let $a,m,c,x,\eta\in\mathbb R$ satisfy $a\le m\le c$ and $\eta>0$. Define $f_\theta(z)=z+\theta$, define $L(\theta)=|\theta-a|+|\theta-m|+|\theta-c|$, and set $\theta_n=G_m(n\eta,x)$. Then:
+**Theorem 8.1 (Exact two-cycle).** Take samples $y = (0,1,2)$, so $N=3$ and the unique minimizer is $\theta^\star = 1$. Fixed-step subgradient descent with $\eta = 3$ initialized at $\theta_0 = 3$ produces
+$$\theta_n \;=\; \begin{cases} 3, & n \text{ even},\\ -6, & n \text{ odd}.\end{cases}$$
 
-1. for every $z\in\mathbb R$, $f_{\theta_n}(z)$ converges to $f_m(z)$;
-2. the convergence is finitely terminating, with $f_{\theta_n}=f_m$ for every $n\ge\lceil|x-m|/\eta\rceil$;
-3. $m$ minimizes $L$, so $L(m)\le L(\theta)$ for every $\theta$;
-4. $m$ is the unique global minimizer of $L$;
-5. the parameter, prediction, and excess-loss bounds are
+*Proof sketch.* Induction. At $\theta=3$ all three samples satisfy $y_i \le 3$, so $g(3) = 3$ and the next iterate is $3 - 3\cdot3 = -6$. At $\theta=-6$ all three samples exceed $-6$, so $g(-6) = -3$ and the next iterate is $-6 + 9 = 3$. $\square$
 
-$$
-|\theta_n-m|=|f_{\theta_n}(z)-f_m(z)|
-=\max\{0,|x-m|-n\eta\},
-$$
+**Corollary 8.2 (Permanent failure).** For every $n$, $|\theta_n - \theta^\star| \ge 2$.
 
-and
+Thus the literal statement "gradient descent on a tropical loss converges to a tropical rational minimizer" is **false** for a fixed step size. The mechanism is purely tropical: outside the convex hull of the data the subgradient is *constant* of magnitude $N$, so the iterate translates by the fixed amount $\eta N$ regardless of how far away it is. There is no restoring force proportional to the error — precisely the absence that curvature would have supplied. The correct statements are the best-iterate bound of Theorem 6.4 with a $1/\sqrt n$ step schedule, and the Polyak bound of Theorem 7.4, which is self-tuning and needs no step selection at all.
 
-$$
-0\le L(\theta_n)-L(m)
-\le3\max\{0,|x-m|-n\eta\};
-$$
+This also isolates what sharpness does and does not give. Sharpness bounds the loss *from below*; it says nothing about the step rule. A method that ignores the loss value (fixed step) cannot use sharpness, and it fails. A method that reads the loss value (Polyak) converts sharpness directly into contraction.
 
-6. every iterate has the exact two-ReLU representation in Corollary 6.2.
+---
 
-**Proof sketch.** Statements 1 and 2 follow from finite parameter termination and the parameter-prediction isometry. Statements 3 and 4 are the median optimality lemma. Statement 5 combines the exact distance theorem with loss stability. Statement 6 is the two-ReLU identity at cumulative time $n\eta$. $\square$
+## 9. Comparison with rectifier networks
 
-## 8. Algorithms and complexity
+**Definition 9.1.** For a hypothesis $f:\mathbb{R}\to\mathbb{R}$ and data $(X_i,Y_i)_{i<N}$, the empirical risk is $\mathcal{R}_N(f;X,Y) = \sum_{i<N}|f(X_i)-Y_i|$.
 
-### 8.1. Iterative clipped descent
+**Theorem 9.2 (Risk-landscape equivalence).** For $f:\mathbb{R}\to\mathbb{R}$, the following are equivalent:
+1. $f$ is tropical rational;
+2. there is a rectifier expression $e$ with $\mathcal{R}_N(f;X,Y) = \mathcal{R}_N(e;X,Y)$ for every $N$ and all data $X,Y$.
 
-Given ordered targets $a\le m\le c$, an initial parameter $x$, a positive step $\eta$, and an iteration count $K$, the direct algorithm initializes $\theta\leftarrow x$ and repeats the following operation $K$ times: if $\theta<m$, replace $\theta$ by $\min(m,\theta+\eta)$; otherwise replace it by $\max(m,\theta-\eta)$. Each update uses constant time and constant memory. Computing $K$ iterates costs $O(K)$ time and $O(1)$ auxiliary space, or $O(K)$ storage if the complete trajectory is retained.
+*Proof.* $(1)\Rightarrow(2)$: Theorem 4.8 produces $e$ with $e = f$ pointwise; equal functions have equal risks. $(2)\Rightarrow(1)$: fix $x$ and apply the hypothesis to the one-point data set $N=1$, $X_0 = x$, $Y_0 = f(x)$. The left side is $|f(x)-f(x)| = 0$, so $|e(x)-f(x)| = 0$, i.e. $e(x)=f(x)$. As $x$ was arbitrary, $e=f$ pointwise, and $f$ is tropical rational by Theorem 4.4. $\square$
 
-### 8.2. Closed-form evaluation
+**Corollary 9.3.** The tropical hypothesis class and the rectifier hypothesis class have identical loss landscapes: the same minimizers, the same sharpness constants, the same Lipschitz constants, and hence exactly the same first-order convergence rates. Every rate in Sections 6–7 transfers verbatim.
 
-When only the $n$th iterate is needed, compute $t=n\eta$ and evaluate $G_m(t,x)$ directly. This costs $O(1)$ arithmetic operations and $O(1)$ space. The closed form also permits immediate calculation of the exact parameter error, the uniform prediction error, and the loss upper bound.
+**Corollary 9.4.** Each trained max-plus monomial $M_\theta(z) = z+\theta$ is computed exactly by a rectifier expression (indeed by an affine unit, with zero rectifiers), and every iterate along either trajectory therefore lies in both classes.
 
-### 8.3. Stopping rule
+The interpretation is deflationary in a productive way. One might hope that the observed speed of training a rectifier network reflects something about the *architecture* — depth, over-parameterization, the shape of the rectifier. Theorem 9.2 says that, at the level of what a first-order method sees, the architecture contributes nothing that the tropical description does not already contain. The rate is determined by the pair $(\mu, G)$: the growth constant of the loss at the optimum and its largest slope. Both are read off from the tropical data — the sample geometry and the monomial slopes — and neither refers to the parameterization.
 
-The exact stopping time is obtained without running the optimizer:
+---
 
-$$
-N=\left\lceil\frac{|x-m|}{\eta}\right\rceil.
-$$
+## 10. Algorithms
 
-This has constant arithmetic complexity in a real-RAM model. In floating-point software, the iterative implementation should snap to $m$ through min and max operations, while a tolerance can guard against representation error in user-facing diagnostics.
+**Algorithm 1 (Tropical evaluation).** Evaluate $P_{b,\ell}(x)$ by a single fold: $\Theta(k)$ time, $\Theta(1)$ space, $k=|\ell|+1$.
 
-## 9. Numerical examples
+**Algorithm 2 (Tropical-to-rectifier compilation).** Convert $P_{b,\ell}$ into a rectifier expression by the recursion of Construction 4.6: $\Theta(k)$ nodes, $k-1$ rectifiers, depth $\Theta(k)$ (or $\Theta(\log k)$ with a balanced pairwise variant using $\max(u,v)=v+\mathrm{relu}(u-v)$ on a binary tree).
 
-### 9.1. Finite capture from below
+**Algorithm 3 (Tropical product).** Given two tropical polynomials with $k$ and $k'$ monomials, form the pointwise-sum polynomial with $kk'$ monomials by Lemma 4.1: $\Theta(kk')$ time. Redundant monomials (those never attaining the maximum) can be pruned by an upper-hull sweep in $\Theta(kk'\log(kk'))$.
 
-Let $a=-2$, $m=1$, $c=5$, $x=-4$, and $\eta=2$. The initial distance is $5$, so
+**Algorithm 4 (Polyak-step tropical training).** Given samples $y$, an initial $\theta_0$, and the optimal value $R^\star$: repeat $\theta \leftarrow \theta - \frac{R(\theta)-R^\star}{g(\theta)^2}g(\theta)$ until $g(\theta)=0$. Each iteration costs $\Theta(N)$; by Theorem 7.4 the number of iterations to accuracy $\varepsilon$ is $O(N^2\log(D/\varepsilon))$, for total $O(N^3\log(D/\varepsilon))$. (For the one-dimensional median problem, sorting solves the problem exactly in $\Theta(N\log N)$; the iterative method is of interest as the analysable prototype of the multivariate case, where no closed form exists.)
 
-$$
-N=\left\lceil\frac{5}{2}\right\rceil=3.
-$$
+**Algorithm 5 (Dequantization schedule).** To train a smooth EML unit and land in the tropical regime: run at temperature $T_j$ with $T_j\downarrow 0$; Theorem 3.6 guarantees the objective at temperature $T_j$ is within $NT_j\log k$ of the tropical objective uniformly, so a schedule $T_j = \varepsilon/(2N\log k)$ makes the smooth surrogate's optimum $\varepsilon$-optimal for the tropical problem.
 
-The trajectory is
+---
 
-$$
-\theta_0=-4,\qquad
-\theta_1=-2,\qquad
-\theta_2=0,\qquad
-\theta_3=1,
-$$
+## 11. Discussion
 
-and $\theta_n=1$ thereafter. The exact distance sequence is $5,3,1,0,0,\ldots$. At $z=7$, the predictions are $3,5,7,8,8,\ldots$, converging in finite time to $f_1(7)=8$.
+### 11.1 Slope and sharpness replace smoothness and strong convexity
 
-The losses are
+Every rate proved here is controlled by exactly two numbers:
 
-$$
-L(-4)=20,\quad L(-2)=14,\quad L(0)=10,\quad L(1)=8.
-$$
+- $G$, the **maximal tropical slope**, which is simultaneously the Lipschitz constant of the loss (Proposition 4.10) and the subgradient bound (Proposition 5.2);
+- $\mu$, the **sharpness constant**, the linear growth rate of the loss away from the optimum (Theorem 5.5).
 
-The excess losses $12,6,2,0$ remain below the certificates $15,9,3,0$.
+Their ratio $\mu/G \in (0,1]$ (Remark 5.8) plays the role that the inverse condition number $m/L$ plays for smooth strongly convex problems. The formal analogy is exact: smooth strongly convex gradient descent contracts by $1 - m/L$ per step; sharp Lipschitz Polyak descent contracts squared distance by $1-\mu^2/G^2$. In the tropical setting these constants are *combinatorial*: $G$ is the largest slope appearing among the tropical monomials, and $\mu$ is determined by which monomials are active at the optimum. No analytic estimate enters.
 
-### 9.2. Capture from above
+### 11.2 Why the loss stays tropical
 
-Let $a=-3$, $m=0$, $c=4$, $x=5.5$, and $\eta=1.5$. Then
+A pleasing structural feature is closure: the model is tropical, the loss is tropical (Proposition 5.1), and every level set and subdifferential is polyhedral. Optimization never leaves the tropical category. This is not automatic — a squared-error loss on a tropical model is piecewise *quadratic*, and while that is smoother, it destroys the exact combinatorial description and, with it, the sharpness constant. The $L^1$ loss is the tropically natural choice, and it is also the one for which the theory is strongest.
 
-$$
-N=\left\lceil\frac{5.5}{1.5}\right\rceil=4.
-$$
+### 11.3 Dequantization as a physical limit
 
-The iterates are $5.5$, $4$, $2.5$, $1$, and $0$. The fourth movement is clipped from length $1.5$ to length $1$. The two-ReLU formula reproduces each value without branching.
+The bound $\max \le \mathrm{LSE}_T \le \max + T\log k$ is the learning-theoretic form of the zero-temperature limit in statistical mechanics: $\mathrm{LSE}_T$ is $-T$ times a free energy, its $T\to0$ limit is a ground-state energy, and the $T\log k$ error is an entropy term bounded by the logarithm of the number of states. That the error is uniform in the input, and only logarithmic in the width, is what makes the tropical model a legitimate proxy rather than a caricature: a wide network at moderate weight scale is already extremely close to its combinatorial shadow.
 
-### 9.3. A large step
+### 11.4 Limits of the present analysis
 
-If $x=-4$, $m=1$, and $\eta=100$, then $N=1$. Ordinary un-clipped signed steps could overshoot dramatically, but clipped descent lands at $m$ in one update. Thus no upper restriction on the positive step size is required for convergence in this model.
+The results are one-dimensional in the parameter and in the input. Two obstructions arise in higher dimension. First, the sharpness proof uses the reflection pairing $i\mapsto 2m-i$ and the betweenness lemma, both of which are one-dimensional; in $\mathbb{R}^d$ the $L^1$ minimizer is a coordinatewise median only when the loss separates across coordinates. Second, the identification of $G$ with the largest slope generalizes (as the largest dual norm of a monomial's gradient), but the identification of $\mu$ requires knowing which normal cone of the tropical hypersurface contains the optimum. The product rule of Lemma 4.1 generalizes verbatim to $\mathbb{R}^d$, so the algebra is not the difficulty; the geometry of the optimum is.
 
-## 10. Applications and interpretation
+---
 
-The model represents robust offset calibration. Given residuals $r_i=y_i-z_i$, minimizing absolute prediction loss chooses their median. This is useful when a minority of observations may be corrupted, because the median is less sensitive to extreme values than the mean. The three-point analysis makes this robustness geometric: one observation lies on each side of the central target, and their directional effects ensure a unique balance at $m$.
+## 12. Future directions
 
-The tropical formulation is relevant when large-weight limits or max-plus structures turn smooth computations into piecewise-affine maps. In such settings, the active affine region can encode a discrete combinatorial state. Here the states are “below the capture interval,” “captured,” and “above the capture interval.” Training consists of moving through at most one outer state before entering the central absorbing state.
+**Conjecture 1 (A tropical condition number governs all first-order rates).** For a tropical rational loss $L$ on $\mathbb{R}^d$, with $G$ its maximal tropical slope and $\mu$ its sharpness constant at the minimizer, Polyak-step subgradient descent contracts the squared distance by exactly $1-\mu^2/G^2$ per step, and no first-order method beats $(1-\mu^2/G^2)^{n/2}$ on the worst instance with these invariants. The key point is that $\mu/G$ is a purely combinatorial quantity — the ratio between the smallest and largest slopes of the tropical normal fan at the optimum — so the optimization rate is computed from the geometry of a Newton polytope rather than from any analytic estimate. The one-variable case is settled here ($\mu=1$, $G=N$, contraction $1-1/N^2$), and the multivariate normal-fan machinery required for the matching lower bound is elementary polyhedral combinatorics.
 
-The ReLU representation gives a second interpretation. A pair of shifted hinges builds the exact optimizer map, so one may regard the training trajectory itself as a shallow network whose biases depend on elapsed optimization time. This does not claim that arbitrary ReLU training behaves identically. Rather, it identifies an exact common primitive shared by tropical dynamics and rectified-linear computation.
+**Conjecture 2 (Dequantization commutes with training).** Let $\theta_T(n)$ be the $n$-th gradient-descent iterate of the smooth EML network at temperature $T$, and $\theta_0(n)$ the $n$-th subgradient iterate of its tropical limit. Then $|\theta_T(n) - \theta_0(n)| \le C\,n\,T\log k$, and consequently the two training trajectories have the same limit set as $T\to0^{+}$. The reason to expect this is that the dequantization defect is uniformly $T\log k$ *per unit* (Theorem 3.6), so it can accumulate at most linearly along a trajectory of $1$-Lipschitz update maps; the missing ingredient is a discrete Grönwall argument for nonexpansive piecewise-linear update maps.
 
-## 11. Limitations
+**Further problems.** (i) Multivariate tropical rational calculus: the pairwise-sum product rule generalizes, but a substitute for the median/betweenness argument is needed. (ii) Pruning: characterize which tropical monomials are *inessential* (never attain the maximum), giving a canonical minimal rectifier realization and a notion of tropical model compression with an exact, not approximate, guarantee. (iii) Stochastic and mini-batch Polyak steps for tropical losses, where $R^\star$ is unknown and must be estimated online. (iv) Generalization: sharpness at the empirical optimum plus a uniform bound on tropical slopes should yield fast (non-$\sqrt n$) excess-risk rates, since sharp empirical risk pins down the parameter, not merely the loss value. (v) Depth: the compilation of Construction 4.6 has depth linear in the number of monomials; quantifying the depth/monomial trade-off would give a tropical account of the expressivity benefits of depth.
 
-The conclusions rely on a scalar parameter and a translation model. Coupled parameters can generate trajectories that are not coordinatewise clipped. The loss uses three unweighted absolute deviations; different losses can replace the median by another statistic and can destroy finite termination. The target $m$ is assumed available from the ordered reduced samples. In a streaming setting, computing or tracking the median becomes an additional algorithmic problem.
-
-The loss-rate upper bound is global and simple rather than always sharp. Exact excess loss can be computed piecewise from the positions of $\theta_n$, $a$, $m$, and $c$, but the $3|\theta_n-m|$ certificate is more portable and suffices to prove finite vanishing.
-
-Finally, this analysis concerns the tropical limit itself. A finite-weight model may only approximate the piecewise-linear dynamics. Quantifying that approximation requires a perturbation theory that tracks accumulated update errors.
-
-## 12. Discussion and future work
-
-Several extensions preserve the central geometry. For $2k+1$ ordered scalar residuals, the absolute-loss minimizer is the unique central order statistic. A clipped unit-direction method should reach it after at most $\lceil|x-m|/\eta\rceil$ iterations. For $2k$ samples, the minimizer set is the closed interval between the two central order statistics; the correct analogue of finite termination is capture by that interval.
-
-For a separable $d$-parameter model, each coordinate can follow its own scalar flow. Simultaneous descent should terminate when the last coordinate arrives, giving a total stopping time equal to the maximum coordinatewise stopping time. Nonseparable tropical rational functions are a more substantial challenge because changes in the active max-plus pieces couple the coordinates.
-
-Perturbed updates form another natural direction. If each intended movement suffers an error bounded by $\varepsilon<\eta$, the effective guaranteed progress per step is $\eta-\varepsilon$ while the iterate remains outside an error neighborhood. This suggests a robust bound of the form
-
-$$
-|\theta_n-m|\le\max\{0,|x-m|-n(\eta-\varepsilon)\}
-$$
-
-until entry into a closed $\varepsilon$-neighborhood of $m$.
-
-The exact two-ReLU realization also invites a minimal-width result. The clipped flow with $t>0$ has two breakpoints, at $m-t$ and $m+t$. A single ordinary ReLU has at most one breakpoint, whereas two shifted units suffice by Theorem 6.1. Formalizing the corresponding lower bound would characterize the representation sharply.
+---
 
 ## 13. Conclusion
 
-Clipped fixed-step descent for a tropical translation model admits a complete solution. Three-sample absolute loss selects the median uniquely. The optimizer moves toward that median at an exactly known rate, reaches it after finitely many updates, and remains there. Parameter error equals prediction error at every input, excess loss has an explicit vanishing certificate, and the full trajectory is represented by two shifted ReLU units.
-
-The analysis illustrates the explanatory value of tropical limits. Piecewise-linear structure turns convergence from a qualitative statement into an exact distance identity and exposes a direct correspondence between robust statistics, optimization dynamics, and neural-network representation.
+Freezing an exp–log network — sending its weight scale to infinity, or its temperature to zero — costs at most $T\log k$ uniformly and turns it into a max-plus object. In one variable that object is exactly a rectifier network, monomial for monomial. Its absolute-error training landscape is a convex piecewise-linear function that is sharp with an explicit constant, and sharpness, not smoothness, is what determines how fast first-order methods run. With a fixed step the method may cycle forever; with a $1/\sqrt n$ schedule it achieves the optimal general rate; with the self-tuning Polyak step it converges geometrically at rate $1-\mu^2/G^2$, which for the tropical median problem is $1-1/N^2$. Since a rectifier network with the same function has an identical risk landscape, the speed is a property of the tropical geometry of the loss and not of the parameterization. Two combinatorial invariants — the largest slope and the growth constant — determine everything.

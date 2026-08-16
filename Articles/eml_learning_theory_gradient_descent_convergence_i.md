@@ -1,158 +1,143 @@
-# When Learning Becomes a Journey to the Median
+# When Neural Networks Freeze: Learning at Absolute Zero
 
-## A tropical model with an unusually transparent training path
+## A tale of two arithmetics
 
-Many machine-learning systems are difficult to understand for the same reason that a crowded city is difficult to understand from street level: too many interactions happen at once. Parameters push and pull one another, nonlinearities switch on and off, and a training algorithm winds through a landscape with millions of dimensions. Convergence may be visible on a plot while remaining obscure in principle.
+Imagine a version of arithmetic where you never multiply and you never really add. Instead, "adding" two numbers means *taking the larger one*, and "multiplying" them means *adding them in the ordinary sense*. So
 
-A tropical limit offers a different view. In tropical mathematics, addition and maximum replace some of ordinary algebra’s familiar operations. Models that were smoothly nonlinear can become piecewise linear, and a tangled optimization landscape can turn into a small collection of straight slopes joined at corners. The simplification does not make learning trivial. It makes the mechanism visible.
+$$3 \oplus 5 = \max(3,5) = 5, \qquad 3 \odot 5 = 3 + 5 = 8.$$
 
-Consider the one-parameter tropical model
+This is the **max-plus** or **tropical** semiring. It looks like a party trick, but it obeys most of the laws you expect: $\oplus$ and $\odot$ are commutative and associative, $\odot$ distributes over $\oplus$, the number $-\infty$ acts as zero and $0$ acts as one. What it lacks is subtraction — you cannot undo a maximum.
 
-$$
-f_\theta(z)=z+\theta.
-$$
+A *tropical polynomial* in one variable is what you get by writing an ordinary polynomial in this arithmetic:
 
-Its parameter $\theta$ translates every input by the same amount. This is a max-plus monomial, hence a basic tropical polynomial and also a tropical rational function. Suppose three reduced training targets are ordered as
+$$p(x) = c_0 \oplus (a_1 \odot x) \oplus (a_2 \odot x^{\odot 2}) \oplus \cdots = \max\{c_0,\; a_1 + x,\; a_2 + 2x, \dots\}.$$
 
-$$
-a\le m\le c.
-$$
+In plain language: a tropical polynomial is a **maximum of finitely many straight lines**. Its graph is a convex, piecewise-linear curve with a finite number of kinks. A *tropical rational function* is a difference $p(x) - q(x)$ of two such maxima; dropping the convexity, these are exactly the piecewise-linear functions with finitely many pieces.
 
-Using absolute error, the empirical loss of a parameter $\theta$ is
+Now hold that thought and look at a modern neural network. Strip away the mystique and a ReLU network is a machine built from three moves: affine maps $x \mapsto ax+b$, additions, scalings, and the rectifier $\mathrm{relu}(u) = \max(u,0)$. Every one of these operations is *piecewise linear*. The network is a piecewise-linear function pretending to be smooth.
 
-$$
-L(\theta)=|\theta-a|+|\theta-m|+|\theta-c|.
-$$
+The story of this article is that the pretence can be dropped entirely, that when you drop it the training problem becomes visibly *combinatorial*, and that the combinatorics tells you exactly how fast learning can go.
 
-The middle observation $m$ is the median. It is also the unique minimizer of $L$. That familiar fact from robust statistics is the anchor of the whole story: tropical training becomes a controlled trip from an initial parameter $x$ to the median $m$.
+## Freezing the network
 
-## The optimizer as motion with a speed limit
+Consider a soft aggregator — the thing hiding inside softmax attention, inside log-partition functions, inside the "exp–log" units that appear whenever a model has to blend several alternatives:
 
-Choose a positive step length $\eta$. After $n$ updates, let the cumulative travel budget be $t=n\eta$. The clipped tropical descent trajectory is
+$$\mathrm{LSE}_T(u_1,\dots,u_k) = T \log\!\left(e^{u_1/T} + \cdots + e^{u_k/T}\right).$$
 
-$$
-G_t(x)=
-\begin{cases}
-\min\{m,x+t\}, & x<m,\\
-\max\{m,x-t\}, & x\ge m.
-\end{cases}
-$$
+Here $T > 0$ is a temperature; equivalently, $s = 1/T$ is the overall scale of the weights. At $T=1$ this is the familiar log-sum-exp: a smooth, differentiable blend. As $T \to 0^{+}$ — the *large-weight limit* — something clean happens. The largest term overwhelms the others and the blend collapses to a choice:
 
-The $n$th trained parameter is $\theta_n=G_{n\eta}(x)$. If the starting point lies below the median, the parameter moves upward at unit speed and stops at $m$. If it lies above, it moves downward and stops at $m$. The word “clipped” matters: the final move is shortened when necessary, so the trajectory lands on the target rather than overshooting it.
+$$\mathrm{LSE}_T(u_1,\dots,u_k) \longrightarrow \max(u_1,\dots,u_k).$$
 
-Imagine a train running along a perfectly straight track toward a station. It may travel at most $\eta$ units per update. Once its remaining distance is less than $\eta$, it uses only the distance needed to reach the platform. There is no oscillation and no asymptotic hovering.
+This collapse has a name, **Maslov dequantization**, and it is more than a limit: it is an inequality with a rate. Writing $M = \max_i u_i$, one checks that $e^{M/T}$ is one of the $k$ summands, so the sum is at least $e^{M/T}$; and every summand is at most $e^{M/T}$, so the sum is at most $k\,e^{M/T}$. Taking $T\log(\cdot)$ of both bounds gives, exactly,
 
-This picture is captured by an exact distance law:
+$$\max_i u_i \;\le\; \mathrm{LSE}_T(u_1,\dots,u_k) \;\le\; \max_i u_i \;+\; T\log k .$$
 
-$$
-|G_t(x)-m|=\max\{0,|x-m|-t\}.
-$$
+**The Dequantization Theorem.** *A smooth exp–log unit and its tropical shadow never differ by more than $T \log k$, where $k$ is the number of terms — uniformly in the inputs. In particular, as the temperature falls to zero (equivalently, as the weights are scaled up without bound), the smooth unit converges to the max-plus unit.*
 
-Consequently,
+Two features of this bound deserve emphasis. First, it is *uniform*: the same $T\log k$ works at every input $x$, so an entire neuron $x \mapsto \mathrm{LSE}_T(a_1x+b_1, \dots, a_kx+b_k)$ is within $T\log k$ of the tropical polynomial $\max_i (a_i x + b_i)$ everywhere on the real line. Second, the dependence on the size of the layer is only *logarithmic*. A layer with a thousand units at temperature $10^{-3}$ is within about $0.007$ of its tropical shadow, everywhere.
 
-$$
-|\theta_n-m|=\max\{0,|x-m|-n\eta\}.
-$$
+So: at low temperature, the network *is* a tropical object, to a controlled error. The question is what happens when you train it there.
 
-This is stronger than a conventional convergence estimate. It is not merely an upper bound; it gives the error exactly at every update. Before arrival, each update removes precisely $\eta$ units of error. After arrival, the error is exactly zero.
+## The dictionary
 
-The formula immediately yields a finite stopping time. For $\eta>0$, the first guaranteed arrival occurs after
+Before training, we should know exactly which functions live in the frozen world. The answer is a clean equivalence.
 
-$$
-N=\left\lceil\frac{|x-m|}{\eta}\right\rceil
-$$
+**The Tropical–ReLU Dictionary.** *A function $f:\mathbb{R}\to\mathbb{R}$ is a tropical rational function — a difference of two finite maxima of affine functions — if and only if it is computed exactly by some feed-forward network of rectifier units of arbitrary depth built from affine maps, sums, scalar multiples and $\mathrm{relu}$.*
 
-updates. For every $n\ge N$, $\theta_n=m$. Thus the sequence converges to $m$, but “converges” understates what happens: it becomes constant after finitely many steps.
+Neither direction is a soft existence argument; both are constructions.
 
-## From parameter convergence to model convergence
+Going from networks to tropical functions is an induction on the structure of the network. Affine maps are tropical rational. Sums and differences of tropical rational functions are tropical rational (add numerators and denominators crosswise, exactly as with ordinary fractions). Scalar multiples are, too, with a twist: multiplying by a *negative* scalar swaps the roles of the two maxima, because $c\max(u,v) = \min(cu,cv)$ when $c<0$, and $\min$ is expressible as a difference. Finally, $\mathrm{relu}(f) = \max(f,0)$, and the maximum of two tropical rational functions $p_1-q_1$, $p_2-q_2$ is $\max(p_1+q_2,\,p_2+q_1) - (q_1+q_2)$ — a difference of tropical polynomials, because a max of tropical polynomials is a tropical polynomial and so is a sum. The tropical rational functions form a lattice-ordered vector space, and the network can never leave it.
 
-A learning algorithm ultimately matters through its predictions. Here the bridge from parameters to functions is exact. For every input $z$,
+Going the other way is a one-line identity with real consequences:
 
-$$
-|f_\theta(z)-f_m(z)|=|(z+\theta)-(z+m)|=|\theta-m|.
-$$
+$$\max(u,v) = v + \mathrm{relu}(u-v).$$
 
-The prediction error is independent of $z$. Therefore the trained models $f_{\theta_n}$ converge pointwise to
+Each extra line in a tropical polynomial costs exactly one rectifier. A tropical polynomial with $k$ monomials is realized by a network with $k-1$ rectifiers, and a tropical rational function $p-q$ by the difference of two such blocks. **The number of tropical monomials is the number of ReLU units.** The abstract algebraic complexity and the concrete architectural cost are the same number.
 
-$$
-f_m(z)=z+m,
-$$
+## The loss landscape is a polytope in disguise
 
-and they do so at exactly the same rate as the parameter. Indeed, once $n\eta\ge |x-m|$, the entire learned function—not merely its value on the three samples—is identical to the minimizing model.
+Now we can train. Take the simplest nontrivial frozen model: the max-plus monomial
 
-This produces a compact learning theorem. For three ordered targets $a\le m\le c$, any initial parameter $x$, and any positive step $\eta$, clipped tropical descent reaches $m$ in finitely many updates. The resulting tropical rational models converge at every input to $z\mapsto z+m$. The limit uniquely minimizes the three-sample absolute-error loss.
+$$M_\theta(z) = z \odot \theta = z + \theta,$$
 
-The uniqueness is worth emphasizing. For an odd number of observations, absolute loss selects a single central point. Moving $\theta$ slightly away from $m$ increases the combined distance because two of the three samples oppose the move while only one can favor it. The median is not an arbitrary destination inserted into the algorithm; it is forced by the geometry of the objective.
+a single trainable shift — and fit it to data $(X_i, Y_i)$, $i = 0,\dots,N-1$, under the absolute-error risk
 
-## A loss certificate at every step
+$$R(\theta) = \sum_{i} \bigl| M_\theta(X_i) - Y_i \bigr| = \sum_i |\theta - y_i|, \qquad y_i := Y_i - X_i.$$
 
-Distance to the optimum is useful, but practitioners usually monitor loss. The three absolute-value terms obey the reverse triangle inequality. Changing $\theta$ to $m$ changes each term by at most $|\theta-m|$, so
+The $L^1$ loss is the natural companion of a max-plus model: both are built from the same piecewise-linear vocabulary, and indeed the loss $R$ is *itself* a tropical polynomial in $\theta$ — a maximum of $2^N$ affine functions of $\theta$, one for each choice of signs. Training a tropical model on a tropical loss never leaves the tropical category.
 
-$$
-L(\theta)-L(m)\le 3|\theta-m|.
-$$
+This landscape has no curvature anywhere. It is a stack of straight segments glued at the data points. Classical optimization theory says such landscapes are bad news: for a general non-differentiable convex objective, no first-order method can beat an error of order $1/\sqrt{n}$ after $n$ steps, and the standard subgradient method achieves exactly that. Concretely, running $\theta_{k+1} = \theta_k - \eta\, g(\theta_k)$ with a subgradient $g$ bounded by $G$ and step $\eta = D/(G\sqrt{n})$, where $D$ is the initial distance to the optimum, some iterate before time $n$ has risk within $DG/\sqrt{n}$ of optimal. For our tropical loss the subgradient is a sum of $N$ signs, so $G = N$ exactly, and the guarantee reads $DN/\sqrt{n}$.
 
-Because $m$ minimizes $L$, the left-hand side is nonnegative. Substituting the exact training trajectory gives the explicit certificate
+That would be the end of the story if the tropical loss were a *generic* nonsmooth convex function. It is not, and the reason is the most beautiful part of this circle of ideas.
 
-$$
-0\le L(\theta_n)-L(m)
-\le 3\max\{0,|x-m|-n\eta\}.
-$$
+## Sharpness: the V-shape that curvature forgot
 
-The excess loss therefore falls beneath a linear envelope and vanishes after finitely many updates. The factor $3$ records the number of samples: each absolute-error term can change at unit rate with respect to the scalar parameter.
+Order the residuals $y_0 \le y_1 \le \cdots \le y_{2m}$ and let $\theta^\star = y_m$ be the median. Then the following holds for **every** $\theta$:
 
-Take a concrete run with $m=1$, $x=-4$, and $\eta=2$. The parameters are
+$$R(\theta) \;\ge\; R(\theta^\star) \;+\; |\theta - \theta^\star| .$$
 
-$$
--4,\;-2,\;0,\;1,\;1,\ldots
-$$
+**The Sharpness Theorem.** *The tropical absolute-error risk grows at least linearly, with constant exactly $1$, as you move away from the median parameter. Consequently the median is a minimizer, and it is the unique one.*
 
-The initial gap is $5$. Two full updates remove $4$ units, and the third update is clipped to the remaining unit. At input $z=7$, the trained model then returns $f_1(7)=8$. Every number in this example is predicted before the run begins by the exact error formula.
+The proof is a lovely pairing argument. Sum the loss against its own reflection $i \mapsto 2m-i$:
 
-## The hidden ReLU network
+$$2R(\theta) = \sum_{i=0}^{2m} \bigl( |\theta - y_i| + |\theta - y_{2m-i}| \bigr).$$
 
-Tropical piecewise-linear dynamics and rectified linear units are close relatives. Define the rectifier by
+For each $i$, the median $y_m$ lies *between* $y_i$ and $y_{2m-i}$, and for a point $v$ between $u$ and $w$ the elementary inequality $|v-u| + |v-w| \le |\theta-u| + |\theta-w|$ holds for every $\theta$ — the sum of distances to two fixed points is minimized on the segment joining them. So each of the $2m+1$ paired terms is at least as large at $\theta^\star$ as it is at $\theta$... and one of the pairs, the diagonal one $i = m$, contributes exactly $2|\theta - y_m|$ of slack. Keep that single term and discard the rest: $2R(\theta) - 2R(\theta^\star) \ge 2|\theta - \theta^\star|$. Done.
 
-$$
-\operatorname{ReLU}(u)=\max\{0,u\}.
-$$
+This is the piecewise-linear replacement for strong convexity. A strongly convex function grows *quadratically* away from its minimum; the tropical loss grows *linearly*. Linear growth is a stronger constraint near the optimum, not a weaker one — and it is exactly what a nonsmooth method needs.
 
-The entire clipped trajectory can be written as
+## Free lunch: from $1/\sqrt{n}$ to geometric
 
-$$
-G_t(x)=m+\operatorname{ReLU}(x-m-t)
--\operatorname{ReLU}(m-x-t),
-$$
+Sharpness has an immediate consequence: it converts a guarantee about *loss* into a guarantee about *parameters*. If some iterate has risk within $\varepsilon$ of optimal, then by the theorem it lies within $\varepsilon$ of the true median. So the $O(DN/\sqrt{n})$ risk rate is simultaneously an $O(DN/\sqrt{n})$ parameter rate — for free.
 
-for $t\ge0$. One shifted ReLU detects whether $x$ remains more than $t$ above the median; the other detects whether it remains more than $t$ below. Their signed difference reconstructs the central plateau at $m$ and the two outer linear branches.
+But we can do far better. Suppose you know the optimal loss value $R^\star$ (for the median fit, you often do, and if not it can be estimated). Then use the **Polyak step**: instead of a fixed $\eta$, take
 
-At discrete time $n$, this becomes
+$$\theta_{k+1} = \theta_k - \frac{R(\theta_k)-R^\star}{g(\theta_k)^2}\, g(\theta_k),$$
 
-$$
-\theta_n=m+\operatorname{ReLU}(x-m-n\eta)
--\operatorname{ReLU}(m-x-n\eta).
-$$
+stopping if $g(\theta_k)=0$. The step is self-tuning: far from the optimum the gap $R(\theta_k)-R^\star$ is large and the step is bold; near it, the step vanishes.
 
-Thus every iterate of the tropical training process is represented exactly by a width-two ReLU expression. This is not an approximation or a similarity of shape. The outputs agree for every real starting point $x$.
+**The Geometric Convergence Theorem.** *Let $R$ be convex with a subgradient oracle bounded by $G$, sharp with constant $\mu>0$ at a minimizer $\theta^\star$. Then every Polyak step contracts the squared distance to the optimum:*
 
-The identity creates a clean comparison between two languages for piecewise-linear learning. Tropical notation describes motion toward a median through min and max operations. ReLU notation describes the same map through two hinges. The tropical view makes optimization and finite termination immediate; the ReLU view makes network realization immediate.
+$$(\theta_{k+1}-\theta^\star)^2 \;\le\; \Bigl(1 - \frac{\mu^2}{G^2}\Bigr)(\theta_k-\theta^\star)^2,$$
 
-## Reading the geometry
+*hence $(\theta_n - \theta^\star)^2 \le (1-\mu^2/G^2)^n (\theta_0-\theta^\star)^2$ and the iterates converge to $\theta^\star$.*
 
-The loss graph gives another way to see why the method is so decisive. Far to the left of all three observations, increasing $\theta$ shortens all three distances, so the graph descends steeply. Between $a$ and $m$, two distances are still shrinking while one is growing, and the graph continues downward with a gentler slope. Immediately after $m$, the balance reverses: two distances grow while one shrinks. The graph rises, first gently and then, beyond $c$, steeply. The sole bottom corner is therefore located at $m$.
+Two ingredients make this work. From convexity, the gap is dominated by the subgradient: $R(\theta)-R^\star \le g(\theta)(\theta-\theta^\star)$, which after expanding the square gives $(\theta_{k+1}-\theta^\star)^2 \le (\theta_k-\theta^\star)^2 - t\,d$ with $d$ the gap and $t = d/g^2$ the step scale. From sharpness, $d \ge \mu|\theta_k-\theta^\star|$, so $t d = d^2/g^2 \ge \mu^2(\theta_k-\theta^\star)^2/G^2$. Subtract. (A pleasant by-product of the same reasoning: the sharpness constant can never exceed the subgradient bound, $\mu \le G$, so the contraction factor is genuinely in $[0,1)$.)
 
-This geometry also distinguishes clipping from an ordinary fixed-magnitude subgradient step. A rule that always moves exactly $\eta$ could jump from one side of $m$ to the other forever. Clipping replaces that last jump by a landing. In optimization language, $m$ is an absorbing state. In dynamical language, the interval of starting points that have reached $m$ by time $t$ is $[m-t,m+t]$, and this capture interval expands linearly. The two ReLU hinges sit exactly at its moving boundaries.
+For the tropical fit, $\mu = 1$ and $G = N$, so:
 
-There is an appealing practical consequence. The optimizer needs no vague stopping tolerance in exact arithmetic. Before training begins, one can calculate the number of updates needed from the initial gap and the step length. One can also certify every intermediate prediction and bound its excess loss. The training log is not merely evidence of progress; it is the realization of a formula known in advance.
+**Linear Rate for Tropical Training.** *With Polyak steps, tropical absolute-error training of a max-plus monomial on $N = 2m+1$ ordered samples satisfies*
 
-## Why this small model matters
+$$(\theta_n - \theta^\star)^2 \le \Bigl(1 - \tfrac{1}{N^2}\Bigr)^{n}(\theta_0-\theta^\star)^2 .$$
 
-A one-parameter translation neuron is not a modern large network in miniature. Its value lies elsewhere: it isolates a mechanism that is usually hidden. The median arises from absolute loss; clipping prevents overshoot; piecewise linearity turns convergence into a distance identity; and two rectifiers encode the complete dynamical map.
+*The parameter — and hence the trained model, pointwise — converges to the unique tropical rational minimizer.*
 
-These ingredients occur in robust estimation, quantile methods, signal correction, and architectures designed for max-plus or large-weight regimes. Whenever a complicated model separates into scalar coordinates or local linear regions, this analysis suggests what to seek: an exact residual law rather than only an asymptotic rate, a finite active-set transition rather than endless decay, and a direct translation between tropical and rectifier descriptions.
+Compare: the fixed-step guarantee decays as $n^{-1/2}$; the Polyak rate decays as $e^{-n/(2N^2)}$. To gain a factor of a thousand in accuracy, the first method needs a million times more steps; the second needs about $14 N^2$ more steps.
 
-The result also clarifies what assumptions do the work. The positivity of $\eta$ ensures progress. The ordered triple makes $m$ the unique median. The clipping rule guarantees capture rather than oscillation. The translation form makes parameter error equal prediction error. Remove any one of these features and the conclusion may change.
+## The knife's edge: fixed steps can fail forever
 
-Several extensions beckon. With any odd number of samples, absolute loss again has a unique median, suggesting the same finite-arrival picture. For an even number, the minimizers form the interval between the two central observations, so the natural destination is a plateau rather than a point. In multiple dimensions with separable losses, coordinates can travel independently and the slowest coordinate sets the total stopping time. Small perturbations should replace exact capture by entry into a controlled neighborhood. Finally, the two-ReLU formula raises a sharp expressivity question: the two-sided clipped map has two hinges, suggesting that one ordinary ReLU cannot represent it when the plateau has positive width.
+It is tempting to imagine that any reasonable step size eventually works. On a piecewise-linear landscape it does not, and the counterexample fits on one line. Take the three samples $0, 1, 2$, whose median is $1$, and run fixed-step subgradient descent from $\theta_0 = 3$ with $\eta = 3$. Away from the data the subgradient has constant magnitude $3$, so the iterate jumps by $9$ every time:
 
-The broader lesson is that a limit can reveal structure rather than merely discard detail. In the tropical regime, training is no longer a mysterious descent through a curved landscape. It is a measured journey along a line, aimed at the robust center of the data, with an odometer that tells us exactly how far remains.
+$$3 \;\to\; -6 \;\to\; 3 \;\to\; -6 \;\to\; \cdots$$
+
+an exact two-cycle. Every iterate stays at distance at least $2$ from the optimum, for all time. There is no decay, no averaging that helps, no asymptotic rescue. The `$1/\sqrt{n}$` theorem is not being violated — it *requires* the step to shrink like $1/\sqrt{n}$ — but the example shows that the requirement is real, and that "gradient descent converges to the optimum" is simply false for a fixed step on a tropical loss. The correct statements are the best-iterate bound and the Polyak bound. Sharpness rescues you only if the step rule can exploit it.
+
+## Does the rectifier network do any better?
+
+A natural objection: we analysed a max-plus monomial. Real practitioners train ReLU networks. Do they see a friendlier landscape?
+
+They see the *identical* landscape. Precisely:
+
+**Risk-Landscape Equivalence.** *A one-variable function is tropical rational if and only if there is a rectifier network whose absolute-error empirical risk agrees with it on every finite data set.*
+
+One direction is the dictionary plus the observation that equal functions have equal risks. The other direction is a cunning single-point test: apply the hypothesis to the one-sample data set $X_0 = x$, $Y_0 = f(x)$. The risk of $f$ is zero, so the risk of the network is zero, which forces the network to agree with $f$ at $x$ — and $x$ was arbitrary. Equality of risks on all data sets is therefore equality of functions, and the two hypothesis classes coincide as sets of *landscapes*, not merely as sets of functions.
+
+The moral is deflationary and clarifying. Whatever speed-up you observe when training a piecewise-linear model does not come from the parameterization — from depth, from the rectifier, from any architectural cleverness. It comes from the *geometry of the loss*: the ratio $\mu/G$ between the sharpness constant and the largest slope. That ratio is a combinatorial quantity, computed from which lines are active at the optimum, not from any analytic estimate. The tropical picture makes it visible.
+
+## What freezing teaches us
+
+Step back and the shape of the theory is this. A smooth exp–log network at low temperature is within $T\log k$ of a max-plus network, uniformly. Max-plus networks in one variable are exactly rectifier networks, with an explicit unit-for-monomial translation. Their absolute-error training landscape is a convex piecewise-linear function that is *sharp*, and sharpness — not smoothness, which is absent — is what governs speed. With the right step rule, the ostensibly hostile nonsmooth problem is solved geometrically fast, at a rate written entirely in terms of two tropical invariants: the largest slope and the growth constant.
+
+There is an appealing physical analogy. Statistical mechanics at temperature $T$ is a smooth, blended affair; at $T=0$ the system snaps into its ground state and the free energy becomes a piecewise-linear function of the parameters, whose kinks are phase transitions. Tropical geometry is the mathematics of that zero-temperature limit, and the dequantization bound $T\log k$ is the price of the approximation. A neural network trained with large weights is a system near absolute zero — and the surprise is that the frozen system is not harder to optimize than the warm one. It is easier, because you can finally see the crystal.
+
+The obvious frontier is dimension. In one variable the median argument is exact and the sharpness constant is $1$ on the nose. In $\mathbb{R}^d$, the pairing trick fails for non-separable losses, and the right generalization of $\mu/G$ is a ratio of slopes in the normal fan of a Newton polytope at the optimal vertex — a purely combinatorial object attached to the model's tropical geometry. If that programme succeeds, the convergence rate of first-order training will be computable from a polytope, without a single analytic estimate. That is a strange and rather wonderful prospect: optimization theory replaced by counting the faces of a shape.
