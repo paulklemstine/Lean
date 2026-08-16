@@ -3,21 +3,6 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "consumed_by_exp_id": "dc071269",
-    "description": "## NET-30 \u2014 The k=2 freeze test (round-net-30, 12 arms, ALL_DONE_NET30)\n\nThe middle of the eval-dependence gradient (NET-29 open 1). Twelve same-seed reproductions of NET-27 arms (byte-identical EOSWidthGRU; all ctl re-baselines reproduce the published NET-27 outcomes on fresh draws). Inference-only interventions on the trained exclusive coords; fresh eval draws per arm \u00d7 manipulation.\n\n### Part A \u2014 k=2 (E=22) \u00d7 seeds 8\u201313, 6 interventions/arm (n=8 full)\n\n| seed | ctl | **zeroN** (both excl) | zero1@0/1 | flip1@0 | scale0.1 |\n|---|---|---|---|---|---|\n| 8  | 1.0000 | 1.0000 | 1.0000 | 1.0000 (n5 .9995) | 1.0000 |\n| 9  | 0.9888 | 0.9902 | 0.9863 / 0.9902 | 0.9902 | 0.9873 |\n| 10 | 0.9399 | 0.9453 | 0.9502 / 0.9390 | 0.9487 | 0.9380 |\n| 11 | 1.0000 | 1.0000 | 1.0000 | 1.0000 | 1.0000 |\n| 12 | 1.0000 | 0.9995 (n6/n7) | 1.0000 | 0.9985 (n5/n6) | 1.0000 |\n| 13 | 0.9980 | **0.7544** | 0.9961 / 0.9990 | **0.7505** | **0.9067** |\n\n**k=2 is NOT intermediate \u2014 it matches k=3.** Whole-block zeroing costs \u22640.010 in 5/6 arms (the two largest changes are POSITIVE \u2014 removal *helps* the imperfect s=10 arm, never breaks it). The 6th is **s=13 \u2014 the SAME seed as the k=3 outlier** \u2014 again a redundant ensemble (2-of-2-redundant: zero1 no-ops) but now sign-SENSITIVE (flip \u22120.25) and magnitude-sensitive, again with the LARGEST coords of its width (0.701 vs \u22640.660). k=3's s=13 flip was a no-op \u21d2 **sign-sensitivity is width-conditional; NET-29's \"signs never matter\" was a k=3 statement.** Within-width \u221d-quality REFUTED (s=10, the worst arm at ctl 0.9399, is self-sufficient).\n\n### Part B \u2014 k=1 (E=21) \u00d7 seeds 8\u201313, ctl/zero1 (n=8 full)\n\n| seed | NET-27 ctl | ctl | zero1 | verdict |\n|---|---|---|---|---|\n| 8  | 1.0000 | 1.0000 | **1.0000** | self-sufficient cure |\n| 9  | 0.7715 | 0.7622 | 0.7432 | \u22120.019 (~2 SE, marginal) |\n| 10 | 0.1567 | 0.1606 | 0.1592 | no-op |\n| 11 | 0.8926 | 0.8892 | 0.8901 | no-op |\n| 12 | 1.0000 | 1.0000 | **1.0000** | self-sufficient cure |\n| 13 | 0.2656 | 0.2734 | 0.2510 | \u22120.022 (~2 SE, marginal fail) |\n\n**NET-29's \"k=1 internalization \u221d cure quality\" is REFUTED at a second seed set.** Both fresh full cures (s=8, s=12) are fully self-sufficient \u2014 zeroing the sole coord costs 0% at every length. Pooled over all 12 k=1 arms (NET-29 seeds 14\u201319 + NET-30 seeds 8\u201313): **fails are no-ops in EVERY arm of both rounds; successes split seed-heterogeneously** (2/2 dependent at NET-29 seeds, 0/2 at NET-30 seeds). Self-sufficiency rate rises with k: k=1 ~1/2 of successes, k=2 5/6, k=3 5/6.\n\n### The law\n\n**INTERNALIZATION-SATURATES-AT-K=2 + THE-K=1-INTERNALIZATION-IS-SEED-HETEROGENEOUS + S13-IS-A-SEED-WIDE-OUTLIER.** (1) Eval-sufficiency of the exclusive boundary channel collapses between k=1 and k=2; NET-28's P(cure) ramp is a TRAINING-TIME success-rate effect only \u2014 k=3's knee buys reliable *training* success, *eval* sufficiency is bought at k=2. (2) s=13 is a seed-wide (not width-specific) trait \u2014 the same seed keeps its recovery boundary-dependent at eval at every width where it succeeds, always with the largest exclusive coords (magnitude\u2192dependence hint now holds at two widths for one seed). (3) NET-29's \u221d-quality law is corrected: the robust invariant over 12 k=1 arms is that removal of the sole coord is a no-op exactly where the model already failed, and at successes it is seed-heterogeneous. Design rule sharpens to **\u22652 exclusive dims** for a self-sufficient recovery (\u22653 for reliable success).\n\n### Barriers\n\n(a) same-seed reproductions of NET-27 arms, ctl reproduces published outcomes, inference-only; (b) target (saturation width, seed-wide outlier, \u221d-quality refutation) new \u2014 Catalog no prior; (c) toy-scale \u2014 transferable statement is the training-time design rule; real-scale remains the frontier; (d) clean; (e) THE round's content \u2014 the NET-29 refutation recorded as an honest correction, seed-heterogeneity as a distribution, ~2 SE excursions reported as marginals (1 of 12 comparisons); (f) exact parameter writes, ctl reproduces, SEs, no-op = |\u0394|\u22641.2 SE; (g) byte-identical cell, within-arm ctl, Part A vs B differ only in E + intervention set; (h) design rule \u22652 exclusive dims + CAUTION updated (k=1 cures NOT reliably self-sufficient).\n\n### Next candidates\n\nREAL-SCALE transfer of the training-time \u22652/\u22653-exclusive-dims rule (the frontier, unchanged); magnitude\u2192dependence trend (~24 more arms/width); **seed-trait-vs-width-trait test** (run NET-29's dependent k=1 seeds s=14/15 at E=23 \u2014 do they become ensemble-dependent there too?); pad384-vs-NET-24-hybrid parity.\n\nScript: /tmp/exp_net_eos_freezek2.py. Log: /tmp/net30.log. Paper: ResearchOutput/NetworkMathematics/30_EvalDependenceSaturatesK2.md.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1281",
-    "phase": "B",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-15T04:54:25.029697+00:00",
-    "title": "NET-30: INTERNALIZATION-SATURATES-AT-K=2 (k=2 freeze test \u2014 the missing middle; NET-29's \u221d-quality law corrected)"
-  },
-  {
     "consumed_by_exp_id": "e67b8bbc",
     "description": "**Part of:** Research plan \u2014 *Compression Beyond the Pigeonhole Bound* (Phase B, Question 2: can random number generators help?).\n\n## Claim (negative result)\nA deterministic PRNG **cannot** help compress arbitrary data.\n\n## Proof sketch\nA fixed function seed \u2192 stream is deterministic: `2^s` seeds produce at most `2^s` distinct streams, so representing an arbitrary n-bit string still needs `s \u2265 n \u2212 c`. A PRNG creates **no entropy** \u2014 the \"compress to the seed\" trick only works when the data was *already* PRNG-generated (i.e., it always had low Kolmogorov complexity and the PRNG is just the right decompressor).\n\n## Deliverable\nA crisp, citable proof plus a working demo (e.g., a seeded generator whose outputs appear \"compressible\" while a true random file stays at n bits).\n\n## Purpose\nKill this dead end with evidence **before** anyone spends a year hunting \"the seed that contains my file.\" Calibrates the team on exactly what randomness can and cannot do.\n\n**Milestone:** M1 (days).\n",
     "domains": [
@@ -124,20 +109,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle 13788cf3 (Q=0.850), which proved 470 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **PLUSONE-SMOOTH-NULL** \u2014 factoring research lab round-16 #2 (paper 64, assessment v175, 399 experiments). CONFIRMED null.\n\nThe Williams p+1 / Lucas-sequence weakness \u2014 the sibling of the p\u22121/ECM weakness (closed by SMOOTH-SELFHINT-DENSITY, SEQSMOOTH-NULL) \u2014 is invisible from N in three independent ",
-    "domains": [
-      "Tropical"
-    ],
-    "id": "push_13788cf3_2a5ccffe",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "13788cf3",
-    "status": "available",
-    "timestamp": "2026-08-14T08:46:05.909306+00:00",
-    "title": "Deepening: Exp 399 PLUSONE-SMOOTH-NULL (round-16 #2): the Williams p+1 weakness is residue-"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Building on cycle 295ca744 (Q=0.860), which proved 79 theorems in Algebra. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## ECM-PARITY (round-18 #1, experiment 404, assessment v180, paper 69)\n\nThe parity face of the generic ECM order \u2014 the even-\u2113 complement of ECM-ORDER-NULL (paper 66, which tested only odd \u2113): **2 | #E0(F_p) \u27fa the S\u2083 cubic x\u00b3+x+1 has a root mod p \u27fa the Frobenius is NOT a 3-cycle**. **Verdict: CONFIRM",
     "domains": [
       "Algebra"
@@ -149,90 +120,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-14T16:15:07.446774+00:00",
     "title": "Deepening: ECM-PARITY: first positive symmetric residue shadow on the GENERIC elliptic orde"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 53eb02be (Q=0.860), which proved 85 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## Factoring research loop \u2014 round-15 #6, final (experiment 397, assessment v173, paper 62)\n\n**Hypothesis.** Does the p\u22121 smoothness class (ECM-weak smaller factor) leak into the statistics of a short window of the mod-exponential sequence {a^x mod N}?\n\n**Result: CONFIRMED null \u2014 the mod-exp sequenc",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "push_53eb02be_3e9fe882",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "53eb02be",
-    "status": "available",
-    "timestamp": "2026-08-14T13:50:07.086564+00:00",
-    "title": "Deepening: Experiment 397: SEQSMOOTH-NULL \u2014 mod-exp sequence stats are smoothness-blind (AU"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 6753d65f (Q=0.890), which proved 92 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Paper:** `ResearchOutput/NewMathematics/41_ResidueLeakage_DirichletNoPruning.md` (factor3)\n**Experiment:** QRLEAK (#376), assessment v152.\n\n## Finding\nThe QR fingerprint F_K(N) = [(a_i|N)] over the first K primes (each Jacobi symbol\npoly(log N)-computable) \u2014 the maximal cheap residue handle. Verif",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "push_6753d65f_8cb24da6",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "6753d65f",
-    "status": "available",
-    "timestamp": "2026-08-13T15:22:02.175016+00:00",
-    "title": "Deepening: The Residue-Leakage Curve and the Dirichlet No-Pruning Theorem, Closed"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 7477e654 (Q=0.850), which proved 501 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Paper 54 (NewMathematics) \u2014 Experiment 389, assessment v165. Round-14 #10.**\n\n**Hypothesis:** whether the smaller factor p has p-1 B-smooth (the weakness Pollard p-1 / ECM exploit) is detectable from N alone \u2014 a statistical instance-class self-hint (frontier iii).\n\n**Experiment (random k-bit semip",
-    "domains": [
-      "Tropical"
-    ],
-    "id": "push_7477e654_595365ea",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "7477e654",
-    "status": "available",
-    "timestamp": "2026-08-14T08:45:35.522800+00:00",
-    "title": "Deepening: SMOOTH-SELFHINT-DENSITY: the p-1/ECM weakness is residue-invisible \u2014 asymmetric/"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 83c80b79 (Q=0.860), which proved 129 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Paper (factor3):** [ResearchOutput/NewMathematics/31_Dequantization_Assessed.md](https://github.com/paulklemstine/factor3/blob/main/ResearchOutput/NewMathematics/31_Dequantization_Assessed.md)\n\n---\n\n# De-Quantization Assessed: Shor's QFT Is Irreducible\n\n**Program:** Factoring research lab \u2014 user-p",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_83c80b79_e4c1233a",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "83c80b79",
-    "status": "available",
-    "timestamp": "2026-08-14T15:14:33.793464+00:00",
-    "title": "Deepening: De-Quantization Assessed: Shor's QFT Is Irreducible"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 8590e003 (Q=0.870), which proved 122 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## CM-ECM-GENERAL (round-17 #2, experiment 403, assessment v179, paper 68)\n\nGeneralization + stress-test of the CM-ECM-ORDER shadow (paper 67) on the second CM field Q(\u221a\u22123) \u2014 the j=0 curve y\u00b2=x\u00b3+1 (End=\u2124[\u03c9], bad primes 2, 3), which has RATIONAL 3-torsion ((0,\u00b11) over Q). **Verdict: CONFIRMED null (f",
-    "domains": [
-      "Probability"
-    ],
-    "id": "push_8590e003_d1be6378",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "8590e003",
-    "status": "available",
-    "timestamp": "2026-08-14T19:21:29.086881+00:00",
-    "title": "Deepening: CM-ECM-GENERAL: rational-torsion degeneracy, union-dilution law, 3-adic Hecke vi"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 9e8cd1f4 (Q=0.870), which proved 939 theorems in Algebra. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Paper:** `ResearchOutput/NewMathematics/47_QubitTrade_RegisterThreshold.md` (factor3)\n**Experiment:** QUBIT-TRADE (#382), assessment v158.\n\n## Finding\nCan Shor's order-finding register be truncated? Measuring only the top t bits of\nthe QFT outcome, is r = ord_N(a) recoverable with more samples? Ve",
-    "domains": [
-      "Algebra"
-    ],
-    "id": "push_9e8cd1f4_f3a6b73f",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "9e8cd1f4",
-    "status": "available",
-    "timestamp": "2026-08-13T15:21:48.639964+00:00",
-    "title": "Deepening: The Quantum Register Cannot Be Shrunk: QUBIT-TRADE, Closed"
   },
   {
     "consumed_by_exp_id": "",
@@ -3218,6 +3105,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-13T23:09:59.921663+00:00",
     "title": "Deepening: Round-7 Hypothesis Closures: Scoping the Noise-Floor Principle and the Trace-Lem"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle dc071269 (Q=0.780), which proved 72 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## NET-30 \u2014 The k=2 freeze test (round-net-30, 12 arms, ALL_DONE_NET30)\n\nThe middle of the eval-dependence gradient (NET-29 open 1). Twelve same-seed reproductions of NET-27 arms (byte-identical EOSWidthGRU; all ctl re-baselines reproduce the published NET-27 outcomes on fresh draws). Inference-only",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "push_dc071269_a35cfcde",
+    "priority_score": 0.88,
+    "research_mode": "team",
+    "source_exp_id": "dc071269",
+    "status": "available",
+    "timestamp": "2026-08-16T01:57:40.886173+00:00",
+    "title": "Deepening: NET-30: INTERNALIZATION-SATURATES-AT-K=2 (k=2 freeze test \u2014 the missing middle; "
   },
   {
     "consumed_by_exp_id": "",
@@ -19243,6 +19144,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# FUTURE DIRECTIONS \u2014 after NET-30's formalisation\n\nThe four Lean files in `Catalog/NumberTheory/` prove: (i) the \"1-redundant but\nblock-dependent\" signature forces `k \u2265 2` for *any* statistic; (ii) it forces a\nstrictly non-convex read-out; (iii) it is realised, to within the reported\n`0.005` no-op scale, by an explicit saturating-gate population model; (iv) that\nmodel *derives* the \u22652 (self-sufficiency) and \u22653 (sign-robustness) design\nthresholds instead of fitting them; and (v) the k = 1 rows are unconstrained,\nwhich is exactly why NET-29's proportionality law did not survive.\n\nEach conjecture below is falsifiable by a single additional experimental round\nor by a single Lean theorem.\n\n## C1 \u2014 The clip level co-scales with the exclusive coordinate magnitude\n\n**Conjecture.** In the saturating channel the effective clip level `T` is not a\nseed-independent constant but satisfies `T \u224d g_max`, the largest exclusive\ncoordinate of the arm; equivalently, self-sufficiency is governed by the\n*dimensionless* ratio `(k\u22121)\u00b7g / T` and not by `(k\u22121)\u00b7g`.\n\n*The key insight is* that `self_sufficiency_monotone_in_gain` proves the\nopposite of the observed trend at fixed `T` \u2014 larger coordinates should be\n*more* self-sufficient \u2014 so the measured s = 13 arms (largest coordinates of\ntheir width, `0.701` vs `\u2264 0.660`, and the only dependent ones) refute a\nseed-independent clip, and the only conservative repair is a clip that grows\nwith the coordinates.\n\n*Why now?* The magnitude\u2192dependence hint now holds at two widths for one seed;\nthe ratio form is testable with the same ~24 arms/width already scheduled for\nthe magnitude trend, at no extra training cost, and it converts a\nseed-idiosyncrasy into a measurable scalar.\n\n## C2 \u2014 The redundancy defect is the round's real observable\n\n**Conjecture.** `R = (\u2211\u1d62 d\u1d62) \u2212 D` (single drops minus block drop) separates arms\nfar better than any single intervention: `|R| \u2264 0.004` for every\nself-sufficient arm and `R \u2264 \u22120.2` for every dependent one, at every width,\nwith no intermediate values.\n\n*The key insight is* that `R` has a curvature meaning \u2014 `R \u2265 0` for convex,\n`R = 0` for affine, `R \u2264 0` for concave read-outs \u2014 so an empirical bimodality\nof `R` is a claim about the *shape* of the boundary read-out, not about\naccuracy, and one gap-free measurement of `R` would upgrade \"saturates at k = 2\"\nto \"the read-out is affine below the knee and saturated above it\".\n\n*Why now?* `R` is computable from data already collected in NET-27/29/30 (it\nneeds only ctl, all zero1 and zeroAll), so the first test is a re-analysis, not\na new round.\n\n## C3 \u2014 Sign-robustness has its own width, one above self-sufficiency\n\n**Conjecture.** For every seed and every width, the smallest `k` at which the\nflip becomes a no-op equals the smallest `k` at which single ablations become\nno-ops, **plus one**.\n\n*The key insight is* that a flip removes twice the coordinate that an ablation\nremoves, so under any saturating gate the two thresholds are `(k\u22121)g \u2265 T` and\n`(k\u22122)g \u2265 T` \u2014 mathematically forced to be adjacent\n(`self_sufficient_iff_gain`, `sign_robust_iff_gain`), which turns the observed\nk = 2 sign-sensitivity / k = 3 sign-robustness pair into a general prediction\nrather than a coincidence of one seed.\n\n*Why now?* The prediction is decided by the already-proposed seed-trait test\n(NET-29's dependent k = 1 seeds s = 14/15 at E = 23): if the \"+1\" law holds,\nthose seeds must show flip-sensitivity at exactly one width above their\nablation-sensitivity width.\n\n## C4 \u2014 Training-time success and eval-time sufficiency have different knees\nbecause they measure different functionals\n\n**Conjecture.** P(cure) at training time is governed by the *number* of\nexclusive coordinates the optimiser can recruit (knee at `k = 3`), while\neval-time sufficiency is governed by the *saturation margin* `(k\u22121)g \u2212 T`\n(knee at `k = 2`); consequently forcing `g` up by a factor `\u2265 2` at `k = 1`\n(e.g. by rescaling the boundary column at initialisation) should buy eval\nsufficiency at `k = 1` without buying training reliability.\n\n*The key insight is* that the two knees are separated by exactly one\ncoordinate, which is what a margin-versus-count distinction predicts, and the\nLean thresholds make the margin functional explicit and manipulable.\n\n*Why now?* It is the cheapest available discriminator between \"k = 2 is\nspecial\" and \"the margin is special\", and it needs one inference-time rescale\nplus one training run per seed.\n\n## C5 \u2014 A concavity certificate for real-scale models\n\n**Conjecture.** The sign of `R` transfers to real-scale sequence models: for a\nproduction-scale recurrent or attention model with an identifiable boundary\nchannel of `k` exclusive directions, ablation experiments will show `R \u2248 0`\nbelow the saturation width and `R < 0` above it, with the crossover at the same\nplace as the toy-scale \u22652 rule.\n\n*The key insight is* that everything proved here is scale-free \u2014 the chord\ninequality behind `convex_block_drop_le_sum_single_drops` uses only convexity\nand nonnegative gains, no property of the toy task \u2014 so the only scale-dependent\ningredient is whether a real boundary channel saturates at all.\n\n*Why now?* Real-scale transfer of the \u22652/\u22653 rule is the frontier item the round\nalready names; `R` gives it a one-number readout that does not require\nretraining anything, only ablating.\n",
+    "domains": [
+      "Geometry",
+      "MachineLearning"
+    ],
+    "id": "fd_1321",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "dc071269",
+    "status": "available",
+    "timestamp": "2026-08-16T01:57:27.914652+00:00",
+    "title": "The four Lean files in `Catalog/NumberTheory/` prove: (i) the \"1-redundant but"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "A vampire number is a composite number v with an even number of digits that can be factizedd as v = x * y where x and y together have the same digits as v. The smallest is 1260 = 21 * 60. But vampire numbers are just the beginning. Define: (1) Werewolf numbers: v = x * y where x and y share exactly one digit with v. (2) Ghost numbers: v = x * y where v has NO digits in common with x or y. (3) Zombie numbers: v = x * y where x and y are both prime (these violate the definition but exist \u2014 125460 = 204 * 615 = 246 * 510, where both factorizations involve a prime and a composite). Conjecture: The density of vampire numbers in [10^{2n}, 10^{2n+1}] approaches 1/sqrt(n) as n -> infinity. Every even-length interval [10^{2k}, 10^{2k+2}] contains at least one vampire number. Ghost numbers have density 0 \u2014 they become vanishingly rare as the number of digits increases. Test: enumerate all vampire, werewolf, ghost, and zombie numbers up to 10^8. Prove the density conjecture by counting valid digit permutations. Impact: a playful but genuine number theory of arithmetic creatures \u2014 combinatorial digit problems that are easy to state but may be as hard as factoring.",
     "domains": [
       "Novelty",
@@ -19564,7 +19480,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Categorification of Entropy: The Information Loss of Functors"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6c757940",
     "description": "A database with missing entries is a partial section of a sheaf. The sheaf condition (gluing) says that if two partial sections agree on their overlap, they can be glued into a global section. Conjecture: the probability that a random database with missing rate r satisfies the sheaf condition (i.e., can be consistently filled in) is P(sheaf) = (1-r)^{C(n,k)} where n is the number of columns, k is the number of rows, and C(n,k) is the number of overlapping constraints. This means: for a database with n columns and k rows, the probability of consistent imputation drops exponentially with the number of overlapping constraints. The sheaf imputation method: fill in missing values by finding the closest global section of the data sheaf. This is equivalent to solving a constrained optimization problem where the constraints are the sheaf condition on every overlapping pair of feature subsets. Conjecture: sheaf imputation outperforms mean imputation and KNN imputation when the missing rate r < 0.5 and the number of features n > 10, because the sheaf condition provides exponentially many consistency constraints that other methods ignore. Test: generate synthetic databases with known ground truth, introduce missing values at rate r, compare sheaf imputation with mean, KNN, and MICE. Impact: data imputation is a sheaf cohomology problem. The sheaf condition is the natural consistency constraint for databases.",
     "domains": [
       "Novelty",
@@ -19573,10 +19489,11 @@ window.FUTURE_DIRECTIONS = [
       "MachineLearning"
     ],
     "id": "seed_197",
+    "phase": "A",
     "priority_score": 0.73,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
   },

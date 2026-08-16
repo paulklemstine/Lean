@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "6753d65f",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions — next-cycle conjectures from the residue-leakage thread\n\nThe closed results of this cycle (all proved in `Catalog/Bridges/`):\n\n* `dirichlet_no_pruning` — every candidate prime sur",
-      "quality_score": 0.89,
-      "sorry_count": 2,
-      "theorem_count": 92,
-      "timestamp": "2026-08-13T15:22:02",
-      "title": "The Residue-Leakage Curve and the Dirichlet No-Pruning Theorem, Closed"
-    },
-    {
       "cycle_id": "560413ae",
       "domain": "Physics",
       "key_insight": "# Future Directions\n\nFive falsifiable conjectures distilled from what survived, and what resisted, in this cycle.\nEach is stated so that it can be written down as a Lean 4 theorem on top of the defini",
@@ -499,19 +489,19 @@
       "theorem_count": 71,
       "timestamp": "2026-08-16T00:37:25",
       "title": "NET-31: Internalization is a seed-fixed trait among cures — same 4 seeds dependent at k=2 and k=3; N"
+    },
+    {
+      "cycle_id": "dc071269",
+      "domain": "NumberTheory",
+      "key_insight": "# FUTURE DIRECTIONS — after NET-30's formalisation\n\nThe four Lean files in `Catalog/NumberTheory/` prove: (i) the \"1-redundant but\nblock-dependent\" signature forces `k ≥ 2` for *any* statistic; (ii) i",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 72,
+      "timestamp": "2026-08-16T01:57:40",
+      "title": "NET-30: INTERNALIZATION-SATURATES-AT-K=2 (k=2 freeze test — the missing middle; NET-29's ∝-quality l"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "8fa60fb0",
-      "domain": "NumberTheory",
-      "key_insight": "# Future directions\n\n## What is now proved\n\nTwo new self-contained files extend the conditional Hilbert-class-field interface of\n`Catalog/NumberTheory/`, settling target 2 of the previous cycle (the G",
-      "quality_score": 0.686,
-      "sorry_count": 0,
-      "theorem_count": 78,
-      "timestamp": "2026-08-05T12:24:25",
-      "title": "The conditional Hilbert-class-field interface in `Catalog/NumberTheory/` contain"
-    },
     {
       "cycle_id": "8dd43c13",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 71,
       "timestamp": "2026-08-16T00:37:25",
       "title": "NET-31: Internalization is a seed-fixed trait among cures — same 4 seeds dependent at k=2 and k=3; N"
+    },
+    {
+      "cycle_id": "dc071269",
+      "domain": "NumberTheory",
+      "key_insight": "# FUTURE DIRECTIONS — after NET-30's formalisation\n\nThe four Lean files in `Catalog/NumberTheory/` prove: (i) the \"1-redundant but\nblock-dependent\" signature forces `k ≥ 2` for *any* statistic; (ii) i",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 72,
+      "timestamp": "2026-08-16T01:57:40",
+      "title": "NET-30: INTERNALIZATION-SATURATES-AT-K=2 (k=2 freeze test — the missing middle; NET-29's ∝-quality l"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "fefb96cd",
-      "domain": "Novelty",
-      "name": "of",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "fefb96cd",
-      "domain": "Novelty",
-      "name": "mem_traceSet_iff_isSquare_discrim",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "fefb96cd",
-      "domain": "Novelty",
-      "name": "two_mul_card_traceSet_eq_add_legendreSym",
-      "quality": 0.82
-    },
     {
       "cycle_id": "70d03dec",
       "domain": "Physics",
@@ -2803,9 +2785,27 @@
       "domain": "NumberTheory",
       "name": "two_pow_card_sub_one_le_prod_erase",
       "quality": 0.72
+    },
+    {
+      "cycle_id": "dc071269",
+      "domain": "NumberTheory",
+      "name": "chord_le_of_convexOn",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "dc071269",
+      "domain": "NumberTheory",
+      "name": "le_chord_of_concaveOn",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "dc071269",
+      "domain": "NumberTheory",
+      "name": "le_sum_of_nonneg",
+      "quality": 0.78
     }
   ],
-  "last_updated": "2026-08-16T00:37:25",
+  "last_updated": "2026-08-16T01:57:40",
   "open_questions": [
     {
       "context": "-    sorry+  -- On the certified range, extract the primitive divisor from the",
@@ -3641,12 +3641,6 @@
     ],
     "NumberTheory": [
       {
-        "cycle_id": "a5f7aac5",
-        "quality": 0.6853135011441648,
-        "theorems": 437,
-        "title": "Deepening: Hilbert 12: Kronecker-Weber Generalization"
-      },
-      {
         "cycle_id": "8fa60fb0",
         "quality": 0.686,
         "theorems": 78,
@@ -3699,6 +3693,12 @@
         "quality": 0.72,
         "theorems": 71,
         "title": "NET-31: Internalization is a seed-fixed trait among cures — same 4 seeds depende"
+      },
+      {
+        "cycle_id": "dc071269",
+        "quality": 0.78,
+        "theorems": 72,
+        "title": "NET-30: INTERNALIZATION-SATURATES-AT-K=2 (k=2 freeze test — the missing middle; "
       }
     ],
     "Physics": [
