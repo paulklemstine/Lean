@@ -1,33 +1,88 @@
 # Computational Evidence
 
-The claims are linear-geometric, so small exact examples suffice to expose the key possibilities; the general results are proved symbolically in Lean.
+Small numerical experiments carried out *before* formalisation, to fix the right
+definitions and to locate the boundaries of each conjecture.  All arithmetic
+below is exact rational arithmetic.  Nothing in this file is a proof; every
+claim that survived is proved in `Catalog/Physics/WrongTheories/*.lean`, and the
+counterexamples found here are the ones formalised in `Boundaries.lean`.
 
-## Small-case correction calculation
+Notation: a perturbative theory has wrongness series
+`W(ε) = Σ_{n≥0} a_n ε^{n+1}`, `tail_N(ε) = W(ε) − Σ_{n<N} a_n ε^{n+1}` is the
+error of the order-`N` truncation relative to the exact prediction.
 
-Take truth `0`, initial theory `T₀ = 1`, and corrections
+## 1. Convergence of the wrongness series (geometric family `a_n = 1`)
 
-| n | correction c(n) | partial theory after n terms | wrongness |
-|---:|---:|---:|---:|
-| 0 | 1 | 1 | 1 |
-| 1 | -2 | 2 | 2 |
-| 2 | 0 thereafter | 0 | 0 |
+`W(ε) = ε/(1−ε)`, `tail_N(ε) = ε^{N+1}/(1−ε)`.
 
-The correction sum is `1 + (-2) = -1 = truth - T₀`. Hence the series reaches truth, but wrongness increases from 1 to 2 at its first step. This exact calculation is certified by `convergent_correction_can_initially_worsen`.
+| ε    | tail₀ | tail₁ | tail₂ | tail₃ |
+|------|-------|-------|-------|-------|
+| 1/2  | 1     | 1/2   | 1/4   | 1/8   |
+| 1/4  | 1/3   | 1/12  | 1/48  | 1/192 |
+| 1/10 | 1/9   | 1/90  | 1/900 | 1/9000 |
 
-## Two-dimensional geometry
+Observations that shaped the formal statements:
 
-Let truth be `(0,0)`, wrong theory error `a = (1,0)`, and rival error `b = (1,1)`. The Gram–Schmidt residual is
+* the errors decrease geometrically in `N` — this is the content of
+  `abs_tail_le_two` and of the hierarchy theorem;
+* the proved bound `|W(ε)| ≤ bound·|ε|/(1 − ratio·|ε|)` is *attained* here
+  (bound = ratio = 1), so `abs_wrongness_le` is sharp and cannot be improved by
+  a constant factor.
 
-`u = b - (<b,a>/<a,a>)a = (0,1)`.
+## 2. Counterexample hunt: is the truncation tower globally monotone?
 
-Then `<a,u> = 0`, while `<b,u> = 1`. Thus the wrong theory is exact on `u` and the rival is not. The Lean theorem proves this construction in every real inner-product space under nonparallelity.
+Test family `W(ε) = ε − 3ε²` (`a₀ = 1`, `a₁ = −3`, all higher `a_n = 0`).
 
-For the counterexample to uniform dominance, choose the phenomenon `u = a`. Truth's error is zero, while the wrong theory's error is `<a,a> = ||a||² > 0`.
+| ε     | \|tail₀\| | \|tail₁\| | \|tail₂\| | higher truncation better? |
+|-------|-----------|-----------|-----------|---------------------------|
+| 1     | 2         | 3         | 0         | **no** |
+| 1/2   | 1/4       | 3/4       | 0         | **no** |
+| 1/4   | 1/16      | 3/16      | 0         | **no** |
+| 1/10  | 7/100     | 3/100     | 0         | yes |
+| 1/100 | 97/10000  | 3/10000   | 0         | yes |
 
-## Counterexample hunt
+The crossover is exactly at `ε = 1/6`: `|ε − 3ε²| > 3ε² ⟺ ε < 1/6` for `ε > 0`.
+So the naive conjecture "higher order is always better" is **false**, and the
+`ε = 1` row is precisely the counterexample formalised in
+`WrongTheory.hierarchy_not_monotone_outside_window`.  The window in
+`WrongTheory.higher_order_eventually_better` is therefore not an artefact.
 
-The universal claim fails immediately whenever the comparison class contains truth, because truth's prediction error is zero for every phenomenon. It also fails as a claim of uniform dominance for every nonzero error vector, using that error vector itself as the phenomenon. Both counterexamples are proved parametrically rather than only sampled.
+For this family the *proved* window is
+`δ = min(1, 1/(2(r+1)), c/(2b(r^N + r^{M+1})+1))` with `c = 1`, `b = 4`, `r = 1`,
+`M = 0`, `N = 1`, i.e. `δ = 1/17 ≈ 0.059`, safely inside the true threshold
+`1/6 ≈ 0.167`: the formal bound is conservative but correct.
 
-## OEIS
+## 3. Counterexample hunt: does the meta-theorem hold at any coupling?
 
-No integer sequence arises from this continuous linear-geometric formulation, so an OEIS search is not applicable.
+Family `W(ε) = ε`, rival theory `C ≡ 1/4`, truth `0`.
+
+| ε    | error of the perturbative theory | error of the rival | wrong theory wins? |
+|------|----------------------------------|--------------------|--------------------|
+| 1/2  | 1/2                              | 1/4                | **no** |
+| 1/4  | 1/4                              | 1/4                | tie |
+| 1/8  | 1/8                              | 1/4                | yes |
+| 1/16 | 1/16                             | 1/4                | yes |
+
+Hence the meta-theorem genuinely needs a coupling window; the `ε = 1/2` row is
+formalised as `WrongTheory.meta_needs_small_coupling`.
+
+## 4. Condorcet cycle search
+
+Exhaustive check over the three theories with error vectors
+`A = (1,2,3)`, `B = (2,3,1)`, `C = (3,1,2)` against truth `0`:
+
+| pair | phenomenon 0 | phenomenon 1 | phenomenon 2 | majority |
+|------|--------------|--------------|--------------|----------|
+| A vs B | A (1<2) | A (2<3) | B (1<3) | **A** |
+| B vs C | B (2<3) | C (1<3) | B (1<2) | **B** |
+| C vs A | A (1<3) | C (1<2) | C (2<3) | **C** |
+| A vs C | A (1<3) | C (1<2) | C (2<3) | **C** (A wins only once) |
+
+A cyclic majority preference `A ≻ B ≻ C ≻ A`, with `A ⊁ C`, disproving
+transitivity.  This is exactly the data used in `WrongTheory.condorcet_cycle`
+and `WrongTheory.not_majorityBeats_A_C`.
+
+## 5. No OEIS entry
+
+The only integer data appearing above is the `3×3` circulant error matrix
+`(1,2,3; 2,3,1; 3,1,2)`, a cyclic Latin square; no interesting sequence is
+generated by the constructions, so no OEIS identifier is claimed.

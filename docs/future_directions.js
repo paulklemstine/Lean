@@ -48,17 +48,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantum-Pythagorean-Walk: Polynomial Time Integer Factorization via Tree Resonance"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "93afd30b",
     "description": "Derives exact spectral eigenvalue distributions of Berggren tree generator matrices M1, M2, M3 mod N proving that resonant energy frequencies align with prime factors of N = p * q.",
     "domains": [
       "Pythagorean",
       "Cryptography"
     ],
     "id": "pyth_factor_modular_1ae54410",
+    "phase": "A",
     "priority_score": 0.98,
     "research_mode": "team",
     "source_exp_id": "pythagorean_factorization_breakthrough",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-23T20:10:45.762312+00:00",
     "title": "Berggren-Spectral-Eigenvalues: Modular Energy Resonance for RSA Integer Factorization"
   },
@@ -105,20 +106,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-16T13:45:35.625007+00:00",
     "title": "Deepening: Wigner-Semicircle: Universality of the Spectral Distribution"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle ade8206b (Q=0.850), which proved 105 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Explore what theorems hold in non-standard models of arithmetic. Formalize ultrapower constructions, transfer principles, and prove which classical theorems survive in non-Archimedean settings.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_ade8206b_599d4c51",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "ade8206b",
-    "status": "available",
-    "timestamp": "2026-08-16T13:01:16.214557+00:00",
-    "title": "Deepening: Alien Mathematics: Non-Standard Arithmetic"
   },
   {
     "consumed_by_exp_id": "",
@@ -1738,21 +1725,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Prove that every loopless graph requiring k+1 colors for a proper coloring contains K_{k+1} as a minor. Formalize known cases (k \u2264 5), the Wagner equivalence, and the connection to the Four Color Theorem.",
-    "domains": [
-      "Combinatorics",
-      "Geometry"
-    ],
-    "id": "seed_211",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Hadwiger's Conjecture"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Formalize the lattice of cryptographic hardness assumptions: one-way functions \u2192 pseudorandom generators \u2192 pseudorandom functions \u2192 secure encryption. Prove separation results.",
     "domains": [
       "Cryptography",
@@ -1765,21 +1737,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "One-Way Functions: Existence and Hierarchy"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize the information paradox as a theorem about unitary evolution: prove that if black hole evaporation is unitary, information is preserved; if not, quantum mechanics is violated. Construct a toy model where a 2-qubit black hole evaporates unitarily and recover the initial state from radiation.",
-    "domains": [
-      "Physics",
-      "Logic"
-    ],
-    "id": "seed_310",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Hawking Radiation: Information Paradox Formalized"
   },
   {
     "consumed_by_exp_id": "",
