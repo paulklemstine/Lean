@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "a1e10693",
-      "domain": "Computation",
-      "key_insight": "# FUTURE DIRECTIONS — next-cycle conjectures from the round-3 closures\n\nThe five round-3 hypotheses (RS-MIND, MODPAR-CERT, BURAU-ORD, DENS-SUB,\nCONG-DIV) are now closed with machine-checked Lean proof",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 83,
-      "timestamp": "2026-08-13T22:10:10",
-      "title": "Round-3 Hypothesis Closures: Five Novel Classical Factoring Hypotheses, Tested and Closed"
-    },
-    {
       "cycle_id": "c7164926",
       "domain": "Tropical",
       "key_insight": "# FUTURE DIRECTIONS — after the round-7 closures\n\nThe five Lean files added in `Catalog/Tropical/` make the round-7 verdicts\nprecise: the AGREEMENT aggregate collapses to `φ(N)/2` and to the Jacobi le",
@@ -499,19 +489,19 @@
       "theorem_count": 152,
       "timestamp": "2026-08-16T09:42:56",
       "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
+    },
+    {
+      "cycle_id": "6e253e5d",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Tropical EML learning theory (next cycle)\n\nDerived from what survived and what failed in this cycle. Formalized this cycle:\nthe tropical/ReLU dictionary in one variable (`isTropR",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 109,
+      "timestamp": "2026-08-16T09:43:07",
+      "title": "EML Learning Theory: Gradient Descent Convergence in the Tropical Limit"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "52648a00",
-      "domain": "Bridges",
-      "key_insight": "# Future directions\n\nConcrete, falsifiable conjectures arising from the formalization in\n\n* `Catalog/Bridges/B3FreeFamilies.lean` — framework of weak/strong `P`-free families,\n  layers, `e(P)`, `La(n,",
-      "quality_score": 0.686,
-      "sorry_count": 0,
-      "theorem_count": 122,
-      "timestamp": "2026-08-05T14:51:21",
-      "title": "ArXiv paper: On the maximum size of $B_3$-free families"
-    },
     {
       "cycle_id": "7c424175",
       "domain": "Shared",
@@ -2501,27 +2491,19 @@
       "theorem_count": 152,
       "timestamp": "2026-08-16T09:42:56",
       "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
+    },
+    {
+      "cycle_id": "6e253e5d",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Tropical EML learning theory (next cycle)\n\nDerived from what survived and what failed in this cycle. Formalized this cycle:\nthe tropical/ReLU dictionary in one variable (`isTropR",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 109,
+      "timestamp": "2026-08-16T09:43:07",
+      "title": "EML Learning Theory: Gradient Descent Convergence in the Tropical Limit"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "aeab7c87",
-      "domain": "Applications",
-      "name": "mem_den_kernel_add",
-      "quality": 0.88
-    },
-    {
-      "cycle_id": "032d68e5",
-      "domain": "Bridges",
-      "name": "mordellC_equation_iff",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "032d68e5",
-      "domain": "Bridges",
-      "name": "mordellC_negY",
-      "quality": 0.85
-    },
     {
       "cycle_id": "032d68e5",
       "domain": "Bridges",
@@ -2803,9 +2785,27 @@
       "domain": "Computation",
       "name": "term_one",
       "quality": 0.89
+    },
+    {
+      "cycle_id": "6e253e5d",
+      "domain": "Applications",
+      "name": "polyakIter_zero",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "6e253e5d",
+      "domain": "Applications",
+      "name": "polyakIter_succ",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "6e253e5d",
+      "domain": "Applications",
+      "name": "sharp_le_subgradient_bound",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-16T09:42:56",
+  "last_updated": "2026-08-16T09:43:07",
   "open_questions": [
     {
       "context": "This file gives a **complete, self-contained proof** of that theorem (0 `sorry`s).",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "8d083ef6",
-        "quality": 0.686,
-        "theorems": 37,
-        "title": "**Conjecture.** For a nonuniform distribution on finite network histories and an"
-      },
-      {
         "cycle_id": "3a707635",
         "quality": 0.7555699999999999,
         "theorems": 13,
@@ -3141,6 +3135,12 @@
         "quality": 0.55,
         "theorems": 31,
         "title": "The 'Only Bad Primes' Conjecture is False (elliptic curve denominators)"
+      },
+      {
+        "cycle_id": "6e253e5d",
+        "quality": 0.82,
+        "theorems": 109,
+        "title": "EML Learning Theory: Gradient Descent Convergence in the Tropical Limit"
       }
     ],
     "Bridges": [

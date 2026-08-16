@@ -975,7 +975,7 @@
       "depth_estimate": 3,
       "description": "Establishes exact parameter domain bounds ensuring strict monotonicity and positive second derivatives for generalized EML activation functions.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Applications"
       ],
@@ -1015,7 +1015,7 @@
       "depth_estimate": 3,
       "description": "Proves an explicit Lie algebra isomorphism between EML exponential-logarithmic state spaces and continuous scaling transformation groups.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Applications"
       ],
@@ -17917,7 +17917,7 @@
       "title": "Primality Testing: Miller-Rabin and AKS Formalization"
     },
     {
-      "ambition_level": "extension",
+      "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
       "attempt_count": 1,
@@ -34496,7 +34496,7 @@
       "depth_estimate": 3,
       "description": "Formalizes the Nash existence theorem for normal-form games via Brouwer's fixed point theorem applied to the product of mixed-strategy simplices, and proves the computational hardness that finding an approximate Nash equilibrium is PPAD-complete.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Applications",
         "Computation"
@@ -39439,7 +39439,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 0dcd87ee (Q=0.751), which proved 67 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future directions\n\nThe new file `Catalog/Applications/SurveillanceNetworks/PrivacyThreshold.lean`\nsettles the \"sharp privacy threshold\" direction for binary network histories:\nperfectly private channels — deterministic or randomized — achieve worst-case\nHamming distortion `D` exactly when a single",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Combinatorics"
       ],
@@ -39679,7 +39679,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 18622a4a (Q=0.775), which proved 22 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the conjecture that e^a * log(b) is a universal primitive for real computation. Conjecture: Every computable real function f: R^n -> R can be expressed as a finite composition of e^x, log(x), constants, and field operations. Test: prove this for the class of elementary functions (sin, cos,",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Applications"
       ],
@@ -40239,7 +40239,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 362b8901 (Q=0.766), which proved 44 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the Risch algorithm for deciding if the integral of an EML function is an EML function. Prove the Risch theorem: integration in finite terms is decidable for EML functions. Implement the key steps: logarithmic part, exponential part, and algebraic part. Prove that the algorithm terminates ",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Applications"
       ],
@@ -40773,14 +40773,14 @@
       "parent_direction": "",
       "priority_score": 0.9199999999999999,
       "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
+      "prune_reason": "tournament_rejected: ",
+      "pruned_at": "2026-08-16T09:43:08Z",
       "quarantined_until": "",
       "research_mode": "team",
       "source": "",
       "source_exp_id": "560413ae",
       "source_path": "Entanglement-Monotone: Formalization of Logarithmic Negativity Bounds",
-      "status": "available",
+      "status": "pruned",
       "thread_id": "",
       "timestamp": "2026-08-13T17:19:09.572305+00:00",
       "title": "Deepening: Entanglement-Monotone: Formalization of Logarithmic Negativity Bounds"
@@ -41199,7 +41199,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 61e33133 (Q=0.767), which proved 12 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that the class of EML functions (compositions of exp, log, and field operations) is dense in C([0,1]^n) with respect to the uniform norm. Show that the approximation rate depends on the depth of the EML composition and derive explicit bounds for shallow networks.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Applications"
       ],
@@ -41653,14 +41653,14 @@
       "parent_direction": "",
       "priority_score": 0.9022499999999999,
       "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
+      "prune_reason": "tournament_rejected: ",
+      "pruned_at": "2026-08-16T09:43:08Z",
       "quarantined_until": "",
       "research_mode": "team",
       "source": "",
       "source_exp_id": "687f4282",
       "source_path": "The Combinatorics of Compiler Optimization: Register Allocation as Graph Colorin",
-      "status": "available",
+      "status": "pruned",
       "thread_id": "",
       "timestamp": "2026-07-29T12:32:32.674077+00:00",
       "title": "Deepening: The Combinatorics of Compiler Optimization: Register Allocation as Graph Colorin"
@@ -42359,7 +42359,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 8dd43c13 (Q=0.793), which proved 32 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Establishes exact parameter domain bounds ensuring strict monotonicity and positive second derivatives for generalized EML activation functions.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Applications"
       ],
@@ -42479,7 +42479,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 8fe295b2 (Q=0.771), which proved 6 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Define quantum EML neurons where exp and log are replaced by unitary exponentials: U = exp(iH) for Hermitian H, and the log is the matrix logarithm. Conjecture: The quantum EML neuron U = exp(iH1) * log(I+iH2) can implement any single-qubit unitary. Test: parameterize H1, H2 and prove the map covers",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Applications"
       ],
@@ -43293,14 +43293,14 @@
       "parent_direction": "",
       "priority_score": 0.9199999999999999,
       "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
+      "prune_reason": "tournament_rejected: ",
+      "pruned_at": "2026-08-16T09:43:08Z",
       "quarantined_until": "",
       "research_mode": "team",
       "source": "",
       "source_exp_id": "b7a22960",
       "source_path": "Construct a Boolean-valued universe whose generic quotients instantiate the abst",
-      "status": "available",
+      "status": "pruned",
       "thread_id": "",
       "timestamp": "2026-08-13T18:15:13.337392+00:00",
       "title": "Deepening: Construct a Boolean-valued universe whose generic quotients instantiate the abst"
@@ -43359,7 +43359,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle bb566a68 (Q=0.783), which proved 11 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize transseries as formal series in x, log(x), exp(x), exp(exp(x)), etc. Prove that the field of transseries is real closed. Show that every EML function has a transseries expansion that uniquely determines it. Prove the asymptotic comparison theorem: if two transseries agree to all orders, th",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Applications"
       ],
@@ -44266,7 +44266,7 @@
       "title": "Deepening: Inverse Stereographic Renormalization Group"
     },
     {
-      "ambition_level": "extension",
+      "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
       "attempt_count": 0,
@@ -45121,7 +45121,7 @@
       "domain_bridges": [
         "Pythagorean <-> EML"
       ],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Pythagorean",
         "Applications"
@@ -56612,11 +56612,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 2,
       "catalog_references": [],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "25d882e7",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -56630,7 +56630,7 @@
       ],
       "github_issue": 0,
       "id": "seed_273",
-      "last_attempt_time": "2026-07-27T08:00:22.466026+00:00",
+      "last_attempt_time": "2026-08-16T09:43:33.014864+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -56645,7 +56645,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "",
       "title": "The Unreasonable Effectiveness of Wrong Theories"
@@ -62531,8 +62531,8 @@
     "famous_subtask",
     "famous_subtask",
     "famous_subtask",
-    "famous_subtask",
     "abduction_followup",
+    "cross_domain_bridge",
     "cross_domain_bridge"
   ]
 }

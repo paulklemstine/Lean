@@ -79,6 +79,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 6c757940 (Q=0.890), which proved 152 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: A database with missing entries is a partial section of a sheaf. The sheaf condition (gluing) says that if two partial sections agree on their overlap, they can be glued into a global section. Conjecture: the probability that a random database with missing rate r satisfies the sheaf condition (i.e.,",
+    "domains": [
+      "Computation"
+    ],
+    "id": "push_6c757940_6b367ed7",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "6c757940",
+    "status": "available",
+    "timestamp": "2026-08-16T09:42:56.378415+00:00",
+    "title": "Deepening: Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Formally proves conditions under which information can exist purely within a closed timelike curve loop without ever having an initial origin (Ontological Paradox).",
     "domains": [
       "Physics"
@@ -752,34 +766,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle 560413ae (Q=0.820), which proved 131 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Proves that logarithmic negativity is a strict entanglement monotone under Local Operations and Classical Communication (LOCC).",
-    "domains": [
-      "Physics"
-    ],
-    "id": "push_560413ae_6f99ea56",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "560413ae",
-    "status": "available",
-    "timestamp": "2026-08-13T17:19:09.572305+00:00",
-    "title": "Deepening: Entanglement-Monotone: Formalization of Logarithmic Negativity Bounds"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle b7a22960 (Q=0.820), which proved 127 theorems in Logic. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions: Multiverse Truth and Forcing Branches\n\n## 1. Internal Boolean-Valued Realization\n\nConstruct a Boolean-valued universe whose generic quotients instantiate the abstract frame, with forcing closure, directedness, and opposite Continuum Hypothesis branches derived rather than assume",
-    "domains": [
-      "Logic"
-    ],
-    "id": "push_b7a22960_ae13aa54",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "b7a22960",
-    "status": "available",
-    "timestamp": "2026-08-13T18:15:13.337392+00:00",
-    "title": "Deepening: Construct a Boolean-valued universe whose generic quotients instantiate the abst"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Building on cycle f1303b99 (Q=0.811), which proved 21 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove Conway's Game of Life is Turing complete via a direct constructive embedding. Formalize cellular automata in Lean 4 and establish complexity bounds on the simulation overhead.",
     "domains": [
       "Novelty"
@@ -805,20 +791,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-01T18:22:53.127464+00:00",
     "title": "Deepening: Bridge: Fourier Analysis as a Functor"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 687f4282 (Q=0.802), which proved 14 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Register allocation in a compiler assigns variables to CPU registers. The interference graph G has variables as vertices and edges between variables that are 'live' at the same time. Register allocation is equivalent to coloring G with k colors (k = number of registers). Conjecture: for SSA-form pro",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_687f4282_020404d0",
-    "priority_score": 0.9022499999999999,
-    "research_mode": "team",
-    "source_exp_id": "687f4282",
-    "status": "available",
-    "timestamp": "2026-07-29T12:32:32.674077+00:00",
-    "title": "Deepening: The Combinatorics of Compiler Optimization: Register Allocation as Graph Colorin"
   },
   {
     "consumed_by_exp_id": "",
@@ -6344,23 +6316,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "PAC-Bayes Bounds: Information-Theoretic Generalization"
   },
   {
-    "consumed_by_exp_id": "6e253e5d",
-    "description": "Model EML network training in the tropical limit (large weights) as piecewise-linear optimization. Prove that gradient descent on tropical EML functions converges to a tropical rational function that minimizes the tropical loss. Derive convergence rates and compare to ReLU networks.",
-    "domains": [
-      "EML",
-      "Tropical",
-      "MachineLearning"
-    ],
-    "id": "seed_338",
-    "phase": "A",
-    "priority_score": 0.83,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "EML Learning Theory: Gradient Descent Convergence in the Tropical Limit"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Characterize all fields over which every element is a sum of two squares (Pythagorean fields). Prove that a field is Pythagorean iff it is formally real with a unique ordering. Show that Q(i) is not Pythagorean but R is.",
     "domains": [
@@ -6945,7 +6900,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Transreal Arithmetic: Computing Beyond Plus-Minus Infinity"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "25d882e7",
     "description": "Prove a meta-theorem: for any approximately correct physical theory T, there exists a class of phenomena for which T makes predictions closer to truth than any known correct theory. Formalize using perturbation theory on theory-space and prove that the wrongness of T forms a convergent series toward truth.",
     "domains": [
       "Novelty",
@@ -6953,10 +6908,11 @@ window.FUTURE_DIRECTIONS = [
       "Bridges"
     ],
     "id": "seed_273",
+    "phase": "A",
     "priority_score": 0.82,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "The Unreasonable Effectiveness of Wrong Theories"
   },
@@ -18845,6 +18801,36 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Sheaf-Theoretic Data Integration\n\nAll results below are in `Catalog/Computation/`, compile against Mathlib\n(Lean 4, toolchain `v4.28.0`) with **zero `sorry`** and only the standard axioms\n`propext`, `Classical.choice`, `Quot.sound`.\n\n## Verified results\n\n| Result | File |\n|---|---|\n| Gluing \u21d4 pairwise consistency (`gluable_iff_pairwise`) | `DatabaseSheafGluing.lean` |\n| Section count `q^(#unobserved columns)` (`card_sections`) | `DatabaseSheafGluing.lean` |\n| Mean imputation = sheaf imputation on gluable data | `DatabaseSheafGluing.lean` |\n| Exact law `P(sheaf) = (q(r+(1-r)/q)^k \u2212 (q\u22121)r^k)^n` | `DatabaseSheafProbability.lean` |\n| `P(sheaf)` increasing in the missing rate; `< 1` for `k,q \u2265 2` | `DatabaseSheafProbability.lean` |\n| No exponent `C` gives `P(sheaf) = (1\u2212r)^C` | `DatabaseSheafProbability.lean` |\n| First moment `E[N] = (q(r+(1\u2212r)/q)^k)^n`, Markov bound | `DatabaseSheafProbability.lean` |\n| **Second moment `E[N\u00b2] = (q(r+(1\u2212r)/q)^k + (q\u00b2\u2212q)r^k)^n`** | `DatabaseSheafSecondMoment.lean` |\n| **Second-moment bound `E[N]\u00b2/E[N\u00b2] \u2264 P(sheaf)`, tight at `r \u2208 {0,1}`, strict inside** | `DatabaseSheafSecondMoment.lean` |\n| \u010cech complex of the data sheaf: `H\u2070 \u2245 \ud835\udd5c^n`, `H\u00b9 = 0` for every cover | `DatabaseCechComplex.lean` |\n| Calibration sheaf on a cyclic nerve: `dim H\u00b9 = 1`, holonomy criterion | `DatabaseHolonomy.lean`, `DatabaseNerveBetti.lean` |\n| Star (tree) nerve: `dim H\u00b9 = 0` \u2014 topological dichotomy | `DatabaseNerveBetti.lean` |\n| **General nerve: `dim H\u00b9 + #sources = #overlaps + #components` (`= b\u2081`)** | `DatabaseNerveGeneral.lean` |\n| **`H\u00b9 = 0` \u21d4 the nerve is a forest; theta nerve has `dim H\u00b9 = 2`** | `DatabaseNerveGeneral.lean` |\n| **Pair union bound `1 \u2212 base \u2264 C(k,2)(1\u22121/q)(1\u2212r)\u00b2`, exact for `k = 2`** | `DatabasePairBound.lean` |\n| **`P(sheaf) \u2265 1 \u2212 n\u00b7C(k,2)(1\u22121/q)(1\u2212r)\u00b2`** | `DatabasePairBound.lean` |\n| **Tail sandwich `(1\u22121/q)\u00b7tail \u2264 1 \u2212 base \u2264 tail`, `tail = 1 \u2212 r^k \u2212 k(1\u2212r)r^{k\u22121}`** | `DatabaseBinomialTail.lean` |\n| **`(1 \u2212 tail)^n \u2264 P(sheaf) \u2264 (1 \u2212 (1\u22121/q)tail)^n`; threshold bounds `P \u2264 e^{\u2212n(1\u22121/q)tail}`, `P \u2265 1 \u2212 n\u00b7tail`** | `DatabaseBinomialTail.lean` |\n| **Nerve complex with triple overlaps: `dim H\u00b9 + #sources + rank d\u00b9 = #overlaps + #components`, hence `dim H\u00b9 \u2264 b\u2081`** | `DatabaseNerveTriple.lean` |\n| **Filling a triangle kills the obstruction: `dim H\u00b9 = 1` open, `= 0` filled** | `DatabaseNerveTriple.lean` |\n\nThe three conjectures in the original assignment came out as: the probability law\nis **false** (wrong functional form *and* wrong direction of monotonicity,\nreplaced by an exact law); the imputation-superiority claim is **false** for the\nconstant data sheaf (mean imputation is already exactly the sheaf imputation);\nthe slogan \"imputation is a sheaf cohomology problem\" is **true only in degree 0**\nfor raw records, and becomes a genuine `H\u00b9` statement only for calibration\ncoefficients \u2014 where the obstruction dimension is exactly the first Betti number\nof the overlap nerve.\n\n## Status of the cycle-1 conjectures (C1\u2013C5)\n\n* **C1 (Betti law for the calibration obstruction) \u2014 CLOSED, true.**\n  `DatabaseNerveGeneral.finrank_H1_nerve` proves\n  `dim H\u00b9 + |V| = |\u03b9| + c` for an arbitrary finite family of oriented overlaps\n  `E : \u03b9 \u2192 V \u00d7 V` over an arbitrary field, i.e. `dim H\u00b9 = b\u2081(nerve)`; the kernel\n  computation `finrank_ker_dNerve` identifies the invisible calibrations with the\n  functions constant on connected components. The cycle case is re-derived from\n  the general theorem (`finrank_H1_cycleEdges`), and the forest criterion\n  (`h1_vanishes_iff_forest`) supersedes the cycle/star dichotomy. The\n  triple-overlap half of C1 (`dim H\u00b9` of the full nerve complex) remains open and\n  is restated as N1 below.\n* **C4 (second moment) \u2014 CLOSED, with a corrected statement.** The conjectured\n  correction factor does not exist: `expSectionsSq_eq` gives\n  `E[N\u00b2] = (q\u00b7A^k + (q\u00b2\u2212q)\u00b7r^k)^n` with `A = r + (1\u2212r)/q`, the only correction\n  being the fully unobserved-column term. The predicted Paley\u2013Zygmund bound is\n  valid (`second_moment_bound`) and is *exactly* tight at `r = 1` and at `r = 0`\n  (`second_moment_tight_at_one`, `second_moment_tight_at_zero`) but strict for\n  `0 < r < 1`, `q \u2265 2` (`second_moment_strict`) \u2014 so the conjectured asymptotic\n  matching as `r \u2192 1` holds, while no matching holds at fixed `r` as `n \u2192 \u221e`.\n* **C2, C3, C5** remain open and are carried forward below (C2 and C3 refined in\n  the light of the new results).\n* **New this cycle: the binomial coefficient of the original conjecture is\n  misplaced, not spurious.** `DatabasePairBound.one_sub_base_le_pairs` proves\n  `1 \u2212 base(k,q,r) \u2264 C(k,2)\u00b7(1\u22121/q)\u00b7(1\u2212r)\u00b2`, an equality for `k = 2`\n  (`base_two_exact`).  So a binomial coefficient does govern the sheaf condition\n  \u2014 it counts *pairs of rows*, multiplies `(1\u2212r)\u00b2`, and appears linearly rather\n  than in an exponent.  This is the closest true statement to the assignment's\n  `P(sheaf) = (1\u2212r)^{C(n,k)}`.\n\n## Status of the cycle-2 conjectures (N1\u2013N5)\n\n* **N1 (cohomology of the whole nerve complex) \u2014 CLOSED in its structural half.**\n  `DatabaseNerveTriple.finrank_H1_nerve_triple` extends the Betti law to a nerve\n  with triple overlaps: `dim H\u00b9 + #sources + rank d\u00b9 = #overlaps + #components`,\n  so `dim H\u00b9 \u2264 b\u2081` always (`finrank_H1_nerve_triple_le`), with equality exactly\n  when the triangle relations are vacuous.  The predicted collapse is verified on\n  the smallest interesting instance:\n  `triple_overlap_kills_obstruction` proves `dim H\u00b9 = 1` for three sources\n  compared cyclically and `dim H\u00b9 = 0` once their common triple overlap is\n  recorded.  What remains open is the identification of `dim H\u00b9` with simplicial\n  `H\u00b9(N; \ud835\udd5c)` for an arbitrary abstract simplicial nerve, restated as **P1**.\n* **N2 (sharp two-sided threshold) \u2014 CLOSED, with a corrected parameter.** The\n  conjectured parameter `k\u00b2(1\u2212r)\u00b2` is wrong in the dense regime (it diverges\n  while the failure probability saturates at `1`).  The correct parameter is the\n  binomial tail `tail(k,r) = P[Bin(k,1\u2212r) \u2265 2] = 1 \u2212 r^k \u2212 k(1\u2212r)r^{k\u22121}`, and\n  the two-sided bound is proved exactly:\n  `(1\u22121/q)\u00b7tail \u2264 1 \u2212 base(k,q,r) \u2264 tail` (`one_sub_base_ge_tail`,\n  `one_sub_base_le_tail`), hence\n  `(1 \u2212 tail)^n \u2264 P(sheaf) \u2264 (1 \u2212 (1\u22121/q)\u00b7tail)^n` (`sheafProb_sandwich`),\n  `P(sheaf) \u2264 exp(\u2212n(1\u22121/q)\u00b7tail)` and `P(sheaf) \u2265 1 \u2212 n\u00b7tail`.  The transition\n  therefore happens at `n\u00b7tail(k,r) \u224d 1`, and in the sparse regime\n  `C(k,2)(1\u2212r)\u00b2r^{k\u22122} \u2264 tail \u2264 C(k,2)(1\u2212r)\u00b2` recovers the pair bound.\n* **N3, N4, N5** remain open; they are restated below as **P3, P4, P5**.\n\n---\n\nBelow are five bold, falsifiable conjectures for the next cycle.\n\n## P1. The obstruction is simplicial cohomology of the abstract nerve\n\n**Conjecture.** For an arbitrary finite abstract simplicial complex `N` of data\nsources, with `C\u2070 = \ud835\udd5c^{vertices}`, `C\u00b9 = \ud835\udd5c^{edges}`, `C\u00b2 = \ud835\udd5c^{triangles}` and the\ncalibration coboundaries, `dim H\u00b9 = dim H\u00b9(N; \ud835\udd5c)` in every characteristic; in\nparticular the obstruction depends only on the homotopy type of `N`, so two\nintegration problems whose nerves are homotopy equivalent are equally hard.\n\n*The key insight is* that `finrank_H1_nerve_triple` already reduces the question\nto computing `rank d\u00b9`, which is the simplicial statement that the number of\nindependent triangle relations equals `#triangles \u2212 dim H\u00b2`-type bookkeeping;\nthe graph case is the `2`-skeleton-free specialisation.\n\n*Why now?* Both endpoints are proved: `finrank_H1_nerve` (no triangles) and\n`triple_overlap_kills_obstruction` (one triangle, obstruction destroyed), and\nMathlib's simplicial-complex and `Finset`-chain API supplies the general `d\u00b9`.\n\n## P2. The tail is the exact hardness parameter, uniformly in the model\n\n**Conjecture.** For every missingness model with per-column observation counts\ndistributed as some `\u03bc` on `{0,\u2026,k}` (not only i.i.d. Bernoulli), the per-column\nfailure probability satisfies\n`(1 \u2212 1/q)\u00b7\u03bc{\u22652} \u2264 1 \u2212 base_\u03bc(k,q) \u2264 \u03bc{\u22652}`, so `P(sheaf) = \u0398((1 \u2212 \u03bc{\u22652})^n)`\nwith model-independent constants; the missing rate itself never appears.\n\n*The key insight is* that the proof of `one_sub_base_eq_tail_sum` only uses that\npatterns with `j \u2264 1` observed cells cannot conflict and that patterns with\n`j \u2265 2` conflict with probability `1 \u2212 q^{1\u2212j} \u2208 [1\u22121/q, 1]` \u2014 nothing about the\ndistribution of `j`.\n\n*Why now?* The Bernoulli case is fully proved in `DatabaseBinomialTail.lean`, and\nthe argument is already organised as a bound on the weights, so replacing the\nbinomial weights by arbitrary ones is a re-parameterisation of the same sum.\n\n## P3. Cohomological imputation is optimal exactly for flasque coefficient sheaves\n\n**Conjecture.** Let `F` be a coefficient sheaf on the column set. The \"closest\nglobal section\" imputation rule coincides with columnwise mean imputation for\n*every* gluable database if and only if `F` is the constant (flasque) data\nsheaf; for any coefficient sheaf with a non-surjective restriction map there is a\ngluable database on which the two rules differ, and the gap is bounded below by\nthe norm of the corresponding holonomy class.\n\n*The key insight is* that mean imputation is the orthogonal projection onto a\nproduct subspace, which agrees with the sheaf projection precisely when the\nsheaf imposes no cross-column constraints \u2014 i.e. exactly when `H\u00b9` vanishes for\nall covers, which by N1 means a forest nerve.\n\n*Why now?* One direction is already proved\n(`mean_imputation_eq_sheaf_imputation`), and `DatabaseHolonomy.lean` plus\n`DatabaseNerveGeneral.finrank_H1_theta` supply explicit non-flasque examples,\nincluding one (`theta`) with a two-dimensional obstruction, to test the converse\nagainst.\n\n## P4. Missingness that is not MCAR acts on the nerve, never on the coefficients\n\n**Conjecture.** For adversarial (MNAR) missingness, where the observed support of\neach row may depend on the values, the data sheaf on the *observed* cover is\nstill flasque, hence `H\u00b9 = 0`; but the induced distribution on nerves is\nsupported on graphs with positive first Betti number with probability bounded\naway from zero, so by the now-proved Betti law the calibration obstruction\nappears with probability `1 \u2212 O(n^{-1})` for `k \u2265 3` sources and `n` columns.\n\n*The key insight is* that missingness mechanisms act on the *nerve*, not on the\ncoefficients: they cannot create cohomology in the data sheaf, only change which\nnerve is drawn \u2014 and the obstruction is then read off from the drawn nerve by\n`finrank_H1_nerve`.\n\n*Why now?* Both halves are separately available: `h1_vanishes` is proved for\narbitrary covers (hence for adversarially chosen ones), and `finrank_H1_nerve`\nturns the random nerve into a random Betti number, reducing the conjecture to a\nrandom-graph cycle-count computation of the same flavour as the exact law proved\nhere.\n\n## P5. Redundancy, not missingness, is the true difficulty parameter\n\n**Conjecture.** Define the *redundancy* of an integration problem as\n`\u03c1 = |\u03b9| \u2212 |V| + c`, the Betti number of its overlap nerve. Then (i) the expected\nnumber of independent unfixable inconsistencies of a random integration problem\nis exactly `E[\u03c1]`, and (ii) the minimum number of overlap measurements that must\nbe discarded to make the problem solvable equals `\u03c1` \u2014 so the cost of\nreconciliation is a matroid rank complement (the cographic matroid of the nerve),\nindependent of the missing rate `r` entirely.\n\n*The key insight is* that `finrank_H1_theta = 2` already shows the obstruction\ngrowing purely through redundancy, with no missing data at all: repeated\ncomparisons of the same two sources each add one dimension of possible\ndisagreement.\n\n*Why now?* `finrank_H1_nerve` gives (i) as a linear-algebra identity once the\nrandom nerve model is fixed, and (ii) is the statement that the coboundary's\ncokernel dimension equals the corank of the graphic matroid \u2014 the same\nrank\u2013nullity computation already carried out in `DatabaseNerveGeneral.lean`,\nplus Mathlib's matroid API.\n",
+    "domains": [
+      "Geometry",
+      "Logic"
+    ],
+    "id": "fd_1328",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "6c757940",
+    "status": "available",
+    "timestamp": "2026-08-16T09:42:44.963501+00:00",
+    "title": "All results below are in `Catalog/Computation/`, compile against Mathlib"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Tropical EML learning theory (next cycle)\n\nDerived from what survived and what failed in this cycle. Formalized this cycle:\nthe tropical/ReLU dictionary in one variable (`isTropRat_iff_reluExpr`), quantitative\nMaslov dequantization of EML units (`tmax_le_lse`, `lse_le_tmax_add`,\n`largeWeight_tendsto_tmax`), the `O(D G/\u221an)` subgradient rate\n(`best_iterate_sqrt_rate`), sharpness of the tropical `L\u00b9` loss\n(`tropL1_sharp_growth`), the geometric Polyak rate (`polyak_geometric`), and the\nfixed-step non-convergence boundary (`fixedStep_never_converges`).\n\nFailure analysis feeding the conjectures below:\n\n* *True but hard*: multivariate tropical rational calculus. The pairwise-sum product\n  rule `tmax_add_tmax` generalizes verbatim, but the median/sharpness argument does not:\n  in `\u211d^d` the `L\u00b9` minimizer is a coordinatewise median only for separable losses.\n* *Needs a different definition*: \"gradient descent converges to a tropical rational\n  function\" is false as literally stated for a fixed step (see the 2-cycle\n  counterexample); the correct statements are best-iterate and Polyak-step convergence.\n* *Structural pattern*: every rate we proved is controlled by two tropical invariants \u2014\n  the largest absolute slope (Lipschitz constant, `tpEval_lipschitz`) and the sharpness\n  constant (growth away from the minimizer). This slope/sharpness pair is the tropical\n  replacement for the smoothness/strong-convexity pair.\n\n## Conjecture 1 (Tropical condition number governs all first-order rates)\n\nFor any tropical rational loss `L` on `\u211d^d`, with `G` its maximal tropical slope and `\u03bc`\nits sharpness constant at the minimizer, Polyak-step subgradient descent contracts the\nsquared distance by exactly `1 \u2212 \u03bc\u00b2/G\u00b2` per step, and no first-order method beats\n`(1 \u2212 \u03bc\u00b2/G\u00b2)^{n/2}` on the worst instance with these invariants.\n\n*The key insight is* that `\u03bc/G` is a purely combinatorial quantity \u2014 the ratio between\nthe smallest and largest slopes of the tropical normal fan at the optimum \u2014 so the\noptimization rate is computed by the geometry of a Newton polytope rather than by any\nanalytic estimate. *Why now?* The one-variable case is fully proved here\n(`polyak_geometric` with `\u03bc = 1`, `G = N`), and the multivariate normal-fan machinery\nneeded for the lower bound is elementary polyhedral combinatorics.\n\n## Conjecture 2 (Dequantization commutes with training)\n\nLet `\u03b8_T(n)` be the `n`-th gradient-descent iterate of the smooth EML network at\ntemperature `T`, and `\u03b8_0(n)` the `n`-th subgradient iterate of its tropical limit. Then\n`|\u03b8_T(n) \u2212 \u03b8_0(n)| \u2264 C \u00b7 n \u00b7 T \u00b7 log k`, and consequently the two training trajectories\nhave the same limit set as `T \u2192 0\u207a`.\n\n*The key insight is* that the dequantization defect is uniformly `T log k` **per unit**\n(`lseNeuron_sub_tpEval_le`), so it can only accumulate linearly along a trajectory of\n`1`-Lipschitz update maps. *Why now?* The per-unit bound with its explicit constant is\nalready proved; what remains is a discrete Gr\u00f6nwall argument over the iteration.\n\n## Conjecture 3 (Sharpness \u21d2 finite termination with an exact line search)\n\nOn a tropical `L\u00b9` loss with `N` samples, subgradient descent with exact line search\nalong the negative subgradient terminates at the exact minimizer in at most `N` steps \u2014\nno asymptotics at all.\n\n*The key insight is* that a piecewise-linear convex function restricted to a line is\nagain piecewise linear with breakpoints only at data values, so an exact line search\nmust land on a breakpoint and each breakpoint can be visited at most once. *Why now?*\nThe kernel-checked example in `PolyakLinearRate.lean` already exhibits one-step\ntermination from `x\u2080 = 0`, and the breakpoint bookkeeping is finite combinatorics over\n`Finset.range N`.\n\n## Conjecture 4 (Depth is exponentially cheaper than width, tropically)\n\nThe tropical polynomial `max(0, x, 2x \u2212 1, \u2026, kx \u2212 c_k)` obtained as the `k`-fold\ntropical power of a two-term monomial needs `\u0398(k)` ReLU units in a *shallow* network but\nonly `\u0398(log k)` units in a deep one, and the gap is exactly the difference between the\nnumber of tropical monomials and the number of *distinct slopes* after tropical\nmultiplication.\n\n*The key insight is* that tropical multiplication (`tmax_add_tmax`) multiplies monomial\ncounts while composition of ReLU blocks squares them, so depth realizes tropical powers\nfor free. *Why now?* Our construction `tpExpr` gives the shallow upper bound with an\nexact unit count; the matching lower bound only requires counting distinct slopes, an\ninvariant already available from `tpEval_lipschitz`.\n\n## Conjecture 5 (Generalization is controlled by the tropical monomial count)\n\nFor tropical models with at most `k` monomials and slopes bounded by `G`, the empirical\n`L\u00b9` risk converges to the population risk at rate `O(G \u221a(k log k / n))`, and the\nconstant is *independent of the network depth* used to realize the model.\n\n*The key insight is* that by `isTropRat_iff_reluExpr` depth is a purely syntactic\nattribute of the realization: the hypothesis class is parameterized by tropical\nmonomials, so capacity must be measured in monomials, not in weights. *Why now?* The\ndictionary theorem making \"depth is free\" precise is proved here, and the covering\nnumber of `k`-monomial tropical polynomials is a direct consequence of\n`tpEval_lipschitz`.\n\n## Three concrete next-cycle sub-conjectures\n\n1. `tmax_add_tmax` extends to `\u211d^d` with pairwise sums of exponent vectors, and the\n   resulting class is closed under `max`, `+`, `\u2212`, `min` and `relu` (multivariate\n   `IsTropRat` closure).\n2. For separable multivariate tropical `L\u00b9` losses the sharpness constant is `1` in each\n   coordinate, hence Polyak steps contract by `1 \u2212 1/(dN\u00b2)`.\n3. Exact line search on a one-variable tropical `L\u00b9` loss reaches the median after at\n   most one step from any initialization outside the data range.\n",
+    "domains": [
+      "Geometry",
+      "Tropical"
+    ],
+    "id": "fd_1329",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "6e253e5d",
+    "status": "available",
+    "timestamp": "2026-08-16T09:43:03.215806+00:00",
+    "title": "Derived from what survived and what failed in this cycle. Formalized this cycle:"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "A vampire number is a composite number v with an even number of digits that can be factizedd as v = x * y where x and y together have the same digits as v. The smallest is 1260 = 21 * 60. But vampire numbers are just the beginning. Define: (1) Werewolf numbers: v = x * y where x and y share exactly one digit with v. (2) Ghost numbers: v = x * y where v has NO digits in common with x or y. (3) Zombie numbers: v = x * y where x and y are both prime (these violate the definition but exist \u2014 125460 = 204 * 615 = 246 * 510, where both factorizations involve a prime and a composite). Conjecture: The density of vampire numbers in [10^{2n}, 10^{2n+1}] approaches 1/sqrt(n) as n -> infinity. Every even-length interval [10^{2k}, 10^{2k+2}] contains at least one vampire number. Ghost numbers have density 0 \u2014 they become vanishingly rare as the number of digits increases. Test: enumerate all vampire, werewolf, ghost, and zombie numbers up to 10^8. Prove the density conjecture by counting valid digit permutations. Impact: a playful but genuine number theory of arithmetic creatures \u2014 combinatorial digit problems that are easy to state but may be as hard as factoring.",
     "domains": [
       "Novelty",
@@ -19164,24 +19150,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Categorification of Entropy: The Information Loss of Functors"
-  },
-  {
-    "consumed_by_exp_id": "6c757940",
-    "description": "A database with missing entries is a partial section of a sheaf. The sheaf condition (gluing) says that if two partial sections agree on their overlap, they can be glued into a global section. Conjecture: the probability that a random database with missing rate r satisfies the sheaf condition (i.e., can be consistently filled in) is P(sheaf) = (1-r)^{C(n,k)} where n is the number of columns, k is the number of rows, and C(n,k) is the number of overlapping constraints. This means: for a database with n columns and k rows, the probability of consistent imputation drops exponentially with the number of overlapping constraints. The sheaf imputation method: fill in missing values by finding the closest global section of the data sheaf. This is equivalent to solving a constrained optimization problem where the constraints are the sheaf condition on every overlapping pair of feature subsets. Conjecture: sheaf imputation outperforms mean imputation and KNN imputation when the missing rate r < 0.5 and the number of features n > 10, because the sheaf condition provides exponentially many consistency constraints that other methods ignore. Test: generate synthetic databases with known ground truth, introduce missing values at rate r, compare sheaf imputation with mean, KNN, and MICE. Impact: data imputation is a sheaf cohomology problem. The sheaf condition is the natural consistency constraint for databases.",
-    "domains": [
-      "Novelty",
-      "Algebra",
-      "Computation",
-      "MachineLearning"
-    ],
-    "id": "seed_197",
-    "phase": "A",
-    "priority_score": 0.73,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
   },
   {
     "consumed_by_exp_id": "",

@@ -260,7 +260,7 @@ theorem erasedNats_mono_comp [DecidableEq γ] (f : α → β) (g : β → γ) :
     · have hsub : fiber f (f x) ⊆ fiber (g ∘ f) ((g ∘ f) x) := by
         intro z hz
         rw [mem_fiber] at hz ⊢
-        simp [Function.comp_def, hz]
+        simp [hz]
       exact_mod_cast Finset.card_le_card hsub
   rcases isEmpty_or_nonempty α with hα | hα
   · haveI := hα
@@ -421,14 +421,14 @@ def binarySrc (n m : ℕ) : Type := Fin (2 ^ m) × Fin (2 ^ (n - m))
 instance (n m : ℕ) : Fintype (binarySrc n m) := instFintypeProd _ _
 instance (n m : ℕ) : DecidableEq (binarySrc n m) := instDecidableEqProd
 instance (n m : ℕ) : Nonempty (binarySrc n m) :=
-  ⟨(⟨0, Nat.pos_pow_of_pos _ (by norm_num)⟩, ⟨0, Nat.pos_pow_of_pos _ (by norm_num)⟩)⟩
+  ⟨(⟨0, by positivity⟩, ⟨0, by positivity⟩)⟩
 
 /-- The truncation compression on full binary proof spaces. -/
 def binaryTruncate (n m : ℕ) : binarySrc n m → Fin (2 ^ m) := Prod.fst
 
 theorem binaryTruncate_surjective (n m : ℕ) : Function.Surjective (binaryTruncate n m) := by
   intro a
-  exact ⟨(a, ⟨0, Nat.pos_pow_of_pos _ (by norm_num)⟩), rfl⟩
+  exact ⟨(a, ⟨0, by positivity⟩), rfl⟩
 
 /-- Truncating a full binary `n`-step proof to its first `m` steps erases exactly
 `(n-m) log 2` nats, i.e. exactly `n - m` bits. -/
@@ -450,7 +450,11 @@ theorem binary_landauer_bound_isLeast (n m : ℕ) :
   · exact ⟨binaryTruncate n m, binaryTruncate_surjective n m, binaryTruncate_erasure n m⟩
   · rintro r ⟨f, hsurj, rfl⟩
     have hb := erasedNats_ge_log_card_ratio f hsurj
-    rw [Fintype.card_prod, Fintype.card_fin, Fintype.card_fin] at hb
+    have hcard : Fintype.card (binarySrc n m) = 2 ^ m * 2 ^ (n - m) := by
+      rw [show Fintype.card (binarySrc n m)
+            = Fintype.card (Fin (2 ^ m) × Fin (2 ^ (n - m))) from rfl,
+        Fintype.card_prod, Fintype.card_fin, Fintype.card_fin]
+    rw [hcard, Fintype.card_fin] at hb
     have hrw : Real.log ((2 ^ m * 2 ^ (n - m) : ℕ) : ℝ) - Real.log ((2 ^ m : ℕ) : ℝ)
         = ((n - m : ℕ) : ℝ) * Real.log 2 := by
       have h1 : ((2 ^ m * 2 ^ (n - m) : ℕ) : ℝ) = (2:ℝ) ^ m * (2:ℝ) ^ (n - m) := by push_cast; ring
@@ -468,17 +472,17 @@ def branchSrc (b n m : ℕ) : Type := Fin (b ^ m) × Fin (b ^ (n - m))
 instance (b n m : ℕ) : Fintype (branchSrc b n m) := instFintypeProd _ _
 
 instance branchSrc_nonempty (b n m : ℕ) [NeZero b] : Nonempty (branchSrc b n m) :=
-  ⟨(⟨0, Nat.pos_pow_of_pos _ (Nat.pos_of_ne_zero (NeZero.ne b))⟩,
-    ⟨0, Nat.pos_pow_of_pos _ (Nat.pos_of_ne_zero (NeZero.ne b))⟩)⟩
+  ⟨(⟨0, Nat.pow_pos (Nat.pos_of_ne_zero (NeZero.ne b))⟩,
+    ⟨0, Nat.pow_pos (Nat.pos_of_ne_zero (NeZero.ne b))⟩)⟩
 
 /-- **The true cost of one erased proof step is `log b`, not `log 2`.**  With branching
 factor `b`, truncating an `n`-step proof to `m` steps erases exactly `(n-m)·log b`. -/
 theorem branching_erasure_eq (b n m : ℕ) (hb : 0 < b) :
     erasedNats (Prod.fst : branchSrc b n m → Fin (b ^ m))
       = ((n - m : ℕ) : ℝ) * Real.log b := by
-  haveI : NeZero b := ⟨Nat.pos_iff.mp hb |> fun h => by omega⟩
-  haveI : Nonempty (Fin (b ^ m)) := ⟨⟨0, Nat.pos_pow_of_pos _ hb⟩⟩
-  haveI : Nonempty (Fin (b ^ (n - m))) := ⟨⟨0, Nat.pos_pow_of_pos _ hb⟩⟩
+  haveI : NeZero b := ⟨by omega⟩
+  haveI : Nonempty (Fin (b ^ m)) := ⟨⟨0, Nat.pow_pos hb⟩⟩
+  haveI : Nonempty (Fin (b ^ (n - m))) := ⟨⟨0, Nat.pow_pos hb⟩⟩
   have h := erasedNats_fst (α := Fin (b ^ m)) (γ := Fin (b ^ (n - m)))
   rw [show (Prod.fst : branchSrc b n m → Fin (b^m))
       = (Prod.fst : Fin (b^m) × Fin (b^(n-m)) → Fin (b^m)) from rfl, h, Fintype.card_fin]
@@ -503,7 +507,7 @@ theorem branching_beats_naive_bound (b n m : ℕ) (hb : 3 ≤ b) (hmn : m < n) :
 /-! ## The requested numeric instance: 1000 steps ↦ 100 steps -/
 
 /-- Boltzmann's constant in J/K (exact, SI 2019). -/
-def boltzmann : ℝ := 1380649 / 10 ^ 29
+noncomputable def boltzmann : ℝ := 1380649 / 10 ^ 29
 
 /-- Room temperature in kelvin. -/
 def roomT : ℝ := 300
@@ -533,5 +537,6 @@ theorem fta_compression_bits : erasedBits (binaryTruncate 1000 100) = 900 := by
   rw [erasedBits, binaryTruncate_erasure]
   have h2 : Real.log 2 ≠ 0 := ne_of_gt (Real.log_pos (by norm_num))
   field_simp
+  norm_num
 
 end LandauerProofCompression
