@@ -2,15 +2,15 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Remove the unused Lean toolchain from the Aether CI workflow (saving ~7 min/run) and correct a misleading comment in the Aristotle dispatch path.
+**Goal:** Cut the Aether CI tick runtime from ~9-10 min to ~2 min (measured 1:51) via three changes: remove the unused Lean toolchain, correct a misleading comment, and switch to shallow checkout.
 
-**Architecture:** Two independent edits. (1) Delete the three Lean-toolchain steps (elan cache, Mathlib cache, install + `lake exe cache get`) from `.github/workflows/aether-research.yml`; nothing in the tick compiles Lean and the Aristotle SDK strips oleans on upload, so the toolchain was pure waste. (2) Replace the inaccurate "Retain .lake build-cache dirs... speeds up remote compilation" comment at `Aether/knowledge_extractor.py:1668-1672` with an accurate description (empty skeleton dirs silence SDK warnings; compiled artifacts are never sent).
+**Architecture:** Three independent edits. (1) Delete the three Lean-toolchain steps (elan cache, Mathlib cache, install + `lake exe cache get`) from `.github/workflows/aether-research.yml`; nothing in the tick compiles Lean and the Aristotle SDK strips oleans on upload, so the toolchain was pure waste. (2) Replace the inaccurate "Retain .lake build-cache dirs... speeds up remote compilation" comment at `Aether/knowledge_extractor.py:1668-1672` with an accurate description (empty skeleton dirs silence SDK warnings; compiled artifacts are never sent). (3) Change `actions/checkout` to `fetch-depth: 1` — full-history checkout re-downloads 5.2 GB of pack (13k commits, 100 MB+ historical blobs) every run (~6.5 min); shallow fetch pulls only the tip tree (~23s). Task 3 was added after Tasks 1-2 landed, when measuring showed the toolchain was only ~1 min of the ~9 and checkout was the real dominant cost.
 
 **Tech Stack:** GitHub Actions YAML, Python 3.12 (Aether), no new dependencies.
 
 ## Global Constraints
 
-- The `17 * * * *` cron, `concurrency` block, `permissions`, and `env` in `.github/workflows/aether-research.yml` are **untouched** — only the three toolchain steps are removed.
+- The `17 * * * *` cron, `concurrency` block, `permissions`, and `env` in `.github/workflows/aether-research.yml` are **untouched** — only the three toolchain steps and the checkout `fetch-depth` change.
 - `AETHER_MAX_INFLIGHT`, `GH_TOKEN`, `GITHUB_TOKEN` env vars and the `--max-inflight` invocation of `aether_tick.py` are unchanged.
 - The comment fix at `knowledge_extractor.py:1668-1672` must make only the factual correction — no logic changes in `_dispatch_to_aristotle`.
 - Do not edit `docs/` directly (rsync-synced from `Packages/` each tick); this plan touches only `.github/workflows/` and `Aether/`.
@@ -171,4 +171,64 @@ Expected: push succeeds; the post-commit hook also force-pushes `catalog-lean` (
 - [ ] **Step 6: Confirm the next scheduled tick succeeds**
 
 Check the hourly run after this change lands: `gh run list --workflow aether-research.yml --limit 1 --json status,conclusion,createdAt`.
-Expected: `completed / success`, and the run duration drops from ~8-11 min to ~3 min (compare `createdAt` vs `updatedAt`).
+Expected: `completed / success`, and the run duration drops from ~8-11 min. (Measured result after all three tasks, see Task 4 Step 6: 1:51.)
+
+---
+
+### Task 4: Shallow checkout (`fetch-depth: 1`)
+
+*Added after Tasks 1-3, when measuring showed the toolchain was only ~1 min of the ~9-min run; full-history checkout (~6.5 min) was the real dominant cost.*
+
+**Files:**
+- Modify: `.github/workflows/aether-research.yml` (checkout step `fetch-depth: 0` → `fetch-depth: 1`)
+
+**Interfaces:**
+- Consumes: Task 1's cleaned workflow.
+- Produces: a shallow checkout that pulls only the tip tree (~23s) instead of 5.2 GB of pack (~6.5 min).
+
+- [ ] **Step 1: Change checkout to shallow**
+
+In `.github/workflows/aether-research.yml`, the "Checkout repository" step:
+`fetch-depth: 0` → `fetch-depth: 1`.
+
+- [ ] **Step 2: Commit**
+
+```bash
+git add .github/workflows/aether-research.yml
+git commit -m "ci(aether): shallow checkout (fetch-depth 1) to cut tick setup time
+
+Full-history checkout pulls ~6GB of pack on every run (13k commits, 100MB+
+historical blobs). The tick only fetches/merges origin/master at runtime and
+the catalog-lean hooks use archive/commit-tree, neither needs full history.
+Trial: watch for merge/push failures on shallow clone."
+```
+
+- [ ] **Step 3: Push and fire a trial run**
+
+```bash
+git push origin master
+gh workflow run aether-research.yml --ref master
+```
+
+- [ ] **Step 4: Confirm the run succeeds and measure duration**
+
+Run: `gh run list --workflow aether-research.yml --limit 1 --json databaseId,status,conclusion,createdAt,updatedAt`.
+Expected: `completed / success`, duration ~2 min (vs 8:13 with full history).
+
+- [ ] **Step 5: Confirm the tick's merge/push worked on the shallow clone**
+
+Run: `gh run view <trial-id> --log | grep "Changes committed and pushed"`
+Expected: `[Tick] Changes committed and pushed to origin/master` — the tick's in-run `git merge origin/master` + push behave correctly on depth-1 (the runtime `git fetch` pulls the delta; the tick's own tip is the merge base). No `fatal: refusing to merge unrelated histories`.
+
+- [ ] **Step 6: Confirm the next scheduled cron run also succeeds**
+
+Expected: the next `17 * * * *` run completes successfully under the shallow config. (Measured: the 2026-08-16T01:56Z cron run succeeded.)
+
+**Measured result (trial run 31917618749):**
+
+| Phase | Full history (`fetch-depth: 0`) | Shallow (`fetch-depth: 1`) |
+|---|---|---|
+| Checkout | ~6.5 min | **23s** |
+| Set up Python + pip | ~7s | ~7s |
+| Run Aether tick | ~81s | ~65s |
+| **Total** | **8:13** | **1:51** |

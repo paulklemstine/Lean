@@ -122,7 +122,7 @@ Dispatched jobs that hang server-side are handled by wall-clock caps in the `sta
 
 - Python 3.10+
 - `httpx`, `requests`, `PyYAML`, `aristotlelib>=2.0.0`, `pydantic` (see `requirements.txt`)
-- Lean 4 toolchain (`lake`) for the full verify path
+- No Lean toolchain needed — the production tick never compiles Lean (theorem/sorry counts are regex-based; Aristotle compiles remotely and strips build artifacts on upload). `lake` is only used by the legacy verify path in `integrator.py`, which the tick does not call.
 - Aristotle API key from Harmonic; an LLM tier key (Ollama Cloud and/or OpenRouter)
 
 ---
