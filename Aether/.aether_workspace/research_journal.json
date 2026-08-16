@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "f3293094",
-      "domain": "Tropical",
-      "key_insight": "# Future Directions — tropical reading of the round-4 closures\n\nDerived from the analysis and adversarial review of the four Lean files in\n`Catalog/Tropical/` (`TropicalTorsionCensus`, `TropicalCensus",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 65,
-      "timestamp": "2026-08-13T21:10:03",
-      "title": "Round-4 Hypothesis Closures: Five Novel Attacks via Exotic Resources, Tested and Closed"
-    },
-    {
       "cycle_id": "ab9891cb",
       "domain": "Logic",
       "key_insight": "# Future Directions\n\nDerived from the verified results in\n`Catalog/Logic/ThreeSumBirthdayHierarchy.lean`,\n`Catalog/Logic/ThreeSumRevealDensity.lean`,\n`Catalog/Logic/GcdQueryLowerBound.lean` and\n`Catal",
@@ -499,19 +489,19 @@
       "theorem_count": 78,
       "timestamp": "2026-08-16T04:50:50",
       "title": "NET-36: The Attention-Cost Grid Is Now Two-Seed Everywhere — k*=d·ctx/32 Holds at Every Measured (de"
+    },
+    {
+      "cycle_id": "2a357c10",
+      "domain": "Bridges",
+      "key_insight": "# Future directions — NET-43 bridge (final, after cycles 1–6)\n\nVerified base (all `sorry`-free, all in `Catalog/Bridges/`, all main theorems checked with\n`#print axioms` to use only `propext`, `Classi",
+      "quality_score": 0.84,
+      "sorry_count": 1,
+      "theorem_count": 104,
+      "timestamp": "2026-08-16T07:46:03",
+      "title": "NET-43: The Deepest Rung Is Two-Seed 256 (k\\*=256 reproduces EXACTLY at seed=2; both honest limits c"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "3664af53",
-      "domain": "Applications",
-      "key_insight": "# Affine subspace statistics in `𝔽₂ⁿ` — results and future directions\n\nAll formal results live in four files, which together compile with no `sorry` and use only\nthe standard axioms (`propext`, `Class",
-      "quality_score": 0.686,
-      "sorry_count": 0,
-      "theorem_count": 122,
-      "timestamp": "2026-08-05T14:51:06",
-      "title": "ArXiv paper: Asymptotically sharp bounds for affine subspace statistics in $\\mathbb F_2^n$"
-    },
     {
       "cycle_id": "b369f029",
       "domain": "Bridges",
@@ -2501,21 +2491,19 @@
       "theorem_count": 78,
       "timestamp": "2026-08-16T04:50:50",
       "title": "NET-36: The Attention-Cost Grid Is Now Two-Seed Everywhere — k*=d·ctx/32 Holds at Every Measured (de"
+    },
+    {
+      "cycle_id": "2a357c10",
+      "domain": "Bridges",
+      "key_insight": "# Future directions — NET-43 bridge (final, after cycles 1–6)\n\nVerified base (all `sorry`-free, all in `Catalog/Bridges/`, all main theorems checked with\n`#print axioms` to use only `propext`, `Classi",
+      "quality_score": 0.84,
+      "sorry_count": 1,
+      "theorem_count": 104,
+      "timestamp": "2026-08-16T07:46:03",
+      "title": "NET-43: The Deepest Rung Is Two-Seed 256 (k\\*=256 reproduces EXACTLY at seed=2; both honest limits c"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "67289c0d",
-      "domain": "Cryptography",
-      "name": "here",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "67289c0d",
-      "domain": "Cryptography",
-      "name": "singularModuli_capstone",
-      "quality": 0.82
-    },
     {
       "cycle_id": "67289c0d",
       "domain": "Cryptography",
@@ -2803,17 +2791,22 @@
       "domain": "Probability",
       "name": "mass_le_sqrt",
       "quality": 0.85
+    },
+    {
+      "cycle_id": "2a357c10",
+      "domain": "Bridges",
+      "name": "bestMass_midpoint_concave",
+      "quality": 0.84
+    },
+    {
+      "cycle_id": "2a357c10",
+      "domain": "Bridges",
+      "name": "seq_telescope",
+      "quality": 0.84
     }
   ],
-  "last_updated": "2026-08-16T04:50:50",
+  "last_updated": "2026-08-16T07:46:03",
   "open_questions": [
-    {
-      "context": "-    sorry+  -- On the certified range, extract the primitive divisor from the",
-      "cycle_id": "78cd863a",
-      "domain": "Computation",
-      "sorry_count": 1,
-      "timestamp": "2026-07-24T21:32:33"
-    },
     {
       "context": "This file gives a **complete, self-contained proof** of that theorem (0 `sorry`s).",
       "cycle_id": "a4e412f3",
@@ -3016,6 +3009,13 @@
       "domain": "Combinatorics",
       "sorry_count": 3,
       "timestamp": "2026-08-15T13:51:06"
+    },
+    {
+      "context": "and is proved here, with no `sorry` — are the structural laws that make the",
+      "cycle_id": "2a357c10",
+      "domain": "Bridges",
+      "sorry_count": 1,
+      "timestamp": "2026-08-16T07:46:03"
     }
   ],
   "research_threads": {
@@ -3145,12 +3145,6 @@
     ],
     "Bridges": [
       {
-        "cycle_id": "018a4d2d",
-        "quality": 0.686,
-        "theorems": 73,
-        "title": "Dense Sets Without Large Sumsets"
-      },
-      {
         "cycle_id": "08d2b371",
         "quality": 0.79196,
         "theorems": 202,
@@ -3203,6 +3197,12 @@
         "quality": 0.85,
         "theorems": 92,
         "title": "The 'Only Bad Primes' Conjecture is False (elliptic curve denominators)"
+      },
+      {
+        "cycle_id": "2a357c10",
+        "quality": 0.84,
+        "theorems": 104,
+        "title": "NET-43: The Deepest Rung Is Two-Seed 256 (k\\*=256 reproduces EXACTLY at seed=2; "
       }
     ],
     "Combinatorics": [

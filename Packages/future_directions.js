@@ -3,21 +3,6 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "consumed_by_exp_id": "2a357c10",
-    "description": "## Network loop round-net-43 (speed axis, round 16)\n\n**Title: The Deepest Rung Is Two-Seed 256 \u2014 k\\*=256 at (d=32, ctx=512) reproduces EXACTLY at seed=2, the repaired random-k control shows positive selection gaps (+2.6/+1.7), the two-seed knee bracket tightens to (240, 256], and the concave-power law k\\* \u2248 24.7\u00b7d^(2/3) has its deepest rung confirmed at two seeds (NET-43).**\n\nPaper 87: `ResearchOutput/NetworkMathematics/43_DeepestRungIsTwoSeed256.md`\n\n### Hypothesis (stated before the run)\nk\\* = 256, reproducing s1. NET-42 measured k\\*=256 at (d=32, ctx=512, seed=1), the discriminating rung that refuted both the affine prediction (8d+32=288, over 11%) and the product law (512) by 2\u00d7. Two honest limits remained: the d=32 cell was SINGLE-SEED, and the random-k control was UNMEASURED (k=768 topk crash \u2014 sweep-design bug). This round fixes BOTH.\n\n### Setup\nByte-identical harness to NET-42 (CausalTF dm=64/4 heads, Gutenberg corpus, vocab 4097, 2000 AdamW steps), d=32, seed=2, ctx=512. Sweep {96,128,160,192,224,240,256,288,320,384,512} \u2014 k=768 dropped (redundant), k=240 added to pin the knee bracket. Random-k control {256,384} now RUNS. Full acc 0.1350 (bar 0.1323), loss 5.6482 (s1: 0.1353/5.6281). Train 11563s.\n\n### Result \u2014 k\\*=256, EXACT reproduction\n- k=240 fails (0.978 vs bar 0.98, ~0.2 SE below); k=256 passes (0.982). Two-seed knee bracket **(240, 256]**.\n- k=512 = 1.000 with exact full loss (5.6482 = 5.6482) \u2014 product law refuted by 2\u00d7 at BOTH seeds.\n- Part B2 REPAIRED: random-k gaps **+2.6** (k=256) / **+1.7** (k=384) \u2014 positive; selection importance dilutes with depth but survives.\n- Concentration reproducible to ~0.7% (eff 216.92 vs 218.46; top-256 0.922 vs 0.921).\n\n### What this decides\nBoth of NET-42's honest limits are CLOSED: the deepest rung of the concave-power-2/3 law (k\\* \u2248 24.7\u00b7d^(2/3), predicts 249) is now TWO-SEED (256, 256 \u2014 exact, within knee fuzz); EVERY ctx=512 rung is two-seed at its knee (64,64 / 96,96 / 160,144 / 256,256). The sub-linear depth leg continues (per-doubling 1.50\u21921.58\u21921.68 < 2.0), affine 8d+32 still over-predicts by 11% (local linearization confirmed at two seeds), product law gives NO speedup at d=32 (the knee gives 2.0\u00d7). Deployable speedup at (d=32, ctx=512) = **2.0\u00d7** confirmed two-seed. Honest limits: NONE for this cell \u2014 clean two-seed reproduction with all controls measured.\n\nAll 8 network barriers checked (a\u2013h): no circularity (prediction before run), no known-method-in-disguise, toy-scale confronted, no leakage, variance RESOLVED (this round's substance), measurement clean (no crash, ALL_DONE_NET43), baseline now FAIR (random-k control repaired), practical relevance sharpened (2.0\u00d7 two-seed).\n\nScript: /tmp/exp_net_attncost_d32_ctx512_s2.py \u00b7 Log: /tmp/net43.log\nRound-net-43. Now 43 network experiments. Assessment v43.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1323",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-16T03:13:54.660545+00:00",
-    "title": "NET-43: The Deepest Rung Is Two-Seed 256 (k\\*=256 reproduces EXACTLY at seed=2; both honest limits closed; concave-power-2/3 law's deepest rung two-seed) \u2014 paper 87"
-  },
-  {
     "consumed_by_exp_id": "d4bd7c02",
     "description": "## Network loop round-net-44 (speed axis, round 17)\n\n**Title: The Last Context-Extrapolation Cell Is Two-Seed and the Knee Fluctuates \u2014 k\\*=96 at (d=4, ctx=1024, seed=2) breaks the exact product law d\u00b7ctx/32 (over-predicts by 25% at s2), the two-seed knee bracket is (64, 128], the product law remains a proven-safe UPPER BOUND, selection importance reproduces (+6.2/+4.8), and the s1 context chain's exactness was SEED-LUCKY (NET-44).**\n\nPaper 88: `ResearchOutput/NetworkMathematics/44_LastContextCellTwoSeedKneeFluctuates.md`\n\n### Hypothesis (stated before the run)\nk\\* = 128, reproducing s1. NET-37 measured k\\*=128 EXACT at (d=4, ctx=1024, seed=1) \u2014 d\u00b7ctx/32 held at every context doubling (16/32/64/128 across 128\u2192256\u2192512\u21921024). The ctx=1024 cell was the LAST context-extrapolation cell still single-seed. This round runs seed=2 to close it. k=112 added to pin the (96, 128] bracket.\n\n### Setup\nByte-identical harness to NET-37 (CausalTF dm=64/4 heads, Gutenberg corpus, vocab 4097, 2000 AdamW steps), d=4, seed=2, ctx=1024. Sweep {32,64,96,112,128,192,256,384,512,768}. Random-k control {64,128} runs (Part B2). Full acc 0.1591 (bar 0.1559), loss 5.1179 (s1: 0.1594/5.1209). Train 6067s. ALL_DONE_NET44, no crash.\n\n### Result \u2014 k\\*=96, NOT the predicted 128 (prediction FAILED)\n- k=64 fails the bar at 0.979 (~0.1 SE below \u2014 marginal); k=96 passes at 0.987; k=112 passes 0.991 (s2 knee is NOT 112). **k\\*(s2) = 96**.\n- The s2 retained curve is uniformly ~0.01 HIGHER than s1's at every k (0.979/0.987/0.993 vs 0.968/0.977/0.986 at 64/96/128) \u2014 the knee crossed the bar one grid step (32) earlier.\n- Part B2: selection gaps +6.2 (k=64) / +4.8 (k=128) vs s1 +5.9/+4.6 \u2014 reproduces to ~0.3 pts.\n- Concentration reproducible to ~1.3% (eff 294.97 vs 291.16), NO bounded working set.\n- k=768 = 1.000 with exact full loss (5.1179 = 5.1179).\n\n### What this decides\nThe last single-seed context cell is CLOSED, and the reading is the **first break of product-exactness at any context**: at s2 the ctx=1024 knee is 96 (0.75\u00b7128), so the s1 chain's exactness (16/32/64/128 across four doublings) was **seed-lucky**. Two-seed knee bracket **(64, 128]**; the product law d\u00b7ctx/32 (128) remains a proven-safe UPPER BOUND (passes 0.986/0.993 both seeds) but is NOT minimal at s2 (over-predicts by 25%). The knee-fluctuates-one-grid-step family now spans BOTH axes (depth at d=16 ctx=512 160/144; context at d=4 ctx=1024 128/96). Deployable speedup at (d=4, ctx=1024) = **8.0\u201310.7\u00d7** two-seed (guarantee 8\u00d7 intact as floor).\n\nAll 8 network barriers checked (a\u2013h): no circularity (prediction stated before run, FAILED \u2014 genuine test exposing seed-luck), no known-method-in-disguise, toy-scale confronted, no leakage, variance RESOLVED (this round's substance \u2014 last single-seed cell closed), measurement clean (ALL_DONE_NET44, k=112 pinning), baseline fair (random-k control, both seeds positive), practical sharpened (exact-product claim becomes a two-seed bracket).\n\nScript: /tmp/exp_net_attncost_ctx1024_s2.py \u00b7 Log: /tmp/net44.log\nRound-net-44. Now 44 network experiments. Assessment v44.",
     "domains": [
@@ -767,6 +752,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 2a357c10 (Q=0.840), which proved 104 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## Network loop round-net-43 (speed axis, round 16)\n\n**Title: The Deepest Rung Is Two-Seed 256 \u2014 k\\*=256 at (d=32, ctx=512) reproduces EXACTLY at seed=2, the repaired random-k control shows positive selection gaps (+2.6/+1.7), the two-seed knee bracket tightens to (240, 256], and the concave-power l",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "push_2a357c10_2d79ca2a",
+    "priority_score": 0.94,
+    "research_mode": "team",
+    "source_exp_id": "2a357c10",
+    "status": "available",
+    "timestamp": "2026-08-16T07:46:03.604353+00:00",
+    "title": "Deepening: NET-43: The Deepest Rung Is Two-Seed 256 (k\\*=256 reproduces EXACTLY at seed=2; "
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 560413ae (Q=0.820), which proved 131 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Proves that logarithmic negativity is a strict entanglement monotone under Local Operations and Classical Communication (LOCC).",
     "domains": [
       "Physics"
@@ -809,21 +808,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Prove that the Whitehead problem (every Whitehead group is free) is independent of ZFC. Formalize Shelah's undecidability proof: consistent both ways.",
-    "domains": [
-      "Algebra",
-      "Logic"
-    ],
-    "id": "seed_233",
-    "priority_score": 0.91,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Whitehead Problem: Independence from ZFC"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Building on cycle 6c98f572 (Q=0.805), which proved 21 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the Fourier transform as a natural transformation between the category of locally compact abelian groups and the category of their dual groups. Prove Pontryagin duality as an equivalence of categories. Show that the uncertainty principle is a categorical statement: the functor Hom(-,R/Z) i",
     "domains": [
       "Computation"
@@ -849,20 +833,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-29T12:32:32.674077+00:00",
     "title": "Deepening: The Combinatorics of Compiler Optimization: Register Allocation as Graph Colorin"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 405d388b (Q=0.801), which proved 20 theorems in Logic. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions \u2014 G\u00f6del's Casino, Cycle 1: Randomized Strategies and the Minimax Value\n\n## What this cycle adds\n\nEarlier cycles settled the **deterministic** game: complementing a world negates\nthe payoff (no unconditional winning strategy), and expected profit is positive\nexactly when aggregate",
-    "domains": [
-      "Logic"
-    ],
-    "id": "push_405d388b_5b3a8117",
-    "priority_score": 0.9013399999999999,
-    "research_mode": "team",
-    "source_exp_id": "405d388b",
-    "status": "available",
-    "timestamp": "2026-08-02T14:03:42.148104+00:00",
-    "title": "Deepening: Earlier cycles settled the **deterministic** game: complementing a world negates"
   },
   {
     "consumed_by_exp_id": "",
@@ -5250,6 +5220,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Moonshot: Brain-Computer Interface Mathematics \u2014 Neural Coding Theorems"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle 2a357c10 (Q=0.840) proved 104 theorems in Bridges but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: ## Network loop round-net-43 (speed axis, round 16)\n\n**Title: The Deepest Rung Is Two-Seed 256 \u2014 k\\*=256 at (d=32, ctx=512) reproduces EXACTLY at seed=2, the repaired random-k control shows positive s",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "sorry_fill_2a357c10_d12453d5",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "2a357c10",
+    "status": "available",
+    "timestamp": "2026-08-16T07:46:03.940869+00:00",
+    "title": "Close Proofs: NET-43: The Deepest Rung Is Two-Seed 256 (k\\*=256 reproduces EXACTLY a"
   },
   {
     "consumed_by_exp_id": "",
@@ -13566,17 +13550,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Let two prefix-free encodings of the same deductive system translate into one an"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "be4e28d2",
     "description": "# Future Directions: Four-Dimensional Geometry\n\n## 1. Embedding obstructions for closed three-manifolds \u2014 open-problem category\n\n**Conjecture.** A closed, connected, orientable smooth three-manifold embeds smoothly in the four-sphere if and only if it bounds two smooth compact four-manifolds whose integral intersection pairings and linking forms satisfy the complementary conditions induced by the two components of the complement.\n\nThe key insight is that an embedding splits the four-sphere, so Alexander duality, linking pairings, and four-dimensional intersection theory should be treated as one coupled obstruction rather than as unrelated tests.\n\n**Why now?** The unrestricted assertion that every closed three-manifold embeds in four-space is false, while the complementary-region formulation isolates a falsifiable replacement that can be tested on lens spaces, Seifert manifolds, and homology spheres.\n\n## 2. Smooth four-dimensional Poincar\u00e9 via explicit handle complexity \u2014 open-problem category\n\n**Conjecture.** Every smooth homotopy four-sphere admitting a handle decomposition with no one-handles and at most two two-handles is diffeomorphic to the standard four-sphere.\n\nThe key insight is that low handle complexity may force all apparent exoticity into a finite system of attaching-circle moves that can be eliminated by controlled Kirby calculus.\n\n**Why now?** This bounded-complexity statement is a concrete, testable subproblem of the smooth four-dimensional Poincar\u00e9 conjecture and invites exhaustive comparison of intersection forms, handle slides, and boundary invariants.\n\n## 3. Quantitative rigidity of almost-Hopf fibres \u2014 cross-domain category\n\n**Conjecture.** There is a universal constant `C` such that two unit vectors in complex two-space whose Hopf images are at Euclidean distance at most `\u03b5` differ, after multiplication by a unit phase, by distance at most `C\u221a\u03b5`; moreover, the square-root exponent is optimal.\n\nThe key insight is that exact fibre reconstruction is the equality case of a Hermitian Cauchy\u2013Schwarz identity, so its defect should quantitatively control distance to a circle orbit.\n\n**Why now?** The exact algebraic reconstruction and squared-distance defect identify both the candidate modulus of stability and the configurations likely to make it sharp.\n\n## 4. Clifford-torus extremality under Hopf-symmetric deformations \u2014 cross-domain category\n\n**Conjecture.** Among embedded tori in the unit three-sphere invariant under the diagonal circle action and separating the two coordinate circles, the Clifford torus uniquely minimizes area.\n\nThe key insight is that diagonal phase symmetry reduces the surface problem to a weighted variational problem along an interval in the two-sphere base of the Hopf map.\n\n**Why now?** The Clifford torus has been identified algebraically as the inverse image of the Hopf equator, providing a precise bridge between the symmetry reduction and the geometric level set.\n\n## 5. Tesseract-to-sphere spectral convergence \u2014 cross-domain category\n\n**Conjecture.** For iterated cubical subdivisions of the boundary of the four-cube, followed by radial projection to the unit three-sphere, the normalized graph Laplacians converge spectrally to the Laplace\u2013Beltrami operator on the three-sphere with an explicit second-order error bound.\n\nThe key insight is that the sign-vector metric supplies exact diameter control at the coarsest cubical scale, while radial projection connects cubical combinatorics to spherical analysis.\n\n**Why now?** Exact tesseract distance estimates and the explicit complex model of the three-sphere make both the discrete normalization and the limiting geometry concrete enough for quantitative testing.\n",
     "domains": [
       "Algebra",
       "Geometry"
     ],
     "id": "fd_0564",
+    "phase": "A",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "0268a2b5",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-21T18:48:02.393211+00:00",
     "title": "**Conjecture.** A closed, connected, orientable smooth three-manifold embeds smo"
   },
@@ -18869,6 +18854,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-16T04:50:37.708745+00:00",
     "title": "The five Lean files in `Catalog/Probability/` establish:"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions \u2014 NET-43 bridge (final, after cycles 1\u20136)\n\nVerified base (all `sorry`-free, all in `Catalog/Bridges/`, all main theorems checked with\n`#print axioms` to use only `propext`, `Classical.choice`, `Quot.sound`):\n\n| file | content |\n|---|---|\n| `DeepestRungTwoSeed256.lean` | selection geometry, concentration floor `k \u2265 \u03c4\u00b2\u00b7eff`, knee brackets and two-seed agreement, concave `d^(2/3)` law, speedup arithmetic |\n| `DeepestRungRandomControl.lean` | exact expected mass `k/n` of the random-`k` control, empirical exponent bracket `0.6 < a < 2/3`, grid resolution bound |\n| `DeepestRungSharpness.lean` | uniform and spike profiles, sharpness of the quadratic floor, tightness of the grid bound, knee comparison principle |\n| `DeepestRungTailCeiling.lean` | telescoping inverse-square tail bound, `bestMass \u2265 1 \u2212 c/k`, two-sided knee sandwich |\n| `DeepestRungPowerTail.lean` | **cycle 5**: Bernoulli/tangent-line step, general power-tail sum bound, `bestMass \u2265 1 \u2212 (c/(\u03b1\u22121))\u00b7k^(1\u2212\u03b1)`, explicit knee ceiling for every `\u03b1 > 1` |\n| `DeepestRungGapConcavity.lean` | **cycle 5**: exchange argument making the top-`k` mass curve a concave sequence, concave \u21d2 unimodal, unimodality and nonnegativity of the selection gap, chord extrapolation of the measured Part-B2 gaps |\n| `DeepestRungPeakAndTransfer.lean` | **cycle 6**: the selection gap peaks exactly at the number of above-average keys, its peak height is the total-variation distance to uniform, the NET-43 concentration forces `TV \u2265 0.422`, and concavity transfers from captured mass to accuracy (with a Lipschitz cap on the Part-B2 accuracy gap) |\n\n## Closed since the previous edition\n\n* **Conjecture 1 (general power tail `\u03b1 > 1`)** \u2014 closed by `bestMass_ge_of_power_tail` and\n  `power_tail_knee_bound`.  The analytic obstruction anticipated there (no exact telescoping\n  for real `\u03b1`) is resolved by the tangent-line inequality `rpow_tail_step`, which is exactly\n  Bernoulli's inequality `1 + \u03b1s \u2264 (1+s)^\u03b1` at `s = 1/x`.\n* **Conjecture 3, shape half / sub-conjecture 2** \u2014 closed by `selectionGap_concave` and\n  `selectionGap_unimodal`; the combinatorial input is a single exchange step, and the\n  order-theoretic output is that a concave sequence never dips below both of its ends.\n* **Sub-conjecture 2 (locate the peak)** \u2014 closed by `selectionGap_peak_at_aboveAvg`.  The\n  answer is sharper than conjectured: the peak sits at `k = |{i : p\u1d62 > 1/n}|`, the number of\n  above-average keys, and its height is *exactly* the excess mass\n  `\u2211\u1d62 (p\u1d62 \u2212 1/n)\u207a` (`selectionGap_aboveAvg`), which `excessMass_eq_tv` identifies with the\n  total-variation distance from the attention row to uniform attention.  So the width-free\n  ceiling on any random-`k` control gap is a classical statistical distance, and the NET-43\n  numbers force `TV \u2265 0.422` (`net43_tv_distance_ge`).\n* **Sub-conjecture 3 (concavity transfer)** \u2014 closed by `ConcaveSeq.comp_concave`: if accuracy\n  is a concave nondecreasing function of captured mass, the accuracy-versus-width curve is a\n  concave sequence (`accuracyCurve_concave`), hence unimodal with antitone increments; and if\n  accuracy is `L`-Lipschitz, the accuracy gap of the random-`k` control is at most\n  `L \u00b7 TV(p, uniform)` uniformly in `k` (`accuracyGap_le_of_lipschitz`).\n* Earlier: grid-bound tightness (`grid_resolution_tight`) and the `\u03b1 = 2` tail ceiling\n  (`bestMass_ge_of_inverse_square_tail`, `knee_sandwich`).\n\nThe five conjectures below are the live ones, each falsifiable either by a Lean\ncounterexample or by one measurement round.\n\n## Conjecture 1 (Inverting concentration into a tail exponent). *Formal + empirical.*\nFor a profile with participation ratio `eff` and mass-`\u03c4` knee `k*`, the pair `(eff, k*)`\ndetermines a unique tail exponent `\u03b1(eff, k*)` such that the power-tail ceiling\n`k* \u2264 (c/((\u03b1\u22121)(1\u2212\u03c4)))^(1/(\u03b1\u22121))` and the concentration floor `k* \u2265 \u03c4\u00b2\u00b7eff` are\nsimultaneously tight; at the NET-43 cell (`eff = 216.92`, `k* = 256`, `\u03c4 = 0.92`) this\npredicts `\u03b1 \u2248 2`.\n**The key insight is** that cycle 5 removed the exponent from the hypotheses \u2014 the ceiling\nnow holds for *every* `\u03b1 > 1` \u2014 so the exponent becomes a *derived* quantity, pinned by the\ngap between floor and ceiling rather than assumed.\n**Why now?** Both coordinates are measured at this cell for the first time, and the sandwich\n`\u03c4\u00b2\u00b7eff \u2264 k* \u2264 ceiling(\u03b1)` is monotone in `\u03b1`, so a single bisection on reported numbers\nyields a falsifiable estimate.\n\n## Conjecture 2 (The depth exponent is strictly below 2/3). *Empirical, sharp.*\nThe true depth exponent satisfies `a \u2208 (0.60, 0.6667)` strictly, and at `d = 64` the knee\nfalls **below** `24.7 \u00b7 64^(2/3) \u2248 395`, predicted range `368\u2013392`.\n**The key insight is** that the product of the three measured per-doubling ratios,\n`1.50 \u00b7 1.58 \u00b7 1.68 = 3.9816 < 4 = 2\u00b2`, already forces `3a < 2` \u2014 proved as\n`empirical_exponent_bracket` \u2014 so the round's own data refutes exact `2/3`.\n**Why now?** The refutation is arithmetic on numbers already reported, and `d = 64` is the\nimmediate next rung.\n\n## Conjecture 3 (The accuracy gap inherits the mass gap's concavity). *Empirical.*\nThe measured Part-B2 accuracy gaps form a concave sequence in `k`; consequently the `k = 512`\ngap is at most `+0.8` and the gap vanishes at full width.\n**The key insight is** `net43_gap_chord_extrapolation`: concavity plus the two measured points\n`+2.6 (k=256)`, `+1.7 (k=384)` caps the extrapolation, and at the *mass* level concavity is\nnow a theorem (`selectionGap_concave`), so the only empirical content left is whether accuracy\nis a concave increasing function of captured mass.\n**Why now?** A third control point at `k = 448` or `k = 512` decides it in one round: a\nmeasured gap above `+0.8` at `k = 512` falsifies the concave-transfer hypothesis outright.\n\n## Conjecture 4 (Concavity is forced by subadditive cost). *Bold, structural.*\nAny knee law `d \u21a6 k*(d)` arising from a per-layer budget that is subadditive under layer\ncomposition is concave; hence every affine fit calibrated on shallow rungs over-predicts at\ndepth, and the observed 11\u201312% affine overshoot is a theorem rather than an artefact.\n**The key insight is** `concave_affine_extrapolation_over_predicts`: concavity alone forces\nthe chord extension to dominate, so the empirical content reduces to verifying subadditivity\nof the budget (`kstarLaw_subadditive` gives it for the fitted law).\n**Why now?** Subadditivity is directly testable \u2014 measure `k*` at `d = 8, 24, 32` and check\n`k*(8+24) \u2264 k*(8) + k*(24)`; a violation refutes the concave-law programme in one round.\n\n## Conjecture 5 (Interpolating extremal profiles). *Formal.*\nBetween the uniform profile (`eff = n`, knee `\u2248 \u03c4\u00b7eff`) and the spike profile (knee `= 1`\nwith `\u03c4\u00b7eff > 1`) the ratio `knee / eff` sweeps the whole interval `(0, \u03c4]`, and a profile is\ndetermined up to this ratio by its pair `(eff, knee)`.\n**The key insight is** that cycle 3 exhibits the two endpoints of the ratio and cycle 1 the\ninequality between them, so what remains is a continuity/interpolation construction \u2014\na concrete family, not an estimate.\n**Why now?** The NET-43 cell reports both coordinates (`eff = 216.92`, `k* = 256`) for the\nfirst time, so the ratio `256/216.92 = 1.18` becomes a measurable invariant that can be\ntracked across rungs and seeds.\n\n## Three concrete next-cycle sub-conjectures\n1. **Sharp constant in the power-tail bound.**  The sum-integral loss is quantifiable:\n   `\u2211_{j\u2265k}(j+1)^(\u2212\u03b1) \u2265 k^(1\u2212\u03b1)/(\u03b1\u22121) \u2212 \u03b1\u00b7k^(\u2212\u03b1)/2`, so the ceiling of\n   `power_tail_knee_bound` is tight to first order in `1/k`.  (Cycle-5 evidence: at\n   `\u03b1 = 3/2, k = 256` the true tail is `0.0365` against the bound `0.125`, so the *constant*\n   is far from tight for small `\u03b1` \u2014 the conjecture is that the loss is entirely due to the\n   crude majorant `c\u00b7(i+1)^(\u2212\u03b1)`, not to the summation step.)\n2. **The peak sits below the knee.**  Cycle 6 locates the gap peak at `|aboveAvg|`, the number\n   of above-average keys; the conjecture is that this peak always lies *below* the mass-`\u03c4`\n   knee for `\u03c4` close to `1`, i.e. `|aboveAvg a| \u2264 k*(\u03c4)` whenever `\u03c4 \u2265 1 \u2212 1/e`, so the\n   deployable width is always past the point where selection stops paying incrementally.  At\n   the NET-43 cell this predicts `|aboveAvg| \u2264 256`, testable directly from the logged row.\n3. **Which floor binds?**  Cycle 6 proves a second, independent knee floor\n   `k* \u2265 n\u00b7(\u03c4 \u2212 TV)` (`knee_ge_of_excessMass`) alongside cycle 1's concentration floor\n   `k* \u2265 \u03c4\u00b2\u00b7eff` (`card_ge_of_bestMass_ge`).  The conjecture is that the TV floor is the\n   binding one for concentrated rows and the participation-ratio floor for near-uniform rows,\n   with the crossover at `TV \u2248 \u03c4(1 \u2212 \u03c4\u00b7eff/n)`.  Both coordinates are logged per row, so one\n   round of instrumentation on the NET-43 cell (`n = 512`, `\u03c4 = 0.92`, `eff = 216.92`,\n   `TV \u2265 0.422`) decides it: the floors read `k* \u2265 183` and `k* \u2265 512\u00b7(0.92 \u2212 TV)`, so any\n   measured `TV < 0.56` makes the new floor the stronger of the two.\n",
+    "domains": [
+      "Geometry",
+      "Combinatorics"
+    ],
+    "id": "fd_1327",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "2a357c10",
+    "status": "available",
+    "timestamp": "2026-08-16T07:45:50.352755+00:00",
+    "title": "Verified base (all `sorry`-free, all in `Catalog/Bridges/`, all main theorems ch"
   },
   {
     "consumed_by_exp_id": "",
