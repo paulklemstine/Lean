@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-16T13:45:48.462378+00:00",
+  "last_updated": "2026-08-16T15:36:24.832918+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -56921,6 +56921,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-08-16T13:45:48.325828+00:00",
       "title": "**Conjecture.** A closed, connected, orientable smooth three-manifold embeds smo"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Physics",
+      "duration_seconds": 3437.0679125785828,
+      "end_time": 1786894559.7699473,
+      "files_integrated": 5,
+      "job_id": "25d882e7",
+      "outcome_quality": 0.78,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.78,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.526,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.78,
+        "novelty": 0.78,
+        "proof_depth": 0.78,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1786891122.7020347,
+      "strategy_count": 0,
+      "theorem_count": 53,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 43,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-08-16T15:36:24.654494+00:00",
+      "title": "The Unreasonable Effectiveness of Wrong Theories"
     }
   ]
 }

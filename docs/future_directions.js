@@ -33,6 +33,21 @@ window.FUTURE_DIRECTIONS = [
     "title": "NET-45: The s1 product chain survives at FIVE DOUBLINGS \u2014 k*=256 at (d=4, ctx=2048, s1) = d\u00b7ctx/32 EXACTLY at 16\u00d7 context (prediction confirmed, the longest context measured), at the tightest margin of the chain (+0.0013); selection dilutes with context (+1.7/+1.8); the ctx=2048 second seed becomes the sharpest open cell \u2014 paper 89"
   },
   {
+    "consumed_by_exp_id": "4f1ff831",
+    "description": "## NET-46 \u2014 speed axis (round-net-46; paper 90, /tmp/exp_net_attncost_ctx2048_s2.py, /tmp/net46.log)\n\n**Verdict name: THE-S2-ONE-GRID-STEP-DROP-REPLICATES-AT-16\u00d7-CONTEXT.**\n\n### Result\nAt (d=4, ctx=2048, seed=2), **k\\* = 224 \u2014 one grid step below the product knee 256, the prediction's horn P2 CONFIRMED (P1, two-seed-exact, REFUTED)**. The NET-44 s2 pattern (knee drops one grid step at the second seed) REPLICATES at 16\u00d7: **256\u2192224 exactly as 128\u219296 at 8\u00d7** \u2014 the sub-linear drift at the second seed is SYSTEMATIC, not a one-off fluctuation.\n\n### The two-seed picture is now COMPLETE across all five doublings\n- **s1 exact at every context**: k\\* = 16/32/64/128/256 across ctx = 128/256/512/1024/2048.\n- **s2 exact through 4\u00d7 (64 at ctx=512), exactly one grid step (32) below from 8\u00d7 on** (96, 224).\n- The product law d\u00b7ctx/32 remains a **PROVEN-SAFE UPPER BOUND at both seeds through 16\u00d7** \u2014 its robust claim is the upper bound; its exactness is s1-specific at long context.\n\n### Key numbers\n- Sweep: k=96 0.956 \u2717, 128 0.965 \u2717, 160 0.971 \u2717, 192 0.978 \u2717, **224 0.982 \u2713 (margin +0.0023)**, 256 0.986 \u2713, 288 0.987 \u2713, 384 0.992 \u2713, 512 0.993 \u2713, 768 0.998 \u2713, 1024 0.998 \u2713 (loss 5.2247 vs full 5.2241, \u03940.0006 \u2014 nearly exactly full loss, cleaner than s1's \u03940.0015).\n- The s2 retained curve is **uniformly ABOVE s1's** (0.956 vs 0.939 at 96 \u2026 0.982 vs 0.976 at 224) yet the knee reads one grid step LOWER \u2014 the whole s2 curve sits higher, crossing the bar one step earlier.\n- Full acc 0.1545, bar 0.1514, loss 5.2241; train 13508s (~3.75h, faster than s1's 18436s).\n- **Selection importance +4.4/+3.9 \u2014 LARGER than s1's +1.7/+1.8** (the 16\u00d7 dilution is seed-dependent).\n- **Concentration**: eff support 472.50 (vs s1's 526.39 \u2014 s2 more concentrated, consistent with the lower knee); top-128 0.623, top-256 0.759; per-position 61.56/412.27/888.64 \u2014 NO bounded working set at 16\u00d7.\n- **Deployable**: \u22658.0\u00d7 guaranteed (product law, safe at both seeds), up to **9.1\u00d7 at the s2-typical knee** \u2014 the first cell where the two-seed distribution brackets the number.\n\n### All 8 barriers\n(a) clean \u2014 both horns stated before the run, measured 224 (a replication test of NET-44's pattern at the longest cell); (b) clean \u2014 two-seed knee distribution of data-free attention pruning at 16\u00d7: none in Catalog or literature; (c) confronted \u2014 d=4 \u00d7 ctx=2048, the longest context, now two-seed; (d) clean \u2014 held-out last-10%, data-free top-k; (e) the honest limit \u2014 the s2 drop is now measured at TWO cells (8\u00d7 and 16\u00d7) \u2014 the reproducibility the s1 single-seed chain lacked \u2014 but {224,256} is two-point with no third seed; the sign (s2 \u2264 s1 at long context) is robust, the exact magnitude needs a third seed at 1024; (f) clean \u2014 same metrics, binom SE \u2248 0.11% acc, the +0.0023 margin documented, k=1024's \u03940.0006 cleaner than s1's \u03940.0015, chunked eval identical math, NO crash (ALL_DONE_NET46); (g) fair \u2014 full-attention reference + same 0.98 bar + random-k control at the same k (gaps +4.4/+3.9, positive, the s1-vs-s2 spread informative); (h) sharpened \u2014 deployable \u22658.0\u00d7 guaranteed / 9.1\u00d7 s2-typical.\n\n### Next\n**A third seed at ctx=1024** (does the knee distribution {96,128} hold, or collapse? \u2014 the highest-value open cell now); a third seed at ctx=2048 (does {224,256} extend?); d=8 @ ctx=256 s0 corner.\n\nNow 46 network experiments. Assessment v46. Paper 90.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_1337",
+    "phase": "A",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "in_progress",
+    "timestamp": "2026-08-16T15:36:42.409829+00:00",
+    "title": "NET-46: THE-S2-ONE-GRID-STEP-DROP-REPLICATES-AT-16\u00d7-CONTEXT \u2014 k*=224 at (d=4, ctx=2048, seed=2), the NET-44 s2 break confirmed systematic"
+  },
+  {
     "consumed_by_exp_id": "",
     "description": "Formalizes a quantum random walk on the Berggren Pythagorean tree where constructive interference at energy spectrum minima collapses the state onto factors of N.",
     "domains": [
@@ -1725,6 +1740,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle eb6ff95e (Q=0.794), which proved 17 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the no-cloning theorem in Lean 4 using the framework of C*-algebras. Prove the quantum teleportation protocol is correct. Formalize quantum entanglement measures and prove monogamy of entanglement for qubits.",
+    "domains": [
+      "Computation"
+    ],
+    "id": "push_eb6ff95e_30f1328f",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "eb6ff95e",
+    "status": "available",
+    "timestamp": "2026-08-03T17:32:21.114010+00:00",
+    "title": "Deepening: Quantum Information: No-Cloning and Teleportation"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Formalize the lattice of cryptographic hardness assumptions: one-way functions \u2192 pseudorandom generators \u2192 pseudorandom functions \u2192 secure encryption. Prove separation results.",
     "domains": [
       "Cryptography",
@@ -1752,34 +1781,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Quantum Hamiltonian Complexity: QMA-Completeness of the Local Hamiltonian Problem"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle ab554343 (Q=0.796), which proved 19 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize integrated information theory (IIT) in Lean 4. Define Phi as a measure on causal structures, prove its key properties (composition, exclusion), and explore connections to category theory and complexity.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_ab554343_8e2bded6",
-    "priority_score": 0.89623,
-    "research_mode": "team",
-    "source_exp_id": "ab554343",
-    "status": "available",
-    "timestamp": "2026-08-03T08:05:21.598922+00:00",
-    "title": "Deepening: Consciousness as Integrated Information"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle eb6ff95e (Q=0.794), which proved 17 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the no-cloning theorem in Lean 4 using the framework of C*-algebras. Prove the quantum teleportation protocol is correct. Formalize quantum entanglement measures and prove monogamy of entanglement for qubits.",
-    "domains": [
-      "Computation"
-    ],
-    "id": "push_eb6ff95e_30f1328f",
-    "priority_score": 0.89441,
-    "research_mode": "team",
-    "source_exp_id": "eb6ff95e",
-    "status": "available",
-    "timestamp": "2026-08-03T17:32:21.114010+00:00",
-    "title": "Deepening: Quantum Information: No-Cloning and Teleportation"
   },
   {
     "consumed_by_exp_id": "",
@@ -2374,6 +2375,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-24T14:34:16.697854+00:00",
     "title": "Formal Verification of Algorithms"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 25d882e7 (Q=0.780), which proved 53 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove a meta-theorem: for any approximately correct physical theory T, there exists a class of phenomena for which T makes predictions closer to truth than any known correct theory. Formalize using perturbation theory on theory-space and prove that the wrongness of T forms a convergent series toward",
+    "domains": [
+      "Physics"
+    ],
+    "id": "push_25d882e7_cf5d3cb3",
+    "priority_score": 0.88,
+    "research_mode": "team",
+    "source_exp_id": "25d882e7",
+    "status": "available",
+    "timestamp": "2026-08-16T15:36:21.695272+00:00",
+    "title": "Deepening: The Unreasonable Effectiveness of Wrong Theories"
   },
   {
     "consumed_by_exp_id": "",
@@ -5839,7 +5854,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Chaos as a Computable Shadow: The Shadowing Lemma for Real Programs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7a819734",
     "description": "The primes have density 0 in the integers, but what is the Hausdorff dimension of the set of primes viewed as a subset of R? Define the 'prime fractal' P as the set of primes with the metric d(p,q) = |1/log(p) - 1/log(q)|. This metric stretches out the primes so that the twin primes are close together and the large primes are spread out. Conjecture: The Hausdorff dimension dim_H(P, d) = 1. The primes with this metric are essentially a 1-dimensional set \u2014 they fill out a line when viewed through the logarithmic lens. This is because the prime number theorem pi(x) ~ x/log(x) means that in the d-metric, the 'length' of the primes up to x is sum_{p <= x} d(p, p+1) ~ sum_{p <= x} 1/(p*log(p)) ~ log(log(x)), which diverges. So the primes are 'long enough' to be 1-dimensional. But the Hausdorff dimension might be > 1 if the primes have fractal structure at small scales. In fact, dim_H(P, d) > 1 would mean the primes are more than a line \u2014 they have 'wrinkles' that fill more space. The twin prime conjecture predicts that there are infinitely many pairs of primes at d-distance ~ 1/(p*log(p)), creating a fractal dust that increases the dimension. Conjecture: dim_H(P, d) = 1 + epsilon where epsilon depends on the density of twin primes. If the twin prime conjecture is true, epsilon > 0. Test: estimate dim_H(P, d) by box-counting for primes up to 10^12 and verify it is close to 1 (or slightly above). Impact: the primes are a fractal with dimension 1 + epsilon, where epsilon measures the abundance of twin primes. If twin primes are infinite, the primes are more than a line \u2014 they are a fractal curve.",
     "domains": [
       "Novelty",
@@ -5847,10 +5862,11 @@ window.FUTURE_DIRECTIONS = [
       "Analysis"
     ],
     "id": "seed_155",
+    "phase": "A",
     "priority_score": 0.83,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Fractal Number Theory: Hausdorff Dimension of Prime Distributions"
   },
@@ -6683,23 +6699,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Transreal Arithmetic: Computing Beyond Plus-Minus Infinity"
-  },
-  {
-    "consumed_by_exp_id": "25d882e7",
-    "description": "Prove a meta-theorem: for any approximately correct physical theory T, there exists a class of phenomena for which T makes predictions closer to truth than any known correct theory. Formalize using perturbation theory on theory-space and prove that the wrongness of T forms a convergent series toward truth.",
-    "domains": [
-      "Novelty",
-      "Physics",
-      "Bridges"
-    ],
-    "id": "seed_273",
-    "phase": "A",
-    "priority_score": 0.82,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "The Unreasonable Effectiveness of Wrong Theories"
   },
   {
     "consumed_by_exp_id": "",
@@ -18657,6 +18656,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-16T13:45:41.805164+00:00",
     "title": "This cycle settled three of the five inherited conjectures in sharp form: the"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nDerived from the analysis and adversarial review of the results in\n`Catalog/Physics/WrongTheories/` (`PerturbativeCore.lean`, `MetaTheorem.lean`,\n`TruncationHierarchy.lean`, `Boundaries.lean`).\n\n## What survived, what failed\n\n**Survived (fully proved, 0 sorries).**  Convergence of the wrongness series\nwith a sharp Cauchy bound; the meta-theorem that an approximately correct theory\noutpredicts every imperfect rival on the rival's bad set inside a coupling\nwindow; the strict ordering of the tower of truncations (`truncation_chain`);\nthe epistemic half-space theorem; the Condorcet cycle disproving transitivity of\nmajority empirical adequacy; genericity of nowhere-exact theories; the Wilson\n\u03b5-expansion as a worked instance.\n\n**Failed (proved false).**  Two natural strengthenings were *disproved* rather\nthan merely left open: \"higher order is always better\" (false at `\u03b5 = 1` for\n`\u03b5 \u2212 3\u03b5\u00b2`, `hierarchy_not_monotone_outside_window`) and \"the meta-theorem holds\nat every coupling\" (false at `\u03b5 = 1/2`, `meta_needs_small_coupling`).  Both\nfailures are of the type *\"true only inside a window\"*, and both windows are now\nexplicit and quantitative.\n\n**Needs a different definition.**  Attempts to compare theories by a single\nglobal figure of merit run into the Condorcet obstruction: any aggregation of\npointwise errors into a total order over theories must break either\nindependence-of-phenomena or transitivity.  Comparative adequacy should be\ntreated as a *directed graph on theory space*, not a preorder.\n\n## Conjecture 1 (Asymptotic-series regime: optimal truncation)\n\nFor a family with only an *asymptotic*, factorially divergent bound\n`|a_n| \u2264 B \u00b7 n! \u00b7 r^n` (no convergent radius), there is a truncation order\n`N*(\u03b5) \u224d 1/(r|\u03b5|)` such that `truncate T N*(\u03b5)` beats every truncation of order\n`N \u2260 N*(\u03b5)`, and the resulting error is exponentially small,\n`O(exp(\u22121/(r|\u03b5|)))`.  **The key insight is** that the hierarchy theorem's\ninequality `|tail_N| \u2265 |a_N||\u03b5|^{N+1} \u2212 (rest)` reverses direction once the\ncoefficient growth beats the geometric decay, so the strict chain of\n`truncation_chain` must terminate at a computable order rather than continue\nforever.  **Why now?**  All the analytic ingredients \u2014 the two-sided tail\nestimates `abs_tail_le_two` and `abs_tail_ge` \u2014 are already formalised and are\nstated for arbitrary coefficient bounds; only the geometric majorant needs to be\nreplaced by a factorial one.\n\n## Conjecture 2 (Measure-theoretic unreasonable effectiveness)\n\nEquip the space of \"worlds\" (truth functions on a finite phenomenon set `Fin k`)\nwith Lebesgue measure on a bounded box.  For any two distinct theories `T \u2260 C`\nthe set of worlds in which `T` beats `C` on a majority of phenomena has strictly\npositive measure, and for `k` odd the measures of the two majority regions sum\nto the full measure.  **The key insight is** that `worlds_favouring` already\nexhibits each pointwise favouring set as an open half-line, so the majority\nregion is a finite union of intersections of half-spaces \u2014 a polyhedral cone\nwhose volume is computable.  **Why now?**  The half-space characterisation\n`closer_iff_halfplane` reduces the problem to convex geometry over\n`Mathlib`'s `MeasureTheory.volume`, with no new analysis required.\n\n## Conjecture 3 (Quantitative pessimistic meta-induction)\n\nThere is a sequence of theories `F k`, each wrong at *every* phenomenon, whose\nmaximal error decays like `1/k`, and this rate is optimal in the following\nsense: if each `F k` is required to be a `k`-th order truncation of one fixed\nconvergent perturbative family at a fixed coupling, then the error decays\ngeometrically instead, and no nowhere-exact sequence can converge faster than\nthe radius of convergence permits.  **The key insight is** that\n`pessimistic_meta_induction` and `truncation_chain` produce convergence at two\ngenuinely different rates (polynomial vs geometric), which suggests a\n\"convergence-rate spectrum\" invariant attached to a research programme rather\nthan to a single theory.  **Why now?**  Both endpoints of the spectrum are\nalready formalised; what remains is to define the invariant and prove it is\nindependent of the chosen approximating sequence.\n\n## Conjecture 4 (Condorcet obstruction is universal)\n\nFor every `k \u2265 3` there exist `k` theories on `k` phenomena whose majority\nsuperiority relation is a `k`-cycle, and moreover the `k = 3` circulant example\n`(1,2,3; 2,3,1; 3,1,2)` is the unique minimal one up to relabelling and\norder-preserving reparametrisation of the errors.  **The key insight is** that\nthe error matrix realising the cycle is a cyclic Latin square, so existence for\ngeneral `k` should follow from the circulant construction, while minimality is a\nfinite combinatorial classification.  **Why now?**  `condorcet_cycle` and\n`not_majorityBeats_A_C` supply the base case and the exact obstruction to be\ngeneralised, and the classification for `k = 3` is a finite check that can be\nmade fully formal by enumeration over order types.\n\n## Conjecture 5 (Wrongness as a graded deformation algebra)\n\nThe perturbative families over a fixed phenomenon space, modulo agreement of\nwrongness to order `N`, form a tower of quotient algebras whose inverse limit is\nthe algebra of formal wrongness series; `Perturbative.add` and\n`Perturbative.smul` extend to a product for which `wrongness` is a\nhomomorphism into the convolution algebra of convergent power series, and the\n`N`-th truncation is the projection to the `N`-th stage of the tower.  **The key\ninsight is** that `wrongness_add` and `wrongness_smul` already exhibit wrongness\nas linear, so only multiplicativity of the Cauchy product must be established to\nturn theory space into a filtered algebra \u2014 after which \"approximately correct\"\nbecomes a topological (adic) statement rather than an analytic one.  **Why\nnow?**  `Mathlib`'s `PowerSeries` and `FormalMultilinearSeries` provide the\ntarget algebra, and the geometric coefficient bounds of `Perturbative` are\nexactly the hypothesis under which the Cauchy product converges.\n",
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_1336",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "25d882e7",
+    "status": "available",
+    "timestamp": "2026-08-16T15:36:09.748815+00:00",
+    "title": "Derived from the analysis and adversarial review of the results in"
   },
   {
     "consumed_by_exp_id": "",

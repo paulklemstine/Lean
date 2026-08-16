@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "7477e654",
-      "domain": "Tropical",
-      "key_insight": "# Future directions — after the asymmetric/symmetric divisibility dichotomy\n\nThe formal results of this run (all in `Catalog/Tropical/SmoothSelfHint*.lean`, 0\nsorries, only the standard axioms) are:",
-      "quality_score": 0.85,
-      "sorry_count": 0,
-      "theorem_count": 501,
-      "timestamp": "2026-08-14T08:45:35",
-      "title": "SMOOTH-SELFHINT-DENSITY: the p-1/ECM weakness is residue-invisible — asymmetric/symmetric divisibili"
-    },
-    {
       "cycle_id": "eaebe17a",
       "domain": "Novelty",
       "key_insight": "# Future directions — gcd moments as a trace-witness family\n\nDerived from what survived five full research cycles (seven Lean files, all `sorry`-free, all\naxioms standard: `propext`, `Classical.choice",
@@ -499,19 +489,19 @@
       "theorem_count": 21,
       "timestamp": "2026-08-16T13:45:45",
       "title": "**Conjecture.** A closed, connected, orientable smooth three-manifold embeds smo"
+    },
+    {
+      "cycle_id": "25d882e7",
+      "domain": "Physics",
+      "key_insight": "# Future Directions\n\nDerived from the analysis and adversarial review of the results in\n`Catalog/Physics/WrongTheories/` (`PerturbativeCore.lean`, `MetaTheorem.lean`,\n`TruncationHierarchy.lean`, `Boun",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 53,
+      "timestamp": "2026-08-16T15:36:21",
+      "title": "The Unreasonable Effectiveness of Wrong Theories"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "069d69dc",
-      "domain": "Geometry",
-      "key_insight": "# Future Directions: impossible figures as cellular obstructions\n\nAll Lean files listed below live in `Catalog/Geometry/`, compile against Mathlib\n(Lean 4.28.0) and contain **no `sorry`**; every theor",
-      "quality_score": 0.686,
-      "sorry_count": 0,
-      "theorem_count": 130,
-      "timestamp": "2026-08-05T19:03:25",
-      "title": "**Conjecture.** For every finite connected two-dimensional cell complex and ever"
-    },
     {
       "cycle_id": "018a4d2d",
       "domain": "Bridges",
@@ -2501,27 +2491,19 @@
       "theorem_count": 21,
       "timestamp": "2026-08-16T13:45:45",
       "title": "**Conjecture.** A closed, connected, orientable smooth three-manifold embeds smo"
+    },
+    {
+      "cycle_id": "25d882e7",
+      "domain": "Physics",
+      "key_insight": "# Future Directions\n\nDerived from the analysis and adversarial review of the results in\n`Catalog/Physics/WrongTheories/` (`PerturbativeCore.lean`, `MetaTheorem.lean`,\n`TruncationHierarchy.lean`, `Boun",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 53,
+      "timestamp": "2026-08-16T15:36:21",
+      "title": "The Unreasonable Effectiveness of Wrong Theories"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "79242ce3",
-      "domain": "Cryptography",
-      "name": "den_sq_eq_den_cube",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "603eb18a",
-      "domain": "NumberTheory",
-      "name": "LocalCircuit",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "603eb18a",
-      "domain": "NumberTheory",
-      "name": "LocalCircuit",
-      "quality": 0.78
-    },
     {
       "cycle_id": "603eb18a",
       "domain": "NumberTheory",
@@ -2803,9 +2785,27 @@
       "domain": "Shared",
       "name": "fiber_card_sum",
       "quality": 0.79
+    },
+    {
+      "cycle_id": "25d882e7",
+      "domain": "Physics",
+      "name": "to",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "25d882e7",
+      "domain": "Physics",
+      "name": "binomialFamily_truth",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "25d882e7",
+      "domain": "Physics",
+      "name": "wrongness_binomialFamily",
+      "quality": 0.78
     }
   ],
-  "last_updated": "2026-08-16T13:45:45",
+  "last_updated": "2026-08-16T15:36:21",
   "open_questions": [
     {
       "context": "This file gives a **complete, self-contained proof** of that theorem (0 `sorry`s).",
@@ -3703,12 +3703,6 @@
     ],
     "Physics": [
       {
-        "cycle_id": "70c10cae",
-        "quality": 0.686,
-        "theorems": 61,
-        "title": "ArXiv paper: Quantum determinants in polynomial time"
-      },
-      {
         "cycle_id": "71b84dd8",
         "quality": 0.686,
         "theorems": 31,
@@ -3761,6 +3755,12 @@
         "quality": 0.78,
         "theorems": 75,
         "title": "CYCLIC-TYPE-CHANNEL (round-22 #2, experiment 413, assessment v189, paper 78)"
+      },
+      {
+        "cycle_id": "25d882e7",
+        "quality": 0.78,
+        "theorems": 53,
+        "title": "The Unreasonable Effectiveness of Wrong Theories"
       }
     ],
     "Probability": [
