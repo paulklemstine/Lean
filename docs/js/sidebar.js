@@ -9,7 +9,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const topSentinel = document.getElementById('package-list-status-top');
     const bottomSentinel = document.getElementById('package-list-status');
     const markerEl = document.getElementById('package-list-marker');
-    const jumpBtn = document.getElementById('jump-btn');
     const pagePrev = document.getElementById('page-prev');
     const pageNext = document.getElementById('page-next');
 
@@ -18,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let filteredPackages = [];    // full (sorted newest-first) dataset
     let startIndex = 0;           // first index currently in the DOM
     let endIndex = 0;             // one past the last index currently in the DOM
-    let targetIndex = 0;          // package Jump will scroll to (0-based)
+    let firstVisibleIndex = 0;    // index of the first visible package (marker position)
     let topObserverArmed = true;  // top sentinel may lazy-load (paused right after a Jump)
     let lastScrollTop = 0;        // last scrollTop seen, to detect scroll-up for re-arming
 
@@ -173,39 +172,48 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Enable/disable the Prev / Next / Jump buttons for the current target.
+    // Enable/disable the Prev / Next buttons for the current position. Next
+    // also disables when the container is at its maximum scroll — the list
+    // physically cannot scroll further, even if the first-visible index is
+    // still below total-1 (the last item can't be pushed to the top).
     function updateControls() {
-        if (!pagePrev || !pageNext || !jumpBtn) return;
+        if (!pagePrev || !pageNext) return;
         const total = filteredPackages.length;
-        pagePrev.disabled = total === 0 || targetIndex <= 0;
-        pageNext.disabled = total === 0 || targetIndex >= total - 1;
-        jumpBtn.disabled = total === 0;
-        if (jumpBtn) jumpBtn.title = `Scroll the list to package ${total ? targetIndex + 1 : 0}`;
+        const atBottom = !!(scrollContainer &&
+            scrollContainer.scrollHeight - scrollContainer.scrollTop - scrollContainer.clientHeight <= 1);
+        pagePrev.disabled = total === 0 || firstVisibleIndex <= 0;
+        pageNext.disabled = total === 0 || firstVisibleIndex >= total - 1 || atBottom;
     }
 
-    // Marker: "target / total" — the package Jump will scroll to.
+    // Marker: "position / total" — the first visible package.
     function renderMarker() {
         if (!markerEl) return;
         const total = filteredPackages.length;
-        markerEl.textContent = total ? `${targetIndex + 1} / ${total}` : '';
+        markerEl.textContent = total ? `${firstVisibleIndex + 1} / ${total}` : '';
         updateControls();
     }
 
-    // Sync the target to the first visible package (on render, lazy-load, scroll).
+    // Index of the first package currently visible in the list (0-based).
+    function computeFirstVisible() {
+        if (!packageList || !scrollContainer) return null;
+        const items = packageList.querySelectorAll('.nav-item');
+        if (!items.length) return null;
+        const containerTop = scrollContainer.getBoundingClientRect().top;
+        for (const it of items) {
+            if (it.getBoundingClientRect().bottom >= containerTop) {
+                return Number(it.dataset.idx);
+            }
+        }
+        return null;
+    }
+
+    // Sync the position marker to the first visible package (render, lazy-load, scroll).
     function updateMarker() {
         if (!markerEl) return;
         const total = filteredPackages.length;
         if (!total) { renderMarker(); return; }
-        const items = packageList.querySelectorAll('.nav-item');
-        if (items.length && scrollContainer) {
-            const containerTop = scrollContainer.getBoundingClientRect().top;
-            for (const it of items) {
-                if (it.getBoundingClientRect().bottom >= containerTop) {
-                    targetIndex = Math.min(Math.max(1, Number(it.dataset.idx) + 1), total) - 1;
-                    break;
-                }
-            }
-        }
+        const fv = computeFirstVisible();
+        if (fv != null) firstVisibleIndex = fv;
         renderMarker();
     }
 
@@ -311,52 +319,47 @@ document.addEventListener('DOMContentLoaded', () => {
         }, { passive: true });
     }
 
-    // Move the jump target by +/- SKIP_SIZE packages (no scrolling yet — Jump does that).
-    function setTarget(index) {
-        const total = filteredPackages.length;
-        if (!total) return;
-        targetIndex = Math.max(0, Math.min(total - 1, index));
-        renderMarker();
+    // Make sure the package at `idx` exists in the DOM, extending the loaded
+    // window in the needed direction via the normal lazy-load helpers.
+    function ensureRendered(idx) {
+        if (idx < startIndex) {
+            while (startIndex > idx) loadMoreAbove();
+        } else if (idx >= endIndex) {
+            while (endIndex <= idx) loadMoreBelow();
+        }
     }
 
-    if (pagePrev) {
-        pagePrev.addEventListener('click', () => setTarget(targetIndex - SKIP_SIZE));
-    }
-    if (pageNext) {
-        pageNext.addEventListener('click', () => setTarget(targetIndex + SKIP_SIZE));
-    }
-
-    // Jump: scroll the list so the target package becomes the first visible item.
-    // Top-side lazy loading is paused until the user scrolls up, so the target
-    // stays pinned at the top — the top sentinel would otherwise immediately
-    // load a batch above it and push the target out of the first position.
-    function jumpTo(index) {
+    // Prev / Next: scroll the list so the package SKIP_SIZE away from the
+    // current first-visible package becomes the new first-visible item. Like a
+    // Jump, top-side lazy loading is paused until the user scrolls up, so the
+    // target stays pinned at the top after landing.
+    function pageBy(delta) {
         const total = filteredPackages.length;
-        if (!total) return;
-        const idx = Math.max(0, Math.min(total - 1, index));
+        if (!total || !scrollContainer) return;
+        const fv = computeFirstVisible();
+        const cur = fv != null ? fv : startIndex;
+        const target = Math.max(0, Math.min(total - 1, cur + delta));
+        if (target === cur) { updateControls(); return; }
         if (observer && topSentinel) observer.unobserve(topSentinel);
         topObserverArmed = false;
-        startIndex = idx;
-        endIndex = Math.min(idx + BATCH_SIZE, total);
-        renderWindow();
-        const item = packageList.querySelector(`.nav-item[data-idx="${idx}"]`);
+        ensureRendered(target);
+        const item = packageList.querySelector(`.nav-item[data-idx="${target}"]`);
         if (item) {
-            document.querySelectorAll('.nav-item.graph-highlight').forEach(el => el.classList.remove('graph-highlight'));
-            item.classList.add('graph-highlight');
-            if (scrollContainer) {
-                const itemTop = item.getBoundingClientRect().top;
-                const contTop = scrollContainer.getBoundingClientRect().top;
-                // Instant positioning — a smooth animation races with the
-                // lazy-load sentinels and can land the view unpredictably.
-                scrollContainer.scrollTop += itemTop - contTop;
-            }
+            const itemTop = item.getBoundingClientRect().top;
+            const contTop = scrollContainer.getBoundingClientRect().top;
+            // Instant positioning — a smooth animation races with the
+            // lazy-load sentinels and can land the view unpredictably.
+            scrollContainer.scrollTop += itemTop - contTop;
         }
         lastScrollTop = scrollContainer ? scrollContainer.scrollTop : 0;
         updateMarker();
     }
 
-    if (jumpBtn) {
-        jumpBtn.addEventListener('click', () => jumpTo(targetIndex));
+    if (pagePrev) {
+        pagePrev.addEventListener('click', () => pageBy(-SKIP_SIZE));
+    }
+    if (pageNext) {
+        pageNext.addEventListener('click', () => pageBy(SKIP_SIZE));
     }
 
     window.renderSidebar = function(pkgArray) {

@@ -2520,7 +2520,7 @@ body.light-theme #aether-toast .toast-body {
     min-height: 18px;
 }
 
-/* Sticky control bar: Jump / Prev / position-marker / Next */
+/* Sticky control bar: Prev / position-marker / Next */
 .sidebar-pagination {
     display: flex;
     justify-content: center;
@@ -2555,7 +2555,7 @@ body.light-theme #aether-toast .toast-body {
     color: #fff;
 }
 
-/* Position marker: "target / total" — the package Jump will scroll to */
+/* Position marker: "position / total" — the first visible package */
 .package-list-marker {
     min-width: 64px;
     text-align: center;
