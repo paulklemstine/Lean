@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "43e7ffcb",
-      "domain": "Tropical",
-      "key_insight": "The declared frontier is to **prove the trace-lemma exhaustiveness** — to turn\nthe classification into a theorem in full generality. Define the class of\nCRT-respecting, polynomial-time-computable coun",
-      "quality_score": 0.72697,
-      "sorry_count": 0,
-      "theorem_count": 37,
-      "timestamp": "2026-08-14T11:18:19",
-      "title": "The Factor3 Program: A Definitive Synthesis of the Barrier Framework"
-    },
-    {
       "cycle_id": "677413db",
       "domain": "Algebra",
       "key_insight": "# Future Directions — after the extrinsic class-group corner\n\nCycle 1 proved the collapse at `D = -20` and `D = -84`; cycle 2 located its\nboundary at `D = -23`; cycle 3 proved the collapse is closed u",
@@ -499,19 +489,19 @@
       "theorem_count": 135,
       "timestamp": "2026-08-16T19:34:06",
       "title": "Emergent Spacetime from Quantum Entanglement"
+    },
+    {
+      "cycle_id": "4f1ff831",
+      "domain": "Logic",
+      "key_insight": "# Future directions — bold, falsifiable conjectures from the NET-46 cycle\n\nEach conjecture below is stated so that a single further run, or a single further Lean\ndevelopment, decides it. All are deriv",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 99,
+      "timestamp": "2026-08-16T21:34:53",
+      "title": "NET-46: THE-S2-ONE-GRID-STEP-DROP-REPLICATES-AT-16×-CONTEXT — k*=224 at (d=4, ctx=2048, seed=2), the"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "5b6f1a1d",
-      "domain": "Geometry",
-      "key_insight": "# Future directions\n\nAll notation is that of `Catalog/Applications/AffineSubspaceStats/AffineStats.lean`:\n`Vec n = 𝔽₂ⁿ`, an affine `D`-cube is a base point `c` together with `D` directions\n`v₀,…,v_{D-",
-      "quality_score": 0.686,
-      "sorry_count": 0,
-      "theorem_count": 122,
-      "timestamp": "2026-08-05T22:29:17",
-      "title": "All formal results live in four files, which together compile with no `sorry` an"
-    },
     {
       "cycle_id": "f52c2f13",
       "domain": "Shared",
@@ -2501,15 +2491,19 @@
       "theorem_count": 135,
       "timestamp": "2026-08-16T19:34:06",
       "title": "Emergent Spacetime from Quantum Entanglement"
+    },
+    {
+      "cycle_id": "4f1ff831",
+      "domain": "Logic",
+      "key_insight": "# Future directions — bold, falsifiable conjectures from the NET-46 cycle\n\nEach conjecture below is stated so that a single further run, or a single further Lean\ndevelopment, decides it. All are deriv",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 99,
+      "timestamp": "2026-08-16T21:34:53",
+      "title": "NET-46: THE-S2-ONE-GRID-STEP-DROP-REPLICATES-AT-16×-CONTEXT — k*=224 at (d=4, ctx=2048, seed=2), the"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "66af3cc3",
-      "domain": "NumberTheory",
-      "name": "resolves_of_le_prod",
-      "quality": 0.72
-    },
     {
       "cycle_id": "66af3cc3",
       "domain": "NumberTheory",
@@ -2803,9 +2797,15 @@
       "domain": "Novelty",
       "name": "Sw_strong_subadditive",
       "quality": 0.87
+    },
+    {
+      "cycle_id": "4f1ff831",
+      "domain": "Logic",
+      "name": "window_of_isKnee",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-16T19:34:06",
+  "last_updated": "2026-08-16T21:34:53",
   "open_questions": [
     {
       "context": "This file gives a **complete, self-contained proof** of that theorem (0 `sorry`s).",
@@ -3456,12 +3456,6 @@
     "Logic": [
       {
         "cycle_id": "96503fdf",
-        "quality": 0.686,
-        "theorems": 131,
-        "title": "Constructive Mathematics: Bishop's Analysis"
-      },
-      {
-        "cycle_id": "96503fdf",
         "quality": 0.622,
         "theorems": 131,
         "title": "Constructive Mathematics: Bishop's Analysis"
@@ -3513,6 +3507,12 @@
         "quality": 0.8,
         "theorems": 83,
         "title": "NET-44: The Last Context-Extrapolation Cell Is Two-Seed and the Knee Fluctuates "
+      },
+      {
+        "cycle_id": "4f1ff831",
+        "quality": 0.82,
+        "theorems": 99,
+        "title": "NET-46: THE-S2-ONE-GRID-STEP-DROP-REPLICATES-AT-16×-CONTEXT — k*=224 at (d=4, ct"
       }
     ],
     "MachineLearning": [
