@@ -18,6 +18,21 @@ window.FUTURE_DIRECTIONS = [
     "title": "NET-43: The Deepest Rung Is Two-Seed 256 (k\\*=256 reproduces EXACTLY at seed=2; both honest limits closed; concave-power-2/3 law's deepest rung two-seed) \u2014 paper 87"
   },
   {
+    "consumed_by_exp_id": "d4bd7c02",
+    "description": "## Network loop round-net-44 (speed axis, round 17)\n\n**Title: The Last Context-Extrapolation Cell Is Two-Seed and the Knee Fluctuates \u2014 k\\*=96 at (d=4, ctx=1024, seed=2) breaks the exact product law d\u00b7ctx/32 (over-predicts by 25% at s2), the two-seed knee bracket is (64, 128], the product law remains a proven-safe UPPER BOUND, selection importance reproduces (+6.2/+4.8), and the s1 context chain's exactness was SEED-LUCKY (NET-44).**\n\nPaper 88: `ResearchOutput/NetworkMathematics/44_LastContextCellTwoSeedKneeFluctuates.md`\n\n### Hypothesis (stated before the run)\nk\\* = 128, reproducing s1. NET-37 measured k\\*=128 EXACT at (d=4, ctx=1024, seed=1) \u2014 d\u00b7ctx/32 held at every context doubling (16/32/64/128 across 128\u2192256\u2192512\u21921024). The ctx=1024 cell was the LAST context-extrapolation cell still single-seed. This round runs seed=2 to close it. k=112 added to pin the (96, 128] bracket.\n\n### Setup\nByte-identical harness to NET-37 (CausalTF dm=64/4 heads, Gutenberg corpus, vocab 4097, 2000 AdamW steps), d=4, seed=2, ctx=1024. Sweep {32,64,96,112,128,192,256,384,512,768}. Random-k control {64,128} runs (Part B2). Full acc 0.1591 (bar 0.1559), loss 5.1179 (s1: 0.1594/5.1209). Train 6067s. ALL_DONE_NET44, no crash.\n\n### Result \u2014 k\\*=96, NOT the predicted 128 (prediction FAILED)\n- k=64 fails the bar at 0.979 (~0.1 SE below \u2014 marginal); k=96 passes at 0.987; k=112 passes 0.991 (s2 knee is NOT 112). **k\\*(s2) = 96**.\n- The s2 retained curve is uniformly ~0.01 HIGHER than s1's at every k (0.979/0.987/0.993 vs 0.968/0.977/0.986 at 64/96/128) \u2014 the knee crossed the bar one grid step (32) earlier.\n- Part B2: selection gaps +6.2 (k=64) / +4.8 (k=128) vs s1 +5.9/+4.6 \u2014 reproduces to ~0.3 pts.\n- Concentration reproducible to ~1.3% (eff 294.97 vs 291.16), NO bounded working set.\n- k=768 = 1.000 with exact full loss (5.1179 = 5.1179).\n\n### What this decides\nThe last single-seed context cell is CLOSED, and the reading is the **first break of product-exactness at any context**: at s2 the ctx=1024 knee is 96 (0.75\u00b7128), so the s1 chain's exactness (16/32/64/128 across four doublings) was **seed-lucky**. Two-seed knee bracket **(64, 128]**; the product law d\u00b7ctx/32 (128) remains a proven-safe UPPER BOUND (passes 0.986/0.993 both seeds) but is NOT minimal at s2 (over-predicts by 25%). The knee-fluctuates-one-grid-step family now spans BOTH axes (depth at d=16 ctx=512 160/144; context at d=4 ctx=1024 128/96). Deployable speedup at (d=4, ctx=1024) = **8.0\u201310.7\u00d7** two-seed (guarantee 8\u00d7 intact as floor).\n\nAll 8 network barriers checked (a\u2013h): no circularity (prediction stated before run, FAILED \u2014 genuine test exposing seed-luck), no known-method-in-disguise, toy-scale confronted, no leakage, variance RESOLVED (this round's substance \u2014 last single-seed cell closed), measurement clean (ALL_DONE_NET44, k=112 pinning), baseline fair (random-k control, both seeds positive), practical sharpened (exact-product claim becomes a two-seed bracket).\n\nScript: /tmp/exp_net_attncost_ctx1024_s2.py \u00b7 Log: /tmp/net44.log\nRound-net-44. Now 44 network experiments. Assessment v44.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_1326",
+    "phase": "A",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "in_progress",
+    "timestamp": "2026-08-16T05:43:49.856756+00:00",
+    "title": "NET-44: The Last Context-Extrapolation Cell Is Two-Seed and the Knee Fluctuates (k\\*=96 at (d=4, ctx=1024, s2) breaks the exact product law; two-seed bracket (64,128]; s1 chain's exactness was seed-lucky) \u2014 paper 88"
+  },
+  {
     "consumed_by_exp_id": "",
     "description": "Formalizes a quantum random walk on the Berggren Pythagorean tree where constructive interference at energy spectrum minima collapses the state onto factors of N.",
     "domains": [
@@ -76,20 +91,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-23T20:10:45.914797+00:00",
     "title": "EML-Pythagorean-Operator: Single-Neuron Neural Energy Guided Tree Traversal"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 8ed04a73 (Q=0.850), which proved 78 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## Question\n\nNET-15/16/17/20/33/34 established k* = d\u00b7ctx/32 at a second seed in most of the (d \u00d7 ctx) grid. Two cells remained single-seed, at the grid's extreme corners: **d=16 @ ctx=128** (NET-17, s0 only, predicting k*=4d=64) and **ctx=512 @ d=4** (NET-35, s1 only, predicting k*=d\u00b7ctx/32=64). Do",
-    "domains": [
-      "Probability"
-    ],
-    "id": "push_8ed04a73_331d73a8",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "8ed04a73",
-    "status": "available",
-    "timestamp": "2026-08-16T04:50:51.137617+00:00",
-    "title": "Deepening: NET-36: The Attention-Cost Grid Is Now Two-Seed Everywhere \u2014 k*=d\u00b7ctx/32 Holds a"
   },
   {
     "consumed_by_exp_id": "",
@@ -780,20 +781,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle a9efa47b (Q=0.820), which proved 14 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Summary.** Let F(k) = sum_{a=1}^{N} a^k. Then gcd(F(k), N) reveals a factor\nat k = p-1: for N = pq, gcd(F(p-1), N) = q (provided (q-1) does not divide (p-1)).\n\n**Key results (proven):**\n- **Theorem 1 (power-sum factor reveal):** Mod p the residues cover each nonzero\n  residue q times, so F(k) \u2261 q\u00b7",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_a9efa47b_fdf5d3de",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "a9efa47b",
-    "status": "available",
-    "timestamp": "2026-08-15T11:41:08.201786+00:00",
-    "title": "Deepening: Power-Sum GCD Factoring & Carmichael Periodicity"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Building on cycle b7a22960 (Q=0.820), which proved 127 theorems in Logic. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions: Multiverse Truth and Forcing Branches\n\n## 1. Internal Boolean-Valued Realization\n\nConstruct a Boolean-valued universe whose generic quotients instantiate the abstract frame, with forcing closure, directedness, and opposite Continuum Hypothesis branches derived rather than assume",
     "domains": [
       "Logic"
@@ -805,62 +792,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-13T18:15:13.337392+00:00",
     "title": "Deepening: Construct a Boolean-valued universe whose generic quotients instantiate the abst"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle c80347ac (Q=0.820), which proved 73 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Paper 53 (NewMathematics) \u2014 Experiment 388, assessment v164. Round-14 #12.**\n\n**Hypothesis:** f_j(N) = bit j of the smaller k-bit factor p, over the exact k-bit-prime semiprime support, has no low-degree GF(2) parity of N approximating it \u2014 the Walsh/spectral face of superdensity (BITPROFILE, barr",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_c80347ac_ad32c244",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "c80347ac",
-    "status": "available",
-    "timestamp": "2026-08-13T18:15:00.040305+00:00",
-    "title": "Deepening: EMPIRICAL-DEGREE: the factoring function is spectrally flat \u2014 no low-degree pari"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle c98081c2 (Q=0.820), which proved 73 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Paper:** `ResearchOutput/NewMathematics/44_NoPinning_Lemma.md` (factor3)\n**Experiment:** COMPENSATING-PARTNER (#379), assessment v155.\n\n## Finding\nGeneralize QRLEAK's Dirichlet no-pruning to the FULL class of poly(log N)-\ncomputable predicates: N mod m (m \u2264 B), Jacobi symbols (a|N), gcd(f(N), N).\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_c98081c2_b4afdd6f",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "c98081c2",
-    "status": "available",
-    "timestamp": "2026-08-14T20:05:36.214016+00:00",
-    "title": "Deepening: The Class-Wide No-Pinning Lemma, Verified"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle f3293094 (Q=0.820), which proved 65 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Paper (factor3):** [ResearchOutput/NewMathematics/17_Round4_Closures.md](https://github.com/paulklemstine/factor3/blob/main/ResearchOutput/NewMathematics/17_Round4_Closures.md)\n\n---\n\n# Round-4 Hypothesis Closures: Five Novel Attacks via Exotic Resources, Tested and Closed\n\n**Program:** Factoring r",
-    "domains": [
-      "Tropical"
-    ],
-    "id": "push_f3293094_ea44d3d9",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "f3293094",
-    "status": "available",
-    "timestamp": "2026-08-13T21:10:03.741906+00:00",
-    "title": "Deepening: Round-4 Hypothesis Closures: Five Novel Attacks via Exotic Resources, Tested and"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle fefb96cd (Q=0.820), which proved 54 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Paper 50 (NewMathematics) \u2014 Experiment 385, assessment v161. Round-14 #7.**\n\n**Hypothesis:** the trace s = p+q (minimal factor-bearing witness) has a different information profile than the factor p \u2014 congruence-visible where p is congruence-invisible.\n\n**Experiment (k=12,14; 32 640\u2013380 628 semipri",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_fefb96cd_d93ef88e",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "fefb96cd",
-    "status": "available",
-    "timestamp": "2026-08-15T03:13:27.674781+00:00",
-    "title": "Deepening: TRACEPROFILE: the trace s=p+q is the least-hidden symmetric invariant \u2014 1 bit pe"
   },
   {
     "consumed_by_exp_id": "",
@@ -5315,7 +5246,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Hofstadter: I Am a Strange Loop \u2014 Consciousness as Self-Reference"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "665c1eea",
     "description": "Formalize the Alcubierre warp drive metric: ds^2 = -dt^2 + (dx - v_s f(r_s))dt^2 + dy^2 + dz^2. Prove: the metric is a valid solution of Einstein's field equations. Show: the expansion of space behind the ship and contraction ahead creates effective FTL without local FTL. Explore: the energy requirement is negative (exotic matter). Conjecture: the total energy needed scales as E ~ M * v_s * c (where M is the ship mass). Formalize: does the Alcubierre drive create closed timelike curves?",
     "domains": [
       "Novelty",
@@ -5323,10 +5254,11 @@ window.FUTURE_DIRECTIONS = [
       "Geometry"
     ],
     "id": "seed_407",
+    "phase": "A",
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Moonshot: Warp Drive Spacetime \u2014 Alcubierre Metric Formalization"
   },
