@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "9e8cd1f4",
-      "domain": "Algebra",
-      "key_insight": "# FUTURE DIRECTIONS — after QUBIT-TRADE (register threshold, closed)\n\nAll Lean files of this thread live in `Catalog/Algebra/QubitTrade/` and compile\nagainst mathlib4 (Lean 4.28.0) with **0 `sorry`s**",
-      "quality_score": 0.87,
-      "sorry_count": 0,
-      "theorem_count": 939,
-      "timestamp": "2026-08-13T15:21:48",
-      "title": "The Quantum Register Cannot Be Shrunk: QUBIT-TRADE, Closed"
-    },
-    {
       "cycle_id": "6753d65f",
       "domain": "Bridges",
       "key_insight": "# Future Directions — next-cycle conjectures from the residue-leakage thread\n\nThe closed results of this cycle (all proved in `Catalog/Bridges/`):\n\n* `dirichlet_no_pruning` — every candidate prime sur",
@@ -499,19 +489,19 @@
       "theorem_count": 46,
       "timestamp": "2026-08-16T00:30:44",
       "title": "NET-27 (paper 71): EOS-WIDTH-SHIFT-IS-A-MONOTONE-RAMP — P(cure) ramps 25→33→83→100→100% as exclusive"
+    },
+    {
+      "cycle_id": "66af3cc3",
+      "domain": "NumberTheory",
+      "key_insight": "# Future directions — bold, testable conjectures from the NET-31 formalization\n\nThe two Lean files\n(`Catalog/NumberTheory/BoundaryBlockInternalization.lean`,\n`Catalog/NumberTheory/BoundaryBlockCollect",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 71,
+      "timestamp": "2026-08-16T00:37:25",
+      "title": "NET-31: Internalization is a seed-fixed trait among cures — same 4 seeds dependent at k=2 and k=3; N"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "d9d67aec",
-      "domain": "Pythagorean",
-      "key_insight": "# Future directions\n\nThe formalisation in `Catalog/Pythagorean/BrillNoether/` now consists of ten\nself-contained files, each compiling on its own against Mathlib with no `sorry` and\nusing only the sta",
-      "quality_score": 0.686,
-      "sorry_count": 0,
-      "theorem_count": 143,
-      "timestamp": "2026-08-05T12:24:19",
-      "title": "ArXiv paper: Asymptotic Brill-Noether Existence at the Half-Canonical Degree: Energy Pairing, Cheege"
-    },
     {
       "cycle_id": "8fa60fb0",
       "domain": "NumberTheory",
@@ -2501,27 +2491,19 @@
       "theorem_count": 46,
       "timestamp": "2026-08-16T00:30:44",
       "title": "NET-27 (paper 71): EOS-WIDTH-SHIFT-IS-A-MONOTONE-RAMP — P(cure) ramps 25→33→83→100→100% as exclusive"
+    },
+    {
+      "cycle_id": "66af3cc3",
+      "domain": "NumberTheory",
+      "key_insight": "# Future directions — bold, testable conjectures from the NET-31 formalization\n\nThe two Lean files\n(`Catalog/NumberTheory/BoundaryBlockInternalization.lean`,\n`Catalog/NumberTheory/BoundaryBlockCollect",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 71,
+      "timestamp": "2026-08-16T00:37:25",
+      "title": "NET-31: Internalization is a seed-fixed trait among cures — same 4 seeds dependent at k=2 and k=3; N"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "c94236ec",
-      "domain": "Novelty",
-      "name": "then",
-      "quality": 0.92
-    },
-    {
-      "cycle_id": "c94236ec",
-      "domain": "Novelty",
-      "name": "Hb_zero",
-      "quality": 0.92
-    },
-    {
-      "cycle_id": "c94236ec",
-      "domain": "Novelty",
-      "name": "phi_apply",
-      "quality": 0.92
-    },
     {
       "cycle_id": "fefb96cd",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "NumberTheory",
       "name": "one_sub_sum_le_prod_one_sub",
       "quality": 0.72
+    },
+    {
+      "cycle_id": "66af3cc3",
+      "domain": "NumberTheory",
+      "name": "resolves_of_le_prod",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "66af3cc3",
+      "domain": "NumberTheory",
+      "name": "two_pow_card_le_prod",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "66af3cc3",
+      "domain": "NumberTheory",
+      "name": "two_pow_card_sub_one_le_prod_erase",
+      "quality": 0.72
     }
   ],
-  "last_updated": "2026-08-16T00:30:44",
+  "last_updated": "2026-08-16T00:37:25",
   "open_questions": [
     {
       "context": "-    sorry+  -- On the certified range, extract the primitive divisor from the",
@@ -3641,12 +3641,6 @@
     ],
     "NumberTheory": [
       {
-        "cycle_id": "1343d96e",
-        "quality": 0.65648,
-        "theorems": 4,
-        "title": "Deepening: Stereographic Capacity Theory: Packing Bounds on Spheres via Plane Ge"
-      },
-      {
         "cycle_id": "a5f7aac5",
         "quality": 0.6853135011441648,
         "theorems": 437,
@@ -3699,6 +3693,12 @@
         "quality": 0.72,
         "theorems": 46,
         "title": "NET-27 (paper 71): EOS-WIDTH-SHIFT-IS-A-MONOTONE-RAMP — P(cure) ramps 25→33→83→1"
+      },
+      {
+        "cycle_id": "66af3cc3",
+        "quality": 0.72,
+        "theorems": 71,
+        "title": "NET-31: Internalization is a seed-fixed trait among cures — same 4 seeds depende"
       }
     ],
     "Physics": [
