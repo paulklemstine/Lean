@@ -1,5 +1,4 @@
-import ToricCode.Distance
-
+import Geometry.ToricCode.Distance
 /-!
 # Weights of individual logical classes: the diagonal class costs `M + N`
 

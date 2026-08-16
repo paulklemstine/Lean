@@ -760,7 +760,8 @@ Since p is odd prime, there are no elements of order 2, so class 3
 has exactly p - 1 elements and class 1 ∪ class 2 = {0}.
 **Test**: Verify for p = 3, 5, 7.
 **Disproof path**: Check if there exist elements g ≠ 0 with -g = g
-in ZMod p for odd prime p. There shouldn't be any.
+in ZMod p for odd prime p. There shouldn't be any. -/
+
 /-- For ZMod 7 with negation, the only fixed point is zero. -/
 theorem zmod7_negation_fixed_unique :
     ∀ x : ZMod 7, -x = x → x = 0 := by decide

@@ -1,6 +1,5 @@
 import Mathlib
-import Geometry.RamseyTheory.FlagComplex
-
+import Geometry.FlagComplex
 /-!
 # Cohomological obstructions to patching incomplete data
 
