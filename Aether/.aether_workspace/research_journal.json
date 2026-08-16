@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "eaebe17a",
-      "domain": "Novelty",
-      "key_insight": "# Future directions — gcd moments as a trace-witness family\n\nDerived from what survived five full research cycles (seven Lean files, all `sorry`-free, all\naxioms standard: `propext`, `Classical.choice",
-      "quality_score": 0.9,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-08-14T08:45:51",
-      "title": "Exp 392 GCD-MOMENT: the semiprime gcd-moments M_k = sum gcd(x,N)^k are a closed trace-witness family"
-    },
-    {
       "cycle_id": "13788cf3",
       "domain": "Tropical",
       "key_insight": "# FUTURE DIRECTIONS — after PLUSONE-SMOOTH-NULL (round 16 #2)\n\nThe formal results in `Catalog/Tropical/PlusOneWilliamsCore.lean` and\n`Catalog/Tropical/PlusOneSmoothNull.lean` isolate one mechanism beh",
@@ -499,19 +489,19 @@
       "theorem_count": 53,
       "timestamp": "2026-08-16T15:36:21",
       "title": "The Unreasonable Effectiveness of Wrong Theories"
+    },
+    {
+      "cycle_id": "d4bd7c02",
+      "domain": "Logic",
+      "key_insight": "# Future directions — bold, testable conjectures from the NET-44 formalisation\n\nEverything below is derived from the theorems proved in\n\n* `Catalog/Logic/KneeFluctuationTwoSeed.lean` (knee predicate,",
+      "quality_score": 0.8,
+      "sorry_count": 0,
+      "theorem_count": 83,
+      "timestamp": "2026-08-16T16:43:01",
+      "title": "NET-44: The Last Context-Extrapolation Cell Is Two-Seed and the Knee Fluctuates (k\\*=96 at (d=4, ctx"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "018a4d2d",
-      "domain": "Bridges",
-      "key_insight": "# Future directions: dense sets without large sumsets\n\n## What is formalized here\n\nFiles (all in `Bridges/DenseSumsetFree/`, each compiles independently against\nMathlib; nothing is `sorry`-ed, and the",
-      "quality_score": 0.686,
-      "sorry_count": 0,
-      "theorem_count": 73,
-      "timestamp": "2026-08-05T19:03:39",
-      "title": "Dense Sets Without Large Sumsets"
-    },
     {
       "cycle_id": "08d2b371",
       "domain": "Bridges",
@@ -2501,27 +2491,19 @@
       "theorem_count": 53,
       "timestamp": "2026-08-16T15:36:21",
       "title": "The Unreasonable Effectiveness of Wrong Theories"
+    },
+    {
+      "cycle_id": "d4bd7c02",
+      "domain": "Logic",
+      "key_insight": "# Future directions — bold, testable conjectures from the NET-44 formalisation\n\nEverything below is derived from the theorems proved in\n\n* `Catalog/Logic/KneeFluctuationTwoSeed.lean` (knee predicate,",
+      "quality_score": 0.8,
+      "sorry_count": 0,
+      "theorem_count": 83,
+      "timestamp": "2026-08-16T16:43:01",
+      "title": "NET-44: The Last Context-Extrapolation Cell Is Two-Seed and the Knee Fluctuates (k\\*=96 at (d=4, ctx"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "603eb18a",
-      "domain": "NumberTheory",
-      "name": "no_fixed_depth_local_circuit",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "f0c2b697",
-      "domain": "Logic",
-      "name": "boundaryBias_surjective",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "f0c2b697",
-      "domain": "Logic",
-      "name": "boundaryBias_range_eq",
-      "quality": 0.78
-    },
     {
       "cycle_id": "f0c2b697",
       "domain": "Logic",
@@ -2803,9 +2785,27 @@
       "domain": "Physics",
       "name": "wrongness_binomialFamily",
       "quality": 0.78
+    },
+    {
+      "cycle_id": "d4bd7c02",
+      "domain": "Logic",
+      "name": "knee_s1",
+      "quality": 0.8
+    },
+    {
+      "cycle_id": "d4bd7c02",
+      "domain": "Logic",
+      "name": "knee_s2",
+      "quality": 0.8
+    },
+    {
+      "cycle_id": "d4bd7c02",
+      "domain": "Logic",
+      "name": "margin_s1_96_lt_spread",
+      "quality": 0.8
     }
   ],
-  "last_updated": "2026-08-16T15:36:21",
+  "last_updated": "2026-08-16T16:43:01",
   "open_questions": [
     {
       "context": "This file gives a **complete, self-contained proof** of that theorem (0 `sorry`s).",
@@ -3455,12 +3455,6 @@
     ],
     "Logic": [
       {
-        "cycle_id": "413bc2f0",
-        "quality": 0.7947599999999999,
-        "theorems": 72,
-        "title": "Generalization Bounds via Rademacher Complexity"
-      },
-      {
         "cycle_id": "96503fdf",
         "quality": 0.686,
         "theorems": 131,
@@ -3513,6 +3507,12 @@
         "quality": 0.78,
         "theorems": 41,
         "title": "NET-25 (paper 69): DENSE-FINAL-STEP-IS-THE-CURE — the stateful-carry-cell cure w"
+      },
+      {
+        "cycle_id": "d4bd7c02",
+        "quality": 0.8,
+        "theorems": 83,
+        "title": "NET-44: The Last Context-Extrapolation Cell Is Two-Seed and the Knee Fluctuates "
       }
     ],
     "MachineLearning": [

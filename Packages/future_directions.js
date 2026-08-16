@@ -3,21 +3,6 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "consumed_by_exp_id": "d4bd7c02",
-    "description": "## Network loop round-net-44 (speed axis, round 17)\n\n**Title: The Last Context-Extrapolation Cell Is Two-Seed and the Knee Fluctuates \u2014 k\\*=96 at (d=4, ctx=1024, seed=2) breaks the exact product law d\u00b7ctx/32 (over-predicts by 25% at s2), the two-seed knee bracket is (64, 128], the product law remains a proven-safe UPPER BOUND, selection importance reproduces (+6.2/+4.8), and the s1 context chain's exactness was SEED-LUCKY (NET-44).**\n\nPaper 88: `ResearchOutput/NetworkMathematics/44_LastContextCellTwoSeedKneeFluctuates.md`\n\n### Hypothesis (stated before the run)\nk\\* = 128, reproducing s1. NET-37 measured k\\*=128 EXACT at (d=4, ctx=1024, seed=1) \u2014 d\u00b7ctx/32 held at every context doubling (16/32/64/128 across 128\u2192256\u2192512\u21921024). The ctx=1024 cell was the LAST context-extrapolation cell still single-seed. This round runs seed=2 to close it. k=112 added to pin the (96, 128] bracket.\n\n### Setup\nByte-identical harness to NET-37 (CausalTF dm=64/4 heads, Gutenberg corpus, vocab 4097, 2000 AdamW steps), d=4, seed=2, ctx=1024. Sweep {32,64,96,112,128,192,256,384,512,768}. Random-k control {64,128} runs (Part B2). Full acc 0.1591 (bar 0.1559), loss 5.1179 (s1: 0.1594/5.1209). Train 6067s. ALL_DONE_NET44, no crash.\n\n### Result \u2014 k\\*=96, NOT the predicted 128 (prediction FAILED)\n- k=64 fails the bar at 0.979 (~0.1 SE below \u2014 marginal); k=96 passes at 0.987; k=112 passes 0.991 (s2 knee is NOT 112). **k\\*(s2) = 96**.\n- The s2 retained curve is uniformly ~0.01 HIGHER than s1's at every k (0.979/0.987/0.993 vs 0.968/0.977/0.986 at 64/96/128) \u2014 the knee crossed the bar one grid step (32) earlier.\n- Part B2: selection gaps +6.2 (k=64) / +4.8 (k=128) vs s1 +5.9/+4.6 \u2014 reproduces to ~0.3 pts.\n- Concentration reproducible to ~1.3% (eff 294.97 vs 291.16), NO bounded working set.\n- k=768 = 1.000 with exact full loss (5.1179 = 5.1179).\n\n### What this decides\nThe last single-seed context cell is CLOSED, and the reading is the **first break of product-exactness at any context**: at s2 the ctx=1024 knee is 96 (0.75\u00b7128), so the s1 chain's exactness (16/32/64/128 across four doublings) was **seed-lucky**. Two-seed knee bracket **(64, 128]**; the product law d\u00b7ctx/32 (128) remains a proven-safe UPPER BOUND (passes 0.986/0.993 both seeds) but is NOT minimal at s2 (over-predicts by 25%). The knee-fluctuates-one-grid-step family now spans BOTH axes (depth at d=16 ctx=512 160/144; context at d=4 ctx=1024 128/96). Deployable speedup at (d=4, ctx=1024) = **8.0\u201310.7\u00d7** two-seed (guarantee 8\u00d7 intact as floor).\n\nAll 8 network barriers checked (a\u2013h): no circularity (prediction stated before run, FAILED \u2014 genuine test exposing seed-luck), no known-method-in-disguise, toy-scale confronted, no leakage, variance RESOLVED (this round's substance \u2014 last single-seed cell closed), measurement clean (ALL_DONE_NET44, k=112 pinning), baseline fair (random-k control, both seeds positive), practical sharpened (exact-product claim becomes a two-seed bracket).\n\nScript: /tmp/exp_net_attncost_ctx1024_s2.py \u00b7 Log: /tmp/net44.log\nRound-net-44. Now 44 network experiments. Assessment v44.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1326",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-16T05:43:49.856756+00:00",
-    "title": "NET-44: The Last Context-Extrapolation Cell Is Two-Seed and the Knee Fluctuates (k\\*=96 at (d=4, ctx=1024, s2) breaks the exact product law; two-seed bracket (64,128]; s1 chain's exactness was seed-lucky) \u2014 paper 88"
-  },
-  {
     "consumed_by_exp_id": "6a0dc5c0",
     "description": "## NET-45 \u2014 speed axis (round-net-45; paper 89, /tmp/exp_net_attncost_ctx2048.py, /tmp/net45.log)\n\n**Verdict name: THE-S1-PRODUCT-CHAIN-SURVIVES-AT-FIVE-DOUBLINGS-AT-THE-TIGHTEST-MARGIN.**\n\n### Result\nAt (d=4, ctx=2048, seed=1), **k\\* = 256 = d\u00b7ctx/32 EXACTLY \u2014 the prediction CONFIRMED** (P1). The s1 context chain is now exact at **FIVE doublings**: 16/32/64/128/256 across ctx 128\u21922048 \u2014 16\u00d7 context, the longest measured anywhere in the program. P2 (192, systematic 0.75\u00d7 s2 drift) and P3 (224, one-grid-step drop) both REFUTED at s1.\n\n### The tension\n- **At s1 the product law is exact through 16\u00d7 context** (this round).\n- **At s2 the knee broke by one grid step at 8\u00d7 context** (NET-44: k\\*=96 vs 128).\n\nThe pass margin at 2048 is **+0.0013 \u2014 the tightest of the whole chain** (prior margins +0.007/+0.010/+0.003/+0.006 at 128/256/512/1024): k=224 fails ~0.45 SE, k=256 passes ~0.13 SE. The 16\u00d7 cell is single-seed with a razor-thin knee.\n\n### Key numbers\n- Sweep: k=96 0.939 \u2717, 128 0.951 \u2717, 160 0.963 \u2717, 192 0.970 \u2717, 224 0.976 \u2717, **256 0.9813 \u2713**, 288 0.984, 384 0.993, 512 0.997, 768 0.996, 1024 0.998 (loss 5.2062 vs full 5.2047, \u03940.0015 \u2014 first time the ctx/2 point is not exactly full loss, a 2048-row renormalization residual).\n- Full acc 0.1543, bar 0.1512, loss 5.2047; train 18436s (~5.1h \u2014 the O(L\u00b2) attention term dominates at 2048).\n- **Selection dilutes with context**: gaps +1.7 (k=128) / +1.8 (k=256) \u2014 positive but the smallest at d=4 (from +5.9/+4.6 at 8\u00d7, +5.3/+4.6 at 4\u00d7).\n- **Concentration**: eff support 526.39 (\u00d71.81 on the doubling, same superlinear family); top-128 0.589, top-256 0.731; per-position 68.21/461.11/987.30 \u2014 NO bounded working set at 16\u00d7.\n- **Deployable speedup**: 8.0\u00d7 at (d=4, ctx=2048), the product-law guarantee \u2014 but now EQUAL to the knee (s2 could read 224 \u2192 10.3\u00d7).\n\n### All 8 barriers\n(a) clean \u2014 prediction stated before the run, measured 256 (a genuine 16\u00d7 extension); (b) clean \u2014 no context-scaling of data-free attention pruning at 16\u00d7 in Catalog or literature; (c) confronted \u2014 d=4 \u00d7 ctx=2048, the longest context of the program; (d) clean \u2014 held-out last-10%, data-free top-k; (e) the honest limit \u2014 single-seed at 16\u00d7 with a razor-thin margin: the ctx=2048 second seed is the sharpest open cell (256 two-seed-exact vs 224, one grid step); (f) clean \u2014 same metrics, binom SE \u2248 0.11% acc, the +0.0013 margin documented, chunked eval (CHUNK=8) identical math, NO crash (ALL_DONE_NET45); (g) fair \u2014 full-attention reference + same 0.98 bar + random-k at the same k (gaps +1.7/+1.8, positive); (h) sharpened \u2014 deployable 8.0\u00d7 at 16\u00d7 context, the guarantee equal to the knee, two-seed confirmation the practical next step.\n\n### Next\n**ctx=2048 second seed** (decides whether 256 is two-seed-exact, extending ctx=512's 64/64, or drops one grid step to 224, replicating the NET-44 s2 break at 16\u00d7); a third seed at ctx=1024 (knee distribution {96,128}); d=8 @ ctx=256 s0 corner.\n\nNow 45 network experiments. Assessment v45. Paper 89.\n",
     "domains": [
@@ -1740,32 +1725,31 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle eb6ff95e (Q=0.794), which proved 17 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the no-cloning theorem in Lean 4 using the framework of C*-algebras. Prove the quantum teleportation protocol is correct. Formalize quantum entanglement measures and prove monogamy of entanglement for qubits.",
+    "description": "Building on cycle 63e5c24f (Q=0.793), which proved 50 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Investigate the ArXiv paper 'Finding Nearly-Periodic Components in Digraphs and Markov Chains from the Spectrum of Rotated Laplacian Matrices' and formalize its key results. Abstract: Inspired by recent advances in notions of spectral approximation of digraphs [Ahm+20], we study spectral algorithms ",
     "domains": [
       "Computation"
     ],
-    "id": "push_eb6ff95e_30f1328f",
+    "id": "push_63e5c24f_8857bbb8",
     "priority_score": 0.9,
     "research_mode": "team",
-    "source_exp_id": "eb6ff95e",
+    "source_exp_id": "63e5c24f",
     "status": "available",
-    "timestamp": "2026-08-03T17:32:21.114010+00:00",
-    "title": "Deepening: Quantum Information: No-Cloning and Teleportation"
+    "timestamp": "2026-08-05T17:02:26.736199+00:00",
+    "title": "Deepening: ArXiv paper: Finding Nearly-Periodic Components in Digraphs and Markov Chains fr"
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Formalize the lattice of cryptographic hardness assumptions: one-way functions \u2192 pseudorandom generators \u2192 pseudorandom functions \u2192 secure encryption. Prove separation results.",
+    "description": "Building on cycle d4bd7c02 (Q=0.800), which proved 83 theorems in Logic. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## Network loop round-net-44 (speed axis, round 17)\n\n**Title: The Last Context-Extrapolation Cell Is Two-Seed and the Knee Fluctuates \u2014 k\\*=96 at (d=4, ctx=1024, seed=2) breaks the exact product law d\u00b7ctx/32 (over-predicts by 25% at s2), the two-seed knee bracket is (64, 128], the product law remain",
     "domains": [
-      "Cryptography",
-      "Computation"
+      "Logic"
     ],
-    "id": "seed_228",
+    "id": "push_d4bd7c02_84d4f19e",
     "priority_score": 0.9,
     "research_mode": "team",
-    "source_exp_id": "seed",
+    "source_exp_id": "d4bd7c02",
     "status": "available",
-    "timestamp": "",
-    "title": "One-Way Functions: Existence and Hierarchy"
+    "timestamp": "2026-08-16T16:43:02.077478+00:00",
+    "title": "Deepening: NET-44: The Last Context-Extrapolation Cell Is Two-Seed and the Knee Fluctuates "
   },
   {
     "consumed_by_exp_id": "",
@@ -1781,20 +1765,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Quantum Hamiltonian Complexity: QMA-Completeness of the Local Hamiltonian Problem"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 63e5c24f (Q=0.793), which proved 50 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Investigate the ArXiv paper 'Finding Nearly-Periodic Components in Digraphs and Markov Chains from the Spectrum of Rotated Laplacian Matrices' and formalize its key results. Abstract: Inspired by recent advances in notions of spectral approximation of digraphs [Ahm+20], we study spectral algorithms ",
-    "domains": [
-      "Computation"
-    ],
-    "id": "push_63e5c24f_8857bbb8",
-    "priority_score": 0.8934299999999998,
-    "research_mode": "team",
-    "source_exp_id": "63e5c24f",
-    "status": "available",
-    "timestamp": "2026-08-05T17:02:26.736199+00:00",
-    "title": "Deepening: ArXiv paper: Finding Nearly-Periodic Components in Digraphs and Markov Chains fr"
   },
   {
     "consumed_by_exp_id": "",
@@ -18674,6 +18644,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future directions \u2014 bold, testable conjectures from the NET-44 formalisation\n\nEverything below is derived from the theorems proved in\n\n* `Catalog/Logic/KneeFluctuationTwoSeed.lean` (knee predicate, robustness criterion,\n  the NET-44 measurement, seed-luck, quantisation),\n* `Catalog/Logic/KneeSeedEnsembleBracket.lean` (what an `n`-seed ensemble certifies),\n* `Catalog/Logic/KneeLawIdentifiability.lean` (doubling chains, interval-valued laws),\n* `Catalog/Logic/KneeLatticeHomomorphism.lean` (the knee as an order-reversing lattice\n  homomorphism; the certified budget is the knee of the worst-case curve),\n* `Catalog/Logic/KneeFluctuationEvidence.lean` (kernel-checked arithmetic).\n\nEach conjecture is falsifiable by a finite sweep and is stated so that a Lean statement\ncan be written before the run.\n\n---\n\n## C1. The margin\u2013fluctuation law: a knee moves *iff* its margin is under the spread\n\n**Conjecture.** For every cell of the (depth \u00d7 context) grid there is a number\n`m(cell) = bar \u2212 c(k*\u207b)` (the deficit at the grid point below the knee) such that the\nknee is seed-stable exactly when `m(cell) > \u03b7`, where `\u03b7` is the inter-seed spread of the\nretained curve at that cell. Quantitatively: across cells, the empirical probability that\nthe knee moves by one grid step should be a monotone function of `\u03b7 / m` alone, with a\nsharp transition at `\u03b7/m = 1`.\n\n*The key insight is* that `KneeFluctuation.robustKnee_iff` makes stability an exact\ninequality between two independently measurable quantities \u2014 the margin and the spread \u2014\nso \"knee fluctuation\" is not noise to be averaged away but a deterministic consequence of\na measured collar around the bar.\n\n*Why now?* Both quantities are already recorded by the existing harness (NET-44 reports\n`0.003` and `0.010` at the broken cell, and `0.012 > 0.010` at the protected one); no new\ninstrumentation is needed, only reading the margins the sweeps already produce.\n\n---\n\n## C2. Adaptive grids collapse the bracket: bisection to a two-seed knee of width 1\n\n**Conjecture.** Replacing the fixed sweep `{32, 64, 96, \u2026}` by a bisection on the bar\ncrossing yields, for the same compute, a two-seed bracket of width `\u2264 8` at\n`(d = 4, ctx = 1024)` \u2014 i.e. the true knees of the two seeds are separated (or merged)\nat resolution far below `32`, and the resulting fine-grained knees satisfy\n`k*(s2)/k*(s1) \u2208 [0.70, 0.80]` rather than the coarse `0.75` forced by the grid.\n\n*The key insight is* `KneeFluctuation.oneStepFluctuation` together with\n`KneeLaw.true_knee_mem_Ioc`: a step-`s` grid identifies a knee only inside a window of\nwidth `s`, and a one-step difference can be manufactured by an arbitrarily small change\nin the underlying threshold, so the entire observed effect could be a quantisation\nartefact \u2014 *unless* the windows are disjoint, which is a resolution question.\n\n*Why now?* The disjointness of `(64, 96]` and `(96, 128]` is proved\n(`KneeLaw.net44_true_knee_windows`), so the seeds do differ; what is unknown is by how\nmuch, and bisection answers that with `log\u2082(32/8) = 2` extra sweep points per seed.\n\n---\n\n## C3. The product law is exactly a `sup` over seeds, not a mean\n\n**Conjecture.** For every cell, `d\u00b7ctx/32 = max over seeds of k*`, up to one grid step \u2014\nthe fitted constant `1/32` is a *worst-seed* constant, not an average-seed constant.\nTestable prediction: at every cell where a third seed is run, the knee is `\u2264` the law's\nvalue, and the fraction of seeds attaining it stays bounded away from `1`.\n\n*The key insight is* `KneeEnsemble.ensemble_max_is_safe`, `ensemble_max_is_least_safe`\nand `KneeLattice.knee_worstCase`: the only budget a sweep can certify is the maximum of\nthe measured knees \u2014 which is literally the knee of the pointwise-infimum (worst-case)\ncurve \u2014 so any \"safe\" law is by construction an upper envelope, and its apparent\nexactness at a single seed is the statement that that seed happened to be the worst one.\n\n*Why now?* Two seeds already exist at every cell of the grid after NET-44; a single third\nseed per cell turns the conjecture into a decisive measurement, and\n`KneeEnsemble.certified_budget_mono` says the certified budget can only move one way.\n\n---\n\n## C4. Amplitude, not exponent: seed-to-seed knee ratios are context- and depth-free\n\n**Conjecture.** Writing each seed's knee through the Zipf mechanism as\n`k* = A\u00b7d\u00b7ctx/\u03b4`, the ratio `A(s2)/A(s1)` measured at one cell predicts the knee ratio at\n*every* other cell of the grid to within one grid step. At `(d = 4, ctx = 1024)` this\nratio is `3/4`; the prediction is therefore `k*(s2) = 0.75\u00b7k*(s1)` at `(d = 16,\nctx = 512)` too \u2014 where the measured pair `160 / 144` gives `0.9`, so the conjecture is\nalready under strain and a third cell decides it.\n\n*The key insight is* `KneeFluctuation.amplitude_ratio_of_knee_ratio`: depth, context and\nthe accuracy budget cancel exactly in the ratio, so a seed effect must be a pure\namplitude effect if the mechanism is right \u2014 the conjecture is a rigidity statement about\nthe mechanism, not about the data.\n\n*Why now?* Both ingredients are measured (`3/4` at the context axis, `0.9` at the depth\naxis); the conjecture as stated predicts a single number per cell and is refuted by any\ncell whose seed ratio differs from the others by more than a grid step.\n\n---\n\n## C5. No finite seed budget certifies an exact knee law at fixed precision\n\n**Conjecture (metatheoretic, then empirical).** For any fixed sweep precision `\u03b7 > 0`\nthere is no `n` such that an `n`-seed ensemble certifies an exact knee law at a cell whose\nreference margin is below `\u03b7`; empirically, the width of the two-sided knee bracket at a\ncell should *not* shrink as seeds accumulate, but converge to a strictly positive width\ndetermined by `\u03b7` and the local slope of the retained curve.\n\n*The key insight is* `KneeEnsemble.ensemble_underdetermines_knee`: a single grid point\nwhose deficit is within the spread already yields an admissible curve with a smaller\nknee, and that construction is independent of how many seeds have been run \u2014 extra seeds\nadd data but no resolution.\n\n*Why now?* NET-44 closed the last single-seed cell, so the next natural move is \"more\nseeds\"; this conjecture predicts that the move buys nothing unless the *precision* of the\nsweep (grid step and evaluation noise) improves first, which is a cheap thing to test by\nre-running two existing cells at four seeds.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1338",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "d4bd7c02",
+    "status": "available",
+    "timestamp": "2026-08-16T16:42:48.416689+00:00",
+    "title": "Everything below is derived from the theorems proved in"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "A vampire number is a composite number v with an even number of digits that can be factizedd as v = x * y where x and y together have the same digits as v. The smallest is 1260 = 21 * 60. But vampire numbers are just the beginning. Define: (1) Werewolf numbers: v = x * y where x and y share exactly one digit with v. (2) Ghost numbers: v = x * y where v has NO digits in common with x or y. (3) Zombie numbers: v = x * y where x and y are both prime (these violate the definition but exist \u2014 125460 = 204 * 615 = 246 * 510, where both factorizations involve a prime and a composite). Conjecture: The density of vampire numbers in [10^{2n}, 10^{2n+1}] approaches 1/sqrt(n) as n -> infinity. Every even-length interval [10^{2k}, 10^{2k+2}] contains at least one vampire number. Ghost numbers have density 0 \u2014 they become vanishingly rare as the number of digits increases. Test: enumerate all vampire, werewolf, ghost, and zombie numbers up to 10^8. Prove the density conjecture by counting valid digit permutations. Impact: a playful but genuine number theory of arithmetic creatures \u2014 combinatorial digit problems that are easy to state but may be as hard as factoring.",
     "domains": [
       "Novelty",
@@ -18946,7 +18931,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Speculative: Number Theory as Music Theory"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "86a70a4b",
     "description": "The Fibonacci sequence is defined by F(n+1) = F(n) + F(n-1) and converges to the golden ratio. Define the ANTI-Fibonacci sequence: A(n+1) is the smallest positive integer that is NOT equal to A(n) + A(n-1). The sequence begins 1, 1, 2, 4, 7, 11, 16, ... (each term avoids being the sum of the two previous terms). Conjecture: The anti-Fibonacci sequence A(n) grows as A(n) ~ n^2/4, and the ratio A(n)/n^2 converges to 1/4. More precisely, A(n) = floor(n^2/4) + O(1). The sequence avoids the golden ratio entirely \u2014 the ratio A(n+1)/A(n) does NOT converge, instead oscillating between 1 and 2. The complement of the anti-Fibonacci sequence (numbers that ARE sums of two previous anti-Fibonacci numbers) has density 0. Test: compute A(n) for n up to 10^6 and verify A(n)/n^2 approaches 1/4. Prove A(n) = floor(n^2/4) + O(1) by induction. Impact: a beautiful counterpoint to the Fibonacci sequence \u2014 instead of converging to a constant, it grows quadratically while systematically avoiding addition.",
     "domains": [
       "Novelty",
@@ -18954,10 +18939,11 @@ window.FUTURE_DIRECTIONS = [
       "Computation"
     ],
     "id": "seed_112",
+    "phase": "A",
     "priority_score": 0.73,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
   },
