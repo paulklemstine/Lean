@@ -824,34 +824,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle be8c4b71 (Q=0.808), which proved 14 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The Stone-Weierstrass theorem guarantees that any continuous function can be approximated by an algebra that separates points and contains constants. Conjecture: The algebra of EML functions (finite compositions of exp, log, +, *) on any compact subset of R^n is dense in C(K) with a Jackson-type rat",
-    "domains": [
-      "Applications"
-    ],
-    "id": "push_be8c4b71_70184c1e",
-    "priority_score": 0.9084800000000001,
-    "research_mode": "team",
-    "source_exp_id": "be8c4b71",
-    "status": "available",
-    "timestamp": "2026-08-02T09:31:08.650268+00:00",
-    "title": "Deepening: EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 2bc344f1 (Q=0.807), which proved 20 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Establishes formal security reduction for multilinear Diffie-Hellman assumptions in graded encoding schemes.",
-    "domains": [
-      "Cryptography"
-    ],
-    "id": "push_2bc344f1_66f48407",
-    "priority_score": 0.90715,
-    "research_mode": "team",
-    "source_exp_id": "2bc344f1",
-    "status": "available",
-    "timestamp": "2026-08-02T09:28:58.045276+00:00",
-    "title": "Deepening: Multilinear-Maps: Cryptographic Hardness of Graded Encoding Systems"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Building on cycle 6c98f572 (Q=0.805), which proved 21 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the Fourier transform as a natural transformation between the category of locally compact abelian groups and the category of their dual groups. Prove Pontryagin duality as an equivalence of categories. Show that the uncertainty principle is a categorical statement: the functor Hom(-,R/Z) i",
     "domains": [
       "Computation"
@@ -877,20 +849,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-29T12:32:32.674077+00:00",
     "title": "Deepening: The Combinatorics of Compiler Optimization: Register Allocation as Graph Colorin"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle bf94368f (Q=0.802), which proved 28 theorems in Algebra. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: An Escher staircase is an infinite strictly ascending chain of ideals I_1 strictly contained in I_2 strictly contained in ... that nevertheless has I_1 as an element of the infinite intersection. This seems impossible \u2014 how can an infinite ascending chain loop back to the beginning? But in the ring ",
-    "domains": [
-      "Algebra"
-    ],
-    "id": "push_bf94368f_ffccc5a6",
-    "priority_score": 0.90162,
-    "research_mode": "team",
-    "source_exp_id": "bf94368f",
-    "status": "available",
-    "timestamp": "2026-07-30T14:42:57.705724+00:00",
-    "title": "Deepening: Escher Staircases in Algebra: Infinite Ascending Chains That Loop Back"
   },
   {
     "consumed_by_exp_id": "",
@@ -11215,7 +11173,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Percolation Threshold"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ade8206b",
     "description": "Explore what theorems hold in non-standard models of arithmetic. Formalize ultrapower constructions, transfer principles, and prove which classical theorems survive in non-Archimedean settings.",
     "domains": [
       "Speculative",
@@ -11223,10 +11181,11 @@ window.FUTURE_DIRECTIONS = [
       "Algebra"
     ],
     "id": "seed_058",
+    "phase": "A",
     "priority_score": 0.76,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Alien Mathematics: Non-Standard Arithmetic"
   },
