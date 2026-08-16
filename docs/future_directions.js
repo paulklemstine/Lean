@@ -33,6 +33,21 @@ window.FUTURE_DIRECTIONS = [
     "title": "NET-47: The third seed at ctx=1024 reveals a SPREAD not a two-point set \u2014 k*=112 (mid-grid), the knee distribution is {96,112,128} (7/8-median law emerges)"
   },
   {
+    "consumed_by_exp_id": "d71114d5",
+    "description": "## NET-48 \u2014 speed axis (round-net-48; paper 92, /tmp/exp_net_attncost_ctx2048_s3.py, /tmp/net48.log)\n\n**Verdict name: THE-DIRECT-TEST-SURVIVES-VIA-THE-MEDIAN.**\n\n### Result\nAt (d=4, ctx=2048, seed=3), **k\\* = 160 \u2014 all four point-horns REFUTED (P1 224, P2 240, P3 256, P4 192: every pre-stated value passes, none is the knee)**, yet the completed 16\u00d7 three-seed knee distribution **{160, 224, 256} has median EXACTLY 224 = 7/8\u00b7(d\u00b7ctx/32)**, replicating the 8\u00d7 median 112 = 7/8\u00b7128: **the 7/8-median law is 2/2-context, 6/6-seed.** The horns were point-predictions; the law's claim was the distribution's center \u2014 0/4 horns, 1/1 law. A whole family of third-seed values {160, 192, 224} each keep the median at 224; only \u2265256 would shift it.\n\n### The 7/8-median law now two contexts, six seeds\n| context | three-seed k\\* set | \u00d7 product | spread | median |\n|---|---|---|---|---|\n| 8\u00d7 (ctx=1024) | {96, 112, 128} | {0.75, 0.875, 1.0} | 0.25 | 112 = 7/8\u00b7128 |\n| 16\u00d7 (ctx=2048) | {160, 224, 256} | {0.625, 0.875, 1.0} | 0.375 | 224 = 7/8\u00b7256 |\n\n**The 16\u00d7 spread is ~50% WIDER than the 8\u00d7 spread** \u2014 the LOW TAIL is the context-growing quantity (0.75 \u2192 0.625), the product value the pinned upper edge (the s1 chain's exactness), the median stable at 7/8. Per-seed knees are too noisy to predict on the point; the distribution's center is the robust quantity \u2014 that is what a third seed buys.\n\n### Key numbers\n- Full acc 0.1546, bar 0.1516, full loss 5.2199, train **14566s (~4h03m)**.\n- Sweep: 96 0.963 \u2717, 128 0.973 \u2717, **160 0.981 \u2713 (margin +0.0012 \u2014 the tightest of the recent cells; true knee ~150\u2013160 between grid points)**, 192 0.984 \u2713, 224 0.986 \u2713, 240 0.987 \u2713, **256 0.990 \u2713 (product point \u2014 passes 3/3)**, 288 0.993 \u2713, 384 0.999 \u2713, 512 1.000 \u2713, 768 1.003 \u2713, 1024 1.003 \u2713 (loss 5.2215, \u03940.0016). The s3 retained curve is the HIGHEST of the three 16\u00d7 seeds throughout (0.973 at 128 vs s1 0.939, s2 0.965) \u2014 crossing the bar two grid steps earlier than s2, three than s1.\n- **Product-law upper bound 3/3-sure at BOTH long contexts**: product point 256 passes 0.981/0.986/0.990 (joining 8\u00d7's 0.986/0.993/0.988 at 128) \u2014 k\\* \u2264 d\u00b7ctx/32 is a six-seed-verified deployment guarantee through 16\u00d7.\n- **Selection importance +4.7/+3.4**: k=128 random 0.926 vs top-k 0.973; k=256 0.956 vs 0.990 \u2014 comparable to s2, far above s1's +1.7/+1.8; the 16\u00d7 selection spread {1.7, 4.4, 4.7} at k=128 is three-fold (dilution strongly seed-dependent).\n- **Concentration**: eff support 498.13 (s1 526.39, s2 472.50 \u2014 mid-family, spread ~11%); top-128 0.608, top-256 0.746; per-position 64.91/435.27/929.55 \u2014 the eff\u2194knee correlation again does NOT sort across three points (s1 highest-eff/highest-knee, s2 lowest-eff/middle-knee, s3 middle-eff/lowest-knee), NO bounded working set at 16\u00d7, three seeds.\n- **Deployable at (d=4, ctx=2048)**: **\u22658.0\u00d7 guaranteed (3/3), 9.1\u00d7 median, 12.8\u00d7 best \u2014 the BEST-EVER reading** (beats 10.7\u00d7 at 8\u00d7 s2). Distribution {8.0, 9.1, 12.8} wider than 8\u00d7's {8.0, 9.1, 10.7}.\n\n### The 16\u00d7 three-seed table\n| seed | k\\* | \u00d7 product (256) |\n|---|---|---|\n| 1 (NET-45) | 256 | 1.000 |\n| 2 (NET-46) | 224 | 0.875 |\n| **3 (this round)** | **160** | **0.625** |\n\n### All 8 barriers\n(a) clean \u2014 four horns + the law's direct test stated before the run, measured 160 outside ALL horns, yet the distribution's median landed exactly on the law's predicted center (the round separates point-accuracy 0/4 from structural confirmation 1/1); (b) clean \u2014 three-seed 16\u00d7 spread / widening low tail / median-stable center: none in the Catalog (698-pkg) or literature; (c) confronted \u2014 d=4 \u00d7 ctx=2048 real causal word LM, 4097 vocab, held-out loss+acc, three seeds at the longest cell; (d) clean \u2014 held-out last-10%, data-free top-k; (e) the SUBSTANCE, sharpened \u2014 the 16\u00d7 three-seed distribution complete; honest limits: the s3=160 read razor-thin (+0.0012), the 0.625 low tail is ONE of three seeds (a fourth decides s3-specific vs stable), the median law is 2 contexts \u00d7 3 seeds; (f) clean \u2014 same metrics/protocol, binom SE \u2248 0.11% acc (retained SE \u2248 0.007), the razor margin documented, k=512 recovers 1.000 / k=768 1.003 (loss \u03940.0016), monotone recovery, NO crash (ALL_DONE_NET48); (g) fair \u2014 full-attention reference + same 0.98 bar + random-k at same k (seed 12345): gaps +4.7/+3.4, positive, the {1.7\u20134.7} seed spread informative; (h) sharpened \u2014 the widened {8.0\u201312.8} deployment spread is the deployment-relevant uncertainty at the longest cell, guarantee end 3/3-sure.\n\n### Next\n**A fourth seed at ctx=2048** (the LOW-TAIL test \u2014 s4=160/192 \u2192 the 0.625 low tail is real, a stable 16\u00d7 feature; s4 in {224,256} \u2192 it was s3-specific; ~4\u20135h \u2014 the highest-value open cell now); a fourth seed at ctx=1024 (refine {96,112,128}; low value); d=8 @ ctx=256 s0 corner; d=8 compression floor check; carry chain at scale (the frontier).\n\nNow 48 network experiments. Assessment v48. Paper 92.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_1345",
+    "phase": "A",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "in_progress",
+    "timestamp": "2026-08-16T22:37:36.175162+00:00",
+    "title": "NET-48: The direct test survives via the MEDIAN \u2014 k*=160 at (d=4, ctx=2048, seed=3), all four point-horns refuted, the completed 16\u00d7 distribution {160,224,256} has median exactly 224 = 7/8\u00b7(d\u00b7ctx/32) \u2014 the 7/8-median law is 2/2-context, 6/6-seed"
+  },
+  {
     "consumed_by_exp_id": "",
     "description": "Formalizes a quantum random walk on the Berggren Pythagorean tree where constructive interference at energy spectrum minima collapses the state onto factors of N.",
     "domains": [
@@ -106,20 +121,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-16T13:45:35.625007+00:00",
     "title": "Deepening: Wigner-Semicircle: Universality of the Spectral Distribution"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 7a819734 (Q=0.860), which proved 71 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The primes have density 0 in the integers, but what is the Hausdorff dimension of the set of primes viewed as a subset of R? Define the 'prime fractal' P as the set of primes with the metric d(p,q) = |1/log(p) - 1/log(q)|. This metric stretches out the primes so that the twin primes are close togeth",
-    "domains": [
-      "NumberTheory"
-    ],
-    "id": "push_7a819734_fd297bbc",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "7a819734",
-    "status": "available",
-    "timestamp": "2026-08-16T21:35:04.799172+00:00",
-    "title": "Deepening: Fractal Number Theory: Hausdorff Dimension of Prime Distributions"
   },
   {
     "consumed_by_exp_id": "",
@@ -811,6 +812,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 39757711 (Q=0.840), which proved 300 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Investigate the ArXiv paper 'Cayley Graphs Of Order $pqrs$ Are Hamiltonian' and formalize its key results. Abstract: Assume $ G $ is a finite group with order $ |G| = pqrs $, where $ p $, $ q $, $ r $, and $ s $ are distinct prime numbers. We prove that every connected Cayley graph of $ G $ contains",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "push_39757711_08194ab2",
+    "priority_score": 0.94,
+    "research_mode": "team",
+    "source_exp_id": "39757711",
+    "status": "available",
+    "timestamp": "2026-08-16T22:37:14.628384+00:00",
+    "title": "Deepening: ArXiv paper: Cayley Graphs Of Order $pqrs$ Are Hamiltonian"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 3b29df87 (Q=0.820), which proved 110 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the Weil pairing on an elliptic curve and prove its bilinearity. Show that the BLS signature scheme is existentially unforgeable under the computational Diffie-Hellman assumption in the pairing group. Prove that the pairing allows short aggregate signatures.",
     "domains": [
       "Cryptography"
@@ -822,20 +837,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-16T11:35:10.982658+00:00",
     "title": "Deepening: Elliptic Curve Cryptography: Weil Pairing and BLS Signatures"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 4f1ff831 (Q=0.820), which proved 99 theorems in Logic. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## NET-46 \u2014 speed axis (round-net-46; paper 90, /tmp/exp_net_attncost_ctx2048_s2.py, /tmp/net46.log)\n\n**Verdict name: THE-S2-ONE-GRID-STEP-DROP-REPLICATES-AT-16\u00d7-CONTEXT.**\n\n### Result\nAt (d=4, ctx=2048, seed=2), **k\\* = 224 \u2014 one grid step below the product knee 256, the prediction's horn P2 CONFIR",
-    "domains": [
-      "Logic"
-    ],
-    "id": "push_4f1ff831_36c9a89c",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "4f1ff831",
-    "status": "available",
-    "timestamp": "2026-08-16T21:34:54.990538+00:00",
-    "title": "Deepening: NET-46: THE-S2-ONE-GRID-STEP-DROP-REPLICATES-AT-16\u00d7-CONTEXT \u2014 k*=224 at (d=4, ct"
   },
   {
     "consumed_by_exp_id": "",
@@ -8617,18 +8618,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: The role of expanders in the spectral geometry of metric graphs"
   },
   {
-    "consumed_by_exp_id": "39757711",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Cayley Graphs Of Order $pqrs$ Are Hamiltonian' and formalize its key results. Abstract: Assume $ G $ is a finite group with order $ |G| = pqrs $, where $ p $, $ q $, $ r $, and $ s $ are distinct prime numbers. We prove that every connected Cayley graph of $ G $ contains a hamiltonian cycle. Our result drops all restrictions of all previously known results on hamiltonian cycles in Cayley graphs of groups of order $pqrs$.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
     "id": "fd_0166",
-    "phase": "A",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.14440v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-17T02:00:29.717066+00:00",
     "title": "ArXiv paper: Cayley Graphs Of Order $pqrs$ Are Hamiltonian"
   },
@@ -9943,17 +9943,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Kohayakawa's conjecture and clique coverings of complements of paths and cycles"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "507d1ef0",
     "description": "Investigate the ArXiv paper 'A Fourier-analytic Uniqueness Theorem for Lattice-point Enumerators' and formalize its key results. Abstract: We consider a bounded set $P \\subset \\mathbb{R}^d$ and the lattice-point enumerator $L_P(t) = |tP \\cap \\mathbb{Z}^d|$ for real $t > 0$. We show that if two bounded measurable sets with boundary of measure zero have the same real-parameter lattice-point enumerators for all integer translates, then their indicator functions agree almost everywhere. As a corollary, any convex body is uniquely determined by this data. Our proof is short and Fourier-analytic, where the key device is a periodic point-counting function whose Fourier coefficients recover the Fourier transform of the indicator function on a dense set. This recovers and extends, with a unified argument, the uniqueness results for rational polytopes and symmetric convex bodies established by Royer [arXiv:1712.01973, arXiv:1712.03937], whose proofs relied on intricate case-specific geometric constructions.",
     "domains": [
       "Geometry",
       "Cryptography"
     ],
     "id": "fd_1130",
+    "phase": "A",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2608.11078v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-12T02:52:12.133657+00:00",
     "title": "ArXiv paper: A Fourier-analytic Uniqueness Theorem for Lattice-point Enumerators"
   },
@@ -18605,6 +18606,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-16T21:35:00.598766+00:00",
     "title": "The cycle just completed replaced the mission conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Hamiltonicity of Cayley Graphs of Order `pqrs`\n\nThis document records the open conjectures that the formalization in\n`Catalog/Pythagorean/CayleyHamiltonian/` makes concrete and testable.  Everything asserted as\n*proved* below is `sorry`-free Lean 4 / Mathlib and depends only on `propext`,\n`Classical.choice`, `Quot.sound`.\n\n## What is already proved\n\n### Foundations\n\n| result | Lean name |\n|---|---|\n| connectivity \u27fa `\u27eaS\u27eb = G` | `cayleyGraph_connected_iff` |\n| the graph depends only on `S \u222a S\u207b\u00b9` | `cayleyGraph_union_inv` |\n| cyclic enumeration \u21d2 hamiltonian | `isHamiltonian_of_enum` |\n| connection set containing a generator | `isHamiltonian_of_orderOf_eq_card` |\n| all connected Cayley graphs of odd prime order | `isHamiltonian_of_prime_card` |\n| **the factor group lemma (quotient-free formulation)** | `isHamiltonian_of_factorGroup` |\n\n### Coset-by-coset criteria\n\n| result | Lean name |\n|---|---|\n| parity-free zigzag on `C_m \u25a1 C_k` for commuting generators | `isHamiltonian_of_abelian_directProduct` |\n| generalized dihedral pair | `isHamiltonian_of_dihedral_pair` |\n| index-two alternating word | `isHamiltonian_of_index_two_pair` |\n| **twisted direction-sequence criterion (metacyclic `\u27e8a\u27e9 \u22ca \u27e8b\u27e9`)** | `isHamiltonian_of_twisted_directions` |\n| the twist alone closes the cycle when `gcd(e\u22121, |a|) = 1` | `isHamiltonian_of_metacyclic_coprime_twist` |\n| **nonabelian metacyclic groups with `|a|` prime** | `isHamiltonian_of_metacyclic_prime_normal` |\n| two connection elements in one coset of a normal subgroup of prime order | `isHamiltonian_of_same_coset_pair`, `isHamiltonian_of_same_coset_pair'` |\n| two connection elements in mutually inverse cosets | `isHamiltonian_of_inverse_coset_pair` |\n| **general coset-pair criterion, voltage form (no parity hypothesis)** | `isHamiltonian_of_coset_pair_of_voltage` |\n| **general coset-pair criterion: `x` of odd order `k`, `y = A\u00b7x\u1d50`** | `isHamiltonian_of_coset_pair` |\n| the case `m = 2` of the criterion | `isHamiltonian_of_square_coset_pair` |\n\n### Complete order theorems (arbitrary connection set)\n\n| result | Lean name |\n|---|---|\n| **order `2p`, `p` odd prime** | `isHamiltonian_of_card_eq_two_mul_prime` |\n| **order `3q`, `q \u2260 3` prime** | `isHamiltonian_of_card_eq_three_mul_prime` |\n| **order `5q`, `q \u2260 5` prime** | `isHamiltonian_of_card_eq_five_mul_prime` |\n| **order `pq` for all distinct primes `p \u2260 q`** | `isHamiltonian_of_card_eq_prime_mul_prime` |\n| the same, with the order given as `Nat.card` | `isHamiltonian_of_natCard_eq_prime_mul_prime` |\n| abelian groups of order `pq` | `abelian_isHamiltonian_of_card_eq_prime_mul_prime` |\n\n### Structure theory and reductions\n\n| result | Lean name |\n|---|---|\n| elements outside the normal Sylow `q`-subgroup have order `p` or `pq` | `orderOf_eq_or_of_notMem_normal` |\n| connection set meeting the normal Sylow subgroup \u21d2 hamiltonian | `pq_isHamiltonian_of_mem_normal` |\n| order `pq` with a generator of the normal Sylow subgroup in `S` | `pq_isHamiltonian_of_normal_pair` |\n| **order-`pq` reduction: hamiltonian, or `S` is a partial transversal** | `pq_isHamiltonian_or_transversal` |\n| **the transversal may in addition be taken inverse-closed-free** | `pq_isHamiltonian_or_symmetric_transversal` |\n| order `pq` with `\u2265 p` nonidentity connection elements \u21d2 hamiltonian | `pq_isHamiltonian_of_le_ncard` |\n| explicit hamiltonian cycle in the transversal case of order `21` | `Frobenius21.frobenius21_transversal_isHamiltonian` |\n| abelian and dihedral cases of order `pqrs` | `pqrs_abelian_pair_isHamiltonian`, `pqrs_dihedral_isHamiltonian` |\n| metacyclic groups of order `pqrs` | `pqrs_metacyclic_isHamiltonian` |\n\n### Organizing principles\n\n**(A) Coset-by-coset traversal.**  A hamiltonian cycle in `Cay(G, S)` is produced by choosing a\ncyclic subgroup `N = \u27e8a\u27e9` with cyclic \"quotient direction\" `b`, traversing each coset of `N`\ncompletely, and choosing a direction for each traversal so that the accumulated column shift is\n`0` in `N`.  For `N` central the closing condition is the arithmetic congruence\n`m \u2223 \u2211_{j<k} d j` (`isHamiltonian_of_directions`); with a twist `b a b\u207b\u00b9 = a^e` it becomes the\n*geometric* congruence `m \u2223 \u2211_{j<k} d j e\u02b2` (`isHamiltonian_of_twisted_directions`).  The\ngeometric sum explains *why* the twisted case is easier rather than harder:\n`(e \u2212 1) \u2211_{j<k} e\u02b2 = e\u1d4f \u2212 1 \u2261 0 (mod m)` holds automatically, so a nontrivial twist supplies\nits own closing certificate.\n\n**(B) Voltage.**  More generally (`isHamiltonian_of_factorGroup`), any `k`-periodic walk whose\nprefix products meet each coset of `\u27e8z\u27e9` exactly once, where `z` is the *voltage* of one turn,\ncloses into a hamiltonian cycle after `|z|` turns.  This is the factor group lemma, formalized\nhere without ever forming a quotient group: the distinctness hypothesis is stated as\n`P i' * (P i)\u207b\u00b9 \u2208 \u27e8z\u27e9 \u2192 i = i'`.  Principle (A) is the special case where the walk is\n`a, \u2026, a, b, a, \u2026, a, b, \u2026`.\n\n**(C) The coset-pair criterion closes the transversal case.**  The gap left by the previous\ncycle \u2014 a connection set that misses the normal subgroup `N = \u27e8a\u27e9` and meets each nontrivial\ncoset at most once \u2014 is now a theorem.  The decisive observation is that one should *not* look\nfor a positive word: with `x\u0304 = 1` and `\u0233 = m` in the quotient, the only `\u00b1`-free words whose\nsteps sum to `0` are `x^k` and `y^k`, both of voltage `1`.  The word that works is the\n`k`-periodic **`x`-then-`x\u207b\u00b9` word**\n\n```\nx, x, \u2026, x  (t times),  y,  x\u207b\u00b9, x\u207b\u00b9, \u2026, x\u207b\u00b9  (t \u2212 1 times),  y        with t = k \u2212 m,\n```\n\nwhose prefix products run through the cosets `N, Nx, \u2026, Nx^{k\u22121}` exactly once and whose\nvoltage is `B \u00b7 (x B x\u207b\u00b9)` for a conjugate `B` of `A`.  That voltage is *never* trivial: it is\ntrivial only if `x B x\u207b\u00b9 = B\u207b\u00b9`, and conjugation by `x` has odd order `k` on the cyclic group\n`\u27e8a\u27e9` of odd prime order `q`, while inversion has order `2` \u2014 so `B = 1`, a contradiction.  No\narithmetic side condition on the twist survives, which is why the criterion\n(`isHamiltonian_of_coset_pair`) is uniform in `m` and applies equally to abelian and nonabelian\ngroups.  Combined with the dichotomy `pq_isHamiltonian_or_transversal` and the small-prime\ncases `p = 2, 3`, this yields the complete order-`pq` theorem.\n\n---\n\n## Conjecture 1 (Squarefree order \u21d2 hamiltonian, via a normal-form pair)\n\nEvery connected Cayley graph of a group of squarefree order `n \u2265 3` is hamiltonian.  In\nparticular this covers `n = pqrs`, the target of the source paper.\n\n*The key insight is* that the **combinatorial** half of this statement is no longer the\nobstruction: `isHamiltonian_of_coset_pair` is already stated for `|G| = q\u00b7k` with `k` an\narbitrary odd number coprime to the prime `q`, not for `k` prime, so it applies verbatim to\n`k = pr`, `k = prs`, and beyond.  What is missing is a purely group-theoretic **normal-form\nlemma**: every generating set of a group of odd squarefree order contains, or generates by a\nbounded-length word, a pair `(x, y)` with `x` of order `k = |G|/q`, `\u27e8a\u27e9 \u22b4 G` of prime order\n`q`, and `y \u2208 \u27e8a\u27e9x^m \u2216 {x^m}`.  Formally: state\n`squarefree_normalForm_pair : Squarefree (Nat.card G) \u2192 Odd (Nat.card G) \u2192 Subgroup.closure S = \u22a4 \u2192 \u2203 \u2026`\nand feed it to the criterion.\n\n*Why now?*  Mathlib supplies `IsZGroup.of_squarefree` and `IsZGroup.isCyclic_abelianization`\n(already used here in `pqrs_abelian_isCyclic`), so the metacyclic decomposition\n`G = \u27e8a\u27e9 \u22ca \u27e8b\u27e9` is available off the shelf; and the order-`pq` proof in\n`OrderPQComplete.lean` is exactly the `k = p` instance of the intended argument, so it can be\nused as a template line by line.  The conjecture is falsifiable: a counterexample would be a\nsquarefree order `n`, a group `G` of that order and a generating set `S` with no hamiltonian\ncycle, which is a finite check for each `(G, S)`.\n\n## Conjecture 2 (Order `pqr`: the next complete order theorem)\n\nFor distinct primes `p`, `q`, `r`, every connected Cayley graph of a group of order `pqr` is\nhamiltonian.\n\n*The key insight is* that the order-`pq` proof has a three-branch shape \u2014 `S` meets the normal\nsubgroup; `S` has two elements in one coset (or in inverse cosets); `S` is a partial\ntransversal \u2014 and the branch count does not grow with the number of primes, only the\n*bookkeeping* does: for `|G| = pqr` there is a normal Sylow subgroup `N` of prime order `q`\n(by a counting argument on Sylow numbers) with `G/N` of squarefree order `pr`, so the same\ntrichotomy applies once the quotient direction is replaced by an element of order `pr` or by a\npair generating `G/N`.  The genuinely new case, absent for `|G| = pq`, is that `G/N` may fail\nto be cyclic-generated by a single image of `S`; then one needs a *two-generator* quotient\nword, i.e. principle (B) applied to a walk that is not of the form `x\u2026x y x\u2026x y`.\n\n*Why now?*  `isHamiltonian_of_factorGroup` accepts an arbitrary periodic word, so the\ntwo-generator quotient walk needs no new infrastructure \u2014 only a hamiltonian cycle in the\nquotient `Cay(G/N, S\u0304)`, which is a Cayley graph of order `pr` and hence covered by\n`isHamiltonian_of_card_eq_prime_mul_prime`.  The order-`pqr` theorem is therefore an\n*induction on the number of primes* waiting for a voltage-lifting lemma: \"a hamiltonian cycle\nin `Cay(G/N, S\u0304)` with nontrivial voltage lifts to a hamiltonian cycle in `Cay(G, S)`\".\n\n## Conjecture 3 (Sharpness of the voltage condition for even `k`)\n\nThe parity hypotheses of the coset-pair criterion are *exactly* the voltage condition, and the\nvoltage condition is *not* vacuous: there exist `G`, a normal `\u27e8a\u27e9` of prime order `q`, an\nelement `x` of even order `k` and `A \u2208 \u27e8a\u27e9 \u2216 {1}` for which the `x`-then-`x\u207b\u00b9` traversal has\ntrivial voltage `B \u00b7 (x B x\u207b\u00b9) = 1`, so that the criterion genuinely does not apply.\n\n*The key insight is* that the positive half of this conjecture from the previous cycle is now\na **theorem**: `isHamiltonian_of_coset_pair_of_voltage` has no parity hypothesis at all, taking\n`\u2200 B \u2208 \u27e8a\u27e9, B \u2260 1 \u2192 B (x B x\u207b\u00b9) \u2260 1` as its only replacement, and\n`isHamiltonian_of_coset_pair` is the corollary in which oddness of `q` and `k` discharges that\nhypothesis.  What remains is the *negative* half: the oddness is not an artefact of the\ntraversal but the precise obstruction, because the automorphism `c \u21a6 x c x\u207b\u00b9` of `\u27e8a\u27e9 \u2245 \u2124/q`\nhas order dividing `k` and can equal inversion only when `2 \u2223 k`.  The smallest predicted\nwitness is the dihedral-like group `\u2124/q \u22ca_{\u22121} \u2124/k` with `k` even and `x` acting by inversion.\n\n*Why now?*  The statement has been reduced to an explicit computation of one conjugation\nautomorphism in a concrete group of order `qk` \u2014 and that group is nevertheless hamiltonian by\n`isHamiltonian_of_card_eq_two_mul_prime` when `k = 2`, so the witness would bound the *method*,\nnot the theorem, and would tell us exactly which alternative periodic word must replace\n`x, \u2026, x, y, x\u207b\u00b9, \u2026, x\u207b\u00b9, y` in the even case.\n\n## Conjecture 4 (Voltage dichotomy: the factor group lemma is essentially sharp)\n\nFor every group `G` of squarefree order `\u2265 3` and every connected `S`, some periodic word in\n`S \u222a S\u207b\u00b9` satisfies the hypotheses of `isHamiltonian_of_factorGroup`.\n\n*The key insight is* that the two hypotheses of the lemma pull in opposite directions: making\nthe prefix products land in distinct cosets forces the word to be short, while making the\nvoltage generate a nontrivial `\u27e8z\u27e9` forces it to be long; the conjecture says that for\nsquarefree order these constraints are always simultaneously satisfiable.  A counterexample\nwould be a group in which every quotient-hamiltonian closed word has trivial voltage \u2014 and by\nConjecture 1 such a group would still have a hamiltonian cycle, just not one obtainable by\nlifting.\n\n*Why now?*  `isHamiltonian_of_factorGroup` is available as a single reusable statement with an\nexplicitly finite hypothesis set, so the conjecture is falsifiable by a finite search for each\nfixed `(G, S)`; and there are now four proved families of witnesses to seed the search \u2014\n`isHamiltonian_of_same_coset_pair`, `isHamiltonian_of_inverse_coset_pair`,\n`isHamiltonian_of_coset_pair` and the twisted criterion viewed as the word `a\u1d50 b a\u1d50 b \u22ef`.\n\n## Conjecture 5 (Quantitative: how many hamiltonian cycles?)\n\nFor `|G| = pq` with `p < q` primes and `S` a connected connection set, `Cay(G, S)` contains at\nleast `q` distinct hamiltonian cycles; more ambitiously, the number of them is divisible by\n`|G| / 2` whenever `|S| = 2`.\n\n*The key insight is* that vertex-transitivity (`exists_aut_mapping` in `Basic.lean`) makes the\nautomorphism group act on the set of hamiltonian cycles with small stabilizers, so a single\ncycle already forces an orbit of size `|G| / |stabilizer|`; the content of the conjecture is\nthe lower bound on the orbit, i.e. that the stabilizer of a cycle has order at most `2` (a\ncycle is stabilized only by the reversal and by translations along itself).\n\n*Why now?*  Existence is now formally settled for *all* of order `pq`, so counting is the only\nremaining question at that order; the explicit cycles produced by `cosetEnum`, `zigzagEnum`,\n`twistEnum` and `prefixProd` are concrete enough to be counted; and the group-action machinery\n(`translateAut`) is already in `Basic.lean`.\n",
+    "domains": [
+      "NumberTheory",
+      "Combinatorics"
+    ],
+    "id": "fd_1344",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "39757711",
+    "status": "available",
+    "timestamp": "2026-08-16T22:37:02.091127+00:00",
+    "title": "This document records the open conjectures that the formalization in"
   },
   {
     "consumed_by_exp_id": "",

@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "53eb02be",
-      "domain": "Bridges",
-      "key_insight": "# FUTURE DIRECTIONS — after SEQSMOOTH-NULL (Bridges, experiment 397)\n\nWhat the formal round established (all in\n`Catalog/Bridges/ModExpSmoothnessBlindness.lean`, 0 sorries):\n\n* the collision structure",
-      "quality_score": 0.86,
-      "sorry_count": 0,
-      "theorem_count": 85,
-      "timestamp": "2026-08-14T13:50:06",
-      "title": "Experiment 397: SEQSMOOTH-NULL — mod-exp sequence stats are smoothness-blind (AUC 0.500); p-1 weakne"
-    },
-    {
       "cycle_id": "64406111",
       "domain": "Geometry",
       "key_insight": "# Future directions\n\nThe results of this cycle turn four informal verdicts into theorems: the trace lemma\n`R_k(N) = gcd(k, p-1)·gcd(k, q-1)`, the joint-closure / no-aggregator barrier, the sterility o",
@@ -499,19 +489,19 @@
       "theorem_count": 71,
       "timestamp": "2026-08-16T21:35:04",
       "title": "Fractal Number Theory: Hausdorff Dimension of Prime Distributions"
+    },
+    {
+      "cycle_id": "39757711",
+      "domain": "Pythagorean",
+      "key_insight": "# Future Directions — Hamiltonicity of Cayley Graphs of Order `pqrs`\n\nThis document records the open conjectures that the formalization in\n`Catalog/Pythagorean/CayleyHamiltonian/` makes concrete and t",
+      "quality_score": 0.84,
+      "sorry_count": 0,
+      "theorem_count": 300,
+      "timestamp": "2026-08-16T22:37:14",
+      "title": "ArXiv paper: Cayley Graphs Of Order $pqrs$ Are Hamiltonian"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "785c09ab",
-      "domain": "Tropical",
-      "key_insight": "# Tropical Mathematics of Social Choice — results and future directions\n\nThis project formalizes a bridge between **tropical (min-plus) algebra** and\n**social choice theory**, and a second bridge from",
-      "quality_score": 0.7857999999999999,
-      "sorry_count": 0,
-      "theorem_count": 85,
-      "timestamp": "2026-08-05T22:30:27",
-      "title": "**Conjecture.** Every normalized, translation-equivariant, coordinatewise-minimu"
-    },
     {
       "cycle_id": "fc0b5c3a",
       "domain": "Bridges",
@@ -2501,27 +2491,19 @@
       "theorem_count": 71,
       "timestamp": "2026-08-16T21:35:04",
       "title": "Fractal Number Theory: Hausdorff Dimension of Prime Distributions"
+    },
+    {
+      "cycle_id": "39757711",
+      "domain": "Pythagorean",
+      "key_insight": "# Future Directions — Hamiltonicity of Cayley Graphs of Order `pqrs`\n\nThis document records the open conjectures that the formalization in\n`Catalog/Pythagorean/CayleyHamiltonian/` makes concrete and t",
+      "quality_score": 0.84,
+      "sorry_count": 0,
+      "theorem_count": 300,
+      "timestamp": "2026-08-16T22:37:14",
+      "title": "ArXiv paper: Cayley Graphs Of Order $pqrs$ Are Hamiltonian"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "dc071269",
-      "domain": "NumberTheory",
-      "name": "le_chord_of_concaveOn",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "dc071269",
-      "domain": "NumberTheory",
-      "name": "le_sum_of_nonneg",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "e67b8bbc",
-      "domain": "MachineLearning",
-      "name": "seedBits_length",
-      "quality": 0.78
-    },
     {
       "cycle_id": "e67b8bbc",
       "domain": "MachineLearning",
@@ -2803,9 +2785,27 @@
       "domain": "NumberTheory",
       "name": "occupiedBoxes_subset",
       "quality": 0.86
+    },
+    {
+      "cycle_id": "39757711",
+      "domain": "Pythagorean",
+      "name": "We",
+      "quality": 0.84
+    },
+    {
+      "cycle_id": "39757711",
+      "domain": "Pythagorean",
+      "name": "for",
+      "quality": 0.84
+    },
+    {
+      "cycle_id": "39757711",
+      "domain": "Pythagorean",
+      "name": "fib_dvd_gcd",
+      "quality": 0.84
     }
   ],
-  "last_updated": "2026-08-16T21:35:04",
+  "last_updated": "2026-08-16T22:37:14",
   "open_questions": [
     {
       "context": "This file gives a **complete, self-contained proof** of that theorem (0 `sorry`s).",
@@ -3827,12 +3827,6 @@
     ],
     "Pythagorean": [
       {
-        "cycle_id": "2784f3be",
-        "quality": 0.686,
-        "theorems": 124,
-        "title": "Let `W₀ = 1`, `Wₖ₊₁ = 2^Wₖ · Wₖ`, and let `K(n)` be the least `k` such that `n <"
-      },
-      {
         "cycle_id": "713730e2",
         "quality": 0.78748,
         "theorems": 47,
@@ -3885,6 +3879,12 @@
         "quality": 0.82,
         "theorems": 63,
         "title": "The De-Quantization Frontier, Closed"
+      },
+      {
+        "cycle_id": "39757711",
+        "quality": 0.84,
+        "theorems": 300,
+        "title": "ArXiv paper: Cayley Graphs Of Order $pqrs$ Are Hamiltonian"
       }
     ],
     "Shared": [
