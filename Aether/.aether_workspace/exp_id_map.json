@@ -1848,5 +1848,6 @@
   "802e1378": "net_27_paper_71_eos_width_shift_is_a_monotone_ramp.json",
   "66af3cc3": "net_31_internalization_is_a_seed_fixed_trait_among.json",
   "dc071269": "net_30_internalization_saturates_at_k2_k2_freeze_t.json",
-  "e67b8bbc": "compression_research_b1_negative_result__prngs_can.json"
+  "e67b8bbc": "compression_research_b1_negative_result__prngs_can.json",
+  "8da3e793": "compression_research_a2_learnable_shared_decompres.json"
 }
