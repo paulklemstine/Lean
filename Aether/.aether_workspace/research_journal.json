@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "9cc9a6e9",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions — Spectral Free-Witness, next cycle\n\nDerived from the analysis and adversarial review of this cycle's verified results\n(`Catalog/Algebra/SpectralFreeWitness.lean`, `…Walk.lean`, `…",
-      "quality_score": 0.82,
-      "sorry_count": 4,
-      "theorem_count": 42,
-      "timestamp": "2026-08-14T06:50:29",
-      "title": "The Spectral Free-Witness: Heat-Kernel Order Recovery"
-    },
-    {
       "cycle_id": "7477e654",
       "domain": "Tropical",
       "key_insight": "# Future directions — after the asymmetric/symmetric divisibility dichotomy\n\nThe formal results of this run (all in `Catalog/Tropical/SmoothSelfHint*.lean`, 0\nsorries, only the standard axioms) are:",
@@ -499,19 +489,19 @@
       "theorem_count": 21,
       "timestamp": "2026-08-16T13:45:35",
       "title": "Wigner-Semicircle: Universality of the Spectral Distribution"
+    },
+    {
+      "cycle_id": "be4e28d2",
+      "domain": "Shared",
+      "key_insight": "# Future Directions (thread th_16c8d9ad, cycle 1)\n\nThis cycle settled three of the five inherited conjectures in sharp form: the\nalmost-Hopf-fibre stability conjecture (true, but with the wrong expone",
+      "quality_score": 0.79,
+      "sorry_count": 0,
+      "theorem_count": 21,
+      "timestamp": "2026-08-16T13:45:45",
+      "title": "**Conjecture.** A closed, connected, orientable smooth three-manifold embeds smo"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "70c10cae",
-      "domain": "Physics",
-      "key_insight": "# Future directions\n\nThis project formalises a bridge between three areas that are usually kept apart:\n\n* **combinatorics of permutations** (inversions, adjacent transpositions, sign-reversing\n  invol",
-      "quality_score": 0.686,
-      "sorry_count": 0,
-      "theorem_count": 61,
-      "timestamp": "2026-08-05T17:02:38",
-      "title": "ArXiv paper: Quantum determinants in polynomial time"
-    },
     {
       "cycle_id": "069d69dc",
       "domain": "Geometry",
@@ -2501,27 +2491,19 @@
       "theorem_count": 21,
       "timestamp": "2026-08-16T13:45:35",
       "title": "Wigner-Semicircle: Universality of the Spectral Distribution"
+    },
+    {
+      "cycle_id": "be4e28d2",
+      "domain": "Shared",
+      "key_insight": "# Future Directions (thread th_16c8d9ad, cycle 1)\n\nThis cycle settled three of the five inherited conjectures in sharp form: the\nalmost-Hopf-fibre stability conjecture (true, but with the wrong expone",
+      "quality_score": 0.79,
+      "sorry_count": 0,
+      "theorem_count": 21,
+      "timestamp": "2026-08-16T13:45:45",
+      "title": "**Conjecture.** A closed, connected, orientable smooth three-manifold embeds smo"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "ac45a9d9",
-      "domain": "Novelty",
-      "name": "card_good_primes_appearing_ge",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "79242ce3",
-      "domain": "Cryptography",
-      "name": "num_mul_den_eq",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "79242ce3",
-      "domain": "Cryptography",
-      "name": "prime_dvd_den_of_eq_div",
-      "quality": 0.82
-    },
     {
       "cycle_id": "79242ce3",
       "domain": "Cryptography",
@@ -2803,9 +2785,27 @@
       "domain": "Probability",
       "name": "fiber_card_sum",
       "quality": 0.85
+    },
+    {
+      "cycle_id": "be4e28d2",
+      "domain": "Shared",
+      "name": "decode_encode",
+      "quality": 0.79
+    },
+    {
+      "cycle_id": "be4e28d2",
+      "domain": "Shared",
+      "name": "encode_decode",
+      "quality": 0.79
+    },
+    {
+      "cycle_id": "be4e28d2",
+      "domain": "Shared",
+      "name": "fiber_card_sum",
+      "quality": 0.79
     }
   ],
-  "last_updated": "2026-08-16T13:45:35",
+  "last_updated": "2026-08-16T13:45:45",
   "open_questions": [
     {
       "context": "This file gives a **complete, self-contained proof** of that theorem (0 `sorry`s).",
@@ -3889,12 +3889,6 @@
     ],
     "Shared": [
       {
-        "cycle_id": "f52c2f13",
-        "quality": 0.686,
-        "theorems": 52,
-        "title": "Deepening: **Conjecture.** Every finite sequence of signed-literal revisions has"
-      },
-      {
         "cycle_id": "6c07c4d0",
         "quality": 0.6858792756539236,
         "theorems": 994,
@@ -3947,6 +3941,12 @@
         "quality": 0.78,
         "theorems": 48,
         "title": "The 3SUM-Birthday-Bound Hierarchy"
+      },
+      {
+        "cycle_id": "be4e28d2",
+        "quality": 0.79,
+        "theorems": 21,
+        "title": "**Conjecture.** A closed, connected, orientable smooth three-manifold embeds smo"
       }
     ],
     "Tropical": [

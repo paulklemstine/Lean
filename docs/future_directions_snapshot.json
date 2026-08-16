@@ -129,6 +129,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 37827e5f (Q=0.850), which proved 21 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formally proves the semicircle law for Wigner ensembles: the empirical spectral distribution of a random Hermitian matrix with independent entries converges in probability to the semicircle distribution as the dimension grows, establishing the universality of bulk eigenvalue statistics for random ma",
+    "domain_bridges": [],
+    "domains": [
+      "Probability"
+    ],
+    "id": "push_37827e5f_bf513fb8",
+    "lineage_refs": [],
+    "priority_score": 0.95,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "37827e5f",
+    "status": "available",
+    "timestamp": "2026-08-16T13:45:35.625007+00:00",
+    "title": "Deepening: Wigner-Semicircle: Universality of the Spectral Distribution"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Building on cycle ade8206b (Q=0.850), which proved 105 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Explore what theorems hold in non-standard models of arithmetic. Formalize ultrapower constructions, transfer principles, and prove which classical theorems survive in non-Archimedean settings.",
     "domain_bridges": [],
     "domains": [
@@ -2294,25 +2313,6 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "37827e5f",
-    "description": "Formally proves the semicircle law for Wigner ensembles: the empirical spectral distribution of a random Hermitian matrix with independent entries converges in probability to the semicircle distribution as the dimension grows, establishing the universality of bulk eigenvalue statistics for random matrices.",
-    "domain_bridges": [],
-    "domains": [
-      "Probability"
-    ],
-    "id": "fd_1213",
-    "lineage_refs": [],
-    "priority_score": 0.9,
-    "proof_strategy": "Moment method for Gaussian Wigner matrices: compute E[tr(H^k)/n], bound the variance, and identify the moment sequence with Catalan numbers (free cumulants).",
-    "research_mode": "team",
-    "source_exp_id": "human_brainstorm_2026-08-12",
-    "status": "in_progress",
-    "timestamp": "2026-08-13T03:21:12.263241+00:00",
-    "title": "Wigner-Semicircle: Universality of the Spectral Distribution"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Constructs standard Brownian motion from a countable family of Gaussian increments, proves existence of a version with almost-surely continuous paths, and establishes almost-sure Hölder continuity of every exponent below 1/2 together with almost-sure nowhere differentiability.",
     "domain_bridges": [],
@@ -2387,48 +2387,6 @@
     "status": "available",
     "timestamp": "",
     "title": "One-Way Functions: Existence and Hierarchy"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Prove that any sufficiently powerful formal system necessarily contains strange loops: statements that refer to their own unprovability. Formalize Gödel's first incompleteness theorem as a fixed-point in the lattice of provability predicates. Explore whether consciousness arises from tangled hierarchies of self-referential symbols.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Logic",
-      "Computation"
-    ],
-    "id": "seed_253",
-    "lineage_refs": [],
-    "priority_score": 0.9,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Strange Loops: Self-Reference and Gödel's Incompleteness"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Prove that any theory of everything in physics must be a (2,infinity)-category with duals. Formalize the cobordism hypothesis as a universal property and show that TQFTs, CFTs, and string theories are all shadows of a single object in this higher category. Determine whether the resulting theory is computable or contains oracle information.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Physics",
-      "Geometry"
-    ],
-    "id": "seed_281",
-    "lineage_refs": [],
-    "priority_score": 0.9,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Categorical Physics: The Shape of a Theory of Everything"
   },
   {
     "ambition_level": "extension",
@@ -2678,6 +2636,25 @@
     "status": "available",
     "timestamp": "2026-08-14T23:43:25.883780+00:00",
     "title": "Deepening: CYCLIC-TYPE-CHANNEL (round-22 #2, experiment 413, assessment v189, paper 78)"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle be4e28d2 (Q=0.790), which proved 21 theorems in Shared. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions: Four-Dimensional Geometry\n\n## 1. Embedding obstructions for closed three-manifolds — open-problem category\n\n**Conjecture.** A closed, connected, orientable smooth three-manifold embeds smoothly in the four-sphere if and only if it bounds two smooth compact four-manifolds whose i",
+    "domain_bridges": [],
+    "domains": [
+      "Shared"
+    ],
+    "id": "push_be4e28d2_4d6614bf",
+    "lineage_refs": [],
+    "priority_score": 0.89,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "be4e28d2",
+    "status": "available",
+    "timestamp": "2026-08-16T13:45:46.048167+00:00",
+    "title": "Deepening: **Conjecture.** A closed, connected, orientable smooth three-manifold embeds smo"
   },
   {
     "ambition_level": "extension",
@@ -9122,7 +9099,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "81aa12f0",
     "description": "Prove that the geometry of spacetime can be reconstructed from the entanglement structure of a quantum state. Formalize the ER=EPR conjecture: show that entangled qubit pairs satisfy the properties of microscopic Einstein-Rosen bridges in a toy AdS/CFT model.",
     "domain_bridges": [],
     "domains": [
@@ -9136,7 +9113,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Emergent Spacetime from Quantum Entanglement"
   },
@@ -17867,26 +17844,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "be4e28d2",
-    "description": "# Future Directions: Four-Dimensional Geometry\n\n## 1. Embedding obstructions for closed three-manifolds — open-problem category\n\n**Conjecture.** A closed, connected, orientable smooth three-manifold embeds smoothly in the four-sphere if and only if it bounds two smooth compact four-manifolds whose integral intersection pairings and linking forms satisfy the complementary conditions induced by the two components of the complement.\n\nThe key insight is that an embedding splits the four-sphere, so Alexander duality, linking pairings, and four-dimensional intersection theory should be treated as one coupled obstruction rather than as unrelated tests.\n\n**Why now?** The unrestricted assertion that every closed three-manifold embeds in four-space is false, while the complementary-region formulation isolates a falsifiable replacement that can be tested on lens spaces, Seifert manifolds, and homology spheres.\n\n## 2. Smooth four-dimensional Poincaré via explicit handle complexity — open-problem category\n\n**Conjecture.** Every smooth homotopy four-sphere admitting a handle decomposition with no one-handles and at most two two-handles is diffeomorphic to the standard four-sphere.\n\nThe key insight is that low handle complexity may force all apparent exoticity into a finite system of attaching-circle moves that can be eliminated by controlled Kirby calculus.\n\n**Why now?** This bounded-complexity statement is a concrete, testable subproblem of the smooth four-dimensional Poincaré conjecture and invites exhaustive comparison of intersection forms, handle slides, and boundary invariants.\n\n## 3. Quantitative rigidity of almost-Hopf fibres — cross-domain category\n\n**Conjecture.** There is a universal constant `C` such that two unit vectors in complex two-space whose Hopf images are at Euclidean distance at most `ε` differ, after multiplication by a unit phase, by distance at most `C√ε`; moreover, the square-root exponent is optimal.\n\nThe key insight is that exact fibre reconstruction is the equality case of a Hermitian Cauchy–Schwarz identity, so its defect should quantitatively control distance to a circle orbit.\n\n**Why now?** The exact algebraic reconstruction and squared-distance defect identify both the candidate modulus of stability and the configurations likely to make it sharp.\n\n## 4. Clifford-torus extremality under Hopf-symmetric deformations — cross-domain category\n\n**Conjecture.** Among embedded tori in the unit three-sphere invariant under the diagonal circle action and separating the two coordinate circles, the Clifford torus uniquely minimizes area.\n\nThe key insight is that diagonal phase symmetry reduces the surface problem to a weighted variational problem along an interval in the two-sphere base of the Hopf map.\n\n**Why now?** The Clifford torus has been identified algebraically as the inverse image of the Hopf equator, providing a precise bridge between the symmetry reduction and the geometric level set.\n\n## 5. Tesseract-to-sphere spectral convergence — cross-domain category\n\n**Conjecture.** For iterated cubical subdivisions of the boundary of the four-cube, followed by radial projection to the unit three-sphere, the normalized graph Laplacians converge spectrally to the Laplace–Beltrami operator on the three-sphere with an explicit second-order error bound.\n\nThe key insight is that the sign-vector metric supplies exact diameter control at the coarsest cubical scale, while radial projection connects cubical combinatorics to spherical analysis.\n\n**Why now?** Exact tesseract distance estimates and the explicit complex model of the three-sphere make both the discrete normalization and the limiting geometry concrete enough for quantitative testing.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "fd_0564",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "0268a2b5",
-    "status": "in_progress",
-    "timestamp": "2026-07-21T18:48:02.393211+00:00",
-    "title": "**Conjecture.** A closed, connected, orientable smooth three-manifold embeds smo"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "# Future Directions for Snake-in-the-Box Records\n\n## 1. Asymptotic density of induced hypercube paths\n\n**Conjecture.** There is an absolute constant `c > 0` such that every sufficiently large hypercube `Q_n` contains a snake with at least `c · 2^n` edges.\n\nThe key insight is that chordlessness can be viewed as a distance-two condition on each parity-separated subsequence, while consecutive vertices retain the local freedom of a Gray code. This suggests combining large binary codes with controlled bridges between their codewords.\n\n**Why now?** The new records through dimension thirteen have densities that remain substantial, and the distance-two code extraction isolates a concrete structure on which probabilistic nibble or local-lemma methods can act.\n\n## 2. Rigidity near the Boolean-cube ceiling\n\n**Conjecture.** For every `n ≥ 3`, a snake in `Q_n` omits at least `2^(n-2)` vertices.\n\nThe key insight is that a path using nearly every cube vertex would force most unused cube edges to become forbidden chords. Regularity then turns chordlessness into a severe edge-boundary constraint, potentially accessible through cube isoperimetry.\n\n**Why now?** The universal counting ceiling is easy, but the record data lie far below it. Quantifying the unavoidable gap is the natural next structural problem and would connect the census to edge-isoperimetric stability.\n\n## 3. Completeness of the dimension-nine census\n\n**Conjecture.** Every length-191 snake in `Q_9` is equivalent, under coordinate permutation, translation, and path reversal, to one of the 131 reported classes.\n\nThe key insight is that fixing an initial transition pattern should break the full cube symmetry, after which chordlessness and the distance-two constraints may force a finite collection of canonical extensions.\n\n**Why now?** Repeated searches found exactly the same 131 classes, making this a sharply falsifiable classification statement with a finite certificate target rather than an open-ended optimization claim.\n\n## 4. Product constructions with bounded chord repair\n\n**Conjecture.** There is an absolute constant `C` such that snakes of lengths `L` in `Q_m` and `K` in `Q_n` can be combined into a snake in `Q_(m+n)` of length at least `(L+1)(K+1) - C(L+K)`.\n\nThe key insight is that Cartesian products naturally create long grid walks, and all offending chords are localized near changes between factors. A bounded family of separator coordinates may repair those interfaces without destroying the multiplicative main term.\n\n**Why now?** Record searches currently proceed dimension by dimension. A successful product theorem would turn isolated records into systematic lower bounds in higher dimensions and would explain which transition motifs transfer across dimensions.\n\n## 5. Random extension threshold for long snakes\n\n**Conjecture.** For a uniformly chosen endpoint extension among currently legal coordinate flips, the probability that a greedy snake in `Q_n` survives for `2^(α n)` steps has a sharp threshold at a constant `α` strictly greater than one half.\n\nThe key insight is that each accepted vertex excludes a radius-one neighborhood from future nonconsecutive use, so the extension process resembles random sequential adsorption with highly structured overlaps in the Hamming cube.\n\n**Why now?** The census supplies long trajectories and many inequivalent optima, while the coding interpretation identifies the correct exclusion geometry. Together they make survival probabilities and overlap corrections measurable and mathematically testable.\n",
     "domain_bridges": [],
@@ -25058,6 +25015,46 @@
     "status": "available",
     "timestamp": "2026-08-16T13:01:03.187772+00:00",
     "title": "Conjectures generated by the results in `Catalog/Novelty/Nonstandard*.lean`."
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — Wigner Semicircle Universality\n\nThis file closes the current research cycle. Section 0 records **what the cycle\nsettled** (all of it formally proved, `sorry`-free); the remaining sections state the\n**five falsifiable conjectures** that are still open, each phrased so that a single\nLean theorem would settle or refute it, together with three concrete next-cycle\nsub-conjectures.\n\nFormal development:\n`Catalog/Probability/WignerSemicircleMoments.lean`, `WignerTraceBridge.lean`,\n`WignerRademacherEnsemble.lean`, `WignerSemicircleLawLowOrder.lean`,\n`WignerUniversalFourthMoment.lean`, `WignerSecondMomentConcentration.lean`,\n`WignerOddMoments.lean`, `WignerSemicircleRecursion.lean`,\n`WignerSemicircleCapstone.lean`, `WignerWalkParity.lean`,\n`WignerAllOrderParity.lean`, `WignerMomentGrowth.lean`,\n`WignerUniversalOddMoments.lean`, `WignerSpectralEdge.lean`,\n`WignerBulkTightness.lean`, `WignerEvenWalkCount.lean`,\nnumerical laboratory `WignerEvidence.lean` and `ComputationalEvidence.md`.\n\n---\n\n## 0. What this cycle closed\n\nEverything listed here is a complete Lean proof depending only on `propext`,\n`Classical.choice` and `Quot.sound`.\n\n1. **All-order walk expansion.** `RademacherWigner.trace_pow_succ_sum_walks`\n   expands `tr (M^(m+1))` for an arbitrary matrix as a sum over closed `(m+1)`-walks\n   (starting vertex `i`, intermediate vertices `v : Fin m → Fin N`, step `t` going\n   from `(Fin.cons i v) t` to `(Fin.snoc v i) t`), proved from the entrywise path\n   expansion `pow_apply_sum_walks`.\n\n2. **The exact ensemble dichotomy.** For an arbitrary finite family of steps,\n   `expect_prod_entry_family` shows that the ensemble average of the walk monomial is\n   `1` when the family is loop-free with all edge multiplicities even, and `0`\n   otherwise. The vanishing half comes from the sign-flip involution\n   `prod_entry_flipEdge_family`; the surviving half from `prod_entry_eq_one_of_even`.\n   Consequently `expect_trace_pow_eq_sum_indicator` reduces **every** moment to a\n   count of even closed walks, and `expect_trace_pow_odd` proves that **all odd trace\n   moments vanish exactly, at every finite `N`** — no asymptotics. Normalised form:\n   `expect_normalizedMoment_odd`.\n\n3. **Polynomial growth (tightness input).** An even closed walk of length `2k`\n   visits at most `k+1` vertices (`card_visited_le`, a spanning-tree bound proved by\n   induction, plus `card_edgesUsed_le`), so `card_evenWalks_le` counts at most\n   `N^(k+1)(k+1)^(2k)` of them and\n   `expect_normalizedMoment_two_mul_le` gives\n   `E[(1/N) tr((W/√N)^(2k))] ≤ (k+1)^(2k)`, uniformly in `N`.\n\n4. **Two-sided control of the even moments.** A deterministic power-mean argument\n   (`trace_pow_two_mul_ge`, from the exactly self-averaging `tr W² = N² − N`) yields\n   `tr(W^(2k)) ≥ N(N−1)^k` for *every* configuration, hence the sandwich\n   `(1 − 1/N)^k ≤ E[(1/N) tr((W/√N)^(2k))] ≤ (k+1)^(2k)`\n   (`expect_normalizedMoment_two_mul_sandwich`): the even spectral moments have the\n   exact order `N^(k+1)` at every `k`.\n\n5. **Universality of the odd moments for arbitrary entry laws.** For any finitely\n   supported centred unit-variance law, `gexpect_walk_prod` gives the walk–moment\n   formula, and `tendsto_gexpect_normalizedMoment_odd` proves that every odd\n   normalised moment tends to `0`, with the quantitative rate `O(N^{-1/2})`\n   (`abs_gexpect_normalizedMoment_odd_le`). This upgrades the previous cycle's\n   order-`3` statement to *all* odd orders and *all* entry laws.\n\n6. **Spectral edge.** `prob_exists_large_eigenvalue_le` (via a hand-built Markov\n   inequality `markov`) gives, for every `k ≥ 1` and `t > 0`,\n   `P[∃ eigenvalue of W/√N of modulus ≥ t] ≤ N (k+1)^(2k) / t^(2k)`.\n\n7. **Tightness of the empirical spectral distribution.** New in this cycle:\n   `WignerBridge.frac_large_eigenvalues_le` is a deterministic Markov inequality for\n   the ESD of any real symmetric matrix, and\n   `RademacherWigner.expect_frac_large_eigenvalues_le` turns the uniform moment bound\n   into `E[#{i : |λᵢ|/√N ≥ t}/N] ≤ (k+1)^(2k)/t^(2k)`, independent of `N`. Hence\n   `RademacherWigner.esd_tight`: for every `ε > 0` there is a threshold `t` (one may\n   take `t = 2/√ε`) with expected mass at most `ε` outside `[−t, t]` **in every\n   dimension**. This is precisely the compactness hypothesis of Conjecture 4.\n\n8. **Kernel-verified enumeration.** Because `IsEvenWalk` is decidable, the counts of\n   `ComputationalEvidence.md` are now checked *inside the Lean kernel*\n   (`WignerEvenWalkCount.lean`): `18` even closed `4`-walks on `3` vertices, `60` on\n   `4` vertices, `2` even closed `6`-walks on `2` vertices and `66` on `3` vertices,\n   and `0` at odd lengths `3, 5`. Via `expect_trace_pow_eq_card` these are exact\n   moments: `E[tr W⁴] = 18` (`N = 3`), `= 60` (`N = 4`), `E[tr W⁶] = 2` (`N = 2`),\n   `= 66` (`N = 3`), `E[tr W⁵] = 0` (`N = 3`) — the last an independent check of the\n   odd-order vanishing theorem, the sixth-moment values a kernel confirmation of\n   Conjecture 1 at `N = 2, 3`.\n\n---\n\n## Conjecture 1 (Exact sixth trace moment of the sign ensemble)\n\nFor the Rademacher Wigner ensemble on `N` vertices,\n\n```\nE [ tr W⁶ ] = N (N-1) (5N² - 15N + 11) = 5N⁴ - 20N³ + 26N² - 11N.\n```\n\n**Evidence.** Exact enumeration over all `2^(N(N-1)/2)` configurations gives\n`0, 2, 66, 372, 1220` for `N = 1,…,5`; the quartic fitted to those five points\npredicts `3030` at `N = 6`, and the enumeration at `N = 6` returns exactly `3030` — an\nout-of-sample confirmation. The cases `N = 2` (`2`) and `N = 3` (`66`) are now\n**proved in Lean** (`expect_trace_six_dim_two`, `expect_trace_six_dim_three`), by\nkernel enumeration of even closed walks rather than by external computation.\n\n**The key insight is** that the sixth moment splits along the *five rooted plane\ntrees with three edges*: the `5N⁴` leading term is `C₃ = catalan 3` times the number\nof injective vertex labellings, and the corrections `-20N³ + 26N² - 11N` are exactly\nthe inclusion–exclusion cost of the degenerate labellings in which tree vertices\ncollide — the same mechanism that produced `2N(N-1)² - N(N-1)` at order four.\n\n**Why now?** The reduction is complete: `expect_trace_pow_eq_card` says the sixth\nmoment *is* the number of even closed 6-walks, so what remains is a finite,\npurely graph-theoretic enumeration with no probability left in it. Order six is the\nfirst case where genuinely non-planar (crossing) pairings appear and must be shown to\ncancel, so it is the smallest test of the tree/pairing mechanism in general form.\n\n---\n\n## Conjecture 2 (Universal `2k`-th moment: full semicircle law by the moment method)\n\nFor every finitely supported centred unit-variance entry law `ℒ` and every `k`,\n\n```\n(1/N) E [ tr ((W/√N)^{2k}) ] → catalan k,   and   (1/N) E [ tr ((W/√N)^{2k+1}) ] → 0.\n```\n\n**Evidence.** The odd half is **proved**, for all `k` and all entry laws\n(`tendsto_gexpect_normalizedMoment_odd`). The even half is proved for `2k ≤ 4`\n(`tendsto_gexpect_normalizedMoment_of_le_four`), and at every `k` it is now\nsandwiched between `(1-1/N)^k` and `(k+1)^{2k}`\n(`expect_normalizedMoment_two_mul_sandwich`), so the limit — if it exists — is a\nfinite number in `[1, (k+1)^{2k}]`; `catalan k ≤ 4^k` sits inside that window.\n\n**The key insight is** that the surviving walks are exactly those whose edge multiset\nconsists of `k` doubled edges forming a spanning tree of the visited vertices, so the\ncount is `catalan k · N^{k+1} + O(N^k)`; everything sensitive to the entry law lives\non walks with a repeated edge, of which there are `O(N^k)`. The spanning-tree bound\n`card_visited_le` already proves the `≤ k+1` half of this statement; what is missing\nis the *equality* case, i.e. that walks visiting exactly `k+1` vertices are in\nbijection with plane trees.\n\n**Why now?** Mathlib has `catalan`, `catalan_succ` and the Catalan convolution; the\npresent development supplies the trace ↔ eigenvalue bridge, the independence\nfactorisation `gexpect_prod`, the all-order parity dichotomy, and the exact reduction\nof moments to walk counts. The remaining step is a formal bijection between\nnon-crossing pair partitions (equivalently, doubled spanning trees) and plane trees.\n\n---\n\n## Conjecture 3 (Fourth-moment concentration and the `m₄`-dependent variance)\n\nFor every centred unit-variance entry law with finite eighth moment,\n\n```\nVar [ (1/N) tr ((W/√N)⁴) ] = Θ(N⁻²),\n```\n\nand consequently the fourth spectral moment converges to `catalan 2 = 2` **in\nprobability**, not merely in expectation.\n\n**Evidence.** The exactly computed second-moment variance\n`Var = 2(m₄-1)(N-1)/N³` (`variance_normalizedMoment_two`) is `Θ(N⁻²)` for every law\nwith `m₄ ≠ 1`, and vanishes identically for the sign ensemble\n(`variance_normalizedMoment_two_rademacher`). The order-four analogue must therefore\nalso be `Θ(N⁻²)` unless a new cancellation appears.\n\n**The key insight is** that `E[(tr W⁴)²] - (E[tr W⁴])²` is a sum over *pairs* of\nclosed 4-walks, and a pair contributes only when the two walks share at least one\nedge — which costs a factor `N⁻²` relative to the disconnected pairs, exactly as in\nthe second-moment computation `gexpect_trace_two_sq`.\n\n**Why now?** The Chebyshev infrastructure (`gprob`, `chebyshev`, and the\n`squeeze_zero`-based limit argument) is in place and entirely reusable, and the\nall-order dichotomy `expect_prod_entry_family` classifies which pairs of walks\nsurvive; only the eight-index walk classification is new.\n\n---\n\n## Conjecture 4 (From moments to the distribution: a Carleman step)\n\nIf a sequence of random probability measures `μ_N` supported in a fixed compact\ninterval satisfies `∫ x^m dμ_N → ∫ x^m dσ` in probability for every `m`, then\n`μ_N → σ` weakly in probability, where `σ` is the semicircle law. In particular the\nempirical spectral distribution of `W/√N` converges weakly in probability to `σ`.\n\n**Evidence.** `eq_semicircleMoment_of_convolution` shows that the semicircle moment\nsequence is rigid: it is *determined* by the convolution recursion plus\nnormalisation. The compactness hypothesis is no longer an assumption but a theorem:\n`esd_tight` shows the ESD of `W/√N` is tight uniformly in `N`, and\n`prob_exists_large_eigenvalue_le` bounds the exceptional configurations.\n\n**The key insight is** that on a compact interval polynomials are dense in the\ncontinuous functions (Stone–Weierstrass, in Mathlib), so convergence of all moments\nupgrades to convergence against every continuous test function with no tail estimate\n— the analytic hard work is entirely replaced by tightness, which is now proved.\n\n**Why now?** Both halves of the Carleman step are separately available: rigidity of\nthe semicircle moments on the analytic side, tightness of the ESD on the matrix side.\nThe step that remains is to package the ESD as a genuine `MeasureTheory.Measure` and\ninvoke `polynomialFunctions_closure_eq_top` and the portmanteau theorem.\n\n---\n\n## Conjecture 5 (Deterministic spectral edge: no exceptional configuration)\n\nFor the Rademacher sign ensemble, *every* configuration `g` satisfies\n\n```\n√(1 - 1/N) ≤ ‖W(g)/√N‖ ≤ 2 + o(1),\n```\n\nthe lower bound holding at every finite `N` with no exceptional set, and the upper\nbound holding for all but an exponentially small fraction of configurations.\n\n**Evidence.** The lower bound is proved (`exists_large_eigenvalue_rademacher`), as a\ndeterministic consequence of the exactly self-averaging `tr W² = N² − N`; the\ndeterministic strengthening `trace_pow_two_mul_ge` extends this to every even order.\nThe upper bound is proved here only in the weak quantitative form\n`P[‖W/√N‖ ≥ t] ≤ N (k+1)^{2k}/t^{2k}`, which after optimising `k ≍ log N` gives an\nedge of order `log N` rather than the sharp `2`.\n\n**The key insight is** that self-averaging of `tr W²` is *deterministic* for the sign\nensemble — the second moment carries no randomness at all — so one side of the edge\nbehaviour needs no probability whatsoever; only the upper bound is genuinely\nprobabilistic, and it fails to be sharp precisely because the spanning-tree count\n`(k+1)^{2k}` overshoots the true Catalan constant `4^k`.\n\n**Why now?** Replacing `(k+1)^{2k}` by `C·4^k` in `card_evenWalks_le` — i.e. proving\nthe sharp form of Conjecture 2's counting step — immediately converts the existing\nMarkov argument into `‖W/√N‖ ≤ 2 + ε` with high probability, with no new\nprobabilistic input.\n\n---\n\n## Three concrete next-cycle sub-conjectures\n\n1. **(6a)** The number of closed 6-walks on `N` labelled vertices with no self-loop\n   step and all edge multiplicities even is `N(N-1)(5N²-15N+11)` — Conjecture 1\n   reduced, by `expect_trace_pow_eq_card`, to pure graph enumeration; verified in the\n   kernel at `N = 2, 3`.\n2. **(6b)** For every `k`, `N ↦ E[tr W^{2k}]` is a polynomial of degree `k+1` with\n   integer coefficients and leading coefficient `catalan k`. Equivalently: the number\n   of even closed `2k`-walks visiting exactly `k+1` vertices is\n   `catalan k · N(N-1)⋯(N-k)`.\n3. **(6c)** Sharpen `card_evenWalks_le` from `N^{k+1}(k+1)^{2k}` to\n   `C·4^k·N^{k+1}`. This single combinatorial improvement upgrades the tightness\n   bound to the sharp edge `2` (Conjecture 5) and pins the limit in the sandwich of\n   Conjecture 2.\n\n---\n\n## Status of the formal development\n\nAll Lean files of this project compile against mathlib4 (Lean `v4.28.0`) with **no\n`sorry` and no additional axioms**: every theorem cited above depends only on\n`propext`, `Classical.choice` and `Quot.sound`. The five conjectures are precisely\nthe statements that are *not* proved here; each is phrased so that it can be settled\n(or refuted) by a single Lean theorem, and none of them is assumed anywhere in the\nexisting proofs.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Combinatorics",
+      "Logic"
+    ],
+    "id": "fd_1334",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "37827e5f",
+    "status": "available",
+    "timestamp": "2026-08-16T13:45:24.165075+00:00",
+    "title": "This file closes the current research cycle. Section 0 records **what the cycle"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions (thread th_16c8d9ad, cycle 1)\n\nThis cycle settled three of the five inherited conjectures in sharp form: the\nalmost-Hopf-fibre stability conjecture (true, but with the wrong exponent), the\nClifford-torus minimality conjecture (false; the truth is unique maximality), and\nthe algebraic core of the three-manifold embedding obstruction (metabolicity\n⟺ square order).  The conjectures below are the next-cycle sub-problems these\nresults generate.  All are falsifiable, and each is stated so that a\ncounterexample would be a finite or explicitly parametrized object.\n\n## 1. From the circle quotient to Fubini–Study geometry\n\n**Conjecture.** On the unit sphere of any complex inner product space the\nphase-minimized distance `phaseDist p q = √(2 − 2‖⟪p,q⟫‖)` — proved here to be a\nmetric with sharp linear stability against the chordal projective distance —\ncoincides with the quotient (Riemannian submersion) distance of `ℂPⁿ` under the\nFubini–Study metric up to the explicit chord/arc comparison\n`phaseDist = 2 sin(d_FS/2)`; consequently the constant `1/√2` proved in the `ℂ²`\nHopf case is the optimal stability constant in every dimension, with extremal\nconfigurations exactly the orthogonal pairs.\n\n*The key insight is* that both distances depend on the pair only through the\nsingle scalar `t = ‖⟪p,q⟫‖`, so the whole modulus is a one-variable algebraic\nidentity, `m(4 − m) = 2(2 − 2t²)`, rather than a geometric estimate; what remains\nopen is only the identification of the metric-space quotient with the Riemannian\none.\n\n*Why now?* The dimension-free identity, the triangle inequality, the attainment\nof the minimum, and the vanishing-rigidity are all now machine-checked\n(`HopfQuotient`), so the remaining step is the comparison of a chordal metric with\nits geodesic completion — a self-contained analysis problem.\n\n## 2. Constrained extremality replacing the false Clifford minimality claim\n\n**Conjecture.** Within the Hopf-invariant family `T r` the area functional\n`4π² r √(1 − r²)` has no interior minimizer, but the *Willmore-type* functional\n`W(r) = ∫ (1 + H²)` restricted to this family is uniquely minimized at\n`r = √2/2`; more generally, the Clifford torus minimizes area among Hopf-invariant\ntori that are additionally **minimal surfaces**, and that constraint singles out\n`r = √2/2` as the unique critical point of the area functional.\n\n*The key insight is* that in the symmetry-reduced picture the area becomes the\nsingle function `4π² r √(1−r²)`, whose unique interior critical point is a\nmaximum, so any correct extremality statement must be constrained; criticality,\nnot minimality, is what the Clifford parameter satisfies.\n\n*Why now?* `area_eq` gives the reduced functional in closed form,\n`clifford_unique_maximizer` fixes its shape completely, and\n`clifford_unique_critical_point` shows `r = √2/2` is its only critical point, so testing any candidate\nconstrained functional is now a one-variable calculus exercise that can be\nformalized directly.\n\n## 3. Beyond the linking form: the intersection-pairing half of the obstruction\n\n**Conjecture.** For lens spaces the two halves of the conjectured coupled\nobstruction are independent: the linking-form half is exactly \"`n` is a perfect\nsquare\" (proved), while the intersection-pairing half is a genuinely finer\ncongruence condition on the second lens parameter.  Concretely: there exist\n`q` coprime to `m²` for which `L(m², q)` passes the metabolicity test but admits\nno compatible pair of unimodular integral forms, so metabolicity alone is not\nsufficient for embedding.\n\n*The key insight is* that `exists_metabolizer_iff_isSquare` is uniform in `q`,\ni.e. the linking form is blind to the second lens parameter, while embeddability\ndemonstrably is not; the residual information must therefore live entirely in the\nintersection pairings of the complementary pieces.\n\n*Why now?* The linking half is now a theorem with all subgroups quantified over,\nso the search for the missing condition has a precise target: an obstruction that\ndistinguishes different `q` with the same `n = m²`.\n\n## 4. Metabolicity for non-cyclic linking forms\n\n**Conjecture.** For a finite abelian group `A` with nondegenerate symmetric\nlinking form `λ`, the existence of a metabolizer forces `|A|` to be a perfect\nsquare, and conversely every `λ` on `A ⊕ A` of hyperbolic type is metabolic; the\ncyclic case proved here is the extremal one in the sense that `A` cyclic admits a\nmetabolizer for at most one subgroup.\n\n*The key insight is* that the annihilator computation `H_d^⊥ = H_{n/d}` is a\nduality statement `|H| · |H^⊥| = |A|`, which holds for every nondegenerate form,\nso the square-order conclusion should be a formal consequence of nondegeneracy\nalone.\n\n*Why now?* The cyclic proof isolates exactly which step uses cyclicity\n(classification of subgroups by divisors), so replacing it by Pontryagin duality\nfor finite abelian groups is a self-contained formalization target.\n\n## 5. Discrete-to-smooth spectral comparison on `S³`\n\n**Conjecture.** For the radially projected boundary complex of the `4`-cube after\n`k` subdivisions, the smallest nonzero eigenvalue of the normalized graph\nLaplacian converges to the first eigenvalue `3` of the Laplace–Beltrami operator\non the unit three-sphere, with error `O(4^{-k})`.\n\n*The key insight is* that the exact sign-vector distance data of the tesseract\ngives explicit control of edge lengths at every scale, so the discrete Dirichlet\nform can be compared term by term with the smooth one.\n\n*Why now?* The exact tesseract diameter results already in the catalog supply the\ncoarsest-scale constants, and the eigenvalue `3` on `S³` is available in closed\nform, so the comparison is quantitative from the start.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1335",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "be4e28d2",
+    "status": "available",
+    "timestamp": "2026-08-16T13:45:41.805164+00:00",
+    "title": "This cycle settled three of the five inherited conjectures in sharp form: the"
   },
   {
     "ambition_level": "extension",
