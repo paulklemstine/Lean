@@ -34292,7 +34292,7 @@
       "depth_estimate": 3,
       "description": "Formalizes the connection between the Deligne-Mumford compactification of the moduli space of smooth curves and the tropical moduli space of stable tropical curves, including the tropicalization of boundary strata and tropical Gromov-Witten invariants.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Tropical",
         "Geometry"
@@ -34333,7 +34333,7 @@
       "depth_estimate": 3,
       "description": "Develops the formal theory of non-Archimedean tropicalization: the valuation-induced tropicalization map on Berkovich analytifications of algebraic subvarieties, the polyhedral structure of its fibers, and the structure theorem for tropical varieties.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Tropical",
         "NumberTheory"
@@ -35831,7 +35831,7 @@
       "depth_estimate": 3,
       "description": "# FUTURE DIRECTIONS — after the round-7 closures\n\nThe five Lean files added in `Catalog/Tropical/` make the round-7 verdicts\nprecise: the AGREEMENT aggregate collapses to `φ(N)/2` and to the Jacobi level\nset; the zero-divisor graph is exactly `K_{q-1,p-1}` and its degree sequence is\nthe trace witness; the rho sample set escapes the density floor but only through\npigeonhole correlation plus quadratic aggregation; and the digit-convolution\nrelaxation carries an `O(1)`-norm kernel vector, so no factorisation target is\nisolated. Each closure suggests a sharper, falsifiable successor.\n\n## Conjecture A (structural-witness dichotomy)\n\n*For every prime `p ≠ q`, any graph invariant of the zero-divisor graph of\n`ℤ/pqℤ` that is computable in time `polylog N` from `N` alone is a function of\n`N` alone; equivalently, every invariant that separates two semiprimes of equal\nsize requires `Ω(min(p,q))` vertex queries.*\n\n**The key insight is** that `Round7ZDG.vertex_gives_factor` shows a *single*\nvertex already yields a factor, so an invariant is either blind (a function of\n`N`) or its evaluation embeds trial division — there is no middle regime.\n**Why now?** The graph is now a formal `SimpleGraph` with a proven bipartite\nadjacency and degree sequence, so query-complexity statements about it can be\nformalised directly on top of `Round7ZDGDegrees`.\n\n## Conjecture B (atomic-uniform noise floor as a theorem, not a principle)\n\n*Let `D` be any distribution on `[1, N)` whose density is computable from `N` in\n`polylog N` time and is `ε`-close to uniform in total variation. Then a single\nsample from `D` reveals a nontrivial factor with probability at most\n`2/min(p,q) + ε`.*\n\n**The key insight is** that `Round7ZDG.atomic_uniform_success_le` already proves\nthe uniform case with the exact constant `2/p`, and the perturbation term is\nforced by the total-variation bound; the content is that `polylog`-computability\nprevents any density from concentrating on the `p + q - 2` zero divisors.\n**Why now?** The uniform bound is formalised and the vertex set is exactly\ncharacterised, so only the TV-perturbation layer remains.\n\n## Conjecture C (aggregation lower bound for correlated samplers)\n\n*Any algorithm that factors `N = pq` using only pairwise gcds of iterates of a\ndegree-`d` polynomial map mod `N` must perform `Ω(√p)` gcd operations, and the\n`p + 1` pigeonhole bound of `exists_collision_mod_p` is tight up to the birthday\nsquare root.*\n\n**The key insight is** that the collision structure proved in\n`Round7RhoNoiseFloor` is purely a statement about the reduced walk on `ℤ/pℤ`;\nthe birthday bound should therefore be provable as a counting statement about\nfunctional graphs, independently of any randomness assumption.\n**Why now?** The correlation lemma (`rhoZ_iterate_modEq`) and the extraction\nlemma (`gcd_extract_of_dvd_sub`) are both formal, so the remaining step is a\npurely combinatorial estimate on the rho-shaped functional graph.\n\n## Conjecture D (lattice non-isolation in all dimensions)\n\n*For every base `b` and every digit length `n ≥ 2`, the kernel of the digit\nfunctional `w ↦ Σ w_{ij} b^{i+j}` on `n × n` integer matrices contains\n`(n-1)²`-many independent vectors of squared norm `2`, and consequently every\nrank-one target has a non-rank-one companion solution at squared distance `≤ 8`.*\n\n**The key insight is** that the `2 × 2` commutator `[[0,1],[-1,0]]` generalises to\nall \"anti-diagonal transpositions\" `E_{i,j+1} - E_{i+1,j}`, whose count grows\nquadratically while their norm stays constant — the target's norm grows, the\nnoise does not.\n**Why now?** The `2 × 2` case is fully proved in `Round7DigitLattice`\n(`exists_spurious_solution`); the general case is the same identity indexed by a\nlarger family, and it would turn the \"target sits at the Gaussian heuristic\"\nmeasurement into a theorem for all dimensions.\n\n## Conjecture E (tropical corner rigidity)\n\n*In min-plus coordinates the divisor pairs of `N` are exactly the lattice points\nof the tropical line `X ⊙ Y = log N`, and the number of such points within\ndistance `δ` of the corner is `O(N^{δ'})` for explicit `δ'` — i.e. the corner\nneighbourhood is as sparse as the balanced noise floor predicts.*\n\n**The key insight is** that `corner_straddle` and `trop_mul_log_le` already place\nevery divisor pair on opposite sides of the corner; the missing ingredient is a\ncounting bound for divisors in a short interval around `√N`.\n**Why now?** With the tropical statements in place, the corner-counting question\nbecomes an interval-divisor problem that can be attacked with the existing\n`Nat.divisors` API rather than with new tropical machinery.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Computation",
         "Combinatorics"
@@ -36117,7 +36117,7 @@
       "depth_estimate": 3,
       "description": "# Future directions — after the asymmetric/symmetric divisibility dichotomy\n\nThe formal results of this run (all in `Catalog/Tropical/SmoothSelfHint*.lean`, 0\nsorries, only the standard axioms) are:\n\n1. **Fibre dichotomy** (`asym_fiber_card`, `sym_fiber_card`,\n   `sym_fiber_card_incl_excl`): in any finite group, a one-sided condition on a\n   factorisation `n = a·b` has an `n`-independent count `|A|`, while the two-sided\n   condition has count `|A ∪ n·A⁻¹| = 2|A| - |A ∩ n·A⁻¹|`.\n2. **Information form** (`miF_asym_zero`, `mi_asym_three`, `mi_sym_three`,\n   `mi_sym_three_bounds`, `information_dichotomy`): the asymmetric mutual information is\n   *exactly* `0` for every finite group and every `A`; the symmetric one is\n   `3/2 - (3/4)·log₂3 ∈ (0.30, 0.32)` bits at `l = 3` and strictly positive for every\n   odd prime.\n3. **Classification** (`miF_symJointG_eq_zero_iff_autocorrelation`): the symmetric leak\n   vanishes *iff* the autocorrelation `n ↦ |A ∩ n·A⁻¹|` is constant — the perfect\n   difference-set condition.\n4. **Unconditional impossibility** (`asym_no_residue_dial_any_modulus`,\n   `asym_no_residue_dial_three_factors`, `smoothness_no_residue_dial_1155`,\n   `no_pm_one_smoothness_hint`): no function of `N mod M` — for *any* `M`, and for two-\n   or three-factor moduli — computes `l ∣ p-1`, nor `10`-smoothness of `p-1`; and the\n   `N ± 1` smoothness bits are logically independent of the secret bit.\n5. **Tropicalisation** (`fibreSum_left`, `tropical_firstCost_const`,\n   `tropical_dichotomy`): the dichotomy is a property of the fibration `G × G → G`\n   valued in an arbitrary commutative monoid, so it survives into the min-plus semiring,\n   where the symmetric statistic becomes a *cheapest factorisation with all factors\n   cheap* cost.\n6. **Closed form and decay** (`symMI`, `miF_symJointG_singleton_eq_symMI`,\n   `mi_sym_units`, `symMI_two`, `symMI_four`, `mi_sym_five_bounds`,\n   `symMI_lt_two_div_sq`, `neg_lt_symMI`, `symMI_tendsto_zero`, `mi_sym_decay`,\n   `dichotomy_with_rate`): the symmetric leak in a finite group of order `d` equals\n   `symMI d` exactly; at `l = 5` this is certified to lie in `(0.0355, 0.036)`, matching\n   the measured `0.036`; and `symMI d = O(1/d²) → 0`, so the visible half of the\n   dichotomy is itself asymptotically invisible.  (This closes the previous cycle's\n   Conjecture A, and corrects its guessed rate `c/g` to `c/g²`.)\n\n7. **The sharp rate** (`log_div_bounds`, `symMI_envelope`, `symMI_asymptotic`, in\n   `Catalog/Tropical/SmoothSelfHintAsymptotics.lean`): `d²·symMI d → log₂ e - 1 =\n   0.442695…`, so the symmetric leak is asymptotically exactly `(log₂ e - 1)/(l-1)²`\n   bits.  (This closes the Conjecture A′ of the second cycle.)\n\n8. **Subgroup targets always leak** (`sym_fiber_subgroup_mem`,\n   `sym_fiber_subgroup_not_mem`, `miF_symJointG_pos_of_subgroup`, in\n   `Catalog/Tropical/SmoothSelfHintSubgroupTargets.lean`): for any subgroup `H ⪇ G` the\n   symmetric fibre count is `|H|` on `H` and `2|H|` off it, so the leak is strictly\n   positive — this covers the quadratic-residue and `k`-th-power events, and it *refutes*\n   the previous cycle's guess that cosets of subgroups are the invisible sets.\n\n9. **Invisible targets classified for abelian groups** (`reprCount`,\n   `autocorrelation_eq_reprCount`, `charSum_sq_eq_reprCount_sum`,\n   `reprCount_const_iff_trivial`, `miF_symJointG_eq_zero_iff_trivial`,\n   `abelian_dichotomy`, `miF_symJointG_pos_units_of_nontrivial`, in\n   `Catalog/Tropical/SmoothSelfHintInvisibleTargets.lean`): in a finite **abelian**\n   group the representation count `r_A(n) = #{(a,b) ∈ A² : ab = n}` is constant *only*\n   for `A = ∅` and `A = G`, hence the symmetric leak vanishes iff the target is trivial\n   and is strictly positive for every other target.  The proof is Fourier analysis on\n   `Additive G`: `r̂_A = (1̂_A)²`, so constancy kills every nontrivial character sum and\n   `1_A` must be constant.  This **closes the previous cycle's Conjecture B in the\n   abelian case**, which is the case relevant to `(ZMod l)ˣ` and hence to the\n   divisibility events `l ∣ p - 1`.\n\n10. **Positive information, zero prediction advantage** (`predCount`,\n   `predCount_le_bayes`, `predCount_asym_le_best_constant`,\n   `predCount_sym_singleton_le_constant`,\n   `sym_singleton_positive_information_zero_advantage`,\n   `predCount_sym_beats_constants_of_card_three`,\n   `units_positive_information_zero_advantage`, in\n   `Catalog/Tropical/SmoothSelfHintPredictionAdvantage.lean`): scoring a\n   residue-reading predictor `f : G → Bool` by the number of ordered pairs it classifies\n   correctly, **no** predictor beats the better constant predictor for the asymmetric\n   event (any target, any group), and — the new phenomenon — none beats the constant\n   predictor for the *symmetric* event with the arithmetic target `A = {1}` as soon as\n   `4 ≤ |G|`, even though the mutual information there is strictly positive.  The\n   hypothesis is sharp: in a group of order `3` the Bayes predictor scores `6` against\n   `5` and `4` for the two constants.  Arithmetically (`l ≥ 5` prime): the symmetric\n   divisibility event leaks bits about `N mod l` that no algorithm can convert into a\n   better-than-trivial guess.  So the visible half of the dichotomy is visible only in\n   the information-theoretic sense — operationally the whole dichotomy is invisible.\n\nBelow are the next conjectures, ranked by expected impact.\n\n## Conjecture A″ (a variance law for arbitrary targets)\n\nFor an arbitrary target `A ⊆ G` with `|G| = d` write `f_A(n) = |symFiber A n|` for the\nsymmetric fibre count.  Conjecture: as `d → ∞` along any family with\n`f_A(n)/d → 0` uniformly,\n\n```\nmiF (symJointG A) = (log₂ e / 2) · Var_n(f_A(n)) / (d² · E_n f_A(n)) · (1 + o(1)),\n```\n\ni.e. the leak is a chi-squared statistic of the autocorrelation of `A`.  The singleton\ncase `f_A ∈ {1, 2}` gives `Var = (d-1)/d²`, `E = (2d-1)/d`, and the formula reproduces\nthe proved constant `log₂ e - 1` up to the exact correction computed here.\n\n*The key insight is* that mutual information is a second-order quantity: to leading order\nit is `(log₂ e / 2)` times the chi-squared divergence between the joint law and the\nproduct of its marginals, and by the classification theorem that divergence is exactly\nthe variance of the autocorrelation `n ↦ |A ∩ n·A⁻¹|`.\n\n*Why now?* The classification (`miF_symJointG_eq_zero_iff_autocorrelation`) already says\nthe leak vanishes iff that variance vanishes; this conjecture is its quantitative form,\nand the singleton case is now proved with an explicit envelope that generalises verbatim\nonce `f_A` replaces `1`/`2`.\n\n## Conjecture B′ (invisible targets in *nonabelian* groups)\n\nResult 9 settles the abelian case.  Conjecture: the same classification holds with no\ncommutativity hypothesis — in **any** finite group, `r_A(n) = #{(a,b) ∈ A² : ab = n}` is\nconstant only for `A ∈ {∅, G}`, so `miF_symJointG_eq_zero_iff_trivial` holds verbatim for\n`G` nonabelian.\n\n*The key insight is* that the abelian proof reads `r̂_A(χ) = (1̂_A(χ))²` and concludes\n`1̂_A(χ) = 0`; for a nonabelian `G` the same computation gives `ρ(1_A)² = 0` for every\nnontrivial irreducible `ρ`, and a *nonzero nilpotent* matrix is not excluded by the\nidentity alone — so the conjecture is equivalent to ruling out nilpotent Fourier\ncoefficients of a `0/1`-valued class-free function, which should follow from the\nself-adjointness relation `ρ(1_A)^* = ρ(1_{A^{-1}})` together with `A = A⁻¹` after\nreplacing `A` by `A ∪ A⁻¹`.\n\n*Why now?* The abelian argument is fully formalised here, and the only missing input is\nthe matrix-valued Fourier inversion for finite groups, whose ingredients\n(`MonoidAlgebra`, character orthogonality) are already in Mathlib.\n\n## Conjecture C (no self-hint from any symmetric functional)\n\nFor every `M`, no function of the *unordered* data — the residue `N mod M` together with\nany symmetric functions of the factors, e.g. `p + q` mod `M` — determines `l ∣ p - 1`.\nOnly an oracle that breaks the `p ↔ q` symmetry can.\n\n*The key insight is* that the swap construction of `asym_indistinguishable_mod` produces\ntwo instances related by exchanging the residues of the factors, so **every** symmetric\nfunctional agrees on them while the asymmetric bit flips.\n\n*Why now?* The construction is already unconditional (Dirichlet only), and the\nthree-factor extension shows it is robust; the remaining work is to make the swap into\nan involution on the chosen progressions so that `p + q` is preserved as well.\n\n## Conjecture D (tropical smoothness profile is a genuine invariant)\n\nDefine `w(N) = min over factorisations N = a·b of max(log a, log b)`.  Then `w` is not\ncomputable from `N mod M` for any `M`, `w` is a monotone min-plus functional of the\nmultiset of prime factors, and the distribution of `w` on `k`-bit semiprimes converges\nafter normalisation to a Dickman-type law — the `~0.04` fit reported for the density.\n\n*The key insight is* that `worstCost`, already defined and shown non-constant here, is\nthe finite-group shadow of the smoothness profile, so the fibre argument that kills the\nasymmetric leak also explains why only the symmetric smoothness statistic is visible.\n\n*Why now?* `fibreSum_left` gives the min-plus transfer principle for free; the missing\ningredient is a Lean-formalised Dickman function.\n\n## Conjecture E′ (an exact threshold for actionable leakage)\n\nResult 10 proves zero advantage for the singleton target once `4 ≤ |G|`, and exhibits\norder `3` as the unique exception.  Conjecture the general criterion: for an arbitrary\ntarget `A`, the Bayes predictor of the symmetric event beats both constant predictors\n**iff**\n\n```\n∑_n max(f_A(n), |G| - f_A(n))  >  max(∑_n f_A(n), ∑_n (|G| - f_A(n))),\n```\n\nwhich — since `f_A(n) = 2|A| - |A ∩ n·A⁻¹|` — happens iff the autocorrelation\n`n ↦ |A ∩ n·A⁻¹|` crosses the level `2|A| - |G|/2`.  In particular no target with\n`|A| ≤ |G|/4` is ever actionable, so *actionable* leakage requires a dense target, while\n*informational* leakage requires only a nonconstant autocorrelation: the two thresholds\ndiffer by a factor `|G|`.\n\n*The key insight is* that `predCount_le_bayes` makes the optimum an explicit sum of\npointwise maxima, so the whole question reduces to comparing `∑ max(f, |G| - f)` with the\ntwo constant sums — a purely combinatorial inequality about the autocorrelation, with no\ninformation theory left in it.\n\n*Why now?* Both sides of the inequality are already definable and the singleton instance\nis proved in both directions (zero advantage for `|G| ≥ 4`, positive advantage for\n`|G| = 3`), so the general statement is a strict generalisation of a formalised\nspecial case.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Algebra",
         "Tropical"
@@ -36199,7 +36199,7 @@
       "depth_estimate": 3,
       "description": "# FUTURE DIRECTIONS — after PLUSONE-SMOOTH-NULL (round 16 #2)\n\nThe formal results in `Catalog/Tropical/PlusOneWilliamsCore.lean` and\n`Catalog/Tropical/PlusOneSmoothNull.lean` isolate one mechanism behind the\nwhole `p ± 1` self-hint null: **every `N`-computable statistic tested so far is\na *symmetric* function of the factor pair `{p, q}`, while the exploitable\nweakness is an *asymmetric* predicate of the smaller factor.** The residue\nchannel realises this as the XOR-only visibility of\n`mod_three_reveals_xor`, the character channel as the product formula\n`jacobiSym_semiprime_split`. The conjectures below try to turn that observation\nfrom an explanation into a theorem, and to probe where it must break.\n\n---\n\n## Conjecture 1 (Symmetric-Statistic Barrier, quantitative form)\n\n*Let `S : ℕ → Prop` be any predicate on primes that is not almost-everywhere\nconstant on residue classes, and let `stat` be any function of `N` that\nfactors through the multiset `{p mod m, q mod m}` for a fixed modulus `m` and\nthrough `⌊log₂ N⌋`. Then for every `B` there exist two admissible pairs\n`p<q`, `p'<q'` with all four primes of the same bit lengths, `p q ≡ p' q'\n(mod m)`, `⌊log₂ pq⌋ = ⌊log₂ p'q'⌋ ≤ B'`, `S p`, `¬ S p'` — and the number of\nsuch colliding bucket pairs is `≫ π(2^b)²/m` as `b → ∞`.*\n\n**The key insight is** that `N mod m` sees only the *elementary symmetric\nfunctions* `p+q` and `pq` of the residue pair, so a \"which factor\" predicate\nsurvives a full `S_2`-orbit inside every bucket, and Dirichlet density supplies\nboth orbit representatives in equal proportion.\n**Why now?** The single collision witness `359·5849 ≡ 397·5743 (mod 60060)` is\nalready formalised (`matched_pair_collision`); what is missing is only the\ncounting step, and Mathlib now has Dirichlet's theorem on primes in arithmetic\nprogressions, which is exactly the input needed to replace \"one witness\" by\n\"positive density of witnesses\".\n\n## Conjecture 2 (Galois-theoretic upgrade: the invisible datum is a Frobenius conjugacy class)\n\n*Fix a base `P` with discriminant `D = P² − 4`. The base-`P` Williams weakness\nat the smaller factor of `N` is a function of the Frobenius class of `p` in\n`Gal(ℚ(√D, ζ_m)/ℚ)`, whereas everything computable from `N` alone is a\nfunction of the **product** of the two Frobenius classes. Consequently no\nChebotarev-type invariant of `N` — not just `N mod m` and Jacobi symbols but\nany Artin symbol of `N` in an abelian extension — can locate the weak factor.*\n\n**The key insight is** that `(D | N) = (D | p)(D | q)` and `N mod m` are both\ninstances of \"the image of `N` in an abelian character group is the product of\nthe images of `p` and `q`\", so the whole abelian world is `S_2`-blind by\nconstruction; escaping requires a genuinely non-abelian or non-multiplicative\nstatistic.\n**Why now?** `jacobiSym_semiprime_split` is the abelian case in Lean already,\nand the barrier lemma `no_locator_of_collision` is stated for an *arbitrary*\nstatistic, so the upgrade is a matter of supplying Chebotarev collisions rather\nthan of rebuilding the framework.\n\n## Conjecture 3 (Gate density — *counting half now proved*; independence half open)\n\n*The counting half is now a theorem:*\n`PlusOneGateDensity.card_gate_open` proves\n`#{P ∈ 𝔽_p : P² − 4 is a non-residue} = (p−1)/2` for every odd prime `p`, via\nthe trace parametrisation `P = a + a⁻¹`. What remains open is the independence\nstatement:\n\n*For a random prime `p` the events \"base `P` gate closed\" for\n`P = 3, 5, 7` are pairwise independent **except** for the exact coincidence\n`(D₃ | p) = (D₇ | p)`, so the probability that at least one of the three\nclassical bases succeeds on a `p+1`-smooth prime is `3/4`, not `7/8`.*\n\n**The key insight is** that the parametrisation `P = a + a⁻¹` makes the gate\ncondition \"`a ∉ 𝔽_p^×`\" a norm condition, so the counting reduces to the\n`(p+1)/2` distinct traces of norm-one elements, while `D₇ = 5·3²` collapses two\nof the three characters into one.\n**Why now?** `legendreSym_mul_sq` formalises the collapse and\n`card_gate_open` supplies the exact per-base density, so the remaining step is\na joint-distribution statement about the characters `(5|p)` and `(21|p)`,\naccessible by quadratic reciprocity plus Dirichlet. It predicts a *measurable*\nnumber — the observed 24/40 = 0.60 success rate versus 0.75 for the\nindependent model — and hence is falsifiable by a larger run.\n\n## Conjecture 4 (Order-not-smoothness: the true success set is strictly larger)\n\n*The set of primes split by exponent `M` is `{p : ord(a_P) ∣ M}` where `a_P` is\nthe root of `x² − Px + 1` in the norm-one torus, and this set is strictly\nlarger than `{p : (p+1) ∣ M, (D|p) = −1}`: for every bound `B` there are\nprimes `p` with `p + 1` **not** `B`-powersmooth that are still split by\n`M = lcm(1..B)`, with density bounded below by a positive constant.*\n\n**The key insight is** that `lucasV_eq_two_iff_pow_eq_one` (already proved)\nreplaces the classical sufficient condition by an exact one; `ord(a_P)` is a\ndivisor of `p+1` that can be much smoother than `p+1` itself.\n**Why now?** The exact criterion is formalised, so the conjecture is now a\nstatement about the distribution of `ord(a_P)` in a cyclic group of order\n`p+1` — a Kummer-type density question of the same shape as Hooley's\nconditional results on Artin's conjecture.\n\n## Conjecture 5 (Tropical certificate for the search window)\n\n*Define the tropical (max-plus) smoothness height of `n` as\n`h(n) = max_ℓ v_ℓ(n)·log ℓ`. Then the Williams method with exponent\n`lcm(1..B)` splits `N = pq` iff `h(p+1) ≤ log B` (gate permitting), and the\nmap `N ↦ h(p+1)` is invisible from `N` in the same sense as above, while the\ntropical corner `√N` of the divisor hyperbola bounds the returned factor.\nConsequently the \"cost\" of the method is a min-plus optimisation over the\nvaluation vector of the hidden `p+1`, and no relaxation of that optimisation\nthat depends only on `N` is feasible.*\n\n**The key insight is** that `dvd_lcmUpTo_of_powersmooth` turns smoothness into\nthe tropical condition `max_ℓ v_ℓ(p+1) log ℓ ≤ log B`, and\n`williams_output_below_tropical_corner` places the answer below the corner:\nthe algorithm is a max-plus feasibility test on data that the barrier theorems\nforbid us to read.\n**Why now?** Both halves are formalised; what remains is to show that the\nmin-plus relaxation of the search (over all admissible valuation vectors\nconsistent with `N`) has the *full* window `[1, √N]` as its optimal face,\nwhich would give a tropical proof of the \"counting is free, locating is hard\"\nprinciple of `FactorLocationBarriers`.\n\n---\n\n### Three concrete next-cycle sub-conjectures\n\n1. **(C1-lite)** For `m = 60060` and every bit band `b ≥ 20`, at least half of\n   the non-empty `(N mod m, b)` buckets contain both labels of `3 ∣ p+1`\n   (measured: 81.8% at `b = 22`). Formalise the counting for one band.\n2. **(C3-lite)** — **closed this cycle**: `#{P ∈ 𝔽_p : IsSquare (P² − 4)} =\n   (p+1)/2` is `PlusOneGateDensity.card_disc_square`. Next: the joint law of\n   the three classical bases.\n2b. **(New, from the degenerate-base classification)** The universally\n   degenerate bases are exactly `|P| ≤ 2`\n   (`PlusOneDegenerateBases.exists_lucasV_eq_two_iff_abs_le_two`), i.e. exactly\n   the bases whose root `a` is a root of unity. Conjecture: over a number field\n   `K`, the base `P ∈ O_K` is universally degenerate iff `P = a + a⁻¹` for a\n   root of unity `a` — a Kronecker-type statement whose proof should be the\n   height argument replacing the monotonicity lemma `lucasV_three_le`.\n3. **(C4-lite)** Exhibit and formalise one prime `p` with `p+1` not\n   100-powersmooth that is nevertheless split by `M = lcm(1..100)` for base 3,\n   demonstrating that the classical sufficient condition is not necessary.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Algebra",
         "Computation"
@@ -37105,7 +37105,7 @@
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
-      "outcome_quality": 0.0,
+      "outcome_quality": 0.72,
       "parent_direction": "",
       "priority_score": 1000.0,
       "proof_strategy": "",
@@ -37116,7 +37116,7 @@
       "source": "github_injection",
       "source_exp_id": "github",
       "source_path": "github",
-      "status": "in_progress",
+      "status": "completed",
       "thread_id": "",
       "timestamp": "2026-08-15T01:59:12.639788+00:00",
       "title": "NET-27 (paper 71): EOS-WIDTH-SHIFT-IS-A-MONOTONE-RAMP — P(cure) ramps 25→33→83→100→100% as exclusive dims go 0→1→2→4→8; no sharp width, first exclusive dim NOT sufficient; refines NET-26"
@@ -38789,7 +38789,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions — tropical theory of boundary-token width\n\nDerived from the results in `Catalog/Tropical/NeuralNetworks/EOSWidth*.lean`\n(analysis stage: what survived, what failed, and why).\n\n## What survived\n\n* The tropical dichotomy is exact, not approximate: `eos_mem_digitSpan_iff`\n  (span membership ⇔ no exclusive dimension), `margin_le_of_no_exclusive_dim`\n  together with its sharpness `margin_bound_sharp` (best margin `= maxᵢ cᵢ`),\n  and `exclusive_dim_unbounded_margin` / `exclusive_dim_margin_robust`.\n* The empirical \"threshold\" reading is provably wrong as a deterministic law:\n  `no_sharp_boundary`.\n* The correct law is a one-sided distribution shift: monotone in width\n  (`separable_mono`, `separable_eosVec_mono`), interior probability in the\n  fragile regime and probability one in the robust regime\n  (`one_sided_distribution_shift`).\n\n## What failed / needed a different definition\n\nA first attempt to state the law as \"the cure probability of a *random readout*\njumps at `E = D`\" is false: a random max-plus readout separates nothing with\nprobability one in either regime, because separation is a property of the\n*learned* readout.  The definition had to move the randomness into the learned\nembedding coefficients `c` and quantify existentially over readouts\n(`Separable`).  With that change the criterion became exact and the probability\nstatement provable.\n\n## Conjectures\n\n### C1 (E = 24, the shape of the shift). The fragile cure probability is strictly increasing in `E` on `0 < E ≤ D` and is given by `P(maxᵢ≤E cᵢ > 0)`.\nFormally: for i.i.d. symmetric coefficients, `P(cure | E) = 1 − 2^{-E}` for\n`E ≤ D` and `1` for `E > D`, so no `E` in the fragile range has probability `0`\nor `1`.\n**The key insight is** that `separable_eosOf_iff` makes the cure event a\n*maximum-of-coefficients* event, and maxima of independent coordinates are\nmonotone in the number of coordinates — the shift is a max-stability phenomenon,\nnot a capacity phenomenon.\n**Why now?** `separable_eosOf_iff` and `margin_bound_sharp` already pin the\nevent exactly; only the product-measure bookkeeping remains, and the untested\n`E = 24` arm is a direct empirical test of the predicted strict monotonicity.\n\n### C2 (depth amplification, model half now proved). The depth-uniform statement is settled inside the max-plus model: `depth_uniform_ambiguity` shows the fragile boundary trajectory stays within `maxᵢ cᵢ` of the all-digit trajectory at *every* unroll depth, and `exclusive_dim_persists` shows the robust regime keeps its exclusive dimension at every depth.  The open conjecture is the quantitative transfer: in a trained GRU the accuracy at unroll depth `n` in the fragile regime should decay smoothly and monotonically with `n`, with no depth at which it recovers.\n**The key insight is** that a max-plus layer is monotone and commutes with\ntropical scalars (`mplusApply_shift`), so a gap bounded at depth 1 can never be\namplified — which is exactly the observed smooth progressive-unroll collapse\n(1.0000 → 0.9556 → 0.1445 → 0.0166) rather than a cliff.\n**Why now?** The model half is proved with no extra hypotheses, so the empirical\nprediction (monotone, non-recovering degradation in depth for `E ≤ D`, none for\n`E > D`) is immediately falsifiable on the existing unroll sweep.\n\n### C3 (representational distinctness is a matroid/rank invariant). Whether a boundary token is separable depends only on the *support pattern* of the token relative to the supports of the digit atoms, i.e. on the underlying (tropical) matroid, not on the numerical embedding.\n**The key insight is** that `eos_mem_digitSpan_iff` is stated purely in terms of\nsupports, so separability should factor through the lattice of supports and be\ninvariant under any coordinatewise strictly monotone reparametrisation.\n**Why now?** The catalog already contains tropical matroid material\n(`Tropical/TropicalPointMatroid.lean`); joining it to `InDigitSpan` would place\nthis phenomenon inside an existing invariant theory.\n\n### C4 (exclusive dimensions beat width at real scale). At fixed total boundary width, an embedding with `k ≥ 1` exclusive dimensions cures with probability `1` while a width-`W` embedding with `0` exclusive dimensions cures with probability bounded away from `1` for every `W`.\n**The key insight is** `width_is_not_the_control_variable`: two tokens of equal\ntropical support size can lie on opposite sides of the dichotomy, so any law\nphrased in terms of width alone must be a proxy law.\n**Why now?** The prediction is cheap to test (one exclusive dimension added to a\nwidth-20 EOS) and it separates the width hypothesis from the distinctness\nhypothesis in a single arm.\n\n### C5 (statistical sharpness of the two-regime split). The observed data reject *every* exchangeable one-parameter model of the cure event, not merely the i.i.d. Bernoulli one, with likelihood ratio below `10⁻⁵`.\n**The key insight is** that `binomial_kernel_max` bounds the pooled likelihood\nuniformly in the parameter via an AM–GM argument, so the rejection needs no\nasymptotics and should survive replacing independence by exchangeability through\nde Finetti's representation.\n**Why now?** `homogeneous_null_rejected` already gives the i.i.d. case in closed\nform; the exchangeable case is the same bound integrated against a mixing\nmeasure.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Computation"
@@ -38815,6 +38815,47 @@
       "thread_id": "th_33b0f9c2",
       "timestamp": "2026-08-16T00:30:26.516557+00:00",
       "title": "Derived from the results in `Catalog/Tropical/NeuralNetworks/EOSWidth*.lean`"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "# Future directions (derived from the NET-27 formalisation)\n\nThe three files\n`Catalog/NumberTheory/EOSWidthMonotoneRamp.lean`,\n`Catalog/NumberTheory/EOSExclusiveDimGenericity.lean`,\n`Catalog/NumberTheory/EOSRampZetaBridge.lean`\nestablish, in a finite-field obstruction model of the \"exclusive dimension\" reliability curve:\nmonotonicity, strict positivity of failure at every finite width (no capacity cliff), a\ntwo-sided geometric envelope `p^{-k} ≤ 1 - P(cure) ≤ m·p^{-k}`, an exact `q`-Pochhammer\ngenericity bound, and an Euler-product identity linking the ramps over all characteristics to\n`ζ(s)`.  The following conjectures are the natural next targets.\n\n## C1. Exact multi-obstruction curve via subspace Möbius inversion\n\n**Conjecture.**  For a family `W₁,…,W_m` of proper subspaces of an `n`-dimensional `𝔽_p`-space,\nthe failure probability at width `k` is exactly\n`∑_{∅ ≠ S ⊆ [m]} (-1)^{|S|+1} p^{-k·codim(⋂_{j∈S} W_j)}`,\nand in particular the curve `k ↦ P(cure)` is *strictly* increasing whenever `m ≥ 1`, closing the\ngap between `failProb_antitone` (proved) and strict monotonicity (proved here only for `m = 1`).\n\n*The key insight is* that inclusion–exclusion over the lattice generated by the obstructions\nturns the failure count into a signed sum of exact subspace counts, each of which is already a\n`p`-power — so the whole curve is a finite Dirichlet polynomial in `p^{-k}`, whose leading term\nforces strict decrease of the failure mass.\n\n*Why now?*  The exact single-subspace count (`card_tuples_mem`) and the union bound\n(`failCount_le_sum`) are already formalised; only the alternating-sum bookkeeping over\n`Finset (Fin m)` remains, and `Catalog/NumberTheory/SubspaceCounting.lean` supplies the\nGaussian-binomial machinery for the intersections' codimensions.\n\n## C2. The knee is at `k = ⌈log_p m⌉` — a formal \"design rule\"\n\n**Conjecture.**  Define the knee `k*(m,p) := min {k : 1 - P(cure at k) ≤ 1/2}`.  Then in the\nmodel `⌈log_p m⌉ ≤ k*(m,p) ≤ ⌈log_p (2m)⌉`, so the empirically observed \"reserve ≥ 4 exclusive\ndimensions\" rule is the statement `m ≈ 8–16` obstruction modes at `p = 2`.\n\n*The key insight is* that the two-sided envelope proved in `cureProb_deficiency_two_sided`\nalready pins the deficiency between `p^{-k}` and `m p^{-k}`, so the knee can only move by an\nadditive `log_p m`, never by a multiplicative factor — a threshold *location* result even\nthough there is no threshold *sharpness*.\n\n*Why now?*  Both envelope inequalities are theorems; the remaining work is a monotone-inversion\nlemma for `k ↦ m p^{-k}`.\n\n## C3. Ramp/anti-ramp trade-off has an interior optimum\n\n**Conjecture.**  The lower bound of `prob_indep_and_cure_ge`,\n`f(k) = 1 - m p^{-k} - (p^k-1)/((p-1)p^n)`, is maximised at\n`k* = ⌊(n + log_p(m(p-1)))/2⌋ + O(1)`, i.e. the best exclusive width is roughly `n/2`, and the\nmaximum value is `1 - Θ(p^{-n/2})`.\n\n*The key insight is* that the reliability error decays like `p^{-k}` while the genericity error\ngrows like `p^{k-n}`, so the sum is a convex Laurent polynomial in `p^k` whose minimum is at the\ngeometric mean of the two scales — the \"boundary token\" problem is an AM–GM balance, not a\ncapacity constraint.\n\n*Why now?*  Both error terms are already proved in Lean; only a one-variable convexity argument\nover `x = p^k` is missing.\n\n## C4. Zeta-side refinement: the ramp series detects primality\n\n**Conjecture.**  For every integer `q ≥ 2` (not necessarily prime) define the ramp series\n`R_q(s) = ∑_k q^{-ks}`.  Then `∏_{q ≥ 2} R_q(s)` diverges for all `s`, while the product\nrestricted to the characteristics realisable by the model (`q` a prime power) equals\n`ζ(s)·∏_{p} ∏_{r ≥ 2} (1 - p^{-rs})^{-1}`, i.e. the reliability model over all *finite fields*\ncomputes `∏_{r≥1} ζ(rs)`.\n\n*The key insight is* that allowing `𝔽_{p^r}` as the coefficient field replaces each Euler factor\n`(1-p^{-s})^{-1}` by the full `r`-tower, and the resulting product telescopes into a product of\nshifted zeta values — so \"which reliability curves are realisable\" is an arithmetic question.\n\n*Why now?*  `EOSRampZetaBridge.tprod_rampSeries_eq_riemannZeta` establishes the `r = 1` layer\nusing Mathlib's `riemannZeta_eulerProduct_tprod`; the model itself already works over any finite\nfield, only the `ZMod p` specialisation is hard-coded.\n\n## C5. Cliffs are impossible for any exchangeable draw model\n\n**Conjecture.**  Let the `k` exclusive directions be drawn from *any* exchangeable distribution\non `V^k` whose one-dimensional marginal has full support.  Then the reliability curve is still\nmonotone and still satisfies `P(cure at k) < 1` for every `k` — i.e. `IsMonotoneRamp` is\nrobust to the uniformity assumption, and no distributional assumption can create a cliff.\n\n*The key insight is* that the prefix-fibration argument of `failCount_succ_le` never uses\nuniformity, only that the failure event is closed under deleting a coordinate; positivity comes\nfrom the atom at `0`, which any full-support marginal charges.\n\n*Why now?*  The combinatorial core (`failCount_succ_le`) is proved; generalising it means\nreplacing counting measure with an arbitrary product/exchangeable measure, for which Mathlib's\n`MeasureTheory` product API suffices.\n",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Geometry",
+        "Pythagorean"
+      ],
+      "github_issue": 0,
+      "id": "fd_1319",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.75,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "802e1378",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/802e1378",
+      "status": "available",
+      "thread_id": "th_b29599df",
+      "timestamp": "2026-08-16T00:30:39.095515+00:00",
+      "title": "The three files"
     },
     {
       "ambition_level": "extension",
@@ -39150,7 +39191,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 13788cf3 (Q=0.850), which proved 470 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **PLUSONE-SMOOTH-NULL** — factoring research lab round-16 #2 (paper 64, assessment v175, 399 experiments). CONFIRMED null.\n\nThe Williams p+1 / Lucas-sequence weakness — the sibling of the p−1/ECM weakness (closed by SMOOTH-SELFHINT-DENSITY, SEQSMOOTH-NULL) — is invisible from N in three independent ",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Tropical"
       ],
@@ -41390,7 +41431,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 7477e654 (Q=0.850), which proved 501 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Paper 54 (NewMathematics) — Experiment 389, assessment v165. Round-14 #10.**\n\n**Hypothesis:** whether the smaller factor p has p-1 B-smooth (the weakness Pollard p-1 / ECM exploit) is detectable from N alone — a statistical instance-class self-hint (frontier iii).\n\n**Experiment (random k-bit semip",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Tropical"
       ],
@@ -41430,7 +41471,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 785c09ab (Q=0.786), which proved 85 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions: Tropical Mathematics of Social Choice\n\n## 1. Classification of finite min-plus aggregators\n\n**Conjecture.** Every normalized, translation-equivariant, coordinatewise-minimum-preserving map from a finite tropical projective space to the tropical line is a finite minimum of coordi",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Tropical"
       ],
@@ -41895,6 +41936,46 @@
       "thread_id": "",
       "timestamp": "2026-07-31T18:56:28.873535+00:00",
       "title": "Deepening: EML Quantum Activation Functions"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Building on cycle 9c680c24 (Q=0.780), which proved 86 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## Summary\n\nRound-net-26 resolves NET-25's flagged EOS-width threshold (28–384) on the carry-wall cure. Thirty arms on the plain n=5 task (GRUCell(384→192), learned E-d EOS zero-padded to 384, ONLY E varies):\n\n- **Sweep** (E ∈ {20,28,64,96,128,192,256,384} × 2 seeds): E=20 {0.9990, 0.0166} fragile; ",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Tropical"
+      ],
+      "github_issue": 0,
+      "id": "push_9c680c24_935e6e18",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.88,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "9c680c24",
+      "source_path": "NET-26 (paper 70): EOS-WIDTH-DISTRIBUTION-SHIFT — the EOS-width \"threshold\" is a",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-08-16T00:30:32.986685+00:00",
+      "title": "Deepening: NET-26 (paper 70): EOS-WIDTH-DISTRIBUTION-SHIFT — the EOS-width \"threshold\" is a"
     },
     {
       "ambition_level": "extension",
@@ -42870,7 +42951,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle c7164926 (Q=0.780), which proved 72 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Paper (factor3):** [ResearchOutput/NewMathematics/22_Round7_Closures.md](https://github.com/paulklemstine/factor3/blob/main/ResearchOutput/NewMathematics/22_Round7_Closures.md)\n\n---\n\n# Round-7 Hypothesis Closures: Scoping the Noise-Floor Principle and the Trace-Lemma Frontier\n\n**Program:** Factori",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Tropical"
       ],
@@ -43270,7 +43351,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle db97959f (Q=0.860), which proved 75 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Paper:** `ResearchOutput/NewMathematics/38_JacobiSigned_WeilFloor.md` (factor3)\n**Experiment:** JACSIGN (#373), assessment v149.\n\n## Finding\nEvery character-weighted free-witness before (CIRC, BQF, GSP) collapsed to a\nresidue dial (function of N mod 4/8). JACSIGN weights the circle set by (x/N):\nW",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Tropical"
       ],
@@ -44070,7 +44151,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle f3293094 (Q=0.820), which proved 65 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Paper (factor3):** [ResearchOutput/NewMathematics/17_Round4_Closures.md](https://github.com/paulklemstine/factor3/blob/main/ResearchOutput/NewMathematics/17_Round4_Closures.md)\n\n---\n\n# Round-4 Hypothesis Closures: Five Novel Attacks via Exotic Resources, Tested and Closed\n\n**Program:** Factoring r",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Tropical"
       ],
@@ -61633,7 +61714,7 @@
   "pruned": [],
   "recent_domain_counts": {
     "Logic": 1,
-    "Novelty": 61,
+    "Novelty": 62,
     "Physics": 1,
     "Pythagorean": 1
   },
@@ -61647,12 +61728,12 @@
     "*factoring": 22,
     "0.8110": 2,
     "1/φ(f))σ_c": 2,
-    "across": 7,
+    "across": 8,
     "algorithm": 6,
-    "assessment": 35,
+    "assessment": 36,
     "asymmetric": 6,
     "barrier": 45,
-    "barriers": 24,
+    "barriers": 25,
     "beyond": 2,
     "binary": 5,
     "breakthrough": 23,
@@ -61686,21 +61767,21 @@
     "function": 18,
     "generated": 9,
     "governed": 2,
-    "honest": 5,
+    "honest": 6,
     "hypothesis": 5,
-    "independent": 10,
+    "independent": 11,
     "information-sufficient": 2,
-    "inside": 5,
+    "inside": 6,
     "integer": 2,
     "jacsign": 2,
     "lossiness": 2,
-    "mechanism": 4,
+    "mechanism": 5,
     "methods": 6,
     "moduli": 11,
     "n-computable": 8,
     "non-polynomial": 2,
     "orthogonality": 4,
-    "paper": 42,
+    "paper": 43,
     "permutation": 7,
     "pollard": 10,
     "polynomial": 13,
@@ -61709,7 +61790,7 @@
     "proof": 11,
     "proven": 23,
     "quantum": 8,
-    "refuted": 16,
+    "refuted": 17,
     "remains": 14,
     "requires": 11,
     "research": 28,

@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "db97959f",
-      "domain": "Tropical",
-      "key_insight": "# FUTURE DIRECTIONS — after the Jacobi-signed Weil floor\n\nThe formal results in `Catalog/Tropical/JacobiSigned*.lean` settle the JACSIGN\nexperiment: the Jacobi-signed circle count `W(N) = ∑_{x²+y²=1}",
-      "quality_score": 0.86,
-      "sorry_count": 0,
-      "theorem_count": 75,
-      "timestamp": "2026-08-13T13:55:33",
-      "title": "The Jacobi-Signed Circle Count Escapes the Residue Dial, at the Weil Floor"
-    },
-    {
       "cycle_id": "20cf0514",
       "domain": "Applications",
       "key_insight": "# Future directions — bold, testable conjectures from the interval-hint round\n\nThis round formalised the negative verdict for the trace-set (TRACEPROFILE)\nfilter: it is *exact* (`TraceSetFilter.add_me",
@@ -499,19 +489,19 @@
       "theorem_count": 41,
       "timestamp": "2026-08-15T22:46:35",
       "title": "NET-25 (paper 69): DENSE-FINAL-STEP-IS-THE-CURE — the stateful-carry-cell cure was the dense EOS (fi"
+    },
+    {
+      "cycle_id": "9c680c24",
+      "domain": "Tropical",
+      "key_insight": "# Future Directions — tropical theory of boundary-token width\n\nDerived from the results in `Catalog/Tropical/NeuralNetworks/EOSWidth*.lean`\n(analysis stage: what survived, what failed, and why).\n\n## W",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 86,
+      "timestamp": "2026-08-16T00:30:32",
+      "title": "NET-26 (paper 70): EOS-WIDTH-DISTRIBUTION-SHIFT — the EOS-width \"threshold\" is a one-sided P(cure) d"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "a6a59cd3",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions\n\nConjectures suggested by the formalization in `Catalog/Bridges/VertexSplitting.lean` and\n`Catalog/Bridges/VertexSplittingExact.lean`.\nAll are stated in the vocabulary of those fil",
-      "quality_score": 0.686,
-      "sorry_count": 0,
-      "theorem_count": 307,
-      "timestamp": "2026-08-05T09:57:01",
-      "title": "ArXiv paper: Hardness of Vertex Splitting: Cographs, Chordal Graphs, and Beyond"
-    },
     {
       "cycle_id": "9f23a455",
       "domain": "Cryptography",
@@ -2501,27 +2491,19 @@
       "theorem_count": 41,
       "timestamp": "2026-08-15T22:46:35",
       "title": "NET-25 (paper 69): DENSE-FINAL-STEP-IS-THE-CURE — the stateful-carry-cell cure was the dense EOS (fi"
+    },
+    {
+      "cycle_id": "9c680c24",
+      "domain": "Tropical",
+      "key_insight": "# Future Directions — tropical theory of boundary-token width\n\nDerived from the results in `Catalog/Tropical/NeuralNetworks/EOSWidth*.lean`\n(analysis stage: what survived, what failed, and why).\n\n## W",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 86,
+      "timestamp": "2026-08-16T00:30:32",
+      "title": "NET-26 (paper 70): EOS-WIDTH-DISTRIBUTION-SHIFT — the EOS-width \"threshold\" is a one-sided P(cure) d"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "beb0e52b",
-      "domain": "Probability",
-      "name": "negMulLog_sub_half_lt",
-      "quality": 0.91
-    },
-    {
-      "cycle_id": "beb0e52b",
-      "domain": "Probability",
-      "name": "negMulLog_sub_half_le",
-      "quality": 0.91
-    },
-    {
-      "cycle_id": "45ac3b9d",
-      "domain": "Combinatorics",
-      "name": "legendre_eq_kron",
-      "quality": 0.78
-    },
     {
       "cycle_id": "45ac3b9d",
       "domain": "Combinatorics",
@@ -2803,9 +2785,27 @@
       "domain": "Logic",
       "name": "eos_dimension_no_expressivity_gain",
       "quality": 0.78
+    },
+    {
+      "cycle_id": "9c680c24",
+      "domain": "Tropical",
+      "name": "score_mono",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "9c680c24",
+      "domain": "Tropical",
+      "name": "separable_mono",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "9c680c24",
+      "domain": "Tropical",
+      "name": "eosVec_le_of_le",
+      "quality": 0.78
     }
   ],
-  "last_updated": "2026-08-15T22:46:35",
+  "last_updated": "2026-08-16T00:30:32",
   "open_questions": [
     {
       "context": "-    sorry+  -- On the certified range, extract the primitive divisor from the",
@@ -3951,12 +3951,6 @@
     ],
     "Tropical": [
       {
-        "cycle_id": "1f345ab3",
-        "quality": 0.73286,
-        "theorems": 96,
-        "title": "1. **Odd-sample extension.** For every odd sample size `2k+1`, clipped unit-step"
-      },
-      {
         "cycle_id": "2c070abd",
         "quality": 0.627125,
         "theorems": 68,
@@ -4009,6 +4003,12 @@
         "quality": 0.72697,
         "theorems": 37,
         "title": "The Factor3 Program: A Definitive Synthesis of the Barrier Framework"
+      },
+      {
+        "cycle_id": "9c680c24",
+        "quality": 0.78,
+        "theorems": 86,
+        "title": "NET-26 (paper 70): EOS-WIDTH-DISTRIBUTION-SHIFT — the EOS-width \"threshold\" is a"
       }
     ]
   }
