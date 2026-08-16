@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "20cf0514",
-      "domain": "Applications",
-      "key_insight": "# Future directions — bold, testable conjectures from the interval-hint round\n\nThis round formalised the negative verdict for the trace-set (TRACEPROFILE)\nfilter: it is *exact* (`TraceSetFilter.add_me",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 55,
-      "timestamp": "2026-08-13T13:55:47",
-      "title": "INTERVAL-HINT: the trace-set filter is exact (2^-omega pruning) but does not amplify — residue filte"
-    },
-    {
       "cycle_id": "9e8cd1f4",
       "domain": "Algebra",
       "key_insight": "# FUTURE DIRECTIONS — after QUBIT-TRADE (register threshold, closed)\n\nAll Lean files of this thread live in `Catalog/Algebra/QubitTrade/` and compile\nagainst mathlib4 (Lean 4.28.0) with **0 `sorry`s**",
@@ -499,19 +489,19 @@
       "theorem_count": 86,
       "timestamp": "2026-08-16T00:30:32",
       "title": "NET-26 (paper 70): EOS-WIDTH-DISTRIBUTION-SHIFT — the EOS-width \"threshold\" is a one-sided P(cure) d"
+    },
+    {
+      "cycle_id": "802e1378",
+      "domain": "NumberTheory",
+      "key_insight": "# Future directions (derived from the NET-27 formalisation)\n\nThe three files\n`Catalog/NumberTheory/EOSWidthMonotoneRamp.lean`,\n`Catalog/NumberTheory/EOSExclusiveDimGenericity.lean`,\n`Catalog/NumberThe",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 46,
+      "timestamp": "2026-08-16T00:30:44",
+      "title": "NET-27 (paper 71): EOS-WIDTH-SHIFT-IS-A-MONOTONE-RAMP — P(cure) ramps 25→33→83→100→100% as exclusive"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "9f23a455",
-      "domain": "Cryptography",
-      "key_insight": "# Future directions: falsifiable conjectures from the group-model Schnorr formalization\n\nThe new files are\n\n* `Catalog/Cryptography/ZeroKnowledge/SchnorrGroupProtocol.lean` — Schnorr Σ-protocol in a",
-      "quality_score": 0.686,
-      "sorry_count": 0,
-      "theorem_count": 68,
-      "timestamp": "2026-08-05T09:57:12",
-      "title": "Zero-Knowledge Proofs: Schnorr Protocol"
-    },
     {
       "cycle_id": "d9d67aec",
       "domain": "Pythagorean",
@@ -2501,21 +2491,19 @@
       "theorem_count": 86,
       "timestamp": "2026-08-16T00:30:32",
       "title": "NET-26 (paper 70): EOS-WIDTH-DISTRIBUTION-SHIFT — the EOS-width \"threshold\" is a one-sided P(cure) d"
+    },
+    {
+      "cycle_id": "802e1378",
+      "domain": "NumberTheory",
+      "key_insight": "# Future directions (derived from the NET-27 formalisation)\n\nThe three files\n`Catalog/NumberTheory/EOSWidthMonotoneRamp.lean`,\n`Catalog/NumberTheory/EOSExclusiveDimGenericity.lean`,\n`Catalog/NumberThe",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 46,
+      "timestamp": "2026-08-16T00:30:44",
+      "title": "NET-27 (paper 71): EOS-WIDTH-SHIFT-IS-A-MONOTONE-RAMP — P(cure) ramps 25→33→83→100→100% as exclusive"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "45ac3b9d",
-      "domain": "Combinatorics",
-      "name": "quadratic_two_is_dial",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "1b55f202",
-      "domain": "Computation",
-      "name": "sum_terms",
-      "quality": 0.79
-    },
     {
       "cycle_id": "c94236ec",
       "domain": "Novelty",
@@ -2803,9 +2791,21 @@
       "domain": "Tropical",
       "name": "eosVec_le_of_le",
       "quality": 0.78
+    },
+    {
+      "cycle_id": "802e1378",
+      "domain": "NumberTheory",
+      "name": "probIndep_eq_prod",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "802e1378",
+      "domain": "NumberTheory",
+      "name": "one_sub_sum_le_prod_one_sub",
+      "quality": 0.72
     }
   ],
-  "last_updated": "2026-08-16T00:30:32",
+  "last_updated": "2026-08-16T00:30:44",
   "open_questions": [
     {
       "context": "-    sorry+  -- On the certified range, extract the primitive divisor from the",
@@ -3641,12 +3641,6 @@
     ],
     "NumberTheory": [
       {
-        "cycle_id": "5bb368e2",
-        "quality": 0.7482099999999999,
-        "theorems": 10,
-        "title": "Wall-Sun-Sun Primes"
-      },
-      {
         "cycle_id": "1343d96e",
         "quality": 0.65648,
         "theorems": 4,
@@ -3699,6 +3693,12 @@
         "quality": 0.78,
         "theorems": 59,
         "title": "NET-24: A Stateful Carry Cell Unlocks Length-General Carry — The Wall Was the An"
+      },
+      {
+        "cycle_id": "802e1378",
+        "quality": 0.72,
+        "theorems": 46,
+        "title": "NET-27 (paper 71): EOS-WIDTH-SHIFT-IS-A-MONOTONE-RAMP — P(cure) ramps 25→33→83→1"
       }
     ],
     "Physics": [
