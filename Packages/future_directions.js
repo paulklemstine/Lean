@@ -3,21 +3,6 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "consumed_by_exp_id": "8da3e793",
-    "description": "**Part of:** Research plan \u2014 *Compression Beyond the Pigeonhole Bound* (Phase A, Question 1: separating the decompressor from the data).\n\n## Research question\nA fixed pretrained model (e.g., an LLM) used as the shared decompressor + arithmetic-coded residual beats classical compressors on text by a wide margin. The open problem: **the transmitted model delta costs bits** \u2014 how do we amortize it?\n\n## Approach\n- Benchmark LLM-as-decompressor against gzip/bz2/context-mixing baselines (enwik8/9).\n- Investigate sparse / low-rank parameter patches (LoRA-style) as the transmitted program \u2014 how many bits to shift a shared decoder to a specific domain?\n- Design an amortized protocol: decompressor adapts across a *stream* of messages, paying the delta once.\n\n## Deliverable\nSOTA text-compression baseline under the 16 GB decode standard, plus an amortized model-delta protocol.\n\n## Falsifiability / gate\nMust beat classical baselines *losslessly* (decoded output exactly matches input) with the decoder fixed at deploy time. Any delta is part of the transmitted message.\n\n**Milestone:** M4.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1293",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-15T05:50:03.463912+00:00",
-    "title": "Compression Research A2: Learnable shared decompressors \u2014 model is free, model delta is not"
-  },
-  {
     "consumed_by_exp_id": "8ed04a73",
     "description": "## Question\n\nNET-15/16/17/20/33/34 established k* = d\u00b7ctx/32 at a second seed in most of the (d \u00d7 ctx) grid. Two cells remained single-seed, at the grid's extreme corners: **d=16 @ ctx=128** (NET-17, s0 only, predicting k*=4d=64) and **ctx=512 @ d=4** (NET-35, s1 only, predicting k*=d\u00b7ctx/32=64). Do both land exactly at fresh second seeds, making the measured grid two-seed everywhere?\n\n## Method\n\nByte-identical harness to NET-15/17/20/33/34/35 \u2014 CausalTF dm=64, 4 heads, 5 Gutenberg novels, vocab 4097, contiguous 90/10 split, 2000 AdamW steps \u2014 at **d=16 seed=1 @ ctx=128** (1078s train) AND **d=4 seed=2 @ ctx=512** (2706s train). Per cell: full-acc eval \u2192 concentration (eff support) \u2192 top-k sweep \u2192 random-k control (seed 12345). k* = smallest k with retained \u2265 0.98\u00b7full. **Predictions stated before the run: k* = 64 both** (4d and d\u00b7ctx/32). Script /tmp/exp_net_attncost_grid.py; log /tmp/net36.log.\n\n## Results\n\n| cell | predicted | k sweep (retained) | k* | verdict |\n|---|---|---|---|---|\n| d=16, ctx=128, s1 | 4d = 64 | 8\u21920.858 16\u21920.922 32\u21920.970 \u2717 64\u2192**0.996** \u2713 96\u21920.999 128\u21921.000 | **64** | EXACT |\n| d=4, ctx=512, s2 | d\u00b7ctx/32 = 64 | 16\u21920.965 \u2717 32\u21920.976 \u2717 64\u2192**0.985** \u2713 128\u21920.993 256\u21920.998 384\u21921.000 | **64** | EXACT |\n\n- **Both cells land EXACT on k* = 64.** The depth leg k*=4d now holds at **all three depths \u00d7 two seeds** (16/32/64 at d=4/8/16 @ ctx=128); the context leg holds to **4\u00d7 context at two seeds** (64 @ ctx=512 d=4 s1+s2). **Every measured cell of the (d \u00d7 ctx) grid is now two-seed**; the deployable lever speedup = 32/d (8\u00d7 at d=4) is seed-independent at every measured corner.\n- **P3 refinement \u2014 NET-35's long-context margin erosion does NOT reproduce at s2:** the ctx=512 pass is 0.985 (margin 0.005 \u2014 healthy) vs s1's 0.983 (margin 0.003 \u2248 2 SE). The margin at 512 is **seed-fluctuating \u00b10.002**, not systematically eroding; the retained curve is still ~0.005\u20130.01 below 128/256 at both seeds (mild long-context depression, knee unaffected). Re-check at ctx=1024.\n- **Concentration reproduces to three significant figures:** eff support 152.11 = 152.11 (s1 vs s2), top-32 0.533/0.532, per-position 20.41\u201320.45 / 133.23\u2013133.37 / 281.20\u2013281.46. Depth-drift continues at d=16 (eff 52.73; 46.6\u219250.2\u219252.7).\n- **Selection importance survives:** random-k gaps cell A +10.0/+6.0 (largest yet), cell B +7.6/+5.2.\n- Eight-model full-acc set 0.1571\u20130.1620, k*-irrelevant.\n\n## Barriers\n\n(a) circularity \u2014 no, both predictions stated before the run, k* from each model's own trained attention; (b) known-method \u2014 no, two-seed grid-completion of an established law (Catalog re-scan: no prior work); (c) toy-scale \u2014 confronted, the grid's extreme corners (deepest d=16, longest ctx=512), real causal word LM, 4097 vocab, held-out loss+acc; (d) leakage \u2014 none, held-out last-10%, data-free top-k; (e) variance \u2014 the round's content, both last single-seed cells closed, concentration reproduces to 0.001; remaining non-threatening: ctx=512 at d=8/16, d=8 @ ctx=256 s0 corner, ctx=1024; (f) measurement \u2014 clean, k=384 recovers full loss exactly, retained 1.000 = re-normalization MC saturation, seed-2 margins exceed binom SE; (g) baselines \u2014 fair, full-attention reference + random-k control at same k, same bar; (h) relevance \u2014 strengthened, the speedup lever is seed-independent at every measured corner.\n\n## Verdict\n\n**GRID-COMPLETION CONFIRMED** \u2014 every measured cell of the (d \u00d7 ctx) grid is now two-seed. The attention-cost law k* = d\u00b7ctx/32 (speedup 32/d, context-invariant) is seed-independent at every measured corner; no per-instance re-measurement needed within the measured grid.\n\nOpen: ctx=1024 (margin-erosion re-check, ~3.2h); ctx=512 at d=8/16; d=8 @ ctx=256 s0 corner. Paper 80. Round-net-36, assessment v36.",
     "domains": [
@@ -796,48 +781,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle 677413db (Q=0.830), which proved 93 theorems in Algebra. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Paper:** `ResearchOutput/NewMathematics/35_ClassGroup_ResidueDial.md` (factor3)\n**Experiment:** RANDOM-BQF (#370), assessment v146.\n\n## Finding\nThe round-13 brainstorm's most-plausible-positive path: attach an extrinsic\ndiscriminant D, compute Cl(D) (poly|D|, no factoring), measure the representat",
-    "domains": [
-      "Algebra"
-    ],
-    "id": "push_677413db_af9ef4e5",
-    "priority_score": 0.9299999999999999,
-    "research_mode": "team",
-    "source_exp_id": "677413db",
-    "status": "available",
-    "timestamp": "2026-08-14T12:04:19.688440+00:00",
-    "title": "Deepening: The Extrinsic Class-Group Representation Vector is a Residue Dial, Closed"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 20cf0514 (Q=0.820), which proved 55 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Paper 51 (NewMathematics) \u2014 Experiment 386, assessment v162. Round-14 #9.**\n\n**Hypothesis:** can the FREE trace-set filter (TRACEPROFILE) amplify an external interval hint s in [s0-E, s0+E]?\n\n**Experiment (400 semiprimes, k=24 / 48-bit N; trace-set + p-set filters omega=0-20 primes; rejection-orde",
-    "domains": [
-      "Applications"
-    ],
-    "id": "push_20cf0514_7695d9b8",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "20cf0514",
-    "status": "available",
-    "timestamp": "2026-08-13T13:55:47.738633+00:00",
-    "title": "Deepening: INTERVAL-HINT: the trace-set filter is exact (2^-omega pruning) but does not amp"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 299127cc (Q=0.820), which proved 59 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **GENERIC-RECOVERY (round-14 #11, experiment 390, assessment v166, paper 55).**\n\nHypothesis: recovery of p from a t-bit external hint is bounded by the hint's usable information. Verified on exact k-bit-prime sets (k=14-25) and random semiprimes (k=16-20):\n\n1. **Generic hints information-exact**: t-",
-    "domains": [
-      "Combinatorics"
-    ],
-    "id": "push_299127cc_8c2fb89c",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "299127cc",
-    "status": "available",
-    "timestamp": "2026-08-15T14:47:41.656616+00:00",
-    "title": "Deepening: Exp 390 GENERIC-RECOVERY: recovery-from-hint = 2^(k-1-t_eff) \u2014 hint taxonomy clo"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Building on cycle 50be6807 (Q=0.820), which proved 171 theorems in Algebra. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## A4-FORK-PINNING (round-21 #1, experiment 410, assessment v186, paper 75)\n\n**The first cubic-pinned NON-abelian fork: A\u2084's V\u2084-order fork pins at H(1/3), exactly like the abelian cyclic cubic.** Papers 65\u201371 established the pinning-content criterion: a binary splitting fork is congruence-pinned by ",
     "domains": [
       "Algebra"
@@ -863,34 +806,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-13T17:19:09.572305+00:00",
     "title": "Deepening: Entanglement-Monotone: Formalization of Logarithmic Negativity Bounds"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 5ddbfca0 (Q=0.820), which proved 92 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ",
-    "domains": [
-      "MachineLearning"
-    ],
-    "id": "push_5ddbfca0_e5a69303",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "5ddbfca0",
-    "status": "available",
-    "timestamp": "2026-08-14T00:06:44.114509+00:00",
-    "title": "Deepening: Round-6 Hypothesis Closures: The Noise-Floor Principle and the Trace-Lemma Front"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 67289c0d (Q=0.820), which proved 74 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Summary.** Singular moduli factoring WORKS but its scaling is provably\nexponential.\n\n**The method (confirmed).** Try gcd(H_D(j_0), N) for discriminants D and\nevaluation points j_0, where H_D is the Hilbert class polynomial. All 8 test\nsemiprimes (up to N = 5183) factored, using 1-42 evaluations.\n\n",
-    "domains": [
-      "Cryptography"
-    ],
-    "id": "push_67289c0d_c38d1f4a",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "67289c0d",
-    "status": "available",
-    "timestamp": "2026-08-15T10:47:01.448051+00:00",
-    "title": "Deepening: Singular Moduli Factoring and the \u221aN Barrier"
   },
   {
     "consumed_by_exp_id": "",
@@ -2980,6 +2895,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-12T16:18:37.975803+00:00",
     "title": "Deepening: Three Structural Barrier Theorems for Integer Factorization"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 8da3e793 (Q=0.780), which proved 73 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Part of:** Research plan \u2014 *Compression Beyond the Pigeonhole Bound* (Phase A, Question 1: separating the decompressor from the data).\n\n## Research question\nA fixed pretrained model (e.g., an LLM) used as the shared decompressor + arithmetic-coded residual beats classical compressors on text by a ",
+    "domains": [
+      "Tropical"
+    ],
+    "id": "push_8da3e793_655a219f",
+    "priority_score": 0.88,
+    "research_mode": "team",
+    "source_exp_id": "8da3e793",
+    "status": "available",
+    "timestamp": "2026-08-16T04:00:14.992793+00:00",
+    "title": "Deepening: Compression Research A2: Learnable shared decompressors \u2014 model is free, model d"
   },
   {
     "consumed_by_exp_id": "",
@@ -6653,7 +6582,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "PAC-Bayes Bounds: Information-Theoretic Generalization"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6e253e5d",
     "description": "Model EML network training in the tropical limit (large weights) as piecewise-linear optimization. Prove that gradient descent on tropical EML functions converges to a tropical rational function that minimizes the tropical loss. Derive convergence rates and compare to ReLU networks.",
     "domains": [
       "EML",
@@ -6661,10 +6590,11 @@ window.FUTURE_DIRECTIONS = [
       "MachineLearning"
     ],
     "id": "seed_338",
+    "phase": "A",
     "priority_score": 0.83,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "EML Learning Theory: Gradient Descent Convergence in the Tropical Limit"
   },
@@ -19102,6 +19032,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-16T03:13:23.844565+00:00",
     "title": "What is settled (formally, 0 sorries, in `Catalog/MachineLearning/PRNGCompressio"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions \u2014 Compression beyond the pigeonhole bound (Tropical / min-plus track)\n\nDerived from the verified results in `Catalog/Tropical/CompressionDelta/`\n(`Core`, `Amortization`, `Pigeonhole`, `Lossless`, `TropicalBridge`, `Coherence`,\n`DeltaCounting`, `Structure`, `BlockCoherence`).  All conjectures below are falsifiable:\neach can be refuted by a single counterexample in the min-plus model already formalized.\n\n## C1. The amortized rate of *any* streaming adaptation protocol is a tropical eigenvalue\n\n**Conjecture.**  For a finite decoder-state set `M`, delta cost `dlt` and a periodic stream\nof residual costs, the limit `optCost(n)/n` exists and equals the minimum cycle mean of the\nassociated min-plus cost matrix (its tropical eigenvalue), and the optimal protocol is\neventually periodic with that cycle.\n\n*The key insight is* that `CompressionDelta.tropical_pow_mulVec_eq_optCost` already\nidentifies `optCost` with a tropical matrix power, so the asymptotic bits-per-message is\nby definition the growth rate of tropical powers \u2014 the min-plus analogue of the spectral\nradius, which for min-plus matrices is the minimum cycle mean.\n\n*Why now?*  Both special cases are proved: coherent streams give cycle mean `r`\n(`tendsto_amortized_rate`), block-alternating streams give `r + min(2D,L)/(2L)`\n(`tendsto_block_rate`).  A general Karp-style theorem would subsume both and give a\ncomputable design rule for adaptation schedules.\n\n## C2. Optimal adaptation schedules are hysteretic, with threshold exactly `D`\n\n**Conjecture.**  For every cost stream (not just replicate/alternating ones), an optimal\nschedule exists that changes decoder state at message `i` only if the state it enters is\noptimal for at least `D` of the next messages; and this \"commit for `D` messages\" rule is\noptimal within an additive `D` bits.\n\n*The key insight is* that all sharp results so far \u2014 `optCost_replicate_eq`\n(`n\u00b7r + min(D,n)`), `beats_generic_iff` (break-even exactly at `n = D`), and the block law\n(`min(2D, L)`) \u2014 express the same trade-off: a switch is worth it iff the coherent run it\nserves is at least as long as the delta.\n\n*Why now?*  The exact block optimum shows mixed policies can beat both pure policies\n(see \u00a73 of `ComputationalEvidence.md`), so a *provable* greedy/threshold rule with an\nadditive-`D` guarantee is the natural next theorem, and it is directly testable against\nthe DP.\n\n## C3. The `log K` warm-up delay is unavoidable *on average*, not just in the worst case\n\n**Conjecture.**  If a shared decompressor serves `K` domains with prefix-free patches, then\nthe *average* patch length is at least `log\u2082 K \u2212 O(1)`, and hence the average break-even\nstream length over domains is `\u03a9(log K)`; no reparametrisation (LoRA rank, sparsity\npattern, quantisation) can beat this without shrinking the number of reachable domains.\n\n*The key insight is* that `exists_expensive_patch` is a pigeonhole statement about the\npatch alphabet itself, and Kraft's inequality upgrades a worst-case counting bound to an\naverage-case one.\n\n*Why now?*  `log_delay_before_gain` and `total_patch_overhead` already give the worst-case\nand aggregate versions; the missing ingredient is Kraft's inequality for the patch code,\na self-contained formalization target.\n\n## C4. Delta reuse across domains: a metric-entropy law for patch libraries\n\n**Conjecture.**  If the delta cost obeys the triangle inequality, then the optimal cost of\nserving a set `S` of domains from one pretrained decoder is, up to a factor of 2, the\nminimum weight of a spanning structure on `S` in the delta metric \u2014 so a *library* of\npatches costs the metric entropy of the domain space, not `|S|` independent patches.\n\n*The key insight is* `minPlusComp_eq_self_iff_triangle` and `optCost_minPlusComp`: under\nthe triangle inequality, multi-hop patches never help *within* a stream, which is exactly\nthe condition making a spanning-tree/Steiner argument tight *across* domains.\n\n*Why now?*  The triangle-inequality machinery and the superadditivity lemma\n(`optCost_append_ge`) are in place; what remains is to connect them to a combinatorial\noptimum over the domain set, which is a finite, decidable target.\n\n## C5. A losslessness-preserving compiler from probabilistic models to min-plus costs\n\n**Conjecture.**  For any decoder given by a conditional probability model, the\narithmetic-coding residual lengths satisfy the hypotheses of `optCost_replicate_eq` up to\nan additive `2` bits per message, so all the sharp results here transfer verbatim to real\nLLM-as-decompressor pipelines with an `O(1)` per-message slack.\n\n*The key insight is* that `CompressionDelta.SharedCodec` plus\n`decodeStream_encodeStream` already isolate the only property the theory needs from a\ndecoder: exact round-tripping on a domain of at most `2^s` messages.\n\n*Why now?*  It converts the abstract cost model into a falsifiable engineering claim\n(measure `r`, `D`, and the coherence length `L` on a real corpus and check\n`r + min(2D,L)/(2L)` against measured bits-per-message), while keeping the losslessness\ngate formally verified.\n",
+    "domains": [
+      "Tropical",
+      "Algebra"
+    ],
+    "id": "fd_1324",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "8da3e793",
+    "status": "available",
+    "timestamp": "2026-08-16T04:00:02.168347+00:00",
+    "title": "Derived from the verified results in `Catalog/Tropical/CompressionDelta/`"
   },
   {
     "consumed_by_exp_id": "",

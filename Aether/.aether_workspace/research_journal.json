@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "c80347ac",
-      "domain": "Novelty",
-      "key_insight": "# Future directions — the Walsh/GF(2) face of the factoring barrier\n\nDerived from the Stage-3 analysis and Stage-4 critique of the results now proved in\n`Catalog/Novelty/WalshSpectralFlatness.lean` an",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 73,
-      "timestamp": "2026-08-13T18:14:59",
-      "title": "EMPIRICAL-DEGREE: the factoring function is spectrally flat — no low-degree parity of N approximates"
-    },
-    {
       "cycle_id": "b7a22960",
       "domain": "Logic",
       "key_insight": "# Future Directions — Boolean-Valued Multiverse Semantics (cycle 2 output)\n\nThe results of this cycle are in\n\n* `Catalog/Logic/Multiverse/BooleanValuedRealization.lean` — Boolean-valued\n  universe, ge",
@@ -499,19 +489,19 @@
       "theorem_count": 54,
       "timestamp": "2026-08-16T03:13:35",
       "title": "Compression Research B1: Negative result — PRNGs cannot beat pigeonhole (proof + demo)"
+    },
+    {
+      "cycle_id": "8da3e793",
+      "domain": "Tropical",
+      "key_insight": "# Future directions — Compression beyond the pigeonhole bound (Tropical / min-plus track)\n\nDerived from the verified results in `Catalog/Tropical/CompressionDelta/`\n(`Core`, `Amortization`, `Pigeonhol",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 73,
+      "timestamp": "2026-08-16T04:00:14",
+      "title": "Compression Research A2: Learnable shared decompressors — model is free, model delta is not"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "f14ecb01",
-      "domain": "Probability",
-      "key_insight": "# Future directions: Erdős–Rényi threshold phenomena\n\nThis cycle proved the **sharp connectivity threshold** of `G(n,p)` at `p = log n / n`\ninside the catalog's elementary finite model\n(`ErdosRenyi.ma",
-      "quality_score": 0.686,
-      "sorry_count": 0,
-      "theorem_count": 113,
-      "timestamp": "2026-08-05T12:26:04",
-      "title": "Deepening: Random Graphs: Erdős-Rényi Threshold Phenomena"
-    },
     {
       "cycle_id": "2d9904f9",
       "domain": "Combinatorics",
@@ -2501,27 +2491,19 @@
       "theorem_count": 54,
       "timestamp": "2026-08-16T03:13:35",
       "title": "Compression Research B1: Negative result — PRNGs cannot beat pigeonhole (proof + demo)"
+    },
+    {
+      "cycle_id": "8da3e793",
+      "domain": "Tropical",
+      "key_insight": "# Future directions — Compression beyond the pigeonhole bound (Tropical / min-plus track)\n\nDerived from the verified results in `Catalog/Tropical/CompressionDelta/`\n(`Core`, `Amortization`, `Pigeonhol",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 73,
+      "timestamp": "2026-08-16T04:00:14",
+      "title": "Compression Research A2: Learnable shared decompressors — model is free, model delta is not"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "f2bb5930",
-      "domain": "Shared",
-      "name": "lb3_lower",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "f2bb5930",
-      "domain": "Shared",
-      "name": "lb3_upper",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "f2bb5930",
-      "domain": "Shared",
-      "name": "lb5_lower",
-      "quality": 0.72
-    },
     {
       "cycle_id": "ed381d4e",
       "domain": "Shared",
@@ -2803,9 +2785,27 @@
       "domain": "MachineLearning",
       "name": "seedBits_injective",
       "quality": 0.78
+    },
+    {
+      "cycle_id": "8da3e793",
+      "domain": "Tropical",
+      "name": "optCost_replicate_le",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "8da3e793",
+      "domain": "Tropical",
+      "name": "optCost_replicate_le_delta",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "8da3e793",
+      "domain": "Tropical",
+      "name": "rate_le_optCost_replicate",
+      "quality": 0.78
     }
   ],
-  "last_updated": "2026-08-16T03:13:35",
+  "last_updated": "2026-08-16T04:00:14",
   "open_questions": [
     {
       "context": "-    sorry+  -- On the certified range, extract the primitive divisor from the",
@@ -3951,12 +3951,6 @@
     ],
     "Tropical": [
       {
-        "cycle_id": "2c070abd",
-        "quality": 0.627125,
-        "theorems": 68,
-        "title": "Deepening: Tropical Convexity and Helly Theorem"
-      },
-      {
         "cycle_id": "ea23936f",
         "quality": 0.627125,
         "theorems": 96,
@@ -4009,6 +4003,12 @@
         "quality": 0.78,
         "theorems": 86,
         "title": "NET-26 (paper 70): EOS-WIDTH-DISTRIBUTION-SHIFT — the EOS-width \"threshold\" is a"
+      },
+      {
+        "cycle_id": "8da3e793",
+        "quality": 0.78,
+        "theorems": 73,
+        "title": "Compression Research A2: Learnable shared decompressors — model is free, model d"
       }
     ]
   }

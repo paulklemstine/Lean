@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-16T03:13:38.805545+00:00",
+  "last_updated": "2026-08-16T04:00:18.003142+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -56491,6 +56491,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-08-16T03:13:38.621354+00:00",
       "title": "Compression Research B1: Negative result \u2014 PRNGs cannot beat pigeonhole (proof + demo)"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Tropical",
+      "duration_seconds": 2792.5147359371185,
+      "end_time": 1786852791.2889187,
+      "files_integrated": 4,
+      "job_id": "8da3e793",
+      "outcome_quality": 0.78,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.78,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.526,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.78,
+        "novelty": 0.78,
+        "proof_depth": 0.78,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1786849998.7741828,
+      "strategy_count": 0,
+      "theorem_count": 73,
+      "theorem_novelty_disproof": 10,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 48,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-08-16T04:00:17.821448+00:00",
+      "title": "Compression Research A2: Learnable shared decompressors \u2014 model is free, model delta is not"
     }
   ]
 }
