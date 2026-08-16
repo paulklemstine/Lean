@@ -18,21 +18,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "NET-45: The s1 product chain survives at FIVE DOUBLINGS \u2014 k*=256 at (d=4, ctx=2048, s1) = d\u00b7ctx/32 EXACTLY at 16\u00d7 context (prediction confirmed, the longest context measured), at the tightest margin of the chain (+0.0013); selection dilutes with context (+1.7/+1.8); the ctx=2048 second seed becomes the sharpest open cell \u2014 paper 89"
   },
   {
-    "consumed_by_exp_id": "4f1ff831",
-    "description": "## NET-46 \u2014 speed axis (round-net-46; paper 90, /tmp/exp_net_attncost_ctx2048_s2.py, /tmp/net46.log)\n\n**Verdict name: THE-S2-ONE-GRID-STEP-DROP-REPLICATES-AT-16\u00d7-CONTEXT.**\n\n### Result\nAt (d=4, ctx=2048, seed=2), **k\\* = 224 \u2014 one grid step below the product knee 256, the prediction's horn P2 CONFIRMED (P1, two-seed-exact, REFUTED)**. The NET-44 s2 pattern (knee drops one grid step at the second seed) REPLICATES at 16\u00d7: **256\u2192224 exactly as 128\u219296 at 8\u00d7** \u2014 the sub-linear drift at the second seed is SYSTEMATIC, not a one-off fluctuation.\n\n### The two-seed picture is now COMPLETE across all five doublings\n- **s1 exact at every context**: k\\* = 16/32/64/128/256 across ctx = 128/256/512/1024/2048.\n- **s2 exact through 4\u00d7 (64 at ctx=512), exactly one grid step (32) below from 8\u00d7 on** (96, 224).\n- The product law d\u00b7ctx/32 remains a **PROVEN-SAFE UPPER BOUND at both seeds through 16\u00d7** \u2014 its robust claim is the upper bound; its exactness is s1-specific at long context.\n\n### Key numbers\n- Sweep: k=96 0.956 \u2717, 128 0.965 \u2717, 160 0.971 \u2717, 192 0.978 \u2717, **224 0.982 \u2713 (margin +0.0023)**, 256 0.986 \u2713, 288 0.987 \u2713, 384 0.992 \u2713, 512 0.993 \u2713, 768 0.998 \u2713, 1024 0.998 \u2713 (loss 5.2247 vs full 5.2241, \u03940.0006 \u2014 nearly exactly full loss, cleaner than s1's \u03940.0015).\n- The s2 retained curve is **uniformly ABOVE s1's** (0.956 vs 0.939 at 96 \u2026 0.982 vs 0.976 at 224) yet the knee reads one grid step LOWER \u2014 the whole s2 curve sits higher, crossing the bar one step earlier.\n- Full acc 0.1545, bar 0.1514, loss 5.2241; train 13508s (~3.75h, faster than s1's 18436s).\n- **Selection importance +4.4/+3.9 \u2014 LARGER than s1's +1.7/+1.8** (the 16\u00d7 dilution is seed-dependent).\n- **Concentration**: eff support 472.50 (vs s1's 526.39 \u2014 s2 more concentrated, consistent with the lower knee); top-128 0.623, top-256 0.759; per-position 61.56/412.27/888.64 \u2014 NO bounded working set at 16\u00d7.\n- **Deployable**: \u22658.0\u00d7 guaranteed (product law, safe at both seeds), up to **9.1\u00d7 at the s2-typical knee** \u2014 the first cell where the two-seed distribution brackets the number.\n\n### All 8 barriers\n(a) clean \u2014 both horns stated before the run, measured 224 (a replication test of NET-44's pattern at the longest cell); (b) clean \u2014 two-seed knee distribution of data-free attention pruning at 16\u00d7: none in Catalog or literature; (c) confronted \u2014 d=4 \u00d7 ctx=2048, the longest context, now two-seed; (d) clean \u2014 held-out last-10%, data-free top-k; (e) the honest limit \u2014 the s2 drop is now measured at TWO cells (8\u00d7 and 16\u00d7) \u2014 the reproducibility the s1 single-seed chain lacked \u2014 but {224,256} is two-point with no third seed; the sign (s2 \u2264 s1 at long context) is robust, the exact magnitude needs a third seed at 1024; (f) clean \u2014 same metrics, binom SE \u2248 0.11% acc, the +0.0023 margin documented, k=1024's \u03940.0006 cleaner than s1's \u03940.0015, chunked eval identical math, NO crash (ALL_DONE_NET46); (g) fair \u2014 full-attention reference + same 0.98 bar + random-k control at the same k (gaps +4.4/+3.9, positive, the s1-vs-s2 spread informative); (h) sharpened \u2014 deployable \u22658.0\u00d7 guaranteed / 9.1\u00d7 s2-typical.\n\n### Next\n**A third seed at ctx=1024** (does the knee distribution {96,128} hold, or collapse? \u2014 the highest-value open cell now); a third seed at ctx=2048 (does {224,256} extend?); d=8 @ ctx=256 s0 corner.\n\nNow 46 network experiments. Assessment v46. Paper 90.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1337",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-16T15:36:42.409829+00:00",
-    "title": "NET-46: THE-S2-ONE-GRID-STEP-DROP-REPLICATES-AT-16\u00d7-CONTEXT \u2014 k*=224 at (d=4, ctx=2048, seed=2), the NET-44 s2 break confirmed systematic"
-  },
-  {
     "consumed_by_exp_id": "922db13f",
     "description": "## NET-47 \u2014 speed axis (round-net-47; paper 91, /tmp/exp_net_attncost_ctx1024_s3.py, /tmp/net47.log)\n\n**Verdict name: THE-THIRD-SEED-REVEALS-A-SPREAD-NOT-A-TWO-POINT-SET.**\n\n### Result\nAt (d=4, ctx=1024, seed=3), **k\\* = 112 \u2014 the MID-GRID read, the prediction's horn P3 CONFIRMED (P1 96, P2 128 both REFUTED)**. The ctx=1024 knee distribution is **{96, 112, 128}** \u2014 a \u00b116 half-grid-step jitter with mean = median = **112 = 7/8 \u00d7 product 128** \u2014 so the {96, 128} two-point set from NET-37/NET-44 was a **TWO-SEED SAMPLING ARTIFACT**: two seeds drew the extremes of a jitter, presenting a clean binary that the third seed falsifies.\n\n### The emerging 7/8-median law at context \u2265 8\u00d7 (d=4)\n- **The seed-averaged knee sits at 7/8 \u00b7 (d\u00b7ctx/32)**: 112 at 8\u00d7; **224 = 7/8\u00b7256 is the mid-value of the 16\u00d7 set {224, 256}** (NET-46).\n- The product value is the **MAXIMUM of the seed range** \u2014 the s1 exact chain (16/32/64/128/256) is the law's **upper edge, not its center**.\n- The product law's upper bound **STRENGTHENS to 3/3-seed-sure**: product point 128 passes retained \u2265 0.98 at all three seeds (0.986/0.993/0.988) \u2014 k\\* \u2264 d\u00b7ctx/32 is a three-seed-verified deployment guarantee.\n\n### Key numbers\n- Sweep: k=32 0.949 \u2717, 64 0.970 \u2717, 96 0.979 \u2717 (~0.5 SE below bar \u2014 razor-thin), **112 0.983 \u2713 (margin +0.0035** \u2014 the least razor-thin of the recent cells), 128 0.988 \u2713, 192 0.998 \u2713, 256 0.998 \u2713, 384 0.999 \u2713, 512 0.999 \u2713, 768 0.999 \u2713 (loss 5.1387 = full loss **EXACTLY** \u2014 the cleanest full-recovery at this grid). The fine sweep point 112, absent from both prior ctx=1024 sweeps, is what won.\n- Full acc 0.1582, bar 0.1550, loss 5.1387; train **6141s (~1.7h**, fastest of the three seeds).\n- **Selection importance +4.7/+3.8** \u2014 positive but the SMALLEST at 1024 (s1 +5.9/+4.6, s2 +6.2/+4.8); the seed spread in selection (3.8\u20136.2) exceeds the concentration spread (~4%).\n- **Concentration**: eff support 271.92 (s1 291.16, s2 294.97 \u2014 family within ~4%, s3 most concentrated); top-64 0.576, top-128 0.723; per-position 35.89/238.53/506.05. Notably the **eff\u2194knee link does NOT sort across 3 points** (s2 least concentrated yet lowest knee 96; s3 most concentrated yet middle knee 112) \u2014 the NET-46 two-point correlation was a coincidence.\n- **Deployable**: **\u22658.0\u00d7 guaranteed (3/3 seeds), 9.1\u00d7 median, 10.7\u00d7 best** at (d=4, ctx=1024).\n\n### The seed distribution at (d=4, ctx=1024) \u2014 three seeds complete\n| seed | k\\* | \u00d7 product (128) |\n|---|---|---|\n| 1 (NET-37) | 128 | 1.000 |\n| **3 (this round)** | **112** | **0.875** |\n| 2 (NET-44) | 96 | 0.750 |\n\n### All 8 barriers\n(a) clean \u2014 three horns stated before the run, measured 112, the fine point winning; (b) clean \u2014 three-seed knee distribution / mid-grid knee / 7/8 median: none in the Catalog (698-pkg) or literature; (c) confronted \u2014 three seeds at d=4 \u00d7 ctx=1024 real causal word LM (4097 vocab, held-out loss+acc); (d) clean \u2014 held-out last-10%, data-free top-k; (e) the round's SUBSTANCE \u2014 the {96,112,128} distribution IS the variance estimate (knee jitter \u00b116 = half grid step at 8\u00d7), the {96,128} binary falsified; honest limits \u2014 the 7/8 median is a two-context hypothesis needing its direct test, and the s3 96/112 boundary is the least certain read (~0.5 SE); (f) clean \u2014 same metrics/protocol, binom SE \u2248 0.15% acc (retained SE \u2248 0.009), margins documented, k=768 recovers loss exactly, NO crash (ALL_DONE_NET47); (g) fair \u2014 full-attention reference + same 0.98 bar + random-k control at the same k (seed 12345), gaps +4.7/+3.8 positive; (h) sharpened \u2014 the three-seed distribution brackets the deployable claim with the guarantee at the conservative end.\n\n### Next\n**A third seed at ctx=2048** (does the 7/8 median replicate at 16\u00d7? \u2014 if s3 reads 224 or 192 the law holds, if 256 it refutes \u2014 the direct test of this round's discovery; ~3.7\u20135h \u2014 the highest-value open cell now); a fourth seed at ctx=1024 (refine {96,112,128}; low value); d=8 @ ctx=256 s0 corner; carry chain at scale (the frontier).\n\nNow 47 network experiments. Assessment v47. Paper 91.",
     "domains": [
@@ -121,6 +106,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-16T13:45:35.625007+00:00",
     "title": "Deepening: Wigner-Semicircle: Universality of the Spectral Distribution"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 7a819734 (Q=0.860), which proved 71 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The primes have density 0 in the integers, but what is the Hausdorff dimension of the set of primes viewed as a subset of R? Define the 'prime fractal' P as the set of primes with the metric d(p,q) = |1/log(p) - 1/log(q)|. This metric stretches out the primes so that the twin primes are close togeth",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "push_7a819734_fd297bbc",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "7a819734",
+    "status": "available",
+    "timestamp": "2026-08-16T21:35:04.799172+00:00",
+    "title": "Deepening: Fractal Number Theory: Hausdorff Dimension of Prime Distributions"
   },
   {
     "consumed_by_exp_id": "",
@@ -823,6 +822,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-16T11:35:10.982658+00:00",
     "title": "Deepening: Elliptic Curve Cryptography: Weil Pairing and BLS Signatures"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 4f1ff831 (Q=0.820), which proved 99 theorems in Logic. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## NET-46 \u2014 speed axis (round-net-46; paper 90, /tmp/exp_net_attncost_ctx2048_s2.py, /tmp/net46.log)\n\n**Verdict name: THE-S2-ONE-GRID-STEP-DROP-REPLICATES-AT-16\u00d7-CONTEXT.**\n\n### Result\nAt (d=4, ctx=2048, seed=2), **k\\* = 224 \u2014 one grid step below the product knee 256, the prediction's horn P2 CONFIR",
+    "domains": [
+      "Logic"
+    ],
+    "id": "push_4f1ff831_36c9a89c",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "4f1ff831",
+    "status": "available",
+    "timestamp": "2026-08-16T21:34:54.990538+00:00",
+    "title": "Deepening: NET-46: THE-S2-ONE-GRID-STEP-DROP-REPLICATES-AT-16\u00d7-CONTEXT \u2014 k*=224 at (d=4, ct"
   },
   {
     "consumed_by_exp_id": "",
@@ -1741,6 +1754,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 9fb19498 (Q=0.790), which proved 11 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that the tropicalization functor preserves intersection numbers. Formalize tropical varieties as polyhedral complexes and establish the tropical B\u00e9zout theorem with explicit bounds.",
+    "domains": [
+      "Tropical"
+    ],
+    "id": "push_9fb19498_3f9eeeb2",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "9fb19498",
+    "status": "available",
+    "timestamp": "2026-08-01T19:43:12.027506+00:00",
+    "title": "Deepening: Tropical Intersection Theory"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle e3e9c821 (Q=0.792), which proved 15 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize Noether's theorem in Lean 4: every continuous symmetry of the action yields a conserved quantity. Prove energy conservation from time-translation, momentum from space-translation, angular momentum from rotational symmetry. Apply to Kepler problem.",
     "domains": [
       "Physics"
@@ -1752,48 +1779,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-29T17:48:52.827384+00:00",
     "title": "Deepening: Noether's Theorem: Symmetries and Conservation Laws"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 9fb19498 (Q=0.790), which proved 11 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that the tropicalization functor preserves intersection numbers. Formalize tropical varieties as polyhedral complexes and establish the tropical B\u00e9zout theorem with explicit bounds.",
-    "domains": [
-      "Tropical"
-    ],
-    "id": "push_9fb19498_3f9eeeb2",
-    "priority_score": 0.89021,
-    "research_mode": "team",
-    "source_exp_id": "9fb19498",
-    "status": "available",
-    "timestamp": "2026-08-01T19:43:12.027506+00:00",
-    "title": "Deepening: Tropical Intersection Theory"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 1b55f202 (Q=0.790), which proved 145 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## CYCLIC-TYPE-CHANNEL (round-22 #2, experiment 413, assessment v189, paper 78)\n\n**The complete splitting-type channel of a cyclic field exceeds the 1-bit binary-fork cap. Papers 72\u201374 capped every BINARY symmetric semiprime fork at 1.0 bit; the cyclic splitting type is multi-state, and its type-pai",
-    "domains": [
-      "Computation"
-    ],
-    "id": "push_1b55f202_bddb30b9",
-    "priority_score": 0.89,
-    "research_mode": "team",
-    "source_exp_id": "1b55f202",
-    "status": "available",
-    "timestamp": "2026-08-14T23:43:25.883780+00:00",
-    "title": "Deepening: CYCLIC-TYPE-CHANNEL (round-22 #2, experiment 413, assessment v189, paper 78)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle be4e28d2 (Q=0.790), which proved 21 theorems in Shared. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions: Four-Dimensional Geometry\n\n## 1. Embedding obstructions for closed three-manifolds \u2014 open-problem category\n\n**Conjecture.** A closed, connected, orientable smooth three-manifold embeds smoothly in the four-sphere if and only if it bounds two smooth compact four-manifolds whose i",
-    "domains": [
-      "Shared"
-    ],
-    "id": "push_be4e28d2_4d6614bf",
-    "priority_score": 0.89,
-    "research_mode": "team",
-    "source_exp_id": "be4e28d2",
-    "status": "available",
-    "timestamp": "2026-08-16T13:45:46.048167+00:00",
-    "title": "Deepening: **Conjecture.** A closed, connected, orientable smooth three-manifold embeds smo"
   },
   {
     "consumed_by_exp_id": "",
@@ -4639,17 +4624,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Bridge: Category Theory as Universal Language for Mathematics"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0b339d93",
     "description": "Formalize U_q(g) as a q-deformation of the universal enveloping algebra U(g). Prove that as q->1, U_q(g) -> U(g). Bridge: the representation theory of U_q(sl_2) gives the Jones polynomial via the Reshetikhin-Turaev construction. Show that the quantum double construction yields braided tensor categories.",
     "domains": [
       "Bridges",
       "Physics"
     ],
     "id": "seed_351",
+    "phase": "A",
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Bridge: Quantum Groups as Deformations of Classical Groups"
   },
@@ -5727,7 +5713,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Chaos as a Computable Shadow: The Shadowing Lemma for Real Programs"
   },
   {
-    "consumed_by_exp_id": "7a819734",
+    "consumed_by_exp_id": "",
     "description": "The primes have density 0 in the integers, but what is the Hausdorff dimension of the set of primes viewed as a subset of R? Define the 'prime fractal' P as the set of primes with the metric d(p,q) = |1/log(p) - 1/log(q)|. This metric stretches out the primes so that the twin primes are close together and the large primes are spread out. Conjecture: The Hausdorff dimension dim_H(P, d) = 1. The primes with this metric are essentially a 1-dimensional set \u2014 they fill out a line when viewed through the logarithmic lens. This is because the prime number theorem pi(x) ~ x/log(x) means that in the d-metric, the 'length' of the primes up to x is sum_{p <= x} d(p, p+1) ~ sum_{p <= x} 1/(p*log(p)) ~ log(log(x)), which diverges. So the primes are 'long enough' to be 1-dimensional. But the Hausdorff dimension might be > 1 if the primes have fractal structure at small scales. In fact, dim_H(P, d) > 1 would mean the primes are more than a line \u2014 they have 'wrinkles' that fill more space. The twin prime conjecture predicts that there are infinitely many pairs of primes at d-distance ~ 1/(p*log(p)), creating a fractal dust that increases the dimension. Conjecture: dim_H(P, d) = 1 + epsilon where epsilon depends on the density of twin primes. If the twin prime conjecture is true, epsilon > 0. Test: estimate dim_H(P, d) by box-counting for primes up to 10^12 and verify it is close to 1 (or slightly above). Impact: the primes are a fractal with dimension 1 + epsilon, where epsilon measures the abundance of twin primes. If twin primes are infinite, the primes are more than a line \u2014 they are a fractal curve.",
     "domains": [
       "Novelty",
@@ -5735,11 +5721,10 @@ window.FUTURE_DIRECTIONS = [
       "Analysis"
     ],
     "id": "seed_155",
-    "phase": "A",
     "priority_score": 0.83,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "",
     "title": "Fractal Number Theory: Hausdorff Dimension of Prime Distributions"
   },
@@ -18590,6 +18575,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-16T19:34:02.718833+00:00",
     "title": "Five falsifiable conjectures produced by this cycle of work on emergent geometry"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions \u2014 bold, falsifiable conjectures from the NET-46 cycle\n\nEach conjecture below is stated so that a single further run, or a single further Lean\ndevelopment, decides it. All are derived from what survived (and what broke) in\n`Catalog/Logic/KneeDriftLadder.lean`, `Catalog/Logic/KneeAmplitudeIdentifiability.lean`\nand `Catalog/Logic/KneeResolutionLimits.lean`.\n\n---\n\n## C1. The amplitude-conflict conjecture (highest value)\n\n**Conjecture.** A third seed at `ctx = 1024` reports a knee `k*` with\n`k* / 8 \u2208 (12, 14]` \u2014 i.e. `k* \u2208 {112, 128}` on a step-16 grid \u2014 rather than `96`.\nEquivalently, the seed-2 `ctx = 1024` cell, not the `ctx = 2048` cell, is the outlier of\n`KneeAmplitude.seed2_no_common_amplitude`.\n\n*The key insight is* that the two seed-2 rungs are **not** two instances of one drifting\nconstant: their amplitude windows `(8, 12]` and `(12, 14]` are disjoint, so exactly one of\nthem can be generated by a multiplicative law, and the round's \"systematic\" reading is\nprovably unavailable. The conflict is a two-point obstruction, and one more measurement at\nthe *earlier* rung resolves which point is anomalous.\n\n*Why now?* The obstruction is already proved (`seed2_no_common_amplitude`) and each rung\nis separately explainable (`seed2_each_rung_explainable`), so the experiment is a genuine\nfork with two live branches rather than a confirmation run.\n\n---\n\n## C2. The decisive-context conjecture\n\n**Conjecture.** A single seed-2 run at `ctx = 4096` reports a knee in `[416, 448]`. A\nreport `\u2264 384` instead refutes the `ctx = 2048` amplitude window, and a report `\u2265 480`\nrefutes both seed-2 windows in favour of the seed-1 amplitude.\n\n*The key insight is* that the three surviving amplitude hypotheses have predictions at the\nnext rung that are pairwise separated by at least one full grid step\n(`KneeAmplitude.next_rung_three_way_separation`) \u2014 unlike the `224`-vs-`256` reading,\nwhich is not robust at its own resolution (`KneeDrift.net46_seed2_knee_not_robust`). This\nis the first cell of the programme where the grid can actually adjudicate.\n\n*Why now?* The separation theorem is proved and needs no new theory; only the run is\nmissing.\n\n---\n\n## C3. The vanishing-drift conjecture\n\n**Conjecture.** For every seed, `k*(ctx) / (d\u00b7ctx/32) \u2192 1` as `ctx \u2192 \u221e`, and the\nadditive deficit `d\u00b7ctx/32 - k*` stays bounded by one grid step at every rung. Concretely:\nat `ctx = 4096` and `8192` the seed-2 deficit is again exactly `32`, never `64`.\n\n*The key insight is* that a bounded additive drift against a geometrically growing knee is\nasymptotically invisible: the ratio law is exact in the limit and the deployable speedup\ncollapses to the guaranteed `8\u00d7` (`KneeDrift.kneeRatio_tendsto_one`,\n`KneeDrift.speedup_tendsto_eight`). What the programme calls a systematic sub-linear break\nis, if this conjecture holds, a *vanishing correction to an exact law* \u2014 the strongest\npossible rescue of the product law, and one that also predicts the `9.1\u00d7` best case is a\ntransient.\n\n*Why now?* The conjecture's asymptotic half is already a theorem for the modelled ladder;\nwhat is open is whether the measured deficits stay at one step. Two further doublings\ndecide it.\n\n---\n\n## C4. The resolution-barrier conjecture\n\n**Conjecture.** No experiment on a fixed-step grid, at any number of seeds, can certify\nthe Zipf amplitude to better than `s/2^i` at rung `i`; in particular the seed-1 window\ncannot be narrowed below `(15.5, 16]` before `ctx = 8192`, and any claimed \"exact product\nlaw\" at `ctx \u2264 4096` is an artefact of the grid.\n\n*The key insight is* that identification is geometric and no faster: there is always an\namplitude differing from the fitted one by `16/2^N` that reproduces every reported knee\nthrough rung `N` (`KneeResolution.exists_indistinguishable_amplitude`), matching the\nupper bound `32/2^N` to a factor `2`. Exactness claims are therefore statements about the\nsweep, not the model \u2014 made precise by `KneeResolution.isKnee_iff_rounding`, which\nidentifies the measured knee as a rounding of a real number.\n\n*Why now?* The matched bounds are proved; the open part is the *multi-seed* version \u2014 does\naveraging `m` seeds beat `s/2^i`, or is the barrier information-theoretic in the seeds\ntoo? A concentration argument over the seed ensemble would settle it.\n\n---\n\n## C5. The adjoint-invariance conjecture\n\n**Conjecture.** Every knee-level statistic that is invariant under the Galois adjunction\n`kneeInf c \u22a3 c` \u2014 i.e. every functional of the passing up-set rather than of the curve \u2014\nis reproducible across seeds, and every non-reproducible statistic (margins, effective\nsupport, top-`k` mass) is not. In particular the *sign* of every inter-seed knee\ndifference is predicted by curve domination alone, while no magnitude is.\n\n*The key insight is* that the knee functional is a left adjoint\n(`KneeResolution.knee_galoisConnection`), so it factors through the up-set of passing\nbudgets and forgets everything else about the curve; the domination theorems\n(`KneeDrift.drop_direction_forced` versus `KneeDrift.domination_does_not_force_drop`) are\nthe first two instances of the resulting dichotomy.\n\n*Why now?* The adjunction is proved and the two boundary instances are proved. The\nconjecture predicts, before any further run, exactly which of the round's reported\nquantities will replicate at a third seed \u2014 a pre-registered, cheap, falsifiable test of a\nstructural claim.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1342",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "4f1ff831",
+    "status": "available",
+    "timestamp": "2026-08-16T21:34:40.395068+00:00",
+    "title": "Each conjecture below is stated so that a single further run, or a single furthe"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# FUTURE DIRECTIONS \u2014 Fractal number theory of the logarithmic prime embedding\n\nThe cycle just completed replaced the mission conjecture\n(`dim_H(P, d) = 1 + \u03b5`, `\u03b5 > 0` driven by twin primes) with a proved trichotomy:\n\n| quantity | value | file |\n|---|---|---|\n| Hausdorff dimension of `P` (and of its closure) | `0` | `PrimeFractalHausdorff.lean` |\n| box-counting dimension of `P` | `1` | `PrimeFractalBoxDimension.lean` |\n| one-dimensional Minkowski content of `P` | `0` (`N(m) = O(m/log m)`) | `PrimeFractalRefined.lean` |\n| total `d`-length of the primes | `1/log 2` (finite) | `PrimeFractalHausdorff.lean` |\n| twin-prime scale | `d(p,p+2) \u2264 2/(p (log p)^2)` | `PrimeFractalTwin.lean` |\n| grid-vs-cover robustness | any cover by `1/m`-intervals needs `m^{1-o(1)}` sets | `PrimeFractalCovering.lean` |\n| primes vs all integers | identical dimensions `0` and `1` | `PrimeFractalIntegers.lean` |\n\nEvery conjecture below is falsifiable, and each is a concrete next step from a\nresult that is now formalised.\n\n## C1. Exact Minkowski constant: `N(m) \u00b7 log m / m \u2192 1`\n\n**Conjecture.** `lim_{m\u2192\u221e} N(m) log m / m = 1`, where `N(m) = boxCount m` is the number\nof boxes of size `1/m` meeting the prime fractal.  Equivalently\n`N(m) = (1 + o(1)) m / log m`.\n\n*The key insight is* that the occupied boxes split into a \"dense tail\" (indices\n`k \u2264 m/log X` are all occupied because every interval `(e^{m/(k+1)}, e^{m/k}]` contains\na prime once `m/(k(k+1))` is large) and a \"sparse head\" (one box per prime `p \u2264 X`),\nand optimising the split at `X = m` makes the tail `m/log m` and the head `o(m/log m)`;\nthe constant `1` then comes from the tail alone, not from `\u03c0`.\n\n*Why now?* The two-sided bracket `m/(16 (log m)^4) \u2264 N(m) \u2264 5 m/log m` is already\nformalised, and the numerical band (`N log m / m \u2208 [1.26, 1.75]`, decreasing) is in\n`ComputationalEvidence.md`.  Closing the gap needs only prime existence in the\nintervals `(e^{m/(k+1)}, e^{m/k}]` \u2014 Bertrand's postulate (in Mathlib) already handles\n`k \u2272 \u221am`, and any Chebyshev-type short-interval result upgrades this to the full range.\n\n## C2. The logarithmic defect is a genuine second-order invariant\n\n**Conjecture.** Define the *logarithmic dimension defect*\n`\u03b4(P) = lim_{m\u2192\u221e} (1 \u2212 log N(m)/log m) \u00b7 log m / log log m`.\nThen `\u03b4(P) = 1` for the prime fractal, `\u03b4 = 0` for every self-similar set of\ndimension `1`, and `\u03b4(A) = 1` for `A = {1/log n : n \u2208 \u2115}` as well.\n\n*The key insight is* that `log N/log m = 1 \u2212 log log m/log m + o(1/log m)` whenever\n`N(m) \u224d m/log m`, so the *rate* at which the box dimension approaches `1` \u2014 invisible\nto the dimension itself \u2014 is a sharp invariant separating \"arithmetically thin\"\ndimension-1 sets from geometric ones.\n\n*Why now?* This is exactly the quantity the mission's numerical test would have\nmeasured (0.84 at `10^7`, 0.88 at `10^12`); `eventually_boxCount_le` and\n`eventually_boxCount_ge` already pin `1 \u2212 log N/log m` between\n`log log m/log m` and `4 log log m/log m` up to constants.\n\n## C3. Twin primes are invisible to *every* dimension, but visible to gauge functions\n\n**Conjecture.** Let `h(t) = 1/log(1/t)` be a gauge function.  Then the generalised\nHausdorff measure `H^h(P)` is finite and positive iff the primes have positive\n\"logarithmic density\" in the sense of Chebyshev; and `H^h(T) > 0` for the twin\nsubfractal `T` iff the twin prime conjecture holds with the Hardy\u2013Littlewood\ndensity.\n\n*The key insight is* that dimension is the wrong functional: the prime fractal has\n`dim_H = 0` and `dim_B = 1`, so all power gauges `t^s` are degenerate on it, whereas a\nlogarithmic gauge is exactly calibrated to `d(p, next p) \u224d 1/(p (log p)^2)`.\n\n*Why now?* `twin_dist_le` and `zero_mem_closure_iff_infinite` show the twin primes\nenter the metric picture only through the single accumulation point `0`;\n`primeFractal_isolated` shows that no power-law dust exists anywhere else.  A gauge\nmeasure is the first functional that can distinguish the twin subfractal from a\nrandom sparse subfamily.\n\n## C4. Rigidity: the embedding `p \u21a6 1/log p` is metrically forced\n\n**Conjecture.** If `f : (0,\u221e) \u2192 (0,\u221e)` is `C^1`, decreasing, with `f(x) \u2192 0`, and the\nimage `f(primes) \u2286 \u211d` has box dimension `1` and finite total length, then\n`f(x) = c/log x + O(1/(log x)^{1+\u03b7})` for some `c > 0`, `\u03b7 > 0`.\n\n*The key insight is* that box dimension `1` forces `f` to compress the primes at\nexactly the rate at which they thin out (`f'(x) \u2248 f(x)^2 \u00b7 x^{-1}` after PNT),\nand finite length forces the total variation to converge \u2014 the two constraints\ntogether are an ODE with `1/log` as its unique decaying solution class.\n\n*Why now?* The prime fractal is the `f = 1/log` case and is now completely\nunderstood (dimension `0` vs `1`, length `1/log 2`); the rigidity statement turns\nthe mission's ad hoc choice of metric into a theorem.\n\n## C5. Higher-dimensional prime fractals and the `k`-tuple conjecture\n\n**Conjecture.** For `k \u2265 2`, the set `P_k = {(1/log p, 1/log(p+2), \u2026) : p, p+2, \u2026 prime}`\n\u2286 `\u211d^k` has Hausdorff dimension `0` and box-counting dimension `1` if and only if the\nHardy\u2013Littlewood `k`-tuple conjecture holds for that tuple; otherwise the box\ndimension drops below `1`.\n\n*The key insight is* that in the diagonal-collapsing coordinates the `k`-tuple set is\na graph over a subfamily of primes, so its box count is exactly the counting function\nof the tuple \u2014 turning a dimension statement into an equivalent of a counting\nconjecture, in the same way as `twin_conjecture_iff_zero_mem_closure` does for `k = 2`\nat the level of a single point.\n\n*Why now?* The `k = 1` machinery (`boxCountSet`, the separation lemma\n`boxIndex_lt`, the Chebyshev lower bound) is formalised and generalises verbatim to\nproduct boxes; only the counting input changes.\n\n## Status of the loop\n\nCycle 1 produced the trichotomy above; cycle 2 added the universal ceiling and the\nlogarithmic defect; cycle 3 added the twin-prime metric characterisation and point\nisolation; cycle 4 (adversarial review) added grid-versus-cover robustness and the\ncomparison with all integers, which is what turns \"the conjecture is false\" into\n\"no dimension of this embedding could ever have been true\".  C1\u2013C5 are the\nnext-cycle sub-conjectures; C1, C2 and C5 are the three most concrete.\n",
+    "domains": [
+      "NumberTheory",
+      "MachineLearning"
+    ],
+    "id": "fd_1343",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "7a819734",
+    "status": "available",
+    "timestamp": "2026-08-16T21:35:00.598766+00:00",
+    "title": "The cycle just completed replaced the mission conjecture"
   },
   {
     "consumed_by_exp_id": "",

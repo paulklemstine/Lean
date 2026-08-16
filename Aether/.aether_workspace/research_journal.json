@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "677413db",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions — after the extrinsic class-group corner\n\nCycle 1 proved the collapse at `D = -20` and `D = -84`; cycle 2 located its\nboundary at `D = -23`; cycle 3 proved the collapse is closed u",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 93,
-      "timestamp": "2026-08-14T12:04:19",
-      "title": "The Extrinsic Class-Group Representation Vector is a Residue Dial, Closed"
-    },
-    {
       "cycle_id": "53eb02be",
       "domain": "Bridges",
       "key_insight": "# FUTURE DIRECTIONS — after SEQSMOOTH-NULL (Bridges, experiment 397)\n\nWhat the formal round established (all in\n`Catalog/Bridges/ModExpSmoothnessBlindness.lean`, 0 sorries):\n\n* the collision structure",
@@ -499,19 +489,19 @@
       "theorem_count": 99,
       "timestamp": "2026-08-16T21:34:53",
       "title": "NET-46: THE-S2-ONE-GRID-STEP-DROP-REPLICATES-AT-16×-CONTEXT — k*=224 at (d=4, ctx=2048, seed=2), the"
+    },
+    {
+      "cycle_id": "7a819734",
+      "domain": "NumberTheory",
+      "key_insight": "# FUTURE DIRECTIONS — Fractal number theory of the logarithmic prime embedding\n\nThe cycle just completed replaced the mission conjecture\n(`dim_H(P, d) = 1 + ε`, `ε > 0` driven by twin primes) with a p",
+      "quality_score": 0.86,
+      "sorry_count": 0,
+      "theorem_count": 71,
+      "timestamp": "2026-08-16T21:35:04",
+      "title": "Fractal Number Theory: Hausdorff Dimension of Prime Distributions"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "f52c2f13",
-      "domain": "Shared",
-      "key_insight": "# Future directions\n\nThe new file `Catalog/Shared/RevisionHistoryMonoid.lean` completes the last-occurrence\nnormal-form programme: revision histories modulo extensional equivalence form a monoid\nisomo",
-      "quality_score": 0.686,
-      "sorry_count": 0,
-      "theorem_count": 52,
-      "timestamp": "2026-08-05T22:29:21",
-      "title": "Deepening: **Conjecture.** Every finite sequence of signed-literal revisions has a unique n"
-    },
     {
       "cycle_id": "785c09ab",
       "domain": "Tropical",
@@ -2501,27 +2491,19 @@
       "theorem_count": 99,
       "timestamp": "2026-08-16T21:34:53",
       "title": "NET-46: THE-S2-ONE-GRID-STEP-DROP-REPLICATES-AT-16×-CONTEXT — k*=224 at (d=4, ctx=2048, seed=2), the"
+    },
+    {
+      "cycle_id": "7a819734",
+      "domain": "NumberTheory",
+      "key_insight": "# FUTURE DIRECTIONS — Fractal number theory of the logarithmic prime embedding\n\nThe cycle just completed replaced the mission conjecture\n(`dim_H(P, d) = 1 + ε`, `ε > 0` driven by twin primes) with a p",
+      "quality_score": 0.86,
+      "sorry_count": 0,
+      "theorem_count": 71,
+      "timestamp": "2026-08-16T21:35:04",
+      "title": "Fractal Number Theory: Hausdorff Dimension of Prime Distributions"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "66af3cc3",
-      "domain": "NumberTheory",
-      "name": "two_pow_card_le_prod",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "66af3cc3",
-      "domain": "NumberTheory",
-      "name": "two_pow_card_sub_one_le_prod_erase",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "dc071269",
-      "domain": "NumberTheory",
-      "name": "chord_le_of_convexOn",
-      "quality": 0.78
-    },
     {
       "cycle_id": "dc071269",
       "domain": "NumberTheory",
@@ -2803,9 +2785,27 @@
       "domain": "Logic",
       "name": "window_of_isKnee",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "7a819734",
+      "domain": "NumberTheory",
+      "name": "logInv_le_two",
+      "quality": 0.86
+    },
+    {
+      "cycle_id": "7a819734",
+      "domain": "NumberTheory",
+      "name": "boxIndex_le",
+      "quality": 0.86
+    },
+    {
+      "cycle_id": "7a819734",
+      "domain": "NumberTheory",
+      "name": "occupiedBoxes_subset",
+      "quality": 0.86
     }
   ],
-  "last_updated": "2026-08-16T21:34:53",
+  "last_updated": "2026-08-16T21:35:04",
   "open_questions": [
     {
       "context": "This file gives a **complete, self-contained proof** of that theorem (0 `sorry`s).",
@@ -3641,12 +3641,6 @@
     ],
     "NumberTheory": [
       {
-        "cycle_id": "8fa60fb0",
-        "quality": 0.686,
-        "theorems": 78,
-        "title": "The conditional Hilbert-class-field interface in `Catalog/NumberTheory/` contain"
-      },
-      {
         "cycle_id": "8d2025bd",
         "quality": 0.627125,
         "theorems": 225,
@@ -3699,6 +3693,12 @@
         "quality": 0.78,
         "theorems": 72,
         "title": "NET-30: INTERNALIZATION-SATURATES-AT-K=2 (k=2 freeze test — the missing middle; "
+      },
+      {
+        "cycle_id": "7a819734",
+        "quality": 0.86,
+        "theorems": 71,
+        "title": "Fractal Number Theory: Hausdorff Dimension of Prime Distributions"
       }
     ],
     "Physics": [
