@@ -1,5 +1,5 @@
 import Mathlib
-import Shared.AbstractAlgebra.SpbAux
+import Applications.AbstractAlgebra.SpbAux
 
 /-! # CatalogBuild.Shared.Spb_comm
 

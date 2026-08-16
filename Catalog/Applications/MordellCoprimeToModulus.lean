@@ -129,7 +129,7 @@ theorem den_double_isCoprime {N : ℤ} {x y : ℚ} (h : y ^ 2 = x ^ 3 + (N : ℚ
       have : IsCoprime ((2 : ℤ) * 2) N := hN.mul_left hN
       simpa [show (2 : ℤ) * 2 = 4 by norm_num] using this
     have hB : IsCoprime (4 * y.num ^ 2 * ((x.den : ℤ))) N :=
-      (hfour.mul_right hb.pow_left).mul_right hden
+      (hfour.mul_left hb.pow_left).mul_left hden
     exact IsCoprime.of_isCoprime_of_dvd_left hB hdvdD
   · have hshift : IsCoprime (x.num ^ 3 - 8 * N * ((x.den : ℤ)) ^ 3) N := by
       obtain ⟨u, v, huv⟩ := (hnum.pow_left : IsCoprime (x.num ^ 3) N)
@@ -195,8 +195,8 @@ lemma isCoprime_x_of_squarefree {N x y : ℤ} (heq : y ^ 2 = x ^ 3 + N) (hsf : S
   set p : ℕ := g.minFac with hpdef
   have hp : p.Prime := Nat.minFac_prime (by omega)
   have hpg : (p : ℤ) ∣ (g : ℤ) := Int.natCast_dvd_natCast.mpr (Nat.minFac_dvd g)
-  have hpx : (p : ℤ) ∣ x := hpg.trans (Int.gcd_dvd_left)
-  have hpN : (p : ℤ) ∣ N := hpg.trans (Int.gcd_dvd_right)
+  have hpx : (p : ℤ) ∣ x := hpg.trans (Int.gcd_dvd_left x N)
+  have hpN : (p : ℤ) ∣ N := hpg.trans (Int.gcd_dvd_right x N)
   have hpz : Prime (p : ℤ) := Nat.prime_iff_prime_int.mp hp
   have hpy : (p : ℤ) ∣ y := by
     have h1 : (p : ℤ) ∣ y ^ 2 := by
@@ -204,11 +204,11 @@ lemma isCoprime_x_of_squarefree {N x y : ℤ} (heq : y ^ 2 = x ^ 3 + N) (hsf : S
       exact dvd_add (Dvd.dvd.pow hpx (by norm_num)) hpN
     exact hpz.dvd_of_dvd_pow h1
   have hy2 : ((p : ℤ)) * (p : ℤ) ∣ y ^ 2 := by
-    obtain ⟨c, rfl⟩ := hpy; exact ⟨c ^ 2, by ring⟩
+    obtain ⟨c, hc⟩ := hpy; exact ⟨c ^ 2, by rw [hc]; ring⟩
   have hx3 : ((p : ℤ)) * (p : ℤ) ∣ x ^ 3 := by
-    obtain ⟨c, rfl⟩ := hpx; exact ⟨(p : ℤ) * c ^ 3, by ring⟩
+    obtain ⟨c, hc⟩ := hpx; exact ⟨(p : ℤ) * c ^ 3, by rw [hc]; ring⟩
   have hNsq : ((p : ℤ)) * (p : ℤ) ∣ N := by
-    have : N = y ^ 2 - x ^ 3 := by omega
+    have : N = y ^ 2 - x ^ 3 := by rw [heq]; ring
     rw [this]; exact dvd_sub hy2 hx3
   have := hsf _ hNsq
   rw [Int.isUnit_iff] at this
@@ -309,7 +309,11 @@ theorem xCoord_two_pow_smul_isCoprime {N : ℤ} (hN : IsCoprime (2 : ℤ) N)
       rw [hstep] at hYk
       -- the intermediate point is affine, else the sum would be the point at infinity
       cases hS : ((2 ^ k : ℕ) • R) with
-      | zero => rw [hS] at hYk; simp [xCoord] at hYk
+      | zero =>
+          rw [hS] at hYk
+          rw [show (Point.zero : (mordell ((N : ℤ) : ℚ)).toAffine.Point) + Point.zero
+              = Point.zero from rfl] at hYk
+          simp [xCoord] at hYk
       | @some x y hns =>
           have hX' : xCoord ((2 ^ k : ℕ) • R) = some x := by rw [hS]; rfl
           obtain ⟨h1, h2⟩ := ih x hX'

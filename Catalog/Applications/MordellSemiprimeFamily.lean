@@ -158,10 +158,18 @@ lemma famN_unbounded {l : ℕ} (hl5 : 5 ≤ l) (B : ℤ) : ∃ t : ℕ, 0 < t �
   refine ⟨B.natAbs + 1, Nat.succ_pos _, ?_⟩
   have hl' : (5 : ℤ) ≤ (l : ℤ) := by exact_mod_cast hl5
   have hB : B ≤ (B.natAbs : ℤ) := Int.le_natAbs
-  have hT : (1 : ℤ) ≤ ((B.natAbs + 1 : ℕ) : ℤ) := by push_cast; omega
-  have hTB : ((B.natAbs : ℤ)) + 1 = ((B.natAbs + 1 : ℕ) : ℤ) := by push_cast; ring
+  have hnn : (0 : ℤ) ≤ (B.natAbs : ℤ) := Int.natCast_nonneg _
+  set T : ℤ := ((B.natAbs + 1 : ℕ) : ℤ) with hTdef
+  have hTB : ((B.natAbs : ℤ)) + 1 = T := by rw [hTdef]; push_cast; ring
+  have hT1 : (1 : ℤ) ≤ T := by linarith
+  have hTge : B + 1 ≤ T := by linarith
+  have hsq : T ≤ T ^ 2 := by nlinarith
+  have h1 : B + 1 ≤ T ^ 2 := by linarith
+  have h2 : (1 : ℤ) ≤ T ^ 2 := by linarith
+  have hl2 : (25 : ℤ) ≤ (l : ℤ) ^ 2 := by nlinarith
+  have h3 : 100 * T ^ 2 ≤ 4 * (l : ℤ) ^ 2 * T ^ 2 := by nlinarith
   simp only [famN]
-  nlinarith [sq_nonneg ((B.natAbs + 1 : ℕ) : ℤ)]
+  linarith
 
 /-- **Arbitrarily large violations, for every good prime.**  For every prime `ℓ ≥ 5` and every
 bound `B` there is an odd `N > B` with a nontrivial factorisation `N = p·q`, `1 < p < q`, such

@@ -1,5 +1,5 @@
 import Mathlib
-import Shared.BerggrenTrees.BerggrenAux
+import Applications.BerggrenTrees.BerggrenAux
 
 /-! # CatalogBuild.Shared.Parent_hyp_lt
 

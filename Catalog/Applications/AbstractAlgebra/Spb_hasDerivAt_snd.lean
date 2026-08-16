@@ -1,5 +1,5 @@
 import Mathlib
-import Shared.AbstractAlgebra.Spb
+import Applications.AbstractAlgebra.Spb
 
 /-! # CatalogBuild.Shared.Spb_hasDerivAt_snd
 
