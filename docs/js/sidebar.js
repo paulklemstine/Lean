@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const topSentinel = document.getElementById('package-list-status-top');
     const bottomSentinel = document.getElementById('package-list-status');
     const markerEl = document.getElementById('package-list-marker');
+    const pageHome = document.getElementById('page-home');
     const pagePrev = document.getElementById('page-prev');
     const pageNext = document.getElementById('page-next');
 
@@ -18,8 +19,15 @@ document.addEventListener('DOMContentLoaded', () => {
     let startIndex = 0;           // first index currently in the DOM
     let endIndex = 0;             // one past the last index currently in the DOM
     let firstVisibleIndex = 0;    // index of the first visible package (marker position)
-    let topObserverArmed = true;  // top sentinel may lazy-load (paused right after a Jump)
+    let topObserverArmed = true;  // top sentinel may lazy-load (paused while a programmatic scroll runs)
     let lastScrollTop = 0;        // last scrollTop seen, to detect scroll-up for re-arming
+    let programmaticScroll = false; // true while a smooth Prev/Next/Home scroll is animating
+    let programScrollTimer = 0;     // safety net in case scrollend never fires
+    // Destination of the in-flight smooth scroll, so further Prev/Next clicks
+    // while it is still animating accumulate OFF it (e.g. three quick Nexts go
+    // to 25 -> 50 -> 75 rather than reading the moving viewport). Cleared when
+    // the animation settles (scrollend / fallback timer).
+    let scrollTargetIdx = null;
 
     const supportsIO = 'IntersectionObserver' in window;
     const scrollContainer = packageList ? packageList.closest('.package-list-container') : null;
@@ -183,24 +191,35 @@ document.addEventListener('DOMContentLoaded', () => {
             scrollContainer.scrollHeight - scrollContainer.scrollTop - scrollContainer.clientHeight <= 1);
         pagePrev.disabled = total === 0 || firstVisibleIndex <= 0;
         pageNext.disabled = total === 0 || firstVisibleIndex >= total - 1 || atBottom;
+        if (pageHome) pageHome.disabled = total === 0 || firstVisibleIndex <= 0;
     }
 
-    // Marker: "position / total" — the first visible package.
+    // Marker: "package number / total" — the first visible package's number.
+    // Reads the real pkg_num (newest is #total, descending as you scroll down)
+    // with a total-minus-index fallback that matches it exactly in the
+    // unfiltered list.
     function renderMarker() {
         if (!markerEl) return;
         const total = filteredPackages.length;
-        markerEl.textContent = total ? `${firstVisibleIndex + 1} / ${total}` : '';
+        if (!total) { markerEl.textContent = ''; updateControls(); return; }
+        const pkg = filteredPackages[firstVisibleIndex];
+        const num = (pkg && pkg.pkg_num != null) ? pkg.pkg_num : total - firstVisibleIndex;
+        markerEl.textContent = `${num} / ${total}`;
         updateControls();
     }
 
     // Index of the first package currently visible in the list (0-based).
+    // A small epsilon keeps the boundary stable when an item's bottom sits
+    // within a pixel or so of the container top: smooth-scroll landings align
+    // the target item's top exactly at the boundary, so the predecessor's
+    // bottom lands exactly at it too (plus sub-pixel animation error).
     function computeFirstVisible() {
         if (!packageList || !scrollContainer) return null;
         const items = packageList.querySelectorAll('.nav-item');
         if (!items.length) return null;
         const containerTop = scrollContainer.getBoundingClientRect().top;
         for (const it of items) {
-            if (it.getBoundingClientRect().bottom >= containerTop) {
+            if (it.getBoundingClientRect().bottom > containerTop + 1.5) {
                 return Number(it.dataset.idx);
             }
         }
@@ -300,13 +319,38 @@ document.addEventListener('DOMContentLoaded', () => {
         endIndex = supportsIO ? Math.min(BATCH_SIZE, filteredPackages.length) : filteredPackages.length;
     }
 
+    // Programmatic-scroll guard: a smooth Prev/Next/Home animation also raises
+    // the scroll listener with st < lastScrollTop during an upward scroll, which
+    // would otherwise re-arm the top sentinel mid-animation and load content
+    // above the target, shifting the landing spot. While the guard is set, the
+    // sentinel stays paused; it clears on scrollend (with a timer fallback).
+    function endProgrammaticScroll() {
+        programmaticScroll = false;
+        scrollTargetIdx = null;
+        if (programScrollTimer) { clearTimeout(programScrollTimer); programScrollTimer = 0; }
+        // The rAF-throttled marker update can lag the animation's final
+        // sub-pixel settling by a frame, leaving "position / total" one package
+        // off. Recompute against the settled position now.
+        updateMarker();
+    }
+
+    function beginProgrammaticScroll() {
+        programmaticScroll = true;
+        if (programScrollTimer) { clearTimeout(programScrollTimer); programScrollTimer = 0; }
+        programScrollTimer = setTimeout(endProgrammaticScroll, 2000);
+    }
+
     // Throttled scroll listener keeps the position marker in sync with the viewport.
     let markerRaf = 0;
     if (scrollContainer) {
+        if ('onscrollend' in scrollContainer) {
+            scrollContainer.addEventListener('scrollend', endProgrammaticScroll);
+        }
         scrollContainer.addEventListener('scroll', () => {
             const st = scrollContainer.scrollTop;
-            // Re-enable top-side lazy loading once the user genuinely scrolls up.
-            if (!topObserverArmed && observer && topSentinel && st < lastScrollTop) {
+            // Re-enable top-side lazy loading once the user genuinely scrolls up
+            // (not while a programmatic animation is still running).
+            if (!programmaticScroll && !topObserverArmed && observer && topSentinel && st < lastScrollTop) {
                 observer.observe(topSentinel);
                 topObserverArmed = true;
             }
@@ -329,15 +373,20 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Prev / Next: scroll the list so the package SKIP_SIZE away from the
-    // current first-visible package becomes the new first-visible item. Like a
-    // Jump, top-side lazy loading is paused until the user scrolls up, so the
-    // target stays pinned at the top after landing.
+    // Prev / Next: smooth-scroll the list so the package SKIP_SIZE away from the
+    // current first-visible package becomes the new first-visible item. Clicks
+    // that land while the previous animation is still running accumulate off
+    // its committed destination (scrollTargetIdx) instead of the moving
+    // viewport, so three quick Nexts page 25 -> 50 -> 75. While an animation
+    // runs, top-side lazy loading stays paused (programmaticScroll guard above)
+    // so the target item's position in the DOM is stable and the landing exact.
     function pageBy(delta) {
         const total = filteredPackages.length;
         if (!total || !scrollContainer) return;
-        const fv = computeFirstVisible();
-        const cur = fv != null ? fv : startIndex;
+        // Accumulate off the committed destination of an in-flight animation;
+        // otherwise measure the current first-visible package.
+        const cur = (scrollTargetIdx != null) ? scrollTargetIdx
+            : ((computeFirstVisible() ?? startIndex));
         const target = Math.max(0, Math.min(total - 1, cur + delta));
         if (target === cur) { updateControls(); return; }
         if (observer && topSentinel) observer.unobserve(topSentinel);
@@ -347,11 +396,31 @@ document.addEventListener('DOMContentLoaded', () => {
         if (item) {
             const itemTop = item.getBoundingClientRect().top;
             const contTop = scrollContainer.getBoundingClientRect().top;
-            // Instant positioning — a smooth animation races with the
-            // lazy-load sentinels and can land the view unpredictably.
-            scrollContainer.scrollTop += itemTop - contTop;
+            scrollTargetIdx = target;
+            beginProgrammaticScroll();
+            scrollContainer.scrollTo({
+                top: scrollContainer.scrollTop + (itemTop - contTop),
+                behavior: 'smooth'
+            });
+        } else {
+            scrollTargetIdx = null;
         }
-        lastScrollTop = scrollContainer ? scrollContainer.scrollTop : 0;
+        updateMarker();
+    }
+
+    
+    // Home: smooth-scroll back to the very top. If earlier batches aren't
+    // rendered yet (deep window), prepend them first so the whole run exists;
+    // anchoring keeps the viewport stable while the batches are inserted.
+    function goToTop() {
+        const total = filteredPackages.length;
+        if (!total || !scrollContainer) return;
+        scrollTargetIdx = null;
+        if (observer && topSentinel) observer.unobserve(topSentinel);
+        topObserverArmed = false;
+        while (startIndex > 0) loadMoreAbove();
+        beginProgrammaticScroll();
+        scrollContainer.scrollTo({ top: 0, behavior: 'smooth' });
         updateMarker();
     }
 
@@ -361,10 +430,14 @@ document.addEventListener('DOMContentLoaded', () => {
     if (pageNext) {
         pageNext.addEventListener('click', () => pageBy(SKIP_SIZE));
     }
+    if (pageHome) {
+        pageHome.addEventListener('click', goToTop);
+    }
 
     window.renderSidebar = function(pkgArray) {
         // Fixed ordering: newest first
         filteredPackages = [...pkgArray].sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+        scrollTargetIdx = null;
 
         if (startIndex === 0 && endIndex === 0) {
             // First render (or search reset) — start from the top batch.
@@ -391,6 +464,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 : base;
             startIndex = 0;
             endIndex = 0;   // reset to first batch
+            scrollTargetIdx = null;
             window.renderSidebar(filtered);
             scrollSidebarToTop();
         });
@@ -403,6 +477,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // filteredPackages is already sorted newest-first (set by renderSidebar)
         const idx = filteredPackages.findIndex(p => p.filename.replace('.json', '') === slug);
         if (idx === -1) return;
+        scrollTargetIdx = null;
         let s = Math.max(0, idx - Math.floor(BATCH_SIZE / 2));
         const e = Math.min(filteredPackages.length, Math.max(s + BATCH_SIZE, idx + 1));
         s = Math.max(0, Math.min(s, e - 1));

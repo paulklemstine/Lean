@@ -2555,7 +2555,13 @@ body.light-theme #aether-toast .toast-body {
     color: #fff;
 }
 
-/* Position marker: "position / total" — the first visible package */
+/* Compact Home button: sits left of Prev, scrolls back to the top */
+.page-home-btn {
+    padding: 6px 7px;
+    font-size: 0.9rem;
+}
+
+/* Position marker: "package number / total" — the first visible package's number */
 .package-list-marker {
     min-width: 64px;
     text-align: center;
