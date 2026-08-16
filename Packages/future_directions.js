@@ -3,21 +3,6 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "consumed_by_exp_id": "8ed04a73",
-    "description": "## Question\n\nNET-15/16/17/20/33/34 established k* = d\u00b7ctx/32 at a second seed in most of the (d \u00d7 ctx) grid. Two cells remained single-seed, at the grid's extreme corners: **d=16 @ ctx=128** (NET-17, s0 only, predicting k*=4d=64) and **ctx=512 @ d=4** (NET-35, s1 only, predicting k*=d\u00b7ctx/32=64). Do both land exactly at fresh second seeds, making the measured grid two-seed everywhere?\n\n## Method\n\nByte-identical harness to NET-15/17/20/33/34/35 \u2014 CausalTF dm=64, 4 heads, 5 Gutenberg novels, vocab 4097, contiguous 90/10 split, 2000 AdamW steps \u2014 at **d=16 seed=1 @ ctx=128** (1078s train) AND **d=4 seed=2 @ ctx=512** (2706s train). Per cell: full-acc eval \u2192 concentration (eff support) \u2192 top-k sweep \u2192 random-k control (seed 12345). k* = smallest k with retained \u2265 0.98\u00b7full. **Predictions stated before the run: k* = 64 both** (4d and d\u00b7ctx/32). Script /tmp/exp_net_attncost_grid.py; log /tmp/net36.log.\n\n## Results\n\n| cell | predicted | k sweep (retained) | k* | verdict |\n|---|---|---|---|---|\n| d=16, ctx=128, s1 | 4d = 64 | 8\u21920.858 16\u21920.922 32\u21920.970 \u2717 64\u2192**0.996** \u2713 96\u21920.999 128\u21921.000 | **64** | EXACT |\n| d=4, ctx=512, s2 | d\u00b7ctx/32 = 64 | 16\u21920.965 \u2717 32\u21920.976 \u2717 64\u2192**0.985** \u2713 128\u21920.993 256\u21920.998 384\u21921.000 | **64** | EXACT |\n\n- **Both cells land EXACT on k* = 64.** The depth leg k*=4d now holds at **all three depths \u00d7 two seeds** (16/32/64 at d=4/8/16 @ ctx=128); the context leg holds to **4\u00d7 context at two seeds** (64 @ ctx=512 d=4 s1+s2). **Every measured cell of the (d \u00d7 ctx) grid is now two-seed**; the deployable lever speedup = 32/d (8\u00d7 at d=4) is seed-independent at every measured corner.\n- **P3 refinement \u2014 NET-35's long-context margin erosion does NOT reproduce at s2:** the ctx=512 pass is 0.985 (margin 0.005 \u2014 healthy) vs s1's 0.983 (margin 0.003 \u2248 2 SE). The margin at 512 is **seed-fluctuating \u00b10.002**, not systematically eroding; the retained curve is still ~0.005\u20130.01 below 128/256 at both seeds (mild long-context depression, knee unaffected). Re-check at ctx=1024.\n- **Concentration reproduces to three significant figures:** eff support 152.11 = 152.11 (s1 vs s2), top-32 0.533/0.532, per-position 20.41\u201320.45 / 133.23\u2013133.37 / 281.20\u2013281.46. Depth-drift continues at d=16 (eff 52.73; 46.6\u219250.2\u219252.7).\n- **Selection importance survives:** random-k gaps cell A +10.0/+6.0 (largest yet), cell B +7.6/+5.2.\n- Eight-model full-acc set 0.1571\u20130.1620, k*-irrelevant.\n\n## Barriers\n\n(a) circularity \u2014 no, both predictions stated before the run, k* from each model's own trained attention; (b) known-method \u2014 no, two-seed grid-completion of an established law (Catalog re-scan: no prior work); (c) toy-scale \u2014 confronted, the grid's extreme corners (deepest d=16, longest ctx=512), real causal word LM, 4097 vocab, held-out loss+acc; (d) leakage \u2014 none, held-out last-10%, data-free top-k; (e) variance \u2014 the round's content, both last single-seed cells closed, concentration reproduces to 0.001; remaining non-threatening: ctx=512 at d=8/16, d=8 @ ctx=256 s0 corner, ctx=1024; (f) measurement \u2014 clean, k=384 recovers full loss exactly, retained 1.000 = re-normalization MC saturation, seed-2 margins exceed binom SE; (g) baselines \u2014 fair, full-attention reference + random-k control at same k, same bar; (h) relevance \u2014 strengthened, the speedup lever is seed-independent at every measured corner.\n\n## Verdict\n\n**GRID-COMPLETION CONFIRMED** \u2014 every measured cell of the (d \u00d7 ctx) grid is now two-seed. The attention-cost law k* = d\u00b7ctx/32 (speedup 32/d, context-invariant) is seed-independent at every measured corner; no per-instance re-measurement needed within the measured grid.\n\nOpen: ctx=1024 (margin-erosion re-check, ~3.2h); ctx=512 at d=8/16; d=8 @ ctx=256 s0 corner. Paper 80. Round-net-36, assessment v36.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1303",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-15T10:47:21.208244+00:00",
-    "title": "NET-36: The Attention-Cost Grid Is Now Two-Seed Everywhere \u2014 k*=d\u00b7ctx/32 Holds at Every Measured (depth \u00d7 context) Cell"
-  },
-  {
     "consumed_by_exp_id": "2a357c10",
     "description": "## Network loop round-net-43 (speed axis, round 16)\n\n**Title: The Deepest Rung Is Two-Seed 256 \u2014 k\\*=256 at (d=32, ctx=512) reproduces EXACTLY at seed=2, the repaired random-k control shows positive selection gaps (+2.6/+1.7), the two-seed knee bracket tightens to (240, 256], and the concave-power law k\\* \u2248 24.7\u00b7d^(2/3) has its deepest rung confirmed at two seeds (NET-43).**\n\nPaper 87: `ResearchOutput/NetworkMathematics/43_DeepestRungIsTwoSeed256.md`\n\n### Hypothesis (stated before the run)\nk\\* = 256, reproducing s1. NET-42 measured k\\*=256 at (d=32, ctx=512, seed=1), the discriminating rung that refuted both the affine prediction (8d+32=288, over 11%) and the product law (512) by 2\u00d7. Two honest limits remained: the d=32 cell was SINGLE-SEED, and the random-k control was UNMEASURED (k=768 topk crash \u2014 sweep-design bug). This round fixes BOTH.\n\n### Setup\nByte-identical harness to NET-42 (CausalTF dm=64/4 heads, Gutenberg corpus, vocab 4097, 2000 AdamW steps), d=32, seed=2, ctx=512. Sweep {96,128,160,192,224,240,256,288,320,384,512} \u2014 k=768 dropped (redundant), k=240 added to pin the knee bracket. Random-k control {256,384} now RUNS. Full acc 0.1350 (bar 0.1323), loss 5.6482 (s1: 0.1353/5.6281). Train 11563s.\n\n### Result \u2014 k\\*=256, EXACT reproduction\n- k=240 fails (0.978 vs bar 0.98, ~0.2 SE below); k=256 passes (0.982). Two-seed knee bracket **(240, 256]**.\n- k=512 = 1.000 with exact full loss (5.6482 = 5.6482) \u2014 product law refuted by 2\u00d7 at BOTH seeds.\n- Part B2 REPAIRED: random-k gaps **+2.6** (k=256) / **+1.7** (k=384) \u2014 positive; selection importance dilutes with depth but survives.\n- Concentration reproducible to ~0.7% (eff 216.92 vs 218.46; top-256 0.922 vs 0.921).\n\n### What this decides\nBoth of NET-42's honest limits are CLOSED: the deepest rung of the concave-power-2/3 law (k\\* \u2248 24.7\u00b7d^(2/3), predicts 249) is now TWO-SEED (256, 256 \u2014 exact, within knee fuzz); EVERY ctx=512 rung is two-seed at its knee (64,64 / 96,96 / 160,144 / 256,256). The sub-linear depth leg continues (per-doubling 1.50\u21921.58\u21921.68 < 2.0), affine 8d+32 still over-predicts by 11% (local linearization confirmed at two seeds), product law gives NO speedup at d=32 (the knee gives 2.0\u00d7). Deployable speedup at (d=32, ctx=512) = **2.0\u00d7** confirmed two-seed. Honest limits: NONE for this cell \u2014 clean two-seed reproduction with all controls measured.\n\nAll 8 network barriers checked (a\u2013h): no circularity (prediction before run), no known-method-in-disguise, toy-scale confronted, no leakage, variance RESOLVED (this round's substance), measurement clean (no crash, ALL_DONE_NET43), baseline now FAIR (random-k control repaired), practical relevance sharpened (2.0\u00d7 two-seed).\n\nScript: /tmp/exp_net_attncost_d32_ctx512_s2.py \u00b7 Log: /tmp/net43.log\nRound-net-43. Now 43 network experiments. Assessment v43.",
     "domains": [
@@ -94,17 +79,17 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle 295ca744 (Q=0.860), which proved 79 theorems in Algebra. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## ECM-PARITY (round-18 #1, experiment 404, assessment v180, paper 69)\n\nThe parity face of the generic ECM order \u2014 the even-\u2113 complement of ECM-ORDER-NULL (paper 66, which tested only odd \u2113): **2 | #E0(F_p) \u27fa the S\u2083 cubic x\u00b3+x+1 has a root mod p \u27fa the Frobenius is NOT a 3-cycle**. **Verdict: CONFIRM",
+    "description": "Building on cycle 8ed04a73 (Q=0.850), which proved 78 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## Question\n\nNET-15/16/17/20/33/34 established k* = d\u00b7ctx/32 at a second seed in most of the (d \u00d7 ctx) grid. Two cells remained single-seed, at the grid's extreme corners: **d=16 @ ctx=128** (NET-17, s0 only, predicting k*=4d=64) and **ctx=512 @ d=4** (NET-35, s1 only, predicting k*=d\u00b7ctx/32=64). Do",
     "domains": [
-      "Algebra"
+      "Probability"
     ],
-    "id": "push_295ca744_eca059c2",
+    "id": "push_8ed04a73_331d73a8",
     "priority_score": 0.95,
     "research_mode": "team",
-    "source_exp_id": "295ca744",
+    "source_exp_id": "8ed04a73",
     "status": "available",
-    "timestamp": "2026-08-14T16:15:07.446774+00:00",
-    "title": "Deepening: ECM-PARITY: first positive symmetric residue shadow on the GENERIC elliptic orde"
+    "timestamp": "2026-08-16T04:50:51.137617+00:00",
+    "title": "Deepening: NET-36: The Attention-Cost Grid Is Now Two-Seed Everywhere \u2014 k*=d\u00b7ctx/32 Holds a"
   },
   {
     "consumed_by_exp_id": "",
@@ -781,20 +766,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle 50be6807 (Q=0.820), which proved 171 theorems in Algebra. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## A4-FORK-PINNING (round-21 #1, experiment 410, assessment v186, paper 75)\n\n**The first cubic-pinned NON-abelian fork: A\u2084's V\u2084-order fork pins at H(1/3), exactly like the abelian cyclic cubic.** Papers 65\u201371 established the pinning-content criterion: a binary splitting fork is congruence-pinned by ",
-    "domains": [
-      "Algebra"
-    ],
-    "id": "push_50be6807_ce9badd8",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "50be6807",
-    "status": "available",
-    "timestamp": "2026-08-14T20:53:04.045031+00:00",
-    "title": "Deepening: A4-FORK-PINNING: first cubic-pinned non-abelian fork (A4 V4-order, I = H(1/3) ex"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Building on cycle 560413ae (Q=0.820), which proved 131 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Proves that logarithmic negativity is a strict entanglement monotone under Local Operations and Classical Communication (LOCC).",
     "domains": [
       "Physics"
@@ -806,48 +777,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-13T17:19:09.572305+00:00",
     "title": "Deepening: Entanglement-Monotone: Formalization of Logarithmic Negativity Bounds"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 8c90b348 (Q=0.820), which proved 47 theorems in Shared. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## Experiment 398: CFPERIOD-NULL (cron loop round-16 #1) \u2014 CONFIRMED NULL\n\n**Hypothesis.** TRACE-EXHAUSTION proved the barrier-2 reach of the *polynomial* symmetric family is exactly {(N,s)}. The fundamental theorem of symmetric polynomials bounds only polynomials \u2014 so the canonical non-polynomial s",
-    "domains": [
-      "Shared"
-    ],
-    "id": "push_8c90b348_8cfac312",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "8c90b348",
-    "status": "available",
-    "timestamp": "2026-08-14T11:18:05.046208+00:00",
-    "title": "Deepening: Experiment 398: CFPERIOD-NULL \u2014 the continued-fraction period of sqrt(N) is a no"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 9cc9a6e9 (Q=0.820), which proved 42 theorems in Algebra. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Paper (factor3):** [ResearchOutput/NewMathematics/28_Spectral_FreeWitness.md](https://github.com/paulklemstine/factor3/blob/main/ResearchOutput/NewMathematics/28_Spectral_FreeWitness.md)\n\n---\n\n# The Spectral Free-Witness: Heat-Kernel Order Recovery\n\n**Program:** Factoring research lab \u2014 the arXiv ",
-    "domains": [
-      "Algebra"
-    ],
-    "id": "push_9cc9a6e9_597281b4",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "9cc9a6e9",
-    "status": "available",
-    "timestamp": "2026-08-14T06:50:29.972978+00:00",
-    "title": "Deepening: The Spectral Free-Witness: Heat-Kernel Order Recovery"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle a1fe4956 (Q=0.820), which proved 106 theorems in Algebra. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **BERGGREN-PRICE-INTERLOCK (direct analysis request, experiment 391, assessment v167, paper 56).**\n\nHypothesis (refining the prior hypotenuse-N probe): the correct factoring-relevant embedding of N is not m^2+n^2 = N but ODD-LEG-N \u2014 the node (m,n) = ((p+q)/2, (q-p)/2), the Fermat pair. Verified on a",
-    "domains": [
-      "Algebra"
-    ],
-    "id": "push_a1fe4956_726ca406",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "a1fe4956",
-    "status": "available",
-    "timestamp": "2026-08-14T05:10:05.994618+00:00",
-    "title": "Deepening: Exp 391 BERGGREN-PRICE-INTERLOCK: every semiprime is a node of both Pythagorean "
   },
   {
     "consumed_by_exp_id": "",
@@ -876,20 +805,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-13T18:15:13.337392+00:00",
     "title": "Deepening: Construct a Boolean-valued universe whose generic quotients instantiate the abst"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle c76c12ee (Q=0.820), which proved 76 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Experiment 402 / assessment v178 / paper 67 \u2014 CM-ECM-ORDER (cron loop round-17 #1).**\n\nA qualification of ECM-ORDER-NULL (round-16 #4): the total residue-invisibility of the elliptic group order is a NON-CM (GL\u2082-generic) phenomenon. For the CM curve E: y\u00b2 = x\u00b3 + x (End = \u2124[i], Gauss 1801):\n\n**1. T",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_c76c12ee_22f210e3",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "c76c12ee",
-    "status": "available",
-    "timestamp": "2026-08-14T18:13:49.492712+00:00",
-    "title": "Deepening: CM-ECM-ORDER (round-17 #1): the ECM order of a CM curve collapses to p+1 on the "
   },
   {
     "consumed_by_exp_id": "",
@@ -5277,17 +5192,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Post-Quantum Cryptography: Lattice-Based Key Exchange"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3b29df87",
     "description": "Formalize the Weil pairing on an elliptic curve and prove its bilinearity. Show that the BLS signature scheme is existentially unforgeable under the computational Diffie-Hellman assumption in the pairing group. Prove that the pairing allows short aggregate signatures.",
     "domains": [
       "Cryptography",
       "Algebra"
     ],
     "id": "seed_360",
+    "phase": "A",
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Elliptic Curve Cryptography: Weil Pairing and BLS Signatures"
   },
@@ -19047,6 +18963,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-16T04:00:02.168347+00:00",
     "title": "Derived from the verified results in `Catalog/Tropical/CompressionDelta/`"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions \u2014 bold, testable conjectures from the NET-36 formalisation\n\nThe five Lean files in `Catalog/Probability/` establish:\n\n* `AttentionConcentration.lean` \u2014 an assumption-free Cauchy\u2013Schwarz obstruction\n  separating the *mass* knee from the measured *accuracy* knee, together with a\n  spike family proving that no reverse inequality exists;\n* `AttentionCostLaw.lean` \u2014 a mechanism (additive error accumulation over\n  nonexpansive layers plus a scale-free Zipf tail) that derives\n  `k* = d\u00b7ctx/32`, plus rigidity theorems showing both the bilinear form and the\n  `1/x` tail profile are forced, and a knee-stability theorem instantiated on\n  the two measured corner cells;\n* `AttentionTruncationOutput.lean` \u2014 the read-out analysis giving the\n  margin-controlled retention threshold `\u03c1 > 1 \u2212 m/(4LB)`;\n* `AttentionDepthRigidity.lean` (second cycle) \u2014 depth rigidity in both\n  directions, the long-context mass bound, and the exact random-`k` control law;\n* `AttentionMarginLaw.lean` (third cycle) \u2014 the margin law `1 \u2212 \u03c1(k*) =\n  \u0398(m/(L\u00b7B))`, and the amplitude/effective-support rigidity that settles the\n  depth-drift question.\n\n## Closed since the first cycle (now theorems, no longer conjectures)\n\n| previous conjecture | status | theorem |\n|---|---|---|\n| C1 (margin law `1 \u2212 \u03c1(k*) = \u0398(m/(L\u00b7B))`) | **proved**, with explicit constants `1/8`, `1/4` | `margin_law_theta` (`margin_law_upper`, `margin_law_lower`), plus `marginKnee_antitone`, `marginKnee_inverse_scaling`, and the numeric prediction `netB_margin_channel_lower_bound` |\n| C2 (depth drift of `N_eff` is Zipf-amplitude drift) | **refuted in its conjectured form**, and replaced | `amplitude_forced_by_depth_linear_knee`, `amplitude_times_depth_not_constant`; the surviving statement is the depth-independent ceiling `effSupport_ceiling_depth_independent` with the numeric corollary `netA_budget_lower_bound` |\n| C3 (`ctx = 1024` mass bound) | **proved** | `mass_at_law_budget_le`, `ctx1024_mass_prediction`, non-vacuity by `uniform_row_realises_ctx1024_hypotheses` |\n| C4 (random-`k` control law) | **proved** | `sum_powersetCard_mass`, `random_mass_average`, `selection_gain_le`, `netB_selection_gain_le` |\n| C5 (nonexpansiveness is load-bearing) | **proved, both branches** | `depth_leg_linear_of_near_isometry` (survives `\u039b \u2264 1 + c/d`), `expansive_knee_not_linear` (fails for fixed `\u039b > 1`) |\n\nWhat C1 now says precisely: at the budget the margin channel selects, the\nattention *deficit* satisfies `m/(8LB) \u2264 1 \u2212 \u03c1(k*) \u2264 m/(4LB)`, so the knee is\ngoverned by the held-out logit margin and the read-out constant alone; at the\nmeasured long-context cell the certified mass ceiling `\u03c1 \u2264 0.65` turns this into\nthe falsifiable numeric prediction `m > 1.4\u00b7L\u00b7B`.  What C2 now says: a\n*depth-linear* knee forces the tail amplitude to be exactly `\u03b4/32` at **every**\ndepth, so `A(d)\u00b7d` grows linearly rather than staying constant \u2014 the `13 %`\ndrift of `N_eff` across `d = 4, 8, 16` cannot be tail drift.  What survives is a\ncap that the tail does impose on the concentration statistic,\n`N_eff \u2264 8\u00b7A\u00b7ctx + 4`, i.e. `\u03b4 \u2265 4\u00b7(N_eff \u2212 4)/ctx \u2265 1.52` at the deepest cell.\nC3\u2013C5 are as stated in the second cycle: a context-independent mass ceiling\n`sqrt(d/(32\u03b1))`, an exact control mean `k/ctx` with selection gain capped at\n`5.2`, and the near-isometry dichotomy `x \u223c c/d` versus `x \u223c const`.\n\n## Still open from the second cycle\n\n**D1 \u2014 the `exp c` factor is measurable, and `c \u2248 \u2016J\u2016`-drift is `O(1)`.**  For\nthe trained stacks, the per-layer Jacobian norms should satisfy `\u039b_i \u2264 1 + c/d`\nwith `c \u2264 1` at every measured depth, so `depth_leg_linear_of_near_isometry`\ngives an end-to-end constant `exp c \u2264 e`; a measured `c` above `log 2` would\npredict a visible upward bend of `k*(d)` between `d = 16` and `d = 32`.  *The\nkey insight is* that the two branches of C5 are separated by exactly the scaling\n`x \u223c c/d` versus `x \u223c const`, so the single spectral number `d\u00b7(\u039b\u22121)` decides\nwhich regime a checkpoint is in \u2014 before any sweep is run.  *Why now?*\n`expansive_knee_not_linear` makes the failure mode quantitative, and Jacobian\nnorms are a static, cheap measurement on checkpoints already trained.\n\n**D2 \u2014 the selection gain saturates its certified ceiling.**  The measured ratio\n(top-`k` mass)/(random-`k` mass) at the knee should equal `\u03ba\u00b7ctx/sqrt(k\u00b7N_eff)`\nwith `\u03ba \u2208 [0.7, 1]` at every grid cell; `\u03ba \u2264 0.3` would mean the mass channel is\nnot what top-`k` selection exploits.  *The key insight is* that\n`selection_gain_le` relates two *independently measurable* quantities, so its\nslack is an observable rather than a modelling choice.  *Why now?*\n`netB_selection_gain_le` certifies the ceiling `5.2` at the measured cell and\nthe control already logs both sides.\n\n**D3 \u2014 `N_eff` grows like `ctx^0.85`, and the mass ceiling drifts up slowly.**\nThe measured supports at `d = 4` (`46.6` at `ctx = 128`, `152.11` at `ctx = 512`)\nfit `N_eff \u2248 0.75\u00b7ctx^0.85`, predicting `N_eff(1024) \u2248 275 \u00b1 15` and hence a\nretained-mass ceiling `sqrt(128/275) \u2248 0.68` at the law's budget; a measured\n`N_eff(1024) \u2265 512` would instead put the cell in the linear regime where\n`mass_at_law_budget_le` caps the mass at the context-independent `0.354`.  *The\nkey insight is* that the ceiling depends on `d` and on the growth exponent of\n`N_eff` **only** \u2014 the context length cancels exactly when the growth is linear.\n*Why now?*  Both regimes are pre-registered as theorems and `N_eff` is already\nlogged by the concentration stage.\n\n## Next-cycle sub-conjectures (new, from the third cycle)\n\n### E1.  The margin is the *only* free parameter of the knee: `k*\u00b7m` is a cell invariant\n\n**Conjecture.**  Across the whole measured grid, the product of the measured\nknee and the median held-out logit margin, `k*(d, ctx)\u00b7m(d, ctx)`, is constant\nto within `\u00b115 %` once divided by `4\u00b7L\u00b7B\u00b7A\u00b7ctx`; equivalently the dimensionless\nnumber `k*\u00b7m/(4\u00b7L\u00b7B\u00b7A\u00b7ctx)` lies in `[1, 2]` at every cell \u2014 the window that\n`margin_law_theta` proves it must occupy if the margin channel is the operative\none.  A cell landing outside `[1, 2]` \u2014 in particular a cell with a *large*\nmargin but an unchanged knee \u2014 falsifies the margin channel there and points\ninstead to a hard mass requirement.\n\n*The key insight is* that `margin_law_upper` and `margin_law_lower` bracket the\nsame quantity from both sides, so the conjecture is not a fit with a free\nconstant: the admissible window is closed, of width exactly a factor `2`, and is\nfixed before any measurement.  The window itself is now a theorem\n(`knee_margin_window`: `k*\u00b7m/(4\u00b7L\u00b7B\u00b7A\u00b7ctx) \u2208 [1, 2]` whenever the margin channel\nis the operative one), so the conjecture is exactly the empirical claim that the\nmeasured cells fall inside it.\n\n*Why now?*  The margin is the one quantity in the mechanism that the harness\nnever logged; `netB_margin_channel_lower_bound` shows one extra logging line\n(median margin at the knee) already decides the question at the measured cells,\nwith no retraining.\n\n### E2.  The concentration ceiling is tight: `N_eff \u2248 8\u00b7A\u00b7ctx`, not merely `\u2264`\n\n**Conjecture.**  The inequality `N_eff \u2264 8\u00b7A\u00b7ctx + 4` of\n`effSupport_le_eight_amplitude` is saturated up to a factor `2` by trained rows:\n`N_eff/(A\u00b7ctx) \u2208 [4, 8]` at every measured cell, where `A = \u03b4/32` and `\u03b4` is\nread off the accuracy budget of the sweep.  Combined with the depth-independence\nof `A`, this predicts that `N_eff` is *the same function of `ctx` at every\ndepth*, so the residual depth drift `46.6 \u2192 50.2 \u2192 52.7` must be a head-profile\neffect of size `O(1)` positions and must **saturate**: `N_eff(d)` at `ctx = 128`\nshould stay below `56` at `d = 32` and `d = 64`.\n\n*The key insight is* that the tail amplitude bounds concentration from one side\nand Cauchy\u2013Schwarz bounds it from the other, so a two-sided window for\n`N_eff/(A\u00b7ctx)` is available without any new modelling hypothesis \u2014 the same\ndouble-bracket strategy that closed C1.\n\n*Why now?*  `amplitude_ge_of_effSupport` already converts each logged `N_eff`\ninto a lower bound on `\u03b4` (`1.33, 1.44, 1.52, 1.16` across the grid); the spread\nof those four numbers *is* the tightness measurement, and it is small.\n\n### E3.  The margin does **not** drift with depth: `m(16) = m(4)` to within noise\n\n**Conjecture.**  The median held-out logit margin is the same at `d = 4, 8, 16`\n(same context, same tokeniser) to within `\u00b110 %`, and equals `128\u00b7L\u00b7B\u00b7A`.  This\nis the opposite of the naive expectation that a deeper stack has a\nproportionally smaller usable margin: within the mechanism, the linear growth of\n`k*` is produced entirely by error accumulation over layers, so a measured ratio\n`m(16)/m(4) \u2248 1/4` would *refute* the mechanism rather than confirm it.\n\n*The key insight is* that `amplitude_forced_by_depth_linear_knee` removes the\namplitude as a `d`-dependent explanation and\n`margin_forced_by_depth_linear_knee` then pins the margin to a value with no `d`\nin it, so the depth leg becomes a *statement about margins*\n(`margin_depth_independent`) that is testable without any truncation sweep at\nall.\n\n*Why now?*  The three depths are trained and checkpointed at two seeds each, the\nmargin is a single forward pass on the held-out split, and E1 and E3 share that\none measurement: E1 fixes the constant at one cell, E3 predicts its depth\nscaling.\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_1325",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "8ed04a73",
+    "status": "available",
+    "timestamp": "2026-08-16T04:50:37.708745+00:00",
+    "title": "The five Lean files in `Catalog/Probability/` establish:"
   },
   {
     "consumed_by_exp_id": "",

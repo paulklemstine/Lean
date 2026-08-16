@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-16T04:00:18.003142+00:00",
+  "last_updated": "2026-08-16T04:50:53.753849+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -56534,6 +56534,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-08-16T04:00:17.821448+00:00",
       "title": "Compression Research A2: Learnable shared decompressors \u2014 model is free, model delta is not"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Probability",
+      "duration_seconds": 3028.9715332984924,
+      "end_time": 1786855826.0404866,
+      "files_integrated": 4,
+      "job_id": "8ed04a73",
+      "outcome_quality": 0.85,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.85,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.5575,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.85,
+        "novelty": 0.85,
+        "proof_depth": 0.85,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1786852797.0689533,
+      "strategy_count": 0,
+      "theorem_count": 78,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 71,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-08-16T04:50:53.609549+00:00",
+      "title": "NET-36: The Attention-Cost Grid Is Now Two-Seed Everywhere \u2014 k*=d\u00b7ctx/32 Holds at Every Measured (de"
     }
   ]
 }
