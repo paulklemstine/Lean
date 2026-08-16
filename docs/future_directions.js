@@ -79,20 +79,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle 6c757940 (Q=0.890), which proved 152 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: A database with missing entries is a partial section of a sheaf. The sheaf condition (gluing) says that if two partial sections agree on their overlap, they can be glued into a global section. Conjecture: the probability that a random database with missing rate r satisfies the sheaf condition (i.e.,",
-    "domains": [
-      "Computation"
-    ],
-    "id": "push_6c757940_6b367ed7",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "6c757940",
-    "status": "available",
-    "timestamp": "2026-08-16T09:42:56.378415+00:00",
-    "title": "Deepening: Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Formally proves conditions under which information can exist purely within a closed timelike curve loop without ever having an initial origin (Ontological Paradox).",
     "domains": [
       "Physics"
@@ -1410,21 +1396,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Formalize the ABC conjecture statement and prove its major consequences: Fermat's Last Theorem for large exponents, Roth's theorem strengthening, the Szpiro conjecture for elliptic curves. Construct the radical rad(n) function framework in Lean 4.",
-    "domains": [
-      "NumberTheory",
-      "Algebra"
-    ],
-    "id": "fd_0654",
-    "priority_score": 0.9,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-24T14:34:16.697749+00:00",
-    "title": "ABC Conjecture: Consequences and Partial Results"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Formalizes Voiculescu's free probability: the free central limit theorem showing that normalized sums of freely independent identically distributed bounded random variables converge in distribution to the semicircle law, developed through the R-transform and free cumulants.",
     "domains": [
       "Probability",
@@ -1649,16 +1620,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Nonarchimedean-Tropicalization: Berkovich Fibers of Subvarieties"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b3704634",
     "description": "Formalizes the foundations of Teichm\u00fcller theory: the Teichm\u00fcller space of marked Riemann surfaces, the Teichm\u00fcller metric defined by extremal quasi-conformal maps, and the action of the mapping class group whose quotient is the moduli space.",
     "domains": [
       "Geometry"
     ],
     "id": "fd_1209",
+    "phase": "A",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "human_brainstorm_2026-08-12",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-13T03:21:16.243998+00:00",
     "title": "Teichmuller-Moduli: Analytic Structure of Riemann Surface Space"
   },
@@ -1749,35 +1721,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-13T03:21:12.748859+00:00",
     "title": "Stein-Method: Quantitative Normal Approximation Bounds"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 4c2c71e5 (Q=0.800), which proved 46 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The Collatz map T: N -> N defined by T(n) = n/2 if n even, 3n+1 if n odd, is conjectured to always reach 1. The Collatz conjecture is equivalent to: the orbit of every n under T eventually reaches the cycle {1, 4, 2, 1}. Define the Collatz Fourier transform: F_T(omega) = sum_{n=1}^{N} e^{2*pi*i*omeg",
-    "domains": [
-      "MachineLearning"
-    ],
-    "id": "push_4c2c71e5_cba22d99",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "4c2c71e5",
-    "status": "available",
-    "timestamp": "2026-07-19T02:44:51.313246+00:00",
-    "title": "Deepening: The Fourier Analysis of Collatz: Spectral Gaps in the 3n+1 Map"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize the ABC conjecture and its implications in Lean 4. Prove consequences: Fermat's Last Theorem for large exponents, Roth's theorem strengthening, Mordell conjecture. Explore Mochizuki's claimed proof structure.",
-    "domains": [
-      "NumberTheory",
-      "Algebra"
-    ],
-    "id": "seed_029",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "ABC Conjecture Formalization"
   },
   {
     "consumed_by_exp_id": "",
@@ -4284,22 +4227,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Tropical Moduli Spaces: Curves and Their Tropical Counterparts"
-  },
-  {
-    "consumed_by_exp_id": "8fa1e5a5",
-    "description": "Formalize transseries as formal series in x, log(x), exp(x), exp(exp(x)), etc. Prove that the field of transseries is real closed. Show that every EML function has a transseries expansion that uniquely determines it. Prove the asymptotic comparison theorem: if two transseries agree to all orders, they are equal.",
-    "domains": [
-      "EML",
-      "Logic"
-    ],
-    "id": "seed_371",
-    "phase": "A",
-    "priority_score": 0.86,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
   },
   {
     "consumed_by_exp_id": "",
@@ -18828,6 +18755,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-16T09:43:03.215806+00:00",
     "title": "Derived from what survived and what failed in this cycle. Formalized this cycle:"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 EML Transseries\n\nThe formal results of this cycle live in `Catalog/Applications/EML/`:\n\n| file | content |\n|---|---|\n| `TransseriesEMLBase.lean` | the rank group `Rank = \u211d \u00d7\u2097 (\u211d \u00d7\u2097 (\u211d \u00d7\u2097 \u211d))`, the ordered field `TS = Lex (HahnSeries Rank \u211d)`, transmonomials, the growth hierarchy, non-Archimedeanity |\n| `TransseriesRoots.lean` | `n`-th roots of positives, squares `=` nonnegatives, odd roots, `\u22121` is not a sum of squares |\n| `TransseriesOrderRigidity.lean` | the ordering is definable (`f \u2264 g \u2194 IsSquare (g \u2212 f)`), uniqueness of the ordering, automatic monotonicity of ring maps, the quadratic fragment of real closedness |\n| `TransseriesEMLExpansion.lean` | the transseries expansion of an EML function, order embedding of germs, uniqueness of the expansion |\n| `TransseriesRingEmbedding.lean` | the ring homomorphisms `EMLAlg \u2192+* TS` and `EMLAlg \u2192+* Germ atTop \u211d`, both injective |\n| `TransseriesDerivation.lean` | the derivation `emlDeriv`, Leibniz rule, and the theorem that it computes the analytic derivative |\n| `TransseriesAsymptoticComparison.lean` | the asymptotic comparison theorem, formal and analytic |\n| `TransseriesConstants.lean` | the kernel of the derivation is exactly `\u211d` |\n| `TransseriesHardyField.lean` | limits in `\u211d \u222a {\u00b1\u221e}`, eventual strict monotonicity, eventual injectivity |\n| `TransseriesNoAntiderivative.lean` | `log log x` is flat against the whole EML scale; `1/(x log x)` has no EML antiderivative |\n| `PowerSeriesHensel.lean` | `\u211d\u27e6X\u27e7` is `X`-adically complete, hence henselian; the evaluation ring map `tsEval : \u211d\u27e6X\u27e7 \u2192+* TS` at an infinitesimal |\n| `TransseriesHensel.lean` | infinitesimals (`IsSmall`) and their positive `orderTop`; Hensel lifting of simple residue roots into `TS`; Cardano; the casus irreducibilis solved by lifting; the deformation theorem for perturbed real polynomials |\n| `TransseriesRealClosed.lean` | `\u211d` is real closed (`Real.instIsRealClosed`, via the IVT); real closedness of `TS` reduced to the single odd-degree clause; degree-`1` roots |\n| `TransseriesNewtonScaling.lean` | the Newton scaling operator `\u03bb^{-n} P(\u03bb X)`, normalisation of an arbitrary monic polynomial, the Cauchy root bound `|z| < 2` for polynomials with coefficients in the valuation ring, and the sharpened reduction of real closedness to *normalised* odd-degree polynomials |\n\nWhat was **not** achieved: full real closedness of `TS`. The gap is now much sharper\nthan at the end of the previous cycle. Concretely:\n\n* the *scaling* half of the Newton-polygon argument is now a theorem:\n  `EMLTS.exists_newtonScale_normalized` produces, for every monic `P`, a positive `\u03bb`\n  with `\u03bb^{-n} P(\u03bb X)` **normalised** \u2014 all coefficients in the valuation ring\n  (`|coeff| \u2264 1`) and, unless `P = X^n`, some non-leading coefficient exactly `\u00b11`, so\n  the residue polynomial is monic of degree `n` and different from `X^n`;\n  `EMLTS.isRealClosed_iff_exists_root_normalized` cuts the remaining clause down to those\n  polynomials, and `EMLTS.abs_lt_two_of_isRoot_of_coeff_abs_le_one` shows the scaling\n  factor is sharp in the sense that every root of `P` then satisfies `|z| < 2 \u03bb`;\n\n* the *order-theoretic* half is complete \u2014 squares are exactly the nonnegatives\n  (`EMLTS.isSquare_iff_nonneg`), so by `EMLTS.isRealClosed_iff_exists_root_odd_monic`\n  real closedness of `TS` is **equivalent** to the one remaining clause \"every monic\n  odd-degree `P \u2208 TS[X]` has a root\";\n* the residue field of the `orderTop` valuation is `\u211d`, and `\u211d` is now proved real\n  closed in this development (`Real.instIsRealClosed`; Mathlib carries this only as a\n  TODO), so the residue-level input of a Newton-polygon argument is available;\n* the value group `Rank` is divisible (`EMLTS.exists_rank_nsmul`);\n* Hensel lifting itself works: `EMLTS.exists_root_of_residue_simple_root` lifts a simple\n  root of the residue polynomial to a genuine root in `TS`, and this already settles the\n  casus irreducibilis (`EMLTS.exists_root_cubic_casus_irreducibilis`,\n  `EMLTS.exists_three_roots_cubic_casus_irreducibilis`), the one case Cardano's formula\n  cannot reach inside a real closed field.\n\nWhat is still missing is only the *combinatorial* step: a Newton-polygon induction for\ncoefficient families that are not one-parameter. We verified that the one-parameter trick\nused here (`PowerSeries.heval` along a single infinitesimal `t`) cannot be pushed to the\ngeneral case: in a Hahn field over a rank-`\u2265 2` group a family `c_n t^n` with all\n`c_n` infinitesimal need not be summable (take `c_n = single (1, -n) 1`), and a plain\n`\u03c9`-indexed Newton iteration provably fails because `2^k \u00b7 \u03b4` stays inside a single\narchimedean class. So the missing induction is genuinely transfinite. The conjectures\nbelow are calibrated against exactly that gap.\n\n---\n\n## C1. The scale-completion conjecture (flatness is a depth phenomenon)\n\n**Conjecture.** Let `Rank_k` be the `k`-fold iterated-exponential rank group\n(`Rank_2` is the group formalised here, with coordinates for `exp exp x, exp x, x, log x`)\nand `TS_k = Lex (HahnSeries Rank_k \u211d)`. Then for every `k` the natural inclusion\n`TS_k \u21aa TS_{k+1}` is a strict, order-preserving, non-cofinal embedding, and the direct\nlimit `TS_\u221e = colim_k TS_k` satisfies the asymptotic comparison theorem *and* has no\nnonzero element flat with respect to any `TS_k`. Concretely and falsifiably: there is an\nelement of `TS_3` (namely `exp(\u2212exp(exp x))`) that is dominated by every transmonomial of\n`TS_2`, so `EMLTS.eq_zero_of_abs_lt_all_transmonomials` becomes **false** if the ambient\nfield is enlarged while the test family is not.\n\n**The key insight is** that the asymptotic comparison theorem is not a statement about\ntransseries at all, but about the *cofinality of the transmonomial family inside the\npositive cone*: the proof `EMLTS.exists_mono_lt_of_pos` only uses that every nonzero Hahn\nseries has an `order` and that the rank group has no maximum \u2014 so the theorem transfers\nverbatim to any scale, and fails exactly across scales.\n\n**Why now?** The whole infrastructure is already parametric in the rank group: `Rank` is\nused through `rk`/`rd/ra/rb/rc` and `exists_rank_nsmul` only, so replacing `\u211d \u00d7\u2097 \u2026` by a\ncolimit of lexicographic powers is a mechanical refactor, and the comparison proof would\nsurvive unchanged. This makes the conjecture cheap to test and its failure mode explicit.\n\n## C2. Real closedness via a transfinite Newton polygon over a divisible rank group\n\n**Conjecture.** `TS` is real closed. By `EMLTS.isRealClosed_iff_exists_root_odd_monic`\n(proved this cycle) this is now *equivalent* to the single clause: every **monic**\nodd-degree `P \u2208 TS[X]` has a root in `TS`. The proposed route is: (i) the `orderTop`\nvaluation on `TS` has divisible value group `Rank` and residue field `\u211d`, and `\u211d` is\nreal closed (`Real.instIsRealClosed`, proved this cycle from the IVT); (ii) a\nNewton-polygon induction reduces an odd-degree `P` to an odd-degree polynomial over the\nresidue field, which has a root; (iii) Hensel lifts it \u2014 the lifting step is already\nformalised as `EMLTS.exists_root_of_residue_simple_root`.\n\n**The key insight is** that the induction cannot be `\u03c9`-indexed. Our experiments show two\nindependent obstructions, both now documented as negative evidence rather than guesses:\na family `c_n t^n` with infinitesimal `c_n` need not be summable in a Hahn field of rank\n`\u2265 2` (explicit counterexample `c_n = single (1, -n) 1`), and the Newton iterates\n`2^k \u00b7 \u03b4` never leave one archimedean class of a rank-`4` lexicographic group. So the\ncorrect statement of the induction is transfinite: the approximation sequence must be\nindexed by the order type of the support, and the summability condition must be\n`Set.IsPWO` of the union of supports, not convergence in a metric sense.\n\n**Progress this cycle.** The scaling step is done unconditionally\n(`EMLTS.exists_newtonScale_normalized`), so the conjecture may now be restated in its\nsharpest form: *every normalised monic odd-degree `P \u2208 TS[X]` has a root*, where\nnormalised means `|P.coeff i| \u2264 1` for all `i` and `|P.coeff i| = 1` for some `i < n`.\nThe only remaining input is the *residue* step: pass to the monic real polynomial\n`p\u0304 \u2260 X^n` of degree `n`, take one of its real roots `a`, and either lift it (if simple,\nwhich is `EMLTS.exists_root_of_residue_simple_root`) or substitute `X \u21a6 a + Y` and\nre-scale \u2014 the latter being the transfinite recursion described below.\n\n**Why now?** Every ingredient except that induction is in place and machine-checked:\nhenselianity of `\u211d\u27e6X\u27e7` (`PowerSeriesHensel.instIsAdicCompleteSpanX`), the lifting\ntheorem in `TS`, divisibility of `Rank`, real closedness of the residue field, and the\nreduction of the whole problem to one clause. A falsifiable milestone on the way: the\ndeformation theorem `EMLTS.exists_root_perturbed_real_polynomial` should generalise from\none infinitesimal parameter to any finite tuple of infinitesimals; if it does not, the\nsummability obstruction above is essential and the transfinite formulation is forced.\n\n## C3. A complete Liouville criterion for the image of `emlDeriv`\n\n**Proved this cycle (the seed of the conjecture).**\n`EMLTS.no_antiderivative_of_invXLog`: the transmonomial `1/(x log x)` is *not* in the\nimage of `emlDeriv`, even though `1/x` is (`EMLTS.emlDeriv_log`). So the EML algebra is\nclosed under differentiation but not under integration, and the first obstruction appears\nexactly at the transmonomial whose antiderivative would be `log log x`.\n\n**Conjecture.** The image of `emlDeriv` is the kernel of an explicit finite family of\nlinear \"residue\" functionals on `EMLAlg`. Precisely: for a rank `g`, write\n`g = rk d a b c`. Then `single g 1` lies in the image of `emlDeriv` if and only if\n`(d, a, b) \u2260 (0, 0, 0)` or `c \u2209 {1}` \u2014 i.e. the *only* obstructed transmonomials in the\n`(0,0,1,c)` family are `c = 1` (`1/(x log x)`), and more generally the obstruction is the\n`(log x)`-residue. Falsifiable form: exhibit `p` with\n`emlDeriv p = single (rk 0 0 1 1) 1` (refuting the proved theorem \u2014 impossible), or find a\nsecond obstructed rank not in the predicted family.\n\n**The key insight is** that `emlDeriv (single g c) = single g c \u00b7 dlog g` shifts ranks by\nthe fixed four-element set `{rExp, 0, rInvX, rInvXLog}` while multiplying coefficients by\nthe four rank coordinates, so \"being in the image\" is a *linear-algebraic* condition on\nthe coordinates of the support \u2014 and the asymptotic proof of\n`no_antiderivative_of_invXLog` shows how to certify each obstruction analytically when the\nlinear algebra degenerates.\n\n**Why now?** The two halves are in place: the analytic certificate\n(`EMLTS.tendsto_loglog_div_rankFun_zero`, showing `log log x` is flat against the whole\nscale) and the algebraic shift structure (`EMLTS.dlog`, `EMLTS.emlDeriv_single`). Turning\nthe single obstruction into a complete criterion is a bookkeeping induction on the support,\nand it would give a Risch-style decision procedure for the EML scale, directly extending\n`Catalog/Applications/EML/RischAlgorithm.lean`.\n\n## C4. `EMLTS.EMLFun` germs generate a maximal Hardy field of exp-log germs\n\n**Conjecture.** The image of `EMLTS.emlGermHom` is a Hardy field, and it is *maximal*\namong Hardy fields whose elements have transseries expansions of exponential depth `\u2264 2`:\nany germ that is comparable to every EML germ and is closed under differentiation already\nlies in the image. Falsifiable form: exhibit a germ (say a solution of\n`y' = y\u00b2 \u2212 x` on `(1,\u221e)`) that is comparable to all EML germs, has depth-`\u22642` asymptotics,\nand is not an EML germ.\n\n**The key insight is** that the two Hardy-field axioms are now theorems rather than\nhypotheses \u2014 `EMLTS.eventually_strictMono_or_strictAnti_or_const` (no oscillation) and\n`EMLTS.tendsto_EMLFun_limit` (limits exist) \u2014 so maximality becomes a purely\nmodel-theoretic saturation question about the value group `Rank`, not an analytic one.\n\n**Why now?** The germ embedding `EMLTS.emlGermHom_injective` and the compatibility of the\nformal and analytic derivatives (`EMLTS.hasDerivAt_EMLFun`) make the image a *differential*\nsubring of the germ ring; verifying the field axiom needs only\n`EMLTS.eventually_ne_zero`, which is proved. So the statement \"the EML germs form a\nHardy field\" is within one short file, and maximality is the first genuinely open step.\n\n## C5. Order-rigidity forces rigidity of the automorphism group\n\n**Conjecture.** Every field automorphism of `TS` is order preserving (proved here as\n`EMLTS.ringEquiv_monotone`) and therefore induces an automorphism of the rank group\n`Rank` preserving its ordering; conversely every order-automorphism of `Rank` lifts. Hence\n`Aut(TS) \u2245 Aut_{ord}(Rank) \u22c9 (1 + m)^\u00d7`-style semidirect decomposition, where `m` is the\nmaximal ideal of infinitesimals. In particular `Aut(TS)` is *not* trivial (unlike\n`Aut(\u211d)`), and the \"asymptotic scale\" `exp exp x \u226b exp x \u226b x \u226b log x` is canonical only\nup to that group.\n\n**The key insight is** that `EMLTS.le_iff_isSquare_sub` makes the entire asymptotic\nordering a first-order consequence of the ring structure, so an automorphism cannot\nscramble growth rates at all \u2014 the only freedom left is in the value group and in the\n`1`-units, which is exactly a semidirect factorisation.\n\n**Why now?** Automatic monotonicity is already formalised\n(`EMLTS.ringHom_monotone`), and the leading-term decomposition\n`EMLTS.exists_leading_decomposition` gives precisely the \"monomial \u00d7 `1`-unit\"\nfactorisation that the semidirect product needs. The remaining work is to show the\ninduced map on `Rank` is well defined, i.e. that automorphisms preserve `orderTop`, which\nfollows from monotonicity by a two-line argument.\n\n---\n\n## Next-cycle sub-conjectures (concrete, three)\n\n1. **S1 \u2014 settled.** `emlDeriv p = p \u2194 p = c \u00b7 exp x` is now the theorem\n   `EMLTS.emlDeriv_eq_self_iff` in `TransseriesConstants.lean`, proved exactly as\n   predicted, by transporting `y' = y` on `(1,\u221e)` through the faithful germ\n   representation. The natural successor is the inhomogeneous equation:\n   characterise the `q` for which `emlDeriv p = p + q` is solvable in `EMLAlg`; the\n   expected answer is \"all `q`\", by variation of constants, which would make the EML\n   algebra closed under the operator `p \u21a6 p' \u2212 p` \u2014 falsifiable by exhibiting one\n   obstructed `q`, in the style of `EMLTS.no_antiderivative_of_invXLog`.\n2. **S2.** For every `p \u2260 0` in `EMLAlg`, `EMLFun p` is eventually `C^\u221e` and every\n   derivative is again an EML function; hence the EML germs form a differential field\n   closed under all higher derivatives, with an explicit bound on the support growth\n   `|supp (emlDeriv^n p)| \u2264 4^n \u00b7 |supp p|`.\n3. **S3'.** (New this cycle.) The deformation theorem\n   `EMLTS.exists_root_perturbed_real_polynomial` \u2014 a monic real `f` with a simple root `a`\n   keeps a root near `a` after an infinitesimal perturbation `t \u00b7 g` \u2014 extends to\n   perturbations by finitely many independent infinitesimals `t\u2081, \u2026, t\u2098`, by iterating\n   `tsEval` through `\u211d\u27e6X\u2081, \u2026, X\u2098\u27e7`. Falsifiable: exhibit a two-parameter perturbation of\n   `X\u00b3 - 3X` with no root in `TS`.\n4. **S3.** The valuation `v : TS^\u00d7 \u2192 Rank`, `v f = orderTop f`, is surjective and its\n   restriction to the image of `EMLAlg` has image exactly the finitely-supported ranks;\n   consequently `EMLAlg` is a *valuation-dense* subring of `TS`, which is the precise\n   sense in which \"every EML function has a transseries expansion\".\n",
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_1330",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "8fa1e5a5",
+    "status": "available",
+    "timestamp": "2026-08-16T10:39:37.183358+00:00",
+    "title": "The formal results of this cycle live in `Catalog/Applications/EML/`:"
   },
   {
     "consumed_by_exp_id": "",

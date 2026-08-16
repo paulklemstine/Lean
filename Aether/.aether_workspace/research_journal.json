@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "c7164926",
-      "domain": "Tropical",
-      "key_insight": "# FUTURE DIRECTIONS — after the round-7 closures\n\nThe five Lean files added in `Catalog/Tropical/` make the round-7 verdicts\nprecise: the AGREEMENT aggregate collapses to `φ(N)/2` and to the Jacobi le",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 72,
-      "timestamp": "2026-08-13T23:09:59",
-      "title": "Round-7 Hypothesis Closures: Scoping the Noise-Floor Principle and the Trace-Lemma Frontier"
-    },
-    {
       "cycle_id": "5ddbfca0",
       "domain": "MachineLearning",
       "key_insight": "# FUTURE DIRECTIONS — after Round-6: the Noise-Floor Principle and the Trace-Lemma Frontier\n\nRound 6 closed the scalar and matrix theory of the noise floor: the minimum\nexcess risk of *every* spectral",
@@ -499,19 +489,19 @@
       "theorem_count": 109,
       "timestamp": "2026-08-16T09:43:07",
       "title": "EML Learning Theory: Gradient Descent Convergence in the Tropical Limit"
+    },
+    {
+      "cycle_id": "8fa1e5a5",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — EML Transseries\n\nThe formal results of this cycle live in `Catalog/Applications/EML/`:\n\n| file | content |\n|---|---|\n| `TransseriesEMLBase.lean` | the rank group `Rank = ℝ ×ₗ (ℝ",
+      "quality_score": 0.87,
+      "sorry_count": 0,
+      "theorem_count": 524,
+      "timestamp": "2026-08-16T10:39:48",
+      "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "7c424175",
-      "domain": "Shared",
-      "key_insight": "# Future directions\n\nState of the formalisation of *Gilbert's disc model conditioned on the square lattice*\n(one point per cell of `ℤ²`, two points joined when at distance `< R`), files\n`Catalog/Share",
-      "quality_score": 0.686,
-      "sorry_count": 0,
-      "theorem_count": 56,
-      "timestamp": "2026-08-05T14:51:29",
-      "title": "Deepening: ArXiv paper: Gilbert's disc model conditioned on the square lattice"
-    },
     {
       "cycle_id": "2e6f6f76",
       "domain": "Cryptography",
@@ -2501,27 +2491,19 @@
       "theorem_count": 109,
       "timestamp": "2026-08-16T09:43:07",
       "title": "EML Learning Theory: Gradient Descent Convergence in the Tropical Limit"
+    },
+    {
+      "cycle_id": "8fa1e5a5",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — EML Transseries\n\nThe formal results of this cycle live in `Catalog/Applications/EML/`:\n\n| file | content |\n|---|---|\n| `TransseriesEMLBase.lean` | the rank group `Rank = ℝ ×ₗ (ℝ",
+      "quality_score": 0.87,
+      "sorry_count": 0,
+      "theorem_count": 524,
+      "timestamp": "2026-08-16T10:39:48",
+      "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "032d68e5",
-      "domain": "Bridges",
-      "name": "mordellC_Δ",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "43f9870f",
-      "domain": "Combinatorics",
-      "name": "on",
-      "quality": 0.84
-    },
-    {
-      "cycle_id": "43f9870f",
-      "domain": "Combinatorics",
-      "name": "in",
-      "quality": 0.84
-    },
     {
       "cycle_id": "43f9870f",
       "domain": "Combinatorics",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "sharp_le_subgradient_bound",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "8fa1e5a5",
+      "domain": "Applications",
+      "name": "catalog",
+      "quality": 0.87
+    },
+    {
+      "cycle_id": "8fa1e5a5",
+      "domain": "Applications",
+      "name": "spb_linearization_error",
+      "quality": 0.87
+    },
+    {
+      "cycle_id": "8fa1e5a5",
+      "domain": "Applications",
+      "name": "spb_lissajous",
+      "quality": 0.87
     }
   ],
-  "last_updated": "2026-08-16T09:43:07",
+  "last_updated": "2026-08-16T10:39:48",
   "open_questions": [
     {
       "context": "This file gives a **complete, self-contained proof** of that theorem (0 `sorry`s).",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "3a707635",
-        "quality": 0.7555699999999999,
-        "theorems": 13,
-        "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
-      },
-      {
         "cycle_id": "8dd43c13",
         "quality": 0.79294,
         "theorems": 32,
@@ -3141,6 +3135,12 @@
         "quality": 0.82,
         "theorems": 109,
         "title": "EML Learning Theory: Gradient Descent Convergence in the Tropical Limit"
+      },
+      {
+        "cycle_id": "8fa1e5a5",
+        "quality": 0.87,
+        "theorems": 524,
+        "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
       }
     ],
     "Bridges": [

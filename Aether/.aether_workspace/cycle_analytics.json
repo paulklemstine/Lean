@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-16T09:43:10.134036+00:00",
+  "last_updated": "2026-08-16T10:39:54.943159+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -56706,6 +56706,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-08-16T09:43:09.913909+00:00",
       "title": "EML Learning Theory: Gradient Descent Convergence in the Tropical Limit"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Applications",
+      "duration_seconds": 3406.9820885658264,
+      "end_time": 1786876766.4889317,
+      "files_integrated": 5,
+      "job_id": "8fa1e5a5",
+      "outcome_quality": 0.87,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.87,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.5665,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.87,
+        "novelty": 0.87,
+        "proof_depth": 0.87,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.87,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1786873359.506843,
+      "strategy_count": 0,
+      "theorem_count": 524,
+      "theorem_novelty_disproof": 1,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 420,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-08-16T10:39:54.758255+00:00",
+      "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
     }
   ]
 }
