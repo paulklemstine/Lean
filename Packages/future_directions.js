@@ -18,6 +18,21 @@ window.FUTURE_DIRECTIONS = [
     "title": "NET-44: The Last Context-Extrapolation Cell Is Two-Seed and the Knee Fluctuates (k\\*=96 at (d=4, ctx=1024, s2) breaks the exact product law; two-seed bracket (64,128]; s1 chain's exactness was seed-lucky) \u2014 paper 88"
   },
   {
+    "consumed_by_exp_id": "6a0dc5c0",
+    "description": "## NET-45 \u2014 speed axis (round-net-45; paper 89, /tmp/exp_net_attncost_ctx2048.py, /tmp/net45.log)\n\n**Verdict name: THE-S1-PRODUCT-CHAIN-SURVIVES-AT-FIVE-DOUBLINGS-AT-THE-TIGHTEST-MARGIN.**\n\n### Result\nAt (d=4, ctx=2048, seed=1), **k\\* = 256 = d\u00b7ctx/32 EXACTLY \u2014 the prediction CONFIRMED** (P1). The s1 context chain is now exact at **FIVE doublings**: 16/32/64/128/256 across ctx 128\u21922048 \u2014 16\u00d7 context, the longest measured anywhere in the program. P2 (192, systematic 0.75\u00d7 s2 drift) and P3 (224, one-grid-step drop) both REFUTED at s1.\n\n### The tension\n- **At s1 the product law is exact through 16\u00d7 context** (this round).\n- **At s2 the knee broke by one grid step at 8\u00d7 context** (NET-44: k\\*=96 vs 128).\n\nThe pass margin at 2048 is **+0.0013 \u2014 the tightest of the whole chain** (prior margins +0.007/+0.010/+0.003/+0.006 at 128/256/512/1024): k=224 fails ~0.45 SE, k=256 passes ~0.13 SE. The 16\u00d7 cell is single-seed with a razor-thin knee.\n\n### Key numbers\n- Sweep: k=96 0.939 \u2717, 128 0.951 \u2717, 160 0.963 \u2717, 192 0.970 \u2717, 224 0.976 \u2717, **256 0.9813 \u2713**, 288 0.984, 384 0.993, 512 0.997, 768 0.996, 1024 0.998 (loss 5.2062 vs full 5.2047, \u03940.0015 \u2014 first time the ctx/2 point is not exactly full loss, a 2048-row renormalization residual).\n- Full acc 0.1543, bar 0.1512, loss 5.2047; train 18436s (~5.1h \u2014 the O(L\u00b2) attention term dominates at 2048).\n- **Selection dilutes with context**: gaps +1.7 (k=128) / +1.8 (k=256) \u2014 positive but the smallest at d=4 (from +5.9/+4.6 at 8\u00d7, +5.3/+4.6 at 4\u00d7).\n- **Concentration**: eff support 526.39 (\u00d71.81 on the doubling, same superlinear family); top-128 0.589, top-256 0.731; per-position 68.21/461.11/987.30 \u2014 NO bounded working set at 16\u00d7.\n- **Deployable speedup**: 8.0\u00d7 at (d=4, ctx=2048), the product-law guarantee \u2014 but now EQUAL to the knee (s2 could read 224 \u2192 10.3\u00d7).\n\n### All 8 barriers\n(a) clean \u2014 prediction stated before the run, measured 256 (a genuine 16\u00d7 extension); (b) clean \u2014 no context-scaling of data-free attention pruning at 16\u00d7 in Catalog or literature; (c) confronted \u2014 d=4 \u00d7 ctx=2048, the longest context of the program; (d) clean \u2014 held-out last-10%, data-free top-k; (e) the honest limit \u2014 single-seed at 16\u00d7 with a razor-thin margin: the ctx=2048 second seed is the sharpest open cell (256 two-seed-exact vs 224, one grid step); (f) clean \u2014 same metrics, binom SE \u2248 0.11% acc, the +0.0013 margin documented, chunked eval (CHUNK=8) identical math, NO crash (ALL_DONE_NET45); (g) fair \u2014 full-attention reference + same 0.98 bar + random-k at the same k (gaps +1.7/+1.8, positive); (h) sharpened \u2014 deployable 8.0\u00d7 at 16\u00d7 context, the guarantee equal to the knee, two-seed confirmation the practical next step.\n\n### Next\n**ctx=2048 second seed** (decides whether 256 is two-seed-exact, extending ctx=512's 64/64, or drops one grid step to 224, replicating the NET-44 s2 break at 16\u00d7); a third seed at ctx=1024 (knee distribution {96,128}); d=8 @ ctx=256 s0 corner.\n\nNow 45 network experiments. Assessment v45. Paper 89.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_1332",
+    "phase": "A",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "in_progress",
+    "timestamp": "2026-08-16T11:35:29.739763+00:00",
+    "title": "NET-45: The s1 product chain survives at FIVE DOUBLINGS \u2014 k*=256 at (d=4, ctx=2048, s1) = d\u00b7ctx/32 EXACTLY at 16\u00d7 context (prediction confirmed, the longest context measured), at the tightest margin of the chain (+0.0013); selection dilutes with context (+1.7/+1.8); the ctx=2048 second seed becomes the sharpest open cell \u2014 paper 89"
+  },
+  {
     "consumed_by_exp_id": "",
     "description": "Formalizes a quantum random walk on the Berggren Pythagorean tree where constructive interference at energy spectrum minima collapses the state onto factors of N.",
     "domains": [
@@ -749,6 +764,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-24T14:34:16.697733+00:00",
     "title": "Riemann Zeta: Zero-Free Regions and Density Estimates"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 3b29df87 (Q=0.820), which proved 110 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the Weil pairing on an elliptic curve and prove its bilinearity. Show that the BLS signature scheme is existentially unforgeable under the computational Diffie-Hellman assumption in the pairing group. Prove that the pairing allows short aggregate signatures.",
+    "domains": [
+      "Cryptography"
+    ],
+    "id": "push_3b29df87_0c171088",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "3b29df87",
+    "status": "available",
+    "timestamp": "2026-08-16T11:35:10.982658+00:00",
+    "title": "Deepening: Elliptic Curve Cryptography: Weil Pairing and BLS Signatures"
   },
   {
     "consumed_by_exp_id": "",
@@ -1721,70 +1750,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-13T03:21:12.748859+00:00",
     "title": "Stein-Method: Quantitative Normal Approximation Bounds"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Reverse-engineer proof strategies from deep results (FLT, Poincar\u00e9, classification of finite simple groups) and extract reusable structural patterns as higher-order proof schemata.",
-    "domains": [
-      "Logic",
-      "Algebra",
-      "Bridges"
-    ],
-    "id": "seed_054",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Proof Strategy Mining from Deep Mathematics"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Develop a proof theory where the validity of a theorem can be established not just by deriving it from axioms, but by verifying that its logical consequences form a coherent, self-consistent structure. Conjecture: There exists a class of consequence-stable propositions P such that if P implies Q1 and Q2 ... Qn and all Qi are verified, then P has a proof shorter than any direct proof by at least a constant factor. Test: identify consequence-stable propositions in Peano arithmetic and measure proof compression. A consequence-stable proposition P has the property that all its logical consequences are mutually consistent, and the set of verified consequences narrows the search space for P's proof. This is analogous to how in physics, the consequences of a theory (predictive power) can confirm the theory even before a mechanism is found. Retrocausal proof theory would enable a new form of automated theorem proving where consequence verification guides proof search, not just axiom chaining. Impact: a new paradigm for automated theorem proving where consequences guide proof search, not just axioms.",
-    "domains": [
-      "Logic",
-      "Speculative",
-      "Computation"
-    ],
-    "id": "seed_079",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Retrocausal Proof Theory: Proving Theorems by Their Consequences"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "The key insight is that protein folding minimizes a topological energy: the persistent homology barcode of the protein's contact map. The native fold of a protein is the configuration that minimizes the total persistence of the contact filtration. Conjecture: The native state of a protein P minimizes sum_i (d_i - b_i) over all possible 3D configurations, where {b_i, d_i} is the persistent homology barcode of the distance matrix of P's C-alpha atoms. Why now: AlphaFold2 showed that contact maps are sufficient for structure prediction, but it used deep learning without understanding WHY contact maps work. Persistent homology provides the mathematical reason: the barcode captures the topological constraints (no self-intersection, hydrophobic core, etc.) that determine the fold. Test: compute the barcode for 100 proteins from the PDB and verify that the native fold has lower total persistence than 1000 random decoy folds for each protein. Impact: protein folding becomes a topological optimization problem with a provably unique minimum, explaining why folding is fast and reliable despite Levinthal's paradox.",
-    "domains": [
-      "Physics",
-      "Topology",
-      "MachineLearning"
-    ],
-    "id": "seed_102",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Biological Topology: Protein Folding as Persistent Homology Optimization"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "There are mathematical objects whose existence we can prove but whose specific properties are unknowable \u2014 theorems that cast shadows without being visible. Define a dark theorem as a statement T such that: (1) PA proves 'there exists x such that T(x)', but (2) for every specific n, PA does NOT prove T(n). The classic example is the Paris-Harrington theorem: the strengthened finite Ramsey theorem is true but not provable in PA. But dark theorems go further: they assert the existence of objects that no specific instance can be verified. Conjecture: The set of dark theorems is dense in the space of all Pi_2 statements \u2014 most true Pi_2 statements are dark. Moreover, there is a hierarchy of darkness: a dark theorem of level k is one where PA proves 'there exist at least k values of x such that T(x)' but cannot identify any specific one. The hierarchy is strict: level k+1 dark theorems are strictly harder to prove than level k. Test: construct explicit dark theorems of levels 1, 2, 3 using the Paris-Harrington principle and the Kirby-Paris hydra theorem. Prove the density conjecture by counting Pi_2 statements. Impact: most true mathematical statements are dark \u2014 they assert existence without the possibility of verification. This is not incompleteness; it is a new form of mathematical unknowability.",
-    "domains": [
-      "Novelty",
-      "Logic",
-      "NumberTheory"
-    ],
-    "id": "seed_115",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Dark Mathematics: Theorems That Exist But Cannot Be Found"
   },
   {
     "consumed_by_exp_id": "",
@@ -4920,22 +4885,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Post-Quantum Cryptography: Lattice-Based Key Exchange"
-  },
-  {
-    "consumed_by_exp_id": "3b29df87",
-    "description": "Formalize the Weil pairing on an elliptic curve and prove its bilinearity. Show that the BLS signature scheme is existentially unforgeable under the computational Diffie-Hellman assumption in the pairing group. Prove that the pairing allows short aggregate signatures.",
-    "domains": [
-      "Cryptography",
-      "Algebra"
-    ],
-    "id": "seed_360",
-    "phase": "A",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Elliptic Curve Cryptography: Weil Pairing and BLS Signatures"
   },
   {
     "consumed_by_exp_id": "",
@@ -18770,6 +18719,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-16T10:39:37.183358+00:00",
     "title": "The formal results of this cycle live in `Catalog/Applications/EML/`:"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions: Weil pairings, torsion structure and pairing-based signatures\n\nDerived from what survived, and from what broke, in this cycle.  Each conjecture is\nfalsifiable inside the framework already built in `Catalog/Cryptography/`:\n`AltPairing`, `detPairing`, `weilPairingOfEquiv`, `BLSSetting`.\n\n## What this cycle established (context)\n\n* Bilinearity of a Weil pairing is not merely an axiom: on a group generated by two\n  elements, alternation plus bi-additivity *forces* the determinant form\n  (`AltPairing.pair_coords`), and on `(ZMod n)\u00b2` the nondegenerate alternating pairings\n  are exactly the unit multiples of the determinant pairing\n  (`altPairing_nondegenerate_iff_isUnit`, `altPairing_symplectic_normal_form`).\n* Nondegeneracy is incompatible with cyclic torsion\n  (`WeilPairing.torsion_trivial_of_cyclic`).\n* Adversarial review killed the previously catalogued BLS model: the axiom\n  `Function.Injective (fun P => e(P, G))` in `BLSParams` implies that the whole\n  `n`-torsion is trivial (`BLSParams.torsion_trivial`).  The replacement `BLSSetting`\n  (two generators, `orderOf e(gen\u2081,gen\u2082) = n`) is inhabited (`detBLSSetting`,\n  `curveBLSSetting`) and carries the full BLS theory.\n\n## Conjecture 1 (symplectic structure \u21d2 square order)\n\n*Every finite abelian group carrying a nondegenerate alternating pairing into a\ncommutative group has square cardinality, and admits a symplectic basis\n`(x\u2081,y\u2081,\u2026,x_g,y_g)` with `e(x\u1d62,y\u2c7c) = \u03b6\u1d62^{\u03b4\u1d62\u2c7c}`.*\n\n**The key insight is** that `WeilPairing.torsion_trivial_of_cyclic` is the rank-one case\nof a general induction: pick `x` of maximal order, use nondegeneracy to find `y` with\n`e(x,y)` of the same order, and split off the orthogonal complement of `\u27e8x,y\u27e9`; the\nobstruction proved here is exactly the base case that makes the induction start.\n**Why now?** The complement step is the only missing ingredient, and Mathlib's theory of\nfinite abelian groups (`AddCommGroup.equiv_directSum_zmod_of_finite`) supplies the\ndecomposition to run the induction against.  Falsifiable: exhibit a finite abelian group\nof non-square order with a nondegenerate alternating pairing, or fail to close the\ninduction step for `ZMod p \u00d7 ZMod p\u00b2`.\n\n## Conjecture 2 (Weil pairing from divisors, matching the determinant model)\n\n*The classical divisor-theoretic Weil pairing `e_n(P,Q) = f_P(D_Q)/f_Q(D_P)` on a\nWeierstrass curve is, after any isomorphism `E[n] \u2245 (ZMod n)\u00b2`, equal to a unit multiple\nof `detPairing n` \u2014 hence `weilPairingOfEquiv` is not merely \"a\" pairing but \"the\" Weil\npairing up to a choice of primitive root of unity.*\n\n**The key insight is** that `altPairing_symplectic_normal_form` reduces the identification\nto a single computation: any construction that is bi-additive, alternating and\nnondegenerate is forced into the determinant normal form, so only the *value on one\nbasis pair* has to be computed from divisors.\n**Why now?** Mathlib has divisors and function fields of curves but no Weil pairing; the\nnormal-form theorem converts an intimidating identity of rational functions into one\nscalar evaluation.  Falsifiable by computing `f_P(D_Q)/f_Q(D_P)` on a small curve (say\n`y\u00b2 = x\u00b3 + 1` over `\ud835\udd3d\u2087`, `n = 3`) and comparing with `detForm`.\n\n## Conjecture 3 (tight aggregate security is *equivalent* to key registration)\n\n*In the corrected model, aggregate EUF-CMA security holds if and only if public keys are\nregistered: `aggregate_forgery_extracts` gives the reduction from registration, and\nconversely for every unregistered aggregation rule that is a group homomorphism in the\npublic keys there is a rogue-key forger.*\n\n**The key insight is** that `rogue_key_attack` is not an accident of the sum rule: any\nverification equation of the form `e(\u03c3, gen\u2082) = \u220f e(H_i, pk_i)` is linear in the keys, so\nthe adversary can always solve for one key that cancels the victim's contribution.\n**Why now?** Both halves are already stated in the framework; the converse only needs a\nformal definition of \"aggregation rule\" as a homomorphism and a solvability lemma.\nFalsifiable: produce an unregistered, key-homomorphic aggregation rule with no rogue-key\nforger.\n\n## Conjecture 4 (pairing-inversion is the exact security boundary)\n\n*In a `BLSSetting`, computing a preimage of the pairing (given `\u03b6^{ab}` recover\n`ab \u2022 gen\u2081`) is polynomial-time equivalent to CDH in `\u27e8gen\u2081\u27e9`, while DDH is trivially\neasy (`AltPairing.ddh_iff`); hence the gap-Diffie\u2013Hellman assumption underlying BLS is\nexactly \"pairing inversion is hard\".*\n\n**The key insight is** that the proved equivalence `e(aP,bQ) = e(P,cQ) \u2194 ab \u2261 c (mod n)`\nturns every security question in the group into a question about the single scalar\n`orderOf \u03b6 = n`, so the CDH/DDH gap becomes a statement about invertibility of `\u03b6^\u00b7`.\n**Why now?** The exponent-level API (`verifies_iff_modEq`, `pair_gen`) already reduces all\nBLS statements to congruences mod `n`; a formal cost model is the only missing piece.\nFalsifiable by an algorithm that inverts the pairing without solving CDH.\n\n## Conjecture 5 (compression is optimal)\n\n*No verification-equation-preserving encoding of `m` BLS signatures is shorter than one\ngroup element: the aggregation map of `aggregate_compression` is onto the whole group for\nevery `m \u2265 1`, and any injective-on-verifiable-families encoding needs at least\n`log\u2082 N` bits.*\n\n**The key insight is** the surjectivity half of `aggregate_compression`: since every group\nelement is a legitimate aggregate, an encoding shorter than `log\u2082 N` bits must collide on\ntwo aggregates that differ on some verification equation.\n**Why now?** The counting statement is already formal; what remains is a pigeonhole\nargument relating `Fintype.card` to the codomain of an arbitrary encoding, well inside\ncurrent Mathlib.  Falsifiable by a shorter encoding that still decides verification.\n",
+    "domains": [
+      "Algebra",
+      "Cryptography"
+    ],
+    "id": "fd_1331",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "3b29df87",
+    "status": "available",
+    "timestamp": "2026-08-16T11:34:59.325561+00:00",
+    "title": "Derived from what survived, and from what broke, in this cycle.  Each conjecture"
   },
   {
     "consumed_by_exp_id": "",

@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "5ddbfca0",
-      "domain": "MachineLearning",
-      "key_insight": "# FUTURE DIRECTIONS — after Round-6: the Noise-Floor Principle and the Trace-Lemma Frontier\n\nRound 6 closed the scalar and matrix theory of the noise floor: the minimum\nexcess risk of *every* spectral",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 92,
-      "timestamp": "2026-08-14T00:06:43",
-      "title": "Round-6 Hypothesis Closures: The Noise-Floor Principle and the Trace-Lemma Frontier"
-    },
-    {
       "cycle_id": "d99b7790",
       "domain": "MachineLearning",
       "key_insight": "# Future directions: five falsifiable conjectures\n\nDerived from the analysis and adversarial review of the formalised results in\n`Catalog/MachineLearning/FreeWitnessTraceLemma.lean`,\n`FreeWitnessClass",
@@ -499,19 +489,19 @@
       "theorem_count": 524,
       "timestamp": "2026-08-16T10:39:48",
       "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
+    },
+    {
+      "cycle_id": "3b29df87",
+      "domain": "Cryptography",
+      "key_insight": "# Future directions: Weil pairings, torsion structure and pairing-based signatures\n\nDerived from what survived, and from what broke, in this cycle.  Each conjecture is\nfalsifiable inside the framework",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 110,
+      "timestamp": "2026-08-16T11:35:10",
+      "title": "Elliptic Curve Cryptography: Weil Pairing and BLS Signatures"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "2e6f6f76",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions\n\nFive concrete, falsifiable conjectures arising from the LWE development in\n`Catalog/Cryptography/LWE/`. Each is stated so that a single Lean theorem (or a\nsingle counterexample) s",
-      "quality_score": 0.686,
-      "sorry_count": 0,
-      "theorem_count": 100,
-      "timestamp": "2026-08-05T14:51:35",
-      "title": "Deepening: Lattice Cryptography: LWE Hardness"
-    },
     {
       "cycle_id": "63e5c24f",
       "domain": "Computation",
@@ -2501,27 +2491,19 @@
       "theorem_count": 524,
       "timestamp": "2026-08-16T10:39:48",
       "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
+    },
+    {
+      "cycle_id": "3b29df87",
+      "domain": "Cryptography",
+      "key_insight": "# Future directions: Weil pairings, torsion structure and pairing-based signatures\n\nDerived from what survived, and from what broke, in this cycle.  Each conjecture is\nfalsifiable inside the framework",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 110,
+      "timestamp": "2026-08-16T11:35:10",
+      "title": "Elliptic Curve Cryptography: Weil Pairing and BLS Signatures"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "43f9870f",
-      "domain": "Combinatorics",
-      "name": "stated",
-      "quality": 0.84
-    },
-    {
-      "cycle_id": "299127cc",
-      "domain": "Combinatorics",
-      "name": "behind",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "299127cc",
-      "domain": "Combinatorics",
-      "name": "div_eq_iff_block",
-      "quality": 0.82
-    },
     {
       "cycle_id": "299127cc",
       "domain": "Combinatorics",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "spb_lissajous",
       "quality": 0.87
+    },
+    {
+      "cycle_id": "3b29df87",
+      "domain": "Cryptography",
+      "name": "pair_sub_left",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "3b29df87",
+      "domain": "Cryptography",
+      "name": "aggVerifies_of_honest",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "3b29df87",
+      "domain": "Cryptography",
+      "name": "aggregate_signature_unique",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-16T10:39:48",
+  "last_updated": "2026-08-16T11:35:10",
   "open_questions": [
     {
       "context": "This file gives a **complete, self-contained proof** of that theorem (0 `sorry`s).",
@@ -3331,12 +3331,6 @@
     ],
     "Cryptography": [
       {
-        "cycle_id": "2e6f6f76",
-        "quality": 0.686,
-        "theorems": 100,
-        "title": "Deepening: Lattice Cryptography: LWE Hardness"
-      },
-      {
         "cycle_id": "a95dbc85",
         "quality": 0.686,
         "theorems": 112,
@@ -3389,6 +3383,12 @@
         "quality": 0.82,
         "theorems": 78,
         "title": "The 'Only Bad Primes' Conjecture is False (elliptic curve denominators)"
+      },
+      {
+        "cycle_id": "3b29df87",
+        "quality": 0.82,
+        "theorems": 110,
+        "title": "Elliptic Curve Cryptography: Weil Pairing and BLS Signatures"
       }
     ],
     "Geometry": [

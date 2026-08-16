@@ -1175,7 +1175,7 @@
       "depth_estimate": 3,
       "description": "Establishes formal security reduction for multilinear Diffie-Hellman assumptions in graded encoding schemes.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Cryptography"
       ],
@@ -23055,7 +23055,7 @@
       "depth_estimate": 3,
       "description": "# Future directions\n\n- Extend the two-state Cayley–Hamilton recurrence to the full `(s + 2)`-state adjacent-sum matrices used by the lattice-polytope model.\n- Define the open and cyclic lattice-point sets and prove bijections between their elements and the corresponding matrix products and traces.\n- Derive formal-power-series identities from the proved recurrences, including the shared characteristic denominator for both parity classes.\n- Formalize the Möbius recurrence and arctangent closed form for the odd-dimensional series.\n- Identify the dominant real pole under positivity and irreducibility hypotheses and prove the resulting exponential-growth statements.\n- Develop the Jacobi derivative identity for the even cyclic numerator and the corresponding odd cyclic numerator formula.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Cryptography"
       ],
@@ -24854,7 +24854,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'The equality case of Ehrhart's volume conjecture' and formalize its key results. Abstract: We prove that every full-dimensional compact convex body in $\\mathbb R^n$ whose barycenter is its unique interior lattice point and whose volume is $(n+1)^n/n!$ is a unimodular image of the simplex $(n+1)Δ_n-(1,\\dots,1)$. This resolves the equality case of Ehrhart's volume conjecture, as a counterpart of the inequality part recently proved by OpenAI. The main result of this paper is obtained by generative AI, particularly GPT-5.6-sol, Fable 5, and the Danus system.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Geometry",
         "Cryptography"
@@ -31190,7 +31190,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'A Fourier-analytic Uniqueness Theorem for Lattice-point Enumerators' and formalize its key results. Abstract: We consider a bounded set $P \\subset \\mathbb{R}^d$ and the lattice-point enumerator $L_P(t) = |tP \\cap \\mathbb{Z}^d|$ for real $t > 0$. We show that if two bounded measurable sets with boundary of measure zero have the same real-parameter lattice-point enumerators for all integer translates, then their indicator functions agree almost everywhere. As a corollary, any convex body is uniquely determined by this data. Our proof is short and Fourier-analytic, where the key device is a periodic point-counting function whose Fourier coefficients recover the Fourier transform of the indicator function on a dense set. This recovers and extends, with a unified argument, the uniqueness results for rational polytopes and symmetric convex bodies established by Royer [arXiv:1712.01973, arXiv:1712.03937], whose proofs relied on intricate case-specific geometric constructions.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Geometry",
         "Cryptography"
@@ -34128,7 +34128,7 @@
       "depth_estimate": 3,
       "description": "Formalizes Regev's worst-case to average-case reduction showing that a polynomial-time algorithm for the decision Learning With Errors problem over a lattice with polynomial modulus implies a polynomial-time quantum algorithm for the worst-case shortest-vector / GapSVP problem.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Cryptography",
         "Computation"
@@ -34169,7 +34169,7 @@
       "depth_estimate": 3,
       "description": "Proves the security of the BB84 quantum key distribution protocol against collective attacks using entropic uncertainty relations, formalizing the complementarity argument that bounds the eavesdropper's smooth min-entropy on the raw key.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Cryptography",
         "Computation"
@@ -38140,7 +38140,7 @@
       "depth_estimate": 3,
       "description": "# FUTURE DIRECTIONS — Singular Moduli Factoring after the √N Theorem\n\nThe formalisation in `Catalog/Cryptography/SingularModuli/` settles the basic\nquestion: the gcd-of-class-polynomial-values method is exactly a `√N` method,\nits success set has density `≤ 4h/√N`, the class-number speed-up is cancelled by\nthe evaluation cost, and no precomputed table of evaluation points works for\nmore than logarithmically many primes. The following conjectures are the natural\nnext targets. Each is falsifiable, and each is stated so that a counterexample\nor a proof would be recognisable in Lean.\n\n---\n\n## Conjecture 1 (Degree–density duality: the barrier is a conservation law)\n\n*For every family of integer polynomials `H_k` with `deg H_k = h_k` and every\nfamily of evaluation strategies, the product (density of useful points) × (cost\nof one evaluation) is `O(1/√N)` — the two factors trade off exactly.*\n\nFormally: if `W(H)` denotes any cost measure with `W(H) ≥ deg H` (Horner is\noptimal up to constants for a generic polynomial) then\n`W(H) · S(H, N) / N ≤ 4·W(H)·h/√N` cannot be improved to `o(1/√N)` by any choice\nof `H`, because `S ≤ h(p+q)` is sharp (`successCount_add_two_sq_eq`).\n\n**The key insight is** that `h` appears in the numerator of the density bound\nand in the denominator of the per-evaluation cost with the same exponent, so the\n`√N` rate is a *conservation law of the construction*, not a limitation of the\ncounting technique. **Why now?** `total_work_ge` already proves the `√N/4` lower\nbound for a single monic `H`; the missing step is a cost model in Lean\n(`WorkModel` structure with `W(H) ≥ natDegree H`) and the corresponding\n`∀ H, W(H) · N / S(H,N) ≥ √N / 4`, which is a routine generalisation of the\nproof already in `Sharpness.lean`.\n\n---\n\n## Conjecture 2 (Elliptic escape: CM torsion evades the counting bound)\n\n*Replacing \"evaluate `H_D` at `j₀`\" by \"compute the `ℓ`-division polynomial of a\nrandom curve `E/ℤ_N` and gcd its value\" gives a success density bounded by\n`c·ℓ²/√N`, i.e. the same `√N` rate but with `h` replaced by the degree\n`(ℓ²−1)/2` — hence still no gain; but the density is achieved for a positive\nproportion of curves rather than a proportion `≈ h/p`.*\n\n**The key insight is** that both methods are instances of one scheme: a fixed\ninteger polynomial whose roots mod `p` encode an arithmetic property of `p`, and\nthe counting theorem `successCount_eq` applies verbatim, since it never uses\nanything about `H_D` beyond its degree. **Why now?** `successCount_eq` and\n`successDensity_le` in this repository are already stated for an arbitrary monic\n`H ∈ ℤ[X]`, so the whole of ECM-style analysis can be plugged in by instantiating\n`H` with division polynomials; only the sharpness direction (existence of roots)\nneeds new input, namely Hasse's bound.\n\n---\n\n## Conjecture 3 (Adaptive search does not beat uniform search)\n\n*For every adaptive deterministic algorithm that may choose its next evaluation\npoint as a function of all previously observed gcds, the number of steps needed\nto factor a balanced semiprime `N = pq` is at least `√N/(4h)` in the worst case\nover `p, q`.*\n\nThe results here prove this for *oblivious* (precomputed) strategies\n(`finite_family_table_fails`) and bound the *average-case* rate for uniform\nsampling (`successDensity_le_balanced`). The adaptive case needs the observation\nthat a failed trial returns `gcd = 1`, i.e. one bit, so after `k` failures the\nadversary's set of consistent `(p,q)` shrinks by at most `k·h(p+q)` residues.\n\n**The key insight is** that a failing gcd query is information-theoretically\nalmost free for the adversary: it excludes only the `h(p+q)` residues counted by\n`successCount_le`, so an adversary argument in the style of\n`RandomnessBarrier.arithmetic_trajectory_blind` should give the matching\nworst-case bound. **Why now?** The exact criterion (`evalGcd_nontrivialDivisor_iff`)\nturns the transcript of an adaptive attack into a purely combinatorial object —\na sequence of residues avoiding two unknown root sets — which is exactly the\nsetting where a Lean adversary argument is feasible.\n\n---\n\n## Conjecture 4 (Class number cannot be pushed to `√N`)\n\n*For discriminants `|D| ≤ B` the class number satisfies `h(D) = O(√B log B)`,\nwhile the bit size of `H_D` grows like `h(D)^{2+o(1)}`; consequently the\n\"use a huge class number\" strategy has total cost at least `N^{1/2−o(1)}` even\nunder the most optimistic assumption that a single evaluation costs\n`Õ(deg H_D)`.*\n\n**The key insight is** that the barrier proved here is `√N/(4h)` *evaluations*,\nso the only way to reach polynomial time is `h ≈ √N`, which forces\n`|D| ≳ N/ log² N` and a class polynomial with more than `N^{1/2}` coefficients —\nthe polynomial itself becomes the exponential object. **Why now?** The Lean\nstatement needs only the Brauer–Siegel-type upper bound `h(D) = O(√|D| log|D|)`\nas an explicit hypothesis; the rest is arithmetic on the bounds already proved,\nso the conjecture can be formalised as a conditional theorem today and made\nunconditional when Mathlib gains class-number asymptotics.\n\n---\n\n## Conjecture 5 (Universality of the `√N` rung for \"algebraic-set\" methods)\n\n*Let `f ∈ ℤ[X₁,…,X_m]` be any fixed polynomial and consider the method\n\"pick `x ∈ (ℤ/N)^m`, output `gcd(f(x), N)`\". Then the density of successful `x`\nis at most `deg f · (1/p + 1/q)`, so every such method is a `√N` method.*\n\nThis is the multivariate generalisation of `successDensity_le`; the substitute\nfor \"at most `deg` roots\" is the Schwartz–Zippel bound `#Z(f) ≤ deg f · p^{m−1}`\nover `F_p`.\n\n**The key insight is** that the entire barrier rests on one inequality — a\nnonzero polynomial has few zeros modulo `p` — so any method whose useful set is\ncut out by fixed algebraic equations lands on the same rung, regardless of the\ngeometry (elliptic curves, abelian surfaces, Drinfeld modules) used to motivate\nit. **Why now?** Mathlib has the machinery for Schwartz–Zippel-style counting,\nand the CRT transfer lemma proved here (`card_range_filter_crt`) is already\nstated for an arbitrary predicate on `ZMod p × ZMod q`, so only the root-count\nstep needs replacing.\n\n---\n\n### Three concrete next-cycle sub-conjectures\n\n1. **(3a)** Every adaptive strategy making `k` queries factors a uniformly\n   random balanced semiprime with probability at most `4kh/√N` (union bound over\n   the transcript) — provable from `successCount_le` alone.\n2. **(1a)** `successCount H (p*q) = h(p+q) − 2h²` occurs for infinitely many\n   primes `p` for each fixed `D` (Chebotarev density for the ring class field),\n   making the upper bound attained infinitely often.\n3. **(5a)** For `f(X,Y) = Y² − X³ − aX − b` the density of `(x,y)` with\n   `gcd(f(x,y), N)` nontrivial is `Θ(1/p + 1/q)`, exhibiting a two-variable\n   instance of Conjecture 5 with matching upper and lower bounds.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Algebra",
         "Geometry"
@@ -39320,7 +39320,7 @@
       "depth_estimate": 3,
       "description": "# Future directions: Weil pairings, torsion structure and pairing-based signatures\n\nDerived from what survived, and from what broke, in this cycle.  Each conjecture is\nfalsifiable inside the framework already built in `Catalog/Cryptography/`:\n`AltPairing`, `detPairing`, `weilPairingOfEquiv`, `BLSSetting`.\n\n## What this cycle established (context)\n\n* Bilinearity of a Weil pairing is not merely an axiom: on a group generated by two\n  elements, alternation plus bi-additivity *forces* the determinant form\n  (`AltPairing.pair_coords`), and on `(ZMod n)²` the nondegenerate alternating pairings\n  are exactly the unit multiples of the determinant pairing\n  (`altPairing_nondegenerate_iff_isUnit`, `altPairing_symplectic_normal_form`).\n* Nondegeneracy is incompatible with cyclic torsion\n  (`WeilPairing.torsion_trivial_of_cyclic`).\n* Adversarial review killed the previously catalogued BLS model: the axiom\n  `Function.Injective (fun P => e(P, G))` in `BLSParams` implies that the whole\n  `n`-torsion is trivial (`BLSParams.torsion_trivial`).  The replacement `BLSSetting`\n  (two generators, `orderOf e(gen₁,gen₂) = n`) is inhabited (`detBLSSetting`,\n  `curveBLSSetting`) and carries the full BLS theory.\n\n## Conjecture 1 (symplectic structure ⇒ square order)\n\n*Every finite abelian group carrying a nondegenerate alternating pairing into a\ncommutative group has square cardinality, and admits a symplectic basis\n`(x₁,y₁,…,x_g,y_g)` with `e(xᵢ,yⱼ) = ζᵢ^{δᵢⱼ}`.*\n\n**The key insight is** that `WeilPairing.torsion_trivial_of_cyclic` is the rank-one case\nof a general induction: pick `x` of maximal order, use nondegeneracy to find `y` with\n`e(x,y)` of the same order, and split off the orthogonal complement of `⟨x,y⟩`; the\nobstruction proved here is exactly the base case that makes the induction start.\n**Why now?** The complement step is the only missing ingredient, and Mathlib's theory of\nfinite abelian groups (`AddCommGroup.equiv_directSum_zmod_of_finite`) supplies the\ndecomposition to run the induction against.  Falsifiable: exhibit a finite abelian group\nof non-square order with a nondegenerate alternating pairing, or fail to close the\ninduction step for `ZMod p × ZMod p²`.\n\n## Conjecture 2 (Weil pairing from divisors, matching the determinant model)\n\n*The classical divisor-theoretic Weil pairing `e_n(P,Q) = f_P(D_Q)/f_Q(D_P)` on a\nWeierstrass curve is, after any isomorphism `E[n] ≅ (ZMod n)²`, equal to a unit multiple\nof `detPairing n` — hence `weilPairingOfEquiv` is not merely \"a\" pairing but \"the\" Weil\npairing up to a choice of primitive root of unity.*\n\n**The key insight is** that `altPairing_symplectic_normal_form` reduces the identification\nto a single computation: any construction that is bi-additive, alternating and\nnondegenerate is forced into the determinant normal form, so only the *value on one\nbasis pair* has to be computed from divisors.\n**Why now?** Mathlib has divisors and function fields of curves but no Weil pairing; the\nnormal-form theorem converts an intimidating identity of rational functions into one\nscalar evaluation.  Falsifiable by computing `f_P(D_Q)/f_Q(D_P)` on a small curve (say\n`y² = x³ + 1` over `𝔽₇`, `n = 3`) and comparing with `detForm`.\n\n## Conjecture 3 (tight aggregate security is *equivalent* to key registration)\n\n*In the corrected model, aggregate EUF-CMA security holds if and only if public keys are\nregistered: `aggregate_forgery_extracts` gives the reduction from registration, and\nconversely for every unregistered aggregation rule that is a group homomorphism in the\npublic keys there is a rogue-key forger.*\n\n**The key insight is** that `rogue_key_attack` is not an accident of the sum rule: any\nverification equation of the form `e(σ, gen₂) = ∏ e(H_i, pk_i)` is linear in the keys, so\nthe adversary can always solve for one key that cancels the victim's contribution.\n**Why now?** Both halves are already stated in the framework; the converse only needs a\nformal definition of \"aggregation rule\" as a homomorphism and a solvability lemma.\nFalsifiable: produce an unregistered, key-homomorphic aggregation rule with no rogue-key\nforger.\n\n## Conjecture 4 (pairing-inversion is the exact security boundary)\n\n*In a `BLSSetting`, computing a preimage of the pairing (given `ζ^{ab}` recover\n`ab • gen₁`) is polynomial-time equivalent to CDH in `⟨gen₁⟩`, while DDH is trivially\neasy (`AltPairing.ddh_iff`); hence the gap-Diffie–Hellman assumption underlying BLS is\nexactly \"pairing inversion is hard\".*\n\n**The key insight is** that the proved equivalence `e(aP,bQ) = e(P,cQ) ↔ ab ≡ c (mod n)`\nturns every security question in the group into a question about the single scalar\n`orderOf ζ = n`, so the CDH/DDH gap becomes a statement about invertibility of `ζ^·`.\n**Why now?** The exponent-level API (`verifies_iff_modEq`, `pair_gen`) already reduces all\nBLS statements to congruences mod `n`; a formal cost model is the only missing piece.\nFalsifiable by an algorithm that inverts the pairing without solving CDH.\n\n## Conjecture 5 (compression is optimal)\n\n*No verification-equation-preserving encoding of `m` BLS signatures is shorter than one\ngroup element: the aggregation map of `aggregate_compression` is onto the whole group for\nevery `m ≥ 1`, and any injective-on-verifiable-families encoding needs at least\n`log₂ N` bits.*\n\n**The key insight is** the surjectivity half of `aggregate_compression`: since every group\nelement is a legitimate aggregate, an encoding shorter than `log₂ N` bits must collide on\ntwo aggregates that differ on some verification equation.\n**Why now?** The counting statement is already formal; what remains is a pigeonhole\nargument relating `Fintype.card` to the codomain of an arbitrary encoding, well inside\ncurrent Mathlib.  Falsifiable by a shorter encoding that still decides verification.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Cryptography"
@@ -39348,6 +39348,46 @@
       "title": "Derived from what survived, and from what broke, in this cycle.  Each conjecture"
     },
     {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 1,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "6a0dc5c0",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "## NET-45 — speed axis (round-net-45; paper 89, /tmp/exp_net_attncost_ctx2048.py, /tmp/net45.log)\n\n**Verdict name: THE-S1-PRODUCT-CHAIN-SURVIVES-AT-FIVE-DOUBLINGS-AT-THE-TIGHTEST-MARGIN.**\n\n### Result\nAt (d=4, ctx=2048, seed=1), **k\\* = 256 = d·ctx/32 EXACTLY — the prediction CONFIRMED** (P1). The s1 context chain is now exact at **FIVE doublings**: 16/32/64/128/256 across ctx 128→2048 — 16× context, the longest measured anywhere in the program. P2 (192, systematic 0.75× s2 drift) and P3 (224, one-grid-step drop) both REFUTED at s1.\n\n### The tension\n- **At s1 the product law is exact through 16× context** (this round).\n- **At s2 the knee broke by one grid step at 8× context** (NET-44: k\\*=96 vs 128).\n\nThe pass margin at 2048 is **+0.0013 — the tightest of the whole chain** (prior margins +0.007/+0.010/+0.003/+0.006 at 128/256/512/1024): k=224 fails ~0.45 SE, k=256 passes ~0.13 SE. The 16× cell is single-seed with a razor-thin knee.\n\n### Key numbers\n- Sweep: k=96 0.939 ✗, 128 0.951 ✗, 160 0.963 ✗, 192 0.970 ✗, 224 0.976 ✗, **256 0.9813 ✓**, 288 0.984, 384 0.993, 512 0.997, 768 0.996, 1024 0.998 (loss 5.2062 vs full 5.2047, Δ0.0015 — first time the ctx/2 point is not exactly full loss, a 2048-row renormalization residual).\n- Full acc 0.1543, bar 0.1512, loss 5.2047; train 18436s (~5.1h — the O(L²) attention term dominates at 2048).\n- **Selection dilutes with context**: gaps +1.7 (k=128) / +1.8 (k=256) — positive but the smallest at d=4 (from +5.9/+4.6 at 8×, +5.3/+4.6 at 4×).\n- **Concentration**: eff support 526.39 (×1.81 on the doubling, same superlinear family); top-128 0.589, top-256 0.731; per-position 68.21/461.11/987.30 — NO bounded working set at 16×.\n- **Deployable speedup**: 8.0× at (d=4, ctx=2048), the product-law guarantee — but now EQUAL to the knee (s2 could read 224 → 10.3×).\n\n### All 8 barriers\n(a) clean — prediction stated before the run, measured 256 (a genuine 16× extension); (b) clean — no context-scaling of data-free attention pruning at 16× in Catalog or literature; (c) confronted — d=4 × ctx=2048, the longest context of the program; (d) clean — held-out last-10%, data-free top-k; (e) the honest limit — single-seed at 16× with a razor-thin margin: the ctx=2048 second seed is the sharpest open cell (256 two-seed-exact vs 224, one grid step); (f) clean — same metrics, binom SE ≈ 0.11% acc, the +0.0013 margin documented, chunked eval (CHUNK=8) identical math, NO crash (ALL_DONE_NET45); (g) fair — full-attention reference + same 0.98 bar + random-k at the same k (gaps +1.7/+1.8, positive); (h) sharpened — deployable 8.0× at 16× context, the guarantee equal to the knee, two-seed confirmation the practical next step.\n\n### Next\n**ctx=2048 second seed** (decides whether 256 is two-seed-exact, extending ctx=512's 64/64, or drops one grid step to 224, replicating the NET-44 s2 break at 16×); a third seed at ctx=1024 (knee distribution {96,128}); d=8 @ ctx=256 s0 corner.\n\nNow 45 network experiments. Assessment v45. Paper 89.\n",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Novelty"
+      ],
+      "github_issue": 152,
+      "id": "fd_1332",
+      "last_attempt_time": "2026-08-16T11:35:42.131808+00:00",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 1000.0,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "github_injection",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "status": "in_progress",
+      "thread_id": "",
+      "timestamp": "2026-08-16T11:35:29.739763+00:00",
+      "title": "NET-45: The s1 product chain survives at FIVE DOUBLINGS — k*=256 at (d=4, ctx=2048, s1) = d·ctx/32 EXACTLY at 16× context (prediction confirmed, the longest context measured), at the tightest margin of the chain (+0.0013); selection dilutes with context (+1.7/+1.8); the ctx=2048 second seed becomes the sharpest open cell — paper 89"
+    },
+    {
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
@@ -39361,7 +39401,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 03b10997 (Q=0.770), which proved 17 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the Learning With Errors (LWE) problem and prove its reduction from worst-case lattice problems (GapSVP). Show that the Regev encryption scheme is IND-CPA secure under LWE. Prove that key exchange based on LWE achieves forward secrecy. Compute concrete security parameters for 128-bit secur",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Cryptography"
       ],
@@ -40399,6 +40439,46 @@
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
+      "description": "Building on cycle 3b29df87 (Q=0.820), which proved 110 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the Weil pairing on an elliptic curve and prove its bilinearity. Show that the BLS signature scheme is existentially unforgeable under the computational Diffie-Hellman assumption in the pairing group. Prove that the pairing allows short aggregate signatures.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Cryptography"
+      ],
+      "github_issue": 0,
+      "id": "push_3b29df87_0c171088",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.9199999999999999,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "3b29df87",
+      "source_path": "Elliptic Curve Cryptography: Weil Pairing and BLS Signatures",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-08-16T11:35:10.982658+00:00",
+      "title": "Deepening: Elliptic Curve Cryptography: Weil Pairing and BLS Signatures"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
       "description": "Building on cycle 3cce8c08 (Q=0.766), which proved 19 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Model EML network training in the tropical limit (large weights) as piecewise-linear optimization. Prove that gradient descent on tropical EML functions converges to a tropical rational function that minimizes the tropical loss. Derive convergence rates and compare to ReLU networks.",
       "domain_bridges": [],
       "domain_quality_penalty": 1.0,
@@ -40481,7 +40561,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 3e30c45d (Q=0.769), which proved 23 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalizes radical isogeny evaluation algorithms on supersingular Montgomery elliptic curves over quadratic finite fields.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Cryptography"
       ],
@@ -40721,7 +40801,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 50db037d (Q=0.772), which proved 13 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that Shamir's secret sharing scheme is information-theoretically secure: any t-1 shares reveal zero information about the secret. Formalize Feldman's verifiable secret sharing and prove that cheating dealers are caught. Show that the reconstruction threshold equals the degree of the polynomial",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Cryptography"
       ],
@@ -43041,7 +43121,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle a68d3b50 (Q=0.767), which proved 11 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the Learning With Errors (LWE) problem. Prove Regev's quantum reduction: LWE is as hard as worst-case lattice problems (GapSVP). Construct the Dual-Regev encryption scheme and prove CPA security. Formalize the ring-LWE variant.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Cryptography"
       ],
@@ -43241,7 +43321,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle b080b405 (Q=0.789), which proved 13 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Investigate the ArXiv paper 'Alternating adjacent-sum polytopes: transfer matrices and Ehrhart series' and formalize its key results. Abstract: We study a period-two family of adjacent-sum lattice polytopes whose consecutive-coordinate bounds alternate between $s$ and $s+1$. This provides a simple n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Cryptography"
       ],
@@ -48868,14 +48948,14 @@
       "parent_direction": "",
       "priority_score": 0.9,
       "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
+      "prune_reason": "tournament_rejected: ",
+      "pruned_at": "2026-08-16T11:35:12Z",
       "quarantined_until": "",
       "research_mode": "team",
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "pruned",
       "thread_id": "",
       "timestamp": "",
       "title": "Proof Strategy Mining from Deep Mathematics"
@@ -49412,14 +49492,14 @@
       "parent_direction": "",
       "priority_score": 0.9,
       "proof_strategy": "Construct a Gentzen-style sequent calculus where the Cut rule is replaced by a consequence verification rule: if Gamma proves A and A has desirable consequences verified by a computational check, then A is accepted. Prove cut-elimination fails in general but holds for consequence-stable formulas. Test: show that Fermat's Last Theorem for n=4 is consequence-stable, enabling a retrocausal proof.",
-      "prune_reason": "",
-      "pruned_at": "",
+      "prune_reason": "tournament_rejected: ",
+      "pruned_at": "2026-08-16T11:35:12Z",
       "quarantined_until": "",
       "research_mode": "team",
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "pruned",
       "thread_id": "",
       "timestamp": "",
       "title": "Retrocausal Proof Theory: Proving Theorems by Their Consequences"
@@ -50168,14 +50248,14 @@
       "parent_direction": "",
       "priority_score": 0.9,
       "proof_strategy": "Define the contact filtration for protein P with N residues: for distance threshold t, build the Vietoris-Rips complex R_t from the pairwise C-alpha distances. Compute the persistent homology barcode PH(P, configuration) = {(b_i, d_i)}. Define TotalPersistence(P) = sum_i (d_i - b_i). Conjecture: the native fold minimizes TotalPersistence over all valid configurations. Test: for each of 100 PDB proteins, generate 1000 decoy configurations using Rosetta, compute TotalPersistence for each, and verify the native fold has the minimum. Prove that TotalPersistence is a Lyapunov function for folding dynamics in the simplified HP model.",
-      "prune_reason": "",
-      "pruned_at": "",
+      "prune_reason": "tournament_rejected: ",
+      "pruned_at": "2026-08-16T11:35:12Z",
       "quarantined_until": "",
       "research_mode": "team",
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "pruned",
       "thread_id": "",
       "timestamp": "",
       "title": "Biological Topology: Protein Folding as Persistent Homology Optimization"
@@ -50679,14 +50759,14 @@
       "parent_direction": "",
       "priority_score": 0.9,
       "proof_strategy": "Define a dark theorem of level k as a Pi_2 statement 'for all n, there exist at least k values of m such that P(n,m)' such that PA proves the existential claim but PA does not prove P(n,m) for any specific m. Level 1: Paris-Harrington theorem (the strengthened finite Ramsey theorem). Level 2: the Paris-Harrington theorem for the statement 'there exist at least 2 values of m satisfying the Ramsey property'. Prove strictness: if T is level k+1, then T implies a level-k statement that is independent of PA. Prove density: among all Pi_2 statements provable in ZFC, the fraction that are dark approaches 1 as statement length grows. Test: formalize levels 1-3 in Lean 4 using the Paris-Harrington and Goodstein sequences.",
-      "prune_reason": "",
-      "pruned_at": "",
+      "prune_reason": "tournament_rejected: ",
+      "pruned_at": "2026-08-16T11:35:12Z",
       "quarantined_until": "",
       "research_mode": "team",
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "pruned",
       "thread_id": "",
       "timestamp": "",
       "title": "Dark Mathematics: Theorems That Exist But Cannot Be Found"
@@ -61694,7 +61774,7 @@
       "depth_estimate": 3,
       "description": "Cycle 2c38bc1a (Q=0.700) proved 134 theorems in Cryptography but left 2 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Investigate the ArXiv paper 'Even smaller universal posets' and formalize its key results. Abstract: We show that for every $η>0$ and sufficiently large $n$, there exists a poset of size $2^{(1+η)n/2}",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Cryptography"
       ],
@@ -62612,10 +62692,10 @@
     "famous_subtask",
     "famous_subtask",
     "famous_subtask",
-    "famous_subtask",
     "abduction_followup",
     "cross_domain_bridge",
     "cross_domain_bridge",
+    "famous_subtask",
     "famous_subtask"
   ]
 }
