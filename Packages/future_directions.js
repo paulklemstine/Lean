@@ -375,16 +375,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Synthetic-Soul-Invariant: Topological Conservation Laws of Neural Identity"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "094ca37a",
     "description": "Constructs artificial neural architectures capable of directly processing 11-dimensional spatial tensors without dimensional reduction loss.",
     "domains": [
       "MachineLearning"
     ],
     "id": "scifi_50_19_ae8889d5",
+    "phase": "A",
     "priority_score": 0.95,
     "research_mode": "team",
     "source_exp_id": "scifi_50_injection",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-23T20:07:57.739465+00:00",
     "title": "Hyper-Awareness: 11-Dimensional Perception Vectors in Synthetic Neural Nets"
   },
@@ -825,20 +826,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle f1303b99 (Q=0.811), which proved 21 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove Conway's Game of Life is Turing complete via a direct constructive embedding. Formalize cellular automata in Lean 4 and establish complexity bounds on the simulation overhead.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_f1303b99_36640bdc",
-    "priority_score": 0.9110699999999999,
-    "research_mode": "team",
-    "source_exp_id": "f1303b99",
-    "status": "available",
-    "timestamp": "2026-07-29T06:54:54.862192+00:00",
-    "title": "Deepening: Game of Life Universality"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Building on cycle 0e1eb0cb (Q=0.800), which proved 26 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that the Bergman fan of a matroid M equals the tropical linear space of the matroid's circuit ideal. Formalize the connection between matroid connectivity and the topology of the Bergman fan. Show that nested matroids give tropical linear subspaces.",
     "domains": [
       "Tropical"
@@ -850,20 +837,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-01T11:44:09.232762+00:00",
     "title": "Deepening: Tropical Matroid Theory: Bergman Fans and Tropical Linear Spaces"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle ee0c99e7 (Q=0.800), which proved 21 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that depth-L ReLU networks of width (n+4) can approximate any continuous function on [-1,1]^n to epsilon accuracy. Show that the required width grows as O(epsilon^{-1/n}) for shallow networks but only O(log(1/epsilon)) for deep networks. Formalize the depth separation theorem: there exist func",
-    "domains": [
-      "MachineLearning"
-    ],
-    "id": "push_ee0c99e7_d4623ef9",
-    "priority_score": 0.9002899999999999,
-    "research_mode": "team",
-    "source_exp_id": "ee0c99e7",
-    "status": "available",
-    "timestamp": "2026-08-01T11:45:24.562037+00:00",
-    "title": "Deepening: ML Universal Approximation: Width vs Depth Trade-offs"
   },
   {
     "consumed_by_exp_id": "",
@@ -1754,17 +1727,17 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle 67548200 (Q=0.792), which proved 34 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: A cellular automaton (CA) rule f: A^Z -> A^Z is a function from configurations to configurations. The CA is reversible if f is bijective. By Hedlund's theorem, a CA is reversible iff its local rule is a permutation. But which CA rules have reversible dynamics? Conjecture: the set of reversible CA ru",
+    "description": "Building on cycle 1443bb24 (Q=0.791), which proved 19 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize Pearl's do-calculus as a formal logical system with three inference rules. Prove that do-calculus is complete for identifying causal effects in non-parametric structural equation models. Construct a decision procedure for causal effect identifiability.",
     "domains": [
-      "Novelty"
+      "Computation"
     ],
-    "id": "push_67548200_2df4faa1",
+    "id": "push_1443bb24_5e98c56e",
     "priority_score": 0.9,
     "research_mode": "team",
-    "source_exp_id": "67548200",
+    "source_exp_id": "1443bb24",
     "status": "available",
-    "timestamp": "2026-07-30T14:40:38.463626+00:00",
-    "title": "Deepening: Galois Theory of Cellular Automata: Which Rules Have Reversible Dynamics?"
+    "timestamp": "2026-07-27T13:44:25.584304+00:00",
+    "title": "Deepening: Causal Inference: Do-Calculus as Formal Logic"
   },
   {
     "consumed_by_exp_id": "",
@@ -1779,20 +1752,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-29T17:48:52.827384+00:00",
     "title": "Deepening: Noether's Theorem: Symmetries and Conservation Laws"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 1443bb24 (Q=0.791), which proved 19 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize Pearl's do-calculus as a formal logical system with three inference rules. Prove that do-calculus is complete for identifying causal effects in non-parametric structural equation models. Construct a decision procedure for causal effect identifiability.",
-    "domains": [
-      "Computation"
-    ],
-    "id": "push_1443bb24_5e98c56e",
-    "priority_score": 0.8906999999999999,
-    "research_mode": "team",
-    "source_exp_id": "1443bb24",
-    "status": "available",
-    "timestamp": "2026-07-27T13:44:25.584304+00:00",
-    "title": "Deepening: Causal Inference: Do-Calculus as Formal Logic"
   },
   {
     "consumed_by_exp_id": "",
