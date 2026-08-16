@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "a1fe4956",
-      "domain": "Algebra",
-      "key_insight": "# FUTURE DIRECTIONS — after Experiment 391 (Berggren–Price interlock)\n\nThe Pythagorean-tree line for factoring is now closed with exact statements\n(`Catalog/Algebra/BerggrenPriceInterlock/`, five file",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 106,
-      "timestamp": "2026-08-14T05:10:05",
-      "title": "Exp 391 BERGGREN-PRICE-INTERLOCK: every semiprime is a node of both Pythagorean trees — the N-node i"
-    },
-    {
       "cycle_id": "9cc9a6e9",
       "domain": "Algebra",
       "key_insight": "# Future Directions — Spectral Free-Witness, next cycle\n\nDerived from the analysis and adversarial review of this cycle's verified results\n(`Catalog/Algebra/SpectralFreeWitness.lean`, `…Walk.lean`, `…",
@@ -499,19 +489,19 @@
       "theorem_count": 105,
       "timestamp": "2026-08-16T13:01:15",
       "title": "Alien Mathematics: Non-Standard Arithmetic"
+    },
+    {
+      "cycle_id": "37827e5f",
+      "domain": "Probability",
+      "key_insight": "# Future Directions — Wigner Semicircle Universality\n\nThis file closes the current research cycle. Section 0 records **what the cycle\nsettled** (all of it formally proved, `sorry`-free); the remaining",
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "theorem_count": 21,
+      "timestamp": "2026-08-16T13:45:35",
+      "title": "Wigner-Semicircle: Universality of the Spectral Distribution"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "36894b52",
-      "domain": "Logic",
-      "key_insight": "# Future directions\n\nThese conjectures are derived from the results proved this cycle in\n`Catalog/Logic/RamseySubexponentialLoss.lean`,\n`Catalog/Logic/RamseyRootTest.lean`,\n`Catalog/Logic/RamseyAsymme",
-      "quality_score": 0.686,
-      "sorry_count": 0,
-      "theorem_count": 45,
-      "timestamp": "2026-08-05T17:02:33",
-      "title": "These conjectures are derived from the results proved this cycle in"
-    },
     {
       "cycle_id": "70c10cae",
       "domain": "Physics",
@@ -2501,27 +2491,19 @@
       "theorem_count": 105,
       "timestamp": "2026-08-16T13:01:15",
       "title": "Alien Mathematics: Non-Standard Arithmetic"
+    },
+    {
+      "cycle_id": "37827e5f",
+      "domain": "Probability",
+      "key_insight": "# Future Directions — Wigner Semicircle Universality\n\nThis file closes the current research cycle. Section 0 records **what the cycle\nsettled** (all of it formally proved, `sorry`-free); the remaining",
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "theorem_count": 21,
+      "timestamp": "2026-08-16T13:45:35",
+      "title": "Wigner-Semicircle: Universality of the Spectral Distribution"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "3ce74e62",
-      "domain": "Geometry",
-      "name": "dvd_carmichael_left",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "ac45a9d9",
-      "domain": "Novelty",
-      "name": "card_orbit_violations_eq",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "ac45a9d9",
-      "domain": "Novelty",
-      "name": "card_orbit_violations_ge",
-      "quality": 0.85
-    },
     {
       "cycle_id": "ac45a9d9",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "floorSlope_lt",
       "quality": 0.85
+    },
+    {
+      "cycle_id": "37827e5f",
+      "domain": "Probability",
+      "name": "decode_encode",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "37827e5f",
+      "domain": "Probability",
+      "name": "encode_decode",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "37827e5f",
+      "domain": "Probability",
+      "name": "fiber_card_sum",
+      "quality": 0.85
     }
   ],
-  "last_updated": "2026-08-16T13:01:15",
+  "last_updated": "2026-08-16T13:45:35",
   "open_questions": [
     {
       "context": "This file gives a **complete, self-contained proof** of that theorem (0 `sorry`s).",
@@ -3765,12 +3765,6 @@
     ],
     "Probability": [
       {
-        "cycle_id": "10a6c20b",
-        "quality": 0.686,
-        "theorems": 216,
-        "title": "Speculative: Tropical Mathematics of Social Choice"
-      },
-      {
         "cycle_id": "059cccbd",
         "quality": 0.6545542168674698,
         "theorems": 166,
@@ -3823,6 +3817,12 @@
         "quality": 0.85,
         "theorems": 78,
         "title": "NET-36: The Attention-Cost Grid Is Now Two-Seed Everywhere — k*=d·ctx/32 Holds a"
+      },
+      {
+        "cycle_id": "37827e5f",
+        "quality": 0.85,
+        "theorems": 21,
+        "title": "Wigner-Semicircle: Universality of the Spectral Distribution"
       }
     ],
     "Pythagorean": [
