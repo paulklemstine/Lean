@@ -752,20 +752,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle 2a357c10 (Q=0.840), which proved 104 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## Network loop round-net-43 (speed axis, round 16)\n\n**Title: The Deepest Rung Is Two-Seed 256 \u2014 k\\*=256 at (d=32, ctx=512) reproduces EXACTLY at seed=2, the repaired random-k control shows positive selection gaps (+2.6/+1.7), the two-seed knee bracket tightens to (240, 256], and the concave-power l",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "push_2a357c10_2d79ca2a",
-    "priority_score": 0.94,
-    "research_mode": "team",
-    "source_exp_id": "2a357c10",
-    "status": "available",
-    "timestamp": "2026-08-16T07:46:03.604353+00:00",
-    "title": "Deepening: NET-43: The Deepest Rung Is Two-Seed 256 (k\\*=256 reproduces EXACTLY at seed=2; "
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Building on cycle 560413ae (Q=0.820), which proved 131 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Proves that logarithmic negativity is a strict entanglement monotone under Local Operations and Classical Communication (LOCC).",
     "domains": [
       "Physics"
@@ -861,20 +847,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-01T11:45:24.562037+00:00",
     "title": "Deepening: ML Universal Approximation: Width vs Depth Trade-offs"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle b7ae8967 (Q=0.800), which proved 21 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the transformer architecture as a mathematical object: multi-head attention as a bilinear form, positional encodings as function compositions, and layer normalization as affine transformations. Prove that the transformer is a universal approximator of sequence-to-sequence functions.",
-    "domains": [
-      "MachineLearning"
-    ],
-    "id": "push_b7ae8967_8a97b54d",
-    "priority_score": 0.9002199999999999,
-    "research_mode": "team",
-    "source_exp_id": "b7ae8967",
-    "status": "available",
-    "timestamp": "2026-07-28T17:01:26.465710+00:00",
-    "title": "Deepening: Attention is All You Need: Formalizing Transformer Architecture"
   },
   {
     "consumed_by_exp_id": "",
@@ -9046,17 +9018,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: The role of expanders in the spectral geometry of metric graphs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "39757711",
     "description": "Investigate the ArXiv paper 'Cayley Graphs Of Order $pqrs$ Are Hamiltonian' and formalize its key results. Abstract: Assume $ G $ is a finite group with order $ |G| = pqrs $, where $ p $, $ q $, $ r $, and $ s $ are distinct prime numbers. We prove that every connected Cayley graph of $ G $ contains a hamiltonian cycle. Our result drops all restrictions of all previously known results on hamiltonian cycles in Cayley graphs of groups of order $pqrs$.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
     "id": "fd_0166",
+    "phase": "A",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.14440v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-17T02:00:29.717066+00:00",
     "title": "ArXiv paper: Cayley Graphs Of Order $pqrs$ Are Hamiltonian"
   },
