@@ -234,10 +234,8 @@ theorem sorting_non_injective (n : ℕ) (hn : 2 ≤ n) :
            Equiv.refl _, by aesop⟩
   exact fun h => hab <| h <| by simp +decide [sortingFunction]
 
-/-- The information erased by sorting `n` elements equals `log₂(n!)`.
-(The hypothesis `1 ≤ n` of the auto-generated statement was unused — the identity
-also holds at `n = 0`, both sides being `0` — and has been dropped.) -/
-theorem sorting_info_erased (n : ℕ) :
+/-- The information erased by sorting n ≥ 1 elements equals log₂(n!). -/
+theorem sorting_info_erased (n : ℕ) (hn : 1 ≤ n) :
     infoErased (sortingFunction n) = Real.logb 2 (n.factorial) := by
   unfold infoErased sortingFunction; norm_num [Fintype.card_perm]
   rw [Finset.image_const] <;> aesop
