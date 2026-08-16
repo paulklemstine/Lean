@@ -1,6 +1,5 @@
 import Mathlib
-import Novelty.SelfModHalt
-
+import Probability.SelfModHalt
 /-!
 # Self-Modification, Halting, and Semantic Monitoring
 
