@@ -2,25 +2,6 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "e67b8bbc",
-    "description": "**Part of:** Research plan — *Compression Beyond the Pigeonhole Bound* (Phase B, Question 2: can random number generators help?).\n\n## Claim (negative result)\nA deterministic PRNG **cannot** help compress arbitrary data.\n\n## Proof sketch\nA fixed function seed → stream is deterministic: `2^s` seeds produce at most `2^s` distinct streams, so representing an arbitrary n-bit string still needs `s ≥ n − c`. A PRNG creates **no entropy** — the \"compress to the seed\" trick only works when the data was *already* PRNG-generated (i.e., it always had low Kolmogorov complexity and the PRNG is just the right decompressor).\n\n## Deliverable\nA crisp, citable proof plus a working demo (e.g., a seeded generator whose outputs appear \"compressible\" while a true random file stays at n bits).\n\n## Purpose\nKill this dead end with evidence **before** anyone spends a year hunting \"the seed that contains my file.\" Calibrates the team on exactly what randomness can and cannot do.\n\n**Milestone:** M1 (days).\n",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1288",
-    "lineage_refs": [],
-    "priority_score": 1000.0,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-15T05:50:03.460816+00:00",
-    "title": "Compression Research B1: Negative result — PRNGs cannot beat pigeonhole (proof + demo)"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
     "consumed_by_exp_id": "8da3e793",
     "description": "**Part of:** Research plan — *Compression Beyond the Pigeonhole Bound* (Phase A, Question 1: separating the decompressor from the data).\n\n## Research question\nA fixed pretrained model (e.g., an LLM) used as the shared decompressor + arithmetic-coded residual beats classical compressors on text by a wide margin. The open problem: **the transmitted model delta costs bits** — how do we amortize it?\n\n## Approach\n- Benchmark LLM-as-decompressor against gzip/bz2/context-mixing baselines (enwik8/9).\n- Investigate sparse / low-rank parameter patches (LoRA-style) as the transmitted program — how many bits to shift a shared decoder to a specific domain?\n- Design an amortized protocol: decompressor adapts across a *stream* of messages, paying the delta once.\n\n## Deliverable\nSOTA text-compression baseline under the 16 GB decode standard, plus an amortized model-delta protocol.\n\n## Falsifiability / gate\nMust beat classical baselines *losslessly* (decoded output exactly matches input) with the decoder fixed at deploy time. Any delta is part of the transmitted message.\n\n**Milestone:** M4.\n",
     "domain_bridges": [],
@@ -55,6 +36,25 @@
     "status": "in_progress",
     "timestamp": "2026-08-15T10:47:21.208244+00:00",
     "title": "NET-36: The Attention-Cost Grid Is Now Two-Seed Everywhere — k*=d·ctx/32 Holds at Every Measured (depth × context) Cell"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "2a357c10",
+    "description": "## Network loop round-net-43 (speed axis, round 16)\n\n**Title: The Deepest Rung Is Two-Seed 256 — k\\*=256 at (d=32, ctx=512) reproduces EXACTLY at seed=2, the repaired random-k control shows positive selection gaps (+2.6/+1.7), the two-seed knee bracket tightens to (240, 256], and the concave-power law k\\* ≈ 24.7·d^(2/3) has its deepest rung confirmed at two seeds (NET-43).**\n\nPaper 87: `ResearchOutput/NetworkMathematics/43_DeepestRungIsTwoSeed256.md`\n\n### Hypothesis (stated before the run)\nk\\* = 256, reproducing s1. NET-42 measured k\\*=256 at (d=32, ctx=512, seed=1), the discriminating rung that refuted both the affine prediction (8d+32=288, over 11%) and the product law (512) by 2×. Two honest limits remained: the d=32 cell was SINGLE-SEED, and the random-k control was UNMEASURED (k=768 topk crash — sweep-design bug). This round fixes BOTH.\n\n### Setup\nByte-identical harness to NET-42 (CausalTF dm=64/4 heads, Gutenberg corpus, vocab 4097, 2000 AdamW steps), d=32, seed=2, ctx=512. Sweep {96,128,160,192,224,240,256,288,320,384,512} — k=768 dropped (redundant), k=240 added to pin the knee bracket. Random-k control {256,384} now RUNS. Full acc 0.1350 (bar 0.1323), loss 5.6482 (s1: 0.1353/5.6281). Train 11563s.\n\n### Result — k\\*=256, EXACT reproduction\n- k=240 fails (0.978 vs bar 0.98, ~0.2 SE below); k=256 passes (0.982). Two-seed knee bracket **(240, 256]**.\n- k=512 = 1.000 with exact full loss (5.6482 = 5.6482) — product law refuted by 2× at BOTH seeds.\n- Part B2 REPAIRED: random-k gaps **+2.6** (k=256) / **+1.7** (k=384) — positive; selection importance dilutes with depth but survives.\n- Concentration reproducible to ~0.7% (eff 216.92 vs 218.46; top-256 0.922 vs 0.921).\n\n### What this decides\nBoth of NET-42's honest limits are CLOSED: the deepest rung of the concave-power-2/3 law (k\\* ≈ 24.7·d^(2/3), predicts 249) is now TWO-SEED (256, 256 — exact, within knee fuzz); EVERY ctx=512 rung is two-seed at its knee (64,64 / 96,96 / 160,144 / 256,256). The sub-linear depth leg continues (per-doubling 1.50→1.58→1.68 < 2.0), affine 8d+32 still over-predicts by 11% (local linearization confirmed at two seeds), product law gives NO speedup at d=32 (the knee gives 2.0×). Deployable speedup at (d=32, ctx=512) = **2.0×** confirmed two-seed. Honest limits: NONE for this cell — clean two-seed reproduction with all controls measured.\n\nAll 8 network barriers checked (a–h): no circularity (prediction before run), no known-method-in-disguise, toy-scale confronted, no leakage, variance RESOLVED (this round's substance), measurement clean (no crash, ALL_DONE_NET43), baseline now FAIR (random-k control repaired), practical relevance sharpened (2.0× two-seed).\n\nScript: /tmp/exp_net_attncost_d32_ctx512_s2.py · Log: /tmp/net43.log\nRound-net-43. Now 43 network experiments. Assessment v43.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_1323",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "in_progress",
+    "timestamp": "2026-08-16T03:13:54.660545+00:00",
+    "title": "NET-43: The Deepest Rung Is Two-Seed 256 (k\\*=256 reproduces EXACTLY at seed=2; both honest limits closed; concave-power-2/3 law's deepest rung two-seed) — paper 87"
   },
   {
     "ambition_level": "grand_challenge",
@@ -162,120 +162,6 @@
     "status": "available",
     "timestamp": "2026-08-14T16:15:07.446774+00:00",
     "title": "Deepening: ECM-PARITY: first positive symmetric residue shadow on the GENERIC elliptic orde"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle aeab7c87 (Q=0.880), which proved 60 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Summary.** The conjecture that for E_N: y² = x³ + N with N = pq, the\ndenominators of x(nP) are divisible only by {2, 3, p, q} (the primes dividing\nΔ = -432N²) is mathematically FALSE.\n\n**Counterexample.** N = 55 = 5·11, P = (9,28) ∈ E_55(Q):\n  x(2P) = (9^4 - 8·55·9) / (4(9^3 + 55)) = 2601/3136, an",
-    "domain_bridges": [],
-    "domains": [
-      "Applications"
-    ],
-    "id": "push_aeab7c87_2893015c",
-    "lineage_refs": [],
-    "priority_score": 0.95,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "aeab7c87",
-    "status": "available",
-    "timestamp": "2026-08-15T11:41:25.126685+00:00",
-    "title": "Deepening: The 'Only Bad Primes' Conjecture is False (elliptic curve denominators)"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle beb0e52b (Q=0.910), which proved 254 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## CYCLIC-CUBIC-FORK (round-19 #1, experiment 406, assessment v182, paper 71)\n\n**The fork-pinning criterion — machine-verified on three Galois groups:** a binary splitting fork of a number field is congruence-pinned by a Dirichlet character **iff it factors through the abelianization G^ab of the Gal",
-    "domain_bridges": [],
-    "domains": [
-      "Probability"
-    ],
-    "id": "push_beb0e52b_63890db5",
-    "lineage_refs": [],
-    "priority_score": 0.95,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "beb0e52b",
-    "status": "available",
-    "timestamp": "2026-08-14T21:48:03.170648+00:00",
-    "title": "Deepening: CYCLIC-CUBIC-FORK: fork-pinning ⟺ fork in the abelianization of the Galois closu"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle c94236ec (Q=0.920), which proved 226 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## SPLIT-COUNT-LAW (round-20 #2, experiment 409, assessment v185, paper 74)\n\n**The complete symmetric fork channel is the split-count, and it beats the OR cap.** Papers 71–73 characterized the OR projection of a character-pinned fork: the semiprime OR collapse I(N mod f; [split(p) OR split(q)]) = g(",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_c94236ec_373623bc",
-    "lineage_refs": [],
-    "priority_score": 0.95,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "c94236ec",
-    "status": "available",
-    "timestamp": "2026-08-15T03:13:13.457376+00:00",
-    "title": "Deepening: SPLIT-COUNT-LAW: the complete symmetric fork channel is the split-count s ~ Bin("
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle db97959f (Q=0.860), which proved 75 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Paper:** `ResearchOutput/NewMathematics/38_JacobiSigned_WeilFloor.md` (factor3)\n**Experiment:** JACSIGN (#373), assessment v149.\n\n## Finding\nEvery character-weighted free-witness before (CIRC, BQF, GSP) collapsed to a\nresidue dial (function of N mod 4/8). JACSIGN weights the circle set by (x/N):\nW",
-    "domain_bridges": [],
-    "domains": [
-      "Tropical"
-    ],
-    "id": "push_db97959f_d5eb2bc4",
-    "lineage_refs": [],
-    "priority_score": 0.95,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "db97959f",
-    "status": "available",
-    "timestamp": "2026-08-13T13:55:34.066547+00:00",
-    "title": "Deepening: The Jacobi-Signed Circle Count Escapes the Residue Dial, at the Weil Floor"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle e0db545b (Q=0.910), which proved 202 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Paper:** `ResearchOutput/NewMathematics/33_Permutation_Readout_Asymmetry.md` (factor3)\n**Experiment:** PERMORD (#368), assessment v144.\n\n## Finding\nThe free order-probes only ever see `ord_N(a) = lcm(ord_p(a), ord_q(a))` — a\nsymmetric data loss. This paper closes that \"lcm-blindness\" loophole: the",
-    "domain_bridges": [],
-    "domains": [
-      "Physics"
-    ],
-    "id": "push_e0db545b_334de7b1",
-    "lineage_refs": [],
-    "priority_score": 0.95,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "e0db545b",
-    "status": "available",
-    "timestamp": "2026-08-14T17:18:51.962827+00:00",
-    "title": "Deepening: The Permutation Readout of Individual Orders, Closed"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle eaebe17a (Q=0.900), which proved 14 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## GCD-MOMENT (exp 392, round-15 #1): the semiprime gcd-moments M_k = Σ_{x≤N} gcd(x,N)^k are a closed trace-witness family\n\n**Hypothesis tested.** The brainstorm's S2 = N²+3N+1+(N−1)s−s² recovers the trace s = p+q via an O(N) prefix mean. Does any moment k escape the free-witness barriers?\n\n**Result",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_eaebe17a_08620eb4",
-    "lineage_refs": [],
-    "priority_score": 0.95,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "eaebe17a",
-    "status": "available",
-    "timestamp": "2026-08-14T08:45:52.116557+00:00",
-    "title": "Deepening: Exp 392 GCD-MOMENT: the semiprime gcd-moments M_k = sum gcd(x,N)^k are a closed "
   },
   {
     "ambition_level": "extension",
@@ -2923,7 +2809,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "37827e5f",
     "description": "Formally proves the semicircle law for Wigner ensembles: the empirical spectral distribution of a random Hermitian matrix with independent entries converges in probability to the semicircle distribution as the dimension grows, establishing the universality of bulk eigenvalue statistics for random matrices.",
     "domain_bridges": [],
     "domains": [
@@ -2935,7 +2821,7 @@
     "proof_strategy": "Moment method for Gaussian Wigner matrices: compute E[tr(H^k)/n], bound the variance, and identify the moment sequence with Catalan numbers (free cumulants).",
     "research_mode": "team",
     "source_exp_id": "human_brainstorm_2026-08-12",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-13T03:21:12.263241+00:00",
     "title": "Wigner-Semicircle: Universality of the Spectral Distribution"
   },
@@ -4211,6 +4097,25 @@
     "status": "available",
     "timestamp": "2026-08-16T01:57:40.886173+00:00",
     "title": "Deepening: NET-30: INTERNALIZATION-SATURATES-AT-K=2 (k=2 freeze test — the missing middle; "
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle e67b8bbc (Q=0.780), which proved 54 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Part of:** Research plan — *Compression Beyond the Pigeonhole Bound* (Phase B, Question 2: can random number generators help?).\n\n## Claim (negative result)\nA deterministic PRNG **cannot** help compress arbitrary data.\n\n## Proof sketch\nA fixed function seed → stream is deterministic: `2^s` seeds pr",
+    "domain_bridges": [],
+    "domains": [
+      "MachineLearning"
+    ],
+    "id": "push_e67b8bbc_9c168ec4",
+    "lineage_refs": [],
+    "priority_score": 0.88,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "e67b8bbc",
+    "status": "available",
+    "timestamp": "2026-08-16T03:13:36.247710+00:00",
+    "title": "Deepening: Compression Research B1: Negative result — PRNGs cannot beat pigeonhole (proof +"
   },
   {
     "ambition_level": "extension",
@@ -25675,6 +25580,26 @@
     "status": "available",
     "timestamp": "2026-08-16T01:57:27.914652+00:00",
     "title": "The four Lean files in `Catalog/NumberTheory/` prove: (i) the \"1-redundant but"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — after \"PRNGs cannot beat pigeonhole\"\n\nWhat is settled (formally, 0 sorries, in `Catalog/MachineLearning/PRNGCompression*.lean`):\n\n* a deterministic generator with an `s`-bit seed that reaches every `n`-bit\n  string forces `s ≥ n` (`prng_seed_bits_lower_bound`);\n* the same holds when the decoder additionally reads an arbitrary side program\n  (`prng_assisted_no_gain`), when generators are chained\n  (`prng_composition_no_gain`), and when a library of `2^m` generators may be\n  searched (`prng_family_no_gain`, `exists_hard_for_whole_family`);\n* the failure is quantitative: at most a `2^(1-d)` fraction of files can be\n  shrunk by `d` bits (`compressible_fraction_le`), and the *average* rate is\n  `n - O(log n)` (`average_length_lower_real`);\n* the bound is tight, which isolates exactly what a PRNG can do: its `≤ 2^s`\n  outputs admit an `s`-bit code and nothing else is helped\n  (`exists_code_of_small_set`, `prng_dichotomy`).\n\nThe following conjectures are the natural next cycle. Each is falsifiable and\nstated so that a formalization attempt is meaningful.\n\n## C1. Resource-bounded seeds do not restore the trick — with an *exponential* loss\n\n**Conjecture.** For every polynomial-time generator family `G_n : {0,1}^{s(n)} → {0,1}^n`\nand every polynomial-time decoder, the number of `n`-bit strings compressible\nbelow `n - d` bits is at most `2^{n-d+1}`, and moreover the *time-bounded*\ncomplexity `KC^t` satisfies `KC^t(x) ≥ KC(x)` with the counting bound holding\nuniformly in `t`; hence no complexity assumption (P ≠ NP, one-way functions)\ncan ever be used to beat pigeonhole.\n\n*The key insight is* that the counting argument never inspects the decoder, so\nit survives verbatim under any resource bound — bounding resources can only\n*remove* decodable strings, never add them.\n*Why now?* Our `KC` and `exists_shortest_code` are stated for an arbitrary\n`D : List Bool → Bits n`; specializing `D` to a step-indexed interpreter is a\npurely definitional extension of the existing files.\n\n## C2. Randomized compressors: a `δ`-error scheme still needs `n - log(1/δ)` bits\n\n**Conjecture.** If an encoder may toss true coins and is only required to\ndecode correctly with probability `1 - δ` over its own randomness *and* a\nuniform input, then some input still needs `≥ n - log₂(1/δ) - 1` bits.\n\n*The key insight is* that a randomized scheme is a distribution over\ndeterministic schemes, and an averaging (first-moment) argument selects one\ndeterministic scheme with the same error, which our counting bound already\nkills.\n*Why now?* `prng_assisted_no_gain` already handles \"best of `2^m` deterministic\nschemes\"; the missing step is a Markov-type averaging lemma over `Finset`\ndistributions, which Mathlib's `Finset.sum` API supports directly.\n\n## C3. Structured sources: a sharp \"PRNG dividend\" theorem\n\n**Conjecture.** Let a source be supported on a set `A ⊆ {0,1}^n` and let `G` be\na generator with `s`-bit seeds. The optimal expected code length using `G` is\n`H_0(A ∩ range G) + Pr[A ∖ range G]·n ± 1`; in particular the PRNG's dividend\nequals exactly `Pr[x ∈ range G]·(n - s)` bits and vanishes for any source whose\nsupport is not correlated with `range G`.\n\n*The key insight is* that `prng_dichotomy` splits every source into a\n\"generated\" part (compressible to `s` bits, by `exists_code_of_small_set`) and a\n\"free\" part (incompressible, by `exists_KC_ge`); the conjecture says these two\nregimes are the whole story with no interaction term.\n*Why now?* Both halves of the split are already theorems; what remains is the\nexpectation bookkeeping over a `Finset`-supported distribution.\n\n## C4. Descriptive-complexity form of the family bound: the `log`-loss is optimal\n\n**Conjecture.** For every `m`, there is a family `F` of `2^m` decompressors and\na string `x` such that `min_i KC(F_i, x) = n - m` exactly, i.e. the additive\nloss `m` in `exists_hard_for_whole_family` cannot be improved to `m - 1`, while\nsimultaneously *no* family achieves `min_i KC(F_i, x) ≤ n - m - 1` for all `x`.\n\n*The key insight is* that the family decoder `familyDecoder F` is an optimal\nprefix-selection machine, so the `m` index bits are simultaneously sufficient\n(upper bound, already proved) and necessary (matching lower bound, open).\n*Why now?* `exists_code_of_small_set` gives the tightness technology on the\nconstructive side; the lower bound needs only a partition-counting argument\nover `2^m` decoders.\n\n## C5. Kolmogorov-structure view: \"seed hunting\" is a measure-zero strategy\n\n**Conjecture.** For a uniformly random `x ∈ {0,1}^n`, the probability that\n*some* generator describable in `m` bits outputs `x` is at most `2^{m+1-n}`; so\nthe expected payoff of searching a library of generators grows only linearly in\nthe library's description size while the search cost grows exponentially.\n\n*The key insight is* that a library is itself data: describing which generator\nto use costs exactly the bits it saves, which is the content of\n`family_hard_strings_are_abundant`.\n*Why now?* The counting half is proved; turning it into a probability statement\nrequires only `PMF.uniformOfFintype` and the existing `Finset.card` bound.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Computation",
+      "Combinatorics"
+    ],
+    "id": "fd_1322",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "e67b8bbc",
+    "status": "available",
+    "timestamp": "2026-08-16T03:13:23.844565+00:00",
+    "title": "What is settled (formally, 0 sorries, in `Catalog/MachineLearning/PRNGCompressio"
   },
   {
     "ambition_level": "extension",

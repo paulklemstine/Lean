@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "560413ae",
-      "domain": "Physics",
-      "key_insight": "# Future Directions\n\nFive falsifiable conjectures distilled from what survived, and what resisted, in this cycle.\nEach is stated so that it can be written down as a Lean 4 theorem on top of the defini",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 131,
-      "timestamp": "2026-08-13T17:19:09",
-      "title": "Entanglement-Monotone: Formalization of Logarithmic Negativity Bounds"
-    },
-    {
       "cycle_id": "c80347ac",
       "domain": "Novelty",
       "key_insight": "# Future directions — the Walsh/GF(2) face of the factoring barrier\n\nDerived from the Stage-3 analysis and Stage-4 critique of the results now proved in\n`Catalog/Novelty/WalshSpectralFlatness.lean` an",
@@ -499,19 +489,19 @@
       "theorem_count": 72,
       "timestamp": "2026-08-16T01:57:40",
       "title": "NET-30: INTERNALIZATION-SATURATES-AT-K=2 (k=2 freeze test — the missing middle; NET-29's ∝-quality l"
+    },
+    {
+      "cycle_id": "e67b8bbc",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions — after \"PRNGs cannot beat pigeonhole\"\n\nWhat is settled (formally, 0 sorries, in `Catalog/MachineLearning/PRNGCompression*.lean`):\n\n* a deterministic generator with an `s`-bit seed",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 54,
+      "timestamp": "2026-08-16T03:13:35",
+      "title": "Compression Research B1: Negative result — PRNGs cannot beat pigeonhole (proof + demo)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "8dd43c13",
-      "domain": "Applications",
-      "key_insight": "# Future directions\n\nThe file `Applications/EML/ActivationMonotonicityTropicalBridge.lean` proves:\n\n* the exact derivative and second-derivative formulas for the generalized EML\n  activation `E_{a,b}(",
-      "quality_score": 0.79294,
-      "sorry_count": 0,
-      "theorem_count": 32,
-      "timestamp": "2026-08-05T12:25:58",
-      "title": "EML-Activation-Monotonicity: Global Convexity Conditions for EML Transcendentals"
-    },
     {
       "cycle_id": "f14ecb01",
       "domain": "Probability",
@@ -2501,27 +2491,19 @@
       "theorem_count": 72,
       "timestamp": "2026-08-16T01:57:40",
       "title": "NET-30: INTERNALIZATION-SATURATES-AT-K=2 (k=2 freeze test — the missing middle; NET-29's ∝-quality l"
+    },
+    {
+      "cycle_id": "e67b8bbc",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions — after \"PRNGs cannot beat pigeonhole\"\n\nWhat is settled (formally, 0 sorries, in `Catalog/MachineLearning/PRNGCompression*.lean`):\n\n* a deterministic generator with an `s`-bit seed",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 54,
+      "timestamp": "2026-08-16T03:13:35",
+      "title": "Compression Research B1: Negative result — PRNGs cannot beat pigeonhole (proof + demo)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "70d03dec",
-      "domain": "Physics",
-      "name": "keyOf_prime",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "70d03dec",
-      "domain": "Physics",
-      "name": "sum_ite_eq_zero",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "70d03dec",
-      "domain": "Physics",
-      "name": "sum_ite_ne_zero",
-      "quality": 0.78
-    },
     {
       "cycle_id": "f2bb5930",
       "domain": "Shared",
@@ -2803,9 +2785,27 @@
       "domain": "NumberTheory",
       "name": "le_sum_of_nonneg",
       "quality": 0.78
+    },
+    {
+      "cycle_id": "e67b8bbc",
+      "domain": "MachineLearning",
+      "name": "seedBits_length",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "e67b8bbc",
+      "domain": "MachineLearning",
+      "name": "bitsOfList_seedBits",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "e67b8bbc",
+      "domain": "MachineLearning",
+      "name": "seedBits_injective",
+      "quality": 0.78
     }
   ],
-  "last_updated": "2026-08-16T01:57:40",
+  "last_updated": "2026-08-16T03:13:35",
   "open_questions": [
     {
       "context": "-    sorry+  -- On the certified range, extract the primitive divisor from the",
@@ -3517,12 +3517,6 @@
     ],
     "MachineLearning": [
       {
-        "cycle_id": "d6f1fad6",
-        "quality": 0.6536503144654089,
-        "theorems": 177,
-        "title": "The current development proves an exact finite-domain universality result for a"
-      },
-      {
         "cycle_id": "f3cf4755",
         "quality": 0.7422650000000001,
         "theorems": 137,
@@ -3575,6 +3569,12 @@
         "quality": 0.82,
         "theorems": 72,
         "title": "The CRT-Multiplicative Free-Witness Classification and the Trace Lemma"
+      },
+      {
+        "cycle_id": "e67b8bbc",
+        "quality": 0.78,
+        "theorems": 54,
+        "title": "Compression Research B1: Negative result — PRNGs cannot beat pigeonhole (proof +"
       }
     ],
     "Novelty": [

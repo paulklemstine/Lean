@@ -735,7 +735,7 @@
       "depth_estimate": 3,
       "description": "Computes exact maximum region count formulas for depth-L ReLU neural network input space partitioning.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "MachineLearning"
       ],
@@ -815,7 +815,7 @@
       "depth_estimate": 3,
       "description": "Proves global 1-Lipschitz continuity for Eikonal-regularized neural network implicit surface representations.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "MachineLearning"
       ],
@@ -855,7 +855,7 @@
       "depth_estimate": 3,
       "description": "Proves exponential convergence of gradient descent optimization on infinite-width neural networks matching NTK dynamic regime.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "MachineLearning"
       ],
@@ -895,7 +895,7 @@
       "depth_estimate": 3,
       "description": "Derives tight uniform generalization error bounds for Vision Transformers via empirical Rademacher complexity.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "MachineLearning"
       ],
@@ -20191,7 +20191,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\nThe current development proves an exact finite-domain universality result for a clearly delimited linear-attention lookup architecture. Natural extensions are:\n\n1. **Softmax attention.** Relate the bilinear score to scaled dot-product softmax attention and prove quantitative convergence of high-temperature lookup heads to the exact finite selector.\n2. **Approximation bounds.** Turn exact finite lookup into an epsilon-approximation theorem and derive explicit bounds on score scale, head count, and output error.\n3. **Continuous universality.** Formalize compact sequence domains, continuous sequence-to-sequence maps, and a genuine uniform universal-approximation theorem using an available neural-network or Stone–Weierstrass development.\n4. **Full layer normalization.** Add mean subtraction and variance normalization, prove invariance under shifts and positive rescaling, and then compose this nonlinear normalization with the learned affine stage already formalized.\n5. **Standard multi-head plumbing.** Add query/key/value projections, concatenation, output projection, residual connections, and feed-forward blocks, with dimension-safe matrix types.\n6. **Permutation and positional structure.** Prove equivariance without positional encodings and characterize how additive positional encodings break that symmetry.\n7. **Efficiency.** Replace one head per possible sequence by constructive architectures with fewer heads/layers and prove upper and lower resource bounds.\n\nThe most important qualification to preserve is that exact finite lookup is not by itself the usual continuous universal-approximation theorem for standard softmax transformers.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "MachineLearning",
         "Algebra"
@@ -26786,7 +26786,7 @@
       "depth_estimate": 3,
       "description": "# Future directions\n\nConcrete, falsifiable conjectures suggested by the formalization in\n`Catalog/Logic/ConstructiveAnalysis/` (files `BishopReals.lean`,\n`ConstructiveIVT.lean`, `BrouwerianCounterexamples.lean`, `ComputableReals.lean`,\n`ConstructiveOrder.lean`, `ConstructiveSup.lean`, `Sharpness.lean`, `RootLocation.lean`).  Each is stated\nso that a single Lean proof (or a single counterexample) settles it.\n\nFive earlier conjectures of this list have since been settled inside the project;\nthey are recorded, with the theorem that settles them, in the last section.\n\n## C6. `k` oracle calls per step cannot beat the ratio `1/(k+1)`\n\n`Bishop.one_query_contraction_gt_half` and\n`Bishop.exists_one_query_contraction_lt_half_add` show that the optimal contraction\nratio of a *one-query* located search is the infimum `1/2`, never attained.  The\nnatural generalization queries the locatedness oracle `k` times per step, at the\npairs `(p + α_i (q−p), p + β_i (q−p))` with `α_1 < β_1 ≤ α_2 < β_2 ≤ … < β_k`, keeping\non the answers the smallest enclosure they certify.\n\n> **Conjecture.** The worst-case contraction factor of any such `k`-query scheme is\n> `> 1/(k+1)`, and for every `η > 0` some `k`-query scheme achieves a factor\n> `< 1/(k+1) + η`.  In particular the per-oracle-call efficiency\n> `(contraction)^(1/k)` tends to `0` as `k → ∞`, i.e. batching queries strictly pays.\n\nFalsifiable: a `k`-query scheme (for a concrete `k`, e.g. `k = 2`) that provably\npreserves `Bishop.Enclosing` and contracts by a factor `≤ 1/(k+1)` refutes the first\nhalf; a proof that no `2`-query scheme beats, say, `2/5` refutes the second.\n\n## C7. The cotransitivity threshold of `lt_cotrans` is exactly `6`\n\n`Bishop.Reg.lt_cotrans` decides `x < z` or `z < y` at any index `m` with\n`1/(m+1) ≤ gapAt x y n / 8`; the arithmetic of the proof only needs\n`1/(m+1) < gapAt x y n / 6`.\n\n> **Conjecture.** `6` is optimal: the hypothesis `1/(m+1) ≤ gapAt x y n / κ` with\n> `κ < 6` is insufficient — there are `x, y, z` and indices `n, m` satisfying it for\n> which the midpoint test at `m` decides neither `x < z` nor `z < y` — while the\n> conclusion of `lt_cotrans` does hold under `1/(m+1) < gapAt x y n / 6`.\n\nFalsifiable: a Lean proof of `lt_cotrans` with a constant `κ < 6` refutes the first\nhalf; an explicit triple defeating the constant `6` refutes the second.\n\n## C8. The canonical bound in `Reg.mul` can be lowered to `⌈|x₀|⌉ + 1`\n\n`Bishop.Reg.bound x = ⌈|x.approx 0|⌉ + 2` is used to choose the index shift in the\ndefinition of multiplication.  Since `|x_n − x_0| ≤ 1/(n+1) + 1 ≤ 2`, with strict\ninequality for `n ≥ 1`, only `n = 0` is at issue.\n\n> **Conjecture.** Replacing `bound` by `⌈|x.approx 0|⌉ + 1` still yields a regular\n> sequence in `Reg.mul`, and `toReal_mul` continues to hold; the constant `1` is then\n> optimal, i.e. `⌈|x.approx 0|⌉` alone fails for some pair of Bishop reals.\n\nFalsifiable: a pair `x, y` for which the sequence defined with `⌈|x.approx 0|⌉ + 1`\nviolates the regularity inequality refutes the first half; a proof of regularity with\n`⌈|x.approx 0|⌉` refutes the second.\n\n## C9. Local non-constancy with modulus `ν` gives root location only through brackets\n\n`Bishop.exists_grid_near_root` locates a genuine root within one mesh, using only the\n*sign change* of `f` across a grid cell, and `Bishop.local_nonconstancy_insufficient`\nshows a bound on `|f x|` alone cannot locate a root even under local non-constancy.\nWhat remains open is the intermediate, quantitative statement.\n\n> **Conjecture.** If `f` has modulus `ω` on `[a,b]`, `f a ≤ 0 ≤ f b`, and satisfies\n> local non-constancy with modulus `ν`, then *every* root of `f` in `[a,b]` is within\n> `2 (b−a)/N` of a grid point `k` of the sign-change search of `Bishop.\n> exists_grid_near_root`, provided the mesh satisfies `(b−a)/N ≤ ω (ν δ)`; and the\n> number of roots of `f` in `[a,b]` is at most `⌈(b−a)/δ⌉` whenever `ν δ > 0`.\n\nFalsifiable: a function with modulus `ω` and local non-constancy modulus `ν` having\ntwo roots closer than `δ` with `ν δ > 0` refutes the second half; a root far from\nevery bracketing grid point refutes the first.\n\n## Settled inside the project\n\n* **C1 (root modulus `ε/c` is sharp) — proved.**  `Bishop.root_modulus_attained`\n  exhibits, for every `c, ε > 0` with `ε/c ≤ 1`, a function with modulus of uniform\n  continuity and slope bound `c` having an `ε`-approximate root at distance *exactly*\n  `ε/c` from the exact root; `Bishop.no_root_modulus_below_one` shows no constant\n  `κ < 1` can replace the factor `1`.\n* **C2 (the diagonal shift is necessary) — proved.**\n  `Bishop.Reg.unshifted_diagonal_not_regular` exhibits a regular sequence of Bishop\n  reals (`Bishop.Reg.diagWitness`, denoting `1/(k+1)` with `k`-alternating error\n  signs) whose unshifted diagonal violates regularity already at `m = 0, n = 1`\n  (difference `2` against the allowed `3/2`).  For the same family the shifted\n  diagonal converges to the correct limit `0`\n  (`Bishop.Reg.diagWitness_limit_toReal`).\n* **C3 (the ratio `2/3` is optimal for one-query located searches) — refuted.**  The\n  general one-query scheme is formalized as `Bishop.searchGen`; it preserves the\n  enclosure invariant (`Bishop.searchGen_enclosing`) and contracts by\n  `max β (1−α)` (`Bishop.searchGen_width_le`).  `Bishop.trisection_not_optimal`\n  instantiates `α = 2/5, β = 1/2`, contracting by `3/5 < 2/3`.  The corrected sharp\n  statement is `Bishop.one_query_contraction_gt_half` (every one-query ratio exceeds\n  `1/2`) together with `Bishop.exists_one_query_contraction_lt_half_add` (ratios\n  arbitrarily close to `1/2` occur), so `1/2` is the unattained infimum.\n* **C5 (every shelf root selector oscillates by at least `1` at `0`) — proved.**\n  `Bishop.shelf_selector_oscillation_ge_one` shows that for *every* function `r`\n  choosing a root of `shelf t` for each `t ∈ [-1,1]` and every `η > 0`, the difference\n  `sSup (r '' {|t| ≤ η}) - sInf (r '' {|t| ≤ η})` is at least `1`; the roots are `1`\n  for `t > 0` (`Bishop.shelf_root_of_pos`) and `2` for `t < 0`\n  (`Bishop.shelf_root_of_neg`), and every root lies in `[1,2]`\n  (`Bishop.shelf_root_mem_Icc`).  Selectors do exist classically\n  (`Bishop.exists_shelf_root_selector`), so the statement is not vacuous.\n* **C4 (Bishop's local non-constancy suffices, with an explicit modulus) — refuted in\n  the \"small value ⟹ small distance\" reading.**\n  `Bishop.local_nonconstancy_insufficient` exhibits, for every `δ ∈ (0,2)`, a\n  `1`-Lipschitz function on `[0,4]` with a unique root, satisfying local\n  non-constancy with the explicit modulus `ν h = h/8`, and a point at distance `2`\n  from the root where `|f| ≤ ν δ / 2`.  What does survive without any non-degeneracy\n  hypothesis is the bracketing statement `Bishop.exists_grid_near_root`: the\n  sign-change grid search returns a grid point within one mesh `(b−a)/N` of a genuine\n  root.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Logic",
         "MachineLearning"
@@ -26909,7 +26909,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\nThis cycle turned the seven informal \"future directions\" of the transformer catalog file into\nseven compiling, `sorry`-free Lean developments in\n`Catalog/MachineLearning/TransformerUniversality/`:\n\n| file | headline results |\n|---|---|\n| `SoftmaxLookup.lean` | softmax mass concentration `(n−1)e^{−βγ}`; error bound `2M(n−1)e^{−β}`; explicit ε-scale `log((2M(N−1)+1)/ε)`; `Tendsto` limit; **no exactness at finite temperature** |\n| `FiniteLookupSeparation.lean` | `Ω(1/N)` resolution lower bound for quantized lookup; general finite-range version; **depth does not help**; matching midpoint construction; **optimal error is exactly `1/(2N)`** |\n| `ContinuousUniversality.lean` | Stone–Weierstrass universality of the attention-readout algebra on **compact sequence domains**, scalar and sequence-to-sequence |\n| `LayerNorm.lean` | exact symmetry group of layer normalization (shifts, positive dilations; sign flip and its sharpness), moments, idempotence, composition with the learned affine stage |\n| `HeadComplexity.lean` | **minimal head count = rank of the value table**, with matching lower bound and construction |\n| `PositionalSymmetry.lean` | equivariance without positional encodings; **equivariance holds iff the permutation stabilizes the encoding**; stabilizer subgroup; trivial for injective encodings; **transitive symmetry forces constancy**, so not every subgroup is realizable |\n| `MultiHeadPlumbing.lean` | QK factorization = catalog bilinear score; low-rank bottleneck `rank ≤ d_k`; output projection of concatenated heads = sum of block projections; residual injectivity; FFN positive homogeneity |\n\nThe structural pattern that emerged, and that drives the conjectures below, is a **resource\ndichotomy**: on a fixed finite domain, accuracy `ε` costs only `log(1/ε)` in *score scale* at\nfixed head count, whereas on a continuous domain accuracy `ε` costs `Θ(1/ε)` in *lookup cells*.\nSelection is cheap; resolution is expensive. Everything else in the development (rank bounds,\nstabilizers, layer-norm invariance) is a statement about which resource a given architectural\ncomponent actually buys.\n\n---\n\n## Conjecture 1 (Rank–temperature tradeoff for softmax heads)\n\n*For a value table `f : X → ℝ^m` of rank `r`, there are softmax attention models with `H`\nheads and score scale `β` achieving uniform error `ε` iff `H ≥ r` and\n`β ≳ log(H · ‖f‖_∞ / ε)`; in particular head count and temperature are not interchangeable:\nno amount of score scale compensates for `H < r`.*\n\n**The key insight is** that `HeadComplexity.minHeads_eq_finrank` is a statement about the\n*value* side of a head and is completely temperature-independent, whereas\n`SoftmaxLookup.softmaxLookup_error_le` is a statement about the *score* side and is completely\nrank-independent; the two resources are therefore conjecturally orthogonal, and the exact\nresource region should be a product of a rank constraint and a logarithmic temperature\nconstraint.\n\n**Why now?** Both halves are already formalized here; what is missing is the approximate\nversion of the rank lower bound (rank of an `ε`-approximating model), which needs only a\nperturbation argument for `finrank` — a standard singular-value statement now within reach of\nMathlib's matrix rank API.\n\n## Conjecture 2 (Capacity, not depth — refined after a refutation)\n\nThe naive form of this conjecture (\"depth `L` buys resolution `1/(2N^L)`\") was **refuted in\nthis cycle**: a stack whose final stage reads an `X`-indexed value table has at most `|X|`\ndistinct outputs whatever precedes it, so `FiniteLookupSeparation.depth_does_not_help` gives\nuniform error at least `1/(2|X|)` at every depth. The general statement proved is\n`finite_range_error_lower_bound`: the resource is the number of distinct realizable output\nvalues, not the depth.\n\n*Refined conjecture.* For a stack of `L` **softmax** attention layers with `N` keys each and\nscore scale `β`, the uniform error on the identity over `[0,1]` is `Θ(N^{-L})` uniformly in\n`β`: soft depth buys exponential resolution while hard (quantized) depth buys none.\n\n**The key insight is** that softmax mixing makes the set of realizable outputs a curved\n`N^L`-parameter family rather than a finite set, so the pigeonhole invariant of\n`finite_range_error_lower_bound` must be replaced by a metric-entropy / parameter-count\ninvariant — and the gap between the two regimes is exactly the gap between hard and soft\nselection quantified in `SoftmaxLookup.lt_softmaxLookup_of_strict_min`.\n\n**Why now?** The hard case is fully proved here, so the contrast is now a precise, testable\ndichotomy rather than an intuition; the soft upper bound is a composition-of-partitions\nconstruction, and the lower bound is a Vapnik–Chervonenkis/parameter-counting argument on a\nclass already defined in `SoftmaxLookup.lean`.\n\n## Conjecture 3 (Layer normalization strictly enlarges the realizable class)\n\n*The subalgebra generated by attention readouts composed with layer normalization is strictly\nlarger than the readout algebra restricted to any sphere-crossing compact domain, and layer\nnormalization is the unique (up to affine post-composition) continuous map that is invariant\nunder shifts and positive dilations and has mean-zero, unit-variance image.*\n\n**The key insight is** that `LayerNorm.layerNorm_shift_invariant`,\n`layerNorm_pos_smul` and `layerNorm_idempotent` already identify layer normalization as a\nprojection onto the mean-zero unit sphere with exactly the affine-symmetry group of the data;\na rigidity theorem should follow from the fact that the quotient of a hyperplane by positive\ndilations *is* that sphere.\n\n**Why now?** The invariance group is now pinned down exactly, including the sharpness of the\npositivity hypothesis (`layerNorm_not_neg_smul_invariant`), which is precisely the input a\nuniqueness argument needs.\n\n## Conjecture 4 (The symmetry lattice — refined after a second refutation)\n\nThe natural conjecture \"every subgroup `G ≤ Sym(ι)` is the residual symmetry group of some\nadditive positional encoding\" was **refuted in this cycle**:\n`PositionalSymmetry.posStab_eq_top_of_transitive` shows that a symmetry whose powers act\ntransitively forces the encoding to be constant, hence forces the symmetry group to be\neverything; `no_cyclic_residual_symmetry` turns this into a concrete impossibility for the\ncyclic group on three positions. The residual symmetry group is always the pointwise\nstabilizer of the encoding, i.e. the Young subgroup of its level-set partition.\n\n*Refined conjecture.* The realizable residual symmetry groups are **exactly** the Young\nsubgroups `∏_B Sym(B)` over set partitions `B` of the positions, and for a target that is\ninvariant under a non-Young group `G` the minimal head count of any positionally-encoded\nmodel is at least `[Sym(ι) : Young(G)]` times the head count of the equivariant model.\n\n**The key insight is** that an additive positional encoding can only record *which cell* a\nposition lies in, never a cyclic order, because the score depends on `p` through pointwise\nvalues and not through any ordering; the symmetry lattice of additive encodings is therefore\nthe partition lattice, not the subgroup lattice.\n\n**Why now?** The `iff` characterization, the stabilizer subgroup, the transitivity obstruction\nand one concrete impossibility are all formalized, so only the counting half — connecting the\nindex of the Young subgroup to `HeadComplexity.minHeads` — remains.\n\n## Conjecture 5 (Low-rank heads cannot select)\n\n*With head width `d_k < d`, for every `WQ, WK` there is an input set of `d_k + 1` mutually\northogonal tokens on which the softmax head cannot separate the diagonal from the off-diagonal\nscores by more than `O(1)`; consequently exact finite lookup over `X` requires head width\n`Ω(log|X|)` even with unbounded temperature.*\n\n**The key insight is** that `MultiHeadPlumbing.rank_qk_le_headDim` shows the score matrix has\nrank at most `d_k`, and the exact selector requires the identity score pattern\n(`qk_ne_one_of_headDim_lt`); the quantitative version replaces \"not equal to the identity\" by\n\"far from the identity in operator norm\", which is exactly an eigenvalue-counting statement.\n\n**Why now?** The exact obstruction is proved here; the approximate one needs only the standard\nbound relating rank to the distance from the identity, and would tie the head-width resource\nto the temperature resource of Conjecture 1, completing the resource dichotomy.\n\n---\n\n# Cycle 2: three of the next-cycle sub-conjectures settled\n\nCycle 2 added three further compiling, `sorry`-free files in the same directory. Two of the\nthree sub-conjectures listed at the end of cycle 1 are now closed — one **proved**, one\n**refuted** — and the quantitative half of Conjecture 5 is proved and shown to be sharp.\n\n| file | headline results |\n|---|---|\n| `LowRankQuantitative.lean` | quantitative low-rank obstruction: a singular `n × n` matrix has an entry at distance `≥ β/n` from `β·1`; **the constant `1/n` is exactly optimal** (centering matrix); head-width lower bound `d ≤ dk` whenever `ε·d < β`, uniformly in the score scale |\n| `SoftmaxResolution.lean` | **refutation** of the `Ω(1/N)` softmax resolution barrier: two keys approximate the identity on `[0,1]` to any accuracy; convex-hull bounds; the pigeonhole `1/(2N)` bound for hard selection; the resulting soft/hard dichotomy |\n| `HeadComposition.lean` | `minHeads` is monotone under linear read-outs, **invariant** under injective ones, **subadditive** under sums, and monotone under domain restriction and rescaling |\n\n### Status of the cycle-1 sub-conjectures\n\n1. *\"A softmax layer with `N` keys has uniform error `≥ c/N` on the identity.\"* — **False.**\n   `SoftmaxResolution.no_universal_softmax_resolution_bound`. The construction is explicit: the\n   logit gap `log((x+ε)/(1+ε−x))` makes the two-key head compute `(x+ε)/(1+2ε)`. The\n   pigeonhole invariant behind the hard bound (`finitely many realizable outputs`) simply has\n   no soft analogue: softmax weights move continuously and the realizable set is an interval.\n2. *\"`minHeads` is subadditive/monotone under composition.\"* — **True**, and sharper than\n   conjectured: `minHeads_add_le` (subadditivity), `minHeads_postcomp_le` (monotonicity under\n   arbitrary linear read-outs) and `minHeads_postcomp_of_injective` (equality for injective\n   read-outs, since an injective linear map has a linear left inverse). The inequality is\n   strict in general: the zero read-out gives `minHeads = 0`.\n3. *\"Density survives post-composition with layer normalization.\"* — still open; the obstacle\n   identified in cycle 2 is that the readout algebra must be restricted to a compact domain\n   avoiding the constant sequences before `layerNorm` is even continuous there, and no\n   formalization of that restriction was attempted.\n\n### The refined resource picture\n\nCycle 1 proposed the dichotomy *\"selection is cheap (`log(1/ε)` score scale), resolution is\nexpensive (`Θ(1/ε)` cells)\"*. Cycle 2 corrects it: the expensive side is **hard** selection.\nThe correct three-way picture is\n\n* hard finite lookup on a continuum: error `Θ(1/N)` in the number of cells (cycle 1);\n* soft selection on a continuum: error `→ 0` at fixed key count (cycle 2);\n* soft selection *of a finite table*: error `2M(N−1)e^{−β}`, i.e. `log(1/ε)` score scale\n  (cycle 1);\n* and the one resource that no amount of temperature can buy: **head width**, because the\n  distance from a rank-deficient score matrix to the selection pattern scales with the score\n  scale itself (cycle 2, `qk_far_from_scaled_identity`).\n\n---\n\n## Conjecture 6 (Score-family lower bounds — the correct replacement for the refuted barrier)\n\n*Let `S_N^{aff}` be the class of `N`-key softmax heads on `[0,1]` whose scores are **affine** in\nthe input, `s_i(x) = a_i x + b_i`. Then the uniform error of `S_N^{aff}` on the identity is\n`Θ(N^{-2})`: the upper bound by a small-`β` expansion (`σ(t) = ½ + t/4 + O(t³)`, values scaled\nby `1/β`), the lower bound by a Chebyshev/total-positivity argument on sums of logistic\ncurves.*\n\n**The key insight is** that the refutation in `SoftmaxResolution.lean` uses a score function\nwhose logit is `log((x+ε)/(1+ε−x))` — an *unbounded, task-specific* nonlinearity that a real\nattention layer cannot produce; the honest resource is the complexity of the score family, and\nfor the affine family the error is controlled by how well `N` logistic curves approximate a\nstraight line, a classical Chebyshev-system question.\n\n**Why now?** Both endpoints are formalized: the exact two-key closed form\n`softmaxHead (logitScore ε) unitValues x = (x+ε)/(1+2ε)` shows what unrestricted scores buy,\nand `hardHead_error_ge` shows what no continuity buys. Only the affine case, sandwiched\nbetween them, is open.\n\n## Conjecture 7 (Head width is the only irreducible resource)\n\n*Let a model have `H` heads of width `dk` on token dimension `d`, score scale `β`, and suppose\nit computes exact one-hot selection over `d` tokens to entrywise score accuracy `ε`. Then\n`dk ≥ d` whenever `ε·d < β` (proved), and moreover the total parameter count `H·dk·d` needed\nfor uniform output error `δ` is `Θ(d² + d·log(1/δ))`: the `d²` term is a hard architectural\nfloor and the `log(1/δ)` term is pure temperature.*\n\n**The key insight is** that `LowRankQuantitative.entrywise_distance_to_identity_eq` shows the\n`1/d` obstruction is *exact*, not merely a bound, so the head-width term cannot be shaved by a\ncleverer projection; the two terms in the parameter count then come from two provably\nindependent mechanisms (rank and exponential concentration).\n\n**Why now?** The `Θ(1)`-per-dimension lower bound and the `log(1/δ)` upper bound are both\nproved here; what remains is the bookkeeping that combines them into a single parameter-count\nstatement, plus the matching construction.\n\n## Conjecture 8 (Head complexity is a rank functor)\n\n*`minHeads` extends to a functor from the category of finite value tables and linear read-outs\nto `ℕ`: it is monotone, invariant under isomorphisms, subadditive under `+` (all proved in\n`HeadComposition.lean`), and satisfies the missing multiplicativity law\n`minHeads (f ⊗ g) = minHeads f · minHeads g` for the tensor (feature-product) task.*\n\n**The key insight is** that `minHeads = rank` (cycle 1) and rank is multiplicative under tensor\nproducts of matrices; the compositional laws proved in cycle 2 are exactly the functorial ones,\nso the remaining content is that attention heads compose multiplicatively across independent\nfeature blocks — which is the precise sense in which multi-head attention is *parallel*.\n\n**Why now?** The subadditive/invariant half is proved; `Matrix.rank_kronecker` style results\nare the only missing ingredient.\n\n## Conjecture 9 (Soft depth versus hard depth)\n\n*For a stack of `L` softmax layers with `N` keys each, the realizable class on `[0,1]` has\nmetric entropy `Θ(L·N·log(1/δ))` at resolution `δ`, whereas the corresponding hard stack has at\nmost `N` realizable outputs at every depth (`FiniteLookupSeparation.depth_does_not_help`).\nConsequently soft depth is exponentially more expressive than hard depth, but only\npolynomially more expressive than soft width.*\n\n**The key insight is** that cycle 2 removed the pigeonhole obstruction for a single soft layer,\nso depth can no longer be dismissed by counting outputs; the correct invariant is the\nparameter count of the realizable family, and the soft/hard gap is a gap between metric entropy\nand cardinality.\n\n**Why now?** The `L = 1` case is settled in both regimes by the two theorems just named, which\nturns the general statement into a genuine induction rather than an intuition.\n\n## Conjecture 10 (Layer normalization preserves universality)\n\n*The subalgebra generated by attention readouts post-composed with layer normalization is dense\nin `C(K, ℝ)` for every compact `K` of sequences with variance bounded below, and the\n`ε`-parameter is asymptotically irrelevant: the density constant depends on `K` only through\n`inf_K var`.*\n\n**The key insight is** that `LayerNorm.layerNorm_idempotent` identifies layer normalization as a\nprojection onto the mean-zero unit sphere, and a projection with dense image on a set bounded\naway from its singular locus preserves separation of points — the only hypothesis Stone–\nWeierstrass needs, and the one `ContinuousUniversality.attentionAlgebra_separatesPoints`\nalready verifies for the unnormalized algebra.\n\n**Why now?** This is sub-conjecture 3 of cycle 1, now stated with the missing hypothesis\n(`var` bounded below) that cycle 2 identified as the actual obstacle.\n\n---\n\n### Next-cycle sub-conjectures (concrete, immediately testable)\n\n1. The two-key affine-score head `v₂ + (v₁−v₂)·σ(ax+b)` has uniform error `Θ(a²)` against the\n   best affine fit of the identity on `[0,1]`; formalizing this requires only the cubic Taylor\n   bound `|tanh u − u| ≤ u³/3`, and it is the first nontrivial case of Conjecture 6.\n2. `minHeads` of a block-diagonal task is the sum of the blocks' head counts (the equality case\n   of `minHeads_add_le`, which is currently only an inequality).\n3. The head-width bound `qk_far_from_scaled_identity` upgrades from the entrywise sup norm to\n   the operator norm with the same constant `β/d`, via the same kernel vector.\n\n---\n\n### Appendix: the cycle-1 sub-conjectures, for the record\n\n(Items 1 and 2 were settled in cycle 2 — item 1 refuted, item 2 proved — and item 3 remains\nopen; see the status list above.)\n\n1. `Ω(1/ε)`-cells vs `log(1/ε)`-scale extends to *softmax* models on `[0,1]`: a softmax\n   attention layer with `N` fixed keys and arbitrary score scale has uniform error at least\n   `c/N` on the identity.\n2. `minHeads` is subadditive under composition: `minHeads (g ∘ f) ≤ min (minHeads f, minHeads g)`\n   for linear `g`, with equality iff `g` is injective on the span of the outputs of `f`.\n3. The attention-readout algebra of `ContinuousUniversality.lean` remains dense after\n   post-composition with layer normalization on any compact domain avoiding the constant\n   sequences — i.e. normalization does not destroy universality.\n\n---\n\n# Cycle 3: all three next-cycle sub-conjectures settled\n\nCycle 3 added three further compiling, `sorry`-free files to\n`Catalog/MachineLearning/TransformerUniversality/`. Each of the three \"concrete, immediately\ntestable\" sub-conjectures listed at the end of cycle 2 is now closed: **one refuted, one proved,\none proved in a stronger, dimension-free form.**\n\n| file | headline results |\n|---|---|\n| `AffineScoreTwoKey.lean` | **refutation** of the conjectured affine-score barrier: a genuinely affine two-key softmax head has uniform error `≤ a²/96` on the identity over `[0,1]`, hence zero infimal error; and the replacement law **amplitude × score scale `≥ 4(1 − 2ε)`**, which is **sharp** (the tuned head achieves exactly `4`). Supporting analysis proved from scratch: `tanh` in exponential form, `tanh′ = 1 − tanh²`, the sharp global cubic bound `|tanh u − u| ≤ |u|³/3`, and the optimal `1/4`-Lipschitz constant of the logistic |\n| `BlockDiagonalHeads.lean` | **equality case of subadditivity**: `minHeads (f ⊞ g) = minHeads f + minHeads g` for block-diagonal tasks, via `rank (f ⊞ g) = rank f + rank g`; and strictness of plain subadditivity (`f` with `−f`) |\n| `OperatorNormObstruction.lean` | the spectral low-rank obstruction: the operator-norm distance from `β·1` to the singular matrices is **exactly `β`**, with *no* dimension factor; hence a head of width `dk < d` cannot reach *any* nontrivial relative spectral accuracy on the exact-selection pattern |\n\n### Status of the cycle-2 sub-conjectures\n\n1. *\"The two-key affine-score head has uniform error `Θ(a²)` against the best affine fit, and\n   this is the first nontrivial case of the `Θ(N^{-2})` affine barrier (Conjecture 6).\"* —\n   **Half true, and fatal to Conjecture 6.** The `Θ(a²)` rate is right (`idHead_error_le` proves\n   `≤ a²/96`, the exact leading order), but `a` is a *free parameter of the head*,\n   not a constant of the class: letting `a → 0` drives the error to zero. So the affine class\n   also has zero infimal error (`no_affine_two_key_barrier`), and Conjecture 6 is **false as\n   stated**. What survives is the conservation law `amplitude × scale ≥ 1 − 2ε`: the honest\n   resource is not the *shape* of the score family but the *magnitude of the values*.\n2. *\"`minHeads` of a block-diagonal task is the sum of the blocks' head counts.\"* — **True**\n   (`minHeads_blockTask`). The proof is that the output span of the block task is the internal\n   direct sum of the two pushed-forward output spans, so ranks add; and the block structure is\n   necessary, since `minHeads_add_lt_of_neg` shows plain subadditivity is strict.\n3. *\"The head-width bound upgrades from the entrywise sup norm to the operator norm with the\n   same constant `β/d`.\"* — **True with a better constant**: the operator-norm obstruction is\n   `β`, not `β/d` (`spectral_distance_to_scaled_identity`), and this is again exact. The `1/d`\n   of cycle 2 was an artifact of measuring a rank-one deviation entrywise.\n\n### The resource picture after three cycles\n\nFour resources have now been separated, each by a proved exact or matching bound:\n\n* **cells** (hard selection on a continuum): error exactly `1/(2N)`, and depth does not help;\n* **score scale** (soft selection of a finite table): error `2M(N−1)e^{−β}`, i.e. `log(1/ε)`;\n* **amplitude** (soft selection on a continuum): value spread `×` score scale `≥ 4(1 − 2ε)`, an\n  exactly attained bound, so\n  accuracy on a continuum is bought by *unbounded values*, not by keys or by temperature;\n* **head width**: spectral distance to the selection pattern is exactly `β`, uniformly in the\n  model width — the one resource that neither temperature nor amplitude can buy.\n\nThe two refutations of the thread (the `Ω(1/N)` softmax barrier in cycle 2, the affine barrier\nin cycle 3) share a mechanism: *any* attempt to lower-bound soft selection by counting keys or\nby restricting the score family fails, because the softmax weights move continuously and the\nvalues are unconstrained. The correct invariants are metric (amplitude, spectral distance), not\ncombinatorial. This is the sharpened form of the central qualification of the whole\ndevelopment: exact finite lookup is not continuous universal approximation, and the gap is\nmeasured in amplitude and head width, not in key count.\n\n---\n\n## Conjecture 11 (Bounded-amplitude universality is false)\n\n*Fix `M ≥ 1`. In the class of `N`-key softmax heads on `[0,1]` with **affine** scores and values\nbounded by `M`, the uniform error on the identity is `Θ(1/(M·N))`; in particular a\nbounded-parameter transformer of fixed width has a strictly positive approximation floor on the\nidentity, and universality is recovered only by letting the parameter norm grow like `1/ε`.*\n\n**The key insight is** that `AffineScoreTwoKey.amplitude_times_scale_ge` already proves the\n`N = 2` lower bound in the form `amplitude × scale ≥ 1 − 2ε`, and that the same endpoint\nargument applied to `N` keys should give `M · (max_i a_i − min_i a_i) ≳ 1`, turning the\namplitude law into a genuine parameter-norm lower bound — the first barrier in this thread that\nis *not* refuted by letting a parameter blow up, because blow-up is exactly what it forbids.\n\n**Why now?** The two previous barrier conjectures were refuted precisely by unbounded\nparameters; the amplitude law identifies the unique quantity that both refutations exploit, so\nconstraining it is the first hypothesis under which a barrier can survive.\n\n## Conjecture 12 — *settled inside this cycle*\n\nThe conjecture \"the logistic is exactly `1/4`-Lipschitz, the cubic bound is `|u|³/3`, and hence\nthe sharp conservation law is `|v₁ − v₂|·|a₁ − a₂| ≥ 4(1 − 2ε)`\" is **proved**, so the tuned\nhead is optimal and not merely order-optimal:\n\n* `abs_tanh_sub_le_cube` — `|tanh u − u| ≤ |u|³/3` for **all** real `u`, from monotonicity of\n  `u ↦ u³/3 − (u − tanh u)` whose derivative is `u² − tanh²u ≥ 0`;\n* `abs_logistic_sub_le` — `|σ(p) − σ(q)| ≤ |p − q|/4`, the optimal constant, from\n  `σ′ = e^s/(e^s+1)² ≤ 1/4`;\n* `amplitude_times_scale_ge` — `4(1 − 2ε) ≤ |v₁ − v₂|·|a₁ − a₂|`;\n* `amplitude_law_is_sharp` — for every `ε > 0` an `ε`-accurate head with product exactly `4`.\n\nThe residual open question is the *`N`-key* version: does `amplitude × (max_i a_i − min_i a_i)\n≥ 4(1 − 2ε)/(N−1)` hold, i.e. does key count buy amplitude linearly?  This is now the sharpest\nform of Conjecture 11.\n\n## Conjecture 13 (Head complexity is a rank functor — the multiplicative law)\n\n*Beyond additivity (`minHeads_blockTask`, proved) the measure is multiplicative on tensor\ntasks: `minHeads (f ⊗ g) = minHeads f · minHeads g`, where `(f ⊗ g)(x,x')(y,y') = f x y · g x' y'`;\ntogether with monotonicity, injective-invariance and subadditivity this makes `minHeads` a\nsemiring homomorphism from the Grothendieck semiring of finite value tables to `ℕ`.*\n\n**The key insight is** that `minHeads = rank` and that the block-diagonal proof just given is\nexactly the statement `rank (A ⊕ B) = rank A + rank B`; the tensor law is its multiplicative\ntwin, `rank (A ⊗ B) = rank A · rank B`, so the same span-decomposition technique should apply\nwith `Submodule.map` replaced by a bilinear pairing.\n\n**Why now?** The additive half is proved here with a technique (push spans forward along\ninjective coordinate maps, then add finranks over a trivial intersection) that transfers\nverbatim once a basis-free tensor pairing of the two output spans is set up.\n\n## Conjecture 14 (Spectral head-width bound is stable under composition)\n\n*For a stack of `L` layers, each of head width `dk`, the spectral distance from the composed\nscore map to the `L`-fold exact selector is at least `β` whenever `dk < d`, independently of `L`:\ndepth cannot simulate width, and the obstruction of\n`OperatorNormObstruction.headDim_lower_bound_of_spectral_approx` is invariant under\ncomposition.*\n\n**The key insight is** that the obstruction is a *kernel* statement — a nonzero vector on which\nthe deviation acts as `−β` — and kernels only grow under composing rank-deficient maps, so the\neigenvalue witness should propagate through the stack rather than being diluted by it.\n\n**Why now?** The single-layer statement is proved here in exactly the eigenvector form that an\ninduction over layers needs, and the cycle-1 result `depth_does_not_help` is the hard-selection\nshadow of the same phenomenon.\n\n## Conjecture 15 (Layer normalization preserves universality — still open, now sharper)\n\n*The subalgebra generated by attention readouts post-composed with layer normalization is dense\nin `C(K, ℝ)` for every compact `K` of sequences with variance bounded below, and the failure at\n`inf_K var = 0` is exactly one dimension: the constants.*\n\n**The key insight is** that `LayerNorm.layerNorm_idempotent` makes layer normalization a\nprojection onto the mean-zero unit sphere, whose only singular fibre is the set of constant\nsequences; the amplitude law of cycle 3 suggests the correct quantitative form, since\nnormalization is precisely the operation that *forbids* the amplitude blow-up on which both\nrefuted barriers relied.\n\n**Why now?** This is the one sub-conjecture of cycle 1 still open after three cycles, and cycle\n3 explains why it is the interesting one: normalization bounds amplitude, and amplitude is the\nresource that every refutation in this thread has spent.\n\n---\n\n### Next-cycle sub-conjectures (concrete, immediately testable)\n\n1. The `N`-key amplitude law: `|v_max − v_min| · (max_i a_i − min_i a_i) ≥ 4(1 − 2ε)/(N − 1)`\n   for affine-score softmax heads, the sharpest form of Conjecture 11. (The `N = 2` case is\n   `amplitude_times_scale_ge`, proved and sharp.)\n2. `rank (A ⊗ B) = rank A · rank B` for the tensor of two finite value tables, the\n   multiplicative half of Conjecture 13.\n3. The spectral obstruction propagates through a stack of layers (Conjecture 14), by iterating\n   the kernel witness of `beta_le_of_opNormLe`.\n\n*(The two analytic sub-conjectures originally listed here — the sharp cubic `tanh` bound and the\n`1/4`-Lipschitz constant of the logistic — were both proved before this document was finalized;\nsee Conjecture 12 above.)*\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Algebra",
         "MachineLearning"
@@ -29449,7 +29449,7 @@
       "depth_estimate": 3,
       "description": "# Future directions: bold, testable conjectures from the symmetry dichotomy\n\nThe cycle established, in\n`Catalog/MachineLearning/TransformerUniversality/PermutationDichotomy.lean` (0 sorries):\n\n* `group_uniform_universal` — for **any** finite group `Γ` of token symmetries, the\n  `Γ`-invariant part of the attention algebra is uniformly dense in the `Γ`-invariant continuous\n  functionals on compact saturated domains (specializations: `symmetric_uniform_universal` for\n  the full symmetric group, `shift_uniform_universal` for cyclic/relative symmetry);\n* `equivariant_uniform_universal` — the exact converse in the sequence-to-sequence setting:\n  symmetric attention, queried through the marked-token encoding, is a universal approximator of\n  the continuous `Γ`-equivariant maps, and the constructed heads are exactly equivariant;\n* `equivariant_iff_exists_marked_invariant` — a representation theorem: continuous equivariant\n  sequence-to-sequence maps are *exactly* the marked-token evaluations of continuous invariant\n  functionals;\n* `orbit_barrier_lower` / `orbit_barrier_attained` / `symmetry_barrier_position_read` — the\n  obstruction is *sharp*: the optimal invariant error on an orbit equals exactly half the orbit\n  oscillation, and reading an absolute position costs at least `1/2`;\n* `positional_restores_universality` / `positional_seq2seq_universality` — one-hot positional\n  encodings remove the obstruction completely, via an explicit invariant continuous decoder.\n\nBelow are the follow-up conjectures, ranked by expected impact.\n\n## C1. Head-count law: the symmetric approximant needs only orbit-many heads, not `|Γ|`-many\n\n**Conjecture.** For every `Γ`-invariant `g ∈ C(K, ℝ)` and `ε > 0`, there is a `Γ`-invariant\nelement of `attentionAlgebra` that `ε`-approximates `g` and is a sum of at most\n`poly(dim, 1/ε)` products of readouts — in particular independent of `|Γ| = n!`, which is what\nthe averaging proof of `group_uniform_universal` currently spends.\n\n*The key insight is* that averaging over `Γ` is a *projection*, not a construction: the invariant\nsubalgebra is already generated by the multisymmetric power sums `x ↦ ∑_i ∏_a (x_i a)^{e_a}`,\neach of which is a **single** product of readouts, so the group sum can be eliminated in favour\nof a generating set of size polynomial in the feature dimension and the degree.\n\n*Why now?* The stability lemma `attentionAlgebra_compPerm_mem` plus the sharp barrier give both\nhalves needed to measure such a bound: any candidate generating set can be tested against the\n`1/2` barrier of `symmetry_barrier_position_read`, so the conjecture is falsifiable by an\nexplicit finite computation at small `|ι|`.\n\n## C2. Softmax realizability: every element of the attention algebra is a limit of genuine\nsoftmax transformer blocks\n\n**Conjecture.** The uniform closure on compacta of finite compositions of *softmax* attention\nlayers with residual connections and coordinatewise multiplicative gating contains\n`attentionAlgebra`, with an explicit inverse-temperature schedule `β(ε) = O(log(1/ε))`.\n\n*The key insight is* that `softmaxHeadRead_zero_scores` already realizes a linear readout as a\nzero-score softmax head, and the exponential concentration bound of `SoftmaxLookup.lean`\n(`sum_weight_erase_le`) controls the deviation of a finite-`β` head from a hard selection, so\nproducts of readouts should be reachable by stacking two layers with logarithmically scaled\nscores.\n\n*Why now?* Both ingredients are already formalized in this catalog; the missing step is a single\ncomposition estimate, so the conjecture can be attacked directly and refuted by an explicit\ntwo-token counterexample if the residual structure is insufficient.\n\n## C3. Symmetry-group determination: the invariance group of a trained architecture is\nrecoverable from finitely many queries\n\n**Conjecture.** For a model `p` in `attentionAlgebra ι κ`, the subgroup\n`{σ : p ∘ permAct σ = p}` is determined by the values of `p` on the orbit of a single generic\nsequence, and equals the stabilizer of the positional encoding in the sense of\n`PositionalSymmetry.posStab`.\n\n*The key insight is* that `orbit_barrier_lower` converts symmetry detection into an\napproximation-error measurement: a non-symmetry of `p` shows up as a nonzero orbit oscillation,\nwhich is exactly the quantity the sharp barrier measures.\n\n*Why now?* The barrier is now known to be an equality, not just an inequality, so orbit\noscillation is a *complete* invariant rather than a one-sided test.\n\n## C4. Quantized-domain phase transition between exact and approximate universality\n\n**Conjecture.** On the `N`-quantized cube of sequences, the minimal number of heads of an exact\nsymmetric model interpolating an invariant target grows like `Θ(N^{|ι|·|κ|}/|Γ|)`, while the\nnumber needed for `ε`-approximation of a Lipschitz target grows like `Θ((L/ε)^{|ι||κ|}/|Γ|)`;\nin particular exact interpolation and uniform approximation have the *same* exponent but differ\nby the symmetry factor `|Γ|`.\n\n*The key insight is* that the group-averaging step divides the effective domain by the orbit\nsize, so both counting problems descend to the orbit space, where the finite lookup theorem of\n`TransformerArchitecture.lean` and the separation lower bound of `FiniteLookupSeparation.lean`\napply verbatim.\n\n*Why now?* The orbit-space picture only became available with `SaturatedUnder` and the averaging\nargument proved this cycle; the statement is a finite counting claim, hence decidable at small\nparameters.\n\n## C5. Beyond finite groups: compact symmetry groups and continuous positional encodings\n\n**Conjecture.** `group_uniform_universal` remains true when the finite group `Γ` is replaced by a\ncompact group acting continuously on the position space (e.g. rotations of a circular position\nencoding), with Haar averaging in place of the finite sum, and the barrier becomes half the\noscillation over the (now compact) orbit.\n\n*The key insight is* that the only property of `Γ` used in the proof is that averaging is a\nbounded projection onto the invariants that preserves the subalgebra — a property Haar measure\nsupplies for compact groups.\n\n*Why now?* The proof of `symmetrize_error` isolates exactly this projection property, so\nreplacing `∑_{g ∈ Γ} / |Γ|` by `∫ dμ` is a localized change; a counterexample would have to come\nfrom failure of subalgebra stability, which is testable on the rotation group of a 4-token ring.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Algebra",
         "MachineLearning"
@@ -30146,7 +30146,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions — Certified Adversarial Robustness via Sheaf Cohomology\n\nDerived from the analysis and adversarial review of this cycle.  All five\nconjectures are falsifiable and each has a concrete first Lean target.\n\nContext: this cycle proved (0 sorries) the discrete Poincaré lemma for arbitrary\nnerve graphs with arbitrary abelian coefficients, `H¹(loop, M) ≃+ M`, the\nquantitative defect theorem `min uniform mismatch = |holonomy|/(n+1)`,\n`H¹(torus) ≅ ℝ²`, `H¹ = 0` for tree nerves, the Betti-number law\n`dim H¹ = |E| − |V| + 1`, the nonabelian discrete Poincaré lemma with its\nmulti-class permutation-monodromy obstruction, and the equivalence between\ngluing of local `L∞` sign certificates and the absence of decision-sheaf\nholonomy.\n\n---\n\n## C1. Plaquette rank conjecture (dimension of `H¹` for `2`-dimensional nerves)\n\n**Statement.** For a finite `2`-dimensional nerve (regions, overlaps, triple\noverlaps), `dim H¹ = |E| − |V| + 1 − rank(δ¹)`, where `δ¹` is the plaquette\ncoboundary; equivalently `dim H¹ = dim ker δ¹ − (|V| − 1)`.\n\n**Evidence.** Verified in the two extreme cases proved here: the loop\n(`rank δ¹ = 0`, `dim H¹ = 1`) and the discrete torus, where the `(m+1)(n+1)`\nplaquette relations have rank `|V| − 1` and cut `dim H¹` from `|V| + 1` down to\nexactly `2` (`finrank_torusH1`).\n\n**The key insight is** that the drop from the graph Betti number to the true\nČech `H¹` is precisely the rank of the plaquette relation matrix, so counting\nadversarial obstructions of a real cover is a rank computation, not a homotopy\ncomputation.\n\n**Why now?** `NerveBetti.finrank_nerveH1` already gives the `1`-dimensional case\nby rank–nullity, and the same rank–nullity argument applies verbatim once `δ¹`\nis defined; the torus file supplies the nontrivial test case.\n\n**First Lean target.** Define `delta1 : (Edge → ℝ) →ₗ[ℝ] (Plaq → ℝ)` and prove\n`finrank (ker δ¹ ⧸ range δ⁰) + (|V| − 1) = finrank (ker δ¹)`.\n\n---\n\n## C2. Betti number = maximal certified radius deficit\n\n**Statement.** For a connected cover of a continuous score with overlap scale\n`δ`, if the nerve has first Betti number `b`, then the set of local certificate\nfamilies that fail to glue is a codimension-`b` condition, and there exist\nscores realising exactly `b` independent obstruction scales\n`|H₁|/L₁, …, |H_b|/L_b`, each an upper bound on the certified `L∞` radius of some\nregion.\n\n**The key insight is** that the *number* of independent loops of the cover\ncontrols the *number* of independent adversarial directions, so cover design\n(making the nerve a tree) is a certified-robustness intervention.\n\n**Why now?** `holonomy_obstructs_uniform_certificate` gives the `b = 1` case, and\n`cyclic_defect_isLeast` gives the quantitative scale; the general case needs a\nbasis of the cycle space, which `finrank_nerveH1` now supplies.\n\n**Falsifier.** A connected cover with `b = 2` in which every pair of independent\nholonomies is realised by the *same* boundary point would refute independence.\n\n---\n\n## C3. Lipschitz refinement: holonomy lower-bounds the adversarial distance\n\n**Statement.** If the score is `L`-Lipschitz in `L∞` and the sign holonomy around\na loop of anchors is nonzero, then there is an adversarial example within\ndistance `min_i |s(x_i)| / L` of some anchor, and this bound is attained by a\npiecewise-linear score.\n\n**The key insight is** that the qualitative obstruction of\n`not_certified_of_holonomy` (an *existence* statement produced by the\nintermediate value theorem) upgrades to a *metric* statement as soon as a\nLipschitz constant is available, turning cohomology into a numeric certificate\nbound.\n\n**Why now?** The IVT witness `exists_boundary_point_near` already localises the\nboundary point on a specific segment; only a Lipschitz estimate along that\nsegment is missing.\n\n---\n\n## C4. Metric multi-class monodromy (the nonabelian certificate theorem)\n\n**Status of the base case.** The *qualitative* nonabelian statement was proved in\nthis cycle: `Nonabelian.nonabelian_discrete_poincare` shows that for any group\n`G`, a transition cochain on a connected nerve comes from a global relabelling\niff its monodromy around every closed walk is trivial, and\n`perm_monodromy_obstructs_global_labelling` (with the realised example\n`exTransition_no_global_labelling`) gives the `k`-class instance.\n\n**Statement (open).** For a `k`-class classifier with continuous score vector\n`s : E → ℝ^k` and a cover with overlap scale `δ`, the following are equivalent:\n(i) every region admits a local `L∞` certificate of radius `δ` for its argmax\nclass; (ii) the permutation monodromy of the label-transport cochain is trivial\non every loop of the nerve.  Moreover, when the monodromy is nontrivial, the\ncertified radius of some region is at most `δ`, witnessed by a point where two\nclass scores tie.\n\n**The key insight is** that the binary equivalence proved here\n(`local_certificates_glue_iff_global` together with\n`holonomy_obstructs_uniform_certificate`) is the `k = 2` case of a statement in\nwhich \"sign change\" is replaced by \"argmax change\", and the intermediate value\ntheorem is replaced by a tie-point argument on the difference of two coordinates.\n\n**Why now?** Both halves already exist separately: the nonabelian gluing theorem\nis proved, and the analytic tie-point argument is a two-coordinate instance of\n`exists_boundary_point_near`.\n\n**Falsifier.** A `3`-class cover with trivial monodromy but no global certificate\nat radius `δ` — e.g. produced by an argmax that changes without any pairwise tie\ninside a region — would refute the equivalence.\n\n## C5. Spectral bound: holonomy versus the nerve Laplacian\n\n**Statement.** For a connected nerve with graph Laplacian `Δ` and Fiedler value\n`λ₂ > 0`, the least uniform defect of a discrepancy `g` obeys\n`‖g‖₂² − ‖proj_B g‖₂² ≥ λ₂⁻¹ ‖holonomy(g)‖²`, i.e. spectral expansion of the\nnerve quantitatively suppresses adversarial obstructions.\n\n**The key insight is** that `cyclic_defect_isLeast` is the `L∞` instance of an\n`L²` Hodge decomposition, where the harmonic representative is the projection\nonto `ker Δ` restricted to the cycle space, so the defect is controlled by the\nspectral gap of the cover.\n\n**Why now?** The exact `L∞` answer for the loop is now proved, giving a\ncalibration point (`λ₂ = 2(1 − cos(2π/(n+1)))` for the cycle graph) against\nwhich any `L²` bound can be tested numerically before formalisation.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Geometry",
         "MachineLearning"
@@ -30281,8 +30281,8 @@
       "parent_direction": "",
       "priority_score": 1000.0,
       "proof_strategy": "",
-      "prune_reason": "github issue #18 closed; direction superseded",
-      "pruned_at": "2026-08-16T01:59:26.251055+00:00",
+      "prune_reason": "tournament_rejected: ",
+      "pruned_at": "2026-08-16T03:13:37Z",
       "quarantined_until": "",
       "research_mode": "team",
       "source": "github_injection",
@@ -30322,7 +30322,7 @@
       "priority_score": 1000.0,
       "proof_strategy": "",
       "prune_reason": "github issue #16 closed; direction superseded",
-      "pruned_at": "2026-08-16T01:59:26.251076+00:00",
+      "pruned_at": "2026-08-16T03:13:55.760203+00:00",
       "quarantined_until": "",
       "research_mode": "team",
       "source": "github_injection",
@@ -34210,7 +34210,7 @@
       "depth_estimate": 3,
       "description": "Proves the Kolmogorov-Arnold representation theorem that every continuous multivariate function on the unit cube can be represented as a finite superposition of continuous univariate functions and additions, with quantitative trade-offs between inner and outer functions.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "MachineLearning",
         "Computation"
@@ -34251,7 +34251,7 @@
       "depth_estimate": 3,
       "description": "Proves sharp generalization bounds for minimum-norm interpolating least-squares estimators in overparameterized regression, characterizing when interpolation generalizes (benign overfitting) versus fails, in terms of the eigenvalue decay of the design matrix.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "MachineLearning",
         "Probability"
@@ -34527,11 +34527,11 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "famous_subtask",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "37827e5f",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -34543,7 +34543,7 @@
       ],
       "github_issue": 0,
       "id": "fd_1213",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-08-16T03:14:02.421523+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem wigner_semicircle (n : ℕ) (H : WignerEnsemble n) : (empirical_spectral_measure H) →ₚ semicircle_law",
       "lineage_refs": [],
@@ -34558,7 +34558,7 @@
       "source": "",
       "source_exp_id": "human_brainstorm_2026-08-12",
       "source_path": "future_directions_epic_2026-08-12.md",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-08-13T03:21:12.263241+00:00",
       "title": "Wigner-Semicircle: Universality of the Spectral Distribution"
@@ -38708,7 +38708,7 @@
       "depth_estimate": 3,
       "description": "# FUTURE DIRECTIONS — after NET-25 (DENSE-FINAL-STEP-IS-THE-CURE)\n\nThe three catalog files\n(`Catalog/Logic/DenseFinalStepCarryChain.lean`,\n`Catalog/Logic/DenseFinalStepBoundaryConditioning.lean`,\n`Catalog/Logic/DenseFinalStepStateHorizon.lean`)\nestablish, with no `sorry`:\n\n1. the carry **transition** admits an exactly length-general finite solution, and\n   local correctness on the finitely many reachable triples forces correctness at\n   every depth (so the wall is not an expressivity obstruction);\n2. EOS **width is invisible to the function class** but changes the gradient-flow\n   geometry, with a gain that is linear in the width, an exponential contraction\n   rate `2 d c²`, and a sufficient training budget scaling like `1 / d`;\n3. a contractive cell has a provable **state horizon** for every bounded linear\n   readout, and a final-step gain `m` extends the usable depth by\n   `k ≈ log m / log(1/lam)` — logarithmically.\n\nThe following conjectures are the falsifiable continuations.\n\n## C1 — Logarithmic-depth law for boundary richness\n\n**Conjecture.** For the round-net-25 architecture family with EOS width `d`, the\nmaximal unroll depth at which teacher-forced full accuracy stays above `1 - δ`\ngrows like `a + b · log d` (with `b = 1 / log(1/lam)` given by the cell's\ncontraction factor), rather than exhibiting a sharp threshold between 28 and 384.\n\n*The key insight is* that boundary gain enters the readout margin multiplicatively\nwhile depth enters it exponentially, so richness can only buy depth through a\nlogarithm — this is exactly `Logic.StateHorizon.horizon_shift_log`.\n\n*Why now?* The round leaves the interval 28–384 untested; the log law makes a\npointed prediction for a cheap sweep (`d ∈ {20, 28, 40, 64, 96, 160, 256, 384}`\nshould be equally spaced in usable depth on a log-`d` axis).\n\n## C2 — The scale-invariance counter-prediction\n\n**Conjecture.** If the EOS vector is initialised at per-coordinate scale\n`c / √d` (so that `‖e‖²` is held constant as `d` grows), the pad384 cure\ndisappears: the wide-EOS arm should fall back into the raw20 distribution.\n\n*The key insight is* that the proved gain bound depends on `‖e‖² = d c²`, not on\n`d` as such, so the cure must track the *norm* of the EOS input and not its\ndimension.\n\n*Why now?* This is the single sharpest test of the mechanism claim and it is a\none-line change to the initialiser; it separates \"richness\" from \"dimension\" and\nwould either confirm or destroy the DENSE-FINAL-STEP law as stated.\n\n## C3 — Boundary conditioning in the discrete-time optimiser\n\n**Conjecture.** The continuous-time contraction rate `2 d c²`\n(`dense_eos_exp_decay`) survives discretisation for step sizes\n`η < 1 / (d c² + ‖W‖²)`, and fails — with a divergence rather than a slowdown —\nabove it; i.e. wide EOS should show a *narrower* stable learning-rate window,\ndetectable as an optimal-η shift by a factor `≈ 20/384`.\n\n*The key insight is* that the same preconditioner `‖e‖² I + W Wᵀ` which\naccelerates the flow also determines the stability threshold of the Euler\ndiscretisation.\n\n*Why now?* AdamW's effective step is measurable per arm; a predicted η-window\nshift is a falsifier that needs no new architecture.\n\n## C4 — From one-bit carry to k-bit state horizons\n\n**Conjecture.** For a recurrent answer path whose exact solution needs a\n`k`-state (rather than 2-state) transition, the horizon depth of a contractive\ncell scales like `log(γ / (Δ R)) / log lam − log k / log(1/lam)`, i.e. each extra\nbit of required state costs a constant number of depth steps, and the required\nboundary gain grows polynomially in `k`.\n\n*The key insight is* that state separation must be shared among `k` classes, so\nthe minimal pairwise margin shrinks like `1/k` before contraction is applied.\n\n*Why now?* Base-`b` addition with `b > 10`, and multi-carry tasks (e.g. base-2\nmultiplication), give a controlled `k`-sweep on the same rig as NET-24/25.\n\n## C5 — Non-contractive cures\n\n**Conjecture.** Any architectural change that removes the contraction hypothesis\n`‖A z‖ ≤ lam ‖z‖` with `lam < 1` on the reachable state manifold (orthogonal or\nunitary recurrent maps, gated identity paths, layer-normed states) cures the\ndepth wall *without* needing a dense boundary input at all — pad20 + orthogonal\nGRU should reach 1.0000 at `n = 8`.\n\n*The key insight is* that `exists_state_horizon` is driven entirely by\ncontraction; a norm-preserving recurrence has no finite horizon, so the boundary\ngain becomes unnecessary rather than merely cheaper.\n\n*Why now?* It converts the NET-25 design lesson (\"make the boundary rich\") into a\nstrictly stronger, cheaper competitor (\"make the recurrence norm-preserving\"),\nand the two can be run head-to-head in the existing 6-arm harness.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Geometry",
         "MachineLearning"
@@ -38912,7 +38912,7 @@
       "depth_estimate": 3,
       "description": "# FUTURE DIRECTIONS — after NET-30's formalisation\n\nThe four Lean files in `Catalog/NumberTheory/` prove: (i) the \"1-redundant but\nblock-dependent\" signature forces `k ≥ 2` for *any* statistic; (ii) it forces a\nstrictly non-convex read-out; (iii) it is realised, to within the reported\n`0.005` no-op scale, by an explicit saturating-gate population model; (iv) that\nmodel *derives* the ≥2 (self-sufficiency) and ≥3 (sign-robustness) design\nthresholds instead of fitting them; and (v) the k = 1 rows are unconstrained,\nwhich is exactly why NET-29's proportionality law did not survive.\n\nEach conjecture below is falsifiable by a single additional experimental round\nor by a single Lean theorem.\n\n## C1 — The clip level co-scales with the exclusive coordinate magnitude\n\n**Conjecture.** In the saturating channel the effective clip level `T` is not a\nseed-independent constant but satisfies `T ≍ g_max`, the largest exclusive\ncoordinate of the arm; equivalently, self-sufficiency is governed by the\n*dimensionless* ratio `(k−1)·g / T` and not by `(k−1)·g`.\n\n*The key insight is* that `self_sufficiency_monotone_in_gain` proves the\nopposite of the observed trend at fixed `T` — larger coordinates should be\n*more* self-sufficient — so the measured s = 13 arms (largest coordinates of\ntheir width, `0.701` vs `≤ 0.660`, and the only dependent ones) refute a\nseed-independent clip, and the only conservative repair is a clip that grows\nwith the coordinates.\n\n*Why now?* The magnitude→dependence hint now holds at two widths for one seed;\nthe ratio form is testable with the same ~24 arms/width already scheduled for\nthe magnitude trend, at no extra training cost, and it converts a\nseed-idiosyncrasy into a measurable scalar.\n\n## C2 — The redundancy defect is the round's real observable\n\n**Conjecture.** `R = (∑ᵢ dᵢ) − D` (single drops minus block drop) separates arms\nfar better than any single intervention: `|R| ≤ 0.004` for every\nself-sufficient arm and `R ≤ −0.2` for every dependent one, at every width,\nwith no intermediate values.\n\n*The key insight is* that `R` has a curvature meaning — `R ≥ 0` for convex,\n`R = 0` for affine, `R ≤ 0` for concave read-outs — so an empirical bimodality\nof `R` is a claim about the *shape* of the boundary read-out, not about\naccuracy, and one gap-free measurement of `R` would upgrade \"saturates at k = 2\"\nto \"the read-out is affine below the knee and saturated above it\".\n\n*Why now?* `R` is computable from data already collected in NET-27/29/30 (it\nneeds only ctl, all zero1 and zeroAll), so the first test is a re-analysis, not\na new round.\n\n## C3 — Sign-robustness has its own width, one above self-sufficiency\n\n**Conjecture.** For every seed and every width, the smallest `k` at which the\nflip becomes a no-op equals the smallest `k` at which single ablations become\nno-ops, **plus one**.\n\n*The key insight is* that a flip removes twice the coordinate that an ablation\nremoves, so under any saturating gate the two thresholds are `(k−1)g ≥ T` and\n`(k−2)g ≥ T` — mathematically forced to be adjacent\n(`self_sufficient_iff_gain`, `sign_robust_iff_gain`), which turns the observed\nk = 2 sign-sensitivity / k = 3 sign-robustness pair into a general prediction\nrather than a coincidence of one seed.\n\n*Why now?* The prediction is decided by the already-proposed seed-trait test\n(NET-29's dependent k = 1 seeds s = 14/15 at E = 23): if the \"+1\" law holds,\nthose seeds must show flip-sensitivity at exactly one width above their\nablation-sensitivity width.\n\n## C4 — Training-time success and eval-time sufficiency have different knees\nbecause they measure different functionals\n\n**Conjecture.** P(cure) at training time is governed by the *number* of\nexclusive coordinates the optimiser can recruit (knee at `k = 3`), while\neval-time sufficiency is governed by the *saturation margin* `(k−1)g − T`\n(knee at `k = 2`); consequently forcing `g` up by a factor `≥ 2` at `k = 1`\n(e.g. by rescaling the boundary column at initialisation) should buy eval\nsufficiency at `k = 1` without buying training reliability.\n\n*The key insight is* that the two knees are separated by exactly one\ncoordinate, which is what a margin-versus-count distinction predicts, and the\nLean thresholds make the margin functional explicit and manipulable.\n\n*Why now?* It is the cheapest available discriminator between \"k = 2 is\nspecial\" and \"the margin is special\", and it needs one inference-time rescale\nplus one training run per seed.\n\n## C5 — A concavity certificate for real-scale models\n\n**Conjecture.** The sign of `R` transfers to real-scale sequence models: for a\nproduction-scale recurrent or attention model with an identifiable boundary\nchannel of `k` exclusive directions, ablation experiments will show `R ≈ 0`\nbelow the saturation width and `R < 0` above it, with the crossover at the same\nplace as the toy-scale ≥2 rule.\n\n*The key insight is* that everything proved here is scale-free — the chord\ninequality behind `convex_block_drop_le_sum_single_drops` uses only convexity\nand nonnegative gains, no property of the toy task — so the only scale-dependent\ningredient is whether a real boundary channel saturates at all.\n\n*Why now?* Real-scale transfer of the ≥2/≥3 rule is the frontier item the round\nalready names; `R` gives it a one-number readout that does not require\nretraining anything, only ablating.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Geometry",
         "MachineLearning"
@@ -38953,7 +38953,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions — after \"PRNGs cannot beat pigeonhole\"\n\nWhat is settled (formally, 0 sorries, in `Catalog/MachineLearning/PRNGCompression*.lean`):\n\n* a deterministic generator with an `s`-bit seed that reaches every `n`-bit\n  string forces `s ≥ n` (`prng_seed_bits_lower_bound`);\n* the same holds when the decoder additionally reads an arbitrary side program\n  (`prng_assisted_no_gain`), when generators are chained\n  (`prng_composition_no_gain`), and when a library of `2^m` generators may be\n  searched (`prng_family_no_gain`, `exists_hard_for_whole_family`);\n* the failure is quantitative: at most a `2^(1-d)` fraction of files can be\n  shrunk by `d` bits (`compressible_fraction_le`), and the *average* rate is\n  `n - O(log n)` (`average_length_lower_real`);\n* the bound is tight, which isolates exactly what a PRNG can do: its `≤ 2^s`\n  outputs admit an `s`-bit code and nothing else is helped\n  (`exists_code_of_small_set`, `prng_dichotomy`).\n\nThe following conjectures are the natural next cycle. Each is falsifiable and\nstated so that a formalization attempt is meaningful.\n\n## C1. Resource-bounded seeds do not restore the trick — with an *exponential* loss\n\n**Conjecture.** For every polynomial-time generator family `G_n : {0,1}^{s(n)} → {0,1}^n`\nand every polynomial-time decoder, the number of `n`-bit strings compressible\nbelow `n - d` bits is at most `2^{n-d+1}`, and moreover the *time-bounded*\ncomplexity `KC^t` satisfies `KC^t(x) ≥ KC(x)` with the counting bound holding\nuniformly in `t`; hence no complexity assumption (P ≠ NP, one-way functions)\ncan ever be used to beat pigeonhole.\n\n*The key insight is* that the counting argument never inspects the decoder, so\nit survives verbatim under any resource bound — bounding resources can only\n*remove* decodable strings, never add them.\n*Why now?* Our `KC` and `exists_shortest_code` are stated for an arbitrary\n`D : List Bool → Bits n`; specializing `D` to a step-indexed interpreter is a\npurely definitional extension of the existing files.\n\n## C2. Randomized compressors: a `δ`-error scheme still needs `n - log(1/δ)` bits\n\n**Conjecture.** If an encoder may toss true coins and is only required to\ndecode correctly with probability `1 - δ` over its own randomness *and* a\nuniform input, then some input still needs `≥ n - log₂(1/δ) - 1` bits.\n\n*The key insight is* that a randomized scheme is a distribution over\ndeterministic schemes, and an averaging (first-moment) argument selects one\ndeterministic scheme with the same error, which our counting bound already\nkills.\n*Why now?* `prng_assisted_no_gain` already handles \"best of `2^m` deterministic\nschemes\"; the missing step is a Markov-type averaging lemma over `Finset`\ndistributions, which Mathlib's `Finset.sum` API supports directly.\n\n## C3. Structured sources: a sharp \"PRNG dividend\" theorem\n\n**Conjecture.** Let a source be supported on a set `A ⊆ {0,1}^n` and let `G` be\na generator with `s`-bit seeds. The optimal expected code length using `G` is\n`H_0(A ∩ range G) + Pr[A ∖ range G]·n ± 1`; in particular the PRNG's dividend\nequals exactly `Pr[x ∈ range G]·(n - s)` bits and vanishes for any source whose\nsupport is not correlated with `range G`.\n\n*The key insight is* that `prng_dichotomy` splits every source into a\n\"generated\" part (compressible to `s` bits, by `exists_code_of_small_set`) and a\n\"free\" part (incompressible, by `exists_KC_ge`); the conjecture says these two\nregimes are the whole story with no interaction term.\n*Why now?* Both halves of the split are already theorems; what remains is the\nexpectation bookkeeping over a `Finset`-supported distribution.\n\n## C4. Descriptive-complexity form of the family bound: the `log`-loss is optimal\n\n**Conjecture.** For every `m`, there is a family `F` of `2^m` decompressors and\na string `x` such that `min_i KC(F_i, x) = n - m` exactly, i.e. the additive\nloss `m` in `exists_hard_for_whole_family` cannot be improved to `m - 1`, while\nsimultaneously *no* family achieves `min_i KC(F_i, x) ≤ n - m - 1` for all `x`.\n\n*The key insight is* that the family decoder `familyDecoder F` is an optimal\nprefix-selection machine, so the `m` index bits are simultaneously sufficient\n(upper bound, already proved) and necessary (matching lower bound, open).\n*Why now?* `exists_code_of_small_set` gives the tightness technology on the\nconstructive side; the lower bound needs only a partition-counting argument\nover `2^m` decoders.\n\n## C5. Kolmogorov-structure view: \"seed hunting\" is a measure-zero strategy\n\n**Conjecture.** For a uniformly random `x ∈ {0,1}^n`, the probability that\n*some* generator describable in `m` bits outputs `x` is at most `2^{m+1-n}`; so\nthe expected payoff of searching a library of generators grows only linearly in\nthe library's description size while the search cost grows exponentially.\n\n*The key insight is* that a library is itself data: describing which generator\nto use costs exactly the bits it saves, which is the content of\n`family_hard_strings_are_abundant`.\n*Why now?* The counting half is proved; turning it into a probability statement\nrequires only `PMF.uniformOfFintype` and the existing `Finset.card` bound.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Computation",
         "Combinatorics"
@@ -38979,6 +38979,46 @@
       "thread_id": "th_0a6996a8",
       "timestamp": "2026-08-16T03:13:23.844565+00:00",
       "title": "What is settled (formally, 0 sorries, in `Catalog/MachineLearning/PRNGCompressio"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 1,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "2a357c10",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "## Network loop round-net-43 (speed axis, round 16)\n\n**Title: The Deepest Rung Is Two-Seed 256 — k\\*=256 at (d=32, ctx=512) reproduces EXACTLY at seed=2, the repaired random-k control shows positive selection gaps (+2.6/+1.7), the two-seed knee bracket tightens to (240, 256], and the concave-power law k\\* ≈ 24.7·d^(2/3) has its deepest rung confirmed at two seeds (NET-43).**\n\nPaper 87: `ResearchOutput/NetworkMathematics/43_DeepestRungIsTwoSeed256.md`\n\n### Hypothesis (stated before the run)\nk\\* = 256, reproducing s1. NET-42 measured k\\*=256 at (d=32, ctx=512, seed=1), the discriminating rung that refuted both the affine prediction (8d+32=288, over 11%) and the product law (512) by 2×. Two honest limits remained: the d=32 cell was SINGLE-SEED, and the random-k control was UNMEASURED (k=768 topk crash — sweep-design bug). This round fixes BOTH.\n\n### Setup\nByte-identical harness to NET-42 (CausalTF dm=64/4 heads, Gutenberg corpus, vocab 4097, 2000 AdamW steps), d=32, seed=2, ctx=512. Sweep {96,128,160,192,224,240,256,288,320,384,512} — k=768 dropped (redundant), k=240 added to pin the knee bracket. Random-k control {256,384} now RUNS. Full acc 0.1350 (bar 0.1323), loss 5.6482 (s1: 0.1353/5.6281). Train 11563s.\n\n### Result — k\\*=256, EXACT reproduction\n- k=240 fails (0.978 vs bar 0.98, ~0.2 SE below); k=256 passes (0.982). Two-seed knee bracket **(240, 256]**.\n- k=512 = 1.000 with exact full loss (5.6482 = 5.6482) — product law refuted by 2× at BOTH seeds.\n- Part B2 REPAIRED: random-k gaps **+2.6** (k=256) / **+1.7** (k=384) — positive; selection importance dilutes with depth but survives.\n- Concentration reproducible to ~0.7% (eff 216.92 vs 218.46; top-256 0.922 vs 0.921).\n\n### What this decides\nBoth of NET-42's honest limits are CLOSED: the deepest rung of the concave-power-2/3 law (k\\* ≈ 24.7·d^(2/3), predicts 249) is now TWO-SEED (256, 256 — exact, within knee fuzz); EVERY ctx=512 rung is two-seed at its knee (64,64 / 96,96 / 160,144 / 256,256). The sub-linear depth leg continues (per-doubling 1.50→1.58→1.68 < 2.0), affine 8d+32 still over-predicts by 11% (local linearization confirmed at two seeds), product law gives NO speedup at d=32 (the knee gives 2.0×). Deployable speedup at (d=32, ctx=512) = **2.0×** confirmed two-seed. Honest limits: NONE for this cell — clean two-seed reproduction with all controls measured.\n\nAll 8 network barriers checked (a–h): no circularity (prediction before run), no known-method-in-disguise, toy-scale confronted, no leakage, variance RESOLVED (this round's substance), measurement clean (no crash, ALL_DONE_NET43), baseline now FAIR (random-k control repaired), practical relevance sharpened (2.0× two-seed).\n\nScript: /tmp/exp_net_attncost_d32_ctx512_s2.py · Log: /tmp/net43.log\nRound-net-43. Now 43 network experiments. Assessment v43.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Novelty"
+      ],
+      "github_issue": 150,
+      "id": "fd_1323",
+      "last_attempt_time": "2026-08-16T03:13:58.155486+00:00",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 1000.0,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "github_injection",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "status": "in_progress",
+      "thread_id": "",
+      "timestamp": "2026-08-16T03:13:54.660545+00:00",
+      "title": "NET-43: The Deepest Rung Is Two-Seed 256 (k\\*=256 reproduces EXACTLY at seed=2; both honest limits closed; concave-power-2/3 law's deepest rung two-seed) — paper 87"
     },
     {
       "ambition_level": "extension",
@@ -40194,7 +40234,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 4ae649eb (Q=0.792), which proved 35 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that PAC-Bayes generalization bounds can be expressed in terms of the mutual information between the training data and the learned hypothesis. Formalize the connection between compression, information, and generalization. Show that shorter description lengths imply better generalization.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "MachineLearning"
       ],
@@ -40234,7 +40274,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 4c2c71e5 (Q=0.800), which proved 46 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The Collatz map T: N -> N defined by T(n) = n/2 if n even, 3n+1 if n odd, is conjectured to always reach 1. The Collatz conjecture is equivalent to: the orbit of every n under T eventually reaches the cycle {1, 4, 2, 1}. Define the Collatz Fourier transform: F_T(omega) = sum_{n=1}^{N} e^{2*pi*i*omeg",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "MachineLearning"
       ],
@@ -40714,7 +40754,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 5ddbfca0 (Q=0.820), which proved 92 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "MachineLearning"
       ],
@@ -42434,7 +42474,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle a60d1c49 (Q=0.782), which proved 8 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the attention mechanism A(Q,K,V) = softmax(QK^T / sqrt(d_k)) V. Prove that permutation-equivariant attention is a universal approximator of permutation-equivariant functions. Show that the attention kernel K(x,y) = exp(q(x)^T k(y) / sqrt(d)) defines a reproducing kernel Hilbert space. Prov",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "MachineLearning"
       ],
@@ -42688,14 +42728,14 @@
       "parent_direction": "",
       "priority_score": 0.95,
       "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
+      "prune_reason": "tournament_rejected: ",
+      "pruned_at": "2026-08-16T03:13:37Z",
       "quarantined_until": "",
       "research_mode": "team",
       "source": "",
       "source_exp_id": "aeab7c87",
       "source_path": "The 'Only Bad Primes' Conjecture is False (elliptic curve denominators)",
-      "status": "available",
+      "status": "pruned",
       "thread_id": "",
       "timestamp": "2026-08-15T11:41:25.126685+00:00",
       "title": "Deepening: The 'Only Bad Primes' Conjecture is False (elliptic curve denominators)"
@@ -42874,7 +42914,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle b7ae8967 (Q=0.800), which proved 21 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the transformer architecture as a mathematical object: multi-head attention as a bilinear form, positional encodings as function compositions, and layer normalization as affine transformations. Prove that the transformer is a universal approximator of sequence-to-sequence functions.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "MachineLearning"
       ],
@@ -43008,14 +43048,14 @@
       "parent_direction": "",
       "priority_score": 0.95,
       "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
+      "prune_reason": "tournament_rejected: ",
+      "pruned_at": "2026-08-16T03:13:37Z",
       "quarantined_until": "",
       "research_mode": "team",
       "source": "",
       "source_exp_id": "beb0e52b",
       "source_path": "CYCLIC-CUBIC-FORK: fork-pinning ⟺ fork in the abelianization of the Galois closu",
-      "status": "available",
+      "status": "pruned",
       "thread_id": "",
       "timestamp": "2026-08-14T21:48:03.170648+00:00",
       "title": "Deepening: CYCLIC-CUBIC-FORK: fork-pinning ⟺ fork in the abelianization of the Galois closu"
@@ -43248,14 +43288,14 @@
       "parent_direction": "",
       "priority_score": 0.95,
       "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
+      "prune_reason": "tournament_rejected: ",
+      "pruned_at": "2026-08-16T03:13:37Z",
       "quarantined_until": "",
       "research_mode": "team",
       "source": "",
       "source_exp_id": "c94236ec",
       "source_path": "SPLIT-COUNT-LAW: the complete symmetric fork channel is the split-count s ~ Bin(",
-      "status": "available",
+      "status": "pruned",
       "thread_id": "",
       "timestamp": "2026-08-15T03:13:13.457376+00:00",
       "title": "Deepening: SPLIT-COUNT-LAW: the complete symmetric fork channel is the split-count s ~ Bin("
@@ -43488,14 +43528,14 @@
       "parent_direction": "",
       "priority_score": 0.95,
       "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
+      "prune_reason": "tournament_rejected: ",
+      "pruned_at": "2026-08-16T03:13:37Z",
       "quarantined_until": "",
       "research_mode": "team",
       "source": "",
       "source_exp_id": "db97959f",
       "source_path": "The Jacobi-Signed Circle Count Escapes the Residue Dial, at the Weil Floor",
-      "status": "available",
+      "status": "pruned",
       "thread_id": "",
       "timestamp": "2026-08-13T13:55:34.066547+00:00",
       "title": "Deepening: The Jacobi-Signed Circle Count Escapes the Residue Dial, at the Weil Floor"
@@ -43648,14 +43688,14 @@
       "parent_direction": "",
       "priority_score": 0.95,
       "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
+      "prune_reason": "tournament_rejected: ",
+      "pruned_at": "2026-08-16T03:13:37Z",
       "quarantined_until": "",
       "research_mode": "team",
       "source": "",
       "source_exp_id": "e0db545b",
       "source_path": "The Permutation Readout of Individual Orders, Closed",
-      "status": "available",
+      "status": "pruned",
       "thread_id": "",
       "timestamp": "2026-08-14T17:18:51.962827+00:00",
       "title": "Deepening: The Permutation Readout of Individual Orders, Closed"
@@ -43739,6 +43779,46 @@
       "thread_id": "",
       "timestamp": "2026-07-29T17:48:52.827384+00:00",
       "title": "Deepening: Noether's Theorem: Symmetries and Conservation Laws"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Building on cycle e67b8bbc (Q=0.780), which proved 54 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Part of:** Research plan — *Compression Beyond the Pigeonhole Bound* (Phase B, Question 2: can random number generators help?).\n\n## Claim (negative result)\nA deterministic PRNG **cannot** help compress arbitrary data.\n\n## Proof sketch\nA fixed function seed → stream is deterministic: `2^s` seeds pr",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "MachineLearning"
+      ],
+      "github_issue": 0,
+      "id": "push_e67b8bbc_9c168ec4",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.88,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "e67b8bbc",
+      "source_path": "Compression Research B1: Negative result — PRNGs cannot beat pigeonhole (proof +",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-08-16T03:13:36.247710+00:00",
+      "title": "Deepening: Compression Research B1: Negative result — PRNGs cannot beat pigeonhole (proof +"
     },
     {
       "ambition_level": "extension",
@@ -43928,14 +44008,14 @@
       "parent_direction": "",
       "priority_score": 0.95,
       "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
+      "prune_reason": "tournament_rejected: ",
+      "pruned_at": "2026-08-16T03:13:37Z",
       "quarantined_until": "",
       "research_mode": "team",
       "source": "",
       "source_exp_id": "eaebe17a",
       "source_path": "Exp 392 GCD-MOMENT: the semiprime gcd-moments M_k = sum gcd(x,N)^k are a closed ",
-      "status": "available",
+      "status": "pruned",
       "thread_id": "",
       "timestamp": "2026-08-14T08:45:52.116557+00:00",
       "title": "Deepening: Exp 392 GCD-MOMENT: the semiprime gcd-moments M_k = sum gcd(x,N)^k are a closed "
@@ -44034,7 +44114,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle ee0c99e7 (Q=0.800), which proved 21 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that depth-L ReLU networks of width (n+4) can approximate any continuous function on [-1,1]^n to epsilon accuracy. Show that the required width grows as O(epsilon^{-1/n}) for shallow networks but only O(log(1/epsilon)) for deep networks. Formalize the depth separation theorem: there exist func",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "MachineLearning"
       ],
@@ -44394,7 +44474,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle f8e43caa (Q=0.773), which proved 12 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize grokking: prove a delayed generalization theorem for two-layer networks and characterize the phase transition as a saddle-node bifurcation.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "MachineLearning"
       ],
@@ -45486,7 +45566,7 @@
       "depth_estimate": 3,
       "description": "Constructs artificial neural architectures capable of directly processing 11-dimensional spatial tensors without dimensional reduction loss.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "MachineLearning"
       ],
@@ -45526,7 +45606,7 @@
       "depth_estimate": 3,
       "description": "Proves that offline memory consolidation during neural 'sleep' cycles corresponds to traversing strange attractors in weight space.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "MachineLearning"
       ],
@@ -48619,7 +48699,7 @@
       "depth_estimate": 3,
       "description": "Prove depth-width tradeoffs specific to EML activation exp(w*x+b) - log(w'*x+b'). Conjecture: An EML network of depth d and width w can approximate any Lipschitz function on [0,1]^n with error O((w*d)^{-2/n}) — matching ReLU rates but with smoother gradients. Test: prove the lower bound by constructing an EML network that approximates x^2 on [0,1] with error O(w^{-2}) using depth 2. Compare with ReLU's O(w^{-1}) rate.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "EML",
         "MachineLearning",
@@ -48997,7 +49077,7 @@
       "depth_estimate": 3,
       "description": "The Stone-Weierstrass theorem guarantees that any continuous function can be approximated by an algebra that separates points and contains constants. Conjecture: The algebra of EML functions (finite compositions of exp, log, +, *) on any compact subset of R^n is dense in C(K) with a Jackson-type rate: for f in Lip_alpha(K), there exists an EML network of width O(epsilon^{-n/alpha}) approximating f within epsilon. The separation property is key: given x != y in K, the function g(t) = exp(a)*log(b*t + c) can separate them for appropriate parameters a, b, c (because g is strictly monotone for a, b > 0). The constants are included via c = exp(a)*log(c) for c > 0. This gives EML networks provable approximation guarantees with explicit rates, going beyond the existential guarantees of universal approximation theorems. Test: prove the separation property (given x != y in K, find EML parameters that separate them) and the rate bound for Lipschitz functions. Construct an EML network of width n approximating x^2 on [0,1] with explicit error bounds. Impact: gives EML networks provable approximation guarantees with explicit rates, surpassing the existential guarantees of universal approximation theorems.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "EML",
         "Analysis",
@@ -57880,7 +57960,7 @@
       "depth_estimate": 3,
       "description": "Prove that PAC-Bayes generalization bounds can be expressed in terms of the mutual information between the training data and the learned hypothesis. Formalize the connection between compression, information, and generalization. Show that shorter description lengths imply better generalization.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "MachineLearning",
         "Logic"
@@ -61807,7 +61887,7 @@
       "depth_estimate": 3,
       "description": "Cycle f3cf4755 (Q=0.742) proved 137 theorems in MachineLearning but left 2 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future directions\n\nThe completed formalization deliberately studies the smallest non-trivial model:\na width-one scalar two-layer ReLU network with an explicit time-dependent input,\ntogether with the",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "MachineLearning"
       ],
