@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "64406111",
-      "domain": "Geometry",
-      "key_insight": "# Future directions\n\nThe results of this cycle turn four informal verdicts into theorems: the trace lemma\n`R_k(N) = gcd(k, p-1)·gcd(k, q-1)`, the joint-closure / no-aggregator barrier, the sterility o",
-      "quality_score": 0.85,
-      "sorry_count": 1,
-      "theorem_count": 72,
-      "timestamp": "2026-08-14T15:14:21",
-      "title": "Round-10 Closures: The Exhaustion of the Classical Attack Surface"
-    },
-    {
       "cycle_id": "83c80b79",
       "domain": "Novelty",
       "key_insight": "# Future Directions — De-Quantization Assessed: Shor's QFT Is Irreducible\n\nThe formalized results (`Catalog/Novelty/Shor*.lean`) establish, with zero\n`sorry`s:\n\n* the full Shor state has Schmidt rank",
@@ -499,19 +489,19 @@
       "theorem_count": 300,
       "timestamp": "2026-08-16T22:37:14",
       "title": "ArXiv paper: Cayley Graphs Of Order $pqrs$ Are Hamiltonian"
+    },
+    {
+      "cycle_id": "922db13f",
+      "domain": "NumberTheory",
+      "key_insight": "# FUTURE DIRECTIONS — NET-47 staircase thread\n\nFour cycles of the loop produced, in `Catalog/NumberTheory/`:\n\n| file | content |\n|---|---|\n| `KneeStaircaseArithmetic.lean` | binary staircase normal fo",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 83,
+      "timestamp": "2026-08-16T23:34:53",
+      "title": "NET-47: The third seed at ctx=1024 reveals a SPREAD not a two-point set — k*=112 (mid-grid), the kne"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "fc0b5c3a",
-      "domain": "Bridges",
-      "key_insight": "# Future directions\n\n## What is proved\n\n`Bridges/DeltaDenseSumsetAvoidance.lean` proves, for every fixed `0 < δ < 1` and every\nsufficiently large `n`, the existence of `S ⊆ [n]` with `|S| ≥ δn` such t",
-      "quality_score": 0.686,
-      "sorry_count": 0,
-      "theorem_count": 118,
-      "timestamp": "2026-08-06T00:18:07",
-      "title": "Existence of δ‑dense sets avoiding large sumsets"
-    },
     {
       "cycle_id": "10a6c20b",
       "domain": "Probability",
@@ -2501,27 +2491,19 @@
       "theorem_count": 300,
       "timestamp": "2026-08-16T22:37:14",
       "title": "ArXiv paper: Cayley Graphs Of Order $pqrs$ Are Hamiltonian"
+    },
+    {
+      "cycle_id": "922db13f",
+      "domain": "NumberTheory",
+      "key_insight": "# FUTURE DIRECTIONS — NET-47 staircase thread\n\nFour cycles of the loop produced, in `Catalog/NumberTheory/`:\n\n| file | content |\n|---|---|\n| `KneeStaircaseArithmetic.lean` | binary staircase normal fo",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 83,
+      "timestamp": "2026-08-16T23:34:53",
+      "title": "NET-47: The third seed at ctx=1024 reveals a SPREAD not a two-point set — k*=112 (mid-grid), the kne"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "e67b8bbc",
-      "domain": "MachineLearning",
-      "name": "bitsOfList_seedBits",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "e67b8bbc",
-      "domain": "MachineLearning",
-      "name": "seedBits_injective",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "8da3e793",
-      "domain": "Tropical",
-      "name": "optCost_replicate_le",
-      "quality": 0.78
-    },
     {
       "cycle_id": "8da3e793",
       "domain": "Tropical",
@@ -2803,9 +2785,27 @@
       "domain": "Pythagorean",
       "name": "fib_dvd_gcd",
       "quality": 0.84
+    },
+    {
+      "cycle_id": "922db13f",
+      "domain": "NumberTheory",
+      "name": "stair_zero_ones",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "922db13f",
+      "domain": "NumberTheory",
+      "name": "stair_one",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "922db13f",
+      "domain": "NumberTheory",
+      "name": "one_le_two_pow",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-16T22:37:14",
+  "last_updated": "2026-08-16T23:34:53",
   "open_questions": [
     {
       "context": "This file gives a **complete, self-contained proof** of that theorem (0 `sorry`s).",
@@ -3641,12 +3641,6 @@
     ],
     "NumberTheory": [
       {
-        "cycle_id": "8d2025bd",
-        "quality": 0.627125,
-        "theorems": 225,
-        "title": "Mobius Arithmetic: Number Theory on the Mobius Band"
-      },
-      {
         "cycle_id": "36710bef",
         "quality": 0.7451150000000001,
         "theorems": 43,
@@ -3699,6 +3693,12 @@
         "quality": 0.86,
         "theorems": 71,
         "title": "Fractal Number Theory: Hausdorff Dimension of Prime Distributions"
+      },
+      {
+        "cycle_id": "922db13f",
+        "quality": 0.82,
+        "theorems": 83,
+        "title": "NET-47: The third seed at ctx=1024 reveals a SPREAD not a two-point set — k*=112"
       }
     ],
     "Physics": [

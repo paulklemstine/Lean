@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-16T22:37:20.334193+00:00",
+  "last_updated": "2026-08-16T23:34:59.593389+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -57222,6 +57222,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-08-16T22:37:20.173137+00:00",
       "title": "ArXiv paper: Cayley Graphs Of Order $pqrs$ Are Hamiltonian"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "NumberTheory",
+      "duration_seconds": 3431.599931240082,
+      "end_time": 1786923270.5800414,
+      "files_integrated": 4,
+      "job_id": "922db13f",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.82,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.544,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.82,
+        "novelty": 0.82,
+        "proof_depth": 0.82,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1786919838.9801102,
+      "strategy_count": 0,
+      "theorem_count": 83,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 81,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-08-16T23:34:59.410545+00:00",
+      "title": "NET-47: The third seed at ctx=1024 reveals a SPREAD not a two-point set \u2014 k*=112 (mid-grid), the kne"
     }
   ]
 }

@@ -21,25 +21,6 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "922db13f",
-    "description": "## NET-47 — speed axis (round-net-47; paper 91, /tmp/exp_net_attncost_ctx1024_s3.py, /tmp/net47.log)\n\n**Verdict name: THE-THIRD-SEED-REVEALS-A-SPREAD-NOT-A-TWO-POINT-SET.**\n\n### Result\nAt (d=4, ctx=1024, seed=3), **k\\* = 112 — the MID-GRID read, the prediction's horn P3 CONFIRMED (P1 96, P2 128 both REFUTED)**. The ctx=1024 knee distribution is **{96, 112, 128}** — a ±16 half-grid-step jitter with mean = median = **112 = 7/8 × product 128** — so the {96, 128} two-point set from NET-37/NET-44 was a **TWO-SEED SAMPLING ARTIFACT**: two seeds drew the extremes of a jitter, presenting a clean binary that the third seed falsifies.\n\n### The emerging 7/8-median law at context ≥ 8× (d=4)\n- **The seed-averaged knee sits at 7/8 · (d·ctx/32)**: 112 at 8×; **224 = 7/8·256 is the mid-value of the 16× set {224, 256}** (NET-46).\n- The product value is the **MAXIMUM of the seed range** — the s1 exact chain (16/32/64/128/256) is the law's **upper edge, not its center**.\n- The product law's upper bound **STRENGTHENS to 3/3-seed-sure**: product point 128 passes retained ≥ 0.98 at all three seeds (0.986/0.993/0.988) — k\\* ≤ d·ctx/32 is a three-seed-verified deployment guarantee.\n\n### Key numbers\n- Sweep: k=32 0.949 ✗, 64 0.970 ✗, 96 0.979 ✗ (~0.5 SE below bar — razor-thin), **112 0.983 ✓ (margin +0.0035** — the least razor-thin of the recent cells), 128 0.988 ✓, 192 0.998 ✓, 256 0.998 ✓, 384 0.999 ✓, 512 0.999 ✓, 768 0.999 ✓ (loss 5.1387 = full loss **EXACTLY** — the cleanest full-recovery at this grid). The fine sweep point 112, absent from both prior ctx=1024 sweeps, is what won.\n- Full acc 0.1582, bar 0.1550, loss 5.1387; train **6141s (~1.7h**, fastest of the three seeds).\n- **Selection importance +4.7/+3.8** — positive but the SMALLEST at 1024 (s1 +5.9/+4.6, s2 +6.2/+4.8); the seed spread in selection (3.8–6.2) exceeds the concentration spread (~4%).\n- **Concentration**: eff support 271.92 (s1 291.16, s2 294.97 — family within ~4%, s3 most concentrated); top-64 0.576, top-128 0.723; per-position 35.89/238.53/506.05. Notably the **eff↔knee link does NOT sort across 3 points** (s2 least concentrated yet lowest knee 96; s3 most concentrated yet middle knee 112) — the NET-46 two-point correlation was a coincidence.\n- **Deployable**: **≥8.0× guaranteed (3/3 seeds), 9.1× median, 10.7× best** at (d=4, ctx=1024).\n\n### The seed distribution at (d=4, ctx=1024) — three seeds complete\n| seed | k\\* | × product (128) |\n|---|---|---|\n| 1 (NET-37) | 128 | 1.000 |\n| **3 (this round)** | **112** | **0.875** |\n| 2 (NET-44) | 96 | 0.750 |\n\n### All 8 barriers\n(a) clean — three horns stated before the run, measured 112, the fine point winning; (b) clean — three-seed knee distribution / mid-grid knee / 7/8 median: none in the Catalog (698-pkg) or literature; (c) confronted — three seeds at d=4 × ctx=1024 real causal word LM (4097 vocab, held-out loss+acc); (d) clean — held-out last-10%, data-free top-k; (e) the round's SUBSTANCE — the {96,112,128} distribution IS the variance estimate (knee jitter ±16 = half grid step at 8×), the {96,128} binary falsified; honest limits — the 7/8 median is a two-context hypothesis needing its direct test, and the s3 96/112 boundary is the least certain read (~0.5 SE); (f) clean — same metrics/protocol, binom SE ≈ 0.15% acc (retained SE ≈ 0.009), margins documented, k=768 recovers loss exactly, NO crash (ALL_DONE_NET47); (g) fair — full-attention reference + same 0.98 bar + random-k control at the same k (seed 12345), gaps +4.7/+3.8 positive; (h) sharpened — the three-seed distribution brackets the deployable claim with the guarantee at the conservative end.\n\n### Next\n**A third seed at ctx=2048** (does the 7/8 median replicate at 16×? — if s3 reads 224 or 192 the law holds, if 256 it refutes — the direct test of this round's discovery; ~3.7–5h — the highest-value open cell now); a fourth seed at ctx=1024 (refine {96,112,128}; low value); d=8 @ ctx=256 s0 corner; carry chain at scale (the frontier).\n\nNow 47 network experiments. Assessment v47. Paper 91.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1339",
-    "lineage_refs": [],
-    "priority_score": 1000.0,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-16T17:34:35.935120+00:00",
-    "title": "NET-47: The third seed at ctx=1024 reveals a SPREAD not a two-point set — k*=112 (mid-grid), the knee distribution is {96,112,128} (7/8-median law emerges)"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
     "consumed_by_exp_id": "d71114d5",
     "description": "## NET-48 — speed axis (round-net-48; paper 92, /tmp/exp_net_attncost_ctx2048_s3.py, /tmp/net48.log)\n\n**Verdict name: THE-DIRECT-TEST-SURVIVES-VIA-THE-MEDIAN.**\n\n### Result\nAt (d=4, ctx=2048, seed=3), **k\\* = 160 — all four point-horns REFUTED (P1 224, P2 240, P3 256, P4 192: every pre-stated value passes, none is the knee)**, yet the completed 16× three-seed knee distribution **{160, 224, 256} has median EXACTLY 224 = 7/8·(d·ctx/32)**, replicating the 8× median 112 = 7/8·128: **the 7/8-median law is 2/2-context, 6/6-seed.** The horns were point-predictions; the law's claim was the distribution's center — 0/4 horns, 1/1 law. A whole family of third-seed values {160, 192, 224} each keep the median at 224; only ≥256 would shift it.\n\n### The 7/8-median law now two contexts, six seeds\n| context | three-seed k\\* set | × product | spread | median |\n|---|---|---|---|---|\n| 8× (ctx=1024) | {96, 112, 128} | {0.75, 0.875, 1.0} | 0.25 | 112 = 7/8·128 |\n| 16× (ctx=2048) | {160, 224, 256} | {0.625, 0.875, 1.0} | 0.375 | 224 = 7/8·256 |\n\n**The 16× spread is ~50% WIDER than the 8× spread** — the LOW TAIL is the context-growing quantity (0.75 → 0.625), the product value the pinned upper edge (the s1 chain's exactness), the median stable at 7/8. Per-seed knees are too noisy to predict on the point; the distribution's center is the robust quantity — that is what a third seed buys.\n\n### Key numbers\n- Full acc 0.1546, bar 0.1516, full loss 5.2199, train **14566s (~4h03m)**.\n- Sweep: 96 0.963 ✗, 128 0.973 ✗, **160 0.981 ✓ (margin +0.0012 — the tightest of the recent cells; true knee ~150–160 between grid points)**, 192 0.984 ✓, 224 0.986 ✓, 240 0.987 ✓, **256 0.990 ✓ (product point — passes 3/3)**, 288 0.993 ✓, 384 0.999 ✓, 512 1.000 ✓, 768 1.003 ✓, 1024 1.003 ✓ (loss 5.2215, Δ0.0016). The s3 retained curve is the HIGHEST of the three 16× seeds throughout (0.973 at 128 vs s1 0.939, s2 0.965) — crossing the bar two grid steps earlier than s2, three than s1.\n- **Product-law upper bound 3/3-sure at BOTH long contexts**: product point 256 passes 0.981/0.986/0.990 (joining 8×'s 0.986/0.993/0.988 at 128) — k\\* ≤ d·ctx/32 is a six-seed-verified deployment guarantee through 16×.\n- **Selection importance +4.7/+3.4**: k=128 random 0.926 vs top-k 0.973; k=256 0.956 vs 0.990 — comparable to s2, far above s1's +1.7/+1.8; the 16× selection spread {1.7, 4.4, 4.7} at k=128 is three-fold (dilution strongly seed-dependent).\n- **Concentration**: eff support 498.13 (s1 526.39, s2 472.50 — mid-family, spread ~11%); top-128 0.608, top-256 0.746; per-position 64.91/435.27/929.55 — the eff↔knee correlation again does NOT sort across three points (s1 highest-eff/highest-knee, s2 lowest-eff/middle-knee, s3 middle-eff/lowest-knee), NO bounded working set at 16×, three seeds.\n- **Deployable at (d=4, ctx=2048)**: **≥8.0× guaranteed (3/3), 9.1× median, 12.8× best — the BEST-EVER reading** (beats 10.7× at 8× s2). Distribution {8.0, 9.1, 12.8} wider than 8×'s {8.0, 9.1, 10.7}.\n\n### The 16× three-seed table\n| seed | k\\* | × product (256) |\n|---|---|---|\n| 1 (NET-45) | 256 | 1.000 |\n| 2 (NET-46) | 224 | 0.875 |\n| **3 (this round)** | **160** | **0.625** |\n\n### All 8 barriers\n(a) clean — four horns + the law's direct test stated before the run, measured 160 outside ALL horns, yet the distribution's median landed exactly on the law's predicted center (the round separates point-accuracy 0/4 from structural confirmation 1/1); (b) clean — three-seed 16× spread / widening low tail / median-stable center: none in the Catalog (698-pkg) or literature; (c) confronted — d=4 × ctx=2048 real causal word LM, 4097 vocab, held-out loss+acc, three seeds at the longest cell; (d) clean — held-out last-10%, data-free top-k; (e) the SUBSTANCE, sharpened — the 16× three-seed distribution complete; honest limits: the s3=160 read razor-thin (+0.0012), the 0.625 low tail is ONE of three seeds (a fourth decides s3-specific vs stable), the median law is 2 contexts × 3 seeds; (f) clean — same metrics/protocol, binom SE ≈ 0.11% acc (retained SE ≈ 0.007), the razor margin documented, k=512 recovers 1.000 / k=768 1.003 (loss Δ0.0016), monotone recovery, NO crash (ALL_DONE_NET48); (g) fair — full-attention reference + same 0.98 bar + random-k at same k (seed 12345): gaps +4.7/+3.4, positive, the {1.7–4.7} seed spread informative; (h) sharpened — the widened {8.0–12.8} deployment spread is the deployment-relevant uncertainty at the longest cell, guarantee end 3/3-sure.\n\n### Next\n**A fourth seed at ctx=2048** (the LOW-TAIL test — s4=160/192 → the 0.625 low tail is real, a stable 16× feature; s4 in {224,256} → it was s3-specific; ~4–5h — the highest-value open cell now); a fourth seed at ctx=1024 (refine {96,112,128}; low value); d=8 @ ctx=256 s0 corner; d=8 compression floor check; carry chain at scale (the frontier).\n\nNow 48 network experiments. Assessment v48. Paper 92.",
     "domain_bridges": [],
@@ -1096,7 +1077,7 @@
     "title": "Riemann Zeta: Zero-Free Regions and Density Estimates"
   },
   {
-    "ambition_level": "extension",
+    "ambition_level": "grand_challenge",
     "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Building on cycle 39757711 (Q=0.840), which proved 300 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Investigate the ArXiv paper 'Cayley Graphs Of Order $pqrs$ Are Hamiltonian' and formalize its key results. Abstract: Assume $ G $ is a finite group with order $ |G| = pqrs $, where $ p $, $ q $, $ r $, and $ s $ are distinct prime numbers. We prove that every connected Cayley graph of $ G $ contains",
@@ -1132,6 +1113,25 @@
     "status": "available",
     "timestamp": "2026-08-16T11:35:10.982658+00:00",
     "title": "Deepening: Elliptic Curve Cryptography: Weil Pairing and BLS Signatures"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 922db13f (Q=0.820), which proved 83 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## NET-47 — speed axis (round-net-47; paper 91, /tmp/exp_net_attncost_ctx1024_s3.py, /tmp/net47.log)\n\n**Verdict name: THE-THIRD-SEED-REVEALS-A-SPREAD-NOT-A-TWO-POINT-SET.**\n\n### Result\nAt (d=4, ctx=1024, seed=3), **k\\* = 112 — the MID-GRID read, the prediction's horn P3 CONFIRMED (P1 96, P2 128 both",
+    "domain_bridges": [],
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "push_922db13f_ef28d9e0",
+    "lineage_refs": [],
+    "priority_score": 0.9199999999999999,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "922db13f",
+    "status": "available",
+    "timestamp": "2026-08-16T23:34:53.708547+00:00",
+    "title": "Deepening: NET-47: The third seed at ctx=1024 reveals a SPREAD not a two-point set — k*=112"
   },
   {
     "ambition_level": "grand_challenge",
@@ -2404,28 +2404,6 @@
     "status": "available",
     "timestamp": "2026-07-29T17:48:52.827384+00:00",
     "title": "Deepening: Noether's Theorem: Symmetries and Conservation Laws"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Zero-knowledge proofs let you convince someone a statement is true without revealing WHY. Apply this to mathematics: a zero-knowledge proof of a theorem T convinces the verifier that T is provable in PA without revealing any step of the proof. Conjecture: Every theorem provable in Peano Arithmetic has a zero-knowledge proof whose communication complexity is polynomial in the length of the theorem statement (not the proof). This follows from the PCP theorem combined with the fact that PA-proofs can be arithmetized. The zero-knowledge protocol: (1) Prover commits to each proof step using a collision-resistant hash. (2) Verifier randomly challenges one proof step. (3) Prover opens that step and shows it follows from the axioms. Repeating O(k) times gives soundness error 2^{-k}. The proof is zero-knowledge because the verifier only sees one random step per challenge. Test: implement a zero-knowledge proof system for propositional tautologies and prove that a verifier learns nothing beyond the validity of the tautology. Impact: mathematicians can certify results without revealing their methods — a mathematical equivalent of sealed-bid auctions for proof strategies.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Cryptography",
-      "Logic",
-      "Computation"
-    ],
-    "id": "seed_108",
-    "lineage_refs": [],
-    "priority_score": 0.89,
-    "proof_strategy": "Arithmetize PA-proofs: encode each proof step as a polynomial equation over a finite field F_p. Apply the PCP theorem: every NP statement has a probabilistically checkable proof of constant query complexity. Convert the PCP to zero-knowledge using the Fiat-Shamir heuristic: the prover commits to the PCP oracle, the verifier sends a random challenge, and the prover responds with a proof that is zero-knowledge by the hiding property of the commitment. Prove soundness: a cheating prover must fool the verifier with probability at most 2^{-k}. Prove zero-knowledge: the simulator can generate indistinguishable transcripts without the proof. Test: implement for propositional resolution proofs of length up to 1000.",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem Without Showing You the Proof"
   },
   {
     "ambition_level": "extension",
@@ -8580,7 +8558,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c798c801",
     "description": "The sequence of primes 2, 3, 5, 7, 11, 13, ... defines a point cloud in R where the n-th prime p_n is at position p_n on the real line. The gaps between primes create a topological structure. Define the persistent homology of the prime point cloud as the Rips filtration R_epsilon = {p_n : |p_m - p_n| <= epsilon}. As epsilon increases, more primes are connected, and the topology changes. Conjecture: The persistent H_0 (connected components) of the prime point cloud has the same barcode as a Poisson point process with intensity 1/log(x). Specifically, the bar lengths in H_0 follow an exponential distribution with mean equal to the average prime gap (which is approximately log(x) by the prime number theorem). The persistent H_1 (1-dimensional holes) of the prime point cloud appears at scale epsilon ~ log(x)^2, corresponding to prime pairs (p, p+2k) where 2k is a specific even gap. The longest H_1 bar corresponds to the twin prime conjecture: it persists from epsilon = 2 (the twin prime scale) to epsilon = infinity. Test: compute persistent homology of the primes up to 10^6 using Rips filtration and compare with the Poisson point process prediction. Verify that H_0 bar lengths are exponentially distributed with mean log(x). Impact: primes have topology — their gaps create persistent homology that encodes the twin prime conjecture and other arithmetic properties.",
     "domain_bridges": [],
     "domains": [
@@ -8595,7 +8573,7 @@
     "proof_strategy": "Define the prime point cloud P_N = {p_1, p_2, ..., p_N} subset R. The Rips complex R_epsilon(P_N) connects p_i and p_j if |p_i - p_j| <= epsilon. H_0: at epsilon = 0, each prime is its own component. At epsilon = 2, twin primes are connected (p, p+2). At epsilon = 4, cousin primes are connected. At epsilon = log(x), most nearby primes are connected. The bar lengths in H_0 are the prime gaps: bar i has length g_i = p_{i+1} - p_i. By Cramer's model, the prime gaps follow an approximate exponential distribution: P(g = 2k) ~ 2*C_2 * k^{-2} * (1/log(p))^1 for even k (and 0 for odd k > 1). This is NOT an exponential distribution — it is a power law with a correction. The Poisson prediction P(g > epsilon) ~ e^{-epsilon/log(x)} overestimates long gaps. Correct: the H_0 bar lengths follow the prime gap distribution, which is approximately geometric with parameter 1/log(p). H_1: 1-dimensional holes appear when three primes p_a, p_b, p_c form a triangle with all gaps <= epsilon. This happens at epsilon = max(p_b - p_a, p_c - p_b, p_c - p_a). The H_1 bars encode constellations of 3+ primes in a short interval. Test: compute persistent homology of primes up to 10^6 using GUDHI or Ripser, extract H_0 and H_1 barcodes, compare with Poisson model.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Persistent Homology of Prime Numbers: The Topology of Arithmetic"
   },
@@ -24942,6 +24920,26 @@
     "status": "available",
     "timestamp": "2026-08-16T22:37:02.091127+00:00",
     "title": "This document records the open conjectures that the formalization in"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# FUTURE DIRECTIONS — NET-47 staircase thread\n\nFour cycles of the loop produced, in `Catalog/NumberTheory/`:\n\n| file | content |\n|---|---|\n| `KneeStaircaseArithmetic.lean` | binary staircase normal form `stair b j = 2^b(2^j-1)`, digits, 2-adic valuation, injectivity, midpoint law, window classification |\n| `KneeStaircaseDivisorSpectrum.lean` | `σ(stair b j)`, abundance criterion, Euclid **and** Euler directions for the family, abundancy monotonicity and its limit |\n| `KneeStaircaseOctaveCensus.lean` | exact census of grid-admissible knees in a dyadic octave, count `n - g`, bracket `[(3/4)2^n, 2^n]`, waste ratio `4/3`, renormalisation, the 7/8-median law |\n| `KneeStaircaseDivisibilityLattice.lean` | `stair b j ∣ stair b' j' ↔ b ≤ b' ∧ j ∣ j'`, gcd closure, lcm failure, census antichains, grid step recovered as a gcd |\n| `KneeStaircaseCensusDensity.lean` | `2·A(n) = n(n+1) + 2` staircase numbers below `2^n`, density `→ 0` |\n\nAll statements are proved with no `sorry` and no non-standard axioms.  Below are the conjectures\nthe cycles left open, each falsifiable and each with a concrete first target.\n\n---\n\n## Conjecture 1 (grid-ratio law). The 7/8 median is a statement about the *sweep grid*, not the network.\n\n**Claim.** For every cell, the seed-averaged knee equals `(1 - 2^{-(r-1)}) · 2^n` where\n`2^n` is the product point and `r = n - g` is the grid ratio (`log₂` of product point over grid\nstep).  In particular a knee distribution with median `≠ (7/8)·2^n` must come from a sweep whose\ngrid is not `2^{n-3}`.\n\n*The key insight is* that `KneeStaircase.octave_census_card` fixes the number of admissible knees\nat `n - g`, and `KneeStaircase.seven_eighths_median_law` shows that for `n - g = 3` the census is\nforced to be the arithmetic progression `{(3/4)2^n, (7/8)2^n, 2^n}` whose median is the mean —\nso the \"7/8 law\" is a property of the measuring grid, reproducible with no network at all.\n\n*Why now?*  The round's own next step (a third seed at `ctx = 2048`) tests exactly this: with the\n`32`-grid the census is `{192, 224, 256}` (`census_prediction_2048`, proved) and the law predicts\nmedian `224`; with a `16`-grid the census gains `240` and the median must move to `232`.  The\nprediction is a single number, decidable by one run.\n\n**First formal target.**  Prove `median (octaveCandidates n g) = 2^n - 2^{g + (r-1)/2}` for odd\n`r`, and show the even-`r` census has no member equal to its mean — a *parity obstruction* to any\n\"mean = median\" law when the grid ratio is even.\n\n---\n\n## Conjecture 2 (rigidity of staircase knees). Every knee of a monotone truncation sweep is a staircase number.\n\n**Claim.** If a retention curve `c : ℕ → ℝ` is nondecreasing and its knee is measured on a dyadic\ngrid, the knee is a staircase number in the sense of `KneeStaircase.IsStaircase`.\n\n*The key insight is* `KneeStaircase.staircase_density_tendsto_zero`: staircase numbers have\ndensity `→ 0` (there are only `n(n+1)/2 + 1` below `2^n`), so the fact that all five measured\nknees of the NET series (`16, 32, 64, 96, 112, 128, 224, 256`) are staircase numbers is not\nexplicable by chance and must come from the geometry of the sweep grid.\n\n*Why now?*  The conjecture is refutable by a single non-staircase knee (e.g. `104 = 1101000₂`,\nwhich is a *sum* of two staircase blocks); refuting it would show the grid, not arithmetic, is\ndoing the work — and confirming it on a finer grid would make the staircase form a genuine\nprediction.\n\n**First formal target.**  Prove that the set of \"two-block\" numbers (`2^a(2^i-1) + 2^b(2^j-1)`)\nhas density `→ 0` as well, so that even the weaker \"few-block\" hypothesis is a strong constraint,\nand identify the first grid on which a non-staircase point can win.\n\n---\n\n## Conjecture 3 (antichain obstruction to seed averaging). No knee ensemble admits a common refinement.\n\n**Claim.** For every octave census, the measured knees form a divisibility antichain\n(`KneeStaircase.census_antichain`, proved), and consequently no single \"law value\" `k` can be a\ncommon multiple of two admissible knees while remaining admissible: the family is a\nmeet-semilattice but not a lattice (`KneeStaircase.staircase_not_lcm_closed`).\n\n*The key insight is* the product order `stair b j ∣ stair b' j' ↔ b ≤ b' ∧ j ∣ j'`: the zero block\nmust grow while the one block must divide, and along a census the two move in opposite\ndirections, which is exactly why lcm leaves the family (`lcm 3 7 = 21`).\n\n*Why now?*  The NET series is trying to summarise seed spreads by a single deployable number.\nThis says any such summary must be an *upper bound* (a join outside the family), never a member —\na structural reason the \"guarantee at the conservative end\" is the only honest summary.\n\n**First formal target.**  Compute the smallest staircase number above `lcm` of a census (the\n\"join in the family\") and show it equals `2^{n+1}`, i.e. that the only common staircase multiple\nof two distinct admissible knees is a full octave up — a factor-2 penalty theorem.\n\n---\n\n## Conjecture 4 (arithmetic type of the knee). Jittered knees are abundant, product points are deficient.\n\n**Claim.** For every cell with grid ratio `r ≥ 2`, all census members except the top point are\nabundant, and the top point is deficient; no census member is ever perfect.\n\nProved here for `2 ≤ j ≤ b` (`KneeStaircase.stair_abundant`), for the top point\n(`KneeStaircase.stair_deficient_of_one`), and for weight-7 ladders\n(`KneeStaircase.net47_no_knee_perfect`).  The open part is the regime `j > b`, i.e. very fine\ngrids, where the abundancy ceiling `2σ(2^j-1)/(2^j-1)` of\n`KneeStaircase.abundancy_tendsto` can drop below `2`.\n\n*The key insight is* that abundance of `2^b(2^j-1)` is governed by the *ratio* `b : j` and not by\nsize — the whole family has a `j`-dependent abundancy ceiling, so at fixed `j` the deep rungs are\nabundant and at fixed `b` the tall rungs need not be.\n\n*Why now?*  It predicts the exact grid depth at which the arithmetic character of the knee\ndistribution flips, a discrete, checkable event: the first `(b, j)` with `j > b` and\n`σ(2^j-1)(2^{b+1}-1) < 2^{b+1}(2^j-1)`.\n\n**First formal target.**  Prove `stair b j` is deficient whenever `2^j - 1` is prime and `b < j -\n1`, closing the classification for prime Mersenne blocks, and exhibit the first composite-block\ncounterexample.\n\n---\n\n## Conjecture 5 (identifiability of the measurement from the data). The census determines `(n, g)`.\n\n**Claim.** The map `(n, g) ↦ octaveCandidates n g` is injective on `g < n`: the maximum recovers\n`2^n` and the gcd recovers `2^g` (`KneeStaircase.census_gcd_is_grid_step`,\n`KneeStaircase.net47_gcd_recovers_grid`: `gcd(96,112) = 16`).  Hence a reported knee *set*\ncarries its own measurement metadata, and any two experiments with the same census used the same\ncontext and the same grid.\n\n*The key insight is* the renormalisation identity `KneeStaircase.census_scaling`: the census is\nexactly self-similar under `(n, g) ↦ (n+1, g+1)`, so only the *difference* `n - g` controls the\nshape while the pair `(max, gcd)` pins the absolute scale.\n\n*Why now?*  It converts a housekeeping question (\"was the sweep grid the same across seeds?\")\ninto a theorem, and it is refuted the moment two cells with different `(n, g)` report identical\nknee sets.\n\n**Status.**  The set-level statement is now *proved*: `KneeStaircase.census_determines_params`\nshows `(n, g)` is recovered from the census (maximum gives `n`, cardinality gives `n - g`).  What\nremains open is the *physical* identifiability: the census sees only the product `n`, never the\npair `(d, ctx)` behind it.\n\n**First formal target.**  Show that the fibre of the census map over a fixed `n` is exactly the\nset of cells with `d·ctx = 32·2^n`, i.e. that knee data alone can never separate \"depth\" from\n\"context\" — a genuine limit on what a truncation sweep can measure, and a prediction that a\n`(d = 8, ctx = 512)` cell must report the same census as `(d = 4, ctx = 1024)`.\n",
+    "domain_bridges": [],
+    "domains": [
+      "NumberTheory",
+      "Geometry"
+    ],
+    "id": "fd_1346",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "922db13f",
+    "status": "available",
+    "timestamp": "2026-08-16T23:34:40.088103+00:00",
+    "title": "Four cycles of the loop produced, in `Catalog/NumberTheory/`:"
   },
   {
     "ambition_level": "extension",
