@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "8c90b348",
-      "domain": "Shared",
-      "key_insight": "# FUTURE DIRECTIONS — after CFPERIOD-NULL (Experiment 398)\n\nWhat is now formally settled in `Catalog/Shared/CFPeriodNull.lean`:\n\n1. the PQa state machine of `√N` and its four integral invariants\n   (`",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 47,
-      "timestamp": "2026-08-14T11:18:04",
-      "title": "Experiment 398: CFPERIOD-NULL — the continued-fraction period of sqrt(N) is a non-polynomial symmetr"
-    },
-    {
       "cycle_id": "43e7ffcb",
       "domain": "Tropical",
       "key_insight": "The declared frontier is to **prove the trace-lemma exhaustiveness** — to turn\nthe classification into a theorem in full generality. Define the class of\nCRT-respecting, polynomial-time-computable coun",
@@ -499,19 +489,19 @@
       "theorem_count": 884,
       "timestamp": "2026-08-16T19:33:55",
       "title": "Teichmuller-Moduli: Analytic Structure of Riemann Surface Space"
+    },
+    {
+      "cycle_id": "81aa12f0",
+      "domain": "Novelty",
+      "key_insight": "# Future directions\n\nFive falsifiable conjectures produced by this cycle of work on emergent geometry\nfrom entanglement. Each is stated so that it can be decided by a proof or by an\nexplicit counterex",
+      "quality_score": 0.87,
+      "sorry_count": 0,
+      "theorem_count": 135,
+      "timestamp": "2026-08-16T19:34:06",
+      "title": "Emergent Spacetime from Quantum Entanglement"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "0763cd86",
-      "domain": "Computation",
-      "key_insight": "# Future Directions\n\nDerived from the results proved in this research thread.\n\n## Formalized so far (all statements below are proved, with no `sorry`)\n\n* `Catalog/Computation/InformationGeometry/Fishe",
-      "quality_score": 0.686,
-      "sorry_count": 0,
-      "theorem_count": 536,
-      "timestamp": "2026-08-05T22:29:11",
-      "title": "Future directions from cycle 4be361b7"
-    },
     {
       "cycle_id": "5b6f1a1d",
       "domain": "Geometry",
@@ -2501,27 +2491,19 @@
       "theorem_count": 884,
       "timestamp": "2026-08-16T19:33:55",
       "title": "Teichmuller-Moduli: Analytic Structure of Riemann Surface Space"
+    },
+    {
+      "cycle_id": "81aa12f0",
+      "domain": "Novelty",
+      "key_insight": "# Future directions\n\nFive falsifiable conjectures produced by this cycle of work on emergent geometry\nfrom entanglement. Each is stated so that it can be decided by a proof or by an\nexplicit counterex",
+      "quality_score": 0.87,
+      "sorry_count": 0,
+      "theorem_count": 135,
+      "timestamp": "2026-08-16T19:34:06",
+      "title": "Emergent Spacetime from Quantum Entanglement"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "9c680c24",
-      "domain": "Tropical",
-      "name": "eosVec_le_of_le",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "802e1378",
-      "domain": "NumberTheory",
-      "name": "probIndep_eq_prod",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "802e1378",
-      "domain": "NumberTheory",
-      "name": "one_sub_sum_le_prod_one_sub",
-      "quality": 0.72
-    },
     {
       "cycle_id": "66af3cc3",
       "domain": "NumberTheory",
@@ -2803,9 +2785,27 @@
       "domain": "Geometry",
       "name": "clusterGraph_indepNum_le",
       "quality": 0.91
+    },
+    {
+      "cycle_id": "81aa12f0",
+      "domain": "Novelty",
+      "name": "Sw_empty",
+      "quality": 0.87
+    },
+    {
+      "cycle_id": "81aa12f0",
+      "domain": "Novelty",
+      "name": "Sw_subadditive",
+      "quality": 0.87
+    },
+    {
+      "cycle_id": "81aa12f0",
+      "domain": "Novelty",
+      "name": "Sw_strong_subadditive",
+      "quality": 0.87
     }
   ],
-  "last_updated": "2026-08-16T19:33:55",
+  "last_updated": "2026-08-16T19:34:06",
   "open_questions": [
     {
       "context": "This file gives a **complete, self-contained proof** of that theorem (0 `sorry`s).",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "c80347ac",
-        "quality": 0.82,
-        "theorems": 73,
-        "title": "EMPIRICAL-DEGREE: the factoring function is spectrally flat — no low-degree pari"
-      },
-      {
         "cycle_id": "eaebe17a",
         "quality": 0.9,
         "theorems": 14,
@@ -3637,6 +3631,12 @@
         "quality": 0.85,
         "theorems": 105,
         "title": "Alien Mathematics: Non-Standard Arithmetic"
+      },
+      {
+        "cycle_id": "81aa12f0",
+        "quality": 0.87,
+        "theorems": 135,
+        "title": "Emergent Spacetime from Quantum Entanglement"
       }
     ],
     "NumberTheory": [

@@ -19977,11 +19977,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "286b3a0e",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -19994,7 +19994,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0792",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-08-16T19:34:33.497339+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -20009,7 +20009,7 @@
       "source": "",
       "source_exp_id": "09a3e4f4",
       "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/09a3e4f4",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "th_1c6791ee",
       "timestamp": "2026-07-28T12:21:03.386066+00:00",
       "title": "`Catalog/Novelty/MonsterMoonshineBridge.lean` proves a rigorous cross-domain bri"
@@ -37176,7 +37176,7 @@
       "depth_estimate": 3,
       "description": "# FUTURE DIRECTIONS — TRACEPROFILE (Paper 50 / Experiment 385)\n\nThe verified results of this cycle are in `Catalog/Novelty/TraceProfile*.lean`:\n\n* `TraceProfileLowBits.lean` — the exact low bit `s₁ = 1 - N₁`, its `3/4` failure at\n  bit 2, and the fact that the visible bit is a function of `N mod 4` alone.\n* `TraceProfileTraceSet.lean` — the trace set `S_R(N) = {x+y : xy = N}`, its ring\n  isomorphism invariance, CRT multiplicativity, the exact prime-field size\n  `2|S_p(N)| = p + χ_p(N)`, and the joint law\n  `∏(p-1) ≤ 2^{ω} |S_M(N)| ≤ ∏(p+1)`.\n* `TraceProfileFactorInvisible.lean` — `I(p mod q ; N mod q) = 0` as an exact\n  product rule, the failure of that product rule for the trace at `q = 5`, and the\n  size contrast `|S_q(N)| < |factorSet_q(N)| = q - 1`.\n* `TraceProfileCharacterArity.lean` — the discriminant description of `S_q(N)`, the\n  identification of the visible bit with the Legendre symbol, the `k`-factor low-bit\n  law, and the arity-2/arity-3 dichotomy.\n* `TraceProfilePinningBarrier.lean` — the counting barrier: congruence data leaves\n  `≳ N/2^{ω}` candidate traces in the window `[1, N]`.\n\nBelow are the next-cycle conjectures they suggest.  Each is falsifiable by a finite\ncomputation at a specific prime.\n\n---\n\n## C1.  The trace set is a complete invariant of the modulus\n\n**Conjecture.**  For every odd prime `p` and all `N, N' ∈ 𝔽_p^×`,\n`S_p(N) = S_p(N')` implies `N = N'`.\n\n*Status.* Verified for `p ≤ 41` computationally; formally verified at `p = 13`\n(`traceSet_injective_thirteen`).\n\n*The key insight is* that `S_p(N) = {s : χ(s² - 4N) ≠ -1}` is the \"non-residue\nlocus\" of the quadratic pencil `s² - 4N`, and two such loci coincide only if the\npencils agree: the overlap `|S_p(N) ∩ S_p(N')|` is a two-variable character sum\nequal to `p/4 + O(√p)` for `N ≠ N'`, whereas equality would force `p/2 + O(1)`.\n\n*Why now?*  The Legendre-symbol identification proved in this cycle\n(`two_mul_card_traceSet_eq_add_legendreSym`) shows the *size* of `S_p(N)` sees only\n`χ_p(N)`; C1 says the *set* sees everything.  That gap is precisely the information\nthat a residue attack fails to convert into factors, and pinning it down turns the\nqualitative verdict \"the trace is the least hidden invariant\" into a theorem about\nhow much is hidden.\n\n## C2.  The arity-3 collapse has threshold exactly 11\n\n**Conjecture.**  For every prime `p ≥ 11` and every `N ∈ 𝔽_p^×`,\n`{x + y + z : xyz = N} = 𝔽_p`; and `p = 3, 5, 7` are the only exceptions.\n\n*Status.* Verified for `p ≤ 19`; formally verified at `p = 11`\n(`tripleSumSet_full_eleven`) with the exception at `p = 5` also formal\n(`tripleSumSet_not_full_five`).\n\n*The key insight is* that `s` is a three-factor sum iff the quartic\n`w² = z²(s-z)² - 4Nz` has a point with `z ≠ 0`; this is a genus-1 curve, so the\nHasse–Weil bound gives `p + O(√p)` points and forces solvability once\n`p ≥ 11`.\n\n*Why now?*  It isolates exactly *why* the trace is special: the two-factor\nconstraint is a conic (one quadratic condition, one bit), the three-factor\nconstraint is an elliptic curve (no condition at all beyond small `p`).  Formalising\nit would need a Hasse-type bound for a specific quartic family — a realistic\ntarget, since the family is completely explicit.\n\n## C3.  The visible bits are exactly the Jacobi symbols — no more\n\n**Conjecture.**  Let `M` be squarefree odd and coprime to `N`.  Then the trace set\n`S_M(N)` is determined by, and determines, the tuple of Legendre symbols\n`(χ_p(N))_{p ∣ M}` *together with* `N mod M`; and the *size* `|S_M(N)|` is\ndetermined by the Jacobi symbol data alone:\n`2^{ω(M)} |S_M(N)| = ∏_{p ∣ M} (p + χ_p(N))`.\n\n*Status.* The size formula follows from `card_traceSet_prime` plus\n`traceNat_primorial` (both proved); the \"no more\" half — that no function of\n`S_M(N)` beyond the character tuple is computable in polynomial time from `N` — is\nopen.\n\n*The key insight is* that every bit the trace exposes to a congruence battery is a\nvalue of a quadratic character of the *public* modulus, hence computable by\nreciprocity in polynomial time from `N` alone; a leak would have to come from the\n*joint* distribution across primes, which the CRT factorisation of the trace set\nrules out.\n\n*Why now?*  This is the exact information-theoretic form of Barrier 2, and it is\nnow within reach: multiplicativity and the prime-level formula are theorems, so\nonly the \"no residual information\" half remains.\n\n## C4.  Quantitative pinning threshold\n\n**Conjecture.**  For a semiprime `N = pq` and a squarefree odd `M` coprime to `N`,\nthe number of `t ∈ [1, N]` with `t mod M ∈ S_M(N)` is\n`(1 + o(1)) · N · 2^{-ω(M)} · ∏_{p ∣ M}(1 + χ_p(N)/p)`,\nand in particular a congruence battery must use `ω(M) ≥ log₂ N - O(1)` primes before\na single candidate trace remains.\n\n*Status.* The lower bound `≥ (∏(p-1)/2^{ω}) (N/M - 1)` is proved\n(`trace_pinning_barrier`); the matching upper bound and the `o(1)` are open.\n\n*The key insight is* that the surviving set is a union of `|S_M|` full residue\nclasses, so its density is *exactly* `|S_M|/M` up to boundary terms — the only\nquestion is the boundary, which is `O(|S_M|)` and hence negligible when `M ≪ N`.\n\n*Why now?*  With the lower bound formal, the upper bound is elementary counting;\ntogether they would give the first fully formal statement of the shape \"residue\ninformation about the trace is worth `ω` bits and the search space is `log₂ N`\nbits\", i.e. a proved (not measured) version of the paper's verdict.\n\n## C5.  Higher symmetric functions of a semiprime are congruence-free\n\n**Conjecture.**  For an odd prime `q` and `N ∈ 𝔽_q^×`, the *difference* invariant\n`D_q(N) = {x - y : xy = N}` satisfies `|D_q(N)| = (q + χ_q(-N))/2`, and the pair\n`(S_q(N), D_q(N))` determines the unordered factor pair modulo `q` but never the\nordered one — so no symmetric residue observable can break the `p ↔ q` symmetry.\n\n*Status.* Open; the size claim follows the same discriminant computation\n(`x - y` has `(x-y)² = s² - 4N` replaced by `(x+y)² = d² + 4N`), so it should be\nprovable by the method of `card_traceSet_prime`.\n\n*The key insight is* that the swap `x ↔ y` acts on every factorisation datum, and\nthe trace and the difference generate the whole invariant ring of that action; a\ncongruence attack therefore lives on the quotient, where `p` and `q` are\nindistinguishable by construction.\n\n*Why now?*  `card_traceSet_prime` already contains all the machinery (the involution\n`x ↦ N/x`, the degenerate-fibre count), so C5 is a short extension that closes the\n\"never isolate `p` or `q`\" clause of the verdict at the same level of rigour as the\nrest.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "NumberTheory",
         "Algebra"
@@ -39401,7 +39401,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\nConjectures generated by the results in `Catalog/Novelty/Nonstandard*.lean`.\nEach is falsifiable: it is either provable in Lean or refutable by an explicit\ngerm-level counterexample.\n\n## Conjecture 1 (Saturation ⇒ nonstandard compactness for internal families)\n\n*Every countable family of internal subsets of `HyperNat` with the finite\nintersection property has an internal set contained in all of them* — not just\na common element, as proved in `countable_saturation`.  Equivalently, the\ninternal sets form a countably compact family closed under internal\nintersections indexed by a hypernatural.\n\n**The key insight is** that the diagonal depth function `Nat.findGreatest` used\nin `countable_saturation` already produces an *internal* object, namely the\ngerm of the finite intersections `⋂_{k ≤ depth i} A_k(i)`; making this precise\nturns countable saturation into a statement about internal families indexed by\nan unlimited hypernatural, i.e. into genuine \"hyperfinite compactness\".\n\n**Why now?** The diagonal witness and the internal-set API already exist in the\nproject; only the indexing by an unlimited element is missing, and\n`exists_mem_iInter_of_decreasing` shows the decreasing case is already in reach.\n\n## Conjecture 2 (Primes are dense on the *multiplicative* scale) — *twice revised*\n\nTwo successive versions of this conjecture are now **refuted** in\n`Catalog/Novelty/NonstandardPrimeGaps.lean`: \"every galaxy contains a\nhyperprime\" fails (`exists_primeFree_galaxy`), and even \"prime-carrying\ngalaxies are dense\" fails (`no_prime_galaxy_between`: no galaxy strictly\nbetween `[i!]` and `[i! + i]` carries a prime).  Additive scales are therefore\nthe wrong invariant.  The surviving conjecture is multiplicative:\n\n*Call `H` and `K` **commensurable** when `H ≤ K ^ n` and `K ≤ H ^ n` for some\nstandard `n`.  Then every commensurability class of unlimited hypernaturals\ncontains a hyperprime.*\n\n**The key insight is** that Bertrand's postulate produces a prime in every\ninterval `(x, 2x)` pointwise, and `[x]` and `[2x]` are always commensurable\neven though they are typically in different galaxies — so the multiplicative\nscale is exactly the resolution at which the prime distribution becomes\nuniform, while the additive (galaxy) scale is too fine.\n\n**Why now?** Mathlib has Bertrand's postulate, the germ-level machinery for\ncommensurability is a direct variant of `SameGalaxy`, and the two refutations\nabove pin down precisely why the additive version fails.\n\n## Conjecture 3 (Galaxy order type is that of a nonstandard model of PA)\n\n*The quotient of `HyperNat` by `SameGalaxy` is a dense linear order without\nendpoints above its least element, and it is order-isomorphic to a quotient of\nsize exactly `𝔠`.*  We proved density (`far_dense`), unboundedness\n(`far_no_max`, `exists_far_below_of_isUnlimited`) and least element\n(`far_standard_iff_isUnlimited`); what remains is the cardinality of the\nquotient and, under CH, the isomorphism type `ℕ + η·𝔠`.\n\n**The key insight is** that `mk_hyperNat = 𝔠` bounds the quotient from above,\nwhile the slope family `floorSlope r` already realises pairwise-far germs for\nmultiplicatively independent slopes, giving a continuum-sized antichain of\ngalaxies directly.\n\n**Why now?** Both ingredients (`floorSlope_lt` and the galaxy API) exist; the\nonly new work is proving `Far (floorSlope r) (floorSlope s)` fails for\n`s/r` bounded and holds otherwise.\n\n## Conjecture 4 (Nonstandard proof of infinite Ramsey)\n\n*Ramsey's theorem for pairs has a nonstandard proof of the same shape as\n`infinite_pigeonhole`: fix an unlimited `H`, colour each standard `n` by the\ncolour of the pair `{n, H}`, apply the finite pigeonhole for ultrafilters\n(`hyperfilter_eventually_const`), and iterate.*\n\n**The key insight is** that `hyperfilter_eventually_const` converts a colouring\ninto an eventually constant one, which is precisely the \"type of `H` over the\nstandard part\" — the nonstandard substitute for the usual recursive\nconstruction of a homogeneous set.\n\n**Why now?** The two ingredients used in the classical nonstandard proof\n(`infinite_iff_exists_unlimited_mem` and `hyperfilter_eventually_const`) are\nnow available and were exactly what made `infinite_pigeonhole` a three-line\nargument.\n\n## Conjecture 5 (Internal sets are exactly the ones satisfying transfer)\n\n*A subset `S ⊆ HyperNat` is internal if and only if both quantifier transfer\nlaws hold for it, i.e. iff `S` and its complement satisfy the conclusion of\n`forall_internalMem_iff`/`exists_internalMem_iff` relative to every internal\nfamily.*  Combined with `standard_not_internal` and `unlimited_not_internal`\nthis would give a purely combinatorial test for internality.\n\n**The key insight is** that the choice-based counterexample germ built in\n`forall_internalMem_iff` is canonical: it produces, from any non-internal\nfamily, a germ witnessing the failure of transfer, so failure of transfer\nshould be *equivalent* to non-internality rather than merely implied by it.\n\n**Why now?** The two transfer laws are proved, and the two known external sets\n(the standard cut, the unlimited part) provide immediate test cases for a\nfalsification attempt.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Combinatorics",
         "NumberTheory"
@@ -41142,14 +41142,14 @@
       "parent_direction": "",
       "priority_score": 0.9,
       "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
+      "prune_reason": "tournament_rejected: ",
+      "pruned_at": "2026-08-16T19:34:08Z",
       "quarantined_until": "",
       "research_mode": "team",
       "source": "",
       "source_exp_id": "4ae649eb",
       "source_path": "PAC-Bayes Bounds: Information-Theoretic Generalization",
-      "status": "available",
+      "status": "pruned",
       "thread_id": "",
       "timestamp": "2026-08-02T18:22:37.383512+00:00",
       "title": "Deepening: PAC-Bayes Bounds: Information-Theoretic Generalization"
@@ -42155,7 +42155,7 @@
       "title": "Deepening: The Residue-Leakage Curve and the Dirichlet No-Pruning Theorem, Closed"
     },
     {
-      "ambition_level": "extension",
+      "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
       "attempt_count": 0,
@@ -42180,7 +42180,7 @@
       "lineage_refs": [],
       "outcome_quality": 0.0,
       "parent_direction": "",
-      "priority_score": 0.8916099999999999,
+      "priority_score": 0.9,
       "proof_strategy": "",
       "prune_reason": "",
       "pruned_at": "",
@@ -44782,14 +44782,14 @@
       "parent_direction": "",
       "priority_score": 0.8913999999999999,
       "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
+      "prune_reason": "tournament_rejected: ",
+      "pruned_at": "2026-08-16T19:34:08Z",
       "quarantined_until": "",
       "research_mode": "team",
       "source": "",
       "source_exp_id": "dd55976d",
       "source_path": "Category-Theoretic Neural Architectures",
-      "status": "available",
+      "status": "pruned",
       "thread_id": "",
       "timestamp": "2026-08-02T09:30:03.262439+00:00",
       "title": "Deepening: Category-Theoretic Neural Architectures"
@@ -59252,7 +59252,7 @@
       "catalog_references": [],
       "category": "famous_subtask",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "81aa12f0",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -59281,7 +59281,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "",
       "title": "Emergent Spacetime from Quantum Entanglement"
@@ -62941,7 +62941,7 @@
       "depth_estimate": 3,
       "description": "Cycle c94236ec (Q=0.920) proved 226 theorems in Novelty but left 2 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: ## SPLIT-COUNT-LAW (round-20 #2, experiment 409, assessment v185, paper 74)\n\n**The complete symmetric fork channel is the split-count, and it beats the OR cap.** Papers 71–73 characterized the OR proj",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Novelty"
       ],
@@ -63294,7 +63294,6 @@
     "famous_subtask",
     "famous_subtask",
     "famous_subtask",
-    "famous_subtask",
     "abduction_followup",
     "cross_domain_bridge",
     "cross_domain_bridge",
@@ -63307,6 +63306,7 @@
     "famous_subtask",
     "famous_subtask",
     "cross_domain_bridge",
+    "abduction_followup",
     "abduction_followup"
   ]
 }

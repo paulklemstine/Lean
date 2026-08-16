@@ -124,6 +124,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle b3704634 (Q=0.910), which proved 884 theorems in Geometry. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalizes the foundations of Teichm\u00fcller theory: the Teichm\u00fcller space of marked Riemann surfaces, the Teichm\u00fcller metric defined by extremal quasi-conformal maps, and the action of the mapping class group whose quotient is the moduli space.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "push_b3704634_dfd6ea73",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "b3704634",
+    "status": "available",
+    "timestamp": "2026-08-16T19:33:56.483285+00:00",
+    "title": "Deepening: Teichmuller-Moduli: Analytic Structure of Riemann Surface Space"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Formally proves conditions under which information can exist purely within a closed timelike curve loop without ever having an initial origin (Ontological Paradox).",
     "domains": [
       "Physics"
@@ -1652,17 +1666,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "Nonarchimedean-Tropicalization: Berkovich Fibers of Subvarieties"
   },
   {
-    "consumed_by_exp_id": "b3704634",
+    "consumed_by_exp_id": "",
     "description": "Formalizes the foundations of Teichm\u00fcller theory: the Teichm\u00fcller space of marked Riemann surfaces, the Teichm\u00fcller metric defined by extremal quasi-conformal maps, and the action of the mapping class group whose quotient is the moduli space.",
     "domains": [
       "Geometry"
     ],
     "id": "fd_1209",
-    "phase": "A",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "human_brainstorm_2026-08-12",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-13T03:21:16.243998+00:00",
     "title": "Teichmuller-Moduli: Analytic Structure of Riemann Surface Space"
   },
@@ -1741,17 +1754,17 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle 4ae649eb (Q=0.792), which proved 35 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that PAC-Bayes generalization bounds can be expressed in terms of the mutual information between the training data and the learned hypothesis. Formalize the connection between compression, information, and generalization. Show that shorter description lengths imply better generalization.",
+    "description": "Building on cycle 67548200 (Q=0.792), which proved 34 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: A cellular automaton (CA) rule f: A^Z -> A^Z is a function from configurations to configurations. The CA is reversible if f is bijective. By Hedlund's theorem, a CA is reversible iff its local rule is a permutation. But which CA rules have reversible dynamics? Conjecture: the set of reversible CA ru",
     "domains": [
-      "MachineLearning"
+      "Novelty"
     ],
-    "id": "push_4ae649eb_c81b44fe",
+    "id": "push_67548200_2df4faa1",
     "priority_score": 0.9,
     "research_mode": "team",
-    "source_exp_id": "4ae649eb",
+    "source_exp_id": "67548200",
     "status": "available",
-    "timestamp": "2026-08-02T18:22:37.383512+00:00",
-    "title": "Deepening: PAC-Bayes Bounds: Information-Theoretic Generalization"
+    "timestamp": "2026-07-30T14:40:38.463626+00:00",
+    "title": "Deepening: Galois Theory of Cellular Automata: Which Rules Have Reversible Dynamics?"
   },
   {
     "consumed_by_exp_id": "",
@@ -1766,34 +1779,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-29T17:48:52.827384+00:00",
     "title": "Deepening: Noether's Theorem: Symmetries and Conservation Laws"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 67548200 (Q=0.792), which proved 34 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: A cellular automaton (CA) rule f: A^Z -> A^Z is a function from configurations to configurations. The CA is reversible if f is bijective. By Hedlund's theorem, a CA is reversible iff its local rule is a permutation. But which CA rules have reversible dynamics? Conjecture: the set of reversible CA ru",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_67548200_2df4faa1",
-    "priority_score": 0.8916099999999999,
-    "research_mode": "team",
-    "source_exp_id": "67548200",
-    "status": "available",
-    "timestamp": "2026-07-30T14:40:38.463626+00:00",
-    "title": "Deepening: Galois Theory of Cellular Automata: Which Rules Have Reversible Dynamics?"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle dd55976d (Q=0.791), which proved 15 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize neural network architectures as morphisms in a monoidal category. Prove that ResNet skip connections are categorical products, attention is a natural transformation, and architecture search is optimization in a functor category.",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "push_dd55976d_9862dd5d",
-    "priority_score": 0.8913999999999999,
-    "research_mode": "team",
-    "source_exp_id": "dd55976d",
-    "status": "available",
-    "timestamp": "2026-08-02T09:30:03.262439+00:00",
-    "title": "Deepening: Category-Theoretic Neural Architectures"
   },
   {
     "consumed_by_exp_id": "",
@@ -6692,7 +6677,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Reinforcement Learning: Convergence of Policy Gradient Methods"
   },
   {
-    "consumed_by_exp_id": "81aa12f0",
+    "consumed_by_exp_id": "",
     "description": "Prove that the geometry of spacetime can be reconstructed from the entanglement structure of a quantum state. Formalize the ER=EPR conjecture: show that entangled qubit pairs satisfy the properties of microscopic Einstein-Rosen bridges in a toy AdS/CFT model.",
     "domains": [
       "Physics",
@@ -6700,11 +6685,10 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "id": "seed_335",
-    "phase": "A",
     "priority_score": 0.82,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "",
     "title": "Emergent Spacetime from Quantum Entanglement"
   },
@@ -14109,17 +14093,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "every rule and small period `n` with kernel-checked finite enumeration."
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "286b3a0e",
     "description": "# Future Directions: Moonshine Beyond the j-Function\n\n## Verified connector\n\n`Catalog/Novelty/MonsterMoonshineBridge.lean` proves a rigorous cross-domain bridge between\nfinite-group character theory and formal generating functions.\n\nFor a finite group `G` acting on each finite grade `X n`, define the coefficient of the series\nattached to `g` to be the number of points in `X n` fixed by `g`. The file proves:\n\n\\[\n  \\sum_{g\\in G} |(X_n)^g| = |G|\\,|X_n/G|\n\\]\n\nfor every `n`, and consequently the coefficientwise q-series identity\n\n\\[\n  \\sum_{g\\in G} T_g(q) = |G|\\,O(q),\n  \\qquad O(q)=\\sum_{n\\ge0}|X_n/G|q^n.\n\\]\n\nIt also proves that every coefficient, and hence every whole series `T_g`, is invariant under\nconjugacy. Thus these element-indexed series genuinely descend to conjugacy-class data. The\naverage coefficient is exactly the number of orbits. This is Burnside's orbit-counting theorem\nlifted grade-by-grade to a formal q-expansion, connecting character values with enumerative\ngenerating functions without imposing unjustified analytic hypotheses.\n\n## Why the proposed product claim was not asserted\n\nThe mission's much stronger product claim should not be treated as an established consequence\nof monstrous moonshine. Several issues must first be resolved:\n\n1. Standard McKay\u2013Thompson series are normalized with leading term `q\u207b\u00b9`. A product of 194\n   class representatives therefore begins with `q\u207b\u00b9\u2079\u2074`, so it is generally meromorphic at the\n   cusp rather than a holomorphic modular form as stated.\n2. If \u201cproduct over all `g in M`\u201d literally means all Monster elements, its leading term is\n   `q^{-|M|}`. If it means one representative of each conjugacy class, it is a different\n   product. These formulations cannot be interchanged.\n3. The series have different invariance groups (often genus-zero groups involving\n   Atkin\u2013Lehner extensions). A product is modular only after specifying a common subgroup,\n   compatible multipliers, cusp behavior, and a coherent notion of weight.\n4. McKay\u2013Thompson series are modular **functions**, normally of weight zero. Multiplying them\n   does not produce weight `|M|/24`; moreover `|M|/24` is not the weight naturally supplied by\n   the moonshine theorem.\n5. Character values are recovered grade by grade from the family of traces and the Monster\n   character table. A single product loses information in general, so the claim that it\n   determines the complete character table, element order, and maximal-subgroup structure\n   requires a separately specified injective reconstruction map.\n\nAccordingly, claiming the requested product theorem would encode an unsupported\u2014and in its\nliteral normalization, incompatible\u2014statement. The formal result supplied here captures the\nvalid additive relationship between all trace/fixed-point series and orbit enumeration.\n\n## Computational evidence decision\n\nA separate computational-evidence file was intentionally omitted because the requested output\npermits only `.lean` files and `FUTURE_DIRECTIONS.md`. More importantly, the connector is proved\nfor every finite group, every graded finite action, and every coefficient; checking selected\nsmall cases would be logically weaker than the completed theorem. The proof is not a\n`native_decide` calculation. The concrete Monster request for 194 \u00d7 100 coefficients would\nalso require an external certified dataset containing the Monster character table and the\nnormalized McKay\u2013Thompson coefficients, neither of which is present in this project.\n\n## Concrete next steps\n\n1. Formalize complex-valued graded characters `tr(g | V_n)` and prove conjugacy invariance by\n   trace invariance under similarity.\n2. Define Laurent q-series with the standard `q\u207b\u00b9 + O(q)` normalization and formalize the pole\n   order of finite products. This will make the normalization obstruction precise.\n3. Import a provenance-checked table of Monster irreducible characters and the 194 normalized\n   McKay\u2013Thompson series; verify coefficient decompositions by exact integer arithmetic.\n4. State modularity separately for each class, with its actual moonshine group and multiplier.\n5. Investigate information-preserving aggregates\u2014such as the full vector-valued family or a\n   labeled generating function\u2014rather than an unlabeled scalar product that discards data.\n",
     "domains": [
       "Pythagorean",
       "Bridges"
     ],
     "id": "fd_0792",
+    "phase": "A",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "09a3e4f4",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-28T12:21:03.386066+00:00",
     "title": "`Catalog/Novelty/MonsterMoonshineBridge.lean` proves a rigorous cross-domain bri"
   },
@@ -18616,6 +18601,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-16T16:42:48.416689+00:00",
     "title": "Everything below is derived from the theorems proved in"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\nDerived from the analysis and adversarial review of the verified results in\n`Catalog/Geometry/Teichmuller/`:\n\n* `LinearQC.lean` \u2014 the algebra of quasiconformal dilatations of real-linear maps;\n* `TorusSpace.lean` \u2014 the extremal affine map and `d_T = d_\u210d/2`;\n* `ModuliSpace.lean` \u2014 the mapping class group action, the moduli pseudometric, the two orbifold\n  points and the cusp;\n* `TranslationLength.lean` \u2014 the exact displacement identity and Anosov translation lengths;\n* `Geodesic.lean` \u2014 the stretch line as a unit-speed geodesic;\n* `Systole.lean` \u2014 the systolic bound and Hermite's constant `\u03b3\u2082 = 2/\u221a3`;\n* `ConeSeparation.lean` \u2014 the metric separation of the two cone points;\n* `ProperAction.lean` \u2014 proper discontinuity of `SL(2, \u2124)` on `\u210d`, attainment of the infimum\n  defining `moduliDist`, and `moduliDist \u03c4 \u03c4' = 0 \u2194` same orbit;\n* `SystoleFunctional.lean` \u2014 the systolic functional `sys` as an attained minimum, its\n  invariance, `sys \u03c1 = 2/\u221a3`, `sys i = 1`, its Lipschitz estimate on the moduli space, and the\n  infinite diameter of the moduli space;\n* `LengthSpectrum.lean` \u2014 the complete determination of the Teichm\u00fcller length spectrum;\n* `CuspExhaustion.lean` \u2014 `sys w = 1/Im w` on the whole fundamental domain, the two-sided\n  comparison `|moduliDist \u03c1 \u03c4 \u2212 \u00bd log (1/sys \u03c4)| \u2264 \u00bd log 5`, and properness of the exhaustion;\n* `MahlerCompactness.lean` *(new)* \u2014 continuity of `sys`, compactness of the thick part\n  (Mahler's criterion) and properness of the moduli space;\n* `SecondMinimum.lean` *(new)* \u2014 the determinant inequality, the collar lemma, uniqueness of the\n  shortest geodesic on the thin part, and Minkowski's second theorem `1 \u2264 \u03bb\u2081\u03bb\u2082 \u2264 4/3` with both\n  bounds attained;\n* `SuccessiveMinima.lean` *(new)* \u2014 the second successive minimum `sys2` as an attained,\n  mapping-class-group-invariant function on the moduli space, realized simultaneously with the\n  systole, with `1 \u2264 sys \u00b7 sys2 \u2264 4/3`, the closed formula `sys w \u00b7 sys2 w = |w|\u00b2/(Im w)\u00b2` on\n  the fundamental domain, and the exact determination of both extremal loci: the product equals\n  `4/3` precisely on the orbit of the hexagonal torus and `1` precisely on the rectangular\n  locus.\n\n## Status of the previous cycles' conjectures\n\n| | statement | status |\n|---|---|---|\n| **C1 / D1** | Royden rigidity from the dilatation axioms | **open** \u2014 restated as **E1** below |\n| **C2** | spectral hierarchy for Anosov translation lengths | **closed** \u2014 `mem_lengthSpectrum_iff`, `spectrumValue_strictMonoOn`, `finite_lengthSpectrum_le`, `lengthSpectrum_unbounded`, `isLeast_lengthSpectrum`, `spectrumValue_gap_lt`, `setOf_spectrumValue_le` / `card_spectrumValue_le` |\n| **C3 / D4** | the systolic ratio is a proper exhaustion of the moduli space | **closed** \u2014 the metric half by `abs_moduliDist_rho_sub_half_log_le` and `sys_proper_exhaustion` (`CuspExhaustion.lean`), the topological half by `continuous_sys`, `isCompact_fdThick`, `mahler_compactness` and `isCompact_moduliBall` (`MahlerCompactness.lean`) |\n| **C4** | properness of the action and metricity of the quotient | **closed** \u2014 `finite_smul_dist_le`, `finite_stabilizer`, `exists_moduliDist_eq`, `moduliDist_eq_zero_iff` |\n| **C5 / D5** | higher genus: dimension `6g\u22126` and the geodesic flow | **open** \u2014 restated as **E5** below |\n| **D2, D3** | prime geodesic theorem and class-number multiplicities | **open** \u2014 merged into **E2** below |\n| **D4a** | a minimising translate exists inside the fundamental domain | **closed** \u2014 `moduliDist_rho_le_log_sys` realises the minimiser via `ModularGroup.exists_smul_mem_fd`, and `exists_smul_mem_moduliBall` upgrades it to the compactness statement |\n\nThe conjectures below are the next cycle: each is falsifiable, each is stated so that a Lean\nformalization could confirm or refute it, and each is out of reach of the current files by one\nidentifiable step.\n\n## E1. Royden rigidity and the Kobayashi normalization\n\n**Conjecture.** Let `\u03a6` be any function on the group of orientation-preserving nonsingular\nreal-linear maps of `\u2102` that is submultiplicative (`\u03a6(f \u2218 g) \u2264 \u03a6(f) + \u03a6(g)`), inverse-invariant\n(`\u03a6(f\u207b\u00b9) = \u03a6(f)`), vanishes exactly on the conformal maps, and is invariant under pre- and\npost-composition by conformal maps.  Then the induced distance on `SL(2,\u211d)/SO(2) \u2245 \u210d` is a\npositive multiple of `teichDist`; with the normalization fixed by `teichDist_eq_half_dist` it\ncoincides with the Kobayashi pseudodistance of `\u210d`, so every holomorphic self-map of the\nTeichm\u00fcller space of the torus is `1`-Lipschitz for `teichDist`.\n\n*The key insight is* that `dil_comp_le`, `dil_inv` and `dil_eq_one_iff` already form a complete\nmetric axiom system, and the factor `1/2` of `teichDist_eq_half_dist` is exactly the\nSchwarz\u2013Pick normalization turning the Poincar\u00e9 metric into the Kobayashi metric \u2014 so Royden's\ntheorem for the torus should be pure algebra plus transitivity of the `GL\u207a(2,\u211d)` action on\npairs, with no analysis at all.\n*Why now?* All three axioms and the rescaling constant are theorems in `LinearQC.lean` and\n`TorusSpace.lean`; `ProperAction.lean` supplies the rigidity input on the discrete side (finite\nstabilizers) and `MahlerCompactness.lean` now supplies the topological input (properness), so\nonly the homogeneity statement **E1a** and a normalization lemma remain.\n\n## E2. Multiplicities in the length spectrum: from lengths to class numbers\n\n**Conjecture.** For `n \u2265 3` the number of conjugacy classes of `SL(2, \u2124)` whose Teichm\u00fcller\ntranslation length equals `\u2113(n) = log((n+\u221a(n\u00b2\u22124))/2)` is finite and equals the class number\n`h(n\u00b2\u22124)` of binary quadratic forms of discriminant `n\u00b2\u22124`; consequently the number of closed\nTeichm\u00fcller geodesics of length at most `L` is asymptotic to `e^{2L}/(2L)`, while the number of\ndistinct *lengths* below `L` is exactly `\u230a2 cosh L\u230b \u2212 2 \u223c e^L` (already proved,\n`card_spectrumValue_le`).\n\n*The key insight is* that `mem_lengthSpectrum_iff` shows the length sees the mapping class only\nthrough its trace, so the fibre of the length function is the set of integral matrices with a\nfixed characteristic polynomial \u2014 a torsor under the unit group of the associated real quadratic\norder, whose orbit count is by definition a class number.  All of the analytic difficulty of the\nprime geodesic theorem for the modular surface therefore sits in the multiplicity, not in the\ngeometry.\n*Why now?* The length side is completely formalized and the geometric input is discharged\n(`exists_spectrumValue_eq`, `setOf_spectrumValue_le`, `finite_lengthSpectrum_le`), so what is\nleft is a purely arithmetic counting statement about `SL(2, \u2124)`-conjugacy of integral matrices\nwith given trace.\n\n## E3 (closed in this cycle). The hexagonal torus is the unique maximizer\n\n**Conjecture, now a theorem.** Define `P \u03c4 = \u03bb\u2081(\u03c4) \u00b7 \u03bb\u2082(\u03c4)`, the product of the two successive minima of the\nunimodular lattice of the marked torus `\u03c4` (`SecondMinimum.lean` proves `1 \u2264 P \u03c4 \u2264 4/3`).  Then\n`P` is a continuous mapping-class-group-invariant function on the moduli space, `P \u03c4 = 4/3`\nholds **only** on the orbit of `\u03c1`, and `P \u03c4 = 1` holds **exactly** on the orbit of the\nrectangular locus `{i y : y \u2265 1}`.  In particular `P` is a second, independent proper\n\"shape coordinate\" and the pair `(sys, P)` separates the two orbifold points.\n\n*The key insight was* that inside the standard fundamental domain the product collapses to the\nclosed formula `P w = |w|\u00b2 / (Im w)\u00b2`, so both extremal statements become the elementary\ninequalities `|w|\u00b2 \u2264 (4/3)(Im w)\u00b2` (with equality only at the two corners `\u03c1`, `\u03c1+1`) and\n`|w|\u00b2 \u2265 (Im w)\u00b2` (with equality only when `Re w = 0`) \u2014 the entire moduli-theoretic content is\nreduction theory, which is already available through `ModularGroup.exists_smul_mem_fd` and the\nindex transport `latticeValue_smul_index`.\n*Status.* **Closed.**  `SuccessiveMinima.lean` defines `\u03bb\u2082 = sys2` invariantly (Minkowski's\nformulation), proves that it is attained *together with* the systole (`exists_sys2_eq`), that it\nis a mapping class group invariant (`sys2_smul`), that `1 \u2264 sys \u00b7 sys2 \u2264 4/3`\n(`sys_mul_sys2_mem_Icc`), that `sys2 w = |w|\u00b2/Im w` and `sys w \u00b7 sys2 w = |w|\u00b2/(Im w)\u00b2` on the\nfundamental domain (`sys2_eq_of_fd`, `sys_mul_sys2_of_fd`), and finally the two uniqueness\nstatements `sys_mul_sys2_eq_four_thirds_iff` (product `4/3` iff the torus is equivalent to `\u03c1`)\nand `sys_mul_sys2_eq_one_iff` (product `1` iff it is equivalent to a rectangular torus `i Y`,\n`Y \u2265 1`).  What remains of the original conjecture is only the assertion that the *pair*\n`(sys, sys \u00b7 sys2)` separates points of the moduli space, which is **E3b** below.\n\n## E4. The moduli space of tori has exactly one end\n\n**Conjecture.** For every `0 < \u03b5 \u2264 2/\u221a3` the `\u03b5`-thick part of the moduli space is compact,\nconnected and nonempty, and its complement \u2014 the `\u03b5`-thin part \u2014 is connected; hence the moduli\nspace has exactly one end, and the systolic functional `sys` is an exhaustion whose level sets\n`{sys = \u03b5}` are connected for all small `\u03b5`.  Quantitatively, the thin part is homeomorphic to a\npunctured disc, with `\u2212log sys` as the radial coordinate.\n\n*The key insight is* that compactness of the thick part is now a theorem (`isCompact_fdThick`,\n`mahler_compactness`), and that the collar lemma `collar_lemma` shows the thin part is\nparametrized by the unique short vector (`shortest_unique_of_sys_lt_one`) \u2014 that uniqueness *is*\nthe statement that the thin part has one component per cusp, and the torus has one cusp.\n*Why now?* Both ingredients were missing before this cycle: without continuity of `sys` the\nthick part was not known to be closed, and without uniqueness of the shortest vector the thin\npart could a priori have several components.  Only the connectivity of `\ud835\udc9f \u2229 {Im \u2264 1/\u03b5}` \u2014 a\nconvexity statement in coordinates \u2014 remains.\n\n## E5. Higher genus: quadratic differentials, `6g\u22126`, and Mahler compactness\n\n**Conjecture.** The constructions of this project extend verbatim from `dz\u00b2` on the torus to a\nunit-area holomorphic quadratic differential on a closed surface of genus `g \u2265 2`: the extremal\nmap is affine in the flat structure of the differential, its dilatation defines the Teichm\u00fcller\nmetric, the associated stretch line is a unit-speed geodesic (the analogue of\n`teichDist_stretchLine`), the mapping class group acts properly discontinuously with finite\nstabilizers (the analogue of `finite_smul_dist_le`), the systole is continuous and its\nsuperlevel sets are cocompact (the analogue of `mahler_compactness`), and the resulting space\nhas dimension `6g \u2212 6`.\n\n*The key insight is* that the torus computation never uses global uniformization: it uses only\nthat the extremal map is affine in the flat structure determined by a quadratic differential,\nthat the \"denominator\" quadratic form on the relevant lattice of periods is proper, and that the\nsystole is a `1`-Lipschitz-in-log function of the marked point \u2014 the three ingredients isolated\nin `LinearQC.lean`, `ProperAction.lean` and `MahlerCompactness.lean`.\n*Why now?* The genus-one case is closed end-to-end, including the three facts (properness,\nattainment, compactness of the thick part) that in the classical literature are quoted from\nTeichm\u00fcller's and Mahler's theorems; the higher-genus statement can therefore be attacked by\nreplacing \"affine map of `\u2102` respecting a lattice\" with \"affine map of the flat structure of a\nquadratic differential\", keeping the whole algebra of `LinearQC.lean` unchanged.\n\n## E6. The area of the moduli space and the size of the thick part\n\n**Conjecture.** With respect to the hyperbolic area `dx dy / y\u00b2`, the moduli space of tori has\nfinite total area `\u03c0/3`, and for `0 < \u03b5 \u2264 1` the area of the `\u03b5`-thin part is exactly `1/\u03b5 \u2212 c`\nfor an explicit constant `c`, so\n\n    area {sys \u2265 \u03b5} = \u03c0/3 \u2212 1/\u03b5 + O(1)   as \u03b5 \u2192 0 ,\n\nwith the error term coming only from the two corners of the fundamental domain.  In particular\nthe thick part exhausts the finite total area, and the counting function of `SL(2, \u2124)`-orbits of\ntori with `sys \u2265 \u03b5` inside a ball of radius `R` grows like `area \u00b7 e^{R}`.\n\n*The key insight is* that the compactness statement `isCompact_fdThick` already identifies the\nthick part with the *truncated* fundamental domain `\ud835\udc9f \u2229 {Im \u2264 1/\u03b5}` \u2014 and on that region the\nhyperbolic area integral is elementary, `\u222b dx dy / y\u00b2` over a vertical strip, so the whole\ncomputation reduces to `\u222b_{\u221a(1\u2212x\u00b2)}^{1/\u03b5} dy/y\u00b2` and a single arcsine.\n*Why now?* Before this cycle the thick part was known only up to a metric comparison; now it is\na concrete compact region with explicit boundary (`isCompact_fdThick`, `sys_eq_one_div_im_of_fd`),\nwhich is exactly the input an area computation needs, and Mathlib's integration API can evaluate\nthe resulting one-dimensional integrals.\n\n---\n\n### Three concrete next-cycle sub-conjectures\n\n1. **E3b.** The pair `(sys, sys \u00b7 sys2)` is injective on the moduli space: two marked tori with\n   the same systole and the same successive-minima product are equivalent.  Inside the\n   fundamental domain this says that `(1/y, (x\u00b2+y\u00b2)/y\u00b2)` determines `(|x|, y)`, so the only\n   possible failure is the reflection `x \u21a6 \u2212x`, i.e. the conjectural statement is exactly that\n   the moduli space is the quotient of `\ud835\udc9f` by that single reflection.\n2. **E1a.** The `GL\u207a(2, \u211d)`-action on ordered pairs of distinct points of `\u210d` at equal distance\n   is transitive \u2014 the single homogeneity statement that turns the axioms `dil_comp_le`,\n   `dil_inv`, `dil_eq_one_iff` into the uniqueness half of **E1**.\n3. **E4a.** For `0 < \u03b5 \u2264 1` the set `{w \u2208 \ud835\udc9f : Im w \u2265 1/\u03b5}` is convex in the `(Re, Im)`\n   coordinates and its image in the moduli space is connected \u2014 the last missing step of **E4**.\n\nSub-conjectures closed in this cycle: **E3a** (the closed formula `sys w \u00b7 sys2 w = |w|\u00b2/(Im w)\u00b2`\non the fundamental domain, now `sys_mul_sys2_of_fd`, together with the two uniqueness statements),\n**D4a** (a minimising translate exists in the fundamental\ndomain, now `exists_smul_mem_moduliBall`), and the two conjectural halves of **D4**, the\nreciprocal comparison `sys \u00b7 (second minimum) \u2265 1` (now `collar_lemma`) and the compactness of\nthe thick part (now `mahler_compactness`).  Previously closed: **D2a**\n(`\u221a(((n\u22121)\u00b2\u22124)((n+1)\u00b2\u22124)) < n\u00b2\u22123`, inside `spectrumValue_gap_lt`) and the cusp identity\n`sys \u03c4 = 1/Im \u03c4`, extended in this thread to the whole fundamental domain\n(`sys_eq_one_div_im_of_fd`).\n",
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_1340",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "b3704634",
+    "status": "available",
+    "timestamp": "2026-08-16T19:33:43.379861+00:00",
+    "title": "Derived from the analysis and adversarial review of the verified results in"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\nFive falsifiable conjectures produced by this cycle of work on emergent geometry\nfrom entanglement. Each is stated so that it can be decided by a proof or by an\nexplicit counterexample in the same framework\n(`Catalog/Novelty/EmergentGeometryEntropyCone.lean` and its dependents).\n\n---\n\n## C1. The contraction calculus is complete for graph models\n\n**Conjecture.** A linear inequality `\u03a3\u2c7c c\u2c7c S(B\u2c7c) \u2264 \u03a3\u1d62 d\u1d62 S(A\u1d62)` with nonnegative\ninteger coefficients holds for the min-cut entropies of *every* finite bulk\ngeometry if and only if it is witnessed by a `ContractionMap` in the sense of\n`Catalog/Novelty/HolographicContractionCalculus.lean` (after replacing each\nregion by `d\u1d62`, resp. `c\u2c7c`, parallel copies).\n\n*The key insight is* that the min-cut entropy of a graph is a minimum of linear\nfunctionals of Boolean patterns, so any valid inequality must survive the\n\"worst-case pattern\" test, and that test is exactly Hamming contraction.\n\n*Why now?* Both new inequalities proved here (monogamy, five-party cyclic) were\nobtained by finding a contraction map by computer search over `2^k` patterns,\nand the search space is small enough that completeness can be tested\nexhaustively for `k \u2264 5` before attempting a proof.\n\n---\n\n## C2. Reconstruction is possible exactly for bulk-minimal geometries\n\n**Conjecture.** Call a holographic model *bulk-minimal* if no hidden cell can be\ndeleted or merged into a boundary cell without changing some entropy. Then two\nbulk-minimal models with identical boundary entropy functions are isomorphic as\nweighted graphs; equivalently, `weight_eq_half_mutualInfo` extends from\n`NoBulk` models to bulk-minimal ones.\n\n*Progress this cycle.* The hidden-cell-free case is now completely settled:\n`entropy_eq_iff_mutualInfo_eq` and `spacetime_from_entanglement` in\n`Catalog/Novelty/EmergentGeometryReconstruction.lean` show that for `NoBulk`\nmodels the two-point mutual informations determine every region entropy *and*\nthe whole bridge relation, and `weight_diag_is_gauge` shows this is sharp (the\nself-loop weights are pure gauge). What remains open is exactly the extension to\nbulk-minimal models below.\n\n*The key insight is* that the star/triangle pair of\n`Catalog/Novelty/EmergentGeometryNonUniqueness.lean` is not a genuine\ncounterexample to reconstruction but a redundancy: the star's hidden cell is\n\"free\", and quotienting it produces the triangle.\n\n*Why now?* The failure of reconstruction is now formalised in a single explicit\n`Fin 4` example, so the conjecture has a concrete first test case: prove that the\nstar is *not* bulk-minimal and that all `Fin 5` counterexamples arise the same\nway.\n\n---\n\n## C3. Facet conjecture for the cyclic inequality\n\n*Status of the previous C3 (now settled).* The former C3 asked for a five-party\nentropy vector satisfying subadditivity, strong subadditivity, weak monotonicity\nand monogamy while violating the cyclic inequality. Such a vector now exists in\nmachine-checked form: `EmergentGeometry.Sw` in\n`Catalog/Novelty/CyclicIndependence.lean`, with\n`cyclic5_independent_of_SA_SSA_WM_MMI` verifying all four families over the full\n`32^3` space of disjoint mask triples and\n`no_bulk_geometry_realises_Sw` showing no bulk graph can produce it. The\nsuccessor conjecture below asks how *tight* that obstruction is.\n\n**Conjecture.** The cyclic inequality is a *facet* of the five-party holographic\nentropy cone: there are `30` linearly independent entropy vectors, each realised\nby an explicit finite bulk graph in the sense of `HoloModel`, that saturate\n`entropy_cyclic5` with equality. Equivalently, the inequality cannot be written\nas a positive combination of other valid holographic inequalities.\n\n*The key insight is* that the contraction rule\n`cyc c\u2080 c\u2081 c\u2082 c\u2083 c\u2084 = c\u2084 \u2227 \u00acc\u2082 \u2227 (c\u2080 \u2228 (c\u2081 \u2227 \u00acc\u2083))` is *bijective* on the\npatterns it does not annihilate, and bijectivity of a contraction map is exactly\nthe condition for the associated inequality to be saturated on a full-dimensional\nfamily of graph states.\n\n*Why now?* The violating side is settled (`Sw_violates_cyclic5` gives a gap of\nexactly one unit, and the four validity families are exhaustively checked), so\nwhat remains is the saturating side: a rank computation over explicitly\nconstructed graphs, each of which is already expressible with the `HoloModel`,\n`cutWeight` and `entropy` machinery in this project.\n\n---\n\n## C4. Bit threads: min cut equals max flow in the emergent geometry\n\n**Conjecture.** For every finite bulk geometry and boundary region `A`,\n`entropy M A` equals the maximum value of a flow from `A` to the complementary\nboundary subject to the capacity constraints given by the weights \u2014 and the\nholographic inequalities proved here all follow from flow superposition.\n\n*The key insight is* that the recombination arguments used for monogamy are\n\"cut-side\" proofs; the corresponding \"flow-side\" proofs would replace 64-case\nBoolean checks by explicit convex combinations of flows, which generalise to\ninequalities with fractional coefficients.\n\n*Why now?* The cut side is fully formalised (`cutWeight`, `entropy`,\n`entropy_le_of_contraction`), so max-flow/min-cut can be attacked as a statement\nabout objects that already exist in the project rather than as new theory.\n\n---\n\n## C5. Continuity forces geometry: an inverse stability theorem\n\n**Conjecture.** The Lipschitz bound `entropy_lipschitz` is invertible on\n`NoBulk` models: if two such models have entropy functions differing by at most\n`\u03b5` on every boundary region, their geometries differ by at most `C\u03b5` in total\narea, with an absolute constant `C` (conjecturally `C = 2`, from\n`weight_eq_half_mutualInfo`).\n\n*The key insight is* that reconstruction `w(u,v) = I(u:v)/2` is not merely\npointwise but Lipschitz, so entanglement data determines geometry *stably*,\nwhich is what \"spacetime emerges from entanglement\" should mean physically.\n\n*Why now?* The exact (`\u03b5 = 0`) case is now a theorem\n(`spacetime_from_entanglement`), and one direction of the Lipschitz equivalence\nis already available as `entropy_lipschitz`;\nthe converse is a finite computation with the same three entropies per edge, and\nits failure for models with hidden cells is already visible in the star/triangle\nexample.\n",
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_1341",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "81aa12f0",
+    "status": "available",
+    "timestamp": "2026-08-16T19:34:02.718833+00:00",
+    "title": "Five falsifiable conjectures produced by this cycle of work on emergent geometry"
   },
   {
     "consumed_by_exp_id": "",
