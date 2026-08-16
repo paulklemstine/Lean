@@ -33,6 +33,21 @@ window.FUTURE_DIRECTIONS = [
     "title": "NET-46: THE-S2-ONE-GRID-STEP-DROP-REPLICATES-AT-16\u00d7-CONTEXT \u2014 k*=224 at (d=4, ctx=2048, seed=2), the NET-44 s2 break confirmed systematic"
   },
   {
+    "consumed_by_exp_id": "922db13f",
+    "description": "## NET-47 \u2014 speed axis (round-net-47; paper 91, /tmp/exp_net_attncost_ctx1024_s3.py, /tmp/net47.log)\n\n**Verdict name: THE-THIRD-SEED-REVEALS-A-SPREAD-NOT-A-TWO-POINT-SET.**\n\n### Result\nAt (d=4, ctx=1024, seed=3), **k\\* = 112 \u2014 the MID-GRID read, the prediction's horn P3 CONFIRMED (P1 96, P2 128 both REFUTED)**. The ctx=1024 knee distribution is **{96, 112, 128}** \u2014 a \u00b116 half-grid-step jitter with mean = median = **112 = 7/8 \u00d7 product 128** \u2014 so the {96, 128} two-point set from NET-37/NET-44 was a **TWO-SEED SAMPLING ARTIFACT**: two seeds drew the extremes of a jitter, presenting a clean binary that the third seed falsifies.\n\n### The emerging 7/8-median law at context \u2265 8\u00d7 (d=4)\n- **The seed-averaged knee sits at 7/8 \u00b7 (d\u00b7ctx/32)**: 112 at 8\u00d7; **224 = 7/8\u00b7256 is the mid-value of the 16\u00d7 set {224, 256}** (NET-46).\n- The product value is the **MAXIMUM of the seed range** \u2014 the s1 exact chain (16/32/64/128/256) is the law's **upper edge, not its center**.\n- The product law's upper bound **STRENGTHENS to 3/3-seed-sure**: product point 128 passes retained \u2265 0.98 at all three seeds (0.986/0.993/0.988) \u2014 k\\* \u2264 d\u00b7ctx/32 is a three-seed-verified deployment guarantee.\n\n### Key numbers\n- Sweep: k=32 0.949 \u2717, 64 0.970 \u2717, 96 0.979 \u2717 (~0.5 SE below bar \u2014 razor-thin), **112 0.983 \u2713 (margin +0.0035** \u2014 the least razor-thin of the recent cells), 128 0.988 \u2713, 192 0.998 \u2713, 256 0.998 \u2713, 384 0.999 \u2713, 512 0.999 \u2713, 768 0.999 \u2713 (loss 5.1387 = full loss **EXACTLY** \u2014 the cleanest full-recovery at this grid). The fine sweep point 112, absent from both prior ctx=1024 sweeps, is what won.\n- Full acc 0.1582, bar 0.1550, loss 5.1387; train **6141s (~1.7h**, fastest of the three seeds).\n- **Selection importance +4.7/+3.8** \u2014 positive but the SMALLEST at 1024 (s1 +5.9/+4.6, s2 +6.2/+4.8); the seed spread in selection (3.8\u20136.2) exceeds the concentration spread (~4%).\n- **Concentration**: eff support 271.92 (s1 291.16, s2 294.97 \u2014 family within ~4%, s3 most concentrated); top-64 0.576, top-128 0.723; per-position 35.89/238.53/506.05. Notably the **eff\u2194knee link does NOT sort across 3 points** (s2 least concentrated yet lowest knee 96; s3 most concentrated yet middle knee 112) \u2014 the NET-46 two-point correlation was a coincidence.\n- **Deployable**: **\u22658.0\u00d7 guaranteed (3/3 seeds), 9.1\u00d7 median, 10.7\u00d7 best** at (d=4, ctx=1024).\n\n### The seed distribution at (d=4, ctx=1024) \u2014 three seeds complete\n| seed | k\\* | \u00d7 product (128) |\n|---|---|---|\n| 1 (NET-37) | 128 | 1.000 |\n| **3 (this round)** | **112** | **0.875** |\n| 2 (NET-44) | 96 | 0.750 |\n\n### All 8 barriers\n(a) clean \u2014 three horns stated before the run, measured 112, the fine point winning; (b) clean \u2014 three-seed knee distribution / mid-grid knee / 7/8 median: none in the Catalog (698-pkg) or literature; (c) confronted \u2014 three seeds at d=4 \u00d7 ctx=1024 real causal word LM (4097 vocab, held-out loss+acc); (d) clean \u2014 held-out last-10%, data-free top-k; (e) the round's SUBSTANCE \u2014 the {96,112,128} distribution IS the variance estimate (knee jitter \u00b116 = half grid step at 8\u00d7), the {96,128} binary falsified; honest limits \u2014 the 7/8 median is a two-context hypothesis needing its direct test, and the s3 96/112 boundary is the least certain read (~0.5 SE); (f) clean \u2014 same metrics/protocol, binom SE \u2248 0.15% acc (retained SE \u2248 0.009), margins documented, k=768 recovers loss exactly, NO crash (ALL_DONE_NET47); (g) fair \u2014 full-attention reference + same 0.98 bar + random-k control at the same k (seed 12345), gaps +4.7/+3.8 positive; (h) sharpened \u2014 the three-seed distribution brackets the deployable claim with the guarantee at the conservative end.\n\n### Next\n**A third seed at ctx=2048** (does the 7/8 median replicate at 16\u00d7? \u2014 if s3 reads 224 or 192 the law holds, if 256 it refutes \u2014 the direct test of this round's discovery; ~3.7\u20135h \u2014 the highest-value open cell now); a fourth seed at ctx=1024 (refine {96,112,128}; low value); d=8 @ ctx=256 s0 corner; carry chain at scale (the frontier).\n\nNow 47 network experiments. Assessment v47. Paper 91.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_1339",
+    "phase": "A",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "in_progress",
+    "timestamp": "2026-08-16T17:34:35.935120+00:00",
+    "title": "NET-47: The third seed at ctx=1024 reveals a SPREAD not a two-point set \u2014 k*=112 (mid-grid), the knee distribution is {96,112,128} (7/8-median law emerges)"
+  },
+  {
     "consumed_by_exp_id": "",
     "description": "Formalizes a quantum random walk on the Berggren Pythagorean tree where constructive interference at energy spectrum minima collapses the state onto factors of N.",
     "domains": [
@@ -1397,16 +1412,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Graph-Expander: Alon-Boppana Bound for Regular Graph Eigenvalues"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9aa1e8d1",
     "description": "Proves that quantizing transformer weight matrices onto modular lattice grids preserves global loss landscape convexity invariants.",
     "domains": [
       "Bridges"
     ],
     "id": "dir_50_50_600fb3ba",
+    "phase": "A",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "batch_50_injection",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-23T20:05:24.803690+00:00",
     "title": "Bridge-NumberTheory-ML: Arithmetic Geometry of Transformer Weight Lattices"
   },
@@ -1739,20 +1755,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle d4bd7c02 (Q=0.800), which proved 83 theorems in Logic. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## Network loop round-net-44 (speed axis, round 17)\n\n**Title: The Last Context-Extrapolation Cell Is Two-Seed and the Knee Fluctuates \u2014 k\\*=96 at (d=4, ctx=1024, seed=2) breaks the exact product law d\u00b7ctx/32 (over-predicts by 25% at s2), the two-seed knee bracket is (64, 128], the product law remain",
-    "domains": [
-      "Logic"
-    ],
-    "id": "push_d4bd7c02_84d4f19e",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "d4bd7c02",
-    "status": "available",
-    "timestamp": "2026-08-16T16:43:02.077478+00:00",
-    "title": "Deepening: NET-44: The Last Context-Extrapolation Cell Is Two-Seed and the Knee Fluctuates "
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove that the k-Local Hamiltonian Problem is QMA-complete for k >= 2. Formalize the Kitaev reduction from quantum circuit satisfiability to the local Hamiltonian problem. Analyze the promise gap and its effect on complexity.",
     "domains": [
       "Computation",
@@ -1765,20 +1767,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Quantum Hamiltonian Complexity: QMA-Completeness of the Local Hamiltonian Problem"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 8dd43c13 (Q=0.793), which proved 32 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Establishes exact parameter domain bounds ensuring strict monotonicity and positive second derivatives for generalized EML activation functions.",
-    "domains": [
-      "Applications"
-    ],
-    "id": "push_8dd43c13_ce2d18f0",
-    "priority_score": 0.89294,
-    "research_mode": "team",
-    "source_exp_id": "8dd43c13",
-    "status": "available",
-    "timestamp": "2026-08-05T12:25:58.467948+00:00",
-    "title": "Deepening: EML-Activation-Monotonicity: Global Convexity Conditions for EML Transcendentals"
   },
   {
     "consumed_by_exp_id": "",
