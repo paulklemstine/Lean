@@ -1,211 +1,222 @@
-# One Point, Many Voices: Pairings and the Mathematics of Short Signatures
+# The Determinant Hidden Inside Elliptic Curves
 
-A city may need to authenticate a million sensor reports before breakfast. A distributed ledger may need hundreds of validators to approve the same block. A software archive may need to preserve decades of endorsements without allowing its certificate files to grow without bound. In each case, the engineering question hides a mathematical one: can many independent statements of trust be compressed without destroying the ability to check them?
+*How a two-by-two determinant makes the world's shortest digital signatures possible — and why the most natural way to set them up is mathematically impossible.*
 
-Pairing-based cryptography answers yes. Its central mechanism is a map that takes two points from an elliptic-curve group and produces an element of a multiplicative group. The map is not merely a hash or a change of notation. It transports addition into multiplication so rigidly that a secret multiplication performed on one input can be recognized from public data on the other. That bridge supports BLS signatures: short signatures whose sums remain verifiable as a whole.
+---
 
-This article develops the complete algebraic story. It defines the relevant curve subgroup and pairing, derives the pairing laws, explains signature correctness and uniqueness, isolates the computational Diffie–Hellman assumption behind unforgeability, and proves why any finite family of signatures can be represented by a single curve point.
+## A signature the size of a tweet
 
-## The stage: torsion points on an elliptic curve
+Every time a blockchain validator votes, or a certificate authority vouches for a website, a digital signature is produced. Signatures are small, but they are not free: a thousand validators produce a thousand signatures, and someone has to store and check all of them.
 
-An elliptic curve over a field carries an abelian group law. Its points can be added, there is an identity point $0$, and every point has an inverse. Repeated addition is written $aP$, where $a$ is a nonnegative integer and $P$ is a point.
+There is a scheme, however, in which a thousand signatures on a thousand different messages, produced by a thousand different signers who have never spoken to one another, can be added together into **one** object no bigger than a single signature — and a single equation still certifies that all thousand signers really did sign. This is the BLS signature scheme, and its engine is a piece of nineteenth-century-flavoured algebra: the **Weil pairing** on an elliptic curve.
 
-Fix a positive integer $n$. The $n$-torsion subgroup is
+This article is about what that pairing really is, why it works, and a subtle trap: the textbook way of writing down the setup, if you take it literally, describes a mathematical object that cannot exist.
 
-$$
-E[n]=\{P\in E:nP=0\}.
-$$
+---
 
-It really is a subgroup: $n(P+Q)=nP+nQ$, and $n(-P)=-(nP)$. Thus sums and inverses of $n$-torsion points remain in $E[n]$. Cryptographic constructions normally work in a carefully selected finite, often prime-order, subgroup of this kind.
+## Bilinearity, and the one extra axiom that changes everything
 
-Now let $\mu$ be a commutative multiplicative group. A Weil pairing for this discussion is a map
+Start with an abelian group $A$ written additively — think of the points of an elliptic curve that are killed by multiplication by $n$, the so-called **$n$-torsion**. A *pairing* is a map
 
-$$
-e:E[n]\times E[n]\longrightarrow \mu
-$$
+$$e : A \times A \to \mu$$
 
-with four structural properties.
+into a commutative group $\mu$ (concretely, the $n$-th roots of unity in a finite field), which is additive in each slot:
 
-First, it is additive-to-multiplicative in each input:
+$$e(P + P', Q) = e(P,Q)\,e(P',Q), \qquad e(P, Q+Q') = e(P,Q)\,e(P,Q').$$
 
-$$
-e(P+Q,R)=e(P,R)e(Q,R),\qquad
-e(P,Q+R)=e(P,Q)e(P,R).
-$$
+This is bilinearity, and by itself it already turns addition into multiplication: $e(aP, bQ) = e(P,Q)^{ab}$. That single identity is the whole reason pairings are useful in cryptography. A verifier who can compute $e$ can *check a multiplication of secret exponents without learning the exponents*.
 
-Second, it is alternating:
+Now add one more axiom, the one that makes a pairing a *Weil* pairing:
 
-$$
-e(P,P)=1.
-$$
+$$e(P,P) = 1 \quad \text{for every } P.$$
 
-Third, every value is $n$-torsion in the target:
+This is called **alternation**, and it looks innocuous. It is not. Three consequences follow immediately, and they organise everything else.
 
-$$
-e(P,Q)^n=1.
-$$
+**First, skew-symmetry.** Expand $1 = e(P+Q, P+Q)$ using bilinearity: the diagonal terms die, and what is left is $e(P,Q)\,e(Q,P) = 1$, that is,
 
-Finally, it is nondegenerate on both sides: if $e(P,Q)=1$ for every $Q$, then $P=0$, and if $e(P,Q)=1$ for every $P$, then $Q=0$. Nondegeneracy says the pairing does not erase a nonzero input in every comparison.
+$$e(Q,P) = e(P,Q)^{-1}.$$
 
-These axioms pack remarkable leverage. Pairing with the identity gives $e(0,Q)=e(P,0)=1$. Repeatedly applying the addition laws yields bilinearity:
+Antisymmetry was never assumed; it is a theorem.
 
-$$
-e(aP,Q)=e(P,Q)^a,\qquad e(P,bQ)=e(P,Q)^b,
-$$
+**Second, blindness on a line.** If $P$ and $Q$ happen to be multiples of a common point $R$, say $P = aR$ and $Q = bR$, then
 
-and therefore
+$$e(aR, bR) = e(R,R)^{ab} = 1.$$
 
-$$
-e(aP,bQ)=e(P,Q)^{ab}.
-$$
+An alternating pairing is *identically trivial* on any cyclic subgroup. It sees nothing at all inside a single "line" of the torsion group. This is why pairing-based cryptography always needs two independent directions in the torsion — a fact usually presented as an engineering convention (use two groups $\mathbb{G}_1, \mathbb{G}_2$) but which is really a theorem.
 
-The proof is simple induction, but the consequence is profound: the product $ab$, hidden in the curve point $abP$, becomes visible as an exponent in the target group.
+**Third — and this is the punchline — the determinant is forced.** Suppose the group is generated by two elements $e_1, e_2$, and set $\zeta = e(e_1, e_2)$. Take arbitrary elements $a e_1 + b e_2$ and $c e_1 + d e_2$. Expanding by bilinearity gives four terms; the two diagonal ones vanish by alternation; the two cross terms combine by skew-symmetry, and out drops
 
-Alternation adds another symmetry. Since $e(P+Q,P+Q)=1$, expanding both inputs gives
+$$e(a e_1 + b e_2,\; c e_1 + d e_2) \;=\; \zeta^{\,ad-bc}.$$
 
-$$
-e(P,Q)e(Q,P)=1,
-$$
+The exponent is the **determinant** of $\begin{pmatrix} a & b \\ c & d\end{pmatrix}$.
 
-so
+Nobody put a determinant into the axioms. Bi-additivity plus $e(P,P)=1$ produced it. Everything the Weil pairing does in cryptography — the security of short signatures, the collapse of the decisional Diffie–Hellman problem, the transfer of discrete logarithms from curves to finite fields — is a shadow of this two-by-two determinant.
 
-$$
-e(P,Q)=e(Q,P)^{-1}.
-$$
+---
 
-This skew-symmetry is not an extra assumption; it follows from alternation and the two addition laws.
+## Classifying every pairing there is
 
-## Turning bilinearity into a signature
+Once you know the determinant is forced, it is natural to ask how much freedom is left. On the model group $(\mathbb{Z}/n)^2$ with values in the $n$-th roots of unity (which we may identify with $\mathbb{Z}/n$ written multiplicatively), the answer is: exactly one scalar's worth.
 
-Choose a public generator $G\in E[n]$. We require one additional operational condition: the map
+**Classification.** Every alternating bilinear pairing on $(\mathbb{Z}/n)^2$ has the form
 
-$$
-P\longmapsto e(P,G)
-$$
+$$e(v,w) \;=\; \zeta^{\,u \cdot \det(v,w)}, \qquad \det(v,w) = v_1 w_2 - v_2 w_1,$$
 
-must be injective on the subgroup in use. In other words, two curve points that pair identically with $G$ must be equal. This is the exact condition that makes the verification equation identify one signature rather than merely a class of indistinguishable points.
+for a single scalar $u \in \mathbb{Z}/n$, namely $u$ determined by the value on the standard basis.
 
-A secret key is a scalar $x$, and the public key is
+**Nondegeneracy.** Such a pairing is nondegenerate — meaning no nonzero $v$ pairs trivially with everything — **if and only if $u$ is a unit** modulo $n$. So the nondegenerate alternating pairings are in bijection with $(\mathbb{Z}/n)^\times$; for $n$ prime there are exactly $n-1$ of them, and they are the primitive powers of the determinant form.
 
-$$
-X=xG.
-$$
+**Symplectic normal form.** Any nondegenerate alternating pairing is the determinant pairing composed with an automorphism of the group: there is an isomorphism $\psi$ with $e(v,w) = \det(\psi v, w)$. In other words, the Weil pairing is unique up to a change of basis. The pairing you get from divisors on a curve, the pairing you get from a Tate-style construction, and the naive determinant form on coordinates are all the *same* object wearing different clothes.
 
-A hash-to-curve procedure sends a message $m$ to a point $H(m)\in E[n]$. The signature is
+This is a satisfying state of affairs: a definition that looks analytic and geometric (the classical Weil pairing is built from functions with prescribed zeros and poles) is pinned down completely by three lines of algebra.
 
-$$
-\sigma=xH(m).
-$$
+---
 
-Verification checks the pairing equation
+## Why cyclic torsion is fatal
 
-$$
-e(\sigma,G)=e(H(m),X).
-$$
+Here is a theorem with real teeth. Suppose the $n$-torsion of a curve is *cyclic* — generated by one point $g$ — and suppose it carries a nondegenerate alternating pairing. Then:
 
-Why does an honest signature pass? Bilinearity makes both sides equal to the same target-group element:
+**The torsion is trivial.** Every $n$-torsion point is zero.
 
-$$
-e(xH(m),G)=e(H(m),G)^x=e(H(m),xG).
-$$
+The proof is two lines. Blindness on a line says $e(g, Q) = 1$ for every $Q$, since every $Q$ is a multiple of $g$. Nondegeneracy then forces $g = 0$, and since everything is a multiple of $g$, everything is $0$.
 
-This equality is the heartbeat of BLS.
+Contrapositively: **a nontrivial nondegenerate Weil pairing can only live on rank-two torsion.** For elliptic curves this matches the classical structure theorem, $E[n] \cong (\mathbb{Z}/n)^2$ when $n$ is prime to the characteristic. But note that we did not need the structure theorem to prove it — the obstruction is pure pairing algebra, and it explains *why* the structure theorem must hold if a Weil pairing is to exist at all.
 
-There is also a stronger uniqueness theorem. For an honest public key $X=xG$, a candidate $\tau$ verifies for $m$ if and only if
+And the pairing does exist. Given any curve whose $n$-torsion is isomorphic to $(\mathbb{Z}/n)^2$, transporting the determinant form along that isomorphism produces a genuine Weil pairing: bilinear, alternating, $n$-torsion valued, nondegenerate in both slots. The axioms are consistent and non-vacuous, and one can point at a specific pairing satisfying them.
 
-$$
-\tau=xH(m).
-$$
+---
 
-The forward direction uses injectivity: verification says that $e(\tau,G)$ equals $e(xH(m),G)$, so $\tau=xH(m)$. The reverse direction is ordinary correctness. Thus verification does not merely accept the intended signature; under the stated injectivity condition, it accepts exactly that curve point.
+## What the pairing costs you: DDH dies
 
-## Where security enters
+A pairing is a gift to the protocol designer and a gift to the attacker, in equal measure.
 
-Algebra proves correctness, but security is computational. The relevant hard problem is computational Diffie–Hellman in additive notation. Given
+**The degree law.** For any alternating pairing and any integer $m$,
 
-$$
-A=xG\qquad\text{and}\qquad B,
-$$
+$$e(mP, mQ) = e(P,Q)^{m^2}.$$
 
-the challenge is to compute
+More generally, if an endomorphism of the torsion is given in coordinates by a matrix $\begin{pmatrix} a & b \\ c & d \end{pmatrix}$, the pairing is scaled by its determinant: $e(\varphi P, \varphi Q) = e(P,Q)^{ad-bc}$. Scalar multiplication by $m$ has determinant $m^2$ — which is exactly the degree of the multiplication-by-$m$ isogeny. The algebraic shadow of a deep geometric fact is, once again, a determinant.
 
-$$
-xB.
-$$
+**The MOV reduction.** If $\zeta = e(P, Q)$ has exact order $n$, then the map $a \mapsto e(aP, Q) = \zeta^a$ is injective on $\{0, 1, \dots, n-1\}$. So an attacker facing the discrete logarithm problem "find $a$ from $aP$" on the curve can pair with $Q$ and instead solve a discrete logarithm in the multiplicative group of a finite field — where index calculus and its descendants are far more powerful. This is why pairing-friendly curves must be chosen with the *embedding degree* large enough that the finite-field problem stays hard. Pairings do not just enable protocols; they downgrade the security of the curves that support them.
 
-The public point $A$ reveals the action of the secret $x$ on $G$; the challenge asks for its action on an independently supplied point $B$.
+**Decisional Diffie–Hellman collapses entirely.** Given group elements $aP$, $bQ$, $cQ$ — and no knowledge of $a$, $b$, $c$ — the test
 
-To connect a signature forgery to this problem, consider a fresh target message $m^\star$: it was not among the messages for which the adversary previously requested signatures. In the random-oracle model, the reduction programs its hash value as
+$$e(aP,\, bQ) \;\overset{?}{=}\; e(P,\, cQ)$$
 
-$$
-H(m^\star)=B
-$$
+is computable by anyone, and it holds precisely when $c \equiv ab \pmod n$. So in a pairing group the decisional Diffie–Hellman problem is *easy*. Any protocol whose security proof rests on DDH is dead on arrival here. This is the reason BLS must be reduced to the **computational** Diffie–Hellman problem — given $aP$ and $bP$, actually *produce* $abP$ — which the pairing does not appear to help with.
 
-and uses $A=xG$ as the public key. If an adversary produces a valid signature $\sigma^\star$ on $m^\star$, verification gives
+There is a nice coda: on a single cyclic subgroup the DDH test is vacuous, because both sides are $1$ by blindness. The attack, like the protocol, needs two independent torsion directions.
 
-$$
-e(\sigma^\star,G)=e(B,A)=e(B,xG)=e(xB,G).
-$$
+---
 
-Injectivity of pairing against $G$ forces
+## Signing with a pairing
 
-$$
-\sigma^\star=xB.
-$$
+Now the scheme. Fix a signature generator $g_1$ and a key generator $g_2$, and let $\zeta = e(g_1, g_2)$.
 
-The forgery is therefore exactly the Diffie–Hellman solution.
+- A secret key is a number $sk$; the public key is $pk = sk \cdot g_2$.
+- A message is hashed to a curve point $H$ in the signature group.
+- The signature is $\sigma = sk \cdot H$. That is all. One scalar multiplication.
+- Verification checks the single equation $e(\sigma, g_2) = e(H, pk)$.
 
-This yields the algebraic unforgeability consequence. Suppose a stated class of adversarially attainable outputs does not contain the target $xB$—the explicit computational Diffie–Hellman hardness assumption for that class. Then no attainable output can be a valid signature for the fresh programmed message. Otherwise the reduction above would identify that output with $xB$, contradicting the assumption.
+Correctness is bilinearity: both sides equal $\zeta^{sk \cdot h}$ when $H = h\, g_1$.
 
-The qualification matters. This argument isolates the deterministic core of a standard security reduction: freshness, oracle programming, validation, and extraction of the hard-problem solution. A complete quantitative treatment also measures probabilities, query counts, and the reduction’s loss. The algebra tells us exactly what any successful fresh-message forgery must be.
+The signature is one group element — about 48 bytes at standard security levels. There is no randomness, no nonce, and therefore no catastrophic nonce-reuse failure mode. Signatures are *deterministic and unique*, which is a rare and valuable property.
 
-## Many signatures collapse into one
+Uniqueness is a theorem, and it is sharper than "the honest signature verifies". If we ask which candidates $s \cdot g_1$ in the signature group are accepted, the answer is: **exactly those with $s \equiv sk \cdot h \pmod n$**, where $n$ is the exact order of $\zeta$. The verification equation is a bijective test on the exponent, not merely a necessary condition. Consequently every accepted signature *equals* the honest one.
 
-The most visually striking property appears when signatures are aggregated. Let a finite collection of signers have secrets $x_i$, public keys $X_i=x_iG$, message hash points $H_i$, and signatures
+---
 
-$$
-\sigma_i=x_iH_i.
-$$
+## The trap: the symmetric setup is impossible
 
-Define their aggregate by curve addition:
+Here is where a very natural formulation goes wrong, and the failure is instructive.
 
-$$
-\Sigma=\sum_i\sigma_i.
-$$
+It is tempting to set the scheme up symmetrically: one generator $G$, one group, and to demand — because uniqueness of signatures is what you want — that the map
 
-Because $E[n]$ is a group, $\Sigma$ is still one element of the same subgroup. It does not become a tuple or a growing list. Bilinearity gives
+$$P \longmapsto e(P, G)$$
 
-$$
-e(\Sigma,G)
-=e\!\left(\sum_i\sigma_i,G\right)
-=\prod_i e(\sigma_i,G)
-=\prod_i e(H_i,X_i).
-$$
+be **injective**. This looks like a clean, strong form of nondegeneracy, and it is exactly what a uniqueness proof would like to have.
 
-This is the Aggregate Verification Theorem. The left side contains one transmitted curve point, while the right side checks the contribution of every signer and message. The theorem applies to any finite index set, including the empty family, for which the sum is $0$ and the product is $1$.
+It is also self-contradictory. Alternation gives $e(G,G) = 1 = e(0,G)$, so injectivity immediately forces $G = 0$. But then $e(Q, G) = e(Q, 0) = 1 = e(0,0)$ for every $Q$, so injectivity forces $Q = 0$ as well:
 
-The compression is algebraic, not conventional. If a curve point has a fixed-size encoding, then the aggregate signature has that same fixed group-element size regardless of how many signatures were added. Verification work still depends on the number of signers—the product on the right must be assembled—but communication of the signature itself stays constant.
+**Obstruction theorem.** *A pairing setup with an alternating pairing and an injective map $P \mapsto e(P,G)$ can only exist when the entire $n$-torsion group is trivial.*
 
-A small exponent model makes the mechanism easy to see. Imagine representing a curve point by a scalar modulo a prime $r$, and let $g$ generate a multiplicative group of order $r$. Define
+Every theorem proved in such a setup is therefore vacuously true. Correctness, uniqueness, unforgeability: all true, all about nothing. This is not a subtle bug in a proof; it is a bug in a *definition*, and it is precisely the kind of error that a careful adversarial reading of one's own axioms is meant to catch. The moral generalises well beyond signatures: when a security model bundles a convenient injectivity assumption together with an alternating form, check that the bundle is inhabited.
 
-$$
-e(P,Q)=g^{PQ}.
-$$
+The repair is the configuration actually used in practice — the **asymmetric (type-3) setting**. Keep two generators, $g_1$ for signatures and $g_2$ for keys, and replace the impossible injectivity axiom by the true and satisfiable requirement:
 
-Then $e(aP,bQ)=g^{abPQ}=e(P,Q)^{ab}$. A signature has exponent $xH$, and the verification exponents are $xH$ on both sides. Aggregating signatures adds their exponents, while multiplying pairing values also adds exponents modulo $r$. Real elliptic-curve pairings are richer and require careful encoding and subgroup checks, but this toy model exposes the exact identities being used.
+$$\operatorname{ord}\big(e(g_1,g_2)\big) = n.$$
 
-## A compression law with practical consequences
+Signatures live in the cyclic group generated by $g_1$, where the verification map *is* injective — not by fiat, but as a consequence of the root of unity having full order. The whole theory goes through, and this time it is about something: the setting is inhabited, both by the explicit determinant model on $(\mathbb{Z}/n)^2$ for every $n \geq 1$, and by any elliptic curve whose $n$-torsion is $(\mathbb{Z}/n)^2$.
 
-Why does saving group elements matter? In a consensus network, a block may be endorsed by hundreds or thousands of participants. Sending each signature separately makes the certificate grow with the committee. An aggregate changes the signature portion of that certificate from a list into one curve point. In a sensor network, the same principle allows an upstream collector to combine attestations before forwarding them across a narrow radio link. In a transparency system, it can compactly record that many witnesses observed the same event.
+---
 
-The gain is specifically in representation. Suppose one encoded subgroup point occupies $s$ bytes. Then $k$ separate signatures occupy $ks$ bytes, whereas their aggregate occupies $s$ bytes. The theorem does not make the identities of the signers disappear, nor does it make every verification operation constant-time. A verifier still needs enough information to reconstruct the right-hand product $\prod_i e(H_i,X_i)$. What disappears is the linear list of signature points.
+## Unforgeability, honestly stated
 
-This distinction is healthy: mathematics tells us exactly which resource is compressed. The aggregate is a sufficient algebraic representative for the pairing equation, because the pairing of a sum remembers the product of all the individual pairing values. It is not a general-purpose compression of messages, keys, or participant metadata.
+Why can't an adversary forge? The reduction is a programming argument. Suppose we are handed a computational Diffie–Hellman challenge: elements $a\,g_2$ and $h\,g_1$, and we must produce $ah\,g_1$. We run the adversary, setting the signer's public key to be the challenge $a\,g_2$, and programming the hash oracle so that the target message hashes to $h\,g_1$. The target message is *fresh*: it was never queried to the signing oracle, so we never had to sign something we could not compute.
 
-## What the theorem does—and does not—promise
+Now if the adversary outputs any accepted signature $\sigma$ on the target message, the uniqueness theorem says $\sigma$ is not merely *related to* the Diffie–Hellman answer — it **is** the Diffie–Hellman answer, $\sigma = a\,(h\,g_1)$. There is no slack, no factor to strip off, no rewinding. Hence:
 
-Short aggregation is powerful, but it is not a license to ignore protocol design. If signers may choose public keys maliciously, a rogue-key attack can let one key cancel another. Practical multi-signer systems therefore use proof of possession or other defenses. Messages must be mapped securely into the intended subgroup, inputs must be validated, domains must be separated, and secret scalars must be generated safely. None of these engineering obligations is replaced by bilinearity.
+**Existential unforgeability.** *If the Diffie–Hellman target lies outside the adversary's reach, then no reachable group element passes verification on the fresh message.*
 
-Within its assumptions, however, the mathematical pipeline is crisp. The pairing turns addition into multiplication. That identity proves signature correctness. Injectivity turns a valid equation into uniqueness. Fresh-message programming turns a forgery into $xB$, the computational Diffie–Hellman target. Finally, the same addition law turns a sum of signatures into a product of verification terms.
+---
 
-The result is a rare cryptographic design in which the reason for correctness, the core of the security reduction, and the source of compression are all manifestations of one equation. Many voices add on the curve; one point carries their combined statement; and the pairing lets everyone hear the individual harmonies inside it.
+## Adding a thousand signatures into one
+
+Aggregation is where pairings earn their keep. Given signatures $\sigma_i$ from signers $i$ in a set $S$, on messages hashing to $H_i$, define the aggregate simply as the sum:
+
+$$\sigma = \sum_{i \in S} \sigma_i.$$
+
+Verification is one equation:
+
+$$e(\sigma,\, g_2) \;=\; \prod_{i \in S} e(H_i,\, pk_i).$$
+
+Correctness is again bilinearity: both sides are $\zeta^{\sum_i sk_i h_i}$. And in the registered-key setting the aggregate is *unique* — the verification equation has exactly one solution, the honest sum.
+
+**Aggregate security reduces to single-signer security.** Suppose an adversary produces a valid aggregate for a signer set $S$ containing an honest target $i_0$, while the reduction knows all the co-signers' secret keys. Then
+
+$$\sigma \;-\; \sum_{i \in S \setminus \{i_0\}} sk_i H_i$$
+
+is a valid **single-signer** signature for $i_0$. The proof is a one-line computation: subtracting in the first slot divides in the target group, and dividing the aggregate equation by the co-signers' factors leaves exactly $e(H_{i_0}, pk_{i_0})$. Chaining this with the programming argument above, an aggregate forgery on a fresh message *is*, verbatim, the Diffie–Hellman answer. Aggregate unforgeability therefore reduces to computational Diffie–Hellman with no loss.
+
+**But only with registered keys.** Drop the requirement that signers prove possession of their secret keys, and the scheme shatters. Here is the attack in full. Let $pk_1$ be an honest victim's public key. The adversary picks any number $y$, computes the **rogue key**
+
+$$pk_2 = y\,g_2 - pk_1,$$
+
+which requires nothing but the victim's public key, and then publishes the "aggregate signature" $\sigma = y \cdot H$ on a common message $H$. Check it:
+
+$$e(H, pk_1)\, e(H, pk_2) = e\big(H,\; pk_1 + (y g_2 - pk_1)\big) = e(H, y g_2) = e(yH, g_2) = e(\sigma, g_2).$$
+
+Verification passes. The adversary knows no secret key, never interacted with the victim, and has just produced a two-signer aggregate implicating them. The victim's key was *cancelled algebraically* by the attacker's choice. This is why real deployments demand proofs of possession or key registration — the extraction theorem above needs the reduction to know the co-signers' keys, and the rogue-key attack is exactly the demonstration that this hypothesis cannot be dropped.
+
+---
+
+## How short is short? A counting theorem
+
+"Aggregation is compressing" can be made exact. Let the group have $N$ elements. The space of $m$ separate signatures has
+
+$$N^m$$
+
+elements, while the aggregate is a single group element, so at most $N$ values can occur. Moreover, for any $m \geq 1$, *every* group element occurs as an aggregate (put the desired value in the first slot and zeros elsewhere). So aggregation realises exactly an
+
+$$N^m \twoheadrightarrow N$$
+
+compression: the image is the whole group, no smaller and no larger. At $N \approx 2^{255}$ and $m = 1000$, that is a $255\,000$-bit object replaced by a $255$-bit one, with no hidden verification data — the entire cost of $m$ signers has migrated from the signature into the public keys, which are known in advance anyway.
+
+A related practical point: one can also **batch-verify** without aggregating. Choose weights $r_i$ and check
+$$e\Big(\sum_i r_i \sigma_i,\ g_2\Big) = \prod_i e(H_i, pk_i)^{r_i}.$$
+This passes for *all* weight vectors precisely when every individual signature is valid — take the indicator weights $r = (0,\dots,1,\dots,0)$ to recover any single check. That equivalence is the deterministic core of the randomised batch-verification tricks used in production.
+
+---
+
+## What the numbers say
+
+All of this can be watched happen in miniature. Over the model group $(\mathbb{Z}/5)^2$ one can enumerate all $625$ pairs and confirm that every nonzero vector pairs nontrivially with something; over $(\mathbb{Z}/6)^2$ — where the modulus is not prime, so the coefficient ring is not a field — skew-symmetry still holds identically; over $(\mathbb{Z}/3)^2$ all $81$ endomorphisms scale the form by exactly their determinant; and over $(\mathbb{Z}/5)^2$ the rogue-key identity holds for every choice of victim key, message and rogue exponent.
+
+Best of all, over $(\mathbb{Z}/7)^2$ one can run the whole signature scheme exhaustively: for all $49$ key/message pairs the honest signature is accepted, and among all $343$ triples $(sk, h, s)$ the candidate $s\,g_1$ is accepted **if and only if** $s \equiv sk\cdot h \pmod 7$. Uniqueness of signatures, visible in a $7 \times 7 \times 7$ table.
+
+---
+
+## The shape of the thing
+
+Step back and the structure is remarkably tidy. A single axiom, $e(P,P) = 1$, forces a determinant. The determinant forces rank two. Rank two is what makes the pairing nontrivial, what makes the discrete logarithm transferable, what kills decisional Diffie–Hellman, and what makes short aggregate signatures possible. The classification says there is essentially one pairing, so there is no design freedom to exploit and none to worry about. And the one place where a natural-looking definition overreaches — demanding injectivity in a symmetric group — is caught by the very same alternation axiom that started everything.
+
+Cryptography usually looks like a pile of assumptions. Here, unusually, most of it is a consequence of one line of linear algebra.
