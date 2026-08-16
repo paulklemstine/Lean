@@ -6,19 +6,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const mobileMenuBtn = document.getElementById('mobile-menu-btn');
     const sidebarOverlay = document.getElementById('sidebar-overlay');
     const mobileToggle = document.getElementById('mobile-toggle');
-    const pageHome = document.getElementById('page-home');
-    const pagePrev = document.getElementById('page-prev');
-    const pageNext = document.getElementById('page-next');
-    const pageIndicator = document.getElementById('page-indicator');
+    const topSentinel = document.getElementById('package-list-status-top');
+    const bottomSentinel = document.getElementById('package-list-status');
+    const markerEl = document.getElementById('package-list-marker');
 
-    const PAGE_SIZE = 10;
-    let currentPage = 1;
-    let filteredPackages = [];
+    const BATCH_SIZE = 20;        // items loaded per lazy-load batch (each direction)
+    let filteredPackages = [];    // full (sorted newest-first) dataset
+    let startIndex = 0;           // first index currently in the DOM
+    let endIndex = 0;             // one past the last index currently in the DOM
+
+    const supportsIO = 'IntersectionObserver' in window;
+    const scrollContainer = packageList ? packageList.closest('.package-list-container') : null;
 
     function scrollSidebarToTop() {
-        const listContainer = packageList.closest('.package-list-container');
-        if (listContainer) {
-            listContainer.scrollTo({ top: 0, behavior: 'smooth' });
+        if (scrollContainer) {
+            scrollContainer.scrollTo({ top: 0, behavior: 'smooth' });
         }
     }
 
@@ -62,15 +64,239 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    function updatePagination() {
-        const totalPages = Math.max(1, Math.ceil(filteredPackages.length / PAGE_SIZE));
-        if (currentPage > totalPages) currentPage = totalPages;
-        if (currentPage < 1) currentPage = 1;
+    // Build a single package <li>. index is the absolute position within filteredPackages.
+    function buildNavItem(pkg, index) {
+        const li = document.createElement('li');
+        li.className = 'nav-item';
+        li.dataset.slug = pkg.filename.replace('.json', '');
+        li.dataset.idx = index;
 
-        pageIndicator.textContent = `${currentPage} / ${totalPages}`;
-        pagePrev.disabled = currentPage <= 1;
-        pageNext.disabled = currentPage >= totalPages;
+        const d = new Date(pkg.date);
+        const dateStr = !isNaN(d) ? d.toLocaleDateString() : 'Recent';
+        const timeStr = !isNaN(d) ? d.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'}) : '';
+
+        const qs = pkg.quality_score;
+        const quality = pkg.quality || 'unrated';
+        const tier = pkg.quality_tier || 'unrated';
+        const scorePct = qs != null ? Math.round(qs * 100) : null;
+        const tierEmojis = { gold: '\u{1F947}', silver: '\u{1F948}', bronze: '\u{1F949}', unrated: '' };
+        const tierEmoji = tierEmojis[tier] || '';
+        const standout = qs != null && qs >= 0.90;
+        if (standout) li.classList.add('standout');
+
+        // Score color based on tier
+        let scoreColor = '#6b7280'; // unrated gray
+        if (qs != null) {
+            if (qs >= 0.90) scoreColor = '#fbbf24';      // gold - standout
+            else if (qs >= 0.80) scoreColor = '#8b5cf6';  // violet - strong
+            else if (qs >= 0.70) scoreColor = '#06b6d4';  // cyan - good
+            else if (qs >= 0.60) scoreColor = '#dc2626';  // red - moderate
+            else scoreColor = '#991b1b';                   // dark red - low
+        }
+
+        const slug = pkg.filename.replace(/\.json$/i, '');
+        const pkgNum = pkg.pkg_num || '';
+        li.innerHTML = `
+            <a class="nav-item-link" href="/${encodeURIComponent(slug)}" data-filename="${pkg.filename}">
+                <div class="nav-item-title">${pkgNum ? pkgNum + '. ' : ''}${pkg.title || 'Untitled Research'}</div>
+                ${qs != null ? `<div class="nav-item-score" data-quality="${quality}">
+                    <div class="score-bar"><div class="score-bar-fill" style="width:${scorePct}%;background:${scoreColor}"></div></div>
+                    <span class="score-label" style="color:${scoreColor}">${scorePct}%${tierEmoji ? ' ' + tierEmoji : ''}</span>
+                </div>` : ''}
+                <div class="nav-item-meta">
+                    <span>${pkg.domain || 'General'}</span>
+                    <span class="nav-item-datetime">${dateStr}${timeStr ? `<br><span class="nav-item-time">${timeStr}</span>` : ''}</span>
+                </div>
+            </a>
+        `;
+
+        li.addEventListener('click', (e) => {
+            e.preventDefault();
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+            li.classList.add('active');
+            if (window.loadPackage) window.loadPackage(pkg.filename);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            if (window.innerWidth <= 768 && window.closeSidebar) {
+                window.closeSidebar();
+            }
+        });
+
+        // Sidebar hover -> highlight graph node
+        li.addEventListener('mouseenter', () => {
+            document.querySelectorAll('.nav-item.graph-highlight').forEach(el => el.classList.remove('graph-highlight'));
+            const node = (window._graphNodes || []).find(n => n.id === li.dataset.slug);
+            if (window._setHoveredNode) window._setHoveredNode(node || null);
+            if (window._fadeWelcome) window._fadeWelcome();
+        });
+        li.addEventListener('mouseleave', () => {
+            const current = window._getHoveredNode ? window._getHoveredNode() : null;
+            if (current && current.id === li.dataset.slug && window._setHoveredNode) {
+                window._setHoveredNode(null);
+            }
+        });
+
+        return li;
     }
+
+    // Show/hide the sentinels. Each is hidden once there is nothing left to load
+    // in its direction; the bottom one shows an end marker when the whole list
+    // (both directions) has been loaded.
+    function updateSentinels() {
+        const total = filteredPackages.length;
+        if (!topSentinel || !bottomSentinel) return;
+        if (total === 0) {
+            topSentinel.style.display = 'none';
+            bottomSentinel.textContent = '';
+            bottomSentinel.style.display = 'none';
+            return;
+        }
+        if (startIndex <= 0) {
+            topSentinel.style.display = 'none';
+        } else {
+            topSentinel.style.display = '';
+            if (observer) observer.observe(topSentinel);
+        }
+        if (endIndex >= total) {
+            bottomSentinel.textContent = (startIndex <= 0 && total > BATCH_SIZE) ? '— end of list —' : '';
+            bottomSentinel.style.display = (startIndex <= 0 && total > BATCH_SIZE) ? '' : 'none';
+        } else {
+            bottomSentinel.textContent = '';
+            bottomSentinel.style.display = '';
+            if (observer) observer.observe(bottomSentinel);
+        }
+    }
+
+    // Live position marker: "firstVisiblePosition / total" for the current view.
+    // "total" reflects the current filtered list, so it matches the visible set.
+    function updateMarker() {
+        if (!markerEl) return;
+        const total = filteredPackages.length;
+        if (!total) { markerEl.textContent = ''; return; }
+        const items = packageList.querySelectorAll('.nav-item');
+        if (!items.length || !scrollContainer) {
+            markerEl.textContent = `${Math.max(1, startIndex + 1)} / ${total}`;
+            return;
+        }
+        const containerTop = scrollContainer.getBoundingClientRect().top;
+        let pos = startIndex + 1;
+        for (const it of items) {
+            if (it.getBoundingClientRect().bottom >= containerTop) {
+                pos = Number(it.dataset.idx) + 1;
+                break;
+            }
+        }
+        markerEl.textContent = `${Math.min(Math.max(1, pos), total)} / ${total}`;
+    }
+
+    // Rebuild the whole visible window (initial render, search, refresh, highlight).
+    function renderWindow() {
+        packageList.innerHTML = '';
+        const total = filteredPackages.length;
+        if (total === 0) {
+            packageList.innerHTML = '<li class="nav-item"><div class="nav-item-title" style="color:var(--text-muted)">No packages found.</div></li>';
+            updateSentinels();
+            updateMarker();
+            return;
+        }
+        const frag = document.createDocumentFragment();
+        for (let i = startIndex; i < endIndex; i++) {
+            frag.appendChild(buildNavItem(filteredPackages[i], i));
+        }
+        packageList.appendChild(frag);
+        updateSentinels();
+        updateMarker();
+    }
+
+    // Append a batch at the bottom (downward scroll).
+    function loadMoreBelow() {
+        const total = filteredPackages.length;
+        if (endIndex >= total) { updateSentinels(); return; }
+        const newEnd = Math.min(endIndex + BATCH_SIZE, total);
+        const frag = document.createDocumentFragment();
+        for (let i = endIndex; i < newEnd; i++) {
+            frag.appendChild(buildNavItem(filteredPackages[i], i));
+        }
+        packageList.appendChild(frag);
+        endIndex = newEnd;
+        updateSentinels();
+        updateMarker();
+    }
+
+    // Prepend a batch at the top (upward scroll), pinning the previously visible
+    // item so the viewport does not jump when content is inserted above it.
+    function loadMoreAbove() {
+        if (startIndex <= 0 || !scrollContainer) { updateSentinels(); return; }
+        const items = packageList.querySelectorAll('.nav-item');
+        const containerTop = scrollContainer.getBoundingClientRect().top;
+        let anchorSlug = null;
+        let anchorRectTop = null;
+        for (const it of items) {
+            const r = it.getBoundingClientRect();
+            if (r.bottom >= containerTop) { anchorSlug = it.dataset.slug; anchorRectTop = r.top; break; }
+        }
+        const newStart = Math.max(0, startIndex - BATCH_SIZE);
+        const frag = document.createDocumentFragment();
+        for (let i = newStart; i < startIndex; i++) {
+            frag.appendChild(buildNavItem(filteredPackages[i], i));
+        }
+        packageList.insertBefore(frag, packageList.firstChild);
+        startIndex = newStart;
+        if (anchorSlug) {
+            const el = packageList.querySelector(`[data-slug="${anchorSlug}"]`);
+            if (el) {
+                scrollContainer.scrollTop += el.getBoundingClientRect().top - anchorRectTop;
+            }
+        }
+        updateSentinels();
+        updateMarker();
+    }
+
+    // Lazy-loading via IntersectionObserver on the sentinels; falls back to
+    // rendering everything at once in browsers without support.
+    let observer = null;
+    if (supportsIO && scrollContainer && topSentinel && bottomSentinel) {
+        observer = new IntersectionObserver((entries) => {
+            for (const entry of entries) {
+                if (!entry.isIntersecting) continue;
+                if (entry.target === bottomSentinel) loadMoreBelow();
+                else if (entry.target === topSentinel) loadMoreAbove();
+            }
+        }, { root: scrollContainer, rootMargin: '200px 0px' });
+        observer.observe(bottomSentinel);
+        observer.observe(topSentinel);
+    }
+
+    function initWindow() {
+        startIndex = 0;
+        endIndex = supportsIO ? Math.min(BATCH_SIZE, filteredPackages.length) : filteredPackages.length;
+    }
+
+    // Throttled scroll listener keeps the position marker in sync with the viewport.
+    let markerRaf = 0;
+    if (scrollContainer) {
+        scrollContainer.addEventListener('scroll', () => {
+            if (markerRaf) return;
+            markerRaf = requestAnimationFrame(() => {
+                markerRaf = 0;
+                updateMarker();
+            });
+        }, { passive: true });
+    }
+
+    window.renderSidebar = function(pkgArray) {
+        // Fixed ordering: newest first
+        filteredPackages = [...pkgArray].sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+
+        if (startIndex === 0 && endIndex === 0) {
+            // First render (or search reset) — start from the top batch.
+            initWindow();
+        } else {
+            // Data refresh (60s polling): keep the current window, clamped to the new length.
+            if (endIndex > filteredPackages.length) endIndex = filteredPackages.length;
+            if (startIndex >= filteredPackages.length) startIndex = Math.max(0, filteredPackages.length - BATCH_SIZE);
+        }
+        renderWindow();
+    };
 
     // Search filter
     if (searchInput) {
@@ -83,160 +309,41 @@ document.addEventListener('DOMContentLoaded', () => {
                     p.domain?.toLowerCase().includes(term)
                   )
                 : base;
-            currentPage = 1;
+            startIndex = 0;
+            endIndex = 0;   // reset to first batch
             window.renderSidebar(filtered);
+            scrollSidebarToTop();
         });
     }
 
-    // Pagination
-    if (pageHome) {
-        pageHome.addEventListener('click', () => {
-            if (currentPage !== 1) {
-                currentPage = 1;
-                window.renderSidebar(filteredPackages);
-                scrollSidebarToTop();
-            }
-        });
-    }
-    if (pagePrev) {
-        pagePrev.addEventListener('click', () => {
-            if (currentPage > 1) {
-                currentPage--;
-                window.renderSidebar(filteredPackages);
-                scrollSidebarToTop();
-            }
-        });
-    }
-    if (pageNext) {
-        pageNext.addEventListener('click', () => {
-            const totalPages = Math.ceil(filteredPackages.length / PAGE_SIZE);
-            if (currentPage < totalPages) {
-                currentPage++;
-                window.renderSidebar(filteredPackages);
-                scrollSidebarToTop();
-            }
-        });
-    }
-
-    window.renderSidebar = function(pkgArray) {
-        filteredPackages = pkgArray;
-        packageList.innerHTML = '';
-
-        if (pkgArray.length === 0) {
-            packageList.innerHTML = '<li class="nav-item"><div class="nav-item-title" style="color:var(--text-muted)">No packages found.</div></li>';
-            updatePagination();
-            return;
-        }
-
-        // Fixed ordering: newest first
-        const sorted = [...pkgArray].sort((a, b) => (b.date || '').localeCompare(a.date || ''));
-        const totalPages = Math.ceil(sorted.length / PAGE_SIZE);
-        if (currentPage > totalPages) currentPage = totalPages;
-        const start = (currentPage - 1) * PAGE_SIZE;
-        const pageItems = sorted.slice(start, start + PAGE_SIZE);
-
-        pageItems.forEach(pkg => {
-            const li = document.createElement('li');
-            li.className = 'nav-item';
-            li.dataset.slug = pkg.filename.replace('.json', '');
-
-            const d = new Date(pkg.date);
-            const dateStr = !isNaN(d) ? d.toLocaleDateString() : 'Recent';
-            const timeStr = !isNaN(d) ? d.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'}) : '';
-
-            const qs = pkg.quality_score;
-            const quality = pkg.quality || 'unrated';
-            const tier = pkg.quality_tier || 'unrated';
-            const scorePct = qs != null ? Math.round(qs * 100) : null;
-            const tierEmojis = { gold: '\u{1F947}', silver: '\u{1F948}', bronze: '\u{1F949}', unrated: '' };
-            const tierEmoji = tierEmojis[tier] || '';
-            const standout = qs != null && qs >= 0.90;
-            if (standout) li.classList.add('standout');
-
-            // Score color based on tier
-            let scoreColor = '#6b7280'; // unrated gray
-            if (qs != null) {
-                if (qs >= 0.90) scoreColor = '#fbbf24';      // gold - standout
-                else if (qs >= 0.80) scoreColor = '#8b5cf6';  // violet - strong
-                else if (qs >= 0.70) scoreColor = '#06b6d4';  // cyan - good
-                else if (qs >= 0.60) scoreColor = '#dc2626';  // red - moderate
-                else scoreColor = '#991b1b';                   // dark red - low
-            }
-
-            const slug = pkg.filename.replace(/\.json$/i, '');
-            const pkgNum = pkg.pkg_num || '';
-            li.innerHTML = `
-                <a class="nav-item-link" href="/${encodeURIComponent(slug)}" data-filename="${pkg.filename}">
-                    <div class="nav-item-title">${pkgNum ? pkgNum + '. ' : ''}${pkg.title || 'Untitled Research'}</div>
-                    ${qs != null ? `<div class="nav-item-score" data-quality="${quality}">
-                        <div class="score-bar"><div class="score-bar-fill" style="width:${scorePct}%;background:${scoreColor}"></div></div>
-                        <span class="score-label" style="color:${scoreColor}">${scorePct}%${tierEmoji ? ' ' + tierEmoji : ''}</span>
-                    </div>` : ''}
-                    <div class="nav-item-meta">
-                        <span>${pkg.domain || 'General'}</span>
-                        <span class="nav-item-datetime">${dateStr}${timeStr ? `<br><span class="nav-item-time">${timeStr}</span>` : ''}</span>
-                    </div>
-                </a>
-            `;
-
-            li.addEventListener('click', (e) => {
-                e.preventDefault();
-                document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-                li.classList.add('active');
-                if (window.loadPackage) window.loadPackage(pkg.filename);
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-                if (window.innerWidth <= 768 && window.closeSidebar) {
-                    window.closeSidebar();
-                }
-            });
-
-            // Sidebar hover -> highlight graph node
-            li.addEventListener('mouseenter', () => {
-                document.querySelectorAll('.nav-item.graph-highlight').forEach(el => el.classList.remove('graph-highlight'));
-                const node = (window._graphNodes || []).find(n => n.id === li.dataset.slug);
-                if (window._setHoveredNode) window._setHoveredNode(node || null);
-                if (window._fadeWelcome) window._fadeWelcome();
-            });
-            li.addEventListener('mouseleave', () => {
-                const current = window._getHoveredNode ? window._getHoveredNode() : null;
-                if (current && current.id === li.dataset.slug && window._setHoveredNode) {
-                    window._setHoveredNode(null);
-                }
-            });
-
-            packageList.appendChild(li);
-        });
-
-        updatePagination();
-    };
-
-    // Navigate to the page containing a slug and highlight it
+    // Navigate to the item for a slug: center the loaded window on it, then highlight.
+    // Only a bounded set is rendered, so deep targets stay lazy on both sides.
     window.highlightSidebarItem = function(slug) {
         if (!slug || !filteredPackages.length) return;
-        const sorted = [...filteredPackages].sort((a, b) => (b.date || '').localeCompare(a.date || ''));
-        const idx = sorted.findIndex(p => p.filename.replace('.json', '') === slug);
+        // filteredPackages is already sorted newest-first (set by renderSidebar)
+        const idx = filteredPackages.findIndex(p => p.filename.replace('.json', '') === slug);
         if (idx === -1) return;
-        // Navigate to the page containing this item
-        const targetPage = Math.floor(idx / PAGE_SIZE) + 1;
-        if (targetPage !== currentPage) {
-            currentPage = targetPage;
-            window.renderSidebar(filteredPackages);
-        }
+        let s = Math.max(0, idx - Math.floor(BATCH_SIZE / 2));
+        const e = Math.min(filteredPackages.length, Math.max(s + BATCH_SIZE, idx + 1));
+        s = Math.max(0, Math.min(s, e - 1));
+        startIndex = s;
+        endIndex = e;
+        renderWindow();
         // Now the item should be in the DOM — highlight and scroll
-        const item = document.querySelector(`.nav-item[data-slug="${slug}"]`);
+        const item = packageList.querySelector(`.nav-item[data-slug="${slug}"]`);
         if (item) {
             item.classList.add('graph-highlight');
-            const listContainer = item.closest('.package-list-container');
-            if (listContainer) {
+            if (scrollContainer) {
                 const itemRect = item.getBoundingClientRect();
-                const listRect = listContainer.getBoundingClientRect();
+                const listRect = scrollContainer.getBoundingClientRect();
                 if (itemRect.top < listRect.top || itemRect.bottom > listRect.bottom) {
-                    listContainer.scrollTo({
-                        top: listContainer.scrollTop + itemRect.top - listRect.top - listRect.height / 3,
+                    scrollContainer.scrollTo({
+                        top: scrollContainer.scrollTop + itemRect.top - listRect.top - listRect.height / 3,
                         behavior: 'smooth'
                     });
                 }
             }
+            updateMarker();
         }
     };
 });

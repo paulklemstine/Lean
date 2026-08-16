@@ -323,7 +323,7 @@ body {
 
 .nav-list {
     list-style: none;
-    padding-bottom: 8px; /* space before sticky pagination */
+    padding-bottom: 8px; /* space before the lazy-load status sentinel */
 }
 
 .nav-item {
@@ -2511,43 +2511,21 @@ body.light-theme #aether-toast .toast-body {
     margin: 0 0.15rem;
 }
 
-/* Sidebar pagination controls */
-.sidebar-pagination {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 12px;
-    padding: 12px 24px;
-    border-top: 1px solid var(--border-color);
-    position: sticky;
-    bottom: 0;
-    background: var(--bg-panel);
-    z-index: 10;
-}
-
-.page-btn {
-    background: var(--bg-elevated);
-    color: var(--text-primary);
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    padding: 6px 14px;
-    cursor: pointer;
-    font-size: 0.85rem;
-}
-
-.page-btn:disabled {
-    opacity: 0.4;
-    cursor: default;
-}
-
-.page-btn:hover:not(:disabled) {
-    background: var(--accent);
-    color: #fff;
-}
-
-#page-indicator {
+/* Sidebar infinite-scroll status sentinels (IntersectionObserver targets) */
+.nav-list-status {
+    text-align: center;
     color: var(--text-muted);
     font-size: 0.8rem;
-    min-width: 60px;
+    padding: 10px 24px 14px;
+    min-height: 18px;
+}
+
+/* Sidebar scroll-position marker: "firstVisible / total" for the current list */
+.package-list-marker {
     text-align: center;
+    color: var(--text-muted);
+    font-size: 0.78rem;
+    padding: 0 24px 4px;
+    min-height: 1.1em;
+    user-select: none;
 }
