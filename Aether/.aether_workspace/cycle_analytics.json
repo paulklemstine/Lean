@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-17T09:58:03.376571+00:00",
+  "last_updated": "2026-08-17T10:49:10.280656+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -57738,6 +57738,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-08-17T09:58:03.184310+00:00",
       "title": "Tangled Hierarchies: Proof Systems That Reference Their Own Soundness"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Shared",
+      "duration_seconds": 3042.342786550522,
+      "end_time": 1786963724.31312,
+      "files_integrated": 4,
+      "job_id": "8993bd64",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.81,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.5395,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.81,
+        "novelty": 0.81,
+        "proof_depth": 0.81,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.81,
+      "sorry_count": 4,
+      "sorry_density": 0.04938271604938271,
+      "start_time": 1786960681.9703333,
+      "strategy_count": 0,
+      "theorem_count": 81,
+      "theorem_novelty_disproof": 4,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 48,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-08-17T10:49:10.085472+00:00",
+      "title": "Compression Research B6: Compression \u2194 one-way functions (the cryptography link)"
     }
   ]
 }

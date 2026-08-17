@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "fefb96cd",
-      "domain": "Novelty",
-      "key_insight": "# FUTURE DIRECTIONS — TRACEPROFILE (Paper 50 / Experiment 385)\n\nThe verified results of this cycle are in `Catalog/Novelty/TraceProfile*.lean`:\n\n* `TraceProfileLowBits.lean` — the exact low bit `s₁ =",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 54,
-      "timestamp": "2026-08-15T03:13:27",
-      "title": "TRACEPROFILE: the trace s=p+q is the least-hidden symmetric invariant — 1 bit per prime exactly, s1="
-    },
-    {
       "cycle_id": "70d03dec",
       "domain": "Physics",
       "key_insight": "# Future Directions — the cyclic splitting-type channel\n\nDerived from what survived and what failed in this cycle.  Each conjecture is falsifiable by a\nsingle computation on a cyclic order `n`; each i",
@@ -499,19 +489,19 @@
       "theorem_count": 128,
       "timestamp": "2026-08-17T09:57:56",
       "title": "Tangled Hierarchies: Proof Systems That Reference Their Own Soundness"
+    },
+    {
+      "cycle_id": "8993bd64",
+      "domain": "Shared",
+      "key_insight": "# Future Directions — Compression ⇋ One-Way Functions (after Phase B / M8)\n\nThe three new files prove, in a resource-abstract but fully formal model, that\n\n* compression is capped unconditionally by t",
+      "quality_score": 0.81,
+      "sorry_count": 4,
+      "theorem_count": 81,
+      "timestamp": "2026-08-17T10:49:06",
+      "title": "Compression Research B6: Compression ↔ one-way functions (the cryptography link)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "39ee2889",
-      "domain": "Combinatorics",
-      "key_insight": "# Future directions\n\nConcrete, falsifiable conjectures arising from the results proved this cycle, on top of the\nframework of weak and strong $B_d$-free families, layers, level families and the extrem",
-      "quality_score": 0.79707,
-      "sorry_count": 0,
-      "theorem_count": 34,
-      "timestamp": "2026-08-06T07:55:36",
-      "title": "Concrete, falsifiable conjectures arising from the formalization in"
-    },
     {
       "cycle_id": "96503fdf",
       "domain": "Logic",
@@ -2501,27 +2491,19 @@
       "theorem_count": 128,
       "timestamp": "2026-08-17T09:57:56",
       "title": "Tangled Hierarchies: Proof Systems That Reference Their Own Soundness"
+    },
+    {
+      "cycle_id": "8993bd64",
+      "domain": "Shared",
+      "key_insight": "# Future Directions — Compression ⇋ One-Way Functions (after Phase B / M8)\n\nThe three new files prove, in a resource-abstract but fully formal model, that\n\n* compression is capped unconditionally by t",
+      "quality_score": 0.81,
+      "sorry_count": 4,
+      "theorem_count": 81,
+      "timestamp": "2026-08-17T10:49:06",
+      "title": "Compression Research B6: Compression ↔ one-way functions (the cryptography link)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "d4bd7c02",
-      "domain": "Logic",
-      "name": "margin_s1_96_lt_spread",
-      "quality": 0.8
-    },
-    {
-      "cycle_id": "b3704634",
-      "domain": "Geometry",
-      "name": "geomFrac_gt_of_indep_ratio",
-      "quality": 0.91
-    },
-    {
-      "cycle_id": "b3704634",
-      "domain": "Geometry",
-      "name": "clusterGraph_indep_card_le",
-      "quality": 0.91
-    },
     {
       "cycle_id": "b3704634",
       "domain": "Geometry",
@@ -2803,17 +2785,28 @@
       "domain": "Logic",
       "name": "iterSound_iff_cycle",
       "quality": 0.83
+    },
+    {
+      "cycle_id": "8993bd64",
+      "domain": "Shared",
+      "name": "inverter_failure_infinite",
+      "quality": 0.81
+    },
+    {
+      "cycle_id": "8993bd64",
+      "domain": "Shared",
+      "name": "compression_failure_infinite",
+      "quality": 0.81
+    },
+    {
+      "cycle_id": "8993bd64",
+      "domain": "Shared",
+      "name": "tailAvoiding_patchClosed",
+      "quality": 0.81
     }
   ],
-  "last_updated": "2026-08-17T09:57:56",
+  "last_updated": "2026-08-17T10:49:06",
   "open_questions": [
-    {
-      "context": "-    sorry+  have hchecked := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
-      "cycle_id": "905765f9",
-      "domain": "Shared",
-      "sorry_count": 1,
-      "timestamp": "2026-07-25T10:53:08"
-    },
     {
       "context": "-    sorry+  have hchecked := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hn2⟩)",
       "cycle_id": "9f0b015d",
@@ -3016,6 +3009,13 @@
       "domain": "Logic",
       "sorry_count": 5,
       "timestamp": "2026-08-17T09:57:56"
+    },
+    {
+      "context": "No axioms beyond the standard three, no `sorry`.; All results are proved from scratch; there are no axioms and no `sorry`.; No axioms beyond the standard three, no `sorry`.",
+      "cycle_id": "8993bd64",
+      "domain": "Shared",
+      "sorry_count": 4,
+      "timestamp": "2026-08-17T10:49:06"
     }
   ],
   "research_threads": {
@@ -3889,12 +3889,6 @@
     ],
     "Shared": [
       {
-        "cycle_id": "8a90ae7b",
-        "quality": 0.640478157722513,
-        "theorems": 659,
-        "title": "Close Proofs: ArXiv paper: Chebotarev geodesic theorem: non-split case"
-      },
-      {
         "cycle_id": "5e2efbe9",
         "quality": 0.6514402131782946,
         "theorems": 555,
@@ -3947,6 +3941,12 @@
         "quality": 0.84,
         "theorems": 70,
         "title": "Fourier Analysis on Finite Groups"
+      },
+      {
+        "cycle_id": "8993bd64",
+        "quality": 0.81,
+        "theorems": 81,
+        "title": "Compression Research B6: Compression ↔ one-way functions (the cryptography link)"
       }
     ],
     "Tropical": [

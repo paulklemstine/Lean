@@ -18,13 +18,13 @@ window.FUTURE_DIRECTIONS = [
     "title": "NET-48: The direct test survives via the MEDIAN \u2014 k*=160 at (d=4, ctx=2048, seed=3), all four point-horns refuted, the completed 16\u00d7 distribution {160,224,256} has median exactly 224 = 7/8\u00b7(d\u00b7ctx/32) \u2014 the 7/8-median law is 2/2-context, 6/6-seed"
   },
   {
-    "consumed_by_exp_id": "8993bd64",
+    "consumed_by_exp_id": "e8a76d4f",
     "description": "**Part of:** Research plan \u2014 *Compression Beyond the Pigeonhole Bound* (Phase B, Question 2: can random number generators help?).\n\n## Research question\nWorst-case short-program-finding is **provably hard under standard assumptions**: roughly, if you could always find a short description for every `x` quickly, you could invert one-way functions. Compression \u21cb computational hardness.\n\n## Approach\n- State precisely **which compression tasks are equivalent to inverting OWFs** (distinguishable / polynomial-time Kolmogorov complexity literature).\n- Derive what that implies for achievable worst-case bounds.\n\n## Deliverable\nA precise characterization mapping compression tasks to cryptographic assumptions.\n\n## Purpose\nCalibrates the whole plan: **randomness helps compression exactly up to the computational-hardness boundary, and no further.** Converts the intuition \"randomness should help\" into a quantified expectation.\n\n**Milestone:** M8 (theory, 3\u20136 weeks).\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_1365",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
@@ -908,6 +908,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-16T11:35:10.982658+00:00",
     "title": "Deepening: Elliptic Curve Cryptography: Weil Pairing and BLS Signatures"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 8993bd64 (Q=0.810), which proved 81 theorems in Shared. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Part of:** Research plan \u2014 *Compression Beyond the Pigeonhole Bound* (Phase B, Question 2: can random number generators help?).\n\n## Research question\nWorst-case short-program-finding is **provably hard under standard assumptions**: roughly, if you could always find a short description for every `x",
+    "domains": [
+      "Shared"
+    ],
+    "id": "push_8993bd64_f878d7ef",
+    "priority_score": 0.91,
+    "research_mode": "team",
+    "source_exp_id": "8993bd64",
+    "status": "available",
+    "timestamp": "2026-08-17T10:49:06.818231+00:00",
+    "title": "Deepening: Compression Research B6: Compression \u2194 one-way functions (the cryptography link)"
   },
   {
     "consumed_by_exp_id": "",
@@ -1823,20 +1837,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-27T13:44:25.584304+00:00",
     "title": "Deepening: Causal Inference: Do-Calculus as Formal Logic"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle d71114d5 (Q=0.790), which proved 116 theorems in Logic. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## NET-48 \u2014 speed axis (round-net-48; paper 92, /tmp/exp_net_attncost_ctx2048_s3.py, /tmp/net48.log)\n\n**Verdict name: THE-DIRECT-TEST-SURVIVES-VIA-THE-MEDIAN.**\n\n### Result\nAt (d=4, ctx=2048, seed=3), **k\\* = 160 \u2014 all four point-horns REFUTED (P1 224, P2 240, P3 256, P4 192: every pre-stated value ",
-    "domains": [
-      "Logic"
-    ],
-    "id": "push_d71114d5_e1badfce",
-    "priority_score": 0.89,
-    "research_mode": "team",
-    "source_exp_id": "d71114d5",
-    "status": "available",
-    "timestamp": "2026-08-17T05:50:58.245815+00:00",
-    "title": "Deepening: NET-48: The direct test survives via the MEDIAN \u2014 k*=160 at (d=4, ctx=2048, seed"
   },
   {
     "consumed_by_exp_id": "",
@@ -4870,6 +4870,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-13T15:22:02.456534+00:00",
     "title": "Close Proofs: The Residue-Leakage Curve and the Dirichlet No-Pruning Theorem, Closed"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle 8993bd64 (Q=0.810) proved 81 theorems in Shared but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: **Part of:** Research plan \u2014 *Compression Beyond the Pigeonhole Bound* (Phase B, Question 2: can random number generators help?).\n\n## Research question\nWorst-case short-program-finding is **provably h",
+    "domains": [
+      "Shared"
+    ],
+    "id": "sorry_fill_8993bd64_584612e0",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "8993bd64",
+    "status": "available",
+    "timestamp": "2026-08-17T10:49:07.357501+00:00",
+    "title": "Close Proofs: Compression Research B6: Compression \u2194 one-way functions (the cryptogr"
   },
   {
     "consumed_by_exp_id": "",
@@ -19650,5 +19664,19 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-17T09:57:44.799218+00:00",
     "title": "The finite case is fully proved (`iterExt_sound_ncard`,"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "go through and shaped the conjectures\nbelow: (a) a *length-estimation* oracle (returning the number `K D y` but no\nprogram) could not be turned into an inverter without an extra closure axiom \u2014\nour search-to-decision reduction genuinely needs the *conditional* (prefix)\npredicate; (b) the class-level equivalence needs honesty (`HonestIn`), and a\nnon-honest function can be one-way for trivial reasons.",
+    "domains": [
+      "Logic"
+    ],
+    "id": "fd_1418",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "8993bd64",
+    "status": "available",
+    "timestamp": "2026-08-17T10:48:53.313531+00:00",
+    "title": "go through and shaped the conjectures"
   }
 ];
