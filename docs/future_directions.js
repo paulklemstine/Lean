@@ -3,13 +3,13 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "consumed_by_exp_id": "d71114d5",
+    "consumed_by_exp_id": "97b1c345",
     "description": "## NET-48 \u2014 speed axis (round-net-48; paper 92, /tmp/exp_net_attncost_ctx2048_s3.py, /tmp/net48.log)\n\n**Verdict name: THE-DIRECT-TEST-SURVIVES-VIA-THE-MEDIAN.**\n\n### Result\nAt (d=4, ctx=2048, seed=3), **k\\* = 160 \u2014 all four point-horns REFUTED (P1 224, P2 240, P3 256, P4 192: every pre-stated value passes, none is the knee)**, yet the completed 16\u00d7 three-seed knee distribution **{160, 224, 256} has median EXACTLY 224 = 7/8\u00b7(d\u00b7ctx/32)**, replicating the 8\u00d7 median 112 = 7/8\u00b7128: **the 7/8-median law is 2/2-context, 6/6-seed.** The horns were point-predictions; the law's claim was the distribution's center \u2014 0/4 horns, 1/1 law. A whole family of third-seed values {160, 192, 224} each keep the median at 224; only \u2265256 would shift it.\n\n### The 7/8-median law now two contexts, six seeds\n| context | three-seed k\\* set | \u00d7 product | spread | median |\n|---|---|---|---|---|\n| 8\u00d7 (ctx=1024) | {96, 112, 128} | {0.75, 0.875, 1.0} | 0.25 | 112 = 7/8\u00b7128 |\n| 16\u00d7 (ctx=2048) | {160, 224, 256} | {0.625, 0.875, 1.0} | 0.375 | 224 = 7/8\u00b7256 |\n\n**The 16\u00d7 spread is ~50% WIDER than the 8\u00d7 spread** \u2014 the LOW TAIL is the context-growing quantity (0.75 \u2192 0.625), the product value the pinned upper edge (the s1 chain's exactness), the median stable at 7/8. Per-seed knees are too noisy to predict on the point; the distribution's center is the robust quantity \u2014 that is what a third seed buys.\n\n### Key numbers\n- Full acc 0.1546, bar 0.1516, full loss 5.2199, train **14566s (~4h03m)**.\n- Sweep: 96 0.963 \u2717, 128 0.973 \u2717, **160 0.981 \u2713 (margin +0.0012 \u2014 the tightest of the recent cells; true knee ~150\u2013160 between grid points)**, 192 0.984 \u2713, 224 0.986 \u2713, 240 0.987 \u2713, **256 0.990 \u2713 (product point \u2014 passes 3/3)**, 288 0.993 \u2713, 384 0.999 \u2713, 512 1.000 \u2713, 768 1.003 \u2713, 1024 1.003 \u2713 (loss 5.2215, \u03940.0016). The s3 retained curve is the HIGHEST of the three 16\u00d7 seeds throughout (0.973 at 128 vs s1 0.939, s2 0.965) \u2014 crossing the bar two grid steps earlier than s2, three than s1.\n- **Product-law upper bound 3/3-sure at BOTH long contexts**: product point 256 passes 0.981/0.986/0.990 (joining 8\u00d7's 0.986/0.993/0.988 at 128) \u2014 k\\* \u2264 d\u00b7ctx/32 is a six-seed-verified deployment guarantee through 16\u00d7.\n- **Selection importance +4.7/+3.4**: k=128 random 0.926 vs top-k 0.973; k=256 0.956 vs 0.990 \u2014 comparable to s2, far above s1's +1.7/+1.8; the 16\u00d7 selection spread {1.7, 4.4, 4.7} at k=128 is three-fold (dilution strongly seed-dependent).\n- **Concentration**: eff support 498.13 (s1 526.39, s2 472.50 \u2014 mid-family, spread ~11%); top-128 0.608, top-256 0.746; per-position 64.91/435.27/929.55 \u2014 the eff\u2194knee correlation again does NOT sort across three points (s1 highest-eff/highest-knee, s2 lowest-eff/middle-knee, s3 middle-eff/lowest-knee), NO bounded working set at 16\u00d7, three seeds.\n- **Deployable at (d=4, ctx=2048)**: **\u22658.0\u00d7 guaranteed (3/3), 9.1\u00d7 median, 12.8\u00d7 best \u2014 the BEST-EVER reading** (beats 10.7\u00d7 at 8\u00d7 s2). Distribution {8.0, 9.1, 12.8} wider than 8\u00d7's {8.0, 9.1, 10.7}.\n\n### The 16\u00d7 three-seed table\n| seed | k\\* | \u00d7 product (256) |\n|---|---|---|\n| 1 (NET-45) | 256 | 1.000 |\n| 2 (NET-46) | 224 | 0.875 |\n| **3 (this round)** | **160** | **0.625** |\n\n### All 8 barriers\n(a) clean \u2014 four horns + the law's direct test stated before the run, measured 160 outside ALL horns, yet the distribution's median landed exactly on the law's predicted center (the round separates point-accuracy 0/4 from structural confirmation 1/1); (b) clean \u2014 three-seed 16\u00d7 spread / widening low tail / median-stable center: none in the Catalog (698-pkg) or literature; (c) confronted \u2014 d=4 \u00d7 ctx=2048 real causal word LM, 4097 vocab, held-out loss+acc, three seeds at the longest cell; (d) clean \u2014 held-out last-10%, data-free top-k; (e) the SUBSTANCE, sharpened \u2014 the 16\u00d7 three-seed distribution complete; honest limits: the s3=160 read razor-thin (+0.0012), the 0.625 low tail is ONE of three seeds (a fourth decides s3-specific vs stable), the median law is 2 contexts \u00d7 3 seeds; (f) clean \u2014 same metrics/protocol, binom SE \u2248 0.11% acc (retained SE \u2248 0.007), the razor margin documented, k=512 recovers 1.000 / k=768 1.003 (loss \u03940.0016), monotone recovery, NO crash (ALL_DONE_NET48); (g) fair \u2014 full-attention reference + same 0.98 bar + random-k at same k (seed 12345): gaps +4.7/+3.4, positive, the {1.7\u20134.7} seed spread informative; (h) sharpened \u2014 the widened {8.0\u201312.8} deployment spread is the deployment-relevant uncertainty at the longest cell, guarantee end 3/3-sure.\n\n### Next\n**A fourth seed at ctx=2048** (the LOW-TAIL test \u2014 s4=160/192 \u2192 the 0.625 low tail is real, a stable 16\u00d7 feature; s4 in {224,256} \u2192 it was s3-specific; ~4\u20135h \u2014 the highest-value open cell now); a fourth seed at ctx=1024 (refine {96,112,128}; low value); d=8 @ ctx=256 s0 corner; d=8 compression floor check; carry chain at scale (the frontier).\n\nNow 48 network experiments. Assessment v48. Paper 92.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_1345",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
@@ -49,20 +49,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "**Part of:** Research plan \u2014 *Compression Beyond the Pigeonhole Bound* (Phase B, Question 2: can random number generators help?).\n\n## Research question\nThe expensive part of program-search compression ([[A3]]) is *finding* the short program. **Randomized search is the right tool** \u2014 randomness helps compression the way it helps every hard combinatorial problem: in the search, not in the code.\n\n## Approach\n- MCTS / stochastic beam search / simulated annealing over the program space; randomized restarts.\n- Randomized hashing to test whether a generated prefix agrees with the target \u2014 far cheaper than full comparison.\n- Integrate with the A3 substrate as its search engine.\n\n## Deliverable\nA randomized search loop with measured search-effort vs. compression-quality tradeoffs.\n\n## Falsifiability / gate\nMust demonstrate concrete wall-clock / compute savings over deterministic search on the same program space.\n\n**Milestone:** part of M3.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1367",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-17T04:13:54.292729+00:00",
-    "title": "Compression Research B4: Randomness as the search engine for program-space search"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "**Part of:** Research plan \u2014 *Compression Beyond the Pigeonhole Bound* (Phase B, Question 2: can random number generators help?).\n\n## Research question\nPigeonhole governs *exact* decoding for *all* strings. Relax to: **decoder fails with probability \u2264 \u03b5** (almost-lossless). Random codebooks (Shannon's random-coding argument) then reach near-optimal rates \u2014 the counting bound relaxes by an \u03b5-dependent factor.\n\n## Approach\n- Constructive almost-lossless schemes with small failure probability.\n- The real obstacle is **decoder search complexity** (naive random coding is exponential), not the rate \u2014 tackle that.\n- Error detection (checksums) so failures are **never silent**.\n\n## Deliverable\nA scheme plus a proof that decode succeeds with probability \u2265 1\u2212\u03b5, and its exact decoding complexity.\n\n## Falsifiability / gate\nFor each scheme: bound on P(failure) and an explicit decoder-complexity figure. No silent corruption allowed.\n\n**Milestone:** M9.\n",
     "domains": [
       "Novelty"
@@ -74,62 +60,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-17T04:13:54.293504+00:00",
     "title": "Compression Research B3: Almost-lossless / Monte Carlo compression"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "**Part of:** Research plan \u2014 *Compression Beyond the Pigeonhole Bound* (Phase B, Question 2: can random number generators help?).\n\n## Research question\nIn **distributed** compression (Slepian\u2013Wolf / Wyner\u2013Ziv), the encoder and decoder each see correlated but different observations. Shared randomness between them does **not** count toward rate and provably achieves the joint-entropy bound the encoder alone couldn't reach. A PRNG is the practical vehicle for that shared randomness.\n\n## Approach\n- Practical codes exploiting common randomness (linear codes + random cosets).\n- The **seeding protocol**: how the PRNG seed is established out-of-band without counting against rate.\n- Identify the regime where the PRNG-backed common source shrinks rate vs. the encoder's own side information.\n\n## Deliverable\nConstructive schemes with rate proofs and a seeding protocol.\n\n## Falsifiability / gate\nFor each scheme: achievable rate vs. joint-entropy bound, with the seed demonstrably not counted as transmitted bits.\n\n**Milestone:** M6. **This is the honest home for \"PRNG helps compression\" \u2014 it's about the setting, not the message.**\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1369",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-17T04:13:54.294117+00:00",
-    "title": "Compression Research B2: Common randomness in distributed compression (Slepian-Wolf / Wyner-Ziv)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "**Part of:** Research plan \u2014 *Compression Beyond the Pigeonhole Bound* (Phase A, Question 1: separating the decompressor from the data).\n\n## Why this exists\nEvery compression result in the plan must be judged against the field standard, or it is **cheating, not compression**. This is a mandatory process / infrastructure issue for all other items.\n\n## The standard (Hutter Prize rules)\n- Decoded output must **exactly** match the input (lossless).\n- Decoding must run under a **16 GB memory limit**.\n- No precomputed dictionaries or hidden side channels.\n- The decompressor must be reconstructible from the transmitted message + the *public, fixed* substrate.\n\n## Deliverable\nA verification harness enforcing this standard across all plan items \u2014 including the check that any model delta is counted as transmitted bits.\n\n**Gate for every other issue:** if a result can't pass this harness, it's not a compression breakthrough \u2014 it's a trick.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1370",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-17T04:13:54.294715+00:00",
-    "title": "Compression Research A5: Verification discipline \u2014 16GB decode standard"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "**Part of:** Research plan \u2014 *Compression Beyond the Pigeonhole Bound* (Phase A, Question 1: separating the decompressor from the data).\n\n## Research question\nWhat if the transmitted program itself contains a decompressor? `U(p)` where `p = (U', p')` \u2014 a **recursive / hierarchical** scheme. Does the overhead grow sublinearly across levels? Likely 2 levels capture nearly all the gain.\n\n## Approach\n- Analyze overhead growth per level analytically.\n- Implement a 2-level demo and measure on corpora.\n\n## Deliverable\nA definitive result (positive or negative) on whether hierarchical decompressors pay for themselves.\n\n## Falsifiability / gate\nMust show per-message overhead vanishes or is absorbed across levels, under exact-match decoding.\n\n**Milestone:** M7 (cheap, ~1 week).\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1371",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-17T04:13:54.295266+00:00",
-    "title": "Compression Research A4: Meta-compression \u2014 recursive decompressors"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "**Part of:** Research plan \u2014 *Compression Beyond the Pigeonhole Bound* (Phase A, Question 1: separating the decompressor from the data).\n\n## Research question\nInstead of a fixed model, **search a space of programs** for the shortest one that emits `x`. This is a direct attack on Kolmogorov complexity `K(x)`. The interpreter is the shared decompressor (free, constant); the program is the message; the search is where cleverness goes.\n\n## Approach\n- Build a **compression substrate**: a small Turing-complete interpreter with cheap built-in primitives for patterns real data has (rep-patterns, LZ matches, arithmetic loops, tables).\n- Apply modern heuristic search over the program space: MCTS, genetic programming, gradient-guided program synthesis.\n- Tame the exponential search with *data-structured* program spaces and strong priors; budgeted search with early gating.\n\n## Deliverable\nThe substrate + search loop, with measured compression on text and structured corpora.\n\n## Falsifiability / gate\nMust beat SOTA lossless baselines exactly, under the 16 GB decode standard. **This is the single most promising structural direction for decompressor separation.**\n\n**Milestone:** M3. Related: [[B4]] (randomized search as the engine for this).\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1372",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-17T04:13:54.295817+00:00",
-    "title": "Compression Research A3: Program search as compression \u2014 Kolmogorov-approximation substrate"
   },
   {
     "consumed_by_exp_id": "",
@@ -2115,6 +2045,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-27T13:44:25.584304+00:00",
     "title": "Deepening: Causal Inference: Do-Calculus as Formal Logic"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle d71114d5 (Q=0.790), which proved 116 theorems in Logic. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## NET-48 \u2014 speed axis (round-net-48; paper 92, /tmp/exp_net_attncost_ctx2048_s3.py, /tmp/net48.log)\n\n**Verdict name: THE-DIRECT-TEST-SURVIVES-VIA-THE-MEDIAN.**\n\n### Result\nAt (d=4, ctx=2048, seed=3), **k\\* = 160 \u2014 all four point-horns REFUTED (P1 224, P2 240, P3 256, P4 192: every pre-stated value ",
+    "domains": [
+      "Logic"
+    ],
+    "id": "push_d71114d5_e1badfce",
+    "priority_score": 0.89,
+    "research_mode": "team",
+    "source_exp_id": "d71114d5",
+    "status": "available",
+    "timestamp": "2026-08-17T05:50:58.245815+00:00",
+    "title": "Deepening: NET-48: The direct test survives via the MEDIAN \u2014 k*=160 at (d=4, ctx=2048, seed"
   },
   {
     "consumed_by_exp_id": "",
@@ -19707,5 +19651,19 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "The Category Theory of Jokes: Universal Properties of Humor"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Two contexts and six seeds already separate the three rungs of a three-seed\nladder, and a single `ctx = 4096` cell distinguishes the two candidate low-tail families by\nexactly one grid step: `320` (constant ratio) versus `288` (affine), proved as\n`KneeQuota.lowtail_prediction_32x`.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_1403",
+    "priority_score": 0.4752083333333334,
+    "research_mode": "team",
+    "source_exp_id": "d71114d5",
+    "status": "available",
+    "timestamp": "2026-08-17T05:50:44.235858+00:00",
+    "title": "Two contexts and six seeds already separate the three rungs of a three-seed"
   }
 ];

@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "c98081c2",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — after the Class-Wide No-Pinning Lemma\n\nThe verified core of this cycle (all in `Catalog/Novelty/NoPinning*.lean`, 0 sorries):\n\n* **No-pinning (class-wide).** For a target `N₀` an",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 73,
-      "timestamp": "2026-08-14T20:05:36",
-      "title": "The Class-Wide No-Pinning Lemma, Verified"
-    },
-    {
       "cycle_id": "50be6807",
       "domain": "Algebra",
       "key_insight": "# Future directions — bold, testable conjectures from the A₄ fork-pinning cycle\n\nThe formal cycle established: (i) the pinned/flat/leaking **trichotomy** for an\narbitrary finite dial (`info_trichotomy",
@@ -499,19 +489,19 @@
       "theorem_count": 83,
       "timestamp": "2026-08-17T04:03:34",
       "title": "Hyper-Awareness: 11-Dimensional Perception Vectors in Synthetic Neural Nets"
+    },
+    {
+      "cycle_id": "d71114d5",
+      "domain": "Logic",
+      "key_insight": "# Future directions — bold, testable conjectures from the NET-48 order-statistics round\n\nThe round replaced a point law (\"the knee equals `d·ctx/32`\") by a *distributional* law\n(\"the centre of the kne",
+      "quality_score": 0.79,
+      "sorry_count": 0,
+      "theorem_count": 116,
+      "timestamp": "2026-08-17T05:50:57",
+      "title": "NET-48: The direct test survives via the MEDIAN — k*=160 at (d=4, ctx=2048, seed=3), all four point-"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "9f1ee483",
-      "domain": "Algebra",
-      "key_insight": "# Future directions\n\nThis cycle proved a cross-domain bridge, formalized in\n`Catalog/Bridges/SubmultiplicativeSearchEntropy.lean`:\n\n> **Bridge.** For a nonnegative transition matrix `A` of a finite-st",
-      "quality_score": 0.79301,
-      "sorry_count": 0,
-      "theorem_count": 36,
-      "timestamp": "2026-08-06T03:46:13",
-      "title": "**Conjecture.** Let `N(n)` be the number of successful prefixes of length `n` in"
-    },
     {
       "cycle_id": "413bc2f0",
       "domain": "Logic",
@@ -2501,27 +2491,19 @@
       "theorem_count": 83,
       "timestamp": "2026-08-17T04:03:34",
       "title": "Hyper-Awareness: 11-Dimensional Perception Vectors in Synthetic Neural Nets"
+    },
+    {
+      "cycle_id": "d71114d5",
+      "domain": "Logic",
+      "key_insight": "# Future directions — bold, testable conjectures from the NET-48 order-statistics round\n\nThe round replaced a point law (\"the knee equals `d·ctx/32`\") by a *distributional* law\n(\"the centre of the kne",
+      "quality_score": 0.79,
+      "sorry_count": 0,
+      "theorem_count": 116,
+      "timestamp": "2026-08-17T05:50:57",
+      "title": "NET-48: The direct test survives via the MEDIAN — k*=160 at (d=4, ctx=2048, seed=3), all four point-"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "8fa1e5a5",
-      "domain": "Applications",
-      "name": "spb_lissajous",
-      "quality": 0.87
-    },
-    {
-      "cycle_id": "3b29df87",
-      "domain": "Cryptography",
-      "name": "pair_sub_left",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "3b29df87",
-      "domain": "Cryptography",
-      "name": "aggVerifies_of_honest",
-      "quality": 0.82
-    },
     {
       "cycle_id": "3b29df87",
       "domain": "Cryptography",
@@ -2803,9 +2785,27 @@
       "domain": "MachineLearning",
       "name": "in",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "d71114d5",
+      "domain": "Logic",
+      "name": "quotaBudget_le_iff",
+      "quality": 0.79
+    },
+    {
+      "cycle_id": "d71114d5",
+      "domain": "Logic",
+      "name": "quotaProb_three",
+      "quality": 0.79
+    },
+    {
+      "cycle_id": "d71114d5",
+      "domain": "Logic",
+      "name": "quotaProb_two",
+      "quality": 0.79
     }
   ],
-  "last_updated": "2026-08-17T04:03:34",
+  "last_updated": "2026-08-17T05:50:57",
   "open_questions": [
     {
       "context": "This file gives a **complete, self-contained proof** of that theorem (0 `sorry`s).",
@@ -3455,12 +3455,6 @@
     ],
     "Logic": [
       {
-        "cycle_id": "0ed998a7",
-        "quality": 0.6603294191919192,
-        "theorems": 276,
-        "title": "Results of this cycle live in `Catalog/Combinatorics/ThreeQubitHyperdeterminant."
-      },
-      {
         "cycle_id": "e69eca5d",
         "quality": 0.683555,
         "theorems": 149,
@@ -3513,6 +3507,12 @@
         "quality": 0.82,
         "theorems": 79,
         "title": "NET-45: The s1 product chain survives at FIVE DOUBLINGS — k*=256 at (d=4, ctx=20"
+      },
+      {
+        "cycle_id": "d71114d5",
+        "quality": 0.79,
+        "theorems": 116,
+        "title": "NET-48: The direct test survives via the MEDIAN — k*=160 at (d=4, ctx=2048, seed"
       }
     ],
     "MachineLearning": [
