@@ -1210,25 +1210,6 @@
     "title": "Deepening: Elliptic Curve Cryptography: Weil Pairing and BLS Signatures"
   },
   {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle c798c801 (Q=0.820), which proved 110 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The sequence of primes 2, 3, 5, 7, 11, 13, ... defines a point cloud in R where the n-th prime p_n is at position p_n on the real line. The gaps between primes create a topological structure. Define the persistent homology of the prime point cloud as the Rips filtration R_epsilon = {p_n : |p_m - p_n",
-    "domain_bridges": [],
-    "domains": [
-      "Computation"
-    ],
-    "id": "push_c798c801_f7dfb7f3",
-    "lineage_refs": [],
-    "priority_score": 0.9199999999999999,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "c798c801",
-    "status": "available",
-    "timestamp": "2026-08-17T14:45:27.775477+00:00",
-    "title": "Deepening: Persistent Homology of Prime Numbers: The Topology of Arithmetic"
-  },
-  {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
     "consumed_by_exp_id": "",
@@ -2444,26 +2425,7 @@
     "title": "Stein-Method: Quantitative Normal Approximation Bounds"
   },
   {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 7edbd52d (Q=0.790), which proved 19 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that for every finite union-closed family of sets (not all empty), some element belongs to at least half the sets. Formalize the lattice-theoretic reformulation and known partial results.",
-    "domain_bridges": [],
-    "domains": [
-      "Combinatorics"
-    ],
-    "id": "push_7edbd52d_1385c3bc",
-    "lineage_refs": [],
-    "priority_score": 0.8895799999999999,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "7edbd52d",
-    "status": "available",
-    "timestamp": "2026-07-30T14:41:47.783526+00:00",
-    "title": "Deepening: Frankl's Union-Closed Conjecture"
-  },
-  {
-    "ambition_level": "extension",
+    "ambition_level": "grand_challenge",
     "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Building on cycle b080b405 (Q=0.789), which proved 13 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Investigate the ArXiv paper 'Alternating adjacent-sum polytopes: transfer matrices and Ehrhart series' and formalize its key results. Abstract: We study a period-two family of adjacent-sum lattice polytopes whose consecutive-coordinate bounds alternate between $s$ and $s+1$. This provides a simple n",
@@ -2473,7 +2435,7 @@
     ],
     "id": "push_b080b405_eeb26716",
     "lineage_refs": [],
-    "priority_score": 0.8891599999999998,
+    "priority_score": 0.9,
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "b080b405",
@@ -26196,7 +26158,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "921a0e7b",
     "description": "It would upgrade \"the cost of internal soundness is one loop\"\n(`soundnessExt_sound_iff`, `iterExt_selfLoop_ncard`) into \"the cost is *nothing* for\nthe old theory\", i.e. a genuine conservativity theorem for tangled hierarchies — the\nformal counterpart of Hofstadter's claim that strange loops do not corrupt the levels\nthey sit above.",
     "domain_bridges": [],
     "domains": [],
@@ -26206,7 +26168,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "615053e5",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-17T09:57:44.101662+00:00",
     "title": "It would upgrade \"the cost of internal soundness is one loop\""
   },
