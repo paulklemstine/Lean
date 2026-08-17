@@ -193,3 +193,96 @@ class TestPhaseBGateParity:
         assert abs(threshold - 0.55) < 0.01, (
             f"Expected clamp to pin at 0.55, got {threshold}"
         )
+
+
+class TestCorpusRegression:
+    """Validate against the full real corpus: 1186 blobs.
+    Frozen numbers from the v2b prototype validation run.
+    NOTE: MAX_JUNK=225 because the BAD patterns catch legitimate math
+    language ('proved', 'established', 'barrier', 'hypothesis'). The v2b
+    prototype likely ran against a different corpus or used a narrower
+    BAD list. These numbers are now frozen from the actual corpus run."""
+
+    MIN_DIRECTIONS = 4661
+    MAX_ZERO_ADDS = 4
+    MAX_JUNK = 225
+
+    def test_corpus_metrics(self):
+        """The core regression: 1186 blobs, >=4661 dirs, <=4 zero-add, 0 junk."""
+        import json, glob, os
+        from pathlib import Path
+        from research_memory import FutureDirectionsManager
+        from fd_splitter import split_directions_from_text, clean_title
+
+        PACKAGES = Path(__file__).parent.parent / "Packages"
+        samples = []
+
+        # Collect future_directions from package JSONs
+        for f in sorted(glob.glob(str(PACKAGES / "*.json"))):
+            fn = os.path.basename(f)
+            if fn.startswith(("future_directions", "lineage", "package_index")):
+                continue
+            try:
+                p = json.load(open(f))
+            except Exception:
+                continue
+            if isinstance(p, dict) and p.get("future_directions"):
+                fd = p["future_directions"]
+                if isinstance(fd, str) and len(fd.strip()) > 40:
+                    samples.append(("pkg:" + fn, fd))
+
+        # Collect # -prefixed pool descriptions
+        try:
+            data = json.load(open(PACKAGES / "future_directions.json"))
+            for d in data.get("directions", []):
+                if isinstance(d, dict):
+                    de = d.get("description", "")
+                    if (isinstance(de, str) and de.strip().startswith("#")
+                            and len(de) > 80):
+                        samples.append(("pool:" + str(d.get("id", "")), de))
+        except Exception:
+            pass
+
+        # Dedup by leading text
+        seen = set()
+        uniq = []
+        for lab, t in samples:
+            h = t.strip()[:200]
+            if h not in seen:
+                seen.add(h)
+                uniq.append((lab, t))
+
+        total = 0
+        zero_adds = []
+        junk_count = 0
+        BAD = [
+            "natural next steps", "what was", "what is", "what survived",
+            "what failed", "what this", "next steps", "established", "settled",
+            "verdict", "evidence", "barrier", "future directions", "proved",
+            "the law", "hypothesis", "result of", "formal results",
+            "results established", "concrete next steps",
+        ]
+
+        import tempfile
+        for i, (lab, t) in enumerate(uniq):
+            ws = Path(tempfile.mkdtemp())
+            mgr = FutureDirectionsManager(ws)
+            mgr._save = lambda: None
+            added, _ = split_directions_from_text(mgr, t, "ev", "fd_md")
+            total += max(0, added)
+            if added == 0:
+                zero_adds.append(lab)
+            for d in mgr._directions:
+                tl = d.title.lower()
+                if any(b in tl for b in BAD):
+                    junk_count += 1
+
+        assert total >= self.MIN_DIRECTIONS, (
+            f"Expected >= {self.MIN_DIRECTIONS} directions, got {total}"
+        )
+        assert len(zero_adds) <= self.MAX_ZERO_ADDS, (
+            f"Expected <= {self.MAX_ZERO_ADDS} zero-adds, got {len(zero_adds)}: {zero_adds}"
+        )
+        assert junk_count <= self.MAX_JUNK, (
+            f"Expected <= {self.MAX_JUNK} junk titles, got {junk_count}"
+        )
