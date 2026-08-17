@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "1b55f202",
-      "domain": "Computation",
-      "key_insight": "# Future directions: the cyclic splitting-type channel\n\nEach conjecture below is falsifiable by a single counterexample in the finite cyclic model\n`ℤ/n`, `T(x) = n / gcd(n, x)`, and each is already ve",
-      "quality_score": 0.79,
-      "sorry_count": 0,
-      "theorem_count": 145,
-      "timestamp": "2026-08-14T23:43:25",
-      "title": "CYCLIC-TYPE-CHANNEL (round-22 #2, experiment 413, assessment v189, paper 78)"
-    },
-    {
       "cycle_id": "c94236ec",
       "domain": "Novelty",
       "key_insight": "# FUTURE DIRECTIONS — after the SPLIT-COUNT LAW\n\nThe formal results now live in seven files, all compiling with no `sorry` and on\nthe standard axioms only:\n\n* `Catalog/Novelty/SplitCountLaw.lean` — fi",
@@ -499,19 +489,19 @@
       "theorem_count": 54,
       "timestamp": "2026-08-17T07:17:22",
       "title": "ArXiv paper: A Fourier-analytic Uniqueness Theorem for Lattice-point Enumerators"
+    },
+    {
+      "cycle_id": "525aecde",
+      "domain": "Shared",
+      "key_insight": "# Future directions\n\nFive falsifiable conjectures arising from the formal development in\n`Catalog/Shared/FourierFiniteAbelian.lean`, `FourierSubgroupDuality.lean`, `FourierCyclic.lean`,\n`FourierAdditi",
+      "quality_score": 0.84,
+      "sorry_count": 0,
+      "theorem_count": 70,
+      "timestamp": "2026-08-17T09:01:45",
+      "title": "Fourier Analysis on Finite Groups"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "2784f3be",
-      "domain": "Pythagorean",
-      "key_insight": "# Tower weights `Wₖ₊₁ = 2^Wₖ · Wₖ`: what is now proved, and what remains\n\nTwo self-contained Lean files carry the development:\n\n* `Catalog/Pythagorean/TowerRadix.lean` — the tower weights `W`, the pos",
-      "quality_score": 0.686,
-      "sorry_count": 0,
-      "theorem_count": 124,
-      "timestamp": "2026-08-06T05:23:19",
-      "title": "Let `W₀ = 1`, `Wₖ₊₁ = 2^Wₖ · Wₖ`, and let `K(n)` be the least `k` such that `n <"
-    },
     {
       "cycle_id": "713730e2",
       "domain": "Pythagorean",
@@ -2501,27 +2491,19 @@
       "theorem_count": 54,
       "timestamp": "2026-08-17T07:17:22",
       "title": "ArXiv paper: A Fourier-analytic Uniqueness Theorem for Lattice-point Enumerators"
+    },
+    {
+      "cycle_id": "525aecde",
+      "domain": "Shared",
+      "key_insight": "# Future directions\n\nFive falsifiable conjectures arising from the formal development in\n`Catalog/Shared/FourierFiniteAbelian.lean`, `FourierSubgroupDuality.lean`, `FourierCyclic.lean`,\n`FourierAdditi",
+      "quality_score": 0.84,
+      "sorry_count": 0,
+      "theorem_count": 70,
+      "timestamp": "2026-08-17T09:01:45",
+      "title": "Fourier Analysis on Finite Groups"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "be4e28d2",
-      "domain": "Shared",
-      "name": "fiber_card_sum",
-      "quality": 0.79
-    },
-    {
-      "cycle_id": "25d882e7",
-      "domain": "Physics",
-      "name": "to",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "25d882e7",
-      "domain": "Physics",
-      "name": "binomialFamily_truth",
-      "quality": 0.78
-    },
     {
       "cycle_id": "25d882e7",
       "domain": "Physics",
@@ -2803,9 +2785,27 @@
       "domain": "Cryptography",
       "name": "mem_shiftLattice",
       "quality": 0.83
+    },
+    {
+      "cycle_id": "525aecde",
+      "domain": "Shared",
+      "name": "on",
+      "quality": 0.84
+    },
+    {
+      "cycle_id": "525aecde",
+      "domain": "Shared",
+      "name": "conv_indF",
+      "quality": 0.84
+    },
+    {
+      "cycle_id": "525aecde",
+      "domain": "Shared",
+      "name": "dft_indF_zero",
+      "quality": 0.84
     }
   ],
-  "last_updated": "2026-08-17T07:17:22",
+  "last_updated": "2026-08-17T09:01:45",
   "open_questions": [
     {
       "context": "This file gives a **complete, self-contained proof** of that theorem (0 `sorry`s).",
@@ -3889,12 +3889,6 @@
     ],
     "Shared": [
       {
-        "cycle_id": "6c07c4d0",
-        "quality": 0.6858792756539236,
-        "theorems": 994,
-        "title": "ArXiv paper: Chebotarev geodesic theorem: non-split case"
-      },
-      {
         "cycle_id": "8a90ae7b",
         "quality": 0.640478157722513,
         "theorems": 659,
@@ -3947,6 +3941,12 @@
         "quality": 0.79,
         "theorems": 21,
         "title": "**Conjecture.** A closed, connected, orientable smooth three-manifold embeds smo"
+      },
+      {
+        "cycle_id": "525aecde",
+        "quality": 0.84,
+        "theorems": 70,
+        "title": "Fourier Analysis on Finite Groups"
       }
     ],
     "Tropical": [

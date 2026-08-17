@@ -78,72 +78,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Compression Research A1: Price of universality \u2014 minimax redundancy of universal decompressors"
   },
   {
-    "consumed_by_exp_id": "",
-    "description": "Network lab iteration 1 (compression axis). Hypothesis: per-layer quantization sensitivity is governed by each weight matrix's participation ratio (effective rank) PR=(\u03a3\u03c3\u00b2)\u00b2/\u03a3\u03c3\u2074.\n\n**Laws measured (3 seeds \u00d7 2 model classes, RTN per-row quantization, clean held-out):**\n\n**MLP (5-layer, smooth 2D classification \u2014 generalizes, no grokking):** the minimal bits b* to keep \u226598% held-out accuracy is a MONOTONE step function of PR \u2014 high-rank bottleneck (PR\u22485.4) needs 6 bits every seed, rank-1 readout (PR=1.0) needs 2 bits every seed. corr(PR, 3-bit damage) = \u22120.80/\u22120.92/\u22120.90; corr(PR, b*) = +0.87/+0.58/+0.94. PR-proportional equal-budget allocation beats uniform-4 on 2/3 seeds (+2.9/+3.5 pp at equal-or-fewer bits). PR is a DATA-FREE, BACKWARD-FREE sensitivity estimate (one SVD per layer).\n\n**Transformer LM (2-layer, 2nd-order automaton, test=1.0 \u2014 perfectly generalizing):** the law REVERSES \u2014 every interior matrix (PR 12\u201325) is robust at 2 bits, while the LOW-PR input embeddings (PR\u22484.4, 9.4) are the fragile layers (b*=3). Mechanism: per-row RTN at 2 bits has 1 level \u2192 collapses the 5-row embedding to \u00b1max sign patterns. Joint quantization compounds: uniform-2 fails (0.59\u20130.91), uniform-3 lossless (0.98\u20131.0) \u2192 per-layer isolation undercounts joint damage.\n\n**Verdict:** CONFIRMED within class, REFUTED as blanket transfer. Honest domain boundary: a data-free spectral law with a documented non-transfer; joint-aware allocation and real-scale (small BERT) validation are the next steps.\n\nBarriers: (a) no, (b) sensitivity-based mixed precision is a known family (HAWQ/OBS/GPTQ) \u2014 new = data-free PR law + domain reversal, (c) toy-scale acknowledged, (d) clean held-out, (e) 3 seeds, (f) joint-compounding documented, (g) equal budgets (1 seed overshoot reported), (h) +2\u20133.5pp on MLP, no win on toy LM.\n\nScript: /tmp/exp_net_quant.py. Paper: ResearchOutput/NetworkMathematics/1_SpectralQuantization_LawAndDomain.md. Round-net-1. Network exp 1, assessment v1.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1398",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-17T04:58:32.811411+00:00",
-    "title": "NET-1 SPECTRAL-QUANTIZATION: participation-ratio bit-need law holds on MLPs, reverses on tiny attention LMs"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "## ABELIAN-TYPE-CHANNEL (round-23 #1, experiment 414, assessment v190, paper 79)\n\n**The type-pair law is universal over all abelian cyclotomic conductors \u2014 and the >1-bit threshold is multi-stateness, not cyclicity (cyclicity amplifies). The motivating hypothesis is honestly refuted at the threshold: non-cyclic abelian groups DO exceed 1 bit when they have \u22653 type states.**\n\n### Universality\n\nPaper 78 proved I_pair = H(\u03a0) \u2212 (1/\u03c6(f))\u03a3_c H(\u03a0_c) for cyclic fields (f prime). The same exact law holds on ALL abelian conductors \u2014 cyclic primes (5,7,13), cyclic prime powers (9=3\u00b2, 25=5\u00b2), and non-cyclic abelian unit groups (C\u2082\u00d7C\u2082 f=8,12; C\u2082\u00d7C\u2082\u00d7C\u2082 f=24; C\u2082\u00d7C\u2084 f=15,20; C\u2082\u00d7C\u2082\u00d7C\u2084 f=40). Exact enumeration + 30k semiprime MC agree within 0.01 (f=8 0.2914 vs 0.2947; f=9 1.4749 vs 1.4739; f=15 1.0712 vs 1.0737; f=40 1.0216 vs 1.0226).\n\n### Prime level on composite conductors\n\nI(p mod f; T) = H(T) EXACT \u2014 first measured on non-cyclic abelian groups: C\u2082\u00d7C\u2084 (f=15) carries a **1.40-bit** multi-state type channel (1.4030 vs H(T)=1.4056), C\u2082\u00d7C\u2082\u00d7C\u2084 (f=40) 1.2700 vs 1.2718. **[T=1] splits-completely pins at H(1/\u03c6(f)) EXACTLY for every composite f**: f=8 0.8092 = H(1/4) (= paper 77's V\u2084 = Q(\u03b6\u2088)); f=15 0.5397 = H(1/8) \u2014 the **FIRST C\u2082\u00d7C\u2084 pinning**; f=40 0.3352 = H(1/16) \u2014 the **FIRST C\u2082\u00d7C\u2082\u00d7C\u2084 pinning**. Thickening zero (f=15: I(p mod 225; T) = I(p mod 15; T)); coprime controls flat.\n\n### Corrected structure law\n\nThe claim \"non-cyclic \u27f9 \u2264 1 bit\" is FALSE: C\u2082\u00d7C\u2084 (f=15,20) I_pair = **1.0737** and C\u2082\u00d7C\u2082\u00d7C\u2084 (f=40) = **1.0226**, both exceeding the binary-fork cap. The true threshold is TYPE-STATE COUNT:\n\n- **2 states \u27f9 I_pair = Is(\u03c6(f)) EXACTLY** (the type pair IS the split count): f=8 0.2947 = Is(4) \u2014 the full type channel of Q(\u03b6\u2088) is exactly paper 77's split-count; f=24 0.0906 = Is(8). Paper 74's Is(n) is the 2-state face.\n- **\u2265 3 states \u27f9 I_pair > 1 bit**, cyclic and non-cyclic alike.\n\nBut **cyclicity amplifies** \u2014 a clean 1D > 2D > 3D character law among 3-state groups:\n\n| group | I_pair |\n|---|---|\n| C\u2084 (cyclic, 1D) | 1.2500 |\n| C\u2082\u00d7C\u2084 (2D) | 1.0737 |\n| C\u2082\u00d7C\u2082\u00d7C\u2084 (3D) | 1.0226 |\n\nA cyclic (1-dimensional) character concentrates the N-conditioning best; each extra generator erodes the channel.\n\n### Two exact identities\n\n- **Prime-power identity**: Q(\u03b6\u2089) (3\u00b2, C\u2086) has EXACTLY the same type law as Q(\u03b6\u2087) (p, C\u2086) \u2014 I_pair = 1.4739 both. The type law of a cyclic field depends only on the cyclic order \u03c6(f), not the conductor.\n- **2-state identity**: for any 2-state type, I_pair = Is(\u03c6(f)) EXACT (verified to 1e-9 on f = 8, 12, 24).\n\nSemiprime checks: which-factor wall 0.0000\u20130.0002 (symmetric, factor-useless); coprime controls flat; s-projection recovers Is(\u03c6) (f=15 0.0888 vs Is(8)=0.0906; f=40 0.0257 vs Is(16)=0.0267).\n\n### Verdict\n\nCONFIRMED (universal law + corrected threshold). New exact objects: the type-pair law on non-cyclic abelian groups, the composite-conductor [T=1] pinnings (first C\u2082\u00d7C\u2084 and C\u2082\u00d7C\u2082\u00d7C\u2084), the prime-power identity, the 2-state identity, and the 1D>2D>3D amplification law. Factor-useless: symmetric (barrier 2), pure p-mod-f residue dial (barrier 5), N-computable only behind the CRT split (barrier 6), cyclotomic fields + Dirichlet characters + CRT + Chebotarev 1922 (barrier 8). Unifies papers 74 (Is(n) = 2-state face), 77 (Q(\u03b6\u2088) = the 2-state type channel), 78 (cyclic prime type channel). Barriers 2/5/6/8.\n\n*Script:* /tmp/exp_abeltype.py.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1399",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-17T04:58:32.811804+00:00",
-    "title": "ABELIAN-TYPE-CHANNEL (round-23 #1, experiment 414, assessment v190, paper 79)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "## C2XC2-PINNING-CONTRAST (round-22 #1, experiment 412, assessment v188, paper 77)\n\n**The first 2-dimensional abelianization G^ab = C\u2082\u00d7C\u2082, tested on the control pair of Q(\u221a2,i) = Q(\u03b6\u2088) (Gal = V\u2084, ABELIAN) and Q(\u221c2,i) (Gal = D\u2084, non-abelian) \u2014 identical character lattice, same abelianization, differing only in abelian-ness. The paper-71 criterion in its cleanest form: abelian V\u2084 pins the identity; non-abelian D\u2084 cannot.**\n\n### The control pair\n\nBoth fields share the three quadratic subfields Q(\u221a2), Q(i), Q(\u221a\u22122) \u27f9 the identical character lattice \u2014 (2|p) cond 8, (\u22121|p) cond 4, (\u22122|p) cond 8, all N-computable via p mod 8 \u2014 and the same G^ab = C\u2082\u00d7C\u2082. Only abelian-ness differs: V\u2084 (x\u2074\u22122x\u00b2+9, disc 384\u00b2) is abelian; D\u2084 (x\u2074\u22122, disc \u22122\u00b9\u00b9, [D\u2084,D\u2084]=\u27e8r\u00b2\u27e9\u2245C\u2082) is not. Histograms over 22,997 primes (2^18): V\u2084 nr=4 0.2487 (1/4), nr=0 0.7513; D\u2084 nr=4 0.1238 (1/8), nr=0 0.6257 (5/8), nr=2 0.2505 (1/4) \u2014 the exact signatures.\n\n### The criterion on the 2D abelianization\n\n- **V\u2084 (abelian) \u27f9 every fork pins**: [nr=4] \u27fa p\u22611 mod 8, I = 0.8092 = H(1/4) = 0.8113 EXACT.\n- **D\u2084 (non-abelian) \u27f9 only the \u27e8r\u00b2\u27e9-coset forks pin**: [nr=2] (rate 1/4) \u27fa p\u22617 mod 8, I = 0.8120 = H(1/4) EXACT \u2014 the first **JOINT-AND 2D fork** (AND of (2|p)=+1 with (\u22121|p)=\u22121; no character mod 8 has {7} as a level set); complement [nr\u2208{4,0}] \u27fa p\u2208{1,3,5} mod 8 equally pinned.\n- **The identity [nr=4] = {e} (rate 1/8) CANNOT pin**: e shares the commutator coset {e,r\u00b2} with r\u00b2 (same C\u2082\u00d7C\u2082 fibre (+1,+1)) \u27f9 **LEAKAGE** I = 0.2916 = H(1/8) \u2212 (1/4)H(1/2) = 0.29356 EXACT, CAPPED at every m (ladder m=4 0.1379, m=8/16 0.2936, coprime m=5 0). Large partner [nr=0] (rate 5/8) leaks 0.70443 EXACT.\n\n### Within-coset: the e-vs-r\u00b2 commutator coin\n\nP([e] | p\u22611 mod 8) = **0.4980** (D\u2084: e vs r\u00b2 a fair coin in the commutator fibre) vs **1.0000** (V\u2084: pinned). I(p mod 16; [e] | p\u22611 mod 8) = 0.0000 (z = \u22120.61) \u2014 the beyond-the-dial refinement invisible to every modulus. Cap check I(m=8)=I(m=16)=0.2916 < H(1/8) = 0.5436.\n\n### Semiprime (30k)\n\nThe paper-74 order-4 split-count law holds EXACTLY on BOTH rate-1/4 forks, including the D\u2084 joint-AND 2D event on a non-abelian field: V\u2084 [split] s 0.2892 vs Is(4)=0.2947, OR 0.0349 vs g(4)=0.0359, AND 0.1323 vs A(4)=0.1345, XOR 0.1994 vs X(4)=0.2044; D\u2084 [nr=2] s 0.3003, OR 0.0363, AND 0.1376, XOR 0.2087. The D\u2084 [e] leakage fork \u2014 the SEMIPRIME COLLAPSE of prime-level leakage: s 0.0421 (law 0.0428), OR 0.0034 (0.0030), AND 0.0306 (0.0318), XOR 0.0138 (0.0135). Which-factor wall 0.0000 for all three forks.\n\n### Classification table (C\u2082\u00d7C\u2082 row closed)\n\nC\u2082\u2192quadratic (54/72); C\u2083\u2192cubic H(1/3) (71); C\u2085\u2192order-5 H(1/5) (76); S\u2083/S\u2084\u2192sign-only (65\u201371); A\u2084\u2192cubic+within-V\u2084 flat (75); A\u2085\u2192absolutely flat (76); **V\u2084\u2192every fork pins [e]=H(1/4) EXACT; D\u2084\u2192coset-forks pin ([nr=2] joint-AND H(1/4)), [e] leaks 0.2936 capped, [nr=0] leaks 0.7044** (this paper). The 2D abelianization adds pinning CONTENT but the e-vs-r\u00b2 refinement stays commutator-invisible.\n\n### Verdict\n\nCONFIRMED. The paper-71 criterion holds on the first 2-dimensional abelianization; the control pair is its cleanest statement. Factor-useless: symmetric class functions with residue content only at the N-computable abelianization (barrier 2), a full 2D residue dial with invisible beyond-dial refinement (barrier 5), the C\u2082\u00d7C\u2082 fibre IS the quadratic-reciprocity content \u2014 computing the coset IS computing (\u03c7\u2082(p),\u03c7\u2084(p)) (barrier 6), all Galois 1832 + cyclotomic fields + quadratic/octic reciprocity + Chebotarev 1922 (barrier 8). Unifies papers 71, 74, 75, 76. Barriers 2/5/6/8.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1400",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-17T04:58:32.812192+00:00",
-    "title": "C2XC2-PINNING-CONTRAST (round-22 #1, exp 412, v188): 2D abelianization \u2014 abelian V4 pins [e], non-abelian D4 cannot"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "## A5-PERFECT-FLATNESS (round-21 #2, experiment 411, assessment v187, paper 76)\n\n**The splitting fork of a Gal(A\u2085) field is ABSOLUTELY unpinnable \u2014 closing paper 75's predicted A\u2085 row.** Papers 65\u201371 established: a binary splitting fork is congruence-pinned by a Dirichlet character IFF it factors through the abelianization G^ab of the Galois closure. Every group tested had G^ab \u2260 {1}. This experiment tests the final prediction: **A\u2085 perfect \u27f9 absolutely flat.**\n\n### The theorem (provable a priori)\n\nA\u2085 is perfect ([A\u2085,A\u2085]=A\u2085, A\u2085^ab={1}), so the only quotients of A\u2085 are A\u2085 and {e} \u2014 the splitting field L has NO nontrivial abelian subextension, hence **L \u2229 Q(\u03b6_m) = Q for EVERY modulus m**, Gal(L\u00b7Q(\u03b6_m)/Q) = **A\u2085 \u00d7 (Z/m)^\u00d7** (direct product), and by Chebotarev P(Frob_p \u2208 F | p \u2261 c mod m) = |F|/60 for every fork F and residue c \u27f9 **I(p mod m; fork) = 0 exactly in the limit, all forks, all m.** No pinning (no character exists); no leakage (paper 75's leakage needs a pinned super-channel). **A\u2085 realizes only the flat state.**\n\n### Machine-verified on x\u2075 + 20x + 16 (disc 32000\u00b2 = 2\u00b9\u2076\u00b75\u2076, Gal = A\u2085)\n\nPart A \u2014 exact A\u2085 signature over 22,997 primes: nr=5 0.0163 (id, 1/60), nr=2 0.3334 (3-cycles, 1/3), nr=1 0.2496 ([2,2], 1/4), nr=0 0.4007 (5-cycles, 2/5), **nr=3/nr=4 ZERO** (no transpositions \u27f9 G \u2286 A\u2085; distinguishes A\u2085 from D\u2085/C\u2085).\n\nPart B \u2014 ABSOLUTE FLATNESS: all 5 forks \u00d7 12 moduli (3,4,7,8,9,11,13,16,25,31,59,101, incl. the discriminant's 16/25 and the C\u2085 control's 11) at the **shuffled-null** (300 shuffles, paper-70 honest test): **GLOBAL max |z| = 2.00.** The strongest residue-invisibility in the lab, provable a priori.\n\nPart C \u2014 positive control: the abelian C\u2085 field Q(\u03b6\u2081\u2081)+ pins EXACTLY \u2014 I(p mod 11; [nr=5]) = **0.7198 = H(1/5) = 0.7219**, P=1.0000 on p\u2261\u00b11 mod 11, coprime m=13 flat \u2014 the pipeline detects pinning when it exists, so the A\u2085 flatness is real.\n\nPart D \u2014 semiprime (30k, 2^16 pool): C\u2085 obeys the paper-74 order-5 split-count law EXACTLY (s 0.2028 vs Is(5)=0.2027; OR 0.0203 vs 0.0215; AND 0.0995 vs 0.0979; XOR 0.1262 vs 0.1276; s-dist [0.64,0.32,0.04]), while A\u2085 forks give EVERY channel at null (|z|\u22640.9) \u2014 no character to carry s.\n\n### Verdict\n\nCONFIRMED. The pinning-content classification table is **CLOSED**: abelian \u27f9 pinned at H(1/n) (n=order), solvable non-abelian \u27f9 pinned at the abelianization, **perfect \u27f9 absolutely flat**. The three-state picture (pinned/flat/leakage) is exhausted. Factor-useless: symmetric class functions with zero residue content (barrier 2), the strongest structural-orthogonality seal (barrier 5), L\u2229Q(\u03b6_m)=Q behind the direct product (barrier 6), all Galois 1832 + A\u2085 simplicity + Chebotarev 1922 + cyclotomic fields (barrier 8). Unifies papers 71, 74, 75. Barriers 2/5/6/8. Round-21 COMPLETE 2/2.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1401",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-17T04:58:32.812650+00:00",
-    "title": "A5-PERFECT-FLATNESS: the A5 splitting fork is absolutely unpinnable (perfect \u27f9 flat, all forks \u00d7 all m) \u2014 paper 76, exp 411, v187"
-  },
-  {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e46e79a5",
     "description": "## OR-COLLAPSE-LAW (round-19 #2, experiment 407, assessment v183, paper 72)\n\n**An exact universal law of the semiprime OR collapse.** Paper 71 proved the fork-pinning criterion (a fork is congruence-pinned iff it factors through G^ab) and measured one collapse (cond-7 cubic OR = 0.0728 bits). Here is the general law: for any abelian field whose split-completely event is pinned by an order-n Dirichlet character (split \u27fa \u03c7(p)=1, P(split)=1/n), the semiprime OR [split(p) OR split(q)] obeys, for gcd(N,f)=1,\n\n**P(OR | \u03c7(N)=1) = 1/n, P(OR | \u03c7(N)\u22601) = 2/n, P(OR) = (2n\u22121)/n\u00b2, I(N mod f; OR) = g(n) = H((2n\u22121)/n\u00b2) \u2212 (1/n)H(1/n) \u2212 ((n\u22121)/n)H(2/n)** \u2014 universal in the order n, independent of field, degree, and conductor structure.\n\n### Machine-verified on 7 fields (2^22, 30k semiprimes, split sets empirically confirmed by nroots==deg)\n\n| field | n | f | I(N mod f; OR) | g(n) |\n|---|---|---|---|---|\n| x\u00b2\u2212x\u22121 (Q(\u221a5)) | 2 | 5 | 0.3076 | 0.3113 |\n| x\u00b3+x\u00b2\u22122x\u22121 (cyclic cubic) | 3 | 7 | 0.0704 | 0.0728 |\n| x\u00b3\u22123x+1 (cyclic cubic) | 3 | 9=3\u00b2 | 0.0735 | 0.0728 |\n| x\u2074\u22124x\u00b2+2 (Q(\u03b6\u2081\u2086)+, units C\u2082\u00d7C\u2084) | 4 | 16=2\u2074 | 0.0384 | 0.0359 |\n| x\u2075+x\u2074\u22124x\u00b3\u22123x\u00b2+3x+1 (Q(\u03b6\u2081\u2081)+) | 5 | 11 | 0.0222 | 0.0215 |\n| \u03a6\u2087 (Q(\u03b6\u2087)) | 6 | 7 | 0.0146 | 0.0144 |\n| cyclic cubic (character-only) | 3 | 21=3\u00b77 | 0.0700 | 0.0728 |\n\nPer-class conditional rates match 1/n and 2/n within 1\u20132% everywhere; coprime modulus FLAT; m=f\u00b2 invariant.\n\n### UNIFICATION \u2014 the two biggest residue channels of the lab are two points of one law\n\n- **The p\u22121 \u2113=3 symmetric OR (paper 54: 0.313) IS the n=2 case** with f=3 (split = p \u2261 1 mod 3, \u03c7 the quadratic character of Q(\u221a\u22123)): reproduced I(N mod 3; OR) = **0.3126** including the N\u22610 class, P(OR|N\u22611)=0.4942 (law 1/2), P(OR|N\u22612)=**1.0000** (law 2/n).\n- **Paper 71's cond-7 cubic OR (0.0728) is the n=3 case.**\n\n### The decay law\n\ng(n) monotone \u2192 0: 0.3113/0.0728/0.0359/0.0215/0.0144/0.0103/0.0077/0.0060 (n=2..9). The MORE the prime-level fork pins (H(1/n) \u2248 1 bit), the LESS its OR shows \u2014 no order-n Dirichlet fork ever yields more than g(n) \u2264 0.3113 symmetric OR bits.\n\n### Factor-useless (barriers 2/5/6/8)\n\nSymmetric (which-factor wall 0.0001\u20130.0002), a Dirichlet residue dial (QRLEAK family), sealed behind the CRT split, all classical (quadratic 1801 / cubic 1844 / higher reciprocity + Dirichlet characters + CRT). The residue-fork line is now quantitatively CLOSED at the semiprime level.\n\n**Verdict:** exact law CONFIRMED on 7 fields spanning prime/composite conductors and cyclic/non-cyclic unit groups. Round-19 2/2 done. Barriers 2/5/6/8.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_1402",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-17T04:58:32.813043+00:00",
     "title": "OR-COLLAPSE-LAW: semiprime OR of a cyclic split-complete fork = g(n) = H((2n-1)/n^2) - (1/n)H(1/n) - ((n-1)/n)H(2/n) bits (round-19 #2, exp 407, v183, paper 72)"
   },
@@ -907,6 +852,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-24T14:34:16.697733+00:00",
     "title": "Riemann Zeta: Zero-Free Regions and Density Estimates"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 525aecde (Q=0.840), which proved 70 theorems in Shared. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the discrete Fourier transform as representation theory of cyclic groups. Prove Parseval's theorem and the convolution theorem. Extend to arbitrary finite abelian groups. Prove the uncertainty principle: supp(f) \u00b7 supp(f\u0302) \u2265 |G|.",
+    "domains": [
+      "Shared"
+    ],
+    "id": "push_525aecde_c7061879",
+    "priority_score": 0.94,
+    "research_mode": "team",
+    "source_exp_id": "525aecde",
+    "status": "available",
+    "timestamp": "2026-08-17T09:01:45.769310+00:00",
+    "title": "Deepening: Fourier Analysis on Finite Groups"
   },
   {
     "consumed_by_exp_id": "",
@@ -5592,18 +5551,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Jacobian Conjecture: Degree 2 and 3 Cases"
   },
   {
-    "consumed_by_exp_id": "525aecde",
+    "consumed_by_exp_id": "",
     "description": "Formalize the discrete Fourier transform as representation theory of cyclic groups. Prove Parseval's theorem and the convolution theorem. Extend to arbitrary finite abelian groups. Prove the uncertainty principle: supp(f) \u00b7 supp(f\u0302) \u2265 |G|.",
     "domains": [
       "Analysis",
       "Algebra"
     ],
     "id": "fd_0664",
-    "phase": "A",
     "priority_score": 0.83,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-24T14:34:16.697777+00:00",
     "title": "Fourier Analysis on Finite Groups"
   },
@@ -19528,6 +19486,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Chebotarev's theorem that every square submatrix of the `p \u00d7 p` DFT matrix\nis nonsingular, which in turn follows from a resultant/Vandermonde computation over `Q(\u03b6_p)`\nusing the irreducibility of the `p`-th cyclotomic polynomial \u2014 machinery that Mathlib already\ncontains (`Polynomial.cyclotomic_irreducible`, `IsPrimitiveRoot`).",
+    "domains": [],
+    "id": "fd_1410",
+    "priority_score": 0.41040350877192977,
+    "research_mode": "team",
+    "source_exp_id": "525aecde",
+    "status": "available",
+    "timestamp": "2026-08-17T09:01:32.349835+00:00",
+    "title": "Chebotarev's theorem that every square submatrix of the `p \u00d7 p` DFT matrix"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The lcm reduction is already formal, so a conditional proof needs only the\ntorus version of Artin's conjecture; the failures visible in the table of\n`ComputationalEvidence.md` (`p = 17, 29, 41, 59`) give a ready-made test set.",
     "domains": [
       "Logic"
@@ -19554,5 +19524,65 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-17T07:17:07.148738+00:00",
     "title": "(from C5, first half now proved)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The `\u21d0` direction is proved (`FourierFA.uncertainty_eq_coset_modulation`); the `\u21d2`\ndirection is open in this development.",
+    "domains": [],
+    "id": "fd_1408",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "525aecde",
+    "status": "available",
+    "timestamp": "2026-08-17T09:01:31.838883+00:00",
+    "title": "The `\u21d0` direction is proved (`FourierFA.uncertainty_eq_coset_modulation`); the `\u21d2`"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Open here; the multiplicative bound `|supp f| \u00b7 |supp f\u0302| \u2265 p` is proved\n(`FourierCyclic.uncertainty_zmod`), and it is strictly weaker (e.g. `|supp f| = |supp f\u0302| = \u221ap`\nwould satisfy the product bound but violate the sum bound).",
+    "domains": [],
+    "id": "fd_1409",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "525aecde",
+    "status": "available",
+    "timestamp": "2026-08-17T09:01:32.094527+00:00",
+    "title": "Open here; the multiplicative bound `|supp f| \u00b7 |supp f\u0302| \u2265 p` is proved"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The \"if\" direction is proved (`FourierFA.poisson_summation`); the converse is open.",
+    "domains": [],
+    "id": "fd_1411",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "525aecde",
+    "status": "available",
+    "timestamp": "2026-08-17T09:01:32.595927+00:00",
+    "title": "The \"if\" direction is proved (`FourierFA.poisson_summation`); the converse is open."
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Both sides of the identity are already available as Lean theorems\n(`FourierFA.poisson_summation`, `FourierFA.dft_delta`), so the converse can be formalised as a\nfinite statement about the character table with no new analytic input.",
+    "domains": [],
+    "id": "fd_1412",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "525aecde",
+    "status": "available",
+    "timestamp": "2026-08-17T09:01:32.846985+00:00",
+    "title": "Both sides of the identity are already available as Lean theorems"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The inequality itself is **proved** (`FourierAdd.card_support_rep_ge`); what is open is\nthe second half \u2014 exhibiting explicit families where it is strictly stronger than the pigeonhole\nbound, and computing `E` for them.",
+    "domains": [],
+    "id": "fd_1413",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "525aecde",
+    "status": "available",
+    "timestamp": "2026-08-17T09:01:33.098615+00:00",
+    "title": "The inequality itself is proved"
   }
 ];

@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-17T07:17:26.024919+00:00",
+  "last_updated": "2026-08-17T09:01:48.995931+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -57652,6 +57652,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-08-17T07:17:25.828818+00:00",
       "title": "ArXiv paper: A Fourier-analytic Uniqueness Theorem for Lattice-point Enumerators"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Shared",
+      "duration_seconds": 3467.107618331909,
+      "end_time": 1786957277.694144,
+      "files_integrated": 4,
+      "job_id": "525aecde",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.84,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.553,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.84,
+        "novelty": 0.84,
+        "proof_depth": 0.84,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.84,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1786953810.5865257,
+      "strategy_count": 0,
+      "theorem_count": 70,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 64,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-08-17T09:01:48.798037+00:00",
+      "title": "Fourier Analysis on Finite Groups"
     }
   ]
 }
