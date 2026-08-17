@@ -854,20 +854,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle 921a0e7b (Q=0.830), which proved 105 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: It would upgrade \"the cost of internal soundness is one loop\"\n(`soundnessExt_sound_iff`, `iterExt_selfLoop_ncard`) into \"the cost is *nothing* for\nthe old theory\", i.e. a genuine conservativity theorem for tangled hierarchies \u2014 the\nformal counterpart of Hofstadter's claim that strange loops do not c",
-    "domains": [
-      "Computation"
-    ],
-    "id": "push_921a0e7b_50197f52",
-    "priority_score": 0.9299999999999999,
-    "research_mode": "team",
-    "source_exp_id": "921a0e7b",
-    "status": "available",
-    "timestamp": "2026-08-17T22:41:19.251239+00:00",
-    "title": "Deepening: It would upgrade \"the cost of internal soundness is one loop\""
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Building on cycle 3b29df87 (Q=0.820), which proved 110 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the Weil pairing on an elliptic curve and prove its bilinearity. Show that the BLS signature scheme is existentially unforgeable under the computational Diffie-Hellman assumption in the pairing group. Prove that the pairing allows short aggregate signatures.",
     "domains": [
       "Cryptography"
@@ -1455,17 +1441,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "Graph-Expander: Alon-Boppana Bound for Regular Graph Eigenvalues"
   },
   {
-    "consumed_by_exp_id": "9aa1e8d1",
+    "consumed_by_exp_id": "",
     "description": "Proves that quantizing transformer weight matrices onto modular lattice grids preserves global loss landscape convexity invariants.",
     "domains": [
       "Bridges"
     ],
     "id": "dir_50_50_600fb3ba",
-    "phase": "A",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "batch_50_injection",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-23T20:05:24.803690+00:00",
     "title": "Bridge-NumberTheory-ML: Arithmetic Geometry of Transformer Weight Lattices"
   },
@@ -1811,20 +1796,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle 5907c59d (Q=0.787), which proved 22 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that the geometry of spacetime can be reconstructed from the entanglement structure of a quantum state. Formalize the ER=EPR conjecture: show that entangled qubit pairs satisfy the properties of microscopic Einstein-Rosen bridges in a toy AdS/CFT model.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_5907c59d_51326e24",
-    "priority_score": 0.88678,
-    "research_mode": "team",
-    "source_exp_id": "5907c59d",
-    "status": "available",
-    "timestamp": "2026-08-02T22:19:35.900197+00:00",
-    "title": "Deepening: Emergent Spacetime from Quantum Entanglement"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Building on cycle ee1ae94f (Q=0.787), which proved 11 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Extend the Kronecker-Weber theorem to arbitrary algebraic fields by constructing Hilbert class fields. Formalize explicit class field theory and connect to the Langlands program.",
     "domains": [
       "NumberTheory"
@@ -2037,6 +2008,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-25T15:47:33.250380+00:00",
     "title": "Deepening: The repaired repeated-summand rule is now completely classified: its unique traj"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 33519cdb (Q=0.780), which proved 70 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Open here; the multiplicative bound `|supp f| \u00b7 |supp f\u0302| \u2265 p` is proved\n(`FourierCyclic.uncertainty_zmod`), and it is strictly weaker (e.g. `|supp f| = |supp f\u0302| = \u221ap`\nwould satisfy the product bound but violate the sum bound).",
+    "domains": [
+      "MachineLearning"
+    ],
+    "id": "push_33519cdb_d210ed2c",
+    "priority_score": 0.88,
+    "research_mode": "team",
+    "source_exp_id": "33519cdb",
+    "status": "available",
+    "timestamp": "2026-08-17T23:37:08.105745+00:00",
+    "title": "Deepening: Open here; the multiplicative bound `|supp f| \u00b7 |supp f\u0302| \u2265 p` is proved"
   },
   {
     "consumed_by_exp_id": "",
@@ -19489,16 +19474,29 @@ window.FUTURE_DIRECTIONS = [
     "title": "The low-tail experiment."
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c4b3dd3f",
     "description": "Two finite `G`-actions have the same *trace distribution*\n    `{|X^g| : g \u2208 G}` **iff** they have the same orbit counts on `k`-tuples for all `k \u2264 N`\n    (`traceDistribution_eq_iff_card_orbits_eq`), and then for all `k` whatsoever\n    (`card_orbits_eq_of_le`). Gradewise q-series form: `traceDistribution_graded_eq`.",
     "domains": [],
     "id": "fd_1434",
+    "phase": "A",
     "priority_score": 0.4260952380952381,
     "research_mode": "team",
     "source_exp_id": "286b3a0e",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-17T13:54:05.925280+00:00",
     "title": "Conjecture A, closed"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## Conjecture A (Parity-gap conjecture). For all `n \u2265 2`, all injective `S, T : Fin n \u2192 ZMod p`, the parity-weighted exponent counter `permCoeff S T` is nonzero somewhere; in fact `max_r |permCoeff S T r| \u2265 1` is attained at a residue of the form `\u2211_j S(\u03c3 j) T j` for a permutation `\u03c3` of *minimal* Coxeter length among those realising its exponent.",
+    "domains": [],
+    "id": "fd_1464",
+    "priority_score": 0.4188205128205128,
+    "research_mode": "team",
+    "source_exp_id": "33519cdb",
+    "status": "available",
+    "timestamp": "2026-08-17T23:36:54.745326+00:00",
+    "title": "Conjecture A (Parity-gap conjecture). For all `n \u2265 2`, all injective `S, T : Fin n \u2192 ZMod p`, the parity-weighted exponent counter `permCoeff S T` is nonzero somewhere; in fact `max_r |permCoeff S T r"
   },
   {
     "consumed_by_exp_id": "0cf95d8d",
@@ -19512,6 +19510,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-08-17T13:54:06.155568+00:00",
     "title": "Sharpness"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "All the surrounding infrastructure now exists in this development (primitive root\n`om`, character `ez`, Leibniz expansion, cyclotomic minimal polynomial); the one missing\ningredient is the Schur-polynomial specialisation `s_\u03bb(1,\u2026,1) = \u220f_{j<k}(t_k\u2212t_j)/(k\u2212j)`, which\nMathlib does not yet contain and which is a self-contained, reusable addition.",
+    "domains": [],
+    "id": "fd_1465",
+    "priority_score": 0.41600000000000004,
+    "research_mode": "team",
+    "source_exp_id": "33519cdb",
+    "status": "available",
+    "timestamp": "2026-08-17T23:36:54.988368+00:00",
+    "title": "All the surrounding infrastructure now exists in this development (primitive root"
   },
   {
     "consumed_by_exp_id": "11c9ff9f",
@@ -19617,15 +19627,14 @@ window.FUTURE_DIRECTIONS = [
     "title": "The `\u21d0` direction is proved (`FourierFA.uncertainty_eq_coset_modulation`); the `\u21d2`"
   },
   {
-    "consumed_by_exp_id": "33519cdb",
+    "consumed_by_exp_id": "",
     "description": "Open here; the multiplicative bound `|supp f| \u00b7 |supp f\u0302| \u2265 p` is proved\n(`FourierCyclic.uncertainty_zmod`), and it is strictly weaker (e.g. `|supp f| = |supp f\u0302| = \u221ap`\nwould satisfy the product bound but violate the sum bound).",
     "domains": [],
     "id": "fd_1409",
-    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "525aecde",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-17T09:01:32.094527+00:00",
     "title": "Open here; the multiplicative bound `|supp f| \u00b7 |supp f\u0302| \u2265 p` is proved"
   },
@@ -20100,5 +20109,29 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-17T22:41:06.978687+00:00",
     "title": "The abstract theory here is stated for an arbitrary index type of"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "It is **proved** here when `|supp f| \u2264 3`, when `|supp f\u0302| \u2264 3`, when `|supp f| \u2265 p \u2212 3`,\n  when `supp f` is an arithmetic progression, and when `supp f\u0302` is an arithmetic progression\n  (collected in `sum_bound_known_regimes`).",
+    "domains": [],
+    "id": "fd_1463",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "33519cdb",
+    "status": "available",
+    "timestamp": "2026-08-17T23:36:54.493174+00:00",
+    "title": "It is proved"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "This is the smallest genuine strengthening beyond one progression, it needs no new\nMathlib theory (only resultants of two univariate polynomials), and it would already cover all\nsupports of size \u2264 4 in `ZMod p` for `p \u2265 7`, closing the first open case of Conjecture A by a\ndifferent route.",
+    "domains": [],
+    "id": "fd_1466",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "33519cdb",
+    "status": "available",
+    "timestamp": "2026-08-17T23:36:55.232879+00:00",
+    "title": "This is the smallest genuine strengthening beyond one progression, it needs no new"
   }
 ];
