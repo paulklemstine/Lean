@@ -40,7 +40,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "7ee9f549",
+    "consumed_by_exp_id": "23eee1e8",
     "description": "**Part of:** Research plan — *Compression Beyond the Pigeonhole Bound* (Phase B, Question 2: can random number generators help?).\n\n## Research question\nA surprising amount of real-world data **is** PRNG output: game worlds, simulations, certain file formats, crypto keys. Detect it and recover the seed → compress to ~0 bits beyond the seed.\n\n## Approach\n- Robust **PRNG fingerprinting**: which generator family produced this stream?\n- **Seed recovery**: Berlekamp–Massey for LFSRs; solver-based inversion for other families.\n- A classifier that routes each file to *seed-compressible* vs. *model-compressible*.\n\n## Deliverable\nDetection + seed-recovery tooling and a benchmark of seed-compressible files found in real corpora.\n\n## Falsifiability / gate\nFor a recovered seed: decompressed output must exactly reproduce the file. Measures what fraction of real data is seed-compressible.\n\n**Milestone:** M2 (cheap, warm-up infrastructure). Related: [[B1]].\n",
     "domain_bridges": [],
     "domains": [
@@ -97,7 +97,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "e46e79a5",
+    "consumed_by_exp_id": "",
     "description": "## OR-COLLAPSE-LAW (round-19 #2, experiment 407, assessment v183, paper 72)\n\n**An exact universal law of the semiprime OR collapse.** Paper 71 proved the fork-pinning criterion (a fork is congruence-pinned iff it factors through G^ab) and measured one collapse (cond-7 cubic OR = 0.0728 bits). Here is the general law: for any abelian field whose split-completely event is pinned by an order-n Dirichlet character (split ⟺ χ(p)=1, P(split)=1/n), the semiprime OR [split(p) OR split(q)] obeys, for gcd(N,f)=1,\n\n**P(OR | χ(N)=1) = 1/n, P(OR | χ(N)≠1) = 2/n, P(OR) = (2n−1)/n², I(N mod f; OR) = g(n) = H((2n−1)/n²) − (1/n)H(1/n) − ((n−1)/n)H(2/n)** — universal in the order n, independent of field, degree, and conductor structure.\n\n### Machine-verified on 7 fields (2^22, 30k semiprimes, split sets empirically confirmed by nroots==deg)\n\n| field | n | f | I(N mod f; OR) | g(n) |\n|---|---|---|---|---|\n| x²−x−1 (Q(√5)) | 2 | 5 | 0.3076 | 0.3113 |\n| x³+x²−2x−1 (cyclic cubic) | 3 | 7 | 0.0704 | 0.0728 |\n| x³−3x+1 (cyclic cubic) | 3 | 9=3² | 0.0735 | 0.0728 |\n| x⁴−4x²+2 (Q(ζ₁₆)+, units C₂×C₄) | 4 | 16=2⁴ | 0.0384 | 0.0359 |\n| x⁵+x⁴−4x³−3x²+3x+1 (Q(ζ₁₁)+) | 5 | 11 | 0.0222 | 0.0215 |\n| Φ₇ (Q(ζ₇)) | 6 | 7 | 0.0146 | 0.0144 |\n| cyclic cubic (character-only) | 3 | 21=3·7 | 0.0700 | 0.0728 |\n\nPer-class conditional rates match 1/n and 2/n within 1–2% everywhere; coprime modulus FLAT; m=f² invariant.\n\n### UNIFICATION — the two biggest residue channels of the lab are two points of one law\n\n- **The p−1 ℓ=3 symmetric OR (paper 54: 0.313) IS the n=2 case** with f=3 (split = p ≡ 1 mod 3, χ the quadratic character of Q(√−3)): reproduced I(N mod 3; OR) = **0.3126** including the N≡0 class, P(OR|N≡1)=0.4942 (law 1/2), P(OR|N≡2)=**1.0000** (law 2/n).\n- **Paper 71's cond-7 cubic OR (0.0728) is the n=3 case.**\n\n### The decay law\n\ng(n) monotone → 0: 0.3113/0.0728/0.0359/0.0215/0.0144/0.0103/0.0077/0.0060 (n=2..9). The MORE the prime-level fork pins (H(1/n) ≈ 1 bit), the LESS its OR shows — no order-n Dirichlet fork ever yields more than g(n) ≤ 0.3113 symmetric OR bits.\n\n### Factor-useless (barriers 2/5/6/8)\n\nSymmetric (which-factor wall 0.0001–0.0002), a Dirichlet residue dial (QRLEAK family), sealed behind the CRT split, all classical (quadratic 1801 / cubic 1844 / higher reciprocity + Dirichlet characters + CRT). The residue-fork line is now quantitatively CLOSED at the semiprime level.\n\n**Verdict:** exact law CONFIRMED on 7 fields spanning prime/composite conductors and cyclic/non-cyclic unit groups. Round-19 2/2 done. Barriers 2/5/6/8.\n",
     "domain_bridges": [],
     "domains": [
@@ -109,7 +109,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-17T04:58:32.813043+00:00",
     "title": "OR-COLLAPSE-LAW: semiprime OR of a cyclic split-complete fork = g(n) = H((2n-1)/n^2) - (1/n)H(1/n) - ((n-1)/n)H(2/n) bits (round-19 #2, exp 407, v183, paper 72)"
   },
@@ -257,6 +257,25 @@
     "status": "available",
     "timestamp": "2026-08-17T13:53:58.220287+00:00",
     "title": "Deepening: Topological-Algebraic Bridge: Fundamental Group as a Complete Invariant"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle e46e79a5 (Q=0.860), which proved 67 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## OR-COLLAPSE-LAW (round-19 #2, experiment 407, assessment v183, paper 72)\n\n**An exact universal law of the semiprime OR collapse.** Paper 71 proved the fork-pinning criterion (a fork is congruence-pinned iff it factors through G^ab) and measured one collapse (cond-7 cubic OR = 0.0728 bits). Here i",
+    "domain_bridges": [],
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_e46e79a5_b975e84b",
+    "lineage_refs": [],
+    "priority_score": 0.95,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "e46e79a5",
+    "status": "available",
+    "timestamp": "2026-08-17T16:46:24.152995+00:00",
+    "title": "Deepening: OR-COLLAPSE-LAW: semiprime OR of a cyclic split-complete fork = g(n) = H((2n-1)/"
   },
   {
     "ambition_level": "extension",
@@ -2447,44 +2466,6 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "Building on cycle ef4982e9 (Q=0.789), which proved 11 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that every Galois connection between posets induces a topology on each poset such that the Galois maps become continuous. Show that the fixed points of a Galois connection form a complete lattice (Knaster-Tarski). Bridge to algebraic geometry: Zariski topology on Spec(R) arises from the Galois",
-    "domain_bridges": [],
-    "domains": [
-      "Bridges"
-    ],
-    "id": "push_ef4982e9_dd54d0f2",
-    "lineage_refs": [],
-    "priority_score": 0.88888,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "ef4982e9",
-    "status": "available",
-    "timestamp": "2026-08-02T15:29:38.200404+00:00",
-    "title": "Deepening: Bridge: Galois Connections Between Order Theory and Topology"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 72d619d5 (Q=0.789), which proved 21 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: In homotopy type theory (HoTT), equal things can be equal in different ways — there can be multiple paths between two points. Apply this to cooking: two recipes can produce the same dish, but the paths (methods) may differ. The type of a dish is its flavor profile (a point in taste space R^n where n",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_72d619d5_76cfa23a",
-    "lineage_refs": [],
-    "priority_score": 0.88874,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "72d619d5",
-    "status": "available",
-    "timestamp": "2026-07-30T12:13:11.239098+00:00",
-    "title": "Deepening: Homotopy Type Theory of Cooking Recipes: Paths Between Dishes"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "Building on cycle 89e28e84 (Q=0.789), which proved 12 theorems in Algebra. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize Wilson's epsilon expansion for the phi^4 critical exponents. Prove that eta = epsilon^2/54 + O(epsilon^3) in 4-epsilon dimensions. Verify the Feynman diagram computation and show that the renormalization group beta function has a non-trivial fixed point for d < 4.",
     "domain_bridges": [],
     "domains": [
@@ -2922,6 +2903,25 @@
     "status": "available",
     "timestamp": "2026-08-12T16:18:37.975803+00:00",
     "title": "Deepening: Three Structural Barrier Theorems for Integer Factorization"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 7ee9f549 (Q=0.780), which proved 78 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Part of:** Research plan — *Compression Beyond the Pigeonhole Bound* (Phase B, Question 2: can random number generators help?).\n\n## Research question\nA surprising amount of real-world data **is** PRNG output: game worlds, simulations, certain file formats, crypto keys. Detect it and recover the se",
+    "domain_bridges": [],
+    "domains": [
+      "MachineLearning"
+    ],
+    "id": "push_7ee9f549_def45a6d",
+    "lineage_refs": [],
+    "priority_score": 0.88,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "7ee9f549",
+    "status": "available",
+    "timestamp": "2026-08-17T16:46:12.297819+00:00",
+    "title": "Deepening: Compression Research B5: PRNG-generated real-world data — detection and seed rec"
   },
   {
     "ambition_level": "extension",
@@ -26733,5 +26733,64 @@
     "status": "available",
     "timestamp": "2026-08-17T13:54:18.069073+00:00",
     "title": "The shell constant is optimal: there exist `N` with `n` representations and\n   `N ≤ 114 (n−1)³ · (1 + o(1))`?"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "A `2L`-symbol window suffices to identify a stream of linear complexity `≤ L`\n  (`eq_of_complexityLE_of_agree_two_mul`), proved through the `F[X]`-module\n  structure on streams; linear complexity is subadditive (`complexityLE_add`).",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_1447",
+    "lineage_refs": [],
+    "priority_score": 0.4,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "7ee9f549",
+    "status": "available",
+    "timestamp": "2026-08-17T16:45:56.242804+00:00",
+    "title": "A `2L`-symbol window suffices to identify a stream of linear complexity `≤ L`"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "the exact law `I(N mod f ; OR) = g(n) = H((2n-1)/n²) − (1/n)H(1/n) − ((n−1)/n)H(2/n)`\n  (`or_collapse_law`), derived from a purely group-theoretic fibre count\n  (`card_prodFiber`, `card_orFiber`, `card_orEvent`, `orRate_eq_channel`);",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_1448",
+    "lineage_refs": [],
+    "priority_score": 0.4,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "e46e79a5",
+    "status": "available",
+    "timestamp": "2026-08-17T16:46:18.194294+00:00",
+    "title": "the exact law `I(N mod f ; OR) = g(n) = H((2n-1)/n²) − (1/n)H(1/n) − ((n−1)/n)H(2/n)`"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "The seven measured fields in the experiment already span prime and\nprime-power and composite conductors and cyclic and non-cyclic unit groups, and\nall seven land on the single curve `g(n)` proved here; the remaining step is a\nformal Chebotarev/Dirichlet-density input, which is the only genuinely\narithmetic ingredient the law needs.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "NumberTheory"
+    ],
+    "id": "fd_1449",
+    "lineage_refs": [],
+    "priority_score": 0.4,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "e46e79a5",
+    "status": "available",
+    "timestamp": "2026-08-17T16:46:18.440869+00:00",
+    "title": "The seven measured fields in the experiment already span prime and"
   }
 ]

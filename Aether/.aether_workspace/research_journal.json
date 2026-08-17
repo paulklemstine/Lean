@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "a9efa47b",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Power-Sum GCD Factoring and Carmichael Periodicity\n\nDerived from what survived (and what broke) in the formalisation pass; every item is\nstated so that it can be refuted by a sin",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-08-15T11:41:08",
-      "title": "Power-Sum GCD Factoring & Carmichael Periodicity"
-    },
-    {
       "cycle_id": "aeab7c87",
       "domain": "Applications",
       "key_insight": "# Future directions: denominators of rational points on Mordell curves\n\nDerived from cycles 3–9\n(`Catalog/Applications/MordellDenominator{Squares,Filtration,Orbits,LocalLaw}.lean`,\n`Catalog/Applicatio",
@@ -499,19 +489,19 @@
       "theorem_count": 78,
       "timestamp": "2026-08-17T16:46:11",
       "title": "Compression Research B5: PRNG-generated real-world data — detection and seed recovery"
+    },
+    {
+      "cycle_id": "e46e79a5",
+      "domain": "Applications",
+      "key_insight": "# FUTURE DIRECTIONS — after the OR-COLLAPSE-LAW (paper 72)\n\nWhat is now formally settled (file `Catalog/Applications/OrCollapseLaw.lean`,\n0 sorries, only the standard axioms):\n\n* the exact law `I(N mo",
+      "quality_score": 0.86,
+      "sorry_count": 0,
+      "theorem_count": 67,
+      "timestamp": "2026-08-17T16:46:23",
+      "title": "OR-COLLAPSE-LAW: semiprime OR of a cyclic split-complete fork = g(n) = H((2n-1)/n^2) - (1/n)H(1/n) -"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "96503fdf",
-      "domain": "Logic",
-      "key_insight": "# Future directions\n\nConcrete, falsifiable conjectures suggested by the formalization in\n`Catalog/Logic/ConstructiveAnalysis/` (files `BishopReals.lean`,\n`ConstructiveIVT.lean`, `BrouwerianCounterexam",
-      "quality_score": 0.622,
-      "sorry_count": 0,
-      "theorem_count": 131,
-      "timestamp": "2026-08-06T12:29:37",
-      "title": "Constructive Mathematics: Bishop's Analysis"
-    },
     {
       "cycle_id": "68319f3d",
       "domain": "Computation",
@@ -2501,27 +2491,19 @@
       "theorem_count": 78,
       "timestamp": "2026-08-17T16:46:11",
       "title": "Compression Research B5: PRNG-generated real-world data — detection and seed recovery"
+    },
+    {
+      "cycle_id": "e46e79a5",
+      "domain": "Applications",
+      "key_insight": "# FUTURE DIRECTIONS — after the OR-COLLAPSE-LAW (paper 72)\n\nWhat is now formally settled (file `Catalog/Applications/OrCollapseLaw.lean`,\n0 sorries, only the standard axioms):\n\n* the exact law `I(N mo",
+      "quality_score": 0.86,
+      "sorry_count": 0,
+      "theorem_count": 67,
+      "timestamp": "2026-08-17T16:46:23",
+      "title": "OR-COLLAPSE-LAW: semiprime OR of a cyclic split-complete fork = g(n) = H((2n-1)/n^2) - (1/n)H(1/n) -"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "922db13f",
-      "domain": "NumberTheory",
-      "name": "one_le_two_pow",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "12195e06",
-      "domain": "Algebra",
-      "name": "of",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "12195e06",
-      "domain": "Algebra",
-      "name": "self_mem_orbit",
-      "quality": 0.72
-    },
     {
       "cycle_id": "12195e06",
       "domain": "Algebra",
@@ -2803,9 +2785,27 @@
       "domain": "MachineLearning",
       "name": "shift_pow_apply",
       "quality": 0.78
+    },
+    {
+      "cycle_id": "e46e79a5",
+      "domain": "Applications",
+      "name": "gOR_mul_sq_eq",
+      "quality": 0.86
+    },
+    {
+      "cycle_id": "e46e79a5",
+      "domain": "Applications",
+      "name": "tendsto_mul_log_one_add_inv",
+      "quality": 0.86
+    },
+    {
+      "cycle_id": "e46e79a5",
+      "domain": "Applications",
+      "name": "tendsto_mul_log_one_sub_inv",
+      "quality": 0.86
     }
   ],
-  "last_updated": "2026-08-17T16:46:11",
+  "last_updated": "2026-08-17T16:46:23",
   "open_questions": [
     {
       "context": "## Main Results (all sorry-free); sorry; sorry",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "8dd43c13",
-        "quality": 0.79294,
-        "theorems": 32,
-        "title": "EML-Activation-Monotonicity: Global Convexity Conditions for EML Transcendentals"
-      },
-      {
         "cycle_id": "3664af53",
         "quality": 0.686,
         "theorems": 122,
@@ -3141,6 +3135,12 @@
         "quality": 0.87,
         "theorems": 524,
         "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
+      },
+      {
+        "cycle_id": "e46e79a5",
+        "quality": 0.86,
+        "theorems": 67,
+        "title": "OR-COLLAPSE-LAW: semiprime OR of a cyclic split-complete fork = g(n) = H((2n-1)/"
       }
     ],
     "Bridges": [
