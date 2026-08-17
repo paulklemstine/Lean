@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "50be6807",
-      "domain": "Algebra",
-      "key_insight": "# Future directions — bold, testable conjectures from the A₄ fork-pinning cycle\n\nThe formal cycle established: (i) the pinned/flat/leaking **trichotomy** for an\narbitrary finite dial (`info_trichotomy",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 171,
-      "timestamp": "2026-08-14T20:53:03",
-      "title": "A4-FORK-PINNING: first cubic-pinned non-abelian fork (A4 V4-order, I = H(1/3) exact) — paper 75, exp"
-    },
-    {
       "cycle_id": "beb0e52b",
       "domain": "Probability",
       "key_insight": "# Future directions: falsifiable conjectures from the fork-pinning formalization\n\nThe verified core is: for the uniform measure on a finite Galois group `G`, a fork `Y` satisfies\n`I(X;Y) = H(Y)` iff `",
@@ -499,19 +489,19 @@
       "theorem_count": 116,
       "timestamp": "2026-08-17T05:50:57",
       "title": "NET-48: The direct test survives via the MEDIAN — k*=160 at (d=4, ctx=2048, seed=3), all four point-"
+    },
+    {
+      "cycle_id": "93afd30b",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions — Berggren Spectral Resonance\n\nDerived from the three research cycles recorded in\n`Catalog/Cryptography/BerggrenSpectral/` (spectra → resonance → factorization → exact\nspectrum, tr",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 122,
+      "timestamp": "2026-08-17T07:17:00",
+      "title": "Berggren-Spectral-Eigenvalues: Modular Energy Resonance for RSA Integer Factorization"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "413bc2f0",
-      "domain": "Logic",
-      "key_insight": "# Future directions\n\nWhat is formalised (all statements proved, no `sorry`), in `Logic/Rademacher/`:\n\n* `Basic.lean` — empirical Rademacher complexity of a class of vectors: vanishing on\n  singletons,",
-      "quality_score": 0.7947599999999999,
-      "sorry_count": 0,
-      "theorem_count": 72,
-      "timestamp": "2026-08-06T03:47:31",
-      "title": "Generalization Bounds via Rademacher Complexity"
-    },
     {
       "cycle_id": "66bb09ac",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 116,
       "timestamp": "2026-08-17T05:50:57",
       "title": "NET-48: The direct test survives via the MEDIAN — k*=160 at (d=4, ctx=2048, seed=3), all four point-"
+    },
+    {
+      "cycle_id": "93afd30b",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions — Berggren Spectral Resonance\n\nDerived from the three research cycles recorded in\n`Catalog/Cryptography/BerggrenSpectral/` (spectra → resonance → factorization → exact\nspectrum, tr",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 122,
+      "timestamp": "2026-08-17T07:17:00",
+      "title": "Berggren-Spectral-Eigenvalues: Modular Energy Resonance for RSA Integer Factorization"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "3b29df87",
-      "domain": "Cryptography",
-      "name": "aggregate_signature_unique",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "ade8206b",
-      "domain": "Novelty",
-      "name": "eventually_lt_floorSlope",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "ade8206b",
-      "domain": "Novelty",
-      "name": "isUnlimited_floorSlope",
-      "quality": 0.85
-    },
     {
       "cycle_id": "ade8206b",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Logic",
       "name": "quotaProb_two",
       "quality": 0.79
+    },
+    {
+      "cycle_id": "93afd30b",
+      "domain": "Cryptography",
+      "name": "det_M2R_sub",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "93afd30b",
+      "domain": "Cryptography",
+      "name": "berg_two_eigen_iff",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "93afd30b",
+      "domain": "Cryptography",
+      "name": "berg_two_eigen_neg_one",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-17T05:50:57",
+  "last_updated": "2026-08-17T07:17:00",
   "open_questions": [
     {
       "context": "This file gives a **complete, self-contained proof** of that theorem (0 `sorry`s).",
@@ -3331,12 +3331,6 @@
     ],
     "Cryptography": [
       {
-        "cycle_id": "a95dbc85",
-        "quality": 0.686,
-        "theorems": 112,
-        "title": "ArXiv paper: Even smaller universal posets"
-      },
-      {
         "cycle_id": "2c38bc1a",
         "quality": 0.7055950000000001,
         "theorems": 3,
@@ -3389,6 +3383,12 @@
         "quality": 0.82,
         "theorems": 110,
         "title": "Elliptic Curve Cryptography: Weil Pairing and BLS Signatures"
+      },
+      {
+        "cycle_id": "93afd30b",
+        "quality": 0.82,
+        "theorems": 122,
+        "title": "Berggren-Spectral-Eigenvalues: Modular Energy Resonance for RSA Integer Factoriz"
       }
     ],
     "Geometry": [
