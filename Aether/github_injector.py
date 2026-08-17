@@ -84,7 +84,11 @@ def inject_directions_into_memory(workspace_path: Path):
     # Keep track of existing issue numbers to avoid duplicates
     existing_issues = set()
     for d in directions_list:
-        if d.get("source") == "github_injection" and "github_issue" in d:
+        # Only count live (non-pruned) directions — pruned directions
+        # should not block re-injection of their GitHub issues.
+        if (d.get("source") == "github_injection"
+                and "github_issue" in d
+                and d.get("status") != "pruned"):
             existing_issues.add(d["github_issue"])
 
     injected_count = 0

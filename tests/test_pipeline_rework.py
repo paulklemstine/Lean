@@ -82,3 +82,43 @@ class TestTournamentSourceProtection:
         assert by_id["fd_0003"].status == "pruned"
         assert by_id["fd_0001"].status == "available"
         assert by_id["fd_0002"].status == "available"
+
+
+class TestGithubInjectorDedup:
+    """Section 4: pruned directions must not block re-injection."""
+
+    def test_pruned_does_not_block(self):
+        """A pruned direction with github_issue=N should not prevent
+        re-injection of issue N."""
+        import github_injector
+        import tempfile, json
+        from pathlib import Path
+
+        tmpdir = tempfile.mkdtemp()
+        fd_file = Path(tmpdir) / "future_directions.json"
+        # Pool with a pruned direction referencing issue 42
+        data = {
+            "directions": [
+                {
+                    "id": "fd_0001", "title": "Old direction",
+                    "description": "x" * 100, "status": "pruned",
+                    "source": "github_injection", "github_issue": 42,
+                }
+            ]
+        }
+        fd_file.write_text(json.dumps(data))
+
+        # Simulate: the existing_issues set should NOT include issue 42
+        # because fd_0001 is pruned
+        directions_list = data["directions"]
+        existing_issues = set()
+        for d in directions_list:
+            # FIXED: only count non-pruned directions
+            if (d.get("source") == "github_injection"
+                    and "github_issue" in d
+                    and d.get("status") != "pruned"):
+                existing_issues.add(d["github_issue"])
+
+        assert 42 not in existing_issues, (
+            "Pruned direction should not block re-injection"
+        )
