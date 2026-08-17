@@ -139,20 +139,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle 2e6124e7 (Q=0.880), which proved 100 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The inequality itself is **proved** (`FourierAdd.card_support_rep_ge`); what is open is\nthe second half \u2014 exhibiting explicit families where it is strictly stronger than the pigeonhole\nbound, and computing `E` for them.",
-    "domains": [
-      "Physics"
-    ],
-    "id": "push_2e6124e7_2c3cc7e6",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "2e6124e7",
-    "status": "available",
-    "timestamp": "2026-08-17T20:44:54.901895+00:00",
-    "title": "Deepening: The inequality itself is proved"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Building on cycle 37827e5f (Q=0.850), which proved 21 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formally proves the semicircle law for Wigner ensembles: the empirical spectral distribution of a random Hermitian matrix with independent entries converges in probability to the semicircle distribution as the dimension grows, establishing the universality of bulk eigenvalue statistics for random ma",
     "domains": [
       "Probability"
@@ -865,6 +851,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-17T07:17:22.608319+00:00",
     "title": "Deepening: ArXiv paper: A Fourier-analytic Uniqueness Theorem for Lattice-point Enumerators"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 921a0e7b (Q=0.830), which proved 105 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: It would upgrade \"the cost of internal soundness is one loop\"\n(`soundnessExt_sound_iff`, `iterExt_selfLoop_ncard`) into \"the cost is *nothing* for\nthe old theory\", i.e. a genuine conservativity theorem for tangled hierarchies \u2014 the\nformal counterpart of Hofstadter's claim that strange loops do not c",
+    "domains": [
+      "Computation"
+    ],
+    "id": "push_921a0e7b_50197f52",
+    "priority_score": 0.9299999999999999,
+    "research_mode": "team",
+    "source_exp_id": "921a0e7b",
+    "status": "available",
+    "timestamp": "2026-08-17T22:41:19.251239+00:00",
+    "title": "Deepening: It would upgrade \"the cost of internal soundness is one loop\""
   },
   {
     "consumed_by_exp_id": "",
@@ -1808,20 +1808,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-06T07:00:49.176626+00:00",
     "title": "Deepening: **Conjecture.** For every integer `k \u2265 5`, there is a threshold `N\u2080(k)` such tha"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 78bbd545 (Q=0.787), which proved 10 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that the tropicalization of a variety V over a non-Archimedean field is the limit of V as the valuation goes to infinity. Bridge: the tropical fundamental theorem states that the tropicalization of V equals the corner locus of the tropical polynomial. Show that tropical intersection numbers eq",
-    "domains": [
-      "Tropical"
-    ],
-    "id": "push_78bbd545_a8853678",
-    "priority_score": 0.8874099999999999,
-    "research_mode": "team",
-    "source_exp_id": "78bbd545",
-    "status": "available",
-    "timestamp": "2026-07-31T10:08:45.600616+00:00",
-    "title": "Deepening: Bridge: Tropical Geometry as a Limit of Classical Algebraic Geometry"
   },
   {
     "consumed_by_exp_id": "",
@@ -8105,17 +8091,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Strongly complete sets and a conjecture of Erd\u0151s"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ed687362",
     "description": "Investigate the ArXiv paper 'Edge-decomposition into Two Triangular Forests is NP-complete' and formalize its key results. Abstract: Let $\\mathcal F$ be a graph class that is closed under topological minors and 1-sums, has decidable membership, contains a triangle, and is not the class of all graphs. Recently, Lee, Liu, and Tsai [ICALP 2026] showed that the edge-decomposition problem into $k \\geq 3$ elements of $\\mathcal F$ is NP-hard. In particular, their general hardness reduction covers a long-standing problem on outerthickness (when $\\mathcal F$ is the class of outerplanar graphs). On the other hand, it is well known that decomposing a graph into forests is polynomial-time solvable, as implied by work of Edmonds [J. Res. Natl. Bur. Stand. B. 1965]. In this paper, we take a first step toward determining the complexity of edge-decomposition problems into just two graphs (the case $k=2$). We consider the simplest possible graph class $\\mathcal F$ satisfying the criteria above: the triangular forests, that is, graphs in which every 2-connected component is a triangle. We prove that determining whether a graph can be",
     "domains": [
       "Computation",
       "Logic"
     ],
     "id": "fd_0133",
+    "phase": "A",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.13999v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-16T15:52:39.780537+00:00",
     "title": "ArXiv paper: Edge-decomposition into Two Triangular Forests is NP-complete"
   },
@@ -19436,6 +19423,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The `2 ^ k` computation and the sandwich theorem are already\nformalized; what is missing is only the graph decomposition, a combinatorial\nstatement about `SimpleGraph`/`Quiver` SCCs that Mathlib can support.",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "fd_1461",
+    "priority_score": 0.44833333333333336,
+    "research_mode": "team",
+    "source_exp_id": "921a0e7b",
+    "status": "available",
+    "timestamp": "2026-08-17T22:41:06.736108+00:00",
+    "title": "The `2 ^ k` computation and the sandwich theorem are already"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "`\u03a3_g |X^g|^k = (B_k + \u03a3_P (m_P \u2212 1))\u00b7|G|`\n    (`bell_defect_eq`): the excess of a moment over its Bell floor is `|G|` times the number of\n    *extra* orbits per pattern, and it vanishes exactly for `k`-transitive actions\n    (`sum_patternMultiplicity_sub_one_eq_zero_iff`).\n\n---\n\n\n\n## Open conjectures for the next cycle\n\n\n\n### Conjecture E\u2032 (the fibre spectrum is a strictly finer invariant)\n\n*The vector `(m_P)_P` of pattern multiplicities separates pairs of actions that the scalar moment\n`\u03a3_g |X^g|^k` cannot; and `m_P = 1` for all `P` with exactly `j` blocks iff the action is\n`j`-transitive (the block-graded refinement of the fibrewise criterion).*\n\nThe key insight is that the fibrewise criterion now proved treats all patterns at once, whereas the\ntransitivity hierarchy is graded by the number of blocks: restricting attention to the patterns\nwith `j` blocks should isolate exactly `j`-transitivity inside the `k`-tuple data, giving a\nspectrum of invariants between the moments.\n\nWhy now? The decomposition, the fibrewise criterion and the exact defect formula are proved\n(items 18\u201319), and cycle 3 also shows the scalar moment cannot separate actions (item 15), so the\nonly thing left to test is whether the refined vector can.\n\n\n\n### Conjecture F (Bell defect bounds the failure of transitivity)\n\n*The Bell defect `D_k(G,X) := \u03a3_g |X^g|^k \u2212 B_k|G| \u2265 0` satisfies: `D_k = 0 \u21d2 D_j = 0` for `j \u2264 k`\n(proved), and quantitatively `D_2 > 0 \u21d2 D_k \u2265 c_k \u00b7 D_2` for an explicit combinatorial constant\n`c_k` depending only on `k`.*\n\nThe key insight is that the defect counts non-singleton fibres of the orbit-to-pattern map with\nmultiplicity, and a failure of 2-transitivity is inherited by every longer tuple by padding with\nrepeated coordinates, which multiplies the excess by a controlled partition count.\n\nWhy now? Non-negativity, the implication `D_k = 0 \u21d2 D_j = 0`, and now the exact formula\n`D_k = |G|\u00b7\u03a3_P (m_P \u2212 1)` (item 19) are theorems; only the quantitative propagation between\ndifferent `k` is open, and it is now a statement about fibre sizes rather than about moments.\n\n\n\n### Conjecture G (how much labelling an injective aggregate must spend)\n\n*Every injective aggregate `A : (Fin m \u2192 QLaurent) \u2192 QLaurent` that is additive in each argument\nmust spread the coefficients over at least `m` pairwise disjoint infinite sets of exponents; in\nparticular no such aggregate has image contained in the series supported on a set of density\n`< 1/m`.*\n\nThe key insight is that cycle 3 identified symmetry as the obstruction, so what remains is a\ncounting bound: injectivity forces the aggregate to reserve, for each index, an infinite family of\nindependent coefficient slots, which is exactly what the interleaving construction does with the\nresidues mod `m`.\n\nWhy now? The dichotomy (interleaving injective, every symmetric aggregate non-injective) is proved;\nthe missing piece is a lower bound showing interleaving is not just *an* answer but essentially the\n*only* shape of answer.\n\n\n\n### Co",
     "domains": [
       "Combinatorics",
@@ -19526,15 +19527,14 @@ window.FUTURE_DIRECTIONS = [
     "title": "Fibre spectrum (Conjecture E, first half, closed)"
   },
   {
-    "consumed_by_exp_id": "921a0e7b",
+    "consumed_by_exp_id": "",
     "description": "It would upgrade \"the cost of internal soundness is one loop\"\n(`soundnessExt_sound_iff`, `iterExt_selfLoop_ncard`) into \"the cost is *nothing* for\nthe old theory\", i.e. a genuine conservativity theorem for tangled hierarchies \u2014 the\nformal counterpart of Hofstadter's claim that strange loops do not corrupt the levels\nthey sit above.",
     "domains": [],
     "id": "fd_1414",
-    "phase": "A",
     "priority_score": 0.4143921568627451,
     "research_mode": "team",
     "source_exp_id": "615053e5",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-17T09:57:44.101662+00:00",
     "title": "It would upgrade \"the cost of internal soundness is one loop\""
   },
@@ -20045,5 +20045,60 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-17T20:44:49.335385+00:00",
     "title": "Mathlib now carries the exact-doubling structure theorem"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**Locally stratified tangles are free** \u2014 positive loops inside a level,\n  negative dependencies strictly descending (`LocallyStratified.conservative`),\n  which strictly generalizes both the positive and the graded cases.",
+    "domains": [],
+    "id": "fd_1458",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "921a0e7b",
+    "status": "available",
+    "timestamp": "2026-08-17T22:41:06.021262+00:00",
+    "title": "Locally stratified tangles are free"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**Sharpness**: the liar loop destroys conservativity (`liar_not_conservative`);\n  a single positive loop costs exactly one bit and `k` loops exactly `2 ^ k`\n  models while adding **no** theorem (`loopDen_models_ncard`,\n  `loopDen_conservative`).",
+    "domains": [
+      "Physics"
+    ],
+    "id": "fd_1459",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "921a0e7b",
+    "status": "available",
+    "timestamp": "2026-08-17T22:41:06.258566+00:00",
+    "title": "Sharpness: the liar loop destroys conservativity (`liar_not_conservative`);"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The semantic theorem fixes the right hypotheses (local\nstratification) and the right boundary (`tautDen`, the liar), so a proof-theoretic\nversion now has a precise target and a known counterexample to respect.",
+    "domains": [
+      "Logic"
+    ],
+    "id": "fd_1460",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "921a0e7b",
+    "status": "available",
+    "timestamp": "2026-08-17T22:41:06.497598+00:00",
+    "title": "The semantic theorem fixes the right hypotheses (local"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The abstract theory here is stated for an arbitrary index type of\nnames with an arbitrary denotation function, so an arithmetical instantiation is\na matter of supplying `\u03b9 := \u2115` and a `den` built from a G\u00f6del numbering \u2014 no\nchange to the theorems is required.",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_1462",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "921a0e7b",
+    "status": "available",
+    "timestamp": "2026-08-17T22:41:06.978687+00:00",
+    "title": "The abstract theory here is stated for an arbitrary index type of"
   }
 ];

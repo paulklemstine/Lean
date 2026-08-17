@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "3ce74e62",
-      "domain": "Geometry",
-      "key_insight": "# Future Directions — Power-Sum GCD Factoring & Carmichael Periodicity\n\nDerived from the Stage-3 analysis and Stage-4 critique of the results now proved in\n`Catalog/Geometry/PowerSum*.lean`. Each conj",
-      "quality_score": 0.85,
-      "sorry_count": 0,
-      "theorem_count": 72,
-      "timestamp": "2026-08-15T16:48:51",
-      "title": "Power-Sum GCD Factoring & Carmichael Periodicity"
-    },
-    {
       "cycle_id": "ac45a9d9",
       "domain": "Novelty",
       "key_insight": "# Future directions — \"only bad primes\" thread (after cycles 6–7)\n\nCycle 6 proved that a good prime cannot avoid an orbit: for every `N`, every prime `ℓ ≥ 5`\nwith `ℓ ∤ N` and every rational point `P`",
@@ -499,19 +489,19 @@
       "theorem_count": 100,
       "timestamp": "2026-08-17T20:44:54",
       "title": "The inequality itself is proved"
+    },
+    {
+      "cycle_id": "921a0e7b",
+      "domain": "Computation",
+      "key_insight": "# Future directions: conservativity of tangled hierarchies\n\nThe Lean development in `Catalog/Computation/TangledHierarchy*.lean` establishes:\n\n* **Conservativity criterion**: a tangle is conservative",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 105,
+      "timestamp": "2026-08-17T22:41:18",
+      "title": "It would upgrade \"the cost of internal soundness is one loop\""
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "d6f1fad6",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions\n\nThis cycle turned the seven informal \"future directions\" of the transformer catalog file into\nseven compiling, `sorry`-free Lean developments in\n`Catalog/MachineLearning/Transform",
-      "quality_score": 0.6536503144654089,
-      "sorry_count": 0,
-      "theorem_count": 177,
-      "timestamp": "2026-08-07T03:15:16",
-      "title": "The current development proves an exact finite-domain universality result for a"
-    },
     {
       "cycle_id": "b2707824",
       "domain": "Geometry",
@@ -2501,27 +2491,19 @@
       "theorem_count": 100,
       "timestamp": "2026-08-17T20:44:54",
       "title": "The inequality itself is proved"
+    },
+    {
+      "cycle_id": "921a0e7b",
+      "domain": "Computation",
+      "key_insight": "# Future directions: conservativity of tangled hierarchies\n\nThe Lean development in `Catalog/Computation/TangledHierarchy*.lean` establishes:\n\n* **Conservativity criterion**: a tangle is conservative",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 105,
+      "timestamp": "2026-08-17T22:41:18",
+      "title": "It would upgrade \"the cost of internal soundness is one loop\""
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "094ca37a",
-      "domain": "MachineLearning",
-      "name": "every_unit_essential",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "094ca37a",
-      "domain": "MachineLearning",
-      "name": "in",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "d71114d5",
-      "domain": "Logic",
-      "name": "quotaBudget_le_iff",
-      "quality": 0.79
-    },
     {
       "cycle_id": "d71114d5",
       "domain": "Logic",
@@ -2803,9 +2785,27 @@
       "domain": "Physics",
       "name": "rep_eq_card_fiber",
       "quality": 0.88
+    },
+    {
+      "cycle_id": "921a0e7b",
+      "domain": "Computation",
+      "name": "eval_fnot",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "921a0e7b",
+      "domain": "Computation",
+      "name": "eval_fiff",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "921a0e7b",
+      "domain": "Computation",
+      "name": "sat_tarskiAx_iff",
+      "quality": 0.83
     }
   ],
-  "last_updated": "2026-08-17T20:44:54",
+  "last_updated": "2026-08-17T22:41:18",
   "open_questions": [
     {
       "context": "## Main Results (all sorry-free); sorry; sorry",
@@ -3269,12 +3269,6 @@
     ],
     "Computation": [
       {
-        "cycle_id": "6db0a277",
-        "quality": 0.6345797888127854,
-        "theorems": 15,
-        "title": "For every finite terminating normalization system equipped with a probability la"
-      },
-      {
         "cycle_id": "f566f199",
         "quality": 0.84,
         "theorems": 62,
@@ -3327,6 +3321,12 @@
         "quality": 0.82,
         "theorems": 110,
         "title": "Persistent Homology of Prime Numbers: The Topology of Arithmetic"
+      },
+      {
+        "cycle_id": "921a0e7b",
+        "quality": 0.83,
+        "theorems": 105,
+        "title": "It would upgrade \"the cost of internal soundness is one loop\""
       }
     ],
     "Cryptography": [
