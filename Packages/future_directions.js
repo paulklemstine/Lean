@@ -9,7 +9,7 @@ window.FUTURE_DIRECTIONS = [
       "Novelty"
     ],
     "id": "fd_1345",
-    "phase": "B",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
@@ -48,16 +48,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Compression Research B5: PRNG-generated real-world data \u2014 detection and seed recovery"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f262016d",
     "description": "**Part of:** Research plan \u2014 *Compression Beyond the Pigeonhole Bound* (Phase B, Question 2: can random number generators help?).\n\n## Research question\nPigeonhole governs *exact* decoding for *all* strings. Relax to: **decoder fails with probability \u2264 \u03b5** (almost-lossless). Random codebooks (Shannon's random-coding argument) then reach near-optimal rates \u2014 the counting bound relaxes by an \u03b5-dependent factor.\n\n## Approach\n- Constructive almost-lossless schemes with small failure probability.\n- The real obstacle is **decoder search complexity** (naive random coding is exponential), not the rate \u2014 tackle that.\n- Error detection (checksums) so failures are **never silent**.\n\n## Deliverable\nA scheme plus a proof that decode succeeds with probability \u2265 1\u2212\u03b5, and its exact decoding complexity.\n\n## Falsifiability / gate\nFor each scheme: bound on P(failure) and an explicit decoder-complexity figure. No silent corruption allowed.\n\n**Milestone:** M9.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_1368",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-17T04:13:54.293504+00:00",
     "title": "Compression Research B3: Almost-lossless / Monte Carlo compression"
   },
@@ -74,104 +75,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-17T04:13:54.296356+00:00",
     "title": "Compression Research A1: Price of universality \u2014 minimax redundancy of universal decompressors"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "## NET-16 \u2014 Network/LLM research lab (round-net-16, speed axis \u2014 depth-scaling check of the NET-15 DIFFUSE-BUT-PRUNABLE law)\n\n**Hypothesis.** NET-15 (d=4) established: trained causal attention is diffuse (eff support 46.6/128) yet data-free top-k key/value pruning is lossless at k*=16 (0.984 \u2265 0.98 bar, 8\u00d7 attention-core FLOPs). Its stated caveat was scale. This round tests DEPTH: does lossless-k / the concentration law shift at d=8 on the same real causal LM?\n\n**Setup (identical NET-15).** 5 Gutenberg novels, top-4097 word vocab, ctx 128, contiguous 90/10 split, causal transformer dm=64/4 heads, **d=8 s0**, 2000 AdamW steps. Full acc **0.1619** (d=4 0.1571 \u2014 deeper trains slightly better), bar 0.98\u00b7full=**0.1587**, full loss **5.0788** (d=4 5.1188). Same explicit causal-attention eval (k=96 recovers full loss exactly, 5.0789). Top-k mask from each eval input own causal attention at inference \u2014 data-free.\n\n**Results.**\n\n1. **Part A \u2014 the concentration law is DEPTH-INDEPENDENT.** Effective support per head 43.3\u201356.3, **mean 50.1/128** (d=4 46.6) \u2014 if anything slightly MORE diffuse with depth. Top-k mass lower at every level (top-16 0.586 vs 0.617). The diffuse regime is a stable property of this model scale.\n2. **Part B \u2014 lossless-k GROWS with depth: k* \u2248 4\u00b7d.** k=4 0.873 \u2717 (d=4 0.940), k=8 0.919 \u2717 (0.971), **k=16 0.961 \u2717 (d=4 0.984 \u2713)** \u2014 the 8\u00d7 lever FAILS at d=8, \u0394loss +0.047; **k=32 0.983 \u2713** (d=4 0.998), \u0394loss +0.015; k=64 0.997 \u2713; k=96 0.999 \u2713. Every retained fraction lower and \u0394loss roughly doubled at each k \u2014 per-layer top-k error compounding through the residual stream, the speed-axis mirror of NET-11 compression compounding (deeper = worse).\n3. **Part B2 \u2014 selection importance GROWS with depth.** Random-k gap: k=16 top-k 0.961 vs random 0.866 = **+9.5 pts** (d=4 +6.2); k=32 0.983 vs 0.912 = **+7.1 pts** (d=4 +4.8). The deeper model relies more on the trained selection information.\n\n**Verdict.** **LAWS: CONCENTRATION-LAW-DEPTH-INDEPENDENT** (eff support \u224847\u201350 both depths) + **LOSSLESS-K-SCALES-WITH-DEPTH (k* \u2248 4d at fixed ctx)** + **SELECTION-IMPORTANCE-GROWS-WITH-DEPTH**. DIFFUSE-BUT-PRUNABLE survives with a documented depth boundary: the 8\u00d7 attention-core lever at d=4 is a **4\u00d7** lever at d=8, and the d=16 prediction (k*=64, 2\u00d7) is under test (round-net-17, running). The attention-cost lever is real but a shallow-depth property at fixed ctx \u2014 scale-up claims must quote depth.\n\n**8-barrier check:** (a) top-k from eval-input causal attention at inference, joint evals, k=96 exact-loss match (5.0789 vs 5.0788) \u2014 nothing injected; (b) top-k sparse attention known, but the k*\u22484d depth-scaling + flat concentration law is new; catalog 698 pkgs no depth-scaling attention-cost law on a real small causal LM; (c) confronted \u2014 real causal LM, real text, causal masking, 4097 vocab, 0.98 bar on real next-token; (d) top-k data-free (eval-input attention), contiguous split, held-out eval; (e) 1 model/depth, reproduced exactly 6\u00d7, monotone sweep with a knee that MOVED (16\u219232) in the direction consistent with NET-11 both-depth compounding; (f) 0.98 bar + raw loss, 6-pt sweep + 2-pt random control (fixed seed), k=96 exact numerics, retained vs each model own full (full-loss change 5.1188\u21925.0788 reported); (g) full ref at each depth + random-k control (+9.5 pts), same bar; (h) real lever (4\u00d7 at d=8) but depth-scaling is the honest caveat for scale-up claims.\n\n**Assessment:** v16, 16 experiments (NET-1..NET-16). Paper: `ResearchOutput/NetworkMathematics/16_AttentionCostDepthScalingSmallLM.md`. Script: /tmp/exp_net_attncost_d8.py.\n\n**Next (fan-out running):** round-net-17 (d=16: is k*\u22484d confirmed, predicts k*=64/2\u00d7?), round-net-18 (d=8 compression floor: does per-channel uniform-4 stay lossless at depth?), round-net-19 (carry chain at scale). Speed axis now 3 real-scale iterations (NET-10 negative, NET-15 positive, NET-16 boundary).",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1383",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-17T04:58:32.805036+00:00",
-    "title": "NET-16: The attention-cost law scales with depth \u2014 lossless-k k* \u2248 4d, concentration depth-independent"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "## NET-15 \u2014 Network/LLM research lab (round-net-15, speed-axis rotation \u2014 the attention-cost law, FIRST POSITIVE REAL-SCALE SPEED RESULT)\n\n**Hypothesis.** Trained causal attention is concentrated (small effective support), so a data-free top-k key/value cap (keep only the k most-attended past positions per query, chosen at inference from the input own causal attention weights, renormalize) preserves held-out accuracy at an L/k attention-FLOP reduction. Two independent claims: (A) is attention concentrated? (B) is top-k pruning lossless at k \u226a ctx?\n\n**Setup (identical NET-10/11/12/13/14 family).** 5 Gutenberg novels, top-4097 word vocab, ctx 128, contiguous 90/10 split, causal transformer dm=64/4 heads (head dim 16), d=4 s0, 2000 AdamW steps. Full acc reproduces **0.1571 a sixth time**; bar 0.98\u00b7full = 0.1540, full loss 5.1188. Explicit causal-attention forward verified against the standard forward (k=96 recovers full loss exactly, 5.1188). Top-k mask computed from each eval input own trained attention weights at inference \u2014 data-free, no calibration, no leakage.\n\n**Results.**\n\n1. **Part A \u2014 attention is DIFFUSE, not concentrated.** Per-query effective support exp(H): per-head 39.5\u201354.7, **mean 46.6/128** vs uniform-causal baseline \u224864.5 \u2014 only ~28% more concentrated than uniform. Top-k mass fraction: top-4 0.311, top-8 0.450, top-16 0.617, top-32 0.795. The classical \"attention focuses on a few tokens\" picture does NOT hold at this scale.\n2. **Part B \u2014 yet top-k pruning is LOSSLESS at 12.5% of context.** k=4 0.940 \u2717 (loss +0.084), k=8 0.971 \u2717 (+0.043), **k=16 0.984 \u2713 (loss +0.018, +0.36% rel) \u2014 8\u00d7 attention-core FLOP reduction**, k=32 0.998 \u2713 (+0.005, 4\u00d7), k=64 1.001 \u2713, k=96 1.000 \u2713 (\u22480 loss). Knee between k=8 and k=16. At ctx 128 attention \u224895% of inference FLOPs (\u2248260\u00b7L\u00b2 per token per layer vs \u224833k projections + \u224866k MLP), so 8\u00d7 attention-core \u2248 **5\u20136\u00d7 total-model speedup**, data-free, no retraining.\n3. **Part B2 \u2014 the selection is genuine.** Random-k control: k=16 0.922 vs top-k 0.984 = **\u22126.2 pts**; k=32 0.950 vs 0.998 = **\u22124.8 pts**. Notably random-16 (0.922) is even WORSE than top-8 (0.971) \u2014 selecting the best 8 positions by weight beats selecting any 16 at random.\n\n**Mechanism reconciling A and B.** Attention is diffuse, but the mass beyond the top-k positions is LOW-INFORMATION \u2014 renormalizing over the top-k concentrates the retained mass onto the information-carrying positions. Pruning accuracy tracks the weight-selected positions, not the total retained mass.\n\n**Verdict.** The concentration premise (A) is REFUTED (effective support \u2248 47/128) yet data-free top-k pruning is **LOSSLESS at k=16** (0.984 \u2265 0.98 bar, loss +0.018, 8\u00d7 attention-core / ~5\u20136\u00d7 total FLOP reduction), with weight-selected positions genuinely better than random (+6.2 pts). LAW: **DIFFUSE-BUT-PRUNABLE** \u2014 attention need not be sharply concentrated for lossless top-k pruning at ~12% of context on real text; the speed lever works without a concentration assumption. **First positive real-scale speed result** (toy positives NET-6/7/8; real-scale negative NET-10).\n\n**8-barrier check:** (a) top-k mask uses the model own causal attention weights computed on each eval input at inference \u2014 the deployed algorithm; k=64/96 recover the full loss exactly, confirming the explicit-attention path matches the standard forward; nothing injected; (b) top-k sparse attention is a known family (Longformer-style/streaming) but the specific law \u2014 lossless at 12.5% of context *despite* diffuse attention (eff support 47) \u2014 runs against the concentration-justifies-sparsity story; catalog 698 pkgs, no prior attention-cost law on a real small causal LM; (c) confronted \u2014 real causal LM, real text, causal masking, 4097 vocab, 0.98 bar on real next-token; (d) top-k from the eval input own causal attention, contiguous no-overlap split, held-out eval \u2014 no leakage; (e) 1 model reproduced exactly 6\u00d7, every eval a full joint forward on 60k held-out tokens, monotone k-sweep with clean knee; (f) 0.98\u00b7full bar AND raw loss both reported, 6-point k-sweep + 2-point random control (fixed seed), explicit causal attention verified against standard forward (k=96 exact loss match), eval noise \u22480.15% \u226a k=16 margin; (g) full-attention reference (0.1571/5.1188) + random-k control at the same k (+6.2 pts), same bar; (h) real lever: 8\u00d7 attention-core / ~5\u20136\u00d7 total-model speedup lossless by the accuracy bar (loss +0.36%), data-free and retraining-free \u2014 caveated to scale (measured at dm=64/ctx 128; lossless-k and the concentration law may shift at larger scale).\n\n**Assessment:** v15, 15 experiments (NET-1..NET-15). Paper: `ResearchOutput/NetworkMathematics/15_AttentionCostSmallLM.md`. Script: /tmp/exp_net_attncost.py.\n\n**Next:** does the attention-cost law / lossless-k shift at LARGER scale (d=8, bigger dm, longer ctx \u2014 re-measure effective support + k-sweep)? OR carry chain at scale; OR the d=8 compression floor check; OR load-bearing depth (non-positional stack content with causal masking). Speed axis now has 2 real-scale iterations (NET-10 negative, NET-15 positive).",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1384",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-17T04:58:32.805681+00:00",
-    "title": "NET-15: Attention is diffuse but data-free top-k pruning is lossless at 8\u00d7 \u2014 the DIFFUSE-BUT-PRUNABLE attention-cost law (first positive real-scale speed result)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "## NET-14 \u2014 Network/LLM research lab (round-net-14, compression-axis rotation \u2014 the LAST lever)\n\n**Hypothesis.** NET-13 explicitly left one mechanism untested: activation-aware quantization WITH calibration passes \u2014 AWQ/SmoothQuant-style per-channel *activation* scales (from a calibration forward pass) absorbed into the weight quantizer. If this breaks the 4-bit interface floor, calibration passes are the sub-4-bit lever.\n\n**Setup (identical NET-10/11/12/13 family).** 5 Gutenberg novels, top-4097 word vocab, ctx 128, contiguous 90/10 split, causal transformer dm=64/4 heads, d=4 s0, 2000 AdamW steps. Full acc reproduces **0.1571 a fifth time**; bar 0.98\u00b7full = 0.1540. Calibration: forward pass on 512 **training** sequences (held-out eval never sees it \u2014 no leak). AWQ weight-only quantizer: W[:,j] \u2190 W[:,j]/act_max_j^\u03b1, per-row RTN, scale back.\n\n**Results.**\n1. **Key diagnostic \u2014 the activation scales are near-FLAT.** Mean per-channel activation max: un 2.130, wq0 2.116, mi0 2.117, mo0 1.820; max/mean 1.07\u20131.24. AWQ's absorption only pays when some channels carry 10\u2013100\u00d7 the activation magnitude of others \u2014 this scale has no channel heterogeneity to exploit (activation-side mirror of NET-13's flat weight outliers).\n2. **Part A \u2014 no help at uniform-3.** AWQ \u03b1=0.25 0.938, **\u03b1=0.50 0.943** (vs plain per-row 0.947 \u2014 marginally *worse*), \u03b1=1.00 0.888 (much worse). Uniform-4 identically lossless both ways (0.987).\n3. **Part A2 \u2014 interface-at-3 still fails.** Interface (embed/pos/un) at 3 with AWQ scales, interior clean: **0.958 @ 3.18 bits**, 2.2 pts short of the bar.\n4. **Part B \u2014 activation-informed allocation is a BAD signal.** 25 Linears ranked by mean per-channel act max, terciles 4/3/2: **0.828 @ 3.69** (0.841 with AWQ) vs weight-based role 0.892 @ 3.64, uniform-4 0.987 @ 4.00. The ranking only re-discovers the interface is fragile; it cannot allocate below 4 bits.\n\n**Verdict.** The 4-bit interface floor is not just data-free-irreducible (NET-13) but **activation-irreducible** (NET-14) at this scale \u2014 even calibration passes don't buy sub-4-bit lossless weight quantization on a small causal LM, because the per-channel activation scales are near-uniform (max/mean \u2248 1.2). **The compression axis at small real-LM scale is EXHAUSTED:** every primitive (per-tensor 5.31 bits, per-row/per-column uniform-4 = 4.00 lossless floor, magnitude-split, percentile-clip, activation-calibration) leaves the interface irreducible below 4 bits. Per-channel uniform-4 (4.00 bits, data-free, 0.987) is the practical optimum.\n\n**8-barrier check:** (a) joint evals, AWQ = standard data-free-of-test transform, calibration on training only \u2014 no injection; (b) AWQ/SmoothQuant are mature \u2014 the NEGATIVE (doesn't transfer to a small causal LM because activation heterogeneity is absent) is the content; catalog 698 pkgs, no prior activation-calibration test on a real small causal LM; (c) confronted \u2014 real causal LM, real text, causal masking, 4097 vocab; (d) calibration = training sequences only, eval = held-out; (e) 1 model reproduced exactly 5\u00d7, every eval a full joint held-out forward; (f) 0.98 bar, 3-value \u03b1-sweep, raw activation stats, plain per-row refs re-verified in-run; hook-closure bug crashed the first launch before data, fixed + re-run clean; (g) plain per-row refs re-measured + role/uniform-4 refs from NET-12; (h) negative closes the compression branch at this scale \u2014 rotation to speed (carry chain at scale / attention-cost laws) or a larger-scale compression check (d=8) is next.\n\n**Assessment:** v14, 14 experiments (NET-1..NET-14). Paper: `ResearchOutput/NetworkMathematics/14_ActivationAwareQuantSmallLM.md`. Script: /tmp/exp_net_act.py.\n\n**Next:** rotate to the speed axis (carry chain at scale / attention-cost laws \u2014 speed has had 1 real-scale iteration) OR the one open compression question: does the 4-bit interface floor shift at d=8 / bigger dm?",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1385",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-17T04:58:32.806153+00:00",
-    "title": "NET-14: Activation-aware quantization WITH calibration passes is a no-op \u2014 the compression axis is exhausted at small real-LM scale"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "## NET-13 \u2014 Network/LLM research lab (round-net-13, compression-axis rotation)\n\n**Hypothesis.** NET-12's 4-bit interface (embed/pos/un) floor is an outlier artifact; an activation-aware/outlier-aware primitive (input-channel axis, magnitude split, or outlier clipping) breaks it below 4.0 avg bits.\n\n**Setup (identical NET-10/11/12 family).** 5 Gutenberg novels, word-level top-4097 vocab, ctx 128, contiguous 90/10 split, causal transformer (is_causal=True) dm=64/4 heads, d=4 s0, 2000 AdamW steps. Full acc reproduces **0.1571 a fourth time**; bar 0.98\u00b7full = 0.1540. All evals joint (independent loaded copy, full held-out).\n\n**Results.**\n1. **Axis:** per-COLUMN (input-channel) RTN is WORSE than per-row \u2014 uniform-2 0.413 vs 0.588, uniform-3 0.900 vs 0.947, role 0.923. The standard group-quant axis does not break the floor.\n2. **Outlier diagnostics (the key):** top-1% of magnitude holds only ~3.5% of the mass in EVERY matrix (embed 3.6%, un 3.5%, interior 3.0\u20133.4%); row-norm max/mean 1.1\u20131.9; heaviest tail un (kurtosis 9.1). This small real causal LM is NOT in the 30\u201370% outlier regime LLM.int8/AWQ/SmoothQuant target.\n3. **Magnitude split:** interface top-k rows \u2192 6-bit, rest \u2192 2-bit: k=0 0.636 \u2192 k=256 (top-6%) **0.819 @ 2.74 bits** \u2014 sublinear, saturating, 16 pts short of lossless. The need is distributed.\n4. **Outlier clipping:** percentile-scaled per-row RTN (99.9th/99.0th) changes nothing \u2014 uniform-3 stays 0.944\u20130.948 (under bar), uniform-4 stays lossless (0.982\u20130.985).\n\n**Verdict.** The 4-bit interface floor from NET-12 survives **every standard data-free weight-quantization primitive** at this scale; it is structural (distributed sensitivity, no outlier mass to exploit). NET-12's remaining data-free \"activation-aware allocation\" idea is REFUTED. The honest remaining lever is activation-aware quantization **with calibration passes** (SmoothQuant-style per-channel *activation* scales \u2014 the one non-data-free option).\n\n**8-barrier check:** (a) joint evals, data-free transforms \u2014 no injection; (b) primitives are standard LLM-quant methods, the NEGATIVE (none break the floor on a real causal LM) is the content; catalog (698 packages) has no outlier/activation-aware test on a real small causal LM; (c) confronted \u2014 real causal LM, real text, causal masking, 4097 vocab, and Part B quantifies why this model is not in the target regime; (d) causal masking + contiguous split + data-free quantization; (e) 1 model reproduced exactly 4\u00d7, every eval a full joint held-out forward; (f) 0.98 bar throughout, raw outlier stats, 7-point k-sweep, first-launch script bug fixed + re-run clean; (g) per-row/per-tensor refs from same family, honest uniform-2/3/4 + role baselines; (h) negative closes a branch \u2014 don't expect AWQ-style weight fixes to beat 4-bit lossless on a small causal LM.\n\n**Assessment:** v13, 13 experiments (NET-1..NET-13). Paper: `ResearchOutput/NetworkMathematics/13_OutlierQuantSmallLM.md`. Scripts: /tmp/exp_net_outlier.py, /tmp/exp_net_outlier_partD.py.\n\n**Next:** activation-aware quantization WITH calibration passes / per-channel 3-bit with outlier retention / interface floor at d=8 (larger dm).",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1386",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-17T04:58:32.806581+00:00",
-    "title": "NET-13: Activation-aware (outlier) quantization is NOT the lever \u2014 the 4-bit interface floor is structural on a real causal LM"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "## NET-12 \u2014 Joint-aware bit allocation on a real causal LM (compression axis; the confirmed real target from NET-11)\n\n**Paper:** `ResearchOutput/NetworkMathematics/12_JointAllocSmallLM.md` \u00b7 Notebook Part 12 \u00b7 Assessment v12. Scripts `/tmp/exp_net_joint.py`, `/tmp/exp_net_joint_partC.py`, `/tmp/exp_net_joint_partC2.py`.\n\n**Setup:** the same real causal word LM (5 Gutenberg novels, dm=64, vocab 4097, ctx 128, causal masking, d=4, 2000 steps) \u2014 full acc reproduces 0.1571 a third time; lossless bar 0.98\u00b7full = 0.1540. Every eval is a **joint** quantization of an independent model copy.\n\n### Part A \u2014 joint-marginal map\nWith everything else at the role schedule (4/3/2): attention projections (all 16) are **exactly indifferent at 2 bits** (retained flat at 0.878); **embed 3-bit jointly retains 0.849** (isolation \u22480.95 \u2014 compounding is real, ~11 points); readout **un 2-bit collapses to 0.280** (most fragile matrix, jointly); MLP 2-bit 0.80\u20130.85, 3-bit fine.\n\n### Part B \u2014 per-tensor greedy strict-lossless frontier = **5.31 avg bits**\nGreedy from all-6 keeping retained \u2265 0.98\u00b7full: **interface (embed/pos/un, 73% of params) pinned at 6**, MLP mostly 4, attention 2\u20133, lnf 2; retained 0.982. Even **all-4 misses the bar per-tensor (0.979 vs 0.980)**. Per-tensor static RTN cannot get under \u22485.3 bits losslessly on real text.\n\n### Part C \u2014 per-channel (per-row) RTN is the fix\nUniform all-4 per-row is **lossless at 4.00 bits (retained 0.987)** \u2014 1.3 bits below the per-tensor frontier. Per-row uniform-3 still fails (0.947); the **4-bit interface is irreducible under both primitives**; uniform-2 hopeless (0.588); the per-tensor-optimized frontier scores **worse per-row (0.973)** \u2014 allocation is primitive-dependent.\n\n### Part C2 \u2014 the rotation's question, answered no\n\"4-bit interface + all interior 2\": **0.733** @ 3.46 bits. \"4-bit interface + MLP 4 + attention 2\": **0.907** @ 3.82 bits. Uniform-4: 0.987. The 8-point gap between the last two is almost all attention 2\u21924 \u21d2 **\"attention is 2-bit free\" is an operating-point artifact** \u2014 true in isolation and at the degraded 0.878 baseline, but 2-bit attention costs ~8 points in a clean joint network.\n\n### Answers\n- **Any data-free schedule reach lossless?** YES \u2014 per-channel uniform-4 (4.0 bits).\n- **Is 4-bit interface + 2-bit interior enough?** NO (0.733 / 0.907).\n- **Correction to NET-11:** \"no static RTN schedule \u22643.7 bits lossless\" was about the *per-tensor* primitive; per-channel uniform-4 is lossless. The practical lever is the per-channel primitive, not smarter per-tensor allocation.\n\n### Barriers (8)\n(a) joint evals on independent loaded copy, greedy = pure allocation search \u2014 no injection \u00b7 (b) per-channel/group quantization is standard (rescue = known-primitive confirmation), but the joint-damage quantification is new; Catalog 2094 packages, no prior work \u00b7 (c) real causal LM, causal masking, 4097 vocab \u2014 confronted head-on, toy uniform-3 fails again \u00b7 (d) causal masking + contiguous split + data-free quantization \u00b7 (e) 1 seed, 4 config families \u00d7 4\u20135 bit levels \u00d7 \u226451 greedy steps, each a full joint eval; 0.1571 reproduced exactly 3\u00d7 \u00b7 (f) 0.98 bar throughout, all-4 knife-edge called out, eval noise \u22480.15%, greedy stopping verified, PART C 1-D-lnf crash fixed + re-run clean \u00b7 (g) uniform-2/3 + role + all-4/6 + full-precision baselines at the same bar \u00b7 (h) practical lever = per-channel primitive (uniform-4, data-free); 2-bit-attention \"wins\" measured at degraded operating points do not survive a clean net.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1387",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-17T04:58:32.806988+00:00",
-    "title": "NET-12: Joint-aware bit allocation on a real causal LM \u2014 per-tensor floor ~5.3 bits, per-channel uniform-4 is lossless, 'attention is 2-bit free' was an operating-point artifact"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "**Round-net-11 (compression-axis real-scale rotation). Paper:** ResearchOutput/NetworkMathematics/11_PRlawSmallLM.md\n\n**Setup:** real causal LMs on 5 Gutenberg novels (dm=64, vocab 4097, ctx 128, causal masking), d=4 and d=8, 2000 AdamW steps \u2014 full held-out acc reproduces NET-10 exactly (0.1571/0.1619). For every matrix: PR=(\u03a3s\u00b2)\u00b2/\u03a3s\u2074 and b* = min per-tensor RTN bits retaining \u22650.98\u00b7full (isolated); then joint uniform-2/3 and role-schedule joint.\n\n**Result 1 \u2014 role structure survives, PR predictor fails.** Identical on both depths (28/52 matrices): attention projections (PR 19\u201332) 2-bit lossless; MLP projections (PR 31\u201352) need 3 bits; embed (PR 63) + pos (PR 40) need 4 bits; the readout un (PR 14.9\u201315.3, the LOWEST PR) needs 4 bits with catastrophic 2-bit collapse (27\u201332% retained); lnf (PR=1) 2-bit lossless. Low-PR readout \u2192 most bits, and same-PR attention-vs-MLP differ \u21d2 corr(PR,b*)=+0.58/+0.67 is role-grouping in disguise, NOT a monotone law.\n\n**Result 2 \u2014 NET-1's practical schedule refuted at real scale.** Joint uniform-2 collapses (retained 0.16/0.05); **joint uniform-3 is NOT lossless** (retained 0.83 d=4 / 0.73 d=8, worse with depth \u2014 per-layer isolation says \u226595% everywhere at 3 bits, but compounding costs 17\u201327 points, amplified by residual-stream norm growth through depth). Role schedule (embed/pos/un=4, MLP=3, attn=2): retained **0.878 at 3.64 avg bits** \u2014 +5pts over uniform-3 at +21% bits, still 12% short of lossless. **No static RTN schedule \u22643.7 avg bits is lossless on real text.**\n\n**Verdict:** NET-1's monotone b*(PR) law and its toy practical schedule (uniform-3 lossless) do NOT transfer to a real causal LM. Surviving: coarse role structure (interface fragile / interior robust). Live compression target: joint/activation-aware allocation, not data-free per-matrix PR.\n\n**Barriers:** (a) no injection, PR/b* independent, RTN data-free; (b) sensitivity-based mixed precision known, the real-scale negatives new (Catalog 2094 packages no prior work); (c) confronted \u2014 this IS the real-scale check and the toy law/schedule fail it; (d) causal masking + contiguous split, no leakage; (e) 2 models \u00d7 every matrix, identical structure both depths; (f) 0.98\u00b7full bar with full retained fractions, exact NET-10 reproduction; (g) uniform-2/3 + full-precision baselines; (h) the negative is the win \u2014 don't ship uniform-2/3 on toy/isolated measurements.\n\n**Scripts:** /tmp/exp_net_pr_lm.py, /tmp/exp_net_pr_role.py",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1388",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-17T04:58:32.807405+00:00",
-    "title": "NET-11: The PR quantization law does NOT transfer to a real causal LM \u2014 role-structured bit-need survives (interface fragile/interior robust), but no static RTN schedule \u22643.7 avg bits is lossless (uniform-3 retains only 0.83/0.73, worse with depth)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "**Round-net-10 (network/LLM lab, real-scale rotation).** Two results, both machine-verified.\n\n## 1. Part A \u2014 the toy depth line leaked: full attention put the answer in the input\n\nThe toy TF class uses FULL (bidirectional) attention on next-token tasks: at position t the model attends to position t+1 \u2014 the very token it must output. A copy-the-future circuit yields 100% on any deterministic next-token task. The leak is PROVEN by an information bound: on Dyck-2, new-open types are iid random and 47.8% of next-tokens are opens, so the best causal accuracy is **0.7609 overall** \u2014 full-attention's recorded 1.0000 is impossible causally.\n\nCausal re-runs (same architecture/budget, is_causal=True, 6000 steps, dm=48):\n- Dyck-2 d=1: overall 0.557 / close_all 0.917 (d=2: 0.563/0.926) vs recorded 1.0000; extended budget asymptotes close_all \u22480.92 (0.9105\u21920.9135\u21920.9207 at 6k/12k/18k), still \u22128pts at 3\u00d7 budget.\n- Lookup (deterministic, ceiling 1.0): d\u22481\u2248d\u22482 \u2248 0.89 vs NET-2's 1.0000 \u2014 the artifact is NOT limited to random-type tasks.\n\n**Survives the honesty fix:** the flat-depth SHAPE (d=1 \u2248 d=2 on both classes) and transformer-beats-linear on close recovery (+17pp over the causal windowed-linear baseline \u2014 the NET-8 +25pp was a causal-baseline vs full-attention-transformer mismatch). **Corrected:** NET-8/9 'd=1 = 1.0000 / load-bearing-boundary-not-found' absolute claims withdrawn.\n\n## 2. Part B \u2014 the exit law does NOT transfer to a real LM (0/4 lossless at crossover)\n\nReal causal GPT on 5 Gutenberg novels (dm=64, vocab 4097, ctx 128, d\u2208{4,8}\u00d72 seeds, teacc 0.157\u20130.162). Norm profile is **reset-then-grow** (dip then growth, crossover l=2\u20134), NOT the toy's flat-\u2248d/2-then-grow. Shared-head acc climbs monotonically through the full depth; the crossover marks the ONSET of decodability growth, not its completion. |exit*\u2212cross| = 2/2/5/3, lossless@cross=False in 4/4. The calibration-free dynamic-depth-schedule idea is not supported at real-LM scale.\n\nFull paper: ResearchOutput/NetworkMathematics/10_CausalityScreen_ExitLawRealLM.md. Scripts: /tmp/exp_net_lm.py, /tmp/exp_net_lookup_causal.py. Barriers all checked (paper \u00a75). Assessment v10. Now 10 network experiments.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1389",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-17T04:58:32.807806+00:00",
-    "title": "NET-10: The toy depth law's 1.0000s were a full-attention future-peek artifact (ceiling 0.7609 < 1.0000), and the exit law does not transfer to a real causal LM (0/4 lossless at crossover)"
   },
   {
     "consumed_by_exp_id": "",
@@ -371,18 +274,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantum-Pythagorean-Walk: Polynomial Time Integer Factorization via Tree Resonance"
   },
   {
-    "consumed_by_exp_id": "93afd30b",
+    "consumed_by_exp_id": "",
     "description": "Derives exact spectral eigenvalue distributions of Berggren tree generator matrices M1, M2, M3 mod N proving that resonant energy frequencies align with prime factors of N = p * q.",
     "domains": [
       "Pythagorean",
       "Cryptography"
     ],
     "id": "pyth_factor_modular_1ae54410",
-    "phase": "B",
     "priority_score": 0.98,
     "research_mode": "team",
     "source_exp_id": "pythagorean_factorization_breakthrough",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-23T20:10:45.762312+00:00",
     "title": "Berggren-Spectral-Eigenvalues: Modular Energy Resonance for RSA Integer Factorization"
   },
@@ -1119,6 +1021,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 507d1ef0 (Q=0.830), which proved 54 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Investigate the ArXiv paper 'A Fourier-analytic Uniqueness Theorem for Lattice-point Enumerators' and formalize its key results. Abstract: We consider a bounded set $P \\subset \\mathbb{R}^d$ and the lattice-point enumerator $L_P(t) = |tP \\cap \\mathbb{Z}^d|$ for real $t > 0$. We show that if two bound",
+    "domains": [
+      "Cryptography"
+    ],
+    "id": "push_507d1ef0_4c2b1128",
+    "priority_score": 0.9299999999999999,
+    "research_mode": "team",
+    "source_exp_id": "507d1ef0",
+    "status": "available",
+    "timestamp": "2026-08-17T07:17:22.608319+00:00",
+    "title": "Deepening: ArXiv paper: A Fourier-analytic Uniqueness Theorem for Lattice-point Enumerators"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 3b29df87 (Q=0.820), which proved 110 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the Weil pairing on an elliptic curve and prove its bilinearity. Show that the BLS signature scheme is existentially unforgeable under the computational Diffie-Hellman assumption in the pairing group. Prove that the pairing allows short aggregate signatures.",
     "domains": [
       "Cryptography"
@@ -1130,6 +1046,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-16T11:35:10.982658+00:00",
     "title": "Deepening: Elliptic Curve Cryptography: Weil Pairing and BLS Signatures"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 93afd30b (Q=0.820), which proved 122 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Derives exact spectral eigenvalue distributions of Berggren tree generator matrices M1, M2, M3 mod N proving that resonant energy frequencies align with prime factors of N = p * q.",
+    "domains": [
+      "Cryptography"
+    ],
+    "id": "push_93afd30b_c2e8a033",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "93afd30b",
+    "status": "available",
+    "timestamp": "2026-08-17T07:17:00.821422+00:00",
+    "title": "Deepening: Berggren-Spectral-Eigenvalues: Modular Energy Resonance for RSA Integer Factoriz"
   },
   {
     "consumed_by_exp_id": "",
@@ -2420,6 +2350,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-24T14:34:16.697854+00:00",
     "title": "Formal Verification of Algorithms"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 0b339d93 (Q=0.780), which proved 123 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize U_q(g) as a q-deformation of the universal enveloping algebra U(g). Prove that as q->1, U_q(g) -> U(g). Bridge: the representation theory of U_q(sl_2) gives the Jones polynomial via the Reshetikhin-Turaev construction. Show that the quantum double construction yields braided tensor categor",
+    "domains": [
+      "Physics"
+    ],
+    "id": "push_0b339d93_927cc5f0",
+    "priority_score": 0.88,
+    "research_mode": "team",
+    "source_exp_id": "0b339d93",
+    "status": "available",
+    "timestamp": "2026-08-17T07:17:12.101255+00:00",
+    "title": "Deepening: Bridge: Quantum Groups as Deformations of Classical Groups"
   },
   {
     "consumed_by_exp_id": "",
@@ -4812,18 +4756,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Bridge: Category Theory as Universal Language for Mathematics"
   },
   {
-    "consumed_by_exp_id": "0b339d93",
+    "consumed_by_exp_id": "",
     "description": "Formalize U_q(g) as a q-deformation of the universal enveloping algebra U(g). Prove that as q->1, U_q(g) -> U(g). Bridge: the representation theory of U_q(sl_2) gives the Jones polynomial via the Reshetikhin-Turaev construction. Show that the quantum double construction yields braided tensor categories.",
     "domains": [
       "Bridges",
       "Physics"
     ],
     "id": "seed_351",
-    "phase": "A",
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "",
     "title": "Bridge: Quantum Groups as Deformations of Classical Groups"
   },
@@ -10131,18 +10074,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Kohayakawa's conjecture and clique coverings of complements of paths and cycles"
   },
   {
-    "consumed_by_exp_id": "507d1ef0",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'A Fourier-analytic Uniqueness Theorem for Lattice-point Enumerators' and formalize its key results. Abstract: We consider a bounded set $P \\subset \\mathbb{R}^d$ and the lattice-point enumerator $L_P(t) = |tP \\cap \\mathbb{Z}^d|$ for real $t > 0$. We show that if two bounded measurable sets with boundary of measure zero have the same real-parameter lattice-point enumerators for all integer translates, then their indicator functions agree almost everywhere. As a corollary, any convex body is uniquely determined by this data. Our proof is short and Fourier-analytic, where the key device is a periodic point-counting function whose Fourier coefficients recover the Fourier transform of the indicator function on a dense set. This recovers and extends, with a unified argument, the uniqueness results for rational polytopes and symmetric convex bodies established by Royer [arXiv:1712.01973, arXiv:1712.03937], whose proofs relied on intricate case-specific geometric constructions.",
     "domains": [
       "Geometry",
       "Cryptography"
     ],
     "id": "fd_1130",
-    "phase": "A",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2608.11078v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-12T02:52:12.133657+00:00",
     "title": "ArXiv paper: A Fourier-analytic Uniqueness Theorem for Lattice-point Enumerators"
   },
@@ -19654,6 +19596,35 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Let `\u039b \u2286 \u211d^d` be a full-rank lattice with basis matrix `B`. The data\n`|t(P + v) \u2229 \u039b|` for all real `t > 0` and all `v \u2208 \u039b` determines `1_P` almost everywhere, with\nconstants depending only on `\u03bb_1(\u039b)` and `\u03bb_d(\u039b)`; moreover, the sparse-grid probe reconstructs\n`1_P` using `O(1)` counting queries per probe point. Consequently, a \"lattice-count oracle\" for a\nsecret body `P` (as arises in lattice-based counting/`CVP`-style side channels) leaks `P` up to\nnull sets, with query complexity polynomial in the desired accuracy and in `\u03bb_d/\u03bb_1`.",
+    "domains": [
+      "Computation",
+      "Cryptography"
+    ],
+    "id": "fd_1407",
+    "priority_score": 0.5459999999999999,
+    "research_mode": "team",
+    "source_exp_id": "507d1ef0",
+    "status": "available",
+    "timestamp": "2026-08-17T07:17:17.606403+00:00",
+    "title": "Let `\u039b \u2286 \u211d^d` be a full-rank lattice with basis matrix `B`. The data"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Let `t k = tr(M\u2082^k)` (recurrence `t(k+3) = 5t(k+2) + 5t(k+1) \u2212 t(k)`,\n`t 0,\u2026,t 3 = 3, 5, 35, 197`).  There is **no odd composite** `N` with `gcd(N, 2) = 1`\nsatisfying simultaneously `t N \u2261 5 (mod N)` and `t (N+1) \u2261 t (N\u22121) (mod N)`.  (Dropping the\nsecond condition, pseudoprimes do exist; the conjecture is that the two-sided test is\nCarmichael-free, as for the Baillie\u2013PSW combination.)",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "fd_1405",
+    "priority_score": 0.5064545454545455,
+    "research_mode": "team",
+    "source_exp_id": "93afd30b",
+    "status": "available",
+    "timestamp": "2026-08-17T07:16:47.247467+00:00",
+    "title": "Let `t k = tr(M\u2082^k)` (recurrence `t(k+3) = 5t(k+2) + 5t(k+1) \u2212 t(k)`,"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Two contexts and six seeds already separate the three rungs of a three-seed\nladder, and a single `ctx = 4096` cell distinguishes the two candidate low-tail families by\nexactly one grid step: `320` (constant ratio) versus `288` (affine), proved as\n`KneeQuota.lowtail_prediction_32x`.",
     "domains": [
       "Geometry"
@@ -19665,5 +19636,34 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-17T05:50:44.235858+00:00",
     "title": "Two contexts and six seeds already separate the three rungs of a three-seed"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The lcm reduction is already formal, so a conditional proof needs only the\ntorus version of Artin's conjecture; the failures visible in the table of\n`ComputationalEvidence.md` (`p = 17, 29, 41, 59`) give a ready-made test set.",
+    "domains": [
+      "Logic"
+    ],
+    "id": "fd_1404",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "93afd30b",
+    "status": "available",
+    "timestamp": "2026-08-17T07:16:46.999333+00:00",
+    "title": "The lcm reduction is already formal, so a conditional proof needs only the"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "`QuantumSerre.highest_weight_singular` establishes\n   `E (F^{n+1} v) = 0` for every highest-weight vector of weight `n` in every `U_q(sl\u2082)`-module.\n   The open half is the converse classification: for `q` not a root of unity, every finite\n   dimensional `U_q(sl\u2082)`-module is a direct sum of the modules `uqSl2_rep n` twisted by a sign\n   character \u2014 a complete-reducibility statement that would make the Reshetikhin\u2013Turaev functor\n   well defined on the whole category rather than on the fundamental representation alone.",
+    "domains": [
+      "Algebra",
+      "Physics"
+    ],
+    "id": "fd_1406",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "0b339d93",
+    "status": "available",
+    "timestamp": "2026-08-17T07:17:07.148738+00:00",
+    "title": "(from C5, first half now proved)"
   }
 ];

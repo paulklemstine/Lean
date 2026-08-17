@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "45ac3b9d",
-      "domain": "Combinatorics",
-      "key_insight": "# FUTURE DIRECTIONS — after closing the higher-power reciprocity channel\n\nWhat this cycle established, formally and sorry-free\n(`Catalog/Combinatorics/PowerResidueCriterion.lean`,\n`PowerResidueCircula",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 58,
-      "timestamp": "2026-08-14T22:48:13",
-      "title": "The Higher-Power Reciprocity Channel, Closed"
-    },
-    {
       "cycle_id": "1b55f202",
       "domain": "Computation",
       "key_insight": "# Future directions: the cyclic splitting-type channel\n\nEach conjecture below is falsifiable by a single counterexample in the finite cyclic model\n`ℤ/n`, `T(x) = n / gcd(n, x)`, and each is already ve",
@@ -499,19 +489,19 @@
       "theorem_count": 123,
       "timestamp": "2026-08-17T07:17:11",
       "title": "Bridge: Quantum Groups as Deformations of Classical Groups"
+    },
+    {
+      "cycle_id": "507d1ef0",
+      "domain": "Cryptography",
+      "key_insight": "# Future directions\n\nBold, falsifiable conjectures produced by this research cycle, each stated so that it can be\nsettled (proved or refuted) by a further formalisation effort. All of them build on th",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 54,
+      "timestamp": "2026-08-17T07:17:22",
+      "title": "ArXiv paper: A Fourier-analytic Uniqueness Theorem for Lattice-point Enumerators"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "31b96673",
-      "domain": "Pythagorean",
-      "key_insight": "# Future Directions\n\nEstablished in `Catalog/Pythagorean/EMLBerggrenEnergyNeuron.lean`: the Berggren\n(Barning–Hall) ternary tree of primitive Pythagorean triples is driven by a\n*single* exponential–lo",
-      "quality_score": 0.686,
-      "sorry_count": 0,
-      "theorem_count": 29,
-      "timestamp": "2026-08-06T05:23:12",
-      "title": "EML-Pythagorean-Operator: Single-Neuron Neural Energy Guided Tree Traversal"
-    },
     {
       "cycle_id": "2784f3be",
       "domain": "Pythagorean",
@@ -2501,27 +2491,19 @@
       "theorem_count": 123,
       "timestamp": "2026-08-17T07:17:11",
       "title": "Bridge: Quantum Groups as Deformations of Classical Groups"
+    },
+    {
+      "cycle_id": "507d1ef0",
+      "domain": "Cryptography",
+      "key_insight": "# Future directions\n\nBold, falsifiable conjectures produced by this research cycle, each stated so that it can be\nsettled (proved or refuted) by a further formalisation effort. All of them build on th",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 54,
+      "timestamp": "2026-08-17T07:17:22",
+      "title": "ArXiv paper: A Fourier-analytic Uniqueness Theorem for Lattice-point Enumerators"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "37827e5f",
-      "domain": "Probability",
-      "name": "fiber_card_sum",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "be4e28d2",
-      "domain": "Shared",
-      "name": "decode_encode",
-      "quality": 0.79
-    },
-    {
-      "cycle_id": "be4e28d2",
-      "domain": "Shared",
-      "name": "encode_decode",
-      "quality": 0.79
-    },
     {
       "cycle_id": "be4e28d2",
       "domain": "Shared",
@@ -2803,9 +2785,27 @@
       "domain": "Physics",
       "name": "kauffman_pow",
       "quality": 0.78
+    },
+    {
+      "cycle_id": "507d1ef0",
+      "domain": "Cryptography",
+      "name": "for",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "507d1ef0",
+      "domain": "Cryptography",
+      "name": "lies",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "507d1ef0",
+      "domain": "Cryptography",
+      "name": "mem_shiftLattice",
+      "quality": 0.83
     }
   ],
-  "last_updated": "2026-08-17T07:17:11",
+  "last_updated": "2026-08-17T07:17:22",
   "open_questions": [
     {
       "context": "This file gives a **complete, self-contained proof** of that theorem (0 `sorry`s).",
@@ -3332,12 +3332,6 @@
     "Cryptography": [
       {
         "cycle_id": "2c38bc1a",
-        "quality": 0.7055950000000001,
-        "theorems": 3,
-        "title": "ArXiv paper: Even smaller universal posets"
-      },
-      {
-        "cycle_id": "2c38bc1a",
         "quality": 0.7003711194029851,
         "theorems": 134,
         "title": "ArXiv paper: Even smaller universal posets"
@@ -3389,6 +3383,12 @@
         "quality": 0.82,
         "theorems": 122,
         "title": "Berggren-Spectral-Eigenvalues: Modular Energy Resonance for RSA Integer Factoriz"
+      },
+      {
+        "cycle_id": "507d1ef0",
+        "quality": 0.83,
+        "theorems": 54,
+        "title": "ArXiv paper: A Fourier-analytic Uniqueness Theorem for Lattice-point Enumerators"
       }
     ],
     "Geometry": [
