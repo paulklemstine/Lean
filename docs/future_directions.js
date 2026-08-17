@@ -1812,38 +1812,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Formalize the Lucas-Penrose argument that human minds can see truths that formal systems cannot prove about themselves. Prove or disprove: there exists a computational system that can consistently recognize its own G\u00f6del sentences. Connect to Chaitin's incompleteness theorem and the Berry paradox.",
-    "domains": [
-      "Novelty",
-      "Logic",
-      "Computation"
-    ],
-    "id": "seed_261",
-    "priority_score": 0.89,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Mind vs G\u00f6del: Can Minds Outperform Algorithms?"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove that every classical mathematical theorem has a quantum proof that is shorter by at most a polynomial factor. Formalize quantum proof systems (QMA) and show that some classical theorems (e.g., pigeonhole principle) have exponentially shorter quantum proofs. Determine whether super-polynomial quantum advantage exists.",
-    "domains": [
-      "Novelty",
-      "Computation",
-      "Physics"
-    ],
-    "id": "seed_289",
-    "priority_score": 0.89,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Quantum Proofs of Classical Theorems"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove that the univalence axiom enables automated proof transfer between isomorphic structures. Construct a formal pipeline: given an isomorphism f: A \u2245 B and a theorem about A, mechanically produce the corresponding theorem about B. Quantify the proof compression ratio.",
     "domains": [
       "Bridges",
@@ -19550,14 +19518,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "The `\u21d0` direction is proved (`FourierFA.uncertainty_eq_coset_modulation`); the `\u21d2`"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "33519cdb",
     "description": "Open here; the multiplicative bound `|supp f| \u00b7 |supp f\u0302| \u2265 p` is proved\n(`FourierCyclic.uncertainty_zmod`), and it is strictly weaker (e.g. `|supp f| = |supp f\u0302| = \u221ap`\nwould satisfy the product bound but violate the sum bound).",
     "domains": [],
     "id": "fd_1409",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "525aecde",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-17T09:01:32.094527+00:00",
     "title": "Open here; the multiplicative bound `|supp f| \u00b7 |supp f\u0302| \u2265 p` is proved"
   },

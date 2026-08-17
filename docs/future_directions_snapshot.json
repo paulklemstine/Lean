@@ -2447,48 +2447,6 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "Formalize the Lucas-Penrose argument that human minds can see truths that formal systems cannot prove about themselves. Prove or disprove: there exists a computational system that can consistently recognize its own Gödel sentences. Connect to Chaitin's incompleteness theorem and the Berry paradox.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Logic",
-      "Computation"
-    ],
-    "id": "seed_261",
-    "lineage_refs": [],
-    "priority_score": 0.89,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Mind vs Gödel: Can Minds Outperform Algorithms?"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Prove that every classical mathematical theorem has a quantum proof that is shorter by at most a polynomial factor. Formalize quantum proof systems (QMA) and show that some classical theorems (e.g., pigeonhole principle) have exponentially shorter quantum proofs. Determine whether super-polynomial quantum advantage exists.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Computation",
-      "Physics"
-    ],
-    "id": "seed_289",
-    "lineage_refs": [],
-    "priority_score": 0.89,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Quantum Proofs of Classical Theorems"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "Prove that the univalence axiom enables automated proof transfer between isomorphic structures. Construct a formal pipeline: given an isomorphism f: A ≅ B and a theorem about A, mechanically produce the corresponding theorem about B. Quantify the proof compression ratio.",
     "domain_bridges": [],
     "domains": [
@@ -26183,7 +26141,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "33519cdb",
     "description": "Open here; the multiplicative bound `|supp f| · |supp f̂| ≥ p` is proved\n(`FourierCyclic.uncertainty_zmod`), and it is strictly weaker (e.g. `|supp f| = |supp f̂| = √p`\nwould satisfy the product bound but violate the sum bound).",
     "domain_bridges": [],
     "domains": [],
@@ -26193,7 +26151,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "525aecde",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-17T09:01:32.094527+00:00",
     "title": "Open here; the multiplicative bound `|supp f| · |supp f̂| ≥ p` is proved"
   },
