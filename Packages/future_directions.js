@@ -883,6 +883,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 615053e5 (Q=0.830), which proved 128 theorems in Logic. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Construct a formal proof system where the soundness predicate appears inside the system it validates. Prove that such tangled hierarchies are unavoidable in any system that can reason about its own consistency. Formalize using modal fixed-point logics and Kripke frames.",
+    "domains": [
+      "Logic"
+    ],
+    "id": "push_615053e5_f7b54b26",
+    "priority_score": 0.9299999999999999,
+    "research_mode": "team",
+    "source_exp_id": "615053e5",
+    "status": "available",
+    "timestamp": "2026-08-17T09:57:57.627819+00:00",
+    "title": "Deepening: Tangled Hierarchies: Proof Systems That Reference Their Own Soundness"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 3b29df87 (Q=0.820), which proved 110 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the Weil pairing on an elliptic curve and prove its bilinearity. Show that the BLS signature scheme is existentially unforgeable under the computational Diffie-Hellman assumption in the pairing group. Prove that the pairing allows short aggregate signatures.",
     "domains": [
       "Cryptography"
@@ -894,20 +908,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-16T11:35:10.982658+00:00",
     "title": "Deepening: Elliptic Curve Cryptography: Weil Pairing and BLS Signatures"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 93afd30b (Q=0.820), which proved 122 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Derives exact spectral eigenvalue distributions of Berggren tree generator matrices M1, M2, M3 mod N proving that resonant energy frequencies align with prime factors of N = p * q.",
-    "domains": [
-      "Cryptography"
-    ],
-    "id": "push_93afd30b_c2e8a033",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "93afd30b",
-    "status": "available",
-    "timestamp": "2026-08-17T07:17:00.821422+00:00",
-    "title": "Deepening: Berggren-Spectral-Eigenvalues: Modular Energy Resonance for RSA Integer Factoriz"
   },
   {
     "consumed_by_exp_id": "",
@@ -2570,7 +2570,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "K\u00e4hler-Einstein Metrics and K-Stability"
   },
   {
-    "consumed_by_exp_id": "615053e5",
+    "consumed_by_exp_id": "",
     "description": "Construct a formal proof system where the soundness predicate appears inside the system it validates. Prove that such tangled hierarchies are unavoidable in any system that can reason about its own consistency. Formalize using modal fixed-point logics and Kripke frames.",
     "domains": [
       "Novelty",
@@ -2578,11 +2578,10 @@ window.FUTURE_DIRECTIONS = [
       "Computation"
     ],
     "id": "seed_255",
-    "phase": "A",
     "priority_score": 0.88,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "",
     "title": "Tangled Hierarchies: Proof Systems That Reference Their Own Soundness"
   },
@@ -4829,6 +4828,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-15T13:51:07.140800+00:00",
     "title": "Close Proofs: The 'Only Bad Primes' Conjecture is False (elliptic curve denominators"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle 615053e5 (Q=0.830) proved 128 theorems in Logic but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Construct a formal proof system where the soundness predicate appears inside the system it validates. Prove that such tangled hierarchies are unavoidable in any system that can reason about its own co",
+    "domains": [
+      "Logic"
+    ],
+    "id": "sorry_fill_615053e5_522e308e",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "615053e5",
+    "status": "available",
+    "timestamp": "2026-08-17T09:57:58.295784+00:00",
+    "title": "Close Proofs: Tangled Hierarchies: Proof Systems That Reference Their Own Soundness"
   },
   {
     "consumed_by_exp_id": "",
@@ -19486,13 +19499,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "It would upgrade \"the cost of internal soundness is one loop\"\n(`soundnessExt_sound_iff`, `iterExt_selfLoop_ncard`) into \"the cost is *nothing* for\nthe old theory\", i.e. a genuine conservativity theorem for tangled hierarchies \u2014 the\nformal counterpart of Hofstadter's claim that strange loops do not corrupt the levels\nthey sit above.",
+    "domains": [],
+    "id": "fd_1414",
+    "priority_score": 0.4143921568627451,
+    "research_mode": "team",
+    "source_exp_id": "615053e5",
+    "status": "available",
+    "timestamp": "2026-08-17T09:57:44.101662+00:00",
+    "title": "It would upgrade \"the cost of internal soundness is one loop\""
+  },
+  {
+    "consumed_by_exp_id": "4bf66c09",
     "description": "Chebotarev's theorem that every square submatrix of the `p \u00d7 p` DFT matrix\nis nonsingular, which in turn follows from a resultant/Vandermonde computation over `Q(\u03b6_p)`\nusing the irreducibility of the `p`-th cyclotomic polynomial \u2014 machinery that Mathlib already\ncontains (`Polynomial.cyclotomic_irreducible`, `IsPrimitiveRoot`).",
     "domains": [],
     "id": "fd_1410",
+    "phase": "A",
     "priority_score": 0.41040350877192977,
     "research_mode": "team",
     "source_exp_id": "525aecde",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-17T09:01:32.349835+00:00",
     "title": "Chebotarev's theorem that every square submatrix of the `p \u00d7 p` DFT matrix"
   },
@@ -19584,5 +19610,45 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-17T09:01:33.098615+00:00",
     "title": "The inequality itself is proved"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For modal proof systems in the sense of `ModalSystem`, the following\nare equivalent for a consistent system `S` that proves the reflection schema:\n(a) `S` is closed under necessitation *and* proves the `K` schema;\n(b) the class of frames validating `S` consists exactly of frames in which every world\nis reflexive; and (c) `S` proves `\u25a1\u22a4 \u2227 (\u25a1\u03c6 \u2192 \u25a1\u25a1\u03c6)`, i.e. `S` contains `S4`.\nIn particular, *no* consistent self-sound system can be L\u00f6bian\n(`not_consistent_of_reflection_loeb`), and every consistent self-sound normal system\nis an extension of `S4`.",
+    "domains": [
+      "Logic"
+    ],
+    "id": "fd_1415",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "615053e5",
+    "status": "available",
+    "timestamp": "2026-08-17T09:57:44.344259+00:00",
+    "title": "For modal proof systems in the sense of `ModalSystem`, the following"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle 4 already provides the two witnesses and the joint-inconsistency\ntheorem; what is missing is a Lean development of frame-definability for `ModalSystem`,\nwhich the `KFrame`/`sat` apparatus of Cycle 1 supports directly.",
+    "domains": [],
+    "id": "fd_1416",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "615053e5",
+    "status": "available",
+    "timestamp": "2026-08-17T09:57:44.570347+00:00",
+    "title": "Cycle 4 already provides the two witnesses and the joint-inconsistency"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The finite case is fully proved (`iterExt_sound_ncard`,\n`iterExt_has_unsound_world`); the transfinite case needs only a colimit construction on\n`KFrame`, and it would give a precise formal sense in which Tarski-style stratification\nof a truth/soundness predicate can be iterated through the ordinals without ever\nterminating.",
+    "domains": [
+      "Logic"
+    ],
+    "id": "fd_1417",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "615053e5",
+    "status": "available",
+    "timestamp": "2026-08-17T09:57:44.799218+00:00",
+    "title": "The finite case is fully proved (`iterExt_sound_ncard`,"
   }
 ];

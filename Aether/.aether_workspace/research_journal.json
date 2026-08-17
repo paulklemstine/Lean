@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "c94236ec",
-      "domain": "Novelty",
-      "key_insight": "# FUTURE DIRECTIONS — after the SPLIT-COUNT LAW\n\nThe formal results now live in seven files, all compiling with no `sorry` and on\nthe standard axioms only:\n\n* `Catalog/Novelty/SplitCountLaw.lean` — fi",
-      "quality_score": 0.92,
-      "sorry_count": 2,
-      "theorem_count": 226,
-      "timestamp": "2026-08-15T03:13:13",
-      "title": "SPLIT-COUNT-LAW: the complete symmetric fork channel is the split-count s ~ Bin(2,1/n), I(N mod f; s"
-    },
-    {
       "cycle_id": "fefb96cd",
       "domain": "Novelty",
       "key_insight": "# FUTURE DIRECTIONS — TRACEPROFILE (Paper 50 / Experiment 385)\n\nThe verified results of this cycle are in `Catalog/Novelty/TraceProfile*.lean`:\n\n* `TraceProfileLowBits.lean` — the exact low bit `s₁ =",
@@ -499,19 +489,19 @@
       "theorem_count": 70,
       "timestamp": "2026-08-17T09:01:45",
       "title": "Fourier Analysis on Finite Groups"
+    },
+    {
+      "cycle_id": "615053e5",
+      "domain": "Logic",
+      "key_insight": "# Future Directions — Tangled Hierarchies That Reference Their Own Soundness\n\nDerived from the five research cycles now formalised in\n`Catalog/Logic/ProvabilityLogic/{TangledSoundness, SoundnessTopolo",
+      "quality_score": 0.83,
+      "sorry_count": 5,
+      "theorem_count": 128,
+      "timestamp": "2026-08-17T09:57:56",
+      "title": "Tangled Hierarchies: Proof Systems That Reference Their Own Soundness"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "713730e2",
-      "domain": "Pythagorean",
-      "key_insight": "# Future directions\n\nThis cycle settled the *uniform half-canonical existence* question for almost all\nregular degrees, and in the strongest possible form: for `k ≥ 6` with `k ≠ 7`,\n**every** simple `",
-      "quality_score": 0.78748,
-      "sorry_count": 0,
-      "theorem_count": 47,
-      "timestamp": "2026-08-06T06:55:10",
-      "title": "**Conjecture.** For every integer `k ≥ 5`, there is a threshold `N₀(k)` such tha"
-    },
     {
       "cycle_id": "39ee2889",
       "domain": "Combinatorics",
@@ -2501,27 +2491,19 @@
       "theorem_count": 70,
       "timestamp": "2026-08-17T09:01:45",
       "title": "Fourier Analysis on Finite Groups"
+    },
+    {
+      "cycle_id": "615053e5",
+      "domain": "Logic",
+      "key_insight": "# Future Directions — Tangled Hierarchies That Reference Their Own Soundness\n\nDerived from the five research cycles now formalised in\n`Catalog/Logic/ProvabilityLogic/{TangledSoundness, SoundnessTopolo",
+      "quality_score": 0.83,
+      "sorry_count": 5,
+      "theorem_count": 128,
+      "timestamp": "2026-08-17T09:57:56",
+      "title": "Tangled Hierarchies: Proof Systems That Reference Their Own Soundness"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "25d882e7",
-      "domain": "Physics",
-      "name": "wrongness_binomialFamily",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "d4bd7c02",
-      "domain": "Logic",
-      "name": "knee_s1",
-      "quality": 0.8
-    },
-    {
-      "cycle_id": "d4bd7c02",
-      "domain": "Logic",
-      "name": "knee_s2",
-      "quality": 0.8
-    },
     {
       "cycle_id": "d4bd7c02",
       "domain": "Logic",
@@ -2803,17 +2785,28 @@
       "domain": "Shared",
       "name": "dft_indF_zero",
       "quality": 0.84
+    },
+    {
+      "cycle_id": "615053e5",
+      "domain": "Logic",
+      "name": "atomicSound_iff_uniformlySound",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "615053e5",
+      "domain": "Logic",
+      "name": "sat_boxIter",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "615053e5",
+      "domain": "Logic",
+      "name": "iterSound_iff_cycle",
+      "quality": 0.83
     }
   ],
-  "last_updated": "2026-08-17T09:01:45",
+  "last_updated": "2026-08-17T09:57:56",
   "open_questions": [
-    {
-      "context": "This file gives a **complete, self-contained proof** of that theorem (0 `sorry`s).",
-      "cycle_id": "a4e412f3",
-      "domain": "Geometry",
-      "sorry_count": 1,
-      "timestamp": "2026-07-24T23:24:45"
-    },
     {
       "context": "-    sorry+  have hchecked := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hnupper⟩)",
       "cycle_id": "905765f9",
@@ -3016,6 +3009,13 @@
       "domain": "Bridges",
       "sorry_count": 1,
       "timestamp": "2026-08-16T07:46:03"
+    },
+    {
+      "context": "--   Survived: H10–H13, sorry-free.  Structural pattern: *the modal degree of a; --   Survived: H16–H19, sorry-free.  The interesting failure is the *shape* of H18:; --   Survived: H14, H15, sorry-fre",
+      "cycle_id": "615053e5",
+      "domain": "Logic",
+      "sorry_count": 5,
+      "timestamp": "2026-08-17T09:57:56"
     }
   ],
   "research_threads": {
@@ -3455,12 +3455,6 @@
     ],
     "Logic": [
       {
-        "cycle_id": "e69eca5d",
-        "quality": 0.683555,
-        "theorems": 149,
-        "title": "`Catalog/Combinatorics/BernoulliThresholdCoupling.lean`,"
-      },
-      {
         "cycle_id": "f2796053",
         "quality": 0.743025,
         "theorems": 62,
@@ -3513,6 +3507,12 @@
         "quality": 0.79,
         "theorems": 116,
         "title": "NET-48: The direct test survives via the MEDIAN — k*=160 at (d=4, ctx=2048, seed"
+      },
+      {
+        "cycle_id": "615053e5",
+        "quality": 0.83,
+        "theorems": 128,
+        "title": "Tangled Hierarchies: Proof Systems That Reference Their Own Soundness"
       }
     ],
     "MachineLearning": [
