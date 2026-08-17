@@ -24,7 +24,7 @@ window.FUTURE_DIRECTIONS = [
       "Novelty"
     ],
     "id": "fd_1365",
-    "phase": "B",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
@@ -883,20 +883,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle 615053e5 (Q=0.830), which proved 128 theorems in Logic. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Construct a formal proof system where the soundness predicate appears inside the system it validates. Prove that such tangled hierarchies are unavoidable in any system that can reason about its own consistency. Formalize using modal fixed-point logics and Kripke frames.",
-    "domains": [
-      "Logic"
-    ],
-    "id": "push_615053e5_f7b54b26",
-    "priority_score": 0.9299999999999999,
-    "research_mode": "team",
-    "source_exp_id": "615053e5",
-    "status": "available",
-    "timestamp": "2026-08-17T09:57:57.627819+00:00",
-    "title": "Deepening: Tangled Hierarchies: Proof Systems That Reference Their Own Soundness"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Building on cycle 3b29df87 (Q=0.820), which proved 110 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the Weil pairing on an elliptic curve and prove its bilinearity. Show that the BLS signature scheme is existentially unforgeable under the computational Diffie-Hellman assumption in the pairing group. Prove that the pairing allows short aggregate signatures.",
     "domains": [
       "Cryptography"
@@ -908,20 +894,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-16T11:35:10.982658+00:00",
     "title": "Deepening: Elliptic Curve Cryptography: Weil Pairing and BLS Signatures"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 8993bd64 (Q=0.810), which proved 81 theorems in Shared. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Part of:** Research plan \u2014 *Compression Beyond the Pigeonhole Bound* (Phase B, Question 2: can random number generators help?).\n\n## Research question\nWorst-case short-program-finding is **provably hard under standard assumptions**: roughly, if you could always find a short description for every `x",
-    "domains": [
-      "Shared"
-    ],
-    "id": "push_8993bd64_f878d7ef",
-    "priority_score": 0.91,
-    "research_mode": "team",
-    "source_exp_id": "8993bd64",
-    "status": "available",
-    "timestamp": "2026-08-17T10:49:06.818231+00:00",
-    "title": "Deepening: Compression Research B6: Compression \u2194 one-way functions (the cryptography link)"
   },
   {
     "consumed_by_exp_id": "",
@@ -19614,14 +19586,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Both sides of the identity are already available as Lean theorems"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2e6124e7",
     "description": "The inequality itself is **proved** (`FourierAdd.card_support_rep_ge`); what is open is\nthe second half \u2014 exhibiting explicit families where it is strictly stronger than the pigeonhole\nbound, and computing `E` for them.",
     "domains": [],
     "id": "fd_1413",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "525aecde",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-17T09:01:33.098615+00:00",
     "title": "The inequality itself is proved"
   },
