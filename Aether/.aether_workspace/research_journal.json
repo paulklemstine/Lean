@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "70d03dec",
-      "domain": "Physics",
-      "key_insight": "# Future Directions — the cyclic splitting-type channel\n\nDerived from what survived and what failed in this cycle.  Each conjecture is falsifiable by a\nsingle computation on a cyclic order `n`; each i",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 75,
-      "timestamp": "2026-08-15T07:05:08",
-      "title": "CYCLIC-TYPE-CHANNEL (round-22 #2, experiment 413, assessment v189, paper 78)"
-    },
-    {
       "cycle_id": "f2bb5930",
       "domain": "Shared",
       "key_insight": "# Future directions: the cyclic splitting-type channel\n\nFive falsifiable conjectures distilled from the current cycle.  Everything cited\nas *proved* below is a `sorry`-free Lean theorem in `Catalog/Sh",
@@ -499,19 +489,19 @@
       "theorem_count": 81,
       "timestamp": "2026-08-17T10:49:06",
       "title": "Compression Research B6: Compression ↔ one-way functions (the cryptography link)"
+    },
+    {
+      "cycle_id": "c8991a0a",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions\n\nDerived from the results now formalized in `Catalog/Bridges/FundamentalGroupCovering*.lean`.\nEach conjecture below is falsifiable, and each is stated so that it can be attacked\ndi",
+      "quality_score": 0.88,
+      "sorry_count": 0,
+      "theorem_count": 294,
+      "timestamp": "2026-08-17T13:53:57",
+      "title": "Topological-Algebraic Bridge: Fundamental Group as a Complete Invariant"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "96503fdf",
-      "domain": "Logic",
-      "key_insight": "# Future directions\n\nConcrete, falsifiable conjectures suggested by the formalization in\n`Catalog/Logic/ConstructiveAnalysis/` (files `BishopReals.lean`,\n`ConstructiveIVT.lean`, `BrouwerianCounterexam",
-      "quality_score": 0.686,
-      "sorry_count": 0,
-      "theorem_count": 131,
-      "timestamp": "2026-08-06T08:44:58",
-      "title": "Constructive Mathematics: Bishop's Analysis"
-    },
     {
       "cycle_id": "ffc2840e",
       "domain": "Computation",
@@ -2501,27 +2491,19 @@
       "theorem_count": 81,
       "timestamp": "2026-08-17T10:49:06",
       "title": "Compression Research B6: Compression ↔ one-way functions (the cryptography link)"
+    },
+    {
+      "cycle_id": "c8991a0a",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions\n\nDerived from the results now formalized in `Catalog/Bridges/FundamentalGroupCovering*.lean`.\nEach conjecture below is falsifiable, and each is stated so that it can be attacked\ndi",
+      "quality_score": 0.88,
+      "sorry_count": 0,
+      "theorem_count": 294,
+      "timestamp": "2026-08-17T13:53:57",
+      "title": "Topological-Algebraic Bridge: Fundamental Group as a Complete Invariant"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "b3704634",
-      "domain": "Geometry",
-      "name": "clusterGraph_indepNum_le",
-      "quality": 0.91
-    },
-    {
-      "cycle_id": "81aa12f0",
-      "domain": "Novelty",
-      "name": "Sw_empty",
-      "quality": 0.87
-    },
-    {
-      "cycle_id": "81aa12f0",
-      "domain": "Novelty",
-      "name": "Sw_subadditive",
-      "quality": 0.87
-    },
     {
       "cycle_id": "81aa12f0",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Shared",
       "name": "tailAvoiding_patchClosed",
       "quality": 0.81
+    },
+    {
+      "cycle_id": "c8991a0a",
+      "domain": "Bridges",
+      "name": "C2_eq_one_or",
+      "quality": 0.88
+    },
+    {
+      "cycle_id": "c8991a0a",
+      "domain": "Bridges",
+      "name": "char_surjective_of_ne_one",
+      "quality": 0.88
+    },
+    {
+      "cycle_id": "c8991a0a",
+      "domain": "Bridges",
+      "name": "index_ker_of_ne_one",
+      "quality": 0.88
     }
   ],
-  "last_updated": "2026-08-17T10:49:06",
+  "last_updated": "2026-08-17T13:53:57",
   "open_questions": [
     {
       "context": "-    sorry+  have hchecked := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hn2⟩)",
@@ -3145,12 +3145,6 @@
     ],
     "Bridges": [
       {
-        "cycle_id": "08d2b371",
-        "quality": 0.79196,
-        "theorems": 202,
-        "title": "Deepening: Topological-Algebraic Bridge: Fundamental Group as a Complete Invaria"
-      },
-      {
         "cycle_id": "fc0b5c3a",
         "quality": 0.686,
         "theorems": 118,
@@ -3203,6 +3197,12 @@
         "quality": 0.84,
         "theorems": 104,
         "title": "NET-43: The Deepest Rung Is Two-Seed 256 (k\\*=256 reproduces EXACTLY at seed=2; "
+      },
+      {
+        "cycle_id": "c8991a0a",
+        "quality": 0.88,
+        "theorems": 294,
+        "title": "Topological-Algebraic Bridge: Fundamental Group as a Complete Invariant"
       }
     ],
     "Combinatorics": [
