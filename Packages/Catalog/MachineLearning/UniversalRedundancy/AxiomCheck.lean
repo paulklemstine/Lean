@@ -1,0 +1,18 @@
+import MachineLearning.UniversalRedundancy.Separation
+import MachineLearning.UniversalRedundancy.Products
+import MachineLearning.UniversalRedundancy.Capacity
+import MachineLearning.UniversalRedundancy.Markov
+
+#print axioms UniversalRedundancy.SourceClass.shtarkov_minimax
+#print axioms UniversalRedundancy.SourceClass.kraft_converse_bits
+#print axioms UniversalRedundancy.SourceClass.nmlCodeLength_le
+#print axioms UniversalRedundancy.iid_redundancy_bits_le
+#print axioms UniversalRedundancy.markov_redundancy_bits_le
+#print axioms UniversalRedundancy.bernoulli_price_sandwich
+#print axioms UniversalRedundancy.price_separation
+#print axioms UniversalRedundancy.compensation_identity
+#print axioms UniversalRedundancy.shtarkovSum_prodClass
+#print axioms UniversalRedundancy.mutualInfo_le_logb_shtarkovSum
+#print axioms UniversalRedundancy.redundancy_rate_tendsto_zero
+#print axioms UniversalRedundancy.iid_price_subadditive
+#print axioms UniversalRedundancy.shtarkovSum_tiedProdClass_le

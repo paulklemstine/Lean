@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "aeab7c87",
-      "domain": "Applications",
-      "key_insight": "# Future directions: denominators of rational points on Mordell curves\n\nDerived from cycles 3–9\n(`Catalog/Applications/MordellDenominator{Squares,Filtration,Orbits,LocalLaw}.lean`,\n`Catalog/Applicatio",
-      "quality_score": 0.88,
-      "sorry_count": 0,
-      "theorem_count": 60,
-      "timestamp": "2026-08-15T11:41:24",
-      "title": "The 'Only Bad Primes' Conjecture is False (elliptic curve denominators)"
-    },
-    {
       "cycle_id": "032d68e5",
       "domain": "Bridges",
       "key_insight": "# Future directions\n\nDerived from the verified results in\n\n* `Catalog/Bridges/MordellDenominatorBadPrimes.lean` — the `n = 2` layer: mechanism theorem\n  `prime_dvd_den_dblX_iff`, reduction/torsion bri",
@@ -499,19 +489,19 @@
       "theorem_count": 67,
       "timestamp": "2026-08-17T16:46:23",
       "title": "OR-COLLAPSE-LAW: semiprime OR of a cyclic split-complete fork = g(n) = H((2n-1)/n^2) - (1/n)H(1/n) -"
+    },
+    {
+      "cycle_id": "f262016d",
+      "domain": "Applications",
+      "key_insight": "# Future directions — almost-lossless compression beyond the pigeonhole bound\n\nDerived from the verified results in `Catalog/Applications/AlmostLossless/`\n(cycle 1: converse + explicit scheme + comple",
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "theorem_count": 87,
+      "timestamp": "2026-08-17T18:57:47",
+      "title": "Compression Research B3: Almost-lossless / Monte Carlo compression"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "68319f3d",
-      "domain": "Computation",
-      "key_insight": "# Future Directions\n\nDerived from the analysis and adversarial review of cycles 1–9\n(`Catalog/Computation/FourierFunctor/`), where we proved: `pontryagin : FinAb ≌\nFinAbᵒᵖ`, `fourierNatIso` (Fourier i",
-      "quality_score": 0.646,
-      "sorry_count": 0,
-      "theorem_count": 1088,
-      "timestamp": "2026-08-06T12:29:44",
-      "title": "Deepening: Bridge: Fourier Analysis as a Functor"
-    },
     {
       "cycle_id": "a95dbc85",
       "domain": "Pythagorean",
@@ -2501,27 +2491,19 @@
       "theorem_count": 67,
       "timestamp": "2026-08-17T16:46:23",
       "title": "OR-COLLAPSE-LAW: semiprime OR of a cyclic split-complete fork = g(n) = H((2n-1)/n^2) - (1/n)H(1/n) -"
+    },
+    {
+      "cycle_id": "f262016d",
+      "domain": "Applications",
+      "key_insight": "# Future directions — almost-lossless compression beyond the pigeonhole bound\n\nDerived from the verified results in `Catalog/Applications/AlmostLossless/`\n(cycle 1: converse + explicit scheme + comple",
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "theorem_count": 87,
+      "timestamp": "2026-08-17T18:57:47",
+      "title": "Compression Research B3: Almost-lossless / Monte Carlo compression"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "12195e06",
-      "domain": "Algebra",
-      "name": "equivMapDomain_mem_orbit",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "6a0dc5c0",
-      "domain": "Logic",
-      "name": "exists_isTopMass",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "6a0dc5c0",
-      "domain": "Logic",
-      "name": "IsTopMass",
-      "quality": 0.82
-    },
     {
       "cycle_id": "6a0dc5c0",
       "domain": "Logic",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "tendsto_mul_log_one_sub_inv",
       "quality": 0.86
+    },
+    {
+      "cycle_id": "f262016d",
+      "domain": "Applications",
+      "name": "concatEnc_zero",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "f262016d",
+      "domain": "Applications",
+      "name": "concatEnc_succ",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "f262016d",
+      "domain": "Applications",
+      "name": "decodeChunks_concat",
+      "quality": 0.85
     }
   ],
-  "last_updated": "2026-08-17T16:46:23",
+  "last_updated": "2026-08-17T18:57:47",
   "open_questions": [
     {
       "context": "## Main Results (all sorry-free); sorry; sorry",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "3664af53",
-        "quality": 0.686,
-        "theorems": 122,
-        "title": "ArXiv paper: Asymptotically sharp bounds for affine subspace statistics in $\\mat"
-      },
-      {
         "cycle_id": "de149d0f",
         "quality": 0.6301902500000001,
         "theorems": 104,
@@ -3141,6 +3135,12 @@
         "quality": 0.86,
         "theorems": 67,
         "title": "OR-COLLAPSE-LAW: semiprime OR of a cyclic split-complete fork = g(n) = H((2n-1)/"
+      },
+      {
+        "cycle_id": "f262016d",
+        "quality": 0.85,
+        "theorems": 87,
+        "title": "Compression Research B3: Almost-lossless / Monte Carlo compression"
       }
     ],
     "Bridges": [

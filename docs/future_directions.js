@@ -48,7 +48,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Compression Research B5: PRNG-generated real-world data \u2014 detection and seed recovery"
   },
   {
-    "consumed_by_exp_id": "f262016d",
+    "consumed_by_exp_id": "be7c0bd7",
     "description": "**Part of:** Research plan \u2014 *Compression Beyond the Pigeonhole Bound* (Phase B, Question 2: can random number generators help?).\n\n## Research question\nPigeonhole governs *exact* decoding for *all* strings. Relax to: **decoder fails with probability \u2264 \u03b5** (almost-lossless). Random codebooks (Shannon's random-coding argument) then reach near-optimal rates \u2014 the counting bound relaxes by an \u03b5-dependent factor.\n\n## Approach\n- Constructive almost-lossless schemes with small failure probability.\n- The real obstacle is **decoder search complexity** (naive random coding is exponential), not the rate \u2014 tackle that.\n- Error detection (checksums) so failures are **never silent**.\n\n## Deliverable\nA scheme plus a proof that decode succeeds with probability \u2265 1\u2212\u03b5, and its exact decoding complexity.\n\n## Falsifiability / gate\nFor each scheme: bound on P(failure) and an explicit decoder-complexity figure. No silent corruption allowed.\n\n**Milestone:** M9.\n",
     "domains": [
       "Novelty"
@@ -153,20 +153,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle b3704634 (Q=0.910), which proved 884 theorems in Geometry. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalizes the foundations of Teichm\u00fcller theory: the Teichm\u00fcller space of marked Riemann surfaces, the Teichm\u00fcller metric defined by extremal quasi-conformal maps, and the action of the mapping class group whose quotient is the moduli space.",
-    "domains": [
-      "Geometry"
-    ],
-    "id": "push_b3704634_dfd6ea73",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "b3704634",
-    "status": "available",
-    "timestamp": "2026-08-16T19:33:56.483285+00:00",
-    "title": "Deepening: Teichmuller-Moduli: Analytic Structure of Riemann Surface Space"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Building on cycle c8991a0a (Q=0.880), which proved 294 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Determine exactly which spaces are classified up to homotopy by their fundamental group. Prove that for Eilenberg-MacLane spaces K(G,1), the fundamental group is a complete invariant. Construct examples where the fundamental group fails to classify.",
     "domains": [
       "Bridges"
@@ -178,6 +164,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-17T13:53:58.220287+00:00",
     "title": "Deepening: Topological-Algebraic Bridge: Fundamental Group as a Complete Invariant"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle f262016d (Q=0.850), which proved 87 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Part of:** Research plan \u2014 *Compression Beyond the Pigeonhole Bound* (Phase B, Question 2: can random number generators help?).\n\n## Research question\nPigeonhole governs *exact* decoding for *all* strings. Relax to: **decoder fails with probability \u2264 \u03b5** (almost-lossless). Random codebooks (Shannon",
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_f262016d_bdb9b0bd",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "f262016d",
+    "status": "available",
+    "timestamp": "2026-08-17T18:57:47.933599+00:00",
+    "title": "Deepening: Compression Research B3: Almost-lossless / Monte Carlo compression"
   },
   {
     "consumed_by_exp_id": "",
@@ -1783,40 +1783,12 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle b080b405 (Q=0.789), which proved 13 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Investigate the ArXiv paper 'Alternating adjacent-sum polytopes: transfer matrices and Ehrhart series' and formalize its key results. Abstract: We study a period-two family of adjacent-sum lattice polytopes whose consecutive-coordinate bounds alternate between $s$ and $s+1$. This provides a simple n",
-    "domains": [
-      "Cryptography"
-    ],
-    "id": "push_b080b405_eeb26716",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "b080b405",
-    "status": "available",
-    "timestamp": "2026-08-01T21:18:01.345323+00:00",
-    "title": "Deepening: ArXiv paper: Alternating adjacent-sum polytopes: transfer matrices and Ehrhart s"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 89e28e84 (Q=0.789), which proved 12 theorems in Algebra. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize Wilson's epsilon expansion for the phi^4 critical exponents. Prove that eta = epsilon^2/54 + O(epsilon^3) in 4-epsilon dimensions. Verify the Feynman diagram computation and show that the renormalization group beta function has a non-trivial fixed point for d < 4.",
-    "domains": [
-      "Algebra"
-    ],
-    "id": "push_89e28e84_6cc708ea",
-    "priority_score": 0.88874,
-    "research_mode": "team",
-    "source_exp_id": "89e28e84",
-    "status": "available",
-    "timestamp": "2026-07-29T21:21:22.115983+00:00",
-    "title": "Deepening: Renormalization Group Flow: Wilson's Epsilon Expansion"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Building on cycle 6077433a (Q=0.788), which proved 87 theorems in Geometry. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Investigate the ArXiv paper 'Magnitude homology of tope graphs' and formalize its key results. Abstract: We completely determine the magnitude homology of tope graphs of real hyperplane arrangements. Their ranks can be described as the Hilbert functions of the Stanley--Reisner rings of certain simpl",
     "domains": [
       "Geometry"
     ],
     "id": "push_6077433a_dca76e44",
-    "priority_score": 0.88776,
+    "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "6077433a",
     "status": "available",
@@ -19964,5 +19936,29 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-17T16:46:18.440869+00:00",
     "title": "The seven measured fields in the experiment already span prime and"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The `d = 1` case is proved (`withParity_detects_single_flip` plus the\none-codeword converse); the general case needs only the Hamming ball counting\nlemma over `List Bool` of bounded length.",
+    "domains": [],
+    "id": "fd_1450",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "f262016d",
+    "status": "available",
+    "timestamp": "2026-08-17T18:57:33.687836+00:00",
+    "title": "The `d = 1` case is proved (`withParity_detects_single_flip` plus the"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "an averaging (first-moment) argument on top of the exact\ncharacterisation: some code in the support already meets the average, and the\ncounting characterisation shows the good set of that code is achievable\ndeterministically.",
+    "domains": [],
+    "id": "fd_1451",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "f262016d",
+    "status": "available",
+    "timestamp": "2026-08-17T18:57:33.918611+00:00",
+    "title": "an averaging (first-moment) argument on top of the exact"
   }
 ];
