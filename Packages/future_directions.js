@@ -3,13 +3,13 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "consumed_by_exp_id": "97b1c345",
+    "consumed_by_exp_id": "6ba84571",
     "description": "## NET-48 \u2014 speed axis (round-net-48; paper 92, /tmp/exp_net_attncost_ctx2048_s3.py, /tmp/net48.log)\n\n**Verdict name: THE-DIRECT-TEST-SURVIVES-VIA-THE-MEDIAN.**\n\n### Result\nAt (d=4, ctx=2048, seed=3), **k\\* = 160 \u2014 all four point-horns REFUTED (P1 224, P2 240, P3 256, P4 192: every pre-stated value passes, none is the knee)**, yet the completed 16\u00d7 three-seed knee distribution **{160, 224, 256} has median EXACTLY 224 = 7/8\u00b7(d\u00b7ctx/32)**, replicating the 8\u00d7 median 112 = 7/8\u00b7128: **the 7/8-median law is 2/2-context, 6/6-seed.** The horns were point-predictions; the law's claim was the distribution's center \u2014 0/4 horns, 1/1 law. A whole family of third-seed values {160, 192, 224} each keep the median at 224; only \u2265256 would shift it.\n\n### The 7/8-median law now two contexts, six seeds\n| context | three-seed k\\* set | \u00d7 product | spread | median |\n|---|---|---|---|---|\n| 8\u00d7 (ctx=1024) | {96, 112, 128} | {0.75, 0.875, 1.0} | 0.25 | 112 = 7/8\u00b7128 |\n| 16\u00d7 (ctx=2048) | {160, 224, 256} | {0.625, 0.875, 1.0} | 0.375 | 224 = 7/8\u00b7256 |\n\n**The 16\u00d7 spread is ~50% WIDER than the 8\u00d7 spread** \u2014 the LOW TAIL is the context-growing quantity (0.75 \u2192 0.625), the product value the pinned upper edge (the s1 chain's exactness), the median stable at 7/8. Per-seed knees are too noisy to predict on the point; the distribution's center is the robust quantity \u2014 that is what a third seed buys.\n\n### Key numbers\n- Full acc 0.1546, bar 0.1516, full loss 5.2199, train **14566s (~4h03m)**.\n- Sweep: 96 0.963 \u2717, 128 0.973 \u2717, **160 0.981 \u2713 (margin +0.0012 \u2014 the tightest of the recent cells; true knee ~150\u2013160 between grid points)**, 192 0.984 \u2713, 224 0.986 \u2713, 240 0.987 \u2713, **256 0.990 \u2713 (product point \u2014 passes 3/3)**, 288 0.993 \u2713, 384 0.999 \u2713, 512 1.000 \u2713, 768 1.003 \u2713, 1024 1.003 \u2713 (loss 5.2215, \u03940.0016). The s3 retained curve is the HIGHEST of the three 16\u00d7 seeds throughout (0.973 at 128 vs s1 0.939, s2 0.965) \u2014 crossing the bar two grid steps earlier than s2, three than s1.\n- **Product-law upper bound 3/3-sure at BOTH long contexts**: product point 256 passes 0.981/0.986/0.990 (joining 8\u00d7's 0.986/0.993/0.988 at 128) \u2014 k\\* \u2264 d\u00b7ctx/32 is a six-seed-verified deployment guarantee through 16\u00d7.\n- **Selection importance +4.7/+3.4**: k=128 random 0.926 vs top-k 0.973; k=256 0.956 vs 0.990 \u2014 comparable to s2, far above s1's +1.7/+1.8; the 16\u00d7 selection spread {1.7, 4.4, 4.7} at k=128 is three-fold (dilution strongly seed-dependent).\n- **Concentration**: eff support 498.13 (s1 526.39, s2 472.50 \u2014 mid-family, spread ~11%); top-128 0.608, top-256 0.746; per-position 64.91/435.27/929.55 \u2014 the eff\u2194knee correlation again does NOT sort across three points (s1 highest-eff/highest-knee, s2 lowest-eff/middle-knee, s3 middle-eff/lowest-knee), NO bounded working set at 16\u00d7, three seeds.\n- **Deployable at (d=4, ctx=2048)**: **\u22658.0\u00d7 guaranteed (3/3), 9.1\u00d7 median, 12.8\u00d7 best \u2014 the BEST-EVER reading** (beats 10.7\u00d7 at 8\u00d7 s2). Distribution {8.0, 9.1, 12.8} wider than 8\u00d7's {8.0, 9.1, 10.7}.\n\n### The 16\u00d7 three-seed table\n| seed | k\\* | \u00d7 product (256) |\n|---|---|---|\n| 1 (NET-45) | 256 | 1.000 |\n| 2 (NET-46) | 224 | 0.875 |\n| **3 (this round)** | **160** | **0.625** |\n\n### All 8 barriers\n(a) clean \u2014 four horns + the law's direct test stated before the run, measured 160 outside ALL horns, yet the distribution's median landed exactly on the law's predicted center (the round separates point-accuracy 0/4 from structural confirmation 1/1); (b) clean \u2014 three-seed 16\u00d7 spread / widening low tail / median-stable center: none in the Catalog (698-pkg) or literature; (c) confronted \u2014 d=4 \u00d7 ctx=2048 real causal word LM, 4097 vocab, held-out loss+acc, three seeds at the longest cell; (d) clean \u2014 held-out last-10%, data-free top-k; (e) the SUBSTANCE, sharpened \u2014 the 16\u00d7 three-seed distribution complete; honest limits: the s3=160 read razor-thin (+0.0012), the 0.625 low tail is ONE of three seeds (a fourth decides s3-specific vs stable), the median law is 2 contexts \u00d7 3 seeds; (f) clean \u2014 same metrics/protocol, binom SE \u2248 0.11% acc (retained SE \u2248 0.007), the razor margin documented, k=512 recovers 1.000 / k=768 1.003 (loss \u03940.0016), monotone recovery, NO crash (ALL_DONE_NET48); (g) fair \u2014 full-attention reference + same 0.98 bar + random-k at same k (seed 12345): gaps +4.7/+3.4, positive, the {1.7\u20134.7} seed spread informative; (h) sharpened \u2014 the widened {8.0\u201312.8} deployment spread is the deployment-relevant uncertainty at the longest cell, guarantee end 3/3-sure.\n\n### Next\n**A fourth seed at ctx=2048** (the LOW-TAIL test \u2014 s4=160/192 \u2192 the 0.625 low tail is real, a stable 16\u00d7 feature; s4 in {224,256} \u2192 it was s3-specific; ~4\u20135h \u2014 the highest-value open cell now); a fourth seed at ctx=1024 (refine {96,112,128}; low value); d=8 @ ctx=256 s0 corner; d=8 compression floor check; carry chain at scale (the frontier).\n\nNow 48 network experiments. Assessment v48. Paper 92.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_1345",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
@@ -69,7 +69,7 @@ window.FUTURE_DIRECTIONS = [
       "Novelty"
     ],
     "id": "fd_1373",
-    "phase": "B",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
@@ -136,6 +136,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-23T20:10:45.914797+00:00",
     "title": "EML-Pythagorean-Operator: Single-Neuron Neural Energy Guided Tree Traversal"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 2e6124e7 (Q=0.880), which proved 100 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The inequality itself is **proved** (`FourierAdd.card_support_rep_ge`); what is open is\nthe second half \u2014 exhibiting explicit families where it is strictly stronger than the pigeonhole\nbound, and computing `E` for them.",
+    "domains": [
+      "Physics"
+    ],
+    "id": "push_2e6124e7_2c3cc7e6",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "2e6124e7",
+    "status": "available",
+    "timestamp": "2026-08-17T20:44:54.901895+00:00",
+    "title": "Deepening: The inequality itself is proved"
   },
   {
     "consumed_by_exp_id": "",
@@ -868,20 +882,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle 7199d5c0 (Q=0.820), which proved 84 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Part of:** Research plan \u2014 *Compression Beyond the Pigeonhole Bound* (Phase A, Question 1: separating the decompressor from the data).\n\n## Research question\nOne shared decompressor `U` must serve all inputs. A decompressor specialized to a *class* of data does better per class. What is the **price",
-    "domains": [
-      "MachineLearning"
-    ],
-    "id": "push_7199d5c0_b06c2268",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "7199d5c0",
-    "status": "available",
-    "timestamp": "2026-08-17T19:42:56.921155+00:00",
-    "title": "Deepening: Compression Research A1: Price of universality \u2014 minimax redundancy of universal"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Building on cycle 0e1eb0cb (Q=0.800), which proved 26 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that the Bergman fan of a matroid M equals the tropical linear space of the matroid's circuit ideal. Formalize the connection between matroid connectivity and the topology of the Bergman fan. Show that nested matroids give tropical linear subspaces.",
     "domains": [
       "Tropical"
@@ -1455,16 +1455,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Graph-Expander: Alon-Boppana Bound for Regular Graph Eigenvalues"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9aa1e8d1",
     "description": "Proves that quantizing transformer weight matrices onto modular lattice grids preserves global loss landscape convexity invariants.",
     "domains": [
       "Bridges"
     ],
     "id": "dir_50_50_600fb3ba",
+    "phase": "A",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "batch_50_injection",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-23T20:05:24.803690+00:00",
     "title": "Bridge-NumberTheory-ML: Arithmetic Geometry of Transformer Weight Lattices"
   },
@@ -19348,6 +19349,35 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Both sides of the comparison are now closed-form Lean theorems\n(`addEnergy_sidon`, `addEnergy_sidon2`), so the conjecture is exactly the statement that\nthe exponent-two computation is *extremal*, a finite convexity problem over the\ndistribution of `r`, not a new Fourier estimate.",
+    "domains": [
+      "Combinatorics",
+      "Geometry"
+    ],
+    "id": "fd_1456",
+    "priority_score": 0.5131212121212121,
+    "research_mode": "team",
+    "source_exp_id": "2e6124e7",
+    "status": "available",
+    "timestamp": "2026-08-17T20:44:49.133494+00:00",
+    "title": "Both sides of the comparison are now closed-form Lean theorems"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "\u2014 Stirling closes the $47$-versus-$49$ gap | **Split verdict.** Structural half **closed**: the missing lower bound $16^r \\le \\binom{2r}{r}^2(4r+1)$ is proved by induction through the recursion $(r+1)\\binom{2r+2}{r+1} = 2(2r+1)\\binom{2r}{r}$ (slack exactly $1$), giving the sandwich $4^r/\\sqrt{4r+1} \\le \\binom{2r}{r} \\le 4^r/\\sqrt{3r+1}$, the exact $r^{-1/2}$ defect rate $\\delta_r\\sqrt r \\in [1/(2\\sqrt5),\\,1/(2\\sqrt3)]$, non-summability of the defects, and the Stirling-improved rate $2p(1-p)(4p(1-p))^r/((2p-1)\\sqrt{3r+4})$. Numerical half **refuted**: *no* bound dominating the sharpened rate can certify $1\\%$ at $47$ seeds, because the sharpened rate itself already exceeds $1/100$ there while the truth does not. |\n| **D2** \u2014 the dichotomy under contamination | **Closed in finite-sample form**: for contamination level $c$ below the breakdown number, the achievable readings of the $m$-th rung are *exactly* the clean readings in $[Q(m-c),\\,Q(m+c)]$ \u2014 the bracket is attained at both ends, so the maximal bias equals the clean spread and the breakdown number is the level at which that spread stops being finite. |\n| **D3** \u2014 every offset rung has its own generating function | **Closed**: for each fixed offset $k$, the off-centre ladder started at its smallest ensemble sums to exactly $1 - p^{2k+1} = (1-p)(1 + p + \\cdots + p^{2k})$, i.e. the conjectured $(1-p)R_k(p)$ with $R_k$ the geometric polynomial of length $2k+1$; $k = 0$ recovers the earlier cycle's $1-p$. |",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_1453",
+    "priority_score": 0.5083684210526316,
+    "research_mode": "team",
+    "source_exp_id": "97b1c345",
+    "status": "available",
+    "timestamp": "2026-08-17T20:44:28.600866+00:00",
+    "title": "\u2014 Stirling closes the $47$-versus-$49$ gap | Split verdict."
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Let `t k = tr(M\u2082^k)` (recurrence `t(k+3) = 5t(k+2) + 5t(k+1) \u2212 t(k)`,\n`t 0,\u2026,t 3 = 3, 5, 35, 197`).  There is **no odd composite** `N` with `gcd(N, 2) = 1`\nsatisfying simultaneously `t N \u2261 5 (mod N)` and `t (N+1) \u2261 t (N\u22121) (mod N)`.  (Dropping the\nsecond condition, pseudoprimes do exist; the conjecture is that the two-sided test is\nCarmichael-free, as for the Baillie\u2013PSW combination.)",
     "domains": [
       "NumberTheory"
@@ -19443,6 +19473,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-17T14:45:14.122863+00:00",
     "title": "The equivalence and the cap are formal; sieve-theoretic upper bounds of"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**The low-tail experiment.** A fourth seed at the long context is diagnostic for the *tail*,\n  not the centre: a fourth knee in $\\{160, 192\\}$ would establish the $0.625P$ low tail as a\n  stable feature of the $16\\times$ cell, while a value in $\\{224, 256\\}$ would mark it\n  seed-specific. Strengthening the *centre* requires a fifth seed, since a fourth improves\n  neither the breakdown number nor the calibration.",
+    "domains": [],
+    "id": "fd_1454",
+    "priority_score": 0.4291538461538461,
+    "research_mode": "team",
+    "source_exp_id": "97b1c345",
+    "status": "available",
+    "timestamp": "2026-08-17T20:44:28.805700+00:00",
+    "title": "The low-tail experiment."
   },
   {
     "consumed_by_exp_id": "",
@@ -19611,15 +19653,14 @@ window.FUTURE_DIRECTIONS = [
     "title": "Both sides of the identity are already available as Lean theorems"
   },
   {
-    "consumed_by_exp_id": "2e6124e7",
+    "consumed_by_exp_id": "",
     "description": "The inequality itself is **proved** (`FourierAdd.card_support_rep_ge`); what is open is\nthe second half \u2014 exhibiting explicit families where it is strictly stronger than the pigeonhole\nbound, and computing `E` for them.",
     "domains": [],
     "id": "fd_1413",
-    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "525aecde",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-17T09:01:33.098615+00:00",
     "title": "The inequality itself is proved"
   },
@@ -19973,5 +20014,35 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-17T18:57:33.918611+00:00",
     "title": "an averaging (first-moment) argument on top of the exact"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**Continuous budgets.** Extend the contamination curve from an ordinal ladder to a continuous\n  budget axis, where the window width becomes a quantile spread and centre-minimality becomes a\n  log-concavity hypothesis on the knee density.",
+    "domains": [
+      "Geometry",
+      "Logic"
+    ],
+    "id": "fd_1455",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "97b1c345",
+    "status": "available",
+    "timestamp": "2026-08-17T20:44:29.001079+00:00",
+    "title": "Continuous budgets. Extend the contamination curve from an ordinal ladder to a continuous"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Mathlib now carries the exact-doubling structure theorem\n(`Finset.vadd_stabilizer_of_no_doubling`, used in `gain_or_coset`) and approximate-subgroup\nmachinery, so the stable version can be attacked by combining the Lean-proved energy\nidentity with existing Freiman-type infrastructure rather than rebuilding it.",
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_1457",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "2e6124e7",
+    "status": "available",
+    "timestamp": "2026-08-17T20:44:49.335385+00:00",
+    "title": "Mathlib now carries the exact-doubling structure theorem"
   }
 ];

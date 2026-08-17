@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "299127cc",
-      "domain": "Combinatorics",
-      "key_insight": "# FUTURE DIRECTIONS — GENERIC-RECOVERY, next cycle\n\nThree cycles of the loop produced: (I) the master bound and the exact fibre\ncount of generic hints, (II) sharpness, an average-case strengthening an",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 59,
-      "timestamp": "2026-08-15T14:47:41",
-      "title": "Exp 390 GENERIC-RECOVERY: recovery-from-hint = 2^(k-1-t_eff) — hint taxonomy closed"
-    },
-    {
       "cycle_id": "3ce74e62",
       "domain": "Geometry",
       "key_insight": "# Future Directions — Power-Sum GCD Factoring & Carmichael Periodicity\n\nDerived from the Stage-3 analysis and Stage-4 critique of the results now proved in\n`Catalog/Geometry/PowerSum*.lean`. Each conj",
@@ -499,19 +489,19 @@
       "theorem_count": 255,
       "timestamp": "2026-08-17T20:44:43",
       "title": "NET-48: The direct test survives via the MEDIAN — k*=160 at (d=4, ctx=2048, seed=3), all four point-"
+    },
+    {
+      "cycle_id": "2e6124e7",
+      "domain": "Physics",
+      "key_insight": "# Future Directions\n\nDerived from the analysis and adversarial review of this cycle.  Everything cited as\n\"proved\" below is a `sorry`-free Lean theorem in `Catalog/Physics/FourierEnergyBound.lean`,\n`C",
+      "quality_score": 0.88,
+      "sorry_count": 0,
+      "theorem_count": 100,
+      "timestamp": "2026-08-17T20:44:54",
+      "title": "The inequality itself is proved"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "3744942f",
-      "domain": "Probability",
-      "key_insight": "# Future Directions — Hadwiger's Conjecture (cycle v19c, continuation pass)\n\nWhat is now formalised (all statements below are `sorry`-free theorems in\n`Catalog/Probability/Hadwiger*.lean`):\n\n* transit",
-      "quality_score": 0.6546236561723476,
-      "sorry_count": 0,
-      "theorem_count": 666,
-      "timestamp": "2026-08-07T03:15:10",
-      "title": "Deepening: Hadwiger's Conjecture"
-    },
     {
       "cycle_id": "d6f1fad6",
       "domain": "MachineLearning",
@@ -2501,27 +2491,19 @@
       "theorem_count": 255,
       "timestamp": "2026-08-17T20:44:43",
       "title": "NET-48: The direct test survives via the MEDIAN — k*=160 at (d=4, ctx=2048, seed=3), all four point-"
+    },
+    {
+      "cycle_id": "2e6124e7",
+      "domain": "Physics",
+      "key_insight": "# Future Directions\n\nDerived from the analysis and adversarial review of this cycle.  Everything cited as\n\"proved\" below is a `sorry`-free Lean theorem in `Catalog/Physics/FourierEnergyBound.lean`,\n`C",
+      "quality_score": 0.88,
+      "sorry_count": 0,
+      "theorem_count": 100,
+      "timestamp": "2026-08-17T20:44:54",
+      "title": "The inequality itself is proved"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "86a70a4b",
-      "domain": "Computation",
-      "name": "gcd_dvd_two",
-      "quality": 0.88
-    },
-    {
-      "cycle_id": "86a70a4b",
-      "domain": "Computation",
-      "name": "antiFib_four_mul_add_two",
-      "quality": 0.88
-    },
-    {
-      "cycle_id": "094ca37a",
-      "domain": "MachineLearning",
-      "name": "balanced_activation_at_optimum",
-      "quality": 0.82
-    },
     {
       "cycle_id": "094ca37a",
       "domain": "MachineLearning",
@@ -2803,9 +2785,27 @@
       "domain": "Probability",
       "name": "breakdown_up",
       "quality": 0.92
+    },
+    {
+      "cycle_id": "2e6124e7",
+      "domain": "Physics",
+      "name": "rep_pos_iff",
+      "quality": 0.88
+    },
+    {
+      "cycle_id": "2e6124e7",
+      "domain": "Physics",
+      "name": "support_rep_eq_add",
+      "quality": 0.88
+    },
+    {
+      "cycle_id": "2e6124e7",
+      "domain": "Physics",
+      "name": "rep_eq_card_fiber",
+      "quality": 0.88
     }
   ],
-  "last_updated": "2026-08-17T20:44:43",
+  "last_updated": "2026-08-17T20:44:54",
   "open_questions": [
     {
       "context": "## Main Results (all sorry-free); sorry; sorry",
@@ -3703,12 +3703,6 @@
     ],
     "Physics": [
       {
-        "cycle_id": "76abd1f0",
-        "quality": 0.6537058069977426,
-        "theorems": 456,
-        "title": "Chaos and the Three-Body Problem: Lyapunov Exponent Bounds"
-      },
-      {
         "cycle_id": "a55e871b",
         "quality": 0.627125,
         "theorems": 163,
@@ -3761,6 +3755,12 @@
         "quality": 0.78,
         "theorems": 123,
         "title": "Bridge: Quantum Groups as Deformations of Classical Groups"
+      },
+      {
+        "cycle_id": "2e6124e7",
+        "quality": 0.88,
+        "theorems": 100,
+        "title": "The inequality itself is proved"
       }
     ],
     "Probability": [
