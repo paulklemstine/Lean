@@ -40,7 +40,7 @@ window.FUTURE_DIRECTIONS = [
       "Cryptography"
     ],
     "id": "pyth_factor_modular_1ae54410",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 0.98,
     "research_mode": "team",
     "source_exp_id": "pythagorean_factorization_breakthrough",
@@ -796,6 +796,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 665c1eea (Q=0.830), which proved 90 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the Alcubierre warp drive metric: ds^2 = -dt^2 + (dx - v_s f(r_s))dt^2 + dy^2 + dz^2. Prove: the metric is a valid solution of Einstein's field equations. Show: the expansion of space behind the ship and contraction ahead creates effective FTL without local FTL. Explore: the energy require",
+    "domains": [
+      "Physics"
+    ],
+    "id": "push_665c1eea_56c01735",
+    "priority_score": 0.9299999999999999,
+    "research_mode": "team",
+    "source_exp_id": "665c1eea",
+    "status": "available",
+    "timestamp": "2026-08-17T03:13:42.974585+00:00",
+    "title": "Deepening: Moonshot: Warp Drive Spacetime \u2014 Alcubierre Metric Formalization"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 3b29df87 (Q=0.820), which proved 110 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the Weil pairing on an elliptic curve and prove its bilinearity. Show that the BLS signature scheme is existentially unforgeable under the computational Diffie-Hellman assumption in the pairing group. Prove that the pairing allows short aggregate signatures.",
     "domains": [
       "Cryptography"
@@ -807,20 +821,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-16T11:35:10.982658+00:00",
     "title": "Deepening: Elliptic Curve Cryptography: Weil Pairing and BLS Signatures"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 6a0dc5c0 (Q=0.820), which proved 79 theorems in Logic. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## NET-45 \u2014 speed axis (round-net-45; paper 89, /tmp/exp_net_attncost_ctx2048.py, /tmp/net45.log)\n\n**Verdict name: THE-S1-PRODUCT-CHAIN-SURVIVES-AT-FIVE-DOUBLINGS-AT-THE-TIGHTEST-MARGIN.**\n\n### Result\nAt (d=4, ctx=2048, seed=1), **k\\* = 256 = d\u00b7ctx/32 EXACTLY \u2014 the prediction CONFIRMED** (P1). The s",
-    "domains": [
-      "Logic"
-    ],
-    "id": "push_6a0dc5c0_12718b67",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "6a0dc5c0",
-    "status": "available",
-    "timestamp": "2026-08-17T01:55:59.679434+00:00",
-    "title": "Deepening: NET-45: The s1 product chain survives at FIVE DOUBLINGS \u2014 k*=256 at (d=4, ctx=20"
   },
   {
     "consumed_by_exp_id": "",
@@ -2559,7 +2559,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "K\u00e4hler-Einstein Metrics and K-Stability"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "615053e5",
     "description": "Construct a formal proof system where the soundness predicate appears inside the system it validates. Prove that such tangled hierarchies are unavoidable in any system that can reason about its own consistency. Formalize using modal fixed-point logics and Kripke frames.",
     "domains": [
       "Novelty",
@@ -2567,10 +2567,11 @@ window.FUTURE_DIRECTIONS = [
       "Computation"
     ],
     "id": "seed_255",
+    "phase": "A",
     "priority_score": 0.88,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Tangled Hierarchies: Proof Systems That Reference Their Own Soundness"
   },
@@ -4745,7 +4746,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Hofstadter: I Am a Strange Loop \u2014 Consciousness as Self-Reference"
   },
   {
-    "consumed_by_exp_id": "665c1eea",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Alcubierre warp drive metric: ds^2 = -dt^2 + (dx - v_s f(r_s))dt^2 + dy^2 + dz^2. Prove: the metric is a valid solution of Einstein's field equations. Show: the expansion of space behind the ship and contraction ahead creates effective FTL without local FTL. Explore: the energy requirement is negative (exotic matter). Conjecture: the total energy needed scales as E ~ M * v_s * c (where M is the ship mass). Formalize: does the Alcubierre drive create closed timelike curves?",
     "domains": [
       "Novelty",
@@ -4753,11 +4754,10 @@ window.FUTURE_DIRECTIONS = [
       "Geometry"
     ],
     "id": "seed_407",
-    "phase": "A",
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "",
     "title": "Moonshot: Warp Drive Spacetime \u2014 Alcubierre Metric Formalization"
   },
@@ -9985,6 +9985,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-14T02:53:49.163890+00:00",
     "title": "ArXiv paper: Gross vectors modulo 2 and elliptic curves of prime conductor"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Isomorphism of tournaments with bounded VC dimension' and formalize its key results. Abstract: The tournament isomorphism problem is one of the two fundamental bottlenecks to designing better algorithms for the graph isomorphism problem. Though the problem has been investigated for more than five decades, compared to graphs, there are only very few results on the isomorphism problem of tournaments. For most classes of tournaments neither hardness nor polynomial-time solvability is known. Tournaments of bounded VC dimension are such a class for which no results are available, even though the VC dimension is arguably one of the most robust and central notions of combinatorial tameness. Resolving an open problem of Neuen and Grohe, we show that the isomorphism problem for tournaments of VC dimension $d$ can be decided in time $n^{O(d\\log d)}$. Consequently, automorphism groups of tournaments of bounded VC dimension can be computed in polynomial time. To this end, we develop a new method to isomorphism-invariantly decompose tournaments. To facilitate recursion, we introduce the noti",
+    "domains": [
+      "Combinatorics",
+      "Algebra"
+    ],
+    "id": "fd_1350",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2608.14486v1",
+    "status": "available",
+    "timestamp": "2026-08-17T03:14:01.909338+00:00",
+    "title": "ArXiv paper: Isomorphism of tournaments with bounded VC dimension"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Shimura curves of discriminant 14 and 15 and associated Heun Functions' and formalize its key results. Abstract: The Shimura curve of discriminant $D$ for $D=14, 15$ is uniformized by a subgroup of an arithmetic quadrilateral Fuchsian group $(2, 2, 2, q)$, where $q=4, 6$. We relate the generator of the ring of quaternionic modular forms on this Shimura curve to explicit Heun functions for the quadrilateral group. We also discuss how the Picard-Fuchs equation of the associated family of abelian surfaces has solutions that are modular forms on $X^{D}(1) / W_{D}$, where $W_D$ is the full group of Atkin-Lehner involutions. This leads us to completely describe the rational exceptional sets of the associated Heun functions, and the algebraic values attained by the Heun function on these points, for example $${\\rm He}\\left( 81, \\frac{1}{2}; \\frac{1}{3}, \\frac{1}{6}, \\frac{1}{2}, \\frac{1}{2};-\\frac{729}{112}\\right)= \\left( \\frac{2^2 \\cdot 3^3 \\cdot 5^3}{7^5} \\right)^{\\frac{1}{6}}$$.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1351",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2608.14495v1",
+    "status": "available",
+    "timestamp": "2026-08-17T03:14:05.187824+00:00",
+    "title": "ArXiv paper: Shimura curves of discriminant 14 and 15 and associated Heun Functions"
   },
   {
     "consumed_by_exp_id": "",
@@ -18634,6 +18664,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-17T01:55:53.241843+00:00",
     "title": "Each conjecture is stated so that a single computation, run, or Lean development"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 bold, testable conjectures from the Alcubierre formalization\n\nEach conjecture below is stated so that it can be settled (proved or refuted) inside the\nformal framework already built in `Catalog/Physics/Spacetime/Alcubierre*.lean`.\n\n---\n\n## C1. Universal exotic-energy floor: `|E| \u2265 v\u00b2 R\u00b2 /(12 \u0394)` for *every* superluminal bubble geometry\n\n**Statement.** Let the bubble be any (not necessarily spherical) region whose shape function\nequals `1` on a body of inradius `R` and `0` outside a shell of thickness `\u0394`.  Then the\ntotal Eulerian energy satisfies `E \u2264 -(v\u00b2/12)(R\u00b2/\u0394)(1 + o(1))` as `\u0394 \u2192 0`, with the constant\n`1/12` unimprovable.\n\n**Status after this cycle.** Proved for spherically symmetric walls, and *sharply*:\n`warp_energy_floor_is_sharp` shows the minimum of the radial energy integral over all\nadmissible profiles is exactly `ab/(b-a)`, attained by `f'(r) \u221d -1/r\u00b2`; the piecewise-linear\nwall exceeds it by exactly `\u0394/3` (`linear_wall_excess`).  The open part is the removal of\nspherical symmetry.\n\n**The key insight is** that the energy functional is a weighted `L\u00b2` norm of `\u2207f` subject to\na single linear normalisation, so the floor is a Cauchy\u2013Schwarz dual norm \u2014 and the dual\nnorm of a *shape* constraint is a purely geometric (capacity-like) quantity, which should\nidentify the true minimum with the electrostatic capacity of the shell.\n\n**Why now?** The Cauchy\u2013Schwarz argument is already formalized in one dimension; lifting it\nto three dimensions only requires Mathlib's `MeasureTheory` H\u00f6lder inequality plus a\ncapacity estimate, both within reach.\n\n---\n\n## C2. Quadratic-not-linear universality: every ADM warp ansatz with unit lapse has energy exactly homogeneous of degree two in the warp speed\n\n**Statement.** For *any* shift field `\u03b2 = -v_s F(x)` on flat slices with unit lapse, the\nEulerian energy density satisfies `\u03c1(\u03bb v_s) = \u03bb\u00b2 \u03c1(v_s)` pointwise, while the momentum\ndensity is homogeneous of degree one; hence no warp ansatz of this class can have energy\nscaling `E ~ M v_s c`.\n\n**Status.** Proved for the Alcubierre shape (`energy_quadratic_scaling`,\n`momentumFlux_scaling`, `linear_energy_scaling_false`); the general shift field is open but\nthe Hamiltonian constraint is quadratic in `K`, so the proof should be a two-line\nhomogeneity argument once the general `K_ij(\u03b2)` is defined.\n\n**The key insight is** that the Hamiltonian constraint is *exactly quadratic* in the\nextrinsic curvature while `K` is *exactly linear* in the shift, so the degree of homogeneity\nis a structural invariant of the ADM formalism, not a feature of Alcubierre's particular\nprofile.\n\n**Why now?** The mission's conjecture `E ~ M v_s c` has been formally refuted for the\ncanonical profile; the natural next question is whether *any* member of the class could obey\nit, and the machinery to answer it is one definition away.\n\n---\n\n## C3. Chronology dichotomy: single-bubble spacetimes are globally hyperbolic, pairs are not\n\n**Statement.** Every spacetime of ADM form with unit lapse, flat slices and *one* shift field\nis stably causal (the coordinate time is a global time function), whereas for every `V > 1`\nthere is a two-corridor spacetime containing a closed timelike curve.\n\n**Status.** Both halves are proved in the tangent-space/kinematic sense\n(`no_closed_causal_curve`, `warp_pair_closes_loop`, packaged as\n`alcubierre_ctc_dichotomy`).  Open: constructing the *glued* two-corridor metric as a single\nLorentzian manifold and exhibiting the CTC as a curve in it.\n\n**The key insight is** that the causality violation is not local: each corridor is causally\nimpeccable, and the loop only closes because the two corridors define *different* time\nfunctions \u2014 so chronology protection must be a statement about the space of admissible shift\nfields, not about any single metric.\n\n**Why now?** The kinematic obstruction is already machine-checked; the missing step is a\ngluing construction, which is a finite amount of explicit differential geometry rather than\nnew analysis.\n\n---\n\n## C4. Focusing threshold as an engineering criterion: `|\u03b8\u2080| > v_s \u221a(m \u2016\u2207\u22a5f\u2016\u00b2/2)` decides bubble stability\n\n**Statement.** A congruence of test geodesics crossing the bubble wall focuses (and hence a\ncaustic/instability forms) if and only if its entry convergence exceeds\n`v_s \u221a(m \u2016\u2207\u22a5f\u2016\u00b2/2)`; below the threshold the exotic matter defeats focusing entirely.\n\n**Status.** The sufficient direction is proved (`warp_critical_convergence` +\n`warp_focusing_survives`, built on the catalog's `focusing_domain_bound_of_energy_defect`),\nand the threshold is shown to be sharp for the model inequality\n(`warp_defect_defeats_focusing_at_threshold`).  Open: promoting \"sharp for the differential\ninequality\" to \"sharp for the actual congruence in the bubble\".\n\n**The key insight is** that the warp bubble's exotic matter enters the singularity theorems\nonly through the single scalar defect `c_warp = -16\u03c0\u03c1`, so the entire stability question\ncompresses to comparing two numbers.\n\n**Why now?** The bridge between the warp metric and the catalog's Raychaudhuri engine is now\nformal, so any refinement of the focusing theory transfers to warp drives automatically.\n\n---\n\n## C5. No momentum-free warp bubble: transversal harmonicity forces triviality\n\n**Statement.** If a compactly supported shape function `f` makes the Einstein-required\nmomentum density vanish identically (transversally harmonic with no mixed second\nderivatives), then `f` is constant \u2014 hence *every* genuine warp bubble carries a nonzero\nexotic energy flux.\n\n**Status.** The algebraic half is proved (`momentum_vanishes_iff`,\n`exotic_matter_not_comoving`): momentum vanishes iff `\u2202_y\u00b2f + \u2202_z\u00b2f = 0` and\n`\u2202_x\u2202_yf = \u2202_x\u2202_zf = 0`.  Open: the Liouville-type step showing that a compactly supported\nfunction harmonic in each transverse plane must be constant.\n\n**The key insight is** that the momentum constraint converts a global support condition into\na plane-wise harmonicity condition, so the maximum principle in two dimensions \u2014 not any\nLorentzian geometry \u2014 is what rules out momentum-free warp drives.\n\n**Why now?** Mathlib's harmonic-function API has matured to the point where the\ntwo-dimensional maximum principle is usable, making this the cheapest remaining no-go\ntheorem in the family.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1349",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "665c1eea",
+    "status": "available",
+    "timestamp": "2026-08-17T03:13:31.232522+00:00",
+    "title": "Each conjecture below is stated so that it can be settled (proved or refuted) in"
   },
   {
     "consumed_by_exp_id": "",

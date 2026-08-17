@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "e0db545b",
-      "domain": "Physics",
-      "key_insight": "# Future directions — from the permutation readout to the next barrier\n\nThe formal results of this project (`Catalog/Physics/PermutationReadout*.lean`)\nsettle the PERMORD question: the permutation `x",
-      "quality_score": 0.91,
-      "sorry_count": 0,
-      "theorem_count": 202,
-      "timestamp": "2026-08-14T17:18:51",
-      "title": "The Permutation Readout of Individual Orders, Closed"
-    },
-    {
       "cycle_id": "c76c12ee",
       "domain": "Novelty",
       "key_insight": "# FUTURE DIRECTIONS — CM-ECM-ORDER, next cycle\n\nDerived from the three verified files\n`Catalog/Novelty/CmEcmOrderShadow.lean` (cycle 1: exact CM dichotomy, residue\nshadow, which-factor null), `Catalog",
@@ -499,19 +489,19 @@
       "theorem_count": 79,
       "timestamp": "2026-08-17T01:55:59",
       "title": "NET-45: The s1 product chain survives at FIVE DOUBLINGS — k*=256 at (d=4, ctx=2048, s1) = d·ctx/32 E"
+    },
+    {
+      "cycle_id": "665c1eea",
+      "domain": "Physics",
+      "key_insight": "# Future Directions — bold, testable conjectures from the Alcubierre formalization\n\nEach conjecture below is stated so that it can be settled (proved or refuted) inside the\nformal framework already bu",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 90,
+      "timestamp": "2026-08-17T03:13:42",
+      "title": "Moonshot: Warp Drive Spacetime — Alcubierre Metric Formalization"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "716ebed1",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\nThe neural-coding development now consists of six files, all compiling against\nMathlib with complete proofs (no `sorry`, axioms limited to `propext`,\n`Classical.choice`, `Quot.sou",
-      "quality_score": 0.686,
-      "sorry_count": 0,
-      "theorem_count": 123,
-      "timestamp": "2026-08-06T03:44:43",
-      "title": "Deepening: Moonshot: Brain-Computer Interface Mathematics — Neural Coding Theorems"
-    },
     {
       "cycle_id": "059cccbd",
       "domain": "Probability",
@@ -2501,27 +2491,19 @@
       "theorem_count": 79,
       "timestamp": "2026-08-17T01:55:59",
       "title": "NET-45: The s1 product chain survives at FIVE DOUBLINGS — k*=256 at (d=4, ctx=2048, s1) = d·ctx/32 E"
+    },
+    {
+      "cycle_id": "665c1eea",
+      "domain": "Physics",
+      "key_insight": "# Future Directions — bold, testable conjectures from the Alcubierre formalization\n\nEach conjecture below is stated so that it can be settled (proved or refuted) inside the\nformal framework already bu",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 90,
+      "timestamp": "2026-08-17T03:13:42",
+      "title": "Moonshot: Warp Drive Spacetime — Alcubierre Metric Formalization"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "2a357c10",
-      "domain": "Bridges",
-      "name": "seq_telescope",
-      "quality": 0.84
-    },
-    {
-      "cycle_id": "6c757940",
-      "domain": "Computation",
-      "name": "term_nonneg",
-      "quality": 0.89
-    },
-    {
-      "cycle_id": "6c757940",
-      "domain": "Computation",
-      "name": "term_zero",
-      "quality": 0.89
-    },
     {
       "cycle_id": "6c757940",
       "domain": "Computation",
@@ -2803,9 +2785,27 @@
       "domain": "Logic",
       "name": "card",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "665c1eea",
+      "domain": "Physics",
+      "name": "forbids",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "665c1eea",
+      "domain": "Physics",
+      "name": "boost_factor_pos",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "665c1eea",
+      "domain": "Physics",
+      "name": "boost_origin",
+      "quality": 0.83
     }
   ],
-  "last_updated": "2026-08-17T01:55:59",
+  "last_updated": "2026-08-17T03:13:42",
   "open_questions": [
     {
       "context": "This file gives a **complete, self-contained proof** of that theorem (0 `sorry`s).",
@@ -3703,12 +3703,6 @@
     ],
     "Physics": [
       {
-        "cycle_id": "71b84dd8",
-        "quality": 0.686,
-        "theorems": 31,
-        "title": "`Physics/ZeroPointHarvesting.lean` models any proposed harvesting apparatus by t"
-      },
-      {
         "cycle_id": "2def9e1c",
         "quality": 0.661958698156682,
         "theorems": 605,
@@ -3761,6 +3755,12 @@
         "quality": 0.78,
         "theorems": 53,
         "title": "The Unreasonable Effectiveness of Wrong Theories"
+      },
+      {
+        "cycle_id": "665c1eea",
+        "quality": 0.83,
+        "theorems": 90,
+        "title": "Moonshot: Warp Drive Spacetime — Alcubierre Metric Formalization"
       }
     ],
     "Probability": [
