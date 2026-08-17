@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "f2bb5930",
-      "domain": "Shared",
-      "key_insight": "# Future directions: the cyclic splitting-type channel\n\nFive falsifiable conjectures distilled from the current cycle.  Everything cited\nas *proved* below is a `sorry`-free Lean theorem in `Catalog/Sh",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-08-15T07:52:25",
-      "title": "CYCLIC-TYPE-CHANNEL (round-22 #2, experiment 413, assessment v189, paper 78)"
-    },
-    {
       "cycle_id": "35640655",
       "domain": "Bridges",
       "key_insight": "# FUTURE DIRECTIONS — after the OR-dial maximum and its multi-prime extension\n\nThe verified state of the thread (all in `Catalog/Bridges/ORDial*.lean`, 0 sorries, no added\naxioms, no `native_decide`):",
@@ -499,19 +489,19 @@
       "theorem_count": 294,
       "timestamp": "2026-08-17T13:53:57",
       "title": "Topological-Algebraic Bridge: Fundamental Group as a Complete Invariant"
+    },
+    {
+      "cycle_id": "286b3a0e",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions — Moonshine Beyond the j-Function\n\nThis research thread studies what survives, rigorously, of \"moonshine-type\" statements when the\nanalytic mythology is stripped away: element-inde",
+      "quality_score": 0.89,
+      "sorry_count": 3,
+      "theorem_count": 145,
+      "timestamp": "2026-08-17T13:54:12",
+      "title": "`Catalog/Novelty/MonsterMoonshineBridge.lean` proves a rigorous cross-domain bri"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "ffc2840e",
-      "domain": "Computation",
-      "key_insight": "# Future directions\n\nDerived from the five Lean files of this thread, all of which compile against\nmathlib4 (Lean 4.28.0) with no `sorry` and use only the standard axioms\n`propext`, `Classical.choice`",
-      "quality_score": 0.686,
-      "sorry_count": 0,
-      "theorem_count": 154,
-      "timestamp": "2026-08-06T09:23:28",
-      "title": "Group actions and orbit relations.: Instantiate `InvariantPattern` with th"
-    },
     {
       "cycle_id": "39ee2889",
       "domain": "Combinatorics",
@@ -2501,27 +2491,19 @@
       "theorem_count": 294,
       "timestamp": "2026-08-17T13:53:57",
       "title": "Topological-Algebraic Bridge: Fundamental Group as a Complete Invariant"
+    },
+    {
+      "cycle_id": "286b3a0e",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions — Moonshine Beyond the j-Function\n\nThis research thread studies what survives, rigorously, of \"moonshine-type\" statements when the\nanalytic mythology is stripped away: element-inde",
+      "quality_score": 0.89,
+      "sorry_count": 3,
+      "theorem_count": 145,
+      "timestamp": "2026-08-17T13:54:12",
+      "title": "`Catalog/Novelty/MonsterMoonshineBridge.lean` proves a rigorous cross-domain bri"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "81aa12f0",
-      "domain": "Novelty",
-      "name": "Sw_strong_subadditive",
-      "quality": 0.87
-    },
-    {
-      "cycle_id": "4f1ff831",
-      "domain": "Logic",
-      "name": "window_of_isKnee",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "7a819734",
-      "domain": "NumberTheory",
-      "name": "logInv_le_two",
-      "quality": 0.86
-    },
     {
       "cycle_id": "7a819734",
       "domain": "NumberTheory",
@@ -2803,17 +2785,28 @@
       "domain": "Bridges",
       "name": "index_ker_of_ne_one",
       "quality": 0.88
+    },
+    {
+      "cycle_id": "286b3a0e",
+      "domain": "Bridges",
+      "name": "and",
+      "quality": 0.89
+    },
+    {
+      "cycle_id": "286b3a0e",
+      "domain": "Bridges",
+      "name": "in",
+      "quality": 0.89
+    },
+    {
+      "cycle_id": "286b3a0e",
+      "domain": "Bridges",
+      "name": "sum_card_fixedBy_eq_orbits_mul_card",
+      "quality": 0.89
     }
   ],
-  "last_updated": "2026-08-17T13:53:57",
+  "last_updated": "2026-08-17T13:54:12",
   "open_questions": [
-    {
-      "context": "-    sorry+  have hchecked := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hn2⟩)",
-      "cycle_id": "9f0b015d",
-      "domain": "Logic",
-      "sorry_count": 1,
-      "timestamp": "2026-07-25T15:27:37"
-    },
     {
       "context": "## Main Results (all sorry-free); sorry; sorry",
       "cycle_id": "55a94506",
@@ -3016,6 +3009,13 @@
       "domain": "Shared",
       "sorry_count": 4,
       "timestamp": "2026-08-17T10:49:06"
+    },
+    {
+      "context": "Everything is proved; there are no `sorry`s, no `native_decide`, and no new axioms.; Everything is proved; there are no `sorry`s, no `native_decide`, and no new axioms.; Everything is proved; there ar",
+      "cycle_id": "286b3a0e",
+      "domain": "Bridges",
+      "sorry_count": 3,
+      "timestamp": "2026-08-17T13:54:12"
     }
   ],
   "research_threads": {
@@ -3145,12 +3145,6 @@
     ],
     "Bridges": [
       {
-        "cycle_id": "fc0b5c3a",
-        "quality": 0.686,
-        "theorems": 118,
-        "title": "Existence of δ‑dense sets avoiding large sumsets"
-      },
-      {
         "cycle_id": "0e033e47",
         "quality": 0.648859294871795,
         "theorems": 228,
@@ -3203,6 +3197,12 @@
         "quality": 0.88,
         "theorems": 294,
         "title": "Topological-Algebraic Bridge: Fundamental Group as a Complete Invariant"
+      },
+      {
+        "cycle_id": "286b3a0e",
+        "quality": 0.89,
+        "theorems": 145,
+        "title": "`Catalog/Novelty/MonsterMoonshineBridge.lean` proves a rigorous cross-domain bri"
       }
     ],
     "Combinatorics": [
