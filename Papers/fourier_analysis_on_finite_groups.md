@@ -1,58 +1,71 @@
-# Computational Evidence — Fourier Analysis on Finite Groups
+# Computational evidence (exploratory, *not* machine-verified)
 
-Target identities (discrete Fourier transform `𝓕 = ZMod.dft` on `ZMod N`,
-normalisation `𝓕 f (k) = Σ_j e^{-2πi jk/N} f(j)`):
+All numbers below come from floating-point exploration scripts run before formalisation.
+They are **not** part of the verified artifact; the verified statements are exactly the Lean
+theorems in `Catalog/Shared/Fourier*.lean`, which build with no `sorry` and use only the
+standard axioms `propext`, `Classical.choice`, `Quot.sound`.
 
-1. Convolution theorem: `𝓕(f ⋆ g) = 𝓕 f · 𝓕 g`.
-2. Parseval/Plancherel: `Σ_k |𝓕 f (k)|² = N · Σ_j |f(j)|²`.
-3. Donoho–Stark uncertainty: `f ≠ 0 ⟹ |supp f| · |supp 𝓕f| ≥ N`.
+## 1. Donoho–Stark: minimum of `|supp f| · |supp f̂|` over random `f` on `Z/n`
 
-## 1. Small-case calculations for the uncertainty principle
+2000 random sparse complex vectors per `n` (support chosen uniformly, entries in
+`{-2,…,2} + i{-2,…,2}`), transform `f̂(k) = ∑_x e^{-2πikx/n} f(x)`, tolerance `10⁻⁹`.
 
-We list `|supp f|`, `|supp 𝓕f|` and their product for canonical test functions.
+| n | minimum observed `|supp f|·|supp f̂|` | proved lower bound |
+|---|---|---|
+| 3 | 3 | 3 |
+| 4 | 4 | 4 |
+| 5 | 5 | 5 |
+| 6 | 6 | 6 |
+| 8 | 8 | 8 |
+| 9 | 9 | 9 |
+| 12 | 12 | 12 |
 
-| Group | f | |supp f| | |supp 𝓕f| | product | ≥ N ? |
-|------|---|---------|-----------|---------|-------|
-| ZMod 4 | δ₀ (indicator of {0}) | 1 | 4 | 4 | = 4 (sharp) |
-| ZMod 4 | constant 1 | 4 | 1 | 4 | = 4 (sharp) |
-| ZMod 6 | indicator of subgroup {0,3} (size 2) | 2 | 3 | 6 | = 6 (sharp) |
-| ZMod 6 | indicator of subgroup {0,2,4} (size 3) | 3 | 2 | 6 | = 6 (sharp) |
-| ZMod 5 | δ₀ + δ₁ (two spikes) | 2 | 5 | 10 | ≥ 5 |
-| ZMod p (prime) | any 0 < |supp f| < p | a | b | a·b | a·b ≥ p (in fact a+b ≥ p+1, Tao) |
+No violation of `|supp f| · |supp f̂| ≥ n` was found, and the bound is attained in every case —
+consistent with `FourierCyclic.uncertainty_zmod` and with the extremal families we then proved
+(`FourierFA.uncertainty_eq_coset_modulation`).
 
-**Sharpness pattern.** Equality `|supp f|·|supp 𝓕f| = N` occurs exactly for
-(translates/modulations of) indicators of subgroups: an indicator of a subgroup
-`H ≤ ZMod N` with `|H| = d` has Fourier transform supported on the annihilator
-`H^⊥`, of size `N/d`, so the product is `d · (N/d) = N`. The achievable products
-on `ZMod N` are exactly the numbers `d · (N/d) ≥ N` ranging over divisors `d | N`,
-and `N²` for "generic" `f` with full support and full spectral support.
+## 2. Subgroup indicators are extremal, and `|H| · |H^⊥| = |G|`
 
-## 2. OEIS / sequence remarks
+Indicators `1_H` of the subgroups `H ≤ Z/n`:
 
-No new integer sequence is introduced; the relevant structured quantity is the set
-of equality products `{ d·(N/d) : d | N } = {N}` — equality is achieved by every
-divisor, reflecting the subgroup ⇄ annihilator duality. The divisor lattice of `N`
-(the subgroup lattice of the cyclic group, OEIS A000005 counts the divisors) indexes
-the sharp cases.
+| n | \|H\| | \|supp 1_H\| | \|supp (1_H)^\| | product |
+|---|---|---|---|---|
+| 6 | 1 | 1 | 6 | 6 |
+| 6 | 2 | 2 | 3 | 6 |
+| 6 | 3 | 3 | 2 | 6 |
+| 6 | 6 | 6 | 1 | 6 |
+| 8 | 2 | 2 | 4 | 8 |
+| 8 | 4 | 4 | 2 | 8 |
+| 12 | 3 | 3 | 4 | 12 |
+| 12 | 4 | 4 | 3 | 12 |
+| 12 | 6 | 6 | 2 | 12 |
 
-## 3. Counterexample hunt
+The observed `|supp (1_H)^| = |G| / |H|` motivated the Plancherel proof of
+`FourierFA.card_subgroup_mul_card_annihilator` (`|H| · |H^⊥| = |G|`), which avoids any appeal to
+Pontryagin duality for the quotient group.
 
-- **Uncertainty.** The claim is false for `f = 0` (both supports empty, `0 ≥ N`
-  fails); this is why `f ≠ 0` is a load-bearing hypothesis. For every nonzero `f`
-  on small groups (`ZMod 2..8`, spikes, sums of two spikes, subgroup indicators,
-  random ±1 vectors) the inequality held; no counterexample found, consistent with
-  the proof.
-- **Parseval constant.** Testing `f = δ₀` gives `Σ|𝓕f|² = N` and `Σ|f|² = 1`, so
-  the constant must be exactly `N`; any other normalisation (`1`, `1/N`, `√N`)
-  fails this test. The proof uses the constant `N`.
-- **Convolution.** `𝓕(δ₀ ⋆ g) = 𝓕 g` because `δ₀` is the convolution unit, and
-  `𝓕 δ₀ = 1`, matching `𝓕 f · 𝓕 g` with `f = δ₀`. No discrepancy found.
+## 3. Sumset criterion: exhaustive search on `Z/n`, `n ≤ 8`
 
-## 4. Method note
+For every pair of subsets `A, B ⊆ Z/n` we tested the Cauchy–Schwarz hypothesis
+`(n-|A|)(n-|B|) < |A||B|` against the conclusion `A + B = Z/n`.
 
-All three identities reduce to two structural facts about the standard additive
-character `χ = stdAddChar`: it is **multiplicative** (`χ(a+b) = χ(a)χ(b)`) and
-**orthogonal** (`Σ_k χ(mk) = N·[m=0]`). The convolution theorem needs only
-multiplicativity; Parseval additionally needs orthogonality; the uncertainty
-principle needs neither — only `|χ| = 1` and Fourier inversion. This stratification
-is what made the formal development tractable and is recorded in the Lab Notes.
+| n | instances satisfying the hypothesis | counterexamples to `A+B = G` |
+|---|---|---|
+| 5 | 386 | 0 |
+| 6 | 1586 | 0 |
+| 7 | 6476 | 0 |
+| 8 | 26333 | 0 |
+
+**Negative finding (important).** A follow-up count showed there is *no* pair of cardinalities
+with `(n-a)(n-b) < ab` and `a + b ≤ n`. Indeed the two conditions are algebraically equivalent
+(`n² < n(a+b)`), so the Fourier/Cauchy–Schwarz argument recovers, but does not beat, the
+pigeonhole threshold. This is recorded honestly in Lean as
+`FourierAdd.cardCondition_iff`, and the docstring of `FourierAdd.exists_add_eq` states it.
+The genuinely new content in that file is therefore the exact Plancherel identity
+`FourierAdd.energy_identity` and the covering bound `FourierAdd.card_support_rep_ge`, which do
+not reduce to pigeonhole.
+
+## 4. OEIS
+
+No new integer sequence arose: the quantities encountered (`|G|`, `|H|`, `|G|/|H|`) are
+divisor data of the group order, and were not searched further.
