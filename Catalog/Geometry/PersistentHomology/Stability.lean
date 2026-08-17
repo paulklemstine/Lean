@@ -1,5 +1,6 @@
 import Mathlib
-import Logic.TopoErrorMitigation.PersistentH0
+import Catalog.Logic.TopoErrorMitigation.PersistentH0
+
 /-!
 # Stability of finite persistent zero-dimensional homology
 

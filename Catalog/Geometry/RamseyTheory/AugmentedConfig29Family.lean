@@ -18,7 +18,8 @@ structural consequences of the independence-ratio engine:
   strict regime `geomFrac > 4` of `G29` is one rung of an infinite ladder.
 -/
 import Mathlib
-import Geometry.AugmentedConfig29
+import Geometry.RamseyTheory.AugmentedConfig29
+
 open SimpleGraph Finset
 open scoped BigOperators
 

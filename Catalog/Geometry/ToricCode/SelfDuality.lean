@@ -1,4 +1,5 @@
-import Geometry.ToricCode.Dual
+import ToricCode.Dual
+
 /-!
 # Abstract self-duality: when are the `X`- and `Z`-spectra equal?
 
