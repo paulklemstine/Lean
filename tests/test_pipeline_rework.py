@@ -89,10 +89,10 @@ class TestGithubInjectorDedup:
 
     def test_pruned_does_not_block(self):
         """A pruned direction with github_issue=N should not prevent
-        re-injection of issue N."""
+        re-injection of issue N via the real production function."""
+        import json
         import github_injector
-        import tempfile, json
-        from pathlib import Path
+        from unittest.mock import patch
 
         tmpdir = tempfile.mkdtemp()
         fd_file = Path(tmpdir) / "future_directions.json"
@@ -108,17 +108,43 @@ class TestGithubInjectorDedup:
         }
         fd_file.write_text(json.dumps(data))
 
-        # Simulate: the existing_issues set should NOT include issue 42
-        # because fd_0001 is pruned
-        directions_list = data["directions"]
-        existing_issues = set()
-        for d in directions_list:
-            # FIXED: only count non-pruned directions
-            if (d.get("source") == "github_injection"
-                    and "github_issue" in d
-                    and d.get("status") != "pruned"):
-                existing_issues.add(d["github_issue"])
+        # Mock fetch to return issue 42 as an open issue
+        fake_issue = [{"number": 42, "title": "Reopened issue",
+                       "body": "Fresh content for issue 42"}]
+        with patch.object(github_injector, "fetch_injected_directions",
+                          return_value=fake_issue):
+            count = github_injector.inject_directions_into_memory(Path(tmpdir))
 
-        assert 42 not in existing_issues, (
-            "Pruned direction should not block re-injection"
-        )
+        assert count == 1, f"Expected 1 injection (issue 42 re-injected), got {count}"
+        # Verify the new direction was written to disk
+        written = json.loads(fd_file.read_text())
+        issue_nums = [d["github_issue"] for d in written["directions"]]
+        assert 42 in issue_nums, "Issue 42 should have been re-injected"
+
+    def test_live_direction_still_blocks(self):
+        """A non-pruned direction with github_issue=N still blocks
+        re-injection of issue N (normal dedup still works)."""
+        import json
+        import github_injector
+        from unittest.mock import patch
+
+        tmpdir = tempfile.mkdtemp()
+        fd_file = Path(tmpdir) / "future_directions.json"
+        data = {
+            "directions": [
+                {
+                    "id": "fd_0001", "title": "Active direction",
+                    "description": "x" * 100, "status": "available",
+                    "source": "github_injection", "github_issue": 42,
+                }
+            ]
+        }
+        fd_file.write_text(json.dumps(data))
+
+        fake_issue = [{"number": 42, "title": "Same issue",
+                       "body": "Should not be injected again"}]
+        with patch.object(github_injector, "fetch_injected_directions",
+                          return_value=fake_issue):
+            count = github_injector.inject_directions_into_memory(Path(tmpdir))
+
+        assert count == 0, f"Expected 0 injections (issue 42 already live), got {count}"
