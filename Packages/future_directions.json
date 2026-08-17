@@ -335,7 +335,7 @@
       "depth_estimate": 3,
       "description": "Establishes a non-zero spectrum lower bound for the quantum Yang-Mills Hamiltonian on four-dimensional spherical manifolds.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Physics"
       ],
@@ -375,7 +375,7 @@
       "depth_estimate": 3,
       "description": "Formalizes boundary conditions under which trapped surfaces in spacetime guarantee geodesic incompleteness.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Physics"
       ],
@@ -415,7 +415,7 @@
       "depth_estimate": 3,
       "description": "Derives the thermodynamic entropy of isolated horizons in stationary black hole spacetimes from quantum microstate counting.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Physics"
       ],
@@ -455,7 +455,7 @@
       "depth_estimate": 3,
       "description": "Proves the Kolmogorov-Arnold-Moser (KAM) theorem on the persistence of quasi-periodic invariant tori under small Hamiltonian perturbations.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Physics"
       ],
@@ -495,7 +495,7 @@
       "depth_estimate": 3,
       "description": "Constructs an explicit non-trivial Hilbert space operator model satisfying the Wightman axioms for self-interacting scalar quantum fields in two dimensions.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Physics"
       ],
@@ -1375,7 +1375,7 @@
       "depth_estimate": 3,
       "description": "Formally proves lower bounds on error thresholds for topological surface codes under depolarizing noise models.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Physics"
       ],
@@ -1455,7 +1455,7 @@
       "depth_estimate": 3,
       "description": "Proves Hastings' theorem establishing efficient Matrix Product State (MPS) approximations for ground states of gapped 1D quantum spin chains.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Physics"
       ],
@@ -1495,7 +1495,7 @@
       "depth_estimate": 3,
       "description": "Proves necessary and sufficient conditions for quantum EPR steering under uncharacterized local measurements.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Physics"
       ],
@@ -1535,7 +1535,7 @@
       "depth_estimate": 3,
       "description": "Formalizes the Lloyd-Shor-Devetak (LSD) theorem for quantum channel capacity defined by regularized coherent information.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Physics"
       ],
@@ -2712,7 +2712,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Claw-free cubic graphs and zero forcing' and formalize its key results. Abstract: A claw-free cubic graph is a cubic graph with no induced subgraph isomorphic to $K_{1,3}$. The zero forcing process begins with an initial set $S$ of colored vertices. At each step, a colored vertex with exactly one uncolored neighbor forces that neighbor to become colored. If repeated applications of this rule color every vertex of $G$, then $S$ is called a zero forcing set. The minimum cardinality of a zero forcing set is the zero forcing number, denoted by $Z(G)$. In this paper, we answer three open questions posed by Davila and Henning concerning upper bounds on the zero forcing number of claw-free cubic graphs. We characterize the connected claw-free cubic graphs satisfying $Z(G)=α(G)+1$, where $α(G)$ is the independence number. In addition, we establish the improved upper bound $Z(G)\\leq \\frac{T}{2}+D+2$ for claw-free cubic graphs with Hamiltonian contraction multigraphs, where $D$ is the number of diamonds and $T$ is the number of triangles in $G$.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Physics"
       ],
@@ -24364,7 +24364,7 @@
       "depth_estimate": 3,
       "description": "# Future directions\n\nThe spectral-projection decomposition in `SignedCubeSpectralProjections.lean` suggests the following concrete, falsifiable next claims.\n\n1. **Equal eigenspace dimensions.** For every `n > 0` and every real `r ≠ 0` with `r² = n`, the images of `positiveSpectralPart n r` and `negativeSpectralPart n r` each have real vector-space dimension `2^(n-1)`.\n\n2. **Characteristic polynomial.** After representing `signedAdj n` as an endomorphism of the finite-dimensional space `Cube n → ℝ`, its characteristic polynomial is `(X^2 - n)^(2^(n-1))` for every `n > 0`.\n\n3. **Trace cancellation under restriction.** For every nonempty proper vertex subset `S` of `Cube n`, the principal restriction of the canonical signed adjacency matrix has trace zero; moreover, if `|S| > 2^(n-1)`, that restriction has a positive eigenvalue at least `1`.\n\n4. **Face-cancellation characterization.** A symmetric `{−1,1}` edge signing of the Boolean cube has adjacency square equal to `nI` if and only if the product of its four edge signs around every two-dimensional face is `−1`.\n\n5. **Switching uniqueness.** Any two symmetric cube-edge signings satisfying the negative face-product condition differ by vertex switching: there is a vertex labeling by `{−1,1}` whose endpoint products transform one signing into the other.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Physics"
       ],
@@ -29531,7 +29531,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\nDerived from the verified results in\n\n* `Catalog/Novelty/CollatzSpectralNormalized.lean` — limit law, modulus formula,\n  resonance classification, `3n+1` vs `5n+1` vs `7n+1` discriminator, `L²` mean;\n* `Catalog/Novelty/CollatzSpectralUniform.lean` — explicit `O((1+|ω| log N)/N)`\n  error bound, uniform convergence on compact frequency sets, and the\n  density-zero blindness no-go;\n* `Catalog/Novelty/CollatzSpectralResonance.lean` — arithmetic of the resonance\n  sets and pairwise separation of the three classical multipliers.\n\nWhat this cycle settled. The one-step phase `T(n)/n` splits into a constant even\nbranch `1/2` and an odd branch `a + 1/n`; the odd perturbation `1/n` is summable\nafter Cesàro averaging, so `F_N(ω)/N → (e(ω/2)+e(aω))/2` with modulus\n`|cos(π(a−½)ω)|`.  Every question about \"cancellation for the `an+1` map at a\nfixed frequency\" is therefore *completely answered* at the level of the one-step\nsum, and the answer contains no dynamical information whatsoever\n(`spectral_blind_to_finite_modification`).  The following conjectures push into\nthe regimes where information can survive.\n\n---\n\n## Conjecture 1 (Second-order spectral law: the `log N` term is a genuine invariant)\n\nFor every `a ≥ 1` and every `ω ≠ 0`,\n`F a ω N − N · limitAmp a ω − c(a,ω) · log N` converges as `N → ∞`, with\n`c(a,ω) = π i ω e(aω)` (the coefficient produced by the odd-branch expansion\n`e(ω/n) = 1 + 2πiω/n + O(ω²/n²)` summed against the odd harmonic series).\nEquivalently, `(F a ω N − N·limitAmp a ω)/log N → c(a,ω)`.\n\n**The key insight is** that the first-order term erases the multiplier's\narithmetic (it depends only on `e(aω)` through a modulus that is a single\ncosine), while the *second*-order term is an honest half-harmonic sum whose\ncoefficient is linear in `ω` and carries the branch phase `e(aω)` undamped —\nso the subleading spectrum sees strictly more than the leading one.\n\n**Why now?** `norm_F_div_sub_limitAmp_le` already isolates the deviation sum\n`Σ dseq` and bounds it by `2π|ω|(1+log N)`; the conjecture asserts that this\nbound is attained with an explicit constant.  The Lean infrastructure\n(`dseq_eq`, `sum_one_div_le_one_add_log`) needs only a matching *lower* bound\nplus `Real.log` asymptotics for the odd harmonic sum, both of which are in reach\nof the existing `harmonic` API.\n\n---\n\n## Conjecture 2 (Iterated transforms are not blind)\n\nDefine the `m`-step transform `F^{(m)} a ω N = Σ_{n≤N} e(ω · T_a^m(n)/n)`.\nThen for each fixed `m`, `F^{(m)} a ω N / N` converges to an explicit finite\ncombination `Σ_{j} 2^{−m} · (multiplicity) · e(ω · r_j)`, where `r_j` ranges over\nthe finitely many limiting `m`-step ratios `a^{k} / 2^{m−k}` (`k` = number of odd\nsteps), weighted by the density of residue classes mod `2^m` following that\nparity pattern.  Moreover, for `m ≥ 2` the resonance set of `F^{(m)}` is **not**\na coset of a lattice, and its zero set determines `a` uniquely.\n\n**The key insight is** that one step gives two branches and hence a cosine, i.e.\none Diophantine condition; `m` steps give `2^m` branches with ratios\n`a^k/2^{m−k}`, so the limiting amplitude becomes an exponential polynomial in\n`ω` whose zero set is an intersection of many conditions — rigid enough to\nrecover `a`, and no longer invariant under sparse modification of the map.\n\n**Why now?** The proof template is exactly the one verified here: split by the\nparity pattern of the first `m` steps (a residue class mod `2^m` of known\ndensity), show the ratio converges on each class, and Cesàro-average.\n`summand_eq` + `dseq_eq` + `Filter.Tendsto.cesaro_smul` generalize verbatim.\n\n---\n\n## Conjecture 3 (A density-zero blindness threshold)\n\n`spectral_blind_to_density_zero` is sharp in the following strong sense: for\nevery function `h : ℕ → ℝ` with `h N / N → 0` and `h N → ∞` there exist a\nmultiplier `a` and a modification of `ratio a` supported on a set `S` with\n`#(S ∩ [1,N]) ≍ h N` such that the modified transform still satisfies\n`F̃/N → limitAmp a ω` for all `ω`, yet the modified map has an orbit structure\n(e.g. an extra cycle of length `≍ h N` at scale `N`) that differs from the\noriginal.  Conversely, any modification on a set of positive upper density\nchanges the limit for a set of frequencies of positive measure.\n\n**The key insight is** that \"invisible to the normalized spectrum\" is exactly\n\"supported on a density-zero set\", so the spectral method has a precise\ninformation-theoretic ceiling: it can only ever certify statements that are\nthemselves invariant under density-zero surgery — and cycle existence is not.\n\n**Why now?** The forward half is already proved (`norm_Fgen_sub_le` gives the\n`2·#S/N` bound, which is the whole content).  The converse needs a lower bound\non `‖Σ_{k ∈ S} (e(ω r₁) − e(ω r₂))‖` after averaging in `ω`, i.e. a Plancherel\nargument on `[0,2]` for which `meanSquare_limitAmp` is the model computation.\n\n---\n\n## Conjecture 4 (Resonance sets classify the multiplier, and pairwise\nintersections are governed by `gcd(2a−1, 2b−1)`)\n\nFor all `a, b ≥ 1`, the common resonance set\n`R a ∩ R b = {ω : (2a−1)ω and (2b−1)ω are both odd integers}` equals\n`{ω = (2m+1)·g / ((2a−1)(2b−1)/g') ...}` — precisely, writing\n`d = gcd(2a−1, 2b−1)`, `R a ∩ R b = (d / ((2a−1)(2b−1))) · (2ℤ+1) ∩ R a`, and in\nparticular `R a ∩ R b ⊆ 2ℤ+1` exactly when `d = 1`.  Hence `R a = R b` iff\n`a = b`, and the map `a ↦ R a` is a complete invariant of the multiplier.\n\n**The key insight is** that the resonance sets are cosets of the lattices\n`(1/(2a−1))(2ℤ+1)`, so their intersection theory is pure elementary number\ntheory of the odd numbers `2a−1` — an arithmetic invariant hiding inside a\npurely analytic (Fourier) statistic.\n\n**Why now?** The three instances `d = gcd(5,9) = gcd(5,13) = gcd(9,13) = 1` are\nalready proved in `common_resonance_three_five`, `common_resonance_three_seven`,\n`common_resonance_five_seven`, each via a two-line `omega` certificate.  The\ngeneral statement is the same argument with `d` carried symbolically, and\n`limitAmp_eq_zero_iff` reduces it entirely to `ℤ`.\n\n---\n\n## Conjecture 5 (Orbit transforms: a genuine spectral–dynamical bridge)\n\nLet `σ(n)` be the stopping time of `n` under `T_3` and define the *orbit\ntransform* `G ω N = Σ_{n≤N} e(ω σ(n)/log n)`.  Then `G ω N / N` converges for\nevery `ω` to the characteristic function of the limiting distribution of\n`σ(n)/log n`, and the Collatz conjecture restricted to `[1,N]` is *equivalent*\nto `σ` being everywhere finite, i.e. to `G` being well defined — whereas no\nstatement about `F a ω N` has this property (by Conjecture 3 / the proved\nblindness theorem).\n\n**The key insight is** that spectral information about a dynamical system can\nonly be dynamical if the *phase itself* is an orbit functional; replacing the\none-step ratio `T(n)/n` by the normalized stopping time turns the transform into\nthe characteristic function of the (conjecturally log-normal) stopping-time\ndistribution, where cancellation genuinely encodes orbit behaviour.\n\n**Why now?** The present cycle proves the negative half rigorously — the\none-step transform is provably blind — which is precisely the justification for\nmoving the phase from one step to the whole orbit.  The positive half is a\nLévy-continuity statement, and Mathlib now has the characteristic-function and\nweak-convergence API needed to state it.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Pythagorean",
         "Physics"
@@ -35749,7 +35749,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions — tropical reading of the round-4 closures\n\nDerived from the analysis and adversarial review of the four Lean files in\n`Catalog/Tropical/` (`TropicalTorsionCensus`, `TropicalCensusMulti`,\n`TorsionProfileAmbiguity`, `FactorLocationBarriers`).\n\nWhat the formalisation established, in one sentence: *for a squarefree modulus the\nwhole `KROOT` free-witness family (`d ↦ #{x : x^d = 1 mod N}`) is a tropical\npolynomial whose data is the per-prime multiset of tropical roots, and that data is\ninvariant under shuffling roots between the prime factors — which is exactly why it\ncannot locate a factor.* The conjectures below push on the three places where the\nproofs were tight.\n\n---\n\n## Conjecture 1 (Tropical Sealing Conjecture). Every multiplicative \"spectral\" statistic of `(ℤ/Nℤ)ˣ` is root-shuffling invariant, hence cannot locate.\n\n**Statement.** Let `F` be any function of `N` computable from the isomorphism class of\nthe abelian group `(ℤ/Nℤ)ˣ` alone. Then for squarefree `N = ∏ p`, `F(N)` is invariant\nunder any permutation of the local valuation multisets `{v_ℓ(p-1)}_{p | N}` that\npreserves the multiset at each prime `ℓ`. Consequently there exist, for every\n`B`, two `B`-bit semiprimes with equal `F` and coprime factorisations.\n\n*The key insight is* that `TropicalTorsionCensus.gcd_profile_eq_of_valuations` already\nproves the invariance for the torsion profile, and the torsion profile is a complete\nisomorphism invariant of a finite abelian group; so the conjecture reduces to a purely\ntropical statement about shuffling roots of one-variable min-plus polynomials, with the\nopen part being the *density* claim (existence of shuffled pairs at every bit size,\nwhich needs a Linnik/Bombieri–Vinogradov type input on primes in progressions).\n\n*Why now?* The invariance half is formalised and machine-checked; only the\nprime-density half remains, and it is a statement about primes `p ≡ 1 + 2^a·u`, an area\nwhere effective results exist.\n\n---\n\n## Conjecture 2 (Tropical Corner Barrier). No `poly(log N)`-time algorithm can evaluate the census exponent `k ↦ min(k, v₂(p-1)) + min(k, v₂(q-1))` at any `k ≥ 1` for adversarial semiprimes.\n\n**Statement.** Evaluating `T(k)` for one `k ∈ [1, log N]` is as hard as factoring, in the\nsense that an oracle returning `T(2)` for arbitrary semiprimes yields a probabilistic\npolynomial-time factoring algorithm.\n\n*The key insight is* that `T(2) = 2^{min(2,a)+min(2,b)}` distinguishes `a = 1` from\n`a ≥ 2`, i.e. it reveals `p mod 4`-type information about the *unordered* pair, and\ncombining this with the classical square-root-of-1 factoring reduction (which our\n`energyGroundSet_eq` four-point ground space makes explicit) should upgrade the oracle\ninto a factorisation, showing that the *sealing* result of\n`census_cannot_locate` is tight rather than an artefact.\n\n*Why now?* The exact formula `torsionCensus_eq` is now a theorem, so the reduction can\nbe attempted symbolically rather than experimentally.\n\n---\n\n## Conjecture 3 (Level-0 invisibility is the only obstruction). The census exponent function determines the multiset `{v₂(p-1) : p | N}` completely once the number of prime factors is known.\n\n**Statement.** For squarefree `s, t` with `s.card = t.card`,\n`(∀ k, censusExponentMulti s k = censusExponentMulti t k)` implies the multisets\n`{v₂(p-1) : p ∈ s}` and `{v₂(p-1) : p ∈ t}` are equal, *including* the level-0 part.\n\n*The key insight is* that `census_determines_root_multiplicities` already gives equality\nat every level `≥ 1`; the level-0 multiplicity is then forced by the cardinality\nconstraint, so the conjecture should follow from a counting argument — but our current\nproof does not carry `s.card = t.card`, and making it do so requires a\ntropical-degree statement (`deg` of a min-plus polynomial = number of roots with\nmultiplicity, including roots at `0`).\n\n*Why now?* It is a two-lemma addition on top of the existing multiplicity theorem and\nwould complete the classification of exactly what the free-witness family sees.\n\n---\n\n## Conjecture 4 (Tropical hypersurface form of the factorisation problem). The set of factorisations of `N` is the corner locus of the two-variable tropical polynomial `P(X,Y) = (X ⊙ Y) ⊕ N`, and locating a corner point requires `Ω(√N)` queries in the min-plus query model.\n\n**Statement.** In the min-plus model where a query at `(x, y)` returns\n`min(x + y, log N)` plus the indicator of equality, any deterministic algorithm needs\n`Ω(√N)` queries to output a nontrivial corner point of `P`.\n\n*The key insight is* the straddle theorem `divisor_pair_straddles_corner`: every divisor\npair meets the corner `√N` from both sides, so a query at `(x,y)` only reveals which\nside of the tropical line the point lies on — one bit — while the number of candidate\ncorner points below the corner is `√N` and exactly one is nontrivial\n(`nontrivial_witness_below_corner`).\n\n*Why now?* Both ingredients are proved; what remains is to formalise the query model\nand run an adversary argument, which is a finite combinatorial statement well suited to\nLean.\n\n---\n\n## Conjecture 5 (Zero-entanglement is generic for algebraic witness Hamiltonians). Any energy of the form `E(a,b) = g(ab)` with `g(N) = 0` has a ground space that is a union of `τ(N)` product states, hence entanglement entropy exactly `0` and no descent gradient.\n\n**Statement.** Formalise \"product state\" and \"zero entanglement\" for the divisor-pair\nground space and prove that the ground space of every `ab`-mediated energy is a disjoint\nunion of `τ(N)` rank-one tensors, so no tensor-network ansatz with bond dimension `> 1`\ncan help.\n\n*The key insight is* that `energyGroundSet_eq` shows the ground space is a finite set of\n*points* (not a correlated subspace), and `energy_gap` shows the landscape is a delta:\nthe search cost is therefore the counting `4/N²`, independent of the representation.\n\n*Why now?* The ground-space computation is done; the remaining step is a definition of\nthe Schmidt rank of a finitely supported state, which Mathlib's tensor-product API can\nsupport directly.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Algebra",
         "Physics"
@@ -42339,7 +42339,7 @@
       "depth_estimate": 3,
       "description": "`QuantumSerre.highest_weight_singular` establishes\n   `E (F^{n+1} v) = 0` for every highest-weight vector of weight `n` in every `U_q(sl₂)`-module.\n   The open half is the converse classification: for `q` not a root of unity, every finite\n   dimensional `U_q(sl₂)`-module is a direct sum of the modules `uqSl2_rep n` twisted by a sign\n   character — a complete-reducibility statement that would make the Reshetikhin–Turaev functor\n   well defined on the whole category rather than on the fundamental representation alone.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Physics"
@@ -42365,6 +42365,47 @@
       "thread_id": "",
       "timestamp": "2026-08-17T07:17:07.148738+00:00",
       "title": "(from C5, first half now proved)"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Let `Λ ⊆ ℝ^d` be a full-rank lattice with basis matrix `B`. The data\n`|t(P + v) ∩ Λ|` for all real `t > 0` and all `v ∈ Λ` determines `1_P` almost everywhere, with\nconstants depending only on `λ_1(Λ)` and `λ_d(Λ)`; moreover, the sparse-grid probe reconstructs\n`1_P` using `O(1)` counting queries per probe point. Consequently, a \"lattice-count oracle\" for a\nsecret body `P` (as arises in lattice-based counting/`CVP`-style side channels) leaks `P` up to\nnull sets, with query complexity polynomial in the desired accuracy and in `λ_d/λ_1`.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Computation",
+        "Cryptography"
+      ],
+      "github_issue": 0,
+      "id": "fd_1407",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.5459999999999999,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "507d1ef0",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/507d1ef0",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-08-17T07:17:17.606403+00:00",
+      "title": "Let `Λ ⊆ ℝ^d` be a full-rank lattice with basis matrix `B`. The data"
     },
     {
       "ambition_level": "extension",
@@ -42525,6 +42566,46 @@
       "thread_id": "",
       "timestamp": "2026-07-28T12:21:06.834733+00:00",
       "title": "Deepening: The Monster Group's Secret Message: Moonshine Beyond the j-Function"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Building on cycle 0b339d93 (Q=0.780), which proved 123 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize U_q(g) as a q-deformation of the universal enveloping algebra U(g). Prove that as q->1, U_q(g) -> U(g). Bridge: the representation theory of U_q(sl_2) gives the Jones polynomial via the Reshetikhin-Turaev construction. Show that the quantum double construction yields braided tensor categor",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Physics"
+      ],
+      "github_issue": 0,
+      "id": "push_0b339d93_927cc5f0",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.88,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "0b339d93",
+      "source_path": "Bridge: Quantum Groups as Deformations of Classical Groups",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-08-17T07:17:12.101255+00:00",
+      "title": "Deepening: Bridge: Quantum Groups as Deformations of Classical Groups"
     },
     {
       "ambition_level": "extension",
@@ -43140,7 +43221,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 25d882e7 (Q=0.780), which proved 53 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove a meta-theorem: for any approximately correct physical theory T, there exists a class of phenomena for which T makes predictions closer to truth than any known correct theory. Formalize using perturbation theory on theory-space and prove that the wrongness of T forms a convergent series toward",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Physics"
       ],
@@ -44700,7 +44781,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 647e3d96 (Q=0.775), which proved 10 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Proves that a physical system's observable geometric state is strictly conditioned on the topological complexity of the observing neural network (Twilight Zone / Perceptual Reality).",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Physics"
       ],
@@ -48020,7 +48101,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle e722c646 (Q=0.771), which proved 10 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The renormalization group in physics zooms out by integrating out high-energy modes. Formalize this as an inverse stereographic projection on the energy sphere: RG flow equals iterated stereographic projection with varying pole. Conjecture: The beta function beta(g) in phi^4 theory equals the deriva",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Physics"
       ],
@@ -49072,7 +49153,7 @@
       "depth_estimate": 3,
       "description": "Formally proves conditions under which information can exist purely within a closed timelike curve loop without ever having an initial origin (Ontological Paradox).",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Physics"
       ],
@@ -49112,7 +49193,7 @@
       "depth_estimate": 3,
       "description": "Derives non-signaling boundary conditions allowing superluminal tachyon pulses to modulate past quantum states without triggering fatal temporal paradoxes.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Physics"
       ],
@@ -49152,7 +49233,7 @@
       "depth_estimate": 3,
       "description": "Proves that entropy strictly decreases along retro-geodesics within intense Kerr black hole ergospheres.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Physics"
       ],
@@ -49272,7 +49353,7 @@
       "depth_estimate": 3,
       "description": "Derives upper bound on thermodynamic energy extraction from mega-scale orbital solar collection swarms encircling main-sequence stars.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Physics"
       ],
@@ -49312,7 +49393,7 @@
       "depth_estimate": 3,
       "description": "Proves exact minimum exotic negative energy density requirements necessary to maintain a stable superluminal Alcubierre warp bubble without collapse.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Physics"
       ],
@@ -49432,7 +49513,7 @@
       "depth_estimate": 3,
       "description": "Proves that a physical system's observable geometric state is strictly conditioned on the topological complexity of the observing neural network (Twilight Zone / Perceptual Reality).",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Physics"
       ],
@@ -49672,7 +49753,7 @@
       "depth_estimate": 3,
       "description": "Formalizes Giulio Tononi's Integrated Information Theory (Phi) as a continuous scalar field over spacetime manifolds.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Physics"
       ],
@@ -49992,7 +50073,7 @@
       "depth_estimate": 3,
       "description": "Formalizes theoretical probability bounds for macroscopic quantum tunneling between decohered Everett multiverse branches.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Physics"
       ],
@@ -50032,7 +50113,7 @@
       "depth_estimate": 3,
       "description": "Calculates maximum divergence rate of macroscopic physical observables following a single quantum measurement event.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Physics"
       ],
@@ -50072,7 +50153,7 @@
       "depth_estimate": 3,
       "description": "Formalizes the Ekpyrotic universe model where big bang singularities are produced by periodic collisions of 4D branes in 5D bulk space.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Physics"
       ],
@@ -50112,7 +50193,7 @@
       "depth_estimate": 3,
       "description": "Proves the mathematical signature of gravitational energy leaking from our universe into neighboring extra-dimensional branes.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Physics"
       ],
@@ -50192,7 +50273,7 @@
       "depth_estimate": 3,
       "description": "Proves the existence of a non-zero net directional force generated by asymmetric Casimir cavity geometry in quantum vacuum.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Physics"
       ],
@@ -50272,7 +50353,7 @@
       "depth_estimate": 3,
       "description": "Formally proves that Hawking radiation carries complete quantum information out of an evaporating black hole via subtle page curve correlations.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Physics"
       ],
@@ -50312,7 +50393,7 @@
       "depth_estimate": 3,
       "description": "Proves absolute bounds on power extraction rates from zero-point quantum field fluctuations without violating global conservation laws.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Physics"
       ],
@@ -62799,7 +62880,7 @@
       "catalog_references": [],
       "category": "famous_subtask",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "0b339d93",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -62827,7 +62908,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "",
       "title": "Bridge: Quantum Groups as Deformations of Classical Groups"
@@ -65913,7 +65994,7 @@
       "depth_estimate": 3,
       "description": "Cycle c6b3a18e (Q=0.629) proved 102 theorems in Physics but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: In the far future (10^100 years), all stars burn out and computation ceases. Formalize: a 'theorem' is a finite string provable in ZFC. Prove: the set of all theorems is countably infinite, so in prin",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Physics"
       ],
