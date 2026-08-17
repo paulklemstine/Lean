@@ -33,7 +33,7 @@ Euler characteristic data, and the complementary regions are faces.
 -/
 
 import Mathlib
-import Geometry.LFunctions.GenusFormula
+import Geometry.GenusFormula
 
 namespace Hilbert16
 
