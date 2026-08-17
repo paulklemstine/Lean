@@ -54,7 +54,7 @@ window.FUTURE_DIRECTIONS = [
       "Novelty"
     ],
     "id": "fd_1368",
-    "phase": "B",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
@@ -63,13 +63,13 @@ window.FUTURE_DIRECTIONS = [
     "title": "Compression Research B3: Almost-lossless / Monte Carlo compression"
   },
   {
-    "consumed_by_exp_id": "7199d5c0",
+    "consumed_by_exp_id": "ae5d2ae6",
     "description": "**Part of:** Research plan \u2014 *Compression Beyond the Pigeonhole Bound* (Phase A, Question 1: separating the decompressor from the data).\n\n## Research question\nOne shared decompressor `U` must serve all inputs. A decompressor specialized to a *class* of data does better per class. What is the **price of universality** \u2014 the minimax redundancy a universal scheme must pay over a per-distribution scheme?\n\n## Approach\n- Derive closed-form / tight bounds on universal redundancy for natural source classes: stationary sources, finite-state, Markov.\n- Express redundancy as a function of message length `n` and class complexity.\n\n## Deliverable\nRigorous bounds on universal vs. per-distribution redundancy, and a conclusion on whether specialized decompressors are theoretically worth pursuing.\n\n## Falsifiability / gate\nBounds must match or beat known minimax rates from the literature (Rissanen-style redundancy). If specialization doesn't move bits from *message* to *shared*, the direction is dead.\n\n**Milestone:** M5 (theory, ~2 weeks).\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_1373",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
@@ -164,20 +164,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-17T13:53:58.220287+00:00",
     "title": "Deepening: Topological-Algebraic Bridge: Fundamental Group as a Complete Invariant"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle f262016d (Q=0.850), which proved 87 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Part of:** Research plan \u2014 *Compression Beyond the Pigeonhole Bound* (Phase B, Question 2: can random number generators help?).\n\n## Research question\nPigeonhole governs *exact* decoding for *all* strings. Relax to: **decoder fails with probability \u2264 \u03b5** (almost-lossless). Random codebooks (Shannon",
-    "domains": [
-      "Applications"
-    ],
-    "id": "push_f262016d_bdb9b0bd",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "f262016d",
-    "status": "available",
-    "timestamp": "2026-08-17T18:57:47.933599+00:00",
-    "title": "Deepening: Compression Research B3: Almost-lossless / Monte Carlo compression"
   },
   {
     "consumed_by_exp_id": "",
@@ -882,6 +868,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 7199d5c0 (Q=0.820), which proved 84 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Part of:** Research plan \u2014 *Compression Beyond the Pigeonhole Bound* (Phase A, Question 1: separating the decompressor from the data).\n\n## Research question\nOne shared decompressor `U` must serve all inputs. A decompressor specialized to a *class* of data does better per class. What is the **price",
+    "domains": [
+      "MachineLearning"
+    ],
+    "id": "push_7199d5c0_b06c2268",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "7199d5c0",
+    "status": "available",
+    "timestamp": "2026-08-17T19:42:56.921155+00:00",
+    "title": "Deepening: Compression Research A1: Price of universality \u2014 minimax redundancy of universal"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 0e1eb0cb (Q=0.800), which proved 26 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that the Bergman fan of a matroid M equals the tropical linear space of the matroid's circuit ideal. Formalize the connection between matroid connectivity and the topology of the Bergman fan. Show that nested matroids give tropical linear subspaces.",
     "domains": [
       "Tropical"
@@ -1455,17 +1455,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "Graph-Expander: Alon-Boppana Bound for Regular Graph Eigenvalues"
   },
   {
-    "consumed_by_exp_id": "9aa1e8d1",
+    "consumed_by_exp_id": "",
     "description": "Proves that quantizing transformer weight matrices onto modular lattice grids preserves global loss landscape convexity invariants.",
     "domains": [
       "Bridges"
     ],
     "id": "dir_50_50_600fb3ba",
-    "phase": "A",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "batch_50_injection",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-23T20:05:24.803690+00:00",
     "title": "Bridge-NumberTheory-ML: Arithmetic Geometry of Transformer Weight Lattices"
   },
@@ -1802,7 +1801,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean"
     ],
     "id": "push_713730e2_75cbee46",
-    "priority_score": 0.8874799999999999,
+    "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "713730e2",
     "status": "available",
@@ -19332,6 +19331,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-17T14:45:13.883434+00:00",
     "title": "The obstruction half is fully formal (a `Finset` pigeonhole plus a"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For a class `{p_\u03b8}` the minimax pointwise redundancy is **exactly** `log\u2082 C\u209b`\nwith `C\u209b = \u2211\u2093 sup_\u03b8 p_\u03b8(x)` (`shtarkov_minimax`), and\n\n* memoryless class over alphabet `A`: `C\u209b \u2264 (n+1)^{#A}`, binary case `C\u209b \u2264 n+1`;\n* first-order Markov: `C\u209b \u2264 #A\u00b7(n+1)^{#A\u00b2}`;\n* binary memoryless lower bound: `C\u209b \u2265 \u221an/4`, i.e. `\u2265 \u00bd log\u2082 n \u2212 2` bits;\n* deterministic (\"one decompressor per file\") class: `C\u209b = #X`, price `= n` bits;\n* the price is additive over independent blocks (`price_prodClass_add`), and\n  only *sub*additive when the blocks share a parameter\n  (`shtarkovSum_tiedProdClass_le`), which specialises to subadditivity of the\n  memoryless price in the message length, `C\u209b(n\u2081+n\u2082) \u2264 C\u209b(n\u2081)\u00b7C\u209b(n\u2082)`\n  (`iid_price_subadditive`) \u2014 so `log\u2082 C\u209b(n)/n` converges by Fekete.\n\nSo a specialised decompressor can move only `\u0398(log n)` bits out of the message\nfor a parametric class, and *zero* bits for an unrestricted class. The gate of\nthe research plan is met (the Rissanen rate is matched from below), and the\nverdict is: specialisation pays only when the data class is genuinely\nlow-complexity relative to the data.",
+    "domains": [
+      "Computation"
+    ],
+    "id": "fd_1452",
+    "priority_score": 0.5147368421052632,
+    "research_mode": "team",
+    "source_exp_id": "7199d5c0",
+    "status": "available",
+    "timestamp": "2026-08-17T19:42:39.316319+00:00",
+    "title": "Answer this cycle produced (context for the conjectures)"
   },
   {
     "consumed_by_exp_id": "",

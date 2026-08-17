@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-17T18:57:53.273476+00:00",
+  "last_updated": "2026-08-17T19:42:59.716608+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -58082,6 +58082,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-08-17T18:57:53.078330+00:00",
       "title": "Compression Research B3: Almost-lossless / Monte Carlo compression"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "MachineLearning",
+      "duration_seconds": 2674.562243938446,
+      "end_time": 1786995745.5079787,
+      "files_integrated": 4,
+      "job_id": "7199d5c0",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.82,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.544,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.82,
+        "novelty": 0.82,
+        "proof_depth": 0.82,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1786993070.9457347,
+      "strategy_count": 0,
+      "theorem_count": 84,
+      "theorem_novelty_disproof": 2,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 72,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-08-17T19:42:59.522812+00:00",
+      "title": "Compression Research A1: Price of universality \u2014 minimax redundancy of universal decompressors"
     }
   ]
 }
