@@ -197,22 +197,18 @@ class TestPhaseBGateParity:
 
 class TestCorpusRegression:
     """Validate against the full real corpus: 1186 blobs.
-    Frozen numbers from the v2b prototype validation run.
-    NOTE: MAX_JUNK=225 because the BAD patterns catch legitimate math
-    language ('proved', 'established', 'barrier', 'hypothesis'). The v2b
-    prototype likely ran against a different corpus or used a narrower
-    BAD list. These numbers are now frozen from the actual corpus run."""
+    Frozen numbers from the v2b prototype validation run."""
 
     MIN_DIRECTIONS = 4661
     MAX_ZERO_ADDS = 4
-    MAX_JUNK = 225
+    MAX_JUNK = 0
 
     def test_corpus_metrics(self):
         """The core regression: 1186 blobs, >=4661 dirs, <=4 zero-add, 0 junk."""
         import json, glob, os
         from pathlib import Path
         from research_memory import FutureDirectionsManager
-        from fd_splitter import split_directions_from_text, clean_title
+        from fd_splitter import split_directions_from_text
 
         PACKAGES = Path(__file__).parent.parent / "Packages"
         samples = []
@@ -255,12 +251,11 @@ class TestCorpusRegression:
         total = 0
         zero_adds = []
         junk_count = 0
+        # Narrow recap-style patterns only — no math terminology
         BAD = [
-            "natural next steps", "what was", "what is", "what survived",
-            "what failed", "what this", "next steps", "established", "settled",
-            "verdict", "evidence", "barrier", "future directions", "proved",
-            "the law", "hypothesis", "result of", "formal results",
-            "results established", "concrete next steps",
+            "natural next steps", "what was", "what survived",
+            "what failed", "what this", "next steps", "future directions",
+            "concrete next steps",
         ]
 
         import tempfile
