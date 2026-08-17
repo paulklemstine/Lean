@@ -1,160 +1,160 @@
-# The Anti-Fibonacci Paradox: How an Exclusion Rule Collapses to One
+# The Anti-Fibonacci Sequence: Numbers That Refuse the Golden Ratio
 
-## A sequence that refuses to begin
+## A sequence that forgets
 
-The Fibonacci sequence grows from one of mathematics’ most famous local rules: add the two previous terms. Starting with $1,1$, it continues $2,3,5,8,\ldots$. Its neighboring-term ratios settle toward the golden ratio, and its simple recurrence reappears in subjects ranging from population models to computer algorithms.
+Everyone knows the Fibonacci numbers. Start with $1, 1$ and let every term be the sum of the two before it:
 
-What happens if we reverse the instruction? Consider the proposed “anti-Fibonacci” rule:
+$$1,\; 1,\; 2,\; 3,\; 5,\; 8,\; 13,\; 21,\; 34,\; \ldots$$
 
-> Start with $A_0=A_1=1$. For each later index, choose the smallest positive integer that is not equal to the sum of the two preceding terms.
+The Fibonacci sequence has a memory. To make the next number, it reaches back two steps and adds. That backward reach is what makes it explode: each term is roughly $1.618\ldots$ times the last, and the ratio $F_{n+1}/F_n$ converges to the golden ratio
+$$\varphi = \frac{1+\sqrt{5}}{2}.$$
+The golden ratio is the fingerprint of self-reference. Wherever a quantity is built by adding its own recent past, $\varphi$ shows up.
 
-At first glance, the word “not” seems to promise a dramatically different sequence—perhaps a greedy escape from Fibonacci growth. One might expect a list such as $1,1,2,4,7,11,16,\ldots$, with each term carefully dodging an additive constraint. Claims of quadratic growth and unusual ratio oscillation might then seem plausible.
+Now cripple that memory. Keep the *shape* of the recurrence — "add something to the previous term" — but let the sequence forget the value it is supposed to add, and remember only *how many steps it has taken*. Define
 
-But there is a trap hidden in plain language. At each step, the rule forbids only one number: the sum of the previous two terms. Almost every positive integer remains legal. In particular, the smallest positive integer, $1$, remains legal unless the forbidden sum itself is $1$.
+$$a_0 = 1, \qquad a_{n+1} = a_n + n.$$
 
-That observation settles the entire recurrence.
+This is the **anti-Fibonacci sequence**. It begins
 
-## The one-number exclusion principle
+$$1,\; 1,\; 2,\; 4,\; 7,\; 11,\; 16,\; 22,\; 29,\; 37,\; 46,\; 56,\; \ldots$$
 
-For nonnegative integers $x$ and $y$, define $L(x,y)$ to be the least positive integer different from $x+y$. There are only two cases:
+At first glance it looks like a shy cousin of Fibonacci: same start, same "add and move on" rhythm, but the increments are $0, 1, 2, 3, 4, 5, \ldots$ instead of previous terms. And the result is a completely different animal. Summing $0 + 1 + \cdots + (n-1)$ gives the exact formula
 
-$$
-L(x,y)=
-\begin{cases}
-2,&x+y=1,\\
-1,&x+y\ne 1.
-\end{cases}
-$$
+$$\boxed{\,a_n = \frac{n(n-1)}{2} + 1\,}$$
 
-Why? If $x+y\ne1$, then $1$ is positive, is not forbidden, and is automatically the least legal choice. If $x+y=1$, then $1$ is forbidden and $2$ is the next positive integer. This is not an approximation or a heuristic. It is the exact closed form of the greedy choice.
+or, in the subtraction-free form that will turn out to be the master key,
 
-This tiny lemma is the key to the paradox. Feed it the proposed initial values. Since $A_0+A_1=2$, the forbidden number at the first recurrence step is $2$. The least positive integer different from $2$ is not $2$; it is $1$. Thus $A_2=1$. The same calculation repeats forever: whenever the two preceding values are both $1$, their sum is $2$, so the next value is again $1$.
+$$2a_n + n = n^2 + 2.$$
 
-We therefore obtain the central result.
+So the anti-Fibonacci numbers grow **quadratically**, like $n^2/2$, not exponentially. The consecutive ratio $a_{n+1}/a_n = 1 + n/a_n$ tends to $1$. The golden ratio never appears — not in the limit, not asymptotically, not anywhere. Forgetting kills $\varphi$.
 
-**Constant-Sequence Theorem.** If $A_0=A_1=1$ and
+You have almost certainly met these numbers before without knowing it. Draw $n-1$ straight lines across a pizza, in general position so that no two are parallel and no three meet at a point. The number of pieces you get is exactly $a_n$. One line makes $2$ pieces, two lines make $4$, three lines make $7$, four lines make $11$. This is the classic "lazy caterer" count. The anti-Fibonacci sequence is the sequence of *maximal regions cut from the plane by lines* — a purely geometric object that has wandered into number theory.
 
-$$
-A_{n+2}=\min\{m\in\mathbb Z_{>0}:m\ne A_{n+1}+A_n\},
-$$
+And once it is in number theory, something remarkable happens. The tame quadratic sequence turns out to be a machine for generating hard classical problems, and each one of them can be solved exactly.
 
-then $A_n=1$ for every nonnegative integer $n$.
+## The master identity
 
-The proof is a two-step induction. The two base cases are given. If two consecutive terms equal $1$, then their sum is $2$, and the least positive integer unequal to $2$ is $1$. Hence the next term is also $1$.
+Multiply the closed form by $8$ and complete the square:
 
-The proposed sequence does not grow slowly. It does not grow at all.
+$$8a_n = 4n^2 - 4n + 8 = (2n-1)^2 + 7.$$
 
-## Why the advertised prefix cannot arise
+Every anti-Fibonacci number, scaled by $8$, is an **odd square plus seven**. That single line is the hinge on which everything below turns. Questions about the anti-Fibonacci sequence — is a term a square? do three terms form an arithmetic progression? which primes divide some term? — become questions about the binary quadratic form $x^2 + 7$, one of the most beautiful objects in classical number theory. The discriminant $-7$ belongs to the imaginary quadratic field $\mathbb{Q}(\sqrt{-7})$, one of the nine fields of class number one, which is why the answers come out clean rather than approximate.
 
-The displayed list $1,1,2,4,7,11,16,\ldots$ already conflicts with the literal rule at its third entry. After $1,1$, the single forbidden value is $2$, yet the list chooses exactly $2$. At the following step, even if one accepted that choice, the previous sum would be $3$, while the list chooses $4$ despite $1$ being legal and smaller.
+Here is what the identity buys.
 
-There is another revealing pattern. The displayed values satisfy
+## How many anti-Fibonacci numbers are there, really?
 
-$$
-1,1,2,4,7,11,16,\ldots
-$$
+Let $C(N)$ count the indices $k$ with $a_k \le N$. Because the sequence is (weakly) increasing, this index set is an unbroken initial segment $\{0, 1, \ldots, Q-1\}$, and the master identity pins down $Q$ exactly:
+$$a_k \le N \iff (2k-1)^2 \le 8N - 7.$$
+Solving for $k$ gives a **constant-time counting formula**:
 
-with successive differences
+> **Counting Theorem.** For every $N \ge 1$,
+> $$C(N) = \left\lfloor \frac{\lfloor \sqrt{8N-7} \rfloor + 1}{2} \right\rfloor + 1.$$
 
-$$
-0,1,2,3,4,5,\ldots.
-$$
+No scan, no loop: one integer square root. Compare with the naive method, which must test every $k$ up to $N$. And the formula immediately yields sharp two-sided integer inequalities,
+$$2N + C(N) \le C(N)^2 + 1 \qquad\text{and}\qquad C(N)^2 + 4 \le 2N + 3\,C(N),$$
+the second of which is an equality precisely when $N$ is itself a term of the sequence ($N = 1, 2, 4, 7, 11, 16, \ldots$). Squeezing these gives
+$$\sqrt{2N} \;\le\; C(N) \;\le\; \sqrt{2N} + 3,$$
+hence the asymptotics
+$$C(N) \sim \sqrt{2N}, \qquad \frac{C(N)}{N} \longrightarrow 0.$$
 
-For the shown indices this gives
+That last limit is the precise sense in which the anti-Fibonacci numbers are **rare**: they have natural density zero. Below one million there are just $1415$ of them, against a prediction of $\sqrt{2\cdot 10^6} = 1414.21\ldots$. Below ten thousand there are $142$, against $141.42\ldots$. The error never leaves the interval $[0,3]$ guaranteed by the theorem; empirically it hovers between $1/2$ and $3/2$.
 
-$$
-1+\frac{n(n-1)}{2},
-$$
+The same identity gives an $O(1)$ **membership test**: a positive integer $m$ is an anti-Fibonacci number if and only if $8m - 7$ is a perfect square. Try $m = 46$: $8 \cdot 46 - 7 = 361 = 19^2$. Yes. Try $m = 47$: $369$ is not a square. No. That is the whole algorithm.
 
-which has leading quadratic coefficient $1/2$, not $1/4$. Thus the prefix, the verbal recurrence, and the proposed asymptotic law point in three different directions. Before asking how fast such an object grows, one must first decide which object is intended.
+## Squares hiding in the sequence
 
-This is a broadly useful lesson in mathematical modeling. Words such as “avoid,” “new,” and “greedy” often conceal the real state space. Avoid what—one number, all earlier sums, or every value used before? Choose the least candidate among all positive integers, among unused integers, or among integers larger than the previous term? Each interpretation creates a different problem.
+The Fibonacci sequence contains exactly three perfect squares: $0$, $1$, and $144$. That is a hard theorem, proved only in 1964. What about the anti-Fibonacci sequence?
 
-## The asymptotic reversal
+Asking for $a_n = y^2$ means, by the master identity, $(2n-1)^2 + 7 = 8y^2$. Writing $x = 2n-1$, we must solve the **Pell-type equation**
+$$x^2 + 7 = 8y^2$$
+in positive integers. This equation has two "seed" solutions, $(x,y) = (1,1)$ and $(5,2)$, and the fundamental unit $3 + \sqrt{8}$ of the ring $\mathbb{Z}[\sqrt{8}]$ acts on solutions by
+$$(x, y) \longmapsto (3x + 8y,\; x + 3y).$$
+A descent argument — bounding any solution with $y \ge 3$ by $2y < x < 3y$ and $8y \le 3x$, then running the automorphism backwards to a strictly smaller solution — shows that *every* solution arises this way.
 
-For the literal sequence, quadratic normalization is immediate. Since $A_n=1$,
+> **Square Classification Theorem.** For $n \ge 1$, the anti-Fibonacci number $a_n$ is a perfect square if and only if $(2n-1, y)$ lies in the orbit of $(1,1)$ or $(5,2)$ under $(x,y) \mapsto (3x+8y, x+3y)$. In particular the sequence contains **infinitely many** perfect squares.
 
-$$
-\frac{A_n}{n^2}=\frac{1}{n^2}
-$$
+The squares are
+$$a_1 = 1,\quad a_3 = 4,\quad a_6 = 16,\quad a_{16} = 121,\quad a_{33} = 529,\quad a_{91} = 4096,\quad a_{190} = 17956,\ \ldots$$
+that is $1^2, 2^2, 4^2, 11^2, 23^2, 64^2, 134^2, \ldots$, thinning out geometrically but never stopping. Where Fibonacci allows three squares, the anti-Fibonacci sequence allows infinitely many — and, unlike Fibonacci's, they can all be listed by a two-line recursion.
 
-for every positive $n$. Consequently,
+## Three terms in a row: Pythagoras appears
 
-$$
-\lim_{n\to\infty}\frac{A_n}{n^2}=0.
-$$
+When do three anti-Fibonacci numbers form an arithmetic progression, $a_a + a_c = 2a_b$? Substituting the master identity and cancelling the sevens gives
+$$(2a-1)^2 + (2c-1)^2 = 2(2b-1)^2,$$
+and the standard rotation $u^2 + v^2 = 2w^2 \iff \left(\frac{u+v}{2}\right)^2 + \left(\frac{v-u}{2}\right)^2 = w^2$ converts this into a Pythagorean equation.
 
-The proposed limit $1/4$ is therefore impossible. A sequence cannot converge to two distinct real numbers, and $0\ne1/4$.
+> **Progression–Triple Correspondence.** For all indices $a, b, c$,
+> $$a_a + a_c = 2\,a_b \iff (a + c - 1)^2 + (c - a)^2 = (2b-1)^2.$$
+> Three-term progressions in the anti-Fibonacci sequence are **exactly** Pythagorean triples with odd hypotenuse.
 
-The millionth-index computation dramatizes the scale of the discrepancy. At $n=1{,}000{,}000$,
+Since there are infinitely many such triples, there are infinitely many progressions, and they can be written down. The triple $(2k+1,\; 2k^2+2k,\; 2k^2+2k+1)$ — the family that contains $(3,4,5)$, $(5,12,13)$, $(7,24,25)$ — translates into the elegant identity
 
-$$
-\frac{A_{1{,}000{,}000}}{(1{,}000{,}000)^2}
-=\frac{1}{1{,}000{,}000{,}000{,}000}.
-$$
+$$a_{k^2} + a_{(k+1)^2} = 2\, a_{k^2+k+1} \qquad \text{for every } k,$$
 
-That is $10^{-12}$, already extremely close to zero and nowhere near $0.25$.
+with the three indices genuinely increasing, $k^2 < k^2+k+1 < (k+1)^2$. Even the common difference has a name: it equals
+$$3\left(1^2 + 2^2 + \cdots + k^2\right),$$
+three times a square-pyramidal number — the number of cannonballs in a square pyramid $k$ layers deep. For $k = 1$ we get $a_1 = 1$, $a_3 = 4$, $a_4 = 7$: the progression $1, 4, 7$ with difference $3$, born from the $(3,4,5)$ triangle.
 
-Neighboring-term ratios are equally uncomplicated. Because every term is positive and equal to $1$,
+The contrast with Fibonacci could not be sharper. In the Fibonacci sequence, arithmetic progressions are essentially forbidden: for $3 \le a < b < c$, the equation $F_a + F_c = 2F_b$ forces $c = b+1$ and $a = b-2$ — a single rigid pattern, coming from $F_{b-2} + F_{b+1} = 2F_b$, and nothing else. Exponential growth leaves no room for arithmetic. Quadratic growth is roomy, and the room is precisely the shape of a right triangle.
 
-$$
-\frac{A_{n+1}}{A_n}=1
-$$
+## Which numbers are sums of anti-Fibonacci numbers?
 
-for every $n$. The ratio neither approaches the golden ratio nor oscillates between $1$ and $2$; it is identically $1$.
+Add two terms, $a_a + a_b = m$. Multiply by $8$: the master identity turns this into
+$$8m - 14 = x^2 + y^2$$
+for odd $x, y$ — and it turns out the oddness is automatic. So:
 
-## A graph hidden inside the collapse
+> **Two-Summand Criterion.** For $m \ge 2$, $m$ is the sum of two anti-Fibonacci numbers if and only if $8m - 14$ is a sum of two squares — equivalently (by Fermat's two-squares theorem) if and only if every prime $q \equiv 3 \pmod 4$ divides $8m-14$ to an even power.
 
-Even a collapsed recurrence can expose an interesting structural bridge. Take the first $n$ time indices as vertices. Connect two distinct indices whenever the values at those times sum to $2$.
+This makes the *non*-representable numbers computable too. If $m \equiv 1$ or $7 \pmod 9$, then $8m - 14$ is divisible by $3$ but not by $9$; a sum of two squares divisible by $3$ must have both squares divisible by $3$, hence be divisible by $9$. Contradiction. So two residue classes in nine are permanently locked out:
 
-Because every value is $1$, every pair of distinct vertices qualifies:
+> No integer congruent to $1$ or $7$ modulo $9$ is a sum of two anti-Fibonacci numbers.
 
-$$
-A_i+A_j=1+1=2.
-$$
+Among the first $9K+10$ integers, at least $2K$ are non-representable: the exceptional set has density at least $2/9$. Two summands are genuinely not enough.
 
-The resulting graph is the complete graph on $n$ vertices. It has exactly
+Four summands are. Here the argument runs through Lagrange's four-square theorem, in the sharpened form that **every integer of the shape $8k+4$ is a sum of four odd squares**. Given $m \ge 4$, write $m = k + 4$ and apply this to $8k + 4 = 8m - 28$; pulling each of the four odd squares back through $8a_{p+1} = (2p+1)^2 + 7$ yields four indices whose terms sum to $m$.
 
-$$
-\binom n2=\frac{n(n-1)}2
-$$
+> **Additive Basis Theorem.** An integer $m$ is a sum of four anti-Fibonacci numbers if and only if $m \ge 4$. The anti-Fibonacci sequence is an additive basis of order $4$, and the order cannot be lowered to $2$.
 
-edges, the largest possible edge count for a simple graph on $n$ vertices.
+Three summands sit exactly on the boundary of what classical theory decides: $m \ge 3$ is a sum of three anti-Fibonacci numbers if and only if $8m - 21$ is a sum of three squares, which by Gauss' three-squares theorem means $8m-21$ is not of the form $4^s(8t+7)$. So the order is $3$ for all but a thin, explicitly described set.
 
-**Complete-Graph Theorem.** For the sequence generated by the literal exclusion rule, the graph joining distinct indices $i$ and $j$ when $A_i+A_j=2$ is complete. Its edge count is $\binom n2$ on the first $n$ indices.
+## Which primes ever divide a term?
 
-The proof is one line once the constant-sequence theorem is known: every pair has values $1$ and $1$. This connector is more than decorative. It illustrates a recurring mathematical strategy: turn an additive relation among numbers into adjacency in a graph. For more substantial greedy sequences, graph density, cliques, and forbidden subgraphs can reveal additive structure that is hard to see directly.
+Every prime divides some Fibonacci number — that is a classical fact, and it makes the Fibonacci sequence *universal* for divisibility. The anti-Fibonacci sequence is not universal, and one can say exactly how it fails. A prime $p$ divides some $a_n$ precisely when $(2n-1)^2 \equiv -7 \pmod{p}$ is solvable, i.e. when $-7$ is a quadratic residue mod $p$. Quadratic reciprocity for the discriminant $-7$ then gives a crisp congruence answer.
 
-Here the additive relation is maximally dense. Every possible edge appears. If a repaired anti-Fibonacci rule produced a genuinely varying sequence, the same graph construction could measure how frequently a target sum occurs.
+> **Prime Divisor Law.** For a prime $p$, some anti-Fibonacci number is divisible by $p$ if and only if
+> $$p = 7 \quad\text{or}\quad p \equiv 1, 2, 4 \pmod 7.$$
 
-## What a genuine anti-Fibonacci problem might be
+The list of "good" primes starts $2, 7, 11, 23, 29, 37, 43, 53, \ldots$; the "bad" primes — those that never divide any term — start $3, 5, 13, 17, 19, 31, 41, \ldots$, namely $p \equiv 3, 5, 6 \pmod 7$. Both lists are infinite, by Dirichlet's theorem on primes in arithmetic progressions. The set $\{1,2,4\}$ is exactly the set of nonzero squares modulo $7$, and its appearance here is no coincidence: it *is* the splitting law for the field $\mathbb{Q}(\sqrt{-7})$.
 
-The failure is not in the desire to build an additive-avoidance sequence. The failure is in asking one forbidden value to do more work than it can.
+A refinement counts residues rather than zeros. Modulo an odd prime $p$, the residue $m$ is attained by some $a_n$ if and only if $8m - 7$ is a square in $\mathbb{Z}/p$. Since a field with $p$ elements has exactly $(p+1)/2$ squares (the squaring map is two-to-one away from zero), and $m \mapsto 8m-7$ is a bijection:
 
-A richer definition could require each new term to be unused and larger than the previous term. It could also forbid the new term from belonging to the set of sums of two earlier values. One possible template is:
+> **Residue Spectrum Theorem.** Modulo an odd prime $p$, the anti-Fibonacci sequence attains exactly $(p+1)/2$ of the $p$ residue classes. In particular, at least one class is *never* attained.
 
-$$
-B_{n+1}=\min\{m>B_n:m\notin\{B_i+B_j:0\le i,j\le n\}\}.
-$$
+Just over half of all residues, always — never all of them. Modulo $13$, for example, the sequence hits only $\{1,2,3,4,7,9,11\}$, seven classes out of thirteen, and $0, 5, 6, 8, 10, 12$ are unreachable forever.
 
-This is only an example, not a claim that it reproduces the displayed prefix. It makes explicit three ingredients absent from the original wording: the candidate must move forward, all earlier pairwise sums matter, and the forbidden set changes globally rather than containing a single number.
+## Two more fingerprints
 
-Once a corrected rule is fixed, meaningful questions emerge. Does the sequence exist indefinitely? Is it strictly increasing? What fraction of positive integers does it occupy? How large is the restricted sumset? Does a quadratic normalization converge? Can an associated graph have controlled edge density or forbidden cliques?
+**The period.** Reduce the Fibonacci sequence modulo $m$ and it repeats with the celebrated Pisano period, an erratic function of $m$ with no closed formula. Reduce the anti-Fibonacci sequence modulo $m$ and the answer is embarrassingly simple. A positive integer $p$ is a period if and only if two conditions hold: $m \mid p$, and $a_p \equiv 1 \pmod m$. (Infinitely many congruences collapse to two, because the difference $a_{n+p} - a_n = np + (a_p - 1)$ is *linear* in $n$.) Chasing the parity gives:
 
-The phrase “the complement” would also need clarification. It might mean positive integers not appearing as sequence values, or it might mean integers outside a set of earlier-term sums. Those are different universes, with potentially different densities.
+> **Minimal Period Theorem.** For $m > 0$, the minimal period of the anti-Fibonacci sequence modulo $m$ is
+> $$\pi(m) = \begin{cases} m, & m \text{ odd},\\ 2m, & m \text{ even}.\end{cases}$$
 
-## A five-second test before a million-step experiment
+For even $m$, the period $m$ itself fails for a single, identifiable parity reason. This $\pi$ is multiplicative on coprime arguments, just like the Pisano period — and coprimality cannot be dropped, since $\pi(4) = 8 \ne 4 = \pi(2)\pi(2)$.
 
-The proposal included a natural computational challenge: generate a million terms and watch the quotient $A_n/n^2$. Such experiments are often excellent guides. Here, however, a semantic check outruns the computer. Ask only what happens after the initial pair. The sum is $2$, so the rule demands the least positive integer other than $2$. That number is $1$. One more step produces exactly the same state, and the future is settled.
+**The gcd.** Consecutive Fibonacci numbers are always coprime. Consecutive anti-Fibonacci numbers are *almost* always coprime, and the failure is perfectly periodic. Since $a_{n+1} = a_n + n$, any common divisor of $a_n$ and $a_{n+1}$ divides $n$, and then divides $2a_n + n - n^2 = 2$. So the gcd is $1$ or $2$, and a short parity computation using $a_{4k+2} = 8k^2 + 6k + 2$ decides which:
 
-This “small-state test” is useful far beyond integer sequences. Before simulating a model, inspect its boundary cases, fixed points, and smallest admissible choices. Greedy systems are especially sensitive because minimization amplifies tiny omissions in a definition. If reuse is permitted, the smallest object may be selected forever. If only one obstacle is removed from an infinite candidate set, the obstacle may have almost no effect.
+> **Consecutive GCD Law.** $\gcd(a_n, a_{n+1}) = 2$ if $n \equiv 2 \pmod 4$, and $= 1$ otherwise.
 
-Computation still has an illuminating role. A short program can implement both the literal recurrence and the closed form, compare them over any requested range, print normalized values, and construct the associated graph. The output makes the theorem visible: every row contains $1$, normalized values decay like $1/n^2$, and an $n$-vertex sum-to-two graph contains all $\binom n2$ possible edges. The experiment is no longer being asked to discover the law; it becomes a transparent demonstration of an exact argument.
+Read off the gcds for $n = 0, 1, 2, \ldots$: $1, 1, 2, 1, 1, 1, 2, 1, 1, 1, 2, 1, \ldots$ — a metronome of period four. The first failure is $\gcd(a_2, a_3) = \gcd(2,4) = 2$, whereas the corresponding Fibonacci pair $(1,2)$ is coprime.
 
-## The deeper moral
+## Why this matters
 
-Mathematical definitions are small programs written in ordinary language. A single quantifier can change their behavior completely. “Not equal to the previous sum” excludes one value. “Not equal to any sum of two earlier terms” excludes a whole evolving set. “Least positive integer” repeatedly pulls the construction back toward $1$ unless additional conditions prevent reuse.
+There is a temptation to see the anti-Fibonacci sequence as a joke: the lazy caterer's numbers, dressed up. But the structure it reveals is real, and it is a lesson about where difficulty lives in mathematics.
 
-The anti-Fibonacci proposal is therefore valuable precisely because it fails so cleanly. Its apparent complexity evaporates into a two-case minimum. The resulting theorems are exact: the sequence is constant, its quadratic normalization tends to zero, its millionth normalized value is $10^{-12}$, and its sum-to-two graph is complete with $\binom n2$ edges.
+The Fibonacci sequence is *analytically* rich and *arithmetically* opaque. Its growth constant is the golden ratio, its identities are gorgeous, and yet the simplest arithmetic questions about it — which terms are squares? which are primes? — are either deep theorems or open problems. The anti-Fibonacci sequence is the mirror image. Analytically it is trivial: a parabola. Arithmetically it is *exactly as rich as the quadratic form $x^2 + 7$*, which means every question about it is a classical question in disguise, and classical answers apply verbatim. Squares become Pell's equation. Progressions become Pythagorean triples. Sums of two terms become Fermat's two-squares theorem. Sums of four terms become Lagrange. Divisibility becomes quadratic reciprocity. Nine centuries of number theory, all keyed to one identity:
+$$8a_n = (2n-1)^2 + 7.$$
 
-Before searching for the golden ratio’s opposite, one must first specify the rules of escape. In this case, the number $1$ does not merely win the race. It is allowed to return to the starting line forever.
+That is the real payoff of taking a famous recurrence and breaking it in the gentlest possible way. Fibonacci's memory produced the golden ratio and a fortress of unsolved problems. Forgetting produced a parabola — and a parabola, it turns out, is a doorway to everything.
+
+Between exponential growth and quadratic growth there is no smooth interpolation; there is a phase transition. On one side, self-reference, irrational limits, and rigidity: Fibonacci has essentially one arithmetic progression, no square beyond $144$, and no prime it misses. On the other side, forgetfulness, rational asymptotics, and abundance: the anti-Fibonacci sequence has infinitely many progressions, infinitely many squares, and infinitely many primes it never touches. Which is the more interesting sequence? The honest answer is that they are interesting for opposite reasons — and that is worth knowing.
