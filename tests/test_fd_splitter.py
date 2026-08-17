@@ -258,3 +258,33 @@ All lemmas hold and the conjecture is settled.
         mgr = self._mgr()
         added, _ = split_directions_from_text(mgr, text, "test", "fd")
         assert added == 0, f"Pure recap should add 0, got {added}"
+
+
+class TestWriteSideSplit:
+    """Section 2: merged-one injection now splits before storing."""
+
+    def test_split_before_store(self):
+        """A multi-direction blob should produce multiple pool entries."""
+        from fd_splitter import split_directions_from_text
+        from research_memory import FutureDirectionsManager
+        import tempfile
+        from pathlib import Path
+
+        blob = """## Synthesis
+This cycle explored tropical geometry and quantum computing.
+
+## Future Directions
+* Prove the tropical lifting conjecture for all toric varieties. The
+dimension-3 case was settled but the general case requires new techniques
+from tropical intersection theory and stacky fans.
+
+* Extend the quantum error-correcting code framework to handle
+non-stabilizer noise models. Current codes assume depolarizing noise
+but realistic hardware exhibits biased noise.
+"""
+        tmpdir = tempfile.mkdtemp()
+        mgr = FutureDirectionsManager(Path(tmpdir))
+        mgr._save = lambda: None
+        added, _ = split_directions_from_text(mgr, blob, "test_cycle", "fd")
+        assert added >= 2, f"Expected >=2 from merged blob, got {added}"
+        assert all(d.source_exp_id == "test_cycle" for d in mgr._directions)
