@@ -225,3 +225,192 @@ def clean_title(t: Optional[str]) -> Optional[str]:
     if re.match(r'^[a-z]', s) and len(s.split()) <= 5:
         return None
     return s
+
+
+def split_directions_from_text(
+    mgr,
+    text: str,
+    source_exp_id: str = "ev",
+    source_path: str = "fd_md",
+) -> Tuple[int, str]:
+    """Section-aware splitter. Returns (directions_added, synthesis_text).
+
+    This is the production port of the validated split_v2b prototype.
+    It is the single entry point that add_directions_from_text delegates to.
+    """
+    from research_memory import FutureDirection
+    added = 0
+    synthesis_text = ""
+
+    def _maybe_add(fd):
+        nonlocal added
+        if not mgr._is_quality_direction(fd):
+            return False
+        q = mgr._compute_quality_score(fd)
+        fd.priority_score = min(fd.priority_score, max(0.40, q))
+        if fd.title.startswith("Direction "):
+            fd.priority_score = min(fd.priority_score, 0.50)
+        elif fd.title.startswith("This research cycle") or fd.title.startswith("This cycle"):
+            fd.priority_score = min(fd.priority_score, 0.50)
+        mgr.add_direction(fd)
+        added += 1
+        return True
+
+    def _domains(t):
+        return infer_domains_v2(t)
+
+    # ── strip recap sections ──
+    sections = split_sections(text)
+    parts = []
+    for lvl, hdr, body in sections:
+        if hdr and classify_header(hdr) == "recap":
+            continue
+        if hdr:
+            parts.append('#' * lvl + ' ' + hdr + "\n" + body)
+        else:
+            parts.append(body)
+    text = "\n\n".join(parts)
+
+    # structured ### Direction N:
+    structured_pattern = re.compile(
+        r'###\s+Direction\s+\d+\s*:\s*(.+?)\n(.*?)(?=\n###\s+Direction\s+\d+|\Z)',
+        re.DOTALL,
+    )
+    for m in structured_pattern.finditer(text):
+        title, body = m.group(1).strip(), m.group(2).strip()
+        conjecture = mgr._extract_bold_field(body, "Conjecture")
+        test = mgr._extract_bold_field(body, "Test")
+        impact = mgr._extract_bold_field(body, "Impact")
+        proof_strategy = mgr._extract_bold_field(body, "Proof Strategy")
+        catalog_refs_raw = mgr._extract_bold_field(body, "Catalog References")
+        catalog_references = (
+            re.findall(r'`([^`]+)`', catalog_refs_raw) if catalog_refs_raw else []
+        )
+        desc_parts = [p for p in (conjecture, test, impact) if p]
+        description = "\n\n".join(desc_parts) if desc_parts else body[:800]
+        fd = FutureDirection(
+            id=mgr._next_id(), title=title, description=description,
+            source_exp_id=source_exp_id, source_path=source_path,
+            domains=_domains(title + " " + description),
+            proof_strategy=proof_strategy or "", depth_estimate=3,
+            priority_score=0.80, catalog_references=catalog_references,
+        )
+        _maybe_add(fd)
+
+    # numbered-bold
+    if added == 0:
+        for m in re.finditer(r'\d+\.\s+\*\*([^*]+?)\*\*\s*', text):
+            title = m.group(1).strip().rstrip(".")
+            rem = text[m.end():]
+            nx = re.search(r'\n\s*\d+\.\s+\*\*', rem)
+            desc = (rem[:nx.start()] if nx else rem).strip()[:3000]
+            if len(desc) > 30:
+                title = clean_title(title)
+                if not title:
+                    continue
+                fd = FutureDirection(
+                    id=mgr._next_id(), title=title, description=desc,
+                    source_exp_id=source_exp_id, source_path=source_path,
+                    domains=_domains(title + " " + desc), depth_estimate=3,
+                    priority_score=0.75,
+                )
+                _maybe_add(fd)
+
+    # plain numbered list
+    if added == 0:
+        for para in [p.strip() for p in re.split(r'\n\s*\n', text) if p.strip()]:
+            if not re.match(r'^\s*\d+\.\s+', para):
+                continue
+            for item in re.split(r'\s+(?=\d{1,3}\.\s)', para):
+                item = item.strip()
+                if not re.match(r'^\d+\.', item):
+                    continue
+                body = re.sub(r'^\d+\.\s*', '', item).strip()
+                if len(body) < 30:
+                    continue
+                sent = re.split(r'(?<=[.!?])\s+', body, maxsplit=1)
+                title = clean_title(sent[0])
+                if not title:
+                    continue
+                fd = FutureDirection(
+                    id=mgr._next_id(), title=title[:200], description=body[:3000],
+                    source_exp_id=source_exp_id, source_path=source_path,
+                    domains=_domains(title + " " + body), depth_estimate=3,
+                    priority_score=0.70,
+                )
+                _maybe_add(fd)
+
+    # bullets (BEFORE headers so bullet items win)
+    if added == 0:
+        for m in re.finditer(
+            r'[-•*]\s+(.+?)(?=\n[-•*]|\n\n|\Z)', text, re.DOTALL
+        ):
+            item = m.group(1).strip()
+            if len(item) <= 80:
+                continue
+            firstline = item.split('\n', 1)[0].lower()
+            if any(s in firstline for s in (
+                "status.", "remark.", "why now?", "evidence.", "key insight",
+                "note.", "assumption.", "notation."
+            )):
+                continue
+            direction_verbs = [
+                "prove", "show", "extend", "formalize", "conjecture", "theorem",
+                "uniformize", "study", "track", "derive", "construct", "resolve",
+                "develop", "generalize", "investigate",
+            ]
+            if not any(k in item.lower() for k in direction_verbs):
+                continue
+            title = clean_title(item.split('\n', 1)[0])
+            if not title:
+                continue
+            fd = FutureDirection(
+                id=mgr._next_id(), title=title[:200], description=item[:3000],
+                source_exp_id=source_exp_id, source_path=source_path,
+                domains=_domains(item), depth_estimate=3, priority_score=0.65,
+            )
+            _maybe_add(fd)
+
+    # markdown headers
+    if added == 0:
+        for m in re.finditer(
+            r'#{2,4}\s+(.+?)\n(.*?)(?=#{2,4}|\Z)', text, re.DOTALL
+        ):
+            header, body = m.group(1).strip(), m.group(2).strip()
+            if classify_header(header) == "recap":
+                continue
+            if not clean_title(header):
+                continue
+            kw_check = (header + body).lower()
+            direction_kws = [
+                "prove", "show", "extend", "formalize", "conjecture", "theorem",
+                "establish", "open", "future", "direction",
+            ]
+            if (len(body) > 100 and
+                    any(k in kw_check for k in direction_kws)):
+                fd = FutureDirection(
+                    id=mgr._next_id(), title=header[:200], description=body[:3000],
+                    source_exp_id=source_exp_id, source_path=source_path,
+                    domains=_domains(header + " " + body), depth_estimate=3,
+                    priority_score=0.7,
+                )
+                _maybe_add(fd)
+
+    # paragraph fallback
+    if added == 0 and len(text) > 80:
+        for para in [p.strip() for p in re.split(r'\n\s*\n', text) if p.strip()]:
+            if len(para) < 80:
+                continue
+            sentences = re.split(r'(?<=[.!?])\s+', para, maxsplit=1)
+            title = clean_title(sentences[0])
+            if not title:
+                continue
+            fd = FutureDirection(
+                id=mgr._next_id(), title=title[:200], description=para[:3000],
+                source_exp_id=source_exp_id, source_path=source_path,
+                domains=_domains(title + " " + para), depth_estimate=3,
+                priority_score=0.65,
+            )
+            _maybe_add(fd)
+
+    return (added, synthesis_text)

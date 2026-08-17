@@ -149,3 +149,96 @@ class TestExtractItems:
     def test_empty_body(self):
         items = extract_items("")
         assert items == []
+
+
+class TestSplitDirectionsFromText:
+    """One test per format class in the spec."""
+
+    def _mgr(self):
+        import tempfile
+        from pathlib import Path
+        from research_memory import FutureDirectionsManager
+        tmpdir = tempfile.mkdtemp()
+        mgr = FutureDirectionsManager(Path(tmpdir))
+        mgr._save = lambda: None  # skip disk writes
+        return mgr
+
+    def test_structured(self):
+        """### Direction N: sections with **Field** entries."""
+        from fd_splitter import split_directions_from_text
+        text = """### Direction 1: Uniformize the obstruction
+**Conjecture**: The obstruction class lives in H^2.
+**Test**: Compute for small groups.
+**Impact**: Resolves the suspension tower problem.
+
+### Direction 2: Extend the tropical lifting
+**Conjecture**: Every tropical variety lifts to a higher-dimensional ambient space.
+**Test**: Check dimension 3 and verify the lifting preserves the tropical structure.
+**Impact**: Provides a new classification tool for tropical geometry problems.
+"""
+        mgr = self._mgr()
+        added, _ = split_directions_from_text(mgr, text, "test", "fd")
+        assert added >= 2, f"Expected >=2, got {added}"
+
+    def test_numbered_bold(self):
+        """1. **Title** format."""
+        from fd_splitter import split_directions_from_text
+        text = """1. **Prove a generalization of Goldbach** for sparse sequences.
+The current result only applies to dense sequences. Extending to sparse
+sequences would resolve a long-standing open problem in analytic number
+theory and connect to recent work on additive combinatorics.
+
+2. **Classify all rank-3 matroids** over finite fields.
+The classification of rank-2 matroids is complete but rank-3 remains open.
+Recent computational evidence suggests a finite classification is possible.
+"""
+        mgr = self._mgr()
+        added, _ = split_directions_from_text(mgr, text, "test", "fd")
+        assert added >= 2
+
+    def test_bullets(self):
+        """* and - bullet items."""
+        from fd_splitter import split_directions_from_text
+        text = """Future directions:
+
+* Prove the uniform bound for all Lp norms by extending the current
+interpolation argument to the non-commutative setting. This would unify
+several scattered results in harmonic analysis and provide sharp constants
+for the operator inequality.
+
+- Construct explicit examples of the failure of the tropical lifting
+conjecture in dimension 4. The dimension-3 case was settled by Zhang but
+the higher-dimensional picture remains unclear and computationally
+challenging.
+"""
+        mgr = self._mgr()
+        added, _ = split_directions_from_text(mgr, text, "test", "fd")
+        assert added >= 2
+
+    def test_recap_stripped(self):
+        """Recap sections are dropped; directions are kept."""
+        from fd_splitter import split_directions_from_text
+        text = """## Summary of Results
+We proved the main theorem and established all lemmas.
+
+## Future Directions
+* Extend the proof to the non-abelian case. This would generalize
+the main result to a much broader class of groups and resolve the
+open problem posed by Thompson in 2019.
+"""
+        mgr = self._mgr()
+        added, _ = split_directions_from_text(mgr, text, "test", "fd")
+        assert added >= 1, "Should extract direction from Future Directions section"
+
+    def test_zero_add_recap_only(self):
+        """Pure-recap blob yields 0 directions — defensible."""
+        from fd_splitter import split_directions_from_text
+        text = """## Summary
+We proved the main theorem about Goldbach.
+
+## Established Results
+All lemmas hold and the conjecture is settled.
+"""
+        mgr = self._mgr()
+        added, _ = split_directions_from_text(mgr, text, "test", "fd")
+        assert added == 0, f"Pure recap should add 0, got {added}"
