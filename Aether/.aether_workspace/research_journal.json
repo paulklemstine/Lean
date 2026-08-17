@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "83c80b79",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — De-Quantization Assessed: Shor's QFT Is Irreducible\n\nThe formalized results (`Catalog/Novelty/Shor*.lean`) establish, with zero\n`sorry`s:\n\n* the full Shor state has Schmidt rank",
-      "quality_score": 0.86,
-      "sorry_count": 0,
-      "theorem_count": 129,
-      "timestamp": "2026-08-14T15:14:33",
-      "title": "De-Quantization Assessed: Shor's QFT Is Irreducible"
-    },
-    {
       "cycle_id": "295ca744",
       "domain": "Algebra",
       "key_insight": "# FUTURE DIRECTIONS — ECM-PARITY (round-18 #1, experiment 404)\n\nThe cycle proved, with zero `sorry`s:\n\n| face | theorem |\n|---|---|\n| parity dichotomy | `ECMParity.two_dvd_curveCard_iff` |\n| Stickelbe",
@@ -499,19 +489,19 @@
       "theorem_count": 83,
       "timestamp": "2026-08-16T23:34:53",
       "title": "NET-47: The third seed at ctx=1024 reveals a SPREAD not a two-point set — k*=112 (mid-grid), the kne"
+    },
+    {
+      "cycle_id": "12195e06",
+      "domain": "Algebra",
+      "key_insight": "# Future directions\n\nDerived from the formalisation in `Catalog/Algebra/KleberComplementaryProducts.lean` and\n`Catalog/Algebra/KleberManyFoldProducts.lean`, and from the exploratory data in\n`Computati",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 7,
+      "timestamp": "2026-08-17T01:55:43",
+      "title": "ArXiv paper: Kleber's conjecture and complementary products of symmetric functions"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "10a6c20b",
-      "domain": "Probability",
-      "key_insight": "# Future directions: tropical mathematics of social choice\n\nAll statements below are conjectures suggested by the formalised results in\n\n* `Catalog/Probability/TropicalSocialChoice.lean` (tropical Arr",
-      "quality_score": 0.686,
-      "sorry_count": 0,
-      "theorem_count": 216,
-      "timestamp": "2026-08-06T00:18:13",
-      "title": "Speculative: Tropical Mathematics of Social Choice"
-    },
     {
       "cycle_id": "b20da64b",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 83,
       "timestamp": "2026-08-16T23:34:53",
       "title": "NET-47: The third seed at ctx=1024 reveals a SPREAD not a two-point set — k*=112 (mid-grid), the kne"
+    },
+    {
+      "cycle_id": "12195e06",
+      "domain": "Algebra",
+      "key_insight": "# Future directions\n\nDerived from the formalisation in `Catalog/Algebra/KleberComplementaryProducts.lean` and\n`Catalog/Algebra/KleberManyFoldProducts.lean`, and from the exploratory data in\n`Computati",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 7,
+      "timestamp": "2026-08-17T01:55:43",
+      "title": "ArXiv paper: Kleber's conjecture and complementary products of symmetric functions"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "8da3e793",
-      "domain": "Tropical",
-      "name": "optCost_replicate_le_delta",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "8da3e793",
-      "domain": "Tropical",
-      "name": "rate_le_optCost_replicate",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "8ed04a73",
-      "domain": "Probability",
-      "name": "collision_nonneg",
-      "quality": 0.85
-    },
     {
       "cycle_id": "8ed04a73",
       "domain": "Probability",
@@ -2803,9 +2785,27 @@
       "domain": "NumberTheory",
       "name": "one_le_two_pow",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "12195e06",
+      "domain": "Algebra",
+      "name": "of",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "12195e06",
+      "domain": "Algebra",
+      "name": "self_mem_orbit",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "12195e06",
+      "domain": "Algebra",
+      "name": "equivMapDomain_mem_orbit",
+      "quality": 0.72
     }
   ],
-  "last_updated": "2026-08-16T23:34:53",
+  "last_updated": "2026-08-17T01:55:43",
   "open_questions": [
     {
       "context": "This file gives a **complete, self-contained proof** of that theorem (0 `sorry`s).",
@@ -3021,12 +3021,6 @@
   "research_threads": {
     "Algebra": [
       {
-        "cycle_id": "ab157807",
-        "quality": 0.6443439147018031,
-        "theorems": 56,
-        "title": "The formal results show that a scalar missing rate and feature count do not dete"
-      },
-      {
         "cycle_id": "0dad7f8d",
         "quality": 0.627125,
         "theorems": 74,
@@ -3079,6 +3073,12 @@
         "quality": 0.82,
         "theorems": 171,
         "title": "A4-FORK-PINNING: first cubic-pinned non-abelian fork (A4 V4-order, I = H(1/3) ex"
+      },
+      {
+        "cycle_id": "12195e06",
+        "quality": 0.72,
+        "theorems": 7,
+        "title": "ArXiv paper: Kleber's conjecture and complementary products of symmetric functio"
       }
     ],
     "Applications": [
