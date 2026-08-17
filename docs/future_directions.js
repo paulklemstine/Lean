@@ -154,20 +154,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle 286b3a0e (Q=0.890), which proved 145 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions: Moonshine Beyond the j-Function\n\n## Verified connector\n\n`Catalog/Novelty/MonsterMoonshineBridge.lean` proves a rigorous cross-domain bridge between\nfinite-group character theory and formal generating functions.\n\nFor a finite group `G` acting on each finite grade `X n`, define th",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "push_286b3a0e_82c2985f",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "286b3a0e",
-    "status": "available",
-    "timestamp": "2026-08-17T13:54:12.346869+00:00",
-    "title": "Deepening: `Catalog/Novelty/MonsterMoonshineBridge.lean` proves a rigorous cross-domain bri"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Building on cycle 37827e5f (Q=0.850), which proved 21 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formally proves the semicircle law for Wigner ensembles: the empirical spectral distribution of a random Hermitian matrix with independent entries converges in probability to the semicircle distribution as the dimension grows, establishing the universality of bulk eigenvalue statistics for random ma",
     "domains": [
       "Probability"
@@ -897,20 +883,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle 2ce26220 (Q=0.820), which proved 77 theorems in Geometry. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions: Taxicab Number Generalizations\n\nDerived from the current cycle's findings on Hardy\u2013Ramanujan taxicab numbers.\n\n## 1. Unbounded representation counts (existence of Taxicab(n) for all n)\n\n**Conjecture.** For every `n` there exists a positive integer expressible as a\nsum of two pos",
-    "domains": [
-      "Geometry"
-    ],
-    "id": "push_2ce26220_a5fdc26d",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "2ce26220",
-    "status": "available",
-    "timestamp": "2026-08-17T13:54:23.022721+00:00",
-    "title": "Deepening: Derived from the current cycle's findings on Hardy\u2013Ramanujan taxicab numbers."
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Building on cycle 3b29df87 (Q=0.820), which proved 110 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the Weil pairing on an elliptic curve and prove its bilinearity. Show that the BLS signature scheme is existentially unforgeable under the computational Diffie-Hellman assumption in the pairing group. Prove that the pairing allows short aggregate signatures.",
     "domains": [
       "Cryptography"
@@ -922,6 +894,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-16T11:35:10.982658+00:00",
     "title": "Deepening: Elliptic Curve Cryptography: Weil Pairing and BLS Signatures"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle c798c801 (Q=0.820), which proved 110 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The sequence of primes 2, 3, 5, 7, 11, 13, ... defines a point cloud in R where the n-th prime p_n is at position p_n on the real line. The gaps between primes create a topological structure. Define the persistent homology of the prime point cloud as the Rips filtration R_epsilon = {p_n : |p_m - p_n",
+    "domains": [
+      "Computation"
+    ],
+    "id": "push_c798c801_f7dfb7f3",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "c798c801",
+    "status": "available",
+    "timestamp": "2026-08-17T14:45:27.775477+00:00",
+    "title": "Deepening: Persistent Homology of Prime Numbers: The Topology of Arithmetic"
   },
   {
     "consumed_by_exp_id": "",
@@ -1823,20 +1809,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-13T03:21:12.748859+00:00",
     "title": "Stein-Method: Quantitative Normal Approximation Bounds"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 1443bb24 (Q=0.791), which proved 19 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize Pearl's do-calculus as a formal logical system with three inference rules. Prove that do-calculus is complete for identifying causal effects in non-parametric structural equation models. Construct a decision procedure for causal effect identifiability.",
-    "domains": [
-      "Computation"
-    ],
-    "id": "push_1443bb24_5e98c56e",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "1443bb24",
-    "status": "available",
-    "timestamp": "2026-07-27T13:44:25.584304+00:00",
-    "title": "Deepening: Causal Inference: Do-Calculus as Formal Logic"
   },
   {
     "consumed_by_exp_id": "",
@@ -6377,7 +6349,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Periodic Table Is a Lie: Elements as Eigenvalues of Spacetime"
   },
   {
-    "consumed_by_exp_id": "c798c801",
+    "consumed_by_exp_id": "",
     "description": "The sequence of primes 2, 3, 5, 7, 11, 13, ... defines a point cloud in R where the n-th prime p_n is at position p_n on the real line. The gaps between primes create a topological structure. Define the persistent homology of the prime point cloud as the Rips filtration R_epsilon = {p_n : |p_m - p_n| <= epsilon}. As epsilon increases, more primes are connected, and the topology changes. Conjecture: The persistent H_0 (connected components) of the prime point cloud has the same barcode as a Poisson point process with intensity 1/log(x). Specifically, the bar lengths in H_0 follow an exponential distribution with mean equal to the average prime gap (which is approximately log(x) by the prime number theorem). The persistent H_1 (1-dimensional holes) of the prime point cloud appears at scale epsilon ~ log(x)^2, corresponding to prime pairs (p, p+2k) where 2k is a specific even gap. The longest H_1 bar corresponds to the twin prime conjecture: it persists from epsilon = 2 (the twin prime scale) to epsilon = infinity. Test: compute persistent homology of the primes up to 10^6 using Rips filtration and compare with the Poisson point process prediction. Verify that H_0 bar lengths are exponentially distributed with mean log(x). Impact: primes have topology \u2014 their gaps create persistent homology that encodes the twin prime conjecture and other arithmetic properties.",
     "domains": [
       "Novelty",
@@ -6386,11 +6358,10 @@ window.FUTURE_DIRECTIONS = [
       "Computation"
     ],
     "id": "seed_162",
-    "phase": "A",
     "priority_score": 0.82,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "",
     "title": "Persistent Homology of Prime Numbers: The Topology of Arithmetic"
   },
@@ -19434,6 +19405,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The obstruction half is fully formal (a `Finset` pigeonhole plus a\ntelescoping identity), so the conjecture can be stated in Lean today with a proved\nconverse; each new case of the existence half (e.g. `k = 1`, the twin case) is a known\nhard target with a now-precise topological meaning.",
+    "domains": [
+      "Combinatorics",
+      "Geometry"
+    ],
+    "id": "fd_1445",
+    "priority_score": 0.5150701754385965,
+    "research_mode": "team",
+    "source_exp_id": "c798c801",
+    "status": "available",
+    "timestamp": "2026-08-17T14:45:13.883434+00:00",
+    "title": "The obstruction half is fully formal (a `Finset` pigeonhole plus a"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Let `t k = tr(M\u2082^k)` (recurrence `t(k+3) = 5t(k+2) + 5t(k+1) \u2212 t(k)`,\n`t 0,\u2026,t 3 = 3, 5, 35, 197`).  There is **no odd composite** `N` with `gcd(N, 2) = 1`\nsatisfying simultaneously `t N \u2261 5 (mod N)` and `t (N+1) \u2261 t (N\u22121) (mod N)`.  (Dropping the\nsecond condition, pseudoprimes do exist; the conjecture is that the two-sided test is\nCarmichael-free, as for the Baillie\u2013PSW combination.)",
     "domains": [
       "NumberTheory"
@@ -19448,6 +19434,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "in this cycle: `exists_block_dvd` shows that a\nnon-admissible pattern is realised at most finitely often (never, past `p > q`), and\n`constant_gap_run_dvd` is the special case of constant patterns.  The open half is the\nexistence direction, a barcode restatement of the Hardy\u2013Littlewood/Dickson prime\n`k`-tuple conjecture.",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "fd_1444",
+    "priority_score": 0.48678787878787877,
+    "research_mode": "team",
+    "source_exp_id": "c798c801",
+    "status": "available",
+    "timestamp": "2026-08-17T14:45:13.645265+00:00",
+    "title": "in this cycle: `exists_block_dvd` shows that a"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Two contexts and six seeds already separate the three rungs of a three-seed\nladder, and a single `ctx = 4096` cell distinguishes the two candidate low-tail families by\nexactly one grid step: `320` (constant ratio) versus `288` (affine), proved as\n`KneeQuota.lowtail_prediction_32x`.",
     "domains": [
       "Geometry"
@@ -19459,6 +19459,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-17T05:50:44.235858+00:00",
     "title": "Two contexts and six seeds already separate the three rungs of a three-seed"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "the twin prime conjecture is the unboundedness of the single Betti step at `\u03b5 = 2`\n  (an `H\u2080` statement, not `H\u2081`);",
+    "domains": [
+      "Pythagorean",
+      "NumberTheory"
+    ],
+    "id": "fd_1443",
+    "priority_score": 0.46003508771929824,
+    "research_mode": "team",
+    "source_exp_id": "c798c801",
+    "status": "available",
+    "timestamp": "2026-08-17T14:45:13.395324+00:00",
+    "title": "the twin prime conjecture is the unboundedness of the single Betti step at `\u03b5 = 2`"
   },
   {
     "consumed_by_exp_id": "",
@@ -19486,6 +19501,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-17T13:54:07.071462+00:00",
     "title": "Conjecture D, main half, closed"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The equivalence and the cap are formal; sieve-theoretic upper bounds of\nBrun type would give the first nontrivial *proved* upper bound of the correct order for\nthe step, a realistic Lean target.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_1446",
+    "priority_score": 0.4434444444444444,
+    "research_mode": "team",
+    "source_exp_id": "c798c801",
+    "status": "available",
+    "timestamp": "2026-08-17T14:45:14.122863+00:00",
+    "title": "The equivalence and the cap are formal; sieve-theoretic upper bounds of"
   },
   {
     "consumed_by_exp_id": "",
@@ -19880,14 +19909,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Extremes"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "856336cf",
     "description": "are complete `G`-invariants of the equality pattern of a tuple, counted by\n   the Bell numbers `1, 1, 2, 5, 15, 52` (OEIS A000110), proved by `decide`.",
     "domains": [],
     "id": "fd_1431",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "286b3a0e",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-17T13:54:05.239324+00:00",
     "title": "Kernel patterns"
   },

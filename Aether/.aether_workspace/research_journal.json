@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "ed381d4e",
-      "domain": "Shared",
-      "key_insight": "# Future Directions — collision factoring beyond the birthday bound\n\nDerived from the verified results in\n\n* `Catalog/Shared/ThreeSumFactorReveal.lean`\n* `Catalog/Shared/BirthdayBoundHierarchy.lean`\n*",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 48,
-      "timestamp": "2026-08-15T08:56:17",
-      "title": "The 3SUM-Birthday-Bound Hierarchy"
-    },
-    {
       "cycle_id": "67289c0d",
       "domain": "Cryptography",
       "key_insight": "# FUTURE DIRECTIONS — Singular Moduli Factoring after the √N Theorem\n\nThe formalisation in `Catalog/Cryptography/SingularModuli/` settles the basic\nquestion: the gcd-of-class-polynomial-values method",
@@ -499,19 +489,19 @@
       "theorem_count": 77,
       "timestamp": "2026-08-17T13:54:22",
       "title": "Derived from the current cycle's findings on Hardy–Ramanujan taxicab numbers."
+    },
+    {
+      "cycle_id": "c798c801",
+      "domain": "Computation",
+      "key_insight": "# Future Directions — Topology of the Prime Point Cloud\n\nThe cycle just completed tested the \"primes look Poisson, and their `H₁` encodes twin\nprimes\" conjecture and found both halves false, replacing",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 110,
+      "timestamp": "2026-08-17T14:45:26",
+      "title": "Persistent Homology of Prime Numbers: The Topology of Arithmetic"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "6c07c4d0",
-      "domain": "Shared",
-      "key_insight": "# Future directions\n\nDerived from seven research cycles on the paper *\"Chebotarev geodesic theorem: non-split\ncase\"*, carried out in\n\n* `Catalog/Shared/ChebotarevGeodesic.lean` — the exponent calculus",
-      "quality_score": 0.6858792756539236,
-      "sorry_count": 2,
-      "theorem_count": 994,
-      "timestamp": "2026-08-06T12:26:25",
-      "title": "ArXiv paper: Chebotarev geodesic theorem: non-split case"
-    },
     {
       "cycle_id": "68319f3d",
       "domain": "Computation",
@@ -2501,15 +2491,19 @@
       "theorem_count": 77,
       "timestamp": "2026-08-17T13:54:22",
       "title": "Derived from the current cycle's findings on Hardy–Ramanujan taxicab numbers."
+    },
+    {
+      "cycle_id": "c798c801",
+      "domain": "Computation",
+      "key_insight": "# Future Directions — Topology of the Prime Point Cloud\n\nThe cycle just completed tested the \"primes look Poisson, and their `H₁` encodes twin\nprimes\" conjecture and found both halves false, replacing",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 110,
+      "timestamp": "2026-08-17T14:45:26",
+      "title": "Persistent Homology of Prime Numbers: The Topology of Arithmetic"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "39757711",
-      "domain": "Pythagorean",
-      "name": "for",
-      "quality": 0.84
-    },
     {
       "cycle_id": "39757711",
       "domain": "Pythagorean",
@@ -2803,9 +2797,15 @@
       "domain": "Geometry",
       "name": "signed_sq_bound",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "c798c801",
+      "domain": "Computation",
+      "name": "is",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-17T13:54:22",
+  "last_updated": "2026-08-17T14:45:26",
   "open_questions": [
     {
       "context": "## Main Results (all sorry-free); sorry; sorry",
@@ -3269,12 +3269,6 @@
     ],
     "Computation": [
       {
-        "cycle_id": "c31d2b69",
-        "quality": 0.627125,
-        "theorems": 150,
-        "title": "Define periodic left and right shifts explicitly and derive the Rule 110 sing"
-      },
-      {
         "cycle_id": "6db0a277",
         "quality": 0.6345797888127854,
         "theorems": 15,
@@ -3327,6 +3321,12 @@
         "quality": 0.88,
         "theorems": 105,
         "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
+      },
+      {
+        "cycle_id": "c798c801",
+        "quality": 0.82,
+        "theorems": 110,
+        "title": "Persistent Homology of Prime Numbers: The Topology of Arithmetic"
       }
     ],
     "Cryptography": [
