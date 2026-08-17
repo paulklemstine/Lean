@@ -197,8 +197,14 @@ class DirectionTournament:
         self,
         winners: List[Dict[str, str]],
         rejections: List[Dict[str, str]],
+        dispatched_ids: Optional[set] = None,
     ) -> Dict[str, int]:
         """Apply tournament results to future_directions.json.
+
+        When dispatched_ids is provided (the set of direction IDs that were
+        sent to the tournament), only those IDs are eligible for outcome
+        write-back.  This prevents hallucinated or stale outcome IDs from
+        clobbering unrelated pool directions.
 
         Entries may be plain ID strings ("fd_0421") from the JSON file or dicts
         ({"id": ..., "reason": ..., "lean_stub": ...}) from the legacy parser.
@@ -213,6 +219,8 @@ class DirectionTournament:
 
         for d in mgr._directions:
             if d.id in winner_map:
+                if dispatched_ids is not None and d.id not in dispatched_ids:
+                    continue
                 d.status = "available"
                 d.priority_score = max(d.priority_score, 0.90)
                 if winner_map[d.id]:
@@ -220,6 +228,8 @@ class DirectionTournament:
                 d.ambition_level = "grand_challenge"
                 promoted += 1
             elif d.id in rejection_map:
+                if dispatched_ids is not None and d.id not in dispatched_ids:
+                    continue
                 d.status = "pruned"
                 d.prune_reason = f"tournament_rejected: {rejection_map[d.id]}"
                 d.pruned_at = time.strftime("%Y-%m-%dT%H:%M:%SZ")
