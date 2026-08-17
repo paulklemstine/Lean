@@ -1,5 +1,4 @@
-import ToricCode.ClassWeights
-
+import Geometry.ToricCode.ClassWeights
 /-!
 # Rigidity of minimum-weight logical operators
 
