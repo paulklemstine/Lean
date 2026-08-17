@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "295ca744",
-      "domain": "Algebra",
-      "key_insight": "# FUTURE DIRECTIONS — ECM-PARITY (round-18 #1, experiment 404)\n\nThe cycle proved, with zero `sorry`s:\n\n| face | theorem |\n|---|---|\n| parity dichotomy | `ECMParity.two_dvd_curveCard_iff` |\n| Stickelbe",
-      "quality_score": 0.86,
-      "sorry_count": 0,
-      "theorem_count": 79,
-      "timestamp": "2026-08-14T16:15:07",
-      "title": "ECM-PARITY: first positive symmetric residue shadow on the GENERIC elliptic order (2|#E ⟺ cubic root"
-    },
-    {
       "cycle_id": "e0db545b",
       "domain": "Physics",
       "key_insight": "# Future directions — from the permutation readout to the next barrier\n\nThe formal results of this project (`Catalog/Physics/PermutationReadout*.lean`)\nsettle the PERMORD question: the permutation `x",
@@ -499,19 +489,19 @@
       "theorem_count": 7,
       "timestamp": "2026-08-17T01:55:43",
       "title": "ArXiv paper: Kleber's conjecture and complementary products of symmetric functions"
+    },
+    {
+      "cycle_id": "6a0dc5c0",
+      "domain": "Logic",
+      "key_insight": "# Future directions — bold, falsifiable conjectures from the NET-45 cycle\n\nEach conjecture is stated so that a single computation, run, or Lean development decides\nit. Formal counterparts of the defin",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 79,
+      "timestamp": "2026-08-17T01:55:59",
+      "title": "NET-45: The s1 product chain survives at FIVE DOUBLINGS — k*=256 at (d=4, ctx=2048, s1) = d·ctx/32 E"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "b20da64b",
-      "domain": "Novelty",
-      "key_insight": "# Future directions: integrated information via tensor networks\n\n## Where the formalization stands\n\nThe Lean development lives in `Catalog/Novelty/` and compiles end to end against\nMathlib (Lean 4.28.",
-      "quality_score": 0.686,
-      "sorry_count": 0,
-      "theorem_count": 213,
-      "timestamp": "2026-08-06T03:44:36",
-      "title": "Integrated Information via Tensor Networks"
-    },
     {
       "cycle_id": "716ebed1",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 7,
       "timestamp": "2026-08-17T01:55:43",
       "title": "ArXiv paper: Kleber's conjecture and complementary products of symmetric functions"
+    },
+    {
+      "cycle_id": "6a0dc5c0",
+      "domain": "Logic",
+      "key_insight": "# Future directions — bold, falsifiable conjectures from the NET-45 cycle\n\nEach conjecture is stated so that a single computation, run, or Lean development decides\nit. Formal counterparts of the defin",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 79,
+      "timestamp": "2026-08-17T01:55:59",
+      "title": "NET-45: The s1 product chain survives at FIVE DOUBLINGS — k*=256 at (d=4, ctx=2048, s1) = d·ctx/32 E"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "8ed04a73",
-      "domain": "Probability",
-      "name": "sq_subset_mass_le",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "8ed04a73",
-      "domain": "Probability",
-      "name": "mass_le_sqrt",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "2a357c10",
-      "domain": "Bridges",
-      "name": "bestMass_midpoint_concave",
-      "quality": 0.84
-    },
     {
       "cycle_id": "2a357c10",
       "domain": "Bridges",
@@ -2803,9 +2785,27 @@
       "domain": "Algebra",
       "name": "equivMapDomain_mem_orbit",
       "quality": 0.72
+    },
+    {
+      "cycle_id": "6a0dc5c0",
+      "domain": "Logic",
+      "name": "exists_isTopMass",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "6a0dc5c0",
+      "domain": "Logic",
+      "name": "IsTopMass",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "6a0dc5c0",
+      "domain": "Logic",
+      "name": "card",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-17T01:55:43",
+  "last_updated": "2026-08-17T01:55:59",
   "open_questions": [
     {
       "context": "This file gives a **complete, self-contained proof** of that theorem (0 `sorry`s).",
@@ -3455,12 +3455,6 @@
     ],
     "Logic": [
       {
-        "cycle_id": "96503fdf",
-        "quality": 0.622,
-        "theorems": 131,
-        "title": "Constructive Mathematics: Bishop's Analysis"
-      },
-      {
         "cycle_id": "0ed998a7",
         "quality": 0.6603294191919192,
         "theorems": 276,
@@ -3513,6 +3507,12 @@
         "quality": 0.82,
         "theorems": 99,
         "title": "NET-46: THE-S2-ONE-GRID-STEP-DROP-REPLICATES-AT-16×-CONTEXT — k*=224 at (d=4, ct"
+      },
+      {
+        "cycle_id": "6a0dc5c0",
+        "quality": 0.82,
+        "theorems": 79,
+        "title": "NET-45: The s1 product chain survives at FIVE DOUBLINGS — k*=256 at (d=4, ctx=20"
       }
     ],
     "MachineLearning": [

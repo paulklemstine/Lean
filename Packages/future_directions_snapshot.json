@@ -2,25 +2,6 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "6a0dc5c0",
-    "description": "## NET-45 — speed axis (round-net-45; paper 89, /tmp/exp_net_attncost_ctx2048.py, /tmp/net45.log)\n\n**Verdict name: THE-S1-PRODUCT-CHAIN-SURVIVES-AT-FIVE-DOUBLINGS-AT-THE-TIGHTEST-MARGIN.**\n\n### Result\nAt (d=4, ctx=2048, seed=1), **k\\* = 256 = d·ctx/32 EXACTLY — the prediction CONFIRMED** (P1). The s1 context chain is now exact at **FIVE doublings**: 16/32/64/128/256 across ctx 128→2048 — 16× context, the longest measured anywhere in the program. P2 (192, systematic 0.75× s2 drift) and P3 (224, one-grid-step drop) both REFUTED at s1.\n\n### The tension\n- **At s1 the product law is exact through 16× context** (this round).\n- **At s2 the knee broke by one grid step at 8× context** (NET-44: k\\*=96 vs 128).\n\nThe pass margin at 2048 is **+0.0013 — the tightest of the whole chain** (prior margins +0.007/+0.010/+0.003/+0.006 at 128/256/512/1024): k=224 fails ~0.45 SE, k=256 passes ~0.13 SE. The 16× cell is single-seed with a razor-thin knee.\n\n### Key numbers\n- Sweep: k=96 0.939 ✗, 128 0.951 ✗, 160 0.963 ✗, 192 0.970 ✗, 224 0.976 ✗, **256 0.9813 ✓**, 288 0.984, 384 0.993, 512 0.997, 768 0.996, 1024 0.998 (loss 5.2062 vs full 5.2047, Δ0.0015 — first time the ctx/2 point is not exactly full loss, a 2048-row renormalization residual).\n- Full acc 0.1543, bar 0.1512, loss 5.2047; train 18436s (~5.1h — the O(L²) attention term dominates at 2048).\n- **Selection dilutes with context**: gaps +1.7 (k=128) / +1.8 (k=256) — positive but the smallest at d=4 (from +5.9/+4.6 at 8×, +5.3/+4.6 at 4×).\n- **Concentration**: eff support 526.39 (×1.81 on the doubling, same superlinear family); top-128 0.589, top-256 0.731; per-position 68.21/461.11/987.30 — NO bounded working set at 16×.\n- **Deployable speedup**: 8.0× at (d=4, ctx=2048), the product-law guarantee — but now EQUAL to the knee (s2 could read 224 → 10.3×).\n\n### All 8 barriers\n(a) clean — prediction stated before the run, measured 256 (a genuine 16× extension); (b) clean — no context-scaling of data-free attention pruning at 16× in Catalog or literature; (c) confronted — d=4 × ctx=2048, the longest context of the program; (d) clean — held-out last-10%, data-free top-k; (e) the honest limit — single-seed at 16× with a razor-thin margin: the ctx=2048 second seed is the sharpest open cell (256 two-seed-exact vs 224, one grid step); (f) clean — same metrics, binom SE ≈ 0.11% acc, the +0.0013 margin documented, chunked eval (CHUNK=8) identical math, NO crash (ALL_DONE_NET45); (g) fair — full-attention reference + same 0.98 bar + random-k at the same k (gaps +1.7/+1.8, positive); (h) sharpened — deployable 8.0× at 16× context, the guarantee equal to the knee, two-seed confirmation the practical next step.\n\n### Next\n**ctx=2048 second seed** (decides whether 256 is two-seed-exact, extending ctx=512's 64/64, or drops one grid step to 224, replicating the NET-44 s2 break at 16×); a third seed at ctx=1024 (knee distribution {96,128}); d=8 @ ctx=256 s0 corner.\n\nNow 45 network experiments. Assessment v45. Paper 89.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1332",
-    "lineage_refs": [],
-    "priority_score": 1000.0,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-16T11:35:29.739763+00:00",
-    "title": "NET-45: The s1 product chain survives at FIVE DOUBLINGS — k*=256 at (d=4, ctx=2048, s1) = d·ctx/32 EXACTLY at 16× context (prediction confirmed, the longest context measured), at the tightest margin of the chain (+0.0013); selection dilutes with context (+1.7/+1.8); the ctx=2048 second seed becomes the sharpest open cell — paper 89"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
     "consumed_by_exp_id": "d71114d5",
     "description": "## NET-48 — speed axis (round-net-48; paper 92, /tmp/exp_net_attncost_ctx2048_s3.py, /tmp/net48.log)\n\n**Verdict name: THE-DIRECT-TEST-SURVIVES-VIA-THE-MEDIAN.**\n\n### Result\nAt (d=4, ctx=2048, seed=3), **k\\* = 160 — all four point-horns REFUTED (P1 224, P2 240, P3 256, P4 192: every pre-stated value passes, none is the knee)**, yet the completed 16× three-seed knee distribution **{160, 224, 256} has median EXACTLY 224 = 7/8·(d·ctx/32)**, replicating the 8× median 112 = 7/8·128: **the 7/8-median law is 2/2-context, 6/6-seed.** The horns were point-predictions; the law's claim was the distribution's center — 0/4 horns, 1/1 law. A whole family of third-seed values {160, 192, 224} each keep the median at 224; only ≥256 would shift it.\n\n### The 7/8-median law now two contexts, six seeds\n| context | three-seed k\\* set | × product | spread | median |\n|---|---|---|---|---|\n| 8× (ctx=1024) | {96, 112, 128} | {0.75, 0.875, 1.0} | 0.25 | 112 = 7/8·128 |\n| 16× (ctx=2048) | {160, 224, 256} | {0.625, 0.875, 1.0} | 0.375 | 224 = 7/8·256 |\n\n**The 16× spread is ~50% WIDER than the 8× spread** — the LOW TAIL is the context-growing quantity (0.75 → 0.625), the product value the pinned upper edge (the s1 chain's exactness), the median stable at 7/8. Per-seed knees are too noisy to predict on the point; the distribution's center is the robust quantity — that is what a third seed buys.\n\n### Key numbers\n- Full acc 0.1546, bar 0.1516, full loss 5.2199, train **14566s (~4h03m)**.\n- Sweep: 96 0.963 ✗, 128 0.973 ✗, **160 0.981 ✓ (margin +0.0012 — the tightest of the recent cells; true knee ~150–160 between grid points)**, 192 0.984 ✓, 224 0.986 ✓, 240 0.987 ✓, **256 0.990 ✓ (product point — passes 3/3)**, 288 0.993 ✓, 384 0.999 ✓, 512 1.000 ✓, 768 1.003 ✓, 1024 1.003 ✓ (loss 5.2215, Δ0.0016). The s3 retained curve is the HIGHEST of the three 16× seeds throughout (0.973 at 128 vs s1 0.939, s2 0.965) — crossing the bar two grid steps earlier than s2, three than s1.\n- **Product-law upper bound 3/3-sure at BOTH long contexts**: product point 256 passes 0.981/0.986/0.990 (joining 8×'s 0.986/0.993/0.988 at 128) — k\\* ≤ d·ctx/32 is a six-seed-verified deployment guarantee through 16×.\n- **Selection importance +4.7/+3.4**: k=128 random 0.926 vs top-k 0.973; k=256 0.956 vs 0.990 — comparable to s2, far above s1's +1.7/+1.8; the 16× selection spread {1.7, 4.4, 4.7} at k=128 is three-fold (dilution strongly seed-dependent).\n- **Concentration**: eff support 498.13 (s1 526.39, s2 472.50 — mid-family, spread ~11%); top-128 0.608, top-256 0.746; per-position 64.91/435.27/929.55 — the eff↔knee correlation again does NOT sort across three points (s1 highest-eff/highest-knee, s2 lowest-eff/middle-knee, s3 middle-eff/lowest-knee), NO bounded working set at 16×, three seeds.\n- **Deployable at (d=4, ctx=2048)**: **≥8.0× guaranteed (3/3), 9.1× median, 12.8× best — the BEST-EVER reading** (beats 10.7× at 8× s2). Distribution {8.0, 9.1, 12.8} wider than 8×'s {8.0, 9.1, 10.7}.\n\n### The 16× three-seed table\n| seed | k\\* | × product (256) |\n|---|---|---|\n| 1 (NET-45) | 256 | 1.000 |\n| 2 (NET-46) | 224 | 0.875 |\n| **3 (this round)** | **160** | **0.625** |\n\n### All 8 barriers\n(a) clean — four horns + the law's direct test stated before the run, measured 160 outside ALL horns, yet the distribution's median landed exactly on the law's predicted center (the round separates point-accuracy 0/4 from structural confirmation 1/1); (b) clean — three-seed 16× spread / widening low tail / median-stable center: none in the Catalog (698-pkg) or literature; (c) confronted — d=4 × ctx=2048 real causal word LM, 4097 vocab, held-out loss+acc, three seeds at the longest cell; (d) clean — held-out last-10%, data-free top-k; (e) the SUBSTANCE, sharpened — the 16× three-seed distribution complete; honest limits: the s3=160 read razor-thin (+0.0012), the 0.625 low tail is ONE of three seeds (a fourth decides s3-specific vs stable), the median law is 2 contexts × 3 seeds; (f) clean — same metrics/protocol, binom SE ≈ 0.11% acc (retained SE ≈ 0.007), the razor margin documented, k=512 recovers 1.000 / k=768 1.003 (loss Δ0.0016), monotone recovery, NO crash (ALL_DONE_NET48); (g) fair — full-attention reference + same 0.98 bar + random-k at same k (seed 12345): gaps +4.7/+3.4, positive, the {1.7–4.7} seed spread informative; (h) sharpened — the widened {8.0–12.8} deployment spread is the deployment-relevant uncertainty at the longest cell, guarantee end 3/3-sure.\n\n### Next\n**A fourth seed at ctx=2048** (the LOW-TAIL test — s4=160/192 → the 0.625 low tail is real, a stable 16× feature; s4 in {224,256} → it was s3-specific; ~4–5h — the highest-value open cell now); a fourth seed at ctx=1024 (refine {96,112,128}; low value); d=8 @ ctx=256 s0 corner; d=8 compression floor check; carry chain at scale (the frontier).\n\nNow 48 network experiments. Assessment v48. Paper 92.",
     "domain_bridges": [],
@@ -1118,20 +1099,20 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "Building on cycle 922db13f (Q=0.820), which proved 83 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## NET-47 — speed axis (round-net-47; paper 91, /tmp/exp_net_attncost_ctx1024_s3.py, /tmp/net47.log)\n\n**Verdict name: THE-THIRD-SEED-REVEALS-A-SPREAD-NOT-A-TWO-POINT-SET.**\n\n### Result\nAt (d=4, ctx=1024, seed=3), **k\\* = 112 — the MID-GRID read, the prediction's horn P3 CONFIRMED (P1 96, P2 128 both",
+    "description": "Building on cycle 6a0dc5c0 (Q=0.820), which proved 79 theorems in Logic. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## NET-45 — speed axis (round-net-45; paper 89, /tmp/exp_net_attncost_ctx2048.py, /tmp/net45.log)\n\n**Verdict name: THE-S1-PRODUCT-CHAIN-SURVIVES-AT-FIVE-DOUBLINGS-AT-THE-TIGHTEST-MARGIN.**\n\n### Result\nAt (d=4, ctx=2048, seed=1), **k\\* = 256 = d·ctx/32 EXACTLY — the prediction CONFIRMED** (P1). The s",
     "domain_bridges": [],
     "domains": [
-      "NumberTheory"
+      "Logic"
     ],
-    "id": "push_922db13f_ef28d9e0",
+    "id": "push_6a0dc5c0_12718b67",
     "lineage_refs": [],
     "priority_score": 0.9199999999999999,
     "proof_strategy": "",
     "research_mode": "team",
-    "source_exp_id": "922db13f",
+    "source_exp_id": "6a0dc5c0",
     "status": "available",
-    "timestamp": "2026-08-16T23:34:53.708547+00:00",
-    "title": "Deepening: NET-47: The third seed at ctx=1024 reveals a SPREAD not a two-point set — k*=112"
+    "timestamp": "2026-08-17T01:55:59.679434+00:00",
+    "title": "Deepening: NET-45: The s1 product chain survives at FIVE DOUBLINGS — k*=256 at (d=4, ctx=20"
   },
   {
     "ambition_level": "grand_challenge",
@@ -7888,7 +7869,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c8991a0a",
     "description": "Determine exactly which spaces are classified up to homotopy by their fundamental group. Prove that for Eilenberg-MacLane spaces K(G,1), the fundamental group is a complete invariant. Construct examples where the fundamental group fails to classify.",
     "domain_bridges": [],
     "domains": [
@@ -7901,7 +7882,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Topological-Algebraic Bridge: Fundamental Group as a Complete Invariant"
   },
@@ -9545,7 +9526,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "12195e06",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Kleber's conjecture and complementary products of symmetric functions' and formalize its key results. Abstract: We prove Kleber's rectangular-complement conjecture for Schur functions over an arbitrary commutative ring $R$, showing that, for a fixed rectangle, the products $s_λs_{λ^\\vee}$, indexed by unordered complementary pairs, are linearly independent in $Λ_R$. The proof rests on a general independence theorem for componentwise splittings, which asserts that for every partition $θ$, the products $s_αs_β$ are linearly independent as $\\{α,β\\}$ ranges over unordered pairs of partitions satisfying $α+β=θ$. The independence of the products $s_λs_{λ^\\vee}$ also yields linear independence of the Koike--Terada universal-character products over any field, answering a question of Gao--Orelowitz--Yong. We also prove the analogous result for monomial symmetric functions over fields of characteristic zero, as well as integral linear independence over $\\mathbb{Z}$.",
     "domain_bridges": [],
     "domains": [
@@ -9558,7 +9539,7 @@
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
     "research_mode": "team",
     "source_exp_id": "2607.12120v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-15T21:02:35.937376+00:00",
     "title": "ArXiv paper: Kleber's conjecture and complementary products of symmetric functions"
   },
@@ -24940,6 +24921,46 @@
     "status": "available",
     "timestamp": "2026-08-16T23:34:40.088103+00:00",
     "title": "Four cycles of the loop produced, in `Catalog/NumberTheory/`:"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future directions\n\nDerived from the formalisation in `Catalog/Algebra/KleberComplementaryProducts.lean` and\n`Catalog/Algebra/KleberManyFoldProducts.lean`, and from the exploratory data in\n`ComputationalEvidence.md`.\n\nWhat is *proved* (sorry-free Lean, characteristic-zero domains, in particular `ℤ` and any\nfield of characteristic zero):\n\n* products `m_α m_β` of monomial symmetric functions indexed by pairs with **pairwise\n  distinct multiset unions** `α ⊎ β` are linearly independent\n  (`linearIndependent_msym_mul`), and likewise for products of arbitrarily many factors\n  (`linearIndependent_msym_prod`);\n* as a corollary of the many-fold theorem, products of power sums `p_{k_1} ⋯ p_{k_r}`\n  indexed by pairwise distinct multisets of positive exponents are linearly independent\n  (`linearIndependent_psum_monomials`, via `m_{(k)} = p_k`);\n* a product `m_α m_β` determines `α ⊎ β` (`parts_union_eq_of_msym_mul_eq`);\n* the one-row componentwise splitting case is unconditional\n  (`linearIndependent_row_splittings`);\n* the number-of-variables hypothesis is necessary\n  (`not_linearIndependent_of_too_few_variables`) and the distinct-union hypothesis is not\n  (`linearIndependent_collision_pair_two`, covering every two-element union class).\n\nThe engine behind all of this is the quadratic statistic `Q(d) = Σ_i d_i²`, which satisfies\n`Q(u+v) = Q(u) + Q(v) + 2⟨u,v⟩`: the monomials of `m_α m_β` of minimal `Q` are exactly those\nwhose part multiset is `α ⊎ β`. This is a filtration *transverse* to dominance order — the\ndominance-leading term `m_θ` is the same for every splitting of `θ`, which is why the naive\ntriangularity argument fails.\n\n## Conjecture 1 (union classes). For a fixed multiset `U`, the products `m_A m_B` over unordered multiset splittings `A ⊎ B = U` are linearly independent over `ℚ` (and over `ℤ`).\n\nThe key insight is that the `Q`-filtration collapses on a single union class — all these\nproducts have proportional leading forms, a scalar multiple of `m_U` — so the class must be\nseparated one layer up, by the monomials obtained from `U` by merging exactly one pair of\nparts, where the coefficient is governed by how `α` and `β` distribute the merged pair.\n\nWhy now? Conjecture 1 is exactly the missing half of the argument: combined with the\nalready-formalised `Q`-grading it yields the full componentwise splitting theorem for\nmonomial symmetric functions. It is verified for every `U` with `|U| ≤ 8`, and its smallest\ninstance (`U = {v,v}`) is already a theorem in the Lean files.\n\n## Conjecture 2 (merge filtration). Order monomials by the number of \"merges\" needed to obtain them from `U`. For pairs in one union class the matrix of coefficients at the one-merge layer, indexed by pairs `{α,β}` and by merged pairs of parts `{a,b} ⊆ U`, has full row rank.\n\nThe key insight is that a one-merge monomial `w` with merged parts `a, b` receives a\ncontribution from `m_α m_β` in exactly two ways — `a+b` is a single part of one factor, or\n`a` and `b` lie in different factors — so the coefficient is a linear function of the\n\"crossing statistics\" of the splitting, which are distinct for distinct splittings.\n\nWhy now? The layer-by-layer coefficients are completely explicit finite counts (products of\nbinomial coefficients at the zeroth layer), and the Lean infrastructure for extracting the\ncoefficient at any prescribed monomial (`coeff_msym_mul`, `exists_split_of_coeff_ne_zero`)\nis already in place, so this conjecture is directly attackable by formalisation.\n\n## Conjecture 3 (Schur transfer). The `Q`-filtration argument lifts verbatim from `m` to `s`: for a family of pairs with pairwise distinct multiset unions, the products `s_α s_β` are linearly independent over every commutative ring `R` (not just in characteristic zero).\n\nThe key insight is that `s_λ = m_λ + Σ_{μ ◁ λ} K_{λμ} m_μ` is unitriangular with **unit**\ndiagonal, so the `Q`-minimal layer of `s_α s_β` is `m_{α⊎β}` with coefficient a *product of\nbinomial coefficients times 1*, and the leading unit survives base change to an arbitrary\ncommutative ring — the same mechanism that makes the paper's statement ring-independent.\n\nWhy now? The obstruction is not the argument but the missing Mathlib infrastructure (there\nis no ring of symmetric functions and no Schur function in Mathlib); the present files build\n`m`-functions, orbits, and the coefficient calculus from scratch, so adding Kostka-triangular\n`s`-functions on top of them is a well-defined, self-contained project.\n\n## Conjecture 4 (rigidity: the product remembers the pair). If `m_α m_β = m_{α'} m_{β'}` (with enough variables) then `{α,β} = {α',β'}`.\n\nThe key insight is that `parts_union_eq_of_msym_mul_eq` already forces `α ⊎ β = α' ⊎ β'`, so\nthe whole question reduces to Conjecture 1 restricted to a two-element subfamily — rigidity\nis the \"injectivity shadow\" of linear independence.\n\nWhy now? Half of the statement is a theorem in the current files, and the remaining half is\nthe smallest nontrivial case of Conjecture 1, making this the cheapest genuine test of the\none-merge technique of Conjecture 2.\n\n## Conjecture 5 (quantitative dependence threshold). Fix `n`. The family of *all* products `m_α m_β` with `|α| + |β| = n` has rank exactly `p(n)` (the dimension of the degree-`n` component), and a maximal independent subfamily can always be chosen by picking one pair per multiset union.\n\nThe key insight is that the `Q`-grading gives a surjection \"pair ↦ union\" onto partitions of\n`n`, and the theorem proved here shows any section of that surjection yields an independent\nset; the conjecture asserts that this bound is tight, i.e. unions index a basis of the span.\n\nWhy now? The upper bound `rank ≤ p(n)` is dimension counting and the lower bound is exactly\nthe formalised theorem, so the conjecture is a sharp, immediately testable statement that\nwould turn the criterion into a complete description of the span of all such products.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_1347",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "12195e06",
+    "status": "available",
+    "timestamp": "2026-08-17T01:55:31.540177+00:00",
+    "title": "Derived from the formalisation in `Catalog/Algebra/KleberComplementaryProducts.l"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future directions — bold, falsifiable conjectures from the NET-45 cycle\n\nEach conjecture is stated so that a single computation, run, or Lean development decides\nit. Formal counterparts of the definitions used here live in\n`Catalog/Logic/KneeMarginChain.lean`, `Catalog/Logic/AttentionSelectionDilution.lean` and\n`Catalog/Logic/AttentionSelectionExchange.lean`.\n\n## C1. The margin law: margins decay geometrically along an exact chain\n\n**Conjecture.** Along a doubling ladder on which the product law `k* = A·d·ctx/δ` is exact\nat every rung, the margin at rung `i` satisfies `m_i ≤ M·ρ^i` with `ρ < 1`; consequently\nthe certified depth of an exact chain grows only like `log(1/η)`, and **no exact chain of\nmore than `O(log(1/η))` rungs can ever be certified at noise `η`**.\n\n*The key insight is* that exactness is a quantisation coincidence: rung `i` reports the\ngrid point immediately above a continuous knee whose fractional position in the last grid\ncell is essentially equidistributed, and the margin is the retained-accuracy increment\nacross that fraction of a cell — an increment which shrinks as the retained curve\nflattens with context. The NET-45 ladder `0.007, 0.010, 0.003, 0.006, 0.0013` is\nconsistent with `ρ ≈ 0.6` on the odd subsequence and is already at the resolution limit\nof the harness.\n\n*Why now?* `KneeMarginChain.CertDepth` and `certDepth_antitone` give the exact\nbook-keeping, and five rungs of margins are recorded. A sixth rung (`ctx = 4096`) with a\nmargin below `0.0008` would confirm the geometric law and would also prove that the\nprogramme can never certify the chain it is measuring.\n\n## C2. The dilution exponent: the selection gap decays like `k/N_eff`\n\n**Conjecture.** At matched sparsity `k/L`, the selection gap of the measured profiles\nobeys `gap(ctx) ≍ c·(k/N_eff(ctx))^{1/2} − k/L`, so with `N_eff ∝ ctx^{0.86}` the gap\ndecays like `ctx^{-0.43}` and reaches zero — the uniform-attention rigidity point of\n`SelectionDilution.uniform_of_topMass_eq` — at a finite, computable context.\n\n*The key insight is* that `SelectionExchange.selection_gap_split_eq` makes the gap an\nexact invariant of self-similar refinement, so **any** decay is a measurement of the\nfailure of self-similarity, and the Cauchy–Schwarz cap\n`SelectionDilution.topMass_sq_le_card_mul_sumSq` converts the measured effective support\ndirectly into the achievable gap.\n\n*Why now?* The measured gaps (`+5.3, +5.9, +1.7`) and the two measured\neffective supports (`291.16, 526.39`) already over-determine the two constants; a single\n`ctx = 4096` run tests the prediction, and a gap of zero would be the strongest possible\nnegative result about data-free attention pruning.\n\n## C3. Mass retention and accuracy retention diverge\n\n**Conjecture.** The budget needed to retain `98 %` of the attention *mass* grows like\n`N_eff(ctx) ∝ ctx^{0.86}`, while the budget needed to retain `98 %` of the *accuracy*\ngrows like `ctx` (the product law). The two curves therefore cross, and beyond the\ncrossing context the knee is strictly **above** the mass-retention budget: attention mass\nstops being the mechanism of the knee.\n\n*The key insight is* `SelectionDilution.budget_ge_of_retained_mass`: concentration alone\nforces `k ≥ β²·N_eff`, a bound with a *different exponent* from the product law, so the\ntwo cannot both be exact laws for all context.\n\n*Why now?* At `ctx = 2048` the two budgets are `≈ 505` (mass) and `256` (accuracy) — they\nhave already crossed, and `SelectionDilution.net45_mass_retention_at_knee_bound` proves\nthe knee budget cannot retain the mass. Measuring the retained *mass* at the knee in the\nnext run is a one-line addition to the harness and directly tests the conjecture.\n\n## C4. The certified-depth bound on amplitude identifiability\n\n**Conjecture.** The Zipf amplitude `A` of `Probability.AttentionCostLaw` is identifiable\nonly to width `s/2^{D(η)}`, where `D(η)` is the certified depth of the chain at the\nharness noise `η` — not to width `s/2^n` for the number `n` of rungs actually run. At\n`η = 0.006` this gives width `8`, not the width `2` window `(14, 16]` claimed from four\nrungs.\n\n*The key insight is* that `Logic.KneeResolutionLimits` computes the resolution of a rung\n*assuming its reading is correct*, while `KneeMarginChain.net45_chain_collapse` shows only\nthe first two readings are certified at the measured spread; identifiability must be\ncomputed on the certified prefix.\n\n*Why now?* Both halves are already formal — the resolution theory in\n`KneeResolutionLimits` and the depth theory here — so the conjecture is a Lean\ndevelopment away, and it decides whether the programme's headline amplitude window is\nreal.\n\n## C5. Refinement invariance beyond the dyadic case\n\n**Conjecture.** For every `r ≥ 2`, the `r`-fold self-similar refinement (each position\nsplit into `r` positions of weight `p_i/r`) leaves the top-mass functional invariant:\n`T_{rk}(split_r p) = T_k(p)`; and the invariance characterises self-similarity, i.e. a\nprofile family whose gaps are invariant under refinement at *two* coprime ratios is\nasymptotically self-similar.\n\n*The key insight is* that the dyadic proof (`SelectionExchange.topMass_split_le`) needs\nonly one combinatorial fact — a set of `2m` positions contains `m` positions carrying half\nthe mass — whose `r`-fold analogue is an equipartition statement: a set of `rm` positions\nsplits into `r` blocks of `m`, one of which carries at least `1/r` of the mass.\n\n*Why now?* The dyadic case is proved with no positivity, ordering or normalisation\nhypotheses, which is exactly the regime in which the equipartition argument generalises;\nand the `r = 4` case is what the programme's `4×` context jumps actually measure.\n",
+    "domain_bridges": [],
+    "domains": [
+      "NumberTheory",
+      "Combinatorics"
+    ],
+    "id": "fd_1348",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "6a0dc5c0",
+    "status": "available",
+    "timestamp": "2026-08-17T01:55:53.241843+00:00",
+    "title": "Each conjecture is stated so that a single computation, run, or Lean development"
   },
   {
     "ambition_level": "extension",
