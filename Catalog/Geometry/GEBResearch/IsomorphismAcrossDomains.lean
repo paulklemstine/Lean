@@ -1,5 +1,5 @@
 import Mathlib
--- import Computation.Computation.SelfModifyingHalt  -- (module absent from the catalog; import removed so the file compiles)
+import Computation.Computation.SelfModifyingHalt
 
 /-!
 # Isomorphism across domains: a precise GEB fixed-point bridge

@@ -37,7 +37,7 @@ This creates a conceptual corridor:
 -/
 
 import Mathlib
-import Geometry.GenusFormula
+import Geometry.Hilbert16.GenusFormula
 
 namespace Hilbert16
 

@@ -11,7 +11,8 @@ and convex position in the plane. Key results include:
 -/
 import Mathlib
 import Logic.GraphTheory.Defs
-import Geometry.Orient
+import Geometry.ErdosSzekeres.Orient
+
 namespace ErdosSzekeres
 
 /-! ## Basic Cup/Cap Properties -/

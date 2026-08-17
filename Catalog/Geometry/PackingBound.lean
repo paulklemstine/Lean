@@ -5,7 +5,8 @@ Stereographic Capacity Theory: Packing Bounds
 This module proves the main packing bound theorems, including the closed-form
 bound for S² and calibration against known optimal configurations.
 -/
-import Geometry.Distortion
+import Geometry.StereographicCapacity.Distortion
+
 open Real Finset
 
 /-! ## Equivalence of the two forms of the S² bound -/

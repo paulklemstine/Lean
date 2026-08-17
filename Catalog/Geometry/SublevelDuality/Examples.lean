@@ -1,6 +1,6 @@
 import Mathlib
 import Geometry.SublevelDuality.Homogeneous
--- import output-final_aristotle.output-final_aristotle.Incomplete.Pythagorean.Duality  -- (module absent from the catalog; import removed so the file compiles)
+import output-final_aristotle.output-final_aristotle.Incomplete.Pythagorean.Duality
 
 /-
 # A concrete, non-vacuous instance of the RC sublevel duality
