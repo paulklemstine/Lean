@@ -148,3 +148,48 @@ class TestGithubInjectorDedup:
             count = github_injector.inject_directions_into_memory(Path(tmpdir))
 
         assert count == 0, f"Expected 0 injections (issue 42 already live), got {count}"
+
+
+class TestPhaseBGateParity:
+    """Section 4: docstring/code parity on the Phase B gate."""
+
+    def test_gate_returns_p50_not_p70(self):
+        """The code computes p50; verify it doesn't return p70."""
+        import knowledge_extractor
+        import tempfile, json
+        from pathlib import Path
+
+        tmpdir = tempfile.mkdtemp()
+        analytics_path = Path(tmpdir) / "cycle_analytics.json"
+        # Create 10 records with known scores
+        records = [{"phase": "A_only", "quality_score": i / 10.0}
+                   for i in range(10)]
+        analytics_path.write_text(json.dumps({"records": records}))
+
+        ke = object.__new__(knowledge_extractor.KnowledgeExtractor)
+        ke.workspace = Path(tmpdir)
+        threshold = ke._adaptive_phase_b_threshold()
+        # With scores [0.0, 0.1, 0.2, ..., 0.9], p50 index = int(0.5*9)=4
+        # so threshold = sorted[4] = 0.4 (integer truncation, not rounding)
+        assert abs(threshold - 0.4) < 0.01, (
+            f"Expected p50≈0.4 (int-truncated median), got {threshold}"
+        )
+
+    def test_clamp_upper_is_055(self):
+        """Upper clamp is 0.55, not 0.70."""
+        import knowledge_extractor
+        import tempfile, json
+        from pathlib import Path
+
+        tmpdir = tempfile.mkdtemp()
+        records = [{"phase": "A_only", "quality_score": 0.9}
+                   for _ in range(20)]
+        analytics_path = Path(tmpdir) / "cycle_analytics.json"
+        analytics_path.write_text(json.dumps({"records": records}))
+
+        ke = object.__new__(knowledge_extractor.KnowledgeExtractor)
+        ke.workspace = Path(tmpdir)
+        threshold = ke._adaptive_phase_b_threshold()
+        assert threshold <= 0.55, (
+            f"Expected clamp <= 0.55, got {threshold}"
+        )

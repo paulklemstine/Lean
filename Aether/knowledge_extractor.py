@@ -391,10 +391,15 @@ class KnowledgeExtractor:
     def _adaptive_phase_b_threshold(self) -> float:
         """Rank-based Phase B promotion gate.
 
-        Promotes roughly the **top 30%** of recent Phase A cycles to
-        packaging: the threshold is the 70th percentile of recent Phase A
-        quality scores, clamped to [0.25, 0.70]. A cycle scoring at or
-        above this value gets a Phase B package; the rest stay A_only.
+        Promotes roughly the **top 50%** of recent Phase A cycles to
+        packaging: the threshold is the 50th percentile (median) of recent
+        Phase A quality scores, clamped to [0.25, 0.55].  A cycle scoring
+        at or above this value gets a Phase B package; the rest stay A_only.
+
+        NOTE (2026-08-16): the docstring previously said "top 30% / p70 /
+        clamp [0.25, 0.70]" but the code has always computed p50 / [0.25, 0.55].
+        This docstring now matches the code.  See cache_version=3 and the
+        regression test in tests/test_pipeline_rework.py::TestPhaseBGateParity.
 
         Phase A scores are extracted from cycle_analytics records:
         - For records that went on to Phase B, ``phase_a_quality_score``
