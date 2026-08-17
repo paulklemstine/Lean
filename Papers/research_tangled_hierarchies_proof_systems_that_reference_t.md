@@ -1,194 +1,411 @@
-# Tangled Hierarchies: A Kripke-Semantic Account of Self-Referential Soundness
+# Tangled Hierarchies: Proof Systems That Reference Their Own Soundness
+
+**Author:** Aristotle
+**Date:** 2026-08-17
+
+---
 
 ## Abstract
 
-We give a self-contained semantic treatment of *self-referential soundness* in Gödel–Löb provability logic and prove, at the level of Kripke frames, that the soundness (equivalently, consistency) predicate of a sufficiently expressive proof system cannot reside inside the system it validates without trivializing it. Modelling a proof system as a Kripke frame whose worlds are theories and whose accessibility relation encodes "provable reachability," we identify the two structural conditions — **transitivity** and **converse well-foundedness** — under which the provability modality validates Löb's axiom. Within this setting we prove a **semantic Löb theorem**, $\Box(\Box A \to A) \subseteq \Box A$, by converse-well-founded induction; we derive the **semantic second incompleteness theorem**, $\Box\,\mathrm{Con} \subseteq \Box\bot$, from the observation that the reflection instance at the false proposition *is* the consistency statement; and we prove the **tangled hierarchy theorem**: no consistent world validates $\Box\,\mathrm{Con}$, so the soundness predicate is unavoidably external. We complement these with a converse — local self-soundness forces consistency — and ground the whole family of results in a single **Lawvere fixed-point** argument, from which Cantor's theorem and Tarski's undefinability of truth follow as the fixed-point-free instance given by Boolean negation. An explicit infinite frame (the natural numbers under $>$) witnesses non-vacuity of every result. We include algorithms that compute the modality on finite frames, verify the collapse concretely, and search for fixed points, together with numerical demonstrations.
+We give a complete frame-theoretic account of what it costs a formal system to contain its own soundness predicate. Working in the semantics of arbitrary Kripke frames — deliberately *not* assuming well-foundedness, since well-foundedness is precisely what is at stake — we prove that a world validates the reflection (soundness) schema $\Box\varphi\to\varphi$ uniformly in the valuation **if and only if** it accesses itself. Internalised soundness *is* a strange loop, in the exact sense of an edge from a vantage point to itself.
 
-**Keywords:** provability logic, Gödel–Löb logic, Löb's theorem, second incompleteness theorem, Kripke semantics, converse well-foundedness, Lawvere fixed-point theorem, Tarski undefinability, self-reference.
+Four sharpenings follow. (i) **The schema cannot be weakened**: reflection for propositional variables alone already forces the loop and hence the full schema. (ii) **The loop cannot be avoided but can be isolated**: every frame extends, by one new top world, to a frame with an internally sound world; the extension preserves the truth of every formula at every old world, has exactly one self-loop and exactly one sound world; iterating gives a tower whose $n$-th stage has exactly $n$ sound worlds and still contains an unsound one, so stratification never converges. (iii) **The loop can be stretched, not removed**: a world validates the $n$-fold principle $\Box^{n}\varphi\to\varphi$ iff it lies on a closed walk of length exactly $n$; cycle frames on $n$ worlds realise degree $n$ while refuting all smaller positive degrees and having no self-loops, yet remain tangled in the transitive closure, and no provability frame admits any positive degree. (iv) **The boundary is at reflection, not consistency**: internal consistency $\neg\Box\bot$ is seriality, is validated on a loop-free converse-well-founded two-world chain, and costs nothing — while every *finite* frame sound for a system that proves its own consistency must be tangled, the infinite $\omega$-chain showing that finiteness is essential.
+
+At the level of proof systems we prove a trichotomy: the system of validities of well-founded provability frames is consistent and Löbian but does not prove its own soundness schema or its own consistency; the system of formulas true at the single self-accessing world is consistent and proves both its soundness schema and its consistency statement, but refutes Löb's axiom; and *no* system closed under modus ponens and necessitation can be consistent while proving both. There are exactly two coherent regimes for a system that reasons about itself: well founded and silent, or self-certifying and tangled.
+
+**Keywords:** provability logic, reflection principle, Löb's theorem, Kripke frames, strange loops, self-reference, Alexandrov topology, modal fixed points.
 
 ---
 
 ## 1. Introduction
 
-A recurring temptation in the design of reasoning systems — formal theories, program verifiers, self-modelling agents — is to let a system certify its own reliability. The certificate typically takes the shape of a *soundness* or *consistency* statement: "everything I prove is true," or "I never prove a contradiction." The central fact of this paper is that such a certificate cannot live inside the system it certifies. If it does, the system is either inconsistent (its certificate is vacuous) or it cannot produce the certificate at all. We call the resulting stratification a **tangled hierarchy**: the level that would validate a system must sit strictly above it.
+### 1.1 The stratified picture and its discontents
 
-Our contribution is to present this phenomenon *semantically*, purely in terms of Kripke frames, in a way that is elementary, fully self-contained, and non-vacuous. The classical route to these facts runs through the arithmetization of syntax, Gödel numbering, and the Hilbert–Bernays–Löb derivability conditions. We bypass all of that. We work directly with the modal semantics of the provability operator, isolate the two frame conditions that make provability logic tick, and obtain Löb's theorem, the second incompleteness theorem, and the impossibility of internal consistency proofs as short, transparent semantic lemmas. Beneath them all sits Lawvere's fixed-point theorem, which we prove and use to recover Cantor and Tarski.
+The standard hygiene of metamathematics is stratification. Statements about a theory live one floor above the theory; statements about those statements live one floor above that; the "is about" relation is well founded and the tower never bends back on itself. Tarski's theorem on the undefinability of truth and Gödel's second incompleteness theorem are the classical reasons for the discipline: a system strong enough to talk about itself cannot in general certify itself.
 
-### 1.1 Contributions
+Yet the temptation to internalise self-certification is permanent. What we would like a trusted system $S$ to contain is the **reflection schema**
+$$\Box\varphi\to\varphi \qquad (\varphi \text{ any formula of } S\text{'s own language}),$$
+where $\Box$ is $S$'s provability predicate: *whatever I prove is true*. Douglas Hofstadter named the resulting configuration a **tangled hierarchy** — a level structure whose supposedly higher levels reach back down into the levels they were meant to survey.
 
-1. A definition of **Gödel–Löb frames** (Section 3) as transitive, converse-well-founded Kripke frames, with box, diamond, and consistency modalities defined as operators on subsets of worlds.
-2. A **semantic Löb theorem** (Section 4) proved by converse-well-founded induction, with an explicit maximal-counterexample argument.
-3. The identity **reflection-at-$\bot$ equals consistency** (Section 5) and, as an immediate corollary, the **semantic second incompleteness theorem** and the **tangled hierarchy theorem**.
-4. A **converse**: local self-soundness at $\bot$ forces consistency (Section 5).
-5. The **Lawvere fixed-point theorem** and its corollaries **Cantor/Tarski** (Section 6).
-6. A concrete **infinite witness frame** and a proof that non-dead worlds cannot prove their own consistency (Section 7).
-7. **Algorithms and numerical demonstrations** on finite frames (Section 8).
+This paper asks the quantitative question. Granting that the tangle is unavoidable, *how much* tangle is forced? Where exactly does the tangle appear? Can it be weakened, delayed, isolated, or paid off in instalments? We answer all four questions in the Kripke semantics of modal provability logic, where "tangle" becomes a completely concrete graph-theoretic property: a closed walk in the accessibility relation.
 
----
+### 1.2 Summary of results
 
-## 2. Preliminaries and notation
+Throughout, a *frame* is a pair $(W,R)$ with no assumptions at all, and a world is *internally sound* if every reflection instance holds there under every valuation.
 
-Throughout, a *property* of worlds is identified with the subset of worlds satisfying it. Logical connectives on properties are the corresponding Boolean set operations; the false proposition $\bot$ is the empty set $\varnothing$, and the true proposition $\top$ is the full set of worlds. We write $w \in A$ for "world $w$ satisfies property $A$," and $A \subseteq B$ for "$A$ entails $B$ at every world."
-
-We freely use the material-implication property: for properties $A, B$, the property "$A \to B$" is $\{w \mid w \in A \Rightarrow w \in B\}$, i.e. the complement of $A$ united with $B$.
-
----
-
-## 3. Gödel–Löb frames and the modalities
-
-**Definition 3.1 (Gödel–Löb frame).** A *Gödel–Löb frame* $F$ consists of a set $W$ of *worlds* (theories) together with a binary *accessibility relation* $R \subseteq W \times W$ satisfying:
-
-- **(Transitivity)** for all $a,b,c$, if $R\,a\,b$ and $R\,b\,c$ then $R\,a\,c$;
-- **(Converse well-foundedness)** the relation $a \prec b :\Leftrightarrow R\,b\,a$ is well-founded; equivalently, there is no infinite ascending chain $w_0, w_1, w_2, \dots$ with $R\,w_i\,w_{i+1}$ for all $i$, and every nonempty set of worlds has an $R$-maximal element.
-
-We read $R\,w\,v$ as "from $w$, the theory $v$ is a provably reachable continuation." Transitivity is the modal axiom **4** (positive introspection): provability of provability. Converse well-foundedness is exactly the frame condition validating Löb's axiom.
-
-**Definition 3.2 (Box).** For a property $A \subseteq W$, the *box* (provability) modality is
-$$\Box A \;=\; \{\, w \mid \forall v,\ R\,w\,v \Rightarrow v \in A \,\}.$$
-A world validates $\Box A$ (read "$A$ is provable at $w$") iff $A$ holds at every accessible world.
-
-**Definition 3.3 (Diamond).** The *diamond* (consistency-with) modality is
-$$\Diamond A \;=\; \{\, w \mid \exists v,\ R\,w\,v \wedge v \in A \,\}.$$
-
-**Definition 3.4 (Consistency).** The *consistency* property is $\mathrm{Con} = \Diamond\top$, i.e.
-$$\mathrm{Con} \;=\; \{\, w \mid \exists v,\ R\,w\,v \,\}.$$
-A world is consistent iff it has an accessible successor. A world with no successor is a *dead end*: it vacuously validates $\Box A$ for every $A$ (including $\Box\bot$), the semantic image of an inconsistent theory that proves everything.
-
-**Lemma 3.5 (Monotonicity of box).** If $A \subseteq B$ then $\Box A \subseteq \Box B$.
-
-*Proof.* If $w \in \Box A$ and $R\,w\,v$, then $v \in A \subseteq B$, so $v \in B$; hence $w \in \Box B$. $\qquad\blacksquare$
+1. **Soundness = Tangle** (Theorem 3.2). $w$ internally sound $\iff R\,w\,w$.
+2. **Atomic Reflection** (Theorem 3.4). Reflection for atoms alone $\iff$ full reflection.
+3. **Löb forbids the loop** (Theorem 3.6), hence **no world is both sound and Löbian**, and a frame validating both schemas everywhere is empty (Theorem 3.7).
+4. **Structural destruction** (Section 4). A sound world admits no natural-number level grading, no well-founded rank of any kind (ordinals included), and lies outside the least fixed point $\mu X.\Box X$, which we identify with the well-founded part of the frame and show equals $W$ iff the frame is converse well founded.
+5. **Topological bridge** (Theorem 4.6). The box operator of a frame is the interior operator of its Alexandrov topology iff every world is internally sound and the frame is transitive; on a nonempty provability frame this never happens.
+6. **Cost is one loop** (Section 5). The soundness extension, its truth lemma, its exact loop and soundness counts, and the non-convergence of the reflection tower.
+7. **The spectrum** (Section 6). $n$-fold reflection $\iff$ closed walk of length $n$; cycle frames realise each degree; the degree set is a submonoid of $(\mathbb{N},+)$; no provability frame has any positive degree.
+8. **The boundary** (Section 7). Consistency is seriality and is tangle-free; but finite serial frames contain cycles, so all finite semantics for a self-consistent system are tangled, and the $\omega$-chain shows finiteness cannot be dropped.
+9. **The trichotomy for proof systems** (Section 8).
 
 ---
 
-## 4. The semantic Löb theorem
+## 2. Definitions
 
-The following is the semantic core of the paper. Recall the reflection property "$\Box A \to A$" $= \{w \mid w \in \Box A \Rightarrow w \in A\}$.
+### 2.1 Syntax
 
-**Theorem 4.1 (Semantic Löb).** In every Gödel–Löb frame,
-$$\Box(\Box A \to A) \;\subseteq\; \Box A.$$
-Equivalently: if a world proves "provability of $A$ entails $A$," it already proves $A$.
+Fix a set $\mathrm{At}$ of propositional variables. The modal language is generated by
+$$\varphi ::= p \mid \bot \mid \varphi\to\varphi \mid \Box\varphi , \qquad p \in \mathrm{At}.$$
+Negation is $\neg\varphi := \varphi\to\bot$, and the **consistency statement** is
+$$\mathrm{Con} := \neg\Box\bot .$$
+Two schemas are central:
 
-*Proof.* Fix $w \in \Box(\Box A \to A)$ and any successor $v$ with $R\,w\,v$; we must show $v \in A$. Suppose not, so $v \notin A$. Consider the nonempty set
-$$S \;=\; \{\, u \mid R\,w\,u \ \wedge\ u \notin A \,\}, \qquad v \in S.$$
-By converse well-foundedness, $S$ has an $R$-maximal element $u$: that is, $R\,w\,u$, $u \notin A$, and for every $t$ with $R\,u\,t$ and $t \notin A$ we would have a contradiction, because such $t$ satisfies $R\,w\,t$ (by transitivity from $R\,w\,u$ and $R\,u\,t$) and $t \notin A$, so $t \in S$, contradicting maximality of $u$. Hence every $t$ with $R\,u\,t$ satisfies $t \in A$; that is, $u \in \Box A$.
+* the **reflection instance** $\mathrm{Refl}(\varphi) := \Box\varphi\to\varphi$;
+* the **Löb instance** $\mathrm{Loeb}(\varphi) := \Box(\Box\varphi\to\varphi)\to\Box\varphi$.
 
-Now $R\,w\,u$ and $w \in \Box(\Box A \to A)$ give $u \in (\Box A \to A)$, i.e. $u \in \Box A \Rightarrow u \in A$. Since $u \in \Box A$, we conclude $u \in A$ — contradicting $u \notin A$. Therefore no such $v$ exists, and $w \in \Box A$. $\qquad\blacksquare$
+The $n$-fold box is defined by $\Box^{0}\varphi = \varphi$ and $\Box^{n+1}\varphi = \Box\,\Box^{n}\varphi$.
 
-The proof is a single maximal-counterexample induction; converse well-foundedness is used *exactly once*, to extract the maximal offender $u$, and transitivity is used *exactly once*, to certify that $u$'s successors are also $w$'s successors. These are the only two frame conditions the theorem needs, and both are necessary: on a reflexive point (which is trivially not converse well-founded) Löb's principle fails.
+### 2.2 Frames and satisfaction
 
----
+**Definition 2.1 (Frame).** A *frame* is a pair $F = (W,R)$ where $W$ is a set of *worlds* and $R\subseteq W\times W$ is the *accessibility relation*. **No** further condition is imposed; in particular neither transitivity nor irreflexivity nor well-foundedness.
 
-## 5. Consistency, incompleteness, and tangling
+**Definition 2.2 (Satisfaction).** A *valuation* is a map $V : \mathrm{At} \to \mathcal{P}(W)$. Satisfaction $w \models_V \varphi$ is defined by recursion:
+$$w\models_V p \iff w \in V(p), \qquad w\not\models_V \bot,$$
+$$w\models_V \varphi\to\psi \iff (w\models_V\varphi \Rightarrow w\models_V\psi), \qquad w\models_V \Box\varphi \iff \forall v\,(R\,w\,v \Rightarrow v\models_V\varphi).$$
 
-The reduction of incompleteness to Löb is a single algebraic identity.
+**Definition 2.3 (Provability frame).** A *provability frame* (GL frame) is a frame that is transitive and converse well founded — there is no infinite chain $w_0 R w_1 R w_2 R \cdots$. Converse well-foundedness implies irreflexivity. These are exactly the frames validating Löb's axiom, and they are the intended semantics of formal provability.
 
-**Theorem 5.1 (Reflection at $\bot$ is consistency).**
-$$\{\, w \mid w \in \Box\bot \Rightarrow w \in \bot \,\} \;=\; \mathrm{Con}.$$
+### 2.3 Internal soundness
 
-*Proof.* Unfolding, $w \in \Box\bot$ means every successor of $w$ lies in $\varnothing$, which holds iff $w$ has *no* successor. And $w \in \bot$ is impossible. So "$w \in \Box\bot \Rightarrow w \in \bot$" holds iff "$w$ has no successor" is false, i.e. iff $w$ has a successor, i.e. iff $w \in \mathrm{Con}$. $\qquad\blacksquare$
+**Definition 2.4 (Internal soundness).** A world $w$ of $F$ is **internally sound** (for the language over $\mathrm{At}$) if
+$$\forall V\ \forall\varphi:\quad w\models_V \Box\varphi\to\varphi .$$
+The quantifier over valuations is essential: soundness is a property of the *world in the frame*, not of a particular interpretation.
 
-**Theorem 5.2 (Semantic second incompleteness).** In every Gödel–Löb frame,
-$$\Box\,\mathrm{Con} \;\subseteq\; \Box\bot.$$
-A world that proves its own consistency proves falsehood, hence proves everything.
+**Definition 2.5 (Atomic soundness).** $w$ is **atomically sound** if $\forall V\ \forall p\in\mathrm{At}:\ w\models_V \Box p \to p$.
 
-*Proof.* Instantiate Theorem 4.1 at $A = \bot$: $\Box(\Box\bot \to \bot) \subseteq \Box\bot$. By Theorem 5.1 the antecedent $\Box\bot \to \bot$ equals $\mathrm{Con}$, so $\Box(\Box\bot \to \bot) = \Box\,\mathrm{Con}$. Substituting gives $\Box\,\mathrm{Con} \subseteq \Box\bot$. $\qquad\blacksquare$
+**Definition 2.6 ($n$-fold internal soundness).** $w$ has *soundness degree $n$*, written $\mathrm{IS}_n(w)$, if $\forall V\ \forall \varphi:\ w \models_V \Box^{n}\varphi\to\varphi$. Degree $1$ is Definition 2.4.
 
-**Theorem 5.3 (Tangled hierarchy theorem).** Let $w$ be a world with at least one successor (i.e. $w \in \mathrm{Con}$). Then
-$$w \notin \Box\,\mathrm{Con}.$$
-No consistent world proves its own consistency; the soundness/consistency predicate is unavoidably external.
+**Definition 2.7 (Löb world).** $w$ *validates Löb* if $\forall V\,\forall\varphi:\ w\models_V \mathrm{Loeb}(\varphi)$.
 
-*Proof.* Suppose $w \in \Box\,\mathrm{Con}$. By Theorem 5.2, $w \in \Box\bot$, so every successor of $w$ lies in $\varnothing$. But $w$ has a successor $v$ by hypothesis, whence $v \in \varnothing$, a contradiction. $\qquad\blacksquare$
+**Definition 2.8 ($n$-step accessibility).** $R^{(0)}\,u\,v :\iff u=v$, and $R^{(n+1)}\,u\,v :\iff \exists z\,(R\,u\,z \wedge R^{(n)}\,z\,v)$. Thus $R^{(n)}\,w\,w$ says $w$ lies on a **closed walk of length exactly $n$**.
 
-The dichotomy is now exact. If a world proves its own consistency then, by Theorem 5.2, it proves $\bot$, and (Theorem 5.1) it has no successor: it is a dead, inconsistent theory whose "consistency proof" is vacuous. If instead the world is genuinely consistent, Theorem 5.3 forbids the proof outright. There is no consistent, self-certifying world.
-
-A gratifying converse holds as well.
-
-**Theorem 5.4 (Soundness forces consistency).** If a world $w$ is locally self-sound at $\bot$ — that is, $w \in \Box\bot \Rightarrow w \in \bot$ — then $w \in \mathrm{Con}$.
-
-*Proof.* This is precisely membership of $w$ in the left-hand side of Theorem 5.1, which equals $\mathrm{Con}$. Concretely: local self-soundness at $\bot$ says $w \notin \Box\bot$ (since $w \in \bot$ is impossible), i.e. $w$ has a successor. $\qquad\blacksquare$
-
-Thus reflection and consistency are two faces of one coin: a world that cannot be duped by a proof of falsehood is automatically a live theory — but, by Theorem 5.3, it cannot internalize this fact as a theorem about itself.
+**Definition 2.9 (Tangled).** A relation $S$ on $W$ is **tangled** if it contains a two-cycle, i.e. there are $a,b$ (possibly equal) with $S\,a\,b$ and $S\,b\,a$. In particular a self-loop makes $S$ tangled. A tangled relation admits no *grading*: no $\mathrm{rank}: W\to\mathbb{N}$ with $S\,a\,b \Rightarrow \mathrm{rank}(a) < \mathrm{rank}(b)$.
 
 ---
 
-## 6. The diagonal core: Lawvere, Cantor, Tarski
+## 3. Internalised soundness is exactly a self-loop
 
-All of the above are shadows of a single fixed-point phenomenon.
+### 3.1 The easy direction
 
-**Theorem 6.1 (Lawvere fixed-point).** Let $A, B$ be sets and let $f : A \to (A \to B)$ be *point-surjective*: every function $A \to B$ equals $f(a)$ for some $a \in A$. Then every endomap $g : B \to B$ has a fixed point: there exists $b \in B$ with $g(b) = b$.
+**Lemma 3.1.** *If $R\,w\,w$ then $w$ is internally sound.*
 
-*Proof.* Consider the diagonal map $d : A \to B$, $d(a) = g(f(a)(a))$. By point-surjectivity, $d = f(c)$ for some $c \in A$. Evaluating at $c$: $f(c)(c) = d(c) = g(f(c)(c))$. Hence $b := f(c)(c)$ satisfies $g(b) = b$. $\qquad\blacksquare$
+*Proof.* Suppose $w\models_V\Box\varphi$. By definition $\varphi$ holds at every $R$-successor of $w$; $w$ is such a successor; hence $w\models_V\varphi$. $\square$
 
-**Theorem 6.2 (Cantor / Tarski undefinability).** For no set $A$ is there a point-surjective map $f : A \to (A \to \mathrm{Bool})$. Equivalently, a system cannot carry a surjective self-encoding onto its own two-valued predicates; its truth predicate is not internally definable.
+### 3.2 The diagonal valuation
 
-*Proof.* Boolean negation $\lnot : \mathrm{Bool} \to \mathrm{Bool}$ has no fixed point ($\lnot\,\text{true} = \text{false} \neq \text{true}$ and $\lnot\,\text{false} = \text{true} \neq \text{false}$). If a point-surjective $f : A \to (A \to \mathrm{Bool})$ existed, Theorem 6.1 with $g = \lnot$ would produce a fixed point of $\lnot$, a contradiction. $\qquad\blacksquare$
+**Theorem 3.2 (Soundness = Tangle).** *For every frame $F$ and world $w$:*
+$$w \text{ is internally sound} \iff R\,w\,w .$$
 
-The conceptual link is that provability, truth, and membership are all instances of a predicate a system tries to apply to its own codes; the diagonal produces the self-referential sentence (the Gödel sentence, the liar, the anti-diagonal set) that the fixed-point-free operator (negation, "unprovable," "not in the set") cannot accommodate. Löb's theorem is the constructive, converse-well-founded refinement of this picture: rather than merely forbidding a fixed point of negation, it computes what the fixed point of the *modalized* transformer $X \mapsto \Box X \to A$ must be, and converse well-foundedness makes that computation terminate rank by rank.
+*Proof sketch.* ($\Leftarrow$) is Lemma 3.1. For ($\Rightarrow$), fix any atom $p$ and define the **diagonal valuation** $V^{\ast}$ by
+$$V^{\ast}(p) := \{ v \in W : R\,w\,v \} \qquad (\text{other atoms arbitrary}).$$
+By construction $p$ holds at every successor of $w$, so $w \models_{V^{\ast}} \Box p$. Internal soundness applied to the instance $\Box p \to p$ yields $w\models_{V^{\ast}} p$, i.e. $R\,w\,w$. $\square$
 
----
+The proof consumes only one atom and one instance of the schema; this is the source of the next result.
 
-## 7. A concrete infinite frame
+**Remark 3.3.** The theorem needs the quantifier over valuations. Relative to a *fixed* valuation, an irreflexive world can accidentally be sound (Section 8.3 discusses a frame in which a valuation names its own soundness set non-vacuously).
 
-Non-vacuity is essential: the theorems above would be empty if Gödel–Löb frames were degenerate. They are not.
+**Theorem 3.4 (No safe fragment).** *A world is atomically sound iff it is internally sound.*
 
-**Definition 7.1 (Natural-number frame).** Let $\mathbb{N}$ be the worlds with $R\,a\,b :\Leftrightarrow b < a$.
+*Proof sketch.* Internal soundness trivially implies the atomic fragment. Conversely, the diagonal valuation of Theorem 3.2 uses only an atomic instance, so atomic soundness already gives $R\,w\,w$, and Lemma 3.1 upgrades this to full reflection. $\square$
 
-**Proposition 7.2.** The natural-number frame is a Gödel–Löb frame.
+Theorem 3.4 is a sharpness statement: there is no non-trivial fragment of the soundness schema that a well-founded system can afford. Self-trust does not come in weaker syntactic flavours — only (Section 6) in slower ones.
 
-*Proof.* Transitivity: if $b < a$ and $c < b$ then $c < a$. Converse well-foundedness: the relation $a \prec b \Leftrightarrow b < a$ (i.e. the usual $<$) is well-founded on $\mathbb{N}$; there is no infinite strictly descending chain of naturals. $\qquad\blacksquare$
+### 3.3 Löb and the impossibility of coexistence
 
-**Proposition 7.3 (The dead world).** $0 \notin \mathrm{Con}$: world $0$ has no successor (no natural is $< 0$), so it vacuously proves everything and is inconsistent.
+**Lemma 3.5.** *If $w$ validates Löb, then $\neg R\,w\,w$.*
 
-**Proposition 7.4 (Live worlds cannot self-certify).** For every $n > 0$: $n \in \mathrm{Con}$ and $n \notin \Box\,\mathrm{Con}$.
+*Proof sketch.* Take the valuation making an atom $p$ false everywhere and consider $\mathrm{Loeb}(p)$. If $R\,w\,w$ held, $w\models\Box(\Box p\to p)$ would follow from Lemma 3.1 applied at successors — more directly, one checks that with $p$ false everywhere, $\Box(\Box p \to p)$ holds at $w$ exactly when every successor $v$ of $w$ fails $\Box p$; a self-loop plus the Löb instance then forces $w\models\Box p$, hence $w\models p$ by the loop, contradicting the choice of $V$. $\square$
 
-*Proof.* Since $0 < n$, we have $R\,n\,0$, so $n$ has a successor and $n \in \mathrm{Con}$. By Theorem 5.3, $n \notin \Box\,\mathrm{Con}$. $\qquad\blacksquare$
+**Theorem 3.6.** *No world is both internally sound and Löb-validating.*
 
-In this frame $\Box^k\bot$ is exactly the set $\{0, 1, \dots, k-1\}$ of worlds of rank below $k$: $\Box\bot = \{0\}$ (only $0$ has all-successors-in-$\varnothing$), $\Box\Box\bot = \{0,1\}$, and so on. Consistency $\mathrm{Con} = \{n \mid n \geq 1\}$ is the complement of the rank-$0$ shell, and $\Box\,\mathrm{Con}$ collapses into $\Box\bot = \{0\}$, visibly excluding every live world — a completely explicit instance of the collapse.
+*Proof.* Soundness gives $R\,w\,w$ (Theorem 3.2); Löb gives $\neg R\,w\,w$ (Lemma 3.5). $\square$
 
----
+**Theorem 3.7 (Semantic second incompleteness).** *A frame in which every world is both internally sound and Löb-validating is empty. In particular, no world of a provability frame is internally sound.*
 
-## 8. Algorithms and computation
+*Proof.* The first claim is immediate from Theorem 3.6. For the second, a provability frame is irreflexive, so Theorem 3.2 forbids soundness at each of its worlds. $\square$
 
-On a **finite** frame the modalities are computable by direct set manipulation, and every theorem above becomes a decidable check. We record the core routines; full type-hinted implementations accompany this paper.
-
-**Algorithm A (Box operator).** Given the successor lists of a finite frame and a subset $A$ of worlds (as a bitset), compute $\Box A = \{w : \text{succ}(w) \subseteq A\}$ in $O(|W| + |{\to}|)$ time by scanning each world's successors.
-
-**Algorithm B (Consistency and collapse check).** Compute $\mathrm{Con} = \{w : \text{succ}(w) \neq \varnothing\}$, then $\Box\,\mathrm{Con}$ and $\Box\varnothing$, and verify $\Box\,\mathrm{Con} \subseteq \Box\varnothing$ (Theorem 5.2) and, for each $w \in \mathrm{Con}$, that $w \notin \Box\,\mathrm{Con}$ (Theorem 5.3).
-
-**Algorithm C (Löb least fixed point).** For the transformer $\Phi(X) = \Box X \to A = (W \setminus \Box X) \cup A$ on a finite frame, iterate from $\varnothing$ (or from $\Box(\Phi\text{-antecedent})$) to a fixed point; converse well-foundedness guarantees termination, and the fixed point equals $\Box A$, exhibiting the Löb identity numerically.
-
-**Algorithm D (Lawvere / anti-diagonal witness).** Given a candidate encoding $f$ of predicates and an endomap $g$ on values, form the diagonal $d(a) = g(f(a)(a))$; either return the fixed point $f(c)(c)$ when $d = f(c)$, or, for $g = \lnot$, return the anti-diagonal predicate $a \mapsto \lnot f(a)(a)$ that is provably outside the range of $f$, certifying non-surjectivity (Theorem 6.2).
-
-The accompanying demonstration verifies on random finite Gödel–Löb frames that $\Box\,\mathrm{Con} \subseteq \Box\bot$ always holds, that no consistent world lies in $\Box\,\mathrm{Con}$, that the rank identity $\Box^k\bot = \{\text{rank} < k\}$ holds on the natural-number frame, and that the anti-diagonal predicate is never in the range of any candidate encoding into $\mathrm{Bool}$.
+This is the frame-level content of Gödel's second theorem: the well-founded reading of provability and the internalisation of soundness are jointly unsatisfiable, not merely jointly unproven.
 
 ---
 
-## 9. Applications and interpretation
+## 4. What the tangle destroys
 
-**Formal theories.** The results are the semantic skeleton of Gödel's and Löb's theorems: a consistent, sufficiently expressive theory cannot prove its own consistency, and can prove "$A$ is provable $\to A$" only for the $A$ it already proves. The Kripke picture makes precise *why* the provability predicate must be studied from a metatheory.
+### 4.1 No levels
 
-**Program verification and trusted computing.** A verifier that could internally certify its own soundness would, by Theorem 5.2, be unsound (it would "prove" everything). Practical trust is therefore layered: a small trusted kernel is validated from outside, and each layer certifies only strictly weaker layers — a concrete tangled hierarchy.
+**Theorem 4.1.** *If a frame has an internally sound world, its accessibility relation is tangled, and consequently there is no $\mathrm{rank}: W\to\mathbb{N}$ with $R\,a\,b \Rightarrow \mathrm{rank}(a)<\mathrm{rank}(b)$.*
 
-**Self-modelling agents.** An agent whose internal model certifies "all my conclusions are correct" is, by the same collapse, an agent that endorses every conclusion. Calibrated reliability is necessarily represented externally, not as an internal theorem of self-soundness.
+*Proof.* Theorem 3.2 gives $R\,w\,w$, a self-loop, so $R$ is tangled; a grading would give $\mathrm{rank}(w)<\mathrm{rank}(w)$. $\square$
 
-**Foundations of self-reference.** Section 6 unifies the liar paradox, Cantor's theorem, Russell's paradox, Tarski's undefinability, and Gödel–Löb incompleteness as instances of one fixed-point law, isolating the fixed-point-free operator (negation) as the single source of impossibility.
+**Theorem 4.2 (Absoluteness of the collapse).** *If $w$ is internally sound, then for no well-founded relation $s$ on any set $B$ is there a map $\rho:W\to B$ with $R\,a\,b \Rightarrow s\,\rho(b)\,\rho(a)$; in particular there is no ordinal-valued grading $\rho : W \to \mathrm{Ord}$ strictly decreasing along arrows.*
+
+*Proof sketch.* Such a $\rho$ would give $s\,\rho(w)\,\rho(w)$, and no element of a well-founded relation relates to itself. $\square$
+
+So the failure is not an artefact of counting with $\mathbb{N}$: no hierarchy of metalevels of any ordinal height can accommodate one self-trusting world.
+
+### 4.2 Box as a set operator; Löb induction
+
+Define, for $X\subseteq W$,
+$$\Box X := \{ w \in W : \forall v\,(R\,w\,v \Rightarrow v\in X)\} .$$
+This is monotone, hence has a least fixed point $\mu X.\Box X$ by Knaster–Tarski.
+
+**Theorem 4.3.** *$\mu X.\Box X$ is exactly the well-founded part of $R$, i.e. the set of worlds $w$ such that $R$ restricted to the worlds reachable from $w$ is converse well founded (equivalently, $w$ is accessible for the converse relation).*
+
+**Theorem 4.4 (Löb's principle as induction).** *The following are equivalent:*
+1. *$\Box X \subseteq X$ implies $X = W$, for every $X\subseteq W$;*
+2. *$\mu X.\Box X = W$;*
+3. *$R$ is converse well founded.*
+
+*Proof sketch.* $(1)\Rightarrow(2)$ apply (1) to the least prefixed point. $(2)\Rightarrow(3)$ by Theorem 4.3. $(3)\Rightarrow(1)$ is transfinite induction along the converse relation: if $\Box X\subseteq X$ and $w\notin X$, then $w$ has a successor outside $X$, generating an infinite ascending chain. $\square$
+
+**Corollary 4.5.** *If $R\,w\,w$, then $w\notin\mu X.\Box X$ and hence $\mu X.\Box X \neq W$. In particular an internally sound world escapes every Löb-style induction.*
+
+Thus the tangle does not merely block a bookkeeping device; it removes the induction principle that makes provability logic work.
+
+### 4.3 The topological bridge
+
+Every frame carries its **Alexandrov topology**: $X\subseteq W$ is open iff it is closed under accessibility ($w\in X$ and $R\,w\,v$ imply $v\in X$). This is a genuine topology (arbitrary unions and finite intersections of $R$-closed sets are $R$-closed).
+
+**Theorem 4.6 (Interior = provability iff everywhere sound and transitive).** *For a frame $F$, the following are equivalent:*
+1. *for every $X\subseteq W$, $\operatorname{int}(X) = \Box X$ in the Alexandrov topology;*
+2. *every world of $F$ is internally sound, and $R$ is transitive.*
+
+*Proof sketch.* $(2)\Rightarrow(1)$: soundness everywhere gives reflexivity (Theorem 3.2), so $\Box X\subseteq X$; transitivity makes $\Box X$ open; and any open $U\subseteq X$ satisfies $U\subseteq \Box X$ by openness, so $\Box X$ is the largest open subset of $X$. $(1)\Rightarrow(2)$: from $\operatorname{int}(X)=\Box X$ we get $\Box X\subseteq X$ for all $X$; applying this to $X=\{v : R\,w\,v\}$ yields $R\,w\,w$, hence soundness by Theorem 3.2. Idempotence $\Box X\subseteq\Box\Box X$ (also inherited from the interior operator) applied to the same set yields transitivity. $\square$
+
+**Corollary 4.7.** *On a nonempty provability frame the box operator is never the interior operator of the Alexandrov topology.*
+
+Modal soundness-internalisation and topological interior semantics are literally the same hypothesis: the S4/interior picture of $\Box$ presupposes exactly the self-trust that provability logic forbids.
 
 ---
 
-## 10. Discussion and future directions
+## 5. The cost is exactly one loop
 
-The organizing insight is that **converse well-foundedness converts self-reference into terminating recursion stratified by ordinal rank**. This is what turns the reflective principle $\Box(\Box A \to A)$ into the flat $\Box A$, and it suggests several directions.
+### 5.1 The soundness extension
 
-1. **Uniqueness of modal fixed points on tangled frames.** *Conjecture.* On every transitive, converse-well-founded frame, each modalized predicate transformer has a *unique* fixed point, definable from finite Boolean combinations of iterated consistency statements. The rank-stratification $\Box^k\varnothing = \{\text{rank} < k\}$ forces a fixed point to be constant on each rank shell, converting the de Jongh–Sambin uniqueness folklore into a checkable ordinal induction.
+**Definition 5.1.** For a frame $F=(W,R)$, its **soundness extension** $F^{+}$ has worlds $W \sqcup \{\top\}$ and accessibility
+$$R^{+}\,\top\,x \text{ for all } x \text{ (including } x=\top), \qquad R^{+}\,u\,v \iff R\,u\,v \ \ (u,v\in W), \qquad \neg R^{+}\,u\,\top \ (u \in W).$$
+$\top$ is the system that reasons about $F$ while remaining inside the picture.
 
-2. **Exact tangling threshold.** *Conjecture.* A proof system can internally express its own soundness for all propositions of quantifier-rank below $k$ but never for rank exactly $k$, and this threshold coincides with the converse-well-founded rank of the canonical frame. Internal soundness is a graded reflection principle, and Löb's collapse acts once the grade reaches the self-referential diagonal; "consistency = reflection at $\bot$" is the base rung.
+**Theorem 5.2 (Truth lemma; conservation).** *Extend a valuation $V$ on $F$ to $F^{+}$ by making every atom false at $\top$. Then for every formula $\varphi$ and every old world $v\in W$,*
+$$v \models^{F^{+}} \varphi \iff v \models^{F} \varphi .$$
 
-3. **Polymodal tangling and provability strength.** *Conjecture.* In a polymodal system with modalities $[0], [1], [2], \dots$ of strictly increasing strength, each modality can prove the consistency of all strictly weaker modalities but never its own, and the provable cross-consistencies form a strict linear order isomorphic to the modality index. A stronger operator sees a sparser accessibility relation, spends strictly less ordinal capital, and the gap certifies weaker operators while barring self-certification; antitonicity of rank in the modality index supplies the strict inequalities.
+*Proof sketch.* Induction on $\varphi$. The only non-trivial case is $\Box$, and it is exactly the fact that $W$ is a *generated submodel* of $F^{+}$: no old world accesses $\top$, so the successor set of an old world is unchanged. $\square$
 
-4. **Diagonal-free consistency certificates.** *Conjecture.* A proof system admits a *diagonal-free* consistency certificate — a non-self-referential internal witness of its own consistency — if and only if its canonical frame has an accessible terminal (dead) world reachable in a bounded number of steps, decoupling the witness from the diagonal that Löb's theorem exploits.
+**Theorem 5.3 (Exact cost).** *$\top$ is internally sound in $F^{+}$. If $F$ is irreflexive, then $\top$ is the unique self-accessing world and the unique internally sound world of $F^{+}$. Moreover $F^{+}$ is not converse well founded, and the failure occurs exactly at $\top$.*
+
+*Proof.* $R^{+}\top\top$ holds, so Lemma 3.1 applies. Self-loops of $F^{+}$ are $\{\top\}\cup\{u\in W : R\,u\,u\} = \{\top\}$ under irreflexivity, and Theorem 3.2 converts "self-loop" into "internally sound". $\square$
+
+**Corollary 5.4 (Every well-founded hierarchy tangles minimally).** *For every provability frame $M$: no world of $M$ is internally sound; $M$ embeds into $M^{+}$ with all truths at old worlds preserved; $M^{+}$ has a unique internally sound world; and $M^{+}$ admits no natural-number grading.*
+
+This is the precise sense in which a strange loop need not corrupt the levels it sits above: the tangle is conservative for the old worlds while being fatal to global stratification.
+
+### 5.2 The reflection tower does not converge
+
+**Definition 5.5.** The **reflection tower** over $F$ is $F^{(0)} := F$, $F^{(n+1)} := (F^{(n)})^{+}$. Stage $n+1$ is a system that reasons about — and certifies the soundness of — stage $n$.
+
+**Theorem 5.6 (One loop per stage).** *If $F$ is irreflexive then the set of self-accessing worlds of $F^{(n)}$ is finite of cardinality exactly $n$; equivalently, $F^{(n)}$ has exactly $n$ internally sound worlds — no matter how large $F$ is.*
+
+*Proof sketch.* Induction: the self-loop set of $G^{+}$ is $\{\top\}$ together with the injective image of the self-loop set of $G$, so the count increases by exactly one at each stage. Theorem 3.2 converts loops into sound worlds. $\square$
+
+**Theorem 5.7 (Non-convergence).** *If $F$ is irreflexive and nonempty, then for every $n$ the stage $F^{(n)}$ still contains a world that is not internally sound.*
+
+*Proof.* Any old irreflexive world remains irreflexive at every stage; apply Theorem 3.2. $\square$
+
+**Corollary 5.8 (Tower report).** *For a nonempty provability frame $M$ and any $n$: stage $n$ has exactly $n$ internally sound worlds; stage $n$ still has an unsound world; and every internally sound world of stage $n+1$ lies outside $\mu X.\Box X$ and admits no ordinal grading.*
+
+Adding metalevels buys internal soundness at a rate of exactly one sound world per level and never completes. The tangle can be added, never finished.
 
 ---
 
-## 11. Conclusion
+## 6. The spectrum of tangles: iterated reflection
 
-Working entirely within Kripke semantics, we have shown that the soundness/consistency predicate of an expressive proof system cannot be internal to that system without collapse. The engine is the semantic Löb theorem, proved by one maximal-counterexample induction using transitivity and converse well-foundedness; its instance at the false proposition is the second incompleteness theorem, and the consistency of a live world then forbids any internal consistency proof. Beneath these lies a single Lawvere fixed-point argument that also yields Cantor and Tarski. An explicit infinite frame confirms that none of the statements is vacuous. Tangled hierarchies are not an accident of a particular formalism; they are a structural law of any system rich enough to reason about its own reasoning.
+### 6.1 The characterisation
+
+**Lemma 6.1.** *$w\models_V \Box^{n}\varphi$ iff $\varphi$ holds at every $v$ with $R^{(n)}\,w\,v$.*
+
+*Proof.* Induction on $n$; the successor step decomposes a path of length $n+1$ as an edge followed by a path of length $n$. $\square$
+
+**Theorem 6.2 (Spectrum Theorem).** *For every frame, world $w$ and $n\in\mathbb{N}$:*
+$$\mathrm{IS}_n(w) \iff R^{(n)}\,w\,w ,$$
+*i.e. $w$ validates $\Box^{n}\varphi\to\varphi$ (uniformly in the valuation) iff $w$ lies on a closed walk of length exactly $n$.*
+
+*Proof sketch.* ($\Leftarrow$) If $R^{(n)}\,w\,w$ and $w\models_V\Box^{n}\varphi$ then Lemma 6.1 gives $w\models_V\varphi$. ($\Rightarrow$) Diagonalise at distance $n$: interpret an atom $p$ as $\{v : R^{(n)}\,w\,v\}$. Then $w\models\Box^{n}p$ by Lemma 6.1, so the instance $\Box^{n}p\to p$ gives $p$ at $w$, i.e. $R^{(n)}\,w\,w$. $\square$
+
+**Corollary 6.3.** *$\mathrm{IS}_1(w)$ iff $R\,w\,w$: the case $n=1$ is Theorem 3.2.*
+
+**Proposition 6.4 (Degrees form a monoid).** *$\mathrm{IS}_0(w)$ always holds, and $\mathrm{IS}_m(w)\wedge \mathrm{IS}_n(w) \Rightarrow \mathrm{IS}_{m+n}(w)$. Hence the *soundness spectrum* $D(w) := \{ n : \mathrm{IS}_n(w)\}$ is a submonoid of $(\mathbb{N},+)$.*
+
+*Proof.* Degree $0$ is the tautology $\varphi\to\varphi$. For addition, concatenate a closed $m$-walk with a closed $n$-walk at $w$ to obtain a closed $(m+n)$-walk, then apply Theorem 6.2 in both directions. $\square$
+
+### 6.2 Every positive degree is tangled
+
+**Lemma 6.5.** *If $n>0$ and $R^{(n)}\,u\,v$ then $u\,R^{+}\,v$ in the transitive closure of $R$.*
+
+**Theorem 6.6.** *If $\mathrm{IS}_n(w)$ for some $n\ge 1$, then the transitive closure of $R$ is tangled and admits no natural-number grading.*
+
+*Proof.* Theorem 6.2 gives a closed walk of positive length at $w$; Lemma 6.5 turns it into a self-loop of the transitive closure. $\square$
+
+**Lemma 6.7.** *On a transitive frame, $R^{(n)}\,u\,v$ with $n\ge 1$ implies $R\,u\,v$.*
+
+**Theorem 6.8 (No degree on a provability frame).** *For every provability frame $M$, every $n\ge 1$ and every world $w$: $\neg\,\mathrm{IS}_n(w)$.*
+
+*Proof.* Theorem 6.2 and Lemma 6.7 give $R\,w\,w$, contradicting irreflexivity. $\square$
+
+Delay does not buy escape: a well-founded provability system cannot internalise soundness even after arbitrarily many boxes.
+
+### 6.3 Realising the spectrum: cycle frames
+
+**Definition 6.9.** The **cycle frame** $C_n$ has worlds $\mathbb{Z}/n\mathbb{Z}$ and $R\,i\,j \iff j = i+1$.
+
+**Lemma 6.10.** *In $C_n$, $R^{(k)}\,i\,j \iff j = i + k \pmod n$.*
+
+**Theorem 6.11 (Degree exactly $n$).** *For $n\ge 2$ the frame $C_n$ satisfies:*
+1. *every world validates $\Box^{n}\varphi\to\varphi$;*
+2. *no world validates $\Box^{k}\varphi\to\varphi$ for any $0<k<n$;*
+3. *no world accesses itself;*
+4. *the transitive closure of its accessibility relation is nevertheless tangled.*
+
+*Proof sketch.* (1) $i+n \equiv i$. (2) By Theorem 6.2 and Lemma 6.10, $\mathrm{IS}_k(i)$ would give $k\equiv 0 \bmod n$, i.e. $n\mid k$, impossible for $0<k<n$. (3) is (2) with $k=1$. (4) is Theorem 6.6 applied with $n$. $\square$
+
+So internal soundness comes in a strictly increasing hierarchy of *tangle lengths*. A system can internalise a **delayed** soundness principle — "what I prove that I prove that I prove … is true" — with no world referring to itself in a single step. The self-reference is genuinely spread across $n$ distinct levels; what cannot be spread away is the closed walk itself.
+
+By Proposition 6.4 the spectra $D(w)$ are submonoids of $(\mathbb{N},+)$, and cycle frames realise precisely the principal submonoids $n\mathbb{N}$.
+
+---
+
+## 7. Where the boundary lies: consistency is free
+
+### 7.1 Consistency is seriality
+
+**Theorem 7.1.** *For every frame, valuation and world: $w\models \mathrm{Con}$ (that is, $w \models \neg\Box\bot$) iff $w$ has at least one successor. In particular internal consistency does not depend on the valuation.*
+
+*Proof.* $w\models\Box\bot$ iff $w$ has no successors, since $\bot$ holds nowhere. $\square$
+
+**Definition 7.2.** The **two-chain** is the frame with worlds $\{t,f\}$ and the single edge $t \to f$.
+
+**Theorem 7.3 (Consistency costs nothing).** *The two-chain is loop-free and converse well founded — a bona fide well-founded hierarchy — yet its world $t$ satisfies $\mathrm{Con}$ under every valuation. And $t$ is not internally sound, not even atomically.*
+
+*Proof.* $t$ has the successor $f$, so Theorem 7.1 applies. Internal soundness would force $R\,t\,t$ by Theorem 3.2. $\square$
+
+**Corollary 7.4 (The precise Gödel boundary).** *Internal consistency is compatible with a converse-well-founded, loop-free frame; internal soundness of any positive degree is not (Theorem 6.8). The jump from untangled to tangled happens exactly at reflection.*
+
+### 7.2 Finite semantics of a self-consistent system must tangle
+
+Now move up one level, from a world to a *system* asserting its own consistency.
+
+**Definition 7.5.** A **modal proof system** is a set $\mathrm{Thm}$ of formulas closed under modus ponens ($\mathrm{Thm}(\varphi\to\psi)$ and $\mathrm{Thm}(\varphi)$ give $\mathrm{Thm}(\psi)$) and necessitation ($\mathrm{Thm}(\varphi)$ gives $\mathrm{Thm}(\Box\varphi)$). Nothing else is assumed, so each result below isolates exactly which principle causes a collapse. It is **consistent** if $\bot\notin\mathrm{Thm}$; it is **frame-sound for $F$** if every theorem holds at every world of $F$ under every valuation.
+
+**Theorem 7.6.** *If $S$ proves $\mathrm{Con}$ and $F$ is frame-sound for $S$, then $F$ is serial: every world has a successor. Consequently, if $F$ is also converse well founded then $F$ is empty; in particular no nonempty provability frame is sound for a system that proves its own consistency.*
+
+*Proof.* Seriality is Theorem 7.1 applied at each world. A converse-well-founded serial frame would have a maximal world with a successor — impossible. $\square$
+
+**Lemma 7.7 (Finite + serial $\Rightarrow$ cyclic).** *A finite nonempty serial frame contains a world lying on a cycle of its transitive closure.*
+
+*Proof sketch.* Choose a successor function $f$ and iterate from any world; by finiteness $f^{i}(w) = f^{j}(w)$ for some $i<j$, and the segment between them is a closed walk of positive length. $\square$
+
+**Theorem 7.8 (Unavoidability of the tangle, finite case).** *Every finite nonempty frame that is sound for a proof system asserting its own consistency has a tangled transitive closure, and hence admits no natural-number grading of its reference graph.*
+
+**Theorem 7.9 (Sharpness).** *Finiteness cannot be dropped: the $\omega$-chain $0\to 1\to 2\to\cdots$ is serial and completely loop-free — even in its transitive closure — so an infinite untangled semantics for a self-consistent system does exist.*
+
+The tangle is thus forced by *finiteness plus self-consistency*, not by self-consistency alone. Infinity is the only legitimate way to be self-consistent without tangling.
+
+---
+
+## 8. Proof systems: the trichotomy
+
+### 8.1 Löb's rule and the impossibility
+
+**Definition 8.1.** A system $S$ **proves the Löb axiom** if $\mathrm{Loeb}(\varphi)\in\mathrm{Thm}$ for all $\varphi$; it **contains its own soundness predicate** if $\mathrm{Refl}(\varphi)\in\mathrm{Thm}$ for all $\varphi$.
+
+**Theorem 8.2 (Löb's rule).** *In a system proving the Löb axiom, if $\Box\varphi\to\varphi$ is a theorem then so is $\varphi$.*
+
+*Proof.* From $\mathrm{Thm}(\Box\varphi\to\varphi)$, necessitation gives $\mathrm{Thm}(\Box(\Box\varphi\to\varphi))$; the Löb axiom and modus ponens give $\mathrm{Thm}(\Box\varphi)$; the hypothesis and modus ponens give $\mathrm{Thm}(\varphi)$. $\square$
+
+**Theorem 8.3.** *A system that proves the Löb axiom and contains its own soundness predicate is inconsistent.*
+
+*Proof.* Apply Theorem 8.2 with $\varphi=\bot$: the reflection instance $\Box\bot\to\bot$ is a theorem, hence so is $\bot$. $\square$
+
+**Corollary 8.4 (Second incompleteness, modally).** *A consistent Löbian system proves neither its own consistency statement $\mathrm{Con}$ nor any complete soundness schema. Conversely, a consistent system containing its own soundness predicate cannot be Löbian.*
+
+*Proof.* $\mathrm{Con} = \Box\bot\to\bot$ is exactly the reflection instance for $\bot$, and Theorem 8.2 with $\varphi=\bot$ turns it into $\bot$. $\square$
+
+### 8.2 Two concrete systems
+
+**The well-founded system.** Let $\mathrm{GL}$-validity be the system whose theorems are the formulas valid at every world of every provability frame under every valuation. It is closed under modus ponens and necessitation, it is Löbian (Löb's axiom is valid on exactly these frames), and it is consistent (witness: the one-point irreflexive frame, at whose world $\bot$ fails). By Corollary 8.4 it does **not** contain its own soundness predicate and does **not** prove $\mathrm{Con}$.
+
+**The tangled system.** Let the **tangled system** have as theorems the formulas true, under every valuation, at the world of the one-point *reflexive* frame (a single world accessing itself). It is closed under modus ponens and necessitation. Because the world is self-accessing, Lemma 3.1 shows the system proves every instance of $\Box\varphi\to\varphi$; it proves $\mathrm{Con}$ (the instance at $\bot$); and it is consistent (take the valuation making everything false). By Theorem 8.3 it must **refute** the Löb axiom.
+
+### 8.3 The trichotomy
+
+**Theorem 8.5 (Trichotomy).** *For every propositional signature:*
+1. *the $\mathrm{GL}$-validity system is consistent, proves every instance of the Löb axiom, and does not contain its own soundness predicate;*
+2. *the tangled system is consistent, contains its own soundness predicate (and proves its own consistency statement), and does not prove the Löb axiom;*
+3. *no modal proof system whatsoever is simultaneously consistent, Löbian, and in possession of its own soundness predicate.*
+
+Hence: **a proof system that reasons about its own soundness or consistency is necessarily tangled** — it cannot carry the well-founded Löbian provability discipline — and conversely the well-founded systems are exactly those that must leave their own soundness outside.
+
+**Complement (a genuine internal soundness predicate).** Tangling is not the only phenomenon available; a frame can also carry, non-vacuously, an atom naming its *own* soundness set. On the two-world frame $\{f,t\}$ in which both worlds access $t$ and only $t$, put $V(s) := \{t\}$: then $s$ holds at exactly those worlds that are sound relative to $V$, so $s$ is a genuine modal fixed point, and it is non-vacuous — $t$ is sound, $f$ is not. If instead a system *asserts* such a predicate at every world, then every world must have a successor, and by Theorem 7.6 a converse-well-founded frame realising this is empty. Naming your soundness is safe; asserting it everywhere is not.
+
+---
+
+## 9. Algorithms
+
+All the structural facts above are decidable on finite frames, by design: the modal statements have been converted into reachability statements.
+
+**Algorithm A (Soundness spectrum of a world).** Given a finite frame $(W,R)$ with $|W| = N$ and a world $w$, compute $D(w) \cap [0,K]$, i.e. the set of degrees $n\le K$ with $\mathrm{IS}_n(w)$. By Theorem 6.2 this is just $\{ n \le K : R^{(n)}\,w\,w\}$. Iterating the frontier $S_{n+1} = R[S_n]$ from $S_0 = \{w\}$ costs $O(K\cdot |R|)$ time and $O(N)$ space, versus the hopeless direct approach of quantifying over all valuations and all formulas.
+
+**Algorithm B (Sound-world census and tangle test).** Compute $\{w : \mathrm{IS}_1(w)\} = \{w : R\,w\,w\}$ in $O(N)$; compute the transitive closure (e.g. by repeated reachability, $O(N\cdot|R|)$) and report tangledness as the existence of a diagonal entry. By Theorem 4.1 a non-empty answer certifies that no natural-number grading exists; when the answer is empty, a grading can be produced by topological sort in $O(N+|R|)$, which is precisely the well-founded stratified case.
+
+**Algorithm C (Reflection tower simulation).** Given an irreflexive $F$, construct $F^{(n)}$ by $n$ applications of the soundness extension, each adding one world with edges to everything including itself. The loop count at stage $n$ is exactly $n$ (Theorem 5.6) and at least one world remains unsound (Theorem 5.7); both are verified in $O(N+n)$ per stage. This is the computational form of "stratification never converges."
+
+---
+
+## 10. Discussion
+
+### 10.1 What has been isolated
+
+The classical statements — Tarski, Gödel 2, Löb — say that self-certification is impossible *within* a well-founded system. The results here say something more finely grained, and arguably more useful:
+
+* **Self-certification is a graph property.** Uniform internal soundness of degree $n$ is *identical* to lying on a closed walk of length $n$. Every semantic question about internalised soundness reduces to reachability.
+* **It has no weak fragments, only slow ones.** Atomic reflection already yields the whole schema (Theorem 3.4); but $n$-fold reflection genuinely stratifies into a strictly increasing hierarchy of degrees realised by cycle frames (Theorem 6.11).
+* **It is conservative where it matters.** The minimal tangling of a hierarchy changes no truth of the original hierarchy (Theorem 5.2), costs exactly one loop, and yields exactly one sound world (Theorem 5.3).
+* **It cannot be reached by stratification.** Every finite stage of the reflection tower has an unsound world (Theorem 5.7).
+* **It is a property of soundness, not coherence.** Consistency is seriality and is free on well-founded frames (Theorem 7.3); it becomes tangling only in the presence of finiteness (Theorems 7.8, 7.9).
+
+### 10.2 The topological reading
+
+Theorem 4.6 says the S4/interior semantics of $\Box$ — familiar from topological semantics of modal logic, where $\Box$ is interior — is *equivalent* to universal internal soundness plus transitivity. So the choice between "provability" and "interior" readings of the same symbol is exactly the choice between well-foundedness and self-trust. There is no frame on which both readings are available and the frame is nonempty (Corollary 4.7).
+
+### 10.3 Applications and analogies
+
+The formal content transfers wherever a structure certifies its own outputs.
+
+* **Verified toolchains.** A verifier that verifies verifiers, and finally itself, must include itself in its own scope of quantification. The results say: this is achievable, it is conservative over the previously verified components, and it costs exactly one non-well-founded edge — but no finite tower of "meta-verifiers" achieves it, because each stage still has an uncertified top.
+* **Reflective agents.** An agent whose model of its own reliability is asserted at every state must be serial (it always sees a next state), and if its state space is finite it must be cyclic: a finite self-trusting agent necessarily revisits its own vantage point.
+* **Institutional self-amendment.** A constitution authorising its own amendment is a top world seeing itself. The conservation theorem is the formal counterpart of the observation that self-amendment need not disturb any existing law.
+
+### 10.4 Limits of the analysis
+
+The framework is deliberately austere: propositional modal language, no arithmetic, no coding. The results are therefore statements about *reference structure*, not about arithmetical strength; they explain what shape self-reference must take, not what it can compute. Bridging to arithmetised provability (where $\Box$ is a genuine proof predicate and the correspondence with frames is Solovay's theorem) is a natural next step, and would turn the frame-level costing above into a costing in terms of theories and reflection principles.
+
+---
+
+## 11. Future work
+
+1. **The soundness-degree monoid.** We have shown $D(w) = \{n : \mathrm{IS}_n(w)\}$ is a submonoid of $(\mathbb{N},+)$ containing $0$, equal to $\{0\}$ exactly when $w$ lies on no cycle, and that cycle frames realise the principal submonoids $n\mathbb{N}$. Conjecture: *every* submonoid of $(\mathbb{N},+)$ arises as $D(w)$, so "how self-sound a world is" is a complete numerical-semigroup invariant. The realisation half needs only a wedge of cycles of prescribed lengths glued at a common world.
+2. **Global conservativity.** Theorem 5.2 gives conservativity for truth at old worlds. Conjecture: the soundness extension is conservative for *global consequence*, and the same holds for the direct limit of the reflection tower. This would upgrade "the cost is one loop" to "the cost is nothing for the old theory".
+3. **A topological trichotomy.** Classify frames by whether the box operator is the interior operator, is merely a monotone operator with $\Box X\subseteq X$ failing everywhere (the provability case), or lies strictly between; Theorem 4.6 pins the two extremes and the intermediate class is unexplored.
+4. **Degrees beyond $\omega$.** Transfinite iterations of the reflection tower, and reflection principles indexed by ordinals, should produce an ordinal-valued analogue of the soundness spectrum.
+5. **Arithmetical realisation.** Identify which of these frame phenomena are realised by concrete theories with concrete reflection principles, via the arithmetical completeness theory of provability logic.
+
+---
+
+## 12. Conclusion
+
+Internalised soundness is not a subtle syntactic condition; it is a loop, and only a loop. A world trusts itself exactly when it sees itself; it trusts itself with an $n$-step delay exactly when it lies on a closed walk of $n$ steps. This one identification converts the whole subject into graph theory, and every structural consequence follows: no levels, no ordinal ranks, no Löb induction, no coexistence with the well-founded provability discipline, no non-trivial safe fragment, and no convergence of stratification. In compensation, the loop is cheap and clean — one edge, one world, no disturbance to any pre-existing truth — and it is the price of *soundness* alone: mere self-declared consistency remains free on well-founded frames, and becomes unavoidable only when the world of the system is finite.
+
+Tangled hierarchies, in short, are neither pathologies nor accidents. They are the exact and minimal shape that self-certification must take.

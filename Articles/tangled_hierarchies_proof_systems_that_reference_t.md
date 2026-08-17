@@ -1,117 +1,106 @@
-# Tangled Hierarchies: When a Proof System Tries to Trust Itself
+# Tangled Hierarchies: What Happens When a System Trusts Itself
 
-## A promise you cannot keep
+## The loop you can't unloop
 
-Imagine a mathematician of boundless energy and perfect discipline. She never makes a mistake, she never tires, and she is willing to check any argument you hand her, no matter how long. One day you ask her the most natural question in the world:
+There is an old and comfortable picture of how careful reasoning is supposed to work. At the bottom sits the object level: statements about numbers, sets, machines. Above it sits the metalevel: statements about the object level — "that proof is valid", "this theory is consistent". Above that sits the meta-metalevel, and so on upward, each floor commenting on the floor below and never on itself. The picture is comfortable because it is well founded: every chain of "is about" relations terminates. Nothing ever comes back around.
 
-> "Are you sure you never contradict yourself?"
+The trouble is that we constantly want to say something the picture forbids. We want a system to certify *itself* — to contain, as one of its own theorems, the statement *whatever I prove is true*. Call this the **reflection schema**, written
+$$\Box\varphi \to \varphi,$$
+where $\Box\varphi$ reads "$\varphi$ is provable". It is the most natural thing in the world to believe about a system you trust. It is also, as we will see, exactly the thing that snaps the well-founded picture.
 
-You would like her to answer *yes* — and, crucially, to **prove** it, using only the very rules she already trusts. This sounds like the safest possible request. After all, if she is reliable, surely she can certify her own reliability.
+This article is about a precise answer to the question: *what does internalised self-trust cost, and can you avoid paying?* The answer, in one line: **self-trust is a loop, exactly one loop, and no amount of clever restructuring will remove it.**
 
-She cannot. And the reason is not a failure of cleverness or effort. It is a structural law, as unavoidable as the impossibility of a map of a city that fits inside the city and shows every street including itself at full size. Any system powerful enough to talk about its own reasoning is forbidden — on pain of collapse — from proving its own trustworthiness from the inside.
+## Worlds, arrows, and the meaning of $\Box$
 
-This is the phenomenon of the **tangled hierarchy**: the moment a proof system's certificate of soundness is allowed to live *inside* the system it is supposed to certify, the whole edifice either says nothing new or says everything, including falsehoods. The soundness stamp must always come from outside.
+To make this exact, replace the informal hierarchy by a **frame**: a collection of *worlds* $W$ together with an *accessibility* relation $R$. Read $R\,w\,v$ as "from vantage point $w$, the state of affairs $v$ is a live possibility" — or, in the reading that matters here, "the system at level $w$ quantifies over level $v$ when it says 'provable'." A **valuation** assigns to each atomic proposition the set of worlds where it holds, and truth of compound formulas is defined as usual, with the crucial clause
+$$w \models \Box\varphi \quad\text{iff}\quad \varphi \text{ holds at every } v \text{ with } R\,w\,v .$$
+So $\Box\varphi$ at $w$ means: $\varphi$ survives everywhere the system at $w$ can see.
 
-This article tells the story of why, and shows that the whole drama can be captured in a handful of clean, provable statements about a simple geometric picture.
+The well-founded picture is the class of **provability frames**: transitive, with no infinite ascending chains of arrows (equivalently, converse well-founded). These are the frames of the logic of provability, the ones that validate Löb's axiom
+$$\Box(\Box\varphi\to\varphi)\to\Box\varphi$$
+— the modal fingerprint of Gödel's incompleteness phenomena. Provability frames are the mathematics of stratification done right: they are irreflexive, so no world sees itself, and every ascent terminates.
 
-## Provability as a landscape
+Now say a world $w$ is **internally sound** if *every* instance of reflection holds there, for every formula and under every valuation: whatever the system at $w$ certifies as provable really is the case.
 
-To make the idea precise, we replace the tireless mathematician with a **landscape of theories**. Picture a vast collection of possible "states of knowledge," which we call **worlds**. From each world $w$ there are arrows pointing to other worlds. Write $R\,w\,v$ when there is an arrow from $w$ to $v$, and read it as:
+## Theorem 1: soundness *is* the loop
 
-> "From the standpoint of $w$, the world $v$ is one of the situations that $w$ regards as provably reachable."
+**Soundness = Tangle Theorem.** *A world $w$ of a frame is internally sound if and only if $w$ accesses itself: $R\,w\,w$.*
 
-This little arrow relation $R$ is the entire engine of the theory. Everything about provability, consistency, and self-reference is going to be expressed in terms of it.
+Both directions are two lines, and both are illuminating. If $w$ sees itself, then $\Box\varphi$ at $w$ says "$\varphi$ holds at all worlds $w$ sees", and $w$ is one of them — so $\varphi$ holds at $w$. Self-reference gives you self-trust for free.
 
-We now introduce a single operator, the **box**, written $\Box$. For any property $A$ of worlds, the property $\Box A$ holds at a world $w$ exactly when *every* world you can reach from $w$ by an arrow satisfies $A$:
+The converse is the surprising one, and it is proved by a *diagonal valuation*. Suppose $w$ is internally sound. Pick an atom $p$ and interpret it as the set of worlds $w$ can see: $p$ is true at $v$ precisely when $R\,w\,v$. Then $\Box p$ holds at $w$ trivially — by construction $p$ is true at everything $w$ sees. Internal soundness then forces $p$ itself to be true at $w$, that is, $R\,w\,w$. The system's own trust in itself, applied to a proposition that names the system's field of vision, folds the field of vision back onto its centre.
 
-$$w \in \Box A \quad\text{means}\quad \text{for all } v,\ R\,w\,v \ \Rightarrow\ v \in A.$$
+This is Hofstadter's *strange loop* made into a theorem, and it is unforgiving in both directions.
 
-The reading is deliberate: $\Box A$ means "**$A$ is provable**." A theory proves $A$ if $A$ holds in every situation the theory can see. The mirror image is the **diamond**, $\Diamond A$, meaning "$A$ is *consistent* with the theory": there exists at least one reachable world where $A$ holds.
+## Theorem 2: you cannot buy a smaller version
 
-The single most important property in the whole story is **consistency itself**. A theory is consistent precisely when it does not prove absurdity — equivalently, when it has *somewhere to go*. We define
+You might hope to keep a weak, harmless fragment of self-trust: trust yourself only about atomic facts, not about complicated compound claims. Nothing doing.
 
-$$\mathrm{Con} \;=\; \{\,w \mid \text{there exists } v \text{ with } R\,w\,v\,\}.$$
+**Atomic Reflection Theorem.** *If a world validates $\Box p\to p$ for propositional variables $p$ alone — under every valuation — then it validates the full reflection schema for every formula whatsoever.*
 
-A world is consistent exactly when it has at least one outgoing arrow. A world with no arrows at all is a dead end: vacuously, *every* property holds "at all reachable worlds" (there are none), so such a world proves everything — it is the picture of an inconsistent theory, one from which any falsehood follows.
+The diagonal valuation above only ever used an atom, so the weakest fragment already produces the loop, and the loop produces everything. There is no non-trivial safe fragment of soundness. Self-trust is all or nothing.
 
-## The two rules of a well-behaved landscape
+## Theorem 3: what the loop destroys
 
-Not every arrow-diagram deserves to be called a proof system. Genuine provability obeys two structural laws, and these two laws are the whole secret.
+Once a frame contains one internally sound world, several structural goods vanish at once, and not by a little.
 
-**Rule 1: Transitivity.** If $w$ can reach $v$, and $v$ can reach $u$, then $w$ can reach $u$ directly. In logical terms this is the principle that "if something is provable, then it is provable that it is provable" — the system has insight into its own reasoning.
+*Levels vanish.* There is no function assigning each world a natural-number "level" that strictly increases along arrows — indeed no assignment into any well-founded order that strictly decreases along arrows, ordinals included. A self-loop would have to have a level below itself. The tidy floor plan of object level, metalevel, meta-metalevel simply cannot be drawn.
 
-**Rule 2: No infinite ascent.** There is no endless chain of worlds $w_1, w_2, w_3, \dots$ each reachable from the one before, climbing forever. Formally, the arrow relation is **converse well-founded**: every nonempty collection of worlds contains a world that is, in the relevant sense, maximal. Intuitively, proofs bottom out; you cannot postpone justification forever.
+*Löb induction vanishes.* The box operator acts on sets of worlds: $\Box X$ is the set of worlds all of whose successors lie in $X$. Its least fixed point $\mu X.\,\Box X$ is exactly the well-founded part of the frame, and it equals the whole frame precisely when the frame is converse well founded. This is Löb's theorem in set form: "everything follows by induction on the accessibility relation" is *equivalent* to well-foundedness. An internally sound world lies outside that least fixed point, permanently beyond the reach of any Löb-style induction.
 
-A landscape satisfying both rules is what we will call a **Gödel–Löb frame**, after the two logicians whose theorems it encodes. These two innocuous-looking conditions turn out to be *exactly* the ones that make self-reference collapse in a controlled, predictable way.
+*Coexistence vanishes.* A world validating every instance of Löb's axiom must be irreflexive, and so no world can be both internally sound and Löbian. A frame validating both schemas everywhere has no worlds at all. That is the semantic shadow of Gödel's second incompleteness theorem: a well-founded provability discipline and internalised soundness are jointly unsatisfiable, not merely jointly unproven.
 
-And such frames genuinely exist, with infinitely many worlds. The cleanest example is the natural numbers $0, 1, 2, 3, \dots$ with the arrow rule "$w$ can reach $v$ when $v < w$." From $5$ you can reach $4, 3, 2, 1, 0$. This relation is transitive (if $c<b$ and $b<a$ then $c<a$) and it never ascends forever (you cannot keep going to strictly smaller natural numbers indefinitely — you hit $0$). Here $0$ is the unique dead end: it has no smaller number to point to, so $0$ is inconsistent, while every positive number is consistent.
+The same story at the level of proof systems is even blunter. Consider any system of modal theorems closed under modus ponens and necessitation. **Löb's rule** says that in a system proving Löb's axiom, proving *an instance* of your own soundness already gets you the conclusion: from $\Box\varphi\to\varphi$ as a theorem, necessitation gives $\Box(\Box\varphi\to\varphi)$, Löb's axiom gives $\Box\varphi$, and reflection gives $\varphi$. Apply this with $\varphi=\bot$: a Löbian system that proves its own soundness schema proves falsehood. Contrapositively, a consistent Löbian system can neither prove its own soundness nor prove its own consistency statement $\neg\Box\bot$ — Gödel's second theorem in three lines.
 
-## Löb's astonishing shortcut
+## Theorem 4: the cost is exactly one loop
 
-Now comes the pivotal theorem, and it is genuinely surprising the first time you meet it.
+So far the news is negative. Here is the positive half, and it is the reason "tangled hierarchy" is not a synonym for "collapse".
 
-Consider a world that proves a certain modest-sounding statement: *"if $A$ is provable, then $A$ is actually true."* This is a statement of **self-trust restricted to $A$** — the system is willing to certify that its own proofs of $A$ are reliable. In symbols, the world satisfies $\Box(\Box A \to A)$.
+Given any frame $F$, build its **soundness extension** by adjoining a single new world at the top which sees every old world *and itself*. This new world is the system that reasons about $F$ while remaining inside the picture.
 
-You might expect this self-trust to be nearly free — a harmless expression of confidence. Löb's theorem says something far stronger:
+**Conservation Theorem.** *The old worlds form a generated submodel: every formula has exactly the same truth value at every old world before and after the extension. The new top world is internally sound. If the base frame was irreflexive, the extension has exactly one self-loop and exactly one internally sound world.*
 
-> **The Semantic Löb Theorem.** In any Gödel–Löb frame, $\Box(\Box A \to A) \subseteq \Box A$. That is, if a world proves "provability of $A$ entails $A$," then that world *already proves $A$ outright.*
+So the tangle is real but surgically local. The old hierarchy notices nothing: all of its truths are untouched. Every provability frame — every well-founded stratification — embeds truth-preservingly into a frame with a unique self-trusting world at the top. Hofstadter's intuition that a strange loop need not corrupt the levels beneath it is here a theorem.
 
-In words: **the only statements a system can safely trust itself about are the ones it can already prove unconditionally.** Self-trust buys you nothing you did not already have. The conditional confidence "if I could prove $A$, then $A$ would hold" silently upgrades itself into the flat assertion "$A$."
+What if you try to escape upwards, adding a new certifying level each time? Iterate the extension: stage $n+1$ reasons about, and validates the soundness of, stage $n$. Then **stage $n$ has exactly $n$ self-loops and exactly $n$ internally sound worlds**, and — over any nonempty irreflexive base — **some world at every stage is still not internally sound**. Stratification never converges. Each reflection step buys exactly one loop's worth of self-trust, and never buys the last one.
 
-Why is this true? Here is the heart of the argument, and it uses Rule 2 in an essential way. Suppose, for contradiction, that some reachable world fails to satisfy $A$. Among all the reachable worlds where $A$ fails, the no-infinite-ascent rule guarantees we can pick a **maximal** offender $u$: a world where $A$ fails, but from which *every* further reachable world *does* satisfy $A$. By transitivity, everything $u$ can reach is also reachable from the start, so all of those worlds satisfy $A$ — which means $u$ satisfies $\Box A$. But our starting hypothesis was that "$\Box A \to A$" holds everywhere reachable, and in particular at $u$. So $u$ satisfies $\Box A \to A$, and since it satisfies $\Box A$, it must satisfy $A$. That contradicts $u$ being an offender. No offenders can exist; $A$ holds everywhere reachable; the world proves $A$. The maximal-offender trick is precisely where converse well-foundedness earns its keep.
+## Theorem 5: how weak can self-trust be? A spectrum
 
-## Consistency is the forbidden fixed point
+If you cannot weaken the schema, perhaps you can *delay* it. Instead of "what I prove is true", assert "what I prove, that I prove, that I prove … ($n$ times) … is true":
+$$\Box^n\varphi\to\varphi .$$
 
-Here is where the pieces snap together with a click.
+**Spectrum Theorem.** *A world validates the $n$-fold reflection principle, uniformly in the valuation, if and only if it lies on a closed walk of exactly $n$ steps.* For $n=1$ this is the self-loop of Theorem 1.
 
-Recall that a world is consistent exactly when it has a successor — when it is *not* a dead end. Now look closely at the statement "if $\bot$ (absurdity) is provable, then $\bot$ is true," where $\bot$ stands for the empty property that no world satisfies. Unwinding the definitions, this self-trust statement about $\bot$ turns out to be **literally identical** to the assertion "this world is consistent." Trusting yourself not to prove falsehood *is the same thing* as being consistent. In our landscape this is an exact equation:
+This calibrates the phenomenon perfectly, because every point of the spectrum is realised. Take the **cycle frame** on $n$ worlds $0,1,\dots,n-1$, each accessing the next and the last accessing the first. For $n\ge 2$ it has *no self-loops at all* — no world sees itself in one step — and yet every world validates $\Box^n\varphi\to\varphi$, while refuting $\Box^k\varphi\to\varphi$ for every $0<k<n$. Delayed self-trust genuinely exists, comes in strictly increasing degrees, and each degree is strictly stronger than nothing and incomparable with the smaller ones.
 
-$$\{\,w \mid w \in \Box\bot \to w \in \bot\,\} \;=\; \mathrm{Con}.$$
+But delay is not escape. Every degree of internal soundness still tangles the reference graph: a closed walk of any positive length is a loop in the transitive closure, so there is still no level function, still no well-founded rank. And on a provability frame — transitive and converse well founded — *no* degree is available at any world: transitivity collapses a closed walk to a self-loop, and irreflexivity forbids it. You can spread the loop out over $n$ levels; you cannot make it disappear.
 
-Feed this identity into Löb's theorem, taking $A = \bot$. Löb says $\Box(\Box\bot \to \bot) \subseteq \Box\bot$. Rewriting the left side using the identity above, we get the semantic form of one of the most famous results in all of mathematics:
+There is also a pleasant arithmetic to this. The set of degrees a world enjoys always contains $0$ and is closed under addition — walks concatenate — so "how self-sound a world is" is measured by a submonoid of the natural numbers.
 
-> **Gödel's Second Incompleteness Theorem.** In any Gödel–Löb frame, $\Box\,\mathrm{Con} \subseteq \Box\bot$. A world that **proves its own consistency proves absurdity** — and therefore proves everything.
+## Theorem 6: where the boundary really lies
 
-The stamp "I am consistent" is toxic. Any system that manages to prove it, from the inside, has thereby proven falsehood and collapsed into the trivial system that asserts all statements indiscriminately.
+Is *all* self-reference this expensive? No, and the boundary is sharp.
 
-## The tangled hierarchy theorem
+Internal **consistency** — the statement $\neg\Box\bot$, "I do not prove falsehood" — holds at a world exactly when that world has at least one successor. That is *seriality*, and seriality is cheap. The two-world chain $t \to f$ is loop-free, converse well founded, an entirely respectable well-founded hierarchy, and the world $t$ asserts its own consistency under every valuation. The same world is not internally sound, not even atomically.
 
-From here, the punchline is immediate and sharp:
+**Consistency costs nothing; reflection costs a loop.** That is the precise frame-theoretic location of the Gödel phenomenon: the jump from harmless to tangled happens exactly at reflection.
 
-> **The Tangled Hierarchy Theorem.** No *consistent* world can prove its own consistency. If a world has any successor at all — that is, if it is genuinely consistent — then it does **not** satisfy $\Box\,\mathrm{Con}$.
+There is a beautiful finite caveat. If a *proof system* actually proves its own consistency, then every frame validating that system is serial — and a finite nonempty serial frame must contain a cycle. So **every finite semantics for a self-consistent system is tangled**, with no level grading of any kind. Finiteness is essential: the infinite chain $0\to1\to2\to\cdots$ is serial and completely loop-free, even in its transitive closure. Infinity is the one legitimate way to be self-consistent without tangling, and it is exactly the escape route Gödel's theorem leaves open.
 
-The proof is a single clean step. Suppose a consistent world $w$ nevertheless proved its own consistency, $w \in \Box\,\mathrm{Con}$. By Gödel's Second Theorem this forces $w \in \Box\bot$: every world reachable from $w$ satisfies the impossible empty property. But $w$ is consistent, so it *has* a reachable world $v$ — and that $v$ would have to satisfy the impossible property. Contradiction. So no consistent world can carry its own consistency stamp.
+## A tale of two systems
 
-This is the tangled hierarchy made precise. The soundness predicate — the certificate that says "this system is trustworthy" — cannot be an internal citizen of the system. The instant you let it inside, one of two things happens: either the system is inconsistent (and its "proof" of consistency is worthless, a lie told by a system that proves everything), or the system is consistent (and then it simply cannot produce the proof at all). There is no third option in which a healthy system vouches for itself.
+The whole story can be compressed into two concrete proof systems and one impossibility.
 
-There is a consoling flip side, which the same framework delivers for free:
+The first is the system of formulas valid on all well-founded provability frames. It is consistent, it proves every instance of Löb's axiom — and it does not prove its own soundness schema, nor its own consistency statement. It is Gödel's world: disciplined, stratified, and permanently unable to vouch for itself.
 
-> **Soundness Forces Consistency.** If a world is even *locally* self-sound about absurdity — if at that world "$\Box\bot \to \bot$" holds — then the world is automatically consistent; it has a successor.
+The second is the system of formulas true at the single self-accessing world. It is consistent, it proves every instance of $\Box\varphi\to\varphi$, and it proves $\neg\Box\bot$. It vouches for itself completely. Its price: it refutes Löb's axiom. It has abandoned the well-founded reading of its own provability operator.
 
-So reflection and consistency travel together: a world that refuses to be fooled by a proof of falsehood is thereby guaranteed to be a live, consistent theory. What it cannot do is turn that guarantee into an internal theorem about itself.
+And the impossibility: **no** modal proof system whatsoever, closed under modus ponens and necessitation, can be consistent while proving both its own soundness schema and Löb's axiom.
 
-## The diagonal at the bottom of it all
+There are exactly two coherent ways to be a system that talks about itself. You can be well founded, and silent about your own truth. Or you can be self-certifying, and tangled. The middle option — stratified *and* self-trusting — is not merely hard to build. It does not exist.
 
-Why does self-reference behave this way? Beneath Gödel, Löb, and the tangled hierarchy lies a single, breathtakingly general mechanism — the same one behind Cantor's proof that there are more real numbers than whole numbers, and behind the classic liar paradox. It is **Lawvere's fixed-point theorem**, and it can be stated in one sentence.
+## Why it matters beyond logic
 
-> **Lawvere's Fixed-Point Theorem.** Suppose a system is rich enough to *encode all of its own predicates*: there is a map $f$ that, from a single object $a$, produces a predicate $f(a)$, and every predicate whatsoever arises as $f(a)$ for some $a$ (the encoding is *surjective*). Then **every** transformation $g$ of truth-values has a fixed point — some value $b$ with $g(b) = b$.
+The mathematics here is about modal frames, but the shape of the result is not confined to them. Anywhere a structure is asked to certify its own outputs — a compiler that verifies compilers, a legal system whose constitution authorises its own amendment, a learning system that scores its own reliability, a mind modelling itself modelling the world — the same trade-off appears in the same place. Full internal certification requires the certifying vantage point to lie inside its own field of view. That loop is not a design flaw to be engineered away; it is what internal certification *is*.
 
-The proof is the diagonal argument in its purest form. Because the encoding is surjective, the specific "diagonal" predicate $a \mapsto g(f(a)(a))$ must itself be $f(c)$ for some code $c$. Evaluate at $c$: you find $f(c)(c) = g(f(c)(c))$, so the value $b = f(c)(c)$ is fixed by $g$. One line, and it powers a century of self-reference.
-
-Now turn it around. Truth-values come with a transformation that has **no** fixed point: **negation**, which swaps *true* and *false* and never leaves anything unchanged. If a system could encode all of its own true/false predicates by a surjective map, Lawvere's theorem would hand us a fixed point of negation — an impossibility. Therefore:
-
-> **Tarski's Undefinability of Truth (Cantor's Theorem).** No system can carry a surjective self-encoding onto its own true/false predicates. Truth is not definable inside the system; the collection of predicates is strictly richer than the objects that name them.
-
-This is the same wall, seen from a different angle. Whether you call it Cantor (there is no surjection from a set onto its power set), Tarski (no language can define its own truth predicate), Gödel (no consistent system proves its own consistency), or the tangled hierarchy (soundness cannot be internal), you are looking at one theorem wearing four costumes. The negation map has no fixed point, and everything else follows.
-
-## Why this matters beyond logic
-
-The tangled hierarchy is not a curiosity confined to the foundations of mathematics. It is a design law for anything that reasons about itself.
-
-Consider a **verification tool** meant to certify that programs are bug-free. Can it certify *itself*? Only from a stronger vantage point — a "meta" system that is not part of what it checks. Stack these vantage points and you get an unavoidable tower of ever-stronger certifiers, none of which can validate the level it occupies. That tower is the tangled hierarchy in engineering dress; it explains why bootstrapping "total self-trust" into a single system is impossible, and why real-world trust is always anchored in something external — a simpler kernel, a human auditor, a physical measurement.
-
-Consider **artificial agents** that model their own reliability. An agent that could internally prove "everything I conclude is correct" would, by the same theorem, be an agent that concludes *everything* — the very opposite of reliable. Genuine reliability shows up not as an internal certificate but as an external record, and as the humility of leaving one's own soundness unproven from within.
-
-And consider the ordinary human situation with which we began. The demand "prove, using only your own reasoning, that your reasoning never fails" is not merely hard; it is incoherent for any reasoner strong enough to pose it. The healthiest systems — mathematical, mechanical, or human — are precisely the ones that cannot vouch for themselves, and know it. Their consistency is real. It simply has to be certified from somewhere else.
-
-That is the strange gift hidden in these tangled hierarchies: the inability to prove your own soundness is not a bug in a reasoning system. It is a certificate, visible only from outside, that the system is alive.
+What the theorems add to the intuition is a costing. The loop can be added to any well-founded structure without disturbing a single one of its existing truths. It comes in degrees, spread over cycles of any length. It can never be reached by finitely many stratification steps. And it is the price of *soundness*, not of *consistency* — mere self-declared coherence remains free, so long as you are willing to be infinite.
