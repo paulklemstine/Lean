@@ -1,301 +1,303 @@
-# Computational evidence — NET-48 seed-ensemble rung theory
+# Why the Middle Number Wins
 
-All numbers below were computed in exact rational arithmetic (Python `fractions`) *before*
-the Lean proofs were written, and every claim they support is now a `sorry`-free theorem in
-`Catalog/Probability/`.  The Lean statements, not this file, are the certified artefacts.
-
-## 1.  The calibration table (coin-flip seeds, `p = 1/2`)
-
-`rungProb n m (1/2)` = probability that at least `m` of `n` coin-flip seeds pass.
-Rows `n = 1 … 8`, entries `m = 0 … n+1`:
-
-| `n` | rung values `m = 0,1,…,n+1` | rungs equal to `1/2` |
-|---|---|---|
-| 1 | 1, **1/2**, 0 | `m = 1` |
-| 2 | 1, 3/4, 1/4, 0 | none |
-| 3 | 1, 7/8, **1/2**, 1/8, 0 | `m = 2` |
-| 4 | 1, 15/16, 11/16, 5/16, 1/16, 0 | none |
-| 5 | 1, 31/32, 13/16, **1/2**, 3/16, 1/32, 0 | `m = 3` |
-| 6 | 1, 63/64, 57/64, 21/32, 11/32, 7/64, 1/64, 0 | none |
-| 7 | 1, 127/128, 15/16, 99/128, **1/2**, 29/128, 1/16, 1/128, 0 | `m = 4` |
-| 8 | 1, 255/256, 247/256, 219/256, 163/256, 93/256, 37/256, 9/256, 1/256, 0 | none |
-
-Observed pattern: a calibrated rung exists exactly for odd `n`, and then only at
-`m = (n+1)/2`.  Formalised as `SeedQuota.rungProb_half_eq_iff`,
-`SeedQuota.exists_calibrated_rung_iff_odd`, `SeedQuota.even_no_calibrated_rung`,
-`SeedQuota.calibrated_rung_unique`.
-
-**Counterexample hunt.**  All `n ≤ 200` and all `0 ≤ m ≤ n+1` were swept in exact
-arithmetic (testing `2·tailCount n m = 2^n`).  Zero anomalies: no even ensemble has a calibrated
-rung, and every odd ensemble has exactly one, at `2m = n+1`.
-
-## 2.  The calibration defect of an even ensemble
-
-`defect r = C(2r,r)/2^(2r+1)` — the distance of either central rung of a `2r`-seed ensemble
-from `1/2`.  Central binomial coefficients `C(2r,r) = 1, 2, 6, 20, 70, 252, 924, …` are
-OEIS **A000984**.
-
-| `r` | 0 | 1 | 2 | 3 | 4 | 5 | 6 |
-|---|---|---|---|---|---|---|---|
-| `defect r` | 1/2 | 1/4 | **3/16** | 5/32 | 35/256 | 63/512 | 231/2048 |
-| decimal | 0.5000 | 0.2500 | 0.1875 | 0.1563 | 0.1367 | 0.1230 | 0.1128 |
-
-Further out: `defect 10 = 0.0881`, `defect 50 = 0.0398`, `defect 200 = 0.0199` — the decay is
-visibly `~ r^{-1/2}` (halving `defect` needs quadrupling `r`).
-
-The four-seed defect `3/16` is exactly the offset of the measured pair `11/16, 5/16`;
-strict decrease and the `r^{-1/2}` decay are `SeedQuota.defect_strictAnti` and
-`SeedQuota.defect_tendsto_zero` (through `SeedQuota.centralBinom_sq_mul_le`, checked
-numerically for `0 ≤ r ≤ 2000`: `C(2r,r)^2 (3r+1) ≤ 16^r` holds throughout, with maximum
-ratio `1.0` attained at `r = 0`, so the constant `3` in `3r+1` cannot be improved at the
-base point).
-
-## 3.  The Condorcet ladder at the measured frequency `p = 2/3`
-
-`p = 2/3` is the NET-48 six-seed frequency of landing at or below the `7/8` budget.
-
-| ensemble `n = 2s+1` | 3 | 5 | 7 | 9 | 11 | 13 |
-|---|---|---|---|---|---|---|
-| median rung | 20/27 | 64/81 | 1808/2187 | 16832/19683 | 640/729 | 476416/531441 |
-| decimal | 0.7407 | 0.7901 | 0.8267 | 0.8552 | 0.8779 | 0.8965 |
-
-Strictly increasing, as `SeedCondorcet.condorcet_ladder_strict` requires; the three-seed
-value `20/27` reproduces `KneeAmplify.net48_amplification_example`.
-
-## 4.  The rate bound versus the true miss probability (`p = 2/3`)
-
-Bound: `2(1-p)(4p(1-p))^r = (2/3)·(8/9)^r`.
-
-| `r` | 1 | 5 | 10 | 20 | 35 | 36 |
-|---|---|---|---|---|---|---|
-| true `1 - rung` | 0.2593 | 0.1221 | 0.0557 | 0.0135 | 0.00185 | 0.00163 |
-| bound | 0.5926 | 0.3700 | 0.2053 | 0.0632 | 0.01080 | 0.00960 |
-| bound `≤ 1/100`? | no | no | no | no | **no** | **yes** |
-
-So the bound first certifies `1 %` at `r = 36`, i.e. `73` seeds
-(`SeedCondorcetRate.net48_seeds_for_one_percent`,
-`SeedCondorcetRate.net48_thirty_five_insufficient`).  The true miss probability reaches
-`1 %` already at `r = 23` (`n = 47` seeds), so the elementary bound costs roughly a factor
-`1.55` in seed count — an honest gap recorded in `FUTURE_DIRECTIONS.md` (conjecture C3).
-
-## 5.  Breakdown numbers (integer check)
-
-`breakdownNumber n m = min (m-1, n-m)`, the two-sided corruption tolerance of the `m`-th
-rung, computed for small ensembles:
-
-| `n \ m` | 1 | 2 | 3 | 4 | 5 |
-|---|---|---|---|---|---|
-| 3 | 0 | **1** | 0 | | |
-| 4 | 0 | 1 | 1 | 0 | |
-| 5 | 0 | 1 | **2** | 1 | 0 |
-
-Unique maximiser for odd `n` (at `2m = n+1`, the calibrated rung), two maximisers for even
-`n` — the integer shadow of the same parity obstruction
-(`SeedBreakdown.calibrated_iff_maximally_robust`, `SeedBreakdown.even_no_unique_centre`).
-
-## 6.  What the evidence does *not* show
-
-Nothing here validates the empirical `7/8`-median law itself; that law's status is the
-three-seed knee set `{160, 224, 256}` and its `ctx = 1024` counterpart `{96, 112, 128}`, as
-recorded in `Logic.KneeMedianLaw`.  This file's numbers concern only the *reading rule* — how
-a centre of a seed ensemble behaves as a statistic — which is what the planned fourth seed
-puts at stake.
+### A guided tour of quota ladders, breakdown numbers, and the theorem that makes "report the median" more than a convention
 
 ---
 
-# Cycle 3 evidence — the fourth seed, the ladder sum, the sharpened rate
+## 0. The question in one paragraph
 
-Same protocol: exact rational arithmetic first, Lean proofs after.  Every claim below is now
-a `sorry`-free theorem in `Catalog/Probability/`.
+You run the same experiment three times, changing only the random seed, and get three numbers:
+$160$, $224$, $256$. You must publish one number. Almost everyone picks the middle. This page is
+about what entitles us to that reflex — and about the moment where the reflex turns into a
+theorem with an exact statement, an exact proof, and an unwelcome consequence for anyone planning
+a fourth run.
 
-## 7.  The four-seed reading as a function of the fourth seed (closes C1)
+By the end you will be able to state, and to test with your own numbers, the following:
 
-Four-seed reading = mean of the two central order statistics of `{256, 224, 160, x}`
-(`quotaBudget` rungs 2 and 3 of `KneeQuota.knees16four`):
+> **The Calibration–Robustness Dichotomy.** In an ensemble of $n = 2r+1$ runs, a reading is
+> unbiased on maximally uninformative data **if and only if** it is maximally hard to sabotage.
+> Both properties hold for exactly one reading — the median — and for even $n$ both fail
+> together.
 
-| fourth seed `x` | ≤ 160 | 176 | 192 | 208 | **224** | 240 | 256 | ≥ 256 |
-|---|---|---|---|---|---|---|---|---|
-| reading | 192 | 200 | 208 | 216 | **224** | 232 | 240 | 240 |
-| bias from `224` | 32 | 24 | 16 | 8 | **0** | 8 | 16 | 16 |
+---
 
-A strict V with a unique zero at `x = 224`, half-step slope on both arms, flat at `32` below
-`160` and at `16` above `256`; `bias ≤ 16 ⟺ x ≥ 192`.  Formalised as
-`SeedFourMedian.bias_eq_zero_iff`, `bias_le_sixteen_iff`, `bias_eq_thirtytwo_iff`,
-`bias_strictAnti_low`, `bias_strictMono_high`.
+## 1. Where the numbers came from
 
-## 8.  The ladder sum and the generating function (closes C4)
+The measurement behind this theory is about attention sparsification. For a sequence model with
+width parameter $d$ and context length $L$, keep only the $k$ largest attention weights at each
+position and discard the rest. The **knee** is the least $k$ at which held-out quality is still
+preserved — the compression factor you can safely deploy.
 
-Partial ladder sums `∑_{r<R} gap(2/3, r)` (exact):
+Train the same model with a different seed and the knee moves. At $(d,L) = (4,2048)$ three seeds
+gave $\{160, 224, 256\}$; at $(d,L) = (4,1024)$ three others gave $\{96, 112, 128\}$. Writing
+$P = dL/32$ for the natural scale of the cell ($256$ and $128$ respectively), those sets are
+$$\{0.625P,\;0.875P,\;1.0P\} \qquad\text{and}\qquad \{0.75P,\;0.875P,\;1.0P\}.$$
+Individual knees are wildly noisy — the long-context spread is $60\%$ — yet **both medians are
+exactly $\tfrac78 P$**. Four sharp point predictions for the third long-context seed ($224$, $240$,
+$256$, $192$) were all refuted by the measured $160$; the prediction about the *centre* survived
+untouched.
 
-| `R` | 1 | 2 | 3 | 5 | 10 | 20 | → ∞ |
-|---|---|---|---|---|---|---|---|
-| partial sum | 2/27 | 0.1235 | 0.1600 | 0.2112 | 0.2776 | 0.3198 | **1/3** |
+That is the pattern this page explains.
 
-The limit is exactly `1 - p = 1/3` (`SeedLadderGF.tsum_gap`).  Substituting
-`p = (1+√(1-4x))/2` turns this into the central binomial identity
-`∑_{r≥0} C(2r+1,r) x^{r+1} = (1/2)(1/√(1-4x) - 1)` for `0 < x < 1/4`
-(`SeedLadderGF.hasSum_centralBinomOdd`); at the measured frequency `x = p(1-p) = 2/9` the
-series is exactly `1` (`SeedLadderGF.net48_generating_function`).  Coefficients
-`C(2r+1,r) = 1, 3, 10, 35, 126, …` are OEIS **A001700**.
+---
 
-## 9.  The sharpened rate and the exact crossing (closes C3, upper half)
+## 2. From a list of runs to a ladder of readings
 
-Sharpened bound `C(2r+1,r)(p(1-p))^{r+1}/(2p-1)` at `p = 2/3`, versus the crude bound and the
-truth:
+The first move is to stop thinking of the ensemble as a list and start thinking of it as a
+**ladder**. Give each run $i$ its knee $K(i)$, and for each quota $m$ define
 
-| seeds `n = 2r+1` | 43 | 45 | **47** | **49** | 73 |
-|---|---|---|---|---|---|
-| true miss | 0.01180 | 0.01030 | **0.00900** | 0.00787 | 0.00163 |
-| sharpened bound | 0.01344 | 0.01169 | 0.01017 | **0.00886** | 0.00178 |
-| crude bound | 0.05620 | 0.04995 | 0.04440 | 0.03947 | 0.00960 |
+$$Q(m) \;=\; \text{the least budget } b \text{ at which at least } m \text{ of the } n \text{ runs clear the bar}.$$
 
-So the truth crosses `1 %` at `47` seeds, the sharpened bound at `49`, the crude bound only at
-`73`.  All three readings are now Lean theorems: `SeedExactCrossing.miss_47_le_one_percent`
-and `miss_45_gt_one_percent` (exact tails, binomials evaluated through
-`Nat.choose_eq_descFactorial_div_factorial`), `SeedSharpRate.net48_sharp_49_seeds` and
-`net48_sharp_47_insufficient`, `SeedCondorcetRate.net48_seeds_for_one_percent`.
+$Q(1)$ is the best case, $Q(n)$ is the guarantee ("this budget works for everybody"), and for odd
+$n = 2r+1$ the rung $Q(r+1)$ is the median. Every reporting convention you have ever seen is a
+choice of rung.
 
-## 10.  Counterexample hunt against conjecture C5 (refuted)
+{{algorithm:0}}
 
-C5 predicted `risk(2r) < risk(2r+1)` at the upper central rung.  Exact values at `p = 2/3`:
+<details>
+<summary>Why $Q(m)$ really is the $m$-th smallest reading</summary>
 
-| reading | `n = 2` at `m = 2` | `n = 3` at `m = 2` | `n = 4` at `m = 3` | `n = 5` at `m = 3` |
-|---|---|---|---|---|
-| rung | 4/9 | 20/27 | 16/27 | 64/81 |
-| risk | 0.5556 | **0.2593** | 0.4074 | **0.2099** |
+At least $m$ runs clear the bar at budget $b$ exactly when $b$ is at least the $m$-th smallest
+knee. Taking the least such $b$ gives the $m$-th order statistic. The operational definition and
+the order-statistic definition therefore agree — which is what lets us reason about *quotas* while
+computing with *sorted lists*.
+</details>
 
-Every even ensemble read at its upper central rung is riskier than the odd ensemble one seed
-larger, at every size tested (`r < 60`, exact arithmetic), and the excess is exactly
-`p·C(2r,r)p^r(1-p)^r` — proved in `SeedRisk.odd_median_sub_even_upper` and
-`SeedRisk.even_upper_central_strictly_riskier`, with the numerical instance in
-`SeedRisk.net48_C5_counterexample`.
+---
 
-## 11.  The central binomial sandwich and the defect rate (cycle 4, D1 structural half)
+## 3. Play with it: the seed ensemble laboratory
 
-Both halves of the sandwich `C(2r,r)^2(3r+1) ≤ 16^r ≤ C(2r,r)^2(4r+1)` were checked in exact
-integer arithmetic for every `r < 400` (no failures).  The slack of the *lower* half is exactly
-`0` at `r = 0` and then grows (`4, 68, 1104, 17764, 285008` at `r = 1..5`), which is what makes
-the induction close with the constant `4`:
+Type in your own run readings. Choose a rung by clicking a row. Then drag the corruption slider
+and watch which readings survive and which are pushed off to infinity.
 
-| `r` | 1 | 2 | 5 | 10 | 50 | 200 | 1000 | limit |
-|---|---|---|---|---|---|---|---|---|
-| `defect r · √r` | 0.25000 | 0.26517 | 0.27514 | 0.27859 | 0.28139 | 0.28192 | 0.28206 | `1/(2√π) = 0.28209` |
+{{interactive_demo:0}}
 
-The proved window is `[1/(2√5), 1/(2√3)] = [0.22361, 0.28868]`; it contains the Wallis limit
-`0.28209` but does not identify it — the gap that conjecture **E1** targets.  Formalised as
-`SeedStirling.centralBinom_sq_mul_ge` and `SeedStirling.defect_sqrt_bracket`.
+Three things are worth discovering here before we prove anything:
 
-## 12.  Why `47` is out of reach of the sharpened route (cycle 4, D1 numerical half — refuted)
+1. The **guarantee** rung — the maximum, the number a deployment SLA quotes — is destroyed by a
+   single bad run. So is the best case.
+2. With three runs, the **median is the only rung that survives one corrupted run at all**.
+3. Switching from three runs to four does *not* improve that: the maximal tolerance stays at one,
+   and now two rungs tie for it.
 
-Exact rationals at `p = 2/3`, `r = 23` (i.e. `47` seeds):
+---
 
-| quantity | value | `< 1/100`? |
-|---|---|---|
-| true miss `1 - rungProb 47 24 (2/3)` | 0.0090029 | **yes** |
-| sharpened rate `C(47,23)(p(1-p))^{24}/(2p-1)` | 0.0101739 | **no** |
-| sharpened rate at `49` seeds | 0.0088626 | yes |
+## 4. The first quality score: calibration
 
-So the sharpened rate is already above `1 %` at `47`: *any* bound dominating it fails there,
-whatever Stirling estimate is fed in.  The loss is `0.0101739 / 0.0090029 = 1.130`, i.e. the
-`13 %` overshoot of the geometric majorant over the true tail — a `Θ(1/r)` effect, which is
-conjecture **E2**.  Formalised as `SeedStirling.no_sharp_route_certifies_47` and
-`truth_at_47_below_one_percent`.
+Fix a budget and model each run as clearing the bar independently with probability $p$. Then rung
+$m$ sits at or below that budget exactly when at least $m$ runs clear it, so its distribution
+function is the binomial upper tail
 
-## 13.  The off-centre ladder sums (cycle 4, D3)
+$$R_n(m,p) \;=\; \sum_{j\ge m}\binom{n}{j}p^{\,j}(1-p)^{\,n-j}.$$
 
-Partial sums `∑_{k ≤ r < 60} offsetGap k (2/3) r` in exact arithmetic, against the closed form
-`1 - p^{2k+1}`:
+Call the rung **calibrated** if $R_n(m,\tfrac12) = \tfrac12$: on maximally uninformative data —
+fair coins — it says "pass" exactly half the time, so it does not lean.
 
-| offset `k` | 0 | 1 | 2 | 3 |
-|---|---|---|---|---|
-| partial sum (`r < 60`) | 0.333256 | 0.703544 | 0.867995 | 0.940857 |
-| closed form `1 - (2/3)^{2k+1}` | 0.333333 | 0.703704 | 0.868313 | 0.941472 |
+> **The parity law of calibration.** $R_n(m,\tfrac12) = \tfrac12$ **iff** $2m = n+1$.
+> An ensemble has a calibrated rung iff its size is odd, and then it is unique.
 
-Convergence is geometric and the residuals are exactly the omitted tail.  Note that the
-off-centre steps are *not* dominated by the median step: the step ratio
-`offsetGap k p r / offsetGap k p (r-1)` exceeds `1` well off the centre (maximum `2.872` found
-at `r = 11, k = 10, p = 0.55` over `r ≤ 11`, `k < r`, `p ∈ {0.55, …, 0.95}`), whereas at the
-centre it is always below `1` (`0.667, 0.741, 0.778, 0.800, 0.815` for `r = 1..5` at `p = 2/3`).
-This is why the off-centre convergence needed its own bound
-(`SeedOffsetLadder.offset_tail_bound`) rather than the median argument.  Closed form:
-`SeedOffsetLadder.hasSum_offsetGap`.
+<details>
+<summary>Click to reveal the proof (three lines, no analysis)</summary>
 
-## 14.  The quota threshold law (cycle 4, D5)
+At $p = 1/2$ every outcome is equally likely, so $R_n(m,\tfrac12) = T(n,m)/2^n$ with
+$T(n,m) = \sum_{j\ge m}\binom{n}{j}$. The substitution $j \mapsto n-j$ turns the tail
+$\{j \ge m\}$ into the head $\{j \le n-m\}$ and fixes binomial coefficients, so
 
-Brute-force check of the ascent criterion `rungProb n (m+1) p ≤ rungProb (n+2) (m+2) p ⟺
-(1-p)(n+1) ≤ m+1` over all `1 ≤ n ≤ 13`, `0 ≤ m < n`, `p ∈ {1/20, …, 19/20}` (exact rationals):
-**0 mismatches** out of 2223 cases.  Formalised as `SeedThreshold.ladder_ascends_iff`; the
-median specialisation is the Condorcet condition `p ≥ 1/2`, and NET-48's own `3/3` guarantee
-rung ascends already at `p ≥ 1/4` (`net48_unanimity_threshold`).
+$$T(n,m) + T(n,\,n+1-m) = 2^{\,n}.$$
 
-The hypothesis `m ≤ n` in `SeedThreshold.rate_sharp_general` is necessary: for `m ≥ n+2` the
-rung is empty, so the left side is `1`, while the right side can drop below it — the smallest
-instance is `n = 0, m = 3, p = 13/20`, where the right side is `0.9154`.
+Also $T(n,\cdot)$ strictly decreases, because each step removes a positive binomial coefficient.
+Now $R_n(m,\tfrac12) = \tfrac12$ says $T(n,m) = T(n,n+1-m)$, and strict monotonicity forces
+$m = n+1-m$, i.e. $2m = n+1$. Conversely, if $2m = n+1$ the reflection identity reads
+$2T(n,m) = 2^n$. $\blacksquare$
+</details>
 
-## 15.  The contamination curve on the round's own sample (cycle 4, D2)
+Even ensembles miss, and by a measurable amount. The two central rungs of a $2r$-run ensemble read
 
-Clean sample `K = {160, 224, 256}` (the three measured `16×` knees), `n = 3`:
+$$\tfrac12 \pm \delta_r, \qquad \delta_r = \frac{1}{2^{2r+1}}\binom{2r}{r},$$
 
-| rung `m` | 1 | 2 (median) | 3 (the `3/3` guarantee) |
+so they *average* to exactly $\tfrac12$. That is precisely the textbook rule "the median of an even
+sample is the mean of the two middle values" — not a tie-break convention, but the exact repair of
+a parity defect.
+
+<details>
+<summary>How fast does the defect vanish? (Spoiler: $\pi$ appears)</summary>
+
+The defect is squeezed between two explicit square roots,
+$$\frac{1}{2\sqrt{4r+1}} \;\le\; \delta_r \;\le\; \frac{1}{2\sqrt{3r+1}},$$
+both proved by induction through the central binomial recursion
+$(r+1)\binom{2r+2}{r+1} = 2(2r+1)\binom{2r}{r}$. So $\delta_r\sqrt r$ lives in
+$[1/(2\sqrt5),\,1/(2\sqrt3)]$, and the exact limit is
+$$\delta_r\sqrt r \longrightarrow \frac{1}{2\sqrt\pi} = 0.28209\ldots$$
+Consistency of the bracket with the limit is exactly the statement $3 \le \pi \le 5$, read off a
+ladder of ensembles instead of a circle. And since $\delta_r \gtrsim 1/(4(r+1))$, the defects are
+not even summable: even ensembles are asymptotically, but never exactly, calibrated. For more on
+the constant, see [Wallis' product](https://en.wikipedia.org/wiki/Wallis_product) and
+[Stirling's approximation](https://en.wikipedia.org/wiki/Stirling%27s_approximation).
+</details>
+
+---
+
+## 5. The second quality score: the breakdown number
+
+Now forget probability. Someone hands you $n$ readings and warns that up to $c$ are corrupted —
+a diverged run, a logging bug, a throttled machine — and you do not know which.
+
+> **Bracket.** If two readings assignments agree outside a set of $c$ runs, then
+> $Q(m-c) \le Q'(m) \le Q(m+c)$: $c$ corrupted runs move a rung by at most $c$ rungs, both ways.
+>
+> **Sharpness.** With $m$ corrupted runs the rung collapses to $0$; with $n-m+1$ corrupted runs it
+> exceeds any bound.
+>
+> **Hence** the breakdown number of rung $m$ is exactly $\ \beta(n,m) = \min(m-1,\;n-m)$.
+
+<details>
+<summary>Click to reveal both proofs</summary>
+
+*Bracket.* At a budget where $m + c$ runs pass under the clean assignment, at least $m$ of those
+passers are outside the corrupted set, hence still pass under the corrupted assignment; so
+$Q'(m) \le Q(m+c)$. Exchange the roles of the two assignments and use monotonicity of the ladder
+for the lower bound.
+
+*Upward breakdown.* Set every corrupted run's reading to $B$. If the corrupted rung read less than
+$B$, its pass set would avoid the corrupted runs entirely and hence have fewer than $m$ elements —
+contradicting the defining property of a rung.
+
+*Downward breakdown.* Set $m$ corrupted readings to $0$; the quota is met at budget $0$.
+$\blacksquare$
+</details>
+
+Two immediate consequences, both of them counterintuitive if you have ever quoted a worst case:
+$\beta(n,n) = 0$ and $\beta(n,1) = 0$. **Guarantees are the most fragile reading, not the safest.**
+
+Better still, below breakdown there is no gray zone: the readings an adversary can force are
+*exactly* the clean interval $[Q(m-c),\,Q(m+c)]$, both endpoints attained. The maximal bias equals
+the clean spread — which is why the widget above reports an asymmetric bias like $-64/+32$ rather
+than a symmetric error bar.
+
+---
+
+## 6. The punchline: the two scores are the same score
+
+Put the two profiles side by side. For $n = 2r+1$:
+
+* calibration picks $m$ with $2m = n+1$, i.e. $m = r+1$;
+* robustness picks $m$ maximising $\min(m-1, n-m)$, i.e. $m = r+1$.
+
+{{visualization:0}}
+
+> **The Calibration–Robustness Dichotomy.** For $n = 2r+1$ and $1 \le m \le n$:
+> $$R_n\!\left(m,\tfrac12\right) = \tfrac12 \quad\Longleftrightarrow\quad \beta(n,m) = r.$$
+
+The two sides were derived from disjoint premises — a symmetry of binomial coefficients on one
+side, a counting bound on adversarial corruptions on the other — and they pin the same index.
+That is the whole content: "report the median" is a theorem.
+
+And the mirror image is just as sharp. For even $n = 2r$, no rung is calibrated **and** the
+maximal breakdown number $r-1$ is attained by two rungs. Parity is a single obstruction to a
+canonical centre, visible on both sides at once.
+
+{{demo:1}}
+
+---
+
+## 7. So: should you run a fourth seed?
+
+This is where the theory stops being decorative. Three runs gave $\{160, 224, 256\}$; the natural
+next step is a fourth. Drag its outcome and watch what you buy.
+
+{{interactive_demo:2}}
+
+The verdict, stated plainly:
+
+| you go from | breakdown number | calibrated? | what you bought |
 |---|---|---|---|
-| clean reading `quotaBudget K m` | 160 | **224** | 256 |
-| breakdown number `min(m-1, n-m)` | 0 | **1** | 0 |
-| reachable set at `c = 1` | — | `[160, 256]` | unbounded above |
+| 3 runs → 4 runs | $1 \to 1$ | yes → **no** | nothing, unless the fourth lands exactly on $224$ |
+| 3 runs → 5 runs | $1 \to 2$ | yes → yes | a strict robustness increment and calibration restored |
 
-At the last level before breakdown the median can be pushed to either end of the clean spread
-and no further — both endpoints attained, which is the content of
-`SeedContamination.contamination_curve`; the guarantee rung, with breakdown number `0`, can be
-pushed above *any* prescribed budget by a single corrupted seed
-(`SeedContamination.net48_guarantee_fragile`).
+**Increase ensembles by two, not one.** (A fourth run is still worth doing if your question is
+about the *low tail* — whether $0.625P$ is a stable feature of the long context or an artifact of
+one seed — but that is a tail experiment, and should be reported as one.)
 
-## 16.  How often does the median minimise the contamination width? (cycle 5, E4/E6)
+---
 
-Monte-Carlo over i.i.d. samples of `n` seeds (`200 000` draws per cell, radius `c = 1`, rungs
-restricted to those with a nonempty contamination curve, i.e. `2 ≤ m ≤ n-1`), for the standard
-normal (symmetric unimodal, mode = median):
+## 8. How many runs would actually certify the centre?
 
-| `n` | 5 | 7 | 9 | 11 |
-|---|---|---|---|---|
-| mean width at the median rung | **0.992** | **0.707** | **0.548** | **0.449** |
-| mean width at an extreme admissible rung (`m = 2`) | 1.164 | 1.000 | 0.913 | 0.858 |
-| P(median minimises the *realised* width) | 0.346 | 0.253 | 0.191 | 0.153 |
-| P(ladder is centre-minimal) | 0.243 | 0.028 | 0.0019 | 0.0001 |
+A different question: not *which* rung, but *how many* runs make it certain. If each run clears
+the bar with probability $p > 1/2$, the median rung is a
+[Condorcet jury](https://en.wikipedia.org/wiki/Condorcet%27s_jury_theorem), and adding two runs
+changes it by exactly one monomial:
 
-Three readings, all of which shaped cycle 5 and conjecture **E6**.
+$$R_{2r+3}(r+2,p) - R_{2r+1}(r+1,p) \;=\; \binom{2r+1}{r}\bigl(p(1-p)\bigr)^{r+1}(2p-1).$$
 
-* The **mean** width profile is exactly V-shaped and minimised at the median in every cell —
-  E6(1).
-* The **realised** width is minimised at the median only about a third of the time at `n = 5`,
-  and the frequency *decreases* with `n` — so E4's original "for every sample" was not merely
-  unlucky in one adversarial example, it fails for a constant fraction of typical draws (this
-  is what turned E4 from a target into a refutation, `SeedWindow.median_not_always_narrowest`).
-* **Centre-minimality**, the sufficient condition of `SeedWindow.width_median_minimal`, is a
-  prescribed ordering of the realised spacings, and its probability collapses (`0.24 → 0.0001`
-  from `n = 5` to `n = 11`) — strictly rarer than the median winning, which is E6(3).  This
-  measurement is also what forced the hypothesis to be stated with a *strict* distance
-  comparison: demanding equality of two equidistant gaps would make it fail almost surely for
-  a continuous law, and the induction never needs such a comparison.
+Telescoping gives a geometric rate, $1 - R_{2r+1}(r+1,p) \le 2(1-p)(4p(1-p))^r$, and keeping the
+binomial factor instead of bounding it gives a sharpened rate. Now explore the gap between what is
+true and what each bound can prove:
 
-For an asymmetric law the median loses even in the mean, exactly as the mechanism predicts:
-for the half-normal `|N(0,1)|` (mode at the boundary) the mean widths at `n = 9` are
-`0.266, 0.281, 0.303, 0.337, 0.393, 0.496, 0.746` for `m = 2, …, 8` — minimised at the
-*lowest* rung, the one sitting at the mode.  The minimiser follows the density, not the centre.
+{{interactive_demo:1}}
 
-The deterministic instances used in the Lean file are exact: the straggler sample
-`![0,0,0,10,20]` has ladder `0,0,0,10,20`, median window width `10` and second-rung window
-width `0`; the centre-minimal ladder `0,6,10,12,14,18` has gaps `6,4,2,2,4` and window widths
-`10, 6, 4, 6` at `m = 1,2,3,4`, minimised at the median `m = 3`.
+At the measured frequency $p = 2/3$ and a $1\%$ target, the three answers are **$47$ (truth), $49$
+(sharpened bound), $73$ (crude bound)** — and no bound dominating the sharpened rate can reach
+$47$, because the sharpened rate itself exceeds $1/100$ there. The gap is a property of the proof
+route, honestly priced.
 
-## 17.  The Wallis constant, numerically (cycle 6, E1 limit half)
+{{algorithm:1}}
 
-The quantity now proved to converge, `defect r · √r`, against its identified limit
-`1/(2√π) = 0.2820948`:
+Meanwhile the actual three-run ensemble has median-rung miss probability
+$1 - R_3(2,\tfrac23) = 7/27 \approx 26\%$. The centre is the right functional to report; it is
+still a point estimate.
 
-| `r` | 1 | 2 | 5 | 10 | 50 | 200 | 1000 | 10000 |
-|---|---|---|---|---|---|---|---|---|
-| `defect r · √r` | 0.25000 | 0.26517 | 0.27514 | 0.27859 | 0.28139 | 0.28192 | 0.28206 | 0.282088 |
-| relative error | 11.4 % | 6.0 % | 2.5 % | 1.24 % | 0.249 % | 0.0624 % | 0.0125 % | 0.00125 % |
+{{visualization:1}}
 
-The relative error is visibly `≈ 1/(8r)`, which is the effective two-sided form that the
-restated **E1** now targets; the approach is monotone from below, consistent with the proved
-lower bound `1/(2√(4r+1))` being the tighter of cycle 4's two ends near the limit.
+---
+
+## 9. A conjecture that turned out to be false
+
+Since the achievable readings form the interval $[Q(m-c), Q(m+c)]$, its **width** is the
+deployment-relevant uncertainty. Is the median always narrowest?
+
+No. Take the five readings $\{0,0,0,10,20\}$ — three runs agreeing, two stragglers. The ladder is
+$(0,0,0,10,20)$, so at radius $1$ the median window is $[0,10]$, of width $10$, while the rung
+below it has window $[0,0]$, of width $0$. The minimiser of the width follows the sample's
+**gaps**, not its centre. (Type that sample into the laboratory in §3 and see it.)
+
+<details>
+<summary>But it is true under the hypothesis a well-behaved experiment supplies</summary>
+
+Call a ladder **centre-minimal** if gaps nearer the middle are smaller — which is what the order
+statistics of a unimodal law do. Under centre-minimality, the median window is narrowest among all
+rungs, at every radius. The proof is a two-sided induction driven by an exact criterion: moving a
+window outward widens it exactly when the gap it takes in exceeds the gap it lets out.
+
+The measured sample fails the hypothesis: its gaps are $64$ and $32$, equidistant from the centre
+of a three-rung ladder yet unequal. So at three runs the median's robustness is *not* explained by
+narrowness — it is explained by the breakdown number, the median being the only rung with a
+contamination window at all. The mechanism first bites at five runs.
+</details>
+
+---
+
+## 10. Run the numbers yourself
+
+Everything above is computable in a few dozen lines, with exact rational arithmetic wherever
+exactness matters. The demonstration below reproduces the median law, the parity law, the defect
+sandwich and its $1/(2\sqrt\pi)$ constant, the breakdown table with a brute-force adversary, the
+contamination curves, the fourth-seed bias, the Condorcet crossing at $47$, and the dichotomy.
+
+{{demo:0}}
+
+---
+
+## 11. What to take away
+
+* An ensemble does not report a number; it reports a **ladder** of numbers, one per quota.
+* Each rung carries two scores: does it lean on uninformative data, and how many corrupted runs
+  does it survive? The first is a **parity** condition, $2m = n+1$; the second is an exact
+  **count**, $\min(m-1, n-m)$.
+* For odd ensembles the two scores select the same rung, and only that rung. For even ensembles
+  both fail, together.
+* Consequently: report the median of an **odd** ensemble; treat published guarantees as maximally
+  fragile; quote the contamination interval instead of a symmetric error bar; and grow ensembles
+  by two.
+* And when four sharp point predictions about a single run all fail while the prediction about the
+  centre holds exactly — as happened at $\tfrac78 P = 224$ — that is not luck. It is the only
+  outcome the theory permits you to expect.
