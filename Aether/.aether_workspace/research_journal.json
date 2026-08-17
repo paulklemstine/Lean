@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "8590e003",
-      "domain": "Probability",
-      "key_insight": "# FUTURE DIRECTIONS — CM-ECM-GENERAL (`j = 0` curve over `ℚ(√−3)`)\n\n## What this cycle established\n\n* **Rational 3-torsion degeneracy.** `3 ∣ #E_{j0}(𝔽_p)` for every prime `p > 3`,\n  proved by realisi",
-      "quality_score": 0.87,
-      "sorry_count": 0,
-      "theorem_count": 122,
-      "timestamp": "2026-08-14T19:21:28",
-      "title": "CM-ECM-GENERAL: rational-torsion degeneracy, union-dilution law, 3-adic Hecke visibility (Q(sqrt(-3)"
-    },
-    {
       "cycle_id": "c98081c2",
       "domain": "Novelty",
       "key_insight": "# Future Directions — after the Class-Wide No-Pinning Lemma\n\nThe verified core of this cycle (all in `Catalog/Novelty/NoPinning*.lean`, 0 sorries):\n\n* **No-pinning (class-wide).** For a target `N₀` an",
@@ -499,19 +489,19 @@
       "theorem_count": 105,
       "timestamp": "2026-08-17T04:03:22",
       "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
+    },
+    {
+      "cycle_id": "094ca37a",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions — Hyper-Awareness: 11-dimensional perception architectures\n\nDerived from the analysis and adversarial review of this cycle. Every conjecture below is\nfalsifiable, and each is state",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 83,
+      "timestamp": "2026-08-17T04:03:34",
+      "title": "Hyper-Awareness: 11-Dimensional Perception Vectors in Synthetic Neural Nets"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "71b84dd8",
-      "domain": "Physics",
-      "key_insight": "# Future directions\n\n## What has been established in this cycle\n\n`Catalog/Physics/ZeroPointHarvestingLossy.lean` (self-contained, `import Mathlib`,\nno `sorry`) extends the previous discrete harvesting",
-      "quality_score": 0.686,
-      "sorry_count": 0,
-      "theorem_count": 31,
-      "timestamp": "2026-08-06T03:44:54",
-      "title": "`Physics/ZeroPointHarvesting.lean` models any proposed harvesting apparatus by t"
-    },
     {
       "cycle_id": "9f1ee483",
       "domain": "Algebra",
@@ -2501,27 +2491,19 @@
       "theorem_count": 105,
       "timestamp": "2026-08-17T04:03:22",
       "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
+    },
+    {
+      "cycle_id": "094ca37a",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions — Hyper-Awareness: 11-dimensional perception architectures\n\nDerived from the analysis and adversarial review of this cycle. Every conjecture below is\nfalsifiable, and each is state",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 83,
+      "timestamp": "2026-08-17T04:03:34",
+      "title": "Hyper-Awareness: 11-Dimensional Perception Vectors in Synthetic Neural Nets"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "6e253e5d",
-      "domain": "Applications",
-      "name": "sharp_le_subgradient_bound",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "8fa1e5a5",
-      "domain": "Applications",
-      "name": "catalog",
-      "quality": 0.87
-    },
-    {
-      "cycle_id": "8fa1e5a5",
-      "domain": "Applications",
-      "name": "spb_linearization_error",
-      "quality": 0.87
-    },
     {
       "cycle_id": "8fa1e5a5",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Computation",
       "name": "antiFib_four_mul_add_two",
       "quality": 0.88
+    },
+    {
+      "cycle_id": "094ca37a",
+      "domain": "MachineLearning",
+      "name": "balanced_activation_at_optimum",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "094ca37a",
+      "domain": "MachineLearning",
+      "name": "every_unit_essential",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "094ca37a",
+      "domain": "MachineLearning",
+      "name": "in",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-17T04:03:22",
+  "last_updated": "2026-08-17T04:03:34",
   "open_questions": [
     {
       "context": "This file gives a **complete, self-contained proof** of that theorem (0 `sorry`s).",
@@ -3517,12 +3517,6 @@
     ],
     "MachineLearning": [
       {
-        "cycle_id": "f3cf4755",
-        "quality": 0.7422650000000001,
-        "theorems": 137,
-        "title": "The completed formalization deliberately studies the smallest non-trivial model:"
-      },
-      {
         "cycle_id": "8643e3f8",
         "quality": 0.6592476265822785,
         "theorems": 394,
@@ -3575,6 +3569,12 @@
         "quality": 0.78,
         "theorems": 54,
         "title": "Compression Research B1: Negative result — PRNGs cannot beat pigeonhole (proof +"
+      },
+      {
+        "cycle_id": "094ca37a",
+        "quality": 0.82,
+        "theorems": 83,
+        "title": "Hyper-Awareness: 11-Dimensional Perception Vectors in Synthetic Neural Nets"
       }
     ],
     "Novelty": [

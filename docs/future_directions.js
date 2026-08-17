@@ -94,6 +94,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 86a70a4b (Q=0.880), which proved 105 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The Fibonacci sequence is defined by F(n+1) = F(n) + F(n-1) and converges to the golden ratio. Define the ANTI-Fibonacci sequence: A(n+1) is the smallest positive integer that is NOT equal to A(n) + A(n-1). The sequence begins 1, 1, 2, 4, 7, 11, 16, ... (each term avoids being the sum of the two pre",
+    "domains": [
+      "Computation"
+    ],
+    "id": "push_86a70a4b_2ba762b1",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "86a70a4b",
+    "status": "available",
+    "timestamp": "2026-08-17T04:03:23.413768+00:00",
+    "title": "Deepening: The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle b3704634 (Q=0.910), which proved 884 theorems in Geometry. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalizes the foundations of Teichm\u00fcller theory: the Teichm\u00fcller space of marked Riemann surfaces, the Teichm\u00fcller metric defined by extremal quasi-conformal maps, and the action of the mapping class group whose quotient is the moduli space.",
     "domains": [
       "Geometry"
@@ -345,17 +359,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "Synthetic-Soul-Invariant: Topological Conservation Laws of Neural Identity"
   },
   {
-    "consumed_by_exp_id": "094ca37a",
+    "consumed_by_exp_id": "",
     "description": "Constructs artificial neural architectures capable of directly processing 11-dimensional spatial tensors without dimensional reduction loss.",
     "domains": [
       "MachineLearning"
     ],
     "id": "scifi_50_19_ae8889d5",
-    "phase": "A",
     "priority_score": 0.95,
     "research_mode": "team",
     "source_exp_id": "scifi_50_injection",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-23T20:07:57.739465+00:00",
     "title": "Hyper-Awareness: 11-Dimensional Perception Vectors in Synthetic Neural Nets"
   },
@@ -782,31 +795,17 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle 39757711 (Q=0.840), which proved 300 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Investigate the ArXiv paper 'Cayley Graphs Of Order $pqrs$ Are Hamiltonian' and formalize its key results. Abstract: Assume $ G $ is a finite group with order $ |G| = pqrs $, where $ p $, $ q $, $ r $, and $ s $ are distinct prime numbers. We prove that every connected Cayley graph of $ G $ contains",
+    "description": "Building on cycle 094ca37a (Q=0.820), which proved 83 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Constructs artificial neural architectures capable of directly processing 11-dimensional spatial tensors without dimensional reduction loss.",
     "domains": [
-      "Pythagorean"
+      "MachineLearning"
     ],
-    "id": "push_39757711_08194ab2",
-    "priority_score": 0.94,
+    "id": "push_094ca37a_55cf5dc3",
+    "priority_score": 0.9199999999999999,
     "research_mode": "team",
-    "source_exp_id": "39757711",
+    "source_exp_id": "094ca37a",
     "status": "available",
-    "timestamp": "2026-08-16T22:37:14.628384+00:00",
-    "title": "Deepening: ArXiv paper: Cayley Graphs Of Order $pqrs$ Are Hamiltonian"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 665c1eea (Q=0.830), which proved 90 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the Alcubierre warp drive metric: ds^2 = -dt^2 + (dx - v_s f(r_s))dt^2 + dy^2 + dz^2. Prove: the metric is a valid solution of Einstein's field equations. Show: the expansion of space behind the ship and contraction ahead creates effective FTL without local FTL. Explore: the energy require",
-    "domains": [
-      "Physics"
-    ],
-    "id": "push_665c1eea_56c01735",
-    "priority_score": 0.9299999999999999,
-    "research_mode": "team",
-    "source_exp_id": "665c1eea",
-    "status": "available",
-    "timestamp": "2026-08-17T03:13:42.974585+00:00",
-    "title": "Deepening: Moonshot: Warp Drive Spacetime \u2014 Alcubierre Metric Formalization"
+    "timestamp": "2026-08-17T04:03:34.921412+00:00",
+    "title": "Deepening: Hyper-Awareness: 11-Dimensional Perception Vectors in Synthetic Neural Nets"
   },
   {
     "consumed_by_exp_id": "",
@@ -1736,34 +1735,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-27T13:44:25.584304+00:00",
     "title": "Deepening: Causal Inference: Do-Calculus as Formal Logic"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 9fb19498 (Q=0.790), which proved 11 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that the tropicalization functor preserves intersection numbers. Formalize tropical varieties as polyhedral complexes and establish the tropical B\u00e9zout theorem with explicit bounds.",
-    "domains": [
-      "Tropical"
-    ],
-    "id": "push_9fb19498_3f9eeeb2",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "9fb19498",
-    "status": "available",
-    "timestamp": "2026-08-01T19:43:12.027506+00:00",
-    "title": "Deepening: Tropical Intersection Theory"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle e3e9c821 (Q=0.792), which proved 15 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize Noether's theorem in Lean 4: every continuous symmetry of the action yields a conserved quantity. Prove energy conservation from time-translation, momentum from space-translation, angular momentum from rotational symmetry. Apply to Kepler problem.",
-    "domains": [
-      "Physics"
-    ],
-    "id": "push_e3e9c821_a543f97d",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "e3e9c821",
-    "status": "available",
-    "timestamp": "2026-07-29T17:48:52.827384+00:00",
-    "title": "Deepening: Noether's Theorem: Symmetries and Conservation Laws"
   },
   {
     "consumed_by_exp_id": "",
@@ -5541,17 +5512,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Jacobian Conjecture: Degree 2 and 3 Cases"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "525aecde",
     "description": "Formalize the discrete Fourier transform as representation theory of cyclic groups. Prove Parseval's theorem and the convolution theorem. Extend to arbitrary finite abelian groups. Prove the uncertainty principle: supp(f) \u00b7 supp(f\u0302) \u2265 |G|.",
     "domains": [
       "Analysis",
       "Algebra"
     ],
     "id": "fd_0664",
+    "phase": "A",
     "priority_score": 0.83,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-24T14:34:16.697777+00:00",
     "title": "Fourier Analysis on Finite Groups"
   },
@@ -18682,6 +18654,36 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 bold, testable conjectures from this cycle\n\nContext: the anti-Fibonacci sequence `antiFib 0 = 1`, `antiFib (n+1) = antiFib n + n`\n(closed form `2\u00b7antiFib n + n = n\u00b2 + 2`) from `Catalog/Novelty/Basic.lean`.\nThis cycle proved: the exact modular period (`m` odd, `2m` even), the `O(1)` counting\nalgorithm with `C(N) ~ \u221a(2N)` and density zero, the equivalence\n\"3-term progressions \u2194 Pythagorean triples\", the complete Pell classification of the\nperfect squares, the two-squares criterion for sums of two terms with a `2/9` lower bound\non the non-representable set, the residue spectrum modulo an odd prime (exactly `(p+1)/2`\nclasses attained, so one is always omitted), and the exact gcd law for consecutive terms\n(`2` iff `n \u2261 2 mod 4`).\n\n---\n\n## C1. No four anti-Fibonacci numbers are in arithmetic progression\n\n**Statement.** There are no indices `a < b < c < d` with\n`antiFib b - antiFib a = antiFib c - antiFib b = antiFib d - antiFib c`.\n\n**The key insight is** that `8\u00b7antiFib n = (2n-1)\u00b2 + 7`, so a four-term progression of\nanti-Fibonacci numbers is *exactly* a four-term progression of odd squares \u2014 and by\nFermat's right-triangle theorem no four distinct squares are in arithmetic progression.\nThe proved bridge `antiFib_AP_iff_pythagoreanTriple` already reduces the three-term case\nto Pythagorean triples; the four-term case should reduce to `x\u2074 - y\u2074 = z\u00b2`.\n\n**Why now?** Mathlib already contains the descent infrastructure for the quartic Fermat\nequation (`not_fermat_42`, the `Fermat42.Minimal` machinery) and the full classification\nof Pythagorean triples, so the missing step is the passage from `a\u2074 + b\u2074 \u2260 c\u00b2` to\n`a\u2074 - b\u2074 \u2260 c\u00b2`, a single extra descent that is now within formalisation reach.\n\n**Falsifiable:** a brute-force scan over `a < b < c < d \u2264 10\u2075` either produces a\ncounterexample or supports the conjecture; the scan is cheap because of the proved\n`O(1)` membership test `isAntiFibValue`.\n\n---\n\n## C2. The anti-Fibonacci \"Pisano-type\" period determines the sequence\n\n**Statement.** Let `f : \u2115 \u2192 \u2115` satisfy `f 0 = 1` and have minimal period modulo every\n`m > 0` equal to `pisanoAnti m = if Odd m then m else 2m`.  Then `f = antiFib`\nwhenever `f` is a polynomial sequence of degree `\u2264 2`.\n\n**The key insight is** that the proved characterisation `isPeriodMod_iff`\n(\"`p` is a period iff `m \u2223 p` and `f p \u2261 f 0`\") uses only the *first difference being\nlinear*; conversely, a period function equal to `m`/`2m` forces the second difference to\nbe constant and equal to `1`, pinning the sequence.\n\n**Why now?** The characterisation of periods is already formalised, and the converse is a\nfinite linear-algebra argument over `ZMod m` \u2014 no new analytic input is needed.\n\n**Falsifiable:** exhibit a non-quadratic `f` with the same period function.\n\n---\n\n## C3. Exact second-order counting law: `C(N) = \u221a(2N) + \u03b8(N)` with `\u03b8` equidistributed\n\n**Statement.** With `C(N)` the proved counting function, the fractional discrepancy\n`\u03b8(N) = C(N) - \u221a(2N) \u2208 [0,3)` is equidistributed in `[0,1)` after the natural\nnormalisation `\u03b8(N) mod 1`.\n\n**The key insight is** that `C(N) = \u230a(\u221a(8N-7)+1)/2\u230b + 1` exactly (proved), so `\u03b8(N)` is a\ndeterministic function of the fractional part of `\u221a(8N-7)/2`, and equidistribution of\n`\u221an mod 1` is a classical Weyl-type result.\n\n**Why now?** The exact closed form removes all combinatorial noise; what remains is a\npure equidistribution statement about `\u221an`, for which Mathlib now has Weyl-criterion\ninfrastructure.\n\n**Falsifiable:** compute the empirical distribution of `\u03b8(N)` for `N \u2264 10\u2078`; a visible\nbias refutes it.\n\n---\n\n## C4. Positive density of integers that are sums of two anti-Fibonacci numbers, with a\nLandau-type constant\n\n**Statement.** `#{m \u2264 N : m = antiFib a + antiFib b} ~ K \u00b7 N / \u221a(log N)` for an explicit\nLandau\u2013Ramanujan-type constant `K`.\n\n**The key insight is** the proved equivalence \"representable \u27fa `8m - 14` is a sum of two\nsquares\": the counting problem transfers verbatim to the classical Landau problem on an\narithmetic progression, so the density is *not* `0` in the crude sense but decays like\n`1/\u221alog N`.  Our proved `2/9` lower bound on the non-representable set is the first\nquantitative step in this direction.\n\n**Why now?** The reduction is formalised; the remaining input is the Landau\u2013Selberg\u2013Delange\nasymptotic, which is the natural next analytic target for Mathlib's Dirichlet-series API.\n\n**Falsifiable:** the ratio `#{representable m \u2264 N}\u00b7\u221a(log N)/N` should stabilise; if it\ndrifts to `0` or `\u221e`, the conjecture is wrong.\n\n---\n\n## C5. Anti-Fibonacci Waring problem: three terms always suffice\n\n**Statement.** Every integer `m \u2265 3` is a sum of exactly three anti-Fibonacci numbers.\n\n*Status update (this cycle).* The order-`4` version is now **proved unconditionally** in\n`Catalog/Computation/AntiFibonacciLagrange.lean`: `sum_four_iff` shows that `m` is a sum of\nfour anti-Fibonacci numbers iff `m \u2265 4`, and `sum_three_iff_sq_add_sq_add_sq` reduces the\nremaining order-`3` question to \"`8m - 21` is a sum of three squares\".  What is left open\nis therefore exactly the three-squares input.\n\n**The key insight is** that `antiFib n = 1 + T(n-1)` with `T` triangular, so the claim is\nexactly Gauss's *Eureka* theorem \"every natural number is the sum of three triangular\nnumbers\", shifted by `3`; equivalently, by the proved reduction, that every `8m - 21 \u2261 3\n(mod 8)` is a sum of three squares.  Combined with the proved two-term criterion this\nwould give a complete additive picture: two terms fail on a set of positive density\n(proved), three terms always succeed, four terms always succeed (proved).\n\n**Why now?** Mathlib already has the three-squares theorem's cousin (sum of four squares)\nand the two-squares classification; Gauss's triangular theorem follows from the\nthree-squares theorem `8m + 3 = x\u00b2 + y\u00b2 + z\u00b2`, whose formalisation is the single missing\ningredient and is actively within reach of the existing quadratic-forms API.\n\n**Falsifiable:** a single `m` requiring four terms refutes it; scanning `m \u2264 10\u2076` with the\nproved `O(1)` membership test is a cheap check.\n\n---\n\n## C6. The omitted residues determine the sequence's prime divisors\n\n**Statement.** A prime `p > 2` divides some anti-Fibonacci number iff `-7` is a quadratic\nresidue modulo `p`, i.e. iff `p = 7` or `p \u2261 1, 2, 4 (mod 7)`; and the set of such primes\nhas density `1/2`.\n\n*Status update (this cycle).* The congruence criterion is now **proved** in\n`Catalog/Computation/AntiFibonacciPrimeDivisors.lean` (`prime_dvd_antiFib_iff`, uniform in\n`p` including `p = 2`), together with the two infinitude statements\n`infinite_divisor_primes` and `infinite_nondivisor_primes` (Dirichlet).  What remains open\nis only the *quantitative* half: that the divisor primes have natural density exactly\n`1/2`, i.e. `#{p \u2264 x : p \u2223 some antiFib n} ~ x / (2 log x)`, which needs the prime number\ntheorem in arithmetic progressions rather than mere infinitude.\n\n**The key insight is** the proved spectrum criterion `m \u2208 range(antiFib mod p) \u2194 8m - 7 is\na square`: taking `m = 0` this says `p \u2223 antiFib n` for some `n` iff `-7` is a square mod\n`p`, which by quadratic reciprocity is a congruence condition modulo `7`.\n\n**Why now?** Mathlib has full quadratic reciprocity (`legendreSym.quadratic_reciprocity`)\nand the residue-spectrum theorem is already formalised, so only the reciprocity\ncomputation for the discriminant `-7` remains; the density statement then follows from\nDirichlet's theorem, also available.\n\n**Falsifiable:** list the primes dividing some `antiFib n` for `p < 1000` and compare with\nthe residues `1, 2, 4 (mod 7)`; a single mismatch refutes it.\n\n---\n\n## C7. A Jacobi formula for anti-Fibonacci representations\n\n**Statement.** For every `m \u2265 4`, the number of *ordered* quadruples of positive indices\n`(a, b, c, d)` with `antiFib a + antiFib b + antiFib c + antiFib d = m` equals `\u03c3(2m - 7)`,\nthe sum of the divisors of `2m - 7`.\n\n**The key insight is** the reduction proved this cycle: such quadruples correspond exactly\nto representations of `8m - 28 \u2261 4 (mod 8)` by four *odd* squares, and Jacobi's four-square\ntheorem counts those: for `N \u2261 4 (mod 8)` the number of signed representations is\n`16 \u03c3(N/4)`, and the `2\u2074` sign choices divide out, leaving `\u03c3((8m-28)/4) = \u03c3(2m-7)`.  The\nformula therefore turns an additive-basis statement into an exact multiplicative identity,\nand in particular re-proves `sum_four_iff` because `\u03c3(2m-7) > 0`.\n\n**Why now?** The reduction to four odd squares is already formalised\n(`Catalog/Computation/AntiFibonacciLagrange.lean`, `four_odd_squares` and `sum_four_iff`),\nso the only missing ingredient is Jacobi's four-square theorem, whose modern proof needs\njust the Hurwitz quaternion order \u2014 a self-contained piece of algebra that Mathlib's\nexisting quaternion and Euclidean-domain API can support.\n\n**Falsifiable:** the identity is checked in Lean for `4 \u2264 m \u2264 13`\n(`reprCount m = \u03c3(2m-7)`, see the Evidence section of the same file); a single larger `m`\nwith `reprCount m \u2260 \u03c3(2m-7)` refutes it outright.\n",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_1352",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "86a70a4b",
+    "status": "available",
+    "timestamp": "2026-08-17T04:03:10.451124+00:00",
+    "title": "Context: the anti-Fibonacci sequence `antiFib 0 = 1`, `antiFib (n+1) = antiFib n"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Hyper-Awareness: 11-dimensional perception architectures\n\nDerived from the analysis and adversarial review of this cycle. Every conjecture below is\nfalsifiable, and each is stated so that a single Lean theorem (or a single explicit\ncounterexample) settles it.\n\nRecap of what is now proved (all sorry-free, in `Catalog/MachineLearning/HyperAwareness11D/`):\n\n* **Exact width law.** `22` is the least width of a lossless (injective) ReLU layer on `\u211d\u00b9\u00b9`;\n  in general the least width is `2n` (`isLeast_width_11`, `two_mul_le_card_of_injective`,\n  `doubleLayer_injective`).\n* **Metric law.** The optimal layer is a frame with sharp constants `1/2` and `1`\n  (`double_frame`, `double_frame_lower_sharp`, `double_frame_upper_sharp`).\n* **Rigidity at the optimum.** A `22`-unit lossless layer splits into two balanced blocks of\n  `11` active units and has no inessential unit (`balanced_activation_at_optimum`,\n  `every_unit_essential_11`).\n* **Symmetry obstruction.** Hyperoctahedral equivariance collapses an 11-dimensional layer to\n  a single scalar parameter (`hyperoctahedral_rigidity`), permutation equivariance to two\n  (`permEquivariant_deepSets`).\n* **Parity dividend.** Every 11-dimensional linear layer has an invariant percept direction,\n  and the dimension-2 rotation shows oddness is essential (`exists_invariant_percept_11`,\n  `rotation_has_no_invariant_percept`).\n\n---\n\n## Conjecture A \u2014 the bias-free optimum is *unique up to symmetry*\n\n**Statement.** Let `W : Fin 22 \u2192 Fin 11 \u2192 \u211d` with zero bias be such that `x \u21a6 relu(Wx)` is\ninjective. Then there is a permutation `\u03c0` of the 22 units, positive scalars `c\u1d62 > 0` and an\ninvertible `A \u2208 GL\u2081\u2081(\u211d)` such that the rows satisfy `w_{\u03c0(i)} = c\u1d62 \u00b7 (A e_i)` for `i < 11` and\n`w_{\u03c0(i)} = \u2212c_i \u00b7 (A e_{i\u221211})` for `i \u2265 11` \u2014 i.e. every optimal architecture is a\nreparametrised positive/negative split.\n\n**The key insight is** that `balanced_activation_at_optimum` already forces the 22 rows to\nsplit into two blocks of 11 that are *mutually antipodal in sign pattern* across every\ntransverse direction, and a set of vectors whose sign patterns are exactly complementary on\nall of `\u211d\u00b9\u00b9` must be an antipodal pair of bases.\n\n**Why now?** The balanced-activation theorem proved in this cycle supplies precisely the\ncombinatorial input (two disjoint spanning blocks of size exactly `11`) that was missing; the\nremaining step is a sign-pattern classification, which is finite-dimensional linear algebra.\n\n**Falsifier.** A single injective bias-free `22 \u00d7 11` layer whose rows are not of this form.\n\n---\n\n## Conjecture B \u2014 the width law is stable: `2n(1+\u03b5)` units buy conditioning `1/(1+\u03b5)`\n\n**Statement.** For every `m \u2265 22` there is an injective ReLU layer `\u211d\u00b9\u00b9 \u2192 \u211d\u1d50` whose frame\nconstants satisfy `\u03b1 \u2265 1/2 + c\u00b7(m \u2212 22)/m` for an absolute `c > 0`, and no injective layer of\nwidth `m` has lower frame constant `\u03b1 > 1/2 + C\u00b7(m \u2212 22)/m`. In particular the optimal\ncondition number `\u221a2` at `m = 22` improves *continuously*, not discontinuously, with width.\n\n**The key insight is** that the lower frame constant is controlled by the worst antipodal\npair, and the proof of `double_frame_lower` localises the loss of a factor `2` to coordinates\nwhose sign flips; adding redundant detectors in generic directions reduces the number of\ncoordinates that can flip simultaneously without being seen.\n\n**Why now?** The sharp constants `1/2` and `1` are now proved for the optimum, so a\nwidth/conditioning trade-off curve has two anchored endpoints to interpolate between.\n\n**Falsifier.** A width-`23` layer with frame constant `1/2` that is provably optimal, or a\nwidth-`m` layer beating the claimed upper envelope.\n\n---\n\n## Conjecture C \u2014 depth cannot beat `2n` at *any* layer\n\n**Statement.** If a ReLU network `\u211d\u00b9\u00b9 \u2192 \u211d^{m\u2081} \u2192 \u211d^{m\u2082} \u2192 \u22ef \u2192 \u211d^{m_L}` is injective, then\n`m\u2096 \u2265 22` for **every** `k`, not just `k = 1`.\n\n**The key insight is** that the image of the first `k\u22121` layers contains, inside each\nactivation region, a full 11-dimensional affine patch, and the local-rank lemma\n`card_activeRows_ge` applies verbatim on that patch; what is missing is a *global* probe\nargument replacing the antipodal directions `\u00b1su`, since the patch is only a cone.\n\n**Why now?** This cycle proved the `k = 1` case unconditionally\n(`no_injective_network_of_narrow_first_layer`) and isolated the exact obstruction\n(`exists_antipodal_probes` needs a full linear space, not a cone). Either a cone version of\nthe duality count or an explicit two-layer counterexample with `m\u2082 = 12` settles it.\n\n**Falsifier.** An injective two-layer ReLU network `\u211d\u00b9\u00b9 \u2192 \u211d\u00b2\u00b2 \u2192 \u211d^{m\u2082}` with `m\u2082 < 22`.\n\n---\n\n## Conjecture D \u2014 symmetry/losslessness incompatibility is quantitative\n\n**Statement.** Call a layer `\u03b4`-equivariant if its weight matrix is within `\u03b4` (entrywise) of\nthe hyperoctahedral-equivariant subspace. Then every `\u03b4`-equivariant injective ReLU layer on\n`\u211d\u00b9\u00b9` has frame lower constant `\u03b1 = O(\u03b4\u00b2)`; equivalently, approximate hypercube symmetry\nforces an approximate information bottleneck with an explicit modulus.\n\n**The key insight is** that `hyperoctahedral_rigidity` shows the equivariant subspace is\n`1`-dimensional (scalars), so an equivariant-plus-perturbation layer is a scalar map plus a\n`\u03b4`-small operator, and the scalar part contributes nothing to distinguishing percepts after\nrectification along the flipped coordinates.\n\n**Why now?** The exact rigidity statement (dimension `1` versus `121`) is now proved, which\nturns the qualitative \"symmetry destroys 11-dimensional processing\" slogan into a perturbation\nquestion with a well-posed constant.\n\n**Falsifier.** A family of `\u03b4`-equivariant injective layers with frame constant bounded below\nindependently of `\u03b4`.\n\n---\n\n## Conjecture E \u2014 the parity dividend has an architectural payoff\n\n**Statement.** For every linear-plus-ReLU layer on `\u211d\u00b9\u00b9` (odd dimension) there is a nonzero\npercept `v` and `\u03bb \u2265 0` with `relu(Wv) = \u03bb v` whenever `W` has nonnegative entries; and the\nodd-dimensional invariant-direction theorem extends to the *nonlinear* rectified setting via\na fixed-point argument on the percept sphere.\n\n**The key insight is** that `relu \u2218 W` maps the nonnegative orthant of `\u211d\u00b9\u00b9` into itself when\n`W \u2265 0`, so Brouwer's theorem on the (odd-dimensional) simplex yields an invariant ray, while\n`exists_invariant_percept_11` gives the linear shadow of the same phenomenon.\n\n**Why now?** The linear odd-dimensional statement and its dimension-2 counterexample are\nproved, so the exact boundary of the phenomenon is known; Mathlib's Brouwer fixed-point\nmachinery makes the nonlinear extension reachable.\n\n**Falsifier.** A nonnegative `11 \u00d7 11` matrix `W` for which `relu(Wv) = \u03bbv` has no nonzero\nsolution.\n",
+    "domains": [
+      "Geometry",
+      "MachineLearning"
+    ],
+    "id": "fd_1353",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "094ca37a",
+    "status": "available",
+    "timestamp": "2026-08-17T04:03:29.989932+00:00",
+    "title": "Derived from the analysis and adversarial review of this cycle. Every conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "A vampire number is a composite number v with an even number of digits that can be factizedd as v = x * y where x and y together have the same digits as v. The smallest is 1260 = 21 * 60. But vampire numbers are just the beginning. Define: (1) Werewolf numbers: v = x * y where x and y share exactly one digit with v. (2) Ghost numbers: v = x * y where v has NO digits in common with x or y. (3) Zombie numbers: v = x * y where x and y are both prime (these violate the definition but exist \u2014 125460 = 204 * 615 = 246 * 510, where both factorizations involve a prime and a composite). Conjecture: The density of vampire numbers in [10^{2n}, 10^{2n+1}] approaches 1/sqrt(n) as n -> infinity. Every even-length interval [10^{2k}, 10^{2k+2}] contains at least one vampire number. Ghost numbers have density 0 \u2014 they become vanishingly rare as the number of digits increases. Test: enumerate all vampire, werewolf, ghost, and zombie numbers up to 10^8. Prove the density conjecture by counting valid digit permutations. Impact: a playful but genuine number theory of arithmetic creatures \u2014 combinatorial digit problems that are easy to state but may be as hard as factoring.",
     "domains": [
       "Novelty",
@@ -18954,7 +18956,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Speculative: Number Theory as Music Theory"
   },
   {
-    "consumed_by_exp_id": "86a70a4b",
+    "consumed_by_exp_id": "",
     "description": "The Fibonacci sequence is defined by F(n+1) = F(n) + F(n-1) and converges to the golden ratio. Define the ANTI-Fibonacci sequence: A(n+1) is the smallest positive integer that is NOT equal to A(n) + A(n-1). The sequence begins 1, 1, 2, 4, 7, 11, 16, ... (each term avoids being the sum of the two previous terms). Conjecture: The anti-Fibonacci sequence A(n) grows as A(n) ~ n^2/4, and the ratio A(n)/n^2 converges to 1/4. More precisely, A(n) = floor(n^2/4) + O(1). The sequence avoids the golden ratio entirely \u2014 the ratio A(n+1)/A(n) does NOT converge, instead oscillating between 1 and 2. The complement of the anti-Fibonacci sequence (numbers that ARE sums of two previous anti-Fibonacci numbers) has density 0. Test: compute A(n) for n up to 10^6 and verify A(n)/n^2 approaches 1/4. Prove A(n) = floor(n^2/4) + O(1) by induction. Impact: a beautiful counterpoint to the Fibonacci sequence \u2014 instead of converging to a constant, it grows quadratically while systematically avoiding addition.",
     "domains": [
       "Novelty",
@@ -18962,11 +18964,10 @@ window.FUTURE_DIRECTIONS = [
       "Computation"
     ],
     "id": "seed_112",
-    "phase": "A",
     "priority_score": 0.73,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "",
     "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
   },
