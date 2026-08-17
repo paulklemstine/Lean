@@ -190,6 +190,6 @@ class TestPhaseBGateParity:
         ke = object.__new__(knowledge_extractor.KnowledgeExtractor)
         ke.workspace = Path(tmpdir)
         threshold = ke._adaptive_phase_b_threshold()
-        assert threshold <= 0.55, (
-            f"Expected clamp <= 0.55, got {threshold}"
+        assert abs(threshold - 0.55) < 0.01, (
+            f"Expected clamp to pin at 0.55, got {threshold}"
         )
