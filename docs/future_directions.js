@@ -154,6 +154,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 286b3a0e (Q=0.890), which proved 145 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions: Moonshine Beyond the j-Function\n\n## Verified connector\n\n`Catalog/Novelty/MonsterMoonshineBridge.lean` proves a rigorous cross-domain bridge between\nfinite-group character theory and formal generating functions.\n\nFor a finite group `G` acting on each finite grade `X n`, define th",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "push_286b3a0e_82c2985f",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "286b3a0e",
+    "status": "available",
+    "timestamp": "2026-08-17T13:54:12.346869+00:00",
+    "title": "Deepening: `Catalog/Novelty/MonsterMoonshineBridge.lean` proves a rigorous cross-domain bri"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 37827e5f (Q=0.850), which proved 21 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formally proves the semicircle law for Wigner ensembles: the empirical spectral distribution of a random Hermitian matrix with independent entries converges in probability to the semicircle distribution as the dimension grows, establishing the universality of bulk eigenvalue statistics for random ma",
     "domains": [
       "Probability"
@@ -179,6 +193,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-16T19:33:56.483285+00:00",
     "title": "Deepening: Teichmuller-Moduli: Analytic Structure of Riemann Surface Space"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle c8991a0a (Q=0.880), which proved 294 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Determine exactly which spaces are classified up to homotopy by their fundamental group. Prove that for Eilenberg-MacLane spaces K(G,1), the fundamental group is a complete invariant. Construct examples where the fundamental group fails to classify.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "push_c8991a0a_f15cb614",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "c8991a0a",
+    "status": "available",
+    "timestamp": "2026-08-17T13:53:58.220287+00:00",
+    "title": "Deepening: Topological-Algebraic Bridge: Fundamental Group as a Complete Invariant"
   },
   {
     "consumed_by_exp_id": "",
@@ -855,20 +883,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle 525aecde (Q=0.840), which proved 70 theorems in Shared. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the discrete Fourier transform as representation theory of cyclic groups. Prove Parseval's theorem and the convolution theorem. Extend to arbitrary finite abelian groups. Prove the uncertainty principle: supp(f) \u00b7 supp(f\u0302) \u2265 |G|.",
-    "domains": [
-      "Shared"
-    ],
-    "id": "push_525aecde_c7061879",
-    "priority_score": 0.94,
-    "research_mode": "team",
-    "source_exp_id": "525aecde",
-    "status": "available",
-    "timestamp": "2026-08-17T09:01:45.769310+00:00",
-    "title": "Deepening: Fourier Analysis on Finite Groups"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Building on cycle 507d1ef0 (Q=0.830), which proved 54 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Investigate the ArXiv paper 'A Fourier-analytic Uniqueness Theorem for Lattice-point Enumerators' and formalize its key results. Abstract: We consider a bounded set $P \\subset \\mathbb{R}^d$ and the lattice-point enumerator $L_P(t) = |tP \\cap \\mathbb{Z}^d|$ for real $t > 0$. We show that if two bound",
     "domains": [
       "Cryptography"
@@ -880,6 +894,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-17T07:17:22.608319+00:00",
     "title": "Deepening: ArXiv paper: A Fourier-analytic Uniqueness Theorem for Lattice-point Enumerators"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 2ce26220 (Q=0.820), which proved 77 theorems in Geometry. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions: Taxicab Number Generalizations\n\nDerived from the current cycle's findings on Hardy\u2013Ramanujan taxicab numbers.\n\n## 1. Unbounded representation counts (existence of Taxicab(n) for all n)\n\n**Conjecture.** For every `n` there exists a positive integer expressible as a\nsum of two pos",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "push_2ce26220_a5fdc26d",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "2ce26220",
+    "status": "available",
+    "timestamp": "2026-08-17T13:54:23.022721+00:00",
+    "title": "Deepening: Derived from the current cycle's findings on Hardy\u2013Ramanujan taxicab numbers."
   },
   {
     "consumed_by_exp_id": "",
@@ -1809,36 +1837,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-27T13:44:25.584304+00:00",
     "title": "Deepening: Causal Inference: Do-Calculus as Formal Logic"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove that the univalence axiom enables automated proof transfer between isomorphic structures. Construct a formal pipeline: given an isomorphism f: A \u2245 B and a theorem about A, mechanically produce the corresponding theorem about B. Quantify the proof compression ratio.",
-    "domains": [
-      "Bridges",
-      "Logic"
-    ],
-    "id": "seed_295",
-    "priority_score": 0.89,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Homotopy Type Theory to HoTT Bridge: Univalent Foundations for Proof Transfer"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove that tropical curve counts equal classical Gromov-Witten invariants for toric surfaces. Formalize the correspondence theorem: each tropical curve lifts to a unique complex curve in the toric surface. Compute the tropical GW invariants for P^2.",
-    "domains": [
-      "Tropical",
-      "Algebra"
-    ],
-    "id": "seed_318",
-    "priority_score": 0.89,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Tropical Curve Counting: Gromov-Witten Invariants"
   },
   {
     "consumed_by_exp_id": "",
@@ -4743,6 +4741,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Cycle 286b3a0e (Q=0.890) proved 145 theorems in Bridges but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions: Moonshine Beyond the j-Function\n\n## Verified connector\n\n`Catalog/Novelty/MonsterMoonshineBridge.lean` proves a rigorous cross-domain bridge between\nfinite-group character theory a",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "sorry_fill_286b3a0e_55141f77",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "286b3a0e",
+    "status": "available",
+    "timestamp": "2026-08-17T13:54:12.663412+00:00",
+    "title": "Close Proofs: `Catalog/Novelty/MonsterMoonshineBridge.lean` proves a rigorous cross-"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle 2a357c10 (Q=0.840) proved 104 theorems in Bridges but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: ## Network loop round-net-43 (speed axis, round 16)\n\n**Title: The Deepest Rung Is Two-Seed 256 \u2014 k\\*=256 at (d=32, ctx=512) reproduces EXACTLY at seed=2, the repaired random-k control shows positive s",
     "domains": [
       "Bridges"
@@ -5860,18 +5872,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Mega-Sphere: All Dimensions at Once"
   },
   {
-    "consumed_by_exp_id": "c8991a0a",
+    "consumed_by_exp_id": "",
     "description": "Determine exactly which spaces are classified up to homotopy by their fundamental group. Prove that for Eilenberg-MacLane spaces K(G,1), the fundamental group is a complete invariant. Construct examples where the fundamental group fails to classify.",
     "domains": [
       "Bridges",
       "Algebra"
     ],
     "id": "seed_298",
-    "phase": "A",
     "priority_score": 0.83,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "",
     "title": "Topological-Algebraic Bridge: Fundamental Group as a Complete Invariant"
   },
@@ -13847,18 +13858,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "The certified census of fundamental discriminants with `|D| \u2264 1000` \u2014 exactly `6"
   },
   {
-    "consumed_by_exp_id": "2ce26220",
+    "consumed_by_exp_id": "",
     "description": "# Future Directions: Taxicab Number Generalizations\n\nDerived from the current cycle's findings on Hardy\u2013Ramanujan taxicab numbers.\n\n## 1. Unbounded representation counts (existence of Taxicab(n) for all n)\n\n**Conjecture.** For every `n` there exists a positive integer expressible as a\nsum of two positive cubes in at least `n` distinct ways.\n\nThe key insight is that the affine Fermat cubic `x\u00b3 + y\u00b3 = N` is an elliptic\ncurve, and a single rational point of infinite order generates infinitely many\nrational representations; clearing denominators by a common cube collapses `n`\nof them onto a single integer that inherits `n` integer representations.\n\nWhy now? The cycle established the exact provable boundary: the elementary\nscaling map multiplies a fixed representation set by a cube but never *creates*\nnew representations, so genuine growth in the count must come from the group law\non the cubic. Isolating this obstruction pinpoints precisely the arithmetic\ninput \u2014 a non-torsion rational point \u2014 that any full proof must supply.\n\n## 2. Sharp growth rate of Taxicab(n)\n\n**Conjecture.** The cubic floor is far from optimal: `Taxicab(n)` grows faster\nthan any fixed polynomial in `n`, and in fact `log Taxicab(n) / n \u2192 \u221e`.\n\nThe key insight is that representations correspond to lattice-like points on the\ncubic curve whose heights grow at least geometrically under repeated application\nof the chord-and-tangent construction, forcing the smallest number carrying `n`\nrepresentations to grow super-polynomially rather than at the elementary cubic\nrate proved here.\n\nWhy now? Having proved a clean lower bound `Taxicab(n) > n\u00b3` by pigeonhole on\ndistinct smaller summands, the natural next question is how loose it is; the\nobserved values (`1729`, `8.7\u00b710\u2077`, `7.0\u00b710\u00b9\u00b2`) already grow far faster than\n`n\u00b3`, quantitatively motivating a super-polynomial lower bound.\n\n## 3. Multiplicative obstruction and a cube-free core\n\n**Conjecture.** Every taxicab number `N` factors as `N = m\u00b3 \u00b7 N\u2080` with `N\u2080`\ncube-free, and the representation count of `N` equals that of its cube-free core\n`N\u2080`; consequently the *primitive* taxicab numbers (cube-free `N\u2080`) already carry\nall the representation-count information.\n\nThe key insight is that the scaling map proved in this cycle is a bijection\nbetween representations of `N\u2080` and representations of `m\u00b3 N\u2080` that preserves the\nordering `a \u2264 b`, so cube factors contribute nothing new and can be stripped.\n\nWhy now? The scaling theorem `scaled_reps_card` supplies exactly the injection\nneeded for the easy direction; the open content is the reverse inclusion \u2014 that\nscaling by a cube produces *no additional* representations \u2014 which would reduce\nthe whole theory to cube-free numbers.\n\n## 4. Cabtaxi numbers (cubes with signs)\n\n**Conjecture.** Allowing one summand to be negative (differences of cubes)\nstrictly lowers the least number with `n` representations for every `n \u2265 2`, and\nthe signed and unsigned growth exponents nevertheless coincide.\n\nThe key insight is that the signed cubic `x\u00b3 + y\u00b3 = N` with `x, y \u2208 \u2124` has\nstrictly more rational points available to the chord-and-tangent process than its\npositive-orthant restriction, so signed representations are strictly cheaper to\naccumulate while remaining governed by the same elliptic-curve height growth.\n\nWhy now? The pigeonhole lower bound in this cycle used only positivity and the\nordering `a \u2264 b`; relaxing positivity isolates how much of the growth is forced\nby arithmetic geometry versus by the sign restriction, a clean comparative test.\n",
     "domains": [
       "Geometry",
       "Pythagorean"
     ],
     "id": "fd_0711",
-    "phase": "A",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "78cd863a",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-24T21:32:19.516529+00:00",
     "title": "Derived from the current cycle's findings on Hardy\u2013Ramanujan taxicab numbers."
   },
@@ -14012,18 +14022,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "every rule and small period `n` with kernel-checked finite enumeration."
   },
   {
-    "consumed_by_exp_id": "286b3a0e",
+    "consumed_by_exp_id": "",
     "description": "# Future Directions: Moonshine Beyond the j-Function\n\n## Verified connector\n\n`Catalog/Novelty/MonsterMoonshineBridge.lean` proves a rigorous cross-domain bridge between\nfinite-group character theory and formal generating functions.\n\nFor a finite group `G` acting on each finite grade `X n`, define the coefficient of the series\nattached to `g` to be the number of points in `X n` fixed by `g`. The file proves:\n\n\\[\n  \\sum_{g\\in G} |(X_n)^g| = |G|\\,|X_n/G|\n\\]\n\nfor every `n`, and consequently the coefficientwise q-series identity\n\n\\[\n  \\sum_{g\\in G} T_g(q) = |G|\\,O(q),\n  \\qquad O(q)=\\sum_{n\\ge0}|X_n/G|q^n.\n\\]\n\nIt also proves that every coefficient, and hence every whole series `T_g`, is invariant under\nconjugacy. Thus these element-indexed series genuinely descend to conjugacy-class data. The\naverage coefficient is exactly the number of orbits. This is Burnside's orbit-counting theorem\nlifted grade-by-grade to a formal q-expansion, connecting character values with enumerative\ngenerating functions without imposing unjustified analytic hypotheses.\n\n## Why the proposed product claim was not asserted\n\nThe mission's much stronger product claim should not be treated as an established consequence\nof monstrous moonshine. Several issues must first be resolved:\n\n1. Standard McKay\u2013Thompson series are normalized with leading term `q\u207b\u00b9`. A product of 194\n   class representatives therefore begins with `q\u207b\u00b9\u2079\u2074`, so it is generally meromorphic at the\n   cusp rather than a holomorphic modular form as stated.\n2. If \u201cproduct over all `g in M`\u201d literally means all Monster elements, its leading term is\n   `q^{-|M|}`. If it means one representative of each conjugacy class, it is a different\n   product. These formulations cannot be interchanged.\n3. The series have different invariance groups (often genus-zero groups involving\n   Atkin\u2013Lehner extensions). A product is modular only after specifying a common subgroup,\n   compatible multipliers, cusp behavior, and a coherent notion of weight.\n4. McKay\u2013Thompson series are modular **functions**, normally of weight zero. Multiplying them\n   does not produce weight `|M|/24`; moreover `|M|/24` is not the weight naturally supplied by\n   the moonshine theorem.\n5. Character values are recovered grade by grade from the family of traces and the Monster\n   character table. A single product loses information in general, so the claim that it\n   determines the complete character table, element order, and maximal-subgroup structure\n   requires a separately specified injective reconstruction map.\n\nAccordingly, claiming the requested product theorem would encode an unsupported\u2014and in its\nliteral normalization, incompatible\u2014statement. The formal result supplied here captures the\nvalid additive relationship between all trace/fixed-point series and orbit enumeration.\n\n## Computational evidence decision\n\nA separate computational-evidence file was intentionally omitted because the requested output\npermits only `.lean` files and `FUTURE_DIRECTIONS.md`. More importantly, the connector is proved\nfor every finite group, every graded finite action, and every coefficient; checking selected\nsmall cases would be logically weaker than the completed theorem. The proof is not a\n`native_decide` calculation. The concrete Monster request for 194 \u00d7 100 coefficients would\nalso require an external certified dataset containing the Monster character table and the\nnormalized McKay\u2013Thompson coefficients, neither of which is present in this project.\n\n## Concrete next steps\n\n1. Formalize complex-valued graded characters `tr(g | V_n)` and prove conjugacy invariance by\n   trace invariance under similarity.\n2. Define Laurent q-series with the standard `q\u207b\u00b9 + O(q)` normalization and formalize the pole\n   order of finite products. This will make the normalization obstruction precise.\n3. Import a provenance-checked table of Monster irreducible characters and the 194 normalized\n   McKay\u2013Thompson series; verify coefficient decompositions by exact integer arithmetic.\n4. State modularity separately for each class, with its actual moonshine group and multiplier.\n5. Investigate information-preserving aggregates\u2014such as the full vector-valued family or a\n   labeled generating function\u2014rather than an unlabeled scalar product that discards data.\n",
     "domains": [
       "Pythagorean",
       "Bridges"
     ],
     "id": "fd_0792",
-    "phase": "A",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "09a3e4f4",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-28T12:21:03.386066+00:00",
     "title": "`Catalog/Novelty/MonsterMoonshineBridge.lean` proves a rigorous cross-domain bri"
   },
@@ -19453,6 +19462,70 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "`\u03a3_g |X^g|^k = (B_k + \u03a3_P (m_P \u2212 1))\u00b7|G|`\n    (`bell_defect_eq`): the excess of a moment over its Bell floor is `|G|` times the number of\n    *extra* orbits per pattern, and it vanishes exactly for `k`-transitive actions\n    (`sum_patternMultiplicity_sub_one_eq_zero_iff`).\n\n---\n\n\n\n## Open conjectures for the next cycle\n\n\n\n### Conjecture E\u2032 (the fibre spectrum is a strictly finer invariant)\n\n*The vector `(m_P)_P` of pattern multiplicities separates pairs of actions that the scalar moment\n`\u03a3_g |X^g|^k` cannot; and `m_P = 1` for all `P` with exactly `j` blocks iff the action is\n`j`-transitive (the block-graded refinement of the fibrewise criterion).*\n\nThe key insight is that the fibrewise criterion now proved treats all patterns at once, whereas the\ntransitivity hierarchy is graded by the number of blocks: restricting attention to the patterns\nwith `j` blocks should isolate exactly `j`-transitivity inside the `k`-tuple data, giving a\nspectrum of invariants between the moments.\n\nWhy now? The decomposition, the fibrewise criterion and the exact defect formula are proved\n(items 18\u201319), and cycle 3 also shows the scalar moment cannot separate actions (item 15), so the\nonly thing left to test is whether the refined vector can.\n\n\n\n### Conjecture F (Bell defect bounds the failure of transitivity)\n\n*The Bell defect `D_k(G,X) := \u03a3_g |X^g|^k \u2212 B_k|G| \u2265 0` satisfies: `D_k = 0 \u21d2 D_j = 0` for `j \u2264 k`\n(proved), and quantitatively `D_2 > 0 \u21d2 D_k \u2265 c_k \u00b7 D_2` for an explicit combinatorial constant\n`c_k` depending only on `k`.*\n\nThe key insight is that the defect counts non-singleton fibres of the orbit-to-pattern map with\nmultiplicity, and a failure of 2-transitivity is inherited by every longer tuple by padding with\nrepeated coordinates, which multiplies the excess by a controlled partition count.\n\nWhy now? Non-negativity, the implication `D_k = 0 \u21d2 D_j = 0`, and now the exact formula\n`D_k = |G|\u00b7\u03a3_P (m_P \u2212 1)` (item 19) are theorems; only the quantitative propagation between\ndifferent `k` is open, and it is now a statement about fibre sizes rather than about moments.\n\n\n\n### Conjecture G (how much labelling an injective aggregate must spend)\n\n*Every injective aggregate `A : (Fin m \u2192 QLaurent) \u2192 QLaurent` that is additive in each argument\nmust spread the coefficients over at least `m` pairwise disjoint infinite sets of exponents; in\nparticular no such aggregate has image contained in the series supported on a set of density\n`< 1/m`.*\n\nThe key insight is that cycle 3 identified symmetry as the obstruction, so what remains is a\ncounting bound: injectivity forces the aggregate to reserve, for each index, an infinite family of\nindependent coefficient slots, which is exactly what the interleaving construction does with the\nresidues mod `m`.\n\nWhy now? The dichotomy (interleaving injective, every symmetric aggregate non-injective) is proved;\nthe missing piece is a lower bound showing interleaving is not just *an* answer but essentially the\n*only* shape of answer.\n\n\n\n### Co",
+    "domains": [
+      "Combinatorics",
+      "MachineLearning"
+    ],
+    "id": "fd_1441",
+    "priority_score": 0.4474382280955627,
+    "research_mode": "team",
+    "source_exp_id": "286b3a0e",
+    "status": "available",
+    "timestamp": "2026-08-17T13:54:07.627034+00:00",
+    "title": "The Bell defect, counted exactly"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "No permutation-invariant aggregate of `m \u2265 2` series is\n    injective (`symmetric_aggregate_not_injective`); the product aggregate is the special case\n    (`prod_aggregate_not_injective_of_two_le`), and the injective interleaving aggregate is\n    therefore necessarily asymmetric (`interleave_not_symmetric`). Commutativity, not any accident\n    of a two-factor example, is the obstruction.",
+    "domains": [],
+    "id": "fd_1439",
+    "priority_score": 0.4443333333333333,
+    "research_mode": "team",
+    "source_exp_id": "286b3a0e",
+    "status": "available",
+    "timestamp": "2026-08-17T13:54:07.071462+00:00",
+    "title": "Conjecture D, main half, closed"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Two finite `G`-actions have the same *trace distribution*\n    `{|X^g| : g \u2208 G}` **iff** they have the same orbit counts on `k`-tuples for all `k \u2264 N`\n    (`traceDistribution_eq_iff_card_orbits_eq`), and then for all `k` whatsoever\n    (`card_orbits_eq_of_le`). Gradewise q-series form: `traceDistribution_graded_eq`.",
+    "domains": [],
+    "id": "fd_1434",
+    "priority_score": 0.4260952380952381,
+    "research_mode": "team",
+    "source_exp_id": "286b3a0e",
+    "status": "available",
+    "timestamp": "2026-08-17T13:54:05.925280+00:00",
+    "title": "Conjecture A, closed"
+  },
+  {
+    "consumed_by_exp_id": "0cf95d8d",
+    "description": "The range `k \u2264 N` cannot be shortened: `(0,2)` and `(1,1)` are bounded by `2`,\n    agree for `k \u2264 1`, and have different distributions (`powerSums_not_determined_of_lt`).\n    Exhaustive search (`ComputationalEvidence.md`, \u00a78) finds `0` such pairs at `K = N` and many at\n    `K = N \u2212 1`.",
+    "domains": [],
+    "id": "fd_1435",
+    "phase": "A",
+    "priority_score": 0.4160952380952381,
+    "research_mode": "team",
+    "source_exp_id": "286b3a0e",
+    "status": "in_progress",
+    "timestamp": "2026-08-17T13:54:06.155568+00:00",
+    "title": "Sharpness"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For `k \u2264 |X|` the orbit count splits\n    along patterns, `#(X^k/G) = \u03a3_P m_P` (`sum_patternMultiplicity`), with `m_P \u2265 1` for every\n    pattern (`one_le_patternMultiplicity`), and the action is `k`-transitive **iff** every fibre\n    is a singleton (`patternMultiplicity_eq_one_iff`).",
+    "domains": [],
+    "id": "fd_1440",
+    "priority_score": 0.4153333333333333,
+    "research_mode": "team",
+    "source_exp_id": "286b3a0e",
+    "status": "available",
+    "timestamp": "2026-08-17T13:54:07.301598+00:00",
+    "title": "Fibre spectrum (Conjecture E, first half, closed)"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "It would upgrade \"the cost of internal soundness is one loop\"\n(`soundnessExt_sound_iff`, `iterExt_selfLoop_ncard`) into \"the cost is *nothing* for\nthe old theory\", i.e. a genuine conservativity theorem for tangled hierarchies \u2014 the\nformal counterpart of Hofstadter's claim that strange loops do not corrupt the levels\nthey sit above.",
     "domains": [],
     "id": "fd_1414",
@@ -19462,6 +19535,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-17T09:57:44.101662+00:00",
     "title": "It would upgrade \"the cost of internal soundness is one loop\""
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every `m \u2265 1`, the renormalized product `q^m \u00b7 \u03a0 f i` of `m`\n    normalized series realizes **exactly** the series of order `0`\n    (`renormalized_prod_iff_orderTop_zero`); the pole order is the only obstruction, and the\n    factorization is never unique (`factorization_not_unique`).",
+    "domains": [],
+    "id": "fd_1438",
+    "priority_score": 0.41264102564102567,
+    "research_mode": "team",
+    "source_exp_id": "286b3a0e",
+    "status": "available",
+    "timestamp": "2026-08-17T13:54:06.839161+00:00",
+    "title": "Conjecture C, closed"
   },
   {
     "consumed_by_exp_id": "4bf66c09",
@@ -19475,6 +19560,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-08-17T09:01:32.349835+00:00",
     "title": "Chebotarev's theorem that every square submatrix of the `p \u00d7 p` DFT matrix"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Two `\u2115`-valued functions on finite types bounded by `N` with equal\n    power sums for all `k \u2264 N` have equal value distributions (`count_eq_of_powerSums`), proved by\n    inverting a transposed Vandermonde system over `\u211a` with the nodes `0, 1, \u2026, N`.",
+    "domains": [],
+    "id": "fd_1433",
+    "priority_score": 0.4043921568627451,
+    "research_mode": "team",
+    "source_exp_id": "286b3a0e",
+    "status": "available",
+    "timestamp": "2026-08-17T13:54:05.695599+00:00",
+    "title": "Power-sum inversion"
   },
   {
     "consumed_by_exp_id": "",
@@ -19620,5 +19717,233 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-17T10:48:53.313531+00:00",
     "title": "go through and shaped the conjectures"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "All the moving parts are already formal here: `index_ker_eq_two` and\n`char_eq_of_ker_eq` (characters versus kernels), `index_two_gEquiv_iff_eq` (normality\nkills conjugacy), and `nonempty_gEquiv_iff_isConj` (the general correspondence). Two of the\nthree ingredients of the odd-prime count are now theorems as well, in\n`Catalog/Bridges/FundamentalGroupCoveringPrimeIndex.lean`: every normal subgroup of prime\nindex `p` is the kernel of a surjection onto `C_p`\n(`exists_surjective_char_of_prime_index`), and exactly `p \u2212 1` surjective characters share\na given kernel (`card_surjective_chars_with_ker`, via `Aut(C_p)` having order `p \u2212 1`), which\nis precisely the scaling correction \u2014 for `p = 2` it degenerates to `1` and recovers\n`char_eq_of_ker_eq`.  The regularity dichotomy behind the split is now closed on both\nsides, in `Catalog/Bridges/FundamentalGroupCoveringNonRegular.lean`: a non-normal subgroup\nof prime index `p` forces `|G|` to have a prime factor below `p`\n(`minFac_lt_index_of_not_normal`), and conversely the non-regular case really occurs \u2014\nthe point stabiliser of `S\u2083` gives a connected three-sheeted covering of a `K(S\u2083,1)` that\nis not regular and whose deck group is trivial (`s3_triple_covering_not_regular`,\n`s3_triple_covering_deck_trivial`).  What remains open is only the count of non-normal\nindex-`p` classes.",
+    "domains": [
+      "Algebra",
+      "Bridges"
+    ],
+    "id": "fd_1419",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "c8991a0a",
+    "status": "available",
+    "timestamp": "2026-08-17T13:53:42.216170+00:00",
+    "title": "All the moving parts are already formal here: `index_ker_eq_two` and"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The abelian branch of the theory is fully formal\n(`nonempty_gEquiv_iff_stabilizer_eq_of_comm`), so the topological content is discharged\nand only the lattice count remains; the one-dimensional case is already a theorem here\n(`circle_coverings_classified_by_degree`: index-`n` subgroups of `\u2124` are unique, giving\n`\u03c3(n) = 1` for `k = 1`), and the case `n = 2`, `k = 2` is now also a theorem\n(`torus_three_double_coverings` in `Catalog/Bridges/FundamentalGroupCoveringTorus.lean`:\nexactly three double coverings, `\u03c3(2) = 3`, and all three total spaces are again tori), as\nis the case `n = 3` (`torus_four_triple_coverings` in\n`Catalog/Bridges/FundamentalGroupCoveringTorusTriple.lean`: exactly four triple coverings,\n`\u03c3(3) = 4`, pairwise non-isomorphic, and again all four total spaces are tori).\nThe remaining work is the general Hermite-normal-form count; the first genuinely new case\nwas `n = 4`, where the predicted answer `\u03c3(4) = 7` mixes the two index-two-inside-index-two\ntowers with the primitive index-four sublattices.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1420",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "c8991a0a",
+    "status": "available",
+    "timestamp": "2026-08-17T13:53:42.477570+00:00",
+    "title": "The abelian branch of the theory is fully formal"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "(`Catalog/Bridges/FundamentalGroupCoveringTorusSigma.lean`).  The Hermite normal form of a\nsublattice is formalized (`exists_hnf`, `hnf_unique`, `index_torusLat`), giving\n`card_index_n_subgroups_torus_sigma`: for every `n \u2265 1` the torus has exactly\n`\u03c3(n) = \u2211_{d \u2223 n} d` connected `n`-sheeted coverings, pairwise non-isomorphic, and each\ntotal space is again a torus (`torus_sigma_classification`, using\n`torus_finite_covering_is_torus`).  The predicted checkpoint is confirmed:\n`card_index_four_subgroups_torus` gives `\u03c3(4) = 7`.  The prime case was obtained\nindependently by character theory (`torus_prime_degree_classification`, `p + 1`\ncoverings).  So a homotopy invariant of a fixed space is now, in this catalog, literally an\narithmetic function.  What remains open is the higher-rank statement for `K(\u2124^k,1)`,\n`k \u2265 3`.",
+    "domains": [
+      "Algebra",
+      "NumberTheory"
+    ],
+    "id": "fd_1421",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "c8991a0a",
+    "status": "available",
+    "timestamp": "2026-08-17T13:53:42.725365+00:00",
+    "title": "(`Catalog/Bridges/FundamentalGroupCoveringTorusSigma.lean`).  The Hermite normal form of a"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The object-level statements are all proved (`nonempty_gHom_iff_le_conj`,\n`nonempty_gEquiv_iff_isConj`, `dosetEquivOrbits` for fibre products). Upgrading them to a\ncategorical equivalence is a bookkeeping exercise in the same model, and the \"if and only\nif\" is then immediate. A concrete falsification target: find a finite group where\nisomorphic subgroups are always conjugate yet two non-isomorphic coverings still share a\n\u03c0\u2081 \u2014 this would refute the criterion and force a finer invariant.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_1422",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "c8991a0a",
+    "status": "available",
+    "timestamp": "2026-08-17T13:53:42.963258+00:00",
+    "title": "The object-level statements are all proved (`nonempty_gHom_iff_le_conj`,"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The catalog now contains the complete `1`-truncated story (both the positive\ntheorem for `K(G,1)`s and a general family of failures, `twistedPair_theorem`), so the\n`1`-type boundary is the next well-posed question; the restriction map on group cohomology\nis available in Mathlib, which makes the functoriality statement directly formalizable\neven before the full `2`-type classification is.",
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_1423",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "c8991a0a",
+    "status": "available",
+    "timestamp": "2026-08-17T13:53:43.196205+00:00",
+    "title": "The catalog now contains the complete `1`-truncated story (both the positive"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Every index-two subgroup of any group is the kernel of a surjection\n   onto `C\u2082` (`charOfIndexTwo`, `ker_charOfIndexTwo`), and its odd-prime successor is now\n   settled too: a *normal* subgroup of prime index `p` is the kernel of a surjection onto\n   `C_p` (`exists_surjective_char_of_prime_index`) and exactly `p \u2212 1` surjective characters\n   share that kernel (`card_surjective_chars_with_ker`). **New successor (C1b):** drop\n   normality \u2014 for `p` the smallest prime dividing `|G|`, every index-`p` subgroup of a\n   finite group is normal, hence *every* connected degree-`p` covering of a `K(G,1)` with\n   `p = min(primes dividing |G|)` is regular and character-theoretic; the falsifiable form\n   is that a non-regular connected degree-`p` covering forces a prime divisor of `|G|`\n   smaller than `p`, tested by `G = S\u2083`, `p = 3` (one non-regular triple covering, and\n   `2 < 3`).  **C1b is now settled in both directions**\n   (`normal_and_exists_char_of_index_eq_minFac`, and\n   `minFac_lt_index_of_not_normal` together with the `S\u2083` witness\n   `nonRegular_prime_degree_forces_smaller_prime`).  **New successor (C1c):** for a finite\n   group `G` and a prime `p \u2223 |G|` that is *not* minimal, the number of conjugacy classes\n   of non-normal index-`p` subgroups is `(n_p(G) \u2212 1)/p`-controlled by Sylow counting \u2014\n   concretely, the conjecture is that this number is `0` exactly when every index-`p`\n   subgroup contains a normal subgroup of index `p`, and the falsifiable form is to exhibit\n   a group where the non-normal classes outnumber the character-theoretic ones.\n2. **(C2a \u2014 settled)** `\u2124\u00b2` has exactly three subgroups of index two and exactly four of\n   index three, so the torus has `\u03c3(2) = 3` double and `\u03c3(3) = 4` triple coverings\n   (`torus_three_double_coverings`, `torus_four_triple_coverings`), all of whose total\n   spaces are tori. **New successor (C2b):** every connected finite covering of the torus\n   has total space a torus, i.e. every finite-index subgroup of `\u2124\u00b2` is isomorphic to `\u2124\u00b2`\n   \u2014 provable from the fact that a finite-index subgroup of `\u2124^k` is free abelian of the\n   same rank \u2014 and the degree-`n` count is `\u03c3(n)`, with `n = 4` (`\u03c3(4) = 7`) the next\n   checkpoint.  **C2b is now settled**: `torus_finite_index_subgroup_mulEquiv` (every\n   finite-index subgroup of `\u2124\u00b2` is a copy of `\u2124\u00b2`),\n   `card_index_n_subgroups_torus_sigma` (the count is `\u03c3(n)` for every `n`) and\n   `card_index_four_subgroups_torus` (`\u03c3(4) = 7`).  **New successor (C2c):** for `K(\u2124^k,1)`\n   with `k \u2265 3` the number of connected `n`-sheeted coverings is the coefficient\n   `\u2211_{d\u2081 d\u2082 \u22ef = n}` of the lattice zeta function `\u03b6(s)\u03b6(s\u22121)\u22ef\u03b6(s\u2212k+1)`, i.e. the number of\n   finite-index sublattices of `\u2124^k` of index `n`; the falsifiable form is the first case\n   `k = 3`, `n = 2`, where the prediction is `7` sublattices of index two \u2014 testable by the\n   same character argument that gives `p + 1` for `k = 2`, since index-two sublattices of\n   `\u2124^k` are the nonzero mod-two characters, `2^k \u2212 1`.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_1424",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "c8991a0a",
+    "status": "available",
+    "timestamp": "2026-08-17T13:53:43.516724+00:00",
+    "title": "Every index-two subgroup of any group is the kernel of a surjection"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "`\u03a3_{g\u2208G} |X^g|^k = |G| \u00b7 #(X^k/G)` for every `k`\n   (`sum_fixedPoints_pow_eq_orbits_mul_card`); `k = 1` is Burnside, `k = 2` is the rank of the\n   permutation action.",
+    "domains": [],
+    "id": "fd_1425",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "286b3a0e",
+    "status": "available",
+    "timestamp": "2026-08-17T13:54:03.885731+00:00",
+    "title": "Moment hierarchy"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Equality at `k = 2` holds *iff* the action is trivial\n   (`orbits_sq_eq_orbitals_iff_trivial`), with a quantitative refinement (`rigidity_quantitative`).",
+    "domains": [],
+    "id": "fd_1426",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "286b3a0e",
+    "status": "available",
+    "timestamp": "2026-08-17T13:54:04.115247+00:00",
+    "title": "Rigidity"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Trace series built as genuine `q\u207b\u00b9 + O(q)` series, with\n   `\u03a3_g T_g = |G| \u00b7 O(q)` at that level (`sum_traceLaurent_eq_card_smul_orbitLaurent`).",
+    "domains": [],
+    "id": "fd_1427",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "286b3a0e",
+    "status": "available",
+    "timestamp": "2026-08-17T13:54:04.340399+00:00",
+    "title": "Honest Laurent normalization"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "A product of `m` normalized series has order exactly `\u2212m`\n   (`orderTop_prod_normalized`), so a Monster-sized product has a pole of order `194`\n   (`orderTop_prod_traceLaurent_194`); multiplying by `q^m` restores order `0`.",
+    "domains": [],
+    "id": "fd_1428",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "286b3a0e",
+    "status": "available",
+    "timestamp": "2026-08-17T13:54:04.565939+00:00",
+    "title": "Pole-order obstruction"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The unlabeled product is not injective on families; the interleaved\n   aggregate is (`interleave_injective`).",
+    "domains": [],
+    "id": "fd_1429",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "286b3a0e",
+    "status": "available",
+    "timestamp": "2026-08-17T13:54:04.788765+00:00",
+    "title": "Aggregate dichotomy"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "`#(G^{k+1}/G) = |G|^k` for the regular action; freeness is characterized by one\n   maximal moment (`free_iff_orbits_pi`).\n\n\n\n### Cycle 2 \u2014 Bell numbers detect `k`-transitivity (Conjecture B, closed)",
+    "domains": [],
+    "id": "fd_1430",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "286b3a0e",
+    "status": "available",
+    "timestamp": "2026-08-17T13:54:05.015488+00:00",
+    "title": "Extremes"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "are complete `G`-invariants of the equality pattern of a tuple, counted by\n   the Bell numbers `1, 1, 2, 5, 15, 52` (OEIS A000110), proved by `decide`.",
+    "domains": [],
+    "id": "fd_1431",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "286b3a0e",
+    "status": "available",
+    "timestamp": "2026-08-17T13:54:05.239324+00:00",
+    "title": "Kernel patterns"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "`\u03a3_g |X^g|^k = B_k\u00b7|G| \u2194 k`-transitivity, with attainment for symmetric\n    groups and monotonicity in `k`; and its gradewise (q-series) form.\n\n\n\n### Cycle 3 \u2014 inversion, sharpness, limits, factorization (Conjectures A, C, D)",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_1432",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "286b3a0e",
+    "status": "available",
+    "timestamp": "2026-08-17T13:54:05.467226+00:00",
+    "title": "The criterion"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Every level set of `g \u21a6 |X^g|`, the number of\n    fixed-point-free elements, the orbit count, and \u2014 through cycle 2's Bell criterion \u2014 the whole\n    `k`-transitivity spectrum (`kTransitive_iff_of_traceDistribution_eq`).",
+    "domains": [],
+    "id": "fd_1436",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "286b3a0e",
+    "status": "available",
+    "timestamp": "2026-08-17T13:54:06.382046+00:00",
+    "title": "What the distribution determines"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Two actions of the Klein four-group on two points have equal\n    trace distributions, hence equal orbit counts on `k`-tuples for *every* `k`, yet are not\n    equivariantly isomorphic (`traceDistribution_not_complete_invariant`). Moment data is a\n    complete invariant of the *distribution*, never of the *action*.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_1437",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "286b3a0e",
+    "status": "available",
+    "timestamp": "2026-08-17T13:54:06.608211+00:00",
+    "title": "What it does not determine"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The shell constant is optimal: there exist `N` with `n` representations and\n   `N \u2264 114 (n\u22121)\u00b3 \u00b7 (1 + o(1))`? \u2014 i.e. is the shell inequality ever nearly tight?\n   (Data suggest emphatically not; a proof that it is *never* tight for `n \u2265 3` would be\n   the first super-cubic lower bound.)",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_1442",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "2ce26220",
+    "status": "available",
+    "timestamp": "2026-08-17T13:54:18.069073+00:00",
+    "title": "The shell constant is optimal: there exist `N` with `n` representations and\n   `N \u2264 114 (n\u22121)\u00b3 \u00b7 (1 + o(1))`?"
   }
 ];

@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "35640655",
-      "domain": "Bridges",
-      "key_insight": "# FUTURE DIRECTIONS — after the OR-dial maximum and its multi-prime extension\n\nThe verified state of the thread (all in `Catalog/Bridges/ORDial*.lean`, 0 sorries, no added\naxioms, no `native_decide`):",
-      "quality_score": 0.89,
-      "sorry_count": 0,
-      "theorem_count": 2,
-      "timestamp": "2026-08-15T08:56:05",
-      "title": "OR-DIAL-MAXIMUM: the semiprime OR dial has a global cap g(2)=0.3113 bits over every class-rate profi"
-    },
-    {
       "cycle_id": "ed381d4e",
       "domain": "Shared",
       "key_insight": "# Future Directions — collision factoring beyond the birthday bound\n\nDerived from the verified results in\n\n* `Catalog/Shared/ThreeSumFactorReveal.lean`\n* `Catalog/Shared/BirthdayBoundHierarchy.lean`\n*",
@@ -499,19 +489,19 @@
       "theorem_count": 145,
       "timestamp": "2026-08-17T13:54:12",
       "title": "`Catalog/Novelty/MonsterMoonshineBridge.lean` proves a rigorous cross-domain bri"
+    },
+    {
+      "cycle_id": "2ce26220",
+      "domain": "Geometry",
+      "key_insight": "# Future Directions — taxicab / cabtaxi cycle 1\n\nThis cycle proved, with zero `sorry`s (files `Catalog/Geometry/TaxicabCubicReps.lean`,\n`TaxicabCabtaxi.lean`, `TaxicabRationalTransfer.lean`, `TaxicabW",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 77,
+      "timestamp": "2026-08-17T13:54:22",
+      "title": "Derived from the current cycle's findings on Hardy–Ramanujan taxicab numbers."
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "39ee2889",
-      "domain": "Combinatorics",
-      "key_insight": "# Future directions\n\nConcrete, falsifiable conjectures arising from the results proved this cycle in\n`Catalog/Combinatorics/B3FreeAntichainMonotone.lean`, on top of the framework of\n`Catalog/Bridges/B",
-      "quality_score": 0.7010699999999999,
-      "sorry_count": 0,
-      "theorem_count": 34,
-      "timestamp": "2026-08-06T10:02:07",
-      "title": "Concrete, falsifiable conjectures arising from the formalization in"
-    },
     {
       "cycle_id": "6c07c4d0",
       "domain": "Shared",
@@ -2501,27 +2491,19 @@
       "theorem_count": 145,
       "timestamp": "2026-08-17T13:54:12",
       "title": "`Catalog/Novelty/MonsterMoonshineBridge.lean` proves a rigorous cross-domain bri"
+    },
+    {
+      "cycle_id": "2ce26220",
+      "domain": "Geometry",
+      "key_insight": "# Future Directions — taxicab / cabtaxi cycle 1\n\nThis cycle proved, with zero `sorry`s (files `Catalog/Geometry/TaxicabCubicReps.lean`,\n`TaxicabCabtaxi.lean`, `TaxicabRationalTransfer.lean`, `TaxicabW",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 77,
+      "timestamp": "2026-08-17T13:54:22",
+      "title": "Derived from the current cycle's findings on Hardy–Ramanujan taxicab numbers."
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "7a819734",
-      "domain": "NumberTheory",
-      "name": "boxIndex_le",
-      "quality": 0.86
-    },
-    {
-      "cycle_id": "7a819734",
-      "domain": "NumberTheory",
-      "name": "occupiedBoxes_subset",
-      "quality": 0.86
-    },
-    {
-      "cycle_id": "39757711",
-      "domain": "Pythagorean",
-      "name": "We",
-      "quality": 0.84
-    },
     {
       "cycle_id": "39757711",
       "domain": "Pythagorean",
@@ -2803,9 +2785,27 @@
       "domain": "Bridges",
       "name": "sum_card_fixedBy_eq_orbits_mul_card",
       "quality": 0.89
+    },
+    {
+      "cycle_id": "2ce26220",
+      "domain": "Geometry",
+      "name": "cube_le_neg_one",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "2ce26220",
+      "domain": "Geometry",
+      "name": "sq_le_cube",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "2ce26220",
+      "domain": "Geometry",
+      "name": "signed_sq_bound",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-17T13:54:12",
+  "last_updated": "2026-08-17T13:54:22",
   "open_questions": [
     {
       "context": "## Main Results (all sorry-free); sorry; sorry",
@@ -3399,12 +3399,6 @@
         "title": "Hyperbolic-Pythagorean-Geodesics: Sub-Linear Trajectory Factorization in Poincar"
       },
       {
-        "cycle_id": "b2707824",
-        "quality": 0.73319,
-        "theorems": 182,
-        "title": "Hyperbolic-Pythagorean-Geodesics: Sub-Linear Trajectory Factorization in Poincar"
-      },
-      {
         "cycle_id": "c29c7fbe",
         "quality": 0.657274625691032,
         "theorems": 163,
@@ -3451,6 +3445,12 @@
         "quality": 0.91,
         "theorems": 884,
         "title": "Teichmuller-Moduli: Analytic Structure of Riemann Surface Space"
+      },
+      {
+        "cycle_id": "2ce26220",
+        "quality": 0.82,
+        "theorems": 77,
+        "title": "Derived from the current cycle's findings on Hardy–Ramanujan taxicab numbers."
       }
     ],
     "Logic": [
