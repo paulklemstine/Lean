@@ -1,7 +1,6 @@
 """Section-aware future-direction splitter. Ported from validated prototype v2b."""
 import re
 from typing import List, Tuple, Optional
-from research_memory import FutureDirection
 
 # Domain keyword table (same as _infer_domains, lines 6-21 of prototype)
 DOMAIN_KEYWORDS = {
@@ -149,7 +148,10 @@ def extract_items(body: str) -> List[Tuple[str, str]]:
         title = m.group(1).strip().rstrip('.')
         rem = body[m.end():]
         nx = re.search(r'\n\s*\d+\.\s+\*\*', rem)
-        desc = (rem[:nx.start()] if nx else rem).strip()[:3000]
+        desc = (rem[:nx.start()] if nx else rem).strip()
+        if nx is None:
+            desc = re.split(r'\n\s*\n', desc, 1)[0] if '\n\n' in desc else desc.split('\n\n')[0] if '\n\n' in desc else desc
+        desc = desc.strip()[:3000]
         if len(desc) > 30:
             items.append((title, desc))
     if items:
