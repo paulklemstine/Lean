@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "67289c0d",
-      "domain": "Cryptography",
-      "key_insight": "# FUTURE DIRECTIONS — Singular Moduli Factoring after the √N Theorem\n\nThe formalisation in `Catalog/Cryptography/SingularModuli/` settles the basic\nquestion: the gcd-of-class-polynomial-values method",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 74,
-      "timestamp": "2026-08-15T10:47:01",
-      "title": "Singular Moduli Factoring and the √N Barrier"
-    },
-    {
       "cycle_id": "a9efa47b",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Power-Sum GCD Factoring and Carmichael Periodicity\n\nDerived from what survived (and what broke) in the formalisation pass; every item is\nstated so that it can be refuted by a sin",
@@ -499,19 +489,19 @@
       "theorem_count": 110,
       "timestamp": "2026-08-17T14:45:26",
       "title": "Persistent Homology of Prime Numbers: The Topology of Arithmetic"
+    },
+    {
+      "cycle_id": "7ee9f549",
+      "domain": "MachineLearning",
+      "key_insight": "# Future directions — PRNG-generated data: detection and seed recovery (B5)\n\nDerived from the verified results in `Catalog/MachineLearning/`:\n`PRNGSeedRecoveryLFSR.lean`, `PRNGBerlekampMassey.lean`,\n`",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 78,
+      "timestamp": "2026-08-17T16:46:11",
+      "title": "Compression Research B5: PRNG-generated real-world data — detection and seed recovery"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "68319f3d",
-      "domain": "Computation",
-      "key_insight": "# Future Directions\n\nDerived from the analysis and adversarial review of cycles 1–9\n(`Catalog/Computation/FourierFunctor/`), where we proved: `pontryagin : FinAb ≌\nFinAbᵒᵖ`, `fourierNatIso` (Fourier i",
-      "quality_score": 0.686,
-      "sorry_count": 0,
-      "theorem_count": 133,
-      "timestamp": "2026-08-06T12:28:01",
-      "title": "Deepening: Bridge: Fourier Analysis as a Functor"
-    },
     {
       "cycle_id": "96503fdf",
       "domain": "Logic",
@@ -2501,27 +2491,19 @@
       "theorem_count": 110,
       "timestamp": "2026-08-17T14:45:26",
       "title": "Persistent Homology of Prime Numbers: The Topology of Arithmetic"
+    },
+    {
+      "cycle_id": "7ee9f549",
+      "domain": "MachineLearning",
+      "key_insight": "# Future directions — PRNG-generated data: detection and seed recovery (B5)\n\nDerived from the verified results in `Catalog/MachineLearning/`:\n`PRNGSeedRecoveryLFSR.lean`, `PRNGBerlekampMassey.lean`,\n`",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 78,
+      "timestamp": "2026-08-17T16:46:11",
+      "title": "Compression Research B5: PRNG-generated real-world data — detection and seed recovery"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "39757711",
-      "domain": "Pythagorean",
-      "name": "fib_dvd_gcd",
-      "quality": 0.84
-    },
-    {
-      "cycle_id": "922db13f",
-      "domain": "NumberTheory",
-      "name": "stair_zero_ones",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "922db13f",
-      "domain": "NumberTheory",
-      "name": "stair_one",
-      "quality": 0.82
-    },
     {
       "cycle_id": "922db13f",
       "domain": "NumberTheory",
@@ -2803,9 +2785,27 @@
       "domain": "Computation",
       "name": "is",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "7ee9f549",
+      "domain": "MachineLearning",
+      "name": "that",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "7ee9f549",
+      "domain": "MachineLearning",
+      "name": "shift_apply",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "7ee9f549",
+      "domain": "MachineLearning",
+      "name": "shift_pow_apply",
+      "quality": 0.78
     }
   ],
-  "last_updated": "2026-08-17T14:45:26",
+  "last_updated": "2026-08-17T16:46:11",
   "open_questions": [
     {
       "context": "## Main Results (all sorry-free); sorry; sorry",
@@ -3517,12 +3517,6 @@
     ],
     "MachineLearning": [
       {
-        "cycle_id": "8643e3f8",
-        "quality": 0.6592476265822785,
-        "theorems": 394,
-        "title": "Neural-Manifold: Exact Piecewise Linear Partition Bounds for ReLU Networks"
-      },
-      {
         "cycle_id": "221c30c4",
         "quality": 0.6272308571428571,
         "theorems": 81,
@@ -3575,6 +3569,12 @@
         "quality": 0.82,
         "theorems": 83,
         "title": "Hyper-Awareness: 11-Dimensional Perception Vectors in Synthetic Neural Nets"
+      },
+      {
+        "cycle_id": "7ee9f549",
+        "quality": 0.78,
+        "theorems": 78,
+        "title": "Compression Research B5: PRNG-generated real-world data — detection and seed rec"
       }
     ],
     "Novelty": [
