@@ -215,6 +215,22 @@ challenging.
         added, _ = split_directions_from_text(mgr, text, "test", "fd")
         assert added >= 2
 
+    def test_plain_numbered(self):
+        """Plain numbered list: 1. Title. 2. Title. (no bold)."""
+        from fd_splitter import split_directions_from_text
+        text = """1. Prove a generalization of Goldbach for sparse sequences.
+The current result only applies to dense sequences. Extending to sparse
+sequences would resolve a long-standing open problem in analytic number
+theory and connect to recent work on additive combinatorics.
+
+2. Classify all rank-3 matroids over finite fields.
+The classification of rank-2 matroids is complete but rank-3 remains open.
+Recent computational evidence suggests a finite classification is possible.
+"""
+        mgr = self._mgr()
+        added, _ = split_directions_from_text(mgr, text, "test", "fd")
+        assert added >= 2
+
     def test_recap_stripped(self):
         """Recap sections are dropped; directions are kept."""
         from fd_splitter import split_directions_from_text
