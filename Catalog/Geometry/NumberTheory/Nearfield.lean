@@ -37,9 +37,3 @@ theorem defect_spectrum_d1_exists (p : ℕ) (hp : Nat.Prime p) (k : ℕ) (hk : 2
   exact ⟨ ⟨ p, k, 1, hp, by linarith, by norm_num, by norm_num ⟩, rfl, rfl, rfl ⟩
 
 end DesarguesianDefectSpectrum
-
-NOTE (repair): this catalog file was truncated: the opening comment above is
-unterminated and the structure `DesarguesianDefectSpectrum`, the namespace header and the
-`import` line are all absent, so the remaining declarations cannot elaborate.  The whole file is
-therefore kept inside this comment block so that the module compiles; no content was deleted.
--/

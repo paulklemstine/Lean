@@ -66,7 +66,8 @@ insufficient — as the *emotional floor* `emoChrom ≥ 3` rather than as a spur
 -- !-- End Lab Notes -- !--
 -/
 
-import Geometry.ChromaticPolynomialColorable
+import Catalog.Combinatorics.ChromaticPolynomialColorable
+
 namespace Catalog.Novelty.EmotionalChromaticNumber
 
 open Catalog.Combinatorics.ChromaticPolynomial SimpleGraph

@@ -1,6 +1,6 @@
 import Mathlib
-import Bridges.PolynomialBridge
-import Geometry.GenusFormula
+import Bridges.TropicalAlgebra.PolynomialBridge
+import Geometry.LFunctions.GenusFormula
 
 /-!
 # Algebraic Surrogates for Turing Pattern Nodal Sets

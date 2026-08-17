@@ -40,7 +40,7 @@ Synthesis (PI):
 -- !-- end Lab Notes -- !--
 -/
 import Mathlib
-import Geometry.BrocardTriangular
+import Geometry.GraphTheory.BrocardTriangular
 
 namespace TriangularSquareCharacter
 

@@ -5,7 +5,8 @@ Authors: Aristotle (Harmonic)
 -/
 import Mathlib
 import Geometry.PosetTheory.NonCircular
-import Geometry.Contractions
+import Geometry.PosetTheory.Contractions
+
 /-!
 # A linear contraction sequence for finite posets of bounded width
 

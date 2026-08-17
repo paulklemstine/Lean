@@ -1,4 +1,4 @@
-import Geometry.ToricCode.Dual
+import ToricCode.Dual
 import Probability.HomologicalDistance
 
 /-!

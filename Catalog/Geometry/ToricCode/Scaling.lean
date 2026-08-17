@@ -1,5 +1,6 @@
-import Geometry.ToricCode.Dual
-import Geometry.ToricCode.Locality
+import ToricCode.Dual
+import ToricCode.Locality
+
 /-!
 # Correct asymptotics: distance in terms of block length, not genus
 

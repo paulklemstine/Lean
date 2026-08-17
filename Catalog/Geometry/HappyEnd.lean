@@ -18,7 +18,7 @@ a minimum number ES(n) such that any set of ES(n) points in general position
 contains a convex n-gon. Known values: ES(3)=3, ES(4)=5, ES(5)=9, ES(6)=17.
 -/
 import Mathlib
--- import Geometry.ErdosSzekeres.Defs  -- (module absent from the catalog; import removed so the file compiles)
+import Geometry.ErdosSzekeres.Defs
 import Geometry.ErdosSzekeres.CupsCaps
 
 open Finset Function ErdosSzekeres
