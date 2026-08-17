@@ -98,25 +98,6 @@
     "ambition_level": "grand_challenge",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "## OR-COLLAPSE-LAW (round-19 #2, experiment 407, assessment v183, paper 72)\n\n**An exact universal law of the semiprime OR collapse.** Paper 71 proved the fork-pinning criterion (a fork is congruence-pinned iff it factors through G^ab) and measured one collapse (cond-7 cubic OR = 0.0728 bits). Here is the general law: for any abelian field whose split-completely event is pinned by an order-n Dirichlet character (split ⟺ χ(p)=1, P(split)=1/n), the semiprime OR [split(p) OR split(q)] obeys, for gcd(N,f)=1,\n\n**P(OR | χ(N)=1) = 1/n, P(OR | χ(N)≠1) = 2/n, P(OR) = (2n−1)/n², I(N mod f; OR) = g(n) = H((2n−1)/n²) − (1/n)H(1/n) − ((n−1)/n)H(2/n)** — universal in the order n, independent of field, degree, and conductor structure.\n\n### Machine-verified on 7 fields (2^22, 30k semiprimes, split sets empirically confirmed by nroots==deg)\n\n| field | n | f | I(N mod f; OR) | g(n) |\n|---|---|---|---|---|\n| x²−x−1 (Q(√5)) | 2 | 5 | 0.3076 | 0.3113 |\n| x³+x²−2x−1 (cyclic cubic) | 3 | 7 | 0.0704 | 0.0728 |\n| x³−3x+1 (cyclic cubic) | 3 | 9=3² | 0.0735 | 0.0728 |\n| x⁴−4x²+2 (Q(ζ₁₆)+, units C₂×C₄) | 4 | 16=2⁴ | 0.0384 | 0.0359 |\n| x⁵+x⁴−4x³−3x²+3x+1 (Q(ζ₁₁)+) | 5 | 11 | 0.0222 | 0.0215 |\n| Φ₇ (Q(ζ₇)) | 6 | 7 | 0.0146 | 0.0144 |\n| cyclic cubic (character-only) | 3 | 21=3·7 | 0.0700 | 0.0728 |\n\nPer-class conditional rates match 1/n and 2/n within 1–2% everywhere; coprime modulus FLAT; m=f² invariant.\n\n### UNIFICATION — the two biggest residue channels of the lab are two points of one law\n\n- **The p−1 ℓ=3 symmetric OR (paper 54: 0.313) IS the n=2 case** with f=3 (split = p ≡ 1 mod 3, χ the quadratic character of Q(√−3)): reproduced I(N mod 3; OR) = **0.3126** including the N≡0 class, P(OR|N≡1)=0.4942 (law 1/2), P(OR|N≡2)=**1.0000** (law 2/n).\n- **Paper 71's cond-7 cubic OR (0.0728) is the n=3 case.**\n\n### The decay law\n\ng(n) monotone → 0: 0.3113/0.0728/0.0359/0.0215/0.0144/0.0103/0.0077/0.0060 (n=2..9). The MORE the prime-level fork pins (H(1/n) ≈ 1 bit), the LESS its OR shows — no order-n Dirichlet fork ever yields more than g(n) ≤ 0.3113 symmetric OR bits.\n\n### Factor-useless (barriers 2/5/6/8)\n\nSymmetric (which-factor wall 0.0001–0.0002), a Dirichlet residue dial (QRLEAK family), sealed behind the CRT split, all classical (quadratic 1801 / cubic 1844 / higher reciprocity + Dirichlet characters + CRT). The residue-fork line is now quantitatively CLOSED at the semiprime level.\n\n**Verdict:** exact law CONFIRMED on 7 fields spanning prime/composite conductors and cyclic/non-cyclic unit groups. Round-19 2/2 done. Barriers 2/5/6/8.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1402",
-    "lineage_refs": [],
-    "priority_score": 1000.0,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-17T04:58:32.813043+00:00",
-    "title": "OR-COLLAPSE-LAW: semiprime OR of a cyclic split-complete fork = g(n) = H((2n-1)/n^2) - (1/n)H(1/n) - ((n-1)/n)H(2/n) bits (round-19 #2, exp 407, v183, paper 72)"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "Formalizes a quantum random walk on the Berggren Pythagorean tree where constructive interference at energy spectrum minima collapses the state onto factors of N.",
     "domain_bridges": [
       "Pythagorean <-> Physics"
@@ -257,25 +238,6 @@
     "status": "available",
     "timestamp": "2026-08-17T13:53:58.220287+00:00",
     "title": "Deepening: Topological-Algebraic Bridge: Fundamental Group as a Complete Invariant"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle e46e79a5 (Q=0.860), which proved 67 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## OR-COLLAPSE-LAW (round-19 #2, experiment 407, assessment v183, paper 72)\n\n**An exact universal law of the semiprime OR collapse.** Paper 71 proved the fork-pinning criterion (a fork is congruence-pinned iff it factors through G^ab) and measured one collapse (cond-7 cubic OR = 0.0728 bits). Here i",
-    "domain_bridges": [],
-    "domains": [
-      "Applications"
-    ],
-    "id": "push_e46e79a5_b975e84b",
-    "lineage_refs": [],
-    "priority_score": 0.95,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "e46e79a5",
-    "status": "available",
-    "timestamp": "2026-08-17T16:46:24.152995+00:00",
-    "title": "Deepening: OR-COLLAPSE-LAW: semiprime OR of a cyclic split-complete fork = g(n) = H((2n-1)/"
   },
   {
     "ambition_level": "extension",
@@ -26141,7 +26103,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "11c9ff9f",
     "description": "For `k ≤ |X|` the orbit count splits\n    along patterns, `#(X^k/G) = Σ_P m_P` (`sum_patternMultiplicity`), with `m_P ≥ 1` for every\n    pattern (`one_le_patternMultiplicity`), and the action is `k`-transitive **iff** every fibre\n    is a singleton (`patternMultiplicity_eq_one_iff`).",
     "domain_bridges": [],
     "domains": [],
@@ -26151,7 +26113,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "286b3a0e",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-17T13:54:07.301598+00:00",
     "title": "Fibre spectrum (Conjecture E, first half, closed)"
   },

@@ -39,7 +39,7 @@ window.FUTURE_DIRECTIONS = [
       "Novelty"
     ],
     "id": "fd_1366",
-    "phase": "B",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
@@ -54,7 +54,7 @@ window.FUTURE_DIRECTIONS = [
       "Novelty"
     ],
     "id": "fd_1368",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
@@ -76,20 +76,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-08-17T04:13:54.296356+00:00",
     "title": "Compression Research A1: Price of universality \u2014 minimax redundancy of universal decompressors"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "## OR-COLLAPSE-LAW (round-19 #2, experiment 407, assessment v183, paper 72)\n\n**An exact universal law of the semiprime OR collapse.** Paper 71 proved the fork-pinning criterion (a fork is congruence-pinned iff it factors through G^ab) and measured one collapse (cond-7 cubic OR = 0.0728 bits). Here is the general law: for any abelian field whose split-completely event is pinned by an order-n Dirichlet character (split \u27fa \u03c7(p)=1, P(split)=1/n), the semiprime OR [split(p) OR split(q)] obeys, for gcd(N,f)=1,\n\n**P(OR | \u03c7(N)=1) = 1/n, P(OR | \u03c7(N)\u22601) = 2/n, P(OR) = (2n\u22121)/n\u00b2, I(N mod f; OR) = g(n) = H((2n\u22121)/n\u00b2) \u2212 (1/n)H(1/n) \u2212 ((n\u22121)/n)H(2/n)** \u2014 universal in the order n, independent of field, degree, and conductor structure.\n\n### Machine-verified on 7 fields (2^22, 30k semiprimes, split sets empirically confirmed by nroots==deg)\n\n| field | n | f | I(N mod f; OR) | g(n) |\n|---|---|---|---|---|\n| x\u00b2\u2212x\u22121 (Q(\u221a5)) | 2 | 5 | 0.3076 | 0.3113 |\n| x\u00b3+x\u00b2\u22122x\u22121 (cyclic cubic) | 3 | 7 | 0.0704 | 0.0728 |\n| x\u00b3\u22123x+1 (cyclic cubic) | 3 | 9=3\u00b2 | 0.0735 | 0.0728 |\n| x\u2074\u22124x\u00b2+2 (Q(\u03b6\u2081\u2086)+, units C\u2082\u00d7C\u2084) | 4 | 16=2\u2074 | 0.0384 | 0.0359 |\n| x\u2075+x\u2074\u22124x\u00b3\u22123x\u00b2+3x+1 (Q(\u03b6\u2081\u2081)+) | 5 | 11 | 0.0222 | 0.0215 |\n| \u03a6\u2087 (Q(\u03b6\u2087)) | 6 | 7 | 0.0146 | 0.0144 |\n| cyclic cubic (character-only) | 3 | 21=3\u00b77 | 0.0700 | 0.0728 |\n\nPer-class conditional rates match 1/n and 2/n within 1\u20132% everywhere; coprime modulus FLAT; m=f\u00b2 invariant.\n\n### UNIFICATION \u2014 the two biggest residue channels of the lab are two points of one law\n\n- **The p\u22121 \u2113=3 symmetric OR (paper 54: 0.313) IS the n=2 case** with f=3 (split = p \u2261 1 mod 3, \u03c7 the quadratic character of Q(\u221a\u22123)): reproduced I(N mod 3; OR) = **0.3126** including the N\u22610 class, P(OR|N\u22611)=0.4942 (law 1/2), P(OR|N\u22612)=**1.0000** (law 2/n).\n- **Paper 71's cond-7 cubic OR (0.0728) is the n=3 case.**\n\n### The decay law\n\ng(n) monotone \u2192 0: 0.3113/0.0728/0.0359/0.0215/0.0144/0.0103/0.0077/0.0060 (n=2..9). The MORE the prime-level fork pins (H(1/n) \u2248 1 bit), the LESS its OR shows \u2014 no order-n Dirichlet fork ever yields more than g(n) \u2264 0.3113 symmetric OR bits.\n\n### Factor-useless (barriers 2/5/6/8)\n\nSymmetric (which-factor wall 0.0001\u20130.0002), a Dirichlet residue dial (QRLEAK family), sealed behind the CRT split, all classical (quadratic 1801 / cubic 1844 / higher reciprocity + Dirichlet characters + CRT). The residue-fork line is now quantitatively CLOSED at the semiprime level.\n\n**Verdict:** exact law CONFIRMED on 7 fields spanning prime/composite conductors and cyclic/non-cyclic unit groups. Round-19 2/2 done. Barriers 2/5/6/8.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1402",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-17T04:58:32.813043+00:00",
-    "title": "OR-COLLAPSE-LAW: semiprime OR of a cyclic split-complete fork = g(n) = H((2n-1)/n^2) - (1/n)H(1/n) - ((n-1)/n)H(2/n) bits (round-19 #2, exp 407, v183, paper 72)"
   },
   {
     "consumed_by_exp_id": "",
@@ -192,20 +178,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-17T13:53:58.220287+00:00",
     "title": "Deepening: Topological-Algebraic Bridge: Fundamental Group as a Complete Invariant"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle e46e79a5 (Q=0.860), which proved 67 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## OR-COLLAPSE-LAW (round-19 #2, experiment 407, assessment v183, paper 72)\n\n**An exact universal law of the semiprime OR collapse.** Paper 71 proved the fork-pinning criterion (a fork is congruence-pinned iff it factors through G^ab) and measured one collapse (cond-7 cubic OR = 0.0728 bits). Here i",
-    "domains": [
-      "Applications"
-    ],
-    "id": "push_e46e79a5_b975e84b",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "e46e79a5",
-    "status": "available",
-    "timestamp": "2026-08-17T16:46:24.152995+00:00",
-    "title": "Deepening: OR-COLLAPSE-LAW: semiprime OR of a cyclic split-complete fork = g(n) = H((2n-1)/"
   },
   {
     "consumed_by_exp_id": "",
@@ -19513,14 +19485,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sharpness"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "11c9ff9f",
     "description": "For `k \u2264 |X|` the orbit count splits\n    along patterns, `#(X^k/G) = \u03a3_P m_P` (`sum_patternMultiplicity`), with `m_P \u2265 1` for every\n    pattern (`one_le_patternMultiplicity`), and the action is `k`-transitive **iff** every fibre\n    is a singleton (`patternMultiplicity_eq_one_iff`).",
     "domains": [],
     "id": "fd_1440",
+    "phase": "A",
     "priority_score": 0.4153333333333333,
     "research_mode": "team",
     "source_exp_id": "286b3a0e",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-17T13:54:07.301598+00:00",
     "title": "Fibre spectrum (Conjecture E, first half, closed)"
   },
