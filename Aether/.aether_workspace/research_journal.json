@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "c76c12ee",
-      "domain": "Novelty",
-      "key_insight": "# FUTURE DIRECTIONS — CM-ECM-ORDER, next cycle\n\nDerived from the three verified files\n`Catalog/Novelty/CmEcmOrderShadow.lean` (cycle 1: exact CM dichotomy, residue\nshadow, which-factor null), `Catalog",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 76,
-      "timestamp": "2026-08-14T18:13:49",
-      "title": "CM-ECM-ORDER (round-17 #1): the ECM order of a CM curve collapses to p+1 on the inert half — a resid"
-    },
-    {
       "cycle_id": "8590e003",
       "domain": "Probability",
       "key_insight": "# FUTURE DIRECTIONS — CM-ECM-GENERAL (`j = 0` curve over `ℚ(√−3)`)\n\n## What this cycle established\n\n* **Rational 3-torsion degeneracy.** `3 ∣ #E_{j0}(𝔽_p)` for every prime `p > 3`,\n  proved by realisi",
@@ -499,19 +489,19 @@
       "theorem_count": 90,
       "timestamp": "2026-08-17T03:13:42",
       "title": "Moonshot: Warp Drive Spacetime — Alcubierre Metric Formalization"
+    },
+    {
+      "cycle_id": "86a70a4b",
+      "domain": "Computation",
+      "key_insight": "# Future Directions — bold, testable conjectures from this cycle\n\nContext: the anti-Fibonacci sequence `antiFib 0 = 1`, `antiFib (n+1) = antiFib n + n`\n(closed form `2·antiFib n + n = n² + 2`) from `C",
+      "quality_score": 0.88,
+      "sorry_count": 0,
+      "theorem_count": 105,
+      "timestamp": "2026-08-17T04:03:22",
+      "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "059cccbd",
-      "domain": "Probability",
-      "key_insight": "# Future directions: concrete, falsifiable conjectures\n\nDerived from the theorems proved in `Catalog/Probability/NeuralCoding/`:\n`IIDPopulationCoding.lean`, `SparseEntropyBound.lean`,\n`SparseEntropyLo",
-      "quality_score": 0.6545542168674698,
-      "sorry_count": 4,
-      "theorem_count": 166,
-      "timestamp": "2026-08-06T03:44:49",
-      "title": "Future directions from cycle 6622cac1"
-    },
     {
       "cycle_id": "71b84dd8",
       "domain": "Physics",
@@ -2501,27 +2491,19 @@
       "theorem_count": 90,
       "timestamp": "2026-08-17T03:13:42",
       "title": "Moonshot: Warp Drive Spacetime — Alcubierre Metric Formalization"
+    },
+    {
+      "cycle_id": "86a70a4b",
+      "domain": "Computation",
+      "key_insight": "# Future Directions — bold, testable conjectures from this cycle\n\nContext: the anti-Fibonacci sequence `antiFib 0 = 1`, `antiFib (n+1) = antiFib n + n`\n(closed form `2·antiFib n + n = n² + 2`) from `C",
+      "quality_score": 0.88,
+      "sorry_count": 0,
+      "theorem_count": 105,
+      "timestamp": "2026-08-17T04:03:22",
+      "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "6c757940",
-      "domain": "Computation",
-      "name": "term_one",
-      "quality": 0.89
-    },
-    {
-      "cycle_id": "6e253e5d",
-      "domain": "Applications",
-      "name": "polyakIter_zero",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "6e253e5d",
-      "domain": "Applications",
-      "name": "polyakIter_succ",
-      "quality": 0.82
-    },
     {
       "cycle_id": "6e253e5d",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Physics",
       "name": "boost_origin",
       "quality": 0.83
+    },
+    {
+      "cycle_id": "86a70a4b",
+      "domain": "Computation",
+      "name": "gcd_dvd_index",
+      "quality": 0.88
+    },
+    {
+      "cycle_id": "86a70a4b",
+      "domain": "Computation",
+      "name": "gcd_dvd_two",
+      "quality": 0.88
+    },
+    {
+      "cycle_id": "86a70a4b",
+      "domain": "Computation",
+      "name": "antiFib_four_mul_add_two",
+      "quality": 0.88
     }
   ],
-  "last_updated": "2026-08-17T03:13:42",
+  "last_updated": "2026-08-17T04:03:22",
   "open_questions": [
     {
       "context": "This file gives a **complete, self-contained proof** of that theorem (0 `sorry`s).",
@@ -3269,12 +3269,6 @@
     ],
     "Computation": [
       {
-        "cycle_id": "af44a08e",
-        "quality": 0.659818701923077,
-        "theorems": 201,
-        "title": "Fix a sound, computably axiomatized theory capable of elementary arithmetic and"
-      },
-      {
         "cycle_id": "c31d2b69",
         "quality": 0.627125,
         "theorems": 150,
@@ -3327,6 +3321,12 @@
         "quality": 0.89,
         "theorems": 152,
         "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
+      },
+      {
+        "cycle_id": "86a70a4b",
+        "quality": 0.88,
+        "theorems": 105,
+        "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
       }
     ],
     "Cryptography": [
