@@ -35172,11 +35172,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "a5150a29",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -35189,7 +35189,7 @@
       ],
       "github_issue": 0,
       "id": "fd_1229",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-08-17T21:42:48.345114+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -35204,7 +35204,7 @@
       "source": "",
       "source_exp_id": "db97959f",
       "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/db97959f",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "th_99352bb2",
       "timestamp": "2026-08-13T13:55:24.344466+00:00",
       "title": "The formal results in `Catalog/Tropical/JacobiSigned*.lean` settle the JACSIGN"
@@ -39906,7 +39906,7 @@
       "priority_score": 1000.0,
       "proof_strategy": "",
       "prune_reason": "tournament_rejected: ",
-      "pruned_at": "2026-08-17T07:17:23Z",
+      "pruned_at": "2026-08-17T21:41:38Z",
       "quarantined_until": "",
       "research_mode": "team",
       "source": "github_injection",
@@ -45532,7 +45532,7 @@
       "title": "Deepening: Memory Editing: When Forgetting Is a Mathematical Operation"
     },
     {
-      "ambition_level": "extension",
+      "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
       "attempt_count": 0,
@@ -68985,7 +68985,6 @@
     "witness": 4
   },
   "selection_log": [
-    "abduction_followup",
     "famous_subtask",
     "famous_subtask",
     "famous_subtask",
@@ -69004,6 +69003,7 @@
     "famous_subtask",
     "famous_subtask",
     "famous_subtask",
-    "famous_subtask"
+    "famous_subtask",
+    "abduction_followup"
   ]
 }
