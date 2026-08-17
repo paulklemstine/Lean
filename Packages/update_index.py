@@ -232,9 +232,11 @@ def update_index():
             print(f"Skipping {f}: not a package object (got {type(data).__name__})")
             continue
 
-        # Determine stable git creation date (or JSON/mtime fallback)
+        # Determine publish date: prefer the per-package JSON "date" field
+        # (when the research was actually done), then git creation date,
+        # then filesystem mtime as last resort.
         rel_f = os.path.normpath(os.path.relpath(os.path.abspath(f), catalog_root))
-        date_str = normalize_iso_date(git_creation_dates.get(rel_f) or data.get("date") or get_creation_date(f, catalog_root))
+        date_str = normalize_iso_date(data.get("date") or git_creation_dates.get(rel_f) or get_creation_date(f, catalog_root))
 
         pkg_slug = f.replace('.json', '')
 
