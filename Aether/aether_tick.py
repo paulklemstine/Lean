@@ -1298,6 +1298,9 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
         try:
             import github_injector
             github_injector.inject_directions_into_memory(extractor.workspace)
+            # Close GitHub issues for consumed directions that were never closed
+            # (prevents duplicate re-injection on future ticks)
+            github_injector.close_orphaned_issues(extractor.workspace)
         except Exception as e:
             print(f"[Tick] Failed to inject GitHub issues: {e}")
 

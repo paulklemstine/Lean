@@ -85,11 +85,12 @@ class TestTournamentSourceProtection:
 
 
 class TestGithubInjectorDedup:
-    """Section 4: pruned directions must not block re-injection."""
+    """Section 4: duplicate prevention — all directions block re-injection."""
 
-    def test_pruned_does_not_block(self):
-        """A pruned direction with github_issue=N should not prevent
-        re-injection of issue N via the real production function."""
+    def test_pruned_blocks_reinjection(self):
+        """A pruned direction with github_issue=N MUST block re-injection
+        of issue N to prevent duplicate pool entries.  Orphaned issues
+        should be closed by close_orphaned_issues, not re-injected."""
         import json
         import github_injector
         from unittest.mock import patch
@@ -115,11 +116,10 @@ class TestGithubInjectorDedup:
                           return_value=fake_issue):
             count = github_injector.inject_directions_into_memory(Path(tmpdir))
 
-        assert count == 1, f"Expected 1 injection (issue 42 re-injected), got {count}"
-        # Verify the new direction was written to disk
+        assert count == 0, f"Expected 0 injections (pruned dir blocks duplicate), got {count}"
+        # Pool should still have only the original direction
         written = json.loads(fd_file.read_text())
-        issue_nums = [d["github_issue"] for d in written["directions"]]
-        assert 42 in issue_nums, "Issue 42 should have been re-injected"
+        assert len(written["directions"]) == 1, "No duplicate should be created"
 
     def test_live_direction_still_blocks(self):
         """A non-pruned direction with github_issue=N still blocks
@@ -148,6 +148,56 @@ class TestGithubInjectorDedup:
             count = github_injector.inject_directions_into_memory(Path(tmpdir))
 
         assert count == 0, f"Expected 0 injections (issue 42 already live), got {count}"
+
+    def test_close_orphaned_issues(self):
+        """Consumed directions with open GitHub issues should be closed."""
+        import json
+        import github_injector
+        from unittest.mock import patch
+
+        tmpdir = tempfile.mkdtemp()
+        fd_file = Path(tmpdir) / "future_directions.json"
+        data = {
+            "directions": [
+                {
+                    "id": "fd_0001", "title": "Consumed direction",
+                    "description": "x" * 100, "status": "completed",
+                    "source": "github_injection", "github_issue": 99,
+                },
+                {
+                    "id": "fd_0002", "title": "Pruned direction",
+                    "description": "x" * 100, "status": "pruned",
+                    "source": "github_injection", "github_issue": 100,
+                },
+                {
+                    "id": "fd_0003", "title": "Still live",
+                    "description": "x" * 100, "status": "available",
+                    "source": "github_injection", "github_issue": 101,
+                },
+            ]
+        }
+        fd_file.write_text(json.dumps(data))
+
+        # Mock gh issue view to return OPEN for 99 and 100, CLOSED for 101
+        def mock_run_gh(args):
+            if args[0] == "issue" and args[1] == "view":
+                num = int(args[2])
+                if num in (99, 100):
+                    return json.dumps({"state": "OPEN"})
+                elif num == 101:
+                    return json.dumps({"state": "CLOSED"})
+            return None
+
+        closed_issues = []
+        def mock_close(num, comment):
+            closed_issues.append(num)
+
+        with patch.object(github_injector, "run_gh_command", side_effect=mock_run_gh), \
+             patch.object(github_injector, "close_injected_direction_with_comment", side_effect=mock_close):
+            count = github_injector.close_orphaned_issues(Path(tmpdir))
+
+        assert count == 2, f"Expected 2 orphaned issues closed, got {count}"
+        assert set(closed_issues) == {99, 100}, f"Expected issues 99,100 closed, got {closed_issues}"
 
 
 class TestPhaseBGateParity:
