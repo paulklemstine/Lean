@@ -42,8 +42,15 @@ class TestTournamentSourceProtection:
             dispatched_ids=dispatched_ids,
         )
         assert result["retired"] == 2
+        # Re-read from disk to verify actual mutation (apply_tournament_outcomes
+        # operates on a fresh manager, not the original mgr object)
+        mgr_reload = FutureDirectionsManager(Path(tmpdir))
+        by_id = {d.id: d for d in mgr_reload._directions}
+        # Verify dispatched directions were actually pruned
+        assert by_id["fd_0001"].status == "pruned"
+        assert by_id["fd_0002"].status == "pruned"
         # fd_0003 must NOT be touched
-        d3 = [d for d in mgr._directions if d.id == "fd_0003"][0]
+        d3 = by_id["fd_0003"]
         assert d3.status == "available", "Unrelated direction was modified!"
 
     def test_unmatched_outcome_ignored(self):
@@ -58,3 +65,20 @@ class TestTournamentSourceProtection:
             dispatched_ids=dispatched_ids,
         )
         assert result["retired"] == 0, "Non-dispatched ID should be ignored"
+
+    def test_none_dispatched_ids_processes_all(self):
+        """When dispatched_ids=None (backward compat), all directions are processed."""
+        from direction_tournament import DirectionTournament
+        mgr, tmpdir = self._make_pool()
+        t = DirectionTournament(workspace=Path(tmpdir))
+        result = t.apply_tournament_outcomes(
+            winners=[], rejections=[{"id": "fd_0003", "reason": "test"}],
+            dispatched_ids=None,  # backward compat
+        )
+        assert result["retired"] == 1
+        # Re-read from disk to verify mutation occurred
+        mgr_reload = FutureDirectionsManager(Path(tmpdir))
+        by_id = {d.id: d for d in mgr_reload._directions}
+        assert by_id["fd_0003"].status == "pruned"
+        assert by_id["fd_0001"].status == "available"
+        assert by_id["fd_0002"].status == "available"
