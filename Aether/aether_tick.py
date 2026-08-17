@@ -1010,6 +1010,7 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
                 else:
                     dt = DirectionTournament(workspace=extractor.workspace)
                     batch = dt.get_candidate_batch(batch_size=10)
+                    dispatched_ids = [d.id for d in batch] if batch else []
                     if batch and len(batch) >= 5:
                         print(f"[Tournament] Available directions={avail_dirs} > 1000. Running Direction Tournament for {len(batch)} candidates...")
                         prompt = dt.build_tournament_prompt(batch, target_winners=2)
@@ -1042,6 +1043,7 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
                                         status="dispatched",
                                         dispatch_time=time.time(),
                                         direction_id="__direction_tournament__",
+                                        tournament_dispatched_ids=dispatched_ids,
                                     )
                                     extractor.inflight[proj_id] = tournament_job
                                     extractor._save_inflight()

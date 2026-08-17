@@ -88,6 +88,7 @@ class ResearchJob:
     result_algorithms: Optional[str] = None
     result_json_package: Optional[str] = None
     tournament_results_json: Optional[str] = None  # Direction Tournament JSON (winners/rejections)
+    tournament_dispatched_ids: Optional[list] = None  # IDs of directions sent to tournament
     quality_score: float = 0.0
     quality_assessment: Optional[Dict] = None
     quality_detail: Optional[Any] = None  # 8-axis QualityScore from quality_evaluator
@@ -4965,7 +4966,8 @@ Research mode: {concept.research_mode}
                     winners = data.get("winners", [])
                     rejections = data.get("rejections", [])
                     if winners or rejections:
-                        res = dt.apply_tournament_outcomes(winners, rejections)
+                        dispatched = set(job.tournament_dispatched_ids) if job.tournament_dispatched_ids else None
+                        res = dt.apply_tournament_outcomes(winners, rejections, dispatched_ids=dispatched)
                         print(f"[Tournament] Applied tournament JSON results: {res['promoted']} promoted, {res['retired']} retired")
                     return
                 except Exception as e:
@@ -4996,7 +4998,8 @@ Research mode: {concept.research_mode}
                         if isinstance(parsed, dict) and isinstance(parsed.get("winners"), list):
                             data = parsed
                     if data is not None:
-                        res = dt.apply_tournament_outcomes(data["winners"], data["rejections"])
+                        dispatched = set(job.tournament_dispatched_ids) if job.tournament_dispatched_ids else None
+                        res = dt.apply_tournament_outcomes(data["winners"], data["rejections"], dispatched_ids=dispatched)
                         print(f"[Tournament] Applied tournament JSON (from text): {res['promoted']} promoted, {res['retired']} retired")
                         return
                 except Exception:
@@ -5009,7 +5012,8 @@ Research mode: {concept.research_mode}
                         dt = DirectionTournament(workspace=self.workspace)
                         parsed = dt.parse_tournament_report(fd_text)
                         if parsed["winners"] or parsed["rejections"]:
-                            res = dt.apply_tournament_outcomes(parsed["winners"], parsed["rejections"])
+                            dispatched = set(job.tournament_dispatched_ids) if job.tournament_dispatched_ids else None
+                            res = dt.apply_tournament_outcomes(parsed["winners"], parsed["rejections"], dispatched_ids=dispatched)
                             print(f"[Tournament] Applied tournament results: {res['promoted']} promoted, {res['retired']} retired")
                             return
                     except Exception as e:
