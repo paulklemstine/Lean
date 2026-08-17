@@ -29,8 +29,7 @@ to the LP lower bound `geomFrac G ≥ |V| / α(G)`.
   chromatic number of the plane exceeds `4`.
 -/
 import Mathlib
-import Geometry.RamseyTheory.GeomFractionalChromatic
-
+import Geometry.GeomFractionalChromatic
 open SimpleGraph Finset GeomFrac
 open scoped BigOperators
 

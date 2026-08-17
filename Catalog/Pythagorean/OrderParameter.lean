@@ -1,5 +1,5 @@
 import Mathlib
-import Novelty.Counting
+import Pythagorean.Counting
 
 /-! # The order parameter of a proof space
 

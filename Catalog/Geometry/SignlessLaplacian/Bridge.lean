@@ -26,8 +26,7 @@
   Synthesis: `q(G) ≤ 2Δ`, the `r = 1` instance of the conjecture's bound.
 -/
 import Geometry.SignlessLaplacian.Core
-import Geometry.RamseyTheory.FlagComplex
-
+import Geometry.FlagComplex
 open Finset BigOperators
 
 namespace SignlessLaplacian
