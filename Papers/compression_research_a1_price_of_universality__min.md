@@ -1,95 +1,69 @@
 # Computational evidence — price of universality (Phase A, Question 1)
 
-All numbers below were produced with Lean `#eval` (Float arithmetic) on the exact
-combinatorial formula for the Shtarkov sum of a memoryless class,
+All numbers below were produced with Lean `#eval` (Float arithmetic) on the
+definitions used in the formal development; they are *evidence*, not proof.
+The proved statements are the Lean theorems in `Catalog/NumberTheory/`.
 
-`Cₛ(m, n) = Σ_{types (k₁,…,k_m), Σkᵢ = n} (n! / Πkᵢ!) · Π (kᵢ/n)^{kᵢ}`,
+## 1. Shtarkov sums of the Bernoulli (memoryless, binary) class
 
-i.e. the sum over messages of the maximum-likelihood probability, grouped by
-type.  They are *evidence*, not proof; every claim marked as a theorem below is
-proved without `sorry` in `Catalog/Logic/PriceOfUniversality/`.
+`C_n = Σ_j C(n,j) (j/n)^j ((n−j)/n)^(n−j)` is the Shtarkov sum whose logarithm
+is the exact worst-case price of universality of the class.
 
-## 1. Binary memoryless class (`m = 2`)
+| n | C_n | √(πn/2) | log₂ C_n | ½ log₂ n |
+|---|-----|---------|----------|----------|
+| 1 | 2.000 | 1.253 | 1.000 | 0.000 |
+| 2 | 2.500 | 1.772 | 1.322 | 0.500 |
+| 4 | 3.219 | 2.507 | 1.687 | 1.000 |
+| 8 | 4.245 | 3.545 | 2.086 | 1.500 |
+| 16 | 5.704 | 5.013 | 2.512 | 2.000 |
+| 20 | 6.294 | 5.605 | 2.654 | 2.161 |
+| 100 | 13.210 | 12.533 | 3.724 | 3.322 |
+| 1000 | 40.303 | 39.633 | 5.333 | 4.983 |
 
-| n | Cₛ | lower bound √n/4 (proved) | upper bound n+1 (proved) |
-|---|------|------|------|
-| 1 | 2.000 | 0.250 | 2 |
-| 2 | 2.500 | 0.354 | 3 |
-| 4 | 3.219 | 0.500 | 5 |
-| 8 | 4.245 | 0.707 | 9 |
-| 12 | 5.036 | 0.866 | 13 |
-| 16 | 5.704 | 1.000 | 17 |
+`C_n / √(πn/2) → 1` numerically (1.017 at n = 1000), i.e.
+`log₂ C_n ≈ ½ log₂ n + ½ log₂(π/2) = ½ log₂ n + 0.326`, which is the classical
+Rissanen/Shtarkov rate for a one-parameter class.  This is consistent with the
+formally proved sandwich in the catalog
+(`½ log₂ n − 2 ≤ log₂ C_n ≤ log₂ (n+1)`) and with the new exact value
+`log₂ (n+1)` for the constant-composition class (§3).
 
-Observations.
+## 2. The separation, numerically
 
-* Both catalogued bounds hold on every computed instance.
-* `Cₛ` tracks `√(πn/2)` closely (`n = 16`: `√(8π) = 5.013` vs `5.704`), i.e. the
-  true growth is `½ log₂ n + O(1)` bits — the Rissanen rate for one free
-  parameter.  The proved lower bound `√n/4` has the right *exponent* and loses
-  only an additive constant (2 bits); the proved upper bound `n+1` has exponent
-  `1` instead of `½`, i.e. it is off by a factor `2` in the coefficient of
-  `log₂ n`, exactly as the literature's `d/2 · log n` predicts.
+`price(deterministic class on n bits) = n` versus
+`price(memoryless class) ≤ 2 log₂(n+1)`:
 
-## 2. Ternary and quaternary alphabets: is the *dimension* right?
+| n | n − 2 log₂(n+1) |
+|---|------------------|
+| 1 | −1.000 |
+| 5 | −0.170 |
+| 6 | +0.385 |
+| 10 | 3.081 |
+| 20 | 11.215 |
+| 100 | 86.68 |
 
-| n | Cₛ (m = 3) | (n+1)^(m−1) = (n+1)² | Cₛ (m = 4) | (n+1)³ |
-|---|------|------|------|------|
-| 2 | 4.500 | 9 | 7.000 | 27 |
-| 4 | 7.219 | 25 | 13.656 | 125 |
-| 6 | 9.775 | 49 | 21.099 | 343 |
-| 8 | 12.245 | 81 | 29.225 | 729 |
-| 10 | 14.660 | 121 | 37.961 | 1331 |
-| 12 | 17.036 | 169 | — | — |
+The gap changes sign at `n = 6` and then diverges — matching the proved
+`average_price_gap_tendsto_top`.
 
-Observations.
+## 3. Constant-composition class
 
-* The dimension-corrected bound `Cₛ ≤ (n+1)^(#A−1)`
-  (`shtarkovSum_iidClass_le_dim`, proved) holds everywhere and is far tighter
-  than the previously catalogued `(n+1)^#A`.
-* Growth is consistent with `Cₛ ≍ n^{(m−1)/2}`: for `m = 3` the data is close to
-  linear in `n` (17.0 at `n = 12`), for `m = 4` close to `n^{3/2}`.  So the
-  exponent `m − 1` in the proved upper bound is again exactly twice the truth —
-  the same factor-2 gap as in the binary case, and the same one the literature
-  has.
+Its Shtarkov sum is exactly `n + 1` (proved: `shtarkovSum_compositionClass`), so
+its price is `log₂(n+1)`: 3.46 bits at n = 10, 6.66 at n = 100, 9.97 at n = 1000
+— larger than the Bernoulli price (2.22 / 3.72 / 5.33) by about a factor 2, as
+expected since the composition class is the "conditioned" family with `n+1`
+mutually singular members.
 
-## 3. The tensorization/embedding claim
+## 4. Counterexample hunt
 
-`shtarkovSum_power_le_iid` (proved) says the memoryless class over an alphabet
-of size `2^k` contains the `k`-fold power of the binary memoryless class, so
-`Cₛ(m = 4, n) ≥ Cₛ(m = 2, n)²`.
-
-| n | Cₛ(m = 4) | Cₛ(m = 2)² |
-|---|------|------|
-| 2 | 7.000 | 6.250 |
-| 4 | 13.656 | 10.360 |
-| 6 | 21.099 | 14.248 |
-| 8 | 29.225 | 18.020 |
-| 10 | 37.961 | 21.718 |
-
-The inequality holds on every instance, with slack that grows — consistent with
-the honest statement in the file: the embedding recovers exponent
-`k = log₂ #A` where the truth is `(#A − 1)/2`.
-
-## 4. The parameter-sharing dichotomy
-
-Independent parameters (`k` blocks of length `n = 4`, binary) versus one shared
-parameter over the same `4k` symbols:
-
-| k | log₂ Cₛ(power) = k·log₂ 3.219 | log₂ Cₛ(shared, n = 4k) ≤ log₂(4k+1) |
-|---|------|------|
-| 1 | 1.687 | 2.32 |
-| 2 | 3.375 | 3.17 |
-| 4 | 6.749 | 4.09 |
-| 8 | 13.499 | 5.04 |
-| 32 | 53.996 | 7.01 |
-
-Linear versus logarithmic, exactly as `parameter_sharing_dichotomy` and
-`sharing_gap_linear` state.  (The proved explicit gap `k/4` is stated from
-`k ≥ 5000` because the proof routes through the crude `log₂ t ≤ 2.9 √t`
-estimate; the numerics show the phenomenon starts immediately.)
-
-## 5. No counterexample found
-
-Every inequality that appears as a theorem in
-`Catalog/Logic/PriceOfUniversality/` was tested on all instances above
-(`m ∈ {2,3,4}`, `n ≤ 16`) before being formalised; no violation was observed.
+* *Is the average-case price always strictly below the worst-case price?*  No —
+  for mutually singular classes the two coincide (both `log₂ #Θ`); this is
+  proved (`singular_minimax_average_exact` vs
+  `shtarkovSum_eq_card_of_disjoint_supports`).  Only `≤` holds in general
+  (`klDiv_nml_le_logb_shtarkovSum`).
+* *Is `t log₂ t ≥ −1` on `[0,1]`?*  Numerically the minimum is
+  `−1/(e ln 2) = −0.5307`, so `−2` (the constant used in
+  `mul_logb_self_ge`) is safe with room to spare; the sharper constant is not
+  needed anywhere.
+* *Is the Shtarkov sum of a union of two classes equal to the sum of the
+  Shtarkov sums?*  No: `Σ_x max(S₁ x, S₂ x) < C₁ + C₂` whenever the classes
+  overlap (e.g. two copies of the same class give `C` and not `2C`), which is
+  why only subadditivity is proved (`shtarkovSum_sigma_le`).

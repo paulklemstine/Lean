@@ -40,7 +40,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "ef01dce6",
+    "consumed_by_exp_id": "512ab986",
     "description": "**Part of:** Research plan — *Compression Beyond the Pigeonhole Bound* (Phase B, Question 2: can random number generators help?).\n\n## Research question\nPigeonhole governs *exact* decoding for *all* strings. Relax to: **decoder fails with probability ≤ ε** (almost-lossless). Random codebooks (Shannon's random-coding argument) then reach near-optimal rates — the counting bound relaxes by an ε-dependent factor.\n\n## Approach\n- Constructive almost-lossless schemes with small failure probability.\n- The real obstacle is **decoder search complexity** (naive random coding is exponential), not the rate — tackle that.\n- Error detection (checksums) so failures are **never silent**.\n\n## Deliverable\nA scheme plus a proof that decode succeeds with probability ≥ 1−ε, and its exact decoding complexity.\n\n## Falsifiability / gate\nFor each scheme: bound on P(failure) and an explicit decoder-complexity figure. No silent corruption allowed.\n\n**Milestone:** M9.\n",
     "domain_bridges": [],
     "domains": [
@@ -162,6 +162,25 @@
     "status": "available",
     "timestamp": "2026-07-23T20:10:45.914797+00:00",
     "title": "EML-Pythagorean-Operator: Single-Neuron Neural Energy Guided Tree Traversal"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 09567e3d (Q=0.890), which proved 134 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The `d = 1` case is proved (`withParity_detects_single_flip` plus the\none-codeword converse); the general case needs only the Hamming ball counting\nlemma over `List Bool` of bounded length.",
+    "domain_bridges": [],
+    "domains": [
+      "Computation"
+    ],
+    "id": "push_09567e3d_df50f812",
+    "lineage_refs": [],
+    "priority_score": 0.95,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "09567e3d",
+    "status": "available",
+    "timestamp": "2026-08-18T18:57:47.772779+00:00",
+    "title": "Deepening: The `d = 1` case is proved (`withParity_detects_single_flip` plus the"
   },
   {
     "ambition_level": "grand_challenge",
@@ -2405,44 +2424,6 @@
     "status": "available",
     "timestamp": "2026-08-05T06:51:05.180719+00:00",
     "title": "Deepening: ArXiv paper: Magnitude homology of tope graphs"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 603eb18a (Q=0.780), which proved 59 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Program:** Network/LLM lab — round-net-24 (performance axis; recurrence / stateful-carry-cell test of the carry-chain length wall). Machine-verified (ALL_DONE_NET24). Paper: ResearchOutput/NetworkMathematics/24_StatefulCarryCell.md (paper 68). Script /tmp/exp_net_stateful.py, log /tmp/net24.log.\n\n",
-    "domain_bridges": [],
-    "domains": [
-      "NumberTheory"
-    ],
-    "id": "push_603eb18a_0b216f1e",
-    "lineage_refs": [],
-    "priority_score": 0.88,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "603eb18a",
-    "status": "available",
-    "timestamp": "2026-08-15T22:46:22.527013+00:00",
-    "title": "Deepening: NET-24: A Stateful Carry Cell Unlocks Length-General Carry — The Wall Was the An"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 64ac4ffd (Q=0.780), which proved 56 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Summary.** Three proven theorems classify why broad classes of structural\nfactoring approaches are impossible. All three are now machine-checked in Lean\n(the polynomial barrier at `Catalog/NumberTheory/PolynomialBarrier.lean`).\n\n**Theorem 1 (polynomial barrier / LLL).** For f ∈ Z[x] and N = pq:\np ",
-    "domain_bridges": [],
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "push_64ac4ffd_64231fa7",
-    "lineage_refs": [],
-    "priority_score": 0.88,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "64ac4ffd",
-    "status": "available",
-    "timestamp": "2026-08-12T16:18:37.975803+00:00",
-    "title": "Deepening: Three Structural Barrier Theorems for Integer Factorization"
   },
   {
     "ambition_level": "extension",
@@ -25711,6 +25692,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Define `bsearchRange`, a binary search returning the maximal index\n   interval with the target key, prove its cost bound `≤ log₂ n + 1`, and show\n   that its uniqueness test is exactly `interval length = 1` — this is the whole\n   content of Conjecture F.\n2. **G1.**  Prove Kraft's inequality for `DTree`: `∑_{leaves} 2^{-depth} ≤ 1`,\n   from which the expected-cost version of `exists_runCost_ge_log` follows by\n   Jensen; this is the only missing ingredient of Conjecture G.\n3. **I1.**  Formalize a randomized scheme as `RScheme α Code R` (an encoder\n   family plus abstaining decoders) and prove the averaging reduction\n   \"small expected failure ⇒ some fixed randomness achieves it\", the first half\n   of Conjecture I.",
+    "domain_bridges": [],
+    "domains": [
+      "Computation"
+    ],
+    "id": "fd_1547",
+    "lineage_refs": [],
+    "priority_score": 0.5083684210526316,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "ef01dce6",
+    "status": "available",
+    "timestamp": "2026-08-18T18:57:23.245401+00:00",
+    "title": "Define `bsearchRange`, a binary search returning the maximal index"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "The block-tracking fibration (`stirling2_succ_succ`, `card_filter_last_eq`,\n`card_filter_last_ne`) is proved and gives complete control of the triangle row by row;\nlog-concavity is the first statement about the triangle that is *not* a consequence of the\nrecursion alone.  The super-multiplicative bound `bell m * bell n ≤ bell (m + n)` proved in\n`BellSuperMultiplicative.lean` is the \"additive\" shadow of Bell log-convexity and shows that the\nrelation-assembly technique reaches inequalities of exactly this shape, so row log-concavity is\nthe natural next test of the API.  Mathlib has neither Stirling\nnumbers nor any log-concavity statement about `Nat.bell`.",
     "domain_bridges": [],
     "domains": [
@@ -25744,6 +25744,63 @@
     "status": "in_progress",
     "timestamp": "2026-08-18T03:58:31.809783+00:00",
     "title": "The case `m = 3`, `F = x² + y² - z²` is fully proved"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "**Conjecture A (the `log₂ n + 3` decoder is optimal) — PROVED**, in the\n  stronger *worst-case cost* form rather than the *depth* form that was\n  conjectured.  `AlmostLosslessDecisionTree.lean` defines an explicit adaptive\n  Boolean-query model (`DTree`, `run`, `runCost`, `outputsUpTo`) with the\n  counting lemma `card_outputsUpTo_le : |outputsUpTo t c| ≤ 2^c`, the converse\n  `card_le_two_pow_of_runCost_le` (a tree decoding `n` distinct symbols with at\n  most `c` queries per input forces `n ≤ 2^c`), and\n  `exists_runCost_ge_log`: **some input costs at least `log₂ n` queries**.\n  `bsDecode_optimal_within_three` then compares this with the proved\n  achievability `bsDecode_cost_le` — the verified binary-search decoder is\n  optimal up to an additive `3`.  Nothing in the model assumes the queries are\n  comparisons or come from a hash family, so it is a converse for *every*\n  adaptive algorithm.",
+    "domain_bridges": [],
+    "domains": [
+      "Computation"
+    ],
+    "id": "fd_1538",
+    "lineage_refs": [],
+    "priority_score": 0.5082222222222222,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "ef01dce6",
+    "status": "available",
+    "timestamp": "2026-08-18T18:57:21.325970+00:00",
+    "title": "Conjecture A (the `log₂ n + 3` decoder is optimal) — PROVED, in the"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "For the `b`-fold product source, *every* decoder — not only the\ncoordinatewise ones covered by `block_cost_ge_of_coordinatewise` — that succeeds\nwith probability `≥ 1 − ε` on a product codebook of `n^b` entries must spend\n`≥ b·log₂ n − O(b)` queries in the worst case.  Formally, `exists_runCost_ge_log`\napplied to the product codebook gives `log₂(n^b) = b·log₂ n` directly, so the\ncontent of the conjecture is the *average*-case version: cost `≥ (1−ε)·b·log₂ n`\nunder the product distribution.",
+    "domain_bridges": [],
+    "domains": [
+      "Computation"
+    ],
+    "id": "fd_1545",
+    "lineage_refs": [],
+    "priority_score": 0.5082222222222222,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "ef01dce6",
+    "status": "available",
+    "timestamp": "2026-08-18T18:57:22.825449+00:00",
+    "title": "For the `b`-fold product source, *every* decoder — not only the"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Cycle 7 supplies both directions of the machinery (`minDist_image_withParity`,\n`minDist_image_dropLast`) and the extremal function `A` with its attainment lemma\n`A_isGreatest`, so each instance is a finite, falsifiable search; a companion quantitative\nquestion — whether the packing defect at `d = 3` and `n + 1` not a power of two is always at\nleast one whole ball, `(A(n,3) + 1) · (n + 1) ≤ 2 ^ n`, strengthening the proved\n`hamming_bound_strict` — is testable in the same framework\n(`n = 4`: `2 · 5 = 10`, defect `6 ≥ 5`; `n = 5`: `4 · 6 = 24`, defect `8 ≥ 6`;\n`n = 6`: `8 · 7 = 56`, defect `8 ≥ 7`).",
+    "domain_bridges": [],
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "fd_1548",
+    "lineage_refs": [],
+    "priority_score": 0.5082222222222222,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "09567e3d",
+    "status": "available",
+    "timestamp": "2026-08-18T18:57:42.739273+00:00",
+    "title": "Cycle 7 supplies both directions of the machinery (`minDist_image_withParity`,"
   },
   {
     "ambition_level": "extension",
@@ -26196,6 +26253,57 @@
     "status": "available",
     "timestamp": "2026-08-18T07:55:02.830577+00:00",
     "title": "C1 (settled, in a stronger form)."
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "**Conjecture C (sharper silent-error constant) — PROVED.**\n  `AlmostLosslessTunableMarkov.lean` generalises the Markov step to an arbitrary\n  threshold (`card_badMassC_lt`, sub-conjecture C1) and splits the key space\n  with any pair `1/c₁ + 1/c₂ ≤ 1` (`exists_tunable_good_key`).  With\n  `c₁ = 1+η`, `c₂ = 1+1/η` this yields\n  `exists_tunable_almost_lossless_scheme`: silent corruption\n  `≤ (1+η)·δ·|l|/M` and failure `≤ δ + (1+1/η)·|l|/M`, cost exactly `|l|`.  The\n  silent constant can therefore be pushed to the first-moment optimum `1`; the\n  cycle-2 theorem is the case `η = 1`.",
+    "domain_bridges": [],
+    "domains": [],
+    "id": "fd_1540",
+    "lineage_refs": [],
+    "priority_score": 0.4302222222222222,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "ef01dce6",
+    "status": "available",
+    "timestamp": "2026-08-18T18:57:21.765957+00:00",
+    "title": "Conjecture C (sharper silent-error constant) — PROVED.*"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "**Conjecture D (coordinatewise block decoding is optimal) — converse half\n  PROVED.**  `block_cost_ge_of_coordinatewise` shows that `b` independent\n  coordinate decoders that are correct on an `n`-symbol codebook are forced, on\n  some product input, to spend `≥ b·log₂ n` queries in total, matching the\n  `b·(log₂ n + 3)` cost of the sorted block decoder.  What is *not* proved is\n  that a non-coordinatewise decoder cannot do better; see Conjecture G below.",
+    "domain_bridges": [],
+    "domains": [],
+    "id": "fd_1541",
+    "lineage_refs": [],
+    "priority_score": 0.4302222222222222,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "ef01dce6",
+    "status": "available",
+    "timestamp": "2026-08-18T18:57:21.975022+00:00",
+    "title": "Conjecture D (coordinatewise block decoding is optimal) — converse half"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "**Conjecture B (a `T`-wise independent family with a short key) — PROVED.**\n  `AlmostLosslessPolyFamily.lean` realises the degree-`T` polynomial family\n  `h_c(x) = c₀ + c₁x + ⋯ + c_T x^T` over `ZMod p` with `K = p^{T+1}` keys.  The\n  missing counting step (sub-conjecture B1) is\n  `polyEval_injective_of_agree_on_points`, proved from\n  `Matrix.det_vandermonde_ne_zero_iff` rather than from polynomial-degree\n  bookkeeping: coefficient vectors agreeing at `T+1` distinct points coincide.\n  Hence `card_poly_constrained_le` (at most `p` keys satisfy a `T`-fold\n  collision constraint) and `polyHash_indepT : IndepT (polyHash p T) T`.  The\n  deliverable `exists_poly_list_scheme_exponential` gives failure\n  `≤ δ + (|l|/p)^T` from `(T+1)·log₂ p` bits of advice, with the numeric\n  instance `concrete_poly_list_scheme` (source `ZMod 101`, codebook `10`,\n  `T = 3`, key one of `101⁴ ≈ 10⁸`, failure `≤ 1/100 + 1/1000`, list `≤ 3`) and\n  the separation `poly_key_exponentially_shorter : p^{T+1} < p^p`.\n  `polyHash_universal2_one` records coherence with cycle 1 at `T = 1`.",
+    "domain_bridges": [],
+    "domains": [],
+    "id": "fd_1539",
+    "lineage_refs": [],
+    "priority_score": 0.42987499999999995,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "ef01dce6",
+    "status": "available",
+    "timestamp": "2026-08-18T18:57:21.554073+00:00",
+    "title": "Conjecture B (a `T`-wise independent family with a short key) — PROVED.*"
   },
   {
     "ambition_level": "extension",
@@ -26957,7 +27065,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "09567e3d",
+    "consumed_by_exp_id": "",
     "description": "The `d = 1` case is proved (`withParity_detects_single_flip` plus the\none-codeword converse); the general case needs only the Hamming ball counting\nlemma over `List Bool` of bounded length.",
     "domain_bridges": [],
     "domains": [],
@@ -26967,7 +27075,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "f262016d",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-17T18:57:33.687836+00:00",
     "title": "The `d = 1` case is proved (`withParity_detects_single_flip` plus the"
   },
@@ -27979,5 +28087,102 @@
     "status": "available",
     "timestamp": "2026-08-18T15:47:19.752849+00:00",
     "title": "Both ends of the sandwich are formalised"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "**Conjecture E (the key-length hierarchy) — PROVED, and by a different\n  mechanism than conjectured.**  The coding-theoretic route suggested in cycle 2\n  is *vacuous*: at relative distance exactly `1 − 1/M` the Plotkin double count\n  degenerates to `N(N−1) ≤ N²`, and the Cauchy–Schwarz second-moment count\n  degenerates to `n/M ≤ n`, so neither yields any bound.  What works is\n  **integrality**: the number of keys on which two symbols collide is a natural\n  number `≤ K/M`, so `K < M` forces every hash function to be injective.\n  `AlmostLosslessKeySharp.lean` proves `universal2_key_ge_codes`: a nonempty\n  2-universal family that compresses at all (`M < n`) has `K ≥ M` keys — the\n  advice is at least as long as the codeword.  Consequences:\n  `universal2_key_ge_max : K ≥ max(M, log_M n)`,\n  `universal2_key_pow_bound : n ≤ M^c → n ≤ K^c` (so at constant rate the key\n  space is polynomially large and `poly(log n)` keys are impossible, refuting\n  cycle-1 Conjecture 5 as predicted), and `universal2_key_length_ge` in bits.\n  The bound is attained: `linHash_key_count_optimal` shows *every* 2-universal\n  family compressing `(ZMod p)²` into `p` codewords needs `≥ p` keys, which the\n  inner-product family meets exactly.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_1542",
+    "lineage_refs": [],
+    "priority_score": 0.4,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "ef01dce6",
+    "status": "available",
+    "timestamp": "2026-08-18T18:57:22.205393+00:00",
+    "title": "Conjecture E (the key-length hierarchy) — PROVED, and by a different"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Every quantity the mission asked for is now a\nproved, definable number rather than an `O(·)`: the failure probability\n(`δ + 2|l|/M`, tunable, or `δ + (|l|/M)^T` with a short key), the silent-error\nprobability (`(1+η)δ|l|/M`, and identically `0` on codebook symbols), the\ndecoding cost (`log₂|l| + 3`, optimal within `+3`), and the amount of randomness\n(`K` keys with `max(M, log_M n) ≤ K`, met exactly by the field family).",
+    "domain_bridges": [],
+    "domains": [
+      "Computation",
+      "Algebra"
+    ],
+    "id": "fd_1543",
+    "lineage_refs": [],
+    "priority_score": 0.4,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "ef01dce6",
+    "status": "available",
+    "timestamp": "2026-08-18T18:57:22.412121+00:00",
+    "title": "Every quantity the mission asked for is now a"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Both endpoints are formal: `exists_runCost_ge_log` gives the\nconverse `log₂ n` and `bsDecode_cost_le` the achievability `log₂ n + 3`, so the\nconjecture is the statement that a definable integer gap equals `1`, testable by\n`#eval` on small codebooks before any proof is attempted.",
+    "domain_bridges": [],
+    "domains": [
+      "Logic"
+    ],
+    "id": "fd_1544",
+    "lineage_refs": [],
+    "priority_score": 0.4,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "ef01dce6",
+    "status": "available",
+    "timestamp": "2026-08-18T18:57:22.615104+00:00",
+    "title": "Both endpoints are formal: `exists_runCost_ge_log` gives the"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "The `Scheme` structure with abstaining decoder is general enough to\ncarry a randomized encoder as a family indexed by `Fin R`, and both halves of the\nargument — averaging and integrality — are already formalized in this catalog.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_1546",
+    "lineage_refs": [],
+    "priority_score": 0.4,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "ef01dce6",
+    "status": "available",
+    "timestamp": "2026-08-18T18:57:23.027560+00:00",
+    "title": "The `Scheme` structure with abstaining decoder is general enough to"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "The companion half is already settled: `optimal_detecting_classification`\n(cycle 6) shows the *codes* are rigid — exactly two optimal single-error-detecting codes\nexist.  What remains is the rigidity of the *map*, for which `parity_xorWord` (the\nhomomorphism property, cycle 2) and `hypercube_connected` (cycle 6) supply the ingredients.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_1549",
+    "lineage_refs": [],
+    "priority_score": 0.4,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "09567e3d",
+    "status": "available",
+    "timestamp": "2026-08-18T18:57:42.950267+00:00",
+    "title": "The companion half is already settled: `optimal_detecting_classification`"
   }
 ]

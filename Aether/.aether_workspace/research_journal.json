@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "b3704634",
-      "domain": "Geometry",
-      "key_insight": "# Future directions\n\nDerived from the analysis and adversarial review of the verified results in\n`Catalog/Geometry/Teichmuller/`:\n\n* `LinearQC.lean` — the algebra of quasiconformal dilatations of real",
-      "quality_score": 0.91,
-      "sorry_count": 0,
-      "theorem_count": 884,
-      "timestamp": "2026-08-16T19:33:55",
-      "title": "Teichmuller-Moduli: Analytic Structure of Riemann Surface Space"
-    },
-    {
       "cycle_id": "81aa12f0",
       "domain": "Novelty",
       "key_insight": "# Future directions\n\nFive falsifiable conjectures produced by this cycle of work on emergent geometry\nfrom entanglement. Each is stated so that it can be decided by a proof or by an\nexplicit counterex",
@@ -499,19 +489,19 @@
       "theorem_count": 179,
       "timestamp": "2026-08-18T18:57:37",
       "title": "Compression Research B3: Almost-lossless / Monte Carlo compression"
+    },
+    {
+      "cycle_id": "09567e3d",
+      "domain": "Computation",
+      "key_insight": "# Future Directions\n\nDerived from the seven research cycles in `Catalog/Computation/ListHammingBallParity.lean`,\n`BinaryCodeBounds.lean`, `HammingCodePerfect.lean`, `HammingCodesGeneral.lean`,\n`Plotki",
+      "quality_score": 0.89,
+      "sorry_count": 0,
+      "theorem_count": 134,
+      "timestamp": "2026-08-18T18:57:47",
+      "title": "The `d = 1` case is proved (`withParity_detects_single_flip` plus the"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "22e93393",
-      "domain": "Combinatorics",
-      "key_insight": "# Future directions\n\nThe thread opened with two questions — the finite-key probability formula and\ncrossing-probability monotonicity — both of which are proved in\n`Catalog/Combinatorics/BernoulliThres",
-      "quality_score": 0.71348,
-      "sorry_count": 0,
-      "theorem_count": 557,
-      "timestamp": "2026-08-07T16:40:33",
-      "title": "Deepening: 1. **Finite-key probability formula.** For every finite type `V`, independent"
-    },
     {
       "cycle_id": "af44a08e",
       "domain": "Computation",
@@ -2501,27 +2491,19 @@
       "theorem_count": 179,
       "timestamp": "2026-08-18T18:57:37",
       "title": "Compression Research B3: Almost-lossless / Monte Carlo compression"
+    },
+    {
+      "cycle_id": "09567e3d",
+      "domain": "Computation",
+      "key_insight": "# Future Directions\n\nDerived from the seven research cycles in `Catalog/Computation/ListHammingBallParity.lean`,\n`BinaryCodeBounds.lean`, `HammingCodePerfect.lean`, `HammingCodesGeneral.lean`,\n`Plotki",
+      "quality_score": 0.89,
+      "sorry_count": 0,
+      "theorem_count": 134,
+      "timestamp": "2026-08-18T18:57:47",
+      "title": "The `d = 1` case is proved (`withParity_detects_single_flip` plus the"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "be7c0bd7",
-      "domain": "Geometry",
-      "name": "blockDecode_blocks",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "be7c0bd7",
-      "domain": "Geometry",
-      "name": "blockDecode_never_wrong",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "856336cf",
-      "domain": "Pythagorean",
-      "name": "catalog",
-      "quality": 0.88
-    },
     {
       "cycle_id": "856336cf",
       "domain": "Pythagorean",
@@ -2803,9 +2785,27 @@
       "domain": "Bridges",
       "name": "bsearch_cost_le",
       "quality": 0.88
+    },
+    {
+      "cycle_id": "09567e3d",
+      "domain": "Computation",
+      "name": "over",
+      "quality": 0.89
+    },
+    {
+      "cycle_id": "09567e3d",
+      "domain": "Computation",
+      "name": "that",
+      "quality": 0.89
+    },
+    {
+      "cycle_id": "09567e3d",
+      "domain": "Computation",
+      "name": "of",
+      "quality": 0.89
     }
   ],
-  "last_updated": "2026-08-18T18:57:37",
+  "last_updated": "2026-08-18T18:57:47",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hupper⟩)",
@@ -3269,12 +3269,6 @@
     ],
     "Computation": [
       {
-        "cycle_id": "f566f199",
-        "quality": 0.84,
-        "theorems": 62,
-        "title": "The Quantum-Classical Boundary in Integer Factorization"
-      },
-      {
         "cycle_id": "219576b7",
         "quality": 0.9,
         "theorems": 7,
@@ -3327,6 +3321,12 @@
         "quality": 0.83,
         "theorems": 105,
         "title": "It would upgrade \"the cost of internal soundness is one loop\""
+      },
+      {
+        "cycle_id": "09567e3d",
+        "quality": 0.89,
+        "theorems": 134,
+        "title": "The `d = 1` case is proved (`withParity_detects_single_flip` plus the"
       }
     ],
     "Cryptography": [
