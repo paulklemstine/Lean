@@ -1153,44 +1153,6 @@
     "title": "Deepening: ArXiv paper: A Fourier-analytic Uniqueness Theorem for Lattice-point Enumerators"
   },
   {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 13fee392 (Q=0.820), which proved 97 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The Bonferroni machinery\n(`card_sum_le_card_biUnion_add_offDiag`, `card_doubleCollision_mul_le`) is\nalready formalised for arbitrary finite families, so the conjecture is a\nstatement about which *marginals* are fed into it.",
-    "domain_bridges": [],
-    "domains": [
-      "MachineLearning"
-    ],
-    "id": "push_13fee392_bf1a2075",
-    "lineage_refs": [],
-    "priority_score": 0.9199999999999999,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "13fee392",
-    "status": "available",
-    "timestamp": "2026-08-18T15:47:13.268223+00:00",
-    "title": "Deepening: The Bonferroni machinery"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 2afe0ce6 (Q=0.820), which proved 63 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: *For every finite action the spectrum is log-concave: `t_r² ≥ t_{r−1}·t_{r+1}` for\n`1 ≤ r < |X|`.*",
-    "domain_bridges": [],
-    "domains": [
-      "Applications"
-    ],
-    "id": "push_2afe0ce6_0601a127",
-    "lineage_refs": [],
-    "priority_score": 0.9199999999999999,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "2afe0ce6",
-    "status": "available",
-    "timestamp": "2026-08-18T15:47:25.548455+00:00",
-    "title": "Deepening: For every finite action the spectrum is log-concave: `t_r² ≥ t_{r−1}·t_{r+1}` fo"
-  },
-  {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
     "consumed_by_exp_id": "",
@@ -26293,7 +26255,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c0dccdf7",
     "description": "## Conjecture A (Parity-gap conjecture). For all `n ≥ 2`, all injective `S, T : Fin n → ZMod p`, the parity-weighted exponent counter `permCoeff S T` is nonzero somewhere; in fact `max_r |permCoeff S T r| ≥ 1` is attained at a residue of the form `∑_j S(σ j) T j` for a permutation `σ` of *minimal* Coxeter length among those realising its exponent.",
     "domain_bridges": [],
     "domains": [],
@@ -26303,7 +26265,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "33519cdb",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-17T23:36:54.745326+00:00",
     "title": "Conjecture A (Parity-gap conjecture). For all `n ≥ 2`, all injective `S, T : Fin n → ZMod p`, the parity-weighted exponent counter `permCoeff S T` is nonzero somewhere; in fact `max_r |permCoeff S T r"
   },

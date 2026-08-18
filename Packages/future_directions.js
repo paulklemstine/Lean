@@ -853,34 +853,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle 13fee392 (Q=0.820), which proved 97 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The Bonferroni machinery\n(`card_sum_le_card_biUnion_add_offDiag`, `card_doubleCollision_mul_le`) is\nalready formalised for arbitrary finite families, so the conjecture is a\nstatement about which *marginals* are fed into it.",
-    "domains": [
-      "MachineLearning"
-    ],
-    "id": "push_13fee392_bf1a2075",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "13fee392",
-    "status": "available",
-    "timestamp": "2026-08-18T15:47:13.268223+00:00",
-    "title": "Deepening: The Bonferroni machinery"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 2afe0ce6 (Q=0.820), which proved 63 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: *For every finite action the spectrum is log-concave: `t_r\u00b2 \u2265 t_{r\u22121}\u00b7t_{r+1}` for\n`1 \u2264 r < |X|`.*",
-    "domains": [
-      "Applications"
-    ],
-    "id": "push_2afe0ce6_0601a127",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "2afe0ce6",
-    "status": "available",
-    "timestamp": "2026-08-18T15:47:25.548455+00:00",
-    "title": "Deepening: For every finite action the spectrum is log-concave: `t_r\u00b2 \u2265 t_{r\u22121}\u00b7t_{r+1}` fo"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Building on cycle 3b29df87 (Q=0.820), which proved 110 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the Weil pairing on an elliptic curve and prove its bilinearity. Show that the BLS signature scheme is existentially unforgeable under the computational Diffie-Hellman assumption in the pairing group. Prove that the pairing allows short aggregate signatures.",
     "domains": [
       "Cryptography"
@@ -19623,14 +19595,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Conjecture A, closed"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c0dccdf7",
     "description": "## Conjecture A (Parity-gap conjecture). For all `n \u2265 2`, all injective `S, T : Fin n \u2192 ZMod p`, the parity-weighted exponent counter `permCoeff S T` is nonzero somewhere; in fact `max_r |permCoeff S T r| \u2265 1` is attained at a residue of the form `\u2211_j S(\u03c3 j) T j` for a permutation `\u03c3` of *minimal* Coxeter length among those realising its exponent.",
     "domains": [],
     "id": "fd_1464",
+    "phase": "A",
     "priority_score": 0.4188205128205128,
     "research_mode": "team",
     "source_exp_id": "33519cdb",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-17T23:36:54.745326+00:00",
     "title": "Conjecture A (Parity-gap conjecture). For all `n \u2265 2`, all injective `S, T : Fin n \u2192 ZMod p`, the parity-weighted exponent counter `permCoeff S T` is nonzero somewhere; in fact `max_r |permCoeff S T r"
   },
