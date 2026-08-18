@@ -1,361 +1,291 @@
 """
-Moment collisions on a bounded alphabet: numerical demonstrations.
-==================================================================
+Power-sum rigidity for bounded multisets, and the exact sharpness of the window 0 <= k <= N.
 
-This self-contained script illustrates every quantitative statement of the
-accompanying paper "Sharpness of the Finite Moment Problem".
+This self-contained script demonstrates, with exact integer / rational arithmetic:
 
-Setting.  Fix an integer N >= 1 (the *alphabet bound*).  A weight system is a
-vector w = (w_0, ..., w_N) of reals; its power sums (moments) are
+  1. Rigidity:      multisets with elements in {0,...,N} are determined by p_0,...,p_N.
+  2. Sharpness:     the binomial parity pair E_N (multiplicity C(N,j) at even j) and
+                    O_N (multiplicity C(N,j) at odd j) agree on p_0,...,p_{N-1}.
+  3. Exact gap:     p_N(E_N) - p_N(O_N) = (-1)^N * N!.
+  4. Classification: any near miss has multiplicity difference lambda * ((-1)^j C(N,j)).
+  5. Quantisation:  N! divides the top-index gap; |gap| >= N! for distinct multisets.
+  6. Size floor:    a near miss at level N >= 1 has at least 2^(N-1) elements; E_N attains it.
+  7. Zero index:    {0} and {} agree on every p_k with k >= 1.
+  8. Positive support: with elements in {1,...,N} the window 1 <= k <= N is rigid.
+  9. Reconstruction: recover multiplicities from p_0,...,p_N by solving the Vandermonde system.
+ 10. Exhaustive search reproducing the computational-evidence table.
 
-        S_k(w) = sum_{i=0}^{N} w_i * i^k ,       k = 0, 1, 2, ...
-
-A *data set* (multiset) of naturals bounded by N is the special case in which
-w_i is a non-negative integer, the multiplicity of the letter i.
-
-The demonstrations below cover:
-
-  1. Rigidity: the moments of orders k <= N determine w  (Vandermonde solve).
-  2. Sharpness: the even/odd binomial halves agree up to order N-1.
-  3. The structure theorem: every kernel vector is a multiple of
-     i |-> (-1)^i * C(N, i).
-  4. The exact gap  S_N(w) - S_N(v) = (w_0 - v_0) * (-1)^N * N!,
-     the total variation |w_0 - v_0| * 2^N, and the extremal separation
-     N! / 2^(N-1) for probability distributions.
-  5. The invariant m(N, K), the least size of a collision of agreement order
-     K over the alphabet {0, ..., N}, computed by exhaustive search, and its
-     sandwich  K < m(N, K) <= 2^K.
-  6. The narrow ideal Prouhet-Tarry-Escott witnesses realising the floor
-     m(N, K) = K + 1 for K = 1, 2, 3, 4, 5.
-  7. The Prouhet-Thue-Morse doubling construction.
-  8. Stability constants (the l1 norms of Lagrange coefficient vectors).
-
-Only the standard library is used.
+Run:  python3 demo.py
 """
 
 from __future__ import annotations
 
 from fractions import Fraction
-from itertools import combinations_with_replacement
+from itertools import combinations, product
 from math import comb, factorial
 from typing import Dict, Iterable, List, Sequence, Tuple
 
-
-# ----------------------------------------------------------------------
-# 1. Basic quantities
-# ----------------------------------------------------------------------
+Counts = Tuple[int, ...]  # multiplicity vector (c_0, ..., c_N)
 
 
-def power_sum(data: Sequence[int], k: int) -> int:
-    """The k-th power sum sum_{x in data} x^k of a multiset of naturals."""
-    return sum(x ** k for x in data)
+# --------------------------------------------------------------------------------------
+# Core definitions
+# --------------------------------------------------------------------------------------
 
 
-def weighted_power_sum(weights: Sequence[Fraction], k: int) -> Fraction:
-    """S_k(w) = sum_i w_i * i^k for a weight vector indexed by 0, 1, ..., N."""
-    return sum(w * Fraction(i) ** k for i, w in enumerate(weights))
+def power_sum(counts: Sequence[int], k: int) -> int:
+    """p_k = sum_j c_j * j^k for the multiset with multiplicity c_j at j (0^0 = 1)."""
+    return sum(c * (j**k) for j, c in enumerate(counts))
 
 
-def agree_up_to(s: Sequence[int], t: Sequence[int], K: int) -> bool:
-    """Do the two data sets have identical power sums of all orders k <= K?"""
-    return all(power_sum(s, k) == power_sum(t, k) for k in range(K + 1))
+def power_sums(counts: Sequence[int], kmax: int) -> List[int]:
+    """The vector (p_0, ..., p_kmax)."""
+    return [power_sum(counts, k) for k in range(kmax + 1)]
 
 
-# ----------------------------------------------------------------------
-# 2. Rigidity: solving the Vandermonde system
-# ----------------------------------------------------------------------
-
-
-def solve_vandermonde(moments: Sequence[Fraction], N: int) -> List[Fraction]:
-    """Recover the weights w_0, ..., w_N from the moments S_0, ..., S_N.
-
-    Exact rational Gaussian elimination on the Vandermonde matrix V[k][i] = i^k,
-    which is invertible because the nodes 0, 1, ..., N are pairwise distinct.
-    Complexity O(N^3).
-    """
-    n = N + 1
-    aug: List[List[Fraction]] = [
-        [Fraction(i) ** k for i in range(n)] + [Fraction(moments[k])] for k in range(n)
-    ]
-    for col in range(n):
-        pivot = next(r for r in range(col, n) if aug[r][col] != 0)
-        aug[col], aug[pivot] = aug[pivot], aug[col]
-        piv = aug[col][col]
-        aug[col] = [x / piv for x in aug[col]]
-        for r in range(n):
-            if r != col and aug[r][col] != 0:
-                factor = aug[r][col]
-                aug[r] = [a - factor * b for a, b in zip(aug[r], aug[col])]
-    return [aug[r][n] for r in range(n)]
-
-
-# ----------------------------------------------------------------------
-# 3. The even/odd binomial halves
-# ----------------------------------------------------------------------
-
-
-def binomial_halves(N: int) -> Tuple[List[Fraction], List[Fraction]]:
-    """The two probability distributions on {0, ..., N} that agree in all
-    moments of order < N: the even and the odd half of C(N, i) / 2^(N-1)."""
-    denom = Fraction(2 ** (N - 1))
-    even = [Fraction(comb(N, i)) / denom if i % 2 == 0 else Fraction(0) for i in range(N + 1)]
-    odd = [Fraction(0) if i % 2 == 0 else Fraction(comb(N, i)) / denom for i in range(N + 1)]
-    return even, odd
-
-
-def binomial_half_multisets(N: int) -> Tuple[List[int], List[int]]:
-    """The same construction as integer data sets: letter i repeated C(N, i)
-    times, split by the parity of i.  Each side has 2^(N-1) elements."""
-    even = [i for i in range(N + 1) if i % 2 == 0 for _ in range(comb(N, i))]
-    odd = [i for i in range(N + 1) if i % 2 == 1 for _ in range(comb(N, i))]
-    return even, odd
-
-
-def alternating_vector(N: int) -> List[int]:
-    """The kernel vector i |-> (-1)^i C(N, i)."""
-    return [(-1) ** i * comb(N, i) for i in range(N + 1)]
-
-
-# ----------------------------------------------------------------------
-# 4. Exhaustive computation of the invariant m(N, K)
-# ----------------------------------------------------------------------
-
-
-def collisions_of_size(N: int, K: int, n: int) -> List[Tuple[Tuple[int, ...], Tuple[int, ...]]]:
-    """All disjoint collisions with n elements per side: pairs of distinct
-    multisets s != t of size n, entries in {0, ..., N}, sharing no element,
-    with equal power sums of every order k <= K.
-
-    A minimal collision can always be taken disjoint (deleting the common part
-    preserves all power-sum differences), so restricting to disjoint pairs is
-    lossless for computing m(N, K).  The signature of a multiset is the tuple
-    (S_0, ..., S_K); bucketing by signature makes the search
-    O(C(N+n, n) * K) instead of quadratic in the number of multisets.
-    """
-    buckets: Dict[Tuple[int, ...], List[Tuple[int, ...]]] = {}
-    for combo in combinations_with_replacement(range(N + 1), n):
-        sig = tuple(power_sum(combo, k) for k in range(K + 1))
-        buckets.setdefault(sig, []).append(combo)
-    out: List[Tuple[Tuple[int, ...], Tuple[int, ...]]] = []
-    for group in buckets.values():
-        for s, t in combinations_with_replacement(group, 2):
-            if s != t and not (set(s) & set(t)):
-                out.append((s, t))
+def as_multiset(counts: Sequence[int]) -> List[int]:
+    """Expand a multiplicity vector into a sorted list of elements."""
+    out: List[int] = []
+    for j, c in enumerate(counts):
+        out.extend([j] * c)
     return out
 
 
-def min_collision_card(N: int, K: int, cap: int = 9) -> int:
-    """m(N, K): the least size of a collision of agreement order K over the
-    alphabet {0, ..., N}.  Returns 0 when no collision exists (the rigid
-    regime N <= K), and -1 if none is found up to the search cap."""
-    if N <= K:
-        return 0
-    for n in range(K + 1, cap + 1):
-        if collisions_of_size(N, K, n):
-            return n
-    return -1
+def cardinality(counts: Sequence[int]) -> int:
+    return sum(counts)
 
 
-def minimal_alphabet_for_ideal(K: int, cap: int = 20) -> int:
-    """d(K): the least alphabet bound D such that an *ideal* collision --
-    agreement order K with only K + 1 elements per side -- fits inside
-    {0, ..., D}."""
-    for D in range(K + 1, cap + 1):
-        if collisions_of_size(D, K, K + 1):
-            return D
-    return -1
+def even_part(n: int) -> Counts:
+    """E_N: multiplicity C(N,j) at every even j <= N."""
+    return tuple(comb(n, j) if j % 2 == 0 else 0 for j in range(n + 1))
 
 
-# ----------------------------------------------------------------------
-# 5. The Prouhet-Thue-Morse doubling construction
-# ----------------------------------------------------------------------
+def odd_part(n: int) -> Counts:
+    """O_N: multiplicity C(N,j) at every odd j <= N."""
+    return tuple(0 if j % 2 == 0 else comb(n, j) for j in range(n + 1))
 
 
-def prouhet_pair(K: int) -> Tuple[List[int], List[int]]:
-    """The Prouhet pair of degree K: the naturals below 2^(K+1) split by the
-    parity of their binary digit sum.  Each side has 2^K elements and the two
-    sides have equal power sums of every order k <= K."""
-    s: List[int] = [0]
-    t: List[int] = [1]
-    for j in range(K):
-        shift = 2 ** (j + 1)
-        s, t = s + [y + shift for y in t], t + [y + shift for y in s]
-    return sorted(s), sorted(t)
+def alternating_vector(n: int) -> List[int]:
+    """The kernel vector v_j = (-1)^j C(N,j)."""
+    return [(-1) ** j * comb(n, j) for j in range(n + 1)]
 
 
-# ----------------------------------------------------------------------
-# 6. Stability constants
-# ----------------------------------------------------------------------
+def alternating_table_entry(n: int, k: int) -> int:
+    """A(N,k) = sum_j (-1)^j C(N,j) j^k."""
+    return sum((-1) ** j * comb(n, j) * (j**k) for j in range(n + 1))
 
 
-def lagrange_coefficients(N: int, j: int) -> List[Fraction]:
-    """Coefficient vector of the j-th Lagrange basis polynomial for the nodes
-    0, 1, ..., N, computed by repeated polynomial multiplication."""
-    poly: List[Fraction] = [Fraction(1)]
-    denom = Fraction(1)
-    for i in range(N + 1):
-        if i == j:
-            continue
-        poly = [Fraction(0)] + poly  # multiply by X
-        for d in range(len(poly) - 1):
-            poly[d] -= Fraction(i) * poly[d + 1]
-        denom *= Fraction(j - i)
-    return [c / denom for c in poly]
+# --------------------------------------------------------------------------------------
+# Reconstruction: solve the Vandermonde system  sum_j c_j j^k = p_k,  0 <= k <= N
+# --------------------------------------------------------------------------------------
 
 
-def stability_constant(N: int, j: int) -> Fraction:
-    """The l1 norm of the coefficient vector of the j-th Lagrange basis
-    polynomial: the factor by which a moment error of size eps can be
-    amplified in the reconstructed weight w_j."""
-    return sum(abs(c) for c in lagrange_coefficients(N, j))
+def solve_vandermonde(nodes: Sequence[int], rhs: Sequence[Fraction]) -> List[Fraction]:
+    """Exact Gaussian elimination for the transposed Vandermonde system V c = rhs,
+    where V[k][j] = nodes[j] ** k. Cost O(n^3) with exact rational arithmetic."""
+    n = len(nodes)
+    mat: List[List[Fraction]] = [
+        [Fraction(nodes[j] ** k) for j in range(n)] + [Fraction(rhs[k])] for k in range(n)
+    ]
+    for col in range(n):
+        pivot = next(r for r in range(col, n) if mat[r][col] != 0)
+        mat[col], mat[pivot] = mat[pivot], mat[col]
+        pv = mat[col][col]
+        mat[col] = [x / pv for x in mat[col]]
+        for r in range(n):
+            if r != col and mat[r][col] != 0:
+                f = mat[r][col]
+                mat[r] = [a - f * b for a, b in zip(mat[r], mat[col])]
+    return [mat[k][n] for k in range(n)]
 
 
-# ----------------------------------------------------------------------
-# 7. Demonstrations
-# ----------------------------------------------------------------------
-
-IDEAL_WITNESSES: Dict[int, Tuple[List[int], List[int]]] = {
-    1: ([0, 2], [1, 1]),
-    2: ([0, 3, 3], [1, 1, 4]),
-    3: ([1, 1, 6, 6], [0, 3, 4, 7]),
-    4: ([0, 4, 8, 16, 17], [1, 2, 10, 14, 18]),
-    5: ([0, 3, 5, 11, 13, 16], [1, 1, 8, 8, 15, 15]),
-}
-
-INTERMEDIATE_WITNESSES: List[Tuple[int, List[int], List[int]]] = [
-    (3, [1, 1, 1, 4, 4, 4], [0, 2, 2, 3, 3, 5]),
-    (4, [1, 1, 1, 5, 6, 6, 8], [0, 2, 2, 3, 7, 7, 7]),
-]
+def reconstruct(n: int, sums: Sequence[int]) -> List[int]:
+    """Recover the multiplicity vector of a multiset bounded by N from (p_0, ..., p_N)."""
+    sol = solve_vandermonde(list(range(n + 1)), [Fraction(s) for s in sums])
+    if any(x.denominator != 1 or x < 0 for x in sol):
+        raise ValueError("input is not the power-sum vector of a multiset bounded by N")
+    return [int(x) for x in sol]
 
 
-def banner(text: str) -> None:
-    print("\n" + "=" * 74)
-    print(text)
-    print("=" * 74)
+# --------------------------------------------------------------------------------------
+# Exhaustive search over multiplicity vectors
+# --------------------------------------------------------------------------------------
 
 
-def demo_rigidity(N: int = 6) -> None:
-    banner(f"1. Rigidity: N = {N}, the moments of orders 0..{N} recover the weights")
-    weights = [Fraction(i * i + 1, 7) for i in range(N + 1)]
-    moments = [weighted_power_sum(weights, k) for k in range(N + 1)]
-    recovered = solve_vandermonde(moments, N)
-    print("  weights   :", [str(w) for w in weights])
-    print("  moments   :", [str(m) for m in moments])
-    print("  recovered :", [str(w) for w in recovered])
-    print("  exact match:", recovered == weights)
+def all_counts(n: int, mmax: int) -> Iterable[Counts]:
+    """All multiplicity vectors on {0,...,N} with entries at most M."""
+    return product(range(mmax + 1), repeat=n + 1)
 
 
-def demo_sharpness(N: int = 5) -> None:
-    banner(f"2. Sharpness: the binomial halves on {{0,...,{N}}} agree below order {N}")
-    even, odd = binomial_halves(N)
-    print("  even half :", [str(w) for w in even])
-    print("  odd  half :", [str(w) for w in odd])
-    for k in range(N + 1):
-        a, b = weighted_power_sum(even, k), weighted_power_sum(odd, k)
-        tag = "agree" if a == b else "DIFFER"
-        print(f"    k = {k}:  S_k(even) = {str(a):>12}   S_k(odd) = {str(b):>12}   {tag}")
-    gap = weighted_power_sum(even, N) - weighted_power_sum(odd, N)
-    predicted = Fraction((-1) ** N * factorial(N), 2 ** (N - 1))
-    print(f"  gap at order {N}: {gap}   predicted (-1)^N N!/2^(N-1) = {predicted}")
-    print("  extremal separation attained:", gap == predicted)
+def search_near_misses(n: int, mmax: int) -> Tuple[int, int, Tuple[Counts, Counts] | None]:
+    """Count unordered pairs of distinct multisets bounded by N with multiplicities <= M
+    agreeing on all p_k with k <= N, and those agreeing on all p_k with k <= N-1.
+    Also return the first near miss found (lexicographic order)."""
+    table: Dict[Counts, List[int]] = {c: power_sums(c, n) for c in all_counts(n, mmax)}
+    full = 0
+    trunc = 0
+    witness: Tuple[Counts, Counts] | None = None
+    for a, b in combinations(sorted(table), 2):
+        pa, pb = table[a], table[b]
+        if pa[:n] == pb[:n]:
+            trunc += 1
+            if witness is None:
+                witness = (a, b)
+            if pa == pb:
+                full += 1
+    return full, trunc, witness
 
 
-def demo_structure(N: int = 5) -> None:
-    banner(f"3. Structure of the kernel at N = {N}")
-    even, odd = binomial_halves(N)
-    diff = [a - b for a, b in zip(even, odd)]
-    alt = alternating_vector(N)
-    c = diff[0] / Fraction(alt[0])
-    print("  difference w - v :", [str(d) for d in diff])
-    print("  (-1)^i C(N,i)    :", alt)
-    print(f"  ratio c = w_0 - v_0 = {c}")
-    print("  difference = c * alternating vector:",
-          all(d == c * Fraction(a) for d, a in zip(diff, alt)))
-    tv = sum(abs(d) for d in diff)
-    print(f"  total variation = {tv},  |c| * 2^N = {abs(c) * 2 ** N}")
+# --------------------------------------------------------------------------------------
+# Demonstrations
+# --------------------------------------------------------------------------------------
 
 
-def demo_alternating_identity(N: int = 5) -> None:
-    banner(f"4. The alternating identity at N = {N}")
-    alt = alternating_vector(N)
-    for k in range(N + 1):
-        val = sum(a * i ** k for i, a in enumerate(alt))
-        expect = 0 if k < N else (-1) ** N * factorial(N)
-        print(f"    sum_i (-1)^i C({N},i) i^{k} = {val:>10}   (predicted {expect})")
+def demo_motivating_example() -> None:
+    print("=" * 78)
+    print("1. The motivating example: {0,2} versus {1,1}")
+    print("=" * 78)
+    s = (1, 0, 1)  # one 0, one 2
+    t = (0, 2, 0)  # two 1s
+    for k in range(3):
+        print(f"   p_{k}({as_multiset(s)}) = {power_sum(s, k):3d}    "
+              f"p_{k}({as_multiset(t)}) = {power_sum(t, k):3d}")
+    print(f"   gap at k = 2: {power_sum(s, 2) - power_sum(t, 2)}  =  (-1)^2 * 2! = {factorial(2)}")
+    print()
 
 
-def demo_invariant(max_N: int = 7, max_K: int = 3) -> None:
-    banner("5. The invariant m(N, K) by exhaustive search, with the sandwich K < m <= 2^K")
-    header = "  N \\ K " + "".join(f"{K:>6}" for K in range(1, max_K + 1))
+def demo_binomial_pair(nmax: int = 7) -> None:
+    print("=" * 78)
+    print("2-3. Binomial parity pair: agreement below the top index, exact gap (-1)^N N!")
+    print("=" * 78)
+    print(f"   {'N':>2} {'E_N':>28} {'O_N':>28} {'gap':>10} {'(-1)^N N!':>12}")
+    for n in range(1, nmax + 1):
+        e, o = even_part(n), odd_part(n)
+        assert all(power_sum(e, k) == power_sum(o, k) for k in range(n)), "agreement below top"
+        gap = power_sum(e, n) - power_sum(o, n)
+        expected = (-1) ** n * factorial(n)
+        assert gap == expected
+        se = str(as_multiset(e)) if n <= 4 else f"<{cardinality(e)} elts>"
+        so = str(as_multiset(o)) if n <= 4 else f"<{cardinality(o)} elts>"
+        print(f"   {n:>2} {se:>28} {so:>28} {gap:>10} {expected:>12}")
+    print()
+
+
+def demo_alternating_table(nmax: int = 8) -> None:
+    print("=" * 78)
+    print("4. The alternating table A(N,k) = sum_j (-1)^j C(N,j) j^k is lower triangular")
+    print("=" * 78)
+    header = "   N\\k " + "".join(f"{k:>8}" for k in range(nmax + 1))
     print(header)
-    for N in range(1, max_N + 1):
-        row = f"  {N:>5} "
-        for K in range(1, max_K + 1):
-            row += f"{min_collision_card(N, K):>6}"
-        print(row)
-    print("  (0 marks the rigid regime N <= K, where no collision exists at all.)")
-    print("  ceilings 2^K :", {K: 2 ** K for K in range(1, max_K + 1)})
+    for n in range(nmax + 1):
+        row = "".join(f"{alternating_table_entry(n, k):>8}" for k in range(n + 1))
+        print(f"   {n:>3} " + row)
+    diag = [alternating_table_entry(n, n) for n in range(nmax + 1)]
+    print(f"   diagonal: {diag}   (= (-1)^N N!)")
+    print()
 
 
-def demo_ideal_witnesses() -> None:
-    banner("6. Ideal witnesses: agreement order K with only K + 1 elements per side")
-    for K, (s, t) in IDEAL_WITNESSES.items():
-        ok = agree_up_to(s, t, K)
-        split = power_sum(s, K + 1) != power_sum(t, K + 1)
-        D = max(max(s), max(t))
-        print(f"  K = {K}: {s} vs {t}   diameter {D}")
-        print(f"      power sums k <= {K}: {[power_sum(s, k) for k in range(K + 1)]}"
-              f"  (equal: {ok})")
-        print(f"      order {K + 1}: {power_sum(s, K + 1)} vs {power_sum(t, K + 1)}"
-              f"  (separated: {split})")
-    print("\n  intermediate witnesses (below the ceiling 2^K, above the floor K + 1):")
-    for K, s, t in INTERMEDIATE_WITNESSES:
-        D = max(max(s), max(t))
-        print(f"  K = {K}: {s} vs {t}  size {len(s)} < {2 ** K} = 2^K, diameter {D},"
-              f" valid: {agree_up_to(s, t, K) and power_sum(s, K + 1) != power_sum(t, K + 1)}")
+def demo_classification_and_quantisation(n: int = 4, lam: int = 3) -> None:
+    print("=" * 78)
+    print("5. Classification and quantisation of near misses")
+    print("=" * 78)
+    v = alternating_vector(n)
+    base = [5] * (n + 1)  # a common padding, added to both sides
+    s = tuple(base[j] + max(lam * v[j], 0) for j in range(n + 1))
+    t = tuple(base[j] + max(-lam * v[j], 0) for j in range(n + 1))
+    assert all(power_sum(s, k) == power_sum(t, k) for k in range(n)), "near miss"
+    diff = [s[j] - t[j] for j in range(n + 1)]
+    recovered_lambda = s[0] - t[0]
+    print(f"   N = {n}, kernel vector v_j = (-1)^j C(N,j) = {v}")
+    print(f"   multiplicity difference c(s) - c(t) = {diff}")
+    print(f"   lambda recovered from the j = 0 coordinate: {recovered_lambda}")
+    assert diff == [recovered_lambda * vj for vj in v]
+    gap = power_sum(s, n) - power_sum(t, n)
+    print(f"   top-index gap = {gap} = lambda * (-1)^N * N! = "
+          f"{recovered_lambda * (-1) ** n * factorial(n)}")
+    assert gap % factorial(n) == 0 and abs(gap) >= factorial(n)
+    print(f"   N! = {factorial(n)} divides the gap, and |gap| >= N!   (quantisation)")
+    print()
 
 
-def demo_minimal_alphabets(max_K: int = 4) -> None:
-    banner("7. Minimal alphabets d(K) carrying an ideal collision (exhaustive)")
-    for K in range(1, max_K + 1):
-        d = minimal_alphabet_for_ideal(K)
-        print(f"  d({K}) = {d}")
-    print("  (Larger degrees require a wider search; the known values continue"
-          " d(5) = 16 < 18 = d(4), so d is not monotone.)")
+def demo_size_floor(nmax: int = 8) -> None:
+    print("=" * 78)
+    print("6. Size floor: a near miss at level N has at least 2^(N-1) elements")
+    print("=" * 78)
+    print(f"   {'N':>2} {'|E_N|':>10} {'2^(N-1)':>10} {'|O_N|':>10}")
+    for n in range(1, nmax + 1):
+        e, o = even_part(n), odd_part(n)
+        assert cardinality(e) == 2 ** (n - 1) == cardinality(o)
+        print(f"   {n:>2} {cardinality(e):>10} {2 ** (n - 1):>10} {cardinality(o):>10}")
+    print()
 
 
-def demo_prouhet(max_K: int = 4) -> None:
-    banner("8. The Prouhet-Thue-Morse doubling construction")
-    for K in range(0, max_K + 1):
-        s, t = prouhet_pair(K)
-        ok = agree_up_to(s, t, K)
-        print(f"  K = {K}: |s| = {len(s)} = 2^{K}, alphabet < {2 ** (K + 1)}")
-        print(f"      s = {s}")
-        print(f"      t = {t}")
-        print(f"      agree up to order {K}: {ok};  separated at order {K + 1}:"
-              f" {power_sum(s, K + 1) != power_sum(t, K + 1)}")
+def demo_zero_index_and_positive_support(n: int = 4) -> None:
+    print("=" * 78)
+    print("7-8. The index k = 0 exists only to see the value 0")
+    print("=" * 78)
+    singleton_zero = (1,) + (0,) * n
+    empty = (0,) * (n + 1)
+    print(f"   p_k({{0}}) = p_k({{}}) for k = 1..{n}: "
+          f"{[ (power_sum(singleton_zero, k), power_sum(empty, k)) for k in range(1, n + 1) ]}")
+    print(f"   but p_0 differs: {power_sum(singleton_zero, 0)} vs {power_sum(empty, 0)}")
+    e_pos = (0,) + even_part(n)[1:]  # E_N with the value 0 deleted
+    o = odd_part(n)
+    agree = all(power_sum(e_pos, k) == power_sum(o, k) for k in range(1, n))
+    print(f"   positive-support witness at N = {n}: agree for 1 <= k < N ? {agree}; "
+          f"gap at k = N is {power_sum(e_pos, n) - power_sum(o, n)}")
+    print()
 
 
-def demo_stability(max_N: int = 6) -> None:
-    banner("9. Stability constants: worst-case amplification of a moment error")
-    for N in range(1, max_N + 1):
-        consts = [stability_constant(N, j) for j in range(N + 1)]
-        worst = max(consts)
-        print(f"  N = {N}: max_j Lambda_(N,j) = {worst}"
-              f"   (~ {float(worst):.3g}),  N!/2^(N-1) = {Fraction(factorial(N), 2 ** (N - 1))}")
+def demo_reconstruction(n: int = 5) -> None:
+    print("=" * 78)
+    print("9. Reconstruction of a multiset from its first N+1 power sums")
+    print("=" * 78)
+    secret = (3, 0, 12, 1, 6, 4)  # multiplicities on {0,...,5}
+    sums = power_sums(secret, n)
+    print(f"   hidden multiplicities : {list(secret)}   (cardinality {cardinality(secret)})")
+    print(f"   observed power sums   : {sums}")
+    rec = reconstruct(n, sums)
+    print(f"   reconstructed         : {rec}")
+    assert rec == list(secret)
+    print("   exact match -- rigidity in action")
+    # One power sum short: the ambiguity is exactly a multiple of the kernel vector.
+    v = alternating_vector(n)
+    twin = tuple(secret[j] - v[j] for j in range(n + 1))
+    if all(c >= 0 for c in twin):
+        assert all(power_sum(secret, k) == power_sum(twin, k) for k in range(n))
+        print(f"   dropping p_{n}: the multiset {list(twin)} is indistinguishable, "
+              f"gap {power_sum(secret, n) - power_sum(twin, n)} = {factorial(n)} * "
+              f"{(power_sum(secret, n) - power_sum(twin, n)) // factorial(n)}")
+    print()
+
+
+def demo_exhaustive_table() -> None:
+    print("=" * 78)
+    print("10. Exhaustive search over multiplicity vectors (computational evidence)")
+    print("=" * 78)
+    print(f"   {'N':>2} {'M':>2} {'agree k<=N':>11} {'agree k<=N-1':>13}  first witness")
+    for n, mmax in [(1, 2), (2, 1), (2, 2), (2, 3), (3, 2), (3, 3)]:
+        full, trunc, witness = search_near_misses(n, mmax)
+        if witness is None:
+            desc = f"(none; needs multiplicity {max(comb(n, j) for j in range(n + 1))})"
+        else:
+            desc = f"{as_multiset(witness[0])} vs {as_multiset(witness[1])}"
+        print(f"   {n:>2} {mmax:>2} {full:>11} {trunc:>13}  {desc}")
+    print("   the 'agree k<=N' column is identically zero: this is rigidity")
+    print()
 
 
 def main() -> None:
-    demo_rigidity()
-    demo_sharpness()
-    demo_structure()
-    demo_alternating_identity()
-    demo_invariant()
-    demo_ideal_witnesses()
-    demo_minimal_alphabets()
-    demo_prouhet()
-    demo_stability()
-    print("\nAll demonstrations complete.")
+    demo_motivating_example()
+    demo_binomial_pair()
+    demo_alternating_table()
+    demo_classification_and_quantisation()
+    demo_size_floor()
+    demo_zero_index_and_positive_support()
+    demo_reconstruction()
+    demo_exhaustive_table()
+    print("All assertions passed.")
 
 
 if __name__ == "__main__":

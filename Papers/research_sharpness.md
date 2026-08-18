@@ -1,20 +1,36 @@
-# Sharpness of the Finite Moment Problem on a Bounded Alphabet
+# Power-Sum Rigidity for Bounded Multisets and the Exact Sharpness of the Window $0 \le k \le N$
 
-**Rigidity, the one-dimensional kernel, and the minimal collision size $m(N,K)$**
-
-*Aristotle*
+**Author:** Aristotle
+**Date:** 2026-08-18
 
 ---
 
 ## Abstract
 
-Let $N \ge 1$ and consider weight systems $w = (w_0,\dots,w_N) \in \mathbb{R}^{N+1}$ on the node set $\{0,1,\dots,N\}$, with power sums (moments) $S_k(w)=\sum_{i=0}^N w_i i^k$. We give a complete rigidity/sharpness analysis of the reconstruction problem $w \mapsto (S_0(w),\dots,S_K(w))$.
+For a finite multiset $s$ of natural numbers write $p_k(s) = \sum_{x \in s} x^k$ for its $k$-th
+power sum. We prove that if all elements of $s$ and $t$ are bounded by $N$ and
+$p_k(s) = p_k(t)$ for every $k \in \{0, 1, \dots, N\}$, then $s = t$; and that this window of
+$N + 1$ indices is optimal at every level $N$, witnessed by the *binomial parity pair* $E_N$,
+$O_N$ carrying multiplicity $\binom{N}{j}$ at even, respectively odd, $j \le N$. We then prove
+that the failure is exactly quantified. The multiplicity difference of *any* pair of bounded
+multisets agreeing on all power sums below the top index is an integer multiple of the single
+alternating binomial vector $j \mapsto (-1)^j \binom{N}{j}$; consequently the separation at the
+top index is divisible by $N!$, is at least $N!$ in absolute value for distinct multisets, and
+equals $(-1)^N N!$ for the binomial pair. The same classification yields a size floor: a near
+miss at level $N \ge 1$ has at least $2^{N-1}$ elements, attained by the binomial pair. We
+isolate the role of the counting index $k = 0$: it is needed *only* because the value $0$ is
+invisible to positive power sums, and on positive support the punctured window
+$1 \le k \le N$ is again rigid and again sharp. Finally we give the spectral reading: for monic
+integer polynomials split with roots in $\{0, \dots, N\}$ — equivalently, spectra of
+diagonalisable matrices with eigenvalues in that range — the traces
+$\operatorname{tr}(A^0), \dots, \operatorname{tr}(A^N)$ determine the characteristic polynomial,
+and $N$ traces do not. The unifying mechanism is a single linear-algebra fact: the Vandermonde
+matrix on the nodes $0, \dots, N$ is invertible, and the kernel of its top-row truncation is the
+line spanned by the alternating binomial vector.
 
-We prove: (i) **rigidity** — the moments of orders $k \le N$ determine $w$; (ii) **sharpness** — for every $K < N$ there are two distinct probability distributions on $\{0,\dots,N\}$ whose moments agree in all orders $k \le K$, namely the even and odd halves of the normalised binomial weights; (iii) a **structure theorem** — two weight systems agreeing in all orders $k < N$ differ by a scalar multiple of the alternating binomial vector $i \mapsto (-1)^i \binom{N}{i}$, so the space of moment-invisible signals is exactly one-dimensional; (iv) the resulting **exact gap and total-variation identities** $S_N(w)-S_N(v)=(w_0-v_0)(-1)^N N!$ and $\|w-v\|_1 = |w_0-v_0| 2^N$, and the **extremal separation** $|S_N(w)-S_N(v)| \le N!/2^{N-1}$ for probability distributions, attained by the binomial halves; and (v) a **stability estimate** with the $\ell^1$ norms of Lagrange coefficient vectors as constants.
-
-Turning to integer data (multisets), a second, independent rigidity mechanism — Newton's identities — gives determination from the moments of orders $k \le n$ for a multiset of size $n$, whence the exact threshold $\min(N,n)$. We package the sharpness data into a single invariant, the **minimal collision size** $m(N,K)$: the least cardinality of a multiset $s$ with entries $\le N$ such that some $t \ne s$ has the same power sums in all orders $k \le K$. We prove: $m(N,K)=0$ (no collision) exactly when $N \le K$; the Prouhet–Tarry–Escott floor $K < m(N,K)$; antitonicity in $N$ and monotonicity in $K$; the exact critical value $m(N,N-1)=2^{N-1}$; the uniform Prouhet ceiling $m(N,K) \le 2^K$ on the whole non-rigid range, via a doubling lemma yielding the Thue–Morse pairs; and the reduction to disjoint collisions. Finally we compute the invariant exactly in small degree: $m(N,1)=2$ ($N \ge 2$), the complete table $m(N,2) \in \{0,4,3\}$, $m(N,3)=4$ ($N \ge 7$), $m(N,4)=5$ ($N \ge 18$), $m(N,5)=6$ ($N \ge 16$). Hence the PTE floor is attained in every degree $K \le 5$. The narrow multiset witnesses used exhibit minimal ideal alphabets $d(3)=7$, $d(4)=18$, $d(5)=16$ — in particular $d$ is **not monotone** in the degree.
-
-**Keywords:** moment problem, power sums, Vandermonde, Newton's identities, Prouhet–Tarry–Escott, Thue–Morse, alternating binomial identity, minimal collision size.
+**Keywords:** power sums, moment problem, multiset reconstruction, Vandermonde matrix, Lagrange
+interpolation, finite differences, alternating binomial sums, Newton's identities, spectral
+rigidity.
 
 ---
 
@@ -22,382 +38,546 @@ Turning to integer data (multisets), a second, independent rigidity mechanism �
 
 ### 1.1 The problem
 
-The moment problem asks to what extent a measure is determined by its moments. On the real line the classical answers (Hamburger, Stieltjes, Hausdorff) concern infinite moment sequences and analytic growth conditions. On a *finite* node set the question becomes finite-dimensional and combinatorial: how many moments does one need, exactly, and what goes wrong one moment short?
+Let $s$ be a finite multiset of natural numbers. Its power sums are
+$$p_k(s) = \sum_{x \in s} x^k \in \mathbb{Z}, \qquad k = 0, 1, 2, \dots,$$
+with the convention $0^0 = 1$, so that $p_0(s) = |s|$ is the cardinality. Power sums are the
+most natural "measurements" one can perform on a multiset: they are symmetric, additive over
+disjoint union, and computable from any presentation of the data.
 
-Fix $N \ge 1$ and let the nodes be $0, 1, \dots, N$. A **weight system** is a vector $w = (w_0,\dots,w_N) \in \mathbb{R}^{N+1}$; we write
+The reconstruction question is: *how many power sums determine $s$?* Without a bound on the
+elements the answer is "no finite number", since one may always place a difference at a very
+high value. But if all elements lie in $\{0, 1, \dots, N\}$, the multiset is described by
+$N + 1$ multiplicities, and one expects $N + 1$ measurements to suffice. That expectation is
+correct, and the purpose of this paper is to prove it and then to determine precisely how it
+fails when one measurement is removed.
 
-$$S_k(w) \;=\; \sum_{i=0}^{N} w_i \, i^k, \qquad k \ge 0,$$
+### 1.2 The motivating example
 
-for its **power sums**, with the convention $0^0 = 1$, so $S_0(w) = \sum_i w_i$ is total mass. Special cases of interest:
+The smallest interesting instance is
+$$s = \{0, 2\}, \qquad t = \{1, 1\},$$
+both bounded by $N = 2$. One computes
+$$p_0(s) = p_0(t) = 2, \qquad p_1(s) = p_1(t) = 2, \qquad p_2(s) = 4 \ne 2 = p_2(t).$$
+The two multisets are indistinguishable by the first two power sums and separate exactly at
+$k = N = 2$. We will see that this is not an isolated coincidence but the level-$2$ instance of
+a construction that exists at every $N$, and that it is *extremal* in two independent senses.
 
-* $w_i \ge 0$ and $S_0(w)=1$: a probability distribution on $\{0,\dots,N\}$;
-* $w_i \in \mathbb{Z}_{\ge 0}$: the multiplicity vector of a finite multiset ("data set") of naturals bounded by $N$, whose power sums are $\sum_{x \in s} x^k$.
+### 1.3 Results
 
-Two questions organise the paper.
+Throughout, "bounded by $N$" means every element is $\le N$; multiplicities are unrestricted.
 
-**Q1 (Rigidity/sharpness).** For which $K$ does $(S_0,\dots,S_K)$ determine $w$? What is the exact structure of the failure when $K$ is too small?
+* **Theorem A (Rigidity).** If $s, t$ are bounded by $N$ and $p_k(s) = p_k(t)$ for all
+  $k \le N$, then $s = t$.
+* **Theorem B (Sharpness).** For every $N$ there exist distinct multisets bounded by $N$ whose
+  power sums agree for all $k < N$; explicitly, the binomial parity pair $E_N$, $O_N$.
+* **Theorem C (Exact top-index gap).** $p_N(E_N) - p_N(O_N) = (-1)^N N!$.
+* **Theorem D (Classification of near misses).** If $s, t$ are bounded by $N$ and agree on all
+  $p_k$ with $k < N$, then there is an integer $\lambda$ with
+  $c_j(s) - c_j(t) = \lambda \, (-1)^j \binom{N}{j}$ for all $j \le N$, where $c_j$ denotes
+  multiplicity; in fact $\lambda = c_0(s) - c_0(t)$.
+* **Theorem E (Quantisation and extremality).** Under the hypotheses of Theorem D,
+  $N! \mid p_N(s) - p_N(t)$; if moreover $s \ne t$ then $|p_N(s) - p_N(t)| \ge N!$, and the
+  binomial pair attains the bound.
+* **Theorem F (Size floor).** Under the hypotheses of Theorem D with $s \ne t$ and $N \ge 1$,
+  $2^N \le 2|s|$, i.e. $|s| \ge 2^{N-1}$; and $|E_N| = 2^{N-1}$ exactly.
+* **Theorem G (The role of $k = 0$).** The window $1 \le k \le N$ fails in general ($\{0\}$
+  versus $\emptyset$), but on positive support — all elements in $\{1, \dots, N\}$ — the
+  punctured window $1 \le k \le N$ is rigid, and it too is sharp.
+* **Theorem H (Spectral form).** For $s, t$ bounded by $N$, the monic split polynomials
+  $\chi_s = \prod_{x \in s} (X - x)$ and $\chi_t$ are equal if and only if $p_k(s) = p_k(t)$
+  for all $k \le N$; and there exist $s, t$ with $\chi_s \ne \chi_t$ agreeing for all $k < N$.
+* **Proposition I (Abundance).** For each $N$ the set of pairs of distinct multisets bounded by
+  $N$ agreeing on all $p_k$ with $k < N$ is infinite.
 
-**Q2 (Cost of a collision).** In the integer setting, if the moments up to order $K$ fail to determine the data set, how *large* must an ambiguous data set be?
+### 1.4 Context
 
-Question Q1 has a clean and complete answer (Sections 2–4). Question Q2 leads to a numerical invariant $m(N,K)$ (Section 6) which interpolates between two classical circles of ideas: the exponential $2^{N-1}$ threshold coming from the alternating binomial kernel, and the Prouhet–Tarry–Escott problem of ideal power-sum equalities.
+Two classical circles of ideas meet here. The first is the theory of symmetric functions:
+Newton's identities convert the first $n$ power sums of $n$ quantities into their elementary
+symmetric functions, hence into the coefficients of the polynomial they are roots of. That
+gives a reconstruction theorem in which the number of required power sums is governed by the
+*cardinality* of the multiset. The present statement is governed instead by the *range* of the
+values, and does not degrade as the multiplicities grow: a multiset of a billion elements
+bounded by $5$ still needs only six power sums. The second circle is the truncated moment
+problem, where one asks which finite sequences $(m_0, \dots, m_K)$ arise as moments of a
+measure and when the measure is determined. Restricting to atoms in $\{0, \dots, N\}$ makes
+that problem finite-dimensional and linear, and the answer is entirely governed by the
+Vandermonde matrix on those nodes.
 
-### 1.2 Summary of results
+The novelty here is not that the Vandermonde matrix is invertible but that the *failure mode*
+one index short is completely described: a single kernel line, an integrality constraint from
+its normalisation at $j = 0$, and hence an exact factorial quantisation of the smallest
+possible discrepancy.
 
-| Statement | Content |
+---
+
+## 2. Setup and notation
+
+$\mathbb{N} = \{0, 1, 2, \dots\}$. Multisets of naturals are written $s, t$; $c_j(s)$ denotes
+the multiplicity of $j$ in $s$; $|s| = \sum_j c_j(s)$ is the cardinality; $\emptyset$ is the
+empty multiset. Power sums $p_k(s) = \sum_{x \in s} x^k$ are computed in $\mathbb{Z}$ (so
+subtraction is available), with $0^0 = 1$.
+
+Two immediate properties, used constantly:
+
+* **Additivity.** $p_k(s \uplus t) = p_k(s) + p_k(t)$, where $\uplus$ is multiset union with
+  multiplicities added.
+* **Replication.** $p_k(n \cdot \{j\}) = n\,j^k$ for the multiset consisting of $n$ copies of
+  $j$.
+
+**Definition 2.1 (Multiplicity presentation).** For $N \in \mathbb{N}$ and
+$c : \{0, \dots, N\} \to \mathbb{N}$ let
+$$\mathrm{Ms}_N(c) \;=\; \biguplus_{j=0}^{N} \, c(j)\cdot\{j\}$$
+be the multiset with multiplicity $c(j)$ at $j$. Every multiset bounded by $N$ is of this form,
+namely $s = \mathrm{Ms}_N(j \mapsto c_j(s))$, and conversely every $\mathrm{Ms}_N(c)$ is bounded
+by $N$.
+
+**Lemma 2.2 (Linear form of the power sums).** If $s$ is bounded by $N$ then for every $k$,
+$$p_k(s) \;=\; \sum_{j=0}^{N} c_j(s)\, j^k .$$
+
+*Proof.* Write $s$ in the form of Definition 2.1 and apply additivity and replication. $\square$
+
+Lemma 2.2 is the whole translation: the map
+$$s \longmapsto \bigl(p_0(s), \dots, p_K(s)\bigr)$$
+is the restriction to nonnegative integer vectors of the linear map with matrix
+$V^{(K)}_{k,j} = j^k$, $0 \le k \le K$, $0 \le j \le N$. For $K = N$ this is the square
+Vandermonde matrix on the nodes $0, 1, \dots, N$ (transposed); for $K = N-1$ it is that matrix
+with its last row deleted.
+
+---
+
+## 3. Rigidity
+
+The key linear statement is the injectivity of the transposed Vandermonde map, phrased so that
+it applies directly to the *difference* of two multiplicity vectors (which may be negative, and
+is naturally considered over $\mathbb{Q}$).
+
+**Lemma 3.1 (Dual Vandermonde injectivity).** Let $e_0, \dots, e_N \in \mathbb{Q}$ satisfy
+$$\sum_{j=0}^{N} e_j\, j^k = 0 \qquad \text{for every } k \le N .$$
+Then $e_m = 0$ for all $m \le N$.
+
+*Proof.* Consider the linear functional $\Lambda(f) = \sum_{j=0}^{N} e_j f(j)$ on the space
+$\mathbb{Q}[x]_{\le N}$ of polynomials of degree at most $N$. The hypothesis says $\Lambda$
+annihilates every monomial $x^k$ with $k \le N$; by linearity $\Lambda$ annihilates all of
+$\mathbb{Q}[x]_{\le N}$. Fix $m \le N$ and let $L_m \in \mathbb{Q}[x]_{\le N}$ be the Lagrange
+basis polynomial for the nodes $0, 1, \dots, N$:
+$$L_m(x) \;=\; \prod_{\substack{j = 0 \\ j \ne m}}^{N} \frac{x - j}{m - j},
+\qquad L_m(m) = 1, \quad L_m(j) = 0 \ (j \ne m).$$
+Its degree is $N < N + 1$, so expanding $L_m$ in the monomial basis and applying $\Lambda$
+term by term gives $\Lambda(L_m) = 0$. On the other hand, evaluating the defining sum,
+$\Lambda(L_m) = \sum_j e_j L_m(j) = e_m$. Hence $e_m = 0$. $\square$
+
+The proof deserves a remark. It uses only that the nodes $0, \dots, N$ are pairwise distinct
+(so that the Lagrange basis exists) and that there are exactly as many of them as the dimension
+of the polynomial space being tested. No determinant is computed: the argument is the statement
+that point evaluations at $N+1$ distinct nodes form a basis of the dual of
+$\mathbb{Q}[x]_{\le N}$, and the Lagrange polynomials are the dual basis of the monomials'
+image. This is the "algebra $\leftrightarrow$ combinatorics" bridge on which everything below
+rests.
+
+**Theorem A (Rigidity).** Let $s, t$ be finite multisets of naturals bounded by $N$ with
+$$p_k(s) = p_k(t) \qquad \text{for all } k \le N .$$
+Then $s = t$.
+
+*Proof.* Set $e_j = c_j(s) - c_j(t) \in \mathbb{Q}$ for $j \le N$. By Lemma 2.2 and the
+hypothesis, for every $k \le N$,
+$$\sum_{j=0}^{N} e_j\, j^k = p_k(s) - p_k(t) = 0 .$$
+Lemma 3.1 gives $e_m = 0$, i.e. $c_m(s) = c_m(t)$, for all $m \le N$. For $m > N$ both
+multiplicities vanish because both multisets are bounded by $N$. Multisets with identical
+multiplicity functions are equal. $\square$
+
+Two comments. First, the bound on the elements is essential — the theorem is not about the
+number of measurements versus the number of elements but versus the number of *available
+values*. Second, the hypothesis is used only for $k \le N$, and the conclusion is exact
+equality of multisets, not merely of some coarser invariant.
+
+---
+
+## 4. Alternating binomial sums and finite differences
+
+We now build the object that will realise sharpness. Let $\Delta$ denote the forward difference
+operator with unit step, $(\Delta f)(x) = f(x+1) - f(x)$.
+
+**Lemma 4.1 (Difference expansion).** For all $N, k \in \mathbb{N}$,
+$$(\Delta^N f)(0) \;=\; (-1)^N \sum_{j=0}^{N} (-1)^j \binom{N}{j} f(j) .$$
+
+*Proof.* Induction on $N$, or the operator identity $\Delta = S - I$ with $S$ the unit shift:
+expanding $(S - I)^N$ by the binomial theorem gives
+$\Delta^N = \sum_{i} \binom{N}{i} (-1)^{N-i} S^{i}$, and evaluating at $0$ gives
+$\sum_i (-1)^{N-i}\binom{N}{i} f(i)$, which is the stated expression after replacing
+$(-1)^{N-i}$ by $(-1)^N(-1)^i$. $\square$
+
+**Lemma 4.2 (Vanishing below the top degree).** If $k < N$ then
+$$A(N,k) \;:=\; \sum_{j=0}^{N} (-1)^j \binom{N}{j} j^k \;=\; 0 .$$
+
+*Proof.* By Lemma 4.1, $A(N,k) = (-1)^N (\Delta^N f)(0)$ with $f(x) = x^k$. The difference
+operator lowers the degree of a polynomial by exactly one; applying it $N > k$ times to a
+polynomial of degree $k$ yields the zero function. $\square$
+
+**Lemma 4.3 (Value at the top degree).**
+$$A(N,N) \;=\; \sum_{j=0}^{N} (-1)^j \binom{N}{j} j^N \;=\; (-1)^N \, N! \, .$$
+
+*Proof.* Again by Lemma 4.1 with $f(x) = x^N$: each application of $\Delta$ to a monic
+polynomial of degree $d$ yields a polynomial of degree $d-1$ with leading coefficient $d$, so
+$\Delta^N x^N$ is the constant $N!$. Multiplying by $(-1)^N$ and using
+$(-1)^N(-1)^N = 1$ gives the claim. $\square$
+
+Together, Lemmas 4.2 and 4.3 say that the *alternating table*
+$A(N,k)$, $0 \le k \le N$, is strictly lower triangular with diagonal $(-1)^N N!$. Its diagonal
+entries are
+$$1, \; -1, \; 2, \; -6, \; 24, \; -120, \; 720, \; -5040, \; 40320, \dots$$
+the factorials with alternating signs.
+
+**Definition 4.4 (Binomial parity pair).** For $N \in \mathbb{N}$ set
+$$E_N \;=\; \mathrm{Ms}_N\bigl(j \mapsto [\,j \text{ even}\,]\tbinom{N}{j}\bigr), \qquad
+O_N \;=\; \mathrm{Ms}_N\bigl(j \mapsto [\,j \text{ odd}\,]\tbinom{N}{j}\bigr),$$
+where $[\,\cdot\,]$ is the indicator. Thus $E_N$ contains $\binom{N}{j}$ copies of each even
+$j \le N$, and $O_N$ contains $\binom{N}{j}$ copies of each odd $j \le N$. Both are bounded by
+$N$.
+
+**Lemma 4.5.** For every $k$, $\;p_k(E_N) - p_k(O_N) = A(N, k)$.
+
+*Proof.* By Lemma 2.2 the difference is $\sum_{j \le N} \bigl(c_j(E_N) - c_j(O_N)\bigr) j^k$,
+and by construction $c_j(E_N) - c_j(O_N) = (-1)^j \binom{N}{j}$: at even $j$ the difference is
+$+\binom{N}{j}$ and at odd $j$ it is $-\binom{N}{j}$. $\square$
+
+**Theorem C (Exact top-index gap).** For every $N$,
+$$p_k(E_N) = p_k(O_N) \quad \text{for all } k < N, \qquad
+p_N(E_N) - p_N(O_N) = (-1)^N\, N! \, .$$
+
+*Proof.* Combine Lemma 4.5 with Lemmas 4.2 and 4.3. $\square$
+
+**Corollary 4.6.** $E_N \ne O_N$, since $(-1)^N N! \ne 0$.
+
+**Theorem B (Sharpness).** For every $N$ there exist multisets $s \ne t$ bounded by $N$ with
+$p_k(s) = p_k(t)$ for all $k < N$. Consequently the window $0 \le k \le N$ of Theorem A cannot
+be shortened at any level.
+
+*Proof.* Take $s = E_N$, $t = O_N$ and apply Theorem C and Corollary 4.6. $\square$
+
+**Optimality, packaged.** For every $N$, the implication
+"$p_k(s) = p_k(t)$ for all $k \le N$ $\Rightarrow$ $s = t$" holds for all multisets bounded by
+$N$, while the implication with $k \le N$ replaced by $k < N$ fails. This is precisely the
+statement that the threshold $K = N$ is optimal.
+
+**Low levels.** At $N = 2$: $\binom{2}{0} = \binom{2}{2} = 1$ and $\binom{2}{1} = 2$, so
+$E_2 = \{0, 2\}$ and $O_2 = \{1, 1\}$, with gap $4 - 2 = 2 = 2!$. At $N = 3$:
+$E_3 = \{0, 2, 2, 2\}$ and $O_3 = \{1, 1, 1, 3\}$, agreeing at $k = 0$ ($4 = 4$), $k = 1$
+($6 = 6$) and $k = 2$ ($12 = 12$), separating at $k = 3$: $24 - 30 = -6 = -3!$. The motivating
+example of §1.2 is thus the level-$2$ instance of Definition 4.4, derived rather than found.
+
+---
+
+## 5. Classification of near misses and quantisation of the gap
+
+Call a pair $(s,t)$ of multisets bounded by $N$ a **near miss at level $N$** if
+$p_k(s) = p_k(t)$ for all $k < N$. Theorem B produces near misses; the results of this section
+show that there are essentially no others, and that they carry an exact numerical cost.
+
+**Theorem D (Classification).** Let $(s,t)$ be a near miss at level $N$. Then, with
+$\lambda = c_0(s) - c_0(t) \in \mathbb{Z}$,
+$$c_j(s) - c_j(t) \;=\; \lambda \,(-1)^j \binom{N}{j} \qquad \text{for all } j \le N .$$
+
+*Proof sketch.* Let $e_j = c_j(s) - c_j(t)$ and $v_j = (-1)^j \binom{N}{j}$, and consider the
+corrected vector $w_j = e_j - \lambda v_j$. Two facts are combined.
+
+1. For every $k < N$, $\sum_{j \le N} w_j j^k = \bigl(p_k(s) - p_k(t)\bigr) - \lambda A(N,k) = 0$,
+   using the near-miss hypothesis and Lemma 4.2.
+2. $w_0 = e_0 - \lambda v_0 = e_0 - \lambda = 0$, because $v_0 = (-1)^0\binom{N}{0} = 1$.
+
+So $w$ is supported on $\{1, \dots, N\}$ — that is $N$ nodes — and annihilates the $N$ monomials
+$x^k$, $k < N$. Repeating the Lagrange argument of Lemma 3.1 on the punctured node set
+$\{1, \dots, N\}$ (which again has as many nodes as the dimension of the polynomial space being
+tested) forces $w_j = 0$ for all $j \le N$. Hence $e = \lambda v$. $\square$
+
+The mechanism is worth stating plainly. The kernel of the truncated matrix
+$V^{(N-1)} = (j^k)_{k<N,\; j \le N}$, of size $N \times (N+1)$, is at least one-dimensional by
+dimension count and at most one-dimensional because deleting any single column leaves an
+invertible $N \times N$ Vandermonde matrix. Lemma 4.2 exhibits $v$ in that kernel, so the
+kernel is exactly $\mathbb{Q}v$. Theorem D adds the arithmetic refinement: because $v_0 = 1$,
+the coefficient $\lambda$ of an *integer* kernel vector is itself an integer, namely the
+$0$-coordinate. The normalisation $v_0 = 1$ — a triviality about Pascal's triangle — is what
+turns a statement about a line into a statement about a lattice.
+
+**Theorem E (Quantisation and extremality).** Let $(s,t)$ be a near miss at level $N$. Then
+$$N! \; \big| \; p_N(s) - p_N(t).$$
+If moreover $s \ne t$, then $|p_N(s) - p_N(t)| \ge N!$. The bound is attained: for
+$s = E_N$, $t = O_N$ one has $|p_N(s) - p_N(t)| = N!$.
+
+*Proof.* By Lemma 2.2 and Theorem D,
+$$p_N(s) - p_N(t) = \sum_{j \le N} \bigl(c_j(s) - c_j(t)\bigr) j^N
+= \lambda \sum_{j \le N} (-1)^j \binom{N}{j} j^N = \lambda \, (-1)^N N! ,$$
+using Lemma 4.3. Divisibility by $N!$ is immediate. If $s \ne t$ then some multiplicity differs;
+by Theorem D that forces $\lambda \ne 0$ (if $\lambda = 0$ then $e_j = 0$ for all $j \le N$, and
+multiplicities above $N$ vanish by boundedness, so $s = t$). Hence $|\lambda| \ge 1$ and
+$|p_N(s) - p_N(t)| = |\lambda| \, N! \ge N!$. Attainment is Theorem C, where $\lambda = 1$.
+$\square$
+
+Theorem E converts the qualitative sharpness of Theorem B into an extremal statement: not only
+does the shortened window fail, but every failure is expensive. The cheapest one costs exactly
+$N!$, and the binomial pair realises that minimum. There is no near miss with a small
+discrepancy at the top index; the discrepancy is quantised in units of $N!$.
+
+**Theorem F (Size floor).** Let $(s,t)$ be a near miss at level $N \ge 1$ with $s \ne t$. Then
+$$2^N \le 2\,|s| , \qquad \text{i.e.} \qquad |s| \ge 2^{N-1}.$$
+Moreover $2\,|E_N| = 2^N$, so the binomial pair attains the floor.
+
+*Proof sketch.* By Theorem D with $|\lambda| \ge 1$, the multiplicity difference dominates the
+alternating binomial vector coordinatewise in absolute value:
+$|c_j(s) - c_j(t)| \ge \binom{N}{j}$ for every $j \le N$. Summing over $j$ and using
+$\sum_j \binom{N}{j} = 2^N$ gives
+$$2^N \le \sum_{j \le N} \bigl(c_j(s) + c_j(t)\bigr) = |s| + |t| ,$$
+since $|a - b| \le a + b$ for nonnegative integers. But $|s| = p_0(s) = p_0(t) = |t|$ when
+$N \ge 1$, because the near-miss hypothesis includes the index $k = 0$. Hence $2^N \le 2|s|$.
+For the attainment, $|E_N| = \sum_{j \text{ even}} \binom{N}{j} = 2^{N-1}$, the standard parity
+identity, which follows from evaluating $(1+1)^N$ and $(1-1)^N$ and averaging. $\square$
+
+Theorem F is a second extremality statement, independent of Theorem E: the binomial pair is not
+just the cheapest near miss in top-index separation, it is also the smallest one in cardinality.
+Both minima are consequences of the same fact — that the kernel is a line whose primitive
+integer generator is $v$.
+
+**Proposition I (Abundance).** For each $N$, the set of near misses at level $N$ consisting of
+distinct multisets is infinite.
+
+*Proof.* For each $m \in \mathbb{N}$ let $s_m = E_N \uplus (m \cdot \{0\})$ and
+$t_m = O_N \uplus (m \cdot \{0\})$. Adding copies of $0$ changes $p_k$ only for $k = 0$, and
+changes it equally on both sides, so each pair is again a near miss; $s_m \ne t_m$ because
+$E_N \ne O_N$ and padding is cancellative; and the pairs are pairwise distinct since their
+cardinalities differ. $\square$
+
+Note the consistency with Theorem D: padding by $m$ zeros leaves $\lambda = 1$, so all these
+pairs sit at the minimum of Theorem E. Increasing $|\lambda|$ instead — for example taking
+multiplicity $2\binom{N}{j}$ — multiplies both the top-index gap and the size floor by
+$|\lambda|$.
+
+---
+
+## 6. The role of the index $k = 0$
+
+The window $0 \le k \le N$ contains one index of a different flavour: $p_0$ measures
+cardinality, not any arithmetic of the elements. It is natural to ask whether it can be dropped
+in favour of a purely "positive-degree" window.
+
+**Observation 6.1 (The counting index cannot be dropped).** For every $N$ the multisets
+$s = \{0\}$ and $t = \emptyset$ are bounded by $N$, are distinct, and satisfy $p_k(s) = p_k(t)$
+for all $k$ with $1 \le k \le N$ — indeed for all $k \ge 1$, since $0^k = 0$.
+
+So the naive punctured statement is false, and it fails for a single, completely identifiable
+reason: the value $0$ contributes nothing to any positive power sum. Removing that value from
+consideration removes the obstruction entirely.
+
+**Theorem G (Positive support).** Let $s, t$ be multisets with all elements in
+$\{1, 2, \dots, N\}$.
+
+1. *(Rigidity)* If $p_k(s) = p_k(t)$ for all $k$ with $1 \le k \le N$, then $s = t$.
+2. *(Sharpness)* For $N \ge 1$ there exist distinct such $s, t$ with $p_k(s) = p_k(t)$ for all
+   $k$ with $1 \le k < N$.
+
+*Proof sketch.* (1) Let $e_j = c_j(s) - c_j(t)$; then $e_0 = 0$ because neither multiset
+contains $0$, and $\sum_{j \le N} e_j j^k = 0$ for $1 \le k \le N$. The functional
+$\Lambda(f) = \sum_{j=1}^{N} e_j f(j)$ therefore annihilates $x, x^2, \dots, x^N$, hence every
+polynomial of degree $\le N$ with zero constant term. For $m \in \{1, \dots, N\}$, the Lagrange
+basis polynomial $L_m$ for the nodes $\{1,\dots,N\}$ has degree $N - 1$; multiplying it by
+$x/m$ produces a polynomial of degree $\le N$ with zero constant term taking value $1$ at $m$
+and $0$ at the other positive nodes. Applying $\Lambda$ to it yields $e_m = 0$. Multiplicities
+outside $\{1, \dots, N\}$ vanish by hypothesis, so $s = t$.
+
+(2) Take $E_N^{+}$, the binomial even part with the value $0$ deleted, and $O_N$. Deleting
+zeros changes no power sum with $k \ge 1$, so by Theorem C the two agree for $1 \le k < N$; and
+they are distinct because their power sums at $k = N$ differ by $(-1)^N N!$, again unaffected
+by the deletion. $\square$
+
+Both windows in Theorem G have length $N$: the general statement needs $N + 1$ indices only
+because it must also detect a value that positive power sums cannot see. The picture is
+therefore complete and symmetric — one index per available value, no more and no less.
+
+---
+
+## 7. Spectral form: traces of powers determine the spectrum
+
+Multisets of naturals are root multisets. For a multiset $s$ define the monic integer
+polynomial
+$$\chi_s(X) \;=\; \prod_{x \in s} \, (X - x) \;\in\; \mathbb{Z}[X].$$
+Its degree is $|s|$, it splits over $\mathbb{Z}$, and its root multiset (with multiplicity) is
+exactly $s$; in particular $s \mapsto \chi_s$ is injective. If $A$ is a diagonalisable matrix
+whose eigenvalues, with multiplicity, are the elements of $s$, then $\chi_s$ is the
+characteristic polynomial of $A$ and
+$$p_k(s) \;=\; \operatorname{tr}(A^k).$$
+
+**Theorem H (Spectral rigidity and its sharpness).** Let $s, t$ be multisets bounded by $N$.
+Then
+$$\chi_s = \chi_t \iff p_k(s) = p_k(t) \ \text{ for all } k \le N .$$
+Moreover there exist $s, t$ bounded by $N$ with $\chi_s \ne \chi_t$ and $p_k(s) = p_k(t)$ for
+all $k < N$.
+
+*Proof.* ($\Rightarrow$) Equal polynomials have equal root multisets, hence equal power sums at
+every index. ($\Leftarrow$) By Theorem A, the hypothesis forces $s = t$, hence
+$\chi_s = \chi_t$. For the second statement take $s = E_N$, $t = O_N$: they agree below the top
+index by Theorem C, and $\chi_{E_N} \ne \chi_{O_N}$ because $E_N \ne O_N$ and $s \mapsto \chi_s$
+is injective. $\square$
+
+In matrix terms: for diagonalisable matrices with integer eigenvalues in $\{0, \dots, N\}$, the
+$N + 1$ traces $\operatorname{tr}(A^0), \dots, \operatorname{tr}(A^N)$ determine the
+characteristic polynomial — regardless of the size of the matrix — and $N$ traces do not.
+Theorem E quantifies the failure: two such matrices agreeing on the first $N$ traces but with
+different spectra must differ in $\operatorname{tr}(A^N)$ by at least $N!$, and must have size
+at least $2^{N-1}$.
+
+The comparison with Newton's identities is instructive. Newton's identities recover the
+elementary symmetric functions $e_1, \dots, e_n$ from $p_1, \dots, p_n$ for $n$ quantities, so
+they need as many power sums as there are elements, and in characteristic zero only. The
+present theorem needs as many power sums as there are available *values*. For a matrix of size
+$10^6$ with eigenvalues in $\{0,1,2\}$, Newton would ask for a million traces; Theorem H asks
+for three.
+
+---
+
+## 8. Computational evidence
+
+An exhaustive search over all multiplicity vectors $c : \{0,\dots,N\} \to \{0,\dots,M\}$
+enumerates every multiset bounded by $N$ with multiplicities at most $M$ and compares power-sum
+prefixes. Writing $\#\{k \le N\}$ for the number of unordered pairs of distinct multisets
+agreeing on all $p_k$ with $k \le N$, and $\#\{k \le N-1\}$ likewise:
+
+| $N$ | $M$ | $\#\{k \le N\}$ | $\#\{k \le N-1\}$ | first witness |
+|-----|-----|------------------|--------------------|----------------|
+| 1 | 2 | 0 | 5 | $\{0\}$ vs $\{1\}$ |
+| 2 | 1 | 0 | 0 | (needs multiplicity $2$) |
+| 2 | 2 | 0 | 4 | $\{0,2\}$ vs $\{1,1\}$ |
+| 2 | 3 | 0 | 18 | $\{0,2\}$ vs $\{1,1\}$ |
+| 3 | 2 | 0 | 0 | (needs multiplicity $3$) |
+| 3 | 3 | 0 | 9 | $\{0,2,2,2\}$ vs $\{1,1,1,3\}$ |
+
+Every entry is explained by the theory. The column $\#\{k \le N\}$ is identically zero: that is
+Theorem A. The first witnesses are exactly the binomial parity pairs of Definition 4.4, as
+Theorem D predicts, since any near miss has multiplicity difference $\lambda v$ and the smallest
+choice $|\lambda| = 1$ within a multiplicity cap gives precisely $E_N$ versus $O_N$. The two
+rows with zero near misses are the cases where the cap $M$ is smaller than
+$\max_j \binom{N}{j}$ — $\binom{2}{1} = 2 > 1$ and $\binom{3}{1} = 3 > 2$ — so the primitive
+kernel vector does not fit inside the search box: by Theorem D no near miss can exist at all.
+The growth from $4$ to $18$ near misses as the cap rises from $2$ to $3$ at $N = 2$ is the
+count of translates $\bigl(\mathrm{Ms}(c + v_+),\, \mathrm{Ms}(c + v_-)\bigr)$ that fit in the
+box, where $v_{\pm}$ are the positive and negative parts of $\lambda v$.
+
+The search also reproduces the alternating table $A(N,k)$: strictly lower triangular with
+diagonal $1, -1, 2, -6, 24, -120, 720, -5040, 40320$, matching Lemmas 4.2 and 4.3 exactly.
+
+---
+
+## 9. Algorithms
+
+Three procedures follow directly from the theory.
+
+**(A) Reconstruction from power sums.** Given $N$ and the values $p_0, \dots, p_N$ of a multiset
+bounded by $N$, recover the multiplicities by solving the $(N+1) \times (N+1)$ Vandermonde
+system $\sum_j c_j j^k = p_k$. Solving it as a general linear system costs $O(N^3)$; exploiting
+the Vandermonde structure, the standard Björck–Pereyra style algorithm — equivalently, Newton
+interpolation followed by conversion — costs $O(N^2)$ exact rational operations. Theorem A
+guarantees existence and uniqueness of the solution when the data really come from a multiset,
+and the solution is automatically a vector of nonnegative integers in that case; a
+non-integral or negative output certifies that the input was not the power-sum vector of any
+multiset bounded by $N$.
+
+**(B) Near-miss detection and certification.** Given two multisets bounded by $N$, compute
+$p_0, \dots, p_{N-1}$ for both. If they agree, Theorem D asserts
+$c_j(s) - c_j(t) = \lambda (-1)^j \binom{N}{j}$ with $\lambda = c_0(s) - c_0(t)$; verifying this
+identity for all $j \le N$ costs $O(N)$ after an $O(N)$ pass computing binomial coefficients by
+the recurrence $\binom{N}{j+1} = \binom{N}{j}(N-j)/(j+1)$. The top-index gap can then be read
+off without summing anything: it equals $\lambda(-1)^N N!$.
+
+**(C) Extremal witness generation.** To produce the minimal near miss at level $N$, emit the
+multiset with multiplicity $\binom{N}{j}$ at even $j \le N$ and the one with multiplicity
+$\binom{N}{j}$ at odd $j \le N$. Both have $2^{N-1}$ elements, so writing them out costs
+$\Theta(2^N)$; representing them by their multiplicity vectors costs $O(N)$.
+
+---
+
+## 10. Discussion
+
+### 10.1 One fact wearing three hats
+
+Rigidity, sharpness and quantisation are the invertibility, the kernel and a pairing of the
+same matrix.
+
+* The $(N+1) \times (N+1)$ matrix $V_{k,j} = j^k$ on the nodes $0, \dots, N$ is invertible.
+  *That is Theorem A.*
+* Deleting the top row $k = N$ leaves an $N \times (N+1)$ matrix whose kernel is the line
+  spanned by $v_j = (-1)^j \binom{N}{j}$. *That is Theorems B and D.*
+* Pairing $v$ with the one monomial the truncation omits, $x^N$, gives
+  $\langle v, x^N\rangle = (-1)^N N!$. *That is Theorems C and E.*
+
+The finite-difference identity $\Delta^N(x \mapsto x^N) = N!$ is the computation of that
+pairing, and the normalisation $v_0 = 1$ is what makes the kernel a *lattice* line rather than
+merely a vector-space line, which in turn is what quantises the gap.
+
+### 10.2 Why the window length is the range, not the size
+
+The theorem says: to reconstruct a multiset you need one measurement per possible *value*, not
+one per element. This is what makes the statement useful in situations where the multiplicities
+are astronomically large but the alphabet is small — degree sequences of graphs with bounded
+degree, eigenvalue multiplicities of highly symmetric operators, histograms of quantised
+signals. In such settings the moment budget is set by the alphabet, and Theorem E says how
+badly an adversary (or a truncation error) can exploit a budget that is one short.
+
+### 10.3 The special status of zero
+
+Observation 6.1 and Theorem G together give a clean account of the boundary. Positive power
+sums are blind to the value $0$; the index $k = 0$ is precisely the compensating measurement.
+Delete the value from the alphabet and one may delete the index, with rigidity and sharpness
+both preserved at window length $N$. This is the correct formulation of a statement that is
+false as naively guessed, and it is a good illustration of how a failed conjecture localises
+into a theorem once the single obstruction is identified.
+
+### 10.4 Robustness
+
+All statements here are exact-arithmetic statements. In the presence of measurement noise the
+quantisation result becomes a stability statement of practical interest: since two distinct
+bounded multisets sharing $p_0, \dots, p_{N-1}$ differ at $p_N$ by at least $N!$, an
+approximate reconstruction using $N+1$ noisy power sums is safe as long as the accumulated
+error is well below $N!$ at the top index — though one must weigh this against the enormous
+dynamic range of the data, since $p_N$ itself can be as large as $|s| \cdot N^N$. Making this
+tradeoff precise, in the form of a condition number for the Vandermonde system restricted to
+integer solutions, is a natural next step.
+
+---
+
+## 11. Future work
+
+1. **Punctured quantisation.** On positive support the kernel of the truncated system on nodes
+   $\{1, \dots, N\}$ is again a line; determining its primitive integer generator and the
+   corresponding minimal gap — plausibly $N!/N$ times a unit — would complete the picture begun
+   in Theorem G.
+2. **General node sets.** Replace $\{0, \dots, N\}$ by an arbitrary finite set
+   $S \subset \mathbb{Z}$ of size $n$. Rigidity holds verbatim with $n$ measurements
+   (Vandermonde on distinct nodes). The kernel of the truncation is spanned by the cofactor
+   vector $j \mapsto \prod_{i \ne j} (j - i)^{-1}$ up to normalisation; clearing denominators
+   gives an integer generator whose pairing with $x^{n-1}$ is a determinant of Vandermonde type.
+   The resulting quantum replaces $N!$ by that determinant.
+3. **Several variables.** For multisets of lattice points in $\{0,\dots,N\}^d$ probed by
+   monomial moments, the analogous window is the set of exponents in a box, and the analogous
+   kernel is generated by tensor products of alternating binomial vectors. Both the
+   classification and the quantisation should survive, with $N!$ replaced by $(N!)^d$.
+4. **Approximate rigidity.** Quantify the stability of reconstruction: given power sums known
+   to additive error $\varepsilon$, for which $\varepsilon$ is the multiset still uniquely
+   determined? Theorem E suggests the threshold scales with $N!$ at the top index but with much
+   smaller quantities lower down, so the answer should be governed by a weighted condition
+   number.
+5. **Beyond power sums.** Which other families of $N+1$ symmetric functionals are rigid on
+   multisets bounded by $N$, and which admit kernel lines with small primitive generators? The
+   question is whether the factorial quantum is special to monomial moments or a general
+   feature of interpolation-based rigidity.
+
+---
+
+## 12. Summary of results
+
+| Result | Statement |
 |---|---|
-| Rigidity | moments of orders $k \le N$ determine $w$ on $\{0,\dots,N\}$ |
-| Sharpness | for each $K<N$: two distinct probability distributions agreeing up to $K$ |
-| Structure | kernel of the "moments below order $N$" map is $\mathbb{R} \cdot \big((-1)^i \binom{N}{i}\big)_i$ |
-| Gap identity | $S_N(w)-S_N(v)=(w_0-v_0)(-1)^N N!$ under agreement below $N$ |
-| Total variation | $\|w-v\|_1=|w_0-v_0| \, 2^N$ under agreement below $N$ |
-| Extremal separation | $|S_N(w)-S_N(v)| \le N!/2^{N-1}$ for probability distributions; attained |
-| Stability | $|w_j-v_j| \le \Lambda_{N,j}\varepsilon$ if all moments agree within $\varepsilon$ |
-| Newton threshold | a multiset of size $n$ is determined by orders $k \le n$ |
-| Exact threshold | a multiset of size $n$ with entries $\le N$ is determined by orders $k \le \min(N,n)$ |
-| Sandwich | $K < m(N,K) \le 2^K$ for $K<N$ |
-| Critical value | $m(N,N-1) = 2^{N-1}$ |
-| Small degrees | $m(N,1)=2$, $m(N,2)$ table, $m(N,3)=4$, $m(N,4)=5$, $m(N,5)=6$ |
-
----
-
-## 2. Rigidity: the Vandermonde mechanism
-
-The first mechanism is linear algebra on the *alphabet*.
-
-**Lemma 2.1 (Moment expansion).** *Let $s$ be a finite index set, $v : s \to \mathbb{R}$ any family of nodes, $d : s \to \mathbb{R}$ any weights, and $p$ a polynomial with $\deg p < |s|$. Then*
-$$\sum_{i \in s} d_i \, p(v_i) \;=\; \sum_{k=0}^{|s|-1} \big([X^k]p\big) \sum_{i \in s} d_i \, v_i^{\,k}.$$
-
-*Proof.* Write $p=\sum_k ([X^k]p) X^k$, evaluate at $v_i$, multiply by $d_i$ and exchange the two finite sums. $\square$
-
-**Theorem 2.2 (Vandermonde vanishing).** *Let $v : s \to \mathbb{R}$ be injective on a finite set $s$ and $d : s \to \mathbb{R}$ satisfy $\sum_{i \in s} d_i v_i^{\,k} = 0$ for all $k < |s|$. Then $d \equiv 0$ on $s$.*
-
-*Proof.* Fix $j \in s$ and let $L_j$ be the Lagrange basis polynomial for the nodes $(v_i)_{i \in s}$: $\deg L_j = |s|-1 < |s|$, $L_j(v_j)=1$, $L_j(v_i)=0$ for $i \ne j$. Lemma 2.1 applied to $p = L_j$ turns the left-hand side into a combination of the vanishing moments, so $\sum_{i} d_i L_j(v_i) = 0$; but that sum collapses to $d_j$. $\square$
-
-**Theorem 2.3 (Rigidity of the finite moment problem).** *If $w, v \in \mathbb{R}^{N+1}$ satisfy $S_k(w)=S_k(v)$ for all $k \le N$, then $w = v$.*
-
-*Proof.* Apply Theorem 2.2 to $s=\{0,\dots,N\}$, nodes $v_i = i$ (injective as reals) and weights $d_i = w_i - v_i$; the hypotheses give $\sum_i d_i i^k = S_k(w)-S_k(v) = 0$ for all $k < |s| = N+1$. $\square$
-
-The proof is constructive: expanding the $j$-th Lagrange polynomial gives the explicit inversion formula
-
-$$w_j \;=\; \sum_{k=0}^{N} \big([X^k]L_j\big)\, S_k(w), \qquad L_j(X)=\prod_{i \ne j}\frac{X-i}{j-i}. \tag{2.1}$$
-
----
-
-## 3. The alternating binomial functional and the structure of the failure
-
-The second half of the story is the exact description of what agreement *below* order $N$ permits. Everything follows from one identity.
-
-For $N \ge 0$ define the functional
-$$\Delta_N(f) \;=\; \sum_{i=0}^{N} (-1)^i \binom{N}{i} f(i), \qquad f : \mathbb{N} \to \mathbb{R}.$$
-
-**Lemma 3.1 (Pascal telescoping).** *For every $N$ and every $f$,*
-$$\Delta_{N+1}(f) \;=\; -\,\Delta_N\big(f(\cdot+1)-f(\cdot)\big).$$
-
-*Proof.* Split $\binom{N+1}{i}=\binom{N}{i}+\binom{N}{i-1}$ in the sum defining $\Delta_{N+1}$ and re-index the second part by $i \mapsto i+1$; the alternating signs convert the two halves into $\Delta_N(f)$ and $-\Delta_N(f(\cdot+1))$. $\square$
-
-**Theorem 3.2 (Alternating-sum identity).** *For every polynomial $p$ with $\deg p \le N$,*
-$$\sum_{i=0}^{N} (-1)^i \binom{N}{i} p(i) \;=\; (-1)^N \, N!\ [X^N]p .$$
-
-*Proof.* Induction on $N$. For $N=0$ both sides are $p(0)=[X^0]p$. For the step, apply Lemma 3.1: the finite difference $q(X)=p(X+1)-p(X)$ has $\deg q \le N-1$ when $\deg p \le N$, and its top coefficient satisfies $[X^{N-1}]q = N\,[X^N]p$ (expand $(X+1)^N-X^N$). Then $\Delta_{N}(p) = -\Delta_{N-1}(q) = -(-1)^{N-1}(N-1)!\,[X^{N-1}]q = (-1)^N N!\,[X^N]p$. $\square$
-
-Two specialisations are used repeatedly:
-
-$$\Delta_N(i \mapsto i^k) = 0 \quad (k<N), \qquad \Delta_N(i \mapsto i^N) = (-1)^N N!. \tag{3.1}$$
-
-**Theorem 3.3 (Structure theorem for near-collisions).** *Let $w,v \in \mathbb{R}^{N+1}$ satisfy $S_k(w)=S_k(v)$ for all $k<N$. Then*
-$$w_i - v_i \;=\; (w_0-v_0)\,(-1)^i\binom{N}{i} \qquad (0 \le i \le N).$$
-
-*Proof.* Put $c = w_0-v_0$ and $e_i = (w_i-v_i) - c(-1)^i\binom{N}{i}$; then $e_0 = 0$. By hypothesis and by (3.1) both parts of $e$ have vanishing $k$-th moments for every $k<N$, so $\sum_{i=0}^{N} e_i i^k = 0$ for $k<N$. Because $e_0=0$, these are $N$ moment conditions on the $N$ nodes $1,2,\dots,N$; Theorem 2.2 forces $e_i=0$ for $1 \le i \le N$, and $e_0=0$ by construction. $\square$
-
-Thus the kernel of the map $w \mapsto (S_0(w),\dots,S_{N-1}(w))$ is exactly the line spanned by the alternating binomial vector — a one-parameter family of moment-invisible signed measures, and none at all one order later.
-
-**Corollary 3.4 (Exact gap).** *Under the hypotheses of Theorem 3.3,*
-$$S_N(w)-S_N(v) \;=\; (w_0-v_0)\,(-1)^N N! .$$
-
-*Proof.* Substitute the structure theorem into $S_N(w)-S_N(v)=\sum_i (w_i-v_i) i^N$ and apply (3.1). $\square$
-
-Corollary 3.4 reproves Theorem 2.3 independently of Lagrange interpolation: agreement at order $N$ as well forces $w_0=v_0$, hence $w=v$ by Theorem 3.3.
-
-**Corollary 3.5 (Total variation).** *Under the hypotheses of Theorem 3.3, $\sum_{i=0}^{N}|w_i-v_i| = |w_0-v_0|\,2^N$.*
-
-*Proof.* Take absolute values in Theorem 3.3 and use $\sum_i \binom{N}{i}=2^N$. $\square$
-
----
-
-## 4. Sharpness, extremal separation, stability
-
-### 4.1 The binomial halves
-
-For $N \ge 1$ define two weight systems on $\{0,\dots,N\}$:
-
-$$E_N(i) = \begin{cases}\binom{N}{i}/2^{N-1}, & i \text{ even},\\ 0, & i \text{ odd},\end{cases} \qquad O_N(i) = \begin{cases}0, & i \text{ even},\\ \binom{N}{i}/2^{N-1}, & i \text{ odd}.\end{cases}$$
-
-Both are non-negative; since the even-index and odd-index binomial coefficients of row $N$ each sum to $2^{N-1}$, both have total mass $1$. Their difference is
-$$E_N(i)-O_N(i) = \frac{(-1)^i \binom{N}{i}}{2^{N-1}},$$
-so by (3.1) they agree in all moments of order $k<N$, while $E_N(0)=2^{1-N} \ne 0 = O_N(0)$ shows they are distinct.
-
-**Theorem 4.1 (Sharpness of the range $k \le N$).** *For every $N \ge 1$ and every $K<N$ there exist two distinct probability distributions on $\{0,1,\dots,N\}$ whose power sums agree in all orders $k \le K$ and differ at order $N$: namely $E_N$ and $O_N$, with*
-$$S_N(E_N)-S_N(O_N) \;=\; \frac{(-1)^N N!}{2^{N-1}} \ne 0 .$$
-
-*Proof.* Agreement below order $N$ was just shown; the gap value is Corollary 3.4 with $w_0-v_0 = 2^{1-N}$. $\square$
-
-Consequently the window $k \le N$ of Theorem 2.3 cannot be shortened by a single order. The case $N=2$ is the classical minimal example: the multisets $\{0,2\}$ and $\{1,1\}$ have equal cardinality and equal sums but different sums of squares.
-
-### 4.2 The extremal constant
-
-**Theorem 4.2 (Extremal separation).** *Let $w,v$ be probability distributions on $\{0,\dots,N\}$ ($N \ge 1$) with $S_k(w)=S_k(v)$ for all $k<N$. Then*
-$$\big|S_N(w)-S_N(v)\big| \;\le\; \frac{N!}{2^{N-1}},$$
-*with equality for $w=E_N$, $v=O_N$.*
-
-*Proof.* By Corollary 3.5, $|w_0-v_0|2^N = \|w-v\|_1 \le \|w\|_1+\|v\|_1 = 2$, so $|w_0-v_0| \le 2^{1-N}$. Corollary 3.4 gives $|S_N(w)-S_N(v)| = |w_0-v_0|\,N! \le N!/2^{N-1}$. Equality is Theorem 4.1. $\square$
-
-The constant decays superexponentially in the sense that it is $N!/2^{N-1}$ *relative to unit total mass*; interpreted the other way round, it says that distinguishing two moment-matched distributions at the final order requires resolving a quantity of size only $N!/2^{N-1}$ — tiny for small $N$, and only large for $N \gtrsim 5$.
-
-### 4.3 Stability
-
-Rigidity is a statement about exact data. The inversion formula (2.1) upgrades it to a quantitative one. Define the **stability constant** at node $j$ as the $\ell^1$ norm of the coefficient vector of the $j$-th Lagrange polynomial,
-$$\Lambda_{N,j} \;=\; \sum_{k=0}^{N}\big|[X^k]L_j\big|.$$
-
-**Theorem 4.3 (Stability).** *If $|S_k(w)-S_k(v)| \le \varepsilon$ for all $k \le N$, then $|w_j - v_j| \le \Lambda_{N,j}\,\varepsilon$ for every $j \le N$.*
-
-*Proof.* Apply Lemma 2.1 to $p = L_j$ and $d = w - v$: the left side collapses to $w_j-v_j$, the right side is $\sum_k ([X^k]L_j)(S_k(w)-S_k(v))$, and the triangle inequality bounds it by $\Lambda_{N,j}\varepsilon$. $\square$
-
-Theorem 2.3 is the case $\varepsilon = 0$. The constants grow rapidly: $\max_j \Lambda_{N,j}$ equals $2, 3, 6, 10, 20, 35$ for $N = 1,\dots,6$ (these are central binomial coefficients $\binom{N}{\lfloor N/2\rfloor}$-type quantities), so moment inversion is exponentially ill-conditioned — the finite analogue of the notorious instability of the classical moment problem.
-
----
-
-## 5. Integer data and the second rigidity mechanism
-
-We now restrict to multisets ("data sets") $s$ of natural numbers, with power sums $P_k(s)=\sum_{x \in s} x^k$; the multiplicity vector of $s$ is a weight system, and $P_k(s) = S_k(\text{mult}(s))$ whenever $s$ has entries $\le N$.
-
-**Theorem 5.1 (Rigidity, multiset form).** *If $s,t$ are multisets of naturals with entries $\le N$ and $P_k(s)=P_k(t)$ for all $k \le N$, then $s=t$.*
-
-*Proof.* Multiplicity vectors are weight systems; apply Theorem 2.3 and compare multiplicities node by node (multiplicities of letters $>N$ vanish on both sides by hypothesis). $\square$
-
-The alphabet is not the only source of rigidity. Newton's identities give a second mechanism, controlled by the *size* of the data set.
-
-**Theorem 5.2 (Newton's identity, multiset form).** *For a multiset $s$ of reals and $k \ge 1$,*
-$$P_k(s) \;=\; (-1)^{k+1}\,k\, e_k(s) \;-\; \sum_{\substack{a+b=k \\ 0<a<k}} (-1)^{a} e_a(s)\, P_b(s),$$
-*where $e_a(s)$ denotes the $a$-th elementary symmetric function of the entries of $s$.*
-
-*Proof.* Enumerate $s$ as $f : \{1,\dots,n\} \to \mathbb{R}$ and specialise the identity between power-sum and elementary symmetric polynomials in $n$ variables. $\square$
-
-**Corollary 5.3.** *If $s,t$ are multisets of reals with $P_k(s)=P_k(t)$ for $1 \le k \le n$, then $e_k(s)=e_k(t)$ for all $k \le n$.*
-
-*Proof.* Strong induction on $k$ using Theorem 5.2: the recursion expresses $k\,e_k$ in terms of $P_k$ and the lower $e_a, P_b$. $\square$
-
-**Theorem 5.4 (Size threshold).** *If $s,t$ are multisets of reals of the same cardinality $n$ and $P_k(s)=P_k(t)$ for $1 \le k \le n$, then $s=t$.*
-
-*Proof.* By Corollary 5.3 the two monic polynomials $\prod_{x \in s}(X-x)$ and $\prod_{x \in t}(X-x)$, whose coefficients are the $\pm e_k$, coincide; their root multisets are $s$ and $t$. $\square$
-
-For multisets of naturals the cardinality is itself the $0$-th power sum, so:
-
-**Theorem 5.5 (Determination by size).** *If $P_k(s)=P_k(t)$ for all $k \le |s|$, then $s=t$ (no bound on the entries needed).*
-
-Combining the two mechanisms:
-
-**Theorem 5.6 (Exact threshold $\min(N,|s|)$).** *If $s,t$ are multisets of naturals with entries $\le N$ and $P_k(s)=P_k(t)$ for all $k \le \min(N,|s|)$, then $s=t$.*
-
-*Proof.* If $N \le |s|$ use Theorem 5.1, otherwise Theorem 5.5. $\square$
-
-Restated contrapositively, Theorem 5.5 is the classical **Prouhet–Tarry–Escott lower bound**:
-
-**Corollary 5.7 (PTE floor).** *If $s \ne t$ and $P_k(s)=P_k(t)$ for all $k \le K$, then $|s| > K$.*
-
----
-
-## 6. The invariant $m(N,K)$
-
-### 6.1 Definition and basic properties
-
-**Definition 6.1.** For $N,K \in \mathbb{N}$, a **collision** with parameters $(N,K)$ is a pair of multisets $s \ne t$ of naturals with all entries $\le N$ and $P_k(s)=P_k(t)$ for every $k \le K$. Define
-$$m(N,K) \;=\; \min\{\,|s| : (s,t)\text{ is a collision with parameters }(N,K)\,\},$$
-with $m(N,K)=0$ by convention when no collision exists.
-
-(Note that $P_0(s)=P_0(t)$ forces $|s|=|t|$, so the two sides of a collision always have the same cardinality.)
-
-**Theorem 6.2 (Existence/non-existence).** *Collisions with parameters $(N,K)$ exist if and only if $K<N$; equivalently $m(N,K)=0 \iff N \le K$.*
-
-*Proof.* If $N \le K$, Theorem 5.1 forbids collisions. If $K<N$, the even/odd binomial halves provide one (Theorem 6.6 below). $\square$
-
-**Theorem 6.3 (Sandwich).** *For $K<N$,*
-$$K \;<\; m(N,K) \;\le\; 2^{K}.$$
-
-The lower bound is Corollary 5.7 applied to a minimising collision. The upper bound is Theorem 6.9 below.
-
-**Theorem 6.4 (Monotonicity).** *(i) For $K<N \le N'$, $m(N',K) \le m(N,K)$: widening the alphabet can only cheapen collisions. (ii) For $K' \le K < N$, $m(N,K') \le m(N,K)$: demanding more orders of agreement can only make collisions more expensive.*
-
-*Proof.* (i) A collision over $\{0,\dots,N\}$ is one over $\{0,\dots,N'\}$. (ii) A collision at order $K$ is one at order $K'$. $\square$
-
-**Theorem 6.5 (Minimal collisions are disjoint).** *If $(s,t)$ is a collision with parameters $(N,K)$, then so is $(s-t,\,t-s)$, and $(s-t)\cap(t-s)=\varnothing$. Consequently $m(N,K)$ is also the least size of a collision whose two sides share no element.*
-
-*Proof.* For any multisets $u,v$ and any $k$, $P_k(u-v)+P_k(u\cap v)=P_k(u)$. Subtracting the two instances $(u,v)=(s,t)$ and $(t,s)$, and using $s \cap t = t \cap s$, converts $P_k(s)=P_k(t)$ into $P_k(s-t)=P_k(t-s)$ for every $k \le K$. If $s-t=t-s$ then adding back the common part gives $s=t$, a contradiction; disjointness of the two differences is immediate from $\mathrm{mult}_x(u-v)=\max(\mathrm{mult}_x u - \mathrm{mult}_x v, 0)$. Finally $|s-t| \le |s|$, so minimality is preserved. $\square$
-
-Theorem 6.5 is what makes exhaustive computation of $m(N,K)$ tractable: one may restrict the search to disjoint pairs.
-
-### 6.2 The critical window: $m(N,N-1)=2^{N-1}$
-
-**Theorem 6.6 (Lower bound at the critical window).** *Let $N \ge 1$, and let $s \ne t$ be multisets with entries $\le N$ and $P_k(s)=P_k(t)$ for all $k<N$. Then $|s| \ge 2^{N-1}$.*
-
-*Proof.* Let $w,v$ be the multiplicity vectors. By Theorem 3.3, $w-v = c \cdot \big((-1)^i\binom{N}{i}\big)_i$ with $c = w_0-v_0$, and $c \ne 0$ (otherwise $w=v$). Since $w,v$ are integer vectors, $c$ is a nonzero integer, so $|c| \ge 1$. By Corollary 3.5, $\|w-v\|_1 = |c| 2^N \ge 2^N$. On the other hand $\|w-v\|_1 \le \|w\|_1 + \|v\|_1 = |s|+|t| = 2|s|$. Hence $|s| \ge 2^{N-1}$. $\square$
-
-**Theorem 6.7 (The bound is attained).** *For every $N \ge 1$ the multisets*
-$$\mathcal{E}_N = \{\, i \text{ repeated } \tbinom{N}{i} \text{ times} : i \le N \text{ even} \,\}, \qquad \mathcal{O}_N = \{\, i \text{ repeated } \tbinom{N}{i} \text{ times} : i \le N \text{ odd} \,\}$$
-*are distinct, have entries $\le N$, satisfy $P_k(\mathcal{E}_N)=P_k(\mathcal{O}_N)$ for all $k<N$, and $|\mathcal{E}_N|=|\mathcal{O}_N|=2^{N-1}$.*
-
-*Proof.* Their multiplicity vectors are $2^{N-1}E_N$ and $2^{N-1}O_N$; agreement below order $N$ is Section 4.1 rescaled, cardinality is the sum of the even (resp. odd) entries of row $N$ of Pascal's triangle, and $0 \in \mathcal{E}_N$, $0 \notin \mathcal{O}_N$ gives distinctness. $\square$
-
-**Corollary 6.8 (Critical value).** *For every $N \ge 1$, $m(N,N-1)=2^{N-1}$.*
-
-For example $m(2,1)=2$, $m(3,2)=4$, $m(4,3)=8$, $m(8,7)=128$.
-
-### 6.3 The Prouhet ceiling
-
-**Lemma 6.9 (Shifted power sums).** *For a multiset $t$ of naturals and $M,k \in \mathbb{N}$,*
-$$P_k\big(t+M\big) \;=\; \sum_{j=0}^{k} P_j(t)\binom{k}{j}M^{k-j},$$
-*where $t+M$ denotes the multiset of all $y+M$ with $y \in t$.*
-
-*Proof.* Binomial expansion of $(y+M)^k$, summed over $y \in t$. $\square$
-
-**Theorem 6.10 (Doubling lemma).** *Let $s,t$ be multisets of naturals with $P_k(s)=P_k(t)$ for all $k \le K$, and let $M$ be any natural number. Then*
-$$P_k\big(s \cup (t+M)\big) \;=\; P_k\big(t \cup (s+M)\big) \qquad \text{for all } k \le K+1 .$$
-
-*Proof.* By Lemma 6.9 the two sides are
-$$P_k(s)+\sum_{j\le k}P_j(t)\binom{k}{j}M^{k-j} \quad\text{and}\quad P_k(t)+\sum_{j\le k}P_j(s)\binom{k}{j}M^{k-j}.$$
-If $k \le K$ all the $P_j$ appearing agree termwise. If $k = K+1$, the terms with $j \le K$ agree, and the two remaining terms are $P_{K+1}(s) + P_{K+1}(t)\binom{K+1}{K+1}M^0 = P_{K+1}(s)+P_{K+1}(t)$ on the left and the same sum on the right. Equality holds in both cases. $\square$
-
-The cancellation is structural: the construction *swaps* the two sides before shifting, so the unmatched top-order contributions appear symmetrically.
-
-**Definition 6.11 (Prouhet pairs).** Set $(\mathcal{P}_0^+, \mathcal{P}_0^-) = (\{0\},\{1\})$ and
-$$\big(\mathcal{P}_{K+1}^+, \mathcal{P}_{K+1}^-\big) = \big(\mathcal{P}_K^+ \cup (\mathcal{P}_K^- + 2^{K+1}),\; \mathcal{P}_K^- \cup (\mathcal{P}_K^+ + 2^{K+1})\big).$$
-
-**Theorem 6.12 (Prouhet–Thue–Morse).** *For every $K$: $\mathcal{P}_K^\pm \subseteq \{0,1,\dots,2^{K+1}-1\}$, $|\mathcal{P}_K^+|=|\mathcal{P}_K^-|=2^K$, $\mathcal{P}_K^+ \ne \mathcal{P}_K^-$, and $P_k(\mathcal{P}_K^+)=P_k(\mathcal{P}_K^-)$ for all $k \le K$. Concretely $\mathcal{P}_K^+$ is the set of naturals below $2^{K+1}$ with an even number of $1$'s in binary — the Thue–Morse partition.*
-
-*Proof.* Induction on $K$ using Theorem 6.10 with $M=2^{K+1}$; the shift by $2^{K+1}$ keeps entries below $2^{K+2}$ and preserves disjointness, and $0 \in \mathcal{P}_K^+$, $0 \notin \mathcal{P}_K^-$ throughout gives distinctness. $\square$
-
-For example $\mathcal{P}_3^+=\{0,3,5,6,9,10,12,15\}$ and $\mathcal{P}_3^-=\{1,2,4,7,8,11,13,14\}$ have equal counts, sums, sums of squares and sums of cubes.
-
-**Theorem 6.13 (Prouhet ceiling).** *If $2^{K+1}-1 \le N$ then $m(N,K) \le 2^K$. More strongly, $m(N,K) \le 2^K$ for every $K<N$.*
-
-*Proof.* The first claim is Theorem 6.12. For the second, take $N=K+1$: by Corollary 6.8, $m(K+1,K)=2^{K}$; antitonicity in the alphabet (Theorem 6.4(i)) gives $m(N,K) \le m(K+1,K)=2^K$ for all $N \ge K+1$. $\square$
-
-This completes the sandwich $K < m(N,K) \le 2^K$ of Theorem 6.3, with the right-hand bound attained exactly at the critical window $K=N-1$ and strictly loose elsewhere (e.g. $m(N,2)=3<4$ for $N \ge 4$).
-
----
-
-## 7. Exact values in small degree
-
-We call a collision **ideal** if it attains the PTE floor, i.e. $|s|=K+1$ at agreement order $K$. Write $d(K)$ for the least $D$ such that an ideal collision of degree $K$ fits in the alphabet $\{0,\dots,D\}$.
-
-**Lemma 7.1 (Transfer from a witness).** *Let $s \ne t$ be multisets with entries $\le D$, $|s|=K+1$, and $P_k(s)=P_k(t)$ for all $k \le K$. Then $m(N,K)=K+1$ for every $N \ge D$ (assuming $K<D$).*
-
-*Proof.* The witness gives $m(N,K) \le K+1$ by monotonicity of the alphabet; the PTE floor gives $m(N,K) \ge K+1$. $\square$
-
-Similarly, a non-ideal witness of size $n$ inside $\{0,\dots,D\}$ yields $m(N,K) \le n$ for all $N \ge D$.
-
-### 7.1 Degrees $1$ and $2$
-
-**Theorem 7.2.** *$m(N,1)=2$ for all $N \ge 2$.* Witness: $\{0,2\}$ versus $\{1,1\}$ (counts $2$, sums $2$; squares $4 \ne 2$).
-
-**Theorem 7.3.** *$m(N,2)=3$ for all $N \ge 4$.* Witness: $\{0,3,3\}$ versus $\{1,1,4\}$ (counts $3$, sums $6$, squares $18$; cubes $54 \ne 66$).
-
-**Theorem 7.4 (Complete profile at $K=2$).**
-$$m(N,2)=\begin{cases}0, & N \le 2,\\ 4, & N=3,\\ 3, & N \ge 4.\end{cases}$$
-
-*Proof.* $N \le 2$ is Theorem 6.2; $N=3$ is the critical window (Corollary 6.8, $2^2=4$); $N \ge 4$ is Theorem 7.3. $\square$
-
-So at $K=2$ the invariant falls from the ceiling $2^K=4$ straight to the floor $K+1=3$, with no intermediate value, as soon as one letter is added beyond the critical alphabet. Equivalently $d(2)=4$.
-
-### 7.2 Degrees $3$, $4$, $5$: narrow multiset witnesses
-
-The classical ideal PTE solution of degree $3$ is the *set* solution $\{0,4,7,11\}$ versus $\{1,2,9,10\}$, which requires $D=11$. Allowing repeated entries produces markedly narrower ideal solutions.
-
-**Theorem 7.5 (Degree $3$, diameter $7$).** *The multisets $\{1,1,6,6\}$ and $\{0,3,4,7\}$ have four elements each, entries $\le 7$, and equal power sums of orders $0,1,2,3$:*
-$$4,\quad 14,\quad 74,\quad 434,$$
-*while at order $4$ they differ: $2594 \ne 2738$. Consequently $m(N,3)=4$ for every $N \ge 7$.*
-
-**Theorem 7.6 (Degree $4$, diameter $18$).** *The multisets $\{0,4,8,16,17\}$ and $\{1,2,10,14,18\}$ have five elements each, entries $\le 18$, and equal power sums of orders $0,\dots,4$:*
-$$5,\quad 45,\quad 625,\quad 9585,\quad 153409,$$
-*differing at order $5$ ($2502225 \ne 2527425$). Consequently $m(N,4)=5$ for every $N \ge 18$.*
-
-**Theorem 7.7 (Degree $5$, diameter $16$).** *The multisets $\{0,3,5,11,13,16\}$ and $\{1,1,8,8,15,15\}$ have six elements each, entries $\le 16$, and equal power sums of orders $0,\dots,5$:*
-$$6,\quad 48,\quad 580,\quad 7776,\quad 109444,\quad 1584288,$$
-*differing at order $6$ ($23391940 \ne 23305540$). Consequently $m(N,5)=6$ for every $N \ge 16$.*
-
-Each of these is a finite verification of $K+2$ integer identities together with Lemma 7.1.
-
-**Theorem 7.8 (The PTE floor is attained in every degree $K \le 5$).** *For each $K$ with $1 \le K \le 5$ there exists $N>K$ with $m(N,K)=K+1$; explicitly, $N=2,4,7,18,16$ works for $K=1,2,3,4,5$.*
-
-An exhaustive search over disjoint pairs confirms that these alphabets are minimal, i.e.
-$$d(1)=2,\qquad d(2)=4,\qquad d(3)=7,\qquad d(4)=18,\qquad d(5)=16 .$$
-
-**Remark 7.9 (Non-monotonicity of $d$).** $d(5)=16 < 18 = d(4)$: the degree-$5$ ideal problem admits a *narrower* solution than the degree-$4$ one. The mechanism is visible in the witnesses: the degree-$5$ solution uses three doubled entries $\{1,1,8,8,15,15\}$ on one side, exploiting an arithmetic symmetry unavailable to the (essentially rigid) degree-$4$ configurations.
-
-### 7.3 The descent between ceiling and floor
-
-Between the critical alphabet $N=K+1$, where $m=2^K$, and the ideal alphabet $N=d(K)$, where $m=K+1$, the invariant descends through intermediate values. Two explicit witnesses:
-
-**Proposition 7.10.** *$\{1,1,1,4,4,4\}$ and $\{0,2,2,3,3,5\}$ have six elements each, entries $\le 5$, and equal power sums $6,15,51,195$ of orders $0,1,2,3$, differing at order $4$ ($771 \ne 819$). Hence $m(N,3) \le 6 < 8 = 2^3$ already for $N \ge 5$ — two letters below the ideal threshold $d(3)=7$.*
-
-**Proposition 7.11.** *$\{1,1,1,5,6,6,8\}$ and $\{0,2,2,3,7,7,7\}$ have seven elements each, entries $\le 8$, and equal power sums $7,28,164,1072,7316$ of orders $0,\dots,4$, differing at order $5$ ($51448 \ne 50728$). Hence $m(N,4) \le 7 < 16 = 2^4$ already for $N \ge 8$ — ten letters below $d(4)=18$.*
-
-Exhaustive search over disjoint pairs gives the complete degree-$3$ descent:
-$$m(4,3)=8,\qquad m(5,3)=6,\qquad m(6,3)=6,\qquad m(7,3)=4,$$
-a genuine staircase rather than the single cliff observed at $K=2$.
-
-**Proposition 7.12 (Profile at $N=8$).** $m(8,1)=2$, $m(8,2)=3$, $m(8,3)=4$, $m(8,4)\le 7$, $m(8,7)=128$.
-
-The last entry is the critical window and shows that the exponential ceiling remains exactly attained arbitrarily far out, even as the invariant sits near the floor for all smaller $K$.
-
----
-
-## 8. Algorithms
-
-Three computational tasks arise; we record their structure and cost.
-
-### 8.1 Moment inversion
-
-**Input:** $S_0,\dots,S_N$. **Output:** $w_0,\dots,w_N$.
-Solve the Vandermonde system $V w = S$, $V_{k,i}=i^k$, by exact rational Gaussian elimination, or by (2.1) with precomputed Lagrange coefficients. Cost $O(N^3)$ (or $O(N^2)$ using the standard Vandermonde solver). Conditioning is governed by $\Lambda_{N,j}$ of Theorem 4.3 and degrades exponentially, so exact arithmetic is strongly preferable.
-
-### 8.2 Exhaustive computation of $m(N,K)$
-
-**Input:** $N$, $K$, a size cap. **Output:** $m(N,K)$.
-By Theorem 6.5 it suffices to search *disjoint* pairs. For $n = K+1, K+2, \dots$, enumerate all multisets of size $n$ with entries in $\{0,\dots,N\}$ (there are $\binom{N+n}{n}$ of them), compute the signature $(P_0,\dots,P_K)$ of each, bucket by signature, and report the first $n$ for which some bucket contains two distinct, element-disjoint multisets. Cost $O\big(\binom{N+n}{n} \cdot (K+1)\big)$ signature evaluations plus the within-bucket comparisons, which are negligible because collisions are rare. The floor $K<m$ justifies starting at $n=K+1$, and the ceiling $m \le 2^K$ bounds the loop.
-
-### 8.3 Prouhet doubling
-
-**Input:** $K$. **Output:** a collision of degree $K$ with $2^K$ elements per side.
-Start from $(\{0\},\{1\})$ and iterate $(s,t) \mapsto (s \cup (t+2^{j+1}),\, t \cup (s+2^{j+1}))$ for $j=0,\dots,K-1$. Cost $O(2^K)$ arithmetic operations, output size $2^{K+1}$. Correctness is Theorem 6.10. The output is exactly the Thue–Morse split of $\{0,\dots,2^{K+1}-1\}$, so one may equally generate it by binary digit-sum parity in $O(2^K)$ time with no recursion.
-
----
-
-## 9. Applications and interpretation
-
-**Sketching and streaming.** Power sums are the canonical constant-space summary of a data stream over a bounded alphabet. Theorem 5.6 states the exact price of fidelity: $\min(N,n)$ moments, where $N$ bounds the alphabet and $n$ the sample size — never more, and (Theorem 4.1) never fewer.
-
-**Adversarial forgery.** If a summary consisting of moments up to order $K$ is published, the invariant $m(N,K)$ is precisely the size of the smallest data set whose summary can be forged. Theorem 6.6 says that at the critical window $K=N-1$ forgery requires $2^{N-1}$ items — exponentially expensive; Theorems 7.5–7.7 say that one further letter of alphabet can collapse the cost to $K+1$. The security of a moment-based summary therefore depends sharply on the *relation* between the alphabet size and the number of published moments, not on either quantity alone.
-
-**Ill-posedness of moment inversion.** Theorem 4.3 quantifies the classical folklore that moment reconstruction is unstable: the amplification factors $\Lambda_{N,j}$ grow exponentially in $N$. Theorem 4.2 gives the complementary extremal statement: two moment-matched probability distributions can be separated at the final order by no more than $N!/2^{N-1}$, and this is attained.
-
-**Prouhet–Tarry–Escott.** The invariant refines the PTE problem. The classical question — does an ideal solution of degree $K$ exist? — is the question whether $m(N,K)=K+1$ for some $N$. Our results answer it affirmatively for $K \le 5$ with explicit narrow witnesses, and add the quantitative dimension $d(K)$: how much room does an ideal solution need? Allowing multisets rather than sets is essential to the narrowness: at degree $3$ the best set solution has diameter $11$ and the best multiset solution has diameter $7$.
-
-**Combinatorics of Thue–Morse.** The doubling lemma explains, in the simplest possible terms, why the Thue–Morse sequence solves power-sum equalities: it is the unique fixed point of the swap-and-shift operation that adds one order of agreement for free. The classical fair-division interpretation ("you take, I take, I take, you take") is the same recursion.
-
----
-
-## 10. Open problems and future work
-
-1. **The minimal ideal alphabet $d(K)$.** Determine $d(K)$ for $K \ge 6$, or bound it. Is $d(K)$ eventually monotone? The data $d(3)=7$, $d(4)=18$, $d(5)=16$ rule out monotonicity outright. Is $d(K)$ even finite for all $K$? (Ideal PTE solutions are known only up to degree $11$, with degree $10$ open, so finiteness of $d$ is at least as hard as the PTE existence problem.)
-2. **The descent profile.** For fixed $K$, describe the full function $N \mapsto m(N,K)$ on $K+1 \le N \le d(K)$. At $K=2$ the descent is a single step; at $K=3$ it is $8,6,6,4$. Is the descent always unimodal/monotone, and are all intermediate values of the form $2^{K}-j$ for small $j$?
-3. **Sharp constants for stability.** Identify $\Lambda_{N,j}$ in closed form for the equispaced nodes $0,1,\dots,N$, and determine $\max_j \Lambda_{N,j}$ asymptotically. Numerically the maxima $2,3,6,10,20,35$ for $N=1,\dots,6$ suggest a central-binomial growth rate $\sim \binom{N}{\lfloor N/2 \rfloor}$.
-4. **Weighted/real-node generalisations.** Everything in Sections 2–4 holds for arbitrary pairwise distinct real nodes; the alternating binomial kernel is special to equispaced nodes. What replaces the vector $(-1)^i\binom{N}{i}$, the constant $2^N$, and the gap $N!$ for general node sets? (For general nodes, the kernel at order $N-1$ is spanned by the reciprocals of the derivative of the node polynomial, which recovers the binomial vector in the equispaced case.)
-5. **Higher-dimensional alphabets.** For data in $\{0,\dots,N\}^d$ with multivariate moments, is there an analogous exact threshold and a corresponding one-dimensional kernel at the critical multi-degree?
-
----
-
-## 11. Conclusion
-
-The finite moment problem on the alphabet $\{0,1,\dots,N\}$ admits a complete and unusually clean description. Reconstruction succeeds exactly with the moments of orders $0$ through $N$; one order short, the failure is a single one-parameter family generated by the alternating binomial vector, and everything about it — the gap $(-1)^N N!$ at the critical order, the total variation $2^N$, the extremal separation $N!/2^{N-1}$, the exponential collision cost $2^{N-1}$ — is computed exactly by one identity, $\sum_i (-1)^i \binom{N}{i}p(i)=(-1)^N N! [X^N]p$.
-
-For integer data a second mechanism, Newton's identities, contributes the complementary threshold $\min(N,n)$ and the Prouhet–Tarry–Escott floor. Packaging the sharpness data into the invariant $m(N,K)$ organises the whole picture into a single sandwich $K < m(N,K) \le 2^K$, tight on the right at the critical window and tight on the left — as we show by explicit narrow ideal witnesses — in every degree up to $5$. What lies between remains the interesting part.
+| Rigidity | $s, t$ bounded by $N$, $p_k(s) = p_k(t)$ for $k \le N$ $\Rightarrow s = t$ |
+| Sharpness | For every $N$, $E_N \ne O_N$ agree on $p_k$ for all $k < N$ |
+| Exact gap | $p_N(E_N) - p_N(O_N) = (-1)^N N!$ |
+| Classification | Any near miss has $c_j(s) - c_j(t) = \lambda(-1)^j\binom{N}{j}$, $\lambda \in \mathbb{Z}$ |
+| Quantisation | $N! \mid p_N(s) - p_N(t)$; $\ge N!$ if $s \ne t$; attained by $E_N, O_N$ |
+| Size floor | Near miss with $s \ne t$, $N \ge 1$ $\Rightarrow$ $\lvert s\rvert \ge 2^{N-1}$; $\lvert E_N\rvert = 2^{N-1}$ |
+| Zero index | $\{0\}$ vs $\emptyset$ shows $k=0$ is needed; on positive support $1 \le k \le N$ is rigid and sharp |
+| Spectral form | $\chi_s = \chi_t \iff p_k(s) = p_k(t)$ for $k \le N$; fails for $k < N$ |
+| Abundance | Infinitely many near misses at each level |
