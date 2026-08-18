@@ -24,7 +24,7 @@ window.FUTURE_DIRECTIONS = [
       "Novelty"
     ],
     "id": "fd_1366",
-    "phase": "B",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
@@ -853,20 +853,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle 16c8a71d (Q=0.820), which proved 21 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The unlabeled product is not injective on families; the interleaved\n   aggregate is (`interleave_injective`).",
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "push_16c8a71d_2acde3d2",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "16c8a71d",
-    "status": "available",
-    "timestamp": "2026-08-18T21:38:31.314157+00:00",
-    "title": "Deepening: Aggregate dichotomy"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Building on cycle 3b29df87 (Q=0.820), which proved 110 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the Weil pairing on an elliptic curve and prove its bilinearity. Show that the BLS signature scheme is existentially unforgeable under the computational Diffie-Hellman assumption in the pairing group. Prove that the pairing allows short aggregate signatures.",
     "domains": [
       "Cryptography"
@@ -881,17 +867,17 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle 4f724156 (Q=0.820), which proved 21 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For every `m \u2265 1`, the renormalized product `q^m \u00b7 \u03a0 f i` of `m`\n    normalized series realizes **exactly** the series of order `0`\n    (`renormalized_prod_iff_orderTop_zero`); the pole order is the only obstruction, and the\n    factorization is never unique (`factorization_not_unique`).",
+    "description": "Building on cycle fbb9718e (Q=0.820), which proved 278 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The case `m = 3`, `F = x\u00b2 + y\u00b2 - z\u00b2` is fully proved\n(`PythagoreanKernel.pyth_kernel_spectrum`: defect exactly one, the obstruction being that `2`\nis not a square, with the dimension-dependence isolated in `constant_legs_dim_two_three_four`),\nand the Fermat family shows the defect is *not* constant ",
     "domains": [
-      "Probability"
+      "Pythagorean"
     ],
-    "id": "push_4f724156_26a0a4dc",
+    "id": "push_fbb9718e_18e12df4",
     "priority_score": 0.9199999999999999,
     "research_mode": "team",
-    "source_exp_id": "4f724156",
+    "source_exp_id": "fbb9718e",
     "status": "available",
-    "timestamp": "2026-08-18T21:38:20.282510+00:00",
-    "title": "Deepening: Conjecture C, closed"
+    "timestamp": "2026-08-18T22:42:44.002617+00:00",
+    "title": "Deepening: The case `m = 3`, `F = x\u00b2 + y\u00b2 - z\u00b2` is fully proved"
   },
   {
     "consumed_by_exp_id": "",
@@ -19223,17 +19209,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "The block-tracking fibration (`stirling2_succ_succ`, `card_filter_last_eq`,"
   },
   {
-    "consumed_by_exp_id": "fbb9718e",
+    "consumed_by_exp_id": "",
     "description": "The case `m = 3`, `F = x\u00b2 + y\u00b2 - z\u00b2` is fully proved\n(`PythagoreanKernel.pyth_kernel_spectrum`: defect exactly one, the obstruction being that `2`\nis not a square, with the dimension-dependence isolated in `constant_legs_dim_two_three_four`),\nand the Fermat family shows the defect is *not* constant along a family\n(`FermatKernel.spectrum_card_iff_flt`), so the invariant is nontrivial and computable in\nexamples.",
     "domains": [
       "Pythagorean"
     ],
     "id": "fd_1487",
-    "phase": "A",
     "priority_score": 0.5082222222222222,
     "research_mode": "team",
     "source_exp_id": "856336cf",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-18T03:58:31.809783+00:00",
     "title": "The case `m = 3`, `F = x\u00b2 + y\u00b2 - z\u00b2` is fully proved"
   },
@@ -19675,14 +19660,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "The low-tail experiment."
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f46e1405",
     "description": "The qualitative half is now **proved**: `C\u209b = 1` iff the class is degenerate\n(`shtarkovSum_eq_one_iff`), so any genuinely new source makes the price strictly\npositive, and the price is monotone in the class (`price_reindex_le`).  What\nremains is the quantitative form.  If `S'` is obtained from `S` by adding one\nsource `p_new`, then\n`C\u209b' \u2212 C\u209b = \u03a3_x (p_new(x) \u2212 maxLik_S(x))\u207a`, and this is strictly positive unless\n`p_new \u2264 maxLik_S` pointwise.  *The key insight is* that the Shtarkov sum is\nthe `\u2113\u00b9`-norm of a pointwise supremum, so its increments measure exactly the\nmass on which the new model strictly dominates the old envelope \u2014 a\n\"marginal value of a model\" formula.  *Why now?*  `maxLik` and the library\nbounds (`shtarkovSum_sigma_le`, `le_shtarkovSum_sigma`) are in place, so the\nstatement is a pointwise `max` computation; if true it turns the price of\nuniversality into a submodular set function on model libraries, which would make\ngreedy decompressor-library design provably near-optimal.",
     "domains": [],
     "id": "fd_1550",
+    "phase": "A",
     "priority_score": 0.4277368421052631,
     "research_mode": "team",
     "source_exp_id": "bba7fa1e",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-18T19:41:03.927928+00:00",
     "title": "The qualitative half is now proved: `C\u209b = 1` iff the class is degenerate\n(`shtarkovSum_eq_one_iff`), so any genuinely new source makes the price strictly\npositive, and the price is monotone in the cla"
   },
@@ -21150,5 +21136,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-18T21:38:36.490022+00:00",
     "title": "For every control word `w`, `(applyPath w).2.2 \u2265 2\u00b7|w|\u00b2 + 6\u00b7|w| + 5`, with\nequality exactly for the all-`A` word."
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For all `n\u2081, n\u2082 \u2265 1` there exist distinct `a, b \u2265 0` and `y \u2209 {a,b}` with\n   `n\u2081a\u00b2 + n\u2082b\u00b2 = y\u00b2`.  *(The `r = 2` case of Conjecture 1; probably provable by taking\n   `a = n\u2082 t`, `b` from a Pythagorean parametrisation.)*\n2. **(C2a)** For every `d \u2264 4` there are infinitely many `C` with\n   `ConicKernel.conicDefect 1 1 C = d`.  *(Strengthens `conicDefect_surjective` from\n   surjective to infinitely-often; the `d = 4` case asks for infinitely many `C` such that\n   `x\u00b2 + y\u00b2 = Cz\u00b2` has only the origin, i.e. infinitely many `C` with a prime\n   `\u2261 3 mod 4` to an odd power.)*\n3. **(C4a)** For `p = 3` the set `{C : x\u00b3 + y\u00b3 = Cz\u00b3 realises ![0,0,2]}` is exactly\n   `{C : 2C\u00b2 is a cube} \u2216 {2}`, and this set is `{2^{3m+4}\u00b7u\u00b3 : m \u2265 0, u \u2265 1}` up to cubes.\n   *(A completely explicit description, decidable coefficient by coefficient.)*",
+    "domains": [
+      "NumberTheory",
+      "Logic"
+    ],
+    "id": "fd_1561",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "fbb9718e",
+    "status": "available",
+    "timestamp": "2026-08-18T22:42:31.929646+00:00",
+    "title": "For all `n\u2081, n\u2082 \u2265 1` there exist distinct `a, b \u2265 0` and `y \u2209 {a,b}` with"
   }
 ];
