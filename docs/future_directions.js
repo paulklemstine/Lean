@@ -54,7 +54,7 @@ window.FUTURE_DIRECTIONS = [
       "Novelty"
     ],
     "id": "fd_1373",
-    "phase": "B",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
@@ -19833,14 +19833,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Open here; the multiplicative bound `|supp f| \u00b7 |supp f\u0302| \u2265 p` is proved"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5bad6114",
     "description": "The \"if\" direction is proved (`FourierFA.poisson_summation`); the converse is open.",
     "domains": [],
     "id": "fd_1411",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "525aecde",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-17T09:01:32.595927+00:00",
     "title": "The \"if\" direction is proved (`FourierFA.poisson_summation`); the converse is open."
   },

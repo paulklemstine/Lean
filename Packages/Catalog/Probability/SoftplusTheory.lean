@@ -1,3 +1,6 @@
+-- `Shared.NeuralCoding.LogisticSigmoid` already provides `softplus`, `one_plus_exp_pos`
+-- and `logisticSigmoid`; importing `Shared.NeuralCoding.Softplus` as well would redefine
+-- `softplus` and make this file fail to elaborate.
 import Shared.NeuralCoding.LogisticSigmoid
 
 /-! # CatalogBuild.Shared.Softplus theory
