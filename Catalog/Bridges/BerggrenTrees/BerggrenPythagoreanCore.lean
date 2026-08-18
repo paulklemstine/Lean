@@ -90,11 +90,11 @@ theorem det_asymmetry : Matrix.det B₁_mat = 1 ∧ Matrix.det B₂_mat = -1 ∧
 
 /-- Product of Berggren matrices remains in O(2,1;ℤ) -/
 theorem B₁B₂_lorentz : (B₁_mat * B₂_mat).transpose * QLor * (B₁_mat * B₂_mat) = QLor := by
-  native_decide
+  decide
 
 theorem B₁B₂B₃_lorentz :
     (B₁_mat * B₂_mat * B₃_mat).transpose * QLor * (B₁_mat * B₂_mat * B₃_mat) = QLor := by
-  native_decide
+  decide
 
 theorem fwd_inv_A (a b c : ℤ) :
     invA (bergA a b c).1 (bergA a b c).2.1 (bergA a b c).2.2 = (a, b, c) := by
@@ -120,21 +120,21 @@ theorem inv_fwd_C (a b c : ℤ) :
     bergC (invC a b c).1 (invC a b c).2.1 (invC a b c).2.2 = (a, b, c) := by
   simp only [bergC, invC, Prod.mk.injEq]; exact ⟨by ring, by ring, by ring⟩
 
-theorem bergA_root : bergA 3 4 5 = (5, 12, 13) := by native_decide
+theorem bergA_root : bergA 3 4 5 = (5, 12, 13) := by decide
 
-theorem bergB_root : bergB 3 4 5 = (21, 20, 29) := by native_decide
+theorem bergB_root : bergB 3 4 5 = (21, 20, 29) := by decide
 
-theorem bergC_root : bergC 3 4 5 = (15, 8, 17) := by native_decide
+theorem bergC_root : bergC 3 4 5 = (15, 8, 17) := by decide
 
-theorem invA_recovers : invA 5 12 13 = (3, 4, 5) := by native_decide
+theorem invA_recovers : invA 5 12 13 = (3, 4, 5) := by decide
 
-theorem invB_recovers : invB 21 20 29 = (3, 4, 5) := by native_decide
+theorem invB_recovers : invB 21 20 29 = (3, 4, 5) := by decide
 
-theorem invC_recovers : invC 15 8 17 = (3, 4, 5) := by native_decide
+theorem invC_recovers : invC 15 8 17 = (3, 4, 5) := by decide
 
-theorem bergA_depth2 : bergA 5 12 13 = (7, 24, 25) := by native_decide
+theorem bergA_depth2 : bergA 5 12 13 = (7, 24, 25) := by decide
 
-theorem bergB_depth2 : bergB 21 20 29 = (119, 120, 169) := by native_decide
+theorem bergB_depth2 : bergB 21 20 29 = (119, 120, 169) := by decide
 
 theorem bergA_hyp_increase (a b c : ℤ) (ha : 0 < a) (_ : 0 < b) (_ : 0 < c)
     (_ : a < c) (hbc : b < c) :
@@ -222,9 +222,9 @@ theorem bHyp_recurrence (n : ℕ) : bHyp (n + 2) = 6 * bHyp (n + 1) - bHyp n := 
 theorem bHyp_values : bHyp 0 = 5 ∧ bHyp 1 = 29 ∧ bHyp 2 = 169 ∧ bHyp 3 = 985 ∧ bHyp 4 = 5741 := by
   constructor; · rfl
   constructor; · rfl
-  constructor; · native_decide
-  constructor; · native_decide
-  · native_decide
+  constructor; · decide
+  constructor; · decide
+  · decide
 
 /-- The Pell recurrence checks: 6·29-5=169, 6·169-29=985, 6·985-169=5741 -/
 theorem pell_checks :
@@ -299,8 +299,8 @@ theorem euclid_is_pythag (m n : ℤ) :
     IsPythag (euclid m n).1 (euclid m n).2.1 (euclid m n).2.2 := by
   unfold IsPythag euclid; ring
 
-theorem euclid_root : euclid 2 1 = (3, 4, 5) := by native_decide
+theorem euclid_root : euclid 2 1 = (3, 4, 5) := by decide
 
-theorem euclid_5_12_13 : euclid 3 2 = (5, 12, 13) := by native_decide
+theorem euclid_5_12_13 : euclid 3 2 = (5, 12, 13) := by decide
 
-theorem euclid_8_15_17 : euclid 4 1 = (15, 8, 17) := by native_decide
+theorem euclid_8_15_17 : euclid 4 1 = (15, 8, 17) := by decide
