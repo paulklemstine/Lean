@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "8ed04a73",
-      "domain": "Probability",
-      "key_insight": "# Future directions — bold, testable conjectures from the NET-36 formalisation\n\nThe five Lean files in `Catalog/Probability/` establish:\n\n* `AttentionConcentration.lean` — an assumption-free Cauchy–Sc",
-      "quality_score": 0.85,
-      "sorry_count": 0,
-      "theorem_count": 78,
-      "timestamp": "2026-08-16T04:50:50",
-      "title": "NET-36: The Attention-Cost Grid Is Now Two-Seed Everywhere — k*=d·ctx/32 Holds at Every Measured (de"
-    },
-    {
       "cycle_id": "2a357c10",
       "domain": "Bridges",
       "key_insight": "# Future directions — NET-43 bridge (final, after cycles 1–6)\n\nVerified base (all `sorry`-free, all in `Catalog/Bridges/`, all main theorems checked with\n`#print axioms` to use only `propext`, `Classi",
@@ -499,19 +489,19 @@
       "theorem_count": 32,
       "timestamp": "2026-08-18T07:54:55",
       "title": "Rigidity"
+    },
+    {
+      "cycle_id": "a5150a29",
+      "domain": "Pythagorean",
+      "key_insight": "# FUTURE DIRECTIONS — after the character-agnostic Weil floor\n\nThis cycle closed, in Lean, the algebraic content of four of the five conjectures of the\nprevious cycle and refuted half of one of them.",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 52,
+      "timestamp": "2026-08-18T07:55:08",
+      "title": "The formal results in `Catalog/Tropical/JacobiSigned*.lean` settle the JACSIGN"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "3590d6fa",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions — Reciprocal-Zero Harmonics (after cycle 1)\n\nCycle 1 formalised, with complete Lean proofs and no `sorry`, the following: the\nmultiplicity-sensitive, conjugate-symmetric window sum",
-      "quality_score": 0.6546970930232558,
-      "sorry_count": 0,
-      "theorem_count": 60,
-      "timestamp": "2026-08-07T07:08:34",
-      "title": "Define the multiplicity-sensitive, conjugate-symmetric sum"
-    },
     {
       "cycle_id": "8dc4e6e3",
       "domain": "Algebra",
@@ -2501,27 +2491,19 @@
       "theorem_count": 32,
       "timestamp": "2026-08-18T07:54:55",
       "title": "Rigidity"
+    },
+    {
+      "cycle_id": "a5150a29",
+      "domain": "Pythagorean",
+      "key_insight": "# FUTURE DIRECTIONS — after the character-agnostic Weil floor\n\nThis cycle closed, in Lean, the algebraic content of four of the five conjectures of the\nprevious cycle and refuted half of one of them.",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 52,
+      "timestamp": "2026-08-18T07:55:08",
+      "title": "The formal results in `Catalog/Tropical/JacobiSigned*.lean` settle the JACSIGN"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "2ce26220",
-      "domain": "Geometry",
-      "name": "signed_sq_bound",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "c798c801",
-      "domain": "Computation",
-      "name": "is",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "7ee9f549",
-      "domain": "MachineLearning",
-      "name": "that",
-      "quality": 0.78
-    },
     {
       "cycle_id": "7ee9f549",
       "domain": "MachineLearning",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "turns",
       "quality": 0.85
+    },
+    {
+      "cycle_id": "a5150a29",
+      "domain": "Pythagorean",
+      "name": "chiC_apply",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "a5150a29",
+      "domain": "Pythagorean",
+      "name": "circleSumC_eq_zero_of_odd",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "a5150a29",
+      "domain": "Pythagorean",
+      "name": "card_sqrtsC",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-18T07:54:55",
+  "last_updated": "2026-08-18T07:55:08",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hupper⟩)",
@@ -3827,12 +3827,6 @@
     ],
     "Pythagorean": [
       {
-        "cycle_id": "a95dbc85",
-        "quality": 0.686,
-        "theorems": 112,
-        "title": "Fix a finite corpus of statements and charge each theory for both source length"
-      },
-      {
         "cycle_id": "e384d0b8",
         "quality": 0.6540809924078091,
         "theorems": 1352,
@@ -3885,6 +3879,12 @@
         "quality": 0.88,
         "theorems": 29,
         "title": "Kernel patterns"
+      },
+      {
+        "cycle_id": "a5150a29",
+        "quality": 0.82,
+        "theorems": 52,
+        "title": "The formal results in `Catalog/Tropical/JacobiSigned*.lean` settle the JACSIGN"
       }
     ],
     "Shared": [

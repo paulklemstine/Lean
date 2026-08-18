@@ -152,17 +152,17 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle c8991a0a (Q=0.880), which proved 294 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Determine exactly which spaces are classified up to homotopy by their fundamental group. Prove that for Eilenberg-MacLane spaces K(G,1), the fundamental group is a complete invariant. Construct examples where the fundamental group fails to classify.",
+    "description": "Building on cycle cf8480d3 (Q=0.850), which proved 32 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Equality at `k = 2` holds *iff* the action is trivial\n   (`orbits_sq_eq_orbitals_iff_trivial`), with a quantitative refinement (`rigidity_quantitative`).",
     "domains": [
-      "Bridges"
+      "Novelty"
     ],
-    "id": "push_c8991a0a_f15cb614",
+    "id": "push_cf8480d3_4cd9b595",
     "priority_score": 0.95,
     "research_mode": "team",
-    "source_exp_id": "c8991a0a",
+    "source_exp_id": "cf8480d3",
     "status": "available",
-    "timestamp": "2026-08-17T13:53:58.220287+00:00",
-    "title": "Deepening: Topological-Algebraic Bridge: Fundamental Group as a Complete Invariant"
+    "timestamp": "2026-08-18T07:54:56.804207+00:00",
+    "title": "Deepening: Rigidity"
   },
   {
     "consumed_by_exp_id": "",
@@ -867,6 +867,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle a5150a29 (Q=0.820), which proved 52 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # FUTURE DIRECTIONS \u2014 after the Jacobi-signed Weil floor\n\nThe formal results in `Catalog/Tropical/JacobiSigned*.lean` settle the JACSIGN\nexperiment: the Jacobi-signed circle count `W(N) = \u2211_{x\u00b2+y\u00b2=1} (x/N)` is\nmultiplicative (`circleWeightZ_mul`), vanishes identically when a factor is\n`\u2261 3 (mod 4)` ",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "push_a5150a29_0faf3769",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "a5150a29",
+    "status": "available",
+    "timestamp": "2026-08-18T07:55:09.118796+00:00",
+    "title": "Deepening: The formal results in `Catalog/Tropical/JacobiSigned*.lean` settle the JACSIGN"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 0e1eb0cb (Q=0.800), which proved 26 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that the Bergman fan of a matroid M equals the tropical linear space of the matroid's circuit ideal. Formalize the connection between matroid connectivity and the topology of the Bergman fan. Show that nested matroids give tropical linear subspaces.",
     "domains": [
       "Tropical"
@@ -1440,17 +1454,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "Graph-Expander: Alon-Boppana Bound for Regular Graph Eigenvalues"
   },
   {
-    "consumed_by_exp_id": "9aa1e8d1",
+    "consumed_by_exp_id": "",
     "description": "Proves that quantizing transformer weight matrices onto modular lattice grids preserves global loss landscape convexity invariants.",
     "domains": [
       "Bridges"
     ],
     "id": "dir_50_50_600fb3ba",
-    "phase": "A",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "batch_50_injection",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-23T20:05:24.803690+00:00",
     "title": "Bridge-NumberTheory-ML: Arithmetic Geometry of Transformer Weight Lattices"
   },
@@ -1779,34 +1792,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-05T06:51:05.180719+00:00",
     "title": "Deepening: ArXiv paper: Magnitude homology of tope graphs"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 785c09ab (Q=0.786), which proved 85 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions: Tropical Mathematics of Social Choice\n\n## 1. Classification of finite min-plus aggregators\n\n**Conjecture.** Every normalized, translation-equivariant, coordinatewise-minimum-preserving map from a finite tropical projective space to the tropical line is a finite minimum of coordi",
-    "domains": [
-      "Tropical"
-    ],
-    "id": "push_785c09ab_23b00019",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "785c09ab",
-    "status": "available",
-    "timestamp": "2026-08-05T22:30:27.421578+00:00",
-    "title": "Deepening: **Conjecture.** Every normalized, translation-equivariant, coordinatewise-minimu"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle bb566a68 (Q=0.783), which proved 11 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize transseries as formal series in x, log(x), exp(x), exp(exp(x)), etc. Prove that the field of transseries is real closed. Show that every EML function has a transseries expansion that uniquely determines it. Prove the asymptotic comparison theorem: if two transseries agree to all orders, th",
-    "domains": [
-      "Applications"
-    ],
-    "id": "push_bb566a68_c03a6dd2",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "bb566a68",
-    "status": "available",
-    "timestamp": "2026-08-01T03:58:55.405414+00:00",
-    "title": "Deepening: EML Transseries: Asymptotic Expansions Beyond Power Series"
   },
   {
     "consumed_by_exp_id": "",
@@ -17433,18 +17418,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "The formal results in `Catalog/Physics/DerivedModulus*.lean` close the"
   },
   {
-    "consumed_by_exp_id": "a5150a29",
+    "consumed_by_exp_id": "",
     "description": "# FUTURE DIRECTIONS \u2014 after the Jacobi-signed Weil floor\n\nThe formal results in `Catalog/Tropical/JacobiSigned*.lean` settle the JACSIGN\nexperiment: the Jacobi-signed circle count `W(N) = \u2211_{x\u00b2+y\u00b2=1} (x/N)` is\nmultiplicative (`circleWeightZ_mul`), vanishes identically when a factor is\n`\u2261 3 (mod 4)` (`WZ_semiprime_eq_zero_of_three_mod_four`), is not a residue dial\n(`not_residue_dial_prime`, `not_residue_dial_modulus`), and is pinned at the Weil\nfloor by an *exact identity* \u2014 `A(1)\u00b2 + A(\u03bd)\u00b2 = 4p` (`jacobsthal_identity`) \u2014 whose two\nlegs are the Gaussian coordinates of `p` (`two_squares_odd_leg`).  The following\nconjectures are the natural next cycle.\n\n---\n\n## C1. Every character-weighted circle count is a quadratic-twist trace, hence at the floor\n\n**Conjecture.** Let `\u03c8` be any nontrivial multiplicative character mod `p` of order `d`\nand set `W_\u03c8(p) = \u2211_{x\u00b2+y\u00b2=1} \u03c8(x)`.  Then `|W_\u03c8(p)| \u2264 (d) \u221ap`, and `W_\u03c8(p)` is a\n`\u2124[\u03b6_d]`-linear combination of traces of Frobenius of the curves `y\u00b2 = x\u00b3 - c x`\n(`d = 2`) or of Jacobi sums `J(\u03c8, \u03c7)` in general; in particular no choice of `\u03c8`\nescapes the square-root floor.\n\n*The key insight is* that summing `y` away turns any circle weight into\n`\u2211_x \u03c8(x)(1 + \u03c7(1-x\u00b2))`, i.e. a **Jacobi sum**, and Jacobi sums have absolute value\nexactly `\u221ap` \u2014 so the floor is a property of the circle, not of the weight.\n\n*Why now?* The second-moment machinery in `JacobiSignedWeilFloorBound.lean`\n(`chiSum_quadratic`, `moment`, `sum_sq_comp`) is character-agnostic; Mathlib already has\n`jacobiSum` with `jacobiSum_mul_jacobiSum_inv`, so the `\u221ap` step is within reach.\n\n---\n\n## C2. The two-leg trade-off is a hard obstruction to factor leakage\n\n**Conjecture.** For semiprimes `N = pq` the pair `(W(N), A_\u03bd(N))` is equidistributed on\nthe \"Weil circle\" `u\u00b2 + v\u00b2 \u2264 16N` in the sense that, for any fixed `\u03b5 > 0`, the map\n`N \u21a6 W(N)/(4\u221aN)` has limiting distribution the (Sato\u2013Tate-type) pushforward of the\nproduct of two arcsine laws \u2014 hence carries `O(1)` bits about `p` versus `q`.\n\n*The key insight is* that `jacobsthal_identity` forces `W(p)` and its nonresidue twin to\ntrade off with `4p` conserved: any large signal in one leg is compensated in the other,\nso a witness reading only one leg sees a conserved-quantity projection, never the split.\n\n*Why now?* The identity is now a theorem, so the statement is unconditional in its\nalgebraic half; only the equidistribution half is open, and the `p \u2261 3 (mod 4)`\nvanishing already proves a density-1/2 zero-information family.\n\n---\n\n## C3. `v\u2082(W(N))` is a complete obstruction to a \"dial + parity\" witness\n\n**Conjecture.** For `N = pq` with both primes `\u2261 1 (mod 4)`, `v\u2082(W(N)) = 2` exactly, and\nmore generally `v\u2082(W(N)) = #{primes p | N with p \u2261 1 mod 4}`; consequently the 2-adic\nvaluation of the statistic counts the number of `1 mod 4` prime factors \u2014 a genuine but\n*already publicly computable* invariant (it is determined by `N mod 4` for semiprimes),\nso it leaks nothing new.\n\n*The key insight is* that `W_mod_four` gives `v\u2082 = 1` at each `1 mod 4` prime and\nmultiplicativity adds valuations, so the 2-adic content of the statistic is exactly the\ncount of such factors and nothing more.\n\n*Why now?* `W_mod_four` and `WZ_mul` are proved; the conjecture is a short corollary for\nsemiprimes and an induction for general `N`, and its \"leaks nothing new\" half is a\nprecise, falsifiable information claim.\n\n---\n\n## C4. Weil-floor attainment has positive density\n\n**Conjecture.** For every `\u03b5 > 0` the set of primes `p \u2261 1 (mod 4)` with\n`W(p)\u00b2 > (1-\u03b5)\u00b74p` has positive relative density; equivalently, the odd leg `a` of\n`p = a\u00b2 + b\u00b2` satisfies `b = O(p^{\u03b5})` for a positive-density set of primes.\n\n*The key insight is* that near-attainment means `p = a\u00b2 + b\u00b2` with `b` tiny, i.e. `p`\nlies just above a square \u2014 so the conjecture is a statement about primes of the form\n`a\u00b2 + b\u00b2` with `b` bounded, closely tied to Landau\u2013Ramanujan and to primes represented by\nthin quadratic families.\n\n*Why now?* `weil_floor_near_attained` proves attainment at 97.7 % for `p = 173`;\n`jacobsthal_identity` converts the analytic question into a purely Diophantine one about\nthe two-square decomposition, where sieve technology applies.\n\n---\n\n## C5. No polynomial-time-computable circle statistic beats the floor\n\n**Conjecture.** Let `S(N)` be any statistic of the form `\u2211_{(x,y) \u2208 C(N)} w(x, y)` with\n`w` a product of Jacobi-type characters and `C(N)` a conic mod `N`.  Then `S` is\nmultiplicative in the modulus, `|S(N)| = O(N^{1/2+o(1)})`, and `S(N)` is computable from\n`N` alone in time `N^{1+o(1)}` but from `(p,q)` in time `polylog(N)` \u2014 so the\n\"free-witness\" gap is exactly the Weil floor.\n\n*The key insight is* that the CRT proof of `circleWeightZ_mul` never used the specific\nweight: multiplicativity plus a per-prime Weil bound is automatic for any character\nweight on any conic, which is why CIRC, BQF, GSP and JACSIGN all die the same death.\n\n*Why now?* `circleWeightZ_mul` is proved for an arbitrary modulus and the per-prime bound\nis proved by an elementary second moment; generalising both to arbitrary conics and\ncharacter products is a mechanical extension of the existing Lean development.\n",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
     "id": "fd_1229",
-    "phase": "A",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "db97959f",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-13T13:55:24.344466+00:00",
     "title": "The formal results in `Catalog/Tropical/JacobiSigned*.lean` settle the JACSIGN"
   },
@@ -19281,6 +19265,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The exact identity and the sharp constant 16 are theorems\n(`weil_deficiency`, `W_sq_le_four_p_sub_sixteen`, `improved_floor_sharp`); only the\ninfinitude of primes `a\u00b2 + 4` (an Euler-type problem) is open, and partial sieve results\n(almost-primes of that shape) can already be formalised as a weakened version.",
+    "domains": [
+      "Pythagorean",
+      "NumberTheory"
+    ],
+    "id": "fd_1504",
+    "priority_score": 0.5225714285714286,
+    "research_mode": "team",
+    "source_exp_id": "a5150a29",
+    "status": "available",
+    "timestamp": "2026-08-18T07:55:03.855793+00:00",
+    "title": "The exact identity and the sharp constant 16 are theorems"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The obstruction half is fully formal (a `Finset` pigeonhole plus a\ntelescoping identity), so the conjecture can be stated in Lean today with a proved\nconverse; each new case of the existence half (e.g. `k = 1`, the twin case) is a known\nhard target with a now-precise topological meaning.",
     "domains": [
       "Combinatorics",
@@ -19378,6 +19377,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-18T05:46:06.328404+00:00",
     "title": "version. Conjecture: there is an absolute constant `c > 0` such that for all `p`"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The set of attainable values of `4p \u2212 W(p)\u00b2` over primes `p \u2261 1 (mod 4)` is\nexactly `{4b\u00b2 : b even, b \u2260 0}` and each level `b = 2k` is attained infinitely often;\nequivalently, for every `k \u2265 1` there are infinitely many primes of the form `a\u00b2 + 4k\u00b2`.\nConsequently the improved floor `W(p)\u00b2 \u2264 4p \u2212 16` is sharp at level `k = 1` and the \"97.7 %\"\nphenomenon of `p = 173` recurs infinitely often.",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "fd_1503",
+    "priority_score": 0.5076666666666667,
+    "research_mode": "team",
+    "source_exp_id": "a5150a29",
+    "status": "available",
+    "timestamp": "2026-08-18T07:55:03.601527+00:00",
+    "title": "The set of attainable values of `4p \u2212 W(p)\u00b2` over primes `p \u2261 1 (mod 4)` is"
   },
   {
     "consumed_by_exp_id": "",
@@ -19573,6 +19586,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-17T14:45:14.122863+00:00",
     "title": "The equivalence and the cap are formal; sieve-theoretic upper bounds of"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**C1 (settled, in a stronger form).**  Every character-weighted circle count is either\n  identically zero (odd weights, `circleSumC_eq_zero_of_odd`) or a sum of exactly two Jacobi\n  sums against the quadratic character (`circleSumC_eq_jacobiSum_add`), whence\n  `|W_\u03c8(p)| \u2264 2\u221ap` with an **order-independent** constant (`norm_circleSumC_le`) \u2014 better than\n  the conjectured `d\u221ap`.  The `\u221ap` step is `norm_jacobiSum_eq_sqrt`.",
+    "domains": [],
+    "id": "fd_1500",
+    "priority_score": 0.4302222222222222,
+    "research_mode": "team",
+    "source_exp_id": "a5150a29",
+    "status": "available",
+    "timestamp": "2026-08-18T07:55:02.830577+00:00",
+    "title": "C1 (settled, in a stronger form)."
   },
   {
     "consumed_by_exp_id": "",
@@ -19941,15 +19966,14 @@ window.FUTURE_DIRECTIONS = [
     "title": "Moment hierarchy"
   },
   {
-    "consumed_by_exp_id": "cf8480d3",
+    "consumed_by_exp_id": "",
     "description": "Equality at `k = 2` holds *iff* the action is trivial\n   (`orbits_sq_eq_orbitals_iff_trivial`), with a quantitative refinement (`rigidity_quantitative`).",
     "domains": [],
     "id": "fd_1426",
-    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "286b3a0e",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-17T13:54:04.115247+00:00",
     "title": "Rigidity"
   },
@@ -20327,14 +20351,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "If the action is not `r`-transitive but is `(r\u22121)`-transitive and `r + 1 \u2264 |X|`, then\n`t_{r+1} > t_r`; more boldly, `t_{r+1} \u2265 t_r + (t_r \u2212 1)`, i.e."
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2afe0ce6",
     "description": "*For every finite action the spectrum is log-concave: `t_r\u00b2 \u2265 t_{r\u22121}\u00b7t_{r+1}` for\n`1 \u2264 r < |X|`.*",
     "domains": [],
     "id": "fd_1475",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "11c9ff9f",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-18T03:08:40.358199+00:00",
     "title": "For every finite action the spectrum is log-concave: `t_r\u00b2 \u2265 t_{r\u22121}\u00b7t_{r+1}` for\n`1 \u2264 r < |X|`."
   },
@@ -20508,5 +20533,62 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-18T05:46:17.086204+00:00",
     "title": "All the machinery \u2014 honesty, guarding, bounded search, the"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The equality case is now a theorem rather than a hypothesis, so the extremal class\nis precisely delimited, and mathlib's character theory of finite groups (`FDRep`, orthogonality\nof characters) supplies the regular-character decomposition that the argument needs.",
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_1499",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "cf8480d3",
+    "status": "available",
+    "timestamp": "2026-08-18T07:54:43.933078+00:00",
+    "title": "The equality case is now a theorem rather than a hypothesis, so the extremal class"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**C4 (algebraic half settled).**  `4p \u2212 W(p)\u00b2 = 4b\u00b2` exactly (`weil_deficiency`), so\n  near-attainment is *equivalent* to a Diophantine bound on the even Gaussian leg\n  (`weil_near_attainment_iff`), and the Weil floor improves to the sharp\n  `W(p)\u00b2 \u2264 4p \u2212 16` (`W_sq_le_four_p_sub_sixteen`).",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_1501",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "a5150a29",
+    "status": "available",
+    "timestamp": "2026-08-18T07:55:03.091276+00:00",
+    "title": "C4 (algebraic half settled)."
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Both ingredients are theorems: `WZpoly_mul` for arbitrary weights and\n`padicValInt_two_eq` for the valuation bookkeeping; what is missing is the ramification\nbookkeeping in `\u2124[\u03b6_d]`, which Mathlib's cyclotomic API supports.",
+    "domains": [],
+    "id": "fd_1502",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "a5150a29",
+    "status": "available",
+    "timestamp": "2026-08-18T07:55:03.342215+00:00",
+    "title": "Both ingredients are theorems: `WZpoly_mul` for arbitrary weights and"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The congruence is a theorem and the four-square identity\n`WZ_semiprime_four_squares` writes `N` explicitly in terms of the four legs; the remaining\nstep is a counting statement over the finitely many two-square representations of `N`, which\nis combinatorial rather than analytic.",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_1505",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "a5150a29",
+    "status": "available",
+    "timestamp": "2026-08-18T07:55:04.106620+00:00",
+    "title": "The congruence is a theorem and the four-square identity"
   }
 ];
