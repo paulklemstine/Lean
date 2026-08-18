@@ -1,6 +1,6 @@
 import Mathlib
-import Shared.CarmichaelHelper
-import Shared.NumberTheory.CarmichaelComposite
+import Shared.NumberTheory.CarmichaelHelpers
+import Shared.NumberTheory.CarmichaelProof
 
 /-! # Computational verification of Carmichael's theorem
 
@@ -62,26 +62,11 @@ lemma fib_gt_one' (n : ℕ) (hn : 3 ≤ n) : 1 < Nat.fib n := by
     then either p is primitive for F(n), or the entry point of p
     strictly divides n (so p divides F(d) for proper d | n).
 
-    NOTE (repair): the original statement of this theorem was unbounded in `n` and
-    its proof was left unfinished (it applied the *verified-range* theorem
-    `fib_carmichael`/`fib_carmichael_composite`, which carries the hypothesis
-    `n ≤ 10000`, without supplying that hypothesis).  The unbounded composite case is
-    the quantitative core of Carmichael's theorem and is not available in this
-    development, so the statement is guarded here by the same certified range
-    `n ≤ 10000`; the original, unguarded statement is retained in a comment below.
-    The proof requires deep number-theoretic infrastructure (lifting-the-exponent for
-    Fibonacci, entry point theory) and remains an open formalization challenge. -/
-theorem fib_composite_has_primitive (n : ℕ) (hn : 13 ≤ n) (hn2 : n ≤ 10000)
-    (hn_comp : ¬Nat.Prime n) :
-    ∃ p, Nat.Prime p ∧ p ∣ Nat.fib n ∧
-      ∀ k, 0 < k → k < n → ¬(p ∣ Nat.fib k) := by
-  exact fib_carmichael n hn hn2
-
-/- Original (unbounded) statement, left unproved by the earlier development and
-   therefore commented out rather than deleted:
-
+    This is the composite case, which together with `fib_primitive_divisor_prime`
+    completes Carmichael's theorem. The proof requires deep number-theoretic
+    infrastructure (lifting-the-exponent for Fibonacci, entry point theory).
+    Currently an open formalization challenge. -/
 theorem fib_composite_has_primitive (n : ℕ) (hn : 13 ≤ n) (hn_comp : ¬Nat.Prime n) :
     ∃ p, Nat.Prime p ∧ p ∣ Nat.fib n ∧
       ∀ k, 0 < k → k < n → ¬(p ∣ Nat.fib k) := by
-  exact fib_carmichael n hn
--/
+  exact fib_carmichael_composite n hn hn_comp

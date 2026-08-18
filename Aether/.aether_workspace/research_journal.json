@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "39757711",
-      "domain": "Pythagorean",
-      "key_insight": "# Future Directions — Hamiltonicity of Cayley Graphs of Order `pqrs`\n\nThis document records the open conjectures that the formalization in\n`Catalog/Pythagorean/CayleyHamiltonian/` makes concrete and t",
-      "quality_score": 0.84,
-      "sorry_count": 0,
-      "theorem_count": 300,
-      "timestamp": "2026-08-16T22:37:14",
-      "title": "ArXiv paper: Cayley Graphs Of Order $pqrs$ Are Hamiltonian"
-    },
-    {
       "cycle_id": "922db13f",
       "domain": "NumberTheory",
       "key_insight": "# FUTURE DIRECTIONS — NET-47 staircase thread\n\nFour cycles of the loop produced, in `Catalog/NumberTheory/`:\n\n| file | content |\n|---|---|\n| `KneeStaircaseArithmetic.lean` | binary staircase normal fo",
@@ -499,19 +489,19 @@
       "theorem_count": 21,
       "timestamp": "2026-08-18T21:38:31",
       "title": "Aggregate dichotomy"
+    },
+    {
+      "cycle_id": "24a12580",
+      "domain": "Pythagorean",
+      "key_insight": "# Future directions\n\nDerived from the four completed cycles in `Catalog/Pythagorean/PRNGBerggren*.lean`\nand `Catalog/Pythagorean/PRNGMatrixFingerprint.lean`.  Each conjecture is stated\nso that it can",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 118,
+      "timestamp": "2026-08-18T21:38:44",
+      "title": "Compression Research B5: PRNG-generated real-world data — detection and seed recovery"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "2116bc97",
-      "domain": "Cryptography",
-      "key_insight": "# Future directions: radical isogenies on Montgomery curves\n\n## Where the thread stands\n\nThe thread has run through several cycles on the same object: the radical\n2-isogeny step on a Montgomery curve",
-      "quality_score": 0.6539737559241706,
-      "sorry_count": 0,
-      "theorem_count": 324,
-      "timestamp": "2026-08-07T19:22:39",
-      "title": "Deepening: Isogeny-SIDH: Radical Isogeny Verification on Montgomery Curves"
-    },
     {
       "cycle_id": "558c6b54",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 21,
       "timestamp": "2026-08-18T21:38:31",
       "title": "Aggregate dichotomy"
+    },
+    {
+      "cycle_id": "24a12580",
+      "domain": "Pythagorean",
+      "key_insight": "# Future directions\n\nDerived from the four completed cycles in `Catalog/Pythagorean/PRNGBerggren*.lean`\nand `Catalog/Pythagorean/PRNGMatrixFingerprint.lean`.  Each conjecture is stated\nso that it can",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 118,
+      "timestamp": "2026-08-18T21:38:44",
+      "title": "Compression Research B5: PRNG-generated real-world data — detection and seed recovery"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "4bf66c09",
-      "domain": "Novelty",
-      "name": "about",
-      "quality": 0.88
-    },
-    {
-      "cycle_id": "4bf66c09",
-      "domain": "Novelty",
-      "name": "dft_conv",
-      "quality": 0.88
-    },
-    {
-      "cycle_id": "4bf66c09",
-      "domain": "Novelty",
-      "name": "supp_conv_subset",
-      "quality": 0.88
-    },
     {
       "cycle_id": "e8a76d4f",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Pythagorean",
       "name": "fiber_card_sum",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "24a12580",
+      "domain": "Pythagorean",
+      "name": "isOrbit_iff_iterate",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "24a12580",
+      "domain": "Pythagorean",
+      "name": "orbitA_invariant",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "24a12580",
+      "domain": "Pythagorean",
+      "name": "orbitC_invariant",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-18T21:38:31",
+  "last_updated": "2026-08-18T21:38:44",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hupper⟩)",
@@ -3827,12 +3827,6 @@
     ],
     "Pythagorean": [
       {
-        "cycle_id": "df8839cd",
-        "quality": 0.71728,
-        "theorems": 70,
-        "title": "This cycle settled the *uniform half-canonical existence* question for almost al"
-      },
-      {
         "cycle_id": "756b62a7",
         "quality": 0.7084450000000001,
         "theorems": 86,
@@ -3885,6 +3879,12 @@
         "quality": 0.82,
         "theorems": 21,
         "title": "Aggregate dichotomy"
+      },
+      {
+        "cycle_id": "24a12580",
+        "quality": 0.82,
+        "theorems": 118,
+        "title": "Compression Research B5: PRNG-generated real-world data — detection and seed rec"
       }
     ],
     "Shared": [

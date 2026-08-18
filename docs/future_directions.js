@@ -18,13 +18,13 @@ window.FUTURE_DIRECTIONS = [
     "title": "NET-48: The direct test survives via the MEDIAN \u2014 k*=160 at (d=4, ctx=2048, seed=3), all four point-horns refuted, the completed 16\u00d7 distribution {160,224,256} has median exactly 224 = 7/8\u00b7(d\u00b7ctx/32) \u2014 the 7/8-median law is 2/2-context, 6/6-seed"
   },
   {
-    "consumed_by_exp_id": "24a12580",
+    "consumed_by_exp_id": "d9b9ca59",
     "description": "**Part of:** Research plan \u2014 *Compression Beyond the Pigeonhole Bound* (Phase B, Question 2: can random number generators help?).\n\n## Research question\nA surprising amount of real-world data **is** PRNG output: game worlds, simulations, certain file formats, crypto keys. Detect it and recover the seed \u2192 compress to ~0 bits beyond the seed.\n\n## Approach\n- Robust **PRNG fingerprinting**: which generator family produced this stream?\n- **Seed recovery**: Berlekamp\u2013Massey for LFSRs; solver-based inversion for other families.\n- A classifier that routes each file to *seed-compressible* vs. *model-compressible*.\n\n## Deliverable\nDetection + seed-recovery tooling and a benchmark of seed-compressible files found in real corpora.\n\n## Falsifiability / gate\nFor a recovered seed: decompressed output must exactly reproduce the file. Measures what fraction of real data is seed-compressible.\n\n**Milestone:** M2 (cheap, warm-up infrastructure). Related: [[B1]].\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_1366",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
@@ -121,20 +121,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-23T20:10:45.914797+00:00",
     "title": "EML-Pythagorean-Operator: Single-Neuron Neural Energy Guided Tree Traversal"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 09567e3d (Q=0.890), which proved 134 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The `d = 1` case is proved (`withParity_detects_single_flip` plus the\none-codeword converse); the general case needs only the Hamming ball counting\nlemma over `List Bool` of bounded length.",
-    "domains": [
-      "Computation"
-    ],
-    "id": "push_09567e3d_df50f812",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "09567e3d",
-    "status": "available",
-    "timestamp": "2026-08-18T18:57:47.772779+00:00",
-    "title": "Deepening: The `d = 1` case is proved (`withParity_detects_single_flip` plus the"
   },
   {
     "consumed_by_exp_id": "",
@@ -867,6 +853,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 16c8a71d (Q=0.820), which proved 21 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The unlabeled product is not injective on families; the interleaved\n   aggregate is (`interleave_injective`).",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "push_16c8a71d_2acde3d2",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "16c8a71d",
+    "status": "available",
+    "timestamp": "2026-08-18T21:38:31.314157+00:00",
+    "title": "Deepening: Aggregate dichotomy"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 3b29df87 (Q=0.820), which proved 110 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the Weil pairing on an elliptic curve and prove its bilinearity. Show that the BLS signature scheme is existentially unforgeable under the computational Diffie-Hellman assumption in the pairing group. Prove that the pairing allows short aggregate signatures.",
     "domains": [
       "Cryptography"
@@ -878,6 +878,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-16T11:35:10.982658+00:00",
     "title": "Deepening: Elliptic Curve Cryptography: Weil Pairing and BLS Signatures"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 4f724156 (Q=0.820), which proved 21 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For every `m \u2265 1`, the renormalized product `q^m \u00b7 \u03a0 f i` of `m`\n    normalized series realizes **exactly** the series of order `0`\n    (`renormalized_prod_iff_orderTop_zero`); the pole order is the only obstruction, and the\n    factorization is never unique (`factorization_not_unique`).",
+    "domains": [
+      "Probability"
+    ],
+    "id": "push_4f724156_26a0a4dc",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "4f724156",
+    "status": "available",
+    "timestamp": "2026-08-18T21:38:20.282510+00:00",
+    "title": "Deepening: Conjecture C, closed"
   },
   {
     "consumed_by_exp_id": "",
@@ -1793,20 +1807,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-05T06:51:05.180719+00:00",
     "title": "Deepening: ArXiv paper: Magnitude homology of tope graphs"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 7ee9f549 (Q=0.780), which proved 78 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Part of:** Research plan \u2014 *Compression Beyond the Pigeonhole Bound* (Phase B, Question 2: can random number generators help?).\n\n## Research question\nA surprising amount of real-world data **is** PRNG output: game worlds, simulations, certain file formats, crypto keys. Detect it and recover the se",
-    "domains": [
-      "MachineLearning"
-    ],
-    "id": "push_7ee9f549_def45a6d",
-    "priority_score": 0.88,
-    "research_mode": "team",
-    "source_exp_id": "7ee9f549",
-    "status": "available",
-    "timestamp": "2026-08-17T16:46:12.297819+00:00",
-    "title": "Deepening: Compression Research B5: PRNG-generated real-world data \u2014 detection and seed rec"
   },
   {
     "consumed_by_exp_id": "",
@@ -19167,6 +19167,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "*Let `x` be any finite integer stream of length `n \u2265 8` produced by iterating an\naffine map of `\u2124\u00b3`.  Then the Berlekamp\u2013Massey linear complexity of `x` is at\nmost 4, and the minimal polynomial computed from the first 8 symbols determines\nthe affine map up to conjugacy.*",
+    "domains": [
+      "Geometry",
+      "Computation"
+    ],
+    "id": "fd_1558",
+    "priority_score": 0.5118888888888888,
+    "research_mode": "team",
+    "source_exp_id": "24a12580",
+    "status": "available",
+    "timestamp": "2026-08-18T21:38:36.700109+00:00",
+    "title": "Let `x` be any finite integer stream of length `n \u2265 8` produced by iterating an\naffine map of `\u2124\u00b3`."
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "\u2014 Stirling closes the $47$-versus-$49$ gap | **Split verdict.** Structural half **closed**: the missing lower bound $16^r \\le \\binom{2r}{r}^2(4r+1)$ is proved by induction through the recursion $(r+1)\\binom{2r+2}{r+1} = 2(2r+1)\\binom{2r}{r}$ (slack exactly $1$), giving the sandwich $4^r/\\sqrt{4r+1} \\le \\binom{2r}{r} \\le 4^r/\\sqrt{3r+1}$, the exact $r^{-1/2}$ defect rate $\\delta_r\\sqrt r \\in [1/(2\\sqrt5),\\,1/(2\\sqrt3)]$, non-summability of the defects, and the Stirling-improved rate $2p(1-p)(4p(1-p))^r/((2p-1)\\sqrt{3r+4})$. Numerical half **refuted**: *no* bound dominating the sharpened rate can certify $1\\%$ at $47$ seeds, because the sharpened rate itself already exceeds $1/100$ there while the truth does not. |\n| **D2** \u2014 the dichotomy under contamination | **Closed in finite-sample form**: for contamination level $c$ below the breakdown number, the achievable readings of the $m$-th rung are *exactly* the clean readings in $[Q(m-c),\\,Q(m+c)]$ \u2014 the bracket is attained at both ends, so the maximal bias equals the clean spread and the breakdown number is the level at which that spread stops being finite. |\n| **D3** \u2014 every offset rung has its own generating function | **Closed**: for each fixed offset $k$, the off-centre ladder started at its smallest ensemble sums to exactly $1 - p^{2k+1} = (1-p)(1 + p + \\cdots + p^{2k})$, i.e. the conjectured $(1-p)R_k(p)$ with $R_k$ the geometric polynomial of length $2k+1$; $k = 0$ recovers the earlier cycle's $1-p$. |",
     "domains": [
       "Geometry"
@@ -19418,6 +19433,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-18T13:08:22.887394+00:00",
     "title": "The two easy halves are *proved*: closure under subgraphs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Mathlib has the unique factorisation of `\u2124[i]` (`GaussianInt` is a\n`EuclideanDomain`), and `range_toGaussian` already identifies `PTriple` with the square-norm\nsubmonoid, so the conjecture becomes a statement about prime factorisations with even\nexponents \u2014 reachable with existing API.",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "fd_1555",
+    "priority_score": 0.4765416666666667,
+    "research_mode": "team",
+    "source_exp_id": "16c8a71d",
+    "status": "available",
+    "timestamp": "2026-08-18T21:38:25.335287+00:00",
+    "title": "Mathlib has the unique factorisation of `\u2124[i]` (`GaussianInt` is a"
   },
   {
     "consumed_by_exp_id": "",
@@ -19731,15 +19760,14 @@ window.FUTURE_DIRECTIONS = [
     "title": "It would upgrade \"the cost of internal soundness is one loop\""
   },
   {
-    "consumed_by_exp_id": "4f724156",
+    "consumed_by_exp_id": "",
     "description": "For every `m \u2265 1`, the renormalized product `q^m \u00b7 \u03a0 f i` of `m`\n    normalized series realizes **exactly** the series of order `0`\n    (`renormalized_prod_iff_orderTop_zero`); the pole order is the only obstruction, and the\n    factorization is never unique (`factorization_not_unique`).",
     "domains": [],
     "id": "fd_1438",
-    "phase": "A",
     "priority_score": 0.41264102564102567,
     "research_mode": "team",
     "source_exp_id": "286b3a0e",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-17T13:54:06.839161+00:00",
     "title": "Conjecture C, closed"
   },
@@ -19754,6 +19782,30 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-17T09:01:32.349835+00:00",
     "title": "Chebotarev's theorem that every square submatrix of the `p \u00d7 p` DFT matrix"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "*The number of triples `(a,b,c)` with `0 < a,b,c \u2264 H` that are Berggren-generated\nfrom a positive seed is `\u0398(H)` \u2014 vanishingly few compared with `H\u00b3` \u2014 while the\nnumber of *Pythagorean* triples in the same box that are Berggren-generated is\n`(1 - o(1))` times the number of primitive Pythagorean triples in the box.*",
+    "domains": [],
+    "id": "fd_1559",
+    "priority_score": 0.40809523809523807,
+    "research_mode": "team",
+    "source_exp_id": "24a12580",
+    "status": "available",
+    "timestamp": "2026-08-18T21:38:36.914118+00:00",
+    "title": "The number of triples `(a,b,c)` with `0 < a,b,c \u2264 H` that are Berggren-generated\nfrom a positive seed is `\u0398(H)` \u2014 vanishingly few compared with `H\u00b3` \u2014 while the\nnumber of *Pythagorean* triples in the "
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "*Fix a large modulus `m` and consider the Berggren moves acting on `(\u2124/m)\u00b3`.\nThen the classifier `whichMove` remains sound, but seed recovery of a control\nword of length `k` from a single observed state requires `\u03a9(3^k / poly)` work\nunless the discrete-logarithm-like problem for the matrix `B\u2082` modulo `m` is\neasy.*",
+    "domains": [],
+    "id": "fd_1560",
+    "priority_score": 0.4066666666666666,
+    "research_mode": "team",
+    "source_exp_id": "24a12580",
+    "status": "available",
+    "timestamp": "2026-08-18T21:38:37.125696+00:00",
+    "title": "Fix a large modulus `m` and consider the Berggren moves acting on `(\u2124/m)\u00b3`."
   },
   {
     "consumed_by_exp_id": "",
@@ -20061,15 +20113,14 @@ window.FUTURE_DIRECTIONS = [
     "title": "Pole-order obstruction"
   },
   {
-    "consumed_by_exp_id": "16c8a71d",
+    "consumed_by_exp_id": "",
     "description": "The unlabeled product is not injective on families; the interleaved\n   aggregate is (`interleave_injective`).",
     "domains": [],
     "id": "fd_1429",
-    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "286b3a0e",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-17T13:54:04.788765+00:00",
     "title": "Aggregate dichotomy"
   },
@@ -21014,5 +21065,90 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-18T18:57:42.950267+00:00",
     "title": "The companion half is already settled: `optimal_detecting_classification`"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The algebraic fibre is completely described (`fibreEquivKer`), and the positivity\nobstruction is now a theorem rather than a heuristic; only the convexity and extreme-point\nanalysis remain.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1551",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "4f724156",
+    "status": "available",
+    "timestamp": "2026-08-18T21:38:04.240364+00:00",
+    "title": "The algebraic fibre is completely described (`fibreEquivKer`), and the positivity"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**Correction found by adversarial review.**  The conjectured dichotomy \"unique iff `m = 1`\"\n  needs one extra hypothesis at finite level that is automatic at valuation level: the truncated\n  unit group must be nontrivial.  `card_fibre_eq_one_iff` gives the sharp form (unique iff\n  `m = 1` **or** the group is trivial), `zmod_finite_rigidity_dichotomy` the usable form, and\n  `zmod_two_level_one_rigid` exhibits the unique exception `p = 2, D = 1`, where the\n  factorization is unique for every `m`.",
+    "domains": [
+      "Algebra",
+      "MachineLearning"
+    ],
+    "id": "fd_1552",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "4f724156",
+    "status": "available",
+    "timestamp": "2026-08-18T21:38:04.452743+00:00",
+    "title": "Correction found by adversarial review."
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The abstract `DiscreteVal` layer isolates precisely the commutativity uses (they are\nconfined to `val_prod` and `prod_uniformizer_zpow`), so the non-commutative generalization can be\nattempted by weakening one structure field at a time.",
+    "domains": [
+      "Algebra",
+      "MachineLearning"
+    ],
+    "id": "fd_1553",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "4f724156",
+    "status": "available",
+    "timestamp": "2026-08-18T21:38:04.657757+00:00",
+    "title": "The abstract `DiscreteVal` layer isolates precisely the commutativity uses (they are"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "of a discretely valued field `F` with `m` slots by\n`Z_{F,m}(T) = \u2211_{D \u2265 1} #fibre_D(F) \u00b7 T^D`, the fibre being taken modulo `\u03c0^D`.  Cycle 5 proves\n`Z_{\u211a_p,m}(T) = (p-1)^{m-1} T / (1 - p^{m-1} T)` (`euler_factor_identity`).  Conjecture: for every\nlocal field `F` with residue field of size `q\u2080` one has\n`Z_{F,m}(T) = (q\u2080-1)^{m-1} T / (1 - q\u2080^{m-1} T)`, so that the pair `(q\u2080, m)` is recoverable from\n`Z_{F,m}` alone \u2014 the unique pole is at `T = q\u2080^{-(m-1)}` \u2014 and, conversely, `Z_{F,m}` is a\nrational function **iff** the residue field is finite.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_1554",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "4f724156",
+    "status": "available",
+    "timestamp": "2026-08-18T21:38:04.873995+00:00",
+    "title": "of a discretely valued field `F` with `m` slots by"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "*For a generator driven by an integer matrix `M \u2208 GL\u2083(\u2124)` with spectral radius\n`\u03c1(M) > 1`, the control-word length needed to reach a state of size `S` is\n`\u0398(log S / log \u03c1(M))`; if `\u03c1(M) = 1` (unipotent) it is `\u0398(S^{1/d})`, where `d` is\nthe size of the largest Jordan block minus one.*",
+    "domains": [
+      "Physics"
+    ],
+    "id": "fd_1556",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "24a12580",
+    "status": "available",
+    "timestamp": "2026-08-18T21:38:36.277699+00:00",
+    "title": "For a generator driven by an integer matrix `M \u2208 GL\u2083(\u2124)` with spectral radius\n`\u03c1(M) > 1`, the control-word length needed to reach a state of size `S` is\n`\u0398(log S / log \u03c1(M))`; if `\u03c1(M) = 1` (unipotent"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "*For every control word `w`, `(applyPath w).2.2 \u2265 2\u00b7|w|\u00b2 + 6\u00b7|w| + 5`, with\nequality exactly for the all-`A` word.*",
+    "domains": [],
+    "id": "fd_1557",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "24a12580",
+    "status": "available",
+    "timestamp": "2026-08-18T21:38:36.490022+00:00",
+    "title": "For every control word `w`, `(applyPath w).2.2 \u2265 2\u00b7|w|\u00b2 + 6\u00b7|w| + 5`, with\nequality exactly for the all-`A` word."
   }
 ];

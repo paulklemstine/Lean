@@ -1,7 +1,7 @@
 import Mathlib
 import Speculative.AbstractAlgebra.PisanoPeriodFactoring
 import Shared.NumberTheory.CarmichaelProof
-import Shared.CarmichaelHelper
+import Shared.NumberTheory.CarmichaelHelpers
 
 /-! # CatalogBuild.Shared.Fib_gcd_identity
 
@@ -124,4 +124,4 @@ theorem fib_composite_test (n : ℕ) (hn : 1 < n) (hn2 : n ≠ 2) (hn5 : n ≠ 5
 
 
 /-- F(4) = 3. -/
-theorem fib_four_val : Nat.fib 4 = 3 := by decide
+theorem fib_four_val : Nat.fib 4 = 3 := by native_decide
