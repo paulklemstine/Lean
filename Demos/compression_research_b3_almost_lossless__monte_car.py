@@ -2,460 +2,391 @@
 Almost-lossless compression beyond the pigeonhole bound
 =======================================================
 
-Numerical demonstrations of every quantitative claim in the accompanying
-paper, using only the Python standard library.
+Numerical demonstration of the results of the accompanying paper.
+
+Everything below is a *finite* computation over the space of all codebooks
+H : A -> [M], enumerated exhaustively where feasible and sampled otherwise.
+No external dependencies; standard library only.
 
 Contents
 --------
-1.  The enumerative epsilon-almost-lossless code: encode, decode, measure.
-2.  The epsilon-relaxed counting bound and its exact rate characterisation.
-3.  The uniform source: tolerating epsilon saves at most log2(1/(1-eps)) bits.
-4.  Birthday bound for random codebooks, and its tightness at q = 2.
-5.  Derandomisation: a successful Monte Carlo codebook never beats the
-    deterministic enumerative code on rate, and loses badly on time.
-6.  Exact decoder step counts: k + 2 versus 2^k (worst case) and
-    (2^k + 1)/2 (average case).
-7.  Parity checksum: every single-bit corruption is detected.
-8.  Block composition: parse-free concatenation, the union bound
-    1 - (1 - eps0)^n <= n*eps, and the exact cost n(k+3) + 1.
+1.  The pigeonhole barrier and its epsilon-relaxed converse.
+2.  Exhaustive verification of the exact marginal count
+        M * #{H : H(p) = H(q)} = M^|A|      (p != q).
+3.  The scanning decoder: exact cost |L|, soundness on typical inputs.
+4.  Exhaustive failure probability vs. the exact closed form
+        1 - (1 - 1/M)^(|S|-1),
+    the union bound (|S|-1)/M and the Bonferroni bound (|S|-1)/(2M).
+5.  Derandomisation: a fixed codebook whose bad set is at most |S|(|S|-1)/M.
+6.  The blocked (product) code: exact cost b|T| versus the flat cost |T|^b,
+    and the union-bound failure probability b(|T|-1)/M.
+7.  The atypical-input loophole (silent corruption) measured exhaustively,
+    and its suppression by an independent checksum to <= 1/K.
+8.  Rate / complexity / safety table for realistic parameters.
 
 Run:  python3 demo.py
 """
 
 from __future__ import annotations
 
+import itertools
 import math
 import random
-from typing import Callable, Dict, List, Optional, Sequence, Tuple
+from fractions import Fraction
+from typing import Callable, Iterator, Optional, Sequence
 
-Bit = int
-Word = List[Bit]
-Message = str
-
-# ---------------------------------------------------------------------------
-# 1. Binary index codec
-# ---------------------------------------------------------------------------
-
-
-def to_bits(k: int, n: int) -> Word:
-    """Little-endian k-bit expansion of n (truncating above 2^k)."""
-    return [(n >> i) & 1 for i in range(k)]
-
-
-def from_bits(w: Sequence[Bit]) -> int:
-    """Read a little-endian bit list as a natural number."""
-    value = 0
-    for i, b in enumerate(w):
-        value += b << i
-    return value
-
-
-def codec_round_trip_check(k: int) -> bool:
-    """fromBits(toBits(k, n)) = n for every n < 2^k."""
-    return all(from_bits(to_bits(k, n)) == n for n in range(2 ** k))
+Codebook = tuple[int, ...]  # H as a tuple: H[x] in [M] for x in range(|A|)
 
 
 # ---------------------------------------------------------------------------
-# 2. The enumerative epsilon-almost-lossless code
+# 0. Utilities
 # ---------------------------------------------------------------------------
 
-
-class EnumerativeCode:
-    """Flag bit + k-bit index inside the typical set S.
-
-    Every codeword has exactly k + 1 bits (fixed rate); messages outside S
-    are sent as the explicit failure marker 0 followed by k zero bits, and
-    the decoder maps every word beginning with 0 to None ("detected
-    failure").  The code is sound: it never returns a wrong message.
-    """
-
-    def __init__(self, typical_set: Sequence[Message], k: int) -> None:
-        if len(typical_set) > 2 ** k:
-            raise ValueError(f"|S| = {len(typical_set)} exceeds 2^k = {2 ** k}")
-        self.k = k
-        self.table: List[Message] = list(typical_set)
-        self.index: Dict[Message, int] = {x: i for i, x in enumerate(self.table)}
-
-    def encode(self, x: Message) -> Word:
-        if x in self.index:
-            return [1] + to_bits(self.k, self.index[x])
-        return [0] + to_bits(self.k, 0)
-
-    def decode(self, w: Sequence[Bit]) -> Optional[Message]:
-        if not w or w[0] == 0:
-            return None
-        idx = from_bits(w[1:])
-        if idx < len(self.table):
-            return self.table[idx]
-        return None
-
-    def decode_instrumented(self, w: Sequence[Bit]) -> Tuple[Optional[Message], int]:
-        """Returns (answer, exact step count).
-
-        One step per index bit, one to detect the end of the index, one for
-        the flag bit's table access.  Cost on a typical message: k + 2.
-        """
-        if not w or w[0] == 0:
-            return (None, 1)
-        rest = w[1:]
-        cost = len(rest) + 1 + 1  # read index bits, end marker, table access
-        idx = from_bits(rest)
-        if idx < len(self.table):
-            return (self.table[idx], cost)
-        return (None, cost)
-
-    def good_set(self, alphabet: Sequence[Message]) -> List[Message]:
-        return [x for x in alphabet if self.decode(self.encode(x)) == x]
-
-    def fail_prob(self, p: Dict[Message, float]) -> float:
-        return sum(w for x, w in p.items() if self.decode(self.encode(x)) != x)
+def all_codebooks(alphabet_size: int, m: int) -> Iterator[Codebook]:
+    """Enumerate all M^|A| codebooks H : A -> [M] as tuples of length |A|."""
+    return itertools.product(range(m), repeat=alphabet_size)
 
 
-# ---------------------------------------------------------------------------
-# 3. Typical sets and the design rule
-# ---------------------------------------------------------------------------
-
-
-def typical_set(p: Dict[Message, float], eps: float) -> List[Message]:
-    """Shortest prefix of the alphabet sorted by decreasing probability whose
-    mass is at least 1 - eps.  This is the (1-eps)-quantile of the source."""
-    ordered = sorted(p, key=lambda x: -p[x])
-    mass, out = 0.0, []
-    for x in ordered:
-        if mass >= 1.0 - eps - 1e-15:
-            break
-        out.append(x)
-        mass += p[x]
-    return out
-
-
-def design_rate(p: Dict[Message, float], eps: float) -> Tuple[int, int]:
-    """Returns (|S|, k) for the design rule: k = ceil(log2 |S|)."""
-    s = typical_set(p, eps)
-    k = max(0, math.ceil(math.log2(len(s)))) if s else 0
-    return len(s), k
-
-
-# ---------------------------------------------------------------------------
-# 4. Random codebooks: the birthday bound
-# ---------------------------------------------------------------------------
-
-
-def collision_prob_exact(q: int, m: int) -> float:
-    """Exact probability that a uniform codebook {1..q} -> {1..m} collides:
-    1 - m^{underline q} / m^q."""
-    if q > m:
-        return 1.0
-    injective = 1.0
-    for i in range(q):
-        injective *= (m - i) / m
-    return 1.0 - injective
-
-
-def collision_prob_bound(q: int, m: int) -> float:
-    """Birthday bound q(q-1)/(2m); exact at q = 2."""
-    return q * (q - 1) / (2 * m)
-
-
-def collision_prob_monte_carlo(q: int, m: int, trials: int, seed: int = 0) -> float:
-    rng = random.Random(seed)
-    bad = 0
-    for _ in range(trials):
-        f = [rng.randrange(m) for _ in range(q)]
-        if len(set(f)) < q:
-            bad += 1
-    return bad / trials
-
-
-# ---------------------------------------------------------------------------
-# 5. Exhaustive search decoding of an unstructured codebook
-# ---------------------------------------------------------------------------
-
-
-def scan_decode(codebook: Sequence[Tuple[Message, Word]], w: Sequence[Bit]
-                ) -> Tuple[Optional[Message], int]:
-    """Left-to-right equality probes; returns (answer, number of probes)."""
-    probes = 0
-    for name, word in codebook:
-        probes += 1
-        if list(word) == list(w):
-            return (name, probes)
-    return (None, probes)
-
-
-def scan_costs(codebook: Sequence[Tuple[Message, Word]]) -> List[int]:
-    return [scan_decode(codebook, word)[1] for _, word in codebook]
-
-
-# ---------------------------------------------------------------------------
-# 6. Parity checksum
-# ---------------------------------------------------------------------------
-
-
-def parity(w: Sequence[Bit]) -> Bit:
-    acc = 0
-    for b in w:
-        acc ^= b
-    return acc
-
-
-def with_parity_encode(code: EnumerativeCode, x: Message) -> Word:
-    w = code.encode(x)
-    return w + [parity(w)]
-
-
-def with_parity_decode(code: EnumerativeCode, w: Sequence[Bit]) -> Optional[Message]:
-    if parity(w) == 1:
-        return None
-    return code.decode(w[:-1])
-
-
-def with_parity_cost(code: EnumerativeCode, x: Message) -> int:
-    """One step per received bit for the checksum, plus the index decode."""
-    w = with_parity_encode(code, x)
-    return len(w) + code.decode_instrumented(code.encode(x))[1]
-
-
-# ---------------------------------------------------------------------------
-# 7. Block composition
-# ---------------------------------------------------------------------------
-
-
-def block_encode(code: EnumerativeCode, v: Sequence[Message]) -> Word:
-    out: Word = []
-    for x in v:
-        out.extend(code.encode(x))
-    return out
-
-
-def block_decode_instrumented(code: EnumerativeCode, n: int, w: Sequence[Bit]
-                              ) -> Tuple[Optional[List[Message]], int]:
-    """Slice into n chunks of k+1 bits and decode each; exact step count."""
-    ell = code.k + 1
-    out: List[Message] = []
-    cost = 0
-    rest = list(w)
-    for _ in range(n):
-        chunk, rest = rest[:ell], rest[ell:]
-        answer, c = code.decode_instrumented(chunk)
-        cost += c + 1  # one slicing step per block
-        if answer is None:
-            return (None, cost)
-        out.append(answer)
-    cost += 1  # final empty-string check
-    return (out, cost)
-
-
-def block_fail_prob(eps0: float, n: int) -> float:
-    return 1.0 - (1.0 - eps0) ** n
-
-
-# ---------------------------------------------------------------------------
-# Demonstrations
-# ---------------------------------------------------------------------------
-
-
-def rule(title: str) -> None:
-    print("\n" + "=" * 74)
+def banner(title: str) -> None:
+    print()
+    print("=" * 78)
     print(title)
-    print("=" * 74)
+    print("=" * 78)
 
 
-def demo_codec() -> None:
-    rule("1.  Binary index codec is exact below 2^k")
-    for k in range(1, 9):
-        assert codec_round_trip_check(k)
-    print("  fromBits(toBits(k, n)) = n verified for all n < 2^k, k = 1..8.")
-    print(f"  Example: toBits(5, 19) = {to_bits(5, 19)}  ->  {from_bits(to_bits(5, 19))}")
+# ---------------------------------------------------------------------------
+# 1. Pigeonhole barrier and the epsilon-relaxed converse
+# ---------------------------------------------------------------------------
+
+def exact_decodable_count(enc: Sequence[int], dec: Sequence[Optional[int]]) -> int:
+    """|{x : dec(enc(x)) = x}|, the set the converse bound controls.
+
+    Theorem (converse): this count is at most M for ANY encoder/decoder pair,
+    because the encoder is injective on that set.
+    """
+    return sum(1 for x, c in enumerate(enc) if dec[c] == x)
 
 
-def demo_scheme() -> None:
-    rule("2.  The enumerative scheme on a skewed source")
-    # Zipf-like source on 32 symbols.
-    alphabet = [f"m{i:02d}" for i in range(32)]
-    raw = {x: 1.0 / (i + 1) ** 1.4 for i, x in enumerate(alphabet)}
-    z = sum(raw.values())
-    p = {x: v / z for x, v in raw.items()}
-
-    print(f"  alphabet size N = {len(alphabet)}, "
-          f"exact code needs ceil(log2 N) = {math.ceil(math.log2(len(alphabet)))} bits")
-    print(f"  {'eps':>6} {'|S|':>5} {'k':>3} {'rate(bits)':>11} "
-          f"{'fail prob':>11} {'steps':>7}")
-    for eps in (0.30, 0.20, 0.10, 0.05, 0.01, 0.0):
-        s, k = design_rate(p, eps)
-        code = EnumerativeCode(typical_set(p, eps), k)
-        fp = code.fail_prob(p)
-        steps = code.decode_instrumented(code.encode(code.table[0]))[1]
-        print(f"  {eps:6.2f} {s:5d} {k:3d} {k + 1:11d} {fp:11.5f} {steps:7d}")
-        assert fp <= eps + 1e-12
-        assert steps == k + 2
-        assert code.good_set(alphabet) == code.table
-        # soundness: an answer is always the true message
-        for x in alphabet:
-            ans = code.decode(code.encode(x))
-            assert ans is None or ans == x
-    print("  Verified for every row: fail <= eps, good set = S, decode cost = k+2,")
-    print("  and soundness (an answer, when given, is always correct).")
+def demo_pigeonhole() -> None:
+    banner("1.  The pigeonhole barrier and its epsilon-relaxed converse")
+    alphabet_size, m = 8, 3
+    rng = random.Random(20260818)
+    worst = 0
+    for _ in range(20000):
+        enc = [rng.randrange(m) for _ in range(alphabet_size)]
+        dec: list[Optional[int]] = [rng.randrange(alphabet_size) for _ in range(m)]
+        worst = max(worst, exact_decodable_count(enc, dec))
+    print(f"  |A| = {alphabet_size}, M = {m}")
+    print(f"  max over 20000 random (encoder, decoder) pairs of")
+    print(f"      |{{x : dec(enc(x)) = x}}|  =  {worst}   (converse bound: <= M = {m})")
+    print("  Exact decoding of ALL of A would need M >= |A| = "
+          f"{alphabet_size}; with M = {m} at most {m} strings can ever be exact.")
+    for eps in (0.01, 0.1, 0.5):
+        s_card = 1000
+        print(f"    to decode a (1-{eps}) fraction of a typical set of size "
+              f"{s_card}: need M >= {(1 - eps) * s_card:.0f}")
 
 
-def demo_uniform_bound() -> None:
-    rule("3.  Uniform source: error tolerance saves at most log2(1/(1-eps)) bits")
-    n_sym = 1024
-    print(f"  {'eps':>6} {'saving (bits)':>15} {'(1-eps)N':>12} {'min t+1':>9}")
-    for eps in (0.0, 0.01, 0.05, 0.10, 0.25, 0.50):
-        saving = math.log2(1.0 / (1.0 - eps))
-        needed = math.ceil(math.log2((1 - eps) * n_sym))
-        print(f"  {eps:6.2f} {saving:15.4f} {(1 - eps) * n_sym:12.1f} {needed:9d}")
-    print("  At eps = 1% the entire benefit of error tolerance is 0.0145 bits:")
-    print("  the pigeonhole bound is dented, not broken.  Real gains come from")
-    print("  non-uniformity, where the (1-eps)-quantile is exponentially smaller.")
+# ---------------------------------------------------------------------------
+# 2. The exact marginal count  M * #{H : H p = H q} = M^|A|
+# ---------------------------------------------------------------------------
+
+def collision_count(alphabet_size: int, m: int, p: int, q: int) -> int:
+    """#{H : A -> [M] with H(p) = H(q)}, by exhaustive enumeration."""
+    return sum(1 for h in all_codebooks(alphabet_size, m) if h[p] == h[q])
 
 
-def demo_exact_characterisation() -> None:
-    rule("4.  Exact rate characterisation and the one-codeword price of detection")
-    print("  A sound code of length <= t with good set S exists iff")
-    print("     |S| + 2 <= 2^(t+1)   (S a proper subset), or")
-    print("     |S| + 1 <= 2^(t+1)   (S the whole alphabet).")
-    print(f"  {'t':>3} {'short strings':>14} {'max |S| (partial)':>19} {'max |S| (total)':>17}")
-    for t in range(1, 9):
-        strings = 2 ** (t + 1) - 1
-        print(f"  {t:3d} {strings:14d} {2 ** (t + 1) - 2:19d} {strings:17d}")
-    print("  The gap of exactly one entry is the codeword reserved for saying 'failed'.")
+def demo_marginal() -> None:
+    banner("2.  Exact marginal count:  M * #{H : H(p) = H(q)} = M^|A|")
+    print(f"  {'|A|':>4} {'M':>3} {'#collisions':>12} {'M*#':>12} {'M^|A|':>12}  ok")
+    for alphabet_size in (4, 5, 6):
+        for m in (2, 3, 4):
+            c = collision_count(alphabet_size, m, 0, 1)
+            lhs, rhs = m * c, m ** alphabet_size
+            print(f"  {alphabet_size:>4} {m:>3} {c:>12} {lhs:>12} {rhs:>12}"
+                  f"  {'YES' if lhs == rhs else 'NO'}")
+    print("  => a random codebook collides on a fixed pair with probability")
+    print("     exactly 1/M.  This single identity carries the whole argument.")
 
 
-def demo_birthday() -> None:
-    rule("5.  Birthday bound for random codebooks (tight at q = 2)")
-    print(f"  {'q':>4} {'m':>7} {'exact':>10} {'bound':>10} {'sampled':>10}")
-    for q, m in ((2, 16), (2, 256), (4, 256), (8, 256), (16, 1024), (32, 4096)):
-        exact = collision_prob_exact(q, m)
-        bound = collision_prob_bound(q, m)
-        samp = collision_prob_monte_carlo(q, m, trials=40000, seed=q * 7 + m)
-        print(f"  {q:4d} {m:7d} {exact:10.5f} {bound:10.5f} {samp:10.5f}")
-        assert exact <= bound + 1e-12
-    print("  At q = 2 the bound is met with equality: exactly m of the m^2")
-    print("  codebooks collide, so the collision probability is exactly 1/m.")
+# ---------------------------------------------------------------------------
+# 3. The scanning decoder
+# ---------------------------------------------------------------------------
+
+def scanning_decode(candidates: Sequence[int], h: Codebook,
+                    c: int) -> tuple[Optional[int], int]:
+    """Return (output, cost).
+
+    Scan the candidate list once, keeping every y with H(y) = c.  Output y if
+    there is exactly one match, otherwise None (an explicit, detected failure).
+    Cost = one hash comparison per candidate = len(candidates), always.
+    """
+    matches: list[int] = []
+    cost = 0
+    for y in candidates:
+        cost += 1
+        if h[y] == c:
+            matches.append(y)
+    return (matches[0] if len(matches) == 1 else None), cost
+
+
+def demo_decoder() -> None:
+    banner("3.  The scanning decoder: exact cost, and soundness on typical inputs")
+    alphabet_size, m = 6, 3
+    typical = [0, 1, 2]
+    h: Codebook = tuple(y % 3 for y in range(alphabet_size))
+    out, cost = scanning_decode(typical, h, h[0])
+    print(f"  |A| = {alphabet_size}, S = {typical}, H(y) = y mod 3")
+    print(f"  decode(H(0)) = {out}, cost = {cost}   (theory: cost = |S| = {len(typical)})")
+
+    costs = {scanning_decode(typical, hh, c)[1]
+             for hh in all_codebooks(alphabet_size, m) for c in range(m)}
+    print(f"  set of costs over ALL {m ** alphabet_size} codebooks and all "
+          f"codewords: {costs}  (a single value: the cost is exact)")
+
+    violations = 0
+    for hh in all_codebooks(alphabet_size, m):
+        for x in typical:
+            out, _ = scanning_decode(typical, hh, hh[x])
+            if out is not None and out != x:
+                violations += 1
+    print(f"  soundness on typical inputs: confident-and-wrong outputs = "
+          f"{violations}  (theory: 0)")
+
+
+# ---------------------------------------------------------------------------
+# 4. Failure probability: measured, exact formula, and the two bounds
+# ---------------------------------------------------------------------------
+
+def failure_probability_exhaustive(alphabet_size: int, typical: Sequence[int],
+                                   x: int, m: int) -> Fraction:
+    """Exact fraction of codebooks under which some other typical string
+    collides with x."""
+    bad = 0
+    for h in all_codebooks(alphabet_size, m):
+        if any(h[y] == h[x] for y in typical if y != x):
+            bad += 1
+    return Fraction(bad, m ** alphabet_size)
+
+
+def failure_probability_closed_form(k: int, m: int) -> Fraction:
+    """1 - (1 - 1/M)^k, the exact failure probability of uniform random hashing
+    against k competitors."""
+    return 1 - Fraction(m - 1, m) ** k
+
+
+def demo_failure_probability() -> None:
+    banner("4.  Failure probability: exhaustive vs. exact formula vs. bounds")
+    alphabet_size = 6
+    typical = [0, 1, 2]
+    x = 0
+    k = len(typical) - 1
+    print(f"  |A| = {alphabet_size}, S = {typical}, x = {x}, k = |S|-1 = {k}")
+    print(f"  {'M':>3} {'measured':>12} {'1-(1-1/M)^k':>14} {'union k/M':>12}"
+          f" {'Bonferroni':>12}  sandwiched")
+    for m in (2, 3, 4, 8, 16):
+        meas = failure_probability_exhaustive(alphabet_size, typical, x, m)
+        exact = failure_probability_closed_form(k, m)
+        union = Fraction(k, m)
+        bonf = Fraction(k, 2 * m)
+        ok = (bonf <= meas <= union) and (meas == exact)
+        print(f"  {m:>3} {str(meas):>12} {str(exact):>14} {str(union):>12}"
+              f" {str(bonf):>12}  {'YES' if ok else 'NO'}")
+    print("  => the closed form is exact; the union bound and the Bonferroni")
+    print("     lower bound are each tight to within a factor of two.")
+    print()
+    print("  Rate consequence (M >= (|S|-1)/eps gives success >= 1-eps):")
+    for eps in (1e-3, 1e-6, 1e-12):
+        s_card = 2 ** 20
+        m_needed = (s_card - 1) / eps
+        print(f"    |S| = 2^20, eps = {eps:g}:  log2 M >= {math.log2(m_needed):.1f} bits"
+              f"   (= log2|S| + log2(1/eps) = {20 + math.log2(1 / eps):.1f})")
+
+
+# ---------------------------------------------------------------------------
+# 5. Derandomisation
+# ---------------------------------------------------------------------------
+
+def bad_strings(typical: Sequence[int], h: Codebook) -> list[int]:
+    """Typical strings that a FIXED codebook fails to separate."""
+    return [x for x in typical if any(h[y] == h[x] for y in typical if y != x)]
 
 
 def demo_derandomisation() -> None:
-    rule("6.  Derandomisation: random codebooks buy no rate, cost exponential time")
-    k = 10
-    m = 2 ** k
-    rng = random.Random(2026)
-    size = 20  # typical-set size; the birthday bound is well below 1 here
-    tries = 0
-    while tries < 1000:
-        tries += 1
-        f = [rng.randrange(m) for _ in range(size)]
-        if len(set(f)) == size:
-            break
-    print(f"  rate k = {k}, |S| = {size}: a collision-free random codebook was")
-    print(f"  found after {tries} draw(s); the birthday bound predicts collision")
-    print(f"  probability <= {collision_prob_bound(size, m):.4f} per draw")
-    print(f"  (exact: {collision_prob_exact(size, m):.4f}).")
-    print(f"  Success forces |S| <= 2^k = {m}: exactly the counting condition the")
-    print("  deterministic enumerative code is designed from -- zero rate advantage.")
-    print(f"  Deterministic decode cost: {k + 2} steps, independent of |S|.")
-    print(f"  Searching this codebook: up to {size} probes, {(size + 1) / 2:.1f} on")
-    print(f"  average.  At full rate (|S| = 2^k = {m}) the search costs up to {m}")
-    print(f"  probes and {(m + 1) / 2:.1f} on average: a {m / (k + 2):.0f}x penalty.")
+    banner("5.  Derandomisation: a fixed codebook with a provably small bad set")
+    alphabet_size = 6
+    typical = [0, 1, 2, 3]
+    for m in (3, 4, 5, 8):
+        best = min(all_codebooks(alphabet_size, m),
+                   key=lambda h: len(bad_strings(typical, h)))
+        nbad = len(bad_strings(typical, best))
+        bound = len(typical) * (len(typical) - 1) / m
+        print(f"  M = {m:>2}:  min |Bad(S,H)| = {nbad}   "
+              f"averaging bound |S|(|S|-1)/M = {bound:.2f}   "
+              f"{'satisfied' if nbad <= bound else 'VIOLATED'}")
+    print("  Note: with M < |S| the bad set can be made small but NEVER empty --")
+    print("  an empty bad set would contradict the converse counting bound.")
 
 
-def demo_complexity() -> None:
-    rule("7.  Exact decoder step counts: k + 2 versus 2^k")
-    print(f"  {'k':>3} {'enum steps':>11} {'search worst':>13} {'search avg':>12} "
-          f"{'speed-up':>10}")
-    for k in range(1, 13):
-        table = [f"x{i}" for i in range(2 ** k)]
-        code = EnumerativeCode(table, k)
-        enum_cost = code.decode_instrumented(code.encode(table[-1]))[1]
-        assert enum_cost == k + 2
-        if k <= 9:  # explicit scan only for small k
-            codebook = [(x, code.encode(x)) for x in table]
-            costs = scan_costs(codebook)
-            worst, total = max(costs), sum(costs)
-            n = len(costs)
-            assert worst == n
-            assert 2 * total == n * (n + 1)
-            avg = total / n
+# ---------------------------------------------------------------------------
+# 6. The blocked (product) code
+# ---------------------------------------------------------------------------
+
+def blocked_decode(block_typical: Sequence[int],
+                   h: Callable[[int, int], int],
+                   received: Sequence[int]) -> tuple[Optional[tuple[int, ...]], int]:
+    """Decode each block independently with the scanning decoder.
+
+    Succeed only if EVERY block decodes unambiguously.  Cost = b * |T| exactly.
+    """
+    out: list[int] = []
+    cost = 0
+    ok = True
+    for i, c in enumerate(received):
+        matches: list[int] = []
+        for y in block_typical:
+            cost += 1
+            if h(i, y) == c:
+                matches.append(y)
+        if len(matches) == 1:
+            out.append(matches[0])
         else:
-            n = 2 ** k
-            worst, avg = n, (n + 1) / 2
-        print(f"  {k:3d} {enum_cost:11d} {worst:13d} {avg:12.1f} "
-              f"{worst / enum_cost:10.1f}x")
-    print("  Verified for k <= 9 by explicit scan: worst case = |codebook| probes")
-    print("  and the total over all messages is exactly n(n+1)/2.")
-    print("  Unbounded speed-up: for every M, k = 4M + 8 gives M(k+3) < 2^k.")
-    for mfac in (1, 5, 20, 100):
-        k = 4 * mfac + 8
-        assert mfac * (k + 3) < 2 ** k
-    print("  Checked for M = 1, 5, 20, 100.")
+            ok = False
+    return (tuple(out) if ok else None), cost
 
 
-def demo_checksum() -> None:
-    rule("8.  Parity checksum: every single-bit corruption is detected")
-    table = [f"s{i}" for i in range(16)]
-    k = 4
-    code = EnumerativeCode(table, k)
-    detected = 0
-    total = 0
-    for x in table:
-        w = with_parity_encode(code, x)
-        assert parity(w) == 0
-        assert with_parity_decode(code, w) == x
-        for i in range(len(w)):
-            corrupted = list(w)
-            corrupted[i] ^= 1
-            total += 1
-            if with_parity_decode(code, corrupted) is None:
-                detected += 1
-    print(f"  {total} single-bit corruptions tried, {detected} detected "
-          f"({100.0 * detected / total:.1f}%).")
-    print(f"  Codeword length with checksum: {k + 2} bits (index, flag, parity).")
-    print(f"  Total decode cost: {with_parity_cost(code, table[0])} steps "
-          f"= 2k + 4 = {2 * k + 4}.")
+def demo_blocking() -> None:
+    banner("6.  Blocking: exponential search becomes linear")
+    block_typical = [0, 1, 2, 3]
+    t = len(block_typical)
+    print(f"  |T| = {t}")
+    print(f"  {'b':>3} {'blocked cost b|T|':>18} {'flat cost |T|^b':>18} {'speedup':>14}")
+    for b in (1, 2, 3, 5, 10, 20, 50):
+        print(f"  {b:>3} {b * t:>18} {t ** b:>18} {t ** b / (b * t):>14.3e}")
+    print("  (theorem: b|T| < |T|^b for |T| >= 2, b >= 3)")
+
+    print()
+    print("  Measured decoder cost of the blocked decoder (must equal b*|T|):")
+    m = 4096
+    rng = random.Random(1234)
+    for b in (2, 3, 6):
+        table = {(i, y): rng.randrange(m) for i in range(b) for y in range(t)}
+        h = lambda i, y: table[(i, y)]
+        x = tuple(rng.choice(block_typical) for _ in range(b))
+        received = [h(i, x[i]) for i in range(b)]
+        out, cost = blocked_decode(block_typical, h, received)
+        print(f"    b = {b}:  cost = {cost} (= b|T| = {b * t}), "
+              f"output {'== x' if out == x else out}")
+
+    print()
+    print("  Failure probability, measured by sampling vs. union bound b(|T|-1)/M:")
+    trials = 200000
+    for b, m in ((3, 64), (5, 128), (10, 512)):
+        fails = 0
+        for _ in range(trials):
+            table = {(i, y): rng.randrange(m) for i in range(b) for y in range(t)}
+            h = lambda i, y: table[(i, y)]
+            x = tuple(rng.choice(block_typical) for _ in range(b))
+            received = [h(i, x[i]) for i in range(b)]
+            out, _ = blocked_decode(block_typical, h, received)
+            if out != x:
+                fails += 1
+        bound = b * (t - 1) / m
+        print(f"    b = {b:>2}, M = {m:>3}:  measured {fails / trials:.5f}   "
+              f"bound {bound:.5f}   {'OK' if fails / trials <= bound else 'VIOLATED'}")
+    print("  Note: an output is NEVER wrong here, only absent -- the blocked")
+    print("  decoder is sound on typical inputs, block by block.")
 
 
-def demo_blocks() -> None:
-    rule("9.  Block composition: union bound and exact linear-time cost")
-    table = [f"b{i}" for i in range(8)]
-    k = 3
-    code = EnumerativeCode(table, k)
-    rng = random.Random(11)
-    for n in (1, 2, 5, 10, 25):
-        v = [rng.choice(table) for _ in range(n)]
-        w = block_encode(code, v)
-        out, cost = block_decode_instrumented(code, n, w)
-        assert out == v
-        assert len(w) == n * (k + 1)
-        assert cost == n * (k + 3) + 1
-    print(f"  {'n':>4} {'bits sent':>10} {'decode steps':>13} {'= n(k+3)+1':>12}")
-    for n in (1, 2, 5, 10, 25):
-        print(f"  {n:4d} {n * (k + 1):10d} {n * (k + 3) + 1:13d} "
-              f"{n * (k + 3) + 1:12d}")
-    print("\n  Union bound  1 - (1 - eps0)^n  <=  n * eps0 :")
-    print(f"  {'n':>5} {'eps0=0.01 exact':>17} {'n*eps0':>9} {'eps0=0.001 exact':>18} "
-          f"{'n*eps0':>9}")
-    for n in (1, 5, 10, 50, 100):
-        e1, e2 = 0.01, 0.001
-        f1, f2 = block_fail_prob(e1, n), block_fail_prob(e2, n)
-        assert f1 <= n * e1 + 1e-12 and f2 <= n * e2 + 1e-12
-        print(f"  {n:5d} {f1:17.6f} {n * e1:9.3f} {f2:18.6f} {n * e2:9.4f}")
-    print("  The union bound is never violated (Bernoulli), and it is tight to")
-    print("  first order in eps0: the loss of block composition is 1-(1-eps0)^n.")
+# ---------------------------------------------------------------------------
+# 7. The atypical loophole and the universal checksum
+# ---------------------------------------------------------------------------
 
+def demo_silent_corruption() -> None:
+    banner("7.  Silent corruption on ATYPICAL inputs, and the checksum that "
+           "kills it")
+    alphabet_size = 6
+    typical = [1, 2]          # the decoder's candidate list
+    x = 0                      # the transmitted string -- ATYPICAL
+    m = 4
+    total = m ** alphabet_size
+    silent = 0
+    for h in all_codebooks(alphabet_size, m):
+        out, _ = scanning_decode(typical, h, h[x])
+        if out is not None and out != x:
+            silent += 1
+    p_silent = Fraction(silent, total)
+    print(f"  |A| = {alphabet_size}, candidate list = {typical}, transmitted "
+          f"x = {x} (atypical), M = {m}")
+    print(f"  P[confident WRONG output, no checksum] = {p_silent} "
+          f"= {float(p_silent):.4f}")
+    print("  This is the loophole: typicality-based soundness says nothing here.")
+    print()
+    print("  Now append an independent random checksum C : A -> [K] and accept")
+    print("  the candidate y only if C(y) equals the received checksum.")
+    print(f"  {'K':>3} {'measured':>12} {'bound 1/K':>12}  ok")
+    for k in (2, 4, 8):
+        silent_pairs = 0
+        for h in all_codebooks(alphabet_size, m):
+            out, _ = scanning_decode(typical, h, h[x])
+            if out is None or out == x:
+                continue
+            # candidate y0 = out is determined by H; a silent corruption now
+            # requires C(y0) = C(x), i.e. one collision of the checksum.
+            silent_pairs += k ** (alphabet_size - 1)
+        measured = Fraction(silent_pairs, total * k ** alphabet_size)
+        bound = Fraction(1, k)
+        print(f"  {k:>3} {str(measured):>12} {str(bound):>12}  "
+              f"{'YES' if measured <= bound else 'NO'}")
+    print("  => exactly the 1/K scaling, for EVERY source string and for ANY")
+    print("     inner decoder whatsoever (the bound is proved fibrewise:")
+    print("     fixing the inner randomness determines the candidate, after")
+    print("     which only the independent checksum matters).")
+
+
+# ---------------------------------------------------------------------------
+# 8. The composite scheme at realistic parameters
+# ---------------------------------------------------------------------------
+
+def demo_composite_table() -> None:
+    banner("8.  The composite scheme (blocks + checksum) at realistic parameters")
+    print("  Encoder: b block hashes into [M], plus one global checksum in [K].")
+    print("  Decoder: blockwise scan, unanimity test, then checksum test.")
+    print("  Cost: exactly b|T| + 1 comparisons.")
+    print()
+    header = (f"  {'|T|':>8} {'b':>4} {'eps':>8} {'K':>10} {'log2 M':>8}"
+              f" {'rate (bits)':>12} {'cost':>12} {'flat cost':>12} {'P[lie]':>10}")
+    print(header)
+    for t_log, b, eps, k in ((20, 50, 1e-9, 2 ** 32),
+                             (20, 50, 1e-12, 2 ** 64),
+                             (10, 100, 1e-9, 2 ** 32),
+                             (16, 8, 1e-6, 2 ** 32)):
+        t = 2 ** t_log
+        m = b * (t - 1) / eps
+        rate = b * math.log2(m) + math.log2(k)
+        cost = b * t + 1
+        flat = t ** b
+        print(f"  {'2^' + str(t_log):>8} {b:>4} {eps:>8.0e} {'2^' + str(k.bit_length() - 1):>10}"
+              f" {math.log2(m):>8.1f} {rate:>12.0f} {cost:>12.3e}"
+              f" {'2^' + str(round(b * t_log)):>12} {1 / k:>10.2e}")
+    print()
+    print("  Read the last two columns: the blocked decoder does ~10^7-10^9")
+    print("  comparisons where the flat random code would need 2^1000.")
+
+
+# ---------------------------------------------------------------------------
 
 def main() -> None:
-    print(__doc__)
-    demo_codec()
-    demo_scheme()
-    demo_uniform_bound()
-    demo_exact_characterisation()
-    demo_birthday()
+    demo_pigeonhole()
+    demo_marginal()
+    demo_decoder()
+    demo_failure_probability()
     demo_derandomisation()
-    demo_complexity()
-    demo_checksum()
-    demo_blocks()
-    rule("All demonstrations completed; every assertion above passed.")
+    demo_blocking()
+    demo_silent_corruption()
+    demo_composite_table()
+    print()
+    print("All demonstrations completed.")
 
 
 if __name__ == "__main__":
