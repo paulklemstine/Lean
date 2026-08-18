@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "37827e5f",
-      "domain": "Probability",
-      "key_insight": "# Future Directions — Wigner Semicircle Universality\n\nThis file closes the current research cycle. Section 0 records **what the cycle\nsettled** (all of it formally proved, `sorry`-free); the remaining",
-      "quality_score": 0.85,
-      "sorry_count": 0,
-      "theorem_count": 21,
-      "timestamp": "2026-08-16T13:45:35",
-      "title": "Wigner-Semicircle: Universality of the Spectral Distribution"
-    },
-    {
       "cycle_id": "be4e28d2",
       "domain": "Shared",
       "key_insight": "# Future Directions (thread th_16c8d9ad, cycle 1)\n\nThis cycle settled three of the five inherited conjectures in sharp form: the\nalmost-Hopf-fibre stability conjecture (true, but with the wrong expone",
@@ -499,19 +489,19 @@
       "theorem_count": 59,
       "timestamp": "2026-08-18T13:57:55",
       "title": "Compression Research A1: Price of universality — minimax redundancy of universal decompressors"
+    },
+    {
+      "cycle_id": "13fee392",
+      "domain": "MachineLearning",
+      "key_insight": "# Future directions — bold, testable conjectures\n\nDerived from the analysis and adversarial review of the results now formalised\nin `Catalog/MachineLearning/BonferroniMarginals/`\n(`Core`, `Rigidity`,",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 97,
+      "timestamp": "2026-08-18T15:47:12",
+      "title": "The Bonferroni machinery"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "8a90ae7b",
-      "domain": "Shared",
-      "key_insight": "# Future Directions\n\nThis file continues the research thread on the Chebotarev geodesic theorem in the non-split\ncase.  It first records the fate of the five conjectures C1–C5 of the previous cycle —",
-      "quality_score": 0.640478157722513,
-      "sorry_count": 0,
-      "theorem_count": 659,
-      "timestamp": "2026-08-07T13:46:54",
-      "title": "Close Proofs: ArXiv paper: Chebotarev geodesic theorem: non-split case"
-    },
     {
       "cycle_id": "09b12514",
       "domain": "Combinatorics",
@@ -2501,27 +2491,19 @@
       "theorem_count": 59,
       "timestamp": "2026-08-18T13:57:55",
       "title": "Compression Research A1: Price of universality — minimax redundancy of universal decompressors"
+    },
+    {
+      "cycle_id": "13fee392",
+      "domain": "MachineLearning",
+      "key_insight": "# Future directions — bold, testable conjectures\n\nDerived from the analysis and adversarial review of the results now formalised\nin `Catalog/MachineLearning/BonferroniMarginals/`\n(`Core`, `Rigidity`,",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 97,
+      "timestamp": "2026-08-18T15:47:12",
+      "title": "The Bonferroni machinery"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "921a0e7b",
-      "domain": "Computation",
-      "name": "eval_fiff",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "921a0e7b",
-      "domain": "Computation",
-      "name": "sat_tarskiAx_iff",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "33519cdb",
-      "domain": "MachineLearning",
-      "name": "product_bound_does_not_imply_sum_bound",
-      "quality": 0.78
-    },
     {
       "cycle_id": "33519cdb",
       "domain": "MachineLearning",
@@ -2803,9 +2785,27 @@
       "domain": "Logic",
       "name": "fsm_price_rate_tendsto_zero",
       "quality": 0.84
+    },
+    {
+      "cycle_id": "13fee392",
+      "domain": "MachineLearning",
+      "name": "mem_cover",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "13fee392",
+      "domain": "MachineLearning",
+      "name": "mult_pos_iff",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "13fee392",
+      "domain": "MachineLearning",
+      "name": "one_le_mult_of_mem_cover",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-18T13:57:55",
+  "last_updated": "2026-08-18T15:47:12",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hupper⟩)",
@@ -3517,12 +3517,6 @@
     ],
     "MachineLearning": [
       {
-        "cycle_id": "6225a932",
-        "quality": 0.627125,
-        "theorems": 82,
-        "title": "Deepening: The Fourier Analysis of Collatz: Spectral Gaps in the 3n+1 Map"
-      },
-      {
         "cycle_id": "9cee3a4c",
         "quality": 0.627125,
         "theorems": 122,
@@ -3575,6 +3569,12 @@
         "quality": 0.78,
         "theorems": 70,
         "title": "Open here; the multiplicative bound `|supp f| · |supp f̂| ≥ p` is proved"
+      },
+      {
+        "cycle_id": "13fee392",
+        "quality": 0.82,
+        "theorems": 97,
+        "title": "The Bonferroni machinery"
       }
     ],
     "Novelty": [
