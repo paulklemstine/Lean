@@ -1,176 +1,96 @@
-# Computational Evidence — Almost-Lossless / Monte-Carlo Compression
+# Computational evidence — almost-lossless / Monte-Carlo compression
 
-*Exploratory numerics used to shape the conjectures before formalization.  These
-are ad-hoc simulations, **not** verified computations; only the Lean files in
-`Catalog/Bridges/AlmostLossless*.lean` are machine-checked.*
+All numbers below were produced by exhaustive enumeration in Lean (`#eval` over
+lists of `ℕ` implementing arithmetic mod `p`), before the corresponding theorems
+were formalised.  Every claim that survived is now a `sorry`-free theorem in
+`Catalog/Logic/AlmostLossless/`; the two claims that are *exactly* reproduced by
+the theorems are flagged below.
 
-## 1. The first-moment bound `E_k[P(fail)] ≤ |S|/M`
+## 1. Pairwise collision fraction of the inner-product family
 
-Family: `h_{a,b}(x) = ((a·x + b) mod p) mod M` on `Z_p`, `p = 1009` (a standard
-2-universal family), source uniform on a random typical set `S` with `|S| = 30`,
-400 random keys per row, failure = "`x` shares its hash with another `S`-element".
+Family: seed `a ∈ (ZMod p)^k`, hash `x ↦ ⟨a,x⟩ ∈ ZMod p`.
+For a fixed pair `x ≠ y` we counted the seeds with `⟨a,x⟩ = ⟨a,y⟩`.
 
-| `M` | measured avg `P(fail)` | best key found | predicted bound `|S|/M` | silent errors on codebook |
-|-----|------------------------|----------------|--------------------------|---------------------------|
-| 32  | 0.5929 | 0.3333 | 0.9375 | 0 |
-| 64  | 0.3611 | 0.0000 | 0.4688 | 0 |
-| 128 | 0.1854 | 0.0000 | 0.2344 | 0 |
-| 256 | 0.0805 | 0.0000 | 0.1172 | 0 |
-| 512 | 0.0302 | 0.0000 | 0.0586 | 0 |
+| `p` | `k` | `x` | `y` | colliding seeds / all seeds | fraction |
+|----|----|------|------|------|------|
+| 7 | 2 | (1,0) | (0,0) | 7 / 49 | 1/7 |
+| 7 | 3 | (3,1,1) | (0,2,5) | 49 / 343 | 1/7 |
+| 5 | 2 | (2,4) | (1,1) | 5 / 25 | 1/5 |
+| 11 | 2 | (3,4) | (7,1) | 11 / 121 | 1/11 |
 
-Observations that drove the formalization:
+The fraction is **exactly** `1/p` in every case — the family is not merely
+2-universal but pairwise independent.  Formalised as
+`AlmostLossless.twoUniversal_dotHash` (proved through
+`AlmostLossless.card_ker_mul_card_eq`, which gives the exact fibre count).
 
-* the measured average is always below `|S|/M` and within a factor ≈ 2 of it, so
-  the bound proved in `sum_collision_mass_le` is the right order and not
-  improvable by more than a constant;
-* the *best* key is far better than the average — the derandomized statement
-  `exists_good_key` is therefore not wasteful;
-* **zero** silent errors on codebook symbols in every run, for every key,
-  including the badly-parameterised `M = 32` row.  This is what suggested that
-  "no silent corruption on the codebook" is *unconditional* rather than
-  probabilistic — it is proved as `decodeList_never_wrong_on_codebook`
-  (the argument: `x` itself is always among the matches, so a unique match must
-  be `x`).
+## 2. Probability that a random seed is injective on a typical set `T`
 
-## 2. Decoder cost: coordinatewise versus one-shot
+| `p` | `k` | `|T|` | good seeds / all | failure prob. | union bound `|T|(|T|-1)/p` | random-function birthday value |
+|----|----|-----|------|------|------|------|
+| 11 | 2 | 3 | 90 / 121 | 0.256 | 0.545 | 0.256 |
+| 11 | 2 | 4 | 80 / 121 | 0.339 | > 1 | 0.459 |
+| 11 | 2 | 5 | 40 / 121 | 0.669 | > 1 | 0.656 |
+| 13 | 3 | 5 | 888 / 2197 | 0.596 | > 1 | 0.584 |
 
-Codebook size `n` per block, `b` blocks.  One-shot random coding scans the
-product codebook (`n^b` entries); the block decoder scans `b·n`.
+Observations:
 
-| `n` | `b` | block cost `b·n` | one-shot cost `n^b` | ratio |
-|-----|-----|------------------|----------------------|-------|
-| 2 | 3 | 6 | 8 | 1.33 |
-| 2 | 10 | 20 | 1 024 | 51.2 |
-| 4 | 5 | 20 | 1 024 | 51.2 |
-| 4 | 10 | 40 | 1 048 576 | 2.6·10⁴ |
-| 16 | 10 | 160 | 1.1·10¹² | 6.9·10⁹ |
+* the union bound `AlmostLossless.collisionProb_le` is always valid but loose by
+  a factor ≈ 2 already at `|T| = 3`;
+* the empirical failure probability tracks the *birthday* value
+  `1 - ∏_{i<|T|}(1 - i/p)` closely, i.e. the quadratic dependence on `|T|` is
+  genuine and not an artefact of the union bound.  This motivated the
+  "birthday penalty" statement `AlmostLossless.exists_quadratic_rate_scanScheme`
+  (range of size `≍ |T|²`).
 
-The smallest case with a strict gap for `n = 2` is `b = 3` (6 < 8), which is
-exactly the hypothesis range of the formal statement `linear_lt_pow`
-(`2 ≤ n`, `3 ≤ b`).  For `b = 2, n = 2` one has `b·n = 4 = n^b`, so the strict
-inequality genuinely needs `b ≥ 3`; this counterexample hunt fixed the
-hypotheses of the theorem.
+## 3. Exact structure of the bad-seed set (`k = 2`)
 
-## 3. Counterexample hunt on the converse
+Counting the distinct **projective directions** `d` of the difference set of
+`T` (normalising each nonzero difference to `[1, *]` or `[0, 1]`):
 
-For the relaxed pigeonhole bound we tested `P(success) ≤ |Code|·p_max` on 20 000
-random instances (random distribution, random encoder, random partial decoder,
-`2 ≤ |α| ≤ 8`, `1 ≤ |Code| ≤ 4`): **0 violations, 922 equality cases**.  Equality
-occurs when the code space is used injectively on `|Code|` symbols all of
-maximal probability.  This equality case is why the
-converse is stated with `maxMass` (min-entropy) rather than with a cruder
-`|Code|/|α|` factor.
+| `p` | `T` | `d` | predicted bad seeds `1 + d(p-1)` | measured bad seeds |
+|----|-----|----|------|------|
+| 11 | {(1,0),(0,1),(2,3)} | 3 | 31 | 31 |
+| 11 | {(1,0),(0,1),(2,3),(5,7)} | 4 | 41 | 41 |
+| 11 | {(1,0),(0,1),(2,3),(5,7),(9,4)} | 8 | 81 | 81 |
 
----
+Exact agreement in all cases.  This is now the theorem
+`AlmostLossless.exact_card_collides_planar` (bad seeds form a pencil of `d`
+lines through the origin), together with the machine-checked instance
+`AlmostLossless.example_card_collides` and its independent `decide`
+cross-check `AlmostLossless.example_card_collides_bruteForce` (31 of 121).
 
-# Cycle 2 evidence (sub-linear decoding, sharp silent errors, higher independence)
+In dimension 3 the analogous count is *not* `1 + d(p^{k-1}-1)`
+(`p = 13, k = 3, |T| = 5`: `d = 20`, measured bad seeds `1309`, formula would
+give `1 + 20·168 = 3361 > p^k`), because three or more hyperplanes through the
+origin intersect in more than the origin.  Hence the theorem is stated for
+`k = 2` only; the higher-dimensional case needs inclusion–exclusion over the
+lattice of subspaces spanned by the directions (see `FUTURE_DIRECTIONS.md`).
 
-*Again ad-hoc simulations used to shape the conjectures; only the Lean files are
-machine-checked.*
+## 4. Expected decoder work of the bucketed decoder
 
-## 4. Sharp silent-error bound (Conjecture 2 → `exists_sharp_almost_lossless_scheme`)
+Average, over all `p^k` seeds, of the size of the bucket containing a fixed
+typical word `x` (this is exactly the number of candidate tests the bucketed
+decoder performs):
 
-Family `h_{a,b}(x) = ((a·x + b) mod 1009) mod M`, 200 random keys, codebook
-`|S| = 30`, mass `δ` placed uniformly outside the codebook.
+| `p` | `k` | `|T|` | measured average | `1 + (|T|-1)/p` |
+|----|----|-----|------|------|
+| 11 | 2 | 5 | 165/121 = 1.3636 | 1 + 4/11 = 1.3636 |
+| 13 | 3 | 5 | 2873/2197 = 1.3077 | 1 + 4/13 = 1.3077 |
 
-| `M` | `δ` | measured avg silent mass | sharp bound `2δ|S|/M` | old bound `|S|/M` |
-|-----|-----|--------------------------|-----------------------|-------------------|
-| 64  | 0.10 | 0.0358 | 0.0938 | 0.4688 |
-| 128 | 0.10 | 0.0188 | 0.0469 | 0.2344 |
-| 256 | 0.02 | 0.0017 | 0.0047 | 0.1172 |
+The bound `AlmostLossless.avg_decodeCost_bucketed_le` is **attained with
+equality** for this family — expected decoder work is `1 + (|T|-1)/m₁` candidate
+tests, i.e. essentially constant once the bucket count exceeds `|T|`, versus
+`|T|` for the naive scan.
 
-The measured silent mass tracks `δ|S|/M`, i.e. it is smaller than the *failure*
-mass by a factor `δ`, exactly as the sharpened theorem asserts; the old bound
-`|S|/M` overestimates it by more than an order of magnitude.  This is what
-motivated instantiating the free region `A` of `sum_collision_mass_le` at `Sᶜ`
-and proving the two-sided derandomization `exists_doubly_good_key`.
+## 5. Counterexample hunt
 
-## 5. Factorial moments beat Markov (Conjecture 3 → `exists_list_scheme_exponential`)
-
-Fully random hash values (the `T`-wise independent extreme, formalized as
-`fullFamily_indepT`), codebook `|S| = 30`, 20 000 trials per row.  "Markov" is
-the bound `|S|/(T·M)` from 2-universality; "factorial" is the new bound
-`C(|S|,T)/M^T`.
-
-| `M` | `T` | empirical `P(≥T collisions)` | Markov `|S|/(TM)` | factorial `C(|S|,T)/M^T` |
-|-----|-----|------------------------------|--------------------|---------------------------|
-| 64  | 1 | 0.3748 | 0.4688 | 0.4688 |
-| 64  | 2 | 0.0842 | 0.2344 | 0.1062 |
-| 64  | 3 | 0.0112 | 0.1563 | 0.0155 |
-| 64  | 4 | 0.0018 | 0.1172 | 0.0016 |
-| 128 | 3 | 0.0019 | 0.0781 | 0.0019 |
-| 256 | 4 | 0.0000 | 0.0293 | 0.000006 |
-
-The Markov bound decays like `1/T`; the empirical failure probability and the
-factorial bound both decay geometrically, and agree to within a few per cent
-from `T = 2` on.  This ruled out "the linear gain is real" and pointed at the
-`T`-th factorial moment as the right statistic.
-
-## 6. Cost of the logarithmic decoder (Conjecture 1 → `exists_sublinear_almost_lossless_scheme`)
-
-Deterministic figures for the two decoders on a codebook of `n` entries; the
-binary-search column is the *proved* upper bound `⌊log₂ n⌋ + 3`
-(`bsDecode_cost_le`), the scan column is the *proved exact* cost `n`
-(`scanCost_snd`).
-
-| `n` | scan cost | binary-search bound | speed-up |
-|-----|-----------|---------------------|----------|
-| 8    | 8    | 6  | 1.3× |
-| 64   | 64   | 9  | 7.1× |
-| 1000 | 1000 | 12 | 83× |
-| 10⁶  | 10⁶  | 22 | 4.5·10⁴× |
-
-The crossover is at `n = 6` (`⌊log₂ 6⌋ + 3 = 5 < 6`), which is exactly the
-hypothesis of the formal separation `sublinear_speedup`.
-
----
-
-## Cycle 3 — evidence for the conjectures settled in this cycle
-
-These computations were run ad hoc (small brute-force enumerations in a scratch
-script) *before* the Lean proofs, to check that the statements were true and
-worth formalizing.  They are **not** machine-checked; only the Lean files are.
-
-### 1. Higher independence of the degree-`T` polynomial family (Conjecture B)
-
-For every prime `p` and degree `T` below, all pairs `(x, s)` with `|s| = T`,
-`x ∉ s` were enumerated and the number of coefficient vectors
-`c ∈ (ZMod p)^{T+1}` with `h_c(y) = h_c(x)` for all `y ∈ s` was counted.
-
-| `p` | `T` | keys `K = p^{T+1}` | max. constrained keys | `IndepT` needs `≤ K/M^T = p` |
-|----:|----:|-------------------:|----------------------:|-----------------------------:|
-| 3 | 1 | 9 | 3 | 3 |
-| 5 | 1 | 25 | 5 | 5 |
-| 5 | 2 | 125 | 5 | 5 |
-| 7 | 2 | 343 | 7 | 7 |
-| 7 | 3 | 2401 | 7 | 7 |
-
-The count is **exactly** `p` in every case — the constrained keys are precisely
-the `p` constant polynomials — so `polyHash_indepT` is tight, and the
-interpolation lemma `polyEval_injective_of_agree_on_points` is the right reason.
-
-### 2. Why the coding-theoretic route to Conjecture E fails
-
-For a 2-universal family the hash vectors form a code of length `K` over an
-alphabet of size `M` with pairwise distance `≥ K(1 − 1/M)`.  Substituting this
-into the Plotkin double count gives `N(N−1)·K(1−1/M) ≤ K(1−1/M)·N²`, i.e.
-`N(N−1) ≤ N²` — true for every `N`, hence no bound; the Cauchy–Schwarz
-second-moment count degenerates in the same way to `n/M ≤ n`.  This is a genuine
-*negative* experimental finding: it redirected the proof to the integrality
-argument (`K < M ⇒ every collision count is 0 ⇒ every hash is injective`), which
-is what `universal2_key_ge_codes` formalizes.
-
-### 3. The tunable Markov trade-off (Conjecture C)
-
-Constants `(c₁, c₂) = (1+η, 1+1/η)` satisfy `1/c₁ + 1/c₂ = 1` exactly, so the
-two bad-key sets always leave a key free:
-
-| `η` | silent constant `1+η` | failure constant `1+1/η` | `1/c₁ + 1/c₂` |
-|----:|----------------------:|-------------------------:|--------------:|
-| 1    | 2.0  | 2.0  | 1 |
-| 0.5  | 1.5  | 3.0  | 1 |
-| 0.1  | 1.1  | 11.0 | 1 |
-| 0.01 | 1.01 | 101.0| 1 |
-
-The silent-error constant tends to the first-moment optimum `1`; whether it is
-attained is Conjecture H.
+* *"Honesty needs a checksum."*  Refuted: with uniqueness decoding the scan is
+  honest for **every** seed, because the true word is always a candidate, so a
+  unique match must be it (`AlmostLossless.honest_scanCode`).  No separate
+  checksum field is needed; the second hash only buys decoding *speed*.
+* *"Shared randomness beats the counting bound."*  Refuted for uniform sources:
+  averaging the deterministic bound over any seed distribution gives the same
+  `1 - |C|/|S|` (`AlmostLossless.randomized_avg_failProb_lower`).
+* *"The relaxed bound is just `(1-ε)|S| ≤ |C|`."*  Only for uniform sources; the
+  correct general statement is the concentration characterisation
+  `AlmostLossless.epsilon_pigeonhole_iff`.

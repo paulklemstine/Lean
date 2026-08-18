@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "6a0dc5c0",
-      "domain": "Logic",
-      "key_insight": "# Future directions — bold, falsifiable conjectures from the NET-45 cycle\n\nEach conjecture is stated so that a single computation, run, or Lean development decides\nit. Formal counterparts of the defin",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 79,
-      "timestamp": "2026-08-17T01:55:59",
-      "title": "NET-45: The s1 product chain survives at FIVE DOUBLINGS — k*=256 at (d=4, ctx=2048, s1) = d·ctx/32 E"
-    },
-    {
       "cycle_id": "665c1eea",
       "domain": "Physics",
       "key_insight": "# Future Directions — bold, testable conjectures from the Alcubierre formalization\n\nEach conjecture below is stated so that it can be settled (proved or refuted) inside the\nformal framework already bu",
@@ -499,19 +489,19 @@
       "theorem_count": 55,
       "timestamp": "2026-08-18T23:36:17",
       "title": "~~`minimal_near_miss_size`~~ — RESOLVED in cycle 3: among all near-miss pairs at level\n   `N ≥ 1` th"
+    },
+    {
+      "cycle_id": "aa4eb9d3",
+      "domain": "Tropical",
+      "key_insight": "# Future Directions — the tropical cost/reliability trade-off\n\nThe results now in `Catalog/Tropical/DecodingTradeoff/` supply both endpoints\n(`decode_cost` + `failSet_prob_le`; `blockDecode_cost` + `b",
+      "quality_score": 0.86,
+      "sorry_count": 0,
+      "theorem_count": 106,
+      "timestamp": "2026-08-18T23:36:29",
+      "title": "Both endpoints of the trade-off are now formal theorems in this"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "ab157807",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions\n\nThis cycle settled three of the five conjectures inherited by the thread, over\nan arbitrary field and with arbitrary linear restriction maps\n(`Catalog/Algebra/DataSheafCohomology.",
-      "quality_score": 0.6443439147018031,
-      "sorry_count": 0,
-      "theorem_count": 56,
-      "timestamp": "2026-08-07T21:06:35",
-      "title": "The formal results show that a scalar missing rate and feature count do not dete"
-    },
     {
       "cycle_id": "100d7a9d",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 55,
       "timestamp": "2026-08-18T23:36:17",
       "title": "~~`minimal_near_miss_size`~~ — RESOLVED in cycle 3: among all near-miss pairs at level\n   `N ≥ 1` th"
+    },
+    {
+      "cycle_id": "aa4eb9d3",
+      "domain": "Tropical",
+      "key_insight": "# Future Directions — the tropical cost/reliability trade-off\n\nThe results now in `Catalog/Tropical/DecodingTradeoff/` supply both endpoints\n(`decode_cost` + `failSet_prob_le`; `blockDecode_cost` + `b",
+      "quality_score": 0.86,
+      "sorry_count": 0,
+      "theorem_count": 106,
+      "timestamp": "2026-08-18T23:36:29",
+      "title": "Both endpoints of the trade-off are now formal theorems in this"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "a5150a29",
-      "domain": "Pythagorean",
-      "name": "chiC_apply",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "a5150a29",
-      "domain": "Pythagorean",
-      "name": "circleSumC_eq_zero_of_odd",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "a5150a29",
-      "domain": "Pythagorean",
-      "name": "card_sqrtsC",
-      "quality": 0.82
-    },
     {
       "cycle_id": "9aa1e8d1",
       "domain": "Bridges",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "vandermonde_kernel_weighted",
       "quality": 0.87
+    },
+    {
+      "cycle_id": "aa4eb9d3",
+      "domain": "Tropical",
+      "name": "tmin_le",
+      "quality": 0.86
+    },
+    {
+      "cycle_id": "aa4eb9d3",
+      "domain": "Tropical",
+      "name": "le_tmax",
+      "quality": 0.86
+    },
+    {
+      "cycle_id": "aa4eb9d3",
+      "domain": "Tropical",
+      "name": "le_tmin",
+      "quality": 0.86
     }
   ],
-  "last_updated": "2026-08-18T23:36:17",
+  "last_updated": "2026-08-18T23:36:29",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hupper⟩)",
@@ -3951,12 +3951,6 @@
     ],
     "Tropical": [
       {
-        "cycle_id": "b7dba88e",
-        "quality": 0.7419800000000001,
-        "theorems": 115,
-        "title": "Deepening: ArXiv paper: Transformation Semigroup Perspective on the Magma Monoid"
-      },
-      {
         "cycle_id": "db97959f",
         "quality": 0.86,
         "theorems": 75,
@@ -4009,6 +4003,12 @@
         "quality": 0.85,
         "theorems": 120,
         "title": "NET-48: The direct test survives via the MEDIAN — k*=160 at (d=4, ctx=2048, seed"
+      },
+      {
+        "cycle_id": "aa4eb9d3",
+        "quality": 0.86,
+        "theorems": 106,
+        "title": "Both endpoints of the trade-off are now formal theorems in this"
       }
     ]
   }

@@ -166,6 +166,34 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle aa4eb9d3 (Q=0.860), which proved 106 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Both endpoints of the trade-off are now formal theorems in this\nrepository (`decode_cost` + `failSet_prob_le` at one end,\n`blockDecode_cost` + `blockFail_prob_le` at the other); only the interpolation\nand its converse are missing.",
+    "domains": [
+      "Tropical"
+    ],
+    "id": "push_aa4eb9d3_d4fc2eb2",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "aa4eb9d3",
+    "status": "available",
+    "timestamp": "2026-08-18T23:36:29.796750+00:00",
+    "title": "Deepening: Both endpoints of the trade-off are now formal theorems in this"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle af68ac83 (Q=0.870), which proved 55 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ~~`minimal_near_miss_size`~~ \u2014 **RESOLVED in cycle 3**: among all near-miss pairs at level\n   `N \u2265 1` the binomial pair also minimises the cardinality, the minimum being `2^{N-1}`\n   (`two_pow_le_two_mul_card_of_near_miss`, `card_evenPart`). Open successor: is the\n   *support size* (number of distin",
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_af68ac83_5e7a9331",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "af68ac83",
+    "status": "available",
+    "timestamp": "2026-08-18T23:36:18.480965+00:00",
+    "title": "Deepening: ~~`minimal_near_miss_size`~~ \u2014 RESOLVED in cycle 3: among all near-miss pairs at"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Formally proves conditions under which information can exist purely within a closed timelike curve loop without ever having an initial origin (Ontological Paradox).",
     "domains": [
       "Physics"
@@ -864,20 +892,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-16T11:35:10.982658+00:00",
     "title": "Deepening: Elliptic Curve Cryptography: Weil Pairing and BLS Signatures"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle fbb9718e (Q=0.820), which proved 278 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The case `m = 3`, `F = x\u00b2 + y\u00b2 - z\u00b2` is fully proved\n(`PythagoreanKernel.pyth_kernel_spectrum`: defect exactly one, the obstruction being that `2`\nis not a square, with the dimension-dependence isolated in `constant_legs_dim_two_three_four`),\nand the Fermat family shows the defect is *not* constant ",
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "push_fbb9718e_18e12df4",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "fbb9718e",
-    "status": "available",
-    "timestamp": "2026-08-18T22:42:44.002617+00:00",
-    "title": "Deepening: The case `m = 3`, `F = x\u00b2 + y\u00b2 - z\u00b2` is fully proved"
   },
   {
     "consumed_by_exp_id": "",
@@ -1793,20 +1807,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-05T06:51:05.180719+00:00",
     "title": "Deepening: ArXiv paper: Magnitude homology of tope graphs"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 8da3e793 (Q=0.780), which proved 73 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Part of:** Research plan \u2014 *Compression Beyond the Pigeonhole Bound* (Phase A, Question 1: separating the decompressor from the data).\n\n## Research question\nA fixed pretrained model (e.g., an LLM) used as the shared decompressor + arithmetic-coded residual beats classical compressors on text by a ",
-    "domains": [
-      "Tropical"
-    ],
-    "id": "push_8da3e793_655a219f",
-    "priority_score": 0.88,
-    "research_mode": "team",
-    "source_exp_id": "8da3e793",
-    "status": "available",
-    "timestamp": "2026-08-16T04:00:14.992793+00:00",
-    "title": "Deepening: Compression Research A2: Learnable shared decompressors \u2014 model is free, model d"
   },
   {
     "consumed_by_exp_id": "",
@@ -19109,6 +19109,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "1. **(S1)** `minimal_card_on_nodes`: for `A = {0, c, 2c, \u2026, Nc}` the minimal near-miss\n   cardinality is again `2^{N-1}` \u2014 dilation invariance of the extremal problem.\n2. **(S2)** `support_gap_two`: there is *no* near miss at level `N \u2265 2` with\n   `#supp s + #supp t = N + 1` and `lam \u2265 2` whose two sides have equal support size unless\n   `N` is odd \u2014 a parity obstruction visible in the tables of `ComputationalEvidence.md`.\n3. **(S3)** `fwdDiff_kernel_dimension`: the space of `\u2124`-valued functionals on `{0,\u2026,N}`\n   annihilated by every near miss at level `N` has rank exactly `N`, spanned by\n   `x \u21a6 x^k`, `k < N`; equivalently the near-miss functional is a *cyclic* vector for the\n   shift operator on that space.",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "fd_1562",
+    "priority_score": 0.516875,
+    "research_mode": "team",
+    "source_exp_id": "af68ac83",
+    "status": "available",
+    "timestamp": "2026-08-18T23:36:03.948225+00:00",
+    "title": "Three concrete next-cycle sub-conjectures (recursive abduction)"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The obstruction half is fully formal (a `Finset` pigeonhole plus a\ntelescoping identity), so the conjecture can be stated in Lean today with a proved\nconverse; each new case of the existence half (e.g. `k = 1`, the twin case) is a known\nhard target with a now-precise topological meaning.",
     "domains": [
       "Combinatorics",
@@ -19492,6 +19506,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "decoder that extends its window at position `i` only until it meets an\ninformative step achieves expected cost `n \u00b7 q\u00b2 / p` \u2014 independent of the target failure\nprobability `\u03b5` \u2014 while a fixed-window decoder needs cost `\u0398(n q\u00b2 log(1/\u03b5))`.",
+    "domains": [
+      "Computation"
+    ],
+    "id": "fd_1563",
+    "priority_score": 0.46070175438596495,
+    "research_mode": "team",
+    "source_exp_id": "aa4eb9d3",
+    "status": "available",
+    "timestamp": "2026-08-18T23:36:24.831186+00:00",
+    "title": "decoder that extends its window at position `i` only until it meets an"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "the twin prime conjecture is the unboundedness of the single Betti step at `\u03b5 = 2`\n  (an `H\u2080` statement, not `H\u2081`);",
     "domains": [
       "Pythagorean",
@@ -19587,15 +19615,14 @@ window.FUTURE_DIRECTIONS = [
     "title": "The equivalence and the cap are formal; sieve-theoretic upper bounds of"
   },
   {
-    "consumed_by_exp_id": "af68ac83",
+    "consumed_by_exp_id": "",
     "description": "~~`minimal_near_miss_size`~~ \u2014 **RESOLVED in cycle 3**: among all near-miss pairs at level\n   `N \u2265 1` the binomial pair also minimises the cardinality, the minimum being `2^{N-1}`\n   (`two_pow_le_two_mul_card_of_near_miss`, `card_evenPart`). Open successor: is the\n   *support size* (number of distinct values used) also minimised, and is it `\u2308(N+1)/2\u2309`?",
     "domains": [],
     "id": "fd_1537",
-    "phase": "A",
     "priority_score": 0.4305555555555556,
     "research_mode": "team",
     "source_exp_id": "5792b548",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-18T17:43:18.015803+00:00",
     "title": "~~`minimal_near_miss_size`~~ \u2014 RESOLVED in cycle 3: among all near-miss pairs at level\n   `N \u2265 1` the binomial pair also minimises the cardinality, the minimum being `2^{N-1}`\n   (`two_pow_le_two_mul_"
   },
@@ -19646,6 +19673,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-18T18:57:21.554073+00:00",
     "title": "Conjecture B (a `T`-wise independent family with a short key) \u2014 PROVED.*"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The three-fold Bonferroni term: `\u2211_{i<j<k} Prob (E\u1d62 \u2229 E\u2c7c \u2229 E\u2096) = C(m,3)(1-p)^{3b}`\n   for disjoint windows, upgrading `prob_failSet_ge_half` to a bound valid without the\n   smallness hypothesis `m (1-p)^b \u2264 1`.  (`(C2a)`, the two-fold case, is now proved as\n   `Prob_badWindow_inter`.)\n2. **(C3a)** `diam (mmul A A) = 0` iff there exist two states `b\u2081, b\u2082` with\n   `A a b\u2081 + A b\u2081 c = 0` for all `a, c` \u2014 the two-step scrambling criterion.\n3. **(C1a)** The first-occurrence decomposition\n   `failSet n b = \u2a06_i (badWindow n i b \\ \u22c3_{j<i} badWindow n j b)` is a *disjoint* union,\n   giving `Prob p (failSet n b) = \u2211_i Prob p (first bad window at i)` and hence the sharp\n   constant of Conjecture 1.",
+    "domains": [],
+    "id": "fd_1564",
+    "priority_score": 0.4296666666666666,
+    "research_mode": "team",
+    "source_exp_id": "aa4eb9d3",
+    "status": "available",
+    "timestamp": "2026-08-18T23:36:25.099843+00:00",
+    "title": "The three-fold Bonferroni term: `\u2211_{i<j<k} Prob (E\u1d62 \u2229 E\u2c7c \u2229 E\u2096) = C(m,3)(1-p)^{3b}`"
   },
   {
     "consumed_by_exp_id": "",
@@ -20087,14 +20126,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Honest Laurent normalization"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3da67f84",
     "description": "A product of `m` normalized series has order exactly `\u2212m`\n   (`orderTop_prod_normalized`), so a Monster-sized product has a pole of order `194`\n   (`orderTop_prod_traceLaurent_194`); multiplying by `q^m` restores order `0`.",
     "domains": [],
     "id": "fd_1428",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "286b3a0e",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-17T13:54:04.565939+00:00",
     "title": "Pole-order obstruction"
   },
@@ -20472,15 +20512,14 @@ window.FUTURE_DIRECTIONS = [
     "title": "For a graded `G`-set `Y = \u2a06_n Y_n` the generating function `\u03a3_n t_r(Y_n) q^n` is a rational\nfunction of `q` whenever the grades are eventually `r`-transitive, with denominator dividing\n`(1\u2212q)^{r+1}`."
   },
   {
-    "consumed_by_exp_id": "aa4eb9d3",
+    "consumed_by_exp_id": "",
     "description": "Both endpoints of the trade-off are now formal theorems in this\nrepository (`decode_cost` + `failSet_prob_le` at one end,\n`blockDecode_cost` + `blockFail_prob_le` at the other); only the interpolation\nand its converse are missing.",
     "domains": [],
     "id": "fd_1478",
-    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "be7c0bd7",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-18T03:09:00.743392+00:00",
     "title": "Both endpoints of the trade-off are now formal theorems in this"
   },
