@@ -152,17 +152,17 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle 9aa1e8d1 (Q=0.860), which proved 93 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Proves that quantizing transformer weight matrices onto modular lattice grids preserves global loss landscape convexity invariants.",
+    "description": "Building on cycle 5297c534 (Q=0.860), which proved 49 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The `\u21d0` direction is proved (`FourierFA.uncertainty_eq_coset_modulation`); the `\u21d2`\ndirection is open in this development.",
     "domains": [
-      "Bridges"
+      "Novelty"
     ],
-    "id": "push_9aa1e8d1_00878eab",
+    "id": "push_5297c534_15484863",
     "priority_score": 0.95,
     "research_mode": "team",
-    "source_exp_id": "9aa1e8d1",
+    "source_exp_id": "5297c534",
     "status": "available",
-    "timestamp": "2026-08-18T08:54:39.349283+00:00",
-    "title": "Deepening: Bridge-NumberTheory-ML: Arithmetic Geometry of Transformer Weight Lattices"
+    "timestamp": "2026-08-18T09:49:34.716388+00:00",
+    "title": "Deepening: The `\u21d0` direction is proved (`FourierFA.uncertainty_eq_coset_modulation`); the `"
   },
   {
     "consumed_by_exp_id": "",
@@ -1455,6 +1455,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Formalize the Miller-Rabin primality test in Lean 4 and prove its error bounds. Formalize the AKS deterministic primality test and prove correctness: PRIMES \u2208 P. Construct efficient modular arithmetic tactics for Lean.",
+    "domains": [
+      "NumberTheory",
+      "Computation"
+    ],
+    "id": "fd_0652",
+    "priority_score": 0.9,
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-24T14:34:16.697745+00:00",
+    "title": "Primality Testing: Miller-Rabin and AKS Formalization"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Formalizes Voiculescu's free probability: the free central limit theorem showing that normalized sums of freely independent identically distributed bounded random variables converge in distribution to the semicircle law, developed through the R-transform and free cumulants.",
     "domains": [
       "Probability",
@@ -1778,35 +1793,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-05T06:51:05.180719+00:00",
     "title": "Deepening: ArXiv paper: Magnitude homology of tope graphs"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 545fa377 (Q=0.782), which proved 10 theorems in Geometry. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that the algebraic connectivity of a neural network's computation graph bounds its certified robustness radius. Formalize the connection between graph spectra and function Lipschitz constants.",
-    "domains": [
-      "Geometry"
-    ],
-    "id": "push_545fa377_06b84e6e",
-    "priority_score": 0.8815999999999998,
-    "research_mode": "team",
-    "source_exp_id": "545fa377",
-    "status": "available",
-    "timestamp": "2026-07-29T12:29:20.468595+00:00",
-    "title": "Deepening: Spectral Graph Theory Meets Network Robustness"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize the Miller-Rabin primality test in Lean 4 and prove its error bounds. Formalize the AKS deterministic primality test and prove correctness: PRIMES \u2208 P. Construct efficient modular arithmetic tactics for Lean.",
-    "domains": [
-      "NumberTheory",
-      "Computation"
-    ],
-    "id": "fd_0652",
-    "priority_score": 0.88,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-24T14:34:16.697745+00:00",
-    "title": "Primality Testing: Miller-Rabin and AKS Formalization"
   },
   {
     "consumed_by_exp_id": "",
@@ -19467,6 +19453,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The gap theorem `FourierFA.uncertainty_gap_of_not_cosetModulation` already shows the\ndiscrete side of this picture (products jump by at least `|supp f|` once `|supp f|` divides\n`|G|`), so the remaining content is purely analytic and the Lean infrastructure\n(`norm_sum_eq_sum_norm_phase`, `IsExtremal.phase_align`) is in place.",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "fd_1511",
+    "priority_score": 0.4884545454545455,
+    "research_mode": "team",
+    "source_exp_id": "5297c534",
+    "status": "available",
+    "timestamp": "2026-08-18T09:49:19.537331+00:00",
+    "title": "The gap theorem `FourierFA.uncertainty_gap_of_not_cosetModulation` already shows the"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "in this cycle: `exists_block_dvd` shows that a\nnon-admissible pattern is realised at most finitely often (never, past `p > q`), and\n`constant_gap_run_dvd` is the special case of constant patterns.  The open half is the\nexistence direction, a barcode restatement of the Hardy\u2013Littlewood/Dickson prime\n`k`-tuple conjecture.",
     "domains": [
       "NumberTheory"
@@ -19767,15 +19767,14 @@ window.FUTURE_DIRECTIONS = [
     "title": "(from C5, first half now proved)"
   },
   {
-    "consumed_by_exp_id": "5297c534",
+    "consumed_by_exp_id": "",
     "description": "The `\u21d0` direction is proved (`FourierFA.uncertainty_eq_coset_modulation`); the `\u21d2`\ndirection is open in this development.",
     "domains": [],
     "id": "fd_1408",
-    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "525aecde",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-17T09:01:31.838883+00:00",
     "title": "The `\u21d0` direction is proved (`FourierFA.uncertainty_eq_coset_modulation`); the `\u21d2`"
   },
@@ -20154,14 +20153,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "The seven measured fields in the experiment already span prime and"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "09567e3d",
     "description": "The `d = 1` case is proved (`withParity_detects_single_flip` plus the\none-codeword converse); the general case needs only the Hamming ball counting\nlemma over `List Bool` of bounded length.",
     "domains": [],
     "id": "fd_1450",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "f262016d",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-17T18:57:33.687836+00:00",
     "title": "The `d = 1` case is proved (`withParity_detects_single_flip` plus the"
   },
@@ -20636,5 +20636,34 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-18T08:54:26.202451+00:00",
     "title": "The audit theorems reduce the whole question to the purely continuous"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The multiplicative picture is completely settled here, which isolates exactly what\nthe additive statement adds; Mathlib now has enough cyclotomic-field theory for a serious attempt\nat Chebotarev's theorem.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_1512",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "5297c534",
+    "status": "available",
+    "timestamp": "2026-08-18T09:49:19.780464+00:00",
+    "title": "The multiplicative picture is completely settled here, which isolates exactly what"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "In the setting of Conjecture 1, prove the *support* stability first: if\n   `|supp f|\u00b7|supp f\u0302| < |G| + |supp f|` then `supp f` is a coset (this is already a theorem here\n   when `|supp f|` divides `|G|`; the open case is `|supp f| \u2224 |G|`).\n2. **(C4a)** Prove that the pairing function on `K \u00d7 K\u0302` is, up to modulation/translation and the\n   symplectic action, the *unique* bi-flat function with full support and full spectrum when `K`\n   has odd order.\n3. **(C5a)** Prove the phase-subgroup step (`IsExtremal.sub_mem_phaseSubgroup`) for finite\n   Heisenberg groups, the smallest genuinely non-abelian test case.",
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_1513",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "5297c534",
+    "status": "available",
+    "timestamp": "2026-08-18T09:49:20.037935+00:00",
+    "title": "In the setting of Conjecture 1, prove the *support* stability first: if"
   }
 ];

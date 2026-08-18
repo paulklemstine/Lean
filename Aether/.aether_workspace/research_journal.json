@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "6c757940",
-      "domain": "Computation",
-      "key_insight": "# Future Directions — Sheaf-Theoretic Data Integration\n\nAll results below are in `Catalog/Computation/`, compile against Mathlib\n(Lean 4, toolchain `v4.28.0`) with **zero `sorry`** and only the standa",
-      "quality_score": 0.89,
-      "sorry_count": 0,
-      "theorem_count": 152,
-      "timestamp": "2026-08-16T09:42:56",
-      "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
-    },
-    {
       "cycle_id": "6e253e5d",
       "domain": "Applications",
       "key_insight": "# Future Directions — Tropical EML learning theory (next cycle)\n\nDerived from what survived and what failed in this cycle. Formalized this cycle:\nthe tropical/ReLU dictionary in one variable (`isTropR",
@@ -499,19 +489,19 @@
       "theorem_count": 93,
       "timestamp": "2026-08-18T08:54:38",
       "title": "Bridge-NumberTheory-ML: Arithmetic Geometry of Transformer Weight Lattices"
+    },
+    {
+      "cycle_id": "5297c534",
+      "domain": "Novelty",
+      "key_insight": "# Future directions\n\nThe `⇒` direction of the extremal problem for the Donoho–Stark uncertainty principle, open in\nthis development, is now closed: `FourierFA.extremal_iff_isCosetModulation` in\n`Catal",
+      "quality_score": 0.86,
+      "sorry_count": 0,
+      "theorem_count": 49,
+      "timestamp": "2026-08-18T09:49:33",
+      "title": "The `⇐` direction is proved (`FourierFA.uncertainty_eq_coset_modulation`); the `⇒`"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "e384d0b8",
-      "domain": "Pythagorean",
-      "key_insight": "# FUTURE DIRECTIONS\n\nBold, falsifiable conjectures spun off from this cycle. Each is stated so that a\nfuture cycle can either prove it in Lean or kill it with an explicit\ncounterexample. Everything re",
-      "quality_score": 0.6540809924078091,
-      "sorry_count": 0,
-      "theorem_count": 1352,
-      "timestamp": "2026-08-07T09:22:25",
-      "title": "Deepening: Quantum Entanglement as Algebraic Topology: The Linking Number Is Entanglement"
-    },
     {
       "cycle_id": "c29c7fbe",
       "domain": "Geometry",
@@ -2501,27 +2491,19 @@
       "theorem_count": 93,
       "timestamp": "2026-08-18T08:54:38",
       "title": "Bridge-NumberTheory-ML: Arithmetic Geometry of Transformer Weight Lattices"
+    },
+    {
+      "cycle_id": "5297c534",
+      "domain": "Novelty",
+      "key_insight": "# Future directions\n\nThe `⇒` direction of the extremal problem for the Donoho–Stark uncertainty principle, open in\nthis development, is now closed: `FourierFA.extremal_iff_isCosetModulation` in\n`Catal",
+      "quality_score": 0.86,
+      "sorry_count": 0,
+      "theorem_count": 49,
+      "timestamp": "2026-08-18T09:49:33",
+      "title": "The `⇐` direction is proved (`FourierFA.uncertainty_eq_coset_modulation`); the `⇒`"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "e46e79a5",
-      "domain": "Applications",
-      "name": "tendsto_mul_log_one_add_inv",
-      "quality": 0.86
-    },
-    {
-      "cycle_id": "e46e79a5",
-      "domain": "Applications",
-      "name": "tendsto_mul_log_one_sub_inv",
-      "quality": 0.86
-    },
-    {
-      "cycle_id": "f262016d",
-      "domain": "Applications",
-      "name": "concatEnc_zero",
-      "quality": 0.85
-    },
     {
       "cycle_id": "f262016d",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Bridges",
       "name": "gridRound_eq_self_iff",
       "quality": 0.86
+    },
+    {
+      "cycle_id": "5297c534",
+      "domain": "Novelty",
+      "name": "pairingFn_apply",
+      "quality": 0.86
+    },
+    {
+      "cycle_id": "5297c534",
+      "domain": "Novelty",
+      "name": "pairingFn_norm",
+      "quality": 0.86
+    },
+    {
+      "cycle_id": "5297c534",
+      "domain": "Novelty",
+      "name": "pairingFn_ne_zero",
+      "quality": 0.86
     }
   ],
-  "last_updated": "2026-08-18T08:54:38",
+  "last_updated": "2026-08-18T09:49:33",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hupper⟩)",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "c94236ec",
-        "quality": 0.92,
-        "theorems": 226,
-        "title": "SPLIT-COUNT-LAW: the complete symmetric fork channel is the split-count s ~ Bin("
-      },
-      {
         "cycle_id": "fefb96cd",
         "quality": 0.82,
         "theorems": 54,
@@ -3637,6 +3631,12 @@
         "quality": 0.85,
         "theorems": 32,
         "title": "Rigidity"
+      },
+      {
+        "cycle_id": "5297c534",
+        "quality": 0.86,
+        "theorems": 49,
+        "title": "The `⇐` direction is proved (`FourierFA.uncertainty_eq_coset_modulation`); the `"
       }
     ],
     "NumberTheory": [
