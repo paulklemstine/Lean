@@ -24732,7 +24732,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\n1. **Additive density.** For every preadditive category `C`, every additive presheaf\n   `Cᵒᵖ ⥤+ AddCommGrpCat` is a colimit, in the category of additive functors, of additive\n   representables indexed by its category of elements.\n\n2. **Representability from limit preservation.** If `C` is a small finitely complete\n   category and a presheaf `F : Cᵒᵖ ⥤ Type` preserves all small limits and satisfies the\n   solution-set condition, then `F` is representable.\n\n3. **Sheaf density by represented sheaves.** On every subcanonical site, each type-valued\n   sheaf is a colimit in the sheaf category of represented sheaves, with a canonical indexing\n   diagram obtained from maps out of represented sheaves.\n\n4. **Classifier uniqueness.** In a category with pullbacks and a terminal object, any two\n   subobject classifiers are uniquely isomorphic by an isomorphism commuting with their\n   truth arrows.\n\n5. **Predicate extensionality through characteristic maps.** In a category with a subobject\n   classifier, two subobjects of `X` are equal precisely when their characteristic morphisms\n   `X ⟶ Ω` are equal, and this correspondence is natural under pullback along every\n   morphism into `X`.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Bridges"
       ],
@@ -39156,7 +39156,7 @@
       "depth_estimate": 3,
       "description": "# Future directions — NET-43 bridge (final, after cycles 1–6)\n\nVerified base (all `sorry`-free, all in `Catalog/Bridges/`, all main theorems checked with\n`#print axioms` to use only `propext`, `Classical.choice`, `Quot.sound`):\n\n| file | content |\n|---|---|\n| `DeepestRungTwoSeed256.lean` | selection geometry, concentration floor `k ≥ τ²·eff`, knee brackets and two-seed agreement, concave `d^(2/3)` law, speedup arithmetic |\n| `DeepestRungRandomControl.lean` | exact expected mass `k/n` of the random-`k` control, empirical exponent bracket `0.6 < a < 2/3`, grid resolution bound |\n| `DeepestRungSharpness.lean` | uniform and spike profiles, sharpness of the quadratic floor, tightness of the grid bound, knee comparison principle |\n| `DeepestRungTailCeiling.lean` | telescoping inverse-square tail bound, `bestMass ≥ 1 − c/k`, two-sided knee sandwich |\n| `DeepestRungPowerTail.lean` | **cycle 5**: Bernoulli/tangent-line step, general power-tail sum bound, `bestMass ≥ 1 − (c/(α−1))·k^(1−α)`, explicit knee ceiling for every `α > 1` |\n| `DeepestRungGapConcavity.lean` | **cycle 5**: exchange argument making the top-`k` mass curve a concave sequence, concave ⇒ unimodal, unimodality and nonnegativity of the selection gap, chord extrapolation of the measured Part-B2 gaps |\n| `DeepestRungPeakAndTransfer.lean` | **cycle 6**: the selection gap peaks exactly at the number of above-average keys, its peak height is the total-variation distance to uniform, the NET-43 concentration forces `TV ≥ 0.422`, and concavity transfers from captured mass to accuracy (with a Lipschitz cap on the Part-B2 accuracy gap) |\n\n## Closed since the previous edition\n\n* **Conjecture 1 (general power tail `α > 1`)** — closed by `bestMass_ge_of_power_tail` and\n  `power_tail_knee_bound`.  The analytic obstruction anticipated there (no exact telescoping\n  for real `α`) is resolved by the tangent-line inequality `rpow_tail_step`, which is exactly\n  Bernoulli's inequality `1 + αs ≤ (1+s)^α` at `s = 1/x`.\n* **Conjecture 3, shape half / sub-conjecture 2** — closed by `selectionGap_concave` and\n  `selectionGap_unimodal`; the combinatorial input is a single exchange step, and the\n  order-theoretic output is that a concave sequence never dips below both of its ends.\n* **Sub-conjecture 2 (locate the peak)** — closed by `selectionGap_peak_at_aboveAvg`.  The\n  answer is sharper than conjectured: the peak sits at `k = |{i : pᵢ > 1/n}|`, the number of\n  above-average keys, and its height is *exactly* the excess mass\n  `∑ᵢ (pᵢ − 1/n)⁺` (`selectionGap_aboveAvg`), which `excessMass_eq_tv` identifies with the\n  total-variation distance from the attention row to uniform attention.  So the width-free\n  ceiling on any random-`k` control gap is a classical statistical distance, and the NET-43\n  numbers force `TV ≥ 0.422` (`net43_tv_distance_ge`).\n* **Sub-conjecture 3 (concavity transfer)** — closed by `ConcaveSeq.comp_concave`: if accuracy\n  is a concave nondecreasing function of captured mass, the accuracy-versus-width curve is a\n  concave sequence (`accuracyCurve_concave`), hence unimodal with antitone increments; and if\n  accuracy is `L`-Lipschitz, the accuracy gap of the random-`k` control is at most\n  `L · TV(p, uniform)` uniformly in `k` (`accuracyGap_le_of_lipschitz`).\n* Earlier: grid-bound tightness (`grid_resolution_tight`) and the `α = 2` tail ceiling\n  (`bestMass_ge_of_inverse_square_tail`, `knee_sandwich`).\n\nThe five conjectures below are the live ones, each falsifiable either by a Lean\ncounterexample or by one measurement round.\n\n## Conjecture 1 (Inverting concentration into a tail exponent). *Formal + empirical.*\nFor a profile with participation ratio `eff` and mass-`τ` knee `k*`, the pair `(eff, k*)`\ndetermines a unique tail exponent `α(eff, k*)` such that the power-tail ceiling\n`k* ≤ (c/((α−1)(1−τ)))^(1/(α−1))` and the concentration floor `k* ≥ τ²·eff` are\nsimultaneously tight; at the NET-43 cell (`eff = 216.92`, `k* = 256`, `τ = 0.92`) this\npredicts `α ≈ 2`.\n**The key insight is** that cycle 5 removed the exponent from the hypotheses — the ceiling\nnow holds for *every* `α > 1` — so the exponent becomes a *derived* quantity, pinned by the\ngap between floor and ceiling rather than assumed.\n**Why now?** Both coordinates are measured at this cell for the first time, and the sandwich\n`τ²·eff ≤ k* ≤ ceiling(α)` is monotone in `α`, so a single bisection on reported numbers\nyields a falsifiable estimate.\n\n## Conjecture 2 (The depth exponent is strictly below 2/3). *Empirical, sharp.*\nThe true depth exponent satisfies `a ∈ (0.60, 0.6667)` strictly, and at `d = 64` the knee\nfalls **below** `24.7 · 64^(2/3) ≈ 395`, predicted range `368–392`.\n**The key insight is** that the product of the three measured per-doubling ratios,\n`1.50 · 1.58 · 1.68 = 3.9816 < 4 = 2²`, already forces `3a < 2` — proved as\n`empirical_exponent_bracket` — so the round's own data refutes exact `2/3`.\n**Why now?** The refutation is arithmetic on numbers already reported, and `d = 64` is the\nimmediate next rung.\n\n## Conjecture 3 (The accuracy gap inherits the mass gap's concavity). *Empirical.*\nThe measured Part-B2 accuracy gaps form a concave sequence in `k`; consequently the `k = 512`\ngap is at most `+0.8` and the gap vanishes at full width.\n**The key insight is** `net43_gap_chord_extrapolation`: concavity plus the two measured points\n`+2.6 (k=256)`, `+1.7 (k=384)` caps the extrapolation, and at the *mass* level concavity is\nnow a theorem (`selectionGap_concave`), so the only empirical content left is whether accuracy\nis a concave increasing function of captured mass.\n**Why now?** A third control point at `k = 448` or `k = 512` decides it in one round: a\nmeasured gap above `+0.8` at `k = 512` falsifies the concave-transfer hypothesis outright.\n\n## Conjecture 4 (Concavity is forced by subadditive cost). *Bold, structural.*\nAny knee law `d ↦ k*(d)` arising from a per-layer budget that is subadditive under layer\ncomposition is concave; hence every affine fit calibrated on shallow rungs over-predicts at\ndepth, and the observed 11–12% affine overshoot is a theorem rather than an artefact.\n**The key insight is** `concave_affine_extrapolation_over_predicts`: concavity alone forces\nthe chord extension to dominate, so the empirical content reduces to verifying subadditivity\nof the budget (`kstarLaw_subadditive` gives it for the fitted law).\n**Why now?** Subadditivity is directly testable — measure `k*` at `d = 8, 24, 32` and check\n`k*(8+24) ≤ k*(8) + k*(24)`; a violation refutes the concave-law programme in one round.\n\n## Conjecture 5 (Interpolating extremal profiles). *Formal.*\nBetween the uniform profile (`eff = n`, knee `≈ τ·eff`) and the spike profile (knee `= 1`\nwith `τ·eff > 1`) the ratio `knee / eff` sweeps the whole interval `(0, τ]`, and a profile is\ndetermined up to this ratio by its pair `(eff, knee)`.\n**The key insight is** that cycle 3 exhibits the two endpoints of the ratio and cycle 1 the\ninequality between them, so what remains is a continuity/interpolation construction —\na concrete family, not an estimate.\n**Why now?** The NET-43 cell reports both coordinates (`eff = 216.92`, `k* = 256`) for the\nfirst time, so the ratio `256/216.92 = 1.18` becomes a measurable invariant that can be\ntracked across rungs and seeds.\n\n## Three concrete next-cycle sub-conjectures\n1. **Sharp constant in the power-tail bound.**  The sum-integral loss is quantifiable:\n   `∑_{j≥k}(j+1)^(−α) ≥ k^(1−α)/(α−1) − α·k^(−α)/2`, so the ceiling of\n   `power_tail_knee_bound` is tight to first order in `1/k`.  (Cycle-5 evidence: at\n   `α = 3/2, k = 256` the true tail is `0.0365` against the bound `0.125`, so the *constant*\n   is far from tight for small `α` — the conjecture is that the loss is entirely due to the\n   crude majorant `c·(i+1)^(−α)`, not to the summation step.)\n2. **The peak sits below the knee.**  Cycle 6 locates the gap peak at `|aboveAvg|`, the number\n   of above-average keys; the conjecture is that this peak always lies *below* the mass-`τ`\n   knee for `τ` close to `1`, i.e. `|aboveAvg a| ≤ k*(τ)` whenever `τ ≥ 1 − 1/e`, so the\n   deployable width is always past the point where selection stops paying incrementally.  At\n   the NET-43 cell this predicts `|aboveAvg| ≤ 256`, testable directly from the logged row.\n3. **Which floor binds?**  Cycle 6 proves a second, independent knee floor\n   `k* ≥ n·(τ − TV)` (`knee_ge_of_excessMass`) alongside cycle 1's concentration floor\n   `k* ≥ τ²·eff` (`card_ge_of_bestMass_ge`).  The conjecture is that the TV floor is the\n   binding one for concentrated rows and the participation-ratio floor for near-uniform rows,\n   with the crossover at `TV ≈ τ(1 − τ·eff/n)`.  Both coordinates are logged per row, so one\n   round of instrumentation on the NET-43 cell (`n = 512`, `τ = 0.92`, `eff = 216.92`,\n   `TV ≥ 0.422`) decides it: the floors read `k* ≥ 183` and `k* ≥ 512·(0.92 − TV)`, so any\n   measured `TV < 0.56` makes the new floor the stronger of the two.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Geometry",
         "Combinatorics"
@@ -40813,7 +40813,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "ef01dce6",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -40840,7 +40840,7 @@
       "source": "github_injection",
       "source_exp_id": "github",
       "source_path": "github",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-08-17T04:13:54.293504+00:00",
       "title": "Compression Research B3: Almost-lossless / Monte Carlo compression"
@@ -42845,7 +42845,7 @@
       "depth_estimate": 3,
       "description": "All the moving parts are already formal here: `index_ker_eq_two` and\n`char_eq_of_ker_eq` (characters versus kernels), `index_two_gEquiv_iff_eq` (normality\nkills conjugacy), and `nonempty_gEquiv_iff_isConj` (the general correspondence). Two of the\nthree ingredients of the odd-prime count are now theorems as well, in\n`Catalog/Bridges/FundamentalGroupCoveringPrimeIndex.lean`: every normal subgroup of prime\nindex `p` is the kernel of a surjection onto `C_p`\n(`exists_surjective_char_of_prime_index`), and exactly `p − 1` surjective characters share\na given kernel (`card_surjective_chars_with_ker`, via `Aut(C_p)` having order `p − 1`), which\nis precisely the scaling correction — for `p = 2` it degenerates to `1` and recovers\n`char_eq_of_ker_eq`.  The regularity dichotomy behind the split is now closed on both\nsides, in `Catalog/Bridges/FundamentalGroupCoveringNonRegular.lean`: a non-normal subgroup\nof prime index `p` forces `|G|` to have a prime factor below `p`\n(`minFac_lt_index_of_not_normal`), and conversely the non-regular case really occurs —\nthe point stabiliser of `S₃` gives a connected three-sheeted covering of a `K(S₃,1)` that\nis not regular and whose deck group is trivial (`s3_triple_covering_not_regular`,\n`s3_triple_covering_deck_trivial`).  What remains open is only the count of non-normal\nindex-`p` classes.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Algebra",
         "Bridges"
@@ -42927,7 +42927,7 @@
       "depth_estimate": 3,
       "description": "(`Catalog/Bridges/FundamentalGroupCoveringTorusSigma.lean`).  The Hermite normal form of a\nsublattice is formalized (`exists_hnf`, `hnf_unique`, `index_torusLat`), giving\n`card_index_n_subgroups_torus_sigma`: for every `n ≥ 1` the torus has exactly\n`σ(n) = ∑_{d ∣ n} d` connected `n`-sheeted coverings, pairwise non-isomorphic, and each\ntotal space is again a torus (`torus_sigma_classification`, using\n`torus_finite_covering_is_torus`).  The predicted checkpoint is confirmed:\n`card_index_four_subgroups_torus` gives `σ(4) = 7`.  The prime case was obtained\nindependently by character theory (`torus_prime_degree_classification`, `p + 1`\ncoverings).  So a homotopy invariant of a fixed space is now, in this catalog, literally an\narithmetic function.  What remains open is the higher-rank statement for `K(ℤ^k,1)`,\n`k ≥ 3`.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Algebra",
         "NumberTheory"
@@ -46644,7 +46644,7 @@
       "depth_estimate": 3,
       "description": "Conjecture A already supplies the multiset for every subgroup at once, and\n`Catalog/Logic/TraceDistribution/Functoriality.lean` supplies the mark formalism\n(`fixedCard_prod`, `fixedCard_sum`, `fixedCard_of_equivariant_equiv`).  The only missing\ningredient is Möbius inversion over `Nat.divisors`, which mathlib has.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Bridges"
@@ -47925,6 +47925,86 @@
       "thread_id": "",
       "timestamp": "2026-08-18T18:57:23.245401+00:00",
       "title": "Define `bsearchRange`, a binary search returning the maximal index"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Cycle 7 supplies both directions of the machinery (`minDist_image_withParity`,\n`minDist_image_dropLast`) and the extremal function `A` with its attainment lemma\n`A_isGreatest`, so each instance is a finite, falsifiable search; a companion quantitative\nquestion — whether the packing defect at `d = 3` and `n + 1` not a power of two is always at\nleast one whole ball, `(A(n,3) + 1) · (n + 1) ≤ 2 ^ n`, strengthening the proved\n`hamming_bound_strict` — is testable in the same framework\n(`n = 4`: `2 · 5 = 10`, defect `6 ≥ 5`; `n = 5`: `4 · 6 = 24`, defect `8 ≥ 6`;\n`n = 6`: `8 · 7 = 56`, defect `8 ≥ 7`).",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Combinatorics"
+      ],
+      "github_issue": 0,
+      "id": "fd_1548",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.5082222222222222,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "09567e3d",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/09567e3d",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-08-18T18:57:42.739273+00:00",
+      "title": "Cycle 7 supplies both directions of the machinery (`minDist_image_withParity`,"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "The companion half is already settled: `optimal_detecting_classification`\n(cycle 6) shows the *codes* are rigid — exactly two optimal single-error-detecting codes\nexist.  What remains is the rigidity of the *map*, for which `parity_xorWord` (the\nhomomorphism property, cycle 2) and `hypercube_connected` (cycle 6) supply the ingredients.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra"
+      ],
+      "github_issue": 0,
+      "id": "fd_1549",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.4,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "09567e3d",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/09567e3d",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-08-18T18:57:42.950267+00:00",
+      "title": "The companion half is already settled: `optimal_detecting_classification`"
     },
     {
       "ambition_level": "extension",
@@ -71993,7 +72073,7 @@
       "depth_estimate": 3,
       "description": "Cycle 286b3a0e (Q=0.890) proved 145 theorems in Bridges but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions: Moonshine Beyond the j-Function\n\n## Verified connector\n\n`Catalog/Novelty/MonsterMoonshineBridge.lean` proves a rigorous cross-domain bridge between\nfinite-group character theory a",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Bridges"
       ],
@@ -72073,7 +72153,7 @@
       "depth_estimate": 3,
       "description": "Cycle 2a357c10 (Q=0.840) proved 104 theorems in Bridges but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: ## Network loop round-net-43 (speed axis, round 16)\n\n**Title: The Deepest Rung Is Two-Seed 256 — k\\*=256 at (d=32, ctx=512) reproduces EXACTLY at seed=2, the repaired random-k control shows positive s",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Bridges"
       ],
@@ -72273,7 +72353,7 @@
       "depth_estimate": 3,
       "description": "Cycle 55a94506 (Q=0.630) proved 38205 theorems in Bridges but left 22 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Prove that the Fisher information metric on a statistical manifold satisfies the axioms of a Riemannian metric. Construct explicit connections between the Fisher metric and the Kullback-Leibler diverg",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Bridges"
       ],
@@ -72433,7 +72513,7 @@
       "depth_estimate": 3,
       "description": "Cycle 6753d65f (Q=0.890) proved 92 theorems in Bridges but left 2 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: **Paper:** `ResearchOutput/NewMathematics/41_ResidueLeakage_DirichletNoPruning.md` (factor3)\n**Experiment:** QRLEAK (#376), assessment v152.\n\n## Finding\nThe QR fingerprint F_K(N) = [(a_i|N)] over the ",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Bridges"
       ],
@@ -72953,7 +73033,7 @@
       "depth_estimate": 3,
       "description": "Cycle f96004ff (Q=0.686) proved 271 theorems in Bridges but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions: Quantitative Sphere Detection from Finite Data\n\n## 1. Quantitative homotopy recovery under reach and density\n\nLet a compact smooth submanifold have reach at least `τ`, and let a f",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Bridges"
       ],

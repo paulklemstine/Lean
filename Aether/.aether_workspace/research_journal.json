@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "d4bd7c02",
-      "domain": "Logic",
-      "key_insight": "# Future directions — bold, testable conjectures from the NET-44 formalisation\n\nEverything below is derived from the theorems proved in\n\n* `Catalog/Logic/KneeFluctuationTwoSeed.lean` (knee predicate,",
-      "quality_score": 0.8,
-      "sorry_count": 0,
-      "theorem_count": 83,
-      "timestamp": "2026-08-16T16:43:01",
-      "title": "NET-44: The Last Context-Extrapolation Cell Is Two-Seed and the Knee Fluctuates (k\\*=96 at (d=4, ctx"
-    },
-    {
       "cycle_id": "b3704634",
       "domain": "Geometry",
       "key_insight": "# Future directions\n\nDerived from the analysis and adversarial review of the verified results in\n`Catalog/Geometry/Teichmuller/`:\n\n* `LinearQC.lean` — the algebra of quasiconformal dilatations of real",
@@ -499,19 +489,19 @@
       "theorem_count": 59,
       "timestamp": "2026-08-18T17:43:35",
       "title": "Sharpness"
+    },
+    {
+      "cycle_id": "ef01dce6",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions — Almost-Lossless / Monte-Carlo Compression (M9)\n\nDerived from the verified results in `Catalog/Bridges/AlmostLossless*.lean`\n(fifteen files, all compiling, no `sorry`, standard ax",
+      "quality_score": 0.88,
+      "sorry_count": 0,
+      "theorem_count": 179,
+      "timestamp": "2026-08-18T18:57:37",
+      "title": "Compression Research B3: Almost-lossless / Monte Carlo compression"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "22e93393",
-      "domain": "Combinatorics",
-      "key_insight": "# Future directions\n\nThe thread opened with two questions — the finite-key probability formula and\ncrossing-probability monotonicity — both of which are proved in\n`Catalog/Combinatorics/BernoulliThres",
-      "quality_score": 0.71348,
-      "sorry_count": 0,
-      "theorem_count": 557,
-      "timestamp": "2026-08-07T15:44:58",
-      "title": "Deepening: 1. **Finite-key probability formula.** For every finite type `V`, independent"
-    },
     {
       "cycle_id": "22e93393",
       "domain": "Combinatorics",
@@ -2501,27 +2491,19 @@
       "theorem_count": 59,
       "timestamp": "2026-08-18T17:43:35",
       "title": "Sharpness"
+    },
+    {
+      "cycle_id": "ef01dce6",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions — Almost-Lossless / Monte-Carlo Compression (M9)\n\nDerived from the verified results in `Catalog/Bridges/AlmostLossless*.lean`\n(fifteen files, all compiling, no `sorry`, standard ax",
+      "quality_score": 0.88,
+      "sorry_count": 0,
+      "theorem_count": 179,
+      "timestamp": "2026-08-18T18:57:37",
+      "title": "Compression Research B3: Almost-lossless / Monte Carlo compression"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "11c9ff9f",
-      "domain": "Logic",
-      "name": "descFactorial_dvd_card_of_kTransitive",
-      "quality": 0.86
-    },
-    {
-      "cycle_id": "11c9ff9f",
-      "domain": "Logic",
-      "name": "descFactorial_le_card_of_kTransitive",
-      "quality": 0.86
-    },
-    {
-      "cycle_id": "be7c0bd7",
-      "domain": "Geometry",
-      "name": "blockDecode_cost",
-      "quality": 0.82
-    },
     {
       "cycle_id": "be7c0bd7",
       "domain": "Geometry",
@@ -2803,9 +2785,27 @@
       "domain": "Shared",
       "name": "powerSum_replicate",
       "quality": 0.88
+    },
+    {
+      "cycle_id": "ef01dce6",
+      "domain": "Bridges",
+      "name": "bsearch_zero",
+      "quality": 0.88
+    },
+    {
+      "cycle_id": "ef01dce6",
+      "domain": "Bridges",
+      "name": "bsearch_succ",
+      "quality": 0.88
+    },
+    {
+      "cycle_id": "ef01dce6",
+      "domain": "Bridges",
+      "name": "bsearch_cost_le",
+      "quality": 0.88
     }
   ],
-  "last_updated": "2026-08-18T17:43:35",
+  "last_updated": "2026-08-18T18:57:37",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hupper⟩)",
@@ -3145,12 +3145,6 @@
     ],
     "Bridges": [
       {
-        "cycle_id": "768360e4",
-        "quality": 0.6509097115384616,
-        "theorems": 130,
-        "title": "Bridge: Homological Algebra Connecting Algebra and Topology"
-      },
-      {
         "cycle_id": "869ec8f3",
         "quality": 0.627125,
         "theorems": 135,
@@ -3203,6 +3197,12 @@
         "quality": 0.86,
         "theorems": 93,
         "title": "Bridge-NumberTheory-ML: Arithmetic Geometry of Transformer Weight Lattices"
+      },
+      {
+        "cycle_id": "ef01dce6",
+        "quality": 0.88,
+        "theorems": 179,
+        "title": "Compression Research B3: Almost-lossless / Monte Carlo compression"
       }
     ],
     "Combinatorics": [
