@@ -139,6 +139,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 0cf95d8d (Q=0.880), which proved 101 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The range `k \u2264 N` cannot be shortened: `(0,2)` and `(1,1)` are bounded by `2`,\n    agree for `k \u2264 1`, and have different distributions (`powerSums_not_determined_of_lt`).\n    Exhaustive search (`ComputationalEvidence.md`, \u00a78) finds `0` such pairs at `K = N` and many at\n    `K = N \u2212 1`.",
+    "domains": [
+      "Probability"
+    ],
+    "id": "push_0cf95d8d_c91e6793",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "0cf95d8d",
+    "status": "available",
+    "timestamp": "2026-08-18T01:51:35.956324+00:00",
+    "title": "Deepening: Sharpness"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 37827e5f (Q=0.850), which proved 21 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formally proves the semicircle law for Wigner ensembles: the empirical spectral distribution of a random Hermitian matrix with independent entries converges in probability to the semicircle distribution as the dimension grows, establishing the universality of bulk eigenvalue statistics for random ma",
     "domains": [
       "Probability"
@@ -1441,16 +1455,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Graph-Expander: Alon-Boppana Bound for Regular Graph Eigenvalues"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9aa1e8d1",
     "description": "Proves that quantizing transformer weight matrices onto modular lattice grids preserves global loss landscape convexity invariants.",
     "domains": [
       "Bridges"
     ],
     "id": "dir_50_50_600fb3ba",
+    "phase": "A",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "batch_50_injection",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-23T20:05:24.803690+00:00",
     "title": "Bridge-NumberTheory-ML: Arithmetic Geometry of Transformer Weight Lattices"
   },
@@ -1793,34 +1808,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-06T07:00:49.176626+00:00",
     "title": "Deepening: **Conjecture.** For every integer `k \u2265 5`, there is a threshold `N\u2080(k)` such tha"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle ee1ae94f (Q=0.787), which proved 11 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Extend the Kronecker-Weber theorem to arbitrary algebraic fields by constructing Hilbert class fields. Formalize explicit class field theory and connect to the Langlands program.",
-    "domains": [
-      "NumberTheory"
-    ],
-    "id": "push_ee1ae94f_39fc795b",
-    "priority_score": 0.88664,
-    "research_mode": "team",
-    "source_exp_id": "ee1ae94f",
-    "status": "available",
-    "timestamp": "2026-07-28T17:00:01.809184+00:00",
-    "title": "Deepening: Hilbert 12: Kronecker-Weber Generalization"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 1a03af4c (Q=0.787), which proved 14 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove specific cases of Langlands functoriality: the transfer from GL(2) to GL(3), or symmetric power liftings. Formalize automorphic representations and L-functions in Lean 4.",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "push_1a03af4c_793f10c7",
-    "priority_score": 0.88657,
-    "research_mode": "team",
-    "source_exp_id": "1a03af4c",
-    "status": "available",
-    "timestamp": "2026-07-29T06:53:52.425249+00:00",
-    "title": "Deepening: Langlands Program: Functoriality"
   },
   {
     "consumed_by_exp_id": "",
@@ -19262,6 +19249,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For any `s \u2260 t` bounded by `N` agreeing up to\n   order `K`, the integer vector `c = count_s \u2212 count_t` lies in the kernel of the\n   `(K+1) \u00d7 (N+1)` Vandermonde matrix, and `card s \u2265 \u00bd\u2016c\u2016\u2081 \u2265 ` the minimum of `\u00bd\u2016\u00b7\u2016\u2081` over\n   nonzero integer kernel vectors.  Conjecture: this lattice minimum equals `2^K` for\n   `N = K + 1` and equals `K + 1` for `N \u2265 d(K)`, with no intermediate values other than\n   integers in `[K+1, 2^K]`.",
+    "domains": [
+      "Cryptography"
+    ],
+    "id": "fd_1468",
+    "priority_score": 0.6234444444444445,
+    "research_mode": "team",
+    "source_exp_id": "0cf95d8d",
+    "status": "available",
+    "timestamp": "2026-08-18T01:51:23.482696+00:00",
+    "title": "S2 (`\u2113\u00b9` weight is the right invariant)"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Category theory studies objects and morphisms between them. A joke has a setup (an object) and a punchline (a morphism that subverts expectations). Define the category Joke where objects are setups and morphisms are punchlines. A joke J: S -> P is a morphism from setup S to punchline P that factors through an unexpected category. The humor of a joke is measured by its 'surprise': the distance between the expected punchline (the limit of the setup category) and the actual punchline. Conjecture: The funniest jokes are those where the setup category has a colimit that is far from the limit. Formally, if S is a setup with expected resolution lim(S) and the actual punchline P is a colimit colim(S'), then the humor H(J) = d(lim(S), colim(S')), where d is a metric on the category of punchlines. Puns have H close to 0 (the punchline is near the expected resolution). Absurdist humor has H large (the punchline is in a completely different category). The universal property of jokes: a joke J is universal if for any other joke J' with the same setup, there is a unique natural transformation J => J'. The funniest jokes are universal \u2014 they are the terminal objects in the category of jokes with a given setup. Test: formalize 100 jokes as category-theoretic objects and compute H(J) for each. Correlate with human funniness ratings. Impact: humor is a colimit. The funnier the joke, the further the punchline is from the expected limit of the setup.",
     "domains": [
       "Novelty",
@@ -19362,6 +19363,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-17T07:16:47.247467+00:00",
     "title": "Let `t k = tr(M\u2082^k)` (recurrence `t(k+3) = 5t(k+2) + 5t(k+1) \u2212 t(k)`,"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The gap bound `N!/2^{N\u22121}` of\n   `powerSum_gap_le` should degrade to `N!/m(N, K)` when only orders `k \u2264 K` agree, i.e. the\n   extremal discrepancy is inversely proportional to the minimal collision size.  Falsifiable\n   by exhibiting a pair with agreement order `K` and discrepancy exceeding `N!/m(N,K)`.",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "fd_1469",
+    "priority_score": 0.5000952380952381,
+    "research_mode": "team",
+    "source_exp_id": "0cf95d8d",
+    "status": "available",
+    "timestamp": "2026-08-18T01:51:23.718741+00:00",
+    "title": "S3 (stability off the critical window)"
   },
   {
     "consumed_by_exp_id": "",
@@ -19499,15 +19514,14 @@ window.FUTURE_DIRECTIONS = [
     "title": "Conjecture A (Parity-gap conjecture). For all `n \u2265 2`, all injective `S, T : Fin n \u2192 ZMod p`, the parity-weighted exponent counter `permCoeff S T` is nonzero somewhere; in fact `max_r |permCoeff S T r"
   },
   {
-    "consumed_by_exp_id": "0cf95d8d",
+    "consumed_by_exp_id": "",
     "description": "The range `k \u2264 N` cannot be shortened: `(0,2)` and `(1,1)` are bounded by `2`,\n    agree for `k \u2264 1`, and have different distributions (`powerSums_not_determined_of_lt`).\n    Exhaustive search (`ComputationalEvidence.md`, \u00a78) finds `0` such pairs at `K = N` and many at\n    `K = N \u2212 1`.",
     "domains": [],
     "id": "fd_1435",
-    "phase": "A",
     "priority_score": 0.4160952380952381,
     "research_mode": "team",
     "source_exp_id": "286b3a0e",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-17T13:54:06.155568+00:00",
     "title": "Sharpness"
   },
@@ -19830,14 +19844,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Moment hierarchy"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "cf8480d3",
     "description": "Equality at `k = 2` holds *iff* the action is trivial\n   (`orbits_sq_eq_orbitals_iff_trivial`), with a quantitative refinement (`rigidity_quantitative`).",
     "domains": [],
     "id": "fd_1426",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "286b3a0e",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-17T13:54:04.115247+00:00",
     "title": "Rigidity"
   },
@@ -20133,5 +20148,48 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-17T23:36:55.232879+00:00",
     "title": "This is the smallest genuine strengthening beyond one progression, it needs no new"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "*Settled for `K \u2264 5`:* `m(N,1) = 2` for `N \u2265 2`, `m(N,2) = 3` for\n   `N \u2265 4` with `m(3,2) = 4` (`minCollisionCard_two_table`), `m(N,3) = 4` for `N \u2265 7`\n   (`PowerSumIdealPTE.minCollisionCard_three_narrow` \u2014 the question asked in the previous\n   cycle, \"is `m(N,3) = 4` already for some `N < 11`?\", is answered **yes**, with the\n   multiset solution `{1,1,6,6}` vs `{0,3,4,7}` of diameter `7`), `m(N,4) = 5` for `N \u2265 18`\n   and `m(N,5) = 6` for `N \u2265 16`.  *Still open:* the exact minimal alphabet `d(K)` and the\n   claim `m(N,K) > K + 1` for `N < d(K)`.  The computed values `d(1..5) = 2, 4, 7, 18, 16`\n   (`ComputationalEvidence.md` \u00a712) show `d` is **not monotone**, so any conjectured formula\n   must accommodate that; falsifiable by one collision of size `K + 1` inside an alphabet\n   narrower than the tabulated `d(K)`.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_1467",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "0cf95d8d",
+    "status": "available",
+    "timestamp": "2026-08-18T01:51:23.233950+00:00",
+    "title": "S1 (drop point)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Let `d(K)` be the least `N` for which an\n   ideal collision of degree `K` and size `K + 1` fits in `{0, \u2026, N}`.  The verified values\n   `d(1..5) = 2, 4, 7, 18, 16` show `d(5) < d(4)`.  Conjecture: `d(K)` is non-monotone\n   infinitely often, and `d(K) = \u0398(K^2)` \u2014 in particular `d(K) < 2^{K+1} - 1`, so the Prouhet\n   alphabet is never optimal for `K \u2265 3`.  *The key insight is* that ideal solutions of odd\n   degree can be built symmetrically (the degree-`5` optimum `{0,3,5,11,13,16}` vs\n   `{1,1,8,8,15,15}` is symmetric under `x \u21a6 16 \u2212 x`), which halves the number of independent\n   constraints, whereas even degrees admit no such symmetry.  *Why now?*  Symmetry of the\n   optimum is visible already at `K = 5` in the search of \u00a712, and the transfer lemma\n   `PowerSumIdealPTE.minCollisionCard_eq_of_ideal_witness` turns any candidate witness into a\n   theorem about `m(N, K)` mechanically, so each new degree costs one `decide`.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_1470",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "0cf95d8d",
+    "status": "available",
+    "timestamp": "2026-08-18T01:51:23.978914+00:00",
+    "title": "S4 (non-monotonicity of the ideal alphabet)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Between the critical alphabet `N = K + 1`, where\n   `m = 2^K`, and `N = d(K)`, where `m = K + 1`, the invariant appears to descend through few\n   values: for `K = 3` the verified/computed profile is `8, 6, 6, 4, 4, \u2026`\n   (`ComputationalEvidence.md` \u00a712), and `m(N,3) \u2264 6` for `N \u2265 5` is the theorem\n   `PowerSumIdealPTE.minCollisionCard_three_le_six`.  Conjecture: every intermediate value of\n   `m(\u00b7, K)` is of the form `\u00bd\u2016c\u2016\u2081` for a *vertex* of the kernel polytope, and the number of\n   distinct values taken by `m(\u00b7, K)` is `O(K)` rather than exponential.  *The key insight is*\n   that the descent is governed by the successive minima of the Vandermonde kernel lattice in\n   the `\u2113\u00b9` norm, not by the arithmetic of individual PTE solutions.  *Why now?*  The `K = 2`\n   row is fully proved (`minCollisionCard_two_table`: only the values `4` and `3` occur) and\n   the `K = 3` row is now bracketed from both sides by theorems, so the first genuinely new\n   data point is `K = 4`, a search of the same size as the one already carried out.",
+    "domains": [
+      "Algebra",
+      "Cryptography"
+    ],
+    "id": "fd_1471",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "0cf95d8d",
+    "status": "available",
+    "timestamp": "2026-08-18T01:51:24.243279+00:00",
+    "title": "S5 (the intermediate plateau)"
   }
 ];

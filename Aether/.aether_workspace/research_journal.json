@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "79242ce3",
-      "domain": "Cryptography",
-      "key_insight": "# Future directions\n\nDerived from the verified results in\n`Catalog/Cryptography/MordellDenominators/` (all statements there are proved in\nLean 4 with no `sorry`), together with the exploratory data in",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 78,
-      "timestamp": "2026-08-15T19:41:15",
-      "title": "The 'Only Bad Primes' Conjecture is False (elliptic curve denominators)"
-    },
-    {
       "cycle_id": "603eb18a",
       "domain": "NumberTheory",
       "key_insight": "# Future directions — carry chains, state, and length generalisation\n\nDerived from the theorems in `Catalog/NumberTheory/CarryChainStatefulCell.lean` and\n`Catalog/NumberTheory/CarryChainDepthBound.lea",
@@ -499,19 +489,19 @@
       "theorem_count": 70,
       "timestamp": "2026-08-17T23:37:07",
       "title": "Open here; the multiplicative bound `|supp f| · |supp f̂| ≥ p` is proved"
+    },
+    {
+      "cycle_id": "0cf95d8d",
+      "domain": "Probability",
+      "key_insight": "# Future Directions\n\nDerived from the results in `Catalog/Probability/PowerSumSharpness.lean`,\n`Catalog/Probability/PowerSumNewtonThreshold.lean`,\n`Catalog/Probability/PowerSumMinimalCollision.lean`,",
+      "quality_score": 0.88,
+      "sorry_count": 0,
+      "theorem_count": 101,
+      "timestamp": "2026-08-18T01:51:35",
+      "title": "Sharpness"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "2c38bc1a",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions — Universal Posets\n\nDerived from the analysis and adversarial-review stages of the two research\ncycles run on this project.  Each conjecture is falsifiable, and each is stated\nso t",
-      "quality_score": 0.7055950000000001,
-      "sorry_count": 0,
-      "theorem_count": 3,
-      "timestamp": "2026-08-07T04:15:17",
-      "title": "ArXiv paper: Even smaller universal posets"
-    },
     {
       "cycle_id": "0e033e47",
       "domain": "Bridges",
@@ -2501,27 +2491,19 @@
       "theorem_count": 70,
       "timestamp": "2026-08-17T23:37:07",
       "title": "Open here; the multiplicative bound `|supp f| · |supp f̂| ≥ p` is proved"
+    },
+    {
+      "cycle_id": "0cf95d8d",
+      "domain": "Probability",
+      "key_insight": "# Future Directions\n\nDerived from the results in `Catalog/Probability/PowerSumSharpness.lean`,\n`Catalog/Probability/PowerSumNewtonThreshold.lean`,\n`Catalog/Probability/PowerSumMinimalCollision.lean`,",
+      "quality_score": 0.88,
+      "sorry_count": 0,
+      "theorem_count": 101,
+      "timestamp": "2026-08-18T01:51:35",
+      "title": "Sharpness"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "93afd30b",
-      "domain": "Cryptography",
-      "name": "berg_two_eigen_iff",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "93afd30b",
-      "domain": "Cryptography",
-      "name": "berg_two_eigen_neg_one",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "0b339d93",
-      "domain": "Physics",
-      "name": "bCoeff_zero",
-      "quality": 0.78
-    },
     {
       "cycle_id": "0b339d93",
       "domain": "Physics",
@@ -2803,9 +2785,27 @@
       "domain": "MachineLearning",
       "name": "sub2_one",
       "quality": 0.78
+    },
+    {
+      "cycle_id": "0cf95d8d",
+      "domain": "Probability",
+      "name": "minCollisionCard_eq_of_ideal_witness",
+      "quality": 0.88
+    },
+    {
+      "cycle_id": "0cf95d8d",
+      "domain": "Probability",
+      "name": "minCollisionCard_le_of_witness",
+      "quality": 0.88
+    },
+    {
+      "cycle_id": "0cf95d8d",
+      "domain": "Probability",
+      "name": "ideal_pte_three_narrow",
+      "quality": 0.88
     }
   ],
-  "last_updated": "2026-08-17T23:37:07",
+  "last_updated": "2026-08-18T01:51:35",
   "open_questions": [
     {
       "context": "## Main Results (all sorry-free); sorry; sorry",
@@ -3765,12 +3765,6 @@
     ],
     "Probability": [
       {
-        "cycle_id": "3744942f",
-        "quality": 0.6546236561723476,
-        "theorems": 666,
-        "title": "Deepening: Hadwiger's Conjecture"
-      },
-      {
         "cycle_id": "436f9275",
         "quality": 0.627125,
         "theorems": 164,
@@ -3823,6 +3817,12 @@
         "quality": 0.92,
         "theorems": 255,
         "title": "NET-48: The direct test survives via the MEDIAN — k*=160 at (d=4, ctx=2048, seed"
+      },
+      {
+        "cycle_id": "0cf95d8d",
+        "quality": 0.88,
+        "theorems": 101,
+        "title": "Sharpness"
       }
     ],
     "Pythagorean": [
