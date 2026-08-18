@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "7a819734",
-      "domain": "NumberTheory",
-      "key_insight": "# FUTURE DIRECTIONS — Fractal number theory of the logarithmic prime embedding\n\nThe cycle just completed replaced the mission conjecture\n(`dim_H(P, d) = 1 + ε`, `ε > 0` driven by twin primes) with a p",
-      "quality_score": 0.86,
-      "sorry_count": 0,
-      "theorem_count": 71,
-      "timestamp": "2026-08-16T21:35:04",
-      "title": "Fractal Number Theory: Hausdorff Dimension of Prime Distributions"
-    },
-    {
       "cycle_id": "39757711",
       "domain": "Pythagorean",
       "key_insight": "# Future Directions — Hamiltonicity of Cayley Graphs of Order `pqrs`\n\nThis document records the open conjectures that the formalization in\n`Catalog/Pythagorean/CayleyHamiltonian/` makes concrete and t",
@@ -499,19 +489,19 @@
       "theorem_count": 21,
       "timestamp": "2026-08-18T21:38:19",
       "title": "Conjecture C, closed"
+    },
+    {
+      "cycle_id": "16c8a71d",
+      "domain": "Pythagorean",
+      "key_insight": "# Future directions — aggregate dichotomy for Pythagorean families\n\nThe formal results of this cycle live in\n\n* `Catalog/Pythagorean/PTripleMonoid.lean` — the commutative monoid `PTriple` of integral",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 21,
+      "timestamp": "2026-08-18T21:38:31",
+      "title": "Aggregate dichotomy"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "76abd1f0",
-      "domain": "Physics",
-      "key_insight": "# Future Directions\n\nDerived from the analysis and adversarial review of the formal results in\n`Catalog/Physics/Chaos/`. Every Lean file in that directory compiles end-to-end with no\n`sorry` and no ne",
-      "quality_score": 0.6537058069977426,
-      "sorry_count": 0,
-      "theorem_count": 456,
-      "timestamp": "2026-08-07T19:22:32",
-      "title": "Chaos and the Three-Body Problem: Lyapunov Exponent Bounds"
-    },
     {
       "cycle_id": "2116bc97",
       "domain": "Cryptography",
@@ -2501,27 +2491,19 @@
       "theorem_count": 21,
       "timestamp": "2026-08-18T21:38:19",
       "title": "Conjecture C, closed"
+    },
+    {
+      "cycle_id": "16c8a71d",
+      "domain": "Pythagorean",
+      "key_insight": "# Future directions — aggregate dichotomy for Pythagorean families\n\nThe formal results of this cycle live in\n\n* `Catalog/Pythagorean/PTripleMonoid.lean` — the commutative monoid `PTriple` of integral",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 21,
+      "timestamp": "2026-08-18T21:38:31",
+      "title": "Aggregate dichotomy"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "6ba84571",
-      "domain": "Tropical",
-      "name": "on",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "6ba84571",
-      "domain": "Tropical",
-      "name": "knee_of_median_curve",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "6ba84571",
-      "domain": "Tropical",
-      "name": "determines",
-      "quality": 0.85
-    },
     {
       "cycle_id": "4bf66c09",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Probability",
       "name": "fiber_card_sum",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "16c8a71d",
+      "domain": "Pythagorean",
+      "name": "decode_encode",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "16c8a71d",
+      "domain": "Pythagorean",
+      "name": "encode_decode",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "16c8a71d",
+      "domain": "Pythagorean",
+      "name": "fiber_card_sum",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-18T21:38:19",
+  "last_updated": "2026-08-18T21:38:31",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hupper⟩)",
@@ -3827,12 +3827,6 @@
     ],
     "Pythagorean": [
       {
-        "cycle_id": "e384d0b8",
-        "quality": 0.6540809924078091,
-        "theorems": 1352,
-        "title": "Deepening: Quantum Entanglement as Algebraic Topology: The Linking Number Is Ent"
-      },
-      {
         "cycle_id": "df8839cd",
         "quality": 0.71728,
         "theorems": 70,
@@ -3885,6 +3879,12 @@
         "quality": 0.82,
         "theorems": 52,
         "title": "The formal results in `Catalog/Tropical/JacobiSigned*.lean` settle the JACSIGN"
+      },
+      {
+        "cycle_id": "16c8a71d",
+        "quality": 0.82,
+        "theorems": 21,
+        "title": "Aggregate dichotomy"
       }
     ],
     "Shared": [

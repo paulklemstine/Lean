@@ -1,353 +1,123 @@
-# The File That Was Never Random
-
-## How a few dozen symbols can prove that a gigabyte was written by a formula
-
-Somewhere on your hard drive there is a file that is not really a file. It looks
-like data — megabytes of terrain heights, noise textures, particle positions, a
-stream of "random" bytes in a test fixture — but it was never authored. It was
-*computed*, from a short recipe and a starting number, by a pseudorandom number
-generator. If you knew the recipe and the number, you could throw the file away
-and regenerate it perfectly, on demand, from a few bytes.
-
-This is a tantalising idea for anyone who thinks about compression. The
-pigeonhole principle puts a hard ceiling on compressing arbitrary data: there
-are $q^n$ files of $n$ symbols over an alphabet of size $q$, and no scheme maps
-all of them to shorter descriptions. But pseudorandom data is not arbitrary. A
-generator with a state space of size $|S|$ can only ever produce $|S|$ distinct
-files of any given length. If your file is one of those, its true information
-content is $\log_2 |S|$ bits — and the rest is free.
-
-So the dream is a compressor that asks, of every file it meets: *were you
-generated?* And if so: *by what, and from what seed?* This article is about
-making that question precise, and about the surprisingly sharp answers it
-admits. Three of them stand out.
-
-1. **A universal certificate.** For the most important generator family — the
-   linear feedback shift register of order $L$ — exactly $2L$ observed symbols
-   suffice to certify a recovered generator *forever*. Not "with high
-   probability", not "for typical seeds": if two order-$L$ generators, with
-   arbitrary taps and arbitrary seeds, agree on their first $2L$ outputs, they
-   agree at every index from now to eternity. And $2L-1$ symbols provably do
-   not suffice.
-2. **A hard ceiling on the whole programme.** Detecting the generator does not
-   beat the pigeonhole bound. A "router" that inspects a file, picks any member
-   from a whole zoo of generator families, and emits an index plus a seed can
-   compress at most $\sum_i |S_i|$ files of each length — the total number of
-   seeds across the zoo, and not one file more. Adding families adds their seed
-   counts and nothing else.
-3. **Noise breaks things in an unexpected way.** Real files are only *nearly*
-   generator output — there are headers, checksums, interleaved metadata. The
-   natural coding-theoretic guess, that $2L + 2e + 1$ symbols suffice to decode
-   uniquely in the presence of $e$ corruptions, is *false* for every error
-   budget $e \geq 1$. The correct threshold is not additive but multiplicative:
-   $2L(2e+1)$. And that is sharp.
-
-Let us take these in turn.
-
----
-
-## Generators, streams, and the falsifiability gate
-
-Strip a pseudorandom generator down to its bones and you get two functions: a
-**step** map $\mathrm{step} : S \to S$ that advances an internal state, and an
-**output** map $\mathrm{out} : S \to \alpha$ that extracts a visible symbol.
-Starting from a seed $s$, the generator emits the stream
-
-$$y_t = \mathrm{out}\big(\mathrm{step}^{t}(s)\big), \qquad t = 0, 1, 2, \dots$$
-
-A finite file $x$ of length $n$ is **seed-compressible** for this generator if
-some seed reproduces it *exactly*: $y_i = x_i$ for all $i < n$. Exactness is the
-point. This is a falsifiable claim in the strictest sense — you decompress, you
-compare byte for byte, and either it matches or the claim dies. There is no
-partial credit.
-
-Two facts follow immediately, and they set the boundaries of everything else.
-
-**The pigeonhole ceiling.** At most $|S|$ files of length $n$ are
-seed-compressible, because the map from seeds to length-$n$ prefixes cannot hit
-more targets than it has sources. So as soon as $|S| < q^n$, some file of length
-$n$ is *not* seed-compressible; and the fraction a perfect detector accepts —
-its false-positive rate on uniformly random data — is at most $|S| / q^n$, which
-collapses exponentially as the file grows.
-
-**Finite state means eventual periodicity.** Run any finite-state generator for
-$|S|$ steps and the pigeonhole principle forces a repeated state; from that
-moment the trajectory cycles, with preperiod plus period at most $|S|$. The
-consequence is striking: the *entire infinite stream* is determined by its first
-$|S|$ symbols. This is the structural reason seed compression can work at all.
-
----
-
-## The shift register, and why one recurrence catches two families
-
-The workhorse of practical pseudorandomness is the **linear feedback shift
-register**. Its state is a window of $L$ symbols $\sigma_0, \dots, \sigma_{L-1}$
-drawn from a ring $K$; each tick, it emits the oldest cell $\sigma_0$, shifts
-everything left, and refills the vacated cell with a linear combination
-$\sum_j c_j \sigma_j$ of the current window, where $c = (c_0, \dots, c_{L-1})$
-is the **tap vector**. Over the two-element field this is the classical binary
-LFSR that appears inside stream ciphers, checksums, and any number of
-"fast random" routines.
-
-The first thing to establish is the **window lemma**: after $k$ ticks, cell $i$
-of the register holds precisely the symbol that will be output at time $i + k$.
-The state is not mysterious hidden information — the register is a sliding
-window onto its own future output. Everything else is a corollary.
-
-*Corollary one: the fingerprint.* Every stream generated this way satisfies the
-order-$L$ linear recurrence
-
-$$y_{t+L} \;=\; \sum_{j=0}^{L-1} c_j \, y_{t+j} \qquad \text{for all } t \geq 0.$$
-
-*Corollary two: detection is exact, in both directions.* A stream $y$ satisfies
-this recurrence **if and only if** it is the output of the order-$L$ register
-with taps $c$ from *some* seed. The test is sound and complete simultaneously:
-it never accepts an impostor and never rejects a genuine member.
-
-*Corollary three: seed recovery is free.* The seed *is* the first $L$ output
-symbols — no search, no inversion, no solver. And the recovered seed regenerates
-the whole stream exactly, at every index, not merely on the window where you
-checked. That is the falsifiability gate, discharged.
-
-Now here is the pleasant surprise. The second great real-world family is the
-**linear congruential generator**, $x \mapsto a x + b$ — the engine behind
-`rand()`, behind countless game engines, behind a generation of simulation code.
-It looks like a different animal: an affine map on a ring, not a shift register.
-It is not. Subtract consecutive terms of $x_{t+1} = a x_t + b$ and the increment
-$b$ cancels, leaving
-
-$$x_{t+2} \;=\; (a+1)\, x_{t+1} \;-\; a\, x_t,$$
-
-which is exactly the order-two shift-register recurrence with taps $(-a,\,a+1)$.
-The full-output congruential generator is an order-two register in disguise. The
-same detector catches both families, and the equivalent register seed is
-$(x_0,\; a x_0 + b)$ — two observed symbols, and you are done. One pipeline, two
-families.
-
----
-
-## The $2L$ theorem: when is a recovered seed *certain*?
-
-Suppose your detector has looked at a window and reported: *this is an order-$L$
-register with taps $c$ and seed $\sigma$.* You now delete the file and keep only
-$(c, \sigma)$. When is that safe?
-
-The danger is not that the recovered generator disagrees with what you saw — you
-checked that — but that it agrees on the window and then diverges past the end
-of it, in a region you never examined. How long a window buys you certainty?
-
-**The $2L$ theorem.** *Let $y$ and $z$ be sequences over a commutative ring,
-each satisfying some order-$L$ linear recurrence — possibly with **different**
-tap vectors. If $y_t = z_t$ for all $t < 2L$, then $y_t = z_t$ for every $t$.*
-
-Twice the order. That is the whole answer, and it is uniform over the entire
-family at once: it does not matter which taps, which seeds, or how long the file
-is. A window of $2L$ matching symbols is a certificate valid to infinity.
-
-The proof is a small piece of algebra with a lot of leverage. Let the shift
-operator $\mathcal{S}$ act on sequences by $(\mathcal{S}y)_t = y_{t+1}$. It is
-linear, so polynomials act on sequences: $p(X) = \sum_i p_i X^i$ sends $y$ to
-$t \mapsto \sum_i p_i\, y_{t+i}$ — precisely a linear recurrence operator.
-Attach to a tap vector $c$ its **characteristic polynomial**
-
-$$f_c(X) \;=\; X^L - \sum_{j=0}^{L-1} c_j X^j,$$
-
-monic of degree exactly $L$. Then "$y$ has taps $c$" says exactly that
-$f_c(\mathcal{S})\,y = 0$: the sequence is *annihilated* by its characteristic
-polynomial.
-
-Now take our two sequences, with annihilators $f$ and $g$. Because polynomials
-in a single operator commute, the product $fg$ annihilates *both* — and hence
-the difference $w = y - z$. This is the step that fuses two different tap
-vectors into one object, and $fg$ is monic of degree $2L$.
-
-All that remains is a rigidity lemma: *a sequence annihilated by a monic
-polynomial of degree $m$ that vanishes on $\{0, 1, \dots, m-1\}$ vanishes
-identically.* Why? Monicity means the top coefficient is $1$, so the relation
-$\sum_{i \le m} p_i\, w_{t+i} = 0$ solves for the newest term,
-$w_{t+m} = -\sum_{i<m} p_i\, w_{t+i}$. Every value is forced by the $m$ before
-it, and the first $m$ are zero, so strong induction sweeps the zero forward for
-ever. Since $y$ and $z$ agree on $[0, 2L)$, their difference vanishes there, and
-$2L$ is exactly the degree of $fg$. Done.
-
-**And $2L-1$ is not enough.** Take the *impulse* seed $\sigma = (0,\dots,0,1)$
-under two different tap vectors: with all taps zero the register empties,
-producing the lone impulse $0^{L-1}\,1\,0\,0\cdots$; with taps $(1,0,\dots,0)$
-the recurrence is the pure delay $y_{t+L} = y_t$, producing the periodic impulse
-train $0^{L-1}\,1\,0^{L-1}\,1\cdots$. These agree on their first $2L-1$ symbols
-and disagree at index $2L-1$. So no gate based on fewer than $2L$ observed
-symbols can be sound; the constant is exactly right.
-
-There is a matching counting shadow. Let $N_L(n)$ be the number of length-$n$
-files producible by *some* order-$L$ register from *some* seed. Then $N_L(n)$
-grows until $n = 2L$ and is constant thereafter: longer windows reveal no new
-order-$L$ files, because $2L$ symbols already separate them all.
-
-One more question: the detector returns *a* tap vector, but is it *the* tap
-vector? Form the $L \times L$ **Hankel matrix** $H_{t,j} = y_{t+j}$ of the
-observed window. If $H$ is nonsingular then any two tap vectors explaining the
-same stream coincide, since their difference lies in the kernel of $H$.
-Nondegeneracy of the window is precisely the condition under which seed recovery
-has a unique answer rather than merely a consistent one.
-
----
-
-## Counting the compressible: rarity, exactly
-
-How much of the world is seed-compressible? Very little, and we can say how
-little.
-
-An order-$L$ register over an alphabet of size $q$ is described by $L$ taps and
-$L$ seed symbols, so it produces at most $q^{2L}$ files of any length, out of
-$q^n$. Once $n > 2L$, some file is produced by no order-$L$ register at all, and
-the fraction that are is at most $q^{2L-n}$ — exponentially small. Bounded-order
-seed compression is never universal at any order.
-
-The crude count $q^{2L}$ is never attained, and one can see why in one line: the
-$q^L$ parameter pairs with **zero seed** all produce the same file — the
-all-zero one. Discounting that collapse gives the improved bound
-
-$$N_L(n) \;\leq\; q^{2L} - q^{L} + 1,$$
-
-a strict improvement for every $L \geq 1$.
-
-At order one the count can be nailed exactly. Over a field, the order-one
-register is multiplication by its single tap, so its output is the geometric
-word $x_t = c^t s$. If $s \neq 0$ the parameters are recoverable from the first
-two symbols ($c = x_1 / x_0$), giving $q(q-1)$ distinct words; if $s = 0$ the
-word is all-zero whatever the tap. Hence, for every $n \geq 2$,
-
-$$N_1(n) \;=\; q^2 - q + 1,$$
-
-which meets the improved bound exactly — and, intriguingly, can be rewritten as
-
-$$q^2 - q + 1 \;=\; \frac{q^3 + 1}{q + 1} \;=\; \frac{q^{2L+1}+1}{q+1} \Bigg|_{L=1}.$$
-
-That closed form is conjectured to hold for every order, and the exhaustive
-counts are strikingly obedient. Over the binary alphabet, orders $1$ through $5$
-give $3,\ 11,\ 43,\ 171,\ 683$, matching $(2^{2L+1}+1)/3$; over the ternary
-alphabet, orders $1, 2, 3$ give $7,\ 61,\ 547$, matching $(3^{2L+1}+1)/4$. Note
-that $N_1 = q^2-q+1$ lies *strictly between* the general bounds $q^L$ and
-$q^{2L}$, so the conjecture is a genuine claim about the degeneracy structure of
-the family, not a pigeonhole estimate dressed up. Proving it for $L \geq 2$ is
-open.
-
----
-
-## No free lunch for the router
-
-The engineering fantasy is a **router**: a front end that inspects a file,
-consults a library of generator families — registers of every order,
-congruential generators, whatever else — decides which one wrote it, and emits a
-family index plus a seed. Surely a big enough library covers a lot of data?
-
-It does not, and the bound is embarrassingly simple.
-
-**Router capacity.** *For any finite family of generators $g_i$ with state
-spaces $S_i$, the number of length-$n$ files reproducible by some member is at
-most $\sum_i |S_i|$.*
-
-That is the total number of seeds in the library, and nothing more: adding a
-family adds its seed count, with no synergy and no combinatorial windfall. The
-contrapositive is the sharpest way to say it: *a router that compresses
-everything saves nothing* — if every length-$n$ file is reproducible by some
-member, the library must carry at least $q^n$ seeds, exactly the number of files
-it was supposed to compress.
-
-The ceiling itself is usually not attained: at order one, the router that tries
-every register of order $\leq 1$ carries $1 + q^2$ seeds but accepts exactly
-$q^2 - q + 1$ files — a deficit of exactly $q$. There is also a structural
-collapse worth knowing: padding a tap vector with a leading zero turns an
-order-$L$ recurrence into an order-$(L{+}1)$ one for the same stream, so the
-family of files of linear complexity $\leq M$ is *exactly* the order-$M$ family.
-A router over all orders $\leq M$ is no more powerful than a detector at order
-$M$ alone.
-
-None of this kills the programme; it relocates it. Seed compression does not
-beat the pigeonhole bound on average, it reallocates code space toward a sparse,
-structured corner of file space. Whether that corner is where your data actually
-lives is an empirical question — and a well-posed one, because the gate is exact
-reproduction.
-
----
-
-## Recovery in practice, and what noise does to it
-
-The recovery procedure is almost anticlimactic. The candidate seed is the first
-$L$ observed symbols; the only search is over tap vectors, keeping those that
-reproduce the whole observed word from that seed. The test is **sound** (an
-accepted tap vector regenerates the file symbol by symbol) and **complete** (it
-accepts exactly the files of linear complexity $\leq L$), and once the window is
-at least $2L$ long, *all* accepted candidates predict the same infinite stream:
-ambiguity in the taps, if any, is invisible in the output.
-
-At the other extreme sits the **impulse word** $0,0,\dots,0,1$, the worst case
-for this whole enterprise. No register of order $L < n$ produces it: its first
-$L$ symbols are all zero, so the only compatible seed is the zero seed, which
-produces the all-zero file. Order $n$ does produce it, so its linear complexity
-is *exactly* $n$ — maximal. This kills a natural conjecture: one might hope a
-recovery routine could always return an order at most $\lceil n/2 \rceil$
-consistent with the window it saw, but for $n \geq 2$ the impulse word is
-consistent with no such order. The correct invariant is *minimality* of the
-returned order.
-
-Finally, noise. Real files are contaminated: a header here, a checksum there,
-interleaved metadata. A practical detector must tolerate $e$ corrupted symbols,
-and coding theory conditions one to expect an additive answer: $2L$ symbols to
-pin the generator, $2e$ more to out-vote the errors, one to break ties — a
-threshold of $2L + 2e + 1$.
-
-**That guess is false, for every error budget $e \geq 1$.** Over the
-three-element field, take the constant stream $y_t = 1$ (order one, tap $1$) and
-the alternating stream $z_t = 2^t$, which there is $1, 2, 1, 2, \dots$ (order
-one, tap $2$). These are distinct streams — yet they *agree at every even
-index*. Now build an observed word of length exactly $2 \cdot 1 + 2e + 1$ whose
-entries are all $1$ except a single $2$ at position $1$. It differs from the
-constant stream in one place, and from the alternating stream in the $e$ odd
-positions $3, 5, \dots, 2e+1$. Both distances are at most $e$: two distinct
-generators, one observed word, no way to choose. The smallest instance takes
-$e = 1$ and a window of five symbols.
-
-The failure is structural, not accidental: the two streams agree on a
-half-density set of indices, so their disagreements are spread out and *no*
-window of $2L$ consecutive positions is error-free. Once you see that, the
-repair suggests itself. Two streams within distance $e$ of a common word
-disagree with it in at most $2e$ places combined; and $2e$ corrupted positions
-cannot possibly meet all of $2e+1$ *disjoint* blocks of length $2L$. So at least
-one clean block exists, and on a clean block the two streams agree on $2L$
-consecutive symbols — which by the shifted $2L$ theorem forces them to agree
-from there onward.
-
-**Corrected threshold.** *A window of length $2L(2e+1)$ suffices: if an observed
-word of that length is within Hamming distance $e$ of two streams of linear
-complexity at most $L$, those streams agree from some index $j$ with
-$j + 2L \leq n$ onward.*
-
-The dependence on $e$ is multiplicative, not additive. And it is sharp, at least
-at order one: at length $4e + 1 = 2 \cdot 1 \cdot (2e+1) - 1$, one symbol short,
-unique decoding already fails. The witness is a word that splits its
-disagreements evenly — $1$ at even indices, $1$ at the first $e$ odd indices,
-$2$ at the last $e$ odd indices — sitting at distance exactly $e$ from each of
-the two streams. So the multiplicative blow-up is not an artefact of the block
-pigeonhole; it is the truth.
-
----
-
-## What this all means
-
-The seed-compression programme survives its own analysis, but in a chastened
-form. It cannot be universal — the router capacity theorem forbids that in one
-line, with no assumption about the generators — and it cannot help on average,
-because the fraction of files it touches decays like $q^{-n}$.
-
-What it *can* do is exact, cheap, and certified. If a file really is
-shift-register output of order $L$, then $2L$ symbols are enough to recover the
-generator and prove — not estimate — that it reproduces every remaining byte.
-The seed is free to read, the congruential family comes along at order two for
-no extra machinery, and when the file is only nearly generated, the price of
-tolerating $e$ errors is a window growing like $2L(2e+1)$: a multiplicative, not
-additive, tax, and a sharp one.
-
-That is the honest shape of the answer to the question we started with. The file
-that was never random can be recognised, recovered, and certified. There just
-are not very many of them — and now we can count exactly how few.
+# The Data That Compresses to Three Integers
+
+## What if your file is not data at all, but a seed?
+
+Every compression scheme ever written runs into the same wall. There are $2^n$ possible files of $n$ bits, and only $2^n - 1$ shorter strings to encode them with. So no compressor can shrink everything. Most files, in the brutal arithmetic of the pigeonhole principle, are incompressible.
+
+And yet real-world data compresses beautifully — because real-world data is not random. It has structure. Usually that structure is *statistical*: letters follow letters, pixels resemble neighbours, and a good model of those tendencies buys you a factor of ten.
+
+But there is a second, much rarer, and far more dramatic kind of structure. Sometimes a file is not merely *patterned*; it is **generated**. Somebody ran a short deterministic procedure — a pseudorandom number generator, a procedural terrain algorithm, a table-building loop — and wrote the output to disk. The file may be a gigabyte. The procedure that made it may be four lines long. If you can *recognise* that the file is generator output, and *recover the seed*, the file collapses to the seed. Not compressed by ten percent. Collapsed.
+
+This article is about carrying that idea out to the end in one concrete, ancient, and completely explicit setting: **Pythagorean triples**.
+
+## A generator hiding in plain sight
+
+A Pythagorean triple is a triple of positive integers $(a,b,c)$ with
+$$a^2 + b^2 = c^2.$$
+The first one everybody meets is $(3,4,5)$. The next few are $(5,12,13)$, $(8,15,17)$, $(7,24,25)$, $(20,21,29)$.
+
+Tables of these triples are genuinely real-world data. They appear in geometry software, in test suites, in procedurally generated meshes, in number-theory datasets, in the innards of exact-arithmetic libraries. They look, at a glance, like an irregular list of integers — the kind of thing you would gzip and move on.
+
+They are not irregular at all. In 1963 F. J. M. Barning, and independently in 1934 B. Berggren, observed that every *primitive* triple (one where the legs share no common factor) is reachable from $(3,4,5)$ by repeatedly applying just three fixed linear maps. Write a triple as a column vector; the three maps are the matrices
+
+$$
+A=\begin{pmatrix}1&-2&2\\2&-1&2\\2&-2&3\end{pmatrix},\qquad
+B=\begin{pmatrix}1&2&2\\2&1&2\\2&2&3\end{pmatrix},\qquad
+C=\begin{pmatrix}-1&2&2\\-2&1&2\\-2&2&3\end{pmatrix}.
+$$
+
+Apply them to $(3,4,5)$ and you get $(5,12,13)$, $(21,20,29)$, and $(15,8,17)$. Apply them again and you get nine more triples. Keep going and you sweep out an infinite ternary tree that contains **every** primitive triple, each exactly once.
+
+So a table of primitive Pythagorean triples is not data. It is generator output. The generator is a three-state machine; the "seed" of a triple is nothing more than the sequence of letters $A$, $B$, $C$ you have to type to reach it. That is the setting in which we can ask the compression question sharply — and answer every part of it.
+
+## Question one: how do you *know* it is generator output?
+
+Compression by seed recovery is useless if you cannot tell, cheaply, that seed recovery is even worth attempting. You need a **fingerprint**: a test you can run on the raw numbers, without guessing the seed, that shouts "a generator made this".
+
+Here the fingerprint falls out of a two-hundred-year-old theorem. Every $3\times3$ matrix satisfies its own characteristic polynomial — that is the Cayley–Hamilton theorem — and a cubic characteristic polynomial means the matrix's powers satisfy a three-term linear relation. Translating: if a stream of vectors is the orbit of a fixed $3\times 3$ integer matrix $M$, then *any* linear measurement you take of that stream, say $y(t) = u_1 a(t) + u_2 b(t) + u_3 c(t)$, obeys the fixed recurrence
+
+$$y(t+3) = \operatorname{tr}(M)\,y(t+2) \;-\; c_2(M)\,y(t+1) \;+\; \det(M)\,y(t),$$
+
+where $\operatorname{tr}(M)$ is the trace, $\det(M)$ the determinant, and $c_2(M)$ the sum of the three principal $2\times2$ minors. The coefficients — engineers call them *taps* — depend only on the matrix, never on the seed.
+
+That is the whole detection story, and it is beautifully robust: it doesn't matter *which* coordinate you look at, or which combination, or where the orbit started. Feeding the observed stream to a linear-complexity detector — the classical Berlekamp–Massey algorithm, which finds the shortest linear recurrence fitting a sequence — recovers the taps from a handful of samples.
+
+For the Pythagorean generators, the taps are startlingly simple. Both $A$ and $C$ have characteristic polynomial $(\lambda - 1)^3$, giving
+
+$$y(t+3) = 3y(t+2) - 3y(t+1) + y(t),$$
+
+which is just the statement that the **third difference vanishes**: the stream is a quadratic polynomial in $t$. The matrix $B$ has characteristic polynomial $\lambda^3 - 5\lambda^2 - 5\lambda + 1$, so
+
+$$y(t+3) = 5y(t+2) + 5y(t+1) - y(t).$$
+
+You can see this in the numbers. Iterate $A$ from $(3,4,5)$ and you get
+$$(3,4,5),\ (5,12,13),\ (7,24,25),\ (9,40,41),\ (11,60,61),\dots$$
+The hypotenuses $5, 13, 25, 41, 61$ have second differences $8, 8, 8, 8$ — the quadratic $2t^2 + 6t + 5$, exactly as the closed form predicts. Iterate $B$ instead and the hypotenuses are $5, 29, 169, 985, 5741$, each roughly $5.83$ times the last: the Pell numbers, obeying $c(t+2) = 6c(t+1) - c(t)$, because $\lambda^3 - 5\lambda^2 - 5\lambda + 1$ factors as $(\lambda+1)(\lambda^2 - 6\lambda + 1)$ and the Pell factor $3 \pm 2\sqrt 2$ is what actually drives the growth.
+
+And that order-3 bound is not slack: for the $A$- and $C$-branches, no order-2 recurrence fits the hypotenuse stream at all, while the $B$-branch hypotenuse fits order $2$ and nothing shorter. So the *complexity itself* is a classifier: measure the shortest recurrence length of one coordinate, get $3$, and you are on a unipotent branch; get $2$, and you are on the Pell branch. No seed search required.
+
+## Question two: can you actually recover the seed?
+
+Detection without recovery is a party trick. Here recovery is complete, and it is cheap.
+
+For a single repeated move, the seed is literally the first three observed symbols: feed them into the recurrence and the reconstructed stream agrees with the observed one at *every* index, forever, exactly. A file of a million triples becomes three integers and a two-bit label.
+
+For the full generator — where the control word $w \in \{A,B,C\}^*$ can mix the three moves — the recovery is a descent. Given a triple, we ask *which move made it*. The answer is decided by three sign tests: undo each of $A$, $B$, $C$ in turn and see which one lands you back in the positive quadrant. Exactly one does, and running it moves you strictly closer to the root, because each forward step increases the hypotenuse by at least $4$. So the descent terminates, and it recovers the control word letter for letter. Compress by writing the word; decompress by replaying it; the output is bit-for-bit the input.
+
+Even better, the code is *uniquely decodable*: two different control words never produce the same triple. Combining that with the coverage theorem below, the map from words to triples is an honest bijection between $\{A,B,C\}^*$ and the set of normalised primitive Pythagorean triples.
+
+## Question three: how much of the data is seed-compressible?
+
+Here the answer splits in two, and the split is the real lesson of the whole exercise.
+
+**Restricted to the data the generator was built for, the answer is: all of it.** Every primitive Pythagorean triple with positive legs and odd first leg is emitted by the generator, for exactly one control word. Not "most". Every one. The proof is a descent: any such triple with hypotenuse greater than $5$ has exactly one legitimate parent, whose hypotenuse is strictly smaller; iterate and you reach the unique small triple, $(3,4,5)$. So a corpus of primitive triples is 100% seed-compressible, and the seed is found in a number of sign tests linear in the size of the data — at most $(c-5)/4$ rounds for a triple with hypotenuse $c$.
+
+**Restricted to arbitrary files, the answer is: almost none of it, and provably so.** Suppose we allow any of the three generators, started at any seed whose three coordinates lie in $[-N,N]$, and we ask how many length-$n$ files it can possibly produce. There are at most $3(2N+1)^3$ of them — three branch choices times the number of seeds. Crucially, that bound *does not grow with $n$*. Meanwhile the number of length-$n$ files over the same alphabet is $((2N+1)^3)^n$, which explodes. Already at $n=2$ and $N=1$ the count of candidate files, $729$, dwarfs the compressor's entire reach, $81$. Most files are not generator output, and the gap widens exponentially with length.
+
+That is the pigeonhole principle doing its inevitable work, but stated in a useful form: seed compression is not a general-purpose compressor, it is a *detector* with a spectacular payoff on the tiny set it recognises. Which is exactly why the routing question — is this file seed-compressible or model-compressible? — is the operationally important one.
+
+## The classifier, and what it costs
+
+Routing turns out to be almost free, because the three generators are aggressively distinguishable.
+
+First, there are three conserved quantities, one per branch, which can be read off two consecutive triples with two subtractions:
+
+- On the $A$-branch, the gap $c - b$ **never changes**. (For the orbit from $(3,4,5)$ it is frozen at $1$: $5-4$, $13-12$, $25-24$, $41-40$, …)
+- On the $C$-branch, the gap $c - a$ never changes (frozen at $2$ from the root: $17-15$, $37-35$, …).
+- On the $B$-branch, the leg gap $b - a$ merely flips sign at each step, so its absolute value is frozen ($|4-3| = 1$, $|20-21| = 1$, …).
+
+Second — and this is what makes routing a decision rather than a guess — on any triple with positive legs, the three moves land on three *distinct* triples. A single observed transition therefore pins down the branch. The formal classifier is trivially simple: given consecutive observations $p$ and $q$, try $Ap$, $Bp$, $Cp$ and report whichever matches. It is *sound* (whenever it commits, it is right), *complete* (if any Berggren move explains the transition, it finds one), and on triples with positive legs it is *exact* (the branch it returns is the branch). Consequently a stream can never be explained by two different branches: seed and family label are both uniquely recoverable.
+
+Two concrete negative examples pin down where the scheme stops. A constant stream — the same triple repeated forever — is *not* a generator orbit, because every move strictly increases the hypotenuse. That data is highly compressible, but by a model ("repeat this"), not by a seed. And the triple $(6,8,10)$, the doubling of the root, has no legitimate parent at all: it can never occur after the first step of any orbit, which puts it outside the range of the control-word code entirely. Double a file that the control-word code had crushed to a handful of ternary symbols, and the compressor is thrown back on spelling out the triple. The scheme is exquisitely sensitive to normalisation — a lesson any real deployment would learn the hard way.
+
+## Question four: is recovering the seed actually a *win*?
+
+This is the sharpest surprise, and it is the reason detection and compression must be kept apart in one's head.
+
+Consider two extreme control words of the same length $k$.
+
+The word $BBB\cdots B$ produces a triple whose hypotenuse is at least $5 \cdot 3^k$ — in truth it grows like $(3+2\sqrt2)^k \approx 5.83^k$. To write that hypotenuse in binary costs about $k \log_2 5.83 \approx 2.5k$ bits; to write the seed costs $k$ trits, about $1.6k$ bits, plus a length. That is real, honest, logarithmic-in-the-data compression.
+
+The word $AAA\cdots A$ produces a triple whose hypotenuse is exactly $2k^2 + 6k + 5$. Writing the hypotenuse in binary costs about $2\log_2 k$ bits. Writing the seed costs $k \approx \sqrt{c/2}$ trits. The "compressed" form is **exponentially larger than the raw data**. Seed compression is a catastrophic loss on that branch.
+
+Both branches have identical detectability — order-3 linear recurrence, three-symbol fingerprint, same detector, same cost. They differ completely in profit. Stated in one breath: *for every $k$, the all-$B$ word emits a hypotenuse of at least $5 \cdot 3^k$, while the all-$A$ word emits one of at most $2(k+2)^2$.* At $k = 10$ the contrast is $295{,}245$ against $265$.
+
+And there is a ceiling as well as a floor: one Berggren step multiplies the hypotenuse by at most $7$, so a word of length $k$ can never reach beyond $5 \cdot 7^k$. Consequently a seed can never be *shorter* than logarithmic in the data. Berggren coding beats binary by at most a constant factor, ever.
+
+What separates the winning branch from the losing one is a single spectral quantity. The matrix $B$ has spectral radius $3 + 2\sqrt2 > 1$; its orbits grow exponentially, so a length-$k$ seed names an exponentially large object and the seed is short. The matrices $A$ and $C$ are *unipotent* — all their eigenvalues equal $1$ — so their orbits grow only polynomially, and the seed is long. Detectability is governed by the **degree** of the characteristic polynomial (always $3$, by Cayley–Hamilton). Compressibility is governed by the **root moduli** of the very same polynomial. Two different invariants of one matrix, pulling in different directions.
+
+## What this actually teaches
+
+It is tempting to read the Pythagorean case as a curiosity. It is better read as a fully worked miniature of the general problem, with every question answered exactly rather than empirically:
+
+1. **Detection is easy and universal.** Any generator whose state evolves by a fixed $d \times d$ integer matrix leaves an order-$d$ linear recurrence on *every* linear observable. You do not need to know the matrix; Berlekamp–Massey extracts the recurrence from $2d$ samples. This survives composition: driving the machine with a repeating control word $w$ merely replaces the matrix by a product of matrices, which is still $3\times3$, and still order-3 detectable.
+
+2. **Recovery, when detection fires, is exact and cheap.** Three symbols for a single-move stream; a linear-time descent by sign tests for the full tree; the falsifiability gate — decompressed output equals the input, exactly — is met in every case.
+
+3. **Coverage is a matter of choosing the right corpus.** On its natural domain the generator covers everything; on arbitrary files it covers a set whose size does not even grow with the file length. A deployed system must therefore be a *router*, not a compressor: cheaply test for the fingerprint, seed-compress when it fires, fall back to a statistical model when it does not.
+
+4. **Detectability and profitability are different invariants.** This is the finding a practitioner should carry away. You can be certain a file is generator output, recover the seed exactly, and *still* end up with something bigger than what you started with. Whether seeding wins is decided by the growth rate of the generator, not by how loudly it announces itself.
+
+The pigeonhole principle guarantees that no compressor beats it in general. What the Pythagorean tree shows, in complete and checkable detail, is what beating it *locally* looks like: an exactly characterised island of data on which a gigabyte becomes a handful of trits — surrounded by an ocean where the same machinery, running perfectly, is worse than useless.
+
+Somewhere in that picture is a design principle for real compressors, and a caution: the interesting question is never "can I find the seed?" but "will finding it pay?"
