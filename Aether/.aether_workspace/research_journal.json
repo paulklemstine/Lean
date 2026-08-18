@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "12195e06",
-      "domain": "Algebra",
-      "key_insight": "# Future directions\n\nDerived from the formalisation in `Catalog/Algebra/KleberComplementaryProducts.lean` and\n`Catalog/Algebra/KleberManyFoldProducts.lean`, and from the exploratory data in\n`Computati",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 7,
-      "timestamp": "2026-08-17T01:55:43",
-      "title": "ArXiv paper: Kleber's conjecture and complementary products of symmetric functions"
-    },
-    {
       "cycle_id": "6a0dc5c0",
       "domain": "Logic",
       "key_insight": "# Future directions — bold, falsifiable conjectures from the NET-45 cycle\n\nEach conjecture is stated so that a single computation, run, or Lean development decides\nit. Formal counterparts of the defin",
@@ -499,19 +489,19 @@
       "theorem_count": 278,
       "timestamp": "2026-08-18T22:42:43",
       "title": "The case `m = 3`, `F = x² + y² - z²` is fully proved"
+    },
+    {
+      "cycle_id": "af68ac83",
+      "domain": "Applications",
+      "key_insight": "# FUTURE DIRECTIONS — power-sum near misses (after cycles 4–5)\n\n## What is now settled\n\nThe open successor question of cycle 3 — *is the support size of a near miss also minimised\nby the binomial pair",
+      "quality_score": 0.87,
+      "sorry_count": 0,
+      "theorem_count": 55,
+      "timestamp": "2026-08-18T23:36:17",
+      "title": "~~`minimal_near_miss_size`~~ — RESOLVED in cycle 3: among all near-miss pairs at level\n   `N ≥ 1` th"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "df8839cd",
-      "domain": "Pythagorean",
-      "key_insight": "# Future directions\n\n## What this cycle settled\n\nThe previous cycle left the exact rank of a uniform divisor on a complete graph as\nits headline conjecture: the *upper* bound `r(m·1) ≤ m(m+3)/2` on `K",
-      "quality_score": 0.71728,
-      "sorry_count": 0,
-      "theorem_count": 70,
-      "timestamp": "2026-08-07T19:26:07",
-      "title": "This cycle settled the *uniform half-canonical existence* question for almost al"
-    },
     {
       "cycle_id": "ab157807",
       "domain": "Algebra",
@@ -2501,15 +2491,19 @@
       "theorem_count": 278,
       "timestamp": "2026-08-18T22:42:43",
       "title": "The case `m = 3`, `F = x² + y² - z²` is fully proved"
+    },
+    {
+      "cycle_id": "af68ac83",
+      "domain": "Applications",
+      "key_insight": "# FUTURE DIRECTIONS — power-sum near misses (after cycles 4–5)\n\n## What is now settled\n\nThe open successor question of cycle 3 — *is the support size of a near miss also minimised\nby the binomial pair",
+      "quality_score": 0.87,
+      "sorry_count": 0,
+      "theorem_count": 55,
+      "timestamp": "2026-08-18T23:36:17",
+      "title": "~~`minimal_near_miss_size`~~ — RESOLVED in cycle 3: among all near-miss pairs at level\n   `N ≥ 1` th"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "cf8480d3",
-      "domain": "Novelty",
-      "name": "turns",
-      "quality": 0.85
-    },
     {
       "cycle_id": "a5150a29",
       "domain": "Pythagorean",
@@ -2803,9 +2797,15 @@
       "domain": "Pythagorean",
       "name": "requires",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "af68ac83",
+      "domain": "Applications",
+      "name": "vandermonde_kernel_weighted",
+      "quality": 0.87
     }
   ],
-  "last_updated": "2026-08-18T22:42:43",
+  "last_updated": "2026-08-18T23:36:17",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hupper⟩)",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "94177336",
-        "quality": 0.6348185595414201,
-        "theorems": 96,
-        "title": "Close Proofs: Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem "
-      },
-      {
         "cycle_id": "c56f6a79",
         "quality": 0.71215,
         "theorems": 43,
@@ -3141,6 +3135,12 @@
         "quality": 0.82,
         "theorems": 63,
         "title": "For every finite action the spectrum is log-concave: `t_r² ≥ t_{r−1}·t_{r+1}` fo"
+      },
+      {
+        "cycle_id": "af68ac83",
+        "quality": 0.87,
+        "theorems": 55,
+        "title": "~~`minimal_near_miss_size`~~ — RESOLVED in cycle 3: among all near-miss pairs at"
       }
     ],
     "Bridges": [
