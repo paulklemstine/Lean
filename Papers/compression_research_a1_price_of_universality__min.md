@@ -1,77 +1,95 @@
-# Computational evidence
+# Computational evidence — price of universality (Phase A, Question 1)
 
-All numbers below were produced by `#eval` inside this Lean project (a scratch
-module, since removed) using `Float` arithmetic.  They are *numerical
-exploration*, not verified facts: the verified statements are the theorems in
-`Catalog/Novelty/`, listed at the end.
+All numbers below were produced with Lean `#eval` (Float arithmetic) on the exact
+combinatorial formula for the Shtarkov sum of a memoryless class,
 
-## 1. The Shtarkov sum of the memoryless binary class
+`Cₛ(m, n) = Σ_{types (k₁,…,k_m), Σkᵢ = n} (n! / Πkᵢ!) · Π (kᵢ/n)^{kᵢ}`,
 
-For block length `n`, the exact minimax pointwise regret of the class of
-memoryless binary sources is `log₂ Sₙ` with
+i.e. the sum over messages of the maximum-likelihood probability, grouped by
+type.  They are *evidence*, not proof; every claim marked as a theorem below is
+proved without `sorry` in `Catalog/Logic/PriceOfUniversality/`.
 
-```
-Sₙ = ∑_{k=0}^{n} C(n,k) · (k/n)^k · ((n−k)/n)^{n−k}
-```
+## 1. Binary memoryless class (`m = 2`)
 
-(the `k = 0` and `k = n` terms use `0^0 = 1`).  Computed values, together with
-the two bounds proved in this project and the classical asymptotic
-`√(πn/2)`:
+| n | Cₛ | lower bound √n/4 (proved) | upper bound n+1 (proved) |
+|---|------|------|------|
+| 1 | 2.000 | 0.250 | 2 |
+| 2 | 2.500 | 0.354 | 3 |
+| 4 | 3.219 | 0.500 | 5 |
+| 8 | 4.245 | 0.707 | 9 |
+| 12 | 5.036 | 0.866 | 13 |
+| 16 | 5.704 | 1.000 | 17 |
 
-| n  | Sₙ (computed) | proved lower bd √n/4 | √(πn/2) | proved upper bd n+1 |
-|----|---------------|----------------------|---------|---------------------|
-| 8  | 4.2450        | 0.7071               | 3.5449  | 9                   |
-| 16 | 5.7043        | 1.0000               | 5.0133  | 17                  |
-| 24 | 6.8268        | 1.2247               | 6.1400  | 25                  |
-| 32 | 7.7740        | 1.4142               | 7.0898  | 33                  |
-| 40 | 8.6091        | 1.5811               | 7.9267  | 41                  |
-| 48 | 9.3644        | 1.7321               | 8.6832  | 49                  |
-| 56 | 10.0591       | 1.8708               | 9.3789  | 57                  |
-| 64 | 10.7058       | 2.0000               | 10.0265 | 65                  |
-| 72 | 11.3133       | 2.1213               | 10.6347 | 73                  |
-| 80 | 11.8880       | 2.2361               | 11.2100 | 81                  |
-| 88 | 12.4346       | 2.3452               | 11.7571 | 89                  |
-| 96 | 12.9569       | 2.4495               | 12.2799 | 97                  |
+Observations.
 
-Observations:
+* Both catalogued bounds hold on every computed instance.
+* `Cₛ` tracks `√(πn/2)` closely (`n = 16`: `√(8π) = 5.013` vs `5.704`), i.e. the
+  true growth is `½ log₂ n + O(1)` bits — the Rissanen rate for one free
+  parameter.  The proved lower bound `√n/4` has the right *exponent* and loses
+  only an additive constant (2 bits); the proved upper bound `n+1` has exponent
+  `1` instead of `½`, i.e. it is off by a factor `2` in the coefficient of
+  `log₂ n`, exactly as the literature's `d/2 · log n` predicts.
 
-* `Sₙ` tracks `√(πn/2) + 2/3` very closely (e.g. `n = 96`: `12.2799 + 0.667 =
-  12.947` versus the computed `12.957`), matching the classical expansion of the
-  binomial Shtarkov sum.  This is the numerical signature of the Rissanen rate
-  `log₂ Sₙ = (1/2) log₂ n + O(1)`.
-* The proved lower bound `√n/4` is correct but loose by a constant factor of
-  about `5` (it comes from a Chebyshev argument with slack `3/4` per window and
-  windows of half-width `⌈√n⌉`).  Only the *rate* — the coefficient `1/2` in
-  front of `log₂ n` — is asymptotically sharp.
-* The proved upper bound `n + 1` is a factor `√n` off; closing this to `O(√n)`
-  is Conjecture 1 of `FUTURE_DIRECTIONS.md`.
+## 2. Ternary and quaternary alphabets: is the *dimension* right?
 
-## 2. Counterexample hunt
+| n | Cₛ (m = 3) | (n+1)^(m−1) = (n+1)² | Cₛ (m = 4) | (n+1)³ |
+|---|------|------|------|------|
+| 2 | 4.500 | 9 | 7.000 | 27 |
+| 4 | 7.219 | 25 | 13.656 | 125 |
+| 6 | 9.775 | 49 | 21.099 | 343 |
+| 8 | 12.245 | 81 | 29.225 | 729 |
+| 10 | 14.660 | 121 | 37.961 | 1331 |
+| 12 | 17.036 | 169 | — | — |
 
-The two structural claims of the project were tested for counterexamples before
-being proved:
+Observations.
 
-* *Multiplicativity of the Shtarkov sum.* For product classes built from small
-  random families (`|A| = |B| = 3`, `|Θ| = |Ψ| = 2`) the identity
-  `S(P ⊗ Q) = S(P)·S(Q)` held exactly; no counterexample exists, and the identity
-  is now proved (`shtarkov_prodClass`).
-* *`S ≥ 1` with equality iff the class is a single source.* Confirmed on small
-  families and proved as `one_le_shtarkov`.
-* *Disjointly supported classes.* For `m` deterministic sources on `m` letters,
-  `S = m` exactly, matching `shtarkov_disjointSupports`.
+* The dimension-corrected bound `Cₛ ≤ (n+1)^(#A−1)`
+  (`shtarkovSum_iidClass_le_dim`, proved) holds everywhere and is far tighter
+  than the previously catalogued `(n+1)^#A`.
+* Growth is consistent with `Cₛ ≍ n^{(m−1)/2}`: for `m = 3` the data is close to
+  linear in `n` (17.0 at `n = 12`), for `m = 4` close to `n^{3/2}`.  So the
+  exponent `m − 1` in the proved upper bound is again exactly twice the truth —
+  the same factor-2 gap as in the binary case, and the same one the literature
+  has.
 
-No counterexample to any conjecture that was subsequently formalised was found.
+## 3. The tensorization/embedding claim
 
-## 3. What is actually verified in Lean (0 sorries)
+`shtarkovSum_power_le_iid` (proved) says the memoryless class over an alphabet
+of size `2^k` contains the `k`-fold power of the binary memoryless class, so
+`Cₛ(m = 4, n) ≥ Cₛ(m = 2, n)²`.
 
-* `redundancy_nonneg`, `exists_code_redundancy_le_one` — Shannon bounds.
-* `kl_compensation`, `exists_source_redundancy_ge_mutualInfo`,
-  `price_of_universality_sandwich` — average-case price of universality.
-* `minimax_regret_eq_logb_shtarkov`, `shtarkov_disjointSupports` — exact
-  worst-case price.
-* `shtarkov_bernClass_ge_sqrt`, `bernoulli_regret_ge_half_logb`,
-  `bernoulli_regret_two_sided` — the Rissanen-style rate.
-* `shtarkov_prodClass`, `two_block_bernoulli_regret` — additivity over
-  independent components.
-* `price_of_specialisation`, `exists_length_ge_logb_card` — the value of
-  specialisation and the pigeonhole form of the bound.
+| n | Cₛ(m = 4) | Cₛ(m = 2)² |
+|---|------|------|
+| 2 | 7.000 | 6.250 |
+| 4 | 13.656 | 10.360 |
+| 6 | 21.099 | 14.248 |
+| 8 | 29.225 | 18.020 |
+| 10 | 37.961 | 21.718 |
+
+The inequality holds on every instance, with slack that grows — consistent with
+the honest statement in the file: the embedding recovers exponent
+`k = log₂ #A` where the truth is `(#A − 1)/2`.
+
+## 4. The parameter-sharing dichotomy
+
+Independent parameters (`k` blocks of length `n = 4`, binary) versus one shared
+parameter over the same `4k` symbols:
+
+| k | log₂ Cₛ(power) = k·log₂ 3.219 | log₂ Cₛ(shared, n = 4k) ≤ log₂(4k+1) |
+|---|------|------|
+| 1 | 1.687 | 2.32 |
+| 2 | 3.375 | 3.17 |
+| 4 | 6.749 | 4.09 |
+| 8 | 13.499 | 5.04 |
+| 32 | 53.996 | 7.01 |
+
+Linear versus logarithmic, exactly as `parameter_sharing_dichotomy` and
+`sharing_gap_linear` state.  (The proved explicit gap `k/4` is stated from
+`k ≥ 5000` because the proof routes through the crude `log₂ t ≤ 2.9 √t`
+estimate; the numerics show the phenomenon starts immediately.)
+
+## 5. No counterexample found
+
+Every inequality that appears as a theorem in
+`Catalog/Logic/PriceOfUniversality/` was tested on all instances above
+(`m ∈ {2,3,4}`, `n ≤ 16`) before being formalised; no violation was observed.

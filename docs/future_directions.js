@@ -18,13 +18,13 @@ window.FUTURE_DIRECTIONS = [
     "title": "NET-48: The direct test survives via the MEDIAN \u2014 k*=160 at (d=4, ctx=2048, seed=3), all four point-horns refuted, the completed 16\u00d7 distribution {160,224,256} has median exactly 224 = 7/8\u00b7(d\u00b7ctx/32) \u2014 the 7/8-median law is 2/2-context, 6/6-seed"
   },
   {
-    "consumed_by_exp_id": "23eee1e8",
+    "consumed_by_exp_id": "24a12580",
     "description": "**Part of:** Research plan \u2014 *Compression Beyond the Pigeonhole Bound* (Phase B, Question 2: can random number generators help?).\n\n## Research question\nA surprising amount of real-world data **is** PRNG output: game worlds, simulations, certain file formats, crypto keys. Detect it and recover the seed \u2192 compress to ~0 bits beyond the seed.\n\n## Approach\n- Robust **PRNG fingerprinting**: which generator family produced this stream?\n- **Seed recovery**: Berlekamp\u2013Massey for LFSRs; solver-based inversion for other families.\n- A classifier that routes each file to *seed-compressible* vs. *model-compressible*.\n\n## Deliverable\nDetection + seed-recovery tooling and a benchmark of seed-compressible files found in real corpora.\n\n## Falsifiability / gate\nFor a recovered seed: decompressed output must exactly reproduce the file. Measures what fraction of real data is seed-compressible.\n\n**Milestone:** M2 (cheap, warm-up infrastructure). Related: [[B1]].\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_1366",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
@@ -864,20 +864,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-16T11:35:10.982658+00:00",
     "title": "Deepening: Elliptic Curve Cryptography: Weil Pairing and BLS Signatures"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 0e1eb0cb (Q=0.800), which proved 26 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that the Bergman fan of a matroid M equals the tropical linear space of the matroid's circuit ideal. Formalize the connection between matroid connectivity and the topology of the Bergman fan. Show that nested matroids give tropical linear subspaces.",
-    "domains": [
-      "Tropical"
-    ],
-    "id": "push_0e1eb0cb_989cd146",
-    "priority_score": 0.90043,
-    "research_mode": "team",
-    "source_exp_id": "0e1eb0cb",
-    "status": "available",
-    "timestamp": "2026-08-01T11:44:09.232762+00:00",
-    "title": "Deepening: Tropical Matroid Theory: Bergman Fans and Tropical Linear Spaces"
   },
   {
     "consumed_by_exp_id": "",
@@ -1793,22 +1779,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-05T06:51:05.180719+00:00",
     "title": "Deepening: ArXiv paper: Magnitude homology of tope graphs"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize the group law on elliptic curves over finite fields in Lean 4. Prove associativity via the chord-tangent construction. Implement and verify point multiplication. Prove Hasse's bound: |#E(F_p) - p - 1| \u2264 2\u221ap.",
-    "domains": [
-      "Cryptography",
-      "Algebra",
-      "NumberTheory"
-    ],
-    "id": "fd_0689",
-    "priority_score": 0.88,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-24T14:34:16.697838+00:00",
-    "title": "Elliptic Curve Arithmetic: Group Law Formalization"
   },
   {
     "consumed_by_exp_id": "",
@@ -7948,18 +7918,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: Strongly complete sets and a conjecture of Erd\u0151s"
   },
   {
-    "consumed_by_exp_id": "ed687362",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Edge-decomposition into Two Triangular Forests is NP-complete' and formalize its key results. Abstract: Let $\\mathcal F$ be a graph class that is closed under topological minors and 1-sums, has decidable membership, contains a triangle, and is not the class of all graphs. Recently, Lee, Liu, and Tsai [ICALP 2026] showed that the edge-decomposition problem into $k \\geq 3$ elements of $\\mathcal F$ is NP-hard. In particular, their general hardness reduction covers a long-standing problem on outerthickness (when $\\mathcal F$ is the class of outerplanar graphs). On the other hand, it is well known that decomposing a graph into forests is polynomial-time solvable, as implied by work of Edmonds [J. Res. Natl. Bur. Stand. B. 1965]. In this paper, we take a first step toward determining the complexity of edge-decomposition problems into just two graphs (the case $k=2$). We consider the simplest possible graph class $\\mathcal F$ satisfying the criteria above: the triangular forests, that is, graphs in which every 2-connected component is a triangle. We prove that determining whether a graph can be",
     "domains": [
       "Computation",
       "Logic"
     ],
     "id": "fd_0133",
-    "phase": "A",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.13999v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-16T15:52:39.780537+00:00",
     "title": "ArXiv paper: Edge-decomposition into Two Triangular Forests is NP-complete"
   },
@@ -19481,6 +19450,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The two easy halves are *proved*: closure under subgraphs\n(`TriangularForest.IsTriangularForest.mono`, `IsTriangularForest.comap`) and closure under\n1-sums (`TriangularForest.isTriangularForest_oneSum`).  Subdivision/suppression is the missing\noperation and is not available in Mathlib.",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "fd_1527",
+    "priority_score": 0.4768888888888889,
+    "research_mode": "team",
+    "source_exp_id": "ed687362",
+    "status": "available",
+    "timestamp": "2026-08-18T13:08:22.887394+00:00",
+    "title": "The two easy halves are *proved*: closure under subgraphs"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Two contexts and six seeds already separate the three rungs of a three-seed\nladder, and a single `ctx = 4096` cell distinguishes the two candidate low-tail families by\nexactly one grid step: `320` (constant ratio) versus `288` (affine), proved as\n`KneeQuota.lowtail_prediction_32x`.",
     "domains": [
       "Geometry"
@@ -19492,6 +19475,35 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-17T05:50:44.235858+00:00",
     "title": "Two contexts and six seeds already separate the three rungs of a three-seed"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "(`TriangularForest.completeGraph_not_decomposesIntoTwo_six`).  Randomised search finds\nmatching covers for all `n \u2264 11`.  Open: a construction for general `n`.",
+    "domains": [
+      "Combinatorics",
+      "Computation"
+    ],
+    "id": "fd_1526",
+    "priority_score": 0.47470175438596485,
+    "research_mode": "team",
+    "source_exp_id": "ed687362",
+    "status": "available",
+    "timestamp": "2026-08-18T13:08:22.727028+00:00",
+    "title": "(`TriangularForest.completeGraph_not_decomposesIntoTwo_six`).  Randomised search finds"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The certificate reformulation just proved turns the problem into an\nedge-set-quantified property, which is the precise input format of the MSO transfer theorems;\nand the sparsity bound `e \u2264 3(n-1)` for decomposable graphs already bounds the instances that\nneed to be considered.",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "fd_1529",
+    "priority_score": 0.4742222222222222,
+    "research_mode": "team",
+    "source_exp_id": "ed687362",
+    "status": "available",
+    "timestamp": "2026-08-18T13:08:23.208699+00:00",
+    "title": "The certificate reformulation just proved turns the problem into an"
   },
   {
     "consumed_by_exp_id": "",
@@ -20761,5 +20773,68 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-18T10:46:56.846468+00:00",
     "title": "The support form is in place, so this conjecture reduces entirely to a"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "if `x` is a `2L`-window of an order-`L` stream, the returned generator\n   reproduces the stream forever.",
+    "domains": [],
+    "id": "fd_1522",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "23eee1e8",
+    "status": "available",
+    "timestamp": "2026-08-18T13:08:02.670980+00:00",
+    "title": "if `x` is a `2L`-window of an order-`L` stream, the returned generator\n   reproduces the stream forever."
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The odd case of existence is *proved*: `TriangularForest.sparsity_bound_attained`\nexhibits the windmill `F\u2096` on `n = 2k+1` vertices with `2e = 3(n-1)`.  What remains is (a) the\neven case `e = (3n-4)/2` and (b) the *uniqueness* half \u2014 the characterisation of maximisers.",
+    "domains": [],
+    "id": "fd_1523",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "ed687362",
+    "status": "available",
+    "timestamp": "2026-08-18T13:08:22.193046+00:00",
+    "title": "The odd case of existence is *proved*: `TriangularForest.sparsity_bound_attained`"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Both ingredients are already machine-checked (the sharp bound and 1-sum closure),\nso the conjecture reduces to an equality analysis of an existing induction rather than to new\ntheory.",
+    "domains": [],
+    "id": "fd_1524",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "ed687362",
+    "status": "available",
+    "timestamp": "2026-08-18T13:08:22.402394+00:00",
+    "title": "Both ingredients are already machine-checked (the sharp bound and 1-sum closure),"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The lower bound `n \u2264 3k` is *proved*\n(`TriangularForest.triangularThickness_lower_bound_sharp`), and the exception at `n = 6` is",
+    "domains": [],
+    "id": "fd_1525",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "ed687362",
+    "status": "available",
+    "timestamp": "2026-08-18T13:08:22.565100+00:00",
+    "title": "The lower bound `n \u2264 3k` is *proved"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Open here; NP-membership is *proved* in the sense that the problem has a succinct\ncertificate and is decidable (`TriangularForest.decomposesIntoTwo_iff_exists_edgeColoring`,\n`TriangularForest.instDecidableDecomposesIntoTwo`).",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_1528",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "ed687362",
+    "status": "available",
+    "timestamp": "2026-08-18T13:08:23.047321+00:00",
+    "title": "Open here; NP-membership is *proved* in the sense that the problem has a succinct"
   }
 ];
