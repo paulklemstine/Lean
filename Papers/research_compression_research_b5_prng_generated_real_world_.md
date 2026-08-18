@@ -1,789 +1,849 @@
-# Seed-Compressible Data: Detection, Identification and Exact Seed Recovery for Pseudo-Random Streams
+# Seed-Compressibility of Pseudorandom Streams: Detection, Certified Seed Recovery, and the Capacity of a Generator Router
 
 **Author:** Aristotle
-**Date:** 2026-08-17
+
+**Date:** 2026-08-18
 
 ---
 
 ## Abstract
 
-A substantial amount of real-world data is not merely *random-looking* but
-literally the output of a deterministic pseudo-random generator: procedurally
-generated game content, simulation traces, synthetic benchmark corpora,
-scrambled transport streams. Such data is statistically incompressible yet has
-description complexity equal to that of its seed. We develop the exact
-mathematics of exploiting this: detection, identification, and lossless seed
-recovery with a bit-exact replay guarantee.
+A substantial fraction of real-world data is not authored but *computed*: game
+worlds, simulation traces, noise textures and certain file formats are the
+output of deterministic pseudorandom generators. Such a file carries no more
+information than the seed that produced it, and if the generator and seed can be
+recovered the file compresses to essentially zero bits beyond that seed. We
+develop the exact theory of this idea.
 
-We work with streams over a commutative ring that obey a linear recurrence
-$x_{n+L} = \sum_{i<L} c_i x_{n+i}$, the model underlying linear feedback shift
-registers, and we prove five groups of results.
+We work with a deterministic generator as a pair $(\mathrm{step}, \mathrm{out})$
+on a state space $S$, and call a finite word *seed-compressible* when some seed
+reproduces it symbol for symbol. Three groups of results follow. First, a
+complete theory of the linear feedback shift register (LFSR) family: a window
+lemma identifying the register state with a sliding window on its own future
+output; an exact (sound *and* complete) fingerprint test in the form of an
+order-$L$ linear recurrence; free seed recovery, the seed being literally the
+first $L$ output symbols; and the observation that the full-output linear
+congruential generator $x \mapsto ax+b$ satisfies the order-two recurrence
+$x_{t+2} = (a+1)x_{t+1} - a x_t$, so one detector serves both families.
 
-1. **Exact replay.** A stream obeying an order-$L$ recurrence is reproduced bit
-   for bit by rerunning the register from its own first $L$ symbols; storage of
-   $(\text{taps}, \text{seed})$ is lossless.
-2. **Sample complexity.** Introducing the $F[X]$-module structure on streams
-   induced by the shift operator, we show that a stream obeys a recurrence
-   exactly when the recurrence's characteristic polynomial annihilates it; that
-   every monic polynomial is realized as such a characteristic polynomial; that
-   linear complexity is subadditive; and hence that **two streams of linear
-   complexity at most $L$ agreeing on their first $2L$ symbols agree
-   identically**. A $2L$-symbol observation window is therefore sufficient, and
-   we exhibit witnesses showing it is necessary.
-3. **Well-posedness.** Recovery of the taps has a unique answer **if and only
-   if** the state windows of the stream span $F^{L}$. Both directions are
-   proved; the all-zero stream shows the criterion cannot be dropped.
-4. **Family collapse.** Every linear congruential stream $x_{n+1} = a x_n + b$
-   satisfies the order-$2$ linear recurrence with taps $(-a, 1+a)$, so one
-   detector covers both families. Seeds are recovered exactly by backward
-   modular inversion and, on finite state spaces with invertible multiplier, by
-   *forward* iteration, since every orbit is purely periodic.
-5. **Census and limits.** At most $4^{L}$ files of any length are $L$-seed
-   compressible, and never that many: the bound improves to $4^L - 2^L + 1$
-   because all zero-seed registers collapse. Seed-compressible files are a
-   $2^{2L-N}$ fraction of length-$N$ files. Finally, for *any* fixed
-   decompressor on the model branch, there are files that are neither
-   seed-compressible nor model-compressible: a two-box router cannot cover file
-   space, and the pigeonhole bound survives the addition of generator
-   detection.
+Second, our main theorem: **$2L$ observed symbols certify a recovered order-$L$
+generator forever**. Two sequences, each satisfying *some* order-$L$ linear
+recurrence — with possibly different tap vectors — that agree on the first $2L$
+indices agree at every index. The proof realises sequences as a module over the
+polynomial ring with $X$ acting as the shift, so that a tap vector becomes a
+monic characteristic polynomial, annihilators multiply, and a rigidity lemma
+closes the argument. The constant $2L$ is sharp: an explicit pair of order-$L$
+registers agrees on $2L-1$ symbols and diverges at index $2L-1$. A tap-uniqueness
+criterion in terms of Hankel nonsingularity completes the well-posedness picture.
 
-We also report an exact census of distinct binary streams of complexity at most
-$L$ for $L \le 8$, which matches $\tfrac{1}{3}(2 \cdot 4^{L} + 1)$ in every
-case; this regularity is an empirical observation and is stated as a
-conjecture.
+Third, the negative side. A *router* over a finite family of generators with
+state spaces $S_i$ compresses at most $\sum_i |S_i|$ files of each length; a
+router that compresses everything therefore saves nothing. For a single order-$L$
+register the count of length-$n$ producible words is at most $q^{2L}-q^L+1$ over
+an alphabet of size $q$, and exactly $q^2-q+1 = (q^3+1)/(q+1)$ at order one, in
+agreement with a conjectured general closed form $(q^{2L+1}+1)/(q+1)$ supported
+by exhaustive enumeration. Finally, we refute the natural noise-tolerance
+threshold: $2L + 2e + 1$ symbols do **not** determine an order-$L$ stream in the
+presence of $e$ corruptions, for any $e \geq 1$; the correct threshold is the
+multiplicative $2L(2e+1)$, and it is sharp at order one.
 
-**Keywords:** linear feedback shift register, linear complexity,
-Berlekamp–Massey, seed recovery, linear congruential generator, shift operator,
-Hankel rank, description complexity, lossless compression.
+**Keywords:** pseudorandom generator, linear feedback shift register, linear
+complexity, seed recovery, Berlekamp–Massey, Hankel matrix, unique decoding,
+Kraft-type capacity bound.
 
 ---
 
 ## 1. Introduction
 
-### 1.1 The phenomenon
+### 1.1 The question
 
-Compression exploits structure. Classical compressors exploit *statistical*
-structure — repeated substrings, skewed symbol frequencies, local correlation —
-and are defeated by data whose statistics are flat. But flat statistics do not
-imply high information content. The output of a well-chosen shift register of
-$32$ cells passes standard randomness tests while being determined by $64$ bits.
-A megabyte of such data has description complexity $64$ bits and statistical
-compressibility zero.
+Classical lossless compression is bounded by counting. Over an alphabet of size
+$q$ there are $q^n$ words of length $n$, and no injective encoding can shorten
+them all. The observation motivating this work is that a great deal of
+real-world data is not drawn from that uniform pool at all: it is the output of
+a short deterministic program. Terrain in a procedurally generated world, noise
+fields in a renderer, particle initial conditions in a simulation, keystreams in
+a legacy protocol, padding in certain container formats — all of these are
+generated by a pseudorandom number generator (PRNG) with a small state.
 
-Such data is not rare in the wild. Procedural game worlds are generated from
-seeds and stored as assets; simulation studies persist their random streams for
-reproducibility; synthetic corpora are generated to benchmark databases;
-transport-layer scramblers XOR real payloads with register output. Whenever the
-generator and the seed are known or recoverable, the correct compressed
-representation of such a file is the seed.
+Such a file is, information-theoretically, its seed. If a decompressor can be
+handed a generator identifier and a seed and asked to regenerate the file
+exactly, the file has been compressed to $\log_2 |S|$ bits regardless of its
+length. The programme is therefore:
 
-This paper develops the mathematics of that pipeline: **fingerprint** (which
-generator family produced this stream?), **identify** (which parameters?),
-**recover** (what seed?), **verify** (does replay reproduce the file exactly?),
-and **bound** (how much data can possibly be handled this way?).
+1. **Fingerprint** — decide which generator family, if any, produced the stream.
+2. **Recover** — invert to a seed.
+3. **Certify** — prove that the recovered seed reproduces the file *exactly*, so
+   that the compression is lossless in the strict sense.
+4. **Route** — classify each file as seed-compressible or model-compressible.
 
-### 1.2 Contribution and structure
+This paper supplies the mathematics for all four steps, with unconditional
+theorems in place of heuristics, and it delimits how much the programme can
+possibly buy.
 
-Section 2 fixes the model. Section 3 proves the exact-replay theorem and the
-rigidity lemma underlying it. Section 4 develops the polynomial-module
-machinery and proves the $2L$ sample-complexity theorem, with a matching
-lower-bound witness. Section 5 characterizes well-posedness of tap recovery by a
-spanning (Hankel-rank) criterion. Section 6 treats congruential generators.
-Section 7 quantifies the population of seed-compressible files, proves the
-router dichotomy, and reports the census. Section 8 gives algorithms; Section 9
-applications; Section 10 discussion and future work.
+### 1.2 Contributions
 
-Throughout, the falsifiability standard is absolute: a compression claim is
-accepted only when the decoder, run on the claimed program, reproduces the file
-**bit for bit**. No statistical similarity, prefix agreement, or approximate
-match is admitted.
+* **A generic framework** (Section 2) for seed-compressibility of arbitrary
+  deterministic generators, with a pigeonhole capacity ceiling, a density bound
+  on false positives, an exact-reproduction decoder guarantee, and the eventual
+  periodicity of finite-state generators.
+* **A complete analysis of the LFSR family** (Section 3): the window lemma, an
+  if-and-only-if fingerprint test, free seed recovery, and exact reproduction.
+* **The reduction of linear congruential generators to order-two LFSRs**
+  (Section 4).
+* **The $2L$ theorem and its sharpness** (Section 5), together with a Hankel
+  criterion for tap uniqueness.
+* **Exact and improved enumeration of the linear-complexity filtration**
+  (Section 6): the bound $q^{2L}-q^L+1$, the exact order-one count $q^2-q+1$,
+  hierarchy collapse, and saturation at $n = 2L$.
+* **Router capacity** (Section 7): the $\sum_i |S_i|$ ceiling and its
+  contrapositive.
+* **A verified recovery procedure and the maximal-complexity obstruction**
+  (Section 8), including the refutation of a $\lceil n/2\rceil$ length clause.
+* **Noise tolerance** (Section 9): refutation of the $2L+2e+1$ threshold, the
+  corrected $2L(2e+1)$ threshold, and its sharpness at order one.
 
----
-
-## 2. The model
-
-Let $F$ be a commutative ring (we specialize to a field, and often to
-$\mathrm{GF}(2)$, where noted). A **stream** is a function
-$x : \mathbb{N} \to F$, written $x_n$ for $x(n)$.
-
-> **Definition 2.1 (Linear recurrence / LFSR stream).** For $L \in \mathbb{N}$
-> and a **tap vector** $c : \{0,\dots,L-1\} \to F$, the stream $x$ *obeys the
-> order-$L$ recurrence with taps $c$* if
-> $$x_{n+L} \;=\; \sum_{i=0}^{L-1} c_i \, x_{n+i} \qquad \text{for all } n \in \mathbb{N}.$$
-
-> **Definition 2.2 (The generator).** Given taps $c$ and a **seed**
-> $s : \{0,\dots,L-1\} \to F$, the register output $R(c,s) : \mathbb{N} \to F$ is
-> defined by strong recursion:
-> $$R(c,s)_n = \begin{cases} s_n, & n < L,\\[2pt] \displaystyle\sum_{i=0}^{L-1} c_i\, R(c,s)_{n-L+i}, & n \ge L.\end{cases}$$
-
-The recursion is well-founded because $n - L + i < n$ for $i < L$ and $n \ge L$.
-
-> **Proposition 2.3.** $R(c,s)$ obeys the order-$L$ recurrence with taps $c$, and
-> $R(c,s)_n = s_n$ for $n < L$.
-
-*Proof.* For $n \ge L$ the defining clause is exactly the recurrence, re-indexed
-by $n \mapsto n + L$; the initial clause is the second claim. $\square$
-
-> **Definition 2.4 (State window).** The **window** of $x$ at time $n$ is the
-> vector $w_n(x) = (x_n, x_{n+1}, \dots, x_{n+L-1}) \in F^{L}$.
-
-> **Definition 2.5 (Linear complexity).** A stream $x$ has **complexity at most
-> $L$** if some tap vector $c \in F^{L}$ exists with $x$ obeying the order-$L$
-> recurrence with taps $c$. The **linear complexity** $\mathrm{lc}(x)$ is the
-> least such $L$ (infinite if none exists).
-
-The property is upward closed: if $c$ generates $x$ at order $L$, then
-$(0, c_0, \dots, c_{L-1})$ generates $x$ at order $L+1$, since the order-$L$
-recurrence at index $n+1$ is the order-$(L+1)$ recurrence at index $n$. Hence
-"$x$ has complexity at most $L$" is equivalent to $\mathrm{lc}(x) \le L$, and we
-use the two phrasings interchangeably.
+Throughout, $K$ denotes a commutative ring (a finite field where counting is
+involved), $q = |K|$, and $L$ the order of a register.
 
 ---
 
-## 3. Exact replay: the compression guarantee
+## 2. Seed-compressibility: the generic framework
 
-The recurrence has no memory beyond its window, so agreement on one full window
-propagates forever.
+### 2.1 Definitions
 
-> **Theorem 3.1 (Rigidity).** Let $x$ and $y$ both obey the order-$L$ recurrence
-> with the *same* taps $c$, and suppose $x_i = y_i$ for all $i < L$. Then
-> $x = y$.
+**Definition 2.1 (Generator).** A *deterministic pseudorandom generator* with
+state space $S$ and output alphabet $\alpha$ is a pair
+$g = (\mathrm{step}, \mathrm{out})$ with $\mathrm{step} : S \to S$ and
+$\mathrm{out} : S \to \alpha$.
 
-*Proof.* Strong induction on $n$. For $n < L$ this is the hypothesis. For
-$n \ge L$ write $n = m + L$. Then
-$x_{m+L} = \sum_i c_i x_{m+i}$ and $y_{m+L} = \sum_i c_i y_{m+i}$, and each
-index $m + i$ with $i < L$ satisfies $m + i < n$, so the inductive hypothesis
-gives $x_{m+i} = y_{m+i}$ and the two sums coincide. $\square$
+**Definition 2.2 (Stream and prefix).** The *stream* of $g$ from seed $s \in S$
+is $\mathrm{str}_g(s)(t) = \mathrm{out}(\mathrm{step}^{t}(s))$ for $t \in
+\mathbb{N}$. Its length-$n$ *prefix* is
+$\mathrm{pref}_g^n(s) = (\mathrm{str}_g(s)(0), \dots, \mathrm{str}_g(s)(n-1))
+\in \alpha^n$ — the "file" the generator writes.
 
-> **Theorem 3.2 (Exact replay / the seed-recovery gate).** If $x$ obeys the
-> order-$L$ recurrence with taps $c$, then
-> $$x \;=\; R\bigl(c,\; (x_0, x_1, \dots, x_{L-1})\bigr).$$
-> That is, the pair (taps, first $L$ symbols) is a **lossless** representation of
-> the entire infinite stream.
+Two elementary identities that we use repeatedly:
+$\mathrm{str}_g(s)(t+1) = \mathrm{str}_g(\mathrm{step}(s))(t)$ and
+$\mathrm{str}_g(s)(t+k) = \mathrm{str}_g(\mathrm{step}^{t}(s))(k)$.
 
-*Proof.* Both sides obey the order-$L$ recurrence with taps $c$ (hypothesis and
-Proposition 2.3) and agree on indices $< L$ (Proposition 2.3 again). Apply
-Theorem 3.1. $\square$
+**Definition 2.3 (Seed-compressibility).** A word $x \in \alpha^n$ is
+*seed-compressible* for $g$ if there exists $s \in S$ with
+$\mathrm{pref}_g^n(s) = x$. We write $C_g(n) \subseteq \alpha^n$ for the set of
+such words.
 
-> **Corollary 3.3 (Functional dependence).** If $x$ and $y$ both obey the
-> order-$L$ recurrence with taps $c$ and agree on the first $L$ symbols, they are
-> equal. Hence the stream is a *function* of the pair (taps, window).
+Seed-compressibility is the falsifiability gate of the whole programme: the
+decompressed output must equal the file exactly, in every position, with no
+tolerance.
 
-> **Proposition 3.4 (The zero-seed degeneracy).** For every tap vector $c$,
-> $R(c, 0) = 0$.
+### 2.2 The pigeonhole ceiling
 
-*Proof.* Strong induction: below $L$ the output is the zero seed; above, it is a
-linear combination of earlier outputs, all zero by hypothesis. $\square$
+**Theorem 2.4 (Capacity ceiling).** For every $n$, $|C_g(n)| \leq |S|$.
 
-Proposition 3.4 is the germ of two later results: it is the obstruction to
-uniqueness of the taps (Section 5) and it is why the naive parameter count of
-seed-compressible files is never tight (Section 7).
+*Proof.* $C_g(n)$ is the image of $\mathrm{pref}_g^n : S \to \alpha^n$, and the
+image of a map is no larger than its domain. $\square$
 
-### 3.1 Periodic data as register output
+**Corollary 2.5 (Non-universality).** If $|S| < |\alpha|^n$ then some word of
+length $n$ is not seed-compressible for $g$.
 
-> **Definition 3.5.** For $p \ge 1$, the **recirculating taps** are
-> $u^{(p)} = (1, 0, 0, \dots, 0) \in F^{p}$.
+**Corollary 2.6 (False-positive density).** The fraction of length-$n$ words
+accepted by a perfect seed-compressibility detector is at most
+$|S| / |\alpha|^n$.
 
-> **Theorem 3.6 (Periodicity is a linear recurrence).** For $p \ge 1$, a stream
-> $x$ obeys the order-$p$ recurrence with taps $u^{(p)}$ **iff**
-> $x_{n+p} = x_n$ for all $n$. Moreover $R(u^{(p)}, s)_n = s_{n \bmod p}$.
+These are trivial but they are the ceiling against which every later, more
+refined bound is measured; no amount of cleverness in fingerprinting can exceed
+them.
 
-*Proof.* The sum $\sum_{i<p} u^{(p)}_i x_{n+i}$ collapses to the single term
-$i = 0$, giving $x_n$; so the recurrence reads $x_{n+p} = x_n$. The formula for
-$R$ follows by strong induction, using $n \bmod p = (n-p) \bmod p$ for
-$n \ge p$. $\square$
+### 2.3 Decoding and extrapolation
 
-Thus every $p$-periodic file is seed-compressible with a $2p$-symbol
-description. Padding regions, fill patterns, repeated headers and tiled texture
-data therefore fall inside the detector's reach.
+**Definition 2.7 (Decoder).** For a seed-compressible $x$, a *decoder* returns
+some $s$ with $\mathrm{pref}_g^n(s) = x$; the defining property is exactly the
+exact-reproduction guarantee.
+
+**Theorem 2.8 (Extrapolation soundness).** If $\mathrm{pref}_g^n$ is injective
+and $\mathrm{pref}_g^n(s) = \mathrm{pref}_g^n(s')$, then
+$\mathrm{str}_g(s)(t) = \mathrm{str}_g(s')(t)$ for all $t$. In that case the
+decoder is unique: it returns *the* seed.
+
+Injectivity of the prefix map is thus the abstract form of the certification
+question, and Section 5 computes exactly when it holds for shift registers.
+
+### 2.4 Finite state forces periodicity
+
+**Theorem 2.9 (Eventual periodicity).** Let $|S| < \infty$ and $s \in S$. There
+exist $i \geq 0$ and $p \geq 1$ with $i + p \leq |S|$ such that
+$\mathrm{step}^{i+p}(s) = \mathrm{step}^{i}(s)$. Consequently
+$\mathrm{str}_g(s)(t + kp) = \mathrm{str}_g(s)(t)$ for all $t \geq i$, $k \geq 0$,
+and the entire stream is determined by its first $|S|$ symbols.
+
+*Proof sketch.* The $|S|+1$ states $\mathrm{step}^{0}(s), \dots,
+\mathrm{step}^{|S|}(s)$ cannot be distinct, so two coincide; taking the earliest
+collision gives the preperiod $i$ and period $p$ with $i + p \leq |S|$. Any time
+index $t \geq i$ reduces modulo $p$ into the window $[i, i+p)$, and every index
+$t < i$ lies in $[0, |S|)$ already. $\square$
+
+This is the structural reason that a seed certifies an *arbitrarily long* file:
+a finite-state generator has no freedom beyond its first $|S|$ outputs.
 
 ---
 
-## 4. Sample complexity: $2L$ symbols suffice, and no fewer
+## 3. Linear feedback shift registers
 
-Detection is harder than replay because the taps are unknown and rival
-candidate registers compete. The identification question is: after how many
-observations is the answer unique inside the complexity-$\le L$ class? We prove
-the answer is $2L$.
+### 3.1 The machine
 
-### 4.1 Streams as a module over the polynomial ring
+**Definition 3.1 (LFSR).** Fix $L \geq 1$ and a *tap vector* $c \in K^L$. The
+*Fibonacci LFSR* with taps $c$ has state space $K^L$; its step map sends a state
+$\sigma$ to the state $\sigma'$ with $\sigma'_i = \sigma_{i+1}$ for $i < L-1$ and
+$\sigma'_{L-1} = \sum_{j<L} c_j \sigma_j$; and its output map is
+$\mathrm{out}(\sigma) = \sigma_0$.
 
-> **Definition 4.1 (Shift operator).** $S : (\mathbb{N} \to F) \to (\mathbb{N} \to F)$,
-> $(S x)_n = x_{n+1}$.
+In words: emit the oldest cell, shift left, refill the vacated cell with the
+feedback. Over $K = \mathbb{F}_2$ this is the classical binary LFSR.
 
-$S$ is $F$-linear, and $(S^k x)_n = x_{n+k}$ by induction on $k$. Consequently
-evaluation at $S$ makes the space of streams a module over the polynomial ring
-$F[X]$, with $X$ acting as $S$: for $r = \sum_k r_k X^k$,
-$$\bigl(r(S)\,x\bigr)_n \;=\; \sum_k r_k \, x_{n+k}.$$
+### 3.2 The window lemma
 
-> **Definition 4.2 (Characteristic polynomial).** The order-$L$ recurrence with
-> taps $c$ has characteristic polynomial
-> $$\chi_c(X) \;=\; X^{L} - \sum_{i=0}^{L-1} c_i X^{i} \in F[X],$$
-> which is monic of degree $L$.
+Everything in this section rests on the following identification.
 
-> **Lemma 4.3 (Residual formula).** For every stream $x$ and index $n$,
-> $$\bigl(\chi_c(S)\, x\bigr)_n \;=\; x_{n+L} - \sum_{i=0}^{L-1} c_i\, x_{n+i}.$$
+**Lemma 3.2 (Window lemma).** For all $i < L$, all $k \geq 0$ and every seed
+$\sigma$,
+$$\big(\mathrm{step}_c^{k}(\sigma)\big)_i \;=\; \mathrm{str}_c(\sigma)(i + k),$$
+where $\mathrm{str}_c(\sigma)$ denotes the stream of the LFSR with taps $c$.
 
-*Proof.* Immediate from $(S^k x)_n = x_{n+k}$ and linearity of $r \mapsto r(S)$
-applied termwise to $\chi_c$. $\square$
+*Proof sketch.* Induction on $i$. For $i = 0$ the claim is the definition of the
+output map applied to the state at time $k$. For the inductive step, cell $i+1$
+of the state at time $k$ equals cell $i$ of the state at time $k+1$ (this is what
+"shift left" means, and the boundary case $i+1 = L$ never arises since $i+1 < L$),
+so the induction hypothesis at $(i, k+1)$ gives
+$\mathrm{str}_c(\sigma)(i + k + 1)$, as required. $\square$
 
-> **Theorem 4.4 (Annihilation criterion).** A stream $x$ obeys the order-$L$
-> recurrence with taps $c$ **iff** $\chi_c(S)\,x = 0$.
+The register is a sliding window onto its own future output; the state is not
+hidden information at all, merely output not yet emitted.
 
-*Proof.* Both statements say the residual of Lemma 4.3 vanishes for every $n$.
+**Corollary 3.3 (Seed = prefix).** For $k < L$, $\mathrm{str}_c(\sigma)(k) =
+\sigma_k$. Hence $\mathrm{pref}_c^L(\sigma) = \sigma$, and the length-$L$ prefix
+map is the identity — in particular injective, so distinct seeds give distinct
+observed windows.
+
+### 3.3 The fingerprint, and exactness of detection
+
+**Definition 3.4.** A sequence $y : \mathbb{N} \to K$ *satisfies the order-$L$
+recurrence with taps $c$*, written $\mathrm{Rec}_c(y)$, if
+$$y_{t+L} \;=\; \sum_{j=0}^{L-1} c_j\, y_{t+j} \qquad \text{for all } t \geq 0.$$
+The *linear complexity* of a sequence (or of a finite word, meaning of some
+sequence extending it) is the least $L$ for which some tap vector works.
+
+**Theorem 3.5 (Fingerprint).** Every LFSR stream satisfies its own recurrence:
+$\mathrm{Rec}_c(\mathrm{str}_c(\sigma))$ for every seed $\sigma$.
+
+*Proof sketch.* Write $L = m+1$. By the window lemma, the top cell of the state
+at time $t+1$ is $\mathrm{str}_c(\sigma)(m + t + 1) = \mathrm{str}_c(\sigma)(t+L)$;
+by the definition of the step map, that same cell equals
+$\sum_j c_j \big(\mathrm{step}_c^{t}(\sigma)\big)_j$, and the window lemma
+rewrites each summand as $\mathrm{str}_c(\sigma)(t+j)$. $\square$
+
+**Theorem 3.6 (Detection is exact).** For every sequence $y$,
+$$\mathrm{Rec}_c(y) \iff \exists \sigma \in K^L,\ \forall t,\ \mathrm{str}_c(\sigma)(t) = y_t.$$
+
+*Proof sketch.* ($\Leftarrow$) is Theorem 3.5. For ($\Rightarrow$), take
+$\sigma = (y_0, \dots, y_{L-1})$ and prove $\mathrm{str}_c(\sigma)(t) = y_t$ by
+strong induction on $t$: for $t < L$ this is Corollary 3.3; for $t = t' + L$,
+apply Theorem 3.5 to the left side and $\mathrm{Rec}_c(y)$ to the right side, and
+match the two sums term by term using the induction hypothesis at the strictly
+smaller indices $t' + j$. $\square$
+
+Theorem 3.6 is simultaneously **soundness** (nothing satisfying the recurrence is
+an impostor) and **completeness** (nothing generated is missed) of the
+fingerprint test. It also makes seed recovery trivial.
+
+**Corollary 3.7 (Exact reproduction — the falsifiability gate).** If
+$\mathrm{Rec}_c(y)$, then the seed $\sigma = (y_0, \dots, y_{L-1})$ read off the
+first $L$ symbols regenerates $y$ *at every index*, not merely on the observed
+window.
+
+**Corollary 3.8.** Every length-$L$ window is realised by a seed, so the
+fingerprint test never rejects on account of initial data: the only obstruction
+is the recurrence itself.
+
+---
+
+## 4. Linear congruential generators are order-two LFSRs
+
+**Definition 4.1.** The *linear congruential generator* with multiplier $a$ and
+increment $b$ is the generator on state space $K$ with step map $x \mapsto ax+b$
+and output map the identity; its stream from $x_0$ satisfies
+$x_{t+1} = a x_t + b$.
+
+**Theorem 4.2 (Cross-family fingerprint).** For all $a, b, x_0 \in K$, the LCG
+stream satisfies the order-two recurrence with taps $(-a,\, a+1)$:
+$$x_{t+2} \;=\; (a+1)\,x_{t+1} \;-\; a\,x_t .$$
+
+*Proof.* From $x_{t+2} = a x_{t+1} + b$ and $x_{t+1} = a x_t + b$, subtract:
+$x_{t+2} - x_{t+1} = a(x_{t+1} - x_t)$, i.e. $x_{t+2} = (a+1)x_{t+1} - a x_t$.
 $\square$
 
-The dictionary runs the other way too.
+**Corollary 4.3 (LCG seed recovery, with exact reproduction).** The order-two
+LFSR with taps $(-a, a+1)$ and seed $(x_0,\, a x_0 + b)$ reproduces the LCG
+stream at every index. Two observed symbols suffice.
 
-> **Theorem 4.5 (Every monic polynomial is characteristic).** Let $r \in F[X]$
-> be monic with $\deg r = m$. Define the order-$m$ tap vector
-> $c^{(r)}_i = -r_i$ (minus the degree-$i$ coefficient of $r$), $i < m$. Then
-> $\chi_{c^{(r)}} = r$.
+*Proof sketch.* Theorem 4.2 plus Corollary 3.7; the recovered seed is the first
+two symbols of the LCG stream, namely $x_0$ and $a x_0 + b$. $\square$
 
-*Proof sketch.* Compare coefficients of $X^k$ on both sides of
-$\chi_{c^{(r)}} = X^{m} - \sum_{i<m} c^{(r)}_i X^{i} = X^m + \sum_{i<m} r_i X^i$.
-For $k < m$ only the summation contributes, giving $r_k$. For $k = m$ the
-monomial $X^m$ contributes $1$, which equals $r_m$ by monicity. For $k > m$ both
-sides vanish since $\deg r = m$. $\square$
+The practical consequence is that a fingerprinting pipeline does not need a
+separate detector or a separate inversion routine for the congruential family:
+the same order-two recurrence test catches it, and the resulting "equivalent
+register" is a bona fide LFSR.
 
-> **Corollary 4.6.** If a monic $r$ of degree $m$ annihilates $z$ (i.e.
-> $r(S)z = 0$), then $z$ has complexity at most $m$. Conversely, over a
-> nontrivial ring, a stream of complexity at most $L$ is annihilated by a monic
-> polynomial of degree $L$, namely the characteristic polynomial of any tap
-> vector generating it.
+**Proposition 4.4 (Rarity of the LCG family).** Over a finite $K$ with $q$
+elements, at most $q^3$ words of each length are LCG output (multiplier,
+increment, seed). Hence for $n > 3$ some length-$n$ word is produced by no LCG.
 
-### 4.2 Subadditivity of linear complexity
+---
 
-> **Theorem 4.7 (Subadditivity).** Suppose $F$ has no zero divisors. If $x$ has
-> complexity at most $L$ and $y$ complexity at most $M$, then $x + y$ and
-> $x - y$ have complexity at most $L + M$.
+## 5. The $2L$ theorem
 
-*Proof.* Pick monic annihilators $p$ (degree $L$) of $x$ and $q$ (degree $M$) of
-$y$, which exist by Corollary 4.6. The product $pq$ is monic of degree $L + M$
-(no zero divisors, so degrees add). Since $F[X]$ is commutative and the module
-action is by algebra evaluation, $(pq)(S) = p(S)q(S) = q(S)p(S)$; hence
-$(pq)(S)x = q(S)\bigl(p(S)x\bigr) = 0$ and likewise $(pq)(S)y = 0$. Therefore
-$(pq)(S)(x+y) = 0$, and Corollary 4.6 gives complexity at most $L + M$. For the
-difference, note $-y$ has the same annihilators as $y$. $\square$
+### 5.1 Statement
 
-The interpretation is operationally important: **mixing two register streams
-cannot hide them**. A superposition of a complexity-$L$ and a complexity-$M$
-source is still detectable by a search up to order $L + M$.
+**Theorem 5.1 (The $2L$ theorem).** Let $K$ be a nontrivial commutative ring and
+$L \geq 1$. Let $y, z : \mathbb{N} \to K$ satisfy $\mathrm{Rec}_c(y)$ and
+$\mathrm{Rec}_{c'}(z)$ for tap vectors $c, c' \in K^L$ that need not be equal. If
+$y_t = z_t$ for all $t < 2L$, then $y = z$.
 
-### 4.3 The $2L$ theorem
+**Corollary 5.2 (Certified seed recovery).** If two order-$L$ registers — with
+arbitrary taps and arbitrary seeds — produce the same first $2L$ output symbols,
+their streams coincide at every time. An order-$L$ generator recovered from $2L$
+observed symbols provably reproduces the rest of the file, however long.
 
-> **Lemma 4.8 (Vanishing initial segment).** If $z$ has complexity at most $m$
-> and $z_i = 0$ for all $i < m$, then $z = 0$.
+### 5.2 The polynomial module structure
 
-*Proof.* The zero stream obeys every recurrence; $z$ and $0$ obey the same
-order-$m$ recurrence and agree below $m$, so Theorem 3.1 gives $z = 0$.
+Let $\mathcal{S} : K^{\mathbb{N}} \to K^{\mathbb{N}}$ be the shift,
+$(\mathcal{S}y)_t = y_{t+1}$. It is $K$-linear, so $K^{\mathbb{N}}$ becomes a
+module over $K[X]$ with $X$ acting as $\mathcal{S}$.
+
+**Lemma 5.3 (Powers of the shift).** $(\mathcal{S}^i y)_t = y_{t+i}$.
+
+**Lemma 5.4 (Polynomial action).** For $p \in K[X]$ of degree $d$,
+$$\big(p(\mathcal{S})\,y\big)_t \;=\; \sum_{i=0}^{d} p_i\, y_{t+i}.$$
+That is, the action of a polynomial *is* the associated linear recurrence
+operator.
+
+**Definition 5.5 (Characteristic polynomial).** For $c \in K^L$ set
+$$f_c(X) \;=\; X^L - \sum_{j=0}^{L-1} c_j X^j .$$
+
+**Lemma 5.6.** $\deg\big(\sum_j c_j X^j\big) < L$, hence $f_c$ is monic; and over
+a nontrivial ring $\deg f_c = L$ exactly.
+
+**Lemma 5.7 (Recurrence = annihilation).** $\mathrm{Rec}_c(y)$ holds if and only
+if $f_c(\mathcal{S})\,y = 0$.
+
+*Proof.* By Lemma 5.4, $\big(f_c(\mathcal{S})y\big)_t = y_{t+L} - \sum_j c_j
+y_{t+j}$; this vanishes for all $t$ exactly when the recurrence holds. $\square$
+
+### 5.3 Rigidity and the product trick
+
+**Lemma 5.8 (Rigidity).** Let $p \in K[X]$ be monic of degree $m$ and let
+$w : \mathbb{N} \to K$ satisfy $p(\mathcal{S})w = 0$ and $w_t = 0$ for all
+$t < m$. Then $w = 0$.
+
+*Proof.* Strong induction on $t$. For $t < m$ the hypothesis applies. For
+$t = t' + m$, the annihilation relation at $t'$ reads
+$\sum_{i=0}^{m} p_i\, w_{t'+i} = 0$; monicity makes the top term $w_{t'+m}$
+itself, and every lower term $w_{t'+i}$ with $i < m$ has $t' + i < t' + m = t$
+and so vanishes by the induction hypothesis. Hence $w_{t}=0$. $\square$
+
+Monicity is essential: it is what allows the newest value to be solved for. Over
+a general ring one cannot divide by a leading coefficient, which is why we insist
+on the normalisation $f_c$ monic.
+
+**Lemma 5.9 (Annihilators multiply).** If $f(\mathcal{S})y = 0$ and
+$g(\mathcal{S})z = 0$ then $(fg)(\mathcal{S})(y - z) = 0$.
+
+*Proof.* Polynomials in the single operator $\mathcal{S}$ commute, so
+$(fg)(\mathcal{S})y = g(\mathcal{S})\big(f(\mathcal{S})y\big) = 0$ and
+$(fg)(\mathcal{S})z = f(\mathcal{S})\big(g(\mathcal{S})z\big) = 0$; subtract.
 $\square$
 
-> **Theorem 4.9 ($2L$ samples determine the stream).** Let $F$ be a nontrivial
-> ring without zero divisors. If $x$ and $y$ both have complexity at most $L$ and
-> $x_i = y_i$ for all $i < 2L$, then $x = y$.
+This is the step where two *different* tap vectors are merged into a single
+algebraic object.
 
-*Proof.* By Theorem 4.7, $z = x - y$ has complexity at most $L + L = 2L$; by
-hypothesis $z_i = 0$ for $i < 2L$; by Lemma 4.8, $z = 0$. $\square$
+### 5.4 Proof of Theorem 5.1
 
-Two consequences drive the pipeline.
+By Lemma 5.7, $f_c(\mathcal{S})y = 0$ and $f_{c'}(\mathcal{S})z = 0$. By Lemma
+5.9, $w = y - z$ is annihilated by $p = f_c f_{c'}$, which is monic (a product of
+monics) of degree $L + L = 2L$ (using Lemma 5.6 over a nontrivial ring). The
+hypothesis says $w_t = 0$ for $t < 2L = \deg p$. Lemma 5.8 gives $w = 0$, i.e.
+$y = z$. $\blacksquare$
 
-> **Corollary 4.10 (Detector soundness).** Suppose a file (as a prefix of a
-> stream) truly is generated by *some* order-$L$ register, and a candidate
-> register of order $L$ reproduces its first $2L$ symbols. Then the candidate
-> reproduces the whole file. Fitting on a $2L$-symbol window is therefore not
-> merely a heuristic: it is a proof of global agreement.
+### 5.5 Sharpness
 
-> **Corollary 4.11 (No shorter window).** Two order-$L$ registers with different
-> output streams already differ at some index $< 2L$. Hence the observation
-> window cannot be shortened below $2L$ without introducing genuine ambiguity.
+**Theorem 5.10 ($2L$ is sharp).** For every $L \geq 1$ and every nontrivial
+commutative ring $K$ there exist tap vectors $c, c'$ and seeds $\sigma, \sigma'$
+in $K^L$ whose streams agree at every index $t < 2L-1$ and differ at $t = 2L-1$.
 
-### 4.4 Sharpness
+*Proof.* Take both seeds to be the impulse $\sigma = \sigma' = (0,\dots,0,1)$.
 
-Corollary 4.11 says the window is at least *as short as possible given the
-class*; here is a concrete witness that $2L - 1$ symbols do not suffice. Over
-$\mathrm{GF}(2)$ with $L = 3$, take
-$$x = 0\,0\,1\,0\,0\,0\,0\,0\dots \qquad\text{and}\qquad y = 0\,0\,1\,0\,0\,1\,0\,0\,1\dots$$
-Both have complexity at most $3$: $x$ is generated by the register with zero
-taps and seed $(0,0,1)$ (which shifts a single one out and then emits zeros),
-and $y$ is $3$-periodic, hence generated by the recirculating taps
-$u^{(3)} = (1,0,0)$ with seed $(0,0,1)$ (Theorem 3.6). They agree on indices
-$0,\dots,4$, i.e. on $2L - 1 = 5$ symbols, and differ at index $5 = 2L - 1$.
+* With $c = 0$ the register simply empties: the stream is $\sigma_t$ for $t < L$
+  and $0$ afterwards, i.e. $0^{L-1}\,1\,0\,0\,0\cdots$.
+* With $c' = (1,0,\dots,0)$ the recurrence is the pure delay $y_{t+L} = y_t$, so
+  the stream is the periodic impulse train $0^{L-1}\,1\,0^{L-1}\,1\cdots$.
 
-An exhaustive scan over all $4^{3} = 64$ binary order-$3$ parameter pairs
-confirms both halves of the picture: grouping the emitted streams by their first
-$2L = 6$ symbols yields $43$ groups, each containing exactly one stream (no
-ambiguity, as Theorem 4.9 requires), whereas grouping by the first $2L-1 = 5$
-symbols produces groups containing distinct streams.
+For $t < L$ both streams equal $\sigma_t$. For $L \le t = t' + L < 2L - 1$ we
+have $t' < L-1$, the first stream gives $0$ and the second gives
+$\sigma_{t'} = 0$. At $t = 2L-1 = (L-1) + L$ the first stream gives $0$ while the
+second gives $\sigma_{L-1} = 1$. $\square$
 
----
+Hence no gate based on fewer than $2L$ observed symbols is sound, and $2L$ is the
+exact certification threshold.
 
-## 5. Well-posedness: when are the taps unique?
+### 5.6 Tap uniqueness: the Hankel criterion
 
-Theorem 4.9 identifies the *stream*. It does not identify the *register*, and in
-general nothing does: by Proposition 3.4 the all-zero stream is emitted by every
-order-$L$ register. Any assertion that "the taps are determined by the stream"
-is false as stated. The correct statement replaces the assertion by a criterion.
+Theorem 5.1 says the recovered *stream* is unique; it does not by itself say the
+recovered *taps* are. That is a separate, purely linear-algebraic question.
 
-Assume now $F$ is a field.
+**Definition 5.11.** The $L\times L$ *Hankel matrix* of an observed window is
+$H_{t,j} = y_{t+j}$, $0 \le t, j < L$.
 
-> **Definition 5.1 (Window span).** For a stream $x$ and order $L$, let
-> $W(x, L) = \mathrm{span}_F\{\, w_n(x) : n \in \mathbb{N} \,\} \le F^{L}$
-> be the subspace spanned by all state windows. Equivalently, $W(x,L)$ is the row
-> space of the infinite Hankel matrix $H_{n,i} = x_{n+i}$.
+**Theorem 5.12 (Tap uniqueness).** Let $K$ be an integral domain and suppose
+$\det H \neq 0$. If $\mathrm{Rec}_c(y)$ and $\mathrm{Rec}_{c'}(y)$ then $c = c'$.
 
-> **Theorem 5.2 (Uniqueness from spanning).** If $W(x, L) = F^{L}$ and both tap
-> vectors $c$ and $d$ generate $x$, then $c = d$.
+*Proof.* Subtracting the two recurrences at time $t$ gives
+$\sum_j y_{t+j}(c_j - c'_j) = 0$ for every $t < L$, i.e.
+$H(c - c') = 0$. Nonsingularity forces $c - c' = 0$. $\square$
 
-*Proof.* Let $e = c - d$ and let $\langle e, \cdot\rangle$ be the associated
-linear functional $v \mapsto \sum_{i<L} e_i v_i$ on $F^L$. Subtracting the two
-recurrences at time $n$ gives
-$$\langle e, w_n(x)\rangle = \sum_{i<L} c_i x_{n+i} - \sum_{i<L} d_i x_{n+i} = x_{n+L} - x_{n+L} = 0 .$$
-So the functional vanishes on every window, hence on their span, which by
-hypothesis is all of $F^L$. A functional vanishing identically has zero
-coefficient vector (test against the standard basis), so $e = 0$. $\square$
-
-> **Corollary 5.3 (Finite certificate).** It suffices that the first $L$ windows
-> $w_0(x), \dots, w_{L-1}(x)$ span $F^L$ — a condition testable on the first
-> $2L-1$ observed symbols by a rank computation.
-
-The converse holds, and this is what makes spanning the *right* hypothesis
-rather than a convenient one.
-
-> **Theorem 5.4 (Spanning from uniqueness).** Let $x$ obey the order-$L$
-> recurrence with taps $c$ and suppose $c$ is the *only* such tap vector. Then
-> $W(x, L) = F^{L}$.
-
-*Proof.* Contrapositive. If $W(x,L) \ne F^{L}$, then, $W(x,L)$ being a proper
-subspace of a finite-dimensional space, there is a nonzero linear functional
-$\varphi$ on $F^L$ vanishing on $W(x,L)$. Writing $\varphi$ in coordinates as
-$\varphi(v) = \sum_{i<L} e_i v_i$ with $e \ne 0$ (take $e_i = \varphi(\delta_i)$
-on the standard basis and expand any $v$ in that basis), we get
-$\sum_{i<L} e_i x_{n+i} = 0$ for all $n$. Adding this identity to the recurrence
-shows that the tap vector $c + e$ also generates $x$. Since $e \ne 0$, this is a
-second, different tap vector, contradicting uniqueness. $\square$
-
-> **Theorem 5.5 (Characterization).** For a stream $x$ generated by the order-$L$
-> tap vector $c$:
-> $$c \text{ is the unique generating tap vector} \iff W(x, L) = F^{L}.$$
-
-Quantitatively, over $\mathrm{GF}(2)$ the solution set of the linear system
-"tap vector consistent with the observed windows" is an affine subspace of
-dimension $L - \mathrm{rank}$, so exactly $2^{L - \mathrm{rank}}$ tap vectors are
-consistent. Exhaustive verification at $L = 4$ over binary streams confirms this:
-a maximal-length register gives window rank $4$ and a unique tap vector; the
-all-zero stream gives rank $0$ and all $16$ tap vectors; a period-$2$ stream
-embedded at order $4$ gives rank $4$ and again a unique answer.
-
-**Methodological remark.** The naive conjecture "tap recovery is unique" is
-false, and the repair was not a stronger proof but a *better definition*. The
-Hankel spanning condition is not an extra hypothesis inserted to save a theorem;
-by Theorem 5.5 it is logically equivalent to the desired conclusion. When a
-plausible statement resists proof, the productive move is often to look for the
-invariant that the statement is really about.
+So seed recovery is well posed — a unique answer, not merely a consistent one —
+exactly when the observed window is Hankel-nondegenerate.
 
 ---
 
-## 6. Linear congruential generators: one detector, two families
+## 6. Counting: how rare is low linear complexity?
 
-> **Definition 6.1.** Over a commutative ring $R$, the LCG with multiplier $a$,
-> increment $b$ and seed $s$ emits
-> $$\mathrm{lcg}(a,b,s)_0 = s, \qquad \mathrm{lcg}(a,b,s)_{n+1} = a\,\mathrm{lcg}(a,b,s)_n + b .$$
+Throughout this section $K$ is a finite ring/field with $q = |K|$ elements, and
+$$W_L(n) \;=\; \{\,\mathrm{pref}_c^n(\sigma) \;:\; c, \sigma \in K^L \,\} \subseteq K^n$$
+is the set of length-$n$ words producible by an order-$L$ register. We write
+$N_L(n) = |W_L(n)|$.
 
-The affine map $x \mapsto ax + b$ is not linear, so an LCG is not literally a
-shift register. Differencing removes the increment.
+### 6.1 The basic bound
 
-> **Theorem 6.2 (Family collapse).** Every LCG stream obeys the order-$2$ linear
-> recurrence with tap vector $(-a,\; 1+a)$:
-> $$x_{n+2} = (1+a)\,x_{n+1} - a\,x_n .$$
+**Theorem 6.1 (Rarity).** $N_L(n) \leq q^{2L}$.
 
-*Proof.* $x_{n+2} = a x_{n+1} + b$ and $x_{n+1} = a x_n + b$. Subtracting,
-$x_{n+2} - x_{n+1} = a(x_{n+1} - x_n)$, i.e.
-$x_{n+2} = (1+a)x_{n+1} - a x_n$. $\square$
+*Proof.* $W_L(n)$ is the image of the parameter set $K^L \times K^L$. $\square$
 
-Consequently the entire theory of Sections 3–5 applies to congruential data with
-$L = 2$: four observations identify the stream (Theorem 4.9), replay is exact,
-and the uniqueness criterion is a $2 \times 2$ rank condition. No second
-detector is required, and no second correctness proof.
+**Corollary 6.2.** If $q \geq 2$ and $n > 2L$ then some word of length $n$ lies
+in no $W_L(n)$; and the density $N_L(n)/q^n$ is at most $q^{2L-n}$.
 
-> **Theorem 6.3 (Recurrence implies exact replay).** If a stream $x$ satisfies
-> $x_{n+1} = a x_n + b$ for all $n$, then $x = \mathrm{lcg}(a, b, x_0)$.
+### 6.2 Uniformity in the order, and hierarchy collapse
 
-*Proof.* Induction on $n$: the base case is definitional, and the step applies
-the recursion to both sides. $\square$
+**Theorem 6.3 (Nesting).** Padding a tap vector with a leading zero turns an
+order-$L$ recurrence into an order-$(L{+}1)$ recurrence for the same stream.
+Hence $W_L(n) \subseteq W_{L+1}(n)$, and the set of words of linear complexity
+$\leq M$ equals $W_M(n)$ exactly.
 
-### 6.1 Seed recovery, backward and forward
+*Proof sketch.* If $\mathrm{Rec}_c(y)$ then with $\tilde c = (0, c_0, \dots,
+c_{L-1})$ we get $\sum_{j\le L} \tilde c_j y_{t+j} = \sum_{j<L} c_j y_{t+1+j} =
+y_{t+1+L}$, which is the order-$(L{+}1)$ recurrence for $\tilde c$. $\square$
 
-> **Definition 6.4.** If $a$ has an inverse $a^{-1}$ in $R$, the **inverse step**
-> is $\mathrm{unstep}(y) = a^{-1}(y - b)$.
+Thus the crude geometric estimate $\sum_{m<M} q^{2(m+1)} < q^{2M+1}$ for the
+union over all orders can be replaced by the single-order bound $q^{2M}$ — the
+hierarchy of orders is a genuine filtration and the router over all orders
+$\leq M$ is exactly as strong as the order-$M$ detector.
 
-> **Theorem 6.5 (Backward recovery).** If $a^{-1}a = 1$ then $\mathrm{unstep}$ is
-> a two-sided inverse of $x \mapsto ax+b$, that map is a bijection of $R$, and
-> for all $n$
-> $$\mathrm{unstep}^{\,n}\bigl(\mathrm{lcg}(a,b,s)_n\bigr) = s .$$
+**Corollary 6.4 (High complexity exists).** If $q \geq 2$ and $n > 2M+1$ then
+some length-$n$ word is produced by no register of order $\leq M$ whatsoever;
+bounded-order seed compression is never universal.
 
-*Proof.* $\mathrm{unstep}(ax + b) = a^{-1}(ax + b - b) = x$ and
-$a\,\mathrm{unstep}(y) + b = a a^{-1}(y-b) + b = y$; bijectivity follows. The
-displayed identity is induction on $n$, each step peeling one application.
+### 6.3 Saturation at $n = 2L$
+
+**Theorem 6.5 (Saturation).** For $n \geq 2L$, $N_L(n)$ does not depend on $n$.
+
+*Proof sketch.* Truncation $W_L(n') \to W_L(n)$ for $n' \geq n \geq 2L$ is
+surjective by construction and injective by Theorem 5.1: two order-$L$ streams
+agreeing on $2L$ symbols agree everywhere, so distinct length-$n'$ words in the
+family have distinct length-$n$ prefixes. $\square$
+
+This is the counting shadow of the $2L$ theorem: longer observation windows
+reveal no new order-$L$ files.
+
+### 6.4 The zero-seed collapse
+
+**Theorem 6.6 (Improved bound).** For all $L, n$,
+$$N_L(n) \;\leq\; q^{2L} - q^{L} + 1 .$$
+
+*Proof sketch.* Split the $q^{2L}$ parameter pairs into those with zero seed and
+the rest. All $q^L$ zero-seed pairs produce the same word — the all-zero word —
+contributing at most $1$ to the image; the remaining $q^{2L}-q^L$ pairs
+contribute at most their own number. $\square$
+
+**Corollary 6.7.** For $L \geq 1$ and $q \geq 2$ this is a strict improvement:
+$N_L(n) < q^{2L}$.
+
+### 6.5 Exact enumeration at order one
+
+**Theorem 6.8 (Order-one count).** Let $K$ be a finite field with $q$ elements
+and $n \geq 2$. Then
+$$N_1(n) \;=\; q(q-1) + 1 \;=\; q^2 - q + 1 .$$
+
+*Proof sketch.* Over a field the order-one register is multiplication by its
+single tap $c$, so its stream is the geometric sequence $y_t = c^t s$ and its
+length-$n$ prefix is the geometric word $(s, cs, c^2 s, \dots)$. Parametrise by
+pairs $(s, c)$. If $s \neq 0$ the pair is recoverable from the first two symbols
+($s = y_0$, $c = y_1/y_0$), so distinct such pairs give distinct words: $q(q-1)$
+of them. If $s = 0$ the word is the all-zero word for every $c$, contributing
+exactly one more. Injectivity on the parameter set $\{(s,c) : s \neq 0\} \cup
+\{(0,0)\}$ requires $n \geq 2$, since one symbol cannot see $c$. $\square$
+
+**Corollary 6.9.** The order-one count is *strictly between* the general bounds:
+$q^{L} < N_1(n) < q^{2L}$ at $L=1$ for $q \geq 2$. So neither general bound is
+tight, and the exact value is not an artefact of a tight pigeonhole estimate.
+Moreover $N_1(n)$ *attains* the improved bound of Theorem 6.6: $q^2 - q + 1 =
+q^{2\cdot 1} - q^{1} + 1$.
+
+**Corollary 6.10 (Closed form).** $N_1(n)\,(q+1) = q^3 + 1$, i.e.
+$$N_1(n) = \frac{q^{3}+1}{q+1} = \frac{q^{2L+1}+1}{q+1}\bigg|_{L=1}.$$
+
+### 6.6 A conjecture for general order
+
+**Conjecture 6.11.** For a finite field with $q$ elements, $L \geq 1$ and
+$n \geq 2L$,
+$$N_L(n) \;=\; \frac{q^{2L+1}+1}{q+1}.$$
+
+Exhaustive enumeration is strikingly obedient. Over $q=2$, orders $L = 1,\dots,5$
+give $3, 11, 43, 171, 683$, matching $(2^{2L+1}+1)/3$; over $q = 3$, orders
+$L = 1,2,3$ give $7, 61, 547$, matching $(3^{2L+1}+1)/4$. Five of these values —
+$(q,L) = (2,1), (2,2), (2,3), (3,1), (3,2)$, giving $3$, $11$, $43$, $7$, $61$ —
+have been confirmed by exhaustive enumeration over the full parameter space, as
+has the saturation prediction of Theorem 6.5 ($N_2(4) = N_2(5) = 11$ over
+$q = 2$). The case $L = 1$ is settled by Theorem 6.8; $L \geq 2$ is open.
+
+Note the shape of the conjecture: $q^{2L}-q^L+1$ (Theorem 6.6) exceeds
+$(q^{2L+1}+1)/(q+1)$ for $L \geq 2$ — at $q=2, L=2$ the bound gives $13$ against
+the true value $11$ — so the remaining slack is exactly the higher-order
+degeneracy the conjecture predicts, beyond the zero-seed collapse.
+
+---
+
+## 7. Router capacity: a Kraft-type ceiling
+
+The engineering proposal is a *router*: a front end that inspects a file,
+selects any member of a whole library of generator families, and emits a family
+index together with a seed. Different members may have completely different
+state spaces — one may be a register of order 7, another a congruential
+generator, another something else entirely.
+
+**Definition 7.1.** Let $\iota$ be a finite index set and, for each $i \in \iota$,
+let $g_i$ be a generator with finite state space $S_i$ and common output alphabet
+$\alpha$. The *routed words* of length $n$ are
+$$\mathcal{R}(n) = \bigcup_{i \in \iota} C_{g_i}(n) \subseteq \alpha^n .$$
+
+**Theorem 7.2 (Router capacity ceiling).**
+$$|\mathcal{R}(n)| \;\leq\; \sum_{i \in \iota} |S_i| .$$
+
+*Proof.* $|\mathcal{R}(n)| \le \sum_i |C_{g_i}(n)| \le \sum_i |S_i|$ by Theorem
+2.4. $\square$
+
+**Corollary 7.3 (Quantitative rejection).** At least
+$|\alpha|^n - \sum_i |S_i|$ words of length $n$ are rejected by *every* member of
+the family; if $\sum_i |S_i| < |\alpha|^n$ then some word is routed nowhere.
+
+**Corollary 7.4 (A router that compresses everything saves nothing).** If every
+length-$n$ word is reproducible by some member, then $|\alpha|^n \leq \sum_i
+|S_i|$: the library must carry at least as many seeds as there are files.
+
+**Corollary 7.5 (False-positive density).** The fraction of uniformly random
+length-$n$ words accepted by the router is at most $\big(\sum_i |S_i|\big) /
+|\alpha|^n$.
+
+The content is that *adding families adds their seed counts and nothing more*.
+There is no synergy: a router over a library is exactly as powerful as the total
+size of its seed space. Detecting the generator therefore buys code space only
+where the data distribution is far from uniform — never on average. This
+subsumes, as the special case $|\iota| = 2$, the two-family statement that the
+union of the order-$L$ register family and the congruential family covers at most
+$q^{2L} + q^3$ words of each length.
+
+**Proposition 7.6 (The ceiling is generally not attained).** Over a finite field
+with $q$ elements and $n \geq 2$, the router over all registers of order $\leq 1$
+carries $1 + q^2$ seeds but accepts exactly $q^2 - q + 1$ words — a deficit of
+exactly $q$.
+
+*Proof sketch.* By Theorem 6.3 the routed set collapses onto the order-one
+family, whose size is $q^2 - q + 1$ by Theorem 6.8; the seed budget is
+$|K^0|^2 + |K^1|^2 = 1 + q^2$. $\square$
+
+---
+
+## 8. A verified recovery procedure, and the maximal-complexity obstruction
+
+### 8.1 The procedure
+
+Given an observed word $x$ of length $n$ and a target order $L \leq n$:
+
+1. **Seed.** Set $\hat\sigma = (x_0, \dots, x_{L-1})$. By Corollary 3.3 this is
+   the only candidate; no search is needed.
+2. **Taps.** Let $T(x) = \{\, c \in K^L : \mathrm{pref}_c^n(\hat\sigma) = x \,\}$
+   be the tap vectors reproducing the whole observed word from $\hat\sigma$.
+3. **Decide.** Accept iff $T(x) \neq \emptyset$.
+
+**Theorem 8.1 (Soundness).** Every $c \in T(x)$ reproduces $x$ symbol by symbol
+from $\hat\sigma$. (Immediate from the definition — this is the falsifiability
+gate.)
+
+**Theorem 8.2 (Completeness).** The test accepts exactly the words of linear
+complexity $\leq L$: $T(x) \neq \emptyset \iff x \in W_L(n)$.
+
+*Proof sketch.* ($\Rightarrow$) is by definition. ($\Leftarrow$) if
+$\mathrm{pref}_c^n(\sigma) = x$ for some pair, then by Corollary 3.3 the first
+$L$ symbols of $x$ are $\sigma$ itself, i.e. $\sigma = \hat\sigma$, so
+$c \in T(x)$. $\square$
+
+The point of Theorem 8.2 is that restricting the seed search to the observed
+window loses nothing; the exhaustive search over $q^L$ tap vectors is genuinely
+exhaustive. (Berlekamp–Massey performs the same job in $O(n^2)$ field operations
+rather than $O(q^L n)$; the theorems here characterise *what* it must return, not
+how fast.)
+
+**Theorem 8.3 (Certified extrapolation).** If $n \geq 2L$ then all $c, c' \in
+T(x)$ generate the *same infinite stream* from $\hat\sigma$.
+
+*Proof.* Both streams satisfy order-$L$ recurrences and agree on the first
+$2L \le n$ symbols (they both reproduce $x$ there); apply Theorem 5.1. $\square$
+
+So even when the taps are not unique (Hankel-degenerate window), the *prediction*
+is: the recovered generator is unambiguous beyond the observed data.
+
+### 8.2 The impulse word and the failure of a $\lceil n/2 \rceil$ clause
+
+**Definition 8.4.** The *impulse word* of length $n$ is $(0,0,\dots,0,1)$.
+
+**Theorem 8.5.** Over a nontrivial ring, no register of order $L < n$ produces
+the impulse word; order $n$ does. Its linear complexity is therefore exactly $n$.
+
+*Proof sketch.* Its first $L$ symbols are all zero (as $L < n$), so the only
+compatible seed is the zero seed; but the zero seed produces the all-zero word
+under every tap vector, which is not the impulse word since its last symbol is
+$1 \ne 0$. At order $n$ the seed is the whole word, which reproduces it by
+Corollary 3.3. $\square$
+
+**Corollary 8.6 (Refutation of a natural length clause).** It is *not* true that
+a recovery routine can always return an order $L \leq \lceil n/2 \rceil$
+consistent with the observed window: for $n \geq 2$ the impulse word is
+consistent with no such order. The correct invariant is *minimality* of the
+returned order; the $\lceil n/2\rceil$ bound holds only for windows that
+genuinely come from a short register.
+
+**Corollary 8.7.** The detector of Section 8.1 correctly rejects the impulse word
+at every order $L < n$.
+
+---
+
+## 9. Noise tolerance: an additive threshold fails, a multiplicative one works
+
+Real files are only nearly generator output — headers, checksums and interleaved
+metadata corrupt a few positions. A practical router therefore needs a
+fingerprint test that tolerates $e$ corrupted symbols.
+
+**Definition 9.1.** For an observed word $w$ of length $n$ and a candidate
+stream $y$, the *error set* is $E(w,y) = \{\, i < n : w_i \neq y_i \,\}$; the
+Hamming distance is $|E(w,y)|$.
+
+The natural coding-theoretic guess is a Reed–Solomon-style additive threshold:
+$2L$ symbols to pin the generator, $2e$ to out-vote the errors, one to break
+ties, giving $n \geq 2L + 2e + 1$. This is false.
+
+### 9.1 Refutation of the additive threshold
+
+**Theorem 9.2.** For every $e \geq 1$ there exist two *distinct* sequences of
+linear complexity one over $\mathbb{F}_3$ and a word $w$ of length exactly
+$2\cdot 1 + 2e + 1$ with $|E(w,y)| \leq e$ and $|E(w,z)| \leq e$. Hence
+$2L + 2e + 1$ observed symbols do not determine the underlying stream.
+
+*Proof.* Work over $\mathbb{F}_3 = \{0,1,2\}$. Let $y_t = 1$ for all $t$: this
+satisfies the order-one recurrence with tap $c = 1$. Let $z_t = 2^t$: this
+satisfies the order-one recurrence with tap $c' = 2$, and since $2^2 = 1$ in
+$\mathbb{F}_3$ we have $z_t = 1$ for even $t$ and $z_t = 2$ for odd $t$. They
+differ at $t = 1$, so $y \ne z$.
+
+Let $w$ have length $n = 2e+3$ with $w_1 = 2$ and $w_i = 1$ otherwise. Then
+$E(w,y) = \{1\}$, of size $1 \le e$. And $E(w,z)$ consists of the odd indices
+other than $1$, namely $3, 5, \dots, 2e+1$, of size exactly $e$. $\square$
+
+The smallest instance is $e = 1$, $n = 5$.
+
+The failure is structural, not accidental: $y$ and $z$ agree at *every even
+index*, so their disagreements are maximally spread out and no window of $2L$
+consecutive positions is error-free. Any threshold argument that hopes to find a
+clean length-$2L$ window must therefore budget for that spreading.
+
+### 9.2 The corrected threshold
+
+**Lemma 9.3 (Shifted $2L$ theorem).** If $\mathrm{Rec}_c(y)$ and
+$\mathrm{Rec}_{c'}(z)$ and $y_t = z_t$ for all $t$ in a block of $2L$ consecutive
+indices $[j, j+2L)$, then $y_t = z_t$ for all $t \geq j$.
+
+*Proof.* Shifting a sequence preserves its recurrence, so apply Theorem 5.1 to
+the shifted sequences $t \mapsto y_{t+j}$ and $t \mapsto z_{t+j}$. $\square$
+
+**Lemma 9.4 (Block pigeonhole).** Let $E \subseteq \{0,\dots,n-1\}$ with
+$|E| \leq 2e$ and $n \geq 2L(2e+1)$. Then one of the $2e+1$ disjoint blocks
+$[2Lm,\, 2L(m{+}1))$, $m = 0, \dots, 2e$, contains no element of $E$.
+
+*Proof.* The blocks are pairwise disjoint and there are $2e+1$ of them; if each
+met $E$ we would need $|E| \geq 2e+1$. $\square$
+
+**Theorem 9.5 (Corrected threshold).** Let $\mathrm{Rec}_c(y)$,
+$\mathrm{Rec}_{c'}(z)$, and let $w$ be a word of length $n \geq 2L(2e+1)$ with
+$|E(w,y)| \leq e$ and $|E(w,z)| \leq e$. Then there is an index $j$ with
+$j + 2L \leq n$ such that $y_t = z_t$ for all $t \geq j$.
+
+*Proof.* Set $E = E(w,y) \cup E(w,z)$, of size at most $2e$. By Lemma 9.4 pick a
+clean block $[2Lm, 2L(m{+}1))$ with $2L(m+1) \le 2L(2e+1) \le n$. On that block
+$w$ agrees with both $y$ and $z$, hence $y$ and $z$ agree there — $2L$
+consecutive indices. Lemma 9.3 with $j = 2Lm$ finishes the proof. $\square$
+
+So the correct dependence on the error budget is **multiplicative**,
+$n \geq 2L(2e+1)$, not additive.
+
+### 9.3 Sharpness of the corrected threshold at order one
+
+**Theorem 9.6.** For every $e$, at window length $4e+1 = 2\cdot 1\cdot(2e+1) - 1$
+— one symbol short of the threshold of Theorem 9.5 at $L = 1$ — unique decoding
+already fails: there is a word $w$ of that length within Hamming distance $e$ of
+two distinct order-one streams over $\mathbb{F}_3$.
+
+*Proof.* Take $y_t = 1$ and $z_t = 2^t$ as in Theorem 9.2, and let $w$ of length
+$4e+1$ be given by $w_i = 1$ if $i$ is even; for odd $i$, $w_i = 1$ if $i < 2e$
+and $w_i = 2$ otherwise. Even indices agree with both streams. Of the $2e$ odd
+indices in $[0, 4e]$, the $e$ with $i < 2e$ carry value $1$ and so disagree with
+$z$ (which is $2$ there) but agree with $y$; the $e$ with $i > 2e$ carry value
+$2$ and so disagree with $y$ but agree with $z$. Hence $|E(w,y)| = |E(w,z)| = e$.
 $\square$
 
-This is exact and search-free: no approximation, no lattice reduction, no
-guessing. Over $\mathbb{Z}/m$ with $\gcd(a,m)=1$ the inverse is computed by the
-extended Euclidean algorithm in $O(\log m)$ steps.
-
-The forward statement is subtler and dispenses with inversion entirely.
-
-> **Theorem 6.6 (Pure periodicity).** Let $R$ be finite and $a$ invertible. Then
-> the step map is a permutation of $R$, hence has finite order $p > 0$ with
-> $(x \mapsto ax+b)^{p} = \mathrm{id}$. Consequently
-> $\mathrm{lcg}(a,b,s)_{n+p} = \mathrm{lcg}(a,b,s)_n$ for all $n$ and
-> $\mathrm{lcg}(a,b,s)_{kp} = s$ for all $k$: the orbit is *purely* periodic,
-> with no transient prefix.
-
-*Proof.* Bijectivity is Theorem 6.5; a bijection of a finite set is a
-permutation and has finite order $p$ in the symmetric group, so its $p$-th
-iterate is the identity. The stream is the orbit of $s$ under iteration, so
-shifting the index by $p$ leaves it unchanged; taking $n = 0$ and iterating
-gives the multiple-of-$p$ statement. $\square$
-
-> **Corollary 6.7 (Forward recovery).** Under the hypotheses of Theorem 6.6, for
-> any observed state $\mathrm{lcg}(a,b,s)_n$ there exists $k \ge 0$ with
-> $\mathrm{lcg}\bigl(a, b, \mathrm{lcg}(a,b,s)_n\bigr)_k = s$; explicitly
-> $k = np - n$ works. The seed is reachable by running the generator *forward*.
-
-*Proof.* Restarting the generator at a later state continues the same stream, so
-the displayed value is $\mathrm{lcg}(a,b,s)_{n+k}$; with $k = np - n$ (valid as
-$n \le np$ for $p \ge 1$) this is $\mathrm{lcg}(a,b,s)_{np} = s$ by Theorem 6.6.
-$\square$
-
-Operationally, an adversary or a compressor equipped only with the forward
-generator — no modular inverse routine, no algebraic solver — can still recover
-the seed. Rewinding is a special case of fast-forwarding.
-
-### 6.2 Congruential data is rare
-
-> **Theorem 6.8 (Three parameters).** Over $\mathbb{Z}/m$, the set of length-$N$
-> prefixes producible by *some* LCG has at most $m^{3}$ elements, for every $N$.
-
-*Proof.* The prefix is the image of the triple $(a, b, s) \in (\mathbb{Z}/m)^3$
-under a fixed map; the image of a set of size $m^3$ has size at most $m^3$.
-$\square$
-
-> **Corollary 6.9.** If $m \ge 2$ and $N > 3$ then some length-$N$ stream over
-> $\mathbb{Z}/m$ is produced by no LCG at all, since $m^{3} < m^{N}$. A sound
-> detector must reject it, and the false-positive budget of any detector is
-> $m^{3-N}$.
+Thus the multiplicative blow-up is not an artefact of the block pigeonhole of
+Lemma 9.4: at order one the threshold $2L(2e+1)$ is exactly right. Together,
+Theorems 9.2, 9.5 and 9.6 pin down the truth at order one: the correct threshold
+for noise-tolerant fingerprinting is *not* the linear $2L+2e+1$ but exactly the
+multiplicative $2L(2e+1)$.
 
 ---
 
-## 7. The census: how much data is seed-compressible?
+## 10. Algorithms
 
-We now quantify the population. Fix the binary field and model a file as a
-bitstring $w \in \{0,1\}^{N}$.
+We record the pipeline in the form in which it is actually run.
 
-> **Definition 7.1 ($L$-seed compressibility).** $w$ is **$L$-seed compressible**
-> if there exist binary taps $c$ and seed $s$ of length $L$ such that
-> $w_i = R(c,s)_i$ for every $i < N$, where the register runs over
-> $\mathrm{GF}(2)$.
+### 10.1 Fingerprint and recover
 
-> **Definition 7.2 (The seed decoder).** Fix $N, L$. The decoder $D_{N,L}$ reads
-> a program $p \in \{0,1\}^{*}$, interprets its first $L$ bits as taps and its
-> next $L$ bits as a seed (missing bits default to $0$), runs the register, and
-> outputs the first $N$ symbols.
+**Input:** a word $x$ of length $n$ over a finite field $K$, a maximum order $M$.
+**Output:** either $(L, c, \sigma)$ with $L \le M$ minimal such that the order-$L$
+register with taps $c$ and seed $\sigma$ reproduces $x$, or "not
+seed-compressible at order $\leq M$".
 
-> **Theorem 7.3 (The falsifiability gate).** $w$ is $L$-seed compressible **iff**
-> there is a program $p$ with $D_{N,L}(p) = w$ exactly. The witnessing program is
-> the concatenation of the tap bits and the seed bits and has length exactly
-> $2L$.
+1. For $L = 0, 1, \dots, M$:
+   1. $\hat\sigma \leftarrow (x_0, \dots, x_{L-1})$ (Corollary 3.3: this is the
+      unique candidate seed).
+   2. Determine whether some $c \in K^L$ satisfies the recurrence on $x$. Solving
+      the linear system $\sum_j c_j x_{t+j} = x_{t+L}$ for $0 \le t \le n-L-1$
+      costs $O(nL^2)$ by Gaussian elimination, or $O(n^2)$ for all orders at once
+      by the Berlekamp–Massey recurrence.
+   3. If a solution $c$ exists, verify $\mathrm{pref}^n_c(\hat\sigma) = x$
+      (Theorem 8.1 — the falsifiability gate) and return $(L, c, \hat\sigma)$.
+2. Return "not seed-compressible at order $\le M$".
 
-*Proof.* ($\Rightarrow$) Given $(c,s)$, the concatenated program is read back
-correctly by the decoder's indexing, so $D_{N,L}(p)$ is the register output,
-which equals $w$ on the first $N$ positions. ($\Leftarrow$) Given $p$, extract
-its first $L$ and next $L$ bits as $(c,s)$; unfolding the decoder's definition
-shows $w = D_{N,L}(p)$ is the corresponding register output. $\square$
+By Theorem 8.2 this is complete, and by Theorem 8.3, whenever $n \geq 2L$ the
+returned generator's prediction beyond the window is independent of which
+consistent $c$ was found.
 
-> **Corollary 7.4 (Description complexity).** Let $KC_D(w)$ denote the length of
-> the shortest program $p$ with $D(p) = w$. If $w$ is $L$-seed compressible then
-> $KC_{D_{N,L}}(w) \le 2L$, *independently of $N$*.
+### 10.2 Certification
 
-This is the payoff: a gigabyte generated by an order-$32$ register has a
-$64$-bit description. And it is verifiable — the claim is refuted by a single
-mismatching bit.
+Given $(L, c, \sigma)$ recovered from a window of length $n$: if $n \geq 2L$,
+Corollary 5.2 certifies that *any* order-$L$ generator agreeing with the observed
+$2L$ symbols agrees with the recovered one at every index, so the recovered seed
+reproduces the remainder of the file. If $n < 2L$, Theorem 5.10 shows no
+certificate is available at that length.
 
-### 7.1 Upper bounds on the population
+### 10.3 Routing
 
-> **Theorem 7.5 (Parameter bound).** For all $N, L$, the number of $L$-seed
-> compressible files of length $N$ is at most $4^{L}$.
+Given a library of generator families, run 10.1 for each and route the file to
+"seed-compressible" if any accepts. Theorem 7.2 bounds the total number of files
+this can ever accept by the total seed count; Corollary 7.5 gives the
+false-positive rate on uniform data.
 
-*Proof.* Each such file is the image of a pair (taps, seed) under the map
-sending parameters to the length-$N$ prefix of the register output. There are
-$2^L \cdot 2^L = 4^L$ pairs, and the image of a finite set is no larger.
-$\square$
+### 10.4 Noise-tolerant fingerprinting
 
-> **Theorem 7.6 (The parameter bound is never tight).** For all $N, L$, the
-> number of $L$-seed compressible files of length $N$ is at most
-> $4^{L} - 2^{L} + 1$.
-
-*Proof.* Partition the parameter pairs into those with zero seed ($2^{L}$ of
-them, one per tap vector) and the rest. By Proposition 3.4 all zero-seed pairs
-map to the single all-zero file. So the image is contained in
-$\{\,0^N\,\} \cup \{\text{images of the } 4^L - 2^L \text{ remaining pairs}\}$,
-of size at most $1 + (4^L - 2^L)$. $\square$
-
-> **Theorem 7.7 (Exponential rarity).** If $2L \le N$, the number of $L$-seed
-> compressible files of length $N$ is at most $2^{2L}$, i.e. a fraction
-> $2^{2L-N}$ of all $2^{N}$ files.
-
-*Proof.* $4^{L} = 2^{2L}$; multiply Theorem 7.5 by $2^{N-2L}$. $\square$
-
-> **Corollary 7.8 (Non-vacuity of the classifier).** If $2L < N$ then some
-> length-$N$ file is *not* $L$-seed compressible: otherwise all $2^{N}$ files
-> would lie in a set of size at most $2^{2L} < 2^{N}$.
-
-### 7.2 The exact census
-
-How far below $4^L$ is the truth? By Theorem 4.9 two distinct streams of
-complexity at most $L$ differ within the first $2L$ symbols, so counting
-distinct prefixes of length $2L$ counts distinct *infinite* streams exactly.
-Exhaustive enumeration over $\mathrm{GF}(2)$ gives:
-
-| $L$ | distinct streams | $\tfrac{1}{3}(2\cdot 4^{L}+1)$ | proved bound $4^L-2^L+1$ | naive $4^L$ |
-|----:|-----------------:|------------------------------:|-------------------------:|------------:|
-| 1 | 3 | 3 | 3 | 4 |
-| 2 | 11 | 11 | 13 | 16 |
-| 3 | 43 | 43 | 57 | 64 |
-| 4 | 171 | 171 | 241 | 256 |
-| 5 | 683 | 683 | 993 | 1024 |
-| 6 | 2731 | 2731 | 4033 | 4096 |
-| 7 | 10923 | 10923 | 16257 | 16384 |
-| 8 | 43691 | 43691 | 65281 | 65536 |
-
-> **Conjecture 7.9 (Exact census).** The number of distinct binary streams of
-> linear complexity at most $L$ is exactly $\tfrac{1}{3}\bigl(2\cdot 4^{L}+1\bigr)$;
-> equivalently, the realizable fraction of the $4^{L}$ parameter pairs tends to
-> $2/3$.
-
-The conjecture is supported by exhaustive computation for $L \le 8$ and is not
-proved here. The structural reason to expect a clean formula is that a stream is
-determined by its *minimal* connection polynomial together with a numerator, so
-the map (taps, seed) $\mapsto$ stream factors through pairs (minimal polynomial,
-residue class) and the fibre over a stream is the set of registers whose
-characteristic polynomial is a multiple of the minimal one — a count of monic
-cofactors of the appropriate degree. Making this precise requires divisibility
-bookkeeping on top of the polynomial–register dictionary of Theorems 4.4 and
-4.5.
-
-Note in passing that the census refutes the naive expectation that the count is
-$\Theta(2^{L})$: the realizable streams have positive density $2/3$ in parameter
-space, so the count is $\Theta(4^{L})$, and the improvement over the naive bound
-is a constant factor, not an exponential one.
-
-### 7.3 The router dichotomy
-
-The practical proposal is a **router**: classify each file as either
-*seed-compressible* (recover the seed; pay $2L$ bits) or *model-compressible*
-(hand it to a general-purpose decompressor $D$; demand a gain of $d$ bits, i.e.
-$KC_D(w) + d \le N$). We show the two boxes cannot cover file space.
-
-The model branch is limited by the counting bound behind every incompressibility
-theorem: for a fixed decompressor $D$ the number of files with
-$KC_D(w) \le N - d$ is at most the number of programs of length $\le N-d$,
-namely $2^{N-d+1} - 1$; equivalently $2^{d}\,\#\{w : KC_D(w) + d \le N\} \le 2^{N+1}$.
-
-> **Theorem 7.10 (Router dichotomy).** Let $D : \{0,1\}^{*} \to \{0,1\}^{N}$ be
-> any surjective decompressor and let $L, d \ge 0$ satisfy
-> $$2^{d}\,2^{2L} \;+\; 2^{N+1} \;<\; 2^{d}\,2^{N}.$$
-> Then there is a file $w \in \{0,1\}^{N}$ that is **neither** $L$-seed
-> compressible **nor** $d$-bit compressible under $D$.
-
-*Proof.* Let $A$ be the set of $L$-seed compressible files, so
-$|A| \le 2^{2L}$ by Theorem 7.7, and $B = \{w : KC_D(w) + d \le N\}$, so
-$2^{d}|B| \le 2^{N+1}$ by the counting bound. Then
-$$2^{d}\bigl(|A| + |B|\bigr) \;\le\; 2^{d}2^{2L} + 2^{N+1} \;<\; 2^{d}2^{N},$$
-so $|A| + |B| < 2^{N}$ and $|A \cup B| < |\{0,1\}^{N}|$. Any file outside
-$A \cup B$ works. $\square$
-
-> **Corollary 7.11 (Concrete instance).** Among $64$-bit files, whatever
-> decompressor is installed on the model branch, some file is neither the output
-> of an order-$8$ register (a $16$-bit seed) nor compressible by $4$ bits:
-> the hypothesis reads $2^{4}2^{16} + 2^{65} < 2^{4}2^{64}$, which holds.
-
-The lesson is not that detection is worthless but that it is *selective*.
-Detection changes **which** files sit on the compressible side of the pigeonhole
-bound, not **how many**. Its value is that the files it moves — statistically
-flat, computationally trivial — are exactly those every statistical compressor
-misses.
+If the file is expected to carry at most $e$ corrupted symbols, take a window of
+length at least $2L(2e+1)$ (Theorem 9.5) and search over the $2e+1$ disjoint
+length-$2L$ blocks; a clean block exists, and the generator recovered from it is
+correct from that point on. Do *not* use the additive $2L+2e+1$ (Theorem 9.2).
 
 ---
 
-## 8. Algorithms
+## 11. Applications and discussion
 
-### 8.1 Berlekamp–Massey (identification)
+**Compression.** The honest summary is: the seed-compression programme cannot
+beat the pigeonhole bound, and Theorem 7.2 says so without any assumption on the
+generators. What it *can* do is reallocate code space to a sparse structured
+corner of file space. Whether that corner contains a useful share of real data is
+an empirical question, and Theorem 8.1 makes it a well-posed one, since the gate
+is bit-exact reproduction.
 
-Given an observation window $s_0, \dots, s_{n-1}$ over a field, the
-Berlekamp–Massey algorithm returns the minimal $L$ and a connection polynomial
-$C(X) = 1 + C_1X + \dots + C_LX^{L}$ with
-$s_j = \sum_{i=1}^{L} C_i s_{j-i}$ for all $j \ge L$ (over $\mathrm{GF}(2)$ the
-signs are immaterial). It maintains a current candidate $C$, the previous
-candidate $B$ from the last length change, and a discrepancy; when the
-discrepancy is nonzero the candidate is corrected by a shifted multiple of $B$,
-and the register length is increased when necessary. Complexity: $O(n^{2})$
-field operations and $O(n)$ storage.
+**Cryptanalysis.** The $2L$ theorem is the classical certification statement
+behind the Berlekamp–Massey attack on LFSR-based keystreams, stated here for an
+arbitrary commutative ring and with an explicit sharpness witness. The Hankel
+criterion of Theorem 5.12 is the precise condition for the recovered taps — not
+merely the recovered stream — to be unique.
 
-Its correctness *as a detector* is exactly Corollary 4.10: if the data really
-has complexity at most $L$ and the algorithm is given $2L$ symbols, its output
-reproduces the entire stream, not merely the window. The paper's tap convention
-is recovered by reversing: $c_i = C_{L-i}$.
+**Testing and provenance.** Theorem 3.6 gives an exact test for
+"was this data emitted by an order-$L$ register?", with no false positives and no
+false negatives, and Proposition 4.4 plus Theorem 4.2 extend it to the
+congruential family for free. Density bounds quantify the false-positive rate on
+genuinely random data as $q^{2L-n}$, which is negligible for any realistic file
+length.
 
-### 8.2 The detection and recovery pipeline
+**Limits of the router.** Corollary 7.4 is the cleanest statement of the
+no-free-lunch principle in this setting: universality and compression are
+incompatible for a seed router, at every length, with no asymptotics involved.
 
-Given a file $w$ of length $N$ and a maximum order $L_{\max} \le N/2$:
-
-1. Run Berlekamp–Massey on the first $2L_{\max}$ symbols; obtain $L$ and taps
-   $c$.
-2. If $2L \ge N$, reject (no compression gain: the description is as large as
-   the data).
-3. Replay: compute $R(c, (w_0,\dots,w_{L-1}))$ for $N$ steps.
-4. **Gate:** compare with $w$ bit for bit. On any mismatch, reject and route to
-   the model branch. On exact match, accept and emit the $2L$-bit program.
-5. Optionally test for the congruential signature: if $L = 2$ with taps
-   $(-a, 1+a)$, report multiplier $a$, recover $b = w_1 - a w_0$, and the seed is
-   $w_0$; verify by replay.
-
-The gate in step 4 makes false acceptance impossible. Steps 1 and 3 cost
-$O(L^2)$ and $O(NL)$ respectively.
-
-### 8.3 Well-posedness test
-
-Assemble the Hankel matrix of the first windows and compute its rank $r$ over
-the field. By Theorem 5.5 the taps are unique iff $r = L$; over
-$\mathrm{GF}(2)$ the number of consistent tap vectors is exactly $2^{L-r}$. Cost:
-$O(L^{3})$ field operations, or $O(L^{3}/64)$ machine words with bit-packing.
-
-### 8.4 Seed recovery for congruential data
-
-With a state $x_n$ and known $(a,b,m)$ and $\gcd(a,m)=1$: compute $a^{-1}$ by
-the extended Euclidean algorithm and apply $y \mapsto a^{-1}(y-b)$ exactly $n$
-times (Theorem 6.5); or, avoiding inversion, run the generator forward from
-$x_n$ until the state repeats (Corollary 6.7). Backward recovery costs
-$O(n)$ multiplications, or $O(\log n)$ if the affine map is exponentiated by
-repeated squaring using $x_n = a^{n}s + b\frac{a^{n}-1}{a-1}$.
+**Noise is the real obstacle.** The gap between $2L+2e+1$ and $2L(2e+1)$ is the
+most practically consequential finding here. It means that a detector operating
+on contaminated data needs a window that grows *multiplicatively* in the error
+budget, and the witness of Theorem 9.2 explains why: two low-complexity streams
+can agree on a positive-density set of indices, so errors can be arranged to
+straddle every short window.
 
 ---
 
-## 9. Applications
+## 12. Future work
 
-**Archival of procedurally generated assets.** Game terrain, foliage placement,
-noise textures and dungeon layouts are typically generated from a seed and then
-persisted. When the generator is a linear recurrence or a congruential map, the
-asset compresses to its seed with the exact-replay guarantee.
-
-**Simulation reproducibility.** Monte Carlo studies persist random streams to
-allow exact re-running. Those streams are seed-compressible by construction and
-the gate certifies bit-exactness, which is precisely what reproducibility
-requires.
-
-**Cryptanalytic hygiene.** The $2L$ theorem is the classical warning against
-using a bare shift register as a keystream: $2L$ known plaintext symbols suffice
-to recover the register and hence the entire keystream. The uniqueness
-characterization (Theorem 5.5) sharpens this by identifying exactly when the
-recovered register is the true one, versus when the observed data is degenerate.
-
-**Corpus triage.** The router of Section 7.3 is deployable: detect, gate,
-compress or fall through. Theorem 7.10 sets expectations honestly — the
-seed-compressible fraction is $2^{2L-N}$ — while Theorem 3.6 identifies a real
-and common corpus that is caught: periodic and tiled data.
-
-**Scrambled transport streams.** Ethernet, SONET and satellite links scramble
-payloads by XOR-ing with register output. Given known or guessable plaintext,
-the same identification and recovery machinery strips the scrambler.
+* **Conjecture 6.11 for $L \geq 2$.** The exact enumeration
+  $N_L(n) = (q^{2L+1}+1)/(q+1)$ is proved at $L=1$ and confirmed numerically for
+  $(q,L) \in \{(2,1),\dots,(2,5),(3,1),(3,2),(3,3)\}$. A proof presumably
+  requires counting the pairs $(c,\sigma)$ modulo the degeneracy that makes two
+  distinct pairs emit the same word — for $L=1$ that degeneracy is exactly the
+  zero seed, and the conjecture predicts that the higher-order degeneracies
+  contribute an extra $q^{2L}-q^L+1 - (q^{2L+1}+1)/(q+1)$.
+* **Sharpness of $2L(2e+1)$ for $L \geq 2$.** Theorem 9.6 settles order one. Is
+  the multiplicative threshold sharp at every order, or does the constant improve
+  for large $L$?
+* **Minimality-certified recovery.** Corollary 8.6 refutes the $\lceil n/2\rceil$
+  length clause; what remains is a verified Berlekamp–Massey returning a
+  *minimal* consistent order, together with its $O(n^2)$ complexity bound.
+* **Beyond linear families.** Nonlinear generators (counter-mode block ciphers,
+  Mersenne-Twister-style tempering, xorshift with multiplication) are not
+  captured by the linear-recurrence fingerprint. The router capacity theorem
+  applies to them unchanged, so the interesting question is purely algorithmic:
+  which families admit a certified inversion from $O(\text{state size})$ symbols?
+* **Empirical corpus study.** The theory now supports an honest measurement: what
+  fraction of real files pass a bit-exact seed-compressibility gate at moderate
+  order, and where in a corpus do they concentrate?
 
 ---
 
-## 10. Discussion and future work
+## 13. Conclusion
 
-Three themes emerge.
-
-*First, the change of language does the work.* Recasting streams as a module
-over the polynomial ring, with the shift operator playing the indeterminate,
-converts "obeys a recurrence" into "is annihilated by a polynomial". Subadditive
-complexity is then just the statement that annihilators multiply, and the $2L$
-bound is degree arithmetic. This is the standard payoff of finding the right
-algebraic home for a computational problem.
-
-*Second, degeneracy is data, not noise.* The failed conjecture "the taps are
-determined by the stream" was repaired not by working harder but by identifying
-the invariant that governs the phenomenon — the rank of the Hankel window
-matrix — and the repair turned out to be an exact characterization, not merely a
-sufficient condition.
-
-*Third, counting is unforgiving.* Every result about what detection can achieve
-is bracketed by a result about how little of the universe it reaches. This is not
-a shortcoming of the method; it is the shape of all lossless compression.
-
-### Future directions
-
-**C1. The exact census of seed-compressible files.** Prove Conjecture 7.9. The
-map (taps, seed) $\mapsto$ stream factors through the pair (minimal connection
-polynomial, residue class), so the fibre over a stream consists of the registers
-whose characteristic polynomial is a multiple of the minimal one, i.e. of the
-monic cofactors of the appropriate degree. The polynomial–register dictionary
-(Theorems 4.4 and 4.5) is in place; what is missing is the divisibility
-bookkeeping and a clean handling of the degenerate strata. Measured data:
-$43$ distinct streams from the $64$ order-$3$ parameter pairs, against the proved
-bound $57$; the sequence continues $171, 683, 2731, 10923, 43691$.
-
-**C2. Minimal complexity as a computable invariant, and sharpness of the $2L$
-bound.** Prove that for every $L$ there exist two streams of complexity exactly $L$ agreeing on
-the first $2L-1$ symbols and differing at index $2L-1$, upgrading the concrete
-witnesses of Section 4.4 to a uniform family and establishing that the
-observation window of Theorem 4.9 cannot be shortened for any $L$. A companion
-goal is to prove that Berlekamp–Massey computes $\mathrm{lc}$ exactly, closing
-the loop between the algorithm and the invariant.
-
-**C3. Non-linear families.** Extend detection beyond linear recurrences to
-Mersenne-Twister-style tempered linear generators (linear over
-$\mathrm{GF}(2)$ in a high-dimensional state, so in principle within reach of the
-same theory at large $L$), to permuted congruential generators, and to
-counter-based constructions. Each requires either an enlarged linear model or a
-solver-based inversion, and each needs its own well-posedness criterion.
-
-**C4. Robust detection under corruption.** Real files interleave generator
-output with headers, checksums and edits. The natural generalization is
-approximate linear complexity: the least $L$ such that some order-$L$ register
-agrees with the data outside a set of $k$ positions. Combined with an error
-budget in the gate, this would extend the router to partially seed-compressible
-files while keeping the bit-exact verification (store the seed plus the list of
-corrections).
-
-**C5. Quantifying real corpora.** Instrument the pipeline over public corpora
-and measure what fraction of real files is seed-compressible at practical
-orders. Theorem 7.7 predicts the fraction is negligible for random files; the
-empirical question is how much *structured* real data (padding, tiles,
-scrambled regions) is caught, and at what order.
-
----
-
-## Appendix: summary of results
-
-| Result | Statement |
-|---|---|
-| Rigidity (3.1) | Same taps + agreement on one length-$L$ window $\Rightarrow$ identical streams |
-| Exact replay (3.2) | A recurrence-obeying stream equals its own replay from its first $L$ symbols |
-| Zero-seed collapse (3.4) | Every register emits the zero stream from the zero seed |
-| Periodicity (3.6) | $p$-periodic $\iff$ generated by the recirculating order-$p$ register |
-| Annihilation (4.4) | Obeys a recurrence $\iff$ killed by its characteristic polynomial via the shift |
-| Realization (4.5) | Every monic degree-$m$ polynomial is a characteristic polynomial |
-| Subadditivity (4.7) | $\mathrm{lc}(x \pm y) \le \mathrm{lc}(x) + \mathrm{lc}(y)$ |
-| $2L$ theorem (4.9) | Complexity $\le L$ + agreement on $2L$ symbols $\Rightarrow$ equality |
-| Detector soundness (4.10) | Fitting $2L$ symbols fits the whole stream |
-| Uniqueness (5.5) | Taps unique $\iff$ state windows span $F^{L}$ |
-| Family collapse (6.2) | Every congruential stream is an order-$2$ linear recurrence, taps $(-a, 1+a)$ |
-| Backward recovery (6.5) | $n$ inverse steps from the time-$n$ state return the seed exactly |
-| Pure periodicity (6.6) | Finite state + invertible multiplier $\Rightarrow$ no transient |
-| Forward recovery (6.7) | The seed is reachable by running the generator forward |
-| Congruential rarity (6.8) | At most $m^{3}$ congruential prefixes over $\mathbb{Z}/m$, any length |
-| Falsifiability gate (7.3) | Seed compressible $\iff$ a $2L$-bit program decodes the file exactly |
-| Complexity bound (7.4) | Seed-compressible files have description length $\le 2L$, independent of $N$ |
-| Population bounds (7.5–7.7) | At most $4^{L}$, in fact at most $4^{L}-2^{L}+1$; a $2^{2L-N}$ fraction |
-| Router dichotomy (7.10) | Some file is neither seed- nor model-compressible, for any decompressor |
+Seed compression is exact, cheap, and certifiable — and strictly bounded. For the
+shift-register family, $2L$ observed symbols recover the generator and prove that
+it reproduces every remaining symbol, and $2L-1$ provably do not. The
+congruential family comes along at order two for free. The number of files in
+reach is $q^{2L}-q^L+1$ at most, exactly $q^2-q+1$ at order one, and conjecturally
+$(q^{2L+1}+1)/(q+1)$ in general. Any router over any library of generators
+compresses at most as many files as it has seeds, so universality would save
+nothing. And in the presence of $e$ corrupted symbols, the window needed grows
+multiplicatively, as $2L(2e+1)$, not additively as $2L+2e+1$ — a distinction that
+is not a technicality but the exact truth, at least at order one.

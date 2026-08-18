@@ -1,323 +1,353 @@
-# The Files That Are Already Compressed — And the Ones That Only Look It
+# The File That Was Never Random
 
-## A hard drive full of dice
+## How a few dozen symbols can prove that a gigabyte was written by a formula
 
-Somewhere on your computer, right now, there is a file that contains no
-information at all.
+Somewhere on your hard drive there is a file that is not really a file. It looks
+like data — megabytes of terrain heights, noise textures, particle positions, a
+stream of "random" bytes in a test fixture — but it was never authored. It was
+*computed*, from a short recipe and a starting number, by a pseudorandom number
+generator. If you knew the recipe and the number, you could throw the file away
+and regenerate it perfectly, on demand, from a few bytes.
 
-Not an empty file — a *big* one. A megabyte of terrain data for a procedurally
-generated game world. A folder of Monte Carlo simulation traces. A synthetic
-test corpus someone generated to benchmark a database. Open any of them in a
-hex editor and you will see what looks like pure noise: no repeated words, no
-runs of zeros, nothing a standard compressor can grab hold of. Feed it to a
-zip utility and it will come back roughly the same size, sometimes slightly
-larger. By every statistical measure, the file is incompressible.
+This is a tantalising idea for anyone who thinks about compression. The
+pigeonhole principle puts a hard ceiling on compressing arbitrary data: there
+are $q^n$ files of $n$ symbols over an alphabet of size $q$, and no scheme maps
+all of them to shorter descriptions. But pseudorandom data is not arbitrary. A
+generator with a state space of size $|S|$ can only ever produce $|S|$ distinct
+files of any given length. If your file is one of those, its true information
+content is $\log_2 |S|$ bits — and the rest is free.
 
-And yet the whole megabyte was conjured out of a single 32-bit number — the
-seed of a pseudo-random number generator — plus a few lines of arithmetic. The
-information content of the file is not one megabyte. It is four bytes. Somebody
-just threw away the four bytes and kept the megabyte.
+So the dream is a compressor that asks, of every file it meets: *were you
+generated?* And if so: *by what, and from what seed?* This article is about
+making that question precise, and about the surprisingly sharp answers it
+admits. Three of them stand out.
 
-This article is about the mathematics of getting those four bytes back: how to
-recognize that a stream of data was produced by a deterministic generator, how
-many observations you need before that recognition is *provably* correct, how
-to invert the generator and recover the seed exactly, and — the sobering part —
-exactly how rare such files are, so that nobody mistakes this trick for a
-general-purpose compressor.
+1. **A universal certificate.** For the most important generator family — the
+   linear feedback shift register of order $L$ — exactly $2L$ observed symbols
+   suffice to certify a recovered generator *forever*. Not "with high
+   probability", not "for typical seeds": if two order-$L$ generators, with
+   arbitrary taps and arbitrary seeds, agree on their first $2L$ outputs, they
+   agree at every index from now to eternity. And $2L-1$ symbols provably do
+   not suffice.
+2. **A hard ceiling on the whole programme.** Detecting the generator does not
+   beat the pigeonhole bound. A "router" that inspects a file, picks any member
+   from a whole zoo of generator families, and emits an index plus a seed can
+   compress at most $\sum_i |S_i|$ files of each length — the total number of
+   seeds across the zoo, and not one file more. Adding families adds their seed
+   counts and nothing else.
+3. **Noise breaks things in an unexpected way.** Real files are only *nearly*
+   generator output — there are headers, checksums, interleaved metadata. The
+   natural coding-theoretic guess, that $2L + 2e + 1$ symbols suffice to decode
+   uniquely in the presence of $e$ corruptions, is *false* for every error
+   budget $e \geq 1$. The correct threshold is not additive but multiplicative:
+   $2L(2e+1)$. And that is sharp.
 
-## The universal shape of a cheap generator
+Let us take these in turn.
 
-Almost every fast pseudo-random generator in practical use is, underneath a
-thin cosmetic layer, a **linear recurrence**. A stream of symbols
-$x_0, x_1, x_2, \dots$ drawn from a field $F$ obeys an order-$L$ linear
-recurrence with **tap vector** $c = (c_0, \dots, c_{L-1})$ if
+---
 
-$$x_{n+L} \;=\; \sum_{i=0}^{L-1} c_i\, x_{n+i} \qquad \text{for every } n \ge 0 .$$
+## Generators, streams, and the falsifiability gate
 
-Each new symbol is a fixed linear combination of the previous $L$. Hardware
-engineers call this a *linear feedback shift register*: you keep $L$ symbols in
-a row of cells, tap some of them, combine them, and shift the result in at one
-end. It is the cheapest interesting generator that exists — a handful of gates,
-one clock cycle per symbol — and it is everywhere: in stream ciphers, in test
-pattern generators, in scrambler circuits for Ethernet and satellite links.
+Strip a pseudorandom generator down to its bones and you get two functions: a
+**step** map $\mathrm{step} : S \to S$ that advances an internal state, and an
+**output** map $\mathrm{out} : S \to \alpha$ that extracts a visible symbol.
+Starting from a seed $s$, the generator emits the stream
 
-The first thing to notice is that such a stream is completely determined by
-$2L$ numbers: the $L$ taps and the $L$ symbols of the seed. Everything after
-that is forced. This is the **exact-replay theorem**, and it is the foundation
-of everything below.
+$$y_t = \mathrm{out}\big(\mathrm{step}^{t}(s)\big), \qquad t = 0, 1, 2, \dots$$
 
-> **Theorem (Exact replay).** Suppose a stream $x$ obeys the order-$L$ recurrence
-> with tap vector $c$. Then $x$ is bit-for-bit identical to the stream produced
-> by running the register with taps $c$ from the seed consisting of $x$'s own
-> first $L$ symbols. In particular, storing $(c, x_0, \dots, x_{L-1})$ loses
-> nothing whatsoever.
+A finite file $x$ of length $n$ is **seed-compressible** for this generator if
+some seed reproduces it *exactly*: $y_i = x_i$ for all $i < n$. Exactness is the
+point. This is a falsifiable claim in the strictest sense — you decompress, you
+compare byte for byte, and either it matches or the claim dies. There is no
+partial credit.
 
-The proof is a two-line induction, but it is worth spelling out because the
-same idea recurs throughout: if two streams obey the *same* recurrence and agree
-on any window of $L$ consecutive symbols, then they agree on the next symbol
-(both are the same linear combination of the window), hence on the window
-shifted by one, hence — by induction — forever. Rigidity is the whole story.
-A linear recurrence has no memory beyond its window, so agreeing on one full
-window is agreeing on everything.
+Two facts follow immediately, and they set the boundaries of everything else.
 
-This is what makes the compression claim *falsifiable* in the strictest sense.
-We are not claiming statistical similarity. We are not claiming that a model
-predicts the file well. We are claiming that a specific $2L$-symbol program,
-fed to a fixed decoder that just runs the register, reproduces the file
-**exactly**, and you can check it by running it.
+**The pigeonhole ceiling.** At most $|S|$ files of length $n$ are
+seed-compressible, because the map from seeds to length-$n$ prefixes cannot hit
+more targets than it has sources. So as soon as $|S| < q^n$, some file of length
+$n$ is *not* seed-compressible; and the fraction a perfect detector accepts —
+its false-positive rate on uniformly random data — is at most $|S| / q^n$, which
+collapses exponentially as the file grows.
 
-## The catch: nobody hands you the taps
+**Finite state means eventual periodicity.** Run any finite-state generator for
+$|S|$ steps and the pigeonhole principle forces a repeated state; from that
+moment the trajectory cycles, with preperiod plus period at most $|S|$. The
+consequence is striking: the *entire infinite stream* is determined by its first
+$|S|$ symbols. This is the structural reason seed compression can work at all.
 
-Exact replay assumes you already know the recurrence. In the real problem you
-have a file and no idea what made it. You must recover the taps from the data
-itself. And here a genuine difficulty appears: many different registers can be
-consistent with a finite chunk of data, and the more symbols you look at, the
-fewer survive. How many do you need before the answer is unambiguous?
+---
 
-The classical answer, engineered into the Berlekamp–Massey algorithm in the
-1960s, is **$2L$**. Twice the register length. Not $L$, not $L+1$, not
-$L\log L$ — exactly $2L$, and it is sharp. The reason is one of those arguments
-where a change of language does all the work.
+## The shift register, and why one recurrence catches two families
 
-**Streams as polynomials.** Let $S$ be the *shift operator* that takes the
-stream $(x_0, x_1, x_2, \dots)$ to $(x_1, x_2, x_3, \dots)$. Shifting is
-linear, so any polynomial in $S$ acts on streams: $S^k$ shifts by $k$ places,
-sums and scalar multiples act coefficientwise. This turns the space of all
-streams into a module over the polynomial ring $F[X]$, with $X$ acting as $S$.
+The workhorse of practical pseudorandomness is the **linear feedback shift
+register**. Its state is a window of $L$ symbols $\sigma_0, \dots, \sigma_{L-1}$
+drawn from a ring $K$; each tick, it emits the oldest cell $\sigma_0$, shifts
+everything left, and refills the vacated cell with a linear combination
+$\sum_j c_j \sigma_j$ of the current window, where $c = (c_0, \dots, c_{L-1})$
+is the **tap vector**. Over the two-element field this is the classical binary
+LFSR that appears inside stream ciphers, checksums, and any number of
+"fast random" routines.
 
-Now attach to the recurrence its **characteristic polynomial**
+The first thing to establish is the **window lemma**: after $k$ ticks, cell $i$
+of the register holds precisely the symbol that will be output at time $i + k$.
+The state is not mysterious hidden information — the register is a sliding
+window onto its own future output. Everything else is a corollary.
 
-$$\chi(X) \;=\; X^{L} - \sum_{i=0}^{L-1} c_i X^{i}.$$
+*Corollary one: the fingerprint.* Every stream generated this way satisfies the
+order-$L$ linear recurrence
 
-Apply $\chi(S)$ to a stream and read off the value at position $n$: you get
-exactly $x_{n+L} - \sum_i c_i x_{n+i}$ — the recurrence's residual. So:
+$$y_{t+L} \;=\; \sum_{j=0}^{L-1} c_j \, y_{t+j} \qquad \text{for all } t \geq 0.$$
 
-> **Theorem (Annihilation).** A stream obeys a linear recurrence if and only if
-> the characteristic polynomial of that recurrence, acting through the shift
-> operator, annihilates the stream.
+*Corollary two: detection is exact, in both directions.* A stream $y$ satisfies
+this recurrence **if and only if** it is the output of the order-$L$ register
+with taps $c$ from *some* seed. The test is sound and complete simultaneously:
+it never accepts an impostor and never rejects a genuine member.
 
-"Obeys a recurrence" and "is killed by a polynomial" are the same statement.
-And that dictionary is a two-way street: given *any* monic polynomial $r$ of
-degree $m$, one can write down the order-$m$ recurrence whose characteristic
-polynomial is precisely $r$ — read the taps off the coefficients of $r$, with a
-sign flip. Monic polynomials of degree $m$ and order-$m$ registers are the same
-objects wearing different clothes.
+*Corollary three: seed recovery is free.* The seed *is* the first $L$ output
+symbols — no search, no inversion, no solver. And the recovered seed regenerates
+the whole stream exactly, at every index, not merely on the window where you
+checked. That is the falsifiability gate, discharged.
 
-**Why $2L$.** Say the *linear complexity* of a stream is the smallest $L$ for
-which some order-$L$ register generates it. Take two streams $x$ and $y$, both
-of complexity at most $L$, annihilated by monic polynomials $p$ and $q$ of
-degree $L$. Then the product $pq$ — monic, degree $2L$ — annihilates both, and
-therefore annihilates the difference $x - y$. Translating back through the
-dictionary: $x - y$ obeys some order-$2L$ recurrence. In other words:
+Now here is the pleasant surprise. The second great real-world family is the
+**linear congruential generator**, $x \mapsto a x + b$ — the engine behind
+`rand()`, behind countless game engines, behind a generation of simulation code.
+It looks like a different animal: an affine map on a ring, not a shift register.
+It is not. Subtract consecutive terms of $x_{t+1} = a x_t + b$ and the increment
+$b$ cancels, leaving
 
-> **Theorem (Subadditivity).** Linear complexity is subadditive: if $x$ has
-> complexity at most $L$ and $y$ has complexity at most $M$, then $x \pm y$ has
-> complexity at most $L + M$.
+$$x_{t+2} \;=\; (a+1)\, x_{t+1} \;-\; a\, x_t,$$
 
-But a stream of complexity at most $2L$ whose first $2L$ symbols all vanish is
-the zero stream — that is exact replay again, applied to the all-zero seed. So
-if $x$ and $y$ agree on the first $2L$ symbols, their difference starts with
-$2L$ zeros, is annihilated by a degree-$2L$ polynomial, and must be zero
-everywhere. Hence:
+which is exactly the order-two shift-register recurrence with taps $(-a,\,a+1)$.
+The full-output congruential generator is an order-two register in disguise. The
+same detector catches both families, and the equivalent register seed is
+$(x_0,\; a x_0 + b)$ — two observed symbols, and you are done. One pipeline, two
+families.
 
-> **Theorem ($2L$ samples suffice).** Two streams of linear complexity at most
-> $L$ that agree on their first $2L$ symbols agree forever.
+---
 
-This is the correctness guarantee that lets a detection pipeline *commit*. See
-$2L$ symbols, fit any order-$L$ register that matches them, and you have not
-merely fitted the window — you have fitted the entire infinite stream. Every
-remaining symbol of the file is then predicted, and the prediction is exact.
-Flip it around and it also says the window cannot be shortened: two order-$L$
-registers with different outputs must already differ somewhere in the first
-$2L$ symbols, or they would be the same stream.
+## The $2L$ theorem: when is a recovered seed *certain*?
 
-And $2L$ is genuinely necessary. Over the binary field with $L = 3$, the
-streams $001\,000\,000\dots$ and $001\,001\,001\dots$ both have complexity at
-most $3$; they agree on the first five symbols and part company at the sixth,
-which is symbol number $2L - 1$. Shave one symbol off the window and
-identification becomes ambiguous.
+Suppose your detector has looked at a window and reported: *this is an order-$L$
+register with taps $c$ and seed $\sigma$.* You now delete the file and keep only
+$(c, \sigma)$. When is that safe?
 
-## When is the answer unique?
+The danger is not that the recovered generator disagrees with what you saw — you
+checked that — but that it agrees on the window and then diverges past the end
+of it, in a region you never examined. How long a window buys you certainty?
 
-Suppose your detector finds *a* tap vector consistent with the data. Is it *the*
-tap vector? Not always — and the counterexample is embarrassingly simple. The
-all-zero stream is generated by every register in existence, whatever its taps.
-Any statement of the form "the taps of a linear stream are determined by the
-stream" is simply false as it stands.
+**The $2L$ theorem.** *Let $y$ and $z$ be sequences over a commutative ring,
+each satisfying some order-$L$ linear recurrence — possibly with **different**
+tap vectors. If $y_t = z_t$ for all $t < 2L$, then $y_t = z_t$ for every $t$.*
 
-The fix is not a cleverer proof, but a better question. Look at the
-**state windows** of the stream: the vectors
-$w_n = (x_n, x_{n+1}, \dots, x_{n+L-1})$ obtained by sliding a length-$L$ frame
-along the data. Stack them and you get a Hankel matrix. The right question is
-whether those windows *span* the whole space $F^{L}$.
+Twice the order. That is the whole answer, and it is uniform over the entire
+family at once: it does not matter which taps, which seeds, or how long the file
+is. A window of $2L$ matching symbols is a certificate valid to infinity.
 
-> **Theorem (Uniqueness criterion).** For a stream obeying an order-$L$ linear
-> recurrence with taps $c$, the following are equivalent:
-> (i) $c$ is the only tap vector generating the stream;
-> (ii) the state windows of the stream span $F^{L}$.
+The proof is a small piece of algebra with a lot of leverage. Let the shift
+operator $\mathcal{S}$ act on sequences by $(\mathcal{S}y)_t = y_{t+1}$. It is
+linear, so polynomials act on sequences: $p(X) = \sum_i p_i X^i$ sends $y$ to
+$t \mapsto \sum_i p_i\, y_{t+i}$ — precisely a linear recurrence operator.
+Attach to a tap vector $c$ its **characteristic polynomial**
 
-The forward direction is linear algebra: if two tap vectors $c$ and $d$ both
-work, their difference $e = c - d$ is orthogonal to every state window; if the
-windows span everything, $e$ is orthogonal to everything and hence zero. The
-converse is the interesting one: if the windows fail to span, there is a nonzero
-linear functional vanishing on all of them, and adding its coefficient vector to
-$c$ produces a genuinely *different* register generating the very same stream.
-Degeneracy is not a proof artifact — it is real ambiguity in the data, and no
-algorithm can resolve it.
+$$f_c(X) \;=\; X^L - \sum_{j=0}^{L-1} c_j X^j,$$
 
-The all-zero stream is the extreme case: its windows span nothing, and all
-$2^L$ tap vectors are consistent. A run over binary registers of order $4$
-makes the pattern vivid: whenever the window rank is $r$, exactly $2^{L-r}$
-tap vectors fit the data. Spanning is therefore the precise boundary between
-well-posed and ill-posed recovery.
+monic of degree exactly $L$. Then "$y$ has taps $c$" says exactly that
+$f_c(\mathcal{S})\,y = 0$: the sequence is *annihilated* by its characteristic
+polynomial.
 
-## The other big family, for free
+Now take our two sequences, with annihilators $f$ and $g$. Because polynomials
+in a single operator commute, the product $fg$ annihilates *both* — and hence
+the difference $w = y - z$. This is the step that fuses two different tap
+vectors into one object, and $fg$ is monic of degree $2L$.
 
-Shift registers are one clan of generators. The other workhorse of the last
-half-century is the **linear congruential generator**: pick a modulus $m$, a
-multiplier $a$ and an increment $b$, and iterate
+All that remains is a rigidity lemma: *a sequence annihilated by a monic
+polynomial of degree $m$ that vanishes on $\{0, 1, \dots, m-1\}$ vanishes
+identically.* Why? Monicity means the top coefficient is $1$, so the relation
+$\sum_{i \le m} p_i\, w_{t+i} = 0$ solves for the newest term,
+$w_{t+m} = -\sum_{i<m} p_i\, w_{t+i}$. Every value is forced by the $m$ before
+it, and the first $m$ are zero, so strong induction sweeps the zero forward for
+ever. Since $y$ and $z$ agree on $[0, 2L)$, their difference vanishes there, and
+$2L$ is exactly the degree of $fg$. Done.
 
-$$x_{n+1} \;=\; a\,x_n + b \pmod m .$$
+**And $2L-1$ is not enough.** Take the *impulse* seed $\sigma = (0,\dots,0,1)$
+under two different tap vectors: with all taps zero the register empties,
+producing the lone impulse $0^{L-1}\,1\,0\,0\cdots$; with taps $(1,0,\dots,0)$
+the recurrence is the pure delay $y_{t+L} = y_t$, producing the periodic impulse
+train $0^{L-1}\,1\,0^{L-1}\,1\cdots$. These agree on their first $2L-1$ symbols
+and disagree at index $2L-1$. So no gate based on fewer than $2L$ observed
+symbols can be sound; the constant is exactly right.
 
-This is the generator behind countless `rand()` implementations. It looks
-different from a shift register — it has that pesky additive constant $b$, which
-is not linear. But differencing kills it. Subtract consecutive terms:
-$x_{n+2} - x_{n+1} = a(x_{n+1} - x_n)$, and rearranging gives
+There is a matching counting shadow. Let $N_L(n)$ be the number of length-$n$
+files producible by *some* order-$L$ register from *some* seed. Then $N_L(n)$
+grows until $n = 2L$ and is constant thereafter: longer windows reveal no new
+order-$L$ files, because $2L$ symbols already separate them all.
 
-$$x_{n+2} \;=\; (1+a)\,x_{n+1} - a\,x_n .$$
+One more question: the detector returns *a* tap vector, but is it *the* tap
+vector? Form the $L \times L$ **Hankel matrix** $H_{t,j} = y_{t+j}$ of the
+observed window. If $H$ is nonsingular then any two tap vectors explaining the
+same stream coincide, since their difference lies in the kernel of $H$.
+Nondegeneracy of the window is precisely the condition under which seed recovery
+has a unique answer rather than merely a consistent one.
 
-> **Theorem (One detector, two families).** Every linear congruential stream
-> satisfies the order-$2$ linear recurrence with tap vector $(-a,\, 1+a)$.
+---
 
-So the whole apparatus above — the $2L$ window, the uniqueness criterion, the
-exact-replay guarantee — applies verbatim to congruential generators, with
-$L = 2$. You do not need a second detector; you need four observations. From
-those four numbers the multiplier and increment fall out, and then the seed.
+## Counting the compressible: rarity, exactly
 
-Recovering the seed from a state observed at time $n$ can be done in two ways,
-and both are exact. **Backwards**, if the multiplier $a$ is invertible modulo
-$m$: the inverse step is $y \mapsto a^{-1}(y - b)$, and applying it $n$ times to
-the state at time $n$ returns the seed on the nose. **Forwards**, which is
-stranger and rather beautiful: on a finite state space an invertible multiplier
-makes the update map a *bijection*, so every orbit is **purely periodic** — no
-transient tail, every state eventually returns to itself. Consequently the seed
-is reachable from any observed state simply by *running the generator forward*
-long enough. An attacker with no modular-inverse routine, or a compressor that
-only knows how to call the generator, can still get the seed. Rewinding is a
-special case of running ahead.
+How much of the world is seed-compressible? Very little, and we can say how
+little.
 
-The counting side is equally blunt. A congruential generator over the integers
-modulo $m$ has three parameters — multiplier, increment, seed — so at most
-$m^3$ distinct streams of any length can be congruential. Once a file has more
-than three symbols, most files are not congruential output, and a detector that
-claims otherwise has a false-positive rate you can bound on the back of an
-envelope: $m^{3-N}$ for length-$N$ files.
+An order-$L$ register over an alphabet of size $q$ is described by $L$ taps and
+$L$ seed symbols, so it produces at most $q^{2L}$ files of any length, out of
+$q^n$. Once $n > 2L$, some file is produced by no order-$L$ register at all, and
+the fraction that are is at most $q^{2L-n}$ — exponentially small. Bounded-order
+seed compression is never universal at any order.
 
-## The census: how much data is really seed-compressible?
+The crude count $q^{2L}$ is never attained, and one can see why in one line: the
+$q^L$ parameter pairs with **zero seed** all produce the same file — the
+all-zero one. Discounting that collapse gives the improved bound
 
-Now for the reckoning. Call an $N$-bit file **$L$-seed compressible** if some
-binary shift register of order $L$ emits it verbatim. The detector's promise is
-that such a file has a description of length $2L$ bits — the taps and the seed —
-*no matter how long the file is*. A megabyte of terrain from a 32-bit register
-compresses to 64 bits. That is a compression ratio of about $10^{-5}$, and it is
-lossless in the strongest possible sense: the decoder reruns the register and
-gets the file back bit for bit.
+$$N_L(n) \;\leq\; q^{2L} - q^{L} + 1,$$
 
-The catch is arithmetic, and it is fatal to any hope of generality.
+a strict improvement for every $L \geq 1$.
 
-> **Theorem (Rarity).** At most $4^{L}$ files of any length are $L$-seed
-> compressible: $2^L$ tap vectors times $2^L$ seeds. Out of the $2^N$ files of
-> length $N$, at most a fraction $2^{2L-N}$ are seed compressible.
+At order one the count can be nailed exactly. Over a field, the order-one
+register is multiplication by its single tap, so its output is the geometric
+word $x_t = c^t s$. If $s \neq 0$ the parameters are recoverable from the first
+two symbols ($c = x_1 / x_0$), giving $q(q-1)$ distinct words; if $s = 0$ the
+word is all-zero whatever the tap. Hence, for every $n \geq 2$,
 
-If $L = 32$ and $N$ is a megabyte, that fraction is $2^{64 - 8388608}$. Vanishing
-does not begin to describe it. And the bound is never even tight, because the
-parameter count over-counts:
+$$N_1(n) \;=\; q^2 - q + 1,$$
 
-> **Theorem (The naive count is never tight).** All $2^L$ registers launched
-> from the all-zero seed emit the same all-zero file, so at most
-> $4^L - 2^L + 1$ files are $L$-seed compressible.
+which meets the improved bound exactly — and, intriguingly, can be rewritten as
 
-Even that is an over-estimate. A stream is determined not by the register that
-happens to generate it but by its *minimal* connection polynomial, and many
-different registers share one. Counting the distinct infinite streams of
-complexity at most $L$ over the binary field for $L = 1, \dots, 8$ gives
+$$q^2 - q + 1 \;=\; \frac{q^3 + 1}{q + 1} \;=\; \frac{q^{2L+1}+1}{q+1} \Bigg|_{L=1}.$$
 
-$$3,\; 11,\; 43,\; 171,\; 683,\; 2731,\; 10923,\; 43691,$$
+That closed form is conjectured to hold for every order, and the exhaustive
+counts are strikingly obedient. Over the binary alphabet, orders $1$ through $5$
+give $3,\ 11,\ 43,\ 171,\ 683$, matching $(2^{2L+1}+1)/3$; over the ternary
+alphabet, orders $1, 2, 3$ give $7,\ 61,\ 547$, matching $(3^{2L+1}+1)/4$. Note
+that $N_1 = q^2-q+1$ lies *strictly between* the general bounds $q^L$ and
+$q^{2L}$, so the conjecture is a genuine claim about the degeneracy structure of
+the family, not a pigeonhole estimate dressed up. Proving it for $L \geq 2$ is
+open.
 
-against the parameter counts $4, 16, 64, 256, \dots$ At $L = 3$: forty-three
-distinct streams from sixty-four parameter pairs, comfortably below the proved
-ceiling of fifty-seven. These numbers match $\tfrac{1}{3}(2\cdot 4^{L} + 1)$
-exactly in every case computed — a striking regularity suggesting that the true
-density of realizable streams inside the parameter space converges to $2/3$.
-That formula is, at present, an observed pattern rather than a proved theorem,
-and closing that gap is one of the natural next steps.
+---
 
-There is one large and genuinely common family that the detector *does* catch:
-periodic data. A file whose bits depend only on the index modulo $p$ is exactly
-the output of the order-$p$ register with taps $(1, 0, \dots, 0)$ — the register
-that simply recirculates its seed. So every periodic file has a $2p$-bit
-description, and periodic or run-structured regions are real: padding, fill
-patterns, repeated headers, texture tiles. The detector is not useless. It is
-narrow.
+## No free lunch for the router
 
-## The two boxes do not cover the room
+The engineering fantasy is a **router**: a front end that inspects a file,
+consults a library of generator families — registers of every order,
+congruential generators, whatever else — decides which one wrote it, and emits a
+family index plus a seed. Surely a big enough library covers a lot of data?
 
-The practical proposal that motivates all this is a **router**: examine each
-file, and send it either to the "seed-compressible" branch (recover the seed,
-store $2L$ bits) or to the "model-compressible" branch (hand it to whatever
-general-purpose compressor you like). Two boxes, everything sorted.
+It does not, and the bound is embarrassingly simple.
 
-It does not work, and the reason is the oldest argument in information theory,
-which no amount of clever detection can dodge.
+**Router capacity.** *For any finite family of generators $g_i$ with state
+spaces $S_i$, the number of length-$n$ files reproducible by some member is at
+most $\sum_i |S_i|$.*
 
-> **Theorem (Router dichotomy).** Fix any decompressor $D$ whatsoever for the
-> model branch, and any budgets $L$ (seed order) and $d$ (bits of modelling
-> gain demanded). Whenever the budgets are small compared with the file length
-> $N$ — precisely, whenever $2^{d}\,2^{2L} + 2^{N+1} < 2^{d}\,2^{N}$ — there
-> exists an $N$-bit file that is *neither* $L$-seed compressible *nor*
-> compressible by $d$ bits under $D$.
+That is the total number of seeds in the library, and nothing more: adding a
+family adds its seed count, with no synergy and no combinatorial windfall. The
+contrapositive is the sharpest way to say it: *a router that compresses
+everything saves nothing* — if every length-$n$ file is reproducible by some
+member, the library must carry at least $q^n$ seeds, exactly the number of files
+it was supposed to compress.
 
-Both boxes are small for the same reason. Descriptions of length below $N - d$
-number fewer than $2^{N-d+1}$, so at most a $2^{-d}$-ish fraction of files can
-gain $d$ bits under any fixed decompressor. Seed-compressible files number at
-most $2^{2L}$. Add the two and, as long as the budgets are modest, the sum is
-smaller than $2^N$; there is a file in neither pile. Concretely: among $64$-bit
-files, whatever compressor you install on the model branch, some file is neither
-the output of an order-$8$ register nor compressible by even four bits.
+The ceiling itself is usually not attained: at order one, the router that tries
+every register of order $\leq 1$ carries $1 + q^2$ seeds but accepts exactly
+$q^2 - q + 1$ files — a deficit of exactly $q$. There is also a structural
+collapse worth knowing: padding a tap vector with a leading zero turns an
+order-$L$ recurrence into an order-$(L{+}1)$ one for the same stream, so the
+family of files of linear complexity $\leq M$ is *exactly* the order-$M$ family.
+A router over all orders $\leq M$ is no more powerful than a detector at order
+$M$ alone.
 
-That is not a defect of this approach; it is the pigeonhole principle, and it
-survives the addition of pseudo-random detection intact. What detection changes
-is not *whether* the bound applies but *which* files land on the good side of
-it. Standard compressors are built around statistical structure — repeated
-substrings, skewed symbol frequencies, local correlations. Register output has
-none of that, and yet it has almost no information content. Adding a seed
-detector to a compression pipeline moves an entire class of files, invisible to
-every statistical method, from the incompressible pile to the four-bytes pile.
-It does not shrink the incompressible pile as a whole. Nothing can.
+None of this kills the programme; it relocates it. Seed compression does not
+beat the pigeonhole bound on average, it reallocates code space toward a sparse,
+structured corner of file space. Whether that corner is where your data actually
+lives is an empirical question — and a well-posed one, because the gate is exact
+reproduction.
 
-## What this is really about
+---
 
-There is a philosophical point buried in the engineering here, and it is worth
-saying plainly. "Random-looking" and "information-rich" are not the same
-property, and the gap between them is precisely the gap between statistics and
-computation.
+## Recovery in practice, and what noise does to it
 
-The output of a good shift register passes essentially every statistical test
-you can name — balanced frequencies, flat autocorrelation, uniform block
-statistics — and its Kolmogorov-style description complexity is a few dozen
-bits. Its apparent randomness is a *statistical* illusion sustained by a
-*computational* secret. The detector described above cracks that illusion, not
-by finding statistical structure (there is none to find) but by hypothesizing
-the mechanism and testing it exactly: fit a register to $2L$ symbols, replay,
-and compare bit for bit. Pass, and you have replaced the file by its cause.
-Fail, and you have learned something definite.
+The recovery procedure is almost anticlimactic. The candidate seed is the first
+$L$ observed symbols; the only search is over tap vectors, keeping those that
+reproduce the whole observed word from that seed. The test is **sound** (an
+accepted tap vector regenerates the file symbol by symbol) and **complete** (it
+accepts exactly the files of linear complexity $\leq L$), and once the window is
+at least $2L$ long, *all* accepted candidates predict the same infinite stream:
+ambiguity in the taps, if any, is invisible in the output.
 
-The mathematics tells you the exact price of that test. You need $2L$
-observations, no fewer and no more. The answer is unique exactly when the
-sliding windows of the data span the state space. The families collapse: shift
-registers and congruential generators are the same kind of object, one at order
-$L$ and one at order $2$. Recovery is exact, in both directions, and verifiable
-by replay. And the whole enterprise buys you a set of files of density
-$2^{2L-N}$ — enormous compression on a vanishing sliver of the universe. Which
-is, when you think about it, a fair description of every good compression idea
-ever invented. The art is picking the right sliver.
+At the other extreme sits the **impulse word** $0,0,\dots,0,1$, the worst case
+for this whole enterprise. No register of order $L < n$ produces it: its first
+$L$ symbols are all zero, so the only compatible seed is the zero seed, which
+produces the all-zero file. Order $n$ does produce it, so its linear complexity
+is *exactly* $n$ — maximal. This kills a natural conjecture: one might hope a
+recovery routine could always return an order at most $\lceil n/2 \rceil$
+consistent with the window it saw, but for $n \geq 2$ the impulse word is
+consistent with no such order. The correct invariant is *minimality* of the
+returned order.
+
+Finally, noise. Real files are contaminated: a header here, a checksum there,
+interleaved metadata. A practical detector must tolerate $e$ corrupted symbols,
+and coding theory conditions one to expect an additive answer: $2L$ symbols to
+pin the generator, $2e$ more to out-vote the errors, one to break ties — a
+threshold of $2L + 2e + 1$.
+
+**That guess is false, for every error budget $e \geq 1$.** Over the
+three-element field, take the constant stream $y_t = 1$ (order one, tap $1$) and
+the alternating stream $z_t = 2^t$, which there is $1, 2, 1, 2, \dots$ (order
+one, tap $2$). These are distinct streams — yet they *agree at every even
+index*. Now build an observed word of length exactly $2 \cdot 1 + 2e + 1$ whose
+entries are all $1$ except a single $2$ at position $1$. It differs from the
+constant stream in one place, and from the alternating stream in the $e$ odd
+positions $3, 5, \dots, 2e+1$. Both distances are at most $e$: two distinct
+generators, one observed word, no way to choose. The smallest instance takes
+$e = 1$ and a window of five symbols.
+
+The failure is structural, not accidental: the two streams agree on a
+half-density set of indices, so their disagreements are spread out and *no*
+window of $2L$ consecutive positions is error-free. Once you see that, the
+repair suggests itself. Two streams within distance $e$ of a common word
+disagree with it in at most $2e$ places combined; and $2e$ corrupted positions
+cannot possibly meet all of $2e+1$ *disjoint* blocks of length $2L$. So at least
+one clean block exists, and on a clean block the two streams agree on $2L$
+consecutive symbols — which by the shifted $2L$ theorem forces them to agree
+from there onward.
+
+**Corrected threshold.** *A window of length $2L(2e+1)$ suffices: if an observed
+word of that length is within Hamming distance $e$ of two streams of linear
+complexity at most $L$, those streams agree from some index $j$ with
+$j + 2L \leq n$ onward.*
+
+The dependence on $e$ is multiplicative, not additive. And it is sharp, at least
+at order one: at length $4e + 1 = 2 \cdot 1 \cdot (2e+1) - 1$, one symbol short,
+unique decoding already fails. The witness is a word that splits its
+disagreements evenly — $1$ at even indices, $1$ at the first $e$ odd indices,
+$2$ at the last $e$ odd indices — sitting at distance exactly $e$ from each of
+the two streams. So the multiplicative blow-up is not an artefact of the block
+pigeonhole; it is the truth.
+
+---
+
+## What this all means
+
+The seed-compression programme survives its own analysis, but in a chastened
+form. It cannot be universal — the router capacity theorem forbids that in one
+line, with no assumption about the generators — and it cannot help on average,
+because the fraction of files it touches decays like $q^{-n}$.
+
+What it *can* do is exact, cheap, and certified. If a file really is
+shift-register output of order $L$, then $2L$ symbols are enough to recover the
+generator and prove — not estimate — that it reproduces every remaining byte.
+The seed is free to read, the congruential family comes along at order two for
+no extra machinery, and when the file is only nearly generated, the price of
+tolerating $e$ errors is a window growing like $2L(2e+1)$: a multiplicative, not
+additive, tax, and a sharp one.
+
+That is the honest shape of the answer to the question we started with. The file
+that was never random can be recognised, recovered, and certified. There just
+are not very many of them — and now we can count exactly how few.
