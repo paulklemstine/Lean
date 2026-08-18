@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "6e253e5d",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Tropical EML learning theory (next cycle)\n\nDerived from what survived and what failed in this cycle. Formalized this cycle:\nthe tropical/ReLU dictionary in one variable (`isTropR",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 109,
-      "timestamp": "2026-08-16T09:43:07",
-      "title": "EML Learning Theory: Gradient Descent Convergence in the Tropical Limit"
-    },
-    {
       "cycle_id": "8fa1e5a5",
       "domain": "Applications",
       "key_insight": "# Future Directions — EML Transseries\n\nThe formal results of this cycle live in `Catalog/Applications/EML/`:\n\n| file | content |\n|---|---|\n| `TransseriesEMLBase.lean` | the rank group `Rank = ℝ ×ₗ (ℝ",
@@ -499,19 +489,19 @@
       "theorem_count": 49,
       "timestamp": "2026-08-18T09:49:33",
       "title": "The `⇐` direction is proved (`FourierFA.uncertainty_eq_coset_modulation`); the `⇒`"
+    },
+    {
+      "cycle_id": "c4b3dd3f",
+      "domain": "Logic",
+      "key_insight": "# FUTURE DIRECTIONS — after closing Conjecture A\n\nConjecture A is now closed in `Catalog/Logic/TraceDistribution/`:\n\n* `traceDistribution_eq_iff_card_orbits_eq` — trace distribution `⟺` orbit counts o",
+      "quality_score": 0.86,
+      "sorry_count": 0,
+      "theorem_count": 63,
+      "timestamp": "2026-08-18T10:47:08",
+      "title": "Conjecture A, closed"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "c29c7fbe",
-      "domain": "Geometry",
-      "key_insight": "# Future Directions\n\nDerived from the results proved in\n\n* `Catalog/Geometry/RischResidueLiouville.lean`\n* `Catalog/Geometry/RischSplitIntegration.lean`\n* `Catalog/Geometry/RischGaussianObstruction.le",
-      "quality_score": 0.657274625691032,
-      "sorry_count": 0,
-      "theorem_count": 163,
-      "timestamp": "2026-08-07T09:22:31",
-      "title": "The following conjectures sharpen the boundary of the normalized development in"
-    },
     {
       "cycle_id": "f3cf4755",
       "domain": "MachineLearning",
@@ -2501,27 +2491,19 @@
       "theorem_count": 49,
       "timestamp": "2026-08-18T09:49:33",
       "title": "The `⇐` direction is proved (`FourierFA.uncertainty_eq_coset_modulation`); the `⇒`"
+    },
+    {
+      "cycle_id": "c4b3dd3f",
+      "domain": "Logic",
+      "key_insight": "# FUTURE DIRECTIONS — after closing Conjecture A\n\nConjecture A is now closed in `Catalog/Logic/TraceDistribution/`:\n\n* `traceDistribution_eq_iff_card_orbits_eq` — trace distribution `⟺` orbit counts o",
+      "quality_score": 0.86,
+      "sorry_count": 0,
+      "theorem_count": 63,
+      "timestamp": "2026-08-18T10:47:08",
+      "title": "Conjecture A, closed"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "f262016d",
-      "domain": "Applications",
-      "name": "concatEnc_succ",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "f262016d",
-      "domain": "Applications",
-      "name": "decodeChunks_concat",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "7199d5c0",
-      "domain": "MachineLearning",
-      "name": "factorial_le_stirling_upper",
-      "quality": 0.82
-    },
     {
       "cycle_id": "7199d5c0",
       "domain": "MachineLearning",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "pairingFn_ne_zero",
       "quality": 0.86
+    },
+    {
+      "cycle_id": "c4b3dd3f",
+      "domain": "Logic",
+      "name": "in",
+      "quality": 0.86
+    },
+    {
+      "cycle_id": "c4b3dd3f",
+      "domain": "Logic",
+      "name": "in",
+      "quality": 0.86
+    },
+    {
+      "cycle_id": "c4b3dd3f",
+      "domain": "Logic",
+      "name": "burnside",
+      "quality": 0.86
     }
   ],
-  "last_updated": "2026-08-18T09:49:33",
+  "last_updated": "2026-08-18T10:47:08",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hupper⟩)",
@@ -3455,12 +3455,6 @@
     ],
     "Logic": [
       {
-        "cycle_id": "5b1761bc",
-        "quality": 0.627125,
-        "theorems": 188,
-        "title": "The following are concrete conjectures extending the formal model in `Catalog/No"
-      },
-      {
         "cycle_id": "b7a22960",
         "quality": 0.82,
         "theorems": 127,
@@ -3513,6 +3507,12 @@
         "quality": 0.86,
         "theorems": 90,
         "title": "Fibre spectrum (Conjecture E, first half, closed)"
+      },
+      {
+        "cycle_id": "c4b3dd3f",
+        "quality": 0.86,
+        "theorems": 63,
+        "title": "Conjecture A, closed"
       }
     ],
     "MachineLearning": [

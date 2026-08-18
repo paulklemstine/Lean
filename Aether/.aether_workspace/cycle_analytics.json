@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-18T09:49:37.763598+00:00",
+  "last_updated": "2026-08-18T10:47:12.871497+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -58813,6 +58813,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-08-18T09:49:37.570235+00:00",
       "title": "The `\u21d0` direction is proved (`FourierFA.uncertainty_eq_coset_modulation`); the `\u21d2`"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Logic",
+      "duration_seconds": 3452.0322737693787,
+      "end_time": 1787050006.3922389,
+      "files_integrated": 4,
+      "job_id": "c4b3dd3f",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.86,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.562,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.86,
+        "novelty": 0.86,
+        "proof_depth": 0.86,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.86,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1787046554.359965,
+      "strategy_count": 0,
+      "theorem_count": 63,
+      "theorem_novelty_disproof": 1,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 56,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-08-18T10:47:12.671563+00:00",
+      "title": "Conjecture A, closed"
     }
   ]
 }

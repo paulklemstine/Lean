@@ -166,6 +166,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle c4b3dd3f (Q=0.860), which proved 63 theorems in Logic. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Two finite `G`-actions have the same *trace distribution*\n    `{|X^g| : g \u2208 G}` **iff** they have the same orbit counts on `k`-tuples for all `k \u2264 N`\n    (`traceDistribution_eq_iff_card_orbits_eq`), and then for all `k` whatsoever\n    (`card_orbits_eq_of_le`). Gradewise q-series form: `traceDistribu",
+    "domains": [
+      "Logic"
+    ],
+    "id": "push_c4b3dd3f_31759c6a",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "c4b3dd3f",
+    "status": "available",
+    "timestamp": "2026-08-18T10:47:09.556813+00:00",
+    "title": "Deepening: Conjecture A, closed"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Formally proves conditions under which information can exist purely within a closed timelike curve loop without ever having an initial origin (Ontological Paradox).",
     "domains": [
       "Physics"
@@ -1793,21 +1807,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-05T06:51:05.180719+00:00",
     "title": "Deepening: ArXiv paper: Magnitude homology of tope graphs"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Compute and formalize \u03c0_n(S^m) for small n, m. Prove \u03c0_3(S^2) \u2245 \u2124 via the Hopf fibration. Construct the Hopf invariant and prove it detects the generator. Formalize the long exact sequence of a fibration.",
-    "domains": [
-      "Topology",
-      "Algebra"
-    ],
-    "id": "fd_0668",
-    "priority_score": 0.88,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-24T14:34:16.697789+00:00",
-    "title": "Homotopy Groups of Spheres: Low-Dimensional"
   },
   {
     "consumed_by_exp_id": "",
@@ -19339,16 +19338,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "The block-tracking fibration (`stirling2_succ_succ`, `card_filter_last_eq`,"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fbb9718e",
     "description": "The case `m = 3`, `F = x\u00b2 + y\u00b2 - z\u00b2` is fully proved\n(`PythagoreanKernel.pyth_kernel_spectrum`: defect exactly one, the obstruction being that `2`\nis not a square, with the dimension-dependence isolated in `constant_legs_dim_two_three_four`),\nand the Fermat family shows the defect is *not* constant along a family\n(`FermatKernel.spectrum_card_iff_flt`), so the invariant is nontrivial and computable in\nexamples.",
     "domains": [
       "Pythagorean"
     ],
     "id": "fd_1487",
+    "phase": "A",
     "priority_score": 0.5082222222222222,
     "research_mode": "team",
     "source_exp_id": "856336cf",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-18T03:58:31.809783+00:00",
     "title": "The case `m = 3`, `F = x\u00b2 + y\u00b2 - z\u00b2` is fully proved"
   },
@@ -19628,15 +19628,14 @@ window.FUTURE_DIRECTIONS = [
     "title": "The low-tail experiment."
   },
   {
-    "consumed_by_exp_id": "c4b3dd3f",
+    "consumed_by_exp_id": "",
     "description": "Two finite `G`-actions have the same *trace distribution*\n    `{|X^g| : g \u2208 G}` **iff** they have the same orbit counts on `k`-tuples for all `k \u2264 N`\n    (`traceDistribution_eq_iff_card_orbits_eq`), and then for all `k` whatsoever\n    (`card_orbits_eq_of_le`). Gradewise q-series form: `traceDistribution_graded_eq`.",
     "domains": [],
     "id": "fd_1434",
-    "phase": "A",
     "priority_score": 0.4260952380952381,
     "research_mode": "team",
     "source_exp_id": "286b3a0e",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-17T13:54:05.925280+00:00",
     "title": "Conjecture A, closed"
   },
@@ -20665,5 +20664,115 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-18T09:49:20.037935+00:00",
     "title": "In the setting of Conjecture 1, prove the *support* stability first: if"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## Conjecture B (marks rigidity). The *pointwise* mark function is recovered from orbit counts of restrictions to cyclic subgroups.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_1514",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "c4b3dd3f",
+    "status": "available",
+    "timestamp": "2026-08-18T10:46:55.171231+00:00",
+    "title": "Conjecture B (marks rigidity). The *pointwise* mark function is recovered from orbit counts of restrictions to cyclic subgroups."
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture A already supplies the multiset for every subgroup at once, and\n`Catalog/Logic/TraceDistribution/Functoriality.lean` supplies the mark formalism\n(`fixedCard_prod`, `fixedCard_sum`, `fixedCard_of_equivariant_equiv`).  The only missing\ningredient is M\u00f6bius inversion over `Nat.divisors`, which mathlib has.",
+    "domains": [
+      "Algebra",
+      "Bridges"
+    ],
+    "id": "fd_1515",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "c4b3dd3f",
+    "status": "available",
+    "timestamp": "2026-08-18T10:46:55.420423+00:00",
+    "title": "Conjecture A already supplies the multiset for every subgroup at once, and"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## Conjecture C (exact threshold for group actions). The multiset threshold `n+1` is realised by actual `G`-sets.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_1516",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "c4b3dd3f",
+    "status": "available",
+    "timestamp": "2026-08-18T10:46:55.655352+00:00",
+    "title": "Conjecture C (exact threshold for group actions). The multiset threshold `n+1` is realised by actual `G`-sets."
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "We *proved* the combinatorial extremal pair exists\n(`exists_powerSum_agreeing_ne`) and *proved* the smallest case `n = 2` is realised by\n(`regular G`, `Unit`) for `|G| = 2` (`regular_vs_point_separation`).  The gap between\n\"combinatorially extremal\" and \"group-theoretically realisable\" is now a sharply posed,\nfinite question for each `n`.",
+    "domains": [
+      "Combinatorics",
+      "Algebra"
+    ],
+    "id": "fd_1517",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "c4b3dd3f",
+    "status": "available",
+    "timestamp": "2026-08-18T10:46:55.895059+00:00",
+    "title": "We *proved* the combinatorial extremal pair exists"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## Conjecture D (q-series rigidity / Molien-type dichotomy). The fixed-point q-series determines the orbit-counting generating function, and conversely.",
+    "domains": [],
+    "id": "fd_1518",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "c4b3dd3f",
+    "status": "available",
+    "timestamp": "2026-08-18T10:46:56.131070+00:00",
+    "title": "Conjecture D (q-series rigidity / Molien-type dichotomy). The fixed-point q-series determines the orbit-counting generating function, and conversely."
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## Conjecture E (a strictly finer invariant). Orbit counts on *injective* tuples strictly refine the trace distribution.",
+    "domains": [],
+    "id": "fd_1519",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "c4b3dd3f",
+    "status": "available",
+    "timestamp": "2026-08-18T10:46:56.367069+00:00",
+    "title": "Conjecture E (a strictly finer invariant). Orbit counts on *injective* tuples strictly refine the trace distribution."
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## Conjecture F (stability under change of base group). Trace equivalence is detected by a bounded number of \"test\" actions.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_1520",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "c4b3dd3f",
+    "status": "available",
+    "timestamp": "2026-08-18T10:46:56.602697+00:00",
+    "title": "Conjecture F (stability under change of base group). Trace equivalence is detected by a bounded number of \"test\" actions."
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The support form is in place, so this conjecture reduces entirely to a\ngroup-theoretic estimate on the number of distinct fixed-point counts; a counterexample\nwould be a family of groups with `|G|^{\u03a9(1)}` distinct mark values on a single `G`-set,\nwhich is itself an interesting object.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_1521",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "c4b3dd3f",
+    "status": "available",
+    "timestamp": "2026-08-18T10:46:56.846468+00:00",
+    "title": "The support form is in place, so this conjecture reduces entirely to a"
   }
 ];
