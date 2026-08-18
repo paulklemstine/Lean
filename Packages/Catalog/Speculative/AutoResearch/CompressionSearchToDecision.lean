@@ -35,7 +35,7 @@ prefix-decision compression tasks all sit at the same cryptographic level.*
 
 No axioms beyond the standard three, no `sorry`.
 -/
-import Shared.CompressionUniversality
+import Speculative.AutoResearch.CompressionUniversality
 
 namespace CompressionOWF
 

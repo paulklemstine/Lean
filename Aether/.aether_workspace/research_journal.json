@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "802e1378",
-      "domain": "NumberTheory",
-      "key_insight": "# Future directions (derived from the NET-27 formalisation)\n\nThe three files\n`Catalog/NumberTheory/EOSWidthMonotoneRamp.lean`,\n`Catalog/NumberTheory/EOSExclusiveDimGenericity.lean`,\n`Catalog/NumberThe",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 46,
-      "timestamp": "2026-08-16T00:30:44",
-      "title": "NET-27 (paper 71): EOS-WIDTH-SHIFT-IS-A-MONOTONE-RAMP — P(cure) ramps 25→33→83→100→100% as exclusive"
-    },
-    {
       "cycle_id": "66af3cc3",
       "domain": "NumberTheory",
       "key_insight": "# Future directions — bold, testable conjectures from the NET-31 formalization\n\nThe two Lean files\n(`Catalog/NumberTheory/BoundaryBlockInternalization.lean`,\n`Catalog/NumberTheory/BoundaryBlockCollect",
@@ -499,19 +489,19 @@
       "theorem_count": 29,
       "timestamp": "2026-08-18T03:58:45",
       "title": "Kernel patterns"
+    },
+    {
+      "cycle_id": "ae5d2ae6",
+      "domain": "Novelty",
+      "key_insight": "# Future directions — the price of universality\n\nThe formalised results of this phase answer Question 1 of *Compression Beyond the\nPigeonhole Bound* in the following form.\n\n* **Exact worst-case price.",
+      "quality_score": 0.87,
+      "sorry_count": 0,
+      "theorem_count": 29,
+      "timestamp": "2026-08-18T04:52:43",
+      "title": "Compression Research A1: Price of universality — minimax redundancy of universal decompressors"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "786dcda9",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — arithmetic mirror symmetry, after cycle 4\n\nCycle 1 adjudicated the five assigned conjectures and spun off follow-ups A–D.  **Cycle 2\nclosed all four.**  Cycle 3 closed the divisi",
-      "quality_score": 0.6520853,
-      "sorry_count": 0,
-      "theorem_count": 246,
-      "timestamp": "2026-08-07T05:07:18",
-      "title": "The following conjectures are concrete extensions of the proved bridge.  Each is"
-    },
     {
       "cycle_id": "8d2025bd",
       "domain": "NumberTheory",
@@ -2501,27 +2491,19 @@
       "theorem_count": 29,
       "timestamp": "2026-08-18T03:58:45",
       "title": "Kernel patterns"
+    },
+    {
+      "cycle_id": "ae5d2ae6",
+      "domain": "Novelty",
+      "key_insight": "# Future directions — the price of universality\n\nThe formalised results of this phase answer Question 1 of *Compression Beyond the\nPigeonhole Bound* in the following form.\n\n* **Exact worst-case price.",
+      "quality_score": 0.87,
+      "sorry_count": 0,
+      "theorem_count": 29,
+      "timestamp": "2026-08-18T04:52:43",
+      "title": "Compression Research A1: Price of universality — minimax redundancy of universal decompressors"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "615053e5",
-      "domain": "Logic",
-      "name": "sat_boxIter",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "615053e5",
-      "domain": "Logic",
-      "name": "iterSound_iff_cycle",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "8993bd64",
-      "domain": "Shared",
-      "name": "inverter_failure_infinite",
-      "quality": 0.81
-    },
     {
       "cycle_id": "8993bd64",
       "domain": "Shared",
@@ -2803,9 +2785,27 @@
       "domain": "Pythagorean",
       "name": "catalog",
       "quality": 0.88
+    },
+    {
+      "cycle_id": "ae5d2ae6",
+      "domain": "Novelty",
+      "name": "binw_nonneg",
+      "quality": 0.87
+    },
+    {
+      "cycle_id": "ae5d2ae6",
+      "domain": "Novelty",
+      "name": "binw_sum",
+      "quality": 0.87
+    },
+    {
+      "cycle_id": "ae5d2ae6",
+      "domain": "Novelty",
+      "name": "binw_mul_succ",
+      "quality": 0.87
     }
   ],
-  "last_updated": "2026-08-18T03:58:45",
+  "last_updated": "2026-08-18T04:52:43",
   "open_questions": [
     {
       "context": "- Every main theorem below is `sorry`-free (checked).; `RhoDom.dominant_singleton_iff`, so it is not a self-contained restatement.  No `sorry`, no; `RhoDom.dominant_singleton_iff`, so it is not a self",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "eaebe17a",
-        "quality": 0.9,
-        "theorems": 14,
-        "title": "Exp 392 GCD-MOMENT: the semiprime gcd-moments M_k = sum gcd(x,N)^k are a closed "
-      },
-      {
         "cycle_id": "83c80b79",
         "quality": 0.86,
         "theorems": 129,
@@ -3637,6 +3631,12 @@
         "quality": 0.87,
         "theorems": 135,
         "title": "Emergent Spacetime from Quantum Entanglement"
+      },
+      {
+        "cycle_id": "ae5d2ae6",
+        "quality": 0.87,
+        "theorems": 29,
+        "title": "Compression Research A1: Price of universality — minimax redundancy of universal"
       }
     ],
     "NumberTheory": [

@@ -51,7 +51,7 @@ switching to a universal description system does not close the gap between
 
 No axioms beyond the standard three, and no `sorry`.
 -/
-import Shared.CompressionOneWayFunctions
+import Speculative.AutoResearch.CompressionOneWayFunctions
 
 namespace CompressionOWF
 

@@ -63,13 +63,13 @@ window.FUTURE_DIRECTIONS = [
     "title": "Compression Research B3: Almost-lossless / Monte Carlo compression"
   },
   {
-    "consumed_by_exp_id": "ae5d2ae6",
+    "consumed_by_exp_id": "3eeb9235",
     "description": "**Part of:** Research plan \u2014 *Compression Beyond the Pigeonhole Bound* (Phase A, Question 1: separating the decompressor from the data).\n\n## Research question\nOne shared decompressor `U` must serve all inputs. A decompressor specialized to a *class* of data does better per class. What is the **price of universality** \u2014 the minimax redundancy a universal scheme must pay over a per-distribution scheme?\n\n## Approach\n- Derive closed-form / tight bounds on universal redundancy for natural source classes: stationary sources, finite-state, Markov.\n- Express redundancy as a function of message length `n` and class complexity.\n\n## Deliverable\nRigorous bounds on universal vs. per-distribution redundancy, and a conclusion on whether specialized decompressors are theoretically worth pursuing.\n\n## Falsifiability / gate\nBounds must match or beat known minimax rates from the literature (Rissanen-style redundancy). If specialization doesn't move bits from *message* to *shared*, the direction is dead.\n\n**Milestone:** M5 (theory, ~2 weeks).\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_1373",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
@@ -150,20 +150,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-16T13:45:35.625007+00:00",
     "title": "Deepening: Wigner-Semicircle: Universality of the Spectral Distribution"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 856336cf (Q=0.880), which proved 29 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: are complete `G`-invariants of the equality pattern of a tuple, counted by\n   the Bell numbers `1, 1, 2, 5, 15, 52` (OEIS A000110), proved by `decide`.",
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "push_856336cf_f48b78a1",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "856336cf",
-    "status": "available",
-    "timestamp": "2026-08-18T03:58:45.965512+00:00",
-    "title": "Deepening: Kernel patterns"
   },
   {
     "consumed_by_exp_id": "",
@@ -1802,26 +1788,12 @@ window.FUTURE_DIRECTIONS = [
       "Tropical"
     ],
     "id": "push_785c09ab_23b00019",
-    "priority_score": 0.8857999999999999,
+    "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "785c09ab",
     "status": "available",
     "timestamp": "2026-08-05T22:30:27.421578+00:00",
     "title": "Deepening: **Conjecture.** Every normalized, translation-equivariant, coordinatewise-minimu"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle dff51e05 (Q=0.783), which proved 12 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Euclid's parallel postulate says parallel lines never meet. Hyperbolic geometry says they can diverge. Elliptic geometry says they converge. But what about a geometry where parallel lines BOTH converge AND diverge? Define a Split Geometry on R^2 where the parallel postulate is direction-dependent: l",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_dff51e05_aa92a98b",
-    "priority_score": 0.8832099999999999,
-    "research_mode": "team",
-    "source_exp_id": "dff51e05",
-    "status": "available",
-    "timestamp": "2026-07-29T12:30:24.307178+00:00",
-    "title": "Deepening: Impossible Geometries: Where Parallel Lines Converge AND Diverge"
   },
   {
     "consumed_by_exp_id": "",
@@ -19506,6 +19478,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-17T22:41:06.736108+00:00",
     "title": "The `2 ^ k` computation and the sandwich theorem are already"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "`S(P) = m` **iff** the `m` members of `P` have\n   pairwise disjoint supports (`shtarkov_eq_card_iff`); in strict form, any\n   class two of whose members share a possible message is strictly cheaper than\n   the label-plus-specialised-code scheme\n   (`logb_shtarkov_lt_logb_card_of_not_disjoint`).  Successor question: quantify\n   the deficit `m \u2212 S(P)` in terms of a pairwise overlap (total-variation)\n   functional of the class.  The case `m = 2` is now settled exactly:\n   `S = 1 + TV` (`shtarkov_fin_two`); the open question is whether\n   `S(P) \u2264 1 + \u2211_{\u03b8\u2260\u03b8\u2080} TV(p_\u03b8, p_{\u03b8\u2080})` for every class, with equality only in\n   a \"tree-like\" configuration.\n3. The average-case price equals the worst-case price up to one bit for every\n   class: `max_\u03c0 I(\u03c0) \u2264 log\u2082 S \u2264 max_\u03c0 I(\u03c0) + 1`.  The left inequality should\n   follow from the compensation identity plus NML; the right one is the hard,\n   minimax-theorem-flavoured half.",
+    "domains": [],
+    "id": "fd_1491",
+    "priority_score": 0.4476666666666666,
+    "research_mode": "team",
+    "source_exp_id": "ae5d2ae6",
+    "status": "available",
+    "timestamp": "2026-08-18T04:52:28.225074+00:00",
+    "title": "Resolved in this cycle"
   },
   {
     "consumed_by_exp_id": "",
