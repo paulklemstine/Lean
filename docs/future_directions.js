@@ -54,7 +54,7 @@ window.FUTURE_DIRECTIONS = [
       "Novelty"
     ],
     "id": "fd_1373",
-    "phase": "B",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
@@ -1779,20 +1779,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-05T06:51:05.180719+00:00",
     "title": "Deepening: ArXiv paper: Magnitude homology of tope graphs"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 0b339d93 (Q=0.780), which proved 123 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize U_q(g) as a q-deformation of the universal enveloping algebra U(g). Prove that as q->1, U_q(g) -> U(g). Bridge: the representation theory of U_q(sl_2) gives the Jones polynomial via the Reshetikhin-Turaev construction. Show that the quantum double construction yields braided tensor categor",
-    "domains": [
-      "Physics"
-    ],
-    "id": "push_0b339d93_927cc5f0",
-    "priority_score": 0.88,
-    "research_mode": "team",
-    "source_exp_id": "0b339d93",
-    "status": "available",
-    "timestamp": "2026-08-17T07:17:12.101255+00:00",
-    "title": "Deepening: Bridge: Quantum Groups as Deformations of Classical Groups"
   },
   {
     "consumed_by_exp_id": "",
@@ -20001,14 +19987,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Pole-order obstruction"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "16c8a71d",
     "description": "The unlabeled product is not injective on families; the interleaved\n   aggregate is (`interleave_injective`).",
     "domains": [],
     "id": "fd_1429",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "286b3a0e",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-17T13:54:04.788765+00:00",
     "title": "Aggregate dichotomy"
   },
