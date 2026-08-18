@@ -224,25 +224,6 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "Building on cycle c4b3dd3f (Q=0.860), which proved 63 theorems in Logic. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Two finite `G`-actions have the same *trace distribution*\n    `{|X^g| : g ∈ G}` **iff** they have the same orbit counts on `k`-tuples for all `k ≤ N`\n    (`traceDistribution_eq_iff_card_orbits_eq`), and then for all `k` whatsoever\n    (`card_orbits_eq_of_le`). Gradewise q-series form: `traceDistribu",
-    "domain_bridges": [],
-    "domains": [
-      "Logic"
-    ],
-    "id": "push_c4b3dd3f_31759c6a",
-    "lineage_refs": [],
-    "priority_score": 0.95,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "c4b3dd3f",
-    "status": "available",
-    "timestamp": "2026-08-18T10:47:09.556813+00:00",
-    "title": "Deepening: Conjecture A, closed"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "Formally proves conditions under which information can exist purely within a closed timelike curve loop without ever having an initial origin (Ontological Paradox).",
     "domain_bridges": [],
     "domains": [
@@ -26331,7 +26312,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5792b548",
     "description": "The range `k ≤ N` cannot be shortened: `(0,2)` and `(1,1)` are bounded by `2`,\n    agree for `k ≤ 1`, and have different distributions (`powerSums_not_determined_of_lt`).\n    Exhaustive search (`ComputationalEvidence.md`, §8) finds `0` such pairs at `K = N` and many at\n    `K = N − 1`.",
     "domain_bridges": [],
     "domains": [],
@@ -26341,7 +26322,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "286b3a0e",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-17T13:54:06.155568+00:00",
     "title": "Sharpness"
   },

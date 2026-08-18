@@ -166,20 +166,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle c4b3dd3f (Q=0.860), which proved 63 theorems in Logic. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Two finite `G`-actions have the same *trace distribution*\n    `{|X^g| : g \u2208 G}` **iff** they have the same orbit counts on `k`-tuples for all `k \u2264 N`\n    (`traceDistribution_eq_iff_card_orbits_eq`), and then for all `k` whatsoever\n    (`card_orbits_eq_of_le`). Gradewise q-series form: `traceDistribu",
-    "domains": [
-      "Logic"
-    ],
-    "id": "push_c4b3dd3f_31759c6a",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "c4b3dd3f",
-    "status": "available",
-    "timestamp": "2026-08-18T10:47:09.556813+00:00",
-    "title": "Deepening: Conjecture A, closed"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Formally proves conditions under which information can exist purely within a closed timelike curve loop without ever having an initial origin (Ontological Paradox).",
     "domains": [
       "Physics"
@@ -19652,14 +19638,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Conjecture A (Parity-gap conjecture). For all `n \u2265 2`, all injective `S, T : Fin n \u2192 ZMod p`, the parity-weighted exponent counter `permCoeff S T` is nonzero somewhere; in fact `max_r |permCoeff S T r"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5792b548",
     "description": "The range `k \u2264 N` cannot be shortened: `(0,2)` and `(1,1)` are bounded by `2`,\n    agree for `k \u2264 1`, and have different distributions (`powerSums_not_determined_of_lt`).\n    Exhaustive search (`ComputationalEvidence.md`, \u00a78) finds `0` such pairs at `K = N` and many at\n    `K = N \u2212 1`.",
     "domains": [],
     "id": "fd_1435",
+    "phase": "A",
     "priority_score": 0.4160952380952381,
     "research_mode": "team",
     "source_exp_id": "286b3a0e",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-17T13:54:06.155568+00:00",
     "title": "Sharpness"
   },
