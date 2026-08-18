@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "dc071269",
-      "domain": "NumberTheory",
-      "key_insight": "# FUTURE DIRECTIONS — after NET-30's formalisation\n\nThe four Lean files in `Catalog/NumberTheory/` prove: (i) the \"1-redundant but\nblock-dependent\" signature forces `k ≥ 2` for *any* statistic; (ii) i",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 72,
-      "timestamp": "2026-08-16T01:57:40",
-      "title": "NET-30: INTERNALIZATION-SATURATES-AT-K=2 (k=2 freeze test — the missing middle; NET-29's ∝-quality l"
-    },
-    {
       "cycle_id": "e67b8bbc",
       "domain": "MachineLearning",
       "key_insight": "# Future Directions — after \"PRNGs cannot beat pigeonhole\"\n\nWhat is settled (formally, 0 sorries, in `Catalog/MachineLearning/PRNGCompression*.lean`):\n\n* a deterministic generator with an `s`-bit seed",
@@ -499,19 +489,19 @@
       "theorem_count": 120,
       "timestamp": "2026-08-18T05:45:59",
       "title": "NET-48: The direct test survives via the MEDIAN — k*=160 at (d=4, ctx=2048, seed=3), all four point-"
+    },
+    {
+      "cycle_id": "4bf66c09",
+      "domain": "Novelty",
+      "key_insight": "# Future directions\n\nAll conjectures below are stated so that they can be attacked directly in Lean 4 on top of the\nmaterial now formalized in `Catalog/Novelty/ChebotarevDFT.lean`,\n`Catalog/Novelty/Ch",
+      "quality_score": 0.88,
+      "sorry_count": 0,
+      "theorem_count": 41,
+      "timestamp": "2026-08-18T05:46:10",
+      "title": "Chebotarev's theorem that every square submatrix of the `p × p` DFT matrix"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "2c38bc1a",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions — Universal Posets\n\nDerived from the analysis and adversarial-review stages of the two research\ncycles run on this project.  Each conjecture is falsifiable, and each is stated\nso t",
-      "quality_score": 0.7003711194029851,
-      "sorry_count": 2,
-      "theorem_count": 134,
-      "timestamp": "2026-08-07T05:10:38",
-      "title": "ArXiv paper: Even smaller universal posets"
-    },
     {
       "cycle_id": "edfd57dd",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 120,
       "timestamp": "2026-08-18T05:45:59",
       "title": "NET-48: The direct test survives via the MEDIAN — k*=160 at (d=4, ctx=2048, seed=3), all four point-"
+    },
+    {
+      "cycle_id": "4bf66c09",
+      "domain": "Novelty",
+      "key_insight": "# Future directions\n\nAll conjectures below are stated so that they can be attacked directly in Lean 4 on top of the\nmaterial now formalized in `Catalog/Novelty/ChebotarevDFT.lean`,\n`Catalog/Novelty/Ch",
+      "quality_score": 0.88,
+      "sorry_count": 0,
+      "theorem_count": 41,
+      "timestamp": "2026-08-18T05:46:10",
+      "title": "Chebotarev's theorem that every square submatrix of the `p × p` DFT matrix"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "c8991a0a",
-      "domain": "Bridges",
-      "name": "char_surjective_of_ne_one",
-      "quality": 0.88
-    },
-    {
-      "cycle_id": "c8991a0a",
-      "domain": "Bridges",
-      "name": "index_ker_of_ne_one",
-      "quality": 0.88
-    },
-    {
-      "cycle_id": "286b3a0e",
-      "domain": "Bridges",
-      "name": "and",
-      "quality": 0.89
-    },
     {
       "cycle_id": "286b3a0e",
       "domain": "Bridges",
@@ -2803,9 +2785,27 @@
       "domain": "Tropical",
       "name": "determines",
       "quality": 0.85
+    },
+    {
+      "cycle_id": "4bf66c09",
+      "domain": "Novelty",
+      "name": "about",
+      "quality": 0.88
+    },
+    {
+      "cycle_id": "4bf66c09",
+      "domain": "Novelty",
+      "name": "dft_conv",
+      "quality": 0.88
+    },
+    {
+      "cycle_id": "4bf66c09",
+      "domain": "Novelty",
+      "name": "supp_conv_subset",
+      "quality": 0.88
     }
   ],
-  "last_updated": "2026-08-18T05:45:59",
+  "last_updated": "2026-08-18T05:46:10",
   "open_questions": [
     {
       "context": "- Every main theorem below is `sorry`-free (checked).; `RhoDom.dominant_singleton_iff`, so it is not a self-contained restatement.  No `sorry`, no; `RhoDom.dominant_singleton_iff`, so it is not a self",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "83c80b79",
-        "quality": 0.86,
-        "theorems": 129,
-        "title": "De-Quantization Assessed: Shor's QFT Is Irreducible"
-      },
-      {
         "cycle_id": "c76c12ee",
         "quality": 0.82,
         "theorems": 76,
@@ -3637,6 +3631,12 @@
         "quality": 0.87,
         "theorems": 29,
         "title": "Compression Research A1: Price of universality — minimax redundancy of universal"
+      },
+      {
+        "cycle_id": "4bf66c09",
+        "quality": 0.88,
+        "theorems": 41,
+        "title": "Chebotarev's theorem that every square submatrix of the `p × p` DFT matrix"
       }
     ],
     "NumberTheory": [
