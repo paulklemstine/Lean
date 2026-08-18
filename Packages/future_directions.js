@@ -9,27 +9,13 @@ window.FUTURE_DIRECTIONS = [
       "Novelty"
     ],
     "id": "fd_1345",
-    "phase": "B",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
     "status": "in_progress",
     "timestamp": "2026-08-16T22:37:36.175162+00:00",
     "title": "NET-48: The direct test survives via the MEDIAN \u2014 k*=160 at (d=4, ctx=2048, seed=3), all four point-horns refuted, the completed 16\u00d7 distribution {160,224,256} has median exactly 224 = 7/8\u00b7(d\u00b7ctx/32) \u2014 the 7/8-median law is 2/2-context, 6/6-seed"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "**Part of:** Research plan \u2014 *Compression Beyond the Pigeonhole Bound* (Phase B, Question 2: can random number generators help?).\n\n## Research question\nWorst-case short-program-finding is **provably hard under standard assumptions**: roughly, if you could always find a short description for every `x` quickly, you could invert one-way functions. Compression \u21cb computational hardness.\n\n## Approach\n- State precisely **which compression tasks are equivalent to inverting OWFs** (distinguishable / polynomial-time Kolmogorov complexity literature).\n- Derive what that implies for achievable worst-case bounds.\n\n## Deliverable\nA precise characterization mapping compression tasks to cryptographic assumptions.\n\n## Purpose\nCalibrates the whole plan: **randomness helps compression exactly up to the computational-hardness boundary, and no further.** Converts the intuition \"randomness should help\" into a quantified expectation.\n\n**Milestone:** M8 (theory, 3\u20136 weeks).\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1365",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-17T04:13:54.291308+00:00",
-    "title": "Compression Research B6: Compression \u2194 one-way functions (the cryptography link)"
   },
   {
     "consumed_by_exp_id": "23eee1e8",
@@ -20377,14 +20363,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Both endpoints of the trade-off are now formal theorems in this"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "13fee392",
     "description": "The Bonferroni machinery\n(`card_sum_le_card_biUnion_add_offDiag`, `card_doubleCollision_mul_le`) is\nalready formalised for arbitrary finite families, so the conjecture is a\nstatement about which *marginals* are fed into it.",
     "domains": [],
     "id": "fd_1479",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "be7c0bd7",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-18T03:09:00.981652+00:00",
     "title": "The Bonferroni machinery"
   },
