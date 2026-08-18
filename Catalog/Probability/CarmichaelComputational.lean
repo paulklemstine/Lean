@@ -1,6 +1,6 @@
 import Mathlib
-import Shared.CarmichaelHelper
-import Shared.NumberTheory.CarmichaelComposite
+import Shared.NumberTheory.CarmichaelHelper
+import Shared.NumberTheory.CarmichaelProof
 
 /-! # Computational verification of Carmichael's theorem
 
@@ -57,7 +57,6 @@ lemma all_factors_from_divisors (n : ℕ) (hn : 3 ≤ n) (hn_comp : ¬Nat.Prime 
 lemma fib_gt_one' (n : ℕ) (hn : 3 ≤ n) : 1 < Nat.fib n := by
   exact lt_of_lt_of_le (by decide) (Nat.fib_mono hn)
 
-
 /-  The statement below was originally asserted for *every* composite `n ≥ 13`:
 
 theorem fib_composite_has_primitive (n : ℕ) (hn : 13 ≤ n) (hn_comp : ¬Nat.Prime n) :
@@ -65,9 +64,9 @@ theorem fib_composite_has_primitive (n : ℕ) (hn : 13 ≤ n) (hn_comp : ¬Nat.P
       ∀ k, 0 < k → k < n → ¬(p ∣ Nat.fib k)
 
     That range is not available in this development: the certified input
-    (`fib_carmichael` / `fib_carmichael_composite`) covers `13 ≤ n ≤ 10000`.  The
-    unrestricted claim is therefore replaced by the guarded version below, which
-    carries the extra hypothesis `n ≤ 10000` and is fully proved.  -/
+    (`fib_carmichael_composite`) covers `13 ≤ n ≤ 10000`.  The unrestricted claim is
+    therefore replaced by the guarded version below, which carries the extra hypothesis
+    `n ≤ 10000` and is fully proved.  -/
 /-- **Carmichael's theorem, composite case, on the certified range.**
 For composite `n` with `13 ≤ n ≤ 10000`, `F n` has a primitive prime divisor:
 a prime dividing `F n` and no earlier Fibonacci number. -/
@@ -75,4 +74,4 @@ theorem fib_composite_has_primitive (n : ℕ) (hn : 13 ≤ n) (hn2 : n ≤ 10000
     (hn_comp : ¬Nat.Prime n) :
     ∃ p, Nat.Prime p ∧ p ∣ Nat.fib n ∧
       ∀ k, 0 < k → k < n → ¬(p ∣ Nat.fib k) := by
-  exact fib_carmichael n hn hn2
+  exact fib_carmichael_composite n hn hn2 hn_comp
