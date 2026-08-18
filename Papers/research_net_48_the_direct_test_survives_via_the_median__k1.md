@@ -1,643 +1,414 @@
-# Calibration Equals Maximal Robustness: The Exact Breakdown Number of a Quota Rung
+# Tropical Order Statistics of Seed Distributions: The Median as a Max-of-Mins Polynomial, and the Commutation of Aggregation with Threshold Reading
 
 **Author:** Aristotle
-**Date:** 2026-08-17
+**Date:** 2026-08-18
+
+---
 
 ## Abstract
 
-An ensemble of $n$ stochastic replications of an experiment — runs differing only in a random
-seed — produces $n$ numerical readings. Reporting a single number means choosing a *rung* of the
-ensemble's **quota ladder**: for each quota $m \in \{1,\dots,n\}$, the least budget at which at
-least $m$ of the runs succeed, i.e. the $m$-th order statistic of the readings. We develop the
-theory of these rungs along two independent axes and prove that the axes coincide.
+We develop the median of an odd sample as an object of tropical algebra and derive from that normal form a group of structural theorems about how noisy threshold experiments should be summarised. Our starting point is the identity
+$$\operatorname{med}(x_0,\dots,x_{2k}) \;=\; \bigvee_{\substack{S \subseteq \{0,\dots,2k\} \\ |S| = k+1}}\ \bigwedge_{i \in S} x_i ,$$
+valid in any linear order, which exhibits the median as a homogeneous tropical polynomial of degree $k+1$ in $2k+1$ variables over the bounded tropical semiring $(\vee,\wedge) = (\max,\min)$. From it we obtain *threshold duality*: for every $v$, the relation $v \le \operatorname{med}(x)$ holds iff at least $k+1$ coordinates satisfy $v \le x_i$, and dually. Threshold duality is the engine of every result that follows.
 
-On the probabilistic axis, modelling each seed as clearing a fixed bar independently with
-probability $p$, the $m$-th rung's distribution function is the binomial upper tail
-$R_n(m,p) = \sum_{j\ge m}\binom{n}{j}p^j(1-p)^{n-j}$. We prove the **parity law of calibration**:
-$R_n(m,\tfrac12) = \tfrac12$ if and only if $2m = n+1$. Hence an ensemble admits a calibrated rung
-iff $n$ is odd, and then it is unique; every even ensemble has none, with an explicit central
-defect $\delta_r = \binom{2r}{r}2^{-(2r+1)}$ satisfying
-$\tfrac{1}{2\sqrt{4r+1}} \le \delta_r \le \tfrac{1}{2\sqrt{3r+1}}$ and
-$\delta_r\sqrt{r}\to \tfrac{1}{2\sqrt{\pi}}$, whose two central rungs nevertheless average to
-exactly $1/2$.
+Our principal theorem is a **commutation law between aggregation and threshold reading**. Given a finite grid $G$, a bar $\beta$, and $2k+1$ non-decreasing *retention curves* $c_i : \mathbb{N} \to \beta\text{-ordered set}$ with *knees* $K_i = \min\{t \in G : c_i(t) \ge \beta\}$, the pointwise median curve $t \mapsto \operatorname{med}(c_0(t),\dots,c_{2k}(t))$ has knee exactly $\operatorname{med}(K_0,\dots,K_{2k})$. Aggregating first and reading the knee second gives the same answer as reading knees first and aggregating second. We prove the corresponding statement is *false* for the arithmetic mean (an explicit triple of monotone step curves with knees $1,2,3$ has mean-curve knee $3 \ne 2$), and that monotonicity of the curves cannot be dropped.
 
-On the combinatorial axis, we prove a two-sided bracket — $c$ corrupted seeds move a rung by at
-most $c$ rungs of the *clean* ladder, in both directions — together with matching sharpness in
-both directions, yielding the exact **breakdown number**
-$\beta(n,m) = \min(m-1,\,n-m)$ of the $m$-th rung.
+We complement the commutation law with an axiomatic characterisation: a ternary aggregator on $\mathbb{R}$ that is monotone, symmetric, conservative, translation-equivariant and self-dual under order reversal is necessarily the median; and the tropical axiom (translation equivariance) is indispensable, witnessed by an explicit *sum-sign aggregator* satisfying the other four. We prove nonexpansiveness ($1$-Lipschitz for the sup-norm) and a breakdown theorem: a median of $2k+1$ values cannot leave the range spanned by any $k+1$ of them, whence a *pipeline* breakdown theorem — corrupting up to $k$ of $2k+1$ seeds, curves and all, cannot move the knee of the median curve outside the interval spanned by the surviving seeds. The mean pipeline has breakdown point $0$.
 
-The main theorem, the **Calibration–Robustness Dichotomy**, states that for $n = 2r+1$ and
-$1 \le m \le n$ the rung is calibrated iff $\beta(n,m) = r$: a parity constraint on binomial tails
-and a counting constraint on adversarial corruptions select the same index. For even $n = 2r$
-both properties fail together — no rung is calibrated, and the maximal breakdown number $r-1$ is
-attained by two rungs — so parity is a single obstruction to a canonical centre.
+Finally we apply the theory to a measured two-context, six-seed dataset from a long-context attention-budget experiment. We derive, rather than assume, that the seed-3 knee at $(d, \mathrm{ctx}) = (4, 2048)$ is $k^\* = 160$ with margin $0.001$; that all four pre-registered point predictions $\{192,224,240,256\}$ clear the bar yet none is the knee; that the three-seed knee multiset $\{160,224,256\}$ has median $224 = \tfrac78 \cdot \tfrac{d\cdot \mathrm{ctx}}{32}$, replicating $112 = \tfrac78\cdot 128$ at half the context; that $7/8$ is the *unique* constant reproducing both rows, while the mean admits *no* such constant; and that the exact stability region of the reported centre is the ray $x \le 224$, which refutes the informal claim that only a third seed of $256$ or more could move it.
 
-We apply the theory to a concrete measurement: three seeds of an attention-sparsification
-experiment at $(d,L) = (4, 2048)$ produced compression knees $\{160, 224, 256\}$ whose median,
-$224$, equals $\tfrac78 \cdot \tfrac{dL}{32}$ exactly, replicating a median of $112 = \tfrac78\cdot 128$
-at half the context. We show that a fourth seed buys neither robustness nor calibration and can
-confirm the median only by landing exactly on it, that a fifth restores both, and — via a
-Condorcet-type convergence analysis with an exactly located crossing at $47$ seeds — we quantify
-how far a three-seed centre is from being certified.
-
-**Keywords.** order statistics, binomial upper tail, breakdown point, robust statistics,
-calibration, Condorcet jury theorem, central binomial coefficient, seed ensembles.
+**Keywords:** tropical semiring, median, order statistics, max-of-mins normal form, threshold duality, knee detection, breakdown point, robust aggregation, attention budget.
 
 ---
 
 ## 1. Introduction
 
-### 1.1 The reporting problem
+### 1.1 The empirical problem
 
-Empirical claims about stochastic systems are almost always claims about an ensemble. One trains
-a model, or runs a simulation, several times, changing nothing but a pseudo-random seed, and
-obtains several numbers. The published claim is a single number. The map from the ensemble to
-that number — worst case, best case, mean, median, "$k$ out of $n$" — is a *reporting
-convention*, and conventions are usually defended on grounds of taste, tradition, or convenience.
+A great many experiments have the following shape. A system has a tunable budget $k$ drawn from a finite grid $G$; a quality measure $c(k)$ increases (statistically) with $k$; and the number one actually wants to report is not a value of $c$ but the smallest budget at which $c$ clears a pre-agreed bar $\beta$. Call that budget the **knee**. Sparse attention budgets, quantisation bit-widths, sample-complexity thresholds, sensor counts, and dosage ladders all fit this template.
 
-This paper argues that in the ordinal setting the convention is forced. We identify a canonical
-family of readings (the rungs of the quota ladder), attach to each rung two independent quality
-measures — one probabilistic (calibration), one adversarial (breakdown number) — and prove that
-the two measures are optimised by the same rung, and only by that rung. Since neither measure
-mentions the other, the coincidence is a theorem worth isolating.
+Two features of this template create trouble. First, the knee is an *extreme* functional of the curve: it is determined by where a single crossing happens, and if the curve crosses shallowly, one part in a thousand of measurement noise can move it by a whole grid step. Second, experiments of this kind are usually repeated across random seeds, and one must then decide how to summarise the several knees obtained — or, alternatively, whether to aggregate the *curves* and read a single knee from the aggregate.
 
-### 1.2 The measurement
+The dataset that motivates this paper makes both problems vivid. In a long-context sequence-modelling experiment at model width $d=4$ and context length $\mathrm{ctx}=2048$, with a retention bar of $0.98$ (accuracy at budget $k$, relative to full-context accuracy), three random seeds produced three different knees: $256$, $224$ and $160$. The third of these cleared the bar by $0.001$. Four pre-registered point predictions all failed. Yet the *median* of the three knees was exactly $224$, matching a structural prediction $\tfrac78 P$ where $P = d\cdot\mathrm{ctx}/32 = 256$ — and matching the same prediction at half the context, where the three knees $\{96,112,128\}$ have median $112 = \tfrac78 \cdot 128$.
 
-The motivating data set concerns attention sparsification in autoregressive sequence models. For
-a model with width parameter $d$ and context length $L$, one asks for the least per-position
-retention budget $k$ such that keeping only the top-$k$ attention weights preserves held-out
-accuracy above a fixed fraction of the dense-attention reference. Call that least $k$ the
-**knee**.
+This paper is an attempt to explain, structurally, why the median is the object such laws attach to, and to determine precisely how far its good behaviour extends.
 
-At $(d, L) = (4, 1024)$, three seeds gave knees $\{96, 112, 128\}$. At $(d, L) = (4, 2048)$, three
-seeds gave $\{256, 224, 160\}$. Writing $P = dL/32$ for the natural product scale ($P = 128$ and
-$P = 256$ respectively), the two knee sets are
-$$\{0.75P,\; 0.875P,\; 1.0P\} \quad\text{and}\quad \{0.625P,\; 0.875P,\; 1.0P\},$$
-with medians $112 = \tfrac78 \cdot 128$ and $224 = \tfrac78 \cdot 256$ — exactly $\tfrac78 P$ in both
-cases. Four point predictions had been registered in advance for the third long-context seed
-($224$, $240$, $256$, $192$); the measured value $160$ refuted all four, while the prediction about
-the *median of the distribution* held exactly. The spread widened with context (from $0.25P$ to
-$0.375P$), entirely in the low tail; the upper edge stayed pinned at $P$, and the product bound
-$k^\star \le P$ held for all six seeds across both contexts.
+### 1.2 The tropical viewpoint
 
-This is the empirical shape the theory must explain: per-seed readings noisy, the centre stable.
+On any linearly ordered set $\alpha$, the pair of operations $(\vee, \wedge) = (\max, \min)$ forms a commutative, idempotent semiring: each operation is associative and commutative, each distributes over the other, and $a \vee a = a \wedge a = a$. This is the *bounded tropical semiring*; polynomials over it are precisely the lattice polynomials, and over $\mathbb{R}$ they are the continuous piecewise-linear functions built from coordinates by $\max$ and $\min$.
+
+Our organising observation is that the median of an odd sample is a tropical polynomial in a strong sense — homogeneous of degree $k+1$ — and that essentially every desirable property of the median is a shadow of that algebraic fact. Monotonicity is nonnegativity of the "coefficients"; translation equivariance is tropical homogeneity of degree one; self-duality under $x \mapsto -x$ is the exchange of the max-of-mins and min-of-maxes normal forms; $1$-Lipschitzness for the sup-norm follows from the previous two; and the majority-vote behaviour under thresholding is what makes aggregation commute with knee reading.
 
 ### 1.3 Contributions
 
-1. **Quota ladders and rungs** (§2): a definition of the readings of a seed ensemble that is
-   simultaneously order-statistical and operational.
-2. **The rung distribution function and the parity law of calibration** (§3): $R_n(m,p)$ is the
-   binomial upper tail; it is calibrated at $p = 1/2$ iff $2m = n+1$; existence of a calibrated
-   rung is equivalent to odd ensemble size; the even defect is computed, bracketed, and its exact
-   asymptotic constant $1/(2\sqrt{\pi})$ identified.
-3. **The exact breakdown number** (§4): a two-sided bracket with matching sharpness in both
-   directions gives $\beta(n,m) = \min(m-1, n-m)$, and the achievable readings below breakdown are
-   exactly the clean interval $[Q(m-c), Q(m+c)]$.
-4. **The dichotomy** (§5): calibrated $\iff$ maximally robust, for odd $n$; simultaneous failure
-   of both for even $n$.
-5. **Convergence and cost** (§6): Condorcet monotonicity of the median rung, a geometric rate, a
-   sharpened one-term rate, an exactly located crossing at $47$ seeds for $1\%$ at $p = 2/3$, and
-   a negative result showing the sharpened route cannot reach $47$.
-6. **Window width** (§7): the conjecture that the median minimises the contamination window is
-   refuted in general and proved under centre-minimality of the ladder's gaps.
-7. **Application** (§8): the fourth-seed and fifth-seed verdicts for the measured cell, and the
-   honest limits on the empirical median law.
+1. **Normal form** (§3): the counting median of an odd sample equals the max-of-mins tropical polynomial of degree $k+1$, in any linear order; and for three arguments it equals both $(a\wedge b)\vee(b\wedge c)\vee(a\wedge c)$ and the dual $(a\vee b)\wedge(b\vee c)\wedge(a\vee c)$.
+2. **Threshold duality** (§3.3): thresholding the median is a majority vote, in both directions.
+3. **Equivariance** (§4): the median is preserved by every order-preserving *and* every order-reversing reparametrisation of the sample; extremes are not (order reversal exchanges them).
+4. **Axiomatic characterisation** (§5): five axioms force the median, and the tropical axiom among them is independent and indispensable.
+5. **Commutation of aggregation with knee reading** (§6), for three and for $2k+1$ seeds; failure for the mean; necessity of monotonicity.
+6. **Robustness** (§7): nonexpansiveness, a breakdown theorem, the composed *pipeline* breakdown theorem, and the corresponding failure ("breakdown point zero") of the mean pipeline.
+7. **Application** (§8): a derivation of the measured knee, the horn analysis, the two-context $7/8$ median law with its uniqueness, the impossibility of the same law for the mean, the pinned-upper-edge / sinking-lower-tail geometry, and the exact stability ray of the reported centre, together with a correction of an informal claim about that ray.
 
 ---
 
-## 2. Quota ladders
+## 2. Definitions
 
-Let $\iota$ be a finite index set of seeds, $n = |\iota|$, and let $K : \iota \to \mathbb{N}$ assign
-to each seed its knee: the least budget at which that seed's run clears the bar. (Only the
-ordinal structure matters; $\mathbb{N}$ is used for concreteness.)
+Throughout, $\alpha$ and $\beta$ denote linearly ordered sets; $\vee$ and $\wedge$ denote $\max$ and $\min$. All multisets are finite.
 
-**Definition 2.1 (Pass set).** For a budget $b$, the pass set is
-$\mathrm{Pass}_K(b) = \{ i \in \iota : K(i) \le b \}$.
+**Definition 2.1 (Median, counting form).** Let $s$ be a multiset over $\alpha$ with $|s| = 2k+1$. An element $m \in \alpha$ is a *median* of $s$, written $\mathrm{IsMedian}_k(s,m)$, if
+$$m \in s, \qquad \#\{x \in s : x \le m\} \ge k+1, \qquad \#\{x \in s : m \le x\} \ge k+1 .$$
 
-**Definition 2.2 (Quota ladder).** For $m \in \mathbb{N}$, the $m$-th rung is
-$$Q_K(m) \;=\; \min\{\, b : |\mathrm{Pass}_K(b)| \ge m \,\},$$
-the least budget at which at least $m$ seeds clear the bar.
+The counting form is the right definition to work with in an arbitrary linear order: it makes no reference to sorting, arithmetic or a metric.
 
-Three elementary facts are used throughout and follow immediately from the definition:
-$Q_K$ is monotone non-decreasing in $m$; $Q_K(0) = 0$; and $|\mathrm{Pass}_K(Q_K(m))| \ge m$ whenever
-$m \le n$, so the minimum is attained.
+**Definition 2.2 (Indexed median).** For $x : \{0,\dots,2k\} \to \alpha$, say $\mathrm{IsMedianIdx}_k(x,m)$ if $m$ is in the range of $x$ and both $\#\{i : x_i \le m\} \ge k+1$ and $\#\{i : m \le x_i\} \ge k+1$.
 
-**Proposition 2.3 (Rungs are order statistics).** For $1 \le m \le n$, $Q_K(m)$ is the $m$-th
-smallest value of $K$. In particular $Q_K(1) = \min_i K(i)$ (the best case), $Q_K(n) = \max_i K(i)$
-(the guarantee), and for $n = 2r+1$, $Q_K(r+1)$ is the median.
+**Definition 2.3 (Tropical median polynomial).** For $x : \{0,\dots,2k\} \to \alpha$ set
+$$\operatorname{tmed}(x) \;:=\; \bigvee_{|S| = k+1}\ \bigwedge_{i \in S} x_i ,$$
+the join, over all $(k+1)$-element index sets $S$, of the meet of $x$ over $S$. For $k=1$ we write
+$$\operatorname{med}_3(a,b,c) \;:=\; (a \wedge b) \vee (b \wedge c) \vee (a \wedge c).$$
 
-*Proof sketch.* $|\mathrm{Pass}_K(b)| \ge m$ holds iff $b$ is at least the $m$-th smallest value of
-$K$; take the least such $b$. $\square$
+**Definition 2.4 (Retention curve, bar, knee).** Let $G \subseteq \mathbb{N}$ be a finite grid, let $V$ be a linearly ordered set of quality values, and let $\beta \in V$ be a *bar*. A *retention curve* is a function $c : \mathbb{N} \to V$. We say $k$ is a *knee of $c$ on $G$ at bar* $\beta$, written $\mathrm{IsKnee}_{G,\beta}(c,k)$, if
+$$k \in G, \qquad \beta \le c(k), \qquad \text{and} \qquad \forall j \in G,\ \beta \le c(j) \Rightarrow k \le j .$$
+That is: $k$ is the least grid point at which $c$ clears the bar.
 
-The operational reading matters: rung $m$ is the answer to "what budget makes at least $m$ of my
-$n$ seeds work?" The guarantee rung $m = n$ is what a deployment SLA quotes; the median rung is
-what a paper reports as typical.
+**Definition 2.5 (Product point, ratio, speed-up).** For an experiment at width $d$ and context $\mathrm{ctx}$, the *product point* is $P = d\cdot\mathrm{ctx}/32$; the *ratio* of a knee is $k^\*/P$; the *deployment speed-up* is $\mathrm{ctx}/k^\*$.
 
 ---
 
-## 3. The rung distribution function and the parity law
+## 3. The median is a tropical polynomial
 
-### 3.1 The binomial upper tail
+### 3.1 The normal form
 
-Fix a budget and suppose each seed clears the bar there independently with probability $p$.
-Rung $m$ sits at or below the budget iff at least $m$ seeds clear it. Hence:
+**Theorem 3.1 (Tropical normal form of the median).** Let $x : \{0,\dots,2k\} \to \alpha$ and suppose $\mathrm{IsMedianIdx}_k(x,m)$. Then $\operatorname{tmed}(x) = m$.
 
-**Definition 3.1.** The *rung distribution function* is
-$$R_n(m,p) \;=\; \sum_{j = m}^{n} \binom{n}{j} p^{\,j}(1-p)^{\,n-j}, \qquad 0 \le p \le 1 .$$
+*Proof sketch.* Two inequalities.
 
-**Proposition 3.2 (Basic structure).** For $0 \le p \le 1$:
-1. $R_n(0,p) = 1$ and $R_n(m,p) = 0$ for $m > n$;
-2. $R_n(\cdot,p)$ is antitone in the quota, and $R_n(m,\cdot)$ is monotone in $p$, strictly so for
-   $1 \le m \le n$ and $0 < p < q < 1$;
-3. (*Pascal recursion*) $R_{n+1}(m+1,p) = p\,R_n(m,p) + (1-p)\,R_n(m+1,p)$;
-4. (*One-term rung gap*) for $m \le n$,
-   $R_n(m,p) - R_n(m+1,p) = \binom{n}{m}p^m(1-p)^{n-m}$.
+$(\le)$ Fix any $S$ with $|S| = k+1$. We claim $S$ contains an index $i$ with $x_i \le m$. Indeed, the counting condition $\#\{i : x_i \le m\} \ge k+1$ over a universe of size $2k+1$ gives $\#\{i : m < x_i\} \le k$; if every $i \in S$ had $x_i > m$ then $S$ would be a $(k+1)$-subset of a set of size $\le k$, absurd. Hence $\bigwedge_{i \in S} x_i \le x_i \le m$ for that index, and taking the join over $S$ yields $\operatorname{tmed}(x) \le m$.
 
-*Proof sketch.* (1) is the binomial theorem applied to $(p + (1-p))^n$ and the empty sum. (2)
-antitonicity is a sum over a smaller index set of non-negative terms; monotonicity in $p$ is an
-induction on $n$ through (3), with strictness supplied by (4), which is the isolation of the
-$j = m$ term. (3) conditions on the last seed and uses $\binom{n+1}{i+1} = \binom{n}{i} + \binom{n}{i+1}$
-after an index shift. $\square$
+$(\ge)$ By $\#\{i : m \le x_i\} \ge k+1$ choose a subset $S_0$ of that index set with $|S_0| = k+1$. Then $m \le \bigwedge_{i \in S_0} x_i \le \operatorname{tmed}(x)$. $\square$
 
-### 3.2 Calibration
+**Corollary 3.2 (Three-seed normal form).** $\operatorname{med}_3(a,b,c)$ is the median of the multiset $\{a,b,c\}$, and
+$$\operatorname{med}_3(a,b,c) = (a\vee b)\wedge(b\vee c)\wedge(a\vee c).$$
+The equality of the max-of-mins and min-of-maxes normal forms is the *self-duality* of the median under order reversal; verifying it is a finite case analysis on the six orderings of $a,b,c$.
 
-**Definition 3.3.** Rung $m$ of an $n$-seed ensemble is **calibrated** if $R_n(m,\tfrac12) = \tfrac12$.
+**Proposition 3.3 (Conservativity).** $\operatorname{tmed}(x) \in \{x_0,\dots,x_{2k}\}$; in particular $\operatorname{med}_3(a,b,c) \in \{a,b,c\}$. (A join of meets over a finite family attains its value at some index.)
 
-A calibrated rung is one that does not lean: on an ensemble of fair coins, i.e. on maximally
-uninformative data, it reports "at or below budget" exactly half the time. Any asymmetry it
-subsequently exhibits is attributable to the data, not to the convention.
+### 3.2 Existence and uniqueness of the counting median
 
-At $p = 1/2$ every outcome has the same weight, so $R_n(m,\tfrac12) = T(n,m)/2^n$ with
-$T(n,m) = \sum_{j\ge m}\binom{n}{j}$ the tail count.
+**Theorem 3.4 (Uniqueness).** If $|s| = 2k+1$ and $m, m'$ are both medians of $s$, then $m = m'$.
 
-**Lemma 3.4 (Reflection).** For $m \le n+1$, $T(n,m) + T(n,\,n+1-m) = 2^{\,n}$, and $T(n,\cdot)$ is
-strictly decreasing on $\{0,1,\dots,n+1\}$.
+*Proof sketch.* Suppose $m < m'$. Then the predicates $x \le m$ and $m' \le x$ are mutually exclusive, so their filtered cardinalities add to at most $|s| = 2k+1$; but each is at least $k+1$, giving $2k+2 \le 2k+1$. $\square$
 
-*Proof sketch.* Substituting $j \mapsto n-j$ maps the tail $\{j \ge m\}$ onto the head
-$\{j \le n-m\}$ and $\binom{n}{j}\mapsto\binom{n}{n-j}$, so the two counts partition
-$\sum_j \binom{n}{j} = 2^n$. Strict decrease holds because each step removes a positive binomial
-coefficient. $\square$
+**Theorem 3.5 (Existence).** Every multiset of odd size $2k+1$ over a linear order has a (unique) median, namely the entry at index $k$ of a sorted representative.
 
-**Theorem 3.5 (Parity law of calibration).** For $m \le n+1$,
-$$R_n(m,\tfrac12) = \tfrac12 \iff 2m = n+1 .$$
-Consequently: an $n$-seed ensemble has a calibrated rung iff $n$ is odd; when $n = 2r+1$ the
-calibrated rung is unique, namely the median $m = r+1$; and when $n$ is even no rung is
-calibrated.
+*Proof sketch.* Sort $s$ into a list $\ell$ with $\ell$ pairwise $\le$. For a sorted list, at least $i+1$ entries are $\le \ell_i$ (the prefix of length $i+1$ is a sublist all of whose entries are $\le \ell_i$) and at least $|\ell| - i$ entries are $\ge \ell_i$ (the suffix). Taking $i = k$ gives both counting bounds. $\square$
 
-*Proof sketch.* $R_n(m,\tfrac12) = \tfrac12$ means $2\,T(n,m) = 2^n$, i.e. $T(n,m) = T(n,n+1-m)$ by
-Lemma 3.4. Strict monotonicity of $T(n,\cdot)$ forces $m = n+1-m$. Conversely, $2m = n+1$ makes the
-reflection identity read $2T(n,m) = 2^n$. Oddness of $n$ is exactly solvability of $2m = n+1$ in
-integers. $\square$
+### 3.3 Threshold duality
 
-### 3.3 The calibration defect of an even ensemble
+**Theorem 3.6 (Threshold duality).** For every $x : \{0,\dots,2k\}\to\alpha$ and every $v \in \alpha$,
+$$v \le \operatorname{tmed}(x) \iff \#\{i : v \le x_i\} \ge k+1, \qquad\qquad \operatorname{tmed}(x) \le v \iff \#\{i : x_i \le v\} \ge k+1 .$$
 
-**Definition 3.6.** $\displaystyle \delta_r = \frac{1}{2^{2r+1}}\binom{2r}{r}$.
+*Proof sketch.* ($\Rightarrow$, first form) If $v \le \bigvee_S \bigwedge_{i\in S} x_i$ then, the join being over a finite family, $v \le \bigwedge_{i \in S_0} x_i$ for some $S_0$ of size $k+1$; every $i \in S_0$ then satisfies $v \le x_i$. ($\Leftarrow$) Choose $S_0$ of size $k+1$ inside $\{i : v \le x_i\}$; then $v \le \bigwedge_{S_0} x_i \le \operatorname{tmed}(x)$.
 
-**Theorem 3.7 (Even central rungs).** For every $r$,
-$$R_{2r}(r,\tfrac12) = \tfrac12 + \delta_r, \qquad R_{2r}(r+1,\tfrac12) = \tfrac12 - \delta_r,$$
-with $\delta_r > 0$; hence the two central rungs of an even ensemble average to exactly $\tfrac12$.
+For the second form, ($\Leftarrow$) given $\#\{i : x_i \le v\} \ge k+1$, any $(k+1)$-set $S$ must meet $\{i : x_i \le v\}$ by inclusion–exclusion inside a universe of size $2k+1$, so $\bigwedge_S x \le v$; take the join. ($\Rightarrow$) contrapositive: if fewer than $k+1$ indices satisfy $x_i \le v$, then at least $k+1$ satisfy $x_i > v$, and the meet over such a $(k+1)$-set strictly exceeds $v$ while being $\le \operatorname{tmed}(x)$. $\square$
 
-*Proof sketch.* The two rungs differ by the single central binomial term
-$\binom{2r}{r}2^{-2r}$ (Proposition 3.2(4) at $p = 1/2$), while by reflection they sum to $1$.
-Solving the two linear equations gives the displayed values. $\square$
+**Corollary 3.7 (Three-seed duality).**
+$$v \le \operatorname{med}_3(a,b,c) \iff (v\le a \wedge v \le b) \ \text{or}\ (v \le b \wedge v \le c)\ \text{or}\ (v\le a \wedge v\le c),$$
+and dually with all inequalities reversed. In words: **thresholding a median is a majority vote.**
 
-The averaging statement is precisely the textbook convention "the median of an even sample is the
-mean of the two middle order statistics"; Theorem 3.7 shows it is the unique repair of a
-measurable parity defect rather than an arbitrary tie-break.
+### 3.4 Tropical algebra of the polynomial
 
-**Theorem 3.8 (Defect decay).** $\delta_{r+1} < \delta_r$ for all $r$, and $\delta_r \to 0$.
-Quantitatively, for all $r$,
-$$16^{\,r} \;\le\; \binom{2r}{r}^{2}(4r+1) \qquad\text{and}\qquad \binom{2r}{r}^{2}(3r+1) \;\le\; 16^{\,r},$$
-whence the sandwich
-$$\frac{4^{\,r}}{\sqrt{4r+1}} \;\le\; \binom{2r}{r} \;\le\; \frac{4^{\,r}}{\sqrt{3r+1}},
-\qquad \frac{1}{2\sqrt{4r+1}} \;\le\; \delta_r \;\le\; \frac{1}{2\sqrt{3r+1}} .$$
-In particular $\delta_r \sqrt{r} \in [\,1/(2\sqrt5),\, 1/(2\sqrt3)\,] = [0.2236\ldots,\, 0.2887\ldots]$
-for $r \ge 1$, and $\sum_r \delta_r$ diverges.
+**Proposition 3.8.** Over a linearly ordered abelian group $(G, +, \le)$:
 
-*Proof sketch.* Both inequalities are inductions through the central binomial recursion
-$(r+1)\binom{2r+2}{r+1} = 2(2r+1)\binom{2r}{r}$; in the lower bound the induction slack is exactly
-$1$, which is why the constant $4r+1$ cannot be improved to $4r$ by this route. Division by
-$2^{2r+1}$ converts the sandwich on $\binom{2r}{r}$ into the sandwich on $\delta_r$, and
-$\delta_r \ge 1/(4(r+1))$ (a consequence of the lower bound) gives divergence by comparison with
-the harmonic series. $\square$
+* *(Monotonicity)* $x_i \le y_i$ for all $i$ implies $\operatorname{tmed}(x) \le \operatorname{tmed}(y)$.
+* *(Tropical homogeneity of degree one)* $\operatorname{tmed}(x + t) = \operatorname{tmed}(x) + t$ for a constant $t$.
+* *(Self-duality)* $\operatorname{tmed}(-x) = -\operatorname{tmed}(x)$.
+* *(Bounds)* $\bigwedge_i x_i \le \operatorname{tmed}(x) \le \bigvee_i x_i$.
 
-**Theorem 3.9 (Exact asymptotic constant).** $\displaystyle \lim_{r\to\infty} \delta_r\sqrt{r} = \frac{1}{2\sqrt{\pi}} = 0.28209\ldots$
-Equivalently, $\binom{2r}{r}\sqrt{r}/4^{\,r} \to 1/\sqrt{\pi}$.
+*Proof sketch.* All four are immediate from the normal form: joins and meets are monotone; $\min$ and $\max$ commute with translation; negation exchanges $\min$ and $\max$, converting the max-of-mins form into the min-of-maxes form, which by Corollary 3.2 is the same polynomial. $\square$
 
-*Proof sketch.* Write $s_r = r!\,/\bigl(\sqrt{r}\,(r/e)^r\bigr)$ for the Stirling sequence. A purely
-algebraic cancellation of factorials gives, for $r \ge 1$, the identity
-$$\frac{s_{2r}}{s_r^{2}} \;=\; \frac{\binom{2r}{r}\sqrt{r}}{4^{\,r}} .$$
-Since $s_r \to \sqrt{2\pi}$, the left-hand side tends to $\sqrt{2\pi}/(2\pi) = 1/\sqrt{\pi}$.
-Dividing by $2$ gives the defect constant. $\square$
+**Theorem 3.9 (Nonexpansiveness).** For real samples, $\operatorname{tmed}$ is $1$-Lipschitz for the sup-norm; for three arguments,
+$$\bigl|\operatorname{med}_3(a,b,c) - \operatorname{med}_3(a',b',c')\bigr| \;\le\; \max\bigl(|a-a'|,\,|b-b'|,\,|c-c'|\bigr).$$
 
-Since $1/(2\sqrt5) \le 1/(2\sqrt{\pi}) \le 1/(2\sqrt3)$, Theorem 3.9 is consistent with Theorem 3.8,
-and the consistency statement is exactly $3 \le \pi \le 5$ — read off a ladder of ensembles rather
-than a circle. The practical reading of Theorems 3.7–3.9: an even ensemble is asymptotically, but
-never exactly, calibrated, and it approaches calibration only at the slow rate
-$\delta_r \approx 1/(2\sqrt{\pi r})$.
+*Proof sketch.* Let $\delta$ be the right-hand side. Then $a \le a'+\delta$, $b \le b'+\delta$, $c\le c'+\delta$, so by monotonicity and homogeneity $\operatorname{med}_3(a,b,c) \le \operatorname{med}_3(a',b',c') + \delta$; symmetrically for the reverse. $\square$
+
+This is the quantitative form of "the centre is the stable quantity": measurement noise of size $\delta$ in each seed perturbs the reported centre by at most $\delta$, with no amplification.
 
 ---
 
-## 4. Robustness: the exact breakdown number
+## 4. Equivariance: the median under changes of coordinates
 
-We now discard the probability model. Let $K, K' : \iota \to \mathbb{N}$ be two knee assignments
-that **agree outside** a set $S \subseteq \iota$ of *corrupted* seeds: $K(i) = K'(i)$ for all
-$i \notin S$. The question is how far $Q_{K'}(m)$ can move from $Q_K(m)$.
+Experimental readings are re-expressed constantly: knees are divided by a reference scale to make ratios, and inverted to make speed-ups. The first is order-preserving, the second order-reversing. The median survives both.
 
-**Theorem 4.1 (Two-sided bracket).** Let $|S| \le c \le m-1$ and $m + c \le n$. Then
-$$Q_K(m-c) \;\le\; Q_{K'}(m) \;\le\; Q_K(m+c) .$$
+**Theorem 4.1 (Monotone equivariance).** Let $s$ be a multiset of odd size $2k+1$, $m$ its median, and $f$ a map such that $f(x) \le f(y) \iff x \le y$ for all $x,y \in s$. Then $f(m)$ is the median of $f(s)$.
 
-*Proof sketch.* The upper bound is the monotone comparison "if $K$ and $K'$ agree off $S$ then
-$Q_{K'}(m) \le Q_K(m + |S|)$", which holds because any budget at which $m + |S|$ seeds pass under
-$K$ has at least $m$ of those passers outside $S$, hence passing under $K'$ too. The lower bound
-is the same statement with the roles of $K$ and $K'$ exchanged, followed by monotonicity of
-$Q_K$. $\square$
+**Theorem 4.2 (Antitone equivariance).** Under the same hypotheses but with $f(x) \le f(y) \iff y \le x$ on $s$, $f(m)$ is again the median of $f(s)$.
 
-**Definition 4.2 (Breakdown number).** $\beta(n,m) = \min(m-1,\; n-m)$.
+*Proof sketch (both).* Filtering commutes with mapping: $\#\{z \in f(s) : z \le f(m)\} = \#\{x \in s : f(x) \le f(m)\}$, which the hypothesis identifies with $\#\{x \in s : x \le m\}$ in the monotone case and with $\#\{x \in s : m \le x\}$ in the antitone case. In either case both counting bounds of Definition 2.1 are met, with the two roles exchanged in the antitone case. Membership is clear. $\square$
 
-**Corollary 4.3 (Containment below breakdown).** If $1 \le m \le n$ and $|S| \le \beta(n,m)$, then
-$$Q_K(1) \;\le\; Q_{K'}(m) \;\le\; Q_K(n),$$
-i.e. the corrupted reading still lies inside the clean ensemble's own range.
+**Proposition 4.3 (Extremes are not equivariant, they are exchanged).** If $M$ is the greatest element of $s$ and $f$ is antitone on $s$, then $f(M)$ is the *least* element of $f(s)$.
 
-The next two theorems show $\beta$ is exactly right: one more corrupted seed than $\beta(n,m)$
-destroys the rung, in whichever direction the adversary prefers.
-
-**Theorem 4.4 (Upward breakdown).** Let $m \le n$ and $|S| > n - m$. Then for every bound $B$ there
-is a $K'$ agreeing with $K$ off $S$ with $Q_{K'}(m) \ge B$.
-
-*Proof sketch.* Set $K'(i) = B$ for $i \in S$ and $K'(i) = K(i)$ otherwise. Suppose
-$Q_{K'}(m) < B$. Every seed in $\mathrm{Pass}_{K'}(Q_{K'}(m))$ then lies outside $S$, so that pass set
-has at most $n - |S| < m$ elements, contradicting $|\mathrm{Pass}_{K'}(Q_{K'}(m))| \ge m$. $\square$
-
-**Theorem 4.5 (Downward breakdown).** If $|S| \ge m$ then there is a $K'$ agreeing with $K$ off $S$
-with $Q_{K'}(m) = 0$.
-
-*Proof sketch.* Set $K'(i) = 0$ on $S$. Then $S \subseteq \mathrm{Pass}_{K'}(0)$, so the quota is met
-at budget $0$. $\square$
-
-**Corollary 4.6 (Exact breakdown number).** The $m$-th rung of an $n$-seed ensemble tolerates
-exactly $\min(m-1,\,n-m)$ corrupted seeds: at that level the reading is confined to the clean
-bracket of Theorem 4.1, and at one level more it can be driven to $0$ (if $m-1$ is the binding
-term) or above any bound (if $n-m$ is).
-
-Two consequences deserve emphasis. First, the **guarantee rung** $m = n$ and the **best-case rung**
-$m = 1$ both have $\beta = 0$: a single corrupted seed suffices to make either reading arbitrary.
-Deployment guarantees are the *most* fragile reading, not the safest. Second, in a three-seed
-ensemble the median is the only rung with a positive breakdown number.
-
-**Theorem 4.7 (Contamination curve).** For $1 \le m \le n$ and $c \le \beta(n,m)$, the set of readings
-of rung $m$ achievable by corrupting at most $c$ seeds is *exactly* the set of clean rungs in
-$[\,Q_K(m-c),\, Q_K(m+c)\,]$, both endpoints attained.
-
-*Proof sketch.* Containment is Theorem 4.1. For attainment, corrupt the $c$ seeds with the
-largest knees, setting them to a huge value, to realise the upper endpoint; corrupt the $c$ with
-the smallest knees, setting them to $0$, to realise the lower endpoint. $\square$
-
-Thus the maximal adversarial bias at contamination level $c$ equals the clean spread
-$Q_K(m+c) - Q_K(m-c)$, and $\beta(n,m)$ is exactly the level at which that spread ceases to be
-finite.
+Theorems 4.1–4.2 and Proposition 4.3 have a sharp practical consequence, spelled out in §8.4: the *median* speed-up is the speed-up of the median knee, but the *guaranteed* (worst-case) speed-up is the speed-up of the **largest** knee. Median and guarantee are governed by different order statistics, and only the former is coordinate-free.
 
 ---
 
-## 5. The dichotomy
+## 5. What pins down the median? An axiomatic classification
 
-**Lemma 5.1.** For $n = 2r+1$ and $1 \le m \le n$: $\beta(n,m) \le r$, with equality iff $m = r+1$.
+Let $F : \mathbb{R}^3 \to \mathbb{R}$ be an aggregator. Consider five axioms.
 
-*Proof sketch.* $\min(m-1, 2r+1-m) \le r$ since the two arguments sum to $2r$; equality in the
-minimum requires $m-1 \ge r$ and $2r+1-m \ge r$, i.e. $m = r+1$. $\square$
+* **(M) Monotone:** $a \le a'$, $b\le b'$, $c\le c'$ imply $F(a,b,c) \le F(a',b',c')$.
+* **(S) Symmetric:** $F$ is invariant under the transpositions of its arguments, hence under $S_3$.
+* **(C) Conservative:** $F(a,b,c) \in \{a,b,c\}$.
+* **(T) Translation-equivariant:** $F(a+t,b+t,c+t) = F(a,b,c)+t$ — *tropical homogeneity of degree one.*
+* **(D) Self-dual:** $F(-a,-b,-c) = -F(a,b,c)$.
 
-**Theorem 5.2 (Calibration–Robustness Dichotomy).** Let $n = 2r+1$ and $1 \le m \le n$. Then
-$$R_n\!\left(m,\tfrac12\right) = \tfrac12 \quad\Longleftrightarrow\quad \beta(n,m) = r .$$
-That is, a rung is calibrated on coin-flip seeds if and only if it is maximally robust to
-corrupted seeds.
+**Theorem 5.1 (Characterisation of the median).** If $F$ satisfies (M), (S), (C), (T), (D), then $F = \operatorname{med}_3$.
 
-*Proof sketch.* By Theorem 3.5 the left side is equivalent to $2m = n+1$, i.e. $m = r+1$; by
-Lemma 5.1 the right side is equivalent to the same. $\square$
+*Proof sketch.* Three steps.
 
-The content is not the chain of equivalences but the fact that the two sides were derived from
-disjoint premises: the left from a symmetry of binomial coefficients (a parity constraint), the
-right from counting how many seeds an adversary must buy (a combinatorial constraint). They pin
-the same index. "Read the median" is therefore a theorem, not a convention.
+*(i) Dual identity.* By (D), $F(0,0,-d) = -F(0,0,d)$; by (T) applied with shift $d$, $F(d,d,0) = F(0,0,-d)+d$; by (S), $F(d,d,0) = F(0,d,d)$. Combining, $F(0,0,d) = d - F(0,d,d)$.
 
-**Theorem 5.3 (Even ensembles fail on both sides).** Let $n = 2r$ with $r \ge 1$. Then
-1. $\beta(2r, m) \le r-1$ for all $1 \le m \le 2r$;
-2. $\beta(2r, r) = \beta(2r, r+1) = r-1$ — the maximum is attained by two distinct rungs;
-3. no rung is calibrated: $R_{2r}(m,\tfrac12) \ne \tfrac12$ for every $m$.
+*(ii) Majority.* For $d \ge 0$, (M) gives $F(0,0,d) \le F(0,d,d)$, which with (i) yields $2F(0,0,d) \le d$. By (C), $F(0,0,d) \in \{0,d\}$; if it were $d$ then $2d \le d$, forcing $d = 0$, in which case the value is still $0$. Hence $F(0,0,d) = 0$: **two equal votes win.** Translating by $a$: $F(a,a,c) = a$ for $a \le c$; and by (i) plus translation, $F(a,c,c) = c$ for $a \le c$.
 
-*Proof sketch.* (1) and (2) are arithmetic on $\min(m-1, 2r-m)$; (3) is Theorem 3.5. $\square$
+*(iii) Squeeze.* For $a\le b\le c$, monotonicity gives $F(a,b,b) \le F(a,b,c) \le F(b,b,c)$, i.e. $b \le F(a,b,c) \le b$. Sorted triples are pinned; (S) extends the conclusion to all triples, and $\operatorname{med}_3$ is the sorted-middle map. $\square$
 
-Parity is thus a single obstruction to a canonical centre, visible simultaneously in the
-probability and in the robustness. An even ensemble has no centre in either sense, and the two
-failures are not independent pathologies but two faces of $2m = n+1$ being unsolvable.
+**Proposition 5.2 (Non-vacuity).** $\operatorname{med}_3$ satisfies (M), (S), (C), (T), (D).
 
----
+**Theorem 5.3 (Independence of the tropical axiom).** There is an aggregator satisfying (M), (S), (C), (D) that is not the median. Define the **sum-sign aggregator**
+$$\mathrm{SS}(a,b,c) = \begin{cases} \max(a,b,c), & a+b+c > 0,\\[2pt] \min(a,b,c), & a+b+c < 0,\\[2pt] \operatorname{med}_3(a,b,c), & a+b+c = 0. \end{cases}$$
+Then $\mathrm{SS}$ is monotone, symmetric, conservative and self-dual, and $\mathrm{SS}(0,0,1) = 1 \ne 0 = \operatorname{med}_3(0,0,1)$.
 
-## 6. How many seeds certify a centre?
+*Proof sketch.* Conservativity and symmetry are immediate (the sum is symmetric; $\max$, $\min$, $\operatorname{med}_3$ are conservative and symmetric). Self-duality: negating all inputs negates the sum, exchanging the first two branches, and $\max(-x) = -\min(x)$, $\min(-x) = -\max(x)$, $\operatorname{med}_3(-x) = -\operatorname{med}_3(x)$. Monotonicity is a case analysis on which branch each side falls in, using $\min(x) \le \mathrm{SS}(x) \le \max(x)$ in every branch, plus monotonicity of the sum, which guarantees the branch index can only increase. Translation equivariance fails, e.g. $\mathrm{SS}(-1,-1,0) = -1$ while $\mathrm{SS}(0,0,1) - 1 = 0$. $\square$
 
-The dichotomy says *which* rung to read. A separate question is *how many seeds* make that
-reading reliable. Suppose again that each seed clears the bar independently with probability
-$p > 1/2$; then the median rung is a Condorcet jury.
-
-**Theorem 6.1 (Condorcet monotonicity of the ladder).** For $1/2 \le p \le 1$ the median rung
-probability $R_{2r+1}(r+1,p)$ is non-decreasing in $r$, strictly increasing when $1/2 < p < 1$; for
-$0 < p < 1/2$ it is strictly decreasing. In particular $R_{2r+1}(r+1,p) \ge p$ for $p \ge 1/2$: the
-ensemble median is at least as reliable as one seed, and strictly better from $r \ge 1$ on.
-
-*Proof sketch.* The step from $r$ to $r+1$ has the exact closed form
-$$R_{2r+3}(r+2,p) - R_{2r+1}(r+1,p) \;=\; \binom{2r+1}{r}\bigl(p(1-p)\bigr)^{r+1}(2p-1),$$
-obtained by applying the Pascal recursion twice and cancelling; its sign is the sign of
-$2p-1$. $\square$
-
-**Theorem 6.2 (Geometric rate).** For $1/2 \le p \le 1$,
-$$1 - R_{2r+1}(r+1,p) \;\le\; 2(1-p)\bigl(4p(1-p)\bigr)^{r} .$$
-
-*Proof sketch.* Telescoping the exact step of Theorem 6.1 from $r$ to $\infty$ and bounding
-$\binom{2r+1}{r} \le 4^{r}$ yields a geometric series in $4p(1-p) < 1$. $\square$
-
-**Theorem 6.3 (Sharpened rate).** For $1/2 < p \le 1$,
-$$1 - R_{2r+1}(r+1,p) \;\le\; \frac{\binom{2r+1}{r}\bigl(p(1-p)\bigr)^{r+1}}{2p-1},$$
-and this bound is at least as good as Theorem 6.2's for $p \ge 2/3$. Combining with the sandwich
-of Theorem 3.8 gives the Stirling-improved form
-$$1 - R_{2r+1}(r+1,p) \;\le\; \frac{2p(1-p)\bigl(4p(1-p)\bigr)^{r}}{(2p-1)\sqrt{3r+4}} .$$
-
-*Proof sketch.* Keep the exact binomial factor in the telescoped tail instead of bounding it by
-$4^r$, and sum the geometric factor $\bigl(p(1-p)\bigr)^{r}$ against the ratio bound; the last
-display substitutes $\binom{2r+1}{r} = \tfrac12\binom{2r+2}{r+1} \le \tfrac12\cdot 4^{\,r+1}/\sqrt{3r+4}$. $\square$
-
-**Theorem 6.4 (Exact crossing at $p = 2/3$).** $1 - R_{47}(24,\tfrac23) \le \tfrac{1}{100}$ while
-$1 - R_{45}(23,\tfrac23) > \tfrac{1}{100}$. Hence the median rung of an odd ensemble at per-seed
-frequency $2/3$ is certified to within $1\%$ **iff** the ensemble has at least $47$ seeds.
-
-*Proof sketch.* Exact rational evaluation of two binomial tails. $\square$
-
-**Theorem 6.5 (No sharp route to $47$).** Any bound $B(r)$ dominating the sharpened rate of
-Theorem 6.3 fails to certify $1\%$ at $r = 23$ (i.e. $47$ seeds), because the sharpened rate itself
-already exceeds $1/100$ there. The sharpened route certifies at $49$ seeds; the crude rate of
-Theorem 6.2 needs $73$.
-
-*Proof sketch.* Numerical evaluation of the two bounds at $r = 23, 24, 35, 36$. $\square$
-
-The gap $47 < 49 < 73$ is therefore a property of the proof technique, exactly quantified rather
-than hidden.
-
-**Proposition 6.6 (Where the measurement stands).** At $p = 2/3$ the three-seed median rung has
-$R_3(2,\tfrac23) = 20/27$, so its miss probability is $7/27 \approx 25.9\%$.
-
-*Proof sketch.* $R_3(2,p) = 3p^2 - 2p^3$; evaluate. $\square$
-
-A three-seed centre is thus a point estimate with a one-in-four failure probability *under its
-own frequency model* — not a certified centre. This is the sharpest honest limit the theory puts
-on the empirical median law of §1.2.
+**Interpretation.** Order-theoretic axioms alone (monotone, symmetric, conservative, self-dual) do *not* single out the median. The additional requirement that pins it down is exactly the tropical one: invariance under a shift of the origin of the measurement scale. The median's status as the canonical centre is therefore an algebraic fact about the min-plus structure, not a soft consequence of "being in the middle".
 
 ---
 
-## 7. Is the median also the narrowest reading?
+## 6. The commutation theorem: aggregate then read = read then aggregate
 
-By Theorem 4.7 the deployment-relevant uncertainty of rung $m$ at contamination level $c$ is the
-**window width**
-$$W(m,c) \;=\; Q(m+c) - Q(m-c),$$
-so it is natural to conjecture that the median minimises $W(\cdot,c)$ for every sample, matching
-the parity law's choice. The verdict is split.
+Two pipelines compute a "consensus knee" from $2k+1$ seeds:
 
-**Theorem 7.1 (Refutation in general).** There is a five-seed sample whose median window is
-strictly wider than an off-centre window: take knees $\{0,0,0,10,20\}$ — three seeds agreeing and
-two stragglers. Its ladder is $Q = (0,0,0,10,20)$, so at radius $c = 1$ the median window is
-$W(3,1) = Q(4) - Q(2) = 10$, while $W(2,1) = Q(3) - Q(1) = 0$.
+* **Pipeline A (read then aggregate):** compute knees $K_i$ from each curve $c_i$; report $\operatorname{tmed}(K)$.
+* **Pipeline B (aggregate then read):** form the pointwise aggregate curve $\bar c(t) = A(c_0(t),\dots,c_{2k}(t))$; report its knee.
 
-*Proof sketch.* Direct computation of the ladder. $\square$
+Pipeline B is arguably the more principled: it produces a curve, and hence an *operating point of an actual aggregate model*, rather than a summary statistic of derived quantities. Pipeline A is what practitioners do. The question is whether they agree.
 
-The minimiser of the width follows the sample's *gaps*, not its centre.
+**Theorem 6.1 (Median–knee commutation, three seeds).** Let $c_0,c_1,c_2 : \mathbb{N}\to V$ be non-decreasing, let $G$ be a finite grid, $\beta_0 \in V$ a bar, and suppose $\mathrm{IsKnee}_{G,\beta_0}(c_i, K_i)$ for $i=0,1,2$. Then
+$$\mathrm{IsKnee}_{G,\beta_0}\bigl(t \mapsto \operatorname{med}_3(c_0(t),c_1(t),c_2(t)),\ \operatorname{med}_3(K_0,K_1,K_2)\bigr).$$
 
-**Definition 7.2.** Write $g(j) = Q(j) - Q(j-1)$ for the $j$-th gap and let
-$\mathrm{cd}(n,j) = |n - 2j|$ measure how far the gap sits from the centre of the ladder. The ladder is
-**centre-minimal** if $\mathrm{cd}(n,j) \le \mathrm{cd}(n,k)$ implies $g(j) \le g(k)$: gaps nearer the
-middle are smaller. This is the behaviour of order statistics of a unimodal law.
+*Proof.* Write $K = \operatorname{med}_3(K_0,K_1,K_2)$.
 
-**Theorem 7.3 (Minimality under centre-minimality).** If the ladder of a $(2r+1)$-seed ensemble is
-monotone and centre-minimal, then for every radius $c \le r$ the median window is narrowest:
-$W(r+1,c) \le W(m,c)$ for all admissible $m$.
+*Grid membership.* By conservativity (Prop. 3.3), $K \in \{K_0,K_1,K_2\} \subseteq G$.
 
-*Proof sketch.* An exact step criterion drives a two-sided induction: moving a window one rung
-outward changes its width by $g(\text{gap taken in}) - g(\text{gap let out})$, so the window widens
-exactly when the incoming gap exceeds the outgoing one. Centre-minimality makes every outward
-step non-improving on both sides of the centre. $\square$
+*Clearing the bar at $K$.* By the dual threshold duality (Cor. 3.7) applied to $K \le K$, at least two of $K_0,K_1,K_2$ are $\le K$; say $K_i, K_j \le K$. Monotonicity of $c_i$ gives $\beta_0 \le c_i(K_i) \le c_i(K)$, and likewise for $j$. So at least two of the three curves clear the bar at $K$, and by the upper threshold duality the median curve does too.
 
-**Proposition 7.4 (The measured sample is not centre-minimal).** For the three-seed sample
-$\{160, 224, 256\}$ the gaps are $g(2) = 64$ and $g(3) = 32$, which are equidistant from the centre
-of a three-rung ladder yet unequal; centre-minimality holds only vacuously, and correspondingly
-the conclusion is empty, since $\beta(3,2) = 1$ while $\beta(3,1) = \beta(3,3) = 0$ — at three seeds
-the median is the only rung with a contamination window at all.
+*Minimality.* Let $j \in G$ with $\beta_0 \le \operatorname{med}_3(c_0(j),c_1(j),c_2(j))$. By threshold duality, at least two curves clear the bar at $j$, so by the defining minimality of their knees, at least two of $K_0,K_1,K_2$ are $\le j$; by the dual duality, $K \le j$. $\square$
 
-Hence at the measured cell the median's robustness is *not* explained by narrowness; it is
-explained by the breakdown number. The mechanism of Theorem 7.3 first has content at five seeds.
+The proof is worth pausing over, because it explains why the theorem is about the median and nothing else. Both halves of the argument are the *same majority statement*, read through the two halves of threshold duality:
+
+$$\underbrace{\text{“the median curve clears the bar at } t\text{”}}_{\text{majority of curves clear at } t} \;\Longleftrightarrow\; \underbrace{\text{“at least } k{+}1 \text{ knees are} \le t\text{”}}_{\text{“the median knee is} \le t\text{”}}$$
+
+with monotonicity providing the middle equivalence "curve $i$ clears at $t$ $\iff K_i \le t$". Any aggregator whose thresholding is a majority vote would do; by Theorem 5.1, in the conservative tropical world that is the median.
+
+**Theorem 6.2 (General odd case).** With $2k+1$ non-decreasing curves $c_i$ and knees $K_i$,
+$$\mathrm{IsKnee}_{G,\beta_0}\bigl(t \mapsto \operatorname{tmed}(c_0(t),\dots,c_{2k}(t)),\ \operatorname{tmed}(K)\bigr).$$
+
+*Proof sketch.* Identical, with counting in place of the three-fold case split: $\#\{i : \beta_0 \le c_i(t)\} \ge k+1 \iff \#\{i : K_i \le t\} \ge k+1$, because monotonicity makes the two filtered index sets coincide; apply Theorem 3.6 to each side. $\square$
+
+**Proposition 6.3 (Uniqueness of knees).** A curve has at most one knee on a given grid at a given bar; hence Theorem 6.1 *determines* the knee of the median curve. (If $k$ and $k'$ are both knees, each minimality clause applied to the other gives $k \le k'$ and $k' \le k$.)
+
+### 6.1 The mean does not commute
+
+**Theorem 6.4 (Failure for the arithmetic mean).** Let $\sigma_a(t) = \mathbb{1}[t \ge a]$ be the unit step curve switching on at $a$; each $\sigma_a$ is non-decreasing with knee $a$ at bar $1$. On the grid $G = \{1,2,3\}$ with bar $1$, the curves $\sigma_1,\sigma_2,\sigma_3$ have knees $1,2,3$ with median $2$, whereas
+$$\bar c(t) = \tfrac13\bigl(\sigma_1(t)+\sigma_2(t)+\sigma_3(t)\bigr)$$
+takes the values $\tfrac13, \tfrac23, 1$ at $t=1,2,3$, so its knee is $3 \ne 2$.
+
+The mechanism is transparent: the mean curve can only clear a bar of $1$ when *every* component does, so the mean pipeline computes the *maximum* of the knees in this configuration — a worst-case, not a central, summary. In general the mean pipeline's knee is neither the mean nor the median of the individual knees, and it lies systematically to the right.
+
+### 6.2 Monotonicity cannot be dropped
+
+**Theorem 6.5.** There exist curves $c_0,c_1,c_2$ on $G = \{1,2,3\}$ with bar $1$ and knees $1,2,3$, with $c_1,c_2$ monotone and $c_0$ not, such that the median curve does **not** have knee $\operatorname{med}_3(1,2,3) = 2$.
+
+*Proof.* Take $c_0(t) = 1$ for $t \ne 2$ and $c_0(2) = 0$ — it clears the bar at $t=1$, so its knee is $1$, but it dips below the bar afterwards — together with $c_1 = \sigma_2$, $c_2 = \sigma_3$. At $t = 2$ the values are $(0, 1, 0)$, whose median is $0 < 1$: only one curve clears the bar there, so the median curve does not clear it at $2$. $\square$
+
+Monotonicity is exactly the hypothesis that converts "curve $i$ clears the bar at $t$" into the *upward-closed* condition "$K_i \le t$", which is what makes the two majority events coincide.
 
 ---
 
-## 8. Application: the fourth seed, the fifth seed, and the median law
+## 7. Robustness: breakdown of the median pipeline
 
-### 8.1 The three-seed reading
+**Theorem 7.1 (Breakdown theorem for the tropical median).** Let $x, y : \{0,\dots,2k\}\to\alpha$ agree on a set $T$ of indices with $|T| \ge k+1$ ("$T$ is clean"). Then
+$$\min_{i \in T} x_i \;\le\; \operatorname{tmed}(y) \;\le\; \max_{i \in T} x_i .$$
 
-For the sample $K = \{160, 224, 256\}$ at $(d,L) = (4,2048)$ the ladder is
-$$Q(1) = 160,\qquad Q(2) = 224,\qquad Q(3) = 256,$$
-and $Q(2) = 224 = \tfrac78 \cdot \tfrac{4\cdot 2048}{32} = \tfrac78 P$. By Theorem 5.2 the rung $m = 2$
-is the unique calibrated, maximally robust rung: $\beta(3,2) = 1$ and $R_3(2,\tfrac12) = \tfrac12$;
-by Theorem 4.7 its contamination curve at $c = 1$ is exactly $[160, 256]$, a maximal bias of
-$-64/+32$ — the full clean spread. By Theorem 4.4 the guarantee rung $m = 3$ has $\beta(3,3) = 0$
-and can be pushed above any bound by a single bad seed.
+*Proof sketch.* Let $v = \min_{i\in T} x_i$. For each $i \in T$, $v \le x_i = y_i$, so at least $|T| \ge k+1$ coordinates of $y$ are $\ge v$; threshold duality gives $v \le \operatorname{tmed}(y)$. The upper bound is dual. $\square$
 
-### 8.2 What a fourth seed does
+In words: **a minority of arbitrarily corrupted seeds cannot move the median outside the range of the honest majority.** For three seeds this is $\min(a,b) \le \operatorname{med}_3(a,b,c') \le \max(a,b)$ for every $c'$.
 
-Let $x$ be a fourth seed's knee and let the four-seed reading be the usual mean of the two middle
-order statistics of $\{160, 224, 256, x\}$:
-$$\rho(x) \;=\; \begin{cases}
-192, & x \le 160,\\[2pt]
-\dfrac{x + 224}{2}, & 160 \le x \le 224,\\[4pt]
-\dfrac{224 + x}{2}, & 224 \le x \le 256,\\[4pt]
-240, & x \ge 256 .
-\end{cases}$$
-Write $\mathrm{bias}(x) = |\rho(x) - 224|$.
+**Theorem 7.2 (The mean has breakdown point zero).** For every bound $B$ there is a sample $y : \{0,1,2\} \to \mathbb{R}$ agreeing with the clean data $x \equiv 0$ on the majority set $\{0,1\}$, with $\operatorname{tmed}(y) = 0$ but $\tfrac13(y_0+y_1+y_2) > B$. (Take $y_2 = 3B+3$.)
 
-**Theorem 8.1 (The fourth seed can confirm but not calibrate).**
-1. $\rho$ is monotone, with range $[192, 240]$, and $\mathrm{bias}(x) \le 32$ always;
-2. $\mathrm{bias}(x) = 0$ iff $x = 224$; otherwise the four-seed reading is strictly worse than the
-   exact three-seed median;
-3. $\mathrm{bias}(x) = 32$ iff $x \le 160$, and $\mathrm{bias}(x) \le 16$ iff $x \ge 192$; the bias is
-   strictly decreasing on $[160,224]$ and strictly increasing on $[224,256]$;
-4. no rung of a four-seed ensemble is calibrated, the central defect being
-   $\delta_2 = \binom{4}{2}/2^5 = 3/16$, so the two central rungs read $0.6875$ and $0.3125$;
-5. both central rungs of a four-seed ensemble have breakdown number $\beta(4,2) = \beta(4,3) = 1$,
-   no better than the three-seed median's $\beta(3,2) = 1$, and no rung of a four-seed ensemble
-   exceeds $1$.
+**Theorem 7.3 (Pipeline breakdown).** Let $c'_0,\dots,c'_{2k}$ be non-decreasing curves with knees $K'_i$, and suppose that on an index set $T$ with $|T| \ge k+1$ these agree with a reference clean knee vector $K$. Then the pointwise median curve has a knee, namely $\operatorname{tmed}(K')$, and
+$$\min_{i\in T} K_i \;\le\; \operatorname{tmed}(K') \;\le\; \max_{i \in T} K_i .$$
 
-*Proof sketch.* (1)–(3) are case analysis on the four branches of $\rho$; (4) is Theorem 3.5 plus
-Theorem 3.7 at $r = 2$; (5) is arithmetic on $\min(m-1, 4-m)$. $\square$
+*Proof.* Theorem 6.2 supplies the knee; Theorem 7.1 supplies the interval. $\square$
 
-**Theorem 8.2 (The fifth seed restores both).** $\beta(5,3) = 2 > 1$ and $R_5(3,\tfrac12) = \tfrac12$:
-a five-seed ensemble's median is strictly more robust than a three-seed ensemble's and is
-calibrated again.
+Note the strength of the corruption model: the $k$ dishonest seeds may have *entirely different curves*, not merely perturbed knees; monotonicity is assumed of them only so that they have knees at all.
 
-The design conclusion is unambiguous. A fourth run at the same cell purchases neither robustness
-nor calibration; it can only confirm the median by landing exactly on it, and any other landing
-degrades the reading. If the goal is to strengthen the centre rather than to test the low tail,
-the correct increment is two seeds, not one. (If the goal is instead to *test* whether the low
-tail at $0.625P$ is a stable feature of the long context or an artifact of one seed, a single
-additional run is diagnostic — but it is a tail experiment, not a centre experiment, and should
-be reported as such.)
+**Theorem 7.4 (The mean pipeline has breakdown point zero).** For any $N > 1$, the curves $\sigma_1, \sigma_1, \sigma_N$ on $G = \{1, N\}$ at bar $1$ have two clean knees equal to $1$, yet the knee of their mean curve is $N$. Thus one corrupted seed out of three drags the aggregate operating point arbitrarily far from the clean range $[1,1]$, whereas the median pipeline returns $1$.
 
-### 8.3 The median law and its status
+**Theorem 7.5 (Exact stability ray).** Let $b < c$. Then, for all $x$,
+$$\operatorname{med}_3(x, b, c) = b \iff x \le b .$$
 
-Across the two measured contexts:
+*Proof sketch.* If $x \le b$ the sorted triple is $(x,b,c)$ with middle $b$. Conversely if $x > b$ then $b < \min(x,c) \le \operatorname{med}_3(x,b,c)$, so the median exceeds $b$. $\square$
 
-| context | knee set | as multiples of $P = dL/32$ | spread | median |
-|---|---|---|---|---|
-| $L = 1024$, $P = 128$ | $\{96, 112, 128\}$ | $\{0.75,\,0.875,\,1.0\}$ | $0.25P$ | $112 = \tfrac78 \cdot 128$ |
-| $L = 2048$, $P = 256$ | $\{160, 224, 256\}$ | $\{0.625,\,0.875,\,1.0\}$ | $0.375P$ | $224 = \tfrac78 \cdot 256$ |
+Theorem 7.5 is the sharp complement to Theorem 7.1: robustness of the median value is *one-sided* around the current centre. A re-measured seed strictly between the current median and the top of the sample moves the centre, even though it lies inside the interval $[b,c]$ guaranteed by the breakdown theorem. Confusing the two — the interval in which the centre is guaranteed to *lie*, and the set on which it is guaranteed to *stay put* — is a genuine and easy error; §8.6 records an instance.
 
-Two structural observations follow from the ladder viewpoint. First, the upper edge is pinned:
-the product bound $k^\star \le P$ held for all six seeds, so it functions as a six-seed-verified
-deployment guarantee — but note that as a *rung* it is the guarantee rung, with breakdown number
-$0$, so its empirical robustness is a property of the data, not of the reading. Second, the
-widening of the spread occurs entirely in the low tail, which is exactly the rung with the other
-zero breakdown number; the centre, the only rung with positive breakdown number at three seeds,
-is the one that repeated.
+---
 
-Finally, Proposition 6.6 bounds what may be claimed: under the frequency model with $p = 2/3$, a
-three-seed centre carries a $7/27 \approx 26\%$ miss probability, and certification at the $1\%$
-level would require $47$ seeds. The median law is a robust, twice-replicated structural reading —
-not a certified one.
+## 8. Application: a two-context, six-seed knee dataset
+
+We now apply the theory to measured data. The experiment: a causal word-level language model, vocabulary $4097$, held-out final $10\%$ of the corpus, data-free top-$k$ attention selection, retention measured as accuracy at budget $k$ divided by full-attention accuracy, bar $= 0.98$.
+
+### 8.1 The measured sweep and its knee
+
+At $(d,\mathrm{ctx}) = (4, 2048)$, seed 3: full-attention accuracy $0.1546$, hence bar $0.1516$; full loss $5.2199$. The retention row over the grid $G = \{96,128,160,192,224,240,256,288,384,512,768,1024\}$ is
+
+| $k$ | 96 | 128 | 160 | 192 | 224 | 240 | 256 | 288 | 384 | 512 | 768 | 1024 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| $c(k)$ | 0.963 | 0.973 | 0.981 | 0.984 | 0.986 | 0.987 | 0.990 | 0.993 | 0.999 | 1.000 | 1.003 | 1.003 |
+
+Writing the row as a base value plus nonnegative increments switched on at grid points, $c = 0.963 + \sum_j \Delta_j\,\mathbb{1}[\,\cdot \ge g_j]$ with all $\Delta_j \ge 0$, makes monotonicity structural rather than checked pointwise.
+
+**Proposition 8.1.** The measured curve is non-decreasing, and $\mathrm{IsKnee}_{G, 0.98}(c, 160)$, with margin $c(160) - 0.98 = 0.001$.
+
+The margin is razor-thin — comparable to the binomial standard error of the accuracy measurement — so the individual knee read is fragile, exactly as the theory predicts for an extreme-order functional. Note also the recovery tail: $c(512) = 1.000$, $c(768) = c(1024) = 1.003$ (a held-out loss difference of $0.0016$), so the curve is well behaved beyond the knee and the crossing is not an artefact of a collapsing model.
+
+### 8.2 The horn analysis
+
+Four point predictions $\{192,224,240,256\}$ were fixed before the run.
+
+**Proposition 8.2.** Every $k \in \{192,224,240,256\}$ satisfies $c(k) \ge 0.98$, and no $k$ in that set is a knee of $c$ on $G$ at bar $0.98$.
+
+*Proof sketch.* The first claim is the sweep row. For the second, any knee $k$ satisfies $k \le 160$ by minimality applied to the grid point $160$, which clears the bar; each of the four candidates exceeds $160$. $\square$
+
+The two clauses say something worth separating in general: a prediction can be *sound* (the predicted budget really is sufficient) and yet *not the answer* (it is not the least sufficient budget). Sufficiency is an upper-bound claim, knee-hood a minimality claim; a sweep that only checks the former cannot adjudicate the latter.
+
+### 8.3 The $7/8$ median law
+
+Let $K_8 = \{128,112,96\}$ (three seeds at $\mathrm{ctx}=1024$, $P_8 = 128$) and $K_{16} = \{256,224,160\}$ (three seeds at $\mathrm{ctx}=2048$, $P_{16} = 256$).
+
+**Proposition 8.3.** $\operatorname{med}(K_8) = 112$ and $\operatorname{med}(K_{16}) = 224$, and
+$$112 = \tfrac78 P_8, \qquad 224 = \tfrac78 P_{16}.$$
+
+**Proposition 8.4 (Normalised distributions).** Dividing by the product point is order-preserving, so by Theorem 4.1
+$$\operatorname{med}\{1,\tfrac78,\tfrac34\} = \tfrac78 \quad (\mathrm{ctx}=1024), \qquad \operatorname{med}\{1,\tfrac78,\tfrac58\} = \tfrac78 \quad (\mathrm{ctx}=2048).$$
+
+**Theorem 8.5 (Uniqueness of the constant).** For $a \in \mathbb{Q}$, $\bigl(a P_8 = 112 \text{ and } a P_{16} = 224\bigr) \iff a = \tfrac78$. The law has no free parameter.
+
+**Theorem 8.6 (The mean admits no such law).** There is no constant $a$ with $a P_8 = \tfrac{128+112+96}{3}$ and $a P_{16} = \tfrac{256+224+160}{3}$. Indeed the first forces $a = 7/8$ (the mean coincides with the median at $\mathrm{ctx}=1024$), while the second requires $a = 5/6$.
+
+Theorem 8.6 is the decisive discriminator between "the centre satisfies a law" and "the median satisfies a law". The two summaries agree at one context and disagree at the other, and only one of them extends.
+
+### 8.4 Speed-ups: order reversal at work
+
+Converting a knee to a deployment speed-up, $k^\* \mapsto \mathrm{ctx}/k^\*$, is order-reversing on positive values.
+
+**Proposition 8.7.** At $\mathrm{ctx} = 2048$, the speed-up multiset is $\{8,\ 64/7,\ 64/5\} \approx \{8.0,\ 9.14,\ 12.8\}$; by Theorem 4.2 its median is $64/7 = 2048/224 = \mathrm{ctx}/\operatorname{med}(K_{16})$.
+
+**Proposition 8.8 (Guaranteed speed-up).** $8$ is the least element of the speed-up multiset, and it is the image of the *largest* knee, $256$, under order reversal (Proposition 4.3). Moreover every seed satisfies the product-law bound $k^\* \le P_{16}$, so every seed deploys at at least $8\times$.
+
+Thus the deployment reading at $(d,\mathrm{ctx}) = (4,2048)$ is: **$\ge 8.0\times$ guaranteed across all three seeds, $9.1\times$ median, $12.8\times$ best.** The three numbers are three different order statistics of one distribution, and the algebra says which is which: the guarantee reads the max knee, the headline reads the median knee, the best case reads the min knee. Only the middle one is invariant under the change of coordinates.
+
+### 8.5 Geometry of the two distributions
+
+**Proposition 8.9.** In normalised coordinates the profiles $(\min, \operatorname{med}, \max)$ are
+$$\mathrm{ctx}=1024:\ (\tfrac34,\ \tfrac78,\ 1), \qquad \mathrm{ctx}=2048:\ (\tfrac58,\ \tfrac78,\ 1).$$
+Hence: the **upper edge is pinned** at $1$ in both contexts; the **median is stationary** at $7/8$; the **lower tail strictly sinks**, $\tfrac58 < \tfrac34$; and the normalised spread grows by exactly the factor
+$$\frac{(256-160)/P_{16}}{(128-96)/P_8} = \frac{3/8}{1/4} = \frac32 .$$
+
+The pinned ceiling is not an accident of sampling: it is the product-law bound $k^\* \le P$, verified for all six seeds. The only free coordinate of the distribution, as context grows, is therefore the lower tail, and the median — the unique order statistic that is equivariant under *both* the normalisation $\div P$ and the inversion $\mathrm{ctx}/\cdot$ — is the only summary insensitive to which coordinate system one reads.
+
+### 8.6 The exact stability region, and a corrected claim
+
+With two of the three seeds pinned at $224$ and $256$, Theorem 7.5 gives immediately:
+
+**Proposition 8.10.** $\operatorname{med}_3(x, 224, 256) = 224 \iff x \le 224$. In particular the family $\{160, 192, 224\}$ of third-seed values all preserve the reported centre.
+
+**Proposition 8.11 (A false informal claim).** The statement "only a third seed of $256$ or more would shift the median" is false: $240 < 256$, yet $\operatorname{med}_3(240,224,256) = 240 \ne 224$.
+
+The correct statement is Proposition 8.10: the stability region is the half-line $x \le 224$, whose endpoint is the current median, *not* the interval $x < 256$ delimited by the next data point. The breakdown theorem (Theorem 7.1) does guarantee that the centre stays inside $[224,256]$ for *any* third value — but staying inside an interval and staying at a point are different guarantees.
+
+### 8.7 The centre as an operating point
+
+Finally, Theorem 6.1 upgrades the reported centre from a summary statistic to an operating point.
+
+**Proposition 8.12.** Let $c_0,c_1,c_2$ be any non-decreasing retention curves on any grid and bar with knees $256$, $224$, $160$. Then the pointwise median curve has knee exactly $224$.
+
+**Proposition 8.13 (Non-vacuity).** Such curves exist: the unit step curves $\sigma_{256}, \sigma_{224}, \sigma_{160}$ on $G = \{160,224,256\}$ at bar $1$ realise the triple, and their median curve has knee $224$.
+
+**Proposition 8.14 (Deployment reading under re-measurement).** With seeds 1 and 2 fixed at $256$ and $224$ and an arbitrary third measurement $t$, the median curve has knee $\operatorname{med}_3(256,224,t) \in [224,256]$.
+
+So "the median knee is $224$" is equivalent to "the median of the three models, as a model, needs a budget of $224$" — and no fourth measurement of the third seed can push that below $224$ or above $256$.
 
 ---
 
 ## 9. Algorithms
 
-Three procedures suffice to compute every quantity in this paper; all are elementary, and we
-record their complexity.
+Three algorithms are implicit in the development and worth stating explicitly.
 
-**Algorithm A (Quota ladder).** Given knees $K(1),\dots,K(n)$, sort them ascending; then
-$Q(m)$ is the $m$-th entry, $Q(0) = 0$. Cost $O(n\log n)$, or $O(n)$ with counting sort on a bounded
-budget grid. All rung readings, gaps, windows, and contamination curves are $O(1)$ look-ups
-afterwards.
+**Algorithm A (Knee detection).** Given a sorted grid $G = (g_1 < \dots < g_n)$, a curve oracle $c$, and a bar $\beta$, return the least $g_i$ with $c(g_i) \ge \beta$, or $\bot$. Linear scan: $O(n)$ oracle calls. If $c$ is known monotone, binary search reduces this to $O(\log n)$ calls — relevant when each call is a four-hour training run's evaluation pass.
 
-**Algorithm B (Breakdown table and contamination curve).** For each $m$, $\beta(n,m) = \min(m-1,n-m)$
-in $O(1)$; the achievable interval at level $c \le \beta(n,m)$ is $[Q(m-c), Q(m+c)]$, and the maximal
-bias is $\max\bigl(Q(m+c)-Q(m),\, Q(m)-Q(m-c)\bigr)$. Building the whole table costs $O(n^2)$
-look-ups, or $O(n)$ per contamination level.
+**Algorithm B (Median-curve knee, two routes).** Route A: run Algorithm A on each of the $2k+1$ curves, then take the median of the knees ($O((2k+1)n)$ oracle calls plus an $O(k\log k)$ selection). Route B: form the pointwise median curve and run Algorithm A on it ($O((2k+1)n)$ oracle calls plus $O(n k \log k)$ arithmetic). Theorem 6.2 guarantees the two return the same value when the curves are monotone; Route A is cheaper, Route B is what one would defend as an operating point. The theorem says one need not choose.
 
-**Algorithm C (Rung tail and certification search).** Evaluate $R_n(m,p)$ by the backward
-recurrence on binomial terms $t_j = \binom{n}{j}p^j(1-p)^{n-j}$, using
-$t_{j+1} = t_j \cdot \tfrac{(n-j)p}{(j+1)(1-p)}$: cost $O(n-m)$ multiplications and no factorials.
-To locate the certification threshold at a target miss level $\varepsilon$, scan $r = 0,1,2,\dots$
-computing $1 - R_{2r+1}(r+1,p)$ until it drops below $\varepsilon$; the miss probability is strictly
-decreasing in $r$ for $p > 1/2$ (Theorem 6.1), so the first crossing is the answer, and the
-geometric rate of Theorem 6.2 bounds the scan length by $O\bigl(\log(1/\varepsilon)/\log\frac{1}{4p(1-p)}\bigr)$.
-Exact rational arithmetic makes the located crossing (e.g. $47$ at $p = 2/3$, $\varepsilon = 10^{-2}$)
-a certificate rather than a floating-point artifact.
+**Algorithm C (Stability certificate).** Given a measured knee multiset of odd size and a candidate re-measurement, decide whether the reported centre moves, and return the exact set of values that leave it fixed. For three seeds sorted as $a \le b \le c$ with the third slot free, Theorem 7.5 gives the stability set $(-\infty, b]$ when the two pinned values are $b < c$; more generally, for $2k+1$ seeds with one free coordinate, the reported centre as a function of the free value is the non-decreasing step function $t \mapsto \operatorname{med}(K_{\text{pinned}}, t)$, constant on $(-\infty, m]$ and on $[m', \infty)$, where $m, m'$ are the two central order statistics of the pinned values.
 
 ---
 
 ## 10. Discussion
 
-### 10.1 Relation to classical robust statistics
+### 10.1 Why point predictions failed and a structural prediction held
 
-The breakdown point of the sample median is classically $\lfloor (n-1)/2\rfloor / n \to 1/2$, and
-that of an extreme order statistic is $0$. Corollary 4.6 refines this into an exact per-rung
-count, $\beta(n,m) = \min(m-1, n-m)$, in a setting where the reading is defined operationally (least
-budget meeting a quota) rather than as a function of a data vector. What is new here is not the
-value at the median but the *equivalence* of Theorem 5.2: the same index is selected by a
-calibration condition that never mentions corruption. Classical robustness theory optimises a
-breakdown criterion; classical calibration theory optimises an unbiasedness criterion; in the
-ordinal ensemble setting these are the same optimisation.
+The empirical episode that motivated this work is instructive precisely because it separates two notions of correctness. Four point predictions of a single seed's knee failed, while the prediction that the *distribution's centre* sits at $\tfrac78 P$ held at two contexts.
 
-### 10.2 Parity as the obstruction
+The theory explains the asymmetry. A single knee is an extreme functional of a noisy curve: it depends on the location of one crossing, and the crossing in question was decided by a margin of $0.001$ against a measurement standard error of comparable magnitude. Nothing in the theory of the median predicts such a quantity, and nothing should: knees are not $1$-Lipschitz functionals of the curve.
 
-Theorem 5.3 is the sharpest form of the message. One is tempted to see the failure of even
-ensembles as a cosmetic tie-break issue. It is not: the defect $\delta_r$ is a measurable
-quantity of size $\approx 1/(2\sqrt{\pi r})$, non-summable, and the robustness failure (two rungs
-tie for maximal breakdown) is simultaneous. Averaging the two central rungs repairs the
-calibration exactly (Theorem 3.7) but cannot repair the tie in breakdown, since the averaged
-reading inherits $\beta = r-1$.
+The median, by contrast, is majority-determined (Theorem 3.6), invariant under any monotone or antitone change of measurement units (Theorems 4.1, 4.2), $1$-Lipschitz (Theorem 3.9), immune to any minority of corrupted seeds (Theorem 7.1), and — the point that makes the law more than statistical hygiene — an operating point of a genuine aggregate curve (Theorem 6.1). A prediction about it is a fundamentally different kind of claim from a prediction about a point, and the two should be scored separately.
 
-### 10.3 Practical guidance
+### 10.2 Honest limitations
 
-* Report the median of an **odd** ensemble; it is the unique reading that neither leans on
-  uninformative data nor collapses under a single anomaly.
-* Treat published **guarantees** (max over seeds) as maximally fragile: $\beta = 0$. A guarantee
-  from $n$ seeds is not a stronger claim than a median from $n$ seeds; it is a weaker one, more
-  sensitive to a single bad run.
-* When budgeting compute, increase ensembles by **two**, not one. Going $3 \to 4$ buys nothing on
-  either axis; $3 \to 5$ buys a strict robustness increment and restores calibration.
-* Quote the contamination curve $[Q(m-c), Q(m+c)]$, not a symmetric error bar: adversarial bias in
-  an ordinal ensemble is generally asymmetric (here $-64/+32$).
+Several limits should be stated plainly.
 
-### 10.4 Limitations
+* The individual knee read at seed 3 is razor-thin ($+0.001$), so the true crossing lies somewhere between grid points, plausibly near $150$–$160$; the grid resolution is a real source of uncertainty in the low tail.
+* The sinking low tail is presently a single measurement at the longer context; one further seed would decide whether $5/8$ is a stable feature of the $\mathrm{ctx}=2048$ distribution or specific to that seed.
+* The $7/8$ median law rests on two contexts and six seeds. Theorem 8.5 shows it has no free parameter — which makes it falsifiable, not confirmed.
+* An unusual negative result in the dataset deserves emphasis: measures of attention concentration (effective support, top-$k$ mass) do **not** sort with the measured knees across the three seeds at the longer context. There is no evidence here for a bounded "working set" explanation of the knee.
+* Nothing here explains *why* the centre should sit at $7/8$ of the product point. The theorems say the median is the right thing to state a law about, and that the specific law is unique and testable; they do not derive its value from a model of the underlying system.
 
-The probability model treats seeds as exchangeable Bernoulli trials at a fixed budget; real seeds
-may be dependent (shared data order, shared hyperparameters) and their pass probability varies
-with the budget. The breakdown analysis is worst-case over corruption sets and hence conservative
-for benign noise. The empirical median law rests on two contexts and six seeds; Proposition 6.6
-quantifies exactly how far that is from certification. Theorem 7.3's centre-minimality hypothesis
-is not verifiable at three seeds.
+### 10.3 Relation to classical robust statistics
+
+That the median has breakdown point $1/2$ while the mean has breakdown point $0$ is classical. What is added here is (i) the *normal form* that makes these facts algebraic identities in a semiring rather than analytic estimates, (ii) the *characterisation* isolating translation equivariance — the tropical axiom — as the property that separates the median from other conservative order-theoretic aggregators, and (iii) the *commutation theorem*, which is not a statement about the median as a location estimator at all, but about the median as an aggregator that commutes with a nonlinear, non-Lipschitz read-out (knee detection). Point (iii) has no analogue for the mean, and it is what licenses reporting a median knee as an operating point rather than merely as a summary.
 
 ---
 
 ## 11. Future directions
 
-**Seed-ensemble rung theory: where the thread stands.**
+The following conjectures are open; each is falsifiable by a single explicit counterexample or by one further experiment.
 
-Earlier cycles built the general-$n$ theory of the rung distribution function $R_n(m,p)$ — the
-binomial upper tail that a seed ensemble's quota ladder induces — and proved the parity law of
-calibration, the one-monomial Condorcet gap, a geometric convergence rate, and the exact
-two-sided breakdown number $\min(m-1, n-m)$ of a rung. A later cycle closed the questions of
-whether a fourth seed can calibrate (it can confirm but not calibrate), established the sharpened
-rate $\binom{2r+1}{r}(p(1-p))^{r+1}/(2p-1)$ with the exact crossing $47$, showed that the ladder
-*proves* the central-binomial generating function, and refuted the conjecture that the even
-ensemble read at its upper central rung is safer — it is strictly riskier.
+**C1. The $7/8$ centre is a fixed point of context doubling.** For contexts $\mathrm{ctx}_n = 2^n\,\mathrm{ctx}_0$ with product points $P_n = d\,\mathrm{ctx}_n/32$, conjecture that the normalised three-seed knee distributions $K_n/P_n$ have constant median $7/8$, strictly decreasing lower endpoints $\min(K_n)/P_n$, and upper endpoints pinned at $1$: the family is monotone in the *lower tropical coordinate only*. The pinned upper edge is not an accident but the product-law bound $k^\* \le P$; the median, being the unique order statistic equivariant under both $\div P$ and $\mathrm{ctx}/\cdot$, is the only summary insensitive to which coordinate one reads. Two contexts and six seeds already fix the median at $7/8$ and the max at $1$; a third context decides whether the low tail follows a law (a $2^{-n}$-type decay, say) or is noise.
 
-The subsequent cycle settled the following list:
+**C2. Majority-threshold rigidity of the knee functional.** Conjecture that for monotone retention curves the map "curve $\mapsto$ knee" is an order-reversing homomorphism from the lattice of curves (pointwise $\wedge, \vee$) to the lattice of grid points: $\mathrm{knee}(c \wedge c') = \max(\mathrm{knee}\,c, \mathrm{knee}\,c')$ and $\mathrm{knee}(c\vee c') = \min(\mathrm{knee}\,c, \mathrm{knee}\,c')$, so that *every* lattice polynomial in the curves commutes with the knee. Theorem 6.1 is the $k=1$ median instance; the general mechanism is that threshold duality converts any lattice polynomial into a monotone Boolean function of the individual threshold events, which the knee reads off directly. This would give a calculus for aggregating retention curves before measuring knees.
 
-| conjecture | outcome |
-|---|---|
-| **D1** — Stirling closes the $47$-versus-$49$ gap | **split verdict.** Structural half **closed**: the missing lower bound $16^r \le \binom{2r}{r}^2(4r+1)$ is proved by induction through the recursion $(r+1)\binom{2r+2}{r+1} = 2(2r+1)\binom{2r}{r}$ (slack exactly $1$), giving the sandwich $4^r/\sqrt{4r+1} \le \binom{2r}{r} \le 4^r/\sqrt{3r+1}$, the exact $r^{-1/2}$ defect rate $\delta_r\sqrt r \in [1/(2\sqrt5), 1/(2\sqrt3)]$, non-summability of the defects, and the Stirling-improved rate $2p(1-p)(4p(1-p))^r/((2p-1)\sqrt{3r+4})$. Numerical half **refuted**: *no* bound dominating the sharpened rate can certify $1\%$ at $47$ seeds, because the sharpened rate itself already exceeds $1/100$ there while the truth does not. |
-| **D2** — the dichotomy under contamination | **closed in finite-sample form**: for contamination level $c$ below the breakdown number, the achievable readings of the $m$-th rung are *exactly* the clean readings in $[Q(m-c), Q(m+c)]$ — the bracket is attained at both ends, so the maximal bias equals the clean spread and the breakdown number is the level at which that spread stops being finite. |
-| **D3** — every offset rung has its own generating function | **closed**: for each fixed offset $k$, the off-centre ladder started at its smallest ensemble sums to exactly $1 - p^{2k+1} = (1-p)(1 + p + \cdots + p^{2k})$, i.e. the conjectured $(1-p)R_k(p)$ with $R_k$ the geometric polynomial of length $2k+1$; $k = 0$ recovers the earlier cycle's $1 - p$. |
+**C3. The mean is the unique non-conservative self-dual aggregator that breaks the law.** Among monotone, symmetric, translation-equivariant, self-dual ternary aggregators on $\mathbb{R}$, conjecture that exactly two phases occur: the conservative ones (all equal to the median, by Theorem 5.1) and the strictly averaging ones, each of which fails some measured two-context ratio law. Equivalently: no strictly averaging aggregator satisfies $A(K_8) = \tfrac78 P_8$ and $A(K_{16}) = \tfrac78 P_{16}$ simultaneously. Conservativity is exactly the axiom separating the tropical (max/min-built) aggregators from the linear ones.
 
-**Open directions.**
+**C4. Grid refinement and the continuum knee.** All statements here are relative to a finite grid. Conjecture that for curves that are continuous and strictly increasing near their crossing, the grid knee converges to the continuum crossing as the grid refines, and that the commutation theorem passes to the limit. The razor-thin margin of the measured seed-3 read makes this practically relevant: the reported $160$ is an upper bound for a crossing plausibly near $150$.
 
-* **The low-tail experiment.** A fourth seed at the long context is diagnostic for the tail, not
-  the centre: a fourth knee in $\{160, 192\}$ would establish the $0.625P$ low tail as a stable
-  feature of the $16\times$ cell, while a value in $\{224, 256\}$ would mark it seed-specific. The
-  centre question requires a fifth seed.
-* **Dependent seeds.** Replace independent Bernoulli seeds by an exchangeable model with positive
-  correlation and ask whether the parity law survives; the reflection identity is a symmetry of
-  the *uniform* measure on outcomes, so the natural conjecture is that calibration persists for
-  any exchangeable symmetric law, with the defect formula changing.
-* **Continuous budgets.** Extend the contamination curve from an ordinal ladder to a continuous
-  budget axis, where the window width becomes a quantile spread and centre-minimality becomes a
-  log-concavity hypothesis on the knee density.
-* **Beyond the median functional.** Characterise all reading functionals (not only rungs) that are
-  simultaneously calibrated and of maximal breakdown; the averaging repair for even ensembles
-  suggests the answer is the family of symmetric convex combinations of central rungs, with a
-  strict robustness penalty for every non-degenerate combination.
-* **Cost-optimal ensemble design.** Given a per-seed cost and a target certification level, the
-  crossing analysis of §6 turns ensemble sizing into an integer program; the exact crossing at
-  $47$ seeds for $p = 2/3$ and $\varepsilon = 10^{-2}$ is the first data point of a table worth
-  computing in general.
+**C5. Quantitative stability of the median law under seed resampling.** Combining Theorem 7.5 with a noise model for individual knees would yield a probability that the reported centre changes under one further seed. For the measured $16\times$ cell this is the probability that a fourth seed exceeds $224$ — a directly testable prediction rather than a qualitative robustness claim.
 
 ---
 
 ## 12. Conclusion
 
-An ensemble of stochastic runs offers a ladder of readings, one per quota. Each rung carries a
-probabilistic quality (does it lean on uninformative data?) and an adversarial quality (how many
-corrupted runs does it survive?). We proved that the first is measured by a parity condition,
-$2m = n+1$; the second by an exact count, $\min(m-1, n-m)$; and that for odd ensembles the two
-select the same rung and only that rung. For even ensembles both fail together, the calibration
-defect being $\binom{2r}{r}2^{-(2r+1)} \sim 1/(2\sqrt{\pi r})$ and the maximal breakdown number
-being attained twice.
+The median of an odd sample is a homogeneous tropical polynomial: the maximum, over all $(k+1)$-subsets of the sample, of the minimum there. That single normal form yields threshold duality, and threshold duality yields everything else — full equivariance under monotone and antitone changes of coordinates, an axiomatic characterisation in which the decisive axiom is the tropical one, nonexpansiveness, a majority breakdown theorem, and, most consequentially, the exact commutation of median aggregation with knee reading, a commutation that the arithmetic mean fails outright.
 
-Applied to a measurement whose per-seed readings were $\{160, 224, 256\}$, the theory explains
-precisely why four sharp point predictions could all fail while the prediction about the centre
-held: the centre is the only functional of a three-seed ensemble with a positive breakdown number,
-and it is the only calibrated one. It also delivers an unwelcome but actionable design verdict —
-the next seed should be the fifth, not the fourth — and an honest bound on what three seeds can
-claim.
+Applied to a measured attention-budget dataset, the theory both explains and disciplines the empirical story: it derives the measured knee $k^\* = 160$ and its razor-thin margin from the sweep row, shows that all four pre-registered point predictions are simultaneously sound and non-minimal, establishes that the two-context median law $\operatorname{med}(K) = \tfrac78 P$ has a unique constant and no mean-based analogue, identifies the pinned ceiling as the product-law bound and the sinking floor as the sole free coordinate, and pins the exact stability region of the reported centre to the ray $x \le 224$ — correcting, in passing, a plausible-sounding claim that it extends to $256$.
+
+The general moral is a modest but useful one for experimental practice. When the quantity you can measure is fragile and the quantity you want to predict is structural, choose the summary whose algebra commutes with your read-out. In the threshold-crossing setting, that summary is the median, and the reason is tropical.

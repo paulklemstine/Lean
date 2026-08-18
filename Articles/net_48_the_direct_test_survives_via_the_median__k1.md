@@ -1,273 +1,136 @@
-# Why the Middle Number Wins
+# The Middle Value Knows Something the Averages Don't
 
-## The strange authority of the median
+## How a stubborn little piece of tropical algebra explains why the *median* is the only honest summary of a noisy experiment
 
-Suppose you run the same experiment three times, changing only the random number that
-initializes it, and you get three answers: $160$, $224$, $256$. What do you report?
+### A prediction, four ways wrong
 
-Almost everyone reaches for the middle one. It is such a reflex that we rarely ask what
-entitles us to it. The average would be $213.3$, which is not any of the answers. The largest,
-$256$, is the safe one if you need a guarantee. The smallest is the one you would quote if you
-were selling something. The middle value, $224$, feels *honest* — but "feels honest" is not a
-theorem.
+Imagine you are running an expensive experiment. Each run takes four hours. Before you start, you write down, in ink, four guesses for the number the experiment will produce: $192$, $224$, $240$, $256$. You run it. The answer comes back: $160$.
 
-This article is about the moment where it becomes one. It turns out that the middle reading of
-an odd-sized ensemble of runs is singled out **twice over**, by two arguments that have nothing
-obvious to do with each other:
+All four guesses are wrong. Not close-but-wrong — *categorically* wrong, outside the whole cluster you had in mind. In most accounts of science, this is where you concede and go back to the drawing board.
 
-* a **probabilistic** argument, about what a reading means when your runs are coin flips; and
-* a **combinatorial** argument, about how many of your runs an adversary would have to sabotage
-  before your reading becomes worthless.
+And yet, in the story we are about to tell, something remarkable happened. The four point predictions failed, but a *fifth*, structurally different prediction — a prediction not about any single measurement but about the **centre** of a family of measurements — landed exactly on the nose. The measured value $160$, combined with two earlier measurements $224$ and $256$, produced a three-point distribution whose median was exactly $224$: precisely the predicted value of $\tfrac{7}{8}$ of a certain reference quantity.
 
-Each argument, on its own, picks out exactly one reading from the list. And the two arguments
-pick out the *same* one. The main theorem below says this is not a coincidence but an
-equivalence: **a reading is unbiased on coin-flip runs if and only if it is maximally robust to
-sabotage.** Calibration and robustness are the same constraint wearing different clothes.
+That is a curious kind of scientific success: $0$ out of $4$ on the points, $1$ out of $1$ on the structure. This article is about *why* that is not a fluke or a rhetorical trick, and about the beautiful, spiky, min-and-max flavoured algebra that makes the median — and only the median — capable of that sort of prediction.
 
-The setting where this was discovered is concrete and slightly surprising: measuring how much
-of a language model's attention you can throw away before it degrades.
+### The setting: how much of a long context does a model actually need?
 
-## The measurement that started it
+Here is the concrete experiment behind the numbers, stripped to its essentials.
 
-Modern sequence models compute, for every position in a text, a weighted blend of every earlier
-position. If the text has $L$ tokens, that is on the order of $L^2$ interactions — the reason
-long context is expensive. A natural question: at each position, if you keep only the $k$
-largest attention weights and discard the rest, how small can $k$ be before the model's
-predictions actually get worse?
+A sequence model reads a *context* of $\mathrm{ctx}$ previous tokens, and for each new token it looks back at all of them. That "look at all of them" step is the expensive part; its cost grows with the square of the context length. A natural economy is to keep only the $k$ most relevant past positions and throw away the rest. If you keep too few, the model gets worse. If you keep enough, the model performs indistinguishably from the version that looks at everything.
 
-Call the smallest such $k$ the **knee**. Below the knee the model degrades; above it, nothing
-much happens. The knee is the number an engineer wants, because it is the compression factor
-you can safely deploy.
+So define a **retention curve**: for each budget $k$, let $c(k)$ be the model's accuracy at budget $k$, divided by its accuracy with the full context. It starts below $1$ and climbs. Fix a **bar** — here $0.98$, meaning "within $2\%$ of full performance". Then the **knee** $k^\*$ is the smallest budget on the tested grid at which the curve clears the bar:
 
-Here is the awkward part. Train the same model twice, changing only the random seed, and you get
-two different knees. At a context length of $2048$ and width parameter $d = 4$, three seeds gave
-knees of $256$, $224$, and $160$: a spread of $60\%$ between the smallest and largest. A knee is
-not a property of the architecture; it is a random variable, and a noisy one.
+$$k^\* = \min\{\,k \in G : c(k) \ge \mathrm{bar}\,\}.$$
 
-And yet something in that noise is stable. Write $P = d \cdot L / 32$ for the natural scale of
-the problem — with $d = 4$ and $L = 2048$ this is $P = 256$. Then the three knees are
-$P$, $\tfrac{7}{8}P$, and $\tfrac{5}{8}P$, and their **median is exactly $\tfrac{7}{8}P = 224$**.
-At half the context, $L = 1024$ and $P = 128$, three other seeds had given knees
-$\{96, 112, 128\} = \{\tfrac{3}{4}P, \tfrac{7}{8}P, P\}$ — median again exactly $\tfrac{7}{8}P = 112$.
+The knee is the number you would quote to an engineer: *this is how much of the past you actually need.*
 
-Four sharp predictions had been written down in advance for the third seed at the long context —
-$224$, $240$, $256$, $192$ — and the measurement, $160$, refuted all four. But the prediction
-about the *center of the distribution* survived intact. This is the pattern worth taking
-seriously: individual runs are unpredictable, the center of the ensemble is not. Notice too that
-the spread widened with context — from $\{0.75, 0.875, 1.0\}$ times $P$ to
-$\{0.625, 0.875, 1.0\}$ — with the growth all in the low tail, while the upper edge stayed pinned
-at $P$ and the middle stayed pinned at $\tfrac{7}{8}P$.
+In the experiment at hand, with model width $d=4$ and context $\mathrm{ctx}=2048$, the measured retention curve for one particular random seed reads
 
-Which raises the question the rest of this article answers. If the center is the quantity you
-report, *which* center, and why that one?
+| $k$ | 96 | 128 | 160 | 192 | 224 | 240 | 256 | 288 | 384 | 512 | 768 | 1024 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| $c(k)$ | 0.963 | 0.973 | **0.981** | 0.984 | 0.986 | 0.987 | 0.990 | 0.993 | 0.999 | 1.000 | 1.003 | 1.003 |
 
-## Ladders, not lists
+The bar is $0.980$. The curve first clears it at $k=160$, with the razor-thin margin $0.981 - 0.980 = 0.001$. So $k^\* = 160$: all four horns of the pre-registered prediction — $192, 224, 240, 256$ — *do* clear the bar, but none of them is the *first* budget that does. They are each safe and each wrong, simultaneously. It is a nice illustration that "my prediction passes the test" and "my prediction is the answer" are very different claims.
 
-Start by describing a set of seed results in a way a machine — or a careful accountant — would.
+### The 7/8 law
 
-Give each seed $i$ its knee $K(i)$: the least budget at which that seed's model clears the
-accuracy bar. Now for each quota $m$ between $1$ and $n$, define
-$$Q(m) \;=\; \text{the least budget } b \text{ such that at least } m \text{ of the } n \text{ seeds clear the bar at } b .$$
-This is the **quota ladder**. Its rungs are exactly the sorted knees: $Q(1)$ is the smallest knee
-(the lucky seed), $Q(n)$ is the largest (the budget that works for everybody), and for odd
-$n = 2r+1$ the rung $Q(r+1)$ is the median.
+Now zoom out. The same experiment has been run at two context lengths and, at each, with three different random seeds. There is a natural reference scale, the **product point** $P = d\cdot\mathrm{ctx}/32$: at $\mathrm{ctx}=1024$ that is $P_8 = 128$, and at $\mathrm{ctx}=2048$ it is $P_{16} = 256$. Normalising each measured knee by its product point gives:
 
-Reading the ladder at $m = n$ gives you a **guarantee**: "this budget suffices for all seeds."
-Reading it at $m = 1$ gives you a **best case**. Reading at the middle gives you the *typical*
-case. Every reporting convention in the empirical literature — worst case, best case, median,
-"$k$ out of $n$" — is a choice of rung. The question "which center?" is now precise: which $m$?
+| context | three knees | normalised | median |
+|---|---|---|---|
+| $1024$ | $\{96, 112, 128\}$ | $\{3/4,\ 7/8,\ 1\}$ | $7/8$ |
+| $2048$ | $\{160, 224, 256\}$ | $\{5/8,\ 7/8,\ 1\}$ | $7/8$ |
 
-## The first argument: calibration
+Two things jump out. First, the **top** of each distribution sits exactly at $1$: no seed ever needed more than the product point. Second, the **median** of each distribution sits exactly at $7/8$, in both contexts, even though the distributions themselves are different — the lower end sinks from $3/4$ to $5/8$ as the context doubles, widening the spread by a factor of exactly $3/2$.
 
-Fix a budget and ask, for a single seed, whether it clears the bar there. Model that as a coin
-with bias $p$: the seed clears with probability $p$, independently of the other seeds. Then the
-$m$-th rung sits at or below the budget exactly when at least $m$ seeds clear, so the
-probability that rung $m$ reads "yes" is the binomial upper tail
-$$R_n(m,p) \;=\; \sum_{j \ge m} \binom{n}{j} p^{\,j}(1-p)^{\,n-j}.$$
-This function is the rung's *distribution function*, and it obeys the expected structure: it
-decreases as you raise the quota $m$, increases in $p$, and satisfies the Pascal recursion
-$R_{n+1}(m+1,p) = p\,R_n(m,p) + (1-p)\,R_n(m+1,p)$ obtained by conditioning on the last seed.
-Raising the quota by one costs exactly one binomial term:
-$R_n(m,p) - R_n(m+1,p) = \binom{n}{m}p^m(1-p)^{n-m}$.
+So the picture is: a **pinned ceiling**, a **sinking floor**, and a **stationary centre**. And $7/8$ is not a fudge factor with wiggle room: it is the *unique* constant $a$ with $a\cdot P_8 = 112$ and $a \cdot P_{16} = 224$. There is no free parameter left to tune.
 
-Now call a rung **calibrated** if, when the seeds are fair coins ($p = 1/2$), the rung reads
-"yes" with probability exactly $1/2$. A calibrated rung is one that does not lean: on a
-maximally uninformative ensemble it reports "pass" and "fail" with equal frequency, so any
-asymmetry you see in its output came from the data and not from the reporting convention.
+Here is the sharpest test of whether this is really about the median. Take the *mean* of each knee triple instead. At $\mathrm{ctx}=1024$ the mean is $112 = \tfrac78 P_8$, agreeing by accident. At $\mathrm{ctx}=2048$ the mean is $\tfrac{256+224+160}{3} = \tfrac{640}{3}$, which is $\tfrac56 P_{16}$, not $\tfrac78 P_{16}$. **No constant works for both rows under the mean.** The law is a statement about the median specifically, and one arithmetic line kills the alternative.
 
-At $p = 1/2$ the tail collapses to counting: $R_n(m,1/2) = T(n,m)/2^n$ where
-$T(n,m) = \sum_{j\ge m}\binom{n}{j}$. The binomial coefficients are symmetric, which gives the
-reflection identity
-$$T(n,m) + T(n,\,n+1-m) \;=\; 2^{\,n},$$
-and $T(n,\cdot)$ is strictly decreasing on the meaningful range. Put those together and you get
-the **parity law of calibration**:
-$$R_n(m,\tfrac12) = \tfrac12 \quad\Longleftrightarrow\quad 2m = n+1 .$$
-So an ensemble has a calibrated rung **if and only if its size is odd**, and then that rung is
-unique: the median. An even ensemble has none at all. This is not a near miss that shrinks away;
-it is an exact impossibility at every even size.
+### Enter the tropics
 
-You can measure the failure. For $n = 2r$ the two central rungs read
-$$R_{2r}(r,\tfrac12) = \tfrac12 + \delta_r, \qquad R_{2r}(r+1,\tfrac12) = \tfrac12 - \delta_r,
-\qquad \delta_r = \frac{1}{2^{2r+1}}\binom{2r}{r} .$$
-The defect $\delta_r$ is strictly positive, strictly decreasing, and tends to $0$ — but only at
-the leisurely rate $r^{-1/2}$. Precisely,
-$$\frac{1}{2\sqrt{4r+1}} \;\le\; \delta_r \;\le\; \frac{1}{2\sqrt{3r+1}},
-\qquad \delta_r\sqrt{r} \longrightarrow \frac{1}{2\sqrt{\pi}} = 0.28209\ldots$$
-The upper and lower brackets are exactly the statement $3 \le \pi \le 5$, read off an ensemble
-ladder instead of a circle. The defects are so far from small that $\sum_r \delta_r$ diverges.
+Why would the median, of all summaries, be the one that laws attach themselves to? The answer is algebraic, and it belongs to a corner of mathematics called **tropical algebra**.
 
-There is a consolation prize, and it explains a convention everybody already uses: the two
-central rungs of an even ensemble *average* to exactly $1/2$. That is precisely the textbook rule
-"the median of an even sample is the mean of the two middle values." The rule is not an
-arbitrary tie-break; it is the unique repair of a parity defect.
+In tropical arithmetic, you throw away $+$ and $\times$ and replace them with $\max$ and $\min$ (or $\min$ and $+$, depending on the dialect). It sounds like vandalism, but $(\max, \min)$ on any linearly ordered set really is a perfectly good commutative *semiring*: both operations are associative and commutative, each distributes over the other, and both are idempotent — $a \vee a = a$, $a \wedge a = a$. Polynomials in this semiring are exactly the piecewise-linear, corner-riddled objects that show up wherever optimisation, scheduling, or combinatorial geometry live.
 
-## The second argument: sabotage
+Now, the punchline. **The median is a tropical polynomial.** For three numbers,
 
-Now forget probability. Someone hands you $n$ seed results, and you are told that up to $c$ of
-them are corrupted — a run that silently diverged, a logging bug, a machine that thermally
-throttled. You do not know which. You still want to read a rung.
+$$\operatorname{med}(a,b,c) \;=\; (a \wedge b) \,\vee\, (b\wedge c)\,\vee\,(a \wedge c),$$
 
-The key estimate is a two-sided bracket. If two knee assignments $K$ and $K'$ agree outside a set
-$S$ of at most $c$ seeds, then the corrupted reading of rung $m$ is trapped between two *clean*
-rungs:
-$$Q_K(m-c) \;\le\; Q_{K'}(m) \;\le\; Q_K(m+c).$$
-Corrupting $c$ seeds can move a rung by at most $c$ rungs, in either direction. So as long as
-$m - c \ge 1$ and $m + c \le n$, the sabotaged reading is still somewhere inside the honest
-ensemble's own range — it may be wrong, but it is not *alien*.
+where $\wedge = \min$ and $\vee = \max$. Take pairwise minimums, then take the biggest of them. Try it: for $(256, 224, 160)$ you get $\max(224, 160, 160) = 224$. And there is a dual formula, min-of-maxes,
 
-Both halves of that condition are sharp, and here is where the theory gets its teeth.
+$$\operatorname{med}(a,b,c) \;=\; (a\vee b)\,\wedge\,(b\vee c)\,\wedge\,(a \vee c),$$
 
-* **Upward breakdown.** With $n - m + 1$ corrupted seeds you can push rung $m$ above *any*
-  prescribed value $B$. Set every corrupted knee to $B$; then fewer than $m$ clean seeds remain,
-  so the quota cannot be filled below $B$. The reading is unbounded — infinitely biased.
-* **Downward breakdown.** With $m$ corrupted seeds you can collapse rung $m$ to $0$: set those
-  $m$ knees to zero and the quota is met at budget zero.
+which gives the same answer — the median is *self-dual*: it does not care which way is up.
 
-Therefore the number of corrupted seeds a rung tolerates — its **breakdown number** — is exactly
-$$\beta(n,m) \;=\; \min(m-1,\; n-m).$$
-This is a clean, complete answer: not an estimate, a formula. And it immediately grades the
-usual reporting conventions. The guarantee rung $m=n$ has $\beta = 0$: a single bad seed destroys
-it, without bound. The best-case rung $m=1$ has $\beta = 0$ too. In a three-seed ensemble, the
-median is the *only* rung that survives a single corrupted run at all.
+This is not an accident of three arguments. For any odd sample of size $2k+1$,
 
-Between "tolerable" and "destroyed" there is no gray zone, either: at any contamination level
-below breakdown, the set of readings an adversary can force is *exactly* the clean interval
-$[Q(m-c),\, Q(m+c)]$, with both endpoints attained. So the maximal bias equals the clean spread,
-and the breakdown number is precisely the level at which that spread stops being finite.
+$$\operatorname{med}(x) \;=\; \bigvee_{|S| = k+1}\ \bigwedge_{i \in S} x_i,$$
 
-## The two arguments meet
+the maximum, over all $(k+1)$-element subsets of the indices, of the minimum of the sample there. So the median is a *homogeneous tropical polynomial of degree $k+1$ in $2k+1$ variables*. A statistical quantity, revealed to be an algebraic normal form.
 
-Look at the two answers side by side. For an odd ensemble $n = 2r+1$:
+From this formula, the median's two magic properties fall out immediately.
 
-* the unique **calibrated** rung is $m = r+1$;
-* the unique rung with **maximal breakdown number** is $m = r+1$, since
-  $\beta(2r+1, m) = \min(m-1, 2r+1-m) \le r$ with equality only at the center.
+**Threshold duality.** A value $v$ satisfies $v \le \operatorname{med}(x)$ exactly when at least $k+1$ of the samples satisfy $v \le x_i$; and $\operatorname{med}(x) \le v$ exactly when at least $k+1$ satisfy $x_i \le v$. In plain words: *thresholding the median is a majority vote.* Ask the median any yes/no question of the form "are you above $v$?", and it answers by polling the sample and taking the majority.
 
-That is the theorem, stated as an equivalence:
+**Equivariance.** If you re-express your data in different units by any monotone transformation $f$ — say, divide every knee by the product point — then the median of the transformed data is the transform of the median. And, less obviously, the same holds for *order-reversing* transformations: convert each knee $k^\*$ into a speed-up $\mathrm{ctx}/k^\*$, which turns big into small, and the median of the speed-ups is still the speed-up of the median. The extremes do *not* have this property; order reversal swaps the min and the max.
 
-> **The Calibration–Robustness Dichotomy.** In an ensemble of $n = 2r+1$ seeds, a rung
-> $1 \le m \le n$ satisfies $R_n(m,1/2) = 1/2$ if and only if $\beta(n,m) = r$.
+That last point has a very concrete operational reading. At $\mathrm{ctx}=2048$, the three speed-ups are $2048/256 = 8$, $2048/224 = 64/7 \approx 9.14$, and $2048/160 = 64/5 = 12.8$. Their median is $64/7$, the speed-up of the median knee, exactly as equivariance demands. But the *guaranteed* speed-up — the one you would put in a contract — is $8\times$, and it is the image of the *largest* knee. Order reversal sent the worst case to the top. The median and the guarantee are governed by different order statistics, and the algebra tells you which is which.
 
-A parity identity on binomial tails, and a counting bound on how many seeds an adversary must
-buy, single out the same index. "Report the median" is therefore not a convention chosen for
-convenience: it is the unique reading that is simultaneously unbiased on uninformative data and
-maximally hard to sabotage.
+### The knee of the average is not the average of the knees — unless you average tropically
 
-The dichotomy has a mirror image, and the mirror is just as informative. For an even ensemble
-$n = 2r$, both properties fail *together*: no rung is calibrated, and the maximal breakdown
-number $r-1$ is attained by **two** rungs, the two central ones. Parity is a single obstruction
-to a canonical center, and it shows up on the probabilistic side and the robustness side at
-once. An even ensemble has no center in either sense.
+Here is the question a careful experimentalist should ask. You have three seeds. You could (A) read a knee off each curve, then take the median of the three knees; or (B) merge the three curves into one aggregate curve, then read a single knee off that. Do these agree?
 
-## What this says about the fourth seed
+For the arithmetic mean, **no**. Take three curves that jump from $0$ to $1$ at budgets $1$, $2$, $3$ respectively, with the bar at $1$. Their knees are $1, 2, 3$, whose median is $2$. But the mean curve is $0$ at budget $1$, $1/3$ at budget $2$, and only reaches $1$ at budget $3$. Its knee is $3$. Averaging the curves and averaging the knees give genuinely different answers, and the mean-curve answer is dragged to the worst seed.
 
-Return to the measurement. Three seeds gave $\{160, 224, 256\}$; the median is $224$, exactly
-$\tfrac78 P$; the natural next move is to run a fourth seed.
+For the median, **yes, exactly**. This is the central theorem of the story:
 
-The theory has an unwelcome verdict about that plan. A fourth seed:
+> **Median–Knee Commutation Theorem.** Let $c_0, c_1, c_2$ be non-decreasing retention curves on a grid $G$ with knees $k_0, k_1, k_2$ at a common bar. Then the pointwise median curve $t \mapsto \operatorname{med}(c_0(t), c_1(t), c_2(t))$ has a knee, and that knee is exactly $\operatorname{med}(k_0, k_1, k_2)$.
 
-* does **not** improve robustness. Both central rungs of a four-seed ensemble have breakdown
-  number $1$ — the same as the three-seed median. You pay four hours of training for zero extra
-  tolerance to a bad run.
-* does **not** restore calibration. No rung of a four-seed ensemble is calibrated; the central
-  defect is $\delta_2 = \binom{4}{2}/2^5 = 3/16$, so the two central rungs read $0.6875$ and
-  $0.3125$ instead of $0.5$.
-* **can** confirm the law, and only in one way. Averaging the two middle values of
-  $\{160, 224, 256, x\}$, the four-seed reading is $192$ for $x \le 160$, $(x+224)/2$ for
-  $160 \le x \le 224$, $(224+x)/2$ for $224 \le x \le 256$, and $240$ for $x \ge 256$. It equals
-  the three-seed median $224$ **exactly when $x = 224$** and is strictly worse otherwise, with a
-  bias that never exceeds $32$ and is at most $16$ as soon as $x \ge 192$.
+The proof is pure threshold duality, and it is short enough to give here. The median curve clears the bar at a budget $t$ precisely when at least two of the three curves do; and since the curves are non-decreasing, curve $i$ clears the bar at $t$ precisely when $k_i \le t$. So *the median curve clears the bar at $t$ if and only if at least two of the three knees are $\le t$* — which, by the other half of threshold duality, is exactly the statement $\operatorname{med}(k_0,k_1,k_2) \le t$. Two majority conditions, recognised as the same majority condition. The smallest such $t$ on the grid is therefore $\operatorname{med}(k_0,k_1,k_2)$, and that is the theorem.
 
-A fifth seed, by contrast, does both: breakdown number $2$, strictly better than the third
-seed's $1$, and the median rung is calibrated again. If you can afford one more run, you cannot
-afford one more run — you need two.
+The same argument works for any odd number of seeds, with "at least two of three" replaced by "at least $k+1$ of $2k+1$". Monotonicity of the curves cannot be dropped: a curve that clears the bar early and then falls back is counted by its own knee, but the median curve never sees it, and the identity fails.
 
-## How many runs would actually settle it?
+Applied to the measured data: with knees $256$, $224$, $160$, the median curve of any three monotone retention curves realising them has knee exactly $224$. **The reported centre of the distribution is itself a knee — the knee of the median model.** It is not a bookkeeping average; it is an operating point.
 
-There is a third question the same framework answers: not "which rung?" but "how many seeds
-until the rung is *certain*?"
+### Why one bad seed cannot ruin your day
 
-If each seed clears the bar with probability $p > 1/2$, the median rung is an instance of
-Condorcet's jury theorem: it converges to certainty as the ensemble grows, and the ladder is
-monotone — every extra pair of seeds helps, strictly. The miss probability obeys
-$$1 - R_{2r+1}(r+1,p) \;\le\; 2(1-p)\bigl(4p(1-p)\bigr)^{r},$$
-a geometric rate, since $4p(1-p) < 1$ whenever $p \ne 1/2$. Sharpening the same argument by
-keeping the exact binomial term rather than bounding it gives
-$$1 - R_{2r+1}(r+1,p) \;\le\; \frac{\binom{2r+1}{r}\,\bigl(p(1-p)\bigr)^{r+1}}{2p-1},$$
-and feeding in the central binomial sandwich turns this into an explicit Stirling-type bound
-with an extra $1/\sqrt{3r+4}$.
+There is one more property that makes the median the right summary of an expensive, noisy experiment: robustness, and here too the tropical formula does the work.
 
-At the measured per-seed frequency $p = 2/3$, the crude rate needs $73$ seeds to certify the
-median to within $1\%$; the sharpened rate needs $49$; the truth crosses $1\%$ at exactly $47$.
-And there is a small, honest negative result attached: no bound that dominates the sharpened
-rate can certify at $47$, because the sharpened rate itself still exceeds $1/100$ there. The
-gap between $47$ and $49$ is not an artifact of sloppiness — it is the price of that particular
-route.
+The median of three is **$1$-Lipschitz for the sup-norm**: if every seed's reported knee wobbles by at most $\delta$, the median moves by at most $\delta$. This follows in two lines from monotonicity plus *tropical homogeneity of degree one* — the fact that adding a constant $t$ to all inputs adds $t$ to the median.
 
-Meanwhile the actual three-seed ensemble, evaluated in its own frequency model, has median-rung
-miss probability $1 - R_3(2, 2/3) = 7/27 \approx 26\%$. The center measured in the experiment is
-a point estimate with a one-in-four chance of being on the wrong side — not a certified center.
-That is the sharpest honest limit on the empirical claim, and it comes from the same theory that
-justifies reading the median in the first place.
+Better still is the **breakdown** statement. Suppose a majority of your seeds — $k+1$ out of $2k+1$ — are trustworthy, and the rest are corrupted arbitrarily. Then the median still lies between the smallest and the largest trustworthy value. It cannot be dragged out. For the measured data: with seeds $1$ and $2$ pinned at $256$ and $224$, *whatever* a re-measured third seed reports, the median stays in $[224, 256]$. And composing this with the commutation theorem gives the full pipeline statement: corrupt up to $k$ of the $2k+1$ seeds — curve and all, not just the reported knee — and the knee of the median curve still sits inside the interval spanned by the surviving seeds.
 
-## Is the median also the *narrowest* reading?
+The mean, by contrast, has breakdown point zero. Two clean step curves with knee $1$ plus a single corrupted step curve with knee $N$ produce a mean curve whose knee is $N$, for any $N$ you like. One bad seed out of three, and the aggregate can be sent anywhere.
 
-One more natural conjecture, because it is instructive that it is false. Since the achievable
-readings under $c$ corruptions form the interval $[Q(m-c), Q(m+c)]$, the *width* of that
-interval is the deployment-relevant uncertainty. Is the median always the narrowest?
+### But the median is not infinitely forgiving
 
-No. The five-seed sample $\{0,0,0,10,20\}$ — three seeds agreeing and two stragglers — has a
-median window strictly wider than an off-center one. The minimizer of the width follows the
-sample's *gaps*, not its center.
+Robustness has an exact boundary, and it is worth being precise about it, because it is easy to overstate. With two seeds pinned at $224$ and $256$, which third-seed values leave the median at $224$?
 
-But it is true under exactly the hypothesis that a well-behaved experiment is supposed to
-supply. Call a ladder **center-minimal** if gaps closer to the middle are smaller, which is what
-the order statistics of a unimodal law do. Under center-minimality, the median window is
-narrowest among all rungs, at every radius. The proof is a two-sided induction along the ladder
-driven by an exact criterion: moving a window outward widens it exactly when the gap it takes in
-exceeds the gap it lets out.
+$$\operatorname{med}(x, 224, 256) = 224 \iff x \le 224.$$
 
-And the measured sample? Its gaps are $64$ and $32$ — equidistant from the center of a
-three-rung ladder and unequal — so center-minimality holds only vacuously, and the mechanism has
-no content at three seeds. At the measured cell, the median's robustness is not explained by
-narrowness. It is explained by the breakdown number: with three seeds, the median is the only
-rung that has a contamination window at all.
+Exactly the ray $x \le 224$ — no more. So $160$, $192$ and $224$ all keep the centre where it is, as one would hope. But a tempting looser claim — "only a third seed of $256$ or more would shift the median" — is **false**: a third seed at $240$ lies strictly below $256$ and already moves the centre to $240$. The stability region is a half-line with a sharp endpoint at the current median, not a fuzzy neighbourhood extending to the next data point. It is precisely the sort of statement that sounds right and isn't, and pinning it down is part of the value of doing the algebra rather than the arm-waving.
 
-## The moral
+### What pins down the median? Five axioms, one of them tropical
 
-The result that survives here is not any of the four sharp predictions about a single run. Every
-one of them was refuted. What survived is a statement about the *shape of the distribution* of
-runs — its center sits at $\tfrac78$ of the natural scale — and that survival is exactly what the
-theory says to expect: per-run readings are noisy, the center is the robust functional, and the
-center is robust for two reasons that turn out to be one reason.
+Finally: is there something special about the median, or would any reasonable "centre" have done? There is a clean answer. Consider a summary $F$ of three numbers, and ask it to satisfy five requirements:
 
-There is a broader lesson for anyone who reports numbers from stochastic experiments. The choice
-between "worst case," "best case," and "typical" is not a matter of taste. It is a choice of rung
-on a ladder, each rung comes with a breakdown number $\min(m-1, n-m)$ and a calibration status,
-and those two attributes are locked together by parity. Guarantees are maximally fragile.
-Best cases are maximally fragile. The median of an odd ensemble is the unique fixed point of
-both notions of "does not lean." Even ensembles have no center; averaging the two middle values
-is not a convention but the exact repair of a measurable parity defect.
+1. **Monotone** — if a seed reports a larger value, the summary does not decrease.
+2. **Symmetric** — the seeds are interchangeable; their labels carry no information.
+3. **Conservative** — the summary is one of the measured values, not a value nobody observed.
+4. **Translation-equivariant** — shifting all three measurements by $t$ shifts the summary by $t$. (This is tropical homogeneity of degree one: a change of the zero point of your scale.)
+5. **Self-dual** — measuring "cost" instead of "benefit", i.e. negating all inputs, negates the summary.
 
-The next time someone reports the middle of three runs, they are on firmer ground than they know
-— and if they report the middle of four, they are on ground the theory says does not exist.
+> **Characterisation Theorem.** A ternary aggregator on the reals satisfying all five axioms *is* the median.
+
+The proof is a small tropical gem. Self-duality plus translation gives the identity $F(0,0,d) = d - F(0,d,d)$; monotonicity gives $F(0,0,d) \le F(0,d,d)$; combining them yields $2F(0,0,d) \le d$; and conservativity — the summary must be $0$, $0$, or $d$ — then forces $F(0,0,d) = 0$ whenever $d\ge 0$. That is the **majority property**: two equal votes win. Translating, $F(a,a,c) = a$ and $F(a,c,c)=c$ for $a \le c$, and monotonicity squeezes $F(a,b,c)$ between them onto $b$. Sorted case done; symmetry does the rest.
+
+And the axioms are tight in an instructive place. Drop *only* translation-equivariance and the theorem dies: consider the **sum-sign aggregator**, which returns the maximum of the three inputs if they sum to a positive number, the minimum if they sum to a negative one, and the median on the zero-sum wall. It is monotone, symmetric, conservative and self-dual — and it is not the median, since it returns $1$ on the input $(0,0,1)$ where the median returns $0$. So the median's status as *the* canonical centre is not a soft order-theoretic fact. It is a **tropical** fact: it requires the axiom that says the median behaves linearly with respect to shifts, which is precisely the min-plus notion of degree-one homogeneity.
+
+### The moral
+
+The four point predictions failed. The structural prediction held. That is not special pleading, because the two kinds of claim have provably different characters, and the difference is algebraic.
+
+A single seed's knee is an extreme-order quantity, sensitive to the last decimal of a noisy curve — in this run, decided by a margin of $0.001$. The median is a tropical polynomial in the seeds: majority-determined, unit-independent under any monotone or antitone change of coordinates, $1$-Lipschitz, immune to a minority of corrupted runs, and — the fact that ties the whole story together — commuting with the very act of reading a knee, so that the reported centre is itself an operating point of a real aggregate model rather than a statistician's fiction.
+
+If you want to predict where the individual points land, you need a theory of the noise. If you want to predict where the *centre* lands, you need the right notion of centre. Tropical algebra tells you which notion that is, and, gratifyingly, it is the one everybody already uses when they stop and think: the middle value.
