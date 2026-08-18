@@ -54,7 +54,7 @@ window.FUTURE_DIRECTIONS = [
       "Novelty"
     ],
     "id": "fd_1368",
-    "phase": "B",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
@@ -139,20 +139,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle 11c9ff9f (Q=0.860), which proved 90 theorems in Logic. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For `k \u2264 |X|` the orbit count splits\n    along patterns, `#(X^k/G) = \u03a3_P m_P` (`sum_patternMultiplicity`), with `m_P \u2265 1` for every\n    pattern (`one_le_patternMultiplicity`), and the action is `k`-transitive **iff** every fibre\n    is a singleton (`patternMultiplicity_eq_one_iff`).",
-    "domains": [
-      "Logic"
-    ],
-    "id": "push_11c9ff9f_3d313f4e",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "11c9ff9f",
-    "status": "available",
-    "timestamp": "2026-08-18T03:08:54.625292+00:00",
-    "title": "Deepening: Fibre spectrum (Conjecture E, first half, closed)"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Building on cycle 37827e5f (Q=0.850), which proved 21 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formally proves the semicircle law for Wigner ensembles: the empirical spectral distribution of a random Hermitian matrix with independent entries converges in probability to the semicircle distribution as the dimension grows, establishing the universality of bulk eigenvalue statistics for random ma",
     "domains": [
       "Probability"
@@ -164,6 +150,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-16T13:45:35.625007+00:00",
     "title": "Deepening: Wigner-Semicircle: Universality of the Spectral Distribution"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 856336cf (Q=0.880), which proved 29 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: are complete `G`-invariants of the equality pattern of a tuple, counted by\n   the Bell numbers `1, 1, 2, 5, 15, 52` (OEIS A000110), proved by `decide`.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "push_856336cf_f48b78a1",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "856336cf",
+    "status": "available",
+    "timestamp": "2026-08-18T03:58:45.965512+00:00",
+    "title": "Deepening: Kernel patterns"
   },
   {
     "consumed_by_exp_id": "",
@@ -1794,20 +1794,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-05T06:51:05.180719+00:00",
     "title": "Deepening: ArXiv paper: Magnitude homology of tope graphs"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle a65c164b (Q=0.786), which proved 78 theorems in Algebra. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize Ext and Tor functors in Lean 4. Prove the long exact sequence in cohomology. Construct projective and injective resolutions for concrete modules. Prove the universal coefficient theorem for homology.",
-    "domains": [
-      "Algebra"
-    ],
-    "id": "push_a65c164b_33b89965",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "a65c164b",
-    "status": "available",
-    "timestamp": "2026-08-04T12:27:50.219364+00:00",
-    "title": "Deepening: Homological Algebra: Derived Functors"
   },
   {
     "consumed_by_exp_id": "",
@@ -19382,6 +19368,34 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The block-tracking fibration (`stirling2_succ_succ`, `card_filter_last_eq`,\n`card_filter_last_ne`) is proved and gives complete control of the triangle row by row;\nlog-concavity is the first statement about the triangle that is *not* a consequence of the\nrecursion alone.  The super-multiplicative bound `bell m * bell n \u2264 bell (m + n)` proved in\n`BellSuperMultiplicative.lean` is the \"additive\" shadow of Bell log-convexity and shows that the\nrelation-assembly technique reaches inequalities of exactly this shape, so row log-concavity is\nthe natural next test of the API.  Mathlib has neither Stirling\nnumbers nor any log-concavity statement about `Nat.bell`.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_1486",
+    "priority_score": 0.5082222222222222,
+    "research_mode": "team",
+    "source_exp_id": "856336cf",
+    "status": "available",
+    "timestamp": "2026-08-18T03:58:31.564057+00:00",
+    "title": "The block-tracking fibration (`stirling2_succ_succ`, `card_filter_last_eq`,"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The case `m = 3`, `F = x\u00b2 + y\u00b2 - z\u00b2` is fully proved\n(`PythagoreanKernel.pyth_kernel_spectrum`: defect exactly one, the obstruction being that `2`\nis not a square, with the dimension-dependence isolated in `constant_legs_dim_two_three_four`),\nand the Fermat family shows the defect is *not* constant along a family\n(`FermatKernel.spectrum_card_iff_flt`), so the invariant is nontrivial and computable in\nexamples.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_1487",
+    "priority_score": 0.5082222222222222,
+    "research_mode": "team",
+    "source_exp_id": "856336cf",
+    "status": "available",
+    "timestamp": "2026-08-18T03:58:31.809783+00:00",
+    "title": "The case `m = 3`, `F = x\u00b2 + y\u00b2 - z\u00b2` is fully proved"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The first version of the soundness theorem was stated only for\ntypical inputs and was therefore useless as a \"no silent corruption\" guarantee;\nthe honest fix was the fibrewise (conditional-independence) counting theorem.\nAn early attempt to bound the failure probability of a *fixed* codebook by the\naverage failed: derandomisation only yields a codebook whose bad set is small,\nnever empty \u2014 that is exactly the converse bound biting.",
     "domains": [
       "Computation"
@@ -19464,6 +19478,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-17T14:45:13.395324+00:00",
     "title": "the twin prime conjecture is the unboundedness of the single Betti step at `\u03b5 = 2`"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The reduction is complete and sorry-free; any future Lean formalisation of FLT (or\nof a single exponent, e.g. regular primes via Kummer's theorem) immediately yields the\nspectrum statement, giving a low-cost corollary.",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "fd_1488",
+    "priority_score": 0.45436842105263153,
+    "research_mode": "team",
+    "source_exp_id": "856336cf",
+    "status": "available",
+    "timestamp": "2026-08-18T03:58:32.047119+00:00",
+    "title": "The reduction is complete and sorry-free; any future Lean formalisation of FLT (or"
   },
   {
     "consumed_by_exp_id": "",
@@ -19672,14 +19700,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "(from C5, first half now proved)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5297c534",
     "description": "The `\u21d0` direction is proved (`FourierFA.uncertainty_eq_coset_modulation`); the `\u21d2`\ndirection is open in this development.",
     "domains": [],
     "id": "fd_1408",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "525aecde",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-17T09:01:31.838883+00:00",
     "title": "The `\u21d0` direction is proved (`FourierFA.uncertainty_eq_coset_modulation`); the `\u21d2`"
   },
@@ -19948,15 +19977,14 @@ window.FUTURE_DIRECTIONS = [
     "title": "Extremes"
   },
   {
-    "consumed_by_exp_id": "856336cf",
+    "consumed_by_exp_id": "",
     "description": "are complete `G`-invariants of the equality pattern of a tuple, counted by\n   the Bell numbers `1, 1, 2, 5, 15, 52` (OEIS A000110), proved by `decide`.",
     "domains": [],
     "id": "fd_1431",
-    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "286b3a0e",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-17T13:54:05.239324+00:00",
     "title": "Kernel patterns"
   },
@@ -20344,5 +20372,64 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-18T03:09:01.453027+00:00",
     "title": "The upper bound is proved with *no* hypothesis on the inner decoder,"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**C5 (growth of the Bell numbers) \u2014 partially proved.**\n  `two_pow_le_bell_succ : 2\u207f \u2264 bell (n+1)` (`KernelTwoBlocks.lean`) is now proved from the\n  two-block count, complementing `bell_lt_bell_succ`, `bell_monotone` and `le_bell`\n  (`BellMonotone.lean`).  In the present cycle this was strengthened to *super-multiplicativity*:\n  `KernelPattern.bell_mul_bell_le_bell_add : bell m * bell n \u2264 bell (m + n)`, strict for positive\n  `m, n` (`bell_mul_bell_lt_bell_add`), with the consequences `bell n ^ k \u2264 bell (n * k)` and\n  `2 ^ k \u2264 bell (2 * k)` (`BellSuperMultiplicative.lean`).  The proof is the injection sending a\n  pair of equivalence relations on `A` and on `B` to the equivalence relation on `A \u2295 B` no block\n  of which crosses the two summands; the total relation witnesses strictness.  The sharp\n  asymptotics are folded into **D1** below.",
+    "domains": [
+      "Logic"
+    ],
+    "id": "fd_1484",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "856336cf",
+    "status": "available",
+    "timestamp": "2026-08-18T03:58:31.053205+00:00",
+    "title": "C5 (growth of the Bell numbers) \u2014 partially proved.*"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "of patterns: the recursion `stirling2 (n+1) (k+1) = (k+1) \u00b7 stirling2 n (k+1) + stirling2 n k`\nalready proved here expresses a pattern as a pattern plus a choice of block for the new point,\nso a pair of patterns with block counts `(k-1, k+1)` can be transformed into a pair with block\ncounts `(k, k)` by transferring the smallest point that separates them \u2014 a purely combinatorial\nmap whose injectivity is checkable from the `PatK` description.",
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_1485",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "856336cf",
+    "status": "available",
+    "timestamp": "2026-08-18T03:58:31.309058+00:00",
+    "title": "of patterns: the recursion `stirling2 (n+1) (k+1) = (k+1) \u00b7 stirling2 n (k+1) + stirling2 n k`"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Every connected Cayley graph of a group whose order is a product of three\ndistinct primes `pqr` is hamiltonian; more precisely, the transversal configuration left by\nthe reduction theorem can again be closed by a factor-group word, and the only obstruction is\nthe voltage computation modulo the smallest prime.",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_1489",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "856336cf",
+    "status": "available",
+    "timestamp": "2026-08-18T03:58:32.288166+00:00",
+    "title": "Every connected Cayley graph of a group whose order is a product of three"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "All the ingredients are formalised and sorry-free here: the factor group lemma\n(`isHamiltonian_of_factorGroup`), the reduction theorem (`pq_isHamiltonian_or_transversal`),\nthe counting corollary (`pq_isHamiltonian_of_le_ncard`), the base case of order `2p`\n(`isHamiltonian_of_card_eq_two_mul_prime`) and the general coset-pair criterion; the order\n`pqrs` programme of the literature has no formal counterpart at all, so the three-prime layer\nis the first genuinely new step that the present infrastructure can reach.",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_1490",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "856336cf",
+    "status": "available",
+    "timestamp": "2026-08-18T03:58:32.532017+00:00",
+    "title": "All the ingredients are formalised and sorry-free here: the factor group lemma"
   }
 ];

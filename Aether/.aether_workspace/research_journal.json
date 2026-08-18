@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "9c680c24",
-      "domain": "Tropical",
-      "key_insight": "# Future Directions — tropical theory of boundary-token width\n\nDerived from the results in `Catalog/Tropical/NeuralNetworks/EOSWidth*.lean`\n(analysis stage: what survived, what failed, and why).\n\n## W",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 86,
-      "timestamp": "2026-08-16T00:30:32",
-      "title": "NET-26 (paper 70): EOS-WIDTH-DISTRIBUTION-SHIFT — the EOS-width \"threshold\" is a one-sided P(cure) d"
-    },
-    {
       "cycle_id": "802e1378",
       "domain": "NumberTheory",
       "key_insight": "# Future directions (derived from the NET-27 formalisation)\n\nThe three files\n`Catalog/NumberTheory/EOSWidthMonotoneRamp.lean`,\n`Catalog/NumberTheory/EOSExclusiveDimGenericity.lean`,\n`Catalog/NumberThe",
@@ -499,19 +489,19 @@
       "theorem_count": 84,
       "timestamp": "2026-08-18T03:09:07",
       "title": "Compression Research B3: Almost-lossless / Monte Carlo compression"
+    },
+    {
+      "cycle_id": "856336cf",
+      "domain": "Pythagorean",
+      "key_insight": "# Future directions\n\nDerived from the results proved in `Catalog/Pythagorean/KernelPatterns.lean`,\n`KernelPatternsBell.lean`, `KernelBlockCount.lean`, `KernelStirlingRecurrence.lean`,\n`KernelStirlingC",
+      "quality_score": 0.88,
+      "sorry_count": 0,
+      "theorem_count": 29,
+      "timestamp": "2026-08-18T03:58:45",
+      "title": "Kernel patterns"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "b95b0e68",
-      "domain": "Novelty",
-      "key_insight": "# Future directions\n\nBold, falsifiable conjectures arising from the formalisation of the analytic skeleton of\n*\"On the Second Moment of `L(1/2, As(f) × φ)`\"* in `Catalog/Novelty/AsaiLargeSieve.lean`,",
-      "quality_score": 0.6609054304347827,
-      "sorry_count": 0,
-      "theorem_count": 116,
-      "timestamp": "2026-08-07T04:27:57",
-      "title": "ArXiv paper: On the Second Moment of $ L (1/2, \\mathrm{As}(f) \\times φ)$"
-    },
     {
       "cycle_id": "786dcda9",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 84,
       "timestamp": "2026-08-18T03:09:07",
       "title": "Compression Research B3: Almost-lossless / Monte Carlo compression"
+    },
+    {
+      "cycle_id": "856336cf",
+      "domain": "Pythagorean",
+      "key_insight": "# Future directions\n\nDerived from the results proved in `Catalog/Pythagorean/KernelPatterns.lean`,\n`KernelPatternsBell.lean`, `KernelBlockCount.lean`, `KernelStirlingRecurrence.lean`,\n`KernelStirlingC",
+      "quality_score": 0.88,
+      "sorry_count": 0,
+      "theorem_count": 29,
+      "timestamp": "2026-08-18T03:58:45",
+      "title": "Kernel patterns"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "525aecde",
-      "domain": "Shared",
-      "name": "conv_indF",
-      "quality": 0.84
-    },
-    {
-      "cycle_id": "525aecde",
-      "domain": "Shared",
-      "name": "dft_indF_zero",
-      "quality": 0.84
-    },
-    {
-      "cycle_id": "615053e5",
-      "domain": "Logic",
-      "name": "atomicSound_iff_uniformlySound",
-      "quality": 0.83
-    },
     {
       "cycle_id": "615053e5",
       "domain": "Logic",
@@ -2803,9 +2785,27 @@
       "domain": "Geometry",
       "name": "blockDecode_never_wrong",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "856336cf",
+      "domain": "Pythagorean",
+      "name": "catalog",
+      "quality": 0.88
+    },
+    {
+      "cycle_id": "856336cf",
+      "domain": "Pythagorean",
+      "name": "isPythag_iff_lorentzQ_zero",
+      "quality": 0.88
+    },
+    {
+      "cycle_id": "856336cf",
+      "domain": "Pythagorean",
+      "name": "catalog",
+      "quality": 0.88
     }
   ],
-  "last_updated": "2026-08-18T03:09:07",
+  "last_updated": "2026-08-18T03:58:45",
   "open_questions": [
     {
       "context": "- Every main theorem below is `sorry`-free (checked).; `RhoDom.dominant_singleton_iff`, so it is not a self-contained restatement.  No `sorry`, no; `RhoDom.dominant_singleton_iff`, so it is not a self",
@@ -3827,12 +3827,6 @@
     ],
     "Pythagorean": [
       {
-        "cycle_id": "713730e2",
-        "quality": 0.78748,
-        "theorems": 47,
-        "title": "**Conjecture.** For every integer `k ≥ 5`, there is a threshold `N₀(k)` such tha"
-      },
-      {
         "cycle_id": "a95dbc85",
         "quality": 0.686,
         "theorems": 112,
@@ -3885,6 +3879,12 @@
         "quality": 0.84,
         "theorems": 300,
         "title": "ArXiv paper: Cayley Graphs Of Order $pqrs$ Are Hamiltonian"
+      },
+      {
+        "cycle_id": "856336cf",
+        "quality": 0.88,
+        "theorems": 29,
+        "title": "Kernel patterns"
       }
     ],
     "Shared": [
