@@ -24,7 +24,7 @@ window.FUTURE_DIRECTIONS = [
       "Novelty"
     ],
     "id": "fd_1366",
-    "phase": "B",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
@@ -48,13 +48,13 @@ window.FUTURE_DIRECTIONS = [
     "title": "Compression Research B3: Almost-lossless / Monte Carlo compression"
   },
   {
-    "consumed_by_exp_id": "3eeb9235",
+    "consumed_by_exp_id": "bba7fa1e",
     "description": "**Part of:** Research plan \u2014 *Compression Beyond the Pigeonhole Bound* (Phase A, Question 1: separating the decompressor from the data).\n\n## Research question\nOne shared decompressor `U` must serve all inputs. A decompressor specialized to a *class* of data does better per class. What is the **price of universality** \u2014 the minimax redundancy a universal scheme must pay over a per-distribution scheme?\n\n## Approach\n- Derive closed-form / tight bounds on universal redundancy for natural source classes: stationary sources, finite-state, Markov.\n- Express redundancy as a function of message length `n` and class complexity.\n\n## Deliverable\nRigorous bounds on universal vs. per-distribution redundancy, and a conclusion on whether specialized decompressors are theoretically worth pursuing.\n\n## Falsifiability / gate\nBounds must match or beat known minimax rates from the literature (Rissanen-style redundancy). If specialization doesn't move bits from *message* to *shared*, the direction is dead.\n\n**Milestone:** M5 (theory, ~2 weeks).\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_1373",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
@@ -1779,21 +1779,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-05T06:51:05.180719+00:00",
     "title": "Deepening: ArXiv paper: Magnitude homology of tope graphs"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize classic algorithms with full correctness proofs in Lean 4: binary search (with loop invariants), Dijkstra's shortest path (with graph formalization), and FFT (with number-theoretic transform). Prove complexity bounds.",
-    "domains": [
-      "Computation",
-      "Logic"
-    ],
-    "id": "fd_0698",
-    "priority_score": 0.88,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-24T14:34:16.697854+00:00",
-    "title": "Formal Verification of Algorithms"
   },
   {
     "consumed_by_exp_id": "",
@@ -20836,5 +20821,17 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-18T13:08:23.047321+00:00",
     "title": "Open here; NP-membership is *proved* in the sense that the problem has a succinct"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The finite-state class and its bound were constructed this cycle\n(`fsmClass`, `shtarkovSum_fsmClass_le`), so the family `k(n)` is definable\ninside the framework, and `shtarkovSum_ge_packing` is exactly the tool needed\nfor the lower bound.",
+    "domains": [],
+    "id": "fd_1530",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "3eeb9235",
+    "status": "available",
+    "timestamp": "2026-08-18T13:57:41.361758+00:00",
+    "title": "The finite-state class and its bound were constructed this cycle"
   }
 ];
