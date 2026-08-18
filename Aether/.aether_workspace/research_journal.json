@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "8da3e793",
-      "domain": "Tropical",
-      "key_insight": "# Future directions — Compression beyond the pigeonhole bound (Tropical / min-plus track)\n\nDerived from the verified results in `Catalog/Tropical/CompressionDelta/`\n(`Core`, `Amortization`, `Pigeonhol",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 73,
-      "timestamp": "2026-08-16T04:00:14",
-      "title": "Compression Research A2: Learnable shared decompressors — model is free, model delta is not"
-    },
-    {
       "cycle_id": "8ed04a73",
       "domain": "Probability",
       "key_insight": "# Future directions — bold, testable conjectures from the NET-36 formalisation\n\nThe five Lean files in `Catalog/Probability/` establish:\n\n* `AttentionConcentration.lean` — an assumption-free Cauchy–Sc",
@@ -499,19 +489,19 @@
       "theorem_count": 109,
       "timestamp": "2026-08-18T05:46:22",
       "title": "Compression Research B6: Compression ↔ one-way functions (the cryptography link)"
+    },
+    {
+      "cycle_id": "cf8480d3",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Orbital Rigidity\n\nDerived from the analysis (Stage 3) and adversarial review (Stage 4) of\n`Catalog/Novelty/OrbitalRigidity.lean`.  Each conjecture is falsifiable: a single finite",
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "theorem_count": 32,
+      "timestamp": "2026-08-18T07:54:55",
+      "title": "Rigidity"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "b2707824",
-      "domain": "Geometry",
-      "key_insight": "# Future Directions\n\nDerived from the analysis and adversarial review of\n`Catalog/Geometry/HyperbolicBerggrenGeodesics.lean`.\n\n## What survived, what failed\n\n**Survived (proved, 0 sorries).**\nThe Berg",
-      "quality_score": 0.73319,
-      "sorry_count": 0,
-      "theorem_count": 182,
-      "timestamp": "2026-08-07T05:41:42",
-      "title": "Hyperbolic-Pythagorean-Geodesics: Sub-Linear Trajectory Factorization in Poincaré Disk"
-    },
     {
       "cycle_id": "3590d6fa",
       "domain": "Algebra",
@@ -2501,15 +2491,19 @@
       "theorem_count": 109,
       "timestamp": "2026-08-18T05:46:22",
       "title": "Compression Research B6: Compression ↔ one-way functions (the cryptography link)"
+    },
+    {
+      "cycle_id": "cf8480d3",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Orbital Rigidity\n\nDerived from the analysis (Stage 3) and adversarial review (Stage 4) of\n`Catalog/Novelty/OrbitalRigidity.lean`.  Each conjecture is falsifiable: a single finite",
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "theorem_count": 32,
+      "timestamp": "2026-08-18T07:54:55",
+      "title": "Rigidity"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "2ce26220",
-      "domain": "Geometry",
-      "name": "sq_le_cube",
-      "quality": 0.82
-    },
     {
       "cycle_id": "2ce26220",
       "domain": "Geometry",
@@ -2803,9 +2797,15 @@
       "domain": "Novelty",
       "name": "decisionToFinder_correct_at",
       "quality": 0.78
+    },
+    {
+      "cycle_id": "cf8480d3",
+      "domain": "Novelty",
+      "name": "turns",
+      "quality": 0.85
     }
   ],
-  "last_updated": "2026-08-18T05:46:22",
+  "last_updated": "2026-08-18T07:54:55",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hupper⟩)",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "c98081c2",
-        "quality": 0.82,
-        "theorems": 73,
-        "title": "The Class-Wide No-Pinning Lemma, Verified"
-      },
-      {
         "cycle_id": "c94236ec",
         "quality": 0.92,
         "theorems": 226,
@@ -3637,6 +3631,12 @@
         "quality": 0.78,
         "theorems": 109,
         "title": "Compression Research B6: Compression ↔ one-way functions (the cryptography link)"
+      },
+      {
+        "cycle_id": "cf8480d3",
+        "quality": 0.85,
+        "theorems": 32,
+        "title": "Rigidity"
       }
     ],
     "NumberTheory": [
