@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-18T18:57:52.511526+00:00",
+  "last_updated": "2026-08-18T19:41:23.373718+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -59200,6 +59200,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-08-18T18:57:52.352697+00:00",
       "title": "The `d = 1` case is proved (`withParity_detects_single_flip` plus the"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "NumberTheory",
+      "duration_seconds": 2582.931733608246,
+      "end_time": 1787082054.097803,
+      "files_integrated": 5,
+      "job_id": "bba7fa1e",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.84,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.553,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.84,
+        "novelty": 0.84,
+        "proof_depth": 0.84,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.84,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1787079471.1660695,
+      "strategy_count": 0,
+      "theorem_count": 73,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 68,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-08-18T19:41:23.165363+00:00",
+      "title": "Compression Research A1: Price of universality \u2014 minimax redundancy of universal decompressors"
     }
   ]
 }

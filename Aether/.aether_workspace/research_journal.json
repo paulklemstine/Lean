@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "81aa12f0",
-      "domain": "Novelty",
-      "key_insight": "# Future directions\n\nFive falsifiable conjectures produced by this cycle of work on emergent geometry\nfrom entanglement. Each is stated so that it can be decided by a proof or by an\nexplicit counterex",
-      "quality_score": 0.87,
-      "sorry_count": 0,
-      "theorem_count": 135,
-      "timestamp": "2026-08-16T19:34:06",
-      "title": "Emergent Spacetime from Quantum Entanglement"
-    },
-    {
       "cycle_id": "4f1ff831",
       "domain": "Logic",
       "key_insight": "# Future directions — bold, falsifiable conjectures from the NET-46 cycle\n\nEach conjecture below is stated so that a single further run, or a single further Lean\ndevelopment, decides it. All are deriv",
@@ -499,19 +489,19 @@
       "theorem_count": 134,
       "timestamp": "2026-08-18T18:57:47",
       "title": "The `d = 1` case is proved (`withParity_detects_single_flip` plus the"
+    },
+    {
+      "cycle_id": "bba7fa1e",
+      "domain": "NumberTheory",
+      "key_insight": "# Future directions — price of universality (Phase A, Question 1)\n\nDerived from what survived and what failed in this cycle.  Each conjecture is\nstated so that it can be refuted by a single Lean count",
+      "quality_score": 0.84,
+      "sorry_count": 0,
+      "theorem_count": 73,
+      "timestamp": "2026-08-18T19:41:20",
+      "title": "Compression Research A1: Price of universality — minimax redundancy of universal decompressors"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "af44a08e",
-      "domain": "Computation",
-      "key_insight": "# Future Directions — thread `th_55fc6157`\n\nAll Lean artefacts referenced here live in `Catalog/Computation/` (with the shared base\ndefinitions in `Catalog/Novelty/ThermodynamicsOfProof.lean`) and com",
-      "quality_score": 0.659818701923077,
-      "sorry_count": 0,
-      "theorem_count": 201,
-      "timestamp": "2026-08-07T17:14:16",
-      "title": "Fix a sound, computably axiomatized theory capable of elementary arithmetic and"
-    },
     {
       "cycle_id": "6e948588",
       "domain": "Algebra",
@@ -2501,21 +2491,19 @@
       "theorem_count": 134,
       "timestamp": "2026-08-18T18:57:47",
       "title": "The `d = 1` case is proved (`withParity_detects_single_flip` plus the"
+    },
+    {
+      "cycle_id": "bba7fa1e",
+      "domain": "NumberTheory",
+      "key_insight": "# Future directions — price of universality (Phase A, Question 1)\n\nDerived from what survived and what failed in this cycle.  Each conjecture is\nstated so that it can be refuted by a single Lean count",
+      "quality_score": 0.84,
+      "sorry_count": 0,
+      "theorem_count": 73,
+      "timestamp": "2026-08-18T19:41:20",
+      "title": "Compression Research A1: Price of universality — minimax redundancy of universal decompressors"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "856336cf",
-      "domain": "Pythagorean",
-      "name": "isPythag_iff_lorentzQ_zero",
-      "quality": 0.88
-    },
-    {
-      "cycle_id": "856336cf",
-      "domain": "Pythagorean",
-      "name": "catalog",
-      "quality": 0.88
-    },
     {
       "cycle_id": "ae5d2ae6",
       "domain": "Novelty",
@@ -2803,9 +2791,21 @@
       "domain": "Computation",
       "name": "of",
       "quality": 0.89
+    },
+    {
+      "cycle_id": "bba7fa1e",
+      "domain": "NumberTheory",
+      "name": "maxLik_prod",
+      "quality": 0.84
+    },
+    {
+      "cycle_id": "bba7fa1e",
+      "domain": "NumberTheory",
+      "name": "shtarkovSum_prod",
+      "quality": 0.84
     }
   ],
-  "last_updated": "2026-08-18T18:57:47",
+  "last_updated": "2026-08-18T19:41:20",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hupper⟩)",
@@ -3641,12 +3641,6 @@
     ],
     "NumberTheory": [
       {
-        "cycle_id": "36710bef",
-        "quality": 0.7451150000000001,
-        "theorems": 43,
-        "title": "The scalar-log unit-circle conjecture is now proved with a certified parameter"
-      },
-      {
         "cycle_id": "78f0a7c3",
         "quality": 0.740175,
         "theorems": 142,
@@ -3699,6 +3693,12 @@
         "quality": 0.82,
         "theorems": 83,
         "title": "NET-47: The third seed at ctx=1024 reveals a SPREAD not a two-point set — k*=112"
+      },
+      {
+        "cycle_id": "bba7fa1e",
+        "quality": 0.84,
+        "theorems": 73,
+        "title": "Compression Research A1: Price of universality — minimax redundancy of universal"
       }
     ],
     "Physics": [

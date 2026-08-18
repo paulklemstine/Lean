@@ -59,7 +59,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "bba7fa1e",
+    "consumed_by_exp_id": "18f8232d",
     "description": "**Part of:** Research plan — *Compression Beyond the Pigeonhole Bound* (Phase A, Question 1: separating the decompressor from the data).\n\n## Research question\nOne shared decompressor `U` must serve all inputs. A decompressor specialized to a *class* of data does better per class. What is the **price of universality** — the minimax redundancy a universal scheme must pay over a per-distribution scheme?\n\n## Approach\n- Derive closed-form / tight bounds on universal redundancy for natural source classes: stationary sources, finite-state, Markov.\n- Express redundancy as a function of message length `n` and class complexity.\n\n## Deliverable\nRigorous bounds on universal vs. per-distribution redundancy, and a conclusion on whether specialized decompressors are theoretically worth pursuing.\n\n## Falsifiability / gate\nBounds must match or beat known minimax rates from the literature (Rissanen-style redundancy). If specialization doesn't move bits from *message* to *shared*, the direction is dead.\n\n**Milestone:** M5 (theory, ~2 weeks).\n",
     "domain_bridges": [],
     "domains": [
@@ -164,7 +164,7 @@
     "title": "EML-Pythagorean-Operator: Single-Neuron Neural Energy Guided Tree Traversal"
   },
   {
-    "ambition_level": "extension",
+    "ambition_level": "grand_challenge",
     "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Building on cycle 09567e3d (Q=0.890), which proved 134 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The `d = 1` case is proved (`withParity_detects_single_flip` plus the\none-codeword converse); the general case needs only the Hamming ball counting\nlemma over `List Bool` of bounded length.",
@@ -26321,6 +26321,23 @@
     "status": "available",
     "timestamp": "2026-08-17T20:44:28.805700+00:00",
     "title": "The low-tail experiment."
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "The qualitative half is now **proved**: `Cₛ = 1` iff the class is degenerate\n(`shtarkovSum_eq_one_iff`), so any genuinely new source makes the price strictly\npositive, and the price is monotone in the class (`price_reindex_le`).  What\nremains is the quantitative form.  If `S'` is obtained from `S` by adding one\nsource `p_new`, then\n`Cₛ' − Cₛ = Σ_x (p_new(x) − maxLik_S(x))⁺`, and this is strictly positive unless\n`p_new ≤ maxLik_S` pointwise.  *The key insight is* that the Shtarkov sum is\nthe `ℓ¹`-norm of a pointwise supremum, so its increments measure exactly the\nmass on which the new model strictly dominates the old envelope — a\n\"marginal value of a model\" formula.  *Why now?*  `maxLik` and the library\nbounds (`shtarkovSum_sigma_le`, `le_shtarkovSum_sigma`) are in place, so the\nstatement is a pointwise `max` computation; if true it turns the price of\nuniversality into a submodular set function on model libraries, which would make\ngreedy decompressor-library design provably near-optimal.",
+    "domain_bridges": [],
+    "domains": [],
+    "id": "fd_1550",
+    "lineage_refs": [],
+    "priority_score": 0.4277368421052631,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "bba7fa1e",
+    "status": "available",
+    "timestamp": "2026-08-18T19:41:03.927928+00:00",
+    "title": "The qualitative half is now proved: `Cₛ = 1` iff the class is degenerate\n(`shtarkovSum_eq_one_iff`), so any genuinely new source makes the price strictly\npositive, and the price is monotone in the cla"
   },
   {
     "ambition_level": "extension",

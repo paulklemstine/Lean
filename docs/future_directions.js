@@ -39,7 +39,7 @@ window.FUTURE_DIRECTIONS = [
       "Novelty"
     ],
     "id": "fd_1368",
-    "phase": "B",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
@@ -48,13 +48,13 @@ window.FUTURE_DIRECTIONS = [
     "title": "Compression Research B3: Almost-lossless / Monte Carlo compression"
   },
   {
-    "consumed_by_exp_id": "bba7fa1e",
+    "consumed_by_exp_id": "18f8232d",
     "description": "**Part of:** Research plan \u2014 *Compression Beyond the Pigeonhole Bound* (Phase A, Question 1: separating the decompressor from the data).\n\n## Research question\nOne shared decompressor `U` must serve all inputs. A decompressor specialized to a *class* of data does better per class. What is the **price of universality** \u2014 the minimax redundancy a universal scheme must pay over a per-distribution scheme?\n\n## Approach\n- Derive closed-form / tight bounds on universal redundancy for natural source classes: stationary sources, finite-state, Markov.\n- Express redundancy as a function of message length `n` and class complexity.\n\n## Deliverable\nRigorous bounds on universal vs. per-distribution redundancy, and a conclusion on whether specialized decompressors are theoretically worth pursuing.\n\n## Falsifiability / gate\nBounds must match or beat known minimax rates from the literature (Rissanen-style redundancy). If specialization doesn't move bits from *message* to *shared*, the direction is dead.\n\n**Milestone:** M5 (theory, ~2 weeks).\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_1373",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
@@ -19644,6 +19644,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-17T20:44:28.805700+00:00",
     "title": "The low-tail experiment."
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The qualitative half is now **proved**: `C\u209b = 1` iff the class is degenerate\n(`shtarkovSum_eq_one_iff`), so any genuinely new source makes the price strictly\npositive, and the price is monotone in the class (`price_reindex_le`).  What\nremains is the quantitative form.  If `S'` is obtained from `S` by adding one\nsource `p_new`, then\n`C\u209b' \u2212 C\u209b = \u03a3_x (p_new(x) \u2212 maxLik_S(x))\u207a`, and this is strictly positive unless\n`p_new \u2264 maxLik_S` pointwise.  *The key insight is* that the Shtarkov sum is\nthe `\u2113\u00b9`-norm of a pointwise supremum, so its increments measure exactly the\nmass on which the new model strictly dominates the old envelope \u2014 a\n\"marginal value of a model\" formula.  *Why now?*  `maxLik` and the library\nbounds (`shtarkovSum_sigma_le`, `le_shtarkovSum_sigma`) are in place, so the\nstatement is a pointwise `max` computation; if true it turns the price of\nuniversality into a submodular set function on model libraries, which would make\ngreedy decompressor-library design provably near-optimal.",
+    "domains": [],
+    "id": "fd_1550",
+    "priority_score": 0.4277368421052631,
+    "research_mode": "team",
+    "source_exp_id": "bba7fa1e",
+    "status": "available",
+    "timestamp": "2026-08-18T19:41:03.927928+00:00",
+    "title": "The qualitative half is now proved: `C\u209b = 1` iff the class is degenerate\n(`shtarkovSum_eq_one_iff`), so any genuinely new source makes the price strictly\npositive, and the price is monotone in the cla"
   },
   {
     "consumed_by_exp_id": "",
