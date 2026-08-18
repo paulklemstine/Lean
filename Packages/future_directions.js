@@ -853,6 +853,34 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 13fee392 (Q=0.820), which proved 97 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The Bonferroni machinery\n(`card_sum_le_card_biUnion_add_offDiag`, `card_doubleCollision_mul_le`) is\nalready formalised for arbitrary finite families, so the conjecture is a\nstatement about which *marginals* are fed into it.",
+    "domains": [
+      "MachineLearning"
+    ],
+    "id": "push_13fee392_bf1a2075",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "13fee392",
+    "status": "available",
+    "timestamp": "2026-08-18T15:47:13.268223+00:00",
+    "title": "Deepening: The Bonferroni machinery"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 2afe0ce6 (Q=0.820), which proved 63 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: *For every finite action the spectrum is log-concave: `t_r\u00b2 \u2265 t_{r\u22121}\u00b7t_{r+1}` for\n`1 \u2264 r < |X|`.*",
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_2afe0ce6_0601a127",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "2afe0ce6",
+    "status": "available",
+    "timestamp": "2026-08-18T15:47:25.548455+00:00",
+    "title": "Deepening: For every finite action the spectrum is log-concave: `t_r\u00b2 \u2265 t_{r\u22121}\u00b7t_{r+1}` fo"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 3b29df87 (Q=0.820), which proved 110 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the Weil pairing on an elliptic curve and prove its bilinearity. Show that the BLS signature scheme is existentially unforgeable under the computational Diffie-Hellman assumption in the pairing group. Prove that the pairing allows short aggregate signatures.",
     "domains": [
       "Cryptography"
@@ -1779,34 +1807,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-05T06:51:05.180719+00:00",
     "title": "Deepening: ArXiv paper: Magnitude homology of tope graphs"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 25d882e7 (Q=0.780), which proved 53 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove a meta-theorem: for any approximately correct physical theory T, there exists a class of phenomena for which T makes predictions closer to truth than any known correct theory. Formalize using perturbation theory on theory-space and prove that the wrongness of T forms a convergent series toward",
-    "domains": [
-      "Physics"
-    ],
-    "id": "push_25d882e7_cf5d3cb3",
-    "priority_score": 0.88,
-    "research_mode": "team",
-    "source_exp_id": "25d882e7",
-    "status": "available",
-    "timestamp": "2026-08-16T15:36:21.695272+00:00",
-    "title": "Deepening: The Unreasonable Effectiveness of Wrong Theories"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 2ae125a9 (Q=0.780), which proved 17 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future directions\n\nThe repaired repeated-summand rule is now completely classified: its unique trajectory is `a n = 2n + 1`. The formal development also proves strict monotonicity, identifies its range with all odd natural numbers, and gives the exact cardinality of every finite prefix. The follow",
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "push_2ae125a9_88c2991e",
-    "priority_score": 0.88,
-    "research_mode": "team",
-    "source_exp_id": "2ae125a9",
-    "status": "available",
-    "timestamp": "2026-07-25T15:47:33.250380+00:00",
-    "title": "Deepening: The repaired repeated-summand rule is now completely classified: its unique traj"
   },
   {
     "consumed_by_exp_id": "",
@@ -19435,6 +19435,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The two extreme cases `t = 0` and `t = m` are already proved tight\n(`corradi_tight_of_pairwiseDisjoint`, `corradi_tight_of_constant`), and the\nrigidity theorem tells us precisely which combinatorial object must be built for\nintermediate `t`; nothing else in the argument is missing.",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "fd_1532",
+    "priority_score": 0.47539215686274516,
+    "research_mode": "team",
+    "source_exp_id": "13fee392",
+    "status": "available",
+    "timestamp": "2026-08-18T15:46:59.091211+00:00",
+    "title": "The two extreme cases `t = 0` and `t = m` are already proved tight"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Two contexts and six seeds already separate the three rungs of a three-seed\nladder, and a single `ctx = 4096` cell distinguishes the two candidate low-tail families by\nexactly one grid step: `320` (constant ratio) versus `288` (affine), proved as\n`KneeQuota.lowtail_prediction_32x`.",
     "domains": [
       "Geometry"
@@ -19705,6 +19719,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-17T13:54:05.695599+00:00",
     "title": "Power-sum inversion"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The Burnside mass formula is already formalised\n(`spec_mul_card_eq_sum_fixed`), and the data confirm the pattern for `n \u2264 10` with the\nviolation confined to `r \u2208 {1, n\u22121}`; the conjecture cleanly separates the boundary\nphenomenon (which we proved is fatal in general) from the interior behaviour.",
+    "domains": [],
+    "id": "fd_1535",
+    "priority_score": 0.4023684210526316,
+    "research_mode": "team",
+    "source_exp_id": "2afe0ce6",
+    "status": "available",
+    "timestamp": "2026-08-18T15:47:19.512856+00:00",
+    "title": "The Burnside mass formula is already formalised"
   },
   {
     "consumed_by_exp_id": "",
@@ -20338,15 +20364,14 @@ window.FUTURE_DIRECTIONS = [
     "title": "If the action is not `r`-transitive but is `(r\u22121)`-transitive and `r + 1 \u2264 |X|`, then\n`t_{r+1} > t_r`; more boldly, `t_{r+1} \u2265 t_r + (t_r \u2212 1)`, i.e."
   },
   {
-    "consumed_by_exp_id": "2afe0ce6",
+    "consumed_by_exp_id": "",
     "description": "*For every finite action the spectrum is log-concave: `t_r\u00b2 \u2265 t_{r\u22121}\u00b7t_{r+1}` for\n`1 \u2264 r < |X|`.*",
     "domains": [],
     "id": "fd_1475",
-    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "11c9ff9f",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-18T03:08:40.358199+00:00",
     "title": "For every finite action the spectrum is log-concave: `t_r\u00b2 \u2265 t_{r\u22121}\u00b7t_{r+1}` for\n`1 \u2264 r < |X|`."
   },
@@ -20363,27 +20388,27 @@ window.FUTURE_DIRECTIONS = [
     "title": "For a graded `G`-set `Y = \u2a06_n Y_n` the generating function `\u03a3_n t_r(Y_n) q^n` is a rational\nfunction of `q` whenever the grades are eventually `r`-transitive, with denominator dividing\n`(1\u2212q)^{r+1}`."
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "aa4eb9d3",
     "description": "Both endpoints of the trade-off are now formal theorems in this\nrepository (`decode_cost` + `failSet_prob_le` at one end,\n`blockDecode_cost` + `blockFail_prob_le` at the other); only the interpolation\nand its converse are missing.",
     "domains": [],
     "id": "fd_1478",
-    "priority_score": 0.4,
-    "research_mode": "team",
-    "source_exp_id": "be7c0bd7",
-    "status": "available",
-    "timestamp": "2026-08-18T03:09:00.743392+00:00",
-    "title": "Both endpoints of the trade-off are now formal theorems in this"
-  },
-  {
-    "consumed_by_exp_id": "13fee392",
-    "description": "The Bonferroni machinery\n(`card_sum_le_card_biUnion_add_offDiag`, `card_doubleCollision_mul_le`) is\nalready formalised for arbitrary finite families, so the conjecture is a\nstatement about which *marginals* are fed into it.",
-    "domains": [],
-    "id": "fd_1479",
     "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "be7c0bd7",
     "status": "in_progress",
+    "timestamp": "2026-08-18T03:09:00.743392+00:00",
+    "title": "Both endpoints of the trade-off are now formal theorems in this"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The Bonferroni machinery\n(`card_sum_le_card_biUnion_add_offDiag`, `card_doubleCollision_mul_le`) is\nalready formalised for arbitrary finite families, so the conjecture is a\nstatement about which *marginals* are fed into it.",
+    "domains": [],
+    "id": "fd_1479",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "be7c0bd7",
+    "status": "available",
     "timestamp": "2026-08-18T03:09:00.981652+00:00",
     "title": "The Bonferroni machinery"
   },
@@ -20820,5 +20845,55 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-18T13:57:41.361758+00:00",
     "title": "The finite-state class and its bound were constructed this cycle"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The construction and the exact defect identities are already\nformalised, so the only new ingredient is an optimisation over a\nfinite-dimensional cone \u2014 a computation that Lean can now state, evaluate on\nsmall `k`, and then prove.",
+    "domains": [],
+    "id": "fd_1531",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "13fee392",
+    "status": "available",
+    "timestamp": "2026-08-18T15:46:58.846758+00:00",
+    "title": "The construction and the exact defect identities are already"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The impossibility half is formal and unconditional; converting it\ninto a quantitative statement only requires the ratio analysis of Conjecture 1\napplied to the same two families.",
+    "domains": [],
+    "id": "fd_1533",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "13fee392",
+    "status": "available",
+    "timestamp": "2026-08-18T15:46:59.326570+00:00",
+    "title": "The impossibility half is formal and unconditional; converting it"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "\u2014 is **false**, and the formal development in\n`Catalog/Applications/ActionSpectrum/` explains precisely why: for a transitive action,\nlog-concavity is *equivalent* to set-transitivity, so the conjecture holds only for the\nhandful of `k`-homogeneous-for-all-`k` permutation groups.  What survives are two guarded\ninequalities (`|G|\u00b2` and `r(n\u2212r)` versions) and the exact structural characterisation.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_1534",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "2afe0ce6",
+    "status": "available",
+    "timestamp": "2026-08-18T15:47:19.260604+00:00",
+    "title": "\u2014 is false, and the formal development in"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Both ends of the sandwich are formalised\n(`spec_le_choose`, `choose_le_card_mul_spec`), and the qualitative version\n(`not_logConcave_of_card_lt_choose`) is already a theorem; only the extraction of a\nquantitative defect from the sandwich remains.",
+    "domains": [],
+    "id": "fd_1536",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "2afe0ce6",
+    "status": "available",
+    "timestamp": "2026-08-18T15:47:19.752849+00:00",
+    "title": "Both ends of the sandwich are formalised"
   }
 ];

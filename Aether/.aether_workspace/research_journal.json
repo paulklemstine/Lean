@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "be4e28d2",
-      "domain": "Shared",
-      "key_insight": "# Future Directions (thread th_16c8d9ad, cycle 1)\n\nThis cycle settled three of the five inherited conjectures in sharp form: the\nalmost-Hopf-fibre stability conjecture (true, but with the wrong expone",
-      "quality_score": 0.79,
-      "sorry_count": 0,
-      "theorem_count": 21,
-      "timestamp": "2026-08-16T13:45:45",
-      "title": "**Conjecture.** A closed, connected, orientable smooth three-manifold embeds smo"
-    },
-    {
       "cycle_id": "25d882e7",
       "domain": "Physics",
       "key_insight": "# Future Directions\n\nDerived from the analysis and adversarial review of the results in\n`Catalog/Physics/WrongTheories/` (`PerturbativeCore.lean`, `MetaTheorem.lean`,\n`TruncationHierarchy.lean`, `Boun",
@@ -499,19 +489,19 @@
       "theorem_count": 97,
       "timestamp": "2026-08-18T15:47:12",
       "title": "The Bonferroni machinery"
+    },
+    {
+      "cycle_id": "2afe0ce6",
+      "domain": "Applications",
+      "key_insight": "# Future directions: the subset spectrum of a finite action\n\nThe assigned conjecture — *for every finite action the spectrum is log-concave,\n`t_r² ≥ t_{r-1}·t_{r+1}` for `1 ≤ r < |X|`* — is **false**,",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 63,
+      "timestamp": "2026-08-18T15:47:25",
+      "title": "For every finite action the spectrum is log-concave: `t_r² ≥ t_{r−1}·t_{r+1}` for\n`1 ≤ r < |X|`."
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "09b12514",
-      "domain": "Combinatorics",
-      "key_insight": "# Future directions\n\nDerived from the formalisation in `Catalog/Combinatorics/BipartiteExtremalTrees.lean`,\n`Catalog/Combinatorics/BipartiteExtremalTreesFixedParts.lean` and\n`Catalog/Combinatorics/Bip",
-      "quality_score": 0.6640958333333333,
-      "sorry_count": 0,
-      "theorem_count": 721,
-      "timestamp": "2026-08-07T14:05:25",
-      "title": "ArXiv paper: Bipartite Extremal Numbers of Trees"
-    },
     {
       "cycle_id": "4152b805",
       "domain": "Geometry",
@@ -2501,27 +2491,19 @@
       "theorem_count": 97,
       "timestamp": "2026-08-18T15:47:12",
       "title": "The Bonferroni machinery"
+    },
+    {
+      "cycle_id": "2afe0ce6",
+      "domain": "Applications",
+      "key_insight": "# Future directions: the subset spectrum of a finite action\n\nThe assigned conjecture — *for every finite action the spectrum is log-concave,\n`t_r² ≥ t_{r-1}·t_{r+1}` for `1 ≤ r < |X|`* — is **false**,",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 63,
+      "timestamp": "2026-08-18T15:47:25",
+      "title": "For every finite action the spectrum is log-concave: `t_r² ≥ t_{r−1}·t_{r+1}` for\n`1 ≤ r < |X|`."
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "33519cdb",
-      "domain": "MachineLearning",
-      "name": "sub2_zero",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "33519cdb",
-      "domain": "MachineLearning",
-      "name": "sub2_one",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "0cf95d8d",
-      "domain": "Probability",
-      "name": "minCollisionCard_eq_of_ideal_witness",
-      "quality": 0.88
-    },
     {
       "cycle_id": "0cf95d8d",
       "domain": "Probability",
@@ -2803,9 +2785,27 @@
       "domain": "MachineLearning",
       "name": "one_le_mult_of_mem_cover",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "2afe0ce6",
+      "domain": "Applications",
+      "name": "Nat",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "2afe0ce6",
+      "domain": "Applications",
+      "name": "mem_act",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "2afe0ce6",
+      "domain": "Applications",
+      "name": "act_one",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-18T15:47:12",
+  "last_updated": "2026-08-18T15:47:25",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hupper⟩)",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "de149d0f",
-        "quality": 0.6301902500000001,
-        "theorems": 104,
-        "title": "Doppelgänger-Phase-Lock: Quantum Telepathic Synchronization of Dual Agents"
-      },
-      {
         "cycle_id": "94177336",
         "quality": 0.6348185595414201,
         "theorems": 96,
@@ -3141,6 +3135,12 @@
         "quality": 0.85,
         "theorems": 87,
         "title": "Compression Research B3: Almost-lossless / Monte Carlo compression"
+      },
+      {
+        "cycle_id": "2afe0ce6",
+        "quality": 0.82,
+        "theorems": 63,
+        "title": "For every finite action the spectrum is log-concave: `t_r² ≥ t_{r−1}·t_{r+1}` fo"
       }
     ],
     "Bridges": [
