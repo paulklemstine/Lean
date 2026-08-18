@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "e67b8bbc",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions — after \"PRNGs cannot beat pigeonhole\"\n\nWhat is settled (formally, 0 sorries, in `Catalog/MachineLearning/PRNGCompression*.lean`):\n\n* a deterministic generator with an `s`-bit seed",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 54,
-      "timestamp": "2026-08-16T03:13:35",
-      "title": "Compression Research B1: Negative result — PRNGs cannot beat pigeonhole (proof + demo)"
-    },
-    {
       "cycle_id": "8da3e793",
       "domain": "Tropical",
       "key_insight": "# Future directions — Compression beyond the pigeonhole bound (Tropical / min-plus track)\n\nDerived from the verified results in `Catalog/Tropical/CompressionDelta/`\n(`Core`, `Amortization`, `Pigeonhol",
@@ -499,19 +489,19 @@
       "theorem_count": 41,
       "timestamp": "2026-08-18T05:46:10",
       "title": "Chebotarev's theorem that every square submatrix of the `p × p` DFT matrix"
+    },
+    {
+      "cycle_id": "e8a76d4f",
+      "domain": "Novelty",
+      "key_insight": "# Future directions — Compression ⇋ one-way functions (Phase B / M8)\n\nDerived from the results in `Catalog/Novelty/CompressionLasVegasOWF.lean` and\n`Catalog/Novelty/CompressionLasVegasDecision.lean`,",
+      "quality_score": 0.78,
+      "sorry_count": 4,
+      "theorem_count": 109,
+      "timestamp": "2026-08-18T05:46:22",
+      "title": "Compression Research B6: Compression ↔ one-way functions (the cryptography link)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "edfd57dd",
-      "domain": "Novelty",
-      "key_insight": "# Future directions\n\nThis file is the live end-of-cycle record of the research thread on the\nBekenstein–Hawking area law from microstate counting.  It states what the previous cycles\nconjectured, what",
-      "quality_score": 0.627125,
-      "sorry_count": 0,
-      "theorem_count": 30,
-      "timestamp": "2026-08-07T05:40:02",
-      "title": "Black-Hole-Entropy: Bekenstein-Hawking Metric Area Law Proof"
-    },
     {
       "cycle_id": "b2707824",
       "domain": "Geometry",
@@ -2501,27 +2491,19 @@
       "theorem_count": 41,
       "timestamp": "2026-08-18T05:46:10",
       "title": "Chebotarev's theorem that every square submatrix of the `p × p` DFT matrix"
+    },
+    {
+      "cycle_id": "e8a76d4f",
+      "domain": "Novelty",
+      "key_insight": "# Future directions — Compression ⇋ one-way functions (Phase B / M8)\n\nDerived from the results in `Catalog/Novelty/CompressionLasVegasOWF.lean` and\n`Catalog/Novelty/CompressionLasVegasDecision.lean`,",
+      "quality_score": 0.78,
+      "sorry_count": 4,
+      "theorem_count": 109,
+      "timestamp": "2026-08-18T05:46:22",
+      "title": "Compression Research B6: Compression ↔ one-way functions (the cryptography link)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "286b3a0e",
-      "domain": "Bridges",
-      "name": "in",
-      "quality": 0.89
-    },
-    {
-      "cycle_id": "286b3a0e",
-      "domain": "Bridges",
-      "name": "sum_card_fixedBy_eq_orbits_mul_card",
-      "quality": 0.89
-    },
-    {
-      "cycle_id": "2ce26220",
-      "domain": "Geometry",
-      "name": "cube_le_neg_one",
-      "quality": 0.82
-    },
     {
       "cycle_id": "2ce26220",
       "domain": "Geometry",
@@ -2803,17 +2785,28 @@
       "domain": "Novelty",
       "name": "supp_conv_subset",
       "quality": 0.88
+    },
+    {
+      "cycle_id": "e8a76d4f",
+      "domain": "Novelty",
+      "name": "globalize_at",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "e8a76d4f",
+      "domain": "Novelty",
+      "name": "globalize_correct",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "e8a76d4f",
+      "domain": "Novelty",
+      "name": "decisionToFinder_correct_at",
+      "quality": 0.78
     }
   ],
-  "last_updated": "2026-08-18T05:46:10",
+  "last_updated": "2026-08-18T05:46:22",
   "open_questions": [
-    {
-      "context": "- Every main theorem below is `sorry`-free (checked).; `RhoDom.dominant_singleton_iff`, so it is not a self-contained restatement.  No `sorry`, no; `RhoDom.dominant_singleton_iff`, so it is not a self",
-      "cycle_id": "d7591934",
-      "domain": "Novelty",
-      "sorry_count": 8,
-      "timestamp": "2026-07-26T06:19:11"
-    },
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hupper⟩)",
       "cycle_id": "1ba7b435",
@@ -3016,6 +3009,13 @@
       "domain": "Logic",
       "sorry_count": 4,
       "timestamp": "2026-08-18T03:08:53"
+    },
+    {
+      "context": "All results are proved from scratch; there are no axioms and no `sorry`.; All results are proved from scratch; there are no axioms and no `sorry`.; No axioms beyond the standard three, no `sorry`.",
+      "cycle_id": "e8a76d4f",
+      "domain": "Novelty",
+      "sorry_count": 4,
+      "timestamp": "2026-08-18T05:46:22"
     }
   ],
   "research_threads": {
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "c76c12ee",
-        "quality": 0.82,
-        "theorems": 76,
-        "title": "CM-ECM-ORDER (round-17 #1): the ECM order of a CM curve collapses to p+1 on the "
-      },
-      {
         "cycle_id": "c98081c2",
         "quality": 0.82,
         "theorems": 73,
@@ -3637,6 +3631,12 @@
         "quality": 0.88,
         "theorems": 41,
         "title": "Chebotarev's theorem that every square submatrix of the `p × p` DFT matrix"
+      },
+      {
+        "cycle_id": "e8a76d4f",
+        "quality": 0.78,
+        "theorems": 109,
+        "title": "Compression Research B6: Compression ↔ one-way functions (the cryptography link)"
       }
     ],
     "NumberTheory": [

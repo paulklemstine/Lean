@@ -3,13 +3,13 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "consumed_by_exp_id": "6ba84571",
+    "consumed_by_exp_id": "308f24be",
     "description": "## NET-48 \u2014 speed axis (round-net-48; paper 92, /tmp/exp_net_attncost_ctx2048_s3.py, /tmp/net48.log)\n\n**Verdict name: THE-DIRECT-TEST-SURVIVES-VIA-THE-MEDIAN.**\n\n### Result\nAt (d=4, ctx=2048, seed=3), **k\\* = 160 \u2014 all four point-horns REFUTED (P1 224, P2 240, P3 256, P4 192: every pre-stated value passes, none is the knee)**, yet the completed 16\u00d7 three-seed knee distribution **{160, 224, 256} has median EXACTLY 224 = 7/8\u00b7(d\u00b7ctx/32)**, replicating the 8\u00d7 median 112 = 7/8\u00b7128: **the 7/8-median law is 2/2-context, 6/6-seed.** The horns were point-predictions; the law's claim was the distribution's center \u2014 0/4 horns, 1/1 law. A whole family of third-seed values {160, 192, 224} each keep the median at 224; only \u2265256 would shift it.\n\n### The 7/8-median law now two contexts, six seeds\n| context | three-seed k\\* set | \u00d7 product | spread | median |\n|---|---|---|---|---|\n| 8\u00d7 (ctx=1024) | {96, 112, 128} | {0.75, 0.875, 1.0} | 0.25 | 112 = 7/8\u00b7128 |\n| 16\u00d7 (ctx=2048) | {160, 224, 256} | {0.625, 0.875, 1.0} | 0.375 | 224 = 7/8\u00b7256 |\n\n**The 16\u00d7 spread is ~50% WIDER than the 8\u00d7 spread** \u2014 the LOW TAIL is the context-growing quantity (0.75 \u2192 0.625), the product value the pinned upper edge (the s1 chain's exactness), the median stable at 7/8. Per-seed knees are too noisy to predict on the point; the distribution's center is the robust quantity \u2014 that is what a third seed buys.\n\n### Key numbers\n- Full acc 0.1546, bar 0.1516, full loss 5.2199, train **14566s (~4h03m)**.\n- Sweep: 96 0.963 \u2717, 128 0.973 \u2717, **160 0.981 \u2713 (margin +0.0012 \u2014 the tightest of the recent cells; true knee ~150\u2013160 between grid points)**, 192 0.984 \u2713, 224 0.986 \u2713, 240 0.987 \u2713, **256 0.990 \u2713 (product point \u2014 passes 3/3)**, 288 0.993 \u2713, 384 0.999 \u2713, 512 1.000 \u2713, 768 1.003 \u2713, 1024 1.003 \u2713 (loss 5.2215, \u03940.0016). The s3 retained curve is the HIGHEST of the three 16\u00d7 seeds throughout (0.973 at 128 vs s1 0.939, s2 0.965) \u2014 crossing the bar two grid steps earlier than s2, three than s1.\n- **Product-law upper bound 3/3-sure at BOTH long contexts**: product point 256 passes 0.981/0.986/0.990 (joining 8\u00d7's 0.986/0.993/0.988 at 128) \u2014 k\\* \u2264 d\u00b7ctx/32 is a six-seed-verified deployment guarantee through 16\u00d7.\n- **Selection importance +4.7/+3.4**: k=128 random 0.926 vs top-k 0.973; k=256 0.956 vs 0.990 \u2014 comparable to s2, far above s1's +1.7/+1.8; the 16\u00d7 selection spread {1.7, 4.4, 4.7} at k=128 is three-fold (dilution strongly seed-dependent).\n- **Concentration**: eff support 498.13 (s1 526.39, s2 472.50 \u2014 mid-family, spread ~11%); top-128 0.608, top-256 0.746; per-position 64.91/435.27/929.55 \u2014 the eff\u2194knee correlation again does NOT sort across three points (s1 highest-eff/highest-knee, s2 lowest-eff/middle-knee, s3 middle-eff/lowest-knee), NO bounded working set at 16\u00d7, three seeds.\n- **Deployable at (d=4, ctx=2048)**: **\u22658.0\u00d7 guaranteed (3/3), 9.1\u00d7 median, 12.8\u00d7 best \u2014 the BEST-EVER reading** (beats 10.7\u00d7 at 8\u00d7 s2). Distribution {8.0, 9.1, 12.8} wider than 8\u00d7's {8.0, 9.1, 10.7}.\n\n### The 16\u00d7 three-seed table\n| seed | k\\* | \u00d7 product (256) |\n|---|---|---|\n| 1 (NET-45) | 256 | 1.000 |\n| 2 (NET-46) | 224 | 0.875 |\n| **3 (this round)** | **160** | **0.625** |\n\n### All 8 barriers\n(a) clean \u2014 four horns + the law's direct test stated before the run, measured 160 outside ALL horns, yet the distribution's median landed exactly on the law's predicted center (the round separates point-accuracy 0/4 from structural confirmation 1/1); (b) clean \u2014 three-seed 16\u00d7 spread / widening low tail / median-stable center: none in the Catalog (698-pkg) or literature; (c) confronted \u2014 d=4 \u00d7 ctx=2048 real causal word LM, 4097 vocab, held-out loss+acc, three seeds at the longest cell; (d) clean \u2014 held-out last-10%, data-free top-k; (e) the SUBSTANCE, sharpened \u2014 the 16\u00d7 three-seed distribution complete; honest limits: the s3=160 read razor-thin (+0.0012), the 0.625 low tail is ONE of three seeds (a fourth decides s3-specific vs stable), the median law is 2 contexts \u00d7 3 seeds; (f) clean \u2014 same metrics/protocol, binom SE \u2248 0.11% acc (retained SE \u2248 0.007), the razor margin documented, k=512 recovers 1.000 / k=768 1.003 (loss \u03940.0016), monotone recovery, NO crash (ALL_DONE_NET48); (g) fair \u2014 full-attention reference + same 0.98 bar + random-k at same k (seed 12345): gaps +4.7/+3.4, positive, the {1.7\u20134.7} seed spread informative; (h) sharpened \u2014 the widened {8.0\u201312.8} deployment spread is the deployment-relevant uncertainty at the longest cell, guarantee end 3/3-sure.\n\n### Next\n**A fourth seed at ctx=2048** (the LOW-TAIL test \u2014 s4=160/192 \u2192 the 0.625 low tail is real, a stable 16\u00d7 feature; s4 in {224,256} \u2192 it was s3-specific; ~4\u20135h \u2014 the highest-value open cell now); a fourth seed at ctx=1024 (refine {96,112,128}; low value); d=8 @ ctx=256 s0 corner; d=8 compression floor check; carry chain at scale (the frontier).\n\nNow 48 network experiments. Assessment v48. Paper 92.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_1345",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
@@ -18,17 +18,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "NET-48: The direct test survives via the MEDIAN \u2014 k*=160 at (d=4, ctx=2048, seed=3), all four point-horns refuted, the completed 16\u00d7 distribution {160,224,256} has median exactly 224 = 7/8\u00b7(d\u00b7ctx/32) \u2014 the 7/8-median law is 2/2-context, 6/6-seed"
   },
   {
-    "consumed_by_exp_id": "e8a76d4f",
+    "consumed_by_exp_id": "",
     "description": "**Part of:** Research plan \u2014 *Compression Beyond the Pigeonhole Bound* (Phase B, Question 2: can random number generators help?).\n\n## Research question\nWorst-case short-program-finding is **provably hard under standard assumptions**: roughly, if you could always find a short description for every `x` quickly, you could invert one-way functions. Compression \u21cb computational hardness.\n\n## Approach\n- State precisely **which compression tasks are equivalent to inverting OWFs** (distinguishable / polynomial-time Kolmogorov complexity literature).\n- Derive what that implies for achievable worst-case bounds.\n\n## Deliverable\nA precise characterization mapping compression tasks to cryptographic assumptions.\n\n## Purpose\nCalibrates the whole plan: **randomness helps compression exactly up to the computational-hardness boundary, and no further.** Converts the intuition \"randomness should help\" into a quantified expectation.\n\n**Milestone:** M8 (theory, 3\u20136 weeks).\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_1365",
-    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-17T04:13:54.291308+00:00",
     "title": "Compression Research B6: Compression \u2194 one-way functions (the cryptography link)"
   },
@@ -69,7 +68,7 @@ window.FUTURE_DIRECTIONS = [
       "Novelty"
     ],
     "id": "fd_1373",
-    "phase": "B",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
@@ -150,6 +149,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-16T13:45:35.625007+00:00",
     "title": "Deepening: Wigner-Semicircle: Universality of the Spectral Distribution"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 4bf66c09 (Q=0.880), which proved 41 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Chebotarev's theorem that every square submatrix of the `p \u00d7 p` DFT matrix\nis nonsingular, which in turn follows from a resultant/Vandermonde computation over `Q(\u03b6_p)`\nusing the irreducibility of the `p`-th cyclotomic polynomial \u2014 machinery that Mathlib already\ncontains (`Polynomial.cyclotomic_irred",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_4bf66c09_d16fba54",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "4bf66c09",
+    "status": "available",
+    "timestamp": "2026-08-18T05:46:10.947071+00:00",
+    "title": "Deepening: Chebotarev's theorem that every square submatrix of the `p \u00d7 p` DFT matrix"
   },
   {
     "consumed_by_exp_id": "",
@@ -1802,7 +1815,7 @@ window.FUTURE_DIRECTIONS = [
       "Applications"
     ],
     "id": "push_bb566a68_c03a6dd2",
-    "priority_score": 0.8828599999999999,
+    "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "bb566a68",
     "status": "available",
@@ -19368,6 +19381,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "version. Conjecture: there is an absolute constant `c > 0` such that for all `p`\nprime and all `A, B \u2286 Z/p` with `#A = #B = n`, the smallest singular value of the submatrix\n`(\u03b6^{ab})_{a\u2208A, b\u2208B}` is at least `(c / p)^{n^2}` \u2014 equivalently, `|det|` admits an explicit\nlower bound depending only on `p` and `n`, not on the combinatorics of `A` and `B`. In\nparticular the recovery of `k`-sparse signals from `2k` noisy Fourier samples is stable with an\nerror amplification bounded by a function of `p` and `k` alone.",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "fd_1495",
+    "priority_score": 0.5076666666666667,
+    "research_mode": "team",
+    "source_exp_id": "4bf66c09",
+    "status": "available",
+    "timestamp": "2026-08-18T05:46:06.328404+00:00",
+    "title": "version. Conjecture: there is an absolute constant `c > 0` such that for all `p`"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The first version of the soundness theorem was stated only for\ntypical inputs and was therefore useless as a \"no silent corruption\" guarantee;\nthe honest fix was the fibrewise (conditional-independence) counting theorem.\nAn early attempt to bound the failure probability of a *fixed* codebook by the\naverage failed: derandomisation only yields a codebook whose bad set is small,\nnever empty \u2014 that is exactly the converse bound biting.",
     "domains": [
       "Computation"
@@ -19410,6 +19437,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The unconditional counting separation and the conditional\ncryptographic separation are both formalized; the missing middle case would show\nthat the seed budget is a resource in its own right, not merely a proxy for\ninformation.",
+    "domains": [
+      "Combinatorics",
+      "Cryptography"
+    ],
+    "id": "fd_1498",
+    "priority_score": 0.49473684210526314,
+    "research_mode": "team",
+    "source_exp_id": "e8a76d4f",
+    "status": "available",
+    "timestamp": "2026-08-18T05:46:17.336897+00:00",
+    "title": "The unconditional counting separation and the conditional"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "in this cycle: `exists_block_dvd` shows that a\nnon-admissible pattern is realised at most finitely often (never, past `p > q`), and\n`constant_gap_run_dvd` is the special case of constant patterns.  The open half is the\nexistence direction, a barcode restatement of the Hardy\u2013Littlewood/Dickson prime\n`k`-tuple conjecture.",
     "domains": [
       "NumberTheory"
@@ -19421,6 +19463,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-17T14:45:13.645265+00:00",
     "title": "in this cycle: `exists_block_dvd` shows that a"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Both halves are already formalised separately: the commutation theorem for `2k+1`\nmonotone curves, and the breakdown theorem for `2k+1` samples.  Composing them is the exact\nstatement a deployment guarantee needs \u2014 \"one bad seed cannot move the reported knee\" \u2014 and it\nis the fourth-seed experiment's formal content.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_1492",
+    "priority_score": 0.4851212121212122,
+    "research_mode": "team",
+    "source_exp_id": "6ba84571",
+    "status": "available",
+    "timestamp": "2026-08-18T05:45:45.842671+00:00",
+    "title": "Both halves are already formalised separately: the commutation theorem for `2k+1`"
   },
   {
     "consumed_by_exp_id": "",
@@ -19630,15 +19686,14 @@ window.FUTURE_DIRECTIONS = [
     "title": "Conjecture C, closed"
   },
   {
-    "consumed_by_exp_id": "4bf66c09",
+    "consumed_by_exp_id": "",
     "description": "Chebotarev's theorem that every square submatrix of the `p \u00d7 p` DFT matrix\nis nonsingular, which in turn follows from a resultant/Vandermonde computation over `Q(\u03b6_p)`\nusing the irreducibility of the `p`-th cyclotomic polynomial \u2014 machinery that Mathlib already\ncontains (`Polynomial.cyclotomic_irreducible`, `IsPrimitiveRoot`).",
     "domains": [],
     "id": "fd_1410",
-    "phase": "A",
     "priority_score": 0.41040350877192977,
     "research_mode": "team",
     "source_exp_id": "525aecde",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-17T09:01:32.349835+00:00",
     "title": "Chebotarev's theorem that every square submatrix of the `p \u00d7 p` DFT matrix"
   },
@@ -20415,5 +20470,56 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-18T03:58:32.532017+00:00",
     "title": "All the ingredients are formalised and sorry-free here: the factor group lemma"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The breakdown theorem is formalised and the two measured normalised distributions\nare encoded (`isMedian_ratios16`, `isMedian_ratios8`); the only missing ingredient is the\nsharpness half, which is a finite computation on the measured triples.",
+    "domains": [],
+    "id": "fd_1493",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "6ba84571",
+    "status": "available",
+    "timestamp": "2026-08-18T05:45:46.093221+00:00",
+    "title": "The breakdown theorem is formalised and the two measured normalised distributions"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The `2 \u00d7 2` half of the statement is now a Lean theorem for all composite `N`\n(`exists_singular_submatrix_of_not_prime`), and the exhaustive data for\n`N \u2208 {4, 6, 8, 9, 10, 12, 15}` in `ComputationalEvidence.md` supports the `n \u00d7 n` form;\nMathlib's `Polynomial.cyclotomic` API plus the machinery in\n`ChebotarevDFT.lean` (the multilinear expansion `det_sum_expansion`) is exactly what a general\nproof needs.",
+    "domains": [
+      "NumberTheory",
+      "Logic"
+    ],
+    "id": "fd_1494",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "4bf66c09",
+    "status": "available",
+    "timestamp": "2026-08-18T05:46:06.056404+00:00",
+    "title": "The `2 \u00d7 2` half of the statement is now a Lean theorem for all composite `N`"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The layer-cake lemma `layer_lower_bound` is already isolated and\ntakes an arbitrary bound function, so the rank argument can be dropped in as a\nsecond instantiation without touching any downstream theorem.",
+    "domains": [],
+    "id": "fd_1496",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "e8a76d4f",
+    "status": "available",
+    "timestamp": "2026-08-18T05:46:16.827090+00:00",
+    "title": "The layer-cake lemma `layer_lower_bound` is already isolated and"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "All the machinery \u2014 honesty, guarding, bounded search, the\n`goodSeeds` counting apparatus for fractions \u2014 is already formalized; only the\n\"fraction of a finite level set\" bookkeeping is missing.",
+    "domains": [],
+    "id": "fd_1497",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "e8a76d4f",
+    "status": "available",
+    "timestamp": "2026-08-18T05:46:17.086204+00:00",
+    "title": "All the machinery \u2014 honesty, guarding, bounded search, the"
   }
 ];
