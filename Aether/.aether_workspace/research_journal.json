@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "66af3cc3",
-      "domain": "NumberTheory",
-      "key_insight": "# Future directions — bold, testable conjectures from the NET-31 formalization\n\nThe two Lean files\n(`Catalog/NumberTheory/BoundaryBlockInternalization.lean`,\n`Catalog/NumberTheory/BoundaryBlockCollect",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 71,
-      "timestamp": "2026-08-16T00:37:25",
-      "title": "NET-31: Internalization is a seed-fixed trait among cures — same 4 seeds dependent at k=2 and k=3; N"
-    },
-    {
       "cycle_id": "dc071269",
       "domain": "NumberTheory",
       "key_insight": "# FUTURE DIRECTIONS — after NET-30's formalisation\n\nThe four Lean files in `Catalog/NumberTheory/` prove: (i) the \"1-redundant but\nblock-dependent\" signature forces `k ≥ 2` for *any* statistic; (ii) i",
@@ -499,19 +489,19 @@
       "theorem_count": 29,
       "timestamp": "2026-08-18T04:52:43",
       "title": "Compression Research A1: Price of universality — minimax redundancy of universal decompressors"
+    },
+    {
+      "cycle_id": "6ba84571",
+      "domain": "Tropical",
+      "key_insight": "# Future directions — tropical order statistics of seed distributions\n\nDerived from the results in `Catalog/Tropical/KneeMedian/` (all statements below are open;\neach is falsifiable by a single formal",
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "theorem_count": 120,
+      "timestamp": "2026-08-18T05:45:59",
+      "title": "NET-48: The direct test survives via the MEDIAN — k*=160 at (d=4, ctx=2048, seed=3), all four point-"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "8d2025bd",
-      "domain": "NumberTheory",
-      "key_insight": "# Future directions — Möbius arithmetic\n\nThis file is the live research thread of the project.  Part I records the state\nof the five conjectures posed after cycle 1; three of them have since been\nsett",
-      "quality_score": 0.627125,
-      "sorry_count": 0,
-      "theorem_count": 225,
-      "timestamp": "2026-08-07T05:08:58",
-      "title": "Mobius Arithmetic: Number Theory on the Mobius Band"
-    },
     {
       "cycle_id": "2c38bc1a",
       "domain": "Cryptography",
@@ -2501,27 +2491,19 @@
       "theorem_count": 29,
       "timestamp": "2026-08-18T04:52:43",
       "title": "Compression Research A1: Price of universality — minimax redundancy of universal decompressors"
+    },
+    {
+      "cycle_id": "6ba84571",
+      "domain": "Tropical",
+      "key_insight": "# Future directions — tropical order statistics of seed distributions\n\nDerived from the results in `Catalog/Tropical/KneeMedian/` (all statements below are open;\neach is falsifiable by a single formal",
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "theorem_count": 120,
+      "timestamp": "2026-08-18T05:45:59",
+      "title": "NET-48: The direct test survives via the MEDIAN — k*=160 at (d=4, ctx=2048, seed=3), all four point-"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "8993bd64",
-      "domain": "Shared",
-      "name": "compression_failure_infinite",
-      "quality": 0.81
-    },
-    {
-      "cycle_id": "8993bd64",
-      "domain": "Shared",
-      "name": "tailAvoiding_patchClosed",
-      "quality": 0.81
-    },
-    {
-      "cycle_id": "c8991a0a",
-      "domain": "Bridges",
-      "name": "C2_eq_one_or",
-      "quality": 0.88
-    },
     {
       "cycle_id": "c8991a0a",
       "domain": "Bridges",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "binw_mul_succ",
       "quality": 0.87
+    },
+    {
+      "cycle_id": "6ba84571",
+      "domain": "Tropical",
+      "name": "on",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "6ba84571",
+      "domain": "Tropical",
+      "name": "knee_of_median_curve",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "6ba84571",
+      "domain": "Tropical",
+      "name": "determines",
+      "quality": 0.85
     }
   ],
-  "last_updated": "2026-08-18T04:52:43",
+  "last_updated": "2026-08-18T05:45:59",
   "open_questions": [
     {
       "context": "- Every main theorem below is `sorry`-free (checked).; `RhoDom.dominant_singleton_iff`, so it is not a self-contained restatement.  No `sorry`, no; `RhoDom.dominant_singleton_iff`, so it is not a self",
@@ -3951,12 +3951,6 @@
     ],
     "Tropical": [
       {
-        "cycle_id": "ea23936f",
-        "quality": 0.627125,
-        "theorems": 96,
-        "title": "Deepening: Tropical Scheme Theory: Groebner Bases over the Tropical Semiring"
-      },
-      {
         "cycle_id": "b7dba88e",
         "quality": 0.7419800000000001,
         "theorems": 115,
@@ -4009,6 +4003,12 @@
         "quality": 0.78,
         "theorems": 73,
         "title": "Compression Research A2: Learnable shared decompressors — model is free, model d"
+      },
+      {
+        "cycle_id": "6ba84571",
+        "quality": 0.85,
+        "theorems": 120,
+        "title": "NET-48: The direct test survives via the MEDIAN — k*=160 at (d=4, ctx=2048, seed"
       }
     ]
   }
