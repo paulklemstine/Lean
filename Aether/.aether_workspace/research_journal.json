@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "2a357c10",
-      "domain": "Bridges",
-      "key_insight": "# Future directions — NET-43 bridge (final, after cycles 1–6)\n\nVerified base (all `sorry`-free, all in `Catalog/Bridges/`, all main theorems checked with\n`#print axioms` to use only `propext`, `Classi",
-      "quality_score": 0.84,
-      "sorry_count": 1,
-      "theorem_count": 104,
-      "timestamp": "2026-08-16T07:46:03",
-      "title": "NET-43: The Deepest Rung Is Two-Seed 256 (k\\*=256 reproduces EXACTLY at seed=2; both honest limits c"
-    },
-    {
       "cycle_id": "6c757940",
       "domain": "Computation",
       "key_insight": "# Future Directions — Sheaf-Theoretic Data Integration\n\nAll results below are in `Catalog/Computation/`, compile against Mathlib\n(Lean 4, toolchain `v4.28.0`) with **zero `sorry`** and only the standa",
@@ -499,19 +489,19 @@
       "theorem_count": 52,
       "timestamp": "2026-08-18T07:55:08",
       "title": "The formal results in `Catalog/Tropical/JacobiSigned*.lean` settle the JACSIGN"
+    },
+    {
+      "cycle_id": "9aa1e8d1",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions — Arithmetic Geometry of Transformer Weight Lattices\n\nDerived from the Stage-3 analysis and the Stage-4 adversarial review of\n`Catalog/Bridges/QuantizedWeightLattices*.lean`, after",
+      "quality_score": 0.86,
+      "sorry_count": 0,
+      "theorem_count": 93,
+      "timestamp": "2026-08-18T08:54:38",
+      "title": "Bridge-NumberTheory-ML: Arithmetic Geometry of Transformer Weight Lattices"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "8dc4e6e3",
-      "domain": "Algebra",
-      "key_insight": "# Future directions — tropical linear algebra\n\nThis file is the live research thread of the project.  The Lean development lives in\n`Catalog/Algebra/TropicalLinearAlgebra/` and every result cited belo",
-      "quality_score": 0.6583992433823346,
-      "sorry_count": 0,
-      "theorem_count": 196,
-      "timestamp": "2026-08-07T08:07:25",
-      "title": "Tropical Linear Algebra: Eigenvalues and Determinants"
-    },
     {
       "cycle_id": "e384d0b8",
       "domain": "Pythagorean",
@@ -2501,27 +2491,19 @@
       "theorem_count": 52,
       "timestamp": "2026-08-18T07:55:08",
       "title": "The formal results in `Catalog/Tropical/JacobiSigned*.lean` settle the JACSIGN"
+    },
+    {
+      "cycle_id": "9aa1e8d1",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions — Arithmetic Geometry of Transformer Weight Lattices\n\nDerived from the Stage-3 analysis and the Stage-4 adversarial review of\n`Catalog/Bridges/QuantizedWeightLattices*.lean`, after",
+      "quality_score": 0.86,
+      "sorry_count": 0,
+      "theorem_count": 93,
+      "timestamp": "2026-08-18T08:54:38",
+      "title": "Bridge-NumberTheory-ML: Arithmetic Geometry of Transformer Weight Lattices"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "7ee9f549",
-      "domain": "MachineLearning",
-      "name": "shift_apply",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "7ee9f549",
-      "domain": "MachineLearning",
-      "name": "shift_pow_apply",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "e46e79a5",
-      "domain": "Applications",
-      "name": "gOR_mul_sq_eq",
-      "quality": 0.86
-    },
     {
       "cycle_id": "e46e79a5",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Pythagorean",
       "name": "card_sqrtsC",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "9aa1e8d1",
+      "domain": "Bridges",
+      "name": "gridRound_mem_zmultiples",
+      "quality": 0.86
+    },
+    {
+      "cycle_id": "9aa1e8d1",
+      "domain": "Bridges",
+      "name": "gridRound_error",
+      "quality": 0.86
+    },
+    {
+      "cycle_id": "9aa1e8d1",
+      "domain": "Bridges",
+      "name": "gridRound_eq_self_iff",
+      "quality": 0.86
     }
   ],
-  "last_updated": "2026-08-18T07:55:08",
+  "last_updated": "2026-08-18T08:54:38",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hupper⟩)",
@@ -3145,12 +3145,6 @@
     ],
     "Bridges": [
       {
-        "cycle_id": "0e033e47",
-        "quality": 0.648859294871795,
-        "theorems": 228,
-        "title": "ArXiv paper: On some perfect matching conjectures in infinite, cubic, bridgeless"
-      },
-      {
         "cycle_id": "768360e4",
         "quality": 0.6509097115384616,
         "theorems": 130,
@@ -3203,6 +3197,12 @@
         "quality": 0.89,
         "theorems": 145,
         "title": "`Catalog/Novelty/MonsterMoonshineBridge.lean` proves a rigorous cross-domain bri"
+      },
+      {
+        "cycle_id": "9aa1e8d1",
+        "quality": 0.86,
+        "theorems": 93,
+        "title": "Bridge-NumberTheory-ML: Arithmetic Geometry of Transformer Weight Lattices"
       }
     ],
     "Combinatorics": [

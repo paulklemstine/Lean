@@ -152,17 +152,17 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle cf8480d3 (Q=0.850), which proved 32 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Equality at `k = 2` holds *iff* the action is trivial\n   (`orbits_sq_eq_orbitals_iff_trivial`), with a quantitative refinement (`rigidity_quantitative`).",
+    "description": "Building on cycle 9aa1e8d1 (Q=0.860), which proved 93 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Proves that quantizing transformer weight matrices onto modular lattice grids preserves global loss landscape convexity invariants.",
     "domains": [
-      "Novelty"
+      "Bridges"
     ],
-    "id": "push_cf8480d3_4cd9b595",
+    "id": "push_9aa1e8d1_00878eab",
     "priority_score": 0.95,
     "research_mode": "team",
-    "source_exp_id": "cf8480d3",
+    "source_exp_id": "9aa1e8d1",
     "status": "available",
-    "timestamp": "2026-08-18T07:54:56.804207+00:00",
-    "title": "Deepening: Rigidity"
+    "timestamp": "2026-08-18T08:54:39.349283+00:00",
+    "title": "Deepening: Bridge-NumberTheory-ML: Arithmetic Geometry of Transformer Weight Lattices"
   },
   {
     "consumed_by_exp_id": "",
@@ -864,20 +864,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-16T11:35:10.982658+00:00",
     "title": "Deepening: Elliptic Curve Cryptography: Weil Pairing and BLS Signatures"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle a5150a29 (Q=0.820), which proved 52 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # FUTURE DIRECTIONS \u2014 after the Jacobi-signed Weil floor\n\nThe formal results in `Catalog/Tropical/JacobiSigned*.lean` settle the JACSIGN\nexperiment: the Jacobi-signed circle count `W(N) = \u2211_{x\u00b2+y\u00b2=1} (x/N)` is\nmultiplicative (`circleWeightZ_mul`), vanishes identically when a factor is\n`\u2261 3 (mod 4)` ",
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "push_a5150a29_0faf3769",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "a5150a29",
-    "status": "available",
-    "timestamp": "2026-08-18T07:55:09.118796+00:00",
-    "title": "Deepening: The formal results in `Catalog/Tropical/JacobiSigned*.lean` settle the JACSIGN"
   },
   {
     "consumed_by_exp_id": "",
@@ -1792,20 +1778,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-05T06:51:05.180719+00:00",
     "title": "Deepening: ArXiv paper: Magnitude homology of tope graphs"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle a60d1c49 (Q=0.782), which proved 8 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the attention mechanism A(Q,K,V) = softmax(QK^T / sqrt(d_k)) V. Prove that permutation-equivariant attention is a universal approximator of permutation-equivariant functions. Show that the attention kernel K(x,y) = exp(q(x)^T k(y) / sqrt(d)) defines a reproducing kernel Hilbert space. Prov",
-    "domains": [
-      "MachineLearning"
-    ],
-    "id": "push_a60d1c49_1f2423f4",
-    "priority_score": 0.88167,
-    "research_mode": "team",
-    "source_exp_id": "a60d1c49",
-    "status": "available",
-    "timestamp": "2026-08-03T15:27:09.366606+00:00",
-    "title": "Deepening: ML Attention Mechanism: Formal Properties of Transformers"
   },
   {
     "consumed_by_exp_id": "",
@@ -19250,6 +19222,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "mixing weight `a \u2208 (0,1)` the supremum of the convexity defect\nof `f \u2218 gridRound \u03b4` over convex `L`-Lipschitz `f` and all weight pairs equals\n`2\u00b7L\u00b7r = L\u00b7\u03b4` and is **never attained**; moreover the set of attained defects is\ndense in `[0, L\u00b7\u03b4]`, with gap structure governed by the three-distance theorem for\nthe continued fraction of `a`.  Consequently the *expected* defect of a stochastic\ninterpolation schedule is strictly smaller for an irrational mixing weight than for\nany rational weight of comparable granularity.",
+    "domains": [
+      "Geometry",
+      "Computation"
+    ],
+    "id": "fd_1506",
+    "priority_score": 0.5482222222222222,
+    "research_mode": "team",
+    "source_exp_id": "9aa1e8d1",
+    "status": "available",
+    "timestamp": "2026-08-18T08:54:25.435995+00:00",
+    "title": "mixing weight `a \u2208 (0,1)` the supremum of the convexity defect"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Let `\u039b \u2286 \u211d^d` be a full-rank lattice with basis matrix `B`. The data\n`|t(P + v) \u2229 \u039b|` for all real `t > 0` and all `v \u2208 \u039b` determines `1_P` almost everywhere, with\nconstants depending only on `\u03bb_1(\u039b)` and `\u03bb_d(\u039b)`; moreover, the sparse-grid probe reconstructs\n`1_P` using `O(1)` counting queries per probe point. Consequently, a \"lattice-count oracle\" for a\nsecret body `P` (as arises in lattice-based counting/`CVP`-style side channels) leaks `P` up to\nnull sets, with query complexity polynomial in the desired accuracy and in `\u03bb_d/\u03bb_1`.",
     "domains": [
       "Computation",
@@ -19262,6 +19249,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-17T07:17:17.606403+00:00",
     "title": "Let `\u039b \u2286 \u211d^d` be a full-rank lattice with basis matrix `B`. The data"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle 3 upgraded sharpness from \"the maximum is attained\" to \"every\nlattice value is attained\", and cycle 4 turned the maximum into an identification\ntheorem; the outstanding step is a *closure* description of `defectSet`, which is a\nfinite convex-geometry computation for each `q` and is falsifiable by one\nexhaustive rational scan.",
+    "domains": [
+      "Geometry",
+      "Cryptography"
+    ],
+    "id": "fd_1508",
+    "priority_score": 0.5303333333333333,
+    "research_mode": "team",
+    "source_exp_id": "9aa1e8d1",
+    "status": "available",
+    "timestamp": "2026-08-18T08:54:25.948174+00:00",
+    "title": "Cycle 3 upgraded sharpness from \"the maximum is attained\" to \"every"
   },
   {
     "consumed_by_exp_id": "",
@@ -19419,6 +19421,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-17T07:16:47.247467+00:00",
     "title": "Let `t k = tr(M\u2082^k)` (recurrence `t(k+3) = 5t(k+2) + 5t(k+1) \u2212 t(k)`,"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For fixed `q`, `defectSet \u03b4 k q = defectSet \u03b4 k' q` if and only if\n   `gcd(k,q) = gcd(k',q)` \u2014 the defect spectrum sees only the reduced denominator,\n   and sees it exactly.\n2. **(1a)** For `a` irrational with bounded continued-fraction partial quotients,\n   the attained defects in `[0, L\u03b4]` have gaps `O(1/n)` after `n` weight pairs \u2014\n   a quantitative (three-distance) form of Conjecture 1.\n3. **(2a)** For the `b`-bit grid on `\u211d^N`, the number of codebook points inside the\n   basin `\u2016w \u2212 w*\u2016 \u2264 \u221a(L\u03b4/(\u03bc2^b))` is `\u0398((2^b L /(\u03bc \u03b4))^{N/2})`; below\n   `b = (1/2)log\u2082(L/\u03bc)` this count drops to `1` and the lattice optimum can no\n   longer resolve the basin.",
+    "domains": [
+      "Cryptography"
+    ],
+    "id": "fd_1510",
+    "priority_score": 0.5038571428571429,
+    "research_mode": "team",
+    "source_exp_id": "9aa1e8d1",
+    "status": "available",
+    "timestamp": "2026-08-18T08:54:26.475862+00:00",
+    "title": "For fixed `q`, `defectSet \u03b4 k q = defectSet \u03b4 k' q` if and only if"
   },
   {
     "consumed_by_exp_id": "",
@@ -19685,14 +19701,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "It would upgrade \"the cost of internal soundness is one loop\""
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4f724156",
     "description": "For every `m \u2265 1`, the renormalized product `q^m \u00b7 \u03a0 f i` of `m`\n    normalized series realizes **exactly** the series of order `0`\n    (`renormalized_prod_iff_orderTop_zero`); the pole order is the only obstruction, and the\n    factorization is never unique (`factorization_not_unique`).",
     "domains": [],
     "id": "fd_1438",
+    "phase": "A",
     "priority_score": 0.41264102564102567,
     "research_mode": "team",
     "source_exp_id": "286b3a0e",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-17T13:54:06.839161+00:00",
     "title": "Conjecture C, closed"
   },
@@ -20590,5 +20607,34 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-18T07:55:04.106620+00:00",
     "title": "The congruence is a theorem and the four-square identity"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Mixed-precision quantization (e.g. `INT4 \u00d7 INT3`) is standard practice\nwith no formal justification; the algebraic half is done and the analytic half is a\ntwo-quantizer composition of Theorem A sharpened by the denominator law.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_1507",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "9aa1e8d1",
+    "status": "available",
+    "timestamp": "2026-08-18T08:54:25.693038+00:00",
+    "title": "Mixed-precision quantization (e.g. `INT4 \u00d7 INT3`) is standard practice"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The audit theorems reduce the whole question to the purely continuous\nstatement above, and `convexOn_of_approxConvex_tower` already provides the `\u03b7 \u2192 0`\nboundary case that any proof must specialise to.",
+    "domains": [
+      "Geometry",
+      "Logic"
+    ],
+    "id": "fd_1509",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "9aa1e8d1",
+    "status": "available",
+    "timestamp": "2026-08-18T08:54:26.202451+00:00",
+    "title": "The audit theorems reduce the whole question to the purely continuous"
   }
 ];
