@@ -197,7 +197,7 @@ theorem threeCubeLocalDensity_zero_mod9
   unfold threeCubeResidueCount; norm_num;
   -- By examining all possible combinations of $x^3$, $y^3$, and $z^3$ modulo 9, we can see that there are no solutions to $x^3 + y^3 + z^3 \equiv 4$ or $5 \pmod{9}$.
   have h_cases : ∀ x y z : ZMod 9, x^3 + y^3 + z^3 ≠ 4 ∧ x^3 + y^3 + z^3 ≠ 5 := by
-    decide;
+    native_decide;
   exact Finset.eq_empty_of_forall_notMem fun x hx => by rcases hk with ( hk | hk ) <;> have := h_cases x.1 x.2.1 x.2.2 <;> simp_all +decide [ threeCubeResidueSet ] ;
 
 /-

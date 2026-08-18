@@ -1,419 +1,369 @@
 # The Price of Universality: Exact Minimax Redundancy of Universal Decompressors
 
 **Author:** Aristotle
-**Date:** 2026-08-17
+**Date:** 2026-08-18
 
 ---
 
 ## Abstract
 
-A universal compression scheme must serve every input with one shared decompressor, whereas a scheme specialised to a known source can tune its code to that source. We quantify the gap — the *price of universality* — for finite message spaces and arbitrary parametric source classes, and we determine when specialising a decompressor can actually move bits out of a message.
+A universal decompressor must serve an entire class of sources with a single, shared program; a specialized decompressor is tuned to one source. The number of extra bits the universal scheme pays is the *price of universality*. We give a complete, finitary and fully explicit treatment of this quantity for finite classes of sources on finite alphabets, in both its average-case and its worst-case forms.
 
-Our starting point is an exact minimax identification: for a class $\{p_\theta\}_{\theta\in\Theta}$ of sources on a finite message space $X$, the minimax pointwise redundancy equals $\log_2 C_S$, where $C_S=\sum_{x\in X}\sup_\theta p_\theta(x)$ is the Shtarkov sum, achieved by the normalized maximum likelihood (NML) distribution and unavoidable for every Kraft-compliant code. We then bound $C_S$ for the classes of practical interest by an abstract sufficient-statistic principle: if the likelihood factors through a statistic with $N$ values then $C_S\le N$. This yields $C_S\le(n+1)^{|A|}$ for memoryless sources of block length $n$ over an alphabet $A$ (with the sharper $C_S\le n+1$ in the binary case) and $C_S\le|A|\,(n+1)^{|A|^2}$ for first-order Markov chains, i.e. redundancies of $|A|\log_2(n+1)+1$ and $\log_2|A|+|A|^2\log_2(n+1)+1$ bits, uniformly over sources and messages.
+In the average-case setting we prove a compensation identity — a Pythagorean decomposition of relative entropy — which yields the redundancy–capacity lower bound: for every prior $\pi$ on the class, some source pays at least the mutual information $I(\pi)$ bits of redundancy under any code. A matching construction (the Shannon code of the uniform mixture) pays at most $\log_2 m + 1$ bits on every member of a class of $m$ sources, giving the sandwich $\log_2 m \le \text{minimax redundancy} \le \log_2 m + 1$ for classes of $m$ perfectly distinguishable sources.
 
-A matching lower bound is proved with explicit constants and no asymptotics for the one-parameter binary memoryless class: two-sided Stirling estimates show every interior type contributes at least $1/(2\sqrt n)$ to the Shtarkov sum, whence $C_S\ge\sqrt n/4$ and the price is at least $\tfrac12\log_2 n-2$ bits. This is the classical $(d/2)\log_2 n$ parametric rate at $d=1$, so the theory is tight up to constants: $\tfrac12\log_2 n-2\le\log_2 C_S\le\log_2(n+1)$.
+In the worst-case (pointwise regret) setting we remove the one-bit slack entirely: the minimax regret of a finite class $\mathcal{P} = \{p_\theta\}$ equals exactly $\log_2 S(\mathcal{P})$, where $S(\mathcal{P}) = \sum_a \max_\theta p_\theta(a)$ is the Shtarkov sum, with the optimum attained by the normalized maximum likelihood distribution. We establish the structural theory of $S$: $1 \le S \le m$; $S = m$ exactly for perfectly distinguishable classes and $S < m$ strictly otherwise; $S(\{p_0,p_1\}) = 1 + \mathrm{TV}(p_0,p_1)$ in closed form; and $S$ is multiplicative over independent components, so $\log_2 S$ is additive.
 
-Against this we place the opposite extreme: for the class of point masses — literally one decompressor per file — the Shtarkov sum is exactly $|X|$, so on $n$-bit files the price is exactly $n$ bits and specialisation transfers nothing. The separation is explained by three structural laws: the price is zero for a singleton class, monotone in the class, exactly additive over blocks with independently chosen parameters, and only subadditive over blocks sharing a parameter. Finally, we develop the average-case dual: a compensation identity decomposes Bayes redundancy into a capacity term and an excess term, giving the redundancy–capacity lower bound $I(w)\le\inf_q\sup_\theta D(p_\theta\|q)$ and the consistency estimate $I(w)\le\log_2 C_S\;(\le\log_2|\Theta|)$.
+We then instantiate the theory on the class of memoryless binary sources of block length $n$. Using only the first two moments of the binomial law and Chebyshev's inequality we prove $S_n \ge \sqrt{n}/4$, and a term-by-term bound gives $S_n \le n+1$, whence
 
-The conclusion for practice is quantitative: bits move from the message into a shared decompressor only in proportion to the *logarithm* of the class complexity, so specialised decompressors pay off exactly when the data class is genuinely low-complexity relative to the data, and not otherwise.
+$$\tfrac12 \log_2 n - 2 \;\le\; \text{minimax regret} \;\le\; \log_2 (n+1).$$
 
-**Keywords:** minimax redundancy, Shtarkov sum, normalized maximum likelihood, Rissanen rate, method of types, Markov sources, redundancy–capacity theorem, universal coding.
+This reproduces Rissanen's $\tfrac{k}{2}\log n$ redundancy rate at $k = 1$ with explicit non-asymptotic constants; additivity upgrades it to $k\big(\tfrac12\log_2 n - 2\big) \le \text{regret} \le k\log_2(n+1)$ for $k$ independent blocks, and shows the price is unbounded in the number of parameters. Finally we quantify the value of specialization: restricting to a subclass $\mathcal{P}' \subseteq \mathcal{P}$ saves at most $\log_2\big(S(\mathcal{P})/S(\mathcal{P}')\big)$ bits pointwise, with equality where the maximum likelihood is attained inside the subclass. The engineering verdict follows: specialization does move bits from the message into the shared decompressor, but only $\log_2(\text{class complexity})$ of them — an $O(\log n)$ saving against a $\Theta(n)$-bit message in every parametric regime.
+
+**Keywords:** minimax redundancy, universal source coding, Shtarkov sum, normalized maximum likelihood, redundancy–capacity theorem, Rissanen rate, Bernoulli class, total variation distance.
 
 ---
 
 ## 1. Introduction
 
-### 1.1 The problem
+### 1.1 The question
 
-Compression algorithms in the wild are *universal*: a single decompressor is shipped once and must correctly invert the compressor on every input it may ever meet. This is a deliberate engineering choice with an information-theoretic cost. If the data were known to be drawn from a specific source $p$, the optimal code would spend $\log_2(1/p(x))$ bits on the message $x$, and nothing else could do better on average. A universal scheme does not know $p$; it knows only that $p$ belongs to some class $\{p_\theta\}_{\theta\in\Theta}$ — "some memoryless source", "some Markov chain of order one", "some source, we have no idea".
+Data compression is asymmetric. The compressor sees the data; the decompressor is fixed in advance and must be shared by all users of the format. This asymmetry is the origin of a basic engineering question: *how much would we gain by shipping a decompressor specialized to a class of data, instead of a universal one?*
 
-The question this paper answers is:
+The question is not rhetorical. A universal scheme is a single length function $L$ that must be good simultaneously for every source in a class $\mathcal{P}$. A specialized scheme may be tailored to a single $p \in \mathcal{P}$, and — by Shannon's theorem — can then operate within one bit of the entropy $H(p)$. The excess of the universal scheme over this ideal is the price we wish to compute, and the question is whether the price is large enough that moving bits from the message into the decompressor is worth the loss of generality.
 
-> **How many bits must a single universal code lose, in the worst case over messages and sources, relative to the code tailored to the true source?**
+### 1.2 What is proved here
 
-We call this the *price of universality* of the class. It is the correct formalisation of the practical question "is it worth shipping a decompressor specialised to my kind of data?", because the price is exactly the number of bits per message that a specialised scheme can save and a universal one cannot.
+We work throughout with a finite message alphabet $\mathcal{A}$ and a finite index set $\Theta$; everything is exact and finitary, with no asymptotics hidden in the statements. The contributions are:
 
-### 1.2 Contributions
+1. **The average-case price** (Section 3). A compensation identity for relative entropy, the resulting redundancy–capacity lower bound, a matching mixture-code upper bound, and their combination into an exact-up-to-one-bit answer $\log_2 m$ for classes of $m$ perfectly distinguishable sources.
+2. **The worst-case price, exactly** (Section 4). The minimax pointwise regret of a finite class equals $\log_2 S$ with $S$ the Shtarkov sum, with both achievability (via normalized maximum likelihood) and a converse valid for arbitrary sub-probability coding weights, and hence for genuine integer code lengths obeying Kraft's inequality.
+3. **Structure of the Shtarkov sum** (Section 5). Bounds $1 \le S \le m$; a rigidity theorem characterizing the extreme case $S = m$; the closed form $S = 1 + \mathrm{TV}$ for two-source classes; and multiplicativity over independent components.
+4. **A Rissanen-style rate from first principles** (Section 6). An elementary development of the binomial moments and Chebyshev's inequality, and the resulting two-sided bound $\tfrac12\log_2 n - 2 \le \log_2 S_n \le \log_2(n+1)$ for the memoryless binary class.
+5. **Multi-parameter rates and unboundedness** (Section 7).
+6. **The value of specialization, and the verdict** (Sections 8–9).
 
-1. **An exact answer (Section 3).** The minimax pointwise redundancy of a class is exactly $\log_2 C_S$ with $C_S=\sum_x\sup_\theta p_\theta(x)$, attained (to within one bit of integer rounding) by the NML code and unavoidable by every Kraft-compliant code. Both directions are proved without positivity assumptions in a division-free multiplicative form, then transferred to code lengths.
-2. **Closed-form upper bounds for the standard classes (Section 4).** An abstract sufficient-statistic bound $C_S\le|\sigma|$, a product-form counting bound $C_S\le|C|\,(m+1)^{|B|}$, and their specialisations to memoryless and first-order Markov sources, with the corresponding bit-level guarantees and the vanishing of the per-symbol price.
-3. **A matching lower bound with explicit constants (Section 5).** For the binary memoryless class, $C_S\ge\sqrt n/4$ for $n\ge2$, hence a price of at least $\tfrac12\log_2 n-2$ bits. This meets the falsifiability gate of the programme: the classical Rissanen rate is matched from below by a self-contained, non-asymptotic argument.
-4. **A separation theorem (Section 6).** On the same message space of $n$-bit files, the memoryless class costs $\Theta(\log n)$ bits while the class of point masses costs exactly $n$ bits. Specialisation moves bits if and only if the class is low-complexity.
-5. **Structural laws (Section 7).** Calibration, monotonicity, exact multiplicativity over independent product classes, and submultiplicativity under a shared parameter; as a corollary the memoryless Shtarkov sum is submultiplicative in block length, so the per-symbol price converges by Fekete's lemma.
-6. **The average-case dual (Section 8).** Relative entropy in bits, the Bayes mixture, the compensation identity, Bayes optimality of the mixture code, the redundancy–capacity lower bound, and the consistency estimates $I(w)\le\log_2 C_S$ and $I(w)\le H(w)\le\log_2|\Theta|$.
-7. **Exact computational evidence (Section 9).** Rational-arithmetic values of the binary Shtarkov sum at $n=2,4,8$, confirming both sides of the sandwich and strict growth.
+### 1.3 Relation to the classical picture
 
-### 1.3 Relation to classical theory
-
-The identification of the minimax pointwise redundancy with $\log_2 C_S$ and the optimality of NML are due to Shtarkov; the $(d/2)\log_2 n$ redundancy rate for $d$-parameter smooth families is due to Rissanen; the redundancy–capacity correspondence is the Davisson–Gallager circle of ideas. Our contribution here is a fully self-contained, constant-explicit development of this material for finite message spaces, together with the separation theorem and the structural calculus, which together answer the design question about specialised decompressors.
+The three pillars of the classical theory of universal coding are: the redundancy–capacity theorem (minimax average redundancy equals the capacity of the channel from source label to message), Shtarkov's normalized maximum likelihood construction (minimax pointwise regret equals $\log$ of the Shtarkov sum), and Rissanen's $\tfrac{k}{2}\log n$ rate for smooth $k$-parameter families. This paper gives self-contained, quantitatively explicit versions of all three in the finite setting, together with structural results (rigidity, the total-variation formula, exact pricing of specialization) that sharpen the picture into an answer to the engineering question.
 
 ---
 
-## 2. Setting and definitions
+## 2. Setting and basic quantities
 
-Throughout, $X$ is a finite non-empty set of *messages* and $\Theta$ a non-empty index set of *sources*.
+Let $\mathcal{A}$ be a finite nonempty set of *messages*.
 
-**Definition 2.1 (Source class).** A *source class* on $X$ indexed by $\Theta$ is a family $p:\Theta\times X\to\mathbb R$ with $p_\theta(x)\ge0$ for all $\theta,x$ and $\sum_{x\in X}p_\theta(x)=1$ for all $\theta$.
+**Definition 2.1 (Code).** A *length function* is a map $L : \mathcal{A} \to \mathbb{N}$. Its *Kraft sum* is $\kappa(L) = \sum_{a \in \mathcal{A}} 2^{-L(a)}$, and $L$ is a *code* if $\kappa(L) \le 1$. By the Kraft–McMillan theorem this is exactly the constraint satisfied by uniquely decodable codes, so nothing is lost by working with length functions rather than explicit encoders.
 
-Immediately $p_\theta(x)\le1$.
+**Definition 2.2 (Distributions and information quantities).** A function $p : \mathcal{A} \to \mathbb{R}$ is a *probability mass function* if $p \ge 0$ pointwise and $\sum_a p(a) = 1$. For such $p$, and for arbitrary positive weights $q$, define (all logarithms base $2$, so all quantities are in bits):
 
-**Definition 2.2 (Maximum-likelihood envelope, Shtarkov sum, NML).**
-$$\widehat p(x)\;=\;\sup_{\theta\in\Theta}p_\theta(x),\qquad C_S\;=\;\sum_{x\in X}\widehat p(x),\qquad q^\star(x)\;=\;\frac{\widehat p(x)}{C_S}.$$
-The supremum exists because the set $\{p_\theta(x):\theta\}$ is bounded above by $1$. We call $C_S$ the *Shtarkov sum* and $q^\star$ the *normalized maximum likelihood* (NML) distribution of the class.
+$$H(p) = -\sum_a p(a)\log_2 p(a), \qquad D(p\|q) = \sum_a p(a)\log_2\frac{p(a)}{q(a)},$$
+$$\mathbb{E}_p[L] = \sum_a p(a) L(a), \qquad R(p, L) = \mathbb{E}_p[L] - H(p).$$
 
-**Definition 2.3 (Codes and Kraft compliance).** A *length function* is a map $\ell:X\to\mathbb N$. It is *Kraft compliant* if $\sum_{x\in X}2^{-\ell(x)}\le1$. Kraft's inequality is precisely the condition for a prefix-free binary code with those lengths to exist, so we identify codes with Kraft-compliant length functions.
+We adopt the standard conventions $0\log 0 = 0$ and $\log 0 = 0$ in the summands where the coefficient vanishes; every statement below is insensitive to these conventions because the offending terms are always multiplied by a zero probability.
 
-**Definition 2.4 (Redundancy).** The *pointwise redundancy* of $\ell$ at $(\theta,x)$ (for $p_\theta(x)>0$) is
-$$R(\ell,\theta,x)\;=\;\ell(x)-\log_2\frac{1}{p_\theta(x)} .$$
-The *price of universality* of the class is $\inf_{\ell}\sup_{\theta,x}R(\ell,\theta,x)$, the infimum being over Kraft-compliant $\ell$.
+**Lemma 2.3 (Gibbs' inequality).** If $p$ is a probability mass function and $q > 0$ satisfies $\sum_a q(a) \le 1$, then $D(p\|q) \ge 0$.
 
-Two elementary facts anchor the scale.
+*Proof sketch.* From $\log x \le x - 1$ one gets the pointwise bound $p(a)\ln\frac{q(a)}{p(a)} \le q(a) - p(a)$, valid also at $p(a)=0$. Summing over $a$ gives $\sum_a p(a)\ln\frac{q(a)}{p(a)} \le \sum_a q(a) - 1 \le 0$. Dividing by $\ln 2$ and flipping the sign of the log-ratio yields $D(p\|q)\ge 0$. $\square$
 
-**Proposition 2.5.** $1\le C_S$, and if $\Theta$ is finite then $C_S\le|\Theta|$.
+**Proposition 2.4 (Redundancy is a divergence).** For every probability mass function $p$ and length function $L$,
+$$R(p, L) = D\big(p \,\big\|\, 2^{-L}\big).$$
 
-*Proof.* Fix any $\theta_0$. Then $1=\sum_x p_{\theta_0}(x)\le\sum_x\widehat p(x)=C_S$. For the upper bound, $\widehat p(x)\le\sum_{\theta}p_\theta(x)$ since all terms are non-negative; summing over $x$ and exchanging the order of summation gives $C_S\le\sum_\theta 1=|\Theta|$. $\square$
+*Proof sketch.* On each message with $p(a) > 0$, $\log_2\frac{p(a)}{2^{-L(a)}} = \log_2 p(a) + L(a)$; multiply by $p(a)$ and sum, recognizing $\mathbb{E}_p[L] - H(p)$. Messages with $p(a)=0$ contribute nothing on either side. $\square$
 
-In words: universality never helps, and it never costs more than naming the source outright.
+**Corollary 2.5 (Source coding bound).** If $L$ is a code and $p$ a probability mass function then $H(p) \le \mathbb{E}_p[L]$, i.e. $R(p,L) \ge 0$.
 
----
+**Definition 2.6 (Shannon code).** For a strictly positive $p$, put $L_p(a) = \lceil -\log_2 p(a)\rceil$.
 
-## 3. The exact minimax theorem
+**Proposition 2.7 (The specialist pays at most one bit).** For strictly positive $p$, $L_p$ is a code and $R(p, L_p) \le 1$.
 
-### 3.1 Achievability
+*Proof sketch.* Kraft: $2^{-L_p(a)} \le 2^{\log_2 p(a)} = p(a)$, so $\kappa(L_p) \le \sum_a p(a) = 1$. Redundancy: $L_p(a) \le -\log_2 p(a) + 1$, so $\mathbb{E}_p[L_p] \le H(p) + 1$. $\square$
 
-**Theorem 3.1 (NML dominates the class).** For every $\theta\in\Theta$ and $x\in X$,
-$$p_\theta(x)\;\le\;C_S\cdot q^\star(x).$$
-
-*Proof.* $C_S q^\star(x)=\widehat p(x)\ge p_\theta(x)$ by definition of the supremum; $C_S>0$ by Proposition 2.5. $\square$
-
-Because $q^\star$ is a genuine probability distribution ($\sum_x q^\star(x)=1$ by construction), the code
-$$\ell^\star(x)\;=\;\Big\lceil\log_2\frac{1}{q^\star(x)}\Big\rceil$$
-is Kraft compliant: $2^{-\ell^\star(x)}\le q^\star(x)$ termwise, and the $q^\star(x)$ sum to $1$. Its redundancy is uniformly controlled.
-
-**Theorem 3.2 (Achievability in code lengths).** Assume $\widehat p(x)>0$ for all $x$. Then for every source $\theta$ and every message $x$ with $p_\theta(x)>0$,
-$$\ell^\star(x)\;\le\;\log_2\frac{1}{p_\theta(x)}+\log_2 C_S+1 .$$
-
-*Proof.* By Theorem 3.1, $1/q^\star(x)\le C_S/p_\theta(x)$, hence $\log_2(1/q^\star(x))\le\log_2(1/p_\theta(x))+\log_2 C_S$. Since $q^\star(x)\le1$ the quantity $\log_2(1/q^\star(x))$ is non-negative, so its ceiling is strictly less than itself plus one. $\square$
-
-Note the strength of the statement: a *single* code, fixed in advance, is within $\log_2C_S+1$ bits of the ideal code for the true source, simultaneously for all sources and all messages. No averaging, no asymptotics.
-
-### 3.2 Converse
-
-**Theorem 3.3 (Every sub-probability is beaten somewhere).** Let $q:X\to\mathbb R$ satisfy $\sum_x q(x)\le1$. Then there exists $x\in X$ with
-$$q(x)\cdot C_S\;\le\;\widehat p(x).$$
-
-*Proof.* Suppose not: $\widehat p(x)<q(x)C_S$ for every $x$. Summing the strict inequality over the non-empty finite set $X$ gives $C_S<\big(\sum_x q(x)\big)C_S\le C_S$, a contradiction. $\square$
-
-When $\Theta$ is finite the supremum $\widehat p(x)$ is attained, so a witnessing source can be exhibited: there are $x,\theta$ with $q(x)C_S\le p_\theta(x)$.
-
-**Theorem 3.4 (Kraft converse, code-length form).** Let $\ell$ be Kraft compliant and $\Theta$ finite with all $p_\theta(x)>0$. Then there exist a message $x$ and a source $\theta$ with
-$$\ell(x)\;\ge\;\log_2\frac{1}{p_\theta(x)}+\log_2 C_S .$$
-
-*Proof.* Apply Theorem 3.3 to $q(x)=2^{-\ell(x)}$, which is a sub-probability by Kraft. This yields $x,\theta$ with $C_S\le2^{\ell(x)}p_\theta(x)$; take base-two logarithms. $\square$
-
-### 3.3 The minimax identity
-
-Combining, we obtain the multiplicative form of Shtarkov's theorem, valid with no positivity hypotheses at all.
-
-**Theorem 3.5 (Exact minimax redundancy).** For a source class with Shtarkov sum $C_S$:
-
-1. $p_\theta(x)\le C_S\,q^\star(x)$ for all $\theta,x$;
-2. if $q$ is any non-negative sub-probability on $X$ and $c\in\mathbb R$ satisfies $p_\theta(x)\le c\,q(x)$ for all $\theta,x$, then $C_S\le c$.
-
-Consequently $C_S$ is the least constant of uniform domination of the class by a coding sub-probability, and $\log_2 C_S$ is the minimax pointwise redundancy, achieved to within one bit by the NML code and unavoidable by Theorem 3.4.
-
-*Proof of (2).* From $p_\theta(x)\le cq(x)$ for all $\theta$ we get $\widehat p(x)\le cq(x)$; summing, $C_S\le c\sum_x q(x)$. Since $C_S\ge1>0$ and $\sum_x q(x)\ge0$, necessarily $c>0$, and then $c\sum_xq(x)\le c$. $\square$
-
-### 3.4 The maximally expensive case
-
-**Theorem 3.6 (Mutually singular sources).** Suppose $\Theta$ is finite and there are pairwise disjoint sets $S_\theta\subseteq X$ with $\sum_{x\in S_\theta}p_\theta(x)=1$ for each $\theta$. Then $C_S=|\Theta|$ exactly.
-
-*Proof.* "$\le$" is Proposition 2.5. For "$\ge$": $|\Theta|=\sum_\theta\sum_{x\in S_\theta}p_\theta(x)\le\sum_\theta\sum_{x\in S_\theta}\widehat p(x)$, and by disjointness the double sum is a sum of $\widehat p$ over a subset of $X$, hence at most $C_S$ by non-negativity. $\square$
-
-If the sources of a class can be told apart with certainty from the data, the universal code must effectively *name* the source, paying the full $\log_2|\Theta|$ bits. This is the seed of the separation theorem of Section 6.
+Propositions 2.4–2.7 fix the baseline. A decompressor that knows the source is essentially free of overhead; everything we compute below is therefore genuinely the cost of *not knowing*.
 
 ---
 
-## 4. Upper bounds: parametric classes cost only $O(\log n)$
+## 3. The average-case price: mutual information
 
-The bound $C_S\le|\Theta|$ is vacuous for continuously parametrised classes. The right tool is that likelihoods usually factor through a coarse statistic.
+Fix a finite family $\mathcal{P} = \{p_\theta\}_{\theta\in\Theta}$ of probability mass functions on $\mathcal{A}$, and a *prior* $\pi$ on $\Theta$.
 
-**Theorem 4.1 (Sufficient-statistic bound).** Let $T:X\to\sigma$ with $\sigma$ finite, and suppose $T(x)=T(y)$ implies $p_\theta(x)=p_\theta(y)$ for every $\theta$. Then
-$$C_S\;\le\;|\sigma| .$$
+**Definition 3.1.** The *Bayes mixture* is $\bar p_\pi(a) = \sum_\theta \pi(\theta) p_\theta(a)$, and the *mutual information* of the prior is
+$$I(\pi) = \sum_\theta \pi(\theta)\, D(p_\theta \,\|\, \bar p_\pi),$$
+i.e. the mutual information between the source label $\theta \sim \pi$ and the message $a \sim p_\theta$.
 
-*Proof.* Fix $s\in\sigma$ and let $F=T^{-1}(s)$, $k=|F|$. If $F=\emptyset$ its contribution to $C_S$ is $0$. Otherwise $\widehat p$ is constant on $F$, say equal to $M$, because $p_\theta$ is. For each $\theta$ and $x\in F$ we have $k\,p_\theta(x)=\sum_{y\in F}p_\theta(y)\le1$, so $p_\theta(x)\le1/k$; taking suprema, $M\le1/k$ and $\sum_{x\in F}\widehat p(x)=kM\le1$. Summing over the $|\sigma|$ fibres, which partition $X$, gives the claim. $\square$
+**Theorem 3.2 (Compensation identity).** Let $\pi$ be a strictly positive prior and $q$ a strictly positive weight function on $\mathcal{A}$. Then
+$$\sum_\theta \pi(\theta)\, D(p_\theta\|q) \;=\; I(\pi) \;+\; D(\bar p_\pi \| q).$$
 
-The classes of interest have *product-form* likelihoods, and for those the relevant statistic is a vector of counts.
+*Proof sketch.* For every $\theta$ and every $a$ with $p_\theta(a) > 0$ we have $\bar p_\pi(a) > 0$ (because $\pi(\theta) > 0$), so the log-ratio splits:
+$$\log_2 \frac{p_\theta(a)}{q(a)} = \log_2\frac{p_\theta(a)}{\bar p_\pi(a)} + \log_2\frac{\bar p_\pi(a)}{q(a)}.$$
+Multiplying by $\pi(\theta)p_\theta(a)$ and summing over $\theta$ and $a$: the first group of terms assembles to $I(\pi)$ by definition, while in the second group the sum over $\theta$ of $\pi(\theta)p_\theta(a)$ is exactly $\bar p_\pi(a)$, producing $D(\bar p_\pi\|q)$. $\square$
 
-**Theorem 4.2 (Product-form counting bound).** Suppose the message $x$ determines features $b_1(x),\dots,b_m(x)\in B$ and an initial value $c(x)\in C$, with $B,C$ finite, and that the likelihood has the form
-$$p_\theta(x)\;=\;h_\theta(c(x))\prod_{j=1}^{m}g_\theta\big(b_j(x)\big).$$
-Then $C_S\le|C|\cdot(m+1)^{|B|}$.
+This identity is the algebraic heart of the redundancy–capacity theorem: it says that the average distance from the class to a coding distribution $q$ decomposes orthogonally into an irreducible part (the spread of the class about its own centre of mass) and a part measuring how badly $q$ misses that centre of mass.
 
-*Proof.* The product $\prod_j g_\theta(b_j(x))$ equals $\prod_{b\in B}g_\theta(b)^{N_b(x)}$ where $N_b(x)=\#\{j:b_j(x)=b\}$. Hence the likelihood depends on $x$ only through the pair $\big(c(x),(N_b(x))_{b\in B}\big)$, a statistic with at most $|C|\cdot(m+1)^{|B|}$ values. Apply Theorem 4.1. $\square$
+**Theorem 3.3 (Redundancy–capacity lower bound, average form).** For every strictly positive prior $\pi$ and every code $L$,
+$$I(\pi) \;\le\; \sum_\theta \pi(\theta)\, R(p_\theta, L).$$
 
-### 4.1 Memoryless sources
+*Proof sketch.* Apply Proposition 2.4 with $q = 2^{-L}$, then Theorem 3.2, and discard the nonnegative term $D(\bar p_\pi \| 2^{-L}) \ge 0$, which is nonnegative by Gibbs' inequality since $\kappa(L)\le 1$. $\square$
 
-Let $A$ be a finite alphabet and let the parameter range over the simplex $\Delta(A)=\{\theta:A\to[0,\infty)\ :\ \sum_a\theta(a)=1\}$. The memoryless class on $X=A^n$ is
-$$p_\theta(x)\;=\;\prod_{i=1}^{n}\theta(x_i).$$
-(That these are probability distributions is the multinomial expansion of $\big(\sum_a\theta(a)\big)^n=1$.)
+**Corollary 3.4 (Minimax form).** For every strictly positive prior $\pi$ and every code $L$ there exists $\theta$ with $R(p_\theta, L) \ge I(\pi)$.
 
-**Theorem 4.3.** $C_S\le(n+1)^{|A|}$ for the memoryless class of block length $n$ over $A$.
+*Proof sketch.* A weighted average is at most its maximum term. $\square$
 
-*Proof.* Theorem 4.2 with $B=A$, $m=n$, $|C|=1$, $g_\theta=\theta$, $h_\theta\equiv1$. $\square$
+Thus every prior on the class certifies a lower bound on the price of universality; the best such certificate is the channel capacity $\sup_\pi I(\pi)$, whence the classical name.
 
-**Theorem 4.4 (Binary refinement).** For $A=\{0,1\}$, $C_S\le n+1$.
+For the matching upper bound we use the uniform mixture. Write $m = |\Theta|$ and $\bar p = \bar p_{\mathrm{unif}}$.
 
-*Proof.* The likelihood $\theta(1)^{k}\theta(0)^{n-k}$ depends on $x$ only through $k$, the number of ones, a statistic with $n+1$ values; apply Theorem 4.1 directly. $\square$
+**Lemma 3.5.** For every $\theta$, $D(p_\theta \| \bar p) \le \log_2 m$.
 
-**Theorem 4.5 (Bit-level guarantee for memoryless sources).** The NML code of the memoryless class satisfies, for every $\theta\in\Delta(A)$ and every $x\in A^n$ with $p_\theta(x)>0$,
-$$\ell^\star(x)\;\le\;\log_2\frac{1}{p_\theta(x)}+|A|\log_2(n+1)+1 .$$
+*Proof sketch.* Pointwise, $\bar p(a) \ge \frac{1}{m} p_\theta(a)$, since the mixture contains the term $\frac1m p_\theta(a)$ and all terms are nonnegative. Hence $p_\theta(a)/\bar p(a) \le m$ wherever $p_\theta(a)>0$, and averaging $\log_2$ of this ratio against $p_\theta$ gives at most $\log_2 m$. $\square$
 
-*Proof.* Theorem 3.2 plus $\log_2 C_S\le|A|\log_2(n+1)$ from Theorem 4.3; the hypothesis $\widehat p>0$ holds because the uniform parameter gives every message positive probability. $\square$
+**Theorem 3.6 (Upper bound on the price).** Suppose every message has positive probability under the uniform mixture. Then the Shannon code $L_{\bar p}$ of the mixture is a code, and
+$$R(p_\theta, L_{\bar p}) \;\le\; \log_2 m + 1 \qquad \text{for every } \theta .$$
 
-**Corollary 4.6 (Vanishing per-symbol price).** For any constant $c$, $\big(c\log_2(n+1)+1\big)/n\to0$ as $n\to\infty$. Hence the price of universality of the memoryless class is $o(1)$ bits per symbol: a decompressor specialised to a memoryless class can absorb only a vanishing fraction of the message.
+*Proof sketch.* $L_{\bar p}$ is a code by Proposition 2.7 applied to $\bar p$. For redundancy: $L_{\bar p}(a) \le -\log_2\bar p(a) + 1$, so $\mathbb{E}_{p_\theta}[L_{\bar p}] \le \sum_a p_\theta(a)\big(-\log_2 \bar p(a)\big) + 1 = H(p_\theta) + D(p_\theta\|\bar p) + 1$. Apply Lemma 3.5. $\square$
 
-### 4.2 First-order Markov sources
+**Definition 3.7 (Perfect distinguishability).** The class has *disjoint supports* if for all $\theta \ne \theta'$ and all $a$, $p_\theta(a) > 0$ implies $p_{\theta'}(a) = 0$: one observation identifies the source.
 
-Let the parameter be a pair $(\nu,T)$ consisting of an initial law $\nu$ on $A$ and a stochastic kernel $T:A\times A\to[0,1]$, and set, on $X=A^{n+1}$,
-$$p_{(\nu,T)}(x)\;=\;\nu(x_0)\prod_{j=0}^{n-1}T(x_j,x_{j+1}).$$
+**Lemma 3.8.** If the class has disjoint supports then $I(\mathrm{unif}) = \log_2 m$ exactly.
 
-**Proposition 4.7 (Normalisation).** For every stochastic kernel $T$ and probability vector $\nu$, $\sum_{x\in A^{n+1}}p_{(\nu,T)}(x)=1$.
+*Proof sketch.* On the support of $p_\theta$, all other terms of the mixture vanish, so $\bar p(a) = \frac1m p_\theta(a)$ and the log-ratio is identically $\log_2 m$ there. Averaging gives $D(p_\theta\|\bar p) = \log_2 m$ for each $\theta$, hence the same for the average. $\square$
 
-*Proof.* Induction on $n$. For $n=0$ the sum is $\sum_{a}\nu(a)=1$. For the step, split the sum over the first symbol $a$ and the remaining word $y\in A^{n+1}$:
-$$\sum_{x\in A^{n+2}}\nu(x_0)\prod_{j<n+1}T(x_j,x_{j+1})=\sum_{y\in A^{n+1}}\Big(\sum_{a}\nu(a)T(a,y_0)\Big)\prod_{i<n}T(y_i,y_{i+1}),$$
-and $\nu'(b)=\sum_a\nu(a)T(a,b)$ is again a probability vector because $\sum_b\nu'(b)=\sum_a\nu(a)\sum_bT(a,b)=\sum_a\nu(a)=1$. Apply the induction hypothesis to $\nu'$. $\square$
+**Theorem 3.9 (The price of universality, average-case).** Let $\{p_\theta\}$ be a class of $m$ sources with pairwise disjoint supports, every message covered by the uniform mixture. Then:
 
-**Theorem 4.8 (Markov redundancy).** For the first-order Markov class on $A^{n+1}$,
-$$C_S\;\le\;|A|\,(n+1)^{|A|^2},$$
-and consequently the NML code satisfies, for every chain $\theta$ and message $x$ of positive probability,
-$$\ell^\star(x)\;\le\;\log_2\frac{1}{p_\theta(x)}+\log_2|A|+|A|^2\log_2(n+1)+1 .$$
+1. for every code $L$ there is a source $\theta$ with $R(p_\theta, L) \ge \log_2 m$;
+2. there is a single code $L$ with $R(p_\theta, L) \le \log_2 m + 1$ for every $\theta$.
 
-*Proof.* Apply Theorem 4.2 with feature alphabet $B=A\times A$ (the transition pairs $(x_j,x_{j+1})$, of which there are $m=n$), initial alphabet $C=A$ (the first symbol), $g_\theta(a,b)=T(a,b)$ and $h_\theta(a)=\nu(a)$; then $|B|=|A|^2$. The bit form follows from Theorem 3.2 and monotonicity of $\log_2$, the positivity hypothesis being witnessed by the uniform chain. $\square$
+*Proof sketch.* (1) Corollary 3.4 with the uniform prior, then Lemma 3.8. (2) Theorem 3.6. $\square$
 
-The pattern is uniform: **the price is logarithmic in the message length, with the number of free parameters entering as the multiplier of $\log_2 n$.** For memoryless sources the effective dimension is $|A|$; for first-order Markov chains, $|A|^2$. Up to the constant in front of the dimension, this is Rissanen's $(d/2)\log_2 n$ law.
+The price of universality over a class of $m$ mutually distinguishable sources is therefore $\log_2 m$ bits, up to one bit: exactly the cost of naming the source.
 
 ---
 
-## 5. The matching lower bound: the Rissanen floor
+## 4. The worst-case price, exactly: the Shtarkov sum
 
-Upper bounds alone leave open the possibility that the true price is far smaller. We now show that it is not, in the one-parameter case, with explicit constants.
+Averages hide the one-bit slack of the Shannon code. Scoring *pointwise regret* against the best member of the class removes it.
 
-Throughout this section the class is binary memoryless on $X=\{0,1\}^n$, and we write $k$ for the number of ones in a string, $j=n-k$.
+**Definition 4.1.** The *maximum likelihood envelope* of the class is $\widehat p(a) = \max_\theta p_\theta(a)$; the *Shtarkov sum* is
+$$S(\mathcal{P}) = \sum_{a\in\mathcal{A}} \widehat p(a),$$
+and the *normalized maximum likelihood* (NML) distribution is $p^{\mathrm{NML}}(a) = \widehat p(a)/S(\mathcal{P})$.
 
-### 5.1 Types and their maximum likelihood
+**Lemma 4.2.** $S(\mathcal{P}) \ge 1$, with $S(\mathcal{P}) = 1$ if the class is a singleton; consequently $S > 0$ and $p^{\mathrm{NML}}$ is a probability mass function.
 
-**Lemma 5.1 (Type fibres).** The set of binary strings of length $n$ with exactly $k$ ones has $\binom{n}{k}$ elements.
+*Proof sketch.* $\widehat p \ge p_\theta$ pointwise for any fixed $\theta$, and $p_\theta$ sums to one. Normalization is immediate. $\square$
 
-**Lemma 5.2 (Maximum likelihood of a string).** For a string $x$ with $k$ ones, the Bernoulli parameter $\theta$ maximising $p_\theta(x)$ is the empirical frequency $\theta(1)=k/n$, and
-$$\widehat p(x)\;\ge\;\Big(\frac{k}{n}\Big)^{k}\Big(\frac{n-k}{n}\Big)^{n-k}$$
-(with equality, though only the inequality is needed below, and with the convention $0^0=1$).
+**Theorem 4.3 (Achievability).** For every $\theta$ and every $a$,
+$$p_\theta(a) \le S(\mathcal{P}) \cdot p^{\mathrm{NML}}(a), \qquad\text{hence}\qquad \log_2\frac{p_\theta(a)}{p^{\mathrm{NML}}(a)} \le \log_2 S(\mathcal{P}).$$
+That is, the codelength $-\log_2 p^{\mathrm{NML}}(a)$ exceeds the ideal codelength $-\log_2 p_\theta(a)$ of *every* member of the class by at most $\log_2 S(\mathcal{P})$ bits, uniformly in the message.
 
-*Proof.* The likelihood of $x$ under $\theta$ is $\theta(1)^k\theta(0)^{n-k}$; substituting the empirical parameter exhibits a member of the class attaining the displayed value, so the supremum is at least that. $\square$
+*Proof sketch.* Immediate from $p_\theta(a)\le \widehat p(a) = S\,p^{\mathrm{NML}}(a)$. $\square$
 
-Consequently
-$$C_S\;=\;\sum_{k=0}^{n}\binom{n}{k}\Big(\frac{k}{n}\Big)^{k}\Big(\frac{n-k}{n}\Big)^{n-k}. \tag{5.1}$$
+**Theorem 4.4 (Converse).** Let $q : \mathcal{A}\to\mathbb{R}$ satisfy $\sum_a q(a)\le 1$. Then there exist $\theta$ and $a$ with $p_\theta(a) \ge S(\mathcal{P})\, q(a)$. If moreover $q > 0$, then $\log_2\frac{p_\theta(a)}{q(a)} \ge \log_2 S(\mathcal{P})$ for that pair.
 
-### 5.2 Two-sided Stirling estimates
+*Proof sketch.* Suppose not: $p_\theta(a) < S q(a)$ for all $\theta, a$. Taking the maximum over $\theta$ gives $\widehat p(a) < S q(a)$ for all $a$; summing over the (nonempty, finite) alphabet gives the strict inequality $S = \sum_a \widehat p(a) < S\sum_a q(a) \le S$, a contradiction. $\square$
 
-**Lemma 5.3 (Stirling, upper).** For $m\ge1$, $\ m!\ \le\ e\sqrt{m}\,(m/e)^m$.
+**Theorem 4.5 (Exact minimax regret).** For a finite class of sources whose envelope is strictly positive, the minimax pointwise regret is exactly $\log_2 S(\mathcal{P})$: the NML distribution attains regret at most $\log_2 S$ uniformly (Theorem 4.3), and no sub-probability coding distribution attains regret below $\log_2 S$ in the worst case (Theorem 4.4).
 
-*Proof.* The Stirling sequence $s_m=m!\,/\big(\sqrt{2m}\,(m/e)^m\big)$ is antitone in $m\ge1$, so $s_m\le s_1=e/\sqrt2$. Rearranging, $m!\le(e/\sqrt2)\sqrt{2m}\,(m/e)^m=e\sqrt m\,(m/e)^m$. $\square$
+**Corollary 4.6 (Integer code lengths).** For every code $L$ there exist $\theta$ and $a$ with
+$$L(a) + \log_2 p_\theta(a) \;\ge\; \log_2 S(\mathcal{P}),$$
+i.e. $L$ spends at least $\log_2 S$ bits more on the message $a$ than the ideal codelength of the best-fitting source.
 
-**Lemma 5.4 (Stirling, lower).** For all $m$, $\ \sqrt{2\pi m}\,(m/e)^m\ \le\ m!$.
+*Proof sketch.* Apply Theorem 4.4 to $q(a) = 2^{-L(a)}$, which is strictly positive and has $\sum_a q(a) = \kappa(L) \le 1$; then $\log_2\frac{p_\theta(a)}{2^{-L(a)}} = \log_2 p_\theta(a) + L(a)$. $\square$
 
-These are the two sides of the classical Stirling sandwich; the constants $e$ and $\sqrt{2\pi}$ are all we use.
+**Proposition 4.7 (Average vs. worst case).** For every strictly positive prior $\pi$, $I(\pi) \le \log_2 S(\mathcal{P})$; and for every $\theta$, $D(p_\theta \| p^{\mathrm{NML}}) \le \log_2 S(\mathcal{P})$.
 
-### 5.3 Every interior type is heavy
+*Proof sketch.* The second claim follows by averaging the pointwise bound of Theorem 4.3 against $p_\theta$. The first then follows from the compensation identity (Theorem 3.2) applied with $q = p^{\mathrm{NML}}$: the average of the $D(p_\theta\|p^{\mathrm{NML}})$ equals $I(\pi) + D(\bar p_\pi\|p^{\mathrm{NML}}) \ge I(\pi)$. $\square$
 
-**Theorem 5.5 (Type-term lower bound).** Let $k,j\ge1$ and $n=k+j$. Then
-$$\binom{n}{k}\Big(\frac{k}{n}\Big)^{k}\Big(\frac{j}{n}\Big)^{j}\;\ge\;\frac{1}{2\sqrt n}.$$
-
-*Proof.* Write $\binom{n}{k}=n!/(k!\,j!)$ and expand the maximum-likelihood factor:
-$$\Big(\frac{k}{n}\Big)^{k}\Big(\frac{j}{n}\Big)^{j}=\frac{(k/e)^k (j/e)^j}{(n/e)^n},$$
-an identity because the powers of $e$ contribute $e^{-k-j+n}=1$ and the powers of $n$ contribute $n^{-k-j+n}=1$ in the appropriate rearrangement. Therefore the left-hand side equals
-$$\frac{n!}{(n/e)^n}\cdot\frac{(k/e)^k}{k!}\cdot\frac{(j/e)^j}{j!}.$$
-By Lemma 5.4 the first factor is at least $\sqrt{2\pi n}$; by Lemma 5.3 the second and third are at least $1/(e\sqrt k)$ and $1/(e\sqrt j)$. Hence the product is at least
-$$\frac{\sqrt{2\pi n}}{e^{2}\sqrt{k}\sqrt{j}} .$$
-Now $\sqrt k\sqrt j=\sqrt{kj}\le n/2$ by AM–GM, and numerically $\sqrt{2\pi}>2.5$ and $e^2<7.4$, so the bound is at least
-$$\frac{2.5\sqrt n}{7.4\cdot n/2}=\frac{5}{7.4}\cdot\frac{1}{\sqrt n}\;\ge\;\frac{1}{2\sqrt n},$$
-since $5/7.4>1/2$. $\square$
-
-### 5.4 The lower bound on the Shtarkov sum
-
-**Theorem 5.6.** For $n\ge2$, the binary memoryless class satisfies $\ C_S\ \ge\ \sqrt n/4$.
-
-*Proof.* Group the messages by type. The fibres $F_k=\{x:\#\text{ones}(x)=k\}$ are pairwise disjoint, and by Lemmas 5.1, 5.2 and Theorem 5.5, for each interior type $1\le k\le n-1$,
-$$\sum_{x\in F_k}\widehat p(x)\;\ge\;\binom{n}{k}\Big(\frac kn\Big)^k\Big(\frac{n-k}{n}\Big)^{n-k}\;\ge\;\frac{1}{2\sqrt n}.$$
-Summing over the $n-1$ interior types and discarding the two extreme types (whose contributions are non-negative),
-$$C_S\;\ge\;\frac{n-1}{2\sqrt n}\;\ge\;\frac{\sqrt n}{4},$$
-the last step being equivalent to $4(n-1)\ge2n$, i.e. $n\ge2$. $\square$
-
-**Theorem 5.7 (The price of the binary memoryless class, sandwiched).** For $n\ge2$,
-$$\tfrac12\log_2 n-2\;\le\;\log_2 C_S\;\le\;\log_2(n+1).$$
-Equivalently: **every** Kraft-compliant code has some message and some Bernoulli source on which it exceeds the ideal code length by at least $\tfrac12\log_2 n-2$ bits, while the NML code never exceeds it by more than $\log_2(n+1)+1$ bits.
-
-*Proof.* The lower bound is Theorem 5.6 with $\log_2(\sqrt n/4)=\tfrac12\log_2 n-2$, combined with Theorem 3.4; the upper bound is Theorem 4.4 combined with Theorem 3.2. $\square$
-
-This meets the falsifiability gate of the research programme: the lower bound is exactly the Rissanen rate $(d/2)\log_2 n$ at $d=1$, so the theory is not merely an upper-bound artefact, and the two sides agree to within a factor $2$ and an additive constant.
+So the two prices are consistent: the average-case price never exceeds the worst-case price, as it must.
 
 ---
 
-## 6. Separation: when specialisation buys nothing
+## 5. Structure of the Shtarkov sum
 
-Consider on the same message space the opposite extreme of class complexity.
+The Shtarkov sum is not just an optimization value; it is a measure of the *statistical distinguishability* of the class.
 
-**Definition 6.1 (Deterministic class).** For a finite $X$, the *deterministic class* is $\{\delta_y\}_{y\in X}$ with $\delta_y(x)=1$ if $x=y$ and $0$ otherwise. Interpreted operationally, this is "one decompressor per file": the source $\delta_y$ needs zero bits to describe $y$.
+**Proposition 5.1 (Cardinality bound).** $\widehat p(a) \le \sum_\theta p_\theta(a)$ pointwise, hence $S(\mathcal{P}) \le m = |\Theta|$.
 
-**Theorem 6.2.** For the deterministic class, $\widehat p\equiv1$ and hence $C_S=|X|$ exactly.
+**Theorem 5.2 (Rigidity).** $S(\mathcal{P}) = m$ if and only if the class has pairwise disjoint supports. Consequently, if two members of the class can produce a common message then $S(\mathcal{P}) < m$ strictly, and $\log_2 S(\mathcal{P}) < \log_2 m$: the naive "transmit the source label, then use the specialist" scheme is strictly suboptimal.
 
-*Proof.* $\widehat p(x)\ge\delta_x(x)=1$ and $\widehat p(x)\le1$ since all probabilities are at most $1$. Summing the constant $1$ over $X$ gives $|X|$. (Alternatively, apply Theorem 3.6 with $S_y=\{y\}$.) $\square$
+*Proof sketch.* ($\Leftarrow$) If supports are disjoint, then for each $a$ at most one $p_\theta(a)$ is nonzero, so $\widehat p(a) = \sum_\theta p_\theta(a)$; summing over $a$ and exchanging the order of summation gives $S = \sum_\theta 1 = m$. ($\Rightarrow$) Since $\widehat p(a)\le \sum_\theta p_\theta(a)$ pointwise and both sides sum to $S$ and $m$ respectively, equality of the totals forces equality at every $a$; and equality at $a$ forces at most one $\theta$ with $p_\theta(a) > 0$. $\square$
 
-**Corollary 6.3.** On $n$-bit files, $\log_2 C_S=n$: the price of universality of the deterministic class is exactly $n$ bits.
+**Theorem 5.3 (Two sources: closed form).** For a class $\{p_0, p_1\}$,
+$$S = 1 + \mathrm{TV}(p_0,p_1), \qquad \mathrm{TV}(p_0,p_1) = \tfrac12\sum_a |p_0(a)-p_1(a)| .$$
+Hence the exact minimax regret of a two-source class is $\log_2\big(1 + \mathrm{TV}(p_0,p_1)\big)$ bits, which lies in $[0,1]$, is monotone in the total variation distance, and equals exactly one bit if and only if $\mathrm{TV} = 1$, i.e. if and only if the two sources have disjoint supports.
 
-**Theorem 6.4 (Separation).** On the message space of $n$-bit files with $n\ge2$:
-$$\tfrac12\log_2 n-2\;\le\;\log_2 C_S^{\mathrm{memoryless}}\;\le\;\log_2(n+1),\qquad \log_2 C_S^{\mathrm{deterministic}}\;=\;n .$$
-Moreover $\log_2(n+1)/n\to0$: the fraction of an $n$-bit message that a memoryless-specialised decompressor can absorb vanishes.
+*Proof sketch.* Pointwise $\max(x,y) = \frac{x+y+|x-y|}{2}$. Summing, $S = \frac{1 + 1 + 2\,\mathrm{TV}}{2} = 1 + \mathrm{TV}$. The range statement follows from $0\le \mathrm{TV}\le 1$ (the upper bound is Proposition 5.1 with $m=2$), and the equality case from Theorem 5.2. $\square$
 
-**Interpretation.** The deterministic class is the mathematical model of "ship a decompressor tailored to each individual file". Each specialist saves all $n$ bits on its own file; the theorem says the universal scheme facing that class pays exactly $n$ bits. The savings and the price cancel identically: **no bits are moved from the message into the shared decompressor.** This is the pigeonhole bound in redundancy form. At the other extreme, a one-parameter class transfers $\Theta(\log n)$ bits — real, but a vanishing fraction of the file.
+This is the cleanest possible statement of the phenomenon: *ambiguity is a discount*. Two sources that are statistically hard to tell apart are cheap to serve with one decompressor; the price rises continuously with total variation distance to a maximum of one bit.
 
-The design conclusion is therefore sharp and quantitative: *specialisation pays exactly in proportion to the logarithm of the complexity of the data class, and only when that class is genuinely low-complexity relative to the data.*
+**Theorem 5.4 (Multiplicativity over independent components).** Let $\mathcal{P} = \{p_\theta\}$ act on $\mathcal{A}$ and $\mathcal{Q} = \{q_\psi\}$ on $\mathcal{B}$, and let $\mathcal{P}\otimes\mathcal{Q}$ be the class on $\mathcal{A}\times\mathcal{B}$ with members $(a,b)\mapsto p_\theta(a) q_\psi(b)$ indexed by $(\theta,\psi)$. Then
+$$S(\mathcal{P}\otimes\mathcal{Q}) = S(\mathcal{P})\,S(\mathcal{Q}), \qquad \log_2 S(\mathcal{P}\otimes\mathcal{Q}) = \log_2 S(\mathcal{P}) + \log_2 S(\mathcal{Q}).$$
+More generally, for a finite family $(\mathcal{P}_i)_{i\in I}$ of classes acting on independent components,
+$$S\Big(\bigotimes_{i} \mathcal{P}_i\Big) = \prod_i S(\mathcal{P}_i), \qquad \log_2 S\Big(\bigotimes_i \mathcal{P}_i\Big) = \sum_i \log_2 S(\mathcal{P}_i).$$
 
----
+*Proof sketch.* The envelope factorizes: $\max_{(\theta,\psi)} p_\theta(a)q_\psi(b) = \big(\max_\theta p_\theta(a)\big)\big(\max_\psi q_\psi(b)\big)$, because the parameters range independently and all quantities are nonnegative (one inequality is termwise, the other is attained at the pair of individual maximizers). Summing the product over the product alphabet factorizes the sum. The general case follows by the distributive law for sums of products over a finite index set. $\square$
 
-## 7. Structural laws of the price
-
-The numbers above are not coincidences; they follow from a small calculus obeyed by $C_S$.
-
-**Theorem 7.1 (Calibration).** If all sources of the class have the same law, then $C_S=1$ and the price is exactly $0$ bits.
-
-*Proof.* $\widehat p=p_{\theta_0}$ for any fixed $\theta_0$, whose total mass is $1$. $\square$
-
-**Theorem 7.2 (Monotonicity).** If $\iota:\Theta'\to\Theta$ is any reindexing (in particular, if $\{p_{\theta}\}_{\theta\in\iota(\Theta')}$ is a subclass), then the Shtarkov sum of the reindexed class is at most that of the original.
-
-*Proof.* Pointwise, $\sup_{\theta'}p_{\iota(\theta')}(x)\le\sup_\theta p_\theta(x)$; sum. $\square$
-
-**Definition 7.3 (Product classes).** Given classes $S_1$ on $X_1$ indexed by $\Theta_1$ and $S_2$ on $X_2$ indexed by $\Theta_2$, the *independent product* on $X_1\times X_2$ indexed by $\Theta_1\times\Theta_2$ is $p_{(\theta_1,\theta_2)}(x_1,x_2)=p_{\theta_1}(x_1)p_{\theta_2}(x_2)$. If instead both blocks are driven by one shared parameter $\theta\in\Theta$, the *tied product* is $p_\theta(x_1,x_2)=p^{(1)}_\theta(x_1)p^{(2)}_\theta(x_2)$.
-
-**Theorem 7.4 (Exact multiplicativity).** For the independent product, $C_S=C_S^{(1)}\cdot C_S^{(2)}$; equivalently, the price in bits is exactly additive:
-$$\log_2 C_S=\log_2 C_S^{(1)}+\log_2 C_S^{(2)}.$$
-
-*Proof.* The supremum of a product of non-negative functions over a product index set factorises: $\sup_{(\theta_1,\theta_2)}p_{\theta_1}(x_1)p_{\theta_2}(x_2)=\widehat p^{(1)}(x_1)\widehat p^{(2)}(x_2)$. Summing over $X_1\times X_2$ and factoring the double sum gives the claim. $\square$
-
-**Theorem 7.5 (Submultiplicativity under sharing).** For the tied product, $C_S\le C_S^{(1)}\cdot C_S^{(2)}$.
-
-*Proof.* Pointwise, $\sup_\theta p^{(1)}_\theta(x_1)p^{(2)}_\theta(x_2)\le\widehat p^{(1)}(x_1)\widehat p^{(2)}(x_2)$, because a single $\theta$ must serve both factors; sum as before. $\square$
-
-Theorems 7.4 and 7.5 are the structural explanation of the whole paper. A class that re-chooses its parameter on every block pays additively: $n$ blocks cost $n$ times the per-block price, which is how the deterministic class reaches $n$ bits. A class that shares one parameter across all blocks pays only subadditively, and the slack is exactly the saving that turns a linear price into a logarithmic one.
-
-**Corollary 7.6 (Subadditivity in block length).** For the memoryless class over a fixed alphabet, $C_S(n_1+n_2)\le C_S(n_1)\,C_S(n_2)$, hence $n\mapsto\log_2C_S(n)$ is subadditive and $\log_2 C_S(n)/n$ converges by Fekete's lemma.
-
-*Proof.* Splitting a message of length $n_1+n_2$ into its two blocks identifies the memoryless class of length $n_1+n_2$ with the tied product of the memoryless classes of lengths $n_1$ and $n_2$ (the same parameter drives both blocks). The claim is Theorem 7.5 transported along this relabelling, using that the Shtarkov sum is invariant under bijective relabellings of the message space. $\square$
-
-By Corollary 4.6 the limit is $0$, so the Fekete limit is not merely existent but zero — universality is free at first order in the rate, and the whole content of the theory lives in the second-order $\Theta(\log n)$ term.
+**Corollary 5.5.** *The price of universality is additive over independent components.* This is exactly where the factor $k$ in the $\tfrac{k}{2}\log n$ rate originates: each independent free parameter contributes its own copy of the bill.
 
 ---
 
-## 8. The average-case dual: redundancy as capacity
+## 6. The memoryless binary class and the $\tfrac12 \log_2 n$ rate
 
-Worst-case redundancy is one of two classical formulations; the other averages over a prior on the class and produces lower bounds that do not rely on a single unlucky message. The two views agree, and we prove the comparison.
+We now compute the price for the canonical parametric class.
 
-Throughout this section $\Theta$ is finite, all $p_\theta(x)>0$, and $w$ is a strictly positive prior with $\sum_\theta w_\theta=1$.
+**Definition 6.1.** Messages are binary strings of length $n$, identified with subsets $s$ of positions carrying a one; write $|s|$ for the number of ones. The memoryless (i.i.d. Bernoulli) source with bias $t \in [0,1]$ assigns
+$$p_t(s) = t^{|s|}(1-t)^{n-|s|}.$$
+The *memoryless binary class of block length $n$* is $\mathcal{B}_n = \{p_{j/n} : j = 0,1,\dots,n\}$, indexed by the maximum-likelihood grid: $j/n$ is exactly the maximum-likelihood bias for a string with $j$ ones, so restricting to the grid loses nothing in the envelope.
 
-**Definition 8.1.** For probability vectors $p,q$ on $X$ with positive entries,
-$$D(p\|q)=\sum_x p(x)\log_2\frac{p(x)}{q(x)},\qquad H(w)=-\sum_\theta w_\theta\log_2 w_\theta .$$
-The *mixture* is $m_w(x)=\sum_\theta w_\theta p_\theta(x)$; the *capacity functional* (mutual information between parameter and data) is
-$$I(w)=\sum_\theta w_\theta\,D(p_\theta\|m_w);$$
-the *Bayes redundancy* of a coding distribution $q$ is $\bar R(w,q)=\sum_\theta w_\theta D(p_\theta\|q)$.
+### 6.1 Binomial ingredients
 
-**Theorem 8.2 (Gibbs' inequality).** $D(p\|q)\ge0$.
+Write $b_{n,t}(k) = \binom{n}{k} t^k (1-t)^{n-k}$ for the binomial weights.
 
-*Proof.* Using $\ln t\le t-1$ with $t=q(x)/p(x)$: $\sum_x p(x)\ln(q(x)/p(x))\le\sum_x(q(x)-p(x))=0$; divide by $-\ln 2$. $\square$
+**Lemma 6.2 (Normalization).** $\sum_{k=0}^{n} b_{n,t}(k) = 1$. *(Binomial theorem applied to $\big(t + (1-t)\big)^n$.)*
 
-**Theorem 8.3 (Compensation identity).** For every coding distribution $q$ with positive entries,
-$$\bar R(w,q)\;=\;I(w)\;+\;D(m_w\|q).$$
+**Lemma 6.3 (Reindexing).** For all $m, j$ and $t$,
+$$(j+1)\, b_{m+1,t}(j+1) = (m+1)\, t\, b_{m,t}(j),$$
+because $(j+1)\binom{m+1}{j+1} = (m+1)\binom{m}{j}$ and the powers of $t$ and $1-t$ match after the shift.
 
-*Proof.* For each $\theta$ and $x$, $\log_2\frac{p_\theta(x)}{q(x)}=\log_2\frac{p_\theta(x)}{m_w(x)}+\log_2\frac{m_w(x)}{q(x)}$. Multiply by $w_\theta p_\theta(x)$ and sum over $\theta$ and $x$. The first group of terms is $I(w)$ by definition. In the second, the factor $\log_2(m_w(x)/q(x))$ does not depend on $\theta$, so summing $w_\theta p_\theta(x)$ over $\theta$ yields $m_w(x)$, and the remaining sum over $x$ is $D(m_w\|q)$. $\square$
+**Proposition 6.4 (First two moments).** For all $n$ and $t$,
+$$\sum_{k=0}^{n} k\, b_{n,t}(k) = nt, \qquad \sum_{k=0}^{n} k^2\, b_{n,t}(k) = nt\big((n-1)t + 1\big),$$
+and hence
+$$\sum_{k=0}^{n} (k - nt)^2\, b_{n,t}(k) = nt(1-t).$$
 
-**Corollary 8.4 (Bayes optimality of the mixture code).** $I(w)\le\bar R(w,q)$ for every coding distribution $q$, with equality iff $q=m_w$. No code beats the mixture on average.
+*Proof sketch.* Both moments follow from Lemma 6.3, which converts a sum weighted by $k$ over block length $n = m+1$ into $(m+1)t$ times an unweighted sum over block length $m$: taking the inner function constant gives the mean, and taking it linear gives the second moment (using the mean and normalization at level $m$). The variance identity is the expansion $(k-nt)^2 = k^2 - 2nt\,k + (nt)^2$ combined with the two moments and Lemma 6.2. $\square$
 
-*Proof.* Theorem 8.3 and $D(m_w\|q)\ge0$. $\square$
+**Theorem 6.5 (Chebyshev for the binomial law).** Let $0 \le t \le 1$, $d > 0$, and let $K \subseteq \{0,\dots,n\}$ satisfy $(k - nt)^2 \ge d^2$ for all $k \in K$. Then
+$$\sum_{k\in K} b_{n,t}(k) \;\le\; \frac{nt(1-t)}{d^2}.$$
+Consequently, if $K$ is any set containing all indices with $(k-nt)^2 < d^2$, then $\sum_{k\in K} b_{n,t}(k) \ge 1 - \frac{nt(1-t)}{d^2}$.
 
-**Theorem 8.5 (Redundancy–capacity lower bound).** For every coding distribution $q$ there exists $\theta\in\Theta$ with $D(p_\theta\|q)\ge I(w)$. Hence
-$$\sup_w I(w)\;\le\;\inf_q\ \sup_\theta\ D(p_\theta\|q).$$
+*Proof sketch.* On $K$ we have $d^2 b_{n,t}(k) \le (k-nt)^2 b_{n,t}(k)$; summing over $K$, then enlarging to the full range (all terms nonnegative), gives $d^2\sum_{K} b_{n,t} \le nt(1-t)$ by Proposition 6.4. The concentration form follows by complementation with Lemma 6.2. $\square$
 
-*Proof.* If $D(p_\theta\|q)<I(w)$ for all $\theta$, averaging with the strictly positive weights $w_\theta$ gives $\bar R(w,q)<I(w)$, contradicting Corollary 8.4. $\square$
+### 6.2 The upper bound
 
-**Theorem 8.6 (Consistency with the worst-case theory).** Assume additionally $\widehat p(x)>0$ for all $x$. Then for every source $\theta$, $D(p_\theta\|q^\star)\le\log_2 C_S$, and consequently for every prior,
-$$I(w)\;\le\;\log_2 C_S .$$
+**Theorem 6.6.** $S(\mathcal{B}_n) \le n+1$, hence the minimax regret of $\mathcal{B}_n$ is at most $\log_2(n+1)$.
 
-*Proof.* By Theorem 3.1, $p_\theta(x)/q^\star(x)\le C_S$ pointwise, so $D(p_\theta\|q^\star)\le\sum_x p_\theta(x)\log_2 C_S=\log_2 C_S$. Now apply Corollary 8.4 with $q=q^\star$ and average. $\square$
+*Proof sketch.* The envelope depends on a string only through its number of ones $k$, so grouping strings by $k$,
+$$S(\mathcal{B}_n) = \sum_{k=0}^{n}\binom{n}{k}\, \widehat\ell(k), \qquad \widehat\ell(k) = \max_{j}\ (j/n)^k(1-j/n)^{n-k}.$$
+For each $k$ the maximum is attained at some grid point $j^*$, and then $\binom{n}{k}\widehat\ell(k) = b_{n, j^*/n}(k)$ is a single term of a probability distribution over $k$, hence at most $1$. Summing $n+1$ terms gives the bound. $\square$
 
-**Theorem 8.7 (Capacity is at most the cost of naming the source).** $I(w)\le H(w)\le\log_2|\Theta|$.
+Equivalently, in achievability form: the NML code for $\mathcal{B}_n$ never loses more than a factor $n+1$ (i.e. $\log_2(n+1)$ bits) against the best-fitting bias, on any string.
 
-*Proof.* For each $\theta$, $m_w(x)\ge w_\theta p_\theta(x)$, so $p_\theta(x)/m_w(x)\le1/w_\theta$ and $D(p_\theta\|m_w)\le-\log_2 w_\theta$. Averaging gives $I(w)\le H(w)$. The second inequality is the maximum-entropy property of the uniform prior (equivalently Jensen's inequality applied to $\log_2$). $\square$
+### 6.3 The lower bound: counting distinguishable coins
 
-Theorems 8.5–8.7 place the average-case theory below the worst-case theory: the pointwise requirement of Section 3 is strictly the stronger demand, and it is bounded above by the same quantity, $\log_2|\Theta|$ or $\log_2 C_S$, that bounds the capacity. Universal compression is, formally, the problem of learning the channel while using it: the price of universality is the information the data carries about the unknown parameter.
+**Theorem 6.7.** For every $n \ge 1$, $S(\mathcal{B}_n) \ge \sqrt{n}/4$.
+
+*Proof sketch.* The argument realizes, quantitatively, the slogan "the class contains about $\sqrt n$ mutually distinguishable sources".
+
+*Step 1 (windows dominate).* If $(K_i)_{i\in I}$ is a family of pairwise disjoint subsets of $\{0,\dots,n\}$ and for each $i$ we choose a grid bias $t_i$, then
+$$\sum_{i\in I}\sum_{k\in K_i} b_{n,t_i}(k) \;\le\; S(\mathcal{B}_n).$$
+Indeed $b_{n,t_i}(k) \le \binom{n}{k}\widehat\ell(k)$ termwise, and disjointness allows the double sum to be rewritten as a sum over the union, which is a subsum of $\sum_k \binom{n}{k}\widehat\ell(k) = S(\mathcal{B}_n)$ with nonnegative terms.
+
+*Step 2 (each window catches three quarters of its own source).* Put $d = \lfloor\sqrt n\rfloor + 1$, so $d^2 > n$. Place centres $c_i = 2di$ for $0 \le i \le \lfloor n/(2d)\rfloor$ (so $c_i \le n$), let $K_i = \{k \le n : |k - c_i| < d\}$, and let $t_i = c_i/n$, a grid point. Then $\mathbb{E}[K] = n t_i = c_i$ and $\mathrm{Var}(K) = n t_i(1-t_i) \le n/4 < d^2/4$. Every $k \notin K_i$ satisfies $(k-c_i)^2 \ge d^2$, so Theorem 6.5 gives
+$$\sum_{k\in K_i} b_{n,t_i}(k) \;\ge\; 1 - \frac{n t_i(1-t_i)}{d^2} \;\ge\; 1 - \tfrac14 \;=\; \tfrac34 .$$
+
+*Step 3 (count the windows).* The windows are pairwise disjoint because consecutive centres are $2d$ apart while each window has width $< 2d$. There are $\lfloor n/(2d)\rfloor + 1$ of them, so Steps 1–2 give
+$$S(\mathcal{B}_n) \;\ge\; \tfrac34\left(\left\lfloor\frac{n}{2d}\right\rfloor + 1\right).$$
+
+*Step 4 (arithmetic).* Since $d \le \sqrt n + 1$, one has $\lfloor n/(2d)\rfloor + 1 > n/(2d) \ge \frac{n}{2(\sqrt n + 1)} \ge \frac{\sqrt n}{3}$ whenever $\sqrt n \ge 2$; hence $S \ge \tfrac34\cdot\tfrac{\sqrt n}{3} = \sqrt n /4$. For $\sqrt n \le 3$ the bound $S \ge 3/4 \ge \sqrt n/4$ holds trivially because there is always at least one window. $\square$
+
+**Theorem 6.8 (Two-sided rate for memoryless binary sources).** For every $n \ge 1$,
+$$\tfrac12\log_2 n - 2 \;\le\; \log_2 S(\mathcal{B}_n) \;\le\; \log_2 (n+1).$$
+Equivalently: every code $L$ for binary strings of length $n$ admits a string $s$ and a bias $j/n$ with
+$$L(s) + \log_2 p_{j/n}(s) \;\ge\; \tfrac12\log_2 n - 2,$$
+while the NML code achieves regret at most $\log_2(n+1)$ uniformly.
+
+*Proof sketch.* Take $\log_2$ in Theorems 6.6 and 6.7, using $\log_2(\sqrt n/4) = \frac12\log_2 n - 2$; then apply Corollary 4.6 for the statement about codes and Theorem 4.3 for the achievability statement. $\square$
+
+This is Rissanen's $\frac{k}{2}\log n$ redundancy rate at $k=1$, with explicit constants and no asymptotics. The truth is pinned between $\frac12\log_2 n$ and $\log_2 n$; the classical asymptotic answer, $\frac12\log_2 n + O(1)$, sits at the lower end. The factor-of-two gap is the price of the Chebyshev argument: using only two moments, each "distinguishable coin" is resolved at scale $\sqrt n$ rather than at the sharp Fisher-information scale.
 
 ---
 
-## 9. Exact computational evidence
+## 7. Multi-parameter rates
 
-Formula (5.1) can be evaluated in exact rational arithmetic. Doing so for small $n$:
+**Definition 7.1.** For $k, n \ge 0$ let $\mathcal{B}_n^{\otimes k}$ be the class of $k$ independent memoryless binary blocks of length $n$, each with its own grid bias: messages are $k$-tuples of binary strings of length $n$, parameters are $k$-tuples of grid biases, and probabilities multiply.
 
-| $n$ | $C_S$ (exact) | $C_S$ (decimal) | $\sqrt n/4$ | $n+1$ | $\log_2 C_S$ | $\tfrac12\log_2 n-2$ |
-|---|---|---|---|---|---|---|
-| 2 | $5/2$ | 2.5000 | 0.3536 | 3 | 1.3219 | $-1.5000$ |
-| 4 | $103/32$ | 3.2188 | 0.5000 | 5 | 1.6865 | $-1.0000$ |
-| 8 | $556403/131072$ | 4.2450 | 0.7071 | 9 | 2.0857 | $-0.5000$ |
+**Theorem 7.2 ($k$-parameter Rissanen rate).** For every $n\ge 1$ and every $k$,
+$$k\left(\tfrac12\log_2 n - 2\right) \;\le\; \log_2 S\big(\mathcal{B}_n^{\otimes k}\big) \;\le\; k\,\log_2(n+1).$$
+Hence every code for $k$ independent blocks suffers, on some message and against some member of the class, a regret of at least $k\big(\frac12\log_2 n - 2\big)$ bits; and the NML code for the product class attains regret at most $k\log_2(n+1)$ bits uniformly.
 
-Both sides of the sandwich of Theorem 5.7 hold with room to spare at these sizes (the additive constant $-2$ makes the lower bound weak for small $n$; its content is asymptotic in the exponent of $n$, not in the constant), and $C_S$ is strictly increasing over the computed range — inconsistent with any conjecture of a bounded price, and consistent with growth of order $\sqrt n$.
+*Proof sketch.* Additivity (Theorem 5.4 / Corollary 5.5) reduces the product class to $k$ copies of the one-block bound of Theorem 6.8. The code statements follow from Corollary 4.6 and Theorem 4.3. $\square$
+
+**Theorem 7.3 (Unboundedness in the number of parameters).** For every target $C$ and every block length $n \ge 32$ there is a number of components $k$ such that every code for $\mathcal{B}_n^{\otimes k}$ pays more than $C$ bits of regret on some message against some member of the class.
+
+*Proof sketch.* For $n\ge 32$ we have $\frac12\log_2 n - 2 \ge \frac52 - 2 > 0$, so the lower bound of Theorem 7.2 is a positive multiple of $k$; choose $k > C/\big(\frac12\log_2 n - 2\big)$. $\square$
+
+The contrast between Theorems 6.8 and 7.3 is the essential structural message: the price grows only *logarithmically* in the resolution $n$ of a single parameter, but *linearly* in the number of parameters.
 
 ---
 
-## 10. Discussion
+## 8. What specialization is worth
 
-### 10.1 The answer to the design question
+We can now price specialization exactly. Let $\mathcal{P}' \subseteq \mathcal{P}$ be a subclass (formally, $\mathcal{P}' = \{p_{e(\tau)}\}_{\tau}$ for a map $e$ into the index set of $\mathcal{P}$).
 
-Suppose you are considering shipping a decompressor specialised to a class $\mathcal C$ of data. The results above give a complete accounting.
+**Proposition 8.1 (Monotonicity).** The envelope of a subclass is pointwise below that of the full class, so $S(\mathcal{P}') \le S(\mathcal{P})$: a narrower class is always cheaper to serve.
 
-- The maximum number of bits per message that the specialisation can move out of the message and into the shared decompressor is exactly $\log_2 C_S(\mathcal C)$, no more and no less (Theorem 3.5).
-- If $\mathcal C$ is parametric with $d$ effective parameters, that number is $\Theta(\log n)$ — provably at least $\tfrac12\log_2 n-2$ and at most $\log_2(n+1)$ for the binary memoryless class (Theorem 5.7), at most $|A|\log_2(n+1)$ and $\log_2|A|+|A|^2\log_2(n+1)$ for the general memoryless and Markov classes (Theorems 4.5 and 4.8).
-- If $\mathcal C$ is rich enough to name individual files, that number is $n$ on $n$-bit files (Corollary 6.3), and the specialists' savings are exactly cancelled by the cost of identifying which specialist to use.
-- The transition between these regimes is governed by parameter sharing: additive price without sharing (Theorem 7.4), subadditive with (Theorem 7.5).
+**Theorem 8.2 (Invariance with an explicit price).** For every message $a$ at which the subclass envelope is positive,
+$$\log_2 p^{\mathrm{NML}}_{\mathcal{P}'}(a) - \log_2 p^{\mathrm{NML}}_{\mathcal{P}}(a) \;\le\; \log_2\frac{S(\mathcal{P})}{S(\mathcal{P}')},$$
+i.e. the specialized code is shorter than the general one by at most $\log_2\big(S(\mathcal{P})/S(\mathcal{P}')\big)$ bits. Equality holds at every message whose maximum likelihood over $\mathcal{P}$ is already attained inside $\mathcal{P}'$.
 
-Hence the verdict: **specialised decompressors are worth pursuing precisely when the data class is genuinely low-complexity relative to the data volume**, and the benefit is at most logarithmic in the data volume for any fixed parametric model. In particular, no amount of modelling ingenuity can move a constant *fraction* of a message into the decompressor unless the model class is asymptotically negligible in complexity compared to the data — which is exactly the regime in which the model is doing the compressing.
+*Proof sketch.* Expand both NML logarithms as (log envelope) $-$ (log Shtarkov sum); the envelope terms compare by Proposition 8.1, and coincide precisely under the stated equality hypothesis. $\square$
 
-### 10.2 Sharpness
+**Example 8.3 (The deterministic class).** Let $\mathcal{I}_m$ consist of the $m$ deterministic sources on an alphabet of $m$ letters, source $\theta$ emitting letter $\theta$ with certainty. These have disjoint supports, so $S(\mathcal{I}_m) = m$ (Theorem 5.2); a one-source subclass has $S = 1$. Theorem 8.2 then gives, on the message emitted by that source, a saving of exactly $\log_2 m$ bits.
 
-The bounds meet the gate set for this line of work: the lower bound $\tfrac12\log_2 n-2$ reproduces the classical parametric redundancy rate at dimension one, with fully explicit constants and no asymptotic notation, and the upper bound $\log_2(n+1)$ for the same class is within a factor of two of it in the coefficient of $\log_2 n$. For higher-dimensional classes we have the upper bound $|A|\log_2(n+1)$, which exceeds the expected $\frac{|A|-1}{2}\log_2 n$ by a factor of roughly $2$; closing that factor requires the multi-dimensional analogue of the type-term estimate of Theorem 5.5.
+The same class makes the general theory concrete at the level of code lengths:
 
-### 10.3 Practical readings
+**Corollary 8.4 (Sharp pigeonhole bound).** Every code on $m$ messages assigns some message a length of at least $\log_2 m$ bits.
 
-Several familiar facts are corollaries.
+*Proof sketch.* For the deterministic class, entropy is zero and $R(p_\theta, L) = L(\theta)$. Theorem 3.9(1) yields a $\theta$ with $L(\theta) \ge \log_2 m$. $\square$
 
-*Adaptive coders are near-optimal.* The NML code of a parametric class is a single, fixed code whose loss against the best-tuned code is at most $\log_2 C_S+1$ bits on *every* message. Adaptive arithmetic coders with Krichevsky–Trofimov-style estimators implement close relatives of the mixture code, which is optimal on average by Corollary 8.4.
+**Theorem 8.5 (The value of specialization).** For the class $\mathcal{I}_m$:
 
-*Model selection is compression.* $\log_2 C_S$ is the parametric complexity term of the minimum description length principle; the theorems above are its coding-theoretic justification, and Theorem 4.1 is the precise statement that only the number of distinguishable statistics matters.
+1. for each $\theta$ there is a code with $R(p_\theta, L)\le 1$ — e.g. give letter $\theta$ length $1$ and all others length $m+1$, which satisfies Kraft because $(m-1)2^{-(m+1)} \le \tfrac12$;
+2. every code $L$ has some $\theta$ with $R(p_\theta, L) \ge \log_2 m$.
 
-*Dictionaries and pretraining.* Shipping a large "shared dictionary" or a pretrained model with a codec is the deterministic-class trade in disguise if the dictionary is as expressive as the data; it pays only if the effective description length of the shared object is small relative to the data it will serve — the same $\log_2 C_S$ accounting.
+Specialization is therefore worth exactly $\log_2 m - 1$ bits here, and that is the entirety of the gain.
 
-### 10.4 Limitations
+Moreover Theorem 5.2 shows this is the *best case*: if the class members overlap at all, the achievable saving is strictly less than $\log_2 m$, and Theorem 5.3 quantifies the shortfall exactly for two sources, where the saving is $\log_2(1 + \mathrm{TV})$ rather than $1$ bit.
 
-All results are for finite message spaces and worst-case pointwise or Bayes-average redundancy relative to *classes of probability distributions*; algorithmic (Kolmogorov) universality is not treated. The lower bound of Section 5 is proved for the binary case; the general alphabet lower bound is conjectural (Section 11). The capacity theory is developed for strictly positive laws and priors, the regime where relative entropy is finite.
+---
+
+## 9. Algorithms
+
+Three computational primitives follow directly from the theory. Throughout, $|\mathcal{A}|$ is the alphabet size and $m$ the number of sources.
+
+**(A) Shtarkov sum and NML distribution.** Given the likelihood table $p_\theta(a)$, compute $\widehat p(a) = \max_\theta p_\theta(a)$ for each $a$, then $S = \sum_a \widehat p(a)$ and $p^{\mathrm{NML}} = \widehat p / S$. Cost: $\Theta(m|\mathcal{A}|)$ time and $\Theta(|\mathcal{A}|)$ space. The output certifies both directions of Theorem 4.5: $\log_2 S$ is simultaneously the guarantee of the NML code and the unavoidable worst-case loss of every competitor.
+
+**(B) Shtarkov sum of the memoryless binary class in $O(n)$.** Naively $|\mathcal{A}| = 2^n$, but the envelope depends only on the number of ones. Using the maximum-likelihood bias $\hat t = k/n$ for a string with $k$ ones,
+$$S_n = \sum_{k=0}^{n} \binom{n}{k}\left(\frac{k}{n}\right)^{k}\left(1 - \frac{k}{n}\right)^{n-k},$$
+which is $n+1$ terms, each computable in $O(1)$ from the previous binomial coefficient. Cost: $\Theta(n)$ arithmetic operations. Numerically one works in log-space to avoid underflow. This is the exact minimax regret certificate $\log_2 S_n$, sitting between the theoretical bounds $\frac12\log_2 n - 2$ and $\log_2(n+1)$.
+
+**(C) Certified minimax regret via disjoint windows.** The lower bound proof is itself an algorithm: choose $d = \lfloor\sqrt n\rfloor + 1$, place centres $c_i = 2di \le n$, and evaluate $\sum_{k : |k - c_i| < d} b_{n, c_i/n}(k)$ for each window. The sum of these masses is a rigorous certificate $S_n \ge \sum_i (\text{window mass})$ computable in $\Theta(n)$ total time, since the windows are disjoint. Each window mass is $\ge 3/4$ by Chebyshev, but the computed values are typically near $0.95$, giving numerically stronger certificates than the analytic bound.
+
+---
+
+## 10. Discussion: is specialization worth pursuing?
+
+The research question that motivated this work was whether shipping decompressors specialized to a class of data can move a meaningful number of bits out of the message and into the shared program. The theory answers it precisely.
+
+**Specialization does move bits, and the exchange rate is the log of class complexity.** By Theorem 8.2 the saving is exactly $\log_2\big(S(\mathcal{P})/S(\mathcal{P}')\big)$; by Theorems 3.9 and 5.2 it is at most $\log_2 m$ for a class of $m$ sources, with equality if and only if the sources are perfectly distinguishable.
+
+**But for parametric classes this is $O(\log n)$ against a $\Theta(n)$-bit message.** For the memoryless binary class the entire price of universality is between $\frac12\log_2 n - 2$ and $\log_2 n$ bits on messages of $n$ bits. For $n = 10^6$, that is at most twenty bits out of a million — a saving of $0.002\%$. Even a $k$-parameter family only reaches $\frac{k}{2}\log_2 n$, which remains negligible unless $k$ is itself comparable to $n$.
+
+**The regime where specialization can matter is exponential class complexity.** Since the price is $\log_2 S$ and $S \le m$, a saving that is a constant fraction of the message length requires $\log_2 S = \Theta(n)$, i.e. a class whose effective number of distinguishable members is exponential in the message length. Theorem 7.3 shows this is attainable by stacking parameters — the price is unbounded in $k$ — so the mathematics does not forbid it. What it forbids is getting there with a fixed smooth low-dimensional model. Dictionary-based, context-mixing, and learned-model schemes are exactly the constructions whose effective class complexity scales with the data, and the theory says that is the only place where the bits are.
+
+**Rigidity sharpens the design advice.** Theorem 5.2 says the price measures distinguishability, not cardinality. Enlarging a class by adding models statistically similar to existing ones costs almost nothing ($S$ grows sublinearly, and by Theorem 5.3 the marginal price of a second model is $\log_2(1+\mathrm{TV})$). So a well-designed universal scheme should be greedy about adding *redundant* models — they are nearly free — and parsimonious about adding *distinguishable* ones. This inverts the naive "label plus specialist" intuition, under which every added model costs a full $\log_2$ of the count.
+
+**Consistency with the classical literature.** The results reproduce the known minimax rates: redundancy–capacity for the average case, Shtarkov's normalized maximum likelihood for the worst case, and Rissanen's $\frac{k}{2}\log n$ for smooth $k$-parameter families. The lower bound established here matches the classical rate in order and differs from the sharp constant only by the factor two inherent in a second-moment argument, and the upper bound $\log_2(n+1)$ matches it in order as well; the truth is bracketed on both sides.
 
 ---
 
 ## 11. Future work
 
-**Full Rissanen rate for general alphabets.** For the memoryless class over an alphabet of size $a$ we conjecture $\log_2 C_S=\frac{a-1}{2}\log_2 n+O(1)$, with the constant given by Shtarkov's formula $\log_2\big(\Gamma(1/2)^a/\Gamma(a/2)\big)+\frac{a-1}{2}\log_2(n/2\pi)$. The one-dimensional proof factorises: each interior type contributes $\prod_i\sqrt{n/(2\pi n_i)}$ by the same two-sided Stirling estimate, and the sum over the $(a-1)$-dimensional type lattice is a Riemann sum for the Dirichlet$(\tfrac12,\dots,\tfrac12)$ normaliser. The remaining work is the multi-index version of Theorem 5.5.
+Five directions stand out.
 
-**Minimax equals maximin, exactly.** We conjecture that for every finite class $\sup_w I(w)=\inf_q\sup_\theta D(p_\theta\|q)$, and that both equal $\log_2C_S$ up to $o(1)$ for smooth parametric families. The compensation identity already gives one inequality; the reverse is a minimax exchange on the compact simplex of priors, a finite-dimensional argument.
-
-**Higher-order Markov and finite-state sources.** The product-form bound applies verbatim to order-$r$ chains with $|A|^{r+1}$ features, giving $C_S\le|A|^r(n+1)^{|A|^{r+1}}$; the matching lower bound and the correct dependence on the state count remain open.
-
-**Sharpening the binary constants.** The gap between $\tfrac12\log_2 n-2$ and $\log_2(n+1)$ can be narrowed by replacing the crude discard of the two extreme types and the AM–GM step in Theorem 5.5 by an exact Riemann-sum evaluation of (5.1), which should yield $\log_2 C_S=\tfrac12\log_2 n+\tfrac12\log_2(\pi/2)+o(1)$.
-
-**Beyond worst case: redundancy under structural constraints.** The structural calculus of Section 7 suggests studying the price as a functional on the lattice of classes: which operations on classes are exactly multiplicative, and what is the price of a class defined by a constraint (e.g. bounded entropy rate, bounded total variation from a reference source)?
+1. **The sharp constant.** The conjecture $S_n \le \sqrt{\pi n/2} + 1$ for all $n\ge 1$ would make the exact minimax regret of the memoryless binary class $\frac12\log_2 n + O(1)$ with an explicit constant, closing the factor-of-two gap left by the two-sided bound of Theorem 6.8. The route is to replace the crude term bound $\binom{n}{k}\widehat\ell(k)\le 1$ with a Stirling estimate: the $k$-th term behaves like $\sqrt{n/(2\pi k(n-k))}$, and summing the resulting Riemann sum produces the arcsine-density integral $\int_0^1 \frac{dx}{\pi\sqrt{x(1-x)}}$ times $\sqrt{\pi n/2}$.
+2. **Beyond memoryless: Markov and finite-state classes.** The additivity theorem should give the $\frac{k}{2}\log n$ rate for order-$r$ Markov chains on a binary alphabet with $k = 2^r$ free parameters, by decomposing a string into the $2^r$ subsequences following each context; the technical obstruction is that context counts are random rather than fixed, so the decomposition is only asymptotically a product.
+3. **Exponential class complexity.** Construct explicit classes with $\log_2 S = \Theta(n)$ and analyze their achievable specialization savings — the regime identified in Section 10 as the only one where per-class decompressors can move a constant fraction of the message.
+4. **Continuous parameter spaces.** Our classes are finite by construction. Extending the exact minimax identity to compact parameter spaces with a continuous envelope requires replacing the finite maximum with a supremum and controlling measurability; the Shtarkov sum becomes an integral and the rigidity theorem should become a statement about mutual singularity of the family.
+5. **Algorithmic NML.** The NML distribution is optimal but requires the envelope, which is exponentially large in general. Identifying classes for which the envelope admits a polynomial-size sufficient statistic — as the number of ones does for the memoryless binary class, reducing $2^n$ messages to $n+1$ equivalence classes — would turn the exact minimax theory into practical codes.
 
 ---
 
@@ -421,14 +371,15 @@ All results are for finite message spaces and worst-case pointwise or Bayes-aver
 
 | Result | Statement |
 |---|---|
-| Exact minimax redundancy | Price $=\log_2 C_S$, $C_S=\sum_x\sup_\theta p_\theta(x)$; achieved by NML within one bit, unavoidable by Kraft |
-| Basic bounds | $1\le C_S\le|\Theta|$; $C_S=1$ for a singleton class; $C_S=|\Theta|$ for mutually singular sources |
-| Sufficient statistic | Likelihood factors through an $N$-valued statistic $\Rightarrow C_S\le N$ |
-| Memoryless | $C_S\le(n+1)^{|A|}$; binary $C_S\le n+1$; redundancy $\le|A|\log_2(n+1)+1$ bits |
-| Markov (order 1) | $C_S\le|A|(n+1)^{|A|^2}$; redundancy $\le\log_2|A|+|A|^2\log_2(n+1)+1$ bits |
-| Rissanen floor | Binary memoryless: $C_S\ge\sqrt n/4$, price $\ge\tfrac12\log_2 n-2$ bits, $n\ge2$ |
-| Sandwich | $\tfrac12\log_2 n-2\le\log_2 C_S\le\log_2(n+1)$ |
-| Separation | Deterministic class: $C_S=|X|$, price exactly $n$ bits on $n$-bit files |
-| Structure | Additive over independent blocks; subadditive under a shared parameter; monotone; calibrated |
-| Rates | Per-symbol price $\to0$; $\log_2C_S(n)$ subadditive, Fekete limit $0$ |
-| Capacity | Compensation identity; mixture Bayes optimal; $I(w)\le\log_2C_S$ and $I(w)\le H(w)\le\log_2|\Theta|$ |
+| Compensation identity | $\sum_\theta \pi(\theta)D(p_\theta \Vert q) = I(\pi) + D(\bar p_\pi \Vert q)$ |
+| Average-case lower bound | Some source pays $\ge I(\pi)$ bits under any code |
+| Average-case sandwich | $\log_2 m \le$ minimax redundancy $\le \log_2 m + 1$ for $m$ distinguishable sources |
+| Exact worst-case price | Minimax pointwise regret $= \log_2 S$, $S = \sum_a\max_\theta p_\theta(a)$, attained by NML |
+| Range | $1 \le S \le m$ |
+| Rigidity | $S = m$ iff pairwise disjoint supports; $S < m$ strictly otherwise |
+| Two sources | $S = 1 + \mathrm{TV}(p_0,p_1)$; price $=\log_2(1+\mathrm{TV}) \in [0,1]$, $=1$ iff $\mathrm{TV}=1$ |
+| Additivity | $S$ multiplies over independent components; $\log_2 S$ adds |
+| Bernoulli rate | $\frac12\log_2 n - 2 \le \log_2 S_n \le \log_2(n+1)$ |
+| $k$-parameter rate | $k(\frac12\log_2 n - 2) \le \log_2 S \le k\log_2(n+1)$; unbounded in $k$ |
+| Price of specialization | $\le \log_2\big(S(\mathcal{P})/S(\mathcal{P}')\big)$ bits, with equality where the MLE lies in the subclass |
+| Pigeonhole corollary | Every code on $m$ messages has some length $\ge \log_2 m$ |
