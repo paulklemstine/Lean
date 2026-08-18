@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "25d882e7",
-      "domain": "Physics",
-      "key_insight": "# Future Directions\n\nDerived from the analysis and adversarial review of the results in\n`Catalog/Physics/WrongTheories/` (`PerturbativeCore.lean`, `MetaTheorem.lean`,\n`TruncationHierarchy.lean`, `Boun",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 53,
-      "timestamp": "2026-08-16T15:36:21",
-      "title": "The Unreasonable Effectiveness of Wrong Theories"
-    },
-    {
       "cycle_id": "d4bd7c02",
       "domain": "Logic",
       "key_insight": "# Future directions — bold, testable conjectures from the NET-44 formalisation\n\nEverything below is derived from the theorems proved in\n\n* `Catalog/Logic/KneeFluctuationTwoSeed.lean` (knee predicate,",
@@ -499,19 +489,19 @@
       "theorem_count": 63,
       "timestamp": "2026-08-18T15:47:25",
       "title": "For every finite action the spectrum is log-concave: `t_r² ≥ t_{r−1}·t_{r+1}` for\n`1 ≤ r < |X|`."
+    },
+    {
+      "cycle_id": "5792b548",
+      "domain": "Shared",
+      "key_insight": "# Future Directions — power-sum rigidity, sharpness, and what lies past the boundary\n\nDerived from the verified results in `Catalog/Shared/PowerSumSharpness.lean`\n(rigidity `powerSums_determine`, shar",
+      "quality_score": 0.88,
+      "sorry_count": 0,
+      "theorem_count": 59,
+      "timestamp": "2026-08-18T17:43:35",
+      "title": "Sharpness"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "4152b805",
-      "domain": "Geometry",
-      "key_insight": "# Future Directions — Rigorous Foundations for Schubert Calculus\n\n## What is now formalised\n\nAll statements below are `sorry`-free, compile against mathlib4 (Lean v4.28.0) and depend only\non the stand",
-      "quality_score": 0.6697667517006802,
-      "sorry_count": 0,
-      "theorem_count": 631,
-      "timestamp": "2026-08-07T14:58:13",
-      "title": "Hilbert 15: Schubert Calculus Rigorization"
-    },
     {
       "cycle_id": "22e93393",
       "domain": "Combinatorics",
@@ -2501,27 +2491,19 @@
       "theorem_count": 63,
       "timestamp": "2026-08-18T15:47:25",
       "title": "For every finite action the spectrum is log-concave: `t_r² ≥ t_{r−1}·t_{r+1}` for\n`1 ≤ r < |X|`."
+    },
+    {
+      "cycle_id": "5792b548",
+      "domain": "Shared",
+      "key_insight": "# Future Directions — power-sum rigidity, sharpness, and what lies past the boundary\n\nDerived from the verified results in `Catalog/Shared/PowerSumSharpness.lean`\n(rigidity `powerSums_determine`, shar",
+      "quality_score": 0.88,
+      "sorry_count": 0,
+      "theorem_count": 59,
+      "timestamp": "2026-08-18T17:43:35",
+      "title": "Sharpness"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "0cf95d8d",
-      "domain": "Probability",
-      "name": "minCollisionCard_le_of_witness",
-      "quality": 0.88
-    },
-    {
-      "cycle_id": "0cf95d8d",
-      "domain": "Probability",
-      "name": "ideal_pte_three_narrow",
-      "quality": 0.88
-    },
-    {
-      "cycle_id": "11c9ff9f",
-      "domain": "Logic",
-      "name": "injective_smul",
-      "quality": 0.86
-    },
     {
       "cycle_id": "11c9ff9f",
       "domain": "Logic",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "act_one",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "5792b548",
+      "domain": "Shared",
+      "name": "powerSum_zero",
+      "quality": 0.88
+    },
+    {
+      "cycle_id": "5792b548",
+      "domain": "Shared",
+      "name": "powerSum_add",
+      "quality": 0.88
+    },
+    {
+      "cycle_id": "5792b548",
+      "domain": "Shared",
+      "name": "powerSum_replicate",
+      "quality": 0.88
     }
   ],
-  "last_updated": "2026-08-18T15:47:25",
+  "last_updated": "2026-08-18T17:43:35",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hupper⟩)",
@@ -3889,12 +3889,6 @@
     ],
     "Shared": [
       {
-        "cycle_id": "5e2efbe9",
-        "quality": 0.6514402131782946,
-        "theorems": 555,
-        "title": "ArXiv paper: Solomon zeta functions over arithmetic orders"
-      },
-      {
         "cycle_id": "23bf86f8",
         "quality": 0.6376340955882351,
         "theorems": 61,
@@ -3947,6 +3941,12 @@
         "quality": 0.81,
         "theorems": 81,
         "title": "Compression Research B6: Compression ↔ one-way functions (the cryptography link)"
+      },
+      {
+        "cycle_id": "5792b548",
+        "quality": 0.88,
+        "theorems": 59,
+        "title": "Sharpness"
       }
     ],
     "Tropical": [

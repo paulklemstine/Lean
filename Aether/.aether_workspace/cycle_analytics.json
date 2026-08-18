@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-18T15:47:29.692834+00:00",
+  "last_updated": "2026-08-18T17:43:38.577151+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -59071,6 +59071,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-08-18T15:47:29.499670+00:00",
       "title": "For every finite action the spectrum is log-concave: `t_r\u00b2 \u2265 t_{r\u22121}\u00b7t_{r+1}` for\n`1 \u2264 r < |X|`."
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Shared",
+      "duration_seconds": 3266.4813520908356,
+      "end_time": 1787074983.027358,
+      "files_integrated": 4,
+      "job_id": "5792b548",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.88,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.571,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.88,
+        "novelty": 0.88,
+        "proof_depth": 0.88,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.88,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1787071716.546006,
+      "strategy_count": 0,
+      "theorem_count": 59,
+      "theorem_novelty_disproof": 1,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 53,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-08-18T17:43:38.380375+00:00",
+      "title": "Sharpness"
     }
   ]
 }

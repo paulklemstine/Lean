@@ -1782,34 +1782,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle 33519cdb (Q=0.780), which proved 70 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Open here; the multiplicative bound `|supp f| \u00b7 |supp f\u0302| \u2265 p` is proved\n(`FourierCyclic.uncertainty_zmod`), and it is strictly weaker (e.g. `|supp f| = |supp f\u0302| = \u221ap`\nwould satisfy the product bound but violate the sum bound).",
-    "domains": [
-      "MachineLearning"
-    ],
-    "id": "push_33519cdb_d210ed2c",
-    "priority_score": 0.88,
-    "research_mode": "team",
-    "source_exp_id": "33519cdb",
-    "status": "available",
-    "timestamp": "2026-08-17T23:37:08.105745+00:00",
-    "title": "Deepening: Open here; the multiplicative bound `|supp f| \u00b7 |supp f\u0302| \u2265 p` is proved"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 45ac3b9d (Q=0.780), which proved 58 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Paper:** `ResearchOutput/NewMathematics/39_PowerResidue_Circularity.md` (factor3)\n**Experiment:** KPOWER (#374), assessment v150.\n\n## Finding\nTest whether cubic (Z[\u03c9]) / quartic (Z[i]) power-residue symbols provide residue\ndials that escape the quadratic channel. Verified:\n1. **Cubic symbols escap",
-    "domains": [
-      "Combinatorics"
-    ],
-    "id": "push_45ac3b9d_e503e8e8",
-    "priority_score": 0.88,
-    "research_mode": "team",
-    "source_exp_id": "45ac3b9d",
-    "status": "available",
-    "timestamp": "2026-08-14T22:48:13.363443+00:00",
-    "title": "Deepening: The Higher-Power Reciprocity Channel, Closed"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Building on cycle 603eb18a (Q=0.780), which proved 59 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Program:** Network/LLM lab \u2014 round-net-24 (performance axis; recurrence / stateful-carry-cell test of the carry-chain length wall). Machine-verified (ALL_DONE_NET24). Paper: ResearchOutput/NetworkMathematics/24_StatefulCarryCell.md (paper 68). Script /tmp/exp_net_stateful.py, log /tmp/net24.log.\n\n",
     "domains": [
       "NumberTheory"
@@ -19559,6 +19531,19 @@ window.FUTURE_DIRECTIONS = [
     "title": "The equivalence and the cap are formal; sieve-theoretic upper bounds of"
   },
   {
+    "consumed_by_exp_id": "af68ac83",
+    "description": "~~`minimal_near_miss_size`~~ \u2014 **RESOLVED in cycle 3**: among all near-miss pairs at level\n   `N \u2265 1` the binomial pair also minimises the cardinality, the minimum being `2^{N-1}`\n   (`two_pow_le_two_mul_card_of_near_miss`, `card_evenPart`). Open successor: is the\n   *support size* (number of distinct values used) also minimised, and is it `\u2308(N+1)/2\u2309`?",
+    "domains": [],
+    "id": "fd_1537",
+    "phase": "A",
+    "priority_score": 0.4305555555555556,
+    "research_mode": "team",
+    "source_exp_id": "5792b548",
+    "status": "in_progress",
+    "timestamp": "2026-08-18T17:43:18.015803+00:00",
+    "title": "~~`minimal_near_miss_size`~~ \u2014 RESOLVED in cycle 3: among all near-miss pairs at level\n   `N \u2265 1` the binomial pair also minimises the cardinality, the minimum being `2^{N-1}`\n   (`two_pow_le_two_mul_"
+  },
+  {
     "consumed_by_exp_id": "",
     "description": "**C1 (settled, in a stronger form).**  Every character-weighted circle count is either\n  identically zero (odd weights, `circleSumC_eq_zero_of_odd`) or a sum of exactly two Jacobi\n  sums against the quadratic character (`circleSumC_eq_jacobiSum_add`), whence\n  `|W_\u03c8(p)| \u2264 2\u221ap` with an **order-independent** constant (`norm_circleSumC_le`) \u2014 better than\n  the conjectured `d\u221ap`.  The `\u221ap` step is `norm_jacobiSum_eq_sqrt`.",
     "domains": [],
@@ -19608,15 +19593,14 @@ window.FUTURE_DIRECTIONS = [
     "title": "Conjecture A (Parity-gap conjecture). For all `n \u2265 2`, all injective `S, T : Fin n \u2192 ZMod p`, the parity-weighted exponent counter `permCoeff S T` is nonzero somewhere; in fact `max_r |permCoeff S T r"
   },
   {
-    "consumed_by_exp_id": "5792b548",
+    "consumed_by_exp_id": "",
     "description": "The range `k \u2264 N` cannot be shortened: `(0,2)` and `(1,1)` are bounded by `2`,\n    agree for `k \u2264 1`, and have different distributions (`powerSums_not_determined_of_lt`).\n    Exhaustive search (`ComputationalEvidence.md`, \u00a78) finds `0` such pairs at `K = N` and many at\n    `K = N \u2212 1`.",
     "domains": [],
     "id": "fd_1435",
-    "phase": "A",
     "priority_score": 0.4160952380952381,
     "research_mode": "team",
     "source_exp_id": "286b3a0e",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-17T13:54:06.155568+00:00",
     "title": "Sharpness"
   },
