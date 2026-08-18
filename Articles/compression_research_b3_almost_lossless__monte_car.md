@@ -1,319 +1,284 @@
-# The Pigeonhole's Price: How a Coin Flip Buys You Compression
-
-## A rule you cannot break
-
-Here is one of the most stubborn facts in all of mathematics, and one every
-programmer has bumped into: **you cannot compress everything.**
-
-Suppose you want a compressor that takes any file of $n$ bits and produces a
-shorter description, and a decompressor that always recovers the original file
-exactly. There are $2^n$ possible files. If your compressed descriptions come
-from a set of $M$ possible codewords, and every file must be recovered exactly,
-then two different files can never receive the same codeword — the
-decompressor would have no way to tell them apart. So the encoding map must be
-injective, and injectivity forces
-
-$$2^n \le M.$$
-
-That is the **pigeonhole barrier**, and in its general form it says: if an
-encoder $E : \mathcal{A} \to \{1, \dots, M\}$ admits a decoder $D$ with
-$D(E(x)) = x$ for *every* $x$ in the source alphabet $\mathcal{A}$, then
-$M \ge |\mathcal{A}|$. No cleverness escapes it. It is not a statement about
-algorithms; it is a statement about counting.
-
-This is why "universal compressors" are snake oil, why zip files of random noise
-are bigger than the noise, and why the joke about compressing the internet down
-to a single byte is a joke.
-
-But the barrier has a hairline crack in it, and the crack is the word *every*.
-
-## Relaxing "every" to "almost every"
-
-What if we allow the decoder to fail — rarely? Say, with probability at most
-$\varepsilon = 10^{-12}$, which is far less likely than a cosmic ray flipping a
-bit in your RAM while you read this sentence. This is **almost-lossless
-compression**, and it is the setting where Claude Shannon's information theory
-lives.
-
-The idea, in one line: most real sources don't produce all $|\mathcal{A}|$
-strings with equal enthusiasm. English text, images, sensor readings — they
-concentrate on a much smaller **typical set** $S \subseteq \mathcal{A}$. If we
-only insist on decoding strings from $S$, we only need to distinguish $|S|$
-things, not $|\mathcal{A}|$ things, and $\log_2 |S|$ can be dramatically smaller
-than $\log_2 |\mathcal{A}|$.
-
-And here is where the plot thickens, because Shannon's method of *constructing*
-such a code is one of the strangest arguments in mathematics: **don't design the
-code at all. Roll dice.**
-
-## The random codebook
-
-Pick a random function. Concretely, choose a **codebook** $H$ that assigns to
-every string $x \in \mathcal{A}$ a codeword $H(x) \in \{1,\dots,M\}$, with each
-of the $M^{|\mathcal{A}|}$ possible functions equally likely. To transmit $x$,
-send $H(x)$. To decode a received codeword $c$, list every typical string
-$y \in S$ with $H(y) = c$; if there is **exactly one**, output it; otherwise
-declare failure.
-
-Why on earth should this work? Because of a single clean count. Fix two distinct
-strings $p \ne q$. Among all $M^{|\mathcal{A}|}$ codebooks, how many satisfy
-$H(p) = H(q)$? Exactly $M^{|\mathcal{A}|}/M$ of them — a proportion of exactly
-$1/M$. Written without any division, so that it is a statement about integers
-and nothing else:
-
-$$M \cdot \#\{H : H(p) = H(q)\} = M^{|\mathcal{A}|}, \qquad p \ne q.$$
-
-A random codebook confuses any *fixed* pair of strings with probability exactly
-$1/M$. The transmitted string $x$ has at most $|S| - 1$ typical competitors, so
-by a union bound the chance that *some* competitor collides with $x$ is at most
-$(|S|-1)/M$. Choose
-
-$$M \ \ge\ \frac{|S| - 1}{\varepsilon}$$
-
-and a random codebook decodes $x$ correctly with probability at least
-$1 - \varepsilon$.
-
-Look at the rate this buys:
-
-$$\log_2 M \ \approx\ \log_2 |S| \;+\; \log_2 \frac{1}{\varepsilon}.$$
-
-The first term is the true information content of the source. The second is the
-entire price of reliability — and it is a *constant*, independent of how long
-the message is. Stretch $\varepsilon$ to $10^{-12}$ and you pay forty extra
-bits. Once. For the whole message. The pigeonhole barrier, which demanded
-$\log_2 |\mathcal{A}|$ bits, has been walked around rather than broken.
-
-## Exactly how often does it fail?
-
-Union bounds are approximations, and it is natural to ask what the truth is. It
-turns out the failure probability of uniform random hashing can be written down
-in closed form. With $k = |S| - 1$ competitors,
-
-$$\mathbb{P}[\text{failure at } x] \;=\; 1 - \Bigl(1 - \tfrac{1}{M}\Bigr)^{k}.$$
-
-The proof is a pretty induction. Call a codebook *separating* for $x$ against a
-competitor set $D$ if $H(y) \ne H(x)$ for all $y \in D$. Adding one new
-competitor $a \notin D$ multiplies the number of separating codebooks by exactly
-$(M-1)/M$: given the value $H(x)$, the new value $H(a)$ is free to be any of the
-$M$ symbols but must avoid one. Iterating gives the exact count of separating
-codebooks and hence the formula.
-
-This closed form is worth pausing on, because it explains both of the bounds one
-normally sees. Expanding, $1 - (1-1/M)^k \le k/M$ recovers the union bound; and
-Bonferroni's second inequality (inclusion–exclusion truncated after two terms)
-gives a *lower* bound of the same order. Concretely, if the typical set isn't
-too big compared with the codebook — precisely, if $2(k-1) \le M$ — then
-
-$$\mathbb{P}[\text{failure at } x] \ \ge\ \frac{k}{2M}.$$
-
-The two bounds pin the failure probability at $\Theta(k/M)$: the union bound is
-tight up to a factor of two. There is nothing to be gained by analysing random
-hashing more cleverly.
-
-And that lower bound has teeth. To get failure probability $\le \varepsilon$
-from a random codebook you genuinely need $M \gtrsim k/(2\varepsilon)$ — the
-factor $1/\varepsilon$ is a real feature of the random construction, not an
-artefact of a lazy proof.
-
-Is that factor necessary in principle? No — and this is the interesting tension.
-There is a **converse** bound that applies to *any* encoder and *any* decoder
-whatsoever, however cleverly designed, randomised, or equipped with side
-information: the set of strings on which decoding is exact has size at most $M$.
-(The proof is the pigeonhole argument again, restricted to the set where
-decoding works: on that set the encoder must be injective.) Consequently, to
-decode a $(1-\varepsilon)$ fraction of a typical set $S$ you need
-$M \ge (1-\varepsilon)|S|$ — and *no more* than that, information-theoretically.
-Random hashing overshoots by a factor of $1/\varepsilon$. The gap between
-$(1-\varepsilon)|S|$ and $|S|/\varepsilon$ is the price of not thinking.
-
-## The obstacle nobody advertises
-
-Here is the thing the textbook presentation glosses over. The rate is beautiful.
-The decoder is a catastrophe.
-
-To decode, we scan the typical set. That costs exactly $|S|$ hash comparisons —
-and this can be made precise: the scanning decoder performs one comparison per
-candidate, exactly $|S|$ of them, no more and no less. But $|S|$ is
-*exponential* in the block length $n$; for a source with entropy $h$ per symbol,
-$|S| \approx 2^{hn}$. For $n = 1000$ and $h = 1/2$, that is $2^{500}$
-comparisons. Shannon's random code is optimal and utterly unusable.
-
-So the real research question is not "can randomness beat the pigeonhole
-bound?" — it can, and everyone knows it. The question is: **can randomness beat
-the pigeonhole bound with a decoder you could actually run?**
-
-## Blocking: turning a product into a sum
-
-The fix is to stop treating the message as one atom.
-
-Split the string into $b$ blocks $x = (x_1, \dots, x_b)$, each block drawn from
-a block alphabet with its own typical set $T$. The global typical set is the
-product $T^b$, of size $|T|^b$ — that is what the flat decoder must scan. Now
-draw one random codebook $H$ indexed by *(block position, block value)* pairs,
-and hash each block with its own slice:
-
-$$\text{encode}(x) \;=\; \bigl(H(1,x_1),\, H(2,x_2),\, \dots,\, H(b,x_b)\bigr).$$
-
-The decoder runs the scanning decoder independently on each block and succeeds
-only if every block decodes unambiguously. And now the cost is
-
-$$b \cdot |T| \quad\text{instead of}\quad |T|^{b}.$$
-
-Exponential becomes linear. That the blocked cost really is smaller is an
-elementary but genuine inequality: for $|T| \ge 2$ and $b \ge 3$,
-$$b\,|T| \;<\; |T|^{\,b},$$
-with the gap growing exponentially in the number of blocks. For a modest example
-— $|T| = 2^{20}$ and $b = 50$ — the flat decoder needs $2^{1000}$ comparisons
-and the blocked decoder needs about $5 \times 10^7$. That is the difference
-between "heat death of the universe" and "a fraction of a second".
-
-What does this cost? Exactly one union bound. The blocked scheme fails if *any*
-block collides, so
-
-$$\mathbb{P}[\text{failure}] \ \le\ \frac{b\,(|T| - 1)}{M},$$
-
-and choosing $M \ge b(|T|-1)/\varepsilon$ restores the $1-\varepsilon$
-guarantee. In rate terms we pay an extra $\log_2 b$ bits — logarithmic in the
-number of blocks — to convert an exponential search into a linear one. That is
-an extraordinary bargain, and it is the central engineering content of the whole
-story.
-
-There is a hint of a deeper structure here. The number of blocks $b$ appears as
-a *multiplier* in the failure probability and as a *root* in the search cost
-($|T^b|^{1/b} = |T|$ candidates per block). The two exponents are conjugate to
-one another, which suggests that rate and decoder complexity trade off along a
-genuine Pareto frontier governed by a Legendre-type duality — with the flat
-scheme at one endpoint and the fully blocked scheme at the other. Both endpoints
-are now theorems; the interpolation is open.
-
-## The loophole: when failure is not failure
-
-Now for the part that should make you uneasy.
-
-A compression scheme has two ways to disappoint you. It can say *"I don't
-know"* — annoying, but honest, and you retransmit. Or it can hand you a
-confident, wrong answer. In storage and communication this second mode is called
-**silent corruption**, and it is the one that destroys archives and quietly
-poisons databases.
-
-The scanning decoder is reassuringly safe as long as the transmitted string is
-typical: if $x$ is on the candidate list, then any string the decoder outputs
-must be $x$ itself. The reason is simple — the decoder outputs something only
-when exactly one candidate matches the received codeword, and $x$ is always one
-matching candidate, so the unique match must be $x$. This soundness property
-survives the blocked construction intact: if every block of the transmitted
-string is typical, any output of the blocked decoder equals the transmitted
-string exactly, block by block.
-
-But read that hypothesis again. **Typical.** What if the source, on a bad day,
-emits an atypical string?
-
-Then $x$ is not on the candidate list, and the decoder can find exactly one
-typical string that happens to share $x$'s codeword — and output it, with total
-confidence, and be completely wrong. This is not a theoretical worry. In a small
-explicit instance (six-letter alphabet, two typical strings, sixteen-symbol
-codebook space), the probability of confident-and-wrong output on an atypical
-input measures at $3/8$. Not $3/8$ of a percent. Three eighths.
-
-Typicality-based reasoning simply does not deliver a no-silent-corruption
-guarantee, and any claim that it does is quietly assuming the source never
-misbehaves.
-
-## One checksum closes it — for every decoder at once
-
-The fix is old and simple: send a checksum. Draw a second, independent random
-function $C$ into $\{1, \dots, K\}$ and transmit the pair $(H(x), C(x))$. The
-decoder runs as before, obtains a candidate $y$, and accepts it only if
-$C(y)$ equals the received checksum.
-
-What makes this satisfying is the *generality* of the guarantee. Let the inner
-decoder be **anything at all** — the scanning decoder, the blocked decoder, a
-neural network, an adversary, any randomised procedure whatsoever that proposes
-a candidate. Then for **every** source string $x$, typical or not, with no
-assumption on $x$ and none on the inner decoder:
-
-$$\mathbb{P}\bigl[\text{decoder outputs a string} \ne x\bigr] \ \le\ \frac{1}{K}.$$
-
-The proof is a *fibrewise* argument, and it is the conceptual heart of the
-result. Condition on the inner decoder's randomness. Once that is fixed, the
-candidate $y_0$ it proposes is *determined* — a single string, not a
-distribution. A silent corruption requires $y_0 \ne x$ together with
-$C(y_0) = C(x)$: a collision of the independent checksum on one fixed pair,
-which happens for exactly a $1/K$ fraction of checksums. Averaging over the
-inner randomness preserves the bound. The inner decoder's cleverness, or
-malice, is irrelevant — it is quantified over before the checksum is drawn.
-
-The price is $\log_2 K$ bits and one extra comparison. Thirty-two bits buys
-silent-corruption probability below $2.4 \times 10^{-10}$; sixty-four bits buys
-$5 \times 10^{-20}$. Failures are now loud.
-
-## The scheme, assembled
-
-Put the three pieces together and you get a compression scheme with a complete
-specification — rate, reliability, complexity, and safety, each an exact
-statement rather than an asymptotic gesture:
-
-- **Encoder.** Hash each of the $b$ blocks with its own slice of a random
-  codebook of size $M$, and append one global random checksum from $K$ values.
-- **Decoder.** Scan each block's typical set, demand a unique match in every
-  block, then verify the checksum.
-- **Rate.** $b \log_2 M + \log_2 K$ bits, with
-  $\log_2 M \approx \log_2 |T| + \log_2(b/\varepsilon)$.
-- **Reliability.** For $M \ge b(|T|-1)/\varepsilon$, a random codebook recovers
-  any fixed typical string with probability at least $1 - \varepsilon$.
-- **Complexity.** Exactly $b\,|T| + 1$ comparisons — not $O(b|T|)$, exactly
-  $b|T| + 1$.
-- **Safety.** For every source string, typical or atypical, the probability of a
-  confident wrong answer is at most $1/K$.
-
-And if you dislike randomness at runtime, you can remove it. Averaging the
-failure count over all codebooks shows that **some** fixed codebook of size $M$
-is ambiguous on at most $|S|(|S|-1)/M$ of the typical strings — so with
-$M \ge |S|/\varepsilon$ there is a deterministic codebook losing at most an
-$\varepsilon$ fraction of the typical set, at the same code length. Randomness
-is a proof technique here, not an operational requirement. Note, though, what
-derandomisation *cannot* give you: a codebook with an *empty* bad set. That
-would contradict the converse bound. Averaging only ever yields a codebook whose
-bad set is small.
-
-## What the numbers say
-
-Everything above can be checked by brute force on a small instance, and the
-numbers behave exactly as the theorems predict. With a six-letter alphabet, a
-typical set of three strings, and every codebook enumerated:
-
-| $M$ | measured failure probability | union bound $(|S|-1)/M$ | Bonferroni bound $(|S|-1)/(2M)$ |
-|-----|------------------------------|--------------------------|----------------------------------|
-| 2   | $3/4 = 0.750$                | $1$                      | $1/2$                            |
-| 3   | $5/9 \approx 0.556$          | $2/3 \approx 0.667$      | $1/3 \approx 0.333$              |
-| 4   | $7/16 = 0.438$               | $1/2$                    | $1/4$                            |
-| 8   | $15/64 \approx 0.234$        | $1/4$                    | $1/8$                            |
-| 16  | $31/256 \approx 0.121$       | $1/8$                    | $1/16$                           |
-
-Every measured value equals $1 - (1-1/M)^{2} = (2M-1)/M^2$ on the nose, and sits
-neatly between the two bounds, both of which are tight to within a factor of
-two. And the silent-corruption experiment: $3/8$ without a checksum, $3/16$ with
-a two-valued checksum, $3/32$ with a four-valued one — each division by $K$
-exactly as the $1/K$ bound demands.
-
-## The moral
-
-The pigeonhole principle is not wrong, and it was never in danger. What the
-almost-lossless story shows is that it is answering a question we rarely need
-answered: *can you be exactly right about everything?* Change "everything" to
-"almost everything" and the counting bound relaxes by exactly the fraction you
-are willing to lose — no more and no less, as the converse bound shows.
-
-But relaxing the requirement is only half the job. Shannon's random code takes
-the crack in the pigeonhole and walks through it at optimal rate, then leaves
-you with a decoder that runs in exponential time and a silent-corruption
-loophole hiding behind the word "typical". Blocking closes the first gap,
-converting an exponential search into a linear one for a logarithmic price in
-rate. An independent checksum closes the second, universally, for any inner
-decoder whatsoever, at a cost of $1/K$.
-
-Three ingredients — a counting identity, a product construction, and a coin
-flip — and the result is a scheme where you can state, exactly and without
-asymptotics, how many bits it sends, how often it fails, how many operations it
-performs, and how often it lies. That last number is the one that matters, and
-it is the one the textbook version forgets to compute.
+# Cheating the Pigeonhole: How a Coin Flip Buys You Compression
+
+## The bound everybody knows
+
+Here is the oldest theorem in data compression, and the one that nobody has ever
+broken. Suppose you want to squeeze every possible $1000$-bit file into a $999$-bit
+file, in such a way that you can always get the original back. There are $2^{1000}$
+inputs and only $2^{999}$ outputs. Two different inputs must land on the same
+output. When you decompress that output, you have to choose, and half the time
+you will choose wrong.
+
+This is the pigeonhole principle, and in the compression world it is a wall. It
+says nothing about clever algorithms or fast computers. It is pure counting: if
+your decoder must be right on *all* $n$ inputs, your code space needs at least $n$
+slots.
+
+Every real compressor lives inside this wall. ZIP does not shrink random noise;
+it shrinks *structured* files, and it pays for that by making a few files
+slightly longer. The pigeonhole principle is the accountant that makes sure the
+books balance.
+
+But look closely at the phrase "right on all $n$ inputs." That is a strong
+demand. What if we allow the decoder to be wrong — or better, to *admit* that it
+does not know — on a set of inputs that essentially never occurs? A file you will
+never see costs you nothing if you cannot decompress it. This is the world of
+**almost-lossless compression**, and the question this work answers is: exactly
+how much does the wall move, and what does it cost in computer time to stand on
+the other side of it?
+
+## Two knobs: how often you fail, and how surprised you are
+
+The first thing you need is a way of saying "essentially never occurs." That is
+a statement about the *source*: the probability distribution $\mu$ from which
+your data is drawn. The right measure turns out not to be Shannon entropy but
+the blunter **min-entropy**
+$$H_\infty(\mu) = -\log p_{\max}, \qquad p_{\max} = \max_x \mu(x),$$
+which asks only: how likely is the single most likely file? A source with a
+heavy favourite is easy to compress; a flat source is hard.
+
+Now soften the demand on the decoder. Let it emit a symbol, or emit "I don't
+know." Call the set of source symbols it decodes exactly the **success set**.
+Here is the first observation, and it is the pigeonhole principle refusing to
+die: *the encoder is injective on the success set*. If two symbols are both
+decoded correctly, they cannot share a codeword, because the decoder would have
+to answer twice with a single input. So the success set never has more elements
+than the code space — no matter how badly the decoder behaves elsewhere.
+
+Multiply by probabilities and the counting bound becomes an information bound:
+$$\Pr[\text{success}] \;\le\; |\mathcal{C}| \cdot p_{\max}.$$
+Turn it around. If you insist on succeeding with probability at least $1 -
+\varepsilon$, then
+$$|\mathcal{C}| \;\ge\; \frac{1-\varepsilon}{p_{\max}}, \qquad\text{i.e.}\qquad
+\log |\mathcal{C}| \;\ge\; H_\infty(\mu) + \log(1-\varepsilon).$$
+
+That is the exact price of the relaxation. The pigeonhole wall does not vanish;
+it slides back by precisely $\log(1-\varepsilon)$ bits. For $\varepsilon = 1\%$
+that is about $0.014$ bits — a rounding error. And this is not an artefact of a
+lossy proof: for the uniform source on $n$ symbols and any code size $M \le n$,
+there is a scheme whose success probability is *exactly* $M/n$. The bound is
+attained on the nose, so it cannot be improved.
+
+So the first punchline is deflating and clarifying at once: **randomness does not
+buy you rate.** Allowing a $1\%$ failure probability does not let you compress a
+uniform source by a meaningful amount. What it buys you is something else
+entirely.
+
+## What randomness actually buys
+
+The real gift of the relaxation is that it makes a *stupid* code work.
+
+Shannon's random-coding argument is the most famous proof technique in
+information theory: don't design a code, pick one at random and show that the
+average one is good. It is beautiful, and it is unsatisfying, because a "random
+codebook" is an object of astronomical size that nobody can store and nobody can
+decode.
+
+The fix is **universal hashing**. Instead of drawing a fresh random function,
+draw a single key $k$ from a small family $H_k : \alpha \to \{1,\dots,M\}$ with
+one property: any two distinct symbols collide for at most a $1/M$ fraction of
+keys. That is *2-universality*, and the classic example is arithmetic in a prime
+field: on pairs $(x_1,x_2)$ over $\mathbb{F}_p$, set
+$$h_k(x_1,x_2) = x_1 + k\,x_2 \pmod p, \qquad k \in \mathbb{F}_p.$$
+Two distinct pairs collide for at most one of the $p$ keys, because the
+collision equation is linear in $k$. This family compresses $p^2$ symbols into
+$p$ codewords — half the raw bit-length — and the whole "random codebook" is one
+field element.
+
+Now the encoder does the following. It fixes a small list $l$ of *likely*
+symbols — the codebook — chosen so that the probability of landing outside it is
+at most $\delta$. It sends $h_k(x)$. The decoder scans the codebook and answers
+only if **exactly one** entry hashes to the value it received; otherwise it
+abstains.
+
+Two things follow, and the second is the one that matters in practice.
+
+**Failure is rare.** Averaging the collision mass over all keys shows that some
+key $k$ makes the decoder fail with probability at most $\delta + |l|/M$. The
+$\delta$ is "the data was atypical"; the $|l|/M$ is "the hash was unlucky."
+Choose $M$ a constant factor larger than the codebook and both terms are small.
+
+**Failure is never silent.** If the true symbol is in the codebook, the decoder
+either sees a unique match — and is then provably correct — or sees two matches
+and abstains. It cannot confidently return the wrong answer. Silent corruption is
+possible only for symbols outside the codebook, and that has probability at most
+$|l|/M$ as well.
+
+That last point deserves emphasis, because it is the difference between a
+compressor you can deploy and one you cannot. A compressor that occasionally
+hands you a plausible-looking wrong file is dangerous. A compressor that
+occasionally says "I cannot decode this, send it again" is merely a compressor
+with a retransmission policy.
+
+## Making the silence quieter
+
+You can do better, and the mechanism is a nice piece of probabilistic
+bookkeeping. A silent error needs *two* coincidences: the symbol must be outside
+the codebook (probability $\le \delta$) and it must collide with the codebook
+(probability $\le |l|/M$). The naive analysis picks one key that is good for the
+second event; a two-region argument picks a key that is simultaneously good on
+the whole space and on the complement of the codebook, and the silent-error bound
+picks up the extra factor $\delta$:
+$$\Pr[\text{silent error}] \;\le\; \frac{2\delta|l|}{M},$$
+at the cost of doubling the failure bound to $\delta + 2|l|/M$.
+
+The factor $2$ is not sacred. Thresholding at $c_1$ and $c_2$ with $1/c_1 +
+1/c_2 \le 1$ still leaves a key outside both bad sets, and letting the thresholds
+slide gives a one-parameter family: for every $\eta > 0$ there is a key with
+$$\Pr[\text{silent}] \le (1+\eta)\,\frac{\delta |l|}{M}, \qquad
+\Pr[\text{fail}] \le \delta + \Bigl(1+\tfrac{1}{\eta}\Bigr)\frac{|l|}{M}.$$
+As $\eta \to 0$ the silent constant tends to $1$, the first-moment optimum. You
+can trade "how often it stops" against "how often it lies," continuously.
+
+And if you want the lying gone entirely, append a checksum: a second independent
+universal family with $C$ values. Universality is multiplicative under pairing —
+the paired family with $K K'$ keys and $MC$ codewords is again 2-universal — so
+the silent-error probability drops to $|l|/(MC)$ for $\log C$ extra bits. Ten
+bits of checksum buy a factor of a thousand.
+
+## The real obstacle was never the rate
+
+Here is where the story turns. Everything above concerns *how many bits*. But the
+naive random-coding decoder scans the entire codebook: $|l|$ hash evaluations per
+query. On block sources it is catastrophic. Compress $b$ independent blocks
+jointly and the natural codebook is the $b$-fold product of the per-block typical
+set, with $|T|^b$ entries. Decoding is exponential in the block length. This —
+not the rate — is why textbook random coding is not an algorithm.
+
+Two fixes, both with exact, proved costs rather than $O(\cdot)$ gestures.
+
+**Decode coordinatewise.** Each block gets its own scan against the size-$|T|$
+codebook, and the answers are assembled. A union bound over blocks keeps the
+failure probability at $b \cdot (\delta + |T|/m)$, while the cost falls from
+$|T|^b$ to $b|T|$ — and $b|T| < |T|^b$ whenever $|T| \ge 2$ and $b \ge 3$, so the
+gap is real, not asymptotic hand-waving.
+
+**Sort the codebook.** This is the idea that dissolves the remaining problem, and
+it is almost embarrassingly simple. One might guess that a logarithmic decoder
+requires a hash family that is both 2-universal and *monotone* on every codebook
+— a demanding, probably unattainable combination. It doesn't. The encoder chooses
+its key *first*, and only then stores the codebook **sorted by hash value**.
+Sorting is a permutation of the codebook, so the collision analysis, which sees
+only the multiset of hash values, is completely untouched. But the sorted
+codebook is a monotone array, and a unique-match query on a monotone array is a
+**binary search**.
+
+The resulting decoder does a binary search — at most $\log_2 n + 1$ key
+evaluations, proved by strong induction, not estimated — and then two neighbour
+comparisons to check that the value it found is not repeated. If it is repeated,
+the decoder abstains. Total: at most $\log_2 n + 3$ key evaluations, and *no
+silent corruption whatsoever*, with no hypothesis at all on the hash function.
+Even a maliciously chosen hash cannot make this decoder lie; the worst it can do
+is make it abstain.
+
+Put the two halves together and you get the deliverable: an explicit key with
+failure probability at most $\delta + 2|l|/M$, silent corruption at most
+$2\delta|l|/M$, and a decoding cost of at most $\log_2|l| + 3$ hash evaluations
+instead of $|l|$. Since $\log_2 n + 3 < n$ for every $n \ge 6$, the speedup
+begins essentially immediately.
+
+## How do we know we can't do better?
+
+A cost bound is only interesting next to a matching lower bound, and here the
+counting argument comes back one last time — now applied to *time* rather than to
+*space*.
+
+Model any decoder as an adaptive decision tree: each internal node asks one
+Boolean question about the input (one key evaluation) and branches on the answer;
+each leaf outputs a symbol. A tree that never asks more than $c$ questions can
+reach at most $2^c$ leaves along short paths, so it can output at most $2^c$
+distinct symbols. Hence a decoder that is correct on $n$ distinct symbols and
+always costs at most $c$ satisfies $n \le 2^c$. Equivalently: **some input forces
+at least $\log_2 n$ queries.**
+
+Nothing in that argument assumes the queries are comparisons, or that the tree
+comes from a hash family, or anything at all about the algorithm's structure. It
+is a converse for *every* adaptive Boolean-query decoder. Against it, the
+sorted-codebook decoder at $\log_2 n + 3$ is optimal **up to an additive $3$**.
+The same counting shows that $b$ independent coordinatewise decoders must cost at
+least $b\log_2 n$ in total, so the block scheme is optimal in the same sense.
+
+## Lists, and an exponential surprise
+
+One last relaxation. Suppose the decoder may return a short *list* of candidates
+rather than a single answer, and we count it a success if the truth is on the
+list. Counting again gives the price: $\Pr[\text{success}] \le T|\mathcal{C}|
+p_{\max}$, so a list of length $T$ relaxes the rate bound by exactly $\log T$
+bits — and no more.
+
+What you get in return is more interesting than what you pay. With plain
+2-universality, allowing $T$ candidates improves the failure probability from
+$\delta + |l|/M$ to $\delta + |l|/(TM)$: a linear gain, because a first-moment
+estimate on the number of collisions is all that 2-universality provides.
+
+Upgrade the hash family to $(T{+}1)$-wise independence and the gain becomes
+exponential. The right statistic is not the number of collisions but the number
+of *$T$-element sets* of colliding partners — the $T$-th factorial moment. A
+double count over $T$-subsets yields
+$$M^T \sum_k \binom{c_k}{T} \;\le\; K \binom{|l|}{T},$$
+where $c_k$ is the number of collision partners under key $k$, and the failure
+probability drops to
+$$\delta + \binom{|l|}{T}\big/M^T \;\le\; \delta + \Bigl(\frac{|l|}{M}\Bigr)^{T}.$$
+A list of three candidates cubes the error term.
+
+The catch used to be the key. The obvious $(T{+}1)$-wise independent family is
+*all* functions, which needs $M^{|\alpha|}$ keys — exponentially long advice.
+Degree-$T$ polynomials over a prime field,
+$$h_c(x) = c_0 + c_1 x + \cdots + c_T x^T \pmod p,$$
+do the job with only $p^{T+1}$ keys, and the proof is Vandermonde: two
+coefficient vectors agreeing at $T{+}1$ distinct points are equal. Concretely,
+over $\mathbb{F}_{101}$ with a ten-element codebook and $T = 3$, the key is $27$
+bits — instead of the $101^{101}$ keys of the full family — and the failure
+probability is at most $1/100 + 1/1000$ with lists of length at most $3$.
+
+## How much randomness do you actually need?
+
+Every one of these theorems begins "there exists a key," which means the encoder
+must store $\log_2 K$ bits of advice. How small can $K$ be? The pigeonhole
+principle answers again, now aimed at the key space.
+
+A 2-universal family with at least one key, $M \ge 2$ values, on a domain of size
+$n$, must satisfy $n \le M^K$, so $K \ge \log_M n$: no constant-size family is
+universal on an unbounded source. But integrality does much better. The number of
+keys on which two fixed symbols collide is a *natural number* bounded by $K/M$;
+so if $K < M$ that number is $0$, meaning every hash in the family is injective —
+impossible once $M < n$. Therefore any family that compresses at all has
+$$K \ge M.$$
+The encoder's advice must be at least as long as the codeword it produces. And if
+the code space is a $c$-th root of the source ($n \le M^c$) then $n \le K^c$: the
+key space is polynomially large in the source, so no compressing 2-universal
+family has $\mathrm{poly}(\log n)$ keys.
+
+Is $K = M$ achievable? Yes — the inner-product family over $\mathbb{F}_p$ has
+exactly $K = M = p$ on a source of $p^2$ symbols. One codeword's worth of advice
+is necessary, and one codeword's worth is enough.
+
+## The shape of the answer
+
+Step back and the picture is unusually clean, with a matching converse at every
+level.
+
+*Rate*: allowing failure $\varepsilon$ relaxes the pigeonhole bound by exactly
+$\log(1-\varepsilon)$, and the relaxed bound is attained. Randomness does not buy
+compression.
+
+*Reliability*: a universal hash plus a unique-match rule never lies about a
+codebook symbol, and the residual silent-error probability can be pushed to
+$(1+\eta)\delta|l|/M$ for any $\eta > 0$, or below any target at $\log C$ extra
+checksum bits.
+
+*Time*: sorting the codebook after key selection turns the exponential-looking
+random-coding decoder into a binary search costing at most $\log_2 n + 3$
+evaluations, and an information-theoretic decision-tree argument shows no
+decoder whatsoever can beat $\log_2 n$.
+
+*Randomness*: the key must be at least as long as a codeword, and a single field
+element suffices.
+
+The moral is worth stating plainly, because it inverts the usual folklore.
+Monte-Carlo compression is not a way around the counting bound — the counting
+bound barely moves. It is a way around the *algorithmic* obstruction that made
+random coding a proof technique rather than a program. Once you stop demanding
+that the code be right on files you will never see, the code can be a hash
+function, the codebook can be sorted, and the decoder can be a binary search
+that, on the rare bad day, has the good manners to say so.

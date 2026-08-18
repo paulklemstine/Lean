@@ -1,4 +1,4 @@
-# Almost-Lossless Compression Beyond the Pigeonhole Bound: Exact Rates, Linear-Time Decoding, and Universal Error Detection
+# Almost-Lossless Compression Beyond the Pigeonhole Bound: Exact Converses, Certified Decoders, and Logarithmic Decoding Cost
 
 **Author:** Aristotle
 **Date:** 2026-08-18
@@ -7,688 +7,895 @@
 
 ## Abstract
 
-The pigeonhole principle forbids exact decoding of all source strings below the
-counting bound: an encoder $E : \mathcal{A} \to [M]$ with a decoder exact on all
-of $\mathcal{A}$ forces $M \ge |\mathcal{A}|$. Relaxing exactness to a failure
-probability $\varepsilon$ — *almost-lossless* coding — relaxes the bound, and
-Shannon's random-coding argument attains near-optimal rates. We give a complete,
-finitary, measure-free development of this relaxation in which every probability
-statement is an exact counting identity or inequality over the finite space of
-all codebooks $H : \mathcal{A} \to [M]$, and we address the two questions that
-the classical treatment leaves open: *decoder complexity* and *silent
-corruption*.
+The pigeonhole principle governs *exact* decoding: a compression scheme that
+recovers every symbol of a source alphabet $\alpha$ requires at least
+$|\alpha|$ codewords. We develop the *almost-lossless* relaxation, in which the
+decoder is permitted to abstain or to err with total probability at most
+$\varepsilon$, and we determine the exact price of that relaxation in three
+currencies simultaneously: rate, reliability, and decoding time.
 
-Our contributions are: (1) an **exact** formula for the failure probability of
-uniform random hashing, $1 - (1 - 1/M)^{|S|-1}$ on a typical set $S$, obtained
-from an exact count of separating codebooks, which sharpens and explains both
-the union bound and a matching Bonferroni lower bound; (2) a **converse** valid
-for arbitrary encoder/decoder pairs, showing the set of exactly-decoded strings
-has size at most $M$, hence $M \ge (1-\varepsilon)|S|$; (3) a **blocked
-(product) random code** whose decoder costs exactly $b|T|$ hash comparisons
-rather than $|T|^b$ — exponential to linear — at the cost of only a union-bound
-factor $b$ in the failure probability, $\mathbb{P}[\text{failure}] \le
-b(|T|-1)/M$; (4) a **universal error-detection theorem**: for an arbitrary,
-possibly randomised inner decoder and *arbitrary* (typical or atypical) source
-string, an independent random checksum of size $K$ bounds the probability of a
-confident wrong output by $1/K$; and (5) a composite scheme with exact
-complexity $b|T| + 1$, success probability $\ge 1-\varepsilon$ for $M \ge
-b(|T|-1)/\varepsilon$, and silent-corruption probability $\le 1/K$ uniformly
-over all source strings. We also show that the $\Theta(1/\varepsilon)$ overhead
-of random hashing relative to the converse is intrinsic to uniform random
-codebooks, and that derandomisation yields a fixed codebook with a small — but
-provably never empty — bad set.
+On the rate side we prove a localized pigeonhole bound — the encoder is
+injective on the set of correctly decoded symbols — from which
+$\Pr[\text{success}] \le |\mathcal{C}| \cdot p_{\max}$ and hence
+$\log|\mathcal{C}| \ge H_\infty(\mu) + \log(1-\varepsilon)$; we then exhibit,
+for every code size $M \le n$, a scheme on the uniform source over $n$ symbols
+with success probability exactly $M/n$, so the relaxed bound is attained and no
+converse above it can be improved.
 
-**Keywords:** almost-lossless compression, random coding, pigeonhole bound,
-universal hashing, product codes, decoder complexity, error detection,
-Bonferroni inequalities.
+On the achievability side we replace Shannon's unbounded random codebook by a
+2-universal hash family keyed by a single element, and instrument the decoder so
+that its cost is proved rather than estimated. A first-moment argument produces
+an explicit key with failure probability at most $\delta + |l|/M$ on a codebook
+$l$ whose complement carries mass $\delta$; a two-region threshold argument
+sharpens the silent-corruption bound to $2\delta|l|/M$, and a one-parameter
+version gives $(1+\eta)\delta|l|/M$ against failure $\delta +
+(1+\eta^{-1})|l|/M$ for every $\eta > 0$. Pairing a checksum family multiplies
+the collision parameter, driving silent corruption to $|l|/(MC)$ at $\log C$
+extra bits. Explicit non-vacuity is supplied by the inner-product family
+$h_k(x_1,x_2) = x_1 + kx_2$ over $\mathbb{F}_p$, which compresses $p^2$ symbols
+to $p$ codewords.
+
+The principal contribution is algorithmic. The naive unique-match decoder costs
+exactly $|l|$ hash evaluations, which on a $b$-block product source with typical
+set $T$ means $|T|^b$ — exponential in the block length. We remove this obstacle
+twice. Coordinatewise decoding keeps failure at $b(\delta + |T|/m)$ while cutting
+cost to $b|T|$. More decisively, sorting the codebook by hash value *after* the
+key is chosen — a permutation, hence invisible to the collision analysis — turns
+the unique-match scan into a binary search. We give a cost-instrumented binary
+search with the exact bound $\log_2 n + 1$ key evaluations, add a two-neighbour
+uniqueness test that forces abstention on a duplicate hash value, and prove that
+the resulting decoder *never corrupts silently under any hypothesis on the hash
+function*. Total cost: at most $\log_2 n + 3$. A decision-tree converse shows
+that any adaptive Boolean-query decoder correct on $n$ symbols has worst-case
+cost at least $\log_2 n$, so this decoder is optimal within an additive $3$.
+
+Finally we settle the rate–list and randomness questions. List-$T$ decoding
+relaxes the counting bound by exactly $\log T$; with 2-universality it improves
+failure linearly to $\delta + |l|/(TM)$, and with $(T{+}1)$-wise independence a
+factorial-moment double count improves it exponentially to $\delta +
+\binom{|l|}{T}/M^T \le \delta + (|l|/M)^T$, realized by degree-$T$ polynomials
+over $\mathbb{F}_p$ with only $p^{T+1}$ keys. For the key space itself,
+integrality of a collision count yields the sharp bound $K \ge M$ for any
+compressing 2-universal family — the encoder's advice must be at least as long as
+the codeword — attained by the inner-product family with $K = M = p$.
+
+**Keywords:** almost-lossless compression, universal hashing, min-entropy,
+random coding, list decoding, decision-tree lower bounds, derandomization.
 
 ---
 
 ## 1. Introduction
 
-### 1.1 The barrier
+### 1.1 The exact bound and its rigidity
 
-Let $\mathcal{A}$ be a finite source alphabet (think: the set of all $n$-symbol
-strings) and let $[M] = \{0, 1, \dots, M-1\}$ be the set of codewords. The
-foundational obstruction to compression is a counting statement.
+Let $\alpha$ be a finite source alphabet and $\mathcal{C}$ a finite code space.
+A compression scheme is a pair of maps
+$$\mathrm{enc} : \alpha \to \mathcal{C}, \qquad
+\mathrm{dec} : \mathcal{C} \to \alpha \cup \{\bot\},$$
+the symbol $\bot$ denoting an explicit refusal to answer. If we demand
+$\mathrm{dec}(\mathrm{enc}(x)) = x$ for every $x \in \alpha$, then $\mathrm{enc}$
+is injective and $|\alpha| \le |\mathcal{C}|$. No compression is possible. This is
+the pigeonhole bound, and it is completely insensitive to computational
+resources, to the structure of the source, and to the ingenuity of the designer.
 
-> **Theorem 1 (Pigeonhole barrier).** Let $E : \mathcal{A} \to [M]$ and
-> $D : [M] \to \mathcal{A}$ satisfy $D(E(x)) = x$ for all $x \in \mathcal{A}$.
-> Then $|\mathcal{A}| \le M$.
+Practical compression escapes this by exploiting structure: real sources are far
+from uniform. The information-theoretic idealization of that escape is to relax
+the *universal quantifier*. Fix a probability distribution $\mu$ on $\alpha$ and
+require only
+$$\Pr_{x \sim \mu}\bigl[\mathrm{dec}(\mathrm{enc}(x)) = x\bigr] \ge 1 -
+\varepsilon .$$
+This is **almost-lossless** (or Monte-Carlo) compression. The folklore is that
+random codebooks now achieve near-optimal rates, and the folklore is correct.
+What the folklore does not supply is (i) an exact statement of how far the
+counting bound moves, (ii) a guarantee that failures are never silent, and (iii)
+an implementable decoder with a proved running time. Random coding as usually
+presented is a proof technique: its decoder is an exhaustive search over an
+astronomically large codebook.
 
-*Proof.* $D \circ E = \mathrm{id}$ makes $E$ injective, and an injection into a
-set of size $M$ forces $|\mathcal{A}| \le M$. $\square$
+### 1.2 Contributions
 
-Equivalently, in contrapositive form: if $M < |\mathcal{A}|$ then every encoder
-$E$ admits distinct $x \ne y$ with $E(x) = E(y)$, so no decoder can be exact
-everywhere. The barrier is about counting, not computation; no algorithmic
-ingenuity evades it.
+This paper supplies all three, with matching converses.
 
-### 1.2 The relaxation and the two open flanks
+1. **Exact rate relaxation** (§3). The pigeonhole bound survives in localized
+   form and yields $\log|\mathcal{C}| \ge H_\infty(\mu) + \log(1-\varepsilon)$,
+   which is *attained*.
+2. **Certified achievability** (§4–§6). A 2-universal family plus a unique-match
+   decoder gives failure $\delta + |l|/M$, never lies on a codebook symbol, and
+   admits sharpened and tunable silent-error bounds, plus checksum amplification.
+3. **Logarithmic decoding** (§7–§8). Sorting the codebook after key selection
+   yields a binary-search decoder of proved cost $\le \log_2 n + 3$ that never
+   corrupts silently under *any* hypothesis, together with a decision-tree
+   converse of $\log_2 n$ showing optimality within an additive constant.
+4. **List decoding and higher independence** (§9). Exact $\log T$ rate
+   relaxation; linear gain from 2-universality, exponential gain from
+   $(T{+}1)$-wise independence, realized with short polynomial keys.
+5. **The cost of randomness** (§10). Sharp lower bound $K \ge M$ on the key space
+   of any compressing 2-universal family, attained.
 
-The classical escape is to demand exactness only with high probability. Fix a
-**typical set** $S \subseteq \mathcal{A}$ — the strings the source actually
-produces with non-negligible probability — and ask only that decoding succeed
-with probability $\ge 1 - \varepsilon$. Shannon's random-coding argument then
-achieves $\log_2 M \approx \log_2|S| + \log_2(1/\varepsilon)$ bits.
+### 1.3 A note on the cost model
 
-This is textbook. What is *not* settled by the textbook argument are two
-practical flanks, which are the subject of this paper.
-
-**(F1) Decoder complexity.** The random-coding decoder scans the whole typical
-set: cost $|S|$, which is exponential in the block length. A scheme with
-optimal rate and an unrunnable decoder is not a compression scheme.
-
-**(F2) Silent corruption.** The classical soundness statement is conditional on
-the transmitted string being typical. If the source emits an atypical string,
-the decoder may confidently output a wrong string. We measure this loophole and
-show it is real (probability $3/8$ in a small explicit instance), and then close
-it.
-
-### 1.3 Methodology: counting, not measure
-
-Throughout, the probability space is the finite set of **all** functions
-$H : \iota \to [M]$ on a finite index set $\iota$, with the uniform (counting)
-measure; there are exactly $M^{|\iota|}$ of them. Every probabilistic assertion
-below is therefore an identity or inequality between natural numbers, stated in
-the multiplicative form $M \cdot |\mathcal{E}| \le c \cdot M^{|\iota|}$ rather
-than $\mathbb{P}[\mathcal{E}] \le c/M$. This has two virtues: it is exact (no
-rounding, no asymptotics), and it makes each step a finite combinatorial
-identity. Real-valued corollaries are recorded where they aid interpretation.
-
----
-
-## 2. The counting core of random coding
-
-### 2.1 The codebook space
-
-**Definition 1 (Codebook space).** For a finite index set $\iota$ and $M \ge 1$,
-the codebook space is the set of all functions $H : \iota \to [M]$. Its
-cardinality is $M^{|\iota|}$.
-
-**Definition 2 (Collision event).** For $p, q \in \iota$, the *collision event*
-is
-$$\mathcal{C}(p,q) \;=\; \{H : \iota \to [M] \;:\; H(p) = H(q)\}.$$
-
-The entire random-coding argument rests on one exact count.
-
-> **Theorem 2 (Exact marginal count).** For $p \ne q$ in $\iota$,
-> $$M \cdot |\mathcal{C}(p,q)| \;=\; M^{|\iota|},$$
-> i.e. $\mathbb{P}[H(p) = H(q)] = 1/M$ exactly.
-
-*Proof sketch.* Fibre the codebook space over the restriction to
-$\iota \setminus \{q\}$. Each fibre is a free choice of $H(q)$ among $M$ values,
-of which exactly one — namely $H(p)$ — lies in the event. Hence
-$|\mathcal{C}(p,q)|$ is $M^{|\iota|-1}$, and multiplying by $M$ gives the claim.
-Formally one exhibits a bijection between $\mathcal{C}(p,q)$ and the functions
-on $\iota \setminus \{q\}$, using $p \ne q$ so that $H(p)$ is unaffected by the
-deleted coordinate. $\square$
-
-> **Theorem 3 (Union bound, counting form).** Let $P \subseteq \iota \times
-> \iota$ be a finite set of pairs with $p_1 \ne p_2$ for every $p \in P$, and
-> let $\mathcal{C}(P) = \bigcup_{p \in P} \mathcal{C}(p_1, p_2)$. Then
-> $$M \cdot |\mathcal{C}(P)| \;\le\; |P| \cdot M^{|\iota|}.$$
-
-*Proof sketch.* $|\mathcal{C}(P)| \le \sum_{p \in P} |\mathcal{C}(p_1,p_2)|$ by
-subadditivity of cardinality over a union; apply Theorem 2 termwise. $\square$
+Throughout, "cost" means the number of *key evaluations* — applications of the
+hash function to a candidate symbol — performed by the decoder on one query.
+Every cost statement in this paper is an exact arithmetic bound on an
+instrumented algorithm, never an asymptotic estimate. The lower bounds of §8 are
+stated in the same currency, for a strictly more general model (arbitrary
+adaptive Boolean queries), so the two sides are directly comparable.
 
 ---
 
-## 3. The scanning decoder and its exact cost
+## 2. Schemes, success, and silence
 
-Fix an enumeration $L$ of the typical set $S$: a duplicate-free list whose
-members are exactly the elements of $S$.
+**Definition 2.1 (Scheme).** A *scheme* on a finite alphabet $\alpha$ with code
+space $\mathcal{C}$ is a pair $(\mathrm{enc}, \mathrm{dec})$ with
+$\mathrm{enc} : \alpha \to \mathcal{C}$ and
+$\mathrm{dec} : \mathcal{C} \to \alpha \cup \{\bot\}$.
 
-**Definition 3 (Scan).** For a codebook $H$ and codeword $c$, the *scan*
-traverses $L$ left to right, retaining the candidates $y$ with $H(y) = c$, and
-counting one hash comparison per element inspected. Its outputs are the sublist
-of matches and the count $|L|$.
+**Definition 2.2.** The scheme *succeeds* at $x$ if
+$\mathrm{dec}(\mathrm{enc}(x)) = x$. It *silently corrupts* $x$ if
+$\mathrm{dec}(\mathrm{enc}(x)) = y$ for some $y \ne x$ (in particular $y \ne
+\bot$). It is *never silent* if it silently corrupts no symbol.
 
-**Definition 4 (Scanning decoder).** $\mathrm{Dec}(L, H, c)$ returns $y$ if the
-scan's match list is exactly the singleton $[y]$, and *failure* otherwise
-(zero matches or two or more). Its cost is the scan's count.
+**Lemma 2.3.** A scheme is never silent if and only if for every $x$,
+$\mathrm{dec}(\mathrm{enc}(x)) \in \{x, \bot\}$.
 
-The singleton test is a built-in ambiguity detector: the decoder never
-"chooses" between competing candidates.
+*Proof.* Immediate from the definitions: a confident answer that is not $x$ is a
+silent corruption, and conversely. $\square$
 
-> **Theorem 4 (Exact decoding complexity).** $\mathrm{Dec}(L, H, c)$ performs
-> exactly $|L|$ hash comparisons, for every $H$ and every $c$.
+The distinction between abstention and silent corruption is the operational heart
+of the paper. A scheme that abstains can be composed with retransmission,
+fallback to a raw encoding, or an outer error-correcting layer. A scheme that
+lies confidently cannot be repaired by any outer layer, because the outer layer
+receives no signal.
 
-*Proof sketch.* Induction on $L$: the scan increments its counter exactly once
-per list element, irrespective of whether the element matches. $\square$
+**Definition 2.4 (Success set and success probability).** The *success set*
+$\mathcal{S}$ is $\{x \in \alpha : \mathrm{dec}(\mathrm{enc}(x)) = x\}$. Given a
+distribution $\mu$, the *success probability* is $\mu(\mathcal{S})$.
 
-This is an equality, not a bound; there is no hidden constant.
+**Definition 2.5 (Min-entropy).** $p_{\max}(\mu) = \max_{x} \mu(x)$ and
+$H_\infty(\mu) = -\log p_{\max}(\mu)$.
 
-> **Theorem 5 (Soundness — no silent corruption for typical inputs).** If
-> $x \in L$ and $\mathrm{Dec}(L, H, H(x)) = y$ (an actual output, not failure),
-> then $y = x$.
-
-*Proof sketch.* Output occurs only when the match list is a singleton $[y]$.
-Since $H(x) = H(x)$ and $x \in L$, the string $x$ is itself a match, so $x$
-belongs to the match list; a singleton list containing $x$ must be $[x]$, whence
-$y = x$. $\square$
-
-Note the hypothesis $x \in L$. It is exactly this hypothesis that Section 7
-removes, at the price of a checksum.
-
-### 3.1 The failure event
-
-**Definition 5 (Failure event).** For $x \in S$,
-$$\mathcal{F}(S, x) \;=\; \{H : \exists\, y \in S \setminus \{x\},\ H(y) = H(x)\}.$$
-
-> **Proposition 6.** If $H \notin \mathcal{F}(S,x)$ and $x \in S$, then
-> $\mathrm{Dec}(L, H, H(x))$ outputs $x$ at a cost of exactly $|L| = |S|$
-> comparisons.
-
-*Proof sketch.* Off the failure event no other typical string shares $x$'s
-codeword, so the match list is exactly $[x]$; the singleton test fires. Cost is
-Theorem 4. $\square$
-
-Since $\mathcal{F}(S,x) = \mathcal{C}(P)$ for
-$P = \{(y,x) : y \in S \setminus \{x\}\}$, a set of $|S|-1$ pairs of distinct
-elements, Theorem 3 yields immediately:
-
-> **Theorem 7 (Random-coding bound).** For $x \in S$,
-> $$M \cdot |\mathcal{F}(S,x)| \;\le\; (|S| - 1) \cdot M^{|\mathcal{A}|}.$$
-
-> **Corollary 8 (Almost-lossless guarantee).** Let $\varepsilon > 0$ and
-> $M \ge (|S| - 1)/\varepsilon$. Then for every fixed $x \in S$, a uniformly
-> random codebook decodes $x$ correctly with probability at least
-> $1 - \varepsilon$, at a decoding cost of exactly $|S|$ comparisons.
-
-The rate is
-$$\log_2 M \;\approx\; \log_2 |S| \;+\; \log_2 \tfrac{1}{\varepsilon},$$
-against the pigeonhole requirement $\log_2 |\mathcal{A}|$ for exact decoding of
-all strings. The reliability premium $\log_2(1/\varepsilon)$ is a constant,
-independent of block length.
+Min-entropy, rather than Shannon entropy, is the correct parameter here because
+the arguments are pure counting arguments: a set of $m$ symbols carries at most
+$m \cdot p_{\max}$ mass, and that inequality is what converts cardinality bounds
+into probability bounds.
 
 ---
 
-## 4. The exact failure probability
+## 3. The relaxed pigeonhole bound and its tightness
 
-The union bound of Theorem 7 is not the truth. The truth is available in closed
-form, and it comes from an exact count.
+**Theorem 3.1 (Localized pigeonhole).** For every scheme, the encoder is
+injective on the success set. Consequently $|\mathcal{S}| \le |\mathcal{C}|$.
 
-**Definition 6 (Separating codebooks).** For $x \in \mathcal{A}$ and a
-competitor set $D \subseteq \mathcal{A}$ with $x \notin D$,
-$$\mathrm{Sep}(D, x) \;=\; \{H : H(y) \ne H(x)\ \text{for all } y \in D\}.$$
+*Proof sketch.* Let $x, y \in \mathcal{S}$ with $\mathrm{enc}(x) =
+\mathrm{enc}(y)$. Then $x = \mathrm{dec}(\mathrm{enc}(x)) =
+\mathrm{dec}(\mathrm{enc}(y)) = y$. Injectivity on $\mathcal{S}$ gives
+$|\mathcal{S}| \le |\mathcal{C}|$. $\square$
 
-> **Theorem 9 (Exact count of separating codebooks).** For $x \notin D$,
-> $$M^{|D|} \cdot |\mathrm{Sep}(D,x)| \;=\; (M-1)^{|D|} \cdot M^{|\mathcal{A}|}.$$
+The content of Theorem 3.1 is that failure and abstention buy nothing
+*combinatorially*: however wildly the decoder behaves off $\mathcal{S}$, the part
+where it behaves has to fit inside the code space. All the gain must come from
+$\mathcal{S}$ being small in *cardinality* while large in *measure*, which is
+exactly a min-entropy statement.
 
-*Proof sketch.* Induction on $D$. For $D = \emptyset$ both sides are
-$M^{|\mathcal{A}|}$. For the inductive step, insert a new competitor
-$a \notin D$ with $a \ne x$ and observe a bijection
-$$\mathrm{Sep}(D \cup \{a\}, x) \times [M] \;\longleftrightarrow\;
-  \mathrm{Sep}(D, x) \times [M-1]$$
-obtained by fibring over the value $H(a)$: given the rest of the codebook — in
-particular given $H(x)$, which does not involve the coordinate $a$ — the value
-$H(a)$ ranges freely over $M$ symbols, of which exactly $M-1$ avoid $H(x)$.
-Hence $|\mathrm{Sep}(D\cup\{a\},x)| \cdot M = |\mathrm{Sep}(D,x)| \cdot (M-1)$,
-and multiplying the inductive hypothesis by $(M-1)$ closes the induction.
+**Corollary 3.2 (Exact pigeonhole).** If the scheme succeeds at every symbol then
+$|\alpha| \le |\mathcal{C}|$.
+
+**Theorem 3.3 (Counting bound, probabilistic form).** For every scheme,
+$$\Pr[\text{success}] \;\le\; |\mathcal{C}| \cdot p_{\max}(\mu).$$
+
+*Proof sketch.* $\mu(\mathcal{S}) = \sum_{x \in \mathcal{S}} \mu(x) \le
+|\mathcal{S}| \cdot p_{\max} \le |\mathcal{C}| \cdot p_{\max}$ by Theorem 3.1.
 $\square$
 
-Since a codebook fails at $x$ precisely when it fails to separate $x$ from
-$S \setminus \{x\}$, the separating codebooks are the complement of the failure
-event, which converts Theorem 9 into an exact failure count and thence:
+**Theorem 3.4 (Almost-lossless converse).** If $\Pr[\text{success}] \ge 1 -
+\varepsilon$ then
+$$|\mathcal{C}| \;\ge\; \frac{1-\varepsilon}{p_{\max}(\mu)}, \qquad\text{and, for
+} \varepsilon < 1, \qquad
+\log|\mathcal{C}| \;\ge\; H_\infty(\mu) + \log(1-\varepsilon).$$
 
-> **Theorem 10 (Exact failure probability of uniform random hashing).** For
-> $M \ge 1$ and $k = |S \setminus \{x\}|$,
-> $$\frac{|\mathcal{F}(S,x)|}{M^{|\mathcal{A}|}} \;=\; 1 - \Bigl(1 - \frac{1}{M}\Bigr)^{k}.$$
+*Proof sketch.* Rearrange Theorem 3.3 and take logarithms, using
+$\log(1/p_{\max}) = H_\infty$. $\square$
 
-This single identity subsumes the analysis:
+**Corollary 3.5 (Uniform source).** For $\mu$ uniform on $n$ symbols, success
+probability $1-\varepsilon$ forces $|\mathcal{C}| \ge (1-\varepsilon) n$.
 
-- **Upper bound.** $1 - (1-1/M)^k \le k/M$ by Bernoulli's inequality, recovering
-  Theorem 7.
-- **Lower bound.** For $k \ll M$, $1 - (1-1/M)^k \approx k/M - \binom{k}{2}/M^2$,
-  matching the Bonferroni bound of the next subsection.
-- **Numerics.** It reproduces every measured value in Section 9 exactly.
+So on a flat source the pigeonhole bound degrades by the factor $1-\varepsilon$
+and by nothing more: tolerating a $1\%$ failure probability saves about $0.0145$
+bits. The relaxation does *not* buy rate on flat sources. Its value lies
+elsewhere, as §4 onwards will show.
 
-### 4.1 A matching lower bound: the $1/\varepsilon$ overhead is real
+**Theorem 3.6 (Tightness).** For every $n$ and every $M$ with $0 < M \le n$ there
+is a scheme from the uniform source on $n$ symbols into a code space of size $M$
+whose success probability is exactly $M/n$.
 
-The exact formula shows the union bound is tight to within a factor of two, but
-it is instructive to derive the lower bound from a route that uses only
-*pairwise* information — because that route is what generalises to other
-codebook families.
+*Proof sketch.* Identify the source with $\{0,\dots,n-1\}$ and the code space
+with $\{0,\dots,M-1\}$. Encode $x \mapsto x$ if $x < M$ and $x \mapsto 0$
+otherwise; decode $i \mapsto i$. The success set is exactly $\{0,\dots,M-1\}$,
+of mass $M/n$. $\square$
 
-> **Theorem 11 (Second Bonferroni inequality, counting form).** For a finite
-> family $(A_i)_{i \in I}$ of finite sets,
-> $$\sum_{i \in I} |A_i| \;\le\; \Bigl|\bigcup_{i \in I} A_i\Bigr| \;+\;
->   \sum_{(i,j) \in I^{\ne}} |A_i \cap A_j|,$$
-> the second sum ranging over ordered pairs of distinct indices.
-
-*Proof sketch.* Induction on $I$, using
-$|A \cup B| = |A| + |B| - |A \cap B|$ at each insertion and bounding the
-newly created intersections by the ordered-pair sum. $\square$
-
-> **Lemma 12 (Double collisions).** For pairwise distinct $p, q, r \in \iota$,
-> $$M^2 \cdot \bigl|\mathcal{C}(p,r) \cap \mathcal{C}(q,r)\bigr| \;\le\; M^{|\iota|}.$$
-
-*Proof sketch.* The event forces $H(p) = H(q) = H(r)$: two independent
-constraints, each cutting the codebook space by $M$. Fibring over the two
-coordinates $p, q$ gives the count exactly. $\square$
-
-> **Theorem 13 (Bonferroni lower bound).** With $k = |S \setminus \{x\}|$ and
-> $N = M^{|\mathcal{A}|}$,
-> $$k \, M \, N \;\le\; M^2 \, |\mathcal{F}(S,x)| \;+\; k(k-1)\, N.$$
-
-*Proof sketch.* The failure event is exactly the union of the $k$ collision
-events $\mathcal{C}(y, x)$, $y \in S \setminus \{x\}$. Apply Theorem 11 to this
-family, multiply through by $M^2$, evaluate the left side with Theorem 2
-($M \cdot |\mathcal{C}(y,x)| = N$, so $M^2 \sum_y |\mathcal{C}(y,x)| = kMN$),
-and bound the $k(k-1)$ pairwise-intersection terms with Lemma 12. $\square$
-
-> **Corollary 14 (Random hashing pays the $1/\varepsilon$ factor).** If
-> $2(k-1) \le M$ then
-> $$\frac{|\mathcal{F}(S,x)|}{M^{|\mathcal{A}|}} \;\ge\; \frac{k}{2M}.$$
-> Consequently, achieving $\mathbb{P}[\text{failure}] \le \varepsilon$ with a
-> uniformly random codebook requires $M \ge k/(2\varepsilon)$.
-
-*Proof sketch.* Divide Theorem 13 by $M^2 N$ and use $k(k-1) \le kM/2$, which is
-exactly the hypothesis $2(k-1) \le M$. $\square$
+Combined with Theorem 3.3 (which gives $\le M/n$ in this setting), Theorem 3.6
+shows that no converse in this section can be strengthened.
 
 ---
 
-## 5. The converse: how much the relaxation actually buys
+## 4. Random coding via universal hashing
 
-Corollary 14 is a statement about random hashing. What does information theory
-permit in principle?
+### 4.1 The family
 
-> **Theorem 15 (Converse / relaxed counting bound).** For *any* encoder
-> $E : \mathcal{A} \to [M]$ and *any* decoder $D : [M] \to \mathcal{A} \cup
-> \{\bot\}$ — randomised, adaptive, equipped with arbitrary side information
-> baked in — the set
-> $$G \;=\; \{x \in \mathcal{A} : D(E(x)) = x\}$$
-> of exactly-decoded strings satisfies $|G| \le M$.
+**Definition 4.1 (2-universality).** A family $H : \mathcal{K} \times \alpha \to
+[M]$, with $|\mathcal{K}| = K$, is *2-universal* if for all $x \ne y$,
+$$\bigl|\{k \in \mathcal{K} : H_k(x) = H_k(y)\}\bigr| \cdot M \;\le\; K .$$
+(The multiplicative form avoids division and is the one used in all estimates
+below.)
 
-*Proof sketch.* $E$ restricted to $G$ is injective: if $x, y \in G$ and
-$E(x) = E(y)$ then $x = D(E(x)) = D(E(y)) = y$. An injection from $G$ into
-$[M]$ gives $|G| \le M$. $\square$
+The single key $k$ is the entire source of randomness. This is the concrete
+substitute for Shannon's random codebook: instead of $M^{|\alpha|}$ possible
+codebooks, $K$ of them, and the collision statistics we need are the same.
 
-> **Corollary 16 (Rate converse).** If $D(E(x)) = x$ for all $x$ in a set $G$
-> with $|G| \ge (1-\varepsilon)|S|$, then $M \ge (1-\varepsilon)|S|$.
+**Definition 4.2 (Codebook and typicality parameter).** A *codebook* is a
+duplicate-free list $l$ of source symbols. Its *typicality parameter* is a bound
+$\delta$ with $\mu(\alpha \setminus l) \le \delta$: the probability that the
+source produces a symbol outside the codebook.
 
-So the pigeonhole bound relaxes by *exactly* the fraction of strings one is
-willing to lose, and by nothing more: $\log_2 M \ge \log_2 |S| +
-\log_2(1-\varepsilon)$.
+### 4.2 The unique-match decoder
 
-**The gap.** Corollary 16 permits $M \approx (1-\varepsilon)|S|$; Corollary 14
-shows uniform random hashing needs $M \gtrsim |S|/(2\varepsilon)$. The
-multiplicative overhead $\Theta(1/\varepsilon)$ is therefore a property of the
-random construction, not of the analysis. Section 10 conjectures that this gap
-is intrinsic to all *pairwise-independent* codebook families.
+**Definition 4.3 (Unique-match decoder).** Given a key $k$ and a codebook $l$,
+the encoder sends $H_k(x)$. On receiving $i \in [M]$, the decoder scans $l$ and
+returns the unique $y \in l$ with $H_k(y) = i$ if exactly one such $y$ exists,
+and $\bot$ otherwise. The scan is instrumented: it performs exactly $|l|$ key
+evaluations.
 
-### 5.1 Derandomisation, and its limit
+**Lemma 4.4 (No silent corruption on the codebook).** If $x \in l$, the decoder
+returns either $x$ or $\bot$. In particular, the scheme never silently corrupts a
+codebook symbol, *for every key*.
 
-> **Theorem 17 (Existence of a good deterministic codebook).** For $M \ge 1$
-> there exists a codebook $H : \mathcal{A} \to [M]$ whose set of *ambiguous*
-> typical strings,
-> $$\mathrm{Bad}(S, H) = \{x \in S : \exists\, y \in S\setminus\{x\},\ H(y)=H(x)\},$$
-> satisfies $M \cdot |\mathrm{Bad}(S,H)| \le |S|\,(|S|-1)$.
+*Proof sketch.* If $x \in l$ then $x$ is itself a match for $i = H_k(x)$. Either
+it is the only one, and the decoder returns $x$; or there is another, and the
+uniqueness test fails, returning $\bot$. $\square$
 
-*Proof sketch.* Double counting: summing $|\mathrm{Bad}(S,H)|$ over all
-codebooks equals summing $|\mathcal{F}(S,x)|$ over $x \in S$, since both count
-pairs $(H, x)$ with $x$ ambiguous under $H$. Bound each inner term by Theorem 7
-and pick a codebook minimising $|\mathrm{Bad}(S,\cdot)|$; the minimum is at most
-the average. $\square$
+Lemma 4.4 is unconditional — no probabilistic hypothesis at all. Silent
+corruption can therefore only occur at symbols *outside* the codebook that happen
+to collide with a codebook entry.
 
-In particular $M \ge |S|/\varepsilon$ gives a *fixed* codebook losing at most an
-$\varepsilon$ fraction of $S$, at code length $\log_2 M$ — randomness is a proof
-device, not a runtime requirement.
+### 4.3 The first-moment argument
 
-What derandomisation cannot do is produce a codebook with an *empty* bad set
-whenever $M < |S|$: that would contradict Theorem 15. The averaging argument
-gives a small bad set, never an empty one, and this is precisely the converse
-bound biting.
+**Definition 4.5 (Collision set).** For a key $k$ and $x \in \alpha$, let
+$$\mathrm{Coll}_k(x) = \{y \in l : y \ne x, \; H_k(y) = H_k(x)\}.$$
+The decoder fails at $x \in l$ precisely when $\mathrm{Coll}_k(x) \ne \emptyset$.
 
----
+**Lemma 4.6 (Averaging identity).** For a 2-universal $H$ and any region $A
+\subseteq \alpha$,
+$$M \cdot \sum_{k \in \mathcal{K}} \mu\bigl(\{x \in A : \mathrm{Coll}_k(x) \ne
+\emptyset\}\bigr) \;\le\; K \cdot |l| \cdot \mu(A).$$
 
-## 6. Blocking: exponential-to-linear decoding
+*Proof sketch.* Exchange the order of summation. For fixed $x$ and fixed $y \in
+l$ with $y \ne x$, the number of keys with $H_k(y) = H_k(x)$ is at most $K/M$ by
+2-universality. Summing over the $\le |l|$ choices of $y$ and weighting by
+$\mu(x)$ gives the claim. $\square$
 
-We now address flank (F1).
+**Theorem 4.7 (Derandomization).** There exists a key $k$ for which the
+collision mass on $A$ is at most its average, i.e. at most $|l|\,\mu(A)/M$.
 
-### 6.1 The construction
+*Proof sketch.* A finite family of nonnegative reals contains an element at most
+the mean; apply to Lemma 4.6. $\square$
 
-Let the source string be a $b$-tuple $x = (x_1, \dots, x_b)$ of *blocks* drawn
-from a block alphabet $\beta$, with each block constrained to a per-block
-typical set $T \subseteq \beta$. The global typical set is the product $T^b$.
+**Theorem 4.8 (Achievability).** Let $H$ be 2-universal with $K \ge 1$ keys and
+$M \ge 1$ codewords, and let $l$ be a codebook with typicality parameter
+$\delta$. Then there exists a key $k$ such that the resulting scheme satisfies
+$$\Pr[\text{failure}] \le \delta + \frac{|l|}{M}, \qquad
+\Pr[\text{silent corruption}] \le \frac{|l|}{M},$$
+and the decoder performs exactly $|l|$ key evaluations on every query.
 
-> **Proposition 18.** $|T^b| = |T|^b$.
+*Proof sketch.* Apply Theorem 4.7 with $A = \alpha$. Failure at $x$ requires
+either $x \notin l$ (mass $\le \delta$) or $x \in l$ with a collision (mass $\le
+|l|/M$ by the choice of $k$). Silent corruption requires $x \notin l$ *and* a
+collision, so its mass is at most the collision mass $|l|/M$. The cost statement
+is the instrumentation of the scan. $\square$
 
-This is the candidate list the *flat* scheme of Section 3 would have to scan.
+**Theorem 4.9 (Rate sandwich).** Suppose $p_{\max}(\mu)\,|l| \le c$ (a flatness
+hypothesis) and $|l|/M \le \varepsilon - \delta$. Then
+(i) some key achieves success probability $\ge 1-\varepsilon$ with $M$ codewords,
+and (ii) every scheme with success probability $\ge 1-\varepsilon$, whatever its
+code space, needs at least $(1-\varepsilon)|l|/c$ codewords.
 
-**Definition 7 (Blocked encoder).** Draw a single random codebook indexed by
-position-value pairs, $H : \{1,\dots,b\} \times \beta \to [M]$, and set
-$$\mathrm{Enc}(x) \;=\; \bigl(H(1, x_1),\, H(2, x_2),\, \dots,\, H(b, x_b)\bigr)
-  \in [M]^b.$$
+*Proof sketch.* (i) is Theorem 4.8; (ii) is Theorem 3.4 with $p_{\max} \le
+c/|l|$. $\square$
 
-**Definition 8 (Blocked decoder).** Given $c = (c_1, \dots, c_b)$, run the
-scanning decoder of Section 3 on each block independently, using the $i$-th
-slice $y \mapsto H(i, y)$ of the codebook and the enumeration $L_T$ of $T$.
-Output the tuple of block decodings if **every** block decodes unambiguously;
-otherwise declare failure. The cost is the sum of the per-block costs.
-
-### 6.2 Complexity
-
-> **Theorem 19 (Exact complexity of the blocked decoder).** The blocked decoder
-> performs exactly $b \cdot |T|$ hash comparisons, for every codebook and every
-> received word.
-
-*Proof sketch.* Each of the $b$ per-block calls costs exactly $|T|$ by
-Theorem 4; the total is the constant sum $\sum_{i=1}^{b} |T| = b|T|$. $\square$
-
-> **Theorem 20 (Exponential-to-linear separation).** For $t \ge 2$ and
-> $b \ge 3$, $\;b\,t < t^{\,b}$. Consequently, for $|T| \ge 2$ and $b \ge 3$, the
-> blocked decoder's cost $b|T|$ is strictly less than the flat decoder's cost
-> $|T|^b$, and the gap grows exponentially in $b$.
-
-*Proof sketch.* Induction on $b$. Base case $b = 3$: $t^3 \ge 4t > 3t$ for
-$t \ge 2$. Inductive step: $(b+1)t = bt + t < t^b + t \le 2t^b \le t \cdot t^b =
-t^{b+1}$, using $t \le t^b$ and $t \ge 2$. $\square$
-
-### 6.3 Reliability
-
-**Definition 9 (Blocked failure event).**
-$$\mathcal{F}_{\mathrm{blk}}(T, x) = \bigl\{H : \exists\, i \le b,\ \exists\,
-  y \in T \setminus \{x_i\},\ H(i,y) = H(i,x_i)\bigr\}.$$
-
-> **Proposition 21.** If $x_i \in T$ for all $i$ and
-> $H \notin \mathcal{F}_{\mathrm{blk}}(T,x)$, then the blocked decoder on
-> $\mathrm{Enc}(x)$ outputs exactly $x$, at a cost of exactly $b|T|$.
-
-*Proof sketch.* Off the blocked failure event, each slice $y \mapsto H(i,y)$
-avoids the per-block failure event of Definition 5, so Proposition 6 applies to
-each block; all $b$ blocks decode, so the conjunction test fires. $\square$
-
-> **Theorem 22 (Blocked random-coding bound).** If $x_i \in T$ for all $i$, then
-> $$M \cdot |\mathcal{F}_{\mathrm{blk}}(T,x)| \;\le\; b\,(|T| - 1) \cdot
->   M^{\,b\,|\beta|},$$
-> i.e. $\mathbb{P}[\text{failure}] \le b(|T|-1)/M$.
-
-*Proof sketch.* $\mathcal{F}_{\mathrm{blk}}(T,x)$ is contained in the multi-pair
-collision event over
-$$P = \bigcup_{i=1}^{b} \bigl\{\bigl((i,y),\,(i,x_i)\bigr) : y \in T \setminus
-\{x_i\}\bigr\},$$
-whose members are pairs of distinct indices (they differ in the second
-coordinate) and whose cardinality is at most $\sum_{i} (|T|-1) = b(|T|-1)$ by
-subadditivity of cardinality over a union of images. Apply Theorem 3 with index
-set $\iota = \{1,\dots,b\} \times \beta$, of size $b|\beta|$. $\square$
-
-> **Corollary 23 (Almost-lossless guarantee, blocked).** If $M \ge
-> b(|T|-1)/\varepsilon$ then a uniformly random codebook recovers any fixed
-> typical $x \in T^b$ with probability at least $1 - \varepsilon$, using
-> exactly $b|T|$ hash comparisons.
-
-**Interpretation.** Comparing Corollary 8 (flat) with Corollary 23 (blocked) at
-equal reliability: the flat scheme needs $M_{\mathrm{flat}} \ge (|T|^b -
-1)/\varepsilon$ and scans $|T|^b$ candidates; the blocked scheme needs
-$M_{\mathrm{blk}} \ge b(|T|-1)/\varepsilon$ *per block* — total rate
-$b\log_2 M_{\mathrm{blk}} \approx b\log_2|T| + b\log_2(b/\varepsilon)$ against
-$\log_2|T^b| + \log_2(1/\varepsilon)$ — and scans $b|T|$ candidates. The
-overhead is $b \log_2 b$ bits, i.e. $\log_2 b$ bits per block, in exchange for
-an exponential-to-linear reduction in search.
-
-### 6.4 Soundness survives the product
-
-> **Theorem 24 (No silent corruption for the product code, typical inputs).** If
-> every block $x_i$ of the transmitted string lies in $T$, and the blocked
-> decoder outputs a string $z$, then $z = x$.
-
-*Proof sketch.* An output of the blocked decoder means every block decoded
-successfully, and the $i$-th block output is the $i$-th component of $z$. Apply
-Theorem 5 to each block separately: since $x_i \in T$, the $i$-th block output
-equals $x_i$. Hence $z = x$ componentwise. $\square$
+The gap between the two sides depends only on $\varepsilon$, $\delta$ and the
+flatness constant $c$ — not on $|\alpha|$. This is the precise sense in which
+universal hashing achieves the almost-lossless rate.
 
 ---
 
-## 7. Universal error detection: closing the atypical loophole
+## 5. An explicit family: non-vacuity
 
-Theorems 5 and 24 both carry the hypothesis "the transmitted string is
-typical". This hypothesis is not cosmetic. If $x \notin T^b$, the decoder may
-find exactly one typical candidate sharing $x$'s codeword and output it with
-full confidence. Section 9 measures this at probability $3/8$ in an explicit
-tiny instance. Typicality-based reasoning therefore does **not** deliver a
-no-silent-corruption guarantee.
+**Definition 5.1 (Inner-product family).** Let $p$ be prime. On the source
+$\mathbb{F}_p^2$, with key space $\mathbb{F}_p$ and code space $\mathbb{F}_p$,
+put
+$$h_k(x_1, x_2) = x_1 + k\,x_2 \pmod p .$$
 
-**Definition 10 (Silent corruption).** A decoding outcome $o \in \mathcal{A}
-\cup \{\bot\}$ is a *silent corruption* for the transmitted $x$ if $o \ne \bot$
-and $o \ne x$: the decoder confidently outputs a wrong string. (An explicit
-failure $\bot$ is not a silent corruption; it triggers retransmission.)
+**Theorem 5.2.** The inner-product family is 2-universal. It compresses $p^2$
+source symbols into $p$ codewords.
 
-**Definition 11 (Checksummed scheme).** Draw an independent random function
-$C : \mathcal{A} \to [K]$ and transmit $(H(x), C(x))$. On receipt of $(c, s)$,
-run the inner decoder on $c$; if it proposes $y$, output $y$ only if
-$C(y) = s$, and output $\bot$ otherwise.
+*Proof sketch.* Suppose $(x_1,x_2) \ne (y_1,y_2)$ collide: $x_1 + kx_2 = y_1 +
+ky_2$, i.e. $k(x_2 - y_2) = y_1 - x_1$. If $x_2 \ne y_2$ this determines $k$
+uniquely, so at most one of the $p$ keys collides, and $1 \cdot p \le p$. If $x_2
+= y_2$ then $x_1 \ne y_1$ and no key collides. $\square$
 
-> **Theorem 25 (Exact complexity with checksum).** The checksummed scanning
-> decoder performs exactly $|L| + 1$ comparisons.
+**Theorem 5.3 (A fully numeric instance).** Take $p = 101$, so the source is
+$\mathbb{F}_{101}^2$ with $10201$ symbols, and let $l$ be any duplicate-free
+codebook of $10$ symbols carrying all but $1/100$ of the mass. Then there is a
+key $k \in \mathbb{F}_{101}$ such that the scheme fails with probability at most
+$1/100 + 10/101 \approx 0.109$, corrupts silently with probability at most
+$10/101$, and decodes in exactly $10$ key evaluations.
 
-The main result of this section makes no assumption whatsoever on the inner
-decoder.
-
-> **Theorem 26 (Universal error-detection theorem).** Let $\Omega$ be any finite
-> set of "inner randomness" values and let
-> $$\mathrm{propose} : \Omega \times \mathcal{A} \to \mathcal{A} \cup \{\bot\}$$
-> be an *arbitrary* function: any inner decoder, deterministic or randomised,
-> honest or adversarial. Draw $w \in \Omega$ and $C : \mathcal{A} \to [K]$
-> independently and uniformly. Then for **every** source string
-> $x \in \mathcal{A}$ — typical or atypical, with no assumption on $x$ —
-> $$K \cdot \bigl|\{(w, C) : \text{the checksummed output is a silent
->   corruption for } x\}\bigr| \;\le\; |\Omega| \cdot K^{|\mathcal{A}|},$$
-> equivalently
-> $$\mathbb{P}[\text{silent corruption}] \;\le\; \frac{1}{K}.$$
-
-*Proof sketch.* The argument is **fibrewise**, i.e. conditional on the inner
-randomness. Fix $w \in \Omega$ and consider the slice of bad checksums above it.
-Two cases.
-
-1. $\mathrm{propose}(w, x) = \bot$: the composite decoder outputs $\bot$
-   regardless of $C$, so the slice is empty and the slice bound is trivial.
-2. $\mathrm{propose}(w, x) = y_0$ for a *determined* string $y_0$. If
-   $y_0 = x$ the composite output is either $x$ or $\bot$, never a silent
-   corruption, and the slice is again empty. If $y_0 \ne x$, then a silent
-   corruption requires the checksum test to pass, i.e. $C(y_0) = C(x)$; the
-   slice is therefore contained in the collision event $\mathcal{C}(y_0, x)$ in
-   the checksum codebook space, and Theorem 2 gives
-   $K \cdot |\text{slice}| \le K^{|\mathcal{A}|}$.
-
-In all cases $K \cdot |\text{slice}(w)| \le K^{|\mathcal{A}|}$. Summing over the
-$|\Omega|$ fibres, and using that the silent set is contained in the disjoint
-union of $\{w\} \times \text{slice}(w)$, yields the stated bound. $\square$
-
-Three features deserve emphasis.
-
-- **No hypothesis on $x$.** The bound is uniform over all source strings. This
-  is exactly what the typicality-conditional soundness theorems fail to give.
-- **No hypothesis on the inner decoder.** Its cleverness is quantified over
-  *before* the checksum is drawn; conditioning on $w$ collapses the inner
-  decoder to a single determined candidate $y_0$, after which only the
-  independent checksum matters. This is why the result is universal.
-- **The cost is $\log_2 K$ bits and one comparison.** $K = 2^{32}$ gives silent
-  corruption below $2.4 \times 10^{-10}$; $K = 2^{64}$ gives $5.4 \times
-  10^{-20}$.
+Theorem 5.3 exists to rule out vacuity: every hypothesis of the general theory is
+met by an object one can write down in a line.
 
 ---
 
-## 8. The composite scheme
+## 6. Making silence rarer
 
-Assembling Sections 6 and 7:
+### 6.1 A two-region threshold
 
-**Definition 12 (Composite encoder/decoder).** Encode
-$x \in \beta^{b}$ as $\bigl((H(1,x_1),\dots,H(b,x_b)),\, C(x)\bigr)$ with
-$H$ a random block codebook into $[M]$ and $C$ an independent random checksum
-into $[K]$. Decode by running the blocked decoder, then applying the checksum
-test to its proposal.
+Theorem 4.8's silent bound $|l|/M$ is wasteful. A silent error needs $x \notin l$
+*and* $\mathrm{Coll}_k(x) \ne \emptyset$; the first event already has probability
+$\le \delta$, so the first moment of the silent-error mass carries an extra
+factor $\delta$. The obstruction is that we must choose *one* key that is
+simultaneously good for two different regions.
 
-> **Theorem 27 (Exact complexity).** The composite decoder performs exactly
-> $b\,|T| + 1$ comparisons.
+**Lemma 6.1 (Markov counting).** For any region $A$ and any threshold $c > 0$,
+strictly fewer than $K/c$ keys have collision mass on $A$ exceeding $c$ times its
+average $|l|\mu(A)/M$.
 
-> **Theorem 28 (Reliability).** If every block of $x$ is typical, $M \ge
-> b(|T|-1)/\varepsilon$, and $K \ge 1$, then the composite scheme recovers $x$
-> with probability at least $1 - \varepsilon$.
+**Theorem 6.2 (Doubly good key).** With thresholds $c_1 = c_2 = 2$, the two bad
+key sets each have size $< K/2$ and so cannot cover $\mathcal{K}$. Hence there is
+a single key that is simultaneously good at threshold $2$ for the region $\alpha
+\setminus l$ and for the whole space.
 
-*Proof sketch.* The good set of the composite scheme contains the full product
-slab $(\text{good blocked codebooks}) \times (\text{all checksums})$: whenever
-the blocked decoder outputs the correct $x$, the checksum test on $x$ passes
-automatically since $C(x) = C(x)$. Hence
-$|\mathrm{Good}_{\mathrm{comp}}| \ge |\mathrm{Good}_{\mathrm{blk}}| \cdot
-K^{|\beta^{b}|}$, and dividing by the composite space size
-$M^{b|\beta|} K^{|\beta^b|}$ reduces the claim to Corollary 23. The checksum
-costs nothing in success probability. $\square$
+**Theorem 6.3 (Sharp silent-error bound).** There is a single explicit key with
+$$\Pr[\text{failure}] \le \delta + \frac{2|l|}{M}, \qquad
+\Pr[\text{silent corruption}] \le \frac{2\delta|l|}{M},$$
+and decoding cost still exactly $|l|$.
 
-> **Theorem 29 (Safety).** For **every** $x \in \beta^b$, typical or atypical,
-> the composite scheme's probability of a confident wrong output is at most
-> $1/K$.
+The silent bound has improved by a factor $\delta$ — typically several orders of
+magnitude — at the cost of a factor $2$ in the failure bound.
 
-*Proof sketch.* The composite decoder is literally "blocked inner decoder, then
-checksum test", so Theorem 26 applies verbatim with
-$\Omega = \{$block codebooks$\}$ and
-$\mathrm{propose}(H, z) = $ blocked decoding of $\mathrm{Enc}_H(z)$. $\square$
+### 6.2 The whole trade-off curve
 
-**Summary of the scheme.**
+The threshold $2$ is an artefact of splitting the key space evenly. Any pair
+$c_1, c_2 > 0$ with $c_1^{-1} + c_2^{-1} \le 1$ leaves a key outside both bad
+sets.
 
-| Quantity | Value |
-|---|---|
-| Rate | $b \log_2 M + \log_2 K$ bits, $\log_2 M \approx \log_2|T| + \log_2(b/\varepsilon)$ |
-| Failure probability (typical input) | $\le \varepsilon$ for $M \ge b(|T|-1)/\varepsilon$ |
-| Decoding complexity | exactly $b|T| + 1$ comparisons |
-| Silent-corruption probability (any input) | $\le 1/K$ |
-| Flat-scheme decoding complexity for comparison | $|T|^b$ |
+**Theorem 6.4 (Tunable derandomization).** For every $\eta > 0$ there is a key
+with
+$$\Pr[\text{silent corruption}] \le (1+\eta)\,\frac{\delta|l|}{M}, \qquad
+\Pr[\text{failure}] \le \delta + \Bigl(1 + \frac{1}{\eta}\Bigr)\frac{|l|}{M},$$
+and decoding cost exactly $|l|$.
 
-Every entry is an exact statement, not an asymptotic one.
+*Proof sketch.* Take $c_1 = 1 + \eta$ and $c_2 = 1 + \eta^{-1}$; then $c_1^{-1} +
+c_2^{-1} = 1$, so Lemma 6.1 leaves a key outside both bad sets. $\square$
 
----
+Setting $\eta = 1$ recovers Theorem 6.3. Letting $\eta \to 0$ drives the silent
+constant to $1$, the first-moment optimum, at the price of a diverging failure
+constant: the trade-off is continuous and its two endpoints are exactly the two
+first-moment bounds one would naively hope for separately.
 
-## 9. Numerical validation
+### 6.3 Checksums
 
-All quantities below were obtained by exhaustive enumeration of the codebook
-space on a small instance: source alphabet $\mathcal{A}$ of size $6$, typical
-set $S = \{0,1,2\}$ so $|S| = 3$ and $k = 2$, codebook space of size $M^6$.
+**Definition 6.5 (Paired family).** Given $H : \mathcal{K} \times \alpha \to [M]$
+and $G : \mathcal{K}' \times \alpha \to [C]$, define $H \otimes G$ on key space
+$\mathcal{K} \times \mathcal{K}'$ and code space $[M] \times [C]$ by $(H \otimes
+G)_{(k,k')}(x) = (H_k(x), G_{k'}(x))$.
 
-**Failure probability of uniform random hashing at $x = 0$:**
+**Theorem 6.6 (Universality is multiplicative).** If $H$ and $G$ are 2-universal
+then so is $H \otimes G$, with $KK'$ keys and $MC$ codewords.
 
-| $M$ | measured | exact formula $1-(1-1/M)^2$ | union bound $k/M$ | Bonferroni $k/(2M)$ |
-|-----|----------|------------------------------|-------------------|---------------------|
-| 2   | $3/4 = 0.750$    | $3/4$    | $1$                 | $1/2$    |
-| 3   | $5/9 \approx 0.556$ | $5/9$ | $2/3 \approx 0.667$ | $1/3$    |
-| 4   | $7/16 = 0.438$   | $7/16$   | $1/2$               | $1/4$    |
-| 8   | $15/64 \approx 0.234$ | $15/64$ | $1/4$          | $1/8$    |
-| 16  | $31/256 \approx 0.121$ | $31/256$ | $1/8$        | $1/16$   |
+*Proof sketch.* Two symbols collide under the pair only if they collide under
+both coordinates; count key pairs and multiply the two universality bounds.
+$\square$
 
-The measured column equals $(2M-1)/M^2$ in every row, confirming Theorem 10, and
-lies between the two proved bounds, both tight to within a factor of two. (The
-Bonferroni bound is stated for $2(k-1) \le M$, i.e. $M \ge 2$ here.)
+**Corollary 6.7 (Guaranteed detection).** Appending a $\log_2 C$-bit checksum
+from an independent universal family drives the silent-corruption probability to
+at most $|l|/(MC)$. For any target $\eta > 0$, choosing $C > |l|/(M\eta)$
+suffices.
 
-**Good/bad partition.** For $M = 3$ the codebook space has $3^6 = 729$
-elements; the good set has $324$ and the failure set $405$, and $324 + 405 =
-729$ — the inequality $|\mathrm{Good}| + |\mathcal{F}| \ge M^{|\mathcal{A}|}$
-underlying Corollary 8 is tight here.
-
-**Decoder cost.** Decoding with the enumeration $[0,1,2]$ returns the correct
-string at cost exactly $3$ comparisons, confirming Theorem 4.
-
-**The atypical loophole.** With typical list $[1,2]$ and transmitted string
-$x = 0$ (atypical), the fraction of codebooks under which the decoder produces a
-confident output — necessarily wrong — is $3/8$ for $M = 4$. Adding an
-independent checksum divides this: $3/16$ for $K = 2$, $3/32$ for $K = 4$,
-exactly the $1/K$ scaling of Theorem 26.
-
-**Blocked versus flat.** With $b = 3$ blocks over a binary block alphabet
-($|T| = 2$), the blocked decoder costs $b|T| = 6$ comparisons while the product
-typical set the flat decoder must scan has $|T|^b = 8$ elements — the separation
-of Theorem 20 at its smallest nontrivial parameters. At realistic parameters
-($|T| = 2^{20}$, $b = 50$) the comparison is $5.2 \times 10^7$ against
-$2^{1000}$.
+This is the promised "no silent corruption" gate: failures can always be made
+detectable at logarithmic additive cost, on top of the unconditional Lemma 4.4.
 
 ---
 
-## 10. Discussion and open problems
+## 7. Decoding cost, and how to destroy it
 
-### 10.1 What the results say
+### 7.1 The exponential obstruction
 
-Three things are established that the classical presentation leaves implicit.
+The decoder of §4 costs exactly $|l|$ key evaluations. On a $b$-fold i.i.d.
+product source $\mu^{\otimes b}$ over an alphabet $\beta$, the natural codebook is
+the $b$-fold product $T^b$ of a per-block typical set $T$, with $|T|^b$ entries.
+The naive decoder is therefore exponential in the block length. This — not the
+rate — is the real content of the "random coding is not an algorithm" complaint.
 
-1. **The relaxation is exactly quantified.** The converse (Theorem 15) shows the
-   pigeonhole bound relaxes by exactly the fraction of strings sacrificed;
-   Theorem 10 says exactly how often uniform random hashing fails; Corollary 14
-   says the $\Theta(1/\varepsilon)$ overhead of random hashing over the converse
-   is intrinsic to the construction.
-2. **The decoder-search obstacle is defeated, not merely deferred.** The product
-   construction reduces the search from $|T|^b$ to exactly $b|T|$, paying
-   $\log_2 b$ bits per block. Both endpoints of the trade-off are exact
-   theorems.
-3. **Silent corruption is a real loophole, and it is universally closable.**
-   Typicality-conditional soundness is not a safety guarantee; the measured
-   $3/8$ makes that concrete. One independent checksum closes it for *any*
-   inner decoder, for *every* source string, at $1/K$.
+### 7.2 Coordinatewise decoding
 
-### 10.2 What broke along the way
+**Theorem 7.1 (Product marginals and a union bound).** For the $b$-fold product
+source, the marginal on each coordinate is $\mu$, and for a set of block
+configurations defined by a per-coordinate condition, the total mass is at most
+the sum of the $b$ per-coordinate masses.
 
-Two failed attempts are worth recording, because they shape the final
-statements.
+**Theorem 7.2 (Coordinatewise decoder).** Decode each of the $b$ blocks
+independently with its own unique-match scan against the size-$|T|$ codebook and
+assemble the answers. The resulting block decoder returns a full block exactly
+when every coordinate decoder returns a symbol; hence it never corrupts silently
+on the product codebook, its failure probability is at most $b \cdot (\delta +
+|T|/m)$, and its cost is exactly $b|T|$ key evaluations.
 
-- The first version of the soundness theorem was stated only for typical inputs
-  and was therefore useless as a "no silent corruption" guarantee. The honest
-  fix was the fibrewise (conditional-independence) counting theorem of
-  Section 7, which quantifies over all inner decoders and all inputs.
-- An early attempt to bound the failure probability of a *fixed* codebook by
-  the average failed. Derandomisation only yields a codebook whose bad set is
-  small, never empty — which is exactly the converse bound (Theorem 15) biting.
+**Theorem 7.3 (Exponential speedup).** For $|T| \ge 2$ and $b \ge 3$,
+$$b\,|T| \;<\; |T|^b ,$$
+so the coordinatewise cost $b|T|$ is strictly below the naive codebook size
+$|T|^b$, and the gap grows exponentially in $b$.
 
-### 10.3 Open problems
+### 7.3 Sorting the codebook
 
-**Conjecture 1 (Rate–complexity is a genuine Pareto frontier).** Among all
-schemes whose decoder inspects at most $C$ candidates, the minimal codebook size
-for $(1-\varepsilon)$-reliability on a product typical set $T^b$ satisfies
-$$\log M \;\ge\; \log|T^b| \;+\; \Omega\Bigl(\log\tfrac{1}{\varepsilon} \cdot
-  \frac{\log |T^b|}{\log C}\Bigr).$$
-Equivalently, every factor-of-two saving in decoder cost costs a fixed number of
-extra bits of rate. The key insight is that blocking is not just one
-construction but a *coordinate system*: the exponent $b$ in the union bound and
-the exponent $1/b$ in the search cost are conjugate, so the achievable region
-should be governed by a Legendre-type duality between the two exponents. Both
-endpoints are now theorems (Theorem 4 with Theorem 7 at one end, Theorem 19 with
-Theorem 22 at the other); only the interpolation and its converse are missing.
+The residual $|T|$ per block is still linear. One might expect a logarithmic
+decoder to require a hash family that is simultaneously 2-universal and
+*monotone* on every codebook — an unnatural and probably unachievable
+requirement. It is unnecessary.
 
-**Conjecture 2 (The $1/\varepsilon$ penalty is intrinsic to pairwise-independent
-codebooks).** Corollary 14 shows uniform random hashing needs $M \gtrsim
-|S|/\varepsilon$, while the converse (Corollary 16) shows $M \ge
-(1-\varepsilon)|S|$ suffices information-theoretically. We conjecture the
-$\Theta(1/\varepsilon)$ gap persists for *every* pairwise-independent codebook
-family, and disappears only for families with $\Omega(\log(1/\varepsilon))$-wise
-independence. The key insight is that Bonferroni's second inequality — the only
-ingredient in the lower bound (Theorem 13) — depends solely on pairwise
-marginals, so any family matching those marginals inherits the same lower bound;
-escaping it requires controlling higher-order correlations, which is precisely
-what higher-wise independence provides.
+**Key observation.** The encoder chooses the key $k$ *first*, and only then
+stores the codebook **sorted by hash value**. Sorting is a permutation of the
+codebook. The collision analysis of §4 depends only on the multiset $\{H_k(y) : y
+\in l\}$, which a permutation does not change. Hence every probabilistic bound
+proved so far survives verbatim, while the stored array now has monotone keys —
+and a unique-match query on a monotone array is a binary search.
 
-**Further directions.**
+**Definition 7.4 (Sorted codebook).** Given $k$ and $l$, let $\sigma$ be a
+permutation with $H_k(l_{\sigma(0)}) \le H_k(l_{\sigma(1)}) \le \cdots$. Write
+$\mathrm{key}(i) = H_k(l_{\sigma(i)})$ and $a(i) = l_{\sigma(i)}$.
 
-- *Non-uniform block typical sets.* Allowing $T_i$ to vary with $i$ replaces
-  $b(|T|-1)$ by $\sum_i (|T_i| - 1)$ throughout; the exact analogue of
-  Theorem 10 for the product code, $1 - \prod_i (1-1/M)^{|T_i|-1}$, should
-  follow from the same separating-codebook induction.
-- *Hierarchical blocking.* Iterating the product construction over a tree of
-  depth $d$ should interpolate the Pareto frontier of Conjecture 1, with
-  decoder cost $\Theta(d \cdot |T|^{b^{1/d}})$.
-- *List decoding.* Replacing the singleton test by "at most $\ell$ matches"
-  should reduce the failure probability from $\Theta(k/M)$ to
-  $\Theta((k/M)^{\ell})$ while multiplying the output size by $\ell$; the
-  separating-codebook count of Theorem 9 is the natural tool.
-- *Checksums with structure.* Theorem 26 uses a fully random checksum. A
-  pairwise-independent family (e.g. affine maps over a finite field) satisfies
-  the same one-pair collision bound $1/K$ and would reduce the checksum's
-  description length from $|\mathcal{A}|\log_2 K$ to $O(\log|\mathcal{A}| +
-  \log K)$ bits, at no loss in the guarantee.
+**Lemma 7.5 (Monotonicity).** $\mathrm{key}$ is monotone non-decreasing on
+$\{0,\dots,|l|-1\}$.
 
-### 10.4 Conclusion
+---
 
-The pigeonhole barrier is a statement about exactness for all inputs. Relaxing
-it to $\varepsilon$-reliability relaxes the counting bound by exactly the
-fraction of inputs discarded. Shannon's random codebook attains near-optimal
-rate but with an exponential decoder and a soundness guarantee that silently
-assumes typicality. A product construction converts the exponential search into
-a linear one for a logarithmic price in rate, and an independent checksum closes
-the soundness loophole universally. The resulting scheme has an exact rate, an
-exact failure bound, an exact operation count, and an exact bound on the one
-quantity that actually matters in deployment: how often it lies.
+## 8. A logarithmic decoder and a matching converse
+
+### 8.1 Cost-instrumented binary search
+
+**Definition 8.1.** For a key function $\mathrm{key} : \mathbb{N} \to \mathbb{N}$,
+a target $t$, and a range $[lo, lo+\mathrm{len})$, define $\mathrm{bsearch}$
+recursively: if $\mathrm{len} = 0$, return $(\bot, 0)$; otherwise let $h =
+\lfloor \mathrm{len}/2 \rfloor$ and $m = lo + h$, and
+- if $\mathrm{key}(m) = t$, return $(m, 1)$;
+- if $\mathrm{key}(m) < t$, recurse on $[m+1, m+1+(\mathrm{len}-h-1))$ and add $1$
+  to the cost;
+- otherwise recurse on $[lo, lo+h)$ and add $1$ to the cost.
+
+The second component counts key evaluations exactly.
+
+**Theorem 8.2 (Exact complexity).** For all $lo$ and $\mathrm{len}$,
+$$\mathrm{cost}\bigl(\mathrm{bsearch}(\mathrm{key}, t, lo, \mathrm{len})\bigr)
+\;\le\; \log_2 \mathrm{len} + 1 .$$
+
+*Proof sketch.* Strong induction on $\mathrm{len}$. For $\mathrm{len} \le 1$ the
+search stops after at most one evaluation. For $\mathrm{len} \ge 2$ both
+recursive ranges have size at most $\lfloor \mathrm{len}/2 \rfloor$, and
+$\log_2\lfloor \mathrm{len}/2\rfloor + 1 = \log_2 \mathrm{len}$ in integer
+logarithms; adding the single evaluation at the midpoint closes the induction.
+$\square$
+
+Note this is an exact arithmetic bound with explicit constants, not an
+asymptotic statement.
+
+**Theorem 8.3 (Soundness).** If $\mathrm{bsearch}$ returns an index $m$, then
+$\mathrm{key}(m) = t$ and $lo \le m < lo + \mathrm{len}$. No monotonicity
+hypothesis is required.
+
+*Proof sketch.* Induction; the only place an index is produced is the midpoint
+test, which checks $\mathrm{key}(m) = t$ directly, and the recursive ranges are
+contained in the original. $\square$
+
+**Theorem 8.4 (Completeness).** If $\mathrm{key}$ is monotone non-decreasing on
+$[lo, lo+\mathrm{len})$ and some $j$ in that range has $\mathrm{key}(j) = t$,
+then $\mathrm{bsearch}$ returns some index.
+
+*Proof sketch.* Induction. If the midpoint value is $< t$, monotonicity forces $j
+> m$, so $j$ lies in the right subrange; symmetrically on the other side. The
+subrange hypotheses are restrictions of the original monotonicity. $\square$
+
+The split of soundness from completeness is deliberate and load-bearing:
+soundness holds for an *arbitrary* key function, so a decoder built on it cannot
+be induced to lie by a badly behaved hash. Only the *usefulness* of the decoder
+depends on sortedness.
+
+### 8.2 The decoder
+
+**Definition 8.5 (Binary-search decoder).** Given $\mathrm{key}$, the symbol
+array $a$, the length $n$, and a received value $t$: run
+$\mathrm{bsearch}(\mathrm{key}, t, 0, n)$. If it returns $\bot$, abstain. If it
+returns $m$, evaluate $\mathrm{key}(m-1)$ and $\mathrm{key}(m+1)$ (where they
+exist); if either equals $t$, abstain; otherwise return $a(m)$.
+
+**Theorem 8.6 (Uniqueness from neighbours).** On a range whose key function is
+monotone, an index $m$ whose key differs from those of both neighbours is the
+unique index in $[0,n)$ with that key value.
+
+*Proof sketch.* Monotone key values are constant on blocks of consecutive
+indices, so a value repeated anywhere in the range is repeated at a neighbour of
+any of its occurrences. $\square$
+
+**Theorem 8.7 (No silent corruption, unconditionally).** The binary-search
+decoder never returns a wrong codebook symbol, whatever the key function and
+whatever the array — the only hypothesis used is Theorem 8.3.
+
+**Theorem 8.8 (Total cost).** The binary-search decoder performs at most
+$$\log_2 n + 3$$
+key evaluations: at most $\log_2 n + 1$ in the search, plus at most two neighbour
+evaluations.
+
+**Theorem 8.9 (Sub-linear Monte-Carlo compression).** Let $H$ be 2-universal with
+$K \ge 1$, $M \ge 1$, and let $l$ be a codebook with typicality parameter
+$\delta$. Then there is a key $k$ such that the scheme with sorted codebook and
+binary-search decoder satisfies
+$$\Pr[\text{failure}] \le \delta + \frac{2|l|}{M}, \qquad
+\Pr[\text{silent corruption}] \le \frac{2\delta|l|}{M},$$
+and decodes in at most $\log_2|l| + 3$ key evaluations.
+
+*Proof sketch.* Choose $k$ by Theorem 6.3. On a codebook symbol without
+collisions, Lemma 7.5 and Theorem 8.4 give a hit and Theorem 8.6 passes the
+neighbour test, so the decoder is correct; on a colliding codebook symbol the
+neighbour test fails and it abstains. Theorem 8.7 gives the silent bound and
+Theorem 8.8 the cost. $\square$
+
+**Proposition 8.10 (Speedup is genuine).** $\log_2 n + 3 < n$ for every $n \ge
+6$.
+
+### 8.3 The decision-tree converse
+
+Is $\log_2 n + 3$ optimal? We answer in a model far more general than binary
+search.
+
+**Definition 8.11 (Decision tree).** A decision tree over a query set $Q$ and an
+output set $\iota$ is a finite binary tree whose internal nodes are labelled by
+queries $q \in Q$ and whose leaves are labelled by outputs. An *input* is an
+oracle $Q \to \mathrm{Bool}$; running the tree follows the branch given by the
+oracle's answers. $\mathrm{runCost}$ is the number of queries actually asked.
+
+This model subsumes every adaptive algorithm that learns about its input only
+through Boolean tests — comparisons, key evaluations followed by a test,
+arbitrary predicates.
+
+**Lemma 8.12.** The set of outputs a tree can produce using at most $c$ queries
+has at most $2^c$ elements.
+
+*Proof sketch.* Induction on $c$: the outputs reachable within $c$ queries are the
+union of those reachable within $c-1$ queries in the two subtrees. $\square$
+
+**Theorem 8.13 (Cost converse).** Let $t$ be a decision tree, $S$ a set of $n$
+distinct symbols, and $\mathrm{input}$ an assignment of oracles to symbols. If $t$
+outputs $x$ correctly on $\mathrm{input}(x)$ for every $x \in S$, and
+$\mathrm{runCost}(\mathrm{input}(x)) \le c$ for every $x \in S$, then $n \le 2^c$.
+
+*Proof sketch.* Correctness embeds $S$ into the set of outputs reachable within
+$c$ queries; apply Lemma 8.12. $\square$
+
+**Corollary 8.14 (No sub-logarithmic decoder).** For any correct decoder and any
+nonempty $S$, some input costs at least $\log_2 |S|$ queries.
+
+**Theorem 8.15 (Optimality within an additive $3$).** For every correct
+decision-tree decoder $t$ on a nonempty symbol set $S$, some $x \in S$ satisfies
+$$\mathrm{cost}(\text{binary-search decoder on } |S| \text{ symbols}) \;\le\;
+\mathrm{runCost}_t(\mathrm{input}(x)) + 3 .$$
+
+**Corollary 8.16 (Block converse).** Any scheme decoding $b$ blocks by $b$
+independent coordinatewise decoders, each correct on $n$ symbols, costs at least
+$b \log_2 n$ queries in total; the coordinatewise binary-search scheme achieves
+$b(\log_2 n + 3)$.
+
+The worst-case cost of the sorted-codebook decoder is therefore within an additive
+constant of the information-theoretic minimum, for *every* adaptive Boolean-query
+algorithm — not merely within the class of comparison-based searches.
+
+---
+
+## 9. List decoding: the rate–list trade-off
+
+### 9.1 Converse
+
+**Definition 9.1 (List scheme).** A list scheme has $\mathrm{dec} : \mathcal{C}
+\to \mathrm{List}(\alpha)$ with $|\mathrm{dec}(c)| \le T$ for all $c$; it
+*succeeds* at $x$ if $x \in \mathrm{dec}(\mathrm{enc}(x))$.
+
+**Theorem 9.2 (List converse).** For a list scheme with lists of length at most
+$T$,
+$$\Pr[\text{success}] \le T \cdot |\mathcal{C}| \cdot p_{\max}(\mu),$$
+hence $\log|\mathcal{C}| + \log T \ge H_\infty(\mu) + \log(1-\varepsilon)$.
+
+*Proof sketch.* Each codeword can "cover" at most $T$ symbols of the success set,
+so $|\mathcal{S}| \le T|\mathcal{C}|$; then argue as in Theorem 3.3. $\square$
+
+At $T = 1$ this is Theorem 3.4. So a list of length $T$ relaxes the counting
+bound by exactly $\log T$ bits, and no more.
+
+### 9.2 Linear gain from 2-universality
+
+**Theorem 9.3 (Markov step).** For a 2-universal family, at most a $|l|/(TM)$
+fraction of keys give a fixed symbol $x$ more than $T$ collision partners in the
+codebook.
+
+**Theorem 9.4 (List achievability).** There is a key with
+$$\Pr[\text{failure}] \le \delta + \frac{|l|}{TM},$$
+lists of length at most $T$, decoding cost exactly $|l|$, and the guarantee that
+a non-empty answer *always contains the true symbol* when that symbol is in the
+codebook.
+
+The two sides match: list size $T$ costs $\log T$ bits in the converse and buys a
+factor $T$ in the failure probability.
+
+### 9.3 Exponential gain from higher independence
+
+The factor-$T$ gain is exactly what a first moment yields. Higher independence
+does better, and the correct statistic is the $T$-th *factorial* moment.
+
+**Definition 9.5 ($T$-wise independence, counting form).** $H$ satisfies
+$\mathrm{Indep}_T$ if for every set of $T$ symbols and every distinct symbol $x$,
+the fraction of keys making all $T$ of them collide with $x$ is at most $M^{-T}$.
+
+**Proposition 9.6 (Coherence).** $\mathrm{Indep}_1$ is exactly 2-universality.
+
+**Theorem 9.7 (Factorial-moment identity).** Let $c_k = |\mathrm{Coll}_k(x)|$.
+Then
+$$M^T \sum_{k \in \mathcal{K}} \binom{c_k}{T} \;\le\; K \binom{|l|}{T}.$$
+
+*Proof sketch.* Double count pairs (key, $T$-subset of the codebook all of whose
+members collide with $x$ under that key). For each of the $\binom{|l|}{T}$
+subsets, $\mathrm{Indep}_T$ bounds the number of keys by $K/M^T$. $\square$
+
+**Theorem 9.8 (Exponential list gain).** Under $\mathrm{Indep}_T$ there is a key
+with
+$$\Pr[\text{failure}] \;\le\; \delta + \binom{|l|}{T}\Big/M^T \;\le\; \delta +
+\Bigl(\frac{|l|}{M}\Bigr)^{T},$$
+lists of length at most $T$, and decoding cost exactly $|l|$.
+
+### 9.4 Short keys from Vandermonde
+
+The obvious $\mathrm{Indep}_T$ family is the family of *all* functions $\alpha \to
+[M]$, with $M^{|\alpha|}$ keys: exponentially long advice, useless in practice.
+
+**Definition 9.9 (Polynomial family).** Over a prime field $\mathbb{F}_p$, with
+key $c = (c_0,\dots,c_T) \in \mathbb{F}_p^{T+1}$, put
+$$h_c(x) = c_0 + c_1 x + \cdots + c_T x^T \pmod p .$$
+
+**Lemma 9.10 (Interpolation, counting form).** Two coefficient vectors in
+$\mathbb{F}_p^{T+1}$ that agree at $T{+}1$ distinct points of $\mathbb{F}_p$ are
+equal.
+
+*Proof sketch.* The evaluation map at $T{+}1$ distinct points is given by a
+Vandermonde matrix, whose determinant is nonzero precisely when the points are
+distinct; hence the map is injective. $\square$
+
+**Lemma 9.11.** At most $p$ keys make the polynomial take the same value at $x$
+as at all $T$ points of a given $T$-set: the $T{+}1$ constraints pin the key down
+up to the single common value.
+
+**Theorem 9.12 (Short-key higher independence).** The degree-$T$ polynomial
+family satisfies $\mathrm{Indep}_T$ with only $K = p^{T+1}$ keys, i.e.
+$(T{+}1)\log_2 p$ bits of advice.
+
+**Theorem 9.13 (Numeric instance).** Over $\mathbb{F}_{101}$, with a $10$-element
+codebook carrying all but $1/100$ of the mass and $T = 3$: there is a key in
+$\mathbb{F}_{101}^4$ (about $10^8$ keys, i.e. $27$ bits of advice, versus
+$101^{101}$ for the full family) giving failure probability at most
+$$\tfrac{1}{100} + \tfrac{1}{1000}$$
+with lists of length at most $3$.
+
+**Proposition 9.14 (Exponential key separation).** For $T + 1 < p$ the polynomial
+key space $p^{T+1}$ is strictly smaller than the full family's $p^p$, and the gap
+is exponential in $p$.
+
+---
+
+## 10. How much randomness does the encoder need?
+
+Every achievability theorem above asserts the existence of a good key, so the
+encoder stores $\log_2 K$ bits of advice. How small can $K$ be? Pigeonhole
+answers once more, now aimed at the key space.
+
+**Theorem 10.1 (Logarithmic lower bound).** A 2-universal family with $M \ge 2$,
+at least one key, on a domain of size $n$, satisfies $n \le M^K$; equivalently $K
+\ge \log_M n$.
+
+*Proof sketch.* The map $x \mapsto (H_k(x))_{k \in \mathcal{K}}$ must be
+injective, since two symbols agreeing on all keys would collide for all $K$ keys,
+violating $K \cdot M \le K$ when $M \ge 2$. Hence $n \le M^K$. $\square$
+
+So no constant-size family is universal on an unbounded source. But integrality
+gives much more.
+
+**Theorem 10.2 (Sharp bound).** A nonempty 2-universal family that compresses at
+all — i.e. $M < n$ — has $K \ge M$.
+
+*Proof sketch.* For $x \ne y$, the number of colliding keys is a natural number
+$\le K/M$. If $K < M$ this number is $0$, so every $H_k$ is injective on a domain
+of size $n > M$: impossible. $\square$
+
+**Corollary 10.3.** $K \ge \max(M, \log_M n)$.
+
+**Theorem 10.4 (Polynomial key space).** If the code space is a $c$-th root of
+the source, $n \le M^c$, then $n \le K^c$. Hence the key space is polynomially
+large in the source, and no 2-universal family in that regime has
+$\mathrm{poly}(\log n)$ keys.
+
+**Theorem 10.5 (The bound is attained).** The inner-product family of Definition
+5.1 has exactly $K = M = p$ on a source of $n = p^2$ symbols.
+
+The hierarchy is therefore settled in the compressing regime: the encoder's
+advice must be at least as long as the codeword it produces, and one codeword's
+worth of advice is enough. Randomness cannot be eliminated, but it can be reduced
+to the minimum the counting bound permits.
+
+---
+
+## 11. Algorithms
+
+We record the three procedures whose costs are proved above.
+
+**Algorithm A (Encode).** Input: key $k$, codebook $l$, symbol $x$.
+Output: $H_k(x)$. Cost: one key evaluation.
+
+**Algorithm B (Linear unique-match decode).** Input: $k$, $l$, received $i$.
+Scan $l$, evaluating $H_k$ on each entry, counting matches and remembering the
+last one. Return the match if the count is exactly $1$, else $\bot$. Cost:
+exactly $|l|$ key evaluations. Guarantee: never returns a wrong codebook symbol.
+
+**Algorithm C (Sorted binary-search decode).** Preprocessing (once per key): sort
+$l$ by $H_k$, obtaining arrays $\mathrm{key}$ and $a$. Query: binary search for
+the received value; if found at index $m$, compare with the keys at $m-1$ and
+$m+1$; return $a(m)$ if both differ, else $\bot$. Cost: at most $\log_2|l| + 3$
+key evaluations. Guarantee: never returns a wrong symbol, under no hypothesis at
+all on $H_k$.
+
+Sorting is a one-time cost amortized over all queries with the same key, and it
+does not appear in the per-query bound. Because sorting is a permutation of the
+codebook, it changes no probability in the analysis.
+
+---
+
+## 12. Discussion
+
+### 12.1 What the relaxation does and does not buy
+
+The pairing of Theorem 3.4 with Theorem 3.6 is the cleanest statement of the
+first message: relaxing exact decoding to $(1-\varepsilon)$-decoding moves the
+counting bound by exactly $\log(1-\varepsilon)$ bits, and the relaxed bound is
+achieved. On a uniform source that is a negligible gain. *Randomness does not buy
+rate.*
+
+What it buys is *implementability*. Under the exact requirement, the encoder must
+be injective, so the code is essentially an enumeration of the alphabet. Under the
+relaxed requirement, the code may be a hash — an object with a one-line
+description, a one-field-element key, and a decoder that is a binary search. The
+gain is entirely in description length and running time. This inverts the usual
+framing of random coding, in which the rate is the headline and the algorithm an
+afterthought.
+
+### 12.2 The two-sidedness of every claim
+
+Each of the four axes has a converse, and in each case the achievability is
+within a constant of it:
+
+| Axis | Achievability | Converse | Gap |
+|---|---|---|---|
+| Rate | $\log M$ with failure $\delta + \lvert l\rvert/M$ | $\log\lvert\mathcal{C}\rvert \ge H_\infty + \log(1-\varepsilon)$ | constant in $\varepsilon,\delta$, flatness |
+| Rate with lists | failure $\delta + (\lvert l\rvert/M)^T$ | $\log\lvert\mathcal{C}\rvert + \log T \ge H_\infty + \log(1-\varepsilon)$ | exactly $\log T$ |
+| Time | $\log_2 n + 3$ | $\ge \log_2 n$ for any adaptive Boolean-query decoder | additive $3$ |
+| Randomness | $K = M = p$ realized | $K \ge \max(M, \log_M n)$ | exact |
+
+### 12.3 No silent corruption
+
+The design discipline followed throughout is that a failure must be *announced*.
+Three independent mechanisms enforce this. (i) The unique-match rule makes silent
+corruption impossible on codebook symbols, unconditionally. (ii) The
+neighbour-uniqueness test does the same for the binary-search decoder, again with
+no hypothesis on the hash. (iii) A checksum from a second universal family
+reduces off-codebook silent corruption below any target at $\log C$ extra bits,
+and the tunable threshold argument reduces it to $(1+\eta)\delta|l|/M$ for free.
+Together these give a compressor whose worst realistic behaviour is "please
+resend," not "here is a plausible wrong file."
+
+### 12.4 Why min-entropy
+
+Every converse here is a counting statement in disguise, and counting statements
+convert to probability statements through $\mu(S) \le |S| p_{\max}$. That is why
+$H_\infty$ and not $H$ appears. For sources that are far from flat this is
+conservative — Shannon entropy is the right parameter for asymptotic block coding
+— but for one-shot statements about a decoder that either does or does not get a
+particular symbol right, min-entropy is the honest parameter, and the tightness
+result of Theorem 3.6 shows it cannot be replaced by anything smaller in this
+setting.
+
+---
+
+## 13. Future directions
+
+Derived from the results above, each of the following is falsifiable: it admits
+either an explicit counterexample or a proof.
+
+**On the achieved bounds.** The exact pigeonhole bound says an everywhere-correct
+code needs $|\alpha|$ codewords. Allowing failure probability $\varepsilon$
+replaces this by $|\mathcal{C}| \ge (1-\varepsilon)/p_{\max}$, i.e.
+$\log|\mathcal{C}| \ge H_\infty + \log(1-\varepsilon)$, and the bound is attained.
+A 2-universal family gives an explicit key with failure $\le \delta + |l|/M$,
+silent corruption $\le |l|/M$, no silent corruption at all on the codebook, and a
+decoder costing exactly $|l|$ steps; the two sides differ by a factor depending
+only on $\varepsilon$, $\delta$ and flatness. The inner-product family exhibits an
+explicit compressor from $p^2$ symbols to $p$ codewords. Coordinatewise decoding
+of a $b$-block product source keeps failure at $b(\delta + |T|/m)$ while cutting
+cost from $|T|^b$ to $b|T|$. 2-universality is multiplicative under pairing, so a
+checksum drives silent corruption to $|l|/(MC)$ at $\log C$ extra bits. Returning
+$T$ candidates relaxes the counting bound by exactly $\log T$ and improves failure
+by the factor $T$.
+
+**Sub-linear decoding — resolved, in corrected form.** The natural conjecture
+asked for a family that is 2-universal *and* monotone on every codebook. That
+extra requirement turned out to be unnecessary and is the wrong way to look at the
+problem: the encoder chooses its key first and then stores the codebook sorted by
+hash value, which is a permutation of the codebook and therefore invisible to the
+collision analysis. A cost-instrumented binary search with the exact bound
+$\log_2 \mathrm{len} + 1$, plus a two-neighbour uniqueness test that forces
+abstention on a duplicate hash, gives a decoder with no silent corruption and no
+hypothesis on the hash at all, and a full scheme with failure $\le \delta +
+2|l|/M$, silent corruption $\le 2\delta|l|/M$, and cost $\le \log_2|l| + 3$.
+
+**Remaining questions.**
+
+1. *Beyond worst case in the decision-tree converse.* The converse bounds the
+   worst-case cost by $\log_2 n$. Is there a matching *average-case* converse,
+   $\mathbb{E}[\mathrm{runCost}] \ge H(\mu)$, and does a codebook sorted by hash
+   value but searched with a Huffman-shaped (rather than balanced) split achieve
+   it?
+2. *Closing the additive $3$.* Is the additive gap between $\log_2 n$ and
+   $\log_2 n + 3$ removable, e.g. by folding the neighbour test into the search
+   (a search for the boundary of the equal-key block rather than for any member of
+   it)?
+3. *Optimal thresholds beyond two regions.* The tunable derandomization uses two
+   regions and the constraint $c_1^{-1} + c_2^{-1} \le 1$. For $r$ regions the
+   analogous constraint is $\sum_i c_i^{-1} \le 1$. Which multi-region splits give
+   the best simultaneous failure/silent/list guarantees, and is the resulting
+   region of achievable triples exactly the one cut out by that constraint?
+4. *Sharp key-length hierarchy for higher independence.* The bound $K \ge M$ is
+   sharp for 2-universality. What is the sharp lower bound on $K$ for
+   $\mathrm{Indep}_T$? The polynomial family gives $K = p^{T+1}$ with $M = p$; is
+   $K \ge M^{T}$ or $K \ge M^{T+1}$ forced?
+5. *Interaction of sorting with block decoding.* Coordinatewise decoding with
+   sorted per-block codebooks costs $b(\log_2|T| + 3)$ against the converse
+   $b\log_2|T|$. Is there a joint decoder over the product codebook beating $b
+   \log_2 |T|$ by exploiting correlations between coordinates when the source is
+   not i.i.d.?
+6. *Checksums versus lists.* Both $\log C$ checksum bits and $\log T$ list bits
+   buy reliability. Is there a single quantity — a "detection–ambiguity" budget —
+   of which both are special cases, with a common converse?
+7. *Non-uniform codebooks.* All bounds here treat the codebook as a set with a
+   uniform collision budget. Weighting the codebook by $\mu$ and thresholding the
+   *weighted* collision mass should give bounds in terms of Rényi entropies
+   interpolating between $H_\infty$ and $H$; the first-moment machinery appears to
+   carry over verbatim.
+
+---
+
+## 14. Conclusion
+
+Almost-lossless compression is usually presented as a story about rate: random
+codebooks approach entropy. The results assembled here suggest a different
+emphasis. On the rate axis the relaxation is worth exactly $\log(1-\varepsilon)$
+bits, and the bound it relaxes to is attained — so as a rate technique,
+Monte-Carlo compression is nearly a no-op. Its real content is algorithmic. The
+relaxation is what permits the code to be a keyed hash function instead of an
+enumeration; the observation that the codebook may be sorted *after* the key is
+fixed is what turns the resulting decoder from an exhaustive scan into a binary
+search; and a decision-tree counting argument shows that the resulting cost,
+$\log_2 n + 3$ key evaluations, is within an additive constant of the best any
+adaptive algorithm can do. Along the way, three independent mechanisms guarantee
+that the scheme's failures announce themselves rather than corrupting data
+silently, and a pigeonhole argument applied to the key space shows that the
+encoder's randomness must be at least one codeword long — and that one codeword's
+worth suffices.
