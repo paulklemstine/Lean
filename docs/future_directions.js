@@ -48,13 +48,13 @@ window.FUTURE_DIRECTIONS = [
     "title": "Compression Research B5: PRNG-generated real-world data \u2014 detection and seed recovery"
   },
   {
-    "consumed_by_exp_id": "be7c0bd7",
+    "consumed_by_exp_id": "ef01dce6",
     "description": "**Part of:** Research plan \u2014 *Compression Beyond the Pigeonhole Bound* (Phase B, Question 2: can random number generators help?).\n\n## Research question\nPigeonhole governs *exact* decoding for *all* strings. Relax to: **decoder fails with probability \u2264 \u03b5** (almost-lossless). Random codebooks (Shannon's random-coding argument) then reach near-optimal rates \u2014 the counting bound relaxes by an \u03b5-dependent factor.\n\n## Approach\n- Constructive almost-lossless schemes with small failure probability.\n- The real obstacle is **decoder search complexity** (naive random coding is exponential), not the rate \u2014 tackle that.\n- Error detection (checksums) so failures are **never silent**.\n\n## Deliverable\nA scheme plus a proof that decode succeeds with probability \u2265 1\u2212\u03b5, and its exact decoding complexity.\n\n## Falsifiability / gate\nFor each scheme: bound on P(failure) and an explicit decoder-complexity figure. No silent corruption allowed.\n\n**Milestone:** M9.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_1368",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
@@ -139,17 +139,17 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle 0cf95d8d (Q=0.880), which proved 101 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The range `k \u2264 N` cannot be shortened: `(0,2)` and `(1,1)` are bounded by `2`,\n    agree for `k \u2264 1`, and have different distributions (`powerSums_not_determined_of_lt`).\n    Exhaustive search (`ComputationalEvidence.md`, \u00a78) finds `0` such pairs at `K = N` and many at\n    `K = N \u2212 1`.",
+    "description": "Building on cycle 11c9ff9f (Q=0.860), which proved 90 theorems in Logic. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For `k \u2264 |X|` the orbit count splits\n    along patterns, `#(X^k/G) = \u03a3_P m_P` (`sum_patternMultiplicity`), with `m_P \u2265 1` for every\n    pattern (`one_le_patternMultiplicity`), and the action is `k`-transitive **iff** every fibre\n    is a singleton (`patternMultiplicity_eq_one_iff`).",
     "domains": [
-      "Probability"
+      "Logic"
     ],
-    "id": "push_0cf95d8d_c91e6793",
+    "id": "push_11c9ff9f_3d313f4e",
     "priority_score": 0.95,
     "research_mode": "team",
-    "source_exp_id": "0cf95d8d",
+    "source_exp_id": "11c9ff9f",
     "status": "available",
-    "timestamp": "2026-08-18T01:51:35.956324+00:00",
-    "title": "Deepening: Sharpness"
+    "timestamp": "2026-08-18T03:08:54.625292+00:00",
+    "title": "Deepening: Fibre spectrum (Conjecture E, first half, closed)"
   },
   {
     "consumed_by_exp_id": "",
@@ -1797,26 +1797,12 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle 713730e2 (Q=0.787), which proved 47 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions\n\n## 1. Uniform half-canonical existence\n\n**Conjecture.** For every integer `k \u2265 5`, there is a threshold `N\u2080(k)` such that every simple connected `k`-regular graph on at least `N\u2080(k)` vertices has a divisor of degree `g-1` and rank at least `k-1`.\n\nThe key insight is that regular",
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "push_713730e2_75cbee46",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "713730e2",
-    "status": "available",
-    "timestamp": "2026-08-06T07:00:49.176626+00:00",
-    "title": "Deepening: **Conjecture.** For every integer `k \u2265 5`, there is a threshold `N\u2080(k)` such tha"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Building on cycle a65c164b (Q=0.786), which proved 78 theorems in Algebra. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize Ext and Tor functors in Lean 4. Prove the long exact sequence in cohomology. Construct projective and injective resolutions for concrete modules. Prove the universal coefficient theorem for homology.",
     "domains": [
       "Algebra"
     ],
     "id": "push_a65c164b_33b89965",
-    "priority_score": 0.8864299999999999,
+    "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "a65c164b",
     "status": "available",
@@ -4583,6 +4569,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Moonshot: Brain-Computer Interface Mathematics \u2014 Neural Coding Theorems"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle 11c9ff9f (Q=0.860) proved 90 theorems in Logic but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: For `k \u2264 |X|` the orbit count splits\n    along patterns, `#(X^k/G) = \u03a3_P m_P` (`sum_patternMultiplicity`), with `m_P \u2265 1` for every\n    pattern (`one_le_patternMultiplicity`), and the action is `k`-tr",
+    "domains": [
+      "Logic"
+    ],
+    "id": "sorry_fill_11c9ff9f_c1dbe19e",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "11c9ff9f",
+    "status": "available",
+    "timestamp": "2026-08-18T03:08:55.242135+00:00",
+    "title": "Close Proofs: Fibre spectrum (Conjecture E, first half, closed)"
   },
   {
     "consumed_by_exp_id": "",
@@ -9847,6 +9847,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-17T03:14:05.187824+00:00",
     "title": "ArXiv paper: Shimura curves of discriminant 14 and 15 and associated Heun Functions"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Matrix group $\u039b$-distributions' and formalize its key results. Abstract: The $\u039b$-distribution of a compact matrix group is an invariant in algebraic probability theory that was recently introduced to study zero distributions of function field $L$-functions. It is encoded by the $\u03c3$-moment generating function, a generalization of the Molien series of classical invariant theory. In this work, we compute the $\u03c3$-moment generating functions of finite matrix groups in many new cases. In particular, we compute the asymptotic $\u039b$-distributions for the infinite families of Weyl reflection groups of types $B_n/C_n$ and $D_n$, complementing the previously known case of reflection groups of type $A_n$, i.e., symmetric groups. We also establish a general result relating the shapes of $\u03c3$-moment generating functions to the distributions of associated classical random variables, explaining a previous ad hoc observation for independent Gaussians arising from traces of powers on compact classical groups.",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_1482",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2608.16796v1",
+    "status": "available",
+    "timestamp": "2026-08-18T03:09:24.432685+00:00",
+    "title": "ArXiv paper: Matrix group $\u039b$-distributions"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'A Local Central Limit Theorem for Clique Counts in Sparse Random Graphs' and formalize its key results. Abstract: Let $X_H$ denote the number of copies of a fixed graph $H$ in $G_{n, p}$. Gilmer and Kopparty conjectured that $X_H$ satisfies a local central limit theorem (LCLT) provided that $H$ is connected, $p \\gg n^{-1/m(H)}$, and $n^2 (1-p) \\gg 1$, where $m(H)$ is the maximum density. Following the work of Berkowitz, Sah and Sawhney confirmed this conjecture for every constant $p$, leaving the regime where $p=o(1)$ open. In this regime, the only case addressed in the literature is when $H=K_3$, where, in a recent paper, Ara\u00fajo and Mattos confirmed the conjecture for $p \\in (4n^{-1/2}, 1/2)$. This, together with a general result of R\u00f6llin and Ross, essentially settles the conjecture for the triangle. We generalise these results by showing that an LCLT holds for $H = K_r$ (for any fixed $r \\ge 3$) in the regime $n^{-1/m(H)}\\ll p\\leq 1/2$, essentially settling the conjecture for cliques.",
+    "domains": [
+      "Combinatorics",
+      "Computation"
+    ],
+    "id": "fd_1483",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2608.16882v1",
+    "status": "available",
+    "timestamp": "2026-08-18T03:09:27.702473+00:00",
+    "title": "ArXiv paper: A Local Central Limit Theorem for Clique Counts in Sparse Random Graphs"
   },
   {
     "consumed_by_exp_id": "",
@@ -19352,6 +19382,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The first version of the soundness theorem was stated only for\ntypical inputs and was therefore useless as a \"no silent corruption\" guarantee;\nthe honest fix was the fibrewise (conditional-independence) counting theorem.\nAn early attempt to bound the failure probability of a *fixed* codebook by the\naverage failed: derandomisation only yields a codebook whose bad set is small,\nnever empty \u2014 that is exactly the converse bound biting.",
+    "domains": [
+      "Computation"
+    ],
+    "id": "fd_1477",
+    "priority_score": 0.5066521739130435,
+    "research_mode": "team",
+    "source_exp_id": "be7c0bd7",
+    "status": "available",
+    "timestamp": "2026-08-18T03:09:00.494591+00:00",
+    "title": "The first version of the soundness theorem was stated only for"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Let `t k = tr(M\u2082^k)` (recurrence `t(k+3) = 5t(k+2) + 5t(k+1) \u2212 t(k)`,\n`t 0,\u2026,t 3 = 3, 5, 35, 197`).  There is **no odd composite** `N` with `gcd(N, 2) = 1`\nsatisfying simultaneously `t N \u2261 5 (mod N)` and `t (N+1) \u2261 t (N\u22121) (mod N)`.  (Dropping the\nsecond condition, pseudoprimes do exist; the conjecture is that the two-sided test is\nCarmichael-free, as for the Baillie\u2013PSW combination.)",
     "domains": [
       "NumberTheory"
@@ -19538,15 +19582,14 @@ window.FUTURE_DIRECTIONS = [
     "title": "All the surrounding infrastructure now exists in this development (primitive root"
   },
   {
-    "consumed_by_exp_id": "11c9ff9f",
+    "consumed_by_exp_id": "",
     "description": "For `k \u2264 |X|` the orbit count splits\n    along patterns, `#(X^k/G) = \u03a3_P m_P` (`sum_patternMultiplicity`), with `m_P \u2265 1` for every\n    pattern (`one_le_patternMultiplicity`), and the action is `k`-transitive **iff** every fibre\n    is a singleton (`patternMultiplicity_eq_one_iff`).",
     "domains": [],
     "id": "fd_1440",
-    "phase": "A",
     "priority_score": 0.4153333333333333,
     "research_mode": "team",
     "source_exp_id": "286b3a0e",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-17T13:54:07.301598+00:00",
     "title": "Fibre spectrum (Conjecture E, first half, closed)"
   },
@@ -20191,5 +20234,115 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-18T01:51:24.243279+00:00",
     "title": "S5 (the intermediate plateau)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "What follows are the conjectures the analysis stage extracted, in decreasing order of expected\nimpact.  Each is falsifiable in the present formal setting.",
+    "domains": [],
+    "id": "fd_1472",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "11c9ff9f",
+    "status": "available",
+    "timestamp": "2026-08-18T03:08:39.636525+00:00",
+    "title": "What follows are the conjectures the analysis stage extracted, in decreasing order of expected\nimpact."
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "*For finite `G`-sets `X`, `Y` (with `G`, `H` finite groups) the following are equivalent:\n(a) the spectra agree, `t_r(G,X) = t_r(H,Y)` for all `r`; (b) the orbit counts agree,\n`#(X^k/G) = #(Y^k/H)` for all `k`; (c) the \"moment vectors\" agree,\n`(\u03a3_g |X^g|^k)/|G| = (\u03a3_h |Y^h|^k)/|H|` for all `k`.*",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_1473",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "11c9ff9f",
+    "status": "available",
+    "timestamp": "2026-08-18T03:08:39.885381+00:00",
+    "title": "For finite `G`-sets `X`, `Y` (with `G`, `H` finite groups) the following are equivalent:\n(a) the spectra agree, `t_r(G,X) = t_r(H,Y)` for all `r`; (b) the orbit counts agree,\n`#(X^k/G) = #(Y^k/H)` for"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "*If the action is not `r`-transitive but is `(r\u22121)`-transitive and `r + 1 \u2264 |X|`, then\n`t_{r+1} > t_r`; more boldly, `t_{r+1} \u2265 t_r + (t_r \u2212 1)`, i.e. the defect at least doubles once\nit appears.*",
+    "domains": [],
+    "id": "fd_1474",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "11c9ff9f",
+    "status": "available",
+    "timestamp": "2026-08-18T03:08:40.124663+00:00",
+    "title": "If the action is not `r`-transitive but is `(r\u22121)`-transitive and `r + 1 \u2264 |X|`, then\n`t_{r+1} > t_r`; more boldly, `t_{r+1} \u2265 t_r + (t_r \u2212 1)`, i.e."
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "*For every finite action the spectrum is log-concave: `t_r\u00b2 \u2265 t_{r\u22121}\u00b7t_{r+1}` for\n`1 \u2264 r < |X|`.*",
+    "domains": [],
+    "id": "fd_1475",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "11c9ff9f",
+    "status": "available",
+    "timestamp": "2026-08-18T03:08:40.358199+00:00",
+    "title": "For every finite action the spectrum is log-concave: `t_r\u00b2 \u2265 t_{r\u22121}\u00b7t_{r+1}` for\n`1 \u2264 r < |X|`."
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "*For a graded `G`-set `Y = \u2a06_n Y_n` the generating function `\u03a3_n t_r(Y_n) q^n` is a rational\nfunction of `q` whenever the grades are eventually `r`-transitive, with denominator dividing\n`(1\u2212q)^{r+1}`.*",
+    "domains": [],
+    "id": "fd_1476",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "11c9ff9f",
+    "status": "available",
+    "timestamp": "2026-08-18T03:08:40.595069+00:00",
+    "title": "For a graded `G`-set `Y = \u2a06_n Y_n` the generating function `\u03a3_n t_r(Y_n) q^n` is a rational\nfunction of `q` whenever the grades are eventually `r`-transitive, with denominator dividing\n`(1\u2212q)^{r+1}`."
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Both endpoints of the trade-off are now formal theorems in this\nrepository (`decode_cost` + `failSet_prob_le` at one end,\n`blockDecode_cost` + `blockFail_prob_le` at the other); only the interpolation\nand its converse are missing.",
+    "domains": [],
+    "id": "fd_1478",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "be7c0bd7",
+    "status": "available",
+    "timestamp": "2026-08-18T03:09:00.743392+00:00",
+    "title": "Both endpoints of the trade-off are now formal theorems in this"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The Bonferroni machinery\n(`card_sum_le_card_biUnion_add_offDiag`, `card_doubleCollision_mul_le`) is\nalready formalised for arbitrary finite families, so the conjecture is a\nstatement about which *marginals* are fed into it.",
+    "domains": [],
+    "id": "fd_1479",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "be7c0bd7",
+    "status": "available",
+    "timestamp": "2026-08-18T03:09:00.981652+00:00",
+    "title": "The Bonferroni machinery"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "o(1))/K`; i.e. the universal theorem is tight, and error detection\ncosts exactly `log\u2082 K` bits \u2014 never fewer.",
+    "domains": [],
+    "id": "fd_1480",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "be7c0bd7",
+    "status": "available",
+    "timestamp": "2026-08-18T03:09:01.216627+00:00",
+    "title": "o(1))/K`; i.e. the universal theorem is tight, and error detection"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The upper bound is proved with *no* hypothesis on the inner decoder,\nso a matching lower bound would completely settle the \"no silent corruption\"\ngate of this milestone.",
+    "domains": [],
+    "id": "fd_1481",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "be7c0bd7",
+    "status": "available",
+    "timestamp": "2026-08-18T03:09:01.453027+00:00",
+    "title": "The upper bound is proved with *no* hypothesis on the inner decoder,"
   }
 ];

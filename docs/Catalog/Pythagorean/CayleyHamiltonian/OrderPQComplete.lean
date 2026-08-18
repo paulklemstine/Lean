@@ -145,7 +145,7 @@ private theorem isHamiltonian_of_card_eq_prime_mul_prime_aux {p q : ℕ} (hp : p
       simpa using this
     exact hyx (by rw [hyeq]; exact Subgroup.pow_mem _ (Subgroup.mem_zpowers x) m)
   exact hham (isHamiltonian_of_coset_pair (a := a) (x := x) (y := y) (A := y * (x ^ m)⁻¹)
-    hq hq2 hp3 hpodd hm0 hmlt hxS hyS ha hordx hcop hnormal hcoset hA1 (by group) hcard')
+    hq hq2 hpodd hm0 hmlt hxS hyS ha hordx hcop hnormal hcoset hA1 (by group) hcard')
 
 /-- **The order-`pq` theorem.**  For distinct primes `p` and `q`, every connected Cayley graph
 of a group of order `pq` is hamiltonian.  No restriction whatsoever is placed on the connection

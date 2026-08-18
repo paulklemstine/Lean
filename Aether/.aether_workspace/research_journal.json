@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "f0c2b697",
-      "domain": "Logic",
-      "key_insight": "# FUTURE DIRECTIONS — after NET-25 (DENSE-FINAL-STEP-IS-THE-CURE)\n\nThe three catalog files\n(`Catalog/Logic/DenseFinalStepCarryChain.lean`,\n`Catalog/Logic/DenseFinalStepBoundaryConditioning.lean`,\n`Cat",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 41,
-      "timestamp": "2026-08-15T22:46:35",
-      "title": "NET-25 (paper 69): DENSE-FINAL-STEP-IS-THE-CURE — the stateful-carry-cell cure was the dense EOS (fi"
-    },
-    {
       "cycle_id": "9c680c24",
       "domain": "Tropical",
       "key_insight": "# Future Directions — tropical theory of boundary-token width\n\nDerived from the results in `Catalog/Tropical/NeuralNetworks/EOSWidth*.lean`\n(analysis stage: what survived, what failed, and why).\n\n## W",
@@ -499,19 +489,19 @@
       "theorem_count": 90,
       "timestamp": "2026-08-18T03:08:53",
       "title": "Fibre spectrum (Conjecture E, first half, closed)"
+    },
+    {
+      "cycle_id": "be7c0bd7",
+      "domain": "Geometry",
+      "key_insight": "# Future directions — almost-lossless compression beyond the pigeonhole bound\n\nDerived from what survived and what broke in this cycle\n(`Catalog/Geometry/AlmostLossless*.lean`).\n\n**What survived.**  (",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 84,
+      "timestamp": "2026-08-18T03:09:07",
+      "title": "Compression Research B3: Almost-lossless / Monte Carlo compression"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "768360e4",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions\n\nBold, falsifiable conjectures arising from the results proved in\n\n* `Catalog/Bridges/DerivedHomotopyBridge.lean` — homotopy/derived-category hom-groups\n  out of a single complex c",
-      "quality_score": 0.6509097115384616,
-      "sorry_count": 0,
-      "theorem_count": 130,
-      "timestamp": "2026-08-07T04:27:51",
-      "title": "Bridge: Homological Algebra Connecting Algebra and Topology"
-    },
     {
       "cycle_id": "b95b0e68",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 90,
       "timestamp": "2026-08-18T03:08:53",
       "title": "Fibre spectrum (Conjecture E, first half, closed)"
+    },
+    {
+      "cycle_id": "be7c0bd7",
+      "domain": "Geometry",
+      "key_insight": "# Future directions — almost-lossless compression beyond the pigeonhole bound\n\nDerived from what survived and what broke in this cycle\n(`Catalog/Geometry/AlmostLossless*.lean`).\n\n**What survived.**  (",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 84,
+      "timestamp": "2026-08-18T03:09:07",
+      "title": "Compression Research B3: Almost-lossless / Monte Carlo compression"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "507d1ef0",
-      "domain": "Cryptography",
-      "name": "lies",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "507d1ef0",
-      "domain": "Cryptography",
-      "name": "mem_shiftLattice",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "525aecde",
-      "domain": "Shared",
-      "name": "on",
-      "quality": 0.84
-    },
     {
       "cycle_id": "525aecde",
       "domain": "Shared",
@@ -2803,9 +2785,27 @@
       "domain": "Logic",
       "name": "descFactorial_le_card_of_kTransitive",
       "quality": 0.86
+    },
+    {
+      "cycle_id": "be7c0bd7",
+      "domain": "Geometry",
+      "name": "blockDecode_cost",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "be7c0bd7",
+      "domain": "Geometry",
+      "name": "blockDecode_blocks",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "be7c0bd7",
+      "domain": "Geometry",
+      "name": "blockDecode_never_wrong",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-18T03:08:53",
+  "last_updated": "2026-08-18T03:09:07",
   "open_questions": [
     {
       "context": "- Every main theorem below is `sorry`-free (checked).; `RhoDom.dominant_singleton_iff`, so it is not a self-contained restatement.  No `sorry`, no; `RhoDom.dominant_singleton_iff`, so it is not a self",
@@ -3393,12 +3393,6 @@
     ],
     "Geometry": [
       {
-        "cycle_id": "b2707824",
-        "quality": 0.73319,
-        "theorems": 182,
-        "title": "Hyperbolic-Pythagorean-Geodesics: Sub-Linear Trajectory Factorization in Poincar"
-      },
-      {
         "cycle_id": "c29c7fbe",
         "quality": 0.657274625691032,
         "theorems": 163,
@@ -3451,6 +3445,12 @@
         "quality": 0.82,
         "theorems": 77,
         "title": "Derived from the current cycle's findings on Hardy–Ramanujan taxicab numbers."
+      },
+      {
+        "cycle_id": "be7c0bd7",
+        "quality": 0.82,
+        "theorems": 84,
+        "title": "Compression Research B3: Almost-lossless / Monte Carlo compression"
       }
     ],
     "Logic": [

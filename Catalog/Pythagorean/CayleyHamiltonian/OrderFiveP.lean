@@ -35,7 +35,7 @@ theorem isHamiltonian_of_square_coset_pair {a x y A : G} {q k : ℕ}
     (hA : A ∈ Subgroup.zpowers a) (hA1 : A ≠ 1) (hyx : y = A * x ^ 2)
     (hcard : Fintype.card G = q * k) :
     (cayleyGraph G S).IsHamiltonian :=
-  isHamiltonian_of_coset_pair hq hq2 (by omega) hkodd (by norm_num) (by omega) hx hy horda
+  isHamiltonian_of_coset_pair hq hq2 hkodd (by norm_num) (by omega) hx hy horda
     hordx hcop hnormal hA hA1 hyx hcard
 
 /-- **All connected Cayley graphs of a group of order `5q` (`q` a prime other than `5`) are
