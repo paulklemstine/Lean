@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "c798c801",
-      "domain": "Computation",
-      "key_insight": "# Future Directions — Topology of the Prime Point Cloud\n\nThe cycle just completed tested the \"primes look Poisson, and their `H₁` encodes twin\nprimes\" conjecture and found both halves false, replacing",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 110,
-      "timestamp": "2026-08-17T14:45:26",
-      "title": "Persistent Homology of Prime Numbers: The Topology of Arithmetic"
-    },
-    {
       "cycle_id": "7ee9f549",
       "domain": "MachineLearning",
       "key_insight": "# Future directions — PRNG-generated data: detection and seed recovery (B5)\n\nDerived from the verified results in `Catalog/MachineLearning/`:\n`PRNGSeedRecoveryLFSR.lean`, `PRNGBerlekampMassey.lean`,\n`",
@@ -499,19 +489,19 @@
       "theorem_count": 621,
       "timestamp": "2026-08-19T15:46:41",
       "title": "reinforcement learning"
+    },
+    {
+      "cycle_id": "6bc62e41",
+      "domain": "Applications",
+      "key_insight": "# Future directions\n\nFive falsifiable conjectures growing out of this cycle.  Each is stated against the\ndefinitions now in `Catalog/Applications/PoissonSummationConverse.lean`,\n`Catalog/Applications/",
+      "quality_score": 0.88,
+      "sorry_count": 0,
+      "theorem_count": 70,
+      "timestamp": "2026-08-19T15:46:51",
+      "title": "Both sides of the identity are already available as Lean theorems"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "48492a97",
-      "domain": "Combinatorics",
-      "key_insight": "# Future directions\n\nFive falsifiable conjectures distilled from what survived (and what failed) in this cycle.\nThroughout, `F` is a finite field with `q = #F` elements and odd characteristic,\n`χ = qu",
-      "quality_score": 0.71196,
-      "sorry_count": 0,
-      "theorem_count": 92,
-      "timestamp": "2026-08-09T14:09:21",
-      "title": "Formalizing Modular Bounds on Elliptic Curves over Finite Fields"
-    },
     {
       "cycle_id": "1f345ab3",
       "domain": "Tropical",
@@ -2501,21 +2491,19 @@
       "theorem_count": 621,
       "timestamp": "2026-08-19T15:46:41",
       "title": "reinforcement learning"
+    },
+    {
+      "cycle_id": "6bc62e41",
+      "domain": "Applications",
+      "key_insight": "# Future directions\n\nFive falsifiable conjectures growing out of this cycle.  Each is stated against the\ndefinitions now in `Catalog/Applications/PoissonSummationConverse.lean`,\n`Catalog/Applications/",
+      "quality_score": 0.88,
+      "sorry_count": 0,
+      "theorem_count": 70,
+      "timestamp": "2026-08-19T15:46:51",
+      "title": "Both sides of the identity are already available as Lean theorems"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "16c8a71d",
-      "domain": "Pythagorean",
-      "name": "decode_encode",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "16c8a71d",
-      "domain": "Pythagorean",
-      "name": "encode_decode",
-      "quality": 0.82
-    },
     {
       "cycle_id": "16c8a71d",
       "domain": "Pythagorean",
@@ -2803,9 +2791,21 @@
       "domain": "NumberTheory",
       "name": "requires",
       "quality": 0.9
+    },
+    {
+      "cycle_id": "6bc62e41",
+      "domain": "Applications",
+      "name": "card_poissonPairs",
+      "quality": 0.88
+    },
+    {
+      "cycle_id": "6bc62e41",
+      "domain": "Applications",
+      "name": "isPoissonPair_prime_card",
+      "quality": 0.88
     }
   ],
-  "last_updated": "2026-08-19T15:46:41",
+  "last_updated": "2026-08-19T15:46:51",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hn2⟩)",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "c56f6a79",
-        "quality": 0.71215,
-        "theorems": 43,
-        "title": "Diophantine-Lattice: Spectral Bounds on Non-Homogeneous Quadratic Forms"
-      },
-      {
         "cycle_id": "20cf0514",
         "quality": 0.82,
         "theorems": 55,
@@ -3141,6 +3135,12 @@
         "quality": 0.87,
         "theorems": 55,
         "title": "~~`minimal_near_miss_size`~~ — RESOLVED in cycle 3: among all near-miss pairs at"
+      },
+      {
+        "cycle_id": "6bc62e41",
+        "quality": 0.88,
+        "theorems": 70,
+        "title": "Both sides of the identity are already available as Lean theorems"
       }
     ],
     "Bridges": [
