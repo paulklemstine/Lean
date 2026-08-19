@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "7199d5c0",
-      "domain": "MachineLearning",
-      "key_insight": "# Future directions — price of universality (Phase A, Question 1)\n\nFormal results of this cycle: `Catalog/MachineLearning/UniversalRedundancy/`\n(`Core`, `Types`, `Markov`, `Capacity`, `Bernoulli`, `Se",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 84,
-      "timestamp": "2026-08-17T19:42:56",
-      "title": "Compression Research A1: Price of universality — minimax redundancy of universal decompressors"
-    },
-    {
       "cycle_id": "97b1c345",
       "domain": "Probability",
       "key_insight": "# Future directions — seed-ensemble rung theory\n\n## Where the thread stands\n\nAn earlier cycle built the general-$n$ theory of the rung distribution function\n$R_n(m,p)$ — the binomial upper tail that a",
@@ -499,19 +489,19 @@
       "theorem_count": 68,
       "timestamp": "2026-08-19T17:41:12",
       "title": "Pole-order obstruction"
+    },
+    {
+      "cycle_id": "843dbe86",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions — scan schemes after the exact optimum\n\nThe cycle just closed produced, with zero `sorry`s:\n\n* honest uniqueness decoding through an explicitly constructed **intra-bucket index**",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 62,
+      "timestamp": "2026-08-19T17:41:23",
+      "title": "All the moving parts — honest uniqueness decoding"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "08217b91",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Singmaster multiplicity in Pascal's triangle\n\nDerived from the verified results in `Catalog/Novelty/`:\n`SingmasterSmoothness.lean`, `SingmasterSharpLog.lean`, `SingmasterSmoothHi",
-      "quality_score": 0.746255,
-      "sorry_count": 0,
-      "theorem_count": 85,
-      "timestamp": "2026-08-09T15:02:31",
-      "title": "occurrences of certain numbers in pascals triangle"
-    },
     {
       "cycle_id": "e870e995",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 68,
       "timestamp": "2026-08-19T17:41:12",
       "title": "Pole-order obstruction"
+    },
+    {
+      "cycle_id": "843dbe86",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions — scan schemes after the exact optimum\n\nThe cycle just closed produced, with zero `sorry`s:\n\n* honest uniqueness decoding through an explicitly constructed **intra-bucket index**",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 62,
+      "timestamp": "2026-08-19T17:41:23",
+      "title": "All the moving parts — honest uniqueness decoding"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "fbb9718e",
-      "domain": "Pythagorean",
-      "name": "therefore",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "fbb9718e",
-      "domain": "Pythagorean",
-      "name": "requires",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "af68ac83",
-      "domain": "Applications",
-      "name": "vandermonde_kernel_weighted",
-      "quality": 0.87
-    },
     {
       "cycle_id": "aa4eb9d3",
       "domain": "Tropical",
@@ -2803,9 +2785,27 @@
       "domain": "Cryptography",
       "name": "coeff_four_prod_of_linear_zero",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "843dbe86",
+      "domain": "Algebra",
+      "name": "mem_fiber",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "843dbe86",
+      "domain": "Algebra",
+      "name": "scanList_nodup",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "843dbe86",
+      "domain": "Algebra",
+      "name": "mem_scanList",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-19T17:41:12",
+  "last_updated": "2026-08-19T17:41:23",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hn2⟩)",
@@ -3021,12 +3021,6 @@
   "research_threads": {
     "Algebra": [
       {
-        "cycle_id": "0dad7f8d",
-        "quality": 0.627125,
-        "theorems": 74,
-        "title": "ArXiv paper: The chain replacement of a poset flow"
-      },
-      {
         "cycle_id": "ea50968d",
         "quality": 0.627125,
         "theorems": 81,
@@ -3079,6 +3073,12 @@
         "quality": 0.72,
         "theorems": 7,
         "title": "ArXiv paper: Kleber's conjecture and complementary products of symmetric functio"
+      },
+      {
+        "cycle_id": "843dbe86",
+        "quality": 0.82,
+        "theorems": 62,
+        "title": "All the moving parts — honest uniqueness decoding"
       }
     ],
     "Applications": [

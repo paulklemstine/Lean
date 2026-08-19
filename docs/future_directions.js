@@ -79,6 +79,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 0f708106 (Q=0.860), which proved 109 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Both ingredients are already machine-checked (the sharp bound and 1-sum closure),\nso the conjecture reduces to an equality analysis of an existing induction rather than to new\ntheory.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_0f708106_11968095",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "0f708106",
+    "status": "available",
+    "timestamp": "2026-08-19T17:41:03.610882+00:00",
+    "title": "Deepening: Both ingredients are already machine-checked (the sharp bound and 1-sum closure)"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 4bf66c09 (Q=0.880), which proved 41 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Chebotarev's theorem that every square submatrix of the `p \u00d7 p` DFT matrix\nis nonsingular, which in turn follows from a resultant/Vandermonde computation over `Q(\u03b6_p)`\nusing the irreducibility of the `p`-th cyclotomic polynomial \u2014 machinery that Mathlib already\ncontains (`Polynomial.cyclotomic_irred",
     "domains": [
       "Novelty"
@@ -818,6 +832,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-17T07:17:22.608319+00:00",
     "title": "Deepening: ArXiv paper: A Fourier-analytic Uniqueness Theorem for Lattice-point Enumerators"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 843dbe86 (Q=0.820), which proved 62 theorems in Algebra. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: All the moving parts \u2014 honest uniqueness decoding\n(`honest_scanCode`), exact cost accounting (`ScanScheme.decodeCost_eq`) and the\nexact `\u03b5`-pigeonhole optimum \u2014 are formalised, so the conjecture reduces to\nconstructing the intra-bucket index and re-running the same failure analysis.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "push_843dbe86_ba024774",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "843dbe86",
+    "status": "available",
+    "timestamp": "2026-08-19T17:41:23.334138+00:00",
+    "title": "Deepening: All the moving parts \u2014 honest uniqueness decoding"
   },
   {
     "consumed_by_exp_id": "",
@@ -1718,48 +1746,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-13T03:21:12.748859+00:00",
     "title": "Stein-Method: Quantitative Normal Approximation Bounds"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 7299371d (Q=0.780), which proved 59 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Attacks the Erd\u0151s-Graham conjecture that every finite coloring of the integers greater than one admits a subset whose reciprocals sum to exactly one, formalizing the combinatorial structure of Egyptian fraction decompositions and the known proofs for small colorings.",
-    "domains": [
-      "Combinatorics"
-    ],
-    "id": "push_7299371d_2b9368c3",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "7299371d",
-    "status": "available",
-    "timestamp": "2026-08-19T14:54:23.424891+00:00",
-    "title": "Deepening: Erdos-Graham: Exact Coverings by Distinct Unit Fractions"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 0fbfba35 (Q=0.778), which proved 13 theorems in Algebra. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Investigate the ArXiv paper 'A universal leading-residue formula for Witten zeta functions' and formalize its key results. Abstract: Let $\u03a6$ be an irreducible crystallographic root system of rank $r$, with Coxeter number $h$, Weyl group $W$, Cartan matrix $C_\u03a6$, and invariant degrees $2=d_1\\leq\\cdot",
-    "domains": [
-      "Algebra"
-    ],
-    "id": "push_0fbfba35_1897667b",
-    "priority_score": 0.8781,
-    "research_mode": "team",
-    "source_exp_id": "0fbfba35",
-    "status": "available",
-    "timestamp": "2026-07-31T10:11:09.707032+00:00",
-    "title": "Deepening: ArXiv paper: A universal leading-residue formula for Witten zeta functions"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 18622a4a (Q=0.775), which proved 22 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the conjecture that e^a * log(b) is a universal primitive for real computation. Conjecture: Every computable real function f: R^n -> R can be expressed as a finite composition of e^x, log(x), constants, and field operations. Test: prove this for the class of elementary functions (sin, cos,",
-    "domains": [
-      "Applications"
-    ],
-    "id": "push_18622a4a_221fd965",
-    "priority_score": 0.87537,
-    "research_mode": "team",
-    "source_exp_id": "18622a4a",
-    "status": "available",
-    "timestamp": "2026-08-02T06:55:55.345245+00:00",
-    "title": "Deepening: EML Single Operator Church-Turing Thesis"
   },
   {
     "consumed_by_exp_id": "",
@@ -2714,7 +2700,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Fractal Topology: Hausdorff Dimension as a Topological Invariant"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2e28602b",
     "description": "Neural field equations model macroscopic brain dynamics as PDEs on cortical surfaces. The cortical surface is topologically a sphere with cortical folds. Use inverse stereographic projection to transform neural field PDEs on S^2 into PDEs on R^2 with a conformal weight. Define a stereographic neural field as a function u: S^n to R satisfying Delta_{S^n} u = f(u) where Delta_{S^n} is the Laplace-Beltrami operator on the sphere. Under inverse stereographic projection, this becomes a PDE on R^n with a conformally modified Laplacian. Conjecture: The neural field equation on S^2 with Mexican-hat connectivity has exactly 2N+1 stable pattern solutions for interaction radius r, where N = floor(1/r). Under inverse stereographic projection, these correspond to N-fold symmetric patterns on R^2 that decay at infinity. The 2N+1 count comes from the representation theory of SO(3): each pattern of degree l has 2l+1 rotational variants, and the Mexican-hat kernel selects l = N. Test: prove the existence of 2N+1 patterns for r = 1/k (k=1,2,3) by constructing them as stereographic projections of spherical harmonics. Impact: a geometric theory of neural pattern formation with provable pattern counts, enabling predictions about visual hallucination patterns.",
     "domains": [
       "Geometry",
@@ -2722,10 +2708,11 @@ window.FUTURE_DIRECTIONS = [
       "Physics"
     ],
     "id": "seed_090",
+    "phase": "A",
     "priority_score": 0.86,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Inverse Stereographic Neural Field Theory"
   },
@@ -19294,6 +19281,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "* colourability is closed under 1-sums and under `m`-fold star amalgams;\n* `\u03c7` and `\u03c9` of an amalgam are the maxima over the parts, hence weak perfection (`\u03c7 = \u03c9`) is\n  amalgam-closed;\n* the sharp pigeonhole bound `n \u2264 k\u00b7\u03b1` is an equality **iff** every colour class is a maximum\n  independent set (equality analysis of the catalog induction);\n* independence is superadditive with defect `m - 1`, giving `i(G) \u2265 r - (m-1)(1-r)/n`;\n* the bound is attained for every `m` by the amalgam of `m` copies of `K\u2088 - e`, whose ratio is\n  `(m+1)/(7m+1) \u2192 1/7`; in particular the threshold property `i \u2265 1/4` is **not** amalgam\n  closed;\n* **the `1/7` barrier** (Conjecture 1 of the first pass, now a theorem in\n  `Catalog/Novelty/StarAmalgamSeventhBarrier.lean`): every star amalgam whose sides are\n  non-degenerate and carry density `\u2265 1/4` satisfies `i(G) \u2265 1/7`, and `1/7` is optimal.",
+    "domains": [],
+    "id": "fd_1619",
+    "priority_score": 0.42987499999999995,
+    "research_mode": "team",
+    "source_exp_id": "0f708106",
+    "status": "available",
+    "timestamp": "2026-08-19T17:40:50.592100+00:00",
+    "title": "colourability is closed under 1-sums and under `m`-fold star amalgams;\n* `\u03c7` and `\u03c9` of an amalgam are the maxima over the parts, hence weak perfection (`\u03c7 = \u03c9`) is\n  amalgam-closed;\n* the sharp pigeo"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The three-fold Bonferroni term: `\u2211_{i<j<k} Prob (E\u1d62 \u2229 E\u2c7c \u2229 E\u2096) = C(m,3)(1-p)^{3b}`\n   for disjoint windows, upgrading `prob_failSet_ge_half` to a bound valid without the\n   smallness hypothesis `m (1-p)^b \u2264 1`.  (`(C2a)`, the two-fold case, is now proved as\n   `Prob_badWindow_inter`.)\n2. **(C3a)** `diam (mmul A A) = 0` iff there exist two states `b\u2081, b\u2082` with\n   `A a b\u2081 + A b\u2081 c = 0` for all `a, c` \u2014 the two-step scrambling criterion.\n3. **(C1a)** The first-occurrence decomposition\n   `failSet n b = \u2a06_i (badWindow n i b \\ \u22c3_{j<i} badWindow n j b)` is a *disjoint* union,\n   giving `Prob p (failSet n b) = \u2211_i Prob p (first bad window at i)` and hence the sharp\n   constant of Conjecture 1.",
     "domains": [],
     "id": "fd_1564",
@@ -19339,6 +19338,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-18T19:41:03.927928+00:00",
     "title": "The qualitative half is now proved: `C\u209b = 1` iff the class is degenerate\n(`shtarkovSum_eq_one_iff`), so any genuinely new source makes the price strictly\npositive, and the price is monotone in the cla"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formal target: for `r \u2208 (0, 1]`, if every side of a star amalgam `G` carries an independent set\nof relative density `\u2265 r` (and has at least two vertices), then `i(G) \u2265 r/(2-r)`; and for every\n`\u03b5 > 0` some amalgam of parts of density exactly `r` has `i(G) < r/(2-r) + \u03b5`.  Specialising\n`r = 1/k` predicts the floor `1/(2k-1)`, attained in the limit by amalgams of `K\u2082\u2096` minus an\nedge; `k = 4` is the theorem proved this cycle.",
+    "domains": [],
+    "id": "fd_1620",
+    "priority_score": 0.4263333333333333,
+    "research_mode": "team",
+    "source_exp_id": "0f708106",
+    "status": "available",
+    "timestamp": "2026-08-19T17:40:50.787218+00:00",
+    "title": "Formal target: for `r \u2208 (0, 1]`, if every side of a star amalgam `G` carries an independent set\nof relative density `\u2265 r` (and has at least two vertices), then `i(G) \u2265 r/(2-r)`; and for every\n`\u03b5 > 0` "
   },
   {
     "consumed_by_exp_id": "",
@@ -19839,15 +19850,14 @@ window.FUTURE_DIRECTIONS = [
     "title": "Honest Laurent normalization"
   },
   {
-    "consumed_by_exp_id": "ab33dc9e",
+    "consumed_by_exp_id": "",
     "description": "A product of `m` normalized series has order exactly `\u2212m`\n   (`orderTop_prod_normalized`), so a Monster-sized product has a pole of order `194`\n   (`orderTop_prod_traceLaurent_194`); multiplying by `q^m` restores order `0`.",
     "domains": [],
     "id": "fd_1428",
-    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "286b3a0e",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-17T13:54:04.565939+00:00",
     "title": "Pole-order obstruction"
   },
@@ -20633,15 +20643,14 @@ window.FUTURE_DIRECTIONS = [
     "title": "The odd case of existence is *proved*: `TriangularForest.sparsity_bound_attained`"
   },
   {
-    "consumed_by_exp_id": "0f708106",
+    "consumed_by_exp_id": "",
     "description": "Both ingredients are already machine-checked (the sharp bound and 1-sum closure),\nso the conjecture reduces to an equality analysis of an existing induction rather than to new\ntheory.",
     "domains": [],
     "id": "fd_1524",
-    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "ed687362",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-18T13:08:22.402394+00:00",
     "title": "Both ingredients are already machine-checked (the sharp bound and 1-sum closure),"
   },
@@ -20907,15 +20916,14 @@ window.FUTURE_DIRECTIONS = [
     "title": "For all `n\u2081, n\u2082 \u2265 1` there exist distinct `a, b \u2265 0` and `y \u2209 {a,b}` with"
   },
   {
-    "consumed_by_exp_id": "843dbe86",
+    "consumed_by_exp_id": "",
     "description": "All the moving parts \u2014 honest uniqueness decoding\n(`honest_scanCode`), exact cost accounting (`ScanScheme.decodeCost_eq`) and the\nexact `\u03b5`-pigeonhole optimum \u2014 are formalised, so the conjecture reduces to\nconstructing the intra-bucket index and re-running the same failure analysis.",
     "domains": [],
     "id": "fd_1566",
-    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "512ab986",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-19T01:53:32.686966+00:00",
     "title": "All the moving parts \u2014 honest uniqueness decoding"
   },
@@ -21457,5 +21465,135 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-19T15:46:56.653167+00:00",
     "title": "The Erd\u0151s\u2013Tur\u00e1n set is never perfect"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formal target: if a class `\ud835\udc9e \u2286 {G : i(G) \u2265 1/4}` is closed under 1-sums and closed under\ninduced subgraphs, then every `G \u2208 \ud835\udc9e` has fractional chromatic number `\u2264 4`.",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "fd_1621",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "0f708106",
+    "status": "available",
+    "timestamp": "2026-08-19T17:40:50.973493+00:00",
+    "title": "Formal target: if a class `\ud835\udc9e \u2286 {G : i(G) \u2265 1/4}` is closed under 1-sums and closed under\ninduced subgraphs, then every `G \u2208 \ud835\udc9e` has fractional chromatic number `\u2264 4`."
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formal target: define `IsCliqueSum` (sides meeting in a fixed `k`-clique `K`); prove\n`\u03b1(G) \u2265 \u03b1\u2081 + \u03b1\u2082 - 1` (an independent set meets a clique at most once) and\n`\u03c7(G) = max(\u03c7\u2081, \u03c7\u2082)` for `n \u2265 k`, with both statements failing for `n < k`.",
+    "domains": [],
+    "id": "fd_1622",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "0f708106",
+    "status": "available",
+    "timestamp": "2026-08-19T17:40:51.160593+00:00",
+    "title": "Formal target: define `IsCliqueSum` (sides meeting in a fixed `k`-clique `K`); prove\n`\u03b1(G) \u2265 \u03b1\u2081 + \u03b1\u2082 - 1` (an independent set meets a clique at most once) and\n`\u03c7(G) = max(\u03c7\u2081, \u03c7\u2082)` for `n \u2265 k`, with bo"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formal target: if every induced subgraph of `G\u2081` and of `G\u2082` satisfies `\u03c7 = \u03c9`, then so does\nevery induced subgraph of `G = G\u2081 \u2295_v G\u2082`.",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "fd_1623",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "0f708106",
+    "status": "available",
+    "timestamp": "2026-08-19T17:40:51.344352+00:00",
+    "title": "Formal target: if every induced subgraph of `G\u2081` and of `G\u2082` satisfies `\u03c7 = \u03c9`, then so does\nevery induced subgraph of `G = G\u2081 \u2295_v G\u2082`."
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle 3's `coeff_prod_normalized_general` already provides the exact\nconvolution over `Finset.finsuppAntidiag`, and cycles 6 and 8 show how vanishing linear\nterms collapse it at levels `3` and `4`; the remaining work is to organize the collapse by partitions, which is\nMathlib-supported via `Finset.sym`/`MvPolynomial.psum` machinery.",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "fd_1624",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "ab33dc9e",
+    "status": "available",
+    "timestamp": "2026-08-19T17:41:07.718960+00:00",
+    "title": "Cycle 3's `coeff_prod_normalized_general` already provides the exact"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Positivity is already formalized as a propagating predicate\n(`PoleOrderValuation.IsNonnegReal`, `isNonnegReal_coeff_prod`), so the strictness statement\nis a matter of exhibiting two more antidiagonal terms and bounding them below \u2014 no new\ninfrastructure needed.",
+    "domains": [],
+    "id": "fd_1625",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "ab33dc9e",
+    "status": "available",
+    "timestamp": "2026-08-19T17:41:07.905567+00:00",
+    "title": "Positivity is already formalized as a propagating predicate"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "in the pole coordinate \u2014 no adversary can open `C` as `q^{k'} \u00b7 p'` with `k' \u2260 k`,\nby cycle 3's completeness \u2014 and (ii) it is *hiding* for every coefficient statistic that is\ninvariant under `\u2102\u27e6X\u27e7\u02e3`, by the rigidity theorem.  The conjecture is that the pair\n(binding, hiding) is *tight*: any additional invariant that is binding for `k` must break\nblinding invariance, so the scheme sits exactly at the extremal point of the trade-off.",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "fd_1626",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "ab33dc9e",
+    "status": "available",
+    "timestamp": "2026-08-19T17:41:08.097523+00:00",
+    "title": "in the pole coordinate \u2014 no adversary can open `C` as `q^{k'} \u00b7 p'` with `k' \u2260 k`,"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Every ingredient \u2014 the splitting, the unique shift\n(`existsUnique_shift_poleLeak`), the torsor structure (`PoleOrderTorsor.exists_unique_ratio`)\n\u2014 is now a Lean theorem; only the game-based security definitions remain to be formalized.",
+    "domains": [],
+    "id": "fd_1627",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "ab33dc9e",
+    "status": "available",
+    "timestamp": "2026-08-19T17:41:08.283384+00:00",
+    "title": "Every ingredient \u2014 the splitting, the unique shift"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The corrected-product operation is now a proved closure property\n(`PoleOrderTorsor.isNormalized_q_mul_mul`), which makes the question well posed: one can\niterate the operation inside a fully formal setting and look for the first invariant that\ndistinguishes the orbits.",
+    "domains": [],
+    "id": "fd_1628",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "ab33dc9e",
+    "status": "available",
+    "timestamp": "2026-08-19T17:41:08.465462+00:00",
+    "title": "The corrected-product operation is now a proved closure property"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "honest uniqueness decoding through an explicitly constructed **intra-bucket index**\n  (`ScanScheme.honest_scanCode`, `ScanScheme.decode_eq_some_iff`);",
+    "domains": [],
+    "id": "fd_1629",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "843dbe86",
+    "status": "available",
+    "timestamp": "2026-08-19T17:41:17.231898+00:00",
+    "title": "honest uniqueness decoding through an explicitly constructed intra-bucket index*"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Rigidity is proved and stated in terms of fibre cardinalities, which is exactly\nthe form in which Lagrange's theorem in Mathlib delivers information about homomorphisms.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_1630",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "843dbe86",
+    "status": "available",
+    "timestamp": "2026-08-19T17:41:17.418519+00:00",
+    "title": "Rigidity is proved and stated in terms of fibre cardinalities, which is exactly"
   }
 ];
