@@ -1752,27 +1752,13 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle f0c2b697 (Q=0.780), which proved 41 theorems in Logic. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Program:** Network/LLM research lab \u2014 round-net-25 (performance axis; mechanism dissection of the NET-24 stateful-carry-cell cure). **Paper:** ResearchOutput/NetworkMathematics/25_StatefulCarryCellMechanism.md. **Status:** Machine-verified (ALL_DONE_NET25, _PAD, _SWEEP, _EOS). **Assessment v25, ex",
-    "domains": [
-      "Logic"
-    ],
-    "id": "push_f0c2b697_223f520d",
-    "priority_score": 0.88,
-    "research_mode": "team",
-    "source_exp_id": "f0c2b697",
-    "status": "available",
-    "timestamp": "2026-08-15T22:46:35.482523+00:00",
-    "title": "Deepening: NET-25 (paper 69): DENSE-FINAL-STEP-IS-THE-CURE \u2014 the stateful-carry-cell cure w"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove that a Hadamard matrix exists for every positive multiple of 4. Formalize known constructions (Sylvester, Paley, tensor products) and establish bounds on the smallest open order. Connect to combinatorial designs, error-correcting codes, and signal processing.",
     "domains": [
       "Algebra",
       "Combinatorics"
     ],
     "id": "seed_003",
-    "priority_score": 0.88,
+    "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "available",
@@ -19281,6 +19267,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Once the median is identified with `Set.projIcc`, the whole convex-analysis\ntoolbox (Moreau decomposition, normal cones, resolvents) becomes available to a\nmachine-learning measurement, which is a genuinely new bridge.",
+    "domains": [
+      "Geometry",
+      "Bridges"
+    ],
+    "id": "fd_1574",
+    "priority_score": 0.493,
+    "research_mode": "team",
+    "source_exp_id": "308f24be",
+    "status": "available",
+    "timestamp": "2026-08-19T04:00:35.981495+00:00",
+    "title": "Once the median is identified with `Set.projIcc`, the whole convex-analysis"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The gap theorem `FourierFA.uncertainty_gap_of_not_cosetModulation` already shows the\ndiscrete side of this picture (products jump by at least `|supp f|` once `|supp f|` divides\n`|G|`), so the remaining content is purely analytic and the Lean infrastructure\n(`norm_sum_eq_sum_norm_phase`, `IsExtremal.phase_align`) is in place.",
     "domains": [
       "Combinatorics"
@@ -19602,6 +19603,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-18T23:36:25.099843+00:00",
     "title": "The three-fold Bonferroni term: `\u2211_{i<j<k} Prob (E\u1d62 \u2229 E\u2c7c \u2229 E\u2096) = C(m,3)(1-p)^{3b}`"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any statistic `S : \u211d\u207f \u2192 \u211d` that is (i) symmetric, (ii) translation\nequivariant, (iii) monotone, and (iv) firmly nonexpansive in each argument with the two other\nseeds fixed, `S` agrees with the median on all samples whose two extreme order statistics are\nseparated by more than the sample's inner spread. In particular the mean fails (iv)\n(`mean_surjective` shows its range in the free coordinate is all of \u211d, unlike\n`net48_median_range`).",
+    "domains": [],
+    "id": "fd_1572",
+    "priority_score": 0.4294285714285714,
+    "research_mode": "team",
+    "source_exp_id": "308f24be",
+    "status": "available",
+    "timestamp": "2026-08-19T04:00:35.484211+00:00",
+    "title": "For any statistic `S : \u211d\u207f \u2192 \u211d` that is (i) symmetric, (ii) translation"
   },
   {
     "consumed_by_exp_id": "",
@@ -21146,5 +21159,29 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-19T01:53:32.978866+00:00",
     "title": "Honesty is free* \u2014 `AlmostLossless.exists_scanScheme_of_code`: every code is"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Firm nonexpansiveness of the median-as-projection is proved\n(`proj_firmly_nonexpansive`); the characterisation is open.",
+    "domains": [],
+    "id": "fd_1573",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "308f24be",
+    "status": "available",
+    "timestamp": "2026-08-19T04:00:35.734443+00:00",
+    "title": "Firm nonexpansiveness of the median-as-projection is proved"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The two measured normalised costs and their exact ratio `3/2` are proved; the\nextrapolation is open and is *jointly* falsifiable with C2 (they predict the same 4096 low\ntail).",
+    "domains": [],
+    "id": "fd_1575",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "308f24be",
+    "status": "available",
+    "timestamp": "2026-08-19T04:00:36.228850+00:00",
+    "title": "The two measured normalised costs and their exact ratio `3/2` are proved; the"
   }
 ];
