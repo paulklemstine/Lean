@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "be7c0bd7",
-      "domain": "Geometry",
-      "key_insight": "# Future directions — almost-lossless compression beyond the pigeonhole bound\n\nDerived from what survived and what broke in this cycle\n(`Catalog/Geometry/AlmostLossless*.lean`).\n\n**What survived.**  (",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 84,
-      "timestamp": "2026-08-18T03:09:07",
-      "title": "Compression Research B3: Almost-lossless / Monte Carlo compression"
-    },
-    {
       "cycle_id": "856336cf",
       "domain": "Pythagorean",
       "key_insight": "# Future directions\n\nDerived from the results proved in `Catalog/Pythagorean/KernelPatterns.lean`,\n`KernelPatternsBell.lean`, `KernelBlockCount.lean`, `KernelStirlingRecurrence.lean`,\n`KernelStirlingC",
@@ -499,19 +489,19 @@
       "theorem_count": 158,
       "timestamp": "2026-08-19T22:42:00",
       "title": "Inverse Stereographic Neural Field Theory"
+    },
+    {
+      "cycle_id": "a23b48bf",
+      "domain": "Pythagorean",
+      "key_insight": "# Future directions — after closing the converse of finite Poisson summation\n\nThis cycle closed the open converse: the exact Poisson identity\n`|G| ∑_{x∈S} f = |S| ∑_{ψ∈S^⊥} f̂` holds for all `f` **iff",
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "theorem_count": 74,
+      "timestamp": "2026-08-19T23:36:56",
+      "title": "The \"if\" direction is proved (`FourierFA.poisson_summation`); the converse is open."
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "2db5094c",
-      "domain": "Pythagorean",
-      "key_insight": "# Future directions: the rational star pencils of the Berggren tree\n\nThis cycle established that the radial lines seen when the Berggren tree is plotted in the\nPoincaré half-plane are not confined to",
-      "quality_score": 0.6298458474603094,
-      "sorry_count": 0,
-      "theorem_count": 80,
-      "timestamp": "2026-08-11T01:10:11",
-      "title": "Lines that appear when Berggren Pythagorean Triplet Tree is plotted on a Poincare half plane"
-    },
     {
       "cycle_id": "2db5094c",
       "domain": "Pythagorean",
@@ -2501,27 +2491,19 @@
       "theorem_count": 158,
       "timestamp": "2026-08-19T22:42:00",
       "title": "Inverse Stereographic Neural Field Theory"
+    },
+    {
+      "cycle_id": "a23b48bf",
+      "domain": "Pythagorean",
+      "key_insight": "# Future directions — after closing the converse of finite Poisson summation\n\nThis cycle closed the open converse: the exact Poisson identity\n`|G| ∑_{x∈S} f = |S| ∑_{ψ∈S^⊥} f̂` holds for all `f` **iff",
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "theorem_count": 74,
+      "timestamp": "2026-08-19T23:36:56",
+      "title": "The \"if\" direction is proved (`FourierFA.poisson_summation`); the converse is open."
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "18f8232d",
-      "domain": "Bridges",
-      "name": "idempotent_pow_eq",
-      "quality": 0.89
-    },
-    {
-      "cycle_id": "18f8232d",
-      "domain": "Bridges",
-      "name": "catalog",
-      "quality": 0.89
-    },
-    {
-      "cycle_id": "5bad6114",
-      "domain": "Probability",
-      "name": "dft_coset_modulation",
-      "quality": 0.91
-    },
     {
       "cycle_id": "5bad6114",
       "domain": "Probability",
@@ -2803,9 +2785,27 @@
       "domain": "Physics",
       "name": "W_mul_denom",
       "quality": 0.85
+    },
+    {
+      "cycle_id": "a23b48bf",
+      "domain": "Pythagorean",
+      "name": "mem_annihF",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "a23b48bf",
+      "domain": "Pythagorean",
+      "name": "mem_closureF",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "a23b48bf",
+      "domain": "Pythagorean",
+      "name": "subset_closureF",
+      "quality": 0.85
     }
   ],
-  "last_updated": "2026-08-19T22:42:00",
+  "last_updated": "2026-08-19T23:36:56",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hn2⟩)",
@@ -3828,12 +3828,6 @@
     "Pythagorean": [
       {
         "cycle_id": "2db5094c",
-        "quality": 0.6298458474603094,
-        "theorems": 80,
-        "title": "Lines that appear when Berggren Pythagorean Triplet Tree is plotted on a Poincar"
-      },
-      {
-        "cycle_id": "2db5094c",
         "quality": 0.6288458474603094,
         "theorems": 80,
         "title": "Lines that appear when Berggren Pythagorean Triplet Tree is plotted on a Poincar"
@@ -3885,6 +3879,12 @@
         "quality": 0.82,
         "theorems": 278,
         "title": "The case `m = 3`, `F = x² + y² - z²` is fully proved"
+      },
+      {
+        "cycle_id": "a23b48bf",
+        "quality": 0.85,
+        "theorems": 74,
+        "title": "The \"if\" direction is proved (`FourierFA.poisson_summation`); the converse is op"
       }
     ],
     "Shared": [

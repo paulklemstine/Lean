@@ -42529,7 +42529,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "a23b48bf",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -42554,7 +42554,7 @@
       "source": "",
       "source_exp_id": "525aecde",
       "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/525aecde",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-08-17T09:01:32.595927+00:00",
       "title": "The \"if\" direction is proved (`FourierFA.poisson_summation`); the converse is open."
@@ -43049,7 +43049,7 @@
       "depth_estimate": 3,
       "description": "Every index-two subgroup of any group is the kernel of a surjection\n   onto `C₂` (`charOfIndexTwo`, `ker_charOfIndexTwo`), and its odd-prime successor is now\n   settled too: a *normal* subgroup of prime index `p` is the kernel of a surjection onto\n   `C_p` (`exists_surjective_char_of_prime_index`) and exactly `p − 1` surjective characters\n   share that kernel (`card_surjective_chars_with_ker`). **New successor (C1b):** drop\n   normality — for `p` the smallest prime dividing `|G|`, every index-`p` subgroup of a\n   finite group is normal, hence *every* connected degree-`p` covering of a `K(G,1)` with\n   `p = min(primes dividing |G|)` is regular and character-theoretic; the falsifiable form\n   is that a non-regular connected degree-`p` covering forces a prime divisor of `|G|`\n   smaller than `p`, tested by `G = S₃`, `p = 3` (one non-regular triple covering, and\n   `2 < 3`).  **C1b is now settled in both directions**\n   (`normal_and_exists_char_of_index_eq_minFac`, and\n   `minFac_lt_index_of_not_normal` together with the `S₃` witness\n   `nonRegular_prime_degree_forces_smaller_prime`).  **New successor (C1c):** for a finite\n   group `G` and a prime `p ∣ |G|` that is *not* minimal, the number of conjugacy classes\n   of non-normal index-`p` subgroups is `(n_p(G) − 1)/p`-controlled by Sylow counting —\n   concretely, the conjecture is that this number is `0` exactly when every index-`p`\n   subgroup contains a normal subgroup of index `p`, and the falsifiable form is to exhibit\n   a group where the non-normal classes outnumber the character-theoretic ones.\n2. **(C2a — settled)** `ℤ²` has exactly three subgroups of index two and exactly four of\n   index three, so the torus has `σ(2) = 3` double and `σ(3) = 4` triple coverings\n   (`torus_three_double_coverings`, `torus_four_triple_coverings`), all of whose total\n   spaces are tori. **New successor (C2b):** every connected finite covering of the torus\n   has total space a torus, i.e. every finite-index subgroup of `ℤ²` is isomorphic to `ℤ²`\n   — provable from the fact that a finite-index subgroup of `ℤ^k` is free abelian of the\n   same rank — and the degree-`n` count is `σ(n)`, with `n = 4` (`σ(4) = 7`) the next\n   checkpoint.  **C2b is now settled**: `torus_finite_index_subgroup_mulEquiv` (every\n   finite-index subgroup of `ℤ²` is a copy of `ℤ²`),\n   `card_index_n_subgroups_torus_sigma` (the count is `σ(n)` for every `n`) and\n   `card_index_four_subgroups_torus` (`σ(4) = 7`).  **New successor (C2c):** for `K(ℤ^k,1)`\n   with `k ≥ 3` the number of connected `n`-sheeted coverings is the coefficient\n   `∑_{d₁ d₂ ⋯ = n}` of the lattice zeta function `ζ(s)ζ(s−1)⋯ζ(s−k+1)`, i.e. the number of\n   finite-index sublattices of `ℤ^k` of index `n`; the falsifiable form is the first case\n   `k = 3`, `n = 2`, where the prediction is `7` sublattices of index two — testable by the\n   same character argument that gives `p + 1` for `k = 2`, since index-two sublattices of\n   `ℤ^k` are the nonzero mod-two characters, `2^k − 1`.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -43784,7 +43784,7 @@
       "depth_estimate": 3,
       "description": "the twin prime conjecture is the unboundedness of the single Betti step at `ε = 2`\n  (an `H₀` statement, not `H₁`);",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Pythagorean",
         "NumberTheory"
@@ -43906,7 +43906,7 @@
       "depth_estimate": 3,
       "description": "The equivalence and the cap are formal; sieve-theoretic upper bounds of\nBrun type would give the first nontrivial *proved* upper bound of the correct order for\nthe step, a realistic Lean target.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Pythagorean"
       ],
@@ -45524,7 +45524,7 @@
       "depth_estimate": 3,
       "description": "The case `m = 3`, `F = x² + y² - z²` is fully proved\n(`PythagoreanKernel.pyth_kernel_spectrum`: defect exactly one, the obstruction being that `2`\nis not a square, with the dimension-dependence isolated in `constant_legs_dim_two_three_four`),\nand the Fermat family shows the defect is *not* constant along a family\n(`FermatKernel.spectrum_card_iff_flt`), so the invariant is nontrivial and computable in\nexamples.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Pythagorean"
       ],
@@ -46079,7 +46079,7 @@
       "depth_estimate": 3,
       "description": "**C4 (algebraic half settled).**  `4p − W(p)² = 4b²` exactly (`weil_deficiency`), so\n  near-attainment is *equivalent* to a Diophantine bound on the even Gaussian leg\n  (`weil_near_attainment_iff`), and the Weil floor improves to the sharp\n  `W(p)² ≤ 4p − 16` (`W_sq_le_four_p_sub_sixteen`).",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -46198,7 +46198,7 @@
       "depth_estimate": 3,
       "description": "The exact identity and the sharp constant 16 are theorems\n(`weil_deficiency`, `W_sq_le_four_p_sub_sixteen`, `improved_floor_sharp`); only the\ninfinitude of primes `a² + 4` (an Euler-type problem) is open, and partial sieve results\n(almost-primes of that shape) can already be formalised as a weakened version.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Pythagorean",
         "NumberTheory"
@@ -48380,7 +48380,7 @@
       "depth_estimate": 3,
       "description": "*The number of triples `(a,b,c)` with `0 < a,b,c ≤ H` that are Berggren-generated\nfrom a positive seed is `Θ(H)` — vanishingly few compared with `H³` — while the\nnumber of *Pythagorean* triples in the same box that are Berggren-generated is\n`(1 - o(1))` times the number of primitive Pythagorean triples in the box.*",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [],
       "github_issue": 0,
       "id": "fd_1559",
@@ -50467,7 +50467,7 @@
       "depth_estimate": 3,
       "description": "The reduction of Erdős–Graham to a statement about divisor lattices of\npseudoperfect numbers is formalised (`pseudoperfect_iff_exists_egyptian_dvd`,\n`erdosGraham_of_pseudoperfect_class`), which converts the conjecture from an additive\nstatement about reciprocals into a multiplicative Ramsey statement.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Combinatorics",
         "Pythagorean"
@@ -50548,7 +50548,7 @@
       "depth_estimate": 3,
       "description": "`RLHF.localZeta_curvature_eq_variance` identifies\n   the curvature of the `p`-factor as a variance; conjecture the exact total curvature\n   `∫_{−∞}^{∞} Var_{k log p}(s) ds = A log p` for the `A`-truncated factor, and hence that the\n   total curvature of the truncated Euler product over `p ≤ P` is `∑_{p ≤ P} A_p log p`, a\n   Chebyshev `θ`-type sum.  The variance-flow identity `RLHF.integral_tiltVar` reduces this to\n   the two endpoint limits of the tilted mean.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -51756,11 +51756,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "17d131fb",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -51770,7 +51770,7 @@
       "domains": [],
       "github_issue": 0,
       "id": "fd_1645",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-08-19T23:37:53.027363+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -51785,7 +51785,7 @@
       "source": "",
       "source_exp_id": "c442a26f",
       "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/c442a26f",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-08-19T21:41:40.263622+00:00",
       "title": "Conjecture D10 (the Molien invariant is exactly the Burnside mark vector modulo scaling)"
@@ -57645,7 +57645,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle a07085b6 (Q=0.761), which proved 11 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future directions\n\n## What is now established\n\nFor an arbitrary activation map `a : X → (Fin k → Bool)`, the correct finite semantic space is its range `Feasible a`. The formal development proves:\n\n1. `Feasible a` has at most `2^k` points.\n2. It has exactly `2^k` points iff every formal activation",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Pythagorean"
       ],

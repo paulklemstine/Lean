@@ -19601,15 +19601,14 @@ window.FUTURE_DIRECTIONS = [
     "title": "Open here; the multiplicative bound `|supp f| \u00b7 |supp f\u0302| \u2265 p` is proved"
   },
   {
-    "consumed_by_exp_id": "a23b48bf",
+    "consumed_by_exp_id": "",
     "description": "The \"if\" direction is proved (`FourierFA.poisson_summation`); the converse is open.",
     "domains": [],
     "id": "fd_1411",
-    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "525aecde",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-17T09:01:32.595927+00:00",
     "title": "The \"if\" direction is proved (`FourierFA.poisson_summation`); the converse is open."
   },
@@ -21708,14 +21707,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "The upper bound is formalised (`exists_peel_stopping_time` together with"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "17d131fb",
     "description": "## Conjecture D10 (the Molien invariant is exactly the Burnside mark vector modulo scaling)",
     "domains": [],
     "id": "fd_1645",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "c442a26f",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-19T21:41:40.263622+00:00",
     "title": "Conjecture D10 (the Molien invariant is exactly the Burnside mark vector modulo scaling)"
   },
@@ -21817,5 +21817,63 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-19T22:41:47.698471+00:00",
     "title": "f(u)` on `S\u00b2` with Mexican-hat kernel of radius `1/k`,"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The bijection with the subgroup lattice is formalised, so the analytic side of the\nquestion is entirely eliminated; what remains is a clean statement about abelian groups that\ncan be attacked through the structure theorem, and refuted or confirmed by exhaustion for all\nabelian groups of order \u2264 64.",
+    "domains": [
+      "Algebra",
+      "Cryptography"
+    ],
+    "id": "fd_1654",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "a23b48bf",
+    "status": "available",
+    "timestamp": "2026-08-19T23:36:43.476223+00:00",
+    "title": "The bijection with the subgroup lattice is formalised, so the analytic side of the"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "All three ingredients (constant rigidity, affine rigidity, the identification of\nPoisson sets with uncertainty extremals `poissonSet_iff_supp_dft_indicF_eq_annihF`) are\nformalised; the conjecture is the natural common generalisation and would give a complete\nFourier-theoretic characterisation of the uncertainty extremals in this catalog.",
+    "domains": [
+      "Combinatorics",
+      "Geometry"
+    ],
+    "id": "fd_1655",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "a23b48bf",
+    "status": "available",
+    "timestamp": "2026-08-19T23:36:43.728773+00:00",
+    "title": "All three ingredients (constant rigidity, affine rigidity, the identification of"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The one-test-function converse (`subgroup_of_poissonDelta`) is proved, and Mathlib\nhas enough distribution-free analysis (`Real.fourierIntegral`, Poisson summation for\n`\u2124 \u2286 \u211d`) that the statement can at least be formalised and reduced to a concentration lemma.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_1656",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "a23b48bf",
+    "status": "available",
+    "timestamp": "2026-08-19T23:36:43.984370+00:00",
+    "title": "The one-test-function converse (`subgroup_of_poissonDelta`) is proved, and Mathlib"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "the conjecture predicts that no finite non-lattice `S \u2286 \u2124` (e.g. `{0,1,4}`)\nadmits such a formula; test numerically with Gaussians.",
+    "domains": [
+      "Cryptography"
+    ],
+    "id": "fd_1657",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "a23b48bf",
+    "status": "available",
+    "timestamp": "2026-08-19T23:36:44.235030+00:00",
+    "title": "the conjecture predicts that no finite non-lattice `S \u2286 \u2124` (e.g. `{0,1,4}`)"
   }
 ];
