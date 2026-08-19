@@ -280,4 +280,9 @@ theorem lipschitz_margin_perturbation
   norm_num at *; nlinarith [ mul_div_cancel₀ δ ( by linarith : ( 2 * L ) ≠ 0 ), abs_le.mp this ] ;
 
 end ActivationNerveMarginCosheaf
+
+/- Corrupted trailing fragment of a lost statement, preserved verbatim but
+commented out so the file parses.
+
 end .
+-/

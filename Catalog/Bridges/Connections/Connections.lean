@@ -9,6 +9,11 @@ Declarations: 14
 
 noncomputable section
 
+open Set
+
+/-- The rectified linear unit. -/
+def relu (x : ℝ) : ℝ := max x 0
+
 /-- If r ∘ i = id, then i ∘ r is idempotent. -/
 theorem retraction_yields_idempotent {α β : Type*} (i : β → α) (r : α → β)
     (h : r ∘ i = id) : (i ∘ r) ∘ (i ∘ r) = i ∘ r := by

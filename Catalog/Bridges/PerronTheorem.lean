@@ -99,10 +99,10 @@ theorem exists_eigenvector_dim2
 
     The proof is the Cuninghame-Green construction, carried out in
     `Speculative.AutoResearch.TropicalPerronCore`: `μ` is the maximal cycle mean
-    `TropPerron.lam`, and `v` is the longest-path potential to a critical node in the
-    matrix shifted by `μ`, which is finite because cycle removal shows that no walk
-    beats a walk of length at most `n`.  The `1×1` and `2×2` cases above remain as
-    direct constructions. -/
+    `lam hn M`, and `v i` is the largest shifted weight `Wt l i i₀ - l · μ` of a walk
+    of length `l ≤ n` from `i` to a critical node `i₀`.  Cycle removal (pigeonhole
+    on a walk longer than `n`, together with the fact that every cycle has mean at
+    most `μ`) shows this potential satisfies the eigenvector equation exactly. -/
 theorem exists_maxPlusMul_eigenvector (hn : 0 < n)
     (M : Matrix (Fin n) (Fin n) ℝ) :
     ∃ (mu : ℝ) (v : Fin n → ℝ),

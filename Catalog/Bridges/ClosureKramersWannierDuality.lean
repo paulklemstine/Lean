@@ -428,5 +428,12 @@ theorem reconstruction_via_mobius_and_residuation_correct
   simp_all +decide [ DualReconstruction.Certified, DualReconstruction.Coherent ];
   exact fun R' h1 h2 h3 => ⟨ -R'.dualWeights ∅, fun S => by ring ⟩
 
+
 end ClosureKramersWannier
-end , the tropical bidual is gauge-equivalent to the original section.
+
+/-  The line below is a corrupted leftover of a text edit: it is the tail of a
+    sentence whose head was lost.  It is kept, commented out, for the record;
+    without the comment the file does not parse.
+
+    end , the tropical bidual is gauge-equivalent to the original section.
+-/

@@ -383,4 +383,10 @@ noncomputable def normalizedObstructionScore
     (disagreements : ℕ) : ℚ :=
   if C.card = 0 then 0
   else (disagreements : ℚ) / (overlapComplexity C : ℚ)
-end AgreementOnInter F (s V hV) (s W hW)
+
+/-  The lines below are corrupted leftovers of a text edit: each is the tail of a
+    statement whose head was lost.  They are kept, commented out, for the record;
+    without the comment the file does not parse.
+
+    end AgreementOnInter F (s V hV) (s W hW)
+-/

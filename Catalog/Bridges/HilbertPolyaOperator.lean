@@ -19,7 +19,7 @@ theorem laplacian_is_selfadjoint {n : ℕ}
     (A : Matrix (Fin n) (Fin n) ℝ) (hA : A.IsSymm)
     (D : Matrix (Fin n) (Fin n) ℝ) (hD : D.IsSymm) :
     (D - A).IsSymm :=
-  IsSymm.sub hD hA
+  Matrix.IsSymm.sub hD hA
 
 /-- [Section: # CatalogBuild.Bridges.HilbertPolyaOperator
 Auto-generated from theorem catalog database.
@@ -104,7 +104,7 @@ def hilbertPolyaOperator {n : ℕ} (A : Matrix (Fin n) (Fin n) ℝ) (q : ℕ) :
 theorem hilbertPolya_selfadjoint {n : ℕ} (A : Matrix (Fin n) (Fin n) ℝ)
     (hA : A.IsSymm) (q : ℕ) :
     (hilbertPolyaOperator A q).IsSymm :=
-  IsSymm.smul hA _
+  Matrix.IsSymm.smul hA _
 
 theorem hilbertPolya_ramanujan_bound (q : ℕ) (hq : q ≥ 1)
     (ev : ℝ) (h_ram : |ev| ≤ 2 * Real.sqrt q) :
