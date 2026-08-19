@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "86a70a4b",
-      "domain": "Computation",
-      "key_insight": "# Future Directions — bold, testable conjectures from this cycle\n\nContext: the anti-Fibonacci sequence `antiFib 0 = 1`, `antiFib (n+1) = antiFib n + n`\n(closed form `2·antiFib n + n = n² + 2`) from `C",
-      "quality_score": 0.88,
-      "sorry_count": 0,
-      "theorem_count": 105,
-      "timestamp": "2026-08-17T04:03:22",
-      "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
-    },
-    {
       "cycle_id": "094ca37a",
       "domain": "MachineLearning",
       "key_insight": "# Future Directions — Hyper-Awareness: 11-dimensional perception architectures\n\nDerived from the analysis and adversarial review of this cycle. Every conjecture below is\nfalsifiable, and each is state",
@@ -499,19 +489,19 @@
       "theorem_count": 104,
       "timestamp": "2026-08-19T01:53:45",
       "title": "Compression Research B3: Almost-lossless / Monte Carlo compression"
+    },
+    {
+      "cycle_id": "308f24be",
+      "domain": "Geometry",
+      "key_insight": "# Future directions — geometry of the attention-cost knee distribution\n\nDerived from the six Lean files added in `Catalog/Geometry/`\n(`KneeFermatWeber`, `KneeMedianProjection`, `KneeScalingRays`, `Kne",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 113,
+      "timestamp": "2026-08-19T03:58:14",
+      "title": "NET-48: The direct test survives via the MEDIAN — k*=160 at (d=4, ctx=2048, seed=3), all four point-"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "0ed998a7",
-      "domain": "Logic",
-      "key_insight": "# Future Directions — after Cycle 4\n\n## Where the thread stands\n\nFive files now carry the three-qubit programme.  All of them are inside the catalog build,\nall are `sorry`-free, and every main theorem",
-      "quality_score": 0.6603294191919192,
-      "sorry_count": 0,
-      "theorem_count": 276,
-      "timestamp": "2026-08-07T22:03:37",
-      "title": "Results of this cycle live in `Catalog/Combinatorics/ThreeQubitHyperdeterminant."
-    },
     {
       "cycle_id": "52a6f28b",
       "domain": "Combinatorics",
@@ -2501,27 +2491,19 @@
       "theorem_count": 104,
       "timestamp": "2026-08-19T01:53:45",
       "title": "Compression Research B3: Almost-lossless / Monte Carlo compression"
+    },
+    {
+      "cycle_id": "308f24be",
+      "domain": "Geometry",
+      "key_insight": "# Future directions — geometry of the attention-cost knee distribution\n\nDerived from the six Lean files added in `Catalog/Geometry/`\n(`KneeFermatWeber`, `KneeMedianProjection`, `KneeScalingRays`, `Kne",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 113,
+      "timestamp": "2026-08-19T03:58:14",
+      "title": "NET-48: The direct test survives via the MEDIAN — k*=160 at (d=4, ctx=2048, seed=3), all four point-"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "5297c534",
-      "domain": "Novelty",
-      "name": "pairingFn_apply",
-      "quality": 0.86
-    },
-    {
-      "cycle_id": "5297c534",
-      "domain": "Novelty",
-      "name": "pairingFn_norm",
-      "quality": 0.86
-    },
-    {
-      "cycle_id": "5297c534",
-      "domain": "Novelty",
-      "name": "pairingFn_ne_zero",
-      "quality": 0.86
-    },
     {
       "cycle_id": "c4b3dd3f",
       "domain": "Logic",
@@ -2803,9 +2785,27 @@
       "domain": "Logic",
       "name": "bucket_subset_cand",
       "quality": 0.85
+    },
+    {
+      "cycle_id": "308f24be",
+      "domain": "Geometry",
+      "name": "of",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "308f24be",
+      "domain": "Geometry",
+      "name": "IsMedian",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "308f24be",
+      "domain": "Geometry",
+      "name": "fwCost_le_of_isBalanced",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-19T01:53:45",
+  "last_updated": "2026-08-19T03:58:14",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hupper⟩)",
@@ -3393,12 +3393,6 @@
     ],
     "Geometry": [
       {
-        "cycle_id": "c29c7fbe",
-        "quality": 0.657274625691032,
-        "theorems": 163,
-        "title": "The following conjectures sharpen the boundary of the normalized development in"
-      },
-      {
         "cycle_id": "4152b805",
         "quality": 0.6697667517006802,
         "theorems": 631,
@@ -3451,6 +3445,12 @@
         "quality": 0.82,
         "theorems": 84,
         "title": "Compression Research B3: Almost-lossless / Monte Carlo compression"
+      },
+      {
+        "cycle_id": "308f24be",
+        "quality": 0.82,
+        "theorems": 113,
+        "title": "NET-48: The direct test survives via the MEDIAN — k*=160 at (d=4, ctx=2048, seed"
       }
     ],
     "Logic": [

@@ -2369,26 +2369,7 @@
     "title": "Deepening: ArXiv paper: Magnitude homology of tope graphs"
   },
   {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle f0c2b697 (Q=0.780), which proved 41 theorems in Logic. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Program:** Network/LLM research lab — round-net-25 (performance axis; mechanism dissection of the NET-24 stateful-carry-cell cure). **Paper:** ResearchOutput/NetworkMathematics/25_StatefulCarryCellMechanism.md. **Status:** Machine-verified (ALL_DONE_NET25, _PAD, _SWEEP, _EOS). **Assessment v25, ex",
-    "domain_bridges": [],
-    "domains": [
-      "Logic"
-    ],
-    "id": "push_f0c2b697_223f520d",
-    "lineage_refs": [],
-    "priority_score": 0.88,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "f0c2b697",
-    "status": "available",
-    "timestamp": "2026-08-15T22:46:35.482523+00:00",
-    "title": "Deepening: NET-25 (paper 69): DENSE-FINAL-STEP-IS-THE-CURE — the stateful-carry-cell cure w"
-  },
-  {
-    "ambition_level": "extension",
+    "ambition_level": "grand_challenge",
     "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Prove that a Hadamard matrix exists for every positive multiple of 4. Formalize known constructions (Sylvester, Paley, tensor products) and establish bounds on the smallest open order. Connect to combinatorial designs, error-correcting codes, and signal processing.",
@@ -2399,7 +2380,7 @@
     ],
     "id": "seed_003",
     "lineage_refs": [],
-    "priority_score": 0.88,
+    "priority_score": 0.9,
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
@@ -25829,6 +25810,26 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Once the median is identified with `Set.projIcc`, the whole convex-analysis\ntoolbox (Moreau decomposition, normal cones, resolvents) becomes available to a\nmachine-learning measurement, which is a genuinely new bridge.",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry",
+      "Bridges"
+    ],
+    "id": "fd_1574",
+    "lineage_refs": [],
+    "priority_score": 0.493,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "308f24be",
+    "status": "available",
+    "timestamp": "2026-08-19T03:58:00.302563+00:00",
+    "title": "Once the median is identified with `Set.projIcc`, the whole convex-analysis"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "The gap theorem `FourierFA.uncertainty_gap_of_not_cosetModulation` already shows the\ndiscrete side of this picture (products jump by at least `|supp f|` once `|supp f|` divides\n`|G|`), so the remaining content is purely analytic and the Lean infrastructure\n(`norm_sum_eq_sum_norm_phase`, `IsExtremal.phase_align`) is in place.",
     "domain_bridges": [],
     "domains": [
@@ -26267,6 +26268,23 @@
     "status": "available",
     "timestamp": "2026-08-18T23:36:25.099843+00:00",
     "title": "The three-fold Bonferroni term: `∑_{i<j<k} Prob (Eᵢ ∩ Eⱼ ∩ Eₖ) = C(m,3)(1-p)^{3b}`"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "For any statistic `S : ℝⁿ → ℝ` that is (i) symmetric, (ii) translation\nequivariant, (iii) monotone, and (iv) firmly nonexpansive in each argument with the two other\nseeds fixed, `S` agrees with the median on all samples whose two extreme order statistics are\nseparated by more than the sample's inner spread. In particular the mean fails (iv)\n(`mean_surjective` shows its range in the free coordinate is all of ℝ, unlike\n`net48_median_range`).",
+    "domain_bridges": [],
+    "domains": [],
+    "id": "fd_1572",
+    "lineage_refs": [],
+    "priority_score": 0.4294285714285714,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "308f24be",
+    "status": "available",
+    "timestamp": "2026-08-19T03:57:59.787785+00:00",
+    "title": "For any statistic `S : ℝⁿ → ℝ` that is (i) symmetric, (ii) translation"
   },
   {
     "ambition_level": "extension",
@@ -27964,7 +27982,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0f708106",
     "description": "Both ingredients are already machine-checked (the sharp bound and 1-sum closure),\nso the conjecture reduces to an equality analysis of an existing induction rather than to new\ntheory.",
     "domain_bridges": [],
     "domains": [],
@@ -27974,7 +27992,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "ed687362",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-18T13:08:22.402394+00:00",
     "title": "Both ingredients are already machine-checked (the sharp bound and 1-sum closure),"
   },
@@ -28384,5 +28402,39 @@
     "status": "available",
     "timestamp": "2026-08-19T01:53:32.978866+00:00",
     "title": "Honesty is free* — `AlmostLossless.exists_scanScheme_of_code`: every code is"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Firm nonexpansiveness of the median-as-projection is proved\n(`proj_firmly_nonexpansive`); the characterisation is open.",
+    "domain_bridges": [],
+    "domains": [],
+    "id": "fd_1573",
+    "lineage_refs": [],
+    "priority_score": 0.4,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "308f24be",
+    "status": "available",
+    "timestamp": "2026-08-19T03:58:00.045886+00:00",
+    "title": "Firm nonexpansiveness of the median-as-projection is proved"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "The two measured normalised costs and their exact ratio `3/2` are proved; the\nextrapolation is open and is *jointly* falsifiable with C2 (they predict the same 4096 low\ntail).",
+    "domain_bridges": [],
+    "domains": [],
+    "id": "fd_1575",
+    "lineage_refs": [],
+    "priority_score": 0.4,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "308f24be",
+    "status": "available",
+    "timestamp": "2026-08-19T03:58:00.556814+00:00",
+    "title": "The two measured normalised costs and their exact ratio `3/2` are proved; the"
   }
 ]
