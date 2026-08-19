@@ -1,25 +1,22 @@
-# Normalized Spectral Transforms of the $an+1$ Maps: An Exact Limit Law, Its Resonance Arithmetic, and a No-Go Theorem
+# Branch Densities Decide Cancellation: A Spectral Theory of the $an+1$ Maps
 
 **Author:** Aristotle
-**Date:** 2026-08-11
+
+**Date:** 2026-08-19
 
 ---
 
 ## Abstract
 
-For an integer multiplier $a \ge 1$ let $T_a$ denote the accelerated one-step map $T_a(n) = n/2$ for even $n$ and $T_a(n) = an+1$ for odd $n$, and let $r_a(n) = T_a(n)/n$ be the associated *phase ratio*. We study the cutoff exponential sum
-$$F_a(\omega, N) = \sum_{n=1}^{N} e\bigl(\omega\, r_a(n)\bigr), \qquad e(x) = e^{2\pi i x},$$
-which is the natural one-step analogue of the exponential sums used to detect equidistribution and pseudorandomness in analytic number theory.
+We develop a spectral theory for the one-step and two-step exponential sums attached to the accelerated $an+1$ maps ($a$ odd), of which the Collatz map $a=3$ is the classical case. For a map $T$ we study the cutoff transform $F(\omega,N)=\sum_{n\le N} e(\omega\, T(n)/n)$ with $e(x)=e^{2\pi i x}$, and its normalisation $F(\omega,N)/N$.
 
-We prove an exact limit law: for every $a$ and every real $\omega$,
-$$\frac{F_a(\omega, N)}{N} \longrightarrow A_a(\omega) = \frac{e(\omega/2) + e(a\omega)}{2},$$
-with the explicit, multiplier-uniform error bound $\bigl|F_a(\omega,N)/N - A_a(\omega)\bigr| \le \bigl(1 + 2\pi|\omega|(1 + \log N)\bigr)/N$ for all $N \ge 1$; consequently the convergence is uniform on compact frequency sets, simultaneously for all multipliers. The modulus of the amplitude is the single cosine $|A_a(\omega)| = |\cos(\pi(a - \tfrac12)\omega)|$, so the *resonance set* on which genuine $o(N)$ cancellation occurs is exactly $R_a = \{\omega : (2a-1)\omega \in 2\mathbb{Z}+1\}$, an arithmetic progression of spacing $2/(2a-1)$. Off $R_a$ the transform has full linear size, and near $\omega = 0$ one has $|F_a(\omega,N)| \ge N/4$ eventually, which refutes any pointwise decay statement over all irrational frequencies.
+Our main structural result is the **Dominant-Branch Principle**: if the index set carries a subset of asymptotic density $d>1/2$ along which the phase ratios converge to a single limit, then for every real frequency $\omega$ and every $c<2d-1$ one has $\|F(\omega,N)\| \ge cN$ for all large $N$. Destructive interference is impossible above the density threshold $1/2$; and the threshold is sharp, as the classical Collatz map itself demonstrates.
 
-We then determine the arithmetic of the resonance sets. All multipliers share the trivial resonances at odd integers and have amplitude $1$ at even integers, so no discriminator lives at integer frequencies; but the three classical maps $3n+1$, $5n+1$, $7n+1$ are pairwise separated at $\omega = 1/5$, $1/9$, $1/13$ respectively, and pairwise they resonate together *only* at odd integers. We also show that the mean square $\int_0^2 |A_a(\omega)|^2 \, d\omega = 1$ for every $a$, so $L^2$-averaging cannot discriminate: only the location of the resonance comb can.
+We derive three consequences. (i) **Depth-two spectrum.** A parity analysis modulo $4$ shows that the two-step phase ratio has branch weights $1/4$ and $3/4$; the limiting amplitude is $A_2(\omega)=(e(\omega/4)+3e(a\omega/2))/4$, satisfying $|A_2(\omega)|^2 = (10+6\cos(\pi(2a-1)\omega/2))/16 \ge 1/4$ with equality attained. Hence $\|F_2(\omega,N)\|\ge N/4$ eventually, at every frequency: the depth-one resonances are destroyed by iteration. (ii) **$b$-adic family.** For the map $n\mapsto n/b$ ($b\mid n$), $n\mapsto an+1$ (otherwise) with $b\ge 3$, the one-step transform obeys $\|G_b(\omega,N)\|\ge \frac{b-2}{2b}N$ eventually at every frequency, with the sharp constant $1-2/b$ up to any $\varepsilon>0$; halving is therefore the unique resonant base. (iii) **Averaged statistics.** The mean-square power over a period equals the sum of squared branch weights, $1/2$ at depth one and $5/8$ at depth two, independently of $a$; with explicit finite-$N$ error $8(1+8\pi(1+\log N))/N$, so that the depth-two power eventually exceeds the depth-one power by at least $1/4$. A Chebyshev bound confines the frequencies where $\|F(\omega,N)\|\ge \lambda N$ to measure $\le (2+8\varepsilon_N)/\lambda^2$ in a period.
 
-Finally we prove a sharp no-go theorem: if two phase-ratio functions differ only on a set of indices of density zero, their normalized transforms have the same limit. In particular a modification of the map at finitely many arguments — inserting or destroying a cycle, altering a stopping time — leaves the normalized spectrum unchanged. Hence no implication of the form "spectral estimate $\Rightarrow$ orbit hitting-time estimate" can hold for the one-step cutoff sum. We close with two precise conjectures identifying where dynamical information can still survive: a second-order $\log N$ law, and the non-lattice resonance geometry of iterated transforms.
+The overall conclusion is that spectral cancellation for these maps is governed entirely by branch densities, not by the arithmetic of the multiplier, and that no pointwise smallness statement over irrational frequencies can hold.
 
-**Keywords:** Collatz map, $an+1$ maps, exponential sums, equidistribution, resonance sets, character sums, Cesàro averaging, no-go theorem.
+**Keywords:** Collatz map, exponential sums, branch densities, destructive interference, Terras parity vectors, mean-square power, spectral gap.
 
 ---
 
@@ -27,317 +24,351 @@ Finally we prove a sharp no-go theorem: if two phase-ratio functions differ only
 
 ### 1.1 Motivation
 
-The Collatz map, $n \mapsto n/2$ for even $n$ and $n \mapsto 3n+1$ for odd $n$, is the standard example of an arithmetic dynamical system whose global behaviour is far beyond current techniques. One of the recurring hopes for such problems is that harmonic analysis will supply the missing pseudorandomness: if the orbit data of a map can be encoded in an exponential sum, and if that sum can be shown to exhibit substantial cancellation, then quantitative equidistribution statements — and with luck, statements about hitting times or the absence of divergent orbits — should follow.
+The Collatz map sends $n \mapsto n/2$ for even $n$ and $n \mapsto 3n+1$ for odd $n$; the conjecture that every orbit reaches $1$ is open. A recurring strategy is to study the map through a Fourier-analytic or "spectral" lens, replacing the irregular integer dynamics by a wave-interference problem: attach a unit phase to each integer, sum over a range, and read off the frequencies at which the sum is small (destructive interference, a *spectral gap*) or large (constructive interference, a *resonant peak*).
 
-The purpose of this paper is to carry out that program precisely for the simplest available statistic, the *one-step phase transform*, and to determine its exact content. The outcome is a complete answer with a strongly negative dynamical component: the sum converges, after normalization, to an explicit two-term trigonometric amplitude; the amplitude's modulus is a single cosine; its zero set is an arithmetic progression determined by the multiplier; and the statistic is provably insensitive to any modification of the map on a density-zero set of inputs.
+Such programmes have an appealing physical interpretation. The sum $F(\omega,N)$ is a *structure factor*: it is precisely the quantity one computes when predicting a diffraction pattern from a scattering medium whose scatterers sit at positions determined by the phase sequence. Dark bands in a diffraction pattern — *systematic absences* — encode symmetry in crystallography, so it is natural to hope that dark bands in the Collatz structure factor encode arithmetic.
 
-We regard the negative results as the substance of the paper. Drawing an exact boundary around the reach of a method is more useful than an unquantified failure, and the boundary here is sharp enough to indicate exactly which refinements can still carry information — refinements we formulate as conjectures in Section 8.
+The purpose of this paper is to determine exactly what these dark bands encode. The answer is sharply negative for arithmetic and sharply positive for a simple combinatorial mechanism: **cancellation is decided by branch densities alone**. We formulate this as a general principle with an explicit constant, prove that its density threshold is optimal, and use it to settle the structure of the depth-two spectrum and of an entire family of $b$-adic variants.
 
-### 1.2 Conventions
+### 1.2 Summary of results
 
-Throughout, $a \ge 1$ is an integer multiplier (the classical cases being $a = 3, 5, 7$), $\omega \in \mathbb{R}$ is a frequency, and $N \ge 1$ an integer cutoff. We write
-$$e(x) = \exp(2\pi i x), \qquad x \in \mathbb{R},$$
-for the standard additive character, and we use freely the elementary identities
-$$e(x+y) = e(x)e(y), \qquad |e(x)| = 1, \qquad e(0)=1.$$
-Two further identities are used constantly and we record them now.
+Throughout, $e(x):=e^{2\pi i x}$ and $\|\cdot\|$ is the complex modulus. For a real sequence $r:\mathbb{N}\to\mathbb{R}$ we write
+$$\mathcal{F}[r](\omega,N) \;=\; \sum_{k=0}^{N-1} e\big(\omega\, r(k+1)\big) \;=\; \sum_{n=1}^{N} e\big(\omega\, r(n)\big).$$
 
-**Lemma 1.1 (Chord identities).** For all real $t$ and $x$,
-$$|1 + e(t)| = 2\,|\cos(\pi t)|, \qquad |e(x) - 1| = 2\,|\sin(\pi x)|.$$
+1. **Dominant-Branch Principle (Theorem 3.4).** If $D\subseteq\mathbb{N}$ has asymptotic density $d$, the phases $r(n)$ converge to $\theta$ along $D$, and $c<2d-1$, then for every $\omega\in\mathbb{R}$, $\|\mathcal{F}[r](\omega,N)\|\ge cN$ for all sufficiently large $N$. In particular, if $d>1/2$ the transform has linear size at every frequency.
+2. **Sharpness (Theorem 3.8).** For $a=3$ and $\omega=1/5$, the odd integers form a branch of density exactly $1/2$ with convergent phases, yet $\mathcal{F}(\omega,N)=o(N)$; so the conclusion fails for every $c>0$. The threshold $d>1/2$ cannot be weakened to $d\ge 1/2$.
+3. **Depth-two spectrum (Theorems 4.3–4.7).** With $A_2(\omega)=(e(\omega/4)+3e(a\omega/2))/4$ we have $\|F_2(\omega,N)/N - A_2(\omega)\| \le (2+2\pi|\omega|(1+\log N))/N$, $\|A_2(\omega)\|^2=(10+6\cos(\pi(2a-1)\omega/2))/16$, $\|A_2(\omega)\|\ge 1/2$ with equality at $\omega=2/(2a-1)$, and consequently $\|F_2(\omega,N)\|\ge N/4$ eventually at every $\omega$.
+4. **$b$-adic no-resonance (Theorems 5.2–5.4).** For $b\ge 3$ and any $a$, at every $\omega$: $\|G_b(\omega,N)\|\ge\frac{b-2}{2b}N$ eventually, and $\|G_b(\omega,N)\|\ge (1-2/b-\varepsilon)N$ eventually for every $\varepsilon>0$. Base $2$ is the unique base admitting a spectral gap.
+5. **Averaged theory (Theorems 6.1–6.6).** Exact mean-square identities $\int_0^4\|A(\omega)\|^2 d\omega = 2$ and $\int_0^4\|A_2(\omega)\|^2 d\omega = 5/2$ for all $a$; finite-$N$ versions with error $8\varepsilon_N$; the depth separation $\int_0^4\|F_2/N\|^2 \ge \int_0^4\|F/N\|^2 + 1/4$ eventually; and the Chebyshev peak bound.
 
-*Proof sketch.* Factor out the half-angle: $1 + e(t) = e(t/2)\bigl(e(-t/2) + e(t/2)\bigr)$, and $e(-u) + e(u) = 2\cos(2\pi u)$; take $u = t/2$ and use $|e(t/2)| = 1$. Similarly $e(x)-1 = e(x/2)\bigl(e(x/2)-e(-x/2)\bigr)$ and $e(u) - e(-u) = 2i\sin(2\pi u)$. $\square$
+### 1.3 What the results rule out
 
-An immediate consequence, used for the quantitative error bound, is the Lipschitz estimate
-$$|e(x) - 1| \le 2\pi |x| \qquad (x \in \mathbb{R}), \tag{1.1}$$
-which follows from $|\sin y| \le |y|$.
+Two natural conjectures are eliminated.
 
----
+*The pointwise programme.* One might hope for a statement of the form "$F(\omega,N)=o(N)$ for all irrational $\omega$". This is false, and false for a soft reason: $\omega\mapsto F(\omega,N)$ is continuous, and $F(0,N)=N$, so $\|F(\omega,N)\|$ is close to $N$ for all $\omega$ in a neighbourhood of $0$, irrationals included. The same happens near every even integer frequency. Any correct global statement must either exclude neighbourhoods of the integer resonances or pass to averages. Section 6 does the latter.
 
-## 2. The maps, the phase ratio, and the transform
-
-**Definition 2.1 (Accelerated map).** For integers $a \ge 1$ and $n \ge 1$ set
-$$T_a(n) = \begin{cases} n/2, & n \equiv 0 \pmod 2, \\ a n + 1, & n \equiv 1 \pmod 2. \end{cases}$$
-
-**Definition 2.2 (Phase ratio).** The phase ratio of the map at $n \ge 1$ is $r_a(n) = T_a(n)/n$.
-
-The phase ratio, rather than $T_a(n)$ itself, is the correct object to place inside a character: it is scale-invariant, it is the multiplicative increment governing whether an orbit drifts up or down, and it is bounded.
-
-**Definition 2.3 (Cutoff transform).** For $a \ge 1$, $\omega \in \mathbb{R}$, $N \ge 0$,
-$$F_a(\omega, N) = \sum_{n=1}^{N} e\bigl(\omega\, r_a(n)\bigr).$$
-
-Trivially $|F_a(\omega,N)| \le N$. The classical hope is that for irrational $\omega$ one might have $F_a(\omega,N) = o(N)$, or better; Section 4 shows this fails except on an explicit countable set of $\omega$.
-
-The first structural fact is that the phase ratio is not a complicated sequence at all.
-
-**Proposition 2.4 (Branch splitting).** For $n \ge 1$:
-1. if $n$ is even, then $r_a(n) = \tfrac12$, exactly, independently of $a$;
-2. if $n$ is odd, then $r_a(n) = a + \dfrac{1}{n}$.
-
-*Proof.* For even $n$, $T_a(n) = n/2$ so the ratio is $1/2$. For odd $n$, $T_a(n) = an+1$, so $T_a(n)/n = a + 1/n$. $\square$
-
-Thus $\{r_a(n)\}_{n \ge 1}$ has exactly two accumulation points, $1/2$ and $a$, visited in strict alternation, with a summable-after-averaging perturbation $1/n$ on the odd branch. Everything in this paper is a consequence of Proposition 2.4.
-
-**Definition 2.5 (Limiting amplitude and branch gap).**
-$$A_a(\omega) = \frac{e(\omega/2) + e(a\omega)}{2}, \qquad G_a(\omega) = \frac{e(a\omega) - e(\omega/2)}{2}.$$
-$A_a$ is the mean of the two branch phases and $G_a$ is half their difference; note $|G_a(\omega)| \le 1$.
+*The arithmetic programme.* One might hope that the depth-one resonance set $\{\omega : (2a-1)\omega \in 2\mathbb{Z}+1\}$ is a fingerprint distinguishing the $3n+1$, $5n+1$ and $7n+1$ maps in a dynamically meaningful way. Sections 4 and 5 show this reading is untenable: the resonances disappear at depth two and disappear for every base $b\ge 3$, while the averaged statistics that do survive are completely independent of $a$.
 
 ---
 
-## 3. The exact decomposition and the limit law
+## 2. Setup and definitions
 
-### 3.1 A finite even/odd decomposition
+**Definition 2.1 (Character).** For $x\in\mathbb{R}$ let $e(x) := e^{2\pi i x} \in \mathbb{C}$. Then $\|e(x)\|=1$, $e(x+y)=e(x)e(y)$, $\operatorname{Re} e(x)=\cos 2\pi x$, $\operatorname{Im} e(x)=\sin 2\pi x$, and the elementary Lipschitz bound
+$$\|e(x)-1\| \;\le\; 2\pi |x| \qquad (x\in\mathbb{R}) \tag{2.1}$$
+holds, since $\|e(x)-1\| = 2|\sin \pi x| \le 2\pi|x|$.
 
-Reindexing by $k = n - 1 \in \{0, \dots, N-1\}$, so that $k$ even corresponds to $n$ odd, Proposition 2.4 gives the exact term identity
-$$e\bigl(\omega r_a(k+1)\bigr) = \begin{cases} e(a\omega)\, e\!\left(\dfrac{\omega}{k+1}\right), & k \text{ even}, \\[2mm] e(\omega/2), & k \text{ odd}. \end{cases} \tag{3.1}$$
+**Definition 2.2 (One-step map and ratio).** Fix an odd integer $a\ge 1$. The accelerated $an+1$ map is
+$$T_a(n) \;=\; \begin{cases} n/2, & n \equiv 0 \pmod 2,\\ a n + 1, & n\equiv 1 \pmod 2,\end{cases}$$
+and its *phase ratio* is $\rho_a(n) := T_a(n)/n$ for $n\ge 1$.
 
-**Theorem 3.1 (Exact even/odd split).** For all $a, \omega, N$,
-$$F_a(\omega, N) = \left\lfloor \frac{N}{2} \right\rfloor e(\omega/2) \; + \; e(a\omega) \sum_{\substack{0 \le k < N \\ k \text{ even}}} e\!\left(\frac{\omega}{k+1}\right).$$
+**Definition 2.3 (Generic transform).** For $r:\mathbb{N}\to\mathbb{R}$, $\omega\in\mathbb{R}$ and $N\in\mathbb{N}$,
+$$\mathcal{F}[r](\omega,N) := \sum_{k=0}^{N-1} e(\omega\, r(k+1)).$$
+We write $F(a,\omega,N):=\mathcal{F}[\rho_a](\omega,N)$ for the one-step Collatz-type transform.
 
-*Proof sketch.* Partition $\{0,\dots,N-1\}$ by the parity of $k$ and apply (3.1) termwise. On the odd-$k$ part every summand equals the constant $e(\omega/2)$, and the number of odd $k < N$ is $\lfloor N/2 \rfloor$; on the even-$k$ part factor out the constant $e(a\omega)$. $\square$
+**Definition 2.4 (Density of a branch).** A predicate $D$ on $\mathbb{N}$ has *asymptotic density* $d$ if
+$$\frac{\#\{k < N : D(k)\}}{N} \longrightarrow d \qquad (N\to\infty).$$
 
-The even branch of the map therefore contributes a purely constant phase with multiplicity $\lfloor N/2 \rfloor$, while the odd branch contributes the fixed phase $e(a\omega)$ modulated by the slowly varying factors $e(\omega/n)$, each of which tends to $1$.
+**Proposition 2.5 (Depth-one branches).** For $n$ even, $\rho_a(n)=1/2$ exactly. For $n$ odd, $\rho_a(n)=a+1/n$. Hence the phase takes the limiting values $1/2$ and $a$, each along a branch of density $1/2$.
 
-### 3.2 The deviation sequence
+**Theorem 2.6 (Depth-one normalisation).** With $A(a,\omega) := \tfrac12\big(e(\omega/2)+e(a\omega)\big)$ we have $F(a,\omega,N)/N \to A(a,\omega)$ for every $\omega$, and
+$$\|A(a,\omega)\| \;=\; \Big|\cos\Big(\pi\Big(a-\tfrac12\Big)\omega\Big)\Big| \;=\; \Big|\cos\Big(\tfrac{\pi(2a-1)\omega}{2}\Big)\Big|.$$
 
-To extract a limit we compare each summand with a two-periodic model. Define
-$$d_a(\omega, k) = e\bigl(\omega r_a(k+1)\bigr) - \Bigl( A_a(\omega) + (-1)^k G_a(\omega) \Bigr).$$
-The bracketed model term equals $e(a\omega)$ for $k$ even and $e(\omega/2)$ for $k$ odd, so by (3.1):
+*Proof sketch.* Replace each summand by its branch model ($e(\omega/2)$ for even $n$, $e(a\omega)$ for odd $n$). By (2.1) the deviation at index $n$ is at most $2\pi|\omega|/n$ on the odd branch and $0$ on the even branch, so the total deviation is $O(|\omega|\log N)$, which is $o(N)$. Counting the two branches gives the stated limit. Factoring $e((\omega/2+a\omega)/2)$ out of the sum of two unimodular terms yields the cosine modulus. $\square$
 
-**Lemma 3.2 (Deviation formula).**
-$$d_a(\omega, k) = \begin{cases} e(a\omega)\left(e\!\left(\dfrac{\omega}{k+1}\right) - 1\right), & k \text{ even}, \\[2mm] 0, & k \text{ odd}, \end{cases}$$
-and consequently, using $|e(a\omega)| = 1$ and (1.1),
-$$|d_a(\omega,k)| \le \left| e\!\left(\frac{\omega}{k+1}\right) - 1 \right| \le \frac{2\pi|\omega|}{k+1}. \tag{3.2}$$
-In particular $d_a(\omega,k) \to 0$ as $k \to \infty$.
+**Corollary 2.7 (Depth-one resonance set).** $A(a,\omega)=0$ if and only if $(2a-1)\omega$ is an odd integer. For $a=3$ the smallest positive resonance is $\omega=1/5$, where $F(3,1/5,N)/N\to 0$.
 
-Summing the definition of $d_a$ over $k < N$ gives the master identity
-$$F_a(\omega, N) = N \, A_a(\omega) \; + \; G_a(\omega) \sum_{k=0}^{N-1} (-1)^k \; + \; \sum_{k=0}^{N-1} d_a(\omega, k). \tag{3.3}$$
-The middle sum is $0$ or $1$ according to the parity of $N$; the last sum is the only genuinely analytic term.
-
-### 3.3 The limit law
-
-**Theorem 3.3 (Limit law).** For every integer $a \ge 1$ and every $\omega \in \mathbb{R}$,
-$$\lim_{N \to \infty} \frac{F_a(\omega, N)}{N} = A_a(\omega) = \frac{e(\omega/2) + e(a\omega)}{2}.$$
-
-*Proof sketch.* Divide (3.3) by $N$. The alternating term is bounded by $|G_a(\omega)|/N \le 1/N \to 0$. The deviation term is the Cesàro average of a null sequence by Lemma 3.2, hence tends to $0$. $\square$
-
-The transform therefore does not decay: it grows linearly with an explicit constant, namely the mean of the two branch phases.
-
-### 3.4 A quantitative, multiplier-uniform error bound
-
-Averaging (3.2) against the harmonic bound $\sum_{k<N} \frac{1}{k+1} \le 1 + \log N$ makes Theorem 3.3 effective.
-
-**Theorem 3.4 (Explicit error bound).** For all $a \ge 1$, all $\omega \in \mathbb{R}$ and all $N \ge 1$,
-$$\left| \frac{F_a(\omega, N)}{N} - A_a(\omega) \right| \; \le \; \frac{1 + 2\pi|\omega|\bigl(1 + \log N\bigr)}{N}.$$
-
-*Proof sketch.* By (3.3),
-$$\frac{F_a(\omega,N)}{N} - A_a(\omega) = \frac{1}{N}\left( G_a(\omega)\sum_{k<N}(-1)^k + \sum_{k<N} d_a(\omega,k) \right).$$
-The first bracketed term has modulus at most $1$, since $|G_a(\omega)| \le 1$ and the alternating sum is $0$ or $1$. The second has modulus at most $\sum_{k<N} 2\pi|\omega|/(k+1) \le 2\pi|\omega|(1+\log N)$. $\square$
-
-Every constant here is absolute: the bound does not depend on $a$ at all, and depends on $\omega$ only through $|\omega|$.
-
-**Corollary 3.5 (Uniform convergence on compacts).** For every $M > 0$ and every $\varepsilon > 0$ there is $N_0 = N_0(M,\varepsilon) \ge 1$ such that for all $N \ge N_0$, all multipliers $a \ge 1$ and all $\omega$ with $|\omega| \le M$,
-$$\left| \frac{F_a(\omega,N)}{N} - A_a(\omega) \right| \le \varepsilon.$$
-
-*Proof sketch.* The right-hand side of Theorem 3.4 is at most $\bigl(1 + 2\pi M(1+\log N)\bigr)/N$, which tends to $0$ as $N \to \infty$ since $\log N = o(N)$; choose $N_0$ accordingly. $\square$
-
-Corollary 3.5 is the corrected replacement for the impossible pointwise statement over all irrational frequencies: the correct uniformity is *in the multiplier and over compact frequency ranges*, not over the irrationals.
+This is the extinction phenomenon whose fragility is the subject of the paper.
 
 ---
 
-## 4. The amplitude: modulus, resonances, and the failure of pointwise decay
+## 3. The Dominant-Branch Principle
 
-### 4.1 The modulus is a cosine
+The following is the structural core of the work: a criterion, in terms of density alone, guaranteeing that an exponential sum of unimodular terms cannot cancel.
 
-**Theorem 4.1 (Modulus formula).** For all $a \ge 1$ and $\omega \in \mathbb{R}$,
-$$\bigl| A_a(\omega) \bigr| = \left| \cos\!\left( \pi \left(a - \tfrac12\right)\omega \right) \right|.$$
+### 3.1 The deviation sequence
 
-*Proof sketch.* Factor out the common phase: with $t = (a - \tfrac12)\omega$ one has $\omega/2 + t = a\omega$, so
-$$e(\omega/2) + e(a\omega) = e(\omega/2)\bigl(1 + e(t)\bigr).$$
-Since $|e(\omega/2)| = 1$, Lemma 1.1 gives $|A_a(\omega)| = \tfrac12 \cdot 2|\cos(\pi t)|$. $\square$
+**Definition 3.1.** Given $r:\mathbb{N}\to\mathbb{R}$, a target phase $\theta$, a frequency $\omega$ and a branch predicate $D$, define the *deviation sequence*
+$$\delta(k) \;=\; \begin{cases} e(\omega\, r(k+1)) - e(\omega\theta), & D(k),\\ 0, & \text{otherwise.}\end{cases}$$
 
-The entire spectral content of the one-step transform is thus a single cosine of frequency $(a - \tfrac12)$: the *only* way the multiplier enters the leading-order behaviour is through the dilation factor $2a-1$.
+**Lemma 3.2 (Deviation bound).** For all $k$,
+$$\|\delta(k)\| \;\le\; 2\pi|\omega| \cdot \big| \mathbb{1}_{D(k)}\,(r(k+1)-\theta) \big|.$$
 
-### 4.2 The resonance set
+*Proof.* On $D$, factor $e(\omega r(k+1)) - e(\omega\theta) = e(\omega\theta)\big(e(\omega(r(k+1)-\theta)) - 1\big)$; the first factor is unimodular and the second is bounded by (2.1). Off $D$ the deviation vanishes. $\square$
 
-**Definition 4.2.** The *resonance set* of the multiplier $a$ is
-$$R_a = \bigl\{ \omega \in \mathbb{R} : A_a(\omega) = 0 \bigr\}.$$
+### 3.2 The finite-$N$ decomposition
 
-**Theorem 4.3 (Resonance classification).**
-$$A_a(\omega) = 0 \iff (2a-1)\,\omega \in 2\mathbb{Z}+1, \qquad\text{i.e.}\qquad R_a = \left\{ \frac{2m+1}{2a-1} : m \in \mathbb{Z} \right\}.$$
+**Lemma 3.3 (Split bound).** Let $c_N := \#\{k<N : D(k)\}$ and $S_N := \sum_{k<N}\delta(k)$. Then for every $N$,
+$$\big\|\mathcal{F}[r](\omega,N)\big\| \;\ge\; 2c_N - N - \|S_N\|.$$
 
-*Proof sketch.* By Theorem 4.1, $A_a(\omega) = 0$ iff $\cos\bigl(\pi(a-\tfrac12)\omega\bigr) = 0$, i.e. iff $(a - \tfrac12)\omega = m + \tfrac12$ for some $m \in \mathbb{Z}$; multiplying by $2$ gives $(2a-1)\omega = 2m+1$. $\square$
+*Proof.* Split the sum over $\{k<N\}$ into the part on $D$ and the part off $D$. On $D$ each summand equals $e(\omega\theta)+\delta(k)$, so the $D$-part equals $c_N\, e(\omega\theta) + S_N$. The off-$D$ part $T_N$ is a sum of $N-c_N$ unimodular terms, hence $\|T_N\|\le N-c_N$. Therefore
+$$c_N = \big\| c_N e(\omega\theta)\big\| = \big\|\mathcal{F}[r](\omega,N) - (S_N+T_N)\big\| \le \|\mathcal{F}[r](\omega,N)\| + \|S_N\| + \|T_N\|,$$
+and rearranging with $\|T_N\|\le N-c_N$ gives the claim. $\square$
 
-Geometrically, $R_a$ is the comb of frequencies at which the two branch phases $e(\omega/2)$ and $e(a\omega)$ are exactly antipodal; there, and only there, do the even and odd contributions annihilate one another.
+The geometry is transparent: a block of $c_N$ nearly aligned arrows has length nearly $c_N$; the remaining $N-c_N$ arrows can subtract at most $N-c_N$; the surplus is $2c_N-N$.
 
-**Theorem 4.4 (Cancellation exactly at resonance).**
-1. If $(2a-1)\omega$ is an odd integer then $F_a(\omega,N)/N \to 0$, i.e. $F_a(\omega,N) = o(N)$.
-2. If $A_a(\omega) \ne 0$ then for all sufficiently large $N$,
-$$|F_a(\omega,N)| \;\ge\; \frac{|A_a(\omega)|}{2}\, N.$$
+### 3.3 The principle
 
-*Proof sketch.* (1) is Theorem 3.3 combined with Theorem 4.3. For (2), $|F_a(\omega,N)/N| \to |A_a(\omega)| > |A_a(\omega)|/2$, so the strict inequality holds eventually; multiply by $N$. $\square$
+**Theorem 3.4 (Dominant-Branch Principle).** Let $r:\mathbb{N}\to\mathbb{R}$, $\theta,\omega,d,c\in\mathbb{R}$ and let $D$ be a branch predicate. Assume
 
-At resonance the cancellation is in fact very strong: by Theorem 3.4 the sum is $O(1 + |\omega|\log N)$, and numerically $|F_3(1/5, N)| < 8$ for $N$ up to $10^5$.
+- (density) $\dfrac{\#\{k<N: D(k)\}}{N} \to d$;
+- (phase alignment) $\mathbb{1}_{D(k)}\big(r(k+1)-\theta\big) \to 0$ as $k\to\infty$;
+- (threshold) $c < 2d-1$.
 
-### 4.3 The zero-frequency peak: no pointwise decay
+Then for all sufficiently large $N$,
+$$\big\|\mathcal{F}[r](\omega,N)\big\| \;\ge\; c\,N.$$
 
-**Theorem 4.5 (Peak near zero).** If $|(2a-1)\omega| \le \tfrac23$, then for all sufficiently large $N$,
-$$|F_a(\omega, N)| \;\ge\; \frac{N}{4}.$$
+*Proof sketch.* By Lemma 3.2 and phase alignment, $\delta(k)\to 0$; by the Cesàro theorem, $\frac1N\sum_{k<N}\delta(k) \to 0$, hence $\|S_N\|/N \to 0$. Dividing Lemma 3.3 by $N$,
+$$\frac{\|\mathcal{F}[r](\omega,N)\|}{N} \;\ge\; 2\frac{c_N}{N} - 1 - \frac{\|S_N\|}{N} \;\longrightarrow\; 2d-1.$$
+Since $c<2d-1$, the left-hand side exceeds $c$ eventually. $\square$
 
-*Proof sketch.* Put $t = (a-\tfrac12)\omega$, so $|t| \le 1/3$ and hence $|\pi t| \le \pi/3$. Since cosine is decreasing on $[0,\pi]$ and even, $\cos(\pi t) \ge \cos(\pi/3) = 1/2$, whence $|A_a(\omega)| \ge 1/2$ by Theorem 4.1. Apply Theorem 4.4(2), which gives $|F_a(\omega,N)| \ge \tfrac12|A_a(\omega)|N \ge N/4$ eventually. $\square$
+Note that the conclusion is uniform in $\omega$ in the strongest possible sense: it holds for *every* real frequency, with a constant independent of $\omega$. The frequency enters only through the deviation bound, which is annihilated by the Cesàro average.
 
-**Corollary 4.6 (Refutation of global pointwise decay).** There is no statement of the form "$F_a(\omega,N) = o(N)$ for every irrational $\omega$". Indeed the interval $\bigl(0, \tfrac{2}{3(2a-1)}\bigr]$ contains irrational $\omega$, and every such $\omega$ violates it by Theorem 4.5.
+**Corollary 3.5 (Convenient form).** If $d>1/2$, then for every $\omega$, eventually $\|\mathcal{F}[r](\omega,N)\| \ge \frac{2d-1}{2}\,N$.
 
-The obstruction is structural rather than technical: by Proposition 2.4 the phase ratio takes only two limiting values, so the sequence $\{\omega r_a(n)\}$ is nowhere near equidistributed mod $1$, and continuity of the amplitude at $\omega = 0$ (where $A_a(0)=1$) pins the transform to the trivial bound on a whole neighbourhood.
+*Proof.* Apply Theorem 3.4 with $c=(2d-1)/2 < 2d-1$. $\square$
 
----
+### 3.4 Densities of residue classes
 
-## 5. The arithmetic of resonance sets
+The criterion needs densities, and the branches we use are residue classes.
 
-Theorem 4.3 says $R_a$ depends on $a$ only through $2a-1$, so the resonance sets carry exactly one integer's worth of information. We now determine what can and cannot be read off from them.
+**Lemma 3.6 (Exact count).** For all $b,N$, $\#\{k<N : (k+1)\equiv 0 \bmod b\} = \lfloor N/b\rfloor$.
 
-### 5.1 Integer frequencies carry no information
+*Proof.* Induction on $N$: passing from $N$ to $N+1$ increases the count by $1$ exactly when $b \mid N+1$, which is exactly when $\lfloor (N+1)/b\rfloor = \lfloor N/b\rfloor + 1$. $\square$
 
-**Theorem 5.1 (Trivial resonances).** For every $a \ge 1$ and every $t \in \mathbb{Z}$:
-1. $A_a(2t+1) = 0$: every multiplier resonates at every odd integer frequency;
-2. $|A_a(2t)| = 1$: at every even integer frequency the transform attains the maximal amplitude;
-3. consequently $|A_a(t)| = |A_b(t)|$ for all $a,b \ge 1$ and all $t \in \mathbb{Z}$.
+**Lemma 3.7 (Density).** For $b\ge 1$, $\dfrac{\#\{k<N:(k+1)\equiv 0 \bmod b\}}{N} \to \dfrac1b$, with the explicit rate $\Big|\dfrac{\lfloor N/b\rfloor}{N} - \dfrac1b\Big| \le \dfrac1N$.
 
-*Proof sketch.* (1) $(2a-1)(2t+1) = 2\bigl((2a-1)t + a - 1\bigr)+1$ is odd, so Theorem 4.3 applies. (2) $\pi(a-\tfrac12)(2t) = \bigl((2a-1)t\bigr)\pi$ is an integer multiple of $\pi$, and $|\cos(k\pi)| = 1$. (3) follows from (1) and (2) by splitting on the parity of $t$. $\square$
+*Proof.* Write $N = bq+s$ with $0\le s<b$ and $q=\lfloor N/b\rfloor$. Then $|q/N - 1/b| = |bq-N|/(bN) = s/(bN) \le 1/N$. $\square$
 
-So no spectral discriminator between multipliers can be read off at integer frequencies, and in particular none near $\omega = 0$, the regime where the transform is largest.
+### 3.5 Sharpness of the threshold
 
-### 5.2 Pairwise common resonances
+**Theorem 3.8 (The threshold $d>1/2$ is optimal).** Consider $a=3$, the branch $D=\{k : k+1 \text{ odd}\}$ and $\theta = 3$. Then:
 
-**Lemma 5.2 (Diophantine form).** If $\omega \in R_a \cap R_b$, say $(2a-1)\omega = 2m+1$ and $(2b-1)\omega = 2k+1$ with $m,k \in \mathbb{Z}$, then
-$$(2b-1)(2m+1) = (2a-1)(2k+1).$$
+- $D$ has density exactly $1/2$;
+- $\mathbb{1}_{D(k)}(\rho_3(k+1) - 3) \to 0$ (indeed the deviation is $1/(k+1)$ on $D$);
+- yet for $\omega=1/5$ and **every** $c>0$ it is *false* that $\|\mathcal{F}[\rho_3](1/5,N)\|\ge cN$ eventually, because $\mathcal{F}[\rho_3](1/5,N)/N \to A(3,1/5) = 0$ by Corollary 2.7.
 
-*Proof sketch.* Both sides equal $(2a-1)(2b-1)\omega$. $\square$
+Hence the hypothesis $d>1/2$ cannot be relaxed to $d \ge 1/2$: at the balance point, total cancellation genuinely occurs.
 
-**Theorem 5.3 (Common resonances of the classical multipliers are trivial).** For each of the pairs $(a,b) \in \{(3,5), (3,7), (5,7)\}$ and every $\omega \in \mathbb{R}$,
-$$A_a(\omega) = 0 \;\wedge\; A_b(\omega) = 0 \iff \omega \in 2\mathbb{Z}+1.$$
-
-*Proof sketch.* ($\Leftarrow$) is Theorem 5.1(1). ($\Rightarrow$): take $(a,b) = (3,5)$. Lemma 5.2 gives $9(2m+1) = 5(2k+1)$, so $5 \mid 2m+1$ and $2m+1 = 5(2s+1)$ for an integer $s$ (explicitly $s = \lfloor (m-2)/5 \rfloor$). Then $5\omega = 2m+1 = 5(2s+1)$, so $\omega = 2s+1$ is an odd integer. The cases $(3,7)$ (where $13(2m+1) = 5(2k+1)$) and $(5,7)$ (where $13(2m+1) = 9(2k+1)$) are identical modulo the divisibility bookkeeping. $\square$
-
-Thus each pair of classical multipliers shares only the universal resonances.
-
-### 5.3 An explicit discriminator
-
-**Theorem 5.4 (Spectral separation of $3n+1$, $5n+1$, $7n+1$).**
-1. At $\omega = 1/5$: $A_3(1/5) = 0$, while $A_5(1/5) \ne 0$ and $A_7(1/5) \ne 0$. Explicitly $|A_5(1/5)| = \cos(\pi/10) \approx 0.9511$ and $|A_7(1/5)| = |\cos(3\pi/10)| \approx 0.5878$. Hence $F_3(1/5,N) = o(N)$, whereas $|F_5(1/5,N)| \ge 0.475\,N$ and $|F_7(1/5,N)| \ge 0.293\,N$ for large $N$.
-2. At $\omega = 1/9$: $A_5(1/9) = 0$ while $A_3(1/9) \ne 0 \ne A_7(1/9)$.
-3. At $\omega = 1/13$: $A_7(1/13) = 0$ while $A_3(1/13) \ne 0 \ne A_5(1/13)$.
-
-In particular $R_3$, $R_5$, $R_7$ are pairwise distinct.
-
-*Proof sketch.* For (1): $(2\cdot 3-1)/5 = 1$ is odd, giving $A_3(1/5)=0$ by Theorem 4.3. For $a=5$: $A_5(1/5)=0$ would force $9/5 = 2m+1$, i.e. $9 = 10m+5$, impossible over $\mathbb{Z}$. For $a=7$: $13 = 10m+5$ is likewise impossible. The moduli follow from Theorem 4.1, and the linear lower bounds from Theorem 4.4(2). Items (2) and (3) are the analogous computations with $17/9$, $5=18m+9$, $13=18m+9$, and with $25/13$, $5=26m+13$, $9=26m+13$. $\square$
-
-This is a genuine arithmetic discriminator: it detects the multiplier through the *location* of the resonance comb, not through any dynamical property of the map.
-
-### 5.4 Averaging destroys the discriminator
-
-Faced with the failure of pointwise decay, a natural fallback is an $L^2$ statement over a period. We compute it exactly, and it is uninformative.
-
-**Theorem 5.5 (Mean square of the amplitude).** For every integer $a \ge 1$,
-$$\int_0^2 \bigl| A_a(\omega) \bigr|^2 \, d\omega = 1,$$
-i.e. the mean of $|A_a|^2$ over the interval $[0,2]$ equals $\tfrac12$, independently of $a$.
-
-*Proof sketch.* By Theorem 4.1 and the double-angle formula,
-$$|A_a(\omega)|^2 = \cos^2\bigl(\pi(a-\tfrac12)\omega\bigr) = \frac12 + \frac{\cos\bigl(\pi(2a-1)\omega\bigr)}{2}.$$
-The constant contributes $1$ over $[0,2]$. The cosine contributes
-$$\frac{1}{2}\int_0^2 \cos\bigl(\pi(2a-1)\omega\bigr) d\omega = \frac{\sin\bigl(2\pi(2a-1)\bigr)}{2\pi(2a-1)} = 0,$$
-because $2(2a-1)$ is an even integer and $\sin$ vanishes at integer multiples of $\pi$. $\square$
-
-Every $an+1$ map carries the same total spectral energy. Only the *positions* of the zeros distinguish multipliers; any statistic that integrates $|A_a|^2$ against a multiplier-independent weight over full periods is blind.
+This is the precise sense in which the Collatz spectral gap is a *balance* phenomenon. It sits exactly on the knife edge of the criterion.
 
 ---
 
-## 6. The no-go theorem: the one-step spectrum cannot see dynamics
+## 4. The depth-two spectrum: resonances are destroyed by iteration
 
-The results so far are about a particular family of maps. The following theorem is about the statistic itself, and it is the sharpest limitation.
+### 4.1 Terras branches modulo 4
 
-**Definition 6.1 (Generic transform).** For any function $r : \mathbb{N}_{\ge 1} \to \mathbb{R}$ put $F[r](\omega, N) = \sum_{n=1}^{N} e(\omega\, r(n))$. Thus $F_a(\omega,N) = F[r_a](\omega,N)$.
+Let $T_a^2 = T_a\circ T_a$ and $\rho^{(2)}_a(n) := T_a^2(n)/n$.
 
-**Lemma 6.2 (Disagreement bound).** For all $r_1, r_2, \omega, N$,
-$$\bigl| F[r_1](\omega,N) - F[r_2](\omega,N) \bigr| \;\le\; 2\,\#\{1 \le n \le N : r_1(n) \ne r_2(n)\}.$$
+**Proposition 4.1 (Three-branch decomposition).** Let $a$ be odd and $n\ge 1$.
 
-*Proof sketch.* Terms with $r_1(n) = r_2(n)$ cancel exactly. Each remaining term is a difference of two unit vectors, of modulus at most $2$. $\square$
+- If $n\equiv 0 \pmod 4$ then $T_a^2(n)=n/4$, so $\rho^{(2)}_a(n) = 1/4$ exactly.
+- If $n\equiv 2 \pmod 4$ then $n/2$ is odd, so $T_a^2(n) = a n/2 + 1$ and $\rho^{(2)}_a(n) = a/2 + 1/n$.
+- If $n$ is odd then $an+1$ is even (as $a n$ is odd), so $T_a^2(n) = (an+1)/2$ and $\rho^{(2)}_a(n) = a/2 + 1/(2n)$.
 
-**Theorem 6.3 (Blindness to density-zero modification).** Let $r_1, r_2 : \mathbb{N}_{\ge 1} \to \mathbb{R}$ and suppose the disagreement set has density zero:
-$$\frac{\#\{1 \le n \le N : r_1(n) \ne r_2(n)\}}{N} \longrightarrow 0.$$
-Then for every $\omega$,
-$$\frac{F[r_1](\omega,N)}{N} - \frac{F[r_2](\omega,N)}{N} \longrightarrow 0.$$
+The oddness of $a$ is essential in the third case: it is what makes $an+1$ even and lets the second step be a halving.
 
-*Proof sketch.* Divide Lemma 6.2 by $N$ and apply the density hypothesis. $\square$
+**Corollary 4.2 (Branch weights).** The limiting phases are $1/4$, with density $1/4$ (the class $n\equiv 0$), and $a/2$, with density $1/4 + 1/2 = 3/4$ (the classes $n\equiv 2 \bmod 4$ and $n$ odd, which *coalesce* onto the same limit). The weights are unbalanced.
 
-**Corollary 6.4 (Finite surgery is spectrally invisible).** Let $S$ be a finite set of positive integers and let $r$ agree with $r_a$ outside $S$. Then
-$$\frac{F[r](\omega,N)}{N} \longrightarrow A_a(\omega) \qquad\text{for every } \omega.$$
+This coalescence is the mechanism. At depth one the two limiting phases $1/2$ and $a$ are distinct and equally weighted; at depth two, two of the three Terras classes share the limit $a/2$ and their densities add.
 
-*Proof sketch.* The disagreement count is at most $|S|$ for every $N$, hence of density zero; combine Theorem 6.3 with Theorem 3.3. $\square$
+### 4.2 Convergence with explicit error
 
-**Interpretation.** Whether the $3n+1$ map possesses a nontrivial cycle, and what the stopping time of any particular integer is, are assertions about finite sets of inputs — precisely the data that Corollary 6.4 shows the normalized transform cannot detect. Consequently:
+**Definition.** $F_2(a,\omega,N) := \mathcal{F}[\rho^{(2)}_a](\omega,N)$ and
+$$A_2(a,\omega) \;:=\; \frac{e(\omega/4) + 3\,e(a\omega/2)}{4}.$$
 
-> No implication of the form *"cancellation in the one-step cutoff sum $\Rightarrow$ an orbit hitting-time or cycle-exclusion statement"* can be valid, since the hypothesis is invariant under modifications that change the conclusion.
+**Theorem 4.3 (Explicit error bound).** For $a$ odd, $\omega\in\mathbb{R}$ and $N\ge 1$,
+$$\Big\| \frac{F_2(a,\omega,N)}{N} - A_2(a,\omega) \Big\| \;\le\; \frac{2 + 2\pi|\omega|\big(1+\log N\big)}{N}.$$
 
-Any spectral approach with dynamical content must therefore use a statistic that is *not* invariant under density-zero surgery. The two obvious candidates are the subleading terms of the same sum (which are of size $\log N$, hence in principle sensitive to $O(\log N)$-sized modifications) and the iterated transforms built from $T_a^m$, whose branch structure grows with $m$. Both are discussed in Section 8.
+*Proof sketch.* Compare each summand with the $4$-periodic model $m(k) = e(\omega/4)$ if $k\equiv 3 \bmod 4$ (i.e. $n=k+1\equiv 0 \bmod 4$) and $m(k)=e(a\omega/2)$ otherwise. By Proposition 4.1 and (2.1) the deviation at index $n$ is at most $2\pi|\omega|/n$, and $\sum_{n\le N} 1/n \le 1+\log N$. Summing the model over a range of length $N$ produces $\lfloor N/4\rfloor$ copies of $e(\omega/4)$ and $N - \lfloor N/4\rfloor$ copies of $e(a\omega/2)$; comparing with the exact weights $N/4$, $3N/4$ costs at most $2$ in absolute value. Dividing by $N$ gives the bound. $\square$
 
----
+**Theorem 4.4 (Depth-two normalisation).** For $a$ odd and every $\omega$, $F_2(a,\omega,N)/N \to A_2(a,\omega)$.
 
-## 7. Algorithms and numerical verification
+Note the error bound is uniform in $a$ and locally uniform in $\omega$, which is what makes the mean-square analysis of Section 6 possible.
 
-Three simple algorithms make the theory computationally testable.
+### 4.3 No depth-two resonance
 
-**Algorithm A (Direct transform evaluation).** Given $a$, $\omega$, $N$, compute $F_a(\omega,N)$ by accumulating $e(\omega r_a(n))$ for $n = 1, \dots, N$. Cost $\Theta(N)$ time, $O(1)$ space. Using Theorem 3.1 one may instead evaluate the constant even branch in $O(1)$ and only loop over odd $n$, halving the work.
+**Theorem 4.5 (Exact modulus).** For every $a$ and every $\omega$,
+$$\|A_2(a,\omega)\|^2 \;=\; \frac{10 + 6\cos\!\big(\pi(2a-1)\omega/2\big)}{16}.$$
 
-**Algorithm B (Resonance enumeration).** Given $a$ and a bound $W$, enumerate $R_a \cap (0,W] = \{(2m+1)/(2a-1) : 0 \le m < \bigl((2a-1)W-1\bigr)/2\}$. Cost $\Theta\bigl((2a-1)W\bigr)$ output-sensitive time. Membership testing for a given $\omega$ is $O(1)$: check that $(2a-1)\omega$ is within tolerance of an odd integer.
+*Proof sketch.* Factor $A_2 = \tfrac14 e(a\omega/2)\big(3 + e(\omega/4 - a\omega/2)\big)$. The first factor is unimodular, and $\|3+e(t)\|^2 = 10 + 6\cos 2\pi t$ by expanding $(3+\cos 2\pi t)^2 + \sin^2 2\pi t$. Substituting $t = \omega/4 - a\omega/2$ and using $2\pi t = -\pi(2a-1)\omega/2$ together with the evenness of cosine gives the formula. $\square$
 
-**Algorithm C (Discriminator search).** Given a finite set $\mathcal{A}$ of multipliers, find a frequency at which $a_0 \in \mathcal{A}$ resonates and no other member does. By Theorem 4.3 it suffices to scan $\omega = (2m+1)/(2a_0-1)$ for small $m$ and reject those $\omega$ for which some other $b \in \mathcal{A}$ satisfies $(2b-1)\omega \in 2\mathbb{Z}+1$; Theorem 5.3 guarantees that for the classical multipliers only the odd integers must be rejected, so the search terminates at $m = 0$ with $\omega = 1/(2a_0-1)$.
+**Theorem 4.6 (No two-step resonances, sharp).** For every $a$ and every $\omega$, $\|A_2(a,\omega)\| \ge 1/2$; and the bound is attained: $\|A_2(a, 2/(2a-1))\| = 1/2$.
 
-Numerically, with $a=3$ and $\omega = 0.37$ one finds $|F_3(\omega,N)/N - A_3(\omega)|$ equal to $8.1\times10^{-3}$ at $N = 10^3$ and $1.3\times10^{-4}$ at $N = 10^5$, in both cases comfortably inside the bound of Theorem 3.4. At the resonance $\omega = 1/5$ of the $3n+1$ map the raw sum grows only like $\log N$: $|F_3(1/5,N)| \approx 3.5, 4.9, 6.3, 7.8$ at $N = 10^2, 10^3, 10^4, 10^5$, consistent with $o(N)$ and with the conjectural $\log N$ law of Section 8. At the same frequency, $|F_5|/N \to 0.9511$ and $|F_7|/N \to 0.5878$, matching Theorem 5.4 to four decimal places. Midpoint-rule integration of $|A_a|^2$ over $[0,2]$ returns $0.50000000$ for $a = 1,2,3,5,7,11,101$, confirming Theorem 5.5. Finally, replacing the phase ratio by an arbitrary value at every power of two — a set of density zero — changes the normalized transform by less than $4 \times 10^{-5}$ at $N = 10^5$, illustrating Theorem 6.3.
+*Proof.* From Theorem 4.5 and $\cos \ge -1$: $\|A_2\|^2 \ge (10-6)/16 = 1/4$. Equality requires $\cos(\pi(2a-1)\omega/2) = -1$, i.e. $(2a-1)\omega/2$ an odd integer; $\omega = 2/(2a-1)$ works. Alternatively, directly: $\|1 + 3e(t)\| \ge 3-1 = 2$ by the reverse triangle inequality, and $A_2 = e(\omega/4)(1+3e(a\omega/2-\omega/4))/4$. $\square$
 
----
+The two proofs illustrate the two viewpoints: the reverse triangle inequality is the Dominant-Branch Principle in miniature ($3/4$ against $1/4$), while the exact modulus shows that the resulting constant is not merely a bound but the true minimum.
 
-## 8. Discussion and future directions
+**Theorem 4.7 (Linear size at every frequency).** For $a$ odd and every $\omega\in\mathbb{R}$, for all sufficiently large $N$,
+$$\|F_2(a,\omega,N)\| \;\ge\; \tfrac14 N.$$
 
-### 8.1 What has been settled
+*Proof.* By Theorem 4.3 the error $(2+2\pi|\omega|(1+\log N))/N$ is eventually $\le 1/4$; combined with $\|A_2\|\ge 1/2$ and the reverse triangle inequality, $\|F_2/N\| \ge 1/2 - 1/4 = 1/4$. $\square$
 
-For the one-step phase $T_a(n)/n$ the situation is now completely understood. The phase splits into a constant even branch $1/2$ and an odd branch $a + 1/n$; the odd perturbation $1/n$ is negligible after Cesàro averaging; hence $F_a(\omega,N)/N \to \bigl(e(\omega/2)+e(a\omega)\bigr)/2$ with modulus $|\cos(\pi(a-\tfrac12)\omega)|$. Every question about "cancellation for the $an+1$ map at a fixed frequency" is therefore answered at the level of the one-step sum — and by Theorem 6.3 the answer contains no dynamical information whatsoever.
+### 4.4 The contrast
 
-Two corollaries are worth stating as methodological principles. First, when a proposed pseudorandomness statistic is bounded and has finitely many accumulation points in its phase, its normalized limit should be computed *before* any effort is spent proving cancellation bounds. Second, a statistic invariant under density-zero surgery cannot imply any statement about finite orbit data; invariance under such surgery is a cheap and decisive test to apply to any candidate.
+**Theorem 4.8 (Resonance destroyed by iteration).** For the classical Collatz map $a=3$ at the frequency $\omega=1/5$:
+$$\frac{F(3,1/5,N)}{N} \longrightarrow 0, \qquad\text{yet}\qquad \|F_2(3,1/5,N)\| \ge \tfrac14 N \text{ eventually}.$$
 
-### 8.2 Conjecture 1: the second-order law
-
-The leading term erases the multiplier's arithmetic — it depends on $a$ only through the single cosine. The subleading term does not.
-
-**Conjecture 8.1 (Second-order spectral law).** For every $a \ge 1$ and every $\omega \ne 0$, the quantity
-$$F_a(\omega, N) - N\,A_a(\omega) - c(a,\omega)\log N$$
-converges as $N \to \infty$, where
-$$c(a,\omega) = \pi i\, \omega\, e(a\omega).$$
-Equivalently, $\bigl(F_a(\omega,N) - N A_a(\omega)\bigr)/\log N \to c(a,\omega)$.
-
-The heuristic is exact expansion of the odd branch: $e(\omega/n) = 1 + 2\pi i \omega/n + O(\omega^2/n^2)$, and $\sum_{n \le N,\, n \text{ odd}} 1/n = \tfrac12 \log N + O(1)$, so the deviation sum contributes $e(a\omega)\cdot 2\pi i \omega \cdot \tfrac12 \log N$. Theorem 3.4 already isolates the deviation sum and bounds it by $2\pi|\omega|(1+\log N)$; the conjecture asserts that this bound is attained with the stated constant, which requires only a matching lower bound together with the standard asymptotics of the odd harmonic sum. Note that $c(a,\omega)$ carries the branch phase $e(a\omega)$ undamped and is linear in $\omega$: the subleading spectrum sees strictly more than the leading one. Numerically the convergence is slow (the ratio $(F - NA)/\log N$ at $a=3,\ \omega=0.37$ moves from $-0.976+0.659i$ at $N=10^3$ to $-0.859+0.777i$ at $N=10^6$, against the predicted $-0.741+0.896i$), as expected for an $O(1/\log N)$ correction.
-
-### 8.3 Conjecture 2: iterated transforms are not blind
-
-**Conjecture 8.2 (Iterated limit law).** For fixed $m \ge 1$ define the $m$-step transform
-$$F^{(m)}_a(\omega,N) = \sum_{n \le N} e\!\left(\omega\, \frac{T_a^m(n)}{n}\right).$$
-Then $F^{(m)}_a(\omega,N)/N$ converges to a finite combination
-$$\sum_{j} 2^{-m}\,\mu_j\, e(\omega r_j),$$
-where the $r_j$ are the finitely many limiting $m$-step ratios $a^{k}/2^{\,m-k}$ ($k$ = number of odd steps taken) and $\mu_j$ is the number of residue classes mod $2^m$ following the corresponding parity pattern. Moreover, for $m \ge 2$ the resulting resonance set is *not* a coset of a lattice, and its zero set determines $a$ uniquely.
-
-The point is structural: one step gives two branches and hence a cosine, whose zero set is an arithmetic progression and therefore encodes only the single integer $2a-1$. Two steps give up to four branches with unequal weights, and a sum of four unit vectors with rational weights has a zero set that is a genuine algebraic variety in $\omega$ rather than a lattice coset. Determining these zero sets, and quantifying the perturbation caused by the $O(1/n)$ corrections at each of the $m$ steps, is the natural continuation.
-
-### 8.4 Further directions
-
-* **Local exclusion instead of global bounds.** Replace the impossible global condition over all irrational frequencies by a condition excluding a fixed neighbourhood of the integer resonances; by continuity, values near the zero-frequency peak necessarily remain near the trivial bound $N$, so any meaningful hypothesis must exclude them explicitly.
-* **Quantitative cancellation on compact sets bounded away from integers.** Study $F_a(\omega,N)/N$ on compact frequency sets at positive distance from $\mathbb{Z}$, and seek estimates uniform in $N$ that are sharper than the $O((1+|\omega|\log N)/N)$ bound of Theorem 3.4.
-* **Sharper branch asymptotics.** The explicit decomposition into a constant even phase $1/2$ and an odd phase $a + 1/n$ should support strictly sharper asymptotic estimates than those obtained by treating the two branches together.
-* **Averaged statements outside exceptional sets.** Formulate $L^2$ bounds over a period, or bounds valid outside an exceptional set of small measure. Such claims are compatible with isolated resonant peaks in a way that a pointwise bound over all irrationals is not — though Theorem 5.5 shows plain mean-square averaging is multiplier-blind, so any useful averaged statistic must be weighted so as to detect the location of the resonance comb.
-* **Comparative statistics for $3n+1$, $5n+1$, $7n+1$.** Compare corrected normalized or averaged statistics across the three classical multipliers. Any useful discriminator must depend on more than continuity near frequency zero, since by Theorem 5.1 all multipliers agree at integer frequencies.
-* **Orbit-dependent transforms.** Investigate transforms built from orbit data (hitting times, total stopping times) separately from the one-step cutoff sum. A rigorous implication between an orbit hitting-time estimate and a spectral estimate would require precise definitions and directional proofs; by Corollary 6.4 it must not be treated as an automatic equivalence.
+Thus the depth-one spectral gap at $\omega=1/5$ is not a property of the map's dynamics but of the exact $1/2$–$1/2$ parity balance at depth one. It carries no information stable under iteration. Any programme that reads arithmetic content into these extinctions must explain why the content evaporates after a single additional step of the very map under study.
 
 ---
 
-## 9. Conclusion
+## 5. The $b$-adic family: halving is the unique resonant base
 
-The one-step spectral transform of the $an+1$ maps is completely solved. Its normalized limit is $\bigl(e(\omega/2)+e(a\omega)\bigr)/2$, with modulus the single cosine $|\cos(\pi(a-\tfrac12)\omega)|$ and resonance set the arithmetic progression $\{(2m+1)/(2a-1)\}$. Convergence holds with an explicit $O\bigl((1+|\omega|\log N)/N\bigr)$ rate, uniformly in the multiplier and locally uniformly in the frequency. Cancellation occurs exactly on the resonance set; near frequency zero the transform is pinned to a quarter of the trivial bound, refuting any global pointwise decay hypothesis; the mean square of the amplitude is the universal constant $\tfrac12$; and the whole statistic is invariant under modification of the map on any density-zero set of inputs, hence carries no information about cycles or hitting times.
+### 5.1 The family
 
-What survives is the arithmetic of the resonance combs, which separates $3n+1$, $5n+1$ and $7n+1$ pairwise at the frequencies $1/5$, $1/9$ and $1/13$, and which agrees for all multipliers precisely at integer frequencies. The natural continuations — the conjectural second-order $\log N$ law and the non-lattice resonance geometry of iterated transforms — are exactly the regimes in which the invariance obstruction of Section 6 no longer applies.
+**Definition 5.1.** For integers $b\ge 2$ and $a\ge 1$ let
+$$T_{b,a}(n) \;=\; \begin{cases} n/b, & b \mid n,\\ a n + 1, & \text{otherwise},\end{cases}$$
+with phase ratio $\rho_{b,a}(n)=T_{b,a}(n)/n$ and transform $G_b(a,\omega,N) := \mathcal{F}[\rho_{b,a}](\omega,N)$. For $b=2$ this is exactly the classical transform: $G_2(a,\omega,N)=F(a,\omega,N)$.
+
+**Proposition 5.1 (Branches).** If $b\mid n$ and $n\neq 0$ then $\rho_{b,a}(n)=1/b$ exactly. Otherwise $\rho_{b,a}(n) = a + 1/n \to a$. The dividing branch has density $1/b$ (Lemma 3.7), so the multiplicative branch has density $1-1/b$.
+
+### 5.2 No resonance for $b \ge 3$
+
+**Theorem 5.2 (No $b$-adic resonance).** Let $b\ge 3$ and $a\ge 1$. Then for every $\omega\in\mathbb{R}$ and all sufficiently large $N$,
+$$\|G_b(a,\omega,N)\| \;\ge\; \frac{b-2}{2b}\,N.$$
+
+*Proof.* The multiplicative branch $D=\{k : b \nmid (k+1)\}$ has density $d = 1-1/b \ge 2/3 > 1/2$, and on $D$ the phase $\rho_{b,a}(k+1) = a + 1/(k+1) \to a =: \theta$. Corollary 3.5 gives the constant $(2d-1)/2 = (1-2/b)/2 = (b-2)/(2b)$. $\square$
+
+**Theorem 5.3 (Sharp constant).** Under the same hypotheses, for every $\varepsilon>0$ and all sufficiently large $N$,
+$$\|G_b(a,\omega,N)\| \;\ge\; \Big(1 - \tfrac2b - \varepsilon\Big) N .$$
+
+*Proof.* Apply Theorem 3.4 with $c = 1-2/b-\varepsilon < 2d-1 = 1-2/b$. $\square$
+
+The constant $1-2/b$ is precisely the difference of the two branch weights, $(1-1/b) - 1/b$; it is the length of the residual arrow when the minority branch is aimed in the worst possible direction. Numerically the observed minimum of $\|G_b/N\|$ over $\omega$ agrees with $1-2/b$: $1/3$ at $b=3$, $1/2$ at $b=4$, $3/5$ at $b=5$.
+
+### 5.3 The dichotomy
+
+**Theorem 5.4 (Halving is the unique resonant base).**
+$$\frac{G_2(3,1/5,N)}{N}\longrightarrow 0, \qquad\text{while}\qquad \forall b\ge 3,\ \forall a,\ \forall\omega:\ \|G_b(a,\omega,N)\| \ge \frac{b-2}{2b}N \text{ eventually}.$$
+
+*Proof.* The first statement is Corollary 2.7 together with $G_2=F$; the second is Theorem 5.2. $\square$
+
+The interpretation is decisive. Along the family of bases, the multiplier $a$ is completely inert: it never determines whether cancellation occurs. Only the base does, and only because the base fixes the density split $1/b$ versus $1-1/b$. Base $2$ is the unique base for which that split is balanced, $1/2$ versus $1/2$, and balance is exactly the knife edge identified in Theorem 3.4. The spectral gaps of the $an+1$ maps are a phenomenon of *halving*.
+
+---
+
+## 6. Averaged spectral statistics
+
+### 6.1 Why averaging is forced
+
+Any statement of the form "$\|F(a,\omega,N)\| = o(N)$ for all irrational $\omega$" is false. Indeed $\omega\mapsto F(a,\omega,N)$ is continuous (a finite sum of continuous functions) and $F(a,0,N)=N$; hence for each fixed $N$ there is a neighbourhood of $0$ on which $\|F\| \ge N/2$, and that neighbourhood contains irrationals. The same argument applies near every $\omega$ where $A(a,\omega)$ has modulus $1$, i.e. at the even integers. Continuity alone kills the pointwise programme. The correct replacements are (i) statements on compact frequency sets bounded away from the resonant peaks, and (ii) averaged statements. We develop the latter.
+
+### 6.2 Mean-square power
+
+The natural period is $[0,4]$: both $\|A(a,\cdot)\|^2$ and $\|A_2(a,\cdot)\|^2$ are cosines with argument an integer multiple of $\pi/2$ times $\omega$, so they integrate to their mean over $[0,4]$.
+
+**Theorem 6.1 (Depth-one power).** For every $a$, $\displaystyle \int_0^4 \|A(a,\omega)\|^2\,d\omega = 2$, i.e. the mean over a period is $1/2$.
+
+*Proof sketch.* $\|A(a,\omega)\|^2 = \cos^2(\pi(a-\tfrac12)\omega) = \tfrac12 + \tfrac12\cos(\pi(2a-1)\omega)$. Since $2a-1$ is an integer, the cosine has argument $\pi m \omega$ with $m=2a-1$, and $\int_0^4 \cos(\pi m\omega)\,d\omega = \sin(4\pi m)/(\pi m) = 0$. $\square$
+
+**Theorem 6.2 (Depth-two power).** For every $a$, $\displaystyle \int_0^4 \|A_2(a,\omega)\|^2\,d\omega = \frac52$, i.e. the mean over a period is $5/8$.
+
+*Proof sketch.* By Theorem 4.5, $\|A_2\|^2 = \tfrac58 + \tfrac38\cos\big(\tfrac{\pi(2a-1)}{2}\omega\big)$, and the cosine again integrates to zero over $[0,4]$ since $\tfrac{2a-1}{2}\cdot 4 = 2(2a-1)$ is an even integer. $\square$
+
+**Remark 6.3 (Power = sum of squared weights).** Both values are the squared $\ell^2$-norm of the branch weight vector: $(\tfrac12)^2+(\tfrac12)^2 = \tfrac12$ at depth one; $(\tfrac14)^2+(\tfrac34)^2 = \tfrac58$ at depth two. This is exactly Parseval: when the limiting phases are pairwise distinct, the cross terms are pure oscillations and average to zero, leaving the sum of squares.
+
+**Theorem 6.4 (Depth detected, multiplier invisible).** For all $a,a'$,
+$$\int_0^4\|A(a,\omega)\|^2 d\omega \;=\; \int_0^4\|A(a',\omega)\|^2 d\omega \;<\; \int_0^4\|A_2(a',\omega)\|^2 d\omega .$$
+The mean-square power strictly increases with iteration depth from $1$ to $2$, by the same amount for every multiplier, and is identical across multipliers at fixed depth.
+
+### 6.3 Finite-$N$ mean-square identities
+
+Set
+$$\varepsilon_N := \frac{1+8\pi(1+\log N)}{N}, \qquad \varepsilon'_N := \frac{2+8\pi(1+\log N)}{N},$$
+both tending to $0$.
+
+**Theorem 6.5 (Finite-$N$ power, with error).** For every $a$ and $N\ge 1$,
+$$\Big| \int_0^4 \Big\|\frac{F(a,\omega,N)}{N}\Big\|^2 d\omega - 2 \Big| \;\le\; 8\varepsilon_N,$$
+and for $a$ odd,
+$$\Big| \int_0^4 \Big\|\frac{F_2(a,\omega,N)}{N}\Big\|^2 d\omega - \frac52 \Big| \;\le\; 8\varepsilon'_N.$$
+
+*Proof sketch.* Both $\|F/N\|$ and $\|A\|$ are bounded by $1$, so $\big|\,\|x\|^2-\|y\|^2\,\big| \le 2\|x-y\|$ for $\|x\|,\|y\|\le 1$. Insert the uniform-in-$\omega$ error bound of Theorem 4.3 (and its depth-one analogue) valid for $|\omega| \le 4$, integrate over the interval of length $4$, and use Theorems 6.1–6.2. $\square$
+
+**Theorem 6.6 (Averaged separation of depth).** For every odd $a$, for all sufficiently large $N$,
+$$\int_0^4 \Big\|\frac{F_2(a,\omega,N)}{N}\Big\|^2 d\omega \;\ge\; \int_0^4 \Big\|\frac{F(a,\omega,N)}{N}\Big\|^2 d\omega \;+\; \frac14 .$$
+
+*Proof.* Both errors are eventually $\le 1/8$; then the depth-two integral is $\ge 5/2 - 1/8$ and the depth-one integral is $\le 2 + 1/8$, and $5/2-1/8 - (2+1/8) = 1/4$. $\square$
+
+Unlike the pointwise resonances, this separation is robust: it is a genuine, computable discriminator between iteration depths, valid at finite $N$ with explicit constants.
+
+### 6.4 Confining the peaks
+
+**Theorem 6.7 (Chebyshev bound for the peak set).** For every $a$, every threshold $\lambda>0$ and every $N\ge 1$,
+$$\big|\{\omega \in [0,4] : \|F(a,\omega,N)\| \ge \lambda N\}\big| \;\le\; \frac{2 + 8\varepsilon_N}{\lambda^2},$$
+where $|\cdot|$ is Lebesgue measure.
+
+*Proof sketch.* Let $g(\omega)=\|F(a,\omega,N)/N\|$, a continuous function bounded by $1$. On the super-level set $S_\lambda = \{\omega\in[0,4]: g\ge\lambda\}$ we have $\lambda^2 |S_\lambda| \le \int_{S_\lambda} g^2 \le \int_0^4 g^2 \le 2 + 8\varepsilon_N$ by Theorem 6.5. $\square$
+
+**Corollary 6.8 (Trivial-size frequencies occupy at most half a period).** For every $a$ and every $\eta>0$, for all sufficiently large $N$,
+$$\big|\{\omega\in[0,4] : \|F(a,\omega,N)\| \ge N\}\big| \;\le\; 2 + \eta .$$
+
+*Proof.* Take $\lambda=1$ in Theorem 6.7 and use $8\varepsilon_N \to 0$. $\square$
+
+This is the corrected replacement for the impossible pointwise claim: the transform can attain its trivial size $N$, but only on a set of frequencies occupying at most half of the period $[0,4]$ (up to $\eta$), for large $N$. Such a statement is fully compatible with isolated resonant peaks at the even integers, which a pointwise bound is not.
+
+---
+
+## 7. Algorithms
+
+Three computational primitives underlie the numerical corroboration of the theory.
+
+**(A) Direct transform evaluation.** Given $a$, $\omega$, $N$ and a depth $L$, compute $\sum_{n=1}^N e(\omega\, T_a^L(n)/n)$ by iterating the map $L$ times per integer. Cost $O(NL)$ time, $O(1)$ memory. Numerically stable if the phase is reduced modulo $1$ before exponentiating, since $T_a^L(n)/n$ stays bounded by $a^L$.
+
+**(B) Branch-weight extraction.** Given $a$ and $L$, determine the limiting phase of $T_a^L(n)/n$ for each residue $n \bmod 2^L$: the Terras parity vector of $n$ is a function of $n \bmod 2^L$, so exactly the residues determine the sequence of halvings and multiplications, and the limiting ratio is the product of the corresponding factors ($1/2$ per halving, $a$ per multiplication) — the additive $+1$ terms contribute $O(1/n)$ and vanish in the limit. Grouping equal limits gives the weight vector; cost $O(2^L L)$. At $L=1$ the weights are $(1/2,1/2)$; at $L=2$, $(1/4,3/4)$; at $L=3$, $(1/8,1/4,5/8)$.
+
+**(C) Mean-square power by quadrature.** Compute $\frac14\int_0^4 \|F/N\|^2 d\omega$ by the trapezoidal or Simpson rule on a uniform grid. Since the integrand is a trigonometric polynomial of bounded degree in $\omega$ for the limiting amplitudes, a modest grid is spectrally accurate; at finite $N$ the error is dominated by the $O(\log N/N)$ term of Theorem 6.5.
+
+Combining (B) with the Dominant-Branch Principle yields an immediate decision procedure: *compute the weight vector; if its maximum exceeds $1/2$, the transform has linear size at every frequency with constant $2\max w - 1$; if the maximum equals $1/2$ and there is a matching second weight, cancellation is possible and the resonance set can be solved for explicitly.*
+
+---
+
+## 8. Discussion
+
+### 8.1 What decides cancellation
+
+The results assemble into a single statement: for transforms built from maps with finitely many limiting phase branches, cancellation is governed by the *weight vector* $w = (w_1,\dots,w_m)$ of branch densities, not by the phases themselves. If $\max_i w_i > 1/2$, no cancellation at any frequency, with explicit constant $2\max_i w_i - 1$. If the weights are balanced with two equal maxima at $1/2$, cancellation is possible, and where it occurs is determined by the phases — which is where the multiplier $a$ finally enters, but only to *locate* the resonances, never to create them.
+
+### 8.2 Three mechanisms
+
+1. **Branch densities decide cancellation.** The Dominant-Branch Principle, with the threshold shown optimal by the Collatz map itself.
+2. **Averaging sees depth but not the multiplier.** The mean-square power over a period is the squared $\ell^2$-norm of the weight vector: $1/2$ at depth one, $5/8$ at depth two, uniformly in $a$.
+3. **Resonances are not stable under iteration.** Depth-one gaps at $(2a-1)\omega$ odd are destroyed at depth two, where the amplitude is bounded below by $1/2$ everywhere.
+
+### 8.3 Physical reading
+
+In diffraction language, the transform is a structure factor and its dark bands are systematic absences. Systematic absences in crystallography arise from *exact* symmetries of the unit cell — glide planes and screw axes producing pairs of scatterers in antiphase with equal weight. What the results above show is that the Collatz absences have precisely this character: they come from an exact $1/2$–$1/2$ weighting, an "antiphase pair of sublattices", and they disappear the moment the weights are perturbed, whether by iterating the map (weights $1/4$, $3/4$) or by changing the base (weights $1/b$, $1-1/b$). A systematic absence is a statement about the *lattice of scatterers*, not about the chemistry sitting on it; likewise these absences are a statement about parity densities, not about the arithmetic of $3n+1$.
+
+### 8.4 Limitations
+
+The theory treats the one-step and two-step *pointwise-in-$n$* phase ratio $T^L(n)/n$, not orbit-dependent statistics such as total stopping time or hitting-time distributions. Those are genuinely different objects; no implication between an orbit hitting-time estimate and a spectral estimate of the above kind is asserted here, and any such implication would require precise definitions and a directional proof rather than an assumed equivalence. Likewise, the results say nothing about the Collatz conjecture itself: they are structural facts about interference in the associated exponential sums, and their content is largely negative — they close off certain lines of attack while providing an exact tool for others.
+
+---
+
+## 9. Future work
+
+**Conjecture A (depth-$L$ dominance).** For every odd multiplier $a$, every depth $L\ge2$ and every real frequency,
+$$\liminf_{N\to\infty} \frac{\|F_L(a,\omega,N)\|}{N} \;\ge\; c_L \;>\; 0,$$
+where $F_L$ is the transform of the phase $T_a^L(n)/n$. The mechanism: the Terras parity vector of $n$ is determined by $n \bmod 2^L$, so the depth-$L$ phase takes finitely many limiting values indexed by residues mod $2^L$, weighted by dyadic densities. The classes "at least one halving followed by the multiplicative branch" coalesce, producing one weight strictly above $1/2$ ($3/4$ at $L=2$, $5/8$ at $L=3$), which the Dominant-Branch Principle converts directly into a linear lower bound. What remains is the combinatorial identification of the coalescing classes mod $2^L$ — a finite check for each $L$, plus a recursion in $L$. *Falsifiable:* exhibit a depth $L$ and odd $a$ whose weight vector has no weight above $1/2$, or a frequency where $F_L/N\to0$.
+
+**Remark (a caveat on Conjecture A).** Computing the depth-$L$ weight vectors directly from the residues modulo $2^L$ gives, for every odd $a$ alike,
+$$L=1:\ (\tfrac12,\tfrac12);\quad L=2:\ (\tfrac14,\tfrac34);\quad L=3:\ (\tfrac18,\tfrac14,\tfrac58);\quad L=4:\ (\tfrac1{16},\tfrac7{16},\tfrac12);$$
+$$L=5:\ (\tfrac1{32},\tfrac18,\tfrac9{32},\tfrac9{16});\quad L=6:\ (\tfrac1{64},\tfrac{11}{64},\tfrac5{16},\tfrac12).$$
+The maximal weight is $3/4$, $5/8$, $1/2$, $9/16$, $1/2$ at $L=2,\dots,6$. Thus the Dominant-Branch Principle applies at depths $2,3,5$ but is *silent* at depths $4$ and $6$, where the maximum weight sits exactly at the threshold. Conjecture A therefore needs either a refinement of the criterion (at depth $4$ the two minority weights $1/16$ and $7/16$ would both have to be in exact antiphase with the dominant branch simultaneously, which is two conditions on one frequency and so should fail for all $\omega$) or a different mechanism at the even depths. These weight computations are numerical explorations rather than established facts, and the point at which the criterion goes silent is precisely where care is needed.
+
+**Conjecture B (non-monotone spectral power).** The mean-square power $P_L(a) = \frac14\int_0^4 \|A_L(a,\omega)\|^2 d\omega$ equals the sum of squared branch weights and is **not** monotone in $L$: $P_1 = 1/2 < P_2 = 5/8$, but $P_3 = 15/32 < P_1$, and $P_L\to 0$ as $L\to\infty$. The reason: $P_L$ is the squared $\ell^2$-norm of the weight vector, which is large when the branch structure is unbalanced and disperses as the number of distinct limiting phases grows with $L$; the depth-two bump is a coalescence artefact, not a trend. The exact values at $L=1,2$ are established above; the computed weight vectors give the power sequence $\tfrac12,\ \tfrac58,\ \tfrac{15}{32},\ \tfrac{57}{128},\ \tfrac{211}{512},\ \tfrac{773}{2048}$ for $L=1,\dots,6$ — an initial rise followed by steady decay, consistent with $P_L\to0$. *Falsifiable:* any depth whose measured power breaks the sum-of-squares formula.
+
+**Conjecture C (sharp $b$-adic constant and base dependence).** The constant $1-2/b$ of Theorem 5.3 is the exact minimum of $\lim_N \|G_b(a,\omega,N)\|/N$ over $\omega$, attained where the two branch phases are in antiphase; and the depth-$L$ $b$-adic power equals the sum of squared $b$-adic branch weights, so that the base, not the multiplier, controls all averaged statistics.
+
+**Further directions.**
+- Replace the impossible global condition over all irrational frequencies by a condition excluding a fixed neighbourhood of the integer resonances; continuity forces values near the zero-frequency peak to remain near the cutoff $N$.
+- Study the normalised transforms $F(\omega,N)/N$ on compact frequency sets bounded away from the resonances, seeking quantitative cancellation estimates uniform in $N$.
+- Exploit the explicit even/odd decomposition of the depth-one phase — the even branch contributes the constant phase $1/2$ while the odd branch has phase $a + 1/n$ — for sharper asymptotic estimates than the crude $O(\log N/N)$ error.
+- Formulate further averaged statements: $L^p$ bounds over a period, or bounds outside an exceptional set of small measure. Such claims are compatible with isolated resonant peaks in a way that a pointwise bound over all irrationals is not.
+- Compare the corrected normalised and averaged statistics for the $3n+1$, $5n+1$ and $7n+1$ maps. Any useful discriminator must depend on more than continuity near frequency zero — and the results here show that the mean-square power is *not* such a discriminator.
+- Investigate orbit-dependent transforms separately from the one-step cutoff sum.
+
+---
+
+## 10. Conclusion
+
+For the accelerated $an+1$ maps, the spectrum of the normalised cutoff transform is completely described by a vector of branch densities and a vector of limiting phases. Cancellation — the existence of a spectral gap — is decided by the densities alone, through the sharp threshold $1/2$: a branch of density $d>1/2$ forces $\|F(\omega,N)\|\ge (2d-1-o(1))N$ at every real frequency, while at density exactly $1/2$ total cancellation genuinely occurs. The classical Collatz resonances live exactly on that knife edge; they are destroyed by iterating the map once more (branch weights $1/4$, $3/4$) and by changing the base to any $b\ge3$ (branch weights $1/b$, $1-1/b$). What survives is averaged: the mean-square power over a period equals the sum of squared branch weights, $1/2$ at depth one and $5/8$ at depth two, for every multiplier — a statistic that reads dynamical depth and is blind to arithmetic.

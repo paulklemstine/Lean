@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "97b1c345",
-      "domain": "Probability",
-      "key_insight": "# Future directions — seed-ensemble rung theory\n\n## Where the thread stands\n\nAn earlier cycle built the general-$n$ theory of the rung distribution function\n$R_n(m,p)$ — the binomial upper tail that a",
-      "quality_score": 0.92,
-      "sorry_count": 0,
-      "theorem_count": 255,
-      "timestamp": "2026-08-17T20:44:43",
-      "title": "NET-48: The direct test survives via the MEDIAN — k*=160 at (d=4, ctx=2048, seed=3), all four point-"
-    },
-    {
       "cycle_id": "2e6124e7",
       "domain": "Physics",
       "key_insight": "# Future Directions\n\nDerived from the analysis and adversarial review of this cycle.  Everything cited as\n\"proved\" below is a `sorry`-free Lean theorem in `Catalog/Physics/FourierEnergyBound.lean`,\n`C",
@@ -499,19 +489,19 @@
       "theorem_count": 62,
       "timestamp": "2026-08-19T17:41:23",
       "title": "All the moving parts — honest uniqueness decoding"
+    },
+    {
+      "cycle_id": "252d7c91",
+      "domain": "Algebra",
+      "key_insight": "# Future directions (thread `th_1d82f8a0`, cycle 2)\n\n## What this cycle proved\n\nTwo self-contained files in `Catalog/Algebra/`, both compiling with no `sorry` and using only\n`propext`, `Classical.choi",
+      "quality_score": 0.8,
+      "sorry_count": 0,
+      "theorem_count": 114,
+      "timestamp": "2026-08-19T19:40:27",
+      "title": "Two new self-contained files extend the conditional Hilbert-class-field interfac"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "e870e995",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\nDerived from the formal development in `Catalog/Novelty/WeightMonodromy*.lean`, which proves:\npurity of a weight grading (weight `= α ·` degree, `α > 0`) on the cohomology of a bi",
-      "quality_score": 0.7131,
-      "sorry_count": 0,
-      "theorem_count": 87,
-      "timestamp": "2026-08-09T17:55:19",
-      "title": "ArXiv paper: Formality for rigid-analytic spaces satisfying the weight-monodromy conjecture"
-    },
     {
       "cycle_id": "0dcd87ee",
       "domain": "Combinatorics",
@@ -2501,27 +2491,19 @@
       "theorem_count": 62,
       "timestamp": "2026-08-19T17:41:23",
       "title": "All the moving parts — honest uniqueness decoding"
+    },
+    {
+      "cycle_id": "252d7c91",
+      "domain": "Algebra",
+      "key_insight": "# Future directions (thread `th_1d82f8a0`, cycle 2)\n\n## What this cycle proved\n\nTwo self-contained files in `Catalog/Algebra/`, both compiling with no `sorry` and using only\n`propext`, `Classical.choi",
+      "quality_score": 0.8,
+      "sorry_count": 0,
+      "theorem_count": 114,
+      "timestamp": "2026-08-19T19:40:27",
+      "title": "Two new self-contained files extend the conditional Hilbert-class-field interfac"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "aa4eb9d3",
-      "domain": "Tropical",
-      "name": "tmin_le",
-      "quality": 0.86
-    },
-    {
-      "cycle_id": "aa4eb9d3",
-      "domain": "Tropical",
-      "name": "le_tmax",
-      "quality": 0.86
-    },
-    {
-      "cycle_id": "aa4eb9d3",
-      "domain": "Tropical",
-      "name": "le_tmin",
-      "quality": 0.86
-    },
     {
       "cycle_id": "512ab986",
       "domain": "Logic",
@@ -2803,9 +2785,27 @@
       "domain": "Algebra",
       "name": "mem_scanList",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "252d7c91",
+      "domain": "Algebra",
+      "name": "qBinom_zero_right",
+      "quality": 0.8
+    },
+    {
+      "cycle_id": "252d7c91",
+      "domain": "Algebra",
+      "name": "qBinom_zero_succ",
+      "quality": 0.8
+    },
+    {
+      "cycle_id": "252d7c91",
+      "domain": "Algebra",
+      "name": "qBinom_succ_succ",
+      "quality": 0.8
     }
   ],
-  "last_updated": "2026-08-19T17:41:23",
+  "last_updated": "2026-08-19T19:40:27",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hn2⟩)",
@@ -3021,12 +3021,6 @@
   "research_threads": {
     "Algebra": [
       {
-        "cycle_id": "ea50968d",
-        "quality": 0.627125,
-        "theorems": 81,
-        "title": "Derived from the results proved in `Catalog/Novelty/ArithmetizedQFTReflection.le"
-      },
-      {
         "cycle_id": "6092c7cd",
         "quality": 0.82,
         "theorems": 36,
@@ -3079,6 +3073,12 @@
         "quality": 0.82,
         "theorems": 62,
         "title": "All the moving parts — honest uniqueness decoding"
+      },
+      {
+        "cycle_id": "252d7c91",
+        "quality": 0.8,
+        "theorems": 114,
+        "title": "Two new self-contained files extend the conditional Hilbert-class-field interfac"
       }
     ],
     "Applications": [

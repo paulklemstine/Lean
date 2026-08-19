@@ -1,122 +1,104 @@
-# The Song of $3n+1$: Listening to a Famous Map, and Hearing Almost Nothing
+# The Hidden Diffraction Pattern of the $3n+1$ Problem
 
-## A conjecture that refuses to die
+## Listening to a famous unsolved problem
 
-Pick a whole number. If it is even, halve it. If it is odd, triple it and add one. Repeat. Starting from $7$ you get
+Take a whole number. If it is even, halve it. If it is odd, triple it and add one. Repeat. This is the Collatz map, the $3n+1$ problem, and the conjecture that every starting number eventually reaches $1$ has resisted proof for almost a century. Paul Erdős famously said that mathematics is not yet ready for such problems.
 
-$$7 \to 22 \to 11 \to 34 \to 17 \to 52 \to 26 \to 13 \to 40 \to 20 \to 10 \to 5 \to 16 \to 8 \to 4 \to 2 \to 1.$$
+When a problem resists direct attack, physicists have a favourite move: stop looking at the object and start looking at its *spectrum*. Do not stare at the crystal — shine X-rays through it and read the diffraction pattern. Do not describe the sound wave — take its Fourier transform and read the overtones. A spectrum turns a complicated, irregular object into a landscape of peaks and valleys, and the peaks and valleys are often much easier to interpret than the object itself.
 
-Every number anyone has ever tried eventually crashes into $1$. Nobody can prove it always does. This is the Collatz conjecture, and it has the peculiar status of being simultaneously the most accessible unsolved problem in mathematics and one of the least tractable. Paul Erdős is supposed to have said that mathematics is not yet ready for such problems.
+This article is about what happens when you do exactly that to the $3n+1$ map — and about a surprisingly sharp structural principle that emerges. The punchline: the Collatz map *does* have a diffraction pattern with "systematic absences", frequencies at which the signal cancels perfectly. But those absences are fragile. They come not from the arithmetic of the number $3$, nor from anything deep about the dynamics. They come from a single accident of bookkeeping: **exactly half of all integers are even.**
 
-When a problem resists direct attack, mathematicians reach for translation. If you cannot count something, measure it. If you cannot measure it, take its Fourier transform — turn the object into a wave and look at its spectrum. This is the strategy that cracked prime-counting problems (Hardy–Littlewood, Vinogradov), and it is a natural thing to attempt for Collatz: encode each step of the map as a phase, add up the phases, and hope for *cancellation*. Massive cancellation in an exponential sum is the analytic signature of pseudorandomness, and pseudorandomness is exactly what would force every orbit down to $1$.
+## Building the spectrum
 
-This article is about carrying out that program honestly for the simplest such sum — and discovering, with complete precision, that it cannot possibly work. The failure turns out to be more interesting than a vague "it didn't work". The sum converges to an explicit, beautiful formula; the formula is a single cosine; and the cosine tells you, in exact arithmetic terms, what the sum knows and what it can never know.
+Here is the construction. Write $T(n)$ for one step of the map: $T(n) = n/2$ when $n$ is even, and $T(n) = an+1$ when $n$ is odd, where $a$ is an odd multiplier ($a = 3$ gives Collatz; $a=5$ and $a=7$ give the cousins that are also widely studied).
 
-## Setting the sum up
+The map itself grows and shrinks unpredictably, so we look instead at the *ratio* it produces, $T(n)/n$, which measures the multiplicative effect of one step. Attach to each integer $n$ a unit complex number — a point on the unit circle — that spins at a rate set by that ratio:
 
-Fix an odd multiplier $a$ — the classical case is $a = 3$, but $5n+1$ and $7n+1$ are just as natural to study, and they behave very differently as dynamical systems. Define the accelerated one-step map
+$$e\big(\omega \cdot T(n)/n\big), \qquad e(x) := e^{2\pi i x},$$
 
-$$T_a(n) = \begin{cases} n/2, & n \text{ even},\\ a n + 1, & n \text{ odd}.\end{cases}$$
+where $\omega$ is a frequency dial we are free to turn. Then add up the first $N$ of these arrows:
 
-The natural quantity to make into a phase is not $T_a(n)$ itself — that grows — but the *phase ratio*, the multiplicative factor by which one step changes the number:
+$$F(\omega, N) \;=\; \sum_{n=1}^{N} e\!\left(\omega\,\frac{T(n)}{n}\right).$$
 
-$$r_a(n) = \frac{T_a(n)}{n}.$$
+This is a diffraction pattern in the most literal sense: each integer contributes a wave, and we ask how the waves interfere. If they all point roughly the same way, $|F(\omega,N)|$ grows like $N$ — a bright spot. If they cancel, $|F(\omega,N)|$ is much smaller than $N$ — a dark spot, an *extinction*.
 
-This is exactly the quantity whose logarithm governs whether orbits drift up or down. Now write $e(x) = e^{2\pi i x}$ for the standard character, a point on the unit circle in the complex plane, and form the **cutoff transform**
+What does the pattern look like? The answer is remarkably clean, because the ratio $T(n)/n$ takes only two shapes. If $n$ is even, $T(n)/n = 1/2$ exactly. If $n$ is odd, $T(n)/n = a + 1/n$, which converges to $a$ as $n$ grows. So asymptotically there are just **two arrow directions**, $e(\omega/2)$ and $e(a\omega)$, each carried by exactly half the integers. Dividing by $N$ to normalise, the pattern converges:
 
-$$F_a(\omega, N) = \sum_{n=1}^{N} e\!\left(\omega\, r_a(n)\right).$$
+$$\frac{F(\omega,N)}{N} \;\longrightarrow\; A(\omega) \;=\; \frac{e(\omega/2) + e(a\omega)}{2},$$
 
-Here $\omega$ is a real frequency, the dial we get to turn. Each term is a unit vector; there are $N$ of them; so trivially $|F_a(\omega, N)| \le N$. The whole game of analytic number theory is to prove that some sum of this shape is *much smaller* than the trivial bound — that the unit vectors point in enough different directions to cancel. If $|F_a(\omega, N)|$ were small for every irrational $\omega$, the sequence $r_a(1), r_a(2), r_a(3), \dots$ would be equidistributed, and one would have a genuine pseudorandomness statement about the map.
+and the brightness is
+$$|A(\omega)| \;=\; \Big|\cos\!\big(\tfrac{\pi(2a-1)\omega}{2}\big)\Big|.$$
 
-## The first surprise: the phases only take two shapes
+Two arrows of equal length, half and half. And two equal arrows can cancel *completely*: whenever $(2a-1)\omega$ is an odd integer, the two point in exactly opposite directions and annihilate. For the genuine Collatz map, $a=3$, the first such frequency is $\omega = 1/5$. There the sum of $N$ unit arrows is not of size $N$; it is of size $o(N)$. Perfect destructive interference.
 
-Here is the observation that decides everything. Look at what $r_a(n)$ actually is.
+It is tempting to see something profound here — a hidden resonance in the $3n+1$ problem, a spectral fingerprint of the multiplier $3$. The main results below say, unambiguously, that this reading is wrong, and they say exactly why.
 
-If $n$ is even, $T_a(n) = n/2$, so $r_a(n) = 1/2$ exactly. Not approximately — exactly, for every even $n$, for every multiplier $a$.
+## The dominant-branch principle
 
-If $n$ is odd, $T_a(n) = an + 1$, so
+Everything hinges on one number: the *density* of each branch.
 
-$$r_a(n) = a + \frac{1}{n}.$$
+Suppose we have any sequence of "phases" $r(1), r(2), r(3), \dots$ and we form the same kind of sum, $\sum_{n\le N} e(\omega r(n))$. Suppose some set $D$ of indices has asymptotic density $d$ — meaning a fraction $d$ of the first $N$ indices lie in $D$, in the limit — and that along $D$ the phases settle down to a single value $\theta$. Then here is the principle:
 
-So the "random-looking" sequence of ratios is nothing of the sort. Half the time it is the constant $1/2$. The other half it is $a$ plus a vanishing correction $1/n$. The sequence has exactly two accumulation points, $1/2$ and $a$, and it visits them in strict alternation.
+> **Dominant-Branch Principle.** If $d > 1/2$, then for *every* real frequency $\omega$ and every constant $c < 2d-1$, the sum has size at least $cN$ for all large $N$. In particular it never cancels, at any frequency whatsoever.
 
-That kills the dream immediately, but it does much more: it lets us compute the sum exactly.
+The proof is a two-line accounting argument once stated correctly. The indices in $D$ contribute a block of roughly $dN$ nearly identical arrows, which add up to length nearly $dN$. Everything else — the other $(1-d)N$ arrows — can at worst point the opposite way, subtracting at most $(1-d)N$. The net length is at least $dN - (1-d)N = (2d-1)N$. The only technical work is showing that the arrows within $D$ really do align: the deviations $r(n) - \theta$ tend to zero, and an averaging argument (a Cesàro mean) turns "eventually small" into "small on average", which is what a sum of $N$ terms needs.
 
-## The limit law
+The threshold $d > 1/2$ is not a convenience of the proof. It is exactly right, and the Collatz map itself proves the sharpness: at $a=3$ and $\omega = 1/5$, the odd integers form a branch of density *exactly* $1/2$ whose phases converge to $3$ — every hypothesis holds but the density is not strictly above one half — and the conclusion fails for every positive constant $c$, since the sum is $o(N)$. One half is the knife edge. Above it, no cancellation is possible; at it, total cancellation can occur.
 
-Split the sum into its even and odd parts. The even terms all contribute the identical phase $e(\omega/2)$, and there are $\lfloor N/2 \rfloor$ of them. The odd terms contribute $e(a\omega) \cdot e(\omega/n)$, and the correction factors $e(\omega/n)$ march steadily toward $1$. Averaging, the corrections wash out, and one obtains the exact statement:
+Once you see the principle, the Collatz resonance stops looking mysterious. It exists *because the two branch densities are both $1/2$*. Balance is the whole story.
 
-> **Limit Law.** For every multiplier $a$ and every real frequency $\omega$,
-> $$\frac{F_a(\omega, N)}{N} \longrightarrow A_a(\omega) := \frac{e(\omega/2) + e(a\omega)}{2} \qquad (N \to \infty).$$
+## Test one: iterate the map
 
-The transform does not decay at all in general. It grows linearly, with an explicit proportionality constant: the average of two unit vectors, one for each branch of the map.
+If the resonance were a genuine feature of the dynamics, it should survive when we look at the dynamics more carefully. So take two steps instead of one, and build the same kind of spectrum from $T(T(n))/n$.
 
-The rate is explicit too. Because $|e(x) - 1| \le 2\pi |x|$ and the odd reciprocals sum to at most $1 + \log N$, one gets the clean bound
+Here the answer depends on $n$ modulo $4$, in the style of Terras's parity analysis:
 
-$$\left| \frac{F_a(\omega, N)}{N} - A_a(\omega) \right| \le \frac{1 + 2\pi|\omega|(1 + \log N)}{N},$$
+- $n \equiv 0 \pmod 4$: two halvings, so the ratio is exactly $1/4$ — density $1/4$;
+- $n \equiv 2 \pmod 4$: halve, then multiply, giving $a/2 + 1/n$ — density $1/4$;
+- $n$ odd: multiply (which yields an even number, since $a$ and $n$ are odd), then halve, giving $a/2 + 1/(2n)$ — density $1/2$.
 
-valid for every $N \ge 1$, with absolute constants: the same bound works for *all* multipliers $a$ simultaneously, and it is uniform for $\omega$ in any bounded set. So the convergence is uniform on compact frequency sets. That uniformity is precisely the corrected replacement for the impossible pointwise statement one might have hoped for.
+The last two branches converge to the *same* limiting phase $a/2$. They coalesce. So instead of two balanced arrows we get two arrows of **unequal** length: weight $1/4$ at phase $1/4$, and weight $3/4$ at phase $a/2$. The normalised depth-two pattern converges to
 
-## A single cosine
+$$A_2(\omega) \;=\; \frac{e(\omega/4) + 3\,e(a\omega/2)}{4},$$
 
-The amplitude $A_a(\omega)$ is the mean of two unit vectors, so its size is governed by the angle between them. Factoring out the common phase $e(\omega/2)$ leaves $\bigl(1 + e((a - \tfrac12)\omega)\bigr)/2$, and the modulus of $1 + e(t)$ is $2|\cos(\pi t)|$. Hence:
+with exact brightness
+$$|A_2(\omega)|^2 \;=\; \frac{10 + 6\cos\!\big(\pi(2a-1)\omega/2\big)}{16}.$$
 
-> **Modulus Formula.** $\;\;\bigl|A_a(\omega)\bigr| = \bigl|\cos\bigl(\pi (a - \tfrac{1}{2})\,\omega\bigr)\bigr|.$
+Since the cosine never drops below $-1$, we get $|A_2(\omega)| \ge 1/2$ for **every** frequency and **every** multiplier — and the bound is exactly attained, at $\omega = 2/(2a-1)$. A three-to-one imbalance simply cannot be cancelled by a one-to-three minority. Concretely: the depth-two sum satisfies $|F_2(\omega,N)| \ge N/4$ for all large $N$, at every frequency, rational or irrational.
 
-The whole spectral content of the one-step Collatz phase is one cosine. Whatever complexity the map possesses — its unpredictable trajectories, its mysterious stopping times — has been flattened, by this particular measurement, into a trigonometric function that a first-year student could graph.
+The contrast is stark and can be stated at a single point. For $a = 3$ at $\omega = 1/5$: the one-step transform is $o(N)$ — total extinction — while the two-step transform built from the *same map* at the *same frequency* stays above $N/4$. **The resonance does not survive iteration.** It is not a dynamical invariant. It is an artefact of the $1/2$–$1/2$ split of parities at depth one.
 
-## Where the sum does cancel: resonances
+## Test two: change the base
 
-A cosine has zeros, and those zeros are the only places where the sum genuinely cancels. Since $\cos(\pi t) = 0$ exactly when $t$ is a half-integer:
+The second test is even more decisive. Keep the multiplicative branch exactly as it is, but change what "divide" means: for a base $b$, let the map send $n \mapsto n/b$ when $b \mid n$, and $n \mapsto an+1$ otherwise. Base $b=2$ is Collatz.
 
-> **Resonance Classification.** $A_a(\omega) = 0$ if and only if $(2a - 1)\,\omega$ is an odd integer.
+Now the dividing branch has density $1/b$ and the multiplicative branch has density $1 - 1/b$, with limiting phase $a$. For $b \ge 3$ the multiplicative branch has density strictly above $1/2$, so the Dominant-Branch Principle applies immediately and gives, at *every* real frequency,
 
-At such a frequency, and only there, we get $F_a(\omega, N) = o(N)$ — the unit vectors really do annihilate one another. The reason is transparent: at these frequencies the two branch phases $e(\omega/2)$ and $e(a\omega)$ are exactly antipodal, so the even contribution and the odd contribution cancel term by term. The numerics show the residual sum staying under $8$ even as $N$ reaches $100{,}000$.
+$$|G_b(\omega,N)| \;\ge\; \frac{b-2}{2b}\,N \quad\text{for all large } N,$$
 
-Away from those frequencies, no cancellation of any kind occurs: $|F_a(\omega, N)| \ge c\,N$ eventually, with $c = |A_a(\omega)|/2 > 0$.
+and in fact the sharp constant $1 - 2/b$ up to any $\varepsilon > 0$. No spectral gap. None. For any multiplier $a$, at any frequency.
 
-And near $\omega = 0$ the sum is as large as it can be. If $|(2a-1)\omega| \le 2/3$ then $|\cos(\pi(a - \frac12)\omega)| \ge 1/2$, so eventually
+So among all bases, **halving is the unique resonant base**. The spectral extinctions of the $3n+1$ problem are a property of the number $2$ in the denominator, not of the number $3$ in the numerator. The arithmetic of the multiplier controls only *where* the dark frequencies sit — at $(2a-1)\omega$ odd — never *whether* they exist.
 
-$$|F_a(\omega, N)| \ge \frac{N}{4}.$$
+## What survives: averages
 
-This is the decisive obstruction. Any hypothetical theorem asserting "the transform is small for every irrational frequency" is refuted by the irrational frequencies near zero, where continuity pins the sum against the trivial bound. There is no clever argument to be found; the statement is simply false, and its falsity is visible from the fact that the phase ratio has only two accumulation points.
+If the pointwise dark spots are fragile, is there anything robust in the spectrum? Yes, but you have to average.
 
-## An arithmetic fingerprint
+The natural robust statistic is the mean-square power over a full period of the pattern, which for these maps is the interval $\omega \in [0,4]$. Averaging the brightness across the whole period washes out the oscillating cosine and leaves behind exactly the sum of the squared branch weights:
 
-Here is where the story turns constructive. The resonance set of the multiplier $a$ is the arithmetic progression of frequencies
+$$\frac{1}{4}\int_0^4 |A(\omega)|^2\,d\omega = \left(\tfrac12\right)^2 + \left(\tfrac12\right)^2 = \frac12, \qquad
+\frac{1}{4}\int_0^4 |A_2(\omega)|^2\,d\omega = \left(\tfrac14\right)^2 + \left(\tfrac34\right)^2 = \frac58.$$
 
-$$R_a = \left\{ \frac{2m+1}{2a-1} : m \in \mathbb{Z} \right\},$$
+Two things are worth pausing on. First, the answer does **not** depend on $a$ at all: the mean-square power at depth one is $1/2$ for the $3n+1$, $5n+1$ and $7n+1$ maps alike, and $5/8$ at depth two for all of them. This averaged statistic detects *dynamical depth* and is completely blind to the multiplier. Second, at finite $N$ the same identities hold with a controlled error: the finite-$N$ power over a period differs from its limit by at most $8(1 + 8\pi(1+\log N))/N$, which decays to zero. Consequently, for every odd multiplier, the depth-two power eventually exceeds the depth-one power by at least $1/4$ — a robust, verifiable discriminator that survives averaging even though the individual dark frequencies do not.
 
-an evenly spaced comb with spacing $2/(2a-1)$. Different multipliers give different combs. At $\omega = 1/5$, for instance, $(2a-1)\omega$ equals $1$ for $a = 3$, equals $1.8$ for $a = 5$, and equals $2.6$ for $a = 7$. So:
+There is a second averaged statement, and it is the one that repairs a naive hope. One might want to claim that the Collatz transform is *small* at all irrational frequencies. That claim is impossible: the transform is continuous in $\omega$, and near $\omega=0$ every arrow points the same way, so $|F(\omega,N)|$ is close to its maximum $N$ — including at irrational $\omega$ near zero. Continuity forbids any pointwise smallness statement. What one can say instead is a Chebyshev-type bound: for any threshold $\lambda>0$, the set of frequencies in the period $[0,4]$ where $|F(\omega,N)| \ge \lambda N$ has Lebesgue measure at most $(2 + 8\varepsilon_N)/\lambda^2$, where $\varepsilon_N = (1+8\pi(1+\log N))/N \to 0$. Taking $\lambda = 1$: for large $N$, the frequencies at which the transform attains its trivial maximal size occupy at most half of the period. The bright peaks are real, but they are confined to a set of controlled measure — a statement fully compatible with isolated resonant peaks, unlike a pointwise bound.
 
-> **Discriminator.** At the frequency $\omega = 1/5$ the $3n+1$ map has a complete spectral gap, while the $5n+1$ and $7n+1$ maps retain full linear size, with amplitudes $|A_5(1/5)| = \cos(\pi/10) \approx 0.951$ and $|A_7(1/5)| = |\cos(3\pi/10)| \approx 0.588$.
+## The moral
 
-Symmetrically, $\omega = 1/9$ isolates $5n+1$ and $\omega = 1/13$ isolates $7n+1$. The three classical maps are pairwise separated by their spectra.
+Spectral methods are seductive because they turn arithmetic into optics. You get to say things like "resonance" and "spectral gap" and draw pictures with dark bands. The temptation is to read every dark band as a message from the dynamics.
 
-But the separation is subtle, and the subtlety is the moral of the story. At every *integer* frequency, all multipliers behave identically: every $a$ resonates at every odd integer $\omega$, and every $a$ has amplitude exactly $1$ at every even integer $\omega$. Indeed, one can show that two of the three classical maps resonate at a common frequency only at the odd integers — the trivial resonances shared by everyone. Any real discriminator must therefore live at non-integer frequencies. The behaviour near $\omega = 0$, where the sum is largest and most conspicuous, carries no information about $a$ whatsoever.
+The results here draw a clean line. Cancellation in this kind of transform is decided by one thing and one thing only: the **density profile of the branches**. Above density $1/2$, no cancellation ever, at any frequency, with a quantitative constant. At exactly $1/2$, cancellation is possible and does occur. Everything else — the multiplier, the arithmetic of $3$ versus $5$ versus $7$, the deep unsolved dynamics — moves the dark bands around but cannot create or destroy them.
 
-There is a second warning. A natural instinct, when a pointwise statement fails, is to average — to prove an $L^2$ bound over a period instead. That instinct fails here too, and for a reason one can compute exactly:
+Three concrete consequences follow, and they act as a set of guardrails for anyone hoping to attack the $3n+1$ problem this way. Resonances vanish when you iterate the map, so they are not dynamical invariants. Resonances vanish for every base other than $2$, so they are not about the multiplier. And averaged statistics — the ones that *do* survive — see only depth, not arithmetic.
 
-> **Mean-Square Identity.** For every multiplier $a \ge 1$, the mean of $|A_a(\omega)|^2$ over a full period equals $\tfrac{1}{2}$: precisely, $\int_0^2 |A_a(\omega)|^2 \, d\omega = 1$.
-
-Every map, no matter its multiplier, carries the same total spectral energy. Averaging washes out the one piece of information the spectrum did contain — the *location* of the resonance comb — and leaves a universal constant. If you want to tell $3n+1$ from $7n+1$ spectrally, you must look at where the zeros are, not at how much energy there is.
-
-## The deepest limitation: the spectrum cannot see the dynamics
-
-The most important theorem in this circle of ideas is a negative one, and it is disarmingly simple to prove. Suppose you take the map $T_a$ and modify it however you like at a set of inputs of density zero — say, along one finite orbit, or on the powers of two. Then the two phase-ratio sequences disagree on a vanishing fraction of indices, each disagreement changes the sum by at most $2$, and so:
-
-> **Blindness Theorem.** If two phase-ratio functions differ only on a set of density zero, their normalized cutoff transforms have the same limit. In particular, altering a map at finitely many points — inserting a cycle, destroying a cycle, changing a stopping time — leaves the normalized spectrum completely unchanged.
-
-This is fatal for the original strategy. Whether or not the Collatz map has a nontrivial cycle is a question about a finite set of integers. The one-step spectrum is provably unable to distinguish a map with such a cycle from one without. No theorem of the form "spectral cancellation implies no divergent orbits" can hold for this statistic, not because the proof is hard, but because the statistic does not contain the information.
-
-## Why this is worth knowing
-
-There is a genre of mathematical result that consists of drawing an exact boundary around what a method can do. That is what we have here. A one-step exponential sum over the Collatz phase is not a hard object: it is a two-branch character sum, its normalized limit is $\bigl(e(\omega/2) + e(a\omega)\bigr)/2$, its modulus is a cosine, and its zero set is an arithmetic progression that identifies the multiplier and nothing else. Every question one can ask about "cancellation for the $an+1$ map at a fixed frequency" is now completely answered — and the answer, provably, contains no dynamical content.
-
-The natural next moves are visible from here. The *second-order* term is not blind. Expanding the odd-branch correction as $e(\omega/n) = 1 + 2\pi i \omega/n + O(\omega^2/n^2)$ and summing against the odd harmonic series suggests that
-
-$$F_a(\omega, N) - N\,A_a(\omega) - \pi i \omega\, e(a\omega)\log N$$
-
-converges — so the subleading spectrum carries the branch phase undamped, where the leading term had crushed it into a single cosine. And *iterated* transforms, built from $T_a^m(n)/n$ for $m \ge 2$, should converge to a sum of $2^m$ branch phases weighted by residue-class densities mod $2^m$; for $m \ge 2$ the resulting zero set is no longer a lattice coset, and it should determine $a$ uniquely.
-
-Those are the honest sequels. The lesson of the one-step case is that in this business, the first thing to do with a proposed pseudorandomness statistic is to compute what it converges to. If the limit is a cosine, no amount of ingenuity will extract a dynamical theorem from it — and knowing that saves everyone a great deal of time. The song of $3n+1$, at this frequency, turns out to be a pure tone.
+None of this makes the Collatz conjecture easier. But it tells you precisely which spectral roads are dead ends, and it does so with an exact constant on every claim. In a field where the graveyard is full of plausible approaches, knowing the shape of the graveyard is worth something. And the underlying principle — a branch of density above one half forces linear growth of an exponential sum at every frequency, with the explicit constant $2d-1$ — is a general tool. It applies far beyond Collatz, to any dynamical system whose one-step behaviour splits into branches with computable densities and convergent phases. Wherever the branches are unbalanced, the diffraction pattern can never go dark.
