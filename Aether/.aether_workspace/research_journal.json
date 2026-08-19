@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "286b3a0e",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions — Moonshine Beyond the j-Function\n\nThis research thread studies what survives, rigorously, of \"moonshine-type\" statements when the\nanalytic mythology is stripped away: element-inde",
-      "quality_score": 0.89,
-      "sorry_count": 3,
-      "theorem_count": 145,
-      "timestamp": "2026-08-17T13:54:12",
-      "title": "`Catalog/Novelty/MonsterMoonshineBridge.lean` proves a rigorous cross-domain bri"
-    },
-    {
       "cycle_id": "2ce26220",
       "domain": "Geometry",
       "key_insight": "# Future Directions — taxicab / cabtaxi cycle 1\n\nThis cycle proved, with zero `sorry`s (files `Catalog/Geometry/TaxicabCubicReps.lean`,\n`TaxicabCabtaxi.lean`, `TaxicabRationalTransfer.lean`, `TaxicabW",
@@ -499,19 +489,19 @@
       "theorem_count": 124,
       "timestamp": "2026-08-19T13:09:17",
       "title": "Emergent Spacetime from Quantum Entanglement"
+    },
+    {
+      "cycle_id": "7299371d",
+      "domain": "Combinatorics",
+      "key_insight": "# Future Directions — Erdős–Graham: exact coverings by distinct unit fractions\n\nThe formal development in `Catalog/Combinatorics/ErdosGraham*.lean` establishes:\nthe cardinality spectrum of exact Egypt",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 59,
+      "timestamp": "2026-08-19T14:54:22",
+      "title": "Erdos-Graham: Exact Coverings by Distinct Unit Fractions"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "97241621",
-      "domain": "Novelty",
-      "key_insight": "# Future directions after cycle IX (the silver growth rate)\n\nCycle IX is `Catalog/Novelty/HyperbolicBerggrenSilverGrowth.lean` (compiles against\nMathlib, **0 sorries**, axioms `propext`, `Classical.ch",
-      "quality_score": 0.743405,
-      "sorry_count": 0,
-      "theorem_count": 49,
-      "timestamp": "2026-08-09T13:09:59",
-      "title": "Derived from the analysis and adversarial review of"
-    },
     {
       "cycle_id": "36710bef",
       "domain": "NumberTheory",
@@ -2501,27 +2491,19 @@
       "theorem_count": 124,
       "timestamp": "2026-08-19T13:09:17",
       "title": "Emergent Spacetime from Quantum Entanglement"
+    },
+    {
+      "cycle_id": "7299371d",
+      "domain": "Combinatorics",
+      "key_insight": "# Future Directions — Erdős–Graham: exact coverings by distinct unit fractions\n\nThe formal development in `Catalog/Combinatorics/ErdosGraham*.lean` establishes:\nthe cardinality spectrum of exact Egypt",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 59,
+      "timestamp": "2026-08-19T14:54:22",
+      "title": "Erdos-Graham: Exact Coverings by Distinct Unit Fractions"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "09567e3d",
-      "domain": "Computation",
-      "name": "of",
-      "quality": 0.89
-    },
-    {
-      "cycle_id": "bba7fa1e",
-      "domain": "NumberTheory",
-      "name": "maxLik_prod",
-      "quality": 0.84
-    },
-    {
-      "cycle_id": "bba7fa1e",
-      "domain": "NumberTheory",
-      "name": "shtarkovSum_prod",
-      "quality": 0.84
-    },
     {
       "cycle_id": "4f724156",
       "domain": "Probability",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "cutWeight_eq_crossSum",
       "quality": 0.85
+    },
+    {
+      "cycle_id": "7299371d",
+      "domain": "Combinatorics",
+      "name": "erdosGrahamFinite_mono",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "7299371d",
+      "domain": "Combinatorics",
+      "name": "erdosGrahamProperty_of_finite",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "7299371d",
+      "domain": "Combinatorics",
+      "name": "exists_hyperfilter_value",
+      "quality": 0.78
     }
   ],
-  "last_updated": "2026-08-19T13:09:17",
+  "last_updated": "2026-08-19T14:54:22",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hupper⟩)",
@@ -3207,12 +3207,6 @@
     ],
     "Combinatorics": [
       {
-        "cycle_id": "48492a97",
-        "quality": 0.71196,
-        "theorems": 92,
-        "title": "Formalizing Modular Bounds on Elliptic Curves over Finite Fields"
-      },
-      {
         "cycle_id": "0dcd87ee",
         "quality": 0.751005,
         "theorems": 67,
@@ -3265,6 +3259,12 @@
         "quality": 0.85,
         "theorems": 75,
         "title": "The Bell defect, counted exactly"
+      },
+      {
+        "cycle_id": "7299371d",
+        "quality": 0.78,
+        "theorems": 59,
+        "title": "Erdos-Graham: Exact Coverings by Distinct Unit Fractions"
       }
     ],
     "Computation": [

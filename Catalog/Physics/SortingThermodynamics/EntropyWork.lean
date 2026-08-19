@@ -102,6 +102,9 @@ theorem redundant_comparisons_preserve_sorting (t : ComparisonTree) (n r : ℕ)
 **Three-way factorial synthesis.** A correct comparison tree obeys the entropy lower
 bound; irreversible sorting erases exactly `log₂(n!)` bits; and every reversible
 implementation needs at least `n!` history states.
+
+Repaired statement: the erased-information input `sorting_info_erased` is available for
+`1 ≤ n`, so that hypothesis is carried explicitly here.
 -/
 theorem factorial_controls_comparisons_entropy_and_history
     (t : ComparisonTree) (n : ℕ) (hn : 1 ≤ n) (hs : SortsOrderings t n)
@@ -111,21 +114,22 @@ theorem factorial_controls_comparisons_entropy_and_history
     Nat.clog 2 n.factorial ≤ t.height ∧
     infoErased (sortingFunction n) = Real.logb 2 n.factorial ∧
     n.factorial ≤ Fintype.card Aux := by
-      refine' ⟨ comparison_lower_bound t n hs, _, _ ⟩;
-      · convert sorting_info_erased n hn;
-      · convert sorting_history_lower_bound n Aux e hc using 1;
-        simp +decide [ Fintype.card_perm ]
+      refine ⟨comparison_lower_bound t n hs, sorting_info_erased n hn, ?_⟩
+      convert sorting_history_lower_bound n Aux e hc using 1
+      simp +decide [ Fintype.card_perm ]
 
 /-
 **Exact Landauer scale for sorting.** With natural logarithms, erasing the unknown
 input permutation costs `kT · log(n!)`.  The factor `log 2` in the per-bit cost cancels
 the change of base in `log₂(n!)`.
+
+Repaired statement: as above, the hypothesis `1 ≤ n` is carried explicitly.
 -/
 theorem sorting_landauer_gap_exact (n : ℕ) (hn : 1 ≤ n) (kT : ℝ) :
     landauerGap (sortingFunction n) kT = kT * Real.log n.factorial := by
-      have h2 : Real.log 2 ≠ 0 := ne_of_gt (Real.log_pos (by norm_num))
       unfold landauerGap landauerCost
       rw [sorting_info_erased n hn, Real.logb]
+      have h2 : Real.log 2 ≠ 0 := ne_of_gt (Real.log_pos (by norm_num))
       field_simp
 
 /-

@@ -1395,21 +1395,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Formalize the Miller-Rabin primality test in Lean 4 and prove its error bounds. Formalize the AKS deterministic primality test and prove correctness: PRIMES \u2208 P. Construct efficient modular arithmetic tactics for Lean.",
-    "domains": [
-      "NumberTheory",
-      "Computation"
-    ],
-    "id": "fd_0652",
-    "priority_score": 0.9,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-24T14:34:16.697745+00:00",
-    "title": "Primality Testing: Miller-Rabin and AKS Formalization"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Formalizes Voiculescu's free probability: the free central limit theorem showing that normalized sums of freely independent identically distributed bounded random variables converge in distribution to the semicircle law, developed through the R-transform and free cumulants.",
     "domains": [
       "Probability",
@@ -1499,18 +1484,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Arithmetic-Quantum-Chaos: Equidistribution of Hecke-Maass Eigenforms"
   },
   {
-    "consumed_by_exp_id": "7299371d",
+    "consumed_by_exp_id": "",
     "description": "Attacks the Erd\u0151s-Graham conjecture that every finite coloring of the integers greater than one admits a subset whose reciprocals sum to exactly one, formalizing the combinatorial structure of Egyptian fraction decompositions and the known proofs for small colorings.",
     "domains": [
       "NumberTheory",
       "Combinatorics"
     ],
     "id": "fd_1200",
-    "phase": "B",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "human_brainstorm_2026-08-12",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-13T03:21:14.300445+00:00",
     "title": "Erdos-Graham: Exact Coverings by Distinct Unit Fractions"
   },
@@ -1723,49 +1707,17 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Prove that adding an oracle for the halting problem to PA yields a theory that proves its own consistency but cannot decide its own soundness. Formalize the hierarchy: PA < PA^H < PA^{H^H} < ... and prove that each jump genuinely increases theorem-proving power. Show that the oracle hierarchy is isomorphic to the Turing jump hierarchy.",
+    "description": "Building on cycle 7299371d (Q=0.780), which proved 59 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Attacks the Erd\u0151s-Graham conjecture that every finite coloring of the integers greater than one admits a subset whose reciprocals sum to exactly one, formalizing the combinatorial structure of Egyptian fraction decompositions and the known proofs for small colorings.",
     "domains": [
-      "Novelty",
-      "Logic",
-      "Computation"
+      "Combinatorics"
     ],
-    "id": "seed_293",
+    "id": "push_7299371d_2b9368c3",
     "priority_score": 0.88,
     "research_mode": "team",
-    "source_exp_id": "seed",
+    "source_exp_id": "7299371d",
     "status": "available",
-    "timestamp": "",
-    "title": "The Oracle's Burden: How Much Knowledge Is Too Much?"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Construct an explicit order-preserving map from the proof-theoretic ordinals of PA to those of KP set theory. Prove that epsilon_0 < psi(Omega^omega) and formalize the ordinal collapsing function psi as a term rewriting system in Lean 4.",
-    "domains": [
-      "Bridges",
-      "Logic"
-    ],
-    "id": "seed_299",
-    "priority_score": 0.88,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Proof-Theoretic Bridge: Ordinal Analysis Across Systems"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Construct and prove correct a zero-knowledge proof system for graph 3-colorability. Prove completeness, soundness, and zero-knowledge. Formalize the simulation paradigm and show that the simulator produces indistinguishable transcripts.",
-    "domains": [
-      "Cryptography",
-      "Logic"
-    ],
-    "id": "seed_303",
-    "priority_score": 0.88,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Zero-Knowledge Proof Systems: Formal Verification of Privacy"
+    "timestamp": "2026-08-19T14:54:23.424891+00:00",
+    "title": "Deepening: Erdos-Graham: Exact Coverings by Distinct Unit Fractions"
   },
   {
     "consumed_by_exp_id": "",
@@ -20591,14 +20543,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "We *proved* the combinatorial extremal pair exists"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c442a26f",
     "description": "## Conjecture D (q-series rigidity / Molien-type dichotomy). The fixed-point q-series determines the orbit-counting generating function, and conversely.",
     "domains": [],
     "id": "fd_1518",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "c4b3dd3f",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-18T10:46:56.131070+00:00",
     "title": "Conjecture D (q-series rigidity / Molien-type dichotomy). The fixed-point q-series determines the orbit-counting generating function, and conversely."
   },
@@ -21390,5 +21343,49 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-19T13:09:12.724451+00:00",
     "title": "The corresponding easy half is already a theorem"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The compactness machinery of `ErdosGrahamCompactness.lean` transfers infinite\nstatements to finite ones, so the conjecture is now a statement about finite hypergraphs.",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "fd_1610",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "7299371d",
+    "status": "available",
+    "timestamp": "2026-08-19T14:54:10.287831+00:00",
+    "title": "The compactness machinery of `ErdosGrahamCompactness.lean` transfers infinite"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The finitisation is formally proved, so a SAT/ILP certificate for a single\n`N` would yield the first unconditional formal two-colour Erd\u0151s\u2013Graham theorem; the\ncurrent formal two-colour result (`erdosGraham_two_of_primePow_class`) is the special case\nwhere one class is confined to the prime powers.",
+    "domains": [
+      "NumberTheory",
+      "Combinatorics"
+    ],
+    "id": "fd_1611",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "7299371d",
+    "status": "available",
+    "timestamp": "2026-08-19T14:54:10.567320+00:00",
+    "title": "The finitisation is formally proved, so a SAT/ILP certificate for a single"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The reduction of Erd\u0151s\u2013Graham to a statement about divisor lattices of\npseudoperfect numbers is formalised (`pseudoperfect_iff_exists_egyptian_dvd`,\n`erdosGraham_of_pseudoperfect_class`), which converts the conjecture from an additive\nstatement about reciprocals into a multiplicative Ramsey statement.",
+    "domains": [
+      "Combinatorics",
+      "Pythagorean"
+    ],
+    "id": "fd_1612",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "7299371d",
+    "status": "available",
+    "timestamp": "2026-08-19T14:54:10.839917+00:00",
+    "title": "The reduction of Erd\u0151s\u2013Graham to a statement about divisor lattices of"
   }
 ];

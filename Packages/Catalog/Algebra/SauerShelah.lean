@@ -1,6 +1,7 @@
 import Mathlib
 
-open Fin
+open Finset (image filter)
+open Fin (last)
 
 /-! # CatalogBuild.Algebra.SauerShelah
 
@@ -114,7 +115,7 @@ lemma shatters_embed_of_union {n : ℕ} (F : Finset (Finset (Fin (n + 1))))
                     (F.filter (Fin.last n ∈ ·)).image proj) A) :
     Shatters F (embed A) := by
       intro B hB
-      obtain ⟨T, hT⟩ : ∃ T ∈ Finset.image proj ({x ∈ F | last n ∉ x}) ∪ Finset.image proj ({x ∈ F | last n ∈ x}), A ∩ T = proj B := by
+      obtain ⟨T, hT⟩ : ∃ T ∈ image proj ({x ∈ F | last n ∉ x}) ∪ image proj ({x ∈ F | last n ∈ x}), A ∩ T = proj B := by
         exact h _ ( Finset.subset_iff.mpr fun i hi => by
           simp_all +decide [ Finset.subset_iff, proj, embed ];
           cases hB hi ; aesop );

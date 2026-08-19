@@ -1,5 +1,6 @@
 import Mathlib
-import Shared.NumberTheory.CarmichaelHelper
+import Shared.CarmichaelHelper
+import Shared.NumberTheory.CarmichaelHelpers
 import Shared.NumberTheory.CarmichaelComposite
 
 /-! # Computational verification of Carmichael's theorem
