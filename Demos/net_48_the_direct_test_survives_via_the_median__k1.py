@@ -1,23 +1,24 @@
 """
-Tropical order statistics of seed distributions -- numerical demonstrations.
+Numerical demonstration of the geometry of a knee distribution.
 
-Self-contained (standard library only). Every function is inlined and type-hinted.
+This script is fully self-contained (standard library only, exact rational
+arithmetic where it matters) and verifies, numerically, every quantitative
+claim of the accompanying article and paper:
 
-The demonstrations verify, on the measured two-context / six-seed knee dataset and on
-synthetic curves:
-
-  1. The max-of-mins normal form of the median, for 3 and for 2k+1 samples.
-  2. Threshold duality: thresholding a median is a majority vote.
-  3. Median-knee commutation: the knee of the pointwise median curve equals the
-     median of the individual knees (and the same fails for the arithmetic mean).
-  4. Robustness: 1-Lipschitzness, the majority breakdown interval, the exact
-     stability ray, and the mean's breakdown point of zero.
-  5. The measured NET-48 data: the derived knee k* = 160, the horn analysis, the
-     7/8 median law at two contexts, its uniqueness, its failure for the mean, the
-     order-reversal reading of speed-ups, and the pinned-ceiling / sinking-floor
-     geometry.
-  6. The axiomatic characterisation of the median and the independence of the
-     tropical (translation-equivariance) axiom, checked on a random grid of inputs.
+  1. Fermat-Weber cost on a line, its minimiser set, and the balance
+     characterisation of optimality (any sample size, either parity).
+  2. The measured three-value knee distributions at two context lengths, their
+     geometric medians, and the 7/8 law  median = (7/8) * (d*ctx/32).
+  3. The median of three as a nearest-point projection (clamp): monotonicity,
+     nonexpansiveness, firm nonexpansiveness, fibre structure, range;
+     the refutation of the informal claim "only values >= 256 move the centre".
+  4. Scaling geometry: rays through the origin, the doubling dilation, the
+     low-tail defect P/8, and the exact 3/2 spread ratio.
+  5. The median level set in R^3: a maximal flat edge, the segment joining the
+     two normalised measurements, and non-convexity of the level set.
+  6. The pre-registered prediction for a pending fourth measurement: the centre
+     224 stays optimal for every fourth value, the cost law 96 + |224 - x|,
+     the two regimes, and the uniqueness knife edge.
 
 Run:  python3 demo.py
 """
@@ -25,426 +26,364 @@ Run:  python3 demo.py
 from __future__ import annotations
 
 from fractions import Fraction
-from itertools import combinations, product
-from typing import Callable, Dict, List, Optional, Sequence, Tuple
+from typing import Iterable, List, Sequence, Tuple
 
-Number = Fraction
+Num = Fraction
+
 
 # ---------------------------------------------------------------------------
-# 1. The median as a tropical (max-of-mins) polynomial
+# 1. Fermat-Weber cost, minimiser set, and the balance certificate
 # ---------------------------------------------------------------------------
 
 
-def trop_median(sample: Sequence[Number]) -> Number:
-    """Max-of-mins tropical polynomial: max over all (k+1)-subsets of the min there.
+def fw_cost(sample: Sequence[Num], t: Num) -> Num:
+    """Total distance from the candidate centre `t` to every sample point."""
+    return sum((abs(t - x) for x in sample), Fraction(0))
 
-    For a sample of odd size 2k+1 this equals the median.  Complexity O(C(2k+1,k+1)*k),
-    i.e. exponential in k -- it is a normal form, not an algorithm; `sorted_median`
-    below is the O(n log n) route and the two are asserted equal.
+
+def is_balanced(sample: Sequence[Num], m: Num) -> bool:
+    """`m` is balanced: neither open side of `m` holds more than half the sample."""
+    n_le = sum(1 for x in sample if x <= m)
+    n_lt = sum(1 for x in sample if x < m)
+    n = len(sample)
+    return (n - n_le) <= n_le and n_lt <= (n - n_lt)
+
+
+def fermat_weber_set(sample: Sequence[Num]) -> Tuple[Num, Num]:
+    """Endpoints of the interval of minimisers of the total distance.
+
+    Odd size 2k+1: the singleton [x_(k+1), x_(k+1)].
+    Even size 2k : the middle segment [x_(k), x_(k+1)].
     """
-    n: int = len(sample)
-    if n % 2 == 0:
-        raise ValueError("tropical median normal form requires an odd sample size")
-    k: int = (n - 1) // 2
-    return max(min(subset) for subset in combinations(sample, k + 1))
+    xs = sorted(sample)
+    n = len(xs)
+    if n % 2 == 1:
+        mid = xs[n // 2]
+        return (mid, mid)
+    return (xs[n // 2 - 1], xs[n // 2])
 
 
-def trop_med3(a: Number, b: Number, c: Number) -> Number:
-    """The classical three-argument normal form (a AND b) OR (b AND c) OR (a AND c)."""
+def fw_optimal_cost(sample: Sequence[Num]) -> Num:
+    """Sum of nested spreads: the optimal total distance."""
+    xs = sorted(sample)
+    n = len(xs)
+    return sum((xs[n - 1 - i] - xs[i] for i in range(n // 2)), Fraction(0))
+
+
+def brute_force_min(sample: Sequence[Num], grid: Iterable[Num]) -> Num:
+    """Smallest cost attained on an explicit grid of candidate centres."""
+    return min(fw_cost(sample, t) for t in grid)
+
+
+# ---------------------------------------------------------------------------
+# 2. Median of three, and the clamp (nearest-point projection)
+# ---------------------------------------------------------------------------
+
+
+def med3(a: Num, b: Num, c: Num) -> Num:
+    """Median of three, in the (max, min) lattice-polynomial form."""
     return max(min(a, b), min(b, c), min(a, c))
 
 
-def trop_med3_dual(a: Number, b: Number, c: Number) -> Number:
-    """The dual min-of-maxes normal form; equal to `trop_med3` by self-duality."""
-    return min(max(a, b), max(b, c), max(a, c))
+def clamp(a: Num, b: Num, x: Num) -> Num:
+    """Projection of `x` onto the segment spanned by `a` and `b`."""
+    return max(min(a, b), min(max(a, b), x))
 
 
-def sorted_median(sample: Sequence[Number]) -> Number:
-    """The middle order statistic of an odd sample."""
-    ordered: List[Number] = sorted(sample)
-    return ordered[len(ordered) // 2]
-
-
-def majority_at_least(sample: Sequence[Number], v: Number) -> bool:
-    """True iff at least k+1 of the 2k+1 entries are >= v."""
-    k: int = (len(sample) - 1) // 2
-    return sum(1 for x in sample if x >= v) >= k + 1
-
-
-def majority_at_most(sample: Sequence[Number], v: Number) -> bool:
-    """True iff at least k+1 of the 2k+1 entries are <= v."""
-    k: int = (len(sample) - 1) // 2
-    return sum(1 for x in sample if x <= v) >= k + 1
+def mean3(a: Num, b: Num, x: Num) -> Fraction:
+    return Fraction(a + b + x, 1) / 3
 
 
 # ---------------------------------------------------------------------------
-# 2. Retention curves, knees, aggregation pipelines
+# 3. Plane geometry: rays and dilations
 # ---------------------------------------------------------------------------
 
 
-def step_curve(switch_on: int) -> Callable[[int], Number]:
-    """The monotone unit step curve that jumps from 0 to 1 at `switch_on`."""
-
-    def curve(t: int) -> Number:
-        return Fraction(1) if t >= switch_on else Fraction(0)
-
-    return curve
+def cross(p: Tuple[Num, Num], q: Tuple[Num, Num]) -> Num:
+    """Twice the signed area of the triangle O, p, q."""
+    return p[0] * q[1] - p[1] * q[0]
 
 
-def knee(curve: Callable[[int], Number], grid: Sequence[int], bar: Number) -> Optional[int]:
-    """The least grid point at which `curve` clears `bar` (None if it never does)."""
-    for g in sorted(grid):
-        if curve(g) >= bar:
-            return g
-    return None
+def on_common_ray(p: Tuple[Num, Num], q: Tuple[Num, Num]) -> bool:
+    return cross(p, q) == 0
 
 
-def median_curve(curves: Sequence[Callable[[int], Number]]) -> Callable[[int], Number]:
-    """The pointwise median of an odd family of curves."""
-
-    def aggregate(t: int) -> Number:
-        return trop_median([c(t) for c in curves])
-
-    return aggregate
-
-
-def mean_curve(curves: Sequence[Callable[[int], Number]]) -> Callable[[int], Number]:
-    """The pointwise arithmetic mean of a family of curves."""
-
-    def aggregate(t: int) -> Number:
-        return sum((c(t) for c in curves), Fraction(0)) / len(curves)
-
-    return aggregate
+def triangle_area(p: Tuple[Num, Num], q: Tuple[Num, Num]) -> Fraction:
+    return abs(Fraction(cross(p, q))) / 2
 
 
 # ---------------------------------------------------------------------------
-# 3. The measured NET-48 dataset
+# The measured data
 # ---------------------------------------------------------------------------
 
-GRID_48: List[int] = [96, 128, 160, 192, 224, 240, 256, 288, 384, 512, 768, 1024]
+F = Fraction
 
-SWEEP_48: Dict[int, Number] = {
-    96: Fraction(963, 1000),
-    128: Fraction(973, 1000),
-    160: Fraction(981, 1000),
-    192: Fraction(984, 1000),
-    224: Fraction(986, 1000),
-    240: Fraction(987, 1000),
-    256: Fraction(990, 1000),
-    288: Fraction(993, 1000),
-    384: Fraction(999, 1000),
-    512: Fraction(1000, 1000),
-    768: Fraction(1003, 1000),
-    1024: Fraction(1003, 1000),
-}
+KNEES_8X: List[Num] = [F(96), F(112), F(128)]     # ctx = 1024
+KNEES_16X: List[Num] = [F(160), F(224), F(256)]   # ctx = 2048
+P8, P16 = F(128), F(256)                          # product points d*ctx/32, d = 4
 
-BAR_48: Number = Fraction(98, 100)
-HORNS: List[int] = [192, 224, 240, 256]
-
-KNEES_8: List[Number] = [Fraction(128), Fraction(112), Fraction(96)]
-KNEES_16: List[Number] = [Fraction(256), Fraction(224), Fraction(160)]
-P8: Number = Fraction(128)
-P16: Number = Fraction(256)
+R8 = (F(3, 4), F(7, 8), F(1))                     # normalised 8x triple
+R16 = (F(5, 8), F(7, 8), F(1))                    # normalised 16x triple
 
 
-def sweep_curve(t: int) -> Number:
-    """The measured retention curve, extended to all budgets by last-value-hold."""
-    value: Number = Fraction(0)
-    for g in GRID_48:
-        if t >= g:
-            value = SWEEP_48[g]
-    return value
-
-
-def product_point(width: int, context: int) -> Fraction:
-    """P = d * ctx / 32."""
-    return Fraction(width * context, 32)
-
-
-# ---------------------------------------------------------------------------
-# 4. Aggregator axioms (for the characterisation demo)
-# ---------------------------------------------------------------------------
-
-
-def sum_sign_agg(a: Number, b: Number, c: Number) -> Number:
-    """Max if the inputs sum positive, min if negative, median on the zero-sum wall."""
-    s: Number = a + b + c
-    if s > 0:
-        return max(a, b, c)
-    if s < 0:
-        return min(a, b, c)
-    return trop_med3(a, b, c)
-
-
-def check_axioms(
-    agg: Callable[[Number, Number, Number], Number], values: Sequence[Number]
-) -> Dict[str, bool]:
-    """Exhaustively check the five aggregator axioms on a finite grid of inputs."""
-    triples: List[Tuple[Number, Number, Number]] = list(product(values, repeat=3))
-    monotone: bool = True
-    for (a, b, c), (x, y, z) in product(triples, repeat=2):
-        if a <= x and b <= y and c <= z and agg(a, b, c) > agg(x, y, z):
-            monotone = False
-            break
-    symmetric: bool = all(
-        agg(a, b, c) == agg(b, a, c) and agg(a, b, c) == agg(a, c, b) for a, b, c in triples
-    )
-    conservative: bool = all(agg(a, b, c) in (a, b, c) for a, b, c in triples)
-    translation: bool = all(
-        agg(a + t, b + t, c + t) == agg(a, b, c) + t for a, b, c in triples for t in values
-    )
-    self_dual: bool = all(agg(-a, -b, -c) == -agg(a, b, c) for a, b, c in triples)
-    return {
-        "monotone": monotone,
-        "symmetric": symmetric,
-        "conservative": conservative,
-        "translation-equivariant": translation,
-        "self-dual": self_dual,
-    }
-
-
-# ---------------------------------------------------------------------------
-# Demonstrations
-# ---------------------------------------------------------------------------
-
-
-def banner(title: str) -> None:
+def rule(title: str) -> None:
     print("\n" + "=" * 78)
     print(title)
     print("=" * 78)
 
 
-def demo_normal_form() -> None:
-    banner("1. The median is a max-of-mins tropical polynomial")
-    triple: Tuple[Number, Number, Number] = (Fraction(256), Fraction(224), Fraction(160))
-    print(f"  sample                        : {[int(x) for x in triple]}")
-    print(f"  max-of-mins  (a^b)v(b^c)v(a^c): {int(trop_med3(*triple))}")
-    print(f"  min-of-maxes (avb)^(bvc)^(avc): {int(trop_med3_dual(*triple))}")
-    print(f"  sorted middle order statistic : {int(sorted_median(list(triple)))}")
-    assert trop_med3(*triple) == trop_med3_dual(*triple) == sorted_median(list(triple))
-
-    five: List[Number] = [Fraction(v) for v in (17, 3, 11, 29, 5)]
-    print(f"\n  five-sample                   : {[int(x) for x in five]}")
-    print(f"  max over 3-subsets of the min : {int(trop_median(five))}")
-    print(f"  sorted middle order statistic : {int(sorted_median(five))}")
-    assert trop_median(five) == sorted_median(five)
-    print("\n  Normal form verified for k = 1 and k = 2.")
+def check(label: str, ok: bool, detail: str = "") -> None:
+    mark = "OK  " if ok else "FAIL"
+    print(f"  [{mark}] {label}" + (f"   {detail}" if detail else ""))
+    assert ok, label
 
 
-def demo_threshold_duality() -> None:
-    banner("2. Threshold duality: thresholding a median is a majority vote")
-    sample: List[Number] = [Fraction(v) for v in (160, 224, 256)]
-    m: Number = trop_median(sample)
-    print(f"  sample {[int(x) for x in sample]}, median {int(m)}\n")
-    print("     v      v <= med   majority(>= v)    med <= v   majority(<= v)")
-    for v_int in (150, 160, 200, 224, 240, 256, 300):
-        v: Number = Fraction(v_int)
-        lo: bool = v <= m
-        lo_maj: bool = majority_at_least(sample, v)
-        hi: bool = m <= v
-        hi_maj: bool = majority_at_most(sample, v)
-        assert lo == lo_maj and hi == hi_maj
-        print(f"  {v_int:5d}   {str(lo):>8}   {str(lo_maj):>13}    {str(hi):>8}   {str(hi_maj):>13}")
-    print("\n  Both columns agree at every threshold: duality verified.")
+# ---------------------------------------------------------------------------
+# Demonstration 1: the 7/8 median law as a variational statement
+# ---------------------------------------------------------------------------
 
 
-def demo_commutation() -> None:
-    banner("3. Median-knee commutation (and its failure for the mean)")
-    grid: List[int] = [1, 2, 3]
-    bar: Number = Fraction(1)
-    curves: List[Callable[[int], Number]] = [step_curve(1), step_curve(2), step_curve(3)]
-    knees: List[Number] = [Fraction(knee(c, grid, bar) or 0) for c in curves]
-    print(f"  three monotone step curves with knees {[int(k) for k in knees]}")
-    print(f"  median of the knees                 : {int(trop_median(knees))}")
-    print(f"  knee of the MEDIAN curve            : {knee(median_curve(curves), grid, bar)}")
-    print(f"  knee of the MEAN curve              : {knee(mean_curve(curves), grid, bar)}")
-    assert knee(median_curve(curves), grid, bar) == int(trop_median(knees)) == 2
-    assert knee(mean_curve(curves), grid, bar) == 3
-    print("  -> the median commutes (2 = 2); the mean does not (3 != 2).")
+def demo_median_law() -> None:
+    rule("1. The 7/8 median law: the centre minimises total distance")
 
-    print("\n  The measured NET-48 triple {256, 224, 160}:")
-    grid16: List[int] = [160, 224, 256]
-    curves16: List[Callable[[int], Number]] = [step_curve(256), step_curve(224), step_curve(160)]
-    print(f"    knee of the median curve          : {knee(median_curve(curves16), grid16, bar)}")
-    assert knee(median_curve(curves16), grid16, bar) == 224
-    print("    -> the reported centre 224 is itself an operating point.")
+    for name, knees, P in (("8x  (ctx=1024)", KNEES_8X, P8),
+                           ("16x (ctx=2048)", KNEES_16X, P16)):
+        lo, hi = fermat_weber_set(knees)
+        cost = fw_optimal_cost(knees)
+        print(f"\n  {name}: knees {[int(k) for k in knees]}, product point P = {int(P)}")
+        print(f"    Fermat-Weber set   : [{lo}, {hi}]  (a single point: odd sample)")
+        print(f"    optimal cost       : {cost}  (= the spread)")
+        print(f"    ratios k*/P        : {[str(k / P) for k in knees]}")
+        check("median equals (7/8) * P", lo == F(7, 8) * P, f"{lo} = 7/8 * {int(P)}")
+        check("cost at the centre matches the optimum", fw_cost(knees, lo) == cost)
+        check("the centre is balanced", is_balanced(knees, lo))
 
-    print("\n  Five seeds (k = 2), knees 5, 9, 12, 20, 31 on their own grid:")
-    ks: List[int] = [5, 9, 12, 20, 31]
-    curves5: List[Callable[[int], Number]] = [step_curve(k) for k in ks]
-    got: Optional[int] = knee(median_curve(curves5), ks, bar)
-    print(f"    median of the knees               : {int(trop_median([Fraction(k) for k in ks]))}")
-    print(f"    knee of the median curve          : {got}")
-    assert got == 12
-
-    print("\n  Monotonicity is necessary.  Take c0 = 1 except c0(2) = 0 (knee 1),")
-    print("  together with the step curves at 2 and 3:")
-
-    def dip(t: int) -> Number:
-        return Fraction(0) if t == 2 else Fraction(1)
-
-    bad: List[Callable[[int], Number]] = [dip, step_curve(2), step_curve(3)]
-    print(f"    knees                             : {[knee(c, grid, bar) for c in bad]}")
-    print(f"    median of the knees               : 2")
-    print(f"    knee of the median curve          : {knee(median_curve(bad), grid, bar)}")
-    assert knee(median_curve(bad), grid, bar) == 3
-    print("    -> commutation fails without monotonicity.")
+        # strict minimality on a fine grid around the sample
+        grid = [F(i, 2) for i in range(int(2 * (min(knees) - 40)), int(2 * (max(knees) + 40)))]
+        worse = [t for t in grid if t != lo and fw_cost(knees, t) <= cost]
+        check("no other grid point attains the optimum", not worse)
+        check("grid minimum equals the theoretical optimum",
+              brute_force_min(knees, grid) == cost)
 
 
-def demo_robustness() -> None:
-    banner("4. Robustness: Lipschitz, breakdown, and the exact stability ray")
-    a, b, c = Fraction(256), Fraction(224), Fraction(160)
-    perturbed = (a + Fraction(3), b - Fraction(2), c + Fraction(3))
-    move: Number = abs(trop_med3(a, b, c) - trop_med3(*perturbed))
-    bound: Number = max(Fraction(3), Fraction(2), Fraction(3))
-    print(f"  median before {int(trop_med3(a, b, c))}, after {int(trop_med3(*perturbed))}")
-    print(f"  moved by {move} <= sup-norm perturbation {bound}: 1-Lipschitz confirmed.")
-    assert move <= bound
-
-    print("\n  Breakdown: seeds 1 and 2 pinned at 256 and 224, third seed arbitrary.")
-    print("     t        median(256, 224, t)     inside [224, 256]?")
-    for t_int in (-10 ** 6, 0, 100, 160, 224, 240, 300, 10 ** 6):
-        t: Number = Fraction(t_int)
-        m: Number = trop_med3(a, b, t)
-        inside: bool = Fraction(224) <= m <= Fraction(256)
-        assert inside
-        print(f"  {t_int:>9}   {str(int(m)):>18}     {inside}")
-    print("  -> no single corrupted seed can move the centre out of [224, 256].")
-
-    print("\n  Exact stability ray: median(x, 224, 256) == 224 iff x <= 224.")
-    for x_int in (160, 192, 224, 225, 240, 256):
-        x: Number = Fraction(x_int)
-        stays: bool = trop_med3(x, Fraction(224), Fraction(256)) == Fraction(224)
-        assert stays == (x <= Fraction(224))
-        print(f"    x = {x_int:4d} -> centre {int(trop_med3(x, Fraction(224), Fraction(256))):4d}"
-              f"   (stays: {stays})")
-    print("  -> the informal claim 'only x >= 256 moves the centre' is FALSE: 240 moves it.")
-
-    print("\n  Mean pipeline breakdown point is zero:")
-    for n in (10, 1000, 10 ** 6):
-        curves: List[Callable[[int], Number]] = [step_curve(1), step_curve(1), step_curve(n)]
-        g: List[int] = [1, n]
-        print(f"    clean knees (1, 1), corrupted knee {n:>8}"
-              f" -> mean-curve knee {knee(mean_curve(curves), g, Fraction(1))}"
-              f", median-curve knee {knee(median_curve(curves), g, Fraction(1))}")
-        assert knee(mean_curve(curves), g, Fraction(1)) == n
-        assert knee(median_curve(curves), g, Fraction(1)) == 1
+# ---------------------------------------------------------------------------
+# Demonstration 2: the balance characterisation, all parities
+# ---------------------------------------------------------------------------
 
 
-def demo_measured_sweep() -> None:
-    banner("5. The measured sweep: derived knee, and the horn analysis")
-    print("     k      retention   clears bar 0.98?")
-    for g in GRID_48:
-        print(f"  {g:5d}     {float(SWEEP_48[g]):.3f}        {SWEEP_48[g] >= BAR_48}")
-    k_star: Optional[int] = knee(sweep_curve, GRID_48, BAR_48)
-    print(f"\n  derived knee k* = {k_star}")
-    print(f"  margin          = {float(SWEEP_48[160] - BAR_48):.4f}  (razor-thin)")
-    assert k_star == 160
+def demo_balance_characterisation() -> None:
+    rule("2. Balanced points are exactly the minimisers (any size, any parity)")
 
-    print("\n  Pre-registered point predictions (horns):")
-    for h in HORNS:
-        passes: bool = SWEEP_48[h] >= BAR_48
-        is_knee: bool = h == k_star
-        assert passes and not is_knee
-        print(f"    k = {h:4d}   clears the bar: {passes}    is the knee: {is_knee}")
-    print("  -> all four are sound (sufficient) and all four are wrong (non-minimal).")
-
-
-def demo_seven_eighths_law() -> None:
-    banner("6. The 7/8 median law at two contexts")
-    rows: List[Tuple[int, List[Number], Number]] = [
-        (1024, KNEES_8, P8),
-        (2048, KNEES_16, P16),
+    samples: List[List[Num]] = [
+        [F(160), F(224), F(256)],
+        [F(160), F(224), F(256), F(192)],
+        [F(160), F(224), F(256), F(240)],
+        [F(5), F(5), F(5), F(9), F(100)],
+        [F(0), F(1)],
+        [F(7)],
     ]
-    print("   ctx     knees               P    median   median/P    mean/P")
-    for ctx, ks, p in rows:
-        assert p == product_point(4, ctx)
-        med: Number = trop_median(ks)
-        mean: Number = sum(ks, Fraction(0)) / 3
-        print(f"  {ctx:5d}   {[int(x) for x in sorted(ks)]}   {int(p):5d}"
-              f"    {int(med):5d}     {med / p}       {mean / p}")
-        assert med == Fraction(7, 8) * p
-
-    print("\n  Uniqueness of the constant: a*128 = 112 and a*256 = 224 force a = 7/8.")
-    a_from_8: Number = Fraction(112) / P8
-    a_from_16: Number = Fraction(224) / P16
-    assert a_from_8 == a_from_16 == Fraction(7, 8)
-    print(f"    from ctx=1024: a = {a_from_8};  from ctx=2048: a = {a_from_16}")
-
-    print("\n  The mean admits NO two-context constant:")
-    mean8: Number = sum(KNEES_8, Fraction(0)) / 3
-    mean16: Number = sum(KNEES_16, Fraction(0)) / 3
-    print(f"    mean/P at ctx=1024 = {mean8 / P8}   (= 7/8 by coincidence)")
-    print(f"    mean/P at ctx=2048 = {mean16 / P16}   (= 5/6, not 7/8)")
-    assert mean8 / P8 != mean16 / P16
-
-    print("\n  Geometry of the normalised distributions (min, median, max):")
-    for ctx, ks, p in rows:
-        prof: List[str] = [str(r) for r in sorted(k / p for k in ks)]
-        print(f"    ctx={ctx:5d}:  ({', '.join(prof)})")
-    spread8: Number = (max(KNEES_8) - min(KNEES_8)) / P8
-    spread16: Number = (max(KNEES_16) - min(KNEES_16)) / P16
-    print(f"\n    normalised spread: {spread8} -> {spread16}, a factor of {spread16 / spread8}")
-    assert spread16 / spread8 == Fraction(3, 2)
-    print("    ceiling pinned at 1, median stationary at 7/8, floor sinking 3/4 -> 5/8.")
+    for s in samples:
+        lo, hi = fermat_weber_set(s)
+        grid = [F(i, 2) for i in range(int(2 * (min(s) - 20)), int(2 * (max(s) + 20)) + 1)]
+        best = brute_force_min(s, grid)
+        minimisers = [t for t in grid if fw_cost(s, t) == best]
+        balanced = [t for t in grid if is_balanced(s, t)]
+        print(f"\n  sample {[str(x) for x in s]}")
+        print(f"    predicted optimal interval : [{lo}, {hi}]")
+        print(f"    grid minimisers            : [{min(minimisers)}, {max(minimisers)}]")
+        check("minimiser set equals the balanced set", minimisers == balanced)
+        check("endpoints match the order-statistic formula",
+              (min(minimisers), max(minimisers)) == (lo, hi))
+        check("optimal cost equals the nested-spread formula", best == fw_optimal_cost(s))
+        # convexity of the minimiser set on the grid
+        check("minimiser set is an interval",
+              all(fw_cost(s, t) == best for t in grid if lo <= t <= hi))
 
 
-def demo_speedups() -> None:
-    banner("7. Order reversal: speed-ups, medians and guarantees")
-    ctx: int = 2048
-    speedups: List[Number] = [Fraction(ctx) / k for k in KNEES_16]
-    print(f"  knees      {[int(k) for k in sorted(KNEES_16)]}")
-    print(f"  speed-ups  {[str(s) for s in sorted(speedups)]}"
-          f"  ~ {[round(float(s), 2) for s in sorted(speedups)]}")
-    med_speedup: Number = trop_median(speedups)
-    print(f"\n  median speed-up            : {med_speedup} ~ {float(med_speedup):.3f}")
-    print(f"  speed-up of the median knee: {Fraction(ctx) / trop_median(KNEES_16)}")
-    assert med_speedup == Fraction(ctx) / trop_median(KNEES_16)
-    print("  -> antitone equivariance: the median of the speed-ups is the speed-up of the median.")
-
-    print(f"\n  guaranteed (worst) speed-up: {min(speedups)}"
-          f"  -- image of the LARGEST knee {int(max(KNEES_16))}")
-    print(f"  best speed-up              : {max(speedups)}"
-          f"  -- image of the SMALLEST knee {int(min(KNEES_16))}")
-    assert min(speedups) == Fraction(ctx) / max(KNEES_16)
-    print("  -> order reversal exchanges the extremes but fixes the median.")
-
-    print("\n  Product-law bound k* <= P and the resulting guarantee:")
-    for k in sorted(KNEES_16):
-        assert k <= P16
-        print(f"    k* = {int(k):4d} <= P = {int(P16)}   =>  speed-up {float(Fraction(ctx)/k):.2f}x >= 8x")
+# ---------------------------------------------------------------------------
+# Demonstration 3: the median as a projection, and its robustness
+# ---------------------------------------------------------------------------
 
 
-def demo_axioms() -> None:
-    banner("8. The axiomatic characterisation, and independence of the tropical axiom")
-    grid: List[Number] = [Fraction(v) for v in (-2, -1, 0, 1, 2)]
-    for name, agg in (("median (max-of-mins)", trop_med3), ("sum-sign aggregator", sum_sign_agg)):
-        flags: Dict[str, bool] = check_axioms(agg, grid)
-        print(f"\n  {name}:")
-        for axiom, holds in flags.items():
-            print(f"    {axiom:26s}: {holds}")
-    print("\n  The sum-sign aggregator satisfies four of the five axioms but not translation")
-    print("  equivariance, and it differs from the median:")
-    print(f"    sum-sign(0, 0, 1) = {int(sum_sign_agg(Fraction(0), Fraction(0), Fraction(1)))},"
-          f"   median(0, 0, 1) = {int(trop_med3(Fraction(0), Fraction(0), Fraction(1)))}")
-    assert sum_sign_agg(Fraction(0), Fraction(0), Fraction(1)) != trop_med3(
-        Fraction(0), Fraction(0), Fraction(1)
-    )
-    print("  -> the tropical axiom is exactly what pins the median down.")
+def demo_projection() -> None:
+    rule("3. The median of three is a nearest-point projection onto a segment")
+
+    a, b = F(224), F(256)   # the two earlier 16x measurements
+    print(f"  fixed measurements span the segment [{a}, {b}]")
+
+    xs = [F(i, 2) for i in range(2 * 100, 2 * 400)]
+    check("median of three equals the clamp",
+          all(med3(a, b, x) == clamp(a, b, x) for x in xs))
+    check("the projection lands in the segment",
+          all(a <= clamp(a, b, x) <= b for x in xs))
+    check("monotone", all(clamp(a, b, xs[i]) <= clamp(a, b, xs[i + 1])
+                          for i in range(len(xs) - 1)))
+    check("nonexpansive",
+          all(abs(clamp(a, b, x) - clamp(a, b, y)) <= abs(x - y)
+              for x in xs[::37] for y in xs[::41]))
+    check("firmly nonexpansive",
+          all((clamp(a, b, x) - clamp(a, b, y)) ** 2
+              <= (x - y) * (clamp(a, b, x) - clamp(a, b, y))
+              for x in xs[::37] for y in xs[::41]))
+
+    # fibre structure
+    stable = [x for x in xs if med3(b, a, x) == F(224)]
+    print(f"    values leaving the centre at 224: from {min(stable)} up to {max(stable)}")
+    check("the stability fibre is exactly the ray x <= 224",
+          all((med3(b, a, x) == F(224)) == (x <= F(224)) for x in xs))
+    check("interior fibres are singletons",
+          [x for x in xs if clamp(a, b, x) == F(240)] == [F(240)])
+
+    # the measured third value, and the false informal claim
+    check("the measured value 160 keeps the centre", med3(b, a, F(160)) == F(224))
+    check("its excursion below the segment is 64",
+          abs(clamp(a, b, F(160)) - F(160)) == F(64))
+    check("every segment point is at least 64 away from 160",
+          all(abs(y - F(160)) >= 64 for y in [F(i, 4) for i in range(4 * 224, 4 * 256 + 1)]))
+    check("informal claim 'only >= 256 moves the centre' is FALSE",
+          med3(b, a, F(240)) == F(240) and F(240) < F(256))
+
+    # contrast with the mean
+    m = mean3(b, a, F(160))
+    print(f"    mean of the measured triple: {m} = {float(m):.4f}  (not 224)")
+    check("the mean is moved off the centre", m != F(224))
+    check("the mean is surjective in the free value",
+          mean3(b, a, 3 * F(1000) - b - a) == F(1000))
+    check("the median's range is the compact segment",
+          {med3(a, b, x) for x in xs} == {clamp(a, b, x) for x in xs}
+          and min(med3(a, b, x) for x in xs) == a
+          and max(med3(a, b, x) for x in xs) == b)
+
+
+# ---------------------------------------------------------------------------
+# Demonstration 4: scaling geometry
+# ---------------------------------------------------------------------------
+
+
+def demo_scaling() -> None:
+    rule("4. Scaling geometry: two rays, one defect, an exact 3/2 spread ratio")
+
+    top8, top16 = (F(1024), F(128)), (F(2048), F(256))
+    med8, med16 = (F(1024), F(112)), (F(2048), F(224))
+    low8, low16 = (F(1024), F(96)), (F(2048), F(160))
+
+    check("top edge lies on a ray through the origin", on_common_ray(top8, top16),
+          f"slope {top8[1] / top8[0]}")
+    check("median lies on a ray through the origin", on_common_ray(med8, med16),
+          f"slope {med8[1] / med8[0]} = 7/8 * 1/8")
+    check("median slope is 7/8 of the top slope",
+          med8[1] / med8[0] == F(7, 8) * (top8[1] / top8[0]))
+    check("the slope is forced by one context and confirmed by the other",
+          med8[1] / med8[0] == F(7, 64) and F(7, 64) * med16[0] == med16[1])
+
+    check("low tail lies on NO ray", not on_common_ray(low8, low16),
+          f"determinant {cross(low8, low16)}, origin triangle area {triangle_area(low8, low16)}")
+
+    check("doubling is equivariant on the top edge", (2 * top8[0], 2 * top8[1]) == top16)
+    check("doubling is equivariant on the median", (2 * med8[0], 2 * med8[1]) == med16)
+    defect = 2 * low8[1] - low16[1]
+    check("low-tail defect equals P/8", defect == F(32) and defect == P16 / 8,
+          f"2*96 - 160 = {defect} = {int(P16)}/8")
+
+    factors = {"top": top16[1] / top8[1], "low": low16[1] / low8[1]}
+    print(f"    dilation factor forced by the top edge : {factors['top']}")
+    print(f"    dilation factor forced by the low tail : {factors['low']}")
+    check("no single dilation matches the whole configuration",
+          factors["top"] != factors["low"])
+
+    cost8 = fw_optimal_cost(list(R8))
+    cost16 = fw_optimal_cost(list(R16))
+    print(f"    normalised optimal costs: {cost8} (8x) and {cost16} (16x)")
+    check("the 16x spread is exactly 3/2 times the 8x spread",
+          cost16 == F(3, 2) * cost8)
+    check("the widening is carried entirely by the low coordinate",
+          cost16 - cost8 == R8[0] - R16[0] == F(1, 8))
+    check("top two normalised coordinates agree at both contexts",
+          R8[1:] == R16[1:])
+
+
+# ---------------------------------------------------------------------------
+# Demonstration 5: the median level set in R^3
+# ---------------------------------------------------------------------------
+
+
+def demo_level_set() -> None:
+    rule("5. A maximal flat face inside a non-convex level set")
+
+    check("both normalised triples have median 7/8",
+          med3(*R8) == F(7, 8) and med3(*R16) == F(7, 8))
+
+    edge = [F(i, 32) for i in range(-32, int(32 * F(7, 8)) + 1)]
+    check("the whole half-line {(t, 7/8, 1) : t <= 7/8} lies in the level set",
+          all(med3(t, F(7, 8), F(1)) == F(7, 8) for t in edge))
+    exits = [F(7, 8) + F(i, 64) for i in range(1, 9)]
+    check("the edge is maximal: above 7/8 the median moves with t",
+          all(med3(t, F(7, 8), F(1)) == t for t in exits))
+
+    for i in range(-8, 17):
+        s = F(i, 8)
+        pt = tuple(s * u + (1 - s) * v for u, v in zip(R8, R16))
+        if s <= 1:
+            assert med3(*pt) == F(7, 8)
+    check("the segment joining the two contexts stays in the level set "
+          "(and extends past it, for all s <= 1)", True)
+
+    u, v = (F(5, 8), F(7, 8), F(1)), (F(7, 8), F(1), F(5, 8))
+    mid = tuple((p + q) / 2 for p, q in zip(u, v))
+    print(f"    midpoint of two level-set points: {tuple(str(c) for c in mid)}"
+          f" has median {med3(*mid)}")
+    check("the level set is NOT convex",
+          med3(*u) == F(7, 8) and med3(*v) == F(7, 8) and med3(*mid) == F(13, 16))
+
+
+# ---------------------------------------------------------------------------
+# Demonstration 6: the pending fourth measurement
+# ---------------------------------------------------------------------------
+
+
+def cost16_four(x: Num, t: Num) -> Num:
+    return abs(t - 160) + abs(t - 224) + abs(t - 256) + abs(t - x)
+
+
+def demo_fourth_value() -> None:
+    rule("6. The pending fourth measurement: the centre cannot be moved")
+
+    candidates = [F(c) for c in (96, 128, 160, 176, 192, 208, 224, 240, 256, 288, 384)]
+    grid = [F(i, 2) for i in range(2 * 50, 2 * 500)]
+
+    print("\n     x    optimal cost    predicted 96+|224-x|    optimal segment")
+    for x in candidates:
+        best = min(cost16_four(x, t) for t in grid)
+        predicted = 96 + abs(224 - x)
+        minimisers = [t for t in grid if cost16_four(x, t) == best]
+        lo, hi = fermat_weber_set([F(160), F(224), F(256), x])
+        print(f"   {int(x):>4}    {str(best):>10}      {str(predicted):>14}"
+              f"            [{lo}, {hi}]")
+        check(f"224 is optimal for x = {int(x)}",
+              all(cost16_four(x, 224) <= cost16_four(x, t) for t in grid))
+        check(f"cost law holds for x = {int(x)}", cost16_four(x, F(224)) == predicted)
+        check(f"grid optimum matches the law for x = {int(x)}", best == predicted)
+        check(f"optimal segment endpoints for x = {int(x)}",
+              (min(minimisers), max(minimisers)) == (lo, hi))
+        check(f"224 is balanced for x = {int(x)}",
+              is_balanced([F(160), F(224), F(256), x], F(224)))
+        if F(160) <= x <= F(224):
+            check("low regime: the optimal set is [x, 224]", (lo, hi) == (x, F(224)))
+        if F(224) <= x <= F(256):
+            check("high regime: the optimal set is [224, x]", (lo, hi) == (F(224), x))
+        check("uniqueness holds exactly at the knife edge x = 224",
+              (lo == hi) == (x == F(224)))
 
 
 def main() -> None:
-    demo_normal_form()
-    demo_threshold_duality()
-    demo_commutation()
-    demo_robustness()
-    demo_measured_sweep()
-    demo_seven_eighths_law()
-    demo_speedups()
-    demo_axioms()
-    print("\n" + "=" * 78)
-    print("All demonstrations completed; every assertion held.")
-    print("=" * 78)
+    print(__doc__)
+    demo_median_law()
+    demo_balance_characterisation()
+    demo_projection()
+    demo_scaling()
+    demo_level_set()
+    demo_fourth_value()
+    rule("All checks passed.")
 
 
 if __name__ == "__main__":
