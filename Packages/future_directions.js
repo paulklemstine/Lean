@@ -1506,7 +1506,7 @@ window.FUTURE_DIRECTIONS = [
       "Combinatorics"
     ],
     "id": "fd_1200",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "human_brainstorm_2026-08-12",
@@ -1720,54 +1720,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-13T03:21:12.748859+00:00",
     "title": "Stein-Method: Quantitative Normal Approximation Bounds"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Construct a formal proof system where the soundness predicate appears inside the system it validates. Prove that such tangled hierarchies are unavoidable in any system that can reason about its own consistency. Formalize using modal fixed-point logics and Kripke frames.",
-    "domains": [
-      "Novelty",
-      "Logic",
-      "Computation"
-    ],
-    "id": "seed_255",
-    "priority_score": 0.88,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Tangled Hierarchies: Proof Systems That Reference Their Own Soundness"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove that any Turing-complete system with self-modification capabilities has no general algorithm for predicting its own termination. Formalize the halting problem for programs that can rewrite their own code mid-execution and show this is strictly harder than the classical halting problem. Connect to the virus paradox and AI alignment.",
-    "domains": [
-      "Novelty",
-      "Computation",
-      "Logic"
-    ],
-    "id": "seed_266",
-    "priority_score": 0.88,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Self-Modifying Code That Cannot Be Stopped"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize a Landauer-like principle for mathematical reasoning: every bit of information destroyed in a proof step costs at least kT ln 2 of entropy. Prove that there exist theorems whose shortest proof requires exponentially more erasure than creation, and connect to Kolmogorov complexity and the thermodynamic cost of verification.",
-    "domains": [
-      "Novelty",
-      "Computation",
-      "Physics"
-    ],
-    "id": "seed_276",
-    "priority_score": 0.88,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Thermodynamics of Mathematical Proof"
   },
   {
     "consumed_by_exp_id": "",
@@ -11252,17 +11204,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Represent whole chords, not individual pitch classes.: Use 12-dimensional"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6d98445d",
     "description": "# Future Directions\n\n- Replace the impossible global condition over all irrational frequencies by a condition excluding a fixed neighborhood of the integer resonances. Continuity forces values near the zero-frequency peak to remain near the cutoff `N`.\n- Study normalized transforms `F_N(\u03c9) / N` on compact frequency sets bounded away from integers, and seek quantitative cancellation estimates uniform in `N`.\n- Separate the even and odd summands. For the stated phase `T(n)/n`, the even branch contributes the constant phase `1/2`, while the odd branch has phase `3 + 1/n`; this explicit decomposition should support sharper asymptotic estimates.\n- Formulate averaged statements, such as `L\u00b2` bounds over a period or bounds outside an exceptional set of small measure. Such claims are compatible with isolated resonant peaks in a way that a pointwise bound over all irrationals is not.\n- Compare the corrected normalized or averaged statistics for the `3n+1`, `5n+1`, and `7n+1` maps. Any useful discriminator must depend on more than continuity near frequency zero.\n- Investigate orbit-dependent transforms separately from the one-step cutoff sum. A rigorous implication between an orbit hitting-time estimate and a spectral estimate would require precise definitions and directional proofs; it should not be treated as an automatic equivalence.\n",
     "domains": [
       "Algebra",
       "Physics"
     ],
     "id": "fd_0385",
+    "phase": "A",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "4c2c71e5",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-19T02:44:45.166880+00:00",
     "title": "Future directions from cycle 4c2c71e5"
   },
