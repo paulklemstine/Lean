@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "e46e79a5",
-      "domain": "Applications",
-      "key_insight": "# FUTURE DIRECTIONS — after the OR-COLLAPSE-LAW (paper 72)\n\nWhat is now formally settled (file `Catalog/Applications/OrCollapseLaw.lean`,\n0 sorries, only the standard axioms):\n\n* the exact law `I(N mo",
-      "quality_score": 0.86,
-      "sorry_count": 0,
-      "theorem_count": 67,
-      "timestamp": "2026-08-17T16:46:23",
-      "title": "OR-COLLAPSE-LAW: semiprime OR of a cyclic split-complete fork = g(n) = H((2n-1)/n^2) - (1/n)H(1/n) -"
-    },
-    {
       "cycle_id": "f262016d",
       "domain": "Applications",
       "key_insight": "# Future directions — almost-lossless compression beyond the pigeonhole bound\n\nDerived from the verified results in `Catalog/Applications/AlmostLossless/`\n(cycle 1: converse + explicit scheme + comple",
@@ -499,19 +489,19 @@
       "theorem_count": 69,
       "timestamp": "2026-08-19T15:47:00",
       "title": "What follows are the conjectures the analysis stage extracted, in decreasing order of expected\nimpac"
+    },
+    {
+      "cycle_id": "0f708106",
+      "domain": "Novelty",
+      "key_insight": "# Future directions\n\nDerived from the Stage 3/4 analysis of this cycle.  Each conjecture is falsifiable, and each\ncomes with the precise statement one would formalise next.\n\nEstablished this cycle (al",
+      "quality_score": 0.86,
+      "sorry_count": 0,
+      "theorem_count": 109,
+      "timestamp": "2026-08-19T17:41:03",
+      "title": "Both ingredients are already machine-checked (the sharp bound and 1-sum closure),"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "756b62a7",
-      "domain": "Pythagorean",
-      "key_insight": "# Future directions\n\nDerived from the formalization in `Catalog/Pythagorean/SchurIdempotentGammaTwo.lean`, `SchurIdempotentGap.lean`,\n`SchurIdempotentAlgebra.lean` and `SchurIdempotentEQCost.lean`.\n\nW",
-      "quality_score": 0.7084450000000001,
-      "sorry_count": 0,
-      "theorem_count": 86,
-      "timestamp": "2026-08-09T14:12:45",
-      "title": "ArXiv paper: Towards a characterization of idempotent Schur multipliers"
-    },
     {
       "cycle_id": "08217b91",
       "domain": "Novelty",
@@ -2501,6 +2491,16 @@
       "theorem_count": 69,
       "timestamp": "2026-08-19T15:47:00",
       "title": "What follows are the conjectures the analysis stage extracted, in decreasing order of expected\nimpac"
+    },
+    {
+      "cycle_id": "0f708106",
+      "domain": "Novelty",
+      "key_insight": "# Future directions\n\nDerived from the Stage 3/4 analysis of this cycle.  Each conjecture is falsifiable, and each\ncomes with the precise statement one would formalise next.\n\nEstablished this cycle (al",
+      "quality_score": 0.86,
+      "sorry_count": 0,
+      "theorem_count": 109,
+      "timestamp": "2026-08-19T17:41:03",
+      "title": "Both ingredients are already machine-checked (the sharp bound and 1-sum closure),"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.85
     }
   ],
-  "last_updated": "2026-08-19T15:47:00",
+  "last_updated": "2026-08-19T17:41:03",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hn2⟩)",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "a9efa47b",
-        "quality": 0.82,
-        "theorems": 14,
-        "title": "Power-Sum GCD Factoring & Carmichael Periodicity"
-      },
-      {
         "cycle_id": "ac45a9d9",
         "quality": 0.85,
         "theorems": 41,
@@ -3637,6 +3631,12 @@
         "quality": 0.85,
         "theorems": 124,
         "title": "Emergent Spacetime from Quantum Entanglement"
+      },
+      {
+        "cycle_id": "0f708106",
+        "quality": 0.86,
+        "theorems": 109,
+        "title": "Both ingredients are already machine-checked (the sharp bound and 1-sum closure)"
       }
     ],
     "NumberTheory": [
