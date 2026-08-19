@@ -121,6 +121,34 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 5bad6114 (Q=0.910), which proved 17 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The \"if\" direction is proved (`FourierFA.poisson_summation`); the converse is open.",
+    "domains": [
+      "Probability"
+    ],
+    "id": "push_5bad6114_9b4bad3d",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "5bad6114",
+    "status": "available",
+    "timestamp": "2026-08-19T09:49:48.491455+00:00",
+    "title": "Deepening: The \"if\" direction is proved (`FourierFA.poisson_summation`); the converse is op"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 60572a3f (Q=0.850), which proved 75 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: `\u03a3_g |X^g|^k = (B_k + \u03a3_P (m_P \u2212 1))\u00b7|G|`\n    (`bell_defect_eq`): the excess of a moment over its Bell floor is `|G|` times the number of\n    *extra* orbits per pattern, and it vanishes exactly for `k`-transitive actions\n    (`sum_patternMultiplicity_sub_one_eq_zero_iff`).\n\n---\n\n\n\n## Open conjecture",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "push_60572a3f_43050b28",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "60572a3f",
+    "status": "available",
+    "timestamp": "2026-08-19T09:49:59.558898+00:00",
+    "title": "Deepening: The Bell defect, counted exactly"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 8a3962f5 (Q=0.860), which proved 120 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: *The number of triples `(a,b,c)` with `0 < a,b,c \u2264 H` that are Berggren-generated\nfrom a positive seed is `\u0398(H)` \u2014 vanishingly few compared with `H\u00b3` \u2014 while the\nnumber of *Pythagorean* triples in the same box that are Berggren-generated is\n`(1 - o(1))` times the number of primitive Pythagorean trip",
     "domains": [
       "MachineLearning"
@@ -1735,38 +1763,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-05T06:51:05.180719+00:00",
     "title": "Deepening: ArXiv paper: Magnitude homology of tope graphs"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Two quantum particles are entangled if measuring one instantly affects the other. But entanglement is also a topological property: if you represent the state of two qubits as a curve in R^3, entanglement IS the linking number. Conjecture: For any pure state of two qubits |psi> in C^2 tensor C^2, the concurrence C(psi) = 2|alpha*delta - beta*gamma| (where psi = alpha|00> + beta|01> + gamma|10> + delta|11>) equals the absolute value of the linking number of two curves derived from the Hopf fibration applied to psi. Specifically, map psi to S^7 via normalization, then project to S^4 via the Hopf map, and the preimages of two points in S^4 are linked circles in S^7 whose linking number equals the concurrence. This means: entanglement is MEASURED by topology, and maximally entangled states correspond to the Hopf link (linking number 1). Test: for 1000 random two-qubit states, compute the concurrence and the linking number of the Hopf preimages, and verify they are equal. Prove the equality for the Bell states. Impact: quantum entanglement is not mysterious \u2014 it is the linking number of the Hopf fibration. Two particles are entangled if and only if their Hopf preimages are linked.",
-    "domains": [
-      "Novelty",
-      "Physics",
-      "Topology",
-      "Algebra"
-    ],
-    "id": "seed_141",
-    "priority_score": 0.88,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Quantum Entanglement as Algebraic Topology: The Linking Number Is Entanglement"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Mihailescu proved that 8 and 9 are the only consecutive perfect powers. Generalize: find all solutions to x^a - y^b = k for fixed small k. Formalize the theory of exponential Diophantine equations and Pillai's conjecture.",
-    "domains": [
-      "NumberTheory",
-      "Algebra"
-    ],
-    "id": "seed_205",
-    "priority_score": 0.88,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Catalan's Conjecture Generalizations"
   },
   {
     "consumed_by_exp_id": "",
@@ -4085,6 +4081,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-15T13:51:07.140800+00:00",
     "title": "Close Proofs: The 'Only Bad Primes' Conjecture is False (elliptic curve denominators"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle 60572a3f (Q=0.850) proved 75 theorems in Combinatorics but left 8 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: `\u03a3_g |X^g|^k = (B_k + \u03a3_P (m_P \u2212 1))\u00b7|G|`\n    (`bell_defect_eq`): the excess of a moment over its Bell floor is `|G|` times the number of\n    *extra* orbits per pattern, and it vanishes exactly for `k",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "sorry_fill_60572a3f_a0a9c53d",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "60572a3f",
+    "status": "available",
+    "timestamp": "2026-08-19T09:49:59.891226+00:00",
+    "title": "Close Proofs: The Bell defect, counted exactly"
   },
   {
     "consumed_by_exp_id": "",
@@ -15087,17 +15097,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Three Lean files carry the mathematics of this mission (all of them compile and"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d11810a4",
     "description": "# Future Directions\n\nDerived from the three files of this line of work:\n\n* `Catalog/Bridges/FundamentalGroupCompleteInvariant.lean` (cycle 1) \u2014 connected groupoids\n  (models of `K(G,1)`) are classified up to equivalence by the vertex group of a basepoint;\n  a `\u03c0\u2081`-only counterexample shows the fundamental group alone does not classify.\n* `Catalog/Bridges/FundamentalGroupK1Classification.lean` (cycle 2) \u2014 realization\n  (`exists_functor_inducing`), homotopies are conjugations (`natIso_iff_conjugating_iso`,\n  `realize_natIso_iff_conj`), the classification bijection `classificationEquiv`\n  (`[K(G,1), K(H,1)] \u2243 Hom(G,H)/conj`), Whitehead's theorem for 1-types\n  (`isEquivalence_of_bijective_mapAut`) and its converse, sharpness\n  (`connectedness_necessary`), and a counterexample where *all* positive-degree homotopy\n  groups agree (`allHomotopyGroups_equiv_not_homotopyEquiv`).\n* `Catalog/Bridges/FundamentalGroupK1Deepening.lean` (cycle 3) \u2014 see \"Resolved\" below.\n* `Catalog/Bridges/FundamentalGroupPi0Gluing.lean`,\n  `Catalog/Bridges/FundamentalGroupPi0Decomposition.lean` (this cycle) \u2014 the coproduct of a\n  family of groupoids is a groupoid (`sigmaGroupoid`), its `\u03c0\u2080` is the indexing set\n  (`componentsSigmaEquiv`), equivalences glue over a bijection of indices\n  (`sigmaEquivalence`), coproducts of connected groupoids are classified by index bijections\n  matching vertex groups (`sigma_equivalence_iff`), every groupoid is equivalent to the\n  coproduct of its components (`sigmaComponentsEquivalence`), and hence the pair\n  (`\u03c0\u2080`, fundamental groups of the components) is a complete invariant of arbitrary homotopy\n  1-types (`groupoid_equivalence_iff_pi0_aut`).  This resolves N2 below.\n\n## Resolved since the last cycle\n\n* **C1 (functoriality of the classification).**  `inducedHom_id` shows the identity functor\n  induces the identity homomorphism, `inducedHom_comp_conj` shows the homomorphism induced by\n  a composite is conjugate to the composite of the induced homomorphisms, and\n  `toConjClass_comp` upgrades this to an exact identity of conjugacy classes.  So the\n  classification bijection is compatible with composition; what remains open is the full\n  2-categorical (bicategorical) statement, recorded as N1 below.\n* **C3 (fibres of the classification).**  The conjugation action of `H` on `Hom(G,H)` has\n  stabiliser exactly the centraliser of the image (`stabilizer_eq_centralizer`), so the set\n  of homomorphisms realising a fixed homotopy class is a coset space of that centraliser\n  (`orbitEquivQuotientCentralizer`) and has cardinality its index\n  (`card_orbit_eq_index_centralizer`, `card_homs_natIso_realize`).\n* **C2, discrete case.**  `\u03c0\u2080` is defined (`Components`), shown invariant under equivalence\n  (`componentsEquivOfEquivalence`), trivial for connected 1-types\n  (`subsingleton_components_of_connectedAt`), and shown to be a *complete* invariant of\n  discrete (totally disconnected) 1-types:\n  `discrete_equivalence_iff_nonempty_equiv : Nonempty (Discrete \u03b1 \u224c Discrete \u03b2) \u2194 Nonempty (\u03b1 \u2243 \u03b2)`.\n  The general case (arbitrary groupoids) is restated as N2 below.\n\nThe following conjectures are concrete and falsifiable; each is stated so that a single Lean\ncounterexample would refute it.\n\n## N1. The classification is a biequivalence, not just a compatible family of bijections\n\nConjecture: the assignment `(C, c) \u21a6 Aut c` extends to a biequivalence between the homotopy\n2-category of connected groupoids with chosen basepoints and the 2-category whose objects are\ngroups, whose 1-cells are homomorphisms and whose 2-cells are conjugations.  Concretely, the\nfamily of bijections `classificationEquiv` should be the hom-level part of a pseudofunctor:\nthere are coherent invertible comparison 2-cells for identities and composites (the conjugating\nelements produced by `inducedHom_id` and `inducedHom_comp_conj`) satisfying the associativity\nand unit coherence laws.  Falsified by exhibiting connected groupoids and functors whose\ncomparison conjugators cannot be chosen coherently.\n\n## N2 (RESOLVED). `\u03c0\u2080` together with the vertex groups is a complete invariant of arbitrary 1-types\n\n**Status: proved** \u2014 `FundamentalGroupPi0.groupoid_equivalence_iff_pi0_aut` in\n`Catalog/Bridges/FundamentalGroupPi0Decomposition.lean` states, for groupoids `C`, `D`:\n\n```\nNonempty (C \u224c D) \u2194 \u2203 e : Components C \u2243 Components D,\n  \u2200 p, Nonempty (Aut (Quotient.out p : C) \u2243* Aut (Quotient.out (e p) : D))\n```\n\nThe gluing step identified below as the content of the conjecture \u2014 every groupoid is\nequivalent to the disjoint union of the connected full subcategories on its components \u2014 is\n`sigmaComponentsEquivalence`; the coproduct half is `sigma_equivalence_iff` in\n`Catalog/Bridges/FundamentalGroupPi0Gluing.lean`.  The original statement follows.\n\nConjecture: for arbitrary groupoids `C`, `D`, one has `C \u224c D` iff there is a bijection\n`\u03b2 : Components C \u2243 Components D` together with, for each component, a group isomorphism of the\nvertex groups of corresponding basepoints.  The `Discrete` case is now a theorem\n(`discrete_equivalence_iff_nonempty_equiv`) and the connected case is cycle 2's\n`connectedGroupoids_equivalent_iff_aut_mulEquiv`; the content of the conjecture is the gluing\nstep, i.e. that every groupoid is equivalent to the disjoint union (a `Sigma` of categories) of\nthe single-object groupoids of its components.  Falsified by two groupoids with matching\ncomponent data that are inequivalent.\n\n## N3. The centraliser index is the exact size of every fibre, uniformly in the basepoint\n\nConjecture: for finite `H` the counting identity\n`Nat.card {\u03c8 // \u03c8 conjugate to \u03c6} = (Subgroup.centralizer (Set.range \u03c6)).index`\nproved as `card_homs_natIso_realize` refines to a *pointed* classification: pointed homotopy\nclasses of maps `(C, c) \u2192 (D, d\u2080)` (functors equipped with an isomorphism `F.obj c \u2245 d\u2080`, up to\nnatural isomorphism respecting it) are in bijection with `Hom(Aut c, Aut d\u2080)` itself, and the\nforgetful map to unpointed classes has fibre over `[\u03c6]` of size `[H : C_H(\u03c6(G))]`.  This is\nfalsifiable by a finite computation: take `G = H = S\u2083` (10 homomorphisms, 3 conjugacy classes,\norbit sizes 1, 3, 6, i.e. centraliser indices 1, 3, 6 \u2014 see `ComputationalEvidence.md`) and count pointed classes.\n\n## N4. Asphericity is exactly the condition making `\u03c0\u2081` a complete invariant of maps\n\nConjecture: a path-connected space `X` is aspherical (a `K(G,1)`) **iff** for every\npath-connected `Y` the map `[Y, X] \u2192 Hom(\u03c0\u2081 Y, \u03c0\u2081 X)/conj` is a bijection.  The \"only if\"\ndirection is the topological form of `realize_natIso_iff_conj`; the \"if\" direction should\nfollow by testing against `Y = S\u207f`.  A formalisable first step, entirely inside the current\nframework: prove that the fundamental groupoid functor `Top \u2192 Gpd` sends a map inducing an\nisomorphism on `\u03c0\u2081` of path-connected spaces to an equivalence (a topological Whitehead\nstatement extending `fundamentalGroupoid_equivalence_of_mulEquiv` from existence of *some*\nequivalence to the given map being one).\n\n## N5. A genuinely higher counterexample\n\nConjecture: there exist path-connected `X`, `Y` with `\u03c0\u2081(X, x) \u2243* \u03c0\u2081(Y, y)` that are not\nhomotopy equivalent \u2014 e.g. `S\u00b2` versus a point, distinguished by `\u03c0\u2082`.  The counterexamples\nformalised so far (`same_fundamentalGroup_not_homotopyEquivalent`,\n`allHomotopyGroups_equiv_not_homotopyEquiv`) are `\u03c0\u2080`-obstructions, which N2 explains\ncompletely; a higher counterexample needs `\u03c0\u2082(S\u00b2) \u2260 0`, i.e. a degree or Hopf-invariant\nargument that is not currently available in Mathlib.  Building that invariant is the concrete\ntask; the conjecture is falsified only if no such pair exists, which the informal theory rules\nout, so the real content is the formalisation.\n\n## N6. Homotopy classes of maps between *arbitrary* 1-types\n\nThe object-level classification is now complete for arbitrary 1-types\n(`groupoid_equivalence_iff_pi0_aut`), while the classification of *maps* is so far only\navailable in the connected case (`classificationEquiv`).  Conjecture: for arbitrary\ngroupoids `C`, `D` with chosen component basepoints there is a bijection\n\n```\nQuotient (natIsoSetoid C D)  \u2243  \u2200 p : Components C, \u03a3 q : Components D,\n                                  Hom (Aut (rep p), Aut (rep q)) / conjugation\n```\n\ni.e. a homotopy class of maps of 1-types is exactly the data, for each component of the\nsource, of a target component together with a conjugacy class of homomorphisms of the\ncorresponding fundamental groups.  The ingredients are all in place:\n`sigmaComponentsEquivalence` reduces both sides to coproducts, `Sigma.desc`/`Sigma.natIso`\ndecompose a functor and a natural isomorphism componentwise, and `classificationEquiv`\nhandles a single component.  It is falsified by a pair of groupoids for which the natural\ncomparison map fails to be injective or surjective; a finite search over groupoids with at\nmost two components and vertex groups of order at most 6 would already be decisive.\n",
     "domains": [
       "Geometry",
       "Algebra"
     ],
     "id": "fd_0954",
+    "phase": "A",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "6337dbc1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-04T20:08:45.412332+00:00",
     "title": "Derived from the three files of this line of work:"
   },
@@ -19352,18 +19363,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Resolved in this cycle"
   },
   {
-    "consumed_by_exp_id": "60572a3f",
+    "consumed_by_exp_id": "",
     "description": "`\u03a3_g |X^g|^k = (B_k + \u03a3_P (m_P \u2212 1))\u00b7|G|`\n    (`bell_defect_eq`): the excess of a moment over its Bell floor is `|G|` times the number of\n    *extra* orbits per pattern, and it vanishes exactly for `k`-transitive actions\n    (`sum_patternMultiplicity_sub_one_eq_zero_iff`).\n\n---\n\n\n\n## Open conjectures for the next cycle\n\n\n\n### Conjecture E\u2032 (the fibre spectrum is a strictly finer invariant)\n\n*The vector `(m_P)_P` of pattern multiplicities separates pairs of actions that the scalar moment\n`\u03a3_g |X^g|^k` cannot; and `m_P = 1` for all `P` with exactly `j` blocks iff the action is\n`j`-transitive (the block-graded refinement of the fibrewise criterion).*\n\nThe key insight is that the fibrewise criterion now proved treats all patterns at once, whereas the\ntransitivity hierarchy is graded by the number of blocks: restricting attention to the patterns\nwith `j` blocks should isolate exactly `j`-transitivity inside the `k`-tuple data, giving a\nspectrum of invariants between the moments.\n\nWhy now? The decomposition, the fibrewise criterion and the exact defect formula are proved\n(items 18\u201319), and cycle 3 also shows the scalar moment cannot separate actions (item 15), so the\nonly thing left to test is whether the refined vector can.\n\n\n\n### Conjecture F (Bell defect bounds the failure of transitivity)\n\n*The Bell defect `D_k(G,X) := \u03a3_g |X^g|^k \u2212 B_k|G| \u2265 0` satisfies: `D_k = 0 \u21d2 D_j = 0` for `j \u2264 k`\n(proved), and quantitatively `D_2 > 0 \u21d2 D_k \u2265 c_k \u00b7 D_2` for an explicit combinatorial constant\n`c_k` depending only on `k`.*\n\nThe key insight is that the defect counts non-singleton fibres of the orbit-to-pattern map with\nmultiplicity, and a failure of 2-transitivity is inherited by every longer tuple by padding with\nrepeated coordinates, which multiplies the excess by a controlled partition count.\n\nWhy now? Non-negativity, the implication `D_k = 0 \u21d2 D_j = 0`, and now the exact formula\n`D_k = |G|\u00b7\u03a3_P (m_P \u2212 1)` (item 19) are theorems; only the quantitative propagation between\ndifferent `k` is open, and it is now a statement about fibre sizes rather than about moments.\n\n\n\n### Conjecture G (how much labelling an injective aggregate must spend)\n\n*Every injective aggregate `A : (Fin m \u2192 QLaurent) \u2192 QLaurent` that is additive in each argument\nmust spread the coefficients over at least `m` pairwise disjoint infinite sets of exponents; in\nparticular no such aggregate has image contained in the series supported on a set of density\n`< 1/m`.*\n\nThe key insight is that cycle 3 identified symmetry as the obstruction, so what remains is a\ncounting bound: injectivity forces the aggregate to reserve, for each index, an infinite family of\nindependent coefficient slots, which is exactly what the interleaving construction does with the\nresidues mod `m`.\n\nWhy now? The dichotomy (interleaving injective, every symmetric aggregate non-injective) is proved;\nthe missing piece is a lower bound showing interleaving is not just *an* answer but essentially the\n*only* shape of answer.\n\n\n\n### Co",
     "domains": [
       "Combinatorics",
       "MachineLearning"
     ],
     "id": "fd_1441",
-    "phase": "A",
     "priority_score": 0.4474382280955627,
     "research_mode": "team",
     "source_exp_id": "286b3a0e",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-17T13:54:07.627034+00:00",
     "title": "The Bell defect, counted exactly"
   },
@@ -19392,6 +19402,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-17T14:45:14.122863+00:00",
     "title": "The equivalence and the cap are formal; sieve-theoretic upper bounds of"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "*For all `r, s` with `r + s \u2264 |X|` the spectrum satisfies `t_{r+s} \u2265 t_r\u00b7(t_s \u2212 r)`, and more\nprecisely `t_{r+s} \u2265 t_r \u00b7 (number of orbits of injective `s`-tuples avoiding a fixed injective\n`r`-tuple)`.*\n\nThe key insight is that `descFactorial_injOrbits_one_le` is the case `r = 0` of a relative\nstatement: cutting an injective `(r+s)`-tuple into its first `r` and last `s` coordinates gives a\nfibration of the top fibre at level `r+s` over the top fibre at level `r`, whose fibres are the\norbits of the stabiliser on injective `s`-tuples in the complement.\n\nWhy now? The maps `dropOrbit` and `shrinkOrbit` already realize the \"forget coordinates\"\ndirection, and the orbit\u2013stabiliser theorem used in `descFactorial_dvd_card_of_kTransitive`\nsupplies the relative count; only the bookkeeping between the two is missing.",
+    "domains": [],
+    "id": "fd_1592",
+    "priority_score": 0.4378333333333333,
+    "research_mode": "team",
+    "source_exp_id": "60572a3f",
+    "status": "available",
+    "timestamp": "2026-08-19T09:49:54.571634+00:00",
+    "title": "Conjecture M (a full multiplicative hierarchy)"
   },
   {
     "consumed_by_exp_id": "",
@@ -19624,6 +19646,36 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "*A group with `D_k = 0` and `|G| < 2\u00b7|X|^{\\underline k}` is sharply `k`-transitive, hence for\n`k \u2265 4` belongs to the classical list (symmetric, alternating, Mathieu).  Consequently, for\n`k \u2265 6` the equation `D_k = 0` has no solutions with `|X| > k + 2`.*\n\nThe key insight is that `descFactorial_dvd_card_of_kTransitive` turns defect zero into a\ndivisibility statement, and an order bound below twice the falling factorial forces the quotient\nto be `1`, which is sharp transitivity \u2014 a purely arithmetic route into the classification.\n\nWhy now? Both ingredients (`bellDefect_eq_zero_iff` and the divisibility bound, the latter\nrepaired in this cycle) are now theorems in this thread.",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_1593",
+    "priority_score": 0.4044444444444444,
+    "research_mode": "team",
+    "source_exp_id": "60572a3f",
+    "status": "available",
+    "timestamp": "2026-08-19T09:49:54.830002+00:00",
+    "title": "Conjecture N (spectral rigidity and the classification)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "*With `M_{k,j} = S(k,j)\u00b7t_j\u00b7|G|` the graded moments, the exponential generating function\n`\u03a3_k M_{k,j} x^k/k!` equals `t_j\u00b7|G|\u00b7(e^x \u2212 1)^j / j!`, so the whole moment family of a `G`-set is\ndetermined by the `|X| + 1` numbers `t_j` through the classical Stirling generating function.*\n\nThe key insight is that the rank collapse `m_P = t_{rank P}` factors the doubly indexed family\ninto a purely combinatorial factor and a purely group-theoretic one, so the analytic structure is\ninherited verbatim from the Stirling numbers of the second kind.\n\nWhy now? Both factors are theorems (`patternMultiplicity_eq_injOrbits_rank`,\n`card_orbits_eq_sum_stirling`), and the moment\u2013spectrum equivalence proved in this cycle says the\ngenerating function loses no information \u2014 it would connect this thread back to the analytic\n(moonshine) side that motivated it.",
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_1594",
+    "priority_score": 0.4044444444444444,
+    "research_mode": "team",
+    "source_exp_id": "60572a3f",
+    "status": "available",
+    "timestamp": "2026-08-19T09:49:55.092277+00:00",
+    "title": "Conjecture O (a graded moment generating function)"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Two `\u2115`-valued functions on finite types bounded by `N` with equal\n    power sums for all `k \u2264 N` have equal value distributions (`count_eq_of_powerSums`), proved by\n    inverting a transposed Vandermonde system over `\u211a` with the nodes `0, 1, \u2026, N`.",
     "domains": [],
     "id": "fd_1433",
@@ -19712,15 +19764,14 @@ window.FUTURE_DIRECTIONS = [
     "title": "Open here; the multiplicative bound `|supp f| \u00b7 |supp f\u0302| \u2265 p` is proved"
   },
   {
-    "consumed_by_exp_id": "5bad6114",
+    "consumed_by_exp_id": "",
     "description": "The \"if\" direction is proved (`FourierFA.poisson_summation`); the converse is open.",
     "domains": [],
     "id": "fd_1411",
-    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "525aecde",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-17T09:01:32.595927+00:00",
     "title": "The \"if\" direction is proved (`FourierFA.poisson_summation`); the converse is open."
   },
@@ -21188,5 +21239,78 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-19T08:55:10.761163+00:00",
     "title": "average case (Bayes): minimax redundancy `= C`, the *capacity* of the class"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "form of the statement \u2014 `FourierFA.uncertainty_gap_of_not_dvd` shows the product jumps\nby at least `1` as soon as the support size leaves the divisor lattice \u2014 so the remaining content\nis exactly the metric estimate, and the proof is organised as an explicit chain of inequalities in\nwhich `le_antisymm` is the only step to be replaced.",
+    "domains": [
+      "Cryptography",
+      "Logic"
+    ],
+    "id": "fd_1587",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "5bad6114",
+    "status": "available",
+    "timestamp": "2026-08-19T09:49:35.807164+00:00",
+    "title": "form of the statement \u2014 `FourierFA.uncertainty_gap_of_not_dvd` shows the product jumps"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "*The extremal classes of `\u2124/4`\nand of `\u2124/2 \u00d7 \u2124/2`, equipped with pointwise product and convolution modulo scalars, are **not**\nisomorphic as algebraic structures.*  The counting half of this is now **proved**:\n`FourierFA.extremalSupports_separates_order_four` shows the two groups have literally the same\nextremal spectrum (both `{1, 2, 4}`) yet `2` and `6` extremal supports of size `2` respectively,\nso the family of supports is a strictly finer invariant than the family of sizes. The key\ninsight is `FourierFA.exists_isExtremal_supp_eq_iff_parallelogram`: extremality of the support is\nequivalent to closure under `(x, y, z) \u21a6 x - y + z`, which turns the invariant into a decidable\nfinite count. What remains open is the *algebraic* statement \u2014 that the product/convolution\nstructure, not merely the support count, distinguishes them, and that this holds for every pair\nof non-isomorphic finite abelian groups of the same order. Why now? The support characterisation\nand the closure theorems `isExtremal_mul`, `isExtremal_conv` are all formalised, so the remaining\nstep is to show the two operations recover the subgroup lattice from the extremal class.",
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_1588",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "5bad6114",
+    "status": "available",
+    "timestamp": "2026-08-19T09:49:36.090023+00:00",
+    "title": "The extremal classes of `\u2124/4`"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "*For every finite abelian `G` of order `n` and every\n`s \u2224 n` with `s \u2264 n`, there is a nonzero `f` with `|supp f| = s` and\n`|supp f|\u00b7|supp f\u0302| = s\u00b7\u2308n/s\u2309` \u2014 i.e. `FourierFA.uncertainty_gap_mod` is attained.*  The key\ninsight is that the extremal analysis forbids equality `s\u00b7t = n` only through Lagrange, and a\nunion of `\u2308n/s\u2309`-many cosets truncated to `s` points should saturate the rounded-up bound.  Why\nnow? The exact inequality and the arithmetic obstruction are proved, so only the construction is\nmissing, and it can be tested exhaustively on `\u2124/6` (`s = 4`) and `\u2124/12` (`s = 5`).",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "fd_1589",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "5bad6114",
+    "status": "available",
+    "timestamp": "2026-08-19T09:49:36.344566+00:00",
+    "title": "For every finite abelian `G` of order `n` and every"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "*The map `H \u21a6 (H,\nH^\u22a5)` is an order-reversing lattice isomorphism from `Sub(G)` onto the poset of Poisson pairs\nordered by inclusion of the first coordinate, and it carries `\u2294` to `\u2229`.*  The key insight is\nthat `annihSub_sup` already proves the meet/join exchange for annihilators, and\n`isPoissonPair_unique_subgroup` proves injectivity, so the only missing step is that the order\non pairs is determined by the first coordinate.  Why now? With\n`FourierFA.exists_isPoissonPair_card_iff` the image is known to hit every divisor, so the\nstatement has become a purely lattice-theoretic one about objects already formalised.",
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_1590",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "5bad6114",
+    "status": "available",
+    "timestamp": "2026-08-19T09:49:36.602713+00:00",
+    "title": "The map `H \u21a6 (H,"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "*Define `c_k^{grp} = inf {2\u00b7D_k / D_2}` over all finite actions with `2 \u2264 k \u2264 |X|` and `D_2 > 0`.\nThen `c_k^{grp} > B_k`, and in fact `c_k^{grp} = 2(B_k \u2212 1) \u2212 something explicit`; the infimum is\nattained by the trivial action on `k` points.*\n\nThe key insight is that cycle 4 removed the extremal ray of the *relaxation* (`Conjecture H`), so\nthe infimum over actions is now governed by the *next* face of the cone, cut out by the newly\nproved multiplicative inequality `t_1^{\\underline r} \u2264 t_r`: minimizing `\u03a3_r S(k,r)(t_r \u2212 1)`\nsubject to that constraint is a finite optimization for each `k`.\n\nWhy now? Both the linear relaxation (`bellDefect_two_propagation_sharp`) and the first nonlinear\nconstraint (`descFactorial_injOrbits_one_le`) are theorems, so the optimization has a well-posed\nfeasible region for the first time.",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "fd_1591",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "60572a3f",
+    "status": "available",
+    "timestamp": "2026-08-19T09:49:54.301918+00:00",
+    "title": "Conjecture L (the true propagation constant)"
   }
 ];

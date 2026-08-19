@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "525aecde",
-      "domain": "Shared",
-      "key_insight": "# Future directions\n\nFive falsifiable conjectures arising from the formal development in\n`Catalog/Shared/FourierFiniteAbelian.lean`, `FourierSubgroupDuality.lean`, `FourierCyclic.lean`,\n`FourierAdditi",
-      "quality_score": 0.84,
-      "sorry_count": 0,
-      "theorem_count": 70,
-      "timestamp": "2026-08-17T09:01:45",
-      "title": "Fourier Analysis on Finite Groups"
-    },
-    {
       "cycle_id": "615053e5",
       "domain": "Logic",
       "key_insight": "# Future Directions — Tangled Hierarchies That Reference Their Own Soundness\n\nDerived from the five research cycles now formalised in\n`Catalog/Logic/ProvabilityLogic/{TangledSoundness, SoundnessTopolo",
@@ -499,19 +489,19 @@
       "theorem_count": 17,
       "timestamp": "2026-08-19T09:49:48",
       "title": "The \"if\" direction is proved (`FourierFA.poisson_summation`); the converse is open."
+    },
+    {
+      "cycle_id": "60572a3f",
+      "domain": "Combinatorics",
+      "key_insight": "# Future directions (after cycle 4: the Bell defect, graded by blocks)\n\n## What this cycle settled\n\n| conjecture | outcome |\n|---|---|\n| **E′**, block-graded half: *`m_P = 1` for all `P` with `j` bloc",
+      "quality_score": 0.85,
+      "sorry_count": 8,
+      "theorem_count": 75,
+      "timestamp": "2026-08-19T09:49:59",
+      "title": "The Bell defect, counted exactly"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "3f42ae3f",
-      "domain": "Novelty",
-      "key_insight": "# Future directions — snakes and coils in the hypercube (cycle 4)\n\nAll Lean files of this thread live in `Catalog/Novelty/` (plus the base chain in\n`Catalog/Computation/SnakeInTheBox.lean` and `Catalo",
-      "quality_score": 0.6544111491354468,
-      "sorry_count": 0,
-      "theorem_count": 239,
-      "timestamp": "2026-08-08T07:22:43",
-      "title": "This project formalises a chain of results about snakes (chordless induced"
-    },
     {
       "cycle_id": "5e2efbe9",
       "domain": "Shared",
@@ -2501,27 +2491,19 @@
       "theorem_count": 17,
       "timestamp": "2026-08-19T09:49:48",
       "title": "The \"if\" direction is proved (`FourierFA.poisson_summation`); the converse is open."
+    },
+    {
+      "cycle_id": "60572a3f",
+      "domain": "Combinatorics",
+      "key_insight": "# Future directions (after cycle 4: the Bell defect, graded by blocks)\n\n## What this cycle settled\n\n| conjecture | outcome |\n|---|---|\n| **E′**, block-graded half: *`m_P = 1` for all `P` with `j` bloc",
+      "quality_score": 0.85,
+      "sorry_count": 8,
+      "theorem_count": 75,
+      "timestamp": "2026-08-19T09:49:59",
+      "title": "The Bell defect, counted exactly"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "13fee392",
-      "domain": "MachineLearning",
-      "name": "one_le_mult_of_mem_cover",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "2afe0ce6",
-      "domain": "Applications",
-      "name": "Nat",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "2afe0ce6",
-      "domain": "Applications",
-      "name": "mem_act",
-      "quality": 0.82
-    },
     {
       "cycle_id": "2afe0ce6",
       "domain": "Applications",
@@ -2803,17 +2785,28 @@
       "domain": "Probability",
       "name": "isExtremal_mul",
       "quality": 0.91
+    },
+    {
+      "cycle_id": "60572a3f",
+      "domain": "Combinatorics",
+      "name": "blockPattern_apply",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "60572a3f",
+      "domain": "Combinatorics",
+      "name": "rank_blockPattern",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "60572a3f",
+      "domain": "Combinatorics",
+      "name": "stirling_pos",
+      "quality": 0.85
     }
   ],
-  "last_updated": "2026-08-19T09:49:48",
+  "last_updated": "2026-08-19T09:49:59",
   "open_questions": [
-    {
-      "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hupper⟩)",
-      "cycle_id": "1ba7b435",
-      "domain": "NumberTheory",
-      "sorry_count": 1,
-      "timestamp": "2026-07-26T09:31:46"
-    },
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hupper⟩)",
       "cycle_id": "c6b3a18e",
@@ -3016,6 +3009,13 @@
       "domain": "Novelty",
       "sorry_count": 4,
       "timestamp": "2026-08-18T05:46:22"
+    },
+    {
+      "context": "There are no `sorry`s, no `native_decide`, and no new axioms.; There are no `sorry`s, no `native_decide`, and no new axioms.; There are no `sorry`s, no `native_decide`, and no new axioms.",
+      "cycle_id": "60572a3f",
+      "domain": "Combinatorics",
+      "sorry_count": 8,
+      "timestamp": "2026-08-19T09:49:59"
     }
   ],
   "research_threads": {
@@ -3207,12 +3207,6 @@
     ],
     "Combinatorics": [
       {
-        "cycle_id": "344e2e8a",
-        "quality": 0.627125,
-        "theorems": 585,
-        "title": "occurrences of certain numbers in pascals triangle"
-      },
-      {
         "cycle_id": "48492a97",
         "quality": 0.71196,
         "theorems": 92,
@@ -3265,6 +3259,12 @@
         "quality": 0.82,
         "theorems": 59,
         "title": "Exp 390 GENERIC-RECOVERY: recovery-from-hint = 2^(k-1-t_eff) — hint taxonomy clo"
+      },
+      {
+        "cycle_id": "60572a3f",
+        "quality": 0.85,
+        "theorems": 75,
+        "title": "The Bell defect, counted exactly"
       }
     ],
     "Computation": [
