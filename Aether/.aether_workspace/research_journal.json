@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "f262016d",
-      "domain": "Applications",
-      "key_insight": "# Future directions — almost-lossless compression beyond the pigeonhole bound\n\nDerived from the verified results in `Catalog/Applications/AlmostLossless/`\n(cycle 1: converse + explicit scheme + comple",
-      "quality_score": 0.85,
-      "sorry_count": 0,
-      "theorem_count": 87,
-      "timestamp": "2026-08-17T18:57:47",
-      "title": "Compression Research B3: Almost-lossless / Monte Carlo compression"
-    },
-    {
       "cycle_id": "7199d5c0",
       "domain": "MachineLearning",
       "key_insight": "# Future directions — price of universality (Phase A, Question 1)\n\nFormal results of this cycle: `Catalog/MachineLearning/UniversalRedundancy/`\n(`Core`, `Types`, `Markov`, `Capacity`, `Bernoulli`, `Se",
@@ -499,19 +489,19 @@
       "theorem_count": 109,
       "timestamp": "2026-08-19T17:41:03",
       "title": "Both ingredients are already machine-checked (the sharp bound and 1-sum closure),"
+    },
+    {
+      "cycle_id": "ab33dc9e",
+      "domain": "Cryptography",
+      "key_insight": "# Future directions: bold, testable conjectures from the pole-order programme\n\nThe formal results of this phase live in `Catalog/Cryptography/PoleOrderSplitting.lean`,\n`PoleOrderValuationRigidity.lean",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 68,
+      "timestamp": "2026-08-19T17:41:12",
+      "title": "Pole-order obstruction"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "08217b91",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Singmaster multiplicity in Pascal's triangle\n\nDerived from the results established in this cycle: the smoothness theorem, the smoothness\nhierarchy, the sharpened logarithmic boun",
-      "quality_score": 0.748155,
-      "sorry_count": 0,
-      "theorem_count": 85,
-      "timestamp": "2026-08-09T15:01:26",
-      "title": "occurrences of certain numbers in pascals triangle"
-    },
     {
       "cycle_id": "08217b91",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 109,
       "timestamp": "2026-08-19T17:41:03",
       "title": "Both ingredients are already machine-checked (the sharp bound and 1-sum closure),"
+    },
+    {
+      "cycle_id": "ab33dc9e",
+      "domain": "Cryptography",
+      "key_insight": "# Future directions: bold, testable conjectures from the pole-order programme\n\nThe formal results of this phase live in `Catalog/Cryptography/PoleOrderSplitting.lean`,\n`PoleOrderValuationRigidity.lean",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 68,
+      "timestamp": "2026-08-19T17:41:12",
+      "title": "Pole-order obstruction"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "24a12580",
-      "domain": "Pythagorean",
-      "name": "orbitA_invariant",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "24a12580",
-      "domain": "Pythagorean",
-      "name": "orbitC_invariant",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "fbb9718e",
-      "domain": "Pythagorean",
-      "name": "rules",
-      "quality": 0.82
-    },
     {
       "cycle_id": "fbb9718e",
       "domain": "Pythagorean",
@@ -2803,9 +2785,27 @@
       "domain": "Shared",
       "name": "etSet_isSidon_mod",
       "quality": 0.85
+    },
+    {
+      "cycle_id": "ab33dc9e",
+      "domain": "Cryptography",
+      "name": "coeff_four_mul",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "ab33dc9e",
+      "domain": "Cryptography",
+      "name": "coeff_two_prod_of_linear_zero",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "ab33dc9e",
+      "domain": "Cryptography",
+      "name": "coeff_four_prod_of_linear_zero",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-19T17:41:03",
+  "last_updated": "2026-08-19T17:41:12",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hn2⟩)",
@@ -3331,12 +3331,6 @@
     ],
     "Cryptography": [
       {
-        "cycle_id": "2116bc97",
-        "quality": 0.6539737559241706,
-        "theorems": 324,
-        "title": "Deepening: Isogeny-SIDH: Radical Isogeny Verification on Montgomery Curves"
-      },
-      {
         "cycle_id": "6b69485b",
         "quality": 0.720175,
         "theorems": 95,
@@ -3389,6 +3383,12 @@
         "quality": 0.86,
         "theorems": 66,
         "title": "The qualitative half is now proved: `Cₛ = 1` iff the class is degenerate\n(`shtar"
+      },
+      {
+        "cycle_id": "ab33dc9e",
+        "quality": 0.82,
+        "theorems": 68,
+        "title": "Pole-order obstruction"
       }
     ],
     "Geometry": [
