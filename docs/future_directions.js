@@ -3,13 +3,13 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "consumed_by_exp_id": "57212186",
+    "consumed_by_exp_id": "9e83a721",
     "description": "It is a direct adaptation of the standard Reinforcement Learning from Human Feedback (RLHF) objective with a pre-training mix-in (PTX)\u2014originally introduced in the InstructGPT / PPO alignment framework (Ouyang et al., 2022)\u2014rebranded with neurosymbolic notation.Breakdown of the Components$$\\text{Objective}(\\phi) = \\underbrace{\\mathbb{E}_{x, y}\\left[ RM_{NS}(x, y) \\right]}_{\\text{1. Reward Maximization}} - \\underbrace{\\beta_{NS} \\mathbb{E}_{x, y}\\left[ \\log \\frac{LLM_\\phi^{NS}(y\\vert{}x)}{LLM^{SFT}(y\\vert{}x)} \\right]}_{\\text{2. KL-Divergence Penalty}} + \\underbrace{\\gamma_{NS} \\mathbb{E}_{x}\\left[ \\log LLM_\\phi^{NS}(x) \\right]}_{\\text{3. Pretraining Loss Mix-in (PTX)}}$$NeuroSymbolic Reward Term:$\\mathbb{E}_{x \\sim \\mathcal{D}_{RL}, y \\sim LLM_\\phi^{NS}(x)} [RM_{NS}(x, y)]$Optimizes the policy parameters ($\\phi$) to generate outputs $y$ given prompts $x$ that maximize the score from a (neurosymbolic) reward model $RM_{NS}$.KL Penalty (Regularization):$-\\beta_{NS} \\log \\frac{LLM_\\phi^{NS}(y\\vert{}x)}{LLM^{SFT}(y\\vert{}x)}$The point-wise Kullback\u2013Leibler ($\\text{D}_{\\text{KL}}$) divergence penalty. It prevents the tuned policy $LLM_\\phi^{NS}$ from drifting too far from the base Supervised Fine-Tuned model ($LLM^{SFT}$), preventing policy collapse and reward hacking. $\\beta_{NS}$ controls the penalty strength.Pretraining Mix-in Gradient ($\\text{PPO-ptx}$ term):$+\\gamma_{NS} \\mathbb{E}_{x \\sim \\mathcal{D}_{pretrain}} \\log LLM_\\phi^{NS}(x)$Maximizes the log-likelihood over the original pretraining distribution $\\mathcal{D}_{pretrain}$ with coefficient $\\gamma_{NS}$. This standard trick avoids performance regression on general NLP benchmarks during RL fine-tuning.TakeawayMathematical Validity: 100% sound; it directly mirrors the standard InstructGPT alignment equation.Practical Meaning: It represents fine-tuning a model using RLHF, where the reward signal ($RM_{NS}$) or the model architecture incorporates neurosymbolic rules/logic rather than purely human-labeled reward modeling.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_1569",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
@@ -107,6 +107,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 57212186 (Q=0.900), which proved 621 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: It is a direct adaptation of the standard Reinforcement Learning from Human Feedback (RLHF) objective with a pre-training mix-in (PTX)\u2014originally introduced in the InstructGPT / PPO alignment framework (Ouyang et al., 2022)\u2014rebranded with neurosymbolic notation.Breakdown of the Components$$\\text{Obj",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "push_57212186_b9d15374",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "57212186",
+    "status": "available",
+    "timestamp": "2026-08-19T15:46:42.594882+00:00",
+    "title": "Deepening: reinforcement learning"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 60572a3f (Q=0.850), which proved 75 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: `\u03a3_g |X^g|^k = (B_k + \u03a3_P (m_P \u2212 1))\u00b7|G|`\n    (`bell_defect_eq`): the excess of a moment over its Bell floor is `|G|` times the number of\n    *extra* orbits per pattern, and it vanishes exactly for `k`-transitive actions\n    (`sum_patternMultiplicity_sub_one_eq_zero_iff`).\n\n---\n\n\n\n## Open conjecture",
     "domains": [
       "Combinatorics"
@@ -118,6 +132,34 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-19T09:49:59.558898+00:00",
     "title": "Deepening: The Bell defect, counted exactly"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 6bc62e41 (Q=0.880), which proved 70 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Both sides of the identity are already available as Lean theorems\n(`FourierFA.poisson_summation`, `FourierFA.dft_delta`), so the converse can be formalised as a\nfinite statement about the character table with no new analytic input.",
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_6bc62e41_cb549916",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "6bc62e41",
+    "status": "available",
+    "timestamp": "2026-08-19T15:46:51.818344+00:00",
+    "title": "Deepening: Both sides of the identity are already available as Lean theorems"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle b8ad3057 (Q=0.850), which proved 69 theorems in Shared. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: What follows are the conjectures the analysis stage extracted, in decreasing order of expected\nimpact.  Each is falsifiable in the present formal setting.",
+    "domains": [
+      "Shared"
+    ],
+    "id": "push_b8ad3057_366dd983",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "b8ad3057",
+    "status": "available",
+    "timestamp": "2026-08-19T15:47:01.170112+00:00",
+    "title": "Deepening: What follows are the conjectures the analysis stage extracted, in decreasing ord"
   },
   {
     "consumed_by_exp_id": "",
@@ -1712,56 +1754,12 @@ window.FUTURE_DIRECTIONS = [
       "Combinatorics"
     ],
     "id": "push_7299371d_2b9368c3",
-    "priority_score": 0.88,
+    "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "7299371d",
     "status": "available",
     "timestamp": "2026-08-19T14:54:23.424891+00:00",
     "title": "Deepening: Erdos-Graham: Exact Coverings by Distinct Unit Fractions"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove the Eastin-Knill theorem: no quantum code can transversally implement a universal gate set. Formalize the threshold theorem for fault-tolerant quantum computing and prove that the threshold is approximately 1% for the surface code with depolarizing noise.",
-    "domains": [
-      "Physics",
-      "Computation"
-    ],
-    "id": "seed_314",
-    "priority_score": 0.88,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Quantum Error Correction Threshold: The Eastin-Knill Theorem"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove that specific EML numbers (like exp(exp(1)) + log(2)) are transcendental over Q. Formalize Schanuel's conjecture for EML functions and prove conditional results: if Schanuel's conjecture holds, then the class of EML numbers equals the class of EL numbers.",
-    "domains": [
-      "EML",
-      "Algebra"
-    ],
-    "id": "seed_339",
-    "priority_score": 0.88,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "EML Number Theory: Transcendence and Algebraic Independence"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 38046e56 (Q=0.779), which proved 10 theorems in Geometry. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Proves that Khovanov homology categorifies the Jones polynomial for arbitrary oriented link diagrams.",
-    "domains": [
-      "Geometry"
-    ],
-    "id": "push_38046e56_68a03598",
-    "priority_score": 0.87922,
-    "research_mode": "team",
-    "source_exp_id": "38046e56",
-    "status": "available",
-    "timestamp": "2026-08-03T15:28:39.168208+00:00",
-    "title": "Deepening: Knot-Jones: Quantum Group Verification of Khovanov Invariants"
   },
   {
     "consumed_by_exp_id": "",
@@ -3912,6 +3910,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-15T13:51:07.140800+00:00",
     "title": "Close Proofs: The 'Only Bad Primes' Conjecture is False (elliptic curve denominators"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle 57212186 (Q=0.900) proved 621 theorems in NumberTheory but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: It is a direct adaptation of the standard Reinforcement Learning from Human Feedback (RLHF) objective with a pre-training mix-in (PTX)\u2014originally introduced in the InstructGPT / PPO alignment framewor",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "sorry_fill_57212186_61d0ebf2",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "57212186",
+    "status": "available",
+    "timestamp": "2026-08-19T15:46:43.011405+00:00",
+    "title": "Close Proofs: reinforcement learning"
   },
   {
     "consumed_by_exp_id": "",
@@ -19441,6 +19453,36 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "`RLHF.localZeta_curvature_eq_variance` identifies\n   the curvature of the `p`-factor as a variance; conjecture the exact total curvature\n   `\u222b_{\u2212\u221e}^{\u221e} Var_{k log p}(s) ds = A log p` for the `A`-truncated factor, and hence that the\n   total curvature of the truncated Euler product over `p \u2264 P` is `\u2211_{p \u2264 P} A_p log p`, a\n   Chebyshev `\u03b8`-type sum.  The variance-flow identity `RLHF.integral_tiltVar` reduces this to\n   the two endpoint limits of the tilted mean.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_1614",
+    "priority_score": 0.41373684210526307,
+    "research_mode": "team",
+    "source_exp_id": "57212186",
+    "status": "available",
+    "timestamp": "2026-08-19T15:46:27.490209+00:00",
+    "title": "(Curvature mass of an Euler factor)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": ": `IsSidon A \u2194 IsSidon (A.image (\u00b7 + t))` and,\n   for `u` a unit, `IsSidon A \u2194 IsSidon (A.image (u * \u00b7))`.\n   *Status: **closed in cycle 4** \u2014 `isSidon_image_add_right` and `isSidon_image_unit_mul`.\n   These give an affine group of order `N \u00b7 \u03c6(N)` acting on the Sidon sets of `ZMod N`;\n   the next step is to use it to restrict `maxSidonCard` searches to normalised\n   representatives.*",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1618",
+    "priority_score": 0.41274999999999995,
+    "research_mode": "team",
+    "source_exp_id": "b8ad3057",
+    "status": "available",
+    "timestamp": "2026-08-19T15:46:56.870710+00:00",
+    "title": "Translation- and dilation-invariance"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every `m \u2265 1`, the renormalized product `q^m \u00b7 \u03a0 f i` of `m`\n    normalized series realizes **exactly** the series of order `0`\n    (`renormalized_prod_iff_orderTop_zero`); the pole order is the only obstruction, and the\n    factorization is never unique (`factorization_not_unique`).",
     "domains": [],
     "id": "fd_1438",
@@ -19620,15 +19662,14 @@ window.FUTURE_DIRECTIONS = [
     "title": "The \"if\" direction is proved (`FourierFA.poisson_summation`); the converse is open."
   },
   {
-    "consumed_by_exp_id": "6bc62e41",
+    "consumed_by_exp_id": "",
     "description": "Both sides of the identity are already available as Lean theorems\n(`FourierFA.poisson_summation`, `FourierFA.dft_delta`), so the converse can be formalised as a\nfinite statement about the character table with no new analytic input.",
     "domains": [],
     "id": "fd_1412",
-    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "525aecde",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-17T09:01:32.846985+00:00",
     "title": "Both sides of the identity are already available as Lean theorems"
   },
@@ -20149,15 +20190,14 @@ window.FUTURE_DIRECTIONS = [
     "title": "S5 (the intermediate plateau)"
   },
   {
-    "consumed_by_exp_id": "b8ad3057",
+    "consumed_by_exp_id": "",
     "description": "What follows are the conjectures the analysis stage extracted, in decreasing order of expected\nimpact.  Each is falsifiable in the present formal setting.",
     "domains": [],
     "id": "fd_1472",
-    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "11c9ff9f",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-18T03:08:39.636525+00:00",
     "title": "What follows are the conjectures the analysis stage extracted, in decreasing order of expected\nimpact."
   },
@@ -21387,5 +21427,62 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-19T14:54:10.839917+00:00",
     "title": "The reduction of Erd\u0151s\u2013Graham to a statement about divisor lattices of"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Strengthen `RLHF.expPoly_eq_zero_of_zeros` from \"at\n   most `n \u2212 1` zeros\" to the Descartes bound: an exponential polynomial with `n` exponents\n   has at most as many real zeros as its coefficient sequence has sign changes.  For RLHF this\n   says the difference of two value curves oscillates at most as often as the reward spectra\n   cross, so a monotone reward re-weighting can be certified by a single crossing.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_1613",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "57212186",
+    "status": "available",
+    "timestamp": "2026-08-19T15:46:27.273817+00:00",
+    "title": "(Descartes bound for alignment)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Determine exactly when\n   `RLHF.freeEnergy_convex_comb` is an equality: conjecturally never for `0 < \u03b8 < 1` unless the\n   reward model is constant, which would follow from `RLHF.strictConvexOn_logExpMoment` plus a\n   strict-convexity transfer through the harmonic reparametrization `\u03b2 \u21a6 \u03b2\u207b\u00b9`.",
+    "domains": [
+      "Geometry",
+      "Physics"
+    ],
+    "id": "fd_1615",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "57212186",
+    "status": "available",
+    "timestamp": "2026-08-19T15:46:27.697800+00:00",
+    "title": "(Equality case for the annealing inequality)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The bijection `poissonPairEquivSubgroup` is proved and sorry-free, and the\nkernel-checked table in `ComputationalEvidence.md` already confirms the cyclic case for\n`n \u2264 6`; the first falsifying test (`\u2124/4` versus `\u2124/2 \u2295 \u2124/2`) is a finite computation.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_1616",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "6bc62e41",
+    "status": "available",
+    "timestamp": "2026-08-19T15:46:47.907829+00:00",
+    "title": "The bijection `poissonPairEquivSubgroup` is proved and sorry-free, and the"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": ": for every odd prime `p`,\n   `diffSet (etSetZMod p) \u2260 univ.erase 0`.\n   *Status: **closed in cycle 4** \u2014 `etSetZMod_not_perfect`, proved from\n   `IsSidon.perfect_iff` since `p\u00b2 - p \u2260 2p\u00b2 - 1`. Consequence: the factor-`\u221a2` gap in the\n   cyclic sandwich is on the construction side, not the bound side.*",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "fd_1617",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "b8ad3057",
+    "status": "available",
+    "timestamp": "2026-08-19T15:46:56.653167+00:00",
+    "title": "The Erd\u0151s\u2013Tur\u00e1n set is never perfect"
   }
 ];

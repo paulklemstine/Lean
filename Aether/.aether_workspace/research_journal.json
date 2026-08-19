@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "7ee9f549",
-      "domain": "MachineLearning",
-      "key_insight": "# Future directions — PRNG-generated data: detection and seed recovery (B5)\n\nDerived from the verified results in `Catalog/MachineLearning/`:\n`PRNGSeedRecoveryLFSR.lean`, `PRNGBerlekampMassey.lean`,\n`",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 78,
-      "timestamp": "2026-08-17T16:46:11",
-      "title": "Compression Research B5: PRNG-generated real-world data — detection and seed recovery"
-    },
-    {
       "cycle_id": "e46e79a5",
       "domain": "Applications",
       "key_insight": "# FUTURE DIRECTIONS — after the OR-COLLAPSE-LAW (paper 72)\n\nWhat is now formally settled (file `Catalog/Applications/OrCollapseLaw.lean`,\n0 sorries, only the standard axioms):\n\n* the exact law `I(N mo",
@@ -499,19 +489,19 @@
       "theorem_count": 70,
       "timestamp": "2026-08-19T15:46:51",
       "title": "Both sides of the identity are already available as Lean theorems"
+    },
+    {
+      "cycle_id": "b8ad3057",
+      "domain": "Shared",
+      "key_insight": "# FUTURE DIRECTIONS — Sidon sets, after three research cycles\n\nThree cycles of the scientific-method loop produced, in `Catalog/Shared/`:\n\n* `SidonSetsErdosTuran.lean` — the Erdős–Turán sandwich `√(N/",
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "theorem_count": 69,
+      "timestamp": "2026-08-19T15:47:00",
+      "title": "What follows are the conjectures the analysis stage extracted, in decreasing order of expected\nimpac"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "1f345ab3",
-      "domain": "Tropical",
-      "key_insight": "# Future Directions\n\nDerived from the results proved in `Catalog/Tropical/EML/` during this cycle:\ngeneral odd/even tropical `L¹` median geometry (`TropicalMedianDescent.lean`),\nperturbed and separabl",
-      "quality_score": 0.73286,
-      "sorry_count": 0,
-      "theorem_count": 96,
-      "timestamp": "2026-08-09T14:11:03",
-      "title": "1. **Odd-sample extension.** For every odd sample size `2k+1`, clipped unit-step"
-    },
     {
       "cycle_id": "756b62a7",
       "domain": "Pythagorean",
@@ -2501,21 +2491,19 @@
       "theorem_count": 70,
       "timestamp": "2026-08-19T15:46:51",
       "title": "Both sides of the identity are already available as Lean theorems"
+    },
+    {
+      "cycle_id": "b8ad3057",
+      "domain": "Shared",
+      "key_insight": "# FUTURE DIRECTIONS — Sidon sets, after three research cycles\n\nThree cycles of the scientific-method loop produced, in `Catalog/Shared/`:\n\n* `SidonSetsErdosTuran.lean` — the Erdős–Turán sandwich `√(N/",
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "theorem_count": 69,
+      "timestamp": "2026-08-19T15:47:00",
+      "title": "What follows are the conjectures the analysis stage extracted, in decreasing order of expected\nimpac"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "16c8a71d",
-      "domain": "Pythagorean",
-      "name": "fiber_card_sum",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "24a12580",
-      "domain": "Pythagorean",
-      "name": "isOrbit_iff_iterate",
-      "quality": 0.82
-    },
     {
       "cycle_id": "24a12580",
       "domain": "Pythagorean",
@@ -2803,9 +2791,21 @@
       "domain": "Applications",
       "name": "isPoissonPair_prime_card",
       "quality": 0.88
+    },
+    {
+      "cycle_id": "b8ad3057",
+      "domain": "Shared",
+      "name": "shift_absurd",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "b8ad3057",
+      "domain": "Shared",
+      "name": "etSet_isSidon_mod",
+      "quality": 0.85
     }
   ],
-  "last_updated": "2026-08-19T15:46:51",
+  "last_updated": "2026-08-19T15:47:00",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hn2⟩)",
@@ -3889,12 +3889,6 @@
     ],
     "Shared": [
       {
-        "cycle_id": "2c80b5b7",
-        "quality": 0.727445,
-        "theorems": 55,
-        "title": "Let two prefix-free encodings of the same deductive system translate into one an"
-      },
-      {
         "cycle_id": "2d369115",
         "quality": 0.627125,
         "theorems": 143,
@@ -3947,6 +3941,12 @@
         "quality": 0.78,
         "theorems": 53,
         "title": "Pole-order obstruction"
+      },
+      {
+        "cycle_id": "b8ad3057",
+        "quality": 0.85,
+        "theorems": 69,
+        "title": "What follows are the conjectures the analysis stage extracted, in decreasing ord"
       }
     ],
     "Tropical": [
