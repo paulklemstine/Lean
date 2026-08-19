@@ -1,151 +1,138 @@
-# Folding the Sphere onto a Plane: A Geometric Lens for Neural Patterns
+# The Geometry of Seeing Things That Aren't There
 
-## The map behind the picture
+## How a single algebraic trick turns the folded sphere of the cortex into a flat sheet — and predicts exactly how many hallucination patterns a brain can have
 
-The human cortex is a folded sheet. At the scale of populations rather than individual neurons, its activity is often described by a **neural field**: a function assigning an average voltage, firing rate, or other activity level to every point of a surface. Such fields can form waves, spots, stripes, and more elaborate motifs. These patterns matter in models of sensory maps, seizures, sleep rhythms, and geometric visual hallucinations.
+### Ghosts in the visual system
 
-A recurring mathematical tension lies beneath these models. The global geometry is naturally curved, while almost every screen, plot, and numerical grid is flat. A sphere is the simplest closed curved surface on which to understand that tension. It is not a literal model of every cortical fold, but it captures two essential facts: there is no boundary, and distant directions eventually meet.
+Close your eyes and press gently on your eyelids. Stare at a flickering light. Take one of a long list of psychoactive compounds, or simply fall into the borderland between waking and sleep. In all of these situations, most people see the same handful of things: rotating spirals, honeycomb lattices, concentric rings, radiating fans, chequerboard tunnels.
 
-Stereographic projection offers a remarkably exact bridge. Imagine placing a sphere above an infinite plane and drawing a ray from the sphere’s north pole through each point of the sphere. Where the ray meets the plane gives the projected point. Reversing this construction wraps the entire plane around the sphere, missing only the north pole. Infinity in every planar direction becomes that single omitted point.
+These are the *form constants*, catalogued in the 1920s and rediscovered in every decade since. Their most remarkable feature is not that they occur, but that they are so *few*. Billions of neurons, an essentially unbounded space of possible activity patterns — and the brain, left to its own devices, produces a short and stable menu.
 
-For a planar point $p=(x,y)$, set
+The dominant mathematical explanation is that these patterns are not pictures of anything. They are the *eigenmodes of the cortex itself*: the shapes that spontaneously grow when a sheet of excitable tissue with short-range excitation and longer-range inhibition becomes unstable. The tissue is doing what a drumhead does when you strike it — vibrating in the few shapes its geometry allows. What you "see" is the shape of your own cortex ringing.
 
-$$
-D(x,y)=1+x^2+y^2.
-$$
+This article is about making that story quantitative, and about a piece of nineteenth-century geometry that makes it tractable: **stereographic projection**.
 
-The inverse stereographic map is
+### Neural fields, in one paragraph
 
-$$
-\sigma(x,y)=\left(\frac{2x}{D(x,y)},\frac{2y}{D(x,y)},
-\frac{x^2+y^2-1}{D(x,y)}\right).
-$$
+A *neural field* replaces the discrete tangle of neurons with a continuous activity function $u$ on a cortical domain. Its evolution is governed by an equation of the form
 
-These three components will be denoted $X$, $Y$, and $Z$. This compact formula contains the basic geometry needed to transport spherical patterns to a plane.
+$$\partial_t u(p,t) = -u(p,t) + \int K(p,q)\, S\big(u(q,t)\big)\, dq,$$
 
-## Why the formula is safe
+where $S$ is a sigmoidal firing rate and $K$ is a *connectivity kernel*. The classical choice for $K$ is the **Mexican hat**: positive (excitatory) at short range, negative (inhibitory) at intermediate range, negligible far away, with a characteristic *interaction radius* $r$. Linearise around a uniform resting state and you get a linear operator whose eigenfunctions are the candidate patterns and whose eigenvalues say which ones grow.
 
-The denominator $D(x,y)$ is always positive because $x^2$ and $y^2$ are nonnegative. Thus the map has no finite singularity. Direct algebra gives
+If the cortex were an infinite flat plane, the eigenfunctions would be plane waves and the analysis would be a Fourier transform. But the cortical sheet is not an infinite plane. Topologically, each cortical hemisphere — and the closed cortical surface as an idealised whole — is a **sphere**. And on a sphere, "which shapes can ring" has a famously rigid answer.
 
-$$
-X^2+Y^2+Z^2=1,
-$$
+### The rigidity of the sphere
 
-so every planar point lands exactly on the unit sphere. Conversely, the third coordinate satisfies the complementary identity
+On the round unit sphere $S^2$ the natural analogue of the Fourier basis is the family of **spherical harmonics**. They are the eigenfunctions of the Laplace–Beltrami operator $\Delta_{S^2}$, the sphere's intrinsic notion of "curvature of a function":
 
-$$
-1-Z=\frac{2}{1+x^2+y^2}>0.
-$$
+$$\Delta_{S^2} Y = -\,l(l+1)\, Y, \qquad l = 0,1,2,\dots$$
 
-Every finite planar point therefore lies strictly below the north pole. As $x^2+y^2$ grows, the gap to the pole shrinks. This is how a noncompact plane closes into a compact sphere: all routes to planar infinity converge to one spherical location.
+The crucial fact — the source of everything that follows — is that the eigenvalue $-l(l+1)$ does not come with one eigenfunction, but with exactly
 
-The sphere identity immediately yields a useful bound. Since each square is nonnegative and their sum is one,
+$$2l+1$$
 
-$$
-|X|\le 1,\qquad |Y|\le 1,\qquad |Z|\le 1.
-$$
+independent ones. There is one constant ($l=0$), three dipoles ($l=1$), five quadrupoles ($l=2$), seven octupoles ($l=3$). The reason is representation theory: the rotation group $SO(3)$ acts on the sphere, it must permute the eigenspace of a given eigenvalue among itself, and its irreducible real representations have precisely the dimensions $1, 3, 5, 7, \dots$. The count can also be read off from polynomials: a degree-$l$ harmonic is the restriction of a homogeneous polynomial of degree $l$ in three variables that is annihilated by the flat Laplacian, and
 
-The simplest spherical patterns—the three coordinate functions—therefore remain uniformly bounded when drawn on the plane. They are the degree-one spherical harmonics, the analogues on a sphere of the simplest sinusoidal modes on a line.
+$$\binom{l+2}{2} - \binom{l}{2} = 2l+1.$$
 
-## Infinity remembers the north pole
+So the sphere hands us a discrete, exactly-counted menu of shapes. If a Mexican-hat kernel picks one degree $l$, the brain gets $2l+1$ patterns and no more. That is the mechanism behind the pattern count — and it is what we will make precise.
 
-A subtle point appears when one asks whether a projected spherical pattern “decays at infinity.” Consider the positive horizontal ray $(R,0)$. The first coordinate becomes
+### Flattening the sphere without lying about it
 
-$$
-X(R,0)=\frac{2R}{1+R^2}.
-$$
+Working directly on the sphere is unpleasant: the Laplace–Beltrami operator in spherical coordinates has singularities at the poles, and the natural picture of a "hallucination pattern" is a picture in the *plane* (the visual field, the retina, the flattened cortical map).
 
-For $R\ge 1$, it obeys the quantitative estimate
+**Inverse stereographic projection** solves this. Place the unit sphere so that its north pole sits above the plane, and map each plane point $(x,y)$ to the point where the line to the north pole pierces the sphere:
 
-$$
-|X(R,0)|\le \frac{2}{R}.
-$$
+$$\sigma(x,y) = \big(2xW,\; 2yW,\; (x^2+y^2-1)W\big), \qquad W = W(x,y) = \frac{1}{1+x^2+y^2}.$$
 
-Thus this mode fades to zero. The same behavior holds for $Y$ in corresponding directions. It is tempting to infer that every spherical harmonic must fade on the plane. But the third coordinate tells a different story:
+The image really is on the sphere: $\sigma_1^2+\sigma_2^2+\sigma_3^2 = 1$ identically. The origin of the plane goes to the south pole; the unit circle goes to the equator; and as $|(x,y)| \to \infty$ the image climbs to the north pole, which is the single point the chart misses.
 
-$$
-Z(R,0)=\frac{R^2-1}{R^2+1},
-\qquad
-|1-Z(R,0)|=\frac{2}{1+R^2}.
-$$
+What makes this map special is not that it flattens the sphere — many maps do — but *how* it distorts. Pulling the ambient Euclidean metric back through $\sigma$ gives
 
-It approaches $1$, not $0$. This is not a defect of the map. It is a precise statement that planar infinity records the value of the spherical function at the projection pole. A spherical pattern decays to zero after projection only if its north-pole value is zero. More generally, one should subtract the pole value first. The corrected field then has a genuine chance to decay.
+$$\sigma^*(dX^2+dY^2+dZ^2) = 4W^2\,(dx^2+dy^2).$$
 
-This distinction has practical meaning. A simulation on a large planar box may impose zero boundary conditions because the edge is intended to approximate infinity. That choice is geometrically faithful only for fields vanishing at the omitted pole, or for pole-subtracted fields. Otherwise it silently changes the global mode.
+Angles are preserved exactly; only scale changes, by the single positive factor $4W^2$. In two dimensions this has a magical consequence: the Laplace–Beltrami operator of the curved metric is the *flat* Laplacian divided by the conformal factor,
 
-## Curvature becomes a weight
+$$\Delta_g = \frac{1}{4W^2}\,\Delta_{\text{flat}}.$$
 
-Neural-field models often include spatial smoothing or diffusion. On a curved surface the relevant differential operator is the Laplace–Beltrami operator, written $\Delta_{S^2}$ on the sphere. A schematic local neural-field equation is
+The eigenvalue equation on the sphere therefore becomes a completely explicit equation on the plane:
 
-$$
-\Delta_{S^2}u=f(u),
-$$
+> **Transported eigenvalue equation.** A function $u$ on the plane is the stereographic image of a degree-$l$ spherical harmonic exactly when
+> $$\Delta_{\text{flat}}\, u = -\,l(l+1)\,\big(4W^2\big)\,u, \qquad W = (1+x^2+y^2)^{-1}.$$
 
-where $u$ is activity and $f$ describes local response. Stereographic coordinates preserve angles but stretch lengths. In two dimensions this conformal stretching turns curvature into a spatial weight. With a fixed sign convention, the expected transformation is
+No poles, no coordinate singularities, no special functions: just a flat Laplacian and a weight.
 
-$$
-(\Delta_{S^2}u)\circ\sigma
-=\frac{(1+x^2+y^2)^2}{4}\,\Delta(u\circ\sigma).
-$$
+### The algebra that closes on itself
 
-The flat picture is therefore not governed by an ordinary translation-invariant equation: its coefficients remember the sphere. Near the origin the distortion is modest; far away the conformal factor grows rapidly. This is the mathematical price—and benefit—of placing a closed geometry on an infinite plane.
+Here is the observation that turns this into a *calculus* rather than a sequence of increasingly grim differentiations.
 
-The exact geometric identities above establish the coordinate foundation for that transformation. A complete neural-field theory must additionally specify whether interactions are local or integral, the response law, and the connectivity kernel.
+Every object in sight — the three chart coordinates $\sigma_1 = 2xW$, $\sigma_2 = 2yW$, $\sigma_3 = (x^2+y^2-1)W$, every harmonic pulled back through them, the conformal weight itself — is a **polynomial in the three symbols $x$, $y$, and $W$**. And this algebra is *closed under differentiation*, because
 
-## Counting modes without overcounting patterns
+$$\partial_x W = -2xW^2, \qquad \partial_y W = -2yW^2.$$
 
-Spherical harmonics are organized by a nonnegative integer degree $k$. The space of degree-$k$ harmonics on the two-sphere has dimension
+Differentiating never produces anything new; it produces more polynomials in $x$, $y$, $W$. So one can define differentiation purely as a rewriting rule on symbols, and then prove — once, by induction on the structure of the expression — that this symbolic operation always agrees with the genuine analytic derivative. Every Laplacian in the whole theory is then a finite piece of polynomial algebra.
 
-$$
-2k+1.
-$$
+Two structural identities do all the remaining work. For each chart coordinate $\sigma_i$,
 
-One way to see the number is to start from homogeneous polynomials in three variables. There are
+$$\Delta_{\text{flat}}\, \sigma_i = -2\,(4W^2)\,\sigma_i, \qquad \nabla \sigma_i \cdot \nabla \sigma_j = 4W^2\big(\delta_{ij} - \sigma_i \sigma_j\big).$$
 
-$$
-\binom{k+2}{2}
-$$
+The first says each coordinate is a degree-one harmonic ($l(l+1) = 2$). The second is the induced metric of the sphere, written in the flat chart: it encodes the constraint $\sum \sigma_i^2 = 1$ at the level of gradients. Combine them with the Leibniz rule for the Laplacian,
 
-monomials of total degree $k$. Those divisible by the radial quadratic form contribute a subspace with dimension
+$$\Delta(uv) = u\,\Delta v + v\,\Delta u + 2\,\nabla u \cdot \nabla v,$$
 
-$$
-\binom{k}{2}.
-$$
+and the eigenvalue relation propagates by pure algebra from the three coordinates to *every* polynomial harmonic. For instance, for two orthogonal coordinates, $\Delta(\sigma_i \sigma_j) = -6\,(4W^2)\,\sigma_i\sigma_j$ — exactly the degree-two eigenvalue $l(l+1)=6$ — and for three, $\Delta(\sigma_1\sigma_2\sigma_3) = -12\,(4W^2)\,\sigma_1\sigma_2\sigma_3$, the degree-three eigenvalue.
 
-Removing this trace part leaves the harmonic polynomials, and
+Running this machine produces the fifteen patterns of degrees $1$, $2$, $3$ explicitly as functions on the plane: the three dipoles $\sigma_1, \sigma_2, \sigma_3$; the five quadrupoles $\sigma_1\sigma_2$, $\sigma_1\sigma_3$, $\sigma_2\sigma_3$, $\sigma_1^2-\sigma_2^2$, $3\sigma_3^2-1$; and the seven octupoles including the three-fold sectoral pair $\sigma_1(\sigma_1^2-3\sigma_2^2)$ and $\sigma_2(3\sigma_1^2-\sigma_2^2)$. Each satisfies its eigenvalue equation, and each family is linearly independent — checked by evaluating at a handful of well-chosen plane points.
 
-$$
-\binom{k+2}{2}-\binom{k}{2}=2k+1.
-$$
+### Which degree does the Mexican hat pick?
 
-If a neural interaction operator selects exactly degree $k$, its selected eigenspace therefore has dimension $2k+1$. Under the proposed reciprocal relation $r=1/k$ between an interaction radius $r$ and selected degree, the first three cases are:
+Because the connectivity kernel depends only on the distance between two points of the sphere, it cannot distinguish the members of one eigenspace: it multiplies every degree-$l$ harmonic by one number $\lambda_l$. (This is the classical Funk–Hecke phenomenon: a rotation-invariant kernel is diagonal in the spherical-harmonic basis.) For a difference-of-Gaussians Mexican hat of interaction radius $r$, that multiplier, normalised so its peak equals $1$, is the band-pass profile
 
-- $r=1$, corresponding to $k=1$: dimension $3$;
-- $r=1/2$, corresponding to $k=2$: dimension $5$;
-- $r=1/3$, corresponding to $k=3$: dimension $7$.
+$$\lambda_l(r) = g\big((lr)^2\big), \qquad g(s) = s\,e^{\,1-s}.$$
 
-These are exact mode counts. They are not, by themselves, counts of stable nonlinear patterns. A vector space of dimension $2k+1$ contains infinitely many functions. Rotations mix these functions continuously, and nonlinear dynamics may select isolated branches, continuous families, or no stable branch at all.
+Three facts about $g$ settle mode selection, and each follows from the single inequality $t+1 < e^t$ for $t \ne 0$:
 
-That warning sharpens rather than weakens the theory. Representation theory tells us the size and symmetry of the linear stage on which pattern formation occurs. Stability requires a second act: a specified kernel, activation function, bifurcation parameter, and equivalence rule for patterns related by rotation.
+- **Sharp peak.** $g(1) = 1$, and $g(s) < 1$ for every $s \ne 1$.
+- **Strict unimodality.** $g$ is strictly increasing on $[0,1]$ and strictly decreasing on $[1,\infty)$.
+- **Bracketing of the winner.** For every radius $r>0$ and every degree $l$, $\lambda_l(r) \le \max\{\lambda_{\lfloor 1/r\rfloor}(r),\ \lambda_{\lceil 1/r\rceil}(r)\}$.
 
-## The Mexican-hat question
+The selected degree is the integer whose product $lr$ lands closest to resonance, $lr \approx 1$. Since $l$ must be a whole number and $1/r$ generally is not, the winner is one of the two integers straddling $1/r$.
 
-A frequently used neural interaction profile is “Mexican-hat” connectivity: nearby populations excite one another, while a surrounding annulus inhibits them. Such competition can prefer a characteristic wavelength. On the sphere, a rotationally symmetric kernel acts diagonally on spherical-harmonic degrees, so its spectral coefficients determine which degree destabilizes first.
+At the **resonant radii** $r = 1/k$ the ambiguity disappears completely: then $(kr)^2 = 1$ exactly, the degree-$k$ multiplier hits the peak value $1$, and every other degree is strictly below it. So:
 
-The attractive conjectural picture is that an interaction radius $r=1/k$ selects degree $k$, giving a $2k+1$-dimensional critical eigenspace. The geometry and multiplicity are exact once that spectral-selection hypothesis is made. But the selection rule itself depends on the precise shape and normalization of the kernel; “Mexican hat” describes a family, not a unique operator. Establishing it requires calculating the kernel’s Fourier–Legendre coefficients.
+> **Pattern-count theorem (resonant radii).** For $r = 1/k$ the Mexican-hat kernel strictly selects degree $N = k = \lfloor 1/r\rfloor$, and the selected eigenspace contains exactly $2N+1$ linearly independent stereographic patterns. For $k=1,2,3$ these are the $3$, $5$ and $7$ patterns listed above.
 
-Even after a degree becomes critical, exact stable-solution counting requires nonlinear analysis. One must distinguish basis modes from arbitrary linear combinations, and distinguish genuinely different patterns from rotations of the same pattern. These questions lead naturally to equivariant bifurcation theory, where the rotation group $SO(3)$ organizes the possible branches.
+The count is not merely a lower bound. Within the polynomial ansatz that any truncated amplitude-equation model actually lives in, one can show it is *exact*: an affine function of the chart coordinates satisfies the degree-one equation if and only if its constant term vanishes (giving exactly $3$ solutions' worth of freedom); a general quadratic satisfying the degree-two equation must have no linear part and must have its constant term locked to minus one third of its trace, after which it lies in the span of the five quadrupoles; and a parity-odd cubic satisfying the degree-three equation lies in the span of the seven octupoles. Three degrees, three exact matches with $2l+1$. (Beyond those three, exact rational linear algebra on the full polynomial ansatz reproduces the count $2l+1$ for every degree up to six — strong evidence, though not yet a proof, that the pattern is universal.)
 
-## What the flat patterns can teach us
+### Two places where the naive picture is wrong
 
-There is also a useful way to read the map dynamically. A point moving outward along a straight planar ray does not wander forever over the sphere. It starts near the south pole, crosses the equator when its planar radius is $1$, and then climbs toward the north pole. The journey slows in spherical coordinates even while the planar radius keeps increasing. A ring drawn far from the planar origin therefore represents a narrow spherical neighborhood near the missing pole. Equal distances on the page do not represent equal distances on the sphere.
+Mathematics is at its most useful when it refuses to confirm a slogan. Two clauses of the intuitive story turn out to be false as stated, and their corrections are themselves informative.
 
-That compression changes how one should interpret images. A broad outer band in a planar plot may correspond to a tiny cap of cortex in the spherical model. Conversely, a smooth pattern near the north pole can appear spread across a huge area near the boundary of a truncated plot. Color maps and numerical meshes should therefore be read with the conformal scale in mind. Adaptive grids, or direct spherical discretizations used alongside planar visualization, can help prevent the picture from dictating the physics.
+**The winner is not always $\lfloor 1/r \rfloor$.** It is tempting to say "the selected degree is $N = \lfloor 1/r\rfloor$" for every radius. It isn't. At $r = 0.4$ we have $1/r = 2.5$, and the two candidates give $\lambda_2 = 0.64\,e^{0.36} \approx 0.917$ against $\lambda_3 = 1.44\,e^{-0.44} \approx 0.927$. The ceiling wins. The correct universal statement is the bracketing above; the floor is guaranteed only at the resonant radii.
 
-The stereographic view offers a useful conceptual laboratory. It converts global spherical modes into explicit rational functions on the plane. It shows that boundedness survives projection, while decay depends on a pole condition. It turns harmonic multiplicity into concrete counts—three, five, seven for the first reciprocal radii—without pretending that dimension equals the number of stable states.
+**Not every pattern decays at infinity.** One naturally expects a projected pattern to fade as you move out in the plane, since going to infinity means climbing to the north pole. But a harmonic need not vanish at the north pole — and if it doesn't, the projected pattern converges to a nonzero constant. Concretely, along any ray $R \mapsto (Ru, Rv)$ with $u^2+v^2=1$, a general dipole $a\sigma_1 + b\sigma_2 + c\sigma_3$ satisfies
 
-For visual neuroscience, these distinctions matter. Planar images of spots or stripes may look like ordinary Euclidean patterns, yet their stretching and behavior near the boundary can encode a hidden closed surface. A pattern that tends to a constant at the edge is not necessarily a numerical artifact; it may be the value at the missing pole. A family with five coefficients is not necessarily five percepts; it is a five-dimensional space on which rotations and nonlinearities still act.
+$$a\sigma_1 + b\sigma_2 + c\sigma_3 \;=\; c \;+\; \frac{2aRu + 2bRv - 2c}{1+R^2} \;\longrightarrow\; c,$$
 
-The next steps are clear. Build explicit bases for degrees one through three. Prove a general theorem that subtracting the pole value produces decay, with rates determined by smoothness. Derive the conformally weighted Laplacian in full. Then choose a concrete difference-of-Gaussians kernel, compute its spherical spectrum, and analyze the nonlinear bifurcations.
+with the explicit error bound $|{\cdot} - c| \le (2|a|+2|b|+2|c|)/R$. The zonal mode $\sigma_3$ tends to $1$; it does *not* decay. In fact a degree-one pattern decays along every ray **if and only if** its north-pole coefficient $c$ vanishes. Decay is thus a single linear condition, and the decaying part of the degree-$N$ pattern space has dimension $2N$, not $2N+1$. The patterns that *do* decay do so at sharp polynomial rates: the two-fold sectoral quadrupole obeys $|\sigma_1^2-\sigma_2^2| \le 8/R^2$, and the three-fold sectoral octupole obeys $|\sigma_1(\sigma_1^2 - 3\sigma_2^2)| \le 32/R^3$.
 
-The broader lesson is geometric. Flattening a curved world never erases curvature; it relocates it—into weights, asymptotics, and boundary behavior. Once those traces are read correctly, the infinite plane becomes a faithful window onto activity unfolding over a closed neural surface.
+### Symmetry: why the patterns look the way they do
+
+The reason the projected patterns *look* like hallucinations — fans, rosettes, pinwheels — is that plane rotations are sphere rotations in disguise. Rotating the plane by an angle $\theta$ is conjugated by the chart to rotating the sphere about its polar axis: the two horizontal coordinates transform by the standard rotation matrix,
+
+$$\sigma_1 \mapsto \cos\theta\,\sigma_1 - \sin\theta\,\sigma_2, \qquad \sigma_2 \mapsto \sin\theta\,\sigma_1 + \cos\theta\,\sigma_2,$$
+
+while the polar coordinate $\sigma_3$ is fixed. The degree-$l$ pattern space is therefore a rotation-invariant space: its members really are *rotational variants* of one another, which is precisely the sense in which there are $2l+1$ of them rather than one.
+
+The sectoral patterns — the ones built purely from $\sigma_1$ and $\sigma_2$, that is, from $\mathrm{Re}(\sigma_1 + i\sigma_2)^l$ and $\mathrm{Im}(\sigma_1+i\sigma_2)^l$ — inherit exact discrete symmetry. The degree-two sectoral pattern $\sigma_1^2 - \sigma_2^2$ is invariant under the half-turn: two-fold symmetry. The degree-three pair $\sigma_1(\sigma_1^2-3\sigma_2^2)$ and $\sigma_2(3\sigma_1^2-\sigma_2^2)$ is invariant under rotation by $2\pi/3$: three-fold symmetry, verified by an exact algebraic identity in $\sqrt3$ expressing that the real and imaginary parts of a cube are unchanged when the base is multiplied by a primitive cube root of unity. The boundary case is instructive: the degree-one sectoral pattern is *odd* under the half-turn, $\sigma_1(-x,-y) = -\sigma_1(x,y)$, so its symmetry group is genuinely one-fold. These are exactly the $N$-fold rosettes of the form-constant catalogue.
+
+There is one more symmetry, and it is a pretty one. **Kelvin inversion** of the plane, $p \mapsto p/|p|^2$ — the map that exchanges the inside and outside of the unit circle — is conjugated by the chart to the equatorial reflection $z \mapsto -z$ of the sphere. It fixes $\sigma_1$ and $\sigma_2$ and negates $\sigma_3$. So it pairs patterns of opposite polar parity: the zonal quadrupole $3\sigma_3^2-1$ is unchanged by inversion, while the zonal octupole $\sigma_3(5\sigma_3^2-3)$ changes sign. In perceptual terms: turning a pattern inside out through the unit circle is the same as flipping the cortical sphere north-for-south.
+
+### Why this matters
+
+The point of the construction is that it converts a soft statement — "cortical geometry constrains the hallucination repertoire" — into a countable prediction with an explicit dictionary. Fix the interaction radius $r$ of the cortical connectivity, which is measurable. The theory then says: the emergent pattern is a degree-$N$ mode with $N$ the integer nearest resonance ($N = \lfloor 1/r\rfloor$ when $r$ is a reciprocal integer, and one of $\lfloor 1/r\rfloor, \lceil 1/r\rceil$ otherwise); there are exactly $2N+1$ of them; $2N$ of those fade in the periphery and one does not; the sectoral ones have exactly $N$-fold rotational symmetry; and turning any of them inside out about the unit circle is a symmetry of the whole family.
+
+None of this needs numerical solution of a partial differential equation on a curved surface. It needs one nineteenth-century map, one closure property of a three-symbol algebra, and one inequality about the exponential function. That is a good exchange rate.
+
+And it leaves the frontier clearly marked. The exact $2l+1$ upper bound is established in degrees one, two and three, and confirmed by exact computation up to degree six; the general degree is a purely algebraic recursion waiting to be organised. The codimension-one nature of decay is settled in degree one; the general statement — that decay is vanishing at the north pole, and its rate is the order of vanishing there — is visible but unproved. And the entire analysis so far is about *existence* of patterns, not their *stability*: which of the $2N+1$ shapes a real cortex actually settles into is a question the linear theory poses and the nonlinear theory must answer.
