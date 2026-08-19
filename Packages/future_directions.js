@@ -121,20 +121,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle 5bad6114 (Q=0.910), which proved 17 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The \"if\" direction is proved (`FourierFA.poisson_summation`); the converse is open.",
-    "domains": [
-      "Probability"
-    ],
-    "id": "push_5bad6114_9b4bad3d",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "5bad6114",
-    "status": "available",
-    "timestamp": "2026-08-19T09:49:48.491455+00:00",
-    "title": "Deepening: The \"if\" direction is proved (`FourierFA.poisson_summation`); the converse is op"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Building on cycle 60572a3f (Q=0.850), which proved 75 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: `\u03a3_g |X^g|^k = (B_k + \u03a3_P (m_P \u2212 1))\u00b7|G|`\n    (`bell_defect_eq`): the excess of a moment over its Bell floor is `|G|` times the number of\n    *extra* orbits per pattern, and it vanishes exactly for `k`-transitive actions\n    (`sum_patternMultiplicity_sub_one_eq_zero_iff`).\n\n---\n\n\n\n## Open conjecture",
     "domains": [
       "Combinatorics"
@@ -160,6 +146,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-19T07:54:39.283971+00:00",
     "title": "Deepening: The number of triples `(a,b,c)` with `0 < a,b,c \u2264 H` that are Berggren-generated"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle f46e1405 (Q=0.860), which proved 66 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The qualitative half is now **proved**: `C\u209b = 1` iff the class is degenerate\n(`shtarkovSum_eq_one_iff`), so any genuinely new source makes the price strictly\npositive, and the price is monotone in the class (`price_reindex_le`).  What\nremains is the quantitative form.  If `S'` is obtained from `S` b",
+    "domains": [
+      "Cryptography"
+    ],
+    "id": "push_f46e1405_4c6afcff",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "f46e1405",
+    "status": "available",
+    "timestamp": "2026-08-19T10:47:14.355816+00:00",
+    "title": "Deepening: The qualitative half is now proved: `C\u209b = 1` iff the class is degenerate\n(`shtar"
   },
   {
     "consumed_by_exp_id": "",
@@ -1749,20 +1749,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-13T03:21:12.748859+00:00",
     "title": "Stein-Method: Quantitative Normal Approximation Bounds"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 6077433a (Q=0.788), which proved 87 theorems in Geometry. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Investigate the ArXiv paper 'Magnitude homology of tope graphs' and formalize its key results. Abstract: We completely determine the magnitude homology of tope graphs of real hyperplane arrangements. Their ranks can be described as the Hilbert functions of the Stanley--Reisner rings of certain simpl",
-    "domains": [
-      "Geometry"
-    ],
-    "id": "push_6077433a_dca76e44",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "6077433a",
-    "status": "available",
-    "timestamp": "2026-08-05T06:51:05.180719+00:00",
-    "title": "Deepening: ArXiv paper: Magnitude homology of tope graphs"
   },
   {
     "consumed_by_exp_id": "",
@@ -19512,15 +19498,14 @@ window.FUTURE_DIRECTIONS = [
     "title": "The low-tail experiment."
   },
   {
-    "consumed_by_exp_id": "f46e1405",
+    "consumed_by_exp_id": "",
     "description": "The qualitative half is now **proved**: `C\u209b = 1` iff the class is degenerate\n(`shtarkovSum_eq_one_iff`), so any genuinely new source makes the price strictly\npositive, and the price is monotone in the class (`price_reindex_le`).  What\nremains is the quantitative form.  If `S'` is obtained from `S` by adding one\nsource `p_new`, then\n`C\u209b' \u2212 C\u209b = \u03a3_x (p_new(x) \u2212 maxLik_S(x))\u207a`, and this is strictly positive unless\n`p_new \u2264 maxLik_S` pointwise.  *The key insight is* that the Shtarkov sum is\nthe `\u2113\u00b9`-norm of a pointwise supremum, so its increments measure exactly the\nmass on which the new model strictly dominates the old envelope \u2014 a\n\"marginal value of a model\" formula.  *Why now?*  `maxLik` and the library\nbounds (`shtarkovSum_sigma_le`, `le_shtarkovSum_sigma`) are in place, so the\nstatement is a pointwise `max` computation; if true it turns the price of\nuniversality into a submodular set function on model libraries, which would make\ngreedy decompressor-library design provably near-optimal.",
     "domains": [],
     "id": "fd_1550",
-    "phase": "A",
     "priority_score": 0.4277368421052631,
     "research_mode": "team",
     "source_exp_id": "bba7fa1e",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-18T19:41:03.927928+00:00",
     "title": "The qualitative half is now proved: `C\u209b = 1` iff the class is degenerate\n(`shtarkovSum_eq_one_iff`), so any genuinely new source makes the price strictly\npositive, and the price is monotone in the cla"
   },
@@ -19535,6 +19520,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-17T13:54:05.925280+00:00",
     "title": "Conjecture A, closed"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Define the *curvature* of the pool as\n`\u03ba = 1 \u2212 min\u2c7c (C(\u03a9) \u2212 C(\u03a9\u2216{j})) / C({j})` where `\u03a9` is the whole pool.\nConjecture: greedy library design achieves the factor `(1 \u2212 e^{\u2212\u03ba})/\u03ba`, and for\npools of sources that are pairwise at total-variation distance at most `\u03b4` one\nhas `\u03ba \u2264 \u03b4\u00b7|\u03a9|`, so nearly-identical model pools admit *nearly optimal* greedy\nlibraries.",
+    "domains": [],
+    "id": "fd_1596",
+    "priority_score": 0.4211666666666667,
+    "research_mode": "team",
+    "source_exp_id": "f46e1405",
+    "status": "available",
+    "timestamp": "2026-08-19T10:46:59.962852+00:00",
+    "title": "Define the *curvature* of the pool as\n`\u03ba = 1 \u2212 min\u2c7c (C(\u03a9) \u2212 C(\u03a9\u2216{j})) / C({j})` where `\u03a9` is the whole pool."
   },
   {
     "consumed_by_exp_id": "",
@@ -19815,14 +19812,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "For modal proof systems in the sense of `ModalSystem`, the following"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a985d45a",
     "description": "Cycle 4 already provides the two witnesses and the joint-inconsistency\ntheorem; what is missing is a Lean development of frame-definability for `ModalSystem`,\nwhich the `KFrame`/`sat` apparatus of Cycle 1 supports directly.",
     "domains": [],
     "id": "fd_1416",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "615053e5",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-17T09:57:44.570347+00:00",
     "title": "Cycle 4 already provides the two witnesses and the joint-inconsistency"
   },
@@ -21312,5 +21310,60 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-19T09:49:54.301918+00:00",
     "title": "Conjecture L (the true propagation constant)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Under a matroid constraint on admissible libraries (e.g. \"at most `k` models per\ndata modality\", a partition matroid), the greedy algorithm is only\n`1/2`-optimal, but the multilinear extension of `C` admits a `(1 \u2212 1/e)`\nrounding.  Conjecture: the multilinear extension\n`F(y) = \ud835\udd3c_{A\u223cy} C(A) = \u2211\u2093 \ud835\udd3c max\u1d62\u2208A p\u1d62(x)` of the Shtarkov functional is\n*concave along nonnegative directions* and its gradient has the closed form\n`\u2202F/\u2202y\u2c7c = \u2211\u2093 \ud835\udd3c_{A\u223cy}(p\u2c7c(x) \u2212 env_A(x))\u207a`.",
+    "domains": [
+      "Combinatorics",
+      "Computation"
+    ],
+    "id": "fd_1595",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "f46e1405",
+    "status": "available",
+    "timestamp": "2026-08-19T10:46:59.685253+00:00",
+    "title": "Under a matroid constraint on admissible libraries (e.g."
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: deciding, for a rational pool `P` and thresholds `k, t`, whether\nsome library of size `k` has `C(A) \u2265 t` is NP-hard, by reduction from Max\nCoverage using point-mass models (the pool of Section 4 of\n`ComputationalEvidence.md` is the two-element gadget).  Consequently the\n`(1 \u2212 1/e)` factor of `Library.greedy_one_sub_inv_exp_le` is optimal unless\nP = NP.",
+    "domains": [
+      "Computation"
+    ],
+    "id": "fd_1597",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "f46e1405",
+    "status": "available",
+    "timestamp": "2026-08-19T10:47:00.230305+00:00",
+    "title": "Conjecture: deciding, for a rational pool `P` and thresholds `k, t`, whether\nsome library of size `k` has `C(A) \u2265 t` is NP-hard, by reduction from Max\nCoverage using point-mass models (the pool of Sec"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: if each model of a library `A` is perturbed to `p'\u1d62` with\n`\u2016p\u1d62 \u2212 p'\u1d62\u2016\u2081 \u2264 \u03b5`, then `|C(A) \u2212 C(A')| \u2264 \u03b5`, uniformly in `|A|`; and the\noptimal library is stable: the greedy run on the perturbed pool loses at most\n`2\u03b5\u00b7k` after `k` steps.",
+    "domains": [],
+    "id": "fd_1598",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "f46e1405",
+    "status": "available",
+    "timestamp": "2026-08-19T10:47:00.494332+00:00",
+    "title": "Conjecture: if each model of a library `A` is perturbed to `p'\u1d62` with\n`\u2016p\u1d62 \u2212 p'\u1d62\u2016\u2081 \u2264 \u03b5`, then `|C(A) \u2212 C(A')| \u2264 \u03b5`, uniformly in `|A|`; and the\noptimal library is stable: the greedy run on the perturb"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For the memoryless class of `Catalog/MachineLearning/UniversalRedundancy/Types.lean`\nthe price obeys `C\u209b \u2264 (n+1)^{#A}`.  Conjecture: quantising the simplex into `m`\nmodels and using the greedy library recovers the *exact* asymptotics \u2014 namely\nthat the greedy library of size `m` has price\n`log\u2082 C\u209b \u2212 \u0398(log(1/m))` bits, so `m = poly(n)` models suffice to be within `1`\nbit of full parametric universality.",
+    "domains": [
+      "MachineLearning"
+    ],
+    "id": "fd_1599",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "f46e1405",
+    "status": "available",
+    "timestamp": "2026-08-19T10:47:00.760670+00:00",
+    "title": "For the memoryless class of `Catalog/MachineLearning/UniversalRedundancy/Types.lean`\nthe price obeys `C\u209b \u2264 (n+1)^{#A}`."
   }
 ];

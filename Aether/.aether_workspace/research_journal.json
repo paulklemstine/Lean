@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "615053e5",
-      "domain": "Logic",
-      "key_insight": "# Future Directions — Tangled Hierarchies That Reference Their Own Soundness\n\nDerived from the five research cycles now formalised in\n`Catalog/Logic/ProvabilityLogic/{TangledSoundness, SoundnessTopolo",
-      "quality_score": 0.83,
-      "sorry_count": 5,
-      "theorem_count": 128,
-      "timestamp": "2026-08-17T09:57:56",
-      "title": "Tangled Hierarchies: Proof Systems That Reference Their Own Soundness"
-    },
-    {
       "cycle_id": "8993bd64",
       "domain": "Shared",
       "key_insight": "# Future Directions — Compression ⇋ One-Way Functions (after Phase B / M8)\n\nThe three new files prove, in a resource-abstract but fully formal model, that\n\n* compression is capped unconditionally by t",
@@ -499,19 +489,19 @@
       "theorem_count": 75,
       "timestamp": "2026-08-19T09:49:59",
       "title": "The Bell defect, counted exactly"
+    },
+    {
+      "cycle_id": "f46e1405",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions — the price of universality as a submodular functional\n\nThis cycle closed the quantitative half of the mission: the Shtarkov sum's\nincrement under adding one model is exactly the m",
+      "quality_score": 0.86,
+      "sorry_count": 0,
+      "theorem_count": 66,
+      "timestamp": "2026-08-19T10:47:13",
+      "title": "The qualitative half is now proved: `Cₛ = 1` iff the class is degenerate\n(`shtarkovSum_eq_one_iff`),"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "5e2efbe9",
-      "domain": "Shared",
-      "key_insight": "# Future directions\n\nThe formalization in `Catalog/Shared/SolomonZeta/` (mirrored in the buildable library\n`Shared/SolomonZeta/`) now contains, all machine-checked and free of `sorry`:\n\n* the effectiv",
-      "quality_score": 0.6514402131782946,
-      "sorry_count": 0,
-      "theorem_count": 555,
-      "timestamp": "2026-08-08T14:03:57",
-      "title": "ArXiv paper: Solomon zeta functions over arithmetic orders"
-    },
     {
       "cycle_id": "339ae990",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 75,
       "timestamp": "2026-08-19T09:49:59",
       "title": "The Bell defect, counted exactly"
+    },
+    {
+      "cycle_id": "f46e1405",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions — the price of universality as a submodular functional\n\nThis cycle closed the quantitative half of the mission: the Shtarkov sum's\nincrement under adding one model is exactly the m",
+      "quality_score": 0.86,
+      "sorry_count": 0,
+      "theorem_count": 66,
+      "timestamp": "2026-08-19T10:47:13",
+      "title": "The qualitative half is now proved: `Cₛ = 1` iff the class is degenerate\n(`shtarkovSum_eq_one_iff`),"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "2afe0ce6",
-      "domain": "Applications",
-      "name": "act_one",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "5792b548",
-      "domain": "Shared",
-      "name": "powerSum_zero",
-      "quality": 0.88
-    },
-    {
-      "cycle_id": "5792b548",
-      "domain": "Shared",
-      "name": "powerSum_add",
-      "quality": 0.88
-    },
     {
       "cycle_id": "5792b548",
       "domain": "Shared",
@@ -2803,9 +2785,27 @@
       "domain": "Combinatorics",
       "name": "stirling_pos",
       "quality": 0.85
+    },
+    {
+      "cycle_id": "f46e1405",
+      "domain": "Cryptography",
+      "name": "envelope_empty",
+      "quality": 0.86
+    },
+    {
+      "cycle_id": "f46e1405",
+      "domain": "Cryptography",
+      "name": "envelope_nonneg",
+      "quality": 0.86
+    },
+    {
+      "cycle_id": "f46e1405",
+      "domain": "Cryptography",
+      "name": "le_envelope",
+      "quality": 0.86
     }
   ],
-  "last_updated": "2026-08-19T09:49:59",
+  "last_updated": "2026-08-19T10:47:13",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hupper⟩)",
@@ -3331,12 +3331,6 @@
     ],
     "Cryptography": [
       {
-        "cycle_id": "2c38bc1a",
-        "quality": 0.7003711194029851,
-        "theorems": 134,
-        "title": "ArXiv paper: Even smaller universal posets"
-      },
-      {
         "cycle_id": "2116bc97",
         "quality": 0.6539737559241706,
         "theorems": 324,
@@ -3389,6 +3383,12 @@
         "quality": 0.83,
         "theorems": 54,
         "title": "ArXiv paper: A Fourier-analytic Uniqueness Theorem for Lattice-point Enumerators"
+      },
+      {
+        "cycle_id": "f46e1405",
+        "quality": 0.86,
+        "theorems": 66,
+        "title": "The qualitative half is now proved: `Cₛ = 1` iff the class is degenerate\n(`shtar"
       }
     ],
     "Geometry": [

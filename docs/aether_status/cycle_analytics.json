@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-19T09:50:05.738153+00:00",
+  "last_updated": "2026-08-19T10:47:17.728156+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -59845,6 +59845,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-08-19T09:50:05.536721+00:00",
       "title": "The Bell defect, counted exactly"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Cryptography",
+      "duration_seconds": 3406.2057995796204,
+      "end_time": 1787136410.2467396,
+      "files_integrated": 4,
+      "job_id": "f46e1405",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.86,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.562,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.86,
+        "novelty": 0.86,
+        "proof_depth": 0.86,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.86,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1787133004.04094,
+      "strategy_count": 0,
+      "theorem_count": 66,
+      "theorem_novelty_disproof": 2,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 56,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-08-19T10:47:17.521742+00:00",
+      "title": "The qualitative half is now proved: `C\u209b = 1` iff the class is degenerate\n(`shtarkovSum_eq_one_iff`),"
     }
   ]
 }
