@@ -202,7 +202,7 @@
     "title": "Deepening: The number of triples `(a,b,c)` with `0 < a,b,c ≤ H` that are Berggren-generated"
   },
   {
-    "ambition_level": "extension",
+    "ambition_level": "grand_challenge",
     "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Building on cycle f46e1405 (Q=0.860), which proved 66 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The qualitative half is now **proved**: `Cₛ = 1` iff the class is degenerate\n(`shtarkovSum_eq_one_iff`), so any genuinely new source makes the price strictly\npositive, and the price is monotone in the class (`price_reindex_le`).  What\nremains is the quantitative form.  If `S'` is obtained from `S` b",
@@ -2367,26 +2367,6 @@
     "status": "available",
     "timestamp": "2026-08-13T03:21:12.748859+00:00",
     "title": "Stein-Method: Quantitative Normal Approximation Bounds"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Formalize the hardness reduction from worst-case lattice problems (GapSVP, SIVP) to the Learning with Errors problem with specific parameters.",
-    "domain_bridges": [],
-    "domains": [
-      "Cryptography",
-      "Computation"
-    ],
-    "id": "seed_229",
-    "lineage_refs": [],
-    "priority_score": 0.88,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Learning with Errors: Hardness Reductions"
   },
   {
     "ambition_level": "extension",
@@ -20475,7 +20455,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "252d7c91",
     "description": "# Future directions\n\n## What is now proved\n\nTwo new self-contained files extend the conditional Hilbert-class-field interface of\n`Catalog/NumberTheory/`, settling target 2 of the previous cycle (the Galois `p`-binomial count\nfor elementary abelian class groups).\n\n### `Catalog/NumberTheory/SubspaceCounting.lean` (no dependencies beyond Mathlib)\n\nLet `K` be a finite field with `q` elements and `V` a finite `K`-vector space of dimension `n`.\n\n* `gaussBinom q n k` : the Gaussian binomial coefficient `∏_{i<k}(q^n-q^i) / ∏_{i<k}(q^k-q^i)`;\n* `spanFiberEquiv` : the linearly independent `k`-tuples spanning a fixed `k`-dimensional\n  subspace `W` are exactly the bases of `W`;\n* `card_linearIndependent_eq_mul` : fibring the linearly independent `k`-tuples of `V` over\n  their spans, `#{s : LI k-tuple} = #{W : dim W = k} · ∏_{i<k}(q^k-q^i)`;\n* `card_submodule_finrank_mul` : `#{W : dim W = k} · ∏_{i<k}(q^k-q^i) = ∏_{i<k}(q^n-q^i)`;\n* `card_submodule_finrank_eq_gaussBinom` : `#{W : dim W = k} = gaussBinom q n k` for `k ≤ n`;\n* `card_submodule_finrank_pos`, `card_submodule_finrank_eq_zero` : the count is positive exactly\n  in the range `k ≤ n`;\n* `card_submodule_eq_sum_gaussBinom` : `#(subspaces of V) = ∑_{k ≤ n} gaussBinom q n k`\n  (the Galois number, OEIS A006116 for `q = 2`);\n* `card_submodule_finrank_le_sub`, `card_submodule_finrank_eq_card_submodule_finrank_sub` :\n  duality — `W ↦ W^⊥` (dual annihilator, transported by a basis isomorphism `V* ≃ V`) is\n  injective, whence there are as many `k`-dimensional as `(n-k)`-dimensional subspaces;\n* `gaussBinom_symm`, `gaussBinom_pos` : consequences at `q = p` prime, obtained from the\n  `(ZMod p)^n` model;\n* `card_submodule_finrank_zmod`, `card_submodule_zmod` : the counts for `(ZMod p)^r`.\n\n### `Catalog/NumberTheory/ElementaryAbelianClassField.lean`\n\nFor a Hilbert class field datum `e : Gal(H/K) ≃* Cl(𝒪_K)` together with an isomorphism\n`E : Cl(𝒪_K) ≃* (ℤ/p)^r` (`p` prime):\n\n* `classGroupSubmoduleOrderIso` : `Subgroup Cl(𝒪_K) ≃o Submodule (ZMod p) ((ZMod p)^r)`;\n* `card_subgroup_eq_pow`, `index_eq_pow` : a subgroup corresponding to a `k`-dimensional\n  subspace has order `p^k` and index `p^{r-k}`;\n* `intermediateFieldSubmoduleEquiv` : intermediate fields of `H/K` ↔ subspaces of `(ZMod p)^r`;\n* `card_intermediateField_eq_sum_gaussBinom` : **the datum has exactly `∑_{k≤r} binom(r,k)_p`\n  intermediate fields**;\n* `finrank_eq_pow_sub`, `finrank_eq_pow`, `finrank_classField_eq_pow` : degrees are the expected\n  powers of `p`;\n* `card_intermediateField_finrank_eq_gaussBinom` : **exactly `binom(r,k)_p` intermediate fields\n  have degree `p^k` over `K`** (this is where `gaussBinom_symm` is used);\n* `exists_intermediateField_finrank`, `exists_intermediateField_finrank_iff` : the degrees that\n  occur are exactly `p^k`, `k ≤ r`;\n* `sum_card_intermediateField_finrank` : the degreewise counts sum to the total count;\n* explicit cases: `card_intermediateField_kleinFour` and `card_intermediateField_of_kleinFour`\n  (`p = r = 2`: five intermediate fields, `card_quadratic_intermediateField_of_kleinFour`: three\n  of them quadratic, `finrank_eq_one_or_two_or_four`), and\n  `card_intermediateField_elementary_two_three` together with\n  `card_intermediateField_finrank_two_three` (`p = 2, r = 3`: **sixteen** intermediate fields,\n  with degree distribution `1, 7, 7, 1` in degrees `1, 2, 4, 8`).\n\nThe two falsifiable predictions of the previous cycle at `p = r = 2` (`5 = 1 + 3 + 1`) and at\n`p = 2, r = 3` (`16 = 1 + 7 + 7 + 1`) are therefore both confirmed, as instances of a general\ntheorem rather than case analysis. All results are proved with no `sorry` and use only\n`propext`, `Classical.choice`, `Quot.sound`.\n\n### `Catalog/Speculative/AutoResearch/KleinFourClassField.lean` (now complete)\n\nThe standalone Klein four case, which had been left with five unproved statements, is finished;\nthe file compiles with no `sorry` and its theorems use only `propext`, `Classical.choice`,\n`Quot.sound`.  For a datum `e : Gal(H/K) ≃* Cl(𝒪_K)` together with `E : Cl(𝒪_K) ≃* V`, where\n`V = ℤ/2 × ℤ/2`:\n\n* `card_subgroup_V` : `V` has exactly five subgroups (from `subgroup_cases`);\n* `index_comap_equiv` : transporting a subgroup of `V` back to the class group preserves index;\n* `card_intermediateField_of_kleinFour` : the datum has exactly five intermediate fields,\n  obtained from `HilbertClassFieldDescent.card_intermediateField_eq_card_subgroup` and\n  `MulEquiv.mapSubgroup E`;\n* `finrank_eq_one_or_two_or_four` : every intermediate field has degree `1`, `2` or `4` over `K`,\n  from `HilbertClassFieldDescent.finrank_eq_index` and `index_cases`;\n* `finrank_quadField` : the class field of `⟨x⟩` for `x ≠ 1` is quadratic over `K`;\n* `quadField_injective` and `exists_three_quadratic_intermediateField` : the three subgroups of\n  order two give three pairwise distinct quadratic intermediate fields;\n* `intermediateField_eq_of_kleinFour` : conversely every intermediate field is `K`, `H`, or one\n  of those three quadratic fields, so the degree multiset is exactly `{1, 2, 2, 2, 4}`.\n\nThis is the `p = r = 2` instance of the general count above, proved independently and by hand.\n\n## Next targets\n\nEach of the following is falsifiable: it is either a Lean statement that compiles and is proved,\nor it fails for an explicit counterexample.\n\n1. **General finite abelian class group.** Replace `(ℤ/p)^r` by an arbitrary finite abelian\n   group `A`. The number of intermediate fields is the number of subgroups of `A`, which is\n   multiplicative over the primary components; prove\n   `Nat.card (Subgroup A) = ∏_p Nat.card (Subgroup A_p)` and, for `A_p = ⊕ ℤ/p^{λ_i}`, the\n   Birkhoff–Hall count. Falsifiable already at `A = ℤ/4`, where the answer is `3`, versus\n   `A = (ℤ/2)²`, where it is `5`.\n\n2. **The `q`-Pascal recursion.** Prove\n   `gaussBinom q (n+1) (k+1) = gaussBinom q n k + q^{k+1} * gaussBinom q n (k+1)` directly in ℕ,\n   and deduce `gaussBinom_symm` for arbitrary `q > 1` (not only for prime `q`, where the present\n   proof goes through the `(ZMod q)^n` model). Falsifiable at `q = 4, n = 2, k = 1`.\n\n3. **Unconditional imaginary-quadratic instance.** For `K = ℚ(√-5)` construct\n   `Nat.card (ClassGroup (𝓞 K)) = 2` and the datum `Gal(K(i)/K) ≃* Cl(𝒪_K)`, so that\n   `card_intermediateField_eq_sum_gaussBinom` becomes an unconditional statement (`p = 2`,\n   `r = 1`, two intermediate fields). Falsifiable: the class number must be `2`, not `1`.\n\n4. **Frobenius compatibility of the Artin datum.** Demand that `e⁻¹` send the class of an\n   unramified prime `𝔭` to `arithFrobAt 𝔭`, and prove that `𝔭` splits completely in `H` iff\n   `[𝔭] = 1`. In the elementary abelian case this refines the counting above into a splitting\n   law: the primes splitting completely in the degree-`p^k` class field of a subspace `W` are\n   exactly those whose class lies in `W`.\n\n5. **Genus theory.** For imaginary quadratic `K` with `t` prime discriminant divisors, prove\n   `Nat.card (Cl ⧸ Cl²) = 2^{t-1}` and identify the corresponding class field as the genus\n   field. Combined with the present count, when `Cl(𝒪_K)` is elementary abelian of rank `r` the\n   genus field is the whole Hilbert class field and `r = t - 1`. Falsifiable at `K = ℚ(√-15)`,\n   where the prediction is degree `2`.\n",
     "domain_bridges": [],
     "domains": [
@@ -20488,7 +20468,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "8fa60fb0",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-05T12:24:21.123742+00:00",
     "title": "Two new self-contained files extend the conditional Hilbert-class-field interfac"
   },

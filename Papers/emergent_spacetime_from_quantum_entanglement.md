@@ -1,131 +1,115 @@
-# Computational evidence
+# Computational evidence for the ER=EPR throat/metric theorems
 
-All computations below were run *before* the corresponding Lean proofs, to test
-whether the conjectured recombination rules were true at all. Every claim that
-ended up in the formal development is now backed by a machine-checked Lean proof
-(0 `sorry`s); the tables here record the exploratory stage.
+All numbers below were produced by running rational-arithmetic replicas of the
+formal definitions (`cutWeight`, min-cut `entropy`, `throat`) inside Lean 4 with
+`#eval`, on small finite geometries.  They are *exploratory* data used to select
+the conjectures; the theorems themselves are proved in the `.lean` files and do
+not depend on these computations.
 
-## 1. Monogamy: which recombination of three cuts works?
+Replica definitions used (over `ℚ`, cells `Fin n`):
 
-For three bulk regions with membership patterns `a = (a₁,a₂,a₃)`, `b = (b₁,b₂,b₃)`
-at two bulk cells, we asked whether
-
-```
-Σⱼ sep(χⱼ(a), χⱼ(b))  ≤  Σᵢ sep(aᵢ, bᵢ)
-```
-
-holds pointwise for two candidate rules.
-
-| candidate rule for the four output regions | violations over the 64 patterns |
-|---|---|
-| pairwise intersections `a₁∧a₂, a₁∧a₃, a₂∧a₃` + union | **8** (first at `a=(1,1,1)`, `b=(0,0,0)`: LHS 3, RHS 4) |
-| minority regions `a₁∧a₂∧¬a₃, a₁∧a₃∧¬a₂, a₂∧a₃∧¬a₁` + union | **0** |
-
-Conclusion: the naive intersection recombination is *false*, the minority rule is
-true. Both facts are now theorems: `sepBit_naive_mmi_fails` and `sepBit_mmi`
-(the latter proved by exhaustive Boolean evaluation inside Lean).
-
-## 2. Five-party cyclic inequality: search for a contraction map
-
-We searched for a map `χ : {0,1}⁵ → {0,1}⁶` (five "pair" regions plus the union)
-that is a Hamming contraction and has the prescribed boundary values
-
-```
-χ(pattern of a cell in A_k) = (indicator of j with k ∈ {j, j+1}, 1),   χ(∅) = 0.
+```lean
+cutQ W f  = (∑ u, ∑ v, (if f u = f v then 0 else 1) * W u v) / 2
+capQ W u v = min { cutQ W f : f u = true, f v = false }         -- throat capacity
+entQ W b A = min { cutQ W f : ∀ v, b v → f v = A v }            -- min-cut entropy
+IQ  W u v  = S({u}) + S({v}) − S({u,v})                         -- mutual information
 ```
 
-* Unrestricted local search over the 26 free patterns: solution found (0 violated
-  pairs out of `32 × 32 = 1024`).
-* Search restricted to *cyclically equivariant* maps: solution found, given by
-  the single Boolean rule
+## 1. A four-cell geometry with all cells on the boundary
+
+Weights (symmetric, zero diagonal):
+
+| | 0 | 1 | 2 | 3 |
+|---|---|---|---|---|
+|0| 0 | 5 | 0 | 1 |
+|1| 5 | 0 | 1 | 0 |
+|2| 0 | 1 | 0 | 3 |
+|3| 1 | 0 | 3 | 0 |
+
+Computed capacities `capQ` (diagonal is the sentinel `1000`, i.e. "no separating
+surface exists"; the formal convention is `cap u u = 0`):
 
 ```
-cyc c₀ c₁ c₂ c₃ c₄  =  c₄ ∧ ¬c₂ ∧ (c₀ ∨ (c₁ ∧ ¬c₃)),      χⱼ = cyc ∘ (rotation by j).
+[[1000,    6,    2,    2],
+ [   6, 1000,    2,    2],
+ [   2,    2, 1000,    4],
+ [   2,    2,    4, 1000]]
 ```
 
-* Verification of that closed-form rule: **0 violations** over all 1024 pattern
-  pairs, and all six boundary conditions reproduced exactly.
+Mutual informations `IQ`:
 
-This rule is `EmergentGeometry.cyc`; the contraction property is the Lean theorem
-`sepBit_cyclic5`, and the resulting entropy inequality is `entropy_cyclic5`.
+```
+[[6, 10,  0,  2],
+ [10, 6,  2,  0],
+ [ 0, 2,  4,  6],
+ [ 2, 0,  6,  4]]
+```
 
-## 3. Star versus triangle: entropies of two competing geometries
+Checks (all `true`):
 
-Three boundary cells, values of the min-cut entropy `S(A)` as a function of the
-number `n` of boundary cells in `A`:
+* ultrametric/Gomory–Hu inequality `min(cap u v, cap v w) ≤ cap u w` for `u ≠ w`
+  over all `4³` triples — **true**;
+* `I(u:v) ≤ 2 · cap(u,v)` over all pairs — **true**
+  (e.g. `I(0:1) = 10 ≤ 12 = 2·6`; the bound is *not* tight in general).
 
-| n | star (hidden bulk cell, throat areas 1) | triangle (areas 1/2, no bulk cell) |
-|---|---|---|
-| 0 | 0 | 0 |
-| 1 | min(1, 2) = 1 | 1·2·(1/2) = 1 |
-| 2 | min(2, 1) = 1 | 1 |
-| 3 | 0 | 0 |
+Note the isosceles pattern predicted by `cap_isosceles`: the three capacities of
+`{0,1,2}` are `6, 2, 2` — the two smallest coincide.
 
-The two entropy functions coincide although the geometries differ; this became
-`star_tri_same_entropy` and `bulk_geometry_not_determined_by_entanglement`.
+## 2. A five-cell geometry with hidden bulk cells
 
-## 4. Sanity checks of the qubit dictionary
+Cells `0,1,2` are boundary; `3,4` are hidden bulk.  Weights: `w(0,3)=2`,
+`w(1,3)=3`, `w(2,4)=5`, `w(3,4)=4`, all others `0`.
 
-Evaluated inside Lean (`#eval`) for the definitions used in
-`Novelty/EREPRQuantumBridge.lean`:
+* min-cut entropies of the single boundary cells: `S(0)=2, S(1)=3, S(2)=4`;
+* mutual informations `I(u:v)` for `u,v ∈ {0,1,2}`:
 
-| state | marginal purity `Tr ρ²` | linear entropy | concurrence |
+```
+[[2, 1, 3],
+ [1, 3, 5],
+ [3, 5, 4]]      (diagonal entries are 2S(u) − S(u,u) bookkeeping, off-diagonal is I)
+```
+
+* capacities `cap(0,1)=2`, `cap(0,2)=2`, `cap(1,2)=3`;
+* `I(A:B) ≤ 2·cap(A,B)` for all boundary pairs — **true**
+  (`I(1:2) = 5 ≤ 6`);
+* `cap(u,v) ≤ min(S(u), S(v))` for all boundary pairs — **true**, and *tight* at
+  `cap(1,2) = 3 = min(3,4)`.
+
+This pair of experiments is what suggested the two-sided sandwich
+`I/2 ≤ throat ≤ min(S,S)` (`throat_sandwich`) and the Gomory–Hu inequality
+(`cap_min_le`) that makes the emergent distance an ultrametric.
+
+## 3. Counterexample hunt
+
+* Replacing `exp(-cap)` by `1/(1+cap)` still gives a metric but the *proof* of
+  the max-inequality no longer produces the sharp comparison with `I`, so `exp`
+  was kept; no numerical counterexample to ultrametricity of either choice was
+  found (both are order-reversing reparametrisations, so both are ultrametrics).
+* The inequality `min(cap u v, cap v w) ≤ cap u w` **fails** if `u = w` is
+  allowed (then the left side can be positive while `cap u u = 0`); this is why
+  `cap_min_le` carries the hypothesis `u ≠ w` and why the diagonal of
+  `bridgeDist` is defined separately.
+* No sequence-like invariant appeared, so no OEIS search was applicable.
+
+## 4. Second cycle: coarse-graining experiments
+
+Hand-computed min cuts on the four-cell path `0 — 1 — 2 — 3` with areas
+`w(0,1) = w(2,3) = 5`, `w(1,2) = 1` (the "thin waist"):
+
+| geometry | separating surfaces of `0` from the far end | areas | min cut |
 |---|---|---|---|
-| Bell `(|00⟩+|11⟩)/√2` | 0.5000 | 1.0000 | 1.0000 |
-| product `|00⟩` | 1 | 0 | 0 |
+| fine (`Fin 4`) | `{0}`, `{0,1}`, `{0,2}`, `{0,1,2}` | `5, 1, 10, 5` | `1` |
+| coarse (merge `1,2`) | `{0}`, `{0,a}` | `5, 5` | `5` |
 
-consistent with the theorem `linearEntropy_eq_concurrence_sq`.
+So merging the two waist cells raises the throat from `1` to `5`, i.e. the
+emergent distance drops from `exp(-1) ≈ 0.368` to `exp(-5) ≈ 0.0067`.  Both
+numbers are now theorems (`rgExample_cap_le_one`,
+`rgExample_pushGraph_cap_eq_five`), the second by exhausting the two coarse
+surfaces.
 
-## 5. Counterexample hunt against the main claims
-
-* *Is bulk reconstruction always possible?* No — item 3 is an explicit
-  counterexample, and it is formalised.
-* *Does monogamy hold for all quantum entropy patterns?* No — the pattern
-  "every nonempty marginal has entropy 1" (four-party GHZ) satisfies
-  subadditivity and strong subadditivity on all `8 × 8` subset pairs but breaks
-  monogamy (`3 < 4`). Formalised as `ghzVector_subadditive`,
-  `ghzVector_strong_subadditive`, `ghzVector_violates_monogamy`.
-* *Can a cell be entangled with another without a direct throat?* Yes — in the
-  star geometry `I(0:1) = 1 > 0` while `w(0,1) = 0`; the entanglement is carried
-  by a two-step bridge (`starModel_bridge_through_bulk`).
-
-No sequence with an OEIS entry arose in this project; the objects are Boolean
-recombination rules and cut functions rather than integer sequences.
-
-## 6. Search for a non-geometric five-party entropy vector
-
-A local search over integer vectors `S : {0,…,31} → ℕ` (bitmask indexing of the
-five parties, `S(∅) = 0`) was run with the constraint set
-
-* subadditivity on all disjoint pairs of masks,
-* strong subadditivity, weak monotonicity and monogamy on all `32³` triples of
-  pairwise disjoint masks,
-
-maximising the violation of the cyclic inequality
-`Σⱼ S(AⱼAⱼ₊₁) + S(A₀…A₄) ≤ Σⱼ S(AⱼAⱼ₊₁Aⱼ₊₂)`.
-
-The best vector found (verified independently by a second script, `0` constraint
-violations) is
-
-```
-m : 0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15
-S : 0  3  2  5  4  5  6  5  2  5  4  7  6  6  7  5
-m :16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31
-S : 3  6  5  7  5  4  6  4  4  5  6  6  4  3  5  2
-```
-
-with cyclic left-hand side `29` and right-hand side `28`, i.e. a violation of
-exactly `1`:
-
-| term | masks | values | sum |
-|---|---|---|---|
-| pairs `S(AⱼAⱼ₊₁)` | 3, 6, 12, 24, 17 | 5, 6, 6, 4, 6 | 27 |
-| total `S(A₀…A₄)` | 31 | 2 | 2 |
-| triples `S(AⱼAⱼ₊₁Aⱼ₊₂)` | 7, 14, 28, 25, 19 | 5, 7, 4, 5, 7 | 28 |
-
-All of this is now machine-checked in
-`Catalog/Novelty/CyclicIndependence.lean`: the four validity families are
-discharged by kernel evaluation over the full `32³` case space
-(`Sw_subadditive`, `Sw_strong_subadditive`, `Sw_weak_monotone`, `Sw_monogamy`),
-the violation by `Sw_violates_cyclic5`, and the geometric consequence by
-`no_bulk_geometry_realises_Sw`.
+Counterexample hunt for the reverse inequality: no merging was found that
+*lowers* a capacity — consistent with `cap_le_cap_pushGraph`, which proves this
+is impossible, since every coarse surface pulls back to a fine surface of equal
+area.  Merging two cells that are *not* separated by the minimal surface leaves
+the throat unchanged (e.g. merging `0,1` above keeps the min cut at `1`), which
+is why the strict example merges exactly the two waist cells.

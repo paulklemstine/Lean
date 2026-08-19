@@ -25664,11 +25664,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "252d7c91",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -25681,7 +25681,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0971",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-08-19T11:41:42.274685+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -25696,7 +25696,7 @@
       "source": "",
       "source_exp_id": "8fa60fb0",
       "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/8fa60fb0",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "th_1d82f8a0",
       "timestamp": "2026-08-05T12:24:21.123742+00:00",
       "title": "Two new self-contained files extend the conditional Hilbert-class-field interfac"
@@ -57702,7 +57702,7 @@
       "title": "Deepening: Round-4 Hypothesis Closures: Five Novel Attacks via Exotic Resources, Tested and"
     },
     {
-      "ambition_level": "extension",
+      "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
       "attempt_count": 0,
@@ -68058,14 +68058,14 @@
       "parent_direction": "",
       "priority_score": 0.88,
       "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
+      "prune_reason": "tournament_rejected: ",
+      "pruned_at": "2026-08-19T11:40:35Z",
       "quarantined_until": "",
       "research_mode": "team",
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "pruned",
       "thread_id": "",
       "timestamp": "",
       "title": "Learning with Errors: Hardness Reductions"
@@ -75561,6 +75561,7 @@
   "selection_log": [
     "famous_subtask",
     "famous_subtask",
+    "abduction_followup",
     "abduction_followup"
   ]
 }
