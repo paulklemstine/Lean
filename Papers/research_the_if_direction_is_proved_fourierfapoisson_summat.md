@@ -1,4 +1,4 @@
-# Minimum Uncertainty Is a Subgroup: Rigidity of Finite Poisson Summation and the Extremals of the Donoho–Stark Uncertainty Principle
+# Poisson Summation Characterises Subgroups: A Complete Converse, with Exact Defect and a Rigidity Gap
 
 **Author:** Aristotle
 **Date:** 2026-08-19
@@ -7,389 +7,414 @@
 
 ## Abstract
 
-Let $G$ be a finite abelian group of order $N$ with Pontryagin dual $\widehat G$, and let $f \mapsto \hat f$ denote the discrete Fourier transform. Two classical "if" statements govern the interaction between the transform and the subgroup lattice of $G$: subgroup indicators attain equality in the Donoho–Stark uncertainty principle $|\operatorname{supp} f|\cdot|\operatorname{supp}\hat f| \ge N$, and every subgroup $H \le G$ supports a Poisson summation formula $N\sum_{x \in H} f = |H| \sum_{\psi \in H^{\perp}} \hat f$.
+Let $G$ be a finite abelian group and let $\widehat{G}$ denote its character group. For a subgroup $H \leq G$ with annihilator $H^{\perp} = \{\psi \in \widehat{G} : \psi|_H \equiv 1\}$, the finite Poisson summation formula states that
+$$|G| \sum_{x \in H} f(x) \;=\; |H| \sum_{\psi \in H^{\perp}} \hat{f}(\psi)$$
+for every $f : G \to \mathbb{C}$. The shape of this identity makes sense for an arbitrary subset $S \subseteq G$, since the annihilator $S^{\perp}$ is defined for any $S$; we call $S$ a *Poisson set* when the corresponding identity $(P_S)$ holds for all $f$. We prove the complete converse: $S$ is a Poisson set if and only if $S = \emptyset$ or $S$ is a subgroup, the empty set being a genuine and unique exceptional solution.
 
-We prove the converses of both, and show that the two resulting rigidity theorems describe one and the same object. First, if a nonempty finite set $S \subseteq G$ and a finite set $T \subseteq \widehat G$ satisfy the Poisson identity for *all* test functions, then $S$ is a subgroup and $T$ is exactly its annihilator; moreover the identity need only be verified on the $N$ Dirac functions, so the structure theorem is forced by finitely many scalar equations. Second, a nonzero $f : G \to \mathbb{C}$ satisfies $|\operatorname{supp} f| \cdot |\operatorname{supp} \hat f| = N$ if and only if $f = c\,\chi\,\mathbf 1_{a+K}$ for a subgroup $K \le G$, a character $\chi$, a coset representative $a$, and a nonzero scalar $c$. The subgroup $K$ is unique and equals the difference set $\operatorname{supp} f - \operatorname{supp} f$.
+We establish four strengthenings. First, *one-test-function rigidity*: if $(P_S)$ holds for the single Dirac delta at one point of $S$, then $S$ is already a subgroup. Second, an *exact defect formula*, expressing the failure of $(P_S)$ at $f$ as the discrepancy between the average of $f$ over $S$ and over the generated subgroup $\langle S \rangle$; the driving structural fact is that $S^{\perp} = \langle S \rangle^{\perp}$, so that $|\langle S \rangle| \cdot |S^{\perp}| = |G|$ for every set $S$. Third, a *gap theorem*: a nonempty non-subgroup admits a Dirac delta with defect of modulus at least $|\langle S \rangle| - |S| \geq 1$, so no approximate theory of Poisson sets exists. Fourth, *constant rigidity*: if any complex constant $c$ makes $|G| \sum_{x \in S} f = c \sum_{\psi \in S^\perp} \hat f$ valid for all $f$ with $S \neq \emptyset$, then $S$ is a subgroup and $c = |S|$.
 
-From the classification we derive an arithmetic theory of the extremal class. The support sizes of extremal functions divide $N$ and are complementary divisors (Lagrange rigidity); consequently the uncertainty inequality is strict, with an explicit gap $N + (s - N \bmod s)$, whenever $s = |\operatorname{supp} f|$ fails to divide $N$. Using the converse of Lagrange's theorem for finite abelian groups (proved here by induction from Cauchy's theorem), we show that the *extremal spectrum* of $G$ — the set of achievable support sizes — is exactly the divisor set of $N$, and that the achievable pairs $(|\operatorname{supp} f|, |\operatorname{supp} \hat f|)$ are exactly the factorisations $st = N$. This yields a detection of primality by the extremal class, a reconstruction statement (equal spectra imply equal orders), and a sharp limitation (equal orders imply equal spectra, so the spectrum sees only the order). The finer invariant given by the family of extremal *supports* does separate the two groups of order four.
+Consequences include: an affine version characterising cosets via a phase-twisted identity; the identification of Poisson sets with extremals of the Donoho–Stark uncertainty principle; a canonical order isomorphism between the family of nonempty Poisson sets and the subgroup lattice of $G$; the count of exact Poisson formulas on $\mathbb{Z}/n\mathbb{Z}$ as $d(n)$, the number of divisors of $n$; and the observation that the Poisson spectrum separates $\mathbb{Z}/4\mathbb{Z}$ from the Klein four-group, hence is an isomorphism invariant not determined by $|G|$. As an application we show the quadratic residues modulo $n$ are Poisson sets only for $n \in \{1, 2\}$, and that the squares modulo $8$ fail with a defect of modulus at least $5$.
 
-We further show that the extremal class is closed under pointwise multiplication, convolution, convolution powers, and the Fourier transform itself, making it a rigid algebraic object rather than a merely analytic extremum set. Finally we specialise to probability: an extremal probability distribution on a finite abelian group is precisely a uniform distribution on a coset.
-
-**Keywords:** uncertainty principle, Donoho–Stark, Poisson summation, finite abelian group, Pontryagin duality, coset modulation, extremal problem, discrete Fourier transform, uniform distribution.
+**Keywords:** Poisson summation, finite abelian groups, character annihilator, subgroup lattice, uncertainty principle, rigidity, quadratic residues.
 
 ---
 
 ## 1. Introduction
 
-### 1.1 Two "if" theorems and two missing converses
+### 1.1 Background
 
-Harmonic analysis on a finite abelian group $G$ of order $N$ is governed by the interaction between two lattices: the subgroup lattice of $G$ and the subgroup lattice of the dual group $\widehat G$, matched by the annihilator correspondence $H \mapsto H^{\perp}$. Two facts sit at the centre of that interaction.
+The Poisson summation formula occupies an unusual position in analysis: it is simultaneously a computational device, a structural statement about duality, and a bridge between arithmetic and harmonic analysis. In its classical form, for suitable $f : \mathbb{R}^n \to \mathbb{C}$ and a lattice $\Lambda \subseteq \mathbb{R}^n$ with dual lattice $\Lambda^{*}$,
+$$\sum_{\lambda \in \Lambda} f(\lambda) \;=\; \frac{1}{\operatorname{covol}(\Lambda)} \sum_{\mu \in \Lambda^{*}} \hat{f}(\mu).$$
+It underwrites the sampling theorem, the functional equation of the Jacobi theta function, Ewald summation in computational chemistry, and lattice-point counting in geometry of numbers.
 
-**Fact A (extremality of subgroup indicators).** For $H \le G$, the transform of $\mathbf 1_H$ is $|H| \cdot \mathbf 1_{H^{\perp}}$, and $|H| \cdot |H^{\perp}| = N$. Hence $\mathbf 1_H$ attains equality in the Donoho–Stark uncertainty principle. Since the three basic symmetries of function space — scaling by a nonzero constant, translation, and modulation by a character — permute the two supports without changing their sizes, the whole orbit
-$$f(x) = c\,\chi(x)\,\mathbf 1_{a+K}(x), \qquad c \ne 0,\ \chi \in \widehat G,\ a \in G,\ K \le G$$
-consists of extremal functions. We call these **coset modulations**.
+The formula is habitually presented as a *tool*: one is handed a lattice and told what the identity yields. But the identity's statement makes formal sense in far greater generality than its proof requires. In the finite abelian setting — the setting in which every technical difficulty of convergence and decay disappears and only the algebra remains — one may write the identity down for an arbitrary subset. The question of which subsets satisfy it is then well-posed, elementary to state, and, as far as we are aware, not previously settled in the literature.
 
-**Fact B (Poisson summation).** For $H \le G$ and every $f : G \to \mathbb{C}$,
-$$N \sum_{x \in H} f(x) = |H| \sum_{\psi \in H^{\perp}} \hat f(\psi).$$
+This paper settles it, and in the strongest form we could formulate.
 
-Both are "if" statements: a subgroup produces a phenomenon. The question addressed here is whether the phenomenon produces a subgroup. We answer yes in both cases, and we prove that the answers coincide.
+### 1.2 Setting and notation
 
-### 1.2 Statement of the main results
+Throughout, $G$ is a finite abelian group, written additively, with $|G| = \operatorname{card}(G)$.
 
-Throughout, $\operatorname{supp} f = \{x \in G : f(x) \ne 0\}$.
+**Characters.** A *character* of $G$ is a homomorphism $\psi : G \to \mathbb{C}^{\times}$; since $G$ is finite, every character takes values in the roots of unity, so $|\psi(x)| = 1$ and $\overline{\psi(x)} = \psi(-x) = \psi(x)^{-1}$. The characters form a group $\widehat{G}$ under pointwise multiplication, and $|\widehat{G}| = |G|$.
 
-**Theorem 1 (Rigidity of Poisson summation).** Let $S \subseteq G$ be nonempty and $T \subseteq \widehat G$, and suppose
-$$N \sum_{x \in S} f(x) = |S| \sum_{\psi \in T} \hat f(\psi) \quad \text{for all } f : G \to \mathbb{C}.$$
-Then $S$ is a subgroup of $G$ and $T = S^{\perp}$. In particular $0 \in S$ and $|S| \cdot |T| = N$.
+**Fourier transform.** For $f : G \to \mathbb{C}$,
+$$\hat{f}(\psi) \;=\; \sum_{x \in G} \overline{\psi(x)}\, f(x), \qquad \psi \in \widehat{G}.$$
+We write $\delta_y$ for the Dirac delta at $y$, so $\delta_y(x) = 1$ if $x = y$ and $0$ otherwise; then $\hat{\delta_y}(\psi) = \overline{\psi(y)}$.
 
-**Theorem 2 (Classification of the Donoho–Stark extremals).** Let $f : G \to \mathbb{C}$ be nonzero. Then $|\operatorname{supp} f| \cdot |\operatorname{supp}\hat f| = N$ if and only if $f$ is a coset modulation.
+**Annihilators.** For an arbitrary subset $S \subseteq G$,
+$$S^{\perp} \;=\; \{\psi \in \widehat{G} : \psi(x) = 1 \text{ for all } x \in S\}.$$
+This is always a subgroup of $\widehat{G}$, regardless of whether $S$ is.
 
-**Theorem 3 (Extremal spectrum).** For $d \in \mathbb{N}$, there is a nonzero extremal $f$ on $G$ with $|\operatorname{supp} f| = d$ if and only if $d \mid N$. More precisely, a pair $(s,t)$ occurs as $(|\operatorname{supp} f|, |\operatorname{supp}\hat f|)$ for an extremal $f$ if and only if $st = N$.
+**Generated subgroup.** $\langle S \rangle$ denotes the smallest subgroup of $G$ containing $S$; equivalently the set of all finite sums $\sum_i \varepsilon_i s_i$ with $s_i \in S$, $\varepsilon_i \in \{\pm 1\}$, together with $0$.
 
-**Theorem 4 (Extremal probability distributions).** Let $p$ be a probability distribution on $G$ attaining equality in the uncertainty principle. Then there are $a \in G$ and $K \le G$ with $p = \frac{1}{|K|}\mathbf 1_{a + K}$.
+**Support.** $\operatorname{supp}(f) = \{x : f(x) \neq 0\}$, and $\mathbf{1}_S$ is the indicator of $S$.
 
-Sections 4–8 develop the arithmetic and algebraic consequences: Lagrange rigidity and the uncertainty gap, primality detection, reconstruction of the order, closure under products, convolutions and duality, and the identification of Poisson pairs with extremal support pairs.
+### 1.3 The classical direction
 
-### 1.3 Context
+We take as our starting point the following, which is the "if" half of the story and is classical.
 
-The inequality $|\operatorname{supp} f| \cdot |\operatorname{supp}\hat f| \ge N$ is the discrete uncertainty principle of Donoho and Stark, the combinatorial backbone of sparse recovery: a nonzero signal cannot be simultaneously sparse in the space and frequency domains, and quantitative versions of this statement underwrite the uniqueness guarantees of compressed sensing. Understanding the equality case is understanding the worst case for such guarantees. The results below convert the analytic extremal problem into an arithmetic one: the extremal set sizes are exactly the divisors of $N$, so the abundance of "bad" signals is governed by the factorisation of the group order.
+> **Theorem 1.1 (Poisson summation for subgroups).** Let $H \leq G$ be a subgroup. Then for every $f : G \to \mathbb{C}$,
+> $$|G| \sum_{x \in H} f(x) \;=\; |H| \sum_{\psi \in H^{\perp}} \hat{f}(\psi).$$
+
+*Proof sketch.* Expand the right-hand side and interchange summation:
+$$|H| \sum_{\psi \in H^{\perp}} \hat{f}(\psi) = |H| \sum_{y \in G} f(y) \sum_{\psi \in H^{\perp}} \overline{\psi(y)} .$$
+The inner sum is a character sum over the subgroup $H^{\perp} \leq \widehat{G}$ evaluated at $y$; by orthogonality it equals $|H^{\perp}|$ when $y$ is annihilated by every element of $H^\perp$ — that is, when $y \in H$, by the double-annihilator theorem — and $0$ otherwise. Since $|H| \cdot |H^{\perp}| = |G|$, the right-hand side becomes $|G| \sum_{y \in H} f(y)$. $\square$
+
+We also record the accompanying size identity, which will be generalised in §3:
+$$|H| \cdot |H^{\perp}| = |G| \qquad \text{for every subgroup } H \leq G. \tag{1.1}$$
+
+### 1.4 The question, and the answer
+
+> **Definition 1.2 (Poisson set).** A subset $S \subseteq G$ is a **Poisson set** if
+> $$|G| \sum_{x \in S} f(x) \;=\; |S| \sum_{\psi \in S^{\perp}} \hat{f}(\psi) \qquad \text{for all } f : G \to \mathbb{C}. \tag{$P_S$}$$
+
+Theorem 1.1 says subgroups are Poisson sets. The empty set is trivially a Poisson set: both sides are $0$, the left because the sum is empty and the right because $|S| = 0$. The content of this paper is that these are all.
+
+> **Theorem A (Classification).** A subset $S \subseteq G$ is a Poisson set if and only if $S = \emptyset$ or $S$ is a subgroup of $G$.
+
+> **Theorem B (One-test-function rigidity).** Let $S \subseteq G$ and let $y_0 \in S$. If $(P_S)$ holds for the single function $f = \delta_{y_0}$, then $S = \langle S \rangle$; in particular $S$ is a subgroup.
+
+> **Theorem C (Exact defect formula).** For $S \subseteq G$ and $f : G \to \mathbb{C}$ define the *Poisson defect*
+> $$D_S(f) \;=\; |G| \sum_{x \in S} f(x) \;-\; |S| \sum_{\psi \in S^{\perp}} \hat{f}(\psi).$$
+> Then
+> $$|\langle S \rangle| \cdot D_S(f) \;=\; |G| \left( |\langle S \rangle| \sum_{x \in S} f(x) \;-\; |S| \sum_{x \in \langle S \rangle} f(x) \right).$$
+
+> **Theorem D (Gap theorem).** If $S$ is nonempty and $S \neq \langle S \rangle$, then there exists $y_0 \in S$ with
+> $$\big| D_S(\delta_{y_0}) \big| \;\geq\; |\langle S \rangle| - |S| \;\geq\; 1 .$$
+
+Theorem D is the precise sense in which no approximate theory exists: the defect functional does not take small nonzero values on Dirac data. Theorem B is the sense in which the identity is rigid on contact: the weakest possible test function already forces the full structural conclusion.
+
+### 1.5 Organisation
+
+Section 2 develops the annihilator of an arbitrary set and proves the key blindness lemma $S^{\perp} = \langle S \rangle^{\perp}$. Section 3 derives the fundamental character sum and the general size identity. Section 4 proves Theorems B, A and C, and gives the combinatorial reformulation. Section 5 proves Theorem D and constant rigidity. Section 6 develops the affine (coset) theory. Section 7 links Poisson sets to uncertainty extremality. Section 8 identifies the Poisson spectrum with the subgroup lattice and counts it. Section 9 applies the results to quadratic residues. Section 10 discusses algorithms, and Section 11 open problems.
 
 ---
 
-## 2. Setting and conventions
+## 2. Annihilators of arbitrary sets
 
-Let $G$ be a finite abelian group, written additively, with $N := |G| \ge 1$, and let $\widehat G := \operatorname{Hom}(G, \mathbb{C}^{\times})$ be its group of characters, written additively as well: $(\psi + \chi)(x) = \psi(x)\chi(x)$ and $(\psi - \chi)(x) = \psi(x)/\chi(x)$. Every character takes values in the unit circle, $|\psi(x)| = 1$, and $\widehat G \cong G$ with $|\widehat G| = N$.
+The whole argument rests on one asymmetry: the left-hand side of $(P_S)$ sees $S$ exactly, while the right-hand side sees only $S^{\perp}$ — and $S^{\perp}$ cannot distinguish $S$ from the subgroup it generates.
 
-**Definition 2.1 (Discrete Fourier transform).** For $f : G \to \mathbb{C}$,
-$$\hat f(\psi) := \sum_{x \in G} \overline{\psi(x)}\, f(x), \qquad \psi \in \widehat G.$$
+> **Lemma 2.1 (Blindness of the annihilator).** For every subset $S \subseteq G$,
+> $$S^{\perp} \;=\; \langle S \rangle^{\perp}.$$
 
-We use freely the following standard facts.
+*Proof.* The inclusion $\langle S \rangle^{\perp} \subseteq S^{\perp}$ is immediate from $S \subseteq \langle S \rangle$. For the converse, fix $\psi \in S^{\perp}$ and consider the set $K = \{y \in G : \psi(y) = 1\} = \ker \psi$. Since $\psi$ is a homomorphism, $K$ is a subgroup: $\psi(0) = 1$; if $\psi(a) = \psi(b) = 1$ then $\psi(a + b) = \psi(a)\psi(b) = 1$; and $\psi(-a) = \psi(a)^{-1} = 1$. By hypothesis $S \subseteq K$, and $\langle S \rangle$ is the smallest subgroup containing $S$, so $\langle S \rangle \subseteq K$, i.e. $\psi \in \langle S \rangle^{\perp}$. $\square$
 
-* **Character orthogonality over a subgroup.** For $H \le G$ and $\psi \in \widehat G$,
-  $$\sum_{x \in H}\psi(x) = \begin{cases}|H| & \psi \in H^{\perp},\\ 0 & \text{otherwise,}\end{cases}$$
-  where $H^{\perp} := \{\psi \in \widehat G : \psi|_H \equiv 1\}$ is the **annihilator**. *Proof:* translation by an $x_0 \in H$ with $\psi(x_0) \ne 1$ permutes $H$, whence $(\psi(x_0) - 1)\sum_{x\in H}\psi(x) = 0$.
-* **Inversion.** $f(x) = \frac{1}{N}\sum_{\psi \in \widehat G} \psi(x)\hat f(\psi)$.
-* **Plancherel.** $\sum_{\psi} |\hat f(\psi)|^2 = N \sum_{x}|f(x)|^2$.
-* **Convolution.** With $(u * v)(x) := \sum_{y} u(y)v(x-y)$ one has $\widehat{u * v} = \hat u \cdot \hat v$.
-* **Dirac functions.** $\delta_y(x) := [x = y]$ has $\widehat{\delta_y}(\psi) = \overline{\psi(y)}$.
-* **Donoho–Stark.** For $f \ne 0$, $|\operatorname{supp} f| \cdot |\operatorname{supp}\hat f| \ge N$.
+The proof is three lines, but it is the entire mechanism. Everything downstream is bookkeeping around it.
 
-**Definition 2.2 (Symmetries).** The *translate* is $(T_a f)(x) := f(x - a)$ and the *modulate* is $(M_\chi f)(x) := \chi(x)f(x)$.
+> **Corollary 2.2.** For every subset $S \subseteq G$,
+> $$|\langle S \rangle| \cdot |S^{\perp}| \;=\; |G|.$$
 
-**Lemma 2.3.** $\widehat{T_a f}(\psi) = \overline{\psi(a)}\,\hat f(\psi)$ and $\widehat{M_\chi f}(\psi) = \hat f(\psi - \chi)$.
+*Proof.* Combine Lemma 2.1 with the subgroup identity (1.1) applied to $H = \langle S \rangle$. $\square$
 
-*Proof.* Reindex the defining sum by $x \mapsto x + a$ in the first case, and use $\overline{(\psi-\chi)(x)} = \overline{\psi(x)}\chi(x)$ in the second. $\square$
-
-**Corollary 2.4.** Translation preserves $|\operatorname{supp} f|$ and $|\operatorname{supp}\hat f|$; modulation does likewise; scaling by $c \ne 0$ preserves both. Hence the extremal set is invariant under the three symmetries.
-
-**Definition 2.5 (Extremality).** $f : G \to \mathbb{C}$ is **extremal** if $|\operatorname{supp} f| \cdot |\operatorname{supp}\hat f| = N$.
+Corollary 2.2 already explains why $(P_S)$ is so constrained. The right-hand side of $(P_S)$ is, structurally, a formula "about" $\langle S \rangle$; the coefficient $|S|$ in front of it is the only place where $S$ itself enters. If $S$ is a proper subset of $\langle S \rangle$, the coefficient is wrong and there is nothing to compensate.
 
 ---
 
-## 3. The two rigidity theorems
+## 3. The fundamental character sum
 
-### 3.1 Equality in the triangle inequality
+> **Proposition 3.1.** For every subset $S \subseteq G$ and every $y \in G$,
+> $$|\langle S \rangle| \sum_{\psi \in S^{\perp}} \overline{\psi(y)} \;=\; \begin{cases} |G| & \text{if } y \in \langle S \rangle,\\[2pt] 0 & \text{otherwise.}\end{cases}$$
 
-Both proofs run on the same engine.
+*Proof.* Apply Theorem 1.1 to the subgroup $H = \langle S \rangle$ and the test function $f = \delta_y$. The left-hand side is $|G| \sum_{x \in \langle S \rangle} \delta_y(x) = |G| \cdot \mathbf{1}[y \in \langle S \rangle]$. The right-hand side is $|\langle S \rangle| \sum_{\psi \in \langle S\rangle^{\perp}} \hat{\delta_y}(\psi) = |\langle S \rangle| \sum_{\psi \in \langle S \rangle^{\perp}} \overline{\psi(y)}$. Rewriting $\langle S \rangle^{\perp} = S^{\perp}$ by Lemma 2.1 and equating gives the claim. $\square$
 
-**Lemma 3.1.** Let $s$ be a finite index set and $z_i \in \mathbb{C}$ with $|z_i| = 1$ for all $i \in s$. If $\sum_{i \in s} z_i = |s|$, then $z_i = 1$ for all $i$.
-
-*Proof.* Taking real parts, $\sum_i \operatorname{Re} z_i = |s|$, while $\operatorname{Re} z_i \le |z_i| = 1$ termwise; a sum of terms bounded by $1$ reaching $|s|$ forces every term to equal $1$. Then $\operatorname{Re} z_i = 1$ and $|z_i| = 1$ give $\operatorname{Im} z_i = 0$, so $z_i = 1$. $\square$
-
-**Lemma 3.2 (Constant-modulus form).** Let $z_i$, $i \in s$, be complex numbers with $|z_i| = M > 0$ for all $i$, and suppose $\bigl|\sum_{i\in s} z_i\bigr| = |s| \cdot M$. Then all $z_i$ are equal.
-
-*Proof.* Set $\Sigma := \sum_i z_i$; by hypothesis $\Sigma \ne 0$. The numbers $w_i := \overline{\Sigma}z_i/(|\Sigma| M)$ have modulus $1$ and satisfy $\sum_i w_i = \overline\Sigma \Sigma /(|\Sigma| M) = |\Sigma|/M = |s|$. By Lemma 3.1 all $w_i = 1$, hence $\overline\Sigma z_i = |\Sigma| M$ is independent of $i$; cancelling $\overline \Sigma \ne 0$ gives $z_i = z_j$. $\square$
-
-### 3.2 Rigidity of Poisson summation
-
-**Definition 3.3 (Poisson pair).** A pair $(S,T)$ with $S \subseteq G$, $T \subseteq \widehat G$ is a **Poisson pair** if
-$$N \sum_{x \in S} f(x) = |S| \sum_{\psi \in T} \hat f(\psi) \qquad \text{for every } f : G \to \mathbb{C}.$$
-
-**Lemma 3.4 (Dirac test).** If $(S,T)$ is a Poisson pair, then for every $y \in G$,
-$$N \cdot \mathbf 1_S(y) = |S| \sum_{\psi \in T}\psi(y).$$
-
-*Proof.* Apply the definition to $f = \delta_y$: the left side becomes $N \mathbf 1_S(y)$ and the right side $|S|\sum_{\psi\in T}\overline{\psi(y)}$; conjugating the resulting scalar identity (its left side is real) gives the claim. $\square$
-
-**Lemma 3.5.** If $(S,T)$ is a Poisson pair with $S \ne \emptyset$, then $0 \in S$ and $|S| \cdot |T| = N$.
-
-*Proof.* Take $y = 0$ in Lemma 3.4: $\sum_{\psi \in T}\psi(0) = |T|$, so $N \mathbf 1_S(0) = |S| \, |T|$. If $0 \notin S$ then $|S| \, |T| = 0$, so $T = \emptyset$; but then Lemma 3.4 gives $N\mathbf 1_S(y) = 0$ for all $y$, contradicting $S \ne \emptyset$. Hence $0 \in S$ and $|S| \, |T| = N$. $\square$
-
-**Definition 3.6.** For $T \subseteq \widehat G$ put ${}^{\perp}T := \{y \in G : \psi(y) = 1 \ \forall \psi \in T\}$, the **pre-annihilator**. It is a subgroup of $G$, being the intersection of the kernels of the $\psi \in T$.
-
-**Theorem 3.7 (Theorem 1; rigidity of Poisson summation).** Let $(S,T)$ be a Poisson pair with $S$ nonempty. Then $S = {}^{\perp}T$ is a subgroup of $G$ and $T = S^{\perp}$.
-
-*Proof.* By Lemma 3.5, $N = |S| \, |T|$, so Lemma 3.4 reads
-$$\sum_{\psi \in T}\psi(y) = |T| \cdot \mathbf 1_S(y), \qquad y \in G. \tag{$\ast$}$$
-If $y \in S$, the left side of $(\ast)$ is a sum of $|T|$ unit-modulus numbers equal to $|T|$; by Lemma 3.1 every $\psi \in T$ has $\psi(y) = 1$, i.e. $y \in {}^{\perp}T$. Conversely if $y \in {}^{\perp}T$, the left side of $(\ast)$ equals $|T| > 0$, so $\mathbf 1_S(y) = 1$, i.e. $y \in S$. Hence $S = {}^{\perp}T$, a subgroup. Now each $\psi \in T$ is trivial on $S$, so $T \subseteq S^{\perp}$; and $|S^{\perp}| = N/|S| = |T|$ by the annihilator count (Proposition 3.9 below), so $T = S^{\perp}$. $\square$
-
-**Corollary 3.8 (Poisson summation is a finite test).** If the Poisson identity for $(S,T)$ holds for the $N$ Dirac functions $\delta_y$, $y \in G$, then it holds for every $f$, and hence the conclusion of Theorem 3.7 applies. *Proof:* both sides of the identity are $\mathbb{C}$-linear in $f$, and the $\delta_y$ span $\mathbb{C}^G$. $\square$
-
-Thus the entire structure theorem is forced by $N$ scalar equations — a genuinely finite certificate.
-
-**Proposition 3.9 (Annihilator count).** For $H \le G$, $\widehat{\mathbf 1_H} = |H| \cdot \mathbf 1_{H^{\perp}}$ and $|H| \cdot |H^{\perp}| = N$.
-
-*Proof.* The first assertion is character orthogonality applied to $-\psi$ (note $\overline{\psi(x)} = (-\psi)(x)$, and $-\psi \in H^\perp \iff \psi \in H^{\perp}$). For the second, Plancherel applied to $\mathbf 1_H$ gives $|H^{\perp}| \cdot |H|^2 = N|H|$, and $|H| > 0$. $\square$
-
-Note that this derives the index formula $|H^\perp| = [G:H]$ from Plancherel rather than from Pontryagin duality of the quotient — a self-contained route.
-
-### 3.3 The equality analysis behind the uncertainty principle
-
-**Theorem 3.10 (Flatness and alignment).** Let $f \ne 0$ be extremal. Then there is $M > 0$ with
-
-1. *(flatness)* $|f(x)| = M$ for all $x \in \operatorname{supp} f$; and
-2. *(alignment)* for every $\psi \in \operatorname{supp}\hat f$, the quantity $\overline{\psi(x)} f(x)$ is the same for all $x \in \operatorname{supp} f$.
-
-*Proof.* Let $M := \max_x |f(x)|$, attained at $m$, and $\Sigma := \sum_{x \in \operatorname{supp} f}|f(x)|$. Three bounds:
-
-* $(\mathrm i)$ $\Sigma \le |\operatorname{supp} f| \cdot M$;
-* $(\mathrm{ii})$ $|\hat f(\psi)| = \bigl|\sum_{x \in \operatorname{supp} f}\overline{\psi(x)}f(x)\bigr| \le \Sigma$ for every $\psi$, since $|\psi(x)|=1$;
-* $(\mathrm{iii})$ inversion at $m$, restricted to $\operatorname{supp}\hat f$, gives
-  $N M = \bigl|\sum_{\psi \in \operatorname{supp}\hat f}\psi(m)\hat f(\psi)\bigr| \le \sum_{\psi\in\operatorname{supp}\hat f}|\hat f(\psi)|$.
-
-Combining, $N M \le \sum_{\psi \in \operatorname{supp}\hat f} |\hat f(\psi)| \le |\operatorname{supp}\hat f| \cdot \Sigma \le |\operatorname{supp}\hat f|\cdot|\operatorname{supp} f| \cdot M = NM$ by extremality. Hence all inequalities are equalities. Equality in $(\mathrm i)$ forces $|f(x)| = M$ on $\operatorname{supp} f$, which is (1). Equality in the middle forces $|\hat f(\psi)| = \Sigma = |\operatorname{supp} f| \cdot M$ for every $\psi \in \operatorname{supp}\hat f$; for such $\psi$ the sum $\sum_{x \in \operatorname{supp} f}\overline{\psi(x)}f(x)$ consists of $|\operatorname{supp} f|$ terms of modulus $M$ and has modulus $|\operatorname{supp} f| \cdot M$, so Lemma 3.2 makes all terms equal, which is (2). $\square$
-
-### 3.4 The structure theorem
-
-**Definition 3.11.** For $\psi, \chi \in \widehat G$, the *equalizer* $E(\psi,\chi) := \{g \in G : \psi(g) = \chi(g)\}$ is a subgroup of $G$.
-
-**Theorem 3.12 (Theorem 2; classification of extremals).** Let $f : G \to \mathbb{C}$ be nonzero. Then $f$ is extremal if and only if there are $K \le G$, $\chi \in \widehat G$, $a \in G$ and $c \ne 0$ with
-$$f(x) = \begin{cases} c\,\chi(x), & x - a \in K,\\ 0, & x - a \notin K.\end{cases}$$
-
-*Proof.* ($\Leftarrow$) Such an $f$ equals $c\,M_\chi T_a \mathbf 1_K$; by Proposition 3.9, $\mathbf 1_K$ is extremal, and by Corollary 2.4 extremality survives the three symmetries.
-
-($\Rightarrow$) Let $M$, flatness and alignment be as in Theorem 3.10. Pick $a \in \operatorname{supp} f$ and $\psi_0 \in \operatorname{supp}\hat f$ (both supports are nonempty: $f \ne 0$, and $\hat f \ne 0$ since the transform is injective).
-
-*Step 1 (values are prescribed by any surviving frequency).* Fix $\psi \in \operatorname{supp}\hat f$ and $x \in \operatorname{supp} f$. Alignment gives $\overline{\psi(x)}f(x) = \overline{\psi(a)}f(a)$. Multiplying by $\psi(x)$ and using $\psi(x)\overline{\psi(x)} = 1$, $\overline{\psi(a)} = \psi(a)^{-1}$ and $\psi(x)\psi(a)^{-1} = \psi(x-a)$, we get
-$$f(x) = \psi(x-a)\,f(a). \tag{3.1}$$
-
-*Step 2 (all surviving frequencies agree on a subgroup).* Let
-$$K := \langle \, x - a \ : \ x \in \operatorname{supp} f \, \rangle \le G .$$
-For $\psi \in \operatorname{supp}\hat f$ and $x \in \operatorname{supp} f$, comparing (3.1) for $\psi$ and for $\psi_0$ and cancelling $f(a) \ne 0$ gives $\psi(x-a) = \psi_0(x-a)$. Thus the generators of $K$ lie in the subgroup $E(\psi,\psi_0)$, so $K \le E(\psi,\psi_0)$: every $\psi \in \operatorname{supp}\hat f$ agrees with $\psi_0$ on all of $K$.
-
-*Step 3 (two inclusions).* By construction $\operatorname{supp} f \subseteq a + K$, so $|\operatorname{supp} f| \le |K|$. By Step 2, the map $\psi \mapsto \psi - \psi_0$ sends $\operatorname{supp}\hat f$ injectively into $K^{\perp}$, so $|\operatorname{supp}\hat f| \le |K^{\perp}|$.
-
-*Step 4 (the squeeze).* Multiplying the two inequalities and using extremality and Proposition 3.9,
-$$N = |\operatorname{supp} f| \cdot |\operatorname{supp}\hat f| \le |K| \cdot |K^{\perp}| = N,$$
-so both inequalities are equalities. In particular $|\operatorname{supp} f| = |K|$, and combined with $\operatorname{supp} f \subseteq a+K$ this gives $\operatorname{supp} f = a + K$ exactly.
-
-*Step 5 (reading off).* Put $c := f(a)\,\overline{\psi_0(a)} \ne 0$ and $\chi := \psi_0$. For $x - a \in K$, (3.1) with $\psi_0$ gives $f(x) = \psi_0(x-a)f(a) = \psi_0(x)\psi_0(a)^{-1}f(a) = c\,\chi(x)$; for $x - a \notin K$, $x \notin \operatorname{supp} f$, so $f(x) = 0$. $\square$
-
-**Corollary 3.13.** The support of an extremal function is a coset of a subgroup; the frequency support is a coset of the annihilator of that subgroup. Consequently $\operatorname{supp} f$ is closed under the *parallelogram operation* $(x,y,z)\mapsto x - y + z$.
-
-**Corollary 3.14 (Prime order rigidity).** If $|G| = p$ is prime and $f \ne 0$ is extremal, then either $f = c\,\delta_a$ for some $a \in G$, $c \ne 0$, or $f = c\,\chi$ for some character $\chi$ and $c \ne 0$.
-
-*Proof.* A group of prime order has only the trivial subgroups; take $K = \{0\}$ and $K = G$ in Theorem 3.12. $\square$
+Proposition 3.1 is the analytic content of the entire paper compressed into a single displayed formula: the annihilator character sum is a *sharp indicator* of membership in $\langle S \rangle$, with no reference to $S$ beyond the subgroup it generates.
 
 ---
 
-## 4. Uniqueness and the combinatorial description of $K$
+## 4. The converse
 
-**Proposition 4.1 (Uniqueness of the subgroup).** Suppose a nonempty $S \subseteq G$ satisfies $S = a_1 + K_1 = a_2 + K_2$ for subgroups $K_1, K_2$ and elements $a_1, a_2$. Then $K_1 = K_2$ and $a_1 - a_2 \in K_1$.
+### 4.1 One test function suffices
 
-*Proof.* Both descriptions give $S - S = K_1 = K_2$ (see Proposition 4.2), and $a_1 \in S = a_2 + K_2$. $\square$
+> **Theorem B (restated).** Let $S \subseteq G$, $y_0 \in S$, and suppose
+> $$|G| \sum_{x \in S} \delta_{y_0}(x) \;=\; |S| \sum_{\psi \in S^{\perp}} \hat{\delta_{y_0}}(\psi).$$
+> Then $S = \langle S \rangle$.
 
-**Proposition 4.2 (The subgroup is the difference set).** If $S = a + K$ for a subgroup $K$, then $K = S - S := \{x - y : x, y \in S\}$.
+*Proof.* Since $y_0 \in S$, the left-hand side equals $|G| \cdot 1 = |G|$. Since $y_0 \in S \subseteq \langle S \rangle$, Proposition 3.1 gives
+$$|\langle S \rangle| \sum_{\psi \in S^{\perp}} \overline{\psi(y_0)} = |G|.$$
+Multiply the hypothesis through by $|\langle S \rangle|$ and substitute, using $\hat{\delta_{y_0}}(\psi) = \overline{\psi(y_0)}$:
+$$|\langle S \rangle| \cdot |G| \;=\; |S| \cdot \Big( |\langle S \rangle| \sum_{\psi \in S^{\perp}} \overline{\psi(y_0)} \Big) \;=\; |S| \cdot |G| .$$
+As $|G| \neq 0$, we get $|\langle S \rangle| = |S|$. Since $S \subseteq \langle S \rangle$ and the two finite sets have equal cardinality, $S = \langle S \rangle$. $\square$
 
-*Proof.* $(a+k) - (a+k') = k - k' \in K$, so $S - S \subseteq K$; conversely $k = (a+k) - a \in S - S$. $\square$
+Note what the proof does *not* use: no orthogonality beyond Theorem 1.1, no structure theorem, no Pontryagin duality beyond what is already packaged in Theorem 1.1, and no properties of $S$ other than nonemptiness.
 
-**Corollary 4.3.** For an extremal $f \ne 0$, the subgroup appearing in Theorem 3.12 is uniquely determined and equals $\operatorname{supp} f - \operatorname{supp} f$ — a purely combinatorial description of an object introduced analytically.
+### 4.2 Classification
 
-This is a useful sanity check in practice: to test extremality of a candidate one may compute the difference set of its support and verify that it has the same cardinality as the support (Section 9).
+> **Theorem 4.1.** For nonempty $S \subseteq G$, the following are equivalent:
+> 1. $S$ is a Poisson set;
+> 2. $(P_S)$ holds for $f = \delta_{y_0}$ for some $y_0 \in S$;
+> 3. $S$ is a subgroup of $G$;
+> 4. $0 \in S$ and $x - y \in S$ whenever $x, y \in S$.
 
----
+*Proof.* (1) $\Rightarrow$ (2) is trivial (pick any $y_0 \in S$, which exists by nonemptiness). (2) $\Rightarrow$ (3) is Theorem B, since $\langle S \rangle$ is a subgroup. (3) $\Rightarrow$ (1) is Theorem 1.1. (3) $\Leftrightarrow$ (4) is the standard subgroup criterion for a nonempty subset of an abelian group: closure under subtraction together with $0 \in S$ gives $-y = 0 - y \in S$ and hence $x + y = x - (-y) \in S$. $\square$
 
-## 5. Arithmetic of the extremal class
+> **Theorem A (restated and proved).** $S \subseteq G$ is a Poisson set iff $S = \emptyset$ or $S$ is a subgroup.
 
-### 5.1 Lagrange rigidity and the uncertainty gap
+*Proof.* If $S = \emptyset$, both sides of $(P_S)$ vanish, since $\sum_{x \in \emptyset} f(x) = 0$ and $|S| = 0$; hence $\emptyset$ is a Poisson set. If $S \neq \emptyset$, apply Theorem 4.1. Conversely subgroups are Poisson sets by Theorem 1.1. $\square$
 
-**Theorem 5.1 (Lagrange rigidity).** Let $f \ne 0$ be extremal. Then $|\operatorname{supp} f|$ divides $N$, $|\operatorname{supp} \hat f|$ divides $N$, and
-$$|\operatorname{supp}\hat f| = \frac{N}{|\operatorname{supp} f|}.$$
+The empty set genuinely is an exception rather than a degenerate case of "subgroup", because every subgroup contains $0$. So the nonemptiness hypothesis in Theorem 4.1 is sharp and cannot be dropped.
 
-*Proof.* By Theorem 3.12 and Corollary 4.3, $\operatorname{supp} f$ is a coset of a subgroup $K$, hence $|\operatorname{supp} f| = |K|$ divides $N$ by Lagrange's theorem. The rest is extremality. $\square$
+Equivalence (1) $\Leftrightarrow$ (4) deserves emphasis on its own:
 
-**Theorem 5.2 (Uncertainty gap).** Let $f \ne 0$ and set $s := |\operatorname{supp} f|$. If $s \nmid N$, then
-$$|\operatorname{supp} f| \cdot |\operatorname{supp}\hat f| \;\ge\; N + \bigl(s - (N \bmod s)\bigr) \;\ge\; N+1,$$
-equivalently $|\operatorname{supp}\hat f| \ge \lceil N/s\rceil$.
+> **Corollary 4.2 (Decidability).** For any finite abelian $G$ and any $S \subseteq G$, the analytic property $(P_S)$ — a statement quantified over the $|G|$-dimensional space of test functions $f : G \to \mathbb{C}$ — is equivalent to the finite combinatorial condition
+> $$S = \emptyset \quad\text{or}\quad \big( 0 \in S \ \text{ and } \ \forall x, y \in S,\; x - y \in S \big),$$
+> checkable in $O(|S|^2)$ group operations.
 
-*Proof.* Write $N = s q + r$ with $0 < r < s$ (using $s \nmid N$). Donoho–Stark gives $s\,t \ge N$ with $t := |\operatorname{supp}\hat f|$, hence $t \ge q+1$ (if $t \le q$ then $st \le sq < N$). Therefore $st \ge s(q+1) = sq + s = N - r + s$. $\square$
+### 4.3 The defect formula
 
-**Corollary 5.3 (Prime gap).** If $|G| = p$ is prime and $f \ne 0$ has $1 < |\operatorname{supp} f| < p$, then $|\operatorname{supp} f| \cdot |\operatorname{supp}\hat f| \ge p+1$.
+> **Theorem C (restated and proved).** $|\langle S \rangle| \, D_S(f) = |G| \big( |\langle S \rangle| \sum_{x \in S} f(x) - |S| \sum_{x \in \langle S \rangle} f(x) \big)$.
 
-### 5.2 The extremal spectrum
+*Proof.* By Theorem 1.1 applied to $H = \langle S \rangle$ and Lemma 2.1,
+$$|\langle S \rangle| \sum_{\psi \in S^{\perp}} \hat{f}(\psi) \;=\; |\langle S \rangle| \sum_{\psi \in \langle S \rangle^{\perp}} \hat{f}(\psi) \;=\; |G| \sum_{x \in \langle S \rangle} f(x).$$
+Therefore
+$$|\langle S \rangle| \cdot |S| \sum_{\psi \in S^{\perp}} \hat{f}(\psi) \;=\; |S| \cdot |G| \sum_{x \in \langle S \rangle} f(x),$$
+and multiplying the definition $D_S(f) = |G| \sum_{S} f - |S| \sum_{S^{\perp}} \hat f$ by $|\langle S \rangle|$ and substituting yields the stated identity. $\square$
 
-**Definition 5.4.** The **extremal spectrum** of $G$ is
-$$\operatorname{Spec}(G) := \{\, d \in \mathbb{N} : \exists f \ne 0 \text{ extremal with } |\operatorname{supp} f| = d \,\}.$$
+**Interpretation.** Divide through by $|G| \cdot |S| \cdot |\langle S \rangle|$:
+$$\frac{D_S(f)}{|G| \cdot |S|} \;=\; \frac{1}{|S|}\sum_{x \in S} f(x) \;-\; \frac{1}{|\langle S \rangle|}\sum_{x \in \langle S \rangle} f(x).$$
+The normalised defect is *exactly* the difference between the mean of $f$ over $S$ and its mean over $\langle S \rangle$. Poisson summation for $S$ therefore asserts precisely that $S$ and $\langle S \rangle$ are indistinguishable as averaging measures — which, for $S \subseteq \langle S \rangle$, forces $S = \langle S \rangle$.
 
-**Proposition 5.5.** $\operatorname{Spec}(G)$ is exactly the set of subgroup orders of $G$.
-
-*Proof.* If $f$ is extremal, $|\operatorname{supp} f| = |K|$ for a subgroup $K$ by Corollary 4.3. Conversely $\mathbf 1_K$ is extremal with support $K$. $\square$
-
-The remaining input is purely group-theoretic and, notably, false for nonabelian groups.
-
-**Theorem 5.6 (Converse of Lagrange for finite abelian groups).** Let $A$ be a finite abelian group and $d \mid |A|$. Then $A$ has a subgroup of order $d$.
-
-*Proof sketch.* Induct on $|A|$. If $d = 1$ take the trivial subgroup. Otherwise pick a prime $p \mid d$; then $p \mid |A|$, so by Cauchy's theorem $A$ has an element of order $p$, generating a subgroup $C$ of order $p$. In $A/C$, of order $|A|/p$, the number $d/p$ is a divisor, so by induction there is a subgroup $\bar B \le A/C$ of order $d/p$. Its preimage $B$ under the quotient map is a subgroup of $A$ with $|B| = p \cdot (d/p) = d$. $\square$
-
-(For general finite groups this fails: $|A_5| = 60$ but $A_5$ has no subgroup of order $30$.)
-
-**Theorem 5.7 (Theorem 3; extremal spectrum theorem).** For any finite abelian $G$ and $d \in \mathbb{N}$,
-$$d \in \operatorname{Spec}(G) \iff d \mid N.$$
-Dually, $d$ occurs as $|\operatorname{supp}\hat f|$ for an extremal $f$ if and only if $d \mid N$; and $(s,t)$ occurs as $(|\operatorname{supp} f|, |\operatorname{supp}\hat f|)$ if and only if $st = N$.
-
-*Proof.* Proposition 5.5 plus Lagrange's theorem gives $\Rightarrow$; Proposition 5.5 plus Theorem 5.6 gives $\Leftarrow$. For the pair statement, given $st = N$ take an extremal with support size $s$; its frequency support then has size $N/s = t$ by Theorem 5.1. $\square$
-
-**Theorem 5.8 (Primality is visible in the extremal class).** $N$ is prime if and only if $N > 1$ and every nonzero extremal $f$ on $G$ has $|\operatorname{supp} f| \in \{1, N\}$.
-
-*Proof.* ($\Rightarrow$) Lagrange rigidity: the support size divides a prime. ($\Leftarrow$) Let $d \mid N$. By Theorem 5.7 there is an extremal with support size $d$, so $d \in \{1, N\}$; with $N>1$ this is primality. $\square$
-
-**Theorem 5.9 (Reconstruction, and its ceiling).** Let $G, G'$ be finite abelian. Then $\operatorname{Spec}(G) = \operatorname{Spec}(G')$ if and only if $|G| = |G'|$.
-
-*Proof.* By Theorem 5.7, $\operatorname{Spec}(G)$ is the divisor set of $|G|$; a positive integer is the maximum of its divisor set, and divisor sets determine (and are determined by) the integer. $\square$
-
-So the spectrum is a complete invariant of the *order* and of nothing more: no finer invariant (exponent, number of invariant factors, rank) can be read off from support sizes alone. The *supports* themselves are strictly finer.
-
-**Theorem 5.10 (Supports of extremals are exactly the cosets).** A nonempty $S \subseteq G$ equals $\operatorname{supp} f$ for some extremal $f$ if and only if $S$ is a coset of a subgroup, equivalently if and only if $S$ is closed under the parallelogram operation $(x,y,z)\mapsto x-y+z$.
-
-*Proof.* Necessity is Corollary 3.13, sufficiency is Theorem 3.12 applied to $T_a\mathbf 1_K$. For the combinatorial criterion: a coset is clearly parallelogram-closed; conversely, suppose $S \ne \emptyset$ is parallelogram-closed and fix $a \in S$, setting $K := S - a$. Then $0 = a - a \in K$. For $x, y \in S$ the element $x - a + y$ lies in $S$, so $(x-a)+(y-a) = (x-a+y)-a \in K$: closure under addition. And $a - x + a \in S$, so $-(x-a) = (a-x+a)-a \in K$: closure under negation. Hence $K$ is a subgroup and $S = a + K$. $\square$
-
-Because parallelogram-closure is a decidable finite condition, this yields an effective test (Section 9, Algorithm 3).
-
-**Example 5.11 (The two groups of order four).** $\mathbb{Z}/4$ and $\mathbb{Z}/2\times\mathbb{Z}/2$ have the same extremal spectrum $\{1,2,4\}$. But $\mathbb{Z}/4$ has a single subgroup of order $2$ and hence exactly $2$ extremal supports of size $2$, while the Klein group has three subgroups of order $2$ and hence exactly $6$. An exhaustive enumeration confirms these counts, and therefore the family of extremal supports separates the two groups while the spectrum does not.
+Equivalently: the defect functional $f \mapsto D_S(f)$ is (up to the factor $|G|\cdot|S|$) integration against the signed measure
+$$\mu_S \;=\; \frac{1}{|S|} \mathbf{1}_S \;-\; \frac{1}{|\langle S \rangle|} \mathbf{1}_{\langle S \rangle},$$
+a measure supported on $\langle S \rangle$ with total mass $0$ and total variation $2\big(1 - |S|/|\langle S \rangle|\big)$.
 
 ---
 
-## 6. The extremal class is an algebra
+## 5. Quantitative rigidity
 
-Extremality is an analytic condition, but Theorem 3.12 converts it into membership in a set of algebraically defined functions, and that set turns out to be closed under the natural operations.
+### 5.1 The gap theorem
 
-**Lemma 6.1 (Transform of a coset modulation).** For $K \le G$, $c \ne 0$, $\chi \in \widehat G$, $a \in G$ and $f = c\,M_\chi T_a \mathbf 1_K$,
-$$\hat f(\psi) = \begin{cases} c\;\overline{(\psi-\chi)(a)}\;|K|, & \psi - \chi \in K^{\perp},\\ 0, & \text{otherwise.}\end{cases}$$
+> **Theorem D (restated and proved).** Let $S$ be nonempty with $S \neq \langle S \rangle$. Then there is $y_0 \in S$ with $|D_S(\delta_{y_0})| \geq |\langle S \rangle| - |S| \geq 1$.
 
-*Proof.* Combine Lemma 2.3 with Proposition 3.9: $\hat f(\psi) = c\,\widehat{T_a \mathbf 1_K}(\psi - \chi) = c\,\overline{(\psi-\chi)(a)}\,\widehat{\mathbf 1_K}(\psi-\chi)$. $\square$
+*Proof.* Pick any $y_0 \in S$; then $y_0 \in \langle S \rangle$ as well. Both $\sum_{x \in S}\delta_{y_0}(x)$ and $\sum_{x \in \langle S \rangle}\delta_{y_0}(x)$ equal $1$, so Theorem C gives
+$$|\langle S \rangle| \cdot D_S(\delta_{y_0}) \;=\; |G| \big( |\langle S \rangle| - |S| \big),$$
+a real, nonnegative quantity, since $S \subseteq \langle S \rangle$ and the containment is strict, so $|\langle S \rangle| - |S| \geq 1$. Taking absolute values,
+$$\big| D_S(\delta_{y_0}) \big| \;=\; \frac{|G|}{|\langle S \rangle|}\big(|\langle S \rangle| - |S|\big) \;\geq\; |\langle S \rangle| - |S|,$$
+because $\langle S \rangle \subseteq G$ forces $|G| / |\langle S \rangle| \geq 1$. $\square$
 
-In particular the transform of a coset modulation is again a coset modulation, on the dual group, with subgroup $K^{\perp}$ and coset representative $\chi$.
+The proof in fact gives an *exact* value, not merely a bound: for any $y_0 \in S$,
+$$D_S(\delta_{y_0}) \;=\; [G : \langle S \rangle] \cdot \big( |\langle S \rangle| - |S| \big), \tag{5.1}$$
+where $[G : \langle S \rangle] = |G|/|\langle S \rangle| = |S^\perp|$ is the index. The defect at a delta inside $S$ is a *positive integer*, independent of which point of $S$ is chosen, and it factorises as (index of the generated subgroup) $\times$ (number of missing points).
 
-**Lemma 6.2 (Intersecting cosets).** Let $K, K' \le G$ and $a, a' \in G$, and suppose $b$ lies in both cosets, i.e. $b - a \in K$ and $b - a' \in K'$. Then for all $x$,
-$$\bigl(x - a \in K \ \wedge\ x - a' \in K'\bigr) \iff x - b \in K \cap K'.$$
-Hence the intersection of a coset of $K$ and a coset of $K'$ is either empty or a coset of $K \cap K'$.
+> **Corollary 5.1 (No approximate Poisson sets).** For any $\varepsilon < 1$, there is no nonempty $S \subseteq G$ which fails to be a subgroup yet satisfies $|D_S(f)| \leq \varepsilon$ for all $f$ with $\|f\|_{\infty} \leq 1$. The Poisson property is not merely rigid but *isolated*: the defect functional has a spectral gap of size $1$ at zero.
 
-*Proof.* Write $x - b = (x-a)-(b-a) = (x-a')-(b-a')$ and reverse. $\square$
+### 5.2 Rigidity of the normalising constant
 
-**Theorem 6.3 (Closure under products).** If $u, v \ne 0$ are extremal, then $uv$ is either identically zero or extremal.
+One might hope to save non-subgroups by adjusting the constant. One cannot.
 
-*Proof.* Write $u = c\,\chi\,\mathbf 1_{a+K}$, $v = c'\chi'\mathbf 1_{a'+K'}$ by Theorem 3.12. If the two cosets are disjoint, $uv \equiv 0$. Otherwise pick $b$ in the intersection; by Lemma 6.2 the product is $cc'\,(\chi+\chi')\,\mathbf 1_{b + (K\cap K')}$, a coset modulation with nonzero scalar, hence extremal by Theorem 3.12. $\square$
+> **Theorem 5.2 (Constant rigidity).** Let $S \subseteq G$ be nonempty and suppose there exists $c \in \mathbb{C}$ with
+> $$|G| \sum_{x \in S} f(x) \;=\; c \sum_{\psi \in S^{\perp}} \hat{f}(\psi) \qquad \text{for all } f : G \to \mathbb{C}.$$
+> Then $S$ is a subgroup and $c = |S|$.
 
-This is a genuinely non-formal statement: for arbitrary functions, pointwise products destroy the support structure entirely.
+*Proof sketch.* Two applications of Proposition 3.1.
 
-**Theorem 6.4 (Closure under convolution).** If $u, v \ne 0$ are extremal, then $u * v$ is either identically zero or extremal.
+*Step 1 (the constant is forced to be $|\langle S \rangle|$).* Take $f = \delta_{y_0}$ with $y_0 \in S$. The left side is $|G|$. Multiplying by $|\langle S \rangle|$ and applying Proposition 3.1 at $y_0 \in \langle S \rangle$ turns the right side into $c \cdot |G|$. Cancelling $|G| \neq 0$ gives $c = |\langle S \rangle|$.
 
-*Proof sketch.* Here the support of the product is not determined pointwise, so one squeezes from both sides. On the frequency side, $\widehat{u*v} = \hat u \hat v$, and by Lemma 6.1 each factor is supported on a coset of an annihilator; by Lemma 6.2 (in the dual) the frequency support of $u * v$ is empty or a coset of $K^{\perp} \cap K'^{\perp} = (K + K')^{\perp}$, giving $|\operatorname{supp}\widehat{u*v}| \le |(K+K')^{\perp}|$. On the space side, $\operatorname{supp}(u*v) \subseteq (a+a') + (K + K')$, giving $|\operatorname{supp}(u*v)| \le |K+K'|$. Their product is $|K+K'| \cdot |(K+K')^{\perp}| = N$ by Proposition 3.9, while Donoho–Stark forces the product of the two actual support sizes to be at least $N$. Hence equality throughout, i.e. $u*v$ is extremal (unless it vanishes). $\square$
+*Step 2 ($S$ has no missing points).* Suppose $y \in \langle S \rangle \setminus S$. Take $f = \delta_y$. The left side vanishes, since $y \notin S$. Multiplying by $|\langle S \rangle|$ and applying Proposition 3.1 at $y \in \langle S \rangle$ turns the right side into $c \cdot |G| = |\langle S \rangle| \cdot |G| \neq 0$, a contradiction. Hence $\langle S \rangle \subseteq S$, so $S = \langle S \rangle$ is a subgroup and $c = |\langle S\rangle| = |S|$. $\square$
 
-**Theorem 6.5 (Convolution powers).** Define $f^{*0} := \delta_0$ and $f^{*(k+1)} := f * f^{*k}$. If $f \ne 0$ then $f^{*k} \ne 0$ for all $k$, since $\widehat{f^{*k}} = (\hat f)^k$ is nonzero wherever $\hat f$ is. If moreover $f$ is extremal, then $f^{*k}$ is extremal for every $k \ge 1$, and $|\operatorname{supp} f^{*k}| = |\operatorname{supp} f|$.
-
-*Proof.* Nonvanishing and extremality follow from Theorem 6.4 by induction. For the invariance, $\operatorname{supp}\widehat{f^{*k}} = \operatorname{supp}(\hat f)^k = \operatorname{supp}\hat f$, so the frequency support size is constant along the dynamics, and extremality then pins the space support size. $\square$
-
-Thus the support size is a conserved quantity of the convolution dynamics on the extremal class: convolution moves the coset representative and the character but never the "size scale".
-
-**Theorem 6.6 (Fourier invariance).** If $f$ is extremal on $G$, then $\hat f$ is extremal on $\widehat G$:
-$$|\operatorname{supp}\hat f| \cdot |\operatorname{supp}\widehat{\hat f}| = |\widehat G| = N.$$
-
-*Proof.* The double transform satisfies $\widehat{\hat f} = N \cdot f \circ (-\mathrm{id})$ up to the identification $\widehat{\widehat G}\cong G$, so $|\operatorname{supp}\widehat{\hat f}| = |\operatorname{supp} f|$; combine with $|\widehat G| = N$. $\square$
-
-Summarising Sections 3 and 6: the extremal class is a groupoid of coset modulations, indexed by (subgroup, coset representative, character, scalar), stable under pointwise multiplication (meet of subgroups), convolution (join of subgroups), and the Fourier transform (annihilation).
+Thus the constant $|H|$ appearing in Theorem 1.1 is not a normalisation convention: it is the unique constant for which any such identity can hold, and its correctness is equivalent to the subgroup property.
 
 ---
 
-## 7. The two rigidities are one
+## 6. The affine theory: Poisson summation characterises cosets
 
-**Theorem 7.1.** Let $(S,T)$ be a Poisson pair with $S$ nonempty. Then $S = \operatorname{supp} f$ and $T = \operatorname{supp}\hat f$ for the extremal function $f = \mathbf 1_S$; the subgroup witnessing the pair is unique; and $|S| \mid N$.
+Subgroups are not translation-invariant, but the two sides of Poisson summation transform predictably under translation.
 
-*Proof.* By Theorem 3.7, $S$ is a subgroup $H$ and $T = H^{\perp}$. Proposition 3.9 gives $\operatorname{supp}\widehat{\mathbf 1_H} = H^{\perp}$ and extremality of $\mathbf 1_H$; uniqueness is Proposition 4.1; divisibility is Lagrange. $\square$
+> **Lemma 6.1 (Translation phase).** For $f : G \to \mathbb{C}$, $x_0 \in G$, $\psi \in \widehat{G}$,
+> $$\widehat{f(x_0 + \cdot)}(\psi) \;=\; \psi(x_0)\, \hat{f}(\psi).$$
 
-**Theorem 7.2 (Poisson spectrum).** A natural number $d$ is the size of a nonempty set carrying a Poisson summation formula on $G$ if and only if $d \mid N$.
+*Proof.* Substituting $z = x_0 + y$,
+$$\sum_{y} \overline{\psi(y)} f(x_0 + y) = \sum_z \overline{\psi(z - x_0)} f(z) = \psi(x_0) \sum_z \overline{\psi(z)} f(z),$$
+using $\overline{\psi(z - x_0)} = \overline{\psi(z)}\,\overline{\psi(-x_0)} = \overline{\psi(z)}\,\psi(x_0)$. $\square$
 
-*Proof.* Necessity is Theorem 7.1; sufficiency is Theorem 5.6 plus Fact B for the resulting subgroup. $\square$
+> **Definition 6.2.** For $S \subseteq G$ and a base point $x_0 \in G$, say $S$ is an **affine Poisson set with base point $x_0$** if
+> $$|G| \sum_{x \in S} f(x) \;=\; |S| \sum_{\psi \in (S - x_0)^{\perp}} \psi(x_0)\, \hat{f}(\psi) \qquad \text{for all } f. \tag{$P_{S, x_0}$}$$
 
-So Poisson pairs on $G$ are indexed exactly by the subgroups of $G$; the extremal functions are indexed by (subgroup, coset, character, scalar); and the map "extremal $f$ $\mapsto$ support pair" carries the latter onto the former. Two apparently different rigidity phenomena — one about an identity holding for *all* test functions, one about a *single* numerical equality for one function — are two descriptions of the subgroup lattice.
+> **Theorem 6.3.** $(P_{S, x_0})$ holds for $S$ if and only if $(P_T)$ holds for the translate $T = S - x_0$.
 
----
+*Proof sketch.* Substituting $f \mapsto f(x_0 + \cdot)$ maps $\sum_{y \in T} f(x_0 + y)$ to $\sum_{x \in S} f(x)$, and by Lemma 6.1 converts $\hat{f}(\psi)$ into $\psi(x_0)\hat{f}(\psi)$; the cardinalities agree since translation is a bijection, $|T| = |S|$. The two identities are therefore each other's images under this substitution, which is invertible. $\square$
 
-## 8. Extremal probability distributions
+> **Theorem 6.4 (Coset characterisation).** Let $x_0 \in S$. Then $(P_{S, x_0})$ holds if and only if $S = x_0 + H$ for some subgroup $H \leq G$; that is, iff $S$ is a coset.
 
-**Theorem 8.1 (Theorem 4).** Let $p : G \to \mathbb{R}$ satisfy $p \ge 0$ and $\sum_{x} p(x) = 1$, and suppose the complex-valued function $x \mapsto p(x)$ is extremal. Then there are $a \in G$ and $K \le G$ such that
-$$p(x) = \begin{cases} 1/|K|, & x \in a + K,\\ 0, & \text{otherwise.}\end{cases}$$
+*Proof.* By Theorem 6.3, $(P_{S,x_0})$ is $(P_{S - x_0})$. Since $x_0 \in S$, the translate $S - x_0$ contains $0$ and is in particular nonempty, so Theorem 4.1 applies: $(P_{S-x_0})$ holds iff $S - x_0$ is a subgroup $H$, i.e. iff $S = x_0 + H$. $\square$
 
-*Proof.* $p \ne 0$ since it sums to $1$. By Theorem 3.12, $p = c\,\chi\,\mathbf 1_{a+K}$ with $c \ne 0$. Since $|\chi(x)| = 1$, flatness gives $|p(x)| = |c|$ on the support, and $p \ge 0$ upgrades this to $p(x) = |c|$ there. Summing, $|a+K| \cdot |c| = 1$, so $|c| = 1/|K|$. $\square$
+> **Corollary 6.5.** A set $S$ admits *some* base point in $S$ for which the affine identity holds iff $S$ is a coset of a subgroup.
 
-**Corollary 8.2.** The minimum-uncertainty distributions on $G$ are exactly the uniform distributions on cosets of subgroups. Their supports have size dividing $N$; in particular, on a group of prime order the only minimum-uncertainty distributions are the point masses and the uniform distribution on $G$.
+So the rigidity phenomenon is affine, not merely linear, and the affine Poisson sets are exactly the cosets — the flat subsets of $G$.
 
-This is a striking dichotomy for a probabilist: the analytically defined class of "maximally concentrated in both domains" distributions turns out to have no free parameters beyond a subgroup and a translate. Any attempt to design a distribution with, say, $5$ atoms on $\mathbb{Z}/12$ that is optimally frequency-concentrated is doomed by arithmetic, not by analysis: $5 \nmid 12$, and Theorem 5.2 quantifies the loss.
-
----
-
-## 9. Algorithms
-
-Let $G = \mathbb{Z}/n_1 \times \cdots \times \mathbb{Z}/n_r$ with $N = \prod n_i$. Characters are indexed by $k \in G$ via $\psi_k(x) = \exp\bigl(2\pi i \sum_j k_j x_j / n_j\bigr)$.
-
-**Algorithm 1 (Uncertainty audit).** Given $f$, compute $\hat f$ by the defining sum in $O(N^2)$ operations (or by mixed-radix FFT in $O(N \log N)$), count the two supports with a numerical tolerance, and report the product against $N$. Output: the product, the extremality flag, and — if extremal — the reconstructed data $(K, a, \chi, c)$.
-
-**Algorithm 2 (Structure extraction).** Given an extremal $f$: set $S := \operatorname{supp} f$, choose $a \in S$, and put $K := S - a$ (a subgroup by Theorem 3.12). Recover $c\chi$ by $\chi(x) := f(x)/f(a) \cdot \chi(a)$; concretely, $f(x)/f(a) = \chi(x - a)$ determines $\chi$ on $K$, and any extension to $G$ (there are $|K^\perp|$, matching the frequency support) works. Complexity $O(|S|)$ after the transform.
-
-**Algorithm 3 (Coset test by parallelogram closure).** Given nonempty $S$, fix $a \in S$ and check that $S - a$ is closed under addition and negation; equivalently check $x - y + z \in S$ for all $x,y,z \in S$. This is $O(|S|^2)$ (build $S - a$ and test closure) and decides, by Theorem 5.10, whether $S$ is the support of an extremal function.
-
-**Algorithm 4 (Poisson pair verification).** Given $(S,T)$, verify only the $N$ Dirac identities $N\mathbf 1_S(y) = |S|\sum_{\psi \in T}\psi(y)$, $y \in G$. By Corollary 3.8 this certifies the identity for all test functions; complexity $O(N|T|)$.
-
-**Algorithm 5 (Extremal spectrum).** By Theorem 5.7, enumerate the divisors of $N$ — $O(\sqrt N)$ — to obtain all achievable support sizes; to obtain all extremal *supports* of a given size $d$, enumerate subgroups of order $d$ and their cosets.
+**Example.** The squares modulo $8$, $S = \{0, 1, 4\}$, form neither a subgroup nor a coset: were $S = x_0 + H$, then $H = S - x_0$ would be closed under subtraction, but for every choice of $x_0 \in S$ one of $1 - 4 + x_0$ or $4 - 1 + x_0$ escapes $S$ (e.g. for $x_0 = 0$: $4 - 1 = 3 \notin S$). Hence no base point rescues Poisson summation for the quadratic residues mod $8$.
 
 ---
 
-## 10. Computational evidence
+## 7. Poisson sets are the uncertainty extremals
 
-An exhaustive check on $G = \mathbb{Z}/4$ is small enough to be carried out in exact arithmetic: all characters take values in $\{1, i, -1, -i\}$, so with function values restricted to $\{0, 1, -1, i, -i\}$ the transform lives in the Gaussian integers and every count below is exact rather than numerical.
+Two dual size estimates sandwich $|G|$ for any nonempty $S$.
 
-Enumerating all $5^4 = 625$ such functions:
+> **Proposition 7.1 (Lower estimate).** For every $S \subseteq G$: $\;|S| \cdot |S^{\perp}| \leq |G|$.
 
-| experiment | result |
-|---|---|
-| functions tested / nonzero | 625 / 624 |
-| the bound $|\operatorname{supp} f| \cdot |\operatorname{supp}\hat f| \ge 4$ | holds in every case |
-| number of extremals in the sample | 48 |
-| support-size distribution of extremals (sizes $0,1,2,3,4$) | $0, 16, 16, 0, 16$ |
-| every extremal support is a coset (parallelogram closure) | yes |
-| every extremal has constant modulus on its support | yes |
-| every extremal frequency support is a coset | yes |
-| pointwise products of extremals are zero or extremal | yes |
-| convolutions of extremals are zero or extremal | yes |
-| the non-coset set $\{0,1\}$ as a support | not extremal ($2 \cdot 3 = 6 > 4$) |
+*Proof.* $|S| \leq |\langle S \rangle|$ and $|\langle S \rangle| \cdot |S^{\perp}| = |G|$ by Corollary 2.2. $\square$
 
-Every entry matches the theory. The absence of extremals with support of size $3$ is Theorem 5.7: $3 \nmid 4$. The counts $16$ are also predicted exactly: for size $1$, four positions times four allowed nonzero values; for size $2$, two cosets of $\{0,2\}$ times four values times two characters modulo the annihilator; for size $4$, four characters times four values.
+> **Proposition 7.2 (Upper estimate; Donoho–Stark).** For nonempty $S \subseteq G$:
+> $$|G| \;\leq\; |S| \cdot \big| \operatorname{supp} \widehat{\mathbf{1}_S} \big| .$$
 
-Section 5's separation of the two groups of order four was likewise confirmed by exhaustive enumeration: $\mathbb{Z}/4$ has exactly $2$ extremal supports of size $2$ and $\mathbb{Z}/2\times\mathbb{Z}/2$ has exactly $6$.
+This is the finite uncertainty principle $|\operatorname{supp} f| \cdot |\operatorname{supp} \hat{f}| \geq |G|$, valid for every $f \neq 0$, applied to $f = \mathbf{1}_S$, whose support is exactly $S$.
 
----
+Note also that $S^{\perp} \subseteq \operatorname{supp} \widehat{\mathbf{1}_S}$ always, since for $\psi \in S^{\perp}$ one computes $\widehat{\mathbf{1}_S}(\psi) = \sum_{x \in S} \overline{\psi(x)} = |S| \neq 0$. So the two propositions are genuinely dual: they bound $|G|$ from below and above by $|S|$ times the size of, respectively, the smaller and the larger of two nested sets of characters.
 
-## 11. Discussion
+> **Theorem 7.3 (Extremality).** For nonempty $S \subseteq G$ the following are equivalent:
+> 1. $S$ is a Poisson set;
+> 2. $|S| \cdot |S^{\perp}| = |G|$, i.e. Proposition 7.1 is an equality;
+> 3. $\operatorname{supp}\widehat{\mathbf{1}_S} = S^{\perp}$, i.e. the Fourier support of $\mathbf{1}_S$ is as small as it could possibly be.
 
-**What the theorems buy.** The classification turns an analytic extremal problem into an arithmetic one. Questions of the form "how sparse can a signal be while having few frequencies?" become questions about the divisor lattice of $N$. On $\mathbb{Z}/p$ the extremal class is trivial (deltas and characters) and every other support size incurs a definite penalty; on $\mathbb{Z}/2^k$ the extremal class is a full chain of subgroups with plentiful worst cases. Group order, not group size, decides how badly the uncertainty principle can be saturated.
+*Proof sketch.* (1) $\Rightarrow$ (2): if $S$ is a subgroup then $\langle S \rangle = S$ and Corollary 2.2 gives the equality. (2) $\Rightarrow$ (1): from $|S| \cdot |S^{\perp}| = |G| = |\langle S \rangle| \cdot |S^{\perp}|$ and $|S^{\perp}| \geq 1$ we cancel to get $|S| = |\langle S \rangle|$, hence $S = \langle S \rangle$. (1) $\Rightarrow$ (3): for a subgroup $H$, $\widehat{\mathbf{1}_H}(\psi) = \sum_{x \in H}\overline{\psi(x)}$ equals $|H|$ if $\psi \in H^{\perp}$ and $0$ otherwise by orthogonality on $H$; so the support is exactly $H^{\perp}$. (3) $\Rightarrow$ (2): substituting (3) into Proposition 7.2 gives $|G| \leq |S| \cdot |S^{\perp}|$, and combining with Proposition 7.1 gives equality. $\square$
 
-**Sharpness of the bound in signal recovery.** In compressed sensing, the uncertainty principle underlies the uniqueness of sparse representations: if $|\operatorname{supp} f| \cdot |\operatorname{supp}\hat f| < N$ for two candidate representations of the same signal, they must coincide. The extremal functions are exactly the boundary cases where such arguments become tight, and Theorem 3.12 says these boundary cases are structured — they are Dirac combs on cosets — so they can be recognised and excluded in $O(|S|^2)$ time by Algorithm 3.
-
-**The role of the abelian hypothesis.** Two ingredients are genuinely abelian: Pontryagin duality (used through $|H|\cdot|H^{\perp}| = N$, which we obtain from Plancherel) and the converse of Lagrange's theorem (Theorem 5.6). The latter fails for nonabelian groups, so any nonabelian analogue of Theorem 5.7 must have a different shape; already for $A_5$ one would need to explain the missing "divisor" $30$.
-
-**A remark on proof technique.** Both rigidity results are equality analyses of the triangle inequality, and both use the same lemma — unit-modulus complex numbers whose sum has maximal modulus are all equal. It is the same phenomenon that makes coherence arguments work in analysis: perfect constructive interference is a very strong constraint, and in the presence of a group action it forces homomorphy.
+This is a satisfying reinterpretation. The uncertainty principle says a function and its transform cannot both be concentrated; Theorem 7.3 identifies the sets whose indicators achieve the theoretical minimum of joint concentration, and they are precisely the subgroups — precisely the Poisson sets.
 
 ---
 
-## 12. Future directions
+## 8. The Poisson spectrum: structure and counting
 
-**Beyond abelian groups.** Formulate and prove an uncertainty classification on finite nonabelian groups, where the correct notion of "support" on the dual side involves matrix coefficients and the natural extremals should be induced-from-a-subgroup constructions. Theorem 5.6 fails, so the achievable spectrum will not be the divisor set.
+Define the **Poisson spectrum** of $G$ to be the family
+$$\mathcal{P}(G) \;=\; \{S \subseteq G : S \text{ is a nonempty Poisson set}\},$$
+partially ordered by inclusion.
 
-**Approximate rigidity.** Both theorems here are exact. The natural stability question is quantitative: if $|\operatorname{supp} f|\cdot|\operatorname{supp}\hat f| \le (1+\varepsilon)N$, must $f$ be $\delta(\varepsilon)$-close (in a suitable norm) to a coset modulation? Section 3's equality analysis is a chain of inequalities each of which admits a stability version, so a quantitative statement should follow with explicit constants; the interesting question is the optimal dependence on $\varepsilon$ and $N$. Similarly, an approximate Poisson pair — one for which the identity holds up to $\varepsilon\|f\|_1$ — should be close to a subgroup/annihilator pair.
+> **Theorem 8.1 (The spectrum is the subgroup lattice).** The map $S \mapsto \langle S \rangle$ is a bijection $\mathcal{P}(G) \to \{\text{subgroups of } G\}$, with inverse $H \mapsto H$. It is an order isomorphism: for $S, T \in \mathcal{P}(G)$, $S \subseteq T$ iff $\langle S \rangle \leq \langle T \rangle$.
 
-**Ring and module versions.** Replace $G$ by a finite module over a ring and $\widehat G$ by its Pontryagin dual; the extremal class should become the class of modulated indicators of submodules, and the spectrum should be the set of submodule orders. The interest is that this set is generally *not* the divisor set.
+*Proof.* By Theorem A, every $S \in \mathcal{P}(G)$ *is* a subgroup, so $\langle S \rangle = S$ and the map is the identity in disguise; well-definedness in the other direction is Theorem 1.1 plus $0 \in H$. Order preservation is then trivial. (More carefully: the order isomorphism statement holds even when comparing an arbitrary $S$ against a Poisson set $T$, since $S \subseteq T$ iff $\langle S \rangle \leq \langle T \rangle = T$.) $\square$
 
-**Finite-test phenomena.** Corollary 3.8 says Poisson summation is determined by $N$ scalar identities. Which other functional identities in harmonic analysis are determined by finitely many test cases, and with what optimal test families? A minimal test family for the Poisson identity would be an appealing extremal combinatorial problem in its own right.
+> **Corollary 8.2.** The number of exact Poisson summation formulas available on $G$ equals the number of subgroups of $G$.
 
-**Extremal supports as an invariant.** The family of extremal supports separates $\mathbb{Z}/4$ from $\mathbb{Z}/2 \times \mathbb{Z}/2$. Is the multiset $\{(d, \#\{\text{extremal supports of size } d\})\}_{d \mid N}$ a complete invariant of a finite abelian group? Equivalently: is a finite abelian group determined by the number of subgroups it has of each order? The question reduces, by the structure theorem, to the case of abelian $p$-groups, where the counts are governed by the partition describing the group.
+> **Proposition 8.3 (Lattice behaviour).** $\mathcal{P}(G)$ is closed under intersection whenever the intersection is nonempty (it always is: $0$ lies in every member), but not under union. In the Klein four-group $\mathbb{Z}/2 \times \mathbb{Z}/2$, both $\{0, (1,0)\}$ and $\{0, (0,1)\}$ are Poisson sets, while $\{0, (1,0), (0,1)\}$ is not — it fails closure under addition, since $(1,0) + (0,1) = (1,1)$ is absent.
 
-**Dynamics of convolution.** Theorem 6.5 shows the support size is conserved under convolution powers of an extremal function. Describe the full orbit structure of the convolution dynamics on the extremal class: convolution acts on the parameters $(K, a, \chi, c)$ by join of subgroups, addition of representatives and addition of characters, so the dynamics is a semigroup action on the subgroup lattice — the equilibrium states and their basins are worth mapping out explicitly.
+Hence $\mathcal{P}(G)$ is a meet-semilattice inside the Boolean algebra of subsets of $G$, but not a sublattice: its join is the generated subgroup, strictly larger than the union in general.
+
+### 8.1 Counting on cyclic groups
+
+> **Theorem 8.4.** For $n \geq 1$, the number of nonempty Poisson sets of $\mathbb{Z}/n\mathbb{Z}$ is $d(n)$, the number of divisors of $n$.
+
+*Proof sketch.* By Corollary 8.2 the count is the number of subgroups of $\mathbb{Z}/n\mathbb{Z}$. That number is $d(n)$, by two facts.
+
+*Uniqueness.* A cyclic group has at most one subgroup of each order: if $|H| = m$, then every $x \in H$ satisfies $m x = 0$, so $H \subseteq \{x : mx = 0\}$; but in a cyclic group the equation $mx = 0$ has at most $m$ solutions, so $|\{x : mx = 0\}| \leq m = |H|$ and the inclusion is an equality. Thus $H$ is determined by $|H|$ alone.
+
+*Existence.* Lagrange forces $|H|$ to divide $n$; conversely for each divisor $d \mid n$ the subgroup generated by $n/d$ has order $\operatorname{ord}(n/d) = n / \gcd(n, n/d) = n/(n/d) = d$.
+
+Hence subgroups correspond bijectively to divisors of $n$. $\square$
+
+> **Example 8.5.** $\mathbb{Z}/12\mathbb{Z}$ supports exactly $d(12) = 6$ exact Poisson summation formulas, one for each of the divisors $1, 2, 3, 4, 6, 12$.
+
+### 8.2 The spectrum is an isomorphism invariant
+
+Explicit exhaustive determination of small spectra (counting the empty set, which is always a Poisson set):
+
+| $G$ | Poisson sets | count |
+|---|---|---|
+| $\mathbb{Z}/4\mathbb{Z}$ | $\emptyset,\ \{0\},\ \{0,2\},\ \mathbb{Z}/4\mathbb{Z}$ | $4$ |
+| $\mathbb{Z}/5\mathbb{Z}$ | $\emptyset,\ \{0\},\ \mathbb{Z}/5\mathbb{Z}$ | $3$ |
+| $\mathbb{Z}/6\mathbb{Z}$ | $\emptyset,\ \{0\},\ \{0,3\},\ \{0,2,4\},\ \mathbb{Z}/6\mathbb{Z}$ | $5$ |
+| $\mathbb{Z}/8\mathbb{Z}$ | $\emptyset,\ \{0\},\ \{0,4\},\ \{0,2,4,6\},\ \mathbb{Z}/8\mathbb{Z}$ | $5$ |
+| $\mathbb{Z}/2 \times \mathbb{Z}/2$ | $\emptyset,\ \{0\},\ \{0,(1,0)\},\ \{0,(0,1)\},\ \{0,(1,1)\},\ G$ | $6$ |
+
+Each row is a complete enumeration over all $2^{|G|}$ subsets, and in each cyclic case the number of *nonempty* entries is $d(n)$: $3 = d(4)$, $2 = d(5)$, $4 = d(6)$, $4 = d(8)$.
+
+> **Theorem 8.6 (Separation).** $|\mathbb{Z}/4\mathbb{Z}| = |\mathbb{Z}/2 \times \mathbb{Z}/2| = 4$, yet the former has $4$ Poisson sets and the latter has $6$.
+
+Consequently the size of the Poisson spectrum is *not* a function of $|G|$: it is a genuine isomorphism invariant. Poisson summation, in this sense, "sees" the isomorphism type of the group, not just its order. Note also that $\{0,1,4\}$ — the squares mod $8$ — is conspicuously absent from the $\mathbb{Z}/8\mathbb{Z}$ row.
+
+---
+
+## 9. Application: quadratic residues
+
+Let $Q_n = \{a^2 : a \in \mathbb{Z}/n\mathbb{Z}\}$ denote the set of squares modulo $n$. These are the residue sets that control the classical parametrisation of Pythagorean triples: an integer congruent to $3 \bmod 4$ is not a sum of two squares, a leg parity argument lives in $\mathbb{Z}/4\mathbb{Z}$, and the finer congruence obstructions live in $\mathbb{Z}/8\mathbb{Z}$.
+
+> **Theorem 9.1.** $Q_n$ is a Poisson set for $n = 1$ and $n = 2$, and fails to be one for $3 \leq n \leq 8$.
+
+*Proof.* For $n = 1, 2$ every residue is a square, so $Q_n = \mathbb{Z}/n\mathbb{Z}$ is the whole group, a subgroup. For the failures, apply Corollary 4.2 and exhibit a pair violating closure under subtraction: $n=3$, $0 - 1 = 2 \notin \{0,1\}$; $n=4$, $0 - 1 = 3 \notin \{0,1\}$; $n = 5$, $1 - 4 = 2 \notin \{0,1,4\}$; $n = 6$, $3 - 4 = 5 \notin \{0,1,3,4\}$; $n = 7$, $1 - 2 = 6 \notin \{0,1,2,4\}$; $n = 8$, $1 - 4 = 5 \notin \{0,1,4\}$. $\square$
+
+The mod-$8$ case is the interesting one, and the gap theorem makes the failure quantitative.
+
+> **Proposition 9.2.** $\langle Q_8 \rangle = \mathbb{Z}/8\mathbb{Z}$.
+
+*Proof.* $1 \in Q_8$ and $1$ generates $\mathbb{Z}/8\mathbb{Z}$. $\square$
+
+> **Theorem 9.3 (Quantitative failure over the quadratic residues mod 8).** There is $y_0 \in Q_8 = \{0,1,4\}$ with
+> $$\big| D_{Q_8}(\delta_{y_0}) \big| \;\geq\; 5 .$$
+
+*Proof.* By Theorem D with $S = Q_8$, $\langle S \rangle = \mathbb{Z}/8\mathbb{Z}$: the bound is $|\langle S \rangle| - |S| = 8 - 3 = 5$. (By formula (5.1) the defect is in fact exactly $[G:\langle S\rangle](|\langle S\rangle| - |S|) = 1 \cdot 5 = 5$ for each of the three choices of $y_0$.) $\square$
+
+Since the ambient group has size $8$, an error of $5$ is not a perturbation; it is of the same order as the group itself. There is no sense in which a Poisson-type formula "approximately holds" over the quadratic residues. Combined with Theorem 6.4 and the example in §6, no change of base point helps either: $Q_8$ is not even flat.
+
+---
+
+## 10. Algorithms
+
+The classification converts an analytic quantifier over $\mathbb{C}^{G}$ into finite combinatorics, so all of the following are elementary.
+
+**Algorithm 1 — Poisson set test.** Given $S \subseteq G$: return true if $S = \emptyset$; otherwise return $\big(0 \in S\big) \wedge \big(\forall x, y \in S: x - y \in S\big)$. Cost: $O(|S|^2)$ group operations with $O(1)$ membership tests via a hash set. Correctness: Corollary 4.2. Compare against the naive approach — verifying $(P_S)$ for a spanning set of $|G|$ test functions with $|G|$-term Fourier sums — which costs $O(|G|^3)$ complex operations, or $O(|G|^2 \log|G|)$ with fast transforms.
+
+**Algorithm 2 — Generated subgroup by closure.** Given $S$, compute $\langle S \rangle$ by breadth-first closure: initialise $C = \{0\} \cup S$, repeatedly replace $C$ by $C \cup (C - C)$ until stable. Terminates in at most $\log_2|G|$ rounds, since $|C|$ at least doubles at each non-terminal round (a proper subgroup-generating step at least doubles the size once $C$ is symmetric and contains $0$). Cost: $O(|G|^2)$ worst case.
+
+**Algorithm 3 — Exact defect evaluation.** Given $S$ and $f$, compute the defect in two ways and cross-check: (a) directly, by enumerating characters and forming $|G|\sum_S f - |S| \sum_{S^{\perp}} \hat f$; (b) via Theorem C, as $\frac{|G|}{|\langle S \rangle|}\big(|\langle S \rangle| \sum_S f - |S| \sum_{\langle S \rangle} f\big)$. Route (b) never touches a character and costs $O(|G|)$; route (a) costs $O(|G|^2)$. Their agreement is a numerical certificate of the defect formula.
+
+**Algorithm 4 — Spectrum enumeration.** Enumerate the Poisson spectrum of $G$ by iterating over all $2^{|G|}$ subsets and applying Algorithm 1, or, exponentially faster, by enumerating subgroups directly (e.g. as $\langle T \rangle$ over all small generating sets $T$ and deduplicating). For cyclic $\mathbb{Z}/n\mathbb{Z}$ the answer is available in closed form: the spectrum is $\{\langle n/d \rangle : d \mid n\} \cup \{\emptyset\}$, of size $d(n) + 1$.
+
+---
+
+## 11. Discussion and future directions
+
+### 11.1 What the converse changes
+
+The classical direction presents Poisson summation as a computational identity. The converse recasts it as a *characterisation*, with three consequences of different flavours.
+
+*Logical.* A statement quantified over an infinite-dimensional-looking space of test functions is equivalent to a finite check on $S$; and by Theorem B, to a single evaluation. Verification cost collapses from cubic to quadratic in $|S|$, and the certificate is a single Dirac delta.
+
+*Structural.* The family of Poisson formulas on $G$ is not an amorphous analytic collection but a copy of the subgroup lattice, meet-closed and join-incomplete, and its cardinality distinguishes non-isomorphic groups of equal order.
+
+*Quantitative.* The exact defect formula (Theorem C) and the resulting integrality (5.1) show that the defect at a delta is a positive integer, factoring as index times deficiency. There is no continuum of near-Poisson sets to develop a perturbation theory around.
+
+### 11.2 Future directions
+
+The following program builds on the results above.
+
+**Conjecture 1 (Approximate Poisson sets in the $\ell^1$-averaged sense).** For nonempty $S \subseteq G$ define the normalised defect
+$$D(S) \;=\; \sup_{\|f\|_{\infty} \leq 1} \frac{|D_S(f)|}{|G|}.$$
+Conjecture: $D(S) = 2\big(1 - |S|/|\langle S \rangle|\big) \cdot \big(\text{something explicitly computable from the pair } (S, \langle S \rangle)\big)$, and in particular $D(S) \geq 1/|\langle S \rangle|$ with equality iff $S$ is a subgroup minus one point.
+
+*The key insight is* that the defect formula already expresses the defect as $|G| \big(|\langle S \rangle| \sum_S f - |S| \sum_{\langle S \rangle} f\big) / |\langle S \rangle|$, i.e. as a *signed measure* supported on $\langle S \rangle$ with mass $|S|$ on $S$ — so the supremum over $\|f\|_{\infty} \leq 1$ is the total variation of that measure, a purely combinatorial quantity.
+
+*Why now?* The exact defect identity is established and the extremal test function is already known to be a Dirac delta; only the total-variation computation is missing, and it is a finite sum.
+
+**Falsifiable:** compute $D(S)$ for all $S \subseteq \mathbb{Z}/8\mathbb{Z}$ by exhaustion and compare with the formula.
+
+**Conjecture 2 (Poisson spectrum determines the group).** For finite abelian $G$, $H$, the multiset of cardinalities $\{|S| : S$ a nonempty Poisson set of $G\}$ determines $G$ up to isomorphism.
+
+*The key insight is* that this multiset is exactly the multiset of subgroup orders, so the conjecture asserts that a finite abelian group is determined by its subgroup-order multiset — false in general for arbitrary groups, but plausible for abelian ones ($\mathbb{Z}/4\mathbb{Z}$ gives $\{1,2,4\}$, the Klein group $\{1,2,2,2,4\}$).
+
+*Why now?* The bijection with the subgroup lattice eliminates the analytic side of the question entirely; what remains is a clean statement about abelian groups that can be attacked through the structure theorem, and refuted or confirmed by exhaustion for all abelian groups of order $\leq 64$.
+
+**Falsifiable:** search for two non-isomorphic abelian groups with equal subgroup-order multisets (e.g. among groups of order $p^4$, $p^5$).
+
+**Conjecture 3 (Weighted / non-flat Poisson sets).** Let $w : G \to \mathbb{C}$ be supported on a nonempty $S$. Suppose that for all $f$,
+$$|G| \sum_{x} w(x) f(x) \;=\; c \sum_{\psi \in \operatorname{supp}(\hat w)} \hat w(\psi)\, \hat f(\psi)$$
+for some constant $c$. Conjecture: $w$ must be a scalar multiple of a *coset indicator times a character*. This would unify the subgroup classification (Theorem A) and the coset classification (Theorem 6.4) into a single weighted statement, with the character factor accounting for the translation phase of Lemma 6.1.
+
+### 11.3 Further questions
+
+- **Non-abelian analogues.** Replacing characters by irreducible representations and $S^{\perp}$ by the set of representations trivial on $S$, does the analogue of Theorem A hold, with "subgroup" replaced by "normal subgroup" or by "subgroup" simpliciter? Lemma 2.1 survives verbatim (the kernel of a representation is a normal subgroup), which suggests the right statement involves the normal closure.
+- **Infinite locally compact groups.** For a closed subgroup of a locally compact abelian group, Poisson summation holds with Haar measures; what is the analogue of Theorem B when "Dirac delta" is replaced by an approximate identity, and does one-test-function rigidity survive?
+- **Stability in weaker norms.** Corollary 5.1 rules out approximate Poisson sets for the $\ell^\infty$ test class. What is the correct statement for defect measured against random $f$, or for $f$ drawn from a restricted class such as nonnegative functions?
+- **Algorithmic group recovery.** Theorem B gives a one-query test for subgroup-hood of a set accessible only through the oracle $f \mapsto \sum_{x \in S} f(x)$. What is the query complexity of *recovering* $\langle S \rangle$, or of estimating $|\langle S \rangle| - |S|$, from such an oracle?
+
+---
+
+## 12. Summary of results
+
+1. **Blindness lemma.** $S^{\perp} = \langle S \rangle^{\perp}$ for every $S \subseteq G$, hence $|\langle S \rangle| \cdot |S^{\perp}| = |G|$.
+2. **Fundamental character sum.** $|\langle S \rangle| \sum_{\psi \in S^{\perp}} \overline{\psi(y)} = |G| \cdot \mathbf{1}[y \in \langle S \rangle]$.
+3. **One-test-function rigidity.** $(P_S)$ for a single Dirac delta at a point of $S$ forces $S = \langle S \rangle$.
+4. **Classification.** $S$ is a Poisson set iff $S = \emptyset$ or $S$ is a subgroup; equivalently (for nonempty $S$) iff $0 \in S$ and $S$ is closed under subtraction.
+5. **Exact defect formula.** $|\langle S \rangle| D_S(f) = |G|\big(|\langle S \rangle|\sum_S f - |S|\sum_{\langle S \rangle} f\big)$; the normalised defect is the difference of averages over $S$ and $\langle S \rangle$.
+6. **Gap theorem.** For nonempty non-subgroups, some Dirac delta has defect exactly $[G : \langle S \rangle](|\langle S \rangle| - |S|) \geq 1$: there are no approximate Poisson sets.
+7. **Constant rigidity.** No renormalisation rescues a non-subgroup; the constant $|S|$ is forced.
+8. **Coset characterisation.** The phase-twisted affine identity holds iff $S$ is a coset.
+9. **Uncertainty extremality.** For nonempty $S$: Poisson $\iff$ $|S| |S^{\perp}| = |G|$ $\iff$ $\operatorname{supp}\widehat{\mathbf{1}_S} = S^{\perp}$.
+10. **Spectrum.** Nonempty Poisson sets form a copy of the subgroup lattice: meet-closed, not join-closed; of size $d(n)$ on $\mathbb{Z}/n\mathbb{Z}$; and distinguishing $\mathbb{Z}/4\mathbb{Z}$ (four Poisson sets) from the Klein four-group (six).
+11. **Quadratic residues.** The squares mod $n$ are Poisson only for $n \in \{1,2\}$; mod $8$ they fail with defect exactly $5$ and are not even a coset.

@@ -1,287 +1,186 @@
+#!/usr/bin/env python3
 """
-Minimum Uncertainty Is a Subgroup
-=================================
+Poisson summation characterises subgroups: numerical demonstrations.
+===================================================================
 
-Numerical demonstrations of the classification of the extremals of the
-Donoho-Stark uncertainty principle on a finite abelian group, and of the
-rigidity of finite Poisson summation.
+Setting.  G is a finite abelian group, realised concretely as a product of
+cyclic groups  G = Z/n_1 x ... x Z/n_r,  whose elements are tuples of
+residues.  A character of G is indexed by a tuple k and acts by
 
-Everything is implemented from scratch with the standard library only.
+    psi_k(x) = exp(2*pi*i * sum_j k_j x_j / n_j).
 
-A finite abelian group is represented as a tuple of moduli, e.g.
+The Fourier transform of f : G -> C is
 
-    (12,)      is  Z/12
-    (2, 2)     is  Z/2 x Z/2
-    (6, 2)     is  Z/6 x Z/2
+    fhat(psi) = sum_{x in G} conj(psi(x)) f(x).
 
-Its elements are tuples of residues, and the character indexed by k is
+For an arbitrary subset S of G the annihilator is
 
-    psi_k(x) = exp( 2*pi*i * sum_j k_j x_j / n_j ).
+    S^perp = { psi : psi(x) = 1 for all x in S },
 
-The discrete Fourier transform used throughout is
+and S is called a POISSON SET when
 
-    fhat(psi) = sum_x conj(psi(x)) f(x),
+    |G| sum_{x in S} f(x) = |S| sum_{psi in S^perp} fhat(psi)      (P_S)
 
-with inversion f(x) = (1/N) sum_psi psi(x) fhat(psi) and Plancherel
-sum_psi |fhat(psi)|^2 = N sum_x |f(x)|^2.
+holds for every f.  The Poisson defect is the difference of the two sides,
 
-The results demonstrated:
+    D_S(f) = |G| sum_{x in S} f(x) - |S| sum_{psi in S^perp} fhat(psi).
 
-  1. Coset modulations c * chi * 1_{a+K} are extremal:
-     |supp f| * |supp fhat| = |G|.
-  2. Conversely, every extremal function is a coset modulation, and its
-     subgroup is the difference set of its support.
-  3. The extremal spectrum of G is exactly the divisor set of |G|.
-  4. If |supp f| does not divide |G| the uncertainty product overshoots by
-     at least |supp f| - (|G| mod |supp f|).
-  5. Poisson summation holds exactly for (subgroup, annihilator) pairs, and
-     the |G| Dirac identities already certify it.
-  6. The extremal class is closed under pointwise products and convolutions.
-  7. An extremal probability distribution is uniform on a coset.
-  8. Z/4 and Z/2 x Z/2 have the same extremal spectrum but different
-     families of extremal supports.
+This script verifies numerically, on many concrete groups:
+
+  1. Poisson summation holds for every subgroup and every random f.
+  2. The blindness lemma  S^perp = <S>^perp  and  |<S>| * |S^perp| = |G|.
+  3. The exact defect formula
+         |<S>| D_S(f) = |G| ( |<S>| sum_S f  -  |S| sum_{<S>} f ).
+  4. One-test-function rigidity: a single Dirac delta detects non-subgroups.
+  5. The gap theorem: for a nonempty non-subgroup, the delta defect equals
+         [G : <S>] * ( |<S>| - |S| )  >=  1.
+  6. Constant rigidity: no choice of constant c rescues a non-subgroup.
+  7. Uncertainty extremality: Poisson  <=>  |S||S^perp| = |G|
+                                       <=>  supp(indicator-hat) = S^perp.
+  8. The Poisson spectrum is the subgroup lattice; on Z/nZ it has d(n)
+     nonempty members; it separates Z/4Z from the Klein four-group.
+  9. The squares mod n are Poisson only for n = 1, 2; mod 8 the defect is 5.
+
+Everything is elementary and self-contained: only the standard library plus
+`cmath`/`itertools`/`math` are used.
 """
 
 from __future__ import annotations
 
 import cmath
 import itertools
-from typing import Dict, Iterable, List, Optional, Sequence, Set, Tuple
+import math
+import random
+from typing import Callable, Dict, Iterable, List, Sequence, Tuple
 
-Elem = Tuple[int, ...]
-Group = Tuple[int, ...]
-Func = Dict[Elem, complex]
+Elem = Tuple[int, ...]      # a group element, as a tuple of residues
+Char = Tuple[int, ...]      # a character, indexed the same way
 
-TOL: float = 1e-9
-
-
-# ---------------------------------------------------------------------------
-# Group arithmetic and characters
-# ---------------------------------------------------------------------------
+TOL = 1e-9
 
 
-def elements(group: Group) -> List[Elem]:
+# ----------------------------------------------------------------------
+# Group machinery
+# ----------------------------------------------------------------------
+
+def group_elements(moduli: Sequence[int]) -> List[Elem]:
     """All elements of Z/n_1 x ... x Z/n_r, in lexicographic order."""
-    return [tuple(t) for t in itertools.product(*(range(n) for n in group))]
+    return [tuple(t) for t in itertools.product(*(range(n) for n in moduli))]
 
 
-def order(group: Group) -> int:
-    """The order |G| of the group."""
-    n = 1
-    for m in group:
-        n *= m
-    return n
+def add(moduli: Sequence[int], x: Elem, y: Elem) -> Elem:
+    """Group addition, componentwise modulo the respective moduli."""
+    return tuple((a + b) % n for a, b, n in zip(x, y, moduli))
 
 
-def add(group: Group, x: Elem, y: Elem) -> Elem:
-    """Group addition."""
-    return tuple((a + b) % n for a, b, n in zip(x, y, group))
+def sub(moduli: Sequence[int], x: Elem, y: Elem) -> Elem:
+    """Group subtraction, componentwise modulo the respective moduli."""
+    return tuple((a - b) % n for a, b, n in zip(x, y, moduli))
 
 
-def sub(group: Group, x: Elem, y: Elem) -> Elem:
-    """Group subtraction."""
-    return tuple((a - b) % n for a, b, n in zip(x, y, group))
-
-
-def zero(group: Group) -> Elem:
+def zero(moduli: Sequence[int]) -> Elem:
     """The neutral element."""
-    return tuple(0 for _ in group)
+    return tuple(0 for _ in moduli)
 
 
-def character(group: Group, k: Elem, x: Elem) -> complex:
-    """The character psi_k evaluated at x: exp(2*pi*i * sum k_j x_j / n_j)."""
-    phase = sum(2.0 * cmath.pi * (kj * xj) / nj for kj, xj, nj in zip(k, x, group))
-    return cmath.exp(1j * phase)
+def character_value(moduli: Sequence[int], k: Char, x: Elem) -> complex:
+    """Value psi_k(x) = exp(2*pi*i * sum_j k_j x_j / n_j)."""
+    phase = sum(kj * xj / nj for kj, xj, nj in zip(k, x, moduli))
+    return cmath.exp(2j * math.pi * phase)
 
 
-# ---------------------------------------------------------------------------
-# The discrete Fourier transform
-# ---------------------------------------------------------------------------
+def characters(moduli: Sequence[int]) -> List[Char]:
+    """The full character group, indexed exactly like the group itself."""
+    return group_elements(moduli)
 
 
-def dft(group: Group, f: Func) -> Func:
-    """fhat(k) = sum_x conj(psi_k(x)) f(x), indexed by the dual element k."""
-    els = elements(group)
-    out: Func = {}
-    for k in els:
-        total = 0j
-        for x in els:
-            fx = f.get(x, 0j)
-            if fx != 0:
-                total += character(group, k, x).conjugate() * fx
-        out[k] = total
+def fourier_transform(moduli: Sequence[int],
+                      f: Dict[Elem, complex],
+                      k: Char) -> complex:
+    """fhat(psi_k) = sum_x conj(psi_k(x)) f(x)."""
+    return sum(character_value(moduli, k, x).conjugate() * f[x]
+               for x in group_elements(moduli))
+
+
+def annihilator(moduli: Sequence[int], S: Iterable[Elem]) -> List[Char]:
+    """S^perp = { psi : psi(x) = 1 for all x in S }."""
+    S = list(S)
+    out: List[Char] = []
+    for k in characters(moduli):
+        if all(abs(character_value(moduli, k, x) - 1.0) < TOL for x in S):
+            out.append(k)
     return out
 
 
-def idft(group: Group, fhat: Func) -> Func:
-    """Inverse transform: f(x) = (1/N) sum_k psi_k(x) fhat(k)."""
-    els = elements(group)
-    n = order(group)
-    return {
-        x: sum(character(group, k, x) * fhat.get(k, 0j) for k in els) / n for x in els
-    }
+def generated_subgroup(moduli: Sequence[int], S: Iterable[Elem]) -> List[Elem]:
+    """<S>: closure of S under subtraction, starting from {0}."""
+    current = {zero(moduli)} | set(S)
+    while True:
+        grown = set(current)
+        for x in current:
+            for y in current:
+                grown.add(sub(moduli, x, y))
+        if grown == current:
+            return sorted(current)
+        current = grown
 
 
-def support(f: Func, tol: float = TOL) -> Set[Elem]:
-    """The set of points where f is (numerically) nonzero."""
-    return {x for x, v in f.items() if abs(v) > tol}
-
-
-def uncertainty_product(group: Group, f: Func) -> int:
-    """|supp f| * |supp fhat|."""
-    return len(support(f)) * len(support(dft(group, f)))
-
-
-def is_extremal(group: Group, f: Func) -> bool:
-    """True when |supp f| * |supp fhat| = |G| (and f is nonzero)."""
-    if not support(f):
+def is_subgroup(moduli: Sequence[int], S: Iterable[Elem]) -> bool:
+    """Combinatorial criterion: 0 in S and S closed under subtraction."""
+    Sset = set(S)
+    if not Sset:
         return False
-    return uncertainty_product(group, f) == order(group)
+    if zero(moduli) not in Sset:
+        return False
+    return all(sub(moduli, x, y) in Sset for x in Sset for y in Sset)
 
 
-def convolve(group: Group, u: Func, v: Func) -> Func:
-    """(u * v)(x) = sum_y u(y) v(x - y)."""
-    els = elements(group)
-    return {
-        x: sum(u.get(y, 0j) * v.get(sub(group, x, y), 0j) for y in els) for x in els
-    }
+# ----------------------------------------------------------------------
+# The Poisson identity, its defect, and its predicted value
+# ----------------------------------------------------------------------
+
+def poisson_defect(moduli: Sequence[int],
+                   S: Sequence[Elem],
+                   f: Dict[Elem, complex]) -> complex:
+    """D_S(f) = |G| sum_{x in S} f(x) - |S| sum_{psi in S^perp} fhat(psi)."""
+    G = group_elements(moduli)
+    perp = annihilator(moduli, S)
+    lhs = len(G) * sum(f[x] for x in S)
+    rhs = len(S) * sum(fourier_transform(moduli, f, k) for k in perp)
+    return lhs - rhs
 
 
-def pointwise(u: Func, v: Func) -> Func:
-    """Pointwise product."""
-    return {x: u.get(x, 0j) * v.get(x, 0j) for x in set(u) | set(v)}
+def defect_via_formula(moduli: Sequence[int],
+                       S: Sequence[Elem],
+                       f: Dict[Elem, complex]) -> complex:
+    """The defect predicted by the exact formula, using no characters:
 
-
-# ---------------------------------------------------------------------------
-# Subgroups, cosets, coset modulations
-# ---------------------------------------------------------------------------
-
-
-def subgroup_generated(group: Group, gens: Iterable[Elem]) -> Set[Elem]:
-    """The subgroup of G generated by the given elements (closure by BFS)."""
-    seen: Set[Elem] = {zero(group)}
-    frontier: List[Elem] = [zero(group)]
-    gens = list(gens)
-    while frontier:
-        x = frontier.pop()
-        for g in gens:
-            y = add(group, x, g)
-            if y not in seen:
-                seen.add(y)
-                frontier.append(y)
-    return seen
-
-
-def all_subgroups(group: Group) -> List[Set[Elem]]:
-    """All subgroups of G, obtained by closing every subset of generators
-    of size at most the rank + 1 (exhaustive for the small groups used here)."""
-    els = elements(group)
-    found: Set[frozenset] = set()
-    for r in range(0, min(3, len(els)) + 1):
-        for gens in itertools.combinations(els, r):
-            found.add(frozenset(subgroup_generated(group, gens)))
-    return [set(s) for s in sorted(found, key=lambda s: (len(s), sorted(s)))]
-
-
-def annihilator(group: Group, subgroup: Set[Elem]) -> Set[Elem]:
-    """K^perp = { k : psi_k(x) = 1 for all x in K }, as a set of dual indices."""
-    return {
-        k
-        for k in elements(group)
-        if all(abs(character(group, k, x) - 1.0) < TOL for x in subgroup)
-    }
-
-
-def coset_modulation(
-    group: Group, subgroup: Set[Elem], a: Elem, chi: Elem, c: complex
-) -> Func:
-    """f(x) = c * psi_chi(x) for x in a + K, and 0 elsewhere."""
-    cos = {add(group, a, k) for k in subgroup}
-    return {
-        x: (c * character(group, chi, x) if x in cos else 0j) for x in elements(group)
-    }
-
-
-def difference_set(group: Group, s: Set[Elem]) -> Set[Elem]:
-    """S - S = { x - y : x, y in S }."""
-    return {sub(group, x, y) for x in s for y in s}
-
-
-def is_coset(group: Group, s: Set[Elem]) -> bool:
-    """A nonempty S is a coset iff |S - S| = |S| (equivalently, iff S is
-    closed under the parallelogram operation (x, y, z) -> x - y + z)."""
-    return bool(s) and len(difference_set(group, s)) == len(s)
-
-
-def is_parallelogram_closed(group: Group, s: Set[Elem]) -> bool:
-    """Direct test of closure under (x, y, z) -> x - y + z."""
-    return bool(s) and all(
-        add(group, sub(group, x, y), z) in s for x in s for y in s for z in s
-    )
-
-
-# ---------------------------------------------------------------------------
-# Structure extraction (Algorithm 2 of the paper)
-# ---------------------------------------------------------------------------
-
-
-def extract_structure(
-    group: Group, f: Func
-) -> Optional[Tuple[Set[Elem], Elem, Elem, complex]]:
-    """For an extremal f, recover (K, a, chi, c) with f = c * psi_chi * 1_{a+K}.
-
-    Returns None if f is not extremal.  The subgroup is recovered purely
-    combinatorially, as the difference set of the support; the character index
-    is then found by matching phases on the support.
+        D_S(f) = (|G| / |<S>|) ( |<S>| sum_S f - |S| sum_{<S>} f ).
     """
-    if not is_extremal(group, f):
-        return None
-    s = support(f)
-    a = sorted(s)[0]
-    k_sub = difference_set(group, s)
-    c_times_chi_a = f[a]
-    for chi in elements(group):
-        c = c_times_chi_a * character(group, chi, a).conjugate()
-        candidate = coset_modulation(group, k_sub, a, chi, c)
-        if all(abs(candidate[x] - f.get(x, 0j)) < 1e-7 for x in elements(group)):
-            return k_sub, a, chi, c
-    return None
+    G = group_elements(moduli)
+    H = generated_subgroup(moduli, S)
+    return (len(G) / len(H)) * (len(H) * sum(f[x] for x in S)
+                                - len(S) * sum(f[x] for x in H))
 
 
-# ---------------------------------------------------------------------------
-# Poisson pairs (Definition 3.3, Lemma 3.4, Corollary 3.8)
-# ---------------------------------------------------------------------------
+def dirac(moduli: Sequence[int], y: Elem) -> Dict[Elem, complex]:
+    """The Dirac delta at y."""
+    return {x: (1.0 + 0j if x == y else 0j) for x in group_elements(moduli)}
 
 
-def poisson_holds_for(group: Group, s: Set[Elem], t: Set[Elem], f: Func) -> bool:
-    """Check N * sum_{x in S} f(x) = |S| * sum_{k in T} fhat(k) for one f."""
-    n = order(group)
-    fhat = dft(group, f)
-    lhs = n * sum(f.get(x, 0j) for x in s)
-    rhs = len(s) * sum(fhat[k] for k in t)
-    return abs(lhs - rhs) < 1e-7
+def random_function(moduli: Sequence[int],
+                    rng: random.Random) -> Dict[Elem, complex]:
+    """A random complex test function on G."""
+    return {x: complex(rng.uniform(-1, 1), rng.uniform(-1, 1))
+            for x in group_elements(moduli)}
 
 
-def poisson_dirac_test(group: Group, s: Set[Elem], t: Set[Elem]) -> bool:
-    """The finite certificate: check only the |G| Dirac identities
-    N * 1_S(y) = |S| * sum_{k in T} psi_k(y)."""
-    n = order(group)
-    for y in elements(group):
-        lhs = n * (1.0 if y in s else 0.0)
-        rhs = len(s) * sum(character(group, k, y) for k in t)
-        if abs(lhs - rhs) > 1e-7:
-            return False
-    return True
-
-
-# ---------------------------------------------------------------------------
-# Small helpers
-# ---------------------------------------------------------------------------
-
-
-def divisors(n: int) -> List[int]:
-    """All positive divisors of n, ascending."""
-    return [d for d in range(1, n + 1) if n % d == 0]
+def fmt(z: complex) -> str:
+    """Compact printing of a complex number, cleaning tiny numerical dust."""
+    re, im = z.real, z.imag
+    if abs(im) < 1e-9:
+        return f"{re:+.6f}"
+    return f"{re:+.6f}{im:+.6f}i"
 
 
 def banner(title: str) -> None:
@@ -291,370 +190,280 @@ def banner(title: str) -> None:
     print("=" * 78)
 
 
-# ---------------------------------------------------------------------------
-# Demonstration 1: coset modulations saturate the uncertainty principle
-# ---------------------------------------------------------------------------
+# ----------------------------------------------------------------------
+# Demonstration 1: Poisson summation holds for subgroups
+# ----------------------------------------------------------------------
+
+def demo_subgroups_are_poisson() -> None:
+    banner("1. Poisson summation holds for every subgroup, for random f")
+    rng = random.Random(20260819)
+    cases: List[Tuple[Sequence[int], List[Elem], str]] = [
+        ((8,), [(0,), (2,), (4,), (6,)], "even residues in Z/8Z"),
+        ((8,), [(0,), (4,)], "{0,4} in Z/8Z"),
+        ((12,), [(0,), (3,), (6,), (9,)], "multiples of 3 in Z/12Z"),
+        ((2, 2), [(0, 0), (1, 1)], "diagonal in Klein four-group"),
+        ((2, 6), [(0, 0), (0, 2), (0, 4)], "0 x <2> in Z/2 x Z/6"),
+    ]
+    for moduli, S, name in cases:
+        G = group_elements(moduli)
+        perp = annihilator(moduli, S)
+        worst = 0.0
+        for _ in range(6):
+            f = random_function(moduli, rng)
+            worst = max(worst, abs(poisson_defect(moduli, S, f)))
+        print(f"  {name:34s}  |G|={len(G):3d}  |S|={len(S):2d} "
+              f" |S^perp|={len(perp):3d}   max|defect| = {worst:.2e}")
+        assert worst < 1e-8
 
 
-def demo_coset_modulations_are_extremal() -> None:
-    banner("1. Coset modulations attain equality:  |supp f| * |supp fhat| = |G|")
-    group: Group = (12,)
-    n = order(group)
-    print(f"G = Z/12,  |G| = {n}\n")
-    print(f"{'subgroup K':<28}{'a':<8}{'chi':<7}{'|supp f|':>9}{'|supp fhat|':>13}"
-          f"{'product':>9}")
-    print("-" * 78)
-    for k_sub in all_subgroups(group):
-        a: Elem = (1,)
-        chi: Elem = (5,)
-        f = coset_modulation(group, k_sub, a, chi, 2 + 1j)
-        sf, sh = len(support(f)), len(support(dft(group, f)))
-        label = "{" + ",".join(str(x[0]) for x in sorted(k_sub)) + "}"
-        if len(label) > 26:
-            label = label[:23] + "...}"
-        print(f"{label:<28}{a[0]:<8}{chi[0]:<7}{sf:>9}{sh:>13}{sf * sh:>9}")
-    print("\nEvery product equals |G| = 12, as the classification predicts.")
+# ----------------------------------------------------------------------
+# Demonstration 2: blindness of the annihilator
+# ----------------------------------------------------------------------
+
+def demo_blindness() -> None:
+    banner("2. Blindness lemma:  S^perp = <S>^perp   and   |<S>|*|S^perp| = |G|")
+    cases: List[Tuple[Sequence[int], List[Elem]]] = [
+        ((8,), [(0,), (1,), (4,)]),          # squares mod 8
+        ((8,), [(2,), (6,)]),
+        ((12,), [(4,), (9,)]),
+        ((2, 2), [(1, 0), (0, 1)]),
+        ((3, 3), [(1, 2)]),
+    ]
+    for moduli, S in cases:
+        G = group_elements(moduli)
+        H = generated_subgroup(moduli, S)
+        pS = set(annihilator(moduli, S))
+        pH = set(annihilator(moduli, H))
+        print(f"  G = Z/{'x Z/'.join(map(str, moduli))}   S = {S}")
+        print(f"      <S> has {len(H):3d} elements,  |S^perp| = {len(pS):3d},"
+              f"   S^perp == <S>^perp : {pS == pH}")
+        print(f"      |<S>| * |S^perp| = {len(H) * len(pS):3d}"
+              f"   vs   |G| = {len(G):3d}")
+        assert pS == pH
+        assert len(H) * len(pS) == len(G)
 
 
-# ---------------------------------------------------------------------------
-# Demonstration 2: exhaustive verification on Z/4
-# ---------------------------------------------------------------------------
+# ----------------------------------------------------------------------
+# Demonstration 3: the exact defect formula
+# ----------------------------------------------------------------------
+
+def demo_defect_formula() -> None:
+    banner("3. Exact defect formula (character-free prediction vs direct sum)")
+    rng = random.Random(11235)
+    cases: List[Tuple[Sequence[int], List[Elem]]] = [
+        ((8,), [(0,), (1,), (4,)]),
+        ((8,), [(1,), (3,)]),
+        ((9,), [(3,), (6,)]),
+        ((2, 4), [(1, 1), (0, 2)]),
+    ]
+    for moduli, S in cases:
+        H = generated_subgroup(moduli, S)
+        worst = 0.0
+        for _ in range(8):
+            f = random_function(moduli, rng)
+            worst = max(worst, abs(poisson_defect(moduli, S, f)
+                                   - defect_via_formula(moduli, S, f)))
+        print(f"  S = {str(S):26s} |S| = {len(S)}, |<S>| = {len(H):3d}"
+              f"    max discrepancy = {worst:.2e}")
+        assert worst < 1e-8
 
 
-def demo_exhaustive_z4() -> None:
-    banner("2. Exhaustive census on Z/4 over the values {0, 1, -1, i, -i}")
-    group: Group = (4,)
-    els = elements(group)
-    values: Sequence[complex] = (0j, 1 + 0j, -1 + 0j, 1j, -1j)
+# ----------------------------------------------------------------------
+# Demonstration 4 & 5: one-delta rigidity and the gap theorem
+# ----------------------------------------------------------------------
 
-    total = 0
-    nonzero = 0
-    bound_ok = True
-    extremals: List[Func] = []
-    size_hist: Dict[int, int] = {d: 0 for d in range(5)}
-
-    for combo in itertools.product(values, repeat=len(els)):
-        f: Func = dict(zip(els, combo))
-        total += 1
-        s = support(f)
-        if not s:
-            continue
-        nonzero += 1
-        prod = uncertainty_product(group, f)
-        if prod < 4:
-            bound_ok = False
-        if prod == 4:
-            extremals.append(f)
-            size_hist[len(s)] += 1
-
-    print(f"functions tested / nonzero            : {total} / {nonzero}")
-    print(f"uncertainty bound |supp f||supp fhat| >= 4 holds everywhere : {bound_ok}")
-    print(f"number of extremals                   : {len(extremals)}")
-    print("support-size distribution of extremals: "
-          + ", ".join(f"size {d}: {size_hist[d]}" for d in range(5)))
-    print("  (no extremal of support size 3, because 3 does not divide 4)")
-
-    all_cosets = all(is_coset(group, support(f)) for f in extremals)
-    flat = all(
-        len({round(abs(f[x]), 9) for x in support(f)}) == 1 for f in extremals
-    )
-    freq_cosets = all(
-        is_coset(group, support(dft(group, f))) for f in extremals
-    )
-    print(f"every extremal support is a coset     : {all_cosets}")
-    print(f"every extremal is flat on its support : {flat}")
-    print(f"every frequency support is a coset    : {freq_cosets}")
-
-    bad: Func = {(0,): 1 + 0j, (1,): 1 + 0j, (2,): 0j, (3,): 0j}
-    print(f"\nthe non-coset support {{0,1}}: product = "
-          f"{uncertainty_product(group, bad)} > 4, so not extremal")
+def demo_gap_theorem() -> None:
+    banner("4/5. One Dirac delta detects non-subgroups; the gap is exact")
+    print("     predicted delta-defect = [G:<S>] * (|<S>| - |S|)\n")
+    cases: List[Tuple[Sequence[int], List[Elem], str]] = [
+        ((8,), [(0,), (1,), (4,)], "squares mod 8"),
+        ((8,), [(0,), (2,)], "{0,2} in Z/8Z"),
+        ((8,), [(0,), (1,)], "{0,1} in Z/8Z"),
+        ((12,), [(0,), (4,), (8,), (1,)], "<4> plus one stray point"),
+        ((2, 2), [(0, 0), (1, 0), (0, 1)], "Klein minus one point"),
+        ((5,), [(0,), (1,), (2,)], "{0,1,2} in Z/5Z"),
+    ]
+    for moduli, S, name in cases:
+        G = group_elements(moduli)
+        H = generated_subgroup(moduli, S)
+        index = len(G) // len(H)
+        predicted = index * (len(H) - len(S))
+        y0 = S[0]
+        observed = poisson_defect(moduli, S, dirac(moduli, y0))
+        flag = "SUBGROUP" if is_subgroup(moduli, S) else "not a subgroup"
+        print(f"  {name:26s} {flag:15s} |S|={len(S)} |<S>|={len(H):3d} "
+              f"index={index:2d}  predicted={predicted:3d}  "
+              f"observed={fmt(observed)}")
+        assert abs(observed - predicted) < 1e-8
+        if not is_subgroup(moduli, S):
+            assert abs(observed) >= 1 - 1e-9
 
 
-# ---------------------------------------------------------------------------
-# Demonstration 3: the extremal spectrum is the divisor set
-# ---------------------------------------------------------------------------
+# ----------------------------------------------------------------------
+# Demonstration 6: constant rigidity
+# ----------------------------------------------------------------------
+
+def demo_constant_rigidity() -> None:
+    banner("6. Constant rigidity: no c rescues a non-subgroup")
+    moduli = (8,)
+    S = [(0,), (1,), (4,)]
+    G = group_elements(moduli)
+    perp = annihilator(moduli, S)
+    print(f"  G = Z/8Z, S = squares mod 8 = {S},  |S^perp| = {len(perp)}")
+    print("  Testing  |G| sum_S f = c sum_{S^perp} fhat  for a grid of c,")
+    print("  against the three Dirac deltas at 0, 1, 4 and at 5 (outside S).\n")
+    print(f"  {'c':>6s} | " + " | ".join(f"delta_{y[0]}" for y in
+                                         [(0,), (1,), (4,), (5,)]))
+    for c in [1.0, 2.0, 3.0, 4.0, 8.0]:
+        row = []
+        for y in [(0,), (1,), (4,), (5,)]:
+            f = dirac(moduli, y)
+            lhs = len(G) * sum(f[x] for x in S)
+            rhs = c * sum(fourier_transform(moduli, f, k) for k in perp)
+            row.append(f"{abs(lhs - rhs):7.3f}")
+        print(f"  {c:6.1f} | " + " | ".join(row))
+    print("\n  No single value of c makes all four residuals vanish: c = |<S>| = 8")
+    print("  handles the deltas inside S but then fails at the point 5 of <S>\\S.")
+    print("  The identity is unsalvageable for S, as the theory predicts.")
 
 
-def demo_extremal_spectrum() -> None:
-    banner("3. The extremal spectrum of G equals the divisor set of |G|")
-    for group in [(4,), (2, 2), (6,), (12,), (6, 2)]:
-        n = order(group)
-        achievable = sorted({len(k) for k in all_subgroups(group)})
-        # realise each size by an explicit extremal function and check it
-        realised = []
-        for k_sub in all_subgroups(group):
-            f = coset_modulation(group, k_sub, zero(group), zero(group), 1 + 0j)
-            if is_extremal(group, f):
-                realised.append(len(k_sub))
-        name = " x ".join(f"Z/{m}" for m in group)
-        print(f"{name:<14} |G| = {n:>3}   subgroup orders {achievable}"
-              f"   divisors {divisors(n)}")
-        assert achievable == divisors(n) == sorted(set(realised))
-    print("\nEvery divisor is realised by an explicit extremal function, and no"
-          "\nother size occurs -- the extremal spectrum theorem.")
+# ----------------------------------------------------------------------
+# Demonstration 7: uncertainty extremality
+# ----------------------------------------------------------------------
+
+def demo_uncertainty() -> None:
+    banner("7. Poisson sets are exactly the uncertainty extremals")
+    print("     |S| |S^perp| <= |G| <= |S| |supp(indicator-hat)|,")
+    print("     with the left inequality tight exactly for Poisson sets.\n")
+    for moduli in [(8,), (2, 2), (6,)]:
+        G = group_elements(moduli)
+        print(f"  --- G = Z/{'x Z/'.join(map(str, moduli))}, |G| = {len(G)}")
+        for r in range(1, len(G) + 1):
+            for S in itertools.combinations(G, r):
+                Sl = list(S)
+                perp = annihilator(moduli, Sl)
+                ind = {x: (1.0 + 0j if x in S else 0j) for x in G}
+                supp = [k for k in characters(moduli)
+                        if abs(fourier_transform(moduli, ind, k)) > TOL]
+                left_tight = (len(Sl) * len(perp) == len(G))
+                supp_eq = (set(supp) == set(perp))
+                sub_flag = is_subgroup(moduli, Sl)
+                assert left_tight == sub_flag == supp_eq
+                if sub_flag:
+                    print(f"      subgroup {str(Sl):40s} "
+                          f"|S||S^perp| = {len(Sl) * len(perp):3d} = |G|,"
+                          f"  supp = S^perp")
+        print("      (all non-subgroups checked: both equalities fail)")
 
 
-# ---------------------------------------------------------------------------
-# Demonstration 4: the gap when the support size does not divide |G|
-# ---------------------------------------------------------------------------
+# ----------------------------------------------------------------------
+# Demonstration 8: the Poisson spectrum
+# ----------------------------------------------------------------------
+
+def poisson_spectrum(moduli: Sequence[int]) -> List[List[Elem]]:
+    """All nonempty Poisson sets of G, by exhaustion over subsets."""
+    G = group_elements(moduli)
+    out: List[List[Elem]] = []
+    for r in range(1, len(G) + 1):
+        for S in itertools.combinations(G, r):
+            if is_subgroup(moduli, list(S)):
+                out.append(list(S))
+    return out
 
 
-def demo_uncertainty_gap() -> None:
-    banner("4. The uncertainty gap when |supp f| does not divide |G|")
-    group: Group = (12,)
-    n = order(group)
-    print("G = Z/12.  For each support size s, the sharpened bound is")
-    print("    s * |supp fhat| >= N + (s - N mod s)  when s does not divide N.\n")
-    print(f"{'s':>3}{'s | 12?':>10}{'ceil(12/s)':>12}{'guaranteed product':>21}")
-    print("-" * 48)
-    for s in range(1, n + 1):
-        divides = n % s == 0
-        ceil_t = -(-n // s)
-        guaranteed = n if divides else n + (s - n % s)
-        print(f"{s:>3}{('yes' if divides else 'no'):>10}{ceil_t:>12}{guaranteed:>21}")
-
-    print("\nEmpirical check for s = 5 on Z/12 (random 5-point supports):")
-    import random
-
-    random.seed(20260819)
-    worst = None
-    for _ in range(400):
-        pts = random.sample(elements(group), 5)
-        f: Func = {x: 0j for x in elements(group)}
-        for p in pts:
-            f[p] = complex(random.choice([1, -1, 2, 1j, -1j]))
-        prod = uncertainty_product(group, f)
-        worst = prod if worst is None else min(worst, prod)
-    print(f"  smallest product observed: {worst}"
-          f"   (guaranteed lower bound: {n + (5 - n % 5)})")
+def divisor_count(n: int) -> int:
+    """d(n), the number of positive divisors of n."""
+    return sum(1 for d in range(1, n + 1) if n % d == 0)
 
 
-# ---------------------------------------------------------------------------
-# Demonstration 5: structure extraction from a bare numerical equality
-# ---------------------------------------------------------------------------
+def demo_spectrum() -> None:
+    banner("8. The Poisson spectrum is the subgroup lattice")
+    print("  Nonempty Poisson sets of Z/nZ, counted against d(n):\n")
+    for n in range(1, 13):
+        spec = poisson_spectrum((n,))
+        print(f"    n = {n:2d}:  {len(spec):2d} Poisson sets, d(n) = "
+              f"{divisor_count(n):2d}   sizes = "
+              f"{sorted(len(S) for S in spec)}")
+        assert len(spec) == divisor_count(n)
+
+    print("\n  Separation of two groups of the same order:")
+    z4 = poisson_spectrum((4,))
+    klein = poisson_spectrum((2, 2))
+    print(f"    Z/4Z            : {len(z4)} nonempty "
+          f"(+ empty set = {len(z4) + 1}), sizes "
+          f"{sorted(len(S) for S in z4)}")
+    print(f"    Z/2Z x Z/2Z     : {len(klein)} nonempty "
+          f"(+ empty set = {len(klein) + 1}), sizes "
+          f"{sorted(len(S) for S in klein)}")
+    assert len(z4) + 1 == 4 and len(klein) + 1 == 6
+    print("    => the number of exact Poisson formulas is an isomorphism")
+    print("       invariant, not a function of |G|.")
+
+    print("\n  Meet-closed but not join-closed (Klein four-group):")
+    A: List[Elem] = [(0, 0), (1, 0)]
+    B: List[Elem] = [(0, 0), (0, 1)]
+    U = sorted(set(A) | set(B))
+    I = sorted(set(A) & set(B))
+    print(f"    A = {A} Poisson: {is_subgroup((2, 2), A)}")
+    print(f"    B = {B} Poisson: {is_subgroup((2, 2), B)}")
+    print(f"    A n B = {I} Poisson: {is_subgroup((2, 2), I)}")
+    print(f"    A u B = {U} Poisson: {is_subgroup((2, 2), U)}   "
+          f"(missing (1,1) = (1,0)+(0,1))")
+    assert is_subgroup((2, 2), A) and is_subgroup((2, 2), B)
+    assert is_subgroup((2, 2), I) and not is_subgroup((2, 2), U)
 
 
-def demo_structure_extraction() -> None:
-    banner("5. From a numerical coincidence to a subgroup: structure extraction")
-    group: Group = (6, 2)
-    n = order(group)
-    k_sub = subgroup_generated(group, [(2, 0), (0, 1)])
-    a: Elem = (1, 0)
-    chi: Elem = (4, 1)
-    c: complex = 0.5 - 1.5j
-    f = coset_modulation(group, k_sub, a, chi, c)
+# ----------------------------------------------------------------------
+# Demonstration 9: quadratic residues
+# ----------------------------------------------------------------------
 
-    print(f"G = Z/6 x Z/2, |G| = {n}")
-    print(f"hidden data:  K = {sorted(k_sub)},  a = {a},  chi = {chi},  c = {c}")
-    print(f"observed:     |supp f| * |supp fhat| = {uncertainty_product(group, f)}"
-          f" = |G|\n")
-
-    recovered = extract_structure(group, f)
-    assert recovered is not None
-    k_rec, a_rec, chi_rec, c_rec = recovered
-    print("recovered from f alone (support difference set + phase matching):")
-    print(f"  K   = {sorted(k_rec)}")
-    print(f"  a   = {a_rec}   (any point of the support; differs from the hidden a"
-          " by an element of K)")
-    print(f"  chi = {chi_rec}")
-    print(f"  c   = {c_rec:.6g}")
-    rebuilt = coset_modulation(group, k_rec, a_rec, chi_rec, c_rec)
-    exact = all(abs(rebuilt[x] - f[x]) < 1e-9 for x in elements(group))
-    print(f"\nsubgroup recovered correctly    : {k_rec == k_sub}   (the subgroup is"
-          " unique)")
-    print(f"coset representative consistent : {sub(group, a_rec, a) in k_sub}")
-    print(f"reconstruction reproduces f     : {exact}")
-    print("the character is determined only modulo the annihilator K^perp, and the"
-          "\nscalar compensates, so (chi, c) may legitimately differ from the hidden"
-          " pair.")
+def squares_mod(n: int) -> List[Elem]:
+    """The set of squares in Z/nZ, as singleton tuples."""
+    return sorted({((a * a) % n,) for a in range(n)})
 
 
-# ---------------------------------------------------------------------------
-# Demonstration 6: rigidity of Poisson summation
-# ---------------------------------------------------------------------------
+def demo_quadratic_residues() -> None:
+    banner("9. Quadratic residues: Poisson only for n = 1, 2")
+    for n in range(1, 13):
+        moduli = (n,)
+        Q = squares_mod(n)
+        H = generated_subgroup(moduli, Q)
+        good = is_subgroup(moduli, Q)
+        index = n // len(H)
+        predicted = index * (len(H) - len(Q))
+        observed = poisson_defect(moduli, Q, dirac(moduli, Q[0]))
+        assert abs(observed - predicted) < 1e-8
+        tag = "POISSON" if good else "fails   "
+        print(f"    n = {n:2d}  squares = {str([q[0] for q in Q]):24s} "
+              f"{tag}  delta-defect = {fmt(observed)}")
+    print("\n  The squares mod 8 are {0,1,4}; they generate all of Z/8Z,")
+    print("  so the defect is 1 * (8 - 3) = 5 -- of the same order as |G|.")
+    print("  They are not a coset either: for every base point x0 in the set,")
+    moduli8 = (8,)
+    Q8 = squares_mod(8)
+    for x0 in Q8:
+        T = [sub(moduli8, q, x0) for q in Q8]
+        bad = [(a, b) for a in T for b in T
+               if sub(moduli8, a, b) not in set(T)]
+        print(f"    x0 = {x0[0]}:  S - x0 = {sorted(t[0] for t in T)} "
+              f"is not closed under subtraction "
+              f"(e.g. {bad[0][0][0]} - {bad[0][1][0]} escapes)")
+        assert bad
 
 
-def demo_poisson_rigidity() -> None:
-    banner("6. Poisson summation holds exactly for (subgroup, annihilator) pairs")
-    group: Group = (6,)
-    n = order(group)
-    print(f"G = Z/6, |G| = {n}\n")
-    print(f"{'S':<20}{'T':<22}{'Dirac test':>12}{'random f test':>16}")
-    print("-" * 72)
-
-    import random
-
-    random.seed(7)
-
-    def random_f() -> Func:
-        return {
-            x: complex(random.uniform(-2, 2), random.uniform(-2, 2))
-            for x in elements(group)
-        }
-
-    tests: List[Tuple[Set[Elem], Set[Elem], str]] = []
-    for k_sub in all_subgroups(group):
-        tests.append((k_sub, annihilator(group, k_sub), "subgroup"))
-    # a non-subgroup set of the right size, paired with its "would-be" dual
-    tests.append(({(0,), (1,)}, annihilator(group, {(0,), (3,)}), "non-subgroup"))
-    tests.append(({(1,), (4,)}, annihilator(group, {(0,), (3,)}), "coset, not subgroup"))
-
-    for s, t, _kind in tests:
-        dirac = poisson_dirac_test(group, s, t)
-        rnd = all(poisson_holds_for(group, s, t, random_f()) for _ in range(5))
-        s_lab = "{" + ",".join(str(x[0]) for x in sorted(s)) + "}"
-        t_lab = "{" + ",".join(str(x[0]) for x in sorted(t)) + "}"
-        print(f"{s_lab:<20}{t_lab:<22}{str(dirac):>12}{str(rnd):>16}")
-
-    print("\nThe Dirac test and the full test always agree: the |G| Dirac identities")
-    print("already certify the identity for all test functions.  And only the")
-    print("subgroup/annihilator pairs pass -- a coset that is not a subgroup fails.")
-
-
-# ---------------------------------------------------------------------------
-# Demonstration 7: the extremal class is closed under products and convolutions
-# ---------------------------------------------------------------------------
-
-
-def demo_algebra_closure() -> None:
-    banner("7. Products and convolutions of extremals are zero or extremal")
-    group: Group = (12,)
-    subs = all_subgroups(group)
-    import random
-
-    random.seed(1234)
-
-    pairs = 0
-    prod_zero = 0
-    conv_zero = 0
-    prod_ok = 0
-    conv_ok = 0
-    for _ in range(60):
-        k1 = random.choice(subs)
-        k2 = random.choice(subs)
-        u = coset_modulation(
-            group, k1, random.choice(elements(group)),
-            random.choice(elements(group)), complex(random.uniform(0.5, 2))
-        )
-        v = coset_modulation(
-            group, k2, random.choice(elements(group)),
-            random.choice(elements(group)), complex(0, random.uniform(0.5, 2))
-        )
-        pairs += 1
-
-        w = pointwise(u, v)
-        if not support(w):
-            prod_zero += 1
-        elif is_extremal(group, w):
-            prod_ok += 1
-
-        z = convolve(group, u, v)
-        if not support(z):
-            conv_zero += 1
-        elif is_extremal(group, z):
-            conv_ok += 1
-
-    print(f"random extremal pairs tested on Z/12   : {pairs}")
-    print(f"pointwise products: zero {prod_zero:>3}, extremal {prod_ok:>3},"
-          f" other {pairs - prod_zero - prod_ok:>3}")
-    print(f"convolutions      : zero {conv_zero:>3}, extremal {conv_ok:>3},"
-          f" other {pairs - conv_zero - conv_ok:>3}")
-
-    # convolution powers preserve the support size exactly
-    k_sub = subgroup_generated(group, [(4,)])
-    f = coset_modulation(group, k_sub, (1,), (3,), 1 + 0j)
-    g = dict(f)
-    sizes = [len(support(g))]
-    for _ in range(4):
-        g = convolve(group, f, g)
-        sizes.append(len(support(g)))
-    print(f"\nconvolution powers of a fixed extremal: support sizes {sizes}"
-          " (conserved)")
-
-
-# ---------------------------------------------------------------------------
-# Demonstration 8: extremal probability distributions
-# ---------------------------------------------------------------------------
-
-
-def demo_extremal_distributions() -> None:
-    banner("8. Extremal probability distributions are uniform on cosets")
-    group: Group = (12,)
-    n = order(group)
-    print(f"G = Z/12.  All minimum-uncertainty distributions on G:\n")
-    print(f"{'support':<34}{'p on support':>14}{'|supp p||supp phat|':>22}")
-    print("-" * 72)
-    for k_sub in all_subgroups(group):
-        for a in [(0,), (1,)]:
-            cos = sorted(add(group, a, k) for k in k_sub)
-            p: Func = {
-                x: (complex(1.0 / len(k_sub)) if x in set(cos) else 0j)
-                for x in elements(group)
-            }
-            label = "{" + ",".join(str(x[0]) for x in cos) + "}"
-            if len(label) > 32:
-                label = label[:29] + "...}"
-            print(f"{label:<34}{1.0 / len(k_sub):>14.4f}"
-                  f"{uncertainty_product(group, p):>22}")
-            if len(k_sub) in (1, n):
-                break
-
-    print("\nA non-uniform distribution on a coset, and a distribution on 5 atoms:")
-    k_sub = subgroup_generated(group, [(4,)])  # {0,4,8}
-    skew: Func = {x: 0j for x in elements(group)}
-    for x, w in zip(sorted(k_sub), [0.5, 0.3, 0.2]):
-        skew[x] = complex(w)
-    print(f"  skewed on {{0,4,8}} (weights .5/.3/.2): product = "
-          f"{uncertainty_product(group, skew)} > 12")
-    five: Func = {x: 0j for x in elements(group)}
-    for x in [(0,), (1,), (2,), (3,), (4,)]:
-        five[x] = complex(0.2)
-    print(f"  uniform on 5 atoms (5 does not divide 12): product = "
-          f"{uncertainty_product(group, five)} >= 15")
-
-
-# ---------------------------------------------------------------------------
-# Demonstration 9: the spectrum sees only the order; the supports see more
-# ---------------------------------------------------------------------------
-
-
-def demo_order_four_separation() -> None:
-    banner("9. Z/4 versus Z/2 x Z/2: same spectrum, different extremal supports")
-    for group in [(4,), (2, 2)]:
-        els = elements(group)
-        cosets_of_size_two = set()
-        for s in itertools.combinations(els, 2):
-            ss = set(s)
-            if is_parallelogram_closed(group, ss):
-                cosets_of_size_two.add(frozenset(ss))
-        spectrum = sorted({len(k) for k in all_subgroups(group)})
-        name = " x ".join(f"Z/{m}" for m in group)
-        print(f"{name:<14} spectrum {spectrum}    extremal supports of size 2: "
-              f"{len(cosets_of_size_two)}")
-        for c in sorted(cosets_of_size_two, key=lambda t: sorted(t)):
-            print(f"                 {sorted(c)}")
-    print("\nSame spectrum {1,2,4}; but 2 extremal supports of size 2 on Z/4 and 6 on")
-    print("the Klein group -- the supports form a strictly finer invariant.")
-
-
-# ---------------------------------------------------------------------------
-
+# ----------------------------------------------------------------------
 
 def main() -> None:
     print(__doc__)
-    demo_coset_modulations_are_extremal()
-    demo_exhaustive_z4()
-    demo_extremal_spectrum()
-    demo_uncertainty_gap()
-    demo_structure_extraction()
-    demo_poisson_rigidity()
-    demo_algebra_closure()
-    demo_extremal_distributions()
-    demo_order_four_separation()
-    print()
-    print("=" * 78)
-    print("All demonstrations completed.")
-    print("=" * 78)
+    demo_subgroups_are_poisson()
+    demo_blindness()
+    demo_defect_formula()
+    demo_gap_theorem()
+    demo_constant_rigidity()
+    demo_uncertainty()
+    demo_spectrum()
+    demo_quadratic_residues()
+    banner("All checks passed.")
 
 
 if __name__ == "__main__":

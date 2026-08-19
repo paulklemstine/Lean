@@ -1,128 +1,94 @@
-# Minimum Uncertainty Is a Subgroup
+# The Formula That Refuses to Bend
 
-## How a single equation forces a hidden group to appear
+## How one of analysis's most useful identities turns out to be a perfect detector of hidden symmetry
 
-There is a certain kind of theorem that mathematicians find irresistible: you assume nothing but an *equation*, and out of it walks a *structure*. You did not ask for a group. You did not ask for symmetry. You asked only that some quantity be as small as it can possibly be — and the answer turns out to be that the object you were studying was secretly a group all along.
+There is a small family of formulas in mathematics that seem to know more than they should. You feed them a function, they hand back a number, and somewhere in the exchange they quietly reveal a structural truth about the space you are working in. The Poisson summation formula is the most famous member of that family. This is the story of what happens when you try to break it — and of the discovery that it cannot be broken, bent, approximated, or renormalised. It either holds exactly, or it fails by a wide, quantifiable margin. There is nothing in between.
 
-This article is about two such theorems, and about the discovery that they are the same theorem wearing different clothes.
+### Sampling, aliasing, and a very old idea
 
----
+Start with something concrete. Suppose you are recording a sound. The microphone does not capture the whole continuous waveform; it takes samples, say $8{,}000$ times a second. Every engineer knows what happens next: frequencies above half the sampling rate do not vanish, they *masquerade*. A $9{,}000$ Hz tone recorded at $8{,}000$ samples per second comes back sounding like a $1{,}000$ Hz tone. Frequencies fold onto each other. This is aliasing, and it is the reason your camera turns a spinning wheel backwards.
 
-## Part I: A drum that cannot be everywhere at once
+Poisson summation is the exact bookkeeping of that folding. In its classical form it says that summing a function over a lattice of sample points is the same as summing its Fourier transform over the *dual* lattice — the finer you sample in space, the coarser your grid in frequency, and the two sums agree exactly. It is the identity behind the sampling theorem, behind theta-function transformations in number theory, behind Ewald summation in crystallography, behind the analytic proofs of quadratic reciprocity.
 
-Suppose you have a finite collection of $N$ locations arranged in a circle — think of $N$ pixels on a ring, or $N$ time slots in a repeating schedule, or $N$ atoms in a crystal with periodic boundary conditions. A *signal* on this circle is just an assignment of a complex number $f(x)$ to each location $x$.
+For this article we work in the cleanest possible arena: a finite abelian group $G$. Think of $G$ as the clock face $\mathbb{Z}/n\mathbb{Z}$ — the integers modulo $n$ — or as a product of several such clocks. A *character* of $G$ is a way of wrapping the group onto the unit circle in the complex plane without tearing it: a function $\psi : G \to \mathbb{C}$ with $|\psi(x)| = 1$ and
+$$\psi(x+y) = \psi(x)\,\psi(y).$$
+On $\mathbb{Z}/n\mathbb{Z}$ these are exactly the functions $x \mapsto e^{2\pi i k x/n}$, one for each $k$. The characters form a group of their own, of the same size as $G$, and the Fourier transform of a function $f : G \to \mathbb{C}$ is the recipe that evaluates $f$ against every character:
+$$\hat f(\psi) \;=\; \sum_{x \in G} \overline{\psi(x)}\, f(x).$$
 
-Every such signal can be decomposed into pure oscillations. On a ring of $N$ points, the pure oscillations are the functions
-$$x \longmapsto e^{2\pi i k x / N}, \qquad k = 0, 1, \dots, N-1,$$
-and the recipe for extracting how much of each oscillation your signal contains is the *discrete Fourier transform*:
-$$\hat f(k) \;=\; \sum_{x} e^{-2\pi i k x / N} f(x).$$
+A **subgroup** $H \subseteq G$ is a subset containing $0$ and closed under addition and negation — the even residues inside $\mathbb{Z}/8\mathbb{Z}$, say, or the multiples of $3$ inside $\mathbb{Z}/12\mathbb{Z}$. Every subgroup has a shadow on the character side, its **annihilator**
+$$H^\perp \;=\; \{\psi : \psi(x) = 1 \text{ for all } x \in H\},$$
+the characters that cannot see $H$ at all: they are constantly $1$ there. The annihilator is the finite analogue of the dual lattice, and the sizes trade off exactly as sampling intuition demands: $|H| \cdot |H^\perp| = |G|$. Big subgroup, small annihilator.
 
-Now here is the classical tension. Call the **support** of $f$, written $\operatorname{supp} f$, the set of locations where $f$ is not zero, and call $\operatorname{supp}\hat f$ the set of frequencies actually present. A signal concentrated at a single point — a click, a spike, a delta — has *every* frequency in it: $|\operatorname{supp} f| = 1$ but $|\operatorname{supp} \hat f| = N$. A pure tone is the reverse: one frequency, but it is nonzero everywhere. You cannot have both. The precise statement of this trade-off, the **Donoho–Stark uncertainty principle**, says that for every signal $f$ that is not identically zero,
-$$|\operatorname{supp} f| \cdot |\operatorname{supp}\hat f| \;\ge\; N.$$
+With that vocabulary, Poisson summation on a finite abelian group reads:
+$$|G| \sum_{x \in H} f(x) \;=\; |H| \sum_{\psi \in H^\perp} \hat f(\psi) \qquad \text{for every } f : G \to \mathbb{C}.$$
+Sum over the subgroup on the left, sum over the annihilator on the right, weight each side by the size of the other, and the two agree — always, for every function whatsoever.
 
-This is the discrete cousin of Heisenberg's uncertainty principle, and it is one of the pillars of modern signal processing: it is the reason a sparse signal can be reconstructed from few measurements, and it is at the heart of compressed sensing.
+### The question nobody had answered
 
-The inequality is easy to state. The interesting question is: **when is it an equality?**
+That identity is the "if" direction, and it is classical. But look at the statement again. Nothing in the *shape* of the formula demands that $H$ be a subgroup. Given any subset $S \subseteq G$ at all — the squares modulo $8$, a random handful of residues, three points chosen by throwing darts — you can still form its annihilator
+$$S^\perp = \{\psi : \psi(x) = 1 \text{ for all } x \in S\},$$
+and you can still write down the candidate identity
+$$|G| \sum_{x \in S} f(x) \;\overset{?}{=}\; |S| \sum_{\psi \in S^\perp} \hat f(\psi) \qquad \text{for all } f. \tag{$P_S$}$$
+Call a set satisfying $(P_S)$ a **Poisson set**. Subgroups are Poisson sets. Is anything else?
 
-## Part II: The shape of perfection
+This is a natural question with a slightly menacing quality, because the equation has a lot of freedom in it. The left side depends on $S$ only through which points it contains; the right side depends on $S$ only through its annihilator, which is a much coarser object. There seems to be room for accidents — some strange set whose annihilator happens to compensate for its irregularity. The answer is that there is no room at all.
 
-A signal $f$ is called **extremal** when the product of the two support sizes is exactly $N$ — when it is as simultaneously concentrated in space and in frequency as the laws of Fourier analysis allow.
+### The classification
 
-We already know some examples. Suppose the $N$ points form a group $G$ (on the ring, $G = \mathbb{Z}/N$, and the group operation is addition modulo $N$). Take a **subgroup** $K \le G$ — for instance, on the ring with $N = 12$, the four points $\{0, 3, 6, 9\}$. Its indicator function, which is $1$ on $K$ and $0$ elsewhere, is extremal: its transform is supported exactly on the *annihilator* $K^{\perp}$, the set of frequencies that are trivial on $K$, and a Plancherel computation shows $|K| \cdot |K^{\perp}| = N$ on the nose. Now translate that indicator to sit on a coset $a + K$ instead, multiply it by a pure oscillation $\chi$, and scale by a nonzero constant $c$. Translation and modulation do nothing to the two support sizes — translation in space becomes modulation in frequency and vice versa — so the whole family
-$$f(x) \;=\; c \cdot \chi(x) \cdot \mathbf{1}_{a + K}(x)$$
-consists of extremal signals. Call these **coset modulations**.
+**Theorem (Classification of Poisson sets).** *A finite subset $S$ of a finite abelian group $G$ satisfies $(P_S)$ for every function $f$ if and only if $S$ is empty or $S$ is a subgroup of $G$.*
 
-The result at the heart of this work is that there are no others.
+The empty set is a genuine exception rather than an oversight — both sides of $(P_S)$ are then zero, since $|S| = 0$ and the empty sum vanishes — and it is the *only* exception. Everything else that satisfies Poisson summation is a subgroup, full stop.
 
-> **Classification of the extremals.** Let $G$ be a finite abelian group of order $N$ and let $f : G \to \mathbb{C}$ be a nonzero function. Then $|\operatorname{supp} f| \cdot |\operatorname{supp}\hat f| = N$ if and only if there exist a subgroup $K \le G$, a character $\chi$, an element $a \in G$, and a nonzero constant $c$ such that $f(x) = c\,\chi(x)$ for $x \in a + K$, and $f(x) = 0$ otherwise.
+Equivalently, and more usefully for anyone who wants to *check* the condition: for nonempty $S$, the analytic identity $(P_S)$ holds precisely when $0 \in S$ and $S$ is closed under subtraction. A statement about infinitely many complex-valued test functions collapses into a finite table lookup.
 
-Read that again, because the direction that matters is the one that starts with a bare numerical coincidence. You are handed a function. You count two finite sets and multiply. The product happens to be $N$. And from that single arithmetic fact you may conclude that the function's support is a coset of a subgroup, that its modulus is constant on that coset, and that its phase is a character. The group appears out of nowhere.
+Something even sharper is true, and this is where the result becomes surprising rather than merely tidy. You do not need all functions $f$ to force the conclusion. You need one.
 
-How? The proof is an *equality analysis*: a chain of inequalities is written down whose two ends are both equal, so every link must be tight, and each tight link is a rigidity statement.
+**Theorem (One test function suffices).** *Let $S$ be a set and $y_0$ any single point of $S$. If the identity $(P_S)$ holds for the single Dirac delta $\delta_{y_0}$ — the function equal to $1$ at $y_0$ and $0$ everywhere else — then $S$ is already a subgroup.*
 
-Let $M$ be the largest value of $|f|$, attained at some point $m$, and let $S = \sum_{x \in \operatorname{supp} f} |f(x)|$. Three easy bounds:
+A Dirac delta is the least informative function imaginable. It carries one bit of location and nothing else. Yet checking Poisson summation against that one spike, at any one point of $S$, is enough to certify that $S$ is closed under addition and negation. The identity is not merely rigid; it is rigid on contact.
 
-1. $S \le |\operatorname{supp} f| \cdot M$, since each term is at most $M$.
-2. $|\hat f(\psi)| \le S$ for every frequency $\psi$, since the characters have modulus one.
-3. Fourier inversion at the peak, $N \cdot f(m) = \sum_{\psi \in \operatorname{supp}\hat f} \psi(m)\hat f(\psi)$, gives $N M \le \sum_{\psi \in \operatorname{supp}\hat f}|\hat f(\psi)| \le |\operatorname{supp}\hat f| \cdot S$.
+### Why it works: the defect has a formula
 
-Chaining these: $N M \le |\operatorname{supp}\hat f| \cdot S \le |\operatorname{supp}\hat f| \cdot |\operatorname{supp} f| \cdot M$. If $f$ is extremal, the right-hand end equals $NM$, and the whole chain collapses to equalities. Collapse (1) says $|f|$ is *flat*: constant modulus $M$ across its support. Collapse (2), applied to a triangle inequality among $|\operatorname{supp} f|$ complex numbers all of the same modulus, says those numbers are all *equal*: for each surviving frequency $\psi$, the quantity $\overline{\psi(x)}f(x)$ does not depend on $x$. That is a phase-alignment statement, and it is the whole ballgame.
+The engine behind all of this is a single change of perspective. Any set $S$ sits inside the smallest subgroup containing it, its **generated subgroup** $\langle S \rangle$ — take $S$, add and subtract elements repeatedly until nothing new appears. The crucial observation is that the character side cannot tell $S$ and $\langle S \rangle$ apart:
+$$S^\perp \;=\; \langle S \rangle^\perp .$$
+A character that is $1$ on $S$ is automatically $1$ on all sums, differences, and negatives of elements of $S$; being constantly $1$ is a condition that propagates through the group operation. So the right-hand side of $(P_S)$ is *blind to the difference between $S$ and the subgroup it generates*, while the left-hand side sees it perfectly. As an immediate corollary, for every set $S$ whatsoever,
+$$|\langle S\rangle| \cdot |S^\perp| \;=\; |G|,$$
+the size trade-off being governed by the generated subgroup, not by $S$ itself.
 
-For pick a point $a$ in the support. Alignment says $f(x) = \psi(x - a) f(a)$ for every $x$ in the support and every surviving frequency $\psi$. So *all* the surviving frequencies agree on every difference $x - a$ — hence on the subgroup $K$ they generate. That forces the support into the coset $a + K$, and it forces the frequency support into a single coset of the annihilator $K^{\perp}$. Counting, $|\operatorname{supp} f| \le |K|$ and $|\operatorname{supp}\hat f| \le |K^{\perp}|$, while $|K| \cdot |K^{\perp}| = N = |\operatorname{supp} f| \cdot |\operatorname{supp}\hat f|$. Two inequalities whose products agree must both be equalities. Everything is pinned. Reading off the values gives $f = c\,\chi\,\mathbf{1}_{a+K}$.
+Now define the **defect** of $S$ at $f$ as the amount by which $(P_S)$ fails:
+$$D_S(f) \;=\; |G| \sum_{x \in S} f(x) \;-\; |S| \sum_{\psi \in S^\perp} \hat f(\psi).$$
+Applying honest Poisson summation to the genuine subgroup $\langle S \rangle$ and substituting gives an exact, closed-form answer.
 
-## Part III: The other rigidity — Poisson summation
+**Theorem (Defect formula).** *For every set $S$ and every function $f$,*
+$$|\langle S\rangle| \cdot D_S(f) \;=\; |G| \Big( |\langle S\rangle| \sum_{x \in S} f(x) \;-\; |S| \sum_{x \in \langle S\rangle} f(x) \Big).$$
 
-Change the subject, apparently. Poisson summation is the identity that lets you trade a sum over a lattice for a sum over the dual lattice; it powers the theory of theta functions and the analytic study of the Riemann zeta function. In a finite abelian group $G$ of order $N$ it reads, for a subgroup $H$ and *every* test function $f$,
-$$N \sum_{x \in H} f(x) \;=\; |H| \sum_{\psi \in H^{\perp}} \hat f(\psi).$$
+Read that right-hand side as a comparison of averages. Up to positive factors, the defect measures exactly the discrepancy between the average of $f$ over $S$ and the average of $f$ over the subgroup $S$ generates. If $S = \langle S\rangle$, the two averages coincide for every $f$ and the defect vanishes identically. If $S \subsetneq \langle S\rangle$, choose $f$ to be a spike sitting on a point of $S$ and the two averages cannot agree: the spike counts for a fraction $1/|S|$ of the $S$-average but only $1/|\langle S\rangle|$ of the larger average. The defect formula converts that mismatch into a number, and the number is not small.
 
-Beautiful — but is the pairing (subgroup, annihilator) really *necessary*? Perhaps some clever pair of a set $S \subseteq G$ and a set $T$ of frequencies, with no group structure at all, also satisfies
-$$N \sum_{x \in S} f(x) \;=\; |S| \sum_{\psi \in T} \hat f(\psi) \quad \text{for all } f.$$
-Call such a pair a **Poisson pair**. The answer is a flat no.
+**Theorem (Gap theorem — no approximate Poisson sets).** *If $S$ is nonempty and not a subgroup, then some Dirac delta supported at a point of $S$ has defect of magnitude at least*
+$$|\langle S \rangle| - |S| \;\geq\; 1 .$$
 
-> **Rigidity of Poisson summation.** If $(S, T)$ is a Poisson pair with $S$ nonempty, then $S$ is a subgroup of $G$ and $T$ is exactly its annihilator. In particular $0 \in S$ and $|S| \cdot |T| = N$.
+This is the statement that kills any hope of an approximate theory. One might have imagined a spectrum of near-Poisson sets, sets that satisfy the identity to within a small error, useful in applications where exactness is unattainable. There is no such spectrum. Every non-subgroup misses by at least a full unit, and by much more when it is far from filling out its generated subgroup. The property is all-or-nothing.
 
-The proof is a lovely two-line-plus-epsilon argument. Feed the identity the Dirac spikes $\delta_y$, one for each $y \in G$. Because $\widehat{\delta_y}(\psi) = \overline{\psi(y)}$, the identity becomes
-$$N \cdot \mathbf{1}_S(y) \;=\; |S| \sum_{\psi \in T}\psi(y).$$
-Put $y = 0$: every character is $1$ at $0$, so $N = |S| \cdot |T|$. Therefore the displayed identity says $\sum_{\psi \in T} \psi(y) = |T| \cdot \mathbf{1}_S(y)$. Now, $|T|$ complex numbers of modulus one summing to exactly $|T|$ can only be all equal to $1$ — this is the equality case of the triangle inequality. So for $y \in S$, every $\psi \in T$ satisfies $\psi(y) = 1$; and for $y \notin S$ the sum is $0$, so certainly not all the $\psi(y)$ are $1$. That means $S$ is precisely the set $\{y : \psi(y) = 1 \text{ for all } \psi \in T\}$ — and *that* set is visibly closed under addition and negation. It is a subgroup. The count $|S| \cdot |T| = N$ then upgrades the obvious inclusion $T \subseteq S^{\perp}$ to an equality.
+Nor can the failure be repaired by fiddling with the normalisation. Suppose you allow yourself an arbitrary constant $c$ and ask when $|G| \sum_{x \in S} f(x) = c \sum_{\psi \in S^\perp} \hat f(\psi)$ holds for all $f$. For nonempty $S$ the answer is that $S$ must be a subgroup *and* $c$ must equal $|S|$. The constant in Poisson summation is not a convention; it is forced.
 
-A pleasant corollary: since the argument used only $N$ scalar equations, **Poisson summation is a finite test**. If the identity holds for the $N$ Dirac spikes, it holds for every function whatsoever — and hence the full structure theorem applies.
+### Cosets, uncertainty, and a fingerprint for groups
 
-## Part IV: One object, two faces
+Three consequences give the result texture.
 
-The two rigidity theorems now merge. On the one hand, every Poisson pair is (subgroup, annihilator). On the other hand, subgroup indicators are exactly the extremals with $f(a) = 1$, up to modulation and translation. Putting the two together: **every Poisson pair is the support pair $(\operatorname{supp} f, \operatorname{supp}\hat f)$ of an extremal function, and conversely.** The subgroup behind either phenomenon is unique. The extremals of the uncertainty principle and the valid Poisson summation formulas are the same mathematical object, counted twice.
+**The affine picture.** Subgroups are not translation-invariant objects — sliding one over by a point destroys it — yet Fourier analysis handles translation beautifully: replacing $f$ by $f(x_0 + \cdot)$ multiplies each Fourier coefficient by the phase $\psi(x_0)$. Building that phase into the identity gives an *affine Poisson formula*
+$$|G| \sum_{x \in S} f(x) \;=\; |S| \sum_{\psi \in (S - x_0)^\perp} \psi(x_0)\, \hat f(\psi),$$
+and this phase-twisted version characterises **cosets** — translates $x_0 + H$ of subgroups — exactly as the untwisted version characterises subgroups. So the rigidity is affine, not merely linear. Concretely: the squares modulo $8$, namely $\{0, 1, 4\}$, are not a coset of anything, so no choice of base point rescues them.
 
-## Part V: Arithmetic falls out
+**Extremality in the uncertainty principle.** Every set is squeezed between two dual size estimates. On one side, $|S| \cdot |S^\perp| \leq |G|$, inherited from the generated subgroup. On the other, the Donoho–Stark uncertainty principle applied to the indicator function $\mathbf{1}_S$ gives $|G| \leq |S| \cdot |\mathrm{supp}\,\widehat{\mathbf{1}_S}|$: a function and its Fourier transform cannot both be concentrated. The classification says the first inequality is an equality *precisely* for Poisson sets — and equivalently, that $S$ is Poisson exactly when the Fourier support of its indicator is exactly $S^\perp$, the smallest it could conceivably be. Poisson sets are the uncertainty extremals. Subgroups are, in the sharpest possible sense, the most concentrated objects a finite abelian group contains.
 
-Once you know the extremals are coset modulations, you can *do arithmetic with them*.
+**Counting the formulas.** Since nonempty Poisson sets are exactly subgroups, the family of exact Poisson summation formulas available on $G$ is a perfect copy of the subgroup lattice of $G$. It is closed under intersection, but not under union: in the Klein four-group $\mathbb{Z}/2 \times \mathbb{Z}/2$ the two sets $\{0, (1,0)\}$ and $\{0, (0,1)\}$ are both Poisson, while their union is not — it misses $(1,1)$. And on a cyclic group the count is a classical arithmetic function: the number of exact Poisson summation formulas on $\mathbb{Z}/n\mathbb{Z}$ is exactly $d(n)$, the number of divisors of $n$. Twelve, for example, supports precisely six.
 
-**Lagrange rigidity.** The support of an extremal function is a coset, so its size is the order of a subgroup, so — by Lagrange's theorem — it divides $N$. And the frequency support has size exactly $N/|\operatorname{supp} f|$: the two support sizes are complementary divisors.
+This turns the family of Poisson formulas into a fingerprint. The cyclic group $\mathbb{Z}/4\mathbb{Z}$ and the Klein four-group both have four elements, but the first supports four Poisson sets and the second supports six. How many exact Poisson summation formulas a group admits is not a function of how big it is; it is an invariant of its isomorphism type. Poisson summation *sees* the internal structure of the group.
 
-**A gap in the uncertainty principle.** Turn that around. If $s = |\operatorname{supp} f|$ does *not* divide $N$, then equality is impossible, so the inequality has room to spare — and an integrality argument says exactly how much:
-$$|\operatorname{supp} f| \cdot |\operatorname{supp}\hat f| \;\ge\; N + \bigl(s - (N \bmod s)\bigr),$$
-equivalently $|\operatorname{supp}\hat f| \ge \lceil N/s \rceil$. On a ring of $12$ points, a signal supported on $5$ points has $5 \nmid 12$, so it can never be extremal; the raw bound only says $|\operatorname{supp}\hat f| \ge 12/5 = 2.4$, while the sharpened one says $|\operatorname{supp}\hat f| \ge 3$ and the product overshoots $12$ by at least $5 - (12 \bmod 5) = 3$. On a group whose order is prime, *every* intermediate support size is forbidden: the only extremals are the modulated spikes and the multiples of pure tones, and everything else misses the bound by at least one.
+### The moral
 
-**The extremal spectrum.** Which sizes are achievable? Exactly the divisors:
+The classical direction of Poisson summation is a computational tool: it lets you trade an intractable sum for a tractable one. The converse recasts it as something else entirely — a *test*. Hand me a black box that evaluates $\sum_{x \in S} f(x)$ for a set $S$ I cannot see. I feed it a single spike, compare against the annihilator sum, and if the numbers match I know with certainty that $S$ is closed under addition and negation. If they do not match, I know they miss by at least one, and I can read off from the gap how far $S$ is from filling out the subgroup it generates.
 
-> **Extremal spectrum theorem.** For a finite abelian group $G$ of order $N$ and a natural number $d$, there is a nonzero extremal function with $|\operatorname{supp} f| = d$ if and only if $d \mid N$.
+The squares modulo $8$ — the residue set that governs which numbers can be legs of a Pythagorean triple — fail this test by a margin of $5$ out of a group of size $8$. That is not a near miss. It is the formula announcing, at full volume, that the quadratic residues have no additive structure whatsoever.
 
-One direction is Lagrange rigidity. The other needs a genuine piece of group theory — the *converse of Lagrange's theorem for abelian groups*: a finite abelian group has a subgroup of every order dividing its own. (This is false for general finite groups: the alternating group $A_5$ has order $60$ but no subgroup of order $30$.) Proving it by induction, via Cauchy's theorem and the correspondence between subgroups of a quotient and subgroups containing the kernel, removes the last cyclicity assumption and makes the spectrum theorem universal. More precisely, a pair $(s,t)$ arises as $(|\operatorname{supp} f|, |\operatorname{supp}\hat f|)$ for an extremal $f$ precisely when $st = N$.
-
-**Primality, detected by uncertainty.** Combining both directions yields a curiosity: $N$ is prime *if and only if* every extremal function on $G$ has support of size $1$ or $N$. Primality of the order can be read off from the geometry of the minimum-uncertainty states alone.
-
-**And a limit to what uncertainty can see.** Two finite abelian groups with the same extremal spectrum have the same order — the spectrum *is* the divisor set — but conversely, equal order forces equal spectrum. So the spectrum knows the order and nothing more. The finer invariant, the actual family of extremal *supports*, does better: on the cyclic group $\mathbb{Z}/4$ there are exactly $2$ extremal supports of size $2$, while on the Klein group $\mathbb{Z}/2 \times \mathbb{Z}/2$ there are $6$ (two cosets for each of three subgroups of order two). Same spectrum, different geometry.
-
-## Part VI: A closed algebra
-
-Extremality is a fragile-looking analytic condition, so it is startling that the extremal class is closed under the natural operations.
-
-*Products.* If $u$ and $v$ are extremal, then $uv$ is either identically zero or again extremal. This is not a soft statement — the class of functions with any prescribed support size is certainly not closed under products. It works because an extremal function is a coset modulation, and the intersection of a coset of $K$ with a coset of $K'$ is either empty or a coset of $K \cap K'$; the characters multiply, giving $\chi + \chi'$.
-
-*Convolutions.* Dually, $u * v$ is zero or extremal, now with subgroup $K + K'$, because $(K + K')^{\perp} = K^{\perp}\cap K'^{\perp}$.
-
-*Convolution powers.* Repeatedly convolving an extremal function with itself can never produce zero, since the frequency support is preserved exactly; so every convolution power is extremal, and the support size is a conserved quantity of the dynamics.
-
-*Fourier transform.* Extremality is invariant under the transform itself: if $f$ is extremal on $G$, then $\hat f$ is extremal on the dual group.
-
-Taken together, the minimum-uncertainty states form a rigid algebraic universe — a groupoid of coset modulations, stable under multiplication, convolution and duality.
-
-## Part VII: The probabilistic punchline
-
-Finally, specialize to probability. Let $p$ be a probability distribution on $G$: $p(x) \ge 0$ and $\sum_x p(x) = 1$. It is a legitimate signal, so it has a Fourier transform, and the uncertainty principle applies. What does a **minimum-uncertainty distribution** look like?
-
-> **Extremal distributions are uniform on cosets.** If a probability distribution on a finite abelian group attains equality in the uncertainty principle, then it is the uniform distribution on a coset of a subgroup.
-
-The classification hands this to us: $p = c\,\chi\,\mathbf{1}_{a+K}$; being real and nonnegative pins the phase, flatness makes it constant on its support, and $\sum p = 1$ fixes the constant to $1/|K|$. So among all distributions on a cyclic group of $12$ states, the ones that are simultaneously as concentrated as possible in state and in frequency are precisely: the point masses, the uniform distributions on the two-element cosets $\{a, a+6\}$, on the three-element cosets, the four-element cosets, the six-element cosets, and the uniform distribution on everything. Nothing else, ever. A distribution on $5$ of the $12$ states cannot be a minimum-uncertainty state, no matter how you weight it, because $5 \nmid 12$.
-
-There is a slogan here, and it is worth remembering: **in a finite abelian world, the minimum-uncertainty states are exactly the uniform distributions on cosets.** Perfect localization in both domains is not an analytic accident to be optimized toward — it is an algebraic condition, and the objects that satisfy it are subgroups in disguise.
-
----
-
-## Why it matters
-
-Compressed sensing lives on the uncertainty principle: a signal cannot be sparse in both domains, so a sparse signal has a rich spectrum, so a few frequency samples suffice to identify it. The extremal functions are precisely the *worst cases* — the signals for which the bound is tight and reconstruction guarantees are sharpest. Knowing exactly what they are converts a soft analytic obstruction into a hard arithmetic one: on a group of prime order there are essentially no bad cases, while on a highly composite group the bad cases form a rich lattice indexed by the subgroups.
-
-Poisson summation is the workhorse of lattice sums in number theory and crystallography. Its rigidity says that the lattice structure is not a convenient hypothesis but a *consequence*: any sampling scheme with a Poisson-type exchange formula is a lattice, whether you planned it that way or not.
-
-And the small computation that anchors it all is easy to check by hand. On a ring of four points, enumerate every function taking values in $\{0, 1, -1, i, -i\}$ — all $5^4 = 625$ of them. The uncertainty product never dips below $4$. Exactly $48$ of them are extremal. Their support sizes are $1$, $2$ and $4$ — sixteen of each — and not a single one has support of size $3$, because $3$ does not divide $4$. Every extremal support is a coset; every extremal has constant modulus on its support; products and convolutions of extremals are zero or extremal. The theory predicts each of those counts exactly.
-
-The equation forced the group to appear, and then the group told us everything else.
+Symmetry, it turns out, is not something Poisson summation assumes. It is something Poisson summation detects.
