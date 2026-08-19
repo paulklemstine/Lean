@@ -145,25 +145,6 @@
     "title": "Deepening: The `⇐` direction is proved (`FourierFA.uncertainty_eq_coset_modulation`); the `"
   },
   {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 57212186 (Q=0.900), which proved 621 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: It is a direct adaptation of the standard Reinforcement Learning from Human Feedback (RLHF) objective with a pre-training mix-in (PTX)—originally introduced in the InstructGPT / PPO alignment framework (Ouyang et al., 2022)—rebranded with neurosymbolic notation.Breakdown of the Components$$\\text{Obj",
-    "domain_bridges": [],
-    "domains": [
-      "NumberTheory"
-    ],
-    "id": "push_57212186_b9d15374",
-    "lineage_refs": [],
-    "priority_score": 0.95,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "57212186",
-    "status": "available",
-    "timestamp": "2026-08-19T15:46:42.594882+00:00",
-    "title": "Deepening: reinforcement learning"
-  },
-  {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
     "consumed_by_exp_id": "",
@@ -183,7 +164,7 @@
     "title": "Deepening: The Bell defect, counted exactly"
   },
   {
-    "ambition_level": "extension",
+    "ambition_level": "grand_challenge",
     "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Building on cycle 6bc62e41 (Q=0.880), which proved 70 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Both sides of the identity are already available as Lean theorems\n(`FourierFA.poisson_summation`, `FourierFA.dft_delta`), so the converse can be formalised as a\nfinite statement about the character table with no new analytic input.",
@@ -200,25 +181,6 @@
     "status": "available",
     "timestamp": "2026-08-19T15:46:51.818344+00:00",
     "title": "Deepening: Both sides of the identity are already available as Lean theorems"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle b8ad3057 (Q=0.850), which proved 69 theorems in Shared. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: What follows are the conjectures the analysis stage extracted, in decreasing order of expected\nimpact.  Each is falsifiable in the present formal setting.",
-    "domain_bridges": [],
-    "domains": [
-      "Shared"
-    ],
-    "id": "push_b8ad3057_366dd983",
-    "lineage_refs": [],
-    "priority_score": 0.95,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "b8ad3057",
-    "status": "available",
-    "timestamp": "2026-08-19T15:47:01.170112+00:00",
-    "title": "Deepening: What follows are the conjectures the analysis stage extracted, in decreasing ord"
   },
   {
     "ambition_level": "grand_challenge",
@@ -3184,7 +3146,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5c70a18c",
     "description": "Building on cycle c7c1ec6d (Q=0.767), which proved 8 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future directions: quantum EML activations\n\nThe formal results in `Catalog/Applications/EMLQuantumActivation.lean` show that the raw\nexpression\n\n\\[\n  \\exp(iH_1)\\,\\log(I+iH_2)\n\\]\n\nis not intrinsically unitary-valued: every choice with `H₂ = 0` produces zero.  They also\nshow that unitary output forc",
     "domain_bridges": [],
     "domains": [
@@ -3196,7 +3158,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "c7c1ec6d",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-02T23:23:50.647036+00:00",
     "title": "Deepening: The formal results in `Catalog/Applications/EMLQuantumActivation.lean` show that"
   },

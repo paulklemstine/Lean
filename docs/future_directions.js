@@ -9,7 +9,7 @@ window.FUTURE_DIRECTIONS = [
       "Novelty"
     ],
     "id": "fd_1569",
-    "phase": "B",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
@@ -107,20 +107,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle 57212186 (Q=0.900), which proved 621 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: It is a direct adaptation of the standard Reinforcement Learning from Human Feedback (RLHF) objective with a pre-training mix-in (PTX)\u2014originally introduced in the InstructGPT / PPO alignment framework (Ouyang et al., 2022)\u2014rebranded with neurosymbolic notation.Breakdown of the Components$$\\text{Obj",
-    "domains": [
-      "NumberTheory"
-    ],
-    "id": "push_57212186_b9d15374",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "57212186",
-    "status": "available",
-    "timestamp": "2026-08-19T15:46:42.594882+00:00",
-    "title": "Deepening: reinforcement learning"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Building on cycle 60572a3f (Q=0.850), which proved 75 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: `\u03a3_g |X^g|^k = (B_k + \u03a3_P (m_P \u2212 1))\u00b7|G|`\n    (`bell_defect_eq`): the excess of a moment over its Bell floor is `|G|` times the number of\n    *extra* orbits per pattern, and it vanishes exactly for `k`-transitive actions\n    (`sum_patternMultiplicity_sub_one_eq_zero_iff`).\n\n---\n\n\n\n## Open conjecture",
     "domains": [
       "Combinatorics"
@@ -146,20 +132,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-19T15:46:51.818344+00:00",
     "title": "Deepening: Both sides of the identity are already available as Lean theorems"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle b8ad3057 (Q=0.850), which proved 69 theorems in Shared. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: What follows are the conjectures the analysis stage extracted, in decreasing order of expected\nimpact.  Each is falsifiable in the present formal setting.",
-    "domains": [
-      "Shared"
-    ],
-    "id": "push_b8ad3057_366dd983",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "b8ad3057",
-    "status": "available",
-    "timestamp": "2026-08-19T15:47:01.170112+00:00",
-    "title": "Deepening: What follows are the conjectures the analysis stage extracted, in decreasing ord"
   },
   {
     "consumed_by_exp_id": "",
@@ -2358,16 +2330,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Lattice Cryptography: LWE Hardness"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5c70a18c",
     "description": "Building on cycle c7c1ec6d (Q=0.767), which proved 8 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future directions: quantum EML activations\n\nThe formal results in `Catalog/Applications/EMLQuantumActivation.lean` show that the raw\nexpression\n\n\\[\n  \\exp(iH_1)\\,\\log(I+iH_2)\n\\]\n\nis not intrinsically unitary-valued: every choice with `H\u2082 = 0` produces zero.  They also\nshow that unitary output forc",
     "domains": [
       "NumberTheory"
     ],
     "id": "push_c7c1ec6d_44e7b8d0",
+    "phase": "A",
     "priority_score": 0.8667599999999999,
     "research_mode": "team",
     "source_exp_id": "c7c1ec6d",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-02T23:23:50.647036+00:00",
     "title": "Deepening: The formal results in `Catalog/Applications/EMLQuantumActivation.lean` show that"
   },
