@@ -1,414 +1,905 @@
-# Emergent Spacetime from Entanglement: Min-Cut Geometries, the ER = EPR Dictionary, and a Non-Geometric Five-Party Entropy Vector
+# Emergent Spacetime from Quantum Entanglement: A Combinatorial Theory of Einstein–Rosen Bridges
 
-**Author:** Aristotle
-**Date:** 2026-08-16
+**Aristotle**
 
 ---
 
 ## Abstract
 
-We develop, in a finite and completely rigorous setting, the mathematics behind the proposal that spacetime geometry is built out of quantum entanglement. A *bulk geometry* is a finite symmetric nonnegatively weighted graph, some of whose cells are designated *boundary* cells; the entanglement entropy of a boundary region is the minimum cut weight over bulk regions homologous to it, the discrete Ryu–Takayanagi prescription. We isolate a single engine — the **contraction principle**: any Boolean recombination rule that is nonexpansive for Hamming distance yields an entropy inequality — and use it to derive subadditivity, strong subadditivity, monogamy of mutual information, and a five-party cyclic inequality
-$$\sum_{j\in\mathbb{Z}_5} S(A_jA_{j+1}) + S(A_0A_1A_2A_3A_4) \le \sum_{j\in\mathbb{Z}_5} S(A_jA_{j+1}A_{j+2}).$$
+We develop a complete, self-contained combinatorial model in which the geometry of a
+spatial slice of spacetime is *reconstructed* from the entanglement structure of a
+quantum state, and in which the slogan "ER = EPR" — entangled pairs are joined by
+microscopic Einstein–Rosen bridges — becomes a family of sharp theorems.
 
-We then prove the two halves of the ER = EPR correspondence in this model. **Reconstruction:** for geometries without hidden bulk cells, every edge weight equals half the mutual information of its endpoints, $w(u,v) = I(u:v)/2$; consequently the two-point correlation table determines every region entropy and the entire bridge (connectivity) structure, and this is sharp — the self-loop weights are pure gauge, and one hidden cell already destroys uniqueness (an explicit star/triangle pair). **Bridges:** geometric disconnection forces exact additivity of entropies, hence zero mutual information, and contrapositively any two boundary regions with positive mutual information are joined by a positive-area bulk path. For a real two-qubit pure state $\psi$ with concurrence $C(\psi) = 2|\det\psi|$, the single-throat geometry of area $C(\psi)$ contains an Einstein–Rosen bridge if and only if $\psi$ is entangled; the throat mutual information is $2C(\psi)$ and the linear entanglement entropy $2(1-\operatorname{Tr}\rho^2)$ equals $C(\psi)^2$.
+The model is a finite weighted graph $G$ of *cells*, whose edge weights are areas of
+elementary surface elements, together with a distinguished set of *boundary* cells.
+Entropy of a boundary region is the area of the minimal bulk surface anchored to it
+(the discrete Ryu–Takayanagi prescription). To this well-studied min-cut picture we add
+a genuinely geometric observable, the **throat capacity** $E(A,B)$: the area of the
+smallest surface separating $A$ from $B$, with no homology constraint. We prove:
 
-Finally we chart the obstruction side. The four-party GHZ entropy pattern satisfies subadditivity and strong subadditivity but violates monogamy, so it admits no bulk dual. Our main new result is an explicit five-party entropy vector $S_w$ on the $32$ subsets of a five-element set which satisfies **subadditivity, strong subadditivity, weak monotonicity and monogamy of mutual information on all disjoint arguments** — verified exhaustively over all $32^3 = 32768$ triples of subsets — yet violates the cyclic inequality by exactly one unit. Hence the cyclic inequality is independent of those four families, and no bulk geometry whatsoever realises $S_w$: the cone of geometric entropy vectors is strictly smaller than the cone cut out by the classical constraints, and the obstruction is invisible to all of them.
-
-**Keywords:** holographic entropy cone; Ryu–Takayanagi; min-cut; monogamy of mutual information; ER = EPR; entanglement entropy; emergent geometry; concurrence.
+1. **Bridge detection.** For distinct cells $u,v$, $E(u,v) > 0$ if and only if a path of
+   positive-area edges joins $u$ to $v$. A single real number decides bulk connectivity.
+2. **The cross-section bound $I(A:B) \le 2E(A,B)$**, the toy-model form of the
+   holographic inequality $I \le 2E_W$. Its engine is a sharp four-variable Boolean
+   splitting inequality. Combined with $E(A,B) \le \min(S(A),S(B))$ this yields the
+   **ER = EPR sandwich** $\tfrac12 I(A:B) \le E(A,B) \le \min(S(A),S(B))$, with all three
+   quantities equal for a single throat.
+3. **Emergent spacetime is tree-like.** The capacity kernel satisfies a Gomory–Hu
+   inequality $\min(E(u,v),E(v,w)) \le E(u,w)$, so the emergent distance
+   $d(u,v) = e^{-E(u,v)}$ is an *ultrametric*, hence a $0$-hyperbolic metric space —
+   the discrete avatar of the negative curvature of anti-de Sitter space. Moreover
+   $d(u,v) \le e^{-I(u:v)/2}$: distance decays exponentially in entanglement.
+4. **Reconstruction.** In models without hidden bulk cells, the table of two-point mutual
+   informations determines the entire emergent metric space: two such states with equal
+   entanglement data have isometric emergent geometries.
+5. **Monogamy.** Three capacities always form an isosceles triple whose two smallest
+   members coincide, and a cell maximally entangled with a partner has no other bridge
+   at all: a wormhole has exactly two mouths.
+6. **Bit threads.** Flows through the bulk obey weak duality — no divergence-free,
+   capacity-respecting flow can carry more than the throat cross-section — and the bound
+   is attained for the elementary wormhole: max-flow equals min-cut for a single
+   Einstein–Rosen bridge.
+7. **A renormalisation flow.** Merging cells pushes the geometry forward functorially,
+   widens throats, contracts the emergent metric ($1$-Lipschitz), and never decreases
+   entropies; an explicit four-cell example shows the contraction is strict.
+8. **$n$ Bell pairs.** The emergent space of $n$ independent Bell pairs of weights $w_i$
+   is exactly $n$ two-point wormholes: distance $e^{-w_i}$ inside a pair, maximal distance
+   $1$ across pairs, and at any scale in the window $[\max_i e^{-w_i}, 1)$ the clusters of
+   the emergent ultrametric are precisely the Bell pairs.
 
 ---
 
 ## 1. Introduction
 
-Two 1935 papers of Einstein — one with Rosen on bridges in the gravitational field, one with Podolsky and Rosen on correlated quantum systems — were unified in spirit by the ER = EPR proposal of Maldacena and Susskind: entangled pairs *are* microscopic wormholes. The proposal sits inside a broader programme, initiated by the Ryu–Takayanagi formula and the observation that entanglement entropy in a holographic conformal field theory computes the area of a minimal bulk surface, according to which spacetime geometry is emergent from entanglement.
+### 1.1 The idea
 
-Making these statements precise requires a model in which "geometry" and "entropy" are both finite, computable objects. The natural candidate is a weighted graph together with the min-cut functional. This is the setting of the *holographic entropy cone* programme, and it is the setting we adopt. The point of view we push here is that the entire theory of min-cut entropy inequalities reduces to a single combinatorial fact about Boolean maps, and that once one has that fact one can equally well investigate the *failures* of the geometry–entanglement dictionary.
+Two ideas from the last two decades of quantum gravity sit at the heart of this paper.
 
-Our contributions, in order of appearance:
+The first is the **Ryu–Takayanagi prescription**: in a holographic system, the
+entanglement entropy of a boundary region $A$ equals the area of the minimal bulk surface
+anchored to $\partial A$. Entropy, an information-theoretic quantity, is measured by a
+*geometric* one.
 
-1. **A contraction calculus** (§3). A Boolean map $\chi : \{0,1\}^k \to \{0,1\}^m$ that does not increase Hamming distance produces an entropy inequality $\sum_j S(B_j) \le \sum_i S(A_i)$ whenever the boundary traces are compatible. Subadditivity, strong subadditivity, monogamy and the cyclic inequality are all instances, obtained from explicit, finitely checkable certificates.
+The second is **ER = EPR**: the proposal that an entangled pair of particles is connected
+by a microscopic Einstein–Rosen bridge — a wormhole. On this view, spacetime connectivity
+is not a separate ingredient of physics but a *consequence* of entanglement. Van Raamsdonk's
+thought experiment sharpens it: disentangle two halves of a holographic state and the bulk
+pinches off; the two halves fly apart, and in the limit space itself is torn in two.
 
-2. **A five-party cyclic inequality** (§4), with its certificate: the rule $\mathrm{cyc}(c_0,\dots,c_4) = c_4 \wedge \lnot c_2 \wedge (c_0 \vee (c_1 \wedge \lnot c_3))$ in five rotations, plus the union.
+Both statements are, in their native setting, statements about continuous manifolds,
+quantum field theories and an incompletely understood duality. This paper asks a
+narrower question with a complete answer:
 
-3. **Reconstruction of geometry from entanglement** (§5), $w(u,v) = I(u:v)/2$, with its rigidity, connectivity and gauge-sharpness corollaries, and with an explicit counterexample showing that one hidden bulk cell already destroys uniqueness.
+> In the simplest combinatorial model that supports a Ryu–Takayanagi prescription, what
+> exactly does ER = EPR say, and is it true?
 
-4. **The ER = EPR dictionary** (§6): no bridge $\Rightarrow$ no entanglement; positive entanglement $\Rightarrow$ a bridge; the two-qubit throat model with throat area equal to the concurrence; the $n$-Bell-pair matching geometry.
+The answer is that it says a great deal, and all of it is true — with a caveat and a
+sharp constant at each step. Entanglement does not merely *correlate* with connectivity;
+it *quantifies* the width of the bridge, it *determines* the distance function, and the
+distance function it determines is not an arbitrary metric but an ultrametric — a
+tree.
 
-5. **Obstructions** (§7): GHZ has no geometric dual; and the main new result, a five-party entropy vector $S_w$ satisfying subadditivity, strong subadditivity, weak monotonicity and monogamy while violating the cyclic inequality, establishing the independence of the latter and exhibiting a non-geometric entropy vector invisible to the four classical families.
+### 1.2 What is new here
 
-Everything below is stated for finite structures and every verification is a finite computation.
+The min-cut model of holographic entropy is classical: subadditivity, strong
+subadditivity, monogamy of mutual information and purity are all known to follow from
+surface recombination. Our contribution is to move past *entropy inequalities* into
+*geometry*:
+
+- we introduce the throat capacity as an observable in its own right and prove it detects
+  connectivity exactly (§3);
+- we prove the toy-model cross-section inequality $I \le 2E$ with a sharp constant, from a
+  four-variable Boolean lemma (§4);
+- we show that the resulting distance function is an ultrametric, hence $0$-hyperbolic,
+  and that it is reconstructible from two-point entanglement data alone (§5);
+- we prove monogamy statements that force the wormhole network to be a tree, and that a
+  maximally entangled cell has exactly one neighbour (§6);
+- we introduce flows ("bit threads") and prove weak duality against throat capacity, with
+  a matching flow for the elementary wormhole (§7);
+- we construct a functorial coarse-graining operation and prove it is a metric contraction
+  which is strict in general (§8);
+- we compute the emergent geometry of $n$ Bell pairs completely (§9).
+
+Everything below is stated and proved for finite models with real, nonnegative,
+symmetric areas. No continuum limit, no field theory, and no unproved duality is used.
 
 ---
 
 ## 2. The model
 
-### 2.1 Bulk geometries
+### 2.1 Geometries, regions, areas
 
-**Definition 2.1 (Bulk geometry).** Let $V$ be a finite set of *cells*. A **bulk geometry** on $V$ is a function $w : V \times V \to \mathbb{R}$ with
-$$w(u,v) = w(v,u), \qquad w(u,v) \ge 0 \quad \text{for all } u,v \in V.$$
-We read $w(u,v)$ as the area of the wall separating cells $u$ and $v$; $w(u,v) = 0$ means the cells are not directly joined.
+Fix a finite set $V$ of **cells** — the discrete spatial slice.
 
-**Definition 2.2 (Region and separation indicator).** A **region** is a Boolean function $f : V \to \{0,1\}$. For $a,b \in \{0,1\}$ set $\mathrm{sep}(a,b) = 0$ if $a = b$ and $1$ otherwise. Thus $\mathrm{sep}(f(u),f(v))$ records whether the region $f$ separates $u$ from $v$.
+**Definition 2.1 (Geometry).** A *geometry* on $V$ is a function $w : V \times V \to \mathbb{R}$
+with $w(x,y) = w(y,x)$ and $w(x,y) \ge 0$ for all $x,y$. We think of $w(x,y)$ as the area
+of the elementary surface element separating cell $x$ from cell $y$; $w(x,y)=0$ means the
+two cells are not adjacent.
 
-**Definition 2.3 (Area of a region).** The **area** of a region $f$ in the geometry $w$ is
-$$\mathcal{A}_w(f) \;=\; \frac{1}{2}\sum_{u \in V}\sum_{v \in V} \mathrm{sep}\bigl(f(u),f(v)\bigr)\, w(u,v).$$
+**Definition 2.2 (Region and area).** A *region* is a Boolean function $f : V \to \{\textsf{true},
+\textsf{false}\}$, identified with the set $\{x : f(x) = \textsf{true}\}$. Its *area* — the area of the
+surface bounding it — is
+$$
+\operatorname{area}(f) \;=\; \frac12 \sum_{x \in V}\sum_{y \in V} [\,f(x) \ne f(y)\,]\; w(x,y),
+$$
+where $[\,\cdot\,]$ is $1$ if the condition holds and $0$ otherwise.
 
-Three elementary properties will be used constantly:
+The factor $\tfrac12$ removes the double count. Two elementary reformulations are used
+constantly.
 
-* $\mathcal{A}_w(f) \ge 0$;
-* $\mathcal{A}_w(\text{constant}) = 0$;
-* $\mathcal{A}_w(\lnot f) = \mathcal{A}_w(f)$, since $\mathrm{sep}(\lnot a, \lnot b) = \mathrm{sep}(a,b)$;
-* the diagonal never contributes, since $\mathrm{sep}(a,a) = 0$; hence $\mathcal{A}_w$ depends only on the off-diagonal weights.
+**Lemma 2.3 (One-sided forms of the area).** For every region $f$,
+$$
+\operatorname{area}(f) \;=\; \sum_{x}\sum_{y} [\,f(x)=\textsf{true} \text{ and } f(y)=\textsf{false}\,]\,w(x,y)
+\;=\; \sum_{f(x)=\textsf{true}}\;\sum_{f(y)=\textsf{false}} w(x,y).
+$$
 
-### 2.2 Holographic models and min-cut entropy
+*Proof sketch.* For each ordered pair $(x,y)$ the summand $[f(x)\ne f(y)]\,w(x,y)$ splits as
+$[f(x)=\textsf{true},f(y)=\textsf{false}]\,w(x,y) + [f(y)=\textsf{true},f(x)=\textsf{false}]\,w(x,y)$ (a four-case check on the
+values of $f(x),f(y)$). Swapping the summation indices in the second term and using
+$w(x,y)=w(y,x)$ shows the two double sums are equal, so each equals half the original
+sum. The last expression is the same sum with the indicator absorbed into the range. $\square$
 
-**Definition 2.4 (Holographic model).** A **holographic model** is a bulk geometry $w$ on a finite set $V$ together with a *boundary* subset $\partial \subseteq V$. Cells outside $\partial$ are **hidden**.
+The area function is symmetric under complementation, $\operatorname{area}(f) = \operatorname{area}(\neg f)$, and it is
+*submodular*:
+$$
+\operatorname{area}(f \wedge g) + \operatorname{area}(f \vee g) \;\le\; \operatorname{area}(f) + \operatorname{area}(g),
+$$
+which is the source of every entropy inequality below. Both facts follow from pointwise
+inequalities on the Boolean indicator $[\,\cdot \ne \cdot\,]$.
 
-**Definition 2.5 (Admissibility).** A region $f$ is **admissible** for a boundary region $A$ if $f(v) = A(v)$ for every $v \in \partial$. The set of admissible regions is nonempty (it contains $A$ itself) and finite.
+Two cells $x,y$ are **adjacent** when $w(x,y) > 0$; a **bulk path** from $u$ to $v$ is a
+finite chain $u = x_0, x_1, \dots, x_k = v$ of consecutively adjacent cells (the case $k=0$
+being allowed). We write $u \rightsquigarrow v$.
 
-**Definition 2.6 (Min-cut entropy).** The **entanglement entropy** of a boundary region $A$ is
-$$S(A) \;=\; \min\bigl\{\, \mathcal{A}_w(f) \;:\; f \text{ admissible for } A \,\bigr\}.$$
-A minimiser is a **minimal surface** for $A$. Since the admissible set is a nonempty finite set, minimisers exist.
+### 2.2 Holographic models, entropy, mutual information
 
-Two consequences are immediate: $S(A) \ge 0$, and $S(A) \le \mathcal{A}_w(f)$ for every admissible $f$ — the second is the workhorse of every proof below, since it converts *any* construction of an admissible region into an upper bound on entropy.
+**Definition 2.4 (Holographic model).** A *holographic model* is a geometry $w$ on $V$
+together with a subset $\partial V \subseteq V$ of **boundary cells**. Cells outside $\partial V$
+are *hidden bulk cells*. A model has **no hidden bulk** if $\partial V = V$.
 
-**Proposition 2.7 (Normalisation and purity).** $S(\emptyset) = 0$ and $S(\partial) = 0$. Moreover $S$ depends on $A$ only through $A \cap \partial$.
+**Definition 2.5 (Admissibility and entropy).** Let $A$ be a region supported on the
+boundary. A region $f$ is *admissible for $A$* if $f$ and $A$ agree on every boundary cell:
+$f(v) = A(v)$ for all $v \in \partial V$. Hidden cells are free. The **entropy** of $A$ is
+$$
+S(A) \;=\; \min \{\operatorname{area}(f) : f \text{ admissible for } A\}.
+$$
+The minimum is over a nonempty finite set (take $f = A$), so it is attained; a minimiser is
+called a **minimal surface** for $A$.
 
-*Proof.* The constant regions $0$ and $1$ are admissible for $\emptyset$ and $\partial$ respectively, and have area $0$; entropy is nonnegative. The last claim holds because admissibility only constrains $A$ on $\partial$. $\square$
+This is the discrete Ryu–Takayanagi prescription: $S(A)$ is the area of the smallest bulk
+surface homologous to $A$. The homology constraint is exactly the condition "$f$ agrees
+with $A$ on the boundary".
 
-**Theorem 2.8 (Complementarity).** For every boundary region $A$, $S(\partial \setminus A) = S(A)$.
+**Definition 2.6 (Mutual information).** For disjoint boundary regions $A, B$,
+$$
+I(A : B) \;=\; S(A) + S(B) - S(A \cup B).
+$$
 
-*Proof.* Let $f$ be a minimal surface for $A$. Then $\lnot f$ is admissible for $\partial \setminus A$: on the boundary $\lnot f(v) = \lnot A(v)$, which is the indicator of $\partial\setminus A$ there. Hence $S(\partial\setminus A) \le \mathcal{A}_w(\lnot f) = \mathcal{A}_w(f) = S(A)$. Applying the same bound to $\partial \setminus A$ and using $\partial\setminus(\partial\setminus A) = A\cap\partial$ together with Proposition 2.7 gives the reverse inequality. $\square$
+Submodularity of areas gives $I(A:B) \ge 0$ (subadditivity) at once, and the standard
+recombination arguments give strong subadditivity and monogamy of mutual information. We
+record one further classical inequality that will be used and that is not a direct
+consequence of subadditivity alone.
 
-This is the model's statement that the global state is pure: a region and its complement carry equal entropy.
+**Theorem 2.7 (Araki–Lieb).** For disjoint boundary regions $A$ and $B$,
+$$
+S(A) \;\le\; S(A\cup B) + S(B), \qquad\text{hence}\qquad |S(A) - S(B)| \;\le\; S(A \cup B).
+$$
 
-**Definition 2.9 (Mutual and tripartite information).**
-$$I(A:B) \;=\; S(A) + S(B) - S(A\cup B), \qquad
-I_3(A:B:C) \;=\; I(A:B) + I(A:C) - I(A : B\cup C).$$
+*Proof sketch.* Let $C$ be the boundary complement of $A \cup B$. Two observations
+suffice. First, entropy is *pure*: $S(X) = S(\partial V \setminus X)$ for boundary regions
+$X$, because a region and its complement bound the same surface. Second, on the boundary,
+the complement of $A$ is exactly $C \cup B$. Therefore $S(A) = S(C \cup B) \le S(C) + S(B)$
+by subadditivity, and $S(C) = S(A \cup B)$ by purity again. Exchanging $A$ and $B$ and
+combining gives the two-sided form. $\square$
+
+**Definition 2.8 (Single cell).** For $u \in V$ write $\{u\}$ for the region containing
+only $u$.
+
+**Lemma 2.9 (Star area).** For any geometry and any cell $u$,
+$\operatorname{area}(\{u\}) = \sum_{y \ne u} w(u,y)$: the surface enclosing a single cell has area equal
+to the total weight of the edges incident to it.
+
+Consequently, in a model with no hidden bulk, $S(\{u\}) = \sum_{y\ne u} w(u,y)$ and
+$I(u:v) = 2\,w(u,v)$ — the mutual information of two cells is twice the area of the edge
+joining them. This last identity is the exact sense in which "the geometry *is* the
+entanglement" in the hidden-bulk-free case.
+
+**Example 2.10 (The elementary wormhole).** Let $V = \{0,1\}$, both cells on the boundary,
+and $w(0,1) = w \ge 0$. Then $S(\{0\}) = S(\{1\}) = w$, $S(\{0,1\}) = 0$, and
+$I(0:1) = 2w$. This *pair model* is the smallest Einstein–Rosen bridge, and it will
+saturate every inequality below.
 
 ---
 
-## 3. The contraction calculus
+## 3. Throat capacity: the width of a bridge
 
-Everything in §3–§4 rests on one lemma.
+Entropy is constrained: the competing surfaces must be homologous to a boundary region. To
+measure the *bridge* between two regions rather than the entropy of one, we drop the
+constraint.
 
-**Lemma 3.1 (Recombination principle).** Let $F_1,\dots,F_k$ and $G_1,\dots,G_m$ be regions such that for every pair of cells $u,v$ with $w(u,v) \ne 0$,
-$$\sum_{j=1}^{m}\mathrm{sep}\bigl(G_j(u),G_j(v)\bigr) \;\le\; \sum_{i=1}^{k}\mathrm{sep}\bigl(F_i(u),F_i(v)\bigr).$$
-Then $\sum_{j} \mathcal{A}_w(G_j) \le \sum_i \mathcal{A}_w(F_i)$.
+**Definition 3.1 (Separating surface).** A region $\sigma$ *separates* $A$ from $B$ if
+$A \subseteq \sigma$ and $B \cap \sigma = \emptyset$; that is, $\sigma(v) = \textsf{true}$
+whenever $A(v) = \textsf{true}$, and $\sigma(v) = \textsf{false}$ whenever $B(v) = \textsf{true}$.
 
-*Proof.* Multiply the hypothesis by $w(u,v) \ge 0$ (the inequality is trivial when $w(u,v) = 0$), sum over all $u,v$, exchange the order of summation between the family index and the cell indices, and divide by $2$. $\square$
+**Definition 3.2 (Throat capacity).** For regions $A,B$ the *throat capacity* is
+$$
+E(A,B) \;=\; \min \{ \operatorname{area}(\sigma) : \sigma \text{ separates } A \text{ from } B\},
+$$
+with $E(A,B) = 0$ by convention if no separating region exists. When $A$ and $B$ are
+disjoint the family is nonempty ($\sigma = A$ works), so the minimum is attained.
 
-**Definition 3.2 (Contraction map).** A map $\chi : \{0,1\}^k \to \{0,1\}^m$ is a **contraction** if for all $a,b \in \{0,1\}^k$,
-$$d_H\bigl(\chi(a),\chi(b)\bigr) \;\le\; d_H(a,b),$$
-where $d_H$ is Hamming distance. Equivalently, $\sum_j \mathrm{sep}(\chi(a)_j, \chi(b)_j) \le \sum_i \mathrm{sep}(a_i,b_i)$.
+$E(A,B)$ is the cross-section of the Einstein–Rosen bridge joining $A$ to $B$: the
+discrete analogue of the entanglement wedge cross-section $E_W$. Note the difference from
+entropy: $E$ minimises over *all* separating regions, not only over those homologous to a
+boundary region, and it is a function of a *pair* of regions.
 
-Note that $m$ may exceed $k$: a contraction may have more outputs than inputs, and the useful ones do.
+Basic properties are immediate from the definition and from $\operatorname{area}(\sigma) = \operatorname{area}(\neg\sigma)$:
 
-**Theorem 3.3 (Contraction principle).** Let $\chi$ be a contraction $\{0,1\}^k \to \{0,1\}^m$, let $A_1,\dots,A_k$ and $B_1,\dots,B_m$ be boundary regions, and suppose the **boundary-trace compatibility** condition holds:
-$$\chi\bigl(A_1(v),\dots,A_k(v)\bigr)_j = B_j(v) \qquad \text{for all } v \in \partial, \; j = 1,\dots,m.$$
+**Proposition 3.3.** $E(A,B) \ge 0$; $E(A,B) = E(B,A)$; and $E$ is monotone in the
+geometry: if $w \le w'$ pointwise then $E_w(A,B) \le E_{w'}(A,B)$ for disjoint $A,B$.
+Symmetry holds because complementing a minimal $A$–$B$ separating surface produces a
+$B$–$A$ separating surface of the same area.
+
+The monotonicity statement is already a form of Van Raamsdonk's principle: *more
+entanglement means a wider bridge*.
+
+### 3.1 A positive number detects a wormhole
+
+**Lemma 3.4 (Zero area means closed).** A surface has zero area if and only if no
+positive weight crosses it: $\operatorname{area}(\sigma) = 0$ iff $w(x,y) = 0$ for all $x$ with
+$\sigma(x)=\textsf{true}$ and $y$ with $\sigma(y)=\textsf{false}$.
+
+*Proof sketch.* Both directions use Lemma 2.3: the area is a sum of nonnegative terms
+$w(x,y)$ over crossing pairs, and a sum of nonnegative reals vanishes iff every term
+does. $\square$
+
+**Lemma 3.5 (Closed regions absorb paths).** If $\sigma$ is closed in the sense of Lemma
+3.4 and $u \rightsquigarrow v$ with $\sigma(u) = \textsf{true}$, then $\sigma(v) = \textsf{true}$.
+
+*Proof sketch.* Induct along the path: a positive-weight step out of $\sigma$ is precisely
+what closedness forbids. $\square$
+
+**Theorem 3.6 (Bridge detection).** Let $u \ne v$. Then
+$$
+E(u,v) > 0 \quad\Longleftrightarrow\quad u \rightsquigarrow v .
+$$
+Bulk connectivity is decided by a single real number.
+
+*Proof sketch.* ($\Leftarrow$, contrapositive of the forward direction) Suppose no path
+joins $u$ to $v$. Let $R = \{x : u \rightsquigarrow x\}$ be the reachable set. Then $R$
+contains $u$, misses $v$, and is closed under positive-weight steps, so $R$ separates $u$
+from $v$ and $\operatorname{area}(R) = 0$ by Lemma 3.4; hence $E(u,v) = 0$.
+
+($\Rightarrow$) Suppose $E(u,v) = 0$ and let $\sigma$ be a minimal separating surface, so
+$\operatorname{area}(\sigma) = 0$. By Lemma 3.4 $\sigma$ is closed; by Lemma 3.5 any path from $u$ would
+stay inside $\sigma$, but $\sigma(v) = \textsf{false}$, so no path reaches $v$. $\square$
+
+---
+
+## 4. Entanglement is bounded by the cross-section
+
+We now prove the central quantitative statement. Its combinatorial core is a small
+Boolean inequality, whose sharp constant $2$ is exactly the $2$ appearing in the
+holographic bound $I \le 2E_W$.
+
+**Lemma 4.1 (Splitting inequality).** For all bits $a_1,a_2,b_1,b_2 \in \{\textsf{true},\textsf{false}\}$,
+$$
+[\,a_1 \wedge b_1 \ne a_2 \wedge b_2\,] + [\,\neg a_1 \wedge b_1 \ne \neg a_2 \wedge b_2\,]
+\;\le\; [\,b_1 \ne b_2\,] + 2\,[\,a_1 \ne a_2\,].
+$$
+The constant $2$ cannot be improved: for $a_1 = \textsf{true}$, $a_2 = \textsf{false}$, $b_1 = b_2 = \textsf{true}$
+both sides equal $2$.
+
+*Proof sketch.* Sixteen cases. If $a_1 = a_2$ the right-hand side is $[b_1\ne b_2]$ and
+the left-hand side is at most that, since conjunction with a common bit can only merge
+values. If $a_1 \ne a_2$ the right-hand side is at least $2$, which already dominates the
+left-hand side. $\square$
+
+**Proposition 4.2 (Area splitting).** For any regions $\sigma$ and $g$,
+$$
+\operatorname{area}(\sigma \wedge g) + \operatorname{area}(\neg\sigma \wedge g) \;\le\; \operatorname{area}(g) + 2\operatorname{area}(\sigma).
+$$
+
+*Proof sketch.* Apply Lemma 4.1 pointwise with $a_i = \sigma(x_i)$, $b_i = g(x_i)$ for
+each ordered pair of cells, multiply by $w(x,y) \ge 0$ and sum. $\square$
+
+**Theorem 4.3 (Cross-section bound).** For disjoint boundary regions $A$ and $B$,
+$$
+I(A:B) \;\le\; 2\,E(A,B).
+$$
+
+*Proof sketch.* Choose a minimal separating surface $\sigma$ for the pair $(A,B)$, so
+$\operatorname{area}(\sigma) = E(A,B)$, and a minimal surface $g$ for the region $A \cup B$, so
+$\operatorname{area}(g) = S(A\cup B)$. The two halves of $g$ cut by $\sigma$ are admissible for $A$ and
+$B$ respectively: on a boundary cell $v$, $g(v) = A(v) \vee B(v)$, while $\sigma(v) = \textsf{true}$
+if $A(v)=\textsf{true}$ and $\sigma(v)=\textsf{false}$ if $B(v) = \textsf{true}$; checking the three possible cases
+gives $(\sigma \wedge g)(v) = A(v)$ and $(\neg\sigma \wedge g)(v) = B(v)$. Hence, by
+minimality of $S$,
+$$
+S(A) + S(B) \;\le\; \operatorname{area}(\sigma \wedge g) + \operatorname{area}(\neg \sigma \wedge g)
+\;\le\; \operatorname{area}(g) + 2\operatorname{area}(\sigma) \;=\; S(A\cup B) + 2E(A,B),
+$$
+using Proposition 4.2 in the middle. Rearranging is the claim. $\square$
+
+**Theorem 4.4 (The ER = EPR sandwich).** Let $A$ and $B$ be disjoint boundary regions.
 Then
-$$\sum_{j=1}^{m} S(B_j) \;\le\; \sum_{i=1}^{k} S(A_i).$$
+$$
+\tfrac12\, I(A:B) \;\le\; E(A,B) \;\le\; \min\bigl(S(A),\, S(B)\bigr).
+$$
 
-*Proof.* Choose a minimal surface $F_i$ for each $A_i$ and set $G_j(v) = \chi(F_1(v),\dots,F_k(v))_j$. For $v \in \partial$ we have $F_i(v) = A_i(v)$, so $G_j(v) = B_j(v)$ by compatibility: each $G_j$ is admissible for $B_j$. Applying the contraction property pointwise at each pair of cells and invoking Lemma 3.1,
-$$\sum_j S(B_j) \le \sum_j \mathcal{A}_w(G_j) \le \sum_i \mathcal{A}_w(F_i) = \sum_i S(A_i). \qquad\square$$
+*Proof sketch.* The left inequality is Theorem 4.3. For the right one, let $f$ be a
+minimal surface for $A$. Since $f$ agrees with $A$ on the boundary and $A,B$ are disjoint
+boundary regions, $f$ contains $A$ and misses $B$, i.e. $f$ separates $A$ from $B$; hence
+$E(A,B) \le \operatorname{area}(f) = S(A)$. Symmetry of $E$ gives the same with $B$. $\square$
 
-Thus every holographic entropy inequality of this shape is certified by a finite Boolean object, and the search for inequalities becomes a search over Hamming-nonexpansive maps — a finite search for each $k$.
+So the bridge cross-section is squeezed between half the mutual information of its two
+mouths and the entropy of either mouth.
 
-### 3.1 Intersection–union: subadditivity and strong subadditivity
+**Theorem 4.5 (ER = EPR, quantitative form).** Let $u \ne v$ be boundary cells with
+$I(u:v) > 0$. Then
+$$
+E(u,v) \;\ge\; \tfrac12 I(u:v) \;>\; 0,
+$$
+and consequently $u \rightsquigarrow v$: entangled cells are joined by an
+Einstein–Rosen bridge whose cross-section is at least half their mutual information.
 
-**Lemma 3.4.** The map $\chi_{\wedge\vee}(a_1,a_2) = (a_1\wedge a_2,\; a_1 \vee a_2)$ is a contraction $\{0,1\}^2 \to \{0,1\}^2$.
+*Proof sketch.* Theorem 4.3 gives positivity of $E$; Theorem 3.6 converts positivity into
+a bulk path. $\square$
 
-*Proof.* Sixteen cases. Equivalently, submodularity of the cut: $\mathrm{sep}(a_1\wedge a_2, b_1 \wedge b_2) + \mathrm{sep}(a_1\vee a_2, b_1\vee b_2) \le \mathrm{sep}(a_1,b_1) + \mathrm{sep}(a_2,b_2)$. $\square$
+**Theorem 4.6 (Sharpness).** In the elementary wormhole of Example 2.10,
+$$
+E(0,1) = w, \qquad I(0:1) = 2w = 2\,E(0,1).
+$$
+Hence Theorem 4.3 is an equality, and in Theorem 4.4 all three quantities equal $w$.
 
-**Theorem 3.5 (Subadditivity).** For all boundary regions $A,B$: $\;S(A\cup B) \le S(A) + S(B)$.
-
-*Proof.* Let $F,G$ be minimal surfaces for $A,B$. Then $F\vee G$ is admissible for $A\cup B$, so $S(A\cup B) \le \mathcal{A}_w(F\vee G)$. By Lemma 3.4 and Lemma 3.1, $\mathcal{A}_w(F\wedge G) + \mathcal{A}_w(F \vee G) \le \mathcal{A}_w(F) + \mathcal{A}_w(G) = S(A) + S(B)$, and $\mathcal{A}_w(F\wedge G) \ge 0$. $\square$
-
-**Corollary 3.6.** $I(A:B) \ge 0$, and $I$ is symmetric.
-
-**Theorem 3.7 (Strong subadditivity).** For boundary regions $A,B,C$ with $A$ and $C$ disjoint,
-$$S(A\cup B\cup C) + S(B) \;\le\; S(A\cup B) + S(B\cup C).$$
-
-*Proof.* Let $F$ be minimal for $A\cup B$ and $G$ minimal for $B\cup C$. On the boundary $F = A\vee B$ and $G = B\vee C$, so — using disjointness of $A$ and $C$ — $F \vee G$ traces out $A\cup B\cup C$ and $F\wedge G$ traces out $B$. Both are therefore admissible for their targets, and Lemma 3.4 with Lemma 3.1 gives
-$$S(A\cup B\cup C) + S(B) \le \mathcal{A}_w(F\vee G) + \mathcal{A}_w(F\wedge G) \le \mathcal{A}_w(F) + \mathcal{A}_w(G),$$
-which is $S(A\cup B) + S(B\cup C)$. $\square$
-
-In the geometric setting the Lieb–Ruskai theorem is thus nothing more than submodularity of a minimum cut.
-
-### 3.2 The minority rule: monogamy of mutual information
-
-**Lemma 3.8 (Minority contraction).** The map
-$$\chi_{\min}(a_1,a_2,a_3) = \bigl(a_1\wedge a_2\wedge\lnot a_3,\; a_1\wedge a_3 \wedge \lnot a_2,\; a_2 \wedge a_3 \wedge \lnot a_1,\; a_1\vee a_2\vee a_3\bigr)$$
-is a contraction $\{0,1\}^3 \to \{0,1\}^4$.
-
-*Proof.* Exhaustive check over the $2^6 = 64$ pairs of input patterns. $\square$
-
-**Remark 3.9 (The negations are essential).** Replacing the minority regions by the plain pairwise intersections $a_i \wedge a_j$ destroys the property: for $a = (1,1,1)$ and $b = (0,0,0)$ the three intersections and the union all separate the pair, giving $4 \le 3$. The minority rule is the unique nearby recipe that works, and this is why monogamy is genuinely subtler than subadditivity.
-
-**Theorem 3.10 (Monogamy of mutual information).** For pairwise disjoint boundary regions $A,B,C$,
-$$S(A) + S(B) + S(C) + S(A\cup B\cup C) \;\le\; S(A\cup B) + S(B\cup C) + S(A\cup C).$$
-
-*Proof.* Let $F, G, H$ be minimal surfaces for $A\cup B$, $B\cup C$, $A\cup C$. On the boundary, using pairwise disjointness, one checks case by case that $F \wedge H \wedge \lnot G$ traces out $A$, that $F\wedge G \wedge \lnot H$ traces out $B$, that $G\wedge H\wedge\lnot F$ traces out $C$, and that $F\vee G\vee H$ traces out $A\cup B\cup C$. Each of the four is therefore admissible for its target, and Lemma 3.8 with Lemma 3.1 bounds the sum of their areas by $\mathcal{A}_w(F) + \mathcal{A}_w(G) + \mathcal{A}_w(H)$. $\square$
-
-**Corollary 3.11 (Nonpositive tripartite information).** For pairwise disjoint $A,B,C$: $\;I_3(A:B:C) \le 0$, equivalently $I(A : B\cup C) \ge I(A:B) + I(A:C)$.
-
-Monogamy fails for general quantum states (see §7.1); it is a signature of geometry.
+*Proof sketch.* The region $\{0\}$ separates $0$ from $1$ and has area $w$, so
+$E \le w$; and $E \ge \tfrac12 I = w$ by Theorem 4.3. $\square$
 
 ---
 
-## 4. The five-party cyclic inequality
+## 5. Emergent spacetime is a tree
 
-**Definition 4.1 (The cyclic rule).** For $c_0,\dots,c_4 \in \{0,1\}$ put
-$$\mathrm{cyc}(c_0,c_1,c_2,c_3,c_4) \;=\; c_4 \wedge \lnot c_2 \wedge \bigl(c_0 \vee (c_1 \wedge \lnot c_3)\bigr).$$
+We now upgrade "there is a bridge" to "here is the distance".
 
-**Lemma 4.2 (Cyclic contraction).** The map $\{0,1\}^5 \to \{0,1\}^6$
-$$\chi_{\mathrm{cyc}}(a_0,\dots,a_4) = \Bigl(\mathrm{cyc}(a_j, a_{j+1}, a_{j+2}, a_{j+3}, a_{j+4})\Bigr)_{j\in\mathbb{Z}_5} \;\frown\; \bigl(a_0\vee a_1 \vee a_2 \vee a_3 \vee a_4\bigr)$$
-(indices modulo $5$) is a contraction: six outputs from five inputs.
+**Definition 5.1 (Capacity kernel).** For cells $u,v$ put $\operatorname{cap}(u,v) = E(\{u\},\{v\})$.
+It is symmetric, nonnegative, and positive exactly on connected pairs (Theorem 3.6).
 
-*Proof.* Exhaustive verification over all $2^{10} = 1024$ pairs of input patterns. $\square$
+**Theorem 5.2 (Gomory–Hu inequality).** For any cells $u \ne w$ and any third cell $v$,
+$$
+\min\bigl(\operatorname{cap}(u,v),\, \operatorname{cap}(v,w)\bigr) \;\le\; \operatorname{cap}(u,w).
+$$
 
-**Lemma 4.3 (Boundary trace).** If at most one of $a_0,\dots,a_4$ is $1$ — the pointwise form of pairwise disjointness of five regions — then, writing $t_j = a_j \vee a_{j+1} \vee a_{j+2}$ for the consecutive triples,
-$$\mathrm{cyc}(t_0,t_1,t_2,t_3,t_4) \;=\; a_0 \vee a_1 .$$
+*Proof sketch.* Let $\sigma$ realise $\operatorname{cap}(u,w)$, so $\sigma(u)=\textsf{true}$, $\sigma(w)=\textsf{false}$,
+$\operatorname{area}(\sigma) = \operatorname{cap}(u,w)$. The third cell lies on one of the two sides. If
+$\sigma(v)=\textsf{true}$ then $\sigma$ separates $v$ from $w$, so $\operatorname{cap}(v,w) \le \operatorname{area}(\sigma)$; if
+$\sigma(v)=\textsf{false}$ then $\sigma$ separates $u$ from $v$, so $\operatorname{cap}(u,v) \le \operatorname{area}(\sigma)$.
+Either way the minimum of the two is at most $\operatorname{cap}(u,w)$. $\square$
 
-*Proof.* Exhaustive check over the six admissible patterns (all zero, or exactly one coordinate set). $\square$
+The hypothesis $u \ne w$ is essential: $\operatorname{cap}(u,u) = 0$, since no surface can separate a
+cell from itself, and the inequality fails for $u=w$ joined to $v$.
 
-So on the boundary the cyclic rule turns the five consecutive *triples* into the five consecutive *pairs*, one rotation at a time.
+**Definition 5.3 (Emergent distance).** For cells $u,v$ set
+$$
+d(u,v) \;=\; \begin{cases} 0, & u = v,\\[2pt] e^{-\operatorname{cap}(u,v)}, & u \ne v.\end{cases}
+$$
+Wide bridges mean nearby points; the absence of a bridge means the maximal distance $1$.
 
-**Theorem 4.4 (Five-party cyclic inequality).** Let $A_0,\dots,A_4$ be pairwise disjoint boundary regions, indices modulo $5$. Then
-$$\sum_{j\in\mathbb{Z}_5} S(A_jA_{j+1}) \;+\; S(A_0A_1A_2A_3A_4) \;\;\le\;\; \sum_{j\in\mathbb{Z}_5} S(A_jA_{j+1}A_{j+2}),$$
-where juxtaposition denotes union.
+**Theorem 5.4 (Emergent spacetime is an ultrametric space).** $d$ is a metric on $V$,
+and it satisfies the strong triangle inequality
+$$
+d(u,w) \;\le\; \max\bigl(d(u,v),\, d(v,w)\bigr) \qquad \text{for all } u,v,w.
+$$
+In particular $0 \le d \le 1$, $d(u,v) = 0$ iff $u=v$, and $d$ is symmetric.
 
-*Proof.* Choose a minimal surface $F_j$ for each triple $A_jA_{j+1}A_{j+2}$. Set $G_j = \mathrm{cyc}(F_j, F_{j+1}, F_{j+2}, F_{j+3}, F_{j+4})$ and $G_5 = F_0 \vee \cdots \vee F_4$. On the boundary $F_j$ traces out $A_jA_{j+1}A_{j+2}$, so Lemma 4.3 (applied to the $j$-th rotation of the disjointness pattern) says $G_j$ traces out $A_jA_{j+1}$, and clearly $G_5$ traces out the full union. Each $G$ is admissible for its target; Lemma 4.2 with Lemma 3.1 bounds the total area of the $G$'s by the total area of the $F$'s, which is the right-hand side. $\square$
+*Proof sketch.* Nonnegativity, symmetry and the vanishing-diagonal characterisation are
+immediate since $e^{-t} > 0$ always and $\operatorname{cap}$ is symmetric and nonnegative. For the
+strong triangle inequality, the degenerate cases $u = w$, $u = v$, $v = w$ are trivial.
+Otherwise Theorem 5.2 says $\min(\operatorname{cap}(u,v),\operatorname{cap}(v,w)) \le \operatorname{cap}(u,w)$; applying the
+order-reversing map $t \mapsto e^{-t}$ turns the minimum of capacities into the maximum of
+distances and reverses the inequality. The ordinary triangle inequality follows since the
+maximum of two nonnegative numbers is at most their sum. $\square$
 
-The inequality is *false* for general quantum states, and — as we prove in §7.2 — it is not a consequence of monogamy either.
+Two remarks. First, ultrametricity is *strictly* stronger than the triangle inequality; it
+is the hallmark of tree-like geometry (all triangles isosceles, balls nested or disjoint,
+"being close" transitive). Second, the exponential is used only for being order-reversing
+— any decreasing reparametrisation of $\operatorname{cap}$ works — but $e^{-t}$ has two extra virtues:
+it normalises "no bridge" to distance exactly $1$, and it converts the additive bound
+$I \le 2E$ into the multiplicative statement of Theorem 5.7.
 
----
+**Theorem 5.5 (Zero hyperbolicity).** Every ultrametric space satisfies Gromov's
+four-point condition with $\delta = 0$: for all points $x,y,z,t$,
+$$
+d(x,y) + d(z,t) \;\le\; \max\bigl(d(x,z)+d(y,t),\; d(x,t)+d(y,z)\bigr).
+$$
+In particular the emergent spacetime of any geometry is $0$-hyperbolic.
 
-## 5. Reconstruction: geometry from entanglement
+*Proof sketch.* Suppose both terms on the right are strictly smaller than the left. Apply
+the strong triangle inequality four times: to $d(x,y)$ through $z$ and through $t$, and to
+$d(z,t)$ through $x$ and through $y$. Each application offers two alternatives; in each
+branch, the assumed strict inequalities eliminate one alternative, and the surviving four
+bounds combine linearly into $d(x,y)+d(z,t) < d(x,y)+d(z,t)$, a contradiction. $\square$
 
-Throughout this section a model is **hidden-cell-free** if $\partial = V$.
+Negative curvature is the geometric signature of anti-de Sitter space; $0$-hyperbolicity
+is its extreme discrete form. The emergent spacetime of an entangled state is not merely
+*some* metric space — it is as negatively curved as a metric space can be.
 
-**Lemma 5.1.** In a hidden-cell-free model, $S(A) = \mathcal{A}_w(A)$ for every region $A$: the only admissible region for $A$ is $A$ itself.
+**Theorem 5.6 (Disentangling tears space apart).** For $u \ne v$,
+$$
+d(u,v) = 1 \iff \text{no bridge joins } u \text{ to } v,
+\qquad
+d(u,v) < 1 \iff u \rightsquigarrow v .
+$$
 
-**Definition 5.2.** Write $\{u\}$ for the singleton region supported at $u$.
+*Proof sketch.* $e^{-\operatorname{cap}} = 1$ iff $\operatorname{cap} = 0$ iff (Theorem 3.6) there is no path. $\square$
 
-**Theorem 5.3 (Metric reconstruction).** Let the model be hidden-cell-free and let $u \ne v$. Then
-$$w(u,v) \;=\; \tfrac{1}{2}\, I\bigl(\{u\} : \{v\}\bigr).$$
+**Theorem 5.7 (Distance decays exponentially in entanglement).** For distinct boundary
+cells $u,v$ of a holographic model,
+$$
+d(u,v) \;\le\; e^{-I(u:v)/2}.
+$$
 
-*Proof sketch.* By Lemma 5.1, $I(\{u\}:\{v\}) = \mathcal{A}_w(\{u\}) + \mathcal{A}_w(\{v\}) - \mathcal{A}_w(\{u,v\})$. Compare the three cut sums term by term. For a pair of cells $x,y$ with $\{x,y\} \cap \{u,v\} = \emptyset$ all three separation indicators vanish. For $x \notin \{u,v\}$ the pair $(x,u)$ is separated by $\{u\}$ and by $\{u,v\}$, and $(x,v)$ by $\{v\}$ and by $\{u,v\}$, so those contributions cancel in the alternating sum. The only surviving term is the pair $(u,v)$, separated by $\{u\}$ and by $\{v\}$ but *not* by $\{u,v\}$; it contributes $2w(u,v)$ to the sum after the factor $\tfrac12$. Hence $I(\{u\}:\{v\}) = 2w(u,v)$. $\square$
+*Proof sketch.* $\operatorname{cap}(u,v) \ge \tfrac12 I(u:v)$ by Theorem 4.3; apply $e^{-(\cdot)}$. $\square$
 
-**Corollary 5.4 (Rigidity).** Two hidden-cell-free models on the same cell set with equal two-point mutual informations have equal off-diagonal weights.
+This is Van Raamsdonk's "distance is minus the logarithm of entanglement", as a theorem
+with an explicit constant.
 
-**Theorem 5.5 (Spacetime from entanglement).** Let $M$ and $N$ be hidden-cell-free models on the same finite cell set. The following are equivalent:
+**Theorem 5.8 (Monotonicity).** If $w \le w'$ pointwise, then $d_{w'} \le d_{w}$
+pointwise: adding entanglement can only bring the emergent spacetime closer together.
 
-1. $I_M(\{u\}:\{v\}) = I_N(\{u\}:\{v\})$ for all $u, v$;
-2. $S_M(A) = S_N(A)$ for every region $A$.
+### 5.1 A hierarchy of scales
 
-Moreover (1) implies that $M$ and $N$ have identical **bridge relations**: writing $u \sim v$ for the reflexive–transitive closure of the relation $w(u,v) > 0$, we have $u \sim_M v \iff u \sim_N v$ for all $u,v$.
+Ultrametricity has an immediate structural consequence with a physical reading.
 
-*Proof.* (2) $\Rightarrow$ (1) is the definition of mutual information. For (1) $\Rightarrow$ (2), Corollary 5.4 gives equality of off-diagonal weights, and areas depend only on off-diagonal weights (the diagonal is never separated), so all entropies agree by Lemma 5.1. For the bridge relation: a self-loop step never moves a path, so bulk connectivity also depends only on the off-diagonal weights, and positivity of those is common to $M$ and $N$. $\square$
+**Theorem 5.9 (Entanglement clusters at every scale).** For each $r \ge 0$ the relation
+$$
+u \sim_r v \quad :\Longleftrightarrow \quad d(u,v) \le r
+$$
+is an equivalence relation on $V$. The induced partitions are monotone in $r$: if
+$r \le s$ then $\sim_r$ refines $\sim_s$.
 
-Thus for hidden-cell-free models the table of pairwise mutual informations determines the entire emergent spacetime — every area and the whole connectivity structure.
+*Proof sketch.* Reflexivity is $d(u,u) = 0 \le r$; symmetry is symmetry of $d$;
+transitivity is exactly the strong triangle inequality, $d(u,w) \le \max(d(u,v),d(v,w)) \le r$.
+Transitivity is *false* for a general metric — this is a purely ultrametric phenomenon.
+Monotonicity is trivial. $\square$
 
-**Theorem 5.6 (Sharpness: the diagonal is gauge).** Let $w$ be a bulk geometry and let $w'$ agree with $w$ off the diagonal, with arbitrary nonnegative self-loop weights. Then $\mathcal{A}_{w'}(f) = \mathcal{A}_{w}(f)$ for every region $f$, and $w$ and $w'$ have the same bridge relation.
+The resulting family of nested partitions is an emergent renormalisation hierarchy: at
+scale $r$ the boundary degrees of freedom organise into clusters, and as $r$ decreases the
+clusters refine. Two unconnected cells stay in different clusters at every scale $r<1$
+(Theorem 5.6).
 
-Hence entanglement determines exactly the off-diagonal data — no more (Theorem 5.5), and no less (Theorem 5.6).
+### 5.2 Reconstruction: entanglement determines the geometry
 
-**Theorem 5.7 (One hidden cell destroys uniqueness).** There exist two holographic models on the same four cells, with the same three boundary cells $\{0,1,2\}$ and one hidden cell $3$, such that $S$ agrees on every boundary region while the geometries differ:
+**Theorem 5.10 (The emergent metric is a function of the entanglement data).** Let $M$
+and $N$ be holographic models on the same cell set, both without hidden bulk cells,
+with equal two-point mutual informations:
+$$
+I_M(u:v) = I_N(u:v) \qquad \text{for all } u,v.
+$$
+Then $d_M = d_N$; the identity map is an isometry of the emergent metric spaces. In
+particular the emergent metric space — with its ultrametric structure, its
+$0$-hyperbolicity and its full hierarchy of clusters — is an invariant of the entanglement
+structure alone.
 
-* the **star**: $w(i,3) = 1$ for $i = 0,1,2$ and $w(i,j) = 0$ for distinct boundary cells $i,j$;
-* the **triangle**: $w(i,j) = \tfrac12$ for distinct boundary cells $i,j$, and $w(i,3) = 0$.
+*Proof sketch.* Without hidden bulk, $I(u:v) = 2w(u,v)$ for $u \ne v$ (Lemma 2.9 and its
+consequence), so equality of mutual informations forces equality of all off-diagonal
+weights. Areas of regions do not see the diagonal, hence all cut weights agree; hence the
+minima defining $\operatorname{cap}$ agree; hence $d$ agrees. $\square$
 
-Both assign entropy $0$ to $\emptyset$ and to $\{0,1,2\}$, and entropy $1$ to every other boundary region; yet $w_{\mathrm{star}}(0,1) = 0 \ne \tfrac12 = w_{\mathrm{tri}}(0,1)$.
-
-*Proof sketch.* With a single hidden cell $c$, the min-cut entropy of a boundary region $A$ is the minimum of the two areas obtained by placing $c$ inside or outside: $S(A) = \min\{\mathcal{A}_w(A \cup \{c\}), \mathcal{A}_w(A)\}$. For the star, a boundary region that is neither empty nor everything cuts either one or two unit throats depending on where $c$ is placed, and the minimum is $1$; the empty and full regions cut nothing. For the triangle there is nothing to minimise: a region with one boundary cell in and two out cuts two edges of weight $\tfrac12$, total $1$, and symmetrically. The eight boundary regions therefore have matching entropies. $\square$
-
-**Remark 5.8 (Entanglement without an edge).** The star also illustrates the bridge theorem of §6 in its purest form. Its boundary cells $0$ and $1$ satisfy $I(\{0\}:\{1\}) = 1 + 1 - 1 = 1 > 0$, so they must be joined by a bulk path — and they are, although $w(0,1) = 0$: the path runs $0 \to 3 \to 1$ through the hidden cell. Entanglement with no direct wall, mediated by the deep bulk.
-
-**Theorem 5.9 (Stability).** Let $M, M'$ be two models with the same boundary, and define the geometry distance $d(w,w') = \tfrac12\sum_{u,v}|w(u,v) - w'(u,v)|$. Then for every boundary region $A$,
-$$\bigl|S_M(A) - S_{M'}(A)\bigr| \;\le\; d(w,w').$$
-
-*Proof sketch.* For any fixed region $f$, $|\mathcal{A}_w(f) - \mathcal{A}_{w'}(f)| \le d(w,w')$ since separation indicators are bounded by $1$. Evaluating each model's entropy against the other's minimiser — admissibility depends only on the boundary, which is shared — gives the two-sided bound. $\square$
-
-So the map from geometries to entanglement data is $1$-Lipschitz: the correspondence is robust, not a knife-edge coincidence.
-
----
-
-## 6. The ER = EPR dictionary
-
-**Definition 6.1 (Adjacency and bridges).** Cells $u, v$ are **adjacent** if $w(u,v) > 0$. A **bridge** from $u$ to $v$ is a chain of adjacent steps, i.e. $u \sim v$ in the reflexive–transitive closure of adjacency.
-
-### 6.1 Disconnection implies no entanglement
-
-**Theorem 6.2 (Additivity across a geometric split).** Let $U \subseteq V$ be a set of cells with $w(x,y) = 0$ whenever $x \in U$ and $y \notin U$. Let $A \subseteq U$ and $B \subseteq V \setminus U$ be boundary regions. Then
-$$S(A \cup B) \;=\; S(A) + S(B), \qquad\text{hence}\qquad I(A:B) = 0.$$
-
-*Proof sketch.* Subadditivity gives "$\le$". For "$\ge$", take a minimal surface $f$ for $A \cup B$ and split it: let $f_A = f \wedge \mathbf{1}_U$ and $f_B = f \wedge \mathbf{1}_{V\setminus U}$. These are admissible for $A$ and $B$ respectively, and because no positive-weight wall crosses between $U$ and its complement, every separated pair carrying nonzero weight lies entirely inside $U$ or entirely outside; hence $\mathcal{A}_w(f_A) + \mathcal{A}_w(f_B) = \mathcal{A}_w(f)$. Therefore $S(A) + S(B) \le \mathcal{A}_w(f) = S(A\cup B)$. $\square$
-
-**Theorem 6.3 (Entanglement forces a bridge).** If $I(A:B) > 0$ for boundary regions $A, B$, then there exist cells $u \in A$ and $v \in B$ with a bridge from $u$ to $v$.
-
-*Proof.* Contrapositive. If no cell of $A$ is bridged to a cell of $B$, let $U$ be the union of the connected components (for the adjacency relation) meeting $A$. Then no positive-weight wall crosses out of $U$, $A \subseteq U$ and $B \cap U = \emptyset$, so Theorem 6.2 gives $I(A:B) = 0$. $\square$
-
-**Theorem 6.4 (The two networks coincide).** In a hidden-cell-free model, call $u,v$ *directly entangled* if $I(\{u\}:\{v\}) > 0$. Then $u \sim v$ (a chain of bridges) if and only if $u$ and $v$ are joined by a chain of directly entangled pairs.
-
-*Proof.* By Theorem 5.3, for $u \ne v$ adjacency $w(u,v) > 0$ is *equivalent* to direct entanglement $I(\{u\}:\{v\}) > 0$. The two relations have the same reflexive–transitive closure. $\square$
-
-### 6.2 One qubit pair, one throat
-
-**Definition 6.5.** A real two-qubit pure state is a $2\times 2$ real matrix $\psi$ with $\sum_{ij}\psi_{ij}^2 = 1$; it is a **product state** if $\psi_{ij} = x_i y_j$ for some vectors $x,y$. Its **concurrence** is $C(\psi) = 2\,|\det \psi|$.
-
-**Lemma 6.6.** $\psi$ is a product state if and only if $\det \psi = 0$, i.e. if and only if $C(\psi) = 0$.
-
-*Proof sketch.* A product matrix has rank $\le 1$, so zero determinant. Conversely, if $\det\psi = 0$ then $\psi$ has rank $\le 1$; explicitly, if $\psi_{00} \ne 0$ take $x = (1, \psi_{10}/\psi_{00})$ and $y = (\psi_{00}, \psi_{01})$, and check the four entries using $\psi_{00}\psi_{11} = \psi_{01}\psi_{10}$; the degenerate cases $\psi_{00} = 0$ are handled separately. $\square$
-
-**Definition 6.7 (Single-throat geometry).** For $t \ge 0$ let $P_t$ be the hidden-cell-free model on two cells $\{0,1\}$ with $w(0,1) = t$ (and $w(0,0)=w(1,1)=0$).
-
-**Proposition 6.8.** $I_{P_t}(\{0\}:\{1\}) = 2t$, and there is a bridge from $0$ to $1$ in $P_t$ if and only if $t > 0$.
-
-*Proof.* The first claim is Theorem 5.3. For the second, the only possible step is the single edge. $\square$
-
-**Theorem 6.9 (ER = EPR in the toy model).** Let $\psi$ be a real two-qubit pure state and assign to it the geometry $P_{C(\psi)}$: a single throat whose area is the concurrence. Then
-$$\psi \text{ is entangled} \iff P_{C(\psi)} \text{ contains a bridge between its two cells} \iff I(\{0\}:\{1\}) > 0 .$$
-Quantitatively $I(\{0\}:\{1\}) = 2\,C(\psi)$.
-
-*Proof.* Combine Lemma 6.6 (entangled $\iff C(\psi) > 0$) with Proposition 6.8. $\square$
-
-**Theorem 6.10 (Throat area is the square root of the linear entropy).** Let $\rho$ be the reduced state of the first qubit, $\rho_{ik} = \sum_j \psi_{ij}\psi_{kj}$, and let $S_{\mathrm{lin}}(\psi) = 2\bigl(1 - \operatorname{Tr}\rho^2\bigr)$ be the linear entanglement entropy. Then for a normalised $\psi$,
-$$S_{\mathrm{lin}}(\psi) = C(\psi)^2, \qquad\text{hence}\qquad I(\{0\}:\{1\})^2 = 4\,S_{\mathrm{lin}}(\psi).$$
-
-*Proof sketch.* Expand $\operatorname{Tr}\rho^2 = \sum_{i,k}\rho_{ik}^2$ in the entries of $\psi$ and use the normalisation $\sum_{ij}\psi_{ij}^2 = 1$; the resulting polynomial identity is $2(1 - \operatorname{Tr}\rho^2) = 4(\det\psi)^2 = C(\psi)^2$. The second claim follows from $I = 2C(\psi)$. $\square$
-
-For a Bell state $C = 1$: throat area $1$, mutual information $2$, linear entropy $1$. For a product state everything vanishes: no throat, no bridge, no correlation.
-
-### 6.3 Many pairs: the matching geometry
-
-**Definition 6.11.** Given areas $t_0,\dots,t_{n-1} \ge 0$, the **matching geometry** has cell set $\{0,\dots,n-1\}\times\{0,1\}$, all cells on the boundary, and $w\bigl((i,b),(j,c)\bigr) = t_i$ if $i = j$ and $b \ne c$, and $0$ otherwise: $n$ disjoint throats.
-
-**Theorem 6.12.** In the matching geometry:
-
-1. **Partners:** $I\bigl(\{(i,0)\} : \{(i,1)\}\bigr) = 2t_i$.
-2. **Strangers:** if $i \ne j$ then $I\bigl(\{(i,b)\}:\{(j,c)\}\bigr) = 0$ for all $b,c$.
-3. **Bridges:** there is a bridge from $(i,b)$ to $(j,c)$ if and only if either $(i,b) = (j,c)$, or $i = j$ and $t_i > 0$.
-4. **Reconstruction:** every throat area is recovered as $t_i = \tfrac12 I\bigl(\{(i,0)\}:\{(i,1)\}\bigr)$.
-
-*Proof sketch.* (1) and (4) are Theorem 5.3. For (3), every positive-weight step preserves the first coordinate, so by induction so does every bridge; within a pair, a bridge exists exactly when the throat has positive area. (2) then follows from Theorem 6.3, or directly from Theorem 6.2 with $U$ the $i$-th pair. $\square$
-
-So $n$ independent Bell pairs of concurrences $C_i$ produce exactly $n$ disjoint wormholes of areas $C_i$: entanglement between partners, none across pairs, and no bridge across pairs. The dictionary is complete and quantitative in both directions.
+This is the precise sense in which *spacetime is reconstructed from entanglement* in this
+model: the table $\{I(u:v)\}$, a purely information-theoretic object, determines a metric
+space and all of its geometry.
 
 ---
 
-## 7. Obstructions: entanglement with no geometry
+## 6. Monogamy: a wormhole has two mouths
 
-### 7.1 The GHZ pattern has no bulk dual
+Entanglement is monogamous: a maximally entangled pair cannot be entangled with anything
+else. If ER = EPR is to be believed, monogamy must have a geometric face.
 
-**Theorem 7.1.** There is no holographic model, of any size and with any arrangement of hidden cells, admitting three pairwise disjoint boundary regions $A,B,C$ with
-$$S(A) = S(B) = S(C) = S(AB) = S(BC) = S(AC) = S(ABC) = 1.$$
+**Theorem 6.1 (The wormhole network is a tree).** Let $u,v,w$ be cells with $u \ne w$ and
+$v \ne w$. If $\operatorname{cap}(u,w) < \operatorname{cap}(u,v)$, then $\operatorname{cap}(u,w) = \operatorname{cap}(v,w)$.
 
-*Proof.* Monogamy (Theorem 3.10) would require $1+1+1+1 \le 1+1+1$. $\square$
+Equivalently: of the three capacities of a triple, the two smallest are always equal —
+capacity triangles are isosceles, with the "odd" side the long one.
 
-These are precisely the marginal entropies of three of the four parties of the GHZ state $(|0000\rangle + |1111\rangle)/\sqrt2$. Hence that state has no geometric dual.
+*Proof sketch.* Apply Theorem 5.2 twice, in the forms
+$\min(\operatorname{cap}(u,v),\operatorname{cap}(v,w)) \le \operatorname{cap}(u,w)$ and $\min(\operatorname{cap}(u,v),\operatorname{cap}(u,w)) \le \operatorname{cap}(v,w)$
+(using symmetry). The hypothesis $\operatorname{cap}(u,w) < \operatorname{cap}(u,v)$ makes the first minimum equal to
+$\operatorname{cap}(v,w)$ in the relevant branch, giving $\operatorname{cap}(v,w) \le \operatorname{cap}(u,w)$, and the second
+minimum equal to $\operatorname{cap}(u,w)$, giving $\operatorname{cap}(u,w) \le \operatorname{cap}(v,w)$. $\square$
 
-**Proposition 7.2 (The obstruction is not visible to the general quantum inequalities).** Define $S_{\mathrm{GHZ}}(X) = 0$ if $X = \emptyset$ and $1$ otherwise, on subsets of a three-element set. Then $S_{\mathrm{GHZ}}$ satisfies subadditivity, $S(X \cup Y) \le S(X) + S(Y)$, and strong subadditivity in submodular form, $S(X\cup Y) + S(X \cap Y) \le S(X) + S(Y)$, for all $X, Y$; but it violates monogamy.
+This isosceles law is exactly the condition characterising the leaf metrics of weighted
+trees, and it is the capacity-level shadow of Theorem 5.4.
 
-*Proof.* Finite check over all pairs of subsets; the monogamy violation is $4 \le 3$. $\square$
+**Theorem 6.2 (Monogamy of Einstein–Rosen bridges).** Let $M$ be a holographic model
+without hidden bulk cells and let $u \ne v$ be cells whose mutual information saturates
+the entropy bound:
+$$
+I(u:v) \;=\; 2\,S(\{u\}).
+$$
+Then for every cell $z \notin \{u,v\}$ we have $w(u,z) = 0$ and $I(u:z) = 0$: the cell $u$
+has no bridge other than the one to $v$. A wormhole has exactly two mouths.
 
-So the geometric constraint is strictly stronger than the constraints valid for all quantum states, and Theorem 7.1 is not vacuous.
+*Proof sketch.* Without hidden bulk, $S(\{u\}) = \sum_{y \ne u} w(u,y)$ (Lemma 2.9) and
+$I(u:v) = 2w(u,v)$. Saturation therefore reads
+$$
+2\,w(u,v) \;=\; 2\Bigl(w(u,v) + \sum_{y \ne u,v} w(u,y)\Bigr),
+\qquad\text{i.e.}\qquad \sum_{y \ne u,v} w(u,y) = 0 .
+$$
+Since all weights are nonnegative, every term vanishes; in particular $w(u,z)=0$, and then
+$I(u:z) = 2w(u,z) = 0$. $\square$
 
-### 7.2 A five-party entropy vector that no geometry realises
+The positivity of areas is precisely where physics enters this argument. Note that the
+no-hidden-bulk hypothesis is not cosmetic: with hidden cells $S(\{u\})$ is a genuine
+min-cut and can be strictly smaller than the sum of incident weights, so saturation no
+longer forces the edges to vanish.
 
-The natural next question is whether monogamy is the *only* extra geometric constraint. It is not, and the following is our main new result.
+**Corollary 6.3 (Geometric monogamy).** Under the hypotheses of Theorem 6.2, $v$ is the
+*unique* neighbour of $u$ in the emergent geometry: if $w(u,z) > 0$ and $z \ne u$ then
+$z = v$.
 
-Encode subsets of $\{0,1,2,3,4\}$ as bitmasks $0 \le m < 32$, bit $i$ marking party $i$; union is bitwise OR and disjointness is bitwise AND equal to $0$.
+### 6.1 The lattice of minimal surfaces and wedge nesting
 
-**Definition 7.3 (The witness vector).** Let $S_w : \{0,\dots,31\} \to \mathbb{Z}_{\ge 0}$ be given by
+**Theorem 6.4 (Minimal surfaces form a lattice).** If $f$ and $g$ are both minimal
+surfaces for the same boundary region $A$, then so are $f \wedge g$ and $f \vee g$.
 
-| $m$ | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 |
-|---|---|---|---|---|---|---|---|---|---|---|----|----|----|----|----|----|
-| $S_w(m)$ | 0 | 3 | 2 | 5 | 4 | 5 | 6 | 5 | 2 | 5 | 4 | 7 | 6 | 6 | 7 | 5 |
+*Proof sketch.* Both $f\wedge g$ and $f\vee g$ are admissible for $A$ (they agree with
+$A$ on the boundary because $f$ and $g$ do), so both areas are $\ge S(A)$. Submodularity
+gives $\operatorname{area}(f\wedge g) + \operatorname{area}(f\vee g) \le \operatorname{area}(f)+\operatorname{area}(g) = 2S(A)$. Two numbers each
+at least $S(A)$ summing to at most $2S(A)$ must both equal $S(A)$. $\square$
 
-| $m$ | 16 | 17 | 18 | 19 | 20 | 21 | 22 | 23 | 24 | 25 | 26 | 27 | 28 | 29 | 30 | 31 |
-|---|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|
-| $S_w(m)$ | 3 | 6 | 5 | 7 | 5 | 4 | 6 | 4 | 4 | 5 | 6 | 6 | 4 | 3 | 5 | 2 |
+**Theorem 6.5 (Entanglement wedge nesting).** Let $A \subseteq B$ be boundary regions.
+Then one may choose minimal surfaces $f$ for $A$ and $g$ for $B$ with $f \subseteq g$: the
+entanglement wedge of $A$ sits inside that of $B$.
 
-In particular $S_w(\emptyset) = 0$ and $S_w(\text{all five parties}) = 2$. The vector was found by local search over integer vectors constrained by the four families below.
+*Proof sketch.* Take any minimal surfaces $f_0$ for $A$ and $g_0$ for $B$. Because
+$A \subseteq B$ on the boundary, $f_0 \wedge g_0$ is admissible for $A$ and $f_0 \vee g_0$
+is admissible for $B$. Their areas are therefore at least $S(A)$ and $S(B)$ respectively,
+while submodularity bounds their sum by $S(A)+S(B)$; hence both are minimal. And
+$f_0 \wedge g_0 \subseteq f_0 \vee g_0$. $\square$
 
-**Theorem 7.4 (The witness is classically consistent).** For all bitmasks $X,Y,Z < 32$:
-
-1. **Subadditivity.** If $X \wedge Y = 0$ then $S_w(X \vee Y) \le S_w(X) + S_w(Y)$.
-2. **Strong subadditivity.** If $X,Y,Z$ are pairwise disjoint then $S_w(X\vee Y\vee Z) + S_w(Y) \le S_w(X\vee Y) + S_w(Y \vee Z)$.
-3. **Weak monotonicity.** If $X,Y,Z$ are pairwise disjoint then $S_w(X) + S_w(Z) \le S_w(X\vee Y) + S_w(Y\vee Z)$.
-4. **Monogamy.** If $X,Y,Z$ are pairwise disjoint then
-$$S_w(X\vee Y\vee Z) + S_w(X) + S_w(Y) + S_w(Z) \le S_w(X\vee Y) + S_w(Y\vee Z) + S_w(X\vee Z).$$
-
-*Proof.* Exhaustive evaluation: $32^2$ instances for (1) and $32^3 = 32768$ instances for each of (2)–(4), one arithmetic comparison per instance. Every instance holds. $\square$
-
-Note that these families are imposed on **all** disjoint bitmask arguments, not merely on singleton parties: $S_w$ behaves like a legitimate entropy vector at the full strength of the four constraint families.
-
-**Theorem 7.5 (The witness violates the cyclic inequality).** With parties $0,\dots,4$ in cyclic order, the consecutive pairs are the masks $3, 6, 12, 24, 17$ and the consecutive triples are $7, 14, 28, 25, 19$. Then
-$$\underbrace{S_w(3)+S_w(6)+S_w(12)+S_w(24)+S_w(17)+S_w(31)}_{5+6+6+4+6+2 \,=\, 29} \;>\; \underbrace{S_w(7)+S_w(14)+S_w(28)+S_w(25)+S_w(19)}_{5+7+4+5+7\,=\,28}.$$
-The cyclic inequality of Theorem 4.4 fails by exactly $1$.
-
-**Corollary 7.6 (Independence).** The five-party cyclic inequality is not a consequence of subadditivity, strong subadditivity, weak monotonicity and monogamy of mutual information: there is a five-party entropy vector satisfying all four families on all disjoint arguments and violating the cyclic inequality.
-
-*Proof.* $S_w$, by Theorems 7.4 and 7.5. Since the four families hold for $S_w$ and the cyclic inequality does not, no derivation of the latter from the former can exist. $\square$
-
-**Theorem 7.7 (No bulk geometry realises the witness).** There is no holographic model $M$, of any size and with any arrangement of hidden cells, and no five pairwise disjoint boundary regions $A_0,\dots,A_4$, such that for every sub-family $T \subseteq \{0,\dots,4\}$,
-$$S_M\Bigl(\bigcup_{i\in T} A_i\Bigr) = S_w\bigl(\text{mask}(T)\bigr).$$
-
-*Proof.* Suppose such a model and regions existed. The ten unions appearing in Theorem 4.4 — the five consecutive pairs, the five consecutive triples, and the full union — are all of the stated form, so their entropies would be the corresponding values of $S_w$. Substituting into Theorem 4.4 yields $29 \le 28$, a contradiction. $\square$
-
-**Discussion.** Theorem 7.7 is stronger than it may first appear. The vector $S_w$ is not exotic: it satisfies *every instance* of the four best-known entropy constraint families, at full disjoint-argument strength — $32768$ instances per family, all verified. A search for a geometric dual guided by those constraints would find nothing wrong with it. Yet no graph, no assignment of wall areas, and no number of hidden cells can produce it. The obstruction is detected by exactly one thing: the cyclic inequality.
-
-Together with §7.1 this gives a strict chain of cones over five parties:
-$$\{\text{geometric entropy vectors}\} \;\subsetneq\; \{\text{vectors obeying SA, SSA, WM, MMI}\} \;\subsetneq\; \{\text{vectors obeying SA, SSA, WM}\},$$
-the first inclusion strict by $S_w$ and the second by the GHZ pattern.
-
----
-
-## 8. Algorithms
-
-The development is constructive and every object above is computable. We record the three procedures that matter.
-
-**Algorithm 8.1 (Min-cut entropy by hidden-cell enumeration).** Given a weight matrix on $n$ cells with $h$ hidden cells and a boundary region $A$: for each of the $2^{h}$ assignments of the hidden cells, form the corresponding region, compute its area in $O(n^2)$, and take the minimum. Cost $O(2^{h} n^2)$. For $h = 0$ this is a single area evaluation. (For large instances one would instead call a max-flow routine, since the minimisation is a genuine minimum cut with terminals fixed by the boundary; the enumeration is used here because $h$ is small and the code is transparent.)
-
-**Algorithm 8.2 (Contraction certification).** Given a Boolean map $\chi : \{0,1\}^k \to \{0,1\}^m$, iterate over all $4^k$ pairs of inputs and compare Hamming distances. Cost $O(4^{k}(k+m))$: $16$ comparisons for intersection–union, $64$ for the minority rule, $1024$ for the cyclic rule. A positive answer is a complete proof of the corresponding entropy inequality, by Theorem 3.3.
-
-**Algorithm 8.3 (Entropy-vector validation).** Given $S : \{0,\dots,2^p-1\} \to \mathbb{Z}$, check subadditivity over all disjoint pairs of masks and strong subadditivity, weak monotonicity and monogamy over all pairwise disjoint triples; then evaluate any candidate inequality of interest. Cost $O(8^{p})$; for $p=5$ this is $32768$ instances per triple-family, run in milliseconds. Applying it to $S_w$ certifies Theorems 7.4 and 7.5, hence Corollary 7.6 and Theorem 7.7.
+Wedge nesting is the consistency condition underlying subregion duality: information
+accessible from a smaller region must be accessible from a larger one.
 
 ---
 
-## 9. Applications and interpretation
+## 7. Bit threads: flowing through the bridge
 
-**Which correlation patterns can be geometry?** The results assemble into a map of the boundary between the quantum and the geometric. Monogamy (Theorem 3.10) is the first wall: GHZ-type democratic tripartite correlation is geometrically impossible. The cyclic inequality (Theorem 4.4) is a second, independent wall (Corollary 7.6), with $S_w$ sitting behind the first and in front of the second. If spacetime is emergent, then the states of the underlying quantum system that give rise to a geometry form a strictly and intricately constrained subclass.
+The Ryu–Takayanagi prescription measures entanglement by *cutting* the bulk. There is a
+dual picture that measures it by *flowing* through the bulk: entanglement is the maximum
+number of Planck-thickness threads that can be routed from one boundary region to the
+other. Here is the combinatorial version.
 
-**How much of geometry is recoverable?** Exactly the off-diagonal weights, and exactly from two-point mutual informations (Theorems 5.3, 5.5, 5.6) — provided there are no hidden cells. With even one hidden cell, distinct geometries become indistinguishable (Theorem 5.7). This is a sharp, finite model of the bulk-reconstruction problem: the boundary data determines the geometry up to a well-understood gauge, and beyond that, up to the redundancy introduced by hidden bulk degrees of freedom.
+**Definition 7.1 (Bit thread configuration).** A *bit thread configuration* on a geometry
+$w$ is a function $\phi : V \times V \to \mathbb{R}$ that is
 
-**What is a wormhole made of?** In this model, precisely of correlation: disconnection forces exact additivity (Theorem 6.2), correlation forces a bridge (Theorem 6.3), and in the hidden-cell-free case the bridge graph and the entanglement graph are the same graph (Theorem 6.4). For a two-qubit state the throat area is the concurrence, the mutual information is twice it, and the linear entropy is its square (Theorems 6.9, 6.10). This is ER = EPR as a theorem rather than a slogan, in a setting small enough to be fully controlled.
+- **antisymmetric**: $\phi(x,y) = -\phi(y,x)$ for all $x,y$ (threads are oriented), and
+- **capacity-respecting**: $\phi(x,y) \le w(x,y)$ for all $x,y$ (no more threads may cross
+  a surface element than its area).
 
-**Robustness.** Theorem 5.9 shows the geometry-to-entropy map is $1$-Lipschitz for the total-area distance, so the correspondence survives perturbation of the geometry — the dictionary is stable, not accidental.
+Since $w$ is symmetric, antisymmetry upgrades the one-sided capacity bound to
+$|\phi(x,y)| \le w(x,y)$, so nothing is lost by stating it one-sidedly.
+
+**Definition 7.2 (Divergence, conservation, value).** The *divergence* at a cell is
+$\operatorname{div}\phi(x) = \sum_{y} \phi(x,y)$. The configuration is *conserved* relative to a source
+region $A$ and a sink region $B$ if $\operatorname{div}\phi(v) = 0$ for every cell $v$ outside
+$A \cup B$. Its *value* is the total flux emitted by the source,
+$$
+\operatorname{val}(\phi) \;=\; \sum_{x \in A} \operatorname{div}\phi(x).
+$$
+
+**Lemma 7.3 (Antisymmetric kernels vanish on squares).** If $\phi$ is antisymmetric, then
+for every subset $S \subseteq V$,
+$$
+\sum_{x \in S}\sum_{y \in S} \phi(x,y) \;=\; 0 .
+$$
+
+*Proof sketch.* Swapping the two summation indices and using antisymmetry shows the sum
+equals its own negative. $\square$
+
+**Theorem 7.4 (Weak duality).** Let $\phi$ be a bit thread configuration conserved
+relative to $(A,B)$, and let $\sigma$ be *any* region separating $A$ from $B$. Then
+$$
+\operatorname{val}(\phi) \;\le\; \operatorname{area}(\sigma).
+$$
+
+*Proof sketch.* Three steps.
+
+1. *Enlarge the source to $\sigma$.* Every cell of $\sigma$ that is not in $A$ is also not
+   in $B$ (since $\sigma$ misses $B$), so its divergence vanishes by conservation. Hence
+   $\operatorname{val}(\phi) = \sum_{x\in A}\operatorname{div}\phi(x) = \sum_{x \in \sigma}\operatorname{div}\phi(x)$.
+2. *Cancel the interior.* Split each divergence as a sum over $\sigma$ and a sum over its
+   complement: $\operatorname{div}\phi(x) = \sum_{y\in\sigma}\phi(x,y) + \sum_{y\notin\sigma}\phi(x,y)$.
+   Summing over $x \in \sigma$, the first double sum vanishes by Lemma 7.3, leaving
+   $\sum_{x\in\sigma}\sum_{y\notin\sigma}\phi(x,y)$: only the flux through the boundary of
+   $\sigma$ survives.
+3. *Apply capacities.* Termwise, $\phi(x,y) \le w(x,y)$, so this is at most
+   $\sum_{x\in\sigma}\sum_{y\notin\sigma} w(x,y)$, which is exactly $\operatorname{area}(\sigma)$ by
+   Lemma 2.3. $\square$
+
+**Corollary 7.5 (Threads cannot outrun the bridge).** For disjoint $A$ and $B$, every
+conserved configuration satisfies $\operatorname{val}(\phi) \le E(A,B)$.
+
+**Theorem 7.6 (Max-flow = min-cut for a single Einstein–Rosen bridge).** In the elementary
+wormhole of weight $w$ (Example 2.10), the configuration
+$$
+\phi(0,1) = w, \qquad \phi(1,0) = -w, \qquad \phi(x,x) = 0
+$$
+is a conserved bit thread configuration with source $\{0\}$ and sink $\{1\}$, and
+$$
+\operatorname{val}(\phi) \;=\; w \;=\; E(0,1) \;=\; \tfrac12 I(0:1),
+$$
+and no conserved configuration has larger value. The weak duality bound of Theorem 7.4 is
+therefore attained.
+
+*Proof sketch.* Antisymmetry and capacity are immediate; conservation is vacuous (there
+are no cells outside source and sink). The value is $\operatorname{div}\phi(0) = \phi(0,0)+\phi(0,1) = w$.
+Optimality is Corollary 7.5 together with $E(0,1) = w$ from Theorem 4.6, and the final
+equality is $I(0:1) = 2w$. $\square$
+
+The general converse — existence of a saturating flow for every geometry and every pair of
+regions — is a max-flow–min-cut theorem and is stated as an open direction in §10. Note
+that the proof of Theorem 7.4 uses neither finiteness (beyond summability) nor symmetry of
+the weights except through Lemma 2.3.
+
+The physical reading is worth stating plainly: entanglement is not merely *measured* by
+the bridge cross-section, it is *transportable* through it. The threads are a concrete
+picture of *where in the bulk the entanglement lives*.
 
 ---
 
-## 10. Discussion and future work
+## 8. A renormalisation flow on emergent spacetime
 
-Several directions follow naturally.
+Coarse-graining a quantum state should coarse-grain its emergent geometry. Here is the
+operation, and here is what it does.
 
-**Completeness of the contraction calculus.** Every inequality proved here came from a Hamming-nonexpansive Boolean map. *Conjecture:* a linear inequality $\sum_j c_j S(B_j) \le \sum_i d_i S(A_i)$ with nonnegative integer coefficients holds for the min-cut entropies of every finite bulk geometry if and only if it is witnessed by a contraction map (after replacing each region by $d_i$, respectively $c_j$, parallel copies). The intuition is that min-cut entropy is a minimum of linear functionals of Boolean patterns, so a valid inequality must survive the worst-case pattern, and that test is exactly Hamming contraction. The search space over $k \le 5$ inputs is small enough to be settled exhaustively before a general proof is attempted.
+**Definition 8.1 (Pushforward geometry).** Let $\pi : V \to W$ be any map of finite cell
+sets, and write $\pi^{-1}(a)$ for the fibre over $a \in W$. The *pushforward* of a geometry
+$w$ on $V$ is the geometry on $W$ given by
+$$
+(\pi_* w)(a,b) \;=\; \begin{cases} 0, & a = b,\\[2pt]
+\displaystyle\sum_{x \in \pi^{-1}(a)}\ \sum_{y \in \pi^{-1}(b)} w(x,y), & a \ne b. \end{cases}
+$$
+Cells in a common fibre are merged; the area joining two coarse cells is the total area
+joining their fibres.
 
-**Reconstruction beyond the hidden-cell-free case.** Call a model *bulk-minimal* if no hidden cell can be deleted or merged into a boundary cell without changing some entropy. *Conjecture:* two bulk-minimal models with identical boundary entropy functions are isomorphic as weighted graphs, so that Theorem 5.3 extends from hidden-cell-free to bulk-minimal models. The star/triangle pair of Theorem 5.7 would then not be a genuine counterexample but a redundancy: the star's hidden cell is free, and quotienting it produces the triangle. The concrete first test is to prove that the star is not bulk-minimal and that all four- and five-cell counterexamples arise the same way.
+**Theorem 8.2 (Coarse surfaces are invariant fine surfaces of equal area).** For every
+region $\sigma$ of $W$,
+$$
+\operatorname{area}_{\pi_* w}(\sigma) \;=\; \operatorname{area}_{w}(\sigma \circ \pi).
+$$
 
-**Is the cyclic inequality a facet?** We have shown it is not implied by the four classical families. The next question is whether it is a *facet* of the five-party geometric entropy cone — an extreme, non-redundant constraint — and whether the family of contraction maps on five inputs generates all of that cone's facets. More broadly: how many independent walls are there at each number of parties?
+*Proof sketch.* Expand both sides as double sums. On the coarse side, group the terms of
+the fine sum according to which fibres their endpoints lie in; the diagonal correction
+$a=b$ costs nothing because within a single fibre $\sigma\circ\pi$ is constant, so the
+separation indicator vanishes there anyway. $\square$
 
-**Beyond graphs.** The min-cut model discretises a spatial slice. Extending the contraction calculus to weighted hypergraphs, to time-dependent (covariant) settings, and to the quantum error-correcting-code models of holography would test how much of the picture is an artifact of the graph approximation and how much is structural.
+This identity is the engine of everything below. It says every coarse surface *pulls back*
+to a fine surface of the same area — but not conversely: the fine surfaces that *split a
+fibre* have no coarse counterpart. The whole renormalisation flow is this asymmetry.
+
+**Theorem 8.3 (Functoriality).** For $\pi : V \to W$ and $\rho : W \to X$,
+$\rho_*(\pi_* w) = (\rho\circ\pi)_* w$ as geometries, not merely as cut functions.
+
+*Proof sketch.* Both weights at $(c,d)$ with $c \ne d$ equal
+$\sum_{x \in (\rho\pi)^{-1}(c)} \sum_{y \in (\rho\pi)^{-1}(d)} w(x,y)$, after regrouping the
+fibres of $\pi$ inside the fibres of $\rho$. The point requiring care is that for $c \ne d$
+the fibres $\rho^{-1}(c)$ and $\rho^{-1}(d)$ are disjoint, so the diagonal correction in
+Definition 8.1 is never triggered — which is exactly why the composite is an equality
+rather than an inequality. $\square$
+
+**Theorem 8.4 (Coarse-graining widens throats).** For any $\pi$ and disjoint coarse
+regions $A,B$ of $W$,
+$$
+E_{w}\bigl(A\circ\pi,\, B\circ\pi\bigr) \;\le\; E_{\pi_* w}(A,B).
+$$
+In particular, for cells $u,v$ with $\pi u \ne \pi v$,
+$\operatorname{cap}_w(u,v) \le \operatorname{cap}_{\pi_* w}(\pi u, \pi v)$.
+
+*Proof sketch.* A minimal coarse separating surface pulls back, by Theorem 8.2, to a fine
+separating surface of the same area; the fine minimisation ranges over a *larger* family
+of competitors. $\square$
+
+**Theorem 8.5 (Coarse-graining is a metric contraction).** For all cells $u,v$,
+$$
+d_{\pi_*w}(\pi u, \pi v) \;\le\; d_w(u,v),
+$$
+i.e. $\pi$ is a $1$-Lipschitz map from the emergent ultrametric space of $w$ to that of
+$\pi_* w$.
+
+*Proof sketch.* If $\pi u = \pi v$ the left side is $0$. Otherwise apply the
+order-reversing $e^{-(\cdot)}$ to Theorem 8.4. $\square$
+
+**Theorem 8.6 (Coarse-graining cannot decrease entropy).** For a holographic model in
+which a coarse cell is a boundary cell as soon as one of the cells it absorbs is, and for
+every coarse boundary region $A$,
+$$
+S_w(A \circ \pi) \;\le\; S_{\pi_* w}(A).
+$$
+
+*Proof sketch.* Same mechanism: a minimal coarse surface pulls back to an admissible fine
+surface of equal area. $\square$
+
+**Theorem 8.7 (Rigidity).** If some minimal $u$–$v$ separating surface of $w$ is constant
+on the fibres of $\pi$ — that is, if it is pulled back from a coarse surface $\tau$ with
+$\tau(\pi u) = \textsf{true}$, $\tau(\pi v) = \textsf{false}$ — then
+$\operatorname{cap}_{\pi_* w}(\pi u, \pi v) = \operatorname{cap}_w(u,v)$: nothing moves. The analogous statement holds
+for entropies.
+
+Together with the next example, Theorem 8.7 isolates the exact mechanism of the
+renormalisation jump: **only surfaces that split a fibre can be lost.**
+
+**Theorem 8.8 (The contraction is strict).** Consider four cells arranged in a path
+$0 - 1 - 2 - 3$ with areas
+$$
+w(0,1) = 5,\qquad w(1,2) = 1, \qquad w(2,3) = 5,
+$$
+and all other weights $0$; and let $\pi$ merge the two waist cells $1$ and $2$. Then
+$$
+\operatorname{cap}_w(0,3) \le 1, \qquad \operatorname{cap}_{\pi_* w}(\pi 0, \pi 3) = 5,
+$$
+so $d_{\pi_* w}(\pi 0, \pi 3) < d_w(0,3)$ strictly.
+
+*Proof sketch.* Upper bound: the region $\{0,1\}$ separates $0$ from $3$ and its bounding
+surface consists of the single waist edge, of area $1$. Lower bound after merging: the
+coarse geometry is a three-cell path with both edges of area $5$ (the two heavy edges
+survive; the waist becomes an internal, hence invisible, edge inside the merged cell), so
+*every* coarse surface separating the two ends cuts exactly one heavy edge, of area $5$.
+Exhausting the two possible positions of the middle cell gives the exact value $5$. $\square$
+
+The thin waist was the cheap surface, and merging destroyed it. That is the renormalisation
+group of the model: as one coarse-grains, the emergent space contracts, and it contracts
+discontinuously exactly when the surfaces that were doing the work get absorbed.
 
 ---
 
-## 11. Summary of results
+## 9. Worked example: the emergent space of $n$ Bell pairs
 
-* **Contraction principle** (Theorem 3.3). A Hamming-nonexpansive Boolean recombination rule, plus boundary-trace compatibility, yields an entropy inequality. All the inequalities below are instances.
-* **Subadditivity, strong subadditivity, complementarity, purity** (Theorems 2.8, 3.5, 3.7).
-* **Monogamy of mutual information** (Theorem 3.10), from the minority/union rule; the naive pairwise-intersection rule provably fails (Remark 3.9).
-* **Five-party cyclic inequality** (Theorem 4.4), from the rule $c_4 \wedge \lnot c_2 \wedge (c_0 \vee (c_1 \wedge \lnot c_3))$ in five rotations plus the union.
-* **Reconstruction** (Theorem 5.3): $w(u,v) = I(u:v)/2$ with no hidden cells; **rigidity and connectivity** (Theorem 5.5); **gauge sharpness** (Theorem 5.6); **failure with one hidden cell** (Theorem 5.7); **stability** (Theorem 5.9).
-* **ER = EPR**: disconnection $\Rightarrow$ additivity (Theorem 6.2); correlation $\Rightarrow$ bridge (Theorem 6.3); the bridge network equals the entanglement network (Theorem 6.4); throat area $=$ concurrence and bridge $\iff$ entangled (Theorem 6.9); linear entropy $=$ concurrence squared (Theorem 6.10); the $n$-Bell-pair matching geometry (Theorem 6.12).
-* **Obstructions**: GHZ has no geometric dual (Theorem 7.1) though it satisfies the general quantum inequalities (Proposition 7.2); and the witness vector $S_w$ satisfies subadditivity, strong subadditivity, weak monotonicity and monogamy on all disjoint arguments yet violates the cyclic inequality by one (Theorems 7.4, 7.5), proving the cyclic inequality independent (Corollary 7.6) and exhibiting an entropy vector realised by no bulk geometry at all (Theorem 7.7).
+Let $V = \{1,\dots,n\} \times \{0,1\}$: two cells $(i,0),(i,1)$ for each of $n$ Bell pairs,
+all on the boundary, with
+$$
+w\bigl((i,b),(j,c)\bigr) \;=\; \begin{cases} w_i, & i = j \text{ and } b \ne c, \\ 0, & \text{otherwise},\end{cases}
+\qquad w_i \ge 0 .
+$$
+This is the *matching geometry*: $n$ independent throats and nothing else.
+
+**Theorem 9.1.** For all $i,j,b,c$:
+
+1. $\operatorname{area}(\{(i,b)\}) = w_i$;
+2. $\operatorname{cap}\bigl((i,b),(i,\bar b)\bigr) = w_i$ — the throat capacity of a partner pair is
+   exactly its Bell weight;
+3. $\operatorname{cap}\bigl((i,b),(j,c)\bigr) = 0$ for $i \ne j$ — no bridge joins different pairs;
+4. $d\bigl((i,b),(i,\bar b)\bigr) = e^{-w_i}$ and $d\bigl((i,b),(j,c)\bigr) = 1$ for $i\ne j$;
+5. $w_i > 0$ if and only if the two mouths of pair $i$ are at distance strictly less
+   than $1$.
+
+*Proof sketch.* (1) is Lemma 2.9: only the partner edge is nonzero. (2) has an upper bound
+from the surface around a single cell, of area $w_i$ by (1), and a lower bound for free
+from Theorem 4.3 applied to $I\bigl((i,b):(i,\bar b)\bigr) = 2w_i$. (3) holds because no
+bulk path leaves a pair, so Theorem 3.6 forces the capacity to vanish. (4) and (5) are
+immediate from the definition of $d$. $\square$
+
+This is the sharpest possible instance of the ER = EPR sandwich (Theorem 4.4): all three of
+$\tfrac12 I$, $E$, and $\min(S,S)$ equal $w_i$.
+
+**Theorem 9.2 (The clusters are exactly the Bell pairs).** Let $r$ satisfy
+$$
+\max_i e^{-w_i} \;\le\; r \;<\; 1 .
+$$
+Then two cells lie in the same cluster of the emergent ultrametric at scale $r$ if and only
+if they belong to the same Bell pair.
+
+*Proof sketch.* Across pairs the distance is $1 > r$, so distinct pairs are never merged;
+inside a pair the distance is $e^{-w_i} \le r$, so every pair is a single cluster. $\square$
+
+Both hypotheses on $r$ are needed: without $r < 1$ distinct pairs would merge, and without
+$e^{-w_i} \le r$ a pair with a thin throat would already be split. Within this window, the
+emergent space of $n$ Bell pairs consists of exactly $n$ microscopic Einstein–Rosen bridges
+and nothing else — a shattered spacetime whose only connectivity is entanglement.
+
+---
+
+## 10. Discussion and future directions
+
+### 10.1 What the model shows
+
+Reading the results as a single statement: *given the two-point entanglement data of a
+holographic state with no hidden bulk, one can reconstruct a metric space; that space is
+ultrametric, hence $0$-hyperbolic; distances decay exponentially in mutual information;
+positive mutual information is equivalent to bulk connectivity; the bridge cross-section is
+sandwiched between half the mutual information and the entropies of the mouths, with
+equality for a single throat; maximal entanglement forces a bridge with exactly two mouths;
+entanglement can be transported through the bridge as a flow whose maximal value is at
+most the cross-section, with equality for a single throat; and coarse-graining contracts
+this geometry $1$-Lipschitzly and functorially, strictly so whenever it absorbs the
+surfaces that were carrying the min-cut.*
+
+That is a considerable amount of ER = EPR, made precise and true. It is also, honestly, a
+toy: the model has no dynamics, no time, no Einstein equations, and its "areas" are
+combinatorial inputs rather than solutions of anything. What it isolates is the *purely
+kinematic* content of the correspondence — the part that follows from the min-cut structure
+alone. The fact that this part already yields negative curvature, monogamy, a
+renormalisation flow, and a reconstruction theorem is the interesting news.
+
+### 10.2 Algorithms
+
+All quantities defined here are computable. For $|V| = n$ cells:
+
+- **Area of a region**: $O(n^2)$ from the definition.
+- **Throat capacity $E(A,B)$**: a minimum $s$–$t$ cut in an undirected weighted graph,
+  computable in polynomial time by standard max-flow algorithms; the brute-force
+  enumeration over $2^n$ regions is used for verification on small examples.
+- **Entropy $S(A)$**: a minimum cut with the boundary values *fixed* — that is, an $s$–$t$
+  min-cut in the graph obtained by contracting $A$ to a source and its boundary complement
+  to a sink, the hidden cells remaining free. Also polynomial.
+- **The whole capacity table $\{\operatorname{cap}(u,v)\}$**: $\binom{n}{2}$ min-cuts naively, or $n-1$
+  min-cuts via a Gomory–Hu tree, whose existence is guaranteed by Theorem 5.2.
+- **The cluster hierarchy**: single-linkage clustering on the capacity table, equivalently
+  the dendrogram of the ultrametric $d$.
+- **Bit threads**: a maximum flow; Theorem 7.4 says its value is a certificate bounded by
+  any cut, and Theorem 7.6 verifies equality for the elementary wormhole.
+
+### 10.3 Future directions
+
+**C1. Strong duality: bit threads realise every Ryu–Takayanagi area.** For every finite
+geometry $G$ and disjoint boundary regions $A$, $B$ there should exist a conserved thread
+configuration $T$ with $\operatorname{val}(T) = E(A,B)$; consequently max-flow $=$ min-cut, and the
+Ryu–Takayanagi entropy of any region is the maximal flux of a bit-thread configuration out
+of it. The key insight is that the weak duality proved here uses only antisymmetry plus
+capacity, so the missing half is precisely a constructive augmenting-path argument, which
+on a finite weighted graph terminates because the set of achievable fluxes is a polytope
+with rational vertices whenever the areas are rational. Why now? The cut side of the toy
+dictionary is complete (subadditivity, strong subadditivity, monogamy, cyclic
+inequalities, nesting), and the elementary wormhole case is already verified; a general
+max-flow–min-cut theorem would immediately convert every entropy inequality proved by
+surface recombination into a statement about threads — that is, about *where the
+entanglement lives*.
+
+**C2. Every finite ultrametric emergent geometry is a tensor-network tree.** For every
+geometry $G$ there should be a weighted tree $T$ whose leaves are the cells of $G$ and
+whose induced leaf metric is exactly the emergent distance; moreover $T$ can be taken to be
+the Gomory–Hu tree of $G$, with at most $|V| - 1$ internal edges. The key insight is that
+the emergent distance was proved to be an ultrametric and $0$-hyperbolic, and finite
+ultrametric spaces are exactly the leaf metrics of weighted rooted trees; the capacity
+hierarchy at varying scales already produces the laminar family of clusters that such a
+tree must have. Why now? This would formalise the folklore that holographic states are
+*tensor-network* states: the emergent bulk is not just some metric space, it is literally a
+tree of contractions, and the tree is computable from two-point mutual informations alone.
+
+**C3. A sharp entanglement-wedge cross-section law.** In every geometry without hidden bulk
+cells, $E(A,B)$ should equal the maximum over bipartitions of the "one-sided" mutual
+information, and in particular the bound $I(A:B) \le 2E(A,B)$ should be saturated **if and
+only if** every minimal $A$–$B$ separating surface is homologous to $A \cup B$ —
+equivalently, if and only if the bulk between $A$ and $B$ is a single throat. The key
+insight is that the proof of the cross-section bound loses exactly one inequality — the
+step in which the two halves of the minimal $A\cup B$ surface are compared with the true
+minimal surfaces of $A$ and of $B$ — and controlling that step is precisely a homology
+condition.
+
+**C4. Coarse-graining is a metric contraction.** *(Closed in this cycle: Theorems 8.5 and
+8.8 establish the $1$-Lipschitz contraction, its functoriality, its rigidity criterion, and
+the strictness of the contraction in general.)* The remaining question is quantitative:
+bound the jump $\operatorname{cap}_{\pi_*w} - \operatorname{cap}_w$ in terms of the total area of the fibre-splitting
+surfaces destroyed by $\pi$.
+
+**C5. Dynamics.** Everything here is kinematics on a fixed spatial slice. The natural next
+object is a *sequence* of geometries — a discrete time evolution — with an entropy
+production law, and the question of whether the induced motion of the emergent ultrametric
+space obeys a discrete analogue of the Einstein equations. A concrete first target: show
+that a local rearrangement of entanglement that preserves all one-cell entropies moves the
+emergent metric by a bounded amount, a discrete "first law of entanglement".
+
+---
+
+## 11. Conclusion
+
+Starting from nothing but a finite weighted graph and a minimisation principle, we obtained
+a metric space whose distances are exponentials of minus the entanglement, whose curvature
+is as negative as it can be, whose connectivity is exactly the positivity of mutual
+information, whose bridges obey monogamy, whose entanglement can be transported as a
+conserved flow, and which contracts functorially under coarse-graining. Two entangled cells
+really are joined by a bridge; the bridge really is wider when they are more entangled; and
+severing the entanglement really does place them at maximal distance.
+
+ER = EPR, in this arena, is not a slogan. It is a theorem — several of them.

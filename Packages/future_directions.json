@@ -335,7 +335,7 @@
       "depth_estimate": 3,
       "description": "Establishes a non-zero spectrum lower bound for the quantum Yang-Mills Hamiltonian on four-dimensional spherical manifolds.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Physics"
       ],
@@ -375,7 +375,7 @@
       "depth_estimate": 3,
       "description": "Formalizes boundary conditions under which trapped surfaces in spacetime guarantee geodesic incompleteness.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Physics"
       ],
@@ -415,7 +415,7 @@
       "depth_estimate": 3,
       "description": "Derives the thermodynamic entropy of isolated horizons in stationary black hole spacetimes from quantum microstate counting.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Physics"
       ],
@@ -455,7 +455,7 @@
       "depth_estimate": 3,
       "description": "Proves the Kolmogorov-Arnold-Moser (KAM) theorem on the persistence of quasi-periodic invariant tori under small Hamiltonian perturbations.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Physics"
       ],
@@ -495,7 +495,7 @@
       "depth_estimate": 3,
       "description": "Constructs an explicit non-trivial Hilbert space operator model satisfying the Wightman axioms for self-interacting scalar quantum fields in two dimensions.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Physics"
       ],
@@ -1375,7 +1375,7 @@
       "depth_estimate": 3,
       "description": "Formally proves lower bounds on error thresholds for topological surface codes under depolarizing noise models.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Physics"
       ],
@@ -1455,7 +1455,7 @@
       "depth_estimate": 3,
       "description": "Proves Hastings' theorem establishing efficient Matrix Product State (MPS) approximations for ground states of gapped 1D quantum spin chains.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Physics"
       ],
@@ -1495,7 +1495,7 @@
       "depth_estimate": 3,
       "description": "Proves necessary and sufficient conditions for quantum EPR steering under uncharacterized local measurements.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Physics"
       ],
@@ -1535,7 +1535,7 @@
       "depth_estimate": 3,
       "description": "Formalizes the Lloyd-Shor-Devetak (LSD) theorem for quantum channel capacity defined by regularized coherent information.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Physics"
       ],
@@ -24364,7 +24364,7 @@
       "depth_estimate": 3,
       "description": "# Future directions\n\nThe spectral-projection decomposition in `SignedCubeSpectralProjections.lean` suggests the following concrete, falsifiable next claims.\n\n1. **Equal eigenspace dimensions.** For every `n > 0` and every real `r ≠ 0` with `r² = n`, the images of `positiveSpectralPart n r` and `negativeSpectralPart n r` each have real vector-space dimension `2^(n-1)`.\n\n2. **Characteristic polynomial.** After representing `signedAdj n` as an endomorphism of the finite-dimensional space `Cube n → ℝ`, its characteristic polynomial is `(X^2 - n)^(2^(n-1))` for every `n > 0`.\n\n3. **Trace cancellation under restriction.** For every nonempty proper vertex subset `S` of `Cube n`, the principal restriction of the canonical signed adjacency matrix has trace zero; moreover, if `|S| > 2^(n-1)`, that restriction has a positive eigenvalue at least `1`.\n\n4. **Face-cancellation characterization.** A symmetric `{−1,1}` edge signing of the Boolean cube has adjacency square equal to `nI` if and only if the product of its four edge signs around every two-dimensional face is `−1`.\n\n5. **Switching uniqueness.** Any two symmetric cube-edge signings satisfying the negative face-product condition differ by vertex switching: there is a vertex labeling by `{−1,1}` whose endpoint products transform one signing into the other.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Physics"
       ],
@@ -42339,7 +42339,7 @@
       "depth_estimate": 3,
       "description": "`QuantumSerre.highest_weight_singular` establishes\n   `E (F^{n+1} v) = 0` for every highest-weight vector of weight `n` in every `U_q(sl₂)`-module.\n   The open half is the converse classification: for `q` not a root of unity, every finite\n   dimensional `U_q(sl₂)`-module is a direct sum of the modules `uqSl2_rep n` twisted by a sign\n   character — a complete-reducibility statement that would make the Reshetikhin–Turaev functor\n   well defined on the whole category rather than on the fundamental representation alone.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Algebra",
         "Physics"
@@ -44423,7 +44423,7 @@
       "depth_estimate": 3,
       "description": "**Sharpness**: the liar loop destroys conservativity (`liar_not_conservative`);\n  a single positive loop costs exactly one bit and `k` loops exactly `2 ^ k`\n  models while adding **no** theorem (`loopDen_models_ncard`,\n  `loopDen_conservative`).",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Physics"
       ],
@@ -45085,7 +45085,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "f1fd8ff1",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -45110,7 +45110,7 @@
       "source": "",
       "source_exp_id": "11c9ff9f",
       "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/11c9ff9f",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-08-18T03:08:40.595069+00:00",
       "title": "For a graded `G`-set `Y = ⨆_n Y_n` the generating function `Σ_n t_r(Y_n) q^n` is a rational\nfunction of `q` whenever the grades are eventually `r`-transitive, with denominator dividing\n`(1−q)^{r+1}`."
@@ -48261,7 +48261,7 @@
       "depth_estimate": 3,
       "description": "*For a generator driven by an integer matrix `M ∈ GL₃(ℤ)` with spectral radius\n`ρ(M) > 1`, the control-word length needed to reach a state of size `S` is\n`Θ(log S / log ρ(M))`; if `ρ(M) = 1` (unipotent) it is `Θ(S^{1/d})`, where `d` is\nthe size of the largest Jordan block minus one.*",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Physics"
       ],
@@ -50172,6 +50172,205 @@
       "thread_id": "",
       "timestamp": "2026-08-19T13:08:52.965344+00:00",
       "title": "The real-analytic version on `|q| < 1` is proved; only the passage from `ℝ` to"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "The cut side of the toy AdS/CFT dictionary is fully formalised\n(subadditivity, SSA, MMI, cyclic inequalities, nesting), and the elementary\nwormhole case is already verified (`pairModel_maxflow_eq_throat`); a formal\nmax-flow–min-cut theorem would immediately convert every entropy inequality\nproved by surface recombination into a statement about threads, i.e. about",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Geometry"
+      ],
+      "github_issue": 0,
+      "id": "fd_1605",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.4,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "4ba8c40c",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/4ba8c40c",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-08-19T13:09:11.701407+00:00",
+      "title": "The cut side of the toy AdS/CFT dictionary is fully formalised"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "## C4. Coarse-graining is a metric contraction (an emergent RG flow) — **RESOLVED**",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [],
+      "github_issue": 0,
+      "id": "fd_1606",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.4,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "4ba8c40c",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/4ba8c40c",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-08-19T13:09:11.958719+00:00",
+      "title": "C4. Coarse-graining is a metric contraction (an emergent RG flow) — RESOLVED*"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "It would upgrade the static statement \"emergent space is\n`0`-hyperbolic\" to a dynamical one: the RG flow of a holographic state *is* the\nconstruction of its bulk tree, and it converges in linearly many steps.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Combinatorics"
+      ],
+      "github_issue": 0,
+      "id": "fd_1607",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.4,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "4ba8c40c",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/4ba8c40c",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-08-19T13:09:12.212100+00:00",
+      "title": "It would upgrade the static statement \"emergent space is"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "The one-sided inequality, a strict instance, and the \"if\" direction\n(`cap_pushGraph_eq_of_lift`: a fibre-constant minimal surface freezes the\nthroat) are all proved, so the remaining content is the converse; it would give a *criterion* for when\ncoarse-graining destroys geometric information, i.e. when the RG flow is\nirreversible.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Geometry",
+        "Combinatorics"
+      ],
+      "github_issue": 0,
+      "id": "fd_1608",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.4,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "4ba8c40c",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/4ba8c40c",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-08-19T13:09:12.466361+00:00",
+      "title": "The one-sided inequality, a strict instance, and the \"if\" direction"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "The corresponding easy half is already a theorem\n(`entropy_pushModel_eq_of_lift`).  Together with C7 it would make the whole dictionary\n(area → throat → distance → entropy) uniformly rigid under coarse-graining, and\neach clause is a finite, checkable condition, hence falsifiable on a small\nweighted graph.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Combinatorics"
+      ],
+      "github_issue": 0,
+      "id": "fd_1609",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.4,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "4ba8c40c",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/4ba8c40c",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-08-19T13:09:12.724451+00:00",
+      "title": "The corresponding easy half is already a theorem"
     },
     {
       "ambition_level": "extension",
@@ -53307,7 +53506,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 647e3d96 (Q=0.775), which proved 10 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Proves that a physical system's observable geometric state is strictly conditioned on the topological complexity of the observing neural network (Twilight Zone / Perceptual Reality).",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Physics"
       ],
@@ -57267,7 +57466,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle e722c646 (Q=0.771), which proved 10 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The renormalization group in physics zooms out by integrating out high-energy modes. Formalize this as an inverse stereographic projection on the energy sphere: RG flow equals iterated stereographic projection with varying pole. Conjecture: The beta function beta(g) in phi^4 theory equals the deriva",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Physics"
       ],
@@ -57812,6 +58011,46 @@
       "thread_id": "",
       "timestamp": "2026-08-02T22:20:26.804499+00:00",
       "title": "Deepening: Perfect Cuboid (Euler Brick)"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Building on cycle f1fd8ff1 (Q=0.820), which proved 92 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: *For a graded `G`-set `Y = ⨆_n Y_n` the generating function `Σ_n t_r(Y_n) q^n` is a rational\nfunction of `q` whenever the grades are eventually `r`-transitive, with denominator dividing\n`(1−q)^{r+1}`.*",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Physics"
+      ],
+      "github_issue": 0,
+      "id": "push_f1fd8ff1_ca2d0027",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.9199999999999999,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "f1fd8ff1",
+      "source_path": "For a graded `G`-set `Y = ⨆_n Y_n` the generating function `Σ_n t_r(Y_n) q^n` is",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-08-19T13:09:05.760186+00:00",
+      "title": "Deepening: For a graded `G`-set `Y = ⨆_n Y_n` the generating function `Σ_n t_r(Y_n) q^n` is"
     },
     {
       "ambition_level": "extension",
@@ -58439,7 +58678,7 @@
       "depth_estimate": 3,
       "description": "Formally proves conditions under which information can exist purely within a closed timelike curve loop without ever having an initial origin (Ontological Paradox).",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Physics"
       ],
@@ -58479,7 +58718,7 @@
       "depth_estimate": 3,
       "description": "Derives non-signaling boundary conditions allowing superluminal tachyon pulses to modulate past quantum states without triggering fatal temporal paradoxes.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Physics"
       ],
@@ -58519,7 +58758,7 @@
       "depth_estimate": 3,
       "description": "Proves that entropy strictly decreases along retro-geodesics within intense Kerr black hole ergospheres.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Physics"
       ],
@@ -58639,7 +58878,7 @@
       "depth_estimate": 3,
       "description": "Derives upper bound on thermodynamic energy extraction from mega-scale orbital solar collection swarms encircling main-sequence stars.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Physics"
       ],
@@ -58679,7 +58918,7 @@
       "depth_estimate": 3,
       "description": "Proves exact minimum exotic negative energy density requirements necessary to maintain a stable superluminal Alcubierre warp bubble without collapse.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Physics"
       ],
@@ -58799,7 +59038,7 @@
       "depth_estimate": 3,
       "description": "Proves that a physical system's observable geometric state is strictly conditioned on the topological complexity of the observing neural network (Twilight Zone / Perceptual Reality).",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Physics"
       ],
@@ -59039,7 +59278,7 @@
       "depth_estimate": 3,
       "description": "Formalizes Giulio Tononi's Integrated Information Theory (Phi) as a continuous scalar field over spacetime manifolds.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Physics"
       ],
@@ -59359,7 +59598,7 @@
       "depth_estimate": 3,
       "description": "Formalizes theoretical probability bounds for macroscopic quantum tunneling between decohered Everett multiverse branches.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Physics"
       ],
@@ -59399,7 +59638,7 @@
       "depth_estimate": 3,
       "description": "Calculates maximum divergence rate of macroscopic physical observables following a single quantum measurement event.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Physics"
       ],
@@ -59439,7 +59678,7 @@
       "depth_estimate": 3,
       "description": "Formalizes the Ekpyrotic universe model where big bang singularities are produced by periodic collisions of 4D branes in 5D bulk space.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Physics"
       ],
@@ -59479,7 +59718,7 @@
       "depth_estimate": 3,
       "description": "Proves the mathematical signature of gravitational energy leaking from our universe into neighboring extra-dimensional branes.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Physics"
       ],
@@ -59559,7 +59798,7 @@
       "depth_estimate": 3,
       "description": "Proves the existence of a non-zero net directional force generated by asymmetric Casimir cavity geometry in quantum vacuum.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Physics"
       ],
@@ -59639,7 +59878,7 @@
       "depth_estimate": 3,
       "description": "Formally proves that Hawking radiation carries complete quantum information out of an evaporating black hole via subtle page curve correlations.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Physics"
       ],
@@ -59679,7 +59918,7 @@
       "depth_estimate": 3,
       "description": "Proves absolute bounds on power extraction rates from zero-point quantum field fluctuations without violating global conservation laws.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Physics"
       ],

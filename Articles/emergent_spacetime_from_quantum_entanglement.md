@@ -1,202 +1,367 @@
 # The Shape of Entanglement
 
-### How a universe of space can be knitted out of quantum correlations — and why some quantum states can never be woven into a space at all
+### How the geometry of space can be recovered from nothing but a table of quantum correlations
 
 ---
 
-## A bridge made of nothing
+There is a sentence physicists have been repeating for a decade, half as a joke and half
+as a research programme: **ER = EPR**.
 
-In 1935, Albert Einstein wrote two papers that would take eighty years to be introduced to one another.
+The left-hand side, ER, stands for Einstein and Rosen — who in 1935 found that Einstein's
+equations permit a "bridge" between two distant regions of space, what we now call a
+wormhole. The right-hand side, EPR, stands for Einstein, Podolsky and Rosen — the same
+Einstein, the same year, describing the phenomenon he called *spooky action at a distance*:
+quantum entanglement.
 
-The first, with Nathan Rosen, described a strange feature of general relativity: two distant regions of spacetime can be joined by a tunnel, a "bridge," through which the geometry passes without ever crossing the space in between. We now call these Einstein–Rosen bridges, or wormholes.
+The conjecture says that these two 1935 papers are about the same thing. Every entangled
+pair of particles, on this view, is joined by a microscopic wormhole. Space is not the
+stage on which quantum mechanics happens; space is what entanglement *looks like* when you
+step back far enough.
 
-The second, with Boris Podolsky and Rosen again, described a strange feature of quantum mechanics: two particles can be prepared in a joint state so tightly correlated that measuring one instantly fixes what you will find when you measure the other, however far apart they are. We call this entanglement, and the paper's initials — EPR — are its shorthand.
+It is a beautiful idea, and, as usually stated, alarmingly vague. What does it *mean* for
+two entangled electrons to be "joined by a wormhole"? How wide is the wormhole? What
+happens if you disentangle them — does space tear?
 
-For most of a century these were two separate oddities: one about geometry, one about information. Then Juan Maldacena and Leonard Susskind proposed something audacious. *They are the same oddity.* Entangled particles, they suggested, **are** microscopic wormholes: **ER = EPR**.
-
-That is a beautiful sentence. But what would it mean to actually *prove* it?
-
-This article describes a small, complete, fully worked-out mathematical world in which the question has a sharp answer — and in which the answer comes with a surprise attached. In this world, geometry really is built out of entanglement: the metric can be read off, edge by edge, from a table of quantum correlations. Two particles are entangled if and only if a bridge joins them. But we also find a hard wall. There are perfectly consistent-looking patterns of entanglement — patterns that satisfy every quantum rule anyone had checked — that **no geometry can ever produce**. Not a curved one, not a flat one, not one with hidden extra regions. None.
-
-Space, it turns out, is picky about what it will be made of.
-
----
-
-## The toy universe: a graph and a knife
-
-To make the question precise you need a stripped-down model of spacetime, and the one that has proven most fruitful is disarmingly simple.
-
-A **bulk geometry** is a finite weighted graph. Its vertices are "cells" of space. Between any two cells $u$ and $v$ there is a number $w(u,v) \ge 0$, symmetric in its arguments, which you should picture as the *area* of the wall separating those two cells. Big weight means a thick, expensive wall; zero weight means the cells are not directly joined at all.
-
-Some cells are designated as **boundary** cells. These are where the quantum system lives — in the string-theory picture they are the edge of the universe, where a quantum field theory encodes everything that happens inside. The remaining cells are **hidden**: they are pure interior, the deep bulk.
-
-Now for the knife. Given any way $f$ of splitting the cells into two groups — call it a *region* — the **area** it costs is the total weight of all the walls you had to cut:
-
-$$\mathrm{area}(f) \;=\; \tfrac{1}{2}\sum_{u,v}\,[\,f(u) \neq f(v)\,]\; w(u,v).$$
-
-The bracket is $1$ when the two cells land on opposite sides and $0$ otherwise; the factor of $\tfrac12$ is because each wall gets counted twice.
-
-Finally, the definition that makes the whole subject go. Take a set $A$ of boundary cells. Among all the ways of cutting the bulk that agree with $A$ *on the boundary* — you must take exactly the cells of $A$ and none of the other boundary cells, but you may do whatever you like with the hidden cells — find the cheapest. Its area is the **entanglement entropy** of $A$:
-
-$$S(A) \;=\; \min\{\,\mathrm{area}(f) : f \text{ agrees with } A \text{ on the boundary}\,\}.$$
-
-This is the Ryu–Takayanagi prescription, in miniature. In the full theory it says that the entropy of a region of a quantum field equals the area of the smallest surface in the bulk that hangs from that region. Here it is a minimum cut in a finite graph — a quantity a computer can find, and about which one can prove theorems.
-
-Two immediate sanity checks fall out. The empty region costs nothing: $S(\emptyset) = 0$. And the whole boundary also costs nothing — take *everything* to be inside, cut no walls at all — so $S(\text{everything}) = 0$. That second one is exactly the statement that the global quantum state is **pure**: the universe as a whole has no entropy, only its parts do. A slightly cleverer version of the same argument shows **complementarity**: a region and its complement always have the same entropy, $S(A) = S(A^{c})$, because flipping which side of a cut is "inside" doesn't change what you cut.
+This article is about a small, complete world in which all of these questions have exact
+answers. In this world, ER = EPR is not a slogan. It is a theorem, and so is nearly
+everything you would want to deduce from it.
 
 ---
 
-## Cutting arithmetic
+## A universe made of areas
 
-The engine of everything that follows is a single, almost embarrassingly elementary observation.
+Strip away the continuum. Imagine space is made of a finite number of tiny **cells**. Call
+the set of them $V$. Between any two cells $x$ and $y$ there is a number $w(x,y) \ge 0$,
+symmetric in $x$ and $y$, which we call the **area** of the little wall separating them. If
+$w(x,y)=0$, the two cells are simply not adjacent — there is no wall, because there is no
+contact.
 
-Suppose you have a family of regions $f_1,\dots,f_k$ and you build from them a new family $g_1,\dots,g_m$ by some fixed Boolean recipe — each $g_j$ is computed cell by cell from whether that cell lies in each $f_i$. Ask: for a given pair of cells $(u,v)$, how many of the new regions *separate* them, versus how many of the old ones did?
+That's the entire geometry: a finite list of nonnegative numbers. No coordinates, no
+curvature tensor, no metric. Just areas.
 
-If the recipe never increases that count — for every pair of cells, the new family separates them at most as often as the old family did — then summing against the wall areas gives, immediately,
+Now take any collection of cells — a **region** $f$ — and ask how much wall you would have
+to cut to isolate it. That's its **area**:
 
-$$\sum_{j=1}^{m}\mathrm{area}(g_j) \;\le\; \sum_{i=1}^{k}\mathrm{area}(f_i).$$
+$$\operatorname{area}(f) \;=\; \sum_{x \in f} \; \sum_{y \notin f} w(x,y),$$
 
-That is the whole trick. A recipe with this property is called a **contraction**: viewed as a map from $\{0,1\}^k$ to $\{0,1\}^m$, it never increases Hamming distance. And the punchline is that **every contraction is an entropy inequality**. If the boundary traces work out — if applying the recipe to the boundary patterns of $A_1,\dots,A_k$ gives you exactly $B_1,\dots,B_m$ — then
+the total area of the walls separating inside from outside. This single quantity is the
+workhorse of everything that follows.
 
-$$\sum_j S(B_j) \;\le\; \sum_i S(A_i).$$
+Some cells are marked as **boundary** cells; the rest are hidden in the interior. The
+boundary is where the quantum state lives; the interior is the emergent bulk we are trying
+to build.
 
-The proof is three lines. Take the minimal cut for each $A_i$; apply the recipe to get candidate cuts for each $B_j$; those candidates are admissible, so each $S(B_j)$ is at most the area of its candidate; and the contraction property says the total candidate area doesn't exceed the total minimal area, which is $\sum_i S(A_i)$. Done.
+Finally, the rule connecting quantum information to geometry, borrowed from the
+Ryu–Takayanagi prescription of holography:
 
-So the search for holographic entropy inequalities becomes the search for Hamming-nonexpansive Boolean maps. That is a finite search. A computer can do it.
+> **The entropy of a boundary region $A$ is the area of the smallest surface you can draw
+> in the bulk that ends on $A$.**
 
----
+Formally: consider every region $f$ of the full cell set that *agrees with $A$ on the
+boundary* — it can do whatever it likes in the hidden interior — and take the smallest
+area among them. Call it $S(A)$.
 
-## What the recipes say
-
-**Recipe one: intersection and union.** Send the pair $(a_1, a_2)$ to $(a_1 \wedge a_2,\; a_1 \vee a_2)$. Checking the sixteen cases confirms it is a contraction, and it yields at once two of the pillars of quantum information theory. It gives **subadditivity**, $S(A \cup B) \le S(A) + S(B)$: two regions together are never more disordered than the sum of their parts. And it gives **strong subadditivity**,
-
-$$S(A \cup B \cup C) + S(B) \;\le\; S(A \cup B) + S(B \cup C),$$
-
-which is the hardest-won inequality in quantum information theory — Lieb and Ruskai's celebrated 1973 theorem, obtained here in a couple of lines because in the geometric world it is nothing but the submodularity of a min-cut.
-
-**Recipe two: the minority rule.** This one is subtler and it is where geometry starts to say things that quantum mechanics alone does not. Given three regions $a_1,a_2,a_3$, form the three "minority" regions — the cells in exactly two of the three, e.g. $a_1 \wedge a_2 \wedge \lnot a_3$ — together with the union $a_1 \vee a_2 \vee a_3$. Four outputs from three inputs, and yet it is still a contraction: a fact verified across all sixty-four Boolean configurations.
-
-Four outputs from three inputs is remarkable, and it buys you the signature inequality of holography, **monogamy of mutual information**:
-
-$$S(A) + S(B) + S(C) + S(A\cup B\cup C) \;\le\; S(A\cup B) + S(B\cup C) + S(A\cup C).$$
-
-Written in terms of the mutual information $I(A:B) = S(A) + S(B) - S(A\cup B)$, which measures how much $A$ and $B$ know about each other, this says
-
-$$I(A : B\cup C) \;\ge\; I(A:B) + I(A:C).$$
-
-Entanglement, in a geometric world, is *monogamous*: whatever correlation $A$ has with $B$ and with $C$ separately, it has at least that much with the two of them together. There is no way to spread correlation democratically among three parties.
-
-And here is the detail that shows this is genuinely delicate. If you replace the minority regions by the naive pairwise intersections $a_i \wedge a_j$, the recipe **fails** to be a contraction — take all three $a$'s true and all three $b$'s false and count. The extra "$\lnot a_k$" in each minority region is not decoration. It is load-bearing.
+That's it. From this we will get distance, curvature, wormholes, monogamy and a
+renormalisation group.
 
 ---
 
-## Reading the metric off the correlations
+## The width of a wormhole
 
-Now to the promised reconstruction. Consider a geometry with **no hidden cells**: every cell is a boundary cell, so there is nothing to minimise over and the entropy of a region is just the area of its own boundary wall. In that setting one can compute exactly what the mutual information of two individual cells is, and the answer is startlingly clean:
+Entropy $S(A)$ is a property of one region. To talk about a *bridge between two* regions we
+need something else. Here it is, and it is the key new character in the story.
 
-$$\boxed{\,w(u,v) \;=\; \tfrac12\, I(u:v)\,}$$
+Given two regions $A$ and $B$, look at all the surfaces that **separate** them — every
+region $\sigma$ that swallows all of $A$ and none of $B$ — and take the smallest area among
+them. Call it the **throat capacity**:
 
-**Every single edge weight of the geometry — the entire metric — is one half of the mutual information of the two cells it joins.** Nothing is estimated, nothing is asymptotic. Given the table of pairwise correlations, you write down the geometry.
+$$E(A,B) \;=\; \min\{ \operatorname{area}(\sigma) \;:\; A \subseteq \sigma, \; B \cap \sigma = \emptyset \}.$$
 
-Three corollaries follow, and together they are as close to "spacetime from entanglement" as a theorem can get.
+Picture an hourglass. To cut the two bulbs apart you must slice the waist, and the cheapest
+slice is the narrowest one. $E(A,B)$ is the area of that narrowest waist: the
+*cross-section of the Einstein–Rosen bridge* joining $A$ to $B$.
 
-*Rigidity.* If two hidden-cell-free geometries produce the same pairwise mutual informations, they have the same edge weights, hence the same areas for every region and the same entropy for every boundary set. The correlation table determines everything.
+The first surprise is how much this one number knows.
 
-*Connectivity.* Define a **bridge** between two cells to be a chain of positive-area steps joining them — the discrete version of a wormhole through the bulk. Two such geometries with the same correlations have literally the same bridges. The topology of the emergent space is fixed by the entanglement too, not just the metric.
+> **Bridge Detection Theorem.** For two distinct cells $u$ and $v$, the throat capacity
+> $E(u,v)$ is strictly positive if and only if you can walk from $u$ to $v$ through the
+> bulk along walls of positive area.
 
-*Sharpness.* And it is exactly sharp: the self-loop weights $w(u,u)$ are pure gauge. A cell is never separated from itself, so self-loops never contribute to any cut area and never carry a path anywhere new. Changing them all leaves every entropy and every bridge untouched. So the correlation data determines precisely the off-diagonal geometry — no more, and no less.
+Why? If no path exists, take $R$ to be the set of all cells you *can* reach from $u$. By
+construction, no positive-area wall leads out of $R$ — otherwise you could step further.
+So $R$ separates $u$ from $v$ and has area exactly zero, which drives $E(u,v)$ to zero.
+Conversely if $E(u,v)=0$, the cheapest separating surface has no positive wall crossing it,
+so any journey starting at $u$ is trapped on $u$'s side forever, and $v$ is on the other
+side.
 
----
-
-## No bridge, no entanglement — and back again
-
-The two halves of ER = EPR now come into view.
-
-**No bridge means no entanglement.** Suppose the cells split into two families with no positive-weight wall between them — a geometric disconnection. Then for a region $A$ on one side and $B$ on the other, the entropies are *exactly* additive, $S(A\cup B) = S(A) + S(B)$, so $I(A:B) = 0$. Physically: what the geometry has torn apart, the quantum state cannot correlate.
-
-**Positive entanglement forces a bridge.** Contrapositively, if $I(A:B) > 0$ then there must exist a cell of $A$ and a cell of $B$ joined by a chain of positive-area steps. Correlation *compels* a tunnel. That is the geometric half of ER = EPR, and it is a theorem in this model, not an analogy.
-
-Better still, in the hidden-cell-free case the two networks are not merely correlated but *identical*: two cells are joined by a chain of bridges precisely when they are joined by a chain of directly entangled pairs. The wormhole graph and the entanglement graph are the same graph.
-
----
-
-## A qubit is a wormhole
-
-Time to get concrete, with the smallest possible example: two qubits in a real pure state, described by a $2\times 2$ coefficient matrix $\psi$. Such a state is a **product state** — completely unentangled — exactly when $\det\psi = 0$. Its **concurrence**, the standard measure of two-qubit entanglement, is
-
-$$C(\psi) \;=\; 2\,\bigl|\det\psi\bigr|,$$
-
-which is zero for product states and $1$ for a maximally entangled Bell pair.
-
-To this state assign the simplest possible geometry: two cells joined by one throat, whose area is set equal to the concurrence. Then everything lines up:
-
-- The throat is a genuine bridge — there is a positive-area path from one cell to the other — **if and only if** the state is entangled. That is ER = EPR, proved.
-- The mutual information across the throat is exactly twice its area: $I = 2C(\psi)$.
-- The *linear entropy* $2(1 - \mathrm{Tr}\,\rho^2)$ of either qubit's reduced state — the standard measure of how mixed a piece of a pure state is — equals $C(\psi)^2$ exactly. So the throat area is the square root of the linear entropy, and $I^2 = 4 \cdot (\text{linear entropy})$.
-
-A Bell pair gives $C = 1$: throat area $1$, mutual information $2$, linear entropy $1$. A product state gives $C = 0$: no throat, no bridge, no correlation. Turn a dial from product to Bell and you watch the wormhole widen continuously.
-
-Take $n$ Bell pairs side by side and the emergent geometry is a **perfect matching**: $2n$ cells joined in couples by throats of the prescribed areas. Partners have mutual information twice their throat area. Non-partners have mutual information exactly zero — and no bridge whatsoever joins them, because in a matching no positive-weight step ever leaves a pair. Every throat area is recovered from the pairwise data. The dictionary is complete and quantitative.
+A single real number decides whether two points of space are connected at all. This is
+already ER = EPR in embryo. Now we make it quantitative.
 
 ---
 
-## Where it breaks: entanglement that cannot be a space
+## Entanglement is bounded by the throat
 
-Now the twist, and it is the real news.
+The natural measure of how entangled two boundary regions are is their **mutual
+information**,
 
-Not every quantum state has a geometry. The obstruction is monogamy. Consider a four-party GHZ state, $(|0000\rangle + |1111\rangle)/\sqrt{2}$, and look at three of its parties. Every nonempty marginal — each single party, each pair, and the triple — has entropy exactly $1$. Feed that into monogamy: the left side reads $1+1+1+1 = 4$, the right side reads $1+1+1=3$. The inequality demands $4 \le 3$.
+$$I(A:B) \;=\; S(A) + S(B) - S(A \cup B),$$
 
-So there is no bulk geometry, of any size, with any arrangement of hidden cells, whose min-cut entropies reproduce the GHZ pattern. GHZ entanglement is real, physical, and preparable in a laboratory — and it is *geometrically homeless*. GHZ correlation is shared democratically among three parties, and democracy is exactly what geometry forbids.
+which is zero for independent regions and grows with correlation. The central theorem of
+this story ties it to geometry:
 
-This is not an artifact of a weak model. The GHZ pattern satisfies subadditivity, and it satisfies strong subadditivity in submodular form. It passes every inequality that holds for *all* quantum states. It is monogamy, a strictly geometric constraint, that catches it.
+> **Cross-Section Theorem.** For disjoint boundary regions,
+> $$I(A:B) \;\le\; 2\,E(A,B).$$
 
-So we have a strict hierarchy: quantum-consistent entropy patterns form one cone; geometric ones form a strictly smaller cone inside it. Which raises the obvious question. Monogamy carves off a slice. Is that all there is?
+*You cannot have more entanglement than twice the width of the bridge that carries it.*
+
+The proof is a lovely piece of surgery. Take the cheapest surface $\sigma$ separating $A$
+from $B$, and take the minimal surface $g$ for the combined region $A \cup B$. Now slice
+$g$ along $\sigma$. The piece inside $\sigma$ ends on $A$; the piece outside ends on $B$.
+So each piece is a legitimate competitor in the minimisation defining $S(A)$ and $S(B)$
+respectively, and therefore
+
+$$S(A) + S(B) \;\le\; \operatorname{area}(g \cap \sigma) + \operatorname{area}(g \setminus \sigma).$$
+
+All that remains is to bound the right-hand side. Cutting $g$ in two costs you the original
+surface plus, at worst, *two copies* of the knife:
+
+$$\operatorname{area}(g \cap \sigma) + \operatorname{area}(g \setminus \sigma) \;\le\; \operatorname{area}(g) + 2\operatorname{area}(\sigma).$$
+
+That inequality reduces, wall by wall, to a statement about four bits of information, and a
+patient check of sixteen cases confirms it. The factor $2$ is not slack: there is a
+configuration where both sides are exactly equal. Combining the two displays and cancelling
+$S(A\cup B) = \operatorname{area}(g)$ gives the theorem.
+
+Put it together with an easy observation in the other direction — a minimal surface for $A$
+already separates $A$ from $B$, so $E(A,B) \le S(A)$, and likewise for $B$ — and you get the
+whole picture:
+
+> **The ER = EPR Sandwich.**
+> $$\tfrac12 I(A:B) \;\le\; E(A,B) \;\le\; \min\bigl(S(A),\,S(B)\bigr).$$
+
+The bridge is at least as wide as half the entanglement it carries, and no wider than the
+entropy of either of its mouths. And in the simplest possible case — two cells joined by a
+single wall of area $w$ — all three quantities collapse to $w$. The sandwich is tight.
+
+An immediate corollary deserves its own name:
+
+> **ER = EPR.** If two boundary cells have positive mutual information, then a bulk path
+> joins them, and the bridge between them has cross-section at least half their mutual
+> information.
+
+Entangled means connected. Not by analogy — by proof.
 
 ---
 
-## The five-party cyclic law, and the wall behind it
+## Distance, and why space is a tree
 
-It is not all there is. There are more geometric laws, and they involve more parties.
+Now we build the metric. Wide bridges should mean nearby points; no bridge should mean
+maximal separation. So define
 
-Take five pairwise disjoint boundary regions $A_0, \dots, A_4$ arranged around a circle, indices read modulo $5$. Then every bulk geometry satisfies the **five-party cyclic inequality**:
+$$d(u,v) \;=\; e^{-E(u,v)} \quad (u \ne v), \qquad d(u,u) = 0.$$
 
-$$\sum_{j=0}^{4} S(A_j A_{j+1}) \;+\; S(A_0A_1A_2A_3A_4) \;\;\le\;\; \sum_{j=0}^{4} S(A_j A_{j+1} A_{j+2}).$$
+Distance is the exponential of minus the throat capacity. Cells joined by a fat wormhole
+are close; cells with no wormhole sit at distance exactly $1$, the maximum.
 
-The five consecutive *pairs*, plus the whole boundary, cost no more than the five consecutive *triples*. This too comes from a contraction — but a much stranger one than intersection-and-union. The recipe is
+Is this a metric? It is, and considerably more. The reason is a hidden inequality among
+throat capacities:
 
-$$\mathrm{cyc}(c_0,c_1,c_2,c_3,c_4) \;=\; c_4 \wedge \lnot c_2 \wedge \bigl(c_0 \vee (c_1 \wedge \lnot c_3)\bigr),$$
+> **Gomory–Hu Inequality.** For any three cells with $u \ne v$,
+> $$\min\bigl(E(u,z),\, E(z,v)\bigr) \;\le\; E(u,v).$$
 
-applied in all five rotations, together with the union: six outputs from five inputs. It is a contraction — one verifies this across all $1024$ Boolean configurations — and on the boundary, where the five inputs trace out the consecutive triples and the regions are disjoint, the rule traces out exactly the consecutive pairs. Whoever first stared at that formula was not guessing; it was found by search, and it is the certificate the inequality needs.
+The one-line proof: take the cheapest surface separating $u$ from $v$. The third cell $z$
+has to be on one side or the other. If it's on $u$'s side, that very surface also separates
+$z$ from $v$; if it's on $v$'s side, it separates $u$ from $z$. Either way, one of the two
+capacities on the left is bounded by the area of that surface.
 
-Which brings us to the sharpest result here. Is the cyclic law just monogamy in disguise, applied cleverly five times? A great many valid-looking inequalities collapse that way.
+Now apply $e^{-(\cdot)}$, which reverses order and swaps min for max:
 
-This one does not. There is an explicit assignment of a number to each of the $32$ subsets of a five-element set — call it $S_w$, with $S_w(\emptyset) = 0$ and, for example, $S_w(\{0\}) = 3$, $S_w(\{1\}) = 2$, $S_w(\{0,1\}) = 5$, and $S_w(\text{everything}) = 2$ — with these properties:
+> **Ultrametric Theorem.** For all cells,
+> $$d(u,v) \;\le\; \max\bigl(d(u,z),\, d(z,v)\bigr).$$
 
-- it satisfies **subadditivity** on every disjoint pair of subsets;
-- it satisfies **strong subadditivity** on every disjoint triple;
-- it satisfies **weak monotonicity**, $S(X) + S(Z) \le S(XY) + S(YZ)$, on every disjoint triple;
-- it satisfies **monogamy** on every disjoint triple;
-- and it **violates the cyclic inequality by exactly one unit**: the left side comes to $29$, the right side to $28$.
+This is *much* stronger than the triangle inequality. A space obeying it is called
+**ultrametric**, and ultrametric spaces are strange, rigid places. Every triangle is
+isosceles, with the two shortest sides equal. Any two balls are nested or disjoint — never
+partially overlapping. And "being within distance $r$" is a *transitive* relation, so at
+every scale the space shatters cleanly into clusters that refine as $r$ shrinks.
+Ultrametric spaces are, in essence, trees.
 
-Those first four claims are not one-off spot checks. They are exhaustive verifications, over all $32^3 = 32{,}768$ triples of subsets, of every instance of every one of the four families.
+There is a sharper way to say it. Gromov's four-point condition measures how far a space is
+from being a tree; $\delta = 0$ is the extreme, tree case. Every ultrametric space is
+$0$-hyperbolic. So:
 
-The consequence is decisive on two fronts. Mathematically, the cyclic inequality is **independent** of the four earlier laws: no amount of formal manipulation of subadditivity, strong subadditivity, weak monotonicity and monogamy can produce it, because they are all true of $S_w$ and it is false of $S_w$. Physically, **no bulk geometry whatsoever realises $S_w$** — no graph, no weights, no arrangement of hidden cells. And this obstruction is invisible to the four classical families. You could check every one of their $32{,}768$ instances, find perfect agreement, and still be looking at a pattern of entanglement that no space can carry.
+> **The emergent spacetime is $0$-hyperbolic.**
+
+Negative curvature is the signature of anti-de Sitter space, the setting where holography
+is best understood. Here, from nothing but a min-cut on a finite graph, we get curvature as
+negative as geometry permits. The bulk that entanglement builds is a tree.
+
+Meanwhile, the Cross-Section Theorem converts into a slogan of Van Raamsdonk's, made
+precise:
+
+> **Distance decays exponentially in entanglement:** $\quad d(u,v) \le e^{-I(u:v)/2}$.
+
+And its converse is just as vivid: two cells sit at maximal distance $1$ *exactly* when no
+bridge joins them. Disentangle two halves of the world, and space really does tear apart.
+
+---
+
+## The whole geometry, from a table of numbers
+
+Suppose there are no hidden interior cells — every cell is a boundary cell. Then a short
+computation shows the surface enclosing a single cell has area equal to the total wall area
+touching it, and from this the mutual information of two cells comes out as
+
+$$I(u:v) \;=\; 2\,w(u,v).$$
+
+The entanglement between two cells is literally twice the area of the wall between them.
+Which means:
+
+> **Reconstruction Theorem.** Two such worlds with identical tables of two-point mutual
+> informations have *identical* emergent geometries: same distances, same ultrametric,
+> same clusters, same curvature. The emergent metric space is an invariant of the
+> entanglement data alone.
+
+This is the punchline of the whole subject in miniature. Hand me the table $\{I(u:v)\}$ —
+pure quantum information, no geometry in sight — and I hand you back a metric space,
+complete with its tree structure and its negative curvature.
+
+---
+
+## Monogamy, or why a wormhole has exactly two mouths
+
+Entanglement is famously **monogamous**: if two qubits are maximally entangled with each
+other, neither has any entanglement left over for anyone else. If ER = EPR is right, this
+must show up as a geometric fact. It does.
+
+> **Monogamy of Bridges.** In a world with no hidden cells, suppose a cell $u$ saturates
+> its entropy bound with a partner $v$, meaning $I(u:v) = 2S(\{u\})$. Then every other wall
+> touching $u$ has area zero, and $u$ has zero mutual information with every other cell.
+
+The proof is arithmetic with a physical punchline. Saturation says $2w(u,v)$ equals
+$2\sum_{y \ne u} w(u,y)$, so $\sum_{y \ne u,v} w(u,y) = 0$. But every one of those terms is
+an *area*, and areas are nonnegative. A sum of nonnegative numbers vanishes only if all of
+them do.
+
+Positivity of area — the most innocuous of assumptions — does all the work. Maximal
+entanglement geometrically isolates its pair. **A wormhole has exactly two mouths.**
+
+There is a companion statement at the level of capacities: among any three cells, the two
+smallest throat capacities are always equal. That isosceles law is precisely the algebraic
+signature of a weighted tree, and it says the wormhole network is never a tangle. It is
+always a tree of bridges.
+
+---
+
+## Threads through the bridge
+
+So far we have measured entanglement by *cutting* the bulk. There is a dual way: *flowing*
+through it. Imagine bundles of infinitesimally thin threads running from one boundary region
+to another, each wall limited by its area, the threads conserved in the interior. How many
+can you route?
+
+Concretely, a **thread configuration** is an antisymmetric assignment $\phi(x,y) = -\phi(y,x)$
+of oriented flux to each pair of cells, obeying $\phi(x,y) \le w(x,y)$, and conserved
+everywhere except at the sources and sinks. Its **value** is the flux emitted by the source.
+
+> **Weak Duality.** No conserved, capacity-respecting thread configuration can carry more
+> flux than the area of *any* surface separating its sources from its sinks. In particular
+> its value is at most the throat capacity $E(A,B)$.
+
+The proof has three beats. First: conservation lets you enlarge the source region all the
+way out to the separating surface for free, since every extra cell contributes zero net
+flux. Second: the flux *within* that enlarged region cancels perfectly — an antisymmetric
+quantity summed over a square array is its own negative — so only the flux crossing the
+boundary survives. Third: crossing flux is bounded wall-by-wall by capacity, and the total
+capacity crossing the surface is precisely its area.
+
+Is the bound achievable? For the simplest wormhole — two cells joined by one wall of area
+$w$ — yes: push $w$ units of thread straight through. Its value is $w$, exactly the throat
+capacity, exactly half the mutual information.
+
+> **Max-flow = min-cut for a single Einstein–Rosen bridge.**
+
+The general statement — that every throat is saturated by some flow — is a
+max-flow–min-cut theorem waiting to be proved here, and the most inviting open problem in
+the story. It would upgrade every statement about *how much* entanglement there is into a
+statement about *where it lives*.
+
+---
+
+## Zooming out: a renormalisation group for space
+
+One last move. In physics you always want to know what happens when you blur your vision.
+So take a map $\pi$ that merges cells into clumps, and define the **coarse-grained
+geometry**: the wall area between two clumps is the total wall area between their members.
+
+The engine here is a single identity. Every surface you can draw in the coarse world pulls
+back to a surface in the fine world *with exactly the same area*. But the converse fails,
+and the failure is the whole point: fine surfaces that *cut through a clump* have no coarse
+counterpart. They are destroyed by the blurring.
+
+Since the fine world minimises over strictly more competitors, its min-cuts can only be
+smaller. Hence:
+
+> **Coarse-graining widens throats and contracts distances.** Merging cells can only
+> increase every throat capacity and decrease every emergent distance; the merging map is
+> $1$-Lipschitz.
+
+And it is honestly strict. Take four cells in a row, $0-1-2-3$, with heavy walls of area $5$
+at the ends and a thin waist of area $1$ in the middle. The cheapest way to separate the two
+ends is to slice the waist, so the throat from $0$ to $3$ is at most $1$. Now merge the two
+middle cells. The waist vanishes — it is *inside* a single cell, invisible — and what
+remains is a three-cell chain with two heavy walls, every separating surface slicing one of
+them. The throat jumps from $1$ to $5$; the distance drops from $e^{-1}$ to $e^{-5}$.
+
+That's the renormalisation group of emergent spacetime, and it has a clean moral: *space
+contracts under coarse-graining, and it contracts discontinuously exactly when you absorb
+the surfaces that were doing the work.*
+
+---
+
+## A shattered world
+
+Let's finish with the picture the whole theory was built to explain. Take $n$ Bell pairs:
+$2n$ cells, paired off, with pair $i$ joined by a wall of area $w_i$ and no other walls
+anywhere. What does the emergent space look like?
+
+Everything can be computed exactly. The throat capacity between the two mouths of pair $i$
+is exactly $w_i$ — and the sandwich is tight, with half the mutual information, the throat,
+and both entropies all equal to $w_i$. The capacity between cells of *different* pairs is
+zero, because no path leaves a pair. So the emergent distance is $e^{-w_i}$ within a pair
+and exactly $1$ — maximal — between pairs. And at any resolution $r$ lying below $1$ but
+above every $e^{-w_i}$, the clusters of the emergent ultrametric are *exactly the Bell
+pairs*. Not approximately. Exactly.
+
+So the emergent spacetime of $n$ independent Bell pairs is $n$ disconnected microscopic
+wormholes, each of a width set by how entangled its pair is, and nothing else. Entangle a
+pair more strongly and its mouths draw closer; disentangle it and they fly apart to maximal
+distance as the bridge closes.
 
 ---
 
 ## What it means
 
-Put the pieces together and a picture emerges that is sharper than the slogan it started from.
+None of this is a theory of quantum gravity: no time, no dynamics, no Einstein equation.
+What there is, is the *kinematic skeleton* of ER = EPR, laid bare — a finite graph, a
+minimisation principle, and a handful of theorems.
 
-**Geometry is entanglement, quantitatively.** Not metaphorically: every wall area is exactly one half of a mutual information. And the map is stable — perturb a geometry's total area by $\varepsilon$ and no entropy moves by more than $\varepsilon$ — so the dictionary is a continuous correspondence, not a knife-edge coincidence.
+And the skeleton carries a startling amount of the flesh. From nothing but "the entropy of
+a region is the area of its minimal surface" and "areas are nonnegative", we recover:
 
-**Wormholes are entanglement, exactly.** Positive correlation forces a bridge; geometric disconnection forces zero correlation; and with no hidden cells the bridge network *is* the entanglement network. ER = EPR, in a setting where it is a theorem.
+- **connectivity** — entangled means joined by a bridge, with no exceptions;
+- **width** — the cross-section is squeezed tightly between half the mutual information and
+  the entropy of the mouths;
+- **distance** — an honest metric, exponentially decaying in entanglement;
+- **curvature** — as negative as a geometry can be: the discrete image of anti-de Sitter
+  space;
+- **monogamy** — maximal entanglement isolates its pair, so a wormhole has two mouths;
+- **flows** — entanglement is transportable through the throat, not merely counted by it;
+- **scale** — a functorial coarse-graining that contracts the geometry, strictly.
 
-**But the dictionary has holes, in both directions.** Going from geometry to entanglement, information is lost: hide one cell in the bulk and uniqueness dies. A "star" — three boundary cells each joined by a unit throat to one hidden central cell — and a "triangle" — the same three cells joined pairwise by throats of area $\tfrac12$, no hidden cell — produce *identical* entropies for every boundary region, yet their edge weights differ. Two different spaces, one indistinguishable shadow. (Interestingly, the star also gives the cleanest illustration of the bridge theorem: its cells $0$ and $1$ have mutual information $1$, so they must be bridged — and indeed they are, not by a direct wall, which has area zero, but by a two-step path through the hidden centre. Entanglement without an edge, mediated by the deep bulk.)
+Einstein wrote both 1935 papers, and spent the rest of his life convinced that the second
+exposed a flaw in quantum mechanics. The suspicion now is that he had, twice, in the same
+year, described the same thing from two sides. In the small, exact world of this article,
+that suspicion is settled.
 
-And going from entanglement to geometry, existence fails: GHZ states have no dual, and $S_w$ has no dual either, for a reason that no previously known constraint can see.
-
-That last point is the one to carry away. If spacetime is emergent — if geometry is a coarse-grained description of a pattern of quantum correlations — then the set of correlation patterns that can *be* a geometry is a strict, and strictly complicated, subset of the ones nature can prepare. Monogamy is the first wall. The cyclic law is the second, and provably not the first one in disguise. There is no reason to think it is the last.
-
-The universe may well be made of entanglement. But most entanglement, it turns out, is not made into a universe.
-
+Space, here, *is* entanglement — seen from far enough away.
