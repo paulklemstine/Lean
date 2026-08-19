@@ -79,6 +79,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 2e28602b (Q=0.850), which proved 158 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Neural field equations model macroscopic brain dynamics as PDEs on cortical surfaces. The cortical surface is topologically a sphere with cortical folds. Use inverse stereographic projection to transform neural field PDEs on S^2 into PDEs on R^2 with a conformal weight. Define a stereographic neural",
+    "domains": [
+      "Physics"
+    ],
+    "id": "push_2e28602b_5c112126",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "2e28602b",
+    "status": "available",
+    "timestamp": "2026-08-19T22:42:01.097461+00:00",
+    "title": "Deepening: Inverse Stereographic Neural Field Theory"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 4bf66c09 (Q=0.880), which proved 41 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Chebotarev's theorem that every square submatrix of the `p \u00d7 p` DFT matrix\nis nonsingular, which in turn follows from a resultant/Vandermonde computation over `Q(\u03b6_p)`\nusing the irreducibility of the `p`-th cyclotomic polynomial \u2014 machinery that Mathlib already\ncontains (`Polynomial.cyclotomic_irred",
     "domains": [
       "Novelty"
@@ -132,34 +146,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-19T15:46:51.818344+00:00",
     "title": "Deepening: Both sides of the identity are already available as Lean theorems"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle c442a26f (Q=0.880), which proved 91 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## Conjecture D (q-series rigidity / Molien-type dichotomy). The fixed-point q-series determines the orbit-counting generating function, and conversely.",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "push_c442a26f_1a07ba84",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "c442a26f",
-    "status": "available",
-    "timestamp": "2026-08-19T21:41:54.532872+00:00",
-    "title": "Deepening: Conjecture D (q-series rigidity / Molien-type dichotomy). The fixed-point q-seri"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle f46e1405 (Q=0.860), which proved 66 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The qualitative half is now **proved**: `C\u209b = 1` iff the class is degenerate\n(`shtarkovSum_eq_one_iff`), so any genuinely new source makes the price strictly\npositive, and the price is monotone in the class (`price_reindex_le`).  What\nremains is the quantitative form.  If `S'` is obtained from `S` b",
-    "domains": [
-      "Cryptography"
-    ],
-    "id": "push_f46e1405_4c6afcff",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "f46e1405",
-    "status": "available",
-    "timestamp": "2026-08-19T10:47:14.355816+00:00",
-    "title": "Deepening: The qualitative half is now proved: `C\u209b = 1` iff the class is degenerate\n(`shtar"
   },
   {
     "consumed_by_exp_id": "",
@@ -832,34 +818,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-17T07:17:22.608319+00:00",
     "title": "Deepening: ArXiv paper: A Fourier-analytic Uniqueness Theorem for Lattice-point Enumerators"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle a985d45a (Q=0.820), which proved 101 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Cycle 4 already provides the two witnesses and the joint-inconsistency\ntheorem; what is missing is a Lean development of frame-definability for `ModalSystem`,\nwhich the `KFrame`/`sat` apparatus of Cycle 1 supports directly.",
-    "domains": [
-      "Combinatorics"
-    ],
-    "id": "push_a985d45a_6d9fd52a",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "a985d45a",
-    "status": "available",
-    "timestamp": "2026-08-19T20:46:04.363113+00:00",
-    "title": "Deepening: Cycle 4 already provides the two witnesses and the joint-inconsistency"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle d11810a4 (Q=0.820), which proved 57 theorems in Geometry. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions\n\nDerived from the three files of this line of work:\n\n* `Catalog/Bridges/FundamentalGroupCompleteInvariant.lean` (cycle 1) \u2014 connected groupoids\n  (models of `K(G,1)`) are classified up to equivalence by the vertex group of a basepoint;\n  a `\u03c0\u2081`-only counterexample shows the funda",
-    "domains": [
-      "Geometry"
-    ],
-    "id": "push_d11810a4_a2636b3f",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "d11810a4",
-    "status": "available",
-    "timestamp": "2026-08-19T21:42:07.506015+00:00",
-    "title": "Deepening: Derived from the three files of this line of work:"
   },
   {
     "consumed_by_exp_id": "",
@@ -2658,7 +2616,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Fractal Topology: Hausdorff Dimension as a Topological Invariant"
   },
   {
-    "consumed_by_exp_id": "2e28602b",
+    "consumed_by_exp_id": "",
     "description": "Neural field equations model macroscopic brain dynamics as PDEs on cortical surfaces. The cortical surface is topologically a sphere with cortical folds. Use inverse stereographic projection to transform neural field PDEs on S^2 into PDEs on R^2 with a conformal weight. Define a stereographic neural field as a function u: S^n to R satisfying Delta_{S^n} u = f(u) where Delta_{S^n} is the Laplace-Beltrami operator on the sphere. Under inverse stereographic projection, this becomes a PDE on R^n with a conformally modified Laplacian. Conjecture: The neural field equation on S^2 with Mexican-hat connectivity has exactly 2N+1 stable pattern solutions for interaction radius r, where N = floor(1/r). Under inverse stereographic projection, these correspond to N-fold symmetric patterns on R^2 that decay at infinity. The 2N+1 count comes from the representation theory of SO(3): each pattern of degree l has 2l+1 rotational variants, and the Mexican-hat kernel selects l = N. Test: prove the existence of 2N+1 patterns for r = 1/k (k=1,2,3) by constructing them as stereographic projections of spherical harmonics. Impact: a geometric theory of neural pattern formation with provable pattern counts, enabling predictions about visual hallucination patterns.",
     "domains": [
       "Geometry",
@@ -2666,11 +2624,10 @@ window.FUTURE_DIRECTIONS = [
       "Physics"
     ],
     "id": "seed_090",
-    "phase": "A",
     "priority_score": 0.86,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "",
     "title": "Inverse Stereographic Neural Field Theory"
   },
@@ -19334,6 +19291,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The degrees `1, 2, 3` are already proved this way (`degree_one_exact`,\n`degree_two_exact`, `degree_three_exact` \u2014 the last one extracts its three linear\nconstraints from nothing but linear independence of the chart coordinates); the general case\nonly needs the recursion to be organised by total degree, which the reflective `NExpr`\ncalculus makes mechanical.",
+    "domains": [],
+    "id": "fd_1650",
+    "priority_score": 0.4224285714285715,
+    "research_mode": "team",
+    "source_exp_id": "2e28602b",
+    "status": "available",
+    "timestamp": "2026-08-19T22:41:46.891152+00:00",
+    "title": "The degrees `1, 2, 3` are already proved this way (`degree_one_exact`,"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Define the *curvature* of the pool as\n`\u03ba = 1 \u2212 min\u2c7c (C(\u03a9) \u2212 C(\u03a9\u2216{j})) / C({j})` where `\u03a9` is the whole pool.\nConjecture: greedy library design achieves the factor `(1 \u2212 e^{\u2212\u03ba})/\u03ba`, and for\npools of sources that are pairwise at total-variation distance at most `\u03b4` one\nhas `\u03ba \u2264 \u03b4\u00b7|\u03a9|`, so nearly-identical model pools admit *nearly optimal* greedy\nlibraries.",
     "domains": [],
     "id": "fd_1596",
@@ -21809,5 +21778,44 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-19T21:42:01.720009+00:00",
     "title": "Mathlib's `FundamentalGroupoid` functor plus `permModel_connected`-style"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The `l = 1` case is completely settled (`degree_one_decay_iff`) and the sectoral\nrates `O(R^{-2})`, `O(R^{-3})` are proved; only the interpolating tesseral cases remain.",
+    "domains": [],
+    "id": "fd_1651",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "2e28602b",
+    "status": "available",
+    "timestamp": "2026-08-19T22:41:47.158899+00:00",
+    "title": "The `l = 1` case is completely settled (`degree_one_decay_iff`) and the sectoral"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Strict unimodality and the bracketing of the argmax are already theorems, so the\nonly missing ingredient is the explicit comparison of the two bracketing degrees.",
+    "domains": [],
+    "id": "fd_1652",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "2e28602b",
+    "status": "available",
+    "timestamp": "2026-08-19T22:41:47.421719+00:00",
+    "title": "Strict unimodality and the bracketing of the argmax are already theorems, so the"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "f(u)` on `S\u00b2` with Mexican-hat kernel of radius `1/k`,\nthe centre manifold at the bifurcation is `(2k+1)`-dimensional and its amplitude equations\nare `SO(3)`-equivariant, so the number of stable pattern branches is bounded by the number\nof isotropy subgroups with one-dimensional fixed-point space \u2014 for `k = 1, 2, 3` this gives\n`1, 2, 4` branch types, of which the sectoral ones are the `k`-fold symmetric plane patterns\nconstructed here.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1653",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "2e28602b",
+    "status": "available",
+    "timestamp": "2026-08-19T22:41:47.698471+00:00",
+    "title": "f(u)` on `S\u00b2` with Mexican-hat kernel of radius `1/k`,"
   }
 ];

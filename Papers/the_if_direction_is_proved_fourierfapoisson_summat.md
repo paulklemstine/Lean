@@ -1,128 +1,91 @@
-# Computational evidence
+# Computational evidence — converse of finite Poisson summation
 
-Companion to the Lean development in `Catalog/Probability/Fourier*.lean`. Every number below was
-produced by the machine-checked file `Catalog/Probability/FourierExtremalEvidence.lean`, which is
-part of the build (all figures are `#eval` outputs of that file; the coset check is additionally a
-kernel-verified `decide` theorem).
+Research thread: `FourierFA.poisson_summation` (the "if" direction) is proved in
+`Catalog/Pythagorean/FourierSubgroupDuality.lean`.  This cycle attacked the **converse**:
+for which finsets `S` of a finite abelian group `G` can the identity
 
-## 1. Exact model
+```
+|G| * ∑_{x ∈ S} f x  =  |S| * ∑_{ψ ∈ S^⊥} f̂ ψ        (P_S),   S^⊥ = {ψ : ψ|_S = 1}
+```
 
-On `G = ℤ/4` every character takes values in `{1, i, -1, -i} ⊆ ℤ[i]`, so the discrete Fourier
-transform
+hold for *all* `f : G → ℂ`?
 
-`f̂(k) = ∑_x conj(i^{kx}) f(x)`
+Everything below marked **[Lean]** is machine-checked in this project (0 sorries, only the
+standard axioms `propext`, `Classical.choice`, `Quot.sound`).  Items marked **[script]** come
+from an exploratory Python enumeration and are *not* a formal verification; they were used to
+choose which statements to formalise, and each one that mattered was subsequently reproved in
+Lean by exhaustive `decide`.
 
-can be evaluated with *exact* integer arithmetic (Gaussian integers as pairs of integers). We
-enumerate all `5^4 = 625` functions `ℤ/4 → {0, 1, -1, i, -i}`.
+## 1. Small-case enumeration of Poisson sets
 
-## 2. Small-case calculations
+By the classification proved this cycle, `(P_S)` reduces to the decidable condition
+"`S = ∅`, or `0 ∈ S` and `S` is closed under subtraction" (`FourierFA.poissonSet_iff_comb`
+**[Lean]**).  Enumerating all `2^{|G|}` subsets:
 
-| experiment | result |
-|---|---|
-| functions tested / nonzero | 625 / 624 |
-| Donoho–Stark bound `|supp f| · |supp f̂| ≥ 4` holds for all nonzero `f` | `true` |
-| extremals (`|supp f| · |supp f̂| = 4`) in the sample | 48 |
-| extremal support-size distribution, sizes `0,1,2,3,4` | `0, 16, 16, 0, 16` |
-| every extremal support is closed under `x - y + z` (coset test) | `true` |
-| every extremal has constant modulus on its support | `true` |
-| every extremal *frequency* support is a coset | `true` |
-| pointwise products of extremals: zero or extremal | `true` |
-| convolutions of extremals: zero or extremal | `true` |
-| `supp f = {0,1}` (not a coset): `(|supp f|, |supp f̂|) = (2,3)`, product `6 > 4` | not extremal |
+| group            | order | nonempty Poisson sets | list |
+|------------------|-------|-----------------------|------|
+| `ZMod 4`         | 4     | 3 **[Lean]**          | `{0}`, `{0,2}`, `univ` |
+| `ZMod 5`         | 5     | 2 **[Lean]**          | `{0}`, `univ` |
+| `ZMod 6`         | 6     | 4 **[Lean]**          | `{0}`, `{0,3}`, `{0,2,4}`, `univ` |
+| `ZMod 8`         | 8     | 4 **[Lean]**          | `{0}`, `{0,4}`, `{0,2,4,6}`, `univ` |
+| `ZMod 2 × ZMod 2`| 4     | 5 **[Lean]**          | `{0}`, three order-2 lines, `univ` |
+| `ZMod 9`         | 9     | 3 **[script]**        | — |
+| `ZMod 12`        | 12    | 6 **[Lean]**          | via the general divisor formula |
+| `ZMod 2 × ZMod 4`| 8     | 8 **[script]**        | — |
+| `(ZMod 2)^3`     | 8     | 16 **[script]**       | — |
+| `ZMod 3 × ZMod 3`| 9     | 6 **[script]**        | — |
 
-## 3. Comparison with the proved theorems
+## 2. Sequence identified
 
-* The **absence of extremals with support size 3** is the prediction of
-  `FourierFA.isExtremal_iff_coset_modulation`: 3 is not the order of a subgroup of `ℤ/4`.
-* The three counts `16, 16, 16` match the classification exactly:
-  * size 1: `4` positions × `4` admissible unit values;
-  * size 2: `2` cosets of `{0,2}` × `4` values × `2` characters modulo the annihilator;
-  * size 4: `4` characters × `4` values.
-* Constant modulus on the support is `FourierFA.isExtremal_flat`.
-* Closure under products and convolutions is `FourierFA.isExtremal_mul` and
-  `FourierFA.isExtremal_conv`.
-* The coset shape of the *frequency* support is `FourierFA.isExtremal_supports`.
+For `G = ZMod n` the counts `1, 2, 2, 3, 2, 4, 2, 4, 3, 4, 2, 6` (`n = 1..12`) **[script]**
+are exactly `d(n)`, the number of divisors — **OEIS A000005**.  This is not a coincidence:
+the general statement "number of nonempty Poisson sets = number of subgroups"
+(`FourierFA.card_poissonSets_eq_card_subgroups` **[Lean]**) was proved as an explicit
+bijection, and the indexing of the subgroups of a cyclic group by divisors was then proved as
+well, giving `FourierFA.card_poissonSets_zmod` **[Lean]**: the count is `d(n)` for *every*
+`n`, not just the enumerated ones.  The `ZMod 12` entry above is an instance of that theorem
+checked in Lean.
 
-## 4. Counterexample hunt
+The comparison `ZMod 4` (3) versus `ZMod 2 × ZMod 2` (5) shows the count is *not* a function
+of `|G|`; this is formalised as `FourierFA.poissonSpectrum_distinguishes_zmod4_klein`
+**[Lean]**.
 
-We searched for a **non-coset extremal support** (which would refute the classification) across
-the whole 625-function sample: none exists. We also checked the smallest suspicious support
-`{0,1}` explicitly: its transform has full support, giving `2 · 3 = 6 > 4`, so the uncertainty
-inequality is strict, exactly as the classification demands.
+## 3. Counterexample hunt (universal claim "every nonempty `S` is Poisson")
 
-Two further conjectures were *tested and refuted before formalisation*, which is why the theorems
-are stated as disjunctions:
+Refuted immediately, and quantitatively: the defect
+`|G| ∑_{x∈S} f − |S| ∑_{ψ∈S^⊥} f̂` at a Dirac delta `δ_{y₀}`, `y₀ ∈ S`, equals
+`|G|(|⟨S⟩| − |S|)/|⟨S⟩|` (`FourierFA.poisson_defect_formula` **[Lean]**), hence is
+`≥ |⟨S⟩| − |S| ≥ 1` whenever `S` is not a subgroup (`FourierFA.poisson_gap` **[Lean]**).
+So there are no "approximate Poisson sets" at all.
 
-* "the product of two extremals is extremal" is false — take indicators of disjoint cosets, the
-  product is `0`; hence `FourierFA.isExtremal_mul` reads *zero or extremal*;
-* "the convolution of two extremals is extremal" is false for the same reason on the frequency
-  side (disjoint frequency cosets), hence the disjunction in `FourierFA.isExtremal_conv`.
+## 4. Quadratic-residue table (Pythagorean relevance)
 
-## 5. OEIS
+Squares mod `n`, and whether they satisfy `(P_S)`:
 
-The observed sequence of extremal counts is an artefact of the restricted value alphabet
-(`16, 16, 16`), so no OEIS identification is claimed.
+| n | squares mod n | Poisson? |
+|---|---------------|----------|
+| 1 | {0}           | yes **[Lean]** |
+| 2 | {0,1}         | yes **[Lean]** |
+| 3 | {0,1}         | no **[Lean]** |
+| 4 | {0,1}         | no **[Lean]** |
+| 5 | {0,1,4}       | no **[Lean]** |
+| 6 | {0,1,3,4}     | no **[Lean]** |
+| 7 | {0,1,2,4}     | no **[Lean]** |
+| 8 | {0,1,4}       | no **[Lean]** |
+| 9 | {0,1,4,7}     | no **[script]** |
+|10 | {0,1,4,5,6,9} | no **[script]** |
+|11 | {0,1,3,4,5,9} | no **[script]** |
+|12 | {0,1,4,9}     | no **[script]** |
 
-## 6. Scope
+For `n = 8` the squares generate all of `ZMod 8`, so the gap theorem yields the explicit
+bound `‖defect‖ ≥ 8 − 3 = 5` (`FourierFA.poisson_gap_squares_zmod8` **[Lean]**).
 
-`ℤ/4` was chosen because it is the largest cyclic group whose character values stay inside a
-*computable* ring with decidable equality (`ℤ[i]`); groups such as `ℤ/3` or `ℤ/6` would require
-cyclotomic arithmetic and were therefore analysed by hand rather than by machine. All general
-statements in this project are proved for an arbitrary finite abelian group, so the computations
-serve as sanity checks rather than as the basis of the results.
+## 5. What the evidence changed
 
-## 7. Cycle 2: the divisor prediction, and its confirmation
-
-The classification of the extremals predicts an arithmetic constraint that the `ℤ/4` enumeration
-above already displays: the observed extremal support-size distribution over sizes `0,1,2,3,4` is
-`0, 16, 16, 0, 16` — every size that occurs (`1, 2, 4`) divides `|G| = 4`, and the size `3`, which
-does not divide `4`, never occurs.
-
-This is no longer only experimental. `FourierFA.card_supp_dvd_card` proves that the support size
-of an extremal function always divides `|G|`, `FourierFA.card_supp_isExtremal_iff` proves that the
-achievable sizes are exactly the subgroup orders, and `FourierFA.zmod_card_supp_isExtremal_iff`
-specialises this to `ℤ/n`, where the achievable sizes are exactly the divisors of `n`. The
-`ℤ/4` table is the instance `n = 4` of that theorem.
-
-The same computation is the source of the *gap* statement `FourierFA.uncertainty_gap_of_not_dvd`:
-in the enumeration, no nonzero function with a `3`-element support ever attains the value `4` for
-`|supp f| · |supp f̂|`; the smallest value observed for such functions is `6 ≥ 4 + 1`, consistent
-with (and now implied by) the theorem.
-
-## 8. Cycle 3: the residue gap is exactly the observed one
-
-The `ℤ/4` enumeration also pins down the *size* of the gap, not just its existence. For a
-support of size `s = 3` in a group of order `n = 4` the sharpened bound
-`FourierFA.uncertainty_gap_mod` predicts
-
-`|supp f| · |supp f̂| ≥ n + (s - n mod s) = 4 + (3 - 1) = 6`,
-
-whereas the earlier `FourierFA.uncertainty_gap_of_not_dvd` only gave `≥ 5`. The exhaustive
-enumeration reports `6` as the smallest value actually attained by a `3`-element support, so on
-this instance the sharpened bound is attained and the weaker bound is not. This is what
-motivated proving the rounded-up form `FourierFA.uncertainty_ceil`
-(`|supp f̂| ≥ ⌈|G| / |supp f|⌉`), from which the residue gap follows.
-
-The same table is the `n = 4` instance of the group-independent extremal spectrum theorem
-`FourierFA.card_supp_isExtremal_iff_dvd`: sizes `1, 2, 4` occur and `3` does not, because the
-occurring sizes are exactly the divisors of `|G|` — for *every* finite abelian group, not only
-the cyclic ones, the cyclic restriction having been removed by the converse of Lagrange's
-theorem `FourierFA.exists_addSubgroup_card_eq_of_dvd`.
-
-## 9. Cycle 3: a machine-checked separation of the two groups of order 4
-
-The reduction of extremality of a *support* to closure under `(x, y, z) ↦ x - y + z`
-(`FourierFA.exists_isExtremal_supp_eq_iff_parallelogram`) makes the family of extremal supports
-a decidable finite object, so it can be enumerated by the kernel rather than by an external
-script. Enumerating all `2^4 = 16` subsets of each group of order `4` gives
-
-| group | extremal supports of size 2 |
-|---|---|
-| `ℤ/4` | 2 (the cosets of `{0, 2}`) |
-| `ℤ/2 × ℤ/2` | 6 (two cosets for each of the three subgroups of order 2) |
-
-both proved by `decide` in `FourierFA.card_extremalSupports_two_zmod4` and
-`FourierFA.card_extremalSupports_two_klein` (kernel reduction, not `native_decide`). Since the
-two groups have the same extremal *spectrum* by `FourierFA.extremal_spectrum_eq_of_card_eq`,
-this is a proof that the spectrum is a strictly coarser invariant than the family of supports:
-`FourierFA.extremalSupports_separates_order_four`.
+* The empty set was found to satisfy `(P_∅)` vacuously — the enumeration flagged it before the
+  proof was written, which is why the nonemptiness hypothesis appears in
+  `poissonSet_iff_subgroup` and why the hypothesis-free classification
+  `poissonSet_iff` carries the extra `S = ∅` disjunct.
+* The enumeration showed that unions of Poisson sets are usually not Poisson while
+  intersections always are; both were then proved (`poissonSet_inter`,
+  `not_poissonSet_union_example`).

@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "11c9ff9f",
-      "domain": "Logic",
-      "key_insight": "# Future directions — fibre spectrum of the orbit–pattern map\n\nThis cycle closed the assigned target (Conjecture E, first half: `sum_patternMultiplicity`,\n`one_le_patternMultiplicity`, `patternMultipl",
-      "quality_score": 0.86,
-      "sorry_count": 4,
-      "theorem_count": 90,
-      "timestamp": "2026-08-18T03:08:53",
-      "title": "Fibre spectrum (Conjecture E, first half, closed)"
-    },
-    {
       "cycle_id": "be7c0bd7",
       "domain": "Geometry",
       "key_insight": "# Future directions — almost-lossless compression beyond the pigeonhole bound\n\nDerived from what survived and what broke in this cycle\n(`Catalog/Geometry/AlmostLossless*.lean`).\n\n**What survived.**  (",
@@ -499,19 +489,19 @@
       "theorem_count": 57,
       "timestamp": "2026-08-19T21:42:07",
       "title": "Derived from the three files of this line of work:"
+    },
+    {
+      "cycle_id": "2e28602b",
+      "domain": "Physics",
+      "key_insight": "# Future directions — inverse stereographic neural field theory\n\nDerived from the analysis and adversarial review of the results now proved in\n`Catalog/Physics/StereoNeuralFieldCalculus.lean`,\n`…Harmo",
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "theorem_count": 158,
+      "timestamp": "2026-08-19T22:42:00",
+      "title": "Inverse Stereographic Neural Field Theory"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "23bf86f8",
-      "domain": "Shared",
-      "key_insight": "# FUTURE DIRECTIONS — rainbow arithmetic-progression thresholds\n\nAll conjectures below are falsifiable, are stated for the objects formalised in\n`Catalog/Shared/RainbowAP*.lean`, and are *strictly str",
-      "quality_score": 0.6376340955882351,
-      "sorry_count": 0,
-      "theorem_count": 61,
-      "timestamp": "2026-08-11T00:01:12",
-      "title": "Rainbow Arithmetic Progression Threshold Conjecture"
-    },
     {
       "cycle_id": "2db5094c",
       "domain": "Pythagorean",
@@ -2501,27 +2491,19 @@
       "theorem_count": 57,
       "timestamp": "2026-08-19T21:42:07",
       "title": "Derived from the three files of this line of work:"
+    },
+    {
+      "cycle_id": "2e28602b",
+      "domain": "Physics",
+      "key_insight": "# Future directions — inverse stereographic neural field theory\n\nDerived from the analysis and adversarial review of the results now proved in\n`Catalog/Physics/StereoNeuralFieldCalculus.lean`,\n`…Harmo",
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "theorem_count": 158,
+      "timestamp": "2026-08-19T22:42:00",
+      "title": "Inverse Stereographic Neural Field Theory"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "c0dccdf7",
-      "domain": "Probability",
-      "name": "zeta_pow_mod",
-      "quality": 0.88
-    },
-    {
-      "cycle_id": "8a3962f5",
-      "domain": "MachineLearning",
-      "name": "mem_box",
-      "quality": 0.86
-    },
-    {
-      "cycle_id": "18f8232d",
-      "domain": "Bridges",
-      "name": "catalog",
-      "quality": 0.89
-    },
     {
       "cycle_id": "18f8232d",
       "domain": "Bridges",
@@ -2803,9 +2785,27 @@
       "domain": "Geometry",
       "name": "range_comp_mulEquiv",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "2e28602b",
+      "domain": "Physics",
+      "name": "W_pos",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "2e28602b",
+      "domain": "Physics",
+      "name": "denom_ne_zero",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "2e28602b",
+      "domain": "Physics",
+      "name": "W_mul_denom",
+      "quality": 0.85
     }
   ],
-  "last_updated": "2026-08-19T21:42:07",
+  "last_updated": "2026-08-19T22:42:00",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hn2⟩)",
@@ -3703,12 +3703,6 @@
     ],
     "Physics": [
       {
-        "cycle_id": "0c649bb1",
-        "quality": 0.85,
-        "theorems": 109,
-        "title": "The Derived-Modulus Corner, Closed"
-      },
-      {
         "cycle_id": "560413ae",
         "quality": 0.82,
         "theorems": 131,
@@ -3761,6 +3755,12 @@
         "quality": 0.82,
         "theorems": 57,
         "title": "Future directions from cycle 4c2c71e5"
+      },
+      {
+        "cycle_id": "2e28602b",
+        "quality": 0.85,
+        "theorems": 158,
+        "title": "Inverse Stereographic Neural Field Theory"
       }
     ],
     "Probability": [
