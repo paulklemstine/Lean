@@ -1,141 +1,354 @@
-# The Price of Universality: What One Decompressor Owes to All the Files It Will Ever Meet
+# The Price of Universality
 
-## A tax you have already paid
+### What does it cost to build one decompressor that works for everybody?
 
-Every compressed file you have ever opened arrived with an implicit promise: somewhere on your machine there is a program that knows how to turn that opaque blob of bytes back into a photograph, a spreadsheet, a novel. That program — the *decompressor* — is shared. One copy serves your holiday photos, your tax returns, and the source code of the operating system itself. It has no idea, in advance, which of those it will be handed.
+Every compressed file you have ever opened arrived with an invisible companion: a
+decompressor. The ZIP file on your desktop is useless without the code that knows
+how to read it, and that code is not free. It is a program, it occupies bits, and
+crucially it is *shared* — the same decompressor must serve your holiday photos,
+your source code, your genome, and the log files of a nuclear reactor.
 
-That sharing is not free. A decompressor built exclusively for English text would treat "the" as a single cheap symbol; one built exclusively for grayscale photographs would treat smooth gradients as almost free. A single decompressor that must serve both cannot be optimally tuned to either. It must pay something — some number of extra bits, per file — for the privilege of not knowing what it is about to receive.
+There is an obvious temptation. If you knew in advance that a file was English
+text, you could ship a decompressor tuned for English text, and the compressed
+file would be shorter. If you knew it was a genome, you could ship a genome
+decompressor. Specialization looks like free money.
 
-This article is about that number. It has a name: the **price of universality**. It turns out to be computable in closed form, to obey a clean algebra, and to answer a practical engineering question with unusual sharpness: *is it worth building specialised compressors, or should we just build one good general one?*
+The question this article answers is: **how much money?** Precisely how many bits
+does a single universal decompressor waste, compared with a fleet of specialists
+each tailored to one kind of data? And is the difference big enough to be worth
+chasing?
 
-The short answer, which the rest of this article makes precise, is: **build a library**. Specialisation genuinely helps — sometimes enormously — and merging many specialists into one shared tool is astonishingly cheap. But the price of universality is *extensive*: it grows in proportion to how much data you compress, and it can never be amortised away by batching. And when a class of data has no structure at all, specialisation buys you exactly nothing: the bits you think you saved simply move from the message into the name of the decompressor.
+The answer turns out to be startlingly clean. The waste is not a vague
+engineering quantity. It is an exact number attached to the family of data
+sources you care about, and it is a number that information theorists have met
+before in a completely different context: it is the **capacity of a
+communication channel**.
 
-## Setting the stage: sources, classes, and the cost of a guess
+---
 
-Fix a finite universe $\mathcal{X}$ of possible messages — say, all files of exactly $n$ bytes. A **source** is a probability distribution $p$ on $\mathcal{X}$: it says how likely each message is. Shannon's foundational theorem tells us that if we know $p$, the best possible code spends about $\log_2 (1/p(x))$ bits on the message $x$, and on average
-$$H(p) \;=\; -\sum_{x} p(x)\log_2 p(x)$$
-bits per message — the *entropy*. No code does better. That is the gold standard: what a perfectly specialised decompressor achieves.
+## Setting the stage: sources, codes, and surprise
 
-But we never know $p$. What we typically know is a **class** of candidate sources, $\mathcal{S} = \{p_\theta : \theta \in \Theta\}$ — "English text with some unknown letter frequencies", "a Markov chain with some unknown transition matrix", "an image with some unknown noise level". The parameter $\theta$ is unknown; the class is known.
+Fix a finite set $X$ of possible messages — say, all $n$-bit files. A *source* is
+a probability distribution $p$ on $X$: it says how likely each message is.
 
-Now the question sharpens. We must commit to a single code — equivalently, to a single distribution $q$ used for coding — and the nature will then reveal some $\theta$. Our loss on the message $x$ is the number of bits we spend, $\log_2(1/q(x))$, minus what the oracle who knew $\theta$ would have spent, $\log_2(1/p_\theta(x))$. That difference,
-$$\log_2 \frac{p_\theta(x)}{q(x)},$$
-is called the **regret**. The universal coder wants to keep it small no matter which $\theta$ nature picks and no matter which $x$ it produces.
+The fundamental fact of compression is that a probability distribution *is* a
+code. If your compressor believes message $x$ has probability $q(x)$, the best it
+can do is spend about
+$$\ell(x) = \log_2 \frac{1}{q(x)}$$
+bits on $x$. Likely messages get short codewords, unlikely ones get long
+codewords, and the arithmetic works out exactly: any assignment of codeword
+lengths that can be decoded unambiguously corresponds to a probability
+distribution, and vice versa. So "designing a decompressor" and "choosing a
+probability distribution $q$ on messages" are the same activity. We call $q$ the
+*coding distribution*.
 
-## The Shtarkov sum: one number that says it all
+Now suppose the data really comes from the source $p$, but your decompressor
+believes $q$. On average you spend
+$$\sum_x p(x)\log_2\frac{1}{q(x)}$$
+bits per message, whereas a decompressor that knew $p$ would spend the entropy
+$$H(p) = \sum_x p(x)\log_2\frac{1}{p(x)}.$$
+The difference is the **relative entropy**, or Kullback–Leibler divergence,
+$$D(p\,\|\,q) \;=\; \sum_x p(x)\log_2\frac{p(x)}{q(x)} \;\ge\; 0,$$
+and it is exactly the number of bits per message you waste by believing $q$ when
+the truth is $p$. It is zero if and only if $q = p$. This quantity is the
+currency in which the price of universality is paid.
 
-Here is the surprise. Play the game in its most pessimistic form: minimise, over all coding distributions $q$, the *worst* regret over all $\theta$ and all $x$ simultaneously. The answer is not an intractable optimisation. It is a single explicit number.
+---
 
-Define the **maximum likelihood envelope** of the class,
-$$\hat p(x) \;=\; \sup_{\theta \in \Theta} p_\theta(x),$$
-the best explanation any member of the class can offer for the message $x$. This envelope is not a probability distribution — its total mass exceeds $1$, because different messages are explained best by different parameters. That excess mass is the whole story. The **Shtarkov sum** of the class is
-$$C_{\mathcal{S}} \;=\; \sum_{x \in \mathcal{X}} \hat p(x) \;\;\ge\; 1,$$
-and normalising the envelope gives the **normalised maximum likelihood code**, $q^*(x) = \hat p(x)/C_{\mathcal{S}}$. Against this code, the regret on *every* message and *every* parameter is at most $\log_2 C_{\mathcal{S}}$, and no code does better in the worst case.
+## The minimax question
 
-So the price of universality of a class is exactly
-$$\boxed{\;\text{price}(\mathcal{S}) \;=\; \log_2 C_{\mathcal{S}}\ \text{bits}.\;}$$
+A universal scheme faces not one source but a whole family
+$\{p_\theta : \theta\in\Theta\}$ — all the plausible statistical behaviours of
+the data. It must commit to a single $q$ before seeing which $\theta$ nature
+picked. Nature, adversarially, picks the worst one. So the price of universality
+is
+$$\min_{q}\ \max_{\theta}\ D(p_\theta\,\|\,q),$$
+the fewest bits per message you can guarantee to waste, no matter which member of
+the family produced the data.
 
-Everything that follows is the study of this one functional: how it behaves when you combine classes, when you enlarge them, when you split the data into blocks — and what it says about compressor design.
+This is a saddle-point problem, and saddle-point problems are usually opaque. The
+central theorem of this work is that this one is not.
 
-## Diversity is what you pay for
+> **The Redundancy–Capacity Theorem.** For a finite family of strictly positive
+> sources $\{p_\theta\}_{\theta\in\Theta}$ on a finite message space,
+> $$\min_{q}\ \max_{\theta}\ D(p_\theta\,\|\,q)\;=\;C,$$
+> where $C$, the **capacity** of the family, is
+> $$C \;=\; \max_{w}\ \sum_\theta w_\theta\, D\!\left(p_\theta\,\Big\|\,\sum_{\theta'} w_{\theta'} p_{\theta'}\right),$$
+> the maximum over all prior probability distributions $w$ on the parameter set.
+> The maximum is attained; the minimising $q$ is the mixture
+> $m_{w^\star}=\sum_\theta w^\star_\theta p_\theta$ over a maximising prior; and
+> no coding distribution whatsoever does better than $C$ against every source
+> simultaneously.
 
-Why should a class cost anything at all? Because its members disagree. Here is an identity so simple it is almost a slogan. For two probability distributions $p$ and $p'$, the total variation distance is $\|p - p'\|_{\mathrm{TV}} = \tfrac12 \sum_x |p(x) - p'(x)|$, and one line of algebra using $\max(a,b) = \tfrac{a+b+|a-b|}{2}$ gives
-$$\sum_x \max\bigl(p(x), p'(x)\bigr) \;=\; 1 + \|p - p'\|_{\mathrm{TV}}.$$
+Read the inner quantity again. Write $m_w = \sum_\theta w_\theta p_\theta$ for
+the *Bayes mixture* — the distribution you get by first drawing a source at
+random according to $w$, then drawing a message from it. Then
+$$I(w)=\sum_\theta w_\theta D(p_\theta\|m_w) = H(m_w)-\sum_\theta w_\theta H(p_\theta)$$
+is precisely the **mutual information** between the identity of the source and
+the message it emits: the number of bits the message reveals about *who wrote
+it*. And $\max_w I(w)$ is the textbook definition of the capacity of the channel
+$\theta \mapsto x$.
 
-**Diversity Bound.** *For any two members $p_\theta, p_{\theta'}$ of a class, $C_{\mathcal{S}} \ge 1 + \|p_\theta - p_{\theta'}\|_{\mathrm{TV}}$.* The proof is immediate: the envelope $\hat p$ dominates the pointwise maximum of any two members.
+So here is the punchline, and it is worth stating in plain English:
 
-Three consequences follow at once, and together they close the question of when universality is free.
+> **The bits a universal decompressor wastes are exactly the bits the data leaks
+> about its own identity.**
 
-**No free universality.** The Shtarkov sum equals $1$ — the price is zero — *if and only if* every member of the class is the same distribution. Any genuinely non-degenerate class, containing two sources that differ at even a single message, pays a strictly positive price. There is no clever code that serves two genuinely different sources at no cost. Whatever you gain on one, you lose on the other.
+If all your sources look alike, the message tells you nothing about which one
+produced it, the channel has no capacity, and universality is free. If the
+sources are wildly different — a genome never looks like a JPEG — then the
+message screams its provenance, the channel has high capacity, and universality
+is expensive. The price of not knowing your data is the information content of
+knowing it.
 
-**Specialisation never hurts.** If you shrink a class — restrict your decompressor to a sub-family of sources — the envelope can only shrink, so the price can only go down. Narrowing your ambitions is always, mathematically, rewarded.
+---
 
-**The price is extensive.** This is the sting in the tail, and it needs the algebra of the next section.
+## Why it is true: a perturbation argument
 
-## The algebra: two operations, two laws
+Classical proofs of this theorem invoke a minimax theorem, which is a large
+hammer. There is a more elementary and more revealing route.
 
-Real data is not one monolithic object drawn from one class. It arrives in blocks, and it arrives in kinds. The two corresponding operations on classes are the *independent product* and the *union*, and each obeys a clean law.
+Start from an identity that is pure algebra. For any prior $w$ and any coding
+distribution $q$,
+$$\sum_\theta w_\theta D(p_\theta\|q) \;=\; I(w)\;+\;D(m_w\|q).$$
+Every prior "compensates": the average loss against $q$ splits into the
+irreducible mutual information plus the cost of missing the mixture.
 
-### Products: the price simply adds
+Now take a prior $w^\star$ that maximises $I$ — one exists because $I$ is a
+continuous function of $w$ (visible from the entropy formula above) on the
+compact simplex of priors. Pick any single source $\theta_0$ and nudge the prior
+towards it:
+$$w_t = (1-t)\,w^\star + t\,\delta_{\theta_0},\qquad 0<t\le 1 .$$
+Apply the compensation identity to $w_t$, using the *old* mixture
+$m^\star = m_{w^\star}$ as the coding distribution. The left side is
+$(1-t)I(w^\star)+t\,D(p_{\theta_0}\|m^\star)$; the right side is
+$I(w_t)+D(m_{w_t}\|m^\star)$, and $I(w_t)\le I(w^\star)$ by maximality. So
+$$t\left(D(p_{\theta_0}\|m^\star)-C\right)\;\le\;D(m_{w_t}\,\|\,m^\star).$$
+The nudged mixture differs from the old one by exactly
+$m_{w_t}-m^\star=t\,(p_{\theta_0}-m^\star)$, and relative entropy is bounded by
+the chi-squared distance,
+$$D(a\|b)\;\le\;\frac{1}{\ln 2}\sum_x \frac{(a(x)-b(x))^2}{b(x)},$$
+so the right-hand side is $O(t^2)$. Divide by $t$, let $t\to 0$, and the
+first-order term must be non-positive:
+$$D(p_{\theta_0}\,\|\,m^\star)\;\le\;C\qquad\text{for every }\theta_0 .$$
 
-Suppose the message splits into two independent blocks, the first drawn from a class $\mathcal{S}_1$ on $\mathcal{X}_1$ and the second from a class $\mathcal{S}_2$ on $\mathcal{X}_2$, with independently chosen parameters. The product class $\mathcal{S}_1 \otimes \mathcal{S}_2$ has members $p_{\theta_1} \otimes p_{\theta_2}$.
+That is the whole theorem. The capacity-achieving mixture, which is *by
+construction* only good on average, turns out to be good against every single
+source in the family. It is a derivative computation in disguise, carried out
+with an inequality instead of a derivative.
 
-**Multiplicativity Theorem.** *The maximum likelihood envelope factorises,*
-$$\widehat{p_1 \otimes p_2}(x_1, x_2) \;=\; \hat p_1(x_1)\,\hat p_2(x_2),$$
-*and therefore the Shtarkov sums multiply:* $C_{\mathcal{S}_1 \otimes \mathcal{S}_2} = C_{\mathcal{S}_1} \cdot C_{\mathcal{S}_2}$. *In bits, the price is **additive**:*
-$$\text{price}(\mathcal{S}_1 \otimes \mathcal{S}_2) = \text{price}(\mathcal{S}_1) + \text{price}(\mathcal{S}_2).$$
+There is a bonus. Any source that the optimal prior charges with positive weight
+pays *exactly* $C$ — the optimal universal code is an **equalizer rule**, robbing
+every plausible source equally. And the optimal mixture is **unique**: two
+different capacity-achieving priors always induce the very same coding
+distribution. The best universal decompressor is not an accident of the
+optimisation; it is a canonical object belonging to the family of sources.
 
-The factorisation of the envelope looks obvious, and one direction is: the best joint explanation is at least as good as the product of the two best separate explanations, and at most as good too, because the parameters are chosen independently. But the "at most" direction hides a genuine subtlety when $\Theta$ is infinite and the suprema are not attained by any particular parameter. The argument is a two-step squeeze: first fix a parameter $\theta_2$ for the second block and show $\hat p_1(x_1)\, p_{\theta_2}(x_2) \le \widehat{p_1 \otimes p_2}(x_1,x_2)$ by dividing through and taking the supremum over $\theta_1$; then divide by $\hat p_1(x_1)$ and take the supremum over $\theta_2$. Degenerate cases where one factor vanishes are handled separately. The result holds for arbitrary parameter sets — no compactness, no attainment.
+---
 
-Additivity is the bad news for anyone hoping to amortise. If a single block costs you half a bit of universality, then a thousand independent blocks cost five hundred bits, not half a bit. Combine this with the diversity bound and you get the sharp statement:
+## Two prices, and the gap between them
 
-**Tensorised Diversity Bound.** *If a class contains two sources at total variation distance $\delta$, then $k$ independent blocks of that class cost at least $k \log_2(1 + \delta)$ bits of universality.*
+There is an older, harsher way to measure universality. Instead of averaging over
+messages, demand a guarantee for *every individual message*: how many bits worse
+than the best-fitting member of the family can you be, in the worst case? That
+minimax is also exactly solved, by the **Shtarkov sum**
+$$C_S=\sum_x \max_\theta p_\theta(x),$$
+whose logarithm $\log_2 C_S$ is the worst-case price, achieved by the normalized
+maximum-likelihood code.
 
-The price of universality is not an overhead you pay once at the start of the stream. It is a *tax rate*, levied per block, forever.
+How do the two prices compare? The average-case price never exceeds the
+worst-case price:
+$$C\;\le\;\log_2 C_S,$$
+which follows in one line from the verification criterion below. But they are
+genuinely different numbers, and it is possible to say by exactly how much.
 
-### Libraries: merging specialists is nearly free
+Consider an **unknown-offset class**: a base distribution $p_0$ on a finite
+abelian group $A$, translated by an unknown group element, so
+$p_\theta(x)=p_0(x-\theta)$. Think of a known waveform at an unknown phase, or a
+known byte histogram at an unknown cyclic shift. Symmetry does all the work here:
+the uniform prior is capacity-achieving, and
 
-Now the opposite construction, and the good news. Suppose you have $K$ specialised classes — one for text, one for photographs, one for audio, one for executables — living on the same message space, and you do not know in advance which one your file comes from. Form the **library**: the class whose parameter is a pair (which family, which parameter within it).
+$$C=\log_2|A|-H(p_0),\qquad \log_2 C_S=\log_2|A|-H_\infty(p_0),$$
 
-**Library Bounds.** *Let $\mathcal{L}$ be the library of classes $\mathcal{S}_1,\dots,\mathcal{S}_K$. Then*
-$$\max_{i} C_{\mathcal{S}_i} \;\le\; C_{\mathcal{L}} \;\le\; \sum_{i=1}^K C_{\mathcal{S}_i}.$$
+where $H_\infty(p_0)=-\log_2\max_a p_0(a)$ is the **min-entropy**. Therefore
 
-Both halves are one-liners once the envelope is understood. The library's envelope dominates each member's envelope (a member's best explanation is available to the library too), which gives the lower bound. And the library's envelope at any message is at most the sum of the members' envelopes at that message, which gives the upper bound after summing over messages.
+> **The gap between the worst-case and average-case prices of universality of an
+> unknown-offset class is exactly $H(p_0)-H_\infty(p_0)$**, the gap between the
+> Shannon entropy and the min-entropy of the base law.
 
-Translated into bits, with $B$ an upper bound on every member's Shtarkov sum:
+A fully explicit instance: let $A=\mathbb{Z}/2$ and let $p_0$ be the
+$\text{Bernoulli}(3/4)$ law, giving the two-source class $\{(3/4,1/4),(1/4,3/4)\}$
+— "the bit is probably $0$" versus "the bit is probably $1$". Then
+$$C=\tfrac34\log_2 3-1\approx 0.189\ \text{bits},\qquad
+\log_2 C_S=\log_2 3-1\approx 0.585\ \text{bits},$$
+with a gap of $\tfrac14\log_2 3\approx 0.396$ bits. The worst-case theory
+overcharges by a factor of three on this tiny example. Which price you pay
+depends on whether you must survive every message or merely every source.
 
-**Price of a Library.** *A single decompressor universal for all $K$ specialised families costs at most*
-$$\log_2 K \;+\; \max_i\, \text{price}(\mathcal{S}_i)\ \text{bits},$$
-*and at least $\max_i \text{price}(\mathcal{S}_i)$ bits.*
+---
 
-That $\log_2 K$ is the entire cost of not knowing which specialist to consult. Eight specialists cost three extra bits. A thousand specialists cost ten. Against files of thousands of bytes, this is nothing. **A library of specialised decompressors is essentially as good as knowing which one to use** — the gap between the two is $\log_2 K$ bits, and no more.
+## The structure of the price
 
-Put the two laws side by side and the design guidance is unambiguous. Splitting data into independent blocks multiplies your universality cost; splitting your *models* into a library adds only a logarithm. Model diversity is cheap. Data volume is expensive.
+Once the saddle point is available, a collection of structural facts becomes
+short.
 
-## Average case: the same story in a softer voice
+**It is never zero, unless the problem is trivial.** As soon as two members of the
+family differ as distributions, $C>0$. There is no such thing as a free universal
+scheme over a genuinely uncertain family.
 
-The worst-case regret is a pessimist's accounting: it charges the code for its single most embarrassing message. The classical alternative asks about averages. If nature picks $\theta$ and generates data from $p_\theta$, the code $q$ spends $\mathbb{E}_{p_\theta}\log_2(1/q)$ bits on average, against the oracle's $H(p_\theta)$; the excess is the Kullback–Leibler divergence
-$$D(p_\theta \,\|\, q) \;=\; \sum_x p_\theta(x)\log_2 \frac{p_\theta(x)}{q(x)} \;\ge\; 0.$$
-(Non-negativity is Gibbs' inequality, and it *is* Shannon's source-coding bound: no code beats the entropy on average.)
+**It is at most $\log_2|\Theta|$.** You can always write down which source you
+mean and then code with it — the two-part code — and that costs the logarithm of
+the number of sources. Universality is never worse than an explicit model index.
 
-Here the central identity is the **compensation identity**. Put a prior $w$ on the parameter and form the Bayes mixture $m_w(x) = \sum_\theta w(\theta)\, p_\theta(x)$. Then for *every* coding distribution $q$,
-$$\sum_\theta w(\theta)\, D(p_\theta \,\|\, q) \;=\; I(w) \;+\; D(m_w \,\|\, q),$$
-where $I(w) = \sum_\theta w(\theta) D(p_\theta \| m_w)$ is the mutual information between parameter and message. This is exact bookkeeping. The first term is the *unavoidable* price of universality under the prior $w$ — paid even by the best possible universal code. The second is *avoidable*, and vanishes precisely when $q$ is the mixture. So the Bayes mixture is the optimal universal code, and its cost is a mutual information — a channel capacity, in disguise.
+**It is additive over independent blocks.** If $S$ and $T$ are two families and
+you compress a pair of independent messages, one from each,
+$$C(S\otimes T)=C(S)+C(T).$$
+There is no universality discount for bundling independent data. The hard
+direction — that you cannot do *better* than the sum — is an immediate corollary
+of the saddle point, and it is the reason redundancy accumulates linearly in the
+number of independent blocks rather than being amortised away.
 
-From this one identity everything else falls out. Since a weighted average is at most a maximum: **redundancy exceeds capacity** — whatever code you choose, for every prior $w$ there is a source in the class paying at least $I(w)$ bits. In the other direction, the mixture is never worse than the two-part code: $D(p_\theta \| m_w) \le \log_2 (1/w(\theta))$, which under the uniform prior is $\log_2|\Theta|$ — literally the cost of writing down the name of the source. And the worst-case theory dominates: the normalised maximum likelihood code pays at most $\log_2 C_{\mathcal{S}}$ bits *on average* against every source, so the average-case price never exceeds the worst-case price. All the library and product bounds therefore hold in the average-case world too.
+**Specialization buys at most $\log_2 K$ bits.** This is the question the whole
+investigation was designed to settle. Suppose you split your data into $K$
+specialised classes, each with its own price of universality at most $B$, and
+compare against one universal scheme covering the union. Then
+$$\max_i C_i\;\le\;C(\text{union})\;\le\;B+\log_2 K .$$
+The union is at least as expensive as the worst specialist, and at most
+$\log_2 K$ bits worse than the *best* uniform bound on the specialists. In other
+words: **the total number of bits that specialisation can move from the message
+into the shared decompressor is at most $\log_2 K$** — the cost of naming which
+specialist to use. Merging a thousand specialised codecs into one universal codec
+costs at most about ten bits per message.
 
-## When is the price exactly what you feared?
+**Rich classes cost what you would guess.** If a family contains $N$ members that
+are approximately mutually distinguishable — each source $\theta$ puts mass at
+least $1-\delta$ on its own private set of messages $A_\theta$, and the $A_\theta$
+are disjoint — then
+$$(1-\delta)\log_2 N-4\;\le\;C\;\le\;\log_2 N .$$
+Distinguishability is the whole story: $N$ tellable-apart sources cost $\log_2 N$
+bits, to within four.
 
-Two natural situations pin the price down exactly, and they are the two poles of the design question.
+---
 
-**Mutually singular classes cost everything.** Suppose the sources live on pairwise disjoint sets of messages — each source can only produce "its own" files. Then the universal code must pay exactly $\log_2 |\Theta|$ bits on average: the uniform mixture achieves it, and no coding distribution beats it against all members. The intuition is a pigeonhole argument in disguise: the coding distribution has only one unit of mass to spread over $|\Theta|$ disjoint supports, so some support gets at most $1/|\Theta|$ of it, and the source living there pays $\log_2|\Theta|$ bits. Reassuringly, this is not a knife edge: if the sources merely *concentrate*, each putting mass at least $1-\delta$ on its own set, the price is still at least $(1-\delta)\log_2 |\Theta| - 4$ bits.
+## Front ends are free exactly when they are sufficient statistics
 
-**Conservation of bits.** Now specialise to *file types*. Classify each file by its type $c$ — say by extension — and let $P_c$ be uniform on the files of type $c$. A decompressor that already knows the type needs $\log_2 \#\{\text{files of type } c\}$ bits per file, its entropy. The theorem says: for every code obeying the Kraft inequality, there is a type $c$ on which the code spends, on average, at least
-$$\log_2 \#\{\text{files of type } c\} \;+\; \log_2 \#\{\text{types}\}$$
-bits. Specialising the decompressor moves *exactly* $\log_2 \#\{\text{types}\}$ bits out of the message and into the identity of the decompressor. Never more, never less. If your "specialisation" consists in carving an unstructured set into pieces, you have simply relabelled the bits: the total description length is conserved. In the cleanest version — messages consisting of a type block and a payload block — every code spends, for some type, at least the length of the whole message.
+Real compressors never look at the raw file. They look at a *parse* of it: a
+token stream, a match/literal decomposition, a histogram of byte frequencies.
+Formally, the coder sees $f(x)$ for some coarse-graining map $f$. What does that
+cost?
 
-**But real structure is worth a growing number of bits.** Contrast that with a class that genuinely has low complexity. On $n$-bit files:
+Coarse-graining never *raises* the price — $C(f_*S)\le C(S)$, the data-processing
+inequality for universal compression. But it can lower it, and a price that has
+been lowered by throwing away information is a price paid elsewhere, in fidelity.
 
-- the class of *all* files (equivalently, all point masses) costs exactly $n$ bits — the entire message, which is the pigeonhole bound recovered as a special case;
-- the *memoryless* class over an alphabet $A$ — independent symbols with unknown frequencies — costs at most $|A| \log_2(n+1)$ bits;
-- the *first-order Markov* class costs at most $\log_2 |A| + |A|^2 \log_2(n+1)$ bits.
+The exact accounting is a chain rule:
+$$D(p\,\|\,q)\;=\;D(f_*p\,\|\,f_*q)\;+\;D(p\,\|\,q\mid f),$$
+where the last term is the **parse defect**: the divergence between the
+conditional laws of $p$ and $q$ *inside the fibres* of $f$, averaged over fibres.
+It is non-negative (which re-proves data processing), and it is exactly the
+information the front end discards. At the level of capacity,
+$$C(f_*S)\;\le\;C(S)\;\le\;C(f_*S)+\big(\text{average within-fibre defect}\big).$$
 
-The gap $n - 2\log_2(n+1)$ between "no assumptions" and "memoryless" grows without bound. **The price of universality is governed by the complexity of the class, not by the length of the data.** Moving bits from the message into a shared decompressor is worthwhile exactly when the data class is genuinely low-complexity — and then it is worth an unbounded number of bits.
+And there is a crisp characterisation of the free front ends. The parse defect
+vanishes for every member of the family if and only if the family factorises in
+the Fisher–Neyman form
+$$p_\theta(x)=g_\theta(f(x))\cdot h(x),$$
+that is, if and only if $f$ is a **sufficient statistic** for the family.
 
-A beautiful class makes the logarithmic rate exact rather than merely an upper bound. The **constant-composition** sources on $n$ bits — for each $j$, the uniform distribution on strings with exactly $j$ ones — have disjoint supports, so their Shtarkov sum is exactly $n+1$ and their price is exactly $\log_2(n+1)$ bits, worst case and on average. These are precisely the conditional laws of memoryless sources given their empirical frequency, so the logarithmic Rissanen rate is not an artefact of a lossy upper bound: a natural class attains it on the nose. The associated conservation law reproduces the familiar two-part-code accounting: the entropy $\log_2\binom{n}{j}$ of the composition, plus $\log_2(n+1)$ bits to name it.
+> **A front end loses no bits if and only if it computes a sufficient statistic.**
 
-## What this means for building compressors
+This is the test a compressor designer wants. Is the histogram enough? Is the
+match/literal split enough? If the family factorises through your parse, you may
+use it and pay nothing; otherwise the chain rule tells you, in bits, what you are
+paying. The price of universality is a function of the sufficient statistic
+alone.
 
-Collect the verdicts.
+---
 
-1. **Specialisation is real, and it is worth pursuing** — but only when the specialised class is genuinely simpler, in the precise sense that its Shtarkov sum grows slowly with the data length. Structure that reduces a class from "all files" ($n$ bits) to "memoryless" ($O(\log n)$ bits) moves an unbounded number of bits out of the message.
-2. **Carving up an unstructured set is not specialisation.** The conservation law shows that partitioning $n$-bit files into types just relocates the bits from the payload into the type label. If you want a win, the specialised classes have to be *low-complexity*, not merely *small*.
-3. **Build a library, not a monolith.** Merging $K$ specialised decompressors into one costs at most $\log_2 K$ bits over the most expensive specialist. This is the single most actionable consequence: there is essentially no penalty for carrying many models, so the practical strategy is to carry as many well-fitted specialists as you can and pay the tiny naming cost.
-4. **Do not expect batching to help.** The price adds over independent blocks, so it scales linearly with the volume of data. Any hope of amortising the cost of universality over a long stream is misplaced: the cost per block is a constant, and a constant per block is a linear total.
-5. **The floor is diversity.** A class costs at least $\log_2(1 + \delta)$ bits, where $\delta$ is the largest total variation distance between two of its members, and this floor tensorises. There is no clever engineering around it.
+## Rates: how the price grows with message length
 
-## Coda: the shape of the answer
+Abstract capacity is only useful if it can be computed for the families people
+actually compress. Sufficiency does the work.
 
-There is an aesthetic pleasure in how tightly this theory closes. A single scalar — the excess mass of the maximum likelihood envelope — captures the entire worst-case cost of not knowing your data. It is multiplicative over independent products and subadditive over unions, so in bits the price of universality behaves like a *valuation* on the algebra of source classes: additive over data, logarithmic over models. It is bounded below by statistical distance, so it vanishes only in the degenerate case. And in the average-case world the same quantity reappears as a mutual information, with a compensation identity separating the payable from the unpayable exactly.
+For a **memoryless (i.i.d.) family** over an alphabet $A$ on messages of length
+$n$, the vector of symbol counts — the *type* — is a sufficient statistic, so the
+price is the price of coding the type. There are at most $(n+1)^{|A|}$ types, so
+$$C\;\le\;|A|\,\log_2(n+1)$$
+*no matter how many sources are in the family*. For binary messages the sharper
+statistic (the single count of ones) gives $C\le\log_2(n+1)$.
 
-The pigeonhole principle tells us that no compressor can shrink everything. The theory of universal redundancy tells us something more useful: exactly how much of that irreducible cost is due to *ignorance*, as opposed to *incompressibility* — and, in bits, exactly what knowledge is worth.
+For **Markov sources** with alphabet $A$ and memory one, the transition counts are
+sufficient, and
+$$C\;\le\;\log_2|A|+|A|^2\log_2(n+1).$$
+The multiplier $|A|^2$ is exactly the number of free parameters of the model
+class. This is the shape the theory predicts: redundancy logarithmic in the
+message length, with class complexity as the coefficient.
+
+Upper bounds alone are not convincing — perhaps the true price is far smaller.
+The matching lower bound is the delicate half, and for the genuine one-parameter
+Bernoulli family it can be done by an explicit packing. Take the scale
+$k=\lfloor\sqrt n\rfloor$ and the parameters
+$$t_j=\frac{4j+2}{k},\qquad j<\lfloor k/4\rfloor .$$
+Under the $\text{Bernoulli}(t_j)$ product law on $n$ bits, the number of ones has
+mean $nt_j$ and variance $nt_j(1-t_j)\le n/4$, so by Chebyshev at least $15/16$ of
+the mass sits within $2\sqrt n$ of the mean. Consecutive means are
+$4n/k\ge 4\sqrt n$ apart, so these windows are pairwise disjoint: the $\lfloor
+k/4\rfloor$ parameters are approximately distinguishable. Feeding this packing
+into the distinguishability bound gives, for every $n\ge 64$,
+$$\tfrac{15}{32}\log_2 n-8\;\le\;C\;\le\;\log_2(n+1).$$
+
+So the price of universality of a one-parameter memoryless family really does
+grow like a *constant times* $\log_2 n$, and the constant is pinned between
+$15/32$ and $1$ — bracketing the classical value $1/2$. The $15/16$ is the
+Chebyshev tail; the theorem is fully explicit and holds at every finite $n$, not
+just asymptotically.
+
+---
+
+## So: are specialised decompressors worth building?
+
+Assemble the pieces.
+
+The price of universality over a $d$-parameter family of sources on messages of
+length $n$ is $\Theta(\log n)$ bits, with the constant proportional to $d$. That
+is the *total* size of the prize: a decompressor that magically knew the true
+parameter would save you about $\frac{d}{2}\log_2 n$ bits on the whole message.
+Meanwhile, merging $K$ specialised classes into a single universal scheme costs at
+most $\log_2 K$ bits. And the price is additive across independent blocks, so you
+cannot amortise it by bundling.
+
+The verdict is quantitative and slightly deflating. **Specialisation moves only
+logarithmically many bits from the message into the shared decompressor.** For a
+megabyte file from a modest model class, the entire theoretical prize is a few
+dozen bits — invisible. For very short messages, for enormous model families
+(large $d$), or when thousands of tiny records are compressed independently and
+the per-record $\log n$ toll is paid over and over, specialisation is real and
+worth engineering. Anywhere else, the bits are in the model of the data, not in
+the universality overhead.
+
+There is a second, more constructive verdict hidden in the sufficiency theorem.
+Since the price depends only on the sufficient statistic, the productive move is
+not to build more specialised decompressors — it is to find *better parses*. A
+front end that is sufficient is free; a front end that is not tells you exactly
+how many bits it is burning. That is an actionable design principle, and it comes
+with a formula.
+
+---
+
+## Coda: the same theorem twice
+
+The most satisfying thing about this circle of results is the coincidence at its
+centre. Channel capacity was invented to answer a question about *transmission*:
+how fast can you push information down a noisy wire? The price of universality is
+a question about *representation*: how many bits do you waste by not knowing your
+data?
+
+They are the same number. The family of sources is a channel whose input is the
+identity of the source and whose output is the message; its capacity is
+simultaneously the rate at which you could signal by choosing a source, and the
+overhead you pay for not knowing which source was chosen. Information you cannot
+extract and information you must pay for are the same information, viewed from
+two sides.
+
+That is not a metaphor. It is a theorem, and its proof is two pages of
+perturbation.
