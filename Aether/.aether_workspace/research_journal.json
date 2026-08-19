@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "c8991a0a",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions\n\nDerived from the results now formalized in `Catalog/Bridges/FundamentalGroupCovering*.lean`.\nEach conjecture below is falsifiable, and each is stated so that it can be attacked\ndi",
-      "quality_score": 0.88,
-      "sorry_count": 0,
-      "theorem_count": 294,
-      "timestamp": "2026-08-17T13:53:57",
-      "title": "Topological-Algebraic Bridge: Fundamental Group as a Complete Invariant"
-    },
-    {
       "cycle_id": "286b3a0e",
       "domain": "Bridges",
       "key_insight": "# Future Directions — Moonshine Beyond the j-Function\n\nThis research thread studies what survives, rigorously, of \"moonshine-type\" statements when the\nanalytic mythology is stripped away: element-inde",
@@ -499,19 +489,19 @@
       "theorem_count": 92,
       "timestamp": "2026-08-19T13:09:05",
       "title": "For a graded `G`-set `Y = ⨆_n Y_n` the generating function `Σ_n t_r(Y_n) q^n` is a rational\nfunction"
+    },
+    {
+      "cycle_id": "4ba8c40c",
+      "domain": "Novelty",
+      "key_insight": "# Future directions: emergent spacetime from entanglement\n\nFive bold, testable conjectures distilled from this cycle.  Each is stated so\nthat a counterexample would be a finite object, and each is phr",
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "theorem_count": 124,
+      "timestamp": "2026-08-19T13:09:17",
+      "title": "Emergent Spacetime from Quantum Entanglement"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "344e2e8a",
-      "domain": "Combinatorics",
-      "key_insight": "# Future directions — Singmaster's problem\n\nDerived from the analysis and adversarial review of the results now formalised in\n\n* `Catalog/Combinatorics/SingmasterOccurrences.lean`\n* `Catalog/Combinato",
-      "quality_score": 0.627125,
-      "sorry_count": 0,
-      "theorem_count": 585,
-      "timestamp": "2026-08-08T21:54:19",
-      "title": "occurrences of certain numbers in pascals triangle"
-    },
     {
       "cycle_id": "97241621",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 92,
       "timestamp": "2026-08-19T13:09:05",
       "title": "For a graded `G`-set `Y = ⨆_n Y_n` the generating function `Σ_n t_r(Y_n) q^n` is a rational\nfunction"
+    },
+    {
+      "cycle_id": "4ba8c40c",
+      "domain": "Novelty",
+      "key_insight": "# Future directions: emergent spacetime from entanglement\n\nFive bold, testable conjectures distilled from this cycle.  Each is stated so\nthat a counterexample would be a finite object, and each is phr",
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "theorem_count": 124,
+      "timestamp": "2026-08-19T13:09:17",
+      "title": "Emergent Spacetime from Quantum Entanglement"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "ef01dce6",
-      "domain": "Bridges",
-      "name": "bsearch_cost_le",
-      "quality": 0.88
-    },
-    {
-      "cycle_id": "09567e3d",
-      "domain": "Computation",
-      "name": "over",
-      "quality": 0.89
-    },
-    {
-      "cycle_id": "09567e3d",
-      "domain": "Computation",
-      "name": "that",
-      "quality": 0.89
-    },
     {
       "cycle_id": "09567e3d",
       "domain": "Computation",
@@ -2803,9 +2785,27 @@
       "domain": "Physics",
       "name": "tsum_transCount_mul_one_sub_q",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "4ba8c40c",
+      "domain": "Novelty",
+      "name": "and",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "4ba8c40c",
+      "domain": "Novelty",
+      "name": "sum_antisymm_zero",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "4ba8c40c",
+      "domain": "Novelty",
+      "name": "cutWeight_eq_crossSum",
+      "quality": 0.85
     }
   ],
-  "last_updated": "2026-08-19T13:09:05",
+  "last_updated": "2026-08-19T13:09:17",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hupper⟩)",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "fefb96cd",
-        "quality": 0.82,
-        "theorems": 54,
-        "title": "TRACEPROFILE: the trace s=p+q is the least-hidden symmetric invariant — 1 bit pe"
-      },
-      {
         "cycle_id": "a9efa47b",
         "quality": 0.82,
         "theorems": 14,
@@ -3637,6 +3631,12 @@
         "quality": 0.86,
         "theorems": 49,
         "title": "The `⇐` direction is proved (`FourierFA.uncertainty_eq_coset_modulation`); the `"
+      },
+      {
+        "cycle_id": "4ba8c40c",
+        "quality": 0.85,
+        "theorems": 124,
+        "title": "Emergent Spacetime from Quantum Entanglement"
       }
     ],
     "NumberTheory": [

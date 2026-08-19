@@ -79,20 +79,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle 37827e5f (Q=0.850), which proved 21 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formally proves the semicircle law for Wigner ensembles: the empirical spectral distribution of a random Hermitian matrix with independent entries converges in probability to the semicircle distribution as the dimension grows, establishing the universality of bulk eigenvalue statistics for random ma",
-    "domains": [
-      "Probability"
-    ],
-    "id": "push_37827e5f_bf513fb8",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "37827e5f",
-    "status": "available",
-    "timestamp": "2026-08-16T13:45:35.625007+00:00",
-    "title": "Deepening: Wigner-Semicircle: Universality of the Spectral Distribution"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Building on cycle 4bf66c09 (Q=0.880), which proved 41 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Chebotarev's theorem that every square submatrix of the `p \u00d7 p` DFT matrix\nis nonsingular, which in turn follows from a resultant/Vandermonde computation over `Q(\u03b6_p)`\nusing the irreducibility of the `p`-th cyclotomic polynomial \u2014 machinery that Mathlib already\ncontains (`Polynomial.cyclotomic_irred",
     "domains": [
       "Novelty"
@@ -132,20 +118,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-19T09:49:59.558898+00:00",
     "title": "Deepening: The Bell defect, counted exactly"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 8a3962f5 (Q=0.860), which proved 120 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: *The number of triples `(a,b,c)` with `0 < a,b,c \u2264 H` that are Berggren-generated\nfrom a positive seed is `\u0398(H)` \u2014 vanishingly few compared with `H\u00b3` \u2014 while the\nnumber of *Pythagorean* triples in the same box that are Berggren-generated is\n`(1 - o(1))` times the number of primitive Pythagorean trip",
-    "domains": [
-      "MachineLearning"
-    ],
-    "id": "push_8a3962f5_bbc585aa",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "8a3962f5",
-    "status": "available",
-    "timestamp": "2026-08-19T07:54:39.283971+00:00",
-    "title": "Deepening: The number of triples `(a,b,c)` with `0 < a,b,c \u2264 H` that are Berggren-generated"
   },
   {
     "consumed_by_exp_id": "",
@@ -821,21 +793,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Formalize the classical zero-free region of the Riemann zeta function: \u03b6(s) \u2260 0 for Re(s) > 1 - c/log(|Im(s)|+2). Prove the Riemann-von Mangoldt formula N(T) ~ T/(2\u03c0) log(T/(2\u03c0e)). Formalize the connection between zero-free regions and prime counting error bounds.",
-    "domains": [
-      "NumberTheory",
-      "Analysis"
-    ],
-    "id": "fd_0647",
-    "priority_score": 0.94,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-24T14:34:16.697733+00:00",
-    "title": "Riemann Zeta: Zero-Free Regions and Density Estimates"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Building on cycle 507d1ef0 (Q=0.830), which proved 54 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Investigate the ArXiv paper 'A Fourier-analytic Uniqueness Theorem for Lattice-point Enumerators' and formalize its key results. Abstract: We consider a bounded set $P \\subset \\mathbb{R}^d$ and the lattice-point enumerator $L_P(t) = |tP \\cap \\mathbb{Z}^d|$ for real $t > 0$. We show that if two bound",
     "domains": [
       "Cryptography"
@@ -847,6 +804,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-17T07:17:22.608319+00:00",
     "title": "Deepening: ArXiv paper: A Fourier-analytic Uniqueness Theorem for Lattice-point Enumerators"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle f1fd8ff1 (Q=0.820), which proved 92 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: *For a graded `G`-set `Y = \u2a06_n Y_n` the generating function `\u03a3_n t_r(Y_n) q^n` is a rational\nfunction of `q` whenever the grades are eventually `r`-transitive, with denominator dividing\n`(1\u2212q)^{r+1}`.*",
+    "domains": [
+      "Physics"
+    ],
+    "id": "push_f1fd8ff1_ca2d0027",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "f1fd8ff1",
+    "status": "available",
+    "timestamp": "2026-08-19T13:09:05.760186+00:00",
+    "title": "Deepening: For a graded `G`-set `Y = \u2a06_n Y_n` the generating function `\u03a3_n t_r(Y_n) q^n` is"
   },
   {
     "consumed_by_exp_id": "",
@@ -1749,21 +1720,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-13T03:21:12.748859+00:00",
     "title": "Stein-Method: Quantitative Normal Approximation Bounds"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize the Yau-Tian-Donaldson conjecture: a Fano manifold admits a K\u00e4hler-Einstein metric iff it is K-stable. Prove stability criteria for specific Fano varieties.",
-    "domains": [
-      "Geometry",
-      "Algebra"
-    ],
-    "id": "seed_239",
-    "priority_score": 0.88,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "K\u00e4hler-Einstein Metrics and K-Stability"
   },
   {
     "consumed_by_exp_id": "",
@@ -5864,7 +5820,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Reinforcement Learning: Convergence of Policy Gradient Methods"
   },
   {
-    "consumed_by_exp_id": "4ba8c40c",
+    "consumed_by_exp_id": "",
     "description": "Prove that the geometry of spacetime can be reconstructed from the entanglement structure of a quantum state. Formalize the ER=EPR conjecture: show that entangled qubit pairs satisfy the properties of microscopic Einstein-Rosen bridges in a toy AdS/CFT model.",
     "domains": [
       "Physics",
@@ -5872,11 +5828,10 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "id": "seed_335",
-    "phase": "A",
     "priority_score": 0.82,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "",
     "title": "Emergent Spacetime from Quantum Entanglement"
   },
@@ -19747,14 +19702,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Open here; the multiplicative bound `|supp f| \u00b7 |supp f\u0302| \u2265 p` is proved"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a23b48bf",
     "description": "The \"if\" direction is proved (`FourierFA.poisson_summation`); the converse is open.",
     "domains": [],
     "id": "fd_1411",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "525aecde",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-17T09:01:32.595927+00:00",
     "title": "The \"if\" direction is proved (`FourierFA.poisson_summation`); the converse is open."
   },
@@ -20339,15 +20295,14 @@ window.FUTURE_DIRECTIONS = [
     "title": "For every finite action the spectrum is log-concave: `t_r\u00b2 \u2265 t_{r\u22121}\u00b7t_{r+1}` for\n`1 \u2264 r < |X|`."
   },
   {
-    "consumed_by_exp_id": "f1fd8ff1",
+    "consumed_by_exp_id": "",
     "description": "*For a graded `G`-set `Y = \u2a06_n Y_n` the generating function `\u03a3_n t_r(Y_n) q^n` is a rational\nfunction of `q` whenever the grades are eventually `r`-transitive, with denominator dividing\n`(1\u2212q)^{r+1}`.*",
     "domains": [],
     "id": "fd_1476",
-    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "11c9ff9f",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-18T03:08:40.595069+00:00",
     "title": "For a graded `G`-set `Y = \u2a06_n Y_n` the generating function `\u03a3_n t_r(Y_n) q^n` is a rational\nfunction of `q` whenever the grades are eventually `r`-transitive, with denominator dividing\n`(1\u2212q)^{r+1}`."
   },
@@ -21351,5 +21306,136 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-19T10:47:00.760670+00:00",
     "title": "For the memoryless class of `Catalog/MachineLearning/UniversalRedundancy/Types.lean`\nthe price obeys `C\u209b \u2264 (n+1)^{#A}`."
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The equivalence (both directions) is formalized, so the conjecture reduces to\nconstructing or excluding graded `G`-sets whose difference tables neither stabilize nor\nblow up; that is now a concrete finite-difference statement rather than a vague\n\"rationality\" claim.",
+    "domains": [],
+    "id": "fd_1600",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "f1fd8ff1",
+    "status": "available",
+    "timestamp": "2026-08-19T13:08:51.940310+00:00",
+    "title": "The equivalence (both directions) is formalized, so the conjecture reduces to"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The bound and the coefficient formula are both proved, so the conjecture is a\none-entry non-vanishing statement, directly testable on the synthetic families in\n`GradedTransitivityLabNotes.lean`.",
+    "domains": [],
+    "id": "fd_1601",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "f1fd8ff1",
+    "status": "available",
+    "timestamp": "2026-08-19T13:08:52.199304+00:00",
+    "title": "The bound and the coefficient formula are both proved, so the conjecture is a"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Descent and Burnside are both formalized here for injective tuples, which is\nprecisely the input the argument needs.",
+    "domains": [],
+    "id": "fd_1602",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "f1fd8ff1",
+    "status": "available",
+    "timestamp": "2026-08-19T13:08:52.450925+00:00",
+    "title": "Descent and Burnside are both formalized here for injective tuples, which is"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For a finite group `G` and an eventually `r`-transitive graded `G`-set,\nthe fixed-point generating function `\u2211\u2099 (\u2211_{g\u2208G} #Fix_r(g, Y\u2099)) q\u207f` extends\nmeromorphically to `\u2102` with a *single* simple pole at `q = 1` of residue `\u2212|G|`, and its\nTaylor coefficients at `q = 0` are eventually constant equal to `|G|`.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_1603",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "f1fd8ff1",
+    "status": "available",
+    "timestamp": "2026-08-19T13:08:52.710619+00:00",
+    "title": "For a finite group `G` and an eventually `r`-transitive graded `G`-set,"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The real-analytic version on `|q| < 1` is proved; only the passage from `\u211d` to\n`\u2102` and the residue computation remain.",
+    "domains": [],
+    "id": "fd_1604",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "f1fd8ff1",
+    "status": "available",
+    "timestamp": "2026-08-19T13:08:52.965344+00:00",
+    "title": "The real-analytic version on `|q| < 1` is proved; only the passage from `\u211d` to"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The cut side of the toy AdS/CFT dictionary is fully formalised\n(subadditivity, SSA, MMI, cyclic inequalities, nesting), and the elementary\nwormhole case is already verified (`pairModel_maxflow_eq_throat`); a formal\nmax-flow\u2013min-cut theorem would immediately convert every entropy inequality\nproved by surface recombination into a statement about threads, i.e. about",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_1605",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "4ba8c40c",
+    "status": "available",
+    "timestamp": "2026-08-19T13:09:11.701407+00:00",
+    "title": "The cut side of the toy AdS/CFT dictionary is fully formalised"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## C4. Coarse-graining is a metric contraction (an emergent RG flow) \u2014 **RESOLVED**",
+    "domains": [],
+    "id": "fd_1606",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "4ba8c40c",
+    "status": "available",
+    "timestamp": "2026-08-19T13:09:11.958719+00:00",
+    "title": "C4. Coarse-graining is a metric contraction (an emergent RG flow) \u2014 RESOLVED*"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "It would upgrade the static statement \"emergent space is\n`0`-hyperbolic\" to a dynamical one: the RG flow of a holographic state *is* the\nconstruction of its bulk tree, and it converges in linearly many steps.",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "fd_1607",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "4ba8c40c",
+    "status": "available",
+    "timestamp": "2026-08-19T13:09:12.212100+00:00",
+    "title": "It would upgrade the static statement \"emergent space is"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The one-sided inequality, a strict instance, and the \"if\" direction\n(`cap_pushGraph_eq_of_lift`: a fibre-constant minimal surface freezes the\nthroat) are all proved, so the remaining content is the converse; it would give a *criterion* for when\ncoarse-graining destroys geometric information, i.e. when the RG flow is\nirreversible.",
+    "domains": [
+      "Geometry",
+      "Combinatorics"
+    ],
+    "id": "fd_1608",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "4ba8c40c",
+    "status": "available",
+    "timestamp": "2026-08-19T13:09:12.466361+00:00",
+    "title": "The one-sided inequality, a strict instance, and the \"if\" direction"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The corresponding easy half is already a theorem\n(`entropy_pushModel_eq_of_lift`).  Together with C7 it would make the whole dictionary\n(area \u2192 throat \u2192 distance \u2192 entropy) uniformly rigid under coarse-graining, and\neach clause is a finite, checkable condition, hence falsifiable on a small\nweighted graph.",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "fd_1609",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "4ba8c40c",
+    "status": "available",
+    "timestamp": "2026-08-19T13:09:12.724451+00:00",
+    "title": "The corresponding easy half is already a theorem"
   }
 ];

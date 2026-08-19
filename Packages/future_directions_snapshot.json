@@ -110,25 +110,6 @@
     "ambition_level": "grand_challenge",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "Building on cycle 37827e5f (Q=0.850), which proved 21 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formally proves the semicircle law for Wigner ensembles: the empirical spectral distribution of a random Hermitian matrix with independent entries converges in probability to the semicircle distribution as the dimension grows, establishing the universality of bulk eigenvalue statistics for random ma",
-    "domain_bridges": [],
-    "domains": [
-      "Probability"
-    ],
-    "id": "push_37827e5f_bf513fb8",
-    "lineage_refs": [],
-    "priority_score": 0.95,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "37827e5f",
-    "status": "available",
-    "timestamp": "2026-08-16T13:45:35.625007+00:00",
-    "title": "Deepening: Wigner-Semicircle: Universality of the Spectral Distribution"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "Building on cycle 4bf66c09 (Q=0.880), which proved 41 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Chebotarev's theorem that every square submatrix of the `p × p` DFT matrix\nis nonsingular, which in turn follows from a resultant/Vandermonde computation over `Q(ζ_p)`\nusing the irreducibility of the `p`-th cyclotomic polynomial — machinery that Mathlib already\ncontains (`Polynomial.cyclotomic_irred",
     "domain_bridges": [],
     "domains": [
@@ -181,25 +162,6 @@
     "status": "available",
     "timestamp": "2026-08-19T09:49:59.558898+00:00",
     "title": "Deepening: The Bell defect, counted exactly"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 8a3962f5 (Q=0.860), which proved 120 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: *The number of triples `(a,b,c)` with `0 < a,b,c ≤ H` that are Berggren-generated\nfrom a positive seed is `Θ(H)` — vanishingly few compared with `H³` — while the\nnumber of *Pythagorean* triples in the same box that are Berggren-generated is\n`(1 - o(1))` times the number of primitive Pythagorean trip",
-    "domain_bridges": [],
-    "domains": [
-      "MachineLearning"
-    ],
-    "id": "push_8a3962f5_bbc585aa",
-    "lineage_refs": [],
-    "priority_score": 0.95,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "8a3962f5",
-    "status": "available",
-    "timestamp": "2026-08-19T07:54:39.283971+00:00",
-    "title": "Deepening: The number of triples `(a,b,c)` with `0 < a,b,c ≤ H` that are Berggren-generated"
   },
   {
     "ambition_level": "grand_challenge",
@@ -1117,26 +1079,6 @@
     "ambition_level": "grand_challenge",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "Formalize the classical zero-free region of the Riemann zeta function: ζ(s) ≠ 0 for Re(s) > 1 - c/log(|Im(s)|+2). Prove the Riemann-von Mangoldt formula N(T) ~ T/(2π) log(T/(2πe)). Formalize the connection between zero-free regions and prime counting error bounds.",
-    "domain_bridges": [],
-    "domains": [
-      "NumberTheory",
-      "Analysis"
-    ],
-    "id": "fd_0647",
-    "lineage_refs": [],
-    "priority_score": 0.94,
-    "proof_strategy": "",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-24T14:34:16.697733+00:00",
-    "title": "Riemann Zeta: Zero-Free Regions and Density Estimates"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "Building on cycle 507d1ef0 (Q=0.830), which proved 54 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Investigate the ArXiv paper 'A Fourier-analytic Uniqueness Theorem for Lattice-point Enumerators' and formalize its key results. Abstract: We consider a bounded set $P \\subset \\mathbb{R}^d$ and the lattice-point enumerator $L_P(t) = |tP \\cap \\mathbb{Z}^d|$ for real $t > 0$. We show that if two bound",
     "domain_bridges": [],
     "domains": [
@@ -1151,6 +1093,25 @@
     "status": "available",
     "timestamp": "2026-08-17T07:17:22.608319+00:00",
     "title": "Deepening: ArXiv paper: A Fourier-analytic Uniqueness Theorem for Lattice-point Enumerators"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle f1fd8ff1 (Q=0.820), which proved 92 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: *For a graded `G`-set `Y = ⨆_n Y_n` the generating function `Σ_n t_r(Y_n) q^n` is a rational\nfunction of `q` whenever the grades are eventually `r`-transitive, with denominator dividing\n`(1−q)^{r+1}`.*",
+    "domain_bridges": [],
+    "domains": [
+      "Physics"
+    ],
+    "id": "push_f1fd8ff1_ca2d0027",
+    "lineage_refs": [],
+    "priority_score": 0.9199999999999999,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "f1fd8ff1",
+    "status": "available",
+    "timestamp": "2026-08-19T13:09:05.760186+00:00",
+    "title": "Deepening: For a graded `G`-set `Y = ⨆_n Y_n` the generating function `Σ_n t_r(Y_n) q^n` is"
   },
   {
     "ambition_level": "extension",
@@ -2367,26 +2328,6 @@
     "status": "available",
     "timestamp": "2026-08-13T03:21:12.748859+00:00",
     "title": "Stein-Method: Quantitative Normal Approximation Bounds"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Formalize the Yau-Tian-Donaldson conjecture: a Fano manifold admits a Kähler-Einstein metric iff it is K-stable. Prove stability criteria for specific Fano varieties.",
-    "domain_bridges": [],
-    "domains": [
-      "Geometry",
-      "Algebra"
-    ],
-    "id": "seed_239",
-    "lineage_refs": [],
-    "priority_score": 0.88,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Kähler-Einstein Metrics and K-Stability"
   },
   {
     "ambition_level": "extension",
@@ -7839,7 +7780,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "4ba8c40c",
+    "consumed_by_exp_id": "",
     "description": "Prove that the geometry of spacetime can be reconstructed from the entanglement structure of a quantum state. Formalize the ER=EPR conjecture: show that entangled qubit pairs satisfy the properties of microscopic Einstein-Rosen bridges in a toy AdS/CFT model.",
     "domain_bridges": [],
     "domains": [
@@ -7853,7 +7794,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "",
     "title": "Emergent Spacetime from Quantum Entanglement"
   },
@@ -26482,7 +26423,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a23b48bf",
     "description": "The \"if\" direction is proved (`FourierFA.poisson_summation`); the converse is open.",
     "domain_bridges": [],
     "domains": [],
@@ -26492,7 +26433,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "525aecde",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-17T09:01:32.595927+00:00",
     "title": "The \"if\" direction is proved (`FourierFA.poisson_summation`); the converse is open."
   },
@@ -27290,7 +27231,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "f1fd8ff1",
+    "consumed_by_exp_id": "",
     "description": "*For a graded `G`-set `Y = ⨆_n Y_n` the generating function `Σ_n t_r(Y_n) q^n` is a rational\nfunction of `q` whenever the grades are eventually `r`-transitive, with denominator dividing\n`(1−q)^{r+1}`.*",
     "domain_bridges": [],
     "domains": [],
@@ -27300,7 +27241,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "11c9ff9f",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-18T03:08:40.595069+00:00",
     "title": "For a graded `G`-set `Y = ⨆_n Y_n` the generating function `Σ_n t_r(Y_n) q^n` is a rational\nfunction of `q` whenever the grades are eventually `r`-transitive, with denominator dividing\n`(1−q)^{r+1}`."
   },
@@ -28672,5 +28613,186 @@
     "status": "available",
     "timestamp": "2026-08-19T10:47:00.760670+00:00",
     "title": "For the memoryless class of `Catalog/MachineLearning/UniversalRedundancy/Types.lean`\nthe price obeys `Cₛ ≤ (n+1)^{#A}`."
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "The equivalence (both directions) is formalized, so the conjecture reduces to\nconstructing or excluding graded `G`-sets whose difference tables neither stabilize nor\nblow up; that is now a concrete finite-difference statement rather than a vague\n\"rationality\" claim.",
+    "domain_bridges": [],
+    "domains": [],
+    "id": "fd_1600",
+    "lineage_refs": [],
+    "priority_score": 0.4,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "f1fd8ff1",
+    "status": "available",
+    "timestamp": "2026-08-19T13:08:51.940310+00:00",
+    "title": "The equivalence (both directions) is formalized, so the conjecture reduces to"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "The bound and the coefficient formula are both proved, so the conjecture is a\none-entry non-vanishing statement, directly testable on the synthetic families in\n`GradedTransitivityLabNotes.lean`.",
+    "domain_bridges": [],
+    "domains": [],
+    "id": "fd_1601",
+    "lineage_refs": [],
+    "priority_score": 0.4,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "f1fd8ff1",
+    "status": "available",
+    "timestamp": "2026-08-19T13:08:52.199304+00:00",
+    "title": "The bound and the coefficient formula are both proved, so the conjecture is a"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Descent and Burnside are both formalized here for injective tuples, which is\nprecisely the input the argument needs.",
+    "domain_bridges": [],
+    "domains": [],
+    "id": "fd_1602",
+    "lineage_refs": [],
+    "priority_score": 0.4,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "f1fd8ff1",
+    "status": "available",
+    "timestamp": "2026-08-19T13:08:52.450925+00:00",
+    "title": "Descent and Burnside are both formalized here for injective tuples, which is"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "For a finite group `G` and an eventually `r`-transitive graded `G`-set,\nthe fixed-point generating function `∑ₙ (∑_{g∈G} #Fix_r(g, Yₙ)) qⁿ` extends\nmeromorphically to `ℂ` with a *single* simple pole at `q = 1` of residue `−|G|`, and its\nTaylor coefficients at `q = 0` are eventually constant equal to `|G|`.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_1603",
+    "lineage_refs": [],
+    "priority_score": 0.4,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "f1fd8ff1",
+    "status": "available",
+    "timestamp": "2026-08-19T13:08:52.710619+00:00",
+    "title": "For a finite group `G` and an eventually `r`-transitive graded `G`-set,"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "The real-analytic version on `|q| < 1` is proved; only the passage from `ℝ` to\n`ℂ` and the residue computation remain.",
+    "domain_bridges": [],
+    "domains": [],
+    "id": "fd_1604",
+    "lineage_refs": [],
+    "priority_score": 0.4,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "f1fd8ff1",
+    "status": "available",
+    "timestamp": "2026-08-19T13:08:52.965344+00:00",
+    "title": "The real-analytic version on `|q| < 1` is proved; only the passage from `ℝ` to"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "The cut side of the toy AdS/CFT dictionary is fully formalised\n(subadditivity, SSA, MMI, cyclic inequalities, nesting), and the elementary\nwormhole case is already verified (`pairModel_maxflow_eq_throat`); a formal\nmax-flow–min-cut theorem would immediately convert every entropy inequality\nproved by surface recombination into a statement about threads, i.e. about",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_1605",
+    "lineage_refs": [],
+    "priority_score": 0.4,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "4ba8c40c",
+    "status": "available",
+    "timestamp": "2026-08-19T13:09:11.701407+00:00",
+    "title": "The cut side of the toy AdS/CFT dictionary is fully formalised"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "## C4. Coarse-graining is a metric contraction (an emergent RG flow) — **RESOLVED**",
+    "domain_bridges": [],
+    "domains": [],
+    "id": "fd_1606",
+    "lineage_refs": [],
+    "priority_score": 0.4,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "4ba8c40c",
+    "status": "available",
+    "timestamp": "2026-08-19T13:09:11.958719+00:00",
+    "title": "C4. Coarse-graining is a metric contraction (an emergent RG flow) — RESOLVED*"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "It would upgrade the static statement \"emergent space is\n`0`-hyperbolic\" to a dynamical one: the RG flow of a holographic state *is* the\nconstruction of its bulk tree, and it converges in linearly many steps.",
+    "domain_bridges": [],
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "fd_1607",
+    "lineage_refs": [],
+    "priority_score": 0.4,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "4ba8c40c",
+    "status": "available",
+    "timestamp": "2026-08-19T13:09:12.212100+00:00",
+    "title": "It would upgrade the static statement \"emergent space is"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "The one-sided inequality, a strict instance, and the \"if\" direction\n(`cap_pushGraph_eq_of_lift`: a fibre-constant minimal surface freezes the\nthroat) are all proved, so the remaining content is the converse; it would give a *criterion* for when\ncoarse-graining destroys geometric information, i.e. when the RG flow is\nirreversible.",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry",
+      "Combinatorics"
+    ],
+    "id": "fd_1608",
+    "lineage_refs": [],
+    "priority_score": 0.4,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "4ba8c40c",
+    "status": "available",
+    "timestamp": "2026-08-19T13:09:12.466361+00:00",
+    "title": "The one-sided inequality, a strict instance, and the \"if\" direction"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "The corresponding easy half is already a theorem\n(`entropy_pushModel_eq_of_lift`).  Together with C7 it would make the whole dictionary\n(area → throat → distance → entropy) uniformly rigid under coarse-graining, and\neach clause is a finite, checkable condition, hence falsifiable on a small\nweighted graph.",
+    "domain_bridges": [],
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "fd_1609",
+    "lineage_refs": [],
+    "priority_score": 0.4,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "4ba8c40c",
+    "status": "available",
+    "timestamp": "2026-08-19T13:09:12.724451+00:00",
+    "title": "The corresponding easy half is already a theorem"
   }
 ]
