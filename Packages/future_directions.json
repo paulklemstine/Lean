@@ -375,7 +375,7 @@
       "depth_estimate": 3,
       "description": "Formalizes boundary conditions under which trapped surfaces in spacetime guarantee geodesic incompleteness.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Physics"
       ],
@@ -415,7 +415,7 @@
       "depth_estimate": 3,
       "description": "Derives the thermodynamic entropy of isolated horizons in stationary black hole spacetimes from quantum microstate counting.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Physics"
       ],
@@ -3188,11 +3188,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "61305688",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -3204,7 +3204,7 @@
       ],
       "github_issue": 0,
       "id": "fd_0057",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-08-19T19:41:59.379073+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Bypassed",
       "lineage_refs": [],
@@ -3219,7 +3219,7 @@
       "source": "",
       "source_exp_id": "2607.13424v1",
       "source_path": "http://arxiv.org/abs/2607.13424v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-16T03:36:34.295975+00:00",
       "title": "ArXiv paper: Domination-packing ratio for planar and unit disk graphs"
@@ -11647,7 +11647,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "6d98445d",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -11675,7 +11675,7 @@
       "source": "",
       "source_exp_id": "4c2c71e5",
       "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/4c2c71e5",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "th_482524af",
       "timestamp": "2026-07-19T02:44:45.166880+00:00",
       "title": "Future directions from cycle 4c2c71e5"
@@ -24364,7 +24364,7 @@
       "depth_estimate": 3,
       "description": "# Future directions\n\nThe spectral-projection decomposition in `SignedCubeSpectralProjections.lean` suggests the following concrete, falsifiable next claims.\n\n1. **Equal eigenspace dimensions.** For every `n > 0` and every real `r ≠ 0` with `r² = n`, the images of `positiveSpectralPart n r` and `negativeSpectralPart n r` each have real vector-space dimension `2^(n-1)`.\n\n2. **Characteristic polynomial.** After representing `signedAdj n` as an endomorphism of the finite-dimensional space `Cube n → ℝ`, its characteristic polynomial is `(X^2 - n)^(2^(n-1))` for every `n > 0`.\n\n3. **Trace cancellation under restriction.** For every nonempty proper vertex subset `S` of `Cube n`, the principal restriction of the canonical signed adjacency matrix has trace zero; moreover, if `|S| > 2^(n-1)`, that restriction has a positive eigenvalue at least `1`.\n\n4. **Face-cancellation characterization.** A symmetric `{−1,1}` edge signing of the Boolean cube has adjacency square equal to `nI` if and only if the product of its four edge signs around every two-dimensional face is `−1`.\n\n5. **Switching uniqueness.** Any two symmetric cube-edge signings satisfying the negative face-product condition differ by vertex switching: there is a vertex labeling by `{−1,1}` whose endpoint products transform one signing into the other.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Physics"
       ],
@@ -42339,7 +42339,7 @@
       "depth_estimate": 3,
       "description": "`QuantumSerre.highest_weight_singular` establishes\n   `E (F^{n+1} v) = 0` for every highest-weight vector of weight `n` in every `U_q(sl₂)`-module.\n   The open half is the converse classification: for `q` not a root of unity, every finite\n   dimensional `U_q(sl₂)`-module is a direct sum of the modules `uqSl2_rep n` twisted by a sign\n   character — a complete-reducibility statement that would make the Reshetikhin–Turaev functor\n   well defined on the whole category rather than on the fundamental representation alone.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Algebra",
         "Physics"
@@ -44423,7 +44423,7 @@
       "depth_estimate": 3,
       "description": "**Sharpness**: the liar loop destroys conservativity (`liar_not_conservative`);\n  a single positive loop costs exactly one bit and `k` loops exactly `2 ^ k`\n  models while adding **no** theorem (`loopDen_models_ncard`,\n  `loopDen_conservative`).",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Physics"
       ],
@@ -48261,7 +48261,7 @@
       "depth_estimate": 3,
       "description": "*For a generator driven by an integer matrix `M ∈ GL₃(ℤ)` with spectral radius\n`ρ(M) > 1`, the control-word length needed to reach a state of size `S` is\n`Θ(log S / log ρ(M))`; if `ρ(M) = 1` (unipotent) it is `Θ(S^{1/d})`, where `d` is\nthe size of the largest Jordan block minus one.*",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Physics"
       ],
@@ -50589,7 +50589,7 @@
       "depth_estimate": 3,
       "description": "Determine exactly when\n   `RLHF.freeEnergy_convex_comb` is an equality: conjecturally never for `0 < θ < 1` unless the\n   reward model is constant, which would follow from `RLHF.strictConvexOn_logExpMoment` plus a\n   strict-convexity transfer through the harmonic reparametrization `β ↦ β⁻¹`.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Geometry",
         "Physics"
@@ -51455,7 +51455,7 @@
       "depth_estimate": 3,
       "description": "The depth-`3` amplitude equals `(1/8)e(ω/8) + (5/8)e(aω/4) + (1/4)e(a²ω/2)`\n   for every odd `a`, with `‖·‖ ≥ 1/4`.  (Direct, finite mod-8 case analysis; the\n   numerics already match to four decimals.)\n2. **(3b)** `P_3 = 15/32` exactly, giving a formally verified counterexample to\n   monotonicity of spectral power in the depth.\n3. **(3c)** The base-`b` normalization theorem `FB b a ω N / N → (1/b)e(ω/b) + (1-1/b)e(aω)`,\n   turning the proved `1 - 2/b - ε` bound into an exact limit law with attainment.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Physics"
       ],
@@ -51669,14 +51669,14 @@
       "parent_direction": "",
       "priority_score": 0.8735499999999999,
       "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
+      "prune_reason": "tournament_rejected: ",
+      "pruned_at": "2026-08-19T19:40:41Z",
       "quarantined_until": "",
       "research_mode": "team",
       "source": "",
       "source_exp_id": "09a3e4f4",
       "source_path": "The Monster Group's Secret Message: Moonshine Beyond the j-Function",
-      "status": "available",
+      "status": "pruned",
       "thread_id": "",
       "timestamp": "2026-07-28T12:21:06.834733+00:00",
       "title": "Deepening: The Monster Group's Secret Message: Moonshine Beyond the j-Function"
@@ -51909,14 +51909,14 @@
       "parent_direction": "",
       "priority_score": 0.8743899999999999,
       "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
+      "prune_reason": "tournament_rejected: ",
+      "pruned_at": "2026-08-19T19:40:41Z",
       "quarantined_until": "",
       "research_mode": "team",
       "source": "",
       "source_exp_id": "0f63237d",
       "source_path": "Tropical Schemes: Foundations of Tropical Algebraic Geometry",
-      "status": "available",
+      "status": "pruned",
       "thread_id": "",
       "timestamp": "2026-07-31T09:24:21.203115+00:00",
       "title": "Deepening: Tropical Schemes: Foundations of Tropical Algebraic Geometry"
@@ -55280,6 +55280,46 @@
       "thread_id": "",
       "timestamp": "2026-08-01T18:22:53.127464+00:00",
       "title": "Deepening: Bridge: Fourier Analysis as a Functor"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Building on cycle 6d98445d (Q=0.820), which proved 57 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions\n\n- Replace the impossible global condition over all irrational frequencies by a condition excluding a fixed neighborhood of the integer resonances. Continuity forces values near the zero-frequency peak to remain near the cutoff `N`.\n- Study normalized transforms `F_N(ω) / N` on c",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Physics"
+      ],
+      "github_issue": 0,
+      "id": "push_6d98445d_bd8f8d98",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.9199999999999999,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "6d98445d",
+      "source_path": "Future directions from cycle 4c2c71e5",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-08-19T19:40:40.580624+00:00",
+      "title": "Deepening: Future directions from cycle 4c2c71e5"
     },
     {
       "ambition_level": "grand_challenge",
@@ -59415,7 +59455,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle f1fd8ff1 (Q=0.820), which proved 92 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: *For a graded `G`-set `Y = ⨆_n Y_n` the generating function `Σ_n t_r(Y_n) q^n` is a rational\nfunction of `q` whenever the grades are eventually `r`-transitive, with denominator dividing\n`(1−q)^{r+1}`.*",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Physics"
       ],
@@ -60427,7 +60467,7 @@
       "depth_estimate": 3,
       "description": "Proves that a physical system's observable geometric state is strictly conditioned on the topological complexity of the observing neural network (Twilight Zone / Perceptual Reality).",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Physics"
       ],
@@ -61307,7 +61347,7 @@
       "depth_estimate": 3,
       "description": "Proves absolute bounds on power extraction rates from zero-point quantum field fluctuations without violating global conservation laws.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Physics"
       ],
@@ -77424,6 +77464,7 @@
     "abduction_followup",
     "abduction_followup",
     "abduction_followup",
-    "famous_subtask"
+    "famous_subtask",
+    "cross_domain_bridge"
   ]
 }

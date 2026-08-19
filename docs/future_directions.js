@@ -821,6 +821,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 6d98445d (Q=0.820), which proved 57 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions\n\n- Replace the impossible global condition over all irrational frequencies by a condition excluding a fixed neighborhood of the integer resonances. Continuity forces values near the zero-frequency peak to remain near the cutoff `N`.\n- Study normalized transforms `F_N(\u03c9) / N` on c",
+    "domains": [
+      "Physics"
+    ],
+    "id": "push_6d98445d_bd8f8d98",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "6d98445d",
+    "status": "available",
+    "timestamp": "2026-08-19T19:40:40.580624+00:00",
+    "title": "Deepening: Future directions from cycle 4c2c71e5"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 843dbe86 (Q=0.820), which proved 62 theorems in Algebra. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: All the moving parts \u2014 honest uniqueness decoding\n(`honest_scanCode`), exact cost accounting (`ScanScheme.decodeCost_eq`) and the\nexact `\u03b5`-pigeonhole optimum \u2014 are formalised, so the conjecture reduces to\nconstructing the intra-bucket index and re-running the same failure analysis.",
     "domains": [
       "Algebra"
@@ -1735,31 +1749,17 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle 0f63237d (Q=0.774), which proved 22 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Define tropical schemes as semiring schemes over the tropical semiring. Prove that the tropical scheme associated to a tropical polynomial is the corner locus. Show that the structure sheaf of a tropical scheme satisfies the tropical gluing axiom. Connect to the Grothendieck scheme-theoretic approac",
+    "description": "Building on cycle 252d7c91 (Q=0.800), which proved 114 theorems in Algebra. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future directions\n\n## What is now proved\n\nTwo new self-contained files extend the conditional Hilbert-class-field interface of\n`Catalog/NumberTheory/`, settling target 2 of the previous cycle (the Galois `p`-binomial count\nfor elementary abelian class groups).\n\n### `Catalog/NumberTheory/SubspaceCo",
     "domains": [
-      "Tropical"
+      "Algebra"
     ],
-    "id": "push_0f63237d_fbc106d8",
-    "priority_score": 0.8743899999999999,
+    "id": "push_252d7c91_766dc8a1",
+    "priority_score": 0.9,
     "research_mode": "team",
-    "source_exp_id": "0f63237d",
+    "source_exp_id": "252d7c91",
     "status": "available",
-    "timestamp": "2026-07-31T09:24:21.203115+00:00",
-    "title": "Deepening: Tropical Schemes: Foundations of Tropical Algebraic Geometry"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 09a3e4f4 (Q=0.774), which proved 10 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The Monster group M is the largest sporadic simple group, with order 2^46 * 3^20 * 5^9 * 7^6 * 11^2 * 13^3 * 17 * 19 * 23 * 29 * 31 * 41 * 47 * 59 * 71 (approximately 8 * 10^{53}). Monstrous moonshine says that the coefficients of the j-function encode the dimensions of representations of M. But the",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_09a3e4f4_d507676f",
-    "priority_score": 0.8735499999999999,
-    "research_mode": "team",
-    "source_exp_id": "09a3e4f4",
-    "status": "available",
-    "timestamp": "2026-07-28T12:21:06.834733+00:00",
-    "title": "Deepening: The Monster Group's Secret Message: Moonshine Beyond the j-Function"
+    "timestamp": "2026-08-19T19:40:27.961507+00:00",
+    "title": "Deepening: Two new self-contained files extend the conditional Hilbert-class-field interfac"
   },
   {
     "consumed_by_exp_id": "",
@@ -6443,16 +6443,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "ArXiv paper: On the Second Moment of $ L (1/2, \\mathrm{As}(f) \\times \u03c6)$"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "61305688",
     "description": "Investigate the ArXiv paper 'Domination-packing ratio for planar and unit disk graphs' and formalize its key results. Abstract: The domination number $\u03b3(G)$ of a graph $G$ is the smallest possible size of a vertex set that intersects every radius-$1$ ball of $G$, and the packing number $\u03c1(G)$ is the maximum number of pairwise vertex-disjoint radius-$1$ balls. We prove that $\\frac{\u03b3(G)}{\u03c1(G)}\\le 5$ for every planar graph and $\\frac{\u03b3(G)}{\u03c1(G)} \\le \\frac{18\\sqrt3}\u03c0\\approx 9.924$ for every unit disk graph, thus yielding Erd\u0151s-P\u00f3sa-type bounds for the hypergraph of radius-$1$ balls in the two graph classes. This improves upon results of Guti\u00e9rrez and Paul, and D\u00facz and Gujgiczer, who in turn lowered bounds of Bonamy, Csik\u00f3s, Gujgiczer and Yuditsky, and B\u00f6hme and Mohar. For both graph classes, the best known lower bound on the optimal constant remains $3$.",
     "domains": [
       "Bridges"
     ],
     "id": "fd_0057",
+    "phase": "A",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2607.13424v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-16T03:36:34.295975+00:00",
     "title": "ArXiv paper: Domination-packing ratio for planar and unit disk graphs"
   },
@@ -11100,18 +11101,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Represent whole chords, not individual pitch classes.: Use 12-dimensional"
   },
   {
-    "consumed_by_exp_id": "6d98445d",
+    "consumed_by_exp_id": "",
     "description": "# Future Directions\n\n- Replace the impossible global condition over all irrational frequencies by a condition excluding a fixed neighborhood of the integer resonances. Continuity forces values near the zero-frequency peak to remain near the cutoff `N`.\n- Study normalized transforms `F_N(\u03c9) / N` on compact frequency sets bounded away from integers, and seek quantitative cancellation estimates uniform in `N`.\n- Separate the even and odd summands. For the stated phase `T(n)/n`, the even branch contributes the constant phase `1/2`, while the odd branch has phase `3 + 1/n`; this explicit decomposition should support sharper asymptotic estimates.\n- Formulate averaged statements, such as `L\u00b2` bounds over a period or bounds outside an exceptional set of small measure. Such claims are compatible with isolated resonant peaks in a way that a pointwise bound over all irrationals is not.\n- Compare the corrected normalized or averaged statistics for the `3n+1`, `5n+1`, and `7n+1` maps. Any useful discriminator must depend on more than continuity near frequency zero.\n- Investigate orbit-dependent transforms separately from the one-step cutoff sum. A rigorous implication between an orbit hitting-time estimate and a spectral estimate would require precise definitions and directional proofs; it should not be treated as an automatic equivalence.\n",
     "domains": [
       "Algebra",
       "Physics"
     ],
     "id": "fd_0385",
-    "phase": "A",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "4c2c71e5",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-19T02:44:45.166880+00:00",
     "title": "Future directions from cycle 4c2c71e5"
   },
@@ -15053,18 +15053,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "The formalisation in `Catalog/Pythagorean/BrillNoether/` now consists of ten"
   },
   {
-    "consumed_by_exp_id": "252d7c91",
+    "consumed_by_exp_id": "",
     "description": "# Future directions\n\n## What is now proved\n\nTwo new self-contained files extend the conditional Hilbert-class-field interface of\n`Catalog/NumberTheory/`, settling target 2 of the previous cycle (the Galois `p`-binomial count\nfor elementary abelian class groups).\n\n### `Catalog/NumberTheory/SubspaceCounting.lean` (no dependencies beyond Mathlib)\n\nLet `K` be a finite field with `q` elements and `V` a finite `K`-vector space of dimension `n`.\n\n* `gaussBinom q n k` : the Gaussian binomial coefficient `\u220f_{i<k}(q^n-q^i) / \u220f_{i<k}(q^k-q^i)`;\n* `spanFiberEquiv` : the linearly independent `k`-tuples spanning a fixed `k`-dimensional\n  subspace `W` are exactly the bases of `W`;\n* `card_linearIndependent_eq_mul` : fibring the linearly independent `k`-tuples of `V` over\n  their spans, `#{s : LI k-tuple} = #{W : dim W = k} \u00b7 \u220f_{i<k}(q^k-q^i)`;\n* `card_submodule_finrank_mul` : `#{W : dim W = k} \u00b7 \u220f_{i<k}(q^k-q^i) = \u220f_{i<k}(q^n-q^i)`;\n* `card_submodule_finrank_eq_gaussBinom` : `#{W : dim W = k} = gaussBinom q n k` for `k \u2264 n`;\n* `card_submodule_finrank_pos`, `card_submodule_finrank_eq_zero` : the count is positive exactly\n  in the range `k \u2264 n`;\n* `card_submodule_eq_sum_gaussBinom` : `#(subspaces of V) = \u2211_{k \u2264 n} gaussBinom q n k`\n  (the Galois number, OEIS A006116 for `q = 2`);\n* `card_submodule_finrank_le_sub`, `card_submodule_finrank_eq_card_submodule_finrank_sub` :\n  duality \u2014 `W \u21a6 W^\u22a5` (dual annihilator, transported by a basis isomorphism `V* \u2243 V`) is\n  injective, whence there are as many `k`-dimensional as `(n-k)`-dimensional subspaces;\n* `gaussBinom_symm`, `gaussBinom_pos` : consequences at `q = p` prime, obtained from the\n  `(ZMod p)^n` model;\n* `card_submodule_finrank_zmod`, `card_submodule_zmod` : the counts for `(ZMod p)^r`.\n\n### `Catalog/NumberTheory/ElementaryAbelianClassField.lean`\n\nFor a Hilbert class field datum `e : Gal(H/K) \u2243* Cl(\ud835\udcaa_K)` together with an isomorphism\n`E : Cl(\ud835\udcaa_K) \u2243* (\u2124/p)^r` (`p` prime):\n\n* `classGroupSubmoduleOrderIso` : `Subgroup Cl(\ud835\udcaa_K) \u2243o Submodule (ZMod p) ((ZMod p)^r)`;\n* `card_subgroup_eq_pow`, `index_eq_pow` : a subgroup corresponding to a `k`-dimensional\n  subspace has order `p^k` and index `p^{r-k}`;\n* `intermediateFieldSubmoduleEquiv` : intermediate fields of `H/K` \u2194 subspaces of `(ZMod p)^r`;\n* `card_intermediateField_eq_sum_gaussBinom` : **the datum has exactly `\u2211_{k\u2264r} binom(r,k)_p`\n  intermediate fields**;\n* `finrank_eq_pow_sub`, `finrank_eq_pow`, `finrank_classField_eq_pow` : degrees are the expected\n  powers of `p`;\n* `card_intermediateField_finrank_eq_gaussBinom` : **exactly `binom(r,k)_p` intermediate fields\n  have degree `p^k` over `K`** (this is where `gaussBinom_symm` is used);\n* `exists_intermediateField_finrank`, `exists_intermediateField_finrank_iff` : the degrees that\n  occur are exactly `p^k`, `k \u2264 r`;\n* `sum_card_intermediateField_finrank` : the degreewise counts sum to the total count;\n* explicit cases: `card_intermediateField_kleinFour` and `card_intermediateField_of_kleinFour`\n  (`p = r = 2`: five intermediate fields, `card_quadratic_intermediateField_of_kleinFour`: three\n  of them quadratic, `finrank_eq_one_or_two_or_four`), and\n  `card_intermediateField_elementary_two_three` together with\n  `card_intermediateField_finrank_two_three` (`p = 2, r = 3`: **sixteen** intermediate fields,\n  with degree distribution `1, 7, 7, 1` in degrees `1, 2, 4, 8`).\n\nThe two falsifiable predictions of the previous cycle at `p = r = 2` (`5 = 1 + 3 + 1`) and at\n`p = 2, r = 3` (`16 = 1 + 7 + 7 + 1`) are therefore both confirmed, as instances of a general\ntheorem rather than case analysis. All results are proved with no `sorry` and use only\n`propext`, `Classical.choice`, `Quot.sound`.\n\n### `Catalog/Speculative/AutoResearch/KleinFourClassField.lean` (now complete)\n\nThe standalone Klein four case, which had been left with five unproved statements, is finished;\nthe file compiles with no `sorry` and its theorems use only `propext`, `Classical.choice`,\n`Quot.sound`.  For a datum `e : Gal(H/K) \u2243* Cl(\ud835\udcaa_K)` together with `E : Cl(\ud835\udcaa_K) \u2243* V`, where\n`V = \u2124/2 \u00d7 \u2124/2`:\n\n* `card_subgroup_V` : `V` has exactly five subgroups (from `subgroup_cases`);\n* `index_comap_equiv` : transporting a subgroup of `V` back to the class group preserves index;\n* `card_intermediateField_of_kleinFour` : the datum has exactly five intermediate fields,\n  obtained from `HilbertClassFieldDescent.card_intermediateField_eq_card_subgroup` and\n  `MulEquiv.mapSubgroup E`;\n* `finrank_eq_one_or_two_or_four` : every intermediate field has degree `1`, `2` or `4` over `K`,\n  from `HilbertClassFieldDescent.finrank_eq_index` and `index_cases`;\n* `finrank_quadField` : the class field of `\u27e8x\u27e9` for `x \u2260 1` is quadratic over `K`;\n* `quadField_injective` and `exists_three_quadratic_intermediateField` : the three subgroups of\n  order two give three pairwise distinct quadratic intermediate fields;\n* `intermediateField_eq_of_kleinFour` : conversely every intermediate field is `K`, `H`, or one\n  of those three quadratic fields, so the degree multiset is exactly `{1, 2, 2, 2, 4}`.\n\nThis is the `p = r = 2` instance of the general count above, proved independently and by hand.\n\n## Next targets\n\nEach of the following is falsifiable: it is either a Lean statement that compiles and is proved,\nor it fails for an explicit counterexample.\n\n1. **General finite abelian class group.** Replace `(\u2124/p)^r` by an arbitrary finite abelian\n   group `A`. The number of intermediate fields is the number of subgroups of `A`, which is\n   multiplicative over the primary components; prove\n   `Nat.card (Subgroup A) = \u220f_p Nat.card (Subgroup A_p)` and, for `A_p = \u2295 \u2124/p^{\u03bb_i}`, the\n   Birkhoff\u2013Hall count. Falsifiable already at `A = \u2124/4`, where the answer is `3`, versus\n   `A = (\u2124/2)\u00b2`, where it is `5`.\n\n2. **The `q`-Pascal recursion.** Prove\n   `gaussBinom q (n+1) (k+1) = gaussBinom q n k + q^{k+1} * gaussBinom q n (k+1)` directly in \u2115,\n   and deduce `gaussBinom_symm` for arbitrary `q > 1` (not only for prime `q`, where the present\n   proof goes through the `(ZMod q)^n` model). Falsifiable at `q = 4, n = 2, k = 1`.\n\n3. **Unconditional imaginary-quadratic instance.** For `K = \u211a(\u221a-5)` construct\n   `Nat.card (ClassGroup (\ud835\udcde K)) = 2` and the datum `Gal(K(i)/K) \u2243* Cl(\ud835\udcaa_K)`, so that\n   `card_intermediateField_eq_sum_gaussBinom` becomes an unconditional statement (`p = 2`,\n   `r = 1`, two intermediate fields). Falsifiable: the class number must be `2`, not `1`.\n\n4. **Frobenius compatibility of the Artin datum.** Demand that `e\u207b\u00b9` send the class of an\n   unramified prime `\ud835\udd2d` to `arithFrobAt \ud835\udd2d`, and prove that `\ud835\udd2d` splits completely in `H` iff\n   `[\ud835\udd2d] = 1`. In the elementary abelian case this refines the counting above into a splitting\n   law: the primes splitting completely in the degree-`p^k` class field of a subspace `W` are\n   exactly those whose class lies in `W`.\n\n5. **Genus theory.** For imaginary quadratic `K` with `t` prime discriminant divisors, prove\n   `Nat.card (Cl \u29f8 Cl\u00b2) = 2^{t-1}` and identify the corresponding class field as the genus\n   field. Combined with the present count, when `Cl(\ud835\udcaa_K)` is elementary abelian of rank `r` the\n   genus field is the whole Hilbert class field and `r = t - 1`. Falsifiable at `K = \u211a(\u221a-15)`,\n   where the prediction is degree `2`.\n",
     "domains": [
       "Algebra",
       "NumberTheory"
     ],
     "id": "fd_0971",
-    "phase": "A",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "8fa60fb0",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-05T12:24:21.123742+00:00",
     "title": "Two new self-contained files extend the conditional Hilbert-class-field interfac"
   },
@@ -19337,6 +19336,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The lower bound `1 - 2/b - \u03b5`, for every `\u03b5 > 0`, is now proved\n(`b_adic_no_resonance_sharp`), and the numerical minima in\n`ComputationalEvidence.md` sit exactly at `1 - 2/b`; what remains is the exact\nlimit law (the base-`b` analogue of `tendsto_F_div`, a direct transcription of the\nproved depth-two convergence argument) and the attainment of the constant.",
+    "domains": [],
+    "id": "fd_1635",
+    "priority_score": 0.4226666666666667,
+    "research_mode": "team",
+    "source_exp_id": "6d98445d",
+    "status": "available",
+    "timestamp": "2026-08-19T19:40:34.635571+00:00",
+    "title": "The lower bound `1 - 2/b - \u03b5`, for every `\u03b5 > 0`, is now proved"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Define the *curvature* of the pool as\n`\u03ba = 1 \u2212 min\u2c7c (C(\u03a9) \u2212 C(\u03a9\u2216{j})) / C({j})` where `\u03a9` is the whole pool.\nConjecture: greedy library design achieves the factor `(1 \u2212 e^{\u2212\u03ba})/\u03ba`, and for\npools of sources that are pairwise at total-variation distance at most `\u03b4` one\nhas `\u03ba \u2264 \u03b4\u00b7|\u03a9|`, so nearly-identical model pools admit *nearly optimal* greedy\nlibraries.",
     "domains": [],
     "id": "fd_1596",
@@ -19517,6 +19528,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Conjecture: for `q \u2265 2` the sequence `k \u21a6 binom(n,k)_q` is strictly increasing for `k \u2264 n/2` and\nlog-concave, and consequently `G_q(n) \u2264 (n+1) binom(n,\u230an/2\u230b)_q`.  Falsifiable at `q = 2, n = 4`\n(`1, 15, 35, 15, 1`).\n*The key insight is* that the two Pascal recursions proved here (`gaussBinom_pascal` and\n`gaussBinom_pascal'`) give an induction on `n` in which the ratio of consecutive entries is\ncontrolled by `(q^{n-k} - 1)/(q^{k+1} - 1)`, an explicit monotone quantity.\n*Why now?*  Both recursions are available in `\u2115` without any field-theoretic detour, so the\ninduction is purely arithmetic and needs no finite-field model \u2014 in particular it applies to the\nnon-prime bases `q = 4, 6, \u2026` where the previous cycle's methods were silent.",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_1633",
+    "priority_score": 0.4044444444444444,
+    "research_mode": "team",
+    "source_exp_id": "252d7c91",
+    "status": "available",
+    "timestamp": "2026-08-19T19:40:11.010717+00:00",
+    "title": "C5.  Unimodality and log-concavity of the Gaussian row"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Two `\u2115`-valued functions on finite types bounded by `N` with equal\n    power sums for all `k \u2264 N` have equal value distributions (`count_eq_of_powerSums`), proved by\n    inverting a transposed Vandermonde system over `\u211a` with the nodes `0, 1, \u2026, N`.",
     "domains": [],
     "id": "fd_1433",
@@ -19550,6 +19576,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-18T15:47:19.512856+00:00",
     "title": "The Burnside mass formula is already formalised"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Combine with `HilbertClassFieldDescent`: prove that for a Hilbert class field datum with class\ngroup `A`, the number of intermediate fields is `\u220f_p #Subgroup A_p`, and that the degree\ndistribution of the intermediate fields is the multiset of indices `[A : B]`, `B \u2264 A`.  Falsifiable\nat `A = \u2124/4` (degrees `1, 2, 4`) versus `A = (\u2124/2)\u00b2` (degrees `1, 2, 2, 2, 4`): the *degree\nmultiset*, not merely its size, distinguishes the two.\n*The key insight is* that the Galois correspondence turns an arithmetic invariant (the class\nnumber) into a lattice invariant (the subgroup lattice), and the lattice remembers strictly more.\n*Why now?*  All three counts (cyclic, elementary abelian, coprime products) are available, so the\ndegree multiset can be computed for every abelian group of order `< p^3`.",
+    "domains": [
+      "Algebra",
+      "NumberTheory"
+    ],
+    "id": "fd_1631",
+    "priority_score": 0.4011764705882352,
+    "research_mode": "team",
+    "source_exp_id": "252d7c91",
+    "status": "available",
+    "timestamp": "2026-08-19T19:40:10.440506+00:00",
+    "title": "C3.  The subgroup count as an invariant of the class field tower"
   },
   {
     "consumed_by_exp_id": "",
@@ -21568,5 +21609,59 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-19T17:41:17.418519+00:00",
     "title": "Rigidity is proved and stated in terms of fibre cardinalities, which is exactly"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: for `q \u2265 2` and a prime `\u2113 \u2224 q`, the `\u2113`-adic valuation of `binom(n,k)_q` equals the\nnumber of carries when adding `k` and `n-k` in base `d`, where `d` is the multiplicative order of\n`q` modulo `\u2113`, plus a correction term counted by `v_\u2113(q^{d}-1)`.  Falsifiable at\n`q = 2, \u2113 = 5, n = 6, k = 3`, where `binom(6,3)_2 = 1395 = 3\u00b2 \u00b7 5 \u00b7 31` and the order of `2`\nmodulo `5` is `4`.\n*The key insight is* that `qFactZ_mul_qBinom` expresses `binom(n,k)_q` as an exact quotient of\n`q`-factorials, so the valuation question becomes a counting question about the multiples of `d`\nin an interval \u2014 the same combinatorics that proves Kummer's theorem.\n*Why now?*  The exactness of the division (`gaussBinom_eq_qBinom`) is the hypothesis every\nvaluation argument needs and was the missing ingredient before this cycle.",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "fd_1632",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "252d7c91",
+    "status": "available",
+    "timestamp": "2026-08-19T19:40:10.729111+00:00",
+    "title": "C4.  A `q`-analogue of Kummer's theorem"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The two ingredients are already formalized: the dominant-branch\nprinciple in full generality, and the density lemma `tendsto_card_multiples_div`\nfor residue classes.  What remains is the combinatorial identification of the\ncoalescing classes mod `2^L` \u2014 a finite, checkable statement for each `L`, and a\nrecursion in `L`.",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "fd_1634",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "6d98445d",
+    "status": "available",
+    "timestamp": "2026-08-19T19:40:34.371489+00:00",
+    "title": "The two ingredients are already formalized: the dominant-branch"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The Chebyshev upper bound `(2 + 8\u00b7errL2 N)/lam\u00b2` is proved\n(`measure_peak_set_le`), and the exact level-set computation only requires the\nalready-proved identity `norm_limitAmp` plus a change of variables.",
+    "domains": [],
+    "id": "fd_1636",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "6d98445d",
+    "status": "available",
+    "timestamp": "2026-08-19T19:40:34.892295+00:00",
+    "title": "The Chebyshev upper bound `(2 + 8\u00b7errL2 N)/lam\u00b2` is proved"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The depth-`3` amplitude equals `(1/8)e(\u03c9/8) + (5/8)e(a\u03c9/4) + (1/4)e(a\u00b2\u03c9/2)`\n   for every odd `a`, with `\u2016\u00b7\u2016 \u2265 1/4`.  (Direct, finite mod-8 case analysis; the\n   numerics already match to four decimals.)\n2. **(3b)** `P_3 = 15/32` exactly, giving a formally verified counterexample to\n   monotonicity of spectral power in the depth.\n3. **(3c)** The base-`b` normalization theorem `FB b a \u03c9 N / N \u2192 (1/b)e(\u03c9/b) + (1-1/b)e(a\u03c9)`,\n   turning the proved `1 - 2/b - \u03b5` bound into an exact limit law with attainment.",
+    "domains": [
+      "Physics"
+    ],
+    "id": "fd_1637",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "6d98445d",
+    "status": "available",
+    "timestamp": "2026-08-19T19:40:35.159123+00:00",
+    "title": "The depth-`3` amplitude equals `(1/8)e(\u03c9/8) + (5/8)e(a\u03c9/4) + (1/4)e(a\u00b2\u03c9/2)`"
   }
 ];

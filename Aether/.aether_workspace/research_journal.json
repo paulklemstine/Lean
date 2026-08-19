@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "2e6124e7",
-      "domain": "Physics",
-      "key_insight": "# Future Directions\n\nDerived from the analysis and adversarial review of this cycle.  Everything cited as\n\"proved\" below is a `sorry`-free Lean theorem in `Catalog/Physics/FourierEnergyBound.lean`,\n`C",
-      "quality_score": 0.88,
-      "sorry_count": 0,
-      "theorem_count": 100,
-      "timestamp": "2026-08-17T20:44:54",
-      "title": "The inequality itself is proved"
-    },
-    {
       "cycle_id": "921a0e7b",
       "domain": "Computation",
       "key_insight": "# Future directions: conservativity of tangled hierarchies\n\nThe Lean development in `Catalog/Computation/TangledHierarchy*.lean` establishes:\n\n* **Conservativity criterion**: a tangle is conservative",
@@ -499,19 +489,19 @@
       "theorem_count": 114,
       "timestamp": "2026-08-19T19:40:27",
       "title": "Two new self-contained files extend the conditional Hilbert-class-field interfac"
+    },
+    {
+      "cycle_id": "6d98445d",
+      "domain": "Physics",
+      "key_insight": "# Future directions (thread `th_482524af`, cycle 2)\n\nThe results proved in this cycle live in\n\n* `Catalog/Physics/CollatzTwoStepSpectrum.lean` — the depth-two spectrum,\n* `Catalog/Physics/CollatzSpect",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 57,
+      "timestamp": "2026-08-19T19:40:40",
+      "title": "Future directions from cycle 4c2c71e5"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "0dcd87ee",
-      "domain": "Combinatorics",
-      "key_insight": "# Future directions\n\nDerived from this cycle's results in\n\n* `Catalog/Combinatorics/PrivateAverageDistortion.lean` — the private\n  rate–distortion function `D_priv(p) = min_c E_p[d(c,X)]`, its invaria",
-      "quality_score": 0.751005,
-      "sorry_count": 0,
-      "theorem_count": 67,
-      "timestamp": "2026-08-09T19:10:06",
-      "title": "The new file `Catalog/Applications/SurveillanceNetworks/PrivacyThreshold.lean`"
-    },
     {
       "cycle_id": "78f0a7c3",
       "domain": "NumberTheory",
@@ -2501,21 +2491,19 @@
       "theorem_count": 114,
       "timestamp": "2026-08-19T19:40:27",
       "title": "Two new self-contained files extend the conditional Hilbert-class-field interfac"
+    },
+    {
+      "cycle_id": "6d98445d",
+      "domain": "Physics",
+      "key_insight": "# Future directions (thread `th_482524af`, cycle 2)\n\nThe results proved in this cycle live in\n\n* `Catalog/Physics/CollatzTwoStepSpectrum.lean` — the depth-two spectrum,\n* `Catalog/Physics/CollatzSpect",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 57,
+      "timestamp": "2026-08-19T19:40:40",
+      "title": "Future directions from cycle 4c2c71e5"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "512ab986",
-      "domain": "Logic",
-      "name": "avg_collisionCount_eq",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "512ab986",
-      "domain": "Logic",
-      "name": "avg_decodeCost_bucketed_eq",
-      "quality": 0.85
-    },
     {
       "cycle_id": "512ab986",
       "domain": "Logic",
@@ -2803,9 +2791,21 @@
       "domain": "Algebra",
       "name": "qBinom_succ_succ",
       "quality": 0.8
+    },
+    {
+      "cycle_id": "6d98445d",
+      "domain": "Physics",
+      "name": "norm_devSeq_le",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "6d98445d",
+      "domain": "Physics",
+      "name": "Fgen_lower_bound_aux",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-19T19:40:27",
+  "last_updated": "2026-08-19T19:40:40",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hn2⟩)",
@@ -3703,12 +3703,6 @@
     ],
     "Physics": [
       {
-        "cycle_id": "832153cb",
-        "quality": 0.715855,
-        "theorems": 101,
-        "title": "Derived from the nine research cycles formalised in `Catalog/Novelty/Diophantine"
-      },
-      {
         "cycle_id": "0c649bb1",
         "quality": 0.85,
         "theorems": 109,
@@ -3761,6 +3755,12 @@
         "quality": 0.82,
         "theorems": 92,
         "title": "For a graded `G`-set `Y = ⨆_n Y_n` the generating function `Σ_n t_r(Y_n) q^n` is"
+      },
+      {
+        "cycle_id": "6d98445d",
+        "quality": 0.82,
+        "theorems": 57,
+        "title": "Future directions from cycle 4c2c71e5"
       }
     ],
     "Probability": [
