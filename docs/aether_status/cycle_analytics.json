@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-19T04:00:52.709886+00:00",
+  "last_updated": "2026-08-19T03:58:19.061883+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -59551,8 +59551,8 @@
       "bridge_count": 0,
       "cycle_n": 1,
       "domain": "Geometry",
-      "duration_seconds": 4083.9876601696014,
-      "end_time": 1787112024.2609541,
+      "duration_seconds": 3919.4745857715607,
+      "end_time": 1787111859.7478797,
       "files_integrated": 4,
       "job_id": "308f24be",
       "outcome_quality": 0.0,
@@ -59585,7 +59585,7 @@
       "theorem_novelty_duplicate": 0,
       "theorem_novelty_new": 95,
       "theorem_novelty_strengthening": 0,
-      "timestamp": "2026-08-19T04:00:52.517765+00:00",
+      "timestamp": "2026-08-19T03:58:18.857592+00:00",
       "title": "NET-48: The direct test survives via the MEDIAN \u2014 k*=160 at (d=4, ctx=2048, seed=3), all four point-"
     }
   ]

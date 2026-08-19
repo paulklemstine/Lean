@@ -20851,14 +20851,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "The odd case of existence is *proved*: `TriangularForest.sparsity_bound_attained`"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0f708106",
     "description": "Both ingredients are already machine-checked (the sharp bound and 1-sum closure),\nso the conjecture reduces to an equality analysis of an existing induction rather than to new\ntheory.",
     "domains": [],
     "id": "fd_1524",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "ed687362",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-18T13:08:22.402394+00:00",
     "title": "Both ingredients are already machine-checked (the sharp bound and 1-sum closure),"
   },

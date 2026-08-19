@@ -5,7 +5,7 @@
   "authors": [
     "Aristotle"
   ],
-  "date": "2026-08-19T04:00:30Z",
+  "date": "2026-08-19T03:57:54Z",
   "key_results": [
     "Characterisation of Fermat–Weber points on a line: a point minimises the total distance to a sample if and only if it is balanced, meaning neither open side of it holds more than half the sample; sufficiency holds in any linearly ordered abelian group and necessity is proved over the reals by a finitary step to the nearest datum on the heavier side.",
     "Sharp slope bound for odd samples: the counting median m of a sample of size 2k+1 satisfies F(m) + |t − m| ≤ F(t) for every candidate centre t, giving minimality and uniqueness at once; in any metric space, a metrically between point of a triple is its unique geometric median with optimal cost equal to the diameter.",
