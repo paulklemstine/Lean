@@ -1,414 +1,490 @@
-# Tropical Order Statistics of Seed Distributions: The Median as a Max-of-Mins Polynomial, and the Commutation of Aggregation with Threshold Reading
+# The Geometry of a Knee Distribution: Fermat–Weber Centres, Projections, and Scaling Rays
 
 **Author:** Aristotle
-**Date:** 2026-08-18
+**Date:** 2026-08-19
 
 ---
 
 ## Abstract
 
-We develop the median of an odd sample as an object of tropical algebra and derive from that normal form a group of structural theorems about how noisy threshold experiments should be summarised. Our starting point is the identity
-$$\operatorname{med}(x_0,\dots,x_{2k}) \;=\; \bigvee_{\substack{S \subseteq \{0,\dots,2k\} \\ |S| = k+1}}\ \bigwedge_{i \in S} x_i ,$$
-valid in any linear order, which exhibits the median as a homogeneous tropical polynomial of degree $k+1$ in $2k+1$ variables over the bounded tropical semiring $(\vee,\wedge) = (\max,\min)$. From it we obtain *threshold duality*: for every $v$, the relation $v \le \operatorname{med}(x)$ holds iff at least $k+1$ coordinates satisfy $v \le x_i$, and dually. Threshold duality is the engine of every result that follows.
+We develop the one-dimensional Fermat–Weber (geometric median) theory needed to analyse a family of empirical *knee distributions*, and we use it to convert a set of informal empirical claims into sharp, falsifiable geometric statements.
 
-Our principal theorem is a **commutation law between aggregation and threshold reading**. Given a finite grid $G$, a bar $\beta$, and $2k+1$ non-decreasing *retention curves* $c_i : \mathbb{N} \to \beta\text{-ordered set}$ with *knees* $K_i = \min\{t \in G : c_i(t) \ge \beta\}$, the pointwise median curve $t \mapsto \operatorname{med}(c_0(t),\dots,c_{2k}(t))$ has knee exactly $\operatorname{med}(K_0,\dots,K_{2k})$. Aggregating first and reading the knee second gives the same answer as reading knees first and aggregating second. We prove the corresponding statement is *false* for the arithmetic mean (an explicit triple of monotone step curves with knees $1,2,3$ has mean-curve knee $3 \ne 2$), and that monotonicity of the curves cannot be dropped.
+The empirical setting is a threshold-search experiment: at each context length $\mathrm{ctx}$ one measures the smallest budget $k^\*$ at which a quality metric still clears a fixed bar. The measurement is seed-dependent. Three repetitions at $\mathrm{ctx}=1024$ gave $\{96,112,128\}$; three at $\mathrm{ctx}=2048$ gave $\{160,224,256\}$. Writing $P = d\cdot\mathrm{ctx}/32$ for the natural *product point* of the experiment ($P=128$ and $P=256$ respectively), the two medians are $112 = \tfrac78 P$ and $224 = \tfrac78 P$, while individual seeds scatter over $\{0.75,0.875,1.0\}\cdot P$ and $\{0.625,0.875,1.0\}\cdot P$.
 
-We complement the commutation law with an axiomatic characterisation: a ternary aggregator on $\mathbb{R}$ that is monotone, symmetric, conservative, translation-equivariant and self-dual under order reversal is necessarily the median; and the tropical axiom (translation equivariance) is indispensable, witnessed by an explicit *sum-sign aggregator* satisfying the other four. We prove nonexpansiveness ($1$-Lipschitz for the sup-norm) and a breakdown theorem: a median of $2k+1$ values cannot leave the range spanned by any $k+1$ of them, whence a *pipeline* breakdown theorem — corrupting up to $k$ of $2k+1$ seeds, curves and all, cannot move the knee of the median curve outside the interval spanned by the surviving seeds. The mean pipeline has breakdown point $0$.
+Our contributions are as follows.
 
-Finally we apply the theory to a measured two-context, six-seed dataset from a long-context attention-budget experiment. We derive, rather than assume, that the seed-3 knee at $(d, \mathrm{ctx}) = (4, 2048)$ is $k^\* = 160$ with margin $0.001$; that all four pre-registered point predictions $\{192,224,240,256\}$ clear the bar yet none is the knee; that the three-seed knee multiset $\{160,224,256\}$ has median $224 = \tfrac78 \cdot \tfrac{d\cdot \mathrm{ctx}}{32}$, replicating $112 = \tfrac78\cdot 128$ at half the context; that $7/8$ is the *unique* constant reproducing both rows, while the mean admits *no* such constant; and that the exact stability region of the reported centre is the ray $x \le 224$, which refutes the informal claim that only a third seed of $256$ or more could move it.
+1. **A complete characterisation of Fermat–Weber points on a line.** For a multiset $S$ in a linearly ordered abelian group, a point $m$ minimises $F_S(t)=\sum_{x\in S}|t-x|$ if and only if $m$ is *balanced*: $\#\{x>m\} \le \#\{x\le m\}$ and $\#\{x<m\}\le\#\{x\ge m\}$. Sufficiency holds in any linearly ordered abelian group; necessity is proved over $\mathbb{R}$ by a finitary witness argument (the step is to the nearest datum on the heavy side). Together with convexity of $F_S$ this shows the minimiser set is a closed interval: a point for odd samples, a segment for even ones.
 
-**Keywords:** tropical semiring, median, order statistics, max-of-mins normal form, threshold duality, knee detection, breakdown point, robust aggregation, attention budget.
+2. **A sharp slope bound for odd samples.** If $m$ is the counting median of a sample of odd size $2k+1$, then $F_S(m) + |t-m| \le F_S(t)$ for every $t$. Minimality and uniqueness follow at once, and the bound is metric-space-general: in any metric space, a metrically between point of a triple is its unique geometric median, with optimal cost equal to the diameter.
+
+3. **The median of three as a metric projection.** With two arguments fixed, $x \mapsto \operatorname{med}(a,b,x)$ is the nearest-point projection of $\mathbb{R}$ onto the segment $[a\wedge b,\, a\vee b]$. It is monotone, $1$-Lipschitz, and firmly nonexpansive; its fibres over the endpoints are the normal half-lines and over interior points are singletons; its range is the compact segment, whereas the mean of three is a surjection onto $\mathbb{R}$.
+
+4. **Scaling geometry.** Plotting measurements as points $(\mathrm{ctx},k^\*)$, the top edge and the median lie on rays through the origin of slopes $1/8$ and $7/64 = \tfrac78\cdot\tfrac18$; the median slope is uniquely determined by one context and confirmed by the other. The low tail lies on no such ray: the associated determinant is $-32768$ and the origin triangle has area $16384$. Doubling the context is a dilation that is equivariant on the top edge and the median but has low-tail defect exactly $32 = P/8$; no dilation matches the entire configuration. Normalising, the optimal Fermat–Weber costs are $1/4$ and $3/8$, in exact ratio $3/2$, and the entire increase is carried by the low coordinate.
+
+5. **A level-set statement.** Both normalised triples lie on the maximal half-line $\{(t,7/8,1): t\le 7/8\}$ contained in the level set $\{\operatorname{med} = 7/8\}$, hence so does the segment joining them; the level set itself is not convex, so this is a genuine structural fact about the data.
+
+6. **A pre-registered prediction for a pending fourth measurement.** For every possible fourth value $x$, the point $224$ remains an optimal centre of $\{160,224,256,x\}$, the optimal cost is exactly $96 + |224-x|$, the optimal set is $[x,224]$ when $x\in[160,224]$ and $[224,x]$ when $x\in[224,256]$, and the optimum is unique only in the knife-edge case $x=224$. Consequently a fourth measurement cannot refute the $7/8$ centre variationally; it can only destroy uniqueness. What it tests is the low tail.
+
+**Keywords:** Fermat–Weber point, geometric median, metric projection, firm nonexpansiveness, order statistics, dilation equivariance, level sets, knee distribution.
 
 ---
 
 ## 1. Introduction
 
-### 1.1 The empirical problem
+### 1.1 The empirical setting
 
-A great many experiments have the following shape. A system has a tunable budget $k$ drawn from a finite grid $G$; a quality measure $c(k)$ increases (statistically) with $k$; and the number one actually wants to report is not a value of $c$ but the smallest budget at which $c$ clears a pre-agreed bar $\beta$. Call that budget the **knee**. Sparse attention budgets, quantisation bit-widths, sample-complexity thresholds, sensor counts, and dosage ladders all fit this template.
+Consider an experiment parameterised by a depth $d$ and a context length $\mathrm{ctx}$. For a budget $k$ one measures a quality ratio $q(k) \in [0,1]$ — the performance retained at budget $k$ relative to full budget — and defines the **knee**
 
-Two features of this template create trouble. First, the knee is an *extreme* functional of the curve: it is determined by where a single crossing happens, and if the curve crosses shallowly, one part in a thousand of measurement noise can move it by a whole grid step. Second, experiments of this kind are usually repeated across random seeds, and one must then decide how to summarise the several knees obtained — or, alternatively, whether to aggregate the *curves* and read a single knee from the aggregate.
+$$k^\* \;=\; \min\{k \text{ in the sweep grid}\ :\ q(k) \ge \beta\}$$
 
-The dataset that motivates this paper makes both problems vivid. In a long-context sequence-modelling experiment at model width $d=4$ and context length $\mathrm{ctx}=2048$, with a retention bar of $0.98$ (accuracy at budget $k$, relative to full-context accuracy), three random seeds produced three different knees: $256$, $224$ and $160$. The third of these cleared the bar by $0.001$. Four pre-registered point predictions all failed. Yet the *median* of the three knees was exactly $224$, matching a structural prediction $\tfrac78 P$ where $P = d\cdot\mathrm{ctx}/32 = 256$ — and matching the same prediction at half the context, where the three knees $\{96,112,128\}$ have median $112 = \tfrac78 \cdot 128$.
+for a fixed bar $\beta$ (here $\beta = 0.98$). The quantity $k^\*$ is the deployable budget: the smallest cost at which quality is still acceptable.
 
-This paper is an attempt to explain, structurally, why the median is the object such laws attach to, and to determine precisely how far its good behaviour extends.
+Two structural constants organise the data. The first is the **product point**
 
-### 1.2 The tropical viewpoint
+$$P \;=\; \frac{d\cdot\mathrm{ctx}}{32},$$
 
-On any linearly ordered set $\alpha$, the pair of operations $(\vee, \wedge) = (\max, \min)$ forms a commutative, idempotent semiring: each operation is associative and commutative, each distributes over the other, and $a \vee a = a \wedge a = a$. This is the *bounded tropical semiring*; polynomials over it are precisely the lattice polynomials, and over $\mathbb{R}$ they are the continuous piecewise-linear functions built from coordinates by $\max$ and $\min$.
+which at $(d,\mathrm{ctx}) = (4,1024)$ equals $128$ and at $(4,2048)$ equals $256$. Empirically $k^\* \le P$ at every seed measured, at both contexts — six for six — which makes $P$ a usable upper bound rather than a trend. The second constant is the ratio $7/8$, which appears not in any single measurement but in the *centre* of the measured distribution.
 
-Our organising observation is that the median of an odd sample is a tropical polynomial in a strong sense — homogeneous of degree $k+1$ — and that essentially every desirable property of the median is a shadow of that algebraic fact. Monotonicity is nonnegativity of the "coefficients"; translation equivariance is tropical homogeneity of degree one; self-duality under $x \mapsto -x$ is the exchange of the max-of-mins and min-of-maxes normal forms; $1$-Lipschitzness for the sup-norm follows from the previous two; and the majority-vote behaviour under thresholding is what makes aggregation commute with knee reading.
+The dataset, complete at three seeds per context, is:
 
-### 1.3 Contributions
+| context | knees $k^\*$ | product point $P$ | ratios $k^\*/P$ | median |
+|---|---|---|---|---|
+| $1024$ | $\{96,\,112,\,128\}$ | $128$ | $\{3/4,\ 7/8,\ 1\}$ | $112 = \tfrac78\cdot 128$ |
+| $2048$ | $\{160,\,224,\,256\}$ | $256$ | $\{5/8,\ 7/8,\ 1\}$ | $224 = \tfrac78\cdot 256$ |
 
-1. **Normal form** (§3): the counting median of an odd sample equals the max-of-mins tropical polynomial of degree $k+1$, in any linear order; and for three arguments it equals both $(a\wedge b)\vee(b\wedge c)\vee(a\wedge c)$ and the dual $(a\vee b)\wedge(b\vee c)\wedge(a\vee c)$.
-2. **Threshold duality** (§3.3): thresholding the median is a majority vote, in both directions.
-3. **Equivariance** (§4): the median is preserved by every order-preserving *and* every order-reversing reparametrisation of the sample; extremes are not (order reversal exchanges them).
-4. **Axiomatic characterisation** (§5): five axioms force the median, and the tropical axiom among them is independent and indispensable.
-5. **Commutation of aggregation with knee reading** (§6), for three and for $2k+1$ seeds; failure for the mean; necessity of monotonicity.
-6. **Robustness** (§7): nonexpansiveness, a breakdown theorem, the composed *pipeline* breakdown theorem, and the corresponding failure ("breakdown point zero") of the mean pipeline.
-7. **Application** (§8): a derivation of the measured knee, the horn analysis, the two-context $7/8$ median law with its uniqueness, the impossibility of the same law for the mean, the pinned-upper-edge / sinking-lower-tail geometry, and the exact stability ray of the reported centre, together with a correction of an informal claim about that ray.
+The most recent measurement (the third seed at $\mathrm{ctx}=2048$) returned $k^\*=160$, crossing the bar with margin $+0.0012$ — the tightest of the series, indicating a true threshold near $150$–$160$ that falls between grid points. Four point predictions had been recorded in advance ($224$, $240$, $256$, $192$); all four were refuted. The distributional claim — that the median sits at $\tfrac78 P$ — was not.
 
----
+### 1.2 Why the median, and why geometry
 
-## 2. Definitions
+The naive reading of "the median is robust" is statistical folklore. This paper takes the geometric reading instead, which is sharper and gives quantitative bounds.
 
-Throughout, $\alpha$ and $\beta$ denote linearly ordered sets; $\vee$ and $\wedge$ denote $\max$ and $\min$. All multisets are finite.
+On a line, the median coincides with the **Fermat–Weber point**, i.e. the minimiser of total distance to the sample. Once the median is understood variationally, three things follow that a sorting definition does not deliver:
 
-**Definition 2.1 (Median, counting form).** Let $s$ be a multiset over $\alpha$ with $|s| = 2k+1$. An element $m \in \alpha$ is a *median* of $s$, written $\mathrm{IsMedian}_k(s,m)$, if
-$$m \in s, \qquad \#\{x \in s : x \le m\} \ge k+1, \qquad \#\{x \in s : m \le x\} \ge k+1 .$$
+* a *quantitative* stability bound (how far can a datum move before the centre moves?), obtained from the projection structure;
+* a *characterisation* valid at every sample size and parity, which tells us exactly what happens when the sample size flips from odd to even;
+* a *scaling* analysis, since Fermat–Weber cost is a genuine transport cost that can be compared across contexts.
 
-The counting form is the right definition to work with in an arbitrary linear order: it makes no reference to sorting, arithmetic or a metric.
+All three are needed to state the pending experiment's prediction correctly.
 
-**Definition 2.2 (Indexed median).** For $x : \{0,\dots,2k\} \to \alpha$, say $\mathrm{IsMedianIdx}_k(x,m)$ if $m$ is in the range of $x$ and both $\#\{i : x_i \le m\} \ge k+1$ and $\#\{i : m \le x_i\} \ge k+1$.
+### 1.3 Notation
 
-**Definition 2.3 (Tropical median polynomial).** For $x : \{0,\dots,2k\} \to \alpha$ set
-$$\operatorname{tmed}(x) \;:=\; \bigvee_{|S| = k+1}\ \bigwedge_{i \in S} x_i ,$$
-the join, over all $(k+1)$-element index sets $S$, of the meet of $x$ over $S$. For $k=1$ we write
-$$\operatorname{med}_3(a,b,c) \;:=\; (a \wedge b) \vee (b \wedge c) \vee (a \wedge c).$$
+Sample data are finite multisets. For a multiset $S$ of reals (or, more generally, of a linearly ordered abelian group $\alpha$) and $t\in\alpha$, the **Fermat–Weber cost** is
 
-**Definition 2.4 (Retention curve, bar, knee).** Let $G \subseteq \mathbb{N}$ be a finite grid, let $V$ be a linearly ordered set of quality values, and let $\beta \in V$ be a *bar*. A *retention curve* is a function $c : \mathbb{N} \to V$. We say $k$ is a *knee of $c$ on $G$ at bar* $\beta$, written $\mathrm{IsKnee}_{G,\beta}(c,k)$, if
-$$k \in G, \qquad \beta \le c(k), \qquad \text{and} \qquad \forall j \in G,\ \beta \le c(j) \Rightarrow k \le j .$$
-That is: $k$ is the least grid point at which $c$ clears the bar.
+$$F_S(t) \;=\; \sum_{x\in S} |t - x|,$$
 
-**Definition 2.5 (Product point, ratio, speed-up).** For an experiment at width $d$ and context $\mathrm{ctx}$, the *product point* is $P = d\cdot\mathrm{ctx}/32$; the *ratio* of a knee is $k^\*/P$; the *deployment speed-up* is $\mathrm{ctx}/k^\*$.
+with multiplicity. We write $a\wedge b = \min(a,b)$, $a\vee b = \max(a,b)$, and
+
+$$\operatorname{med}(a,b,c) \;=\; (a\wedge b)\vee(b\wedge c)\vee(a\wedge c)$$
+
+for the median of three, in the $(\max,\min)$ form that makes its lattice-polynomial nature explicit. For a sample of odd size $2k+1$, we say $m$ is a **counting median** if at least $k+1$ entries are $\le m$ and at least $k+1$ entries are $\ge m$.
 
 ---
 
-## 3. The median is a tropical polynomial
+## 2. Fermat–Weber points of a triple: the metric-space core
 
-### 3.1 The normal form
+We begin with the smallest statement, because it is the one that generalises furthest.
 
-**Theorem 3.1 (Tropical normal form of the median).** Let $x : \{0,\dots,2k\} \to \alpha$ and suppose $\mathrm{IsMedianIdx}_k(x,m)$. Then $\operatorname{tmed}(x) = m$.
+**Definition 2.1 (metric betweenness).** In a metric space $(X,d)$, a point $q$ lies *metrically between* $p$ and $r$ if $d(p,q) + d(q,r) = d(p,r)$.
 
-*Proof sketch.* Two inequalities.
+**Theorem 2.2 (triple lower bound).** For any points $p,q,r,x$ of a metric space,
+$$d(p,r) + d(x,q) \;\le\; d(x,p) + d(x,q) + d(x,r).$$
 
-$(\le)$ Fix any $S$ with $|S| = k+1$. We claim $S$ contains an index $i$ with $x_i \le m$. Indeed, the counting condition $\#\{i : x_i \le m\} \ge k+1$ over a universe of size $2k+1$ gives $\#\{i : m < x_i\} \le k$; if every $i \in S$ had $x_i > m$ then $S$ would be a $(k+1)$-subset of a set of size $\le k$, absurd. Hence $\bigwedge_{i \in S} x_i \le x_i \le m$ for that index, and taking the join over $S$ yields $\operatorname{tmed}(x) \le m$.
+*Proof.* The triangle inequality gives $d(p,r)\le d(p,x)+d(x,r) = d(x,p)+d(x,r)$; add $d(x,q)$. $\square$
 
-$(\ge)$ By $\#\{i : m \le x_i\} \ge k+1$ choose a subset $S_0$ of that index set with $|S_0| = k+1$. Then $m \le \bigwedge_{i \in S_0} x_i \le \operatorname{tmed}(x)$. $\square$
+**Theorem 2.3 (betweenness points are geometric medians).** If $q$ lies metrically between $p$ and $r$, then for every $x$,
+$$d(x,p)+d(x,q)+d(x,r) \;\ge\; d(p,r),$$
+with equality **if and only if** $x = q$. The optimal value is the diameter $d(p,r)$, attained at $q$.
 
-**Corollary 3.2 (Three-seed normal form).** $\operatorname{med}_3(a,b,c)$ is the median of the multiset $\{a,b,c\}$, and
-$$\operatorname{med}_3(a,b,c) = (a\vee b)\wedge(b\vee c)\wedge(a\vee c).$$
-The equality of the max-of-mins and min-of-maxes normal forms is the *self-duality* of the median under order reversal; verifying it is a finite case analysis on the six orderings of $a,b,c$.
+*Proof.* The value at $q$ is $d(q,p)+0+d(q,r) = d(p,r)$ by betweenness, so the bound is attained. For the lower bound and rigidity, Theorem 2.2 gives
+$$d(x,p)+d(x,q)+d(x,r) \;\ge\; d(p,r) + d(x,q),$$
+so the total is $\ge d(p,r)$, with equality forcing $d(x,q) = 0$, i.e. $x=q$. Conversely $x=q$ attains it. $\square$
 
-**Proposition 3.3 (Conservativity).** $\operatorname{tmed}(x) \in \{x_0,\dots,x_{2k}\}$; in particular $\operatorname{med}_3(a,b,c) \in \{a,b,c\}$. (A join of meets over a finite family attains its value at some index.)
+Theorem 2.3 is the whole of the odd three-point theory, and it is remarkably cheap: no convexity, no differentiability, no ordering. Everything below specialises it.
 
-### 3.2 Existence and uniqueness of the counting median
+**Corollary 2.4 (the real line).** For $a\le b\le c$ and $x\in\mathbb{R}$,
+$$|x-a| + |x-b| + |x-c| \;\ge\; c-a,$$
+with equality iff $x = b$; and any $x$ attaining the bound satisfies $x = \operatorname{med}(a,b,c)$.
 
-**Theorem 3.4 (Uniqueness).** If $|s| = 2k+1$ and $m, m'$ are both medians of $s$, then $m = m'$.
+*Proof.* On $\mathbb{R}$ with $d(u,v)=|u-v|$, sortedness gives $|a-b| + |b-c| = (b-a)+(c-b) = c-a = |a-c|$, i.e. $b$ is metrically between $a$ and $c$; apply Theorem 2.3. The identification with $\operatorname{med}$ is the evaluation $(a\wedge b)\vee(b\wedge c)\vee(a\wedge c) = a\vee b\vee(a\wedge c)= b$ under $a\le b\le c$. $\square$
 
-*Proof sketch.* Suppose $m < m'$. Then the predicates $x \le m$ and $m' \le x$ are mutually exclusive, so their filtered cardinalities add to at most $|s| = 2k+1$; but each is at least $k+1$, giving $2k+2 \le 2k+1$. $\square$
+**Corollary 2.5 (collinear data in a normed space).** Let $E$ be a real normed space, $v\in E$, $u\in E$ with $\|u\|=1$, and $a\le b\le c$. Then for every $x\in E$,
+$$d(x, v+au) + d(x, v+bu) + d(x, v+cu) \;\ge\; c-a,$$
+with equality iff $x = v + bu$.
 
-**Theorem 3.5 (Existence).** Every multiset of odd size $2k+1$ over a linear order has a (unique) median, namely the entry at index $k$ of a sorted representative.
+*Proof.* $d(v+su, v+tu) = \|(s-t)u\| = |s-t|$, so the three points reproduce the configuration of Corollary 2.4 and $v+bu$ is metrically between the others; apply Theorem 2.3. $\square$
 
-*Proof sketch.* Sort $s$ into a list $\ell$ with $\ell$ pairwise $\le$. For a sorted list, at least $i+1$ entries are $\le \ell_i$ (the prefix of length $i+1$ is a sublist all of whose entries are $\le \ell_i$) and at least $|\ell| - i$ entries are $\ge \ell_i$ (the suffix). Taking $i = k$ gives both counting bounds. $\square$
+Corollary 2.5 matters because it says the minimiser is unique *in the ambient space*, not merely along the line: no off-line point does better. Data that happen to be collinear have a geometric median that is stable against the dimension of the space they are embedded in.
 
-### 3.3 Threshold duality
+**Application 2.6 (the measured triples).** Applying Corollary 2.4:
 
-**Theorem 3.6 (Threshold duality).** For every $x : \{0,\dots,2k\}\to\alpha$ and every $v \in \alpha$,
-$$v \le \operatorname{tmed}(x) \iff \#\{i : v \le x_i\} \ge k+1, \qquad\qquad \operatorname{tmed}(x) \le v \iff \#\{i : x_i \le v\} \ge k+1 .$$
+* $\{160,224,256\}$: for all $x$, $|x-160|+|x-224|+|x-256| \ge 96$, with equality iff $x=224$. The unique geometric median is $224 = \tfrac78\cdot 256$, with optimal cost $96$.
+* $\{96,112,128\}$: for all $x$, $|x-96|+|x-112|+|x-128| \ge 32$, with equality iff $x=112$. The unique geometric median is $112 = \tfrac78\cdot 128$, with optimal cost $32$.
 
-*Proof sketch.* ($\Rightarrow$, first form) If $v \le \bigvee_S \bigwedge_{i\in S} x_i$ then, the join being over a finite family, $v \le \bigwedge_{i \in S_0} x_i$ for some $S_0$ of size $k+1$; every $i \in S_0$ then satisfies $v \le x_i$. ($\Leftarrow$) Choose $S_0$ of size $k+1$ inside $\{i : v \le x_i\}$; then $v \le \bigwedge_{S_0} x_i \le \operatorname{tmed}(x)$.
-
-For the second form, ($\Leftarrow$) given $\#\{i : x_i \le v\} \ge k+1$, any $(k+1)$-set $S$ must meet $\{i : x_i \le v\}$ by inclusion–exclusion inside a universe of size $2k+1$, so $\bigwedge_S x \le v$; take the join. ($\Rightarrow$) contrapositive: if fewer than $k+1$ indices satisfy $x_i \le v$, then at least $k+1$ satisfy $x_i > v$, and the meet over such a $(k+1)$-set strictly exceeds $v$ while being $\le \operatorname{tmed}(x)$. $\square$
-
-**Corollary 3.7 (Three-seed duality).**
-$$v \le \operatorname{med}_3(a,b,c) \iff (v\le a \wedge v \le b) \ \text{or}\ (v \le b \wedge v \le c)\ \text{or}\ (v\le a \wedge v\le c),$$
-and dually with all inequalities reversed. In words: **thresholding a median is a majority vote.**
-
-### 3.4 Tropical algebra of the polynomial
-
-**Proposition 3.8.** Over a linearly ordered abelian group $(G, +, \le)$:
-
-* *(Monotonicity)* $x_i \le y_i$ for all $i$ implies $\operatorname{tmed}(x) \le \operatorname{tmed}(y)$.
-* *(Tropical homogeneity of degree one)* $\operatorname{tmed}(x + t) = \operatorname{tmed}(x) + t$ for a constant $t$.
-* *(Self-duality)* $\operatorname{tmed}(-x) = -\operatorname{tmed}(x)$.
-* *(Bounds)* $\bigwedge_i x_i \le \operatorname{tmed}(x) \le \bigvee_i x_i$.
-
-*Proof sketch.* All four are immediate from the normal form: joins and meets are monotone; $\min$ and $\max$ commute with translation; negation exchanges $\min$ and $\max$, converting the max-of-mins form into the min-of-maxes form, which by Corollary 3.2 is the same polynomial. $\square$
-
-**Theorem 3.9 (Nonexpansiveness).** For real samples, $\operatorname{tmed}$ is $1$-Lipschitz for the sup-norm; for three arguments,
-$$\bigl|\operatorname{med}_3(a,b,c) - \operatorname{med}_3(a',b',c')\bigr| \;\le\; \max\bigl(|a-a'|,\,|b-b'|,\,|c-c'|\bigr).$$
-
-*Proof sketch.* Let $\delta$ be the right-hand side. Then $a \le a'+\delta$, $b \le b'+\delta$, $c\le c'+\delta$, so by monotonicity and homogeneity $\operatorname{med}_3(a,b,c) \le \operatorname{med}_3(a',b',c') + \delta$; symmetrically for the reverse. $\square$
-
-This is the quantitative form of "the centre is the stable quantity": measurement noise of size $\delta$ in each seed perturbs the reported centre by at most $\delta$, with no amplification.
+So the "$7/8$-median law" is a variational statement: the value $\tfrac78 P$ is the unique minimiser of total distance to the measured knees at both contexts.
 
 ---
 
-## 4. Equivariance: the median under changes of coordinates
+## 3. The general characterisation: balanced points
 
-Experimental readings are re-expressed constantly: knees are divided by a reference scale to make ratios, and inverted to make speed-ups. The first is order-preserving, the second order-reversing. The median survives both.
+The triple theory does not survive the change of parity, so we develop the general statement.
 
-**Theorem 4.1 (Monotone equivariance).** Let $s$ be a multiset of odd size $2k+1$, $m$ its median, and $f$ a map such that $f(x) \le f(y) \iff x \le y$ for all $x,y \in s$. Then $f(m)$ is the median of $f(s)$.
+**Definition 3.1 (balance).** Let $S$ be a finite multiset in a linearly ordered abelian group $\alpha$ and $m\in\alpha$. Say $m$ is **balanced** for $S$ if
+$$\#\{x\in S : x > m\} \;\le\; \#\{x\in S : x\le m\} \quad\text{and}\quad \#\{x\in S : x<m\}\;\le\;\#\{x\in S : x\ge m\}.$$
 
-**Theorem 4.2 (Antitone equivariance).** Under the same hypotheses but with $f(x) \le f(y) \iff y \le x$ on $s$, $f(m)$ is again the median of $f(s)$.
+Equivalently: neither open side of $m$ contains more than half of the sample.
 
-*Proof sketch (both).* Filtering commutes with mapping: $\#\{z \in f(s) : z \le f(m)\} = \#\{x \in s : f(x) \le f(m)\}$, which the hypothesis identifies with $\#\{x \in s : x \le m\}$ in the monotone case and with $\#\{x \in s : m \le x\}$ in the antitone case. In either case both counting bounds of Definition 2.1 are met, with the two roles exchanged in the antitone case. Membership is clear. $\square$
+**Lemma 3.2 (two-valued sums).** For a finite multiset $S$, a decidable predicate $p$, and constants $c,d$ in an abelian group,
+$$\sum_{x\in S}\bigl(\text{$c$ if $p(x)$, else $d$}\bigr) \;=\; \#\{x : p(x)\}\cdot c \;+\; \#\{x : \neg p(x)\}\cdot d .$$
 
-**Proposition 4.3 (Extremes are not equivariant, they are exchanged).** If $M$ is the greatest element of $s$ and $f$ is antitone on $s$, then $f(M)$ is the *least* element of $f(s)$.
+*Proof.* Induction on $S$. $\square$
 
-Theorems 4.1–4.2 and Proposition 4.3 have a sharp practical consequence, spelled out in §8.4: the *median* speed-up is the speed-up of the median knee, but the *guaranteed* (worst-case) speed-up is the speed-up of the **largest** knee. Median and guarantee are governed by different order statistics, and only the former is coordinate-free.
+This bookkeeping lemma is the engine of everything in this section: it converts a pointwise comparison into a comparison of *counts*.
 
----
+**Theorem 3.3 (sufficiency).** Let $S$ be a finite multiset in a linearly ordered abelian group and let $m$ be balanced for $S$. Then $F_S(m) \le F_S(t)$ for every $t$.
 
-## 5. What pins down the median? An axiomatic classification
+*Proof.* Suppose first $m \le t$. Set $A = \#\{x\le m\}$, $C = \#\{x>m\}$, so balance gives $C\le A$. The pointwise inequality
+$$|m-x| \;+\; \begin{cases} t-m, & x\le m\\ -(t-m), & x>m\end{cases} \;\le\; |t-x|$$
+holds for every $x$: if $x\le m$ both absolute values open positively and the left side equals $|t-x|$ exactly; if $x>m$ the left side is $-(m-x)-(t-m) = -(t-x) \le |t-x|$. Summing over $S$ and applying Lemma 3.2,
+$$F_S(m) \;+\; A\cdot(t-m) \;+\; C\cdot\bigl(-(t-m)\bigr) \;\le\; F_S(t).$$
+Writing $A = C + r$ with $r\ge 0$, the middle terms collapse to $r\cdot(t-m)\ge 0$, so $F_S(m) \le F_S(t)$. The case $t\le m$ is symmetric, using the other half of balance. $\square$
 
-Let $F : \mathbb{R}^3 \to \mathbb{R}$ be an aggregator. Consider five axioms.
+Note the proof uses only ordered-group arithmetic: no completeness, no archimedean property, no division. The *only* input is the counting condition.
 
-* **(M) Monotone:** $a \le a'$, $b\le b'$, $c\le c'$ imply $F(a,b,c) \le F(a',b',c')$.
-* **(S) Symmetric:** $F$ is invariant under the transpositions of its arguments, hence under $S_3$.
-* **(C) Conservative:** $F(a,b,c) \in \{a,b,c\}$.
-* **(T) Translation-equivariant:** $F(a+t,b+t,c+t) = F(a,b,c)+t$ — *tropical homogeneity of degree one.*
-* **(D) Self-dual:** $F(-a,-b,-c) = -F(a,b,c)$.
+**Theorem 3.4 (odd samples: the counting median is balanced).** If $|S| = 2k+1$ and $m$ is a counting median of $S$, then $m$ is balanced.
 
-**Theorem 5.1 (Characterisation of the median).** If $F$ satisfies (M), (S), (C), (T), (D), then $F = \operatorname{med}_3$.
+*Proof.* $\#\{x\le m\}\ge k+1$ and $\#\{x\le m\}+\#\{x>m\} = 2k+1$ give $\#\{x>m\}\le k \le \#\{x\le m\}$; symmetrically for the other side. $\square$
 
-*Proof sketch.* Three steps.
+Combining Theorems 3.3 and 3.4 recovers the classical statement — but we can say more for odd samples, because the count gap is then at least one.
 
-*(i) Dual identity.* By (D), $F(0,0,-d) = -F(0,0,d)$; by (T) applied with shift $d$, $F(d,d,0) = F(0,0,-d)+d$; by (S), $F(d,d,0) = F(0,d,d)$. Combining, $F(0,0,d) = d - F(0,d,d)$.
+**Theorem 3.5 (sharp slope bound).** Let $|S| = 2k+1$ and let $m$ be a counting median. Then for every $t$,
+$$F_S(m) + |t-m| \;\le\; F_S(t).$$
 
-*(ii) Majority.* For $d \ge 0$, (M) gives $F(0,0,d) \le F(0,d,d)$, which with (i) yields $2F(0,0,d) \le d$. By (C), $F(0,0,d) \in \{0,d\}$; if it were $d$ then $2d \le d$, forcing $d = 0$, in which case the value is still $0$. Hence $F(0,0,d) = 0$: **two equal votes win.** Translating by $a$: $F(a,a,c) = a$ for $a \le c$; and by (i) plus translation, $F(a,c,c) = c$ for $a \le c$.
+*Proof.* Take $m\le t$ (the other case is symmetric). With $A,C$ as above, $A\ge k+1$ and $A+C = 2k+1$ give $C+1\le A$. Repeating the computation of Theorem 3.3 but writing $A = C + r + 1$, the collapse now leaves $r\cdot(t-m) + (t-m) \ge t-m$, so $F_S(m) + (t-m) \le F_S(t)$. $\square$
 
-*(iii) Squeeze.* For $a\le b\le c$, monotonicity gives $F(a,b,b) \le F(a,b,c) \le F(b,b,c)$, i.e. $b \le F(a,b,c) \le b$. Sorted triples are pinned; (S) extends the conclusion to all triples, and $\operatorname{med}_3$ is the sorted-middle map. $\square$
+**Corollary 3.6 (uniqueness for odd samples).** For $|S|$ odd with counting median $m$: $F_S(m) < F_S(t)$ for all $t\ne m$, and any minimiser of $F_S$ equals $m$. In particular the Fermat–Weber point of an odd sample is unique.
 
-**Proposition 5.2 (Non-vacuity).** $\operatorname{med}_3$ satisfies (M), (S), (C), (T), (D).
+Theorem 3.5 is stronger than mere minimality: it says the cost landscape has slope at least $1$ in each direction away from the median, so a perturbation of the centre by $\delta$ costs at least $\delta$. This is the quantitative form of "the median is a sharp minimum".
 
-**Theorem 5.3 (Independence of the tropical axiom).** There is an aggregator satisfying (M), (S), (C), (D) that is not the median. Define the **sum-sign aggregator**
-$$\mathrm{SS}(a,b,c) = \begin{cases} \max(a,b,c), & a+b+c > 0,\\[2pt] \min(a,b,c), & a+b+c < 0,\\[2pt] \operatorname{med}_3(a,b,c), & a+b+c = 0. \end{cases}$$
-Then $\mathrm{SS}$ is monotone, symmetric, conservative and self-dual, and $\mathrm{SS}(0,0,1) = 1 \ne 0 = \operatorname{med}_3(0,0,1)$.
+### 3.1 Necessity
 
-*Proof sketch.* Conservativity and symmetry are immediate (the sum is symmetric; $\max$, $\min$, $\operatorname{med}_3$ are conservative and symmetric). Self-duality: negating all inputs negates the sum, exchanging the first two branches, and $\max(-x) = -\min(x)$, $\min(-x) = -\max(x)$, $\operatorname{med}_3(-x) = -\operatorname{med}_3(x)$. Monotonicity is a case analysis on which branch each side falls in, using $\min(x) \le \mathrm{SS}(x) \le \max(x)$ in every branch, plus monotonicity of the sum, which guarantees the branch index can only increase. Translation equivariance fails, e.g. $\mathrm{SS}(-1,-1,0) = -1$ while $\mathrm{SS}(0,0,1) - 1 = 0$. $\square$
+Sufficiency was purely combinatorial. Necessity requires that we can *step to a witness*, so we work over $\mathbb{R}$ and use the fact that a finite sample has a nearest point on each side.
 
-**Interpretation.** Order-theoretic axioms alone (monotone, symmetric, conservative, self-dual) do *not* single out the median. The additional requirement that pins it down is exactly the tropical one: invariance under a shift of the origin of the measurement scale. The median's status as the canonical centre is therefore an algebraic fact about the min-plus structure, not a soft consequence of "being in the middle".
+**Lemma 3.7 (exact cost of a gap-free step).** Let $S\subset\mathbb{R}$ be a finite multiset and $m\le t$ with the property that no sample point lies strictly between $m$ and $t$ (formally, $x\in S$ and $x>m$ imply $x\ge t$). Then
+$$F_S(t) \;=\; F_S(m) \;+\; \bigl(\#\{x\le m\} - \#\{x>m\}\bigr)\cdot(t-m).$$
+Symmetrically, for a leftward gap-free step to $t \le m$,
+$$F_S(t) \;=\; F_S(m) \;+\; \bigl(\#\{x\ge m\} - \#\{x<m\}\bigr)\cdot(m-t).$$
 
----
+*Proof.* Under the gap hypothesis every $x$ satisfies $|t-x| = |m-x| + (t-m)$ if $x\le m$ and $|t-x| = |m-x| - (t-m)$ if $x>m$ — the absolute values do not change sign. Sum and apply Lemma 3.2. $\square$
 
-## 6. The commutation theorem: aggregate then read = read then aggregate
+**Theorem 3.8 (necessity).** If $m\in\mathbb{R}$ minimises $F_S$, then $m$ is balanced for $S$.
 
-Two pipelines compute a "consensus knee" from $2k+1$ seeds:
+*Proof.* Suppose the first balance condition fails: $A = \#\{x\le m\} < C = \#\{x>m\}$. Then $C>0$, so the set of sample points exceeding $m$ is nonempty and finite; let $t$ be its minimum. Then $m<t$ and no sample point lies strictly between, so Lemma 3.7 applies:
+$$F_S(t) = F_S(m) + (A - C)(t-m) < F_S(m),$$
+since $A-C<0$ and $t-m>0$ — contradicting minimality. The second condition is symmetric, stepping to the maximum of $\{x<m\}$. $\square$
 
-* **Pipeline A (read then aggregate):** compute knees $K_i$ from each curve $c_i$; report $\operatorname{tmed}(K)$.
-* **Pipeline B (aggregate then read):** form the pointwise aggregate curve $\bar c(t) = A(c_0(t),\dots,c_{2k}(t))$; report its knee.
+**Theorem 3.9 (characterisation).** For a finite multiset $S\subset\mathbb{R}$ and $m\in\mathbb{R}$:
+$$m \text{ minimises } F_S \iff m \text{ is balanced for } S.$$
 
-Pipeline B is arguably the more principled: it produces a curve, and hence an *operating point of an actual aggregate model*, rather than a summary statistic of derived quantities. Pipeline A is what practitioners do. The question is whether they agree.
+*Proof.* Theorems 3.3 and 3.8. $\square$
 
-**Theorem 6.1 (Median–knee commutation, three seeds).** Let $c_0,c_1,c_2 : \mathbb{N}\to V$ be non-decreasing, let $G$ be a finite grid, $\beta_0 \in V$ a bar, and suppose $\mathrm{IsKnee}_{G,\beta_0}(c_i, K_i)$ for $i=0,1,2$. Then
-$$\mathrm{IsKnee}_{G,\beta_0}\bigl(t \mapsto \operatorname{med}_3(c_0(t),c_1(t),c_2(t)),\ \operatorname{med}_3(K_0,K_1,K_2)\bigr).$$
+The witness in Theorem 3.8 is a data point, so the argument is finitary — no limiting or derivative argument enters. This matters conceptually: the characterisation is a statement about counts, and its proof only ever compares counts.
 
-*Proof.* Write $K = \operatorname{med}_3(K_0,K_1,K_2)$.
+### 3.2 Convexity and the shape of the optimal set
 
-*Grid membership.* By conservativity (Prop. 3.3), $K \in \{K_0,K_1,K_2\} \subseteq G$.
+**Theorem 3.10 (convexity of the cost).** For $S\subset\mathbb{R}$ finite, $a,b\in\mathbb{R}$ and $\lambda\in[0,1]$,
+$$F_S\bigl(\lambda a + (1-\lambda)b\bigr) \;\le\; \lambda F_S(a) + (1-\lambda)F_S(b).$$
 
-*Clearing the bar at $K$.* By the dual threshold duality (Cor. 3.7) applied to $K \le K$, at least two of $K_0,K_1,K_2$ are $\le K$; say $K_i, K_j \le K$. Monotonicity of $c_i$ gives $\beta_0 \le c_i(K_i) \le c_i(K)$, and likewise for $j$. So at least two of the three curves clear the bar at $K$, and by the upper threshold duality the median curve does too.
+*Proof.* Pointwise, $|\lambda a + (1-\lambda)b - x| = |\lambda(a-x) + (1-\lambda)(b-x)| \le \lambda|a-x| + (1-\lambda)|b-x|$ by the triangle inequality and homogeneity; sum over $S$. $\square$
 
-*Minimality.* Let $j \in G$ with $\beta_0 \le \operatorname{med}_3(c_0(j),c_1(j),c_2(j))$. By threshold duality, at least two curves clear the bar at $j$, so by the defining minimality of their knees, at least two of $K_0,K_1,K_2$ are $\le j$; by the dual duality, $K \le j$. $\square$
+**Theorem 3.11 (the optimal set is an interval).** If $a$ and $b$ both minimise $F_S$ and $a\le t\le b$, then $t$ minimises $F_S$. Hence the Fermat–Weber set is convex, and (being closed and bounded for a nonempty sample) a closed interval.
 
-The proof is worth pausing over, because it explains why the theorem is about the median and nothing else. Both halves of the argument are the *same majority statement*, read through the two halves of threshold duality:
+*Proof.* Write $t = \lambda a + (1-\lambda)b$ with $\lambda\in[0,1]$. Since $a$ and $b$ are both minimisers, $F_S(a) = F_S(b)$, so Theorem 3.10 gives $F_S(t) \le \lambda F_S(b) + (1-\lambda)F_S(b) = F_S(b) \le F_S(u)$ for every $u$. $\square$
 
-$$\underbrace{\text{“the median curve clears the bar at } t\text{”}}_{\text{majority of curves clear at } t} \;\Longleftrightarrow\; \underbrace{\text{“at least } k{+}1 \text{ knees are} \le t\text{”}}_{\text{“the median knee is} \le t\text{”}}$$
-
-with monotonicity providing the middle equivalence "curve $i$ clears at $t$ $\iff K_i \le t$". Any aggregator whose thresholding is a majority vote would do; by Theorem 5.1, in the conservative tropical world that is the median.
-
-**Theorem 6.2 (General odd case).** With $2k+1$ non-decreasing curves $c_i$ and knees $K_i$,
-$$\mathrm{IsKnee}_{G,\beta_0}\bigl(t \mapsto \operatorname{tmed}(c_0(t),\dots,c_{2k}(t)),\ \operatorname{tmed}(K)\bigr).$$
-
-*Proof sketch.* Identical, with counting in place of the three-fold case split: $\#\{i : \beta_0 \le c_i(t)\} \ge k+1 \iff \#\{i : K_i \le t\} \ge k+1$, because monotonicity makes the two filtered index sets coincide; apply Theorem 3.6 to each side. $\square$
-
-**Proposition 6.3 (Uniqueness of knees).** A curve has at most one knee on a given grid at a given bar; hence Theorem 6.1 *determines* the knee of the median curve. (If $k$ and $k'$ are both knees, each minimality clause applied to the other gives $k \le k'$ and $k' \le k$.)
-
-### 6.1 The mean does not commute
-
-**Theorem 6.4 (Failure for the arithmetic mean).** Let $\sigma_a(t) = \mathbb{1}[t \ge a]$ be the unit step curve switching on at $a$; each $\sigma_a$ is non-decreasing with knee $a$ at bar $1$. On the grid $G = \{1,2,3\}$ with bar $1$, the curves $\sigma_1,\sigma_2,\sigma_3$ have knees $1,2,3$ with median $2$, whereas
-$$\bar c(t) = \tfrac13\bigl(\sigma_1(t)+\sigma_2(t)+\sigma_3(t)\bigr)$$
-takes the values $\tfrac13, \tfrac23, 1$ at $t=1,2,3$, so its knee is $3 \ne 2$.
-
-The mechanism is transparent: the mean curve can only clear a bar of $1$ when *every* component does, so the mean pipeline computes the *maximum* of the knees in this configuration — a worst-case, not a central, summary. In general the mean pipeline's knee is neither the mean nor the median of the individual knees, and it lies systematically to the right.
-
-### 6.2 Monotonicity cannot be dropped
-
-**Theorem 6.5.** There exist curves $c_0,c_1,c_2$ on $G = \{1,2,3\}$ with bar $1$ and knees $1,2,3$, with $c_1,c_2$ monotone and $c_0$ not, such that the median curve does **not** have knee $\operatorname{med}_3(1,2,3) = 2$.
-
-*Proof.* Take $c_0(t) = 1$ for $t \ne 2$ and $c_0(2) = 0$ — it clears the bar at $t=1$, so its knee is $1$, but it dips below the bar afterwards — together with $c_1 = \sigma_2$, $c_2 = \sigma_3$. At $t = 2$ the values are $(0, 1, 0)$, whose median is $0 < 1$: only one curve clears the bar there, so the median curve does not clear it at $2$. $\square$
-
-Monotonicity is exactly the hypothesis that converts "curve $i$ clears the bar at $t$" into the *upward-closed* condition "$K_i \le t$", which is what makes the two majority events coincide.
+Theorems 3.9 and 3.11 together give the complete picture: the optimum is an interval whose endpoints are determined by the counting condition. For odd samples the interval degenerates to the counting median (Corollary 3.6); for even samples it is the segment between the two middle order statistics, as we now make explicit.
 
 ---
 
-## 7. Robustness: breakdown of the median pipeline
+## 4. Even samples: the optimum becomes a segment
 
-**Theorem 7.1 (Breakdown theorem for the tropical median).** Let $x, y : \{0,\dots,2k\}\to\alpha$ agree on a set $T$ of indices with $|T| \ge k+1$ ("$T$ is clean"). Then
-$$\min_{i \in T} x_i \;\le\; \operatorname{tmed}(y) \;\le\; \max_{i \in T} x_i .$$
+**Theorem 4.1 (four-point Fermat–Weber).** Let $a\le b\le c\le d$ be real and set
+$$C_4(t) \;=\; |t-a| + |t-b| + |t-c| + |t-d|.$$
+Then for every $t$,
+$$C_4(t) \;\ge\; (d-a) + (c-b),$$
+with equality **if and only if** $b \le t \le c$.
 
-*Proof sketch.* Let $v = \min_{i\in T} x_i$. For each $i \in T$, $v \le x_i = y_i$, so at least $|T| \ge k+1$ coordinates of $y$ are $\ge v$; threshold duality gives $v \le \operatorname{tmed}(y)$. The upper bound is dual. $\square$
+*Proof.* The bound is the sum of $|t-a|+|t-d| \ge d-a$ and $|t-b|+|t-c|\ge c-b$, both instances of the triangle inequality. For the equality case: if $b\le t\le c$ then $t-a\ge 0$, $t-b\ge0$, $t-c\le0$, $t-d\le 0$, and expanding gives exactly $(d-a)+(c-b)$. Conversely, suppose $t<b$. Then $|t-b| = b-t$ and $|t-c| = c-t$, so
+$$C_4(t) = \bigl(|t-a|+|t-d|\bigr) + (b+c-2t) \ge (d-a) + (b + c - 2t) > (d-a)+(c-b)$$
+since $b+c-2t > c-b \iff 2b > 2t$. The case $t>c$ is symmetric. $\square$
 
-In words: **a minority of arbitrarily corrupted seeds cannot move the median outside the range of the honest majority.** For three seeds this is $\min(a,b) \le \operatorname{med}_3(a,b,c') \le \max(a,b)$ for every $c'$.
+**Corollary 4.2 (degeneracy criterion).** The Fermat–Weber set of $\{a,b,c,d\}$ (sorted) is the segment $[b,c]$; it is a single point if and only if $b=c$.
 
-**Theorem 7.2 (The mean has breakdown point zero).** For every bound $B$ there is a sample $y : \{0,1,2\} \to \mathbb{R}$ agreeing with the clean data $x \equiv 0$ on the majority set $\{0,1\}$, with $\operatorname{tmed}(y) = 0$ but $\tfrac13(y_0+y_1+y_2) > B$. (Take $y_2 = 3B+3$.)
-
-**Theorem 7.3 (Pipeline breakdown).** Let $c'_0,\dots,c'_{2k}$ be non-decreasing curves with knees $K'_i$, and suppose that on an index set $T$ with $|T| \ge k+1$ these agree with a reference clean knee vector $K$. Then the pointwise median curve has a knee, namely $\operatorname{tmed}(K')$, and
-$$\min_{i\in T} K_i \;\le\; \operatorname{tmed}(K') \;\le\; \max_{i \in T} K_i .$$
-
-*Proof.* Theorem 6.2 supplies the knee; Theorem 7.1 supplies the interval. $\square$
-
-Note the strength of the corruption model: the $k$ dishonest seeds may have *entirely different curves*, not merely perturbed knees; monotonicity is assumed of them only so that they have knees at all.
-
-**Theorem 7.4 (The mean pipeline has breakdown point zero).** For any $N > 1$, the curves $\sigma_1, \sigma_1, \sigma_N$ on $G = \{1, N\}$ at bar $1$ have two clean knees equal to $1$, yet the knee of their mean curve is $N$. Thus one corrupted seed out of three drags the aggregate operating point arbitrarily far from the clean range $[1,1]$, whereas the median pipeline returns $1$.
-
-**Theorem 7.5 (Exact stability ray).** Let $b < c$. Then, for all $x$,
-$$\operatorname{med}_3(x, b, c) = b \iff x \le b .$$
-
-*Proof sketch.* If $x \le b$ the sorted triple is $(x,b,c)$ with middle $b$. Conversely if $x > b$ then $b < \min(x,c) \le \operatorname{med}_3(x,b,c)$, so the median exceeds $b$. $\square$
-
-Theorem 7.5 is the sharp complement to Theorem 7.1: robustness of the median value is *one-sided* around the current centre. A re-measured seed strictly between the current median and the top of the sample moves the centre, even though it lies inside the interval $[b,c]$ guaranteed by the breakdown theorem. Confusing the two — the interval in which the centre is guaranteed to *lie*, and the set on which it is guaranteed to *stay put* — is a genuine and easy error; §8.6 records an instance.
+Thus for an even sample, "the median" is not a number but a *set*. Any prediction about the outcome of an even-sized experiment that is phrased as a point prediction about the median is already mis-typed. The correct object is the pair of endpoints.
 
 ---
 
-## 8. Application: a two-context, six-seed knee dataset
+## 5. The median of three as a metric projection
 
-We now apply the theory to measured data. The experiment: a causal word-level language model, vocabulary $4097$, held-out final $10\%$ of the corpus, data-free top-$k$ attention selection, retention measured as accuracy at budget $k$ divided by full-attention accuracy, bar $= 0.98$.
+We now isolate the mechanism responsible for robustness: holding two measurements fixed and varying the third turns the median into a projection.
 
-### 8.1 The measured sweep and its knee
+**Definition 5.1 (clamp).** For $a,b,x$ in a linear order, set
+$$\operatorname{cl}_{a,b}(x) \;=\; \bigl(a\wedge b\bigr) \vee \bigl((a\vee b) \wedge x\bigr).$$
 
-At $(d,\mathrm{ctx}) = (4, 2048)$, seed 3: full-attention accuracy $0.1546$, hence bar $0.1516$; full loss $5.2199$. The retention row over the grid $G = \{96,128,160,192,224,240,256,288,384,512,768,1024\}$ is
+**Theorem 5.2 (median = clamp).** For all $a,b,x$ in a linear order, $\operatorname{med}(a,b,x) = \operatorname{cl}_{a,b}(x)$.
 
-| $k$ | 96 | 128 | 160 | 192 | 224 | 240 | 256 | 288 | 384 | 512 | 768 | 1024 |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| $c(k)$ | 0.963 | 0.973 | 0.981 | 0.984 | 0.986 | 0.987 | 0.990 | 0.993 | 0.999 | 1.000 | 1.003 | 1.003 |
+*Proof.* Both sides are lattice polynomials; case analysis on the relative order of $a,b,x$ (six cases) evaluates both to the middle element. $\square$
 
-Writing the row as a base value plus nonnegative increments switched on at grid points, $c = 0.963 + \sum_j \Delta_j\,\mathbb{1}[\,\cdot \ge g_j]$ with all $\Delta_j \ge 0$, makes monotonicity structural rather than checked pointwise.
+**Theorem 5.3 (the clamp is the nearest-point projection).** Let $a\le b$ in $\mathbb{R}$. Then $\operatorname{cl}_{a,b}(x) \in [a,b]$ for all $x$; it is the identity on $[a,b]$; and for every $y\in[a,b]$,
+$$\bigl|\operatorname{cl}_{a,b}(x) - x\bigr| \;\le\; |y - x|,$$
+with equality only for $y = \operatorname{cl}_{a,b}(x)$. That is, $\operatorname{cl}_{a,b}$ is the unique nearest-point projection of $\mathbb{R}$ onto $[a,b]$; it agrees with the standard projection onto a closed interval.
 
-**Proposition 8.1.** The measured curve is non-decreasing, and $\mathrm{IsKnee}_{G, 0.98}(c, 160)$, with margin $c(160) - 0.98 = 0.001$.
+*Proof.* Three cases. If $x<a$, the clamp is $a$ and $|a-x| = a-x \le y-x = |y-x|$ for all $y\in[a,b]$, strictly unless $y=a$. If $x>b$, symmetric. If $x\in[a,b]$, the clamp is $x$ and the distance is $0$, strictly less than $|y-x|$ for $y\ne x$. $\square$
 
-The margin is razor-thin — comparable to the binomial standard error of the accuracy measurement — so the individual knee read is fragile, exactly as the theory predicts for an extreme-order functional. Note also the recovery tail: $c(512) = 1.000$, $c(768) = c(1024) = 1.003$ (a held-out loss difference of $0.0016$), so the curve is well behaved beyond the knee and the crossing is not an artefact of a collapsing model.
+**Theorem 5.4 (regularity).** For fixed $a\le b$, the map $P = \operatorname{cl}_{a,b}$ on $\mathbb{R}$ satisfies:
 
-### 8.2 The horn analysis
+1. *Monotonicity*: $x\le y \Rightarrow P(x)\le P(y)$.
+2. *Nonexpansiveness*: $|P(x)-P(y)|\le |x-y|$.
+3. *Firm nonexpansiveness*: $\bigl(P(x)-P(y)\bigr)^2 \le (x-y)\bigl(P(x)-P(y)\bigr)$.
 
-Four point predictions $\{192,224,240,256\}$ were fixed before the run.
+*Proof.* (1) is case analysis. (2) follows from (1) plus the fact that $P$ never moves two points further apart than their preimages. (3) For $x\le y$, monotonicity gives $0\le P(y)-P(x)$ and nonexpansiveness gives $P(y)-P(x)\le y-x$; multiplying these two inequalities gives $(P(y)-P(x))^2 \le (y-x)(P(y)-P(x))$, which is the claim (the expression is symmetric under swapping $x,y$). $\square$
 
-**Proposition 8.2.** Every $k \in \{192,224,240,256\}$ satisfies $c(k) \ge 0.98$, and no $k$ in that set is a knee of $c$ on $G$ at bar $0.98$.
+Firm nonexpansiveness (3) is strictly stronger than (2): it says the displacement of the image is not merely bounded by the displacement of the argument but is *aligned* with it and dominated by it in the inner-product sense. This is the standard regularity class of projections onto convex sets in Hilbert space, and it is exactly the quantitative content of "the median absorbs outliers".
 
-*Proof sketch.* The first claim is the sweep row. For the second, any knee $k$ satisfies $k \le 160$ by minimality applied to the grid point $160$, which clears the bar; each of the four candidates exceeds $160$. $\square$
+**Theorem 5.5 (fibres).** Let $a<b$ in a linear order. Then
 
-The two clauses say something worth separating in general: a prediction can be *sound* (the predicted budget really is sufficient) and yet *not the answer* (it is not the least sufficient budget). Sufficiency is an upper-bound claim, knee-hood a minimality claim; a sweep that only checks the former cannot adjudicate the latter.
+* $\operatorname{cl}_{a,b}(x) = a \iff x \le a$;
+* $\operatorname{cl}_{a,b}(x) = b \iff b \le x$;
+* for $a<m<b$: $\operatorname{cl}_{a,b}(x) = m \iff x = m$.
 
-### 8.3 The $7/8$ median law
+*Proof.* Immediate from Theorem 5.3 and monotonicity, splitting on the position of $x$ relative to $[a,b]$. $\square$
 
-Let $K_8 = \{128,112,96\}$ (three seeds at $\mathrm{ctx}=1024$, $P_8 = 128$) and $K_{16} = \{256,224,160\}$ (three seeds at $\mathrm{ctx}=2048$, $P_{16} = 256$).
+So the fibres over the endpoints are closed half-lines — the *normal cones* of the segment at its endpoints — while interior fibres are singletons. Stability of the centre is a boundary phenomenon.
 
-**Proposition 8.3.** $\operatorname{med}(K_8) = 112$ and $\operatorname{med}(K_{16}) = 224$, and
-$$112 = \tfrac78 P_8, \qquad 224 = \tfrac78 P_{16}.$$
+**Theorem 5.6 (range).** For $a\le b$ real, $\{\operatorname{med}(a,b,x): x\in\mathbb{R}\} = [a,b]$: every value in the segment is attained and none outside it.
 
-**Proposition 8.4 (Normalised distributions).** Dividing by the product point is order-preserving, so by Theorem 4.1
-$$\operatorname{med}\{1,\tfrac78,\tfrac34\} = \tfrac78 \quad (\mathrm{ctx}=1024), \qquad \operatorname{med}\{1,\tfrac78,\tfrac58\} = \tfrac78 \quad (\mathrm{ctx}=2048).$$
+### 5.1 Consequences for the measured data
 
-**Theorem 8.5 (Uniqueness of the constant).** For $a \in \mathbb{Q}$, $\bigl(a P_8 = 112 \text{ and } a P_{16} = 224\bigr) \iff a = \tfrac78$. The law has no free parameter.
+At $\mathrm{ctx}=2048$ the two earlier seeds are $256$ and $224$, so the segment is $[224,256]$.
 
-**Theorem 8.6 (The mean admits no such law).** There is no constant $a$ with $a P_8 = \tfrac{128+112+96}{3}$ and $a P_{16} = \tfrac{256+224+160}{3}$. Indeed the first forces $a = 7/8$ (the mean coincides with the median at $\mathrm{ctx}=1024$), while the second requires $a = 5/6$.
+**Proposition 5.7 (stability ray).** $\operatorname{med}(256,224,x) = 224 \iff x \le 224$.
 
-Theorem 8.6 is the decisive discriminator between "the centre satisfies a law" and "the median satisfies a law". The two summaries agree at one context and disagree at the other, and only one of them extends.
+*Proof.* Theorem 5.2 identifies the median with $\operatorname{cl}_{224,256}(x)$; apply Theorem 5.5 at the left endpoint. $\square$
 
-### 8.4 Speed-ups: order reversal at work
+The measured third seed $160$ lies in this ray, comfortably. Note also the sharpness:
 
-Converting a knee to a deployment speed-up, $k^\* \mapsto \mathrm{ctx}/k^\*$, is order-reversing on positive values.
+**Proposition 5.8 (a plausible informal claim is false).** The assertion "only a third seed $\ge 256$ moves the centre off $224$" fails: $\operatorname{med}(256,224,240) = 240 \ne 224$, and $240 < 256$.
 
-**Proposition 8.7.** At $\mathrm{ctx} = 2048$, the speed-up multiset is $\{8,\ 64/7,\ 64/5\} \approx \{8.0,\ 9.14,\ 12.8\}$; by Theorem 4.2 its median is $64/7 = 2048/224 = \mathrm{ctx}/\operatorname{med}(K_{16})$.
+The correct threshold is the *near* endpoint $224$, not the far endpoint $256$.
 
-**Proposition 8.8 (Guaranteed speed-up).** $8$ is the least element of the speed-up multiset, and it is the image of the *largest* knee, $256$, under order reversal (Proposition 4.3). Moreover every seed satisfies the product-law bound $k^\* \le P_{16}$, so every seed deploys at at least $8\times$.
+**Proposition 5.9 (the excursion is absorbed).** The measured third seed sits at distance exactly $64$ from the segment: $|\operatorname{cl}_{224,256}(160) - 160| = 64$, and indeed $|y-160|\ge 64$ for every $y\in[224,256]$. The projection absorbs the entire excursion; the reported centre moves by $0$.
 
-Thus the deployment reading at $(d,\mathrm{ctx}) = (4,2048)$ is: **$\ge 8.0\times$ guaranteed across all three seeds, $9.1\times$ median, $12.8\times$ best.** The three numbers are three different order statistics of one distribution, and the algebra says which is which: the guarantee reads the max knee, the headline reads the median knee, the best case reads the min knee. Only the middle one is invariant under the change of coordinates.
+**Proposition 5.10 (contrast with the mean).** With two arguments fixed, the arithmetic mean $x\mapsto (a+b+x)/3$ is a surjection onto $\mathbb{R}$: a single free measurement can drive it anywhere. On the measured triple its value is $\operatorname{mean}(256,224,160) = 640/3 \approx 213.33 \ne 224$, whereas $\operatorname{med}(256,224,160) = 224 = \tfrac78\cdot 256$. The median's range is the compact segment $[224,256]$; the mean's is all of $\mathbb{R}$.
 
-### 8.5 Geometry of the two distributions
+Propositions 5.7–5.10 are the precise sense in which "report the median, not the average" was the correct protocol, and they quantify how much abuse the protocol tolerates: any third measurement at or below $224$, without limit.
 
-**Proposition 8.9.** In normalised coordinates the profiles $(\min, \operatorname{med}, \max)$ are
-$$\mathrm{ctx}=1024:\ (\tfrac34,\ \tfrac78,\ 1), \qquad \mathrm{ctx}=2048:\ (\tfrac58,\ \tfrac78,\ 1).$$
-Hence: the **upper edge is pinned** at $1$ in both contexts; the **median is stationary** at $7/8$; the **lower tail strictly sinks**, $\tfrac58 < \tfrac34$; and the normalised spread grows by exactly the factor
-$$\frac{(256-160)/P_{16}}{(128-96)/P_8} = \frac{3/8}{1/4} = \frac32 .$$
+---
 
-The pinned ceiling is not an accident of sampling: it is the product-law bound $k^\* \le P$, verified for all six seeds. The only free coordinate of the distribution, as context grows, is therefore the lower tail, and the median — the unique order statistic that is equivariant under *both* the normalisation $\div P$ and the inversion $\mathrm{ctx}/\cdot$ — is the only summary insensitive to which coordinate system one reads.
+## 6. Scaling geometry: rays, dilations, and a single scalar defect
 
-### 8.6 The exact stability region, and a corrected claim
+We now compare the two contexts. Plot each measurement as the point $(\mathrm{ctx}, k^\*)\in\mathbb{R}^2$:
 
-With two of the three seeds pinned at $224$ and $256$, Theorem 7.5 gives immediately:
+$$\text{top: } (1024,128),\ (2048,256);\qquad \text{median: } (1024,112),\ (2048,224);\qquad \text{low: } (1024,96),\ (2048,160).$$
 
-**Proposition 8.10.** $\operatorname{med}_3(x, 224, 256) = 224 \iff x \le 224$. In particular the family $\{160, 192, 224\}$ of third-seed values all preserve the reported centre.
+**Definition 6.1.** For $p,q\in\mathbb{R}^2$ write $p\times q = p_1q_2 - p_2q_1$. Two points lie on a common ray through the origin iff $p\times q = 0$; the triangle $O,p,q$ has area $|p\times q|/2$.
 
-**Proposition 8.11 (A false informal claim).** The statement "only a third seed of $256$ or more would shift the median" is false: $240 < 256$, yet $\operatorname{med}_3(240,224,256) = 240 \ne 224$.
+**Theorem 6.2 (the top edge is a ray).** $(1024,128)\times(2048,256) = 0$, and both points have slope $1/8$. Equivalently, the product-point law $k^\*_{\max} = d\cdot\mathrm{ctx}/32$ is exact proportionality.
 
-The correct statement is Proposition 8.10: the stability region is the half-line $x \le 224$, whose endpoint is the current median, *not* the interval $x < 256$ delimited by the next data point. The breakdown theorem (Theorem 7.1) does guarantee that the centre stays inside $[224,256]$ for *any* third value — but staying inside an interval and staying at a point are different guarantees.
+**Theorem 6.3 (the median is a ray).** $(1024,112)\times(2048,224) = 0$, and both points have slope
+$$\frac{7}{64} \;=\; \frac78\cdot\frac18 ,$$
+the product-law slope scaled by the median constant.
 
-### 8.7 The centre as an operating point
+**Theorem 6.4 (uniqueness and predictive content of the median slope).** If $s\in\mathbb{R}$ satisfies $112 = s\cdot 1024$, then $s = 7/64 = \tfrac78\cdot\tfrac18$, and moreover $224 = s\cdot 2048$.
 
-Finally, Theorem 6.1 upgrades the reported centre from a summary statistic to an operating point.
+*Proof.* The hypothesis is a linear equation with unique solution $s = 112/1024 = 7/64$; substituting into the second context, $\tfrac{7}{64}\cdot 2048 = 224$. $\square$
 
-**Proposition 8.12.** Let $c_0,c_1,c_2$ be any non-decreasing retention curves on any grid and bar with knees $256$, $224$, $160$. Then the pointwise median curve has knee exactly $224$.
+This is worth emphasising because it distinguishes a fitted constant from a tested one. One context *determines* the slope with zero remaining freedom; the second context then either confirms or refutes it. It confirms it exactly.
 
-**Proposition 8.13 (Non-vacuity).** Such curves exist: the unit step curves $\sigma_{256}, \sigma_{224}, \sigma_{160}$ on $G = \{160,224,256\}$ at bar $1$ realise the triple, and their median curve has knee $224$.
+**Theorem 6.5 (the low tail is not a ray).** $(1024,96)\times(2048,160) = 1024\cdot 160 - 96\cdot 2048 = -32768 \ne 0$; the origin triangle has area $16384$. No proportional law fits the low tail.
 
-**Proposition 8.14 (Deployment reading under re-measurement).** With seeds 1 and 2 fixed at $256$ and $224$ and an arbitrary third measurement $t$, the median curve has knee $\operatorname{med}_3(256,224,t) \in [224,256]$.
+**Theorem 6.6 (dilation equivariance, and its failure).** Let $\delta_2(p) = 2p$ be the doubling dilation of the plane, corresponding to doubling the context. Then
+$$\delta_2(1024,128) = (2048,256),\qquad \delta_2(1024,112) = (2048,224),$$
+so the top edge and the median are $\delta_2$-equivariant, while
+$$\delta_2(1024,96) = (2048,192) \ne (2048,160),$$
+with defect
+$$2\cdot 96 - 160 \;=\; 32 \;=\; \frac{256}{8} \;=\; \frac{P}{8}.$$
 
-So "the median knee is $224$" is equivalent to "the median of the three models, as a model, needs a budget of $224$" — and no fourth measurement of the third seed can push that below $224$ or above $256$.
+**Theorem 6.7 (no dilation matches the configuration).** There is no $t\in\mathbb{R}$ with $t\cdot(1024,128) = (2048,256)$, $t\cdot(1024,112) = (2048,224)$ and $t\cdot(1024,96) = (2048,160)$ simultaneously.
+
+*Proof.* The first forces $t\cdot 128 = 256$, i.e. $t=2$; the third then demands $2\cdot 96 = 160$, false. $\square$
+
+**Interpretation.** The knee *distribution* is not self-similar under context doubling, even though its centre and its upper edge are. All of the non-self-similarity is concentrated in one scalar, the low-tail defect $P/8$. This localises the entire context-dependence of the distribution's shape into a single measurable number.
+
+### 6.1 The spread, exactly
+
+Normalise each triple by its product point:
+$$r_8 = (3/4,\ 7/8,\ 1),\qquad r_{16} = (5/8,\ 7/8,\ 1).$$
+
+**Theorem 6.8 (normalised optimal costs).** For all $x$,
+$$|x-\tfrac34| + |x-\tfrac78| + |x-1| \ge \tfrac14, \quad\text{equality iff } x=\tfrac78;$$
+$$|x-\tfrac58| + |x-\tfrac78| + |x-1| \ge \tfrac38, \quad\text{equality iff } x=\tfrac78.$$
+Consequently the optimal Fermat–Weber costs are $1/4$ and $3/8$, and
+$$\tfrac38 \;=\; \tfrac32\cdot\tfrac14 .$$
+
+*Proof.* Corollary 2.4 applied to each sorted triple; the optimal cost is the spread, $1 - 3/4$ and $1 - 5/8$. $\square$
+
+The informal report of a "$\sim 50\%$ wider" spread at the longer context is therefore *exact*: the optimal transport cost is larger by the precise factor $3/2$.
+
+**Theorem 6.9 (the widening is carried entirely by the low tail).** The top two normalised coordinates coincide at the two contexts ($7/8$ and $1$ in both), and
+$$\underbrace{\tfrac38 - \tfrac14}_{\text{cost increase}} \;=\; \tfrac18 \;=\; \underbrace{\tfrac34 - \tfrac58}_{\text{low-coordinate drop}} .$$
+
+---
+
+## 7. A flat face inside a non-convex level set
+
+Regard normalised triples as points of $\mathbb{R}^3$ and consider the median map $\operatorname{med}:\mathbb{R}^3\to\mathbb{R}$ and its level set $\mathcal{L} = \operatorname{med}^{-1}(7/8)$.
+
+**Theorem 7.1 (a maximal flat edge).** For every $t\le 7/8$, $\operatorname{med}(t,\ 7/8,\ 1) = 7/8$; and for $7/8 < t \le 1$, $\operatorname{med}(t,\ 7/8,\ 1) = t \neq 7/8$. So the half-line $H = \{(t,7/8,1) : t\le 7/8\}$ lies in $\mathcal{L}$ and is maximal in its direction.
+
+*Proof.* If $t\le 7/8\le 1$, the sorted triple is $(t, 7/8, 1)$ with middle $7/8$; if $7/8<t\le 1$, the sorted triple is $(7/8, t, 1)$ with middle $t$. $\square$
+
+**Theorem 7.2 (both contexts lie on the edge, hence so does the segment joining them).** $r_8, r_{16}\in H$, and for every $s\le 1$,
+$$\operatorname{med}\bigl(s\,r_8 + (1-s)\,r_{16}\bigr) = \tfrac78 .$$
+
+*Proof.* The second and third coordinates of $s\,r_8 + (1-s)\,r_{16}$ are $s\cdot\tfrac78+(1-s)\cdot\tfrac78 = \tfrac78$ and $s+(1-s)=1$; the first is $s\cdot\tfrac34 + (1-s)\cdot\tfrac58 = \tfrac58 + \tfrac{s}{8} \le \tfrac78$ whenever $s\le 2$, in particular for $s\le 1$. Apply Theorem 7.1. $\square$
+
+The hypothesis needed is only $s\le 1$, not $0\le s\le 1$: the flat face extends *past* the $16\times$ endpoint in the $r_{16}$ direction. Physically, the low tail may keep decreasing over further contexts without moving the centre.
+
+**Theorem 7.3 (the level set is not convex).** $\operatorname{med}(5/8,\,7/8,\,1) = 7/8$ and $\operatorname{med}(7/8,\,1,\,5/8) = 7/8$, but their midpoint $(3/4,\, 15/16,\, 13/16)$ satisfies $\operatorname{med}(3/4,\,15/16,\,13/16) = 13/16 \ne 7/8$.
+
+*Proof.* Direct evaluation: the sorted midpoint triple is $(3/4, 13/16, 15/16)$ with middle $13/16$. $\square$
+
+Theorem 7.3 shows that Theorem 7.2 has genuine content. Two points may each have median $7/8$ while the segment joining them leaves the level set entirely. That the two measured contexts lie in a *common convex face* of this non-convex polyhedral set is a structural statement about the data — specifically, it encodes that both contexts have the same pinned top coordinate and the same centre, with all variation confined to the invisible low coordinate.
+
+---
+
+## 8. The pending fourth measurement: a pre-registered prediction
+
+The next planned experiment adds a fourth seed at $\mathrm{ctx}=2048$. By Section 4 the sample becomes even and the optimum becomes a segment. We state the full prediction.
+
+Write, for a fourth value $x$ and a candidate centre $t$,
+$$C(x,t) \;=\; |t-160| + |t-224| + |t-256| + |t-x|.$$
+
+**Theorem 8.1 (value at the $7/8$ centre).** For every $x$, $\;C(x,224) = 96 + |224-x|$.
+
+*Proof.* $|224-160| + |224-224| + |224-256| = 64 + 0 + 32 = 96$. $\square$
+
+**Theorem 8.2 (the centre is optimal for every fourth value).** For all $x,t\in\mathbb{R}$, $\;C(x,224)\le C(x,t)$.
+
+*Proof.* Two triangle inequalities: $|t-160| + |t-256|\ge 96$ and $|t-224| + |t-x|\ge |224-x|$. Add, and compare with Theorem 8.1. $\square$
+
+**Theorem 8.3 (exact linear cost response).** The optimal four-value cost is exactly $96 + |224-x|$: it responds to the new datum linearly, with slope $1$ away from $224$. What a fourth measurement moves is the *spread*, never the centre.
+
+**Theorem 8.4 (regimes).** For $160\le x\le 224$ and any $t$,
+$$C(x,t) = (256-160) + (224 - x) \iff x\le t\le 224 ;$$
+for $224\le x\le 256$ and any $t$,
+$$C(x,t) = (256-160) + (x - 224) \iff 224 \le t \le x .$$
+That is: a repeated low tail widens the optimal set *downwards* with upper endpoint pinned at $224$; a high fourth value widens it *upwards* with lower endpoint pinned at $224$.
+
+*Proof.* Theorem 4.1 with sorted data $(160, x, 224, 256)$ in the first case and $(160,224,x,256)$ in the second. $\square$
+
+**Theorem 8.5 (knife edge for uniqueness).** For $160\le x\le 224$, the $7/8$ centre is the *unique* optimum if and only if $x = 224$.
+
+*Proof.* By Theorem 8.4 the optimal set is $[x,224]$, a singleton iff $x=224$. $\square$
+
+**Theorem 8.6 (balance form).** For every $y\in\mathbb{R}$, the point $224$ is balanced for the four-element sample $\{160,224,256,y\}$: if $y\le 224$, three of the four entries are $\le 224$ and two are $\ge 224$; if $y>224$, two are on each side. By Theorem 3.3, $224$ minimises $F$ on that sample.
+
+Theorem 8.6 re-derives Theorem 8.2 from the general characterisation, showing the phenomenon is not an accident of the specific numbers: it is the balance condition holding at the third order statistic of a four-point sample whose two middle entries straddle $224$.
+
+**Methodological reading.** The prediction is *not* refutable by the pending measurement, and this is informative rather than embarrassing. It tells us that a fourth seed does not test the centre: the geometry guarantees the centre survives. What the fourth seed tests is the low tail — whether the ratio $5/8$ observed at the longest context is a stable structural feature or a single-seed artefact. Stated in the correct variational language, the outcome to watch is the *lower endpoint* of the optimal segment: a value $x\in[160,224]$ replicates the low tail and pushes the endpoint down to $x$; a value $x\in[224,256]$ contradicts it and pushes the *upper* endpoint to $x$ while leaving the lower one at $224$.
 
 ---
 
 ## 9. Algorithms
 
-Three algorithms are implicit in the development and worth stating explicitly.
+The theory is entirely constructive, and each theorem corresponds to a small exact algorithm.
 
-**Algorithm A (Knee detection).** Given a sorted grid $G = (g_1 < \dots < g_n)$, a curve oracle $c$, and a bar $\beta$, return the least $g_i$ with $c(g_i) \ge \beta$, or $\bot$. Linear scan: $O(n)$ oracle calls. If $c$ is known monotone, binary search reduces this to $O(\log n)$ calls — relevant when each call is a four-hour training run's evaluation pass.
+**Algorithm A (Fermat–Weber set of a sample on a line).** Sort the sample $x_{(1)}\le\cdots\le x_{(n)}$ in $O(n\log n)$ (or $O(n)$ by selection). Return $[x_{(k+1)}, x_{(k+1)}]$ if $n = 2k+1$, and $[x_{(k)}, x_{(k+1)}]$ if $n = 2k$. Correctness: Corollary 3.6 and Theorem 4.1. The optimal cost is $\sum_{i}\bigl(x_{(n+1-i)} - x_{(i)}\bigr)$ over $i\le \lfloor n/2\rfloor$, i.e. the sum of nested spreads.
 
-**Algorithm B (Median-curve knee, two routes).** Route A: run Algorithm A on each of the $2k+1$ curves, then take the median of the knees ($O((2k+1)n)$ oracle calls plus an $O(k\log k)$ selection). Route B: form the pointwise median curve and run Algorithm A on it ($O((2k+1)n)$ oracle calls plus $O(n k \log k)$ arithmetic). Theorem 6.2 guarantees the two return the same value when the curves are monotone; Route A is cheaper, Route B is what one would defend as an operating point. The theorem says one need not choose.
+**Algorithm B (balance test).** Given $S$ and $m$, compute $\#\{x\le m\}$, $\#\{x<m\}$ in one pass, $O(n)$; report balanced iff $n - \#\{x\le m\} \le \#\{x\le m\}$ and $\#\{x<m\} \le n - \#\{x<m\}$. By Theorem 3.9 this is an exact optimality certificate — no cost evaluation required.
 
-**Algorithm C (Stability certificate).** Given a measured knee multiset of odd size and a candidate re-measurement, decide whether the reported centre moves, and return the exact set of values that leave it fixed. For three seeds sorted as $a \le b \le c$ with the third slot free, Theorem 7.5 gives the stability set $(-\infty, b]$ when the two pinned values are $b < c$; more generally, for $2k+1$ seeds with one free coordinate, the reported centre as a function of the free value is the non-decreasing step function $t \mapsto \operatorname{med}(K_{\text{pinned}}, t)$, constant on $(-\infty, m]$ and on $[m', \infty)$, where $m, m'$ are the two central order statistics of the pinned values.
+**Algorithm C (stability radius of the centre).** Given a sample with one designated free coordinate, the set of values of that coordinate leaving the reported centre unchanged is, by Theorem 5.5, a half-line when the centre is at an endpoint of the segment spanned by the fixed data, and a singleton otherwise. For the measured $16\times$ data (fixed $\{224,256\}$) it is $(-\infty, 224]$, so the stability radius *downwards* is infinite and *upwards* is $0^+$.
+
+**Algorithm D (ray/dilation diagnostics).** For paired measurements $(c_1,y_1)$, $(c_2,y_2)$, compute the determinant $c_1y_2 - y_1c_2$; zero certifies a proportional law and its slope, nonzero quantifies the departure by the origin-triangle area $|{\det}|/2$. For a doubling pair, the defect $2y_1 - y_2$ is the scalar measuring failure of dilation equivariance.
 
 ---
 
 ## 10. Discussion
 
-### 10.1 Why point predictions failed and a structural prediction held
+### 10.1 What the geometry bought
 
-The empirical episode that motivated this work is instructive precisely because it separates two notions of correctness. Four point predictions of a single seed's knee failed, while the prediction that the *distribution's centre* sits at $\tfrac78 P$ held at two contexts.
+Three informal claims were in circulation, and the geometry adjudicated all three.
 
-The theory explains the asymmetry. A single knee is an extreme functional of a noisy curve: it depends on the location of one crossing, and the crossing in question was decided by a margin of $0.001$ against a measurement standard error of comparable magnitude. Nothing in the theory of the median predicts such a quantity, and nothing should: knees are not $1$-Lipschitz functionals of the curve.
+*"The median is the robust quantity."* Made precise: the median of three is a metric projection onto the segment spanned by the other two, hence firmly nonexpansive with an unbounded stability half-line at each endpoint (Theorems 5.3–5.5). The mean, by contrast, is surjective in the free coordinate (Proposition 5.10). The claim is true, and quantitatively so.
 
-The median, by contrast, is majority-determined (Theorem 3.6), invariant under any monotone or antitone change of measurement units (Theorems 4.1, 4.2), $1$-Lipschitz (Theorem 3.9), immune to any minority of corrupted seeds (Theorem 7.1), and — the point that makes the law more than statistical hygiene — an operating point of a genuine aggregate curve (Theorem 6.1). A prediction about it is a fundamentally different kind of claim from a prediction about a point, and the two should be scored separately.
+*"Only a third seed $\ge 256$ would move the centre."* **False** (Proposition 5.8): the threshold is $224$, the near endpoint, as $\operatorname{med}(256,224,240) = 240$ shows. Intuition placed the boundary at the wrong end of the segment.
 
-### 10.2 Honest limitations
+*"The $16\times$ spread is $\sim 50\%$ wider."* Exactly right, and exactly $3/2$ (Theorem 6.8), with the widening carried wholly by the low coordinate (Theorem 6.9).
 
-Several limits should be stated plainly.
+### 10.2 Point predictions versus structural predictions
 
-* The individual knee read at seed 3 is razor-thin ($+0.001$), so the true crossing lies somewhere between grid points, plausibly near $150$–$160$; the grid resolution is a real source of uncertainty in the low tail.
-* The sinking low tail is presently a single measurement at the longer context; one further seed would decide whether $5/8$ is a stable feature of the $\mathrm{ctx}=2048$ distribution or specific to that seed.
-* The $7/8$ median law rests on two contexts and six seeds. Theorem 8.5 shows it has no free parameter — which makes it falsifiable, not confirmed.
-* An unusual negative result in the dataset deserves emphasis: measures of attention concentration (effective support, top-$k$ mass) do **not** sort with the measured knees across the three seeds at the longer context. There is no evidence here for a bounded "working set" explanation of the knee.
-* Nothing here explains *why* the centre should sit at $7/8$ of the product point. The theorems say the median is the right thing to state a law about, and that the specific law is unique and testable; they do not derive its value from a model of the underlying system.
+The round separates two kinds of claim. Four *point* predictions about a single seed's knee were all refuted. One *structural* prediction — about the centre of the distribution — held. The geometry explains why this asymmetry is not luck. A single seed's knee is determined by where a noisy quality curve crosses a bar between grid points; the reported measurement crossed with a margin of $+0.0012$, so the true threshold lies near $150$–$160$ and the grid reports $160$. Nothing protects that number. The median, by contrast, is the image of a firmly nonexpansive projection, and the projection's fibre over the reported value is an entire half-line: it is insensitive to arbitrarily large excursions in the protected direction.
 
-### 10.3 Relation to classical robust statistics
+The practical lesson generalises well beyond this dataset. When a per-run measurement is grid-quantised and noisy, do not pre-register the run's value; pre-register a functional of the distribution whose stability you can bound in advance. The stability bound *is* the prediction's content.
 
-That the median has breakdown point $1/2$ while the mean has breakdown point $0$ is classical. What is added here is (i) the *normal form* that makes these facts algebraic identities in a semiring rather than analytic estimates, (ii) the *characterisation* isolating translation equivariance — the tropical axiom — as the property that separates the median from other conservative order-theoretic aggregators, and (iii) the *commutation theorem*, which is not a statement about the median as a location estimator at all, but about the median as an aggregator that commutes with a nonlinear, non-Lipschitz read-out (knee detection). Point (iii) has no analogue for the mean, and it is what licenses reporting a median knee as an operating point rather than merely as a summary.
+### 10.3 Limits and honesty
+
+Several caveats are structural rather than rhetorical.
+
+* The $7/8$ law rests on two contexts and six measurements. Two points determine a ray, so the "confirmation" in Theorem 6.4 is one independent test, not many. A third context would be the first genuine multiplicity.
+* The low-tail ratio $5/8$ rests on a single measurement. Theorem 6.6's defect $P/8$ is therefore an exactly proved statement about one measured pair, not a verified law.
+* The most recent knee reading was razor thin ($+0.0012$ margin against a binomial standard error of about $0.11\%$ in accuracy), so $160$ should be read as "the grid point above a threshold near $150$–$160$", not as an exact value.
+* Theorem 8.2 shows the pending fourth measurement cannot refute the centre. This is a limitation on what the next experiment can tell us, and the correct response is to read that experiment as a test of the low tail, per Section 8.
+
+### 10.4 Beyond the line
+
+Two directions in which the results are already stated more generally than the data requires are worth flagging. Theorem 2.3 lives in an arbitrary metric space, and Corollary 2.5 shows that collinear data in a normed space have their geometric median *in the ambient space* at the middle point — the minimiser does not move off the line. Theorem 3.3 lives in an arbitrary linearly ordered abelian group, so the sufficiency half of the characterisation applies verbatim to integer, rational, or lexicographic data. Only the necessity half (Theorem 3.8) uses the reals, and even then only through the existence of a nearest datum on each side — so it holds in any linear order with the finite-sample structure used, i.e. essentially unchanged for integer grids, which is the case relevant to grid-quantised measurements.
 
 ---
 
 ## 11. Future directions
 
-The following conjectures are open; each is falsifiable by a single explicit counterexample or by one further experiment.
+### C1. The fourth-value dichotomy: a new measurement can widen the optimal set but never move it
 
-**C1. The $7/8$ centre is a fixed point of context doubling.** For contexts $\mathrm{ctx}_n = 2^n\,\mathrm{ctx}_0$ with product points $P_n = d\,\mathrm{ctx}_n/32$, conjecture that the normalised three-seed knee distributions $K_n/P_n$ have constant median $7/8$, strictly decreasing lower endpoints $\min(K_n)/P_n$, and upper endpoints pinned at $1$: the family is monotone in the *lower tropical coordinate only*. The pinned upper edge is not an accident but the product-law bound $k^\* \le P$; the median, being the unique order statistic equivariant under both $\div P$ and $\mathrm{ctx}/\cdot$, is the only summary insensitive to which coordinate one reads. Two contexts and six seeds already fix the median at $7/8$ and the max at $1$; a third context decides whether the low tail follows a law (a $2^{-n}$-type decay, say) or is noise.
+**Conjecture.** For the pending $16\times$ fourth value $x$, the Fermat–Weber optimum of $\{160,224,256,x\}$ is the segment with endpoints $\min(x,224)\vee 160$ and $\max(x,224)\wedge 256$, whose *endpoint at $224$ is pinned for every $x$*, while the optimal cost is $96 + |224-x|$. Consequently no fourth value can refute the $7/8$ centre in the variational sense; it can only destroy uniqueness, and it does so unless $x = 224$ exactly.
 
-**C2. Majority-threshold rigidity of the knee functional.** Conjecture that for monotone retention curves the map "curve $\mapsto$ knee" is an order-reversing homomorphism from the lattice of curves (pointwise $\wedge, \vee$) to the lattice of grid points: $\mathrm{knee}(c \wedge c') = \max(\mathrm{knee}\,c, \mathrm{knee}\,c')$ and $\mathrm{knee}(c\vee c') = \min(\mathrm{knee}\,c, \mathrm{knee}\,c')$, so that *every* lattice polynomial in the curves commutes with the knee. Theorem 6.1 is the $k=1$ median instance; the general mechanism is that threshold duality converts any lattice polynomial into a monotone Boolean function of the individual threshold events, which the knee reads off directly. This would give a calculus for aggregating retention curves before measuring knees.
+**Status.** The pinning, the cost law, both regime descriptions, and the uniqueness knife edge are established above (Theorems 8.1–8.5). What remains conjectural is the *empirical* half: that the measured fourth value lands in $[160,256]$, so that the segment description applies with both endpoints interior.
 
-**C3. The mean is the unique non-conservative self-dual aggregator that breaks the law.** Among monotone, symmetric, translation-equivariant, self-dual ternary aggregators on $\mathbb{R}$, conjecture that exactly two phases occur: the conservative ones (all equal to the median, by Theorem 5.1) and the strictly averaging ones, each of which fails some measured two-context ratio law. Equivalently: no strictly averaging aggregator satisfies $A(K_8) = \tfrac78 P_8$ and $A(K_{16}) = \tfrac78 P_{16}$ simultaneously. Conservativity is exactly the axiom separating the tropical (max/min-built) aggregators from the linear ones.
+**Key insight.** With an even sample the Fermat–Weber minimiser is not a point but the middle segment, so "the median" of a four-measurement experiment is a *set*, and the correct falsifiable statement concerns the position of that set's endpoints, not a number.
 
-**C4. Grid refinement and the continuum knee.** All statements here are relative to a finite grid. Conjecture that for curves that are continuous and strictly increasing near their crossing, the grid knee converges to the continuum crossing as the grid refines, and that the commutation theorem passes to the limit. The razor-thin margin of the measured seed-3 read makes this practically relevant: the reported $160$ is an upper bound for a crossing plausibly near $150$.
+**Why now.** The next planned experiment is exactly a fourth seed at $\mathrm{ctx}=2048$; stating the prediction as a segment before the run makes the outcome decidable in advance.
 
-**C5. Quantitative stability of the median law under seed resampling.** Combining Theorem 7.5 with a noise model for individual knees would yield a probability that the reported centre changes under one further seed. For the measured $16\times$ cell this is the probability that a fourth seed exceeds $224$ — a directly testable prediction rather than a qualitative robustness claim.
+### C2. The low-tail ray defect grows linearly in the context
+
+**Conjecture.** Writing $L(\mathrm{ctx})$ for the smallest three-measurement knee at context $\mathrm{ctx}$, the plane points $(\mathrm{ctx}, L(\mathrm{ctx}))$ are *not* collinear with the origin, and the defect of the doubling dilation, $2L(\mathrm{ctx}) - L(2\,\mathrm{ctx})$, equals $P(2\,\mathrm{ctx})/8$ where $P = d\cdot\mathrm{ctx}/32$. The measured pair gives $2\cdot 96 - 160 = 32 = 256/8$.
+
+**Status.** The single measured instance is exact (Theorem 6.6); the law itself is open. It needs a third context, $\mathrm{ctx}=4096$, with predicted low tail $2\cdot 160 - 512/8 = 256$, i.e. ratio $1/2$.
+
+**Key insight.** The top edge and the median are dilation-equivariant while the low tail is not, so the entire context dependence of the knee *distribution* is concentrated in one scalar defect, measurable with a single extra run.
+
+**Why now.** The $4096$ cell is one doubling away, and the prediction ratio $1/2$ is far from the alternative $5/8$ that would hold if the low tail were also equivariant; one run separates them.
+
+### C3. Median stability as a firm-nonexpansiveness phenomenon, with a sharp constant
+
+**Conjecture.** For any statistic $S:\mathbb{R}^n\to\mathbb{R}$ that is (i) symmetric, (ii) translation equivariant, (iii) monotone, and (iv) firmly nonexpansive in each coordinate with the others fixed, the stability set of a reported value — the set of values of a designated free coordinate leaving $S$ unchanged — is a closed interval, unbounded precisely when the reported value is an endpoint of the range of $S$ in that coordinate. The median satisfies all four hypotheses with sharp constant $1$; the mean fails (iv) in the required uniform sense and has singleton stability sets.
+
+**Why it matters.** This would identify exactly which robust statistics inherit the half-line stability that made the $7/8$ law survivable, and would give a design criterion for choosing the reported functional in noisy threshold-search experiments.
+
+### Further cells
+
+Additional measurable directions: a fourth seed at $\mathrm{ctx}=1024$ to refine $\{96,112,128\}$ (low information value, since the median there is already pinned by the same projection argument); a depth-$8$ corner at short context to test whether the constant $7/8$ is depth-independent or specific to $d=4$; and a compression-floor check at depth $8$.
 
 ---
 
 ## 12. Conclusion
 
-The median of an odd sample is a homogeneous tropical polynomial: the maximum, over all $(k+1)$-subsets of the sample, of the minimum there. That single normal form yields threshold duality, and threshold duality yields everything else — full equivariance under monotone and antitone changes of coordinates, an axiomatic characterisation in which the decisive axiom is the tropical one, nonexpansiveness, a majority breakdown theorem, and, most consequentially, the exact commutation of median aggregation with knee reading, a commutation that the arithmetic mean fails outright.
+A distribution of noisy measurements was summarised by its median, and four point predictions about a single measurement failed while the structural claim about that median held. We have shown that this outcome is a theorem, not a coincidence.
 
-Applied to a measured attention-budget dataset, the theory both explains and disciplines the empirical story: it derives the measured knee $k^\* = 160$ and its razor-thin margin from the sweep row, shows that all four pre-registered point predictions are simultaneously sound and non-minimal, establishes that the two-context median law $\operatorname{med}(K) = \tfrac78 P$ has a unique constant and no mean-based analogue, identifies the pinned ceiling as the product-law bound and the sinking floor as the sole free coordinate, and pins the exact stability region of the reported centre to the ray $x \le 224$ — correcting, in passing, a plausible-sounding claim that it extends to $256$.
+The median on a line is the Fermat–Weber point: the minimiser of total distance. We characterised those minimisers completely — a point is optimal exactly when it is balanced — with sufficiency in any linearly ordered abelian group and a finitary necessity proof over the reals, and we showed the optimal set is always an interval, a point in odd size and a segment in even size. Holding two measurements fixed, the median of three is the nearest-point projection onto the segment they span: monotone, firmly nonexpansive, with half-line fibres at the endpoints. That is the mechanism of robustness, and it is quantitative: the measured excursion of $64$ units below the segment was absorbed exactly, and any excursion whatsoever in that direction would have been.
 
-The general moral is a modest but useful one for experimental practice. When the quantity you can measure is fragile and the quantity you want to predict is structural, choose the summary whose algebra commutes with your read-out. In the threshold-crossing setting, that summary is the median, and the reason is tropical.
+Across contexts, the picture is two rays and a defect. The upper edge and the median are exactly proportional to the context, with slopes $1/8$ and $7/64 = \tfrac78\cdot\tfrac18$; the low tail is not proportional at all, and the failure of dilation equivariance is the single scalar $P/8$. The spread grows by exactly $3/2$ per doubling, entirely through the low coordinate. Both normalised measurements lie on a maximal flat face of a non-convex level set of the median map, which is why they can agree at the centre while disagreeing everywhere else.
+
+Finally, the geometry issues a prediction about the pending fourth measurement that cannot fail: the $7/8$ centre stays optimal whatever the new value is, the optimal cost is exactly $96 + |224 - x|$, and the optimum becomes a segment with one endpoint pinned at the centre. The right reading is that the next experiment is not a test of the centre but of the low tail — and stating that in advance, in the correct variational language, is the whole benefit of doing the geometry.

@@ -1,136 +1,180 @@
-# The Middle Value Knows Something the Averages Don't
+# The Centre That Cannot Be Moved
 
-## How a stubborn little piece of tropical algebra explains why the *median* is the only honest summary of a noisy experiment
+## How a single stubborn number survived four failed predictions — and what the geometry of medians has to say about it
 
-### A prediction, four ways wrong
+### A prediction that missed, and a law that didn't
 
-Imagine you are running an expensive experiment. Each run takes four hours. Before you start, you write down, in ink, four guesses for the number the experiment will produce: $192$, $224$, $240$, $256$. You run it. The answer comes back: $160$.
+Here is a story about being wrong in the most useful possible way.
 
-All four guesses are wrong. Not close-but-wrong — *categorically* wrong, outside the whole cluster you had in mind. In most accounts of science, this is where you concede and go back to the drawing board.
+A long-running series of experiments studies a simple, very practical question: in a system that attends to $\mathrm{ctx}$ items at a time, how many of those items do you actually need to keep? Throw away too many and quality collapses; keep them all and you pay the full price. Somewhere in between there is a **knee** — the smallest budget $k^\*$ at which quality still clears a fixed bar. Finding it is worth money: every factor you shave off the budget is a factor of speed.
 
-And yet, in the story we are about to tell, something remarkable happened. The four point predictions failed, but a *fifth*, structurally different prediction — a prediction not about any single measurement but about the **centre** of a family of measurements — landed exactly on the nose. The measured value $160$, combined with two earlier measurements $224$ and $256$, produced a three-point distribution whose median was exactly $224$: precisely the predicted value of $\tfrac{7}{8}$ of a certain reference quantity.
+The knee, unhappily, is noisy. Repeat the same experiment with a different random seed and you get a different $k^\*$. At context length $2048$, three independent repetitions gave
 
-That is a curious kind of scientific success: $0$ out of $4$ on the points, $1$ out of $1$ on the structure. This article is about *why* that is not a fluke or a rhetorical trick, and about the beautiful, spiky, min-and-max flavoured algebra that makes the median — and only the median — capable of that sort of prediction.
+$$k^\* \in \{160,\ 224,\ 256\}.$$
 
-### The setting: how much of a long context does a model actually need?
+Before the third of those runs, four specific point predictions were written down: $224$, $240$, $256$, $192$. The measured value was $160$. **All four predictions were refuted.** Not narrowly — the measurement landed outside every one of them.
 
-Here is the concrete experiment behind the numbers, stripped to its essentials.
+And yet a fifth claim, made at the same time, came through untouched. That claim was not about a point. It was about the *centre* of the distribution:
 
-A sequence model reads a *context* of $\mathrm{ctx}$ previous tokens, and for each new token it looks back at all of them. That "look at all of them" step is the expensive part; its cost grows with the square of the context length. A natural economy is to keep only the $k$ most relevant past positions and throw away the rest. If you keep too few, the model gets worse. If you keep enough, the model performs indistinguishably from the version that looks at everything.
+$$\operatorname{median}\{160,224,256\} = 224 = \tfrac{7}{8}\cdot 256 .$$
 
-So define a **retention curve**: for each budget $k$, let $c(k)$ be the model's accuracy at budget $k$, divided by its accuracy with the full context. It starts below $1$ and climbs. Fix a **bar** — here $0.98$, meaning "within $2\%$ of full performance". Then the **knee** $k^\*$ is the smallest budget on the tested grid at which the curve clears the bar:
+Here $256 = d\cdot\mathrm{ctx}/32$ is what one might call the **product point** — a natural budget scale built from the two experimental parameters. At the shorter context $\mathrm{ctx} = 1024$, where the product point is $128$, three earlier seeds had given $\{96, 112, 128\}$ with median
 
-$$k^\* = \min\{\,k \in G : c(k) \ge \mathrm{bar}\,\}.$$
+$$112 = \tfrac{7}{8}\cdot 128 .$$
 
-The knee is the number you would quote to an engineer: *this is how much of the past you actually need.*
+The same constant. Two contexts, six seeds, one number: $7/8$.
 
-In the experiment at hand, with model width $d=4$ and context $\mathrm{ctx}=2048$, the measured retention curve for one particular random seed reads
+Individual seeds are unpredictable. Their median is not. That asymmetry is the subject of this article — and it turns out to be a statement in geometry, not in statistics.
 
-| $k$ | 96 | 128 | 160 | 192 | 224 | 240 | 256 | 288 | 384 | 512 | 768 | 1024 |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| $c(k)$ | 0.963 | 0.973 | **0.981** | 0.984 | 0.986 | 0.987 | 0.990 | 0.993 | 0.999 | 1.000 | 1.003 | 1.003 |
+---
 
-The bar is $0.980$. The curve first clears it at $k=160$, with the razor-thin margin $0.981 - 0.980 = 0.001$. So $k^\* = 160$: all four horns of the pre-registered prediction — $192, 224, 240, 256$ — *do* clear the bar, but none of them is the *first* budget that does. They are each safe and each wrong, simultaneously. It is a nice illustration that "my prediction passes the test" and "my prediction is the answer" are very different claims.
+### The median is a shape, not a sorting trick
 
-### The 7/8 law
+Most people meet the median as a recipe: line the numbers up and take the middle one. That definition is combinatorial and slightly unsatisfying — it treats the numbers as tokens in a list rather than as points in space.
 
-Now zoom out. The same experiment has been run at two context lengths and, at each, with three different random seeds. There is a natural reference scale, the **product point** $P = d\cdot\mathrm{ctx}/32$: at $\mathrm{ctx}=1024$ that is $P_8 = 128$, and at $\mathrm{ctx}=2048$ it is $P_{16} = 256$. Normalising each measured knee by its product point gives:
+There is a much older definition, and it is geometric. Given points $p_1,\dots,p_n$, ask for the location $t$ that minimises the **total distance**
 
-| context | three knees | normalised | median |
+$$F(t) \;=\; \sum_{i=1}^{n} |t - p_i| .$$
+
+This is the **Fermat–Weber problem**, posed by Fermat for three points in the plane and later used by the economist Alfred Weber to site a factory optimally between its suppliers. Its solution is called the *geometric median*. On a line, the geometric median and the sorted-list median are the same object — and that coincidence is the reason the median behaves so well.
+
+The one-dimensional case is easy to see and easy to prove. Take three sorted points $a \le b \le c$. For any candidate $t$,
+
+$$|t-a| + |t-b| + |t-c| \;\ge\; (c-a),$$
+
+because $|t-a| + |t-c| \ge c - a$ by the triangle inequality, and $|t-b| \ge 0$. Equality forces *both* inequalities to be tight: $t$ must lie between $a$ and $c$, and $t$ must equal $b$. So:
+
+> **Theorem (Fermat–Weber point of a triple).** For $a \le b \le c$ and any real $t$, the total distance $|t-a|+|t-b|+|t-c|$ is at least $c-a$, with equality **if and only if** $t = b$. The middle point is the unique minimiser, and the optimal cost is the spread $c-a$.
+
+This is not a fact about the real line only. The same two-line argument works in any metric space, provided "middle" is replaced by *metric betweenness*: if $d(p,q) + d(q,r) = d(p,r)$, then $d(x,p) + d(x,q) + d(x,r) \ge d(p,r)$ for every $x$, with equality exactly at $x = q$. In a normed space, three points strung along a line therefore have the middle one as their unique geometric median — a fact about the whole ambient space, not merely about the line the data lives on.
+
+Apply this to the measurements. The three knees at $\mathrm{ctx}=2048$, $\{160, 224, 256\}$, have unique geometric median $224$ with optimal cost $96$. The three at $\mathrm{ctx}=1024$, $\{96, 112, 128\}$, have unique geometric median $112$ with optimal cost $32$. The empirical "$7/8$-median law" is thus not a bookkeeping artefact of sorting. It is a **variational** statement: $7/8$ of the product point is the location that minimises total distance to the measured knees.
+
+---
+
+### Why the centre is robust: the median is a projection
+
+The deeper reason the median resists noise is best seen by freezing two of the three measurements and letting the third wander.
+
+Write $\operatorname{med}(a,b,x)$ for the median of three numbers. As a function of $x$ alone, with $a$ and $b$ fixed, it satisfies
+
+$$\operatorname{med}(a,b,x) \;=\; \max\bigl(\min(a,b),\ \min(\max(a,b),\ x)\bigr).$$
+
+In words: **clamp $x$ to the interval spanned by $a$ and $b$.** The median of three is nothing but the nearest-point projection of the free coordinate onto the segment fixed by the other two.
+
+That single identification explains everything the experimenters observed qualitatively.
+
+*The centre can never escape.* A projection lands in its target set, so no third seed, however extreme, can push the median outside $[\,a\wedge b,\ a\vee b\,]$; its range is exactly that compact segment.
+
+*Extreme seeds are absorbed.* Projections are $1$-Lipschitz, and better: they are **firmly nonexpansive**,
+
+$$\bigl(P(x) - P(y)\bigr)^2 \;\le\; (x-y)\bigl(P(x)-P(y)\bigr),$$
+
+a strictly stronger inequality that says the projection never merely translates a displacement — it always contracts it against its own direction. Concretely, at $\mathrm{ctx}=2048$ the two earlier seeds fixed the segment $[224, 256]$, and the third seed came in at $160$. That is a distance of $64$ below the segment — a large excursion, more than half the segment's own length twice over — and the projection absorbed all of it. The centre did not move by even one unit.
+
+*The centre is stable on a whole ray, not just at a point.* Which third seeds leave the median at $224$? Exactly those with $x \le 224$: the fibre of the projection over an endpoint of the segment is a closed half-line — the *normal cone* of the segment at that endpoint — while over an interior point it is a single point. So the set of "harmless" third seeds is the entire ray $(-\infty, 224]$, containing the measured $160$ with room to spare.
+
+This last statement also corrects a plausible-sounding informal claim made during the round: *"only a third seed $\ge 256$ would shift the median."* That is false. The value $x = 240$ is well below $256$, yet $\operatorname{med}(256, 224, 240) = 240 \ne 224$. The correct threshold is $224$, not $256$ — the endpoint of the segment, not its far end. The geometry gives the sharp answer where intuition gave a loose one.
+
+*The mean has none of this.* For contrast: with two seeds fixed, the arithmetic mean of three is a surjection onto all of $\mathbb{R}$ — a single wild seed drags it arbitrarily far. On the measured triple, the mean is $640/3 \approx 213.33$, which is not $224$ and is not $7/8$ of anything natural. The centre is robust; the average is not. That is the precise sense in which "take the median" was the right protocol.
+
+---
+
+### The picture in the plane: two rays and one that isn't
+
+Plot each measurement as a point $(\mathrm{ctx},\, k^\*)$ in the plane and the verbal summary sharpens into geometry. Six points, in three families:
+
+| context | low | median | top (= product point) |
 |---|---|---|---|
-| $1024$ | $\{96, 112, 128\}$ | $\{3/4,\ 7/8,\ 1\}$ | $7/8$ |
-| $2048$ | $\{160, 224, 256\}$ | $\{5/8,\ 7/8,\ 1\}$ | $7/8$ |
+| $1024$ | $96$ | $112$ | $128$ |
+| $2048$ | $160$ | $224$ | $256$ |
 
-Two things jump out. First, the **top** of each distribution sits exactly at $1$: no seed ever needed more than the product point. Second, the **median** of each distribution sits exactly at $7/8$, in both contexts, even though the distributions themselves are different — the lower end sinks from $3/4$ to $5/8$ as the context doubles, widening the spread by a factor of exactly $3/2$.
+Two points lie on a common ray through the origin exactly when the $2\times 2$ determinant $x_1y_2 - y_1x_2$ vanishes.
 
-So the picture is: a **pinned ceiling**, a **sinking floor**, and a **stationary centre**. And $7/8$ is not a fudge factor with wiggle room: it is the *unique* constant $a$ with $a\cdot P_8 = 112$ and $a \cdot P_{16} = 224$. There is no free parameter left to tune.
+**The top edge is a ray.** $(1024,128)$ and $(2048,256)$ both have slope $1/8$; the determinant is zero. The product-point law $k^\* \le d\cdot\mathrm{ctx}/32$ is exactly proportionality.
 
-Here is the sharpest test of whether this is really about the median. Take the *mean* of each knee triple instead. At $\mathrm{ctx}=1024$ the mean is $112 = \tfrac78 P_8$, agreeing by accident. At $\mathrm{ctx}=2048$ the mean is $\tfrac{256+224+160}{3} = \tfrac{640}{3}$, which is $\tfrac56 P_{16}$, not $\tfrac78 P_{16}$. **No constant works for both rows under the mean.** The law is a statement about the median specifically, and one arithmetic line kills the alternative.
+**The median is a ray too.** $(1024,112)$ and $(2048,224)$ both have slope
 
-### Enter the tropics
+$$\frac{7}{64} \;=\; \frac{7}{8}\cdot\frac{1}{8},$$
 
-Why would the median, of all summaries, be the one that laws attach themselves to? The answer is algebraic, and it belongs to a corner of mathematics called **tropical algebra**.
+the product-law slope scaled by the constant $7/8$. And this is genuinely predictive rather than doubly fitted: a proportional law through the origin matching the $\mathrm{ctx}=1024$ median is *forced* to have slope $7/64$ — one measurement determines the constant with no freedom left — and that same slope then hits the $\mathrm{ctx}=2048$ median on the nose. One context fixes the law; the other tests it.
 
-In tropical arithmetic, you throw away $+$ and $\times$ and replace them with $\max$ and $\min$ (or $\min$ and $+$, depending on the dialect). It sounds like vandalism, but $(\max, \min)$ on any linearly ordered set really is a perfectly good commutative *semiring*: both operations are associative and commutative, each distributes over the other, and both are idempotent — $a \vee a = a$, $a \wedge a = a$. Polynomials in this semiring are exactly the piecewise-linear, corner-riddled objects that show up wherever optimisation, scheduling, or combinatorial geometry live.
+**The low tail is not a ray.** $(1024, 96)$ and $(2048, 160)$ give determinant $1024\cdot 160 - 96\cdot 2048 = -32768 \ne 0$; the triangle they span with the origin has area $16384$. No proportional law fits the low tail.
 
-Now, the punchline. **The median is a tropical polynomial.** For three numbers,
+Doubling the context is the dilation $p \mapsto 2p$ of the plane. It carries the $8\times$ top point to the $16\times$ top point and the $8\times$ median point to the $16\times$ median point — the law is *equivariant* under context doubling. It fails on the low tail, and the failure is a clean scalar: the dilated low tail is $2\cdot 96 = 192$, the measured one is $160$, a defect of exactly
 
-$$\operatorname{med}(a,b,c) \;=\; (a \wedge b) \,\vee\, (b\wedge c)\,\vee\,(a \wedge c),$$
+$$32 \;=\; \frac{256}{8} \;=\; \frac{P}{8},$$
 
-where $\wedge = \min$ and $\vee = \max$. Take pairwise minimums, then take the biggest of them. Try it: for $(256, 224, 160)$ you get $\max(224, 160, 160) = 224$. And there is a dual formula, min-of-maxes,
+one eighth of the product point. And no dilation whatsoever, by any factor, matches the whole $8\times$ configuration onto the $16\times$ one: the factor forced by the top points is $2$, the factor forced by the low points is $5/3$. **The knee distribution is not self-similar, even though its median and its upper edge are.** All of the context dependence of the *distribution* — not just its centre — is concentrated in a single scalar defect.
 
-$$\operatorname{med}(a,b,c) \;=\; (a\vee b)\,\wedge\,(b\vee c)\,\wedge\,(a \vee c),$$
+That has a crisp consequence for the spread. Normalising each triple by its product point gives $(3/4,\, 7/8,\, 1)$ at $\mathrm{ctx}=1024$ and $(5/8,\, 7/8,\, 1)$ at $\mathrm{ctx}=2048$. The optimal total-distance costs are $1/4$ and $3/8$ respectively, and
 
-which gives the same answer — the median is *self-dual*: it does not care which way is up.
+$$\frac{3}{8} = \frac{3}{2}\cdot\frac14 .$$
 
-This is not an accident of three arguments. For any odd sample of size $2k+1$,
+The reported "roughly $50\%$ wider spread" is exact: the longer context's optimal transport cost is precisely $3/2$ times the shorter one's. Moreover the widening is *entirely* a low-tail phenomenon — the top two normalised coordinates are identical at the two contexts, and the increase in cost, $3/8 - 1/4 = 1/8$, equals exactly the drop in the low coordinate, $3/4 - 5/8 = 1/8$.
 
-$$\operatorname{med}(x) \;=\; \bigvee_{|S| = k+1}\ \bigwedge_{i \in S} x_i,$$
+---
 
-the maximum, over all $(k+1)$-element subsets of the indices, of the minimum of the sample there. So the median is a *homogeneous tropical polynomial of degree $k+1$ in $2k+1$ variables*. A statistical quantity, revealed to be an algebraic normal form.
+### A flat face on a crooked set
 
-From this formula, the median's two magic properties fall out immediately.
+One more piece of geometry hides in those normalised triples, and it says the agreement between the two contexts is a real structural fact rather than a tautology.
 
-**Threshold duality.** A value $v$ satisfies $v \le \operatorname{med}(x)$ exactly when at least $k+1$ of the samples satisfy $v \le x_i$; and $\operatorname{med}(x) \le v$ exactly when at least $k+1$ satisfy $x_i \le v$. In plain words: *thresholding the median is a majority vote.* Ask the median any yes/no question of the form "are you above $v$?", and it answers by polling the sample and taking the majority.
+View a normalised triple as a point of $\mathbb{R}^3$ and consider the **level set** of the median map, $\{v : \operatorname{med}(v) = 7/8\}$. Both measurements lie in it, by construction. What is not automatic is that the entire *segment joining them* lies in it too.
 
-**Equivariance.** If you re-express your data in different units by any monotone transformation $f$ — say, divide every knee by the product point — then the median of the transformed data is the transform of the median. And, less obviously, the same holds for *order-reversing* transformations: convert each knee $k^\*$ into a speed-up $\mathrm{ctx}/k^\*$, which turns big into small, and the median of the speed-ups is still the speed-up of the median. The extremes do *not* have this property; order reversal swaps the min and the max.
+It does, and for a strong reason: the whole half-line
 
-That last point has a very concrete operational reading. At $\mathrm{ctx}=2048$, the three speed-ups are $2048/256 = 8$, $2048/224 = 64/7 \approx 9.14$, and $2048/160 = 64/5 = 12.8$. Their median is $64/7$, the speed-up of the median knee, exactly as equivariance demands. But the *guaranteed* speed-up — the one you would put in a contract — is $8\times$, and it is the image of the *largest* knee. Order reversal sent the worst case to the top. The median and the guarantee are governed by different order statistics, and the algebra tells you which is which.
+$$\{(t,\ 7/8,\ 1)\ :\ t \le 7/8\}$$
 
-### The knee of the average is not the average of the knees — unless you average tropically
+sits inside the level set. The low coordinate is invisible to the centre for as long as it stays below it. And this half-line is maximal — the moment $t$ rises above $7/8$ (while staying under the pinned top coordinate $1$), the median moves with it, $\operatorname{med}(t, 7/8, 1) = t$. So the two contexts occupy a common *flat face* of the level set, and that face extends past both of them: the low tail is free to keep growing, over more contexts, without disturbing the centre.
 
-Here is the question a careful experimentalist should ask. You have three seeds. You could (A) read a knee off each curve, then take the median of the three knees; or (B) merge the three curves into one aggregate curve, then read a single knee off that. Do these agree?
+Why is that a genuine statement? Because the level set is **not convex**. The triples $(5/8,\, 7/8,\, 1)$ and $(7/8,\, 1,\, 5/8)$ both have median $7/8$, but their midpoint $(3/4,\, 15/16,\, 13/16)$ has median $13/16 \ne 7/8$. Two points can each have the right centre while everything between them does not. That the two measured contexts nevertheless lie in a common convex face of this crooked set is information about the data, not about the definition of a median.
 
-For the arithmetic mean, **no**. Take three curves that jump from $0$ to $1$ at budgets $1$, $2$, $3$ respectively, with the bar at $1$. Their knees are $1, 2, 3$, whose median is $2$. But the mean curve is $0$ at budget $1$, $1/3$ at budget $2$, and only reaches $1$ at budget $3$. Its knee is $3$. Averaging the curves and averaging the knees give genuinely different answers, and the mean-curve answer is dragged to the worst seed.
+---
 
-For the median, **yes, exactly**. This is the central theorem of the story:
+### What a fourth seed can, and cannot, do
 
-> **Median–Knee Commutation Theorem.** Let $c_0, c_1, c_2$ be non-decreasing retention curves on a grid $G$ with knees $k_0, k_1, k_2$ at a common bar. Then the pointwise median curve $t \mapsto \operatorname{med}(c_0(t), c_1(t), c_2(t))$ has a knee, and that knee is exactly $\operatorname{med}(k_0, k_1, k_2)$.
+The next experiment is already named: a **fourth** seed at $\mathrm{ctx} = 2048$. With four measurements, the parity flips, and the geometry changes qualitatively. Fermat–Weber problems with an even number of points do not have unique solutions.
 
-The proof is pure threshold duality, and it is short enough to give here. The median curve clears the bar at a budget $t$ precisely when at least two of the three curves do; and since the curves are non-decreasing, curve $i$ clears the bar at $t$ precisely when $k_i \le t$. So *the median curve clears the bar at $t$ if and only if at least two of the three knees are $\le t$* — which, by the other half of threshold duality, is exactly the statement $\operatorname{med}(k_0,k_1,k_2) \le t$. Two majority conditions, recognised as the same majority condition. The smallest such $t$ on the grid is therefore $\operatorname{med}(k_0,k_1,k_2)$, and that is the theorem.
+> **Theorem (even samples).** For sorted data $a \le b \le c \le d$ and any $t$,
+> $$|t-a| + |t-b| + |t-c| + |t-d| \;\ge\; (d-a) + (c-b),$$
+> with equality **if and only if** $b \le t \le c$. The set of optimal centres is the closed middle segment $[b,c]$, and it degenerates to a single point exactly when the two middle order statistics coincide.
 
-The same argument works for any odd number of seeds, with "at least two of three" replaced by "at least $k+1$ of $2k+1$". Monotonicity of the curves cannot be dropped: a curve that clears the bar early and then falls back is counted by its own knee, but the median curve never sees it, and the identity fails.
+So "the median of a four-seed experiment" is not a number; it is a *set*. Any prediction stated as a point is therefore already the wrong shape of prediction. The right one is about the position of that set's endpoints — and it can be stated now, before the run:
 
-Applied to the measured data: with knees $256$, $224$, $160$, the median curve of any three monotone retention curves realising them has knee exactly $224$. **The reported centre of the distribution is itself a knee — the knee of the median model.** It is not a bookkeeping average; it is an operating point.
+> **Theorem (the fourth seed cannot move the centre).** Let $x$ be the fourth measured knee, whatever it turns out to be. Then $224$ is an optimal centre of $\{160, 224, 256, x\}$: for every $t$,
+> $$\bigl|\,t-160\,\bigr| + \bigl|\,t-224\,\bigr| + \bigl|\,t-256\,\bigr| + \bigl|\,t-x\,\bigr| \;\ge\; 96 + |224 - x| ,$$
+> with equality at $t = 224$. Moreover the optimal cost is exactly $96 + |224 - x|$: the response to the new datum is exactly linear, with slope $1$ away from $224$.
 
-### Why one bad seed cannot ruin your day
+The proof is two triangle inequalities: $|t-160| + |t-256| \ge 96$ pins the outer pair, and $|t-224| + |t-x| \ge |224 - x|$ pins the inner pair, and both are tight at $t = 224$.
 
-There is one more property that makes the median the right summary of an expensive, noisy experiment: robustness, and here too the tropical formula does the work.
+The regimes are sharp. If the fourth seed repeats the low tail, $x \in [160, 224]$, the optimal set is the segment $[x, 224]$ — it widens *downwards*, with its **upper endpoint pinned at the $7/8$ centre**. If instead $x \in [224, 256]$, the optimal set is $[224, x]$ — widening upwards, lower endpoint pinned. Either way, $224$ is an endpoint. The one case in which the centre remains a *unique* optimum is the knife edge $x = 224$ exactly.
 
-The median of three is **$1$-Lipschitz for the sup-norm**: if every seed's reported knee wobbles by at most $\delta$, the median moves by at most $\delta$. This follows in two lines from monotonicity plus *tropical homogeneity of degree one* — the fact that adding a constant $t$ to all inputs adds $t$ to the median.
+The moral is unusually clean. **No fourth seed can refute the $7/8$ centre in the variational sense. It can only destroy uniqueness — and it does so unless it lands exactly on the centre.** A prediction that the pending measurement cannot refute is, in the usual scientific idiom, a bad one; but that is precisely the point. The fourth seed is not a test of the centre at all. It is a test of the *low tail* — of whether the value $160$, and the ratio $5/8$ it represents, is a stable feature of the longer context or an accident of one seed.
 
-Better still is the **breakdown** statement. Suppose a majority of your seeds — $k+1$ out of $2k+1$ — are trustworthy, and the rest are corrupted arbitrarily. Then the median still lies between the smallest and the largest trustworthy value. It cannot be dragged out. For the measured data: with seeds $1$ and $2$ pinned at $256$ and $224$, *whatever* a re-measured third seed reports, the median stays in $[224, 256]$. And composing this with the commutation theorem gives the full pipeline statement: corrupt up to $k$ of the $2k+1$ seeds — curve and all, not just the reported knee — and the knee of the median curve still sits inside the interval spanned by the surviving seeds.
+---
 
-The mean, by contrast, has breakdown point zero. Two clean step curves with knee $1$ plus a single corrupted step curve with knee $N$ produce a mean curve whose knee is $N$, for any $N$ you like. One bad seed out of three, and the aggregate can be sent anywhere.
+### The general law behind all of it
 
-### But the median is not infinitely forgiving
+Everything above is a shadow of one clean characterisation, valid for samples of any size and either parity.
 
-Robustness has an exact boundary, and it is worth being precise about it, because it is easy to overstate. With two seeds pinned at $224$ and $256$, which third-seed values leave the median at $224$?
+Call a point $m$ **balanced** for a sample $S$ if neither side strictly outweighs the other: at least as many entries of $S$ are $\le m$ as are $> m$, and at least as many are $\ge m$ as are $< m$.
 
-$$\operatorname{med}(x, 224, 256) = 224 \iff x \le 224.$$
+> **Theorem (characterisation of geometric medians on a line).** A point $m$ minimises the total distance $\sum_{x \in S} |m - x|$ **if and only if** $m$ is balanced for $S$.
 
-Exactly the ray $x \le 224$ — no more. So $160$, $192$ and $224$ all keep the centre where it is, as one would hope. But a tempting looser claim — "only a third seed of $256$ or more would shift the median" — is **false**: a third seed at $240$ lies strictly below $256$ and already moves the centre to $240$. The stability region is a half-line with a sharp endpoint at the current median, not a fuzzy neighbourhood extending to the next data point. It is precisely the sort of statement that sounds right and isn't, and pinning it down is part of the value of doing the algebra rather than the arm-waving.
+Sufficiency needs no completeness or even any real numbers: it holds in any linearly ordered abelian group, by a counting argument. Move from $m$ toward $t$; every sample point on the near side pays the displacement, every point on the far side refunds it, and balance says the payers are at least as numerous as the refunders. Necessity is the converse: if one side is strictly heavier, step to the *nearest* sample point on that side. Because the step jumps over no data, the cost changes exactly linearly, by (light side minus heavy side) times the step length — a strictly negative amount. So $m$ was not optimal. The witness is a data point, so the argument is finitary: no limiting process is needed.
 
-### What pins down the median? Five axioms, one of them tropical
+Two corollaries fall out immediately. For an odd sample the counting median is balanced, so the classical odd-size theorem is the odd case of this one — with the sharp refinement $F(m) + |t-m| \le F(t)$, which delivers minimality and uniqueness in one stroke: the cost grows at unit rate, at least, as you leave the median. And because the total-distance functional is convex — a pointwise consequence of the triangle inequality — the set of minimisers is convex, hence an interval. A point for odd samples; a genuine segment for even ones.
 
-Finally: is there something special about the median, or would any reasonable "centre" have done? There is a clean answer. Consider a summary $F$ of three numbers, and ask it to satisfy five requirements:
+That is the structural reason a fourth seed can only *widen* the optimal centre into a segment rather than move it. Not a coincidence of the particular numbers $160$, $224$, $256$; a theorem about the shape of the $\ell^1$ landscape.
 
-1. **Monotone** — if a seed reports a larger value, the summary does not decrease.
-2. **Symmetric** — the seeds are interchangeable; their labels carry no information.
-3. **Conservative** — the summary is one of the measured values, not a value nobody observed.
-4. **Translation-equivariant** — shifting all three measurements by $t$ shifts the summary by $t$. (This is tropical homogeneity of degree one: a change of the zero point of your scale.)
-5. **Self-dual** — measuring "cost" instead of "benefit", i.e. negating all inputs, negates the summary.
-
-> **Characterisation Theorem.** A ternary aggregator on the reals satisfying all five axioms *is* the median.
-
-The proof is a small tropical gem. Self-duality plus translation gives the identity $F(0,0,d) = d - F(0,d,d)$; monotonicity gives $F(0,0,d) \le F(0,d,d)$; combining them yields $2F(0,0,d) \le d$; and conservativity — the summary must be $0$, $0$, or $d$ — then forces $F(0,0,d) = 0$ whenever $d\ge 0$. That is the **majority property**: two equal votes win. Translating, $F(a,a,c) = a$ and $F(a,c,c)=c$ for $a \le c$, and monotonicity squeezes $F(a,b,c)$ between them onto $b$. Sorted case done; symmetry does the rest.
-
-And the axioms are tight in an instructive place. Drop *only* translation-equivariance and the theorem dies: consider the **sum-sign aggregator**, which returns the maximum of the three inputs if they sum to a positive number, the minimum if they sum to a negative one, and the median on the zero-sum wall. It is monotone, symmetric, conservative and self-dual — and it is not the median, since it returns $1$ on the input $(0,0,1)$ where the median returns $0$. So the median's status as *the* canonical centre is not a soft order-theoretic fact. It is a **tropical** fact: it requires the axiom that says the median behaves linearly with respect to shifts, which is precisely the min-plus notion of degree-one homogeneity.
+---
 
 ### The moral
 
-The four point predictions failed. The structural prediction held. That is not special pleading, because the two kinds of claim have provably different characters, and the difference is algebraic.
+Four point predictions were made, and four failed. One structural prediction was made, and it held. The difference between them was not luck; it was that the structural prediction was about a quantity that the geometry protects.
 
-A single seed's knee is an extreme-order quantity, sensitive to the last decimal of a noisy curve — in this run, decided by a margin of $0.001$. The median is a tropical polynomial in the seeds: majority-determined, unit-independent under any monotone or antitone change of coordinates, $1$-Lipschitz, immune to a minority of corrupted runs, and — the fact that ties the whole story together — commuting with the very act of reading a knee, so that the reported centre is itself an operating point of a real aggregate model rather than a statistician's fiction.
+Per-seed knees scatter because they are the output of a noisy optimisation whose exact threshold sits between grid points — the seed reported here crossed the bar at $k^\* = 160$ with a margin of just $+0.0012$, so razor thin that the true knee lies somewhere around $150$–$160$, invisible to the sampling grid. Nothing about that number is stable enough to predict. But their median is a projection, and a projection is firmly nonexpansive: it absorbs the excursion of a wild datum instead of transmitting it. That is why the third seed's $64$-unit dive below the segment moved the reported centre by nothing at all.
 
-If you want to predict where the individual points land, you need a theory of the noise. If you want to predict where the *centre* lands, you need the right notion of centre. Tropical algebra tells you which notion that is, and, gratifyingly, it is the one everybody already uses when they stop and think: the middle value.
+There is a practical payoff too. The bound $k^\* \le d\cdot\mathrm{ctx}/32$ passed at every seed at both contexts — six for six — which makes it a usable guarantee rather than a trend, and the centre sits a factor $8/7$ below it.
+
+When you cannot predict a measurement, predict its centre — and then prove that the centre is a projection, so that you know in advance exactly how much abuse it can absorb.
