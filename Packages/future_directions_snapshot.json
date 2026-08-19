@@ -2,25 +2,6 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "308f24be",
-    "description": "## NET-48 — speed axis (round-net-48; paper 92, /tmp/exp_net_attncost_ctx2048_s3.py, /tmp/net48.log)\n\n**Verdict name: THE-DIRECT-TEST-SURVIVES-VIA-THE-MEDIAN.**\n\n### Result\nAt (d=4, ctx=2048, seed=3), **k\\* = 160 — all four point-horns REFUTED (P1 224, P2 240, P3 256, P4 192: every pre-stated value passes, none is the knee)**, yet the completed 16× three-seed knee distribution **{160, 224, 256} has median EXACTLY 224 = 7/8·(d·ctx/32)**, replicating the 8× median 112 = 7/8·128: **the 7/8-median law is 2/2-context, 6/6-seed.** The horns were point-predictions; the law's claim was the distribution's center — 0/4 horns, 1/1 law. A whole family of third-seed values {160, 192, 224} each keep the median at 224; only ≥256 would shift it.\n\n### The 7/8-median law now two contexts, six seeds\n| context | three-seed k\\* set | × product | spread | median |\n|---|---|---|---|---|\n| 8× (ctx=1024) | {96, 112, 128} | {0.75, 0.875, 1.0} | 0.25 | 112 = 7/8·128 |\n| 16× (ctx=2048) | {160, 224, 256} | {0.625, 0.875, 1.0} | 0.375 | 224 = 7/8·256 |\n\n**The 16× spread is ~50% WIDER than the 8× spread** — the LOW TAIL is the context-growing quantity (0.75 → 0.625), the product value the pinned upper edge (the s1 chain's exactness), the median stable at 7/8. Per-seed knees are too noisy to predict on the point; the distribution's center is the robust quantity — that is what a third seed buys.\n\n### Key numbers\n- Full acc 0.1546, bar 0.1516, full loss 5.2199, train **14566s (~4h03m)**.\n- Sweep: 96 0.963 ✗, 128 0.973 ✗, **160 0.981 ✓ (margin +0.0012 — the tightest of the recent cells; true knee ~150–160 between grid points)**, 192 0.984 ✓, 224 0.986 ✓, 240 0.987 ✓, **256 0.990 ✓ (product point — passes 3/3)**, 288 0.993 ✓, 384 0.999 ✓, 512 1.000 ✓, 768 1.003 ✓, 1024 1.003 ✓ (loss 5.2215, Δ0.0016). The s3 retained curve is the HIGHEST of the three 16× seeds throughout (0.973 at 128 vs s1 0.939, s2 0.965) — crossing the bar two grid steps earlier than s2, three than s1.\n- **Product-law upper bound 3/3-sure at BOTH long contexts**: product point 256 passes 0.981/0.986/0.990 (joining 8×'s 0.986/0.993/0.988 at 128) — k\\* ≤ d·ctx/32 is a six-seed-verified deployment guarantee through 16×.\n- **Selection importance +4.7/+3.4**: k=128 random 0.926 vs top-k 0.973; k=256 0.956 vs 0.990 — comparable to s2, far above s1's +1.7/+1.8; the 16× selection spread {1.7, 4.4, 4.7} at k=128 is three-fold (dilution strongly seed-dependent).\n- **Concentration**: eff support 498.13 (s1 526.39, s2 472.50 — mid-family, spread ~11%); top-128 0.608, top-256 0.746; per-position 64.91/435.27/929.55 — the eff↔knee correlation again does NOT sort across three points (s1 highest-eff/highest-knee, s2 lowest-eff/middle-knee, s3 middle-eff/lowest-knee), NO bounded working set at 16×, three seeds.\n- **Deployable at (d=4, ctx=2048)**: **≥8.0× guaranteed (3/3), 9.1× median, 12.8× best — the BEST-EVER reading** (beats 10.7× at 8× s2). Distribution {8.0, 9.1, 12.8} wider than 8×'s {8.0, 9.1, 10.7}.\n\n### The 16× three-seed table\n| seed | k\\* | × product (256) |\n|---|---|---|\n| 1 (NET-45) | 256 | 1.000 |\n| 2 (NET-46) | 224 | 0.875 |\n| **3 (this round)** | **160** | **0.625** |\n\n### All 8 barriers\n(a) clean — four horns + the law's direct test stated before the run, measured 160 outside ALL horns, yet the distribution's median landed exactly on the law's predicted center (the round separates point-accuracy 0/4 from structural confirmation 1/1); (b) clean — three-seed 16× spread / widening low tail / median-stable center: none in the Catalog (698-pkg) or literature; (c) confronted — d=4 × ctx=2048 real causal word LM, 4097 vocab, held-out loss+acc, three seeds at the longest cell; (d) clean — held-out last-10%, data-free top-k; (e) the SUBSTANCE, sharpened — the 16× three-seed distribution complete; honest limits: the s3=160 read razor-thin (+0.0012), the 0.625 low tail is ONE of three seeds (a fourth decides s3-specific vs stable), the median law is 2 contexts × 3 seeds; (f) clean — same metrics/protocol, binom SE ≈ 0.11% acc (retained SE ≈ 0.007), the razor margin documented, k=512 recovers 1.000 / k=768 1.003 (loss Δ0.0016), monotone recovery, NO crash (ALL_DONE_NET48); (g) fair — full-attention reference + same 0.98 bar + random-k at same k (seed 12345): gaps +4.7/+3.4, positive, the {1.7–4.7} seed spread informative; (h) sharpened — the widened {8.0–12.8} deployment spread is the deployment-relevant uncertainty at the longest cell, guarantee end 3/3-sure.\n\n### Next\n**A fourth seed at ctx=2048** (the LOW-TAIL test — s4=160/192 → the 0.625 low tail is real, a stable 16× feature; s4 in {224,256} → it was s3-specific; ~4–5h — the highest-value open cell now); a fourth seed at ctx=1024 (refine {96,112,128}; low value); d=8 @ ctx=256 s0 corner; d=8 compression floor check; carry chain at scale (the frontier).\n\nNow 48 network experiments. Assessment v48. Paper 92.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1345",
-    "lineage_refs": [],
-    "priority_score": 1000.0,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-16T22:37:36.175162+00:00",
-    "title": "NET-48: The direct test survives via the MEDIAN — k*=160 at (d=4, ctx=2048, seed=3), all four point-horns refuted, the completed 16× distribution {160,224,256} has median exactly 224 = 7/8·(d·ctx/32) — the 7/8-median law is 2/2-context, 6/6-seed"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
     "consumed_by_exp_id": "18f8232d",
     "description": "**Part of:** Research plan — *Compression Beyond the Pigeonhole Bound* (Phase A, Question 1: separating the decompressor from the data).\n\n## Research question\nOne shared decompressor `U` must serve all inputs. A decompressor specialized to a *class* of data does better per class. What is the **price of universality** — the minimax redundancy a universal scheme must pay over a per-distribution scheme?\n\n## Approach\n- Derive closed-form / tight bounds on universal redundancy for natural source classes: stationary sources, finite-state, Markov.\n- Express redundancy as a function of message length `n` and class complexity.\n\n## Deliverable\nRigorous bounds on universal vs. per-distribution redundancy, and a conclusion on whether specialized decompressors are theoretically worth pursuing.\n\n## Falsifiability / gate\nBounds must match or beat known minimax rates from the literature (Rissanen-style redundancy). If specialization doesn't move bits from *message* to *shared*, the direction is dead.\n\n**Milestone:** M5 (theory, ~2 weeks).\n",
     "domain_bridges": [],
@@ -2386,44 +2367,6 @@
     "status": "available",
     "timestamp": "2026-08-05T06:51:05.180719+00:00",
     "title": "Deepening: ArXiv paper: Magnitude homology of tope graphs"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle ab9891cb (Q=0.780), which proved 57 theorems in Logic. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Summary.** 3SUM mod-p reveals factors, and collision-based factoring methods\nform a hierarchy all hitting the same √N barrier.\n\n**Observation (3SUM mod-p factor reveal).** For N = pq and triples with\na+b+c ≡ 0 (mod p) but ≢ 0 (mod q): gcd(a+b+c, N) = p. Verified: 19 mod-p-only\ntriples vs. 0 mod-bo",
-    "domain_bridges": [],
-    "domains": [
-      "Logic"
-    ],
-    "id": "push_ab9891cb_06bb9eac",
-    "lineage_refs": [],
-    "priority_score": 0.88,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "ab9891cb",
-    "status": "available",
-    "timestamp": "2026-08-13T21:10:17.113889+00:00",
-    "title": "Deepening: The 3SUM-Birthday-Bound Hierarchy"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle c7164926 (Q=0.780), which proved 72 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Paper (factor3):** [ResearchOutput/NewMathematics/22_Round7_Closures.md](https://github.com/paulklemstine/factor3/blob/main/ResearchOutput/NewMathematics/22_Round7_Closures.md)\n\n---\n\n# Round-7 Hypothesis Closures: Scoping the Noise-Floor Principle and the Trace-Lemma Frontier\n\n**Program:** Factori",
-    "domain_bridges": [],
-    "domains": [
-      "Tropical"
-    ],
-    "id": "push_c7164926_8a993165",
-    "lineage_refs": [],
-    "priority_score": 0.88,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "c7164926",
-    "status": "available",
-    "timestamp": "2026-08-13T23:09:59.921663+00:00",
-    "title": "Deepening: Round-7 Hypothesis Closures: Scoping the Noise-Floor Principle and the Trace-Lem"
   },
   {
     "ambition_level": "extension",
@@ -12881,6 +12824,46 @@
     "status": "available",
     "timestamp": "2026-08-18T03:09:27.702473+00:00",
     "title": "ArXiv paper: A Local Central Limit Theorem for Clique Counts in Sparse Random Graphs"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'An equidistribution conjecture for quotient-closed and submodule-closed subcategories' and formalize its key results. Abstract: We study subcategories of the module category of a finite-dimensional algebra that are closed under quotients or submodules. We propose the quotient--submodule equidistribution conjecture: over a representation-finite algebra, the number of quotient-closed subcategories of size $i$ is equal to that of submodule-closed subcategories of size $i$ for every $i$, where size is the number of indecomposable modules in the subcategory. We prove the following cases of the conjecture: (1) the five smallest and five largest values of $i$, hence all algebras with at most nine indecomposable modules; (2) Nakayama algebras; (3) algebras with radical square zero; and (4) representation-directed algebras. In the last case, we classify quotient-closed subcategories by a lower Bruhat interval in a Coxeter group constructed from the Auslander--Reiten quiver, extending the classification of Oppermann--Reiten--Thomas for Dynkin quivers. We also prove that quotient closure defines a finitary convex geometry",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1570",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
+    "research_mode": "team",
+    "source_exp_id": "2608.18024v1",
+    "status": "available",
+    "timestamp": "2026-08-19T02:52:26.504743+00:00",
+    "title": "ArXiv paper: An equidistribution conjecture for quotient-closed and submodule-closed subcategories"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Cluster-Graph Edit Distance: Metric Proxies, Multiscale Embeddings, and Complexity' and formalize its key results. Abstract: The cluster graphs on $n$ vertices, the disjoint unions of complete graphs, have the integer partitions of $n$ as their isomorphism classes, and the quotient edit distance $q^*(λ,μ)=\\min_{σ\\in S_n}|E(G_λ)\\triangleσE(G_μ)|$ makes that set a metric space. Its metric geometry and its computational complexity both issue from one identity: $q^*$ is an affine function of the maximum of $\\lVert X\\rVert_F^2$ over the contingency tables with margins $λ$ and $μ$. Combinatorially, it yields two explicit $\\ell_1$ models: the vertex-mass metric $δ_1$ on sorted degree sequences, with $\\frac12δ_1\\le q^*<\\frac32δ_1$ and both constants optimal, and the block-energy metric $B$ on the vectors $\\bigl(\\binom{λ_i}2\\bigr)_i$, with $q^*\\le B\\le2q^*-1$ by a per-table refinement measuring how far an alignment is from a block bijection. Hence $c_1(\\mathcal K_n)\\le2$, and an $O(n\\log n)$-time algorithm returns an alignment of cost below $2q^*$ with the certificate $q^*\\in[\\lceil(B+1)/2\\rceil,B]$. The Euclidean di",
+    "domain_bridges": [],
+    "domains": [
+      "Combinatorics",
+      "Geometry"
+    ],
+    "id": "fd_1571",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
+    "research_mode": "team",
+    "source_exp_id": "2608.17990v1",
+    "status": "available",
+    "timestamp": "2026-08-19T02:52:29.608347+00:00",
+    "title": "ArXiv paper: Cluster-Graph Edit Distance: Metric Proxies, Multiscale Embeddings, and Complexity"
   },
   {
     "ambition_level": "extension",
@@ -27445,7 +27428,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f1fd8ff1",
     "description": "*For a graded `G`-set `Y = ⨆_n Y_n` the generating function `Σ_n t_r(Y_n) q^n` is a rational\nfunction of `q` whenever the grades are eventually `r`-transitive, with denominator dividing\n`(1−q)^{r+1}`.*",
     "domain_bridges": [],
     "domains": [],
@@ -27455,7 +27438,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "11c9ff9f",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-18T03:08:40.595069+00:00",
     "title": "For a graded `G`-set `Y = ⨆_n Y_n` the generating function `Σ_n t_r(Y_n) q^n` is a rational\nfunction of `q` whenever the grades are eventually `r`-transitive, with denominator dividing\n`(1−q)^{r+1}`."
   },
