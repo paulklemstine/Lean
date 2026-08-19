@@ -1,544 +1,438 @@
 """
-Almost-Lossless Compression Beyond the Pigeonhole Bound
-=======================================================
+Almost-lossless compression beyond the pigeonhole bound: numerical demonstrations.
 
-Self-contained numerical demonstrations of the results of the accompanying
-paper.  Nothing is imported beyond the Python standard library.
+This self-contained script demonstrates, with exact rational arithmetic wherever
+a theorem asserts an identity, the following results.
 
-The demonstrations, in order:
+  1. The counting lemma and the epsilon-relaxed pigeonhole principle:
+     an alphabet C admits an eps-reliable code iff some set of at most |C|
+     source words carries probability at least 1 - eps.
 
-  1.  The relaxed pigeonhole converse   Pr[success] <= |Code| * p_max
-      and its exact attainment  Pr[success] = M / n  on the uniform source.
+  2. Randomness buys nothing on a uniform source: every seeded ensemble has
+     average failure probability at least 1 - |C|/|S|.
 
-  2.  2-universality of the inner-product family  h_k(x1,x2) = x1 + k*x2
-      over F_p, verified by exhaustive collision counting.
+  3. The Monte Carlo scheme over F_p with the inner-product hash
+     h_a(x) = <a, x>:  honest for every seed (no silent corruption),
+     decoding cost exactly |T| for the linear scan, and average failure
+     probability at most eps + t(t-1)/p.
 
-  3.  Derandomized achievability: search the key space for a key whose
-      failure mass is at most  delta + |l|/M, and compare with the bound.
+  4. Exact expected decoder cost of the bucketed decoder:
+     E[cost] = 1 + (t-1)/m1  exactly, for a pairwise independent bucket hash.
 
-  4.  Silent corruption: exhaustive check that a codebook symbol is never
-      silently corrupted, and measurement of the off-codebook silent mass
-      against the sharp bound  2*delta*|l|/M.
+  5. The universal rate-time hyperbola:  sum of costs over T >= t^2/|M|,
+     hence average cost per typical word >= t/|M|, for EVERY scheme and seed.
 
-  5.  Sorted codebook + binary search: a cost-instrumented decoder whose
-      measured worst-case cost is compared with the proved bound
-      log2(n) + 3, and with the decision-tree converse log2(n).
+  6. Exact planar failure probability:  1 + d(p-1) bad seeds out of p^2, where
+     d is the number of distinct projective directions of the difference set,
+     verified against brute-force enumeration, and compared with the union
+     bound.
 
-  6.  Checksum amplification: pairing two universal families multiplies the
-      collision parameter, so silent corruption falls to |l|/(M*C).
+  7. Derandomisation: for |M| > t(t-1) a perfect (collision-free) seed exists;
+     we find one, and confirm the resulting deterministic scheme decodes every
+     typical word correctly.
 
-  7.  List decoding: linear gain  delta + |l|/(T*M)  from 2-universality
-      versus exponential gain  delta + (|l|/M)^T  from the degree-T
-      polynomial family over F_p.
-
-  8.  Key-space lower bound: exhaustive confirmation that a compressing
-      2-universal family needs at least M keys.
-
-Run with:  python3 demo.py
+Run:  python3 demo.py
 """
 
 from __future__ import annotations
 
-import itertools
-import math
-import random
-from typing import Callable, Dict, List, Optional, Sequence, Tuple
+from fractions import Fraction
+from itertools import product
+from typing import Callable, Dict, List, Optional, Sequence, Set, Tuple
 
-Symbol = Tuple[int, int]
-
-
-# ---------------------------------------------------------------------------
-# Section 0.  Distributions and min-entropy
-# ---------------------------------------------------------------------------
+Vector = Tuple[int, ...]
 
 
-def normalise(weights: Dict[object, float]) -> Dict[object, float]:
-    """Normalise a weight table into a probability distribution."""
-    total = sum(weights.values())
-    return {x: w / total for x, w in weights.items()}
+# ----------------------------------------------------------------------------
+# 1. Codes, honesty, failure probability, and the relaxed pigeonhole principle
+# ----------------------------------------------------------------------------
 
 
-def p_max(mu: Dict[object, float]) -> float:
-    """Largest single-symbol probability."""
-    return max(mu.values())
+def failure_probability(
+    weights: Dict[int, Fraction],
+    enc: Callable[[int], object],
+    dec: Callable[[object], Optional[int]],
+) -> Fraction:
+    """Probability that dec(enc(s)) != s, over the source given by `weights`."""
+    return sum((w for s, w in weights.items() if dec(enc(s)) != s), Fraction(0))
 
 
-def min_entropy(mu: Dict[object, float]) -> float:
-    """H_inf(mu) = -log2 p_max(mu)."""
-    return -math.log2(p_max(mu))
+def is_honest(
+    source: Sequence[int],
+    enc: Callable[[int], object],
+    dec: Callable[[object], Optional[int]],
+) -> bool:
+    """True iff the decoder never returns a wrong word (only the truth or None)."""
+    return all(dec(enc(s)) in (s, None) for s in source)
 
 
-def set_mass(mu: Dict[object, float], subset: Sequence[object]) -> float:
-    """Total probability mass of a set of symbols."""
-    s = set(subset)
-    return sum(p for x, p in mu.items() if x in s)
+def table_code(typical: Sequence[int]) -> Tuple[
+    Callable[[int], Optional[int]], Callable[[Optional[int]], Optional[int]]
+]:
+    """The optimal-rate table code: index into T, or the explicit failure symbol.
 
-
-# ---------------------------------------------------------------------------
-# Section 1.  The relaxed pigeonhole bound and its tightness
-# ---------------------------------------------------------------------------
-
-
-def prefix_scheme_success(n: int, m: int) -> float:
+    Alphabet size |T| + 1; decoding is a single table lookup (cost 1).
     """
-    The tightness construction.  Source = uniform on {0,...,n-1}, code space
-    of size m <= n.  Encode  x -> x  when x < m, else  x -> 0;  decode
-    i -> i.  The success set is exactly {0,...,m-1}, of mass m/n.
+    index = {s: i for i, s in enumerate(typical)}
+
+    def enc(s: int) -> Optional[int]:
+        return index.get(s)
+
+    def dec(c: Optional[int]) -> Optional[int]:
+        return None if c is None else typical[c]
+
+    return enc, dec
+
+
+def smallest_typical_set(
+    weights: Dict[int, Fraction], eps: Fraction
+) -> List[int]:
+    """The smallest set of probability >= 1 - eps: take the heaviest words first.
+
+    By the epsilon-relaxed pigeonhole principle its size is exactly the minimum
+    number of codewords needed for an eps-reliable code.
     """
-    def enc(x: int) -> int:
-        return x if x < m else 0
+    order = sorted(weights, key=lambda s: -weights[s])
+    acc, out = Fraction(0), []
+    for s in order:
+        if acc >= 1 - eps:
+            break
+        acc += weights[s]
+        out.append(s)
+    return out
 
-    def dec(i: int) -> Optional[int]:
-        return i
 
-    success = [x for x in range(n) if dec(enc(x)) == x]
-    return len(success) / n
+def demo_relaxed_pigeonhole() -> None:
+    print("=" * 78)
+    print("1. The epsilon-relaxed pigeonhole principle")
+    print("=" * 78)
 
+    # A concentrated source on 64 words: geometric-like weights.
+    raw = {s: Fraction(1, 2 ** min(s, 10) + 1) for s in range(64)}
+    total = sum(raw.values())
+    weights = {s: w / total for s, w in raw.items()}
 
-def demo_converse_and_tightness() -> None:
-    print("=" * 74)
-    print("1.  The relaxed pigeonhole bound, and that it is attained")
-    print("=" * 74)
+    print(f"{'eps':>10} {'min |C|':>10} {'P_fail(table)':>16} {'cost':>6}")
+    for eps in [Fraction(1, 2), Fraction(1, 10), Fraction(1, 100), Fraction(0)]:
+        T = smallest_typical_set(weights, eps)
+        enc, dec = table_code(T)
+        pf = failure_probability(weights, enc, dec)
+        assert pf <= eps, "table code must be eps-reliable"
+        assert is_honest(list(weights), enc, dec), "table code must be honest"
+        print(f"{str(eps):>10} {len(T) + 1:>10} {float(pf):>16.8f} {1:>6}")
+
+    # Uniform source: the bound is 1 - |C|/|S| and NOTHING relaxes it.
     n = 64
-    mu_uniform = normalise({x: 1.0 for x in range(n)})
-    print(f"    uniform source on n = {n} symbols,  p_max = {p_max(mu_uniform):.6f},"
-          f"  H_inf = {min_entropy(mu_uniform):.3f} bits")
+    unif = {s: Fraction(1, n) for s in range(n)}
+    print("\nUniform source on 64 words -- the counting bound bites:")
+    for csize in [8, 32, 63, 64]:
+        T = list(range(csize - 1))  # |C| = csize including the failure symbol
+        enc, dec = table_code(T)
+        pf = failure_probability(unif, enc, dec)
+        bound = 1 - Fraction(csize, n)
+        print(
+            f"  |C| = {csize:>3}:  P_fail = {float(pf):.6f}"
+            f"   lower bound 1 - |C|/|S| = {float(bound):.6f}"
+        )
+        assert pf >= bound
+
+
+def demo_randomness_is_useless() -> None:
     print()
-    print("      M   converse |C|*p_max   achieved M/n   equal?")
-    for m in (1, 2, 8, 16, 48, 64):
-        bound = m * p_max(mu_uniform)
-        achieved = prefix_scheme_success(n, m)
-        print(f"    {m:3d}   {bound:16.6f}   {achieved:12.6f}   "
-              f"{'yes' if abs(bound - achieved) < 1e-12 else 'NO'}")
-    print()
-    print("    Converse in entropy form:  log|C| >= H_inf + log(1-eps).")
-    for eps in (0.0, 0.01, 0.1, 0.5):
-        need = min_entropy(mu_uniform) + math.log2(1 - eps)
-        print(f"      eps = {eps:4.2f}:  log|C| >= {need:7.4f} bits"
-              f"   (cost of the relaxation: {math.log2(1 - eps):+7.4f} bits)")
-    print()
+    print("=" * 78)
+    print("2. A random number generator buys nothing on a uniform source")
+    print("=" * 78)
+
+    n, csize = 32, 8
+    unif = {s: Fraction(1, n) for s in range(n)}
+    bound = 1 - Fraction(csize, n)
+
+    # An ensemble of 200 'random codebooks': each seed picks which csize-1
+    # words are decodable.  Average failure probability can never beat `bound`.
+    import random
+
+    random.seed(20260818)
+    total = Fraction(0)
+    best = Fraction(1)
+    trials = 200
+    for _ in range(trials):
+        T = random.sample(range(n), csize - 1)
+        enc, dec = table_code(T)
+        pf = failure_probability(unif, enc, dec)
+        total += pf
+        best = min(best, pf)
+    avg = total / trials
+    print(f"  ensemble size            : {trials}")
+    print(f"  average failure prob.    : {float(avg):.6f}")
+    print(f"  best single seed         : {float(best):.6f}")
+    print(f"  lower bound 1 - |C|/|S|  : {float(bound):.6f}")
+    assert avg >= bound and best >= bound
+    print("  => no seed, and no average over seeds, beats the deterministic bound.")
 
 
-# ---------------------------------------------------------------------------
-# Section 2.  The inner-product family over F_p
-# ---------------------------------------------------------------------------
+# ----------------------------------------------------------------------------
+# 3-4. The inner-product hash family over F_p and the scan schemes
+# ----------------------------------------------------------------------------
 
 
-def lin_hash(p: int, k: int) -> Callable[[Symbol], int]:
-    """h_k(x1, x2) = x1 + k*x2  mod p, on the source F_p x F_p."""
-    def h(x: Symbol) -> int:
-        return (x[0] + k * x[1]) % p
-    return h
+def dot_hash(a: Vector, x: Vector, p: int) -> int:
+    """The pairwise independent inner-product hash h_a(x) = <a, x> mod p."""
+    return sum(ai * xi for ai, xi in zip(a, x)) % p
 
 
-def check_universal2(p: int) -> Tuple[int, float]:
+def all_vectors(k: int, p: int) -> List[Vector]:
+    """Every vector of F_p^k, in lexicographic order."""
+    return [tuple(v) for v in product(range(p), repeat=k)]
+
+
+def seed_is_bad(a: Vector, typical: Sequence[Vector], p: int) -> bool:
+    """True iff the seed confuses two distinct typical words."""
+    seen: Set[int] = set()
+    for x in typical:
+        h = dot_hash(a, x, p)
+        if h in seen:
+            return True
+        seen.add(h)
+    return False
+
+
+def linear_scan_decode(
+    m: Optional[int], a: Vector, typical: Sequence[Vector], p: int
+) -> Tuple[Optional[Vector], int]:
+    """Uniqueness scan over the whole typical set; returns (answer, cost).
+
+    The answer is returned only if exactly one candidate matches, so the
+    decoder is honest for EVERY seed: it never returns a wrong word.
     """
-    Exhaustively count, over all unordered pairs of distinct source symbols,
-    the largest number of keys under which they collide.  2-universality
-    requires  (that number) * M <= K,  here  count * p <= p, i.e. count <= 1.
-    """
-    domain = [(a, b) for a in range(p) for b in range(p)]
-    worst = 0
-    for x, y in itertools.combinations(domain, 2):
-        colliding = sum(1 for k in range(p) if lin_hash(p, k)(x) == lin_hash(p, k)(y))
-        worst = max(worst, colliding)
-    return worst, worst * p / p
-
-
-def demo_universal_family() -> None:
-    print("=" * 74)
-    print("2.  The inner-product family  h_k(x1,x2) = x1 + k*x2  over F_p")
-    print("=" * 74)
-    for p in (5, 7, 11):
-        worst, ratio = check_universal2(p)
-        print(f"    p = {p:2d}:  source {p*p:4d} symbols -> {p:2d} codewords "
-              f"({math.log2(p*p):.2f} bits -> {math.log2(p):.2f} bits);  "
-              f"worst-case colliding keys = {worst}  (need <= K/M = 1)  "
-              f"{'OK' if worst * p <= p else 'FAIL'}")
-    print()
-
-
-# ---------------------------------------------------------------------------
-# Section 3-4.  Achievability, derandomization, and silent corruption
-# ---------------------------------------------------------------------------
-
-
-def unique_match_decode(
-    h: Callable[[Symbol], int], codebook: Sequence[Symbol], received: int
-) -> Tuple[Optional[Symbol], int]:
-    """
-    The linear unique-match decoder.  Returns (answer, cost) where cost is the
-    exact number of key evaluations, namely len(codebook).  The answer is the
-    unique codebook entry hashing to `received`, or None if the match is not
-    unique.
-    """
-    found: Optional[Symbol] = None
-    count = 0
-    cost = 0
-    for y in codebook:
-        cost += 1
-        if h(y) == received:
-            count += 1
-            found = y
-    return (found if count == 1 else None), cost
-
-
-def scheme_statistics(
-    p: int,
-    k: int,
-    mu: Dict[Symbol, float],
-    codebook: Sequence[Symbol],
-) -> Dict[str, float]:
-    """Exact failure / silent-corruption masses and decoding cost for one key."""
-    h = lin_hash(p, k)
-    fail = 0.0
-    silent = 0.0
-    cost = 0
-    for x, prob in mu.items():
-        answer, c = unique_match_decode(h, codebook, h(x))
-        cost = max(cost, c)
-        if answer != x:
-            fail += prob
-            if answer is not None:
-                silent += prob
-    return {"failure": fail, "silent": silent, "cost": float(cost)}
-
-
-def demo_achievability(seed: int = 20260818) -> None:
-    print("=" * 74)
-    print("3-4.  Derandomized achievability, and the silent-error guarantee")
-    print("=" * 74)
-    rng = random.Random(seed)
-    p = 23
-    domain = [(a, b) for a in range(p) for b in range(p)]
-    codebook = rng.sample(domain, 8)
-
-    # A source concentrated on the codebook: mass delta escapes it.
-    delta = 0.05
-    weights: Dict[Symbol, float] = {}
-    for x in domain:
-        weights[x] = 1.0 if x in codebook else 0.0
-    inside = sum(weights.values())
-    for x in domain:
-        if x in codebook:
-            weights[x] = weights[x] / inside * (1 - delta)
-        else:
-            weights[x] = delta / (len(domain) - len(codebook))
-    mu = normalise(weights)
-
-    m = p
-    n_l = len(codebook)
-    bound_fail = delta + n_l / m
-    bound_silent = n_l / m
-    bound_silent_sharp = 2 * delta * n_l / m
-    bound_fail_sharp = delta + 2 * n_l / m
-
-    print(f"    p = {p}, source {len(domain)} symbols, codebook |l| = {n_l},"
-          f" M = {m}, delta = {delta}")
-    print(f"    first-moment bounds:  failure <= {bound_fail:.5f},"
-          f"  silent <= {bound_silent:.5f}")
-    print(f"    sharp bounds:         failure <= {bound_fail_sharp:.5f},"
-          f"  silent <= {bound_silent_sharp:.5f}")
-    print()
-
-    stats = [(k, scheme_statistics(p, k, mu, codebook)) for k in range(p)]
-    good = [(k, s) for k, s in stats if s["failure"] <= bound_fail]
-    sharp = [(k, s) for k, s in stats
-             if s["failure"] <= bound_fail_sharp and s["silent"] <= bound_silent_sharp]
-
-    print(f"    keys meeting the first-moment failure bound: {len(good)}/{p}"
-          f"   (the theory guarantees at least one)")
-    print(f"    keys meeting BOTH sharp bounds simultaneously: {len(sharp)}/{p}"
-          f"   (the theory guarantees at least one)")
-    best_k, best = min(stats, key=lambda kv: kv[1]["failure"])
-    print(f"    best key k = {best_k}:  failure = {best['failure']:.5f},"
-          f"  silent = {best['silent']:.5f},  cost = {int(best['cost'])} evaluations")
-    print()
-
-    # Silent corruption on the codebook is impossible for EVERY key.
-    violations = 0
-    for k in range(p):
-        h = lin_hash(p, k)
-        for x in codebook:
-            answer, _ = unique_match_decode(h, codebook, h(x))
-            if answer is not None and answer != x:
-                violations += 1
-    print(f"    exhaustive check over all {p} keys and all {n_l} codebook symbols:")
-    print(f"      silent corruptions of a codebook symbol = {violations}"
-          f"   (theory: always 0, unconditionally)")
-    print()
-
-
-# ---------------------------------------------------------------------------
-# Section 5.  Sorted codebook and the logarithmic decoder
-# ---------------------------------------------------------------------------
-
-
-def bsearch(key: Callable[[int], int], t: int, lo: int, length: int
-            ) -> Tuple[Optional[int], int]:
-    """
-    Cost-instrumented binary search over the index range [lo, lo+length).
-    Returns (index or None, number of key evaluations).  The proved bound is
-    cost <= floor(log2(length)) + 1.
-    """
-    if length == 0:
+    if m is None:
         return None, 0
-    half = length // 2
-    m = lo + half
-    if key(m) == t:
-        return m, 1
-    if key(m) < t:
-        idx, c = bsearch(key, t, m + 1, length - half - 1)
-        return idx, c + 1
-    idx, c = bsearch(key, t, lo, half)
-    return idx, c + 1
+    matches = [x for x in typical if dot_hash(a, x, p) == m]
+    cost = len(typical)  # every typical word is tested: cost is exactly |T|
+    return (matches[0] if len(matches) == 1 else None), cost
 
 
-def bs_decode(key: Callable[[int], int], arr: Sequence[Symbol], n: int, t: int
-              ) -> Tuple[Optional[Symbol], int]:
+def demo_monte_carlo_scheme() -> None:
+    print()
+    print("=" * 78)
+    print("3. The Monte Carlo compressor over F_p: honesty, cost, failure bound")
+    print("=" * 78)
+
+    p, k = 53, 3
+    typical: List[Vector] = [(1, 0, 0), (0, 1, 0), (0, 0, 1), (1, 1, 1), (2, 5, 7)]
+    t = len(typical)
+    seeds = all_vectors(k, p)
+
+    bad = [a for a in seeds if seed_is_bad(a, typical, p)]
+    exact_collision_prob = Fraction(len(bad), len(seeds))
+    union_bound = Fraction(t * (t - 1), p)
+
+    # Honesty check over every seed and every transmitted typical word.
+    honest_everywhere = True
+    for a in seeds:
+        for x in typical:
+            ans, cost = linear_scan_decode(dot_hash(a, x, p), a, typical, p)
+            assert cost == t, "linear scan cost is exactly |T|"
+            if ans not in (x, None):
+                honest_everywhere = False
+    print(f"  source alphabet          : F_{p}^{k}  ({p ** k} words)")
+    print(f"  codeword alphabet        : {p + 1} symbols (p field values + failure flag)")
+    print(f"  typical set size t       : {t}")
+    print(f"  decoding cost            : exactly {t} candidate tests (linear scan)")
+    print(f"  honest for every seed    : {honest_everywhere}")
+    assert honest_everywhere, "no silent corruption is allowed"
+    print(f"  measured P(bad seed)     : {exact_collision_prob} "
+          f"= {float(exact_collision_prob):.6f}")
+    print(f"  union bound t(t-1)/p     : {union_bound} = {float(union_bound):.6f}")
+    assert exact_collision_prob <= union_bound
+
+    # With atypicality loss eps the total average failure is <= eps + t(t-1)/p.
+    eps = Fraction(1, 50)
+    print(f"  average failure bound    : eps + t(t-1)/p = "
+          f"{float(eps + union_bound):.6f}   (eps = {eps})")
+
+
+def bucketed_cost(
+    a1: Vector, x: Vector, typical: Sequence[Vector], p1: int
+) -> int:
+    """Cost of the bucketed decoder on x: the size of x's bucket."""
+    hx = dot_hash(a1, x, p1)
+    return sum(1 for y in typical if dot_hash(a1, y, p1) == hx)
+
+
+def demo_exact_expected_cost() -> None:
+    print()
+    print("=" * 78)
+    print("4. Exact expected decoder cost of the bucketed decoder: 1 + (t-1)/m1")
+    print("=" * 78)
+
+    k, t = 3, 7
+    print(f"  typical set size t = {t}")
+    print(f"{'m1 = p1':>9} {'measured E[cost]':>20} {'1 + (t-1)/m1':>16} {'match':>7}")
+    for p1 in [2, 3, 5, 7, 11, 13]:
+        seeds = all_vectors(k, p1)
+        # t distinct words of the domain F_{p1}^k, so pairwise independence applies
+        typical: List[Vector] = seeds[1 : t + 1]
+        for x in typical:
+            total = sum(bucketed_cost(a1, x, typical, p1) for a1 in seeds)
+            measured = Fraction(total, len(seeds))
+            predicted = 1 + Fraction(t - 1, p1)
+            assert measured == predicted, (x, p1, measured, predicted)
+        print(f"{p1:>9} {str(measured):>20} {str(predicted):>16} {'exact':>7}")
+    print("  => an identity, not a bound: for m1 >= t the cost is below 2 probes.")
+
+
+def demo_rate_time_hyperbola() -> None:
+    print()
+    print("=" * 78)
+    print("5. The universal rate-time hyperbola:  sum of costs >= t^2/|M|")
+    print("=" * 78)
+
+    k, t = 3, 7
+    print(f"{'m = p1':>7} {'min total work':>16} {'t^2/m':>10} "
+          f"{'min avg cost':>13} {'t/m':>8} {'1 + (t-1)/m':>13}")
+    for p1 in [2, 3, 5, 7, 11]:
+        seeds = all_vectors(k, p1)
+        typical: List[Vector] = seeds[1 : t + 1]
+        worst = None
+        for a1 in seeds:
+            total = sum(bucketed_cost(a1, x, typical, p1) for x in typical)
+            worst = total if worst is None else min(worst, total)
+        lower = Fraction(t * t, p1)
+        assert worst >= lower, "Cauchy-Schwarz converse must hold for every seed"
+        print(f"{p1:>7} {worst:>16} {float(lower):>10.3f} "
+              f"{float(Fraction(worst, t)):>13.3f} {float(Fraction(t, p1)):>8.3f} "
+              f"{float(1 + Fraction(t - 1, p1)):>13.3f}")
+    print("  => achievable cost and the universal lower bound differ by < 1 probe.")
+
+
+# ----------------------------------------------------------------------------
+# 6. Exact planar failure probability via projective directions
+# ----------------------------------------------------------------------------
+
+
+def projective_directions(typical: Sequence[Vector], p: int) -> int:
+    """Number of distinct projective directions among the differences of T.
+
+    Two nonzero vectors z, w in F_p^2 give the same direction iff
+    z0*w1 - z1*w0 = 0.  We normalise each direction to a canonical
+    representative and count the distinct ones.
     """
-    The logarithmic decoder: binary search plus a two-neighbour uniqueness
-    test.  Abstains (returns None) whenever the hash value found is repeated
-    at a neighbour, so a duplicate hash can never produce a confident answer.
-    Proved cost bound: floor(log2(n)) + 3.
-    """
-    idx, cost = bsearch(key, t, 0, n)
-    if idx is None:
-        return None, cost
-    if idx > 0:
-        cost += 1
-        if key(idx - 1) == t:
-            return None, cost
-    if idx + 1 < n:
-        cost += 1
-        if key(idx + 1) == t:
-            return None, cost
-    return arr[idx], cost
+    reps: Set[Vector] = set()
+    for x in typical:
+        for y in typical:
+            if x == y:
+                continue
+            z = ((x[0] - y[0]) % p, (x[1] - y[1]) % p)
+            if z == (0, 0):
+                continue
+            # canonical representative: scale so that the first nonzero entry is 1
+            pivot = z[0] if z[0] != 0 else z[1]
+            inv = pow(pivot, p - 2, p)
+            reps.add(((z[0] * inv) % p, (z[1] * inv) % p))
+    return len(reps)
 
 
-def demo_logarithmic_decoder(seed: int = 4242) -> None:
-    print("=" * 74)
-    print("5.  Sorting the codebook turns the scan into a binary search")
-    print("=" * 74)
-    rng = random.Random(seed)
-    p = 1009
-    domain = [(a, b) for a in range(p) for b in range(p)]
-
-    print("       |l|   linear cost   measured bs cost   proved log2|l|+3"
-          "   converse log2|l|")
-    for n_l in (8, 16, 64, 256, 1024):
-        codebook = rng.sample(domain, n_l)
-        k = rng.randrange(p)
-        h = lin_hash(p, k)
-        # Sort AFTER the key is chosen: a permutation, invisible to the analysis.
-        order = sorted(range(n_l), key=lambda i: h(codebook[i]))
-        arr = [codebook[i] for i in order]
-        keys = [h(y) for y in arr]
-
-        def key_fn(i: int) -> int:
-            return keys[i]
-
-        worst = 0
-        for x in arr:
-            _, c = bs_decode(key_fn, arr, n_l, h(x))
-            worst = max(worst, c)
-        proved = int(math.log2(n_l)) + 3
-        converse = int(math.log2(n_l))
-        print(f"    {n_l:6d}   {n_l:11d}   {worst:16d}   {proved:16d}"
-              f"   {converse:16d}")
-
+def demo_exact_planar_count() -> None:
     print()
-    print("    Speedup log2(n)+3 < n holds for every n >= 6:")
-    for n in (5, 6, 7, 10, 100, 10000):
-        lhs = int(math.log2(n)) + 3
-        print(f"      n = {n:6d}:  log2(n)+3 = {lhs:3d}  {'<' if lhs < n else '>='} "
-              f" n = {n}   {'(speedup)' if lhs < n else '(no speedup, n < 6)'}")
+    print("=" * 78)
+    print("6. Exact planar failure probability:  (1 + d(p-1)) / p^2")
+    print("=" * 78)
+
+    examples: List[Tuple[int, List[Vector]]] = [
+        (11, [(1, 0), (0, 1), (2, 3)]),
+        (11, [(0, 0), (1, 0), (2, 0), (3, 0)]),  # collinear: d collapses to 1
+        (13, [(1, 0), (0, 1), (1, 1), (2, 5)]),
+        (17, [(0, 0), (1, 2), (3, 4), (5, 9), (7, 1)]),
+    ]
+    print(f"{'p':>4} {'t':>3} {'d':>3} {'brute force':>12} {'1+d(p-1)':>10} "
+          f"{'exact P':>10} {'union bd':>10}")
+    for p, typical in examples:
+        seeds = all_vectors(2, p)
+        brute = sum(1 for a in seeds if seed_is_bad(a, typical, p))
+        d = projective_directions(typical, p)
+        predicted = 1 + d * (p - 1)
+        assert brute == predicted, (p, typical, brute, predicted)
+        t = len(typical)
+        exact = Fraction(predicted, p * p)
+        union = min(Fraction(t * (t - 1), p), Fraction(1))
+        print(f"{p:>4} {t:>3} {d:>3} {brute:>12} {predicted:>10} "
+              f"{float(exact):>10.5f} {float(union):>10.5f}")
+    print("  => the theorem matches exhaustive enumeration in every case;")
+    print("     the union bound is loose whenever differences share a direction.")
+
+
+# ----------------------------------------------------------------------------
+# 7. Derandomisation: an explicit perfect seed
+# ----------------------------------------------------------------------------
+
+
+def find_perfect_seed(
+    typical: Sequence[Vector], p: int, k: int
+) -> Optional[Vector]:
+    """Search for a seed that hashes T injectively.  One exists if p > t(t-1)."""
+    for a in all_vectors(k, p):
+        if not seed_is_bad(a, typical, p):
+            return a
+    return None
+
+
+def next_prime(n: int) -> int:
+    """The least prime strictly greater than n (Bertrand guarantees p <= 2n)."""
+    def is_prime(m: int) -> bool:
+        if m < 2:
+            return False
+        i = 2
+        while i * i <= m:
+            if m % i == 0:
+                return False
+            i += 1
+        return True
+
+    m = n + 1
+    while not is_prime(m):
+        m += 1
+    return m
+
+
+def demo_derandomisation() -> None:
     print()
+    print("=" * 78)
+    print("7. Derandomisation: an explicit deterministic scheme at quadratic rate")
+    print("=" * 78)
 
-    # Soundness holds even for a deliberately non-monotone key function: any
-    # index the decoder returns really does carry the received value, so the
-    # decoder can be made to abstain but never to answer off-target.
-    bad_keys = [rng.randrange(50) for _ in range(64)]
-    arr64 = [(i, 0) for i in range(64)]
-    unsound = 0
-    answered = 0
-    for t in range(50):
-        ans, _ = bs_decode(lambda i: bad_keys[i], arr64, 64, t)
-        if ans is not None:
-            answered += 1
-            if bad_keys[arr64.index(ans)] != t:
-                unsound += 1
-    print("    adversarial (non-monotone, duplicate-heavy) key function:")
-    print(f"      confident answers = {answered}, of which off-target = {unsound}")
-    print("      (theory: off-target answers are always 0, with no hypothesis on")
-    print("       the hash; monotonicity is only needed for the decoder to find")
-    print("       a match at all, and it is supplied for free by sorting)")
-    print()
+    k = 2
+    typical: List[Vector] = [(1, 0), (0, 1), (2, 3), (4, 5), (6, 1)]
+    t = len(typical)
+    p = next_prime(t * t)  # t^2 < p <= 2t^2 by Bertrand's postulate
+    assert t * t < p <= 2 * t * t
+    a = find_perfect_seed(typical, p, k)
+    assert a is not None, "a perfect seed must exist once p > t(t-1)"
 
-
-# ---------------------------------------------------------------------------
-# Section 6.  Checksums
-# ---------------------------------------------------------------------------
-
-
-def demo_checksum() -> None:
-    print("=" * 74)
-    print("6.  Checksums: universality is multiplicative under pairing")
-    print("=" * 74)
-    n_l, m = 16, 64
-    delta = 0.02
-    print(f"    |l| = {n_l}, M = {m}, delta = {delta}")
-    print("        C   extra bits   silent bound |l|/(M*C)")
-    for c in (1, 4, 16, 256, 1024):
-        print(f"    {c:5d}   {math.log2(c):10.1f}   {n_l / (m * c):22.8f}")
-    print()
-    print("    Tunable derandomization: silent <= (1+eta)*delta*|l|/M,"
-          " failure <= delta + (1+1/eta)*|l|/M")
-    print("        eta     silent bound     failure bound")
-    for eta in (0.1, 0.5, 1.0, 2.0, 10.0):
-        s = (1 + eta) * delta * n_l / m
-        f = delta + (1 + 1 / eta) * n_l / m
-        print(f"    {eta:7.2f}   {s:14.6f}   {f:15.6f}")
-    print("    (eta -> 0 drives the silent constant to 1, the first-moment optimum)")
-    print()
-
-
-# ---------------------------------------------------------------------------
-# Section 7.  List decoding, linear versus exponential gain
-# ---------------------------------------------------------------------------
-
-
-def poly_hash(p: int, coeffs: Sequence[int]) -> Callable[[int], int]:
-    """h_c(x) = c0 + c1*x + ... + cT*x^T  mod p."""
-    def h(x: int) -> int:
-        acc = 0
-        for c in reversed(coeffs):
-            acc = (acc * x + c) % p
-        return acc
-    return h
-
-
-def demo_list_decoding() -> None:
-    print("=" * 74)
-    print("7.  List decoding: linear gain vs exponential gain")
-    print("=" * 74)
-    n_l, m, delta = 10, 101, 0.01
-    print(f"    |l| = {n_l}, M = {m}, delta = {delta}")
-    print("        T   2-universal: delta+|l|/(T*M)   Indep_T: delta+C(|l|,T)/M^T"
-          "   readable (|l|/M)^T")
-    for t in (1, 2, 3, 4):
-        linear = delta + n_l / (t * m)
-        exact = delta + math.comb(n_l, t) / m ** t
-        readable = delta + (n_l / m) ** t
-        print(f"    {t:5d}   {linear:28.8f}   {exact:28.8f}   {readable:19.8f}")
-    print()
-    print("    Rate cost of a list of length T is exactly log2(T) bits:")
-    for t in (1, 2, 4, 8):
-        print(f"      T = {t}:  {math.log2(t):.2f} bits")
-    print()
-
-    # Key length: polynomial family vs the family of all functions.
-    p, t = 101, 3
-    poly_keys = p ** (t + 1)
-    full_keys_log2 = p * math.log2(p)
-    print(f"    key length over F_{p} with T = {t}:")
-    print(f"      degree-T polynomial family: {poly_keys} keys = "
-          f"{math.log2(poly_keys):.1f} bits of advice")
-    print(f"      family of all functions:    {p}^{p} keys = "
-          f"{full_keys_log2:.1f} bits of advice")
-    print(f"      separation factor in bits:  {full_keys_log2 / math.log2(poly_keys):.0f}x")
-    print()
-
-    # Small exhaustive verification that the polynomial family is Indep_T.
-    p_small, t_small = 5, 2
-    domain = list(range(p_small))
-    all_coeffs = list(itertools.product(range(p_small), repeat=t_small + 1))
-    worst_frac = 0.0
-    for x in domain:
-        others = [y for y in domain if y != x]
-        for subset in itertools.combinations(others, t_small):
-            hits = 0
-            for c in all_coeffs:
-                h = poly_hash(p_small, c)
-                if all(h(y) == h(x) for y in subset):
-                    hits += 1
-            worst_frac = max(worst_frac, hits / len(all_coeffs))
-    print(f"    exhaustive Indep_T check, p = {p_small}, T = {t_small}:")
-    print(f"      worst key fraction making T symbols collide with x = {worst_frac:.6f}")
-    print(f"      required bound M^-T = {p_small ** -t_small:.6f}   "
-          f"{'OK' if worst_frac <= p_small ** -t_small + 1e-12 else 'FAIL'}")
-    print()
-
-
-# ---------------------------------------------------------------------------
-# Section 8.  The key-space lower bound  K >= M
-# ---------------------------------------------------------------------------
-
-
-def demo_key_bound() -> None:
-    print("=" * 74)
-    print("8.  A compressing 2-universal family needs at least M keys")
-    print("=" * 74)
-    print("    Exhaustive search over all families H : [K] x [n] -> [M] with")
-    print("    n = 3, M = 2 (so M < n: the family really compresses).")
-    n, m = 3, 2
-    for k in (1, 2, 3):
-        found = None
-        for family in itertools.product(
-            list(itertools.product(range(m), repeat=n)), repeat=k
-        ):
-            ok = True
-            for x, y in itertools.combinations(range(n), 2):
-                colliding = sum(1 for j in range(k) if family[j][x] == family[j][y])
-                if colliding * m > k:
-                    ok = False
-                    break
-            if ok:
-                found = family
-                break
-        status = "exists" if found else "impossible"
-        expect = "allowed (K >= M)" if k >= m else "forbidden (K < M)"
-        print(f"      K = {k}:  2-universal family {status:11s}   -- theory says {expect}")
-    print()
-    print("    The bound is attained: the inner-product family over F_p has")
-    print("    K = M = p on a source of p^2 symbols, so the encoder's advice is")
-    print("    exactly one codeword long.")
-    for p in (7, 101, 65537):
-        print(f"      p = {p:6d}:  source {p*p} symbols, K = M = {p},"
-              f"  advice {math.log2(p):.1f} bits, message {2*math.log2(p):.1f} bits")
-    print()
-
-
-# ---------------------------------------------------------------------------
+    # Verify: zero failure on the typical set, honest, cost exactly t.
+    ok = True
+    for x in typical:
+        ans, cost = linear_scan_decode(dot_hash(a, x, p), a, typical, p)
+        ok = ok and (ans == x) and (cost == t)
+    print(f"  t = {t},  prime p = {p}  (t^2 = {t * t} < p <= 2t^2 = {2 * t * t})")
+    print(f"  perfect seed found       : {a}")
+    print(f"  decodes all of T exactly : {ok}")
+    print(f"  deterministic P_fail on T: 0")
+    print(f"  codeword alphabet        : {p + 1} symbols  "
+          f"(optimum would be {t + 1}: the birthday/squaring penalty)")
+    print(f"  decoding cost            : exactly {t} candidate tests")
+    assert ok
 
 
 def main() -> None:
+    demo_relaxed_pigeonhole()
+    demo_randomness_is_useless()
+    demo_monte_carlo_scheme()
+    demo_exact_expected_cost()
+    demo_rate_time_hyperbola()
+    demo_exact_planar_count()
+    demo_derandomisation()
     print()
-    print("ALMOST-LOSSLESS COMPRESSION BEYOND THE PIGEONHOLE BOUND")
-    print("Numerical demonstrations")
-    print()
-    demo_converse_and_tightness()
-    demo_universal_family()
-    demo_achievability()
-    demo_logarithmic_decoder()
-    demo_checksum()
-    demo_list_decoding()
-    demo_key_bound()
-    print("=" * 74)
-    print("Summary")
-    print("=" * 74)
-    print("  * Allowing failure eps relaxes the counting bound by exactly")
-    print("    log2(1-eps) bits, and the relaxed bound is attained.")
-    print("  * A 2-universal hash with a unique-match rule never lies about a")
-    print("    codebook symbol, for every key, with no probabilistic hypothesis.")
-    print("  * Sorting the codebook after the key is chosen costs nothing in the")
-    print("    analysis and reduces decoding from |l| to at most log2|l|+3")
-    print("    key evaluations -- within an additive 3 of the log2|l| converse.")
-    print("  * Lists cost exactly log2(T) bits of rate and buy a factor T with")
-    print("    2-universality, or a factor (M/|l|)^T with (T+1)-wise independence.")
-    print("  * The encoder's key must be at least as long as one codeword,")
-    print("    and one codeword's worth of advice suffices.")
-    print()
+    print("All demonstrations completed: every asserted identity was verified.")
 
 
 if __name__ == "__main__":
