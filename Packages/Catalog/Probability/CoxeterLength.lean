@@ -1,0 +1,95 @@
+/-
+# Coxeter length on the symmetric group and the sign character
+
+The refinement asked for in Conjecture A speaks of a permutation of *minimal Coxeter length*.
+This file supplies the notion and its basic theory in the shape needed there:
+
+* `ParityGap.coxeterLength σ` — the number of inversions of `σ`, i.e. the length of `σ` in the
+  Coxeter presentation of the symmetric group by adjacent transpositions;
+* `ParityGap.sign_eq_neg_one_pow_coxeterLength` — the sign character is the parity of the
+  Coxeter length;
+* `ParityGap.coxeterLength_eq_zero_iff` — only the identity has length `0`.
+-/
+
+import Mathlib
+
+open Equiv Equiv.Perm Finset
+
+namespace ParityGap
+
+variable {n : ℕ}
+
+/-- The inversion set of a permutation of `Fin n`: pairs `x = ⟨x₁, x₂⟩` with `x₂ < x₁` whose
+order is reversed by `σ`. -/
+def inversions (σ : Perm (Fin n)) : Finset (Σ _ : Fin n, Fin n) :=
+  (Equiv.Perm.finPairsLT n).filter (fun x => σ x.1 < σ x.2)
+
+/-- The **Coxeter length** of a permutation: its number of inversions. -/
+def coxeterLength (σ : Perm (Fin n)) : ℕ := (inversions σ).card
+
+theorem sign_eq_signAux (σ : Perm (Fin n)) : Equiv.Perm.sign σ = Equiv.Perm.signAux σ := by
+  induction σ using Equiv.Perm.swap_induction_on with
+  | one => simp
+  | @swap_mul f x y hxy ih =>
+    rw [map_mul, Equiv.Perm.sign_swap hxy, Equiv.Perm.signAux_mul, Equiv.Perm.signAux_swap hxy, ih]
+
+/-- **The sign is the parity of the Coxeter length.** -/
+theorem sign_eq_neg_one_pow_coxeterLength (σ : Perm (Fin n)) :
+    Equiv.Perm.sign σ = (-1 : ℤˣ) ^ (coxeterLength σ) := by
+  classical
+  have hfilter : (Equiv.Perm.finPairsLT n).filter (fun x => σ x.1 ≤ σ x.2) = inversions σ := by
+    refine Finset.filter_congr fun x hx => ?_
+    have hlt : x.2 < x.1 := Equiv.Perm.mem_finPairsLT.mp hx
+    have hne : σ x.1 ≠ σ x.2 := fun h => absurd (σ.injective h) (ne_of_gt hlt)
+    exact ⟨fun h => lt_of_le_of_ne h hne, le_of_lt⟩
+  rw [sign_eq_signAux, Equiv.Perm.signAux, coxeterLength, ← hfilter, Finset.prod_ite]
+  simp
+
+@[simp] theorem coxeterLength_one : coxeterLength (1 : Perm (Fin n)) = 0 := by
+  classical
+  rw [coxeterLength, inversions, Finset.card_eq_zero, Finset.filter_eq_empty_iff]
+  intro x hx
+  have hlt : x.2 < x.1 := Equiv.Perm.mem_finPairsLT.mp hx
+  simpa using hlt.le
+
+/-- Only the identity permutation has no inversions. -/
+theorem coxeterLength_eq_zero_iff {σ : Perm (Fin n)} : coxeterLength σ = 0 ↔ σ = 1 := by
+  classical
+  constructor
+  · intro h
+    have hno : ∀ x ∈ Equiv.Perm.finPairsLT n, ¬ (σ x.1 < σ x.2) := by
+      intro x hx hlt
+      have : x ∈ inversions σ := Finset.mem_filter.mpr ⟨hx, hlt⟩
+      rw [coxeterLength, Finset.card_eq_zero] at h
+      simp [h] at this
+    have hmono : StrictMono σ := by
+      intro a b hab
+      have hmem : (⟨b, a⟩ : Σ _ : Fin n, Fin n) ∈ Equiv.Perm.finPairsLT n :=
+        Equiv.Perm.mem_finPairsLT.mpr hab
+      have := hno _ hmem
+      have hne : σ b ≠ σ a := fun hc => absurd (σ.injective hc) (ne_of_gt hab)
+      exact lt_of_le_of_ne (not_lt.mp this) (Ne.symm hne)
+    -- a strictly monotone permutation of a finite linear order is the identity
+    ext a
+    have hiso : ∀ a : Fin n, a ≤ σ a := fun a => hmono.le_apply
+    have hiso' : ∀ a : Fin n, a ≤ σ.symm a := by
+      intro a
+      have hmono' : StrictMono σ.symm := by
+        intro x y hxy
+        by_contra hc
+        push_neg at hc
+        rcases eq_or_lt_of_le hc with h1 | h1
+        · exact absurd (σ.symm.injective h1) (ne_of_lt hxy).symm
+        · have := hmono h1
+          simp only [Equiv.apply_symm_apply] at this
+          exact absurd this (not_lt.mpr hxy.le)
+      exact hmono'.le_apply
+    have h1 : a ≤ σ a := hiso a
+    have h3 : σ a ≤ a := by
+      have := hiso' (σ a)
+      simpa using this
+    exact le_antisymm h3 h1
+  · rintro rfl
+    exact coxeterLength_one
+
+end ParityGap

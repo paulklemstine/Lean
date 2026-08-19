@@ -1,0 +1,213 @@
+/-
+# The ring `ℤ[ζ_p]` and its reduction modulo the prime `ζ - 1`
+
+For the parity-gap / Chebotarev development we need an honest characteristic-zero model of
+`ℤ[ζ_p]`, together with the reduction map onto `𝔽_p` that sends `ζ ↦ 1`.  Everything is built
+by hand from `AdjoinRoot (cyclotomic p ℤ)`, so no algebraic number theory is imported:
+
+* `ParityGap.CycRing p` — the ring `ℤ[X]/(Φ_p)`, a Noetherian domain;
+* `ParityGap.zeta p` — the image of `X`, a primitive `p`-th root of unity in `CycRing p`;
+* `ParityGap.red p : CycRing p →+* ZMod p` — the reduction sending `ζ ↦ 1`;
+* `ParityGap.pi p = ζ - 1` — the ramified prime, with `red` vanishing exactly on multiples of it
+  (`ParityGap.pi_dvd_of_red_eq_zero`);
+* `ParityGap.exists_primitive_scaling` — every nonzero vector over `CycRing p` can be divided by
+  a power of `π` so that at least one coordinate survives reduction.  This uses the Krull
+  intersection theorem, which is where Noetherianity enters.
+-/
+
+import Mathlib
+
+open Polynomial
+
+namespace ParityGap
+
+variable (p : ℕ) [hp : Fact p.Prime]
+
+/-- `ℤ[ζ_p] = ℤ[X] / (Φ_p)`. -/
+abbrev CycRing : Type := AdjoinRoot (cyclotomic p ℤ)
+
+instance instIsDomainCycRing : IsDomain (CycRing p) := by
+  have hprime : Prime (cyclotomic p ℤ) := (cyclotomic.irreducible hp.out.pos).prime
+  have : (Ideal.span {cyclotomic p ℤ}).IsPrime :=
+    (Ideal.span_singleton_prime hprime.ne_zero).mpr hprime
+  exact Ideal.Quotient.isDomain _
+
+/-- The distinguished primitive `p`-th root of unity. -/
+noncomputable def zeta : CycRing p := AdjoinRoot.root (cyclotomic p ℤ)
+
+/-- The uniformiser at the unique prime above `p`. -/
+noncomputable def pi : CycRing p := zeta p - 1
+
+theorem geom_sum_zeta : ∑ i ∈ Finset.range p, zeta p ^ i = 0 := by
+  have h2 : (aeval (zeta p)) (cyclotomic p ℤ) = 0 := by
+    rw [zeta, AdjoinRoot.aeval_eq]; exact AdjoinRoot.mk_self
+  have h3 : (aeval (zeta p)) (∑ i ∈ Finset.range p, (X : ℤ[X]) ^ i) = 0 := by
+    rw [← cyclotomic_prime ℤ p]; exact h2
+  simpa using h3
+
+theorem zeta_pow_p : zeta p ^ p = 1 := by
+  have h := geom_sum_zeta p
+  have hg : (∑ i ∈ Finset.range p, zeta p ^ i) * (zeta p - 1) = zeta p ^ p - 1 :=
+    geom_sum_mul _ _
+  rw [h, zero_mul] at hg
+  linear_combination -hg
+
+/-- `p` is nonzero in `ℤ[ζ_p]`: the cyclotomic polynomial does not divide a constant. -/
+theorem natCast_p_ne_zero : (p : CycRing p) ≠ 0 := by
+  intro h
+  have hmk : (AdjoinRoot.mk (cyclotomic p ℤ)) ((p : ℕ) : ℤ[X]) = 0 := by
+    rw [map_natCast]; exact h
+  have hdvd : cyclotomic p ℤ ∣ ((p : ℕ) : ℤ[X]) := AdjoinRoot.mk_eq_zero.mp hmk
+  have hne : ((p : ℕ) : ℤ[X]) ≠ 0 := by
+    simpa using (Nat.cast_ne_zero (R := ℤ)).mpr hp.out.ne_zero
+  have hle := Polynomial.natDegree_le_of_dvd hdvd hne
+  rw [natDegree_cyclotomic] at hle
+  have : p.totient = p - 1 := Nat.totient_prime hp.out
+  have h2 := hp.out.two_le
+  simp only [Polynomial.natDegree_natCast] at hle
+  omega
+
+theorem zeta_ne_one : zeta p ≠ 1 := by
+  intro h
+  have hg := geom_sum_zeta p
+  rw [h] at hg
+  simp only [one_pow, Finset.sum_const, Finset.card_range, nsmul_eq_mul, mul_one] at hg
+  exact natCast_p_ne_zero p hg
+
+theorem orderOf_zeta : orderOf (zeta p) = p := by
+  have hdvd : orderOf (zeta p) ∣ p := orderOf_dvd_of_pow_eq_one (zeta_pow_p p)
+  rcases (Nat.Prime.eq_one_or_self_of_dvd hp.out _ hdvd) with h | h
+  · exact absurd (orderOf_eq_one_iff.mp h) (zeta_ne_one p)
+  · exact h
+
+/-- Distinct exponents below `p` give distinct powers of `ζ`. -/
+theorem zeta_pow_injective {k l : ℕ} (hk : k < p) (hl : l < p)
+    (h : zeta p ^ k = zeta p ^ l) : k = l := by
+  have := pow_injOn_Iio_orderOf (x := zeta p)
+  rw [orderOf_zeta p] at this
+  exact this (Set.mem_Iio.mpr hk) (Set.mem_Iio.mpr hl) h
+
+/-- The reduction `ℤ[ζ_p] → 𝔽_p` determined by `ζ ↦ 1`. -/
+noncomputable def red : CycRing p →+* ZMod p :=
+  AdjoinRoot.lift (Int.castRingHom (ZMod p)) 1 (by
+    rw [eval₂_at_one, eval_one_cyclotomic_prime]
+    simp)
+
+@[simp] theorem red_zeta : red p (zeta p) = 1 := AdjoinRoot.lift_root _
+
+@[simp] theorem red_mk (F : ℤ[X]) :
+    red p (AdjoinRoot.mk (cyclotomic p ℤ) F) = ((F.eval 1 : ℤ) : ZMod p) := by
+  rw [red, AdjoinRoot.lift_mk, eval₂_at_one]
+  rfl
+
+theorem red_pi : red p (pi p) = 0 := by simp [pi]
+
+/-- `π = ζ - 1` divides `p` in `ℤ[ζ_p]`. -/
+theorem pi_dvd_natCast_p : pi p ∣ (p : CycRing p) := by
+  obtain ⟨q, hq⟩ :
+      (X - C (1 : ℤ)) ∣ (cyclotomic p ℤ) - C ((cyclotomic p ℤ).eval 1) :=
+    X_sub_C_dvd_sub_C_eval
+  have hmap := congrArg (AdjoinRoot.mk (cyclotomic p ℤ)) hq
+  simp only [map_sub, AdjoinRoot.mk_self, map_mul, AdjoinRoot.mk_X, map_one, AdjoinRoot.mk_C]
+    at hmap
+  rw [eval_one_cyclotomic_prime] at hmap
+  refine ⟨-(AdjoinRoot.mk (cyclotomic p ℤ) q), ?_⟩
+  have hz : (AdjoinRoot.root (cyclotomic p ℤ) : CycRing p) = zeta p := rfl
+  have hcast : (AdjoinRoot.of (cyclotomic p ℤ)) ((p : ℕ) : ℤ) = (p : CycRing p) := by
+    simp
+  rw [hz] at hmap
+  rw [pi]
+  rw [← hcast]
+  linear_combination -hmap
+
+/-- **The kernel of the reduction is generated by `π`.** -/
+theorem pi_dvd_of_red_eq_zero {y : CycRing p} (h : red p y = 0) : pi p ∣ y := by
+  induction y using AdjoinRoot.induction_on with
+  | _ F =>
+    rw [red_mk] at h
+    obtain ⟨m, hm⟩ : (p : ℤ) ∣ F.eval 1 := by
+      have := (ZMod.intCast_zmod_eq_zero_iff_dvd (F.eval 1) p).mp h
+      exact_mod_cast this
+    obtain ⟨q, hq⟩ : (X - C (1 : ℤ)) ∣ F - C (F.eval 1) := X_sub_C_dvd_sub_C_eval
+    have hmap := congrArg (AdjoinRoot.mk (cyclotomic p ℤ)) hq
+    simp only [map_sub, map_mul, AdjoinRoot.mk_X, map_one, AdjoinRoot.mk_C] at hmap
+    have hz : (AdjoinRoot.root (cyclotomic p ℤ) : CycRing p) = zeta p := rfl
+    rw [hz] at hmap
+    have hconst : (AdjoinRoot.of (cyclotomic p ℤ)) (F.eval 1) = (p : CycRing p) * (m : CycRing p) := by
+      rw [hm]
+      simp
+    obtain ⟨c, hc⟩ := pi_dvd_natCast_p p
+    refine ⟨AdjoinRoot.mk (cyclotomic p ℤ) q + c * (m : CycRing p), ?_⟩
+    have : AdjoinRoot.mk (cyclotomic p ℤ) F
+        = (zeta p - 1) * AdjoinRoot.mk (cyclotomic p ℤ) q
+          + (p : CycRing p) * (m : CycRing p) := by
+      rw [← hconst]
+      linear_combination hmap
+    rw [this, hc, pi]
+    ring
+
+theorem pi_ne_zero : pi p ≠ 0 := by
+  intro h
+  have : zeta p = 1 := by
+    have := h
+    rw [pi, sub_eq_zero] at this
+    exact this
+  exact zeta_ne_one p this
+
+theorem span_pi_ne_top : Ideal.span {pi p} ≠ ⊤ := by
+  intro h
+  have hunit : IsUnit (pi p) := by
+    rwa [Ideal.span_singleton_eq_top] at h
+  have h0 : IsUnit ((0 : ZMod p)) := by
+    have := hunit.map (red p)
+    rwa [red_pi] at this
+  exact (not_isUnit_zero (M₀ := ZMod p)) h0
+
+/-- Only `0` is divisible by every power of `π` (Krull intersection). -/
+theorem eq_zero_of_forall_pi_pow_dvd {y : CycRing p} (h : ∀ m : ℕ, pi p ^ m ∣ y) : y = 0 := by
+  have hbot : (⨅ i : ℕ, (Ideal.span {pi p}) ^ i) = ⊥ :=
+    Ideal.iInf_pow_eq_bot_of_isDomain _ (span_pi_ne_top p)
+  have hmem : y ∈ ⨅ i : ℕ, (Ideal.span {pi p}) ^ i := by
+    refine Ideal.mem_iInf.mpr fun i => ?_
+    rw [Ideal.span_singleton_pow, Ideal.mem_span_singleton]
+    exact h i
+  rw [hbot] at hmem
+  simpa using hmem
+
+/-- **Primitive scaling.**  A nonzero vector over `ℤ[ζ_p]` can be divided by a power of `π` so
+that some coordinate has nonzero reduction. -/
+theorem exists_primitive_scaling {ι : Type*} [Fintype ι] (v : ι → CycRing p)
+    (hv : ∃ i, v i ≠ 0) :
+    ∃ (m : ℕ) (w : ι → CycRing p), (∀ i, v i = pi p ^ m * w i) ∧ ∃ i, red p (w i) ≠ 0 := by
+  classical
+  obtain ⟨i₀, hi₀⟩ := hv
+  set P : ℕ → Prop := fun m => ∀ i, pi p ^ m ∣ v i with hP
+  have hexists : ∃ m, ¬ P m := by
+    by_contra hall
+    push_neg at hall
+    exact hi₀ (eq_zero_of_forall_pi_pow_dvd p (fun m => hall m i₀))
+  set m₀ := Nat.find hexists with hm₀
+  have hnot : ¬ P m₀ := Nat.find_spec hexists
+  have hzero : P 0 := fun i => by simp
+  have hm₀pos : 0 < m₀ := by
+    rcases Nat.eq_zero_or_pos m₀ with h | h
+    · exact absurd (h ▸ hzero) hnot
+    · exact h
+  have hprev : P (m₀ - 1) := by
+    by_contra hc
+    have hle : Nat.find hexists ≤ m₀ - 1 := Nat.find_le hc
+    omega
+  choose w hw using hprev
+  refine ⟨m₀ - 1, w, hw, ?_⟩
+  by_contra hall
+  push_neg at hall
+  apply hnot
+  intro i
+  obtain ⟨c, hc⟩ := pi_dvd_of_red_eq_zero p (hall i)
+  have hm : m₀ = (m₀ - 1) + 1 := by omega
+  refine ⟨c, ?_⟩
+  calc v i = pi p ^ (m₀ - 1) * (pi p * c) := by rw [hw i, hc]
+    _ = pi p ^ ((m₀ - 1) + 1) * c := by rw [pow_succ]; ring
+    _ = pi p ^ m₀ * c := by rw [← hm]
+
+end ParityGap
