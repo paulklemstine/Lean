@@ -135,20 +135,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle c0dccdf7 (Q=0.880), which proved 89 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## Conjecture A (Parity-gap conjecture). For all `n \u2265 2`, all injective `S, T : Fin n \u2192 ZMod p`, the parity-weighted exponent counter `permCoeff S T` is nonzero somewhere; in fact `max_r |permCoeff S T r| \u2265 1` is attained at a residue of the form `\u2211_j S(\u03c3 j) T j` for a permutation `\u03c3` of *minimal* C",
-    "domains": [
-      "Probability"
-    ],
-    "id": "push_c0dccdf7_353382cb",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "c0dccdf7",
-    "status": "available",
-    "timestamp": "2026-08-19T07:05:44.519031+00:00",
-    "title": "Deepening: Conjecture A (Parity-gap conjecture). For all `n \u2265 2`, all injective `S, T : Fin"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Formally proves conditions under which information can exist purely within a closed timelike curve loop without ever having an initial origin (Ontological Paradox).",
     "domains": [
       "Physics"
@@ -833,20 +819,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-17T07:17:22.608319+00:00",
     "title": "Deepening: ArXiv paper: A Fourier-analytic Uniqueness Theorem for Lattice-point Enumerators"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 3b29df87 (Q=0.820), which proved 110 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the Weil pairing on an elliptic curve and prove its bilinearity. Show that the BLS signature scheme is existentially unforgeable under the computational Diffie-Hellman assumption in the pairing group. Prove that the pairing allows short aggregate signatures.",
-    "domains": [
-      "Cryptography"
-    ],
-    "id": "push_3b29df87_0c171088",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "3b29df87",
-    "status": "available",
-    "timestamp": "2026-08-16T11:35:10.982658+00:00",
-    "title": "Deepening: Elliptic Curve Cryptography: Weil Pairing and BLS Signatures"
   },
   {
     "consumed_by_exp_id": "",
@@ -19664,6 +19636,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The final cycle shows both bounds instantiating on the *same* statistic for a\ngenuine parametric family, with the ratio between them a single explicit constant; making\nthat ratio dimension-free is the last structural step before the theory can be quoted as\na design rule for specialised decompressors.",
+    "domains": [],
+    "id": "fd_1586",
+    "priority_score": 0.40388888888888885,
+    "research_mode": "team",
+    "source_exp_id": "18f8232d",
+    "status": "available",
+    "timestamp": "2026-08-19T08:55:10.966078+00:00",
+    "title": "The final cycle shows both bounds instantiating on the *same* statistic for a"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The Burnside mass formula is already formalised\n(`spec_mul_card_eq_sum_fixed`), and the data confirm the pattern for `n \u2264 10` with the\nviolation confined to `r \u2208 {1, n\u22121}`; the conjecture cleanly separates the boundary\nphenomenon (which we proved is fatal in general) from the interior behaviour.",
     "domains": [],
     "id": "fd_1535",
@@ -20269,14 +20253,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "S5 (the intermediate plateau)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b8ad3057",
     "description": "What follows are the conjectures the analysis stage extracted, in decreasing order of expected\nimpact.  Each is falsifiable in the present formal setting.",
     "domains": [],
     "id": "fd_1472",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "11c9ff9f",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-18T03:08:39.636525+00:00",
     "title": "What follows are the conjectures the analysis stage extracted, in decreasing order of expected\nimpact."
   },
@@ -21191,5 +21176,17 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-19T07:54:27.554444+00:00",
     "title": "The exact identity `card_boxPPT_eq_two_mul` (ratio exactly `1/2` for one"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**average case (Bayes)**: minimax redundancy `= C`, the *capacity* of the class\n  \u2014 proved exactly in `redundancy_capacity_theorem`, with a saddle point obtained by\n  prior perturbation plus a \u03c7\u00b2-bound instead of an abstract minimax theorem.",
+    "domains": [],
+    "id": "fd_1585",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "18f8232d",
+    "status": "available",
+    "timestamp": "2026-08-19T08:55:10.761163+00:00",
+    "title": "average case (Bayes): minimax redundancy `= C`, the *capacity* of the class"
   }
 ];

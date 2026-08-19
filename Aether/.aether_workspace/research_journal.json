@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "0b339d93",
-      "domain": "Physics",
-      "key_insight": "# Future Directions\n\nFive bold, falsifiable conjectures distilled from the analysis and adversarial review of the\nformalised results in `Catalog/Physics/` (`QuantumSL2ClassicalLimit`, `QuantumSL2Braid",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 123,
-      "timestamp": "2026-08-17T07:17:11",
-      "title": "Bridge: Quantum Groups as Deformations of Classical Groups"
-    },
-    {
       "cycle_id": "507d1ef0",
       "domain": "Cryptography",
       "key_insight": "# Future directions\n\nBold, falsifiable conjectures produced by this research cycle, each stated so that it can be\nsettled (proved or refuted) by a further formalisation effort. All of them build on th",
@@ -499,19 +489,19 @@
       "theorem_count": 120,
       "timestamp": "2026-08-19T07:54:38",
       "title": "The number of triples `(a,b,c)` with `0 < a,b,c ≤ H` that are Berggren-generated\nfrom a positive see"
+    },
+    {
+      "cycle_id": "18f8232d",
+      "domain": "Bridges",
+      "key_insight": "# Future directions — the price of universality (Phase A, Question 1)\n\nFinal state of the thread.  Two exact theories sit side by side:\n\n* **worst case (pointwise)**: minimax redundancy `= log₂ Cₛ`, t",
+      "quality_score": 0.89,
+      "sorry_count": 0,
+      "theorem_count": 17,
+      "timestamp": "2026-08-19T08:55:24",
+      "title": "Compression Research A1: Price of universality — minimax redundancy of universal decompressors"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "221c30c4",
-      "domain": "MachineLearning",
-      "key_insight": "# Future directions: the boundary geometry of the Berggren tree\n\nThis is the final version of the research thread's open problems, after three cycles.\nNotation follows `Catalog/MachineLearning/Berggre",
-      "quality_score": 0.6272308571428571,
-      "sorry_count": 0,
-      "theorem_count": 81,
-      "timestamp": "2026-08-08T05:09:12",
-      "title": "strange lines and curves on a plot the berggren primitive pythagorean tree"
-    },
     {
       "cycle_id": "fdb5367b",
       "domain": "Probability",
@@ -2501,27 +2491,19 @@
       "theorem_count": 120,
       "timestamp": "2026-08-19T07:54:38",
       "title": "The number of triples `(a,b,c)` with `0 < a,b,c ≤ H` that are Berggren-generated\nfrom a positive see"
+    },
+    {
+      "cycle_id": "18f8232d",
+      "domain": "Bridges",
+      "key_insight": "# Future directions — the price of universality (Phase A, Question 1)\n\nFinal state of the thread.  Two exact theories sit side by side:\n\n* **worst case (pointwise)**: minimax redundancy `= log₂ Cₛ`, t",
+      "quality_score": 0.89,
+      "sorry_count": 0,
+      "theorem_count": 17,
+      "timestamp": "2026-08-19T08:55:24",
+      "title": "Compression Research A1: Price of universality — minimax redundancy of universal decompressors"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "ed687362",
-      "domain": "Logic",
-      "name": "triangle_isTriangularForest",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "ed687362",
-      "domain": "Logic",
-      "name": "not_isTriangularForest_completeGraph_four",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "3eeb9235",
-      "domain": "Logic",
-      "name": "fsm_price_nonneg",
-      "quality": 0.84
-    },
     {
       "cycle_id": "3eeb9235",
       "domain": "Logic",
@@ -2803,9 +2785,27 @@
       "domain": "MachineLearning",
       "name": "mem_box",
       "quality": 0.86
+    },
+    {
+      "cycle_id": "18f8232d",
+      "domain": "Bridges",
+      "name": "catalog",
+      "quality": 0.89
+    },
+    {
+      "cycle_id": "18f8232d",
+      "domain": "Bridges",
+      "name": "idempotent_pow_eq",
+      "quality": 0.89
+    },
+    {
+      "cycle_id": "18f8232d",
+      "domain": "Bridges",
+      "name": "catalog",
+      "quality": 0.89
     }
   ],
-  "last_updated": "2026-08-19T07:54:38",
+  "last_updated": "2026-08-19T08:55:24",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hupper⟩)",
@@ -3145,12 +3145,6 @@
     ],
     "Bridges": [
       {
-        "cycle_id": "869ec8f3",
-        "quality": 0.627125,
-        "theorems": 135,
-        "title": "The CRT-Split No-Go: Why N-Alone Iteration Cannot Factor in Poly(log N)"
-      },
-      {
         "cycle_id": "6753d65f",
         "quality": 0.89,
         "theorems": 92,
@@ -3203,6 +3197,12 @@
         "quality": 0.88,
         "theorems": 179,
         "title": "Compression Research B3: Almost-lossless / Monte Carlo compression"
+      },
+      {
+        "cycle_id": "18f8232d",
+        "quality": 0.89,
+        "theorems": 17,
+        "title": "Compression Research A1: Price of universality — minimax redundancy of universal"
       }
     ],
     "Combinatorics": [

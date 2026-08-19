@@ -1,10 +1,6 @@
-import Shared.Primitive_Prime_Divisors_for_Composite_Index_Fibonacci_Numbers
-
--- This file was not Lean source: the catalog import left a `git diff` fragment here.
--- The text is preserved verbatim (line-commented) below; the module re-exports the
--- rank-of-apparition development of
--- `Shared.Primitive_Prime_Divisors_for_Composite_Index_Fibonacci_Numbers`.
-
+-- This file is not Lean source: the catalog import left a `git diff` fragment
+-- here.  The text is preserved verbatim (line-commented) so that the module is
+-- empty but well-formed.
 -- --- a/Speculative/AutoResearch/Primitive_Prime_Divisors_for_Composite_Index_Fibonacci_Numbers.lean
 -- +++ b/Speculative/AutoResearch/Primitive_Prime_Divisors_for_Composite_Index_Fibonacci_Numbers.lean
 -- @@ -99,6 +99,9 @@

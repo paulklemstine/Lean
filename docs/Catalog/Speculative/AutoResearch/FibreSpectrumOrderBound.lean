@@ -1,4 +1,4 @@
-import Logic.FibreSpectrumStirling
+import Combinatorics.BellDefectBlockPatterns
 
 /-!
 # Group order versus the fibre spectrum: a strict Bell defect from a cardinality count
@@ -63,7 +63,7 @@ theorem descFactorial_dvd_card_of_kTransitive [Finite X] [Finite G] (hk : k ≤ 
     (htr : KTransitive k G X) : (Nat.card X).descFactorial k ∣ Nat.card G := by
   obtain ⟨u, hu⟩ := exists_injective_tuple (X := X) hk
   have horb : Nat.card (MulAction.orbit G u) = (Nat.card X).descFactorial k := by
-    rw [Nat.card_congr (orbitEquivInjectiveTuples hu htr), card_injective_tuples X k]
+    rw [Nat.card_congr (orbitEquivInjectiveTuples hu htr), BellDefectGraded.card_injective_tuples X k]
   have hdvd := Subgroup.index_dvd_card (stabilizer G u)
   rwa [MulAction.index_stabilizer, ← Nat.card_coe_set_eq, horb] at hdvd
 
@@ -79,7 +79,7 @@ theorem descFactorial_le_card_of_kTransitive [Finite X] [Finite G] (hk : k ≤ N
     obtain ⟨g, hg⟩ := htr u f hu hf
     exact ⟨g, Subtype.ext hg⟩
   have h := Nat.card_le_card_of_surjective _ hsurj
-  rwa [card_injective_tuples X k] at h
+  rwa [BellDefectGraded.card_injective_tuples X k] at h
 
 /-- **Forced degeneracy of the spectrum.**  If the group is too small to be `k`-transitive, the
 top spectral value is at least `2`. -/
@@ -108,10 +108,11 @@ theorem bell_lt_card_orbits_of_card_lt [Finite X] [Finite G] (hk : k ≤ Nat.car
       ≤ ∑ r ∈ Finset.range k, stirling k r * injOrbits G X r :=
     Finset.sum_le_sum hlow
   have hbell : bell k = (∑ r ∈ Finset.range k, stirling k r) + 1 := by
-    rw [bell_eq_sum_stirling k, Finset.sum_range_succ, stirling_self]
+    rw [bell_eq_sum_stirling k, Finset.sum_range_succ, BellDefectGraded.stirling_self k]
   have hcount : Nat.card (orbitRel.Quotient G (Fin k → X))
-      = (∑ r ∈ Finset.range k, stirling k r * injOrbits G X r) + injOrbits G X k :=
-    card_orbits_eq_sum_range_add_injOrbits G X k
+      = (∑ r ∈ Finset.range k, stirling k r * injOrbits G X r) + injOrbits G X k := by
+    rw [card_orbits_eq_sum_stirling k G X, Finset.sum_range_succ,
+      BellDefectGraded.stirling_self k, one_mul]
   omega
 
 /-- The moment form of the strict defect: the `k`-th moment of the trace family exceeds

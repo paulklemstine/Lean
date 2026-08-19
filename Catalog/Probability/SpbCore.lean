@@ -1,0 +1,4 @@
+import Shared.AbstractAlgebra.SpbCore
+
+/-! Path alias: the SPB core development lives in `Shared.AbstractAlgebra.SpbCore`; this module
+re-exports it under the module path used by the importing files. -/
