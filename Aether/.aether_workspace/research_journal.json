@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "665c1eea",
-      "domain": "Physics",
-      "key_insight": "# Future Directions — bold, testable conjectures from the Alcubierre formalization\n\nEach conjecture below is stated so that it can be settled (proved or refuted) inside the\nformal framework already bu",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 90,
-      "timestamp": "2026-08-17T03:13:42",
-      "title": "Moonshot: Warp Drive Spacetime — Alcubierre Metric Formalization"
-    },
-    {
       "cycle_id": "86a70a4b",
       "domain": "Computation",
       "key_insight": "# Future Directions — bold, testable conjectures from this cycle\n\nContext: the anti-Fibonacci sequence `antiFib 0 = 1`, `antiFib (n+1) = antiFib n + n`\n(closed form `2·antiFib n + n = n² + 2`) from `C",
@@ -499,19 +489,19 @@
       "theorem_count": 106,
       "timestamp": "2026-08-18T23:36:29",
       "title": "Both endpoints of the trade-off are now formal theorems in this"
+    },
+    {
+      "cycle_id": "512ab986",
+      "domain": "Logic",
+      "key_insight": "# Future directions — almost-lossless compression beyond the pigeonhole bound\n\nDerived from the formalised results in `Catalog/Logic/AlmostLossless/`\n(`Core`, `Hashing`, `Scheme`, `Instances`, `ExactP",
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "theorem_count": 104,
+      "timestamp": "2026-08-19T01:53:45",
+      "title": "Compression Research B3: Almost-lossless / Monte Carlo compression"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "100d7a9d",
-      "domain": "Novelty",
-      "key_insight": "# Future directions — idempotent probability and max-plus large deviations\n\n## Status of the thread\n\nEverything below is formalized in Lean 4 (Mathlib v4.28.0) with **0 sorries**, and every\nmain theor",
-      "quality_score": 0.6599028963414636,
-      "sorry_count": 0,
-      "theorem_count": 106,
-      "timestamp": "2026-08-07T22:03:31",
-      "title": "1. **Exact finite-event bound for exposed velocities.** For every finite max-plu"
-    },
     {
       "cycle_id": "0ed998a7",
       "domain": "Logic",
@@ -2501,27 +2491,19 @@
       "theorem_count": 106,
       "timestamp": "2026-08-18T23:36:29",
       "title": "Both endpoints of the trade-off are now formal theorems in this"
+    },
+    {
+      "cycle_id": "512ab986",
+      "domain": "Logic",
+      "key_insight": "# Future directions — almost-lossless compression beyond the pigeonhole bound\n\nDerived from the formalised results in `Catalog/Logic/AlmostLossless/`\n(`Core`, `Hashing`, `Scheme`, `Instances`, `ExactP",
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "theorem_count": 104,
+      "timestamp": "2026-08-19T01:53:45",
+      "title": "Compression Research B3: Almost-lossless / Monte Carlo compression"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "9aa1e8d1",
-      "domain": "Bridges",
-      "name": "gridRound_mem_zmultiples",
-      "quality": 0.86
-    },
-    {
-      "cycle_id": "9aa1e8d1",
-      "domain": "Bridges",
-      "name": "gridRound_error",
-      "quality": 0.86
-    },
-    {
-      "cycle_id": "9aa1e8d1",
-      "domain": "Bridges",
-      "name": "gridRound_eq_self_iff",
-      "quality": 0.86
-    },
     {
       "cycle_id": "5297c534",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Tropical",
       "name": "le_tmin",
       "quality": 0.86
+    },
+    {
+      "cycle_id": "512ab986",
+      "domain": "Logic",
+      "name": "avg_collisionCount_eq",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "512ab986",
+      "domain": "Logic",
+      "name": "avg_decodeCost_bucketed_eq",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "512ab986",
+      "domain": "Logic",
+      "name": "bucket_subset_cand",
+      "quality": 0.85
     }
   ],
-  "last_updated": "2026-08-18T23:36:29",
+  "last_updated": "2026-08-19T01:53:45",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hupper⟩)",
@@ -3455,12 +3455,6 @@
     ],
     "Logic": [
       {
-        "cycle_id": "f0c2b697",
-        "quality": 0.78,
-        "theorems": 41,
-        "title": "NET-25 (paper 69): DENSE-FINAL-STEP-IS-THE-CURE — the stateful-carry-cell cure w"
-      },
-      {
         "cycle_id": "d4bd7c02",
         "quality": 0.8,
         "theorems": 83,
@@ -3513,6 +3507,12 @@
         "quality": 0.84,
         "theorems": 59,
         "title": "Compression Research A1: Price of universality — minimax redundancy of universal"
+      },
+      {
+        "cycle_id": "512ab986",
+        "quality": 0.85,
+        "theorems": 104,
+        "title": "Compression Research B3: Almost-lossless / Monte Carlo compression"
       }
     ],
     "MachineLearning": [

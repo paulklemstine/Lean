@@ -33,21 +33,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Compression Research B5: PRNG-generated real-world data \u2014 detection and seed recovery"
   },
   {
-    "consumed_by_exp_id": "512ab986",
-    "description": "**Part of:** Research plan \u2014 *Compression Beyond the Pigeonhole Bound* (Phase B, Question 2: can random number generators help?).\n\n## Research question\nPigeonhole governs *exact* decoding for *all* strings. Relax to: **decoder fails with probability \u2264 \u03b5** (almost-lossless). Random codebooks (Shannon's random-coding argument) then reach near-optimal rates \u2014 the counting bound relaxes by an \u03b5-dependent factor.\n\n## Approach\n- Constructive almost-lossless schemes with small failure probability.\n- The real obstacle is **decoder search complexity** (naive random coding is exponential), not the rate \u2014 tackle that.\n- Error detection (checksums) so failures are **never silent**.\n\n## Deliverable\nA scheme plus a proof that decode succeeds with probability \u2265 1\u2212\u03b5, and its exact decoding complexity.\n\n## Falsifiability / gate\nFor each scheme: bound on P(failure) and an explicit decoder-complexity figure. No silent corruption allowed.\n\n**Milestone:** M9.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1368",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-17T04:13:54.293504+00:00",
-    "title": "Compression Research B3: Almost-lossless / Monte Carlo compression"
-  },
-  {
     "consumed_by_exp_id": "18f8232d",
     "description": "**Part of:** Research plan \u2014 *Compression Beyond the Pigeonhole Bound* (Phase A, Question 1: separating the decompressor from the data).\n\n## Research question\nOne shared decompressor `U` must serve all inputs. A decompressor specialized to a *class* of data does better per class. What is the **price of universality** \u2014 the minimax redundancy a universal scheme must pay over a per-distribution scheme?\n\n## Approach\n- Derive closed-form / tight bounds on universal redundancy for natural source classes: stationary sources, finite-state, Markov.\n- Express redundancy as a function of message length `n` and class complexity.\n\n## Deliverable\nRigorous bounds on universal vs. per-distribution redundancy, and a conclusion on whether specialized decompressors are theoretically worth pursuing.\n\n## Falsifiability / gate\nBounds must match or beat known minimax rates from the literature (Rissanen-style redundancy). If specialization doesn't move bits from *message* to *shared*, the direction is dead.\n\n**Milestone:** M5 (theory, ~2 weeks).\n",
     "domains": [
@@ -163,34 +148,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-18T09:49:34.716388+00:00",
     "title": "Deepening: The `\u21d0` direction is proved (`FourierFA.uncertainty_eq_coset_modulation`); the `"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle aa4eb9d3 (Q=0.860), which proved 106 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Both endpoints of the trade-off are now formal theorems in this\nrepository (`decode_cost` + `failSet_prob_le` at one end,\n`blockDecode_cost` + `blockFail_prob_le` at the other); only the interpolation\nand its converse are missing.",
-    "domains": [
-      "Tropical"
-    ],
-    "id": "push_aa4eb9d3_d4fc2eb2",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "aa4eb9d3",
-    "status": "available",
-    "timestamp": "2026-08-18T23:36:29.796750+00:00",
-    "title": "Deepening: Both endpoints of the trade-off are now formal theorems in this"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle af68ac83 (Q=0.870), which proved 55 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ~~`minimal_near_miss_size`~~ \u2014 **RESOLVED in cycle 3**: among all near-miss pairs at level\n   `N \u2265 1` the binomial pair also minimises the cardinality, the minimum being `2^{N-1}`\n   (`two_pow_le_two_mul_card_of_near_miss`, `card_evenPart`). Open successor: is the\n   *support size* (number of distin",
-    "domains": [
-      "Applications"
-    ],
-    "id": "push_af68ac83_5e7a9331",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "af68ac83",
-    "status": "available",
-    "timestamp": "2026-08-18T23:36:18.480965+00:00",
-    "title": "Deepening: ~~`minimal_near_miss_size`~~ \u2014 RESOLVED in cycle 3: among all near-miss pairs at"
   },
   {
     "consumed_by_exp_id": "",
@@ -19506,6 +19463,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The planar case is already an equality, proved and cross-checked\nnumerically (Section 3 of `ComputationalEvidence.md`); the only missing\ningredient is the inclusion\u2013exclusion over the subspace lattice in dimension\n`k \u2265 3`, where the current data show the naive formula fails.",
+    "domains": [
+      "Cryptography"
+    ],
+    "id": "fd_1565",
+    "priority_score": 0.47145454545454546,
+    "research_mode": "team",
+    "source_exp_id": "512ab986",
+    "status": "available",
+    "timestamp": "2026-08-19T01:53:32.538190+00:00",
+    "title": "The planar case is already an equality, proved and cross-checked"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "decoder that extends its window at position `i` only until it meets an\ninformative step achieves expected cost `n \u00b7 q\u00b2 / p` \u2014 independent of the target failure\nprobability `\u03b5` \u2014 while a fixed-window decoder needs cost `\u0398(n q\u00b2 log(1/\u03b5))`.",
     "domains": [
       "Computation"
@@ -19574,17 +19545,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Resolved in this cycle"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "60572a3f",
     "description": "`\u03a3_g |X^g|^k = (B_k + \u03a3_P (m_P \u2212 1))\u00b7|G|`\n    (`bell_defect_eq`): the excess of a moment over its Bell floor is `|G|` times the number of\n    *extra* orbits per pattern, and it vanishes exactly for `k`-transitive actions\n    (`sum_patternMultiplicity_sub_one_eq_zero_iff`).\n\n---\n\n\n\n## Open conjectures for the next cycle\n\n\n\n### Conjecture E\u2032 (the fibre spectrum is a strictly finer invariant)\n\n*The vector `(m_P)_P` of pattern multiplicities separates pairs of actions that the scalar moment\n`\u03a3_g |X^g|^k` cannot; and `m_P = 1` for all `P` with exactly `j` blocks iff the action is\n`j`-transitive (the block-graded refinement of the fibrewise criterion).*\n\nThe key insight is that the fibrewise criterion now proved treats all patterns at once, whereas the\ntransitivity hierarchy is graded by the number of blocks: restricting attention to the patterns\nwith `j` blocks should isolate exactly `j`-transitivity inside the `k`-tuple data, giving a\nspectrum of invariants between the moments.\n\nWhy now? The decomposition, the fibrewise criterion and the exact defect formula are proved\n(items 18\u201319), and cycle 3 also shows the scalar moment cannot separate actions (item 15), so the\nonly thing left to test is whether the refined vector can.\n\n\n\n### Conjecture F (Bell defect bounds the failure of transitivity)\n\n*The Bell defect `D_k(G,X) := \u03a3_g |X^g|^k \u2212 B_k|G| \u2265 0` satisfies: `D_k = 0 \u21d2 D_j = 0` for `j \u2264 k`\n(proved), and quantitatively `D_2 > 0 \u21d2 D_k \u2265 c_k \u00b7 D_2` for an explicit combinatorial constant\n`c_k` depending only on `k`.*\n\nThe key insight is that the defect counts non-singleton fibres of the orbit-to-pattern map with\nmultiplicity, and a failure of 2-transitivity is inherited by every longer tuple by padding with\nrepeated coordinates, which multiplies the excess by a controlled partition count.\n\nWhy now? Non-negativity, the implication `D_k = 0 \u21d2 D_j = 0`, and now the exact formula\n`D_k = |G|\u00b7\u03a3_P (m_P \u2212 1)` (item 19) are theorems; only the quantitative propagation between\ndifferent `k` is open, and it is now a statement about fibre sizes rather than about moments.\n\n\n\n### Conjecture G (how much labelling an injective aggregate must spend)\n\n*Every injective aggregate `A : (Fin m \u2192 QLaurent) \u2192 QLaurent` that is additive in each argument\nmust spread the coefficients over at least `m` pairwise disjoint infinite sets of exponents; in\nparticular no such aggregate has image contained in the series supported on a set of density\n`< 1/m`.*\n\nThe key insight is that cycle 3 identified symmetry as the obstruction, so what remains is a\ncounting bound: injectivity forces the aggregate to reserve, for each index, an infinite family of\nindependent coefficient slots, which is exactly what the interleaving construction does with the\nresidues mod `m`.\n\nWhy now? The dichotomy (interleaving injective, every symmetric aggregate non-injective) is proved;\nthe missing piece is a lower bound showing interleaving is not just *an* answer but essentially the\n*only* shape of answer.\n\n\n\n### Co",
     "domains": [
       "Combinatorics",
       "MachineLearning"
     ],
     "id": "fd_1441",
+    "phase": "A",
     "priority_score": 0.4474382280955627,
     "research_mode": "team",
     "source_exp_id": "286b3a0e",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-17T13:54:07.627034+00:00",
     "title": "The Bell defect, counted exactly"
   },
@@ -21190,5 +21162,41 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-18T22:42:31.929646+00:00",
     "title": "For all `n\u2081, n\u2082 \u2265 1` there exist distinct `a, b \u2265 0` and `y \u2209 {a,b}` with"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "All the moving parts \u2014 honest uniqueness decoding\n(`honest_scanCode`), exact cost accounting (`ScanScheme.decodeCost_eq`) and the\nexact `\u03b5`-pigeonhole optimum \u2014 are formalised, so the conjecture reduces to\nconstructing the intra-bucket index and re-running the same failure analysis.",
+    "domains": [],
+    "id": "fd_1566",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "512ab986",
+    "status": "available",
+    "timestamp": "2026-08-19T01:53:32.686966+00:00",
+    "title": "All the moving parts \u2014 honest uniqueness decoding"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Both endpoints are formalised and the numerics of Section 4 of\n`ComputationalEvidence.md` sit on the conjectured value to the digit; the open\npart is a lower bound over *all* 2-universal families, i.e. a converse to the\nunion bound rather than yet another application of it.",
+    "domains": [],
+    "id": "fd_1567",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "512ab986",
+    "status": "available",
+    "timestamp": "2026-08-19T01:53:32.832554+00:00",
+    "title": "Both endpoints are formalised and the numerics of Section 4 of"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "*Honesty is free* \u2014 `AlmostLossless.exists_scanScheme_of_code`: every code is\n  matched on its correct set by a uniqueness-scan code that is honest by\n  construction and whose decoder probes at most **one** candidate; the only\n  price is one extra alphabet symbol.",
+    "domains": [],
+    "id": "fd_1568",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "512ab986",
+    "status": "available",
+    "timestamp": "2026-08-19T01:53:32.978866+00:00",
+    "title": "Honesty is free* \u2014 `AlmostLossless.exists_scanScheme_of_code`: every code is"
   }
 ];
