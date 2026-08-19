@@ -2372,44 +2372,6 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "Building on cycle dc071269 (Q=0.780), which proved 72 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## NET-30 — The k=2 freeze test (round-net-30, 12 arms, ALL_DONE_NET30)\n\nThe middle of the eval-dependence gradient (NET-29 open 1). Twelve same-seed reproductions of NET-27 arms (byte-identical EOSWidthGRU; all ctl re-baselines reproduce the published NET-27 outcomes on fresh draws). Inference-only",
-    "domain_bridges": [],
-    "domains": [
-      "NumberTheory"
-    ],
-    "id": "push_dc071269_a35cfcde",
-    "lineage_refs": [],
-    "priority_score": 0.88,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "dc071269",
-    "status": "available",
-    "timestamp": "2026-08-16T01:57:40.886173+00:00",
-    "title": "Deepening: NET-30: INTERNALIZATION-SATURATES-AT-K=2 (k=2 freeze test — the missing middle; "
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle e67b8bbc (Q=0.780), which proved 54 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Part of:** Research plan — *Compression Beyond the Pigeonhole Bound* (Phase B, Question 2: can random number generators help?).\n\n## Claim (negative result)\nA deterministic PRNG **cannot** help compress arbitrary data.\n\n## Proof sketch\nA fixed function seed → stream is deterministic: `2^s` seeds pr",
-    "domain_bridges": [],
-    "domains": [
-      "MachineLearning"
-    ],
-    "id": "push_e67b8bbc_9c168ec4",
-    "lineage_refs": [],
-    "priority_score": 0.88,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "e67b8bbc",
-    "status": "available",
-    "timestamp": "2026-08-16T03:13:36.247710+00:00",
-    "title": "Deepening: Compression Research B1: Negative result — PRNGs cannot beat pigeonhole (proof +"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "Building on cycle f0c2b697 (Q=0.780), which proved 41 theorems in Logic. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Program:** Network/LLM research lab — round-net-25 (performance axis; mechanism dissection of the NET-24 stateful-carry-cell cure). **Paper:** ResearchOutput/NetworkMathematics/25_StatefulCarryCellMechanism.md. **Status:** Machine-verified (ALL_DONE_NET25, _PAD, _SWEEP, _EOS). **Assessment v25, ex",
     "domain_bridges": [],
     "domains": [
@@ -28375,7 +28337,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "843dbe86",
     "description": "All the moving parts — honest uniqueness decoding\n(`honest_scanCode`), exact cost accounting (`ScanScheme.decodeCost_eq`) and the\nexact `ε`-pigeonhole optimum — are formalised, so the conjecture reduces to\nconstructing the intra-bucket index and re-running the same failure analysis.",
     "domain_bridges": [],
     "domains": [],
@@ -28385,7 +28347,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "512ab986",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-19T01:53:32.686966+00:00",
     "title": "All the moving parts — honest uniqueness decoding"
   },

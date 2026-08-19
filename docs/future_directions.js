@@ -1752,34 +1752,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle dc071269 (Q=0.780), which proved 72 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## NET-30 \u2014 The k=2 freeze test (round-net-30, 12 arms, ALL_DONE_NET30)\n\nThe middle of the eval-dependence gradient (NET-29 open 1). Twelve same-seed reproductions of NET-27 arms (byte-identical EOSWidthGRU; all ctl re-baselines reproduce the published NET-27 outcomes on fresh draws). Inference-only",
-    "domains": [
-      "NumberTheory"
-    ],
-    "id": "push_dc071269_a35cfcde",
-    "priority_score": 0.88,
-    "research_mode": "team",
-    "source_exp_id": "dc071269",
-    "status": "available",
-    "timestamp": "2026-08-16T01:57:40.886173+00:00",
-    "title": "Deepening: NET-30: INTERNALIZATION-SATURATES-AT-K=2 (k=2 freeze test \u2014 the missing middle; "
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle e67b8bbc (Q=0.780), which proved 54 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Part of:** Research plan \u2014 *Compression Beyond the Pigeonhole Bound* (Phase B, Question 2: can random number generators help?).\n\n## Claim (negative result)\nA deterministic PRNG **cannot** help compress arbitrary data.\n\n## Proof sketch\nA fixed function seed \u2192 stream is deterministic: `2^s` seeds pr",
-    "domains": [
-      "MachineLearning"
-    ],
-    "id": "push_e67b8bbc_9c168ec4",
-    "priority_score": 0.88,
-    "research_mode": "team",
-    "source_exp_id": "e67b8bbc",
-    "status": "available",
-    "timestamp": "2026-08-16T03:13:36.247710+00:00",
-    "title": "Deepening: Compression Research B1: Negative result \u2014 PRNGs cannot beat pigeonhole (proof +"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Building on cycle f0c2b697 (Q=0.780), which proved 41 theorems in Logic. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: **Program:** Network/LLM research lab \u2014 round-net-25 (performance axis; mechanism dissection of the NET-24 stateful-carry-cell cure). **Paper:** ResearchOutput/NetworkMathematics/25_StatefulCarryCellMechanism.md. **Status:** Machine-verified (ALL_DONE_NET25, _PAD, _SWEEP, _EOS). **Assessment v25, ex",
     "domains": [
       "Logic"
@@ -21139,14 +21111,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "For all `n\u2081, n\u2082 \u2265 1` there exist distinct `a, b \u2265 0` and `y \u2209 {a,b}` with"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "843dbe86",
     "description": "All the moving parts \u2014 honest uniqueness decoding\n(`honest_scanCode`), exact cost accounting (`ScanScheme.decodeCost_eq`) and the\nexact `\u03b5`-pigeonhole optimum \u2014 are formalised, so the conjecture reduces to\nconstructing the intra-bucket index and re-running the same failure analysis.",
     "domains": [],
     "id": "fd_1566",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "512ab986",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-19T01:53:32.686966+00:00",
     "title": "All the moving parts \u2014 honest uniqueness decoding"
   },
