@@ -1,5 +1,7 @@
 import Mathlib
 
+open Fin
+
 /-! # CatalogBuild.Algebra.SauerShelah
 
 Auto-generated from theorem catalog database.
@@ -98,12 +100,10 @@ lemma eq_embed_proj_of_last_not_mem {n : ℕ} {S : Finset (Fin (n + 1))}
 
 lemma eq_embed_proj_union_last {n : ℕ} {S : Finset (Fin (n + 1))}
     (h : Fin.last n ∈ S) : S = embed (proj S) ∪ {Fin.last n} := by
-      ext x
-      cases x using Fin.lastCases with
-      | last => simp [h]
-      | cast i =>
-        have hne : i.castSucc ≠ Fin.last n := (Fin.castSucc_lt_last i).ne
-        simp [embed, proj, hne]
+      ext x; by_cases hx : x = last n <;> simp_all +decide [ Fin.ext_iff, Fin.val_add, Fin.val_one ] ;
+      · rwa [ show x = last n from Fin.ext hx ];
+      · simp +decide [ Fin.ext_iff, Fin.val_add, Fin.val_one, hx, embed, proj ];
+        exact ⟨ fun hx' => ⟨ ⟨ x, lt_of_le_of_ne ( Fin.le_last _ ) hx ⟩, by simpa [ Fin.ext_iff ] using hx', rfl ⟩, by rintro ⟨ a, ha, ha' ⟩ ; convert ha; aesop ⟩
 
 
 
@@ -114,7 +114,7 @@ lemma shatters_embed_of_union {n : ℕ} (F : Finset (Finset (Fin (n + 1))))
                     (F.filter (Fin.last n ∈ ·)).image proj) A) :
     Shatters F (embed A) := by
       intro B hB
-      obtain ⟨T, hT⟩ : ∃ T ∈ Finset.image proj ({x ∈ F | Fin.last n ∉ x}) ∪ Finset.image proj ({x ∈ F | Fin.last n ∈ x}), A ∩ T = proj B := by
+      obtain ⟨T, hT⟩ : ∃ T ∈ Finset.image proj ({x ∈ F | last n ∉ x}) ∪ Finset.image proj ({x ∈ F | last n ∈ x}), A ∩ T = proj B := by
         exact h _ ( Finset.subset_iff.mpr fun i hi => by
           simp_all +decide [ Finset.subset_iff, proj, embed ];
           cases hB hi ; aesop );
@@ -208,7 +208,7 @@ lemma card_le_one_of_vc_zero {n : ℕ} (F : Finset (Finset (Fin n)))
       contrapose! hF;
       -- Since F has more than one element, there exist S₁ ≠ S₂ ∈ F.
       obtain ⟨S₁, S₂, hS₁, hS₂, hne⟩ : ∃ S₁ S₂ : Finset (Fin n), S₁ ∈ F ∧ S₂ ∈ F ∧ S₁ ≠ S₂ := by
-        obtain ⟨a, ha, b, hb, hab⟩ := Finset.one_lt_card.mp hF; exact ⟨a, b, ha, hb, hab⟩;
+        exact?;
       -- Since S₁ ≠ S₂, there exists x with x ∈ S₁ and x ∉ S₂ (or vice versa), WLOG x ∈ S₁, x ∉ S₂.
       obtain ⟨x, hx₁, hx₂⟩ : ∃ x : Fin n, x ∈ S₁ ∧ x∉ S₂ ∨ x∉ S₁ ∧ x ∈ S₂ := by
         exact Classical.not_forall_not.1 fun h => hne <| Finset.ext fun x => by by_cases hx₁ : x ∈ S₁ <;> by_cases hx₂ : x ∈ S₂ <;> simpa [ hx₁, hx₂ ] using h x;
