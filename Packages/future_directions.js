@@ -18,21 +18,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "NET-48: The direct test survives via the MEDIAN \u2014 k*=160 at (d=4, ctx=2048, seed=3), all four point-horns refuted, the completed 16\u00d7 distribution {160,224,256} has median exactly 224 = 7/8\u00b7(d\u00b7ctx/32) \u2014 the 7/8-median law is 2/2-context, 6/6-seed"
   },
   {
-    "consumed_by_exp_id": "d9b9ca59",
-    "description": "**Part of:** Research plan \u2014 *Compression Beyond the Pigeonhole Bound* (Phase B, Question 2: can random number generators help?).\n\n## Research question\nA surprising amount of real-world data **is** PRNG output: game worlds, simulations, certain file formats, crypto keys. Detect it and recover the seed \u2192 compress to ~0 bits beyond the seed.\n\n## Approach\n- Robust **PRNG fingerprinting**: which generator family produced this stream?\n- **Seed recovery**: Berlekamp\u2013Massey for LFSRs; solver-based inversion for other families.\n- A classifier that routes each file to *seed-compressible* vs. *model-compressible*.\n\n## Deliverable\nDetection + seed-recovery tooling and a benchmark of seed-compressible files found in real corpora.\n\n## Falsifiability / gate\nFor a recovered seed: decompressed output must exactly reproduce the file. Measures what fraction of real data is seed-compressible.\n\n**Milestone:** M2 (cheap, warm-up infrastructure). Related: [[B1]].\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1366",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-17T04:13:54.291831+00:00",
-    "title": "Compression Research B5: PRNG-generated real-world data \u2014 detection and seed recovery"
-  },
-  {
     "consumed_by_exp_id": "18f8232d",
     "description": "**Part of:** Research plan \u2014 *Compression Beyond the Pigeonhole Bound* (Phase A, Question 1: separating the decompressor from the data).\n\n## Research question\nOne shared decompressor `U` must serve all inputs. A decompressor specialized to a *class* of data does better per class. What is the **price of universality** \u2014 the minimax redundancy a universal scheme must pay over a per-distribution scheme?\n\n## Approach\n- Derive closed-form / tight bounds on universal redundancy for natural source classes: stationary sources, finite-state, Markov.\n- Express redundancy as a function of message length `n` and class complexity.\n\n## Deliverable\nRigorous bounds on universal vs. per-distribution redundancy, and a conclusion on whether specialized decompressors are theoretically worth pursuing.\n\n## Falsifiability / gate\nBounds must match or beat known minimax rates from the literature (Rissanen-style redundancy). If specialization doesn't move bits from *message* to *shared*, the direction is dead.\n\n**Milestone:** M5 (theory, ~2 weeks).\n",
     "domains": [
@@ -46,6 +31,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-08-17T04:13:54.296356+00:00",
     "title": "Compression Research A1: Price of universality \u2014 minimax redundancy of universal decompressors"
+  },
+  {
+    "consumed_by_exp_id": "57212186",
+    "description": "It is a direct adaptation of the standard Reinforcement Learning from Human Feedback (RLHF) objective with a pre-training mix-in (PTX)\u2014originally introduced in the InstructGPT / PPO alignment framework (Ouyang et al., 2022)\u2014rebranded with neurosymbolic notation.Breakdown of the Components$$\\text{Objective}(\\phi) = \\underbrace{\\mathbb{E}_{x, y}\\left[ RM_{NS}(x, y) \\right]}_{\\text{1. Reward Maximization}} - \\underbrace{\\beta_{NS} \\mathbb{E}_{x, y}\\left[ \\log \\frac{LLM_\\phi^{NS}(y\\vert{}x)}{LLM^{SFT}(y\\vert{}x)} \\right]}_{\\text{2. KL-Divergence Penalty}} + \\underbrace{\\gamma_{NS} \\mathbb{E}_{x}\\left[ \\log LLM_\\phi^{NS}(x) \\right]}_{\\text{3. Pretraining Loss Mix-in (PTX)}}$$NeuroSymbolic Reward Term:$\\mathbb{E}_{x \\sim \\mathcal{D}_{RL}, y \\sim LLM_\\phi^{NS}(x)} [RM_{NS}(x, y)]$Optimizes the policy parameters ($\\phi$) to generate outputs $y$ given prompts $x$ that maximize the score from a (neurosymbolic) reward model $RM_{NS}$.KL Penalty (Regularization):$-\\beta_{NS} \\log \\frac{LLM_\\phi^{NS}(y\\vert{}x)}{LLM^{SFT}(y\\vert{}x)}$The point-wise Kullback\u2013Leibler ($\\text{D}_{\\text{KL}}$) divergence penalty. It prevents the tuned policy $LLM_\\phi^{NS}$ from drifting too far from the base Supervised Fine-Tuned model ($LLM^{SFT}$), preventing policy collapse and reward hacking. $\\beta_{NS}$ controls the penalty strength.Pretraining Mix-in Gradient ($\\text{PPO-ptx}$ term):$+\\gamma_{NS} \\mathbb{E}_{x \\sim \\mathcal{D}_{pretrain}} \\log LLM_\\phi^{NS}(x)$Maximizes the log-likelihood over the original pretraining distribution $\\mathcal{D}_{pretrain}$ with coefficient $\\gamma_{NS}$. This standard trick avoids performance regression on general NLP benchmarks during RL fine-tuning.TakeawayMathematical Validity: 100% sound; it directly mirrors the standard InstructGPT alignment equation.Practical Meaning: It represents fine-tuning a model using RLHF, where the reward signal ($RM_{NS}$) or the model architecture incorporates neurosymbolic rules/logic rather than purely human-labeled reward modeling.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_1569",
+    "phase": "A",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "in_progress",
+    "timestamp": "2026-08-19T02:06:03.269650+00:00",
+    "title": "reinforcement learning"
   },
   {
     "consumed_by_exp_id": "",
@@ -1764,20 +1764,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-05T06:51:05.180719+00:00",
     "title": "Deepening: ArXiv paper: Magnitude homology of tope graphs"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 9c680c24 (Q=0.780), which proved 86 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## Summary\n\nRound-net-26 resolves NET-25's flagged EOS-width threshold (28\u2013384) on the carry-wall cure. Thirty arms on the plain n=5 task (GRUCell(384\u2192192), learned E-d EOS zero-padded to 384, ONLY E varies):\n\n- **Sweep** (E \u2208 {20,28,64,96,128,192,256,384} \u00d7 2 seeds): E=20 {0.9990, 0.0166} fragile; ",
-    "domains": [
-      "Tropical"
-    ],
-    "id": "push_9c680c24_935e6e18",
-    "priority_score": 0.88,
-    "research_mode": "team",
-    "source_exp_id": "9c680c24",
-    "status": "available",
-    "timestamp": "2026-08-16T00:30:32.986685+00:00",
-    "title": "Deepening: NET-26 (paper 70): EOS-WIDTH-DISTRIBUTION-SHIFT \u2014 the EOS-width \"threshold\" is a"
   },
   {
     "consumed_by_exp_id": "",
@@ -19781,14 +19767,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Chebotarev's theorem that every square submatrix of the `p \u00d7 p` DFT matrix"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8a3962f5",
     "description": "*The number of triples `(a,b,c)` with `0 < a,b,c \u2264 H` that are Berggren-generated\nfrom a positive seed is `\u0398(H)` \u2014 vanishingly few compared with `H\u00b3` \u2014 while the\nnumber of *Pythagorean* triples in the same box that are Berggren-generated is\n`(1 - o(1))` times the number of primitive Pythagorean triples in the box.*",
     "domains": [],
     "id": "fd_1559",
+    "phase": "A",
     "priority_score": 0.40809523809523807,
     "research_mode": "team",
     "source_exp_id": "24a12580",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-18T21:38:36.914118+00:00",
     "title": "The number of triples `(a,b,c)` with `0 < a,b,c \u2264 H` that are Berggren-generated\nfrom a positive seed is `\u0398(H)` \u2014 vanishingly few compared with `H\u00b3` \u2014 while the\nnumber of *Pythagorean* triples in the "
   },
