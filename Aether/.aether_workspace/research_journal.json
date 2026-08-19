@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "d71114d5",
-      "domain": "Logic",
-      "key_insight": "# Future directions — bold, testable conjectures from the NET-48 order-statistics round\n\nThe round replaced a point law (\"the knee equals `d·ctx/32`\") by a *distributional* law\n(\"the centre of the kne",
-      "quality_score": 0.79,
-      "sorry_count": 0,
-      "theorem_count": 116,
-      "timestamp": "2026-08-17T05:50:57",
-      "title": "NET-48: The direct test survives via the MEDIAN — k*=160 at (d=4, ctx=2048, seed=3), all four point-"
-    },
-    {
       "cycle_id": "93afd30b",
       "domain": "Cryptography",
       "key_insight": "# Future Directions — Berggren Spectral Resonance\n\nDerived from the three research cycles recorded in\n`Catalog/Cryptography/BerggrenSpectral/` (spectra → resonance → factorization → exact\nspectrum, tr",
@@ -499,19 +489,19 @@
       "theorem_count": 53,
       "timestamp": "2026-08-19T05:14:59",
       "title": "Pole-order obstruction"
+    },
+    {
+      "cycle_id": "c0dccdf7",
+      "domain": "Probability",
+      "key_insight": "# Future directions\n\nConjecture A (the parity-gap conjecture) is now a theorem: `ParityGap.conjectureA` in\n`Catalog/Probability/ParityGap/ConjectureA.lean`, together with its equivalent analytic forms",
+      "quality_score": 0.88,
+      "sorry_count": 0,
+      "theorem_count": 89,
+      "timestamp": "2026-08-19T07:05:43",
+      "title": "Conjecture A (Parity-gap conjecture). For all `n ≥ 2`, all injective `S, T : Fin n → ZMod p`, the pa"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "8643e3f8",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions — Exact Piecewise-Linear Partition Bounds for ReLU Networks\n\nThe formal development in `Catalog/MachineLearning/ReLUPartition/` establishes,\nwith 0 sorries and only the standard ax",
-      "quality_score": 0.6592476265822785,
-      "sorry_count": 0,
-      "theorem_count": 394,
-      "timestamp": "2026-08-08T04:36:04",
-      "title": "Neural-Manifold: Exact Piecewise Linear Partition Bounds for ReLU Networks"
-    },
     {
       "cycle_id": "436f9275",
       "domain": "Probability",
@@ -2501,27 +2491,19 @@
       "theorem_count": 53,
       "timestamp": "2026-08-19T05:14:59",
       "title": "Pole-order obstruction"
+    },
+    {
+      "cycle_id": "c0dccdf7",
+      "domain": "Probability",
+      "key_insight": "# Future directions\n\nConjecture A (the parity-gap conjecture) is now a theorem: `ParityGap.conjectureA` in\n`Catalog/Probability/ParityGap/ConjectureA.lean`, together with its equivalent analytic forms",
+      "quality_score": 0.88,
+      "sorry_count": 0,
+      "theorem_count": 89,
+      "timestamp": "2026-08-19T07:05:43",
+      "title": "Conjecture A (Parity-gap conjecture). For all `n ≥ 2`, all injective `S, T : Fin n → ZMod p`, the pa"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "23eee1e8",
-      "domain": "Probability",
-      "name": "Berlekamp",
-      "quality": 0.87
-    },
-    {
-      "cycle_id": "23eee1e8",
-      "domain": "Probability",
-      "name": "shiftEnd_pow_apply",
-      "quality": 0.87
-    },
-    {
-      "cycle_id": "23eee1e8",
-      "domain": "Probability",
-      "name": "aeval_shiftEnd_apply",
-      "quality": 0.87
-    },
     {
       "cycle_id": "ed687362",
       "domain": "Logic",
@@ -2803,9 +2785,27 @@
       "domain": "Shared",
       "name": "orderTop_qSeries",
       "quality": 0.78
+    },
+    {
+      "cycle_id": "c0dccdf7",
+      "domain": "Probability",
+      "name": "over",
+      "quality": 0.88
+    },
+    {
+      "cycle_id": "c0dccdf7",
+      "domain": "Probability",
+      "name": "for",
+      "quality": 0.88
+    },
+    {
+      "cycle_id": "c0dccdf7",
+      "domain": "Probability",
+      "name": "zeta_pow_mod",
+      "quality": 0.88
     }
   ],
-  "last_updated": "2026-08-19T05:14:59",
+  "last_updated": "2026-08-19T07:05:43",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hupper⟩)",
@@ -3765,12 +3765,6 @@
     ],
     "Probability": [
       {
-        "cycle_id": "04a5f386",
-        "quality": 0.718325,
-        "theorems": 119,
-        "title": "**Conjecture.** For every finite relational signature and finite model, there is"
-      },
-      {
         "cycle_id": "a055589e",
         "quality": 0.85,
         "theorems": 6,
@@ -3823,6 +3817,12 @@
         "quality": 0.82,
         "theorems": 21,
         "title": "Conjecture C, closed"
+      },
+      {
+        "cycle_id": "c0dccdf7",
+        "quality": 0.88,
+        "theorems": 89,
+        "title": "Conjecture A (Parity-gap conjecture). For all `n ≥ 2`, all injective `S, T : Fin"
       }
     ],
     "Pythagorean": [

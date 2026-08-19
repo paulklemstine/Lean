@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-19T05:15:03.347640+00:00",
+  "last_updated": "2026-08-19T07:05:50.932308+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -59630,6 +59630,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-08-19T05:15:03.140468+00:00",
       "title": "Pole-order obstruction"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Probability",
+      "duration_seconds": 7940.587024450302,
+      "end_time": 1787123120.1132362,
+      "files_integrated": 4,
+      "job_id": "c0dccdf7",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.88,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.571,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.88,
+        "novelty": 0.88,
+        "proof_depth": 0.88,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.88,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1787115179.5262117,
+      "strategy_count": 0,
+      "theorem_count": 89,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 84,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-08-19T07:05:50.729020+00:00",
+      "title": "Conjecture A (Parity-gap conjecture). For all `n \u2265 2`, all injective `S, T : Fin n \u2192 ZMod p`, the pa"
     }
   ]
 }

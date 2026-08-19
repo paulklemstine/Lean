@@ -136,6 +136,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle c0dccdf7 (Q=0.880), which proved 89 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## Conjecture A (Parity-gap conjecture). For all `n \u2265 2`, all injective `S, T : Fin n \u2192 ZMod p`, the parity-weighted exponent counter `permCoeff S T` is nonzero somewhere; in fact `max_r |permCoeff S T r| \u2265 1` is attained at a residue of the form `\u2211_j S(\u03c3 j) T j` for a permutation `\u03c3` of *minimal* C",
+    "domains": [
+      "Probability"
+    ],
+    "id": "push_c0dccdf7_353382cb",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "c0dccdf7",
+    "status": "available",
+    "timestamp": "2026-08-19T07:05:44.519031+00:00",
+    "title": "Deepening: Conjecture A (Parity-gap conjecture). For all `n \u2265 2`, all injective `S, T : Fin"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Formally proves conditions under which information can exist purely within a closed timelike curve loop without ever having an initial origin (Ontological Paradox).",
     "domains": [
       "Physics"
@@ -1515,17 +1529,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Arithmetic-Quantum-Chaos: Equidistribution of Hecke-Maass Eigenforms"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7299371d",
     "description": "Attacks the Erd\u0151s-Graham conjecture that every finite coloring of the integers greater than one admits a subset whose reciprocals sum to exactly one, formalizing the combinatorial structure of Egyptian fraction decompositions and the known proofs for small colorings.",
     "domains": [
       "NumberTheory",
       "Combinatorics"
     ],
     "id": "fd_1200",
+    "phase": "A",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "human_brainstorm_2026-08-12",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-13T03:21:14.300445+00:00",
     "title": "Erdos-Graham: Exact Coverings by Distinct Unit Fractions"
   },
@@ -1749,39 +1764,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-05T06:51:05.180719+00:00",
     "title": "Deepening: ArXiv paper: Magnitude homology of tope graphs"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Sheaf theory studies how local data glues to form global objects. The stereographic projection gives S^n a two-chart atlas with Mobius transition maps. Define a new class of sheaves called stereographic sheaves where the gluing data is constrained by the conformal structure of the stereographic atlas. A stereographic sheaf on S^n is a sheaf F such that for each chart U_i of the stereographic cover, the restriction F|U_i is a sheaf on R^n, and the transition function F(U_0 cap U_1) is a sheaf morphism that commutes with the Mobius transition. Conjecture: The category of stereographic sheaves on S^n is a proper subcategory of all sheaves on S^n, characterized by the condition that Cech cohomology with respect to the stereographic cover satisfies a Mobius compatibility. This subcategory has better computational properties: H^k(S^n, F) can be computed from the transition function alone for stereographic sheaves, reducing the computation of sheaf cohomology on S^n to a single gluing datum. Test: prove the equivalence with locally constant sheaves on RP^n for n=2,3. Compute H^1(S^2, Z) = Z/2Z for the constant sheaf Z. Impact: a new computational tool for sheaf cohomology that exploits conformal structure, with applications to topological data analysis and differential equations on spheres.",
-    "domains": [
-      "Geometry",
-      "Algebra",
-      "Topology"
-    ],
-    "id": "seed_089",
-    "priority_score": 0.88,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Stereographic Sheaf Theory: Gluing Data on Spheres"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "G\u00f6del showed self-reference breaks completeness, but what if self-referential proofs are not paradoxes but VALID mathematical objects? Develop a proof theory where proofs can reference their own structure \u2014 a proof of theorem T can contain a subproof that assumes T as a hypothesis, forming a circular dependency that is resolved through a fixed-point construction. Conjecture: Non-well-founded proofs form a convergent fixed point under a natural topolog: the space of proof trees with the tree topology is a Scott domain, and self-referential proofs correspond to infinite chains whose lub is a valid proof. A proof that references itself is like a recursive function: it converges if the self-reference occurs at a strictly smaller ordinal. Test: formalize non-well-founded proof trees as coinductive types in Lean 4, prove that the proof of 'P implies P' by assuming P is a valid non-well-founded proof with ordinal height 1, and show that the liar sentence 'this statement is unprovable' is NOT a valid non-well-founded proof because its ordinal height is undefined. Impact: turns the liar paradox from a bug into a feature \u2014 self-referential proofs are a new class of mathematical object with their own consistency conditions.",
-    "domains": [
-      "Novelty",
-      "Logic",
-      "Computation",
-      "Speculative"
-    ],
-    "id": "seed_105",
-    "priority_score": 0.88,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Non-Well-Founded Proofs: Proofs That Reference Themselves"
   },
   {
     "consumed_by_exp_id": "",
@@ -19579,15 +19561,14 @@ window.FUTURE_DIRECTIONS = [
     "title": "Conjecture A, closed"
   },
   {
-    "consumed_by_exp_id": "c0dccdf7",
+    "consumed_by_exp_id": "",
     "description": "## Conjecture A (Parity-gap conjecture). For all `n \u2265 2`, all injective `S, T : Fin n \u2192 ZMod p`, the parity-weighted exponent counter `permCoeff S T` is nonzero somewhere; in fact `max_r |permCoeff S T r| \u2265 1` is attained at a residue of the form `\u2211_j S(\u03c3 j) T j` for a permutation `\u03c3` of *minimal* Coxeter length among those realising its exponent.",
     "domains": [],
     "id": "fd_1464",
-    "phase": "B",
     "priority_score": 0.4188205128205128,
     "research_mode": "team",
     "source_exp_id": "33519cdb",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-17T23:36:54.745326+00:00",
     "title": "Conjecture A (Parity-gap conjecture). For all `n \u2265 2`, all injective `S, T : Fin n \u2192 ZMod p`, the parity-weighted exponent counter `permCoeff S T` is nonzero somewhere; in fact `max_r |permCoeff S T r"
   },
@@ -21160,5 +21141,35 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-19T05:14:48.013697+00:00",
     "title": "The reduction is proved, and the 194 values `c_g(1)` are tabulated"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**Lower bound (new mechanism).**  `ParityGap.parity_gap_closes_wide`: for every factorisation\n  `m = a\u00b7b` with `a, b \u2265 2` the gap closes at **every** width `2 \u2264 n \u2264 m \u2212 a`, via the explicit\n  digit-swapped enumerations `S j = a\u00b7(j % b) + j / b`, `T k = b\u00b7(k % a) + k / a`.  The\n  cancellation is no longer a constant exponent map, but a *pigeonhole involution*\n  (`ParityGap.permCoeff_eq_zero_of_pigeonhole`): the `S`-values that are multiples of `a`\n  outnumber the classes of `T`-values modulo the subgroup generated by `b`, so every permutation\n  matches two same-class columns to two such rows, and transposing them preserves the exponent\n  while reversing the sign.  Specialised: `ParityGap.parity_gap_closes_of_not_prime_wide`\n  (`n \u2264 m \u2212 minFac m`) and `ParityGap.parity_gap_closes_of_even` (`n \u2264 m \u2212 2`).  This is a large\n  improvement on the previous bound `n \u2264 min(a,b) \u2248 \u221am`.",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_1580",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "c0dccdf7",
+    "status": "available",
+    "timestamp": "2026-08-19T07:05:31.096373+00:00",
+    "title": "Lower bound (new mechanism)."
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Both endpoints of the interval are now theorems and the residual gap for odd `m` is\na *finite* combinatorial deficit (`minFac m \u2212 2` widths), not an asymptotic one.  The pigeonhole\ncriterion `ParityGap.permCoeff_eq_zero_of_pigeonhole` is stated for an arbitrary classification of\nthe columns, so a proof for odd `m` only has to exhibit a better `(J, cls)` pair \u2014 no new\nmachinery is needed.",
+    "domains": [
+      "Combinatorics",
+      "Logic"
+    ],
+    "id": "fd_1581",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "c0dccdf7",
+    "status": "available",
+    "timestamp": "2026-08-19T07:05:31.366205+00:00",
+    "title": "Both endpoints of the interval are now theorems and the residual gap for odd `m` is"
   }
 ];
