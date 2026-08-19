@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "507d1ef0",
-      "domain": "Cryptography",
-      "key_insight": "# Future directions\n\nBold, falsifiable conjectures produced by this research cycle, each stated so that it can be\nsettled (proved or refuted) by a further formalisation effort. All of them build on th",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 54,
-      "timestamp": "2026-08-17T07:17:22",
-      "title": "ArXiv paper: A Fourier-analytic Uniqueness Theorem for Lattice-point Enumerators"
-    },
-    {
       "cycle_id": "525aecde",
       "domain": "Shared",
       "key_insight": "# Future directions\n\nFive falsifiable conjectures arising from the formal development in\n`Catalog/Shared/FourierFiniteAbelian.lean`, `FourierSubgroupDuality.lean`, `FourierCyclic.lean`,\n`FourierAdditi",
@@ -499,19 +489,19 @@
       "theorem_count": 17,
       "timestamp": "2026-08-19T08:55:24",
       "title": "Compression Research A1: Price of universality — minimax redundancy of universal decompressors"
+    },
+    {
+      "cycle_id": "5bad6114",
+      "domain": "Probability",
+      "key_insight": "# Future directions\n\n## What is closed\n\n**Cycle 1 — the two converse theorems.**\n\n* **Converse Poisson summation** (`FourierFA.poisson_converse`,\n  `FourierFA.poisson_iff_subgroup_annihilator`): the P",
+      "quality_score": 0.91,
+      "sorry_count": 0,
+      "theorem_count": 17,
+      "timestamp": "2026-08-19T09:49:48",
+      "title": "The \"if\" direction is proved (`FourierFA.poisson_summation`); the converse is open."
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "fdb5367b",
-      "domain": "Probability",
-      "key_insight": "# Future Directions — EML exp–log duality\n\nDerived from the analysis and adversarial review of the results now proved in\n`Catalog/Probability/EMLExpLogDuality.lean` and\n`Catalog/Probability/EMLScaling",
-      "quality_score": 0.6513313973675711,
-      "sorry_count": 0,
-      "theorem_count": 165,
-      "timestamp": "2026-08-08T06:04:26",
-      "title": "EML-ExpLog-Duality: Isomorphism Between EML Functional Spaces and Lie Groups"
-    },
     {
       "cycle_id": "3f42ae3f",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 17,
       "timestamp": "2026-08-19T08:55:24",
       "title": "Compression Research A1: Price of universality — minimax redundancy of universal decompressors"
+    },
+    {
+      "cycle_id": "5bad6114",
+      "domain": "Probability",
+      "key_insight": "# Future directions\n\n## What is closed\n\n**Cycle 1 — the two converse theorems.**\n\n* **Converse Poisson summation** (`FourierFA.poisson_converse`,\n  `FourierFA.poisson_iff_subgroup_annihilator`): the P",
+      "quality_score": 0.91,
+      "sorry_count": 0,
+      "theorem_count": 17,
+      "timestamp": "2026-08-19T09:49:48",
+      "title": "The \"if\" direction is proved (`FourierFA.poisson_summation`); the converse is open."
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "3eeb9235",
-      "domain": "Logic",
-      "name": "fsm_price_rate_tendsto_zero",
-      "quality": 0.84
-    },
-    {
-      "cycle_id": "13fee392",
-      "domain": "MachineLearning",
-      "name": "mem_cover",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "13fee392",
-      "domain": "MachineLearning",
-      "name": "mult_pos_iff",
-      "quality": 0.82
-    },
     {
       "cycle_id": "13fee392",
       "domain": "MachineLearning",
@@ -2803,9 +2785,27 @@
       "domain": "Bridges",
       "name": "catalog",
       "quality": 0.89
+    },
+    {
+      "cycle_id": "5bad6114",
+      "domain": "Probability",
+      "name": "dft_coset_modulation",
+      "quality": 0.91
+    },
+    {
+      "cycle_id": "5bad6114",
+      "domain": "Probability",
+      "name": "inter_coset",
+      "quality": 0.91
+    },
+    {
+      "cycle_id": "5bad6114",
+      "domain": "Probability",
+      "name": "isExtremal_mul",
+      "quality": 0.91
     }
   ],
-  "last_updated": "2026-08-19T08:55:24",
+  "last_updated": "2026-08-19T09:49:48",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hupper⟩)",
@@ -3765,12 +3765,6 @@
     ],
     "Probability": [
       {
-        "cycle_id": "a055589e",
-        "quality": 0.85,
-        "theorems": 6,
-        "title": "The Structural Orthogonality Framework (8 barriers)"
-      },
-      {
         "cycle_id": "8590e003",
         "quality": 0.87,
         "theorems": 122,
@@ -3823,6 +3817,12 @@
         "quality": 0.88,
         "theorems": 89,
         "title": "Conjecture A (Parity-gap conjecture). For all `n ≥ 2`, all injective `S, T : Fin"
+      },
+      {
+        "cycle_id": "5bad6114",
+        "quality": 0.91,
+        "theorems": 17,
+        "title": "The \"if\" direction is proved (`FourierFA.poisson_summation`); the converse is op"
       }
     ],
     "Pythagorean": [
