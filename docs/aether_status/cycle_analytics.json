@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-19T03:58:19.061883+00:00",
+  "last_updated": "2026-08-19T05:15:03.347640+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -59587,6 +59587,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-08-19T03:58:18.857592+00:00",
       "title": "NET-48: The direct test survives via the MEDIAN \u2014 k*=160 at (d=4, ctx=2048, seed=3), all four point-"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Shared",
+      "duration_seconds": 1293.9230031967163,
+      "end_time": 1787116478.5227916,
+      "files_integrated": 4,
+      "job_id": "3da67f84",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.78,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.526,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.78,
+        "novelty": 0.78,
+        "proof_depth": 0.78,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1787115184.5997884,
+      "strategy_count": 0,
+      "theorem_count": 53,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 50,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-08-19T05:15:03.140468+00:00",
+      "title": "Pole-order obstruction"
     }
   ]
 }

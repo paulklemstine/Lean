@@ -1752,34 +1752,17 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Prove that vanishing first sheaf cohomology on neural network weight spaces implies certified L-infinity perturbation radius. Construct explicit sheaf structures on decision boundaries whose stalk cohomology detects adversarial vulnerability.",
+    "description": "Building on cycle 3da67f84 (Q=0.780), which proved 53 theorems in Shared. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: A product of `m` normalized series has order exactly `\u2212m`\n   (`orderTop_prod_normalized`), so a Monster-sized product has a pole of order `194`\n   (`orderTop_prod_traceLaurent_194`); multiplying by `q^m` restores order `0`.",
     "domains": [
-      "MachineLearning",
-      "Algebra",
-      "Bridges"
+      "Shared"
     ],
-    "id": "seed_043",
+    "id": "push_3da67f84_b48f0a8f",
     "priority_score": 0.88,
     "research_mode": "team",
-    "source_exp_id": "seed",
+    "source_exp_id": "3da67f84",
     "status": "available",
-    "timestamp": "",
-    "title": "Certified Adversarial Robustness via Sheaf Cohomology"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove that proof-theoretic ordinal analysis provides a rigorous depth metric for mathematical research. Construct a formalization that computes the proof-theoretic ordinal of research output.",
-    "domains": [
-      "Logic",
-      "Computation"
-    ],
-    "id": "seed_055",
-    "priority_score": 0.88,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Research Depth via Proof-Theoretic Ordinal Analysis"
+    "timestamp": "2026-08-19T05:14:59.825674+00:00",
+    "title": "Deepening: Pole-order obstruction"
   },
   {
     "consumed_by_exp_id": "",
@@ -19629,7 +19612,7 @@ window.FUTURE_DIRECTIONS = [
     "description": "## Conjecture A (Parity-gap conjecture). For all `n \u2265 2`, all injective `S, T : Fin n \u2192 ZMod p`, the parity-weighted exponent counter `permCoeff S T` is nonzero somewhere; in fact `max_r |permCoeff S T r| \u2265 1` is attained at a residue of the form `\u2211_j S(\u03c3 j) T j` for a permutation `\u03c3` of *minimal* Coxeter length among those realising its exponent.",
     "domains": [],
     "id": "fd_1464",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 0.4188205128205128,
     "research_mode": "team",
     "source_exp_id": "33519cdb",
@@ -19825,14 +19808,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "The \"if\" direction is proved (`FourierFA.poisson_summation`); the converse is open."
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6bc62e41",
     "description": "Both sides of the identity are already available as Lean theorems\n(`FourierFA.poisson_summation`, `FourierFA.dft_delta`), so the converse can be formalised as a\nfinite statement about the character table with no new analytic input.",
     "domains": [],
     "id": "fd_1412",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "525aecde",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-17T09:01:32.846985+00:00",
     "title": "Both sides of the identity are already available as Lean theorems"
   },
@@ -20028,15 +20012,14 @@ window.FUTURE_DIRECTIONS = [
     "title": "Honest Laurent normalization"
   },
   {
-    "consumed_by_exp_id": "3da67f84",
+    "consumed_by_exp_id": "",
     "description": "A product of `m` normalized series has order exactly `\u2212m`\n   (`orderTop_prod_normalized`), so a Monster-sized product has a pole of order `194`\n   (`orderTop_prod_traceLaurent_194`); multiplying by `q^m` restores order `0`.",
     "domains": [],
     "id": "fd_1428",
-    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "286b3a0e",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-17T13:54:04.565939+00:00",
     "title": "Pole-order obstruction"
   },
@@ -21155,5 +21138,56 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-19T04:00:36.228850+00:00",
     "title": "The two measured normalised costs and their exact ratio `3/2` are proved; the"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "as `q\u207b\u00b9 \u00b7 (unit of \u2102\u27e6X\u27e7)`.  The\nNewton-type coefficient identities at levels `1` and `2` were proved; level `k`\nwas not.",
+    "domains": [],
+    "id": "fd_1576",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "3da67f84",
+    "status": "available",
+    "timestamp": "2026-08-19T05:14:47.205129+00:00",
+    "title": "as `q\u207b\u00b9 \u00b7 (unit of \u2102\u27e6X\u27e7)`.  The"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The unique factorization theorem\n`exists_unique_unit_factorization` makes the \"vary the unit parts\" step a finite\nmanipulation in `1 + X\u2102\u27e6X\u27e7` rather than an analytic argument.",
+    "domains": [],
+    "id": "fd_1577",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "3da67f84",
+    "status": "available",
+    "timestamp": "2026-08-19T05:14:47.469699+00:00",
+    "title": "The unique factorization theorem"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The additivity theorem is now available for arbitrary finite index\ntypes, so the bridge from valuation theory to a graded/combinatorial count needs\nonly a bookkeeping definition, and Mathlib's `Finset.prod` API supports the\ncoefficient extraction (see `coeff_one_prod_of_constantCoeff_one`).",
+    "domains": [
+      "Combinatorics",
+      "Bridges"
+    ],
+    "id": "fd_1578",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "3da67f84",
+    "status": "available",
+    "timestamp": "2026-08-19T05:14:47.738568+00:00",
+    "title": "The additivity theorem is now available for arbitrary finite index"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The reduction is proved, and the 194 values `c_g(1)` are tabulated\ndata; the conjecture is now a finite, checkable arithmetic statement that could\nbe discharged in Lean by `decide` once the table is entered.",
+    "domains": [],
+    "id": "fd_1579",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "3da67f84",
+    "status": "available",
+    "timestamp": "2026-08-19T05:14:48.013697+00:00",
+    "title": "The reduction is proved, and the 194 values `c_g(1)` are tabulated"
   }
 ];
