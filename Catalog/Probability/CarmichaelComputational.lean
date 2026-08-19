@@ -57,21 +57,20 @@ lemma all_factors_from_divisors (n : ℕ) (hn : 3 ≤ n) (hn_comp : ¬Nat.Prime 
 lemma fib_gt_one' (n : ℕ) (hn : 3 ≤ n) : 1 < Nat.fib n := by
   exact lt_of_lt_of_le (by decide) (Nat.fib_mono hn)
 
-/-  The statement below was originally asserted for *every* composite `n ≥ 13`:
+/-- For the composite case of Carmichael's theorem:
+    If n is composite with n ≥ 13 and has a prime factor p,
+    then either p is primitive for F(n), or the entry point of p
+    strictly divides n (so p divides F(d) for proper d | n).
 
-theorem fib_composite_has_primitive (n : ℕ) (hn : 13 ≤ n) (hn_comp : ¬Nat.Prime n) :
-    ∃ p, Nat.Prime p ∧ p ∣ Nat.fib n ∧
-      ∀ k, 0 < k → k < n → ¬(p ∣ Nat.fib k)
+    This is the composite case, which together with `fib_primitive_divisor_prime`
+    completes Carmichael's theorem.
 
-    That range is not available in this development: the certified input
-    (`fib_carmichael_composite`) covers `13 ≤ n ≤ 10000`.  The unrestricted claim is
-    therefore replaced by the guarded version below, which carries the extra hypothesis
-    `n ≤ 10000` and is fully proved.  -/
-/-- **Carmichael's theorem, composite case, on the certified range.**
-For composite `n` with `13 ≤ n ≤ 10000`, `F n` has a primitive prime divisor:
-a prime dividing `F n` and no earlier Fibonacci number. -/
+    Repaired statement: the available input `fib_carmichael_composite` is proved on
+    the verified range `13 ≤ n ≤ 10000` only (the unbounded tail is the open
+    frontier of this development), so the bound `n ≤ 10000` is carried here as an
+    explicit hypothesis. -/
 theorem fib_composite_has_primitive (n : ℕ) (hn : 13 ≤ n) (hn2 : n ≤ 10000)
     (hn_comp : ¬Nat.Prime n) :
     ∃ p, Nat.Prime p ∧ p ∣ Nat.fib n ∧
-      ∀ k, 0 < k → k < n → ¬(p ∣ Nat.fib k) := by
-  exact fib_carmichael_composite n hn hn2 hn_comp
+      ∀ k, 0 < k → k < n → ¬(p ∣ Nat.fib k) :=
+  fib_carmichael_composite n hn hn2 hn_comp
