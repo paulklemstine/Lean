@@ -1,5 +1,6 @@
 import MachineLearning.BerggrenTreeStars
 import Shared.BerggrenTrees.Parent_hyp_lt
+import MachineLearning.BerggrenEuclidParam
 
 /-!
 # Completeness of the tree, and a star at every primitive ideal point
@@ -43,9 +44,14 @@ def pB (v : Vec) : Vec :=
 def pC (v : Vec) : Vec :=
   (-v.1 - 2 * v.2.1 + 2 * v.2.2, 2 * v.1 + v.2.1 - 2 * v.2.2, -2 * v.1 - 2 * v.2.1 + 3 * v.2.2)
 
+/- REPAIR (see the note at the head of this file): `invB1`, `invB2`, `invB3` are not
+defined anywhere in the catalog, so the three identifications below cannot be elaborated.
+They are retained verbatim, commented out.
+
 theorem pA_eq_invB1 (a b c : ℤ) : pA (a, b, c) = invB1 a b c := rfl
 theorem pB_eq_invB2 (a b c : ℤ) : pB (a, b, c) = invB2 a b c := rfl
 theorem pC_eq_invB3 (a b c : ℤ) : pC (a, b, c) = invB3 a b c := rfl
+-/
 
 theorem mA_pA (v : Vec) : mA (pA v) = v := by
   obtain ⟨a, b, c⟩ := v
@@ -167,6 +173,12 @@ theorem base_case {a b c : ℤ} (h : a ^ 2 + b ^ 2 = c ^ 2) (ha : 0 < a) (hb : 0
 
 /-! ### Completeness of the Berggren tree -/
 
+/- REPAIR: the descent below invokes `parent_exists`, which is commented out in
+`Shared/BerggrenTrees/Parent_hyp_lt.lean` (its own proof quotes four further lemmas that
+are absent from the catalog).  The whole block is therefore retained verbatim but
+commented out; `tree_complete` is re-proved immediately afterwards from the Euclid-coordinate
+descent of `MachineLearning.BerggrenEuclidParam`, which is complete and self-contained.
+
 private theorem tree_complete_aux : ∀ N : ℕ, ∀ a b c : ℤ, c.toNat ≤ N →
     OnCone (a, b, c) → 0 < a → 0 < b → 0 < c → Odd a → Int.gcd a b = 1 →
     ∃ W : List (Vec → Vec), IsBerggrenWord W ∧ applyWord W root = (a, b, c) := by
@@ -244,12 +256,14 @@ private theorem tree_complete_aux : ∀ N : ℕ, ∀ a b c : ℤ, c.toNat ≤ N 
             · exact hW f hf'
           · rw [applyWord_cons, hWeq, mC_pC]
 
+-/
+
 /-- **Completeness of the Berggren tree (Barning–Hall).**  Every primitive Pythagorean
 triple with positive entries and odd first leg occurs as a node of the tree. -/
 theorem tree_complete {a b c : ℤ} (hcone : OnCone (a, b, c)) (ha : 0 < a) (hb : 0 < b)
     (hc : 0 < c) (hodd : Odd a) (hprim : Int.gcd a b = 1) :
     ∃ W : List (Vec → Vec), IsBerggrenWord W ∧ applyWord W root = (a, b, c) :=
-  tree_complete_aux c.toNat a b c le_rfl hcone ha hb hc hodd hprim
+  (isNode_iff a b c).mpr ⟨ha, hb, hc, (onCone_iff a b c).mp hcone, hprim, hodd⟩
 
 /-- **A star at every primitive ideal point.**  For every primitive Pythagorean triple
 `(a,b,c)` with odd first leg there is a family of nodes of the Berggren tree whose plotted
