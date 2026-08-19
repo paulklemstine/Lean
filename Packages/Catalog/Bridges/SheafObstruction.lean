@@ -611,8 +611,13 @@ theorem restriction_preserves_validity
     (hx : P U x) :
     P V (F.res h x) :=
   hP h x hx
-end AgreementOnInter (ConstantPresheaf β L) sW sV := by
 
-end AgreementOnInter (ConstantPresheaf β L) sV sW ↔
+/-  The lines below are corrupted leftovers of a text edit: each is the tail of a
+    statement whose head was lost, and every one of them duplicates a theorem that
+    already appears in full earlier in this file.  They are kept, commented out, for
+    the record; without the comment the file does not parse.
 
-end AgreementOnInter (ConstantPresheaf β L) sV sW ↔ sV = sW := by
+    end AgreementOnInter (ConstantPresheaf β L) sW sV := by
+    end AgreementOnInter (ConstantPresheaf β L) sV sW ↔
+    end AgreementOnInter (ConstantPresheaf β L) sV sW ↔ sV = sW := by
+-/

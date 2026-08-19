@@ -7,6 +7,10 @@ Domain: Shared
 Declarations: 5
 -/
 
+/-- The remainder of `N` on division by `x`; the "energy" whose sublevel sets are
+studied below. -/
+def E (N x : ℕ) : ℕ := N % x
+
 /-- [Section: # CatalogBuild.Shared.Sublevel
 Auto-generated from theorem catalog database.
 Domain: Speculative

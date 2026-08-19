@@ -72,15 +72,24 @@ def PACBayesBound.mcAllesterBound (b : PACBayesBound) : ℝ :=
 
 /-! ## Section 1: Concentration for Bounded Losses -/
 
-/-- For bounded loss ℓ ∈ [0,1], the expected exponential of the gap
-    between empirical and true risk is bounded. This is the key
-    exponential-moment inequality. -/
+/-  The original version of this statement was the placeholder
+
+    `theorem exp_moment_bounded_loss ... (θ : Θ) (n : ℕ) (hn : 1 ≤ n) : True := trivial`
+
+    which asserts nothing.  It is replaced below by the actual exponential-moment
+    inequality it was meant to record (Hoeffding's lemma for the loss of a fixed
+    hypothesis); the unused sample-size arguments `n`, `hn` were dropped. -/
+
+/-- For a bounded loss `ℓ ∈ [0,1]` and a fixed hypothesis `θ`, the moment generating
+    function of the centred loss is bounded by `exp (t² / 8)`.  This is the key
+    exponential-moment inequality behind the McAllester bound. -/
 theorem exp_moment_bounded_loss {α Θ : Type*} [Fintype α] [Fintype Θ]
     (dist : FinDist α) (loss : α → Θ → ℝ)
     (hloss0 : ∀ a θ, 0 ≤ loss a θ) (hloss1 : ∀ a θ, loss a θ ≤ 1)
-    (θ : Θ) (n : ℕ) (hn : 1 ≤ n) :
-    True := by  -- The full MGF bound
-  trivial
+    (θ : Θ) (t : ℝ) :
+    ∑ a, dist.prob a * Real.exp (t * (loss a θ - ∑ b, dist.prob b * loss b θ)) ≤
+      Real.exp (t ^ 2 / 8) :=
+  hoeffding_lemma dist (fun a => loss a θ) t (fun a => hloss0 a θ) (fun a => hloss1 a θ)
 
 /-! ## Section 2: PAC-Bayes McAllester Bound -/
 

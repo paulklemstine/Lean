@@ -3,21 +3,6 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "consumed_by_exp_id": "18f8232d",
-    "description": "**Part of:** Research plan \u2014 *Compression Beyond the Pigeonhole Bound* (Phase A, Question 1: separating the decompressor from the data).\n\n## Research question\nOne shared decompressor `U` must serve all inputs. A decompressor specialized to a *class* of data does better per class. What is the **price of universality** \u2014 the minimax redundancy a universal scheme must pay over a per-distribution scheme?\n\n## Approach\n- Derive closed-form / tight bounds on universal redundancy for natural source classes: stationary sources, finite-state, Markov.\n- Express redundancy as a function of message length `n` and class complexity.\n\n## Deliverable\nRigorous bounds on universal vs. per-distribution redundancy, and a conclusion on whether specialized decompressors are theoretically worth pursuing.\n\n## Falsifiability / gate\nBounds must match or beat known minimax rates from the literature (Rissanen-style redundancy). If specialization doesn't move bits from *message* to *shared*, the direction is dead.\n\n**Milestone:** M5 (theory, ~2 weeks).\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1373",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-17T04:13:54.296356+00:00",
-    "title": "Compression Research A1: Price of universality \u2014 minimax redundancy of universal decompressors"
-  },
-  {
     "consumed_by_exp_id": "57212186",
     "description": "It is a direct adaptation of the standard Reinforcement Learning from Human Feedback (RLHF) objective with a pre-training mix-in (PTX)\u2014originally introduced in the InstructGPT / PPO alignment framework (Ouyang et al., 2022)\u2014rebranded with neurosymbolic notation.Breakdown of the Components$$\\text{Objective}(\\phi) = \\underbrace{\\mathbb{E}_{x, y}\\left[ RM_{NS}(x, y) \\right]}_{\\text{1. Reward Maximization}} - \\underbrace{\\beta_{NS} \\mathbb{E}_{x, y}\\left[ \\log \\frac{LLM_\\phi^{NS}(y\\vert{}x)}{LLM^{SFT}(y\\vert{}x)} \\right]}_{\\text{2. KL-Divergence Penalty}} + \\underbrace{\\gamma_{NS} \\mathbb{E}_{x}\\left[ \\log LLM_\\phi^{NS}(x) \\right]}_{\\text{3. Pretraining Loss Mix-in (PTX)}}$$NeuroSymbolic Reward Term:$\\mathbb{E}_{x \\sim \\mathcal{D}_{RL}, y \\sim LLM_\\phi^{NS}(x)} [RM_{NS}(x, y)]$Optimizes the policy parameters ($\\phi$) to generate outputs $y$ given prompts $x$ that maximize the score from a (neurosymbolic) reward model $RM_{NS}$.KL Penalty (Regularization):$-\\beta_{NS} \\log \\frac{LLM_\\phi^{NS}(y\\vert{}x)}{LLM^{SFT}(y\\vert{}x)}$The point-wise Kullback\u2013Leibler ($\\text{D}_{\\text{KL}}$) divergence penalty. It prevents the tuned policy $LLM_\\phi^{NS}$ from drifting too far from the base Supervised Fine-Tuned model ($LLM^{SFT}$), preventing policy collapse and reward hacking. $\\beta_{NS}$ controls the penalty strength.Pretraining Mix-in Gradient ($\\text{PPO-ptx}$ term):$+\\gamma_{NS} \\mathbb{E}_{x \\sim \\mathcal{D}_{pretrain}} \\log LLM_\\phi^{NS}(x)$Maximizes the log-likelihood over the original pretraining distribution $\\mathcal{D}_{pretrain}$ with coefficient $\\gamma_{NS}$. This standard trick avoids performance regression on general NLP benchmarks during RL fine-tuning.TakeawayMathematical Validity: 100% sound; it directly mirrors the standard InstructGPT alignment equation.Practical Meaning: It represents fine-tuning a model using RLHF, where the reward signal ($RM_{NS}$) or the model architecture incorporates neurosymbolic rules/logic rather than purely human-labeled reward modeling.",
     "domains": [
@@ -133,6 +118,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-18T09:49:34.716388+00:00",
     "title": "Deepening: The `\u21d0` direction is proved (`FourierFA.uncertainty_eq_coset_modulation`); the `"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 8a3962f5 (Q=0.860), which proved 120 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: *The number of triples `(a,b,c)` with `0 < a,b,c \u2264 H` that are Berggren-generated\nfrom a positive seed is `\u0398(H)` \u2014 vanishingly few compared with `H\u00b3` \u2014 while the\nnumber of *Pythagorean* triples in the same box that are Berggren-generated is\n`(1 - o(1))` times the number of primitive Pythagorean trip",
+    "domains": [
+      "MachineLearning"
+    ],
+    "id": "push_8a3962f5_bbc585aa",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "8a3962f5",
+    "status": "available",
+    "timestamp": "2026-08-19T07:54:39.283971+00:00",
+    "title": "Deepening: The number of triples `(a,b,c)` with `0 < a,b,c \u2264 H` that are Berggren-generated"
   },
   {
     "consumed_by_exp_id": "",
@@ -1764,23 +1763,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-05T06:51:05.180719+00:00",
     "title": "Deepening: ArXiv paper: Magnitude homology of tope graphs"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Suppose we had an oracle that computes L(s, chi) for any L-function and any complex s in O(1) time. What theorems would follow? Conjecture: The L-function oracle implies (1) The Riemann Hypothesis (compute zeros directly), (2) The BSD conjecture (compute the order of vanishing at s=1), (3) The Sato-Tate conjecture (compute the distribution of a_p), (4) Langlands functoriality (compare L-functions on both sides of the functoriality lift), and (5) A polynomial-time algorithm for factoring (the L-function of an elliptic curve E over Z/nZ detects factors of n). But the oracle also implies IMPOSSIBILITY results: (6) P != NP (because NP-complete problems would reduce to L-function computations that the oracle solves in O(1), contradicting the time hierarchy theorem if P = NP). Wait \u2014 the oracle solves L-function computations in O(1), so if P = NP, then NP problems can be encoded as L-function computations and solved instantly, but the oracle's existence is an axiom, not a theorem. The correct statement: the L-function oracle collapses the polynomial hierarchy to L-function computations. Test: prove that the Riemann Hypothesis follows from the oracle. Prove that BSD follows. Prove that factoring is in P given the oracle. Impact: understanding what an L-function oracle implies tells us exactly how powerful L-functions are \u2014 and how far we are from proving things about them.",
-    "domains": [
-      "Novelty",
-      "NumberTheory",
-      "Computation",
-      "Logic"
-    ],
-    "id": "seed_123",
-    "priority_score": 0.88,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "The L-Function Oracle: What If We Could Compute L-Functions Instantly?"
   },
   {
     "consumed_by_exp_id": "",
@@ -19645,15 +19627,14 @@ window.FUTURE_DIRECTIONS = [
     "title": "Chebotarev's theorem that every square submatrix of the `p \u00d7 p` DFT matrix"
   },
   {
-    "consumed_by_exp_id": "8a3962f5",
+    "consumed_by_exp_id": "",
     "description": "*The number of triples `(a,b,c)` with `0 < a,b,c \u2264 H` that are Berggren-generated\nfrom a positive seed is `\u0398(H)` \u2014 vanishingly few compared with `H\u00b3` \u2014 while the\nnumber of *Pythagorean* triples in the same box that are Berggren-generated is\n`(1 - o(1))` times the number of primitive Pythagorean triples in the box.*",
     "domains": [],
     "id": "fd_1559",
-    "phase": "A",
     "priority_score": 0.40809523809523807,
     "research_mode": "team",
     "source_exp_id": "24a12580",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-18T21:38:36.914118+00:00",
     "title": "The number of triples `(a,b,c)` with `0 < a,b,c \u2264 H` that are Berggren-generated\nfrom a positive seed is `\u0398(H)` \u2014 vanishingly few compared with `H\u00b3` \u2014 while the\nnumber of *Pythagorean* triples in the "
   },
@@ -19964,14 +19945,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Honest Laurent normalization"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ab33dc9e",
     "description": "A product of `m` normalized series has order exactly `\u2212m`\n   (`orderTop_prod_normalized`), so a Monster-sized product has a pole of order `194`\n   (`orderTop_prod_traceLaurent_194`); multiplying by `q^m` restores order `0`.",
     "domains": [],
     "id": "fd_1428",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "286b3a0e",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-17T13:54:04.565939+00:00",
     "title": "Pole-order obstruction"
   },
@@ -21171,5 +21153,43 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-19T07:05:31.366205+00:00",
     "title": "Both endpoints of the interval are now theorems and the residual gap for odd `m` is"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The present development already contains the exact fibre count\n`card_parityPairs_eq : #parityPairs N = \u230aN/2\u230b\u00b7\u2308N/2\u2309` and the exact divisibility slice, so\nthe only missing ingredient is `\u2211_{k\u2264N} \u03bc(k)/k\u00b2` convergence, which mathlib supports.\nAchieving this would sharpen `boxNode_card_theta` from `[H/128, H]` to `(1/2\u03c0)\u00b7H(1+o(1))`.",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "fd_1582",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "8a3962f5",
+    "status": "available",
+    "timestamp": "2026-08-19T07:54:27.064803+00:00",
+    "title": "The present development already contains the exact fibre count"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The collapse of the three-dimensional box condition to a one-dimensional disc\ncondition is proved here (`mem_euclidBox`, surjectivity branch), which is exactly the step\nthat lets classical circle-problem technology be imported unchanged.",
+    "domains": [],
+    "id": "fd_1583",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "8a3962f5",
+    "status": "available",
+    "timestamp": "2026-08-19T07:54:27.308871+00:00",
+    "title": "The collapse of the three-dimensional box condition to a one-dimensional disc"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The exact identity `card_boxPPT_eq_two_mul` (ratio exactly `1/2` for one\nseed) and `boxBerggren_eq_boxPPT` (ratio exactly `1` for two) are now proved, which pins\ndown the two extreme cases of the conjecture and shows the general statement must be about\nrational limits, not about `1 \u2212 o(1)`.",
+    "domains": [],
+    "id": "fd_1584",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "8a3962f5",
+    "status": "available",
+    "timestamp": "2026-08-19T07:54:27.554444+00:00",
+    "title": "The exact identity `card_boxPPT_eq_two_mul` (ratio exactly `1/2` for one"
   }
 ];

@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "93afd30b",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions — Berggren Spectral Resonance\n\nDerived from the three research cycles recorded in\n`Catalog/Cryptography/BerggrenSpectral/` (spectra → resonance → factorization → exact\nspectrum, tr",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 122,
-      "timestamp": "2026-08-17T07:17:00",
-      "title": "Berggren-Spectral-Eigenvalues: Modular Energy Resonance for RSA Integer Factorization"
-    },
-    {
       "cycle_id": "0b339d93",
       "domain": "Physics",
       "key_insight": "# Future Directions\n\nFive bold, falsifiable conjectures distilled from the analysis and adversarial review of the\nformalised results in `Catalog/Physics/` (`QuantumSL2ClassicalLimit`, `QuantumSL2Braid",
@@ -499,19 +489,19 @@
       "theorem_count": 89,
       "timestamp": "2026-08-19T07:05:43",
       "title": "Conjecture A (Parity-gap conjecture). For all `n ≥ 2`, all injective `S, T : Fin n → ZMod p`, the pa"
+    },
+    {
+      "cycle_id": "8a3962f5",
+      "domain": "MachineLearning",
+      "key_insight": "# Future directions\n\nFive bold, testable conjectures produced by the analysis/critique stages of this cycle.\nEach is stated so that it can be falsified by a single counterexample or settled by a\nLean",
+      "quality_score": 0.86,
+      "sorry_count": 0,
+      "theorem_count": 120,
+      "timestamp": "2026-08-19T07:54:38",
+      "title": "The number of triples `(a,b,c)` with `0 < a,b,c ≤ H` that are Berggren-generated\nfrom a positive see"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "436f9275",
-      "domain": "Probability",
-      "key_insight": "# Future Directions — Sums of Three Cubes\n\nThe cycle closed the \"local half\" of the problem completely: `x³ + y³ + z³ = n` is solvable\nmodulo every modulus, and has `ℤ_p`-points for every prime `p`, e",
-      "quality_score": 0.627125,
-      "sorry_count": 0,
-      "theorem_count": 164,
-      "timestamp": "2026-08-08T05:07:29",
-      "title": "Deepening: Sums of Three Cubes"
-    },
     {
       "cycle_id": "221c30c4",
       "domain": "MachineLearning",
@@ -2501,15 +2491,19 @@
       "theorem_count": 89,
       "timestamp": "2026-08-19T07:05:43",
       "title": "Conjecture A (Parity-gap conjecture). For all `n ≥ 2`, all injective `S, T : Fin n → ZMod p`, the pa"
+    },
+    {
+      "cycle_id": "8a3962f5",
+      "domain": "MachineLearning",
+      "key_insight": "# Future directions\n\nFive bold, testable conjectures produced by the analysis/critique stages of this cycle.\nEach is stated so that it can be falsified by a single counterexample or settled by a\nLean",
+      "quality_score": 0.86,
+      "sorry_count": 0,
+      "theorem_count": 120,
+      "timestamp": "2026-08-19T07:54:38",
+      "title": "The number of triples `(a,b,c)` with `0 < a,b,c ≤ H` that are Berggren-generated\nfrom a positive see"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "ed687362",
-      "domain": "Logic",
-      "name": "isTriangularForest_iff_forall_short",
-      "quality": 0.72
-    },
     {
       "cycle_id": "ed687362",
       "domain": "Logic",
@@ -2803,9 +2797,15 @@
       "domain": "Probability",
       "name": "zeta_pow_mod",
       "quality": 0.88
+    },
+    {
+      "cycle_id": "8a3962f5",
+      "domain": "MachineLearning",
+      "name": "mem_box",
+      "quality": 0.86
     }
   ],
-  "last_updated": "2026-08-19T07:05:43",
+  "last_updated": "2026-08-19T07:54:38",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hupper⟩)",
@@ -3517,12 +3517,6 @@
     ],
     "MachineLearning": [
       {
-        "cycle_id": "9cee3a4c",
-        "quality": 0.627125,
-        "theorems": 122,
-        "title": "Deepening: Certified Adversarial Robustness via Sheaf Cohomology"
-      },
-      {
         "cycle_id": "5b29bc32",
         "quality": 0.86,
         "theorems": 98,
@@ -3575,6 +3569,12 @@
         "quality": 0.82,
         "theorems": 97,
         "title": "The Bonferroni machinery"
+      },
+      {
+        "cycle_id": "8a3962f5",
+        "quality": 0.86,
+        "theorems": 120,
+        "title": "The number of triples `(a,b,c)` with `0 < a,b,c ≤ H` that are Berggren-generated"
       }
     ],
     "Novelty": [

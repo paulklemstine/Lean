@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Shared.SpbHyp_comm
 
 Auto-generated from theorem catalog database.
@@ -5,9 +7,10 @@ Domain: EML
 Declarations: 6
 -/
 
-import Mathlib
-
 noncomputable section
+
+/-- The hyperbolic (relativistic) speed-addition law. -/
+def spbHyp (x y : ℝ) : ℝ := (x + y) / (1 + x * y)
 
 /-- Hyperbolic SPB is commutative. -/
 theorem spbHyp_comm (x y : ℝ) : spbHyp x y = spbHyp y x := by
@@ -27,7 +30,6 @@ theorem spbHyp_tanh_add (α β : ℝ) :
 
 
 /-- The hyperbolic SPB (Einstein velocity addition). -/
-def spbHyp (x y : ℝ) : ℝ := (x + y) / (1 + x * y)
 
 
 theorem spbHyp_subluminal (x y : ℝ) (hx : |x| < 1) (hy : |y| < 1) :

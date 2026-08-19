@@ -9,6 +9,12 @@ Declarations: 5
 
 noncomputable section
 
+/-- The e-tower: e↑↑n. -/
+def eTower : ℕ → ℝ
+  | 0 => 1
+  | n + 1 => Real.exp (eTower n)
+
+
 /-- [Section: # CatalogBuild.Shared.ETower_strictMono
 Auto-generated from theorem catalog database.
 Domain: EML
@@ -32,7 +38,7 @@ theorem eTower_ge_pow2 (n : ℕ) (hn : 1 ≤ n) : eTower n ≥ 2^n := by
   induction' hn with n hn ih <;> simp_all +decide [ pow_succ', eTower ];
   · linarith [ Real.add_one_le_exp 1 ];
   · have h_exp_growth : Real.exp (2^n) ≥ 2 * 2^n := by
-      exact?;
+      exact Real.two_mul_le_exp;
     exact le_trans h_exp_growth ( Real.exp_le_exp.mpr ih )
 
 /-- e-tower grows at least as fast as n. -/
@@ -42,14 +48,5 @@ theorem eTower_ge_n (n : ℕ) : eTower n ≥ n := by
   | succ n ih =>
     simp [eTower]
     linarith [Real.add_one_le_exp (eTower n)]
-
-/-- The e-tower: e↑↑n. -/
-def eTower : ℕ → ℝ
-  | 0 => 1
-  | n + 1 => Real.exp (eTower n)
-
-end
-
-end
 
 end

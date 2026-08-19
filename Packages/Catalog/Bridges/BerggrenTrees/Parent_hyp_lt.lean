@@ -7,11 +7,69 @@ Domain: Shared
 Declarations: 3
 -/
 
+/-! ## Reconstructed definitions
+
+`IsPT` is the Pythagorean relation, and `invB1`, `invB2`, `invB3` are the three
+inverse Berggren maps (the parent maps of the Berggren ternary tree), i.e. the
+inverses of the matrices `[[1,-2,2],[2,-1,2],[2,-2,3]]`, `[[1,2,2],[2,1,2],[2,2,3]]`
+and `[[-1,2,2],[-2,1,2],[-2,2,3]]`. -/
+
+/-- `(a, b, c)` is a Pythagorean triple. -/
+def IsPT (a b c : ℤ) : Prop := a ^ 2 + b ^ 2 = c ^ 2
+
+/-- Parent map for the first Berggren branch. -/
+def invB1 (a b c : ℤ) : ℤ × ℤ × ℤ := (a + 2*b - 2*c, -2*a - b + 2*c, -2*a - 2*b + 3*c)
+
+/-- Parent map for the second Berggren branch. -/
+def invB2 (a b c : ℤ) : ℤ × ℤ × ℤ := (a + 2*b - 2*c, 2*a + b - 2*c, -2*a - 2*b + 3*c)
+
+/-- Parent map for the third Berggren branch. -/
+def invB3 (a b c : ℤ) : ℤ × ℤ × ℤ := (-a - 2*b + 2*c, 2*a + b - 2*c, -2*a - 2*b + 3*c)
+
 /-- The parent hypotenuse is strictly less than c for any PPT with a,b > 0. -/
 theorem parent_hyp_lt (a b c : ℤ) (ha : 0 < a) (hb : 0 < b)
     (hpt : IsPT a b c) : -2*a - 2*b + 3*c < c := by
   unfold IsPT at hpt
   nlinarith [sq_nonneg (a + b - c), sq_nonneg (a - b)]
+
+/-- For a Pythagorean triple with positive legs the parent hypotenuse is positive. -/
+theorem parent_hyp_pos' (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
+    (hpt : IsPT a b c) : 0 < -2*a - 2*b + 3*c := by
+  unfold IsPT at hpt
+  nlinarith [sq_nonneg (3*c - 2*a - 2*b), sq_nonneg (a - b), mul_pos ha hb]
+
+/-- If both `a + 2b > 2c` and `2a + b > 2c`, the branch-2 parent is positive. -/
+theorem invB2_pos_case (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
+    (hpt : IsPT a b c) (h3 : a + 2 * b > 2 * c) (h4 : 2 * a + b > 2 * c) :
+    0 < (invB2 a b c).1 ∧ 0 < (invB2 a b c).2.1 ∧ 0 < (invB2 a b c).2.2 := by
+  refine ⟨by simp only [invB2]; omega, by simp only [invB2]; omega, ?_⟩
+  simpa [invB2] using parent_hyp_pos' a b c ha hb hc hpt
+
+/-- If `a + 2b > 2c` but `2a + b < 2c`, the branch-1 parent is positive. -/
+theorem invB1_pos_case (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
+    (hpt : IsPT a b c) (h3 : a + 2 * b > 2 * c) (h4 : 2 * a + b < 2 * c) :
+    0 < (invB1 a b c).1 ∧ 0 < (invB1 a b c).2.1 ∧ 0 < (invB1 a b c).2.2 := by
+  refine ⟨by simp only [invB1]; omega, by simp only [invB1]; omega, ?_⟩
+  simpa [invB1] using parent_hyp_pos' a b c ha hb hc hpt
+
+/-- If `a + 2b < 2c` but `2a + b > 2c`, the branch-3 parent is positive. -/
+theorem invB3_pos_case (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
+    (hpt : IsPT a b c) (h3 : a + 2 * b < 2 * c) (h4 : 2 * a + b > 2 * c) :
+    0 < (invB3 a b c).1 ∧ 0 < (invB3 a b c).2.1 ∧ 0 < (invB3 a b c).2.2 := by
+  refine ⟨by simp only [invB3]; omega, by simp only [invB3]; omega, ?_⟩
+  simpa [invB3] using parent_hyp_pos' a b c ha hb hc hpt
+
+/-- For a Pythagorean triple with positive legs, `a + 2b` and `2a + b` cannot both
+be at most `2c`: otherwise `4b ≤ 3a` and `4a ≤ 3b`, forcing `b ≤ 0`. -/
+theorem not_both_neg (a b c : ℤ) (ha : 0 < a) (hb : 0 < b)
+    (hpt : IsPT a b c) (h3 : a + 2 * b ≤ 2 * c) (h4 : 2 * a + b ≤ 2 * c) : False := by
+  unfold IsPT at hpt
+  have hc0 : 0 < c := by omega
+  have e1 : (a + 2 * b) ^ 2 ≤ (2 * c) ^ 2 := by nlinarith
+  have e2 : (2 * a + b) ^ 2 ≤ (2 * c) ^ 2 := by nlinarith
+  have k1 : 4 * (a * b) ≤ 3 * a ^ 2 := by nlinarith
+  have k2 : 4 * (a * b) ≤ 3 * b ^ 2 := by nlinarith
+  nlinarith [mul_pos ha hb, sq_nonneg (a - b), sq_nonneg (a + b)]
 
 /-- [Section: # CatalogBuild.Shared.Parent_hyp_lt
 Auto-generated from theorem catalog database.

@@ -158,9 +158,9 @@ theorem oracle_power_collapse {α : Type*} {O : α → α}
   | zero => omega
   | succ k ih =>
     cases k with
-    | zero => simp [iterate_one]
+    | zero => simp [Function.iterate_one]
     | succ k =>
-      rw [iterate_succ']
+      rw [Function.iterate_succ']
       rw [ih (by omega)]
       ext x
       exact hO x

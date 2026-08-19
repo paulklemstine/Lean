@@ -9,6 +9,8 @@ Declarations: 33
 
 noncomputable section
 
+open Matrix
+
 /-- Berggren matrix M₁ -/
 def berggrenMat1 : Matrix (Fin 3) (Fin 3) ℤ :=
   !![1, -2, 2; 2, -1, 2; 2, -2, 3]

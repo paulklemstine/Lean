@@ -1,3 +1,6 @@
+import Mathlib
+
+/-
 Copyright (c) 2025. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 
@@ -28,7 +31,7 @@ proving several fundamental results:
   Our proof uses the handshaking lemma directly.
 -/
 
-import Mathlib
+
 
 namespace SimpleGraph
 

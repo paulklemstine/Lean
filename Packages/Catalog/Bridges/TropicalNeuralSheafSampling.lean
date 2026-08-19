@@ -517,6 +517,11 @@ theorem message_passing_converges {α : Type*} [Fintype α] [PartialOrder α]
 end Applications
 
 end TropicalSheafSampling
+
+/- The lines below are a corrupted trailing fragment of an earlier statement whose
+head was lost; they are preserved verbatim but commented out so the file parses.
+
 end in the kernel of restriction must be zero. This is the core of the
 
 end TheoremA
+-/

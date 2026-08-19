@@ -9,6 +9,10 @@ Declarations: 14
 
 noncomputable section
 
+open Set
+
+variable {α L K V : Type*} [Field K] [AddCommGroup V] [Module K V]
+
 /-- [Section: # CatalogBuild.Bridges.IdempotentCollapse
 Auto-generated from theorem catalog database.
 Domain: Bridges

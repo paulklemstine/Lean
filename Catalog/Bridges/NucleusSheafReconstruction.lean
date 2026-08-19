@@ -358,12 +358,15 @@ theorem NucleusStructurePresheaf_map_comp
   symm; exact restrict_comp hUV hVW
 
 end NucleusSheafReconstruction
-end Congr S (Set.univ : Set (NucleusPoint S)) a b ↔
 
-end Congr S (U ∪ V) a b ↔ sectionCongr S U a b ∧ sectionCongr S V a b := by
+/-  The lines below are corrupted leftovers of a text edit: each is the tail of a
+    statement whose head was lost, and every one of them duplicates a theorem that
+    already appears in full earlier in this file.  They are kept, commented out, for
+    the record; without the comment the file does not parse.
 
-end Congr S (∅ : Set (NucleusPoint S)) a b := by
-
-end Congr S U ≤ sectionCongr S V :=
-
-end Congr S U a b ↔ ∀ x ∈ U, x.con a b :=
+    end Congr S (Set.univ : Set (NucleusPoint S)) a b ↔
+    end Congr S (U ∪ V) a b ↔ sectionCongr S U a b ∧ sectionCongr S V a b := by
+    end Congr S (∅ : Set (NucleusPoint S)) a b := by
+    end Congr S U ≤ sectionCongr S V :=
+    end Congr S U a b ↔ ∀ x ∈ U, x.con a b :=
+-/

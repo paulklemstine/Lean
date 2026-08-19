@@ -9,6 +9,8 @@ Declarations: 12
 
 noncomputable section
 
+variable {K V α : Type*} [Field K] [AddCommGroup V] [Module K V]
+
 /-- An idempotent linear map satisfies f² - f = 0 -/
 theorem idempotent_annihilating_poly (f : V →ₗ[K] V) (hf : f.comp f = f) :
     f.comp f - f = 0 := by
@@ -28,7 +30,7 @@ Domain: Bridges
 Declarations: 12] -/
 theorem idempotent_ker_eq_range_complement (f : V →ₗ[K] V) (hf : f.comp f = f) :
     LinearMap.ker f = LinearMap.range (LinearMap.id - f) := by
-  exact?
+  exact LinearMap.IsIdempotentElem.ker_eq_range hf
 
 theorem idempotent_range_eq_ker_complement (f : V →ₗ[K] V) (hf : f.comp f = f) :
     LinearMap.range f = LinearMap.ker (LinearMap.id - f) := by

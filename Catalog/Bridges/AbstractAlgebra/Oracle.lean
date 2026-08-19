@@ -1,4 +1,6 @@
 import Mathlib
+
+open Function Set
 /- Original: OracleAlgebra.lean -/
 
 
@@ -77,7 +79,7 @@ theorem oracle_kernel_trans {X : Type*} (O : X → X) : Transitive (OracleKernel
 theorem oracle_kernel_equiv {X : Type*} (O : X → X) : Equivalence (OracleKernel O) := by
   refine' { .. };
   · exact fun x => rfl;
-  · exact?;
+  · exact fun {x y} a => Eq.symm a
   · exact fun hxy hyz => hxy.trans hyz
 
 
@@ -100,14 +102,14 @@ theorem range_subset_fixedPoints {X : Type*} (O : X → X) (hO : ∀ x, O (O x) 
 theorem idempotent_injective_iff_surjective {n : ℕ} (O : Fin n → Fin n)
     (hO : ∀ x, O (O x) = O x) :
     Injective O ↔ Surjective O := by
-      exact?
+      exact Finite.injective_iff_surjective
 
 
 
 
 theorem oracle_lattice_inf_le {α : Type*} [CompleteLattice α] (S : Set α) (x : α) (hx : x ∈ S) :
     sInf S ≤ x := by
-      exact?
+      exact CompleteSemilatticeInf.sInf_le S x hx
 
 
 
@@ -158,6 +160,16 @@ end
 
 
 noncomputable section
+
+/-- An **oracle** is an idempotent self-map: consulting it twice gives the same
+answer as consulting it once. -/
+def IsOracle {α : Type*} (P : α → α) : Prop := ∀ x, P (P x) = P x
+
+/-- An oracle is a retraction onto its image: it fixes every point it can output. -/
+theorem oracle_retraction {α : Type*} (P : α → α) (hP : IsOracle P) (y : α)
+    (hy : y ∈ range P) : P y = y := by
+  obtain ⟨x, rfl⟩ := hy
+  exact hP x
 
 /-- The image of an oracle consists exactly of its fixed points. -/
 theorem oracle_image_eq_fixedPoints {α : Type*} (P : α → α) (hP : IsOracle P) :
@@ -464,6 +476,11 @@ def stereoForward (x y : ℝ) : ℝ := x / (1 - y)
 
 
 
+/-- Inverse stereographic projection from `ℝ` to `S¹ \ {north pole}`:
+`t ↦ (2t/(1+t²), (t²-1)/(t²+1))`. -/
+def stereoInverse (t : ℝ) : ℝ × ℝ :=
+  (2 * t / (1 + t ^ 2), (t ^ 2 - 1) / (t ^ 2 + 1))
+
 /-- The denominator 1 + t² is always positive. -/
 theorem one_plus_sq_pos (t : ℝ) : 0 < 1 + t ^ 2 := by positivity
 
@@ -502,6 +519,16 @@ theorem inverse_stereo_roundtrip (x y : ℝ) (hcirc : x ^ 2 + y ^ 2 = 1) (hy : y
 
 theorem stereo_conformal_factor_pos (t : ℝ) : 0 < 2 / (1 + t ^ 2) := by
   positivity
+
+/-- Projecting back after the inverse projection returns the original parameter. -/
+theorem stereo_roundtrip :
+    ∀ t : ℝ, stereoForward (stereoInverse t).1 (stereoInverse t).2 = t := by
+  intro t
+  have h : (1 : ℝ) + t ^ 2 ≠ 0 := one_plus_sq_ne_zero t
+  have h' : t ^ 2 + 1 ≠ 0 := by intro hc; exact h (by linarith [hc])
+  unfold stereoForward stereoInverse
+  field_simp
+  ring
 
 
 
@@ -601,6 +628,8 @@ end
 
 
 noncomputable section
+
+variable {R M : Type*} [CommRing R] [AddCommGroup M] [Module R M] {n : ℕ}
 
 /-- A projection on a module: P² = P. -/
 structure OracleProjection (R M : Type*) [CommRing R] [AddCommGroup M] [Module R M] where
@@ -817,11 +846,11 @@ theorem cook_levin_bound' (n : ℕ) : n ^ 3 ≤ (n + 1) ^ 3 := Nat.pow_le_pow_le
 
 theorem zeta_2_prefactor : (1 : ℚ) / 6 > 0 := by norm_num
 
-theorem pnt_10' : ((range 11).filter Nat.Prime).card = 4 := by native_decide
+theorem pnt_10' : ((Finset.range 11).filter Nat.Prime).card = 4 := by native_decide
 
-theorem pnt_100' : ((range 101).filter Nat.Prime).card = 25 := by native_decide
+theorem pnt_100' : ((Finset.range 101).filter Nat.Prime).card = 25 := by native_decide
 
-theorem pnt_1000' : ((range 1001).filter Nat.Prime).card = 168 := by native_decide
+theorem pnt_1000' : ((Finset.range 1001).filter Nat.Prime).card = 168 := by native_decide
 
 theorem euler_product_check : (1 : ℚ) - 1/4 = 3/4 := by norm_num
 
@@ -966,6 +995,9 @@ theorem bootstrap_preserves_idempotent {R : Type*} [CommRing R] (e : R)
 
 
 
+/-- `a` is **n-potent** when `a ^ n = a`. -/
+def IsNPotent {M : Type*} [Monoid M] (a : M) (n : ℕ) : Prop := a ^ n = a
+
 /-- Every element is 1-potent (a^1 = a). -/
 theorem is_1_potent {M : Type*} [Monoid M] (a : M) : IsNPotent a 1 := by
   simp [IsNPotent]
@@ -1034,6 +1066,14 @@ end
 
 
 noncomputable section
+
+/-- **Knaster–Tarski**: the infimum of the pre-fixed points of a monotone map on a
+complete lattice is a fixed point (indeed the least one). -/
+theorem knaster_tarski_lfp {α : Type*} [CompleteLattice α] (f : α → α)
+    (hf : Monotone f) : f (sInf {x | f x ≤ x}) = sInf {x | f x ≤ x} := by
+  set a := sInf {x | f x ≤ x} with ha
+  have hfa : f a ≤ a := le_sInf fun x hx => (hf (sInf_le hx)).trans hx
+  exact le_antisymm hfa (sInf_le (show f (f a) ≤ f a from hf hfa))
 
 /-- [Section: # CatalogBuild.Computation.Oracles.OracleSearch
 Auto-generated from theorem catalog database.
@@ -1110,6 +1150,9 @@ theorem iteration_fixed_point {α : Type*} (f : α → α) (c : α)
 
 
 
+
+/-- A self-map is **idempotent** when applying it twice equals applying it once. -/
+def IsIdempotent {α : Type*} (f : α → α) : Prop := ∀ x, f (f x) = f x
 
 theorem idempotent_range_fixed {α : Type*} (f : α → α) (hf : IsIdempotent f)
     (y : α) (hy : y ∈ range f) : f y = y := by
@@ -1188,7 +1231,7 @@ theorem schroder_bernstein_structure {α β : Type*}
     intro h_no_equiv;
     have h_schroeder : Nonempty (α ↪ β) ∧ Nonempty (β ↪ α) → Nonempty (α ≃ β) := by
       simp +zetaDelta at *;
-      exact?;
+      exact fun a a_2 => Embedding.antisymm a a_2
     exact h_no_equiv <| h_schroeder ⟨ ⟨ f, hf ⟩, ⟨ g, hg ⟩ ⟩
   obtain ⟨h⟩ := h_equiv
   use h
@@ -1238,7 +1281,7 @@ Declarations: 10] -/
 theorem divisor_count_multiplicative (m n : ℕ) (hm : 0 < m) (hn : 0 < n)
     (hcoprime : Nat.Coprime m n) :
     (Nat.divisors (m * n)).card = (Nat.divisors m).card * (Nat.divisors n).card := by
-  exact?
+  exact Nat.Coprime.card_divisors_mul hcoprime
 
 
 
@@ -1395,6 +1438,10 @@ theorem SolverOracle.constant_truth {X : Type*} (c : X) :
 def invStereoProj (t : ℝ) : ℝ × ℝ :=
   (2 * t / (1 + t ^ 2), (1 - t ^ 2) / (1 + t ^ 2))
 
+/-- Stereographic projection from the unit circle (minus the south pole `(0,-1)`)
+back to `ℝ`: `(x, y) ↦ x / (1 + y)`. -/
+def stereoProj (p : ℝ × ℝ) : ℝ := p.1 / (1 + p.2)
+
 /-- **Theorem 2.1**: Inverse stereo always maps to the unit circle. -/
 theorem invStereoProj_on_circle (t : ℝ) :
     (invStereoProj t).1 ^ 2 + (invStereoProj t).2 ^ 2 = 1 := by
@@ -1466,8 +1513,12 @@ theorem experiment_roundtrip (p q : ℤ) (hq : (q : ℝ) ≠ 0) :
     stereoProj (invStereoProj ((p : ℝ) / q)) = (p : ℝ) / q :=
   oracle_stereo_roundtrip _
 
+/-- `sin (nπ) = 0` for every integer `n`. -/
+theorem sin_int_mul_pi (n : ℤ) : Real.sin (n * Real.pi) = 0 :=
+  Real.sin_int_mul_pi n
+
 /-- **Theorem 5.1 (Crystallization at Integers)**: sin(πn) = 0 for n ∈ ℤ. -/
-theorem crystallization_integers (n : ℤ) : Real.sin (π * ↑n) = 0 := by
+theorem crystallization_integers (n : ℤ) : Real.sin (Real.pi * ↑n) = 0 := by
   rw [mul_comm]; exact sin_int_mul_pi n
 
 /-- **Theorem 5.2**: Lattice points on x²+y²=25. -/
@@ -1489,6 +1540,9 @@ theorem no_lattice_points_3 :
 theorem lattice_points_5 :
     (Finset.filter (fun p : ℤ × ℤ => p.1 ^ 2 + p.2 ^ 2 = 5)
       (Finset.Icc (-3) 3 ×ˢ Finset.Icc (-3) 3)).card = 8 := by native_decide
+
+/-- The Möbius transformation `x ↦ (a x + b) / (c x + d)` on the reals. -/
+def mobiusTransform (a b c d x : ℝ) : ℝ := (a * x + b) / (c * x + d)
 
 /-- **Theorem 6.1**: The identity Möbius transform. -/
 theorem mobius_identity (x : ℝ) : mobiusTransform 1 0 0 1 x = x := by
@@ -1561,6 +1615,19 @@ end
 
 
 noncomputable section
+
+/-- A prediction oracle produces, for each piece of evidence, a prediction together
+with a nonnegative confidence weight. -/
+structure PredictionOracle where
+  /-- The predicted value. -/
+  predict : ℝ → ℝ
+  /-- The weight the oracle assigns to its own prediction. -/
+  confidence : ℝ → ℝ
+
+/-- A council of `n` prediction oracles. -/
+structure OracleCouncil (n : ℕ) where
+  /-- The members of the council. -/
+  oracles : Fin n → PredictionOracle
 
 /-- [Section: # CatalogBuild.MachineLearning.Prediction.OracleTeam
 Auto-generated from theorem catalog database.

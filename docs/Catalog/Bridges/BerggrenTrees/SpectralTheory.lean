@@ -7,6 +7,50 @@ Domain: Pythagorean/Berggren
 Declarations: 66
 -/
 
+/-! ## Reconstructed definitions
+
+The catalogue file carrying the ghost-triple maps used below is missing from this
+repository, so they are reconstructed here from the statements proved in this file:
+`p`, `q`, `h` are the three components of the Barning–Hall parent map, and
+`fwdB1`/`invB1`, `fwdB3`/`invB3` are the branch-1 and branch-3 Berggren child maps
+together with their inverses. -/
+
+/-- First component of the ghost/parent map. -/
+def p (a b c : ℤ) : ℤ := a + 2*b - 2*c
+
+/-- Second component of the ghost/parent map. -/
+def q (a b c : ℤ) : ℤ := 2*a + b - 2*c
+
+/-- Third component of the ghost/parent map. -/
+def h (a b c : ℤ) : ℤ := -2*a - 2*b + 3*c
+
+/-- Berggren branch-1 child map (the matrix `[[1,2,2],[2,1,2],[2,2,3]]`). -/
+def fwdB1 (a b c : ℤ) : ℤ × ℤ × ℤ :=
+  (a + 2*b + 2*c, 2*a + b + 2*c, 2*a + 2*b + 3*c)
+
+/-- Inverse of `fwdB1`, given by the ghost map `(p, q, h)`. -/
+def invB1 (a b c : ℤ) : ℤ × ℤ × ℤ := (p a b c, q a b c, h a b c)
+
+/-- Berggren branch-3 child map (the matrix `[[-1,2,2],[-2,1,2],[-2,2,3]]`). -/
+def fwdB3 (a b c : ℤ) : ℤ × ℤ × ℤ :=
+  (-a + 2*b + 2*c, -2*a + b + 2*c, -2*a + 2*b + 3*c)
+
+/-- Inverse of `fwdB3`; its last component is again `h`. -/
+def invB3 (a b c : ℤ) : ℤ × ℤ × ℤ :=
+  (-a - 2*b + 2*c, 2*a + b - 2*c, h a b c)
+
+/-- The Barning–Hall parent matrix, whose rows are `p`, `q`, `h`. -/
+def M : Matrix (Fin 3) (Fin 3) ℤ := !![1, 2, -2; 2, 1, -2; -2, -2, 3]
+
+/-- The ghost map `(a,b,c) ↦ (p,q,h)`, i.e. multiplication by `M`. -/
+def ghostMap (a b c : ℤ) : ℤ × ℤ × ℤ := (p a b c, q a b c, h a b c)
+
+/-- The Lorentz form of signature (2,1). -/
+def eta : Matrix (Fin 3) (Fin 3) ℤ := !![1, 0, 0; 0, 1, 0; 0, 0, -1]
+
+/-- The second Berggren child matrix; it is the inverse of `M`. -/
+def B2 : Matrix (Fin 3) (Fin 3) ℤ := !![1, 2, 2; 2, 1, 2; 2, 2, 3]
+
 /-- **Key correction**: p + q + h = a + b − c, NOT a + b + c. -/
 theorem sum_correction (a b c : ℤ) : p a b c + q a b c + h a b c = a + b - c := by
   simp only [p, q, h]; ring
@@ -217,6 +261,8 @@ theorem det_M6 : (M ^ 6).det = 1 := by native_decide
 -- Section 12: Lorentz Form Preservation
 -- ═══════════════════════════════════════════════════════════════
 
+theorem M_lorentz : M.transpose * eta * M = eta := by native_decide
+
 theorem M2_lorentz : (M ^ 2).transpose * eta * (M ^ 2) = eta := by native_decide
 
 theorem M3_lorentz : (M ^ 3).transpose * eta * (M ^ 3) = eta := by native_decide
@@ -274,6 +320,16 @@ theorem euclid_43 : ghostMap (4^2 - 3^2) (2*4*3) (4^2 + 3^2) = (5, -12, 13) := b
 -- ═══════════════════════════════════════════════════════════════
 -- Section 18: Euclid Parameterization
 -- ═══════════════════════════════════════════════════════════════
+
+/-- Euclid parameterisation of `p`. -/
+theorem p_euclid (m n : ℤ) :
+    p (m^2-n^2) (2*m*n) (m^2+n^2) = -((m - n) * (m - 3*n)) := by
+  simp only [p]; ring
+
+/-- Euclid parameterisation of `q`. -/
+theorem q_euclid (m n : ℤ) :
+    q (m^2-n^2) (2*m*n) (m^2+n^2) = 2*n*(m - 2*n) := by
+  simp only [q]; ring
 
 theorem pq_euclid (m n : ℤ) :
     p (m^2-n^2) (2*m*n) (m^2+n^2) * q (m^2-n^2) (2*m*n) (m^2+n^2) =

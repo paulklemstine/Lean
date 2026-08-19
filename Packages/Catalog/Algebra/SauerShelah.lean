@@ -98,10 +98,12 @@ lemma eq_embed_proj_of_last_not_mem {n : ℕ} {S : Finset (Fin (n + 1))}
 
 lemma eq_embed_proj_union_last {n : ℕ} {S : Finset (Fin (n + 1))}
     (h : Fin.last n ∈ S) : S = embed (proj S) ∪ {Fin.last n} := by
-      ext x; by_cases hx : x = Fin.last n <;> simp_all +decide [ Fin.ext_iff, Fin.val_add, Fin.val_one ] ;
-      · rwa [ show x = Fin.last n from Fin.ext hx ];
-      · simp +decide [ Fin.ext_iff, Fin.val_add, Fin.val_one, hx, embed, proj ];
-        exact ⟨ fun hx' => ⟨ ⟨ x, lt_of_le_of_ne ( Fin.le_last _ ) hx ⟩, by simpa [ Fin.ext_iff ] using hx', rfl ⟩, by rintro ⟨ a, ha, ha' ⟩ ; convert ha; aesop ⟩
+      ext x
+      cases x using Fin.lastCases with
+      | last => simp [h]
+      | cast i =>
+        have hne : i.castSucc ≠ Fin.last n := (Fin.castSucc_lt_last i).ne
+        simp [embed, proj, hne]
 
 
 
@@ -133,7 +135,7 @@ lemma shatters_embed_union_last_of_inter {n : ℕ} (F : Finset (Finset (Fin (n +
     (h : Shatters ((F.filter (Fin.last n ∉ ·)).image proj ∩
                     (F.filter (Fin.last n ∈ ·)).image proj) A) :
     Shatters F (embed A ∪ {Fin.last n}) := by
-      -- Let B be a subset of embed A ∪ {Fin.last n}. We need to find S ∈ F such that (embed A ∪ {Fin.last n}) ∩ S = B.
+      -- Let B be a subset of embed A ∪ {last n}. We need to find S ∈ F such that (embed A ∪ {last n}) ∩ S = B.
       intro B hB
       by_cases h_last : Fin.last n ∈ B;
       · obtain ⟨T, hT⟩ : ∃ T ∈ (F.filter (Fin.last n∉ ·)).image proj ∩ (F.filter (Fin.last n ∈ ·)).image proj, A ∩ T = proj B := by
@@ -147,7 +149,7 @@ lemma shatters_embed_union_last_of_inter {n : ℕ} (F : Finset (Finset (Fin (n +
         use S₂; simp_all +decide [ Finset.ext_iff ] ;
         intro a; specialize hB; have := @hB a; simp_all +decide [ Finset.subset_iff ] ;
         cases a using Fin.lastCases <;> simp_all +decide [ embed ];
-      · -- Since $Fin.last n \notin B$, we have $B \subseteq embed A$.
+      · -- Since $last n \notin B$, we have $B \subseteq embed A$.
         have hB_subset : B ⊆ embed A := by
           intro x hx; specialize hB hx; aesop;
         -- Since $B \subseteq embed A$, there exists $T \in F₀ \cap F₁$ such that $A \cap T = proj B$.
@@ -206,7 +208,7 @@ lemma card_le_one_of_vc_zero {n : ℕ} (F : Finset (Finset (Fin n)))
       contrapose! hF;
       -- Since F has more than one element, there exist S₁ ≠ S₂ ∈ F.
       obtain ⟨S₁, S₂, hS₁, hS₂, hne⟩ : ∃ S₁ S₂ : Finset (Fin n), S₁ ∈ F ∧ S₂ ∈ F ∧ S₁ ≠ S₂ := by
-        exact?;
+        obtain ⟨a, ha, b, hb, hab⟩ := Finset.one_lt_card.mp hF; exact ⟨a, b, ha, hb, hab⟩;
       -- Since S₁ ≠ S₂, there exists x with x ∈ S₁ and x ∉ S₂ (or vice versa), WLOG x ∈ S₁, x ∉ S₂.
       obtain ⟨x, hx₁, hx₂⟩ : ∃ x : Fin n, x ∈ S₁ ∧ x∉ S₂ ∨ x∉ S₁ ∧ x ∈ S₂ := by
         exact Classical.not_forall_not.1 fun h => hne <| Finset.ext fun x => by by_cases hx₁ : x ∈ S₁ <;> by_cases hx₂ : x ∈ S₂ <;> simpa [ hx₁, hx₂ ] using h x;
