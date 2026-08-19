@@ -107,25 +107,6 @@
     "title": "EML-Pythagorean-Operator: Single-Neuron Neural Energy Guided Tree Traversal"
   },
   {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 0f708106 (Q=0.860), which proved 109 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Both ingredients are already machine-checked (the sharp bound and 1-sum closure),\nso the conjecture reduces to an equality analysis of an existing induction rather than to new\ntheory.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_0f708106_11968095",
-    "lineage_refs": [],
-    "priority_score": 0.95,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "0f708106",
-    "status": "available",
-    "timestamp": "2026-08-19T17:41:03.610882+00:00",
-    "title": "Deepening: Both ingredients are already machine-checked (the sharp bound and 1-sum closure)"
-  },
-  {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
     "consumed_by_exp_id": "",
@@ -1133,7 +1114,7 @@
     "title": "Deepening: ArXiv paper: A Fourier-analytic Uniqueness Theorem for Lattice-point Enumerators"
   },
   {
-    "ambition_level": "extension",
+    "ambition_level": "grand_challenge",
     "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Building on cycle 843dbe86 (Q=0.820), which proved 62 theorems in Algebra. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: All the moving parts — honest uniqueness decoding\n(`honest_scanCode`), exact cost accounting (`ScanScheme.decodeCost_eq`) and the\nexact `ε`-pigeonhole optimum — are formalised, so the conjecture reduces to\nconstructing the intra-bucket index and re-running the same failure analysis.",
@@ -2365,25 +2346,6 @@
     "status": "available",
     "timestamp": "2026-08-13T03:21:12.748859+00:00",
     "title": "Stein-Method: Quantitative Normal Approximation Bounds"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 647e3d96 (Q=0.775), which proved 10 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Proves that a physical system's observable geometric state is strictly conditioned on the topological complexity of the observing neural network (Twilight Zone / Perceptual Reality).",
-    "domain_bridges": [],
-    "domains": [
-      "Physics"
-    ],
-    "id": "push_647e3d96_b1c534e3",
-    "lineage_refs": [],
-    "priority_score": 0.8752299999999998,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "647e3d96",
-    "status": "available",
-    "timestamp": "2026-08-01T17:24:08.374001+00:00",
-    "title": "Deepening: Observer-Dependent-Reality: Collapse Dynamics in Perceptual State Fields"
   },
   {
     "ambition_level": "extension",
@@ -26678,7 +26640,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "daf80a32",
     "description": "are complete `G`-invariants of the equality pattern of a tuple, counted by\n   the Bell numbers `1, 1, 2, 5, 15, 52` (OEIS A000110), proved by `decide`.",
     "domain_bridges": [],
     "domains": [],
@@ -26688,7 +26650,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "286b3a0e",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-17T13:54:05.239324+00:00",
     "title": "Kernel patterns"
   },

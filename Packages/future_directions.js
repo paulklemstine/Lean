@@ -79,20 +79,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle 0f708106 (Q=0.860), which proved 109 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Both ingredients are already machine-checked (the sharp bound and 1-sum closure),\nso the conjecture reduces to an equality analysis of an existing induction rather than to new\ntheory.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_0f708106_11968095",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "0f708106",
-    "status": "available",
-    "timestamp": "2026-08-19T17:41:03.610882+00:00",
-    "title": "Deepening: Both ingredients are already machine-checked (the sharp bound and 1-sum closure)"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Building on cycle 4bf66c09 (Q=0.880), which proved 41 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Chebotarev's theorem that every square submatrix of the `p \u00d7 p` DFT matrix\nis nonsingular, which in turn follows from a resultant/Vandermonde computation over `Q(\u03b6_p)`\nusing the irreducibility of the `p`-th cyclotomic polynomial \u2014 machinery that Mathlib already\ncontains (`Polynomial.cyclotomic_irred",
     "domains": [
       "Novelty"
@@ -1746,20 +1732,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-13T03:21:12.748859+00:00",
     "title": "Stein-Method: Quantitative Normal Approximation Bounds"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 647e3d96 (Q=0.775), which proved 10 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Proves that a physical system's observable geometric state is strictly conditioned on the topological complexity of the observing neural network (Twilight Zone / Perceptual Reality).",
-    "domains": [
-      "Physics"
-    ],
-    "id": "push_647e3d96_b1c534e3",
-    "priority_score": 0.8752299999999998,
-    "research_mode": "team",
-    "source_exp_id": "647e3d96",
-    "status": "available",
-    "timestamp": "2026-08-01T17:24:08.374001+00:00",
-    "title": "Deepening: Observer-Dependent-Reality: Collapse Dynamics in Perceptual State Fields"
   },
   {
     "consumed_by_exp_id": "",
@@ -19886,14 +19858,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Extremes"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "daf80a32",
     "description": "are complete `G`-invariants of the equality pattern of a tuple, counted by\n   the Bell numbers `1, 1, 2, 5, 15, 52` (OEIS A000110), proved by `decide`.",
     "domains": [],
     "id": "fd_1431",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "286b3a0e",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-17T13:54:05.239324+00:00",
     "title": "Kernel patterns"
   },
