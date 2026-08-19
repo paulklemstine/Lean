@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "0cf95d8d",
-      "domain": "Probability",
-      "key_insight": "# Future Directions\n\nDerived from the results in `Catalog/Probability/PowerSumSharpness.lean`,\n`Catalog/Probability/PowerSumNewtonThreshold.lean`,\n`Catalog/Probability/PowerSumMinimalCollision.lean`,",
-      "quality_score": 0.88,
-      "sorry_count": 0,
-      "theorem_count": 101,
-      "timestamp": "2026-08-18T01:51:35",
-      "title": "Sharpness"
-    },
-    {
       "cycle_id": "11c9ff9f",
       "domain": "Logic",
       "key_insight": "# Future directions — fibre spectrum of the orbit–pattern map\n\nThis cycle closed the assigned target (Conjecture E, first half: `sum_patternMultiplicity`,\n`one_le_patternMultiplicity`, `patternMultipl",
@@ -499,19 +489,19 @@
       "theorem_count": 91,
       "timestamp": "2026-08-19T21:41:53",
       "title": "Conjecture D (q-series rigidity / Molien-type dichotomy). The fixed-point q-series determines the or"
+    },
+    {
+      "cycle_id": "d11810a4",
+      "domain": "Geometry",
+      "key_insight": "# Future Directions\n\n## What this cycle established\n\nAll results are in `Catalog/Geometry/`, are `sorry`-free, and use only the standard axioms\n(`propext`, `Classical.choice`, `Quot.sound`).\n\n* `Funda",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 57,
+      "timestamp": "2026-08-19T21:42:07",
+      "title": "Derived from the three files of this line of work:"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "2c070abd",
-      "domain": "Tropical",
-      "key_insight": "# Future Directions — Tropical Convexity, Helly and Optimization\n\nThis cycle proved, with zero `sorry`s:\n\n* the **tropical Cramer dependence theorem** (`trop_dependence_fin`): any `d + 1`\n  vectors of",
-      "quality_score": 0.627125,
-      "sorry_count": 0,
-      "theorem_count": 68,
-      "timestamp": "2026-08-10T23:59:59",
-      "title": "Deepening: Tropical Convexity and Helly Theorem"
-    },
     {
       "cycle_id": "23bf86f8",
       "domain": "Shared",
@@ -2501,27 +2491,19 @@
       "theorem_count": 91,
       "timestamp": "2026-08-19T21:41:53",
       "title": "Conjecture D (q-series rigidity / Molien-type dichotomy). The fixed-point q-series determines the or"
+    },
+    {
+      "cycle_id": "d11810a4",
+      "domain": "Geometry",
+      "key_insight": "# Future Directions\n\n## What this cycle established\n\nAll results are in `Catalog/Geometry/`, are `sorry`-free, and use only the standard axioms\n(`propext`, `Classical.choice`, `Quot.sound`).\n\n* `Funda",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 57,
+      "timestamp": "2026-08-19T21:42:07",
+      "title": "Derived from the three files of this line of work:"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "3da67f84",
-      "domain": "Shared",
-      "name": "orderTop_qSeries",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "c0dccdf7",
-      "domain": "Probability",
-      "name": "over",
-      "quality": 0.88
-    },
-    {
-      "cycle_id": "c0dccdf7",
-      "domain": "Probability",
-      "name": "for",
-      "quality": 0.88
-    },
     {
       "cycle_id": "c0dccdf7",
       "domain": "Probability",
@@ -2803,9 +2785,27 @@
       "domain": "Bridges",
       "name": "node_injective",
       "quality": 0.88
+    },
+    {
+      "cycle_id": "d11810a4",
+      "domain": "Geometry",
+      "name": "centralizer_image_map",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "d11810a4",
+      "domain": "Geometry",
+      "name": "index_centralizer_range_comp",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "d11810a4",
+      "domain": "Geometry",
+      "name": "range_comp_mulEquiv",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-19T21:41:53",
+  "last_updated": "2026-08-19T21:42:07",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hn2⟩)",
@@ -3393,12 +3393,6 @@
     ],
     "Geometry": [
       {
-        "cycle_id": "4152b805",
-        "quality": 0.6697667517006802,
-        "theorems": 631,
-        "title": "Hilbert 15: Schubert Calculus Rigorization"
-      },
-      {
         "cycle_id": "4c1e8096",
         "quality": 0.71709,
         "theorems": 59,
@@ -3451,6 +3445,12 @@
         "quality": 0.82,
         "theorems": 113,
         "title": "NET-48: The direct test survives via the MEDIAN — k*=160 at (d=4, ctx=2048, seed"
+      },
+      {
+        "cycle_id": "d11810a4",
+        "quality": 0.82,
+        "theorems": 57,
+        "title": "Derived from the three files of this line of work:"
       }
     ],
     "Logic": [

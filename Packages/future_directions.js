@@ -135,6 +135,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle c442a26f (Q=0.880), which proved 91 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## Conjecture D (q-series rigidity / Molien-type dichotomy). The fixed-point q-series determines the orbit-counting generating function, and conversely.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "push_c442a26f_1a07ba84",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "c442a26f",
+    "status": "available",
+    "timestamp": "2026-08-19T21:41:54.532872+00:00",
+    "title": "Deepening: Conjecture D (q-series rigidity / Molien-type dichotomy). The fixed-point q-seri"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle f46e1405 (Q=0.860), which proved 66 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The qualitative half is now **proved**: `C\u209b = 1` iff the class is degenerate\n(`shtarkovSum_eq_one_iff`), so any genuinely new source makes the price strictly\npositive, and the price is monotone in the class (`price_reindex_le`).  What\nremains is the quantitative form.  If `S'` is obtained from `S` b",
     "domains": [
       "Cryptography"
@@ -821,20 +835,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle 843dbe86 (Q=0.820), which proved 62 theorems in Algebra. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: All the moving parts \u2014 honest uniqueness decoding\n(`honest_scanCode`), exact cost accounting (`ScanScheme.decodeCost_eq`) and the\nexact `\u03b5`-pigeonhole optimum \u2014 are formalised, so the conjecture reduces to\nconstructing the intra-bucket index and re-running the same failure analysis.",
-    "domains": [
-      "Algebra"
-    ],
-    "id": "push_843dbe86_ba024774",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "843dbe86",
-    "status": "available",
-    "timestamp": "2026-08-19T17:41:23.334138+00:00",
-    "title": "Deepening: All the moving parts \u2014 honest uniqueness decoding"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Building on cycle a985d45a (Q=0.820), which proved 101 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Cycle 4 already provides the two witnesses and the joint-inconsistency\ntheorem; what is missing is a Lean development of frame-definability for `ModalSystem`,\nwhich the `KFrame`/`sat` apparatus of Cycle 1 supports directly.",
     "domains": [
       "Combinatorics"
@@ -846,6 +846,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-19T20:46:04.363113+00:00",
     "title": "Deepening: Cycle 4 already provides the two witnesses and the joint-inconsistency"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle d11810a4 (Q=0.820), which proved 57 theorems in Geometry. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions\n\nDerived from the three files of this line of work:\n\n* `Catalog/Bridges/FundamentalGroupCompleteInvariant.lean` (cycle 1) \u2014 connected groupoids\n  (models of `K(G,1)`) are classified up to equivalence by the vertex group of a basepoint;\n  a `\u03c0\u2081`-only counterexample shows the funda",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "push_d11810a4_a2636b3f",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "d11810a4",
+    "status": "available",
+    "timestamp": "2026-08-19T21:42:07.506015+00:00",
+    "title": "Deepening: Derived from the three files of this line of work:"
   },
   {
     "consumed_by_exp_id": "",
@@ -1746,20 +1760,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-13T03:21:12.748859+00:00",
     "title": "Stein-Method: Quantitative Normal Approximation Bounds"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle f8e43caa (Q=0.773), which proved 12 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize grokking: prove a delayed generalization theorem for two-layer networks and characterize the phase transition as a saddle-node bifurcation.",
-    "domains": [
-      "MachineLearning"
-    ],
-    "id": "push_f8e43caa_d5109e93",
-    "priority_score": 0.87257,
-    "research_mode": "team",
-    "source_exp_id": "f8e43caa",
-    "status": "available",
-    "timestamp": "2026-08-03T23:28:48.795976+00:00",
-    "title": "Deepening: Grokking: Phase Transitions in Learning"
   },
   {
     "consumed_by_exp_id": "",
@@ -5311,16 +5311,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Euler-Mascheroni Constant Irrationality"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "94e7c481",
     "description": "Prove that if A^x + B^y = C^z where A,B,C,x,y,z are positive integers with x,y,z > 2, then A,B,C share a common prime factor. Formalize the connection to Fermat-Catalan and ABC conjecture.",
     "domains": [
       "NumberTheory"
     ],
     "id": "seed_036",
+    "phase": "A",
     "priority_score": 0.82,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Beal's Conjecture"
   },
@@ -14858,18 +14859,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Three Lean files carry the mathematics of this mission (all of them compile and"
   },
   {
-    "consumed_by_exp_id": "d11810a4",
+    "consumed_by_exp_id": "",
     "description": "# Future Directions\n\nDerived from the three files of this line of work:\n\n* `Catalog/Bridges/FundamentalGroupCompleteInvariant.lean` (cycle 1) \u2014 connected groupoids\n  (models of `K(G,1)`) are classified up to equivalence by the vertex group of a basepoint;\n  a `\u03c0\u2081`-only counterexample shows the fundamental group alone does not classify.\n* `Catalog/Bridges/FundamentalGroupK1Classification.lean` (cycle 2) \u2014 realization\n  (`exists_functor_inducing`), homotopies are conjugations (`natIso_iff_conjugating_iso`,\n  `realize_natIso_iff_conj`), the classification bijection `classificationEquiv`\n  (`[K(G,1), K(H,1)] \u2243 Hom(G,H)/conj`), Whitehead's theorem for 1-types\n  (`isEquivalence_of_bijective_mapAut`) and its converse, sharpness\n  (`connectedness_necessary`), and a counterexample where *all* positive-degree homotopy\n  groups agree (`allHomotopyGroups_equiv_not_homotopyEquiv`).\n* `Catalog/Bridges/FundamentalGroupK1Deepening.lean` (cycle 3) \u2014 see \"Resolved\" below.\n* `Catalog/Bridges/FundamentalGroupPi0Gluing.lean`,\n  `Catalog/Bridges/FundamentalGroupPi0Decomposition.lean` (this cycle) \u2014 the coproduct of a\n  family of groupoids is a groupoid (`sigmaGroupoid`), its `\u03c0\u2080` is the indexing set\n  (`componentsSigmaEquiv`), equivalences glue over a bijection of indices\n  (`sigmaEquivalence`), coproducts of connected groupoids are classified by index bijections\n  matching vertex groups (`sigma_equivalence_iff`), every groupoid is equivalent to the\n  coproduct of its components (`sigmaComponentsEquivalence`), and hence the pair\n  (`\u03c0\u2080`, fundamental groups of the components) is a complete invariant of arbitrary homotopy\n  1-types (`groupoid_equivalence_iff_pi0_aut`).  This resolves N2 below.\n\n## Resolved since the last cycle\n\n* **C1 (functoriality of the classification).**  `inducedHom_id` shows the identity functor\n  induces the identity homomorphism, `inducedHom_comp_conj` shows the homomorphism induced by\n  a composite is conjugate to the composite of the induced homomorphisms, and\n  `toConjClass_comp` upgrades this to an exact identity of conjugacy classes.  So the\n  classification bijection is compatible with composition; what remains open is the full\n  2-categorical (bicategorical) statement, recorded as N1 below.\n* **C3 (fibres of the classification).**  The conjugation action of `H` on `Hom(G,H)` has\n  stabiliser exactly the centraliser of the image (`stabilizer_eq_centralizer`), so the set\n  of homomorphisms realising a fixed homotopy class is a coset space of that centraliser\n  (`orbitEquivQuotientCentralizer`) and has cardinality its index\n  (`card_orbit_eq_index_centralizer`, `card_homs_natIso_realize`).\n* **C2, discrete case.**  `\u03c0\u2080` is defined (`Components`), shown invariant under equivalence\n  (`componentsEquivOfEquivalence`), trivial for connected 1-types\n  (`subsingleton_components_of_connectedAt`), and shown to be a *complete* invariant of\n  discrete (totally disconnected) 1-types:\n  `discrete_equivalence_iff_nonempty_equiv : Nonempty (Discrete \u03b1 \u224c Discrete \u03b2) \u2194 Nonempty (\u03b1 \u2243 \u03b2)`.\n  The general case (arbitrary groupoids) is restated as N2 below.\n\nThe following conjectures are concrete and falsifiable; each is stated so that a single Lean\ncounterexample would refute it.\n\n## N1. The classification is a biequivalence, not just a compatible family of bijections\n\nConjecture: the assignment `(C, c) \u21a6 Aut c` extends to a biequivalence between the homotopy\n2-category of connected groupoids with chosen basepoints and the 2-category whose objects are\ngroups, whose 1-cells are homomorphisms and whose 2-cells are conjugations.  Concretely, the\nfamily of bijections `classificationEquiv` should be the hom-level part of a pseudofunctor:\nthere are coherent invertible comparison 2-cells for identities and composites (the conjugating\nelements produced by `inducedHom_id` and `inducedHom_comp_conj`) satisfying the associativity\nand unit coherence laws.  Falsified by exhibiting connected groupoids and functors whose\ncomparison conjugators cannot be chosen coherently.\n\n## N2 (RESOLVED). `\u03c0\u2080` together with the vertex groups is a complete invariant of arbitrary 1-types\n\n**Status: proved** \u2014 `FundamentalGroupPi0.groupoid_equivalence_iff_pi0_aut` in\n`Catalog/Bridges/FundamentalGroupPi0Decomposition.lean` states, for groupoids `C`, `D`:\n\n```\nNonempty (C \u224c D) \u2194 \u2203 e : Components C \u2243 Components D,\n  \u2200 p, Nonempty (Aut (Quotient.out p : C) \u2243* Aut (Quotient.out (e p) : D))\n```\n\nThe gluing step identified below as the content of the conjecture \u2014 every groupoid is\nequivalent to the disjoint union of the connected full subcategories on its components \u2014 is\n`sigmaComponentsEquivalence`; the coproduct half is `sigma_equivalence_iff` in\n`Catalog/Bridges/FundamentalGroupPi0Gluing.lean`.  The original statement follows.\n\nConjecture: for arbitrary groupoids `C`, `D`, one has `C \u224c D` iff there is a bijection\n`\u03b2 : Components C \u2243 Components D` together with, for each component, a group isomorphism of the\nvertex groups of corresponding basepoints.  The `Discrete` case is now a theorem\n(`discrete_equivalence_iff_nonempty_equiv`) and the connected case is cycle 2's\n`connectedGroupoids_equivalent_iff_aut_mulEquiv`; the content of the conjecture is the gluing\nstep, i.e. that every groupoid is equivalent to the disjoint union (a `Sigma` of categories) of\nthe single-object groupoids of its components.  Falsified by two groupoids with matching\ncomponent data that are inequivalent.\n\n## N3. The centraliser index is the exact size of every fibre, uniformly in the basepoint\n\nConjecture: for finite `H` the counting identity\n`Nat.card {\u03c8 // \u03c8 conjugate to \u03c6} = (Subgroup.centralizer (Set.range \u03c6)).index`\nproved as `card_homs_natIso_realize` refines to a *pointed* classification: pointed homotopy\nclasses of maps `(C, c) \u2192 (D, d\u2080)` (functors equipped with an isomorphism `F.obj c \u2245 d\u2080`, up to\nnatural isomorphism respecting it) are in bijection with `Hom(Aut c, Aut d\u2080)` itself, and the\nforgetful map to unpointed classes has fibre over `[\u03c6]` of size `[H : C_H(\u03c6(G))]`.  This is\nfalsifiable by a finite computation: take `G = H = S\u2083` (10 homomorphisms, 3 conjugacy classes,\norbit sizes 1, 3, 6, i.e. centraliser indices 1, 3, 6 \u2014 see `ComputationalEvidence.md`) and count pointed classes.\n\n## N4. Asphericity is exactly the condition making `\u03c0\u2081` a complete invariant of maps\n\nConjecture: a path-connected space `X` is aspherical (a `K(G,1)`) **iff** for every\npath-connected `Y` the map `[Y, X] \u2192 Hom(\u03c0\u2081 Y, \u03c0\u2081 X)/conj` is a bijection.  The \"only if\"\ndirection is the topological form of `realize_natIso_iff_conj`; the \"if\" direction should\nfollow by testing against `Y = S\u207f`.  A formalisable first step, entirely inside the current\nframework: prove that the fundamental groupoid functor `Top \u2192 Gpd` sends a map inducing an\nisomorphism on `\u03c0\u2081` of path-connected spaces to an equivalence (a topological Whitehead\nstatement extending `fundamentalGroupoid_equivalence_of_mulEquiv` from existence of *some*\nequivalence to the given map being one).\n\n## N5. A genuinely higher counterexample\n\nConjecture: there exist path-connected `X`, `Y` with `\u03c0\u2081(X, x) \u2243* \u03c0\u2081(Y, y)` that are not\nhomotopy equivalent \u2014 e.g. `S\u00b2` versus a point, distinguished by `\u03c0\u2082`.  The counterexamples\nformalised so far (`same_fundamentalGroup_not_homotopyEquivalent`,\n`allHomotopyGroups_equiv_not_homotopyEquiv`) are `\u03c0\u2080`-obstructions, which N2 explains\ncompletely; a higher counterexample needs `\u03c0\u2082(S\u00b2) \u2260 0`, i.e. a degree or Hopf-invariant\nargument that is not currently available in Mathlib.  Building that invariant is the concrete\ntask; the conjecture is falsified only if no such pair exists, which the informal theory rules\nout, so the real content is the formalisation.\n\n## N6. Homotopy classes of maps between *arbitrary* 1-types\n\nThe object-level classification is now complete for arbitrary 1-types\n(`groupoid_equivalence_iff_pi0_aut`), while the classification of *maps* is so far only\navailable in the connected case (`classificationEquiv`).  Conjecture: for arbitrary\ngroupoids `C`, `D` with chosen component basepoints there is a bijection\n\n```\nQuotient (natIsoSetoid C D)  \u2243  \u2200 p : Components C, \u03a3 q : Components D,\n                                  Hom (Aut (rep p), Aut (rep q)) / conjugation\n```\n\ni.e. a homotopy class of maps of 1-types is exactly the data, for each component of the\nsource, of a target component together with a conjugacy class of homomorphisms of the\ncorresponding fundamental groups.  The ingredients are all in place:\n`sigmaComponentsEquivalence` reduces both sides to coproducts, `Sigma.desc`/`Sigma.natIso`\ndecompose a functor and a natural isomorphism componentwise, and `classificationEquiv`\nhandles a single component.  It is falsified by a pair of groupoids for which the natural\ncomparison map fails to be injective or surjective; a finite search over groupoids with at\nmost two components and vertex groups of order at most 6 would already be decisive.\n",
     "domains": [
       "Geometry",
       "Algebra"
     ],
     "id": "fd_0954",
-    "phase": "A",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "6337dbc1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-04T20:08:45.412332+00:00",
     "title": "Derived from the three files of this line of work:"
   },
@@ -20565,15 +20565,14 @@ window.FUTURE_DIRECTIONS = [
     "title": "We *proved* the combinatorial extremal pair exists"
   },
   {
-    "consumed_by_exp_id": "c442a26f",
+    "consumed_by_exp_id": "",
     "description": "## Conjecture D (q-series rigidity / Molien-type dichotomy). The fixed-point q-series determines the orbit-counting generating function, and conversely.",
     "domains": [],
     "id": "fd_1518",
-    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "c4b3dd3f",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-18T10:46:56.131070+00:00",
     "title": "Conjecture D (q-series rigidity / Molien-type dichotomy). The fixed-point q-series determines the orbit-counting generating function, and conversely."
   },
@@ -21688,5 +21687,127 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-19T20:45:51.547602+00:00",
     "title": "The reduction to cycles, the disjoint-union theorem, and the cycle-frame"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The Lagrange engine `powerSum_rigidity` is already formalised and it isolates\nexactly which weight vectors are invisible; what remains is a construction, not a new theory.",
+    "domains": [],
+    "id": "fd_1641",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "c442a26f",
+    "status": "available",
+    "timestamp": "2026-08-19T21:41:39.265578+00:00",
+    "title": "The Lagrange engine `powerSum_rigidity` is already formalised and it isolates"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The `n = 1` case is already proved and gives triviality detection\n(`molien_detects_trivial`); the induction step needs only the same split of the moment sum that\n`burnside_le_kernel_add` performs.",
+    "domains": [],
+    "id": "fd_1642",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "c442a26f",
+    "status": "available",
+    "timestamp": "2026-08-19T21:41:39.519196+00:00",
+    "title": "The `n = 1` case is already proved and gives triviality detection"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "group `G` (on possibly different sets) have equal orbit-counting\nseries iff there is a bijection of the two fixed-point fibrations preserving `|X^g|`, i.e. iff\nthe two permutation characters agree; equivalently, the orbit-counting series is a complete\ninvariant of the permutation character, and the only information it loses globally is the group\norder, as `normalisation_necessary` shows.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_1643",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "c442a26f",
+    "status": "available",
+    "timestamp": "2026-08-19T21:41:39.772284+00:00",
+    "title": "group `G` (on possibly different sets) have equal orbit-counting"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The upper bound is formalised (`exists_peel_stopping_time` together with\n`peelEstimate_error`); what remains is a matching family of actions, i.e. a construction.",
+    "domains": [],
+    "id": "fd_1644",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "c442a26f",
+    "status": "available",
+    "timestamp": "2026-08-19T21:41:40.018501+00:00",
+    "title": "The upper bound is formalised (`exists_peel_stopping_time` together with"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## Conjecture D10 (the Molien invariant is exactly the Burnside mark vector modulo scaling)",
+    "domains": [],
+    "id": "fd_1645",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "c442a26f",
+    "status": "available",
+    "timestamp": "2026-08-19T21:41:40.263622+00:00",
+    "title": "Conjecture D10 (the Molien invariant is exactly the Burnside mark vector modulo scaling)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The regular-action computation makes the \"one action is never enough\" half a theorem;\nwhat remains is a finite assembly argument over the subgroup lattice, all of whose ingredients\n(fixed-point counts, orbit counts) are already formalised in this thread.",
+    "domains": [
+      "Algebra",
+      "Cryptography"
+    ],
+    "id": "fd_1646",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "c442a26f",
+    "status": "available",
+    "timestamp": "2026-08-19T21:41:40.513355+00:00",
+    "title": "The regular-action computation makes the \"one action is never enough\" half a theorem;"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Let `Ho\u2081^{*,conn}` be the category whose objects are pointed connected\ngroupoids `(C,c)` and whose morphisms are pointed homotopy classes of pointed maps\n(composition `compClasses`, identities `PtdMap.id`).  Then `(C,c) \u21a6 Aut c` extends to a\nfunctor `Ho\u2081^{*,conn} \u2964 Grp` which is **fully faithful and essentially surjective, with\nstrictly (not merely coherently) preserved composition** \u2014 an isomorphism of categories onto\nthe full image.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1647",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "d11810a4",
+    "status": "available",
+    "timestamp": "2026-08-19T21:42:01.188415+00:00",
+    "title": "Let `Ho\u2081^{*,conn}` be the category whose objects are pointed connected"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Every ingredient is proved: hom-level bijectivity (`ptdClassificationEquiv`),\nstrict composition (`ptdClassificationEquiv_compClasses`), and realization\n(`ptdRealize`).  What is missing is only the bundling of pointed groupoids into a `Category`\ninstance in Lean, a formalisation-engineering step whose difficulty is universe management,\nnot mathematics.  Falsified by exhibiting pointed maps for which no functorial assignment\nexists \u2014 impossible if the three cited theorems are correct, so the real content is the\nbundling.",
+    "domains": [
+      "Algebra",
+      "Bridges"
+    ],
+    "id": "fd_1648",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "d11810a4",
+    "status": "available",
+    "timestamp": "2026-08-19T21:42:01.460892+00:00",
+    "title": "Every ingredient is proved: hom-level bijectivity (`ptdClassificationEquiv`),"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Mathlib's `FundamentalGroupoid` functor plus `permModel_connected`-style\nconnectedness lemmas make the transfer mechanical for the groupoid half; the aspherical half\nstill needs `\u03c0\u2082`-type input, which is the content of the older conjecture N5.  Falsified by a\nbased map inducing a `\u03c0\u2081`-isomorphism whose fundamental-groupoid functor is not an\nequivalence.",
+    "domains": [
+      "Algebra",
+      "Bridges"
+    ],
+    "id": "fd_1649",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "d11810a4",
+    "status": "available",
+    "timestamp": "2026-08-19T21:42:01.720009+00:00",
+    "title": "Mathlib's `FundamentalGroupoid` functor plus `permModel_connected`-style"
   }
 ];
