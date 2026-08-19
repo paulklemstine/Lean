@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "2ce26220",
-      "domain": "Geometry",
-      "key_insight": "# Future Directions — taxicab / cabtaxi cycle 1\n\nThis cycle proved, with zero `sorry`s (files `Catalog/Geometry/TaxicabCubicReps.lean`,\n`TaxicabCabtaxi.lean`, `TaxicabRationalTransfer.lean`, `TaxicabW",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 77,
-      "timestamp": "2026-08-17T13:54:22",
-      "title": "Derived from the current cycle's findings on Hardy–Ramanujan taxicab numbers."
-    },
-    {
       "cycle_id": "c798c801",
       "domain": "Computation",
       "key_insight": "# Future Directions — Topology of the Prime Point Cloud\n\nThe cycle just completed tested the \"primes look Poisson, and their `H₁` encodes twin\nprimes\" conjecture and found both halves false, replacing",
@@ -499,19 +489,19 @@
       "theorem_count": 59,
       "timestamp": "2026-08-19T14:54:22",
       "title": "Erdos-Graham: Exact Coverings by Distinct Unit Fractions"
+    },
+    {
+      "cycle_id": "57212186",
+      "domain": "NumberTheory",
+      "key_insight": "# Future Directions — RLHF/PTX alignment as arithmetic\n\nDerived from the analysis and adversarial review of the verified results in\n`Catalog/NumberTheory/RLHF*.lean`.  Each conjecture is falsifiable,",
+      "quality_score": 0.9,
+      "sorry_count": 5,
+      "theorem_count": 621,
+      "timestamp": "2026-08-19T15:46:41",
+      "title": "reinforcement learning"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "36710bef",
-      "domain": "NumberTheory",
-      "key_insight": "# Future directions\n\n## What is now settled\n\nThe previous cycle left six open directions. Five of them are now proved\noutright, and the sixth is settled in part together with an explicit\nobstruction t",
-      "quality_score": 0.7451150000000001,
-      "sorry_count": 0,
-      "theorem_count": 43,
-      "timestamp": "2026-08-09T13:11:42",
-      "title": "The scalar-log unit-circle conjecture is now proved with a certified parameter"
-    },
     {
       "cycle_id": "48492a97",
       "domain": "Combinatorics",
@@ -2501,27 +2491,19 @@
       "theorem_count": 59,
       "timestamp": "2026-08-19T14:54:22",
       "title": "Erdos-Graham: Exact Coverings by Distinct Unit Fractions"
+    },
+    {
+      "cycle_id": "57212186",
+      "domain": "NumberTheory",
+      "key_insight": "# Future Directions — RLHF/PTX alignment as arithmetic\n\nDerived from the analysis and adversarial review of the verified results in\n`Catalog/NumberTheory/RLHF*.lean`.  Each conjecture is falsifiable,",
+      "quality_score": 0.9,
+      "sorry_count": 5,
+      "theorem_count": 621,
+      "timestamp": "2026-08-19T15:46:41",
+      "title": "reinforcement learning"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "4f724156",
-      "domain": "Probability",
-      "name": "decode_encode",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "4f724156",
-      "domain": "Probability",
-      "name": "encode_decode",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "4f724156",
-      "domain": "Probability",
-      "name": "fiber_card_sum",
-      "quality": 0.82
-    },
     {
       "cycle_id": "16c8a71d",
       "domain": "Pythagorean",
@@ -2803,17 +2785,28 @@
       "domain": "Combinatorics",
       "name": "exists_hyperfilter_value",
       "quality": 0.78
+    },
+    {
+      "cycle_id": "57212186",
+      "domain": "NumberTheory",
+      "name": "rules",
+      "quality": 0.9
+    },
+    {
+      "cycle_id": "57212186",
+      "domain": "NumberTheory",
+      "name": "therefore",
+      "quality": 0.9
+    },
+    {
+      "cycle_id": "57212186",
+      "domain": "NumberTheory",
+      "name": "requires",
+      "quality": 0.9
     }
   ],
-  "last_updated": "2026-08-19T14:54:22",
+  "last_updated": "2026-08-19T15:46:41",
   "open_questions": [
-    {
-      "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hupper⟩)",
-      "cycle_id": "c6b3a18e",
-      "domain": "Physics",
-      "sorry_count": 1,
-      "timestamp": "2026-07-26T14:03:58"
-    },
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hn2⟩)",
       "cycle_id": "346c1c9a",
@@ -3016,6 +3009,13 @@
       "domain": "Combinatorics",
       "sorry_count": 8,
       "timestamp": "2026-08-19T09:49:59"
+    },
+    {
+      "context": "standard Lean axioms `propext`, `Classical.choice`, `Quot.sound` — no `sorry`, no custom; Main results (all `sorry`-free):; Main results (all `sorry`-free):",
+      "cycle_id": "57212186",
+      "domain": "NumberTheory",
+      "sorry_count": 5,
+      "timestamp": "2026-08-19T15:46:41"
     }
   ],
   "research_threads": {
@@ -3641,12 +3641,6 @@
     ],
     "NumberTheory": [
       {
-        "cycle_id": "78f0a7c3",
-        "quality": 0.740175,
-        "theorems": 142,
-        "title": "Cycle IX is `Catalog/Novelty/HyperbolicBerggrenSilverGrowth.lean` (compiles agai"
-      },
-      {
         "cycle_id": "8c828661",
         "quality": 0.627125,
         "theorems": 119,
@@ -3699,6 +3693,12 @@
         "quality": 0.84,
         "theorems": 73,
         "title": "Compression Research A1: Price of universality — minimax redundancy of universal"
+      },
+      {
+        "cycle_id": "57212186",
+        "quality": 0.9,
+        "theorems": 621,
+        "title": "reinforcement learning"
       }
     ],
     "Physics": [
