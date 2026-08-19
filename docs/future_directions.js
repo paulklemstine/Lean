@@ -821,20 +821,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle 6d98445d (Q=0.820), which proved 57 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions\n\n- Replace the impossible global condition over all irrational frequencies by a condition excluding a fixed neighborhood of the integer resonances. Continuity forces values near the zero-frequency peak to remain near the cutoff `N`.\n- Study normalized transforms `F_N(\u03c9) / N` on c",
-    "domains": [
-      "Physics"
-    ],
-    "id": "push_6d98445d_bd8f8d98",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "6d98445d",
-    "status": "available",
-    "timestamp": "2026-08-19T19:40:40.580624+00:00",
-    "title": "Deepening: Future directions from cycle 4c2c71e5"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Building on cycle 843dbe86 (Q=0.820), which proved 62 theorems in Algebra. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: All the moving parts \u2014 honest uniqueness decoding\n(`honest_scanCode`), exact cost accounting (`ScanScheme.decodeCost_eq`) and the\nexact `\u03b5`-pigeonhole optimum \u2014 are formalised, so the conjecture reduces to\nconstructing the intra-bucket index and re-running the same failure analysis.",
     "domains": [
       "Algebra"
@@ -846,6 +832,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-19T17:41:23.334138+00:00",
     "title": "Deepening: All the moving parts \u2014 honest uniqueness decoding"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle a985d45a (Q=0.820), which proved 101 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Cycle 4 already provides the two witnesses and the joint-inconsistency\ntheorem; what is missing is a Lean development of frame-definability for `ModalSystem`,\nwhich the `KFrame`/`sat` apparatus of Cycle 1 supports directly.",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "push_a985d45a_6d9fd52a",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "a985d45a",
+    "status": "available",
+    "timestamp": "2026-08-19T20:46:04.363113+00:00",
+    "title": "Deepening: Cycle 4 already provides the two witnesses and the joint-inconsistency"
   },
   {
     "consumed_by_exp_id": "",
@@ -1746,20 +1746,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-13T03:21:12.748859+00:00",
     "title": "Stein-Method: Quantitative Normal Approximation Bounds"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 252d7c91 (Q=0.800), which proved 114 theorems in Algebra. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future directions\n\n## What is now proved\n\nTwo new self-contained files extend the conditional Hilbert-class-field interface of\n`Catalog/NumberTheory/`, settling target 2 of the previous cycle (the Galois `p`-binomial count\nfor elementary abelian class groups).\n\n### `Catalog/NumberTheory/SubspaceCo",
-    "domains": [
-      "Algebra"
-    ],
-    "id": "push_252d7c91_766dc8a1",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "252d7c91",
-    "status": "available",
-    "timestamp": "2026-08-19T19:40:27.961507+00:00",
-    "title": "Deepening: Two new self-contained files extend the conditional Hilbert-class-field interfac"
   },
   {
     "consumed_by_exp_id": "",
@@ -19697,15 +19683,14 @@ window.FUTURE_DIRECTIONS = [
     "title": "For modal proof systems in the sense of `ModalSystem`, the following"
   },
   {
-    "consumed_by_exp_id": "a985d45a",
+    "consumed_by_exp_id": "",
     "description": "Cycle 4 already provides the two witnesses and the joint-inconsistency\ntheorem; what is missing is a Lean development of frame-definability for `ModalSystem`,\nwhich the `KFrame`/`sat` apparatus of Cycle 1 supports directly.",
     "domains": [],
     "id": "fd_1416",
-    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "615053e5",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-17T09:57:44.570347+00:00",
     "title": "Cycle 4 already provides the two witnesses and the joint-inconsistency"
   },
@@ -21029,14 +21014,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "The additivity theorem is now available for arbitrary finite index"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0750e9d7",
     "description": "The reduction is proved, and the 194 values `c_g(1)` are tabulated\ndata; the conjecture is now a finite, checkable arithmetic statement that could\nbe discharged in Lean by `decide` once the table is entered.",
     "domains": [],
     "id": "fd_1579",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "3da67f84",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-19T05:14:48.013697+00:00",
     "title": "The reduction is proved, and the 194 values `c_g(1)` are tabulated"
   },
@@ -21663,5 +21649,44 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-19T19:40:35.159123+00:00",
     "title": "The depth-`3` amplitude equals `(1/8)e(\u03c9/8) + (5/8)e(a\u03c9/4) + (1/4)e(a\u00b2\u03c9/2)`"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "of the cycle-length monoids of a strongly connected\ndigraph \u2014 and `kThree` already shows the intersection can be the non-principal\nsemigroup `\u27e82,3\u27e9`, refuting the naive \"always `d\u2115`\" reading of Cycle 2.",
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_1638",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "a985d45a",
+    "status": "available",
+    "timestamp": "2026-08-19T20:45:50.998420+00:00",
+    "title": "of the cycle-length monoids of a strongly connected"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The invariant is now defined and proven to be a submonoid\n(`degreeMonoid`), two extremes (`{0}`, `\u2115`) and two nontrivial values (`n\u2115`, `\u27e82,3\u27e9`)\nare certified, so the general realisation problem can be attacked with the existing\n`iterR_add` machinery rather than being restated informally.",
+    "domains": [],
+    "id": "fd_1639",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "a985d45a",
+    "status": "available",
+    "timestamp": "2026-08-19T20:45:51.278589+00:00",
+    "title": "The invariant is now defined and proven to be a submonoid"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The reduction to cycles, the disjoint-union theorem, and the cycle-frame\nfamily are all in place; only the pointwise cycle analysis of the sum is missing.",
+    "domains": [],
+    "id": "fd_1640",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "a985d45a",
+    "status": "available",
+    "timestamp": "2026-08-19T20:45:51.547602+00:00",
+    "title": "The reduction to cycles, the disjoint-union theorem, and the cycle-frame"
   }
 ];

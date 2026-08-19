@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "921a0e7b",
-      "domain": "Computation",
-      "key_insight": "# Future directions: conservativity of tangled hierarchies\n\nThe Lean development in `Catalog/Computation/TangledHierarchy*.lean` establishes:\n\n* **Conservativity criterion**: a tangle is conservative",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 105,
-      "timestamp": "2026-08-17T22:41:18",
-      "title": "It would upgrade \"the cost of internal soundness is one loop\""
-    },
-    {
       "cycle_id": "33519cdb",
       "domain": "MachineLearning",
       "key_insight": "# Future directions — the additive uncertainty principle on `ZMod p`\n\nState of the thread after this cycle (all statements below refer to\n`Catalog/MachineLearning/PrimeUncertainty/`, all proofs are `s",
@@ -499,19 +489,19 @@
       "theorem_count": 57,
       "timestamp": "2026-08-19T19:40:40",
       "title": "Future directions from cycle 4c2c71e5"
+    },
+    {
+      "cycle_id": "a985d45a",
+      "domain": "Combinatorics",
+      "key_insight": "# FUTURE DIRECTIONS — after Cycle 5 (frame definability for `ModalSystem`)\n\nCycle 5 added the missing definability layer over the Cycle-1 `KFrame`/`sat` apparatus:\naxiom-to-relation correspondences (`",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 101,
+      "timestamp": "2026-08-19T20:46:03",
+      "title": "Cycle 4 already provides the two witnesses and the joint-inconsistency"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "78f0a7c3",
-      "domain": "NumberTheory",
-      "key_insight": "# Future directions after cycle XI (density of the metric growth spectrum)\n\nCycle XI is `Catalog/NumberTheory/BerggrenSpectrumDense.lean`, built on cycle X's\n`Catalog/NumberTheory/BerggrenSilverExtrem",
-      "quality_score": 0.740175,
-      "sorry_count": 0,
-      "theorem_count": 142,
-      "timestamp": "2026-08-10T02:43:52",
-      "title": "Cycle IX is `Catalog/Novelty/HyperbolicBerggrenSilverGrowth.lean` (compiles agai"
-    },
     {
       "cycle_id": "8c828661",
       "domain": "NumberTheory",
@@ -2501,27 +2491,19 @@
       "theorem_count": 57,
       "timestamp": "2026-08-19T19:40:40",
       "title": "Future directions from cycle 4c2c71e5"
+    },
+    {
+      "cycle_id": "a985d45a",
+      "domain": "Combinatorics",
+      "key_insight": "# FUTURE DIRECTIONS — after Cycle 5 (frame definability for `ModalSystem`)\n\nCycle 5 added the missing definability layer over the Cycle-1 `KFrame`/`sat` apparatus:\naxiom-to-relation correspondences (`",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 101,
+      "timestamp": "2026-08-19T20:46:03",
+      "title": "Cycle 4 already provides the two witnesses and the joint-inconsistency"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "512ab986",
-      "domain": "Logic",
-      "name": "bucket_subset_cand",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "308f24be",
-      "domain": "Geometry",
-      "name": "of",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "308f24be",
-      "domain": "Geometry",
-      "name": "IsMedian",
-      "quality": 0.82
-    },
     {
       "cycle_id": "308f24be",
       "domain": "Geometry",
@@ -2803,9 +2785,27 @@
       "domain": "Physics",
       "name": "Fgen_lower_bound_aux",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "a985d45a",
+      "domain": "Combinatorics",
+      "name": "isStrictMatrix_iff",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "a985d45a",
+      "domain": "Combinatorics",
+      "name": "valid_loeb_iff_isStrictMatrix",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "a985d45a",
+      "domain": "Combinatorics",
+      "name": "loebFrameCount_eq_ncard_valid",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-19T19:40:40",
+  "last_updated": "2026-08-19T20:46:03",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hn2⟩)",
@@ -3207,12 +3207,6 @@
     ],
     "Combinatorics": [
       {
-        "cycle_id": "0dcd87ee",
-        "quality": 0.751005,
-        "theorems": 67,
-        "title": "The new file `Catalog/Applications/SurveillanceNetworks/PrivacyThreshold.lean`"
-      },
-      {
         "cycle_id": "d1971d75",
         "quality": 0.747205,
         "theorems": 40,
@@ -3265,6 +3259,12 @@
         "quality": 0.78,
         "theorems": 59,
         "title": "Erdos-Graham: Exact Coverings by Distinct Unit Fractions"
+      },
+      {
+        "cycle_id": "a985d45a",
+        "quality": 0.82,
+        "theorems": 101,
+        "title": "Cycle 4 already provides the two witnesses and the joint-inconsistency"
       }
     ],
     "Computation": [
