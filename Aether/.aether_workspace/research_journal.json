@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "308f24be",
-      "domain": "Geometry",
-      "key_insight": "# Future directions — geometry of the attention-cost knee distribution\n\nDerived from the six Lean files added in `Catalog/Geometry/`\n(`KneeFermatWeber`, `KneeMedianProjection`, `KneeScalingRays`, `Kne",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 113,
-      "timestamp": "2026-08-19T03:58:14",
-      "title": "NET-48: The direct test survives via the MEDIAN — k*=160 at (d=4, ctx=2048, seed=3), all four point-"
-    },
-    {
       "cycle_id": "3da67f84",
       "domain": "Shared",
       "key_insight": "# Future Directions — Pole-order obstruction\n\nDerived from the two research cycles formalized in\n`Catalog/Shared/PoleOrderObstruction.lean` and\n`Catalog/Shared/PoleOrderObstructionDeep.lean`.\n\nWhat su",
@@ -499,19 +489,19 @@
       "theorem_count": 58,
       "timestamp": "2026-08-20T21:43:57",
       "title": "**Conjecture.** For a generic family of `r` min-plus keys on `k` coordinates wit"
+    },
+    {
+      "cycle_id": "f2707534",
+      "domain": "Probability",
+      "key_insight": "# Future directions\n\n## What is now proved\n\nAll statements below are formalised in `Catalog/Probability/` and compile\nagainst mathlib4 (Lean 4.28.0) with **no `sorry` and no extra axioms** (only\n`prop",
+      "quality_score": 0.92,
+      "sorry_count": 0,
+      "theorem_count": 115,
+      "timestamp": "2026-08-20T23:41:20",
+      "title": "Martingale-Concentration: Talagrand's Inequality on Product Spaces"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "b7dba88e",
-      "domain": "Tropical",
-      "key_insight": "# Future directions — the magma monoid as a transformation semigroup\n\nAll conjectures below are stated for `Bin(X)`, the monoid of all binary\noperations on a set `X` under `(f * g) a b = g (f a b) (f",
-      "quality_score": 0.7419800000000001,
-      "sorry_count": 0,
-      "theorem_count": 115,
-      "timestamp": "2026-08-11T19:28:43",
-      "title": "Deepening: ArXiv paper: Transformation Semigroup Perspective on the Magma Monoid"
-    },
     {
       "cycle_id": "ea50968d",
       "domain": "Algebra",
@@ -2501,27 +2491,19 @@
       "theorem_count": 58,
       "timestamp": "2026-08-20T21:43:57",
       "title": "**Conjecture.** For a generic family of `r` min-plus keys on `k` coordinates wit"
+    },
+    {
+      "cycle_id": "f2707534",
+      "domain": "Probability",
+      "key_insight": "# Future directions\n\n## What is now proved\n\nAll statements below are formalised in `Catalog/Probability/` and compile\nagainst mathlib4 (Lean 4.28.0) with **no `sorry` and no extra axioms** (only\n`prop",
+      "quality_score": 0.92,
+      "sorry_count": 0,
+      "theorem_count": 115,
+      "timestamp": "2026-08-20T23:41:20",
+      "title": "Martingale-Concentration: Talagrand's Inequality on Product Spaces"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "94e7c481",
-      "domain": "NumberTheory",
-      "name": "dvd_third_of_dvd_two_bc",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "17d131fb",
-      "domain": "NumberTheory",
-      "name": "fixCount_one",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "17d131fb",
-      "domain": "NumberTheory",
-      "name": "fixCount_le_card",
-      "quality": 0.78
-    },
     {
       "cycle_id": "17d131fb",
       "domain": "NumberTheory",
@@ -2803,9 +2785,27 @@
       "domain": "Pythagorean",
       "name": "of",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "f2707534",
+      "domain": "Probability",
+      "name": "exp_le_quadratic",
+      "quality": 0.92
+    },
+    {
+      "cycle_id": "f2707534",
+      "domain": "Probability",
+      "name": "exp_neg_le_cubic",
+      "quality": 0.92
+    },
+    {
+      "cycle_id": "f2707534",
+      "domain": "Probability",
+      "name": "exp_le_quartic",
+      "quality": 0.92
     }
   ],
-  "last_updated": "2026-08-20T21:43:57",
+  "last_updated": "2026-08-20T23:41:20",
   "open_questions": [
     {
       "context": "Everything is proved; there are no `sorry`s and no new axioms.",
@@ -3765,12 +3765,6 @@
     ],
     "Probability": [
       {
-        "cycle_id": "8590e003",
-        "quality": 0.87,
-        "theorems": 122,
-        "title": "CM-ECM-GENERAL: rational-torsion degeneracy, union-dilution law, 3-adic Hecke vi"
-      },
-      {
         "cycle_id": "beb0e52b",
         "quality": 0.91,
         "theorems": 254,
@@ -3823,6 +3817,12 @@
         "quality": 0.91,
         "theorems": 17,
         "title": "The \"if\" direction is proved (`FourierFA.poisson_summation`); the converse is op"
+      },
+      {
+        "cycle_id": "f2707534",
+        "quality": 0.92,
+        "theorems": 115,
+        "title": "Martingale-Concentration: Talagrand's Inequality on Product Spaces"
       }
     ],
     "Pythagorean": [
