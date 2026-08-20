@@ -51,3 +51,77 @@ def test_injected_issue_pkg_url_comment():
 
     assert pkg_filename == "test_injected_hyperbolic_geometry.json"
     assert pkg_url == "https://alethean.org/#pkg=test_injected_hyperbolic_geometry.json"
+
+
+def test_close_issue_skips_already_closed_issue(monkeypatch):
+    """Regression Lean#156: a closed issue must not receive a duplicate result
+    comment. Once the issue is CLOSED, _close_github_issue_if_needed must
+    early-return without posting a comment or re-closing."""
+    import aether_tick
+
+    class DummyConcept:
+        title = "reinforcement learning"
+
+    class DummyJob:
+        github_issue = 156
+        status = "integrated"
+        phase = "complete"
+        quality_score = 0.9
+        theorem_count = 100
+        concept = DummyConcept()
+        job_id = "abc12345"
+
+    calls = {"comment": 0, "close": 0}
+
+    def fake_run_gh(args):
+        # `gh issue view --json state` reports the issue is already CLOSED.
+        if "view" in args:
+            return '{"state": "CLOSED"}'
+        if "comment" in args:
+            calls["comment"] += 1
+        if "close" in args:
+            calls["close"] += 1
+        return ""
+
+    monkeypatch.setattr(github_injector, "run_gh_command", fake_run_gh)
+
+    aether_tick._close_github_issue_if_needed(DummyJob())
+
+    assert calls["comment"] == 0, "must not comment on an already-closed issue"
+    assert calls["close"] == 0, "must not re-close an already-closed issue"
+
+
+def test_close_issue_posts_on_open_issue(monkeypatch):
+    """Sanity: an OPEN issue that reached terminal completion still gets its
+    result comment and close (the happy path)."""
+    import aether_tick
+
+    class DummyConcept:
+        title = "reinforcement learning"
+
+    class DummyJob:
+        github_issue = 156
+        status = "integrated"
+        phase = "complete"
+        quality_score = 0.9
+        theorem_count = 100
+        concept = DummyConcept()
+        job_id = "abc12345"
+
+    calls = {"comment": 0, "close": 0}
+
+    def fake_run_gh(args):
+        if "view" in args:
+            return '{"state": "OPEN"}'
+        if "comment" in args:
+            calls["comment"] += 1
+        if "close" in args:
+            calls["close"] += 1
+        return ""
+
+    monkeypatch.setattr(github_injector, "run_gh_command", fake_run_gh)
+
+    aether_tick._close_github_issue_if_needed(DummyJob())
+
+    assert calls["comment"] == 1
+    assert calls["close"] == 1

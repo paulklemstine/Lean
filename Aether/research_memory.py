@@ -861,6 +861,7 @@ class FutureDirectionsManager:
         catalog_analyzer=None,
         exclude_domains: Optional[list] = None,
         exclude_titles: Optional[list] = None,
+        open_issue_numbers: Optional[set] = None,
     ) -> Optional[FutureDirection]:
         """Select a direction weighted by computed quality score (not just priority).
 
@@ -872,6 +873,16 @@ class FutureDirectionsManager:
         domain_filter: only select directions containing this domain
         exclude_domains: exclude directions containing any of these domains
         exclude_titles: exclude directions whose title matches any in this list (prevents duplicate dispatch)
+        open_issue_numbers: set of GitHub issue numbers that are currently OPEN.
+            When provided, the injected-direction bypass only returns a
+            github_injection direction whose issue is in this set and whose
+            attempt_count is under the cap — mirroring dispatchable_injected_directions.
+            When None (issue state unknown), injected directions are EXCLUDED from
+            the bypass so they cannot be re-dispatched by the standard discovery
+            path; they must instead be dispatched via the dedicated injected-issue
+            block in aether_tick (which fetches live issue state). This prevents
+            the re-publish loop where a closed-issue injected direction kept being
+            re-dispatched every tick, overwriting its package and re-commenting.
         """
         # Lazy cleanup of expired quarantines
         self.cleanup_expired_quarantines()
@@ -880,10 +891,31 @@ class FutureDirectionsManager:
             if d.status == "available" and not self.is_quarantined(d)
         ]
 
-        # --- NEW: Bypass for injected directions (101% probability) ---
+        # --- Bypass for injected directions (high priority) ---
+        # Only return an injected direction when we can PROVE its GitHub issue is
+        # still open AND it has not exhausted its attempt cap. Without live issue
+        # state (open_issue_numbers is None) we must NOT dispatch an injected
+        # direction here at all — a closed issue means the work is already done,
+        # and re-dispatching overwrites the published package and re-comments on
+        # the closed issue (regression: Lean#156). The standard injected-dispatch
+        # block in aether_tick supplies open_issue_numbers; other callers pass
+        # None and fall through to weighted selection of non-injected directions.
         injected = [d for d in available if getattr(d, 'source', None) == "github_injection"]
-        if injected:
-            return injected[0]
+        if open_issue_numbers is not None:
+            open_set = {int(n) for n in open_issue_numbers}
+            # Same gating as dispatchable_injected_directions (attempt cap 3).
+            eligible = [
+                d for d in injected
+                if d.github_issue and int(d.github_issue) in open_set
+                and d.attempt_count < 3
+            ]
+            if eligible:
+                return eligible[0]
+        # open_issue_numbers is None OR no eligible injected direction: fall
+        # through to weighted selection over non-injected directions. Exclude
+        # injected directions from that pool so they are never silently picked
+        # without issue-state verification.
+        available = [d for d in available if getattr(d, 'source', None) != "github_injection"]
 
         if domain_filter:
             available = [d for d in available if domain_filter in d.domains or not d.domains]

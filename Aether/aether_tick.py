@@ -99,6 +99,23 @@ def _close_github_issue_if_needed(job):
 
     try:
         import github_injector
+        # Defense against the re-publish loop (Lean#156): if the issue is
+        # already CLOSED, a prior run already posted results and closed it.
+        # Do NOT post another comment — that produced 6 duplicate result
+        # comments on one closed issue as the direction was re-dispatched.
+        try:
+            _view = github_injector.run_gh_command(
+                ["issue", "view", str(issue_num), "--json", "state"])
+            if _view:
+                import json as _json
+                _info = _json.loads(_view)
+                if _info.get("state", "").upper() == "CLOSED":
+                    print(f"[Tick] Issue #{issue_num} already closed — skipping duplicate result comment")
+                    return
+        except Exception as _state_e:
+            # If we can't verify state, fall through to post (best-effort),
+            # but this is rare; gh is available in CI where this runs.
+            print(f"[Tick] Could not verify issue #{issue_num} state: {_state_e}")
         if phase == "complete" or st == "integrated":
             # Search Packages/ for the actual generated JSON package
             from pathlib import Path

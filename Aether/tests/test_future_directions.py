@@ -1600,6 +1600,51 @@ class TestPruneClosedIssueDirections:
         assert fd_manager.get_direction_by_id("ginj_014").status == "available"
 
 
+class TestSelectWeightedInjectedBypass:
+    """The injected-direction bypass in select_direction_weighted must honor the
+    same gating as dispatchable_injected_directions: an injected direction whose
+    GitHub issue is CLOSED (or whose attempt cap is exhausted) must NOT be
+    re-dispatched by the standard discovery path.
+
+    Regression: issue paulklemstine/Lean#156 ("reinforcement learning") was
+    processed 6 times over ~24h, each run overwriting the same
+    Packages/<slug>.json and posting a new comment on the already-closed issue.
+    Root cause: the standard dispatch path (extractor.discover ->
+    select_direction_weighted) hit an unconditional bypass returning ANY
+    available github_injection direction, with no issue-open or attempt-cap
+    check — circumventing the careful dispatchable_injected_directions gate.
+    """
+
+    def test_closed_issue_injected_not_returned_by_bypass(self, fd_manager):
+        # Issue #156 is closed (not in open_issue_numbers), direction still
+        # 'available' (e.g. released back after a stale/failed dispatch).
+        fd_manager.add_direction(_injected_dir(20, github_issue=156, status="available"))
+        # The bypass must consult issue-open state. With no open issues known,
+        # a closed-issue injected direction must NOT be selected.
+        chosen = fd_manager.select_direction_weighted(open_issue_numbers=set())
+        assert chosen is None
+
+    def test_open_issue_injected_returned_by_bypass(self, fd_manager):
+        fd_manager.add_direction(_injected_dir(21, github_issue=156, status="available"))
+        chosen = fd_manager.select_direction_weighted(open_issue_numbers={156})
+        assert chosen is not None
+        assert chosen.id == "ginj_021"
+
+    def test_attempt_capped_injected_not_returned_by_bypass(self, fd_manager):
+        # Issue still open, but the direction already burned its attempt cap.
+        fd_manager.add_direction(
+            _injected_dir(22, github_issue=156, attempt_count=3, status="available"))
+        chosen = fd_manager.select_direction_weighted(open_issue_numbers={156})
+        assert chosen is None
+
+    def test_completed_injected_not_returned_by_bypass(self, fd_manager):
+        fd_manager.add_direction(_injected_dir(23, github_issue=156, status="available"))
+        fd_manager.mark_direction_completed("ginj_023")
+        chosen = fd_manager.select_direction_weighted(open_issue_numbers={156})
+        assert chosen is None or chosen.id != "ginj_023"
+
+
+
 class TestStaleQueuedJobPurge:
     """Queued jobs stuck past max_age_hours are zombies that inflate the local
     inflight count and block fresh dispatch — they must be identified for purge."""
