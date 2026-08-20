@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "ea23936f",
-      "domain": "Tropical",
-      "key_insight": "# Future Directions\n\nThis cycle deepened the tropical scheme/Gröbner thread by adding the *matroidal*\nlayer that the previous cycle's purely submodule-theoretic notion of tropical\nideal was missing: t",
-      "quality_score": 0.627125,
-      "sorry_count": 0,
-      "theorem_count": 96,
-      "timestamp": "2026-08-11T16:24:20",
-      "title": "Deepening: Tropical Scheme Theory: Groebner Bases over the Tropical Semiring"
-    },
-    {
       "cycle_id": "5b1761bc",
       "domain": "Logic",
       "key_insight": "# Future Directions\n\nThe five conjectures posed for this cycle are now theorems (see\n`Catalog/Logic/ImmortalityHierarchy.lean`, `Catalog/Logic/ImmortalityITTMClock.lean`,\n`Catalog/Logic/ImmortalityStr",
@@ -2501,6 +2491,16 @@
       "theorem_count": 41,
       "timestamp": "2026-08-20T19:00:17",
       "title": "The one-parameter case is already a theorem here"
+    },
+    {
+      "cycle_id": "4494e9cb",
+      "domain": "Applications",
+      "key_insight": "",
+      "quality_score": 0.664175,
+      "sorry_count": 0,
+      "theorem_count": 26,
+      "timestamp": "2026-08-20T19:46:32",
+      "title": "Rigidity gap for shallow product coins"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-20T19:00:17",
+  "last_updated": "2026-08-20T19:46:32",
   "open_questions": [
     {
       "context": "Everything is proved; there are no `sorry`s and no new axioms.",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "67cbe98c",
-        "quality": 0.55,
-        "theorems": 31,
-        "title": "The 'Only Bad Primes' Conjecture is False (elliptic curve denominators)"
-      },
-      {
         "cycle_id": "6e253e5d",
         "quality": 0.82,
         "theorems": 109,
@@ -3141,6 +3135,12 @@
         "quality": 0.86,
         "theorems": 127,
         "title": "The Lagrange engine `powerSum_rigidity` is already formalised and it isolates"
+      },
+      {
+        "cycle_id": "4494e9cb",
+        "quality": 0.664175,
+        "theorems": 26,
+        "title": "Rigidity gap for shallow product coins"
       }
     ],
     "Bridges": [
