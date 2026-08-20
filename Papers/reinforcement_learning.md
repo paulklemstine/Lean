@@ -1,103 +1,93 @@
-# Computational Evidence — Neurosymbolic RLHF / PPO-ptx Objective
+# Computational Evidence — Neurosymbolic RLHF / PPO-ptx objective
 
-All numbers below were produced by `Float` evaluation inside Lean 4 (`#eval`) before
-the formal proofs were attempted; they are *evidence*, not verification. Everything
-they suggest is proved formally and `sorry`-free in
-`Catalog/Shared/NeuroSymbolicRLHFObjective.lean` and
-`Catalog/Shared/NeuroSymbolicRLHFRobustness.lean`.
+All numbers below were produced by floating-point evaluation inside Lean 4
+(`Float` arithmetic, `#eval`).  They are *exploratory* evidence only; the
+actual verification of every claim is the sorry-free Lean proof in
+`Catalog/MachineLearning/RLHF*.lean`.
 
-## Test instance
-
-Three-element response space, SFT reference and neurosymbolic reward
+Fixed test instance (3 responses):
 
 ```
-ref = [0.5, 0.3, 0.2]        r = [1.0, 0.0, 2.0]        (min r = 0, max r = 2)
+ref = (0.20, 0.50, 0.30)      -- SFT reference policy
+r1  = (1.0, -0.5, 2.0)        -- reward model A
+r2  = (0.3,  0.7, -1.2)       -- reward model B
+pre = (0.50, 0.25, 0.25)      -- pre-training distribution
+β   = 0.7
 ```
 
-## 1. The tilted (softmax) policy is a probability vector
-
-`gibbs 1.0 = [0.433268, 0.095634, 0.471098]`, sum `= 1.000000`.
-(Proved: `gibbs_isPosProb`.)
-
-## 2. Variational principle: the tilted policy attains the free energy
+## 1. Hilbert isometry (`hilbertDist_gibbs`)
 
 | quantity | value |
 |---|---|
-| `Objective(gibbs 1.0)` | `1.143252` |
-| `freeEnergy 1.0 = β log Z` | `1.143252` |
+| `d_H(π_β(r1), π_β(r2))` | 6.285714 |
+| `oscil(r1 - r2) / β` | 6.285714 |
+| `d_H(π_β(r1), ref)` | 3.571429 |
+| `oscil(r1) / β` | 3.571429 |
 
-Competitor policies, all strictly worse (counterexample hunt for
-"some other policy beats the softmax policy" — none found):
+Exact agreement to floating-point precision: the tilt map is an isometry, not
+merely Lipschitz.  (`oscil(r1-r2) = 4.4`, `4.4/0.7 = 6.2857…`.)
 
-| policy | objective |
+## 2. Total-variation bound (`tvDist_le_expm1_hilbertDist`)
+
+| quantity | value |
 |---|---|
-| `[0.4, 0.3, 0.3]`    | `0.967618` |
-| `[0.2, 0.2, 0.6]`    | `1.005184` |
-| `[1/3, 1/3, 1/3]`    | `0.934417` |
-| `[0.6, 0.1, 0.3]`    | `1.078829` |
+| `‖π_β(r1) - π_β(r2)‖_TV` | 0.797349 |
+| `exp(oscil(r1-r2)/β) - 1` | 535.85 |
 
-(Proved: `rlhfObj_gibbs`, `rlhfObj_le_freeEnergy`, `rlhfObj_eq_freeEnergy_iff`.)
+| `tanh(d_H/4) = (e^{d/2}-1)/(e^{d/2}+1)` | 0.917253 |
 
-## 3. Monotonicity of the optimal value in the KL coefficient β
+The crude bound holds and is very loose at small `β` (as expected: the exponential
+term is the worst case over the whole simplex), but becomes tight as
+`oscil(r1-r2)/β → 0`.  The sharp Birkhoff bound `tanh(d_H/4) = 0.917` is
+informative on the same instance, and is always below `1` — this is the bound
+proved in `RLHFBirkhoffTV.lean` (`tvDist_le_tanh_hilbertDist`).
 
-| β | 0.25 | 0.5 | 1 | 2 | 4 | 10 |
-|---|---|---|---|---|---|---|
-| `freeEnergy β` | `1.608954` | `1.351155` | `1.143252` | `1.023271` | `0.961598` | `0.924570` |
+## 3. Exact PTX regression law (`ptx_at_gibbs`)
 
-Strictly decreasing, and squeezed between `E_ref[r] = 0.9` and `max r = 2`;
-the values approach `E_ref[r] = 0.9` as `β → ∞` and `max r = 2` as `β → 0`.
-(Proved: `freeEnergy_antitone_beta`, `freeEnergy_mem_Icc`.)
-
-## 4. Reward improvement and sandwich at β = 1
-
-`E_ref[r] = 0.900000  ≤  freeEnergy = 1.143252  ≤  E_gibbs[r] = 1.375464  ≤  max r = 2`.
-(Proved: `expected_ref_le_freeEnergy`, `gibbs_expected_reward_ge`, `freeEnergy_le_of_le`.)
-
-## 5. Drift bound `β · KL(π* ‖ ref) ≤ max r − min r = 2`
-
-| β | 0.25 | 0.5 | 1 | 2 |
-|---|---|---|---|---|
-| `β·KL(π*‖ref)` | `0.346321` | `0.360895` | `0.232212` | `0.122804` |
-
-All comfortably below `2`; the bound is not tight for this instance but is
-attained in the limit of a two-point space with an extreme reward gap.
-(Proved: `gibbs_kl_drift_le`.)
-
-## 6. Composition of tilts (group action)
-
-With a second reward `s = [0.7, -1.2, 0.3]`:
-
-```
-tilt (tilt ref r) s = [0.567582, 0.018738, 0.413680]
-tilt ref (r + s)    = [0.567582, 0.018738, 0.413680]
-```
-
-Identical to machine precision.
-(Proved: `gibbs_add`, `rlhf_sequential`.)
-
-## 7. Pinsker estimates (cycle 5)
-
-Termwise estimate `a log(a/b) − a + b − 3(a−b)²/(2(a+2b))` (must be `≥ 0`):
-
-| (a, b) | (0.5, 1) | (2, 1) | (1, 0.1) | (0.1, 1) | (5, 0.2) | (1.001, 1) |
-|---|---|---|---|---|---|---|
-| value | `0.003426` | `0.011294` | `0.390085` | `0.091170` | `4.894379` | `0.000000` |
-
-(The value at `a = b` is `0` to machine precision, confirming that the estimate
-is tight to second order — which is why the constant `3/2` is the right one.)
-
-Pinsker slack `2·KL(p‖q) − ‖p−q‖₁²` (must be `≥ 0`):
-
-| (p, q) | value |
+| quantity | value |
 |---|---|
-| `([.5,.3,.2], [.2,.3,.5])` | `0.189774` |
-| `([.9,.05,.05], [.1,.45,.45])` | `0.955559` |
-| `([1,0,0], [.34,.33,.33])` | `0.415219` |
-| `([.4,.4,.2], [.39,.41,.2])` | `0.000100` |
+| `𝔼_pre[log π_β(r1)] - 𝔼_pre[log ref]` | -0.590999 |
+| `(𝔼_pre[r1] - F(β,r1)) / β` | -0.590999 |
 
-(Proved: `xlogx_sub_ge`, `kl_term_ge`, `klDivFin_pinsker`, `gibbs_l1_drift_sqrt`.)
+Identity confirmed.  The sign is negative here, i.e. the aligned model *does*
+regress on the pre-training distribution — exactly because
+`𝔼_pre[r1] = 0.875 < F(β,r1) = 1.288`, matching `ptx_no_regression_iff`.
 
-## 8. OEIS
+## 4. Annealing limits (`tendsto_freeEnergy_zero`, `tendsto_freeEnergy_atTop`)
 
-No integer sequence arises in this problem (all objects are real-valued
-distributions and free energies), so no OEIS lookup is applicable.
+| β | `F(β, r1)` | predicted limit |
+|---|---|---|
+| 0.02 | 1.975921 | `max r1 = 2.0` |
+| 50.0 | 0.562248 | `𝔼_ref[r1] = 0.55` |
+
+Both limits are approached at the rates proved (`β log(min ref)` and
+`(3/4)‖r‖∞²/β = 0.06` at `β = 50`).
+
+## 5. Submodularity of symbolic constraints (`constrainedFreeEnergy_submodular`)
+
+With `S = {0,1}`, `T = {1,2}` and reward `r1`:
+
+| quantity | value |
+|---|---|
+| `F_S + F_T` | 1.242706 |
+| `F_{S∪T} + F_{S∩T}` | 0.303496 |
+
+`F_{S∪T} + F_{S∩T} ≤ F_S + F_T` holds with slack 0.94: relaxing one rule set
+helps less once the other has already been relaxed.
+
+## 6. Counterexample hunt
+
+* *Is the TV bound of §2 ever violated?* No violation was found in the sampled
+  instances; the proved statement is an inequality, and the sampled slack is
+  large.
+* *Is the drift budget of `hilbertDist_gibbs_sum_le` an equality?* No — the
+  two-round cancellation instance `r, -r` gives drift `0` against a positive
+  budget `2·oscil(r)/β`.  This counterexample is itself formalised as
+  `drift_cancellation`, so the budget is genuinely an inequality.
+* *Does `ptx_no_regression_iff` ever fail without the positivity hypotheses?*
+  The identity `ptx_at_gibbs` requires `ref` strictly positive; with a zero
+  reference entry the log terms are `Real.log 0 = 0` by convention and the
+  identity breaks, which is why full support is assumed throughout.
+
+No OEIS-style integer sequence arises in this problem: all objects are
+real-valued functionals of a continuous parameter `β`.
