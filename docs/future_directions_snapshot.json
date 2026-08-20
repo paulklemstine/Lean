@@ -1095,7 +1095,7 @@
     "title": "Deepening: ArXiv paper: A Fourier-analytic Uniqueness Theorem for Lattice-point Enumerators"
   },
   {
-    "ambition_level": "extension",
+    "ambition_level": "grand_challenge",
     "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Building on cycle 61305688 (Q=0.820), which proved 185 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Investigate the ArXiv paper 'Domination-packing ratio for planar and unit disk graphs' and formalize its key results. Abstract: The domination number $γ(G)$ of a graph $G$ is the smallest possible size of a vertex set that intersects every radius-$1$ ball of $G$, and the packing number $ρ(G)$ is the",
@@ -2327,25 +2327,6 @@
     "status": "available",
     "timestamp": "2026-08-13T03:21:12.748859+00:00",
     "title": "Stein-Method: Quantitative Normal Approximation Bounds"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 5b26e37d (Q=0.800), which proved 66 theorems in Geometry. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions: Topology of Theorem Networks\n\n## 1. A null model for higher-dimensional citation topology\n\n**Conjecture.** In a sparse random corpus with bounded expected document size and theorem degrees converging to a nondegenerate distribution, each fixed-dimensional normalized Betti number",
-    "domain_bridges": [],
-    "domains": [
-      "Geometry"
-    ],
-    "id": "push_5b26e37d_f1990060",
-    "lineage_refs": [],
-    "priority_score": 0.9,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "5b26e37d",
-    "status": "available",
-    "timestamp": "2026-08-20T08:57:36.944063+00:00",
-    "title": "Deepening: **Conjecture.** In a sparse random corpus with bounded expected document size an"
   },
   {
     "ambition_level": "grand_challenge",
@@ -27712,7 +27693,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "560d610e",
     "description": "The finite-state class and its bound were constructed this cycle\n(`fsmClass`, `shtarkovSum_fsmClass_le`), so the family `k(n)` is definable\ninside the framework, and `shtarkovSum_ge_packing` is exactly the tool needed\nfor the lower bound.",
     "domain_bridges": [],
     "domains": [],
@@ -27722,7 +27703,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "3eeb9235",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-18T13:57:41.361758+00:00",
     "title": "The finite-state class and its bound were constructed this cycle"
   },

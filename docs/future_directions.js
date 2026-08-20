@@ -1723,20 +1723,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle 5b26e37d (Q=0.800), which proved 66 theorems in Geometry. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions: Topology of Theorem Networks\n\n## 1. A null model for higher-dimensional citation topology\n\n**Conjecture.** In a sparse random corpus with bounded expected document size and theorem degrees converging to a nondegenerate distribution, each fixed-dimensional normalized Betti number",
-    "domains": [
-      "Geometry"
-    ],
-    "id": "push_5b26e37d_f1990060",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "5b26e37d",
-    "status": "available",
-    "timestamp": "2026-08-20T08:57:36.944063+00:00",
-    "title": "Deepening: **Conjecture.** In a sparse random corpus with bounded expected document size an"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove tight bounds on quantum error-correcting codes. Formalize the quantum Singleton bound, quantum Hamming bound, and construct optimal stabilizer codes. Connect to topological quantum computing.",
     "domains": [
       "Physics",
@@ -20631,14 +20617,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Open here; NP-membership is *proved* in the sense that the problem has a succinct"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "560d610e",
     "description": "The finite-state class and its bound were constructed this cycle\n(`fsmClass`, `shtarkovSum_fsmClass_le`), so the family `k(n)` is definable\ninside the framework, and `shtarkovSum_ge_packing` is exactly the tool needed\nfor the lower bound.",
     "domains": [],
     "id": "fd_1530",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "3eeb9235",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-18T13:57:41.361758+00:00",
     "title": "The finite-state class and its bound were constructed this cycle"
   },

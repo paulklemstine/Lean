@@ -1,129 +1,70 @@
-# Computational evidence
+# Computational evidence (exploratory)
 
-All numbers below were produced with `#eval` on `Float` inside the project's Lean
-toolchain (Lean 4.28.0 / Mathlib), before the corresponding theorems were proved.
-They are exploratory only; the verified statements are the Lean theorems in
-`Catalog/Novelty/RLHF*.lean`, all of which compile without `sorry`.
+All numbers below were produced by direct enumeration in Lean (`#eval`, `Float`
+arithmetic) *before* the corresponding theorems were proved.  They are exploratory
+sanity checks, **not** verification: the verified artifacts are the `sorry`-free Lean
+theorems in `Catalog/Combinatorics/RLHF*.lean`.
 
-## 1. The Padé lower bound for `log`
+Setting: response space `Finset (Fin n)` (all `2^n` feature sets), uniform SFT reference,
+counting reward `r S = a·|S|`, KL temperature `β`.  The aligned (Gibbs) policy is
+`π S ∝ e^{a|S|/β} / 2^n`; write `θ = σ(a/β) = e^{a/β}/(1+e^{a/β})`.
 
-Conjecture (later `RLHF.log_ge_pade`): for `t > 0`,
+## 1. Level masses of the aligned policy vs. the binomial law (`n = 5, a = 1, β = 1`)
+
+`θ = σ(1) ≈ 0.731059`.  Left column: mass of `{S : |S| = k}` obtained by enumerating all
+32 subsets and normalizing; right column: `C(5,k) θ^k (1-θ)^{5-k}`.
+
+| k | enumerated mass | binomial formula |
+|---|-----------------|------------------|
+| 0 | 0.001407 | 0.001407 |
+| 1 | 0.019123 | 0.019123 |
+| 2 | 0.103963 | 0.103963 |
+| 3 | 0.282600 | 0.282600 |
+| 4 | 0.384093 | 0.384093 |
+| 5 | 0.208815 | 0.208815 |
+
+Total mass: `1.000000`.  This is the evidence behind `gibbs_level_mass` /
+`gibbsPolicy_sizeReward` (aligned policy = i.i.d. Bernoulli features, reward statistic
+binomial).
+
+## 2. Mean of the reward statistic
+
+Enumerated `𝔼|S| = 3.655293`; predicted `n θ = 5 · 0.731059 = 3.655293`.
+Evidence for `expected_size_bernoulli` / `expected_reward_gibbs`.
+
+## 3. Log-concavity of the level masses (unimodality hunt)
+
+`m_{k+1}² − m_k m_{k+2}` for `k = 0,1,2,3` at `n = 5, θ = σ(1)`:
 
 ```
-log t ≥ R(t) := (5t² − 4t − 1) / (2t² + 4t).
+[0.000219, 0.005404, 0.039931, 0.088516]     (all > 0)
 ```
 
-Values of `log t − R(t)`:
+No counterexample was found over the sampled range; the general statement is proved as
+`choose_log_concave` / `binomialLevel_log_concave`, and unimodality follows
+(`binomialLevel_decreasing_persists`).
 
-| t | 0.1 | 0.5 | 0.9 | 1.0 | 1.5 | 2.0 | 10.0 |
-|---|-----|-----|-----|-----|-----|-----|------|
-| `log t − R(t)` | 0.9117 | 0.006853 | 0.0000034 | 0 | 0.000703 | 0.005647 | 0.3901 |
+## 4. Reward-hacking / mode-collapse bound (`n = 5, a = 1`)
 
-The defect vanishes to third order at `t = 1` — this is why the bound produces
-Pinsker's inequality with the *optimal* constant.  A first attempt with the
-denominator `2t + 1` instead of `t + 2` was falsified numerically at `t = 0.9`
-(defect `−1.8·10⁻⁶`), which is what led to the correct Padé form.
+Mass on the maximal response `θ^n` versus the proved lower bound `1 − n e^{−a/β}`:
 
-## 2. Sharpness of Pinsker's constant
+| β    | `θ^5` (top mass) | bound `1 − 5 e^{−1/β}` |
+|------|------------------|------------------------|
+| 0.5  | 0.530126 | 0.323324 |
+| 0.2  | 0.966981 | 0.966310 |
+| 0.1  | 0.999773 | 0.999773 |
+| 0.05 | 1.000000 | 1.000000 |
 
-Two-point family `q_ε = (1/2+ε, 1/2−ε)` against the uniform reference; the table
-shows `2 KL(q_ε ‖ q_0) / ‖q_ε − q_0‖₁²`:
+The bound holds in every sampled case and is asymptotically tight as `β → 0⁺`; this is
+`gibbs_top_mass_ge`.
 
-| ε | 0.2 | 0.1 | 0.05 | 0.01 | 0.001 |
-|---|-----|-----|------|------|-------|
-| ratio | 1.02854 | 1.00678 | 1.00167 | 1.000067 | 1.0000007 |
+## 5. Counterexample hunt (negative results)
 
-The ratio approaches `1` from above, consistent with `RLHF.pinsker` (ratio ≥ 1) and
-with the proved upper bound `1 + (8/3)ε²` (e.g. at `ε = 0.1`: `1.00678 ≤ 1.02667`).
-
-## 3. Drift rate: `β^{-1/2}` versus `β^{-1}`
-
-Two-point model, uniform reference, reward `1_{true}`; exact drift is
-`(e^{1/β} − 1)/(e^{1/β} + 1)`:
-
-| β | drift | `2/β` (proved upper bound) | `1/(3β)` (proved lower bound) | `√(2/β)` (Pinsker-only bound) |
-|---|-------|------|--------|--------|
-| 1 | 0.4621 | 2.000 | 0.3333 | 1.4142 |
-| 2 | 0.2449 | 1.000 | 0.1667 | 1.0000 |
-| 5 | 0.09967 | 0.4000 | 0.06667 | 0.6325 |
-| 10 | 0.04996 | 0.2000 | 0.03333 | 0.4472 |
-| 100 | 0.005000 | 0.02000 | 0.003333 | 0.14142 |
-
-The measured drift is `Θ(1/β)` and is bracketed by the two proved bounds, while the
-`√(2 range/β)` bound coming from Pinsker alone is off by an order of magnitude at
-large `β`.  This computation is what motivated the quadratic KL bound
-`RLHF.kl_gibbs_le_quadratic`.
-
-## 4. Counterexample hunt
-
-* Attempted pointwise bound `t log t − t + 1 ≥ 3(t−1)²/(2(2t+1))`: **false**
-  (fails at `t = 0.9`), replaced by the `(t+2)` denominator.
-* Attempted improvement of Pinsker's constant from `2` to `1.9`: falsified for
-  `ε ≤ 0.05` by the table in §2; this is now a theorem
-  (`RLHF.pinsker_constant_optimal`).
-* Attempted claim "drift `→ 0` as `β ↓ 0`": falsified — drift `→ 1`
-  (`RLHF.l1Dist_spike_tendsto_one`).
-
-No OEIS sequence is involved: all objects here are continuous.
-
----
-
-# Cycles 2–3: variance constant and covariance expansion
-
-## 5. Is the drift constant the range or the standard deviation?
-
-Scaled two-point model (uniform reference on `Bool`, reward `a · 1_{true}`), exact
-drift `tanh(a/(2β))`, reference standard deviation `σ = a/2`:
-
-| a | β | `σ/(2β)` (proved lower bound) | exact drift | `3σ/β` (proved upper bound) |
-|---|---|--------|--------|--------|
-| 1 | 1 | 0.2500 | 0.4621 | 1.500 |
-| 1 | 2 | 0.1250 | 0.2449 | 0.750 |
-| 1 | 10 | 0.02500 | 0.04996 | 0.150 |
-| 2 | 4 | 0.1250 | 0.2449 | 0.750 |
-| 0.5 | 5 | 0.02500 | 0.04996 | 0.150 |
-
-The drift depends on `(a, β)` only through `a/β` and sits inside the sandwich for
-every entry, which is exactly `RLHF.variance_constant_optimal`.
-
-How much smaller than the range can the variance be?  For the reward `1_{true}` and
-the reference `p(true) = ε`, the variance is `ε(1−ε)` while `range²/4 = 0.25`:
-
-| ε | `Var_p(r)` | `range(r)²/4` |
-|---|-----------|---------------|
-| 0.5 | 0.2500 | 0.25 |
-| 0.1 | 0.0900 | 0.25 |
-| 0.01 | 0.00990 | 0.25 |
-| 0.001 | 0.000999 | 0.25 |
-
-So the variance-form bounds of `Novelty/RLHFVarianceDrift.lean` are unboundedly
-stronger than the range-form bounds of `Novelty/RLHFQuadraticDrift.lean` on rare-spike
-rewards — the regime that matters for safety-relevant rare behaviours.
-
-## 6. Is the audit gap a covariance?
-
-Three responses, uniform reference, reward `r = (1, 0, −1)`.
-
-Correlated statistic `f = (1, 0, 0)`, `Cov_p(r,f) = 1/3`:
-
-| β | measured gap | `Cov_p(r,f)/β` | remainder |
-|---|--------------|----------------|-----------|
-| 1 | 0.331908 | 0.333333 | −0.001426 |
-| 2 | 0.173147 | 0.166667 | 0.006480 |
-| 5 | 0.068426 | 0.066667 | 0.001760 |
-| 20 | 0.016799 | 0.016667 | 0.000132 |
-| 100 | 0.003339 | 0.003333 | 0.000005 |
-
-The remainder falls by a factor ≈ 25 when `β` grows by a factor 5: it is `Θ(β⁻²)`,
-matching `RLHF.audit_gap_first_order`.
-
-Uncorrelated statistic `f = (1, −2, 1)`, `Cov_p(r,f) = 0`:
-
-| β | measured gap |
-|---|--------------|
-| 1 | 0.265815 |
-| 2 | 0.078412 |
-| 5 | 0.013201 |
-| 20 | 0.000833 |
-
-Again `Θ(β⁻²)` and never `Θ(β⁻¹)`, which is `RLHF.audit_gap_of_uncorrelated`.
+* Log-concavity was also probed with `θ < 1/2` (i.e. `a < 0`) and with `n` up to 8 — no
+  violation.  Note the proved statement `binomialLevel_log_concave` needs only
+  `0 ≤ θ ≤ 1`, and the boundary cases `k+2 > n` are handled separately (the mass is `0`).
+* Monotonicity of the aligned policy on the lattice (`bernoulliSubsets_monotone`) *fails*
+  for `θ < 1/2`: e.g. `n = 2, θ = 0.3`, `S = ∅`, `T = {0,1}` gives `0.49 > 0.09`.  This is
+  why the theorem carries the guard `1/2 ≤ θ`, equivalently `a ≥ 0`.
+* No OEIS entry is relevant beyond the binomial coefficients themselves
+  (A007318, Pascal's triangle), which appear as the level multiplicities.
