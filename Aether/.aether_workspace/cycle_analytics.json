@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-20T19:46:49.775341+00:00",
+  "last_updated": "2026-08-20T21:43:59.874122+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -61695,6 +61695,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-08-20T19:46:49.559611+00:00",
       "title": "All the machinery \u2014 honesty, guarding, bounded search, the"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 3,
+      "domain": "Pythagorean",
+      "duration_seconds": 3422.1766085624695,
+      "end_time": 1787262218.1239657,
+      "files_integrated": 4,
+      "job_id": "1a7b47b1",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.82,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.544,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.82,
+        "novelty": 0.82,
+        "proof_depth": 0.82,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1787258795.9473572,
+      "strategy_count": 0,
+      "theorem_count": 58,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 40,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-08-20T21:43:59.700623+00:00",
+      "title": "**Conjecture.** For a generic family of `r` min-plus keys on `k` coordinates wit"
     }
   ]
 }

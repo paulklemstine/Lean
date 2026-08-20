@@ -64,20 +64,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle 18b02a30 (Q=0.880), which proved 294 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Conjecture: for `q \u2265 2` and a prime `\u2113 \u2224 q`, the `\u2113`-adic valuation of `binom(n,k)_q` equals the\nnumber of carries when adding `k` and `n-k` in base `d`, where `d` is the multiplicative order of\n`q` modulo `\u2113`, plus a correction term counted by `v_\u2113(q^{d}-1)`.  Falsifiable at\n`q = 2, \u2113 = 5, n = 6, k",
-    "domains": [
-      "NumberTheory"
-    ],
-    "id": "push_18b02a30_211ebd15",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "18b02a30",
-    "status": "available",
-    "timestamp": "2026-08-20T14:00:29.749988+00:00",
-    "title": "Deepening: C4.  A `q`-analogue of Kummer's theorem"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Building on cycle 3b08d230 (Q=0.860), which proved 154 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: is a finitely supported `a : \u2115 \u2192 \u2124` with\n`\u2211 k \u00b7 a k = 24`; `b m = \u2211_{k \u2223 m} a k`; `headCoeff a = a\u2081(a\u2081+3)/2 + a\u2082` is the\nproved value of `c(1)` for the eta quotient `q \u00b7 (1/\u03b7_a) = \u220f_m (1 \u2212 q^m)^(\u2212b m)`.",
     "domains": [
       "Tropical"
@@ -803,6 +789,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-17T07:17:22.608319+00:00",
     "title": "Deepening: ArXiv paper: A Fourier-analytic Uniqueness Theorem for Lattice-point Enumerators"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 1a7b47b1 (Q=0.820), which proved 58 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions: Tropical Cryptocurrency\n\n## 1. Exact recession dimension of generic fibers\n\n**Conjecture.** For a generic family of `r` min-plus keys on `k` coordinates with `r < k`, every nonempty digest fiber has a polyhedral cell whose recession cone has dimension exactly `k-r`, and this low",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "push_1a7b47b1_4d3846d7",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "1a7b47b1",
+    "status": "available",
+    "timestamp": "2026-08-20T21:43:57.574864+00:00",
+    "title": "Deepening: **Conjecture.** For a generic family of `r` min-plus keys on `k` coordinates wit"
   },
   {
     "consumed_by_exp_id": "",
@@ -1707,42 +1707,13 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle 254383ec (Q=0.780), which proved 67 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: All the machinery \u2014 honesty, guarding, bounded search, the\n`goodSeeds` counting apparatus for fractions \u2014 is already formalized; only the\n\"fraction of a finite level set\" bookkeeping is missing.",
-    "domains": [
-      "Cryptography"
-    ],
-    "id": "push_254383ec_bbdf5f94",
-    "priority_score": 0.88,
-    "research_mode": "team",
-    "source_exp_id": "254383ec",
-    "status": "available",
-    "timestamp": "2026-08-20T19:46:44.384352+00:00",
-    "title": "Deepening: All the machinery \u2014 honesty, guarding, bounded search, the"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize fully homomorphic encryption (FHE) schemes based on the ring-LWE problem. Prove correctness: Dec(Enc(m) + Enc(m')) = m + m'. Prove security under ring-LWE. Show that the Gentry bootstrapping procedure converts a somewhat homomorphic scheme into an FHE scheme. Compute the multiplicative depth before bootstrapping is needed.",
-    "domains": [
-      "Cryptography",
-      "Computation"
-    ],
-    "id": "seed_304",
-    "priority_score": 0.87,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Homomorphic Encryption: Computing on Encrypted Data"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove the Coffman-Kundu-Wootters monogamy inequality for qubit entanglement: the sum of squared concurrences is bounded by the squared concurrence with the ancilla. Formalize concurrence as an entanglement measure and extend to n-qubit systems.",
     "domains": [
       "Physics",
       "Computation"
     ],
     "id": "seed_309",
-    "priority_score": 0.87,
+    "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "available",
@@ -10450,18 +10421,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Full Frobenius factorization dictionary.: Formalize that an irreducible fa"
   },
   {
-    "consumed_by_exp_id": "1a7b47b1",
+    "consumed_by_exp_id": "",
     "description": "# Future Directions: Tropical Cryptocurrency\n\n## 1. Exact recession dimension of generic fibers\n\n**Conjecture.** For a generic family of `r` min-plus keys on `k` coordinates with `r < k`, every nonempty digest fiber has a polyhedral cell whose recession cone has dimension exactly `k-r`, and this lower bound is sharp on a dense open set of keys and messages.\n\nThe key insight is that each output component can constrain one independently active coordinate, while all remaining coordinate directions can escape without changing any minimum. **Why now?** The universal collision-ray theorem establishes the first nonzero recession direction for every fiber; the next test is whether the entire expected `k-r`-dimensional cone can be constructed and whether genericity makes the bound exact.\n\n## 2. Hall-type criterion for multidirectional collision cones\n\n**Conjecture.** Let each tropical hash component have a set of active minimizing coordinates at a message. The fiber contains a coordinate cone of dimension at least `d` if and only if the union of these active sets admits a transversal whose complement has cardinality at least `d`.\n\nThe key insight is that collision directions are governed not merely by the number of outputs, but by the combinatorics of which coordinates can certify their minima. **Why now?** Selecting one minimizer per component proved one escaping direction; replacing this selection by a system-of-distinct-representatives analysis should expose the full local fiber geometry.\n\n## 3. Sharp bounded-alphabet collision threshold\n\n**Conjecture.** For messages in `{0,1,\u2026,B}^k` and integer keys, every `r`-component min-plus digest with `r < k` has a collision whenever `B` exceeds an explicit key-spread parameter, and this dependence on the spread is asymptotically optimal.\n\nThe key insight is that the real collision ray survives in a bounded alphabet exactly until it reaches the boundary, so security is controlled by slack at unused coordinates rather than by tropical nonlinearity. **Why now?** The unrestricted theorem identifies the unique obstruction introduced by bounded messages: an unused coordinate may have no legal positive increment.\n\n## 4. Complexity transition for nonce-restricted tropical mining\n\n**Conjecture.** Tropical preimage search is polynomial-time for nonce families described by difference constraints, but becomes NP-complete when the nonce language permits arbitrary binary linear constraints, even for a fixed number of digest components.\n\nThe key insight is that each tropical output condition is a union of linear regions indexed by active coordinates; tractability depends on whether the nonce language preserves shortest-path structure or can encode disjunctive choices. **Why now?** Unrestricted inversion and collision construction are explicit, so any computational hardness must arise from the geometry of the admissible nonce family rather than from the min-plus hash itself.\n",
     "domains": [
       "Tropical",
       "Pythagorean"
     ],
     "id": "fd_0348",
-    "phase": "B",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "57f5aa5e",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-18T19:01:40.919962+00:00",
     "title": "**Conjecture.** For a generic family of `r` min-plus keys on `k` coordinates wit"
   },
@@ -18979,6 +18949,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The set of pairs `(A, m)` with unique and pairwise distinct\nminimizers is open, dense, and of full Lebesgue measure in `\u211d^{rk} \u00d7 \u211d^k`; its\ncomplement is the finite union of the hyperplanes `m j + A i j = m j' + A i j'`, and\nconsequently the \"exact recession dimension `k \u2212 r`\" theorem holds off a set of\ncodimension one, with an explicit tube estimate: the failure locus within distance\n`\u03b5` of a generic point has measure `O(r k^2 \u03b5)`.",
+    "domains": [],
+    "id": "fd_1754",
+    "priority_score": 0.4300588235294117,
+    "research_mode": "team",
+    "source_exp_id": "1a7b47b1",
+    "status": "available",
+    "timestamp": "2026-08-20T21:43:47.478020+00:00",
+    "title": "The set of pairs `(A, m)` with unique and pairwise distinct"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "**Conjecture B (a `T`-wise independent family with a short key) \u2014 PROVED.**\n  `AlmostLosslessPolyFamily.lean` realises the degree-`T` polynomial family\n  `h_c(x) = c\u2080 + c\u2081x + \u22ef + c_T x^T` over `ZMod p` with `K = p^{T+1}` keys.  The\n  missing counting step (sub-conjecture B1) is\n  `polyEval_injective_of_agree_on_points`, proved from\n  `Matrix.det_vandermonde_ne_zero_iff` rather than from polynomial-degree\n  bookkeeping: coefficient vectors agreeing at `T+1` distinct points coincide.\n  Hence `card_poly_constrained_le` (at most `p` keys satisfy a `T`-fold\n  collision constraint) and `polyHash_indepT : IndepT (polyHash p T) T`.  The\n  deliverable `exists_poly_list_scheme_exponential` gives failure\n  `\u2264 \u03b4 + (|l|/p)^T` from `(T+1)\u00b7log\u2082 p` bits of advice, with the numeric\n  instance `concrete_poly_list_scheme` (source `ZMod 101`, codebook `10`,\n  `T = 3`, key one of `101\u2074 \u2248 10\u2078`, failure `\u2264 1/100 + 1/1000`, list `\u2264 3`) and\n  the separation `poly_key_exponentially_shorter : p^{T+1} < p^p`.\n  `polyHash_universal2_one` records coherence with cycle 1 at `T = 1`.",
     "domains": [],
     "id": "fd_1539",
@@ -20175,14 +20157,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "For every finite action the spectrum is log-concave: `t_r\u00b2 \u2265 t_{r\u22121}\u00b7t_{r+1}` for\n`1 \u2264 r < |X|`."
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6a8ae4e1",
     "description": "*For a graded `G`-set `Y = \u2a06_n Y_n` the generating function `\u03a3_n t_r(Y_n) q^n` is a rational\nfunction of `q` whenever the grades are eventually `r`-transitive, with denominator dividing\n`(1\u2212q)^{r+1}`.*",
     "domains": [],
     "id": "fd_1476",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "11c9ff9f",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-18T03:08:40.595069+00:00",
     "title": "For a graded `G`-set `Y = \u2a06_n Y_n` the generating function `\u03a3_n t_r(Y_n) q^n` is a rational\nfunction of `q` whenever the grades are eventually `r`-transitive, with denominator dividing\n`(1\u2212q)^{r+1}`."
   },
@@ -22849,5 +22832,19 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-20T19:46:39.264910+00:00",
     "title": "Both halves exist and are proved: the exact power law"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Lower bound `k \u2212 r` universally (`finrank_span_collisionCone_ge`); exactly `k \u2212 r` under unique, pairwise distinct minimizers (`finrank_span_collisionCone_eq`); the genericity locus is nonempty and open (`exists_strictMinimizer_injective`, `strictMinimizer_stable`); strictness is necessary (`finrank_span_collisionCone_tie`). |\n| 2. Hall-type criterion via transversals (SDRs) | **Refuted as stated, corrected and proved.** SDRs do not govern the cone (`sdr_criterion_counterexample`); *hitting sets* do (`exists_collisionSupport_card_iff`, with the exact local criterion `isCollisionSupport_iff`). |\n| 3. Sharp bounded-alphabet threshold in terms of key spread | **Refuted.** The threshold is two letters and is independent of the keys (`exists_two_letter_collision`, `exists_bounded_integer_collision`); sharp because `r = k` admits injective keys on a box (`exists_injective_digest_on_box`). |\n| 4. Complexity transition for nonce-restricted mining | **Tractable side proved** for box/lower-bound nonce families: inversion is a one-shot test at a canonical candidate (`preimage_exists_iff`, `box_preimage_exists_iff`). Hardness side open. |",
+    "domains": [
+      "Computation"
+    ],
+    "id": "fd_1753",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "1a7b47b1",
+    "status": "available",
+    "timestamp": "2026-08-20T21:43:47.236053+00:00",
+    "title": "Lower bound `k \u2212 r` universally (`finrank_span_collisionCone_ge`); exactly `k \u2212 r` under unique, pairwise distinct minimizers (`finrank_span_collisionCone_eq`); the genericity locus is nonempty and op"
   }
 ];

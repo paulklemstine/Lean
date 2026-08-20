@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "512ab986",
-      "domain": "Logic",
-      "key_insight": "# Future directions — almost-lossless compression beyond the pigeonhole bound\n\nDerived from the formalised results in `Catalog/Logic/AlmostLossless/`\n(`Core`, `Hashing`, `Scheme`, `Instances`, `ExactP",
-      "quality_score": 0.85,
-      "sorry_count": 0,
-      "theorem_count": 104,
-      "timestamp": "2026-08-19T01:53:45",
-      "title": "Compression Research B3: Almost-lossless / Monte Carlo compression"
-    },
-    {
       "cycle_id": "308f24be",
       "domain": "Geometry",
       "key_insight": "# Future directions — geometry of the attention-cost knee distribution\n\nDerived from the six Lean files added in `Catalog/Geometry/`\n(`KneeFermatWeber`, `KneeMedianProjection`, `KneeScalingRays`, `Kne",
@@ -499,19 +489,19 @@
       "theorem_count": 67,
       "timestamp": "2026-08-20T19:46:43",
       "title": "All the machinery — honesty, guarding, bounded search, the"
+    },
+    {
+      "cycle_id": "1a7b47b1",
+      "domain": "Pythagorean",
+      "key_insight": "# Future Directions — Tropical Cryptocurrency (cycle 1 output)\n\nThis cycle settled, in Lean 4, the first three conjectures of the previous cycle\n(with one of them *refuted and corrected*), and added a",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 58,
+      "timestamp": "2026-08-20T21:43:57",
+      "title": "**Conjecture.** For a generic family of `r` min-plus keys on `k` coordinates wit"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "6db0a277",
-      "domain": "Computation",
-      "key_insight": "# Future Directions — Thermodynamics of Mathematical Proof (thread `th_e10b0054`, after cycle 1)\n\nCycle 1 closed three of the five directions inherited from the previous cycle:\n\n* **Direction 1 (fiber",
-      "quality_score": 0.6345797888127854,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-08-11T16:28:01",
-      "title": "For every finite terminating normalization system equipped with a probability la"
-    },
     {
       "cycle_id": "b7dba88e",
       "domain": "Tropical",
@@ -2501,27 +2491,19 @@
       "theorem_count": 67,
       "timestamp": "2026-08-20T19:46:43",
       "title": "All the machinery — honesty, guarding, bounded search, the"
+    },
+    {
+      "cycle_id": "1a7b47b1",
+      "domain": "Pythagorean",
+      "key_insight": "# Future Directions — Tropical Cryptocurrency (cycle 1 output)\n\nThis cycle settled, in Lean 4, the first three conjectures of the previous cycle\n(with one of them *refuted and corrected*), and added a",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 58,
+      "timestamp": "2026-08-20T21:43:57",
+      "title": "**Conjecture.** For a generic family of `r` min-plus keys on `k` coordinates wit"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "0750e9d7",
-      "domain": "NumberTheory",
-      "name": "coeff_mul_of_isOneMod",
-      "quality": 0.84
-    },
-    {
-      "cycle_id": "94e7c481",
-      "domain": "NumberTheory",
-      "name": "dvd_third_of_dvd_two_ab",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "94e7c481",
-      "domain": "NumberTheory",
-      "name": "dvd_third_of_dvd_two_ac",
-      "quality": 0.78
-    },
     {
       "cycle_id": "94e7c481",
       "domain": "NumberTheory",
@@ -2803,9 +2785,27 @@
       "domain": "Cryptography",
       "name": "searchCost_eq_budget_of_not_found",
       "quality": 0.78
+    },
+    {
+      "cycle_id": "1a7b47b1",
+      "domain": "Pythagorean",
+      "name": "exists_unused_coordinate",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "1a7b47b1",
+      "domain": "Pythagorean",
+      "name": "digest_bump_eq",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "1a7b47b1",
+      "domain": "Pythagorean",
+      "name": "of",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-20T19:46:43",
+  "last_updated": "2026-08-20T21:43:57",
   "open_questions": [
     {
       "context": "Everything is proved; there are no `sorry`s and no new axioms.",
@@ -3827,12 +3827,6 @@
     ],
     "Pythagorean": [
       {
-        "cycle_id": "2db5094c",
-        "quality": 0.6288458474603094,
-        "theorems": 80,
-        "title": "Lines that appear when Berggren Pythagorean Triplet Tree is plotted on a Poincar"
-      },
-      {
         "cycle_id": "64ac4ffd",
         "quality": 0.78,
         "theorems": 56,
@@ -3885,6 +3879,12 @@
         "quality": 0.85,
         "theorems": 74,
         "title": "The \"if\" direction is proved (`FourierFA.poisson_summation`); the converse is op"
+      },
+      {
+        "cycle_id": "1a7b47b1",
+        "quality": 0.82,
+        "theorems": 58,
+        "title": "**Conjecture.** For a generic family of `r` min-plus keys on `k` coordinates wit"
       }
     ],
     "Shared": [
