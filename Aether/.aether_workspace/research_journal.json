@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "5792b548",
-      "domain": "Shared",
-      "key_insight": "# Future Directions — power-sum rigidity, sharpness, and what lies past the boundary\n\nDerived from the verified results in `Catalog/Shared/PowerSumSharpness.lean`\n(rigidity `powerSums_determine`, shar",
-      "quality_score": 0.88,
-      "sorry_count": 0,
-      "theorem_count": 59,
-      "timestamp": "2026-08-18T17:43:35",
-      "title": "Sharpness"
-    },
-    {
       "cycle_id": "ef01dce6",
       "domain": "Bridges",
       "key_insight": "# Future Directions — Almost-Lossless / Monte-Carlo Compression (M9)\n\nDerived from the verified results in `Catalog/Bridges/AlmostLossless*.lean`\n(fifteen files, all compiling, no `sorry`, standard ax",
@@ -499,19 +489,19 @@
       "theorem_count": 93,
       "timestamp": "2026-08-20T13:11:32",
       "title": "The finite-state class and its bound were constructed this cycle"
+    },
+    {
+      "cycle_id": "18b02a30",
+      "domain": "NumberTheory",
+      "key_insight": "# Future directions: after the `q`-analogue of Kummer's theorem\n\n## What is now proved (all `sorry`-free, in `Catalog/NumberTheory/QKummer/`)\n\n*Valuation side.*\n\n* the exact factorisation `[k]_q! [n-k",
+      "quality_score": 0.88,
+      "sorry_count": 3,
+      "theorem_count": 294,
+      "timestamp": "2026-08-20T14:00:28",
+      "title": "C4.  A `q`-analogue of Kummer's theorem"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "fb9255eb",
-      "domain": "Geometry",
-      "key_insight": "# Future directions (thread `th_576aa37a`, cycle 1)\n\nThis cycle closed four of the six targets left by cycle 0 — the CSS dictionary\n(`Catalog/Geometry/CSSDictionary.lean`), CSS distance\n(`Catalog/Geom",
-      "quality_score": 0.627125,
-      "sorry_count": 0,
-      "theorem_count": 87,
-      "timestamp": "2026-08-11T07:54:47",
-      "title": "State the CSS dictionary with two classical codes precisely.: The mission"
-    },
     {
       "cycle_id": "3bb7c316",
       "domain": "Novelty",
@@ -2501,15 +2491,19 @@
       "theorem_count": 93,
       "timestamp": "2026-08-20T13:11:32",
       "title": "The finite-state class and its bound were constructed this cycle"
+    },
+    {
+      "cycle_id": "18b02a30",
+      "domain": "NumberTheory",
+      "key_insight": "# Future directions: after the `q`-analogue of Kummer's theorem\n\n## What is now proved (all `sorry`-free, in `Catalog/NumberTheory/QKummer/`)\n\n*Valuation side.*\n\n* the exact factorisation `[k]_q! [n-k",
+      "quality_score": 0.88,
+      "sorry_count": 3,
+      "theorem_count": 294,
+      "timestamp": "2026-08-20T14:00:28",
+      "title": "C4.  A `q`-analogue of Kummer's theorem"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "a985d45a",
-      "domain": "Combinatorics",
-      "name": "isStrictMatrix_iff",
-      "quality": 0.82
-    },
     {
       "cycle_id": "a985d45a",
       "domain": "Combinatorics",
@@ -2803,17 +2797,16 @@
       "domain": "Tropical",
       "name": "shtarkovSum_le_card_image",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "18b02a30",
+      "domain": "NumberTheory",
+      "name": "from",
+      "quality": 0.88
     }
   ],
-  "last_updated": "2026-08-20T13:11:32",
+  "last_updated": "2026-08-20T14:00:28",
   "open_questions": [
-    {
-      "context": "sorry",
-      "cycle_id": "87772396",
-      "domain": "Novelty",
-      "sorry_count": 1,
-      "timestamp": "2026-07-27T10:29:18"
-    },
     {
       "context": "`RhoDom.dominant_singleton_iff`, so it is not a self-contained restatement.  No `sorry`, no",
       "cycle_id": "17b35eaf",
@@ -3016,6 +3009,13 @@
       "domain": "Physics",
       "sorry_count": 3,
       "timestamp": "2026-08-20T11:43:09"
+    },
+    {
+      "context": "--   Survived: H6–H9, all sorry-free.  Structural pattern: *every* obstruction found in; --   Survived: all five hypotheses, with no `sorry`. The unifying structural pattern is; No `sorry`; axioms are",
+      "cycle_id": "18b02a30",
+      "domain": "NumberTheory",
+      "sorry_count": 3,
+      "timestamp": "2026-08-20T14:00:28"
     }
   ],
   "research_threads": {
@@ -3641,12 +3641,6 @@
     ],
     "NumberTheory": [
       {
-        "cycle_id": "66af3cc3",
-        "quality": 0.72,
-        "theorems": 71,
-        "title": "NET-31: Internalization is a seed-fixed trait among cures — same 4 seeds depende"
-      },
-      {
         "cycle_id": "dc071269",
         "quality": 0.78,
         "theorems": 72,
@@ -3699,6 +3693,12 @@
         "quality": 0.86,
         "theorems": 281,
         "title": "Deepening: The formal results in `Catalog/Applications/EMLQuantumActivation.lean"
+      },
+      {
+        "cycle_id": "18b02a30",
+        "quality": 0.88,
+        "theorems": 294,
+        "title": "C4.  A `q`-analogue of Kummer's theorem"
       }
     ],
     "Physics": [

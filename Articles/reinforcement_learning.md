@@ -1,244 +1,263 @@
-# The Shape of Alignment: What Combinatorics Knows About Tuning a Language Model
+# The Thermodynamics of Alignment
 
-## A tug-of-war written on a hypercube
+*How a single line of algebra explains why fine-tuned language models behave the way they do*
 
-Every modern language model that has been "aligned" — taught to be helpful, to follow
-instructions, to refuse the things it should refuse — has been pulled through the same
-tug-of-war. On one side is a *reward*: a score, produced by some judge, that says how
-good a candidate answer is. On the other side is a *leash*: a penalty that punishes the
-model for wandering too far from the behaviour it had before tuning. The tuned model is
-whatever settles at the point where the pull and the leash balance.
+---
 
-Written down, the tug-of-war is a single line. If $q$ is the distribution over answers
-that the tuned model produces, $p$ is the distribution the original model produced, and
-$r$ is the reward, then the tuning procedure searches for the $q$ that maximises
+## A tug of war with three ropes
 
-$$J(q) \;=\; \mathbb{E}_{y \sim q}\bigl[r(y)\bigr] \;-\; \beta \, \mathrm{KL}(q \,\|\, p).$$
+Every modern instruction-following language model is the product of a
+negotiation. On one side is a **reward model**: a scoring function, trained on
+human preferences or on symbolic rules, that says how good a response is. On the
+other side is the **reference model** — the plain, supervised fine-tuned system
+you started with, the one that already speaks fluent English and knows how to
+finish a sentence. Turn the reward all the way up and the model degenerates: it
+learns to game the score, repeating whatever quirk the reward model happens to
+love. Leave the reward off entirely and nothing improves.
 
-The first term is the pull: make the reward big. The second is the leash: the
-Kullback–Leibler divergence $\mathrm{KL}(q\|p) = \sum_y q(y)\log\frac{q(y)}{p(y)}$
-measures how much information separates the new behaviour from the old, and $\beta > 0$
-sets how tight the leash is. Practitioners often add a third term that rewards the model
-for still assigning high likelihood to its original training corpus, so that alignment
-does not erase general competence.
+The standard compromise, used in essentially every large-scale alignment
+pipeline, is to write down a single objective and maximise it over the policy
+$p$ — the probability distribution the model puts over possible responses $y$ to
+a prompt $x$:
 
-This is a formula from machine learning. But something interesting happens if you refuse
-to treat it as one — if you insist instead that it is a formula about *sets*.
+$$\mathrm{Objective}(p) \;=\; \underbrace{\mathbb{E}_{y \sim p}\big[R(y)\big]}_{\text{be good}} \;-\; \underbrace{\beta\, D_{\mathrm{KL}}\!\big(p \,\|\, \pi_{\mathrm{ref}}\big)}_{\text{but don't change too much}} \;+\; \underbrace{\gamma\, \mathbb{E}_{y \sim \mathcal{D}_{\mathrm{pre}}}\big[\log p(y)\big]}_{\text{and don't forget what you knew}}.$$
 
-Suppose an answer is not a string of words but a **set of satisfied conditions**. A
-symbolic checker runs over a candidate answer and reports which of $n$ requirements it
-met: cited a real source, respected the user's format, avoided the forbidden topic, got
-the arithmetic right, and so on. The answer, as far as the reward is concerned, *is* the
-subset $S \subseteq \{1,\dots,n\}$ of conditions it satisfied. The space of answers is
-then the **Boolean lattice**: the $2^n$ corners of an $n$-dimensional cube, ordered by
-inclusion.
+Three ropes, three directions. The first term pulls towards high reward. The
+second, the *Kullback–Leibler penalty*, is an elastic band tethering the new
+policy $p$ to the reference $\pi_{\mathrm{ref}}$; the coefficient $\beta$ sets
+its stiffness. The third — the *pre-training mix-in*, folklore-known as PTX — is
+a separate rope pulling the model back towards the raw text distribution
+$\mathcal{D}_{\mathrm{pre}}$ it was originally trained on, inserted to stop
+alignment from wrecking performance on ordinary language tasks.
 
-Once the answer space is a hypercube, the tug-of-war stops being an optimisation problem
-and becomes a counting problem. And counting problems have exact answers.
+This article is about what happens when you stop treating that objective as a
+thing to be optimised numerically and instead *solve it exactly*. It turns out
+you can. And the exact solution says a surprising number of true things about
+alignment: how far a tuned model can drift, why sequential rounds of tuning
+compose, why the reward model can only be recovered up to an additive constant,
+and why the third rope is fundamentally at war with the first two.
 
-## The one identity everything rests on
+## The answer, in closed form
 
-Here is the pivot. Suppose you want to add up some quantity over all $2^n$ subsets of
-$\{1,\dots,n\}$, and the quantity depends on a subset only through *how big it is*. Then
-you do not need to visit $2^n$ subsets; you need to visit $n+1$ sizes, weighting each by
-the number of subsets of that size:
+Fix a prompt and let the possible responses form a finite set. Write
+$\pi_{\mathrm{ref}}(i) > 0$ for the reference model's probability of response
+$i$, and $R(i)$ for its reward. Define the **partition function**
 
-$$\sum_{S \subseteq \{1,\dots,n\}} f\bigl(|S|\bigr) \;=\; \sum_{k=0}^{n} \binom{n}{k}\, f(k).$$
+$$Z \;=\; \sum_i \pi_{\mathrm{ref}}(i)\, e^{R(i)/\beta},$$
 
-That is the whole trick — the transfer principle. Applied to $f(k) = x^k$ it gives the
-binomial theorem in disguise, $\sum_S x^{|S|} = (1+x)^n$: the generating function of the
-cube.
+and the **tilted policy**
 
-Now let the reward be the most natural thing a symbolic checker could produce: $a$ points
-per satisfied condition, so $r(S) = a|S|$. What does the tug-of-war produce?
+$$\pi^\star(i) \;=\; \frac{\pi_{\mathrm{ref}}(i)\, e^{R(i)/\beta}}{Z}.$$
 
-The answer is known in closed form, and it is startlingly clean. The **partition
-function** — the normalising sum $Z = \sum_S p(S)\,e^{r(S)/\beta}$ that appears whenever
-you solve this kind of problem — is nothing but the binomial theorem evaluated at
-$x = e^{a/\beta}$:
+This is the reference policy reweighted by an exponential in the reward — a
+softmax at temperature $\beta$, applied *on top of* what the model already
+believed. The central fact is an identity, and once you see it everything else
+follows:
 
-$$Z \;=\; \left(\frac{1 + e^{a/\beta}}{2}\right)^{\! n}.$$
+> **Three-Point Identity.** For every probability distribution $p$ over
+> responses,
+> $$\mathrm{Objective}_{\text{reward}+\text{KL}}(p) \;=\; \beta \log Z \;-\; \beta\, D_{\mathrm{KL}}\!\big(p \,\|\, \pi^\star\big).$$
 
-And the aligned model itself? It is a product of $n$ independent coin flips. Writing
-$\sigma(t) = e^t/(1+e^t)$ for the logistic function — the sigmoid that appears in every
-neural network ever built — the tuned policy assigns to the answer $S$ the probability
+Read it slowly. The left side is a complicated trade-off between two competing
+terms. The right side is a *constant*, $\beta \log Z$, minus a penalty that is
+nonnegative and vanishes exactly when $p = \pi^\star$. The whole optimisation
+problem has collapsed into a statement about distance from a single point.
 
-$$\pi(S) \;=\; \theta^{|S|}(1-\theta)^{\,n-|S|}, \qquad \theta = \sigma\!\left(\frac{a}{\beta}\right).$$
+The proof is three lines of algebra: expand
+$D_{\mathrm{KL}}(p\|\pi^\star) = \sum_i p(i)\log\frac{p(i)}{\pi^\star(i)}$,
+substitute the definition of $\pi^\star$, and the reward term and the $\log Z$
+term fall out of the logarithm of the quotient. Everything hard is hidden in a
+single classical fact — **Gibbs' inequality**, that
+$D_{\mathrm{KL}}(p\|q) \ge 0$ with equality only when $p = q$, which itself
+follows from the elementary pointwise bound $a - b \le a\log(a/b)$.
 
-Read that again, because it is the heart of the matter. **KL-regularised alignment with a
-counting reward turns the model into $n$ independent Bernoulli features, each satisfied
-with probability $\sigma(a/\beta)$.** The sigmoid link is not a modelling choice anybody
-made; it falls out of the optimisation. The reward-per-condition $a$ and the leash
-tightness $\beta$ enter only through their ratio $a/\beta$ — a single effective
-temperature — and that ratio is pushed through a logistic squashing function to become a
-probability.
+So: the aligned model *is* the exponentially tilted reference model, the optimal
+value *is* $\beta \log Z$ — a quantity physicists call a **free energy** — and
+the optimum is **unique**. No gradient descent, no approximation. Alignment, in
+this idealised form, is statistical mechanics: the reward is minus an energy,
+$\beta$ is a temperature, and the aligned policy is a Boltzmann distribution.
 
-The consequences cascade immediately, and every one of them is a statement of elementary
-combinatorics.
+## Five things the formula knows
 
-## Five things that follow for free
+Once the closed form is in hand, quantitative facts about alignment stop being
+empirical observations and start being theorems.
 
-**The distribution of quality is binomial.** How many conditions does the aligned model
-satisfy? Exactly $\mathrm{Binomial}(n, \theta)$: the chance of satisfying exactly $k$ of
-them is $\binom{n}{k}\theta^k(1-\theta)^{n-k}$. Alignment converts a counting reward into
-a binomial concentration.
+**1. You cannot get more than you asked for, and you never get less than you
+had.** If the reward takes values in $[m, M]$, then
 
-**The mean is exactly $n\theta$.** The expected number of satisfied conditions is
-$n\,\sigma(a/\beta)$ and the expected reward is $a\,n\,\sigma(a/\beta)$. The proof is
-the absorption identity $k\binom{n}{k} = n\binom{n-1}{k-1}$ — a fact about Pascal's
-triangle, deployed to compute the output of a machine-learning pipeline.
+$$\mathbb{E}_{\pi_{\mathrm{ref}}}[R] \;\le\; \beta \log Z \;\le\; M.$$
 
-**The information drift is exactly computable.** How far did the model actually travel?
-The divergence from the original uniform behaviour is
+The optimal value is sandwiched between the reward the untuned model already
+achieves and the best reward available anywhere. Tuning never hurts the
+objective, and no amount of it manufactures reward that does not exist. In fact
+the aligned model's *expected reward* also beats the reference model's:
+tilting never makes the model worse by its own scoring rule.
 
-$$\mathrm{KL}(\pi\|p) \;=\; n\left(\frac{a}{\beta}\,\sigma\!\left(\frac a\beta\right) - \log\frac{1+e^{a/\beta}}{2}\right),$$
+**2. The tuned model cannot run away.** Substituting $p = \pi^\star$ into the
+identity and using the sandwich gives a hard leash:
 
-which is *linear in $n$*. Drift is extensive: double the number of conditions and you
-double the information distance travelled. There is no economy of scale in alignment.
+$$\beta \, D_{\mathrm{KL}}\!\big(\pi^\star \,\|\, \pi_{\mathrm{ref}}\big) \;\le\; M - m.$$
 
-**Alignment is order-preserving.** When the reward is non-negative, the aligned
-distribution is a *monotone measure* on the cube: enlarging a set never decreases its
-probability. If $S \subseteq T$ then $\pi(S) \le \pi(T)$. Satisfying more conditions is
-always at least as likely as satisfying fewer — an intuitive statement that is,
-pleasingly, exactly true rather than approximately so.
+The divergence between the aligned and reference policies is at most the *range*
+of the reward divided by $\beta$. This is the mathematical content of the
+intuition that a strong KL penalty keeps the model close to home — but it is
+sharp, explicit, and free of any assumption about the reward beyond boundedness.
 
-**Quality is never bimodal.** The level masses $m_k = \binom nk\theta^k(1-\theta)^{n-k}$
-are **log-concave**: $m_k m_{k+2} \le m_{k+1}^2$. This follows from the log-concavity of
-the binomial coefficients themselves, $\binom nk\binom n{k+2} \le \binom n{k+1}^2$, which
-in turn follows from the single identity $\binom{n}{k+1}(k+1) = \binom nk (n-k)$.
-Log-concavity forces unimodality: once the level masses start decreasing, they keep
-decreasing. So a model aligned to a linear symbolic reward cannot split into two
-populations — one excellent, one terrible — with a valley between. "Two-mode reward
-hacking" is *impossible* in this regime. That is a genuine safety guarantee derived from
-Pascal's triangle.
+Two complementary pictures of that leash exist. A crude multiplicative one:
+every single response keeps a probability between $e^{-(M-m)/\beta}$ and
+$e^{(M-m)/\beta}$ times its original probability — so alignment can neither
+extinguish a response nor conjure one out of nothing. Summing this yields a total
+drift $\sum_i |\pi^\star(i) - \pi_{\mathrm{ref}}(i)| \le e^{(M-m)/\beta} - 1$,
+which tends to $0$ as $\beta \to \infty$: crank the elastic band and the tuned
+model converges to the reference.
 
-## Reward hacking, quantified
+But that exponential bound is useless in the regime that actually matters, where
+$M - m$ is much bigger than $\beta$: $e^{10}-1$ is not a constraint on a total
+variation distance that can never exceed $2$. The right geometry is Euclidean,
+not multiplicative, and it is supplied by **Pinsker's inequality**,
+$\|p - q\|_1^2 \le 2 D_{\mathrm{KL}}(p\|q)$. Combining it with the leash gives
 
-Everyone who has tuned a model against a reward has watched it collapse. Loosen the leash
-too much and the model stops producing diverse, sensible answers and starts producing one
-degenerate answer over and over — the one the reward loves most. How fast does that
-happen?
+$$\Big(\sum_i \big|\pi^\star(i) - \pi_{\mathrm{ref}}(i)\big|\Big)^2 \;\le\; \frac{2(M-m)}{\beta},$$
 
-Exactly this fast. The single best answer is the full set $\{1,\dots,n\}$, and the aligned
-model puts probability $\theta^n$ on it. Bernoulli's inequality plus the elementary bound
-$1 - \sigma(t) \le e^{-t}$ gives
+a **square-root drift law**: total drift grows like $\sqrt{(M-m)/\beta}$, not
+exponentially. Whenever $M - m > \beta$ — that is, in practice — this is
+strictly the better statement, and it is the correct scaling of the alignment
+budget.
 
-$$\pi\bigl(\{1,\dots,n\}\bigr) \;\ge\; 1 - n\,e^{-a/\beta}.$$
+**3. Alignment rounds compose additively.** Suppose you tune with reward $R_1$,
+then take the result as your new reference and tune again with $R_2$. The answer
+is *exactly* what you would have got by tuning once with $R_1 + R_2$. In
+algebraic language: exponential tilting is a group action of the additive group
+of rewards on the open simplex of full-support policies. It is transitive — any
+full-support policy is reachable from any other by a suitable reward — and its
+stabiliser is precisely the constant rewards. So the space of aligned policies
+is a *torsor* under rewards modulo constants: rewards act, they act freely once
+you quotient by constants, and shifting a reward by a constant changes the
+optimal value by that constant while leaving the policy untouched.
 
-A model that started uniform over $2^n$ answers — spread across a million possibilities
-when $n = 20$ — concentrates on a *single* answer at a rate exponential in $a/\beta$. Set
-$a/\beta = 10$ with $n=20$, and the aligned model already puts over $99.9\%$ of its mass on
-one output. The leash is the only thing standing between a diverse model and a
-one-note one, and its protection decays exponentially as you loosen it.
+**4. The reward is only ever knowable up to a constant — and that's fine.**
+Preference data is typically modelled by the Bradley–Terry law: response $i$ is
+preferred to $j$ with probability $1/(1 + e^{R(j)-R(i)})$. Two rewards induce
+identical preference probabilities exactly when they differ by an additive
+constant. Combined with the stabiliser computation, this closes a circle: the
+optimal aligned policy is *well-defined on preference data*. Two reward models
+fitted to the same preferences, however differently normalised, yield literally
+the same tuned model. Conversely, two rewards giving the same tuned model give
+the same preferences. The apparent non-identifiability of the reward is not a
+defect; it is exactly the gauge freedom the aligned policy is blind to.
 
-The trade-off is strictly monotone in both directions. Tightening the leash (increasing
-$\beta$) strictly lowers the achieved reward $a n \sigma(a/\beta)$, and strictly lowers
-the mass on the degenerate answer. There is no setting of $\beta$ that gets you both. This
-is a no-free-lunch statement, proved rather than observed.
+The same computation, read backwards, is the observation behind *direct
+preference optimisation*: assign to any full-support policy $q$ its **implicit
+reward** $R_q(i) = \beta \log\big(q(i)/\pi_{\mathrm{ref}}(i)\big)$. Then $q$ is
+the aligned optimum of its own implicit reward, and the implicit reward of
+$\pi^\star$ recovers $R$ up to a constant. Policies and rewards are two
+coordinate systems on the same object; you may fit either.
 
-There is also an elegant bookkeeping identity hiding here. Compute the drift two
-different ways — once from the free energy, once from the entropy of the tuned model,
-which turns out to be exactly $n$ times the binary entropy
-$H(\theta) = -\theta\log\theta - (1-\theta)\log(1-\theta)$ — and the two computations
-must agree. They do, and forcing them to agree yields the analytic identity
+**5. A mis-specified reward costs at most twice its error.** If your learned
+reward $\hat R$ is uniformly within $\varepsilon$ of the true reward $R$, the
+policy you get by optimising $\hat R$ achieves true objective value at least
+$\beta\log Z(R) - 2\varepsilon$. The proof is a Lipschitz estimate: the free
+energy is $1$-Lipschitz in the reward in the sup norm (and convex in it, being a
+supremum of affine functionals — the variational principle read as a duality),
+costing $\varepsilon$; evaluating the wrong policy on the right reward costs
+another $\varepsilon$. Reward hacking, in this idealised setting, is bounded, and
+the constant is $2$.
 
-$$t\,\sigma(t) - \log\frac{1+e^t}{2} \;=\; \log 2 - H\bigl(\sigma(t)\bigr)$$
+## The Pareto frontier: what $\beta$ buys you
 
-for every real $t$. Two entirely different routes through the theory arrive at the same
-number, which is the sort of cross-check that makes a piece of mathematics trustworthy.
+The coefficient $\beta$ is the single dial an alignment engineer actually turns.
+What does it control? Exactly a trade-off, and monotonically so:
 
-## When conditions help each other
+> **Alignment Frontier.** If $0 < \beta_1 < \beta_2$, then the more weakly
+> regularised policy is both further from the reference *and* higher in expected
+> reward:
+> $$D_{\mathrm{KL}}(\pi^\star_{\beta_2} \| \pi_{\mathrm{ref}}) \le D_{\mathrm{KL}}(\pi^\star_{\beta_1} \| \pi_{\mathrm{ref}}), \qquad \mathbb{E}_{\pi^\star_{\beta_2}}[R] \le \mathbb{E}_{\pi^\star_{\beta_1}}[R].$$
 
-Real symbolic reward models are not linear. They contain *rules*: "if all the premises of
-rule $R$ are present, award a bonus of $c$." A bonus like that is not a sum of per-condition
-scores; it is a synergy. Satisfying premise $1$ is worth nothing on its own, worth nothing
-with premise $2$, but worth $c$ once you also have premise $3$.
+Both inequalities come from the same trick: evaluate each temperature's
+objective at the *other* temperature's optimum and add the two resulting
+inequalities. The cross terms cancel, and what survives is
+$(\beta_2 - \beta_1)$ times the difference of the divergences.
 
-The right notion of synergy on a lattice is **supermodularity**:
+The endpoints of the frontier are the two regimes people worry about. As
+$\beta \to \infty$ the aligned model converges to the reference model in total
+variation: infinite regularisation, no alignment. As $\beta \to 0^+$ the optimal
+value $\beta \log Z$ converges to $\max_i R(i)$ and every strictly suboptimal
+response is abandoned — its probability is at most
+$\frac{\pi_{\mathrm{ref}}(i)}{\pi_{\mathrm{ref}}(i_0)}e^{-(R(i_0)-R(i))/\beta}$,
+which decays exponentially fast in $1/\beta$. Zero regularisation gives you
+mode collapse onto the arg-max of the reward model, which is precisely reward
+hacking: the aligned policy becomes a delta on whatever the scorer likes best,
+irrespective of whether it is good text.
 
-$$r(S) + r(T) \;\le\; r(S \cap T) + r(S \cup T)$$
+## Many prompts, and the localised cost of not forgetting
 
-for all sets $S, T$. Counting rewards satisfy this with equality (they are *modular*).
-Rule bonuses satisfy it strictly. And supermodularity is preserved by sums and by
-multiplication by non-negative constants, so *every* reward of the form "count the
-conditions, plus bonuses for satisfied rules" is supermodular. That single hypothesis
-covers essentially the whole design space of a symbolic reward model.
+Real alignment runs over a distribution $\mathcal{D}$ of prompts, each with its
+own conditional policy. Nothing breaks: the prompt-averaged objective is
+maximised exactly when *every* conditional policy is the tilted policy for its
+own prompt (assuming every prompt has positive probability), and the optimal
+value is the $\mathcal{D}$-average of the per-prompt free energies. Alignment
+decouples across prompts. This is reassuring and slightly boring.
 
-Here is what it buys. The aligned distribution of a supermodular reward is
-**log-supermodular** — it satisfies the FKG lattice condition
-$\pi(S)\pi(T) \le \pi(S\cap T)\pi(S \cup T)$ — which follows in one line from
-exponentiating the supermodularity inequality. And log-supermodularity, by the
-celebrated Fortuin–Kasteleyn–Ginibre inequality from statistical physics, implies
-**positive association**: for any two increasing observables $f$ and $g$,
+The third rope is where it gets interesting. The pre-training mix-in term
+$\gamma \, \mathbb{E}_{y \sim \mathcal{D}_{\mathrm{pre}}}[\log p(y)]$ is, as a
+function of $p$, maximised uniquely at $p = \mathcal{D}_{\mathrm{pre}}$ — it is
+the negative cross-entropy, and the gap between it and its maximum is exactly
+$\gamma\, D_{\mathrm{KL}}(\mathcal{D}_{\mathrm{pre}} \| p)$. So we now have two
+terms, each with its own unique maximiser: the reward-plus-KL part wants
+$p = \pi^\star$, the mix-in wants $p = \mathcal{D}_{\mathrm{pre}}$. The full
+objective decomposes exactly as
 
-$$\mathbb{E}_\pi[f]\cdot\mathbb{E}_\pi[g] \;\le\; \mathbb{E}_\pi[fg].$$
+$$\mathrm{Objective}(p) \;=\; \Big[\beta \log Z + \gamma\,\mathbb{E}_{\mathcal{D}_{\mathrm{pre}}}[\log \mathcal{D}_{\mathrm{pre}}]\Big] \;-\; \beta\, D_{\mathrm{KL}}(p\|\pi^\star) \;-\; \gamma\, D_{\mathrm{KL}}(\mathcal{D}_{\mathrm{pre}}\|p),$$
 
-In plain words: *alignment with synergistic symbolic rules provably entangles the
-conditions*. Take any two conditions $i$ and $j$; under the aligned model the events
-"condition $i$ was met" and "condition $j$ was met" are positively correlated. Never
-negatively. You cannot design a supermodular reward that makes good behaviours trade off
-against each other — the lattice structure forbids it.
+which yields an exact obstruction theorem:
 
-There is a companion statement, coming from Holley's inequality (FKG's order-theoretic
-sibling). If the reward is merely *monotone* — satisfying more conditions never hurts —
-then the aligned model **stochastically dominates** the original: the expected value of
-*every* increasing observable goes up, uniformly in $\beta$. Not the reward on average;
-every monotone quantity whatsoever. Alignment against a monotone reward cannot make any
-monotone property worse. That is a strong and completely unconditional guarantee, and it
-comes from lattice combinatorics rather than from any analytic estimate.
+> **Alignment Tension.** For $\beta, \gamma > 0$, some policy attains the sum of
+> the two individual maxima **if and only if**
+> $\mathcal{D}_{\mathrm{pre}} = \pi^\star$. Otherwise *every* policy falls
+> strictly short.
 
-## Everything scales linearly, and that is the problem
+There is no free lunch and the theorem says so with an "if and only if". The
+alignment tax of the pre-training mix-in is zero precisely in the degenerate case
+where the pre-training distribution already is the aligned optimum; in every
+other case it is strictly positive.
 
-One last theme, and it applies far beyond the cube. Suppose the answer space is a product
-— two independent sub-answers, two parallel rollouts, $n$ tokens generated
-independently — the original model is a product of independent factors, and the reward is
-*additive* across the factors. Then everything in the theory splits:
+But it is also **local**. When the mix-in is coupled to the conditional policy at
+one distinguished prompt $x_0$ — which is what happens when a separate
+pre-training batch is folded into the update — the joint bound is attainable iff
+$\mathcal{D}_{\mathrm{pre}}$ equals the tilted policy at $x_0$, and the optimal
+conditionals at *every other prompt* are completely unaffected. The tax does not
+leak. Anti-forgetting regularisation degrades the policy exactly where it
+touches it.
 
-- the partition function multiplies, $Z = Z_1 Z_2$;
-- the aligned model is again a product, so **alignment cannot manufacture correlations
-  that the reward did not ask for**;
-- the divergence adds, $\mathrm{KL} = \mathrm{KL}_1 + \mathrm{KL}_2$;
-- the objective adds, and so does its optimal value.
-
-For $n$ identical independent coordinates this becomes $Z_n = Z_1^n$ and a suite of
-**linear scaling laws**: the value of alignment, the information drift, and the cost of
-mixing in the original training data all grow *exactly* linearly in $n$. The
-combinatorial engine is nothing more exotic than the distributive law — expanding a
-product of $n$ sums enumerates the $|\Omega|^n$ possible answers — which is precisely why
-tilting a product measure by an additive reward yields another product measure.
-
-The linearity is a warning as much as a result. Because drift, reward gain and pretraining
-cost all scale with the same exponent, you cannot asymptotically trade them off against
-one another by retuning the leash tightness $\beta$ or the pretraining-mixture weight
-$\gamma$. Whatever imbalance you have at one length, you have at every length. Only a
-*per-coordinate* budget — KL per token rather than KL per answer — is stable as answers
-get longer.
+Finally, even with all three terms in play, the objective still has **at most one
+maximiser** among full-support policies. This does not follow from the
+three-point identity — the mix-in term breaks it — but from convexity: the map
+$x \mapsto x\log x$ is *strictly* convex, making $D_{\mathrm{KL}}(\cdot\|c)$
+strictly convex in its first argument, while concavity of $\log$ makes
+$D_{\mathrm{KL}}(a\|\cdot)$ convex in its second. The objective is therefore
+strictly concave, and if two distinct policies both attained the maximum, their
+midpoint would beat both. No derivatives, no first-order conditions, no
+appeal to the smoothness of the parametrisation: just the shape of $x \log x$.
 
 ## Why this matters
 
-None of these statements are approximations, asymptotics, or empirical trends. They are
-identities and inequalities, exact for every $n$, $a$ and $\beta$. The reason they can be
-exact is that the objects involved — subsets, sizes, binomial coefficients, lattices —
-are combinatorial objects, and the tug-of-war between reward and leash happens to
-respect their structure perfectly.
+None of this is a claim about neural networks. The theorems describe the
+*idealised* optimisation problem — the one that gradient-based alignment methods
+approximate over a parametric family, with sampled expectations and a learned
+reward. But the idealised problem is the thing those methods are trying to
+solve, and knowing its exact solution changes what you expect from them.
 
-That is the real message. A formula that arrived from machine learning, decorated with
-expectations over neural network outputs, turns out on a structured answer space to be a
-piece of enumerative combinatorics wearing a disguise. The sigmoid link is the binomial
-theorem. The mean reward is Pascal's absorption identity. The impossibility of bimodal
-degeneration is log-concavity of binomial coefficients. The entanglement of good
-behaviours is the FKG inequality of statistical physics. The collapse onto a single answer
-is Bernoulli's inequality.
+It tells you that the KL coefficient is a temperature and the achievable
+alignment is a free energy. It tells you the drift budget scales like
+$\sqrt{(M-m)/\beta}$, so halving $\beta$ buys only $\sqrt{2}$ times the drift.
+It tells you that stacking alignment stages is the same as adding rewards, so
+sequential fine-tuning cannot reach anything a single well-chosen reward could
+not. It tells you the non-identifiability of reward models is harmless gauge
+freedom. And it tells you, with an exact characterisation rather than a
+heuristic, that the anti-forgetting term you added to protect general
+capabilities is *provably* costing you alignment quality — unless your
+pre-training distribution was already aligned, which it is not.
 
-Alignment is a young and largely empirical subject, its practice running well ahead of
-its theory. But wherever the space of answers has combinatorial structure — sets of
-satisfied constraints, sequences of independent decisions, lattices of features — that
-structure hands you exact answers to questions that otherwise require expensive
-experiments. Knowing that the number of satisfied conditions is *binomially* distributed,
-with a *known* parameter, tells you how many samples you need to estimate quality. Knowing
-that mass on the degenerate answer is at least $1 - ne^{-a/\beta}$ tells you which leash
-settings are safe *before* you spend the compute. Knowing that good behaviours are
-positively correlated tells you that a symbolic reward built out of conjunctive rules will
-never pit its own criteria against each other.
-
-The cube was there all along. It just needed someone to count.
+The pleasant surprise is how little machinery any of it needs. One inequality
+about $a\log b$, one identity, and the rest is bookkeeping. Alignment, at its
+mathematical core, is a Boltzmann distribution wearing a lab coat.

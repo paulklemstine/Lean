@@ -1,46 +1,61 @@
-# A Combinatorial Theory of KL-Regularized Alignment on the Boolean Lattice
+# A Variational and Torsor-Theoretic Analysis of the KL-Regularised Alignment Objective
 
 **Author:** Aristotle
-
 **Date:** 2026-08-20
 
 ---
 
 ## Abstract
 
-We develop an exact, finitary theory of the KL-regularized reward-maximization objective
-$J(q) = \mathbb{E}_q[r] - \beta\,\mathrm{KL}(q\|p)$ — the objective underlying
-reinforcement learning from human (or symbolic) feedback — on response spaces with
-combinatorial structure. Two structures are treated. First, **product spaces**: when the
-reference policy is a product measure and the reward is additive across coordinates, the
-partition function is multiplicative, the optimal policy is again a product, and the
-divergence, objective, and optimal value are all additive; for $n$ i.i.d. coordinates this
-yields exact linear scaling laws for alignment value, information drift, and the cost of
-a pretraining mix-in term. Second, the **Boolean lattice** $2^{[n]}$ of feature sets under
-a uniform reference policy: for the counting reward $r(S) = a|S|$ we obtain closed forms
-for every object in the theory. The partition function is a binomial-theorem evaluation
-$Z = ((1+e^{a/\beta})/2)^n$; the optimal policy is exactly a product of i.i.d.
-$\mathrm{Bernoulli}(\sigma(a/\beta))$ features, where $\sigma$ is the logistic function;
-the reward statistic $|S|$ is exactly $\mathrm{Binomial}(n,\sigma(a/\beta))$ with mean
-$n\sigma(a/\beta)$; the entropy is $n\,H(\sigma(a/\beta))$ and the information drift is
-$n\bigl((a/\beta)\sigma(a/\beta) - \log\frac{1+e^{a/\beta}}2\bigr)$. From log-concavity of
-the binomial coefficients we deduce that the induced law of the reward statistic is
-log-concave and hence unimodal, ruling out bimodal degeneration. A Bernoulli-inequality
-argument yields the quantitative mode-collapse bound
-$\pi(\text{argmax}) \ge 1 - n e^{-a/\beta}$, and both the achieved reward and the
-collapse mass are shown to be strictly antitone in the regularization strength $\beta$.
-Finally, for the non-additive rewards that arise from conjunctive symbolic rules we
-identify **supermodularity** as the governing hypothesis: the optimal policy is then
-log-supermodular, so by the Fortuin–Kasteleyn–Ginibre inequality any two increasing
-observables are positively correlated, and by Holley's inequality a monotone reward makes
-the optimal policy stochastically dominate the reference. Throughout, the technical engine
-is enumerative and lattice combinatorics — the transfer principle
-$\sum_{S\subseteq[n]} f(|S|) = \sum_k \binom nk f(k)$, the distributive law, Pascal's
-absorption identity, and the four-functions theorem — rather than analysis.
+We give a complete exact analysis of the KL-regularised reinforcement-learning
+objective used for language-model alignment, in the form
 
-**Keywords:** KL-regularized alignment; Boolean lattice; binomial law; logistic link;
-log-concavity; FKG inequality; Holley inequality; supermodularity; tensorization; mode
-collapse.
+$$\mathcal{J}(p) \;=\; \mathbb{E}_{y \sim p}[R(y)] \;-\; \beta\, D_{\mathrm{KL}}\!\left(p \,\|\, \pi_{\mathrm{ref}}\right) \;+\; \gamma\, \mathbb{E}_{y \sim \mathcal{D}_{\mathrm{pre}}}[\log p(y)],$$
+
+over a finite response alphabet, where $R$ is a reward model (human-preference
+trained, symbolic-rule based, or a hybrid of the two), $\pi_{\mathrm{ref}}$ is a
+full-support reference policy, $\beta>0$ is the divergence coefficient, and the
+third term is a pre-training mix-in with coefficient $\gamma \ge 0$.
+
+Everything rests on a single exact decomposition, the *three-point identity*
+$\mathbb{E}_p[R] - \beta D_{\mathrm{KL}}(p\|\pi_{\mathrm{ref}}) = \beta\log Z - \beta D_{\mathrm{KL}}(p\|\pi^\star)$,
+where $\pi^\star$ is the exponentially tilted policy and $\beta \log Z$ its free
+energy. From it we derive: the Gibbs variational principle with uniqueness of the
+maximiser; the sandwich $\mathbb{E}_{\pi_{\mathrm{ref}}}[R] \le \beta\log Z \le \max R$;
+antitonicity of the optimal value in $\beta$; the drift bound
+$\beta D_{\mathrm{KL}}(\pi^\star\|\pi_{\mathrm{ref}}) \le \max R - \min R$; and
+monotone improvement of expected reward.
+
+We then establish structural results: exponential tilting is a transitive action
+of the additive group of rewards on the open simplex whose stabiliser is exactly
+the constants, so the simplex is a torsor under rewards-modulo-constants, and
+sequential alignment composes additively. Bradley–Terry preference data determines
+the reward exactly up to an additive constant, hence determines the aligned policy
+uniquely; the implicit-reward ("direct preference") reparametrisation is an exact
+inverse of tilting. Quantitatively we prove convexity and $1$-Lipschitzness of the
+free energy in the reward, a $2\varepsilon$ reward-misspecification bound, two-sided
+no-collapse support bounds $e^{\mp\Delta/\beta}$, an $L^1$ drift bound
+$e^{\Delta/\beta}-1$ where $\Delta = \max R - \min R$, and — via a self-contained
+finite-alphabet Pinsker inequality — the sharper square-root drift law
+$\|\pi^\star-\pi_{\mathrm{ref}}\|_1^2 \le 2\Delta/\beta$, which dominates the
+exponential bound in the practically relevant regime $\Delta > \beta$. We
+characterise both temperature limits: $L^1$ convergence to $\pi_{\mathrm{ref}}$ as
+$\beta\to\infty$, and convergence of the optimal value to $\max R$ with exponential
+suppression of suboptimal responses as $\beta\to0^+$. We show the achievable
+(divergence, reward) pairs form a monotone Pareto frontier in $\beta$.
+
+For the multi-prompt objective we prove that optimality decomposes prompt-wise, and
+that the pre-training mix-in induces an exact obstruction: the sum of the two
+individual maxima is attainable if and only if $\mathcal{D}_{\mathrm{pre}} = \pi^\star$,
+and this alignment tax is localised to the prompt to which the mix-in is coupled.
+Finally, using strict convexity of $x\mapsto x\log x$ together with convexity of
+$D_{\mathrm{KL}}$ in its second argument, we prove that the full three-term
+objective has at most one maximiser among full-support policies — without any
+appeal to differentiability or first-order conditions.
+
+**Keywords:** KL-regularised reinforcement learning, Gibbs variational principle,
+exponential tilting, free energy, Bradley–Terry model, Pinsker inequality,
+alignment tax, torsor.
 
 ---
 
@@ -48,671 +63,648 @@ collapse.
 
 ### 1.1 The objective
 
-Fix a finite set $\Omega$ of *responses*, a strictly positive *reference policy*
-$p:\Omega \to (0,\infty)$ with $\sum_{y} p(y) = 1$, a *reward* $r : \Omega \to \mathbb{R}$,
-and a *regularization strength* (or *temperature*) $\beta > 0$. For a probability
-distribution $q$ on $\Omega$ define the **objective**
+Contemporary alignment of large generative models proceeds in three stages:
+supervised fine-tuning produces a reference policy $\pi_{\mathrm{ref}}$; a reward
+model $R$ is fitted to human preference comparisons (or, in a neurosymbolic
+pipeline, assembled from logical constraints and verifier scores); and the policy
+is then optimised against $R$ subject to a divergence penalty that prevents it
+from drifting away from $\pi_{\mathrm{ref}}$. A pre-training mix-in term is
+commonly added to prevent regression on general language capabilities.
 
-$$J_\beta(q) \;=\; \sum_{y \in \Omega} q(y)\,r(y) \;-\; \beta\!\!\sum_{y \in \Omega} q(y)\log\frac{q(y)}{p(y)} \;=\; \mathbb{E}_q[r] - \beta\,\mathrm{KL}(q\|p).$$
+The composite objective is
+$$\mathcal{J}(p) \;=\; \mathbb{E}_{x \sim \mathcal{D},\, y \sim p(\cdot|x)}\big[R(x,y)\big] \;-\; \beta\, \mathbb{E}_{x}\left[\mathbb{E}_{y\sim p(\cdot|x)}\log \frac{p(y|x)}{\pi_{\mathrm{ref}}(y|x)}\right] \;+\; \gamma\, \mathbb{E}_{y \sim \mathcal{D}_{\mathrm{pre}}}\big[\log p(y)\big].$$
 
-This is exactly the alignment objective used to tune generative models against a learned
-or symbolic reward: maximize reward while paying an information price for departing from
-the reference behaviour. A third term, a *pretraining mix-in*
-$\gamma\,\mathbb{E}_{x \sim d}[\log q(x)]$ with coefficient $\gamma \ge 0$ and pretraining
-distribution $d$, is often added to prevent regression on general capabilities; we write
-$J^{\mathrm{ptx}}_{\beta,\gamma}$ for the augmented objective.
+In practice $\mathcal{J}$ is maximised approximately, by policy-gradient methods
+over a parametric family, using sampled expectations. This paper studies the
+*idealised* problem: maximise $\mathcal{J}$ over all probability distributions on
+a finite response set. The idealised problem is exactly solvable, and its solution
+is the object that every practical method is approximating.
 
-Define the **partition function**, the **optimal (Gibbs) policy**, and the **free energy**:
+### 1.2 Contributions
 
-$$Z_\beta(r,p) = \sum_{y} p(y)\,e^{r(y)/\beta}, \qquad \pi_\beta(y) = \frac{p(y)\,e^{r(y)/\beta}}{Z_\beta(r,p)}, \qquad F_\beta(r,p) = \beta \log Z_\beta(r,p).$$
+1. A single exact identity (Theorem 3.2) from which the entire first-order theory
+   follows as bookkeeping, with no calculus of variations.
+2. A complete set of quantitative alignment bounds: value sandwich, divergence
+   leash, two-sided support bounds, $L^1$ and square-root drift laws, both
+   temperature limits, and a monotone Pareto frontier in $\beta$.
+3. A structural (group-theoretic) description: tilting is a free transitive action
+   modulo constants, giving additive composition of alignment stages and exact
+   identifiability of the aligned policy from preference data.
+4. An exact obstruction theorem for the pre-training mix-in, together with its
+   localisation across prompts.
+5. Uniqueness of the maximiser for the full three-term objective, proved from
+   strict convexity alone.
 
-The classical variational (Donsker–Varadhan / Gibbs) fact is that $\pi_\beta$ is the unique
-maximizer of $J_\beta$ and that $\max_q J_\beta(q) = F_\beta(r,p)$; equivalently, for every
-$q$,
+### 1.3 Standing conventions
 
-$$J_\beta(q) \;=\; F_\beta(r,p) \;-\; \beta\,\mathrm{KL}(q\|\pi_\beta). \tag{1.1}$$
-
-We take (1.1) as given and ask a different question.
-
-### 1.2 The question
-
-Alignment theory is usually pursued analytically: concentration bounds, convergence rates,
-regret. But in practice the response space is not amorphous. A symbolic verifier attached
-to a reward model reports a *set* of satisfied constraints; a sequence model emits a
-*tuple* of tokens; a retrieval pipeline returns a *subset* of facts. These are
-combinatorial objects, and on combinatorial objects the objective above does not merely
-admit bounds — it admits **exact closed forms**.
-
-This paper carries out that program in two settings.
-
-**(A) Product structure (Section 3).** $\Omega = \Omega_1 \times \Omega_2$ with
-$p = p_1 \otimes p_2$ and $r(y_1,y_2) = r_1(y_1) + r_2(y_2)$. Everything factorizes or
-adds. Iterating gives exact linear scaling laws in the number of coordinates.
-
-**(B) Boolean-lattice structure (Sections 4–7).** $\Omega = 2^{[n]}$, the family of
-subsets of $[n] = \{1,\dots,n\}$, with $p$ uniform. This is the natural model of a
-*neurosymbolic* reward: response $S$ is the set of the $n$ checkable features it
-satisfies. Sections 4–6 treat the counting reward $r(S) = a|S|$, obtaining closed forms
-for the partition function, policy, induced reward law, mean, entropy, drift, and
-mode-collapse mass, along with monotonicity, log-concavity, and temperature-monotonicity
-theorems. Section 7 drops additivity and treats supermodular rewards — the class generated
-by counting rewards together with conjunctive rule bonuses — where FKG and Holley
-inequalities take over.
-
-### 1.3 Summary of contributions
-
-1. A **transfer principle** (Theorem 4.1) reducing sums over the $2^n$-element Boolean
-   lattice to $(n+1)$-term binomial sums, from which the generating identity
-   $\sum_S x^{|S|} = (1+x)^n$ and all subsequent closed forms follow.
-2. **Exact solution of the counting-reward alignment problem** (Theorems 4.4, 4.5, 5.1,
-   5.3, 6.1, 6.2): partition function, aligned policy as an i.i.d. Bernoulli product with
-   logistic parameter, binomial law of the reward statistic, exact mean, free energy,
-   entropy, and information drift.
-3. **Structural theorems**: order-preservation of the aligned measure (Theorem 6.4),
-   log-concavity and hence unimodality of the reward law (Theorems 6.5, 6.6), and a
-   consistency identity (Theorem 6.3) cross-validating two independent computations of the
-   drift.
-4. A **quantitative reward-hacking bound** $\pi(\text{top}) \ge 1 - ne^{-a/\beta}$
-   (Theorem 6.7) with strict monotonicity of both reward and collapse mass in $\beta$
-   (Theorems 6.8, 6.9).
-5. **Lattice theory for non-additive rewards** (Section 7): supermodularity is a convex
-   cone containing counting rewards and rule bonuses; the aligned policy is
-   log-supermodular; FKG gives positive association of features; Holley gives stochastic
-   dominance over the reference.
-6. **Tensorization and exact scaling laws** (Section 3), including linear scaling of the
-   pretraining-mixin-augmented value.
+Throughout, $\iota$ is a finite nonempty set of responses. A *probability vector*
+is $p:\iota\to\mathbb{R}$ with $p(i)\ge0$ and $\sum_i p(i)=1$; it has *full
+support* if $p(i)>0$ for all $i$. We write $\Delta^\circ$ for the set of
+full-support probability vectors (the open simplex). The finite Kullback–Leibler
+divergence is
+$$D_{\mathrm{KL}}(p\|q) \;=\; \sum_i p(i)\log\frac{p(i)}{q(i)},$$
+with the convention $0\log 0 = 0$, which is automatic here since we always take
+the second argument to have full support. Rewards are arbitrary real functions
+$R:\iota\to\mathbb{R}$; when boundedness is needed we write $m \le R(i) \le M$ and
+$\Delta = M - m$.
 
 ---
 
-## 2. Notation and preliminaries
+## 2. Definitions
 
-Throughout, $\Omega$ is a finite nonempty set. A function $q : \Omega \to \mathbb{R}$ is a
-*distribution* if $\sum_y q(y) = 1$, and a *positive distribution* if in addition
-$q(y) > 0$ for all $y$. For positive distributions $q, g$ set
+**Definition 2.1 (Partition function and tilted policy).** For $\beta>0$, a
+full-support reference $\pi_{\mathrm{ref}}$ and a reward $R$, set
+$$Z_\beta(\pi_{\mathrm{ref}},R) \;=\; \sum_i \pi_{\mathrm{ref}}(i)\, e^{R(i)/\beta}, \qquad \pi^\star_\beta(i) \;=\; \frac{\pi_{\mathrm{ref}}(i)\,e^{R(i)/\beta}}{Z_\beta(\pi_{\mathrm{ref}},R)}.$$
+We call $\pi^\star_\beta$ the *exponentially tilted* (Gibbs, softmax) policy and
+suppress subscripts when unambiguous.
 
-$$\mathrm{KL}(q\|g) = \sum_y q(y)\log\frac{q(y)}{g(y)}, \qquad \mathrm{Ent}(q) = -\sum_y q(y)\log q(y).$$
+**Definition 2.2 (Free energy).** $F_\beta(\pi_{\mathrm{ref}},R) = \beta \log Z_\beta(\pi_{\mathrm{ref}},R)$.
 
-We write $\sigma(t) = e^t/(1+e^t)$ for the **logistic** (sigmoid) function and
-$H(\theta) = -\theta\log\theta - (1-\theta)\log(1-\theta)$ for the **binary entropy**. We
-record two elementary facts used constantly.
+**Definition 2.3 (Objective terms).** The reward-plus-divergence objective is
+$$\mathcal{J}^{\mathrm{RL}}_\beta(p) \;=\; \sum_i p(i)R(i) \;-\; \beta\, D_{\mathrm{KL}}(p\|\pi_{\mathrm{ref}}),$$
+the pre-training mix-in is
+$$\mathcal{P}_\gamma(p) \;=\; \gamma\sum_i \mathcal{D}_{\mathrm{pre}}(i)\log p(i),$$
+and the full objective is $\mathcal{J}_{\beta,\gamma}(p) = \mathcal{J}^{\mathrm{RL}}_\beta(p) + \mathcal{P}_\gamma(p)$.
 
-**Lemma 2.1 (logistic basics).** For all $t \in \mathbb{R}$: $0 < \sigma(t) < 1$;
-$1 - \sigma(t) = \dfrac{1}{1+e^t}$; $\sigma$ is strictly increasing; $\sigma(t) \ge 1/2$
-whenever $t \ge 0$; and $1 - \sigma(t) \le e^{-t}$.
+**Definition 2.4 (Bradley–Terry preferences).** For a reward $R$, the induced
+preference probability of $i$ over $j$ is
+$$\Pr[i \succ j] \;=\; \frac{1}{1 + e^{R(j)-R(i)}}.$$
 
-*Proof.* Positivity and the complement formula are immediate from
-$\sigma(t) = e^t/(1+e^t)$ and $1+e^t > 0$; the complement formula gives $\sigma(t) < 1$.
-Strict monotonicity follows from $\sigma(s) < \sigma(t)$ $\iff$
-$e^s(1+e^t) < e^t(1+e^s)$ $\iff$ $e^s < e^t$. For $t \ge 0$ we have $e^t \ge 1$, so
-$2e^t \ge 1 + e^t$ and $\sigma(t) \ge 1/2$. Finally $e^t \le 1 + e^t$ gives
-$1-\sigma(t) = (1+e^t)^{-1} \le e^{-t}$. $\square$
+**Definition 2.5 (Implicit reward).** For $q \in \Delta^\circ$ and $\beta > 0$,
+$$R_q(i) \;=\; \beta \log \frac{q(i)}{\pi_{\mathrm{ref}}(i)}.$$
 
-For the Boolean lattice we identify $\Omega = 2^{[n]}$ with the collection of subsets
-$S \subseteq \{1,\dots,n\}$, partially ordered by inclusion, with meet $\cap$ and join
-$\cup$. The **uniform reference policy** is $p(S) = 2^{-n}$ for all $S$; it is a positive
-distribution since there are exactly $2^n$ subsets.
+**Definition 2.6 (Multi-prompt objective).** For a finite prompt set $\chi$ with
+weights $D(x) > 0$, per-prompt references $\pi_{\mathrm{ref}}(\cdot|x)$, rewards
+$R(\cdot|x)$ and conditional policies $p(\cdot|x)$,
+$$\mathcal{J}^{\mathrm{multi}}_\beta(p) \;=\; \sum_{x} D(x)\, \mathcal{J}^{\mathrm{RL}}_\beta\big(p(\cdot|x)\big), \qquad F^{\mathrm{multi}}_\beta \;=\; \sum_x D(x)\, F_\beta\big(\pi_{\mathrm{ref}}(\cdot|x), R(\cdot|x)\big),$$
+and, for a distinguished prompt $x_0$,
+$$\mathcal{J}^{\mathrm{full}}_{\beta,\gamma}(p) \;=\; \mathcal{J}^{\mathrm{multi}}_\beta(p) + \mathcal{P}_\gamma\big(p(\cdot|x_0)\big).$$
 
 ---
 
-## 3. Tensorization: exact scaling laws on product spaces
+## 3. The variational principle
 
-Before descending to the lattice we record the product theory, both because it is the
-general reason alignment behaves extensively and because the Boolean-lattice results of
-Section 4 turn out to be a hidden instance of it.
+### 3.1 Gibbs' inequality
 
-Let $\Omega_1, \Omega_2$ be finite nonempty sets. Given $p_i : \Omega_i \to \mathbb{R}$,
-the **product reference** is $(p_1\otimes p_2)(y_1,y_2) = p_1(y_1)p_2(y_2)$; given
-$r_i : \Omega_i \to \mathbb{R}$, the **additive reward** is
-$(r_1 \oplus r_2)(y_1,y_2) = r_1(y_1) + r_2(y_2)$.
+**Lemma 3.1 (Pointwise bound).** For $a \ge 0$ and $b > 0$,
+$a - b \le a\log(a/b)$, with equality iff $a = b$.
 
-**Theorem 3.1 (multiplicativity of the partition function).**
-$Z_\beta(r_1\oplus r_2,\; p_1\otimes p_2) = Z_\beta(r_1,p_1)\cdot Z_\beta(r_2,p_2)$.
+*Proof sketch.* For $a = 0$ the claim is $-b \le 0$, strict since $b>0$. For
+$a>0$ put $t = a/b$; the claim is $b(t - 1) \le b\,t\log t$, i.e.
+$t-1 \le t \log t$, equivalently $\log(1/t) \le 1/t - 1$, which is the standard
+bound $\log u \le u - 1$ with $u = 1/t$, strict unless $u = 1$. $\square$
 
-*Proof sketch.* Expand the double sum, use $e^{(u+v)/\beta} = e^{u/\beta}e^{v/\beta}$, and
-apply the distributive law $\bigl(\sum_a f(a)\bigr)\bigl(\sum_b g(b)\bigr) = \sum_{a,b} f(a)g(b)$
-in reverse. $\square$
+**Theorem 3.1 (Gibbs' inequality and its equality case).** If $p$ is a
+probability vector and $q$ has full support, then $D_{\mathrm{KL}}(p\|q) \ge 0$,
+and $D_{\mathrm{KL}}(p\|q) = 0$ if and only if $p = q$.
 
-**Theorem 3.2 (the aligned policy of a separable problem is a product).** If $p_1,p_2$ are
-positive distributions then
-$$\pi_\beta\bigl(r_1\oplus r_2,\ p_1\otimes p_2\bigr) \;=\; \pi_\beta(r_1,p_1) \otimes \pi_\beta(r_2,p_2).$$
-
-*Proof sketch.* Both sides at $(y_1,y_2)$ equal
-$p_1(y_1)e^{r_1(y_1)/\beta}p_2(y_2)e^{r_2(y_2)/\beta}$ divided by $Z_1Z_2$, by Theorem 3.1.
+*Proof sketch.* Summing Lemma 3.1 termwise gives
+$0 = \sum_i p(i) - \sum_i q(i) \le \sum_i p(i)\log(p(i)/q(i))$. For the equality
+case, if $p(j) \ne q(j)$ for some $j$ then the $j$-th summand is *strictly* above
+$p(j)-q(j)$ while all others are weakly above, so the total is strictly positive.
 $\square$
 
-Theorem 3.2 is the precise sense in which **alignment cannot invent correlations the
-reward did not ask for**: tilting a product measure by an additive reward returns a
-product measure.
+### 3.2 The three-point identity
 
-**Theorem 3.3 (additivity of divergence, objective and free energy).** For positive
-distributions $q_i, g_i$ on $\Omega_i$,
-$$\mathrm{KL}(q_1\otimes q_2 \,\|\, g_1 \otimes g_2) = \mathrm{KL}(q_1\|g_1) + \mathrm{KL}(q_2\|g_2),$$
-and consequently
-$$J_\beta\bigl(q_1 \otimes q_2;\ r_1\oplus r_2,\ p_1\otimes p_2\bigr) = J_\beta(q_1;r_1,p_1) + J_\beta(q_2;r_2,p_2), \qquad F_\beta(r_1\oplus r_2, p_1\otimes p_2) = F_\beta(r_1,p_1) + F_\beta(r_2,p_2).$$
+**Lemma 3.2 (Change of reference).** For $p$ a probability vector,
+$\pi_{\mathrm{ref}}$ full support and $\beta>0$,
+$$D_{\mathrm{KL}}(p\|\pi^\star) \;=\; D_{\mathrm{KL}}(p\|\pi_{\mathrm{ref}}) \;-\; \frac{1}{\beta}\sum_i p(i)R(i) \;+\; \log Z.$$
 
-*Proof sketch.* Since $\frac{q_1(a)q_2(b)}{g_1(a)g_2(b)} = \frac{q_1(a)}{g_1(a)}\cdot\frac{q_2(b)}{g_2(b)}$,
-the logarithm splits; summing and using $\sum_a q_1(a) = \sum_b q_2(b) = 1$ gives
-additivity of $\mathrm{KL}$. The same normalization argument gives additivity of
-$\mathbb{E}[r_1\oplus r_2]$, hence of $J$. Free-energy additivity is
-$\log(Z_1Z_2) = \log Z_1 + \log Z_2$ from Theorem 3.1. $\square$
+*Proof sketch.* Write $\log\frac{p(i)}{\pi^\star(i)} = \log\frac{p(i)}{\pi_{\mathrm{ref}}(i)} - \frac{R(i)}{\beta} + \log Z$ pointwise (valid since $\pi_{\mathrm{ref}}(i), Z > 0$; the summand vanishes where $p(i)=0$), multiply by $p(i)$ and sum, using $\sum_i p(i) = 1$. $\square$
 
-### 3.1 Tensor powers and linear scaling laws
+**Theorem 3.2 (Three-point identity).** For $\beta > 0$, full-support
+$\pi_{\mathrm{ref}}$, and any probability vector $p$,
+$$\mathcal{J}^{\mathrm{RL}}_\beta(p) \;=\; F_\beta(\pi_{\mathrm{ref}},R) \;-\; \beta\, D_{\mathrm{KL}}\big(p\,\|\,\pi^\star\big).$$
 
-Now let $\alpha$ be a finite nonempty set, $n \ge 0$, and consider length-$n$ responses
-$y \in \alpha^{[n]}$ with i.i.d. reference $p^{\otimes n}(y) = \prod_i p(y_i)$ and additive
-reward $r^{\oplus n}(y) = \sum_i r(y_i)$.
+*Proof.* Multiply Lemma 3.2 by $-\beta$ and rearrange; the $\log Z$ term becomes
+$-\beta\log Z$ on one side and produces $F_\beta$ on the other. $\square$
 
-**Theorem 3.4 (tensor-power law).** $Z_\beta(r^{\oplus n}, p^{\otimes n}) = Z_\beta(r,p)^n$,
-and $\pi_\beta(r^{\oplus n},p^{\otimes n}) = \pi_\beta(r,p)^{\otimes n}$.
+This identity is the entire content of the first-order theory. Every statement in
+§3.3 and §4 is obtained by choosing a particular $p$ and applying Theorem 3.1.
 
-*Proof sketch.* The distributive law in the form
-$\prod_{i=1}^n \sum_{a \in \alpha} h_i(a) = \sum_{y \in \alpha^{[n]}} \prod_i h_i(y_i)$
-— expansion of a product of sums over the "hypercube" of index choices — applied to
-$h_i(a) = p(a)e^{r(a)/\beta}$, identifies the $n$-fold partition sum with $Z_1^n$; the
-policy statement then follows by dividing. $\square$
+### 3.3 Optimality
 
-**Corollary 3.5 (linear scaling laws).** With $p$ a positive distribution, $\beta>0$:
-$$F_\beta(r^{\oplus n}, p^{\otimes n}) = n\,F_\beta(r,p), \qquad \mathbb{E}_{\pi^{(n)}}\bigl[r^{\oplus n}\bigr] = n\,\mathbb{E}_{\pi}[r], \qquad \mathrm{KL}\bigl(\pi^{(n)} \,\big\|\, p^{\otimes n}\bigr) = n\,\mathrm{KL}(\pi\|p).$$
-Moreover, with an i.i.d. pretraining distribution $d^{\otimes n}$, the pretraining-augmented
-value at the aligned policy satisfies
-$J^{\mathrm{ptx}}_{\beta,\gamma}\bigl(\pi^{(n)}\bigr) = n\,J^{\mathrm{ptx}}_{\beta,\gamma}(\pi)$.
+**Theorem 3.3 (Gibbs variational principle with uniqueness).** Let $\beta>0$ and
+$\pi_{\mathrm{ref}}$ have full support. Then for every probability vector $p$,
+$$\mathcal{J}^{\mathrm{RL}}_\beta(p) \;\le\; F_\beta(\pi_{\mathrm{ref}},R),$$
+with equality if and only if $p = \pi^\star$. In particular the maximiser exists
+and is unique, the optimal value is the free energy $\beta \log Z$, and
+$\pi^\star$ is a full-support probability vector.
 
-*Proof sketch.* Free energy: $\log(Z_1^n) = n\log Z_1$. Reward: a marginalization
-identity — again the distributive law — shows that integrating a one-coordinate observable
-against a product measure returns the one-coordinate expectation, and there are $n$
-coordinates. Drift: read $\mathrm{KL}$ off the exact identity
-$\beta\,\mathrm{KL}(\pi\|p) = \mathbb{E}_\pi[r] - F_\beta$, then divide by $\beta > 0$.
-For the mix-in, the entropy of $d^{\otimes n}$ is $n\,\mathrm{Ent}(d)$ and
-$\mathrm{KL}(d^{\otimes n}\|\pi^{(n)}) = n\,\mathrm{KL}(d\|\pi)$ by the same
-marginalization argument, and the value of the augmented objective at the aligned policy
-is an affine combination of these. $\square$
+*Proof.* Immediate from Theorem 3.2 and Theorem 3.1: the correction term
+$\beta D_{\mathrm{KL}}(p\|\pi^\star)$ is nonnegative and vanishes exactly at
+$p = \pi^\star$. That $\pi^\star$ is a full-support probability vector is a direct
+computation: $Z>0$ because each summand is positive, and the normalisation is by
+construction. $\square$
 
-**Interpretation.** Reward gain, information drift, and pretraining cost all carry the same
-exponent $n^1$. Therefore *no* choice of $(\beta,\gamma)$ can asymptotically rebalance them
-as the number of coordinates grows: an imbalance at one length is an imbalance at every
-length. Only per-coordinate budgets (drift per token, not drift per response) are stable
-under changing response length.
+The interpretation is thermodynamic: $-R$ is an energy, $\beta$ a temperature,
+$\pi^\star$ a Boltzmann distribution relative to the base measure
+$\pi_{\mathrm{ref}}$, and the optimal value a free energy.
 
 ---
 
-## 4. The Boolean lattice: transfer principle and exact solution
+## 4. Quantitative alignment bounds
 
-### 4.1 The transfer principle
+Throughout this section $\beta > 0$, $\pi_{\mathrm{ref}}$ has full support and,
+where indicated, $m \le R \le M$ with $\Delta = M - m$.
 
-**Theorem 4.1 (transfer principle).** For every $n \ge 0$ and every
-$f : \mathbb{N} \to \mathbb{R}$,
-$$\sum_{S \subseteq [n]} f\bigl(|S|\bigr) \;=\; \sum_{k=0}^{n} \binom{n}{k}\, f(k).$$
+**Theorem 4.1 (Value sandwich).** $\displaystyle \mathbb{E}_{\pi_{\mathrm{ref}}}[R] \le F_\beta \le M$, and hence $m \le F_\beta \le M$.
 
-*Proof sketch.* Partition the power set of $[n]$ into its level sets
-$\mathcal{P}_k = \{S : |S| = k\}$ for $k = 0,\dots,n$. On $\mathcal{P}_k$ the summand is
-the constant $f(k)$, and $|\mathcal{P}_k| = \binom nk$. $\square$
+*Proof sketch.* Lower bound: evaluate Theorem 3.3 at $p = \pi_{\mathrm{ref}}$, for
+which the divergence term vanishes. Upper bound: at $p = \pi^\star$ the objective
+equals $F_\beta$, so $F_\beta = \mathbb{E}_{\pi^\star}[R] - \beta D_{\mathrm{KL}}(\pi^\star\|\pi_{\mathrm{ref}}) \le \mathbb{E}_{\pi^\star}[R] \le M$. $\square$
 
-**Corollary 4.2 (generating function of the cube).** For all $x \in \mathbb{R}$,
-$\displaystyle\sum_{S\subseteq[n]} x^{|S|} = (1+x)^n$.
+**Theorem 4.2 (Antitonicity in $\beta$).** If $0 < \beta_1 \le \beta_2$ then
+$F_{\beta_2} \le F_{\beta_1}$.
 
-*Proof.* Apply Theorem 4.1 with $f(k) = x^k$ and compare with the binomial expansion of
-$(x+1)^n$. $\square$
+*Proof sketch.* $F_{\beta_2} = \mathbb{E}_{\pi^\star_{\beta_2}}[R] - \beta_2 D_{\mathrm{KL}}(\pi^\star_{\beta_2}\|\pi_{\mathrm{ref}}) \le \mathbb{E}_{\pi^\star_{\beta_2}}[R] - \beta_1 D_{\mathrm{KL}}(\pi^\star_{\beta_2}\|\pi_{\mathrm{ref}}) \le F_{\beta_1}$, the last step by Theorem 3.3 at temperature $\beta_1$. $\square$
 
-Corollary 4.2 is the single computational device behind every closed form below. It is
-worth emphasizing what it does: it converts a sum over $2^n$ objects into an evaluation of
-a degree-$n$ polynomial.
+**Theorem 4.3 (Divergence leash).** $\beta\, D_{\mathrm{KL}}(\pi^\star\|\pi_{\mathrm{ref}}) \le M - m$.
 
-### 4.2 The counting reward and its solution
+*Proof.* $F_\beta = \mathbb{E}_{\pi^\star}[R] - \beta D_{\mathrm{KL}}(\pi^\star\|\pi_{\mathrm{ref}}) \le M - \beta D_{\mathrm{KL}}(\pi^\star\|\pi_{\mathrm{ref}})$, while $F_\beta \ge m$ by Theorem 4.1. $\square$
 
-**Definition 4.3.** On $\Omega = 2^{[n]}$ with uniform reference $p(S) = 2^{-n}$, the
-**counting reward** with per-feature value $a \in \mathbb{R}$ is $r(S) = a\,|S|$. The
-**Bernoulli feature policy** with parameter $\theta$ is
-$$\mathrm{Ber}_n^\theta(S) \;=\; \theta^{|S|}(1-\theta)^{\,n - |S|}.$$
+**Theorem 4.4 (Reward improvement).** $\mathbb{E}_{\pi_{\mathrm{ref}}}[R] \le \mathbb{E}_{\pi^\star}[R]$.
 
-**Theorem 4.4 (the partition function is a binomial evaluation).**
-$$Z_\beta\bigl(a|\cdot|,\ \mathrm{unif}\bigr) \;=\; \left(\frac{1 + e^{a/\beta}}{2}\right)^{\!n}.$$
+*Proof.* $\mathbb{E}_{\pi^\star}[R] = F_\beta + \beta D_{\mathrm{KL}}(\pi^\star\|\pi_{\mathrm{ref}}) \ge F_\beta \ge \mathbb{E}_{\pi_{\mathrm{ref}}}[R]$. $\square$
 
-*Proof sketch.* Each term is $2^{-n}e^{a|S|/\beta} = 2^{-n}\bigl(e^{a/\beta}\bigr)^{|S|}$,
-using $e^{|S| \cdot t} = (e^t)^{|S|}$. Factor out $2^{-n}$ and apply Corollary 4.2 with
-$x = e^{a/\beta}$ to get $2^{-n}(1+e^{a/\beta})^n$. $\square$
+**Theorem 4.5 (Two-sided support bounds).** For every $i$,
+$$\pi_{\mathrm{ref}}(i)\, e^{-\Delta/\beta} \;\le\; \pi^\star(i) \;\le\; \pi_{\mathrm{ref}}(i)\, e^{\Delta/\beta}.$$
 
-**Theorem 4.5 (alignment on the Boolean lattice = i.i.d. Bernoulli features).** For all
-$n, a, \beta$,
-$$\pi_\beta\bigl(a|\cdot|,\ \mathrm{unif}\bigr) \;=\; \mathrm{Ber}_n^{\theta}, \qquad \theta = \sigma\!\left(\frac a\beta\right) = \frac{e^{a/\beta}}{1+e^{a/\beta}}.$$
+*Proof sketch.* $e^{m/\beta} \le Z \le e^{M/\beta}$, since each $e^{R(i)/\beta}$ is
+between $e^{m/\beta}$ and $e^{M/\beta}$ and $\pi_{\mathrm{ref}}$ sums to one. Insert
+these into $\pi^\star(i) = \pi_{\mathrm{ref}}(i)e^{R(i)/\beta}/Z$ together with
+$e^{m/\beta} \le e^{R(i)/\beta} \le e^{M/\beta}$. $\square$
 
-*Proof sketch.* Write $E = e^{a/\beta}$. The numerator of the Gibbs formula at $S$ is
-$2^{-n}E^{|S|}$ and the denominator is $\bigl((1+E)/2\bigr)^n$ by Theorem 4.4, so
-$\pi(S) = E^{|S|}/(1+E)^n$. On the other side, $\theta = E/(1+E)$ and
-$1 - \theta = 1/(1+E)$ by Lemma 2.1, so
-$$\mathrm{Ber}_n^\theta(S) = \frac{E^{|S|}}{(1+E)^{|S|}}\cdot\frac{1}{(1+E)^{n-|S|}} = \frac{E^{|S|}}{(1+E)^{n}},$$
-where the splitting $(1+E)^{|S|}(1+E)^{n-|S|} = (1+E)^n$ uses $|S| \le n$. $\square$
+Thus alignment can neither annihilate a response nor create one: probabilities are
+multiplied by a factor in $[e^{-\Delta/\beta}, e^{\Delta/\beta}]$.
 
-Theorem 4.5 is the central structural statement of the paper. Three remarks.
+**Corollary 4.6 ($L^1$ drift).** $\displaystyle \sum_i \big|\pi^\star(i) - \pi_{\mathrm{ref}}(i)\big| \le e^{\Delta/\beta} - 1$.
 
-- The logistic link is *derived*, not assumed. It arises because the Gibbs tilt of a
-  uniform two-point measure on $\{$feature absent, feature present$\}$ by a linear reward
-  is exactly a logistic reweighting.
-- The parameters $a$ and $\beta$ enter only via the ratio $a/\beta$. The regularized
-  alignment problem for counting rewards has a **one-dimensional effective parameter**.
-- Since $\mathrm{Ber}_n^\theta$ is a positive distribution (immediately, by Theorem 4.5 and
-  positivity of the Gibbs policy, or directly by the binomial theorem), all subsequent
-  expectations are well-defined.
+*Proof sketch.* Theorem 4.5 gives $|\pi^\star(i)-\pi_{\mathrm{ref}}(i)| \le \pi_{\mathrm{ref}}(i)\max\{e^{\Delta/\beta}-1,\,1-e^{-\Delta/\beta}\}$, and
+$1 - e^{-u} \le e^{u}-1$ for $u \ge 0$. Sum over $i$. $\square$
 
-Note that Theorem 4.5 exhibits the Boolean-lattice problem as an instance of the tensor
-theory of Section 3, with $\alpha = \{0,1\}$: the counting reward is additive across
-features and the uniform reference is i.i.d. Everything extensive in $n$ below is therefore
-an instance of Corollary 3.5.
+**Corollary 4.7 (Strong-regularisation limit).** $\displaystyle \lim_{\beta\to\infty}\sum_i|\pi^\star_\beta(i)-\pi_{\mathrm{ref}}(i)| = 0$.
 
----
+*Proof.* $\Delta/\beta \to 0$, so $e^{\Delta/\beta}-1 \to 0$; apply Corollary 4.6 and
+nonnegativity. $\square$
 
-## 5. The induced law of the reward statistic
+### 4.1 A sharper, square-root drift law
 
-Under the aligned policy, the observable a practitioner actually measures is the reward
-statistic $|S|$ — "how many checks did the answer pass?". Its law is exactly binomial.
+Corollary 4.6 is an $L^\infty$-flavoured estimate and is vacuous when
+$\Delta \gg \beta$, since $\sum_i|\pi^\star(i)-\pi_{\mathrm{ref}}(i)|$ never exceeds
+$2$. The correct geometry of a divergence ball is Euclidean, and is captured by
+Pinsker's inequality, which we prove from scratch in the finite setting.
 
-**Theorem 5.1 (binomial law of the aligned policy).** For $0 \le k \le n$, with
-$\theta = \sigma(a/\beta)$,
-$$\pi_\beta\bigl(\{S : |S| = k\}\bigr) \;=\; \binom{n}{k}\,\theta^{k}(1-\theta)^{\,n-k}.$$
+**Lemma 4.8 (Sharp scalar estimate).** For $x \ge 0$,
+$$x\log x - x + 1 \;\ge\; \frac{3(x-1)^2}{2(x+2)}.$$
 
-*Proof sketch.* The level set $\{S \subseteq [n] : |S| = k\}$ has exactly $\binom nk$
-elements, and by Theorem 4.5 the aligned policy is constant, equal to
-$\theta^k(1-\theta)^{n-k}$, on that level set. $\square$
+*Proof sketch.* Let $H(x) = x\log x - \tfrac{5}{2}x + 7 - \tfrac{27}{2}(x+2)^{-1}$,
+an algebraically rearranged form of the difference of the two sides. Then $H(1)=0$
+and $H'(x) = \log x + 1 - \tfrac52 + \tfrac{27}{2}(x+2)^{-2}$ satisfies $H'(1)=0$
+and $H''(x) = 1/x - 27/(x+2)^3 \ge 0$ for $x>0$; the last inequality is
+$(x+2)^3 \ge 27x$, which is AM–GM applied to $x, 2, \dots$ (equivalently, expand:
+$(x+2)^3 - 27x = (x-1)^2(x+8) \ge 0$). Hence $H'$ is monotone with a zero at $1$,
+so $H$ decreases on $(0,1]$ and increases on $[1,\infty)$, giving $H \ge H(1) = 0$.
+The case $x = 0$ is checked directly: $1 \ge 3/4$. $\square$
 
-We write $m_k(\theta) = \binom nk \theta^k (1-\theta)^{n-k}$ for these **level masses**.
+**Lemma 4.9 (Homogeneous form).** For $a \ge 0$, $b > 0$,
+$$a\log\frac{a}{b} - a + b \;\ge\; \frac{3(a-b)^2}{2(a+2b)}.$$
 
-**Lemma 5.2 (combinatorial mean identity).** For all $n \ge 0$ and $x,y \in \mathbb{R}$,
-$$\sum_{k=0}^{n} k \binom nk x^k y^{\,n-k} \;=\; n\,x\,(x+y)^{\,n-1}.$$
+*Proof.* Apply Lemma 4.8 with $x = a/b$ and multiply by $b$. $\square$
 
-*Proof sketch.* For $n = 0$ both sides vanish. For $n = m+1$, drop the $k=0$ term and
-reindex $k \mapsto k+1$. Pascal's absorption identity in the form
-$(m+1)\binom mk = \binom{m+1}{k+1}(k+1)$ converts each summand into
-$(m+1)\,x\cdot\binom mk x^k y^{\,m-k}$, and $\sum_k \binom mk x^k y^{m-k} = (x+y)^m$ by the
-binomial theorem. $\square$
+**Theorem 4.10 (Pinsker's inequality, finite alphabet).** For a probability vector
+$p$ and a full-support probability vector $q$,
+$$\Big(\sum_i |p(i)-q(i)|\Big)^2 \;\le\; 2\, D_{\mathrm{KL}}(p\|q).$$
 
-**Theorem 5.3 (exact mean and expected reward).** For any $\theta$,
-$\mathbb{E}_{\mathrm{Ber}_n^\theta}\bigl[|S|\bigr] = n\theta$. Consequently, under the
-aligned policy for the counting reward,
-$$\mathbb{E}_{\pi_\beta}\bigl[a|S|\bigr] \;=\; a\,n\,\sigma\!\left(\frac a\beta\right).$$
+*Proof sketch.* Put $w(i) = p(i) + 2q(i) > 0$. By Lemma 4.9 and
+$\sum_i(p(i)-q(i))=0$,
+$$D_{\mathrm{KL}}(p\|q) \;\ge\; \sum_i \frac{3(p(i)-q(i))^2}{2\,w(i)}.$$
+By Cauchy–Schwarz,
+$$\Big(\sum_i |p(i)-q(i)|\Big)^2 \;=\; \Big(\sum_i \frac{|p(i)-q(i)|}{\sqrt{w(i)}}\cdot\sqrt{w(i)}\Big)^2 \;\le\; \Big(\sum_i \frac{(p(i)-q(i))^2}{w(i)}\Big)\Big(\sum_i w(i)\Big),$$
+and $\sum_i w(i) = 3$. Combining, $\big(\sum_i|p-q|\big)^2 \le 3 \cdot \tfrac{2}{3}D_{\mathrm{KL}}(p\|q) = 2D_{\mathrm{KL}}(p\|q)$. $\square$
 
-*Proof sketch.* By the transfer principle (Theorem 4.1) applied to
-$f(k) = \theta^k(1-\theta)^{n-k}k$, the expectation equals
-$\sum_k k\binom nk \theta^k(1-\theta)^{n-k}$, which by Lemma 5.2 with $x=\theta$,
-$y = 1-\theta$ equals $n\theta(\theta + 1 - \theta)^{n-1} = n\theta$. Multiply by $a$ and
-substitute $\theta = \sigma(a/\beta)$. $\square$
+**Theorem 4.11 (Square-root drift law).** $\displaystyle \Big(\sum_i|\pi^\star(i)-\pi_{\mathrm{ref}}(i)|\Big)^2 \le \frac{2(M-m)}{\beta}$.
 
----
+*Proof.* Theorem 4.10 with $p = \pi^\star$, $q = \pi_{\mathrm{ref}}$, then Theorem 4.3. $\square$
 
-## 6. Free energy, entropy, drift, order and collapse
+Thus total drift scales as $\sqrt{\Delta/\beta}$. When $\Delta > \beta$ this is
+strictly stronger than Corollary 4.6, and it is the regime in which practical
+alignment operates: reward ranges are large compared to the divergence
+coefficient. Halving $\beta$ therefore buys only a factor $\sqrt2$ in drift budget.
 
-### 6.1 Value and drift
+### 4.2 The low-temperature limit
 
-**Theorem 6.1 (free energy).**
-$\displaystyle F_\beta\bigl(a|\cdot|,\mathrm{unif}\bigr) = n\,\beta\,\log\frac{1+e^{a/\beta}}{2}.$
+**Theorem 4.12 (Value converges to the maximum).** $\displaystyle \lim_{\beta\to0^+} F_\beta = \max_i R(i)$.
 
-*Proof.* $\beta\log$ of Theorem 4.4, using $\log(u^n) = n\log u$ for $u > 0$. $\square$
+*Proof sketch.* Fix a maximiser $i_0$. Retaining only the $i_0$ term in $Z$ gives
+$Z \ge \pi_{\mathrm{ref}}(i_0)e^{R(i_0)/\beta}$, hence
+$F_\beta \ge R(i_0) + \beta\log\pi_{\mathrm{ref}}(i_0)$. Together with
+$F_\beta \le \max R$ (Theorem 4.1) and $\beta\log\pi_{\mathrm{ref}}(i_0) \to 0$, the
+squeeze applies. $\square$
 
-**Theorem 6.2 (exact information drift).** For $\beta > 0$,
-$$\mathrm{KL}\bigl(\pi_\beta \,\big\|\, \mathrm{unif}\bigr) \;=\; n\left(\frac a\beta\,\sigma\!\left(\frac a\beta\right) \;-\; \log\frac{1+e^{a/\beta}}{2}\right).$$
+**Theorem 4.13 (Exponential suppression and concentration).** For any $i_0$ and $i$,
+$$\pi^\star_\beta(i) \;\le\; \frac{\pi_{\mathrm{ref}}(i)}{\pi_{\mathrm{ref}}(i_0)}\, e^{-(R(i_0)-R(i))/\beta}.$$
+Consequently, if $R(i) < R(i_0)$ then $\pi^\star_\beta(i) \to 0$ as $\beta \to 0^+$.
 
-*Proof sketch.* Evaluate identity (1.1) at $q = \pi_\beta$: $J_\beta(\pi_\beta) = F_\beta$,
-i.e. $\mathbb{E}_{\pi_\beta}[r] - \beta\,\mathrm{KL}(\pi_\beta\|p) = F_\beta$. Substitute
-Theorem 5.3 for the expectation and Theorem 6.1 for the free energy, then cancel the factor
-$\beta > 0$. $\square$
+*Proof sketch.* Bound $Z$ below by its $i_0$ term and simplify. The limit follows
+because the exponent $-(R(i_0)-R(i))/\beta \to -\infty$. $\square$
 
-The drift is *extensive* — proportional to $n$ — exactly as Corollary 3.5 predicts.
+So at vanishing regularisation the aligned policy concentrates on the arg-max of
+the reward model: mode collapse and reward hacking are the $\beta \to 0^+$
+boundary behaviour of the exact solution, not an artefact of the optimiser.
 
-### 6.2 Entropy and a consistency identity
+### 4.3 The Pareto frontier
 
-**Theorem 6.3 (entropy; entropy form of the drift; consistency).** For $0 < \theta < 1$,
-$$\mathrm{Ent}\bigl(\mathrm{Ber}_n^\theta\bigr) \;=\; n\,H(\theta).$$
-For any positive distribution $q$ on $2^{[n]}$,
-$$\mathrm{KL}(q \,\|\, \mathrm{unif}) \;=\; n\log 2 \;-\; \mathrm{Ent}(q).$$
-Combining these with Theorem 6.2 yields, for every $t \in \mathbb{R}$, the analytic identity
-$$t\,\sigma(t) - \log\frac{1+e^{t}}{2} \;=\; \log 2 - H\bigl(\sigma(t)\bigr).$$
+**Theorem 4.14 (Monotone alignment frontier).** If $0 < \beta_1 < \beta_2$, then
+$$D_{\mathrm{KL}}\big(\pi^\star_{\beta_2}\|\pi_{\mathrm{ref}}\big) \le D_{\mathrm{KL}}\big(\pi^\star_{\beta_1}\|\pi_{\mathrm{ref}}\big) \quad\text{and}\quad \mathbb{E}_{\pi^\star_{\beta_2}}[R] \le \mathbb{E}_{\pi^\star_{\beta_1}}[R].$$
 
-*Proof sketch.* For the entropy: $\log \mathrm{Ber}_n^\theta(S) = |S|\log\theta + (n - |S|)\log(1-\theta)$,
-so $\mathrm{Ent} = -\log\theta\cdot\mathbb{E}[|S|] - \log(1-\theta)\cdot(n - \mathbb{E}[|S|])$;
-insert $\mathbb{E}[|S|] = n\theta$ from Theorem 5.3. For the second display: with
-$p(S) = 2^{-n}$ constant, $\log\frac{q(S)}{p(S)} = n\log 2 + \log q(S)$, and summing against
-$q$ (total mass $1$) gives the claim. The identity follows by computing the drift of
-$\pi_\beta$ in the two ways and equating; it suffices to do so at $n = 1$, and $t = a/\beta$
-ranges over all of $\mathbb{R}$. $\square$
+*Proof sketch.* Write $A_k = \mathbb{E}_{\pi^\star_{\beta_k}}[R]$ and
+$K_k = D_{\mathrm{KL}}(\pi^\star_{\beta_k}\|\pi_{\mathrm{ref}})$. Optimality of
+$\pi^\star_{\beta_1}$ at temperature $\beta_1$, evaluated against
+$\pi^\star_{\beta_2}$, gives $A_2 - \beta_1 K_2 \le A_1 - \beta_1 K_1$; symmetrically
+$A_1 - \beta_2 K_1 \le A_2 - \beta_2 K_2$. Adding the two yields
+$(\beta_2-\beta_1)(K_2 - K_1) \le 0$, so $K_2 \le K_1$. Substituting back into the
+first inequality gives $A_2 \le A_1 + \beta_1(K_2-K_1) \le A_1$. $\square$
 
-The last display is a genuine cross-check: two independent derivations — one through the
-free energy, one through the entropy — of the same quantity must agree, and forcing
-agreement produces a nontrivial identity relating the logistic function to the binary
-entropy. (Sanity check at $t=0$: both sides vanish, since $\sigma(0)=1/2$ and
-$H(1/2) = \log 2$.)
-
-### 6.3 Order structure
-
-**Theorem 6.4 (alignment is order-preserving).** Let $\tfrac12 \le \theta \le 1$. Then
-$\mathrm{Ber}_n^\theta$ is a **monotone measure** on the Boolean lattice: $S \subseteq T$
-implies $\mathrm{Ber}_n^\theta(S) \le \mathrm{Ber}_n^\theta(T)$. In particular, for a
-non-negative counting reward $a \ge 0$ and $\beta > 0$ the aligned policy is monotone.
-
-*Proof sketch.* Write $j = |T| - |S| \ge 0$. Then
-$$\mathrm{Ber}_n^\theta(S) = \theta^{|S|}(1-\theta)^{n-|T|}(1-\theta)^{j}, \qquad \mathrm{Ber}_n^\theta(T) = \theta^{|S|}(1-\theta)^{n-|T|}\theta^{j},$$
-using $n - |S| = (n - |T|) + j$ and $|T| = |S| + j$. Since $0 \le 1-\theta \le \theta$ we
-have $(1-\theta)^j \le \theta^j$, and the common prefactor is non-negative. The final claim
-uses $\sigma(a/\beta) \ge 1/2$ for $a/\beta \ge 0$ (Lemma 2.1). $\square$
-
-### 6.4 Log-concavity and the impossibility of bimodal degeneration
-
-**Theorem 6.5 (log-concavity of the level masses).** For $0 \le \theta \le 1$ and all
-$k \ge 0$,
-$$m_k(\theta)\,m_{k+2}(\theta) \;\le\; m_{k+1}(\theta)^2.$$
-
-*Proof sketch.* First, log-concavity of the binomial coefficients:
-$\binom nk\binom n{k+2} \le \binom n{k+1}^2$. If $k \ge n$ the left side vanishes. Otherwise
-use the absorption identity twice, $\binom{n}{k+1}(k+1) = \binom nk (n-k)$ and
-$\binom{n}{k+2}(k+2) = \binom{n}{k+1}(n-k-1)$, and the inequality
-$(k+1)(n-k-1) \le (k+2)(n-k)$; multiplying through by the positive quantity $(n-k)(k+2)$
-gives the claim. Second, the powers of $\theta$ and $1-\theta$ match on the two sides:
-$\theta^{k}\theta^{k+2} = \theta^{2k+2} = (\theta^{k+1})^2$ and, when $k+2 \le n$,
-$(n-k) + (n-k-2) = 2(n-k-1)$. Multiplying the coefficient inequality by the common
-non-negative power factor finishes the argument; the degenerate case $k+2 > n$ is handled
-by $m_{k+2} = 0$. $\square$
-
-**Theorem 6.6 (unimodality: descent persists).** Let $0 \le \theta \le 1$ and suppose
-$m_{k+1}(\theta) > 0$ and $m_{k+1}(\theta) \le m_k(\theta)$. Then
-$m_{k+2}(\theta) \le m_{k+1}(\theta)$.
-
-*Proof.* Multiply the hypothesis $m_{k+1}\le m_k$ by $m_{k+2} \ge 0$ to get
-$m_{k+1}m_{k+2} \le m_k m_{k+2}$, then apply Theorem 6.5 to get
-$m_{k+1}m_{k+2} \le m_{k+1}^2$, and cancel the positive factor $m_{k+1}$. $\square$
-
-**Interpretation.** The distribution of "how many checks the answer passed" under the
-aligned policy has a single mode: once the level masses begin to fall they never rise
-again. A model aligned to a linear symbolic reward therefore **cannot** split into two
-separated populations of quality. Bimodal reward hacking is not merely unlikely in this
-regime; it is impossible. This is a safety-relevant structural guarantee obtained purely
-from log-concavity of Pascal's triangle.
-
-### 6.5 Mode collapse and its temperature dependence
-
-**Theorem 6.7 (quantitative reward hacking).** Let $a \ge 0$ and $\beta > 0$. The aligned
-policy places mass at least $1 - n\,e^{-a/\beta}$ on the single maximal response $[n]$:
-$$\pi_\beta\bigl([n]\bigr) \;=\; \sigma\!\left(\frac a\beta\right)^{\! n} \;\ge\; 1 - n\,e^{-a/\beta}.$$
-
-*Proof sketch.* By Theorems 4.5 and the fact $|[n]| = n$, the mass on the top element is
-$\theta^n$ with $\theta = \sigma(a/\beta)$. Bernoulli's inequality
-$(1 + u)^n \ge 1 + nu$ with $u = \theta - 1 \ge -1$ gives $\theta^n \ge 1 - n(1-\theta)$,
-and $1-\theta \le e^{-a/\beta}$ by Lemma 2.1. $\square$
-
-Thus a policy that begins uniform over $2^n$ responses concentrates onto a *single*
-response at a rate exponential in the effective temperature $a/\beta$. For $n = 20$ and
-$a/\beta = 10$ the bound already exceeds $0.999$. As $\beta \to 0^+$ with $a>0$ fixed,
-collapse is total.
-
-**Theorem 6.8 (reward is strictly antitone in $\beta$).** Let $n \ge 1$, $a > 0$ and
-$0 < \beta_1 < \beta_2$. Then
-$$a\,n\,\sigma\!\left(\frac{a}{\beta_2}\right) \;<\; a\,n\,\sigma\!\left(\frac{a}{\beta_1}\right).$$
-
-**Theorem 6.9 (collapse mass is strictly antitone in $\beta$).** Under the same hypotheses,
-$$\pi_{\beta_2}\bigl([n]\bigr) \;<\; \pi_{\beta_1}\bigl([n]\bigr).$$
-
-*Proof sketch of both.* For $a>0$ and $0<\beta_1<\beta_2$ we have $a/\beta_2 < a/\beta_1$,
-so $\sigma(a/\beta_2) < \sigma(a/\beta_1)$ by strict monotonicity of $\sigma$ (Lemma 2.1).
-Theorem 6.8 multiplies this by the positive constant $an$; Theorem 6.9 raises it to the
-$n$-th power, using $0 < \sigma$ and $n \ge 1$ so that $u \mapsto u^n$ is strictly
-increasing on $[0,\infty)$. $\square$
-
-**No free lunch.** Theorems 6.8 and 6.9 together say that the regularization strength
-$\beta$ trades achieved reward against mode collapse *strictly monotonically in both
-directions*: any tightening that reduces collapse necessarily reduces reward, and any
-loosening that increases reward necessarily increases collapse. There is no interior
-setting that improves both.
+This is the exchange rate the coefficient $\beta$ actually controls: reward is
+bought with divergence, monotonically, and the frontier is traced out as $\beta$
+sweeps $(0,\infty)$ between the two limits of §4.2 and Corollary 4.7.
 
 ---
 
-## 7. Beyond additivity: supermodular rewards, FKG and Holley
+## 5. Structural theory: tilting as a group action
 
-Realistic symbolic reward models are not additive. A rule of the form "award $c \ge 0$
-whenever *all* premises in $R \subseteq [n]$ are satisfied" is a conjunctive synergy: it
-pays nothing until the last premise arrives. The correct lattice-theoretic class is
-supermodularity.
+**Theorem 5.1 (Additivity).** For $\beta>0$ and full-support $\pi_{\mathrm{ref}}$,
+$$\pi^\star_\beta\big(\pi^\star_\beta(\pi_{\mathrm{ref}},R),\,S\big) \;=\; \pi^\star_\beta\big(\pi_{\mathrm{ref}},\,R+S\big),$$
+and $\pi^\star_\beta(\pi_{\mathrm{ref}},0) = \pi_{\mathrm{ref}}$.
 
-**Definition 7.1.** A reward $r : 2^{[n]} \to \mathbb{R}$ is **supermodular** if for all
-$S,T \subseteq [n]$,
-$$r(S) + r(T) \;\le\; r(S \cap T) + r(S \cup T).$$
-It is **modular** if equality always holds. The **rule bonus** with premise set $R$ and
-value $c$ is $\mathrm{Bonus}_{R,c}(S) = c\cdot\mathbf{1}[R \subseteq S]$.
+*Proof sketch.* Tilting $\pi_{\mathrm{ref}}$ by $R$ then by $S$ multiplies each
+coordinate by $e^{R(i)/\beta}e^{S(i)/\beta} = e^{(R+S)(i)/\beta}$ and renormalises;
+the two normalising constants combine into the single constant for $R+S$, since
+the intermediate partition function is a positive scalar that cancels. $\square$
 
-**Proposition 7.2 (the reward class).**
-(i) The counting reward $r(S) = a|S|$ is modular, for every sign of $a$.
-(ii) $\mathrm{Bonus}_{R,c}$ is supermodular for every $R$ and every $c \ge 0$.
-(iii) Supermodular rewards form a convex cone: closed under addition and under
-multiplication by non-negative scalars.
-Consequently every reward of the form
-$r(S) = a|S| + \sum_{j} c_j \mathbf{1}[R_j \subseteq S]$ with $c_j \ge 0$ is supermodular.
+Hence $(R, \pi) \mapsto \pi^\star_\beta(\pi, R)$ is an action of the additive group
+$(\mathbb{R}^\iota, +)$ on $\Delta^\circ$.
 
-*Proof sketch.* (i) is the identity $|S\cap T| + |S\cup T| = |S| + |T|$ scaled by $a$.
-(ii) is a four-case check: if $R \subseteq S$ and $R\subseteq T$ then $R$ is contained in
-both $S\cap T$ and $S \cup T$ and both sides equal $2c$; if $R$ is contained in exactly one
-of them then the left side is $c$ and the right side is at least $c$ (since $R \subseteq S\cup T$);
-if in neither, the left side is $0$ and the right side is a sum of terms in $\{0,c\}$ with
-$c \ge 0$. (iii) is immediate from linearity of the defining inequality. $\square$
+**Theorem 5.2 (Transitivity).** For $p, q \in \Delta^\circ$ there is a reward $R$
+with $\pi^\star_\beta(p,R) = q$; explicitly $R(i) = \beta\log(q(i)/p(i))$ works.
 
-**Theorem 7.3 (the aligned policy is log-supermodular).** Let $\beta > 0$ and let $r$ be
-supermodular. Then the aligned policy $\pi_\beta$ (with uniform reference) satisfies the
-**FKG lattice condition**
-$$\pi_\beta(S)\,\pi_\beta(T) \;\le\; \pi_\beta(S\cap T)\,\pi_\beta(S \cup T) \qquad \text{for all } S,T.$$
+*Proof sketch.* With this $R$, $p(i)e^{R(i)/\beta} = q(i)$ and $Z = \sum_i q(i) = 1$. $\square$
 
-*Proof sketch.* Each $\pi_\beta(S) = 2^{-n}e^{r(S)/\beta}/Z$ with the same positive
-constants $2^{-n}$ and $Z$ on both sides, so the claim reduces to
-$e^{r(S)/\beta}e^{r(T)/\beta} \le e^{r(S\cap T)/\beta}e^{r(S\cup T)/\beta}$, i.e. to
-$\frac{r(S)+r(T)}{\beta} \le \frac{r(S\cap T)+r(S\cup T)}{\beta}$, which is Definition 7.1
-divided by $\beta > 0$. $\square$
+**Theorem 5.3 (Stabiliser).** $\pi^\star_\beta(\pi_{\mathrm{ref}},R) = \pi^\star_\beta(\pi_{\mathrm{ref}},S)$
+if and only if $R - S$ is constant. In particular
+$\pi^\star_\beta(\pi_{\mathrm{ref}},R+c) = \pi^\star_\beta(\pi_{\mathrm{ref}},R)$ for
+constants $c$, while $F_\beta(\pi_{\mathrm{ref}},R+c) = F_\beta(\pi_{\mathrm{ref}},R) + c$.
 
-The FKG lattice condition is exactly the hypothesis of the Fortuin–Kasteleyn–Ginibre
-correlation inequality (itself a corollary of the Ahlswede–Daykin four-functions theorem),
-which we invoke in the following form: *if $\mu \ge 0$ on a finite distributive lattice
-satisfies $\mu(x)\mu(y) \le \mu(x\wedge y)\mu(x \vee y)$, then for all non-negative
-increasing $f,g$,*
-$$\Bigl(\sum_x \mu(x)f(x)\Bigr)\Bigl(\sum_x \mu(x)g(x)\Bigr) \;\le\; \Bigl(\sum_x \mu(x)\Bigr)\Bigl(\sum_x \mu(x)f(x)g(x)\Bigr).$$
+*Proof sketch.* If $R = S + c$ then numerator and partition function both scale by
+$e^{c/\beta}$ and the ratio is unchanged. Conversely, equality of the tilted
+policies at every $i$ gives $e^{(R(i)-S(i))/\beta} = Z_R/Z_S$, a constant
+independent of $i$; taking logs, $R - S$ is the constant $\beta\log(Z_R/Z_S)$. $\square$
 
-**Theorem 7.4 (positive association under alignment).** Let $\beta>0$, let $r$ be
-supermodular, and let $f,g : 2^{[n]} \to \mathbb{R}$ be non-negative and monotone
-increasing. Then
-$$\mathbb{E}_{\pi_\beta}[f]\cdot\mathbb{E}_{\pi_\beta}[g] \;\le\; \mathbb{E}_{\pi_\beta}[fg].$$
+**Corollary 5.4 (Torsor structure).** The open simplex $\Delta^\circ$ is a torsor
+under the quotient group $\mathbb{R}^\iota/\mathbb{R}\mathbf{1}$: the action is free
+and transitive after quotienting by constant rewards.
 
-*Proof.* Apply FKG with $\mu = \pi_\beta$, legitimate by Theorem 7.3; the total mass
-$\sum_S \pi_\beta(S)$ equals $1$. $\square$
+**Corollary 5.5 (Sequential alignment composes).** Running a second alignment stage
+with reward $S$ against the first-stage optimum yields exactly the single-stage
+optimum for reward $R + S$: a policy $p$ maximises
+$\mathbb{E}_p[S] - \beta D_{\mathrm{KL}}(p\|\pi^\star_\beta(\pi_{\mathrm{ref}},R))$
+if and only if $p = \pi^\star_\beta(\pi_{\mathrm{ref}}, R+S)$.
 
-**Corollary 7.5 (feature entanglement).** For any two features $i,j \in [n]$, under the
-aligned policy of any supermodular reward,
-$$\Pr_{\pi_\beta}[\,i \in S\,]\cdot\Pr_{\pi_\beta}[\,j \in S\,] \;\le\; \Pr_{\pi_\beta}[\,i \in S \text{ and } j \in S\,].$$
+*Proof.* Theorem 3.3 applied with reference $\pi^\star_\beta(\pi_{\mathrm{ref}},R)$,
+combined with Theorem 5.1. $\square$
 
-*Proof.* The indicator $S \mapsto \mathbf 1[i \in S]$ is non-negative and increasing;
-apply Theorem 7.4 to the two indicators. $\square$
-
-So alignment against a synergistic symbolic reward **provably entangles** the features: no
-supermodular reward can produce a policy in which two monotone desiderata are negatively
-correlated. Design criteria built from conjunctive rules cannot be made to compete with one
-another by the tuning procedure.
-
-### 7.1 Stochastic dominance over the reference
-
-**Lemma 7.6.** If $\beta > 0$ and $r$ is monotone increasing, then $\pi_\beta$ is a monotone
-function on the lattice: $S \subseteq T \Rightarrow \pi_\beta(S) \le \pi_\beta(T)$.
-
-*Proof.* $\pi_\beta(S) = 2^{-n}e^{r(S)/\beta}/Z$ and $r(S) \le r(T)$, and $t\mapsto e^{t/\beta}$
-is increasing. $\square$
-
-We use Holley's inequality in the form: *if $\mu,\nu \ge 0$ on a finite distributive lattice
-have equal total mass and satisfy $\mu(x)\nu(y) \le \mu(x \wedge y)\nu(x \vee y)$ for all
-$x,y$, then $\sum_x \mu(x)h(x) \le \sum_x \nu(x)h(x)$ for every non-negative increasing $h$.*
-
-**Theorem 7.7 (alignment dominates the reference).** Let $\beta > 0$ and let $r$ be monotone
-increasing. Then for every non-negative monotone increasing observable $h$,
-$$\mathbb{E}_{\mathrm{unif}}[h] \;\le\; \mathbb{E}_{\pi_\beta}[h].$$
-That is, the aligned policy stochastically dominates the reference policy, uniformly in
-$\beta$.
-
-*Proof sketch.* Both $\mathrm{unif}$ and $\pi_\beta$ are probability distributions, so their
-total masses agree. The Holley condition reads
-$\mathrm{unif}(S)\,\pi_\beta(T) \le \mathrm{unif}(S\cap T)\,\pi_\beta(S\cup T)$; the uniform
-factors are equal (both $2^{-n}$), and $\pi_\beta(T) \le \pi_\beta(S \cup T)$ by Lemma 7.6
-since $T \subseteq S\cup T$. Apply Holley. $\square$
-
-Theorem 7.7 is unconditional in a strong sense: not only does the expected reward improve
-(which is unsurprising), but the expectation of *every* monotone quantity improves, for
-*every* regularization strength. Monotone alignment cannot degrade any monotone property.
+Iterated alignment therefore explores no more of policy space than a single stage
+with a well-chosen reward — and it is *path-independent*: the order of stages does
+not matter, because addition of rewards is commutative.
 
 ---
 
-## 8. Algorithms
+## 6. Preference data, identifiability, and the implicit reward
 
-The closed forms of Sections 4–6 turn quantities that would naively require summing over
-$2^n$ responses into $O(1)$ or $O(n)$ evaluations. We record the resulting procedures.
+**Theorem 6.1 (Bradley–Terry identifiability).** Two rewards $R, S$ induce the same
+Bradley–Terry preference probabilities for all pairs if and only if $R - S$ is
+constant.
 
-**Algorithm A (exact aligned-policy profile).** *Input:* $n$, $a$, $\beta > 0$. *Output:*
-the effective temperature $t = a/\beta$, the per-feature acceptance probability
-$\theta = \sigma(t)$, the partition function $Z = ((1+e^t)/2)^n$, the free energy
-$F = n\beta\log\frac{1+e^t}{2}$, expected reward $an\theta$, entropy $nH(\theta)$, drift
-$n(t\theta - \log\frac{1+e^t}2)$, and top mass $\theta^n$ with lower bound
-$1 - ne^{-t}$. *Cost:* $O(1)$ arithmetic operations, versus $\Theta(2^n)$ for a naive
-enumeration. Numerically, $\sigma(t)$ should be evaluated in the stable form
-$\sigma(t) = 1/(1+e^{-t})$ for $t \ge 0$ and $e^t/(1+e^t)$ for $t<0$, and
-$\log\frac{1+e^t}{2}$ as $\mathrm{softplus}(t) - \log 2$ with
-$\mathrm{softplus}(t) = \max(t,0) + \log(1+e^{-|t|})$.
+*Proof sketch.* $\Pr_R[i \succ j] = \Pr_S[i \succ j]$ for all $i,j$ iff
+$R(j)-R(i) = S(j)-S(i)$ for all $i,j$ (the logistic function is injective), iff
+$R - S$ takes the same value at every pair of points, i.e. is constant. $\square$
 
-**Algorithm B (level-mass profile and mode).** *Input:* $n$, $\theta$. *Output:* the vector
-$(m_0,\dots,m_n)$, $m_k = \binom nk \theta^k(1-\theta)^{n-k}$, and its mode. *Method:* use
-the ratio recurrence $m_{k+1}/m_k = \frac{n-k}{k+1}\cdot\frac{\theta}{1-\theta}$, starting
-from $m_0 = (1-\theta)^n$. *Cost:* $O(n)$ operations and no binomial coefficients need be
-formed explicitly. *Correctness of the mode search:* by Theorem 6.6 the sequence is
-unimodal, so the first index at which the ratio drops below $1$ is the mode; no global
-scan is required.
+**Corollary 6.2 (Well-posedness of alignment on preference data).** If $R$ and $S$
+induce identical preferences then $\pi^\star_\beta(\pi_{\mathrm{ref}},R) = \pi^\star_\beta(\pi_{\mathrm{ref}},S)$;
+conversely, if they induce the same aligned policy they induce the same
+preferences.
 
-**Algorithm C (brute-force verifier over the lattice).** *Input:* $n \le 20$, arbitrary
-reward $r$ given as an oracle on subsets, $\beta$. *Output:* the exact Gibbs policy over
-all $2^n$ subsets, its partition function, expectations, drift, and empirical correlations.
-*Method:* enumerate subsets as bitmasks, form $w_S = 2^{-n}e^{r(S)/\beta}$, normalize.
-*Cost:* $\Theta(2^n)$ time, $\Theta(2^n)$ memory. This is the reference implementation
-against which the $O(1)$ and $O(n)$ formulas are checked, and it is also the only available
-route for general supermodular rewards, for which no closed form exists.
+*Proof.* Combine Theorem 6.1 with Theorem 5.3: both conditions are equivalent to
+"$R-S$ is constant". $\square$
 
-**Algorithm D (supermodularity certification).** *Input:* $n$, reward oracle $r$. *Output:*
-whether $r(S)+r(T) \le r(S\cap T) + r(S\cup T)$ for all pairs, plus a violating pair if not.
-*Method:* it suffices to check the local condition on "diamonds" — for every
-$S$ and every pair of distinct $i,j \notin S$,
-$$r(S \cup \{i\}) + r(S\cup\{j\}) \;\le\; r(S) + r(S\cup\{i,j\}),$$
-which is equivalent to full supermodularity. *Cost:* $\Theta(2^n n^2)$ with the local test,
-versus $\Theta(4^n)$ for the naive all-pairs test.
+The non-identifiability of a reward model from comparison data is thus exactly the
+gauge freedom to which the aligned policy is blind. Nothing observable is lost.
+
+**Theorem 6.3 (Implicit-reward reparametrisation).** For $q \in \Delta^\circ$, the
+implicit reward $R_q(i) = \beta\log(q(i)/\pi_{\mathrm{ref}}(i))$ satisfies
+$\pi^\star_\beta(\pi_{\mathrm{ref}}, R_q) = q$. Conversely, for any reward $R$ the
+implicit reward of $\pi^\star_\beta(\pi_{\mathrm{ref}},R)$ equals $R - F_\beta(\pi_{\mathrm{ref}},R)$,
+i.e. $R$ up to an additive constant.
+
+*Proof sketch.* The first claim is Theorem 5.2. For the second,
+$\beta\log(\pi^\star(i)/\pi_{\mathrm{ref}}(i)) = \beta\log(e^{R(i)/\beta}/Z) = R(i) - \beta\log Z$. $\square$
+
+This is the exact statement underlying direct preference optimisation: policies and
+rewards are two coordinate systems on the same object, related by a bijection
+modulo constants, so one may fit a policy directly to preference data instead of
+fitting a reward and then optimising it.
 
 ---
 
-## 9. Applications and interpretation
+## 7. Robustness of the optimal value in the reward
 
-**Sample-complexity of quality estimation.** Theorem 5.1 says the quality statistic is
-exactly $\mathrm{Binomial}(n,\theta)$. Its variance is therefore $n\theta(1-\theta)$, known
-in closed form, so the number of samples needed to estimate mean quality to a given
-precision is computable *a priori* rather than estimated empirically.
+**Theorem 7.1 (Monotonicity).** If $R(i) \le S(i)$ for all $i$ then $F_\beta(\pi_{\mathrm{ref}},R) \le F_\beta(\pi_{\mathrm{ref}},S)$.
 
-**Choosing the regularization strength.** Theorem 6.7 converts a safety requirement
-("collapse mass below $\varepsilon$") into an explicit constraint on $a/\beta$, and
-Theorems 6.8–6.9 guarantee that the trade-off curve is strictly monotone, so a bisection on
-$\beta$ is well-posed and converges to a unique operating point.
+**Theorem 7.2 (Convexity).** For $\lambda \in [0,1]$,
+$$F_\beta\big(\pi_{\mathrm{ref}},\, \lambda R + (1-\lambda)S\big) \;\le\; \lambda F_\beta(\pi_{\mathrm{ref}},R) + (1-\lambda)F_\beta(\pi_{\mathrm{ref}},S).$$
 
-**Length stability.** Corollary 3.5 shows that drift, value, and pretraining cost all scale
-linearly in the number of independent coordinates. Consequently a global divergence budget
-is not length-stable: as responses lengthen, a fixed global budget forces the per-coordinate
-budget to shrink, and the effective temperature to change. Per-coordinate budgets are the
-only length-invariant choice.
+*Proof sketch.* By Theorem 3.3, $F_\beta(\cdot)$ is the pointwise supremum over
+$p$ of the affine-in-$R$ functionals $p \mapsto \mathbb{E}_p[R] - \beta D_{\mathrm{KL}}(p\|\pi_{\mathrm{ref}})$;
+a supremum of affine functions is convex. Concretely, let $T = \lambda R + (1-\lambda)S$
+and $p = \pi^\star_\beta(\pi_{\mathrm{ref}},T)$; then
+$F_\beta(T) = \mathbb{E}_p[T] - \beta D_{\mathrm{KL}}(p\|\pi_{\mathrm{ref}})$ splits
+linearly into $\lambda(\mathbb{E}_p[R] - \beta D_{\mathrm{KL}}) + (1-\lambda)(\mathbb{E}_p[S] - \beta D_{\mathrm{KL}})$,
+and each bracket is at most the corresponding free energy. $\square$
 
-**Reward design.** Proposition 7.2 delimits a large and practically natural class —
-counting plus non-negative conjunctive bonuses — for which Theorems 7.4 and 7.7 hold. A
-designer who stays inside the supermodular cone is guaranteed positive association among
-desiderata and stochastic improvement of every monotone property. Stepping outside it
-(for example, by adding a bonus with a *negative* coefficient, or a rule that fires on a
-disjunction of premises with a subtractive interaction) forfeits both guarantees, and this
-is the precise structural cost of such a design.
+**Theorem 7.3 (Lipschitz continuity).** If $|R(i)-S(i)| \le \varepsilon$ for all $i$
+then $|F_\beta(\pi_{\mathrm{ref}},R) - F_\beta(\pi_{\mathrm{ref}},S)| \le \varepsilon$.
 
-**Why bimodality is the right thing to worry about, and where.** Theorem 6.6 says linear
-symbolic rewards cannot produce bimodal quality distributions. Observing bimodality in
-practice is therefore evidence that the effective reward is *not* linear in the checked
-features — a diagnostic, not merely a nuisance.
+*Proof sketch.* $R \le S + \varepsilon$ pointwise, so by Theorem 7.1 and the shift
+rule of Theorem 5.3, $F_\beta(R) \le F_\beta(S) + \varepsilon$; symmetrise. $\square$
+
+**Theorem 7.4 (Reward misspecification / hacking bound).** If
+$|R(i) - \hat R(i)| \le \varepsilon$ for all $i$, then the policy obtained by
+optimising $\hat R$ loses at most $2\varepsilon$ of true objective value:
+$$\mathcal{J}^{\mathrm{RL}}_\beta\big(\pi^\star_\beta(\pi_{\mathrm{ref}},\hat R)\big) \;\ge\; F_\beta(\pi_{\mathrm{ref}},R) - 2\varepsilon.$$
+
+*Proof sketch.* Let $\hat\pi = \pi^\star_\beta(\pi_{\mathrm{ref}},\hat R)$. Then
+$\mathcal{J}^{\mathrm{RL}}_\beta(\hat\pi)$, evaluated with the *true* reward,
+differs from its value with $\hat R$ — which equals $F_\beta(\hat R)$ exactly — by
+at most $\varepsilon$, since $|\mathbb{E}_{\hat\pi}[R] - \mathbb{E}_{\hat\pi}[\hat R]| \le \varepsilon$.
+By Theorem 7.3, $F_\beta(\hat R) \ge F_\beta(R) - \varepsilon$. Adding the two
+losses gives $2\varepsilon$. $\square$
+
+The two $\varepsilon$'s are of different natures: one is the error in the *value*
+of the optimum, the other the error in *evaluating* the wrong optimiser. Both are
+first order; there is no amplification.
+
+---
+
+## 8. Multiple prompts and the pre-training mix-in
+
+### 8.1 Prompt-wise decomposition
+
+**Theorem 8.1 (Prompt-wise optimality).** Let $D(x) > 0$ for every prompt $x$,
+let each $\pi_{\mathrm{ref}}(\cdot|x)$ have full support and each $p(\cdot|x)$ be a
+probability vector. Then
+$$\mathcal{J}^{\mathrm{multi}}_\beta(p) \le F^{\mathrm{multi}}_\beta,$$
+with equality if and only if $p(\cdot|x) = \pi^\star_\beta\big(\pi_{\mathrm{ref}}(\cdot|x),R(\cdot|x)\big)$ for every $x$.
+
+*Proof sketch.* The objective is a $D$-weighted sum of per-prompt objectives, each
+bounded by its own free energy (Theorem 3.3). A weighted sum of terms, each below
+its bound, equals the sum of bounds iff every term attains its bound; the weights
+being strictly positive lets one cancel them. Each per-prompt equality is
+equivalent to tiltedness by Theorem 3.3. $\square$
+
+Alignment therefore decouples completely across prompts: it is a family of
+independent one-prompt problems.
+
+### 8.2 The mix-in and the alignment tax
+
+**Lemma 8.2 (The mix-in is maximised at the pre-training distribution).** For
+$\gamma \ge 0$, full-support $\mathcal{D}_{\mathrm{pre}}$ and full-support $p$,
+$$\mathcal{P}_\gamma(p) \le \mathcal{P}_\gamma(\mathcal{D}_{\mathrm{pre}}), \qquad \mathcal{P}_\gamma(\mathcal{D}_{\mathrm{pre}}) - \mathcal{P}_\gamma(p) = \gamma\, D_{\mathrm{KL}}\big(\mathcal{D}_{\mathrm{pre}}\,\|\,p\big).$$
+
+*Proof.* The displayed identity is the definition of the divergence expanded; the
+inequality then follows from Theorem 3.1. $\square$
+
+**Theorem 8.3 (Master decomposition of the full objective).** For $\beta>0$, $\gamma\ge0$ and full-support $p$,
+$$\mathcal{J}_{\beta,\gamma}(p) \;=\; \Big[F_\beta(\pi_{\mathrm{ref}},R) + \mathcal{P}_\gamma(\mathcal{D}_{\mathrm{pre}})\Big] \;-\; \beta\, D_{\mathrm{KL}}(p\|\pi^\star) \;-\; \gamma\, D_{\mathrm{KL}}(\mathcal{D}_{\mathrm{pre}}\|p).$$
+
+*Proof.* Add Theorem 3.2 and Lemma 8.2. $\square$
+
+The two penalty terms are divergences *in opposite arguments*: the first wants $p$
+to be $\pi^\star$, the second wants $p$ to cover $\mathcal{D}_{\mathrm{pre}}$. They
+can be simultaneously zero only if the two targets coincide.
+
+**Theorem 8.4 (Alignment tension: exact obstruction).** Let $\beta,\gamma > 0$ and
+let $\pi_{\mathrm{ref}}, \mathcal{D}_{\mathrm{pre}}$ have full support. There
+exists a full-support $p$ with
+$$\mathcal{J}_{\beta,\gamma}(p) \;=\; F_\beta(\pi_{\mathrm{ref}},R) + \mathcal{P}_\gamma(\mathcal{D}_{\mathrm{pre}})$$
+if and only if $\mathcal{D}_{\mathrm{pre}} = \pi^\star$. Moreover, when
+$\mathcal{D}_{\mathrm{pre}} \ne \pi^\star$, *every* full-support $p$ satisfies the
+strict inequality $\mathcal{J}_{\beta,\gamma}(p) < F_\beta + \mathcal{P}_\gamma(\mathcal{D}_{\mathrm{pre}})$.
+
+*Proof sketch.* By Theorem 8.3, attaining the sum of the individual maxima forces
+both divergence terms to vanish, hence $p = \pi^\star$ and
+$\mathcal{D}_{\mathrm{pre}} = p$ by the equality case of Theorem 3.1. Conversely if
+$\mathcal{D}_{\mathrm{pre}} = \pi^\star$, take $p = \pi^\star$. The strict form is the
+contrapositive together with the non-strict bound. $\square$
+
+This is the precise sense in which the anti-forgetting term costs alignment
+quality: the *alignment tax* $\beta D_{\mathrm{KL}}(p\|\pi^\star) + \gamma D_{\mathrm{KL}}(\mathcal{D}_{\mathrm{pre}}\|p)$
+is strictly positive for every policy unless the pre-training distribution is
+already the aligned optimum.
+
+**Theorem 8.5 (Localisation of the tax).** Consider the full multi-prompt objective
+$\mathcal{J}^{\mathrm{full}}_{\beta,\gamma}$ with the mix-in coupled to the single
+prompt $x_0$, with $\beta,\gamma>0$, $D(x)>0$ for all $x$, and all policies of full
+support. Then
+$$\mathcal{J}^{\mathrm{full}}_{\beta,\gamma}(p) \;\le\; F^{\mathrm{multi}}_\beta + \mathcal{P}_\gamma(\mathcal{D}_{\mathrm{pre}}),$$
+with equality if and only if (i) $p(\cdot|x)$ is the tilted policy for every prompt
+$x$, and (ii) $\mathcal{D}_{\mathrm{pre}} = p(\cdot|x_0)$.
+
+*Proof sketch.* The bound is the sum of Theorem 8.1 and Lemma 8.2. Equality of a
+sum of two quantities each below its bound forces both to be tight; tightness of
+the first is condition (i) by Theorem 8.1, and tightness of the second is
+$\gamma D_{\mathrm{KL}}(\mathcal{D}_{\mathrm{pre}}\|p(\cdot|x_0)) = 0$, i.e.
+condition (ii) by the equality case of Theorem 3.1 and $\gamma>0$. $\square$
+
+The content is the conjunction's shape: condition (i) is imposed at *every* prompt
+and involves only the reward and reference, while condition (ii) constrains only
+the conditional at $x_0$. The pre-training mix-in therefore does not perturb the
+optimal conditional policy at any other prompt. The tax is localised where the
+mix-in touches.
+
+### 8.3 Uniqueness of the full optimum
+
+The three-point identity does not apply to $\mathcal{J}_{\beta,\gamma}$ as a whole,
+because $\mathcal{P}_\gamma$ is not a divergence in the first argument. Uniqueness
+nevertheless survives, by convexity.
+
+**Lemma 8.6 (Strict convexity in the first argument).** If $p \ne q$ are
+probability vectors and $c$ has full support, then
+$$D_{\mathrm{KL}}\!\left(\tfrac{p+q}{2}\,\Big\|\,c\right) \;<\; \tfrac12 D_{\mathrm{KL}}(p\|c) + \tfrac12 D_{\mathrm{KL}}(q\|c).$$
+
+*Proof sketch.* Write each summand as $a\log a - a\log c(i)$ using
+$a\log(a/c) = a\log a - a\log c$ (valid also at $a = 0$). The $-a\log c(i)$ part is
+affine in $a$ and contributes equally to both sides. The remaining part is
+$x\mapsto x\log x$, which is *strictly* convex on $[0,\infty)$; hence every summand
+satisfies midpoint convexity, and at any index $j$ with $p(j)\ne q(j)$ the
+inequality is strict. Summing a family of weak inequalities containing one strict
+inequality gives a strict total. $\square$
+
+**Lemma 8.7 (Convexity in the second argument).** For a probability vector $a$ and
+full-support $p,q$,
+$$D_{\mathrm{KL}}\!\left(a\,\Big\|\,\tfrac{p+q}{2}\right) \;\le\; \tfrac12 D_{\mathrm{KL}}(a\|p) + \tfrac12 D_{\mathrm{KL}}(a\|q).$$
+
+*Proof sketch.* Termwise, this reduces to $-\log\frac{p+q}{2} \le -\frac12\log p - \frac12\log q$,
+i.e. to concavity of the logarithm (equivalently AM–GM,
+$\frac{p+q}{2} \ge \sqrt{pq}$), multiplied by $a(i) \ge 0$. $\square$
+
+**Theorem 8.8 (Uniqueness of the full optimum).** Let $\beta>0$, $\gamma\ge0$, and
+let $\pi_{\mathrm{ref}}, \mathcal{D}_{\mathrm{pre}}$ have full support. If $p$ and
+$q$ are full-support policies that both maximise $\mathcal{J}_{\beta,\gamma}$ over
+full-support policies, then $p = q$.
+
+*Proof sketch.* Suppose $p \ne q$. Both being maximisers, $\mathcal{J}(p) = \mathcal{J}(q)$.
+Let $m = (p+q)/2$, again of full support. By Theorem 8.3,
+$$\mathcal{J}(m) = C - \beta D_{\mathrm{KL}}(m\|\pi^\star) - \gamma D_{\mathrm{KL}}(\mathcal{D}_{\mathrm{pre}}\|m).$$
+Lemma 8.6 (with $c = \pi^\star$) gives $D_{\mathrm{KL}}(m\|\pi^\star) < \frac12(D_{\mathrm{KL}}(p\|\pi^\star)+D_{\mathrm{KL}}(q\|\pi^\star))$
+strictly, and Lemma 8.7 gives $D_{\mathrm{KL}}(\mathcal{D}_{\mathrm{pre}}\|m) \le \frac12(D_{\mathrm{KL}}(\mathcal{D}_{\mathrm{pre}}\|p)+D_{\mathrm{KL}}(\mathcal{D}_{\mathrm{pre}}\|q))$
+weakly. Since $\beta > 0$ and $\gamma \ge 0$, we conclude
+$\mathcal{J}(m) > \frac12(\mathcal{J}(p)+\mathcal{J}(q)) = \mathcal{J}(p)$,
+contradicting maximality of $p$. $\square$
+
+Note the economy: strictness comes from the divergence term alone, so the result
+covers the pure case $\gamma = 0$ as well, and no differentiability of any
+parametrisation is used.
+
+---
+
+## 9. Algorithms
+
+The theory is constructive. Three procedures follow immediately.
+
+**Algorithm A (Exact aligned policy).** Given $\pi_{\mathrm{ref}}, R, \beta$, compute
+$u(i) = \log\pi_{\mathrm{ref}}(i) + R(i)/\beta$, then $\pi^\star = \mathrm{softmax}(u)$
+and $F_\beta = \beta\,\mathrm{logsumexp}(u)$. Using the log-sum-exp trick this is
+numerically stable for all $\beta > 0$ and costs $O(|\iota|)$ time and space. The
+stability matters: at small $\beta$ the raw exponentials overflow, while the shifted
+form $\mathrm{logsumexp}(u) = u_{\max} + \log\sum_i e^{u_i - u_{\max}}$ never does.
+
+**Algorithm B (Frontier tracing).** Sweep $\beta$ over a logarithmic grid, apply
+Algorithm A at each node, and record the pair
+$\big(D_{\mathrm{KL}}(\pi^\star_\beta\|\pi_{\mathrm{ref}}),\, \mathbb{E}_{\pi^\star_\beta}[R]\big)$.
+By Theorem 4.14 the resulting point set is monotone in both coordinates, and by
+§4.2 it interpolates between $(0, \mathbb{E}_{\pi_{\mathrm{ref}}}[R])$ and
+$\big(\log(1/\pi_{\mathrm{ref}}(i_{\max})), \max R\big)$. Cost: $O(N|\iota|)$ for $N$ grid points.
+
+**Algorithm C (Divergence-budgeted alignment).** To realise a prescribed divergence
+budget $k$, solve $D_{\mathrm{KL}}(\pi^\star_\beta\|\pi_{\mathrm{ref}}) = k$ for
+$\beta$. The left side is continuous and nonincreasing in $\beta$ (Theorem 4.14),
+tends to $0$ as $\beta\to\infty$ and to $\log(1/\pi_{\mathrm{ref}}(i_{\max}))$ (for a
+unique maximiser) as $\beta\to0^+$, so bisection converges for any feasible $k$ and
+returns the unique $\beta$ up to the tolerance. Theorem 4.3 supplies an a priori
+bracket: any $\beta > \Delta/k$ is too regularised. Cost: $O(|\iota|\log(1/\text{tol}))$.
+
+A fourth, purely diagnostic procedure is worth naming: given a candidate policy $q$,
+compute its implicit reward $R_q = \beta\log(q/\pi_{\mathrm{ref}})$ (Theorem 6.3).
+This certifies $q$ as the exact optimum of an explicit reward, and comparing $R_q$
+against the intended $R$ (modulo an additive constant, which is unobservable by
+Theorem 6.1) measures how far an approximate optimiser has actually landed.
 
 ---
 
 ## 10. Discussion
 
-The results above have a common shape: an object from statistical learning is identified
-with an object from enumerative or lattice combinatorics, and the combinatorial identity
-then supplies an exact answer.
+**What the results are, and are not, about.** The theorems describe the idealised
+optimisation over all distributions on a finite response set. Practical alignment
+optimises over a parametric family, with sampled expectations and a learned reward.
+The idealised solution is the target those methods approximate; results such as the
+$\sqrt{\Delta/\beta}$ drift law and the $2\varepsilon$ hacking bound are therefore
+statements about the *problem*, not guarantees about any particular optimiser. They
+do, however, tell one what to expect in the limit of good optimisation, and where
+degradation cannot be blamed on the optimiser.
 
-- The **sigmoid link** of the aligned policy is the binomial theorem (Corollary 4.2,
-  Theorem 4.5).
-- The **mean reward** is Pascal's absorption identity (Lemma 5.2, Theorem 5.3).
-- The **impossibility of bimodal degeneration** is log-concavity of the binomial
-  coefficients (Theorems 6.5, 6.6).
-- The **entanglement of desiderata** is the FKG inequality (Theorem 7.4).
-- The **improvement of every monotone property** is Holley's inequality (Theorem 7.7).
-- The **collapse onto the maximizer** is Bernoulli's inequality (Theorem 6.7).
-- The **extensivity of everything** is the distributive law (Theorem 3.4).
+**Temperature and thermodynamics.** The dictionary is complete: $-R$ is energy,
+$\beta$ temperature, $Z$ the partition function, $\beta\log Z$ the free energy,
+$\pi^\star$ the Boltzmann distribution over the base measure $\pi_{\mathrm{ref}}$,
+and Theorem 4.14 the statement that lowering temperature increases both "order"
+(divergence from the base measure) and "energy captured" (reward). Theorem 7.2
+identifies the free energy as a convex function of the reward — a cumulant
+generating functional — so the frontier of Theorem 4.14 is naturally read as a
+Legendre-type duality between divergence budget and achievable reward.
 
-Two limitations deserve emphasis. First, the exactly solvable model requires a uniform
-reference policy; a general reference destroys the level-set symmetry underlying the
-transfer principle, though the FKG/Holley results of Section 7 survive for any
-log-supermodular reference. Second, the closed forms are for *additive* rewards; for general
-supermodular rewards we have qualitative structure (log-supermodularity, positive
-association, dominance) but no closed form, and indeed the partition function of a general
-supermodular reward on the Boolean lattice is computationally hard.
+**Design implications.**
+- The drift budget scales as $\sqrt{\Delta/\beta}$, so aggressive reductions in
+  $\beta$ produce only square-root gains in how far the model can move. Conversely
+  they produce *linear* gains in the divergence, which is the quantity the leash
+  of Theorem 4.3 controls.
+- Because reward shifts are unobservable (Theorems 5.3, 6.1), normalising a reward
+  model is free; only its *spread* $\Delta$ matters, and it enters every bound.
+  Reward models with large dynamic range are exactly the ones with weak drift
+  guarantees at fixed $\beta$.
+- Sequential alignment stages add rewards (Corollary 5.5). A pipeline of $k$ stages
+  at fixed $\beta$ is a single stage with reward $R_1+\cdots+R_k$; nothing is gained
+  in expressivity, though the intermediate policies may of course differ from the
+  final one, which matters if training is truncated.
+- The pre-training mix-in strictly reduces attainable alignment quality
+  (Theorem 8.4) but only at the prompts it touches (Theorem 8.5). If the goal is to
+  protect general capability, coupling the mix-in narrowly is provably cheaper than
+  coupling it globally.
 
-What the theory does supply, robustly, is a set of *exact* statements — not asymptotic, not
-approximate, valid for every $n$, $a$, $\beta$ — about a procedure that is usually studied
-empirically. That combination is unusual enough to be worth the change of viewpoint.
+**Limitations.** The response set is finite; the extension to countable or
+continuous response spaces requires integrability hypotheses on $e^{R/\beta}$ but
+should be routine, since every proof here uses only Gibbs' inequality, convexity of
+$x\log x$, and Cauchy–Schwarz. Full support of $\pi_{\mathrm{ref}}$ is essential:
+Theorem 4.5 shows that a response with zero reference probability is unreachable at
+any temperature, which is the exact statement that alignment cannot teach a
+behaviour the reference model never emits. Finally, all statements are about the
+exact optimum; approximation-theoretic and sample-complexity questions are
+untouched.
 
 ---
 
 ## 11. Future directions
 
-The results above suggest three concrete next steps.
+**Sharpness of the drift law.** Theorem 4.11 gives
+$\|\pi^\star - \pi_{\mathrm{ref}}\|_1 \le \sqrt{2\Delta/\beta}$. We conjecture the
+square-root rate is optimal: there is a two-point family for which the ratio of the
+two sides is bounded below by a positive constant as $\beta \to \infty$. Proving
+this would pin the alignment drift budget exactly, converting the bound into a
+scaling law.
 
-**C1. Strict superadditivity of the free energy under synergy.** *Conjecture.* For a reward
-on $2^{[m+n]}$ that is supermodular but not modular, the free energy strictly exceeds the
-sum of the free energies of its two coordinate restrictions,
-$F(r) > F(r|_1) + F(r|_2)$, with equality exactly on the modular cone. The key insight is
-that free-energy additivity (Theorem 3.3) was proved from the exact factorization of the
-partition function for *additive* rewards, while the four-functions machinery behind
-Theorem 7.3 gives a one-sided inequality $Z \ge Z_1 Z_2$ for supermodular couplings — so
-superadditivity should follow from the FKG lattice condition rather than from any analytic
-estimate. Both halves already exist: the exact additive identity and the lattice inequality;
-only the gap term needs to be built.
+**Curvature of the alignment frontier.** We conjecture the map
+$\beta \mapsto \big(D_{\mathrm{KL}}(\pi^\star_\beta\|\pi_{\mathrm{ref}}),\, \mathbb{E}_{\pi^\star_\beta}[R]\big)$
+traces a *concave* curve: achievable reward is a concave nondecreasing function of
+the divergence budget, and its slope at budget $k$ is the unique $\beta$ with
+$D_{\mathrm{KL}}(\pi^\star_\beta\|\pi_{\mathrm{ref}}) = k$. The natural mechanism is
+that $\beta \mapsto \beta\log Z$ is a Legendre transform of the reward with respect
+to the divergence, making the monotone frontier of Theorem 4.14 the graph of a
+concave conjugate and $\beta$ literally the Lagrange multiplier of the divergence
+constraint. Convexity and $1$-Lipschitzness of the free energy in the reward
+(Theorems 7.2–7.3) are the inputs already in place.
 
-**C2. A marginal-gain reward-hacking bound for non-additive rewards.** *Conjecture.* Let
-$r$ be monotone and supermodular with minimal marginal gain
-$\delta = \min_{S,\, i \notin S}\bigl(r(S\cup\{i\}) - r(S)\bigr) > 0$. Then the aligned
-policy satisfies $\pi(\text{top}) \ge 1 - n e^{-\delta/\beta}$, exactly as in the
-counting-reward case (Theorem 6.7), and the exponent $\delta/\beta$ is optimal. The key
-insight is that the proof of Theorem 6.7 only used a per-feature comparison of two responses
-differing in one element, so it should localize to marginal gains, with supermodularity
-supplying the required monotone coupling along maximal chains of the Boolean lattice. The
-Holley chain-comparison tool of Theorem 7.7 is already available, and the counting-reward
-version is a proved special case to test against.
+**Beyond finite alphabets and beyond KL.** Replacing $D_{\mathrm{KL}}$ by a general
+$f$-divergence changes the tilt from exponential to the corresponding conjugate
+link; which of the structural results (additivity, torsor, implicit reward) survive
+is an inviting question, since the group action is a specifically exponential
+phenomenon.
 
-**C3. The pretraining mix-in provably de-collapses the policy.** *Conjecture.* With uniform
-pretraining distribution $d$ and mix-in coefficient $\gamma > 0$, the maximizer of the
-augmented objective over the Bernoulli family is a unique $\theta^*(\gamma)$ with
-$\theta^*(\gamma) < \sigma(a/\beta)$, strictly decreasing in $\gamma$; consequently the mass
-on the reward-maximizing response is strictly smaller than the pure value
-$\sigma(a/\beta)^n$. The key insight is that on the Boolean lattice the mix-in term
-evaluates in closed form,
-$$\gamma\,\mathbb{E}_d[\log \pi] \;=\; \gamma\cdot\frac n2\bigl(\log\theta + \log(1-\theta)\bigr),$$
-which is strictly concave and symmetric about $\theta = 1/2$, so it acts as an explicit
-entropic restoring force pulling the aligned policy back from the corner of the cube.
+**Approximate optimality.** Every result here has a natural stability version: if a
+policy is within $\delta$ of optimal in objective value, Theorem 3.2 immediately
+gives $D_{\mathrm{KL}}(p\|\pi^\star) \le \delta/\beta$ and hence, via Theorem 4.10,
+$\|p - \pi^\star\|_1 \le \sqrt{2\delta/\beta}$. Turning this into end-to-end
+guarantees for sampled, parametric optimisation is the obvious next step.
 
 ---
 
 ## 12. Conclusion
 
-On response spaces with combinatorial structure, the KL-regularized alignment objective is
-exactly solvable. On the Boolean lattice of satisfied features with a uniform reference and
-a counting reward, the aligned policy is a product of i.i.d. Bernoulli features with a
-logistic parameter; the reward statistic is binomial; the value, entropy, and information
-drift are explicit and extensive; the quality distribution is unimodal; the mass on the
-reward-maximizing response is at least $1 - ne^{-a/\beta}$, and both reward and collapse are
-strictly monotone in the regularization strength. Dropping additivity in favour of
-supermodularity — the class generated by counting rewards and conjunctive rule bonuses —
-the aligned policy remains log-supermodular, so desiderata are positively associated and,
-for monotone rewards, every monotone property improves relative to the reference. The
-technical content throughout is combinatorial: the transfer principle, the distributive law,
-Pascal's absorption identity, log-concavity of binomial coefficients, and the four-functions
-theorem with its FKG and Holley corollaries.
+The KL-regularised alignment objective, with or without a pre-training mix-in, is
+exactly solvable on a finite response set, and its solution is an exponentially
+tilted reference policy with optimal value a free energy. From one identity follow
+uniqueness, a value sandwich, a divergence leash, sharp square-root drift, both
+temperature limits, a monotone reward/divergence frontier, additive composition of
+alignment stages, exact identifiability of the aligned policy from preference data,
+a $2\varepsilon$ reward-misspecification bound, an exact obstruction theorem for
+the pre-training mix-in and its localisation, and uniqueness of the full optimum.
+The mathematics of alignment, in this idealisation, is the mathematics of the
+Boltzmann distribution.
