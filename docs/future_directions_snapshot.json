@@ -183,25 +183,6 @@
     "title": "Deepening: The Bell defect, counted exactly"
   },
   {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 6bc62e41 (Q=0.880), which proved 70 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Both sides of the identity are already available as Lean theorems\n(`FourierFA.poisson_summation`, `FourierFA.dft_delta`), so the converse can be formalised as a\nfinite statement about the character table with no new analytic input.",
-    "domain_bridges": [],
-    "domains": [
-      "Applications"
-    ],
-    "id": "push_6bc62e41_cb549916",
-    "lineage_refs": [],
-    "priority_score": 0.95,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "6bc62e41",
-    "status": "available",
-    "timestamp": "2026-08-19T15:46:51.818344+00:00",
-    "title": "Deepening: Both sides of the identity are already available as Lean theorems"
-  },
-  {
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
@@ -1131,25 +1112,6 @@
     "status": "available",
     "timestamp": "2026-08-19T13:09:05.760186+00:00",
     "title": "Deepening: For a graded `G`-set `Y = ⨆_n Y_n` the generating function `Σ_n t_r(Y_n) q^n` is"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle fc85d14f (Q=0.820), which proved 41 theorems in Shared. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The one-parameter case is already a theorem here\n(`headCoeff_pmFrame_ge_neg_one`), and the closed formula makes the general case a\nstatement about integer points in a two-dimensional region, i.e. amenable to\n`omega`/`nlinarith` once the balance and cycle-type constraints are formalized.",
-    "domain_bridges": [],
-    "domains": [
-      "Shared"
-    ],
-    "id": "push_fc85d14f_da9c527a",
-    "lineage_refs": [],
-    "priority_score": 0.9199999999999999,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "fc85d14f",
-    "status": "available",
-    "timestamp": "2026-08-20T19:00:17.816505+00:00",
-    "title": "Deepening: The one-parameter case is already a theorem here"
   },
   {
     "ambition_level": "extension",
@@ -2351,20 +2313,20 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "Building on cycle ce273a18 (Q=0.780), which proved 83 theorems in Geometry. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The upper bound is formalised (`exists_peel_stopping_time` together with\n`peelEstimate_error`); what remains is a matching family of actions, i.e. a construction.",
+    "description": "Building on cycle 254383ec (Q=0.780), which proved 67 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: All the machinery — honesty, guarding, bounded search, the\n`goodSeeds` counting apparatus for fractions — is already formalized; only the\n\"fraction of a finite level set\" bookkeeping is missing.",
     "domain_bridges": [],
     "domains": [
-      "Geometry"
+      "Cryptography"
     ],
-    "id": "push_ce273a18_6f864948",
+    "id": "push_254383ec_bbdf5f94",
     "lineage_refs": [],
     "priority_score": 0.88,
     "proof_strategy": "",
     "research_mode": "team",
-    "source_exp_id": "ce273a18",
+    "source_exp_id": "254383ec",
     "status": "available",
-    "timestamp": "2026-08-20T17:46:31.054713+00:00",
-    "title": "Deepening: The upper bound is formalised (`exists_peel_stopping_time` together with"
+    "timestamp": "2026-08-20T19:46:44.384352+00:00",
+    "title": "Deepening: All the machinery — honesty, guarding, bounded search, the"
   },
   {
     "ambition_level": "extension",
@@ -3016,7 +2978,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "42f28947",
     "description": "Prove depth-width tradeoffs specific to EML activation exp(w*x+b) - log(w'*x+b'). Conjecture: An EML network of depth d and width w can approximate any Lipschitz function on [0,1]^n with error O((w*d)^{-2/n}) — matching ReLU rates but with smoother gradients. Test: prove the lower bound by constructing an EML network that approximates x^2 on [0,1] with error O(w^{-2}) using depth 2. Compare with ReLU's O(w^{-1}) rate.",
     "domain_bridges": [],
     "domains": [
@@ -3030,7 +2992,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "EML Neural Network Expressiveness: Depth vs Width"
   },
@@ -25255,7 +25217,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "4494e9cb",
+    "consumed_by_exp_id": "",
     "description": "Quantify Conjecture 3″ at fixed depth: for\n   every product coin of depth `n`, `‖A(ψ)‖² ≤ (1 − c)·|R|` with an explicit `c > 0`\n   depending only on `n` and `|R| ≥ 2`, i.e. the optimum is *never* attained by a coin that\n   does not already depend on `N`.  With `resonanceAmplitude_sq_eq_iff` this is now a\n   statement about the non-membership of the indicator in the product family, provable\n   already for `n = 2` by a direct computation.",
     "domain_bridges": [],
     "domains": [],
@@ -25265,7 +25227,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "db2f2b2f",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-20T11:42:58.411516+00:00",
     "title": "Rigidity gap for shallow product coins"
   },
@@ -25516,6 +25478,23 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "An earlier form of this conjecture asserted\n> `expCost ≤ B·(1 - frac Found) + (B+1)/2 · frac Found`.  That is **false**: a\n> succeeding seed may have witness index `B-1`, so the conditional average of a\n> succeeding seed is not bounded by `(B+1)/2`.  The `j = 1` case that survives\n> the correction is now the theorem `expCost_le_of_first_probe`.  The conjecture\n> below is the corrected, still-open generalisation.",
+    "domain_bridges": [],
+    "domains": [],
+    "id": "fd_1751",
+    "lineage_refs": [],
+    "priority_score": 0.42987499999999995,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "254383ec",
+    "status": "available",
+    "timestamp": "2026-08-20T19:46:38.987446+00:00",
+    "title": "An earlier form of this conjecture asserted"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "The three-fold Bonferroni term: `∑_{i<j<k} Prob (Eᵢ ∩ Eⱼ ∩ Eₖ) = C(m,3)(1-p)^{3b}`\n   for disjoint windows, upgrading `prob_failSet_ge_half` to a bound valid without the\n   smallness hypothesis `m (1-p)^b ≤ 1`.  (`(C2a)`, the two-fold case, is now proved as\n   `Prob_badWindow_inter`.)\n2. **(C3a)** `diam (mmul A A) = 0` iff there exist two states `b₁, b₂` with\n   `A a b₁ + A b₁ c = 0` for all `a, c` — the two-step scrambling criterion.\n3. **(C1a)** The first-occurrence decomposition\n   `failSet n b = ⨆_i (badWindow n i b \\ ⋃_{j<i} badWindow n j b)` is a *disjoint* union,\n   giving `Prob p (failSet n b) = ∑_i Prob p (first bad window at i)` and hence the sharp\n   constant of Conjecture 1.",
     "domain_bridges": [],
     "domains": [],
@@ -25566,7 +25545,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "63d0d6e2",
     "description": "**The low-tail experiment.** A fourth seed at the long context is diagnostic for the *tail*,\n  not the centre: a fourth knee in $\\{160, 192\\}$ would establish the $0.625P$ low tail as a\n  stable feature of the $16\\times$ cell, while a value in $\\{224, 256\\}$ would mark it\n  seed-specific. Strengthening the *centre* requires a fifth seed, since a fourth improves\n  neither the breakdown number nor the calibration.",
     "domain_bridges": [],
     "domains": [],
@@ -25576,7 +25555,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "97b1c345",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-17T20:44:28.805700+00:00",
     "title": "The low-tail experiment."
   },
@@ -25868,6 +25847,26 @@
     "status": "available",
     "timestamp": "2026-08-17T13:54:07.301598+00:00",
     "title": "Fibre spectrum (Conjecture E, first half, closed)"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "The theorem uses a single missing corner. A resonance set may contain\nmany corner-disjoint violating rectangles, each contributing deviation energy at essentially disjoint\nlocations. Summing over a maximum family of such witnesses should yield a bound\nsup |A|^2 <= |R| - c*w(R), where w(R) is the maximum number of corner-disjoint non-box witnesses,\ninterpolating towards the multiplicative losses observed for the agreement family (where the true\noptimum is exactly half the Cauchy-Schwarz value at every depth).\n\n**Bounded entanglement / higher rank.** Replacing product coins by states of Schmidt rank at most r\nacross a chosen cut, the Cauchy-Schwarz optimum becomes the sum of the r largest squared singular\nvalues, and one expects a gap unless the resonance set is a union of r disjoint boxes. Rank at most r\nforces the vanishing of all (r+1)x(r+1) minors, so the minor-versus-pattern comparison should\ngeneralise, with an (r+1)-dimensional analogue of the rank-one minor inequality.\n\n**Multi-cut strengthening at depth n.** The depth-n theorem transports the bipartite gap along a\nsingle register cut. A resonance set may be non-box at several registers simultaneously, and the\ndeviation energies harvested at different cuts are generically distinct. Combining k cuts should give\na constant of order k/7, producing gaps that grow with the depth for genuinely global targets.\n\n**Extremal combinatorics of the gap.** Determining which non-box set of size m minimises\nm - sigma_1^2 would replace the size-dependent factor m/(3m+1) by the exact extremal function. The\nexhaustive scan of all subsets of small grids suggests the minimiser is always the L-shape, embedded.\n\n**Beyond the Euclidean metric.** The distance identity underlying the proof is specific to the\nl^2 geometry. Analogues in l^p geometry, or with relative entropy replacing squared distance to the\nproduct family, would connect the rigidity gap to information-theoretic separability measures.",
+    "domain_bridges": [],
+    "domains": [
+      "Combinatorics",
+      "Geometry"
+    ],
+    "id": "fd_1748",
+    "lineage_refs": [],
+    "priority_score": 0.4149999999999999,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "4494e9cb",
+    "status": "available",
+    "timestamp": "2026-08-20T19:46:18.217277+00:00",
+    "title": "Structure-dependent gaps"
   },
   {
     "ambition_level": "extension",
@@ -27318,7 +27317,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "254383ec",
+    "consumed_by_exp_id": "",
     "description": "All the machinery — honesty, guarding, bounded search, the\n`goodSeeds` counting apparatus for fractions — is already formalized; only the\n\"fraction of a finite level set\" bookkeeping is missing.",
     "domain_bridges": [],
     "domains": [],
@@ -27328,7 +27327,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "e8a76d4f",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-18T05:46:17.086204+00:00",
     "title": "All the machinery — honesty, guarding, bounded search, the"
   },
@@ -30699,5 +30698,63 @@
     "status": "available",
     "timestamp": "2026-08-20T19:00:03.046599+00:00",
     "title": "The `t = 2` case, with `H(2) = 1` proved *and* shown sharp for every"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "The first conjecture of the initial list — the\n> sharp finite-window envelope for the compromised fraction of a sampled\n> monitoring run — was proved before finalising and is now\n> `SampledMonitoring.frac_compromised_residue` (the exact identity\n> `(k-1)/k + (N mod k)/(kN)`), together with `frac_compromised_eq_iff` (the\n> alignment criterion, an `iff`) and `frac_compromised_le_envelope` (the `1/N`\n> envelope).  It is replaced below by C1′.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_1749",
+    "lineage_refs": [],
+    "priority_score": 0.4,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "254383ec",
+    "status": "available",
+    "timestamp": "2026-08-20T19:46:38.417394+00:00",
+    "title": "The first conjecture of the initial list — the"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Replace the periodic checkpoint set `{n : k ∣ n}` by an arbitrary\nschedule `T : Finset ℕ → Prop` (decidable).  Conjecture: the compromised fraction\nof the window `(0, N]` is `1 - |T ∩ (0,N]| / N` for every `N`, and two schedules\n`T₁, T₂` give the same compromised fraction for **every** `N ≥ 1` if and only if\n`T₁ ∩ (0,∞) = T₂ ∩ (0,∞)`.",
+    "domain_bridges": [],
+    "domains": [
+      "Combinatorics",
+      "Logic"
+    ],
+    "id": "fd_1750",
+    "lineage_refs": [],
+    "priority_score": 0.4,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "254383ec",
+    "status": "available",
+    "timestamp": "2026-08-20T19:46:38.705073+00:00",
+    "title": "Replace the periodic checkpoint set `{n : k ∣ n}` by an arbitrary"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Both halves exist and are proved: the exact power law\n(`frac_pow_of_independent_repetition`) and the sharp one-shot threshold\n(`exists_two_accepting_challenges` together with\n`frac_eq_one_div_card_of_unique`).  What is missing is only the identification of\n`(R ×ˢ C)^k` with `R^k ×ˢ C^k`, which is a `Fintype.piFinset` reindexing and is\nthe natural next brick.",
+    "domain_bridges": [],
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "fd_1752",
+    "lineage_refs": [],
+    "priority_score": 0.4,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "254383ec",
+    "status": "available",
+    "timestamp": "2026-08-20T19:46:39.264910+00:00",
+    "title": "Both halves exist and are proved: the exact power law"
   }
 ]
