@@ -1,130 +1,231 @@
-# The Hidden Geometry of Aligning a Language Model
+# The Leash and the Lie Detector: How Much Can Alignment Change a Model?
 
-## A reward is a direction, a policy is a place
+## A tug-of-war in three terms
 
-Every large language model that answers politely, refuses gracefully, and cites carefully has been through a second education. After the model has read the internet and learned to imitate, it is *aligned*: nudged toward answers that people (or a set of symbolic rules) actually prefer. The workhorse recipe for that nudge is a single formula. Written out, it says: make the model's answers score well under a reward model, don't let the model wander too far from where it started, and don't let it forget how to speak English.
+Every modern language assistant is, at bottom, the outcome of an argument between three
+forces. The first force wants the model to score well: a *reward model* — trained on
+human preferences, or, increasingly, on symbolic rules and logical checks — hands out a
+number $r(y)$ for each possible response $y$, and the training procedure pushes the model
+toward high-scoring answers. The second force wants the model to stay put: a penalty
+proportional to how far the new policy has strayed from the original, carefully
+fine-tuned model. The third force wants the model to remember where it came from: a
+mix-in of the original pretraining objective, so the assistant does not forget how to
+write Python or conjugate French verbs while it is learning to be polite.
 
-In symbols, with $\Omega$ the (finite) set of possible responses, $q$ the tuned policy we are searching for, $p$ the starting "supervised fine-tuned" reference policy, $r$ the reward model, $d$ the pretraining distribution, and two knobs $\beta,\gamma>0$:
+Written down, the argument becomes a single expression. If $p$ is the reference policy
+(the supervised fine-tuned model), $q$ the candidate aligned policy, $r$ the reward, $d$
+the pretraining distribution, and $\beta,\gamma > 0$ two knobs, the objective is
 
-$$J_\gamma(q) \;=\; \underbrace{\sum_{y} q(y)\,r(y)}_{\text{score well}} \;-\; \underbrace{\beta \sum_y q(y)\log\frac{q(y)}{p(y)}}_{\text{stay near the reference}} \;+\; \underbrace{\gamma \sum_y d(y)\log q(y)}_{\text{don't forget}} .$$
+$$J(q) \;=\; \mathbb{E}_{y \sim q}[r(y)] \;-\; \beta\, \mathrm{KL}(q \,\|\, p) \;+\; \gamma\, \mathbb{E}_{y \sim d}[\log q(y)].$$
 
-The middle term is the Kullback–Leibler divergence $\mathrm{KL}(q\|p)$, a measure of how much information it takes to tell $q$ apart from $p$. The last term is the "pretraining mix-in": a bribe paid to the model to keep assigning respectable probability to ordinary text.
+The middle term — the Kullback–Leibler divergence, $\mathrm{KL}(q\|p) = \sum_y q(y)\log\frac{q(y)}{p(y)}$ —
+is the leash. Practitioners have always described it in words: *it keeps the tuned model
+from drifting too far, and thereby prevents policy collapse and reward hacking.* That
+sentence is folklore. It is repeated in papers, in blog posts, in code comments. But
+folklore is not a theorem. **How far, exactly?** How much can a model change when you
+turn the leash to strength $\beta$? Which of its behaviours can change, and which are
+provably safe?
 
-Practitioners treat this formula as an engineering compromise: three competing pressures, balanced by hand-tuned coefficients. What follows is the claim that it is not a compromise at all. It is a piece of geometry, and once you see the geometry, several practical facts about alignment — reward hacking, mode collapse, the "alignment tax", the fact that you can read a reward model off a tuned policy — stop being folklore and become theorems.
+This article is about a set of answers to those questions — sharp ones, with matching
+examples showing that they cannot be improved.
 
-## The simplest case: alignment as a tilt
+## Where the aligned model actually lands
 
-Drop the pretraining term for a moment ($\gamma=0$). Then the maximization has a closed-form answer that has been known since Gibbs studied gases: the best policy is the reference policy *tilted* by the reward,
+Start with the clean case $\gamma = 0$. Over a finite set of possible responses, the
+maximizer of $J$ is not a mystery: it is the *exponential tilt* of the reference,
 
-$$\pi_r(y) \;=\; \frac{p(y)\,e^{r(y)/\beta}}{Z}, \qquad Z \;=\; \sum_z p(z)\,e^{r(z)/\beta}.$$
+$$\pi_\beta(y) \;=\; \frac{p(y)\, e^{r(y)/\beta}}{Z_\beta}, \qquad Z_\beta = \sum_y p(y)\, e^{r(y)/\beta}.$$
 
-Responses the reward likes get multiplied up, responses it dislikes get multiplied down, and everything is renormalized. The temperature $\beta$ controls how violent the tilt is. The best value attainable is the *free energy*
+Physicists will recognize a Boltzmann distribution at temperature $\beta$, with the reward
+playing the role of minus the energy. This is where the whole story lives: alignment does
+not invent a new model, it *reweights* the old one, multiplying each response's
+probability by $e^{r(y)/\beta}$ and renormalizing. Large $\beta$ means a cold, timid
+reweighting; small $\beta$ means a violent one.
 
-$$F(r) \;=\; \beta \log Z \;=\; \beta \log \sum_y p(y)\, e^{r(y)/\beta}.$$
+The natural measure of "how far did the model move" is the total-variation-style distance
 
-Now the first structural observation. Suppose you tilt by $r_1$, and then tilt the result by $r_2$. You get exactly the tilt by $r_1 + r_2$. Tilting by the zero reward changes nothing. And tilting by a *constant* reward — one that gives every response the same score — also changes nothing, because the constant cancels in the normalization. So rewards act on policies the way translations act on a plane: composably, invertibly, and with a subgroup (the constants) acting trivially.
+$$\|\pi_\beta - p\|_1 = \sum_y |\pi_\beta(y) - p(y)|,$$
 
-Push this to its conclusion and you get a clean statement.
+which runs from $0$ (no change at all) to $2$ (the new model and the old one never agree).
+Call it the **drift**.
 
-> **Alignment Torsor Theorem.** Fix $\beta>0$ and a strictly positive reference policy $p$. The additive group of reward models modulo constants acts on the set of strictly positive policies by exponential tilting, and this action is *simply transitive*: for any two such policies there is exactly one reward-modulo-constant taking one to the other.
+## First answer: the leash is self-limiting
 
-A set on which a group acts simply transitively is called a *torsor* — a space that looks like the group but has forgotten where its origin is. That is precisely the situation in alignment: policies are rewards that have forgotten which reward was "zero". Choose an origin (the reference policy $p$) and the two become the same thing.
+Here is the first surprise, and it is almost free. Let $\mathrm{range}(r) = \max_y r(y) - \min_y r(y)$.
+Because the aligned policy is optimal, it must beat the reference; because the reward can
+only improve by at most its own range, the divergence it can afford to spend is capped:
 
-The explicit inverse map is famous in its own right. Given a policy $q$, the reward that produced it is
+> **Self-limiting divergence.** $\mathrm{KL}(\pi_\beta \| p) \le \mathrm{range}(r)/\beta$.
 
-$$r_q(y) \;=\; \beta \log\frac{q(y)}{p(y)},$$
+Nothing about the reward's shape enters — only how far apart its best and worst values
+are. Combined with **Pinsker's inequality**, $\|q-p\|_1^2 \le 2\,\mathrm{KL}(q\|p)$, this
+yields a first *no-collapse law*: the drift is at most $\sqrt{2\,\mathrm{range}(r)/\beta}$,
+which tends to $0$ as the leash tightens. The folklore is now a theorem.
 
-the *implicit reward*. This is the identity underlying direct preference optimization: you never need to train a separate reward model, because the policy already *is* one, written in different coordinates.
+Is it the best theorem? Pinsker's constant $2$ turns out to be exactly optimal: on a
+two-point space with the family $q_\varepsilon = (\tfrac12+\varepsilon, \tfrac12-\varepsilon)$
+around the uniform reference, the ratio $2\,\mathrm{KL}/\|q_\varepsilon - q_0\|_1^2$
+converges to $1$ as $\varepsilon \downarrow 0$, so no constant smaller than $2$ works.
 
-The correspondence is not merely a bijection of sets. Fix the gauge by insisting $\sum_y r(y)=0$, and the map from mean-zero rewards to strictly positive policies is a **homeomorphism**: nearby rewards give nearby policies, and nearby policies give nearby rewards. Small reward-model errors cause only small policy changes, and reward extraction from a policy is a stable operation. But — and this is where the mathematics earns its keep — the homeomorphism lives strictly on the *interior* of the probability simplex. As a policy pushes some response's probability toward zero, the implicit reward for that response diverges to $-\infty$. Policy collapse is not a numerical accident; it is the boundary of the coordinate chart.
+And yet the $\beta^{-1/2}$ law is *not* the truth. That is the useful lesson: when a
+composite bound is loose, the loose step need not be the one you suspect. Pinsker was
+perfect; the *input* to Pinsker was crude.
 
-## Two ways to say the same thing
+## Second answer: the real rate is $1/\beta$
 
-There is a second, deeper duality hiding in the same formula. The free energy $F(r)$ is a convex function of the reward. Its supporting-hyperplane inequality,
+The variational argument above only used the *value* of the objective. It ignored the
+structure of the answer — that $\pi_\beta$ is an exponential family, and that a tilt's
+divergence from its base point is *quadratic* in the tilt parameter, not linear. Exploiting
+that gives
 
-$$F(s) \;\ge\; F(r) + \mathbb{E}_{\pi_r}[\,s - r\,],$$
+$$\mathrm{KL}(\pi_\beta \| p) \;\le\; \frac{\mathrm{range}(r)^2}{2\beta^2}\, e^{\mathrm{range}(r)/\beta},
+\qquad \|\pi_\beta - p\|_1 \;\le\; \frac{\mathrm{range}(r)}{\beta}\, e^{\mathrm{range}(r)/(2\beta)},$$
 
-is classical in statistical mechanics. What is pleasant here is that the *gap* in this inequality is not merely nonnegative; it has an exact identity:
+and, once the temperature exceeds the reward scale ($\beta \ge \mathrm{range}(r)$), the clean
+statement $\|\pi_\beta - p\|_1 \le 2\,\mathrm{range}(r)/\beta$. The drift decays like
+$1/\beta$, not $1/\sqrt{\beta}$ — a genuine order-of-magnitude improvement in the regime
+anyone actually runs.
 
-$$F(s) - F(r) - \mathbb{E}_{\pi_r}[\,s-r\,] \;=\; \beta\,\mathrm{KL}\!\left(\pi_r \,\|\, \pi_s\right).$$
+That this is the end of the road, and not another artifact, is settled by an explicit
+example: on a coin-flip response space with uniform reference and the reward "one point
+for heads", the drift is at least $1/(3\beta)$ for every $\beta \ge 2$. Upper bound
+$2/\beta$, lower bound $1/(3\beta)$: the rate $\Theta(\beta^{-1})$ is exact.
 
-In words: the failure of the free energy to be linear in the reward is *exactly* the information distance between the corresponding aligned policies. Convexity, strict convexity, monotonicity, and continuity of the alignment value all fall out of this one identity, with no calculus at all.
+## Third answer: it is the *variance* that matters, not the range
 
-From it comes the full Legendre duality:
+The range of a reward is a brutal summary. Imagine a reward model that is essentially flat
+across the millions of responses your model actually produces, but assigns a huge score to
+one bizarre, vanishingly rare string — the classic signature of a reward model with an
+exploitable hole. Its range is enormous. Its *variance under the reference policy*,
+$\mathrm{Var}_p(r) = \mathbb{E}_p[(r - \mathbb{E}_p r)^2]$, is tiny, because the spike
+carries almost no probability mass.
 
-> **Duality Theorem.** For $\beta>0$ and a strictly positive reference $p$:
-> $$F(r) \;=\; \max_{q}\Big( \mathbb{E}_q[r] - \beta\,\mathrm{KL}(q\|p) \Big),$$
-> the maximum attained uniquely at $q=\pi_r$; and dually,
-> $$\beta\,\mathrm{KL}(q\|p) \;=\; \max_{r}\Big( \mathbb{E}_q[r] - F(r) \Big),$$
-> the maximum attained at the implicit reward $r_q = \beta\log(q/p)$.
+Which one governs drift? The variance:
 
-Read the second equation slowly. The KL penalty — the regularizer that alignment engineers add to keep a model from drifting — is not an arbitrary choice of leash. It is the *convex conjugate* of the alignment value. Rewards and policies are Legendre-dual coordinates on the alignment problem, and the tilting torsor is the gradient map between them. The accompanying Fenchel–Young inequality $\mathbb{E}_q[r]\le F(r)+\beta\,\mathrm{KL}(q\|p)$ holds always, with equality exactly on the graph of the tilting map: exactly when $q$ is the aligned policy for $r$.
+$$\mathrm{KL}(\pi_\beta \| p) \;\le\; e^{\mathrm{range}(r)/\beta}\,\frac{\mathrm{Var}_p(r)}{\beta^2},
+\qquad
+\|\pi_\beta - p\|_1 \;\le\; \frac{\sqrt{2\,e^{\mathrm{range}(r)/\beta}\,\mathrm{Var}_p(r)}}{\beta}.$$
 
-## How much damage can a corrupted reward do?
+Since Popoviciu's inequality gives $\mathrm{Var}_p(r) \le \mathrm{range}(r)^2/4$ always, this is
+never worse than the previous bound, and on rare-spike rewards it is unboundedly better.
+An extreme corollary is worth stating on its own: if the reward has *zero* variance under
+the reference — it is constant on everything the model ever says — then $\pi_\beta = p$
+exactly, at every temperature. Alignment pressure with no reward contrast moves nothing.
 
-Reward models are learned, and learned things are wrong. Suppose an adversary — or just a badly-fit neural network — perturbs the reward by at most $K$ at every response. How far can the attainable alignment value move? Convexity gives an immediate answer: at most $K$, exactly.
+Is the standard deviation $\sigma_p(r) = \sqrt{\mathrm{Var}_p(r)}$ the right functional, or
+could something even smaller do? Again a two-point computation decides it. With a uniform
+reference over $\{\text{heads},\text{tails}\}$ and reward $a$ for heads, the drift can be
+computed in closed form:
 
-$$\bigl|F(r) - F(s)\bigr| \;\le\; \sup_y |r(y)-s(y)|.$$
+$$\|\pi_\beta - p\|_1 \;=\; \tanh\!\Big(\frac{a}{2\beta}\Big) \;=\; \frac{e^{a/\beta}-1}{e^{a/\beta}+1},$$
 
-A *reward-hacking budget*: corruption of size $K$ buys the attacker value at most $K$. The natural next question is whether the constant $1$ is pessimistic. It is not.
+while $\sigma_p(r) = a/2$. For $0 < a \le \beta$ this is squeezed between $\sigma/(2\beta)$
+and $3\sigma/\beta$. The law is $\Theta(\sigma_p(r)/\beta)$ — the functional and the rate
+are both correct, and only the absolute constant remains to be pinned down.
 
-> **Sharpness Theorem.** For every $K\ge 0$ and every $\varepsilon>0$ there is a two-response space, a temperature, a reference policy, and a pair of reward models at sup-norm distance at most $K$ whose alignment values differ by more than $K-\varepsilon$. Consequently no constant $c<1$ satisfies $|F(r)-F(s)|\le c\sup_y|r-s|$ in general.
+## The lie-detector question: which behaviours can be hacked?
 
-The witness is disarmingly simple: two responses, a uniform reference policy, one reward identically zero and the other paying $K$ for a single response. Then $F=\beta\log\frac{e^{K/\beta}+1}{2}\ge K-\beta\log 2$. As the temperature $\beta$ shrinks — that is, as the KL leash is loosened relative to the reward scale — the value gap converges to the entire budget $K$. Low temperature is precisely the regime in which reward hacking is observed empirically, and here it is, as a theorem.
+Now the question that actually keeps alignment researchers awake. Suppose you have an
+*audit statistic* $f$: a second reward model the training never saw, a toxicity probe, a
+truthfulness classifier, a measurement of how often the model says "I don't know". You
+want to know whether optimizing $r$ silently moved $f$. The **audit gap** is
+$\mathbb{E}_{\pi_\beta}[f] - \mathbb{E}_p[f]$.
 
-There is a sharper, more uncomfortable companion. A tempting way to diagnose reward corruption is to measure it *where the model actually spends its probability*: use the reference-weighted energy $\|f\|^2_{L^2(p)} = \sum_y p(y) f(y)^2$, which discounts responses the base model almost never emits. That diagnostic is worthless.
+A first bound comes for free from the drift law: the gap is at most $\|f\|_\infty$ times
+the drift. But this is unsatisfying — it says a large-magnitude statistic is always at
+risk. The sharper truth replaces magnitude by *fluctuation*:
 
-> **No-Reference-Weighted-Bound Theorem.** For every constant $C$, however large, there is a temperature, a reference policy, and a pair of reward models with
-> $$\bigl|F(r)-F(s)\bigr| \;>\; C \left(\sum_y p(y)\,(r(y)-s(y))^2\right)^{1/2}.$$
+$$\big|\mathbb{E}_{\pi_\beta}[f] - \mathbb{E}_p[f]\big| \;\le\; \frac{e^{\mathrm{range}(r)/\beta}}{\beta}\, \sigma_p(r)\, \sigma_p(f).$$
 
-The construction places the corruption on a response of reference probability $\delta$ and then lowers the temperature: the weighted norm shrinks like $\sqrt{\delta}$ while the value gap stays of order $1$. Exponential tilting amplifies rare responses without limit, so an attack hidden in the tail of the reference distribution is invisible to any tail-discounting metric — which is exactly how reward hacking evades the obvious defenses.
+A statistic that is nearly deterministic under the reference cannot be moved at all, no
+matter how large its values.
 
-## Putting the pretraining term back
+And then the sharpest statement, the one that gives the whole subject a clean slogan.
+Write $\mathrm{Cov}_p(r,f) = \mathbb{E}_p[(r - \mathbb{E}_p r)(f - \mathbb{E}_p f)]$ for the
+covariance of the reward and the audit statistic *under the reference policy* — a quantity
+you can estimate before you run a single step of alignment, by sampling from the model you
+already have. Then, for a reward bounded by $R$ and a temperature $\beta \ge R$:
 
-Now restore $\gamma>0$. The pretraining mix-in destroys the closed form: the optimality condition becomes transcendental, and no Gibbs formula solves it. What replaces the formula?
+> **The audit gap is a covariance.**
+> $$\Big|\, \mathbb{E}_{\pi_\beta}[f] - \mathbb{E}_p[f] \;-\; \frac{\mathrm{Cov}_p(r,f)}{\beta} \,\Big| \;\le\; 24 \Big(\frac{R}{\beta}\Big)^{2} \sigma_p(f).$$
 
-First, the optimum exists and is unique. Uniqueness comes from strict concavity: for distinct positive policies $q_1\neq q_2$, the objective at their midpoint strictly exceeds the average of the two values. Existence needs a little care, because the objective diverges to $-\infty$ at the simplex boundary; the fix is to note that this divergence is a *good* thing — provided the pretraining distribution has full support ($d(y)\ge\delta>0$), any policy with a tiny coordinate has terrible value, so the search can be confined to a compact slice of the simplex where the objective is continuous.
+The leading behaviour of every audit statistic under alignment is *pinned* by one number
+computed on the pre-alignment model. And therefore:
 
-Second, and more interestingly, the missing closed form is replaced by a *fixed-point* equation. Define the marginal value of putting mass on response $y$:
+> **First-order reward hacking requires correlation with the reward model.**
+> If $\mathrm{Cov}_p(r,f) = 0$, then $|\mathbb{E}_{\pi_\beta}[f] - \mathbb{E}_p[f]| \le 24(R/\beta)^2 \sigma_p(f)$ —
+> the statistic moves at order $\beta^{-2}$, one full order better than the generic guarantee.
 
-$$S(y) \;=\; r(y) \;-\; \beta\left(\log\frac{q(y)}{p(y)} + 1\right) \;+\; \gamma\,\frac{d(y)}{q(y)}.$$
+Why is this the right shape? Because $\pi_\beta = p \cdot (e^{r/\beta}/Z_\beta)$, so the
+audit gap is *exactly* the reference covariance of $f$ with the likelihood ratio
+$e^{r/\beta}/Z_\beta$; and to first order that likelihood ratio is just $1 + r/\beta$.
+Covariance with the constant $1$ is zero; covariance with $r/\beta$ is
+$\mathrm{Cov}_p(r,f)/\beta$. Everything else is a second-order remainder, and the entire
+technical work is showing that the remainder is genuinely small — it has oscillation at
+most $24(R/\beta)^2$, and an oscillation bound controls a standard deviation.
 
-> **Stationarity Theorem.** A strictly positive policy is the global optimum if and only if $S$ is constant across all responses. Equivalently, the optimum satisfies the self-consistent Gibbs equation
-> $$q \;=\; \pi_{\,r + \gamma d/q}, \qquad\text{i.e.}\qquad q(y) \;=\; \frac{p(y)\exp\!\big((r(y)+\gamma\, d(y)/q(y))/\beta\big)}{\sum_z p(z)\exp\!\big((r(z)+\gamma\, d(z)/q(z))/\beta\big)}.$$
+This has an operational reading. You cannot audit every behaviour of a model. But you can
+*rank* behaviours by their pre-alignment correlation with the reward, and the ranking is
+provably the right one to first order: high-correlation statistics are the ones that will
+move, and low-correlation ones are protected by an explicit quadratic bound.
 
-This is the most quotable consequence of the whole development: **the pretraining mix-in is a self-referential reward bonus**. The tuned model behaves exactly as if it were doing ordinary tilted alignment against an *augmented* reward $r + \gamma\, d/q$, where the bonus $\gamma d(y)/q(y)$ is large precisely on responses the pretraining distribution likes and the current policy has suppressed. It is an automatic, self-correcting subsidy for whatever the alignment process is in the act of forgetting.
+## The price of alignment, both ways
 
-That subsidy has teeth. Because the bonus blows up as $q(y)\to 0$, no response with pretraining mass can be starved:
+The same machinery quantifies the trade. Since $\pi_\beta$ is the optimum, its reward gain
+must at least pay for the divergence it spends:
 
-> **Anti-Starvation Theorem.** If the reward is bounded above by $M$, then at the optimum every response satisfies
-> $$q(y) \;\ge\; \frac{\gamma\, d(y)}{\beta \log\frac{1}{p(y)} + M + \gamma - r(y)}.$$
+$$\mathbb{E}_{\pi_\beta}[r] - \mathbb{E}_p[r] \;\ge\; \beta\, \mathrm{KL}(\pi_\beta\|p) \;\ge\; \frac{\beta}{2}\|\pi_\beta - p\|_1^2.$$
 
-A hard, reward-independent probability floor. However badly a corrupted reward model scores a response, if the pretraining distribution likes it, the aligned model cannot suppress it below this level. Mode collapse under PPO-with-pretraining-mix-in is not just discouraged; it is bounded away.
+*Gain costs drift.* Conversely, a model that has not moved cannot have improved:
+$\mathbb{E}_{\pi_\beta}[r] - \mathbb{E}_p[r] \le \frac{\mathrm{range}(r)}{2}\|\pi_\beta - p\|_1$,
+so once $\beta \ge \mathrm{range}(r)$ the total extractable reward is itself capped by
+$\mathrm{range}(r)^2/\beta$. *Drift caps gain.* There is no free alignment: the leash you
+choose fixes, in both directions, how much improvement is even on the table.
 
-## The price of not forgetting
+Finally, the pretraining mix-in. Suppose a policy $q$ merely *beats the reference* under
+the full objective with $\gamma > 0$. Then
 
-How much does the pretraining term cost? Exactly what you would expect, and it is provable without ever differentiating anything, from the two optimality inequalities alone:
+$$\beta\, \mathrm{KL}(q\|p) \;+\; \gamma\, \mathrm{KL}(d\|q) \;\le\; \mathrm{range}(r) \;+\; \gamma\, \mathrm{KL}(d\|p).$$
 
-* Raising $\gamma$ *monotonically improves* the pretraining fit $\sum_y d(y)\log q(y)$ of the optimum. The bribe works.
-* Raising $\gamma$ *monotonically degrades* the pure reward-minus-KL part. This is the **alignment tax**, and it is paid monotonically — no free lunches, no non-monotone surprises.
-* The optimal value is a decreasing, **convex** function of $\gamma$ (an envelope theorem: it is a maximum of functions affine in $\gamma$).
+One inequality, two guarantees. The reward term can buy at most $\mathrm{range}(r)/\beta$
+worth of divergence from the fine-tuned model, and — reading the same line the other way —
+the aligned model can be pushed away from the pretraining distribution by at most
+$\mathrm{range}(r)/\gamma$ beyond where the reference already was. The two coefficients are
+two independent budgets, and the reward range is the single currency both are spent in.
 
-And how far does the mix-in push the policy away from the clean Gibbs answer $\pi_r$? Here the geometry returns in its most elegant form:
+## What happens if you drop the leash
 
-> **Pythagorean Drift Theorem.** For the mix-in optimum $q^*$,
-> $$\beta\,\mathrm{KL}(q^*\|\pi_r) \;+\; \gamma\,\mathrm{KL}(d\|q^*) \;\le\; \gamma\,\mathrm{KL}(d\|\pi_r).$$
-> Hence $\mathrm{KL}(q^*\|\pi_r) \le (\gamma/\beta)\,\mathrm{KL}(d\|\pi_r)$, so as $\gamma\to 0^+$ the mix-in optimum converges in information to the Gibbs policy; and if $d=\pi_r$ exactly, the mix-in has no effect at all.
+For completeness, the opposite regime. As $\beta \downarrow 0$ the KL penalty vanishes and
+the picture is that of a zero-temperature limit in statistical physics. The free energy
+$\beta \log Z_\beta$ is squeezed between $\max_y r(y) + \beta \log(\min_y p(y))$ and
+$\max_y r(y)$, so it converges to the maximal reward — an explicit, non-asymptotic form of
+the Laplace principle. Every suboptimal response is exponentially suppressed,
 
-The two divergences are the legs of an information-geometric right triangle whose hypotenuse is $\mathrm{KL}(d\|\pi_r)$: the mix-in optimum sits *between* the aligned policy and the pretraining distribution, and the amount of drift it can cause is budgeted by how far apart those two were in the first place. If alignment did not move the model away from its pretraining distribution, the mix-in has nothing to correct and does nothing.
+$$\pi_\beta(y) \;\le\; \frac{1}{\min_z p(z)}\, e^{-(\max_z r(z) - r(y))/\beta},$$
 
-Finally, the reward-hacking analysis extends from values to policies. Strong concavity at the optimum gives, for reward models agreeing to within $K$ in sup-norm and their respective optima $q_1,q_2$,
+so its probability vanishes; and in the two-point model the drift converges to its maximal
+possible value $1$. This is **total policy collapse**: not a large perturbation of the
+reference, but a complete replacement of it by a point mass on the reward's argmax. Low
+temperature is not a continuous deformation of the reference model — it is a different
+object entirely.
 
-$$\beta\Big(\mathrm{KL}(q_1\|q_2)+\mathrm{KL}(q_2\|q_1)\Big) \;\le\; \sum_y (q_1(y)-q_2(y))\,(r(y)-s(y)) \;\le\; 2K.$$
+## The shape of the picture
 
-An *immunity band*: a bounded corruption of the reward model can move the aligned policy by only a bounded amount of information, and the band tightens as $\beta$ grows. The temperature $\beta$ is thus doing double duty — it is the leash length, and it is the inverse of the sensitivity to reward error. Turn it down to chase reward, and you buy both a bigger value swing (the sharpness theorem) and a bigger policy swing (this one). The two failure modes people report at low KL penalty are the same theorem viewed twice.
+Put the pieces together and the KL penalty stops being a heuristic and becomes a
+thermostat with a known calibration curve:
 
-## What the geometry buys
+- at $\beta = 0^+$, total collapse onto the reward maximizer;
+- at large $\beta$, drift exactly of order $\sigma_p(r)/\beta$ — proportional to the
+  reward's fluctuation on the model's own output distribution, not to its worst-case range;
+- for any individual behaviour you might care to audit, a first-order prediction
+  $\mathrm{Cov}_p(r,f)/\beta$ with an explicit $O(\beta^{-2})$ error, and hence a proof that
+  behaviours uncorrelated with the reward are second-order safe;
+- and a two-sided budget saying exactly how much reward the leash lets you buy.
 
-None of this changes the training loop. What it changes is what the loop *is*. The three terms of the alignment objective are not three engineering hacks glued together; they are: a linear functional (the reward), the convex conjugate structure that makes rewards and policies dual coordinates (the KL penalty), and a barrier that keeps the policy inside the region where those coordinates are defined (the pretraining mix-in). The barrier's strength is a self-referential reward bonus. The dual coordinates degenerate exactly at collapse. The value's Lipschitz constant is exactly one, and no tail-discounting norm can improve it.
-
-That is a satisfying amount of structure to find inside a formula that was written down to make a chatbot behave.
+None of this requires knowing anything about neural networks. It requires only that the
+aligned model is the exponential tilt of the reference — which is the defining property of
+the objective, whether the reward signal comes from human raters, from a symbolic rule
+engine, or from anything else. That is the pleasant thing about the result: the
+architecture of the reward model is irrelevant to the geometry of the leash. What matters
+is a variance and a covariance, both measurable on the model you already have, before
+alignment begins.
