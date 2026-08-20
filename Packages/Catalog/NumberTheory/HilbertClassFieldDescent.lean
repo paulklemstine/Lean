@@ -19,7 +19,7 @@ and the results below identify the arithmetic of `L` with the arithmetic of this
   `⊥` and `⊤`.
 -/
 
-import NumberTheory.HilbertClassFieldIntermediate
+import Catalog.NumberTheory.HilbertClassFieldIntermediate
 
 open NumberField
 

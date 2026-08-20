@@ -1,5 +1,5 @@
-import Geometry.HyperbolicBerggrenGeodesics
-import NumberTheory.BerggrenStarLines
+import Catalog.Geometry.HyperbolicBerggrenGeodesics
+import Catalog.NumberTheory.BerggrenStarLines
 
 /-!
 # The limit set of the Berggren tree on the ideal boundary

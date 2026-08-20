@@ -1,7 +1,7 @@
 import Mathlib
-import Shared.CarmichaelHelper
-import Shared.NumberTheory.CarmichaelHelpers
-import Applications.ProofAutomation.FibonacciTactics
+import Catalog.Shared.CarmichaelHelper
+import Catalog.Shared.NumberTheory.CarmichaelHelpers
+import Catalog.Applications.ProofAutomation.FibonacciTactics
 
 /-!
 # Finite gcd synchronization for Fibonacci apparition

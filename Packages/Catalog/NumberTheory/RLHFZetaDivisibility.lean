@@ -1,4 +1,4 @@
-import NumberTheory.RLHFZetaEulerPolicy
+import Catalog.NumberTheory.RLHFZetaEulerPolicy
 
 /-!
 # Divisibility statistics of the aligned (zeta) policy

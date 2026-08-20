@@ -43,7 +43,7 @@ class complexity, universal coding, specialised decompressor, pigeonhole bound,
 minimax redundancy separation
 -/
 
-import MachineLearning.UniversalRedundancy.Bernoulli
+import Catalog.MachineLearning.UniversalRedundancy.Bernoulli
 
 open Finset Real
 

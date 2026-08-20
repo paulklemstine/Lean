@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "e8a76d4f",
-      "domain": "Novelty",
-      "key_insight": "# Future directions — Compression ⇋ one-way functions (Phase B / M8)\n\nDerived from the results in `Catalog/Novelty/CompressionLasVegasOWF.lean` and\n`Catalog/Novelty/CompressionLasVegasDecision.lean`,",
-      "quality_score": 0.78,
-      "sorry_count": 4,
-      "theorem_count": 109,
-      "timestamp": "2026-08-18T05:46:22",
-      "title": "Compression Research B6: Compression ↔ one-way functions (the cryptography link)"
-    },
-    {
       "cycle_id": "cf8480d3",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Orbital Rigidity\n\nDerived from the analysis (Stage 3) and adversarial review (Stage 4) of\n`Catalog/Novelty/OrbitalRigidity.lean`.  Each conjecture is falsifiable: a single finite",
@@ -499,19 +489,19 @@
       "theorem_count": 56,
       "timestamp": "2026-08-20T03:58:56",
       "title": "Beal's Conjecture"
+    },
+    {
+      "cycle_id": "17d131fb",
+      "domain": "NumberTheory",
+      "key_insight": "# Future directions: after the refutation of Conjecture D10\n\nConjecture D10 (\"the Molien invariant is exactly the Burnside mark vector modulo scaling\")\nis **false**, and the reason is now precisely lo",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 85,
+      "timestamp": "2026-08-20T04:54:04",
+      "title": "Conjecture D10 (the Molien invariant is exactly the Burnside mark vector modulo scaling)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "94177336",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Zero-Knowledge Theorem Proving\n\nFour full research cycles were run in this session; everything below is derived\nfrom results that are now formalised, sorry-free, in\n`Catalog/Appl",
-      "quality_score": 0.6348185595414201,
-      "sorry_count": 0,
-      "theorem_count": 96,
-      "timestamp": "2026-08-11T02:39:19",
-      "title": "Close Proofs: Zero-Knowledge Theorem Proving: I Can Prove Fermat's Last Theorem With"
-    },
     {
       "cycle_id": "4c1e8096",
       "domain": "Geometry",
@@ -2501,27 +2491,19 @@
       "theorem_count": 56,
       "timestamp": "2026-08-20T03:58:56",
       "title": "Beal's Conjecture"
+    },
+    {
+      "cycle_id": "17d131fb",
+      "domain": "NumberTheory",
+      "key_insight": "# Future directions: after the refutation of Conjecture D10\n\nConjecture D10 (\"the Molien invariant is exactly the Burnside mark vector modulo scaling\")\nis **false**, and the reason is now precisely lo",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 85,
+      "timestamp": "2026-08-20T04:54:04",
+      "title": "Conjecture D10 (the Molien invariant is exactly the Burnside mark vector modulo scaling)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "4ba8c40c",
-      "domain": "Novelty",
-      "name": "and",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "4ba8c40c",
-      "domain": "Novelty",
-      "name": "sum_antisymm_zero",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "4ba8c40c",
-      "domain": "Novelty",
-      "name": "cutWeight_eq_crossSum",
-      "quality": 0.85
-    },
     {
       "cycle_id": "7299371d",
       "domain": "Combinatorics",
@@ -2803,9 +2785,27 @@
       "domain": "NumberTheory",
       "name": "dvd_third_of_dvd_two_bc",
       "quality": 0.78
+    },
+    {
+      "cycle_id": "17d131fb",
+      "domain": "NumberTheory",
+      "name": "fixCount_one",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "17d131fb",
+      "domain": "NumberTheory",
+      "name": "fixCount_le_card",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "17d131fb",
+      "domain": "NumberTheory",
+      "name": "markOn_le_fixCount",
+      "quality": 0.78
     }
   ],
-  "last_updated": "2026-08-20T03:58:56",
+  "last_updated": "2026-08-20T04:54:04",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hn2⟩)",
@@ -3641,12 +3641,6 @@
     ],
     "NumberTheory": [
       {
-        "cycle_id": "603eb18a",
-        "quality": 0.78,
-        "theorems": 59,
-        "title": "NET-24: A Stateful Carry Cell Unlocks Length-General Carry — The Wall Was the An"
-      },
-      {
         "cycle_id": "802e1378",
         "quality": 0.72,
         "theorems": 46,
@@ -3699,6 +3693,12 @@
         "quality": 0.78,
         "theorems": 56,
         "title": "Beal's Conjecture"
+      },
+      {
+        "cycle_id": "17d131fb",
+        "quality": 0.78,
+        "theorems": 85,
+        "title": "Conjecture D10 (the Molien invariant is exactly the Burnside mark vector modulo "
       }
     ],
     "Physics": [

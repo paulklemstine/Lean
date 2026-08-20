@@ -1,5 +1,5 @@
 import Mathlib
-import EML.FixedPointConvergence
+import Catalog.EML.FixedPointConvergence
 
 /-!
 # Algebraic-independence reductions for special EML values

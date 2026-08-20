@@ -24,7 +24,7 @@ would make the failure mass a finite sum, destroying the Euler factor.
 -/
 
 import Mathlib
-import NumberTheory.EOSWidthMonotoneRamp
+import Catalog.NumberTheory.EOSWidthMonotoneRamp
 
 open Filter Topology Complex
 

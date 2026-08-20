@@ -45,8 +45,8 @@ which the tangle can be exhibited, and `GLFrame.toKFrame` (with
 -/
 
 import Mathlib
-import Logic.ProvabilityLogic.GLPFrames
-import Logic.TangledHierarchies
+import Catalog.Logic.ProvabilityLogic.GLPFrames
+import Catalog.Logic.TangledHierarchies
 
 namespace TangledSoundness
 

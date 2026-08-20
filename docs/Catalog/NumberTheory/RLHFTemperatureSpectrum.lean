@@ -1,4 +1,4 @@
-import NumberTheory.RLHFGibbsVariational
+import Catalog.NumberTheory.RLHFGibbsVariational
 
 /-!
 # The RLHF free-energy spectrum and a von Mangoldt reward model

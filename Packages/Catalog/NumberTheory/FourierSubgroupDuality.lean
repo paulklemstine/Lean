@@ -16,7 +16,7 @@ Main results:
 -/
 
 import Mathlib
-import Shared.FourierFiniteAbelian
+import Catalog.Shared.FourierFiniteAbelian
 
 open Finset Fintype ComplexConjugate
 

@@ -1,6 +1,6 @@
 import Mathlib
-import NumberTheory.MobiusIntegers.Basic
-import NumberTheory.MobiusIntegers.Factorization
+import Catalog.NumberTheory.Basic
+import Catalog.NumberTheory.Factorization
 
 /-!
 # The oriented double `O` of the integers: an honest Möbius twist

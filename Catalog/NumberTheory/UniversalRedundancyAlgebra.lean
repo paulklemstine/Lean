@@ -41,7 +41,7 @@ universal compression, Shtarkov sum, model libraries, product sources,
 minimax redundancy, price of universality
 -/
 
-import NumberTheory.UniversalRedundancyAverage
+import Catalog.NumberTheory.UniversalRedundancyAverage
 
 open Finset Real
 

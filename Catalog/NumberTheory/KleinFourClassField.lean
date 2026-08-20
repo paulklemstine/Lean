@@ -18,7 +18,7 @@ This file settles the smallest non-cyclic case, `Cl(𝒪_K) ≃ ℤ/2 × ℤ/2` 
 Together these confirm the predicted degree multiset `{1, 2, 2, 2, 4}`.
 -/
 
-import NumberTheory.HilbertClassFieldDescent
+import Catalog.NumberTheory.HilbertClassFieldDescent
 
 open NumberField
 

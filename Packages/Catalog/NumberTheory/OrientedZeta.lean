@@ -1,5 +1,5 @@
 import Mathlib
-import NumberTheory.MobiusIntegers.Zeta
+import Catalog.NumberTheory.Zeta
 
 /-!
 # Oriented zeta functions of `k`-fold norm covers

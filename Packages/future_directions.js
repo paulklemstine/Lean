@@ -3,6 +3,21 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
+    "consumed_by_exp_id": "84bf9824",
+    "description": "It is a direct adaptation of the standard Reinforcement Learning from Human Feedback (RLHF) objective with a pre-training mix-in (PTX)\u2014originally introduced in the InstructGPT / PPO alignment framework (Ouyang et al., 2022)\u2014rebranded with neurosymbolic notation.Breakdown of the Components$$\\text{Objective}(\\phi) = \\underbrace{\\mathbb{E}_{x, y}\\left[ RM_{NS}(x, y) \\right]}_{\\text{1. Reward Maximization}} - \\underbrace{\\beta_{NS} \\mathbb{E}_{x, y}\\left[ \\log \\frac{LLM_\\phi^{NS}(y\\vert{}x)}{LLM^{SFT}(y\\vert{}x)} \\right]}_{\\text{2. KL-Divergence Penalty}} + \\underbrace{\\gamma_{NS} \\mathbb{E}_{x}\\left[ \\log LLM_\\phi^{NS}(x) \\right]}_{\\text{3. Pretraining Loss Mix-in (PTX)}}$$NeuroSymbolic Reward Term:$\\mathbb{E}_{x \\sim \\mathcal{D}_{RL}, y \\sim LLM_\\phi^{NS}(x)} [RM_{NS}(x, y)]$Optimizes the policy parameters ($\\phi$) to generate outputs $y$ given prompts $x$ that maximize the score from a (neurosymbolic) reward model $RM_{NS}$.KL Penalty (Regularization):$-\\beta_{NS} \\log \\frac{LLM_\\phi^{NS}(y\\vert{}x)}{LLM^{SFT}(y\\vert{}x)}$The point-wise Kullback\u2013Leibler ($\\text{D}_{\\text{KL}}$) divergence penalty. It prevents the tuned policy $LLM_\\phi^{NS}$ from drifting too far from the base Supervised Fine-Tuned model ($LLM^{SFT}$), preventing policy collapse and reward hacking. $\\beta_{NS}$ controls the penalty strength.Pretraining Mix-in Gradient ($\\text{PPO-ptx}$ term):$+\\gamma_{NS} \\mathbb{E}_{x \\sim \\mathcal{D}_{pretrain}} \\log LLM_\\phi^{NS}(x)$Maximizes the log-likelihood over the original pretraining distribution $\\mathcal{D}_{pretrain}$ with coefficient $\\gamma_{NS}$. This standard trick avoids performance regression on general NLP benchmarks during RL fine-tuning.TakeawayMathematical Validity: 100% sound; it directly mirrors the standard InstructGPT alignment equation.Practical Meaning: It represents fine-tuning a model using RLHF, where the reward signal ($RM_{NS}$) or the model architecture incorporates neurosymbolic rules/logic rather than purely human-labeled reward modeling.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_1569",
+    "phase": "A",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "in_progress",
+    "timestamp": "2026-08-19T02:06:03.269650+00:00",
+    "title": "reinforcement learning"
+  },
+  {
     "consumed_by_exp_id": "db2f2b2f",
     "description": "Formalizes a quantum random walk on the Berggren Pythagorean tree where constructive interference at energy spectrum minima collapses the state onto factors of N.",
     "domains": [
@@ -1722,31 +1737,17 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle 94e7c481 (Q=0.780), which proved 56 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that if A^x + B^y = C^z where A,B,C,x,y,z are positive integers with x,y,z > 2, then A,B,C share a common prime factor. Formalize the connection to Fermat-Catalan and ABC conjecture.",
+    "description": "Building on cycle 17d131fb (Q=0.780), which proved 85 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## Conjecture D10 (the Molien invariant is exactly the Burnside mark vector modulo scaling)",
     "domains": [
       "NumberTheory"
     ],
-    "id": "push_94e7c481_56cb3c22",
+    "id": "push_17d131fb_1bdcc081",
     "priority_score": 0.88,
     "research_mode": "team",
-    "source_exp_id": "94e7c481",
+    "source_exp_id": "17d131fb",
     "status": "available",
-    "timestamp": "2026-08-20T03:58:56.657371+00:00",
-    "title": "Deepening: Beal's Conjecture"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 3dce6722 (Q=0.770), which proved 21 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the mathematics of a Dyson sphere: a megastructure that completely encloses a star to capture its energy output. Define: the Dyson sphere surface area is 4*pi*R^2 where R is the orbital radius. Prove: the optimal Dyson swarm (many independent collectors) has total collecting area equal to ",
-    "domains": [
-      "Applications"
-    ],
-    "id": "push_3dce6722_ed000628",
-    "priority_score": 0.87,
-    "research_mode": "team",
-    "source_exp_id": "3dce6722",
-    "status": "available",
-    "timestamp": "2026-07-22T12:13:55.338811+00:00",
-    "title": "Deepening: Moonshot: Dyson Sphere Mathematics \u2014 Energy Collection Optimization"
+    "timestamp": "2026-08-20T04:54:04.735210+00:00",
+    "title": "Deepening: Conjecture D10 (the Molien invariant is exactly the Burnside mark vector modulo "
   },
   {
     "consumed_by_exp_id": "",
@@ -11843,17 +11844,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "**Conjecture.** There is a uniformly defined operator on partial functions whose"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5b26e37d",
     "description": "# Future Directions: Topology of Theorem Networks\n\n## 1. A null model for higher-dimensional citation topology\n\n**Conjecture.** In a sparse random corpus with bounded expected document size and theorem degrees converging to a nondegenerate distribution, each fixed-dimensional normalized Betti number has a deterministic limit, while the unnormalized Betti number is bounded above by the corresponding binomial face count and is typically of strictly smaller order.\n\nThe key insight is that the universal binomial ceiling controls the available chain generators, but boundary ranks\u2014not simplex counts alone\u2014determine the surviving topology.\n\n**Why now?** The structural ceiling and dimension-vanishing theorem identify exactly which asymptotic claims are possible; specifying a random incidence model is the missing ingredient needed to replace an unsupported power law by a falsifiable limit theorem.\n\n## 2. Conformality thresholds in temporal co-citation hypergraphs\n\n**Conjecture.** For a growing random co-citation corpus, there is a sharp threshold at which every clique in the pairwise co-citation graph acquires a common document witness, and hence the higher-order corpus complex becomes equal to its flag completion.\n\nThe key insight is that equality of the two complexes is governed by one exact obstruction: pairwise compatibility without a global witness.\n\n**Why now?** The three-theorem boundary example isolates the smallest obstruction, while the conformality criterion turns the disappearance of all such obstructions into a precise event whose threshold can be studied probabilistically.\n\n## 3. Stability of semantic labels under topological perturbation\n\n**Conjecture.** If research-community labels are defined independently of the citation complex, then no uniformly stable rule can recover them from first homology alone; recovery becomes possible only after adding vertex metadata or a generative assortativity assumption.\n\nThe key insight is that a cycle is an incidence pattern rather than a semantic object, so identical complexes can support incompatible assignments of mathematical schools.\n\n**Why now?** Structural topology can now be cleanly separated from interpretation. This makes it possible to state identifiability assumptions explicitly and test whether metadata genuinely contributes information beyond graph connectivity.\n\n## 4. Persistent detection of localized structural change\n\n**Conjecture.** In a temporal corpus filtration with bounded document size, an abrupt increase followed by decay in persistent second homology detects a sustained failure of local conformality more reliably than raw triangle or tetrahedron counts.\n\nThe key insight is that pairwise projection can fill a spurious triangle even when no triple witness exists, whereas persistence across the genuine hypergraph filtration records whether the resulting cavity survives subsequent documents.\n\n**Why now?** Monotonicity of the corpus complex provides a valid filtration, and the explicit strict-loss example supplies the elementary mechanism from which a statistical change-point theory can be built.\n\n## 5. Extremal Betti profiles under document-size constraints\n\n**Conjecture.** Among corpora on `n` theorems whose documents have size at most `d`, the maximum possible `k`-th Betti number is attained by a highly symmetric design and has order `n^(k+1)` only for fixed `k < d`, with constants depending essentially on both `d` and the coefficient field.\n\nThe key insight is that polynomial growth can be plausible in fixed dimension even though it is impossible uniformly across dimensions; document-size bounds determine which chain groups can exist at all.\n\n**Why now?** The binomial ceiling supplies the correct ambient scale, while dimension vanishing rules out overgeneralization. The remaining extremal problem is concrete, finite, and testable on designs, multipartite constructions, and random bounded hypergraphs.\n",
     "domains": [
       "Algebra",
       "Geometry"
     ],
     "id": "fd_0517",
+    "phase": "A",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "e3b4f2fe",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-20T15:09:33.179129+00:00",
     "title": "**Conjecture.** In a sparse random corpus with bounded expected document size an"
   },
@@ -21661,15 +21663,14 @@ window.FUTURE_DIRECTIONS = [
     "title": "The upper bound is formalised (`exists_peel_stopping_time` together with"
   },
   {
-    "consumed_by_exp_id": "17d131fb",
+    "consumed_by_exp_id": "",
     "description": "## Conjecture D10 (the Molien invariant is exactly the Burnside mark vector modulo scaling)",
     "domains": [],
     "id": "fd_1645",
-    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "c442a26f",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-19T21:41:40.263622+00:00",
     "title": "Conjecture D10 (the Molien invariant is exactly the Burnside mark vector modulo scaling)"
   },
@@ -21951,5 +21952,78 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-20T03:58:47.374011+00:00",
     "title": "For every prime `p \u2265 5` there are non-constant, pairwise coprime"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Direction (ii) \u27f9 (i) and the elementary abelian instances of (i) \u27f9 (ii) are both\nalready formalised here; only the induction step (transport of a counterexample along\ninduction of `G`-sets) is missing, and it is a finite, purely combinatorial construction.",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "fd_1670",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "17d131fb",
+    "status": "available",
+    "timestamp": "2026-08-20T04:53:53.629179+00:00",
+    "title": "Direction (ii) \u27f9 (i) and the elementary abelian instances of (i) \u27f9 (ii) are both"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The kernel of the map \"Burnside mark vector \u21a6 permutation character\" has\nrank equal to (number of conjugacy classes of subgroups of `G`) \u2212 (number of conjugacy\nclasses of cyclic subgroups of `G`); for `(\u2124/p)\u00b2` this is exactly `1`, matching the single\nrelation `\u2294_\u2113 E/\u2113  ~  E \u2294 p\u00b7pt` proved here.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_1671",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "17d131fb",
+    "status": "available",
+    "timestamp": "2026-08-20T04:53:53.781306+00:00",
+    "title": "The kernel of the map \"Burnside mark vector \u21a6 permutation character\" has"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The single relation for `(\u2124/p)\u00b2` is proved uniformly in `p` in this project, and\n`molien_eq_avgMarks` already exhibits the factorisation through cyclic subgroups; the\nremaining content is linear algebra over the (finite) subgroup poset.",
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_1672",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "17d131fb",
+    "status": "available",
+    "timestamp": "2026-08-20T04:53:53.935350+00:00",
+    "title": "The single relation for `(\u2124/p)\u00b2` is proved uniformly in `p` in this project, and"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every finite group `G` acting on a finite set `Y` and every `k`, the\ncongruence `|G| \u2223 \u2211_{g \u2208 G} k^{c(g)}` (proved here as `card_dvd_sum_pow_cycles`) refines to a",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_1673",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "17d131fb",
+    "status": "available",
+    "timestamp": "2026-08-20T04:53:54.086537+00:00",
+    "title": "For every finite group `G` acting on a finite set `Y` and every `k`, the"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The `gcd` form of the congruence and Fermat's little theorem are already proved\nin this project; the divisor-sum form needs only the counting lemma\n`#{a < n : gcd(n,a) = d} = \u03c6(n/d)`.",
+    "domains": [
+      "Pythagorean",
+      "NumberTheory"
+    ],
+    "id": "fd_1674",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "17d131fb",
+    "status": "available",
+    "timestamp": "2026-08-20T04:53:54.238087+00:00",
+    "title": "The `gcd` form of the congruence and Fermat's little theorem are already proved"
   }
 ];

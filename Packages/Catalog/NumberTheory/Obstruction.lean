@@ -1,5 +1,5 @@
 import Mathlib
-import NumberTheory.MobiusIntegers.Basic
+import Catalog.NumberTheory.Basic
 
 /-!
 # Classification of twists, and the sharp additive obstruction

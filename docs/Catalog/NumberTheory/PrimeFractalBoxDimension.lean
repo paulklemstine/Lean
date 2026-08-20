@@ -1,5 +1,5 @@
-import NumberTheory.PrimeFractalChebyshev
-import NumberTheory.PrimeFractalHausdorff
+import Catalog.NumberTheory.PrimeFractalChebyshev
+import Catalog.NumberTheory.PrimeFractalHausdorff
 
 /-!
 # The box-counting dimension of the prime fractal is exactly `1`

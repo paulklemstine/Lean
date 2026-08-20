@@ -22,8 +22,8 @@ which exactly `binom(r,k)_p` have degree `p^k` over `K`.
 -/
 
 import Mathlib
-import NumberTheory.HilbertClassFieldDescent
-import NumberTheory.SubspaceCounting
+import Catalog.NumberTheory.HilbertClassFieldDescent
+import Catalog.NumberTheory.SubspaceCounting
 
 open NumberField Module SubspaceCounting
 

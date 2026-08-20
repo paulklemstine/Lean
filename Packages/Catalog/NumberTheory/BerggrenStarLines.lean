@@ -1,4 +1,4 @@
-import Geometry.HyperbolicBerggrenGeodesics
+import Catalog.Geometry.HyperbolicBerggrenGeodesics
 
 /-!
 # The star lines of the Berggren tree on the boundary of the Poincaré half-plane

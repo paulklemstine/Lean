@@ -1,4 +1,4 @@
-import NumberTheory.MobiusIntegers.Basic
+import Catalog.NumberTheory.Basic
 
 /-!
 # Factorisation theory of the Möbius integers

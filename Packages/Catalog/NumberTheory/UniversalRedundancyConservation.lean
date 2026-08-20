@@ -40,7 +40,7 @@ universal compression, minimax redundancy, log-sum inequality, typical sets,
 file types, price of universality, conservation of description length
 -/
 
-import NumberTheory.UniversalRedundancyAverage
+import Catalog.NumberTheory.UniversalRedundancyAverage
 
 open Finset Real
 

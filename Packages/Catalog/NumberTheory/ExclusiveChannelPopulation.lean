@@ -46,7 +46,7 @@ Ingredients.
 -/
 
 import Mathlib
-import NumberTheory.ExclusiveChannelInterventions
+import Catalog.NumberTheory.ExclusiveChannelInterventions
 
 namespace NumberTheory.ExclusiveChannel
 

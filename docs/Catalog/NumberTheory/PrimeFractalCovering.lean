@@ -1,4 +1,4 @@
-import NumberTheory.PrimeFractalRefined
+import Catalog.NumberTheory.PrimeFractalRefined
 
 /-!
 # Robustness of the box dimension: grid boxes versus arbitrary covers

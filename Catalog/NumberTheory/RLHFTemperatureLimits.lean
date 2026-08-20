@@ -1,4 +1,4 @@
-import NumberTheory.RLHFTemperatureSpectrum
+import Catalog.NumberTheory.RLHFTemperatureSpectrum
 
 /-!
 # Zero- and infinite-temperature limits of the RLHF free energy

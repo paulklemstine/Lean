@@ -1,4 +1,4 @@
-import NumberTheory.BerggrenStarLines
+import Catalog.NumberTheory.BerggrenStarLines
 
 /-!
 # Arithmetic of the two Berggren stars: conserved charges and a totient count of arms

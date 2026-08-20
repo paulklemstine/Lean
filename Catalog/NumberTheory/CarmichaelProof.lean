@@ -1,5 +1,5 @@
 import Mathlib
-import Shared.NumberTheory.CarmichaelHelpers
+import Catalog.Shared.NumberTheory.CarmichaelHelpers
 
 /-! # Certified finite range of Carmichael's theorem (composite case)
 

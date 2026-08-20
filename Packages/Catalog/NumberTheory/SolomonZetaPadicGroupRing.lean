@@ -31,7 +31,7 @@ Main results:
 * `SolomonZeta.autCard_mul_quotIsoCount_padicCyclic_free` — the case `Λ = ℤ_p[ℤ/pℤ]` singled
   out in the conjecture.
 -/
-import NumberTheory.SolomonZetaLocalityAscent
+import Catalog.NumberTheory.SolomonZetaLocalityAscent
 
 namespace SolomonZeta
 

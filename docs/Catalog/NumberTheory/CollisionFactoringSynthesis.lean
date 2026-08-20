@@ -1,6 +1,6 @@
 import Mathlib
-import Shared.ThreeSumFactorReveal
-import Shared.BirthdayBoundHierarchy
+import Catalog.Shared.ThreeSumFactorReveal
+import Catalog.Shared.BirthdayBoundHierarchy
 
 /-!
 # End-to-end collision factoring, and the two barriers it must pass

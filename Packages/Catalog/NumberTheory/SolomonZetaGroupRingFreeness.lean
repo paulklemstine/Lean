@@ -22,8 +22,8 @@ i.e. iff `M` has the Solomon coefficients of `Λⁿ`.  Specialised to `Λ = ℤ_
 separates the free lattice `Λ` from the two other indecomposable `Λ`-lattices `ℤ_p` and
 `ℤ_p[ζ_p]` by a Möbius-weight computation alone.
 -/
-import NumberTheory.SolomonZetaPadicGroupRing
-import NumberTheory.SolomonZetaFreenessCriterion
+import Catalog.NumberTheory.SolomonZetaPadicGroupRing
+import Catalog.NumberTheory.SolomonZetaFreenessCriterion
 
 namespace SolomonZeta
 

@@ -32,7 +32,7 @@ sharp arithmetic dichotomy running straight through the measured data:
 -/
 
 import Mathlib
-import NumberTheory.KneeStaircaseArithmetic
+import Catalog.NumberTheory.KneeStaircaseArithmetic
 
 namespace KneeStaircase
 

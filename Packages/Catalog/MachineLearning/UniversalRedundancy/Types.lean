@@ -55,7 +55,7 @@ method of types, sufficient statistic, Rissanen redundancy, Markov sources,
 universal coding, parametric class complexity
 -/
 
-import MachineLearning.UniversalRedundancy.Core
+import Catalog.MachineLearning.UniversalRedundancy.Core
 
 open Finset Real
 

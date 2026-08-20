@@ -1,5 +1,5 @@
 import Mathlib
-import Shared.CatalogbuildSharedE.E
+import Catalog.Shared.CatalogbuildSharedE.E
 
 /-! # CatalogBuild.Shared.Sublevel
 

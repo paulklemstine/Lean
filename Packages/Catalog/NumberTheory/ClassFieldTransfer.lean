@@ -19,7 +19,7 @@ that mechanism for the catalog's Hilbert class field interface:
   datum.
 -/
 
-import NumberTheory.HilbertClassFieldDescent
+import Catalog.NumberTheory.HilbertClassFieldDescent
 
 open NumberField
 

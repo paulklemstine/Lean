@@ -17,7 +17,7 @@ Together these reduce the Solomon coefficients of a decomposable lattice — ove
 particular over `ℤ_p[ℤ/pℤ]`, where every lattice is a direct sum of three indecomposables — to
 the Hom-count functions of the indecomposable summands.
 -/
-import Shared.SolomonZeta.Core
+import Catalog.Shared.SolomonZeta.Core
 
 namespace SolomonZeta
 

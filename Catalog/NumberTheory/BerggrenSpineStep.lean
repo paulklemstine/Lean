@@ -1,5 +1,5 @@
-import Geometry.HyperbolicBerggrenTreeDepth
-import NumberTheory.BerggrenStarSteps
+import Catalog.Geometry.HyperbolicBerggrenTreeDepth
+import Catalog.NumberTheory.BerggrenStarSteps
 
 /-!
 # The step length along the Pell spine, and the step-length trichotomy

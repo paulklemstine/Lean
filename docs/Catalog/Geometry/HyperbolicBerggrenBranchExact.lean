@@ -1,4 +1,4 @@
-import Geometry.HyperbolicBerggrenResidual
+import Catalog.Geometry.HyperbolicBerggrenResidual
 
 /-!
 # Hyperbolic–Pythagorean Geodesics, cycle VI: exact branch monotonicity of the residual

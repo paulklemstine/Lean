@@ -41,7 +41,7 @@ it needs `k ≥ 2` (companion file) plus strict concavity (here).
 -/
 
 import Mathlib
-import NumberTheory.ExclusiveChannelInterventions
+import Catalog.NumberTheory.ExclusiveChannelInterventions
 
 namespace NumberTheory.ExclusiveChannel
 

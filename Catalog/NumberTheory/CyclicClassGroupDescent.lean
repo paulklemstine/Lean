@@ -11,7 +11,7 @@ The two auxiliary results `Subgroup.eq_of_card_eq_of_isCyclic` and
 cyclic group by their order.
 -/
 
-import NumberTheory.HilbertClassFieldDescent
+import Catalog.NumberTheory.HilbertClassFieldDescent
 
 open NumberField
 

@@ -13,8 +13,8 @@ relate triviality of the extension to principality of ideals.  The construction 
 number-field analogue of the cyclotomic character correspondence already in the catalog.
 -/
 
-import Novelty.HilbertClassFieldReciprocity
-import Algebra.IdealClassGroupBridge
+import Catalog.Novelty.HilbertClassFieldReciprocity
+import Catalog.Algebra.IdealClassGroupBridge
 
 open NumberField
 

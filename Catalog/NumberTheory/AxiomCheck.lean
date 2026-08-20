@@ -1,0 +1,23 @@
+import Catalog.Shared.RecodingCriticalGeometry
+import Catalog.Shared.ProofSpaceDimensionSpectrum
+import Catalog.Shared.ProofRegimeMixturePowerLaw
+
+#print axioms RecodingGeometry.countRadius_quasi_invariant
+#print axioms RecodingGeometry.growthRate_eq_of_recoding
+#print axioms RecodingGeometry.density_criticalIndex_sandwich
+#print axioms RecodingGeometry.criticalIndex_gap_unbounded
+#print axioms RecodingGeometry.transition_window_width
+#print axioms RecodingGeometry.window_width_cross
+#print axioms RecodingGeometry.criticalIndices_close_of_exponential_order
+#print axioms RecodingGeometry.recoding_exponential_order
+#print axioms RecodingGeometry.fekete_growthRate
+#print axioms RecodingGeometry.submultiplicative_uniform_window
+#print axioms DimensionSpectrum.stratumCount_hasDimension
+#print axioms DimensionSpectrum.dimension_union
+#print axioms DimensionSpectrum.dimension_intersection_strict_drop
+#print axioms DimensionSpectrum.nontrivial_spectrum
+#print axioms ProofRegimeMixture.mixedTail_eq
+#print axioms ProofRegimeMixture.mixedTail_power_bounds
+#print axioms ProofRegimeMixture.mixedTail_regularly_varying
+#print axioms ProofRegimeMixture.mixedTail_ratio_tendsto_one
+#print axioms ProofRegimeMixture.mixedTail_not_geometric

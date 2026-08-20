@@ -22,8 +22,8 @@ knee reading is.
 -/
 
 import Mathlib
-import NumberTheory.KneeStaircaseArithmetic
-import NumberTheory.KneeStaircaseOctaveCensus
+import Catalog.NumberTheory.KneeStaircaseArithmetic
+import Catalog.NumberTheory.KneeStaircaseOctaveCensus
 
 namespace KneeStaircase
 

@@ -1,4 +1,4 @@
-import Novelty.HyperbolicBerggrenSilverGrowth
+import Catalog.Novelty.HyperbolicBerggrenSilverGrowth
 
 /-!
 # Hyperbolic–Pythagorean Geodesics, cycle X: the exact extremal structure of the Berggren tree

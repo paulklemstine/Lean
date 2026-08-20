@@ -1,4 +1,4 @@
-import NumberTheory.MobiusIntegers.Factorization
+import Catalog.NumberTheory.Factorization
 
 /-!
 # The Möbius double cover as a free `ℤ/2`-action, and what does and does not lift

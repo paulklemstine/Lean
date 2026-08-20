@@ -1,4 +1,4 @@
-import NumberTheory.RecursiveMixedRadix
+import Catalog.NumberTheory.RecursiveMixedRadix
 
 /-!
 # Tower-base representations

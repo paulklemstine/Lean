@@ -1,4 +1,4 @@
-import NumberTheory.MobiusIntegers.DoubleCover
+import Catalog.NumberTheory.DoubleCover
 
 /-!
 # Polar decomposition: the multiplicative structure of the Möbius integers

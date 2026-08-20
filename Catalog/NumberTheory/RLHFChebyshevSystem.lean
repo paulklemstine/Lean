@@ -1,4 +1,4 @@
-import NumberTheory.RLHFPronySampling
+import Catalog.NumberTheory.RLHFPronySampling
 
 /-!
 # Exponential sums form a Chebyshev system: `n` arbitrary temperatures suffice

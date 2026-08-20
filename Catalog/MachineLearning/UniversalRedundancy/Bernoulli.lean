@@ -48,7 +48,7 @@ Rissanen redundancy, Stirling bounds, method of types, minimax lower bound,
 Bernoulli class, universal coding
 -/
 
-import MachineLearning.UniversalRedundancy.Types
+import Catalog.MachineLearning.UniversalRedundancy.Types
 
 open Finset Real
 

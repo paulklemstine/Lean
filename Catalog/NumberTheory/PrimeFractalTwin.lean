@@ -1,4 +1,4 @@
-import NumberTheory.PrimeFractalHausdorff
+import Catalog.NumberTheory.PrimeFractalHausdorff
 
 /-!
 # No fractal dust: the metric structure of twin primes in the prime fractal

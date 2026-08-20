@@ -27,9 +27,9 @@ The counting rigidity is the conceptual point: free modules realise the *maximal
 surjections onto every finite quotient type, and any deficiency of `M` is already visible on the
 finite-length quotients of `Rⁿ`.
 -/
-import Shared.SolomonZeta.LocalOrder
-import Shared.SolomonZeta.Invariance
-import Shared.SolomonZeta.PadicLattice
+import Catalog.Shared.SolomonZeta.LocalOrder
+import Catalog.Shared.SolomonZeta.Invariance
+import Catalog.Shared.SolomonZeta.PadicLattice
 
 namespace SolomonZeta
 

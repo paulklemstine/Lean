@@ -1,4 +1,4 @@
-import NumberTheory.RLHFZetaEulerPolicy
+import Catalog.NumberTheory.RLHFZetaEulerPolicy
 
 /-!
 # The full Euler product of an aligned policy: arbitrarily many primes

@@ -1,4 +1,4 @@
-import NumberTheory.RLHFSpectralRigidity
+import Catalog.NumberTheory.RLHFSpectralRigidity
 
 /-!
 # Finite-sample spectral rigidity: how many temperatures does a reward audit need?

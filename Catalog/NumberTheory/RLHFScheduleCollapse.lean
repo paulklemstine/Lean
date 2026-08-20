@@ -1,4 +1,4 @@
-import NumberTheory.RLHFRewardIdentifiability
+import Catalog.NumberTheory.RLHFRewardIdentifiability
 
 /-!
 # Temperature schedules collapse: iterated RLHF is single-step RLHF

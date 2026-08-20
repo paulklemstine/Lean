@@ -1,4 +1,4 @@
-import NumberTheory.RLHFLogConvexity
+import Catalog.NumberTheory.RLHFLogConvexity
 
 /-!
 # Curvature of the RLHF value curve is the reward variance

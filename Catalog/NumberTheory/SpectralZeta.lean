@@ -1,6 +1,6 @@
 import Mathlib
-import NumberTheory.MobiusIntegers.Zeta
-import NumberTheory.MobiusIntegers.OrientedDouble
+import Catalog.NumberTheory.Zeta
+import Catalog.NumberTheory.OrientedDouble
 
 /-!
 # The spectral zeta function of the oriented double — Conjecture 6, resolved

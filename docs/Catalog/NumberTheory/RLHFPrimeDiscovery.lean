@@ -1,4 +1,4 @@
-import NumberTheory.RLHFTemperatureSpectrum
+import Catalog.NumberTheory.RLHFTemperatureSpectrum
 
 /-!
 # Reward hacking finds the primes: a quantitative low-temperature theorem

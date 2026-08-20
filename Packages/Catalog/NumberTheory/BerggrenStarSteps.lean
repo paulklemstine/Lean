@@ -1,4 +1,4 @@
-import NumberTheory.BerggrenStarLines
+import Catalog.NumberTheory.BerggrenStarLines
 
 /-!
 # Step lengths along the star arms, and the circles of the picture

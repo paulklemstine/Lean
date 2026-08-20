@@ -1,4 +1,5 @@
-import NumberTheory.RLHFVarianceCurvature
+import Catalog.NumberTheory.RLHFVarianceCurvature
+import Catalog.NumberTheory.RLHFZetaEulerPolicy
 
 /-!
 # Sharpness of the alignment speed limit, and curvature of the Euler factors
