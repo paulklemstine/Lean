@@ -1,145 +1,126 @@
 # The Shape of Sameness
 
-## How the pattern of repeats inside a list of numbers becomes a complete invariant, counts itself with the Bell numbers, and quietly encodes Fermat's Last Theorem
+## What a word remembers when it forgets its letters
 
-### A puzzle about anonymous data
+Look at the word **BANANA**. Now look at the word **LOLOLO**. They share no letters, they mean nothing alike, and yet something about them is the same. Write down, for each, only *which positions agree with which*:
 
-Suppose I show you a list of five items and refuse to tell you what they are. All I let you know is which positions carry *the same* item:
+- In BANANA, positions $1$ stands alone; positions $2,4,6$ agree; positions $3,5$ agree.
+- In LOLOLO, positions $1,3,5$ agree; positions $2,4,6$ agree.
 
-$$(\ast, \ast, \ast, \ast, \ast), \qquad \text{positions } 1 \text{ and } 4 \text{ agree}, \quad \text{positions } 2 \text{ and } 5 \text{ agree}, \quad \text{position } 3 \text{ is alone}.$$
+Not the same after all. Try **BANANA** against **SUSUSU**? No. Try **BANANA** against **XYZYZY**? Positions $2,4,6$ carry $Y$... no, $X,Y,Z,Y,Z,Y$ has $1$ alone, $2,4,6$ agreeing, $3,5$ agreeing. Yes: **BANANA** and **XYZYZY** have exactly the same *shape of sameness*.
 
-You cannot recover my list. The items themselves have been erased. But you have not learned *nothing* — you have learned exactly the part of the list that survives renaming its entries. Call this residue the **equality pattern**, or the **kernel**, of the list.
+This shape has a name. Given a finite list — a tuple $x = (x_1, \dots, x_n)$ with entries drawn from some alphabet $\alpha$ — its **kernel** (or **equality pattern**) is the relation
+$$ i \sim_x j \iff x_i = x_j $$
+on the index positions $\{1, \dots, n\}$. It is an equivalence relation: it is reflexive, symmetric and transitive for free, because equality is. It records everything about which slots repeat and nothing at all about *what* is in them.
 
-This little idea turns out to be the exact answer to a natural question, and the answer has an unexpectedly rich life. Here is the question:
+This article is about a single, sharp claim: **the kernel is exactly the information that survives renaming**, and about the surprising amount of classical combinatorics that falls out once you take that claim seriously and make it computational.
 
-> Two lists of the same length, with entries drawn from the same finite pool of symbols. When can one be turned into the other by consistently renaming the symbols?
+## Renaming is the whole story
 
-The answer is a theorem you can state in a sentence, and it is the theme of everything below.
+Suppose you have a machine that relabels letters: a bijection $\sigma$ of the alphabet with itself — a permutation. Feed it BANANA with the substitution $B \mapsto X$, $A \mapsto Y$, $N \mapsto Z$ and out comes XYZYZY. Obviously renaming can't change which positions agree, since a bijection sends equals to equals and unequals to unequals. So the kernel is an **invariant** of the renaming action.
 
-**Completeness Theorem.** *Let $f$ and $g$ be two $n$-tuples with entries in a finite set $B$. There exists a permutation $\sigma$ of $B$ with $\sigma \circ f = g$ if and only if $f$ and $g$ have the same equality pattern: $f_i = f_j \iff g_i = g_j$ for all $i, j$.*
+The interesting direction is the converse. Is the kernel a *complete* invariant — does sameness of kernel force the two tuples to be renamings of one another?
 
-One direction is obvious: a permutation is injective, so it cannot merge two distinct entries or split one entry into two, and the pattern is untouched. The other direction is the content. Given two tuples with identical patterns, you build the renaming directly: send each value taken by $f$ to the value $g$ takes at the same position. The matching patterns are exactly what makes this well-defined and injective, and since $B$ is finite, a bijection between two subsets of $B$ of equal size always extends to a permutation of all of $B$. Finiteness is doing real work here; over an infinite alphabet you would need to compare the sizes of the complements.
+**Completeness Theorem.** *Let $x$ and $y$ be $n$-tuples with entries in the same alphabet $\alpha$ (of any cardinality whatsoever, finite or infinite). Then $x$ and $y$ have the same kernel if and only if there exists a permutation $\sigma$ of $\alpha$ with $\sigma(x_i) = y_i$ for every $i$.*
 
-So the equality pattern is a **complete invariant**: it is not merely preserved by renaming, it distinguishes tuples that renaming cannot connect. Complete invariants are the gold standard in classification problems — the Jordan form for matrices up to conjugacy, the genus for closed orientable surfaces — and this is a particularly clean one.
+The proof is the natural one, done carefully. Same kernel means the assignment $x_i \mapsto y_i$ is well defined (if $x_i = x_j$ then $y_i = y_j$) and injective (if $y_i = y_j$ then $x_i = x_j$) as a map between the two finite sets of values actually used. That is a bijection between two finite subsets of $\alpha$ of the same size. To promote it to a permutation of *all* of $\alpha$, you must match up the leftovers: the complements of the two value sets. When $\alpha$ is finite the complements have equal size, so any bijection between them will do. When $\alpha$ is infinite, removing a finite set doesn't change the cardinality — the complements are each of size $|\alpha|$ — so again a bijection exists. Glue and you have your $\sigma$.
 
-### Making the invariant concrete
+Small example, infinite alphabet: over the natural numbers, $(0,0,1)$ and $(5,5,7)$ have the same kernel, so some permutation of $\mathbb{N}$ carries one to the other. It cannot be a "nice" formula, but it exists, and the theorem hands it to you.
 
-An "equality pattern" is really an equivalence relation on the set of positions $\{1, \dots, n\}$, and equivalently a partition of the positions into blocks. That is elegant but abstract, and abstract objects are hard to store, compare, and count. There is a beautiful trick that makes the pattern into an ordinary tuple of numbers.
+So: **two lists are renamings of each other precisely when they repeat in the same places.** Everything below is an exploration of the consequences of taking that as a definition of "shape".
 
-**Definition (canonical form).** For a tuple $f$, define
-$$\mathrm{canon}(f)_i \;=\; \min\{\, j : f_j = f_i \,\},$$
-the *earliest* position carrying the same entry as position $i$.
+## Giving the shape a name you can compute with
 
-The tuple $(\text{blue}, \text{red}, \text{green}, \text{blue}, \text{red})$ becomes $(1,2,3,1,2)$. The tuple $(7,7,4,7,4)$ becomes $(1,1,3,1,3)$. Each block of the partition is labelled by its own smallest element. These labelled tuples are exactly what combinatorialists call *restricted growth strings*, and they satisfy a crisp package of properties, each of which can be checked directly from the definition:
+An equivalence relation is a fine mathematical object, but a clumsy thing to store or to compare. The trick is to pick a *canonical representative* of each shape. For a tuple $x$, define
+$$ \operatorname{can}(x)_i \;=\; \min\{\, j : x_j = x_i \,\}, $$
+the earliest position carrying the same value. BANANA $\mapsto (1,2,3,2,3,2)$; XYZYZY $\mapsto (1,2,3,2,3,2)$; identical, as promised. Computer scientists know these strings under the name **restricted growth strings**; the process is exactly the "first-occurrence renaming" used to hash variable names or to normalise database queries up to renaming of constants.
 
-- $f_{\mathrm{canon}(f)_i} = f_i$: the representative really lies in the block.
-- $f_i = f_j$ precisely when $\mathrm{canon}(f)_i = \mathrm{canon}(f)_j$: no information is lost.
-- $\mathrm{canon}$ is **idempotent**: applying it to a canonical form returns that form unchanged. Canonical forms are exactly the fixed points.
-- $\mathrm{canon}(\sigma \circ f) = \mathrm{canon}(f)$ for any injective renaming $\sigma$ — in particular for any permutation of the alphabet.
-- If $f$ has all entries distinct, then $\mathrm{canon}(f) = (1, 2, \dots, n)$, the *discrete* pattern.
+Two facts make $\operatorname{can}$ the right object.
 
-Combining the last few facts with the Completeness Theorem: **two tuples over a finite alphabet lie in the same renaming-orbit if and only if their canonical forms are literally equal.** Classification has been reduced to comparing two lists of integers — a linear-time test, no group theory at runtime.
+*It is a complete encoding.* Two tuples have the same kernel if and only if their canonical forms are literally equal, and $\operatorname{can}(f \circ x) = \operatorname{can}(x)$ for **any injection** $f$ of the alphabet into any other alphabet — not merely for permutations. So canonical form is a stable name for the shape, comparable across alphabets.
 
-### Counting the patterns: the Bell numbers appear
+*Its image is describable.* Call a map $p: \{1,\dots,n\} \to \{1,\dots,n\}$ a **pattern** if
+$$ p(i) \le i \quad\text{and}\quad p(p(i)) = p(i) \quad\text{for all } i. $$
+That is: $p$ is *contracting* (it never points forward) and *idempotent* (its values are fixed points). These two little conditions are exactly the image of $\operatorname{can}$: every canonical form is a pattern, and every pattern is its own canonical form, $\operatorname{can}(p) = p$. So $\operatorname{can}$ is an idempotent retraction of the set of all tuples onto a small, explicitly checkable set of normal forms. Because the conditions are decidable inequalities, a computer can enumerate all patterns on $n$ letters by brute force — a fact we will cash in shortly.
 
-Now that patterns are concrete objects, we can ask how many there are. Let $P_n$ denote the set of patterns of length $n$ — equivalently, the fixed points of $\mathrm{canon}$ among all tuples of length $n$. Enumerating them for small $n$ gives
+## The count: Bell numbers
 
-$$|P_0|, |P_1|, |P_2|, |P_3|, |P_4|, |P_5| \;=\; 1,\; 1,\; 2,\; 5,\; 15,\; 52.$$
+How many shapes are there?
 
-Anyone who has spent time with combinatorics will recognise these instantly: the **Bell numbers**, the sequence counting the ways to partition a set. Their standard recursive definition is
-$$B_{n+1} \;=\; \sum_{i=0}^{n} \binom{n}{i} B_{n-i},$$
-which says: choose which of the remaining $n$ points share a block with a distinguished point, then partition what is left.
+**Classification Theorem.** *Patterns on $n$ letters are in canonical bijection with equivalence relations on an $n$-element set: a pattern $p$ goes to the relation $i \sim j \iff p(i) = p(j)$, and an equivalence relation goes to the canonical form of its own quotient map.*
 
-That these two sequences coincide is not a coincidence, and it is not merely a numerical check for small $n$. It holds in every arity:
+Counting equivalence relations on a finite set is counting *set partitions*, and set partitions are counted by the **Bell numbers** $B_n$:
+$$ B_0, B_1, B_2, B_3, B_4, B_5, \dots \;=\; 1,\, 1,\, 2,\, 5,\, 15,\, 52, \dots $$
+This is one of the most famous integer sequences in mathematics (catalogued as A000110). The Bell numbers satisfy the binomial recurrence
+$$ B_{n+1} \;=\; \sum_{k=0}^{n} \binom{n}{k} B_{n-k}, $$
+which you prove by asking: how many of the other $n$ points share a block with a distinguished point? Choose those $k$ partners in $\binom{n}{k}$ ways, then partition the remaining $n-k$ points arbitrarily. Making that argument airtight is more delicate than it sounds — you have to exhibit the fibres of the "which points sit with the distinguished point" map as genuinely being the equivalence relations on the complement, gluing a subset and a relation back into a single relation and checking transitivity across all the cases — but it works, and it yields:
 
-**Enumeration Theorem.** *For every $n$, the number of equality patterns of an $n$-tuple equals the Bell number $B_n$. More generally, for every finite index set $I$, the number of equivalence relations on $I$ is $B_{|I|}$.*
+**Counting Theorem.** *There are exactly $B_n$ patterns on $n$ letters, hence exactly $B_n$ possible kernels of an $n$-tuple.*
 
-The proof is a chain of four reductions, each of which is a bijection you can hold in your head. First, a pattern is the same data as an equivalence relation on positions (read off from which positions get the same label). Second, this count only depends on the size of the index set, not on what the index set is. Third — the crucial step — an equivalence relation on a set with one distinguished extra point $\star$ is the same thing as *a choice of which ordinary points share $\star$'s block*, together with *an equivalence relation on everything left over*. Fourth, grouping those choices by how many points join $\star$ turns the third step into precisely the binomial recursion above, and strong induction closes the loop.
+And now the punchline that ties the invariant to the count:
 
-The pattern-counting picture immediately gives an **orbit count**. Recall that patterns classify tuples up to renaming, so counting orbits is counting realisable patterns:
+**Orbit Theorem.** *If the alphabet $\alpha$ is finite with at least $n$ letters, then the group of all permutations of $\alpha$ has exactly $B_n$ orbits on the set of $n$-tuples over $\alpha$, and the complete invariant separating those orbits is the equality pattern.*
 
-**Orbit-Counting Theorem.** *Let $B$ be a finite alphabet with $|B| \ge n$. The symmetric group of $B$, acting on $n$-tuples over $B$ by renaming entries, has exactly $B_n$ orbits.*
+For instance the symmetric group on five letters has exactly $52$ orbits on the $5^5 = 3125$ quintuples over a five-letter alphabet. There is nothing to check about the group: $52$ is $B_5$, and every quintuple is nothing more than its shape.
 
-The hypothesis $|B| \ge n$ is sharp, and pleasantly so. A tuple of length $n$ over an alphabet of $m < n$ letters cannot have all its entries distinct, so the discrete pattern is unreachable; more precisely, the reachable patterns are exactly those with at most $m$ blocks, and the orbit count drops to a truncated sum. Writing $S(n,k)$ for the number of patterns of length $n$ with exactly $k$ blocks, we get the clean statement that the number of orbits over any finite alphabet $B$ is
-$$\sum_{k \le |B|} S(n,k),$$
-which is strictly less than $B_n$ exactly when $|B| < n$.
+Because patterns are defined by decidable conditions on a finite set of maps, the values $1, 1, 2, 5, 15, 52$ can be obtained by direct exhaustive computation over the finite set of patterns, and then transported back to the Bell numbers by the Classification Theorem — a rare instance where a famous sequence is verified by literally listing the objects it counts.
 
-### The Stirling triangle, from scratch
+## Refining by the number of blocks: Stirling
 
-Those refined counts $S(n,k)$ are, of course, the **Stirling numbers of the second kind** — but here they arrive with a purely combinatorial definition: the number of length-$n$ patterns with exactly $k$ blocks. Everything classical about them can be re-derived from that definition, and the derivations are short.
+A pattern has **blocks** — the classes of the relation, equivalently the fixed points of $p$, equivalently the distinct values of the original tuple. Sorting the $B_n$ patterns by their number of blocks refines the Bell count into the **Stirling numbers of the second kind** $S(n,k)$, defined by the recurrence
+$$ S(n+1, k+1) = (k+1)\,S(n,k+1) + S(n,k), \qquad S(0,0)=1, $$
+with $S(0,k+1) = S(n+1,0) = 0$.
 
-The engine is a single case split. Take a pattern of length $n+1$ with $k+1$ blocks and look at the last position. Either it is a block all by itself — delete it, and you are left with a pattern of length $n$ with $k$ blocks — or it joins one of the $k+1$ existing blocks, which can happen in $k+1$ ways. Hence
+**Refinement Theorem.** *The number of patterns on $n$ letters with exactly $k$ blocks is $S(n,k)$; consequently $\sum_{k=0}^{n} S(n,k) = B_n$.*
 
-$$S(n+1, k+1) \;=\; S(n, k) \;+\; (k+1)\, S(n, k+1),$$
+The proof is the "last letter" fibration and is genuinely pretty. Delete the last coordinate of a pattern on $n+1$ letters: you get a pattern on $n$ letters. Conversely, to extend a pattern $q$ on $n$ letters you must choose the value at the new last coordinate, and there are exactly two kinds of legal choice: either point at one of the existing block representatives of $q$ (joining an old block, block count unchanged — and if $q$ has $k+1$ blocks there are $k+1$ such choices), or point at the new coordinate itself (starting a fresh block, raising the count from $k$ to $k+1$, one choice). Count the fibre and the Stirling recurrence appears on the page. The row $n=5$ reads $0, 1, 15, 25, 10, 1$, and indeed $1 + 15 + 25 + 10 + 1 = 52$.
 
-and by definition $\sum_k S(n,k) = B_n$: the rows of the triangle sum to the Bell numbers.
+## When the alphabet runs out
 
-From the recursion, closed forms tumble out by induction. Splitting $n+1$ positions into exactly two nonempty blocks amounts to choosing the block containing position $1$, any of the $2^n - 1$ proper choices, so
-$$S(n+1, 2) = 2^n - 1.$$
-A pattern of length $n+1$ with $n$ blocks merges exactly one pair of positions and leaves the rest alone, so
-$$S(n+1, n) = \binom{n+1}{2},$$
-and one step further down the diagonal,
-$$S(n+2, n) = \binom{n+2}{3} + 3\binom{n+2}{4}.$$
-The columns obey inclusion–exclusion formulas which the recursion proves by induction:
-$$6\,S(n,3) = 3^n - 3\cdot 2^n + 3, \qquad 24\, S(n,4) = 4^n - 4\cdot 3^n + 6 \cdot 2^n - 4,$$
-$$120\, S(n,5) = 5^n - 5\cdot 4^n + 10\cdot 3^n - 10 \cdot 2^n + 5.$$
-Summing the resulting rows gives Bell numbers far past the reach of brute-force enumeration: the sixth row $(0,1,31,90,65,15,1)$ sums to $B_6 = 203$, the seventh to $B_7 = 877$, and the eighth $(0,1,127,966,1701,1050,266,28,1)$ to $B_8 = 4140$.
+The Orbit Theorem assumed the alphabet had at least $n$ letters. What if it doesn't? A three-letter word over a two-letter alphabet can never realise the shape "all three positions different". The general answer is exactly this obstruction and nothing more:
 
-The same fibre-counting yields two more classical facts with no extra work. Counting how many tuples over an alphabet of size $m$ realise a given pattern with $k$ blocks — you must choose $k$ distinct letters in order, so $m(m-1)\cdots(m-k+1)$ ways — and summing over patterns gives the **falling-factorial expansion**
-$$m^n \;=\; \sum_{k} S(n,k)\, m^{\underline{k}},$$
-the identity converting ordinary powers into falling powers. Restricting to patterns with exactly $k$ blocks and alphabets of size exactly $k$ gives the count of surjections: there are $k!\, S(n,k)$ surjective maps from an $n$-set onto a $k$-set, and in particular $n!$ surjections from an $n$-set onto itself.
+**Realisability Theorem.** *A pattern occurs as the pattern of some tuple over a finite alphabet $\alpha$ if and only if its number of blocks is at most $|\alpha|$.*
 
-### Growth, and a congruence out of nowhere
+**General Orbit Theorem.** *For every finite alphabet $\alpha$ and every $n$, the permutation group of $\alpha$ has exactly*
+$$ \sum_{k=0}^{|\alpha|} S(n,k) $$
+*orbits on the $n$-tuples over $\alpha$ — a truncated Stirling row, with no relation assumed between $n$ and $|\alpha|$.*
 
-Two structural theorems about Bell numbers fall out of the pattern picture.
+Truncated rows can be summed in closed form for tiny alphabets, and the answers are charming.
 
-**Super-multiplicativity.** *$B_m B_n \le B_{m+n}$, with strict inequality whenever $m, n \ge 1$.*
+**Binary alphabet.** Bit strings of length $n+1$ fall into exactly $2^{n}$ classes up to swapping $0$ and $1$. (Reason: $S(m,0)+S(m,1)+S(m,2) = 0 + 1 + (2^{m-1}-1) = 2^{m-1}$.) This is the classical count of "necklaces up to colour swap" for linear strings: half of the $2^{n+1}$ strings, as one would expect from a free involution — and the theorem proves it as a corollary of a partition-counting statement rather than by the parity argument.
 
-The proof is a picture. Given a partition of a set $A$ and a partition of a disjoint set $C$, lay them side by side: you get a partition of $A \cup C$ in which no block straddles the two halves. This is an injection from pairs of partitions to partitions of the union, giving the inequality. It is never surjective when both sides are nonempty, because the partition with a single all-encompassing block certainly straddles — hence strictness. Already $B_2 B_2 = 4 < 15 = B_4$. Iterating gives $B_n^k \le B_{nk}$, so $2^k \le B_{2k}$: the Bell numbers outrun every exponential. Monotonicity comes from the same style of argument: appending a new singleton block embeds the patterns of length $n$ into those of length $n+1$, and the all-in-one-block pattern is never in the image once $n \ge 1$, so $B_n < B_{n+1}$ for $n \ge 1$.
+**Ternary alphabet.** Strings of length $n+1$ over three letters fall into $(3^{n}+1)/2$ classes; the theorem is stated in the clean integral form $2 \cdot (\text{number of classes}) = 3^{n}+1$.
 
-And then there is a genuine surprise — a number-theoretic congruence proved by pure symmetry.
+And from length $3$ onwards the binary count $2^{n-1}$ is *strictly* below the Bell number $B_n$: a two-letter alphabet is genuinely too poor to realise every shape. Concretely, the $3$-bit strings fall into $4$ classes, while $B_3 = 5$; the missing shape is "three distinct letters".
 
-**Touchard's Congruence.** *For every prime $p$ and every $n \ge 0$,*
-$$B_{p+n} \;\equiv\; B_{n+1} + B_n \pmod{p}.$$
+## A power identity for free
 
-Here is the whole argument. Index a set by $\mathbb{Z}/p$ together with $n$ extra points. The cyclic group $\mathbb{Z}/p$ acts by rotating the first part and fixing the extras, hence acts on the $B_{p+n}$ partitions of the whole index set. For a group of prime order $p$, the size of any set it acts on is congruent mod $p$ to the number of fixed points, because every non-fixed orbit has exactly $p$ elements. So we only need to count the *rotation-invariant* partitions — and these are easy to classify. Look at the block containing the point $0$ of the cyclic part. If that block contains any other cyclic point, then rotating and chaining forces the entire cyclic part into one single block, and what remains is a partition of the $n$ extra points together with that one distinguished extra block — that is, a partition of an $(n+1)$-element set, and there are $B_{n+1}$ of those. Otherwise every cyclic point is its own singleton block, and all that remains is an arbitrary partition of the $n$ extras: $B_n$ of those. Adding gives $B_{n+1} + B_n$, and the congruence follows.
+Here is the payoff that turns the classification into an algebraic identity. Fix a finite alphabet of size $a$. Every tuple over it factors *uniquely* as a shape plus an injective labelling of the shape's blocks by letters. So the tuples with a prescribed pattern $p$ with $k$ blocks are in bijection with the injections of a $k$-element set into an $a$-element set, of which there are the falling factorial $a^{\underline{k}} = a(a-1)\cdots(a-k+1)$ many. Summing over all patterns and grouping by block count:
 
-Setting $n = 0$ gives the classical **$B_p \equiv 2 \pmod p$** for every prime $p$; for instance $B_7 = 877 = 7 \cdot 125 + 2$. Taking $p = 5, n = 3$ gives $B_8 \equiv B_4 + B_3 = 15 + 5 = 20 \equiv 0$, so $5 \mid B_8$ — and indeed $4140 = 5 \cdot 828$, exactly as the Stirling-row computation independently produced.
+**Connection Formula.** *For every $a$ and $n$,*
+$$ a^{n} \;=\; \sum_{k=0}^{n} S(n,k)\, a^{\underline{k}}, \qquad a^{\underline{k}} = a(a-1)\cdots(a-k+1). $$
 
-### Which patterns can a Pythagorean triple have?
+This is the classical change of basis between ordinary powers and falling factorials — usually proved by manipulating generating functions or by induction on the recurrence — obtained here as pure bookkeeping: *count the same finite set two ways*. It also explains the truncation phenomenon above without any extra work: when $k > a$, the falling factorial $a^{\underline{k}}$ is zero, so the terms beyond the alphabet size simply vanish. Check it at $a=3$, $n=4$: $81 = 0\cdot 1 + 1\cdot 3 + 7\cdot 6 + 6\cdot 6 + 1\cdot 0 = 3 + 42 + 36 = 81$. 
 
-So far the story is pure combinatorics. Here is the turn: patterns are a *filter* you can apply to any Diophantine equation. Given an equation in $n$ unknowns, ask which of the $B_n$ patterns are realised by its solutions. Call the set of realised patterns the **kernel spectrum** of the equation. It is a finite, purely combinatorial invariant of an infinite arithmetic object.
+## Symmetric functions, counted
 
-Start with triples, where there are $B_3 = 5$ patterns: all three equal; first two equal; first and third equal; last two equal; all distinct. Now impose $a^2 + b^2 = c^2$ over the natural numbers.
+One last reformulation, for readers who like linear algebra. Fix a field $K$ and consider the $K$-valued functions $f$ of an $n$-tuple over an alphabet $\beta$ that are *invariant under relabelling*: $f(\sigma \circ x) = f(x)$ for every permutation $\sigma$ of $\beta$. These form a vector space. What is its dimension?
 
-**Kernel Spectrum of the Pythagorean Equation.** *A pattern of a triple is realised by a solution of $a^2 + b^2 = c^2$ in $\mathbb{N}$ if and only if it is not the pattern "$a = b$, with $c$ different". Exactly four of the five patterns occur.*
+An invariant function is precisely a function on the orbit space, and a function on a finite set is a free choice of one value per point. Hence:
 
-Four are realised, and cheaply: $(3,4,5)$ is all-distinct; $(0,1,1)$ has its last two entries equal; $(1,0,1)$ has its first and last equal; $(0,0,0)$ is the constant triple. The excluded one is the interesting case. If $a = b \neq 0$ then $2a^2 = c^2$, and the arithmetic obstruction is this:
+**Dimension Theorem.** *If $n \le |\beta| < \infty$, the space of relabelling-invariant $K$-valued functions of an $n$-tuple over $\beta$ has dimension exactly $B_n$.*
 
-**Square-Multiplier Lemma.** *If $k a^2 = c^2$ with $a \ne 0$, then $k$ is a perfect square.*
+So "a symmetric function of $n$ arguments drawn from a large enough alphabet" is *nothing more* than a function of the equality pattern, and the Bell numbers measure how much such a function can possibly know. For $n = 5$ that is $52$ degrees of freedom, no matter how large the alphabet.
 
-The proof is a descent: divide $a$ and $c$ by their greatest common divisor to get coprime $a', c'$ with $k a'^2 = c'^2$; then $a'^2$ divides $c'^2$ while being coprime to it, forcing $a' = 1$ and $k = c'^2$. Since $2$ is not a perfect square, $2a^2 = c^2$ has no solution with $a \ne 0$. So the Pythagorean cone is **kernel-deficient of defect one**: its spectrum has $B_3 - 1 = 4$ elements.
+## Why this matters outside the page
 
-And here the invariant shows it is not vacuous, because the defect *depends on the dimension*. Consider $x_1^2 + \dots + x_k^2 = y^2$ and ask when all legs can be equal and nonzero. That is precisely $k a^2 = y^2$, so by the Square-Multiplier Lemma:
+The kernel of a tuple is one of those ideas that keeps being reinvented under different names because it is genuinely fundamental:
 
-**Equal-Legs Criterion.** *The $k$-dimensional Pythagorean equation has a solution with all legs equal and nonzero if and only if $k$ is a perfect square.*
+- **Databases.** Query answers must not depend on the names of constants; the shape of a tuple is exactly the part of it that a name-independent query can see. The truncated Stirling counts tell you how many distinguishable tuples exist over a bounded domain.
+- **Programming languages.** Alpha-equivalence — the doctrine that bound variable names don't matter — is the kernel idea; canonical forms like de Bruijn indices are cousins of the restricted growth string.
+- **Statistics and machine learning.** Permutation-invariant models over a set of tokens can only depend on which tokens coincide; the Dimension Theorem is a hard ceiling on the expressivity of such a model in terms of the Bell numbers.
+- **Combinatorics of hashing and collision patterns.** The pattern of a list of hash values is its collision structure; the Connection Formula is the exact count of how many value-assignments realise each collision structure.
 
-For $k = 2$ and $k = 3$: blocked. For $k = 4$: realised, by $1^2 + 1^2 + 1^2 + 1^2 = 2^2$. The missing pattern is not an artefact of the formalism; it reappears the moment the dimension becomes a square.
+The moral, if there is one, is that the humblest question you can ask about a list — *which entries are equal?* — has a complete, computable answer, a canonical name, a classical count, and enough structure to reproduce the Bell numbers, the Stirling numbers, and the change of basis between powers and falling factorials, all from the single act of forgetting what the letters are called.
 
-### Fermat's Last Theorem, restated as a counting problem
-
-Push the exponent up. For $x^p + y^p = z^p$, define the spectrum exactly as before. Two facts organise everything.
-
-First, the equal-legs pattern is blocked for *every* exponent $p \ge 2$, not just $p = 2$. If $a \ne 0$ and $2a^p = c^p$, compare the exponent of the prime $2$ on both sides: the left side has $2$-adic valuation $1 + p \cdot v_2(a)$, the right has $p \cdot v_2(c)$, so $p$ divides $1$ — impossible for $p \ge 2$. Second, the three "degenerate" patterns, in which some entry coincides with the hypotenuse or everything is zero, are realised for every $p$ by triples like $(0,1,1)$, $(1,0,1)$ and $(0,0,0)$.
-
-That leaves exactly one pattern whose status is in doubt: the discrete pattern, all three entries distinct. And a short argument shows the discrete pattern is realised at exponent $p \ge 2$ **if and only if** the Fermat equation has a solution in strictly positive integers. (Positivity forces all three entries distinct, since the legs cannot be equal by the valuation argument and neither leg can equal the hypotenuse.) Therefore:
-
-**Kernel-Theoretic Form of Fermat's Last Theorem.** *For every exponent $p \ge 2$, the equation $x^p + y^p = z^p$ realises exactly three of the five patterns of a triple if and only if it has no solution in positive integers, and exactly four otherwise.*
-
-For $p = 2$ the count is four, witnessed by $(3,4,5)$. For $p \ge 3$ it is three — this is Fermat's Last Theorem, now phrased as the statement that a certain five-element set has a three-element subset. And at $p = 1$ the whole thing collapses: $1 + 1 = 2$ realises the equal-legs pattern, so all five patterns occur. The defect is a genuine phase transition in the exponent, switching on at $p = 2$ and switching from four to three at $p = 3$.
-
-### Why this is worth the trouble
-
-The moral is that "which coordinates agree" is a legitimate mathematical object, not a bookkeeping detail. It is the complete invariant for renaming symbols; it is computed by a one-line canonical form; its enumeration is the Bell numbers, refined by the Stirling triangle, obeying super-multiplicativity and Touchard's congruence; and, attached to a Diophantine equation, it produces a small, sharp, finite invariant that separates dimension $2$ from dimension $4$ and compresses Fermat's Last Theorem into a cardinality.
-
-Erasing information is a strange way to learn something. But the part of a list that survives the erasure — the shape of its sameness — knows more than it lets on.
+BANANA and XYZYZY, it turns out, know quite a lot.

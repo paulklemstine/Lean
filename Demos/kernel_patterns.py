@@ -1,438 +1,326 @@
 """
-Kernel patterns: numerical demonstrations.
+Kernel patterns of tuples: numerical demonstration.
 
-This self-contained script demonstrates, by direct computation, every quantitative
-claim of the accompanying paper:
+The *kernel* (equality pattern) of a tuple x = (x_0, ..., x_{n-1}) is the equivalence
+relation  i ~ j  <=>  x_i = x_j  on index positions.  This script demonstrates, by
+exhaustive computation on small cases, every quantitative result of the theory:
 
-  1. The canonical form (least-element labelling) of a tuple, and the fact that it
-     is a COMPLETE invariant for renaming the alphabet symbols: two tuples over a
-     finite alphabet lie in the same renaming-orbit iff their canonical forms agree.
-  2. Enumeration of the patterns of length n (restricted growth strings) and the
-     verification that their number is the Bell number B_n = 1, 1, 2, 5, 15, 52, ...
-  3. The block-count refinement S(n,k) (Stirling numbers of the second kind, defined
-     combinatorially), the recursion S(n+1,k+1) = S(n,k) + (k+1) S(n,k+1), the row
-     sums sum_k S(n,k) = B_n, and the closed forms
-         S(n+1,2) = 2^n - 1,  S(n+1,n) = C(n+1,2),  S(n+2,n) = C(n+2,3) + 3 C(n+2,4),
-         6 S(n,3)  = 3^n - 3*2^n + 3,
-         24 S(n,4) = 4^n - 4*3^n + 6*2^n - 4,
-         120 S(n,5)= 5^n - 5*4^n + 10*3^n - 10*2^n + 5.
-  4. The falling-factorial expansion m^n = sum_k S(n,k) * m^(k)  and the surjection
-     count k! S(n,k).
-  5. Orbit counts over an alphabet of size m: sum_{k<=m} S(n,k), equal to B_n exactly
-     when m >= n, strictly smaller otherwise.
-  6. Growth: strict monotonicity of B_n from n = 1, and strict super-multiplicativity
-     B_m B_n < B_{m+n} for m, n >= 1, hence 2^k <= B_{2k}.
-  7. Touchard's congruence B_{p+n} = B_{n+1} + B_n  (mod p) for primes p, and its
-     corollary B_p = 2 (mod p).
-  8. Kernel spectra: the Pythagorean equation a^2 + b^2 = c^2 realises exactly four
-     of the five patterns of a triple (the equal-legs pattern is missing); the
-     k-dimensional equal-legs configuration exists iff k is a perfect square; and the
-     Fermat equation x^p + y^p = z^p realises three patterns for p >= 3 and four for
-     p = 2, with all five occurring at p = 1.
+  1. Canonical form   can(x)_i = min { j : x_j = x_i }   is a complete encoding of the
+     kernel, invariant under any injective relabelling of the alphabet.
+  2. Patterns (= idempotent contracting retractions p with p(i) <= i and p(p(i)) = p(i))
+     are exactly the canonical forms, and they biject with set partitions of [n].
+  3. There are exactly B_n patterns on n letters:  1, 1, 2, 5, 15, 52, ...  (A000110).
+  4. Orbits of the symmetric group of the alphabet on n-tuples are classified by the
+     pattern; their number is B_n when n <= |alphabet|.
+  5. Refining by block count gives the Stirling numbers of the second kind S(n,k),
+     with sum_k S(n,k) = B_n.
+  6. Over an alphabet of size a the orbit count is the truncated row sum_{k<=a} S(n,k);
+     closed forms: 2^n orbits for binary (n+1)-tuples, (3^n+1)/2 for ternary.
+  7. Connection formula: a^n = sum_k S(n,k) * a^{underline k} (falling factorial).
+  8. The space of relabelling-invariant K-valued functions of an n-tuple has
+     dimension B_n when n <= |alphabet|.
 
-Run with:  python3 demo.py
-No third-party dependencies.
+Self-contained: standard library only.
 """
 
 from __future__ import annotations
 
-from itertools import product
-from math import comb, factorial, isqrt
-from typing import Dict, Iterator, List, Sequence, Set, Tuple
+from itertools import product, permutations
+from math import comb
+from typing import Dict, Hashable, List, Sequence, Set, Tuple
 
-# ---------------------------------------------------------------------------
-# 1. Canonical form and completeness of the invariant
-# ---------------------------------------------------------------------------
+# ----------------------------------------------------------------------------------
+# 1. Canonical form and patterns
+# ----------------------------------------------------------------------------------
 
 
-def canon(tup: Sequence[object]) -> Tuple[int, ...]:
-    """Least-element labelling: canon(f)[i] = min{ j : f[j] == f[i] }.
-
-    Linear time and space: scan left to right, recording the first occurrence
-    index of each value.
-    """
-    first: Dict[object, int] = {}
+def canonical_form(x: Sequence[Hashable]) -> Tuple[int, ...]:
+    """can(x)_i = min { j : x_j = x_i }, computed in one O(n) left-to-right pass."""
+    first: Dict[Hashable, int] = {}
     out: List[int] = []
-    for i, x in enumerate(tup):
-        if x not in first:
-            first[x] = i
-        out.append(first[x])
+    for i, xi in enumerate(x):
+        if xi not in first:
+            first[xi] = i
+        out.append(first[xi])
     return tuple(out)
 
 
-def nblocks(pattern: Sequence[int]) -> int:
-    """Number of blocks (distinct labels) of a pattern."""
-    return len(set(pattern))
+def same_kernel(x: Sequence[Hashable], y: Sequence[Hashable]) -> bool:
+    """True iff x and y realise the same equalities between coordinates."""
+    if len(x) != len(y):
+        return False
+    return canonical_form(x) == canonical_form(y)
 
 
-def same_orbit_by_search(f: Sequence[int], g: Sequence[int], alphabet_size: int) -> bool:
-    """Brute force: is there a permutation sigma of the alphabet with sigma(f) = g?
-
-    Exponential in the alphabet size; used only to validate the linear-time test.
-    """
-    from itertools import permutations
-
-    for sigma in permutations(range(alphabet_size)):
-        if tuple(sigma[x] for x in f) == tuple(g):
-            return True
-    return False
+def is_pattern(p: Sequence[int]) -> bool:
+    """A pattern is contracting (p(i) <= i) and idempotent (p(p(i)) = p(i))."""
+    return all(p[i] <= i and p[p[i]] == p[i] for i in range(len(p)))
 
 
-def demo_completeness(n: int = 4, m: int = 4) -> None:
-    print("=" * 74)
-    print(f"1. COMPLETENESS OF THE KERNEL INVARIANT  (tuples of length {n} over {m} letters)")
-    print("=" * 74)
-    examples = [
-        ((0, 1, 2, 0), (3, 1, 0, 3)),
-        ((0, 0, 1, 1), (2, 2, 3, 3)),
-        ((0, 1, 0, 1), (0, 1, 1, 0)),
-        ((0, 1, 2, 3), (3, 2, 1, 0)),
-    ]
-    for f, g in examples:
-        by_canon = canon(f) == canon(g)
-        by_search = same_orbit_by_search(f, g, m)
-        flag = "OK" if by_canon == by_search else "MISMATCH"
-        print(
-            f"  f={f}  g={g} | canon(f)={canon(f)} canon(g)={canon(g)}"
-            f" -> same orbit? canon-test {by_canon}, brute force {by_search}  [{flag}]"
-        )
-
-    # Exhaustive check of the completeness theorem for all tuples.
-    bad = 0
-    for f in product(range(m), repeat=n):
-        for g in product(range(m), repeat=n):
-            if (canon(f) == canon(g)) != same_orbit_by_search(f, g, m):
-                bad += 1
-    print(f"  exhaustive check over all {m ** n}^2 pairs: {bad} disagreements (expected 0)")
-    print()
+def all_patterns_bruteforce(n: int) -> List[Tuple[int, ...]]:
+    """Filter all n^n maps [n] -> [n] by the two pattern conditions (small n only)."""
+    return [p for p in product(range(n), repeat=n) if is_pattern(p)]
 
 
-# ---------------------------------------------------------------------------
-# 2. Enumeration of patterns; Bell numbers
-# ---------------------------------------------------------------------------
+def all_patterns(n: int) -> List[Tuple[int, ...]]:
+    """Generate every pattern exactly once by the last-letter recursion.
 
-
-def patterns(n: int) -> Iterator[Tuple[int, ...]]:
-    """Enumerate the patterns of length n, in least-element labelling.
-
-    The restricted growth strings (p[0] = 0 and p[i] <= 1 + max(p[0..i-1])) are
-    generated with no rejection, then relabelled by `canon` so that each block
-    carries the index of its own least element.  Cost O(n * B_n) time, O(n) space.
+    Extend a pattern q on n letters either by pointing the new coordinate at one of the
+    fixed points of q (join an existing block) or at itself (open a new block).
     """
     if n == 0:
-        yield ()
-        return
-    prefix: List[int] = [0]
-
-    def extend(maximum: int) -> Iterator[Tuple[int, ...]]:
-        if len(prefix) == n:
-            yield canon(prefix)
-            return
-        for label in range(maximum + 2):
-            prefix.append(label)
-            yield from extend(max(maximum, label))
-            prefix.pop()
-
-    yield from extend(0)
+        return [()]
+    out: List[Tuple[int, ...]] = []
+    for q in all_patterns(n - 1):
+        reps = [j for j in range(n - 1) if q[j] == j]
+        for v in reps + [n - 1]:
+            out.append(q + (v,))
+    return out
 
 
-def bell_numbers(upto: int) -> List[int]:
-    """Bell numbers via the binomial recursion B_{n+1} = sum_i C(n,i) B_{n-i}."""
-    bell = [1]
-    for n in range(upto):
-        bell.append(sum(comb(n, i) * bell[n - i] for i in range(n + 1)))
-    return bell
+def num_blocks(p: Sequence[int]) -> int:
+    """Number of blocks: the number of distinct values (= fixed points) of p."""
+    return len(set(p))
 
 
-def demo_bell(upto: int = 8) -> None:
-    print("=" * 74)
-    print("2. PATTERNS ARE COUNTED BY THE BELL NUMBERS")
-    print("=" * 74)
-    bell = bell_numbers(upto)
-    for n in range(upto + 1):
-        if n <= 6:
-            counted = sum(1 for _ in patterns(n))
-            mark = "OK" if counted == bell[n] else "MISMATCH"
-            print(f"  n={n}:  #patterns = {counted:6d}   B_n = {bell[n]:6d}   [{mark}]")
-        else:
-            print(f"  n={n}:  (enumeration skipped)      B_n = {bell[n]:6d}")
-    print("  the five patterns of a triple:", [p for p in patterns(3)])
-    print()
+def pattern_to_partition(p: Sequence[int]) -> List[List[int]]:
+    """The set partition of [n] encoded by the pattern p."""
+    blocks: Dict[int, List[int]] = {}
+    for i, v in enumerate(p):
+        blocks.setdefault(v, []).append(i)
+    return [blocks[k] for k in sorted(blocks)]
 
 
-# ---------------------------------------------------------------------------
-# 3. The block-count refinement: Stirling numbers of the second kind
-# ---------------------------------------------------------------------------
+# ----------------------------------------------------------------------------------
+# 2. Bell and Stirling numbers
+# ----------------------------------------------------------------------------------
 
 
-def stirling_by_enumeration(n: int, k: int) -> int:
-    """S(n,k) defined combinatorially: patterns of length n with exactly k blocks."""
-    return sum(1 for p in patterns(n) if nblocks(p) == k)
+def bell(n: int) -> int:
+    """Bell numbers via the binomial recurrence B_{n+1} = sum_k C(n,k) B_{n-k}."""
+    b: List[int] = [1]
+    for m in range(n):
+        b.append(sum(comb(m, k) * b[m - k] for k in range(m + 1)))
+    return b[n]
 
 
-def stirling_table(upto: int) -> List[List[int]]:
-    """Fill the triangle with the recursion S(n+1,k+1) = S(n,k) + (k+1) S(n,k+1).
-
-    O(upto^2) integer operations.
-    """
-    table = [[0] * (upto + 1) for _ in range(upto + 1)]
-    table[0][0] = 1
-    for n in range(upto):
-        for k in range(upto):
-            table[n + 1][k + 1] = table[n][k] + (k + 1) * table[n][k + 1]
-    return table
+def stirling2(n: int, k: int) -> int:
+    """S(n+1,k+1) = (k+1) S(n,k+1) + S(n,k), with S(0,0) = 1."""
+    table = [[0] * (k + 1) for _ in range(n + 1)]
+    if k >= 0:
+        table[0][0] = 1
+    for m in range(1, n + 1):
+        for j in range(1, k + 1):
+            table[m][j] = j * table[m - 1][j] + table[m - 1][j - 1]
+    return table[n][k]
 
 
-def demo_stirling(upto: int = 8) -> None:
-    print("=" * 74)
-    print("3. THE BLOCK-COUNT TRIANGLE  S(n,k)  AND ITS CLOSED FORMS")
-    print("=" * 74)
-    table = stirling_table(upto)
-    header = "   n\\k " + "".join(f"{k:7d}" for k in range(upto + 1)) + "     row sum"
-    print(header)
-    bell = bell_numbers(upto)
-    for n in range(upto + 1):
-        row = "".join(f"{table[n][k]:7d}" for k in range(upto + 1))
-        s = sum(table[n])
-        mark = "OK" if s == bell[n] else "MISMATCH"
-        print(f"  {n:4d} {row}   {s:8d} = B_{n} [{mark}]")
-
-    print("\n  recursion checked against direct enumeration:")
-    for n in range(6):
-        for k in range(n + 1):
-            assert stirling_by_enumeration(n, k) == table[n][k], (n, k)
-    print("    S(n,k) from enumeration == S(n,k) from the recursion for all n <= 5   [OK]")
-
-    print("\n  closed forms:")
-    for n in range(1, upto - 1):
-        assert table[n + 1][2] == 2 ** n - 1
-        assert table[n + 1][n] == comb(n + 1, 2)
-        assert table[n + 2][n] == comb(n + 2, 3) + 3 * comb(n + 2, 4)
-        assert 6 * table[n][3] == 3 ** n - 3 * 2 ** n + 3
-        assert 24 * table[n][4] == 4 ** n - 4 * 3 ** n + 6 * 2 ** n - 4
-        assert 120 * table[n][5] == 5 ** n - 5 * 4 ** n + 10 * 3 ** n - 10 * 2 ** n + 5
-    print("    S(n+1,2) = 2^n - 1                                   [OK]")
-    print("    S(n+1,n) = C(n+1,2)                                  [OK]")
-    print("    S(n+2,n) = C(n+2,3) + 3 C(n+2,4)                     [OK]")
-    print("    6 S(n,3) = 3^n - 3*2^n + 3                           [OK]")
-    print("    24 S(n,4) = 4^n - 4*3^n + 6*2^n - 4                  [OK]")
-    print("    120 S(n,5) = 5^n - 5*4^n + 10*3^n - 10*2^n + 5       [OK]")
-    print(f"    row 6 = {table[6][:7]} sums to {sum(table[6])}")
-    print(f"    row 7 = {table[7][:8]} sums to {sum(table[7])}")
-    print(f"    row 8 = {table[8][:9]} sums to {sum(table[8])}")
-    print()
-
-
-# ---------------------------------------------------------------------------
-# 4-5. Falling factorials, surjections, orbit counts
-# ---------------------------------------------------------------------------
-
-
-def falling_factorial(m: int, k: int) -> int:
-    """m^(k) = m (m-1) ... (m-k+1)."""
+def falling_factorial(a: int, k: int) -> int:
+    """a^{underline k} = a (a-1) ... (a-k+1); zero when k > a."""
     result = 1
-    for i in range(k):
-        result *= max(m - i, 0) if m - i > 0 else 0
-    return result if m >= k else 0
+    for t in range(k):
+        result *= a - t
+    return result
 
 
-def demo_fibres(nmax: int = 6, mmax: int = 6) -> None:
-    print("=" * 74)
-    print("4. FIBRES, FALLING FACTORIALS, SURJECTIONS, ORBIT COUNTS")
-    print("=" * 74)
-    table = stirling_table(nmax)
-    bell = bell_numbers(nmax)
+# ----------------------------------------------------------------------------------
+# 3. Orbits of the symmetric group of the alphabet on tuples
+# ----------------------------------------------------------------------------------
 
-    print("  m^n = sum_k S(n,k) m^(k):")
-    for n in range(nmax + 1):
-        for m in range(mmax + 1):
-            rhs = sum(table[n][k] * falling_factorial(m, k) for k in range(n + 1))
-            assert m ** n == rhs, (n, m, m ** n, rhs)
-    print("    verified for all 0 <= n <= %d, 0 <= m <= %d                [OK]" % (nmax, mmax))
 
-    print("\n  number of surjections [n] -> [k] equals k! S(n,k):")
-    for n in range(1, 5):
-        for k in range(1, 5):
-            brute = sum(
-                1 for f in product(range(k), repeat=n) if len(set(f)) == k
-            )
-            assert brute == factorial(k) * table[n][k], (n, k)
-            if n == 4:
-                print(f"    n=4, k={k}: {brute:4d} = {k}! * S(4,{k}) = {factorial(k)} * {table[n][k]}")
+def orbit_count_bruteforce(alphabet_size: int, n: int) -> int:
+    """Count orbits of Sym(alphabet) on n-tuples by explicitly applying every letter
+    permutation and taking the number of resulting equivalence classes."""
+    letters = list(range(alphabet_size))
+    seen: Set[Tuple[int, ...]] = set()
+    reps = 0
+    for x in product(letters, repeat=n):
+        if x in seen:
+            continue
+        reps += 1
+        for sigma in permutations(letters):
+            seen.add(tuple(sigma[xi] for xi in x))
+    return reps
 
-    print("\n  orbit counts of the symmetric group of an m-letter alphabet on n-tuples:")
-    print("    (theory: sum_{k<=m} S(n,k); equals B_n iff m >= n)")
-    for n in range(1, 5):
-        for m in range(1, 5):
-            predicted = sum(table[n][k] for k in range(min(m, n) + 1))
-            orbits: Set[Tuple[int, ...]] = {canon(f) for f in product(range(m), repeat=n)}
-            status = "= B_n" if predicted == bell[n] else "< B_n"
-            assert predicted == len(orbits), (n, m)
-            print(
-                f"    n={n}, m={m}: orbits = {len(orbits):3d} (predicted {predicted:3d}) "
-                f"{status} = {bell[n]}"
-            )
+
+def orbit_count_formula(alphabet_size: int, n: int) -> int:
+    """Predicted orbit count: the truncated Stirling row sum_{k <= a} S(n,k)."""
+    return sum(stirling2(n, k) for k in range(alphabet_size + 1))
+
+
+def invariant_dimension(alphabet_size: int, n: int) -> int:
+    """Dimension of the space of relabelling-invariant scalar functions of an n-tuple:
+    one degree of freedom per orbit."""
+    return orbit_count_formula(alphabet_size, n)
+
+
+# ----------------------------------------------------------------------------------
+# 4. Demonstrations
+# ----------------------------------------------------------------------------------
+
+
+def demo_canonical_forms() -> None:
+    print("=" * 78)
+    print("1. CANONICAL FORMS: the shape of sameness")
+    print("=" * 78)
+    words = ["BANANA", "XYZYZY", "LOLOLO", "SUSUSU", "MISSISSIPPI", "AABBCCAABBC"]
+    for w in words:
+        print(f"  {w:<12} -> can = {canonical_form(w)}   blocks = {num_blocks(canonical_form(w))}")
+    print()
+    print(f"  BANANA ~ XYZYZY ? {same_kernel('BANANA', 'XYZYZY')}   (renamings of each other)")
+    print(f"  BANANA ~ LOLOLO ? {same_kernel('BANANA', 'LOLOLO')}")
+    print(f"  LOLOLO ~ SUSUSU ? {same_kernel('LOLOLO', 'SUSUSU')}")
+    print()
+    # Invariance under an arbitrary injective relabelling into a different alphabet.
+    x = [3, 3, 7, 1, 7]
+    f = {3: "cat", 7: "dog", 1: "emu"}  # injective, into a completely different alphabet
+    print(f"  x        = {x}          can = {canonical_form(x)}")
+    fx = [f[v] for v in x]
+    print(f"  f o x    = {fx}   can = {canonical_form(fx)}")
+    print(f"  invariance under injective relabelling: {canonical_form(x) == canonical_form(fx)}")
     print()
 
 
-# ---------------------------------------------------------------------------
-# 6. Growth: monotonicity and super-multiplicativity
-# ---------------------------------------------------------------------------
-
-
-def demo_growth(upto: int = 14) -> None:
-    print("=" * 74)
-    print("5. GROWTH OF THE BELL NUMBERS")
-    print("=" * 74)
-    bell = bell_numbers(upto)
-    print("  B_n for n = 0..%d:" % upto)
-    print("   ", bell)
-    assert all(bell[n] < bell[n + 1] for n in range(1, upto))
-    print("  strict monotonicity B_n < B_{n+1} for n >= 1                 [OK]")
-    print("  super-multiplicativity B_m B_n < B_{m+n} for m,n >= 1:")
-    for m in range(1, 6):
-        for n in range(1, 6):
-            if m + n <= upto:
-                assert bell[m] * bell[n] < bell[m + n]
-    print("    checked for all 1 <= m,n <= 5                              [OK]")
-    print(f"    e.g. B_2 * B_2 = {bell[2] * bell[2]} < {bell[4]} = B_4")
-    print(f"         B_3 * B_4 = {bell[3] * bell[4]} < {bell[7]} = B_7")
-    print("  consequence 2^k <= B_{2k}:")
-    for k in range(upto // 2 + 1):
-        assert 2 ** k <= bell[2 * k]
-    print(f"    e.g. 2^7 = {2 ** 7} <= {bell[14]} = B_14                     [OK]")
+def demo_patterns_are_partitions() -> None:
+    print("=" * 78)
+    print("2. PATTERNS = SET PARTITIONS, counted by the Bell numbers")
+    print("=" * 78)
+    for n in range(4):
+        pats = all_patterns(n)
+        print(f"  n = {n}:  {len(pats)} patterns")
+        for p in pats:
+            part = pattern_to_partition(p)
+            shown = "{" + ", ".join("{" + ",".join(map(str, b)) + "}" for b in part) + "}"
+            print(f"        {p}  <->  {shown}")
+    print()
+    print("  Pattern counts against the Bell numbers:")
+    print("    n | #patterns (recursive) | #patterns (brute force) | B_n")
+    for n in range(7):
+        rec = len(all_patterns(n))
+        brute = len(all_patterns_bruteforce(n)) if n <= 6 else None
+        print(f"    {n} | {rec:>21} | {str(brute):>23} | {bell(n)}")
+    assert [len(all_patterns(n)) for n in range(6)] == [1, 1, 2, 5, 15, 52]
+    assert all(len(all_patterns(n)) == bell(n) for n in range(8))
+    print("  -> first six values 1, 1, 2, 5, 15, 52  (OEIS A000110).  VERIFIED")
     print()
 
 
-# ---------------------------------------------------------------------------
-# 7. Touchard's congruence
-# ---------------------------------------------------------------------------
-
-
-def demo_touchard(upto: int = 24) -> None:
-    print("=" * 74)
-    print("6. TOUCHARD'S CONGRUENCE   B_{p+n} = B_{n+1} + B_n  (mod p)")
-    print("=" * 74)
-    bell = bell_numbers(upto)
-    primes = [p for p in range(2, 12) if all(p % d for d in range(2, isqrt(p) + 1))]
-    for p in primes:
-        for n in range(0, min(6, upto - p) + 1):
-            lhs = bell[p + n] % p
-            rhs = (bell[n + 1] + bell[n]) % p
-            assert lhs == rhs, (p, n, lhs, rhs)
-        print(f"  p = {p:2d}: verified for 0 <= n <= {min(6, upto - p)}   [OK]"
-              f"   B_{p} mod {p} = {bell[p] % p} (theory: 2 mod {p} = {2 % p})")
-    print("  worked example: p=5, n=3  ->  B_8 = B_4 + B_3 = 15 + 5 = 20 = 0 (mod 5),")
-    print(f"                  and indeed B_8 = {bell[8]} = 5 * {bell[8] // 5}")
+def demo_orbits() -> None:
+    print("=" * 78)
+    print("3. ORBITS OF THE SYMMETRIC GROUP ON TUPLES")
+    print("=" * 78)
+    print("   a = alphabet size, n = tuple length")
+    print("    a  n | brute-force orbits | sum_{k<=a} S(n,k) | B_n | equal to B_n?")
+    for a in range(1, 5):
+        for n in range(0, 5):
+            if a ** n > 20000:
+                continue
+            brute = orbit_count_bruteforce(a, n)
+            pred = orbit_count_formula(a, n)
+            assert brute == pred, (a, n, brute, pred)
+            tag = "yes" if pred == bell(n) else "no (alphabet too small)"
+            print(f"    {a}  {n} | {brute:>18} | {pred:>17} | {bell(n):>3} | {tag}")
+    print()
+    print("  The complete invariant separating orbits is the pattern.  Check for a = 3,")
+    print("  n = 4: group the 81 tuples by pattern and confirm each class is one orbit.")
+    by_pattern: Dict[Tuple[int, ...], List[Tuple[int, ...]]] = {}
+    for x in product(range(3), repeat=4):
+        by_pattern.setdefault(canonical_form(x), []).append(x)
+    for p, cls in sorted(by_pattern.items()):
+        rep = cls[0]
+        orbit = {tuple(sigma[xi] for xi in rep) for sigma in permutations(range(3))}
+        assert orbit == set(cls)
+        print(f"    pattern {p}  blocks={num_blocks(p)}  class size {len(cls):>2}"
+              f"  = 3^(underline {num_blocks(p)}) = {falling_factorial(3, num_blocks(p))}")
+    print("  -> pattern classes coincide with orbits, sizes are falling factorials.  VERIFIED")
     print()
 
 
-# ---------------------------------------------------------------------------
-# 8. Kernel spectra of Diophantine equations
-# ---------------------------------------------------------------------------
-
-
-def pythagorean_spectrum(bound: int = 60) -> Set[Tuple[int, ...]]:
-    """Patterns realised by solutions of a^2 + b^2 = c^2 with entries <= bound."""
-    found: Set[Tuple[int, ...]] = set()
-    for a in range(bound + 1):
-        for b in range(bound + 1):
-            s = a * a + b * b
-            c = isqrt(s)
-            if c * c == s and c <= bound:
-                found.add(canon((a, b, c)))
-    return found
-
-
-def fermat_spectrum(p: int, bound: int = 60) -> Set[Tuple[int, ...]]:
-    """Patterns realised by solutions of x^p + y^p = z^p with entries <= bound."""
-    powers = {x ** p: x for x in range(bound + 1)}
-    found: Set[Tuple[int, ...]] = set()
-    for x in range(bound + 1):
-        for y in range(bound + 1):
-            s = x ** p + y ** p
-            z = powers.get(s)
-            if z is not None:
-                found.add(canon((x, y, z)))
-    return found
-
-
-def equal_legs_dimension(k: int, bound: int = 200) -> Tuple[bool, Tuple[int, int] | None]:
-    """Does sum_{i<k} a^2 = y^2 have a solution with a != 0?  (Theory: iff k is a square.)"""
-    for a in range(1, bound + 1):
-        s = k * a * a
-        y = isqrt(s)
-        if y * y == s:
-            return True, (a, y)
-    return False, None
-
-
-def demo_spectra(bound: int = 60) -> None:
-    print("=" * 74)
-    print("7. KERNEL SPECTRA OF DIOPHANTINE EQUATIONS")
-    print("=" * 74)
-    names = {
-        (0, 1, 2): "discrete   (all distinct)",
-        (0, 1, 1): "legs differ, b = c",
-        (0, 1, 0): "a = c, b differs",
-        (0, 0, 0): "all equal",
-        (0, 0, 2): "EQUAL LEGS a = b, c differs",
-    }
-    all_patterns = list(patterns(3))
-
-    spec = pythagorean_spectrum(bound)
-    print(f"  a^2 + b^2 = c^2 with entries <= {bound}:")
-    for pat in all_patterns:
-        mark = "realised    " if pat in spec else "NOT realised"
-        witness = ""
-        if pat == (0, 1, 2):
-            witness = "  e.g. (3,4,5)"
-        if pat == (0, 0, 2):
-            witness = "  (would need 2a^2 = c^2, impossible: 2 is not a square)"
-        print(f"    {pat} {names[pat]:<28} {mark}{witness}")
-    print(f"    |spectrum| = {len(spec)} = B_3 - 1 = 4   -> defect one")
-
-    print("\n  equal legs in dimension k:  sum_{i<k} a^2 = y^2 with a != 0")
-    print("    (theory: solvable iff k is a perfect square)")
-    for k in range(1, 10):
-        ok, witness = equal_legs_dimension(k)
-        square = isqrt(k) ** 2 == k
-        assert ok == square, k
-        w = f"  witness a={witness[0]}, y={witness[1]}" if witness else ""
-        print(f"    k={k}: solvable {str(ok):5s} | k a perfect square: {str(square):5s}{w}")
-
-    print(f"\n  x^p + y^p = z^p with entries <= {bound}:")
-    for p in range(1, 6):
-        spec_p = fermat_spectrum(p, bound)
-        pats = sorted(spec_p)
-        note = ""
-        if p == 1:
-            note = "  all five patterns (1+1=2 gives equal legs)"
-        elif p == 2:
-            note = "  four patterns (3,4,5 gives the discrete one)"
-        else:
-            note = "  three patterns: discrete missing <=> no positive solution"
-        print(f"    p={p}: |spectrum| = {len(spec_p)}  {pats}{note}")
-    print("\n  For p >= 3 the discrete pattern is realised iff x^p + y^p = z^p has a")
-    print("  positive solution, so its absence is exactly Fermat's Last Theorem at p.")
+def demo_stirling_refinement() -> None:
+    print("=" * 78)
+    print("4. BLOCK REFINEMENT: Stirling numbers of the second kind")
+    print("=" * 78)
+    for n in range(7):
+        counts = [0] * (n + 1)
+        for p in all_patterns(n):
+            counts[num_blocks(p)] += 1
+        predicted = [stirling2(n, k) for k in range(n + 1)]
+        assert counts == predicted, (n, counts, predicted)
+        print(f"    n = {n}:  S(n,0..n) = {predicted}   sum = {sum(predicted)} = B_{n} = {bell(n)}")
+        assert sum(predicted) == bell(n)
+    print("  -> patterns with k blocks number S(n,k), and the rows sum to B_n.  VERIFIED")
     print()
 
 
-# ---------------------------------------------------------------------------
+def demo_small_alphabet_closed_forms() -> None:
+    print("=" * 78)
+    print("5. SMALL ALPHABETS: closed forms")
+    print("=" * 78)
+    print("    binary alphabet, tuples of length n+1: orbits should equal 2^n")
+    for n in range(0, 8):
+        got = orbit_count_formula(2, n + 1)
+        assert got == 2 ** n, (n, got)
+        print(f"      n = {n}:  orbits on {n+1}-tuples = {got:>4} = 2^{n}"
+              f"   (B_{n+1} = {bell(n+1)})")
+    print("    ternary alphabet, tuples of length n+1: 2 * orbits should equal 3^n + 1")
+    for n in range(0, 8):
+        got = orbit_count_formula(3, n + 1)
+        assert 2 * got == 3 ** n + 1, (n, got)
+        print(f"      n = {n}:  orbits on {n+1}-tuples = {got:>5},  2*{got} = 3^{n}+1"
+              f" = {3 ** n + 1}")
+    print("    strictness: from length 3 on, the binary count is below the Bell number")
+    for n in range(3, 8):
+        b2 = orbit_count_formula(2, n)
+        print(f"      n = {n}:  binary orbits = {b2:>4}  <  B_{n} = {bell(n)}")
+        assert b2 < bell(n)
+    print("  VERIFIED")
+    print()
+
+
+def demo_connection_formula() -> None:
+    print("=" * 78)
+    print("6. CONNECTION FORMULA  a^n = sum_k S(n,k) * a^(underline k)")
+    print("=" * 78)
+    for a in range(0, 6):
+        for n in range(0, 7):
+            rhs = sum(stirling2(n, k) * falling_factorial(a, k) for k in range(n + 1))
+            assert a ** n == rhs, (a, n, a ** n, rhs)
+        print(f"    a = {a}: verified for n = 0..6")
+    a, n = 3, 4
+    terms = [f"{stirling2(n,k)}*{falling_factorial(a,k)}" for k in range(n + 1)]
+    print(f"    example a=3, n=4:  3^4 = 81 = " + " + ".join(terms)
+          + f" = {sum(stirling2(n,k)*falling_factorial(a,k) for k in range(n+1))}")
+    print("  VERIFIED")
+    print()
+
+
+def demo_invariant_dimension() -> None:
+    print("=" * 78)
+    print("7. DIMENSION OF THE SPACE OF RELABELLING-INVARIANT FUNCTIONS")
+    print("=" * 78)
+    print("    (one degree of freedom per orbit)")
+    print("    a  n | dimension | B_n")
+    for a in range(1, 7):
+        for n in range(0, 6):
+            d = invariant_dimension(a, n)
+            note = "= B_n" if d == bell(n) else "< B_n (alphabet too small)"
+            print(f"    {a}  {n} | {d:>9} | {bell(n):>3}   {note}")
+    assert invariant_dimension(5, 5) == 52 == bell(5)
+    print("  -> for n <= a the dimension is exactly B_n; e.g. n = a = 5 gives 52.  VERIFIED")
+    print()
 
 
 def main() -> None:
-    print()
-    print("KERNEL PATTERNS -- NUMERICAL DEMONSTRATIONS")
-    print()
-    demo_completeness()
-    demo_bell()
-    demo_stirling()
-    demo_fibres()
-    demo_growth()
-    demo_touchard()
-    demo_spectra()
-    print("All demonstrations completed; every assertion above verified numerically.")
+    demo_canonical_forms()
+    demo_patterns_are_partitions()
+    demo_orbits()
+    demo_stirling_refinement()
+    demo_small_alphabet_closed_forms()
+    demo_connection_formula()
+    demo_invariant_dimension()
+    print("=" * 78)
+    print("All demonstrations completed and all assertions passed.")
+    print("=" * 78)
 
 
 if __name__ == "__main__":

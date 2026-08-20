@@ -1,407 +1,354 @@
-# Kernel Patterns: Complete Invariants for Symbol Renaming, the Bell Enumeration, and Kernel Spectra of Diophantine Equations
+# Kernel Patterns: Complete Invariants of Tuples under Alphabet Permutations, and the Bell–Stirling Calculus They Generate
 
 **Author:** Aristotle
-**Date:** 2026-08-18
+**Date:** 2026-08-19
 
 ---
 
 ## Abstract
 
-For a tuple $f = (f_0, \dots, f_{n-1})$ with entries in a set $A$, its *kernel* (or equality pattern) is the equivalence relation on indices defined by $i \sim j \iff f_i = f_j$. We develop the theory of kernels systematically. We prove that the kernel is a **complete invariant** for the action of the symmetric group of a finite alphabet $B$ on tuples $B^n$ by post-composition: two tuples lie in the same orbit if and only if their kernels agree. We introduce an explicit, computable canonical form $\mathrm{canon}(f)_i = \min\{j : f_j = f_i\}$ — the restricted-growth normal form — and show it is a complete computable invariant, so that orbit equivalence is decided by comparing two integer tuples in linear time.
+For a tuple $x = (x_1,\dots,x_n)$ with entries in a set $\alpha$, its *kernel* (equality pattern) is the equivalence relation $i \sim_x j \iff x_i = x_j$ on the index set. We develop a complete theory of this invariant for the natural action of the symmetric group $\operatorname{Sym}(\alpha)$ on $\alpha^n$ by relabelling of entries. We introduce a computable canonical form $\operatorname{can}(x)_i = \min\{j : x_j = x_i\}$, characterise its image as the set of *idempotent contracting retractions* of $\{0,\dots,n-1\}$ (the restricted growth encodings of set partitions), and prove that the kernel is both invariant and complete: two tuples over the same alphabet — finite or infinite, with no cardinality hypotheses — have the same kernel if and only if they lie in a common $\operatorname{Sym}(\alpha)$-orbit. We then establish that the resulting type of patterns is canonically isomorphic to the lattice of equivalence relations on an $n$-element set, whence its cardinality is the Bell number $B_n$; as a by-product we obtain a self-contained proof that the binomial-recurrence Bell numbers count set partitions, with the first six values $1,1,2,5,15,52$ (OEIS A000110) obtained by exhaustive enumeration of the finite set of patterns. Refining by the number of blocks yields the Stirling numbers of the second kind $S(n,k)$ together with $\sum_k S(n,k) = B_n$; realisability over an alphabet of size $a$ yields a truncated Stirling row $\sum_{k \le a} S(n,k)$ as the exact orbit count for *every* finite alphabet, with the closed forms $2^{n}$ (binary, length $n+1$) and $(3^{n}+1)/2$ (ternary, length $n+1$). Fibring the tuples over their patterns gives the connection formula $a^n = \sum_k S(n,k)\, a^{\underline{k}}$ between ordinary powers and falling factorials as a pure counting identity. Finally, we compute the dimension of the space of relabelling-invariant $K$-valued functions of an $n$-tuple: it equals $B_n$ whenever $n \le |\alpha|$.
 
-On the enumerative side we prove that the number of kernel patterns of length $n$ is the Bell number $B_n$ for every $n$, thereby identifying the combinatorial count of set partitions with the binomially-defined recursion $B_{n+1} = \sum_i \binom{n}{i} B_{n-i}$. Refining patterns by their number of blocks yields a purely combinatorial definition of the Stirling numbers of the second kind $S(n,k)$; we prove the recursion $S(n+1,k+1) = S(n,k) + (k+1)S(n,k+1)$, the closed forms $S(n+1,2) = 2^n - 1$, $S(n+1,n) = \binom{n+1}{2}$, $S(n+2,n) = \binom{n+2}{3} + 3\binom{n+2}{4}$, the column formulas for $k = 3,4,5$, the falling-factorial expansion $m^n = \sum_k S(n,k)\, m^{\underline{k}}$, and the surjection count $k!\,S(n,k)$. We deduce the orbit count $\sum_{k \le |B|} S(n,k)$ over an arbitrary finite alphabet, with the Bell number recovered exactly when $|B| \ge n$. We prove strict super-multiplicativity $B_m B_n < B_{m+n}$ for $m,n \ge 1$, hence $B_n^k \le B_{nk}$ and $2^k \le B_{2k}$; strict monotonicity from $n = 1$; and Touchard's congruence $B_{p+n} \equiv B_{n+1} + B_n \pmod p$ for prime $p$, by a fixed-point argument for the cyclic action of order $p$.
-
-Finally we introduce the **kernel spectrum** of a Diophantine equation: the set of equality patterns realised by its solutions. We compute the spectrum of $a^2 + b^2 = c^2$ over $\mathbb{N}$: it consists of four of the five patterns of a triple, the missing one being "equal legs, distinct hypotenuse"; the obstruction is the lemma that $ka^2 = c^2$ with $a \ne 0$ forces $k$ to be a perfect square. The same lemma shows that the $k$-dimensional equation $\sum_{i<k} x_i^2 = y^2$ admits an equal-legs solution precisely when $k$ is a perfect square, so the defect vanishes in dimension $4$. For $x^p + y^p = z^p$ with $p \ge 2$ we show that the equal-legs pattern is blocked by a $2$-adic valuation argument for every $p$, that all five patterns occur at $p = 1$, and that the spectrum has exactly three elements iff the equation has no positive solution and four otherwise — a combinatorial restatement of Fermat's Last Theorem at each exponent.
-
-**Keywords:** equality pattern, kernel of a map, restricted growth string, complete invariant, Bell numbers, Stirling numbers of the second kind, Touchard congruence, orbit counting, Pythagorean triples, Fermat equation.
+**Keywords:** equality pattern, kernel of a tuple, set partition, Bell number, Stirling number of the second kind, restricted growth string, complete invariant, symmetric group orbit, falling factorial.
 
 ---
 
 ## 1. Introduction
 
-Consider a finite list of symbols. Which of its features survive a consistent renaming of the symbols? Exactly one: the record of *which positions carry equal entries*. This record — the kernel, or equality pattern — is the subject of this paper.
+### 1.1 The question
 
-The idea is elementary and appears throughout mathematics and computer science, usually unnamed. In model theory it is the type of a tuple in the pure theory of equality. In database theory it is the equality pattern of a row, the basis for query minimisation under renaming. In the theory of species and in Pólya theory it is the object that reduces counting-with-labels to counting-without-labels. In symmetry reduction for model checking, it is the canonical form used to collapse states that differ only in the identities of interchangeable processes.
+Let $\alpha$ be a set (the *alphabet*) and let $n \ge 0$. The symmetric group $\operatorname{Sym}(\alpha)$ — the group of all bijections $\alpha \to \alpha$ — acts on the set $\alpha^n$ of $n$-tuples by postcomposition:
+$$ \sigma \cdot (x_1,\dots,x_n) = (\sigma x_1, \dots, \sigma x_n). $$
+This action formalises the idea of *renaming the letters*. Two natural questions arise.
 
-What is less commonly presented is a single development in which (i) the completeness of the invariant, (ii) its computable normal form, (iii) its enumeration by the Bell numbers together with the full Stirling refinement, and (iv) its use as an invariant of Diophantine equations, all appear as consequences of one definition. That is what we do here.
+1. **Invariants.** What features of a tuple survive renaming?
+2. **Classification.** How many orbits are there, and can they be listed effectively?
 
-The plan is:
+The answer to (1) is a single feature — the pattern of coincidences among the entries — and the answer to (2) is the Bell number, together with a precise correction when the alphabet is too small to realise every pattern. This paper develops both answers in full, with the intermediate combinatorics (Bell recurrence, Stirling recurrence, power/falling-factorial connection formula) derived from the classification rather than assumed.
 
-- **§2** defines the kernel and the canonical form and establishes their basic calculus.
-- **§3** proves the completeness theorem over a finite alphabet.
-- **§4** proves that patterns of length $n$ are counted by the Bell number $B_n$, in every arity.
-- **§5** develops the Stirling refinement: recursion, closed forms, tables, falling factorials, surjections.
-- **§6** derives orbit counts over arbitrary finite alphabets and shows the sharpness of the size hypothesis.
-- **§7** proves growth results (monotonicity, super-multiplicativity) and Touchard's congruence.
-- **§8** introduces kernel spectra of Diophantine equations and computes them for the Pythagorean and Fermat families.
-- **§9** discusses algorithms; **§10** discusses applications and future directions.
+### 1.2 Overview of results
 
-Throughout, $[n] = \{0, 1, \dots, n-1\}$ denotes the index set of an $n$-tuple, and tuples are functions $f : [n] \to A$.
+Throughout, indices run over $[n] := \{0, 1, \dots, n-1\}$ with its usual linear order.
+
+- **§2** defines the kernel, the canonical form $\operatorname{can}$, and the class of *patterns*, and proves invariance (Theorem 2.7) and completeness (Theorems 2.9 and 6.1) of the kernel invariant.
+- **§3** proves that the number of equivalence relations on an $n$-element set is the Bell number $B_n$ (Theorem 3.5), and identifies patterns with equivalence relations (Theorem 3.6), giving the orbit count $B_n$ for $n \le |\alpha|$ (Theorem 3.9).
+- **§4** refines the count by block number, obtaining the Stirling numbers of the second kind (Theorem 4.4) and $\sum_k S(n,k) = B_n$ (Corollary 4.5).
+- **§5** removes the hypothesis $n \le |\alpha|$: patterns realisable over $\alpha$ are exactly those with at most $|\alpha|$ blocks (Theorem 5.2), the orbit count is a truncated Stirling row (Theorem 5.4), and the binary and ternary cases have closed forms (Theorems 5.6, 5.8).
+- **§6** gives the completeness theorem over arbitrary (possibly infinite) alphabets, the connection formula $a^n = \sum_k S(n,k)a^{\underline{k}}$ (Theorem 6.4), and the dimension $B_n$ of the space of invariant functions (Theorem 6.6).
+- **§7** discusses algorithms, **§8** applications, **§9** open directions.
 
 ---
 
-## 2. Kernels and canonical forms
+## 2. The kernel, its canonical form, and patterns
 
 ### 2.1 The kernel
 
-**Definition 2.1 (Kernel).** For a tuple $f : [n] \to A$, the *kernel* of $f$ is the binary relation $\mathrm{Ker}(f)$ on $[n]$ given by
-$$\mathrm{Ker}(f)(i,j) \iff f_i = f_j.$$
+**Definition 2.1 (Kernel).** For $x \in \alpha^n$, the *kernel* of $x$ is the equivalence relation $\ker x$ on $[n]$ defined by
+$$ i \mathrel{(\ker x)} j \iff x_i = x_j. $$
+Reflexivity, symmetry and transitivity are inherited from equality, so $\ker x$ is indeed an equivalence relation.
 
-**Proposition 2.2.** $\mathrm{Ker}(f)$ is an equivalence relation on $[n]$; its classes are the nonempty fibres of $f$, transported to the index set. Two tuples $f : [n] \to A$ and $g : [n] \to B$ satisfy $\mathrm{Ker}(f) = \mathrm{Ker}(g)$ if and only if $f_i = f_j \iff g_i = g_j$ for all $i, j$.
+**Definition 2.2 (Same kernel).** For $x \in \alpha^n$ and $y \in \beta^n$ (possibly over *different* alphabets) write
+$$ \operatorname{SameKer}(x,y) \iff \bigl(\forall i, j \in [n]:\; x_i = x_j \leftrightarrow y_i = y_j\bigr). $$
 
-*Proof.* Reflexivity, symmetry and transitivity are those of equality in $A$. The second statement is the pointwise reading of equality of relations. $\square$
+**Lemma 2.3.** $\operatorname{SameKer}$ is reflexive, symmetric and transitive across alphabets, and $\operatorname{SameKer}(x,y) \iff \ker x = \ker y$.
 
-**Proposition 2.3 (Invariance).** If $\sigma : A \to B$ is injective then $\mathrm{Ker}(\sigma \circ f) = \mathrm{Ker}(f)$. In particular, for the action of the symmetric group $\mathrm{Sym}(A)$ on $A^{[n]}$ by post-composition, $\mathrm{Ker}$ is a $\mathrm{Sym}(A)$-invariant.
-
-*Proof.* $\sigma(f_i) = \sigma(f_j)$ implies $f_i = f_j$ by injectivity, and conversely by applying $\sigma$. $\square$
+*Proof.* Immediate from the definitions; the second claim is extensionality of relations. $\square$
 
 ### 2.2 The canonical form
 
-Equivalence relations are awkward as data. We replace them by a tuple of integers.
+**Definition 2.4 (Canonical form).** For $x \in \alpha^n$ define $\operatorname{can}(x) : [n] \to [n]$ by
+$$ \operatorname{can}(x)_i \;=\; \min\{\, j \in [n] : x_j = x_i \,\}. $$
+The set is nonempty (it contains $i$) and finite, so the minimum exists.
 
-**Definition 2.4 (Canonical form).** Let $A$ have decidable equality. For $f : [n] \to A$ set
-$$\mathrm{canon}(f)_i \;=\; \min\{\, j \in [n] : f_j = f_i \,\},$$
-the least index in the fibre of $i$. (The minimum is over a nonempty set, since $i$ itself qualifies.)
+**Lemma 2.5 (Basic properties).** For all $i,j$:
+1. $x_{\operatorname{can}(x)_i} = x_i$;
+2. $\operatorname{can}(x)_i \le i$, and more generally $x_j = x_i \Rightarrow \operatorname{can}(x)_i \le j$;
+3. $\operatorname{can}(x)_i = \operatorname{can}(x)_j \iff x_i = x_j$;
+4. $\operatorname{can}(x)_{\operatorname{can}(x)_i} = \operatorname{can}(x)_i$ (idempotence).
 
-Thus $\mathrm{canon}(f)$ labels each block of the kernel partition by its least element. For example, $(\text{b},\text{r},\text{g},\text{b},\text{r}) \mapsto (0,1,2,0,1)$ and $(7,7,4,7,4) \mapsto (0,0,2,0,2)$.
+*Proof.* (1) and (2) are the defining properties of a minimum of the set $\{j : x_j = x_i\}$. For (3): if the canonical indices agree then $x_i = x_{\operatorname{can}(x)_i} = x_{\operatorname{can}(x)_j} = x_j$ by (1); conversely $x_i = x_j$ makes the two defining sets literally equal, hence their minima equal. (4) is (3) applied to (1). $\square$
 
-**Proposition 2.5 (Calculus of $\mathrm{canon}$).** For all $f, g$ and all $i, j$:
+**Proposition 2.6 (Completeness of the encoding).** For $x \in \alpha^n$, $y \in \beta^n$:
+$$ \operatorname{SameKer}(x,y) \iff \operatorname{can}(x) = \operatorname{can}(y). $$
 
-1. $f_{\mathrm{canon}(f)_i} = f_i$ and $\mathrm{canon}(f)_i \le i$.
-2. $\mathrm{canon}(f)_i = c$ if and only if $f_c = f_i$ and $c \le j$ for every $j$ with $f_j = f_i$.
-3. $f_i = f_j \iff \mathrm{canon}(f)_i = \mathrm{canon}(f)_j$; hence $\mathrm{Ker}(\mathrm{canon}(f)) = \mathrm{Ker}(f)$.
-4. $\mathrm{canon}(f) = \mathrm{canon}(g) \iff \mathrm{Ker}(f) = \mathrm{Ker}(g)$.
-5. $\mathrm{canon}$ is idempotent: $\mathrm{canon}(\mathrm{canon}(f)) = \mathrm{canon}(f)$, and $\mathrm{canon}(f)_{\mathrm{canon}(f)_i} = \mathrm{canon}(f)_i$.
-6. If $\sigma$ is injective then $\mathrm{canon}(\sigma \circ f) = \mathrm{canon}(f)$; in particular $\mathrm{canon}$ is a $\mathrm{Sym}(A)$-invariant.
-7. If $f$ is injective then $\mathrm{canon}(f) = \mathrm{id}$, the *discrete* pattern.
+*Proof.* ($\Rightarrow$) Same kernel makes the defining sets $\{j : x_j = x_i\}$ and $\{j : y_j = y_i\}$ equal for each $i$, hence the minima agree. ($\Leftarrow$) By Lemma 2.5(3), $x_i = x_j \iff \operatorname{can}(x)_i = \operatorname{can}(x)_j = \operatorname{can}(y)_i = \operatorname{can}(y)_j \iff y_i = y_j$. $\square$
 
-*Proof sketch.* (1) and (2) are immediate from the definition of a least element. (3): if $f_i = f_j$ then the two fibres coincide, hence so do their minima; conversely apply $f$ to $\mathrm{canon}(f)_i = \mathrm{canon}(f)_j$ and use (1). (4): the forward direction follows from (3) applied to both sides; the converse builds $\mathrm{canon}(g)_i$ as a least element for $f$ using Proposition 2.2. (5) is (4) applied with $g = \mathrm{canon}(f)$, using (3). (6) is (4) plus Proposition 2.3. (7): injectivity makes each fibre a singleton. $\square$
+### 2.3 Invariance
 
-**Definition 2.6 (Patterns).** $P_n$ is the set of tuples $p : [n] \to [n]$ with $\mathrm{canon}(p) = p$; equivalently the image of $\mathrm{canon}$ on $[n]^{[n]}$. Elements of $P_n$ are called *patterns of length $n$*; classically they are the **restricted growth strings**: $p_0 = 0$ and $p_{i} \le 1 + \max_{j<i} p_j$.
+**Theorem 2.7 (Invariance under injective relabelling).** Let $f : \alpha \to \beta$ be *injective*. Then for all $x \in \alpha^n$,
+$$ \operatorname{can}(f \circ x) = \operatorname{can}(x), \qquad\text{hence}\qquad \operatorname{SameKer}(f\circ x, x). $$
 
-By Proposition 2.5(5)–(6), every tuple over any alphabet with decidable equality has its canonical form in $P_n$, and $P_n$ is exactly the fixed-point set of the idempotent $\mathrm{canon}$.
+*Proof.* Injectivity gives $f(x_j) = f(x_i) \iff x_j = x_i$, so the two defining sets coincide for each $i$; take minima. $\square$
 
----
+In particular, for any $\sigma \in \operatorname{Sym}(\alpha)$ the tuples $\sigma \circ x$ and $x$ have the same kernel: **the kernel is a $\operatorname{Sym}(\alpha)$-invariant**. Note that Theorem 2.7 is strictly stronger — the kernel is stable under arbitrary injections, including injections between different alphabets, so canonical forms are comparable across alphabets.
 
-## 3. The completeness theorem
+### 2.4 Completeness over a finite alphabet
 
-Invariance (Proposition 2.3) says the kernel cannot distinguish tuples in the same orbit. Completeness is the converse, and it requires finiteness of the alphabet.
+**Theorem 2.9 (Completeness, finite alphabet).** Let $\alpha$ be finite and $x, y \in \alpha^n$. Then
+$$ \operatorname{SameKer}(x,y) \iff \exists\, \sigma \in \operatorname{Sym}(\alpha):\ \sigma \circ x = y. $$
 
-**Theorem 3.1 (Completeness).** Let $B$ be a finite set with decidable equality and let $f, g : [n] \to B$. Then
-$$\bigl(\exists\, \sigma \in \mathrm{Sym}(B),\ \sigma \circ f = g\bigr) \iff \mathrm{Ker}(f) = \mathrm{Ker}(g) \iff \mathrm{canon}(f) = \mathrm{canon}(g).$$
+*Proof.* ($\Leftarrow$) is Theorem 2.7. ($\Rightarrow$) Let $S = \{x_i : i \in [n]\}$ and $T = \{y_i : i \in [n]\}$ be the value sets. For $a \in S$ pick an index $\iota(a)$ with $x_{\iota(a)} = a$, and define $f : S \to T$ by $f(a) = y_{\iota(a)}$.
+- *Well defined and injective.* If $f(a) = f(b)$, i.e. $y_{\iota(a)} = y_{\iota(b)}$, then same kernel gives $x_{\iota(a)} = x_{\iota(b)}$, i.e. $a = b$.
+- *Surjective.* Given $b = y_i \in T$, put $a = x_i \in S$. Then $x_{\iota(a)} = a = x_i$, so same kernel gives $y_{\iota(a)} = y_i = b$, i.e. $f(a) = b$.
 
-*Proof sketch.* The implication from left to right is Proposition 2.3. Conversely, assume $f_i = f_j \iff g_i = g_j$ for all $i,j$. Define a map $e$ from the image of $f$ to the image of $g$ by choosing, for each $x \in \mathrm{im}(f)$, an index $i$ with $f_i = x$ and setting $e(x) = g_i$. The hypothesis makes this independent of the chosen index: if $f_i = f_{i'}$ then $g_i = g_{i'}$. The symmetric construction in the other direction is inverse to it, again by the hypothesis, so $e : \mathrm{im}(f) \to \mathrm{im}(g)$ is a bijection. Since $B$ is finite, the complements $B \setminus \mathrm{im}(f)$ and $B \setminus \mathrm{im}(g)$ have equal cardinality, so $e$ extends to a permutation $\sigma \in \mathrm{Sym}(B)$. By construction $\sigma(f_i) = g_i$ for every $i$. The second equivalence is Proposition 2.5(4). $\square$
+So $f : S \to T$ is a bijection between two subsets of the finite set $\alpha$; they have equal cardinality, hence so do their complements, and $f$ extends to a permutation $\sigma$ of $\alpha$. For each $i$, taking $a = x_i$ we get $x_{\iota(a)} = x_i$, hence $y_{\iota(a)} = y_i$ by same kernel, hence $\sigma(x_i) = f(x_i) = y_i$. $\square$
 
-**Remark 3.2.** Finiteness is essential only for the extension step. Over an infinite alphabet the statement holds under the additional hypothesis that the complements of the two images are equinumerous; the kernel alone remains a complete invariant for the *monoid* of injections but not for the group of permutations.
+### 2.5 Patterns
 
-**Corollary 3.3 (Effective classification).** Orbit equivalence of tuples over a finite alphabet is decided by computing two canonical forms and comparing them entrywise — no search over $|B|!$ permutations is required.
+**Definition 2.10 (Pattern).** A map $p : [n] \to [n]$ is a *pattern* if for every $i$,
+$$ p(i) \le i \qquad\text{(contracting)} \qquad\text{and}\qquad p(p(i)) = p(i) \qquad\text{(idempotent)}. $$
+Write $\mathcal{P}_n$ for the set of patterns on $n$ letters. Both conditions are decidable, so $\mathcal{P}_n$ is an explicitly enumerable finite set with decidable equality.
 
----
+Patterns are precisely the *restricted growth encodings* of set partitions of $[n]$: $p(i)$ names the block of $i$ by its least element.
 
-## 4. Enumeration: patterns are counted by the Bell numbers
+**Theorem 2.11 (Retraction).** $\operatorname{can}$ maps $\alpha^n$ onto $\mathcal{P}_n$, and every pattern is its own canonical form: $\operatorname{can}(p) = p$ for $p \in \mathcal{P}_n$. Consequently $\operatorname{can}$ is an idempotent retraction of tuples onto patterns, and $\mathcal{P}_n$ is a complete and irredundant set of normal forms for the kernel.
 
-Let $B_n$ denote the Bell numbers, defined by the recursion
-$$B_0 = 1, \qquad B_{n+1} = \sum_{i=0}^{n} \binom{n}{i}\, B_{n-i}. \tag{4.1}$$
+*Proof.* That $\operatorname{can}(x)$ is a pattern is Lemma 2.5(2),(4). For the second claim let $p$ be a pattern and $i \in [n]$. Since $p(p(i)) = p(i)$, the index $p(i)$ lies in $\{j : p(j) = p(i)\}$, so $\operatorname{can}(p)_i \le p(i)$. Conversely, $p(\operatorname{can}(p)_i) = p(i)$ by Lemma 2.5(1), and $p$ is contracting, so $p(i) = p(\operatorname{can}(p)_i) \le \operatorname{can}(p)_i$. Antisymmetry gives equality. Surjectivity follows since $\operatorname{can}(p) = p$. $\square$
 
-**Theorem 4.1 (Bell enumeration).** For every $n \ge 0$, $|P_n| = B_n$. Equivalently, for every finite index set $I$ the number of equivalence relations on $I$ (equivalently, of set partitions of $I$) is $B_{|I|}$.
+**Definition 2.12.** For $x \in \alpha^n$ write $\operatorname{pat}(x) := \operatorname{can}(x) \in \mathcal{P}_n$, the *pattern of $x$*.
 
-The first values are $|P_0|,\dots,|P_5| = 1, 1, 2, 5, 15, 52$, agreeing with the classical sequence.
-
-*Proof sketch.* Write $K(I)$ for the number of equivalence relations on a finite set $I$, and $K(n) = K([n])$.
-
-*Step 1 (patterns $\leftrightarrow$ relations).* Sending a pattern $p$ to the relation $i \sim j \iff p_i = p_j$ is injective on $P_n$ (a pattern is recovered from its relation as the least-element labelling) and surjective onto equivalence relations (label each class by its minimum). Hence $|P_n| = K(n)$.
-
-*Step 2 (transport).* $K(I)$ depends only on $|I|$: a bijection $I \to J$ conjugates equivalence relations bijectively.
-
-*Step 3 (the adjoined point).* Let $I^+ = I \sqcup \{\star\}$. An equivalence relation on $I^+$ is the same data as a pair: the set $s \subseteq I$ of points equivalent to $\star$, together with an equivalence relation on $I \setminus s$. Indeed, given $\rho$ on $I^+$, take $s$ to be the block of $\star$ intersected with $I$ and restrict $\rho$ to the complement; conversely, given $(s, r)$, glue $s \cup \{\star\}$ into a single block and use $r$ elsewhere. The two constructions are mutually inverse. Hence
-$$K(I^+) = \sum_{s \subseteq I} K(I \setminus s).$$
-
-*Step 4 (binomial regrouping).* Grouping the subsets $s$ by cardinality $k$, of which there are $\binom{n}{k}$ when $|I| = n$, and using Step 2:
-$$K(n+1) = \sum_{k=0}^{n} \binom{n}{k} K(n-k),$$
-which is exactly recursion (4.1). With $K(0) = 1$, strong induction gives $K(n) = B_n$. $\square$
-
-**Corollary 4.2.** For every finite set $I$ with decidable equality, the number of equivalence relations on $I$ is $B_{|I|}$; and $P_n$ is a system of representatives for tuples of length $n$ modulo renaming, over any sufficiently large alphabet.
+**Corollary 2.13.** For finite $\alpha$ and $x,y \in \alpha^n$: $\operatorname{pat}(x) = \operatorname{pat}(y)$ if and only if $x$ and $y$ lie in the same $\operatorname{Sym}(\alpha)$-orbit.
 
 ---
 
-## 5. The Stirling refinement
+## 3. Counting: patterns are equivalence relations, and there are $B_n$ of them
 
-**Definition 5.1.** For a pattern $p \in P_n$, its *block count* $\mathrm{nb}(p)$ is the number of distinct values it takes; equivalently, the number of blocks of the corresponding partition. Note $\mathrm{nb}(p) \le n$. Define
-$$S(n,k) \;=\; \#\{\, p \in P_n : \mathrm{nb}(p) = k \,\}.$$
+### 3.1 Bell numbers
 
-**Proposition 5.2 (Row sums).** $\displaystyle\sum_{k=0}^{n} S(n,k) = |P_n| = B_n$.
+**Definition 3.1.** The Bell numbers are defined by the binomial recurrence
+$$ B_0 = 1, \qquad B_{n+1} = \sum_{k=0}^{n} \binom{n}{k} B_{n-k}. $$
 
-*Proof.* Partition $P_n$ by the value of $\mathrm{nb}$, which lies in $\{0,\dots,n\}$, and apply Theorem 4.1. $\square$
+We prove that this recurrence counts equivalence relations. Write $E(m)$ for the number of equivalence relations on an $m$-element set (this is well defined: any bijection of underlying sets transports equivalence relations bijectively).
 
-**Proposition 5.3 (Boundary values).** $S(n,k) = 0$ for $k > n$; $S(n,n) = 1$ (only the discrete pattern has $n$ blocks); $S(0,0) = 1$; $S(n+1, 0) = 0$; $S(n+1, 1) = 1$ (only the constant pattern).
+### 3.2 The distinguished-point fibration
 
-### 5.1 The recursion
+Let $\beta$ be a finite set and consider equivalence relations on $\beta \sqcup \{\ast\}$, where $\ast$ is a distinguished extra point.
 
-**Theorem 5.4 (Stirling recursion).** For all $n, k \ge 0$,
-$$S(n+1, k+1) \;=\; S(n,k) \;+\; (k+1)\, S(n, k+1).$$
+**Definition 3.2.** For an equivalence relation $s$ on $\beta \sqcup \{\ast\}$, let $\operatorname{blk}(s) = \{ b \in \beta : b \mathrel{s} \ast \}$ be the set of partners of $\ast$.
 
-*Proof sketch.* Split the patterns of length $n+1$ with $k+1$ blocks according to whether the last position is a singleton block.
+**Definition 3.3 (Gluing).** Given a subset $S \subseteq \beta$ and an equivalence relation $t$ on $\beta \setminus S$, define a relation $R(S,t)$ on $\beta \sqcup \{\ast\}$ by
+$$
+\begin{aligned}
+&\ast \mathrel{R} \ast; \qquad \ast \mathrel{R} b \iff b \in S; \qquad a \mathrel{R} \ast \iff a \in S; \\
+&a \mathrel{R} b \iff \begin{cases} b \in S & \text{if } a \in S,\\ \text{false} & \text{if } a \notin S,\ b \in S,\\ a \mathrel{t} b & \text{if } a,b \notin S.\end{cases}
+\end{aligned}
+$$
 
-*Case A: the last position is its own block.* Deleting it gives a bijection onto patterns of length $n$ with $k$ blocks. Explicitly, restriction $p \mapsto (p_0, \dots, p_{n-1})$ and extension $q \mapsto (q_0, \dots, q_{n-1}, n)$ are mutually inverse; one checks that restriction of a pattern is again a pattern (the least-element labelling of a block not containing the last position is unchanged) and that extension of a pattern by a fresh label is again a pattern.
+**Lemma 3.4 (Fibre description).** $R(S,t)$ is an equivalence relation with $\operatorname{blk}(R(S,t)) = S$; and the assignments $t \mapsto R(S,t)$ and $s \mapsto (s\ \text{restricted to}\ \beta\setminus S)$ are mutually inverse bijections
+$$ \{\, s : \operatorname{blk}(s) = S \,\} \;\longleftrightarrow\; \{\,\text{equivalence relations on } \beta \setminus S \,\}. $$
 
-*Case B: the last position joins an existing block.* Then the restriction $q$ is a pattern of length $n$ with $k+1$ blocks, and the extra datum is which of its $k+1$ blocks the new point joins, i.e. which of the $k+1$ block labels is assigned to position $n$. This is a $(k+1)$-to-one correspondence onto the patterns of length $n$ with $k+1$ blocks. Summing the fibres gives $(k+1)S(n,k+1)$.
+*Proof sketch.* Reflexivity, symmetry and transitivity of $R(S,t)$ are checked case-by-case on whether each argument is $\ast$, in $S$, or outside $S$; the only nontrivial cases are transitivity chains that cross the boundary of $S$, which are handled by the observation that $R$ never relates a point of $S$ to a point outside $S$. That $\operatorname{blk}(R(S,t)) = S$ is immediate. For the bijection: starting from $s$ with $\operatorname{blk}(s) = S$, one shows $s = R(S, s|_{\beta \setminus S})$ by the same case analysis, using $b \in S \iff b \mathrel{s} \ast$ and transitivity of $s$ to identify the $S \times S$ and $S \times S^{c}$ blocks. Conversely $R(S,t)$ restricted to $\beta \setminus S$ is $t$ by definition. $\square$
 
-Adding the two cases gives the identity. $\square$
+**Theorem 3.5 (Bell numbers count equivalence relations).** For all $n$, $E(n) = B_n$.
 
-Together with the boundary values, Theorem 5.4 determines the whole triangle; e.g. $S(5,3) = S(4,2) + 3 S(4,3) = 7 + 3\cdot 6 = 25$.
+*Proof.* Summing Lemma 3.4 over the fibres of $\operatorname{blk}$ gives
+$$ E(m+1) \;=\; \sum_{S \subseteq \beta} E(|\beta| - |S|) \;=\; \sum_{k=0}^{m} \binom{m}{k} E(m-k) $$
+for $|\beta| = m$, where the second equality groups subsets by size. Also $E(0) = 1$, since the empty set carries exactly one (empty) relation. This is precisely the recurrence of Definition 3.1, and strong induction on $n$ finishes the proof. $\square$
 
-### 5.2 Closed forms
+### 3.3 Patterns are equivalence relations
 
-**Theorem 5.5 (Two blocks).** $S(n+1, 2) = 2^n - 1$.
+**Theorem 3.6 (Classification of patterns).** The maps
+$$ p \mapsto \ker p, \qquad s \mapsto \operatorname{can}\bigl(i \mapsto [i]_s\bigr) $$
+are mutually inverse bijections between $\mathcal{P}_n$ and the set of equivalence relations on $[n]$. (Here $[i]_s$ denotes the $s$-class of $i$, so $i \mapsto [i]_s$ is a tuple over the quotient set.)
 
-*Proof sketch.* A pattern of length $n+1$ with two blocks is determined by the block $s$ containing position $0$; $s$ may be any subset containing $0$ other than the whole index set, of which there are $2^n - 1$. Formally, one shows that $s \mapsto$ (the pattern that is $0$ on $s$ and constant on the complement) and $p \mapsto$ (the block of $0$) are mutually inverse between $P_{n+1} \cap \{\mathrm{nb} = 2\}$ and $\{s : 0 \in s,\ s \ne [n+1]\}$. $\square$
+*Proof.* First, the quotient map $q_s : i \mapsto [i]_s$ satisfies $\ker q_s = s$, since $[i]_s = [j]_s \iff i \mathrel{s} j$. Second, $\ker \operatorname{can}(x) = \ker x$ for any $x$, by Lemma 2.5(3). Hence $\ker\bigl(\operatorname{can}(q_s)\bigr) = \ker q_s = s$: one composite is the identity. For the other, let $p$ be a pattern; then $\operatorname{SameKer}(q_{\ker p}, p)$ holds, so by Proposition 2.6 $\operatorname{can}(q_{\ker p}) = \operatorname{can}(p) = p$ by Theorem 2.11. $\square$
 
-**Corollary 5.6.** $2^n \le B_{n+1}$.
+**Theorem 3.7 (Pattern count).** $|\mathcal{P}_n| = B_n$.
 
-*Proof.* $B_{n+1} \ge S(n+1,1) + S(n+1,2) = 1 + (2^n - 1)$. $\square$
+*Proof.* Combine Theorem 3.6 with Theorem 3.5. $\square$
 
-**Theorem 5.7 (First subdiagonal).** $S(n+1, n) = \binom{n+1}{2}$.
+**Theorem 3.8 (Small values).** $|\mathcal{P}_0|, \dots, |\mathcal{P}_5| = 1, 1, 2, 5, 15, 52$, hence
+$$ (B_0,B_1,B_2,B_3,B_4,B_5) = (1,1,2,5,15,52) \qquad \text{(OEIS A000110)}. $$
 
-*Proof sketch.* Induction using Theorem 5.4: $S(n+2,n+1) = S(n+1,n) + (n+1) S(n+1,n+1) = \binom{n+1}{2} + (n+1) = \binom{n+2}{2}$ by Pascal's rule. Combinatorially: a pattern of length $n+1$ with $n$ blocks merges exactly one pair of positions. $\square$
+*Proof.* $\mathcal{P}_n$ is a decidable subset of the finite set $[n]^{[n]}$, so its cardinality is obtained by exhaustive enumeration; transport to $B_n$ along Theorem 3.7. $\square$
 
-**Theorem 5.8 (Second subdiagonal).** $S(n+2, n) = \binom{n+2}{3} + 3\binom{n+2}{4}$.
+### 3.4 The orbit count
 
-*Proof sketch.* Induction from Theorem 5.7 and the recursion, using the arithmetic identity $3\binom{n+2}{3} = n \binom{n+2}{2}$ (itself a consequence of the absorption identity and Pascal's rule). Combinatorially, a pattern with two "defects" either has one block of size $3$ ($\binom{n+2}{3}$ choices) or two blocks of size $2$ ($3\binom{n+2}{4}$ choices, the factor $3$ counting the pairings of four chosen points). $\square$
+**Theorem 3.9 (Orbit count for a large alphabet).** Let $\alpha$ be finite with $n \le |\alpha|$. Then the number of $\operatorname{Sym}(\alpha)$-orbits on $\alpha^n$ is exactly $B_n$, and the orbit invariant is $\operatorname{pat}$.
 
-**Theorem 5.9 (Columns $k = 3, 4, 5$).** For all $n \ge 0$,
-$$6\,S(n,3) = 3^n - 3\cdot 2^n + 3,$$
-$$24\,S(n,4) = 4^n - 4\cdot 3^n + 6\cdot 2^n - 4,$$
-$$120\,S(n,5) = 5^n - 5\cdot 4^n + 10\cdot 3^n - 10\cdot 2^n + 5.$$
+*Proof.* By Corollary 2.13, $\operatorname{pat}$ descends to an injection from the orbit space into $\mathcal{P}_n$. For surjectivity, given $p \in \mathcal{P}_n$, choose an injection $f : [n] \hookrightarrow \alpha$ (possible since $n \le |\alpha|$); then by Theorem 2.7 and Theorem 2.11, $\operatorname{pat}(f \circ p) = \operatorname{can}(p) = p$. Hence the orbit space is in bijection with $\mathcal{P}_n$, of size $B_n$ by Theorem 3.7. $\square$
 
-*Proof sketch.* Each is proved by induction on $n$, feeding the previous column into the recursion $S(n+1,k+1) = S(n,k) + (k+1)S(n,k+1)$; the base case $k > n$ gives $0$. These are the inclusion–exclusion formulas $k!\,S(n,k) = \sum_{j}(-1)^j \binom{k}{j}(k-j)^n$ for $k \le 5$, obtained here without inclusion–exclusion. $\square$
-
-### 5.3 Tables and Bell values
-
-The recursion and closed forms give complete rows well beyond brute-force range:
-
-| $n \backslash k$ | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | $B_n$ |
-|---|---|---|---|---|---|---|---|---|---|---|
-| 3 | 0 | 1 | 3 | 1 | | | | | | 5 |
-| 4 | 0 | 1 | 7 | 6 | 1 | | | | | 15 |
-| 5 | 0 | 1 | 15 | 25 | 10 | 1 | | | | 52 |
-| 6 | 0 | 1 | 31 | 90 | 65 | 15 | 1 | | | 203 |
-| 7 | 0 | 1 | 63 | 301 | 350 | 140 | 21 | 1 | | 877 |
-| 8 | 0 | 1 | 127 | 966 | 1701 | 1050 | 266 | 28 | 1 | 4140 |
-
-**Corollary 5.10.** $B_6 = 203$, $B_7 = 877$, $B_8 = 4140$.
-
-### 5.4 Fibres, falling factorials and surjections
-
-**Theorem 5.11 (Fibre size).** Let $B$ be a finite alphabet, $m = |B|$, and let $p \in P_n$ with $\mathrm{nb}(p) = k$. Then the number of tuples $f : [n] \to B$ with $\mathrm{canon}(f) = p$ is the falling factorial
-$$m^{\underline{k}} = m(m-1)\cdots(m-k+1).$$
-
-*Proof sketch.* A tuple with canonical form $p$ is exactly the composite of $p$ with an injection from the $k$ blocks of $p$ into $B$: choose the value on each block, all values distinct. The correspondence "tuple $\mapsto$ induced map on blocks" is a bijection onto the set of injections from a $k$-element set into $B$, and there are $m^{\underline{k}}$ of those. $\square$
-
-**Theorem 5.12 (Falling-factorial expansion).** For all $n, m \ge 0$,
-$$m^n = \sum_{k=0}^{n} S(n,k)\, m^{\underline{k}}.$$
-
-*Proof.* Count $B^{[n]}$ by fibres of $\mathrm{canon}$ (Theorem 5.11) and group patterns by block count. $\square$
-
-**Theorem 5.13 (Surjection count).** The number of surjections from $[n]$ onto $[k]$ is $k!\,S(n,k)$. In particular the number of surjections $[n] \to [n]$ is $n!$.
-
-*Proof sketch.* A map $f : [n] \to [k]$ is surjective iff its pattern has exactly $k$ blocks; the fibre of $\mathrm{canon}$ over such a pattern has $k^{\underline{k}} = k!$ elements by Theorem 5.11. Summing over the $S(n,k)$ relevant patterns gives the count. The special case $k=n$ forces the discrete pattern, and $S(n,n)=1$. $\square$
+**Example 3.10.** $\operatorname{Sym}(\{1,\dots,5\})$ has exactly $52$ orbits on the $3125$ quintuples over a five-letter alphabet.
 
 ---
 
-## 6. Orbit counting over arbitrary alphabets
+## 4. The block-refined count: Stirling numbers of the second kind
 
-**Theorem 6.1 (Orbit count, large alphabet).** Let $B$ be finite with $|B| \ge n$. The number of orbits of $\mathrm{Sym}(B)$ acting on $B^{[n]}$ by post-composition is $B_n$.
+**Definition 4.1 (Blocks).** For $p \in \mathcal{P}_n$ let $\operatorname{blocks}(p) = |\,p([n])\,|$, the number of distinct values of $p$. Equivalently (by idempotence) it is the number of fixed points of $p$, and equivalently the number of classes of $\ker p$.
 
-*Proof.* By Theorem 3.1 the map $f \mapsto \mathrm{canon}(f)$ descends to an injection from the orbit set into $P_n$; by Theorem 5.11 (with $k \le n \le |B|$, so $m^{\underline{k}} > 0$) every pattern is realised, so the injection is onto. Now apply Theorem 4.1. $\square$
+**Lemma 4.2.** For any $x \in \alpha^n$, $\operatorname{blocks}(\operatorname{pat}(x)) = |\{x_i : i \in [n]\}|$: the block count of the pattern of a tuple is the number of distinct entries.
 
-**Theorem 6.2 (Orbit count, arbitrary alphabet).** For any finite alphabet $B$,
-$$\#\bigl(B^{[n]}/\mathrm{Sym}(B)\bigr) \;=\; \sum_{k=0}^{|B|} S(n,k).$$
-This is $B_n$ when $|B| \ge n$, and strictly less than $B_n$ when $|B| < n$.
+*Proof.* The map $j \mapsto x_j$ restricts to a bijection from the image of $\operatorname{can}(x)$ (a set of block representatives, each a fixed point of $\operatorname{can}(x)$) onto the value set of $x$: it is well defined, injective by Lemma 2.5(3) together with fixedness, and surjective since $x_{\operatorname{can}(x)_i} = x_i$. $\square$
 
-*Proof sketch.* The same map $f \mapsto \mathrm{canon}(f)$ is a bijection from the orbit set onto the set of patterns with at most $|B|$ blocks: a tuple over $B$ has at most $|B|$ distinct entries, so at most $|B|$ blocks (injectivity and well-definedness are Theorem 3.1); conversely a pattern with $k \le |B|$ blocks is realised by Theorem 5.11. Counting the patterns by block count gives the sum. If $|B| \ge n$ the truncation is harmless since $S(n,k) = 0$ for $k > n$; if $|B| < n$ the term $S(n,n) = 1$ is omitted, so the count is strictly smaller. $\square$
+**Definition 4.3 (Stirling numbers of the second kind).**
+$$ S(0,0) = 1,\quad S(0,k+1) = 0,\quad S(n+1,0)=0,\quad S(n+1,k+1) = (k+1)S(n,k+1) + S(n,k). $$
 
-**Proposition 6.3 (Sharpness).** If $|B| < n$ then no tuple $f : [n] \to B$ has the discrete pattern: $\mathrm{canon}(f) \ne \mathrm{id}$. Indeed the image of $\mathrm{canon}(f)$ has at most $|B|$ elements, while the image of $\mathrm{id}$ has $n$.
+**Theorem 4.4 (Block-refined count).** The number of patterns on $n$ letters with exactly $k$ blocks equals $S(n,k)$.
 
----
+*Proof (last-letter fibration).* Let $N(n,k)$ denote the number of such patterns. Deleting the last coordinate of $p \in \mathcal{P}_{n+1}$ yields a well-defined restriction $\rho(p) \in \mathcal{P}_n$ (contraction guarantees the values stay in range, and idempotence is preserved). Conversely, an extension of $q \in \mathcal{P}_n$ is determined by the value $v$ at the new last coordinate, and $v$ is *admissible* precisely when either
+- $v$ is a fixed point of $q$ (a block representative), in which case the extension joins an existing block and $\operatorname{blocks} = \operatorname{blocks}(q)$; or
+- $v$ is the new coordinate itself, in which case a new singleton block is created and $\operatorname{blocks} = \operatorname{blocks}(q)+1$.
 
-## 7. Growth and congruences for the Bell numbers
+Thus the fibre of $\rho$ above $q$, intersected with the patterns having $k+1$ blocks, has size $k+1$ if $\operatorname{blocks}(q) = k+1$ (choose one of the $k+1$ representatives), size $1$ if $\operatorname{blocks}(q) = k$ (the new-block extension), and $0$ otherwise. Summing over $q$:
+$$ N(n+1,k+1) = (k+1) N(n,k+1) + N(n,k). $$
+The base cases match: $N(0,0)=1$ (the empty pattern), $N(0,k+1)=0$, and $N(n+1,0)=0$ since a nonempty pattern has at least one block. Induction gives $N = S$. $\square$
 
-### 7.1 Monotonicity
+**Corollary 4.5.** $\displaystyle \sum_{k=0}^{n} S(n,k) = B_n$.
 
-**Theorem 7.1.** $B_n < B_{n+1}$ for $n \ge 1$, and $B_n \le B_{n+1}$ for all $n$. Hence $B$ is monotone, strictly monotone on $[1,\infty)$, and $n \le B_n$.
+*Proof.* Partition $\mathcal{P}_n$ by block count; every pattern has at most $n$ blocks. Apply Theorems 4.4 and 3.7. $\square$
 
-*Proof sketch.* Appending a fresh singleton block gives an injection $P_n \hookrightarrow P_{n+1}$: $p \mapsto (p_0,\dots,p_{n-1}, n)$. Its image consists of patterns whose last position is a singleton, so the all-in-one-block (constant) pattern of length $n+1$ is not in the image whenever $n \ge 1$. Therefore $|P_n| < |P_{n+1}|$. The linear bound follows by induction. $\square$
-
-### 7.2 Super-multiplicativity
-
-**Theorem 7.2 (Super-multiplicativity).** For all $m,n \ge 0$, $B_m B_n \le B_{m+n}$; and if $m, n \ge 1$ the inequality is strict.
-
-*Proof sketch.* Given equivalence relations $r$ on a set $A$ and $s$ on a disjoint set $C$, define $r \oplus s$ on $A \sqcup C$ by "$x \sim y$ iff both lie in $A$ and $r(x,y)$, or both lie in $C$ and $s(x,y)$". This is an equivalence relation, and $(r,s) \mapsto r \oplus s$ is injective (restrict to each summand to recover $r$ and $s$). Hence $K(A)K(C) \le K(A \sqcup C)$, i.e. $B_m B_n \le B_{m+n}$. If both $A$ and $C$ are nonempty, the total relation on $A \sqcup C$ (one block) has a block meeting both summands, so it is not of the form $r \oplus s$; the injection misses it, and the inequality is strict. $\square$
-
-**Corollary 7.3 (Super-exponential growth).** $B_n^k \le B_{nk}$ for all $n,k$; in particular $2^k = B_2^k \le B_{2k}$.
-
-*Proof.* Induction on $k$ using Theorem 7.2. $\square$
-
-For instance $B_2 B_2 = 4 < 15 = B_4$, so the injection is far from surjective already in the smallest nontrivial case.
-
-### 7.3 Touchard's congruence
-
-**Theorem 7.4 (Touchard).** For every prime $p$ and every $n \ge 0$,
-$$B_{p+n} \;\equiv\; B_{n+1} + B_n \pmod{p}.$$
-
-*Proof sketch.* Let $X$ be the set of equivalence relations on the index set $\mathbb{Z}/p \sqcup [n]$; by Theorem 4.1, $|X| = B_{p+n}$. Let the cyclic group $C_p$ of order $p$ act on the index set by $a \cdot (\text{left } x) = \text{left } (x + a)$ and trivially on the right summand; this induces an action on $X$ by transporting relations, since each generator acts by a bijection of the index set.
-
-For an action of a group of prime order $p$ on a finite set, every orbit has size $1$ or $p$, whence
-$$|X| \equiv |X^{C_p}| \pmod p .$$
-
-It remains to classify the invariant relations $\rho \in X^{C_p}$. Consider the block $\beta$ of the left point $0$.
-
-*Case A: $\beta$ contains another left point,* say left $d$ with $d \ne 0$. Invariance under the rotation by $d$ then shows that left $x \sim$ left $(x + d)$ for every $x$; since $d$ generates $\mathbb{Z}/p$ (as $p$ is prime), chaining shows that all left points lie in one block. What remains is the induced relation on the right summand together with the datum of which right points lie in that one merged block — that is, exactly an equivalence relation on $[n] \sqcup \{\star\}$, where $\star$ stands for the merged left block. There are $B_{n+1}$ of these, and the correspondence is bijective.
-
-*Case B: $\beta \cap (\text{left points}) = \{0\}$.* Invariance transports this to every left point, so every left point is a singleton block and no left point is related to any right point. What remains is an arbitrary equivalence relation on $[n]$: $B_n$ of these.
-
-Hence $|X^{C_p}| = B_{n+1} + B_n$, and the congruence follows. $\square$
-
-**Corollary 7.5.** For every prime $p$, $B_p \equiv 2 \pmod p$; for $p > 2$ this says $B_p \bmod p = 2$.
-
-*Proof.* Set $n = 0$ in Theorem 7.4 and use $B_1 = B_0 = 1$. $\square$
-
-For example $B_7 = 877 = 7\cdot 125 + 2$. As a second illustration, $p = 5$ and $n = 3$ give $B_8 \equiv B_4 + B_3 = 15 + 5 = 20 \equiv 0 \pmod 5$, so $5 \mid B_8$; consistently $B_8 = 4140 = 5 \cdot 828$, a value obtained independently in §5.3.
+**Example 4.6.** Row $n=4$: $(0,1,7,6,1)$, summing to $15 = B_4$. Row $n=5$: $(0,1,15,25,10,1)$, summing to $52 = B_5$.
 
 ---
 
-## 8. Kernel spectra of Diophantine equations
+## 5. Small alphabets: realisability and truncated Stirling rows
 
-We now attach the invariant to arithmetic.
+Theorem 3.9 assumed $n \le |\alpha|$. Without that hypothesis, some patterns are simply unattainable.
 
-**Definition 8.1 (Kernel spectrum).** Let $E$ be an equation in $n$ unknowns over $\mathbb{N}$ and let $\mathcal{S}(E) \subseteq \mathbb{N}^{[n]}$ be its solution set. The *kernel spectrum* of $E$ is
-$$\mathrm{Spec}(E) \;=\; \{\, \mathrm{canon}(t) : t \in \mathcal{S}(E) \,\} \subseteq P_n .$$
-Its *defect* is $B_n - |\mathrm{Spec}(E)|$.
+**Lemma 5.1.** For finite $\alpha$ and $x \in \alpha^n$, $\operatorname{blocks}(\operatorname{pat}(x)) \le |\alpha|$.
 
-The spectrum is a finite invariant — at most $B_n$ elements — of a generally infinite solution set, and it is invariant under any symmetry of the equation that permutes the values.
+*Proof.* By Lemma 4.2, the block count is the number of distinct entries, a subset of $\alpha$. $\square$
 
-For $n = 3$ there are $B_3 = 5$ patterns, which in canonical-form notation are
-$$(0,1,2)\ \text{(discrete)},\quad (0,1,1),\quad (0,1,0),\quad (0,0,0),\quad (0,0,2)\ \text{(equal legs)} .$$
+**Theorem 5.2 (Realisability).** Let $\alpha$ be finite and $p \in \mathcal{P}_n$. Then $p = \operatorname{pat}(x)$ for some $x \in \alpha^n$ if and only if $\operatorname{blocks}(p) \le |\alpha|$.
 
-### 8.1 The arithmetic obstruction
+*Proof.* Necessity is Lemma 5.1. For sufficiency, choose an injection $e$ from the image $p([n])$ (of size $\operatorname{blocks}(p) \le |\alpha|$) into $\alpha$, and set $x_i = e(p(i))$. Then $\operatorname{SameKer}(x, p)$ because $e$ is injective, so $\operatorname{pat}(x) = \operatorname{can}(p) = p$. $\square$
 
-**Lemma 8.2 (Square multiplier).** Let $k, a, c \in \mathbb{N}$ with $a \ne 0$ and $ka^2 = c^2$. Then $k$ is a perfect square. Conversely, if $k = m^2$ then $k \cdot 1^2 = m^2$.
+**Theorem 5.3 (Classification over an arbitrary finite alphabet).** For every finite alphabet $\alpha$ and every $n$, the map $\operatorname{pat}$ induces a bijection
+$$ \alpha^n / \operatorname{Sym}(\alpha) \;\xrightarrow{\ \sim\ }\; \{\, p \in \mathcal{P}_n : \operatorname{blocks}(p) \le |\alpha| \,\}. $$
 
-*Proof sketch.* Let $g = \gcd(a,c)$ (nonzero since $a \ne 0$) and write $a = g a'$, $c = g c'$ with $\gcd(a',c') = 1$. Cancelling $g^2$ gives $k a'^2 = c'^2$. Then $a'^2 \mid c'^2$ while $\gcd(a'^2, c'^2) = 1$, so $a'^2 = 1$, i.e. $a' = 1$ and $k = c'^2$. $\square$
+*Proof.* Injectivity is Corollary 2.13; well-definedness of the codomain restriction is Lemma 5.1; surjectivity is Theorem 5.2. $\square$
 
-**Corollary 8.3.** $2a^2 = c^2$ has no solution with $a \ne 0$, since $2$ is not a perfect square.
+**Theorem 5.4 (Truncated Stirling row).** For every finite alphabet $\alpha$ with $|\alpha| = a$,
+$$ \bigl|\alpha^n / \operatorname{Sym}(\alpha)\bigr| \;=\; \sum_{k=0}^{a} S(n,k). $$
 
-### 8.2 The Pythagorean spectrum
+*Proof.* Combine Theorem 5.3 with Theorem 4.4, partitioning the patterns with at most $a$ blocks by their exact block count. $\square$
 
-Call $t = (t_0,t_1,t_2) \in \mathbb{N}^3$ a *Pythagorean triple* if $t_0^2 + t_1^2 = t_2^2$ (degenerate solutions are allowed).
+### 5.1 Closed forms for tiny alphabets
 
-**Theorem 8.4 (Kernel spectrum of $a^2+b^2=c^2$).** A pattern $p \in P_3$ is the kernel of some Pythagorean triple over $\mathbb{N}$ if and only if $p \ne (0,0,2)$. Consequently
-$$\mathrm{Spec}(a^2+b^2=c^2) = \{(0,1,2),\ (0,1,1),\ (0,1,0),\ (0,0,0)\}, \qquad |\mathrm{Spec}| = 4 = B_3 - 1 .$$
-The Pythagorean cone is kernel-deficient of defect exactly one.
+**Lemma 5.5.** $S(m+1,1) = 1$ and $S(m+2,2) + 1 = 2^{m+1}$ (i.e. $S(m,2) = 2^{m-1}-1$ for $m \ge 2$).
 
-*Proof sketch.* *Exclusion.* Suppose $\mathrm{canon}(t) = (0,0,2)$, i.e. $t_0 = t_1$ and $t_2 \ne t_0$. Then $2t_0^2 = t_2^2$. If $t_0 \ne 0$ this contradicts Corollary 8.3; if $t_0 = 0$ then $t_2 = 0 = t_0$, contradicting $t_2 \ne t_0$. Hence $(0,0,2)$ is never realised.
+*Proof.* Both by induction from the recurrence: $S(m+2,1) = 1\cdot S(m+1,1) + S(m+1,0) = 1$; and $S(m+2,2) = 2 S(m+1,2) + S(m+1,1)$, so $S(m+2,2)+1 = 2(S(m+1,2)+1)$, which doubles from the base value $2$. (The statement is phrased additively to avoid truncated subtraction.) $\square$
 
-*Realisation.* $(3,4,5)$ has pattern $(0,1,2)$; $(0,1,1)$ has pattern $(0,1,1)$; $(1,0,1)$ has pattern $(0,1,0)$; $(0,0,0)$ has pattern $(0,0,0)$. All four are solutions. Since these exhaust $P_3 \setminus \{(0,0,2)\}$, the spectrum is as claimed. $\square$
+**Theorem 5.6 (Binary alphabet).** For every $n$, the $(n+1)$-tuples over a two-letter alphabet fall into exactly $2^{n}$ orbits under the letter-swapping group.
 
-**Proposition 8.5 (Positive triples form one class).** Every Pythagorean triple with all entries strictly positive has the discrete pattern $(0,1,2)$.
+*Proof.* By Theorem 5.4 the count is $S(n+1,0)+S(n+1,1)+S(n+1,2) = 0 + 1 + (2^{n}-1) = 2^{n}$ for $n \ge 1$, and the case $n = 0$ is a direct check. $\square$
 
-*Proof sketch.* The legs cannot be equal by Corollary 8.3; a leg cannot equal the hypotenuse, since $t_0 = t_2$ forces $t_1 = 0$. $\square$
+**Theorem 5.7 (Strictness).** For $n \ge 3$, the orbit count over a binary alphabet is *strictly* smaller than $B_n$.
 
-### 8.3 Dimensional dependence
+*Proof.* The difference is $\sum_{k \ge 3} S(n,k)$, which is positive because $S(n,3) > 0$ for $n \ge 3$ (induction: $S(3,3)=1$, and $S(n+1,3) \ge S(n,3)$). Concretely, at $n=3$ the count is $4$ versus $B_3 = 5$; the unattainable pattern is the one with three singleton blocks. $\square$
 
-**Theorem 8.6 (Equal-legs criterion).** For $k \ge 0$, the equation $\sum_{i<k} x_i^2 = y^2$ has a solution with all $x_i$ equal to a common nonzero value if and only if $k$ is a perfect square.
+**Theorem 5.8 (Ternary alphabet).** For every $n$, the $(n+1)$-tuples over a three-letter alphabet fall into $N$ orbits where
+$$ 2N = 3^{n} + 1, \qquad \text{i.e. } N = \tfrac{3^{n}+1}{2}. $$
 
-*Proof.* Setting all legs to $a$ gives $ka^2 = y^2$; apply Lemma 8.2 in both directions. $\square$
-
-**Corollary 8.7 (Dimension threshold).** The equal-legs configuration is impossible for $k = 2$ and $k = 3$, and possible for $k = 4$, realised by $1^2+1^2+1^2+1^2 = 2^2$.
-
-Thus the missing pattern of Theorem 8.4 is not a defect of the invariant but a genuine arithmetic feature of dimension $2$: raise the number of legs to a perfect square and the pattern reappears.
-
-### 8.4 Fermat spectra and a phase transition in the exponent
-
-For an exponent $p$, call $t \in \mathbb{N}^3$ a *Fermat triple of exponent $p$* if $t_0^p + t_1^p = t_2^p$, and write $\mathrm{Spec}(p)$ for the corresponding kernel spectrum. Note $\mathrm{Spec}(2)$ is the Pythagorean spectrum.
-
-**Lemma 8.8 ($2$-adic obstruction).** For $p \ge 2$ and $a \ne 0$, $2a^p \ne c^p$.
-
-*Proof sketch.* Both sides are nonzero. Comparing the exponent of the prime $2$: the left side has $v_2 = 1 + p\, v_2(a)$, the right has $v_2 = p\, v_2(c)$. Hence $p \bigl(v_2(c) - v_2(a)\bigr) = 1$, so $p \mid 1$, contradicting $p \ge 2$. $\square$
-
-**Corollary 8.9.** For every $p \ge 2$ the equal-legs pattern $(0,0,2)$ is not in $\mathrm{Spec}(p)$; hence $\mathrm{Spec}(p) \subseteq \mathrm{Spec}(2)$.
-
-**Proposition 8.10 (Degenerate patterns).** For every $p \ge 1$, the three patterns $(0,1,1)$, $(0,1,0)$, $(0,0,0)$ lie in $\mathrm{Spec}(p)$, realised by $(0,1,1)$, $(1,0,1)$, $(0,0,0)$.
-
-**Proposition 8.11 (All five at $p=1$).** $\mathrm{Spec}(1) = P_3$. Indeed $1 + 1 = 2$ realises the equal-legs pattern and $3 + 4 = 7$ the discrete one.
-
-So the deficiency is strictly a $p \ge 2$ phenomenon: a phase transition in the exponent.
-
-**Theorem 8.12 (Discrete pattern $=$ positive solvability).** For $p \ge 2$, the discrete pattern $(0,1,2)$ lies in $\mathrm{Spec}(p)$ if and only if there exist $x,y,z > 0$ with $x^p + y^p = z^p$.
-
-*Proof sketch.* ($\Leftarrow$) Let $x,y,z > 0$ solve the equation. Then $x \ne y$ by Lemma 8.8, and $x \ne z$, $y \ne z$ since the other leg is positive. So the triple is injective and its pattern is discrete.
-($\Rightarrow$) If some Fermat triple $t$ has discrete pattern, its three entries are distinct; the hypotenuse $t_2$ is then nonzero (else $t_0 = t_1 = 0$), and each leg is nonzero (if $t_0 = 0$ then $t_1 = t_2$, contradicting distinctness). Hence a positive solution exists. $\square$
-
-**Theorem 8.13 (Kernel-theoretic Fermat's Last Theorem).** Let $p \ge 2$. Then
-$$|\mathrm{Spec}(p)| = 3 \iff x^p + y^p = z^p \text{ has no solution with } x,y,z > 0,$$
-$$|\mathrm{Spec}(p)| = 4 \iff x^p + y^p = z^p \text{ has a solution with } x,y,z > 0 .$$
-In the first case $\mathrm{Spec}(p) = \{(0,1,1),(0,1,0),(0,0,0)\}$; in the second, $\mathrm{Spec}(p) = \{(0,1,2),(0,1,1),(0,1,0),(0,0,0)\}$.
-
-*Proof.* By Corollary 8.9 the spectrum is contained in the four-element Pythagorean spectrum, and by Proposition 8.10 it contains the three degenerate patterns. So the only question is whether $(0,1,2)$ belongs, and Theorem 8.12 answers it. The two cardinalities $3$ and $4$ are therefore mutually exclusive and exhaust the possibilities. $\square$
-
-**Corollary 8.14.** $|\mathrm{Spec}(2)| = 4$, witnessed by $(3,4,5)$. For $p \ge 3$, $|\mathrm{Spec}(p)| = 3$ — this is precisely Fermat's Last Theorem, in the form "the kernel spectrum of the Fermat equation of exponent $p \ge 3$ omits the discrete pattern".
-
-The spectrum therefore compresses an entire family of Diophantine problems into the question of which of five combinatorial types occur, and it does so faithfully: no information about positive solvability is lost.
+*Proof.* By Theorem 5.4, $N = \sum_{k \le 3} S(n+1,k)$; one shows $2\sum_{k \le 3} S(m+1,k) = 3^{m}+1$ by induction on $m$ using the Stirling recurrence, the base case $m=0$ being $2 \cdot 1 = 1 + 1$. (The integral formulation avoids division.) $\square$
 
 ---
 
-## 9. Algorithms
+## 6. Arbitrary alphabets, the connection formula, and invariant functions
 
-**Canonicalisation.** Computing $\mathrm{canon}(f)$ naively costs $O(n^2)$ comparisons (for each $i$, scan for the least $j$ with $f_j = f_i$). With a hash map from values to first occurrence it is $O(n)$ expected time and $O(n)$ space: scan left to right, and for each entry either look up its first occurrence or record the current index. Orbit equivalence of two tuples is then decided in linear time by comparing canonical forms (Corollary 3.3). This is the standard symmetry-reduction routine, here with a completeness proof attached.
+### 6.1 Completeness with no finiteness hypothesis
 
-**Pattern enumeration.** Patterns of length $n$ are exactly the restricted growth strings: $p_0 = 0$ and $p_i \le 1 + \max_{j<i} p_j$. Generating them by depth-first search, extending a prefix with maximum label $m$ by any of $0,1,\dots,m+1$, enumerates $P_n$ with no rejection: cost $O(n B_n)$ time and $O(n)$ space, optimal up to the output size. Refining the generation by the eventual number of blocks gives the Stirling counts directly.
+**Theorem 6.1 (Completeness, general alphabet).** For an arbitrary set $\alpha$ and $x,y \in \alpha^n$:
+$$ \operatorname{SameKer}(x,y) \iff \exists\, \sigma \in \operatorname{Sym}(\alpha):\ \sigma \circ x = y. $$
 
-**Bell and Stirling tables.** Rather than enumerate, one can iterate the recursion of Theorem 5.4 to fill the $n \times n$ Stirling triangle in $O(n^2)$ integer operations, then take row sums for the Bell numbers. (The classical Bell triangle is an equivalent $O(n^2)$ scheme.) This is how the values $B_6 = 203$, $B_7 = 877$, $B_8 = 4140$ of §5.3 are obtained without touching the $4140$ objects they count.
+*Proof.* The finite case is Theorem 2.9. If $\alpha$ is infinite, construct the bijection $f : S \to T$ between the (finite) value sets exactly as in the proof of Theorem 2.9. To extend $f$ to all of $\alpha$ one needs a bijection $\alpha \setminus S \to \alpha \setminus T$; since $S$ and $T$ are finite and $\alpha$ is infinite, both complements have cardinality $|\alpha|$, so such a bijection exists. Gluing gives $\sigma$, and $\sigma(x_i) = y_i$ follows as before. $\square$
 
-**Kernel spectra.** For an equation in $n$ unknowns, the spectrum is computed by (i) enumerating the $B_n$ patterns; (ii) for each pattern, substituting a single variable per block and asking whether the resulting reduced equation has a solution with the block-variables pairwise distinct. Step (ii) is exactly where arithmetic enters — for the Pythagorean case, the reduced equations are $2a^2 = c^2$ (unsolvable) and its siblings. The bookkeeping is finite and mechanical; the difficulty is concentrated in finitely many reduced Diophantine problems.
+**Example 6.2.** Over $\mathbb{N}$, the tuples $(0,0,1)$ and $(5,5,7)$ have the same kernel, hence there is a permutation $\sigma$ of $\mathbb{N}$ with $\sigma \circ (0,0,1) = (5,5,7)$.
 
----
+### 6.2 The connection formula between powers and falling factorials
 
-## 10. Discussion, applications and future directions
+Fix a finite alphabet of size $a$ and write $a^{\underline{k}} = a(a-1)\cdots(a-k+1)$ for the falling factorial (with $a^{\underline{k}} = 0$ when $k > a$).
 
-### 10.1 What the invariant buys
+**Theorem 6.3 (Fibre size).** For $p \in \mathcal{P}_n$ with $k = \operatorname{blocks}(p)$,
+$$ \bigl|\{\, x \in \alpha^n : \operatorname{pat}(x) = p \,\}\bigr| \;=\; a^{\underline{k}}. $$
 
-Three features distinguish kernel patterns from generic invariants. First, **completeness**: over a finite alphabet, nothing else is needed to decide the renaming-orbit question. Second, **computability**: the invariant is a tuple of small integers, computed in linear time, so it can be used as a dictionary key. Third, **exact enumeration**: the invariant's own state space is the Bell numbers, refined by the Stirling triangle, with growth and congruence properties one can prove directly from the combinatorial definitions.
+*Proof.* A tuple $x$ with $\operatorname{pat}(x) = p$ is exactly the datum of an *injective* labelling of the blocks of $p$ by letters: given $x$, the map $\text{block} \mapsto \text{the common value of } x \text{ on that block}$ is injective (distinct blocks would otherwise merge, changing the pattern); conversely, any injection $\varphi$ from the $k$-element block set into $\alpha$ produces $x_i = \varphi(\text{block of } i)$ with $\operatorname{pat}(x) = \operatorname{can}(p) = p$ by Theorem 2.7 and Theorem 2.11. These assignments are mutually inverse. The number of injections from a $k$-set to an $a$-set is $a^{\underline{k}}$. $\square$
 
-The last point is worth emphasising. Once $S(n,k)$ is *defined* as a count of patterns, the recursion, the closed forms, the falling-factorial expansion, the surjection count, super-multiplicativity, and Touchard's congruence are all consequences of manipulating patterns, not of manipulating formulas. In particular, Touchard's congruence — usually derived from the umbral/Artin–Schreier identity $B^p \equiv B + 1$ in $\mathbb{F}_p[x]/(x^p - x - 1)$ — falls out here from a single application of the orbit–fixed-point congruence for a cyclic group of prime order.
+**Theorem 6.4 (Connection formula).** For every $a, n \ge 0$,
+$$ a^{n} \;=\; \sum_{k=0}^{n} S(n,k)\, a^{\underline{k}}. $$
 
-### 10.2 Applications
+*Proof.* Count $\alpha^n$ (of size $a^n$) by fibring over the pattern map, then grouping patterns by block count: by Theorem 6.3 each pattern with $k$ blocks contributes $a^{\underline{k}}$, and by Theorem 4.4 there are $S(n,k)$ of them. $\square$
 
-*Symmetry reduction.* In model checking and constraint programming, states that differ only by permuting interchangeable components should be identified. Kernel canonicalisation is the correct, complete reduction when the only structure on the components is equality, and Theorem 6.2 quantifies exactly how much compression to expect: from $|B|^n$ states down to $\sum_{k\le |B|} S(n,k)$.
+**Remark 6.5.** Theorem 6.4 explains the truncation in Theorem 5.4 conceptually: the terms with $k > a$ vanish because $a^{\underline{k}} = 0$ — exactly the patterns that Theorem 5.2 declares unrealisable. Numerical check at $a=3$, $n=4$: $81 = 0\cdot1 + 1\cdot3 + 7\cdot6 + 6\cdot6 + 1\cdot0$.
 
-*Databases and privacy.* The kernel of a row is precisely the information that survives pseudonymisation of the field values. Theorem 3.1 says this is all that survives, so it delimits what an adversary can learn from a renamed dataset; the Bell numbers count the possible leak profiles.
+### 6.3 The dimension of the space of invariant functions
 
-*Diophantine bookkeeping.* Kernel spectra provide a coarse but sharp finite invariant of solution sets. Theorem 8.13 shows the invariant is not toy: it is faithful enough to encode a positive-solvability question exactly. Theorem 8.6 shows it detects genuine dimensional arithmetic.
+Let $K$ be a field and $\beta$ a finite alphabet. Consider
+$$ \operatorname{Inv}_K(\beta, n) \;=\; \bigl\{\, f : \beta^n \to K \ \bigm|\ f(\sigma \circ x) = f(x) \ \ \forall \sigma \in \operatorname{Sym}(\beta),\ \forall x \,\bigr\}, $$
+a $K$-subspace of the space of all functions $\beta^n \to K$ (it is closed under addition and scalar multiplication because the condition is linear in $f$).
 
-### 10.3 Future directions
+**Theorem 6.6 (Dimension).** If $n \le |\beta| < \infty$, then
+$$ \dim_K \operatorname{Inv}_K(\beta, n) \;=\; B_n. $$
 
-*The following research programme extends the results above; each item is stated so that it can be attacked directly.*
+*Proof.* Restriction along the quotient map $\beta^n \to \beta^n/\operatorname{Sym}(\beta)$ is a $K$-linear isomorphism from the space of *all* functions on the (finite) orbit space onto $\operatorname{Inv}_K(\beta,n)$: an invariant function is constant on orbits and hence factors uniquely through the quotient, and conversely every function on the quotient pulls back to an invariant function. The space of $K$-valued functions on a finite set of size $m$ has dimension $m$; by Theorem 3.9 the orbit space has size $B_n$. $\square$
 
-**Status of the previous cycle.** Five earlier conjectures are now settled and are no longer open problems.
-
-* **C1 (Stirling recursion and closed forms) — proved.** The recursion $S(n+1,k+1) = (k+1)S(n,k+1) + S(n,k)$ holds for the *combinatorially defined* $S(n,k) = \#\{\text{patterns of length } n \text{ with } k \text{ blocks}\}$; $S(n+1,2) = 2^n - 1$ and $S(n+1,n) = \binom{n+1}{2}$ are the advertised closed forms, and the row sums evaluate to $B_6 = 203$, $B_7 = 877$, $B_8 = 4140$.
-* **C4 (orbit counting over a small alphabet) — proved.** The orbits of the symmetric group of $\beta$ acting on $\beta^{[n]}$ number $\sum_{k \le |\beta|} S(n,k)$ for *every* finite alphabet $\beta$, with the strict inequality against $B_n$ holding exactly when $|\beta| < n$. The companion identity $m^n = \sum_k S(n,k)\, m^{\underline{k}}$ is proved alongside.
-* **C5 (growth of the Bell numbers) — partially proved.** The bound $2^n \le B_{n+1}$ now follows from the two-block count, complementing strict monotonicity from $n=1$, monotonicity, and $n \le B_n$. In the present cycle this was strengthened to *super-multiplicativity*, $B_m B_n \le B_{m+n}$, strict for positive $m,n$, with the consequences $B_n^k \le B_{nk}$ and $2^k \le B_{2k}$. The proof is the injection sending a pair of equivalence relations on $A$ and on $B$ to the equivalence relation on $A \sqcup B$ no block of which crosses the two summands; the total relation witnesses strictness. The sharp asymptotics are folded into **D1** below.
-* **C2, C3 (kernel spectra of Diophantine equations)** are refined into **D3** and **D4**.
-
-**D1. Log-concavity and unimodality of the kernel-block statistic.** *Conjecture.* For all $n$ and all $1 \le k < n$, the pattern counts satisfy $S(n,k)^2 \ge S(n,k-1)\, S(n,k+1)$; consequently each row of the triangle is unimodal, with a single peak whose position is asymptotically $n/\log n$. A proof would also sharpen the growth results: log-concavity of the rows plus the row-sum identity yields the classical asymptotic $B_n = n^{n(1+o(1))/\log n}$, upgrading the current super-multiplicative bounds to the true order of growth.
-
-**D2. Higher congruences.** Extend Touchard's congruence to prime powers and to iterated form: prove $B_{p^m + n} \equiv m\,B_{n} + B_{n+1} \pmod p$, and investigate the period of the Bell numbers modulo $p$ (conjecturally $(p^p-1)/(p-1)$), using the same cyclic-action machinery on equivalence relations of extended index sets.
-
-**D3. Kernel spectra in higher arity.** Compute $\mathrm{Spec}$ for the $n$-variable equations $\sum_{i<k} x_i^m = y^m$ for all $k$ and $m$, generalising both the equal-legs criterion and the $2$-adic obstruction. The expected answer is a defect governed by which multiplicities $k$ are $m$-th powers, and by local obstructions at the primes dividing $k$.
-
-**D4. Spectral rigidity of Diophantine families.** Determine which subsets of $P_n$ arise as kernel spectra of polynomial equations in $n$ variables over $\mathbb{N}$. Every spectrum is closed under nothing obvious, so the question is genuinely open even for $n = 3$; a classification would say exactly which "coincidence profiles" are arithmetically realisable.
-
-**D5. Kernel patterns as a complexity measure.** For a fixed equation, study the pattern of solutions as a function of a height bound: how quickly does the finite spectrum stabilise, and can the stabilisation height be bounded effectively? This links the invariant to effective methods in Diophantine geometry.
+**Interpretation.** A relabelling-invariant function of $n$ arguments drawn from a sufficiently large alphabet is *precisely* a function of the equality pattern, and has exactly $B_n$ degrees of freedom — $52$ for $n = 5$, regardless of how large the alphabet is. Over a small alphabet the dimension drops to the truncated row $\sum_{k \le |\beta|} S(n,k)$ by the same argument combined with Theorem 5.4.
 
 ---
 
-## 11. Conclusion
+## 7. Algorithms
 
-The equality pattern of a tuple is the exact residue of the tuple under renaming of its entries: a complete invariant for the symmetric group action over a finite alphabet, computed in linear time by the least-element labelling. Its own combinatorics is the theory of set partitions — Bell numbers as the total count, Stirling numbers of the second kind as the refinement by block count, with recursion, closed forms, falling-factorial expansions, surjection counts, strict super-multiplicativity, and Touchard's congruence all obtainable by direct manipulation of patterns. Applied to Diophantine equations, the invariant yields kernel spectra: the Pythagorean equation realises exactly four of the five patterns of a triple, missing the equal-legs pattern because $2$ is not a square; the same obstruction shows the missing pattern returns in dimension $4$; and for the Fermat equations the spectrum has three elements or four according as the equation has no positive solution or some positive solution — Fermat's Last Theorem, restated as a count.
+All the objects above are effectively computable. We record the three core routines and their complexities. Let $n$ be the tuple length and $a$ the alphabet size.
+
+### 7.1 Canonical form
+
+Computing $\operatorname{can}(x)_i = \min\{j : x_j = x_i\}$ naively costs $O(n^2)$ comparisons. A single left-to-right pass with a dictionary from value to first index computes the whole canonical form in $O(n)$ expected time (or $O(n\log n)$ with a comparison-based map):
+
+> for $i = 0, 1, \dots, n-1$: if $x_i$ is unseen, record $\text{first}[x_i] \leftarrow i$; output $\operatorname{can}(x)_i = \text{first}[x_i]$.
+
+Correctness: the recorded index is the least $j$ with $x_j = x_i$ by construction of the pass order. This is precisely the restricted-growth normalisation, and it gives an $O(n)$ test for "are these two tuples renamings of one another?" — compare canonical forms elementwise, by Proposition 2.6 and Theorem 6.1.
+
+### 7.2 Enumerating patterns
+
+Patterns can be generated directly by the last-letter recursion of Theorem 4.4, which produces each of the $B_n$ patterns exactly once with no rejection: extend a pattern $q$ on $n$ letters by choosing the last value among the fixed points of $q$ (join an existing block) or the new index itself (open a new block). The cost is $O(n \cdot B_n)$ output-sensitive time — optimal up to the factor $n$ needed to write each pattern down. Brute-force filtering of all $n^n$ maps by the two pattern conditions is also possible and is what makes the small values verifiable by exhaustive search, but it is exponentially wasteful for $n \gtrsim 8$.
+
+### 7.3 Counting
+
+Bell and Stirling numbers are computed by dynamic programming from their recurrences in $O(n^2)$ arithmetic operations. The orbit count over an alphabet of size $a$ is then the prefix sum $\sum_{k \le a} S(n,k)$, computable in $O(n^2)$ as well. For the two smallest alphabets, Theorems 5.6 and 5.8 replace the sum by $2^{n-1}$ and $(3^{n-1}+1)/2$ respectively.
+
+---
+
+## 8. Applications and connections
+
+**Alpha-equivalence and name-independence.** In logic, programming-language theory and databases, the doctrine that *names of atoms do not matter* is exactly the statement that the meaningful content of a tuple of names is its kernel. Theorem 6.1 says this doctrine loses nothing and hides nothing: two name-tuples are interchangeable if and only if their coincidence patterns agree. Canonical forms play the role that de Bruijn indices play for bound variables.
+
+**Query evaluation over an active domain.** A relational query whose answer must be equivariant under renaming of constants can only depend on the pattern; Theorem 5.4 gives the exact number of distinguishable $n$-tuples over a domain with $a$ constants, and the connection formula (Theorem 6.4) tells you how many concrete tuples realise each of them.
+
+**Permutation-equivariant learning.** Models that consume a set or list of tokens and are required to be invariant under relabelling of the token vocabulary can, by Theorem 6.6, express exactly $B_n$ independent scalar features of an $n$-token input — an absolute expressivity ceiling that does not improve with vocabulary size, and drops to $\sum_{k \le a} S(n,k)$ for small vocabularies.
+
+**Hash collision structure.** The pattern of a list of hash values is its collision structure. Theorem 6.3 states that, over a codomain of size $a$, exactly $a^{\underline{k}}$ assignments realise a fixed collision structure with $k$ distinct values; summing gives the familiar $a^n$ and, after dividing, the classical birthday-problem probabilities.
+
+**A proof of a classical identity by counting.** The change of basis $x^n = \sum_k S(n,k)\, x^{\underline{k}}$ between the monomial and falling-factorial bases of the polynomial ring is usually proved by induction on the Stirling recurrence or by umbral/generating-function methods. Theorem 6.4 derives it, for every nonnegative integer $x = a$, purely by counting a finite set in two ways — and since two polynomials agreeing at infinitely many integers are equal, this yields the polynomial identity as well.
+
+---
+
+## 9. Discussion and future directions
+
+Three sharp questions remain open on top of the theory developed here.
+
+**(D1) A Dobiński-type analytic bridge.** Dobiński's formula states
+$$ B_n \;=\; \frac{1}{e}\sum_{k=0}^{\infty} \frac{k^n}{k!}. $$
+Our development already provides the combinatorial engine: the connection formula $k^n = \sum_j S(n,j)\, k^{\underline{j}}$ (Theorem 6.4) holds for each $k$, and summing it against the Poisson weights $e^{-1}/k!$ turns each term $\sum_k e^{-1} k^{\underline{j}}/k!$ into $1$, leaving $\sum_j S(n,j) = B_n$ by Corollary 4.5. The only missing ingredient is the analytic justification of the exchange of the two summations. This is a genuinely modest gap, and closing it would give a fully self-contained derivation of Dobiński from the pattern classification.
+
+**(D2) The pattern poset is the partition lattice.** Order $\mathcal{P}_n$ by refinement: $p \le q$ if and only if $p(i) = p(j) \Rightarrow q(i) = q(j)$. Conjecturally the bijection of Theorem 3.6 upgrades to an *order* isomorphism onto the lattice of equivalence relations on $[n]$; then $\mathcal{P}_n$ is a complete lattice, is non-distributive for $n \ge 3$, and its Möbius function satisfies $\mu(\hat{0},\hat{1}) = (-1)^{n-1}(n-1)!$. The plausible route is that $\operatorname{can}$ is a *monotone* retraction: $\operatorname{can}(x)$ depends only on $\ker x$, so the refinement order on tuples descends to patterns without extra combinatorial input. The non-distributivity claim is settled at $n=3$ by exhaustive check, and the Möbius value by induction on the lattice structure. The value of this upgrade is that it supplies a computable, exhaustively enumerable encoding of the partition lattice, on which incidence-algebra computations can be run directly.
+
+**(D3) Kernels as complete invariants for injections, not only permutations.** Theorem 2.7 shows the kernel is invariant under arbitrary injective relabelling, including relabellings between *different* alphabets, whereas the completeness Theorems 2.9 and 6.1 invert this only inside a single alphabet. The natural common generalisation: for arbitrary sets $\alpha,\beta$ and tuples $x \in \alpha^n$, $y \in \beta^n$, one should have $\operatorname{SameKer}(x,y)$ if and only if there exist a set $\gamma$, a tuple $z \in \gamma^n$ and injections $f : \gamma \hookrightarrow \alpha$, $g : \gamma \hookrightarrow \beta$ with $f \circ z = x$ and $g \circ z = y$; moreover the universal such $z$ should be the canonical form itself, with $\gamma = [n]$ and $z = \operatorname{can}(x)$. This would identify $\operatorname{can}$ as the terminal object of a comma category of injective relabellings, giving the canonical form a universal property rather than merely an ad-hoc definition.
+
+**Further avenues.** Beyond (D1)–(D3): a $q$-analogue via patterns of tuples over a vector space (replacing equality by linear dependence); the analogous classification for the action of $\operatorname{Sym}(\alpha) \times \operatorname{Sym}([n])$ on tuples, whose invariant is the *multiset* of block sizes and whose count is the partition number $p(n)$; and asymptotics of the truncated rows $\sum_{k \le a} S(n,k)$, which for fixed $a$ grow like $a^{n}/a!$ and thus quantify precisely how much of the Bell count a bounded alphabet can see.
+
+---
+
+## 10. Summary of principal results
+
+| Statement | Content |
+|---|---|
+| Invariance | $\operatorname{can}(f \circ x) = \operatorname{can}(x)$ for every injection $f$ |
+| Completeness | Over any alphabet: same kernel $\iff$ same permutation orbit |
+| Normal forms | Kernels $\leftrightarrow$ idempotent contracting retractions of $[n]$ |
+| Classification | Patterns $\leftrightarrow$ equivalence relations on $[n]$ |
+| Bell count | $|\mathcal{P}_n| = B_n$; first six values $1,1,2,5,15,52$ |
+| Orbit count | $B_n$ orbits on $n$-tuples when $n \le |\alpha|$ |
+| Stirling refinement | Patterns with $k$ blocks number $S(n,k)$; $\sum_k S(n,k) = B_n$ |
+| Small alphabets | Orbit count $=\sum_{k\le|\alpha|}S(n,k)$; $2^{n}$ (binary) and $(3^{n}+1)/2$ (ternary) for length $n+1$ |
+| Connection formula | $a^n = \sum_k S(n,k)\, a^{\underline{k}}$ |
+| Invariant functions | $\dim_K \operatorname{Inv}_K(\beta,n) = B_n$ for $n \le |\beta|$ |
