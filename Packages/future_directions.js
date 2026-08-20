@@ -120,6 +120,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 69ffd40e (Q=0.860), which proved 127 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The Lagrange engine `powerSum_rigidity` is already formalised and it isolates\nexactly which weight vectors are invisible; what remains is a construction, not a new theory.",
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_69ffd40e_155fbe57",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "69ffd40e",
+    "status": "available",
+    "timestamp": "2026-08-20T15:50:11.817203+00:00",
+    "title": "Deepening: The Lagrange engine `powerSum_rigidity` is already formalised and it isolates"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 6bc62e41 (Q=0.880), which proved 70 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Both sides of the identity are already available as Lean theorems\n(`FourierFA.poisson_summation`, `FourierFA.dft_delta`), so the converse can be formalised as a\nfinite statement about the character table with no new analytic input.",
     "domains": [
       "Applications"
@@ -1717,38 +1731,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-13T03:21:12.748859+00:00",
     "title": "Stein-Method: Quantitative Normal Approximation Bounds"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Develop a rigorous theory of infinite games where moves are indexed by transfinite ordinals. Prove that Zermelo's theorem extends: every such game has a determined outcome under AD. Formalize the connection between the determinacy hierarchy and large cardinal axioms.",
-    "domains": [
-      "Novelty",
-      "Logic",
-      "SetTheory"
-    ],
-    "id": "seed_257",
-    "priority_score": 0.87,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Transfinite Game Theory: Games That Last Forever"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove that Novikov's self-consistency principle follows from the Banach fixed-point theorem applied to the causal structure of spacetime. Formalize time-travel paradoxes as boundary value problems and prove existence of self-consistent solutions for polynomial causal maps.",
-    "domains": [
-      "Novelty",
-      "Physics",
-      "Bridges"
-    ],
-    "id": "seed_270",
-    "priority_score": 0.87,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Time Travel Consistency: Novikov's Principle as a Fixed-Point Theorem"
   },
   {
     "consumed_by_exp_id": "",
@@ -19059,6 +19041,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "means `InvisibleWeights.Invisible N K e`, and `\u2113\u00b9(e) = \u2211_{j \u2264 N} |e j|`.  Recall what is now\nproved: `\u2113\u00b9(e) \u2265 K + 1` for `e \u2260 0` (`l1_ge_of_invisible_int`), improved to `K + 2` for `K \u2265 2`\nand to `K + 3` for odd `K \u2265 3` (`l1_ge_window_add_two`, `l1_ge_window_add_three_of_odd`, sharp\nat `K = 1, 2, 3`), `\u2113\u00b9(e)` is even\n(`l1_even_of_invisible_int`), the bound `\u2113\u00b9 \u2265 2^K` holds for `K \u2264 2`\n(`l1_ge_two_pow_of_window_le_two`) and **fails for every `K \u2265 3`**\n(`two_pow_l1_conjecture_false`) \u2014 indeed it fails by an exponential factor, since windows add\nand `\u2113\u00b9` norms multiply under convolution (`kconv_invisible`, `l1_kconv_le`), giving\n`\u2113\u00b9 \u2264 6^n \u2248 1.817^{3n}` at window `K = 3n` (`exists_invisible_l1_le_six_pow`,\n`l1_exponentially_below_two_pow`).",
+    "domains": [],
+    "id": "fd_1723",
+    "priority_score": 0.4294285714285714,
+    "research_mode": "team",
+    "source_exp_id": "69ffd40e",
+    "status": "available",
+    "timestamp": "2026-08-20T15:49:58.106032+00:00",
+    "title": "means `InvisibleWeights.Invisible N K e`, and `\u2113\u00b9(e) = \u2211_{j \u2264 N} |e j|`.  Recall what is now"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "**The low-tail experiment.** A fourth seed at the long context is diagnostic for the *tail*,\n  not the centre: a fourth knee in $\\{160, 192\\}$ would establish the $0.625P$ low tail as a\n  stable feature of the $16\\times$ cell, while a value in $\\{224, 256\\}$ would mark it\n  seed-specific. Strengthening the *centre* requires a fifth seed, since a fourth improves\n  neither the breakdown number nor the calibration.",
     "domains": [],
     "id": "fd_1454",
@@ -21574,15 +21568,14 @@ window.FUTURE_DIRECTIONS = [
     "title": "The reduction to cycles, the disjoint-union theorem, and the cycle-frame"
   },
   {
-    "consumed_by_exp_id": "69ffd40e",
+    "consumed_by_exp_id": "",
     "description": "The Lagrange engine `powerSum_rigidity` is already formalised and it isolates\nexactly which weight vectors are invisible; what remains is a construction, not a new theory.",
     "domains": [],
     "id": "fd_1641",
-    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "c442a26f",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-19T21:41:39.265578+00:00",
     "title": "The Lagrange engine `powerSum_rigidity` is already formalised and it isolates"
   },
@@ -21846,14 +21839,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "is a finitely supported `a : \u2115 \u2192 \u2124` with"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fc85d14f",
     "description": "The one-parameter case is already a theorem here\n(`headCoeff_pmFrame_ge_neg_one`), and the closed formula makes the general case a\nstatement about integer points in a two-dimensional region, i.e. amenable to\n`omega`/`nlinarith` once the balance and cycle-type constraints are formalized.",
     "domains": [],
     "id": "fd_1663",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "0750e9d7",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-20T03:10:46.297060+00:00",
     "title": "The one-parameter case is already a theorem here"
   },
@@ -22493,5 +22487,75 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-20T14:00:37.288065+00:00",
     "title": "Barycentre bound"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The two ingredients that make the lower-bound half attackable are both in place\nfor the first time: the exact equality case of the support bound (this cycle) and the parity\nargument; together they already yielded the `K + 2` / `K + 3` improvement by ruling out the\nextremal configuration, and the same method applied to *near*-extremal configurations is what\nwould push the bound towards `2K`.  Combining them along the\n\"support size vs. spread\" trade-off is a finite-dimensional optimisation, not a new theory.\nFalsifiable: a single invisible vector with `\u2113\u00b9 < 2K` refutes it, and the search harness in\n`ComputationalEvidence.md` tests it mechanically.",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "fd_1724",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "69ffd40e",
+    "status": "available",
+    "timestamp": "2026-08-20T15:49:58.388764+00:00",
+    "title": "The two ingredients that make the lower-bound half attackable are both in place"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The equality case is already proved without Descartes, purely from the\ndivided-difference rigidity identity, which shows the statement is true at the boundary and\ngives the exact shape of the extremal configurations.  What remains is the general\ninequality, i.e. a formalisation of Descartes' rule of signs \u2014 currently absent from Mathlib\nbut a self-contained induction on the degree, and a worthwhile library contribution in its\nown right.",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "fd_1725",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "69ffd40e",
+    "status": "available",
+    "timestamp": "2026-08-20T15:49:58.655655+00:00",
+    "title": "The equality case is already proved without Descartes, purely from the"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The whole development is already stated over an arbitrary commutative ring `R`\n(`binWeight`, `moment`, `Invisible`), so the conjecture can be tested by instantiating\n`R := ZMod p` and re-running the existing dimension computation; only the linear-independence\nhalf of `binVec_linearIndependent` needs a genuinely new argument.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_1726",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "69ffd40e",
+    "status": "available",
+    "timestamp": "2026-08-20T15:49:58.911787+00:00",
+    "title": "The whole development is already stated over an arbitrary commutative ring `R`"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Neurosymbolic systems must choose *which* logical rules to enforce\nunder a compute/utility budget; submodularity (now proved) is exactly the\nhypothesis that makes this a tractable optimisation problem.",
+    "domains": [
+      "Logic"
+    ],
+    "id": "fd_1727",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "d37c9a15",
+    "status": "available",
+    "timestamp": "2026-08-20T15:50:17.670569+00:00",
+    "title": "Neurosymbolic systems must choose *which* logical rules to enforce"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "KL-coefficient annealing schedules are used heuristically in\npractice; the exact annealing limits and the additive drift budget proved here\nturn the question into finite convex optimisation.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_1728",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "d37c9a15",
+    "status": "available",
+    "timestamp": "2026-08-20T15:50:17.928750+00:00",
+    "title": "KL-coefficient annealing schedules are used heuristically in"
   }
 ];

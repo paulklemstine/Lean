@@ -735,7 +735,7 @@
       "depth_estimate": 3,
       "description": "Computes exact maximum region count formulas for depth-L ReLU neural network input space partitioning.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "MachineLearning"
       ],
@@ -43702,7 +43702,7 @@
       "depth_estimate": 3,
       "description": "`Σ_g |X^g|^k = (B_k + Σ_P (m_P − 1))·|G|`\n    (`bell_defect_eq`): the excess of a moment over its Bell floor is `|G|` times the number of\n    *extra* orbits per pattern, and it vanishes exactly for `k`-transitive actions\n    (`sum_patternMultiplicity_sub_one_eq_zero_iff`).\n\n---\n\n\n\n## Open conjectures for the next cycle\n\n\n\n### Conjecture E′ (the fibre spectrum is a strictly finer invariant)\n\n*The vector `(m_P)_P` of pattern multiplicities separates pairs of actions that the scalar moment\n`Σ_g |X^g|^k` cannot; and `m_P = 1` for all `P` with exactly `j` blocks iff the action is\n`j`-transitive (the block-graded refinement of the fibrewise criterion).*\n\nThe key insight is that the fibrewise criterion now proved treats all patterns at once, whereas the\ntransitivity hierarchy is graded by the number of blocks: restricting attention to the patterns\nwith `j` blocks should isolate exactly `j`-transitivity inside the `k`-tuple data, giving a\nspectrum of invariants between the moments.\n\nWhy now? The decomposition, the fibrewise criterion and the exact defect formula are proved\n(items 18–19), and cycle 3 also shows the scalar moment cannot separate actions (item 15), so the\nonly thing left to test is whether the refined vector can.\n\n\n\n### Conjecture F (Bell defect bounds the failure of transitivity)\n\n*The Bell defect `D_k(G,X) := Σ_g |X^g|^k − B_k|G| ≥ 0` satisfies: `D_k = 0 ⇒ D_j = 0` for `j ≤ k`\n(proved), and quantitatively `D_2 > 0 ⇒ D_k ≥ c_k · D_2` for an explicit combinatorial constant\n`c_k` depending only on `k`.*\n\nThe key insight is that the defect counts non-singleton fibres of the orbit-to-pattern map with\nmultiplicity, and a failure of 2-transitivity is inherited by every longer tuple by padding with\nrepeated coordinates, which multiplies the excess by a controlled partition count.\n\nWhy now? Non-negativity, the implication `D_k = 0 ⇒ D_j = 0`, and now the exact formula\n`D_k = |G|·Σ_P (m_P − 1)` (item 19) are theorems; only the quantitative propagation between\ndifferent `k` is open, and it is now a statement about fibre sizes rather than about moments.\n\n\n\n### Conjecture G (how much labelling an injective aggregate must spend)\n\n*Every injective aggregate `A : (Fin m → QLaurent) → QLaurent` that is additive in each argument\nmust spread the coefficients over at least `m` pairwise disjoint infinite sets of exponents; in\nparticular no such aggregate has image contained in the series supported on a set of density\n`< 1/m`.*\n\nThe key insight is that cycle 3 identified symmetry as the obstruction, so what remains is a\ncounting bound: injectivity forces the aggregate to reserve, for each index, an infinite family of\nindependent coefficient slots, which is exactly what the interleaving construction does with the\nresidues mod `m`.\n\nWhy now? The dichotomy (interleaving injective, every symmetric aggregate non-injective) is proved;\nthe missing piece is a lower bound showing interleaving is not just *an* answer but essentially the\n*only* shape of answer.\n\n\n\n### Co",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Combinatorics",
         "MachineLearning"
@@ -48099,7 +48099,7 @@
       "depth_estimate": 3,
       "description": "**Correction found by adversarial review.**  The conjectured dichotomy \"unique iff `m = 1`\"\n  needs one extra hypothesis at finite level that is automatic at valuation level: the truncated\n  unit group must be nontrivial.  `card_fibre_eq_one_iff` gives the sharp form (unique iff\n  `m = 1` **or** the group is trivial), `zmod_finite_rigidity_dichotomy` the usable form, and\n  `zmod_two_level_one_rigid` exhibits the unique exception `p = 2, D = 1`, where the\n  factorization is unique for every `m`.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Algebra",
         "MachineLearning"
@@ -48140,7 +48140,7 @@
       "depth_estimate": 3,
       "description": "The abstract `DiscreteVal` layer isolates precisely the commutativity uses (they are\nconfined to `val_prod` and `prod_uniformizer_zpow`), so the non-commutative generalization can be\nattempted by weakening one structure field at a time.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Algebra",
         "MachineLearning"
@@ -49955,7 +49955,7 @@
       "depth_estimate": 3,
       "description": "For the memoryless class of `Catalog/MachineLearning/UniversalRedundancy/Types.lean`\nthe price obeys `Cₛ ≤ (n+1)^{#A}`.  Conjecture: quantising the simplex into `m`\nmodels and using the greedy library recovers the *exact* asymptotics — namely\nthat the greedy library of size `m` has price\n`log₂ Cₛ − Θ(log(1/m))` bits, so `m = poly(n)` models suffice to be within `1`\nbit of full parametric universality.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "MachineLearning"
       ],
@@ -52467,11 +52467,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "fc85d14f",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -52481,7 +52481,7 @@
       "domains": [],
       "github_issue": 0,
       "id": "fd_1663",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-08-20T15:51:30.777821+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -52496,7 +52496,7 @@
       "source": "",
       "source_exp_id": "0750e9d7",
       "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/0750e9d7",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-08-20T03:10:46.297060+00:00",
       "title": "The one-parameter case is already a theorem here"
@@ -53203,7 +53203,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.**  For the nodes `0, …, N`, the `ℓ¹`-norm of the inverse row at the node `0`\nis `lebesgueConst N 0 = N + 1`, and more generally\n`lebesgueConst N v = C(N, v) · ∑_{k} …` is bounded by `2^N`, with the maximum attained at\nthe middle node.\n\n*The key insight is* that `L_0 = ∏_{j=1}^{N} (1 - X/j)` has coefficients of alternating sign,\nso the `ℓ¹`-norm of its coefficient vector is `|L_0(-1)| = ∏_{j=1}^{N}(1 + 1/j) = N + 1`;\nsign alternation is exactly the statement that the elementary symmetric functions of the\npositive nodes are positive.\n\n*Why now?*  `count_eq_of_powerSums_close` already converts any bound on `Λ_N(v)` into an\n*exact* recovery threshold `ε < 1/Λ_N(v)` for noisy power sums; a closed form for `Λ_N`\nturns that qualitative robustness statement into a usable error budget.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "MachineLearning"
       ],
@@ -75019,14 +75019,14 @@
       "parent_direction": "",
       "priority_score": 0.87,
       "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
+      "prune_reason": "tournament_rejected: ",
+      "pruned_at": "2026-08-20T15:50:24Z",
       "quarantined_until": "",
       "research_mode": "team",
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "pruned",
       "thread_id": "",
       "timestamp": "",
       "title": "Transfinite Game Theory: Games That Last Forever"
@@ -75565,14 +75565,14 @@
       "parent_direction": "",
       "priority_score": 0.87,
       "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
+      "prune_reason": "tournament_rejected: ",
+      "pruned_at": "2026-08-20T15:50:24Z",
       "quarantined_until": "",
       "research_mode": "team",
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "pruned",
       "thread_id": "",
       "timestamp": "",
       "title": "Time Travel Consistency: Novikov's Principle as a Fixed-Point Theorem"
@@ -81745,7 +81745,7 @@
       "depth_estimate": 3,
       "description": "Cycle f3cf4755 (Q=0.742) proved 137 theorems in MachineLearning but left 2 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future directions\n\nThe completed formalization deliberately studies the smallest non-trivial model:\na width-one scalar two-layer ReLU network with an explicit time-dependent input,\ntogether with the",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "MachineLearning"
       ],

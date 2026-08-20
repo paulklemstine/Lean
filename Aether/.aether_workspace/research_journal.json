@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "bba7fa1e",
-      "domain": "NumberTheory",
-      "key_insight": "# Future directions — price of universality (Phase A, Question 1)\n\nDerived from what survived and what failed in this cycle.  Each conjecture is\nstated so that it can be refuted by a single Lean count",
-      "quality_score": 0.84,
-      "sorry_count": 0,
-      "theorem_count": 73,
-      "timestamp": "2026-08-18T19:41:20",
-      "title": "Compression Research A1: Price of universality — minimax redundancy of universal decompressors"
-    },
-    {
       "cycle_id": "4f724156",
       "domain": "Probability",
       "key_insight": "# Future Directions — status of the Conjecture-C thread and next-cycle conjectures\n\nThe thread now spans five Lean files, all compiling with `0` sorries and only the standard\naxioms (`propext`, `Class",
@@ -499,19 +489,19 @@
       "theorem_count": 127,
       "timestamp": "2026-08-20T15:50:11",
       "title": "The Lagrange engine `powerSum_rigidity` is already formalised and it isolates"
+    },
+    {
+      "cycle_id": "d37c9a15",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions — Neurosymbolic RLHF (PPO-ptx) research thread\n\nDerived from the analysis and adversarial review of this cycle.  Each\nconjecture is falsifiable, formalisable in the same finite fra",
+      "quality_score": 0.85,
+      "sorry_count": 5,
+      "theorem_count": 61,
+      "timestamp": "2026-08-20T15:50:23",
+      "title": "reinforcement learning"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "2d369115",
-      "domain": "Shared",
-      "key_insight": "# FUTURE DIRECTIONS — Algorithmic Immune Systems\n\nDerived from the verified results in `Catalog/Shared/Immune*.lean` (Parts I–IX:\nparasite calculus and attestation, semantics, the diagonal parasite, q",
-      "quality_score": 0.627125,
-      "sorry_count": 0,
-      "theorem_count": 143,
-      "timestamp": "2026-08-11T10:22:55",
-      "title": "Algorithmic-Immune-System: Autonomous Code Parasite Neutralization"
-    },
     {
       "cycle_id": "c56f6a79",
       "domain": "Applications",
@@ -2501,21 +2491,19 @@
       "theorem_count": 127,
       "timestamp": "2026-08-20T15:50:11",
       "title": "The Lagrange engine `powerSum_rigidity` is already formalised and it isolates"
+    },
+    {
+      "cycle_id": "d37c9a15",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions — Neurosymbolic RLHF (PPO-ptx) research thread\n\nDerived from the analysis and adversarial review of this cycle.  Each\nconjecture is falsifiable, formalisable in the same finite fra",
+      "quality_score": 0.85,
+      "sorry_count": 5,
+      "theorem_count": 61,
+      "timestamp": "2026-08-20T15:50:23",
+      "title": "reinforcement learning"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "c442a26f",
-      "domain": "Bridges",
-      "name": "momentMatrix_transpose",
-      "quality": 0.88
-    },
-    {
-      "cycle_id": "c442a26f",
-      "domain": "Bridges",
-      "name": "node_injective",
-      "quality": 0.88
-    },
     {
       "cycle_id": "d11810a4",
       "domain": "Geometry",
@@ -2803,17 +2791,22 @@
       "domain": "Shared",
       "name": "fullPtxObj_le",
       "quality": 0.85
+    },
+    {
+      "cycle_id": "d37c9a15",
+      "domain": "MachineLearning",
+      "name": "birkhoff_two_constraint_bound",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "d37c9a15",
+      "domain": "MachineLearning",
+      "name": "tvDist_le_tanh_hilbertDist",
+      "quality": 0.85
     }
   ],
-  "last_updated": "2026-08-20T15:50:11",
+  "last_updated": "2026-08-20T15:50:23",
   "open_questions": [
-    {
-      "context": "`RhoDom.dominant_singleton_iff`, so it is not a self-contained restatement.  No `sorry`, no",
-      "cycle_id": "5c8fc610",
-      "domain": "Novelty",
-      "sorry_count": 1,
-      "timestamp": "2026-08-02T23:22:25"
-    },
     {
       "context": "sorry; sorry; sorry",
       "cycle_id": "a5f7aac5",
@@ -3016,6 +3009,13 @@
       "domain": "Shared",
       "sorry_count": 6,
       "timestamp": "2026-08-20T14:00:42"
+    },
+    {
+      "context": "No `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.",
+      "cycle_id": "d37c9a15",
+      "domain": "MachineLearning",
+      "sorry_count": 5,
+      "timestamp": "2026-08-20T15:50:23"
     }
   ],
   "research_threads": {
@@ -3517,12 +3517,6 @@
     ],
     "MachineLearning": [
       {
-        "cycle_id": "5b29bc32",
-        "quality": 0.86,
-        "theorems": 98,
-        "title": "The Non-CRT-Separable Half-Plane Circle Count, Closed"
-      },
-      {
         "cycle_id": "5ddbfca0",
         "quality": 0.82,
         "theorems": 92,
@@ -3575,6 +3569,12 @@
         "quality": 0.86,
         "theorems": 120,
         "title": "The number of triples `(a,b,c)` with `0 < a,b,c ≤ H` that are Berggren-generated"
+      },
+      {
+        "cycle_id": "d37c9a15",
+        "quality": 0.85,
+        "theorems": 61,
+        "title": "reinforcement learning"
       }
     ],
     "Novelty": [
