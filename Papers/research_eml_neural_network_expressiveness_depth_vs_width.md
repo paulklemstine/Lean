@@ -1,457 +1,410 @@
-# Explicit Inverse-Square Approximation of a Quadratic by a Shallow EML Unit
+# Depth, Width and Weight Magnitude for Exponential–Logarithmic Activations: A Provable Separation from Shallow Rectified Networks
 
-**Aristotle**  
-**August 1, 2026**
+**Author:** Aristotle
+**Date:** 2026-08-20
+
+---
 
 ## Abstract
 
-We study a one-dimensional test of expressiveness for the EML activation family
+We study the approximation power of neural networks whose activation is the *exponential-minus-logarithm* (EML) unit
+$$x \mapsto e^{ax+b} - \log(cx+d),$$
+and we compare it, quantitatively and in both directions, with one-hidden-layer rectified-linear (ReLU) networks.
 
-$$
-\Phi_{a,b,a',b'}(x)=\exp(ax+b)-\log(a'x+b'),
-$$
+Our central object is a single EML layer of width $2$,
+$$S_h(x) = \frac{e^{hx} + e^{-hx} - 2}{h^2},$$
+obtained by switching off the logarithmic branches and reading out two exponential neurons with weights $1/h^2$ and bias $-2/h^2$. We prove that $S_h$ approximates $x^2$ on $[0,1]$ with uniform error at most $h^2/6$ and at least $h^2/14$, hence exactly $\Theta(h^2)$ at *constant* width; that the same fixed pair of neurons approximates the derivative $2x$ with error at most $h^2/2$; and that the self-composition $S_h \circ S_h$ approximates $x^4$ with error at most $h^2$, so depth composes without degrading the order.
 
-on domains where $a'x+b'>0$. For a positive scale $h$, we introduce the smooth quadratic approximant
+Against this we prove a matching structural lower bound: **every** one-hidden-layer ReLU network with $k$ units, arbitrary real parameters and a free affine skip connection has uniform error at least $1/(32(k+1)^2)$ on $x^2$, and misestimates the slope $2x$ by at least $1/(2(k+1))$ somewhere in $[0,1]$. Combining the two yields a width separation: accuracy $\varepsilon$ costs the EML model width $2$ and costs the shallow ReLU model width $\Omega(\varepsilon^{-1/2})$.
 
-$$
-Q_h(x)=\frac{2}{h^2}\bigl(\exp(hx)-1-hx\bigr).
-$$
+Polarisation upgrades the squaring layer to a width-$4$ *multiplication gate* with error $\Theta(h^2)$ on $[0,1]^2$ (at most $h^2$, at least $2h^2/7$ at the corner), whence every quadratic form in $n$ variables is a single EML layer of width $4n^2$ with the dimension-free error $h^2 \sum_{i,j}|A_{ij}|$; and the ReLU barrier transfers verbatim to the bivariate product by restriction to the diagonal.
 
-It is realized by one EML nonlinear unit with parameters $(a,b,a',b')=(h,0,0,1)$, followed by an affine readout and a linear skip connection. Its exact derivative is
+Finally we prove the converse containment. Softplus, $\log(1+e^t)$, is literally an exponential neuron followed by a logarithmic one, and satisfies $|M^{-1}\log(1+e^{Mt}) - \mathrm{relu}(t)| \le \log 2/M$. Hence depth-$2$ EML networks dominate shallow ReLU networks at equal width, and inherit the Jackson rate $2L/N + \delta$ for $L$-Lipschitz targets at width $N$. Together the two halves settle the shape of the trade-off: the conjectured $O(w^{-2})$ behaviour is a **smoothness** phenomenon purchased with weight magnitude, not a width phenomenon; on the raw Lipschitz class the rate for both models is $\Theta(1/N)$.
 
-$$
-Q_h'(x)=\frac{2}{h}\bigl(\exp(hx)-1\bigr).
-$$
+**Keywords:** expressive power, depth–width trade-off, ReLU lower bounds, exponential activation, softplus, polarisation identity, Jackson rate, piecewise linear approximation.
 
-Indexing the scale by a positive integer budget $w$ through $h=w^{-2}$ gives
-
-$$
-Q_w(x)=2w^4\left(\exp\left(\frac{x}{w^2}\right)-1-\frac{x}{w^2}\right).
-$$
-
-For every $w\ge1$, this family satisfies the uniform certificate
-
-$$
-\sup_{x\in[0,1]}|Q_w(x)-x^2|\le\frac{4}{9w^2}.
-$$
-
-The inverse-square bound is no greater than the matched inverse-linear benchmark $4/(9w)$ for every positive integral $w$, and is strictly smaller for $w\ge2$. We give proof sketches, stable evaluation algorithms, numerical diagnostics, and a careful account of what this test case does and does not establish. In particular, the result is an explicit smooth approximation theorem for a canonical target, not a general depth-width theorem for arbitrary Lipschitz functions and not an architecture-independent lower bound against piecewise-linear networks.
+---
 
 ## 1. Introduction
 
-Depth-width tradeoffs ask how a network’s approximation power changes as computational resources are rearranged. General theorems are difficult because several notions of complexity coexist: number of nonlinear units, number of trainable parameters, number of affine regions, depth, coefficient magnitude, and permissible skip connections. A useful first step is therefore to isolate a target for which every component of the construction is visible.
+### 1.1 The question
 
-The target $f(x)=x^2$ on $[0,1]$ is particularly informative. It is smooth, nonlinear, and exactly characterized by constant curvature. It also plays a structural role in multiplication and polynomial approximation. The EML activation combines exponential and logarithmic branches. We ask whether its smooth nonlinear geometry can be converted into an explicit approximation of the quadratic, and how the error scales under a prescribed width-indexed choice of parameters.
+Approximation theory for neural networks has two halves. The *upper-bound* half exhibits architectures that reach a prescribed accuracy and counts their resources; the *lower-bound* half proves that a competing architecture cannot do the same with fewer. A separation theorem is a matched pair.
 
-The key observation is elementary but powerful: the second-order Taylor coefficient of the exponential is $1/2$. Subtracting the constant and linear terms from $\exp(hx)$ and multiplying the remainder by $2/h^2$ exposes $x^2$. The remaining terms are controlled uniformly on $[0,1]$. Choosing $h=w^{-2}$ then converts a first-order bound in $h$ into an inverse-square bound in $w$.
+For piecewise-linear activations the lower-bound half has a canonical mechanism: a one-hidden-layer ReLU network is a polyline with at most as many kinks as it has units, and polylines are poor at curvature. This is the source of the classical $\Omega(k^{-2})$ obstruction on smooth targets. For *analytic* activations no such mechanism exists, and one expects — but must prove — that the extra smoothness buys something.
 
-Our contribution consists of four linked results. First, the approximant has an explicit depth-two realization using one EML unit, an affine readout, and a linear skip. Second, it has an exact smooth derivative. Third, it obeys a uniform error certificate $4/(9w^2)$. Fourth, this certificate dominates the matched inverse-linear benchmark, strictly beyond $w=1$.
+The EML activation $x \mapsto e^{ax+b} - \log(cx+d)$ is analytic on its domain and contains two very different behaviours in one unit: an exponential branch with unbounded growth and all derivatives positive, and a logarithmic branch with slowly-varying, concave behaviour. The question this paper answers is: *what exactly does that smoothness buy, and what does it cost?*
 
-Two qualifications should be stated at the outset. The construction uses a single nonlinear unit for each $w$; $w$ indexes the scale chosen within a width budget and is not the literal number of active units. Moreover, the logarithmic branch is specialized to the constant $\log 1=0$. Thus the result proves expressiveness of the EML family through an embedded exponential subfamily. It does not assert that both branches are necessary for this target.
+### 1.2 Results and organisation
 
-## 2. Definitions and architectural model
+Section 2 fixes the model. Section 3 constructs the width-2 squaring layer and proves the two-sided rate $\Theta(h^2)$, together with the gradient estimate; it also shows that a naive one-neuron forward-difference construction is genuinely only first order, so the improvement is real and not an artefact of a lossy estimate. Section 4 proves that depth composes, via the quartic $S_h \circ S_h \approx x^4$. Section 5 proves the shallow-ReLU lower bounds from scratch (pigeonhole on breakpoints, exact affinity on the empty box, and a three-point second-difference estimate). Section 6 assembles the separation. Section 7 develops the multiplication gate, quadratic forms in $n$ variables, and the transfer of the ReLU barrier to two inputs. Section 8 proves the converse containment through softplus and the Lipschitz Jackson rate. Section 9 gives algorithms and numerical corroboration; Section 10 discusses interpretation, limitations and future directions.
 
-### 2.1 The EML activation
+A one-paragraph summary of the interpretation, stated up front so the reader can keep it in view: **width, depth and weight magnitude are three currencies, and an analytic activation can pay in any of them, while a piecewise-linear one can pay only in width.** The $\Theta(h^2)$ rate at constant width is precisely the exchange of accuracy $h^2$ against read-out weight $1/h^2$.
 
-**Definition 2.1 (EML activation).** Let $a,b,a',b'\in\mathbb R$, and let $D\subseteq\mathbb R$ satisfy $a'x+b'>0$ for all $x\in D$. The associated EML activation on $D$ is
+---
 
-$$
-\Phi_{a,b,a',b'}(x)=\exp(ax+b)-\log(a'x+b').
-$$
+## 2. The model
 
-The positivity condition is required only to make the real logarithm well-defined. In the construction below, $(a',b')=(0,1)$, so the logarithmic input is identically $1$ and the condition holds on all of $\mathbb R$.
+**Definition 2.1 (EML neuron).** An *EML neuron* is determined by four real parameters $(a,b,c,d)$ and computes
+$$\mathcal N_{a,b,c,d}(x) = e^{ax+b} - \log(cx+d),$$
+defined wherever $cx+d>0$. Setting $c=0$, $d=1$ switches the logarithmic branch off, since $\log 1 = 0$; setting $a=0$, $b\to-\infty$ is not allowed, but $a = 0$ leaves a harmless constant $e^{b}$ that the read-out bias absorbs.
 
-### 2.2 The scale-dependent quadratic approximant
+**Definition 2.2 (EML layer).** An *EML layer of width $k$* consists of neurons $\mathcal N_1, \dots, \mathcal N_k$, read-out weights $\gamma_1,\dots,\gamma_k \in \mathbb R$ and a bias $\beta \in \mathbb R$; it computes
+$$L(x) = \beta + \sum_{i=1}^{k} \gamma_i \,\mathcal N_i(x).$$
 
-**Definition 2.2 (Exponential quadratic approximant).** For $h\ne0$, define
+**Definition 2.3 (Depth).** A *depth-2 EML network* is a composition $L_2 \circ L_1$ of two layers, or more generally (Section 8) a family of parallel chains $\mathcal N^{(2)}_i \circ \mathcal N^{(1)}_i$ with an affine read-out and an affine skip connection:
+$$\mathcal D(x) = s_0 + s_1 x + \sum_{i=1}^{k} \gamma_i \, \mathcal N^{(2)}_i\!\left(\mathcal N^{(1)}_i(x)\right).$$
+Depth $m$ is obtained by iterating.
 
-$$
-Q_h(x)=\frac{2}{h^2}\bigl(\exp(hx)-1-hx\bigr).
-$$
+**Definition 2.4 (Shallow ReLU network).** With $\mathrm{relu}(t)=\max(t,0)$, a *one-hidden-layer ReLU network with $k$ units* is
+$$R_k(x) = c_0 + c_1 x + \sum_{i=1}^{k} a_i\,\mathrm{relu}(w_i x + b_i),$$
+with arbitrary real $a_i, w_i, b_i, c_0, c_1$. The affine skip connection $c_0 + c_1x$ is granted for free; all lower bounds below hold with it present, hence a fortiori without it.
 
-Although the formula is singular at $h=0$, for each fixed $x$ it has the limit $x^2$ as $h\to0$. We use only positive $h$.
+Throughout, "uniform error on a set $S$" means $\sup_{x \in S} |f(x) - \text{network}(x)|$, and $h > 0$ denotes a scale parameter.
 
-**Definition 2.3 (Width-indexed approximant).** For an integer $w\ge1$, set
+---
 
-$$
-h_w=\frac{1}{w^2}
-$$
+## 3. A width-2 EML layer squares to second order
 
-and define
+### 3.1 The construction
 
-$$
-Q_w(x)=Q_{h_w}(x)
-=2w^4\left(\exp\left(\frac{x}{w^2}\right)-1-\frac{x}{w^2}\right).
-$$
+**Definition 3.1 (Central-difference squaring layer).** For $h \ne 0$ let $S_h$ be the EML layer of width $2$ with neurons $(a,b,c,d) = (h,0,0,1)$ and $(-h,0,0,1)$, read-out weights $1/h^2$, $1/h^2$, and bias $-2/h^2$.
 
-The index $w$ is interpreted as a positive width budget. The realization itself uses one nonlinear unit, which is admissible under every such budget. Increased $w$ changes the parameters and improves the certified accuracy.
+**Proposition 3.2.** For $h \ne 0$,
+$$S_h(x) = \frac{e^{hx} + e^{-hx} - 2}{h^2} = \frac{2\big(\cosh(hx)-1\big)}{h^2}.$$
 
-### 2.3 Realization convention
+*Proof.* Both logarithmic branches read $\log(0\cdot x + 1) = 0$; substitute and simplify. $\square$
 
-A depth-two computation in this paper consists of a nonlinear hidden stage followed by an affine output stage. We additionally permit a direct linear skip from input to output. Under this convention, a scalar realization has the form
+$S_h$ is exactly the second central difference of the exponential map, and its Maclaurin series is
+$$S_h(x) = x^2 + \frac{h^2x^4}{12} + \frac{h^4 x^6}{360} + \cdots,$$
+every term beyond the first carrying $h^2$. Note $S_h(0)=0$, so the layer is exact at the origin.
 
-$$
-R(x)=c\,\Phi_{a,b,a',b'}(x)+r+sx.
-$$
+### 3.2 The upper bound
 
-This convention is explicit because architectural terminology varies. If an architecture forbids input-output skips, an additional compilation argument would be required; no such claim is made here.
+**Lemma 3.3 (Quartic Taylor bound for $2\cosh$).** For $|u| \le 1$,
+$$\left| e^{u} + e^{-u} - 2 - u^2 \right| \;\le\; \frac{u^4}{6}.$$
 
-## 3. Main results
+*Proof sketch.* Apply the standard fifth-order Taylor estimate for $e^u$ and, separately, for $e^{-u}$ (both admissible since $|u| \le 1$, $|-u|\le 1$). All odd powers cancel in the sum, the constant and quadratic terms are subtracted off, and the surviving quartic term is $2u^4/4! = u^4/12$; the fifth-order remainders contribute at most $|u|^5$ times an explicit constant, and $|u|^5 \le u^4$ on $|u|\le 1$. Collecting terms gives a total bounded by $u^4/6$. The true asymptotic constant is $1/12$; the factor two is the price of a uniformly valid remainder bound over the whole range $|u|\le1$. $\square$
 
-### 3.1 Exact shallow realization
+**Theorem 3.4 (Second-order squaring).** For $h \ne 0$ and any $x$ with $|hx| \le 1$,
+$$\left| S_h(x) - x^2 \right| \;\le\; \frac{h^2 x^4}{6}.$$
 
-**Theorem 3.1 (Depth-Two Realization Theorem).** Let $h\ne0$. For every $x\in\mathbb R$,
+*Proof.* By Proposition 3.2,
+$$S_h(x) - x^2 = \frac{e^{hx}+e^{-hx}-2-(hx)^2}{h^2}.$$
+Lemma 3.3 with $u = hx$ bounds the numerator by $(hx)^4/6 = h^4x^4/6$; divide by $h^2$. $\square$
 
-$$
-Q_h(x)
-=\frac{2}{h^2}\left(\exp(hx+0)-\log(0x+1)\right)
--\frac{2}{h^2}-\frac{2}{h}x.
-$$
+**Corollary 3.5 (Rate on the unit interval).** For $0 < h \le 1$ and $x \in [0,1]$, $|S_h(x)-x^2| \le h^2/6$. In particular, taking $h = 1/n$ for an integer $n\ge1$,
+$$\max_{x \in [0,1]} \left| S_{1/n}(x) - x^2 \right| \;\le\; \frac{1}{6n^2}.$$
 
-Consequently, $Q_h$ is realized by one EML nonlinear unit with parameters
+**Corollary 3.6 (Constant width suffices for any accuracy).** For every $\varepsilon > 0$ there is $h>0$ — namely $h = \min(1,\varepsilon)$ — such that the *width-two* EML layer $S_h$ satisfies $|S_h(x)-x^2| \le \varepsilon$ for all $x \in [0,1]$.
 
-$$
-(a,b,a',b')=(h,0,0,1),
-$$
+The width does not depend on $\varepsilon$; only the parameters do. This is the statement that will be contrasted with Theorem 5.5.
 
-an output multiplier $2/h^2$, output bias $-2/h^2$, and linear skip coefficient $-2/h$.
+### 3.3 The lower bound: the rate is exactly $\Theta(h^2)$
 
-**Proof sketch.** The logarithmic branch is $\log(1)=0$. Substitute this identity into the displayed network output and factor $2/h^2$:
+An upper bound alone leaves open the possibility that the estimate is lossy and the true rate is better (or that the comparison with ReLU is unfair). It is not.
 
-$$
-\frac{2}{h^2}\exp(hx)-\frac{2}{h^2}-\frac{2}{h}x
-=\frac{2}{h^2}\bigl(\exp(hx)-1-hx\bigr)=Q_h(x).
-$$
+**Lemma 3.7 (Lower Taylor estimate).** For $0 < h \le 1$,
+$$e^{h} + e^{-h} \;\ge\; 2 + h^2 + \frac{h^4}{14}.$$
 
-No approximation is used in the realization identity. $\square$
+*Proof sketch.* For $e^h$ use the fact that a partial sum of the exponential series underestimates $e^h$ for $h \ge 0$, retaining terms through $h^4$. For $e^{-h}$ use a two-sided fifth-order remainder estimate, valid because $|-h|\le1$, and absorb the resulting $h^5$ and $h^6$ terms into $h^4$ using $h \le 1$. The surviving quartic coefficient is $2/4! = 1/12$ minus the absorbed remainder, which is still at least $1/14$. $\square$
 
-The theorem should be read as a representation result for a specified computational graph. It is not a claim that width $w$ nonlinear units are used, nor that a skip-free architecture has the same exact depth.
+**Theorem 3.8 (Sharpness).** For $0 < h \le 1$,
+$$\left| S_h(1) - 1 \right| \;\ge\; \frac{h^2}{14}.$$
 
-### 3.2 Smoothness and exact derivative
+*Proof.* $S_h(1) - 1 = \big(e^h + e^{-h} - 2 - h^2\big)/h^2 \ge (h^4/14)/h^2 = h^2/14$ by Lemma 3.7. $\square$
 
-**Theorem 3.2 (Derivative Formula).** For every $h\ne0$ and $x\in\mathbb R$, the function $Q_h$ is differentiable at $x$, with
+**Theorem 3.9 (Two-sided rate).** For $0 < h \le 1$, the uniform error of the width-2 EML layer on $[0,1]$ lies between $h^2/14$ and $h^2/6$. Hence it is $\Theta(h^2)$, and the exponent $2$ is exact.
 
-$$
-Q_h'(x)=\frac{2}{h^2}\bigl(h\exp(hx)-h\bigr)
-       =\frac{2}{h}\bigl(\exp(hx)-1\bigr).
-$$
+Numerically the constant is $1/12 \approx 0.0833$ (Section 9), comfortably inside the proved bracket $[1/14, 1/6] = [0.0714, 0.1667]$.
 
-**Proof sketch.** Differentiate $\exp(hx)$ by the chain rule to obtain $h\exp(hx)$. The derivative of $1$ is zero and that of $hx$ is $h$. Multiplication by the constant $2/h^2$ gives the first formula; cancellation of one factor of $h$ gives the second. $\square$
+### 3.4 The naive construction is genuinely slower
 
-Because the exponential is infinitely differentiable, so is $Q_h$. In particular, there are no derivative discontinuities of the kind produced by a generic piecewise-affine approximation.
+One might obtain a squaring network from the *forward* difference instead, using a single exponential neuron:
+$$F_h(x) = \frac{2}{h^2}\left(e^{hx} - 1 - hx\right) = x^2 + \frac{h x^3}{3} + \cdots.$$
+This is a width-1 EML layer (with the linear term supplied by an affine read-out) and it is only first order. That statement, too, we prove rather than assume.
 
-A Taylor expansion explains the limiting slope:
+**Theorem 3.10 (First-order barrier for the forward construction).** For every $h > 0$,
+$$\frac{2}{h^2}\left(e^{h} - 1 - h\right) - 1 \;\ge\; \frac{h}{3}.$$
 
-$$
-Q_h'(x)=\frac{2}{h}\left(hx+\frac{h^2x^2}{2}+\frac{h^3x^3}{6}+\cdots\right)
-=2x+hx^2+\frac{h^2x^3}{3}+\cdots.
-$$
+*Proof.* The partial sum $1 + h + h^2/2 + h^3/6 \le e^h$ for $h \ge 0$. Subtracting and multiplying by $2/h^2$ gives exactly $h/3$ plus a nonnegative remainder. $\square$
 
-This expansion motivates, but does not by itself state, a future uniform derivative-rate theorem.
+So at $x = 1$ the forward network's error is at least $h/3$, and the central-difference layer's improvement from $\Theta(h)$ to $\Theta(h^2)$ is a genuine gain. Numerically the forward error at $x=1$ tends to $h/3$ from above, so the constant in Theorem 3.10 is *sharp*.
 
-### 3.3 Uniform inverse-square error
+### 3.5 Gradients
 
-The error bound depends on the following scale estimate.
+**Lemma 3.11 (Cubic Taylor bound for $2\sinh$).** For $|u| \le 1$, $\left|e^u - e^{-u} - 2u\right| \le |u|^3/2$.
 
-**Lemma 3.3 (Uniform Exponential-Remainder Bound).** If $0<h\le1$ and $x\in[0,1]$, then
+**Theorem 3.12 (Second-order gradients at width two).** For $0 < h \le 1$ and $x \in [0,1]$,
+$$\left| \frac{e^{hx}-e^{-hx}}{h} - 2x \right| \;\le\; \frac{h^2}{2}.$$
 
-$$
-\left|Q_h(x)-x^2\right|\le\frac{4}{9}h.
-$$
+*Proof.* The left-hand quantity is $S_h'(x) - (x^2)'$; write it as $\big(e^{hx}-e^{-hx}-2hx\big)/h$ and apply Lemma 3.11 with $u = hx$, using $|hx|^3 \le h^3$ on the stated range. $\square$
 
-**Proof sketch.** Taylor’s formula gives
+The point is that this is the derivative of *the same* two-neuron network, with no retraining, no extra units, and the same second-order rate. Section 5 shows the corresponding ReLU statement is first order in the width and cannot be improved.
 
-$$
-\exp(hx)=1+hx+\frac{h^2x^2}{2}
-+\sum_{k=3}^{\infty}\frac{(hx)^k}{k!}.
-$$
+---
 
-Therefore
+## 4. Depth composes: the quartic
 
-$$
-Q_h(x)-x^2
-=2\sum_{k=3}^{\infty}\frac{h^{k-2}x^k}{k!}.
-$$
+**Theorem 4.1 (Depth-2 quartic approximation).** For $0 < h \le 1/2$ and $x \in [0,1]$,
+$$\left| S_h\big(S_h(x)\big) - x^4 \right| \;\le\; h^2 .$$
 
-All summands are nonnegative on the prescribed domain. A uniform remainder estimate for the exponential series on $0\le hx\le1$ bounds this tail by $4h/9$. Equivalently, one may apply the standard third-order exponential remainder bound and then use monotonicity on the compact interval. This yields the stated estimate simultaneously for every $x\in[0,1]$. $\square$
+*Proof.* Put $y = S_h(x)$ and decompose
+$$S_h(S_h(x)) - x^4 = \big(S_h(y) - y^2\big) + \big(y^2 - x^4\big).$$
 
-The constant $4/9$ is a global certificate, not claimed to be sharp. Indeed, the leading error term is $hx^3/3$, suggesting an asymptotic supremum constant $1/3$ as $h\to0^+$.
+*Stability of the intermediate value.* By Corollary 3.5, $|y - x^2| \le h^2/6 \le 1/24$, and $0 \le x^2 \le 1$, so $|y| \le 25/24$. Consequently $|hy| \le \tfrac12 \cdot \tfrac{25}{24} < 1$, which is exactly the hypothesis needed to apply Theorem 3.4 at the point $y$. This is the only place where $h \le 1/2$ is used, and it is the mechanism by which depth composes safely: the output of layer one must stay inside the domain of validity of layer two's estimate.
 
-**Theorem 3.4 (Certified Inverse-Square Width Rate).** For every integer $w\ge1$ and every $x\in[0,1]$,
+*First term.* Theorem 3.4 at $y$ gives $|S_h(y)-y^2| \le h^2 y^4/6 \le h^2 \cdot 2/6 = h^2/3$, using $y^4 \le (25/24)^4 \le 2$.
 
-$$
-|Q_w(x)-x^2|\le\frac{4}{9w^2}.
-$$
+*Second term.* $y^2 - x^4 = (y-x^2)(y+x^2)$, and $|y+x^2| \le 25/24 + 1$, so
+$$|y^2 - x^4| \le \frac{h^2}{6}\cdot\frac{49}{24} \le \frac{h^2}{2}.$$
 
-Equivalently,
+Adding, $|S_h(S_h(x))-x^4| \le h^2/3 + h^2/2 \le h^2$. $\square$
 
-$$
-\sup_{x\in[0,1]}|Q_w(x)-x^2|\le\frac{4}{9w^2}.
-$$
+Two layers, width $2$ each, four neurons total, and a degree-four target at second order. The empirical constant is $\approx 1/4$ against the proved $1$ (Section 9). The natural conjecture — depth $m$ gives $x^{2^m}$ with a constant growing like $2^m$ — is stated in Section 10; the proof above already contains the invariant needed for the induction.
 
-**Proof sketch.** Since $w\ge1$, the scale $h_w=1/w^2$ satisfies $0<h_w\le1$. Apply Lemma 3.3 with $h=h_w$:
+---
 
-$$
-|Q_w(x)-x^2|
-\le\frac49h_w
-=\frac{4}{9w^2}.
-$$
+## 5. The shallow ReLU barrier
 
-Because this inequality holds for every $x\in[0,1]$, it also bounds the supremum norm. $\square$
+We now prove the matching lower bound, from first principles, for the model of Definition 2.4.
 
-This theorem is the principal approximation result. Its scope is precise: the target is $x^2$, the domain is $[0,1]$, the budget is a positive integer, and the guarantee is uniform.
+### 5.1 Pigeonhole on breakpoints
 
-### 3.4 Comparison with an inverse-linear benchmark
+**Lemma 5.1 (Breakpoint-free interval).** Let $w, b \in \mathbb R^k$. Among the $k+1$ intervals
+$$I_j = \left(\frac{j}{k+1}, \frac{j+1}{k+1}\right), \qquad j = 0, 1, \dots, k,$$
+at least one contains no breakpoint, i.e. there is $j$ such that for all $x \in I_j$ and all $i$ with $w_i \ne 0$ one has $w_i x + b_i \ne 0$.
 
-**Theorem 3.5 (Non-Strict Benchmark Dominance).** For every integer $w\ge1$,
+*Proof.* A unit with $w_i \ne 0$ has exactly one breakpoint $-b_i/w_i$; units with $w_i = 0$ have none (they are constants, $\mathrm{relu}(b_i)$). At most $k$ points must be placed in $k+1$ disjoint open intervals, so one interval receives none. $\square$
 
-$$
-\frac{4}{9w^2}\le\frac{4}{9w}.
-$$
+### 5.2 Exact affinity on the empty box
 
-**Proof sketch.** Positivity permits multiplication by $9w^2/4$. The desired inequality becomes $1\le w$, which is the hypothesis. $\square$
+**Lemma 5.2 (Single unit).** If $w x + b \ne 0$ for all $x$ in an interval $I$, then $x \mapsto \mathrm{relu}(wx+b)$ agrees on $I$ with a fixed affine function: either $wx+b$ throughout (if the expression is positive somewhere, hence everywhere by continuity and the intermediate value theorem) or $0$ throughout. If $w = 0$ the unit is the constant $\mathrm{relu}(b)$.
 
-**Theorem 3.6 (Strict Benchmark Dominance Beyond Unit Width).** For every integer $w\ge2$,
+**Lemma 5.3 (Whole network).** Under the conclusion of Lemma 5.1, there exist $\alpha, \beta \in \mathbb R$ with $R_k(x) = \alpha x + \beta$ for all $x \in I_j$.
 
-$$
-\frac{4}{9w^2}<\frac{4}{9w}.
-$$
+*Proof.* Sum the affine representations of Lemma 5.2 over $i$, weighted by $a_i$, and add the skip connection. $\square$
 
-**Proof sketch.** After multiplication by the positive quantity $9w^2/4$, the inequality becomes $1<w$, which follows from $w\ge2$. $\square$
+**Proposition 5.4 (Structural core).** For every $k$ and every parameter choice there are $0 \le p < q \le 1$ with $q - p = 1/(k+1)$ and reals $\alpha,\beta$ such that $R_k(x) = \alpha x + \beta$ for all $x \in (p,q)$.
 
-These theorems compare certified numerical rates. They do not establish that all ReLU networks have only inverse-linear accuracy. In fact, for a quadratic target, continuous piecewise-linear interpolation can attain inverse-square error when complexity is counted by the number of affine pieces. Any activation-level comparison must therefore specify a common resource model.
+### 5.3 A line cannot follow a parabola
 
-## 4. Mechanism of the approximation
+**Lemma 5.5 (Three-point second difference).** Let $p<q$, $L = q-p$, and suppose $|x^2 - (\alpha x + \beta)| \le \varepsilon$ for all $x \in (p,q)$. Then
+$$\varepsilon \;\ge\; \frac{L^2}{32}.$$
 
-The construction is a form of coefficient extraction. For a smooth function $g$, the centered second-order remainder
+*Proof.* Evaluate the hypothesis at $x_1 = p + L/4$, $x_2 = p+L/2$, $x_3 = p+3L/4$. The second difference operator $g \mapsto g(x_1) - 2g(x_2) + g(x_3)$ annihilates affine functions and sends $x^2$ to $2(L/4)^2 = L^2/8$. Hence
+$$\frac{L^2}{8} = \big(x_1^2 - (\alpha x_1+\beta)\big) - 2\big(x_2^2-(\alpha x_2+\beta)\big) + \big(x_3^2-(\alpha x_3+\beta)\big) \le 4\varepsilon,$$
+giving $\varepsilon \ge L^2/32$. $\square$
 
-$$
-g(hx)-g(0)-hxg'(0)
-$$
+The optimal constant for this problem is $1/8$, attained by comparing at the endpoints of the interval; the constant $1/32$ is the price of sampling at interior quarter points, which keeps the argument valid on the *open* interval produced by the pigeonhole step. Since only the exponent matters for the separation, we keep the simpler route.
 
-is approximately $h^2x^2g''(0)/2$. If $g''(0)\ne0$, suitable rescaling exposes the quadratic. Taking $g=\exp$ is especially convenient because every derivative is explicit and positive.
+### 5.4 The lower bounds
 
-For the exponential,
+**Theorem 5.6 (Shallow ReLU cannot square).** For every $k \ge 0$, every $a,w,b \in \mathbb R^k$ and every $c_0,c_1 \in \mathbb R$,
+$$\max_{x \in [0,1]} \left| x^2 - R_k(x) \right| \;\ge\; \frac{1}{32\,(k+1)^2}.$$
 
-$$
-\frac{2}{h^2}\bigl(\exp(hx)-1-hx\bigr)
-=x^2+\frac{h}{3}x^3+\frac{h^2}{12}x^4+\cdots.
-$$
+*Proof.* Combine Proposition 5.4 (an interval of length $1/(k+1)$ on which $R_k$ is affine, contained in $[0,1]$) with Lemma 5.5. $\square$
 
-On $[0,1]$, all correction terms are nonnegative, so $Q_h(x)\ge x^2$. The error is expected to be largest near $x=1$. The leading-order prediction is
+The case $k = 0$ is included and reads $\varepsilon \ge 1/32$: a purely affine model cannot beat $1/32$ on the parabola.
 
-$$
-Q_h(1)-1\sim\frac{h}{3}.
-$$
+**Theorem 5.7 (Shallow ReLU cannot match the slope).** For every $k$ and every parameter choice there is an interval $(p,q) \subseteq [0,1]$ of length $1/(k+1)$ on which $R_k$ is affine with some slope $\alpha$, and a point $x \in (p,q)$ with
+$$|\alpha - 2x| \;\ge\; \frac{1}{2(k+1)}.$$
 
-Under $h=w^{-2}$ this becomes
+*Proof.* On $(p,q)$ the true slope $2x$ ranges over an interval of length $2/(k+1)$ while the network's slope is the constant $\alpha$. Whichever side of the midpoint $\alpha$ falls on, one of the two quarter points $p + L/4$, $p + 3L/4$ (with $L = 1/(k+1)$) is at distance at least $L/2 = 1/(2(k+1))$ from $\alpha$ in the sense required. $\square$
 
-$$
-w^2\bigl(Q_w(1)-1\bigr)\to\frac13.
-$$
+Contrast with Theorem 3.12: EML's gradient error is $O(h^2)$ at width $2$; shallow ReLU's is $\Omega(1/k)$, i.e. only first order in the width.
 
-This limit is a natural sharp-constant conjecture for the explicit family. It is not required for the certified $4/(9w^2)$ bound.
+---
 
-The parameter scaling deserves attention. The hidden slope is $h=w^{-2}$, while the output multiplier and skip coefficient have magnitudes
+## 6. The separation theorem
 
-$$
-\frac{2}{h^2}=2w^4,
-\qquad
-\frac{2}{h}=2w^2.
-$$
+**Theorem 6.1 (Width separation on $x^2$).** For every $\varepsilon > 0$:
 
-Thus approximation error improves while coefficient magnitudes grow. A complexity theory based only on unit count will regard the family as extremely economical; a norm-constrained theory may assign it a larger cost. Both viewpoints are legitimate, but they answer different questions.
+1. *(EML upper bound.)* There is $h > 0$ such that the EML layer $S_h$, of width $2$, satisfies $|S_h(x)-x^2| \le \varepsilon$ for all $x \in [0,1]$.
+2. *(ReLU lower bound.)* Every one-hidden-layer ReLU network $R_k$ with $|x^2 - R_k(x)| \le \varepsilon$ on $[0,1]$ satisfies
+$$(k+1)^2 \;\ge\; \frac{1}{32\varepsilon}.$$
 
-## 5. Algorithms and numerical evaluation
+*Proof.* (1) is Corollary 3.6; (2) is Theorem 5.6 rearranged. $\square$
 
-### 5.1 Stable evaluation
+**Corollary 6.2 (Explicit exchange rate).** To match the accuracy $1/(6n^2)$ of the width-2 EML layer with $h = 1/n$, a shallow ReLU network must satisfy
+$$3n^2 \le 16(k+1)^2, \qquad\text{i.e.}\qquad k+1 \ge \frac{\sqrt3}{4}\,n \approx 0.433\,n.$$
+The EML width stays at $2$.
 
-Directly evaluating $\exp(z)-1-z$ is inaccurate for small $z$ because two subtractions remove leading digits. Most numerical libraries provide $\operatorname{expm1}(z)$, which evaluates $\exp(z)-1$ accurately near zero.
+**Remark 6.3 (What is being traded).** The read-out weights of $S_h$ are $\pm 1/h^2$, and the two exponentials nearly cancel: at accuracy $\varepsilon = h^2/6$ the coefficients have magnitude $\sim 1/(6\varepsilon)$. So the separation is *width* against *weight magnitude*, and it is honest to state it as such. It is nevertheless a separation between the two model classes as usually defined (arbitrary real parameters), and Section 10 records the precise conjecture for the bounded-weight regime.
 
-**Algorithm 5.1 (Stable evaluation of the width-indexed approximant).** Given $w\ge1$ and $x\in[0,1]$:
+---
 
-1. Set $h=1/w^2$.
-2. Set $z=hx$.
-3. Compute $r=\operatorname{expm1}(z)-z$.
-4. Return $2r/h^2$.
+## 7. Polarisation: products, quadratic forms, and two inputs
 
-The algorithm uses a constant number of arithmetic operations and one transcendental evaluation, so its arithmetic-operation complexity is $O(1)$ per point and its storage is $O(1)$. For an array of $N$ points, independent evaluation costs $O(N)$ time and $O(N)$ output storage.
+### 7.1 The multiplication gate
 
-For extremely small $z$, even $\operatorname{expm1}(z)-z$ may suffer cancellation. A series fallback is then appropriate:
+**Definition 7.1.** The *EML multiplication gate* is
+$$P_h(x,y) = \frac{S_h(x+y) - S_h(x-y)}{4} = \frac{e^{h(x+y)}+e^{-h(x+y)}-e^{h(x-y)}-e^{-h(x-y)}}{4h^2}.$$
+It is a layer of width $4$ (four exponential neurons, evaluated at the two pre-activations $x+y$ and $x-y$).
 
-$$
-\exp(z)-1-z=\frac{z^2}{2}+\frac{z^3}{6}+\frac{z^4}{24}+\cdots.
-$$
+The construction is the polarisation identity $xy = \tfrac14\big((x+y)^2-(x-y)^2\big)$ applied to an approximate squarer.
 
-### 5.2 Stable derivative evaluation
+**Theorem 7.2 (Accuracy of the gate).** If $|h(x+y)| \le 1$ and $|h(x-y)| \le 1$ then
+$$\left| P_h(x,y) - xy \right| \;\le\; \frac{h^2\big((x+y)^4 + (x-y)^4\big)}{24}.$$
+In particular, for $0 < h \le 1/2$ and $x,y \in [0,1]$,
+$$\left| P_h(x,y) - xy \right| \;\le\; h^2.$$
 
-The derivative is evaluated as
+*Proof.* Apply Theorem 3.4 at the two points $x \pm y$ and combine by the triangle inequality, dividing by $4$. On $[0,1]^2$ one has $(x+y)^4 \le 16$ and $(x-y)^4 \le 1$, giving $17h^2/24 \le h^2$; the hypotheses $|h(x\pm y)|\le 1$ hold because $h \le 1/2$ and $|x \pm y| \le 2$. $\square$
 
-$$
-Q_w'(x)=2w^2\operatorname{expm1}\left(\frac{x}{w^2}\right).
-$$
+**Theorem 7.3 (Sharpness of the gate).** For $0 < h \le 1/2$,
+$$\left| P_h(1,1) - 1 \right| \;\ge\; \frac{2h^2}{7}.$$
+Hence the gate's uniform error on $[0,1]^2$ is $\Theta(h^2)$, bracketed between $2h^2/7$ and $h^2$.
 
-This avoids subtracting $1$ from a number close to $1$ using ordinary exponentiation. As with function evaluation, the cost per point is $O(1)$.
+*Proof.* $S_h(0) = 0$, so $P_h(1,1) = S_h(2)/4$, and
+$$P_h(1,1)-1 = \frac{e^{2h}+e^{-2h}-2-(2h)^2}{4h^2}.$$
+Apply Lemma 3.7 with $h$ replaced by $2h \in (0,1]$: the numerator is at least $(2h)^4/14 = 16h^4/14$, so the quotient is at least $4h^2/14 = 2h^2/7$. $\square$
 
-### 5.3 Grid diagnostics
+The empirical constant is $1/3$ (Section 9), consistent with the proved bracket $[2/7, 17/24] = [0.286, 0.708]$.
 
-A numerical diagnostic selects a grid $x_j=j/(N-1)$ for $j=0,\ldots,N-1$, evaluates the absolute errors, and records their maximum. It then compares that sampled maximum with $4/(9w^2)$. Such a calculation demonstrates scale and implementation behavior but is not a proof of the uniform theorem, because the grid is finite.
+### 7.2 Quadratic forms in many variables
 
-A useful report includes:
+**Theorem 7.4 (Every quadratic form is a single EML layer).** Let $A \in \mathbb R^{n\times n}$, let $q(x) = \sum_{i,j} A_{ij}x_ix_j$, and let $0 < h \le 1/2$. Then for all $x \in [0,1]^n$,
+$$\left| \sum_{i,j} A_{ij}\,P_h(x_i,x_j) \;-\; q(x) \right| \;\le\; h^2 \sum_{i,j}\left|A_{ij}\right|.$$
+The left-hand network is a single EML layer of width at most $4n^2$.
 
-- the sampled value error $\max_j|Q_w(x_j)-x_j^2|$;
-- the certificate $4/(9w^2)$;
-- their ratio;
-- the sampled derivative error $\max_j|Q_w'(x_j)-2x_j|$;
-- the inverse-linear benchmark $4/(9w)$.
+*Proof.* Subtract termwise, apply Theorem 7.2 to each product and the triangle inequality:
+$$\left|\sum_{i,j}A_{ij}\big(P_h(x_i,x_j)-x_ix_j\big)\right| \le \sum_{i,j}|A_{ij}|\cdot h^2. \qquad\square$$
 
-The sampled ratio of the value error to $1/w^2$ should approach approximately $1/3$ for moderate $w$ before floating-point conditioning becomes dominant.
+The essential point is that the constant $h^2$ is **dimension-free**: the ambient dimension $n$ enters only through the coefficient mass $\|A\|_{1,1} = \sum_{i,j}|A_{ij}|$, never through an exponential factor. There is no curse of dimensionality on the class of quadratic forms with bounded coefficient mass. (Width $4n^2$ is of course the natural count of monomials; it can be halved by symmetry and reduced further for low-rank $A$, since $P_h$ applied to the pre-activations of a rank-$r$ factorisation costs $O(r)$ gates.)
 
-## 6. Quantitative consequences
+### 7.3 The ReLU barrier in two inputs
 
-### 6.1 Accuracy-to-budget conversion
+**Definition 7.5.** A one-hidden-layer ReLU network in two inputs with $k$ units is
+$$R^{(2)}_k(x,y) = c_0 + c_1x + c_2y + \sum_{i=1}^{k}a_i\,\mathrm{relu}(w_ix+v_iy+b_i).$$
 
-The uniform certificate can be inverted. Given a tolerance $\varepsilon>0$, any positive integer $w$ satisfying
+**Lemma 7.6 (Diagonal restriction).** $R^{(2)}_k(x,x)$ is a one-hidden-layer *univariate* ReLU network with $k$ units, namely with hidden weights $w_i + v_i$, biases $b_i$, read-out $a_i$ and skip connection $c_0 + (c_1+c_2)x$.
 
-$$
-\frac{4}{9w^2}\le\varepsilon
-$$
+**Theorem 7.7 (Products are as hard as squares for shallow ReLU).** If $|xy - R^{(2)}_k(x,y)| \le \varepsilon$ for all $(x,y) \in [0,1]^2$, then
+$$\varepsilon \;\ge\; \frac{1}{32(k+1)^2}.$$
 
-is sufficient. Equivalently, one may take
+*Proof.* Restrict to $y=x$. The target becomes $x^2$ and the network becomes a univariate $k$-unit shallow ReLU network by Lemma 7.6; apply Theorem 5.6. $\square$
 
-$$
-w\ge \left\lceil\frac{2}{3\sqrt{\varepsilon}}\right\rceil.
-$$
+The restriction is *lossless* — a bivariate unit becomes a genuine univariate unit, not a degenerate one — so the transferred bound costs nothing and cannot be evaded by an adversarial choice of $v_i$.
 
-This is a sufficient budget rule rather than a lower bound. It makes the inverse-square scaling operational: reducing the certified tolerance by a factor of $r$ increases the sufficient index by a factor of approximately $\sqrt r$.
+**Theorem 7.8 (Product separation).** For every $\varepsilon>0$ there is $h>0$ such that the width-$4$ EML gate satisfies $|P_h(x,y)-xy|\le\varepsilon$ on $[0,1]^2$; whereas every bivariate shallow ReLU network achieving the same accuracy has $(k+1)^2 \ge 1/(32\varepsilon)$.
 
-For example, a certificate below $10^{-2}$ is obtained once $w\ge7$, since $4/(9\cdot49)<10^{-2}$. A certificate below $10^{-4}$ is obtained once $w\ge67$. The actual error is expected to be lower because the constant $4/9$ is not sharp.
+*Proof.* Take $h=\min(1/2,\varepsilon)$ in Theorem 7.2 (then $h^2 \le h \le \varepsilon$), and Theorem 7.7 for the converse. $\square$
 
-### 6.2 Monotonicity of the error
+---
 
-The series representation supplies additional qualitative information. For $h>0$ and $x\ge0$,
+## 8. The converse: depth-2 EML contains shallow ReLU
 
-$$
-E_h(x)=Q_h(x)-x^2
-=2\sum_{k=3}^{\infty}\frac{h^{k-2}x^k}{k!}
-$$
+A separation is only informative if the favoured model is not *worse* elsewhere. It is not, and the reason is structural rather than analytic.
 
-is nonnegative. Differentiating the series term by term gives
+### 8.1 Softplus is an EML composite
 
-$$
-E_h'(x)=2\sum_{k=3}^{\infty}\frac{h^{k-2}x^{k-1}}{(k-1)!}\ge0.
-$$
+**Definition 8.1.** $\mathrm{softplus}(t) = \log(1+e^t)$.
 
-Thus the error is nondecreasing on $[0,1]$, and its supremum occurs at $x=1$. This observation is consistent with the exact expression
+Observe that $\mathrm{softplus}$ is exactly an exponential neuron $t \mapsto e^{t}$ followed by a logarithmic neuron $u \mapsto -\log(1 + u)$ (up to sign, absorbed by the read-out) — i.e. a depth-2 EML chain with the exponential branch of the second neuron switched off.
 
-$$
-\sup_{x\in[0,1]}|Q_h(x)-x^2|
-=Q_h(1)-1
-=\frac{2}{h^2}\bigl(\exp(h)-1-h\bigr)-1.
-$$
+**Lemma 8.2.** For all $t$: $\mathrm{relu}(t) \le \mathrm{softplus}(t) \le \mathrm{relu}(t) + \log 2$.
 
-It provides a direct route toward the conjectured sharp asymptotic constant. Expanding the endpoint formula gives
+*Proof.* For $t \le 0$: $\mathrm{relu}(t)=0 \le \log(1+e^t)$ since $1+e^t \ge 1$; and $\log(1+e^t) \le \log 2$ since $e^t \le 1$. For $t>0$: $\log(1+e^t) = t + \log(1+e^{-t}) \ge t = \mathrm{relu}(t)$, and $\log(1+e^{-t}) \le \log 2$. $\square$
 
-$$
-Q_h(1)-1=\frac{h}{3}+\frac{h^2}{12}+O(h^3).
-$$
+**Theorem 8.3 (Scaled softplus approximates ReLU).** For $M>0$ and all $t$,
+$$\left| \frac{\log(1+e^{Mt})}{M} - \mathrm{relu}(t) \right| \;\le\; \frac{\log 2}{M},$$
+with equality at $t=0$.
 
-With $h=w^{-2}$, multiplication by $w^2$ leaves a leading term of $1/3$. These sharper observations explain why the certified constant $4/9$ has slack, though the global certificate remains convenient for all $w\ge1$.
+*Proof.* Apply Lemma 8.2 at $Mt$ and use the positive homogeneity $\mathrm{relu}(Mt) = M\,\mathrm{relu}(t)$; divide by $M$. $\square$
 
-### 6.3 Coefficient growth and conditioning
+### 8.2 Emulation and domination
 
-The construction separates representational complexity from numerical conditioning. Its nonlinear width is fixed at one, but its output coefficients grow polynomially with $w$. If values are computed by separately forming
+**Theorem 8.4 (Emulation error).** For $M>0$ there is an explicit depth-2 EML network $\mathcal E_M$ with $k$ parallel chains — the $i$-th chain being $x \mapsto e^{M(w_ix+b_i)}$ followed by $u \mapsto 1 - \log(1+u)$, read out with weight $-a_i/M$, plus the skip connection $c_0+c_1x$ — such that for all real $x$,
+$$\left| \mathcal E_M(x) - R_k(x) \right| \;\le\; \Big(\sum_{i=1}^k |a_i|\Big)\frac{\log 2}{M}.$$
 
-$$
-2w^4\exp(x/w^2),\qquad 2w^4,\qquad 2w^2x,
-$$
+*Proof.* The $i$-th chain computes $-\big(\log(1+e^{M(w_ix+b_i)}) - 1\big)/M$ up to the constant absorbed by the bias, i.e. $a_i \cdot \mathrm{softplus}(M(w_ix+b_i))/M$ after read-out. Subtract $R_k$ termwise and apply Theorem 8.3 to each term with the triangle inequality. $\square$
 
-then large quantities cancel to leave a value of order one. Standard floating-point arithmetic may lose significant digits. Stable evaluation should instead preserve the small exponential remainder before applying the large multiplier. This distinction is relevant to training as well: a parameterization with large, canceling weights may have unfavorable optimization geometry even when its represented function is excellent.
+**Theorem 8.5 (Domination).** Let $f$ be any function, $S$ any set, and suppose a $k$-unit shallow ReLU network approximates $f$ within $\varepsilon$ on $S$. Then for every $\delta>0$ there is a depth-2 EML network with $k$ chains approximating $f$ within $\varepsilon + \delta$ on $S$.
 
-A norm-aware approximation theorem would therefore track both error and parameter magnitudes. The present result isolates the approximation mechanism and supplies exact growth rates for those magnitudes, providing the data needed for such a refinement.
+*Proof.* Choose $M \ge \max\{1, (\sum_i|a_i|)\log 2/\delta\}$ in Theorem 8.4 and apply the triangle inequality. $\square$
 
-## 7. Applications and interpretation
+### 8.3 The Lipschitz Jackson rate
 
-### 7.1 Quadratic modules and multiplication
+**Definition 8.6 (Interpolant as a ReLU network).** For $f:[0,1]\to\mathbb R$ and $N \ge 1$, let $\sigma_j = N\big(f((j+1)/N)-f(j/N)\big)$ be the slope of the linear interpolant on the $j$-th piece and $\lambda_j = \sigma_j - \sigma_{j-1}$ (with $\sigma_{-1}=0$) the slope jump at the node $j/N$. Then
+$$\Pi_N f(x) = f(0) + \sum_{j=0}^{N-1} \lambda_j\, \mathrm{relu}\!\left(x - \frac{j}{N}\right)$$
+is a width-$N$ shallow ReLU network, and on each piece $[j/N,(j+1)/N]$ it equals the linear interpolant of $f$ at the endpoints (telescoping the slope jumps).
 
-The identity
+**Theorem 8.7 (Interpolation error).** If $f$ is $L$-Lipschitz on $[0,1]$ then $\max_{x\in[0,1]}|f(x)-\Pi_Nf(x)| \le 2L/N$.
 
-$$
-xy=\frac{(x+y)^2-(x-y)^2}{4}
-$$
+*Proof sketch.* Fix $x$ in the $j$-th piece. The interpolant is a convex combination of $f(j/N)$ and $f((j+1)/N)$, each within $L/N$ of $f(x)$ by the Lipschitz property (the piece has length $1/N$); hence the interpolant is within $L/N$ of $f(x)$, and the crude bound $2L/N$ holds with room to spare, uniformly including the endpoints. $\square$
 
-turns square approximation into multiplication approximation. If a square module is valid on an interval containing $x+y$ and $x-y$, two copies can be combined linearly to approximate a product. Domain rescaling is required when the arguments leave $[0,1]$. This observation connects the quadratic test to polynomial feature maps, bilinear interactions, and energy functions.
+**Theorem 8.8 (Jackson rate for depth-2 EML).** Let $f$ be $L$-Lipschitz on $[0,1]$, let $N \ge 1$ and $\delta > 0$. There is a depth-2 EML network with $N$ chains whose uniform error on $[0,1]$ is at most
+$$\frac{2L}{N} + \delta .$$
 
-### 7.2 Smooth surrogate models
+*Proof.* Combine Theorem 8.7 with the domination Theorem 8.5. $\square$
 
-The exact derivative formula makes $Q_w$ suitable as a smooth surrogate where sensitivities are part of the output. Potential settings include differentiable simulation, continuous control, inverse problems, and models constrained by differential equations. The present theorem certifies only function values; a uniform derivative certificate remains a separate result to establish.
+Since the $\Theta(1/N)$ rate is optimal for the Lipschitz class for *any* model with $N$ parameters of this type, Theorem 8.8 says depth-2 EML is exactly as good as ReLU there — no better, no worse.
 
-### 7.3 Activation design
+---
 
-The approximation illustrates a general design principle: affine readouts can cancel low-order Taylor terms, leaving a desired higher-order component. For the EML family, setting the logarithmic branch to zero isolates an exponential whose second derivative is nonzero. More elaborate parameter choices might exploit both branches to control higher-order terms, reduce coefficient growth, or approximate functions with asymmetric curvature.
+## 9. Algorithms and numerical corroboration
 
-## 8. Scope, limitations, and fair comparisons
+Two elementary algorithms suffice to realise all constructions.
 
-The result is deliberately narrow and should not be promoted into claims it does not support.
+**Algorithm A (Central-difference squaring layer).** Given a target accuracy $\varepsilon$, set $h = \min(1,\sqrt{6\varepsilon})$ and return the width-2 layer with parameters $(h,0,0,1)$, $(-h,0,0,1)$, read-out $(1/h^2, 1/h^2)$, bias $-2/h^2$. Evaluation costs two exponentials. The guaranteed uniform error on $[0,1]$ is $h^2/6 \le \varepsilon$.
 
-First, it concerns one smooth target in one dimension. It does not prove that every Lipschitz function on $[0,1]^n$ can be approximated at rate $O((wd)^{-2/n})$. General Lipschitz functions need not have Taylor expansions, and multivariate approximation requires a covering or partition strategy.
+**Algorithm B (Quadratic-form layer).** Given $A \in \mathbb R^{n\times n}$ and $\varepsilon$, set $h = \min(1/2, \sqrt{\varepsilon/\|A\|_{1,1}})$ and return $\sum_{i,j}A_{ij}P_h(x_i,x_j)$, a layer of width $\le 4n^2$; evaluation costs $O(n^2)$ exponentials, or $O(n^2)$ arithmetic operations plus $O(n^2)$ transcendental calls. Guaranteed error $h^2\|A\|_{1,1} \le \varepsilon$.
 
-Second, the parameter $w$ controls $h=w^{-2}$ but does not count active neurons in the displayed formula. The construction fits within width at most $w$ because it uses one nonlinear unit, but the improved rate arises from parameter scaling rather than adding units. If coefficient norms are constrained, the effective complexity changes.
+**Algorithm C (Softplus emulator).** Given a shallow ReLU network $(a,w,b,c_0,c_1)$ and slack $\delta$, set $M = \max\{1, (\sum_i|a_i|)\log 2/\delta\}$ and return the depth-2 EML chains of Theorem 8.4. Uniform emulation error $\le \delta$.
 
-Third, the depth-two statement permits a linear skip connection. A strict sequential architecture may require an additional unit or layer to transport the input. Establishing exact depth and width in such a model requires an architecture-specific compilation theorem.
+Direct numerical evaluation on a $1001$-point grid of $[0,1]$ (and a $51\times51$ grid of $[0,1]^2$ for the gate) gives the following observed constants, where each column reports $\max$ error divided by the predicted rate:
 
-Fourth, the inverse-linear comparison is only a comparison of two formulas. It is not a ReLU lower bound. A fair region-count comparison with continuous piecewise-linear functions is expected to yield inverse-square behavior for $x^2$, with a sharp interpolation error of order $1/w^2$. Thus the benefit highlighted here is smoothness and explicit shallow realization, not a demonstrated asymptotic separation from every piecewise-linear method.
+| $h$ | $\max\lvert S_h - x^2\rvert / h^2$ | $\max\lvert F_h - x^2\rvert / h$ | $\max\lvert S_h\!\circ\! S_h - x^4\rvert/h^2$ | $\max\lvert S_h' - 2x\rvert/h^2$ | $\max\lvert P_h - xy\rvert/h^2$ |
+|---|---|---|---|---|---|
+| $0.5$    | $0.0840$ | $0.3795$ | $0.2612$ | $0.3375$ | $0.3446$ |
+| $0.25$   | $0.0835$ | $0.3553$ | $0.2527$ | $0.3344$ | $0.3361$ |
+| $0.125$  | $0.0834$ | $0.3440$ | $0.2507$ | $0.3336$ | $0.3340$ |
+| $0.0625$ | $0.0833$ | $0.3386$ | — | — | $0.3335$ |
 
-Finally, finite-precision stability limits naive evaluation at very large $w$. The coefficients grow as $w^4$ and cancellation becomes severe. Stable primitives, series expansions, or higher precision are needed to observe the mathematical rate numerically.
+The limits are $1/12$, $1/3$, $1/4$, $1/3$ and $1/3$ respectively — every one strictly inside the proved constants $1/6$, $1/3$ (matched exactly), $1$, $1/2$ and $17/24$. The lower bounds are likewise corroborated: $|S_h(1)-1|/h^2 \to 1/12 > 1/14$, and $|P_h(1,1)-1|/h^2 \to 1/3 > 2/7$.
 
-These limitations also clarify the role of the theorem in empirical work. The family is a controlled baseline: its parameters can be initialized analytically, its output can be compared against exact values, and its error envelope is known in advance. An optimization experiment that fails to recover comparable behavior would diagnose training or conditioning rather than lack of representational capacity. Conversely, success on this target would not establish broad generalization, because the construction is tailored to the quadratic’s Taylor structure. The test is therefore best viewed as a calibration instrument for architectures and optimizers, not as a comprehensive benchmark of learning ability.
+The scaled softplus behaves as predicted: at $M=10$, $\big|M^{-1}\log(1+e^{Mt}) - \mathrm{relu}(t)\big|$ equals $4.54\times10^{-6}$ at $t=\pm1$ and $0.0693 = \log 2/10$ at $t=0$, the maximum.
 
-## 9. Future research
+---
 
-Five directions emerge naturally.
+## 10. Discussion
 
-1. **Multivariate EML rate.** Determine whether, for every $n\ge1$, every $L$-Lipschitz function on $[0,1]^n$, and all positive $w,d$, there exists an EML network of width at most $w$ and depth at most $d$ with uniform error at most $C(n)L(wd)^{-2/n}$, where $C(n)$ is independent of the target, $w$, and $d$.
+### 10.1 What the trade-off actually is
 
-2. **Architecture-intrinsic realization.** In a strict layered model whose only nonlinear activation is $\exp(ax+b)-\log(a'x+b')$, determine whether the present function can be implemented with depth exactly two and width at most $w$ for every $w\ge1$, without relying on an uncompiled skip.
+The mission conjecture was a rate of the form $O((wd)^{-2/n})$ for the EML class on Lipschitz targets, matching the ReLU rate with smoother gradients. The results above refine this into two crisply separated statements.
 
-3. **Sharp asymptotic constant.** Establish whether
+**On the Lipschitz class the rate is $\Theta(1/N)$ for both models.** Theorem 8.8 gives the upper bound for depth-2 EML at width $N$, via the containment of ReLU. Nothing better is available, because a Lipschitz function carries no second-order information to exploit.
 
-$$
-\lim_{w\to\infty}w^2\sup_{x\in[0,1]}|Q_w(x)-x^2|=\frac13.
-$$
+**On smooth (analytic) targets the correct statement is not about width at all.** Theorem 3.9 gives a $\Theta(h^2)$ rate at the *fixed* width $2$, and Theorem 5.6 shows this is unattainable for shallow ReLU at any fixed width. The resource actually being spent is weight magnitude: read-out coefficients $1/h^2$ buy accuracy $h^2$. Width, depth and precision are three currencies; an analytic activation converts freely between them, while a piecewise-linear one is confined to width (and depth, which for ReLU multiplies the number of linear pieces).
 
-4. **Piecewise-linear region comparison.** Prove the sharp uniform error for continuous piecewise-linear approximation of $x^2$ with at most $w$ affine pieces, including the proposed $1/(8w^2)$ lower bound and equal-mesh construction, under a precisely aligned convention.
+The gradient results sharpen the same contrast: $O(h^2)$ at width $2$ versus $\Omega(1/k)$ at width $k$. If the derivative of the learned function is the object of interest — physics-informed models, sensitivity analysis, control, calibration of surrogate models — this is the more consequential half of the separation.
 
-5. **Uniform gradient convergence.** Prove a universal constant $C$ such that
+### 10.2 Limitations
 
-$$
-\sup_{x\in[0,1]}|Q_w'(x)-2x|\le\frac{C}{w^2}
-$$
+Three should be stated plainly.
 
-for every positive integer $w$.
+*Weight magnitude.* As noted, the EML upper bounds are purchased with coefficients of size $\Theta(1/\varepsilon)$ and near-cancelling exponentials. In floating-point arithmetic this places a round-off floor at roughly $\sqrt{u}$ in the target accuracy ($u$ the unit roundoff) — exactly the classical trade-off of central-difference differentiation, where the optimal step balances truncation $O(h^2)$ against cancellation $O(u/h^2)$.
 
-## 10. Reproducible numerical protocol
+*Class of targets.* The width-2 phenomenon is specific to targets whose Taylor series the activation can reproduce cheaply — squares, products, quadratic forms, and (via depth) powers of the form $x^{2^m}$. It is not a general-purpose escape from approximation-theoretic lower bounds.
 
-A numerical study of this family should separate mathematical error from arithmetic error. For each selected width, first compute the approximant with a cancellation-aware exponential remainder. Next evaluate a nested sequence of grids, for example with $10^3$, $2\cdot10^3$, and $4\cdot10^3$ subintervals. Because the error is monotone for this specific family, the endpoint value offers an exact numerical cross-check; the grid maximum should occur at $x=1$. Report both the raw maximum and the rescaled quantity $w^2$ times that maximum.
+*Model of ReLU.* The lower bounds are for *one hidden layer*. Deep ReLU networks achieve $O(4^{-d})$ on $x^2$ with $d$ layers by the classical sawtooth construction, so the separation established here is between EML and *shallow* ReLU, not against arbitrary-depth ReLU. What Section 8 adds is that depth-2 EML also contains shallow ReLU, so the comparison at fixed small depth is one-sided in EML's favour.
 
-Three sanity checks are recommended. First, every sampled value error must lie below $4/(9w^2)$. Second, the inverse-square certificate must not exceed $4/(9w)$, with strict separation for $w\ge2$. Third, the rescaled endpoint error should move toward $1/3$ as $w$ increases, until finite precision interferes. Failure of the first two checks indicates an implementation error; failure of the third at very large widths may instead indicate cancellation.
+### 10.3 Future directions
 
-Derivative diagnostics should be reported separately, since the established value theorem does not certify them. Evaluate $2\operatorname{expm1}(x/w^2)w^2$ and compare it with $2x$. Label the resulting maximum as sampled evidence rather than a proved bound. This distinction preserves the line between the theorem’s scope and the motivating gradient-convergence conjecture.
+**C1. Bounded-weight separation.** Fix $W \ge 1$ and restrict all EML weights (inner and read-out) to $[-W,W]$. Conjecture: approximating $x^2$ on $[0,1]$ to accuracy $\varepsilon$ then requires width $k \ge c\,\varepsilon^{-1/2}/\log W$, and this is attained. The key insight is that the width-2 construction spends $1/h^2$ of read-out magnitude to buy $h^2$ of accuracy, so weight magnitude and width are interchangeable currencies and the lower bound should be stated in the total budget $k\log W$. Both halves of the ledger are already in place: the upper bound exhibits the exchange rate explicitly, and the pigeonhole argument of Section 5 is a template for a lower bound that counts *pieces*, which under a weight budget an EML layer also has.
 
-Finally, report the floating-point type, grid size, evaluation formula, and whether a series fallback was used. These details are essential because the naive algebraically equivalent expression combines terms of size $w^4$. A reproducible experiment is not merely a plot: it states enough numerical methodology for another reader to obtain the same curves and diagnose any discrepancy.
+**C2. Depth is worth an exponent for analytic targets.** Conjecture: for every $m \ge 1$ the $m$-fold composition $S_h^{\circ m}$ approximates $x^{2^m}$ on $[0,1]$ with uniform error $\le C_m h^2$ and $C_m \le 2^m$, whereas any depth-1 EML layer of width $k$ needs $k \ge c\,2^m/(1+|\log h|)$ for the same accuracy — depth doubling the polynomial degree per layer at constant width. Theorem 4.1 is the case $m = 2$ with $C_2 = 1$, and its proof used only that the first layer's output stays in a fixed compact set, an invariant that iterates: the estimate $|y| \le 25/24 \Rightarrow |hy| \le 1$ is exactly the induction hypothesis needed.
+
+**C3. Beyond quadratic forms.** Polarisation gives products; products give monomials by iteration, and monomials give polynomials. The natural target is a Bernstein- or Chebyshev-type theorem: which polynomial classes admit EML networks of width polynomial in the degree with dimension-free error constants, and where does the coefficient mass $\|A\|_{1,1}$ generalise to a Barron-type norm?
+
+**C4. Numerical stabilisation.** Since the obstruction to small $h$ is cancellation, the natural fix is a stably evaluated variant — using $\mathrm{expm1}$, or a Chebyshev-economised combination of several $h$ scales (Richardson extrapolation across scales would give $\Theta(h^4)$ at width $4$). Quantifying the achievable accuracy under a fixed floating-point format would turn the theoretical separation into a practical one.
+
+**C5. Training dynamics.** All results here are about expressivity, i.e. the existence of good parameters. Whether gradient descent *finds* the central-difference configuration — a delicate near-cancellation of two large exponentials — is a separate and genuinely open question, and the honest counterweight to the optimism of Theorem 6.1.
+
+---
 
 ## 11. Conclusion
 
-A single EML unit can expose the quadratic term hidden in the exponential series. After an affine readout and linear skip, the resulting smooth function is
+The parabola is the simplest curved target there is, and it already separates two families of networks. A single EML layer of two neurons reaches any accuracy on $x^2$, with an error that is exactly $\Theta(h^2)$ in its scale parameter and whose derivative is simultaneously accurate to $O(h^2)$; every one-hidden-layer ReLU network with $k$ units errs by at least $1/(32(k+1)^2)$ and misestimates the slope by $\Omega(1/k)$. Polarisation extends the phenomenon to products, hence to all quadratic forms with a dimension-free constant, and the ReLU barrier transfers to the bivariate product without loss. In the other direction, softplus — an exponential followed by a logarithm — embeds every shallow ReLU network into a depth-2 EML network of equal width, so the smooth model is never worse and inherits the optimal $\Theta(1/N)$ Lipschitz rate.
 
-$$
-Q_h(x)=\frac{2}{h^2}\bigl(\exp(hx)-1-hx\bigr),
-$$
-
-with exact derivative $2(\exp(hx)-1)/h$. Choosing $h=w^{-2}$ produces a width-indexed family satisfying the uniform bound
-
-$$
-\sup_{x\in[0,1]}|Q_w(x)-x^2|\le\frac{4}{9w^2}.
-$$
-
-This certificate improves on the matched inverse-linear expression for all positive budgets and strictly improves it for $w\ge2$. The result provides a transparent test case for smooth neural approximation: its mechanism, architecture, error, derivative, and numerical conditioning are all explicit. It also delineates the next steps required for a general theory—multivariate targets, strict architecture accounting, sharp constants, gradient bounds, and resource-aligned comparisons with piecewise-linear methods.
+The conclusion is not that one activation dominates another in practice; it is that the phrase "depth–width trade-off" is incomplete. For analytic activations the true statement involves a third currency, weight magnitude, and the honest question for future work is what the exchange rates become when all three are budgeted at once.

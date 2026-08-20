@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "3da67f84",
-      "domain": "Shared",
-      "key_insight": "# Future Directions — Pole-order obstruction\n\nDerived from the two research cycles formalized in\n`Catalog/Shared/PoleOrderObstruction.lean` and\n`Catalog/Shared/PoleOrderObstructionDeep.lean`.\n\nWhat su",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 53,
-      "timestamp": "2026-08-19T05:14:59",
-      "title": "Pole-order obstruction"
-    },
-    {
       "cycle_id": "c0dccdf7",
       "domain": "Probability",
       "key_insight": "# Future directions\n\nConjecture A (the parity-gap conjecture) is now a theorem: `ParityGap.conjectureA` in\n`Catalog/Probability/ParityGap/ConjectureA.lean`, together with its equivalent analytic forms",
@@ -499,19 +489,19 @@
       "theorem_count": 115,
       "timestamp": "2026-08-20T23:41:20",
       "title": "Martingale-Concentration: Talagrand's Inequality on Product Spaces"
+    },
+    {
+      "cycle_id": "63d0d6e2",
+      "domain": "Physics",
+      "key_insight": "# Future directions — after the low-tail experiment\n\nFive conjectures distilled from cycles 1–4 (`Catalog/Physics/LowTail*.lean`).  Each is\nfalsifiable by a finite computation or by a single further L",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 118,
+      "timestamp": "2026-08-20T23:41:31",
+      "title": "The low-tail experiment."
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "ea50968d",
-      "domain": "Algebra",
-      "key_insight": "# Future directions (thread `th_ac518134`, cycle 3)\n\nThis cycle proved, in `Catalog/Algebra/`:\n\n* **`DepthDominationCriterion.lean`** — a tag-indexed criterion `DepthDominates` for\n  inclusion of the",
-      "quality_score": 0.627125,
-      "sorry_count": 0,
-      "theorem_count": 81,
-      "timestamp": "2026-08-11T19:30:13",
-      "title": "Derived from the results proved in `Catalog/Novelty/ArithmetizedQFTReflection.le"
-    },
     {
       "cycle_id": "832153cb",
       "domain": "Physics",
@@ -2501,27 +2491,19 @@
       "theorem_count": 115,
       "timestamp": "2026-08-20T23:41:20",
       "title": "Martingale-Concentration: Talagrand's Inequality on Product Spaces"
+    },
+    {
+      "cycle_id": "63d0d6e2",
+      "domain": "Physics",
+      "key_insight": "# Future directions — after the low-tail experiment\n\nFive conjectures distilled from cycles 1–4 (`Catalog/Physics/LowTail*.lean`).  Each is\nfalsifiable by a finite computation or by a single further L",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 118,
+      "timestamp": "2026-08-20T23:41:31",
+      "title": "The low-tail experiment."
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "17d131fb",
-      "domain": "NumberTheory",
-      "name": "markOn_le_fixCount",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "5c70a18c",
-      "domain": "NumberTheory",
-      "name": "from",
-      "quality": 0.86
-    },
-    {
-      "cycle_id": "52846ceb",
-      "domain": "Applications",
-      "name": "from",
-      "quality": 0.82
-    },
     {
       "cycle_id": "84bf9824",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Probability",
       "name": "exp_le_quartic",
       "quality": 0.92
+    },
+    {
+      "cycle_id": "63d0d6e2",
+      "domain": "Physics",
+      "name": "tailBar_is_midpoint",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "63d0d6e2",
+      "domain": "Physics",
+      "name": "tailBar_eq_three_quarters",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "63d0d6e2",
+      "domain": "Physics",
+      "name": "lowTail_eq_five_eighths",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-20T23:41:20",
+  "last_updated": "2026-08-20T23:41:31",
   "open_questions": [
     {
       "context": "Everything is proved; there are no `sorry`s and no new axioms.",
@@ -3703,12 +3703,6 @@
     ],
     "Physics": [
       {
-        "cycle_id": "70d03dec",
-        "quality": 0.78,
-        "theorems": 75,
-        "title": "CYCLIC-TYPE-CHANNEL (round-22 #2, experiment 413, assessment v189, paper 78)"
-      },
-      {
         "cycle_id": "25d882e7",
         "quality": 0.78,
         "theorems": 53,
@@ -3761,6 +3755,12 @@
         "quality": 0.9,
         "theorems": 426,
         "title": "Quantum-Pythagorean-Walk: Polynomial Time Integer Factorization via Tree Resonan"
+      },
+      {
+        "cycle_id": "63d0d6e2",
+        "quality": 0.82,
+        "theorems": 118,
+        "title": "The low-tail experiment."
       }
     ],
     "Probability": [
