@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "2afe0ce6",
-      "domain": "Applications",
-      "key_insight": "# Future directions: the subset spectrum of a finite action\n\nThe assigned conjecture — *for every finite action the spectrum is log-concave,\n`t_r² ≥ t_{r-1}·t_{r+1}` for `1 ≤ r < |X|`* — is **false**,",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 63,
-      "timestamp": "2026-08-18T15:47:25",
-      "title": "For every finite action the spectrum is log-concave: `t_r² ≥ t_{r−1}·t_{r+1}` for\n`1 ≤ r < |X|`."
-    },
-    {
       "cycle_id": "5792b548",
       "domain": "Shared",
       "key_insight": "# Future Directions — power-sum rigidity, sharpness, and what lies past the boundary\n\nDerived from the verified results in `Catalog/Shared/PowerSumSharpness.lean`\n(rigidity `powerSums_determine`, shar",
@@ -499,19 +489,19 @@
       "theorem_count": 61,
       "timestamp": "2026-08-20T13:11:21",
       "title": "For the PTX-augmented optimum `q*_{β,γ}` with `γ > 0`,"
+    },
+    {
+      "cycle_id": "560d610e",
+      "domain": "Tropical",
+      "key_insight": "# Future directions — tropical Shtarkov sums of finite-state classes\n\nThe verified results of this cycle live in `Catalog/Tropical/Shtarkov/`:\n\n| file | content |\n|------|---------|\n| `Basic.lean` | `",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 93,
+      "timestamp": "2026-08-20T13:11:32",
+      "title": "The finite-state class and its bound were constructed this cycle"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "5bbe180d",
-      "domain": "MachineLearning",
-      "key_insight": "# Future directions: bold, testable conjectures from the symmetry dichotomy\n\nThe cycle established, in\n`Catalog/MachineLearning/TransformerUniversality/PermutationDichotomy.lean` (0 sorries):\n\n* `grou",
-      "quality_score": 0.7456849999999999,
-      "sorry_count": 0,
-      "theorem_count": 59,
-      "timestamp": "2026-08-11T07:52:58",
-      "title": "Deepening: Attention is All You Need: Formalizing Transformer Architecture"
-    },
     {
       "cycle_id": "fb9255eb",
       "domain": "Geometry",
@@ -2501,27 +2491,19 @@
       "theorem_count": 61,
       "timestamp": "2026-08-20T13:11:21",
       "title": "For the PTX-augmented optimum `q*_{β,γ}` with `γ > 0`,"
+    },
+    {
+      "cycle_id": "560d610e",
+      "domain": "Tropical",
+      "key_insight": "# Future directions — tropical Shtarkov sums of finite-state classes\n\nThe verified results of this cycle live in `Catalog/Tropical/Shtarkov/`:\n\n| file | content |\n|------|---------|\n| `Basic.lean` | `",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 93,
+      "timestamp": "2026-08-20T13:11:32",
+      "title": "The finite-state class and its bound were constructed this cycle"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "252d7c91",
-      "domain": "Algebra",
-      "name": "qBinom_succ_succ",
-      "quality": 0.8
-    },
-    {
-      "cycle_id": "6d98445d",
-      "domain": "Physics",
-      "name": "norm_devSeq_le",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "6d98445d",
-      "domain": "Physics",
-      "name": "Fgen_lower_bound_aux",
-      "quality": 0.82
-    },
     {
       "cycle_id": "a985d45a",
       "domain": "Combinatorics",
@@ -2803,9 +2785,27 @@
       "domain": "Physics",
       "name": "from",
       "quality": 0.9
+    },
+    {
+      "cycle_id": "560d610e",
+      "domain": "Tropical",
+      "name": "bddAbove_of_le_one",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "560d610e",
+      "domain": "Tropical",
+      "name": "shtarkovSum_ge_packing",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "560d610e",
+      "domain": "Tropical",
+      "name": "shtarkovSum_le_card_image",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-20T13:11:21",
+  "last_updated": "2026-08-20T13:11:32",
   "open_questions": [
     {
       "context": "sorry",
@@ -3951,12 +3951,6 @@
     ],
     "Tropical": [
       {
-        "cycle_id": "db97959f",
-        "quality": 0.86,
-        "theorems": 75,
-        "title": "The Jacobi-Signed Circle Count Escapes the Residue Dial, at the Weil Floor"
-      },
-      {
         "cycle_id": "f3293094",
         "quality": 0.82,
         "theorems": 65,
@@ -4009,6 +4003,12 @@
         "quality": 0.86,
         "theorems": 106,
         "title": "Both endpoints of the trade-off are now formal theorems in this"
+      },
+      {
+        "cycle_id": "560d610e",
+        "quality": 0.82,
+        "theorems": 93,
+        "title": "The finite-state class and its bound were constructed this cycle"
       }
     ]
   }

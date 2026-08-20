@@ -107,6 +107,25 @@
     "title": "EML-Pythagorean-Operator: Single-Neuron Neural Energy Guided Tree Traversal"
   },
   {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 367abe49 (Q=0.850), which proved 61 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For the PTX-augmented optimum `q*_{β,γ}` with `γ > 0`,\n`‖q*_{β,γ} − p‖₁ = Θ(γ·‖d − p‖₁) + Θ(σ_p(r)/β)` as `β → ∞`: the pretraining mix-in\ncontributes a `β`-independent drift toward `d`, so `lim_{β→∞} q*_{β,γ} ≠ p` unless\n`d = p`, while the *reward-induced* part of the drift still obeys the `σ/β` law",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_367abe49_55eb8002",
+    "lineage_refs": [],
+    "priority_score": 0.95,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "367abe49",
+    "status": "available",
+    "timestamp": "2026-08-20T13:11:22.340680+00:00",
+    "title": "Deepening: For the PTX-augmented optimum `q*_{β,γ}` with `γ > 0`,"
+  },
+  {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
     "consumed_by_exp_id": "",
@@ -181,25 +200,6 @@
     "status": "available",
     "timestamp": "2026-08-19T15:46:51.818344+00:00",
     "title": "Deepening: Both sides of the identity are already available as Lean theorems"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle db2f2b2f (Q=0.900), which proved 426 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalizes a quantum random walk on the Berggren Pythagorean tree where constructive interference at energy spectrum minima collapses the state onto factors of N.",
-    "domain_bridges": [],
-    "domains": [
-      "Physics"
-    ],
-    "id": "push_db2f2b2f_01bff214",
-    "lineage_refs": [],
-    "priority_score": 0.95,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "db2f2b2f",
-    "status": "available",
-    "timestamp": "2026-08-20T11:43:09.357163+00:00",
-    "title": "Deepening: Quantum-Pythagorean-Walk: Polynomial Time Integer Factorization via Tree Resonan"
   },
   {
     "ambition_level": "extension",
@@ -1112,6 +1112,25 @@
     "status": "available",
     "timestamp": "2026-08-17T07:17:22.608319+00:00",
     "title": "Deepening: ArXiv paper: A Fourier-analytic Uniqueness Theorem for Lattice-point Enumerators"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 560d610e (Q=0.820), which proved 93 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The finite-state class and its bound were constructed this cycle\n(`fsmClass`, `shtarkovSum_fsmClass_le`), so the family `k(n)` is definable\ninside the framework, and `shtarkovSum_ge_packing` is exactly the tool needed\nfor the lower bound.",
+    "domain_bridges": [],
+    "domains": [
+      "Tropical"
+    ],
+    "id": "push_560d610e_4328a484",
+    "lineage_refs": [],
+    "priority_score": 0.9199999999999999,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "560d610e",
+    "status": "available",
+    "timestamp": "2026-08-20T13:11:32.982421+00:00",
+    "title": "Deepening: The finite-state class and its bound were constructed this cycle"
   },
   {
     "ambition_level": "grand_challenge",
@@ -2348,50 +2367,6 @@
     "status": "available",
     "timestamp": "",
     "title": "Quantum Error Correction Bounds"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "The integers Z live on a line, but what happens to arithmetic on a curved space? Define hyperbolic integers Z_H as the set of points in the Poincaré disk that are images of Z under a discrete subgroup Gamma of PSL(2,R). Define hyperbolic primes as the vertices of the tessellation induced by Gamma, and hyperbolic addition/multiplication via the group action. Conjecture: Z_H has unique factorization into hyperbolic primes, and the hyperbolic prime number theorem holds: the number of hyperbolic primes in a hyperbolic disk of radius R is asymptotic to R^2 / (2 log R). The hyperbolic zeta function zeta_H(s) = sum_{n in Z_H, |n|_H > 0} 1/|n|_H^{2s} satisfies a functional equation and has zeros only on the critical line Re(s) = 1/2. Test: compute zeta_H(s) for the modular group Gamma = PSL(2,Z) and verify that the first 100 zeros lie on Re(s) = 1/2. Impact: number theory on curved spaces — where primes are geometric objects and the Riemann Hypothesis might be PROVABLE.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "NumberTheory",
-      "Geometry",
-      "Algebra"
-    ],
-    "id": "seed_106",
-    "lineage_refs": [],
-    "priority_score": 0.87,
-    "proof_strategy": "Define Z_H as the orbit of 0 under Gamma = PSL(2,Z) acting on the Poincaré disk. Define |n|_H as the hyperbolic distance from the origin. Prove Z_H is a discrete subset of the disk. Define the hyperbolic zeta function zeta_H(s) = sum 1/|n|_H^{2s} and prove it converges for Re(s) > 1. Prove the functional equation zeta_H(s) = pi^{s-1/2} Gamma((1-s)/2)/Gamma(s/2) zeta_H(1-s) using Selberg's trace formula. Test: compute first 100 zeros numerically and verify Re(s) = 1/2.",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Hyperbolic Number Theory: Arithmetic on the Poincaré Disk"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "The field with one element F_1 is a hypothetical object that would explain why the Weil conjectures have the form they do — as if there were a field with q^0 = 1 element. Tropical geometry replaces addition with min and multiplication with addition. What if these two ideas are the SAME? Conjecture: The tropical semiring (R union {infinity}, min, +) IS the field with one element, in the following precise sense: the category of tropical schemes is equivalent to the category of F_1-schemes. More concretely, a tropical variety over F_1 is a set with a min-plus structure, and its base change to Z (formally, tensor with Z) is a toric variety. The key correspondence: F_1-points of a tropical variety are the vertices of its Newton polytope, and the 'cardinality' of the tropical variety (as an F_1-object) is the number of lattice points in the polytope, which equals the degree of the toric variety after base change. Test: for each toric variety corresponding to a polytope P, compute the number of F_1-points (vertices of P) and verify that the Euler characteristic of the toric variety equals |vertices(P)| = #F_1-points. Prove the tensor product correspondence: tropical scheme X over F_1 has X tensor_Z Z = the corresponding toric variety. Impact: F_1 and tropical geometry are two faces of the same coin. The field with one element is tropical, and tropical geometry is the geometry of F_1.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Tropical",
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "seed_134",
-    "lineage_refs": [],
-    "priority_score": 0.87,
-    "proof_strategy": "Define the F_1-tropical correspondence: a tropical scheme over F_1 is a monoid object M in the tropical semiring (R union infty, min, +). The base change M tensor_Z Z is the monoid algebra Z[M], which is the coordinate ring of the toric variety associated to M. Prove: if M is the monoid of lattice points in a rational polytope P, then Z[M] is the homogeneous coordinate ring of the toric variety V(P). Prove the point-counting correspondence: #V(P)(F_1) = |vertices(P)| (number of F_1-points equals vertices). Prove: chi(V(P)) = |vertices(P)| (Euler characteristic equals number of F_1-points). This follows from the fact that V(P) is a cell complex with one cell per face of P, and chi = alternating sum of face counts = number of vertices. Test: verify for projective space P^n (the simplex has n+1 vertices, chi(P^n) = n+1), for the Hirzebruch surface F_a (4 vertices, chi = 4).",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Tropical Dreams: The Field with One Element Meets Tropical Geometry"
   },
   {
     "ambition_level": "extension",
@@ -22943,7 +22918,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a0dce043",
     "description": "# Future directions\n\nFive bold, testable conjectures generated by this cycle's analysis of denominator primes of\nmultiples of points on Mordell curves `E_N : y² = x³ + N`.  Layers 2 and 3 are now theorems\n(`Catalog/Combinatorics/MordellDenominatorPointCount.lean`,\n`Catalog/Combinatorics/MordellDenominatorTripling.lean`); the barrier statement below `B` is a\ntheorem for those two layers (`Catalog/Combinatorics/MordellDenominatorBarrier.lean`).  What\nfollows is what should be attacked next.\n\n---\n\n## C1. The division-polynomial tower (layer `n`)\n\n**Conjecture.**  For every `n ≥ 2`, every integral point `P = (x, y)` of `E_N` with\n`ψ_n(x, y) ≠ 0`, and every prime `ℓ ≥ 5` with `ℓ ∤ N`:\n`ℓ ∣ den x(nP) ↔ ℓ ∣ ψ_n(x, y)`, where `ψ_n` is the `n`-th division polynomial of\n`y² = x³ + N`; moreover the exceptional evaluation of the numerator `φ_n` on the locus\n`ψ_n = 0` is always of the form `c_n · N^{k}` with `c_n` composed of the primes `2` and `3`\nonly.\n\n*The key insight is* that the two evaluations computed here at layer 3, `φ₃ ≡ 64N³` on\n`x ≡ 0` and `φ₃ ≡ -1728N³` on `x³ ≡ -4N`, are the discriminant/`j`-invariant constants\n`2⁶` and `2⁶3³` of the Mordell family — the same constants that force the hypothesis `ℓ ≥ 5`,\nand they should recur at every layer because `φ_n` and `ψ_n²` are coprime up to the\ndiscriminant.\n\n*Why now?*  Layers 2 and 3 are proved in this catalog from Mathlib's affine group law with no\nextra theory, and Mathlib now carries enough of the `WeierstrassCurve` API that `ψ_n` can be\nintroduced by the standard recursion; the induction step is the addition formula already used\nhere for `2P + P`.\n\n**Falsifiable form.**  Compute `ψ₄, φ₄` for `y² = x³ + N` and check whether the exceptional\nvalue of `φ₄` on `ψ₄ = 0` involves a prime `≥ 5`.\n\n---\n\n## C2. Exact class counts and a Chebotarev law\n\n**Conjecture.**  Let `r_n(N, ℓ)` be the number of residue classes `x mod ℓ` that produce `ℓ` in\n`den x(nP)`.  Then `∑_{N mod ℓ} r_n(N, ℓ) = c_n · ℓ + O(1)` with `c_n = deg ψ_n / (n-1)`, and\nfor fixed `N` the density of primes with `r_n(N, ℓ) = k` is given by the Chebotarev density of\nthe corresponding conjugacy class in `Gal(ℚ(E_N[n])/ℚ)`.\n\n*The key insight is* that the layer-2 count (`1` at supersingular, `0` or `3` at ordinary\nprimes) is exactly the splitting type of `ℓ` in `ℚ(∛N, ζ₃)`, and layer 3 adds the trivial class\n`x ≡ 0` plus the splitting type of `T³ + 4N`; both are Kummer extensions, so the general\nstatement is a Chebotarev computation for the `n`-division field.\n\n*Why now?*  The exact averages (`∑ = ℓ`) are already proved here by a bijection, and Mathlib\nhas the Frobenius/Chebotarev machinery for abelian extensions; the Kummer case `n = 2, 3` is\nwithin reach without the full `n`-division field.\n\n---\n\n## C3. The barrier persists at every layer and every bound\n\n**Conjecture.**  For every `B` and every semiprime `N = pq` with `p, q > B` there is a prime\n`M` such that the *entire* denominator profile `{(n, ℓ, x) : ℓ ∣ den x(nP)}` restricted to\n`ℓ ≤ B` and all `n` coincides for `E_N` and `E_M`.\n\n*The key insight is* that the layer-`n` criterion `ℓ ∣ ψ_n(x)` has coefficients that are\npolynomials in `N`, hence depends on `N` only modulo `ℓ`; a single congruence `M ≡ N (mod B!)`\ntherefore synchronises all layers at once — this is proved here for `n ∈ {2, 3}` and should\nfollow for all `n` from C1.\n\n*Why now?*  Dirichlet's theorem is in Mathlib and was used here; the only missing ingredient is\nthe uniform statement C1.\n\n**Falsifiable form.**  Exhibit a layer `n` and a prime `ℓ` where the criterion depends on `N`\nbeyond `N mod ℓ` (e.g. through `gcd(N, ℓ^k)` for `k ≥ 2`).\n\n---\n\n## C4. Denominator growth forces rank\n\n**Conjecture.**  If some good prime `ℓ ≥ 5` divides `den x(2P)` for an integral point `P` of\n`E_N`, then `P` has infinite order and the `ℓ`-adic valuations `v_ℓ(den x(2^k P))` grow\nlinearly in `k`, with slope `1` in the sense `v_ℓ(den x(2^k P)) = v_ℓ(den x(2P)) + 2(k-1)` for\nall `k ≥ 1` when `ℓ` is odd.\n\n*The key insight is* that the formal group at `ℓ` gives `v_ℓ(x(2Q)) = 4 v_ℓ(x(Q))/2`-type\ndoubling behaviour, and the catalog already proves the qualitative persistence statement\n(`kernel_stable_two_pow`) and the infinitude of the orbit; what is missing is the exact\narithmetic progression of valuations.\n\n*Why now?*  The valuation lemmas (`pow_dvd_den_double_iff`) in `Shared.MordellDenominatorValuations`\ngive the base case, and the induction is purely `2`-adic bookkeeping.\n\n---\n\n## C5. A \"good prime\" is never a factor oracle\n\n**Conjecture.**  Fix a semiprime `N = pq`.  The probability, over integral points `P` of `E_N`\nand over `n ≤ T`, that a prime dividing `den x(nP)` lies in `{p, q}` tends to `0` as `T → ∞`;\nin fact the expected number of such occurrences is `O(log log T)` while the total number of\ndenominator primes is `≫ T`.\n\n*The key insight is* that `p` divides `den x(nP)` only when the reduced point is `O` in\n`E_N(𝔽_p)`, an event of probability `≈ 1/#E(𝔽_p) ≈ 1/p`, whereas good primes `ℓ` contribute at\nrate `1/ℓ` each and there are `≫ T` of them below the height of `nP`.\n\n*Why now?*  This cycle proves the exact per-prime densities (`1/ℓ` on average) that the\nheuristic needs; converting them into a statement about a single orbit requires only a height\nbound, and the catalog's `MordellInfiniteOrbit` supplies the necessary non-torsion input.\n\n**Falsifiable form.**  Find a semiprime `N` and a point `P` whose orbit exhibits `p` or `q` in\nthe denominators with frequency bounded below.\n\n---\n\n# Cycle 2 addendum: three next-cycle sub-conjectures\n\nCycle 2 turned the class counting around and computed, for a fixed prime `ℓ`, how many residues\n`N mod ℓ` are denominator-active\n(`Catalog/Combinatorics/MordellDenominatorDensity.lean`): exactly `(ℓ+2)/3` at ordinary primes,\nall `ℓ` at supersingular primes, all `ℓ` at layer 3 for every prime, with layer totals `ℓ`\n(doubling) and `2ℓ - 1` (tripling).  This sharpens C2 and suggests the following.\n\n## D1. The layer-`n` total is `(n² - 1)·ℓ + O(1)`\n\n**Conjecture.**  For every `n ≥ 2` and every prime `ℓ ≥ 5` not dividing `n`,\n`∑_{c mod ℓ} #{x mod ℓ : ℓ ∣ den x(nP) for x ≡ c}` equals `(n² - 1)·ℓ/ (something explicit) + O_n(1)`;\nconcretely, `deg ψ_n = (n² - 1)/2` or `(n² - 4)/2` and the total should be\n`deg ψ_n · ℓ / (deg ψ_n) = ℓ` per irreducible factor, giving `#{factors}·ℓ + O(1)`.  The proved\nvalues are `ℓ` for `n = 2` and `2ℓ - 1` for `n = 3`.\n\n*The key insight is* that each factor of `ψ_n` over `ℚ(N)` is, like `T³ + N` and `T³ + 4N`, a\nKummer-type polynomial in `x` whose root count averages exactly `1` over `N mod ℓ`, so the total\ncounts the *number of irreducible factors*, not their degrees.\n\n*Why now?*  The two proved cases are exactly the two smallest instances of this factor count\n(`ψ₂ = T³ + N`: one factor; `ψ₃ = 3T(T³ + 4N)`: two factors), and the averaging bijection used\nhere (`x ↦ -x³`) generalises verbatim to any factor of the shape `T^k + cN^j`.\n\n**Falsifiable form.**  Compute `∑_c #V₄(c)` for `ℓ = 7, 13, 19`; the conjecture predicts a value\nof the form `k·ℓ + O(1)` with `k` = number of `ℚ(N)`-irreducible factors of `ψ₄`.\n\n## D2. Blind residues are exactly the non-cubes, and they vanish at level 3\n\n**Conjecture.**  For `ℓ ≡ 1 (mod 3)` the set of layer-2 blind residues is exactly\n`{c ≠ 0 : -c is not a cube mod ℓ}`, of size `2(ℓ-1)/3`, and every such `c` becomes active at\nlayer 3 through the free root `x ≡ 0`; consequently, for every `N` and every prime `ℓ ≥ 5` there\nis an `n ≤ 3` making `ℓ` a potential denominator prime.\n\n*The key insight is* that \"blindness\" is a purely Kummer-theoretic condition — the cubic residue\ncharacter of `-N` mod `ℓ` — and the free root of `ψ₃` is a *character-free* mechanism, so the\nunion of two layers is unconditionally surjective on residues.\n\n*Status after cycle 2.*  The cardinality half is now a theorem\n(`three_mul_card_blindResidues2_of_one_mod_three`: exactly `2(ℓ-1)/3` blind residues) and the\ncharacterisation of blindness as \"`-N` is not a cube mod `ℓ`\" is `mem_blindResidues2_iff`; what\nremains open is the *uniform in `N`* statement that a single `n ≤ 3` always suffices once an\nintegral point in the free class `x ≡ 0 (mod ℓ)` is available — which is exactly D3.\n\n*Why now?*  Both halves are already formalised separately here (the `0 ∨ 3` dichotomy and\n`V3_nonempty`), so only the arithmetic realisability input is missing.\n\n## D3. Realisability requires a rational point (the missing arithmetic input)\n\n**Conjecture.**  The counting statements above are statements about residue classes; upgrading\nthem to statements about actual denominators requires an integral point of `E_N` in the given\nclass.  Conjecture: for every prime `ℓ ≥ 5` and every residue `c` mod `ℓ` there are infinitely\nmany `N ≡ c (mod ℓ)` such that `E_N(ℤ)` contains a point in every active class of `ℓ`.\n\n*The key insight is* that the constructions used here (`N = ℓ² - 1`, `P = (1, ℓ)` and\n`N = 1 - ℓ³`, `P = (ℓ, 1)`) are one-parameter families producing a point in a *prescribed* class,\nand the general statement is a question about representing residues by the two-variable form\n`y² - x³`.\n\n*Why now?*  The two explicit families are already proved in the catalog, so the induction is on\nthe number of classes rather than on new elliptic-curve theory; and this is precisely the gap\nbetween the density theorems of cycle 2 and unconditional statements about denominators.\n",
     "domain_bridges": [],
     "domains": [
@@ -22956,7 +22931,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "43f9870f",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-15T13:50:59.486295+00:00",
     "title": "Five bold, testable conjectures generated by this cycle's analysis of denominato"
   },
@@ -25457,6 +25432,23 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Fix an audit statistic `f` with `𝔼_p f = 0`, `Var_p f = 1`. Then the PTX mix-in is detectable\nby `f` at sample size `n` iff `γ ≥ c/√n` up to constants, i.e. there is a sharp threshold\n`γ_n ≍ n^{-1/2}` separating \"statistically invisible mix-in\" from \"detectable drift\", while\nthe reward-induced part contributes only at `β^{-1}n^{-1/2}`.\n\nThe key insight is that the two drift scales `γ‖d − p‖₁` and `MAD/β` interact with the\n`n^{-1/2}` statistical noise floor to produce a *two-dimensional* phase diagram in `(γ, β)`\nwhose boundary is a hyperbola `γ ≈ MAD/(β‖d − p‖₁)` — below it, the reward drift dominates\nthe pretraining drift. Why now: both scales are now proved with explicit constants, so the\ncomparison is a finite computation rather than a modelling guess.",
+    "domain_bridges": [],
+    "domains": [],
+    "id": "fd_1714",
+    "lineage_refs": [],
+    "priority_score": 0.4378333333333333,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "367abe49",
+    "status": "available",
+    "timestamp": "2026-08-20T13:11:10.806523+00:00",
+    "title": "Conjecture D (phase transition in γ for the audit-detectability of the mix-in)"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "~~`minimal_near_miss_size`~~ — **RESOLVED in cycle 3**: among all near-miss pairs at level\n   `N ≥ 1` the binomial pair also minimises the cardinality, the minimum being `2^{N-1}`\n   (`two_pow_le_two_mul_card_of_near_miss`, `card_evenPart`). Open successor: is the\n   *support size* (number of distinct values used) also minimised, and is it `⌈(N+1)/2⌉`?",
     "domain_bridges": [],
     "domains": [],
@@ -25955,7 +25947,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "367abe49",
+    "consumed_by_exp_id": "",
     "description": "For the PTX-augmented optimum `q*_{β,γ}` with `γ > 0`,\n`‖q*_{β,γ} − p‖₁ = Θ(γ·‖d − p‖₁) + Θ(σ_p(r)/β)` as `β → ∞`: the pretraining mix-in\ncontributes a `β`-independent drift toward `d`, so `lim_{β→∞} q*_{β,γ} ≠ p` unless\n`d = p`, while the *reward-induced* part of the drift still obeys the `σ/β` law proved\nin cycle 2.",
     "domain_bridges": [],
     "domains": [],
@@ -25965,7 +25957,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "84bf9824",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-20T07:57:25.771403+00:00",
     "title": "For the PTX-augmented optimum `q*_{β,γ}` with `γ > 0`,"
   },
@@ -26116,6 +26108,26 @@
     "status": "available",
     "timestamp": "2026-08-19T08:55:10.966078+00:00",
     "title": "The final cycle shows both bounds instantiating on the *same* statistic for a"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "`KL(q*_{β,γ} ‖ p) = KL(p_γ ‖ p) + O(1/β²)`, and more strongly the *information* floor\n`lim_{β→∞} KL(q*_{β,γ} ‖ p) = KL(p_γ ‖ p) ≥ ½·γ²‖d − p‖₁²` with equality only in the\ntwo-point case.\n\nThe key insight is that the map `β ↦ q*_{β,γ}` is a smooth curve in the exponential family\nthrough `p_γ`, meeting the `KL`-sphere around `p` at a right angle in the sense of the\nPythagorean identity for `e`-geodesics, which forces the `1/β` term to vanish and leaves a\npurely quadratic correction. Why now: this cycle established the variational identity\n`𝔼_q r − β KL(q‖m) = β log Z − β KL(q‖q*)`, which is precisely the Pythagorean decomposition\nin disguise.",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_1713",
+    "lineage_refs": [],
+    "priority_score": 0.40374999999999994,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "367abe49",
+    "status": "available",
+    "timestamp": "2026-08-20T13:11:10.529468+00:00",
+    "title": "Conjecture C (KL-geometry of the floor: a Pythagorean identity)"
   },
   {
     "ambition_level": "extension",
@@ -27666,7 +27678,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "560d610e",
+    "consumed_by_exp_id": "",
     "description": "The finite-state class and its bound were constructed this cycle\n(`fsmClass`, `shtarkovSum_fsmClass_le`), so the family `k(n)` is definable\ninside the framework, and `shtarkovSum_ge_packing` is exactly the tool needed\nfor the lower bound.",
     "domain_bridges": [],
     "domains": [],
@@ -27676,7 +27688,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "3eeb9235",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-18T13:57:41.361758+00:00",
     "title": "The finite-state class and its bound were constructed this cycle"
   },
@@ -29049,7 +29061,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "69ffd40e",
     "description": "The Lagrange engine `powerSum_rigidity` is already formalised and it isolates\nexactly which weight vectors are invisible; what remains is a construction, not a new theory.",
     "domain_bridges": [],
     "domains": [],
@@ -29059,7 +29071,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "c442a26f",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-19T21:41:39.265578+00:00",
     "title": "The Lagrange engine `powerSum_rigidity` is already formalised and it isolates"
   },
@@ -30152,5 +30164,62 @@
     "status": "available",
     "timestamp": "2026-08-20T10:47:51.931196+00:00",
     "title": "For every supermodular reward on `Finset (Fin n)`,"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "For `γ > 0` and `d ≠ p` there is `c(γ, d, p) > 0`, independent of `β`, with\n`𝔼_p[r] − 𝔼_{q*_{β,γ}}[r] ≥ −range(r)·γ‖d − p‖₁/2` and, for the worst-case reward of unit\nrange, `sup_r (𝔼_{q*}[r] − sup_q 𝔼_q[r]) ≤ −c(γ, d, p)`: the mix-in costs a fixed amount of\nachievable reward no matter how the KL penalty is tuned.\n\nThe key insight is that the floor proved here is a statement in total variation, and total\nvariation is exactly the dual norm for rewards of bounded range, so a `‖·‖₁` floor should\nconvert into a uniform reward deficit by duality. Why now: `ptx_drift_lower` already gives\nthe `‖·‖₁` floor with explicit constants, and `ptxOpt_optimal` gives the variational identity\nneeded to compare achieved reward with the unconstrained optimum.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_1712",
+    "lineage_refs": [],
+    "priority_score": 0.4,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "367abe49",
+    "status": "available",
+    "timestamp": "2026-08-20T13:11:10.253935+00:00",
+    "title": "Conjecture B (the alignment tax is unavoidable in reward as well as in distance)"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "The anchor is identifiable from the optimum: if `gibbs β m₁ r` and `gibbs β m₂ r` agree for\ntwo distinct temperatures `β₁ ≠ β₂` with strictly positive `m₁, m₂`, then `m₁ = m₂`; more\nstrongly, the whole curve `β ↦ q*_β` determines `(m, r)` up to affine reparametrisation of\n`r`.\n\nThe key insight is that `anchor_return_iff` already shows the `β → ∞` endpoint of the curve\nrecovers the anchor exactly, so identifiability is a statement about analytic continuation of\na one-parameter exponential family. Why now: the endpoint recovery is proved, so the\nremaining content is a rigidity argument for exponential families that Mathlib's `rpow` and\n`log` API can support directly.",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_1715",
+    "lineage_refs": [],
+    "priority_score": 0.4,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "367abe49",
+    "status": "available",
+    "timestamp": "2026-08-20T13:11:11.075962+00:00",
+    "title": "Conjecture E (uniqueness of the anchor from observations)"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "`shtarkovSum (fsmClass (counterFSM n) m) = 2^m` for all `m ≤ n` is now the\n   theorem `shtarkovSum_counter_eq_of_le`: saturation is a property of the state\n   budget, not of the matched horizon.  Its replacement is **S3'**: for\n   `m > n`, `shtarkovSum (fsmClass (counterFSM n) m) = 2^n · (m - n + 1)`, i.e.\n   past its horizon the counter degenerates to a memoryless source in its\n   absorbing state, and the two regimes multiply.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_1716",
+    "lineage_refs": [],
+    "priority_score": 0.4,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "560d610e",
+    "status": "available",
+    "timestamp": "2026-08-20T13:11:28.175490+00:00",
+    "title": "S3 (resolved during this cycle)"
   }
 ]

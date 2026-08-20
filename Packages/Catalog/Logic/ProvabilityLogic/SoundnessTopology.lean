@@ -38,7 +38,7 @@ Extends `Logic.ProvabilityLogic.TangledSoundness` (Cycle 1) and, through it,
 -/
 
 import Mathlib
-import Catalog.Logic.ProvabilityLogic.TangledSoundness
+import Logic.ProvabilityLogic.TangledSoundness
 
 namespace TangledSoundness
 

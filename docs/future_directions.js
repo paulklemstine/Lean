@@ -79,6 +79,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 367abe49 (Q=0.850), which proved 61 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For the PTX-augmented optimum `q*_{\u03b2,\u03b3}` with `\u03b3 > 0`,\n`\u2016q*_{\u03b2,\u03b3} \u2212 p\u2016\u2081 = \u0398(\u03b3\u00b7\u2016d \u2212 p\u2016\u2081) + \u0398(\u03c3_p(r)/\u03b2)` as `\u03b2 \u2192 \u221e`: the pretraining mix-in\ncontributes a `\u03b2`-independent drift toward `d`, so `lim_{\u03b2\u2192\u221e} q*_{\u03b2,\u03b3} \u2260 p` unless\n`d = p`, while the *reward-induced* part of the drift still obeys the `\u03c3/\u03b2` law",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_367abe49_55eb8002",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "367abe49",
+    "status": "available",
+    "timestamp": "2026-08-20T13:11:22.340680+00:00",
+    "title": "Deepening: For the PTX-augmented optimum `q*_{\u03b2,\u03b3}` with `\u03b3 > 0`,"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 4bf66c09 (Q=0.880), which proved 41 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Chebotarev's theorem that every square submatrix of the `p \u00d7 p` DFT matrix\nis nonsingular, which in turn follows from a resultant/Vandermonde computation over `Q(\u03b6_p)`\nusing the irreducibility of the `p`-th cyclotomic polynomial \u2014 machinery that Mathlib already\ncontains (`Polynomial.cyclotomic_irred",
     "domains": [
       "Novelty"
@@ -132,20 +146,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-19T15:46:51.818344+00:00",
     "title": "Deepening: Both sides of the identity are already available as Lean theorems"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle db2f2b2f (Q=0.900), which proved 426 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalizes a quantum random walk on the Berggren Pythagorean tree where constructive interference at energy spectrum minima collapses the state onto factors of N.",
-    "domains": [
-      "Physics"
-    ],
-    "id": "push_db2f2b2f_01bff214",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "db2f2b2f",
-    "status": "available",
-    "timestamp": "2026-08-20T11:43:09.357163+00:00",
-    "title": "Deepening: Quantum-Pythagorean-Walk: Polynomial Time Integer Factorization via Tree Resonan"
   },
   {
     "consumed_by_exp_id": "",
@@ -818,6 +818,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-17T07:17:22.608319+00:00",
     "title": "Deepening: ArXiv paper: A Fourier-analytic Uniqueness Theorem for Lattice-point Enumerators"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 560d610e (Q=0.820), which proved 93 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The finite-state class and its bound were constructed this cycle\n(`fsmClass`, `shtarkovSum_fsmClass_le`), so the family `k(n)` is definable\ninside the framework, and `shtarkovSum_ge_packing` is exactly the tool needed\nfor the lower bound.",
+    "domains": [
+      "Tropical"
+    ],
+    "id": "push_560d610e_4328a484",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "560d610e",
+    "status": "available",
+    "timestamp": "2026-08-20T13:11:32.982421+00:00",
+    "title": "Deepening: The finite-state class and its bound were constructed this cycle"
   },
   {
     "consumed_by_exp_id": "",
@@ -1734,40 +1748,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Quantum Error Correction Bounds"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "The integers Z live on a line, but what happens to arithmetic on a curved space? Define hyperbolic integers Z_H as the set of points in the Poincar\u00e9 disk that are images of Z under a discrete subgroup Gamma of PSL(2,R). Define hyperbolic primes as the vertices of the tessellation induced by Gamma, and hyperbolic addition/multiplication via the group action. Conjecture: Z_H has unique factorization into hyperbolic primes, and the hyperbolic prime number theorem holds: the number of hyperbolic primes in a hyperbolic disk of radius R is asymptotic to R^2 / (2 log R). The hyperbolic zeta function zeta_H(s) = sum_{n in Z_H, |n|_H > 0} 1/|n|_H^{2s} satisfies a functional equation and has zeros only on the critical line Re(s) = 1/2. Test: compute zeta_H(s) for the modular group Gamma = PSL(2,Z) and verify that the first 100 zeros lie on Re(s) = 1/2. Impact: number theory on curved spaces \u2014 where primes are geometric objects and the Riemann Hypothesis might be PROVABLE.",
-    "domains": [
-      "Novelty",
-      "NumberTheory",
-      "Geometry",
-      "Algebra"
-    ],
-    "id": "seed_106",
-    "priority_score": 0.87,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Hyperbolic Number Theory: Arithmetic on the Poincar\u00e9 Disk"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "The field with one element F_1 is a hypothetical object that would explain why the Weil conjectures have the form they do \u2014 as if there were a field with q^0 = 1 element. Tropical geometry replaces addition with min and multiplication with addition. What if these two ideas are the SAME? Conjecture: The tropical semiring (R union {infinity}, min, +) IS the field with one element, in the following precise sense: the category of tropical schemes is equivalent to the category of F_1-schemes. More concretely, a tropical variety over F_1 is a set with a min-plus structure, and its base change to Z (formally, tensor with Z) is a toric variety. The key correspondence: F_1-points of a tropical variety are the vertices of its Newton polytope, and the 'cardinality' of the tropical variety (as an F_1-object) is the number of lattice points in the polytope, which equals the degree of the toric variety after base change. Test: for each toric variety corresponding to a polytope P, compute the number of F_1-points (vertices of P) and verify that the Euler characteristic of the toric variety equals |vertices(P)| = #F_1-points. Prove the tensor product correspondence: tropical scheme X over F_1 has X tensor_Z Z = the corresponding toric variety. Impact: F_1 and tropical geometry are two faces of the same coin. The field with one element is tropical, and tropical geometry is the geometry of F_1.",
-    "domains": [
-      "Novelty",
-      "Tropical",
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "seed_134",
-    "priority_score": 0.87,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Tropical Dreams: The Field with One Element Meets Tropical Geometry"
   },
   {
     "consumed_by_exp_id": "",
@@ -17114,17 +17094,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Derived from cycles 3\u20139"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a0dce043",
     "description": "# Future directions\n\nFive bold, testable conjectures generated by this cycle's analysis of denominator primes of\nmultiples of points on Mordell curves `E_N : y\u00b2 = x\u00b3 + N`.  Layers 2 and 3 are now theorems\n(`Catalog/Combinatorics/MordellDenominatorPointCount.lean`,\n`Catalog/Combinatorics/MordellDenominatorTripling.lean`); the barrier statement below `B` is a\ntheorem for those two layers (`Catalog/Combinatorics/MordellDenominatorBarrier.lean`).  What\nfollows is what should be attacked next.\n\n---\n\n## C1. The division-polynomial tower (layer `n`)\n\n**Conjecture.**  For every `n \u2265 2`, every integral point `P = (x, y)` of `E_N` with\n`\u03c8_n(x, y) \u2260 0`, and every prime `\u2113 \u2265 5` with `\u2113 \u2224 N`:\n`\u2113 \u2223 den x(nP) \u2194 \u2113 \u2223 \u03c8_n(x, y)`, where `\u03c8_n` is the `n`-th division polynomial of\n`y\u00b2 = x\u00b3 + N`; moreover the exceptional evaluation of the numerator `\u03c6_n` on the locus\n`\u03c8_n = 0` is always of the form `c_n \u00b7 N^{k}` with `c_n` composed of the primes `2` and `3`\nonly.\n\n*The key insight is* that the two evaluations computed here at layer 3, `\u03c6\u2083 \u2261 64N\u00b3` on\n`x \u2261 0` and `\u03c6\u2083 \u2261 -1728N\u00b3` on `x\u00b3 \u2261 -4N`, are the discriminant/`j`-invariant constants\n`2\u2076` and `2\u20763\u00b3` of the Mordell family \u2014 the same constants that force the hypothesis `\u2113 \u2265 5`,\nand they should recur at every layer because `\u03c6_n` and `\u03c8_n\u00b2` are coprime up to the\ndiscriminant.\n\n*Why now?*  Layers 2 and 3 are proved in this catalog from Mathlib's affine group law with no\nextra theory, and Mathlib now carries enough of the `WeierstrassCurve` API that `\u03c8_n` can be\nintroduced by the standard recursion; the induction step is the addition formula already used\nhere for `2P + P`.\n\n**Falsifiable form.**  Compute `\u03c8\u2084, \u03c6\u2084` for `y\u00b2 = x\u00b3 + N` and check whether the exceptional\nvalue of `\u03c6\u2084` on `\u03c8\u2084 = 0` involves a prime `\u2265 5`.\n\n---\n\n## C2. Exact class counts and a Chebotarev law\n\n**Conjecture.**  Let `r_n(N, \u2113)` be the number of residue classes `x mod \u2113` that produce `\u2113` in\n`den x(nP)`.  Then `\u2211_{N mod \u2113} r_n(N, \u2113) = c_n \u00b7 \u2113 + O(1)` with `c_n = deg \u03c8_n / (n-1)`, and\nfor fixed `N` the density of primes with `r_n(N, \u2113) = k` is given by the Chebotarev density of\nthe corresponding conjugacy class in `Gal(\u211a(E_N[n])/\u211a)`.\n\n*The key insight is* that the layer-2 count (`1` at supersingular, `0` or `3` at ordinary\nprimes) is exactly the splitting type of `\u2113` in `\u211a(\u221bN, \u03b6\u2083)`, and layer 3 adds the trivial class\n`x \u2261 0` plus the splitting type of `T\u00b3 + 4N`; both are Kummer extensions, so the general\nstatement is a Chebotarev computation for the `n`-division field.\n\n*Why now?*  The exact averages (`\u2211 = \u2113`) are already proved here by a bijection, and Mathlib\nhas the Frobenius/Chebotarev machinery for abelian extensions; the Kummer case `n = 2, 3` is\nwithin reach without the full `n`-division field.\n\n---\n\n## C3. The barrier persists at every layer and every bound\n\n**Conjecture.**  For every `B` and every semiprime `N = pq` with `p, q > B` there is a prime\n`M` such that the *entire* denominator profile `{(n, \u2113, x) : \u2113 \u2223 den x(nP)}` restricted to\n`\u2113 \u2264 B` and all `n` coincides for `E_N` and `E_M`.\n\n*The key insight is* that the layer-`n` criterion `\u2113 \u2223 \u03c8_n(x)` has coefficients that are\npolynomials in `N`, hence depends on `N` only modulo `\u2113`; a single congruence `M \u2261 N (mod B!)`\ntherefore synchronises all layers at once \u2014 this is proved here for `n \u2208 {2, 3}` and should\nfollow for all `n` from C1.\n\n*Why now?*  Dirichlet's theorem is in Mathlib and was used here; the only missing ingredient is\nthe uniform statement C1.\n\n**Falsifiable form.**  Exhibit a layer `n` and a prime `\u2113` where the criterion depends on `N`\nbeyond `N mod \u2113` (e.g. through `gcd(N, \u2113^k)` for `k \u2265 2`).\n\n---\n\n## C4. Denominator growth forces rank\n\n**Conjecture.**  If some good prime `\u2113 \u2265 5` divides `den x(2P)` for an integral point `P` of\n`E_N`, then `P` has infinite order and the `\u2113`-adic valuations `v_\u2113(den x(2^k P))` grow\nlinearly in `k`, with slope `1` in the sense `v_\u2113(den x(2^k P)) = v_\u2113(den x(2P)) + 2(k-1)` for\nall `k \u2265 1` when `\u2113` is odd.\n\n*The key insight is* that the formal group at `\u2113` gives `v_\u2113(x(2Q)) = 4 v_\u2113(x(Q))/2`-type\ndoubling behaviour, and the catalog already proves the qualitative persistence statement\n(`kernel_stable_two_pow`) and the infinitude of the orbit; what is missing is the exact\narithmetic progression of valuations.\n\n*Why now?*  The valuation lemmas (`pow_dvd_den_double_iff`) in `Shared.MordellDenominatorValuations`\ngive the base case, and the induction is purely `2`-adic bookkeeping.\n\n---\n\n## C5. A \"good prime\" is never a factor oracle\n\n**Conjecture.**  Fix a semiprime `N = pq`.  The probability, over integral points `P` of `E_N`\nand over `n \u2264 T`, that a prime dividing `den x(nP)` lies in `{p, q}` tends to `0` as `T \u2192 \u221e`;\nin fact the expected number of such occurrences is `O(log log T)` while the total number of\ndenominator primes is `\u226b T`.\n\n*The key insight is* that `p` divides `den x(nP)` only when the reduced point is `O` in\n`E_N(\ud835\udd3d_p)`, an event of probability `\u2248 1/#E(\ud835\udd3d_p) \u2248 1/p`, whereas good primes `\u2113` contribute at\nrate `1/\u2113` each and there are `\u226b T` of them below the height of `nP`.\n\n*Why now?*  This cycle proves the exact per-prime densities (`1/\u2113` on average) that the\nheuristic needs; converting them into a statement about a single orbit requires only a height\nbound, and the catalog's `MordellInfiniteOrbit` supplies the necessary non-torsion input.\n\n**Falsifiable form.**  Find a semiprime `N` and a point `P` whose orbit exhibits `p` or `q` in\nthe denominators with frequency bounded below.\n\n---\n\n# Cycle 2 addendum: three next-cycle sub-conjectures\n\nCycle 2 turned the class counting around and computed, for a fixed prime `\u2113`, how many residues\n`N mod \u2113` are denominator-active\n(`Catalog/Combinatorics/MordellDenominatorDensity.lean`): exactly `(\u2113+2)/3` at ordinary primes,\nall `\u2113` at supersingular primes, all `\u2113` at layer 3 for every prime, with layer totals `\u2113`\n(doubling) and `2\u2113 - 1` (tripling).  This sharpens C2 and suggests the following.\n\n## D1. The layer-`n` total is `(n\u00b2 - 1)\u00b7\u2113 + O(1)`\n\n**Conjecture.**  For every `n \u2265 2` and every prime `\u2113 \u2265 5` not dividing `n`,\n`\u2211_{c mod \u2113} #{x mod \u2113 : \u2113 \u2223 den x(nP) for x \u2261 c}` equals `(n\u00b2 - 1)\u00b7\u2113/ (something explicit) + O_n(1)`;\nconcretely, `deg \u03c8_n = (n\u00b2 - 1)/2` or `(n\u00b2 - 4)/2` and the total should be\n`deg \u03c8_n \u00b7 \u2113 / (deg \u03c8_n) = \u2113` per irreducible factor, giving `#{factors}\u00b7\u2113 + O(1)`.  The proved\nvalues are `\u2113` for `n = 2` and `2\u2113 - 1` for `n = 3`.\n\n*The key insight is* that each factor of `\u03c8_n` over `\u211a(N)` is, like `T\u00b3 + N` and `T\u00b3 + 4N`, a\nKummer-type polynomial in `x` whose root count averages exactly `1` over `N mod \u2113`, so the total\ncounts the *number of irreducible factors*, not their degrees.\n\n*Why now?*  The two proved cases are exactly the two smallest instances of this factor count\n(`\u03c8\u2082 = T\u00b3 + N`: one factor; `\u03c8\u2083 = 3T(T\u00b3 + 4N)`: two factors), and the averaging bijection used\nhere (`x \u21a6 -x\u00b3`) generalises verbatim to any factor of the shape `T^k + cN^j`.\n\n**Falsifiable form.**  Compute `\u2211_c #V\u2084(c)` for `\u2113 = 7, 13, 19`; the conjecture predicts a value\nof the form `k\u00b7\u2113 + O(1)` with `k` = number of `\u211a(N)`-irreducible factors of `\u03c8\u2084`.\n\n## D2. Blind residues are exactly the non-cubes, and they vanish at level 3\n\n**Conjecture.**  For `\u2113 \u2261 1 (mod 3)` the set of layer-2 blind residues is exactly\n`{c \u2260 0 : -c is not a cube mod \u2113}`, of size `2(\u2113-1)/3`, and every such `c` becomes active at\nlayer 3 through the free root `x \u2261 0`; consequently, for every `N` and every prime `\u2113 \u2265 5` there\nis an `n \u2264 3` making `\u2113` a potential denominator prime.\n\n*The key insight is* that \"blindness\" is a purely Kummer-theoretic condition \u2014 the cubic residue\ncharacter of `-N` mod `\u2113` \u2014 and the free root of `\u03c8\u2083` is a *character-free* mechanism, so the\nunion of two layers is unconditionally surjective on residues.\n\n*Status after cycle 2.*  The cardinality half is now a theorem\n(`three_mul_card_blindResidues2_of_one_mod_three`: exactly `2(\u2113-1)/3` blind residues) and the\ncharacterisation of blindness as \"`-N` is not a cube mod `\u2113`\" is `mem_blindResidues2_iff`; what\nremains open is the *uniform in `N`* statement that a single `n \u2264 3` always suffices once an\nintegral point in the free class `x \u2261 0 (mod \u2113)` is available \u2014 which is exactly D3.\n\n*Why now?*  Both halves are already formalised separately here (the `0 \u2228 3` dichotomy and\n`V3_nonempty`), so only the arithmetic realisability input is missing.\n\n## D3. Realisability requires a rational point (the missing arithmetic input)\n\n**Conjecture.**  The counting statements above are statements about residue classes; upgrading\nthem to statements about actual denominators requires an integral point of `E_N` in the given\nclass.  Conjecture: for every prime `\u2113 \u2265 5` and every residue `c` mod `\u2113` there are infinitely\nmany `N \u2261 c (mod \u2113)` such that `E_N(\u2124)` contains a point in every active class of `\u2113`.\n\n*The key insight is* that the constructions used here (`N = \u2113\u00b2 - 1`, `P = (1, \u2113)` and\n`N = 1 - \u2113\u00b3`, `P = (\u2113, 1)`) are one-parameter families producing a point in a *prescribed* class,\nand the general statement is a question about representing residues by the two-variable form\n`y\u00b2 - x\u00b3`.\n\n*Why now?*  The two explicit families are already proved in the catalog, so the induction is on\nthe number of classes rather than on new elliptic-curve theory; and this is precisely the gap\nbetween the density theorems of cycle 2 and unconditional statements about denominators.\n",
     "domains": [
       "NumberTheory",
       "Algebra"
     ],
     "id": "fd_1307",
+    "phase": "A",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "43f9870f",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-15T13:50:59.486295+00:00",
     "title": "Five bold, testable conjectures generated by this cycle's analysis of denominato"
   },
@@ -18993,6 +18974,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Fix an audit statistic `f` with `\ud835\udd3c_p f = 0`, `Var_p f = 1`. Then the PTX mix-in is detectable\nby `f` at sample size `n` iff `\u03b3 \u2265 c/\u221an` up to constants, i.e. there is a sharp threshold\n`\u03b3_n \u224d n^{-1/2}` separating \"statistically invisible mix-in\" from \"detectable drift\", while\nthe reward-induced part contributes only at `\u03b2^{-1}n^{-1/2}`.\n\nThe key insight is that the two drift scales `\u03b3\u2016d \u2212 p\u2016\u2081` and `MAD/\u03b2` interact with the\n`n^{-1/2}` statistical noise floor to produce a *two-dimensional* phase diagram in `(\u03b3, \u03b2)`\nwhose boundary is a hyperbola `\u03b3 \u2248 MAD/(\u03b2\u2016d \u2212 p\u2016\u2081)` \u2014 below it, the reward drift dominates\nthe pretraining drift. Why now: both scales are now proved with explicit constants, so the\ncomparison is a finite computation rather than a modelling guess.",
+    "domains": [],
+    "id": "fd_1714",
+    "priority_score": 0.4378333333333333,
+    "research_mode": "team",
+    "source_exp_id": "367abe49",
+    "status": "available",
+    "timestamp": "2026-08-20T13:11:10.806523+00:00",
+    "title": "Conjecture D (phase transition in \u03b3 for the audit-detectability of the mix-in)"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "~~`minimal_near_miss_size`~~ \u2014 **RESOLVED in cycle 3**: among all near-miss pairs at level\n   `N \u2265 1` the binomial pair also minimises the cardinality, the minimum being `2^{N-1}`\n   (`two_pow_le_two_mul_card_of_near_miss`, `card_evenPart`). Open successor: is the\n   *support size* (number of distinct values used) also minimised, and is it `\u2308(N+1)/2\u2309`?",
     "domains": [],
     "id": "fd_1537",
@@ -19346,15 +19339,14 @@ window.FUTURE_DIRECTIONS = [
     "title": "Chebotarev's theorem that every square submatrix of the `p \u00d7 p` DFT matrix"
   },
   {
-    "consumed_by_exp_id": "367abe49",
+    "consumed_by_exp_id": "",
     "description": "For the PTX-augmented optimum `q*_{\u03b2,\u03b3}` with `\u03b3 > 0`,\n`\u2016q*_{\u03b2,\u03b3} \u2212 p\u2016\u2081 = \u0398(\u03b3\u00b7\u2016d \u2212 p\u2016\u2081) + \u0398(\u03c3_p(r)/\u03b2)` as `\u03b2 \u2192 \u221e`: the pretraining mix-in\ncontributes a `\u03b2`-independent drift toward `d`, so `lim_{\u03b2\u2192\u221e} q*_{\u03b2,\u03b3} \u2260 p` unless\n`d = p`, while the *reward-induced* part of the drift still obeys the `\u03c3/\u03b2` law proved\nin cycle 2.",
     "domains": [],
     "id": "fd_1691",
-    "phase": "A",
     "priority_score": 0.4081212121212121,
     "research_mode": "team",
     "source_exp_id": "84bf9824",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-20T07:57:25.771403+00:00",
     "title": "For the PTX-augmented optimum `q*_{\u03b2,\u03b3}` with `\u03b3 > 0`,"
   },
@@ -19465,6 +19457,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-19T08:55:10.966078+00:00",
     "title": "The final cycle shows both bounds instantiating on the *same* statistic for a"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "`KL(q*_{\u03b2,\u03b3} \u2016 p) = KL(p_\u03b3 \u2016 p) + O(1/\u03b2\u00b2)`, and more strongly the *information* floor\n`lim_{\u03b2\u2192\u221e} KL(q*_{\u03b2,\u03b3} \u2016 p) = KL(p_\u03b3 \u2016 p) \u2265 \u00bd\u00b7\u03b3\u00b2\u2016d \u2212 p\u2016\u2081\u00b2` with equality only in the\ntwo-point case.\n\nThe key insight is that the map `\u03b2 \u21a6 q*_{\u03b2,\u03b3}` is a smooth curve in the exponential family\nthrough `p_\u03b3`, meeting the `KL`-sphere around `p` at a right angle in the sense of the\nPythagorean identity for `e`-geodesics, which forces the `1/\u03b2` term to vanish and leaves a\npurely quadratic correction. Why now: this cycle established the variational identity\n`\ud835\udd3c_q r \u2212 \u03b2 KL(q\u2016m) = \u03b2 log Z \u2212 \u03b2 KL(q\u2016q*)`, which is precisely the Pythagorean decomposition\nin disguise.",
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_1713",
+    "priority_score": 0.40374999999999994,
+    "research_mode": "team",
+    "source_exp_id": "367abe49",
+    "status": "available",
+    "timestamp": "2026-08-20T13:11:10.529468+00:00",
+    "title": "Conjecture C (KL-geometry of the floor: a Pythagorean identity)"
   },
   {
     "consumed_by_exp_id": "",
@@ -20593,15 +20600,14 @@ window.FUTURE_DIRECTIONS = [
     "title": "Open here; NP-membership is *proved* in the sense that the problem has a succinct"
   },
   {
-    "consumed_by_exp_id": "560d610e",
+    "consumed_by_exp_id": "",
     "description": "The finite-state class and its bound were constructed this cycle\n(`fsmClass`, `shtarkovSum_fsmClass_le`), so the family `k(n)` is definable\ninside the framework, and `shtarkovSum_ge_packing` is exactly the tool needed\nfor the lower bound.",
     "domains": [],
     "id": "fd_1530",
-    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "3eeb9235",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-18T13:57:41.361758+00:00",
     "title": "The finite-state class and its bound were constructed this cycle"
   },
@@ -21603,14 +21609,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "The reduction to cycles, the disjoint-union theorem, and the cycle-frame"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "69ffd40e",
     "description": "The Lagrange engine `powerSum_rigidity` is already formalised and it isolates\nexactly which weight vectors are invisible; what remains is a construction, not a new theory.",
     "domains": [],
     "id": "fd_1641",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "c442a26f",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-19T21:41:39.265578+00:00",
     "title": "The Lagrange engine `powerSum_rigidity` is already formalised and it isolates"
   },
@@ -22414,5 +22421,47 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-20T10:47:51.931196+00:00",
     "title": "For every supermodular reward on `Finset (Fin n)`,"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For `\u03b3 > 0` and `d \u2260 p` there is `c(\u03b3, d, p) > 0`, independent of `\u03b2`, with\n`\ud835\udd3c_p[r] \u2212 \ud835\udd3c_{q*_{\u03b2,\u03b3}}[r] \u2265 \u2212range(r)\u00b7\u03b3\u2016d \u2212 p\u2016\u2081/2` and, for the worst-case reward of unit\nrange, `sup_r (\ud835\udd3c_{q*}[r] \u2212 sup_q \ud835\udd3c_q[r]) \u2264 \u2212c(\u03b3, d, p)`: the mix-in costs a fixed amount of\nachievable reward no matter how the KL penalty is tuned.\n\nThe key insight is that the floor proved here is a statement in total variation, and total\nvariation is exactly the dual norm for rewards of bounded range, so a `\u2016\u00b7\u2016\u2081` floor should\nconvert into a uniform reward deficit by duality. Why now: `ptx_drift_lower` already gives\nthe `\u2016\u00b7\u2016\u2081` floor with explicit constants, and `ptxOpt_optimal` gives the variational identity\nneeded to compare achieved reward with the unconstrained optimum.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_1712",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "367abe49",
+    "status": "available",
+    "timestamp": "2026-08-20T13:11:10.253935+00:00",
+    "title": "Conjecture B (the alignment tax is unavoidable in reward as well as in distance)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The anchor is identifiable from the optimum: if `gibbs \u03b2 m\u2081 r` and `gibbs \u03b2 m\u2082 r` agree for\ntwo distinct temperatures `\u03b2\u2081 \u2260 \u03b2\u2082` with strictly positive `m\u2081, m\u2082`, then `m\u2081 = m\u2082`; more\nstrongly, the whole curve `\u03b2 \u21a6 q*_\u03b2` determines `(m, r)` up to affine reparametrisation of\n`r`.\n\nThe key insight is that `anchor_return_iff` already shows the `\u03b2 \u2192 \u221e` endpoint of the curve\nrecovers the anchor exactly, so identifiability is a statement about analytic continuation of\na one-parameter exponential family. Why now: the endpoint recovery is proved, so the\nremaining content is a rigidity argument for exponential families that Mathlib's `rpow` and\n`log` API can support directly.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_1715",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "367abe49",
+    "status": "available",
+    "timestamp": "2026-08-20T13:11:11.075962+00:00",
+    "title": "Conjecture E (uniqueness of the anchor from observations)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "`shtarkovSum (fsmClass (counterFSM n) m) = 2^m` for all `m \u2264 n` is now the\n   theorem `shtarkovSum_counter_eq_of_le`: saturation is a property of the state\n   budget, not of the matched horizon.  Its replacement is **S3'**: for\n   `m > n`, `shtarkovSum (fsmClass (counterFSM n) m) = 2^n \u00b7 (m - n + 1)`, i.e.\n   past its horizon the counter degenerates to a memoryless source in its\n   absorbing state, and the two regimes multiply.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_1716",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "560d610e",
+    "status": "available",
+    "timestamp": "2026-08-20T13:11:28.175490+00:00",
+    "title": "S3 (resolved during this cycle)"
   }
 ];
