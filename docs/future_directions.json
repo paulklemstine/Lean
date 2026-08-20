@@ -38384,7 +38384,7 @@
       "depth_estimate": 3,
       "description": "# FUTURE DIRECTIONS — GENERIC-RECOVERY, next cycle\n\nThree cycles of the loop produced: (I) the master bound and the exact fibre\ncount of generic hints, (II) sharpness, an average-case strengthening and the\nexact `t−3` bit value of the trace hint, (III) the structural explanation —\nevery deficit observed is the order of an invariance group of candidate\nsymmetries.  The conjectures below are the open ends of that thread.  Each is\nfalsifiable by a finite computation and each has a formalisable statement.\n\n## C1. Deficit = order of the invariance group, exactly (not merely `≥`)\n\n**Conjecture.**  Let `S` be a finite candidate set and `h` a hint.  Define the\ninvariance group `Γ_h = { σ ∈ Sym(S) : h ∘ σ = h }`.  Then the number of\nreadings satisfies `#readings = |S| / |Γ_h|` **iff** `Γ_h` acts freely and\ntransitively on every class; and in general `#readings · min_orbit ≤ |S|`, with\nequality exactly when all orbits are of equal size.  Cycle III proves the\ninequality (`card_image_mul_le`); the conjecture is the equality case and its\ncharacterisation.\n\n*The key insight is* that a hint is not a function but a partition, and a\npartition with a group of symmetries can only be as fine as the coarsest orbit\ndecomposition — so the \"wasted bits\" of every hint family in the taxonomy are a\nsingle group-theoretic invariant, not four separate accidents.\n\n*Why now?*  Cycles I–III already give the two extreme cases in Lean (trivial\ngroup: exact `2^t`; Klein four-group: exact `2^{t-3}`), so the general statement\ncan be attacked with the existing `cost_ge_of_family` / `card_image_mul_le`\nmachinery plus Mathlib's `MulAction` orbit-counting API.\n\n## C2. The 2-adic root explosion is governed by `v₂(p − q)`\n\n**Conjecture.**  For odd `p ≠ q`, `N = pq`, `s = p + q`, the number of solutions\nof `x² − s x + N ≡ 0 (mod 2^t)` equals `2^{min(v₂(p−q)+1, ⌊t/2⌋)+1}` for\n`t` large, in particular it saturates at `2^{v₂(p−q)+2}` and never grows with\n`t` beyond that.  The computed table (`ComputationalEvidence.md` §6) shows\nsaturation at `8` for `v₂(p−q)=2` and `16` for `v₂(p−q)=3`.\n\n*The key insight is* that the trace hint's sub-bit behaviour is not a constant\n`3`-bit tax but a function of a single 2-adic invariant of the secret pair, so\nthe \"hint deficit\" of a family can depend on the secret and not only on the\nhint — a genuinely new axis in the taxonomy.\n\n*Why now?*  `sq_congr_iff` (cycle I) already reduces the whole question to a\n2-adic valuation bookkeeping over `ℤ`, which `omega` plus induction on `t` can\ncarry.\n\n## C3. No hint family is position-sensitive at the counting level\n\n**Conjecture.**  For every `k`, `t` and every pair of position sets\n`A, B ⊆ {0,…,k−1}` with `|A| = |B|`, and every candidate set `S` that is a\nunion of residue classes mod `2^k`, the two bit-leak hints have identical class\nsize *multisets*, not merely identical sizes on the full cube.  Consequently a\nCoppersmith-style advantage of contiguous top-half leakage is invisible to any\ncounting argument and must be charged entirely to lattice reduction.\n\n*The key insight is* that \"position\" is an algorithmic resource, not an\ninformational one; the Coppersmith condition `t ≥ k/2` cannot be recovered from\nany cardinality bound, which is why every attempt to beat it by re-arranging\nthe leaked bits has failed.\n\n*Why now?*  `card_fiber_coordRestrict_congr` proves the full-cube case in three\nlines; the general case is the statement that the two coordinate subgroups are\nconjugate under a permutation of the cube, which is within reach of Mathlib's\n`Equiv.Perm` API.\n\n## C4. Composite hints: is the bit budget exactly additive on symmetric sets?\n\n**Conjecture.**  If two hints `h₁, h₂` have invariance groups `Γ₁, Γ₂` then the\njoint hint `(h₁,h₂)` has invariance group `Γ₁ ∩ Γ₂` and usable bits\n`log₂(|S|/|Γ₁ ∩ Γ₂|)`; in particular two `t`-bit hints with the same invariance\ngroup are worth `t` bits together, not `2t`.  Cycle I proves only the upper\nbound `t₁ + t₂` (`worstCost_pair_ge`).\n\n*The key insight is* that hint composition is intersection of symmetry groups,\nso redundancy between hints is measurable *a priori* — a designer can tell\nwhether a second leak is free before measuring anything.\n\n*Why now?*  It is the direct group-theoretic dual of `worstCost_pair_ge` and\nneeds only the orbit machinery of C1.\n\n## C5. A trace-set floor for `N`-checkable hints\n\n**Conjecture.**  Let `h(p)` be any hint computable from `(N, p mod m)` alone.\nThen on the set `S_N` of candidates consistent with `N`, `h` cannot cut the\nsearch below the \"trace-set floor\" `|S_N| / m`; in particular no `N`-checkable\nhint of unbounded length beats a `log₂ m`-bit external hint.  Cycle I proves the\ndegenerate case (hint depending on `N` only: zero information,\n`worstCost_of_public`).\n\n*The key insight is* that checkability against public data is exactly\nfactorisation through a public quotient, and factorisation through a quotient is\nthe same phenomenon that makes public hints worthless — the floor is a fibre\ncount, not a cryptographic assumption.\n\n*Why now?*  `worstCost_of_public` gives the mechanism; the general version needs\nonly the product-of-quotients bound already used in `worstCost_pair_ge`.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Algebra",
         "Combinatorics"
@@ -39850,7 +39850,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions — Hamiltonicity of Cayley Graphs of Order `pqrs`\n\nThis document records the open conjectures that the formalization in\n`Catalog/Pythagorean/CayleyHamiltonian/` makes concrete and testable.  Everything asserted as\n*proved* below is `sorry`-free Lean 4 / Mathlib and depends only on `propext`,\n`Classical.choice`, `Quot.sound`.\n\n## What is already proved\n\n### Foundations\n\n| result | Lean name |\n|---|---|\n| connectivity ⟺ `⟪S⟫ = G` | `cayleyGraph_connected_iff` |\n| the graph depends only on `S ∪ S⁻¹` | `cayleyGraph_union_inv` |\n| cyclic enumeration ⇒ hamiltonian | `isHamiltonian_of_enum` |\n| connection set containing a generator | `isHamiltonian_of_orderOf_eq_card` |\n| all connected Cayley graphs of odd prime order | `isHamiltonian_of_prime_card` |\n| **the factor group lemma (quotient-free formulation)** | `isHamiltonian_of_factorGroup` |\n\n### Coset-by-coset criteria\n\n| result | Lean name |\n|---|---|\n| parity-free zigzag on `C_m □ C_k` for commuting generators | `isHamiltonian_of_abelian_directProduct` |\n| generalized dihedral pair | `isHamiltonian_of_dihedral_pair` |\n| index-two alternating word | `isHamiltonian_of_index_two_pair` |\n| **twisted direction-sequence criterion (metacyclic `⟨a⟩ ⋊ ⟨b⟩`)** | `isHamiltonian_of_twisted_directions` |\n| the twist alone closes the cycle when `gcd(e−1, |a|) = 1` | `isHamiltonian_of_metacyclic_coprime_twist` |\n| **nonabelian metacyclic groups with `|a|` prime** | `isHamiltonian_of_metacyclic_prime_normal` |\n| two connection elements in one coset of a normal subgroup of prime order | `isHamiltonian_of_same_coset_pair`, `isHamiltonian_of_same_coset_pair'` |\n| two connection elements in mutually inverse cosets | `isHamiltonian_of_inverse_coset_pair` |\n| **general coset-pair criterion, voltage form (no parity hypothesis)** | `isHamiltonian_of_coset_pair_of_voltage` |\n| **general coset-pair criterion: `x` of odd order `k`, `y = A·xᵐ`** | `isHamiltonian_of_coset_pair` |\n| the case `m = 2` of the criterion | `isHamiltonian_of_square_coset_pair` |\n\n### Complete order theorems (arbitrary connection set)\n\n| result | Lean name |\n|---|---|\n| **order `2p`, `p` odd prime** | `isHamiltonian_of_card_eq_two_mul_prime` |\n| **order `3q`, `q ≠ 3` prime** | `isHamiltonian_of_card_eq_three_mul_prime` |\n| **order `5q`, `q ≠ 5` prime** | `isHamiltonian_of_card_eq_five_mul_prime` |\n| **order `pq` for all distinct primes `p ≠ q`** | `isHamiltonian_of_card_eq_prime_mul_prime` |\n| the same, with the order given as `Nat.card` | `isHamiltonian_of_natCard_eq_prime_mul_prime` |\n| abelian groups of order `pq` | `abelian_isHamiltonian_of_card_eq_prime_mul_prime` |\n\n### Structure theory and reductions\n\n| result | Lean name |\n|---|---|\n| elements outside the normal Sylow `q`-subgroup have order `p` or `pq` | `orderOf_eq_or_of_notMem_normal` |\n| connection set meeting the normal Sylow subgroup ⇒ hamiltonian | `pq_isHamiltonian_of_mem_normal` |\n| order `pq` with a generator of the normal Sylow subgroup in `S` | `pq_isHamiltonian_of_normal_pair` |\n| **order-`pq` reduction: hamiltonian, or `S` is a partial transversal** | `pq_isHamiltonian_or_transversal` |\n| **the transversal may in addition be taken inverse-closed-free** | `pq_isHamiltonian_or_symmetric_transversal` |\n| order `pq` with `≥ p` nonidentity connection elements ⇒ hamiltonian | `pq_isHamiltonian_of_le_ncard` |\n| explicit hamiltonian cycle in the transversal case of order `21` | `Frobenius21.frobenius21_transversal_isHamiltonian` |\n| abelian and dihedral cases of order `pqrs` | `pqrs_abelian_pair_isHamiltonian`, `pqrs_dihedral_isHamiltonian` |\n| metacyclic groups of order `pqrs` | `pqrs_metacyclic_isHamiltonian` |\n\n### Organizing principles\n\n**(A) Coset-by-coset traversal.**  A hamiltonian cycle in `Cay(G, S)` is produced by choosing a\ncyclic subgroup `N = ⟨a⟩` with cyclic \"quotient direction\" `b`, traversing each coset of `N`\ncompletely, and choosing a direction for each traversal so that the accumulated column shift is\n`0` in `N`.  For `N` central the closing condition is the arithmetic congruence\n`m ∣ ∑_{j<k} d j` (`isHamiltonian_of_directions`); with a twist `b a b⁻¹ = a^e` it becomes the\n*geometric* congruence `m ∣ ∑_{j<k} d j eʲ` (`isHamiltonian_of_twisted_directions`).  The\ngeometric sum explains *why* the twisted case is easier rather than harder:\n`(e − 1) ∑_{j<k} eʲ = eᵏ − 1 ≡ 0 (mod m)` holds automatically, so a nontrivial twist supplies\nits own closing certificate.\n\n**(B) Voltage.**  More generally (`isHamiltonian_of_factorGroup`), any `k`-periodic walk whose\nprefix products meet each coset of `⟨z⟩` exactly once, where `z` is the *voltage* of one turn,\ncloses into a hamiltonian cycle after `|z|` turns.  This is the factor group lemma, formalized\nhere without ever forming a quotient group: the distinctness hypothesis is stated as\n`P i' * (P i)⁻¹ ∈ ⟨z⟩ → i = i'`.  Principle (A) is the special case where the walk is\n`a, …, a, b, a, …, a, b, …`.\n\n**(C) The coset-pair criterion closes the transversal case.**  The gap left by the previous\ncycle — a connection set that misses the normal subgroup `N = ⟨a⟩` and meets each nontrivial\ncoset at most once — is now a theorem.  The decisive observation is that one should *not* look\nfor a positive word: with `x̄ = 1` and `ȳ = m` in the quotient, the only `±`-free words whose\nsteps sum to `0` are `x^k` and `y^k`, both of voltage `1`.  The word that works is the\n`k`-periodic **`x`-then-`x⁻¹` word**\n\n```\nx, x, …, x  (t times),  y,  x⁻¹, x⁻¹, …, x⁻¹  (t − 1 times),  y        with t = k − m,\n```\n\nwhose prefix products run through the cosets `N, Nx, …, Nx^{k−1}` exactly once and whose\nvoltage is `B · (x B x⁻¹)` for a conjugate `B` of `A`.  That voltage is *never* trivial: it is\ntrivial only if `x B x⁻¹ = B⁻¹`, and conjugation by `x` has odd order `k` on the cyclic group\n`⟨a⟩` of odd prime order `q`, while inversion has order `2` — so `B = 1`, a contradiction.  No\narithmetic side condition on the twist survives, which is why the criterion\n(`isHamiltonian_of_coset_pair`) is uniform in `m` and applies equally to abelian and nonabelian\ngroups.  Combined with the dichotomy `pq_isHamiltonian_or_transversal` and the small-prime\ncases `p = 2, 3`, this yields the complete order-`pq` theorem.\n\n---\n\n## Conjecture 1 (Squarefree order ⇒ hamiltonian, via a normal-form pair)\n\nEvery connected Cayley graph of a group of squarefree order `n ≥ 3` is hamiltonian.  In\nparticular this covers `n = pqrs`, the target of the source paper.\n\n*The key insight is* that the **combinatorial** half of this statement is no longer the\nobstruction: `isHamiltonian_of_coset_pair` is already stated for `|G| = q·k` with `k` an\narbitrary odd number coprime to the prime `q`, not for `k` prime, so it applies verbatim to\n`k = pr`, `k = prs`, and beyond.  What is missing is a purely group-theoretic **normal-form\nlemma**: every generating set of a group of odd squarefree order contains, or generates by a\nbounded-length word, a pair `(x, y)` with `x` of order `k = |G|/q`, `⟨a⟩ ⊴ G` of prime order\n`q`, and `y ∈ ⟨a⟩x^m ∖ {x^m}`.  Formally: state\n`squarefree_normalForm_pair : Squarefree (Nat.card G) → Odd (Nat.card G) → Subgroup.closure S = ⊤ → ∃ …`\nand feed it to the criterion.\n\n*Why now?*  Mathlib supplies `IsZGroup.of_squarefree` and `IsZGroup.isCyclic_abelianization`\n(already used here in `pqrs_abelian_isCyclic`), so the metacyclic decomposition\n`G = ⟨a⟩ ⋊ ⟨b⟩` is available off the shelf; and the order-`pq` proof in\n`OrderPQComplete.lean` is exactly the `k = p` instance of the intended argument, so it can be\nused as a template line by line.  The conjecture is falsifiable: a counterexample would be a\nsquarefree order `n`, a group `G` of that order and a generating set `S` with no hamiltonian\ncycle, which is a finite check for each `(G, S)`.\n\n## Conjecture 2 (Order `pqr`: the next complete order theorem)\n\nFor distinct primes `p`, `q`, `r`, every connected Cayley graph of a group of order `pqr` is\nhamiltonian.\n\n*The key insight is* that the order-`pq` proof has a three-branch shape — `S` meets the normal\nsubgroup; `S` has two elements in one coset (or in inverse cosets); `S` is a partial\ntransversal — and the branch count does not grow with the number of primes, only the\n*bookkeeping* does: for `|G| = pqr` there is a normal Sylow subgroup `N` of prime order `q`\n(by a counting argument on Sylow numbers) with `G/N` of squarefree order `pr`, so the same\ntrichotomy applies once the quotient direction is replaced by an element of order `pr` or by a\npair generating `G/N`.  The genuinely new case, absent for `|G| = pq`, is that `G/N` may fail\nto be cyclic-generated by a single image of `S`; then one needs a *two-generator* quotient\nword, i.e. principle (B) applied to a walk that is not of the form `x…x y x…x y`.\n\n*Why now?*  `isHamiltonian_of_factorGroup` accepts an arbitrary periodic word, so the\ntwo-generator quotient walk needs no new infrastructure — only a hamiltonian cycle in the\nquotient `Cay(G/N, S̄)`, which is a Cayley graph of order `pr` and hence covered by\n`isHamiltonian_of_card_eq_prime_mul_prime`.  The order-`pqr` theorem is therefore an\n*induction on the number of primes* waiting for a voltage-lifting lemma: \"a hamiltonian cycle\nin `Cay(G/N, S̄)` with nontrivial voltage lifts to a hamiltonian cycle in `Cay(G, S)`\".\n\n## Conjecture 3 (Sharpness of the voltage condition for even `k`)\n\nThe parity hypotheses of the coset-pair criterion are *exactly* the voltage condition, and the\nvoltage condition is *not* vacuous: there exist `G`, a normal `⟨a⟩` of prime order `q`, an\nelement `x` of even order `k` and `A ∈ ⟨a⟩ ∖ {1}` for which the `x`-then-`x⁻¹` traversal has\ntrivial voltage `B · (x B x⁻¹) = 1`, so that the criterion genuinely does not apply.\n\n*The key insight is* that the positive half of this conjecture from the previous cycle is now\na **theorem**: `isHamiltonian_of_coset_pair_of_voltage` has no parity hypothesis at all, taking\n`∀ B ∈ ⟨a⟩, B ≠ 1 → B (x B x⁻¹) ≠ 1` as its only replacement, and\n`isHamiltonian_of_coset_pair` is the corollary in which oddness of `q` and `k` discharges that\nhypothesis.  What remains is the *negative* half: the oddness is not an artefact of the\ntraversal but the precise obstruction, because the automorphism `c ↦ x c x⁻¹` of `⟨a⟩ ≅ ℤ/q`\nhas order dividing `k` and can equal inversion only when `2 ∣ k`.  The smallest predicted\nwitness is the dihedral-like group `ℤ/q ⋊_{−1} ℤ/k` with `k` even and `x` acting by inversion.\n\n*Why now?*  The statement has been reduced to an explicit computation of one conjugation\nautomorphism in a concrete group of order `qk` — and that group is nevertheless hamiltonian by\n`isHamiltonian_of_card_eq_two_mul_prime` when `k = 2`, so the witness would bound the *method*,\nnot the theorem, and would tell us exactly which alternative periodic word must replace\n`x, …, x, y, x⁻¹, …, x⁻¹, y` in the even case.\n\n## Conjecture 4 (Voltage dichotomy: the factor group lemma is essentially sharp)\n\nFor every group `G` of squarefree order `≥ 3` and every connected `S`, some periodic word in\n`S ∪ S⁻¹` satisfies the hypotheses of `isHamiltonian_of_factorGroup`.\n\n*The key insight is* that the two hypotheses of the lemma pull in opposite directions: making\nthe prefix products land in distinct cosets forces the word to be short, while making the\nvoltage generate a nontrivial `⟨z⟩` forces it to be long; the conjecture says that for\nsquarefree order these constraints are always simultaneously satisfiable.  A counterexample\nwould be a group in which every quotient-hamiltonian closed word has trivial voltage — and by\nConjecture 1 such a group would still have a hamiltonian cycle, just not one obtainable by\nlifting.\n\n*Why now?*  `isHamiltonian_of_factorGroup` is available as a single reusable statement with an\nexplicitly finite hypothesis set, so the conjecture is falsifiable by a finite search for each\nfixed `(G, S)`; and there are now four proved families of witnesses to seed the search —\n`isHamiltonian_of_same_coset_pair`, `isHamiltonian_of_inverse_coset_pair`,\n`isHamiltonian_of_coset_pair` and the twisted criterion viewed as the word `aᵐ b aᵐ b ⋯`.\n\n## Conjecture 5 (Quantitative: how many hamiltonian cycles?)\n\nFor `|G| = pq` with `p < q` primes and `S` a connected connection set, `Cay(G, S)` contains at\nleast `q` distinct hamiltonian cycles; more ambitiously, the number of them is divisible by\n`|G| / 2` whenever `|S| = 2`.\n\n*The key insight is* that vertex-transitivity (`exists_aut_mapping` in `Basic.lean`) makes the\nautomorphism group act on the set of hamiltonian cycles with small stabilizers, so a single\ncycle already forces an orbit of size `|G| / |stabilizer|`; the content of the conjecture is\nthe lower bound on the orbit, i.e. that the stabilizer of a cycle has order at most `2` (a\ncycle is stabilized only by the reversal and by translations along itself).\n\n*Why now?*  Existence is now formally settled for *all* of order `pq`, so counting is the only\nremaining question at that order; the explicit cycles produced by `cosetEnum`, `zigzagEnum`,\n`twistEnum` and `prefixProd` are concrete enough to be counted; and the group-action machinery\n(`translateAut`) is already in `Basic.lean`.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "NumberTheory",
         "Combinatorics"
@@ -39972,7 +39972,7 @@
       "depth_estimate": 3,
       "description": "# Future directions\n\nDerived from the formalisation in `Catalog/Algebra/KleberComplementaryProducts.lean` and\n`Catalog/Algebra/KleberManyFoldProducts.lean`, and from the exploratory data in\n`ComputationalEvidence.md`.\n\nWhat is *proved* (sorry-free Lean, characteristic-zero domains, in particular `ℤ` and any\nfield of characteristic zero):\n\n* products `m_α m_β` of monomial symmetric functions indexed by pairs with **pairwise\n  distinct multiset unions** `α ⊎ β` are linearly independent\n  (`linearIndependent_msym_mul`), and likewise for products of arbitrarily many factors\n  (`linearIndependent_msym_prod`);\n* as a corollary of the many-fold theorem, products of power sums `p_{k_1} ⋯ p_{k_r}`\n  indexed by pairwise distinct multisets of positive exponents are linearly independent\n  (`linearIndependent_psum_monomials`, via `m_{(k)} = p_k`);\n* a product `m_α m_β` determines `α ⊎ β` (`parts_union_eq_of_msym_mul_eq`);\n* the one-row componentwise splitting case is unconditional\n  (`linearIndependent_row_splittings`);\n* the number-of-variables hypothesis is necessary\n  (`not_linearIndependent_of_too_few_variables`) and the distinct-union hypothesis is not\n  (`linearIndependent_collision_pair_two`, covering every two-element union class).\n\nThe engine behind all of this is the quadratic statistic `Q(d) = Σ_i d_i²`, which satisfies\n`Q(u+v) = Q(u) + Q(v) + 2⟨u,v⟩`: the monomials of `m_α m_β` of minimal `Q` are exactly those\nwhose part multiset is `α ⊎ β`. This is a filtration *transverse* to dominance order — the\ndominance-leading term `m_θ` is the same for every splitting of `θ`, which is why the naive\ntriangularity argument fails.\n\n## Conjecture 1 (union classes). For a fixed multiset `U`, the products `m_A m_B` over unordered multiset splittings `A ⊎ B = U` are linearly independent over `ℚ` (and over `ℤ`).\n\nThe key insight is that the `Q`-filtration collapses on a single union class — all these\nproducts have proportional leading forms, a scalar multiple of `m_U` — so the class must be\nseparated one layer up, by the monomials obtained from `U` by merging exactly one pair of\nparts, where the coefficient is governed by how `α` and `β` distribute the merged pair.\n\nWhy now? Conjecture 1 is exactly the missing half of the argument: combined with the\nalready-formalised `Q`-grading it yields the full componentwise splitting theorem for\nmonomial symmetric functions. It is verified for every `U` with `|U| ≤ 8`, and its smallest\ninstance (`U = {v,v}`) is already a theorem in the Lean files.\n\n## Conjecture 2 (merge filtration). Order monomials by the number of \"merges\" needed to obtain them from `U`. For pairs in one union class the matrix of coefficients at the one-merge layer, indexed by pairs `{α,β}` and by merged pairs of parts `{a,b} ⊆ U`, has full row rank.\n\nThe key insight is that a one-merge monomial `w` with merged parts `a, b` receives a\ncontribution from `m_α m_β` in exactly two ways — `a+b` is a single part of one factor, or\n`a` and `b` lie in different factors — so the coefficient is a linear function of the\n\"crossing statistics\" of the splitting, which are distinct for distinct splittings.\n\nWhy now? The layer-by-layer coefficients are completely explicit finite counts (products of\nbinomial coefficients at the zeroth layer), and the Lean infrastructure for extracting the\ncoefficient at any prescribed monomial (`coeff_msym_mul`, `exists_split_of_coeff_ne_zero`)\nis already in place, so this conjecture is directly attackable by formalisation.\n\n## Conjecture 3 (Schur transfer). The `Q`-filtration argument lifts verbatim from `m` to `s`: for a family of pairs with pairwise distinct multiset unions, the products `s_α s_β` are linearly independent over every commutative ring `R` (not just in characteristic zero).\n\nThe key insight is that `s_λ = m_λ + Σ_{μ ◁ λ} K_{λμ} m_μ` is unitriangular with **unit**\ndiagonal, so the `Q`-minimal layer of `s_α s_β` is `m_{α⊎β}` with coefficient a *product of\nbinomial coefficients times 1*, and the leading unit survives base change to an arbitrary\ncommutative ring — the same mechanism that makes the paper's statement ring-independent.\n\nWhy now? The obstruction is not the argument but the missing Mathlib infrastructure (there\nis no ring of symmetric functions and no Schur function in Mathlib); the present files build\n`m`-functions, orbits, and the coefficient calculus from scratch, so adding Kostka-triangular\n`s`-functions on top of them is a well-defined, self-contained project.\n\n## Conjecture 4 (rigidity: the product remembers the pair). If `m_α m_β = m_{α'} m_{β'}` (with enough variables) then `{α,β} = {α',β'}`.\n\nThe key insight is that `parts_union_eq_of_msym_mul_eq` already forces `α ⊎ β = α' ⊎ β'`, so\nthe whole question reduces to Conjecture 1 restricted to a two-element subfamily — rigidity\nis the \"injectivity shadow\" of linear independence.\n\nWhy now? Half of the statement is a theorem in the current files, and the remaining half is\nthe smallest nontrivial case of Conjecture 1, making this the cheapest genuine test of the\none-merge technique of Conjecture 2.\n\n## Conjecture 5 (quantitative dependence threshold). Fix `n`. The family of *all* products `m_α m_β` with `|α| + |β| = n` has rank exactly `p(n)` (the dimension of the degree-`n` component), and a maximal independent subfamily can always be chosen by picking one pair per multiset union.\n\nThe key insight is that the `Q`-grading gives a surjection \"pair ↦ union\" onto partitions of\n`n`, and the theorem proved here shows any section of that surjection yields an independent\nset; the conjecture asserts that this bound is tight, i.e. unions index a basis of the span.\n\nWhy now? The upper bound `rank ≤ p(n)` is dimension counting and the lower bound is exactly\nthe formalised theorem, so the conjecture is a sharp, immediately testable statement that\nwould turn the criterion into a complete description of the span of all such products.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Algebra",
         "Combinatorics"
@@ -40095,7 +40095,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Isomorphism of tournaments with bounded VC dimension' and formalize its key results. Abstract: The tournament isomorphism problem is one of the two fundamental bottlenecks to designing better algorithms for the graph isomorphism problem. Though the problem has been investigated for more than five decades, compared to graphs, there are only very few results on the isomorphism problem of tournaments. For most classes of tournaments neither hardness nor polynomial-time solvability is known. Tournaments of bounded VC dimension are such a class for which no results are available, even though the VC dimension is arguably one of the most robust and central notions of combinatorial tameness. Resolving an open problem of Neuen and Grohe, we show that the isomorphism problem for tournaments of VC dimension $d$ can be decided in time $n^{O(d\\log d)}$. Consequently, automorphism groups of tournaments of bounded VC dimension can be computed in polynomial time. To this end, we develop a new method to isomorphism-invariantly decompose tournaments. To facilitate recursion, we introduce the noti",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Combinatorics",
         "Algebra"
@@ -42339,7 +42339,7 @@
       "depth_estimate": 3,
       "description": "`QuantumSerre.highest_weight_singular` establishes\n   `E (F^{n+1} v) = 0` for every highest-weight vector of weight `n` in every `U_q(sl₂)`-module.\n   The open half is the converse classification: for `q` not a root of unity, every finite\n   dimensional `U_q(sl₂)`-module is a direct sum of the modules `uqSl2_rep n` twisted by a sign\n   character — a complete-reducibility statement that would make the Reshetikhin–Turaev functor\n   well defined on the whole category rather than on the fundamental representation alone.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Algebra",
         "Physics"
@@ -43702,7 +43702,7 @@
       "depth_estimate": 3,
       "description": "`Σ_g |X^g|^k = (B_k + Σ_P (m_P − 1))·|G|`\n    (`bell_defect_eq`): the excess of a moment over its Bell floor is `|G|` times the number of\n    *extra* orbits per pattern, and it vanishes exactly for `k`-transitive actions\n    (`sum_patternMultiplicity_sub_one_eq_zero_iff`).\n\n---\n\n\n\n## Open conjectures for the next cycle\n\n\n\n### Conjecture E′ (the fibre spectrum is a strictly finer invariant)\n\n*The vector `(m_P)_P` of pattern multiplicities separates pairs of actions that the scalar moment\n`Σ_g |X^g|^k` cannot; and `m_P = 1` for all `P` with exactly `j` blocks iff the action is\n`j`-transitive (the block-graded refinement of the fibrewise criterion).*\n\nThe key insight is that the fibrewise criterion now proved treats all patterns at once, whereas the\ntransitivity hierarchy is graded by the number of blocks: restricting attention to the patterns\nwith `j` blocks should isolate exactly `j`-transitivity inside the `k`-tuple data, giving a\nspectrum of invariants between the moments.\n\nWhy now? The decomposition, the fibrewise criterion and the exact defect formula are proved\n(items 18–19), and cycle 3 also shows the scalar moment cannot separate actions (item 15), so the\nonly thing left to test is whether the refined vector can.\n\n\n\n### Conjecture F (Bell defect bounds the failure of transitivity)\n\n*The Bell defect `D_k(G,X) := Σ_g |X^g|^k − B_k|G| ≥ 0` satisfies: `D_k = 0 ⇒ D_j = 0` for `j ≤ k`\n(proved), and quantitatively `D_2 > 0 ⇒ D_k ≥ c_k · D_2` for an explicit combinatorial constant\n`c_k` depending only on `k`.*\n\nThe key insight is that the defect counts non-singleton fibres of the orbit-to-pattern map with\nmultiplicity, and a failure of 2-transitivity is inherited by every longer tuple by padding with\nrepeated coordinates, which multiplies the excess by a controlled partition count.\n\nWhy now? Non-negativity, the implication `D_k = 0 ⇒ D_j = 0`, and now the exact formula\n`D_k = |G|·Σ_P (m_P − 1)` (item 19) are theorems; only the quantitative propagation between\ndifferent `k` is open, and it is now a statement about fibre sizes rather than about moments.\n\n\n\n### Conjecture G (how much labelling an injective aggregate must spend)\n\n*Every injective aggregate `A : (Fin m → QLaurent) → QLaurent` that is additive in each argument\nmust spread the coefficients over at least `m` pairwise disjoint infinite sets of exponents; in\nparticular no such aggregate has image contained in the series supported on a set of density\n`< 1/m`.*\n\nThe key insight is that cycle 3 identified symmetry as the obstruction, so what remains is a\ncounting bound: injectivity forces the aggregate to reserve, for each index, an infinite family of\nindependent coefficient slots, which is exactly what the interleaving construction does with the\nresidues mod `m`.\n\nWhy now? The dichotomy (interleaving injective, every symmetric aggregate non-injective) is proved;\nthe missing piece is a lower bound showing interleaving is not just *an* answer but essentially the\n*only* shape of answer.\n\n\n\n### Co",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Combinatorics",
         "MachineLearning"
@@ -43865,7 +43865,7 @@
       "depth_estimate": 3,
       "description": "The obstruction half is fully formal (a `Finset` pigeonhole plus a\ntelescoping identity), so the conjecture can be stated in Lean today with a proved\nconverse; each new case of the existence half (e.g. `k = 1`, the twin case) is a known\nhard target with a now-precise topological meaning.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Combinatorics",
         "Geometry"
@@ -44303,7 +44303,7 @@
       "depth_estimate": 3,
       "description": "Both sides of the comparison are now closed-form Lean theorems\n(`addEnergy_sidon`, `addEnergy_sidon2`), so the conjecture is exactly the statement that\nthe exponent-two computation is *extremal*, a finite convexity problem over the\ndistribution of `r`, not a new Fourier estimate.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Combinatorics",
         "Geometry"
@@ -44344,7 +44344,7 @@
       "depth_estimate": 3,
       "description": "Mathlib now carries the exact-doubling structure theorem\n(`Finset.vadd_stabilizer_of_no_doubling`, used in `gain_or_coset`) and approximate-subgroup\nmachinery, so the stable version can be attacked by combining the Lean-proved energy\nidentity with existing Freiman-type infrastructure rather than rebuilding it.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Algebra",
         "Combinatorics"
@@ -44423,7 +44423,7 @@
       "depth_estimate": 3,
       "description": "**Sharpness**: the liar loop destroys conservativity (`liar_not_conservative`);\n  a single positive loop costs exactly one bit and `k` loops exactly `2 ^ k`\n  models while adding **no** theorem (`loopDen_models_ncard`,\n  `loopDen_conservative`).",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Physics"
       ],
@@ -44503,7 +44503,7 @@
       "depth_estimate": 3,
       "description": "The `2 ^ k` computation and the sandwich theorem are already\nformalized; what is missing is only the graph decomposition, a combinatorial\nstatement about `SimpleGraph`/`Quiver` SCCs that Mathlib can support.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Combinatorics"
       ],
@@ -44816,7 +44816,7 @@
       "depth_estimate": 3,
       "description": "The gap bound `N!/2^{N−1}` of\n   `powerSum_gap_le` should degrade to `N!/m(N, K)` when only orders `k ≤ K` agree, i.e. the\n   extremal discrepancy is inversely proportional to the minimal collision size.  Falsifiable\n   by exhibiting a pair with agreement order `K` and discrepancy exceeding `N!/m(N,K)`.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Combinatorics"
       ],
@@ -45362,7 +45362,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'A Local Central Limit Theorem for Clique Counts in Sparse Random Graphs' and formalize its key results. Abstract: Let $X_H$ denote the number of copies of a fixed graph $H$ in $G_{n, p}$. Gilmer and Kopparty conjectured that $X_H$ satisfies a local central limit theorem (LCLT) provided that $H$ is connected, $p \\gg n^{-1/m(H)}$, and $n^2 (1-p) \\gg 1$, where $m(H)$ is the maximum density. Following the work of Berkowitz, Sah and Sawhney confirmed this conjecture for every constant $p$, leaving the regime where $p=o(1)$ open. In this regime, the only case addressed in the literature is when $H=K_3$, where, in a recent paper, Araújo and Mattos confirmed the conjecture for $p \\in (4n^{-1/2}, 1/2)$. This, together with a general result of Röllin and Ross, essentially settles the conjecture for the triangle. We generalise these results by showing that an LCLT holds for $H = K_r$ (for any fixed $r \\ge 3$) in the regime $n^{-1/m(H)}\\ll p\\leq 1/2$, essentially settling the conjecture for cliques.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Combinatorics",
         "Computation"
@@ -45443,7 +45443,7 @@
       "depth_estimate": 3,
       "description": "of patterns: the recursion `stirling2 (n+1) (k+1) = (k+1) · stirling2 n (k+1) + stirling2 n k`\nalready proved here expresses a pattern as a pattern plus a choice of block for the new point,\nso a pair of patterns with block counts `(k-1, k+1)` can be transformed into a pair with block\ncounts `(k, k)` by transferring the smallest point that separates them — a purely combinatorial\nmap whose injectivity is checkable from the `PatK` description.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Algebra",
         "Combinatorics"
@@ -45959,7 +45959,7 @@
       "depth_estimate": 3,
       "description": "The unconditional counting separation and the conditional\ncryptographic separation are both formalized; the missing middle case would show\nthat the seed budget is a resource in its own right, not merely a proxy for\ninformation.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Combinatorics",
         "Cryptography"
@@ -46000,7 +46000,7 @@
       "depth_estimate": 3,
       "description": "The equality case is now a theorem rather than a hypothesis, so the extremal class\nis precisely delimited, and mathlib's character theory of finite groups (`FDRep`, orthogonality\nof characters) supplies the regular-character decomposition that the argument needs.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Algebra",
         "Combinatorics"
@@ -46483,7 +46483,7 @@
       "depth_estimate": 3,
       "description": "The gap theorem `FourierFA.uncertainty_gap_of_not_cosetModulation` already shows the\ndiscrete side of this picture (products jump by at least `|supp f|` once `|supp f|` divides\n`|G|`), so the remaining content is purely analytic and the Lean infrastructure\n(`norm_sum_eq_sum_norm_phase`, `IsExtremal.phase_align`) is in place.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Combinatorics"
       ],
@@ -46563,7 +46563,7 @@
       "depth_estimate": 3,
       "description": "In the setting of Conjecture 1, prove the *support* stability first: if\n   `|supp f|·|supp f̂| < |G| + |supp f|` then `supp f` is a coset (this is already a theorem here\n   when `|supp f|` divides `|G|`; the open case is `|supp f| ∤ |G|`).\n2. **(C4a)** Prove that the pairing function on `K × K̂` is, up to modulation/translation and the\n   symplectic action, the *unique* bi-flat function with full support and full spectrum when `K`\n   has odd order.\n3. **(C5a)** Prove the phase-subgroup step (`IsExtremal.sub_mem_phaseSubgroup`) for finite\n   Heisenberg groups, the smallest genuinely non-abelian test case.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Algebra",
         "Combinatorics"
@@ -46725,7 +46725,7 @@
       "depth_estimate": 3,
       "description": "We *proved* the combinatorial extremal pair exists\n(`exists_powerSum_agreeing_ne`) and *proved* the smallest case `n = 2` is realised by\n(`regular G`, `Unit`) for `|G| = 2` (`regular_vs_point_separation`).  The gap between\n\"combinatorially extremal\" and \"group-theoretically realisable\" is now a sharply posed,\nfinite question for each `n`.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Combinatorics",
         "Algebra"
@@ -47074,7 +47074,7 @@
       "depth_estimate": 3,
       "description": "(`TriangularForest.completeGraph_not_decomposesIntoTwo_six`).  Randomised search finds\nmatching covers for all `n ≤ 11`.  Open: a construction for general `n`.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Combinatorics",
         "Computation"
@@ -47115,7 +47115,7 @@
       "depth_estimate": 3,
       "description": "The two easy halves are *proved*: closure under subgraphs\n(`TriangularForest.IsTriangularForest.mono`, `IsTriangularForest.comap`) and closure under\n1-sums (`TriangularForest.isTriangularForest_oneSum`).  Subdivision/suppression is the missing\noperation and is not available in Mathlib.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Combinatorics"
       ],
@@ -47196,7 +47196,7 @@
       "depth_estimate": 3,
       "description": "The certificate reformulation just proved turns the problem into an\nedge-set-quantified property, which is the precise input format of the MSO transfer theorems;\nand the sparsity bound `e ≤ 3(n-1)` for decomposable graphs already bounds the instances that\nneed to be considered.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Combinatorics"
       ],
@@ -47312,7 +47312,7 @@
       "depth_estimate": 3,
       "description": "The two extreme cases `t = 0` and `t = m` are already proved tight\n(`corradi_tight_of_pairwiseDisjoint`, `corradi_tight_of_constant`), and the\nrigidity theorem tells us precisely which combinatorial object must be built for\nintermediate `t`; nothing else in the argument is missing.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Combinatorics"
       ],
@@ -47940,7 +47940,7 @@
       "depth_estimate": 3,
       "description": "Cycle 7 supplies both directions of the machinery (`minDist_image_withParity`,\n`minDist_image_dropLast`) and the extremal function `A` with its attainment lemma\n`A_isGreatest`, so each instance is a finite, falsifiable search; a companion quantitative\nquestion — whether the packing defect at `d = 3` and `n + 1` not a power of two is always at\nleast one whole ball, `(A(n,3) + 1) · (n + 1) ≤ 2 ^ n`, strengthening the proved\n`hamming_bound_strict` — is testable in the same framework\n(`n = 4`: `2 · 5 = 10`, defect `6 ≥ 5`; `n = 5`: `4 · 6 = 24`, defect `8 ≥ 6`;\n`n = 6`: `8 · 7 = 56`, defect `8 ≥ 7`).",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Combinatorics"
       ],
@@ -48261,7 +48261,7 @@
       "depth_estimate": 3,
       "description": "*For a generator driven by an integer matrix `M ∈ GL₃(ℤ)` with spectral radius\n`ρ(M) > 1`, the control-word length needed to reach a state of size `S` is\n`Θ(log S / log ρ(M))`; if `ρ(M) = 1` (unipotent) it is `Θ(S^{1/d})`, where `d` is\nthe size of the largest Jordan block minus one.*",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Physics"
       ],
@@ -48497,7 +48497,7 @@
       "depth_estimate": 3,
       "description": "1. **(S1)** `minimal_card_on_nodes`: for `A = {0, c, 2c, …, Nc}` the minimal near-miss\n   cardinality is again `2^{N-1}` — dilation invariance of the extremal problem.\n2. **(S2)** `support_gap_two`: there is *no* near miss at level `N ≥ 2` with\n   `#supp s + #supp t = N + 1` and `lam ≥ 2` whose two sides have equal support size unless\n   `N` is odd — a parity obstruction visible in the tables of `ComputationalEvidence.md`.\n3. **(S3)** `fwdDiff_kernel_dimension`: the space of `ℤ`-valued functionals on `{0,…,N}`\n   annihilated by every near miss at level `N` has rank exactly `N`, spanned by\n   `x ↦ x^k`, `k < N`; equivalently the near-miss functional is a *cyclic* vector for the\n   shift operator on that space.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Combinatorics"
       ],
@@ -48759,11 +48759,11 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 4,
+      "attempt_count": 5,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "39c3166e",
+      "consumed_by_exp_id": "5be71780",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -48775,7 +48775,7 @@
       ],
       "github_issue": 156,
       "id": "fd_1569",
-      "last_attempt_time": "2026-08-20T07:58:44.057115+00:00",
+      "last_attempt_time": "2026-08-20T10:48:57.758142+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -48850,7 +48850,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Cluster-Graph Edit Distance: Metric Proxies, Multiscale Embeddings, and Complexity' and formalize its key results. Abstract: The cluster graphs on $n$ vertices, the disjoint unions of complete graphs, have the integer partitions of $n$ as their isomorphism classes, and the quotient edit distance $q^*(λ,μ)=\\min_{σ\\in S_n}|E(G_λ)\\triangleσE(G_μ)|$ makes that set a metric space. Its metric geometry and its computational complexity both issue from one identity: $q^*$ is an affine function of the maximum of $\\lVert X\\rVert_F^2$ over the contingency tables with margins $λ$ and $μ$. Combinatorially, it yields two explicit $\\ell_1$ models: the vertex-mass metric $δ_1$ on sorted degree sequences, with $\\frac12δ_1\\le q^*<\\frac32δ_1$ and both constants optimal, and the block-energy metric $B$ on the vectors $\\bigl(\\binom{λ_i}2\\bigr)_i$, with $q^*\\le B\\le2q^*-1$ by a per-table refinement measuring how far an alignment is from a block bijection. Hence $c_1(\\mathcal K_n)\\le2$, and an $O(n\\log n)$-time algorithm returns an alignment of cost below $2q^*$ with the certificate $q^*\\in[\\lceil(B+1)/2\\rceil,B]$. The Euclidean di",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Combinatorics",
         "Geometry"
@@ -49122,7 +49122,7 @@
       "depth_estimate": 3,
       "description": "The additivity theorem is now available for arbitrary finite index\ntypes, so the bridge from valuation theory to a graded/combinatorial count needs\nonly a bookkeeping definition, and Mathlib's `Finset.prod` API supports the\ncoefficient extraction (see `coeff_one_prod_of_constantCoeff_one`).",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Combinatorics",
         "Bridges"
@@ -49242,7 +49242,7 @@
       "depth_estimate": 3,
       "description": "Both endpoints of the interval are now theorems and the residual gap for odd `m` is\na *finite* combinatorial deficit (`minFac m − 2` widths), not an asymptotic one.  The pigeonhole\ncriterion `ParityGap.permCoeff_eq_zero_of_pigeonhole` is stated for an arbitrary classification of\nthe columns, so a proof for odd `m` only has to exhibit a better `(J, cls)` pair — no new\nmachinery is needed.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Combinatorics",
         "Logic"
@@ -49516,7 +49516,7 @@
       "depth_estimate": 3,
       "description": "*The extremal classes of `ℤ/4`\nand of `ℤ/2 × ℤ/2`, equipped with pointwise product and convolution modulo scalars, are **not**\nisomorphic as algebraic structures.*  The counting half of this is now **proved**:\n`FourierFA.extremalSupports_separates_order_four` shows the two groups have literally the same\nextremal spectrum (both `{1, 2, 4}`) yet `2` and `6` extremal supports of size `2` respectively,\nso the family of supports is a strictly finer invariant than the family of sizes. The key\ninsight is `FourierFA.exists_isExtremal_supp_eq_iff_parallelogram`: extremality of the support is\nequivalent to closure under `(x, y, z) ↦ x - y + z`, which turns the invariant into a decidable\nfinite count. What remains open is the *algebraic* statement — that the product/convolution\nstructure, not merely the support count, distinguishes them, and that this holds for every pair\nof non-isomorphic finite abelian groups of the same order. Why now? The support characterisation\nand the closure theorems `isExtremal_mul`, `isExtremal_conv` are all formalised, so the remaining\nstep is to show the two operations recover the subgroup lattice from the extremal class.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Algebra",
         "Combinatorics"
@@ -49557,7 +49557,7 @@
       "depth_estimate": 3,
       "description": "*For every finite abelian `G` of order `n` and every\n`s ∤ n` with `s ≤ n`, there is a nonzero `f` with `|supp f| = s` and\n`|supp f|·|supp f̂| = s·⌈n/s⌉` — i.e. `FourierFA.uncertainty_gap_mod` is attained.*  The key\ninsight is that the extremal analysis forbids equality `s·t = n` only through Lagrange, and a\nunion of `⌈n/s⌉`-many cosets truncated to `s` points should saturate the rounded-up bound.  Why\nnow? The exact inequality and the arithmetic obstruction are proved, so only the construction is\nmissing, and it can be tested exhaustively on `ℤ/6` (`s = 4`) and `ℤ/12` (`s = 5`).",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Combinatorics"
       ],
@@ -49597,7 +49597,7 @@
       "depth_estimate": 3,
       "description": "*The map `H ↦ (H,\nH^⊥)` is an order-reversing lattice isomorphism from `Sub(G)` onto the poset of Poisson pairs\nordered by inclusion of the first coordinate, and it carries `⊔` to `∩`.*  The key insight is\nthat `annihSub_sup` already proves the meet/join exchange for annihilators, and\n`isPoissonPair_unique_subgroup` proves injectivity, so the only missing step is that the order\non pairs is determined by the first coordinate.  Why now? With\n`FourierFA.exists_isPoissonPair_card_iff` the image is known to hit every divisor, so the\nstatement has become a purely lattice-theoretic one about objects already formalised.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Algebra",
         "Combinatorics"
@@ -49638,7 +49638,7 @@
       "depth_estimate": 3,
       "description": "*Define `c_k^{grp} = inf {2·D_k / D_2}` over all finite actions with `2 ≤ k ≤ |X|` and `D_2 > 0`.\nThen `c_k^{grp} > B_k`, and in fact `c_k^{grp} = 2(B_k − 1) − something explicit`; the infimum is\nattained by the trivial action on `k` points.*\n\nThe key insight is that cycle 4 removed the extremal ray of the *relaxation* (`Conjecture H`), so\nthe infimum over actions is now governed by the *next* face of the cone, cut out by the newly\nproved multiplicative inequality `t_1^{\\underline r} ≤ t_r`: minimizing `Σ_r S(k,r)(t_r − 1)`\nsubject to that constraint is a finite optimization for each `k`.\n\nWhy now? Both the linear relaxation (`bellDefect_two_propagation_sharp`) and the first nonlinear\nconstraint (`descFactorial_injOrbits_one_le`) are theorems, so the optimization has a well-posed\nfeasible region for the first time.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Combinatorics"
       ],
@@ -49757,7 +49757,7 @@
       "depth_estimate": 3,
       "description": "*With `M_{k,j} = S(k,j)·t_j·|G|` the graded moments, the exponential generating function\n`Σ_k M_{k,j} x^k/k!` equals `t_j·|G|·(e^x − 1)^j / j!`, so the whole moment family of a `G`-set is\ndetermined by the `|X| + 1` numbers `t_j` through the classical Stirling generating function.*\n\nThe key insight is that the rank collapse `m_P = t_{rank P}` factors the doubly indexed family\ninto a purely combinatorial factor and a purely group-theoretic one, so the analytic structure is\ninherited verbatim from the Stirling numbers of the second kind.\n\nWhy now? Both factors are theorems (`patternMultiplicity_eq_injOrbits_rank`,\n`card_orbits_eq_sum_stirling`), and the moment–spectrum equivalence proved in this cycle says the\ngenerating function loses no information — it would connect this thread back to the analytic\n(moonshine) side that motivated it.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Algebra",
         "Combinatorics"
@@ -49798,7 +49798,7 @@
       "depth_estimate": 3,
       "description": "Under a matroid constraint on admissible libraries (e.g. \"at most `k` models per\ndata modality\", a partition matroid), the greedy algorithm is only\n`1/2`-optimal, but the multilinear extension of `C` admits a `(1 − 1/e)`\nrounding.  Conjecture: the multilinear extension\n`F(y) = 𝔼_{A∼y} C(A) = ∑ₓ 𝔼 maxᵢ∈A pᵢ(x)` of the Shtarkov functional is\n*concave along nonnegative directions* and its gradient has the closed form\n`∂F/∂yⱼ = ∑ₓ 𝔼_{A∼y}(pⱼ(x) − env_A(x))⁺`.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Combinatorics",
         "Computation"
@@ -50265,7 +50265,7 @@
       "depth_estimate": 3,
       "description": "It would upgrade the static statement \"emergent space is\n`0`-hyperbolic\" to a dynamical one: the RG flow of a holographic state *is* the\nconstruction of its bulk tree, and it converges in linearly many steps.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Combinatorics"
       ],
@@ -50305,7 +50305,7 @@
       "depth_estimate": 3,
       "description": "The one-sided inequality, a strict instance, and the \"if\" direction\n(`cap_pushGraph_eq_of_lift`: a fibre-constant minimal surface freezes the\nthroat) are all proved, so the remaining content is the converse; it would give a *criterion* for when\ncoarse-graining destroys geometric information, i.e. when the RG flow is\nirreversible.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Geometry",
         "Combinatorics"
@@ -50346,7 +50346,7 @@
       "depth_estimate": 3,
       "description": "The corresponding easy half is already a theorem\n(`entropy_pushModel_eq_of_lift`).  Together with C7 it would make the whole dictionary\n(area → throat → distance → entropy) uniformly rigid under coarse-graining, and\neach clause is a finite, checkable condition, hence falsifiable on a small\nweighted graph.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Combinatorics"
       ],
@@ -50386,7 +50386,7 @@
       "depth_estimate": 3,
       "description": "The compactness machinery of `ErdosGrahamCompactness.lean` transfers infinite\nstatements to finite ones, so the conjecture is now a statement about finite hypergraphs.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Combinatorics"
       ],
@@ -50426,7 +50426,7 @@
       "depth_estimate": 3,
       "description": "The finitisation is formally proved, so a SAT/ILP certificate for a single\n`N` would yield the first unconditional formal two-colour Erdős–Graham theorem; the\ncurrent formal two-colour result (`erdosGraham_two_of_primePow_class`) is the special case\nwhere one class is confined to the prime powers.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "NumberTheory",
         "Combinatorics"
@@ -50467,7 +50467,7 @@
       "depth_estimate": 3,
       "description": "The reduction of Erdős–Graham to a statement about divisor lattices of\npseudoperfect numbers is formalised (`pseudoperfect_iff_exists_egyptian_dvd`,\n`erdosGraham_of_pseudoperfect_class`), which converts the conjecture from an additive\nstatement about reciprocals into a multiplicative Ramsey statement.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Combinatorics",
         "Pythagorean"
@@ -50589,7 +50589,7 @@
       "depth_estimate": 3,
       "description": "Determine exactly when\n   `RLHF.freeEnergy_convex_comb` is an equality: conjecturally never for `0 < θ < 1` unless the\n   reward model is constant, which would follow from `RLHF.strictConvexOn_logExpMoment` plus a\n   strict-convexity transfer through the harmonic reparametrization `β ↦ β⁻¹`.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Geometry",
         "Physics"
@@ -50827,7 +50827,7 @@
       "depth_estimate": 3,
       "description": "Formal target: if a class `𝒞 ⊆ {G : i(G) ≥ 1/4}` is closed under 1-sums and closed under\ninduced subgraphs, then every `G ∈ 𝒞` has fractional chromatic number `≤ 4`.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Combinatorics"
       ],
@@ -50905,7 +50905,7 @@
       "depth_estimate": 3,
       "description": "Formal target: if every induced subgraph of `G₁` and of `G₂` satisfies `χ = ω`, then so does\nevery induced subgraph of `G = G₁ ⊕_v G₂`.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Combinatorics"
       ],
@@ -50945,7 +50945,7 @@
       "depth_estimate": 3,
       "description": "Cycle 3's `coeff_prod_normalized_general` already provides the exact\nconvolution over `Finset.finsuppAntidiag`, and cycles 6 and 8 show how vanishing linear\nterms collapse it at levels `3` and `4`; the remaining work is to organize the collapse by partitions, which is\nMathlib-supported via `Finset.sym`/`MvPolynomial.psum` machinery.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Combinatorics"
       ],
@@ -51023,7 +51023,7 @@
       "depth_estimate": 3,
       "description": "in the pole coordinate — no adversary can open `C` as `q^{k'} · p'` with `k' ≠ k`,\nby cycle 3's completeness — and (ii) it is *hiding* for every coefficient statistic that is\ninvariant under `ℂ⟦X⟧ˣ`, by the rigidity theorem.  The conjecture is that the pair\n(binding, hiding) is *tight*: any additional invariant that is binding for `k` must break\nblinding invariance, so the scheme sits exactly at the extremal point of the trade-off.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Combinatorics"
       ],
@@ -51339,7 +51339,7 @@
       "depth_estimate": 3,
       "description": "The two ingredients are already formalized: the dominant-branch\nprinciple in full generality, and the density lemma `tendsto_card_multiples_div`\nfor residue classes.  What remains is the combinatorial identification of the\ncoalescing classes mod `2^L` — a finite, checkable statement for each `L`, and a\nrecursion in `L`.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Combinatorics"
       ],
@@ -51455,7 +51455,7 @@
       "depth_estimate": 3,
       "description": "The depth-`3` amplitude equals `(1/8)e(ω/8) + (5/8)e(aω/4) + (1/4)e(a²ω/2)`\n   for every odd `a`, with `‖·‖ ≥ 1/4`.  (Direct, finite mod-8 case analysis; the\n   numerics already match to four decimals.)\n2. **(3b)** `P_3 = 15/32` exactly, giving a formally verified counterexample to\n   monotonicity of spectral power in the depth.\n3. **(3c)** The base-`b` normalization theorem `FB b a ω N / N → (1/b)e(ω/b) + (1-1/b)e(aω)`,\n   turning the proved `1 - 2/b - ε` bound into an exact limit law with attainment.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Physics"
       ],
@@ -51495,7 +51495,7 @@
       "depth_estimate": 3,
       "description": "of the cycle-length monoids of a strongly connected\ndigraph — and `kThree` already shows the intersection can be the non-principal\nsemigroup `⟨2,3⟩`, refuting the naive \"always `dℕ`\" reading of Cycle 2.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Algebra",
         "Combinatorics"
@@ -52164,7 +52164,7 @@
       "depth_estimate": 3,
       "description": "All three ingredients (constant rigidity, affine rigidity, the identification of\nPoisson sets with uncertainty extremals `poissonSet_iff_supp_dft_indicF_eq_annihF`) are\nformalised; the conjecture is the natural common generalisation and would give a complete\nFourier-theoretic characterisation of the uncertainty extremals in this catalog.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Combinatorics",
         "Geometry"
@@ -52761,7 +52761,7 @@
       "depth_estimate": 3,
       "description": "Direction (ii) ⟹ (i) and the elementary abelian instances of (i) ⟹ (ii) are both\nalready formalised here; only the induction step (transport of a counterexample along\ninduction of `G`-sets) is missing, and it is a finite, purely combinatorial construction.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Combinatorics"
       ],
@@ -52841,7 +52841,7 @@
       "depth_estimate": 3,
       "description": "The single relation for `(ℤ/p)²` is proved uniformly in `p` in this project, and\n`molien_eq_avgMarks` already exhibits the factorisation through cyclic subgroups; the\nremaining content is linear algebra over the (finite) subgroup poset.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Combinatorics"
@@ -52964,7 +52964,7 @@
       "depth_estimate": 3,
       "description": "is `𝓛 n = {H : Matrix n n ℂ | H Hermitian ∧ H² = t*² I}`; by the\nrigidity theorem of this thread it is exactly the set of Hamiltonians whose logarithmic\nactivation `log (I + iH)` is unitary.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Physics"
       ],
@@ -53004,7 +53004,7 @@
       "depth_estimate": 3,
       "description": "Both channels are now proved theorems in this catalog, so the conjecture is a\nconcrete statement about the pair of certified constants `(2.7 · 10⁻⁶, 1288)` and can be\nfalsified by exhibiting an admissible Gaussian-rational Hamiltonian with `q` inside the\nclaimed range.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Physics"
       ],
@@ -53243,7 +53243,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.**  Let `A ⊆ ℕ` with `#A = m + 1` and let `f, g` be functions with values in `A`\nwhose power sums agree for all `k < m`.  If their value distributions differ then\n\n`|p_m(f) - p_m(g)| ≥ ∏_{a ∈ A} ∏_{b ∈ A, b > a} (b - a) / D_A`\n\nfor an explicit `D_A` depending only on the nodal weights — i.e. the top-index gap is\nquantised, with the interval case `A = {0,…,N}` giving the known bound `N!`.\n\n*The key insight is* that the count difference is an integer multiple of the nodal weight\nvector `w_a = ∏_{b≠a}(a-b)⁻¹` (proved for `w` up to the kernel classification in\n`NearMissGeneralNodes` and constructed explicitly here as `intWeight`), so the top moment\nlives in the lattice generated by `1/w`.\n\n*Why now?*  `powerSums_below_card_insufficient` produces the extremal witness for every `A`;\nthe matching lower bound would show that the witness is not merely an example but the\nminimiser, generalising the catalog's `factorial_le_powerSum_gap` beyond intervals.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Combinatorics",
         "Cryptography"
@@ -53284,7 +53284,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.**  For every `N` and every `v ≤ N` there are bounded functions `f, g` and an\n`ε > 0` with `|p_k(f) - p_k(g)| ≤ ε` for all `k ≤ N` and\n`|count_f(v) - count_g(v)| ≥ c · Λ_N(v) · ε` for an absolute constant `c > 0`.\n\n*The key insight is* that the extremal input for the `ℓ¹`-`ℓ^∞` duality bound used in\n`count_sub_le_of_powerSums_close` is the sign pattern of the inverse row, which is realised\nby the positive/negative split of the nodal weight vector — exactly the construction already\nformalised as `posPart` / `negPart`.\n\n*Why now?*  Together with C1 this would pin the conditioning of power-sum inversion\ncompletely, turning `count_eq_of_powerSums_close` from a sufficient criterion into a sharp\nthreshold.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Combinatorics"
       ],
@@ -53324,7 +53324,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.**  Two diagonalisable rational matrices `A, B` (not assumed diagonal) whose\neigenvalues are natural numbers `≤ N` and which satisfy `tr(A^k) = tr(B^k)` for all `k ≤ N`\nare conjugate over `ℚ̄`, and in fact have equal characteristic polynomials.\n\n*The key insight is* that `count_eq_of_traces` already gives equality of eigenvalue\nmultiplicities for the diagonal representatives, and the missing step is only the transfer\nfrom a diagonalisable matrix to its diagonalisation — a statement about `Matrix.IsDiag`\nconjugacy rather than about power sums.\n\n*Why now?*  `exists_equiv_of_powerSums` supplies precisely the index-set bijection needed to\nbuild the conjugating matrix, so the remaining work is packaging rather than new\nmathematics; it would upgrade the spectral corollary from diagonal matrices to the class\nthat actually occurs in applications.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Physics"
       ],
@@ -53440,7 +53440,7 @@
       "depth_estimate": 3,
       "description": "The Bregman identity `freeEnergy_bregman_eq_kl` is proved, and the exact\ndecomposition `objective_eq_free_energy_sub_kl` reduces the conjecture to a\none-dimensional convexity statement per coordinate.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Geometry",
         "Physics"
@@ -53519,7 +53519,7 @@
       "depth_estimate": 3,
       "description": "Both endpoints of the phase diagram are now theorems\n(`freeEnergy_tendsto_sup`, `l1Dist_spike_tendsto_one`, `gibbs_l1_le_two_range_div`);\nwhat is missing is monotonicity in `β`, a one-variable calculus statement about\n`β ↦ KL(π_β ‖ p)` whose derivative is again a variance.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Physics"
       ],
@@ -53635,7 +53635,7 @@
       "depth_estimate": 3,
       "description": "the one-dimensional theory (`Catalog/Bridges/DominationPackingInterval.lean`): the sharp local\n  packing bound `LocalPackingBound ℝ 4` (with `not_localPackingBound_real_three` showing `4` is\n  optimal for the local method), hence `γ ≤ 4·ρ` for unit interval graphs, and — via an\n  earliest-endpoint greedy producing a dominating set and a packing of equal size — the exact\n  result `γ(G) = ρ(G)` for **every interval graph**, unit interval graphs included;",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Combinatorics",
         "Bridges"
@@ -53676,7 +53676,7 @@
       "depth_estimate": 3,
       "description": "the forest theory, added in this cycle (`Catalog/Bridges/DominationPackingForest.lean`): the\n  abstract greedy criterion `HasGreedyDominator` (some vertex of every finite set has its whole\n  radius-`2` neighbourhood in that set dominated by one vertex), the theorem that the criterion\n  alone forces `γ(G) = ρ(G)`\n  (`dominationNumber_eq_packingNumber_of_greedyDominator`), the fact that interval graphs satisfy\n  it (`intervalRep_hasGreedyDominator`) and that **forests satisfy it**\n  (`hasGreedyDominator_of_isAcyclic`), giving the Meir–Moon theorem\n  `dominationNumber_eq_packingNumber_of_isAcyclic`: **`γ(F) = ρ(F)` for every finite forest**.\n  The criterion is not vacuous and not universal: `not_hasGreedyDominator_cycle4` shows the\n  `4`-cycle fails it, whence `not_isAcyclic_cycle4`.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Combinatorics",
         "Bridges"
@@ -53717,7 +53717,7 @@
       "depth_estimate": 3,
       "description": "One direction is a theorem of this cycle\n(`dominationNumber_eq_packingNumber_of_greedyDominator`, which is hereditary because the\ncriterion quantifies over all finite vertex sets), and the converse is a finite search over\ninduced subgraphs; the `4`-cycle (`not_hasGreedyDominator_cycle4`) is already a machine-checked\nseparating example on the failing side.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Combinatorics"
       ],
@@ -53835,7 +53835,7 @@
       "depth_estimate": 3,
       "description": "**The extremal `f`-vector is attained by the symmetric design.**\n  `isGreatest_card_facesOfCard_bounded`: among `d`-bounded corpora on `n` theorems the\n  maximum number of `q`-faces is exactly `C(n, q)` for `q ≤ d`, attained by the corpus of\n  all `d`-element documents.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Combinatorics"
       ],
@@ -53875,7 +53875,7 @@
       "depth_estimate": 3,
       "description": "**Euler characteristic forces polynomial homology.**\n  `eulerChar_skeletonCorpus`: `χ = 1 - (-1)^d C(n-1, d)`.  Since only `d` Betti numbers can\n  be nonzero, `skeletonCorpus_exists_betti_pow_lower` gives\n  `(n - d)^d ≤ d! · d · β_k + d!` for some `k < d`: the extremal Betti number has order\n  `n^d`, matching the `n^{k+1}` shape of Conjecture 5 in the top surviving dimension.\n  `skeletonHomologyProfile` shows this class of profiles is nonempty.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Combinatorics",
         "Geometry"
@@ -53954,7 +53954,7 @@
       "depth_estimate": 3,
       "description": "**Semantic labels are not recoverable from the incidence pattern.**\n  `no_uniform_recovery`: on a vertex-transitive corpus every renaming-equivariant recovery\n  rule outputs a constant labelling, so it disagrees with every labelling that separates two\n  theorems.  The witness is the same extremal design family, which is homologically rich\n  (`design_betti_one_pos`: `β₁ = C(n-1,2) > 0`), so the obstruction is symmetry, not a lack\n  of topology; `not_uniform_of_recovers` turns this into the statement that vertex metadata\n  is genuine extra information.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Combinatorics",
         "Logic"
@@ -54056,6 +54056,320 @@
       "thread_id": "",
       "timestamp": "2026-08-20T08:57:31.731739+00:00",
       "title": "corpora on `n` theorems whose documents have size at most `d`, the maximum of"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "| --- | --- |\n| 1. `π₁(Foam ℝ S Bool) ≅ F_k` | **still open** | — |\n| 2. Metric defect is a boundary quantity | **proved** (defect `= \\|S \\ interior S\\| · (\\|ι\\|² − \\|ι\\|)`) | `PlanckFoamDefect.lean` |\n| 3. Entropy–geometry duality | **proved, and sharper than conjectured** (exact identity, no `o(\\|X\\|)` slack) | `PlanckFoamCounting.lean` |\n| 4. RG fixed points are only `∅` and `univ` | **refuted** — the flow has the nontrivial fixed point `S = {0}` | `PlanckFoamRGFixedPoints.lean` |\n| 5. Covering locus is exactly the clopen regime | **proved** (`IsCoveringMap proj ↔ IsClopen S`) | `PlanckFoamSpectrum.lean` |",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Geometry"
+      ],
+      "github_issue": 0,
+      "id": "fd_1703",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.4,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "4b03d5cc",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/4b03d5cc",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-08-20T10:47:34.811344+00:00",
+      "title": "| --- | --- |"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "**RG fixed points (cycle 2).** The claim that only `S = ∅` and `S = univ` are\n  fixed by the scale-halving flow is **false**: `latticeSet_two_mul_eq_iff`\n  proves the fixed lattice foams are exactly those of spacing `0`, i.e. the\n  single-branch-point foam `S = {0}`, and\n  `iInter_latticeSet_eq_singleton_zero` shows the tower of a nonzero lattice\n  converges to that foam rather than to the smooth one.  The limit is genuinely\n  non-Hausdorff (`not_t2Space_foam_latticeSet_zero`), with metric defect exactly\n  `2`.  Wheeler foam is therefore **RG-persistent**: coarse graining a lattice\n  foam never removes all branching.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Cryptography"
+      ],
+      "github_issue": 0,
+      "id": "fd_1704",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.4,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "4b03d5cc",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/4b03d5cc",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-08-20T10:47:35.029184+00:00",
+      "title": "RG fixed points (cycle 2)."
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "The open-embedding property of the sheets, path connectedness of the\nline foam, and the exact excess count are all proved, so a van Kampen argument\nhas all its open sets, intersections and base point available; only the\npath-lifting bookkeeping is missing.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [],
+      "github_issue": 0,
+      "id": "fd_1705",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.4,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "4b03d5cc",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/4b03d5cc",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-08-20T10:47:35.229208+00:00",
+      "title": "The open-embedding property of the sheets, path connectedness of the"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Both invariants are formalised and computed in closed form; what\nremains is to show the defect set is preserved by homeomorphisms of foams (it is\ndefined purely from the neighbourhood filters, so this should be routine) and to\ncompare the two multiplicities.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [],
+      "github_issue": 0,
+      "id": "fd_1706",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.4,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "4b03d5cc",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/4b03d5cc",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-08-20T10:47:35.428257+00:00",
+      "title": "Both invariants are formalised and computed in closed form; what"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "The dichotomy, the local homeomorphism property and the semicontinuity\nof `sheetNumber` are all proved; the remaining step is to run the same\ntrivialisation argument relative to an open subset of the base.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [],
+      "github_issue": 0,
+      "id": "fd_1707",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.4,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "4b03d5cc",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/4b03d5cc",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-08-20T10:47:35.625224+00:00",
+      "title": "The dichotomy, the local homeomorphism property and the semicontinuity"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "The entropy–geometry identity and the strict-inclusion structure of\nthe tower (`latticeSet_two_mul_ssubset`) are both proved, so this is a counting\nstatement about `⌊·⌋` rather than new topology.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Geometry",
+        "Cryptography"
+      ],
+      "github_issue": 0,
+      "id": "fd_1708",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.4,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "4b03d5cc",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/4b03d5cc",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-08-20T10:47:35.823774+00:00",
+      "title": "The entropy–geometry identity and the strict-inclusion structure of"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Defect emptiness, the universal property, and the exact excess count\nare all formalised; the conjecture packages them into a single minimality\nstatement about the RG limit produced in this cycle.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [],
+      "github_issue": 0,
+      "id": "fd_1709",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.4,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "4b03d5cc",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/4b03d5cc",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-08-20T10:47:36.020511+00:00",
+      "title": "Defect emptiness, the universal property, and the exact excess count"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For every supermodular reward on `Finset (Fin n)`,\n`KL(π ‖ p) = n log 2 − H(π)` (already proved: `klDiv_uniformSubsets_eq`) admits the sharp\nstrengthening `H(π) ≥ ∑_i H(θ_i)`, where `θ_i = π(i ∈ S)` are the feature marginals, with\nequality iff the reward is modular — the positive association of `gibbs_positive_association`\nmust be paid for in entropy.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.1,
+      "domains": [
+        "Combinatorics"
+      ],
+      "github_issue": 0,
+      "id": "fd_1710",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.4,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "39c3166e",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/39c3166e",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-08-20T10:47:51.931196+00:00",
+      "title": "For every supermodular reward on `Finset (Fin n)`,"
     },
     {
       "ambition_level": "extension",
@@ -56218,6 +56532,46 @@
       "title": "Deepening: PAC-Bayes Bounds: Information-Theoretic Generalization"
     },
     {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Building on cycle 4b03d5cc (Q=0.860), which proved 159 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalizes Wheeler's spacetime foam as a stochastic non-Hausdorff topological space at the Planck scale.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Physics"
+      ],
+      "github_issue": 0,
+      "id": "push_4b03d5cc_79178855",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.95,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "4b03d5cc",
+      "source_path": "Planck-Foam-Topology: Quantum Fluctuation Geometry at 10^-35 Meters",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-08-20T10:47:47.068108+00:00",
+      "title": "Deepening: Planck-Foam-Topology: Quantum Fluctuation Geometry at 10^-35 Meters"
+    },
+    {
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
@@ -57191,7 +57545,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 60572a3f (Q=0.850), which proved 75 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: `Σ_g |X^g|^k = (B_k + Σ_P (m_P − 1))·|G|`\n    (`bell_defect_eq`): the excess of a moment over its Bell floor is `|G|` times the number of\n    *extra* orbits per pattern, and it vanishes exactly for `k`-transitive actions\n    (`sum_patternMultiplicity_sub_one_eq_zero_iff`).\n\n---\n\n\n\n## Open conjecture",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Combinatorics"
       ],
@@ -57325,14 +57679,14 @@
       "parent_direction": "",
       "priority_score": 0.9199999999999999,
       "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
+      "prune_reason": "tournament_rejected: ",
+      "pruned_at": "2026-08-20T10:47:58Z",
       "quarantined_until": "",
       "research_mode": "team",
       "source": "",
       "source_exp_id": "61305688",
       "source_path": "ArXiv paper: Domination-packing ratio for planar and unit disk graphs",
-      "status": "available",
+      "status": "pruned",
       "thread_id": "",
       "timestamp": "2026-08-20T08:57:23.939106+00:00",
       "title": "Deepening: ArXiv paper: Domination-packing ratio for planar and unit disk graphs"
@@ -62431,7 +62785,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle f1fd8ff1 (Q=0.820), which proved 92 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: *For a graded `G`-set `Y = ⨆_n Y_n` the generating function `Σ_n t_r(Y_n) q^n` is a rational\nfunction of `q` whenever the grades are eventually `r`-transitive, with denominator dividing\n`(1−q)^{r+1}`.*",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Physics"
       ],
@@ -64157,7 +64511,7 @@
       "catalog_references": [],
       "category": "famous_subtask",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "4b03d5cc",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -64184,7 +64538,7 @@
       "source": "",
       "source_exp_id": "scifi_50_injection",
       "source_path": "50_scifi_twilight_zone_directions.md",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-07-23T20:07:58.331772+00:00",
       "title": "Planck-Foam-Topology: Quantum Fluctuation Geometry at 10^-35 Meters"
@@ -66411,14 +66765,14 @@
       "parent_direction": "",
       "priority_score": 0.9,
       "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
+      "prune_reason": "tournament_rejected: ",
+      "pruned_at": "2026-08-20T10:47:58Z",
       "quarantined_until": "",
       "research_mode": "team",
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "pruned",
       "thread_id": "",
       "timestamp": "",
       "title": "Tropical Satake Isomorphism for GL_n"
@@ -67290,14 +67644,14 @@
       "parent_direction": "",
       "priority_score": 0.87,
       "proof_strategy": "Step 1: Prove the algebra A of EML functions on compact K separates points. Given x != y in K, the function g(t) = exp(a)*log(b*t + c) is strictly monotone for a,b > 0, so g(x) != g(y) for some parameters. Step 2: Prove A contains constants (c = exp(a)*log(c) for c > 0). By Stone-Weierstrass, A is dense in C(K). Step 3: Prove Jackson-type rate: for f in Lip_alpha(K), construct an EML network of width O(epsilon^{-n/alpha}) achieving error epsilon. Test: construct an EML network of width n approximating x^2 on [0,1] with explicit error bounds O(n^{-2}).",
-      "prune_reason": "",
-      "pruned_at": "",
+      "prune_reason": "tournament_rejected: ",
+      "pruned_at": "2026-08-20T10:47:58Z",
       "quarantined_until": "",
       "research_mode": "team",
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "pruned",
       "thread_id": "",
       "timestamp": "",
       "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
@@ -79564,7 +79918,7 @@
       "depth_estimate": 3,
       "description": "Cycle 43f9870f (Q=0.840) proved 77 theorems in Combinatorics but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: **Summary.** The conjecture that for E_N: y² = x³ + N with N = pq, the\ndenominators of x(nP) are divisible only by {2, 3, p, q} (the primes dividing\nΔ = -432N²) is mathematically FALSE.\n\n**Counterexam",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Combinatorics"
       ],
@@ -79804,7 +80158,7 @@
       "depth_estimate": 3,
       "description": "Cycle 60572a3f (Q=0.850) proved 75 theorems in Combinatorics but left 8 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: `Σ_g |X^g|^k = (B_k + Σ_P (m_P − 1))·|G|`\n    (`bell_defect_eq`): the excess of a moment over its Bell floor is `|G|` times the number of\n    *extra* orbits per pattern, and it vanishes exactly for `k",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Combinatorics"
       ],
@@ -80486,6 +80840,7 @@
     "famous_subtask",
     "cross_domain_bridge",
     "abduction_followup",
+    "famous_subtask",
     "famous_subtask",
     "famous_subtask"
   ]

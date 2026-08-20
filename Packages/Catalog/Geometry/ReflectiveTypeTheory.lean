@@ -1,5 +1,5 @@
 import Mathlib
-import Logic.StrangeLoops.Core
+import Catalog.Logic.StrangeLoops.Core
 
 /-!
 # Reflective Type Theory and the Modal Fixed-Point Language

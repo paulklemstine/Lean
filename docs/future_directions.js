@@ -3,13 +3,13 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "consumed_by_exp_id": "39c3166e",
+    "consumed_by_exp_id": "5be71780",
     "description": "It is a direct adaptation of the standard Reinforcement Learning from Human Feedback (RLHF) objective with a pre-training mix-in (PTX)\u2014originally introduced in the InstructGPT / PPO alignment framework (Ouyang et al., 2022)\u2014rebranded with neurosymbolic notation.Breakdown of the Components$$\\text{Objective}(\\phi) = \\underbrace{\\mathbb{E}_{x, y}\\left[ RM_{NS}(x, y) \\right]}_{\\text{1. Reward Maximization}} - \\underbrace{\\beta_{NS} \\mathbb{E}_{x, y}\\left[ \\log \\frac{LLM_\\phi^{NS}(y\\vert{}x)}{LLM^{SFT}(y\\vert{}x)} \\right]}_{\\text{2. KL-Divergence Penalty}} + \\underbrace{\\gamma_{NS} \\mathbb{E}_{x}\\left[ \\log LLM_\\phi^{NS}(x) \\right]}_{\\text{3. Pretraining Loss Mix-in (PTX)}}$$NeuroSymbolic Reward Term:$\\mathbb{E}_{x \\sim \\mathcal{D}_{RL}, y \\sim LLM_\\phi^{NS}(x)} [RM_{NS}(x, y)]$Optimizes the policy parameters ($\\phi$) to generate outputs $y$ given prompts $x$ that maximize the score from a (neurosymbolic) reward model $RM_{NS}$.KL Penalty (Regularization):$-\\beta_{NS} \\log \\frac{LLM_\\phi^{NS}(y\\vert{}x)}{LLM^{SFT}(y\\vert{}x)}$The point-wise Kullback\u2013Leibler ($\\text{D}_{\\text{KL}}$) divergence penalty. It prevents the tuned policy $LLM_\\phi^{NS}$ from drifting too far from the base Supervised Fine-Tuned model ($LLM^{SFT}$), preventing policy collapse and reward hacking. $\\beta_{NS}$ controls the penalty strength.Pretraining Mix-in Gradient ($\\text{PPO-ptx}$ term):$+\\gamma_{NS} \\mathbb{E}_{x \\sim \\mathcal{D}_{pretrain}} \\log LLM_\\phi^{NS}(x)$Maximizes the log-likelihood over the original pretraining distribution $\\mathcal{D}_{pretrain}$ with coefficient $\\gamma_{NS}$. This standard trick avoids performance regression on general NLP benchmarks during RL fine-tuning.TakeawayMathematical Validity: 100% sound; it directly mirrors the standard InstructGPT alignment equation.Practical Meaning: It represents fine-tuning a model using RLHF, where the reward signal ($RM_{NS}$) or the model architecture incorporates neurosymbolic rules/logic rather than purely human-labeled reward modeling.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_1569",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
@@ -77,6 +77,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-23T20:10:45.914797+00:00",
     "title": "EML-Pythagorean-Operator: Single-Neuron Neural Energy Guided Tree Traversal"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 4b03d5cc (Q=0.860), which proved 159 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalizes Wheeler's spacetime foam as a stochastic non-Hausdorff topological space at the Planck scale.",
+    "domains": [
+      "Physics"
+    ],
+    "id": "push_4b03d5cc_79178855",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "4b03d5cc",
+    "status": "available",
+    "timestamp": "2026-08-20T10:47:47.068108+00:00",
+    "title": "Deepening: Planck-Foam-Topology: Quantum Fluctuation Geometry at 10^-35 Meters"
   },
   {
     "consumed_by_exp_id": "",
@@ -513,17 +527,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "Dimensional-Bleed: Scalar Field Leakage Across Adjacent Parallel Universes"
   },
   {
-    "consumed_by_exp_id": "4b03d5cc",
+    "consumed_by_exp_id": "",
     "description": "Formalizes Wheeler's spacetime foam as a stochastic non-Hausdorff topological space at the Planck scale.",
     "domains": [
       "Physics"
     ],
     "id": "scifi_50_31_9a4a4839",
-    "phase": "A",
     "priority_score": 0.95,
     "research_mode": "team",
     "source_exp_id": "scifi_50_injection",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-23T20:07:58.331772+00:00",
     "title": "Planck-Foam-Topology: Quantum Fluctuation Geometry at 10^-35 Meters"
   },
@@ -806,20 +819,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-17T07:17:22.608319+00:00",
     "title": "Deepening: ArXiv paper: A Fourier-analytic Uniqueness Theorem for Lattice-point Enumerators"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 61305688 (Q=0.820), which proved 185 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Investigate the ArXiv paper 'Domination-packing ratio for planar and unit disk graphs' and formalize its key results. Abstract: The domination number $\u03b3(G)$ of a graph $G$ is the smallest possible size of a vertex set that intersects every radius-$1$ ball of $G$, and the packing number $\u03c1(G)$ is the",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "push_61305688_d4d13e87",
-    "priority_score": 0.9199999999999999,
-    "research_mode": "team",
-    "source_exp_id": "61305688",
-    "status": "available",
-    "timestamp": "2026-08-20T08:57:23.939106+00:00",
-    "title": "Deepening: ArXiv paper: Domination-packing ratio for planar and unit disk graphs"
   },
   {
     "consumed_by_exp_id": "",
@@ -1736,38 +1735,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Quantum Error Correction Bounds"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Extend the tropical Satake isomorphism from GL_2 to GL_n. Prove that it defines a bijection between min-plus Hecke operators and W-invariant tropical polynomials, connecting representation theory to combinatorics.",
-    "domains": [
-      "Tropical",
-      "Algebra",
-      "Bridges"
-    ],
-    "id": "seed_050",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Tropical Satake Isomorphism for GL_n"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "The Stone-Weierstrass theorem guarantees that any continuous function can be approximated by an algebra that separates points and contains constants. Conjecture: The algebra of EML functions (finite compositions of exp, log, +, *) on any compact subset of R^n is dense in C(K) with a Jackson-type rate: for f in Lip_alpha(K), there exists an EML network of width O(epsilon^{-n/alpha}) approximating f within epsilon. The separation property is key: given x != y in K, the function g(t) = exp(a)*log(b*t + c) can separate them for appropriate parameters a, b, c (because g is strictly monotone for a, b > 0). The constants are included via c = exp(a)*log(c) for c > 0. This gives EML networks provable approximation guarantees with explicit rates, going beyond the existential guarantees of universal approximation theorems. Test: prove the separation property (given x != y in K, find EML parameters that separate them) and the rate bound for Lipschitz functions. Construct an EML network of width n approximating x^2 on [0,1] with explicit error bounds. Impact: gives EML networks provable approximation guarantees with explicit rates, surpassing the existential guarantees of universal approximation theorems.",
-    "domains": [
-      "EML",
-      "Analysis",
-      "MachineLearning"
-    ],
-    "id": "seed_086",
-    "priority_score": 0.87,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
   },
   {
     "consumed_by_exp_id": "",
@@ -22331,5 +22298,111 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-20T08:57:31.731739+00:00",
     "title": "corpora on `n` theorems whose documents have size at most `d`, the maximum of"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "| --- | --- |\n| 1. `\u03c0\u2081(Foam \u211d S Bool) \u2245 F_k` | **still open** | \u2014 |\n| 2. Metric defect is a boundary quantity | **proved** (defect `= \\|S \\ interior S\\| \u00b7 (\\|\u03b9\\|\u00b2 \u2212 \\|\u03b9\\|)`) | `PlanckFoamDefect.lean` |\n| 3. Entropy\u2013geometry duality | **proved, and sharper than conjectured** (exact identity, no `o(\\|X\\|)` slack) | `PlanckFoamCounting.lean` |\n| 4. RG fixed points are only `\u2205` and `univ` | **refuted** \u2014 the flow has the nontrivial fixed point `S = {0}` | `PlanckFoamRGFixedPoints.lean` |\n| 5. Covering locus is exactly the clopen regime | **proved** (`IsCoveringMap proj \u2194 IsClopen S`) | `PlanckFoamSpectrum.lean` |",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1703",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "4b03d5cc",
+    "status": "available",
+    "timestamp": "2026-08-20T10:47:34.811344+00:00",
+    "title": "| --- | --- |"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**RG fixed points (cycle 2).** The claim that only `S = \u2205` and `S = univ` are\n  fixed by the scale-halving flow is **false**: `latticeSet_two_mul_eq_iff`\n  proves the fixed lattice foams are exactly those of spacing `0`, i.e. the\n  single-branch-point foam `S = {0}`, and\n  `iInter_latticeSet_eq_singleton_zero` shows the tower of a nonzero lattice\n  converges to that foam rather than to the smooth one.  The limit is genuinely\n  non-Hausdorff (`not_t2Space_foam_latticeSet_zero`), with metric defect exactly\n  `2`.  Wheeler foam is therefore **RG-persistent**: coarse graining a lattice\n  foam never removes all branching.",
+    "domains": [
+      "Cryptography"
+    ],
+    "id": "fd_1704",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "4b03d5cc",
+    "status": "available",
+    "timestamp": "2026-08-20T10:47:35.029184+00:00",
+    "title": "RG fixed points (cycle 2)."
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The open-embedding property of the sheets, path connectedness of the\nline foam, and the exact excess count are all proved, so a van Kampen argument\nhas all its open sets, intersections and base point available; only the\npath-lifting bookkeeping is missing.",
+    "domains": [],
+    "id": "fd_1705",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "4b03d5cc",
+    "status": "available",
+    "timestamp": "2026-08-20T10:47:35.229208+00:00",
+    "title": "The open-embedding property of the sheets, path connectedness of the"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Both invariants are formalised and computed in closed form; what\nremains is to show the defect set is preserved by homeomorphisms of foams (it is\ndefined purely from the neighbourhood filters, so this should be routine) and to\ncompare the two multiplicities.",
+    "domains": [],
+    "id": "fd_1706",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "4b03d5cc",
+    "status": "available",
+    "timestamp": "2026-08-20T10:47:35.428257+00:00",
+    "title": "Both invariants are formalised and computed in closed form; what"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The dichotomy, the local homeomorphism property and the semicontinuity\nof `sheetNumber` are all proved; the remaining step is to run the same\ntrivialisation argument relative to an open subset of the base.",
+    "domains": [],
+    "id": "fd_1707",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "4b03d5cc",
+    "status": "available",
+    "timestamp": "2026-08-20T10:47:35.625224+00:00",
+    "title": "The dichotomy, the local homeomorphism property and the semicontinuity"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The entropy\u2013geometry identity and the strict-inclusion structure of\nthe tower (`latticeSet_two_mul_ssubset`) are both proved, so this is a counting\nstatement about `\u230a\u00b7\u230b` rather than new topology.",
+    "domains": [
+      "Geometry",
+      "Cryptography"
+    ],
+    "id": "fd_1708",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "4b03d5cc",
+    "status": "available",
+    "timestamp": "2026-08-20T10:47:35.823774+00:00",
+    "title": "The entropy\u2013geometry identity and the strict-inclusion structure of"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Defect emptiness, the universal property, and the exact excess count\nare all formalised; the conjecture packages them into a single minimality\nstatement about the RG limit produced in this cycle.",
+    "domains": [],
+    "id": "fd_1709",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "4b03d5cc",
+    "status": "available",
+    "timestamp": "2026-08-20T10:47:36.020511+00:00",
+    "title": "Defect emptiness, the universal property, and the exact excess count"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every supermodular reward on `Finset (Fin n)`,\n`KL(\u03c0 \u2016 p) = n log 2 \u2212 H(\u03c0)` (already proved: `klDiv_uniformSubsets_eq`) admits the sharp\nstrengthening `H(\u03c0) \u2265 \u2211_i H(\u03b8_i)`, where `\u03b8_i = \u03c0(i \u2208 S)` are the feature marginals, with\nequality iff the reward is modular \u2014 the positive association of `gibbs_positive_association`\nmust be paid for in entropy.",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "fd_1710",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "39c3166e",
+    "status": "available",
+    "timestamp": "2026-08-20T10:47:51.931196+00:00",
+    "title": "For every supermodular reward on `Finset (Fin n)`,"
   }
 ];

@@ -1,5 +1,5 @@
 import Mathlib
-import Bridges.ElementaryNumberTheoryBridge
+import Catalog.Bridges.ElementaryNumberTheoryBridge
 
 /-! # Stern's Diatomic Sequence : core development
 

@@ -32,7 +32,7 @@ The central findings of this cycle are:
 -/
 
 import Mathlib
-import Logic.StrangeLoops.Core
+import Catalog.Logic.StrangeLoops.Core
 
 namespace TangledHierarchies
 

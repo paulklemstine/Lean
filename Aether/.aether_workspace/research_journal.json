@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "ed687362",
-      "domain": "Logic",
-      "key_insight": "# Future directions: edge-decomposition into two triangular forests\n\nFive falsifiable conjectures distilled from the verified development in\n`Catalog/Logic/TriangularForest/` (definitions, sparsity, d",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 82,
-      "timestamp": "2026-08-18T13:08:27",
-      "title": "ArXiv paper: Edge-decomposition into Two Triangular Forests is NP-complete"
-    },
-    {
       "cycle_id": "3eeb9235",
       "domain": "Logic",
       "key_insight": "# Future directions — price of universality (Phase A, Question 1)\n\nEach conjecture below is falsifiable, is stated so that it can be formalised in\nthe existing `UniversalRedundancy` framework\n(`Catalo",
@@ -499,19 +489,19 @@
       "theorem_count": 159,
       "timestamp": "2026-08-20T10:47:46",
       "title": "Planck-Foam-Topology: Quantum Fluctuation Geometry at 10^-35 Meters"
+    },
+    {
+      "cycle_id": "39c3166e",
+      "domain": "Combinatorics",
+      "key_insight": "# Future directions\n\nDerived from the three research cycles formalized in\n`Catalog/Combinatorics/RLHFTensorization.lean`,\n`Catalog/Combinatorics/RLHFBooleanLattice.lean`,\n`Catalog/Combinatorics/RLHFBo",
+      "quality_score": 0.74,
+      "sorry_count": 4,
+      "theorem_count": 65,
+      "timestamp": "2026-08-20T10:47:56",
+      "title": "reinforcement learning"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "0dad7f8d",
-      "domain": "Algebra",
-      "key_insight": "# Future directions\n\nThe formalisation in `Catalog/Algebra/PosetFlow/` develops the combinatorial core of\n*the chain replacement of a poset flow*: the refinement poset `ChainFrom x y` of\nstrictly incr",
-      "quality_score": 0.627125,
-      "sorry_count": 0,
-      "theorem_count": 74,
-      "timestamp": "2026-08-11T07:47:33",
-      "title": "ArXiv paper: The chain replacement of a poset flow"
-    },
     {
       "cycle_id": "04a5f386",
       "domain": "Probability",
@@ -2501,27 +2491,19 @@
       "theorem_count": 159,
       "timestamp": "2026-08-20T10:47:46",
       "title": "Planck-Foam-Topology: Quantum Fluctuation Geometry at 10^-35 Meters"
+    },
+    {
+      "cycle_id": "39c3166e",
+      "domain": "Combinatorics",
+      "key_insight": "# Future directions\n\nDerived from the three research cycles formalized in\n`Catalog/Combinatorics/RLHFTensorization.lean`,\n`Catalog/Combinatorics/RLHFBooleanLattice.lean`,\n`Catalog/Combinatorics/RLHFBo",
+      "quality_score": 0.74,
+      "sorry_count": 4,
+      "theorem_count": 65,
+      "timestamp": "2026-08-20T10:47:56",
+      "title": "reinforcement learning"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "843dbe86",
-      "domain": "Algebra",
-      "name": "scanList_nodup",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "843dbe86",
-      "domain": "Algebra",
-      "name": "mem_scanList",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "252d7c91",
-      "domain": "Algebra",
-      "name": "qBinom_zero_right",
-      "quality": 0.8
-    },
     {
       "cycle_id": "252d7c91",
       "domain": "Algebra",
@@ -2803,17 +2785,28 @@
       "domain": "Physics",
       "name": "not_t2Space_of_nonempty",
       "quality": 0.86
+    },
+    {
+      "cycle_id": "39c3166e",
+      "domain": "Combinatorics",
+      "name": "evaluation",
+      "quality": 0.74
+    },
+    {
+      "cycle_id": "39c3166e",
+      "domain": "Combinatorics",
+      "name": "sum_subsets_eq_sum_choose",
+      "quality": 0.74
+    },
+    {
+      "cycle_id": "39c3166e",
+      "domain": "Combinatorics",
+      "name": "sum_pow_card",
+      "quality": 0.74
     }
   ],
-  "last_updated": "2026-08-20T10:47:46",
+  "last_updated": "2026-08-20T10:47:56",
   "open_questions": [
-    {
-      "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hn2⟩)",
-      "cycle_id": "e4773f49",
-      "domain": "NumberTheory",
-      "sorry_count": 1,
-      "timestamp": "2026-07-27T00:20:01"
-    },
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hn2⟩)",
       "cycle_id": "27eaed26",
@@ -3016,6 +3009,13 @@
       "domain": "Novelty",
       "sorry_count": 3,
       "timestamp": "2026-08-20T07:57:37"
+    },
+    {
+      "context": "Main results (all `sorry`-free):; Main results (all `sorry`-free):; Main results (all `sorry`-free):",
+      "cycle_id": "39c3166e",
+      "domain": "Combinatorics",
+      "sorry_count": 4,
+      "timestamp": "2026-08-20T10:47:56"
     }
   ],
   "research_threads": {
@@ -3207,12 +3207,6 @@
     ],
     "Combinatorics": [
       {
-        "cycle_id": "d1971d75",
-        "quality": 0.747205,
-        "theorems": 40,
-        "title": "The accompanying Lean file establishes the basic definitions, finite-perturbatio"
-      },
-      {
         "cycle_id": "fadf9a22",
         "quality": 0.6286056450320513,
         "theorems": 106,
@@ -3265,6 +3259,12 @@
         "quality": 0.82,
         "theorems": 101,
         "title": "Cycle 4 already provides the two witnesses and the joint-inconsistency"
+      },
+      {
+        "cycle_id": "39c3166e",
+        "quality": 0.74,
+        "theorems": 65,
+        "title": "reinforcement learning"
       }
     ],
     "Computation": [
