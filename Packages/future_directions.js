@@ -10457,7 +10457,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean"
     ],
     "id": "fd_0348",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "57f5aa5e",
@@ -18031,7 +18031,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Geometry of Consensus: Arrow's Theorem as Curvature"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "39ef81fe",
     "description": "The chromatic polynomial chi_G(k) counts the number of proper k-colorings of a graph G. For a friendship graph, chi_G(k) counts the number of ways to assign k emotions to people such that no two friends share the same emotion. Conjecture: The chromatic polynomial evaluated at k=6 (for the 6 basic emotions: happiness, sadness, anger, fear, disgust, surprise) gives the number of 'emotionally consistent' assignments of emotions to a social network. The chromatic polynomial has a root at k=2 for any bipartite graph, meaning a social network that splits cleanly into two groups has exactly 0 ways to assign 2 emotions without friends sharing emotions. The real emotional chromatic number chi_E(G) of a social network G is the smallest k such that chi_G(k) > 0 and k >= 3 (since real emotions need at least 3 categories to avoid trivial assignments). For a complete graph K_n (a clique of n mutual friends), chi_E(K_n) = n (everyone needs a different emotion). For a cycle C_n (a circular friendship chain), chi_E(C_n) = 2 if n is even and 3 if n is odd (alternating emotions work for even cycles, but odd cycles need a third emotion). Test: compute chi_E(G) for 100 real social networks and verify that the emotional chromatic number is between 3 and 6 for most networks. Impact: the chromatic polynomial is not just combinatorics \u2014 it measures the emotional diversity of a social network.",
     "domains": [
       "Novelty",
@@ -18040,10 +18040,11 @@ window.FUTURE_DIRECTIONS = [
       "Speculative"
     ],
     "id": "seed_159",
+    "phase": "A",
     "priority_score": 0.69,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Graph Coloring with Emotions: The Chromatic Polynomial Meets Psychology"
   },

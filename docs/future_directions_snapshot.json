@@ -24162,7 +24162,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "39ef81fe",
     "description": "The chromatic polynomial chi_G(k) counts the number of proper k-colorings of a graph G. For a friendship graph, chi_G(k) counts the number of ways to assign k emotions to people such that no two friends share the same emotion. Conjecture: The chromatic polynomial evaluated at k=6 (for the 6 basic emotions: happiness, sadness, anger, fear, disgust, surprise) gives the number of 'emotionally consistent' assignments of emotions to a social network. The chromatic polynomial has a root at k=2 for any bipartite graph, meaning a social network that splits cleanly into two groups has exactly 0 ways to assign 2 emotions without friends sharing emotions. The real emotional chromatic number chi_E(G) of a social network G is the smallest k such that chi_G(k) > 0 and k >= 3 (since real emotions need at least 3 categories to avoid trivial assignments). For a complete graph K_n (a clique of n mutual friends), chi_E(K_n) = n (everyone needs a different emotion). For a cycle C_n (a circular friendship chain), chi_E(C_n) = 2 if n is even and 3 if n is odd (alternating emotions work for even cycles, but odd cycles need a third emotion). Test: compute chi_E(G) for 100 real social networks and verify that the emotional chromatic number is between 3 and 6 for most networks. Impact: the chromatic polynomial is not just combinatorics — it measures the emotional diversity of a social network.",
     "domain_bridges": [],
     "domains": [
@@ -24177,7 +24177,7 @@
     "proof_strategy": "Define the emotional chromatic number chi_E(G) = min{k >= 3 : chi_G(k) > 0}. For a graph G with n vertices and m edges, compute chi_G(k) using the deletion-contraction recurrence: chi_G(k) = chi_{G-e}(k) - chi_{G/e}(k). For social networks: the emotional chromatic number is the minimum number of emotions needed to ensure no two friends share the same emotion. For a complete graph K_n: chi_E = n (every person needs a different emotion). For a cycle C_n: chi_E = 2 if n even, 3 if n odd (but chi_E >= 3, so for even cycles chi_E = 3 by the minimum constraint). For a path P_n: chi_E = 3 (alternating two emotions doesn't satisfy k >= 3). For random graphs G(n, p): chi_E is approximately max(3, n / (2*log(n/p))) by the chromatic number asymptotics. Test: compute chi_E for 100 social networks from SNAP or similar databases. Verify: most social networks have chi_E between 3 and 6. The 6 basic emotions (Ekman) provide a natural upper bound.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Graph Coloring with Emotions: The Chromatic Polynomial Meets Psychology"
   },
