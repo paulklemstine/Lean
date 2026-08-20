@@ -41,7 +41,7 @@ coordinate magnitude — the sharpest next-cycle test this round produces.
 -/
 
 import Mathlib
-import NumberTheory.ExclusiveChannelPopulation
+import Catalog.NumberTheory.ExclusiveChannelPopulation
 
 namespace NumberTheory.ExclusiveChannel
 

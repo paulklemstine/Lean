@@ -1,5 +1,5 @@
-import Geometry.HyperbolicBerggrenGeodesics
-import NumberTheory.BerggrenStarSteps
+import Catalog.Geometry.HyperbolicBerggrenGeodesics
+import Catalog.NumberTheory.BerggrenStarSteps
 
 /-!
 # How far apart are two colliding Berggren nodes?

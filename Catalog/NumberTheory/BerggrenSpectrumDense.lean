@@ -1,4 +1,4 @@
-import NumberTheory.BerggrenRateSpectrum
+import Catalog.NumberTheory.BerggrenRateSpectrum
 
 /-!
 # Hyperbolic–Pythagorean Geodesics, cycle XI: the growth spectrum is dense

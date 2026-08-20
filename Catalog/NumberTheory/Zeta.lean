@@ -1,4 +1,4 @@
-import NumberTheory.MobiusIntegers.Factorization
+import Catalog.NumberTheory.Factorization
 
 /-!
 # The Möbius zeta function

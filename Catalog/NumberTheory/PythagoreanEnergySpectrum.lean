@@ -1,5 +1,5 @@
 import Mathlib
-import Shared.CatalogbuildSharedIspythtriple.IsPythTriple
+import Catalog.Shared.CatalogbuildSharedIspythtriple.IsPythTriple
 
 /-!
 # A Pythagorean energy spectrum for factor certificates

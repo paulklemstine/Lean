@@ -1,4 +1,4 @@
-import NumberTheory.RLHFGibbsVariational
+import Catalog.NumberTheory.RLHFGibbsVariational
 
 /-!
 # Euler products from RLHF: the zeta policy on smooth-number response spaces

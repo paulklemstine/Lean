@@ -1,4 +1,4 @@
-import Geometry.HyperbolicBerggrenGeodesics
+import Catalog.Geometry.HyperbolicBerggrenGeodesics
 
 /-!
 # Boundary dynamics of the Berggren moves: two parabolic cusps and one hyperbolic axis

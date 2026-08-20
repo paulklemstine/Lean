@@ -1,5 +1,5 @@
 import Mathlib.Computability.Reduce
-import Probability.SelfModHalt
+import Catalog.Probability.SelfModHalt
 
 /-!
 # Self-Modification, Halting, and Semantic Monitoring

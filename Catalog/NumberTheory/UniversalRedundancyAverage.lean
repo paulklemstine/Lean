@@ -54,7 +54,7 @@ minimax redundancy, Bayes mixture, mutual information, redundancy–capacity
 theorem, Gibbs inequality, Kullback–Leibler divergence, universal compression
 -/
 
-import MachineLearning.UniversalRedundancy.Separation
+import Catalog.MachineLearning.UniversalRedundancy.Separation
 
 open Finset Real
 

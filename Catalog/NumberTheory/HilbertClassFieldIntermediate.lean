@@ -7,7 +7,7 @@ intermediate extension `K ≤ L ≤ H` is Galois and abelian, and that its degre
 number of `K`.
 -/
 
-import NumberTheory.HilbertClassFieldLanglands
+import Catalog.NumberTheory.HilbertClassFieldLanglands
 
 open NumberField
 

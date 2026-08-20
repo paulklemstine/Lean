@@ -36,8 +36,8 @@ universal compression, minimax redundancy, Bayes redundancy, method of types,
 Markov sources, price of universality, pigeonhole bound
 -/
 
-import MachineLearning.UniversalRedundancy.Markov
-import NumberTheory.UniversalRedundancyAverage
+import Catalog.MachineLearning.UniversalRedundancy.Markov
+import Catalog.NumberTheory.UniversalRedundancyAverage
 
 open Finset Real
 

@@ -1,8 +1,8 @@
 import Mathlib
-import Shared.CarmichaelHelper
-import Speculative.AbstractAlgebra.PisanoPeriodFactoring
-import Shared.NumberTheory.CarmichaelProof
-import Shared.NumberTheory.CarmichaelHelpers
+import Catalog.Shared.CarmichaelHelper
+import Catalog.Speculative.AbstractAlgebra.PisanoPeriodFactoring
+import Catalog.Shared.NumberTheory.CarmichaelProof
+import Catalog.Shared.NumberTheory.CarmichaelHelpers
 
 /-! # CatalogBuild.Shared.Fib_gcd_identity
 

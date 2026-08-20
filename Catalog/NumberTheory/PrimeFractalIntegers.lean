@@ -1,4 +1,4 @@
-import NumberTheory.PrimeFractalBoxDimension
+import Catalog.NumberTheory.PrimeFractalBoxDimension
 
 /-!
 # The logarithmic lens cannot see primality

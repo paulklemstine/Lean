@@ -18,8 +18,8 @@ Main results:
 -/
 
 import Mathlib
-import Shared.FourierFiniteAbelian
-import Shared.FourierSubgroupDuality
+import Catalog.Shared.FourierFiniteAbelian
+import Catalog.Shared.FourierSubgroupDuality
 
 open Finset ComplexConjugate
 

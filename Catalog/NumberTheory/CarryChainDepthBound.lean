@@ -1,5 +1,5 @@
 import Mathlib
-import NumberTheory.CarryChainStatefulCell
+import Catalog.NumberTheory.CarryChainStatefulCell
 
 /-!
 # Fixed depth cannot buy length: a depth lower bound for the carry chain,

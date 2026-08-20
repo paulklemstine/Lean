@@ -21,7 +21,7 @@ together with module-finiteness, the missing invertibility being supplied by Nak
 The statement is sharp in the sense that both hypotheses are used: module-finiteness enters only
 through Nakayama, and the `J`-elements' powers only through the geometric series.
 -/
-import Shared.SolomonZeta.GroupAlgebra
+import Catalog.Shared.SolomonZeta.GroupAlgebra
 
 namespace SolomonZeta
 

@@ -47,7 +47,7 @@ universal compression, minimax redundancy, Shtarkov sum, total variation,
 price of universality, tensorisation
 -/
 
-import NumberTheory.UniversalRedundancyAlgebra
+import Catalog.NumberTheory.UniversalRedundancyAlgebra
 
 open Finset Real
 

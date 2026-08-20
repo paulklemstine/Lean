@@ -1,4 +1,4 @@
-import NumberTheory.BerggrenSilverExtremal
+import Catalog.NumberTheory.BerggrenSilverExtremal
 
 /-!
 # Hyperbolic–Pythagorean Geodesics, cycle X (part 2): the metric growth rate spectrum

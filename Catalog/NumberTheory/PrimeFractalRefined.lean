@@ -1,4 +1,4 @@
-import NumberTheory.PrimeFractalBoxDimension
+import Catalog.NumberTheory.PrimeFractalBoxDimension
 
 /-!
 # Refined box-counting: a universal ceiling and a logarithmic defect

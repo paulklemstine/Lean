@@ -42,8 +42,8 @@ method of types, constant composition, universal compression, minimax
 redundancy, Rissanen rate, price of universality
 -/
 
-import MachineLearning.UniversalRedundancy.Bernoulli
-import NumberTheory.UniversalRedundancyConservation
+import Catalog.MachineLearning.UniversalRedundancy.Bernoulli
+import Catalog.NumberTheory.UniversalRedundancyConservation
 
 open Finset Real
 

@@ -35,7 +35,7 @@ product point `2^n = d·ctx/32` sits at its right end — and a sweep grid of st
 -/
 
 import Mathlib
-import NumberTheory.KneeStaircaseArithmetic
+import Catalog.NumberTheory.KneeStaircaseArithmetic
 
 namespace KneeStaircase
 

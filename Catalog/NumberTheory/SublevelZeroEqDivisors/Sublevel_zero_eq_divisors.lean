@@ -1,5 +1,5 @@
 import Mathlib
-import Shared.CatalogbuildSharedE.E
+import Catalog.Shared.CatalogbuildSharedE.E
 
 /-! # CatalogBuild.Shared.Sublevel_zero_eq_divisors
 
@@ -22,6 +22,7 @@ theorem sublevel_zero_eq_divisors (N : ℕ) (hN : 0 < N) :
   ext x
   simp [sublevel_set];
   exact ⟨ fun h => ⟨ Nat.dvd_of_mod_eq_zero h.2, hN.ne' ⟩, fun h => ⟨ ⟨ Nat.pos_of_dvd_of_pos h.1 hN, Nat.le_of_dvd hN h.1 ⟩, Nat.mod_eq_zero_of_dvd h.1 ⟩ ⟩
+
 
 /-- [Section: # CatalogBuild.Shared.Sublevel_zero_eq_divisors
 Auto-generated from theorem catalog database.

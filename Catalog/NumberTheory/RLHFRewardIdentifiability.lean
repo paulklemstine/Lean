@@ -1,4 +1,4 @@
-import NumberTheory.RLHFZetaEulerPolicy
+import Catalog.NumberTheory.RLHFZetaEulerPolicy
 
 /-!
 # Reward identifiability, DPO reparametrization, and the semigroup of RLHF steps

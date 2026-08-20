@@ -36,7 +36,7 @@ governs, matching the observed monotone ramp `0.25 → 0.33 → 0.83 → 1.00 �
 -/
 
 import Mathlib
-import NumberTheory.EOSWidthMonotoneRamp
+import Catalog.NumberTheory.EOSWidthMonotoneRamp
 
 open Module Finset
 
