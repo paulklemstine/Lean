@@ -513,16 +513,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Dimensional-Bleed: Scalar Field Leakage Across Adjacent Parallel Universes"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4b03d5cc",
     "description": "Formalizes Wheeler's spacetime foam as a stochastic non-Hausdorff topological space at the Planck scale.",
     "domains": [
       "Physics"
     ],
     "id": "scifi_50_31_9a4a4839",
+    "phase": "A",
     "priority_score": 0.95,
     "research_mode": "team",
     "source_exp_id": "scifi_50_injection",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-23T20:07:58.331772+00:00",
     "title": "Planck-Foam-Topology: Quantum Fluctuation Geometry at 10^-35 Meters"
   },
@@ -1410,21 +1411,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Formalize Boolean circuit complexity. Prove Razborov's lower bound: monotone circuits for CLIQUE require exponential size. Formalize the approximation method. Prove the Karchmer-Wigderson connection between circuit depth and communication complexity.",
-    "domains": [
-      "Computation",
-      "Logic"
-    ],
-    "id": "fd_0675",
-    "priority_score": 0.9,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-24T14:34:16.697806+00:00",
-    "title": "Circuit Complexity: Monotone Lower Bounds"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Formalizes Voiculescu's free probability: the free central limit theorem showing that normalized sums of freely independent identically distributed bounded random variables converge in distribution to the semicircle law, developed through the R-transform and free cumulants.",
     "domains": [
       "Probability",
@@ -1734,34 +1720,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-13T03:21:12.748859+00:00",
     "title": "Stein-Method: Quantitative Normal Approximation Bounds"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 17d131fb (Q=0.780), which proved 85 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## Conjecture D10 (the Molien invariant is exactly the Burnside mark vector modulo scaling)",
-    "domains": [
-      "NumberTheory"
-    ],
-    "id": "push_17d131fb_1bdcc081",
-    "priority_score": 0.88,
-    "research_mode": "team",
-    "source_exp_id": "17d131fb",
-    "status": "available",
-    "timestamp": "2026-08-20T04:54:04.735210+00:00",
-    "title": "Deepening: Conjecture D10 (the Molien invariant is exactly the Burnside mark vector modulo "
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle ce71f394 (Q=0.770), which proved 14 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The EML operator class (finite compositions of exp, log, +, *) has remarkable closure properties. Conjecture: The class of EML functions is closed under differentiation, and the derivative of any EML function of composition depth d is an EML function of composition depth at most d+1. Moreover, the d",
-    "domains": [
-      "Applications"
-    ],
-    "id": "push_ce71f394_8567d36c",
-    "priority_score": 0.87,
-    "research_mode": "team",
-    "source_exp_id": "ce71f394",
-    "status": "available",
-    "timestamp": "2026-07-26T05:36:56.554653+00:00",
-    "title": "Deepening: EML Differential Calculus: Chain Rules for exp-log Compositions"
   },
   {
     "consumed_by_exp_id": "",
@@ -2147,17 +2105,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deepening: Lattice Cryptography: LWE Hardness"
   },
   {
-    "consumed_by_exp_id": "5c70a18c",
+    "consumed_by_exp_id": "",
     "description": "Building on cycle c7c1ec6d (Q=0.767), which proved 8 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future directions: quantum EML activations\n\nThe formal results in `Catalog/Applications/EMLQuantumActivation.lean` show that the raw\nexpression\n\n\\[\n  \\exp(iH_1)\\,\\log(I+iH_2)\n\\]\n\nis not intrinsically unitary-valued: every choice with `H\u2082 = 0` produces zero.  They also\nshow that unitary output forc",
     "domains": [
       "NumberTheory"
     ],
     "id": "push_c7c1ec6d_44e7b8d0",
-    "phase": "A",
     "priority_score": 0.8667599999999999,
     "research_mode": "team",
     "source_exp_id": "c7c1ec6d",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-02T23:23:50.647036+00:00",
     "title": "Deepening: The formal results in `Catalog/Applications/EMLQuantumActivation.lean` show that"
   },
@@ -22025,5 +21982,88 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-20T04:53:54.238087+00:00",
     "title": "The `gcd` form of the congruence and Fermat's little theorem are already proved"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "is `\ud835\udcdb n = {H : Matrix n n \u2102 | H Hermitian \u2227 H\u00b2 = t*\u00b2 I}`; by the\nrigidity theorem of this thread it is exactly the set of Hamiltonians whose logarithmic\nactivation `log (I + iH)` is unitary.",
+    "domains": [
+      "Physics"
+    ],
+    "id": "fd_1675",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "5c70a18c",
+    "status": "available",
+    "timestamp": "2026-08-20T05:47:13.612311+00:00",
+    "title": "is `\ud835\udcdb n = {H : Matrix n n \u2102 | H Hermitian \u2227 H\u00b2 = t*\u00b2 I}`; by the"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Both channels are now proved theorems in this catalog, so the conjecture is a\nconcrete statement about the pair of certified constants `(2.7 \u00b7 10\u207b\u2076, 1288)` and can be\nfalsified by exhibiting an admissible Gaussian-rational Hamiltonian with `q` inside the\nclaimed range.",
+    "domains": [
+      "Physics"
+    ],
+    "id": "fd_1676",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "5c70a18c",
+    "status": "available",
+    "timestamp": "2026-08-20T05:47:13.882745+00:00",
+    "title": "Both channels are now proved theorems in this catalog, so the conjecture is a"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The case of entries in *any* imaginary quadratic order is now proved\nunconditionally (`not_mem_rigidityLocus_of_quadraticInt`), as is the case of any entries with\nintegral squared modulus; the remaining gap is precisely the transition from \"finitely many\nlattices, effectively\" to \"all algebraic entries\".",
+    "domains": [
+      "Algebra",
+      "Cryptography"
+    ],
+    "id": "fd_1677",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "5c70a18c",
+    "status": "available",
+    "timestamp": "2026-08-20T05:47:14.147628+00:00",
+    "title": "The case of entries in *any* imaginary quadratic order is now proved"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The empty-interior theorem supplies the local input, the separation theorem\nsupplies the global stratification, and non-convexity (`not_convex`) already rules out\nconvex relaxations.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_1678",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "5c70a18c",
+    "status": "available",
+    "timestamp": "2026-08-20T05:47:14.408180+00:00",
+    "title": "The empty-interior theorem supplies the local input, the separation theorem"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Narrowing the certified interval for `t*` to\nwidth `w` extends the row (denominator) obstruction to all `q \u2272 c \u00b7 w^{-1/2}`, and the\nmethod cannot reach beyond `w^{-1/2}`.  Testable now: narrowing from `1.1 \u00b7 10\u207b\u2076` to\n`10\u207b\u00b9\u00b2` should raise the proved bound from `64` to roughly `6 \u00b7 10\u2074`.",
+    "domains": [],
+    "id": "fd_1679",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "5c70a18c",
+    "status": "available",
+    "timestamp": "2026-08-20T05:47:14.679146+00:00",
+    "title": "Narrowing the certified interval for `t*` to"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "In even dimension at half filling\n(`2k = n`) the trace channel is empty, so the obstruction should *fail* to extend beyond the\nrow bound: there exists, for every `q > 64`, a traceless Gaussian-rational candidate that no\ncurrently available certificate excludes.  Falsifiable by producing an even-dimensional\nobstruction proof that does not narrow the enclosure.",
+    "domains": [
+      "Logic"
+    ],
+    "id": "fd_1680",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "5c70a18c",
+    "status": "available",
+    "timestamp": "2026-08-20T05:47:14.947335+00:00",
+    "title": "In even dimension at half filling"
   }
 ];
