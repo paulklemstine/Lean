@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "856336cf",
-      "domain": "Pythagorean",
-      "key_insight": "# Future directions\n\nDerived from the results proved in `Catalog/Pythagorean/KernelPatterns.lean`,\n`KernelPatternsBell.lean`, `KernelBlockCount.lean`, `KernelStirlingRecurrence.lean`,\n`KernelStirlingC",
-      "quality_score": 0.88,
-      "sorry_count": 0,
-      "theorem_count": 29,
-      "timestamp": "2026-08-18T03:58:45",
-      "title": "Kernel patterns"
-    },
-    {
       "cycle_id": "ae5d2ae6",
       "domain": "Novelty",
       "key_insight": "# Future directions — the price of universality\n\nThe formalised results of this phase answer Question 1 of *Compression Beyond the\nPigeonhole Bound* in the following form.\n\n* **Exact worst-case price.",
@@ -499,19 +489,19 @@
       "theorem_count": 74,
       "timestamp": "2026-08-19T23:36:56",
       "title": "The \"if\" direction is proved (`FourierFA.poisson_summation`); the converse is open."
+    },
+    {
+      "cycle_id": "daf80a32",
+      "domain": "Algebra",
+      "key_insight": "# Future directions — kernel patterns\n\nEach conjecture below is falsifiable, is stated so that it can be formalised directly on\ntop of the definitions in `Catalog/Algebra/KernelPatterns/`, and is *not",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 142,
+      "timestamp": "2026-08-20T01:52:21",
+      "title": "Kernel patterns"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "2db5094c",
-      "domain": "Pythagorean",
-      "key_insight": "# Future directions: the rational star pencils of the Berggren tree\n\nThis cycle established that the radial lines seen when the Berggren tree is plotted in the\nPoincaré half-plane are not confined to",
-      "quality_score": 0.6288458474603094,
-      "sorry_count": 0,
-      "theorem_count": 80,
-      "timestamp": "2026-08-11T01:11:27",
-      "title": "Lines that appear when Berggren Pythagorean Triplet Tree is plotted on a Poincare half plane"
-    },
     {
       "cycle_id": "4c1e8096",
       "domain": "Geometry",
@@ -2501,27 +2491,19 @@
       "theorem_count": 74,
       "timestamp": "2026-08-19T23:36:56",
       "title": "The \"if\" direction is proved (`FourierFA.poisson_summation`); the converse is open."
+    },
+    {
+      "cycle_id": "daf80a32",
+      "domain": "Algebra",
+      "key_insight": "# Future directions — kernel patterns\n\nEach conjecture below is falsifiable, is stated so that it can be formalised directly on\ntop of the definitions in `Catalog/Algebra/KernelPatterns/`, and is *not",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 142,
+      "timestamp": "2026-08-20T01:52:21",
+      "title": "Kernel patterns"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "5bad6114",
-      "domain": "Probability",
-      "name": "inter_coset",
-      "quality": 0.91
-    },
-    {
-      "cycle_id": "5bad6114",
-      "domain": "Probability",
-      "name": "isExtremal_mul",
-      "quality": 0.91
-    },
-    {
-      "cycle_id": "60572a3f",
-      "domain": "Combinatorics",
-      "name": "blockPattern_apply",
-      "quality": 0.85
-    },
     {
       "cycle_id": "60572a3f",
       "domain": "Combinatorics",
@@ -2803,9 +2785,27 @@
       "domain": "Pythagorean",
       "name": "subset_closureF",
       "quality": 0.85
+    },
+    {
+      "cycle_id": "daf80a32",
+      "domain": "Algebra",
+      "name": "kerSetoid_canon",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "daf80a32",
+      "domain": "Algebra",
+      "name": "kerSetoid_quotientMk",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "daf80a32",
+      "domain": "Algebra",
+      "name": "card_pattern",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-19T23:36:56",
+  "last_updated": "2026-08-20T01:52:21",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hn2⟩)",
@@ -3021,12 +3021,6 @@
   "research_threads": {
     "Algebra": [
       {
-        "cycle_id": "6092c7cd",
-        "quality": 0.82,
-        "theorems": 36,
-        "title": "The Partial Free-Witness Threshold is the Trace, Closed"
-      },
-      {
         "cycle_id": "9e8cd1f4",
         "quality": 0.87,
         "theorems": 939,
@@ -3079,6 +3073,12 @@
         "quality": 0.8,
         "theorems": 114,
         "title": "Two new self-contained files extend the conditional Hilbert-class-field interfac"
+      },
+      {
+        "cycle_id": "daf80a32",
+        "quality": 0.82,
+        "theorems": 142,
+        "title": "Kernel patterns"
       }
     ],
     "Applications": [

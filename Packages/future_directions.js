@@ -79,20 +79,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle 2e28602b (Q=0.850), which proved 158 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Neural field equations model macroscopic brain dynamics as PDEs on cortical surfaces. The cortical surface is topologically a sphere with cortical folds. Use inverse stereographic projection to transform neural field PDEs on S^2 into PDEs on R^2 with a conformal weight. Define a stereographic neural",
-    "domains": [
-      "Physics"
-    ],
-    "id": "push_2e28602b_5c112126",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "2e28602b",
-    "status": "available",
-    "timestamp": "2026-08-19T22:42:01.097461+00:00",
-    "title": "Deepening: Inverse Stereographic Neural Field Theory"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Building on cycle 4bf66c09 (Q=0.880), which proved 41 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Chebotarev's theorem that every square submatrix of the `p \u00d7 p` DFT matrix\nis nonsingular, which in turn follows from a resultant/Vandermonde computation over `Q(\u03b6_p)`\nusing the irreducibility of the `p`-th cyclotomic polynomial \u2014 machinery that Mathlib already\ncontains (`Polynomial.cyclotomic_irred",
     "domains": [
       "Novelty"
@@ -1721,45 +1707,17 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle d58932ad (Q=0.772), which proved 13 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Persistent homology computes topological features of data at multiple scales. On spheres, the natural metric is the geodesic (spherical) distance, but existing algorithms assume Euclidean data. Use stereographic projection to transform spherical persistence to weighted Euclidean persistence. Define ",
-    "domains": [
-      "Computation"
-    ],
-    "id": "push_d58932ad_bbcab10f",
-    "priority_score": 0.8724999999999999,
-    "research_mode": "team",
-    "source_exp_id": "d58932ad",
-    "status": "available",
-    "timestamp": "2026-08-01T06:48:10.452584+00:00",
-    "title": "Deepening: Inverse Stereographic Persistence: Topological Data Analysis on Spheres"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Building on cycle 50db037d (Q=0.772), which proved 13 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that Shamir's secret sharing scheme is information-theoretically secure: any t-1 shares reveal zero information about the secret. Formalize Feldman's verifiable secret sharing and prove that cheating dealers are caught. Show that the reconstruction threshold equals the degree of the polynomial",
     "domains": [
       "Cryptography"
     ],
     "id": "push_50db037d_3ae60772",
-    "priority_score": 0.8722199999999999,
+    "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "50db037d",
     "status": "available",
     "timestamp": "2026-07-31T08:23:20.837940+00:00",
     "title": "Deepening: Secret Sharing: Shamir's Scheme and Verifiable Variants"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 8fe295b2 (Q=0.771), which proved 6 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Define quantum EML neurons where exp and log are replaced by unitary exponentials: U = exp(iH) for Hermitian H, and the log is the matrix logarithm. Conjecture: The quantum EML neuron U = exp(iH1) * log(I+iH2) can implement any single-qubit unitary. Test: parameterize H1, H2 and prove the map covers",
-    "domains": [
-      "Applications"
-    ],
-    "id": "push_8fe295b2_8d36337d",
-    "priority_score": 0.8712399999999999,
-    "research_mode": "team",
-    "source_exp_id": "8fe295b2",
-    "status": "available",
-    "timestamp": "2026-07-31T18:56:28.873535+00:00",
-    "title": "Deepening: EML Quantum Activation Functions"
   },
   {
     "consumed_by_exp_id": "",
@@ -19497,14 +19455,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "C5.  Unimodality and log-concavity of the Gaussian row"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "52846ceb",
     "description": "Two `\u2115`-valued functions on finite types bounded by `N` with equal\n    power sums for all `k \u2264 N` have equal value distributions (`count_eq_of_powerSums`), proved by\n    inverting a transposed Vandermonde system over `\u211a` with the nodes `0, 1, \u2026, N`.",
     "domains": [],
     "id": "fd_1433",
+    "phase": "A",
     "priority_score": 0.4043921568627451,
     "research_mode": "team",
     "source_exp_id": "286b3a0e",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-17T13:54:05.695599+00:00",
     "title": "Power-sum inversion"
   },
@@ -19852,15 +19811,14 @@ window.FUTURE_DIRECTIONS = [
     "title": "Extremes"
   },
   {
-    "consumed_by_exp_id": "daf80a32",
+    "consumed_by_exp_id": "",
     "description": "are complete `G`-invariants of the equality pattern of a tuple, counted by\n   the Bell numbers `1, 1, 2, 5, 15, 52` (OEIS A000110), proved by `decide`.",
     "domains": [],
     "id": "fd_1431",
-    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "286b3a0e",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-17T13:54:05.239324+00:00",
     "title": "Kernel patterns"
   },
@@ -21875,5 +21833,19 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-19T23:36:44.235030+00:00",
     "title": "the conjecture predicts that no finite non-lattice `S \u2286 \u2124` (e.g. `{0,1,4}`)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "A closed form for `\u2211_{k \u2264 a} S(n,k)` for every fixed `a \u2265 4`.  The cases `a = 2` and\n   `a = 3` are now proved here (`card_orbits_binary`, `card_orbits_ternary`), and the\n   pattern of the two proofs \u2014 expand the truncated row, apply `stirling2_succ_succ` to each\n   term, and close with `omega` \u2014 suggests that for each fixed `a` the orbit count satisfies\n   the linear recurrence with characteristic roots `1, 2, \u2026, a`; the conjecture is that this\n   holds uniformly in `a` and matches `\u2211_{j \u2264 a} (-1)^{a-j} j^n / (j! (a-j)!)`.",
+    "domains": [
+      "Logic"
+    ],
+    "id": "fd_1658",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "daf80a32",
+    "status": "available",
+    "timestamp": "2026-08-20T01:52:09.352092+00:00",
+    "title": "A closed form for `\u2211_{k \u2264 a} S(n,k)` for every fixed `a \u2265 4`."
   }
 ];

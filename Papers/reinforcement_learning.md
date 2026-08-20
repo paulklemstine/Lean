@@ -1,226 +1,139 @@
-# Computational Evidence — RLHF/PTX objective meets Dirichlet number theory
+# Computational evidence
 
-All numbers below come from a direct floating-point evaluation of the finite-space
-objective
+All numbers below were produced with Lean 4 `#eval` (IEEE `Float` arithmetic) on a two-point
+response space `Ω = {0,1}`, with
 
 ```
-J_β(q) = Σ_y q(y) r(y) − β Σ_y q(y) log(q(y)/p(y)) ,   V(β) = β log Σ_y p(y) e^{r(y)/β}
+SFT reference   p = (0.30, 0.70)
+reward model    r = (1.00, 0.00)
+pretraining     d = (0.80, 0.20)
+KL temperature  β = 0.5
 ```
 
-They are *exploratory* evidence gathered before formalization; the theorems themselves are
-proved from scratch in the Lean files (`Catalog/NumberTheory/RLHF*.lean`) and do not rely on
-these computations.
+Policies are parametrized by their mass `t = q(0)` on the first response, and
 
-## 1. Gibbs optimality (finite response space, von Mangoldt reward)
+```
+J_γ(t) = t·r₀ + (1−t)·r₁ − β·KL(q‖p) + γ·( d₀ log t + d₁ log(1−t) ).
+```
 
-`N = 20`, reward `r(i) = Λ(i)`, uniform SFT reference `p`, `β = 0.7`:
+The evidence stage is deliberately small: it is used only to sanity-check the four inequalities
+that the Lean development then proves in full generality.
+
+## 1. Gibbs policy and free energy
 
 | quantity | value |
 |---|---|
-| best of 50 000 random policies `J_β(q)` | 1.3364264 |
-| `J_β(π_β)` at the Gibbs policy | 1.7640380 |
-| `β log Z(β)` (free energy) | 1.7640380 |
+| `π_β(0) = p₀e^{r₀/β}/Z` | `0.760004` |
+| `F(r) = β log Z` | `0.535229` |
+| grid argmax of `J_0` over `t ∈ {0.001,…,0.999}` | `t* = 0.760`, `J = 0.535229` |
 
-No sampled policy beat the free energy, and the Gibbs policy attained it to machine
-precision — matching `objective_gibbs` and `variational_principle`.
+The `γ = 0` grid maximizer agrees with the closed-form Gibbs policy to the grid resolution,
+and the optimal value agrees with `β log Z` to 6 decimals — a numerical check of
+`RLHF.objective_gibbs` / `RLHF.variational_principle`.
 
-## 2. Free-energy spectrum for the von Mangoldt reward `Λ` on `{1,…,N}`
+## 2. The PTX optimum has no closed form but exists and is unique
 
-| N | ψ(N)/N | V(0.1) | V(0.5) | V(1) | V(2) | V(10) | log N |
-|---|---|---|---|---|---|---|---|
-| 10 | 0.78320 | 1.71909 | 1.18512 | 0.99325 | 0.88790 | 0.80381 | 2.30259 |
-| 50 | 0.98971 | 3.51672 | 2.67834 | 2.03078 | 1.50439 | 1.08112 | 3.91202 |
-| 100 | 0.94045 | 4.17885 | 3.24598 | 2.44755 | 1.68690 | 1.06484 | 4.60517 |
-| 500 | 1.00330 | 5.79664 | 4.77601 | 3.78564 | 2.50404 | 1.23256 | 6.21461 |
-| 2000 | 0.99723 | 7.15720 | 6.04997 | 4.93826 | 3.26722 | 1.31841 | 7.60090 |
+Grid maximization of `J_γ` (step `10⁻³`):
 
-Observations, all subsequently proved in `RLHFTemperatureSpectrum.lean`:
-
-* every row satisfies `ψ(N)/N < V(β) < log N` (`vonMangoldt_freeEnergy_ge_chebyshev`,
-  `vonMangoldt_freeEnergy_le_log`, `vonMangoldt_strict_improvement`);
-* `V` is strictly decreasing along each row (`freeEnergy_antitone`);
-* the column `ψ(N)/N` hovers around 1, the elementary Chebyshev/PNT normalization.
-
-## 3. Euler factorization of the aligned (zeta) policy
-
-`s = 1.3`, primes `p = 2`, `q = 3`, exponent caps `A = 5`, `B = 4`:
-
-```
-Σ_{a≤5, b≤4} (2^a 3^b)^{-s} = 2.2031653077554383
-(Σ_{a≤5} 2^{-as})(Σ_{b≤4} 3^{-bs}) = 2.203165307755438     (difference 4.4e-16)
-Σ_{a≤5} 2^{-as} = 1.6763038  <  (1 − 2^{-s})^{-1} = 1.6838594
-```
-
-matching `zeta_partition_factorizes`, `localZeta_lt_euler_factor` and `euler_factor_tsum`.
-
-## 4. The PTX alignment tax
-
-`N = 6`, `β = 1`, `γ = 0.5`, pretraining distribution `d(n) ∝ n`, uniform SFT reference,
-von Mangoldt reward. The theoretical ceiling is `β log Z − γ H(d) = 0.0161094`; the best of
-200 000 sampled policies reached `−0.0616873`, a strictly positive gap of `0.0777967`.
-The ceiling is provably unattainable whenever `π_β ≠ d`, which is `alignment_tax`.
-
-## 5. Counterexample hunt
-
-* Sampled 50 000 policies at `β = 0.7` looking for `J_β(q) > β log Z`: none found
-  (max deviation `−0.428`).
-* Sampled temperature pairs `β₁ < β₂` for `N ≤ 2000` looking for `V(β₂) > V(β₁)`: none.
-* Sampled `(p,q,A,B,s)` with `p, q` distinct primes looking for failure of the Euler
-  factorization: none (all differences below `10⁻¹⁴`).
-* Searched for `N ≥ 2` with `ψ(N)/N = V(β)` (i.e. no alignment gain): none — consistent
-  with the strict-improvement theorem, whose engine is `Λ(1) = 0 ≠ log 2 = Λ(2)`.
-
-No OEIS lookup was relevant: the sequences appearing (`ψ(N)`, truncated zeta sums) are
-classical and real-valued rather than integer sequences.
-
-## 6. Prime discovery at low temperature (evidence for `RLHF.prime_discovery`)
-
-With the von Mangoldt reward and the uniform reference on `{1,…,N}`, the aligned policy
-weights a prime power `p^k` by `p^{1/β}` and every other response by `1`.  Sampling
-probability of the prime-power set:
-
-| N | threshold β = log 2 / log N | ρ(β) | ρ(2β) |
-|---|---|---|---|
-| 10 | 0.3010 | 0.9969 | 0.9536 |
-| 100 | 0.1505 | 1.0000 | 1.0000 |
-| 1000 | 0.1003 | 1.0000 | 1.0000 |
-
-The proved bound `ρ ≥ 1/2` for `β log N ≤ log 2` is therefore correct but conservative;
-the empirical threshold sits substantially higher, which is what Conjecture 1 of
-`FUTURE_DIRECTIONS.md` quantifies.
-
----
-
-# Cycle 2 evidence (spectral rigidity, schedule collapse, log-convexity, monotone mass)
-
-All numbers below were produced with Lean's own evaluator (`#eval`, `Float` arithmetic) on
-the same definitions that the theorems use.
-
-## 7. Schedule collapse (evidence for `RLHF.schedule_collapse`)
-
-Response space of size 4, uniform reference, rewards
-`r₁ = (0, 0.693, 1.099, 1.386)` and `r₂ = (0.5, −0.2, 0, 1)`.
-
-| computation | resulting policy |
-|---|---|
-| two steps: `β₁ = 0.5` with `r₁`, then `β₂ = 2` with `r₂` | `(0.031883, 0.089843, 0.223646, 0.654628)` |
-| one step at `β = 1` with reward `2 r₁ + 0.5 r₂` | `(0.031883, 0.089843, 0.223646, 0.654628)` |
-
-Agreement to all printed digits, as predicted by `RLHF.gibbs_schedule_two` with
-`β/β₁ = 2`, `β/β₂ = 0.5`.
-
-## 8. Spectral rigidity (evidence for `RLHF.freeEnergy_rigidity`)
-
-Same space, `t = 1/β = 0.7`, uniform reference:
-
-| reward vector | `Z(t)` |
-|---|---|
-| `(0, 0.693, 1.099, 1.386)` | `1.855266` |
-| `(1.386, 0, 1.099, 0.693)` (a permutation: same spectrum) | `1.855266` |
-| `(0, 0.693, 1.099, 1.400)` (spectrum perturbed by `0.014`) | `1.861762` |
-
-Permutations — i.e. reward models with the same spectrum — are invisible to the curve, and
-the smallest perturbation of the spectrum is visible.  This is exactly the boundary drawn by
-the theorem: the curve determines the spectrum, and nothing finer.
-
-## 9. Log-convexity of truncated Dirichlet series (evidence for `RLHF.zetaSum_sq_le`)
-
-`ζ_N(s) = ∑_{n ≤ N} n^{-s}` with `N = 50`:
-
-| midpoint `s` | `ζ_N(s)²` | `ζ_N(s₁) ζ_N(s₂)` |
+| `γ` | `t*` | `J_γ(t*)` |
 |---|---|---|
-| `1.5 = (1.0+2.0)/2` | `5.433280` | `7.311806` |
-| `2.0 = (0.5+3.5)/2` | `2.641056` | `14.368250` |
+| `0.0` | `0.760` | `0.535229` |
+| `0.1` | `0.767` | `0.484806` |
+| `0.5` | `0.780` | `0.283873` |
+| `2.0` | `0.792` | `−0.467417` |
 
-Both inequalities hold with a wide margin, and the margin widens as the endpoints separate,
-as Cauchy–Schwarz predicts.
+The maximizer moves monotonically towards the pretraining distribution `d₀ = 0.8` as `γ` grows,
+and no closed-form Gibbs formula reproduces these values (the stationarity condition is
+transcendental).  In every run the grid objective was unimodal — consistent with the strict
+concavity proved in `RLHF.objectivePTX_midpoint_gt`.
 
-## 10. Monotone prime-power mass (evidence for `RLHF.vonMangoldt_primePower_mass_antitone`)
+## 3. Pythagorean drift bound (`RLHF.ptx_pythagorean`, `RLHF.ptx_drift_le`)
 
-Prime-power probability `ρ_N(β)` of the aligned von Mangoldt policy, `N = 100`
-(threshold of `RLHF.prime_discovery`: `log 2 / log 100 = 0.150515`):
+Reported as `(KL(q*‖π_β), (γ/β)·KL(d‖π_β), β·KL(q*‖π_β)+γ·KL(d‖q*), γ·KL(d‖π_β))`:
 
-| β | 0.15 | 0.3 | 0.6 | 1.0 | 3.0 |
-|---|---|---|---|---|---|
-| ρ₁₀₀(β) | 1.000000 | 0.999997 | 0.996039 | 0.943772 | 0.593799 |
+| `γ` | `KL(q*‖π_β)` | bound `(γ/β)KL(d‖π_β)` | Pythagorean LHS | Pythagorean RHS |
+|---|---|---|---|---|
+| `0.1` | `0.000135` | `0.000914` | `0.000383` | `0.000457` |
+| `0.5` | `0.001118` | `0.004569` | `0.001155` | `0.002285` |
+| `2.0` | `0.002899` | `0.018278` | `0.001842` | `0.009139` |
 
-Strictly decreasing in `β`, in agreement with the proved antitonicity, and still above `1/2`
-well beyond the proved threshold — the quantitative gap that Conjecture 1 addresses.
+Both inequalities hold with room to spare, and `KL(q*‖π_β) → 0` as `γ → 0`, matching
+`RLHF.ptx_drift_tendsto_zero`.
 
-## 11. Curvature of the value curve (evidence for `RLHF.deriv2_logExpMoment_eq_tiltVar`)
+## 4. Gibbs–Bogoliubov–Feynman gap (`RLHF.freeEnergy_add_inner_le`, `freeEnergy_bregman_eq_kl`)
 
-Reward spectrum `r = (0, 1, 3)` on three responses with the uniform reference policy.
-Comparison of the centred second difference of `log Z(t)` (step `h = 10⁻³`) with the reward
-variance `Var_{π_t}(r) = M₂/M₀ − (M₁/M₀)²`, both evaluated in Lean (`Float`):
+Gap `F(s) − F(r) − 𝔼_{π_r}[s − r]` for several alternative reward models `s`:
 
-| `t` | second difference of `log Z` | `Var_{π_t}(r)` |
+| `s` | gap |
+|---|---|
+| `(2.0, 0.0)` | `0.123704` |
+| `(0.0, 1.0)` | `0.834632` |
+| `(1.0, 0.0)` (= `r`) | `0.000000` |
+| `(3.0, −1.0)` | `0.583163` |
+
+Non-negative always, and exactly zero at `s = r` — the supporting-hyperplane behaviour, and
+(by the Bregman identity) equal to `β·KL(π_r‖π_s)`.
+
+## 5. Lipschitz / reward-hacking budget (`RLHF.freeEnergy_lipschitz`)
+
+Reported as `(|F(r) − F(s)|, ‖r − s‖_∞)`:
+
+| `s` | `|ΔF|` | `‖r−s‖_∞` |
 |---|---|---|
-| `0.5` | `1.407086` | `1.407086` |
-| `−1.0` | `0.442450` | `0.442450` |
+| `(2.0, 0.0)` | `0.883709` | `1.000000` |
+| `(0.0, 1.0)` | `0.314624` | `1.000000` |
+| `(3.0, −1.0)` | `1.863176` | `2.000000` |
 
-Agreement to all displayed digits, matching the proved identity `(log Z)'' = Var_{π_t}(r)`.
-Both values are strictly positive, as `RLHF.tiltVar_pos` requires for a non-constant reward,
-and this is what makes the value curve *strictly* convex
-(`RLHF.strictConvexOn_logExpMoment`).
+The `1`-Lipschitz bound is respected and is nearly tight for large sup-norm perturbations
+(`1.863` vs `2.000`).
 
-## 12. Strict log-convexity of the truncated zeta function (evidence for
-`RLHF.strictConvexOn_truncZetaLog`)
+## 6. Strict midpoint concavity (`RLHF.objectivePTX_midpoint_gt`)
 
-`ζ_N(s) = ∑_{n ≤ N} n^{-s}` with `N = 5`, at the midpoint `1.5 = (1.0 + 2.0)/2`:
+Gaps `J_γ((t₁+t₂)/2) − (J_γ(t₁)+J_γ(t₂))/2`:
 
-| `ζ_5(1.5)²` | `ζ_5(1.0) · ζ_5(2.0)` |
+| `γ` | `(t₁,t₂)` | gap |
+|---|---|---|
+| `0.5` | `(0.2, 0.8)` | `0.207944` |
+| `0.5` | `(0.40, 0.45)` | `0.001428` |
+| `0.0` | `(0.1, 0.9)` | `0.184032` |
+
+Strictly positive in all cases, including at `γ = 0`.
+
+## 8. Stationarity, the self-consistent Gibbs form, and the anti-starvation floor
+
+Instance: `Ω = Bool`, `β = 1`, `γ = 0.5`, `r = (1, 0)`, `p = (0.5, 0.5)`, `d = (0.3, 0.7)`.
+Ternary search on the one-dimensional simplex gives the PPO-ptx optimum
+
+| quantity | value |
 |---|---|
-| `3.099171` | `3.341912` |
+| `q*` | `(0.595481, 0.404519)` |
+| `J_γ(q*)` | `0.182608` |
+| score at `true` | `0.077135` |
+| score at `false` | `0.077135` |
+| score gap | `9.7 × 10⁻⁹` |
 
-Strict inequality, as the proved strict convexity predicts for `N ≥ 2` (the reward model
-`n ↦ −log n` is non-constant exactly then; for `N = 1` the curve is affine and the
-inequality degenerates to an equality).
+The score is constant to search precision, as `RLHF.ptx_stationarity_iff` requires.  Feeding `q*`
+back through the self-consistent Gibbs map `q ↦ normalize(p · exp((r + γ d/q)/β))` returns
+`(0.5954812, 0.4045188)` — the fixed-point identity `RLHF.ptx_maximizer_iff_self_consistent`.
 
-## 13. Sharpness of the alignment speed limit (evidence for
-`RLHF.popoviciu_constant_sharp` and `RLHF.tiltMean_drift_constant_sharp`)
+Anti-starvation floor with reward ceiling `M = 1`
+(`γ d y / (β log(1/p y) + M + γ − r y)`):
 
-Two-atom reward `r ∈ {0, 1}` with balanced reference.  Reward variance
-`Var_{π_t}(r) = e^t/(1+e^t)²` (Lean `Float` evaluation):
+| `y` | floor | `q* y` |
+|---|---|---|
+| `true` | `0.125718` | `0.595481` |
+| `false` | `0.159588` | `0.404519` |
 
-| `t` | `0.0` | `0.5` | `1.0` | `2.0` |
-|---|---|---|---|---|
-| `Var_{π_t}(r)` | `0.250000` | `0.235004` | `0.196612` | `0.104994` |
+Both floors hold with a comfortable margin, consistent with `RLHF.ptx_no_starvation`; the margin
+suggests the constant is not optimal, which is next-cycle sub-conjecture 2 in
+`FUTURE_DIRECTIONS.md`.
 
-The maximum `1/4` is attained exactly at `t = 0`, where the tilted policy splits its mass
-evenly — the equality case described by `RLHF.tiltVar_eq_range_sq_iff`.  Difference quotients
-of the aligned reward at the origin approach the same constant:
+## 7. OEIS
 
-| `h` | `0.1` | `0.01` | `0.001` |
-|---|---|---|---|
-| `(𝔼_{π_h}[r] − 𝔼_{π_0}[r])/h` | `0.249792` | `0.249998` | `0.250000` |
+No integer sequence arises in this development (all objects are real-valued functionals on a
+simplex), so no OEIS lookup applies.
 
-so no drift constant below `1/4` can hold, which is `RLHF.tiltMean_drift_constant_sharp`.
-
-## 14. Curvature of a local Euler factor (evidence for
-`RLHF.localZeta_curvature_eq_variance`)
-
-`localZeta s p A = ∑_{k ≤ A} p^{-ks}` with `p = 2`, `A = 3`, at `s = 1.5`.  Centred second
-difference of `log localZeta` (step `h = 10⁻³`) against the variance of `k log p` under the
-truncated geometric law on exponents:
-
-| second difference of `log localZeta` | `Var(k log p)` |
-|---|---|
-| `0.282525` | `0.282525` |
-
-Agreement to all displayed digits, matching the proved identity.
-
-## 15. Three temperatures do not identify a two-atom spectrum (evidence for
-`RLHF.prony_three_samples_insufficient_spectra`)
-
-Spectrum A: levels `{log 1, log 3}` with masses `(1/2, 1/2)`.
-Spectrum B: levels `{log(3/2), log 4}` with masses `(4/5, 1/5)`.
-Partition functions `Z(t)`:
-
-| `t` | `0` | `1` | `2` | `3` |
-|---|---|---|---|---|
-| `Z_A(t)` | `1.000000` | `2.000000` | `5.000000` | `14.000000` |
-| `Z_B(t)` | `1.000000` | `2.000000` | `5.000000` | `15.500000` |
-
-The two spectra are indistinguishable at the three temperatures `t = 0, 1, 2` and separate at
-`t = 3` — exactly the `2n = 4` Prony count for `n = 2` atoms.  With the levels *known*, by
-contrast, `n` temperatures already suffice (`RLHF.spectral_rigidity_sampled_general`).
+**Status of this file.** These are floating-point explorations, *not* verified computations.
+Every claim they support is proved in full generality, `sorry`-free, in
+`Catalog/Algebra/RLHFTiltTorsorPTX.lean`, `Catalog/Algebra/RLHFPTXExistence.lean`,
+`Catalog/Algebra/RLHFPTXDrift.lean` and `Catalog/Algebra/RLHFStationarity.lean`.
