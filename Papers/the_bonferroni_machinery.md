@@ -1,89 +1,79 @@
-# Computational evidence — the Bonferroni machinery and its marginals
+# Computational evidence — Bonferroni machinery and marginal selection
 
-All numbers below were computed inside Lean (`#eval` in
-`Catalog/MachineLearning/BonferroniMarginals/LabNotes.lean`) and every claim
-that is used mathematically has been re-checked as a machine-verified
-`example`/`theorem` in the same directory.  Nothing here is an unchecked
-scratch computation.
+All numbers below were produced by `#eval` inside Lean 4 (Mathlib v4.28.0), i.e. by the
+kernel-compatible compiler on the same definitions that appear in
+`Catalog/Combinatorics/BonferroniMarginals.lean` (`mult`, `support`, `pairSum`,
+`doubleCollision`).  They are *exploratory data*, not proofs; every claim that survived them
+is proved separately in the Lean file with 0 sorries.
 
-## 1. Small-case calculations
+## 1. Exhaustive check of the machinery on all families `Fin 3 → Finset (Fin 4)`
 
-Notation: `d(x) = mult I A x` is the coverage multiplicity, `N = |cover|`,
-`S = ∑ᵢ|Aᵢ|`, `P₂ = ∑_{(i,j) ∈ offDiag}|Aᵢ ∩ Aⱼ|`,
-`D = doubleCollision`, `gap = N·∑ₓd(x)² − S²`.
+Ground set `Fin 4`, index set `Fin 3`, so `2^4 = 16` possible members and `16³ = 4096`
+families.  For each family we tested the three universal statements.
 
-### Three 2-element sets in a 4-point space
+| quantity | count (out of 4096) |
+|---|---|
+| families violating `∑ᵢ \|Aᵢ\| ≤ \|support\| + pairSum` | **0** |
+| families with **equality** in that inequality | 256 |
+| families violating `2·\|doubleCollision\| ≤ pairSum` | **0** |
+| families with equality `2·\|doubleCollision\| = pairSum ≠ 0` | 2145 |
+| families violating `(∑ᵢ \|Aᵢ\|)² ≤ \|support\|·(∑ᵢ \|Aᵢ\| + pairSum)` | **0** |
 
-| family    | `S` | `P₂` | `N` | `d`-profile | `2|D|` | Bonferroni defect `∑(d−1)²` | sharp defect `∑(d−1)(d−2)` | `gap` |
-|-----------|-----|------|-----|-------------|--------|------------------------------|-----------------------------|-------|
-| triangle `{01},{12},{20}`   | 6 | 6 | 3 | (2,2,2)   | 6 | 3 | 0 | 0  |
-| sunflower `{01},{02},{03}`  | 6 | 6 | 4 | (3,1,1,1) | 2 | 4 | 2 | 12 |
+The equality count `256 = 4⁴` is exactly the number of pairwise disjoint families (each of
+the 4 points is placed in one of the 3 members or in none).  This is a numerical confirmation
+of the equality characterisation proved as `Bonferroni.sum_eq_iff_pairwiseDisjoint`.
 
-Both families have **identical** first marginals (`2,2,2`) and **identical**
-second marginals (`1` off the diagonal), but different unions (`3` vs `4`).
-This is the measurement behind `union_not_determined_by_second_order_marginals`
-and `no_second_order_formula`.
+Both sharpness observations were then turned into theorems
+(`doubleCollision_bound_sharp`, `bonferroni_can_be_strict`).
 
-Checks performed on this data:
+## 2. Which marginals? Sidon sets in `ZMod N`
 
-* second Bonferroni `S ≤ N + P₂`: `6 ≤ 3+6` and `6 ≤ 4+6`;
-* sharp Bonferroni `2S ≤ 2N + P₂`: `12 = 12` (tight, triangle) and `12 ≤ 14`
-  (slack `2`, sunflower);
-* double collision `2|D| ≤ P₂`: `6 = 6` (tight) and `2 ≤ 6` (slack `4`);
-* Corrádi with `(k,m,t) = (3,2,1)`: `k·m² = 12 ≤ N·(m+(k−1)t)`, i.e. `12 = 12`
-  (triangle, tight) and `12 < 16` (sunflower);
-* Cauchy–Schwarz gap `0` vs `12`, matching `cauchySchwarz_tight_iff_regular`
-  (the triangle is a regular cover of multiplicity `2`, the sunflower is not).
+`maxSidon N` is the true maximum size of a Sidon set in `ZMod N`, computed by brute force
+over all subsets.  `maxAll N` is the largest `m` permitted by the **all-translate** output
+`m(m-1) ≤ N-1`; `maxSelf N` is the largest `m` permitted by the **self-translate** output
+`m³ ≤ (2m-1)N`.
 
-### A four-set family `quad ⊆ Fin 8`
+| N | maxSidon | maxAll (`S = G`) | maxSelf (`S = A`) |
+|---|---|---|---|
+| 2 | 1 | 1 | 1 |
+| 3 | 2 | 2 | 2 |
+| 4 | 2 | 2 | 2 |
+| 5 | 2 | 2 | 2 |
+| 6 | 2 | 2 | **3** |
+| 7 | 3 | 3 | 3 |
+| 8 | 3 | 3 | 3 |
+| 9 | 3 | 3 | 3 |
+| 10 | 3 | 3 | **4** |
+| 11 | 3 | 3 | **4** |
+| 12 | 3 | 3 | **4** |
+| 13 | 4 | 4 | 4 |
+| 14 | 4 | 4 | **5** |
+| 15 | 4 | 4 | **5** |
+| 16 | 4 | 4 | **5** |
+| 17 | 4 | 4 | **5** |
+| 18 | 4 | 4 | **5** |
+| 19 | 4 | 4 | **5** |
+| 20 | 4 | 4 | **6** |
+| 21 | 5 | 5 | **6** |
 
-`quad = {0,1,2}, {2,3,4}, {4,5,0}, {0,2,4}`; measured `d`-profile `(3,1,3,1,3,1)`,
-`N = 6`, `S = 12`, `P₂ = 18`, `2|D| = 6`, `gap = 36`, Bonferroni defect `12`,
-sharp defect `6`.  All identities of `Rigidity.lean` and `SharpBonferroni.lean`
-were re-verified on this instance by `decide`.
+Observations.
 
-### The parity construction (`plainFam k` vs `parityFam k`)
-
-| `k` | `|cover plain|` | `|cover parity|` | top-order marginal (plain / parity) |
-|-----|-----------------|------------------|--------------------------------------|
-| 1   | 1               | 2                | 1 / 2                                |
-| 2   | 3               | 2                | 1 / 2                                |
-| 3   | 7               | 8                | 1 / 2                                |
-
-For `k = 2` all marginals of order `< 2` were checked equal by `decide`
-(`T = ∅, {0}, {1}`), while the unions differ (`3 ≠ 2`).  The general statement
-is `marginal_order_lt_insufficient`.
-
-## 2. Sequence search
-
-The measured union sizes of the parity construction are
-`|cover plain k| = 2^k − 1` (1, 3, 7, 15, …, the Mersenne numbers, OEIS A000225)
-and `|cover parity k| = 2^k − 2·[k even]` (2, 2, 8, 14, …).  The proof does not
-use the second closed form: only the parity of the two numbers is needed
-(`card_cover_ne`), which is why no sequence identification is required.
+* For every `N` in the range, `maxAll N = maxSidon N`: feeding **all** `|G|` translates into
+  the machinery is not merely sharp asymptotically, it predicts the exact extremal value on
+  this whole range.
+* `maxSelf` first overshoots at `N = 6` and the gap grows; asymptotically the two outputs are
+  `m ≲ √N` versus `m ≲ √(2N)`.
+* This is the numerical content of the pair
+  `all_translate_bound_implies_self_translate_bound` (the all-translate output always implies
+  the self-translate one) and `marginal_selection_strict` (at `N = 100, m = 13` the converse
+  fails), both proved in Lean.
 
 ## 3. Counterexample hunt
 
-The universal claim tested was:
-
-> *the first- and second-order marginals of a finite family determine the size
-> of its union.*
-
-Exhaustively searching families of three `2`-element subsets of a `4`-element
-set immediately produces the triangle/sunflower pair as a counterexample; it is
-minimal in the sense that for two sets the marginals `|A₁|, |A₂|, |A₁∩A₂|` do
-determine `|A₁ ∪ A₂|`.  The counterexample was then generalised: for every
-`k ≥ 1` the pair `plainFam k` / `parityFam k` refutes the analogous claim for
-marginals of every order `< k`.
-
-## 4. What the data suggested, and what was then proved
-
-* triangle gap `0`, sunflower gap `12` ⇒ conjecture "gap `= 0` iff regular
-  cover", proved as `cauchySchwarz_tight_iff_regular` and quantified as
-  `sq_spread_le_gap`;
-* the sharp-Bonferroni and double-collision slacks vanish together on the
-  triangle and are both positive on the sunflower and on `quad` ⇒ conjecture
-  "same extremal class", proved as
-  `sharp_bonferroni_and_doubleCollision_same_extremals`;
-* the parity of `|cover plain k|` and `|cover parity k|` always differed in the
-  measured range ⇒ proved in general via `card_cover_ne`.
+* The universal claims of §1 were tested on the full `4096`-family space: no counterexample.
+* The Sidon marginal `#(translate A g ∩ translate A h) ≤ 1` for `g ≠ h` was checked implicitly
+  by the fact that no Sidon set in the table exceeds `maxAll`, and is proved in Lean
+  (`IsSidon.card_inter_translate_le_one`).
+* No OEIS sequence lookup was performed: the sequences appearing here (`maxSidon N` — the
+  cyclic-Sidon/perfect-difference-set growth) are used only as a sanity check against the two
+  bounds, and no new integer sequence is claimed.

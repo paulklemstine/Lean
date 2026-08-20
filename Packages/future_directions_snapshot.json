@@ -107,6 +107,25 @@
     "title": "Deepening: C4.  A `q`-analogue of Kummer's theorem"
   },
   {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 3b08d230 (Q=0.860), which proved 154 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: is a finitely supported `a : ℕ → ℤ` with\n`∑ k · a k = 24`; `b m = ∑_{k ∣ m} a k`; `headCoeff a = a₁(a₁+3)/2 + a₂` is the\nproved value of `c(1)` for the eta quotient `q · (1/η_a) = ∏_m (1 − q^m)^(−b m)`.",
+    "domain_bridges": [],
+    "domains": [
+      "Tropical"
+    ],
+    "id": "push_3b08d230_2e3b0fb7",
+    "lineage_refs": [],
+    "priority_score": 0.95,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "3b08d230",
+    "status": "available",
+    "timestamp": "2026-08-20T16:51:24.394732+00:00",
+    "title": "Deepening: is a finitely supported `a : ℕ → ℤ` with"
+  },
+  {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
     "consumed_by_exp_id": "",
@@ -162,25 +181,6 @@
     "status": "available",
     "timestamp": "2026-08-19T09:49:59.558898+00:00",
     "title": "Deepening: The Bell defect, counted exactly"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 69ffd40e (Q=0.860), which proved 127 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The Lagrange engine `powerSum_rigidity` is already formalised and it isolates\nexactly which weight vectors are invisible; what remains is a construction, not a new theory.",
-    "domain_bridges": [],
-    "domains": [
-      "Applications"
-    ],
-    "id": "push_69ffd40e_155fbe57",
-    "lineage_refs": [],
-    "priority_score": 0.95,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "69ffd40e",
-    "status": "available",
-    "timestamp": "2026-08-20T15:50:11.817203+00:00",
-    "title": "Deepening: The Lagrange engine `powerSum_rigidity` is already formalised and it isolates"
   },
   {
     "ambition_level": "grand_challenge",
@@ -2346,27 +2346,6 @@
     "status": "available",
     "timestamp": "2026-08-13T03:21:12.748859+00:00",
     "title": "Stein-Method: Quantitative Normal Approximation Bounds"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Construct a rigorous model of hypercomputation that can solve the halting problem. Prove that any physical system implementing hypercomputation requires infinite energy density or infinite precision. Formalize the distinction between accidentally computable (physical oracles) and essentially computable (Turing machines).",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Computation",
-      "Physics"
-    ],
-    "id": "seed_277",
-    "lineage_refs": [],
-    "priority_score": 0.87,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Hypercomputation: Computing the Uncomputable"
   },
   {
     "ambition_level": "extension",
@@ -25205,6 +25184,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Consider the map `a ↦ (tropOrder F_a, c(0), c(1), c(2), …)`.  Then the\ntropical component is constant on all admissible `a` (proved: `tropOrder_etaQuotientProd`),\nand moreover **no** nonconstant function of the coefficient sequence is tropically\nadditive: if `Ψ : (ℕ → ℤ) → Tropical ℕ∞` factors through `a ↦ F_a` and satisfies\n`Ψ(a + a′) = Ψ(a) ⊗ Ψ(a′)`, then `Ψ` is constant.",
+    "domain_bridges": [],
+    "domains": [
+      "Tropical"
+    ],
+    "id": "fd_1731",
+    "lineage_refs": [],
+    "priority_score": 0.4513333333333333,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "3b08d230",
+    "status": "available",
+    "timestamp": "2026-08-20T16:51:10.791058+00:00",
+    "title": "Consider the map `a ↦ (tropOrder F_a, c(0), c(1), c(2), …)`.  Then the"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "The `2 ^ k` computation and the sandwich theorem are already\nformalized; what is missing is only the graph decomposition, a combinatorial\nstatement about `SimpleGraph`/`Quiver` SCCs that Mathlib can support.",
     "domain_bridges": [],
     "domains": [
@@ -25240,7 +25238,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4494e9cb",
     "description": "Quantify Conjecture 3″ at fixed depth: for\n   every product coin of depth `n`, `‖A(ψ)‖² ≤ (1 − c)·|R|` with an explicit `c > 0`\n   depending only on `n` and `|R| ≥ 2`, i.e. the optimum is *never* attained by a coin that\n   does not already depend on `N`.  With `resonanceAmplitude_sq_eq_iff` this is now a\n   statement about the non-membership of the indicator in the product family, provable\n   already for `n = 2` by a direct computation.",
     "domain_bridges": [],
     "domains": [],
@@ -25250,7 +25248,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "db2f2b2f",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-20T11:42:58.411516+00:00",
     "title": "Rigidity gap for shallow product coins"
   },
@@ -25581,6 +25579,23 @@
     "status": "available",
     "timestamp": "2026-08-20T14:00:15.425862+00:00",
     "title": "Both halves of the residual dichotomy are now proved"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "The one-dimensional case is a proved theorem (`headCoeff_surjective`, with\nthe exotic pure sublocus characterised by `pure_headCoeff_iff_sq`: `8c+9` a square), and\n`coeff_three_etaQuotientProd` supplies the third coordinate in closed form.  The\nconjecture is a direct, finitely checkable upgrade from one to three coordinates and\nwould give a complete description of the degree-`≤ 3` moduli of normalised eta\nquotients.",
+    "domain_bridges": [],
+    "domains": [],
+    "id": "fd_1733",
+    "lineage_refs": [],
+    "priority_score": 0.4284545454545454,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "3b08d230",
+    "status": "available",
+    "timestamp": "2026-08-20T16:51:11.366547+00:00",
+    "title": "The one-dimensional case is a proved theorem (`headCoeff_surjective`, with"
   },
   {
     "ambition_level": "extension",
@@ -29363,7 +29378,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "3b08d230",
+    "consumed_by_exp_id": "",
     "description": "is a finitely supported `a : ℕ → ℤ` with\n`∑ k · a k = 24`; `b m = ∑_{k ∣ m} a k`; `headCoeff a = a₁(a₁+3)/2 + a₂` is the\nproved value of `c(1)` for the eta quotient `q · (1/η_a) = ∏_m (1 − q^m)^(−b m)`.",
     "domain_bridges": [],
     "domains": [],
@@ -29373,7 +29388,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "0750e9d7",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-20T03:10:46.040710+00:00",
     "title": "is a finitely supported `a : ℕ → ℤ` with"
   },
@@ -30355,5 +30370,61 @@
     "status": "available",
     "timestamp": "2026-08-20T15:50:17.928750+00:00",
     "title": "KL-coefficient annealing schedules are used heuristically in"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "For each `n ≥ 1` let `Φ_n(a) = (c(0), c(1), …, c(n−1)) ∈ ℤⁿ`.  Then\n`Φ_n` is a group homomorphism from `(ℕ → ℤ, +)` into a *unipotent* group `U_n ≤ GL_{n+1}(ℤ)`\nof upper-triangular matrices with `1`s on the diagonal, extending\n`headMatrix : a ↦ [[1,a₁,c(1)],[0,1,a₁],[0,0,1]]`, and the `k`-th layer of the lower\ncentral series of the image is generated by the degree-`k` part of `c(k−1)` as a\npolynomial in `a₁, …, a_k`.  Concretely: `c(n−1) − (linear in a_n) ` is a polynomial in\n`a₁,…,a_{n−1}` of weighted degree exactly `n` for `weight(a_k) = k`.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_1729",
+    "lineage_refs": [],
+    "priority_score": 0.4,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "3b08d230",
+    "status": "available",
+    "timestamp": "2026-08-20T16:51:10.233099+00:00",
+    "title": "For each `n ≥ 1` let `Φ_n(a) = (c(0), c(1), …, c(n−1)) ∈ ℤⁿ`.  Then"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "The coprime case is proved (`coeff_delta_dvd_of_coprime`) and the failure\nin the non-coprime case is proved by explicit counterexample (`coeff_two_delta_not_dvd_24`:\n`24 ∤ 324`).  The computed table `c(n) mod 24 = 1,0,12,8,18,0,8,0,15,0,12,0,6` in\n`ComputationalEvidence.md` §4.2 shows the residues `12 = 24/2`, `8 = 24/3`, `6 = 24/4`\nappearing exactly at `n = 2, 3, 12`, which is a strong quantitative fingerprint of the\nconjectured modulus.",
+    "domain_bridges": [],
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_1730",
+    "lineage_refs": [],
+    "priority_score": 0.4,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "3b08d230",
+    "status": "available",
+    "timestamp": "2026-08-20T16:51:10.513175+00:00",
+    "title": "The coprime case is proved (`coeff_delta_dvd_of_coprime`) and the failure"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "All coefficients of `F_a` are nonnegative **if and only if** `b m ≥ 0`\nfor every `m ≥ 1`.  The forward direction is proved (`coeff_nonneg_of_bCoeff_nonneg`);\nthe converse is open.  Sharper form: if `b m₀ < 0` for some `m₀`, then `c(n−1) < 0`\nfor some `n ≤ 2 m₀`.",
+    "domain_bridges": [],
+    "domains": [],
+    "id": "fd_1732",
+    "lineage_refs": [],
+    "priority_score": 0.4,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "3b08d230",
+    "status": "available",
+    "timestamp": "2026-08-20T16:51:11.081136+00:00",
+    "title": "All coefficients of `F_a` are nonnegative if and only if"
   }
 ]

@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "4f724156",
-      "domain": "Probability",
-      "key_insight": "# Future Directions — status of the Conjecture-C thread and next-cycle conjectures\n\nThe thread now spans five Lean files, all compiling with `0` sorries and only the standard\naxioms (`propext`, `Class",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 21,
-      "timestamp": "2026-08-18T21:38:19",
-      "title": "Conjecture C, closed"
-    },
-    {
       "cycle_id": "16c8a71d",
       "domain": "Pythagorean",
       "key_insight": "# Future directions — aggregate dichotomy for Pythagorean families\n\nThe formal results of this cycle live in\n\n* `Catalog/Pythagorean/PTripleMonoid.lean` — the commutative monoid `PTriple` of integral",
@@ -499,19 +489,19 @@
       "theorem_count": 61,
       "timestamp": "2026-08-20T15:50:23",
       "title": "reinforcement learning"
+    },
+    {
+      "cycle_id": "3b08d230",
+      "domain": "Tropical",
+      "key_insight": "# Future directions\n\nFive bold, falsifiable conjectures distilled from the verified results in\n`Catalog/Tropical/EtaQuotient*.lean`.  Throughout, `a : ℕ → ℤ` is a finitely\nsupported exponent vector, `",
+      "quality_score": 0.86,
+      "sorry_count": 0,
+      "theorem_count": 154,
+      "timestamp": "2026-08-20T16:51:24",
+      "title": "is a finitely supported `a : ℕ → ℤ` with"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "c56f6a79",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Diophantine–Lattice: Spectral Bounds on Non-Homogeneous Quadratic Forms\n\nAll conjectures below are falsifiable statements about the objects formalised in\n`Catalog/Applications/Di",
-      "quality_score": 0.71215,
-      "sorry_count": 0,
-      "theorem_count": 43,
-      "timestamp": "2026-08-11T10:24:47",
-      "title": "Diophantine-Lattice: Spectral Bounds on Non-Homogeneous Quadratic Forms"
-    },
     {
       "cycle_id": "f2796053",
       "domain": "Logic",
@@ -2501,27 +2491,19 @@
       "theorem_count": 61,
       "timestamp": "2026-08-20T15:50:23",
       "title": "reinforcement learning"
+    },
+    {
+      "cycle_id": "3b08d230",
+      "domain": "Tropical",
+      "key_insight": "# Future directions\n\nFive bold, falsifiable conjectures distilled from the verified results in\n`Catalog/Tropical/EtaQuotient*.lean`.  Throughout, `a : ℕ → ℤ` is a finitely\nsupported exponent vector, `",
+      "quality_score": 0.86,
+      "sorry_count": 0,
+      "theorem_count": 154,
+      "timestamp": "2026-08-20T16:51:24",
+      "title": "is a finitely supported `a : ℕ → ℤ` with"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "d11810a4",
-      "domain": "Geometry",
-      "name": "centralizer_image_map",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "d11810a4",
-      "domain": "Geometry",
-      "name": "index_centralizer_range_comp",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "d11810a4",
-      "domain": "Geometry",
-      "name": "range_comp_mulEquiv",
-      "quality": 0.82
-    },
     {
       "cycle_id": "2e28602b",
       "domain": "Physics",
@@ -2803,9 +2785,27 @@
       "domain": "MachineLearning",
       "name": "tvDist_le_tanh_hilbertDist",
       "quality": 0.85
+    },
+    {
+      "cycle_id": "3b08d230",
+      "domain": "Tropical",
+      "name": "dvd_sigmaB",
+      "quality": 0.86
+    },
+    {
+      "cycle_id": "3b08d230",
+      "domain": "Tropical",
+      "name": "dvd_nat_mul_coeff",
+      "quality": 0.86
+    },
+    {
+      "cycle_id": "3b08d230",
+      "domain": "Tropical",
+      "name": "dvd_coeff_of_isCoprime",
+      "quality": 0.86
     }
   ],
-  "last_updated": "2026-08-20T15:50:23",
+  "last_updated": "2026-08-20T16:51:24",
   "open_questions": [
     {
       "context": "sorry; sorry; sorry",
@@ -3951,12 +3951,6 @@
     ],
     "Tropical": [
       {
-        "cycle_id": "f3293094",
-        "quality": 0.82,
-        "theorems": 65,
-        "title": "Round-4 Hypothesis Closures: Five Novel Attacks via Exotic Resources, Tested and"
-      },
-      {
         "cycle_id": "c7164926",
         "quality": 0.78,
         "theorems": 72,
@@ -4009,6 +4003,12 @@
         "quality": 0.82,
         "theorems": 93,
         "title": "The finite-state class and its bound were constructed this cycle"
+      },
+      {
+        "cycle_id": "3b08d230",
+        "quality": 0.86,
+        "theorems": 154,
+        "title": "is a finitely supported `a : ℕ → ℤ` with"
       }
     ]
   }
