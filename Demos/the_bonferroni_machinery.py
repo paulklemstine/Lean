@@ -1,35 +1,25 @@
 """
-Multiplicity calculus for finite families: numerical demonstration.
-==================================================================
+The Bonferroni Machinery and the Marginal Selection Principle
+=============================================================
 
-This self-contained script verifies, on explicit finite families, every result
-of the theory of coverage multiplicity:
+Numerical demonstration of the results:
 
-  * the two moment identities
-        sum_{x in U} d(x)   = sum_i |A_i|                        (first)
-        sum_{x in U} d(x)^2 = sum_{i,j} |A_i cap A_j|            (second)
-  * the off-diagonal identity
-        sum_{i != j} |A_i cap A_j| = sum_{x in U} d(x)(d(x)-1)
-  * the Bonferroni defect identity
-        S1 + sum_x (d-1)^2 = |U| + S2
-  * the sharp Bonferroni defect identity
-        2 S1 + sum_x (d-1)(d-2) = 2|U| + S2
-  * the double-collision bound   2|D| <= S2
-  * the Cauchy-Schwarz bound     S1^2 <= |U| * S2tot
-  * the three rigidity theorems (tight iff disjoint / iff d<=2 / iff regular)
-  * the stability theorem        (d(x)-d(y))^2 <= g
-  * Corradi's inequality         k m^2 <= |U| (m + (k-1) t)   and its tightness
-  * second-order indeterminacy   (triangle vs sunflower)
-  * the marginal-order threshold (plain vs parity families, all k)
+  * the Fubini identity for the multiplicity function and the first three moments;
+  * the second Bonferroni inequality, its equality case (pairwise disjoint families),
+    the double-collision bound and Corradi's Cauchy-Schwarz strengthening;
+  * the Sidon marginal: distinct translates of a Sidon set meet in at most one point;
+  * the master inequality  |S| |A|^2 <= |G| (|A| + |S| - 1)  over all shift sets S,
+    and the strict ordering of its two extreme instances S = A and S = G;
+  * Reiman's bound for graphs with no two vertices having two common neighbours,
+    tested on incidence graphs of projective planes;
+  * the third-order (triple-correlation) identity and collision bound.
 
-Run with:  python3 demo.py
-No third-party dependencies.
+Self-contained: standard library only.  Run with `python3 demo.py`.
 """
 
 from __future__ import annotations
 
 import itertools
-import math
 import random
 from typing import Dict, Iterable, List, Sequence, Set, Tuple
 
@@ -37,20 +27,20 @@ Family = Sequence[Set[int]]
 
 
 # ---------------------------------------------------------------------------
-# Core multiplicity calculus
+# 1.  The machinery: multiplicity, moments, and the universal inequalities
 # ---------------------------------------------------------------------------
 
+
 def multiplicity(family: Family) -> Dict[int, int]:
-    """Return {x: d(x)} for every covered point x, where d(x) counts the
-    members of the family containing x."""
-    d: Dict[int, int] = {}
+    """m(x) = number of members of the family containing x, for x in the support."""
+    mult: Dict[int, int] = {}
     for member in family:
         for x in member:
-            d[x] = d.get(x, 0) + 1
-    return d
+            mult[x] = mult.get(x, 0) + 1
+    return mult
 
 
-def cover(family: Family) -> Set[int]:
+def support(family: Family) -> Set[int]:
     """The union of the family."""
     out: Set[int] = set()
     for member in family:
@@ -58,412 +48,371 @@ def cover(family: Family) -> Set[int]:
     return out
 
 
-def double_collision(family: Family) -> Set[int]:
-    """Points covered at least twice."""
-    return {x for x, dx in multiplicity(family).items() if dx >= 2}
-
-
-def sigma1(family: Family) -> int:
-    """Sum of the first marginals, sum_i |A_i|."""
+def total_size(family: Family) -> int:
+    """First moment: sum of |A_i|."""
     return sum(len(member) for member in family)
 
 
-def sigma2_offdiag(family: Family) -> int:
-    """Off-diagonal pairwise-overlap mass, sum_{i != j} |A_i cap A_j|."""
+def pair_sum(family: Family) -> int:
+    """Off-diagonal pair-correlation sum P(A) = sum_{i != j} |A_i cap A_j|."""
     k = len(family)
-    return sum(len(family[i] & family[j])
-               for i in range(k) for j in range(k) if i != j)
+    return sum(
+        len(family[i] & family[j]) for i in range(k) for j in range(k) if i != j
+    )
 
 
-def sigma2_total(family: Family) -> int:
-    """Total ordered pairwise-overlap mass, sum_{i,j} |A_i cap A_j|."""
+def full_pair_sum(family: Family) -> int:
+    """Second moment: sum over ALL ordered pairs (i, j), diagonal included."""
     k = len(family)
     return sum(len(family[i] & family[j]) for i in range(k) for j in range(k))
 
 
-def bonferroni_defect(family: Family) -> int:
-    """Irregularity functional sum_{x in U} (d(x) - 1)^2."""
-    return sum((dx - 1) ** 2 for dx in multiplicity(family).values())
-
-
-def sharp_defect(family: Family) -> int:
-    """Sharp Bonferroni defect sum_{x in U} (d(x) - 1)(d(x) - 2)."""
-    return sum((dx - 1) * (dx - 2) for dx in multiplicity(family).values())
-
-
-def cs_gap(family: Family) -> int:
-    """Cauchy-Schwarz gap g = |U| * S2tot - S1^2 (a nonnegative integer)."""
-    return len(cover(family)) * sigma2_total(family) - sigma1(family) ** 2
-
-
-def is_regular(family: Family) -> bool:
-    """True iff the multiplicity is constant on the cover."""
-    values = set(multiplicity(family).values())
-    return len(values) <= 1
-
-
-def is_pairwise_disjoint(family: Family) -> bool:
+def full_triple_sum(family: Family) -> int:
+    """Third moment: sum over all ordered triples of |A_i cap A_j cap A_k|."""
     k = len(family)
-    return all(not (family[i] & family[j])
-               for i in range(k) for j in range(k) if i != j)
+    return sum(
+        len(family[i] & family[j] & family[l])
+        for i in range(k)
+        for j in range(k)
+        for l in range(k)
+    )
 
 
-def max_multiplicity(family: Family) -> int:
-    d = multiplicity(family)
-    return max(d.values()) if d else 0
+def double_collisions(family: Family) -> int:
+    """Number of points of multiplicity at least 2."""
+    return sum(1 for v in multiplicity(family).values() if v >= 2)
 
 
-def joint_marginal(family: Family, T: Iterable[int]) -> int:
-    """|intersection over i in T of A_i|; the empty T is not used here."""
-    idx = list(T)
-    if not idx:
-        raise ValueError("joint_marginal requires a nonempty subfamily")
-    out = set(family[idx[0]])
-    for i in idx[1:]:
-        out &= family[i]
-    return len(out)
+def triple_collisions(family: Family) -> int:
+    """Number of points of multiplicity at least 3."""
+    return sum(1 for v in multiplicity(family).values() if v >= 3)
 
 
-def inclusion_exclusion_union(family: Family) -> int:
-    """|U| recomputed from all joint marginals via inclusion-exclusion."""
-    k = len(family)
-    total = 0
-    for r in range(1, k + 1):
-        for T in itertools.combinations(range(k), r):
-            total += (-1) ** (r + 1) * joint_marginal(family, T)
-    return total
+def check_machinery(family: Family) -> Dict[str, bool]:
+    """Verify every universal statement of the machinery on a single family."""
+    mult = multiplicity(family)
+    supp = support(family)
+    total = total_size(family)
+    pairs = pair_sum(family)
+
+    first_moment = sum(mult.values())
+    second_moment = sum(m * m for m in mult.values())
+    third_moment = sum(m ** 3 for m in mult.values())
+
+    pairwise_disjoint = all(
+        not (family[i] & family[j])
+        for i in range(len(family))
+        for j in range(len(family))
+        if i != j
+    )
+
+    return {
+        "first moment  sum|A_i| = sum m(x)": total == first_moment,
+        "second moment sum_{i,j}|AiAj| = sum m(x)^2": full_pair_sum(family)
+        == second_moment,
+        "collision census P = sum m(m-1)": pairs
+        == sum(m * (m - 1) for m in mult.values()),
+        "Bonferroni  sum|A_i| <= |U| + P": total <= len(supp) + pairs,
+        "equality iff pairwise disjoint": (total == len(supp) + pairs)
+        == pairwise_disjoint,
+        "double collisions  2|D| <= P": 2 * double_collisions(family) <= pairs,
+        "Corradi  (sum|A_i|)^2 <= |U|(sum|A_i| + P)": total ** 2
+        <= len(supp) * (total + pairs),
+        "third moment sum_{i,j,k} = sum m(x)^3": full_triple_sum(family)
+        == third_moment,
+        "third-order identity": (
+            sum(m * (m - 1) * (m - 2) for m in mult.values())
+            + 3 * full_pair_sum(family)
+            == full_triple_sum(family) + 2 * total
+        ),
+        "triple collisions 6|T| <= sum m(m-1)(m-2)": 6 * triple_collisions(family)
+        <= sum(m * (m - 1) * (m - 2) for m in mult.values()),
+    }
 
 
-# ---------------------------------------------------------------------------
-# Reporting helpers
-# ---------------------------------------------------------------------------
-
-def check(label: str, condition: bool, detail: str = "") -> None:
-    mark = "OK " if condition else "FAIL"
-    line = f"  [{mark}] {label}"
-    if detail:
-        line += f"   {detail}"
-    print(line)
-    if not condition:
-        raise AssertionError(label)
+def random_family(
+    num_sets: int, ground: int, max_size: int, rng: random.Random
+) -> List[Set[int]]:
+    """A random family of subsets of {0, ..., ground-1}."""
+    return [
+        set(rng.sample(range(ground), rng.randint(0, max_size)))
+        for _ in range(num_sets)
+    ]
 
 
-def report(name: str, family: Family) -> None:
-    """Print the full second-order dossier of a family and verify every
-    identity and inequality of the theory on it."""
-    U = cover(family)
-    d = multiplicity(family)
-    S1 = sigma1(family)
-    S2 = sigma2_offdiag(family)
-    S2t = sigma2_total(family)
-    D = double_collision(family)
-    g = cs_gap(family)
-    profile = sorted((d[x] for x in U), reverse=True)
-
-    print(f"\n=== {name} ===")
-    print(f"  members            : {[sorted(m) for m in family]}")
-    print(f"  |A_i|              : {[len(m) for m in family]}")
-    print(f"  cover U            : {sorted(U)}   |U| = {len(U)}")
-    print(f"  multiplicity profile: {profile}")
-    print(f"  S1 = sum |A_i|     : {S1}")
-    print(f"  S2 = offdiag mass  : {S2}")
-    print(f"  S2tot (with diag)  : {S2t}")
-    print(f"  |D| (double coll.) : {len(D)}  -> D = {sorted(D)}")
-    print(f"  Bonferroni defect  : {bonferroni_defect(family)}")
-    print(f"  sharp defect       : {sharp_defect(family)}")
-    print(f"  Cauchy-Schwarz gap : {g}")
-
-    # ---- moment identities
-    check("first moment identity  sum_U d = S1",
-          sum(d[x] for x in U) == S1,
-          f"{sum(d[x] for x in U)} = {S1}")
-    check("second moment identity sum_U d^2 = S2tot",
-          sum(d[x] ** 2 for x in U) == S2t,
-          f"{sum(d[x] ** 2 for x in U)} = {S2t}")
-    check("off-diagonal identity  S2 = sum_U d(d-1)",
-          sum(d[x] * (d[x] - 1) for x in U) == S2,
-          f"{sum(d[x] * (d[x] - 1) for x in U)} = {S2}")
-
-    # ---- defect identities
-    check("Bonferroni defect identity  S1 + Irr = |U| + S2",
-          S1 + bonferroni_defect(family) == len(U) + S2,
-          f"{S1} + {bonferroni_defect(family)} = {len(U)} + {S2}")
-    check("sharp defect identity  2 S1 + sharpIrr = 2|U| + S2",
-          2 * S1 + sharp_defect(family) == 2 * len(U) + S2,
-          f"{2 * S1} + {sharp_defect(family)} = {2 * len(U)} + {S2}")
-
-    # ---- inequalities
-    check("second Bonferroni  S1 <= |U| + S2", S1 <= len(U) + S2,
-          f"{S1} <= {len(U) + S2}")
-    check("sharp Bonferroni   2 S1 <= 2|U| + S2", 2 * S1 <= 2 * len(U) + S2,
-          f"{2 * S1} <= {2 * len(U) + S2}")
-    check("double collision   2|D| <= S2", 2 * len(D) <= S2,
-          f"{2 * len(D)} <= {S2}")
-    check("Cauchy-Schwarz     S1^2 <= |U| S2tot", S1 ** 2 <= len(U) * S2t,
-          f"{S1 ** 2} <= {len(U) * S2t}")
-    check("gap nonnegative", g >= 0, f"g = {g}")
-
-    # ---- rigidity
-    check("rigidity I:  Bonferroni tight  <=>  pairwise disjoint",
-          (S1 == len(U) + S2) == is_pairwise_disjoint(family))
-    check("rigidity II: sharp tight  <=>  double-collision tight  <=>  d <= 2",
-          (2 * S1 == 2 * len(U) + S2)
-          == (2 * len(D) == S2)
-          == (max_multiplicity(family) <= 2))
-    check("rigidity III: Cauchy-Schwarz tight  <=>  regular cover",
-          (S1 ** 2 == len(U) * S2t) == is_regular(family))
-
-    # ---- stability
-    if U:
-        worst = max((d[x] - d[y]) ** 2 for x in U for y in U)
-        check("stability: max (d(x)-d(y))^2 <= g", worst <= g,
-              f"{worst} <= {g}")
-        check("integrality: g < 1  =>  regular", (g >= 1) or is_regular(family))
-        if S1 == len(U):
-            check("defect-gap link: |U| * Irr = g  (average multiplicity 1)",
-                  len(U) * bonferroni_defect(family) == g)
-
-    # ---- inclusion-exclusion consistency
-    check("inclusion-exclusion reproduces |U|",
-          inclusion_exclusion_union(family) == len(U),
-          f"{inclusion_exclusion_union(family)} = {len(U)}")
-
-
-# ---------------------------------------------------------------------------
-# Corradi's inequality
-# ---------------------------------------------------------------------------
-
-def corradi_data(family: Family) -> Tuple[int, int, int, int]:
-    """Return (k, m, t, |U|) with m the min first marginal and t the max
-    off-diagonal second marginal."""
-    k = len(family)
-    m = min(len(member) for member in family) if k else 0
-    t = max((len(family[i] & family[j])
-             for i in range(k) for j in range(k) if i != j), default=0)
-    return k, m, t, len(cover(family))
-
-
-def corradi_check(name: str, family: Family) -> None:
-    k, m, t, N = corradi_data(family)
-    lhs = k * m * m
-    rhs = N * (m + (k - 1) * t)
-    status = "TIGHT" if lhs == rhs else "strict"
-    bound = lhs / (m + (k - 1) * t) if (m + (k - 1) * t) else float("inf")
-    print(f"  {name:<26} k={k} m={m} t={t} |U|={N}: "
-          f"{lhs} <= {rhs}  [{status}]   |U| >= {bound:.4f}")
-    assert lhs <= rhs, name
-
-
-# ---------------------------------------------------------------------------
-# The two three-set witnesses
-# ---------------------------------------------------------------------------
-
-TRIANGLE: List[Set[int]] = [{0, 1}, {1, 2}, {2, 0}]
-SUNFLOWER: List[Set[int]] = [{0, 1}, {0, 2}, {0, 3}]
-
-
-def demo_indeterminacy() -> None:
-    print("\n" + "=" * 74)
-    print("SECOND-ORDER MARGINALS DO NOT DETERMINE THE UNION")
-    print("=" * 74)
-
-    first_tri = [len(m) for m in TRIANGLE]
-    first_sun = [len(m) for m in SUNFLOWER]
-    second_tri = {(i, j): len(TRIANGLE[i] & TRIANGLE[j])
-                  for i in range(3) for j in range(3)}
-    second_sun = {(i, j): len(SUNFLOWER[i] & SUNFLOWER[j])
-                  for i in range(3) for j in range(3)}
-
-    print(f"  first marginals   triangle {first_tri}   sunflower {first_sun}")
-    print(f"  second marginals identical: {second_tri == second_sun}")
-    print(f"  |U| triangle  = {len(cover(TRIANGLE))}")
-    print(f"  |U| sunflower = {len(cover(SUNFLOWER))}")
-    check("identical first marginals", first_tri == first_sun)
-    check("identical second marginals", second_tri == second_sun)
-    check("different unions",
-          len(cover(TRIANGLE)) != len(cover(SUNFLOWER)))
-    print("  => no function of first- and second-order marginals can return |U|.")
-
-    tri3 = joint_marginal(TRIANGLE, (0, 1, 2))
-    sun3 = joint_marginal(SUNFLOWER, (0, 1, 2))
-    print(f"  third-order marginals DO differ: {tri3} vs {sun3}")
-    check("third-order marginals differ", tri3 != sun3)
-
-
-# ---------------------------------------------------------------------------
-# The parity construction: order < k is never enough
-# ---------------------------------------------------------------------------
-
-def parity_construction(k: int) -> Tuple[List[Set[int]], List[Set[int]]]:
-    """Build the plain and parity families of k sets on the ground set
-    P({0,...,k-1}) x {0,1}, encoded as integers.
-
-    Ground point (S, b) is encoded as the integer 2 * bitmask(S) + b.
-    plain_i  = {(S, 0) : i in S}
-    parity_i = {(S, b) : i in S, |S| = k (mod 2)}
-    """
-    plain: List[Set[int]] = [set() for _ in range(k)]
-    parity: List[Set[int]] = [set() for _ in range(k)]
-    for mask in range(1 << k):
-        size = bin(mask).count("1")
-        right_parity = (size + k) % 2 == 0
-        for i in range(k):
-            if mask >> i & 1:
-                plain[i].add(2 * mask)
-                if right_parity:
-                    parity[i].add(2 * mask)
-                    parity[i].add(2 * mask + 1)
-    return plain, parity
-
-
-def demo_marginal_threshold(kmax: int = 6) -> None:
-    print("\n" + "=" * 74)
-    print("MARGINAL-ORDER THRESHOLD: ORDER < k NEVER DETERMINES THE UNION")
-    print("=" * 74)
-    print(f"  {'k':>2} {'|U| plain':>10} {'|U| parity':>11} "
-          f"{'orders <k agree':>16} {'top order':>18}")
-    for k in range(1, kmax + 1):
-        plain, parity = parity_construction(k)
-        agree = True
-        for r in range(1, k):
-            for T in itertools.combinations(range(k), r):
-                if joint_marginal(plain, T) != joint_marginal(parity, T):
-                    agree = False
-        top_p = joint_marginal(plain, range(k))
-        top_q = joint_marginal(parity, range(k))
-        up, uq = len(cover(plain)), len(cover(parity))
-        print(f"  {k:>2} {up:>10} {uq:>11} {str(agree):>16} "
-              f"{f'{top_p} vs {top_q}':>18}")
-        check(f"k={k}: all marginals of order < k agree", agree)
-        check(f"k={k}: top-order marginals differ", top_p != top_q)
-        check(f"k={k}: unions differ", up != uq)
-        check(f"k={k}: plain cover is 2^k - 1", up == (1 << k) - 1)
-        check(f"k={k}: parity cover is even", uq % 2 == 0)
-
-
-# ---------------------------------------------------------------------------
-# Corradi tightness at both ends of the correlation scale
-# ---------------------------------------------------------------------------
-
-def demo_corradi() -> None:
-    print("\n" + "=" * 74)
-    print("CORRADI'S INEQUALITY  k m^2 <= |U| (m + (k-1) t)")
-    print("=" * 74)
-
-    # t = 0 : pairwise disjoint m-sets  -> TIGHT
-    k, m = 4, 3
-    disjoint = [set(range(i * m, (i + 1) * m)) for i in range(k)]
-    corradi_check("disjoint (t = 0)", disjoint)
-
-    # t = m : all members equal        -> TIGHT
-    identical = [set(range(m)) for _ in range(k)]
-    corradi_check("identical (t = m)", identical)
-
-    # interior tight example: the triangle (a regular cover)
-    corradi_check("triangle (regular)", TRIANGLE)
-
-    # interior strict example: the sunflower, SAME (k, m, t)
-    corradi_check("sunflower (irregular)", SUNFLOWER)
-
-    print("  Triangle and sunflower share (k,m,t) = (3,2,1); the regular one is")
-    print("  tight and the irregular one is strict -- exactly as rigidity predicts.")
-
-    print("\n  Fisher-type bound  k (m^2 - N t) <= N (m - t)  in the design regime:")
-    for fam, label in ((disjoint, "disjoint"), (TRIANGLE, "triangle")):
-        k, m, t, N = corradi_data(fam)
-        if t <= m and N * t < m * m:
-            lhs = k * (m * m - N * t)
-            rhs = N * (m - t)
-            print(f"    {label:<10} k={k} m={m} t={t} N={N}: {lhs} <= {rhs}")
-            assert lhs <= rhs
-        else:
-            print(f"    {label:<10} k={k} m={m} t={t} N={N}: "
-                  f"outside the design regime (N t = {N * t} >= m^2 = {m * m})")
-
-
-# ---------------------------------------------------------------------------
-# Randomised stress test
-# ---------------------------------------------------------------------------
-
-def random_family(rng: random.Random, k: int, n: int) -> List[Set[int]]:
-    return [set(x for x in range(n) if rng.random() < 0.4) for _ in range(k)]
-
-
-def demo_random_stress(trials: int = 3000, seed: int = 20260818) -> None:
-    print("\n" + "=" * 74)
-    print(f"RANDOMISED STRESS TEST ({trials} random families)")
-    print("=" * 74)
+def demo_machinery(trials: int = 400, seed: int = 20260820) -> None:
+    print("=" * 78)
+    print("1.  THE UNIVERSAL MACHINERY  (random families, no structure whatsoever)")
+    print("=" * 78)
     rng = random.Random(seed)
-    tight_bonf = tight_sharp = tight_cs = 0
-    worst_spread_ratio = 0.0
+    tally: Dict[str, int] = {}
     for _ in range(trials):
-        k = rng.randint(1, 5)
-        n = rng.randint(1, 8)
-        fam = random_family(rng, k, n)
-        U = cover(fam)
-        d = multiplicity(fam)
-        S1, S2, S2t = sigma1(fam), sigma2_offdiag(fam), sigma2_total(fam)
-        g = cs_gap(fam)
+        fam = random_family(rng.randint(1, 6), 12, 7, rng)
+        for name, ok in check_machinery(fam).items():
+            tally[name] = tally.get(name, 0) + int(ok)
+    width = max(len(n) for n in tally)
+    for name, count in tally.items():
+        status = "OK" if count == trials else "FAILED"
+        print(f"  {name:<{width}}  {count:4d}/{trials}  {status}")
 
-        assert S1 + bonferroni_defect(fam) == len(U) + S2
-        assert 2 * S1 + sharp_defect(fam) == 2 * len(U) + S2
-        assert 2 * len(double_collision(fam)) <= S2
-        assert S1 ** 2 <= len(U) * S2t
-        assert g >= 0
-        assert inclusion_exclusion_union(fam) == len(U)
-        assert (S1 == len(U) + S2) == is_pairwise_disjoint(fam)
-        assert ((2 * S1 == 2 * len(U) + S2)
-                == (max_multiplicity(fam) <= 2))
-        assert (S1 ** 2 == len(U) * S2t) == is_regular(fam)
-        for x in U:
-            for y in U:
-                assert (d[x] - d[y]) ** 2 <= g
-        if g < 1:
-            assert is_regular(fam)
-
-        if U:
-            spread = max(d.values()) - min(d.values())
-            if g > 0:
-                worst_spread_ratio = max(worst_spread_ratio,
-                                         spread / math.sqrt(g))
-        tight_bonf += S1 == len(U) + S2
-        tight_sharp += 2 * S1 == 2 * len(U) + S2
-        tight_cs += S1 ** 2 == len(U) * S2t
-
-    print("  all identities, inequalities, rigidity and stability claims hold.")
-    print(f"  Bonferroni-tight (disjoint)      : {tight_bonf}/{trials}")
-    print(f"  sharp-tight (multiplicity <= 2)  : {tight_sharp}/{trials}")
-    print(f"  Cauchy-Schwarz-tight (regular)   : {tight_cs}/{trials}")
-    print(f"  worst observed spread / sqrt(g)  : {worst_spread_ratio:.4f}  (<= 1)")
-    assert worst_spread_ratio <= 1.0 + 1e-12
+    print("\n  Sharpness data:")
+    sharp: List[Set[int]] = [{0}, {0}]
+    print(
+        f"    A0 = A1 = {{0}}:  P = {pair_sum(sharp)},  |D| = {double_collisions(sharp)}"
+        f"   ->  2|D| = P  (double-collision bound attained)"
+    )
+    print(
+        f"    same family:     sum|A_i| = {total_size(sharp)} < "
+        f"{len(support(sharp)) + pair_sum(sharp)} = |U| + P   (Bonferroni strict)"
+    )
+    print()
 
 
 # ---------------------------------------------------------------------------
-# Main
+# 2.  Uniform marginals
 # ---------------------------------------------------------------------------
+
+
+def uniform_marginal_outputs(k: int, m: int, t: int, union_size: int) -> Tuple[bool, bool]:
+    """Return whether the linear and the quadratic uniform-marginal bounds hold."""
+    linear = k * m <= union_size + k * (k - 1) * t
+    quadratic = k * m * m <= union_size * (m + (k - 1) * t)
+    return linear, quadratic
+
+
+# ---------------------------------------------------------------------------
+# 3.  Sidon sets in Z_N and the marginal selection principle
+# ---------------------------------------------------------------------------
+
+
+def is_sidon(a: Sequence[int], n: int) -> bool:
+    """True iff all nonzero differences of `a` modulo n are distinct."""
+    seen: Set[int] = set()
+    for x, y in itertools.permutations(a, 2):
+        d = (x - y) % n
+        if d in seen:
+            return False
+        seen.add(d)
+    return True
+
+
+def greedy_sidon(n: int) -> List[int]:
+    """Greedy Sidon set in Z_n: add the next residue whenever it stays Sidon."""
+    chosen: List[int] = []
+    used: Set[int] = set()
+    for x in range(n):
+        diffs: Set[int] = set()
+        ok = True
+        for y in chosen:
+            for d in ((x - y) % n, (y - x) % n):
+                if d in used or d in diffs:
+                    ok = False
+                    break
+                diffs.add(d)
+            if not ok:
+                break
+        if ok:
+            chosen.append(x)
+            used |= diffs
+    return chosen
+
+
+def nsub(a: int, b: int) -> int:
+    """Truncated (natural-number) subtraction: max(a - b, 0)."""
+    return a - b if a >= b else 0
+
+
+def translate(a: Iterable[int], g: int, n: int) -> Set[int]:
+    return {(x + g) % n for x in a}
+
+
+def demo_sidon(seed: int = 7) -> None:
+    print("=" * 78)
+    print("2.  THE SIDON MARGINAL AND THE MASTER INEQUALITY")
+    print("=" * 78)
+    rng = random.Random(seed)
+
+    for n in (31, 57, 100, 133):
+        a = greedy_sidon(n)
+        assert is_sidon(a, n), "greedy construction failed"
+        m = len(a)
+
+        # The Sidon marginal: distinct translates meet in at most one point.
+        worst = max(
+            len(translate(a, g, n) & translate(a, h, n))
+            for g in range(n)
+            for h in range(n)
+            if g != h
+        )
+
+        # Master inequality across all shift set sizes (random shift sets per size).
+        master_ok = True
+        for size in range(1, n + 1):
+            s = rng.sample(range(n), size)
+            fam = [translate(a, g, n) for g in s]
+            if total_size(fam) ** 2 > len(support(fam)) * (
+                total_size(fam) + pair_sum(fam)
+            ):
+                master_ok = False
+            if size * m * m > n * (m + size - 1):
+                master_ok = False
+
+        et = m * (m - 1) <= n - 1                    # S = G
+        self_t = m ** 3 <= (2 * m - 1) * n           # S = A
+        print(f"  Z_{n}:  greedy Sidon set of size {m}")
+        print(f"    max |(A+g) cap (A+h)| over g != h            = {worst}  (must be <= 1)")
+        print(f"    master inequality |S||A|^2 <= |G|(|A|+|S|-1)  : "
+              f"{'holds for every tested S' if master_ok else 'VIOLATED'}")
+        print(f"    all-translate output   m(m-1) = {m*(m-1):5d} <= {n-1:5d} = N-1     : {et}")
+        print(f"    self-translate output  m^3    = {m**3:5d} <= "
+              f"{(2*m-1)*n:5d} = (2m-1)N : {self_t}")
+        # Largest m each output would allow:
+        m_all = max(mm for mm in range(1, n + 2) if mm * (mm - 1) <= n - 1)
+        m_self = max(mm for mm in range(1, 4 * n) if mm ** 3 <= (2 * mm - 1) * n)
+        print(f"    largest size NOT excluded:  all-translate {m_all},  "
+              f"self-translate {m_self}   (ratio {m_self/m_all:.3f} ~ sqrt2 = 1.414)")
+    print()
+
+
+def demo_marginal_selection(n_max: int = 400) -> None:
+    print("=" * 78)
+    print("3.  THE TWO MARGINAL CHOICES ARE STRICTLY ORDERED")
+    print("=" * 78)
+
+    # Domination: m(m-1) <= N-1  implies  m^3 <= (2m-1)N, for all m, N >= 1.
+    dom_ok = all(
+        (not (m * nsub(m, 1) <= nsub(n, 1))) or (m ** 3 <= nsub(2 * m, 1) * n)
+        for n in range(1, n_max + 1)
+        for m in range(0, 60)
+    )
+    print(f"  Domination  m(m-1) <= N-1  =>  m^3 <= (2m-1)N   for all N <= {n_max},"
+          f" m < 60 : {dom_ok}")
+
+    # Strictness: an explicit witness.
+    n, m = 100, 13
+    print(f"  Witness N = {n}, m = {m}:")
+    print(f"    self-translate  m^3    = {m**3} <= {(2*m-1)*n} = (2m-1)N   -> not excluded")
+    print(f"    all-translate   m(m-1) = {m*(m-1)}  > {n-1}     = N-1      -> excluded")
+    print("    => the weaker marginal cannot rule out a size-13 Sidon set in a group")
+    print("       of order 100, while the all-translate marginal can.")
+
+    # How often does the gap occur?
+    gaps = [
+        (n, m)
+        for n in range(1, n_max + 1)
+        for m in range(1, 60)
+        if m ** 3 <= nsub(2 * m, 1) * n and not (m * nsub(m, 1) <= nsub(n, 1))
+    ]
+    print(f"  Number of (N, m) pairs with N <= {n_max}, m < 60 in the gap: {len(gaps)}")
+    print(f"  Smallest such pair: {min(gaps)}")
+    print()
+
+
+# ---------------------------------------------------------------------------
+# 4.  Cross-domain: C_4-free graphs and Reiman's bound
+# ---------------------------------------------------------------------------
+
+
+def projective_plane_incidence_graph(q: int) -> Tuple[int, List[Tuple[int, int]]]:
+    """Incidence graph (bipartite, C_4-free) of PG(2, q) for prime q.
+
+    Points and lines are the 1-dimensional subspaces of F_q^3, represented by
+    normalised triples.  A point p is adjacent to a line l when p . l = 0.
+    """
+    def normalise(v: Tuple[int, int, int]) -> Tuple[int, int, int]:
+        for i in range(3):
+            if v[i] % q:
+                inv = pow(v[i] % q, q - 2, q)
+                return tuple((c * inv) % q for c in v)  # type: ignore[return-value]
+        raise ValueError("zero vector")
+
+    reps: List[Tuple[int, int, int]] = sorted(
+        {
+            normalise((a, b, c))
+            for a in range(q)
+            for b in range(q)
+            for c in range(q)
+            if (a, b, c) != (0, 0, 0)
+        }
+    )
+    npts = len(reps)                      # q^2 + q + 1
+    edges: List[Tuple[int, int]] = []
+    for i, p in enumerate(reps):
+        for j, l in enumerate(reps):
+            if sum(x * y for x, y in zip(p, l)) % q == 0:
+                edges.append((i, npts + j))   # point i  --  line j
+    return 2 * npts, edges
+
+
+def graph_stats(num_vertices: int, edges: Sequence[Tuple[int, int]]) -> Tuple[int, int, int]:
+    """Return (|V|, |E|, max common neighbours over distinct vertex pairs)."""
+    nbr: List[Set[int]] = [set() for _ in range(num_vertices)]
+    for u, v in edges:
+        nbr[u].add(v)
+        nbr[v].add(u)
+    worst = 0
+    for u in range(num_vertices):
+        for v in range(u + 1, num_vertices):
+            worst = max(worst, len(nbr[u] & nbr[v]))
+    return num_vertices, len(edges), worst
+
+
+def demo_c4_free() -> None:
+    print("=" * 78)
+    print("4.  THE SAME MACHINERY IN GRAPH THEORY: REIMAN'S BOUND")
+    print("=" * 78)
+    for q in (2, 3, 5, 7):
+        nv, edges = projective_plane_incidence_graph(q)
+        v, e, worst = graph_stats(nv, edges)
+        lhs = (2 * e) ** 2
+        rhs = v * (2 * e + v * (v - 1))
+        limit = 0.25 * (v + v * (4 * v - 3) ** 0.5)
+        print(f"  PG(2,{q}) incidence graph:  |V| = {v:4d}, |E| = {e:5d}, "
+              f"max common neighbours = {worst}")
+        print(f"    (2|E|)^2 = {lhs:9d}  <=  {rhs:9d} = |V|(2|E| + |V|(|V|-1))  "
+              f": {lhs <= rhs}")
+        print(f"    Reiman ceiling on |E|: {limit:9.1f}   attained fraction "
+              f"{e/limit:.3f}")
+    print()
+
+
+# ---------------------------------------------------------------------------
+# 5.  Uniform marginals in action
+# ---------------------------------------------------------------------------
+
+
+def demo_uniform_marginals(seed: int = 11) -> None:
+    print("=" * 78)
+    print("5.  UNIFORM MARGINALS:  k m^2 <= |U| (m + (k-1) t)")
+    print("=" * 78)
+    rng = random.Random(seed)
+    print(f"  {'k':>3} {'m':>3} {'t':>3} {'|U|':>5} {'k m^2':>8} "
+          f"{'|U|(m+(k-1)t)':>15}  ok")
+    for _ in range(8):
+        ground = rng.randint(10, 25)
+        m = rng.randint(2, 6)
+        k = rng.randint(2, 6)
+        fam = [set(rng.sample(range(ground), m)) for _ in range(k)]
+        t = max(
+            len(fam[i] & fam[j]) for i in range(k) for j in range(k) if i != j
+        )
+        u = len(support(fam))
+        lin, quad = uniform_marginal_outputs(k, m, t, u)
+        print(f"  {k:3d} {m:3d} {t:3d} {u:5d} {k*m*m:8d} {u*(m+(k-1)*t):15d}  "
+              f"{'yes' if (lin and quad) else 'NO'}")
+    print()
+
+
+# ---------------------------------------------------------------------------
+
 
 def main() -> None:
-    print("=" * 74)
-    print("MULTIPLICITY CALCULUS FOR FINITE FAMILIES -- NUMERICAL DEMONSTRATION")
-    print("=" * 74)
-
-    report("Triangle  A0={0,1}, A1={1,2}, A2={2,0}", TRIANGLE)
-    report("Sunflower B0={0,1}, B1={0,2}, B2={0,3}", SUNFLOWER)
-    report("Partition {0,1,2}, {3,4}, {5}",
-           [{0, 1, 2}, {3, 4}, {5}])
-    report("Mixed-multiplicity quad  (profile 3,1,3,1,3,1)",
-           [{0, 1, 2}, {2, 3, 4}, {4, 5, 0}, {0, 2, 4}])
-    report("Three identical sets {0,1,2}",
-           [{0, 1, 2}, {0, 1, 2}, {0, 1, 2}])
-
-    demo_indeterminacy()
-    demo_corradi()
-    demo_marginal_threshold(kmax=6)
-    demo_random_stress()
-
-    print("\n" + "=" * 74)
-    print("ALL CHECKS PASSED")
-    print("=" * 74)
+    demo_machinery()
+    demo_uniform_marginals()
+    demo_sidon()
+    demo_marginal_selection()
+    demo_c4_free()
+    print("All demonstrations completed.")
 
 
 if __name__ == "__main__":

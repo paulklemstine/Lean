@@ -215,7 +215,7 @@
       "depth_estimate": 3,
       "description": "Proves that Khovanov homology categorifies the Jones polynomial for arbitrary oriented link diagrams.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Geometry"
       ],
@@ -21665,7 +21665,7 @@
       "depth_estimate": 3,
       "description": "# Future directions\n\n1. **Sharp two-sided summand asymptotics.** For every `k : ℕ`, prove\n   `1 / (2 * (k + 2 : ℝ)^2) ≤ gammaTerm k` in addition to the formalized upper\n   bound `gammaTerm k ≤ 1 / (2 * (k + 1 : ℝ)^2)`. This would give a purely\n   rational squeeze of every term.\n\n2. **Quantitative remainder bound.** For every positive `n : ℕ`, prove\n   `0 < Real.eulerMascheroniConstant - Real.eulerMascheroniSeq n` and\n   `Real.eulerMascheroniConstant - Real.eulerMascheroniSeq n ≤ 1 / (2*n : ℝ)`.\n   The present inverse-square term estimate should supply the upper bound after\n   formalizing the corresponding tail estimate.\n\n3. **Midpoint-corrected acceleration.** Define\n   `accelerated n = Real.eulerMascheroniSeq n + 1 / (2*(n+1 : ℝ))` and prove an\n   explicit `O(n⁻²)` error bound, for example\n   `|Real.eulerMascheroniConstant - accelerated n| ≤ 1 / (12*(n+1 : ℝ)^2)`\n   for all sufficiently large `n` (with the exact threshold stated and checked).\n\n4. **Symmetrized information tail.** For positive rates `a,b`, the formalized\n   identity gives\n   `D(a‖b)+D(b‖a)=(a-b)^2/(ab)`. Use it to characterize exactly when a chain of\n   positive exponential rates has summable symmetrized adjacent divergences,\n   and test the characterization on polynomial and geometric rate sequences.\n\n5. **Apéry-style linear forms criterion.** Construct explicit integer sequences\n   `A n, B n` from accelerated harmonic/logarithmic approximants and determine\n   whether the nonzero forms `A n + B n * Real.eulerMascheroniConstant` can be\n   proved to decay exponentially. Either an exponential bound or a concrete\n   obstruction (failure for some `n`) is a falsifiable outcome.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Geometry"
       ],
@@ -34374,7 +34374,7 @@
       "depth_estimate": 3,
       "description": "Formalizes the foundations of Teichmüller theory: the Teichmüller space of marked Riemann surfaces, the Teichmüller metric defined by extremal quasi-conformal maps, and the action of the mapping class group whose quotient is the moduli space.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Geometry"
       ],
@@ -39238,7 +39238,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions — Tropical EML learning theory (next cycle)\n\nDerived from what survived and what failed in this cycle. Formalized this cycle:\nthe tropical/ReLU dictionary in one variable (`isTropRat_iff_reluExpr`), quantitative\nMaslov dequantization of EML units (`tmax_le_lse`, `lse_le_tmax_add`,\n`largeWeight_tendsto_tmax`), the `O(D G/√n)` subgradient rate\n(`best_iterate_sqrt_rate`), sharpness of the tropical `L¹` loss\n(`tropL1_sharp_growth`), the geometric Polyak rate (`polyak_geometric`), and the\nfixed-step non-convergence boundary (`fixedStep_never_converges`).\n\nFailure analysis feeding the conjectures below:\n\n* *True but hard*: multivariate tropical rational calculus. The pairwise-sum product\n  rule `tmax_add_tmax` generalizes verbatim, but the median/sharpness argument does not:\n  in `ℝ^d` the `L¹` minimizer is a coordinatewise median only for separable losses.\n* *Needs a different definition*: \"gradient descent converges to a tropical rational\n  function\" is false as literally stated for a fixed step (see the 2-cycle\n  counterexample); the correct statements are best-iterate and Polyak-step convergence.\n* *Structural pattern*: every rate we proved is controlled by two tropical invariants —\n  the largest absolute slope (Lipschitz constant, `tpEval_lipschitz`) and the sharpness\n  constant (growth away from the minimizer). This slope/sharpness pair is the tropical\n  replacement for the smoothness/strong-convexity pair.\n\n## Conjecture 1 (Tropical condition number governs all first-order rates)\n\nFor any tropical rational loss `L` on `ℝ^d`, with `G` its maximal tropical slope and `μ`\nits sharpness constant at the minimizer, Polyak-step subgradient descent contracts the\nsquared distance by exactly `1 − μ²/G²` per step, and no first-order method beats\n`(1 − μ²/G²)^{n/2}` on the worst instance with these invariants.\n\n*The key insight is* that `μ/G` is a purely combinatorial quantity — the ratio between\nthe smallest and largest slopes of the tropical normal fan at the optimum — so the\noptimization rate is computed by the geometry of a Newton polytope rather than by any\nanalytic estimate. *Why now?* The one-variable case is fully proved here\n(`polyak_geometric` with `μ = 1`, `G = N`), and the multivariate normal-fan machinery\nneeded for the lower bound is elementary polyhedral combinatorics.\n\n## Conjecture 2 (Dequantization commutes with training)\n\nLet `θ_T(n)` be the `n`-th gradient-descent iterate of the smooth EML network at\ntemperature `T`, and `θ_0(n)` the `n`-th subgradient iterate of its tropical limit. Then\n`|θ_T(n) − θ_0(n)| ≤ C · n · T · log k`, and consequently the two training trajectories\nhave the same limit set as `T → 0⁺`.\n\n*The key insight is* that the dequantization defect is uniformly `T log k` **per unit**\n(`lseNeuron_sub_tpEval_le`), so it can only accumulate linearly along a trajectory of\n`1`-Lipschitz update maps. *Why now?* The per-unit bound with its explicit constant is\nalready proved; what remains is a discrete Grönwall argument over the iteration.\n\n## Conjecture 3 (Sharpness ⇒ finite termination with an exact line search)\n\nOn a tropical `L¹` loss with `N` samples, subgradient descent with exact line search\nalong the negative subgradient terminates at the exact minimizer in at most `N` steps —\nno asymptotics at all.\n\n*The key insight is* that a piecewise-linear convex function restricted to a line is\nagain piecewise linear with breakpoints only at data values, so an exact line search\nmust land on a breakpoint and each breakpoint can be visited at most once. *Why now?*\nThe kernel-checked example in `PolyakLinearRate.lean` already exhibits one-step\ntermination from `x₀ = 0`, and the breakpoint bookkeeping is finite combinatorics over\n`Finset.range N`.\n\n## Conjecture 4 (Depth is exponentially cheaper than width, tropically)\n\nThe tropical polynomial `max(0, x, 2x − 1, …, kx − c_k)` obtained as the `k`-fold\ntropical power of a two-term monomial needs `Θ(k)` ReLU units in a *shallow* network but\nonly `Θ(log k)` units in a deep one, and the gap is exactly the difference between the\nnumber of tropical monomials and the number of *distinct slopes* after tropical\nmultiplication.\n\n*The key insight is* that tropical multiplication (`tmax_add_tmax`) multiplies monomial\ncounts while composition of ReLU blocks squares them, so depth realizes tropical powers\nfor free. *Why now?* Our construction `tpExpr` gives the shallow upper bound with an\nexact unit count; the matching lower bound only requires counting distinct slopes, an\ninvariant already available from `tpEval_lipschitz`.\n\n## Conjecture 5 (Generalization is controlled by the tropical monomial count)\n\nFor tropical models with at most `k` monomials and slopes bounded by `G`, the empirical\n`L¹` risk converges to the population risk at rate `O(G √(k log k / n))`, and the\nconstant is *independent of the network depth* used to realize the model.\n\n*The key insight is* that by `isTropRat_iff_reluExpr` depth is a purely syntactic\nattribute of the realization: the hypothesis class is parameterized by tropical\nmonomials, so capacity must be measured in monomials, not in weights. *Why now?* The\ndictionary theorem making \"depth is free\" precise is proved here, and the covering\nnumber of `k`-monomial tropical polynomials is a direct consequence of\n`tpEval_lipschitz`.\n\n## Three concrete next-cycle sub-conjectures\n\n1. `tmax_add_tmax` extends to `ℝ^d` with pairwise sums of exponent vectors, and the\n   resulting class is closed under `max`, `+`, `−`, `min` and `relu` (multivariate\n   `IsTropRat` closure).\n2. For separable multivariate tropical `L¹` losses the sharpness constant is `1` in each\n   coordinate, hence Polyak steps contract by `1 − 1/(dN²)`.\n3. Exact line search on a one-variable tropical `L¹` loss reaches the median after at\n   most one step from any initialization outside the data range.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Geometry",
         "Tropical"
@@ -39727,7 +39727,7 @@
       "depth_estimate": 3,
       "description": "# Future directions\n\nFive falsifiable conjectures produced by this cycle of work on emergent geometry\nfrom entanglement. Each is stated so that it can be decided by a proof or by an\nexplicit counterexample in the same framework\n(`Catalog/Novelty/EmergentGeometryEntropyCone.lean` and its dependents).\n\n---\n\n## C1. The contraction calculus is complete for graph models\n\n**Conjecture.** A linear inequality `Σⱼ cⱼ S(Bⱼ) ≤ Σᵢ dᵢ S(Aᵢ)` with nonnegative\ninteger coefficients holds for the min-cut entropies of *every* finite bulk\ngeometry if and only if it is witnessed by a `ContractionMap` in the sense of\n`Catalog/Novelty/HolographicContractionCalculus.lean` (after replacing each\nregion by `dᵢ`, resp. `cⱼ`, parallel copies).\n\n*The key insight is* that the min-cut entropy of a graph is a minimum of linear\nfunctionals of Boolean patterns, so any valid inequality must survive the\n\"worst-case pattern\" test, and that test is exactly Hamming contraction.\n\n*Why now?* Both new inequalities proved here (monogamy, five-party cyclic) were\nobtained by finding a contraction map by computer search over `2^k` patterns,\nand the search space is small enough that completeness can be tested\nexhaustively for `k ≤ 5` before attempting a proof.\n\n---\n\n## C2. Reconstruction is possible exactly for bulk-minimal geometries\n\n**Conjecture.** Call a holographic model *bulk-minimal* if no hidden cell can be\ndeleted or merged into a boundary cell without changing some entropy. Then two\nbulk-minimal models with identical boundary entropy functions are isomorphic as\nweighted graphs; equivalently, `weight_eq_half_mutualInfo` extends from\n`NoBulk` models to bulk-minimal ones.\n\n*Progress this cycle.* The hidden-cell-free case is now completely settled:\n`entropy_eq_iff_mutualInfo_eq` and `spacetime_from_entanglement` in\n`Catalog/Novelty/EmergentGeometryReconstruction.lean` show that for `NoBulk`\nmodels the two-point mutual informations determine every region entropy *and*\nthe whole bridge relation, and `weight_diag_is_gauge` shows this is sharp (the\nself-loop weights are pure gauge). What remains open is exactly the extension to\nbulk-minimal models below.\n\n*The key insight is* that the star/triangle pair of\n`Catalog/Novelty/EmergentGeometryNonUniqueness.lean` is not a genuine\ncounterexample to reconstruction but a redundancy: the star's hidden cell is\n\"free\", and quotienting it produces the triangle.\n\n*Why now?* The failure of reconstruction is now formalised in a single explicit\n`Fin 4` example, so the conjecture has a concrete first test case: prove that the\nstar is *not* bulk-minimal and that all `Fin 5` counterexamples arise the same\nway.\n\n---\n\n## C3. Facet conjecture for the cyclic inequality\n\n*Status of the previous C3 (now settled).* The former C3 asked for a five-party\nentropy vector satisfying subadditivity, strong subadditivity, weak monotonicity\nand monogamy while violating the cyclic inequality. Such a vector now exists in\nmachine-checked form: `EmergentGeometry.Sw` in\n`Catalog/Novelty/CyclicIndependence.lean`, with\n`cyclic5_independent_of_SA_SSA_WM_MMI` verifying all four families over the full\n`32^3` space of disjoint mask triples and\n`no_bulk_geometry_realises_Sw` showing no bulk graph can produce it. The\nsuccessor conjecture below asks how *tight* that obstruction is.\n\n**Conjecture.** The cyclic inequality is a *facet* of the five-party holographic\nentropy cone: there are `30` linearly independent entropy vectors, each realised\nby an explicit finite bulk graph in the sense of `HoloModel`, that saturate\n`entropy_cyclic5` with equality. Equivalently, the inequality cannot be written\nas a positive combination of other valid holographic inequalities.\n\n*The key insight is* that the contraction rule\n`cyc c₀ c₁ c₂ c₃ c₄ = c₄ ∧ ¬c₂ ∧ (c₀ ∨ (c₁ ∧ ¬c₃))` is *bijective* on the\npatterns it does not annihilate, and bijectivity of a contraction map is exactly\nthe condition for the associated inequality to be saturated on a full-dimensional\nfamily of graph states.\n\n*Why now?* The violating side is settled (`Sw_violates_cyclic5` gives a gap of\nexactly one unit, and the four validity families are exhaustively checked), so\nwhat remains is the saturating side: a rank computation over explicitly\nconstructed graphs, each of which is already expressible with the `HoloModel`,\n`cutWeight` and `entropy` machinery in this project.\n\n---\n\n## C4. Bit threads: min cut equals max flow in the emergent geometry\n\n**Conjecture.** For every finite bulk geometry and boundary region `A`,\n`entropy M A` equals the maximum value of a flow from `A` to the complementary\nboundary subject to the capacity constraints given by the weights — and the\nholographic inequalities proved here all follow from flow superposition.\n\n*The key insight is* that the recombination arguments used for monogamy are\n\"cut-side\" proofs; the corresponding \"flow-side\" proofs would replace 64-case\nBoolean checks by explicit convex combinations of flows, which generalise to\ninequalities with fractional coefficients.\n\n*Why now?* The cut side is fully formalised (`cutWeight`, `entropy`,\n`entropy_le_of_contraction`), so max-flow/min-cut can be attacked as a statement\nabout objects that already exist in the project rather than as new theory.\n\n---\n\n## C5. Continuity forces geometry: an inverse stability theorem\n\n**Conjecture.** The Lipschitz bound `entropy_lipschitz` is invertible on\n`NoBulk` models: if two such models have entropy functions differing by at most\n`ε` on every boundary region, their geometries differ by at most `Cε` in total\narea, with an absolute constant `C` (conjecturally `C = 2`, from\n`weight_eq_half_mutualInfo`).\n\n*The key insight is* that reconstruction `w(u,v) = I(u:v)/2` is not merely\npointwise but Lipschitz, so entanglement data determines geometry *stably*,\nwhich is what \"spacetime emerges from entanglement\" should mean physically.\n\n*Why now?* The exact (`ε = 0`) case is now a theorem\n(`spacetime_from_entanglement`), and one direction of the Lipschitz equivalence\nis already available as `entropy_lipschitz`;\nthe converse is a finite computation with the same three entropies per edge, and\nits failure for models with hidden cells is already visible in the star/triangle\nexample.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Geometry",
         "Algebra"
@@ -39768,7 +39768,7 @@
       "depth_estimate": 3,
       "description": "# Future directions — bold, falsifiable conjectures from the NET-46 cycle\n\nEach conjecture below is stated so that a single further run, or a single further Lean\ndevelopment, decides it. All are derived from what survived (and what broke) in\n`Catalog/Logic/KneeDriftLadder.lean`, `Catalog/Logic/KneeAmplitudeIdentifiability.lean`\nand `Catalog/Logic/KneeResolutionLimits.lean`.\n\n---\n\n## C1. The amplitude-conflict conjecture (highest value)\n\n**Conjecture.** A third seed at `ctx = 1024` reports a knee `k*` with\n`k* / 8 ∈ (12, 14]` — i.e. `k* ∈ {112, 128}` on a step-16 grid — rather than `96`.\nEquivalently, the seed-2 `ctx = 1024` cell, not the `ctx = 2048` cell, is the outlier of\n`KneeAmplitude.seed2_no_common_amplitude`.\n\n*The key insight is* that the two seed-2 rungs are **not** two instances of one drifting\nconstant: their amplitude windows `(8, 12]` and `(12, 14]` are disjoint, so exactly one of\nthem can be generated by a multiplicative law, and the round's \"systematic\" reading is\nprovably unavailable. The conflict is a two-point obstruction, and one more measurement at\nthe *earlier* rung resolves which point is anomalous.\n\n*Why now?* The obstruction is already proved (`seed2_no_common_amplitude`) and each rung\nis separately explainable (`seed2_each_rung_explainable`), so the experiment is a genuine\nfork with two live branches rather than a confirmation run.\n\n---\n\n## C2. The decisive-context conjecture\n\n**Conjecture.** A single seed-2 run at `ctx = 4096` reports a knee in `[416, 448]`. A\nreport `≤ 384` instead refutes the `ctx = 2048` amplitude window, and a report `≥ 480`\nrefutes both seed-2 windows in favour of the seed-1 amplitude.\n\n*The key insight is* that the three surviving amplitude hypotheses have predictions at the\nnext rung that are pairwise separated by at least one full grid step\n(`KneeAmplitude.next_rung_three_way_separation`) — unlike the `224`-vs-`256` reading,\nwhich is not robust at its own resolution (`KneeDrift.net46_seed2_knee_not_robust`). This\nis the first cell of the programme where the grid can actually adjudicate.\n\n*Why now?* The separation theorem is proved and needs no new theory; only the run is\nmissing.\n\n---\n\n## C3. The vanishing-drift conjecture\n\n**Conjecture.** For every seed, `k*(ctx) / (d·ctx/32) → 1` as `ctx → ∞`, and the\nadditive deficit `d·ctx/32 - k*` stays bounded by one grid step at every rung. Concretely:\nat `ctx = 4096` and `8192` the seed-2 deficit is again exactly `32`, never `64`.\n\n*The key insight is* that a bounded additive drift against a geometrically growing knee is\nasymptotically invisible: the ratio law is exact in the limit and the deployable speedup\ncollapses to the guaranteed `8×` (`KneeDrift.kneeRatio_tendsto_one`,\n`KneeDrift.speedup_tendsto_eight`). What the programme calls a systematic sub-linear break\nis, if this conjecture holds, a *vanishing correction to an exact law* — the strongest\npossible rescue of the product law, and one that also predicts the `9.1×` best case is a\ntransient.\n\n*Why now?* The conjecture's asymptotic half is already a theorem for the modelled ladder;\nwhat is open is whether the measured deficits stay at one step. Two further doublings\ndecide it.\n\n---\n\n## C4. The resolution-barrier conjecture\n\n**Conjecture.** No experiment on a fixed-step grid, at any number of seeds, can certify\nthe Zipf amplitude to better than `s/2^i` at rung `i`; in particular the seed-1 window\ncannot be narrowed below `(15.5, 16]` before `ctx = 8192`, and any claimed \"exact product\nlaw\" at `ctx ≤ 4096` is an artefact of the grid.\n\n*The key insight is* that identification is geometric and no faster: there is always an\namplitude differing from the fitted one by `16/2^N` that reproduces every reported knee\nthrough rung `N` (`KneeResolution.exists_indistinguishable_amplitude`), matching the\nupper bound `32/2^N` to a factor `2`. Exactness claims are therefore statements about the\nsweep, not the model — made precise by `KneeResolution.isKnee_iff_rounding`, which\nidentifies the measured knee as a rounding of a real number.\n\n*Why now?* The matched bounds are proved; the open part is the *multi-seed* version — does\naveraging `m` seeds beat `s/2^i`, or is the barrier information-theoretic in the seeds\ntoo? A concentration argument over the seed ensemble would settle it.\n\n---\n\n## C5. The adjoint-invariance conjecture\n\n**Conjecture.** Every knee-level statistic that is invariant under the Galois adjunction\n`kneeInf c ⊣ c` — i.e. every functional of the passing up-set rather than of the curve —\nis reproducible across seeds, and every non-reproducible statistic (margins, effective\nsupport, top-`k` mass) is not. In particular the *sign* of every inter-seed knee\ndifference is predicted by curve domination alone, while no magnitude is.\n\n*The key insight is* that the knee functional is a left adjoint\n(`KneeResolution.knee_galoisConnection`), so it factors through the up-set of passing\nbudgets and forgets everything else about the curve; the domination theorems\n(`KneeDrift.drop_direction_forced` versus `KneeDrift.domination_does_not_force_drop`) are\nthe first two instances of the resulting dichotomy.\n\n*Why now?* The adjunction is proved and the two boundary instances are proved. The\nconjecture predicts, before any further run, exactly which of the round's reported\nquantities will replicate at a third seed — a pre-registered, cheap, falsifiable test of a\nstructural claim.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Algebra",
         "Geometry"
@@ -40054,7 +40054,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions — bold, testable conjectures from the Alcubierre formalization\n\nEach conjecture below is stated so that it can be settled (proved or refuted) inside the\nformal framework already built in `Catalog/Physics/Spacetime/Alcubierre*.lean`.\n\n---\n\n## C1. Universal exotic-energy floor: `|E| ≥ v² R² /(12 Δ)` for *every* superluminal bubble geometry\n\n**Statement.** Let the bubble be any (not necessarily spherical) region whose shape function\nequals `1` on a body of inradius `R` and `0` outside a shell of thickness `Δ`.  Then the\ntotal Eulerian energy satisfies `E ≤ -(v²/12)(R²/Δ)(1 + o(1))` as `Δ → 0`, with the constant\n`1/12` unimprovable.\n\n**Status after this cycle.** Proved for spherically symmetric walls, and *sharply*:\n`warp_energy_floor_is_sharp` shows the minimum of the radial energy integral over all\nadmissible profiles is exactly `ab/(b-a)`, attained by `f'(r) ∝ -1/r²`; the piecewise-linear\nwall exceeds it by exactly `Δ/3` (`linear_wall_excess`).  The open part is the removal of\nspherical symmetry.\n\n**The key insight is** that the energy functional is a weighted `L²` norm of `∇f` subject to\na single linear normalisation, so the floor is a Cauchy–Schwarz dual norm — and the dual\nnorm of a *shape* constraint is a purely geometric (capacity-like) quantity, which should\nidentify the true minimum with the electrostatic capacity of the shell.\n\n**Why now?** The Cauchy–Schwarz argument is already formalized in one dimension; lifting it\nto three dimensions only requires Mathlib's `MeasureTheory` Hölder inequality plus a\ncapacity estimate, both within reach.\n\n---\n\n## C2. Quadratic-not-linear universality: every ADM warp ansatz with unit lapse has energy exactly homogeneous of degree two in the warp speed\n\n**Statement.** For *any* shift field `β = -v_s F(x)` on flat slices with unit lapse, the\nEulerian energy density satisfies `ρ(λ v_s) = λ² ρ(v_s)` pointwise, while the momentum\ndensity is homogeneous of degree one; hence no warp ansatz of this class can have energy\nscaling `E ~ M v_s c`.\n\n**Status.** Proved for the Alcubierre shape (`energy_quadratic_scaling`,\n`momentumFlux_scaling`, `linear_energy_scaling_false`); the general shift field is open but\nthe Hamiltonian constraint is quadratic in `K`, so the proof should be a two-line\nhomogeneity argument once the general `K_ij(β)` is defined.\n\n**The key insight is** that the Hamiltonian constraint is *exactly quadratic* in the\nextrinsic curvature while `K` is *exactly linear* in the shift, so the degree of homogeneity\nis a structural invariant of the ADM formalism, not a feature of Alcubierre's particular\nprofile.\n\n**Why now?** The mission's conjecture `E ~ M v_s c` has been formally refuted for the\ncanonical profile; the natural next question is whether *any* member of the class could obey\nit, and the machinery to answer it is one definition away.\n\n---\n\n## C3. Chronology dichotomy: single-bubble spacetimes are globally hyperbolic, pairs are not\n\n**Statement.** Every spacetime of ADM form with unit lapse, flat slices and *one* shift field\nis stably causal (the coordinate time is a global time function), whereas for every `V > 1`\nthere is a two-corridor spacetime containing a closed timelike curve.\n\n**Status.** Both halves are proved in the tangent-space/kinematic sense\n(`no_closed_causal_curve`, `warp_pair_closes_loop`, packaged as\n`alcubierre_ctc_dichotomy`).  Open: constructing the *glued* two-corridor metric as a single\nLorentzian manifold and exhibiting the CTC as a curve in it.\n\n**The key insight is** that the causality violation is not local: each corridor is causally\nimpeccable, and the loop only closes because the two corridors define *different* time\nfunctions — so chronology protection must be a statement about the space of admissible shift\nfields, not about any single metric.\n\n**Why now?** The kinematic obstruction is already machine-checked; the missing step is a\ngluing construction, which is a finite amount of explicit differential geometry rather than\nnew analysis.\n\n---\n\n## C4. Focusing threshold as an engineering criterion: `|θ₀| > v_s √(m ‖∇⊥f‖²/2)` decides bubble stability\n\n**Statement.** A congruence of test geodesics crossing the bubble wall focuses (and hence a\ncaustic/instability forms) if and only if its entry convergence exceeds\n`v_s √(m ‖∇⊥f‖²/2)`; below the threshold the exotic matter defeats focusing entirely.\n\n**Status.** The sufficient direction is proved (`warp_critical_convergence` +\n`warp_focusing_survives`, built on the catalog's `focusing_domain_bound_of_energy_defect`),\nand the threshold is shown to be sharp for the model inequality\n(`warp_defect_defeats_focusing_at_threshold`).  Open: promoting \"sharp for the differential\ninequality\" to \"sharp for the actual congruence in the bubble\".\n\n**The key insight is** that the warp bubble's exotic matter enters the singularity theorems\nonly through the single scalar defect `c_warp = -16πρ`, so the entire stability question\ncompresses to comparing two numbers.\n\n**Why now?** The bridge between the warp metric and the catalog's Raychaudhuri engine is now\nformal, so any refinement of the focusing theory transfers to warp drives automatically.\n\n---\n\n## C5. No momentum-free warp bubble: transversal harmonicity forces triviality\n\n**Statement.** If a compactly supported shape function `f` makes the Einstein-required\nmomentum density vanish identically (transversally harmonic with no mixed second\nderivatives), then `f` is constant — hence *every* genuine warp bubble carries a nonzero\nexotic energy flux.\n\n**Status.** The algebraic half is proved (`momentum_vanishes_iff`,\n`exotic_matter_not_comoving`): momentum vanishes iff `∂_y²f + ∂_z²f = 0` and\n`∂_x∂_yf = ∂_x∂_zf = 0`.  Open: the Liouville-type step showing that a compactly supported\nfunction harmonic in each transverse plane must be constant.\n\n**The key insight is** that the momentum constraint converts a global support condition into\na plane-wise harmonicity condition, so the maximum principle in two dimensions — not any\nLorentzian geometry — is what rules out momentum-free warp drives.\n\n**Why now?** Mathlib's harmonic-function API has matured to the point where the\ntwo-dimensional maximum principle is usable, making this the cheapest remaining no-go\ntheorem in the family.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Algebra",
         "Geometry"
@@ -40136,7 +40136,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Shimura curves of discriminant 14 and 15 and associated Heun Functions' and formalize its key results. Abstract: The Shimura curve of discriminant $D$ for $D=14, 15$ is uniformized by a subgroup of an arithmetic quadrilateral Fuchsian group $(2, 2, 2, q)$, where $q=4, 6$. We relate the generator of the ring of quaternionic modular forms on this Shimura curve to explicit Heun functions for the quadrilateral group. We also discuss how the Picard-Fuchs equation of the associated family of abelian surfaces has solutions that are modular forms on $X^{D}(1) / W_{D}$, where $W_D$ is the full group of Atkin-Lehner involutions. This leads us to completely describe the rational exceptional sets of the associated Heun functions, and the algebraic values attained by the Heun function on these points, for example $${\\rm He}\\left( 81, \\frac{1}{2}; \\frac{1}{3}, \\frac{1}{6}, \\frac{1}{2}, \\frac{1}{2};-\\frac{729}{112}\\right)= \\left( \\frac{2^2 \\cdot 3^3 \\cdot 5^3}{7^5} \\right)^{\\frac{1}{6}}$$.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Algebra",
         "Geometry"
@@ -42219,7 +42219,7 @@
       "depth_estimate": 3,
       "description": "Two contexts and six seeds already separate the three rungs of a three-seed\nladder, and a single `ctx = 4096` cell distinguishes the two candidate low-tail families by\nexactly one grid step: `320` (constant ratio) versus `288` (affine), proved as\n`KneeQuota.lowtail_prediction_32x`.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Geometry"
       ],
@@ -42886,7 +42886,7 @@
       "depth_estimate": 3,
       "description": "The abelian branch of the theory is fully formal\n(`nonempty_gEquiv_iff_stabilizer_eq_of_comm`), so the topological content is discharged\nand only the lattice count remains; the one-dimensional case is already a theorem here\n(`circle_coverings_classified_by_degree`: index-`n` subgroups of `ℤ` are unique, giving\n`σ(n) = 1` for `k = 1`), and the case `n = 2`, `k = 2` is now also a theorem\n(`torus_three_double_coverings` in `Catalog/Bridges/FundamentalGroupCoveringTorus.lean`:\nexactly three double coverings, `σ(2) = 3`, and all three total spaces are again tori), as\nis the case `n = 3` (`torus_four_triple_coverings` in\n`Catalog/Bridges/FundamentalGroupCoveringTorusTriple.lean`: exactly four triple coverings,\n`σ(3) = 4`, pairwise non-isomorphic, and again all four total spaces are tori).\nThe remaining work is the general Hermite-normal-form count; the first genuinely new case\nwas `n = 4`, where the predicted answer `σ(4) = 7` mixes the two index-two-inside-index-two\ntowers with the primitive index-four sublattices.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Algebra",
         "Geometry"
@@ -43008,7 +43008,7 @@
       "depth_estimate": 3,
       "description": "The catalog now contains the complete `1`-truncated story (both the positive\ntheorem for `K(G,1)`s and a general family of failures, `twistedPair_theorem`), so the\n`1`-type boundary is the next well-posed question; the restriction map on group cohomology\nis available in Mathlib, which makes the functoriality statement directly formalizable\neven before the full `2`-type classification is.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Geometry",
         "Algebra"
@@ -43865,7 +43865,7 @@
       "depth_estimate": 3,
       "description": "The obstruction half is fully formal (a `Finset` pigeonhole plus a\ntelescoping identity), so the conjecture can be stated in Lean today with a proved\nconverse; each new case of the existence half (e.g. `k = 1`, the twin case) is a known\nhard target with a now-precise topological meaning.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Combinatorics",
         "Geometry"
@@ -44184,7 +44184,7 @@
       "depth_estimate": 3,
       "description": "— Stirling closes the $47$-versus-$49$ gap | **Split verdict.** Structural half **closed**: the missing lower bound $16^r \\le \\binom{2r}{r}^2(4r+1)$ is proved by induction through the recursion $(r+1)\\binom{2r+2}{r+1} = 2(2r+1)\\binom{2r}{r}$ (slack exactly $1$), giving the sandwich $4^r/\\sqrt{4r+1} \\le \\binom{2r}{r} \\le 4^r/\\sqrt{3r+1}$, the exact $r^{-1/2}$ defect rate $\\delta_r\\sqrt r \\in [1/(2\\sqrt5),\\,1/(2\\sqrt3)]$, non-summability of the defects, and the Stirling-improved rate $2p(1-p)(4p(1-p))^r/((2p-1)\\sqrt{3r+4})$. Numerical half **refuted**: *no* bound dominating the sharpened rate can certify $1\\%$ at $47$ seeds, because the sharpened rate itself already exceeds $1/100$ there while the truth does not. |\n| **D2** — the dichotomy under contamination | **Closed in finite-sample form**: for contamination level $c$ below the breakdown number, the achievable readings of the $m$-th rung are *exactly* the clean readings in $[Q(m-c),\\,Q(m+c)]$ — the bracket is attained at both ends, so the maximal bias equals the clean spread and the breakdown number is the level at which that spread stops being finite. |\n| **D3** — every offset rung has its own generating function | **Closed**: for each fixed offset $k$, the off-centre ladder started at its smallest ensemble sums to exactly $1 - p^{2k+1} = (1-p)(1 + p + \\cdots + p^{2k})$, i.e. the conjectured $(1-p)R_k(p)$ with $R_k$ the geometric polynomial of length $2k+1$; $k = 0$ recovers the earlier cycle's $1-p$. |",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Geometry"
       ],
@@ -44262,7 +44262,7 @@
       "depth_estimate": 3,
       "description": "**Continuous budgets.** Extend the contamination curve from an ordinal ladder to a continuous\n  budget axis, where the window width becomes a quantile spread and centre-minimality becomes a\n  log-concavity hypothesis on the knee density.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Geometry",
         "Logic"
@@ -44303,7 +44303,7 @@
       "depth_estimate": 3,
       "description": "Both sides of the comparison are now closed-form Lean theorems\n(`addEnergy_sidon`, `addEnergy_sidon2`), so the conjecture is exactly the statement that\nthe exponent-two computation is *extremal*, a finite convexity problem over the\ndistribution of `r`, not a new Fourier estimate.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Combinatorics",
         "Geometry"
@@ -45484,7 +45484,7 @@
       "depth_estimate": 3,
       "description": "The block-tracking fibration (`stirling2_succ_succ`, `card_filter_last_eq`,\n`card_filter_last_ne`) is proved and gives complete control of the triangle row by row;\nlog-concavity is the first statement about the triangle that is *not* a consequence of the\nrecursion alone.  The super-multiplicative bound `bell m * bell n ≤ bell (m + n)` proved in\n`BellSuperMultiplicative.lean` is the \"additive\" shadow of Bell log-convexity and shows that the\nrelation-assembly technique reaches inequalities of exactly this shape, so row log-concavity is\nthe natural next test of the API.  Mathlib has neither Stirling\nnumbers nor any log-concavity statement about `Nat.bell`.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Geometry"
       ],
@@ -45724,7 +45724,7 @@
       "depth_estimate": 3,
       "description": "Both halves are already formalised separately: the commutation theorem for `2k+1`\nmonotone curves, and the breakdown theorem for `2k+1` samples.  Composing them is the exact\nstatement a deployment guarantee needs — \"one bad seed cannot move the reported knee\" — and it\nis the fourth-seed experiment's formal content.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Geometry"
       ],
@@ -46280,7 +46280,7 @@
       "depth_estimate": 3,
       "description": "mixing weight `a ∈ (0,1)` the supremum of the convexity defect\nof `f ∘ gridRound δ` over convex `L`-Lipschitz `f` and all weight pairs equals\n`2·L·r = L·δ` and is **never attained**; moreover the set of attained defects is\ndense in `[0, L·δ]`, with gap structure governed by the three-distance theorem for\nthe continued fraction of `a`.  Consequently the *expected* defect of a stochastic\ninterpolation schedule is strictly smaller for an irrational mixing weight than for\nany rational weight of comparable granularity.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Geometry",
         "Computation"
@@ -46361,7 +46361,7 @@
       "depth_estimate": 3,
       "description": "Cycle 3 upgraded sharpness from \"the maximum is attained\" to \"every\nlattice value is attained\", and cycle 4 turned the maximum into an identification\ntheorem; the outstanding step is a *closure* description of `defectSet`, which is a\nfinite convex-geometry computation for each `q` and is falsifiable by one\nexhaustive rational scan.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Geometry",
         "Cryptography"
@@ -46402,7 +46402,7 @@
       "depth_estimate": 3,
       "description": "The audit theorems reduce the whole question to the purely continuous\nstatement above, and `convexOn_of_approxConvex_tower` already provides the `η → 0`\nboundary case that any proof must specialise to.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Geometry",
         "Logic"
@@ -48058,7 +48058,7 @@
       "depth_estimate": 3,
       "description": "The algebraic fibre is completely described (`fibreEquivKer`), and the positivity\nobstruction is now a theorem rather than a heuristic; only the convexity and extreme-point\nanalysis remain.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Algebra",
         "Geometry"
@@ -48339,7 +48339,7 @@
       "depth_estimate": 3,
       "description": "*Let `x` be any finite integer stream of length `n ≥ 8` produced by iterating an\naffine map of `ℤ³`.  Then the Berlekamp–Massey linear complexity of `x` is at\nmost 4, and the minimal polynomial computed from the first 8 symbols determines\nthe affine map up to conjugacy.*",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Geometry",
         "Computation"
@@ -48809,7 +48809,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'An equidistribution conjecture for quotient-closed and submodule-closed subcategories' and formalize its key results. Abstract: We study subcategories of the module category of a finite-dimensional algebra that are closed under quotients or submodules. We propose the quotient--submodule equidistribution conjecture: over a representation-finite algebra, the number of quotient-closed subcategories of size $i$ is equal to that of submodule-closed subcategories of size $i$ for every $i$, where size is the number of indecomposable modules in the subcategory. We prove the following cases of the conjecture: (1) the five smallest and five largest values of $i$, hence all algebras with at most nine indecomposable modules; (2) Nakayama algebras; (3) algebras with radical square zero; and (4) representation-directed algebras. In the last case, we classify quotient-closed subcategories by a lower Bruhat interval in a Coxeter group constructed from the Auslander--Reiten quiver, extending the classification of Oppermann--Reiten--Thomas for Dynkin quivers. We also prove that quotient closure defines a finitary convex geometry",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Algebra",
         "Geometry"
@@ -48850,7 +48850,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'Cluster-Graph Edit Distance: Metric Proxies, Multiscale Embeddings, and Complexity' and formalize its key results. Abstract: The cluster graphs on $n$ vertices, the disjoint unions of complete graphs, have the integer partitions of $n$ as their isomorphism classes, and the quotient edit distance $q^*(λ,μ)=\\min_{σ\\in S_n}|E(G_λ)\\triangleσE(G_μ)|$ makes that set a metric space. Its metric geometry and its computational complexity both issue from one identity: $q^*$ is an affine function of the maximum of $\\lVert X\\rVert_F^2$ over the contingency tables with margins $λ$ and $μ$. Combinatorially, it yields two explicit $\\ell_1$ models: the vertex-mass metric $δ_1$ on sorted degree sequences, with $\\frac12δ_1\\le q^*<\\frac32δ_1$ and both constants optimal, and the block-energy metric $B$ on the vectors $\\bigl(\\binom{λ_i}2\\bigr)_i$, with $q^*\\le B\\le2q^*-1$ by a per-table refinement measuring how far an alignment is from a block bijection. Hence $c_1(\\mathcal K_n)\\le2$, and an $O(n\\log n)$-time algorithm returns an alignment of cost below $2q^*$ with the certificate $q^*\\in[\\lceil(B+1)/2\\rceil,B]$. The Euclidean di",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Combinatorics",
         "Geometry"
@@ -48967,7 +48967,7 @@
       "depth_estimate": 3,
       "description": "Once the median is identified with `Set.projIcc`, the whole convex-analysis\ntoolbox (Moreau decomposition, normal cones, resolvents) becomes available to a\nmachine-learning measurement, which is a genuinely new bridge.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Geometry",
         "Bridges"
@@ -50187,7 +50187,7 @@
       "depth_estimate": 3,
       "description": "The cut side of the toy AdS/CFT dictionary is fully formalised\n(subadditivity, SSA, MMI, cyclic inequalities, nesting), and the elementary\nwormhole case is already verified (`pairModel_maxflow_eq_throat`); a formal\nmax-flow–min-cut theorem would immediately convert every entropy inequality\nproved by surface recombination into a statement about threads, i.e. about",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Geometry"
       ],
@@ -50305,7 +50305,7 @@
       "depth_estimate": 3,
       "description": "The one-sided inequality, a strict instance, and the \"if\" direction\n(`cap_pushGraph_eq_of_lift`: a fibre-constant minimal surface freezes the\nthroat) are all proved, so the remaining content is the converse; it would give a *criterion* for when\ncoarse-graining destroys geometric information, i.e. when the RG flow is\nirreversible.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Geometry",
         "Combinatorics"
@@ -50508,7 +50508,7 @@
       "depth_estimate": 3,
       "description": "Strengthen `RLHF.expPoly_eq_zero_of_zeros` from \"at\n   most `n − 1` zeros\" to the Descartes bound: an exponential polynomial with `n` exponents\n   has at most as many real zeros as its coefficient sequence has sign changes.  For RLHF this\n   says the difference of two value curves oscillates at most as often as the reward spectra\n   cross, so a monotone reward re-weighting can be certified by a single crossing.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Geometry"
       ],
@@ -50589,7 +50589,7 @@
       "depth_estimate": 3,
       "description": "Determine exactly when\n   `RLHF.freeEnergy_convex_comb` is an equality: conjecturally never for `0 < θ < 1` unless the\n   reward model is constant, which would follow from `RLHF.strictConvexOn_logExpMoment` plus a\n   strict-convexity transfer through the harmonic reparametrization `β ↦ β⁻¹`.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Geometry",
         "Physics"
@@ -50710,7 +50710,7 @@
       "depth_estimate": 3,
       "description": ": `IsSidon A ↔ IsSidon (A.image (· + t))` and,\n   for `u` a unit, `IsSidon A ↔ IsSidon (A.image (u * ·))`.\n   *Status: **closed in cycle 4** — `isSidon_image_add_right` and `isSidon_image_unit_mul`.\n   These give an affine group of order `N · φ(N)` acting on the Sidon sets of `ZMod N`;\n   the next step is to use it to restrict `maxSidonCard` searches to normalised\n   representatives.*",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Algebra",
         "Geometry"
@@ -51722,7 +51722,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "ce273a18",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -51747,7 +51747,7 @@
       "source": "",
       "source_exp_id": "c442a26f",
       "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/c442a26f",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-08-19T21:41:40.018501+00:00",
       "title": "The upper bound is formalised (`exists_peel_stopping_time` together with"
@@ -51845,7 +51845,7 @@
       "depth_estimate": 3,
       "description": "Let `Ho₁^{*,conn}` be the category whose objects are pointed connected\ngroupoids `(C,c)` and whose morphisms are pointed homotopy classes of pointed maps\n(composition `compClasses`, identities `PtdMap.id`).  Then `(C,c) ↦ Aut c` extends to a\nfunctor `Ho₁^{*,conn} ⥤ Grp` which is **fully faithful and essentially surjective, with\nstrictly (not merely coherently) preserved composition** — an isomorphism of categories onto\nthe full image.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Algebra",
         "Geometry"
@@ -52082,7 +52082,7 @@
       "depth_estimate": 3,
       "description": "f(u)` on `S²` with Mexican-hat kernel of radius `1/k`,\nthe centre manifold at the bifurcation is `(2k+1)`-dimensional and its amplitude equations\nare `SO(3)`-equivariant, so the number of stable pattern branches is bounded by the number\nof isotropy subgroups with one-dimensional fixed-point space — for `k = 1, 2, 3` this gives\n`1, 2, 4` branch types, of which the sectoral ones are the `k`-fold symmetric plane patterns\nconstructed here.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Algebra",
         "Geometry"
@@ -52164,7 +52164,7 @@
       "depth_estimate": 3,
       "description": "All three ingredients (constant rigidity, affine rigidity, the identification of\nPoisson sets with uncertainty extremals `poissonSet_iff_supp_dft_indicF_eq_annihF`) are\nformalised; the conjecture is the natural common generalisation and would give a complete\nFourier-theoretic characterisation of the uncertainty extremals in this catalog.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Combinatorics",
         "Geometry"
@@ -52515,7 +52515,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'A simple construction of the automorphic residual spectrum' and formalize its key results. Abstract: We consider the spherical Borel Eisenstein series induced from the trivial representation for a split semisimple linear algebraic group over a number field. We prove that its regularization at the special point corresponding to half the weighted marking of a distinguished coadjoint nilpotent orbit in the Langlands dual Lie algebra is nonzero and square-integrable. Our proof follows the philosophy of Kazhdan and Okounkov. We give a geometric interpretation of Langlands' square-integrability criterion in this setting and, using the equivariant integration formula, prove that the regularization satisfies this criterion. As an immediate consequence, we obtain a simple and uniform proof of Arthur's unitarity conjecture, without case-by-case analysis or machine computation.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Algebra",
         "Geometry"
@@ -53085,7 +53085,7 @@
       "depth_estimate": 3,
       "description": "The empty-interior theorem supplies the local input, the separation theorem\nsupplies the global stratification, and non-convexity (`not_convex`) already rules out\nconvex relaxations.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Geometry"
       ],
@@ -53440,7 +53440,7 @@
       "depth_estimate": 3,
       "description": "The Bregman identity `freeEnergy_bregman_eq_kl` is proved, and the exact\ndecomposition `objective_eq_free_energy_sub_kl` reduces the conjecture to a\none-dimensional convexity statement per coordinate.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Geometry",
         "Physics"
@@ -53795,7 +53795,7 @@
       "depth_estimate": 3,
       "description": "**Document size, not theorem count, bounds the support of the topology.** A `d`-bounded\n  corpus has no faces and no homology in dimensions `≥ d`\n  (`facesOfCard_eq_empty_of_bounded`, `HomologyProfile.beta_eq_zero_of_bounded`).",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Geometry"
       ],
@@ -53875,7 +53875,7 @@
       "depth_estimate": 3,
       "description": "**Euler characteristic forces polynomial homology.**\n  `eulerChar_skeletonCorpus`: `χ = 1 - (-1)^d C(n-1, d)`.  Since only `d` Betti numbers can\n  be nonzero, `skeletonCorpus_exists_betti_pow_lower` gives\n  `(n - d)^d ≤ d! · d · β_k + d!` for some `k < d`: the extremal Betti number has order\n  `n^d`, matching the `n^{k+1}` shape of Conjecture 5 in the top surviving dimension.\n  `skeletonHomologyProfile` shows this class of profiles is nonempty.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Combinatorics",
         "Geometry"
@@ -54071,7 +54071,7 @@
       "depth_estimate": 3,
       "description": "| --- | --- |\n| 1. `π₁(Foam ℝ S Bool) ≅ F_k` | **still open** | — |\n| 2. Metric defect is a boundary quantity | **proved** (defect `= \\|S \\ interior S\\| · (\\|ι\\|² − \\|ι\\|)`) | `PlanckFoamDefect.lean` |\n| 3. Entropy–geometry duality | **proved, and sharper than conjectured** (exact identity, no `o(\\|X\\|)` slack) | `PlanckFoamCounting.lean` |\n| 4. RG fixed points are only `∅` and `univ` | **refuted** — the flow has the nontrivial fixed point `S = {0}` | `PlanckFoamRGFixedPoints.lean` |\n| 5. Covering locus is exactly the clopen regime | **proved** (`IsCoveringMap proj ↔ IsClopen S`) | `PlanckFoamSpectrum.lean` |",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Geometry"
@@ -54266,7 +54266,7 @@
       "depth_estimate": 3,
       "description": "The entropy–geometry identity and the strict-inclusion structure of\nthe tower (`latticeSet_two_mul_ssubset`) are both proved, so this is a counting\nstatement about `⌊·⌋` rather than new topology.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Geometry",
         "Cryptography"
@@ -54463,7 +54463,7 @@
       "depth_estimate": 3,
       "description": "`KL(q*_{β,γ} ‖ p) = KL(p_γ ‖ p) + O(1/β²)`, and more strongly the *information* floor\n`lim_{β→∞} KL(q*_{β,γ} ‖ p) = KL(p_γ ‖ p) ≥ ½·γ²‖d − p‖₁²` with equality only in the\ntwo-point case.\n\nThe key insight is that the map `β ↦ q*_{β,γ}` is a smooth curve in the exponential family\nthrough `p_γ`, meeting the `KL`-sphere around `p` at a right angle in the sense of the\nPythagorean identity for `e`-geodesics, which forces the `1/β` term to vanish and leaves a\npurely quadratic correction. Why now: this cycle established the variational identity\n`𝔼_q r − β KL(q‖m) = β log Z − β KL(q‖q*)`, which is precisely the Pythagorean decomposition\nin disguise.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Geometry",
         "Algebra"
@@ -54542,7 +54542,7 @@
       "depth_estimate": 3,
       "description": "The anchor is identifiable from the optimum: if `gibbs β m₁ r` and `gibbs β m₂ r` agree for\ntwo distinct temperatures `β₁ ≠ β₂` with strictly positive `m₁, m₂`, then `m₁ = m₂`; more\nstrongly, the whole curve `β ↦ q*_β` determines `(m, r)` up to affine reparametrisation of\n`r`.\n\nThe key insight is that `anchor_return_iff` already shows the `β → ∞` endpoint of the curve\nrecovers the anchor exactly, so identifiability is a statement about analytic continuation of\na one-parameter exponential family. Why now: the endpoint recovery is proved, so the\nremaining content is a rigidity argument for exponential families that Mathlib's `rpow` and\n`log` API can support directly.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Geometry"
       ],
@@ -55052,7 +55052,7 @@
       "depth_estimate": 3,
       "description": "KL-coefficient annealing schedules are used heuristically in\npractice; the exact annealing limits and the additive drift budget proved here\nturn the question into finite convex optimisation.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Geometry"
       ],
@@ -55441,7 +55441,7 @@
       "depth_estimate": 3,
       "description": "The upper half is already a theorem in this project; the lower half\nneeds only the reverse geometric-sum estimate, and the limit statement is a\none-line consequence of `Real.exp_log` once both bounds are in place.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Geometry"
       ],
@@ -55521,7 +55521,7 @@
       "depth_estimate": 3,
       "description": "The abstract half is already proved and reusable; only the\ncombinatorial-geometry construction (concentric regular polygons and the proof\nthat each is a convex layer) is missing, and it is elementary.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Geometry",
         "Combinatorics"
@@ -55587,6 +55587,164 @@
       "thread_id": "",
       "timestamp": "2026-08-20T17:46:26.315208+00:00",
       "title": "The lower half of Conjecture B: `1 − (1 − 1/N)^{1/d} ≥ (1 − 1/N)/(d(N−1))`."
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "— they hold for every finite family and\ncarry no arithmetic information — while all arithmetic content enters through the choice of\nmarginals.  For Sidon sets this is now a theorem: the master inequality\n`|S|·|A|² ≤ |G|·(|A| + |S| - 1)` (`IsSidon.translate_family_bound`) is parameterised by the\nshift set `S`, and the two extreme choices `S = G` and `S = A` are strictly ordered\n(`all_translate_bound_implies_self_translate_bound`, `marginal_selection_strict`).",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [],
+      "github_issue": 0,
+      "id": "fd_1742",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.42510526315789465,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "3ec7eb1a",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/3ec7eb1a",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-08-20T17:46:36.014125+00:00",
+      "title": "— they hold for every finite family and"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "The master inequality is already formalised with `S` as a free parameter, so this\nis a purely arithmetic monotonicity statement about a formula that is in the library today;\nproving it converts \"the all-translate choice is best\" from an observation about two data\npoints into a theorem about the whole lattice of marginal choices.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Cryptography"
+      ],
+      "github_issue": 0,
+      "id": "fd_1743",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.4,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "3ec7eb1a",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/3ec7eb1a",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-08-20T17:46:36.222859+00:00",
+      "title": "The master inequality is already formalised with `S` as a free parameter, so this"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "The third-moment layer is already formalised here\n(`sum_card_inter3_eq_sum_mult_cube`, `third_moment_identity`,\n`card_tripleCollision_mul_le`), obtained from the same localised Fubini lemma\n`sum_inter_sum_eq_sum_mult_mul`; the `h`-th moment machinery is a mechanical continuation of\nthat pattern, so the conjecture is decidable by formalisation rather than by new ideas.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Logic"
+      ],
+      "github_issue": 0,
+      "id": "fd_1744",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.4,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "3ec7eb1a",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/3ec7eb1a",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-08-20T17:46:36.429382+00:00",
+      "title": "The third-moment layer is already formalised here"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Both inequalities involved (`reiman_bound`, `card_doubleCollision_mul_le`) are\nformalised for arbitrary families, so the conjecture reduces to comparing two already\navailable upper bounds on `pairSum` — a finite, checkable question on small planes first.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra"
+      ],
+      "github_issue": 0,
+      "id": "fd_1745",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.4,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "3ec7eb1a",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/3ec7eb1a",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-08-20T17:46:36.637867+00:00",
+      "title": "Both inequalities involved (`reiman_bound`, `card_doubleCollision_mul_le`) are"
     },
     {
       "ambition_level": "extension",
@@ -63000,6 +63158,46 @@
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
+      "description": "Building on cycle ce273a18 (Q=0.780), which proved 83 theorems in Geometry. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The upper bound is formalised (`exists_peel_stopping_time` together with\n`peelEstimate_error`); what remains is a matching family of actions, i.e. a construction.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Geometry"
+      ],
+      "github_issue": 0,
+      "id": "push_ce273a18_6f864948",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.88,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "ce273a18",
+      "source_path": "The upper bound is formalised (`exists_peel_stopping_time` together with",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-08-20T17:46:31.054713+00:00",
+      "title": "Deepening: The upper bound is formalised (`exists_peel_stopping_time` together with"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
       "description": "Building on cycle ce71f394 (Q=0.770), which proved 14 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The EML operator class (finite compositions of exp, log, +, *) has remarkable closure properties. Conjecture: The class of EML functions is closed under differentiation, and the derivative of any EML function of composition depth d is an EML function of composition depth at most d+1. Moreover, the d",
       "domain_bridges": [],
       "domain_quality_penalty": 1.0,
@@ -66694,7 +66892,7 @@
       "depth_estimate": 3,
       "description": "Formalizes Lovecraftian 'non-Euclidean angles' where local interior angles of a planar triangle sum to 0 degrees on hyperbolic metric surfaces.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Geometry"
       ],
@@ -81775,7 +81973,7 @@
       "depth_estimate": 3,
       "description": "Cycle 64406111 (Q=0.850) proved 72 theorems in Geometry but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: **Paper (factor3):** [ResearchOutput/NewMathematics/25_Round10_Closures.md](https://github.com/paulklemstine/factor3/blob/main/ResearchOutput/NewMathematics/25_Round10_Closures.md)\n\n---\n\n# Round-10 Cl",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Geometry"
       ],
