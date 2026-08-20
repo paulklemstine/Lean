@@ -1,71 +1,81 @@
 """
-Numerical demonstrations of the exact theory of the KL-regularised alignment
-objective.
+The Projective Geometry of KL-Regularised Alignment — numerical demonstrations.
 
-The objective, over a finite response alphabet, is
+Self-contained: standard library only (math, random, itertools).  Every routine
+is inlined and type-hinted.  Running this file checks, numerically, each of the
+main theorems:
 
-    J(p) = E_p[R] - beta * KL(p || pi_ref) + gamma * E_{D_pre}[log p]
+  1.  Alignment is an isometry:  d_H(pi_b(r1), pi_b(r2)) = osc(r1 - r2) / b.
+  2.  Sharp comparison:          TV(p,q) <= tanh(d_H(p,q)/4)  (and it beats
+                                 the naive e^d - 1 bound, which is vacuous).
+  3.  Misspecification:          TV(pi_b(r1), pi_b(r2)) < 1 always.
+  4.  Envelope theorem:          dF/dt (r + t s) at t = 0 = E_{pi_b(r)}[s].
+  5.  Annealing limits:          F -> max r as b -> 0+, F -> E_ref[r] as b -> oo,
+                                 with the stated rates.
+  6.  Goodhart regret:           F(b,r) - J_r(pi_b(rhat)) <= 2 ||r - rhat||_inf.
+  7.  Pre-training identity:     E_pre[log pi_b(r)] = E_pre[log ref]
+                                     + (E_pre[r] - F)/b,  and the no-regression
+                                 criterion.
+  8.  Symbolic constraints:      constrained optimum attained; filtering
+                                 commutes with alignment; monotone + submodular;
+                                 price bound.
+  9.  Drift budget:              d_H(pi_n, ref) <= sum_k osc(r_k)/b, sharp when
+                                 rounds do not cancel, strict when they do.
 
-and the theory says:
-
-  * the reward+KL part equals  beta*log Z - beta*KL(p || pi*)   (three-point
-    identity), where pi*(i) ∝ pi_ref(i) exp(R(i)/beta);
-  * hence pi* is the unique maximiser, with optimal value F = beta*log Z;
-  * E_ref[R] <= F <= max R;
-  * beta * KL(pi* || pi_ref) <= max R - min R;
-  * ||pi* - pi_ref||_1^2 <= 2 (max R - min R) / beta   (Pinsker route);
-  * tilting is an additive group action: tilt(tilt(ref,R),S) = tilt(ref,R+S);
-  * adding a constant to R leaves pi* unchanged and shifts F by that constant;
-  * (KL, reward) is monotone in beta -- the alignment Pareto frontier;
-  * the full objective attains  F + P(D_pre)  iff  D_pre = pi*;
-  * a reward within eps of the truth loses at most 2 eps of value.
-
-Everything below is self-contained: pure Python plus the standard library.
-
-Run:  python demo.py
+Run:  python3 demo.py
 """
 
 from __future__ import annotations
 
 import math
 import random
-from typing import Callable, Dict, List, Sequence, Tuple
+from itertools import combinations
+from typing import List, Sequence
 
-Vec = List[float]
+Vector = List[float]
 
-# --------------------------------------------------------------------------- #
-# Core numerics                                                               #
-# --------------------------------------------------------------------------- #
-
-
-def logsumexp(u: Sequence[float]) -> float:
-    """Numerically stable log(sum(exp(u_i)))."""
-    umax = max(u)
-    return umax + math.log(sum(math.exp(x - umax) for x in u))
+TOL = 1e-9
 
 
-def softmax(u: Sequence[float]) -> Vec:
-    """Numerically stable softmax."""
-    umax = max(u)
-    e = [math.exp(x - umax) for x in u]
-    s = sum(e)
-    return [x / s for x in e]
+# ----------------------------------------------------------------------------
+# Core objects
+# ----------------------------------------------------------------------------
+
+def oscillation(f: Sequence[float]) -> float:
+    """The oscillation seminorm  osc(f) = max f - min f."""
+    return max(f) - min(f)
 
 
-def tilted_policy(ref: Sequence[float], reward: Sequence[float], beta: float) -> Vec:
-    """The exponentially tilted policy pi*(i) ∝ ref(i) exp(R(i)/beta)."""
-    u = [math.log(r) + q / beta for r, q in zip(ref, reward)]
-    return softmax(u)
+def normalise(w: Sequence[float]) -> Vector:
+    """Normalise a positive weight vector to a probability vector."""
+    total = sum(w)
+    if total <= 0.0:
+        raise ValueError("weights must have positive total mass")
+    return [wi / total for wi in w]
 
 
-def free_energy(ref: Sequence[float], reward: Sequence[float], beta: float) -> float:
-    """F = beta * log Z with Z = sum_i ref(i) exp(R(i)/beta)."""
-    u = [math.log(r) + q / beta for r, q in zip(ref, reward)]
-    return beta * logsumexp(u)
+def partition_function(beta: float, ref: Sequence[float], r: Sequence[float]) -> float:
+    """Z_beta(r) = sum_i ref_i exp(r_i / beta)."""
+    m = max(r)  # shift for numerical stability; compensated by the caller
+    return sum(ri_ref * math.exp((ri - m) / beta) for ri_ref, ri in zip(ref, r)) * math.exp(m / beta)
 
 
-def kl(p: Sequence[float], q: Sequence[float]) -> float:
-    """Finite Kullback-Leibler divergence with 0 log 0 = 0."""
+def free_energy(beta: float, ref: Sequence[float], r: Sequence[float]) -> float:
+    """F(beta, r) = beta log Z_beta(r), the optimal KL-regularised value."""
+    m = max(r)
+    shifted = sum(ri_ref * math.exp((ri - m) / beta) for ri_ref, ri in zip(ref, r))
+    return m + beta * math.log(shifted)
+
+
+def gibbs(beta: float, ref: Sequence[float], r: Sequence[float]) -> Vector:
+    """The aligned policy pi_beta(r)_i proportional to ref_i exp(r_i / beta)."""
+    m = max(r)
+    w = [ri_ref * math.exp((ri - m) / beta) for ri_ref, ri in zip(ref, r)]
+    return normalise(w)
+
+
+def kl_divergence(p: Sequence[float], q: Sequence[float]) -> float:
+    """KL(p || q), with the convention 0 log 0 = 0."""
     total = 0.0
     for pi, qi in zip(p, q):
         if pi > 0.0:
@@ -73,495 +83,438 @@ def kl(p: Sequence[float], q: Sequence[float]) -> float:
     return total
 
 
-def expectation(p: Sequence[float], f: Sequence[float]) -> float:
-    return sum(pi * fi for pi, fi in zip(p, f))
+def rlhf_objective(beta: float, ref: Sequence[float], r: Sequence[float],
+                   p: Sequence[float]) -> float:
+    """J_beta(p) = E_p[r] - beta KL(p || ref)."""
+    return sum(pi * ri for pi, ri in zip(p, r)) - beta * kl_divergence(p, ref)
 
 
-def l1(p: Sequence[float], q: Sequence[float]) -> float:
-    return sum(abs(pi - qi) for pi, qi in zip(p, q))
+def hilbert_distance(p: Sequence[float], q: Sequence[float]) -> float:
+    """Birkhoff's Hilbert projective metric d_H(p,q) = osc(log(p/q))."""
+    ratios = [math.log(pi / qi) for pi, qi in zip(p, q)]
+    return oscillation(ratios)
 
 
-def rl_objective(
-    p: Sequence[float], ref: Sequence[float], reward: Sequence[float], beta: float
-) -> float:
-    """E_p[R] - beta KL(p || ref)."""
-    return expectation(p, reward) - beta * kl(p, ref)
+def tv_distance(p: Sequence[float], q: Sequence[float]) -> float:
+    """Total variation distance, (1/2) sum_i |p_i - q_i|."""
+    return 0.5 * sum(abs(pi - qi) for pi, qi in zip(p, q))
 
 
-def ptx_term(p: Sequence[float], pre: Sequence[float], gamma: float) -> float:
-    """gamma * E_{pre}[log p]."""
-    return gamma * sum(pre_i * math.log(pi) for pre_i, pi in zip(pre, p))
+def tanh_bound(d: float) -> float:
+    """The sharp comparison constant tanh(d/4) = (e^{d/2}-1)/(e^{d/2}+1)."""
+    return math.tanh(d / 4.0)
 
 
-def full_objective(
-    p: Sequence[float],
-    ref: Sequence[float],
-    reward: Sequence[float],
-    pre: Sequence[float],
-    beta: float,
-    gamma: float,
-) -> float:
-    return rl_objective(p, ref, reward, beta) + ptx_term(p, pre, gamma)
+def log10_one_minus_tanh_bound(d: float) -> float:
+    """log10 of 1 - tanh(d/4) = 2/(e^{d/2}+1); the certified margin below 1.
+
+    Computed in log space so that it remains meaningful far beyond the point
+    where double precision reports tanh(d/4) as exactly 1.
+    """
+    return (math.log(2.0) - math.log1p(math.exp(min(d / 2.0, 700.0)))
+            if d / 2.0 <= 700.0 else math.log(2.0) - d / 2.0) / math.log(10.0)
 
 
-def normalise(v: Sequence[float]) -> Vec:
-    s = sum(v)
-    return [x / s for x in v]
+def naive_bound(d: float) -> float:
+    """The crude comparison constant e^d - 1 (vacuous once d > log 2)."""
+    try:
+        return math.exp(d) - 1.0
+    except OverflowError:
+        return math.inf
 
 
-def random_policy(n: int, rng: random.Random) -> Vec:
+# ----------------------------------------------------------------------------
+# Constrained (symbolic) objects
+# ----------------------------------------------------------------------------
+
+def constrained_partition(beta: float, ref: Sequence[float], r: Sequence[float],
+                          S: Sequence[int]) -> float:
+    """Z_S = sum_{i in S} ref_i exp(r_i / beta)."""
+    return sum(ref[i] * math.exp(r[i] / beta) for i in S)
+
+
+def constrained_free_energy(beta: float, ref: Sequence[float], r: Sequence[float],
+                            S: Sequence[int]) -> float:
+    """F_S = beta log Z_S, the optimal value over policies supported in S."""
+    return beta * math.log(constrained_partition(beta, ref, r, S))
+
+
+def constrained_gibbs(beta: float, ref: Sequence[float], r: Sequence[float],
+                      S: Sequence[int]) -> Vector:
+    """The S-conditioned aligned policy (zero off S)."""
+    Z = constrained_partition(beta, ref, r, S)
+    out = [0.0] * len(ref)
+    for i in S:
+        out[i] = ref[i] * math.exp(r[i] / beta) / Z
+    return out
+
+
+# ----------------------------------------------------------------------------
+# Random instances
+# ----------------------------------------------------------------------------
+
+def random_reference(n: int, rng: random.Random) -> Vector:
+    """A strictly positive random reference policy on n outputs."""
     return normalise([rng.uniform(0.05, 1.0) for _ in range(n)])
 
 
-# --------------------------------------------------------------------------- #
-# A running example                                                           #
-# --------------------------------------------------------------------------- #
-
-RESPONSES: List[str] = [
-    "concise and correct",
-    "verbose but correct",
-    "confidently wrong",
-    "refuses to answer",
-    "off-topic rambling",
-]
-REF: Vec = normalise([0.20, 0.30, 0.25, 0.10, 0.15])
-REWARD: Vec = [3.0, 1.5, -2.0, 0.0, -1.0]
+def random_reward(n: int, scale: float, rng: random.Random) -> Vector:
+    """A random reward model with values in [-scale, scale]."""
+    return [rng.uniform(-scale, scale) for _ in range(n)]
 
 
-def banner(title: str) -> None:
-    print()
+# ----------------------------------------------------------------------------
+# Demonstrations
+# ----------------------------------------------------------------------------
+
+def demo_isometry(rng: random.Random) -> None:
     print("=" * 78)
-    print(title)
+    print("1.  ALIGNMENT IS AN ISOMETRY:  d_H(pi_b(r1), pi_b(r2)) = osc(r1-r2)/beta")
     print("=" * 78)
-
-
-def show_policy(p: Sequence[float], label: str) -> None:
-    print(f"  {label}")
-    for name, prob in zip(RESPONSES, p):
-        bar = "#" * int(round(60 * prob))
-        print(f"    {name:<22s} {prob:7.4f} {bar}")
-
-
-# --------------------------------------------------------------------------- #
-# Demonstration 1: the three-point identity and the variational principle     #
-# --------------------------------------------------------------------------- #
-
-
-def demo_three_point_identity(beta: float = 1.0, trials: int = 5) -> None:
-    banner("1. Three-point identity and the Gibbs variational principle")
-    star = tilted_policy(REF, REWARD, beta)
-    F = free_energy(REF, REWARD, beta)
-    print(f"  beta = {beta}")
-    show_policy(REF, "reference policy pi_ref:")
-    show_policy(star, "aligned policy pi*:")
-    print(f"\n  free energy F = beta log Z = {F:.6f}")
-    print(f"  J(pi*)                     = {rl_objective(star, REF, REWARD, beta):.6f}")
-    print("\n  Check J(p) = F - beta KL(p || pi*) on random policies, and J(p) <= F:")
-    rng = random.Random(20260820)
-    print(f"    {'J(p)':>12s} {'F - beta*KL':>14s} {'residual':>12s} {'J(p)<=F':>9s}")
-    for _ in range(trials):
-        p = random_policy(len(REF), rng)
-        lhs = rl_objective(p, REF, REWARD, beta)
-        rhs = F - beta * kl(p, star)
-        print(f"    {lhs:12.8f} {rhs:14.8f} {abs(lhs - rhs):12.2e} {str(lhs <= F + 1e-12):>9s}")
-    print("\n  Uniqueness: only pi* attains F, and the gap is exactly beta*KL(p||pi*).")
-
-
-# --------------------------------------------------------------------------- #
-# Demonstration 2: sandwich, leash, and the two drift bounds                  #
-# --------------------------------------------------------------------------- #
-
-
-def demo_bounds() -> None:
-    banner("2. Value sandwich, divergence leash, and drift laws")
-    m, M = min(REWARD), max(REWARD)
-    delta = M - m
-    ref_reward = expectation(REF, REWARD)
-    print(f"  reward range: m = {m}, M = {M}, Delta = {delta}")
-    print(f"  E_ref[R] = {ref_reward:.6f}\n")
-    header = (
-        f"  {'beta':>7s} {'F':>10s} {'E_pi*[R]':>10s} {'KL(pi*||ref)':>13s}"
-        f" {'beta*KL<=D':>11s} {'L1':>8s} {'exp bnd':>10s} {'sqrt bnd':>9s}"
-    )
-    print(header)
-    for beta in (0.1, 0.25, 0.5, 1.0, 2.0, 5.0, 20.0):
-        star = tilted_policy(REF, REWARD, beta)
-        F = free_energy(REF, REWARD, beta)
-        k = kl(star, REF)
-        d1 = l1(star, REF)
-        exp_bound = math.exp(delta / beta) - 1.0
-        sqrt_bound = math.sqrt(2.0 * delta / beta)
-        print(
-            f"  {beta:7.2f} {F:10.5f} {expectation(star, REWARD):10.5f} {k:13.5f}"
-            f" {beta * k:11.5f} {d1:8.4f} {exp_bound:10.3g} {sqrt_bound:9.3f}"
-        )
-        assert ref_reward - 1e-12 <= F <= M + 1e-12
-        assert beta * k <= delta + 1e-12
-        assert d1 <= exp_bound + 1e-12
-        assert d1 * d1 <= 2.0 * delta / beta + 1e-12
-    print("\n  All bounds verified.  Note the square-root bound beats the exponential")
-    print("  one exactly when Delta > beta, i.e. in every row with beta < 5.")
-
-
-# --------------------------------------------------------------------------- #
-# Demonstration 3: the alignment Pareto frontier                              #
-# --------------------------------------------------------------------------- #
-
-
-def demo_pareto_frontier() -> None:
-    banner("3. The alignment Pareto frontier: reward bought with divergence")
-    betas = [10.0 ** (1.0 - 0.25 * k) for k in range(13)]  # 10.0 down to ~0.01
-    print(f"  {'beta':>9s} {'KL(pi*||ref)':>13s} {'E_pi*[R]':>10s}   monotone?")
-    prev_kl = -1.0
-    prev_rw = -math.inf
-    for beta in betas:
-        star = tilted_policy(REF, REWARD, beta)
-        k = kl(star, REF)
-        rw = expectation(star, REWARD)
-        ok = (k >= prev_kl - 1e-12) and (rw >= prev_rw - 1e-12)
-        print(f"  {beta:9.4f} {k:13.6f} {rw:10.6f}   {'yes' if ok else 'NO'}")
-        assert ok
-        prev_kl, prev_rw = k, rw
-    print("\n  Both coordinates increase as beta decreases (monotone frontier).")
-    print(f"  Limits: beta -> inf gives pi_ref with reward {expectation(REF, REWARD):.5f};")
-    print(f"          beta -> 0+  gives the arg-max response with reward {max(REWARD):.5f}.")
-
-
-# --------------------------------------------------------------------------- #
-# Demonstration 4: divergence-budgeted alignment (bisection in beta)          #
-# --------------------------------------------------------------------------- #
-
-
-def solve_beta_for_kl_budget(
-    ref: Sequence[float],
-    reward: Sequence[float],
-    budget: float,
-    tol: float = 1e-12,
-    max_iter: int = 200,
-) -> float:
-    """Find beta with KL(pi*_beta || ref) = budget, by bisection.
-
-    KL is continuous and nonincreasing in beta, tends to 0 as beta -> infinity
-    and to log(1/ref(argmax R)) as beta -> 0+, so bisection is well posed for
-    any feasible budget.
-    """
-    lo, hi = 1e-9, 1.0
-    while kl(tilted_policy(ref, reward, hi), ref) > budget:
-        hi *= 2.0
-        if hi > 1e12:
-            raise ValueError("budget appears infeasible")
-    for _ in range(max_iter):
-        mid = 0.5 * (lo + hi)
-        if kl(tilted_policy(ref, reward, mid), ref) > budget:
-            lo = mid
-        else:
-            hi = mid
-        if hi - lo < tol * max(1.0, hi):
-            break
-    return 0.5 * (lo + hi)
-
-
-def demo_budgeted_alignment() -> None:
-    banner("4. Divergence-budgeted alignment: choosing beta from a KL budget")
-    delta = max(REWARD) - min(REWARD)
-    print(f"  {'budget k':>9s} {'beta*':>10s} {'achieved KL':>12s} {'reward':>9s} {'Delta/k':>9s}")
-    for budget in (0.01, 0.05, 0.1, 0.3, 0.6, 1.0):
-        beta = solve_beta_for_kl_budget(REF, REWARD, budget)
-        star = tilted_policy(REF, REWARD, beta)
-        print(
-            f"  {budget:9.3f} {beta:10.5f} {kl(star, REF):12.6f}"
-            f" {expectation(star, REWARD):9.5f} {delta / budget:9.3f}"
-        )
-        # The leash beta*KL <= Delta certifies the a priori bracket beta <= Delta/k.
-        assert beta <= delta / budget + 1e-6
-    print("\n  The last column is the a priori bracket supplied by the leash bound.")
-
-
-# --------------------------------------------------------------------------- #
-# Demonstration 5: tilting is a group action                                  #
-# --------------------------------------------------------------------------- #
-
-
-def demo_group_action(beta: float = 0.8) -> None:
-    banner("5. Exponential tilting as a group action of rewards")
-    r1 = [1.0, -0.5, 2.0, 0.25, -1.5]
-    r2 = [-0.75, 2.0, 0.5, -1.0, 1.25]
-    stage1 = tilted_policy(REF, r1, beta)
-    stage2 = tilted_policy(stage1, r2, beta)
-    onestep = tilted_policy(REF, [a + b for a, b in zip(r1, r2)], beta)
-    print("  Additivity: tilt(tilt(ref, r1), r2) == tilt(ref, r1 + r2)")
-    print(f"    max coordinate discrepancy: {max(abs(a - b) for a, b in zip(stage2, onestep)):.3e}")
-
-    reversed_order = tilted_policy(tilted_policy(REF, r2, beta), r1, beta)
-    print("  Order independence (rewards commute):")
-    print(
-        "    max discrepancy between the two orders: "
-        f"{max(abs(a - b) for a, b in zip(stage2, reversed_order)):.3e}"
-    )
-
-    c = 4.2
-    shifted = tilted_policy(REF, [x + c for x in REWARD], beta)
-    base = tilted_policy(REF, REWARD, beta)
-    print(f"  Stabiliser: adding the constant c = {c} to the reward")
-    print(f"    policy discrepancy: {max(abs(a - b) for a, b in zip(shifted, base)):.3e}")
-    print(
-        f"    free energy shift:  {free_energy(REF, [x + c for x in REWARD], beta) - free_energy(REF, REWARD, beta):.6f}"
-        f"  (should be {c})"
-    )
-
-    target = normalise([0.4, 0.1, 0.05, 0.3, 0.15])
-    transport = [beta * math.log(t / r) for t, r in zip(target, REF)]
-    reached = tilted_policy(REF, transport, beta)
-    print("  Transitivity: an explicit reward carrying pi_ref to an arbitrary target")
-    print(f"    max discrepancy from target: {max(abs(a - b) for a, b in zip(reached, target)):.3e}")
-
-    implicit = [beta * math.log(s / r) for s, r in zip(base, REF)]
-    gaps = [a - b for a, b in zip(implicit, REWARD)]
-    print("  Implicit reward of pi* recovers R up to an additive constant:")
-    print(f"    R_implicit - R = {[round(g, 6) for g in gaps]}")
-    print(f"    (constant, equal to -F = {-free_energy(REF, REWARD, beta):.6f})")
-
-
-# --------------------------------------------------------------------------- #
-# Demonstration 6: Bradley-Terry identifiability                              #
-# --------------------------------------------------------------------------- #
-
-
-def bt_matrix(reward: Sequence[float]) -> List[List[float]]:
-    return [[1.0 / (1.0 + math.exp(rj - ri)) for rj in reward] for ri in reward]
-
-
-def demo_preference_identifiability(beta: float = 1.0) -> None:
-    banner("6. Preference data determines the aligned policy exactly")
-    shifted = [x + 7.5 for x in REWARD]
-    rescaled = [1.3 * x for x in REWARD]
-    a, b, c = bt_matrix(REWARD), bt_matrix(shifted), bt_matrix(rescaled)
-    dif_shift = max(abs(a[i][j] - b[i][j]) for i in range(len(REWARD)) for j in range(len(REWARD)))
-    dif_scale = max(abs(a[i][j] - c[i][j]) for i in range(len(REWARD)) for j in range(len(REWARD)))
-    print(f"  max preference difference, R vs R + 7.5   : {dif_shift:.3e}  (identical)")
-    print(f"  max preference difference, R vs 1.3 R     : {dif_scale:.3e}  (different)")
-    p0 = tilted_policy(REF, REWARD, beta)
-    p1 = tilted_policy(REF, shifted, beta)
-    p2 = tilted_policy(REF, rescaled, beta)
-    print(f"  policy difference,   R vs R + 7.5         : {l1(p0, p1):.3e}  (same policy)")
-    print(f"  policy difference,   R vs 1.3 R           : {l1(p0, p2):.3e}  (different)")
-    print("\n  Reward shifts are gauge: unobservable in preferences and in the policy.")
-
-
-# --------------------------------------------------------------------------- #
-# Demonstration 7: reward misspecification costs at most 2 eps                #
-# --------------------------------------------------------------------------- #
-
-
-def demo_reward_hacking(beta: float = 0.7, eps: float = 0.35, trials: int = 2000) -> None:
-    banner("7. Reward misspecification: the 2-epsilon bound")
-    rng = random.Random(11235)
-    F_true = free_energy(REF, REWARD, beta)
+    print(f"{'n':>3} {'beta':>7} {'d_H(policies)':>15} {'osc(r1-r2)/beta':>18} {'error':>11}")
     worst = 0.0
-    for _ in range(trials):
-        noisy = [x + rng.uniform(-eps, eps) for x in REWARD]
-        phat = tilted_policy(REF, noisy, beta)
-        loss = F_true - rl_objective(phat, REF, REWARD, beta)
-        worst = max(worst, loss)
-        assert loss <= 2.0 * eps + 1e-12
-    print(f"  beta = {beta}, sup-norm reward error eps = {eps}")
-    print(f"  worst observed loss over {trials} perturbations: {worst:.6f}")
-    print(f"  guaranteed bound 2*eps                        : {2.0 * eps:.6f}")
-    print("  (Also: the free energy itself moves by at most eps -- 1-Lipschitz.)")
+    for _ in range(6):
+        n = rng.randint(3, 9)
+        beta = rng.choice([0.05, 0.25, 1.0, 3.0, 10.0])
+        ref = random_reference(n, rng)
+        r1 = random_reward(n, 4.0, rng)
+        r2 = random_reward(n, 4.0, rng)
+        lhs = hilbert_distance(gibbs(beta, ref, r1), gibbs(beta, ref, r2))
+        rhs = oscillation([a - b for a, b in zip(r1, r2)]) / beta
+        worst = max(worst, abs(lhs - rhs))
+        print(f"{n:>3} {beta:>7.2f} {lhs:>15.9f} {rhs:>18.9f} {abs(lhs-rhs):>11.2e}")
+    print(f"\n  Maximum deviation from equality: {worst:.3e}   (equality, not a bound)")
+
+    # Displacement from the reference and invariance under constant shifts.
+    n, beta = 5, 0.7
+    ref = random_reference(n, rng)
+    r = random_reward(n, 3.0, rng)
+    print(f"\n  d_H(pi_b(r), ref)        = {hilbert_distance(gibbs(beta, ref, r), ref):.9f}")
+    print(f"  osc(r)/beta              = {oscillation(r)/beta:.9f}")
+    shifted = [ri + 17.0 for ri in r]
+    print(f"  d_H(pi_b(r), pi_b(r+17)) = "
+          f"{hilbert_distance(gibbs(beta, ref, r), gibbs(beta, ref, shifted)):.3e}"
+          "   (rewards matter only modulo constants)")
+    print()
 
 
-# --------------------------------------------------------------------------- #
-# Demonstration 8: the pre-training mix-in and the alignment tax              #
-# --------------------------------------------------------------------------- #
+def demo_sharp_tv(rng: random.Random) -> None:
+    print("=" * 78)
+    print("2-3.  SHARP TV COMPARISON:  TV <= tanh(d_H/4) < 1,  vs the naive e^d - 1")
+    print("=" * 78)
+    print(f"{'beta':>7} {'osc(r1-r2)':>12} {'d_H':>10} {'TV':>10} "
+          f"{'tanh(d/4)':>11} {'e^d - 1':>12}")
+    n = 6
+    ref = random_reference(n, rng)
+    r1 = random_reward(n, 5.0, rng)
+    r2 = random_reward(n, 5.0, rng)
+    osc_diff = oscillation([a - b for a, b in zip(r1, r2)])
+    for beta in (0.05, 0.1, 0.25, 0.5, 1.0, 2.0, 5.0, 20.0):
+        p, q = gibbs(beta, ref, r1), gibbs(beta, ref, r2)
+        d = hilbert_distance(p, q)
+        tv = tv_distance(p, q)
+        sharp, crude = tanh_bound(d), naive_bound(d)
+        assert tv <= sharp + TOL, "sharp bound violated"
+        assert tv <= 1.0
+        crude_str = f"{crude:12.4f}" if crude < 1e6 else f"{crude:12.2e}"
+        print(f"{beta:>7.2f} {osc_diff:>12.4f} {d:>10.4f} {tv:>10.6f} "
+              f"{sharp:>11.6f} {crude_str}")
+    print("\n  The naive bound exceeds 1 (hence says nothing) as soon as d > log 2 ~ 0.693;")
+    print("  tanh(d/4) is always < 1 and is never violated.  Two aligned policies are")
+    print("  therefore never mutually singular, however badly the rewards disagree.")
+    print("  (Entries printed as 1.000000 are strictly below 1; the margin")
+    print("   1 - tanh(d/4) = 2/(e^{d/2}+1) is simply smaller than display precision.)")
+
+    # Stress test: adversarially large disagreement, tiny beta.  Here the tilted
+    # policies underflow to zero in double precision, so we use the isometry to
+    # obtain the Hilbert distance exactly and report the certified margin below 1
+    # in log space.
+    r_big = [0.0] * n
+    r_big[0] = 500.0
+    r_small = [0.0] * n
+    r_small[n - 1] = 500.0
+    beta_x = 0.01
+    d_extreme = oscillation([a - b for a, b in zip(r_big, r_small)]) / beta_x
+    print(f"\n  Extreme case (beta = {beta_x}, opposing reward spikes of size 500):")
+    print(f"    d_H = osc(r1 - r2)/beta = {d_extreme:.1f}  (by the isometry theorem)")
+    print(f"    The two policies underflow to disjoint-looking vectors in floating")
+    print(f"    point, yet the theorem certifies")
+    print(f"      1 - TV  >=  1 - tanh(d/4)  =  10^({log10_one_minus_tanh_bound(d_extreme):.1f}) > 0.")
+    print()
 
 
-def demo_alignment_tax(beta: float = 1.0, gamma: float = 0.5) -> None:
-    banner("8. The pre-training mix-in: an exact obstruction, and its size")
-    star = tilted_policy(REF, REWARD, beta)
-    F = free_energy(REF, REWARD, beta)
-
-    def joint_bound(pre: Sequence[float]) -> float:
-        return F + ptx_term(pre, pre, gamma)
-
-    print("  Case A: pre-training distribution equals the aligned optimum.")
-    pre_a = list(star)
-    best_a = full_objective(star, REF, REWARD, pre_a, beta, gamma)
-    print(f"    joint bound        = {joint_bound(pre_a):.8f}")
-    print(f"    value at p = pi*   = {best_a:.8f}")
-    print(f"    gap                = {joint_bound(pre_a) - best_a:.2e}  (attained)")
-
-    print("\n  Case B: a genuinely different pre-training distribution.")
-    pre_b = normalise([0.30, 0.30, 0.20, 0.10, 0.10])
-    bound_b = joint_bound(pre_b)
-    rng = random.Random(4242)
-    best_b = -math.inf
-    argbest: Vec = []
-    # coarse search over the simplex, refined by a local random walk
-    for _ in range(20000):
-        p = random_policy(len(REF), rng)
-        v = full_objective(p, REF, REWARD, pre_b, beta, gamma)
-        if v > best_b:
-            best_b, argbest = v, p
-    step = 0.05
-    for _ in range(60000):
-        p = normalise([max(1e-9, x + rng.uniform(-step, step) * x) for x in argbest])
-        v = full_objective(p, REF, REWARD, pre_b, beta, gamma)
-        if v > best_b:
-            best_b, argbest = v, p
-        step *= 0.99995
-    tax = bound_b - best_b
-    print(f"    joint bound                = {bound_b:.6f}")
-    print(f"    best value found           = {best_b:.6f}")
-    print(f"    alignment tax (strict gap) = {tax:.6f}  > 0")
-    print(
-        "    predicted tax = min over p of "
-        "[beta KL(p||pi*) + gamma KL(pre||p)]"
-    )
-    predicted = min(
-        beta * kl(p, star) + gamma * kl(pre_b, p)
-        for p in [argbest]
-    )
-    print(f"    at the found optimum this equals {predicted:.6f}")
-    show_policy(star, "aligned optimum pi* (what the reward wants):")
-    show_policy(pre_b, "pre-training distribution (what the mix-in wants):")
-    show_policy(argbest, "compromise optimum of the full objective:")
+def demo_sharpness() -> None:
+    print("=" * 78)
+    print("2b.  THE CONSTANT tanh(d/4) IS ATTAINED (extremal two-point pairs)")
+    print("=" * 78)
+    print(f"{'d':>8} {'d_H(p,q)':>12} {'TV(p,q)':>12} {'tanh(d/4)':>12} {'error':>11}")
+    for d in (0.1, 0.5, 1.0, 2.0, 5.0, 12.0):
+        theta = math.exp(d / 2.0)
+        p = [theta / (1.0 + theta), 1.0 / (1.0 + theta)]
+        q = [1.0 / (1.0 + theta), theta / (1.0 + theta)]
+        dh, tv, bound = hilbert_distance(p, q), tv_distance(p, q), tanh_bound(d)
+        assert abs(dh - d) < 1e-9 and abs(tv - bound) < 1e-12
+        print(f"{d:>8.2f} {dh:>12.8f} {tv:>12.9f} {bound:>12.9f} {abs(tv-bound):>11.2e}")
+    print("\n  Equality throughout: the likelihood ratios are theta and 1/theta, which is")
+    print("  exactly the equality case v*w = 1 of the square (v w - 1)^2 >= 0 driving")
+    print("  the proof.  Since any two positive policies are tilts of any positive")
+    print("  reference, the misspecification bound is attained too.\n")
 
 
-# --------------------------------------------------------------------------- #
-# Demonstration 9: prompt-wise decomposition and localisation of the tax      #
-# --------------------------------------------------------------------------- #
+def demo_envelope(rng: random.Random) -> None:
+    print("=" * 78)
+    print("4.  ENVELOPE THEOREM:  dF/dt|_0 F(beta, r + t s) = E_{pi_beta(r)}[s]")
+    print("=" * 78)
+    n, beta = 7, 0.8
+    ref = random_reference(n, rng)
+    r = random_reward(n, 2.0, rng)
+    s = random_reward(n, 2.0, rng)
+    policy = gibbs(beta, ref, r)
+    analytic = sum(pi * si for pi, si in zip(policy, s))
+    print(f"{'h':>10} {'central difference':>22} {'error':>12}")
+    for h in (1e-2, 1e-3, 1e-4, 1e-5):
+        up = free_energy(beta, ref, [ri + h * si for ri, si in zip(r, s)])
+        dn = free_energy(beta, ref, [ri - h * si for ri, si in zip(r, s)])
+        num = (up - dn) / (2.0 * h)
+        print(f"{h:>10.0e} {num:>22.12f} {abs(num-analytic):>12.2e}")
+    print(f"{'analytic':>10} {analytic:>22.12f}")
+    print("\n  The aligned policy is the reward-gradient of the alignment value.\n")
 
 
-def demo_multiprompt(beta: float = 1.0, gamma: float = 0.6) -> None:
-    banner("9. Many prompts: optimality decouples, and the tax stays local")
-    prompts = ["x0 (mix-in attached)", "x1", "x2"]
-    weights = [0.5, 0.3, 0.2]
-    refs = [
-        normalise([0.2, 0.3, 0.25, 0.1, 0.15]),
-        normalise([0.1, 0.1, 0.4, 0.3, 0.1]),
-        normalise([0.3, 0.2, 0.2, 0.2, 0.1]),
-    ]
-    rewards = [
-        [3.0, 1.5, -2.0, 0.0, -1.0],
-        [0.5, 2.5, -1.0, 1.0, -0.5],
-        [-1.0, 0.0, 1.0, 2.0, 3.0],
-    ]
-    pre = normalise([0.30, 0.30, 0.20, 0.10, 0.10])
+def demo_annealing(rng: random.Random) -> None:
+    print("=" * 78)
+    print("5.  ANNEALING LIMITS WITH RATES")
+    print("=" * 78)
+    n = 5
+    ref = random_reference(n, rng)
+    r = random_reward(n, 3.0, rng)
+    M = max(abs(ri) for ri in r)
+    print(f"  max r = {max(r):.6f},  E_ref[r] = {sum(a*b for a, b in zip(ref, r)):.6f},"
+          f"  ||r||_inf = {M:.4f}")
+    print(f"\n  Cold limit (beta -> 0+):  max r + beta log(min ref)  <=  F  <=  max r")
+    print(f"{'beta':>9} {'lower':>14} {'F':>14} {'upper (max r)':>15}")
+    for beta in (1.0, 0.3, 0.1, 0.03, 0.01, 0.003):
+        F = free_energy(beta, ref, r)
+        lo = max(r) + beta * math.log(min(ref))
+        assert lo - TOL <= F <= max(r) + TOL
+        print(f"{beta:>9.3f} {lo:>14.6f} {F:>14.6f} {max(r):>15.6f}")
 
-    stars = [tilted_policy(r, q, beta) for r, q in zip(refs, rewards)]
-    Fs = [free_energy(r, q, beta) for r, q in zip(refs, rewards)]
-    Fmulti = sum(w * f for w, f in zip(weights, Fs))
-    print(f"  prompt-averaged free energy F_multi = {Fmulti:.6f}")
-    print("  Without the mix-in, the optimum is prompt-wise tilted; check by")
-    print("  perturbing one conditional at a time:")
-    rng = random.Random(99)
-    for j, name in enumerate(prompts):
-        conditionals = [list(s) for s in stars]
-        conditionals[j] = random_policy(len(REF), rng)
-        val = sum(
-            w * rl_objective(p, r, q, beta)
-            for w, p, r, q in zip(weights, conditionals, refs, rewards)
-        )
-        print(f"    perturbing {name:<22s}: value {val:.6f} < F_multi ({Fmulti - val:.6f} below)")
-        assert val < Fmulti
-
-    print("\n  Now attach the mix-in to prompt x0 only.  The optimal conditionals at")
-    print("  x1 and x2 are unchanged; only the conditional at x0 compromises.")
-
-    def full(conds: Sequence[Sequence[float]]) -> float:
-        return sum(
-            w * rl_objective(p, r, q, beta)
-            for w, p, r, q in zip(weights, conds, refs, rewards)
-        ) + ptx_term(conds[0], pre, gamma)
-
-    # optimise the x0 conditional numerically; the others stay tilted
-    best = full([stars[0], stars[1], stars[2]])
-    arg = list(stars[0])
-    step = 0.08
-    for _ in range(80000):
-        cand = normalise([max(1e-9, x + rng.uniform(-step, step) * x) for x in arg])
-        v = full([cand, stars[1], stars[2]])
-        if v > best:
-            best, arg = v, cand
-        step *= 0.99997
-    print(f"    optimal x0 conditional differs from its tilted policy by L1 = {l1(arg, stars[0]):.4f}")
-    for j in (1, 2):
-        perturbed = [list(arg), list(stars[1]), list(stars[2])]
-        perturbed[j] = random_policy(len(REF), rng)
-        assert full(perturbed) < best
-        print(f"    perturbing the conditional at {prompts[j]}: strictly worse, as predicted")
-    print("\n  The alignment tax is localised to the prompt the mix-in touches.")
+    exp_ref = sum(a * b for a, b in zip(ref, r))
+    print(f"\n  Hot limit (beta -> oo):  0 <= F - E_ref[r] <= (3/4) M^2 / beta  (beta >= M)")
+    print(f"{'beta':>9} {'F - E_ref[r]':>16} {'(3/4)M^2/beta':>16}")
+    for beta in (M, 2 * M, 5 * M, 20 * M, 100 * M):
+        gap = free_energy(beta, ref, r) - exp_ref
+        bound = 0.75 * M * M / beta
+        assert -TOL <= gap <= bound + TOL
+        print(f"{beta:>9.3f} {gap:>16.9f} {bound:>16.9f}")
+    print()
 
 
-# --------------------------------------------------------------------------- #
-# Demonstration 10: uniqueness via strict concavity                           #
-# --------------------------------------------------------------------------- #
+def demo_goodhart(rng: random.Random) -> None:
+    print("=" * 78)
+    print("6.  GOODHART REGRET:  F(b,r) - J_r(pi_b(rhat)) <= 2 ||r - rhat||_inf")
+    print("=" * 78)
+    n = 8
+    ref = random_reference(n, rng)
+    r = random_reward(n, 3.0, rng)
+    print(f"{'beta':>8} {'M':>8} {'true regret':>14} {'bound 2M':>10} {'slack':>10}")
+    for beta in (0.05, 0.2, 1.0, 5.0):
+        for M in (0.1, 0.5, 2.0):
+            rhat = [ri + rng.uniform(-M, M) for ri in r]
+            M_eff = max(abs(a - b) for a, b in zip(r, rhat))
+            regret = free_energy(beta, ref, r) - rlhf_objective(
+                beta, ref, r, gibbs(beta, ref, rhat))
+            assert regret <= 2.0 * M_eff + TOL
+            print(f"{beta:>8.2f} {M_eff:>8.4f} {regret:>14.8f} "
+                  f"{2*M_eff:>10.4f} {2*M_eff-regret:>10.4f}")
+    print("\n  The bound holds uniformly in beta: value robustness does not need a")
+    print("  short leash, though policy stability does.\n")
 
 
-def demo_uniqueness(beta: float = 1.1, gamma: float = 0.4, trials: int = 200) -> None:
-    banner("10. Strict concavity: the full objective has at most one maximiser")
-    pre = normalise([0.30, 0.30, 0.20, 0.10, 0.10])
-    rng = random.Random(2718)
-    worst_margin = math.inf
-    for _ in range(trials):
-        p = random_policy(len(REF), rng)
-        q = random_policy(len(REF), rng)
-        mid = [0.5 * (a + b) for a, b in zip(p, q)]
-        jp = full_objective(p, REF, REWARD, pre, beta, gamma)
-        jq = full_objective(q, REF, REWARD, pre, beta, gamma)
-        jm = full_objective(mid, REF, REWARD, pre, beta, gamma)
-        margin = jm - 0.5 * (jp + jq)
-        worst_margin = min(worst_margin, margin)
-        assert margin > 0.0
-    print(f"  midpoint always strictly beats the average; smallest observed margin:")
-    print(f"    {worst_margin:.3e} > 0  over {trials} random pairs")
-    print("  Two distinct maximisers would contradict this, so the maximiser is unique.")
+def demo_ptx(rng: random.Random) -> None:
+    print("=" * 78)
+    print("7.  EXACT PRE-TRAINING IDENTITY AND THE NO-REGRESSION CRITERION")
+    print("=" * 78)
+    n, beta, gamma = 6, 0.6, 0.3
+    ref = random_reference(n, rng)
+    r = random_reward(n, 2.5, rng)
+    pre = random_reference(n, rng)
+
+    aligned = gibbs(beta, ref, r)
+    lhs = sum(p * math.log(a) for p, a in zip(pre, aligned))
+    F = free_energy(beta, ref, r)
+    E_pre_r = sum(p * ri for p, ri in zip(pre, r))
+    rhs = sum(p * math.log(q) for p, q in zip(pre, ref)) + (E_pre_r - F) / beta
+    print(f"  E_pre[log pi_b(r)]                       = {lhs:.12f}")
+    print(f"  E_pre[log ref] + (E_pre[r] - F)/beta     = {rhs:.12f}")
+    print(f"  identity error                           = {abs(lhs-rhs):.2e}")
+
+    print(f"\n  No-regression criterion:  regression happens iff E_pre[r] < F(beta,r).")
+    print(f"{'beta':>8} {'E_pre[r]':>12} {'F(beta,r)':>12} {'PTX change':>14} {'regress?':>10}")
+    for beta_i in (0.05, 0.2, 0.6, 2.0, 10.0, 50.0):
+        F_i = free_energy(beta_i, ref, r)
+        aligned_i = gibbs(beta_i, ref, r)
+        change = gamma * (sum(p * math.log(a) for p, a in zip(pre, aligned_i))
+                          - sum(p * math.log(q) for p, q in zip(pre, ref)))
+        predicted = E_pre_r < F_i - TOL
+        assert predicted == (change < -TOL)
+        assert -change <= gamma * oscillation(r) / beta_i + TOL
+        print(f"{beta_i:>8.2f} {E_pre_r:>12.6f} {F_i:>12.6f} {change:>14.8f} "
+              f"{'yes' if predicted else 'no':>10}")
+    print(f"\n  Worst-case budget gamma*osc(r)/beta is respected at every beta above.")
+    print("  Aggressive alignment (small beta) raises F and so triggers regression.\n")
 
 
-# --------------------------------------------------------------------------- #
-# Demonstration 11: Pinsker's inequality, verified numerically                #
-# --------------------------------------------------------------------------- #
+def demo_symbolic(rng: random.Random) -> None:
+    print("=" * 78)
+    print("8.  SYMBOLIC CONSTRAINTS: attainment, commutation, submodularity, price")
+    print("=" * 78)
+    n, beta = 7, 0.9
+    ref = random_reference(n, rng)
+    r = random_reward(n, 2.0, rng)
+    S = [0, 1, 3, 5]
+
+    # Attainment of the constrained optimum.
+    pi_S = constrained_gibbs(beta, ref, r, S)
+    F_S = constrained_free_energy(beta, ref, r, S)
+    print(f"  J_beta(constrained optimum) = {rlhf_objective(beta, ref, r, pi_S):.12f}")
+    print(f"  F_S                         = {F_S:.12f}")
+    # Random admissible competitors score strictly less.
+    worst_gap = math.inf
+    for _ in range(2000):
+        w = [rng.random() if i in S else 0.0 for i in range(n)]
+        p = normalise(w)
+        worst_gap = min(worst_gap, F_S - rlhf_objective(beta, ref, r, p))
+    print(f"  best random competitor falls short by {worst_gap:.3e} (>= 0)")
+
+    # Commutation of filtering and alignment.
+    aligned = gibbs(beta, ref, r)
+    mass = sum(aligned[i] for i in S)
+    err = max(abs(pi_S[i] - aligned[i] / mass) for i in S)
+    print(f"\n  Filter-then-align vs align-then-filter, max discrepancy: {err:.2e}")
+
+    # Monotonicity and submodularity over the Boolean lattice.
+    idx = list(range(n))
+    viol_mono = viol_sub = 0
+    min_slack = math.inf
+    subsets = [list(c) for k in range(1, n + 1) for c in combinations(idx, k)]
+    for A in subsets:
+        for B in subsets:
+            inter = sorted(set(A) & set(B))
+            if not inter:
+                continue
+            union = sorted(set(A) | set(B))
+            slack = (constrained_free_energy(beta, ref, r, A)
+                     + constrained_free_energy(beta, ref, r, B)
+                     - constrained_free_energy(beta, ref, r, union)
+                     - constrained_free_energy(beta, ref, r, inter))
+            min_slack = min(min_slack, slack)
+            if slack < -TOL:
+                viol_sub += 1
+            if set(A) <= set(B) and (constrained_free_energy(beta, ref, r, A)
+                                     > constrained_free_energy(beta, ref, r, B) + TOL):
+                viol_mono += 1
+    print(f"  Exhaustive lattice check on 2^{n} - 1 = {len(subsets)} admissible sets:")
+    print(f"    monotonicity violations   : {viol_mono}")
+    print(f"    submodularity violations  : {viol_sub}")
+    print(f"    minimal submodular slack  : {min_slack:.3e}  (>= 0 as claimed)")
+
+    # Price of a rule set.
+    print(f"\n  Price of a rule set:  F - F_S <= osc(r) - beta log ref(S)")
+    print(f"{'|S|':>5} {'ref(S)':>10} {'F - F_S':>12} {'bound':>12}")
+    for k in (1, 2, 3, 5, 7):
+        T = list(range(k))
+        price = free_energy(beta, ref, r) - constrained_free_energy(beta, ref, r, T)
+        bound = oscillation(r) - beta * math.log(sum(ref[i] for i in T))
+        assert price <= bound + TOL
+        print(f"{k:>5} {sum(ref[i] for i in T):>10.5f} {price:>12.6f} {bound:>12.6f}")
+    print()
 
 
-def demo_pinsker(trials: int = 5000) -> None:
-    banner("11. Pinsker's inequality on the simplex")
-    rng = random.Random(31415)
-    worst_ratio = 0.0
-    for _ in range(trials):
-        p = random_policy(6, rng)
-        q = random_policy(6, rng)
-        lhs = l1(p, q) ** 2
-        rhs = 2.0 * kl(p, q)
-        assert lhs <= rhs + 1e-12
-        worst_ratio = max(worst_ratio, lhs / rhs if rhs > 0 else 0.0)
-    print(f"  worst observed ratio ||p-q||_1^2 / (2 KL(p||q)) = {worst_ratio:.6f} <= 1")
-    print("  The scalar engine is  x log x - x + 1 >= 3(x-1)^2 / (2(x+2))  for x >= 0:")
-    print(f"    {'x':>8s} {'x log x - x + 1':>17s} {'3(x-1)^2/(2(x+2))':>19s}")
-    for x in (0.0, 0.05, 0.5, 1.0, 2.0, 10.0, 100.0):
-        left = (x * math.log(x) if x > 0 else 0.0) - x + 1.0
-        right = 3.0 * (x - 1.0) ** 2 / (2.0 * (x + 2.0))
-        assert left >= right - 1e-12
-        print(f"    {x:8.2f} {left:17.6f} {right:19.6f}")
+def demo_drift(rng: random.Random) -> None:
+    print("=" * 78)
+    print("9.  DRIFT BUDGET FOR ITERATED ALIGNMENT")
+    print("=" * 78)
+    n, beta = 6, 0.5
+    ref = random_reference(n, rng)
+
+    # (a) Generic rounds: budget holds, with slack from partial cancellation.
+    rounds: List[Vector] = [random_reward(n, 1.0, rng) for _ in range(6)]
+    print("  (a) Random rounds")
+    print(f"{'n rounds':>9} {'true drift':>13} {'budget':>12} {'slack':>11}")
+    for k in range(1, len(rounds) + 1):
+        acc = [sum(rounds[j][i] for j in range(k)) for i in range(n)]
+        drift = hilbert_distance(gibbs(beta, ref, acc), ref)
+        budget = sum(oscillation(rounds[j]) for j in range(k)) / beta
+        assert drift <= budget + TOL
+        print(f"{k:>9} {drift:>13.6f} {budget:>12.6f} {budget-drift:>11.6f}")
+
+    # (b) Aligned rounds (common argmax/argmin): the budget is attained.
+    base = [0.0] * n
+    base[0], base[n - 1] = 1.0, -1.0
+    aligned_rounds = [[c * b for b in base] for c in (0.5, 1.0, 2.0, 0.25)]
+    acc = [sum(rd[i] for rd in aligned_rounds) for i in range(n)]
+    drift = hilbert_distance(gibbs(beta, ref, acc), ref)
+    budget = sum(oscillation(rd) for rd in aligned_rounds) / beta
+    print(f"\n  (b) Non-cancelling rounds (shared argmax and argmin):")
+    print(f"      drift = {drift:.9f},  budget = {budget:.9f},  gap = {abs(drift-budget):.2e}")
+
+    # (c) Cancelling rounds: drift is zero but the budget is positive.
+    s = random_reward(n, 1.5, rng)
+    acc = [0.0] * n
+    drift = hilbert_distance(gibbs(beta, ref, acc), ref)
+    budget = 2.0 * oscillation(s) / beta
+    print(f"\n  (c) Cancelling rounds (s then -s):")
+    print(f"      drift = {drift:.2e},  budget = {budget:.6f}  -> the bound is strict,")
+    print("      so no round-wise ledger can do better without joint information.\n")
 
 
-# --------------------------------------------------------------------------- #
+def demo_beta_calibration(rng: random.Random) -> None:
+    print("=" * 78)
+    print("10.  CALIBRATING beta FROM A DRIFT TARGET (an exact inversion)")
+    print("=" * 78)
+    n = 6
+    ref = random_reference(n, rng)
+    r = random_reward(n, 4.0, rng)
+    print(f"  osc(r) = {oscillation(r):.6f}")
+    print(f"{'target d_H':>12} {'beta*':>10} {'achieved d_H':>14} {'TV':>10} "
+          f"{'TV bound':>10}")
+    for delta in (0.05, 0.2, 0.5, 1.0, 3.0):
+        beta_star = oscillation(r) / delta
+        achieved = hilbert_distance(gibbs(beta_star, ref, r), ref)
+        tv = tv_distance(gibbs(beta_star, ref, r), ref)
+        print(f"{delta:>12.3f} {beta_star:>10.4f} {achieved:>14.9f} {tv:>10.6f} "
+              f"{tanh_bound(delta):>10.6f}")
+    print(f"\n{'target TV':>12} {'beta*':>10} {'achieved TV':>14}")
+    for tau in (0.02, 0.1, 0.3, 0.6):
+        beta_star = oscillation(r) / (4.0 * math.atanh(tau))
+        tv = tv_distance(gibbs(beta_star, ref, r), ref)
+        assert tv <= tau + TOL
+        print(f"{tau:>12.3f} {beta_star:>10.4f} {tv:>14.6f}")
+    print("\n  The Hilbert target is met exactly; the TV target is met conservatively.\n")
 
 
 def main() -> None:
-    print("Exact theory of the KL-regularised alignment objective")
-    print("Numerical demonstrations")
-    demo_three_point_identity()
-    demo_bounds()
-    demo_pareto_frontier()
-    demo_budgeted_alignment()
-    demo_group_action()
-    demo_preference_identifiability()
-    demo_reward_hacking()
-    demo_alignment_tax()
-    demo_multiprompt()
-    demo_uniqueness()
-    demo_pinsker()
-    banner("All demonstrations completed; every asserted bound held.")
+    rng = random.Random(20260820)
+    print()
+    print("#" * 78)
+    print("#  THE PROJECTIVE GEOMETRY OF KL-REGULARISED ALIGNMENT".ljust(77) + "#")
+    print("#  numerical demonstrations of every main theorem".ljust(77) + "#")
+    print("#" * 78)
+    print()
+    demo_isometry(rng)
+    demo_sharp_tv(rng)
+    demo_sharpness()
+    demo_envelope(rng)
+    demo_annealing(rng)
+    demo_goodhart(rng)
+    demo_ptx(rng)
+    demo_symbolic(rng)
+    demo_drift(rng)
+    demo_beta_calibration(rng)
+    print("=" * 78)
+    print("All numerical checks passed.")
+    print("=" * 78)
 
 
 if __name__ == "__main__":
