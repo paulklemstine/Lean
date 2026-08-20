@@ -3,13 +3,13 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "consumed_by_exp_id": "9e83a721",
+    "consumed_by_exp_id": "84bf9824",
     "description": "It is a direct adaptation of the standard Reinforcement Learning from Human Feedback (RLHF) objective with a pre-training mix-in (PTX)\u2014originally introduced in the InstructGPT / PPO alignment framework (Ouyang et al., 2022)\u2014rebranded with neurosymbolic notation.Breakdown of the Components$$\\text{Objective}(\\phi) = \\underbrace{\\mathbb{E}_{x, y}\\left[ RM_{NS}(x, y) \\right]}_{\\text{1. Reward Maximization}} - \\underbrace{\\beta_{NS} \\mathbb{E}_{x, y}\\left[ \\log \\frac{LLM_\\phi^{NS}(y\\vert{}x)}{LLM^{SFT}(y\\vert{}x)} \\right]}_{\\text{2. KL-Divergence Penalty}} + \\underbrace{\\gamma_{NS} \\mathbb{E}_{x}\\left[ \\log LLM_\\phi^{NS}(x) \\right]}_{\\text{3. Pretraining Loss Mix-in (PTX)}}$$NeuroSymbolic Reward Term:$\\mathbb{E}_{x \\sim \\mathcal{D}_{RL}, y \\sim LLM_\\phi^{NS}(x)} [RM_{NS}(x, y)]$Optimizes the policy parameters ($\\phi$) to generate outputs $y$ given prompts $x$ that maximize the score from a (neurosymbolic) reward model $RM_{NS}$.KL Penalty (Regularization):$-\\beta_{NS} \\log \\frac{LLM_\\phi^{NS}(y\\vert{}x)}{LLM^{SFT}(y\\vert{}x)}$The point-wise Kullback\u2013Leibler ($\\text{D}_{\\text{KL}}$) divergence penalty. It prevents the tuned policy $LLM_\\phi^{NS}$ from drifting too far from the base Supervised Fine-Tuned model ($LLM^{SFT}$), preventing policy collapse and reward hacking. $\\beta_{NS}$ controls the penalty strength.Pretraining Mix-in Gradient ($\\text{PPO-ptx}$ term):$+\\gamma_{NS} \\mathbb{E}_{x \\sim \\mathcal{D}_{pretrain}} \\log LLM_\\phi^{NS}(x)$Maximizes the log-likelihood over the original pretraining distribution $\\mathcal{D}_{pretrain}$ with coefficient $\\gamma_{NS}$. This standard trick avoids performance regression on general NLP benchmarks during RL fine-tuning.TakeawayMathematical Validity: 100% sound; it directly mirrors the standard InstructGPT alignment equation.Practical Meaning: It represents fine-tuning a model using RLHF, where the reward signal ($RM_{NS}$) or the model architecture incorporates neurosymbolic rules/logic rather than purely human-labeled reward modeling.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_1569",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
@@ -793,6 +793,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 0750e9d7 (Q=0.840), which proved 102 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The reduction is proved, and the 194 values `c_g(1)` are tabulated\ndata; the conjecture is now a finite, checkable arithmetic statement that could\nbe discharged in Lean by `decide` once the table is entered.",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "push_0750e9d7_e3dbc532",
+    "priority_score": 0.94,
+    "research_mode": "team",
+    "source_exp_id": "0750e9d7",
+    "status": "available",
+    "timestamp": "2026-08-20T03:10:51.205517+00:00",
+    "title": "Deepening: The reduction is proved, and the 194 values `c_g(1)` are tabulated"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 507d1ef0 (Q=0.830), which proved 54 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Investigate the ArXiv paper 'A Fourier-analytic Uniqueness Theorem for Lattice-point Enumerators' and formalize its key results. Abstract: We consider a bounded set $P \\subset \\mathbb{R}^d$ and the lattice-point enumerator $L_P(t) = |tP \\cap \\mathbb{Z}^d|$ for real $t > 0$. We show that if two bound",
     "domains": [
       "Cryptography"
@@ -1395,6 +1409,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Formalize Boolean circuit complexity. Prove Razborov's lower bound: monotone circuits for CLIQUE require exponential size. Formalize the approximation method. Prove the Karchmer-Wigderson connection between circuit depth and communication complexity.",
+    "domains": [
+      "Computation",
+      "Logic"
+    ],
+    "id": "fd_0675",
+    "priority_score": 0.9,
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-24T14:34:16.697806+00:00",
+    "title": "Circuit Complexity: Monotone Lower Bounds"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Formalizes Voiculescu's free probability: the free central limit theorem showing that normalized sums of freely independent identically distributed bounded random variables converge in distribution to the semicircle law, developed through the R-transform and free cumulants.",
     "domains": [
       "Probability",
@@ -1704,63 +1733,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-13T03:21:12.748859+00:00",
     "title": "Stein-Method: Quantitative Normal Approximation Bounds"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 50db037d (Q=0.772), which proved 13 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that Shamir's secret sharing scheme is information-theoretically secure: any t-1 shares reveal zero information about the secret. Formalize Feldman's verifiable secret sharing and prove that cheating dealers are caught. Show that the reconstruction threshold equals the degree of the polynomial",
-    "domains": [
-      "Cryptography"
-    ],
-    "id": "push_50db037d_3ae60772",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "50db037d",
-    "status": "available",
-    "timestamp": "2026-07-31T08:23:20.837940+00:00",
-    "title": "Deepening: Secret Sharing: Shamir's Scheme and Verifiable Variants"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle e722c646 (Q=0.771), which proved 10 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The renormalization group in physics zooms out by integrating out high-energy modes. Formalize this as an inverse stereographic projection on the energy sphere: RG flow equals iterated stereographic projection with varying pole. Conjecture: The beta function beta(g) in phi^4 theory equals the deriva",
-    "domains": [
-      "Physics"
-    ],
-    "id": "push_e722c646_61c75f33",
-    "priority_score": 0.8708899999999998,
-    "research_mode": "team",
-    "source_exp_id": "e722c646",
-    "status": "available",
-    "timestamp": "2026-07-29T22:22:57.527932+00:00",
-    "title": "Deepening: Inverse Stereographic Renormalization Group"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 03b10997 (Q=0.770), which proved 17 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the Learning With Errors (LWE) problem and prove its reduction from worst-case lattice problems (GapSVP). Show that the Regev encryption scheme is IND-CPA secure under LWE. Prove that key exchange based on LWE achieves forward secrecy. Compute concrete security parameters for 128-bit secur",
-    "domains": [
-      "Cryptography"
-    ],
-    "id": "push_03b10997_b34b2217",
-    "priority_score": 0.8701199999999999,
-    "research_mode": "team",
-    "source_exp_id": "03b10997",
-    "status": "available",
-    "timestamp": "2026-07-31T20:49:43.464129+00:00",
-    "title": "Deepening: Post-Quantum Cryptography: Lattice-Based Key Exchange"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize Boolean circuit complexity. Prove Razborov's lower bound: monotone circuits for CLIQUE require exponential size. Formalize the approximation method. Prove the Karchmer-Wigderson connection between circuit depth and communication complexity.",
-    "domains": [
-      "Computation",
-      "Logic"
-    ],
-    "id": "fd_0675",
-    "priority_score": 0.87,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-24T14:34:16.697806+00:00",
-    "title": "Circuit Complexity: Monotone Lower Bounds"
   },
   {
     "consumed_by_exp_id": "",
@@ -9054,6 +9026,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-19T02:52:29.608347+00:00",
     "title": "ArXiv paper: Cluster-Graph Edit Distance: Metric Proxies, Multiscale Embeddings, and Complexity"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'A simple construction of the automorphic residual spectrum' and formalize its key results. Abstract: We consider the spherical Borel Eisenstein series induced from the trivial representation for a split semisimple linear algebraic group over a number field. We prove that its regularization at the special point corresponding to half the weighted marking of a distinguished coadjoint nilpotent orbit in the Langlands dual Lie algebra is nonzero and square-integrable. Our proof follows the philosophy of Kazhdan and Okounkov. We give a geometric interpretation of Langlands' square-integrability criterion in this setting and, using the equivariant integration formula, prove that the regularization satisfies this criterion. As an immediate consequence, we obtain a simple and uniform proof of Arthur's unitarity conjecture, without case-by-case analysis or machine computation.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1664",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2608.19129v1",
+    "status": "available",
+    "timestamp": "2026-08-20T03:11:11.345347+00:00",
+    "title": "ArXiv paper: A simple construction of the automorphic residual spectrum"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'A random walk on p-groups with a symmetric perfect pairing' and formalize its key results. Abstract: The kernel of a random symmetric p-adic matrix is a random abelian group, equipped with a symmetric pairing. If we consider not only the matrix but also its top-left corners, we get a process valued in isomorphism classes of abelian groups, equipped with such a pairing. We show that when the matrix is Haar random, this process is a Markov chain, generated by an operator that we explicitly describe. We will also prove that this operator is reversible with respect to a Cohen-Lenstra type measure.",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_1665",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2608.19179v1",
+    "status": "available",
+    "timestamp": "2026-08-20T03:11:14.592866+00:00",
+    "title": "ArXiv paper: A random walk on p-groups with a symmetric perfect pairing"
   },
   {
     "consumed_by_exp_id": "",
@@ -19081,6 +19083,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Proved this cycle in the form\n   `\u03b2\u00b7(KL(q*_r\u2016q*_s) + KL(q*_s\u2016q*_r)) \u2264 2K` (`ptx_optimum_stability`). Open: whether the sharp\n   constant is `K` rather than `2K`, and whether the quadratic improvement\n   `\u03b2\u00b2\u00b7KL \u2264 2K\u00b2` (via a Pinsker step) holds \u2014 Pinsker's inequality is not currently available in\n   the imported library, so this needs to be built first.",
+    "domains": [],
+    "id": "fd_1661",
+    "priority_score": 0.4387619047619048,
+    "research_mode": "team",
+    "source_exp_id": "9e83a721",
+    "status": "available",
+    "timestamp": "2026-08-20T03:10:26.227171+00:00",
+    "title": "Reward-hacking immunity band \u2014 sharpen the constant"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "*For all `r, s` with `r + s \u2264 |X|` the spectrum satisfies `t_{r+s} \u2265 t_r\u00b7(t_s \u2212 r)`, and more\nprecisely `t_{r+s} \u2265 t_r \u00b7 (number of orbits of injective `s`-tuples avoiding a fixed injective\n`r`-tuple)`.*\n\nThe key insight is that `descFactorial_injOrbits_one_le` is the case `r = 0` of a relative\nstatement: cutting an injective `(r+s)`-tuple into its first `r` and last `s` coordinates gives a\nfibration of the top fibre at level `r+s` over the top fibre at level `r`, whose fibres are the\norbits of the stabiliser on injective `s`-tuples in the complement.\n\nWhy now? The maps `dropOrbit` and `shrinkOrbit` already realize the \"forget coordinates\"\ndirection, and the orbit\u2013stabiliser theorem used in `descFactorial_dvd_card_of_kTransitive`\nsupplies the relative count; only the bookkeeping between the two is missing.",
     "domains": [],
     "id": "fd_1592",
@@ -20939,15 +20953,14 @@ window.FUTURE_DIRECTIONS = [
     "title": "The additivity theorem is now available for arbitrary finite index"
   },
   {
-    "consumed_by_exp_id": "0750e9d7",
+    "consumed_by_exp_id": "",
     "description": "The reduction is proved, and the 194 values `c_g(1)` are tabulated\ndata; the conjecture is now a finite, checkable arithmetic statement that could\nbe discharged in Lean by `decide` once the table is entered.",
     "domains": [],
     "id": "fd_1579",
-    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "3da67f84",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-19T05:14:48.013697+00:00",
     "title": "The reduction is proved, and the 194 values `c_g(1)` are tabulated"
   },
@@ -21847,5 +21860,53 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-20T01:52:09.352092+00:00",
     "title": "A closed form for `\u2211_{k \u2264 a} S(n,k)` for every fixed `a \u2265 4`."
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "`KL(q*_\u03b3 \u2016 \u03c0_\u03b2) \u2264 (\u03b3\u00b2/2\u03b2\u00b2)\u00b7Var_{\u03c0_\u03b2}(d/\u03c0_\u03b2)`, i.e. the\n   drift bound of `ptx_drift_le` can be replaced by a second-order quantity built from the score\n   function proved constant in `ptx_stationarity_iff`.",
+    "domains": [],
+    "id": "fd_1659",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "9e83a721",
+    "status": "available",
+    "timestamp": "2026-08-20T03:10:25.716782+00:00",
+    "title": "Score variance controls drift"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The constant in `ptx_no_starvation` cannot be improved beyond a factor\n   of `2`: there are instances with `q y \u2264 2\u03b3 d y / (\u03b2 log (1/p y) + M + \u03b3 \u2212 r y)`.",
+    "domains": [],
+    "id": "fd_1660",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "9e83a721",
+    "status": "available",
+    "timestamp": "2026-08-20T03:10:25.970261+00:00",
+    "title": "The floor is sharp"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "is a finitely supported `a : \u2115 \u2192 \u2124` with\n`\u2211 k \u00b7 a k = 24`; `b m = \u2211_{k \u2223 m} a k`; `headCoeff a = a\u2081(a\u2081+3)/2 + a\u2082` is the\nproved value of `c(1)` for the eta quotient `q \u00b7 (1/\u03b7_a) = \u220f_m (1 \u2212 q^m)^(\u2212b m)`.",
+    "domains": [],
+    "id": "fd_1662",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "0750e9d7",
+    "status": "available",
+    "timestamp": "2026-08-20T03:10:46.040710+00:00",
+    "title": "is a finitely supported `a : \u2115 \u2192 \u2124` with"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The one-parameter case is already a theorem here\n(`headCoeff_pmFrame_ge_neg_one`), and the closed formula makes the general case a\nstatement about integer points in a two-dimensional region, i.e. amenable to\n`omega`/`nlinarith` once the balance and cycle-type constraints are formalized.",
+    "domains": [],
+    "id": "fd_1663",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "0750e9d7",
+    "status": "available",
+    "timestamp": "2026-08-20T03:10:46.297060+00:00",
+    "title": "The one-parameter case is already a theorem here"
   }
 ];
