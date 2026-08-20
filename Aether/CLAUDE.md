@@ -5,9 +5,16 @@
 Aether is an autonomous mathematical research system that cycles through discovery, formalization, and knowledge accumulation. Each cycle:
 
 1. **Discover** — `knowledge_extractor.discover()` pops a weighted-random future direction (with inverse-frequency domain balancing), builds a `ResearchConcept`, and creates a `ResearchJob`
-2. **Execute** — Aristotle (via `pi_agent_client`) receives the concept and produces Lean 4 proofs, articles, research papers, demos, and FUTURE_DIRECTIONS.md
-3. **Integrate** — `knowledge_extractor.run_single_cycle()` unpacks artifacts into the Catalog, extracts new future directions, and marks the consumed direction as completed
-4. **Repeat** — The next cycle picks up newly seeded directions
+2. **Phase A — Execute** — Aristotle (via `pi_agent_client`) receives the concept and produces Lean 4 proofs, demos, and FUTURE_DIRECTIONS.md. The Phase A result is evaluated and the Lean files are integrated into the Catalog.
+3. **Phase B — Package** (gated on Phase A quality): if Phase A clears the adaptive rank-based promotion gate (top ~50%, floored at `phase_b.min_score`), a second Aristotle call packages the Lean content into a standalone ARTICLE.md, RESEARCH_PAPER.md, interactive demo, and `PACKAGE.json` written to `Packages/`. Injected-issue directions always promote to Phase B (quality-gate bypassed for `github_issue` jobs). Phase B reuses the **same job** (same `job_id`/`github_issue`), replacing only `project_id`.
+4. **Integrate** — `knowledge_extractor` merges Phase A (Lean) + Phase B (article/paper/package) artifacts into the Catalog, extracts new future directions, and marks the consumed direction as completed
+5. **Repeat** — The next cycle picks up newly seeded directions
+
+> **One direction = one package.** The package filename is derived from
+> `concept.title`, so the dispatch gating (especially for injected issues) must
+> ensure a direction is packaged at most once — otherwise later runs overwrite
+> the earlier `Packages/<slug>.json`. See "GitHub Issue Injection" below.
+
 
 ## Key Files
 
@@ -59,6 +66,19 @@ Novelty is a first-class domain for wild/exploratory directions. `EML` and `Spec
 - Domains occupying >30% of the available pool are penalized: `weight *= (1 - fraction)`
 - Domains occupying <10% get a boost: `weight *= (1 + fraction)`
 
+**Injected-direction bypass (gated):** the same method has a high-priority bypass
+for `source == "github_injection"` directions, but it is gated by the same rules
+as `dispatchable_injected_directions()`: it only returns an injected direction
+when its GitHub issue is provably still **OPEN** (`open_issue_numbers` contains
+the issue) **and** `attempt_count < 3`. When `open_issue_numbers` is not supplied
+(the standard discovery path in `discover()`), injected directions are **excluded**
+from weighted selection entirely — they are dispatched only through the dedicated
+injected-issue block in `_tick_impl`, which fetches live issue state. This prevents
+a closed-issue injected direction from being re-dispatched every tick, which
+overwrote its `Packages/<slug>.json` and re-commented on the closed issue
+(regression fixed 2026-08-20; see "GitHub Issue Injection" below).
+
+
 ## Future Directions System
 
 ### Data Model
@@ -102,6 +122,39 @@ available → in_progress (mark_direction_consumed) → completed (mark_directio
 python research_memory.py reset    # Abandon in-progress, seed with directions
 python research_memory.py stats    # Show counts by status
 ```
+
+### GitHub Issue Injection (approved-direction)
+
+External research directions are submitted as GitHub issues labeled
+`approved-direction`. `github_injector.py` manages the round trip:
+
+1. **Inject** (`inject_directions_into_memory`): fetches OPEN
+   `approved-direction` issues via `gh`, appends each as a `FutureDirection`
+   with `source="github_injection"`, `github_issue=<number>`,
+   `priority_score=1000` (top of the pool). Dedup counts **all** existing
+   injected directions (any status) by `github_issue`, so an issue already
+   injected once is never re-injected — even if the direction was later pruned.
+2. **Dispatch gate** (`dispatchable_injected_directions`): an injected
+   direction is dispatched only when its issue is still **OPEN** and
+   `attempt_count < max_attempts` (default 3). This is the *only* standard
+   path that may dispatch an injected direction. `select_direction_weighted`
+   excludes injected directions unless it is explicitly given matching
+   `open_issue_numbers` (see "Inverse-Frequency Domain Balancing" above).
+3. **Self-heal** (`prune_closed_issue_directions`): any non-terminal injected
+   direction whose issue has **closed** is marked `pruned`, so it can never be
+   re-dispatched. Runs at tick start and inside the injected-dispatch block.
+4. **Close** (`_close_github_issue_if_needed`): when an injected-direction job
+   reaches a terminal state (`integrated`/`complete`/`rejected`/`failed`), the
+   tick posts a results comment on the issue and closes it. It first checks
+   `gh issue view --json state`; if the issue is **already CLOSED**, it skips
+   the comment — a prior run already reported results. This guard prevents
+   duplicate result comments when a direction was processed more than once.
+
+**Expected lifecycle:** one injected issue → one Phase A dispatch → one Phase B
+package → issue closed with a single results comment. The package filename is
+derived from `concept.title` (`_derive_artifact_name`), so two directions that
+sanitize to the same title overwrite each other's `Packages/<slug>.json` — the
+gating above is what keeps each issue to a single package.
 
 ## Aristotle Prompt
 
