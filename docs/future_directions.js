@@ -3,13 +3,13 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "consumed_by_exp_id": "5be71780",
+    "consumed_by_exp_id": "d37c9a15",
     "description": "It is a direct adaptation of the standard Reinforcement Learning from Human Feedback (RLHF) objective with a pre-training mix-in (PTX)\u2014originally introduced in the InstructGPT / PPO alignment framework (Ouyang et al., 2022)\u2014rebranded with neurosymbolic notation.Breakdown of the Components$$\\text{Objective}(\\phi) = \\underbrace{\\mathbb{E}_{x, y}\\left[ RM_{NS}(x, y) \\right]}_{\\text{1. Reward Maximization}} - \\underbrace{\\beta_{NS} \\mathbb{E}_{x, y}\\left[ \\log \\frac{LLM_\\phi^{NS}(y\\vert{}x)}{LLM^{SFT}(y\\vert{}x)} \\right]}_{\\text{2. KL-Divergence Penalty}} + \\underbrace{\\gamma_{NS} \\mathbb{E}_{x}\\left[ \\log LLM_\\phi^{NS}(x) \\right]}_{\\text{3. Pretraining Loss Mix-in (PTX)}}$$NeuroSymbolic Reward Term:$\\mathbb{E}_{x \\sim \\mathcal{D}_{RL}, y \\sim LLM_\\phi^{NS}(x)} [RM_{NS}(x, y)]$Optimizes the policy parameters ($\\phi$) to generate outputs $y$ given prompts $x$ that maximize the score from a (neurosymbolic) reward model $RM_{NS}$.KL Penalty (Regularization):$-\\beta_{NS} \\log \\frac{LLM_\\phi^{NS}(y\\vert{}x)}{LLM^{SFT}(y\\vert{}x)}$The point-wise Kullback\u2013Leibler ($\\text{D}_{\\text{KL}}$) divergence penalty. It prevents the tuned policy $LLM_\\phi^{NS}$ from drifting too far from the base Supervised Fine-Tuned model ($LLM^{SFT}$), preventing policy collapse and reward hacking. $\\beta_{NS}$ controls the penalty strength.Pretraining Mix-in Gradient ($\\text{PPO-ptx}$ term):$+\\gamma_{NS} \\mathbb{E}_{x \\sim \\mathcal{D}_{pretrain}} \\log LLM_\\phi^{NS}(x)$Maximizes the log-likelihood over the original pretraining distribution $\\mathcal{D}_{pretrain}$ with coefficient $\\gamma_{NS}$. This standard trick avoids performance regression on general NLP benchmarks during RL fine-tuning.TakeawayMathematical Validity: 100% sound; it directly mirrors the standard InstructGPT alignment equation.Practical Meaning: It represents fine-tuning a model using RLHF, where the reward signal ($RM_{NS}$) or the model architecture incorporates neurosymbolic rules/logic rather than purely human-labeled reward modeling.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_1569",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
@@ -79,17 +79,17 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle 367abe49 (Q=0.850), which proved 61 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For the PTX-augmented optimum `q*_{\u03b2,\u03b3}` with `\u03b3 > 0`,\n`\u2016q*_{\u03b2,\u03b3} \u2212 p\u2016\u2081 = \u0398(\u03b3\u00b7\u2016d \u2212 p\u2016\u2081) + \u0398(\u03c3_p(r)/\u03b2)` as `\u03b2 \u2192 \u221e`: the pretraining mix-in\ncontributes a `\u03b2`-independent drift toward `d`, so `lim_{\u03b2\u2192\u221e} q*_{\u03b2,\u03b3} \u2260 p` unless\n`d = p`, while the *reward-induced* part of the drift still obeys the `\u03c3/\u03b2` law",
+    "description": "Building on cycle 18b02a30 (Q=0.880), which proved 294 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Conjecture: for `q \u2265 2` and a prime `\u2113 \u2224 q`, the `\u2113`-adic valuation of `binom(n,k)_q` equals the\nnumber of carries when adding `k` and `n-k` in base `d`, where `d` is the multiplicative order of\n`q` modulo `\u2113`, plus a correction term counted by `v_\u2113(q^{d}-1)`.  Falsifiable at\n`q = 2, \u2113 = 5, n = 6, k",
     "domains": [
-      "Novelty"
+      "NumberTheory"
     ],
-    "id": "push_367abe49_55eb8002",
+    "id": "push_18b02a30_211ebd15",
     "priority_score": 0.95,
     "research_mode": "team",
-    "source_exp_id": "367abe49",
+    "source_exp_id": "18b02a30",
     "status": "available",
-    "timestamp": "2026-08-20T13:11:22.340680+00:00",
-    "title": "Deepening: For the PTX-augmented optimum `q*_{\u03b2,\u03b3}` with `\u03b3 > 0`,"
+    "timestamp": "2026-08-20T14:00:29.749988+00:00",
+    "title": "Deepening: C4.  A `q`-analogue of Kummer's theorem"
   },
   {
     "consumed_by_exp_id": "",
@@ -1732,37 +1732,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-13T03:21:12.748859+00:00",
     "title": "Stein-Method: Quantitative Normal Approximation Bounds"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove tight bounds on quantum error-correcting codes. Formalize the quantum Singleton bound, quantum Hamming bound, and construct optimal stabilizer codes. Connect to topological quantum computing.",
-    "domains": [
-      "Physics",
-      "Computation",
-      "Algebra"
-    ],
-    "id": "seed_039",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Quantum Error Correction Bounds"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove that higher signatures are homotopy invariants for all finitely presented groups. Formalize the assembly map in topological K-theory and connections to Baum-Connes.",
-    "domains": [
-      "Geometry",
-      "Topology"
-    ],
-    "id": "seed_223",
-    "priority_score": 0.87,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Novikov Conjecture"
   },
   {
     "consumed_by_exp_id": "",
@@ -3501,6 +3470,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-18T03:08:55.242135+00:00",
     "title": "Close Proofs: Fibre spectrum (Conjecture E, first half, closed)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle 18b02a30 (Q=0.880) proved 294 theorems in NumberTheory but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Conjecture: for `q \u2265 2` and a prime `\u2113 \u2224 q`, the `\u2113`-adic valuation of `binom(n,k)_q` equals the\nnumber of carries when adding `k` and `n-k` in base `d`, where `d` is the multiplicative order of\n`q` m",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "sorry_fill_18b02a30_1da19413",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "18b02a30",
+    "status": "available",
+    "timestamp": "2026-08-20T14:00:30.503347+00:00",
+    "title": "Close Proofs: C4.  A `q`-analogue of Kummer's theorem"
   },
   {
     "consumed_by_exp_id": "",
@@ -19118,6 +19101,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Both halves of the residual dichotomy are now proved\n   (`QKummer.exists_padicValNat_qBinom_ge_offset` and `QKummer.not_dvd_qBinom_row_iff`); what\n   remains of D1\u2032 is the *upper* bound, i.e. that no entry of a row with `n % d = d \u2212 1` can pick\n   up the residual `e`, and the identification of the classical maximum\n   `max_{A \u2264 N} v_\u2113(C(N,A))` with a digit statistic of `N`.\n2. **(D2b)** With `S(X) = \u2211_{n < X} #{k : \u2113 \u2224 binom(n,k)_q}`, the ratio `S(X) / X^\u03b8` with\n   `\u03b8 = log(\u2113(\u2113+1)/2)/log \u2113` is bounded above and below by positive constants depending only on\n   `\u2113` and `d`, and oscillates (has no limit) unless `\u2113 = 2`.  The exact scale identity\n   `QKummer.sum_card_row_not_dvd_qBinom` is the `X = d\u00b7\u2113^m` case.\n3. **(D3a)** `v_\u2113(binom(n+d\u00b7\u2113^m, k)_q \u2212 binom(n,k)_q) \u2265 m` for `k < d\u00b7\u2113^m` \u2014 the first\n   nontrivial instance of the modulus of continuity in D3.",
+    "domains": [],
+    "id": "fd_1719",
+    "priority_score": 0.4284545454545454,
+    "research_mode": "team",
+    "source_exp_id": "18b02a30",
+    "status": "available",
+    "timestamp": "2026-08-20T14:00:15.425862+00:00",
+    "title": "Both halves of the residual dichotomy are now proved"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "* **C1 (drift constant is the standard deviation) \u2014 PROVED.**\n  `RLHF.kl_gibbs_le_variance` gives `KL(\u03c0_\u03b2\u2016p) \u2264 e^{range r/\u03b2} Var_p(r)/\u03b2\u00b2`,\n  `RLHF.gibbs_l1_le_variance` gives `\u2016\u03c0_\u03b2 \u2212 p\u2016\u2081 \u2264 \u221a(2 e^{range r/\u03b2} Var_p r)/\u03b2`, and\n  `RLHF.variance_constant_optimal` sandwiches the drift of an explicit family between\n  `\u03c3/(2\u03b2)` and `3\u03c3/\u03b2`.  So the law is `\u0398(\u03c3_p(r)/\u03b2)`; only the absolute constant (which\n  should be `1` by the cumulant heuristic) is still open.  `RLHF.variance_le_range_sq`\n  (Popoviciu) shows this is never weaker, and `ComputationalEvidence.md` \u00a75 shows it is\n  unboundedly stronger on rare-spike rewards.",
     "domains": [],
     "id": "fd_1685",
@@ -21515,17 +21510,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "Rigidity is proved and stated in terms of fibre cardinalities, which is exactly"
   },
   {
-    "consumed_by_exp_id": "18b02a30",
+    "consumed_by_exp_id": "",
     "description": "Conjecture: for `q \u2265 2` and a prime `\u2113 \u2224 q`, the `\u2113`-adic valuation of `binom(n,k)_q` equals the\nnumber of carries when adding `k` and `n-k` in base `d`, where `d` is the multiplicative order of\n`q` modulo `\u2113`, plus a correction term counted by `v_\u2113(q^{d}-1)`.  Falsifiable at\n`q = 2, \u2113 = 5, n = 6, k = 3`, where `binom(6,3)_2 = 1395 = 3\u00b2 \u00b7 5 \u00b7 31` and the order of `2`\nmodulo `5` is `4`.\n*The key insight is* that `qFactZ_mul_qBinom` expresses `binom(n,k)_q` as an exact quotient of\n`q`-factorials, so the valuation question becomes a counting question about the multiples of `d`\nin an interval \u2014 the same combinatorics that proves Kummer's theorem.\n*Why now?*  The exactness of the division (`gaussBinom_eq_qBinom`) is the hypothesis every\nvaluation argument needs and was the missing ingredient before this cycle.",
     "domains": [
       "NumberTheory"
     ],
     "id": "fd_1632",
-    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "252d7c91",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-19T19:40:10.729111+00:00",
     "title": "C4.  A `q`-analogue of Kummer's theorem"
   },
@@ -21648,14 +21642,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "group `G` (on possibly different sets) have equal orbit-counting"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ce273a18",
     "description": "The upper bound is formalised (`exists_peel_stopping_time` together with\n`peelEstimate_error`); what remains is a matching family of actions, i.e. a construction.",
     "domains": [],
     "id": "fd_1644",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "c442a26f",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-19T21:41:40.018501+00:00",
     "title": "The upper bound is formalised (`exists_peel_stopping_time` together with"
   },
@@ -22463,5 +22458,69 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-20T13:11:28.175490+00:00",
     "title": "S3 (resolved during this cycle)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The exact count along the self-similar scale `X = d\u00b7\u2113^m` is already proved\n(`QKummer.sum_card_row_not_dvd_qBinom`), so what remains is purely the interpolation between\nconsecutive scales \u2014 the classical oscillating-constant phenomenon, with no `q`-dependence.",
+    "domains": [],
+    "id": "fd_1717",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "18b02a30",
+    "status": "available",
+    "timestamp": "2026-08-20T14:00:14.828607+00:00",
+    "title": "The exact count along the self-similar scale `X = d\u00b7\u2113^m` is already proved"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Fix `k` and a prime `\u2113 \u2224 q`, and let `d = ord_\u2113(q)`, `e = v_\u2113([d]_q)`.  The map\n`n \u21a6 binom(n,k)_q` extends to a continuous function `d\u00b7\u2124_\u2113 \u2192 \u2124_\u2113`, with explicit modulus of\ncontinuity `v_\u2113(binom(n,k)_q \u2212 binom(n',k)_q) \u2265 e + v_\u2113((n \u2212 n')/d)` whenever `n \u2261 n' (mod d)`.",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "fd_1718",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "18b02a30",
+    "status": "available",
+    "timestamp": "2026-08-20T14:00:15.096622+00:00",
+    "title": "Fix `k` and a prime `\u2113 \u2224 q`, and let `d = ord_\u2113(q)`, `e = v_\u2113([d]_q)`.  The map"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "`\u2016p \u2212 q\u2016\u2081\u00b2 \u2264 2\u00b7klDivFin p q` for probability\n   vectors with `q` positive (the analytic core of Conjecture 1).",
+    "domains": [
+      "Computation"
+    ],
+    "id": "fd_1720",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "5be71780",
+    "status": "available",
+    "timestamp": "2026-08-20T14:00:36.756159+00:00",
+    "title": "Finite-alphabet Pinsker"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every `k` in the achievable range there is a\n   unique `\u03b2 > 0` with `KL(\u03c0*_\u03b2\u2016\u03c0_SFT) = k`, and `\u03c0*_\u03b2` maximises `\ud835\udd3c_p[r]` subject\n   to `KL(p\u2016\u03c0_SFT) \u2264 k` (the duality core of Conjecture 2).",
+    "domains": [],
+    "id": "fd_1721",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "5be71780",
+    "status": "available",
+    "timestamp": "2026-08-20T14:00:37.026590+00:00",
+    "title": "Constrained = penalised"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "`KL(p_\u03b3\u2016\u03c0*) \u2264 (\u03b3/\u03b2)\u00b7KL(pre\u2016\u03c0*)` for the PPO-ptx optimum\n   `p_\u03b3` (a non-asymptotic version of Conjecture 5).",
+    "domains": [],
+    "id": "fd_1722",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "5be71780",
+    "status": "available",
+    "timestamp": "2026-08-20T14:00:37.288065+00:00",
+    "title": "Barycentre bound"
   }
 ];
