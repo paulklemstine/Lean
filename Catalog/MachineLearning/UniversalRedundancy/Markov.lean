@@ -40,7 +40,7 @@ Markov source, transition counts, universal coding with memory, Rissanen
 redundancy, sufficient statistic
 -/
 
-import Catalog.MachineLearning.UniversalRedundancy.Types
+import MachineLearning.UniversalRedundancy.Types
 
 open Finset Real
 

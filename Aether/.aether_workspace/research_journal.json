@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "9aa1e8d1",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions — Arithmetic Geometry of Transformer Weight Lattices\n\nDerived from the Stage-3 analysis and the Stage-4 adversarial review of\n`Catalog/Bridges/QuantizedWeightLattices*.lean`, after",
-      "quality_score": 0.86,
-      "sorry_count": 0,
-      "theorem_count": 93,
-      "timestamp": "2026-08-18T08:54:38",
-      "title": "Bridge-NumberTheory-ML: Arithmetic Geometry of Transformer Weight Lattices"
-    },
-    {
       "cycle_id": "5297c534",
       "domain": "Novelty",
       "key_insight": "# Future directions\n\nThe `⇒` direction of the extremal problem for the Donoho–Stark uncertainty principle, open in\nthis development, is now closed: `FourierFA.extremal_iff_isCosetModulation` in\n`Catal",
@@ -499,19 +489,19 @@
       "theorem_count": 242,
       "timestamp": "2026-08-20T07:06:52",
       "title": "Power-sum inversion"
+    },
+    {
+      "cycle_id": "84bf9824",
+      "domain": "Novelty",
+      "key_insight": "# Future directions\n\nDerived from the analysis and adversarial review of the results in\n`Catalog/Novelty/RLHFPinskerDrift.lean`, `RLHFPinskerSharp.lean`,\n`RLHFQuadraticDrift.lean`, `RLHFGainDriftBudge",
+      "quality_score": 0.85,
+      "sorry_count": 3,
+      "theorem_count": 93,
+      "timestamp": "2026-08-20T07:57:37",
+      "title": "reinforcement learning"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "2c80b5b7",
-      "domain": "Shared",
-      "key_insight": "# Future Directions: Critical Geometry of Counted Proof Spaces (next cycle)\n\nThis cycle settled three of the five directions carried over from the previous\none, and it refuted the first of them in the",
-      "quality_score": 0.727445,
-      "sorry_count": 0,
-      "theorem_count": 55,
-      "timestamp": "2026-08-11T04:50:50",
-      "title": "Let two prefix-free encodings of the same deductive system translate into one an"
-    },
     {
       "cycle_id": "d1971d75",
       "domain": "Combinatorics",
@@ -2501,27 +2491,19 @@
       "theorem_count": 242,
       "timestamp": "2026-08-20T07:06:52",
       "title": "Power-sum inversion"
+    },
+    {
+      "cycle_id": "84bf9824",
+      "domain": "Novelty",
+      "key_insight": "# Future directions\n\nDerived from the analysis and adversarial review of the results in\n`Catalog/Novelty/RLHFPinskerDrift.lean`, `RLHFPinskerSharp.lean`,\n`RLHFQuadraticDrift.lean`, `RLHFGainDriftBudge",
+      "quality_score": 0.85,
+      "sorry_count": 3,
+      "theorem_count": 93,
+      "timestamp": "2026-08-20T07:57:37",
+      "title": "reinforcement learning"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "7299371d",
-      "domain": "Combinatorics",
-      "name": "exists_hyperfilter_value",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "57212186",
-      "domain": "NumberTheory",
-      "name": "rules",
-      "quality": 0.9
-    },
-    {
-      "cycle_id": "57212186",
-      "domain": "NumberTheory",
-      "name": "therefore",
-      "quality": 0.9
-    },
     {
       "cycle_id": "57212186",
       "domain": "NumberTheory",
@@ -2803,17 +2785,28 @@
       "domain": "Applications",
       "name": "from",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "84bf9824",
+      "domain": "Novelty",
+      "name": "mean_sub",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "84bf9824",
+      "domain": "Novelty",
+      "name": "cov_sub_left",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "84bf9824",
+      "domain": "Novelty",
+      "name": "cov_div_left",
+      "quality": 0.85
     }
   ],
-  "last_updated": "2026-08-20T07:06:52",
+  "last_updated": "2026-08-20T07:57:37",
   "open_questions": [
-    {
-      "context": "therefore left as `sorry` and flagged as open formalization targets in the; sorry; sorry",
-      "cycle_id": "95478b50",
-      "domain": "Probability",
-      "sorry_count": 5,
-      "timestamp": "2026-07-27T00:19:54"
-    },
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hn2⟩)",
       "cycle_id": "e4773f49",
@@ -3016,6 +3009,13 @@
       "domain": "Applications",
       "sorry_count": 3,
       "timestamp": "2026-08-20T07:06:52"
+    },
+    {
+      "context": "All statements are `sorry`-free.; All statements are `sorry`-free.; Everything is elementary and `sorry`-free: no differentiation under the sum, only",
+      "cycle_id": "84bf9824",
+      "domain": "Novelty",
+      "sorry_count": 3,
+      "timestamp": "2026-08-20T07:57:37"
     }
   ],
   "research_threads": {
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "ac45a9d9",
-        "quality": 0.85,
-        "theorems": 41,
-        "title": "The 'Only Bad Primes' Conjecture is False (elliptic curve denominators)"
-      },
-      {
         "cycle_id": "ade8206b",
         "quality": 0.85,
         "theorems": 105,
@@ -3637,6 +3631,12 @@
         "quality": 0.86,
         "theorems": 109,
         "title": "Both ingredients are already machine-checked (the sharp bound and 1-sum closure)"
+      },
+      {
+        "cycle_id": "84bf9824",
+        "quality": 0.85,
+        "theorems": 93,
+        "title": "reinforcement learning"
       }
     ],
     "NumberTheory": [

@@ -2,7 +2,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "84bf9824",
+    "consumed_by_exp_id": "39c3166e",
     "description": "It is a direct adaptation of the standard Reinforcement Learning from Human Feedback (RLHF) objective with a pre-training mix-in (PTX)—originally introduced in the InstructGPT / PPO alignment framework (Ouyang et al., 2022)—rebranded with neurosymbolic notation.Breakdown of the Components$$\\text{Objective}(\\phi) = \\underbrace{\\mathbb{E}_{x, y}\\left[ RM_{NS}(x, y) \\right]}_{\\text{1. Reward Maximization}} - \\underbrace{\\beta_{NS} \\mathbb{E}_{x, y}\\left[ \\log \\frac{LLM_\\phi^{NS}(y\\vert{}x)}{LLM^{SFT}(y\\vert{}x)} \\right]}_{\\text{2. KL-Divergence Penalty}} + \\underbrace{\\gamma_{NS} \\mathbb{E}_{x}\\left[ \\log LLM_\\phi^{NS}(x) \\right]}_{\\text{3. Pretraining Loss Mix-in (PTX)}}$$NeuroSymbolic Reward Term:$\\mathbb{E}_{x \\sim \\mathcal{D}_{RL}, y \\sim LLM_\\phi^{NS}(x)} [RM_{NS}(x, y)]$Optimizes the policy parameters ($\\phi$) to generate outputs $y$ given prompts $x$ that maximize the score from a (neurosymbolic) reward model $RM_{NS}$.KL Penalty (Regularization):$-\\beta_{NS} \\log \\frac{LLM_\\phi^{NS}(y\\vert{}x)}{LLM^{SFT}(y\\vert{}x)}$The point-wise Kullback–Leibler ($\\text{D}_{\\text{KL}}$) divergence penalty. It prevents the tuned policy $LLM_\\phi^{NS}$ from drifting too far from the base Supervised Fine-Tuned model ($LLM^{SFT}$), preventing policy collapse and reward hacking. $\\beta_{NS}$ controls the penalty strength.Pretraining Mix-in Gradient ($\\text{PPO-ptx}$ term):$+\\gamma_{NS} \\mathbb{E}_{x \\sim \\mathcal{D}_{pretrain}} \\log LLM_\\phi^{NS}(x)$Maximizes the log-likelihood over the original pretraining distribution $\\mathcal{D}_{pretrain}$ with coefficient $\\gamma_{NS}$. This standard trick avoids performance regression on general NLP benchmarks during RL fine-tuning.TakeawayMathematical Validity: 100% sound; it directly mirrors the standard InstructGPT alignment equation.Practical Meaning: It represents fine-tuning a model using RLHF, where the reward signal ($RM_{NS}$) or the model architecture incorporates neurosymbolic rules/logic rather than purely human-labeled reward modeling.",
     "domain_bridges": [],
     "domains": [
@@ -1079,25 +1079,6 @@
     "ambition_level": "grand_challenge",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "Building on cycle 0750e9d7 (Q=0.840), which proved 102 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The reduction is proved, and the 194 values `c_g(1)` are tabulated\ndata; the conjecture is now a finite, checkable arithmetic statement that could\nbe discharged in Lean by `decide` once the table is entered.",
-    "domain_bridges": [],
-    "domains": [
-      "NumberTheory"
-    ],
-    "id": "push_0750e9d7_e3dbc532",
-    "lineage_refs": [],
-    "priority_score": 0.94,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "0750e9d7",
-    "status": "available",
-    "timestamp": "2026-08-20T03:10:51.205517+00:00",
-    "title": "Deepening: The reduction is proved, and the 194 values `c_g(1)` are tabulated"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "Building on cycle 507d1ef0 (Q=0.830), which proved 54 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Investigate the ArXiv paper 'A Fourier-analytic Uniqueness Theorem for Lattice-point Enumerators' and formalize its key results. Abstract: We consider a bounded set $P \\subset \\mathbb{R}^d$ and the lattice-point enumerator $L_P(t) = |tP \\cap \\mathbb{Z}^d|$ for real $t > 0$. We show that if two bound",
     "domain_bridges": [],
     "domains": [
@@ -1112,25 +1093,6 @@
     "status": "available",
     "timestamp": "2026-08-17T07:17:22.608319+00:00",
     "title": "Deepening: ArXiv paper: A Fourier-analytic Uniqueness Theorem for Lattice-point Enumerators"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 52846ceb (Q=0.820), which proved 242 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Two `ℕ`-valued functions on finite types bounded by `N` with equal\n    power sums for all `k ≤ N` have equal value distributions (`count_eq_of_powerSums`), proved by\n    inverting a transposed Vandermonde system over `ℚ` with the nodes `0, 1, …, N`.",
-    "domain_bridges": [],
-    "domains": [
-      "Applications"
-    ],
-    "id": "push_52846ceb_f3d83454",
-    "lineage_refs": [],
-    "priority_score": 0.9199999999999999,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "52846ceb",
-    "status": "available",
-    "timestamp": "2026-08-20T07:06:53.293831+00:00",
-    "title": "Deepening: Power-sum inversion"
   },
   {
     "ambition_level": "grand_challenge",
@@ -2369,7 +2331,7 @@
     "title": "Quantum Error Correction Bounds"
   },
   {
-    "ambition_level": "extension",
+    "ambition_level": "grand_challenge",
     "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Extend the tropical Satake isomorphism from GL_2 to GL_n. Prove that it defines a bijection between min-plus Hecke operators and W-invariant tropical polynomials, connecting representation theory to combinatorics.",
@@ -2381,7 +2343,7 @@
     ],
     "id": "seed_050",
     "lineage_refs": [],
-    "priority_score": 0.87,
+    "priority_score": 0.9,
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
@@ -25592,6 +25554,23 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "**C4 (reward hacking is a covariance) — PROVED at first order.**\n  `RLHF.audit_gap_first_order`: `|𝔼_{π_β}f − 𝔼_p f − Cov_p(r,f)/β| ≤ 24 (R/β)² σ_p(f)`\n  for `|r| ≤ R ≤ β`, hence `RLHF.audit_gap_of_uncorrelated`: statistics uncorrelated\n  with the reward move only at order `β⁻²`.  The *sharp threshold* half of C4 (a phase\n  transition in `β_c`) is still open and is restated as N2 below.",
+    "domain_bridges": [],
+    "domains": [],
+    "id": "fd_1686",
+    "lineage_refs": [],
+    "priority_score": 0.4300588235294117,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "84bf9824",
+    "status": "available",
+    "timestamp": "2026-08-20T07:57:24.524777+00:00",
+    "title": "C4 (reward hacking is a covariance) — PROVED at first order.*"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "**Conjecture B (a `T`-wise independent family with a short key) — PROVED.**\n  `AlmostLosslessPolyFamily.lean` realises the degree-`T` polynomial family\n  `h_c(x) = c₀ + c₁x + ⋯ + c_T x^T` over `ZMod p` with `K = p^{T+1}` keys.  The\n  missing counting step (sub-conjecture B1) is\n  `polyEval_injective_of_agree_on_points`, proved from\n  `Matrix.det_vandermonde_ne_zero_iff` rather than from polynomial-degree\n  bookkeeping: coefficient vectors agreeing at `T+1` distinct points coincide.\n  Hence `card_poly_constrained_le` (at most `p` keys satisfy a `T`-fold\n  collision constraint) and `polyHash_indepT : IndepT (polyHash p T) T`.  The\n  deliverable `exists_poly_list_scheme_exponential` gives failure\n  `≤ δ + (|l|/p)^T` from `(T+1)·log₂ p` bits of advice, with the numeric\n  instance `concrete_poly_list_scheme` (source `ZMod 101`, codebook `10`,\n  `T = 3`, key one of `101⁴ ≈ 10⁸`, failure `≤ 1/100 + 1/1000`, list `≤ 3`) and\n  the separation `poly_key_exponentially_shorter : p^{T+1} < p^p`.\n  `polyHash_universal2_one` records coherence with cycle 1 at `T = 1`.",
     "domain_bridges": [],
     "domains": [],
@@ -25672,6 +25651,23 @@
     "status": "available",
     "timestamp": "2026-08-17T20:44:28.805700+00:00",
     "title": "The low-tail experiment."
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "* **C1 (drift constant is the standard deviation) — PROVED.**\n  `RLHF.kl_gibbs_le_variance` gives `KL(π_β‖p) ≤ e^{range r/β} Var_p(r)/β²`,\n  `RLHF.gibbs_l1_le_variance` gives `‖π_β − p‖₁ ≤ √(2 e^{range r/β} Var_p r)/β`, and\n  `RLHF.variance_constant_optimal` sandwiches the drift of an explicit family between\n  `σ/(2β)` and `3σ/β`.  So the law is `Θ(σ_p(r)/β)`; only the absolute constant (which\n  should be `1` by the cumulant heuristic) is still open.  `RLHF.variance_le_range_sq`\n  (Popoviciu) shows this is never weaker, and `ComputationalEvidence.md` §5 shows it is\n  unboundedly stronger on rare-spike rewards.",
+    "domain_bridges": [],
+    "domains": [],
+    "id": "fd_1685",
+    "lineage_refs": [],
+    "priority_score": 0.4282380952380952,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "84bf9824",
+    "status": "available",
+    "timestamp": "2026-08-20T07:57:24.260050+00:00",
+    "title": "C1 (drift constant is the standard deviation) — PROVED.*"
   },
   {
     "ambition_level": "extension",
@@ -25933,6 +25929,23 @@
     "status": "available",
     "timestamp": "2026-08-17T09:01:32.349835+00:00",
     "title": "Chebotarev's theorem that every square submatrix of the `p × p` DFT matrix"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "For the PTX-augmented optimum `q*_{β,γ}` with `γ > 0`,\n`‖q*_{β,γ} − p‖₁ = Θ(γ·‖d − p‖₁) + Θ(σ_p(r)/β)` as `β → ∞`: the pretraining mix-in\ncontributes a `β`-independent drift toward `d`, so `lim_{β→∞} q*_{β,γ} ≠ p` unless\n`d = p`, while the *reward-induced* part of the drift still obeys the `σ/β` law proved\nin cycle 2.",
+    "domain_bridges": [],
+    "domains": [],
+    "id": "fd_1691",
+    "lineage_refs": [],
+    "priority_score": 0.4081212121212121,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "84bf9824",
+    "status": "available",
+    "timestamp": "2026-08-20T07:57:25.771403+00:00",
+    "title": "For the PTX-augmented optimum `q*_{β,γ}` with `γ > 0`,"
   },
   {
     "ambition_level": "extension",
@@ -29744,5 +29757,78 @@
     "status": "available",
     "timestamp": "2026-08-20T07:06:39.189784+00:00",
     "title": "C5. Trace rigidity for non-diagonal matrices with spectrum in `{0,…,N}`"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "The Bregman identity `freeEnergy_bregman_eq_kl` is proved, and the exact\ndecomposition `objective_eq_free_energy_sub_kl` reduces the conjecture to a\none-dimensional convexity statement per coordinate.",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry",
+      "Physics"
+    ],
+    "id": "fd_1687",
+    "lineage_refs": [],
+    "priority_score": 0.4,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "84bf9824",
+    "status": "available",
+    "timestamp": "2026-08-20T07:57:24.769384+00:00",
+    "title": "The Bregman identity `freeEnergy_bregman_eq_kl` is proved, and the exact"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "The budget inequality is proved and requires no optimality, so the\nremaining work is an explicit two-point computation of the PTX optimum — exactly the\nkind of closed-form model already formalized in `RLHFQuadraticDrift`.",
+    "domain_bridges": [],
+    "domains": [],
+    "id": "fd_1688",
+    "lineage_refs": [],
+    "priority_score": 0.4,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "84bf9824",
+    "status": "available",
+    "timestamp": "2026-08-20T07:57:25.019340+00:00",
+    "title": "The budget inequality is proved and requires no optimality, so the"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Both endpoints of the phase diagram are now theorems\n(`freeEnergy_tendsto_sup`, `l1Dist_spike_tendsto_one`, `gibbs_l1_le_two_range_div`);\nwhat is missing is monotonicity in `β`, a one-variable calculus statement about\n`β ↦ KL(π_β ‖ p)` whose derivative is again a variance.",
+    "domain_bridges": [],
+    "domains": [
+      "Physics"
+    ],
+    "id": "fd_1689",
+    "lineage_refs": [],
+    "priority_score": 0.4,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "84bf9824",
+    "status": "available",
+    "timestamp": "2026-08-20T07:57:25.270845+00:00",
+    "title": "Both endpoints of the phase diagram are now theorems"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Both terms are now theorems with explicit constants, so the crossover is a\nfinite computation with the inequalities already in `Novelty/RLHFCovarianceExpansion.lean`.",
+    "domain_bridges": [],
+    "domains": [],
+    "id": "fd_1690",
+    "lineage_refs": [],
+    "priority_score": 0.4,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "84bf9824",
+    "status": "available",
+    "timestamp": "2026-08-20T07:57:25.515564+00:00",
+    "title": "Both terms are now theorems with explicit constants, so the crossover is a"
   }
 ]
