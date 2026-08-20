@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "13fee392",
-      "domain": "MachineLearning",
-      "key_insight": "# Future directions — bold, testable conjectures\n\nDerived from the analysis and adversarial review of the results now formalised\nin `Catalog/MachineLearning/BonferroniMarginals/`\n(`Core`, `Rigidity`,",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 97,
-      "timestamp": "2026-08-18T15:47:12",
-      "title": "The Bonferroni machinery"
-    },
-    {
       "cycle_id": "2afe0ce6",
       "domain": "Applications",
       "key_insight": "# Future directions: the subset spectrum of a finite action\n\nThe assigned conjecture — *for every finite action the spectrum is log-concave,\n`t_r² ≥ t_{r-1}·t_{r+1}` for `1 ≤ r < |X|`* — is **false**,",
@@ -499,19 +489,19 @@
       "theorem_count": 426,
       "timestamp": "2026-08-20T11:43:09",
       "title": "Quantum-Pythagorean-Walk: Polynomial Time Integer Factorization via Tree Resonance"
+    },
+    {
+      "cycle_id": "367abe49",
+      "domain": "Novelty",
+      "key_insight": "# Future directions: next-cycle conjectures on PTX-augmented RLHF optima\n\nDerived from what survived and what failed in this cycle (see\n`Catalog/Novelty/RLHFPretrainingMixIn.lean` and `ComputationalEv",
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "theorem_count": 61,
+      "timestamp": "2026-08-20T13:11:21",
+      "title": "For the PTX-augmented optimum `q*_{β,γ}` with `γ > 0`,"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "a55e871b",
-      "domain": "Physics",
-      "key_insight": "# Future directions — adjacency-degree algebras and moment rigidity\n\nThe formal development lives in `Catalog/Physics/AdjacencyDegree/` (13 files, all compiling,\nno `sorry`, axioms `propext`, `Classic",
-      "quality_score": 0.627125,
-      "sorry_count": 0,
-      "theorem_count": 163,
-      "timestamp": "2026-08-11T07:51:10",
-      "title": "ArXiv paper: Adjacency-degree algebras and spectral determination of graphs"
-    },
     {
       "cycle_id": "5bbe180d",
       "domain": "MachineLearning",
@@ -2501,6 +2491,16 @@
       "theorem_count": 426,
       "timestamp": "2026-08-20T11:43:09",
       "title": "Quantum-Pythagorean-Walk: Polynomial Time Integer Factorization via Tree Resonance"
+    },
+    {
+      "cycle_id": "367abe49",
+      "domain": "Novelty",
+      "key_insight": "# Future directions: next-cycle conjectures on PTX-augmented RLHF optima\n\nDerived from what survived and what failed in this cycle (see\n`Catalog/Novelty/RLHFPretrainingMixIn.lean` and `ComputationalEv",
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "theorem_count": 61,
+      "timestamp": "2026-08-20T13:11:21",
+      "title": "For the PTX-augmented optimum `q*_{β,γ}` with `γ > 0`,"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.9
     }
   ],
-  "last_updated": "2026-08-20T11:43:09",
+  "last_updated": "2026-08-20T13:11:21",
   "open_questions": [
     {
       "context": "sorry",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "ade8206b",
-        "quality": 0.85,
-        "theorems": 105,
-        "title": "Alien Mathematics: Non-Standard Arithmetic"
-      },
-      {
         "cycle_id": "81aa12f0",
         "quality": 0.87,
         "theorems": 135,
@@ -3637,6 +3631,12 @@
         "quality": 0.85,
         "theorems": 93,
         "title": "reinforcement learning"
+      },
+      {
+        "cycle_id": "367abe49",
+        "quality": 0.85,
+        "theorems": 61,
+        "title": "For the PTX-augmented optimum `q*_{β,γ}` with `γ > 0`,"
       }
     ],
     "NumberTheory": [
