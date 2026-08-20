@@ -1,17 +1,34 @@
 """
-Numerical demonstration of the drift, variance and covariance laws for the
-KL-regularized preference-optimization objective
+Numerical demonstration of the combinatorial theory of KL-regularized alignment
+on the Boolean lattice.
 
-    J(q) = E_q[r] - beta * KL(q || p) + gamma * E_d[log q].
+Setting
+-------
+Responses are subsets S of {0, ..., n-1} ("which of n symbolic checks did the
+answer pass?").  The reference (pre-tuning) policy is uniform on the 2^n subsets.
+The reward is r(S) = a * |S|.  The tuned policy maximizes
 
-Everything is exact on a finite response space: the optimizer of the gamma = 0
-objective is the exponential tilt
+    J(q) = E_q[r] - beta * KL(q || uniform),
 
-    pi_beta(y) = p(y) * exp(r(y)/beta) / Z,    Z = sum_y p(y) exp(r(y)/beta),
+whose unique maximizer is the Gibbs policy  pi(S) ∝ 2^{-n} exp(r(S)/beta).
 
-and every theorem below is checked numerically against that closed form.
+Every closed form asserted by the theory is checked here against brute-force
+enumeration of all 2^n subsets:
 
-Self-contained: standard library + math only (no numpy required).
+  1.  Z = ((1 + e^{a/beta}) / 2)^n                     (binomial partition function)
+  2.  pi(S) = θ^{|S|}(1-θ)^{n-|S|},  θ = σ(a/beta)     (i.i.d. Bernoulli features)
+  3.  P(|S| = k) = C(n,k) θ^k (1-θ)^{n-k}              (binomial reward law)
+  4.  E[|S|] = n θ,  E[r] = a n θ                      (Pascal absorption identity)
+  5.  F = n β log((1+e^{a/β})/2)                       (free energy)
+  6.  KL(pi || uniform) = n (tθ - log((1+e^t)/2))      (information drift)
+  7.  Ent(pi) = n H(θ)  and  KL = n log 2 - Ent        (entropy identities)
+  8.  t σ(t) - log((1+e^t)/2) = log 2 - H(σ(t))        (consistency identity)
+  9.  m_k m_{k+2} <= m_{k+1}^2                         (log-concavity / unimodality)
+ 10.  pi([n]) = θ^n >= 1 - n e^{-a/β}                  (reward-hacking bound)
+ 11.  monotonicity of pi on the lattice (a >= 0)
+ 12.  strict antitonicity of reward and collapse mass in β
+ 13.  supermodular rewards: log-supermodularity of pi, FKG positive association,
+      Holley stochastic dominance over the reference
 
 Run:  python demo.py
 """
@@ -19,458 +36,376 @@ Run:  python demo.py
 from __future__ import annotations
 
 import math
-import random
-from typing import Callable, Dict, List, Sequence, Tuple
+from itertools import combinations
+from typing import Callable, Dict, Iterable, List, Sequence, Tuple
 
-# --------------------------------------------------------------------------- #
-#  Basic finite-probability utilities
-# --------------------------------------------------------------------------- #
-
-
-def is_distribution(p: Sequence[float], tol: float = 1e-12) -> bool:
-    """True if p is a probability vector (nonnegative, sums to one)."""
-    return all(x >= -tol for x in p) and abs(sum(p) - 1.0) <= 1e-9
-
-
-def mean(p: Sequence[float], f: Sequence[float]) -> float:
-    """E_p[f] = sum_y p(y) f(y)."""
-    return sum(pi * fi for pi, fi in zip(p, f))
-
-
-def variance(p: Sequence[float], f: Sequence[float]) -> float:
-    """Var_p(f) = E_p[(f - E_p f)^2]."""
-    m = mean(p, f)
-    return sum(pi * (fi - m) ** 2 for pi, fi in zip(p, f))
-
-
-def stddev(p: Sequence[float], f: Sequence[float]) -> float:
-    """sigma_p(f) = sqrt(Var_p(f))."""
-    return math.sqrt(max(variance(p, f), 0.0))
-
-
-def covariance(p: Sequence[float], f: Sequence[float], g: Sequence[float]) -> float:
-    """Cov_p(f, g) = E_p[(f - E_p f)(g - E_p g)]."""
-    mf, mg = mean(p, f), mean(p, g)
-    return sum(pi * (fi - mf) * (gi - mg) for pi, fi, gi in zip(p, f, g))
-
-
-def variance_pair_form(p: Sequence[float], f: Sequence[float]) -> float:
-    """Pair representation Var_p(f) = 1/2 sum_{x,y} p(x)p(y)(f(x)-f(y))^2."""
-    total = 0.0
-    for px, fx in zip(p, f):
-        for py, fy in zip(p, f):
-            total += px * py * (fx - fy) ** 2
-    return 0.5 * total
-
-
-def kl_divergence(q: Sequence[float], p: Sequence[float]) -> float:
-    """KL(q || p) = sum_y q(y) log(q(y)/p(y)); requires p > 0."""
-    total = 0.0
-    for qi, pi in zip(q, p):
-        if qi > 0.0:
-            total += qi * math.log(qi / pi)
-    return total
-
-
-def l1_distance(q: Sequence[float], p: Sequence[float]) -> float:
-    """||q - p||_1 = sum_y |q(y) - p(y)| (twice the total variation distance)."""
-    return sum(abs(qi - pi) for qi, pi in zip(q, p))
-
-
-def reward_range(r: Sequence[float]) -> float:
-    """range(r) = max r - min r."""
-    return max(r) - min(r)
+Subset = frozenset
 
 
 # --------------------------------------------------------------------------- #
-#  The aligned (Gibbs) policy
+# Basic scalar functions
 # --------------------------------------------------------------------------- #
 
-
-def tilt_and_policy(
-    p: Sequence[float], r: Sequence[float], beta: float
-) -> Tuple[List[float], List[float], float]:
-    """Return (tilt T_beta, aligned policy pi_beta, partition function Z_beta).
-
-    Uses the max-subtraction trick for numerical stability; the value of Z is
-    reconstructed exactly afterwards.
-    """
-    u = [ri / beta for ri in r]
-    umax = max(u)
-    weights = [pi * math.exp(ui - umax) for pi, ui in zip(p, u)]
-    s = sum(weights)
-    z = s * math.exp(umax)  # = sum_y p(y) e^{r(y)/beta}
-    pi_beta = [w / s for w in weights]
-    tilt = [math.exp(ui) / z for ui in u]
-    return tilt, pi_beta, z
+def logistic(t: float) -> float:
+    """Numerically stable sigmoid  σ(t) = e^t / (1 + e^t)."""
+    if t >= 0.0:
+        return 1.0 / (1.0 + math.exp(-t))
+    e = math.exp(t)
+    return e / (1.0 + e)
 
 
-def diagnostics(p: Sequence[float], r: Sequence[float], beta: float) -> Dict[str, float]:
-    """All drift diagnostics for one temperature."""
-    tilt, pi_beta, z = tilt_and_policy(p, r, beta)
-    rng = reward_range(r)
-    var_r = variance(p, r)
-    kl = kl_divergence(pi_beta, p)
-    l1 = l1_distance(pi_beta, p)
+def softplus(t: float) -> float:
+    """Numerically stable log(1 + e^t)."""
+    return max(t, 0.0) + math.log1p(math.exp(-abs(t)))
+
+
+def log_half_one_plus_exp(t: float) -> float:
+    """log((1 + e^t) / 2), stably."""
+    return softplus(t) - math.log(2.0)
+
+
+def binary_entropy(theta: float) -> float:
+    """H(θ) = -θ log θ - (1-θ) log(1-θ), in nats."""
+    if theta <= 0.0 or theta >= 1.0:
+        return 0.0
+    return -(theta * math.log(theta) + (1.0 - theta) * math.log1p(-theta))
+
+
+# --------------------------------------------------------------------------- #
+# Brute-force machinery over the Boolean lattice
+# --------------------------------------------------------------------------- #
+
+def all_subsets(n: int) -> List[Subset]:
+    """All 2^n subsets of {0,...,n-1}, as frozensets."""
+    out: List[Subset] = []
+    for k in range(n + 1):
+        for c in combinations(range(n), k):
+            out.append(frozenset(c))
+    return out
+
+
+def gibbs_policy(n: int, reward: Callable[[Subset], float],
+                 beta: float) -> Dict[Subset, float]:
+    """Exact Gibbs policy pi(S) ∝ 2^{-n} exp(r(S)/beta), by enumeration."""
+    subsets = all_subsets(n)
+    weights = {S: math.exp(reward(S) / beta) / (2.0 ** n) for S in subsets}
+    Z = sum(weights.values())
+    return {S: w / Z for S, w in weights.items()}
+
+
+def partition_bruteforce(n: int, reward: Callable[[Subset], float],
+                         beta: float) -> float:
+    return sum(math.exp(reward(S) / beta) / (2.0 ** n) for S in all_subsets(n))
+
+
+def expectation(policy: Dict[Subset, float],
+                observable: Callable[[Subset], float]) -> float:
+    return sum(p * observable(S) for S, p in policy.items())
+
+
+def kl_from_uniform(n: int, policy: Dict[Subset, float]) -> float:
+    u = 1.0 / (2.0 ** n)
+    return sum(p * math.log(p / u) for p in policy.values() if p > 0.0)
+
+
+def entropy_of(policy: Dict[Subset, float]) -> float:
+    return -sum(p * math.log(p) for p in policy.values() if p > 0.0)
+
+
+# --------------------------------------------------------------------------- #
+# Closed forms predicted by the theory
+# --------------------------------------------------------------------------- #
+
+def theory_profile(n: int, a: float, beta: float) -> Dict[str, float]:
+    """All closed-form quantities for the counting reward r(S) = a|S|."""
+    t = a / beta
+    theta = logistic(t)
+    lg = log_half_one_plus_exp(t)
     return {
-        "beta": beta,
-        "Z": z,
-        "KL": kl,
-        "L1": l1,
-        "gain": mean(pi_beta, r) - mean(p, r),
-        # Theorem: self-limiting divergence
-        "bound_KL_range": rng / beta,
-        # Theorem: quadratic divergence bound
-        "bound_KL_quadratic": rng**2 / (2 * beta**2) * math.exp(rng / beta),
-        # Theorem: variance drift law
-        "bound_KL_variance": math.exp(rng / beta) * var_r / beta**2,
-        "bound_L1_pinsker": math.sqrt(2 * rng / beta),
-        "bound_L1_quadratic": rng / beta * math.exp(rng / (2 * beta)),
-        "bound_L1_variance": math.sqrt(2 * math.exp(rng / beta) * var_r) / beta,
-        # Theorem: drift caps gain
-        "bound_gain_upper": rng / 2 * l1,
-        # Theorem: gain costs drift
-        "bound_gain_lower": beta * kl,
+        "t": t,
+        "theta": theta,
+        "Z": math.exp(n * lg),
+        "free_energy": n * beta * lg,
+        "expected_size": n * theta,
+        "expected_reward": a * n * theta,
+        "entropy": n * binary_entropy(theta),
+        "kl_drift": n * (t * theta - lg),
+        "top_mass": theta ** n,
+        "top_mass_lower_bound": 1.0 - n * math.exp(-t),
     }
 
 
+def level_masses(n: int, theta: float) -> List[float]:
+    """m_k = C(n,k) θ^k (1-θ)^{n-k}, via the ratio recurrence (O(n))."""
+    if theta <= 0.0:
+        return [1.0] + [0.0] * n
+    if theta >= 1.0:
+        return [0.0] * n + [1.0]
+    m = [(1.0 - theta) ** n]
+    ratio_base = theta / (1.0 - theta)
+    for k in range(n):
+        m.append(m[-1] * (n - k) / (k + 1) * ratio_base)
+    return m
+
+
+def mode_of_level_masses(n: int, theta: float) -> int:
+    """Mode of the binomial level masses; correct by unimodality (log-concavity)."""
+    masses = level_masses(n, theta)
+    best, arg = masses[0], 0
+    for k in range(1, n + 1):
+        if masses[k] > best:
+            best, arg = masses[k], k
+        else:
+            break  # descent persists -- Theorem on unimodality
+    return arg
+
+
 # --------------------------------------------------------------------------- #
-#  Demo 1: the drift hierarchy on a rare-spike reward
+# Supermodular rewards
 # --------------------------------------------------------------------------- #
 
+def counting_reward(a: float) -> Callable[[Subset], float]:
+    return lambda S: a * len(S)
 
-def demo_drift_hierarchy() -> None:
-    """Range-based versus variance-based drift bounds on a rare-spike reward.
 
-    The reference policy puts mass 1 - delta on responses with reward 0 and mass
-    delta on a single 'exploit' response with reward R.  Then range(r) = R but
-    Var_p(r) = delta(1-delta)R^2, which is far smaller.  The variance bound is
-    correspondingly far tighter.
-    """
+def rule_bonus(R: Iterable[int], c: float) -> Callable[[Subset], float]:
+    Rf = frozenset(R)
+    return lambda S: (c if Rf <= S else 0.0)
+
+
+def sum_rewards(*rs: Callable[[Subset], float]) -> Callable[[Subset], float]:
+    return lambda S: sum(r(S) for r in rs)
+
+
+def is_supermodular(n: int, reward: Callable[[Subset], float],
+                    tol: float = 1e-12) -> Tuple[bool, Sequence[object]]:
+    """Local 'diamond' test: r(S+i) + r(S+j) <= r(S) + r(S+i+j).  O(2^n n^2)."""
+    for S in all_subsets(n):
+        outside = [i for i in range(n) if i not in S]
+        for idx, i in enumerate(outside):
+            for j in outside[idx + 1:]:
+                lhs = reward(S | {i}) + reward(S | {j})
+                rhs = reward(S) + reward(S | {i, j})
+                if lhs > rhs + tol:
+                    return False, (S, i, j)
+    return True, ()
+
+
+def check_log_supermodular(n: int, policy: Dict[Subset, float],
+                           tol: float = 1e-12) -> float:
+    """Max violation of pi(S)pi(T) <= pi(S∩T)pi(S∪T); should be <= tol."""
+    worst = 0.0
+    subsets = all_subsets(n)
+    for S in subsets:
+        for T in subsets:
+            lhs = policy[S] * policy[T]
+            rhs = policy[frozenset(S & T)] * policy[frozenset(S | T)]
+            worst = max(worst, lhs - rhs)
+    return worst
+
+
+# --------------------------------------------------------------------------- #
+# Reporting helpers
+# --------------------------------------------------------------------------- #
+
+def check(label: str, lhs: float, rhs: float, tol: float = 1e-9) -> None:
+    ok = abs(lhs - rhs) <= tol * max(1.0, abs(lhs), abs(rhs))
+    flag = "OK " if ok else "FAIL"
+    print(f"  [{flag}] {label:<46} {lhs: .12f}  vs  {rhs: .12f}")
+
+
+def rule(title: str) -> None:
+    print("\n" + "=" * 78)
+    print(title)
     print("=" * 78)
-    print("DEMO 1 — the drift hierarchy (rare-spike reward)")
-    print("=" * 78)
-    n_bulk = 8
-    delta = 0.01
-    big_r = 10.0
-    p = [(1 - delta) / n_bulk] * n_bulk + [delta]
-    r = [0.0] * n_bulk + [big_r]
-    assert is_distribution(p)
-
-    print(f"|Omega| = {len(p)},  range(r) = {reward_range(r):.3f},  "
-          f"Var_p(r) = {variance(p, r):.4f},  sigma_p(r) = {stddev(p, r):.4f}")
-    print(f"(Popoviciu: Var <= range^2/4 = {reward_range(r) ** 2 / 4:.4f})\n")
-
-    header = f"{'beta':>8} {'||pi-p||_1':>12} {'sqrt-law':>12} {'range-law':>12} {'var-law':>12}"
-    print(header)
-    print("-" * len(header))
-    for beta in (10.0, 20.0, 50.0, 100.0, 500.0):
-        d = diagnostics(p, r, beta)
-        print(f"{beta:>8.1f} {d['L1']:>12.6f} {d['bound_L1_pinsker']:>12.6f} "
-              f"{d['bound_L1_quadratic']:>12.6f} {d['bound_L1_variance']:>12.6f}")
-        assert d["L1"] <= d["bound_L1_pinsker"] + 1e-12
-        assert d["L1"] <= d["bound_L1_quadratic"] + 1e-12
-        assert d["L1"] <= d["bound_L1_variance"] + 1e-12
-        assert d["KL"] <= d["bound_KL_range"] + 1e-12
-        assert d["KL"] <= d["bound_KL_quadratic"] + 1e-12
-        assert d["KL"] <= d["bound_KL_variance"] + 1e-12
-    print("\nAll three bounds hold; the variance law is the tightest, and the")
-    print("square-root law is loose by orders of magnitude at large beta.\n")
 
 
 # --------------------------------------------------------------------------- #
-#  Demo 2: exact two-point drift and sharpness of the sigma/beta law
+# Demonstrations
 # --------------------------------------------------------------------------- #
 
+def demo_closed_forms(n: int = 8, a: float = 0.7, beta: float = 0.9) -> None:
+    rule(f"1. Closed forms vs brute force   (n={n}, a={a}, beta={beta})")
+    r = counting_reward(a)
+    pi = gibbs_policy(n, r, beta)
+    th = theory_profile(n, a, beta)
+    print(f"  effective temperature t = a/beta = {th['t']:.6f}")
+    print(f"  per-feature acceptance  theta   = sigma(t) = {th['theta']:.9f}")
+    check("partition function Z", partition_bruteforce(n, r, beta), th["Z"])
+    check("free energy  beta*log Z",
+          beta * math.log(partition_bruteforce(n, r, beta)), th["free_energy"])
+    check("E[|S|]", expectation(pi, lambda S: float(len(S))), th["expected_size"])
+    check("E[reward]", expectation(pi, r), th["expected_reward"])
+    check("entropy of aligned policy", entropy_of(pi), th["entropy"])
+    check("KL(pi || uniform)", kl_from_uniform(n, pi), th["kl_drift"])
+    check("mass on the maximal response", pi[frozenset(range(n))], th["top_mass"])
 
-def demo_two_point_sharpness() -> None:
-    """Closed-form drift tanh(a/2beta) on the two-point model, and its sandwich.
-
-    Uniform reference on {t, f}, reward a on t and 0 on f.  Then
-    ||pi_beta - p||_1 = tanh(a/(2 beta)) exactly, sigma_p(r) = a/2, and for
-    0 < a <= beta the drift lies in [sigma/(2 beta), 3 sigma / beta].
-    """
-    print("=" * 78)
-    print("DEMO 2 — exact two-point drift and Theta(sigma/beta) sharpness")
-    print("=" * 78)
-    p = [0.5, 0.5]
-    header = (f"{'a':>6} {'beta':>7} {'drift':>12} {'tanh(a/2b)':>12} "
-              f"{'sigma/(2b)':>12} {'3 sigma/b':>12}")
-    print(header)
-    print("-" * len(header))
-    for a, beta in ((1.0, 1.0), (1.0, 4.0), (2.0, 5.0), (0.5, 20.0), (3.0, 100.0)):
-        r = [a, 0.0]
-        _, pi_beta, _ = tilt_and_policy(p, r, beta)
-        drift = l1_distance(pi_beta, p)
-        closed = math.tanh(a / (2 * beta))
-        sigma = stddev(p, r)  # = a/2
-        lo, hi = sigma / (2 * beta), 3 * sigma / beta
-        print(f"{a:>6.2f} {beta:>7.2f} {drift:>12.8f} {closed:>12.8f} "
-              f"{lo:>12.8f} {hi:>12.8f}")
-        assert abs(drift - closed) < 1e-12
-        assert abs(sigma - a / 2) < 1e-12
-        assert lo - 1e-12 <= drift <= hi + 1e-12  # requires 0 < a <= beta
-    print("\nThe drift matches tanh(a/2beta) to machine precision and is trapped")
-    print("between sigma/(2 beta) and 3 sigma / beta: the law is Theta(sigma/beta).\n")
+    # pointwise Bernoulli product form
+    theta = th["theta"]
+    worst = max(abs(p - theta ** len(S) * (1 - theta) ** (n - len(S)))
+                for S, p in pi.items())
+    print(f"  max pointwise |pi(S) - Bernoulli product|      = {worst:.3e}")
 
 
-# --------------------------------------------------------------------------- #
-#  Demo 3: the audit gap is a covariance
-# --------------------------------------------------------------------------- #
+def demo_binomial_law(n: int = 10, a: float = 1.1, beta: float = 0.8) -> None:
+    rule(f"2. The reward statistic is Binomial(n, sigma(a/beta))  "
+         f"(n={n}, a={a}, beta={beta})")
+    pi = gibbs_policy(n, counting_reward(a), beta)
+    theta = logistic(a / beta)
+    empirical = [0.0] * (n + 1)
+    for S, p in pi.items():
+        empirical[len(S)] += p
+    predicted = level_masses(n, theta)
+    print(f"  theta = {theta:.9f}     mode = {mode_of_level_masses(n, theta)}")
+    print("   k   exact level mass    binomial formula      log-concavity ratio")
+    for k in range(n + 1):
+        if 0 <= k <= n - 2 and predicted[k + 1] > 0:
+            lc = predicted[k] * predicted[k + 2] / (predicted[k + 1] ** 2)
+            lc_s = f"{lc:.6f} <= 1"
+        else:
+            lc_s = "-"
+        print(f"  {k:2d}   {empirical[k]:.12f}    {predicted[k]:.12f}    {lc_s}")
+    assert all(predicted[k] * predicted[k + 2] <= predicted[k + 1] ** 2 + 1e-15
+               for k in range(n - 1)), "log-concavity violated"
+    print("  log-concavity m_k m_{k+2} <= m_{k+1}^2 verified for all k  [OK]")
 
 
-def demo_audit_covariance(seed: int = 20260820) -> None:
-    """First-order expansion of the audit gap, and second-order safety.
-
-    For |r| <= R <= beta and any statistic f,
-        | E_{pi_beta}[f] - E_p[f] - Cov_p(r,f)/beta |  <=  24 (R/beta)^2 sigma_p(f).
-    We check this on a random reference policy for (i) a statistic strongly
-    correlated with the reward, (ii) a statistic constructed to have exactly zero
-    reference covariance with the reward, which then moves only at order beta^-2.
-    """
-    print("=" * 78)
-    print("DEMO 3 — the audit gap is a covariance (first-order expansion)")
-    print("=" * 78)
-    rng = random.Random(seed)
-    n = 12
-    raw = [rng.random() + 0.05 for _ in range(n)]
-    s = sum(raw)
-    p = [x / s for x in raw]
-    r = [rng.uniform(-1.0, 1.0) for _ in range(n)]
-    big_r = max(abs(x) for x in r)
-
-    f_corr = [2.0 * ri + 0.3 * rng.uniform(-1, 1) for ri in r]
-    # Gram-Schmidt in L^2(p): remove the r-component from a random statistic.
-    f_raw = [rng.uniform(-1.0, 1.0) for _ in range(n)]
-    coef = covariance(p, r, f_raw) / variance(p, r)
-    f_orth = [fi - coef * ri for fi, ri in zip(f_raw, r)]
-    assert abs(covariance(p, r, f_orth)) < 1e-12
-
-    for name, f in (("correlated", f_corr), ("uncorrelated", f_orth)):
-        print(f"\naudit statistic: {name}   "
-              f"Cov_p(r,f) = {covariance(p, r, f):+.6f}   "
-              f"sigma_p(f) = {stddev(p, f):.4f}")
-        header = (f"{'beta':>8} {'true gap':>14} {'Cov/beta':>14} "
-                  f"{'|residual|':>14} {'24(R/b)^2 s_f':>16}")
-        print(header)
-        print("-" * len(header))
-        for beta in (1.0, 2.0, 5.0, 20.0, 100.0):
-            if beta < big_r:
-                continue  # the theorem requires R <= beta
-            _, pi_beta, _ = tilt_and_policy(p, r, beta)
-            gap = mean(pi_beta, f) - mean(p, f)
-            pred = covariance(p, r, f) / beta
-            resid = abs(gap - pred)
-            bound = 24 * (big_r / beta) ** 2 * stddev(p, f)
-            print(f"{beta:>8.1f} {gap:>+14.8f} {pred:>+14.8f} "
-                  f"{resid:>14.2e} {bound:>16.2e}")
-            assert resid <= bound + 1e-12
-    print("\nFor the correlated statistic the gap tracks Cov_p(r,f)/beta.")
-    print("For the uncorrelated one the whole gap is the O(beta^-2) remainder:")
-    print("first-order reward hacking requires correlation with the reward.\n")
+def demo_consistency_identity() -> None:
+    rule("3. Consistency identity   t*sigma(t) - log((1+e^t)/2) = log 2 - H(sigma(t))")
+    for t in (-4.0, -1.0, -0.25, 0.0, 0.25, 1.0, 2.5, 6.0):
+        lhs = t * logistic(t) - log_half_one_plus_exp(t)
+        rhs = math.log(2.0) - binary_entropy(logistic(t))
+        check(f"t = {t:+.2f}", lhs, rhs)
 
 
-# --------------------------------------------------------------------------- #
-#  Demo 4: gain-drift budget and the PTX mix-in
-# --------------------------------------------------------------------------- #
+def demo_reward_hacking(n: int = 12, a: float = 1.0) -> None:
+    rule(f"4. Reward hacking: collapse onto the maximal response   (n={n}, a={a})")
+    print("   beta      t=a/beta     theta       top mass = theta^n   "
+          "bound 1 - n e^{-t}")
+    for beta in (2.0, 1.0, 0.5, 0.25, 0.125, 0.0625):
+        t = a / beta
+        theta = logistic(t)
+        top = theta ** n
+        bound = 1.0 - n * math.exp(-t)
+        assert top >= bound - 1e-12, "reward-hacking bound violated"
+        print(f"  {beta:6.4f}   {t:8.3f}   {theta:.9f}   {top:.12f}   {bound: .9f}")
+    print("  bound  pi([n]) >= 1 - n e^{-a/beta}  holds at every temperature  [OK]")
+
+    print("\n  Strict antitonicity in beta (reward and collapse both fall as beta grows):")
+    prev_rew = prev_top = None
+    for beta in (0.25, 0.5, 1.0, 2.0, 4.0):
+        theta = logistic(a / beta)
+        rew, top = a * n * theta, theta ** n
+        tag = ""
+        if prev_rew is not None:
+            assert rew < prev_rew and top < prev_top
+            tag = "  (strictly decreased)"
+        print(f"    beta={beta:5.2f}   E[reward]={rew:.9f}   top mass={top:.12f}{tag}")
+        prev_rew, prev_top = rew, top
 
 
-def objective_ptx(
-    q: Sequence[float],
-    p: Sequence[float],
-    r: Sequence[float],
-    d: Sequence[float],
-    beta: float,
-    gamma: float,
-) -> float:
-    """J_gamma(q) = E_q[r] - beta KL(q||p) + gamma E_d[log q]."""
-    return (
-        mean(q, r)
-        - beta * kl_divergence(q, p)
-        + gamma * sum(di * math.log(qi) for di, qi in zip(d, q))
+def demo_monotone_measure(n: int = 6, a: float = 0.8, beta: float = 1.0) -> None:
+    rule(f"5. Alignment is order-preserving on the lattice   (n={n}, a={a}, beta={beta})")
+    pi = gibbs_policy(n, counting_reward(a), beta)
+    worst = 0.0
+    pairs = 0
+    for S in all_subsets(n):
+        for T in all_subsets(n):
+            if S <= T:
+                pairs += 1
+                worst = max(worst, pi[S] - pi[T])
+    print(f"  checked {pairs} comparable pairs S ⊆ T")
+    print(f"  max violation of pi(S) <= pi(T):  {worst:.3e}   [OK]" if worst <= 1e-15
+          else f"  VIOLATION {worst:.3e}")
+
+
+def demo_tensorization(a1: float = 0.6, a2: float = -0.3, beta: float = 0.7,
+                       n1: int = 4, n2: int = 5) -> None:
+    rule("6. Tensorization: additive rewards on a product make everything add")
+    Z1 = partition_bruteforce(n1, counting_reward(a1), beta)
+    Z2 = partition_bruteforce(n2, counting_reward(a2), beta)
+    # the product space is the Boolean lattice on n1+n2 features with a reward
+    # that is a1 per feature in the first block and a2 per feature in the second
+    n = n1 + n2
+
+    def split_reward(S: Subset) -> float:
+        return a1 * len([i for i in S if i < n1]) + a2 * len([i for i in S if i >= n1])
+
+    Z = partition_bruteforce(n, split_reward, beta)
+    check("Z(product) = Z1 * Z2", Z, Z1 * Z2)
+    check("F(product) = F1 + F2", beta * math.log(Z),
+          beta * math.log(Z1) + beta * math.log(Z2))
+    pi = gibbs_policy(n, split_reward, beta)
+    pi1 = gibbs_policy(n1, counting_reward(a1), beta)
+    pi2 = gibbs_policy(n2, counting_reward(a2), beta)
+    worst = 0.0
+    for S in all_subsets(n):
+        A = frozenset(i for i in S if i < n1)
+        B = frozenset(i - n1 for i in S if i >= n1)
+        worst = max(worst, abs(pi[S] - pi1[A] * pi2[B]))
+    print(f"  max |pi(product) - pi1 x pi2|                  = {worst:.3e}")
+    check("KL(product) = KL1 + KL2", kl_from_uniform(n, pi),
+          kl_from_uniform(n1, pi1) + kl_from_uniform(n2, pi2))
+    print("  the aligned policy of a separable problem is again a product  [OK]")
+
+
+def demo_supermodular_fkg(n: int = 7, beta: float = 0.6) -> None:
+    rule(f"7. Supermodular (rule-bonus) rewards: FKG and Holley   (n={n}, beta={beta})")
+    r = sum_rewards(
+        counting_reward(0.3),
+        rule_bonus([0, 1, 2], 1.5),      # conjunctive rule
+        rule_bonus([2, 3], 0.9),         # overlapping conjunctive rule
+        rule_bonus([4, 5, 6], 2.0),
     )
+    ok, witness = is_supermodular(n, r)
+    print(f"  reward is supermodular (diamond test): {ok}"
+          + ("" if ok else f"  witness {witness}"))
+    assert ok
 
+    pi = gibbs_policy(n, r, beta)
+    worst = check_log_supermodular(n, pi)
+    print(f"  max violation of log-supermodularity of pi     = {worst:.3e}   [OK]")
 
-def demo_gain_and_ptx(seed: int = 7) -> None:
-    """Two-sided gain-drift inequalities, and the pretraining budget inequality.
+    print("\n  FKG positive association of feature indicators  E[f]E[g] <= E[fg]:")
+    print("    i  j      P(i)P(j)          P(i and j)        covariance")
+    for i in range(3):
+        for j in range(i + 1, 4):
+            pi_i = expectation(pi, lambda S, i=i: 1.0 if i in S else 0.0)
+            pi_j = expectation(pi, lambda S, j=j: 1.0 if j in S else 0.0)
+            pij = expectation(pi, lambda S, i=i, j=j:
+                              1.0 if (i in S and j in S) else 0.0)
+            assert pi_i * pi_j <= pij + 1e-12
+            print(f"    {i}  {j}   {pi_i * pi_j:.12f}    {pij:.12f}"
+                  f"    {pij - pi_i * pi_j:+.3e}")
+    print("  every pair positively correlated -- alignment entangles features  [OK]")
 
-        beta KL(pi||p) <= gain <= (range r / 2) ||pi - p||_1,
-        beta KL(q||p) + gamma KL(d||q) <= range(r) + gamma KL(d||p)
-    for ANY policy q that beats the reference under the full objective.
-    """
-    print("=" * 78)
-    print("DEMO 4 — gain-drift budget and the pretraining (PTX) budget")
-    print("=" * 78)
-    rng = random.Random(seed)
-    n = 10
-    raw = [rng.random() + 0.1 for _ in range(n)]
-    p = [x / sum(raw) for x in raw]
-    raw_d = [rng.random() + 0.1 for _ in range(n)]
-    d = [x / sum(raw_d) for x in raw_d]
-    r = [rng.uniform(0.0, 3.0) for _ in range(n)]
-    rr = reward_range(r)
-
-    print(f"range(r) = {rr:.4f},  KL(d||p) = {kl_divergence(d, p):.4f}\n")
-    header = (f"{'beta':>8} {'gain':>12} {'beta*KL (lo)':>14} "
-              f"{'(rng/2)*L1 (hi)':>16} {'rng^2/beta':>12}")
-    print(header)
-    print("-" * len(header))
-    for beta in (1.0, 3.0, 10.0, 50.0):
-        dg = diagnostics(p, r, beta)
-        print(f"{beta:>8.1f} {dg['gain']:>12.6f} {dg['bound_gain_lower']:>14.6f} "
-              f"{dg['bound_gain_upper']:>16.6f} "
-              f"{rr ** 2 / beta if beta >= rr else float('nan'):>12.6f}")
-        assert dg["bound_gain_lower"] <= dg["gain"] + 1e-12
-        assert dg["gain"] <= dg["bound_gain_upper"] + 1e-12
-        if beta >= rr:
-            assert dg["gain"] <= rr**2 / beta + 1e-12
-
-    print("\nPTX budget check on the exact PTX optimum found by mirror ascent:")
-    beta, gamma = 2.0, 0.7
-    q = ptx_optimize(p, r, d, beta, gamma)
-    assert objective_ptx(p, p, r, d, beta, gamma) <= objective_ptx(q, p, r, d, beta, gamma) + 1e-12
-    lhs = beta * kl_divergence(q, p) + gamma * kl_divergence(d, q)
-    rhs = rr + gamma * kl_divergence(d, p)
-    print(f"  beta KL(q||p) + gamma KL(d||q) = {lhs:.6f}")
-    print(f"  range(r) + gamma KL(d||p)      = {rhs:.6f}")
-    print(f"  budget satisfied: {lhs <= rhs + 1e-9}")
-    print(f"  KL(q||p) = {kl_divergence(q, p):.6f} <= "
-          f"{(rr + gamma * kl_divergence(d, p)) / beta:.6f}")
-    print(f"  KL(d||q) = {kl_divergence(d, q):.6f} <= "
-          f"{kl_divergence(d, p) + rr / gamma:.6f}\n")
-    assert lhs <= rhs + 1e-9
-
-
-def ptx_optimize(
-    p: Sequence[float],
-    r: Sequence[float],
-    d: Sequence[float],
-    beta: float,
-    gamma: float,
-    steps: int = 20000,
-    lr: float = 0.02,
-) -> List[float]:
-    """Maximize J_gamma by exponentiated-gradient (mirror) ascent on the simplex.
-
-    The objective is strictly concave in q, so the iteration converges to the
-    unique maximizer; we only need a policy that beats the reference, so even a
-    partially converged iterate is a valid witness for the budget inequality.
-    """
-    q = list(p)
-    for _ in range(steps):
-        grad = [
-            ri - beta * (math.log(qi / pi) + 1.0) + gamma * di / qi
-            for ri, qi, pi, di in zip(r, q, p, d)
-        ]
-        q = [qi * math.exp(lr * gi) for qi, gi in zip(q, grad)]
-        s = sum(q)
-        q = [qi / s for qi in q]
-    return q
-
-
-# --------------------------------------------------------------------------- #
-#  Demo 5: the zero-temperature phase
-# --------------------------------------------------------------------------- #
-
-
-def demo_zero_temperature() -> None:
-    """Laplace principle and total collapse as beta decreases to 0.
-
-    max r + beta log(min p) <= beta log Z <= max r, every suboptimal response is
-    suppressed like exp(-(max r - r(y))/beta), and in the two-point model the
-    drift tends to its maximal value 1.
-    """
-    print("=" * 78)
-    print("DEMO 5 — the low-temperature phase: Laplace estimate and collapse")
-    print("=" * 78)
-    p = [0.5, 0.3, 0.2]
-    r = [0.0, 1.0, 2.5]
-    rstar, pmin = max(r), min(p)
-    header = (f"{'beta':>10} {'beta log Z':>14} {'lower':>12} {'upper':>10} "
-              f"{'pi(worst)':>12} {'suppr. bd':>12}")
-    print(header)
-    print("-" * len(header))
-    for beta in (2.0, 1.0, 0.5, 0.2, 0.05, 0.01):
-        _, pi_beta, z = tilt_and_policy(p, r, beta)
-        fe = beta * math.log(z)
-        lower = rstar + beta * math.log(pmin)
-        bd = (1 / pmin) * math.exp(-(rstar - r[0]) / beta)
-        print(f"{beta:>10.3f} {fe:>14.8f} {lower:>12.6f} {rstar:>10.4f} "
-              f"{pi_beta[0]:>12.3e} {min(bd, 1.0):>12.3e}")
-        assert lower - 1e-12 <= fe <= rstar + 1e-12
-        assert pi_beta[0] <= bd + 1e-12
-
-    print("\nTwo-point collapse (uniform reference, unit spike reward):")
-    p2 = [0.5, 0.5]
-    r2 = [1.0, 0.0]
-    for beta in (1.0, 0.3, 0.1, 0.03, 0.01):
-        _, pi2, _ = tilt_and_policy(p2, r2, beta)
-        print(f"   beta = {beta:>6.3f}   ||pi_beta - p||_1 = {l1_distance(pi2, p2):.8f}")
-    print("   -> 1, the maximal possible value: total policy collapse.\n")
-
-
-# --------------------------------------------------------------------------- #
-#  Demo 6: structural identities
-# --------------------------------------------------------------------------- #
-
-
-def demo_identities(seed: int = 99) -> None:
-    """Check the two identities that drive every proof.
-
-    (i)  Pair representation:  Var_p(f) = 1/2 sum_{x,y} p(x)p(y)(f(x)-f(y))^2.
-    (ii) Reweighting identity: E_{pi_beta}[f] - E_p[f] = Cov_p(T_beta, f).
-    (iii) Divergence of the tilt: KL(pi_beta||p) = E_{pi_beta}[r]/beta - log Z.
-    """
-    print("=" * 78)
-    print("DEMO 6 — the structural identities behind the proofs")
-    print("=" * 78)
-    rng = random.Random(seed)
-    n = 9
-    raw = [rng.random() + 0.05 for _ in range(n)]
-    p = [x / sum(raw) for x in raw]
-    r = [rng.uniform(-2, 2) for _ in range(n)]
-    f = [rng.uniform(-5, 5) for _ in range(n)]
-    beta = 3.0
-    tilt, pi_beta, z = tilt_and_policy(p, r, beta)
-
-    v1, v2 = variance(p, f), variance_pair_form(p, f)
-    print(f"pair representation:      Var = {v1:.12f}  vs  {v2:.12f}")
-    assert abs(v1 - v2) < 1e-10
-
-    g1 = mean(pi_beta, f) - mean(p, f)
-    g2 = covariance(p, tilt, f)
-    print(f"reweighting identity:     gap = {g1:+.12f}  vs  {g2:+.12f}")
-    assert abs(g1 - g2) < 1e-10
-
-    k1 = kl_divergence(pi_beta, p)
-    k2 = mean(pi_beta, r) / beta - math.log(z)
-    print(f"divergence of the tilt:   KL  = {k1:.12f}  vs  {k2:.12f}")
-    assert abs(k1 - k2) < 1e-10
-
-    print(f"mean of the tilt (= 1):   {mean(p, tilt):.12f}")
-    assert abs(mean(p, tilt) - 1.0) < 1e-10
-
-    # Pinsker and its sharpness on the two-point family.
-    print("\nPinsker ratio 2 KL / ||q-p||_1^2 on the two-point family (-> 1):")
-    for eps in (0.2, 0.1, 0.05, 0.01, 0.001):
-        q = [0.5 + eps, 0.5 - eps]
-        u = [0.5, 0.5]
-        ratio = 2 * kl_divergence(q, u) / l1_distance(q, u) ** 2
-        print(f"   eps = {eps:<8} ratio = {ratio:.8f}")
-        assert ratio >= 1.0 - 1e-12  # Pinsker
-    print()
+    print("\n  Holley stochastic dominance over the uniform reference:")
+    u = {S: 1.0 / 2 ** n for S in all_subsets(n)}
+    observables: List[Tuple[str, Callable[[Subset], float]]] = [
+        ("|S|", lambda S: float(len(S))),
+        ("|S|^2", lambda S: float(len(S)) ** 2),
+        ("1[0 in S]", lambda S: 1.0 if 0 in S else 0.0),
+        ("1[{0,1,2} <= S]", lambda S: 1.0 if frozenset({0, 1, 2}) <= S else 0.0),
+        ("the reward itself", r),
+    ]
+    for name, h in observables:
+        eu, ep = expectation(u, h), expectation(pi, h)
+        assert eu <= ep + 1e-12
+        print(f"    E_ref[{name:<18}] = {eu:12.8f}   <=   "
+              f"E_aligned = {ep:12.8f}")
+    print("  every monotone observable increases under alignment  [OK]")
 
 
 def main() -> None:
-    demo_identities()
-    demo_drift_hierarchy()
-    demo_two_point_sharpness()
-    demo_audit_covariance()
-    demo_gain_and_ptx()
-    demo_zero_temperature()
-    print("=" * 78)
-    print("All numerical checks passed.")
-    print("=" * 78)
+    print(__doc__.strip().splitlines()[0])
+    demo_closed_forms()
+    demo_binomial_law()
+    demo_consistency_identity()
+    demo_reward_hacking()
+    demo_monotone_measure()
+    demo_tensorization()
+    demo_supermodular_fkg()
+    rule("All demonstrations completed.")
 
 
 if __name__ == "__main__":
