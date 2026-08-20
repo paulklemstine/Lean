@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "5297c534",
-      "domain": "Novelty",
-      "key_insight": "# Future directions\n\nThe `⇒` direction of the extremal problem for the Donoho–Stark uncertainty principle, open in\nthis development, is now closed: `FourierFA.extremal_iff_isCosetModulation` in\n`Catal",
-      "quality_score": 0.86,
-      "sorry_count": 0,
-      "theorem_count": 49,
-      "timestamp": "2026-08-18T09:49:33",
-      "title": "The `⇐` direction is proved (`FourierFA.uncertainty_eq_coset_modulation`); the `⇒`"
-    },
-    {
       "cycle_id": "c4b3dd3f",
       "domain": "Logic",
       "key_insight": "# FUTURE DIRECTIONS — after closing Conjecture A\n\nConjecture A is now closed in `Catalog/Logic/TraceDistribution/`:\n\n* `traceDistribution_eq_iff_card_orbits_eq` — trace distribution `⟺` orbit counts o",
@@ -499,19 +489,19 @@
       "theorem_count": 93,
       "timestamp": "2026-08-20T07:57:37",
       "title": "reinforcement learning"
+    },
+    {
+      "cycle_id": "61305688",
+      "domain": "Bridges",
+      "key_insight": "# Future directions: the domination–packing ratio\n\nThe verified results of this cycle (see `Catalog/Bridges/DominationPacking*.lean`) are:\n\n* `ρ(G) ≤ γ(G)` for all finite graphs, and the \"local cover\"",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 185,
+      "timestamp": "2026-08-20T08:57:23",
+      "title": "ArXiv paper: Domination-packing ratio for planar and unit disk graphs"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "d1971d75",
-      "domain": "Combinatorics",
-      "key_insight": "# Future directions — strongly complete sets (thread th_20f13f16, cycle 2)\n\nThis cycle added two files to the catalog:\n\n* `Catalog/Combinatorics/StronglyCompleteBlocks.lean` — monotonicity, the initia",
-      "quality_score": 0.747205,
-      "sorry_count": 0,
-      "theorem_count": 40,
-      "timestamp": "2026-08-11T06:13:48",
-      "title": "The accompanying Lean file establishes the basic definitions, finite-perturbatio"
-    },
     {
       "cycle_id": "fadf9a22",
       "domain": "Combinatorics",
@@ -2501,27 +2491,19 @@
       "theorem_count": 93,
       "timestamp": "2026-08-20T07:57:37",
       "title": "reinforcement learning"
+    },
+    {
+      "cycle_id": "61305688",
+      "domain": "Bridges",
+      "key_insight": "# Future directions: the domination–packing ratio\n\nThe verified results of this cycle (see `Catalog/Bridges/DominationPacking*.lean`) are:\n\n* `ρ(G) ≤ γ(G)` for all finite graphs, and the \"local cover\"",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 185,
+      "timestamp": "2026-08-20T08:57:23",
+      "title": "ArXiv paper: Domination-packing ratio for planar and unit disk graphs"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "57212186",
-      "domain": "NumberTheory",
-      "name": "requires",
-      "quality": 0.9
-    },
-    {
-      "cycle_id": "6bc62e41",
-      "domain": "Applications",
-      "name": "card_poissonPairs",
-      "quality": 0.88
-    },
-    {
-      "cycle_id": "6bc62e41",
-      "domain": "Applications",
-      "name": "isPoissonPair_prime_card",
-      "quality": 0.88
-    },
     {
       "cycle_id": "b8ad3057",
       "domain": "Shared",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "cov_div_left",
       "quality": 0.85
+    },
+    {
+      "cycle_id": "61305688",
+      "domain": "Bridges",
+      "name": "three_le_card_of_dominating_wagner",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "61305688",
+      "domain": "Bridges",
+      "name": "isDominatingSet_wagner_zero_one_two",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "61305688",
+      "domain": "Bridges",
+      "name": "wagner_balls_meet",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-20T07:57:37",
+  "last_updated": "2026-08-20T08:57:23",
   "open_questions": [
     {
       "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hn2⟩)",
@@ -3145,12 +3145,6 @@
     ],
     "Bridges": [
       {
-        "cycle_id": "53eb02be",
-        "quality": 0.86,
-        "theorems": 85,
-        "title": "Experiment 397: SEQSMOOTH-NULL — mod-exp sequence stats are smoothness-blind (AU"
-      },
-      {
         "cycle_id": "35640655",
         "quality": 0.89,
         "theorems": 2,
@@ -3203,6 +3197,12 @@
         "quality": 0.88,
         "theorems": 91,
         "title": "Conjecture D (q-series rigidity / Molien-type dichotomy). The fixed-point q-seri"
+      },
+      {
+        "cycle_id": "61305688",
+        "quality": 0.82,
+        "theorems": 185,
+        "title": "ArXiv paper: Domination-packing ratio for planar and unit disk graphs"
       }
     ],
     "Combinatorics": [
