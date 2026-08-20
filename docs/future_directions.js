@@ -3,32 +3,18 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "consumed_by_exp_id": "84bf9824",
-    "description": "It is a direct adaptation of the standard Reinforcement Learning from Human Feedback (RLHF) objective with a pre-training mix-in (PTX)\u2014originally introduced in the InstructGPT / PPO alignment framework (Ouyang et al., 2022)\u2014rebranded with neurosymbolic notation.Breakdown of the Components$$\\text{Objective}(\\phi) = \\underbrace{\\mathbb{E}_{x, y}\\left[ RM_{NS}(x, y) \\right]}_{\\text{1. Reward Maximization}} - \\underbrace{\\beta_{NS} \\mathbb{E}_{x, y}\\left[ \\log \\frac{LLM_\\phi^{NS}(y\\vert{}x)}{LLM^{SFT}(y\\vert{}x)} \\right]}_{\\text{2. KL-Divergence Penalty}} + \\underbrace{\\gamma_{NS} \\mathbb{E}_{x}\\left[ \\log LLM_\\phi^{NS}(x) \\right]}_{\\text{3. Pretraining Loss Mix-in (PTX)}}$$NeuroSymbolic Reward Term:$\\mathbb{E}_{x \\sim \\mathcal{D}_{RL}, y \\sim LLM_\\phi^{NS}(x)} [RM_{NS}(x, y)]$Optimizes the policy parameters ($\\phi$) to generate outputs $y$ given prompts $x$ that maximize the score from a (neurosymbolic) reward model $RM_{NS}$.KL Penalty (Regularization):$-\\beta_{NS} \\log \\frac{LLM_\\phi^{NS}(y\\vert{}x)}{LLM^{SFT}(y\\vert{}x)}$The point-wise Kullback\u2013Leibler ($\\text{D}_{\\text{KL}}$) divergence penalty. It prevents the tuned policy $LLM_\\phi^{NS}$ from drifting too far from the base Supervised Fine-Tuned model ($LLM^{SFT}$), preventing policy collapse and reward hacking. $\\beta_{NS}$ controls the penalty strength.Pretraining Mix-in Gradient ($\\text{PPO-ptx}$ term):$+\\gamma_{NS} \\mathbb{E}_{x \\sim \\mathcal{D}_{pretrain}} \\log LLM_\\phi^{NS}(x)$Maximizes the log-likelihood over the original pretraining distribution $\\mathcal{D}_{pretrain}$ with coefficient $\\gamma_{NS}$. This standard trick avoids performance regression on general NLP benchmarks during RL fine-tuning.TakeawayMathematical Validity: 100% sound; it directly mirrors the standard InstructGPT alignment equation.Practical Meaning: It represents fine-tuning a model using RLHF, where the reward signal ($RM_{NS}$) or the model architecture incorporates neurosymbolic rules/logic rather than purely human-labeled reward modeling.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1569",
-    "phase": "B",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-19T02:06:03.269650+00:00",
-    "title": "reinforcement learning"
-  },
-  {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "db2f2b2f",
     "description": "Formalizes a quantum random walk on the Berggren Pythagorean tree where constructive interference at energy spectrum minima collapses the state onto factors of N.",
     "domains": [
       "Pythagorean",
       "Physics"
     ],
     "id": "pyth_factor_quantum_26037bbe",
+    "phase": "A",
     "priority_score": 0.99,
     "research_mode": "team",
     "source_exp_id": "pythagorean_factorization_breakthrough",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-07-23T20:10:45.864682+00:00",
     "title": "Quantum-Pythagorean-Walk: Polynomial Time Integer Factorization via Tree Resonance"
   },
@@ -1736,19 +1722,17 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Formalize the Yoneda lemma in Lean 4 with concrete applications. Prove that representable functors determine objects up to isomorphism. Formalize adjunctions and prove the general adjoint functor theorem. Apply to free-forgetful adjunctions.",
+    "description": "Building on cycle 94e7c481 (Q=0.780), which proved 56 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that if A^x + B^y = C^z where A,B,C,x,y,z are positive integers with x,y,z > 2, then A,B,C share a common prime factor. Formalize the connection to Fermat-Catalan and ABC conjecture.",
     "domains": [
-      "Algebra",
-      "Logic",
-      "Bridges"
+      "NumberTheory"
     ],
-    "id": "fd_0694",
-    "priority_score": 0.87,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
+    "id": "push_94e7c481_56cb3c22",
+    "priority_score": 0.88,
+    "research_mode": "team",
+    "source_exp_id": "94e7c481",
     "status": "available",
-    "timestamp": "2026-07-24T14:34:16.697846+00:00",
-    "title": "Categorical Foundations: Yoneda and Adjunctions"
+    "timestamp": "2026-08-20T03:58:56.657371+00:00",
+    "title": "Deepening: Beal's Conjecture"
   },
   {
     "consumed_by_exp_id": "",
@@ -5198,17 +5182,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "Euler-Mascheroni Constant Irrationality"
   },
   {
-    "consumed_by_exp_id": "94e7c481",
+    "consumed_by_exp_id": "",
     "description": "Prove that if A^x + B^y = C^z where A,B,C,x,y,z are positive integers with x,y,z > 2, then A,B,C share a common prime factor. Formalize the connection to Fermat-Catalan and ABC conjecture.",
     "domains": [
       "NumberTheory"
     ],
     "id": "seed_036",
-    "phase": "A",
     "priority_score": 0.82,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "",
     "title": "Beal's Conjecture"
   },
@@ -21908,5 +21891,65 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-20T03:10:46.297060+00:00",
     "title": "The one-parameter case is already a theorem here"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "coprimality condition, the quantitative hyperbolicity bound\n`1/x + 1/y + 1/z \u2264 11/12` (using FLT\u2083 to remove the boundary triple `(3,3,3)`), the reduction to\nexponents that are odd primes or `4`, a mod-8 obstruction on counterexamples, and the full\nfunction-field analogue of Beal's conjecture via Mason\u2013Stothers.  Conditionally, it shows that\n`abc` forces `C^z \u2264 K^12` for every counterexample and that Fermat\u2013Catalan finiteness bounds the\nnumber of counterexamples, and that Beal implies FLT for all `n \u2265 3`.",
+    "domains": [
+      "Pythagorean",
+      "NumberTheory"
+    ],
+    "id": "fd_1666",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "94e7c481",
+    "status": "available",
+    "timestamp": "2026-08-20T03:58:46.812000+00:00",
+    "title": "coprimality condition, the quantitative hyperbolicity bound"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The integral proof is already formal; upgrading it is a matter of replacing `Nat.pow`\nbookkeeping by `rpow` bookkeeping, and `Beal.abcBound_of_abcConjecture` shows the two forms are\ninterchangeable.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_1667",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "94e7c481",
+    "status": "available",
+    "timestamp": "2026-08-20T03:58:46.993344+00:00",
+    "title": "The integral proof is already formal; upgrading it is a matter of replacing `Nat.pow`"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "In any coprime Beal counterexample exactly one of `A, B, C` is even (proved:\n`Beal.parity_trichotomy`); if `C` is the even one then `x` and `y` are not both even (proved:\n`Beal.not_both_exponents_even_of_even_C`); and, conjecturally, `A B C \u2261 0 mod 3` fails, so that\n`A^x + B^y \u2261 C^z mod 9` forces `x \u2261 y \u2261 z mod 2` to be all odd.",
+    "domains": [
+      "NumberTheory",
+      "Pythagorean"
+    ],
+    "id": "fd_1668",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "94e7c481",
+    "status": "available",
+    "timestamp": "2026-08-20T03:58:47.185903+00:00",
+    "title": "In any coprime Beal counterexample exactly one of `A, B, C` is even (proved:"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every prime `p \u2265 5` there are non-constant, pairwise coprime\n`a, b, c \u2208 \ud835\udd3d_p[X]` and exponents `x, y, z \u2265 3` (necessarily divisible by `p`) with\n`a^x + b^y = c^z`; consequently `Beal.PolynomialBealConjecture` genuinely requires the\ncharacteristic-zero hypothesis.",
+    "domains": [
+      "NumberTheory",
+      "Pythagorean"
+    ],
+    "id": "fd_1669",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "94e7c481",
+    "status": "available",
+    "timestamp": "2026-08-20T03:58:47.374011+00:00",
+    "title": "For every prime `p \u2265 5` there are non-constant, pairwise coprime"
   }
 ];

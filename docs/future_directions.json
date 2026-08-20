@@ -19142,14 +19142,14 @@
       "parent_direction": "",
       "priority_score": 0.87,
       "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
+      "prune_reason": "tournament_rejected: ",
+      "pruned_at": "2026-08-20T03:58:57Z",
       "quarantined_until": "",
       "research_mode": "prove",
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "available",
+      "status": "pruned",
       "thread_id": "",
       "timestamp": "2026-07-24T14:34:16.697846+00:00",
       "title": "Categorical Foundations: Yoneda and Adjunctions"
@@ -39850,7 +39850,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions — Hamiltonicity of Cayley Graphs of Order `pqrs`\n\nThis document records the open conjectures that the formalization in\n`Catalog/Pythagorean/CayleyHamiltonian/` makes concrete and testable.  Everything asserted as\n*proved* below is `sorry`-free Lean 4 / Mathlib and depends only on `propext`,\n`Classical.choice`, `Quot.sound`.\n\n## What is already proved\n\n### Foundations\n\n| result | Lean name |\n|---|---|\n| connectivity ⟺ `⟪S⟫ = G` | `cayleyGraph_connected_iff` |\n| the graph depends only on `S ∪ S⁻¹` | `cayleyGraph_union_inv` |\n| cyclic enumeration ⇒ hamiltonian | `isHamiltonian_of_enum` |\n| connection set containing a generator | `isHamiltonian_of_orderOf_eq_card` |\n| all connected Cayley graphs of odd prime order | `isHamiltonian_of_prime_card` |\n| **the factor group lemma (quotient-free formulation)** | `isHamiltonian_of_factorGroup` |\n\n### Coset-by-coset criteria\n\n| result | Lean name |\n|---|---|\n| parity-free zigzag on `C_m □ C_k` for commuting generators | `isHamiltonian_of_abelian_directProduct` |\n| generalized dihedral pair | `isHamiltonian_of_dihedral_pair` |\n| index-two alternating word | `isHamiltonian_of_index_two_pair` |\n| **twisted direction-sequence criterion (metacyclic `⟨a⟩ ⋊ ⟨b⟩`)** | `isHamiltonian_of_twisted_directions` |\n| the twist alone closes the cycle when `gcd(e−1, |a|) = 1` | `isHamiltonian_of_metacyclic_coprime_twist` |\n| **nonabelian metacyclic groups with `|a|` prime** | `isHamiltonian_of_metacyclic_prime_normal` |\n| two connection elements in one coset of a normal subgroup of prime order | `isHamiltonian_of_same_coset_pair`, `isHamiltonian_of_same_coset_pair'` |\n| two connection elements in mutually inverse cosets | `isHamiltonian_of_inverse_coset_pair` |\n| **general coset-pair criterion, voltage form (no parity hypothesis)** | `isHamiltonian_of_coset_pair_of_voltage` |\n| **general coset-pair criterion: `x` of odd order `k`, `y = A·xᵐ`** | `isHamiltonian_of_coset_pair` |\n| the case `m = 2` of the criterion | `isHamiltonian_of_square_coset_pair` |\n\n### Complete order theorems (arbitrary connection set)\n\n| result | Lean name |\n|---|---|\n| **order `2p`, `p` odd prime** | `isHamiltonian_of_card_eq_two_mul_prime` |\n| **order `3q`, `q ≠ 3` prime** | `isHamiltonian_of_card_eq_three_mul_prime` |\n| **order `5q`, `q ≠ 5` prime** | `isHamiltonian_of_card_eq_five_mul_prime` |\n| **order `pq` for all distinct primes `p ≠ q`** | `isHamiltonian_of_card_eq_prime_mul_prime` |\n| the same, with the order given as `Nat.card` | `isHamiltonian_of_natCard_eq_prime_mul_prime` |\n| abelian groups of order `pq` | `abelian_isHamiltonian_of_card_eq_prime_mul_prime` |\n\n### Structure theory and reductions\n\n| result | Lean name |\n|---|---|\n| elements outside the normal Sylow `q`-subgroup have order `p` or `pq` | `orderOf_eq_or_of_notMem_normal` |\n| connection set meeting the normal Sylow subgroup ⇒ hamiltonian | `pq_isHamiltonian_of_mem_normal` |\n| order `pq` with a generator of the normal Sylow subgroup in `S` | `pq_isHamiltonian_of_normal_pair` |\n| **order-`pq` reduction: hamiltonian, or `S` is a partial transversal** | `pq_isHamiltonian_or_transversal` |\n| **the transversal may in addition be taken inverse-closed-free** | `pq_isHamiltonian_or_symmetric_transversal` |\n| order `pq` with `≥ p` nonidentity connection elements ⇒ hamiltonian | `pq_isHamiltonian_of_le_ncard` |\n| explicit hamiltonian cycle in the transversal case of order `21` | `Frobenius21.frobenius21_transversal_isHamiltonian` |\n| abelian and dihedral cases of order `pqrs` | `pqrs_abelian_pair_isHamiltonian`, `pqrs_dihedral_isHamiltonian` |\n| metacyclic groups of order `pqrs` | `pqrs_metacyclic_isHamiltonian` |\n\n### Organizing principles\n\n**(A) Coset-by-coset traversal.**  A hamiltonian cycle in `Cay(G, S)` is produced by choosing a\ncyclic subgroup `N = ⟨a⟩` with cyclic \"quotient direction\" `b`, traversing each coset of `N`\ncompletely, and choosing a direction for each traversal so that the accumulated column shift is\n`0` in `N`.  For `N` central the closing condition is the arithmetic congruence\n`m ∣ ∑_{j<k} d j` (`isHamiltonian_of_directions`); with a twist `b a b⁻¹ = a^e` it becomes the\n*geometric* congruence `m ∣ ∑_{j<k} d j eʲ` (`isHamiltonian_of_twisted_directions`).  The\ngeometric sum explains *why* the twisted case is easier rather than harder:\n`(e − 1) ∑_{j<k} eʲ = eᵏ − 1 ≡ 0 (mod m)` holds automatically, so a nontrivial twist supplies\nits own closing certificate.\n\n**(B) Voltage.**  More generally (`isHamiltonian_of_factorGroup`), any `k`-periodic walk whose\nprefix products meet each coset of `⟨z⟩` exactly once, where `z` is the *voltage* of one turn,\ncloses into a hamiltonian cycle after `|z|` turns.  This is the factor group lemma, formalized\nhere without ever forming a quotient group: the distinctness hypothesis is stated as\n`P i' * (P i)⁻¹ ∈ ⟨z⟩ → i = i'`.  Principle (A) is the special case where the walk is\n`a, …, a, b, a, …, a, b, …`.\n\n**(C) The coset-pair criterion closes the transversal case.**  The gap left by the previous\ncycle — a connection set that misses the normal subgroup `N = ⟨a⟩` and meets each nontrivial\ncoset at most once — is now a theorem.  The decisive observation is that one should *not* look\nfor a positive word: with `x̄ = 1` and `ȳ = m` in the quotient, the only `±`-free words whose\nsteps sum to `0` are `x^k` and `y^k`, both of voltage `1`.  The word that works is the\n`k`-periodic **`x`-then-`x⁻¹` word**\n\n```\nx, x, …, x  (t times),  y,  x⁻¹, x⁻¹, …, x⁻¹  (t − 1 times),  y        with t = k − m,\n```\n\nwhose prefix products run through the cosets `N, Nx, …, Nx^{k−1}` exactly once and whose\nvoltage is `B · (x B x⁻¹)` for a conjugate `B` of `A`.  That voltage is *never* trivial: it is\ntrivial only if `x B x⁻¹ = B⁻¹`, and conjugation by `x` has odd order `k` on the cyclic group\n`⟨a⟩` of odd prime order `q`, while inversion has order `2` — so `B = 1`, a contradiction.  No\narithmetic side condition on the twist survives, which is why the criterion\n(`isHamiltonian_of_coset_pair`) is uniform in `m` and applies equally to abelian and nonabelian\ngroups.  Combined with the dichotomy `pq_isHamiltonian_or_transversal` and the small-prime\ncases `p = 2, 3`, this yields the complete order-`pq` theorem.\n\n---\n\n## Conjecture 1 (Squarefree order ⇒ hamiltonian, via a normal-form pair)\n\nEvery connected Cayley graph of a group of squarefree order `n ≥ 3` is hamiltonian.  In\nparticular this covers `n = pqrs`, the target of the source paper.\n\n*The key insight is* that the **combinatorial** half of this statement is no longer the\nobstruction: `isHamiltonian_of_coset_pair` is already stated for `|G| = q·k` with `k` an\narbitrary odd number coprime to the prime `q`, not for `k` prime, so it applies verbatim to\n`k = pr`, `k = prs`, and beyond.  What is missing is a purely group-theoretic **normal-form\nlemma**: every generating set of a group of odd squarefree order contains, or generates by a\nbounded-length word, a pair `(x, y)` with `x` of order `k = |G|/q`, `⟨a⟩ ⊴ G` of prime order\n`q`, and `y ∈ ⟨a⟩x^m ∖ {x^m}`.  Formally: state\n`squarefree_normalForm_pair : Squarefree (Nat.card G) → Odd (Nat.card G) → Subgroup.closure S = ⊤ → ∃ …`\nand feed it to the criterion.\n\n*Why now?*  Mathlib supplies `IsZGroup.of_squarefree` and `IsZGroup.isCyclic_abelianization`\n(already used here in `pqrs_abelian_isCyclic`), so the metacyclic decomposition\n`G = ⟨a⟩ ⋊ ⟨b⟩` is available off the shelf; and the order-`pq` proof in\n`OrderPQComplete.lean` is exactly the `k = p` instance of the intended argument, so it can be\nused as a template line by line.  The conjecture is falsifiable: a counterexample would be a\nsquarefree order `n`, a group `G` of that order and a generating set `S` with no hamiltonian\ncycle, which is a finite check for each `(G, S)`.\n\n## Conjecture 2 (Order `pqr`: the next complete order theorem)\n\nFor distinct primes `p`, `q`, `r`, every connected Cayley graph of a group of order `pqr` is\nhamiltonian.\n\n*The key insight is* that the order-`pq` proof has a three-branch shape — `S` meets the normal\nsubgroup; `S` has two elements in one coset (or in inverse cosets); `S` is a partial\ntransversal — and the branch count does not grow with the number of primes, only the\n*bookkeeping* does: for `|G| = pqr` there is a normal Sylow subgroup `N` of prime order `q`\n(by a counting argument on Sylow numbers) with `G/N` of squarefree order `pr`, so the same\ntrichotomy applies once the quotient direction is replaced by an element of order `pr` or by a\npair generating `G/N`.  The genuinely new case, absent for `|G| = pq`, is that `G/N` may fail\nto be cyclic-generated by a single image of `S`; then one needs a *two-generator* quotient\nword, i.e. principle (B) applied to a walk that is not of the form `x…x y x…x y`.\n\n*Why now?*  `isHamiltonian_of_factorGroup` accepts an arbitrary periodic word, so the\ntwo-generator quotient walk needs no new infrastructure — only a hamiltonian cycle in the\nquotient `Cay(G/N, S̄)`, which is a Cayley graph of order `pr` and hence covered by\n`isHamiltonian_of_card_eq_prime_mul_prime`.  The order-`pqr` theorem is therefore an\n*induction on the number of primes* waiting for a voltage-lifting lemma: \"a hamiltonian cycle\nin `Cay(G/N, S̄)` with nontrivial voltage lifts to a hamiltonian cycle in `Cay(G, S)`\".\n\n## Conjecture 3 (Sharpness of the voltage condition for even `k`)\n\nThe parity hypotheses of the coset-pair criterion are *exactly* the voltage condition, and the\nvoltage condition is *not* vacuous: there exist `G`, a normal `⟨a⟩` of prime order `q`, an\nelement `x` of even order `k` and `A ∈ ⟨a⟩ ∖ {1}` for which the `x`-then-`x⁻¹` traversal has\ntrivial voltage `B · (x B x⁻¹) = 1`, so that the criterion genuinely does not apply.\n\n*The key insight is* that the positive half of this conjecture from the previous cycle is now\na **theorem**: `isHamiltonian_of_coset_pair_of_voltage` has no parity hypothesis at all, taking\n`∀ B ∈ ⟨a⟩, B ≠ 1 → B (x B x⁻¹) ≠ 1` as its only replacement, and\n`isHamiltonian_of_coset_pair` is the corollary in which oddness of `q` and `k` discharges that\nhypothesis.  What remains is the *negative* half: the oddness is not an artefact of the\ntraversal but the precise obstruction, because the automorphism `c ↦ x c x⁻¹` of `⟨a⟩ ≅ ℤ/q`\nhas order dividing `k` and can equal inversion only when `2 ∣ k`.  The smallest predicted\nwitness is the dihedral-like group `ℤ/q ⋊_{−1} ℤ/k` with `k` even and `x` acting by inversion.\n\n*Why now?*  The statement has been reduced to an explicit computation of one conjugation\nautomorphism in a concrete group of order `qk` — and that group is nevertheless hamiltonian by\n`isHamiltonian_of_card_eq_two_mul_prime` when `k = 2`, so the witness would bound the *method*,\nnot the theorem, and would tell us exactly which alternative periodic word must replace\n`x, …, x, y, x⁻¹, …, x⁻¹, y` in the even case.\n\n## Conjecture 4 (Voltage dichotomy: the factor group lemma is essentially sharp)\n\nFor every group `G` of squarefree order `≥ 3` and every connected `S`, some periodic word in\n`S ∪ S⁻¹` satisfies the hypotheses of `isHamiltonian_of_factorGroup`.\n\n*The key insight is* that the two hypotheses of the lemma pull in opposite directions: making\nthe prefix products land in distinct cosets forces the word to be short, while making the\nvoltage generate a nontrivial `⟨z⟩` forces it to be long; the conjecture says that for\nsquarefree order these constraints are always simultaneously satisfiable.  A counterexample\nwould be a group in which every quotient-hamiltonian closed word has trivial voltage — and by\nConjecture 1 such a group would still have a hamiltonian cycle, just not one obtainable by\nlifting.\n\n*Why now?*  `isHamiltonian_of_factorGroup` is available as a single reusable statement with an\nexplicitly finite hypothesis set, so the conjecture is falsifiable by a finite search for each\nfixed `(G, S)`; and there are now four proved families of witnesses to seed the search —\n`isHamiltonian_of_same_coset_pair`, `isHamiltonian_of_inverse_coset_pair`,\n`isHamiltonian_of_coset_pair` and the twisted criterion viewed as the word `aᵐ b aᵐ b ⋯`.\n\n## Conjecture 5 (Quantitative: how many hamiltonian cycles?)\n\nFor `|G| = pq` with `p < q` primes and `S` a connected connection set, `Cay(G, S)` contains at\nleast `q` distinct hamiltonian cycles; more ambitiously, the number of them is divisible by\n`|G| / 2` whenever `|S| = 2`.\n\n*The key insight is* that vertex-transitivity (`exists_aut_mapping` in `Basic.lean`) makes the\nautomorphism group act on the set of hamiltonian cycles with small stabilizers, so a single\ncycle already forces an orbit of size `|G| / |stabilizer|`; the content of the conjecture is\nthe lower bound on the orbit, i.e. that the stabilizer of a cycle has order at most `2` (a\ncycle is stabilized only by the reversal and by translations along itself).\n\n*Why now?*  Existence is now formally settled for *all* of order `pq`, so counting is the only\nremaining question at that order; the explicit cycles produced by `cosetEnum`, `zigzagEnum`,\n`twistEnum` and `prefixProd` are concrete enough to be counted; and the group-action machinery\n(`translateAut`) is already in `Basic.lean`.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "NumberTheory",
         "Combinatorics"
@@ -39931,7 +39931,7 @@
       "depth_estimate": 3,
       "description": "# FUTURE DIRECTIONS — NET-47 staircase thread\n\nFour cycles of the loop produced, in `Catalog/NumberTheory/`:\n\n| file | content |\n|---|---|\n| `KneeStaircaseArithmetic.lean` | binary staircase normal form `stair b j = 2^b(2^j-1)`, digits, 2-adic valuation, injectivity, midpoint law, window classification |\n| `KneeStaircaseDivisorSpectrum.lean` | `σ(stair b j)`, abundance criterion, Euclid **and** Euler directions for the family, abundancy monotonicity and its limit |\n| `KneeStaircaseOctaveCensus.lean` | exact census of grid-admissible knees in a dyadic octave, count `n - g`, bracket `[(3/4)2^n, 2^n]`, waste ratio `4/3`, renormalisation, the 7/8-median law |\n| `KneeStaircaseDivisibilityLattice.lean` | `stair b j ∣ stair b' j' ↔ b ≤ b' ∧ j ∣ j'`, gcd closure, lcm failure, census antichains, grid step recovered as a gcd |\n| `KneeStaircaseCensusDensity.lean` | `2·A(n) = n(n+1) + 2` staircase numbers below `2^n`, density `→ 0` |\n\nAll statements are proved with no `sorry` and no non-standard axioms.  Below are the conjectures\nthe cycles left open, each falsifiable and each with a concrete first target.\n\n---\n\n## Conjecture 1 (grid-ratio law). The 7/8 median is a statement about the *sweep grid*, not the network.\n\n**Claim.** For every cell, the seed-averaged knee equals `(1 - 2^{-(r-1)}) · 2^n` where\n`2^n` is the product point and `r = n - g` is the grid ratio (`log₂` of product point over grid\nstep).  In particular a knee distribution with median `≠ (7/8)·2^n` must come from a sweep whose\ngrid is not `2^{n-3}`.\n\n*The key insight is* that `KneeStaircase.octave_census_card` fixes the number of admissible knees\nat `n - g`, and `KneeStaircase.seven_eighths_median_law` shows that for `n - g = 3` the census is\nforced to be the arithmetic progression `{(3/4)2^n, (7/8)2^n, 2^n}` whose median is the mean —\nso the \"7/8 law\" is a property of the measuring grid, reproducible with no network at all.\n\n*Why now?*  The round's own next step (a third seed at `ctx = 2048`) tests exactly this: with the\n`32`-grid the census is `{192, 224, 256}` (`census_prediction_2048`, proved) and the law predicts\nmedian `224`; with a `16`-grid the census gains `240` and the median must move to `232`.  The\nprediction is a single number, decidable by one run.\n\n**First formal target.**  Prove `median (octaveCandidates n g) = 2^n - 2^{g + (r-1)/2}` for odd\n`r`, and show the even-`r` census has no member equal to its mean — a *parity obstruction* to any\n\"mean = median\" law when the grid ratio is even.\n\n---\n\n## Conjecture 2 (rigidity of staircase knees). Every knee of a monotone truncation sweep is a staircase number.\n\n**Claim.** If a retention curve `c : ℕ → ℝ` is nondecreasing and its knee is measured on a dyadic\ngrid, the knee is a staircase number in the sense of `KneeStaircase.IsStaircase`.\n\n*The key insight is* `KneeStaircase.staircase_density_tendsto_zero`: staircase numbers have\ndensity `→ 0` (there are only `n(n+1)/2 + 1` below `2^n`), so the fact that all five measured\nknees of the NET series (`16, 32, 64, 96, 112, 128, 224, 256`) are staircase numbers is not\nexplicable by chance and must come from the geometry of the sweep grid.\n\n*Why now?*  The conjecture is refutable by a single non-staircase knee (e.g. `104 = 1101000₂`,\nwhich is a *sum* of two staircase blocks); refuting it would show the grid, not arithmetic, is\ndoing the work — and confirming it on a finer grid would make the staircase form a genuine\nprediction.\n\n**First formal target.**  Prove that the set of \"two-block\" numbers (`2^a(2^i-1) + 2^b(2^j-1)`)\nhas density `→ 0` as well, so that even the weaker \"few-block\" hypothesis is a strong constraint,\nand identify the first grid on which a non-staircase point can win.\n\n---\n\n## Conjecture 3 (antichain obstruction to seed averaging). No knee ensemble admits a common refinement.\n\n**Claim.** For every octave census, the measured knees form a divisibility antichain\n(`KneeStaircase.census_antichain`, proved), and consequently no single \"law value\" `k` can be a\ncommon multiple of two admissible knees while remaining admissible: the family is a\nmeet-semilattice but not a lattice (`KneeStaircase.staircase_not_lcm_closed`).\n\n*The key insight is* the product order `stair b j ∣ stair b' j' ↔ b ≤ b' ∧ j ∣ j'`: the zero block\nmust grow while the one block must divide, and along a census the two move in opposite\ndirections, which is exactly why lcm leaves the family (`lcm 3 7 = 21`).\n\n*Why now?*  The NET series is trying to summarise seed spreads by a single deployable number.\nThis says any such summary must be an *upper bound* (a join outside the family), never a member —\na structural reason the \"guarantee at the conservative end\" is the only honest summary.\n\n**First formal target.**  Compute the smallest staircase number above `lcm` of a census (the\n\"join in the family\") and show it equals `2^{n+1}`, i.e. that the only common staircase multiple\nof two distinct admissible knees is a full octave up — a factor-2 penalty theorem.\n\n---\n\n## Conjecture 4 (arithmetic type of the knee). Jittered knees are abundant, product points are deficient.\n\n**Claim.** For every cell with grid ratio `r ≥ 2`, all census members except the top point are\nabundant, and the top point is deficient; no census member is ever perfect.\n\nProved here for `2 ≤ j ≤ b` (`KneeStaircase.stair_abundant`), for the top point\n(`KneeStaircase.stair_deficient_of_one`), and for weight-7 ladders\n(`KneeStaircase.net47_no_knee_perfect`).  The open part is the regime `j > b`, i.e. very fine\ngrids, where the abundancy ceiling `2σ(2^j-1)/(2^j-1)` of\n`KneeStaircase.abundancy_tendsto` can drop below `2`.\n\n*The key insight is* that abundance of `2^b(2^j-1)` is governed by the *ratio* `b : j` and not by\nsize — the whole family has a `j`-dependent abundancy ceiling, so at fixed `j` the deep rungs are\nabundant and at fixed `b` the tall rungs need not be.\n\n*Why now?*  It predicts the exact grid depth at which the arithmetic character of the knee\ndistribution flips, a discrete, checkable event: the first `(b, j)` with `j > b` and\n`σ(2^j-1)(2^{b+1}-1) < 2^{b+1}(2^j-1)`.\n\n**First formal target.**  Prove `stair b j` is deficient whenever `2^j - 1` is prime and `b < j -\n1`, closing the classification for prime Mersenne blocks, and exhibit the first composite-block\ncounterexample.\n\n---\n\n## Conjecture 5 (identifiability of the measurement from the data). The census determines `(n, g)`.\n\n**Claim.** The map `(n, g) ↦ octaveCandidates n g` is injective on `g < n`: the maximum recovers\n`2^n` and the gcd recovers `2^g` (`KneeStaircase.census_gcd_is_grid_step`,\n`KneeStaircase.net47_gcd_recovers_grid`: `gcd(96,112) = 16`).  Hence a reported knee *set*\ncarries its own measurement metadata, and any two experiments with the same census used the same\ncontext and the same grid.\n\n*The key insight is* the renormalisation identity `KneeStaircase.census_scaling`: the census is\nexactly self-similar under `(n, g) ↦ (n+1, g+1)`, so only the *difference* `n - g` controls the\nshape while the pair `(max, gcd)` pins the absolute scale.\n\n*Why now?*  It converts a housekeeping question (\"was the sweep grid the same across seeds?\")\ninto a theorem, and it is refuted the moment two cells with different `(n, g)` report identical\nknee sets.\n\n**Status.**  The set-level statement is now *proved*: `KneeStaircase.census_determines_params`\nshows `(n, g)` is recovered from the census (maximum gives `n`, cardinality gives `n - g`).  What\nremains open is the *physical* identifiability: the census sees only the product `n`, never the\npair `(d, ctx)` behind it.\n\n**First formal target.**  Show that the fibre of the census map over a fixed `n` is exactly the\nset of cells with `d·ctx = 32·2^n`, i.e. that knee data alone can never separate \"depth\" from\n\"context\" — a genuine limit on what a truncation sweep can measure, and a prediction that a\n`(d = 8, ctx = 512)` cell must report the same census as `(d = 4, ctx = 1024)`.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "NumberTheory",
         "Geometry"
@@ -40013,7 +40013,7 @@
       "depth_estimate": 3,
       "description": "# Future directions — bold, falsifiable conjectures from the NET-45 cycle\n\nEach conjecture is stated so that a single computation, run, or Lean development decides\nit. Formal counterparts of the definitions used here live in\n`Catalog/Logic/KneeMarginChain.lean`, `Catalog/Logic/AttentionSelectionDilution.lean` and\n`Catalog/Logic/AttentionSelectionExchange.lean`.\n\n## C1. The margin law: margins decay geometrically along an exact chain\n\n**Conjecture.** Along a doubling ladder on which the product law `k* = A·d·ctx/δ` is exact\nat every rung, the margin at rung `i` satisfies `m_i ≤ M·ρ^i` with `ρ < 1`; consequently\nthe certified depth of an exact chain grows only like `log(1/η)`, and **no exact chain of\nmore than `O(log(1/η))` rungs can ever be certified at noise `η`**.\n\n*The key insight is* that exactness is a quantisation coincidence: rung `i` reports the\ngrid point immediately above a continuous knee whose fractional position in the last grid\ncell is essentially equidistributed, and the margin is the retained-accuracy increment\nacross that fraction of a cell — an increment which shrinks as the retained curve\nflattens with context. The NET-45 ladder `0.007, 0.010, 0.003, 0.006, 0.0013` is\nconsistent with `ρ ≈ 0.6` on the odd subsequence and is already at the resolution limit\nof the harness.\n\n*Why now?* `KneeMarginChain.CertDepth` and `certDepth_antitone` give the exact\nbook-keeping, and five rungs of margins are recorded. A sixth rung (`ctx = 4096`) with a\nmargin below `0.0008` would confirm the geometric law and would also prove that the\nprogramme can never certify the chain it is measuring.\n\n## C2. The dilution exponent: the selection gap decays like `k/N_eff`\n\n**Conjecture.** At matched sparsity `k/L`, the selection gap of the measured profiles\nobeys `gap(ctx) ≍ c·(k/N_eff(ctx))^{1/2} − k/L`, so with `N_eff ∝ ctx^{0.86}` the gap\ndecays like `ctx^{-0.43}` and reaches zero — the uniform-attention rigidity point of\n`SelectionDilution.uniform_of_topMass_eq` — at a finite, computable context.\n\n*The key insight is* that `SelectionExchange.selection_gap_split_eq` makes the gap an\nexact invariant of self-similar refinement, so **any** decay is a measurement of the\nfailure of self-similarity, and the Cauchy–Schwarz cap\n`SelectionDilution.topMass_sq_le_card_mul_sumSq` converts the measured effective support\ndirectly into the achievable gap.\n\n*Why now?* The measured gaps (`+5.3, +5.9, +1.7`) and the two measured\neffective supports (`291.16, 526.39`) already over-determine the two constants; a single\n`ctx = 4096` run tests the prediction, and a gap of zero would be the strongest possible\nnegative result about data-free attention pruning.\n\n## C3. Mass retention and accuracy retention diverge\n\n**Conjecture.** The budget needed to retain `98 %` of the attention *mass* grows like\n`N_eff(ctx) ∝ ctx^{0.86}`, while the budget needed to retain `98 %` of the *accuracy*\ngrows like `ctx` (the product law). The two curves therefore cross, and beyond the\ncrossing context the knee is strictly **above** the mass-retention budget: attention mass\nstops being the mechanism of the knee.\n\n*The key insight is* `SelectionDilution.budget_ge_of_retained_mass`: concentration alone\nforces `k ≥ β²·N_eff`, a bound with a *different exponent* from the product law, so the\ntwo cannot both be exact laws for all context.\n\n*Why now?* At `ctx = 2048` the two budgets are `≈ 505` (mass) and `256` (accuracy) — they\nhave already crossed, and `SelectionDilution.net45_mass_retention_at_knee_bound` proves\nthe knee budget cannot retain the mass. Measuring the retained *mass* at the knee in the\nnext run is a one-line addition to the harness and directly tests the conjecture.\n\n## C4. The certified-depth bound on amplitude identifiability\n\n**Conjecture.** The Zipf amplitude `A` of `Probability.AttentionCostLaw` is identifiable\nonly to width `s/2^{D(η)}`, where `D(η)` is the certified depth of the chain at the\nharness noise `η` — not to width `s/2^n` for the number `n` of rungs actually run. At\n`η = 0.006` this gives width `8`, not the width `2` window `(14, 16]` claimed from four\nrungs.\n\n*The key insight is* that `Logic.KneeResolutionLimits` computes the resolution of a rung\n*assuming its reading is correct*, while `KneeMarginChain.net45_chain_collapse` shows only\nthe first two readings are certified at the measured spread; identifiability must be\ncomputed on the certified prefix.\n\n*Why now?* Both halves are already formal — the resolution theory in\n`KneeResolutionLimits` and the depth theory here — so the conjecture is a Lean\ndevelopment away, and it decides whether the programme's headline amplitude window is\nreal.\n\n## C5. Refinement invariance beyond the dyadic case\n\n**Conjecture.** For every `r ≥ 2`, the `r`-fold self-similar refinement (each position\nsplit into `r` positions of weight `p_i/r`) leaves the top-mass functional invariant:\n`T_{rk}(split_r p) = T_k(p)`; and the invariance characterises self-similarity, i.e. a\nprofile family whose gaps are invariant under refinement at *two* coprime ratios is\nasymptotically self-similar.\n\n*The key insight is* that the dyadic proof (`SelectionExchange.topMass_split_le`) needs\nonly one combinatorial fact — a set of `2m` positions contains `m` positions carrying half\nthe mass — whose `r`-fold analogue is an equipartition statement: a set of `rm` positions\nsplits into `r` blocks of `m`, one of which carries at least `1/r` of the mass.\n\n*Why now?* The dyadic case is proved with no positivity, ordering or normalisation\nhypotheses, which is exactly the regime in which the equipartition argument generalises;\nand the `r = 4` case is what the programme's `4×` context jumps actually measure.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "NumberTheory",
         "Combinatorics"
@@ -40177,7 +40177,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions — bold, testable conjectures from this cycle\n\nContext: the anti-Fibonacci sequence `antiFib 0 = 1`, `antiFib (n+1) = antiFib n + n`\n(closed form `2·antiFib n + n = n² + 2`) from `Catalog/Novelty/Basic.lean`.\nThis cycle proved: the exact modular period (`m` odd, `2m` even), the `O(1)` counting\nalgorithm with `C(N) ~ √(2N)` and density zero, the equivalence\n\"3-term progressions ↔ Pythagorean triples\", the complete Pell classification of the\nperfect squares, the two-squares criterion for sums of two terms with a `2/9` lower bound\non the non-representable set, the residue spectrum modulo an odd prime (exactly `(p+1)/2`\nclasses attained, so one is always omitted), and the exact gcd law for consecutive terms\n(`2` iff `n ≡ 2 mod 4`).\n\n---\n\n## C1. No four anti-Fibonacci numbers are in arithmetic progression\n\n**Statement.** There are no indices `a < b < c < d` with\n`antiFib b - antiFib a = antiFib c - antiFib b = antiFib d - antiFib c`.\n\n**The key insight is** that `8·antiFib n = (2n-1)² + 7`, so a four-term progression of\nanti-Fibonacci numbers is *exactly* a four-term progression of odd squares — and by\nFermat's right-triangle theorem no four distinct squares are in arithmetic progression.\nThe proved bridge `antiFib_AP_iff_pythagoreanTriple` already reduces the three-term case\nto Pythagorean triples; the four-term case should reduce to `x⁴ - y⁴ = z²`.\n\n**Why now?** Mathlib already contains the descent infrastructure for the quartic Fermat\nequation (`not_fermat_42`, the `Fermat42.Minimal` machinery) and the full classification\nof Pythagorean triples, so the missing step is the passage from `a⁴ + b⁴ ≠ c²` to\n`a⁴ - b⁴ ≠ c²`, a single extra descent that is now within formalisation reach.\n\n**Falsifiable:** a brute-force scan over `a < b < c < d ≤ 10⁵` either produces a\ncounterexample or supports the conjecture; the scan is cheap because of the proved\n`O(1)` membership test `isAntiFibValue`.\n\n---\n\n## C2. The anti-Fibonacci \"Pisano-type\" period determines the sequence\n\n**Statement.** Let `f : ℕ → ℕ` satisfy `f 0 = 1` and have minimal period modulo every\n`m > 0` equal to `pisanoAnti m = if Odd m then m else 2m`.  Then `f = antiFib`\nwhenever `f` is a polynomial sequence of degree `≤ 2`.\n\n**The key insight is** that the proved characterisation `isPeriodMod_iff`\n(\"`p` is a period iff `m ∣ p` and `f p ≡ f 0`\") uses only the *first difference being\nlinear*; conversely, a period function equal to `m`/`2m` forces the second difference to\nbe constant and equal to `1`, pinning the sequence.\n\n**Why now?** The characterisation of periods is already formalised, and the converse is a\nfinite linear-algebra argument over `ZMod m` — no new analytic input is needed.\n\n**Falsifiable:** exhibit a non-quadratic `f` with the same period function.\n\n---\n\n## C3. Exact second-order counting law: `C(N) = √(2N) + θ(N)` with `θ` equidistributed\n\n**Statement.** With `C(N)` the proved counting function, the fractional discrepancy\n`θ(N) = C(N) - √(2N) ∈ [0,3)` is equidistributed in `[0,1)` after the natural\nnormalisation `θ(N) mod 1`.\n\n**The key insight is** that `C(N) = ⌊(√(8N-7)+1)/2⌋ + 1` exactly (proved), so `θ(N)` is a\ndeterministic function of the fractional part of `√(8N-7)/2`, and equidistribution of\n`√n mod 1` is a classical Weyl-type result.\n\n**Why now?** The exact closed form removes all combinatorial noise; what remains is a\npure equidistribution statement about `√n`, for which Mathlib now has Weyl-criterion\ninfrastructure.\n\n**Falsifiable:** compute the empirical distribution of `θ(N)` for `N ≤ 10⁸`; a visible\nbias refutes it.\n\n---\n\n## C4. Positive density of integers that are sums of two anti-Fibonacci numbers, with a\nLandau-type constant\n\n**Statement.** `#{m ≤ N : m = antiFib a + antiFib b} ~ K · N / √(log N)` for an explicit\nLandau–Ramanujan-type constant `K`.\n\n**The key insight is** the proved equivalence \"representable ⟺ `8m - 14` is a sum of two\nsquares\": the counting problem transfers verbatim to the classical Landau problem on an\narithmetic progression, so the density is *not* `0` in the crude sense but decays like\n`1/√log N`.  Our proved `2/9` lower bound on the non-representable set is the first\nquantitative step in this direction.\n\n**Why now?** The reduction is formalised; the remaining input is the Landau–Selberg–Delange\nasymptotic, which is the natural next analytic target for Mathlib's Dirichlet-series API.\n\n**Falsifiable:** the ratio `#{representable m ≤ N}·√(log N)/N` should stabilise; if it\ndrifts to `0` or `∞`, the conjecture is wrong.\n\n---\n\n## C5. Anti-Fibonacci Waring problem: three terms always suffice\n\n**Statement.** Every integer `m ≥ 3` is a sum of exactly three anti-Fibonacci numbers.\n\n*Status update (this cycle).* The order-`4` version is now **proved unconditionally** in\n`Catalog/Computation/AntiFibonacciLagrange.lean`: `sum_four_iff` shows that `m` is a sum of\nfour anti-Fibonacci numbers iff `m ≥ 4`, and `sum_three_iff_sq_add_sq_add_sq` reduces the\nremaining order-`3` question to \"`8m - 21` is a sum of three squares\".  What is left open\nis therefore exactly the three-squares input.\n\n**The key insight is** that `antiFib n = 1 + T(n-1)` with `T` triangular, so the claim is\nexactly Gauss's *Eureka* theorem \"every natural number is the sum of three triangular\nnumbers\", shifted by `3`; equivalently, by the proved reduction, that every `8m - 21 ≡ 3\n(mod 8)` is a sum of three squares.  Combined with the proved two-term criterion this\nwould give a complete additive picture: two terms fail on a set of positive density\n(proved), three terms always succeed, four terms always succeed (proved).\n\n**Why now?** Mathlib already has the three-squares theorem's cousin (sum of four squares)\nand the two-squares classification; Gauss's triangular theorem follows from the\nthree-squares theorem `8m + 3 = x² + y² + z²`, whose formalisation is the single missing\ningredient and is actively within reach of the existing quadratic-forms API.\n\n**Falsifiable:** a single `m` requiring four terms refutes it; scanning `m ≤ 10⁶` with the\nproved `O(1)` membership test is a cheap check.\n\n---\n\n## C6. The omitted residues determine the sequence's prime divisors\n\n**Statement.** A prime `p > 2` divides some anti-Fibonacci number iff `-7` is a quadratic\nresidue modulo `p`, i.e. iff `p = 7` or `p ≡ 1, 2, 4 (mod 7)`; and the set of such primes\nhas density `1/2`.\n\n*Status update (this cycle).* The congruence criterion is now **proved** in\n`Catalog/Computation/AntiFibonacciPrimeDivisors.lean` (`prime_dvd_antiFib_iff`, uniform in\n`p` including `p = 2`), together with the two infinitude statements\n`infinite_divisor_primes` and `infinite_nondivisor_primes` (Dirichlet).  What remains open\nis only the *quantitative* half: that the divisor primes have natural density exactly\n`1/2`, i.e. `#{p ≤ x : p ∣ some antiFib n} ~ x / (2 log x)`, which needs the prime number\ntheorem in arithmetic progressions rather than mere infinitude.\n\n**The key insight is** the proved spectrum criterion `m ∈ range(antiFib mod p) ↔ 8m - 7 is\na square`: taking `m = 0` this says `p ∣ antiFib n` for some `n` iff `-7` is a square mod\n`p`, which by quadratic reciprocity is a congruence condition modulo `7`.\n\n**Why now?** Mathlib has full quadratic reciprocity (`legendreSym.quadratic_reciprocity`)\nand the residue-spectrum theorem is already formalised, so only the reciprocity\ncomputation for the discriminant `-7` remains; the density statement then follows from\nDirichlet's theorem, also available.\n\n**Falsifiable:** list the primes dividing some `antiFib n` for `p < 1000` and compare with\nthe residues `1, 2, 4 (mod 7)`; a single mismatch refutes it.\n\n---\n\n## C7. A Jacobi formula for anti-Fibonacci representations\n\n**Statement.** For every `m ≥ 4`, the number of *ordered* quadruples of positive indices\n`(a, b, c, d)` with `antiFib a + antiFib b + antiFib c + antiFib d = m` equals `σ(2m - 7)`,\nthe sum of the divisors of `2m - 7`.\n\n**The key insight is** the reduction proved this cycle: such quadruples correspond exactly\nto representations of `8m - 28 ≡ 4 (mod 8)` by four *odd* squares, and Jacobi's four-square\ntheorem counts those: for `N ≡ 4 (mod 8)` the number of signed representations is\n`16 σ(N/4)`, and the `2⁴` sign choices divide out, leaving `σ((8m-28)/4) = σ(2m-7)`.  The\nformula therefore turns an additive-basis statement into an exact multiplicative identity,\nand in particular re-proves `sum_four_iff` because `σ(2m-7) > 0`.\n\n**Why now?** The reduction to four odd squares is already formalised\n(`Catalog/Computation/AntiFibonacciLagrange.lean`, `four_odd_squares` and `sum_four_iff`),\nso the only missing ingredient is Jacobi's four-square theorem, whose modern proof needs\njust the Hurwitz quaternion order — a self-contained piece of algebra that Mathlib's\nexisting quaternion and Euclidean-domain API can support.\n\n**Falsifiable:** the identity is checked in Lean for `4 ≤ m ≤ 13`\n(`reprCount m = σ(2m-7)`, see the Evidence section of the same file); a single larger `m`\nwith `reprCount m ≠ σ(2m-7)` refutes it outright.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "NumberTheory",
         "Algebra"
@@ -42299,7 +42299,7 @@
       "depth_estimate": 3,
       "description": "Let `t k = tr(M₂^k)` (recurrence `t(k+3) = 5t(k+2) + 5t(k+1) − t(k)`,\n`t 0,…,t 3 = 3, 5, 35, 197`).  There is **no odd composite** `N` with `gcd(N, 2) = 1`\nsatisfying simultaneously `t N ≡ 5 (mod N)` and `t (N+1) ≡ t (N−1) (mod N)`.  (Dropping the\nsecond condition, pseudoprimes do exist; the conjecture is that the two-sided test is\nCarmichael-free, as for the Baillie–PSW combination.)",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "NumberTheory"
       ],
@@ -43784,7 +43784,7 @@
       "depth_estimate": 3,
       "description": "the twin prime conjecture is the unboundedness of the single Betti step at `ε = 2`\n  (an `H₀` statement, not `H₁`);",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Pythagorean",
         "NumberTheory"
@@ -43825,7 +43825,7 @@
       "depth_estimate": 3,
       "description": "in this cycle: `exists_block_dvd` shows that a\nnon-admissible pattern is realised at most finitely often (never, past `p > q`), and\n`constant_gap_run_dvd` is the special case of constant patterns.  The open half is the\nexistence direction, a barcode restatement of the Hardy–Littlewood/Dickson prime\n`k`-tuple conjecture.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "NumberTheory"
       ],
@@ -44027,7 +44027,7 @@
       "depth_estimate": 3,
       "description": "The seven measured fields in the experiment already span prime and\nprime-power and composite conductors and cyclic and non-cyclic unit groups, and\nall seven land on the single curve `g(n)` proved here; the remaining step is a\nformal Chebotarev/Dirichlet-density input, which is the only genuinely\narithmetic ingredient the law needs.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Algebra",
         "NumberTheory"
@@ -45564,7 +45564,7 @@
       "depth_estimate": 3,
       "description": "The reduction is complete and sorry-free; any future Lean formalisation of FLT (or\nof a single exponent, e.g. regular primes via Kummer's theorem) immediately yields the\nspectrum statement, giving a low-cost corollary.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "NumberTheory"
       ],
@@ -45604,7 +45604,7 @@
       "depth_estimate": 3,
       "description": "Every connected Cayley graph of a group whose order is a product of three\ndistinct primes `pqr` is hamiltonian; more precisely, the transversal configuration left by\nthe reduction theorem can again be closed by a factor-group word, and the only obstruction is\nthe voltage computation modulo the smallest prime.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "NumberTheory",
         "Algebra"
@@ -45645,7 +45645,7 @@
       "depth_estimate": 3,
       "description": "All the ingredients are formalised and sorry-free here: the factor group lemma\n(`isHamiltonian_of_factorGroup`), the reduction theorem (`pq_isHamiltonian_or_transversal`),\nthe counting corollary (`pq_isHamiltonian_of_le_ncard`), the base case of order `2p`\n(`isHamiltonian_of_card_eq_two_mul_prime`) and the general coset-pair criterion; the order\n`pqrs` programme of the literature has no formal counterpart at all, so the three-prime layer\nis the first genuinely new step that the present infrastructure can reach.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "NumberTheory",
         "Algebra"
@@ -45802,7 +45802,7 @@
       "depth_estimate": 3,
       "description": "The `2 × 2` half of the statement is now a Lean theorem for all composite `N`\n(`exists_singular_submatrix_of_not_prime`), and the exhaustive data for\n`N ∈ {4, 6, 8, 9, 10, 12, 15}` in `ComputationalEvidence.md` supports the `n × n` form;\nMathlib's `Polynomial.cyclotomic` API plus the machinery in\n`ChebotarevDFT.lean` (the multilinear expansion `det_sum_expansion`) is exactly what a general\nproof needs.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "NumberTheory",
         "Logic"
@@ -45843,7 +45843,7 @@
       "depth_estimate": 3,
       "description": "version. Conjecture: there is an absolute constant `c > 0` such that for all `p`\nprime and all `A, B ⊆ Z/p` with `#A = #B = n`, the smallest singular value of the submatrix\n`(ζ^{ab})_{a∈A, b∈B}` is at least `(c / p)^{n^2}` — equivalently, `|det|` admits an explicit\nlower bound depending only on `p` and `n`, not on the combinatorics of `A` and `B`. In\nparticular the recovery of `k`-sparse signals from `2k` noisy Fourier samples is stable with an\nerror amplification bounded by a function of `p` and `k` alone.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "NumberTheory"
       ],
@@ -46158,7 +46158,7 @@
       "depth_estimate": 3,
       "description": "The set of attainable values of `4p − W(p)²` over primes `p ≡ 1 (mod 4)` is\nexactly `{4b² : b even, b ≠ 0}` and each level `b = 2k` is attained infinitely often;\nequivalently, for every `k ≥ 1` there are infinitely many primes of the form `a² + 4k²`.\nConsequently the improved floor `W(p)² ≤ 4p − 16` is sharp at level `k = 1` and the \"97.7 %\"\nphenomenon of `p = 173` recurs infinitely often.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "NumberTheory"
       ],
@@ -46198,7 +46198,7 @@
       "depth_estimate": 3,
       "description": "The exact identity and the sharp constant 16 are theorems\n(`weil_deficiency`, `W_sq_le_four_p_sub_sixteen`, `improved_floor_sharp`); only the\ninfinitude of primes `a² + 4` (an Euler-type problem) is open, and partial sieve results\n(almost-primes of that shape) can already be formalised as a weakened version.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Pythagorean",
         "NumberTheory"
@@ -46239,7 +46239,7 @@
       "depth_estimate": 3,
       "description": "The congruence is a theorem and the four-square identity\n`WZ_semiprime_four_squares` writes `N` explicitly in terms of the four legs; the remaining\nstep is a counting statement over the finitely many two-square representations of `N`, which\nis combinatorial rather than analytic.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "NumberTheory",
         "Algebra"
@@ -48221,7 +48221,7 @@
       "depth_estimate": 3,
       "description": "Mathlib has the unique factorisation of `ℤ[i]` (`GaussianInt` is a\n`EuclideanDomain`), and `range_toGaussian` already identifies `PTriple` with the square-norm\nsubmonoid, so the conjecture becomes a statement about prime factorisations with even\nexponents — reachable with existing API.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "NumberTheory"
       ],
@@ -48456,7 +48456,7 @@
       "depth_estimate": 3,
       "description": "For all `n₁, n₂ ≥ 1` there exist distinct `a, b ≥ 0` and `y ∉ {a,b}` with\n   `n₁a² + n₂b² = y²`.  *(The `r = 2` case of Conjecture 1; probably provable by taking\n   `a = n₂ t`, `b` from a Pythagorean parametrisation.)*\n2. **(C2a)** For every `d ≤ 4` there are infinitely many `C` with\n   `ConicKernel.conicDefect 1 1 C = d`.  *(Strengthens `conicDefect_surjective` from\n   surjective to infinitely-often; the `d = 4` case asks for infinitely many `C` such that\n   `x² + y² = Cz²` has only the origin, i.e. infinitely many `C` with a prime\n   `≡ 3 mod 4` to an odd power.)*\n3. **(C4a)** For `p = 3` the set `{C : x³ + y³ = Cz³ realises ![0,0,2]}` is exactly\n   `{C : 2C² is a cube} ∖ {2}`, and this set is `{2^{3m+4}·u³ : m ≥ 0, u ≥ 1}` up to cubes.\n   *(A completely explicit description, decidable coefficient by coefficient.)*",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "NumberTheory",
         "Logic"
@@ -48784,13 +48784,13 @@
       "priority_score": 1000.0,
       "proof_strategy": "",
       "prune_reason": "tournament_rejected: ",
-      "pruned_at": "2026-08-19T16:47:09Z",
+      "pruned_at": "2026-08-20T03:58:57Z",
       "quarantined_until": "",
       "research_mode": "team",
       "source": "github_injection",
       "source_exp_id": "github",
       "source_path": "github",
-      "status": "in_progress",
+      "status": "pruned",
       "thread_id": "",
       "timestamp": "2026-08-19T02:06:03.269650+00:00",
       "title": "reinforcement learning"
@@ -49201,7 +49201,7 @@
       "depth_estimate": 3,
       "description": "**Lower bound (new mechanism).**  `ParityGap.parity_gap_closes_wide`: for every factorisation\n  `m = a·b` with `a, b ≥ 2` the gap closes at **every** width `2 ≤ n ≤ m − a`, via the explicit\n  digit-swapped enumerations `S j = a·(j % b) + j / b`, `T k = b·(k % a) + k / a`.  The\n  cancellation is no longer a constant exponent map, but a *pigeonhole involution*\n  (`ParityGap.permCoeff_eq_zero_of_pigeonhole`): the `S`-values that are multiples of `a`\n  outnumber the classes of `T`-values modulo the subgroup generated by `b`, so every permutation\n  matches two same-class columns to two such rows, and transposing them preserves the exponent\n  while reversing the sign.  Specialised: `ParityGap.parity_gap_closes_of_not_prime_wide`\n  (`n ≤ m − minFac m`) and `ParityGap.parity_gap_closes_of_even` (`n ≤ m − 2`).  This is a large\n  improvement on the previous bound `n ≤ min(a,b) ≈ √m`.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "NumberTheory",
         "Algebra"
@@ -49283,7 +49283,7 @@
       "depth_estimate": 3,
       "description": "The present development already contains the exact fibre count\n`card_parityPairs_eq : #parityPairs N = ⌊N/2⌋·⌈N/2⌉` and the exact divisibility slice, so\nthe only missing ingredient is `∑_{k≤N} μ(k)/k²` convergence, which mathlib supports.\nAchieving this would sharpen `boxNode_card_theta` from `[H/128, H]` to `(1/2π)·H(1+o(1))`.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "NumberTheory"
       ],
@@ -49716,7 +49716,7 @@
       "depth_estimate": 3,
       "description": "*A group with `D_k = 0` and `|G| < 2·|X|^{\\underline k}` is sharply `k`-transitive, hence for\n`k ≥ 4` belongs to the classical list (symmetric, alternating, Mathieu).  Consequently, for\n`k ≥ 6` the equation `D_k = 0` has no solutions with `|X| > k + 2`.*\n\nThe key insight is that `descFactorial_dvd_card_of_kTransitive` turns defect zero into a\ndivisibility statement, and an order bound below twice the falling factorial forces the quotient\nto be `1`, which is sharp transitivity — a purely arithmetic route into the classification.\n\nWhy now? Both ingredients (`bellDefect_eq_zero_iff` and the divisibility bound, the latter\nrepaired in this cycle) are now theorems in this thread.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "NumberTheory",
         "Algebra"
@@ -50426,7 +50426,7 @@
       "depth_estimate": 3,
       "description": "The finitisation is formally proved, so a SAT/ILP certificate for a single\n`N` would yield the first unconditional formal two-colour Erdős–Graham theorem; the\ncurrent formal two-colour result (`erdosGraham_two_of_primePow_class`) is the special case\nwhere one class is confined to the prime powers.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "NumberTheory",
         "Combinatorics"
@@ -50670,7 +50670,7 @@
       "depth_estimate": 3,
       "description": ": for every odd prime `p`,\n   `diffSet (etSetZMod p) ≠ univ.erase 0`.\n   *Status: **closed in cycle 4** — `etSetZMod_not_perfect`, proved from\n   `IsSidon.perfect_iff` since `p² - p ≠ 2p² - 1`. Consequence: the factor-`√2` gap in the\n   cyclic sandwich is on the construction side, not the bound side.*",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "NumberTheory"
       ],
@@ -51217,7 +51217,7 @@
       "depth_estimate": 3,
       "description": "Combine with `HilbertClassFieldDescent`: prove that for a Hilbert class field datum with class\ngroup `A`, the number of intermediate fields is `∏_p #Subgroup A_p`, and that the degree\ndistribution of the intermediate fields is the multiset of indices `[A : B]`, `B ≤ A`.  Falsifiable\nat `A = ℤ/4` (degrees `1, 2, 4`) versus `A = (ℤ/2)²` (degrees `1, 2, 2, 2, 4`): the *degree\nmultiset*, not merely its size, distinguishes the two.\n*The key insight is* that the Galois correspondence turns an arithmetic invariant (the class\nnumber) into a lattice invariant (the subgroup lattice), and the lattice remembers strictly more.\n*Why now?*  All three counts (cyclic, elementary abelian, coprime products) are available, so the\ndegree multiset can be computed for every abelian group of order `< p^3`.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Algebra",
         "NumberTheory"
@@ -51258,7 +51258,7 @@
       "depth_estimate": 3,
       "description": "Conjecture: for `q ≥ 2` and a prime `ℓ ∤ q`, the `ℓ`-adic valuation of `binom(n,k)_q` equals the\nnumber of carries when adding `k` and `n-k` in base `d`, where `d` is the multiplicative order of\n`q` modulo `ℓ`, plus a correction term counted by `v_ℓ(q^{d}-1)`.  Falsifiable at\n`q = 2, ℓ = 5, n = 6, k = 3`, where `binom(6,3)_2 = 1395 = 3² · 5 · 31` and the order of `2`\nmodulo `5` is `4`.\n*The key insight is* that `qFactZ_mul_qBinom` expresses `binom(n,k)_q` as an exact quotient of\n`q`-factorials, so the valuation question becomes a counting question about the multiples of `d`\nin an interval — the same combinatorics that proves Kummer's theorem.\n*Why now?*  The exactness of the division (`gaussBinom_eq_qBinom`) is the hypothesis every\nvaluation argument needs and was the missing ingredient before this cycle.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "NumberTheory"
       ],
@@ -51298,7 +51298,7 @@
       "depth_estimate": 3,
       "description": "Conjecture: for `q ≥ 2` the sequence `k ↦ binom(n,k)_q` is strictly increasing for `k ≤ n/2` and\nlog-concave, and consequently `G_q(n) ≤ (n+1) binom(n,⌊n/2⌋)_q`.  Falsifiable at `q = 2, n = 4`\n(`1, 15, 35, 15, 1`).\n*The key insight is* that the two Pascal recursions proved here (`gaussBinom_pascal` and\n`gaussBinom_pascal'`) give an induction on `n` in which the ratio of consecutive entries is\ncontrolled by `(q^{n-k} - 1)/(q^{k+1} - 1)`, an explicit monotone quantity.\n*Why now?*  Both recursions are available in `ℕ` without any field-theoretic detour, so the\ninduction is purely arithmetic and needs no finite-field model — in particular it applies to the\nnon-prime bases `q = 4, 6, …` where the previous cycle's methods were silent.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "NumberTheory",
         "Algebra"
@@ -52595,6 +52595,170 @@
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
+      "description": "coprimality condition, the quantitative hyperbolicity bound\n`1/x + 1/y + 1/z ≤ 11/12` (using FLT₃ to remove the boundary triple `(3,3,3)`), the reduction to\nexponents that are odd primes or `4`, a mod-8 obstruction on counterexamples, and the full\nfunction-field analogue of Beal's conjecture via Mason–Stothers.  Conditionally, it shows that\n`abc` forces `C^z ≤ K^12` for every counterexample and that Fermat–Catalan finiteness bounds the\nnumber of counterexamples, and that Beal implies FLT for all `n ≥ 3`.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.1,
+      "domains": [
+        "Pythagorean",
+        "NumberTheory"
+      ],
+      "github_issue": 0,
+      "id": "fd_1666",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.4,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "94e7c481",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/94e7c481",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-08-20T03:58:46.812000+00:00",
+      "title": "coprimality condition, the quantitative hyperbolicity bound"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "The integral proof is already formal; upgrading it is a matter of replacing `Nat.pow`\nbookkeeping by `rpow` bookkeeping, and `Beal.abcBound_of_abcConjecture` shows the two forms are\ninterchangeable.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Algebra"
+      ],
+      "github_issue": 0,
+      "id": "fd_1667",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.4,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "94e7c481",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/94e7c481",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-08-20T03:58:46.993344+00:00",
+      "title": "The integral proof is already formal; upgrading it is a matter of replacing `Nat.pow`"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "In any coprime Beal counterexample exactly one of `A, B, C` is even (proved:\n`Beal.parity_trichotomy`); if `C` is the even one then `x` and `y` are not both even (proved:\n`Beal.not_both_exponents_even_of_even_C`); and, conjecturally, `A B C ≡ 0 mod 3` fails, so that\n`A^x + B^y ≡ C^z mod 9` forces `x ≡ y ≡ z mod 2` to be all odd.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.1,
+      "domains": [
+        "NumberTheory",
+        "Pythagorean"
+      ],
+      "github_issue": 0,
+      "id": "fd_1668",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.4,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "94e7c481",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/94e7c481",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-08-20T03:58:47.185903+00:00",
+      "title": "In any coprime Beal counterexample exactly one of `A, B, C` is even (proved:"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For every prime `p ≥ 5` there are non-constant, pairwise coprime\n`a, b, c ∈ 𝔽_p[X]` and exponents `x, y, z ≥ 3` (necessarily divisible by `p`) with\n`a^x + b^y = c^z`; consequently `Beal.PolynomialBealConjecture` genuinely requires the\ncharacteristic-zero hypothesis.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.1,
+      "domains": [
+        "NumberTheory",
+        "Pythagorean"
+      ],
+      "github_issue": 0,
+      "id": "fd_1669",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.4,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "94e7c481",
+      "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/94e7c481",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-08-20T03:58:47.374011+00:00",
+      "title": "For every prime `p ≥ 5` there are non-constant, pairwise coprime"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
       "description": "Building on cycle 03b10997 (Q=0.770), which proved 17 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the Learning With Errors (LWE) problem and prove its reduction from worst-case lattice problems (GapSVP). Show that the Regev encryption scheme is IND-CPA secure under LWE. Prove that key exchange based on LWE achieves forward secrecy. Compute concrete security parameters for 128-bit secur",
       "domain_bridges": [],
       "domain_quality_penalty": 1.0,
@@ -52664,7 +52828,7 @@
       "title": "Deepening: There exists a canonically normalized real-valued functional on the quaternionic"
     },
     {
-      "ambition_level": "extension",
+      "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
       "attempt_count": 0,
@@ -52677,7 +52841,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 0750e9d7 (Q=0.840), which proved 102 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The reduction is proved, and the 194 values `c_g(1)` are tabulated\ndata; the conjecture is now a finite, checkable arithmetic statement that could\nbe discharged in Lean by `decide` once the table is entered.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "NumberTheory"
       ],
@@ -57715,6 +57879,46 @@
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
+      "description": "Building on cycle 94e7c481 (Q=0.780), which proved 56 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that if A^x + B^y = C^z where A,B,C,x,y,z are positive integers with x,y,z > 2, then A,B,C share a common prime factor. Formalize the connection to Fermat-Catalan and ABC conjecture.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "NumberTheory"
+      ],
+      "github_issue": 0,
+      "id": "push_94e7c481_56cb3c22",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.88,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "94e7c481",
+      "source_path": "Beal's Conjecture",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-08-20T03:58:56.657371+00:00",
+      "title": "Deepening: Beal's Conjecture"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
       "description": "Building on cycle 9aa1e8d1 (Q=0.860), which proved 93 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Proves that quantizing transformer weight matrices onto modular lattice grids preserves global loss landscape convexity invariants.",
       "domain_bridges": [],
       "domain_quality_penalty": 0.0,
@@ -61356,11 +61560,11 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "db2f2b2f",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -61375,7 +61579,7 @@
       ],
       "github_issue": 0,
       "id": "pyth_factor_quantum_26037bbe",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-08-20T03:59:53.622621+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem quantum_pythagorean_walk_factorization (N : ℕ) (ψ0 : QuantumState) : ConstructiveInterferenceAtFactor (QuantumBerggrenWalk N ψ0) N := by sorry",
       "lineage_refs": [],
@@ -61390,7 +61594,7 @@
       "source": "",
       "source_exp_id": "pythagorean_factorization_breakthrough",
       "source_path": "user_breakthrough_discovery",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-07-23T20:10:45.864682+00:00",
       "title": "Quantum-Pythagorean-Walk: Polynomial Time Integer Factorization via Tree Resonance"
@@ -64342,7 +64546,7 @@
       "catalog_references": [],
       "category": "famous_subtask",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "94e7c481",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -64369,7 +64573,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "",
       "title": "Beal's Conjecture"
@@ -78010,7 +78214,7 @@
       "depth_estimate": 3,
       "description": "Cycle 57212186 (Q=0.900) proved 621 theorems in NumberTheory but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: It is a direct adaptation of the standard Reinforcement Learning from Human Feedback (RLHF) objective with a pre-training mix-in (PTX)—originally introduced in the InstructGPT / PPO alignment framewor",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "NumberTheory"
       ],
@@ -78769,6 +78973,7 @@
     "famous_subtask",
     "cross_domain_bridge",
     "famous_subtask",
-    "famous_subtask"
+    "famous_subtask",
+    "cross_domain_bridge"
   ]
 }
