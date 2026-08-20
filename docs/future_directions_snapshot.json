@@ -1095,6 +1095,25 @@
     "title": "Deepening: ArXiv paper: A Fourier-analytic Uniqueness Theorem for Lattice-point Enumerators"
   },
   {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 61305688 (Q=0.820), which proved 185 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Investigate the ArXiv paper 'Domination-packing ratio for planar and unit disk graphs' and formalize its key results. Abstract: The domination number $γ(G)$ of a graph $G$ is the smallest possible size of a vertex set that intersects every radius-$1$ ball of $G$, and the packing number $ρ(G)$ is the",
+    "domain_bridges": [],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "push_61305688_d4d13e87",
+    "lineage_refs": [],
+    "priority_score": 0.9199999999999999,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "61305688",
+    "status": "available",
+    "timestamp": "2026-08-20T08:57:23.939106+00:00",
+    "title": "Deepening: ArXiv paper: Domination-packing ratio for planar and unit disk graphs"
+  },
+  {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
     "consumed_by_exp_id": "",
@@ -2310,6 +2329,25 @@
     "title": "Stein-Method: Quantitative Normal Approximation Bounds"
   },
   {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 5b26e37d (Q=0.800), which proved 66 theorems in Geometry. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions: Topology of Theorem Networks\n\n## 1. A null model for higher-dimensional citation topology\n\n**Conjecture.** In a sparse random corpus with bounded expected document size and theorem degrees converging to a nondegenerate distribution, each fixed-dimensional normalized Betti number",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry"
+    ],
+    "id": "push_5b26e37d_f1990060",
+    "lineage_refs": [],
+    "priority_score": 0.9,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "5b26e37d",
+    "status": "available",
+    "timestamp": "2026-08-20T08:57:36.944063+00:00",
+    "title": "Deepening: **Conjecture.** In a sparse random corpus with bounded expected document size an"
+  },
+  {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
     "consumed_by_exp_id": "",
@@ -2350,27 +2388,6 @@
     "status": "available",
     "timestamp": "",
     "title": "Tropical Satake Isomorphism for GL_n"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Landauer's principle states that erasing one bit of information dissipates at least kT*ln(2) of heat. Apply this to proof theory: erasing a proof of theorem T to recover a shorter proof is an information-theoretic process with a thermodynamic cost. Conjecture: The minimum energy required to compress a proof of n steps into a proof of m steps (m < n) is at least kT*(n-m)*ln(2), and this bound is tight for proofs in propositional logic. A proof of length n contains n bits of information (each step is a binary choice in the search tree). Compressing it to m steps requires erasing n-m bits, each costing kT*ln(2) by Landauer. This gives a physical lower bound on proof compression that is independent of the proof system. Test: formalize proof compression as an irreversible computation and derive the Landauer bound. Compute the erasure cost for compressing a 1000-step proof of the fundamental theorem of algebra into a 100-step proof. Impact: connects information thermodynamics to proof complexity, providing a physical lower bound on proof compression.",
-    "domain_bridges": [],
-    "domains": [
-      "Physics",
-      "Computation",
-      "Logic"
-    ],
-    "id": "seed_081",
-    "lineage_refs": [],
-    "priority_score": 0.87,
-    "proof_strategy": "Formalize proof erasure as a thermodynamic process: deleting a proof of length n requires at least kT*n*ln(2) of heat dissipation (Landauer's principle applied to each proof step). Prove that proof compression by a factor of c requires at least kT*n*(1-1/c)*ln(2) of erasure energy. Derive the bound by modeling each proof step as a binary decision in a search tree, so erasing n-m steps loses n-m bits. Test: compute the erasure cost for compressing a 1000-step proof of the fundamental theorem of algebra into a 100-step proof.",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Thermodynamic Proof Erasure: Landauer's Principle for Mathematics"
   },
   {
     "ambition_level": "extension",
@@ -8324,7 +8341,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "61305688",
+    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'Domination-packing ratio for planar and unit disk graphs' and formalize its key results. Abstract: The domination number $γ(G)$ of a graph $G$ is the smallest possible size of a vertex set that intersects every radius-$1$ ball of $G$, and the packing number $ρ(G)$ is the maximum number of pairwise vertex-disjoint radius-$1$ balls. We prove that $\\frac{γ(G)}{ρ(G)}\\le 5$ for every planar graph and $\\frac{γ(G)}{ρ(G)} \\le \\frac{18\\sqrt3}π\\approx 9.924$ for every unit disk graph, thus yielding Erdős-Pósa-type bounds for the hypergraph of radius-$1$ balls in the two graph classes. This improves upon results of Gutiérrez and Paul, and Dúcz and Gujgiczer, who in turn lowered bounds of Bonamy, Csikós, Gujgiczer and Yuditsky, and Böhme and Mohar. For both graph classes, the best known lower bound on the optimal constant remains $3$.",
     "domain_bridges": [],
     "domains": [
@@ -8336,7 +8353,7 @@
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
     "research_mode": "team",
     "source_exp_id": "2607.13424v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-16T03:36:34.295975+00:00",
     "title": "ArXiv paper: Domination-packing ratio for planar and unit disk graphs"
   },
@@ -15814,7 +15831,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "5b26e37d",
+    "consumed_by_exp_id": "",
     "description": "# Future Directions: Topology of Theorem Networks\n\n## 1. A null model for higher-dimensional citation topology\n\n**Conjecture.** In a sparse random corpus with bounded expected document size and theorem degrees converging to a nondegenerate distribution, each fixed-dimensional normalized Betti number has a deterministic limit, while the unnormalized Betti number is bounded above by the corresponding binomial face count and is typically of strictly smaller order.\n\nThe key insight is that the universal binomial ceiling controls the available chain generators, but boundary ranks—not simplex counts alone—determine the surviving topology.\n\n**Why now?** The structural ceiling and dimension-vanishing theorem identify exactly which asymptotic claims are possible; specifying a random incidence model is the missing ingredient needed to replace an unsupported power law by a falsifiable limit theorem.\n\n## 2. Conformality thresholds in temporal co-citation hypergraphs\n\n**Conjecture.** For a growing random co-citation corpus, there is a sharp threshold at which every clique in the pairwise co-citation graph acquires a common document witness, and hence the higher-order corpus complex becomes equal to its flag completion.\n\nThe key insight is that equality of the two complexes is governed by one exact obstruction: pairwise compatibility without a global witness.\n\n**Why now?** The three-theorem boundary example isolates the smallest obstruction, while the conformality criterion turns the disappearance of all such obstructions into a precise event whose threshold can be studied probabilistically.\n\n## 3. Stability of semantic labels under topological perturbation\n\n**Conjecture.** If research-community labels are defined independently of the citation complex, then no uniformly stable rule can recover them from first homology alone; recovery becomes possible only after adding vertex metadata or a generative assortativity assumption.\n\nThe key insight is that a cycle is an incidence pattern rather than a semantic object, so identical complexes can support incompatible assignments of mathematical schools.\n\n**Why now?** Structural topology can now be cleanly separated from interpretation. This makes it possible to state identifiability assumptions explicitly and test whether metadata genuinely contributes information beyond graph connectivity.\n\n## 4. Persistent detection of localized structural change\n\n**Conjecture.** In a temporal corpus filtration with bounded document size, an abrupt increase followed by decay in persistent second homology detects a sustained failure of local conformality more reliably than raw triangle or tetrahedron counts.\n\nThe key insight is that pairwise projection can fill a spurious triangle even when no triple witness exists, whereas persistence across the genuine hypergraph filtration records whether the resulting cavity survives subsequent documents.\n\n**Why now?** Monotonicity of the corpus complex provides a valid filtration, and the explicit strict-loss example supplies the elementary mechanism from which a statistical change-point theory can be built.\n\n## 5. Extremal Betti profiles under document-size constraints\n\n**Conjecture.** Among corpora on `n` theorems whose documents have size at most `d`, the maximum possible `k`-th Betti number is attained by a highly symmetric design and has order `n^(k+1)` only for fixed `k < d`, with constants depending essentially on both `d` and the coefficient field.\n\nThe key insight is that polynomial growth can be plausible in fixed dimension even though it is impossible uniformly across dimensions; document-size bounds determine which chain groups can exist at all.\n\n**Why now?** The binomial ceiling supplies the correct ambient scale, while dimension vanishing rules out overgeneralization. The remaining extremal problem is concrete, finite, and testable on designs, multipartite constructions, and random bounded hypergraphs.\n",
     "domain_bridges": [],
     "domains": [
@@ -15827,7 +15844,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "e3b4f2fe",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-20T15:09:33.179129+00:00",
     "title": "**Conjecture.** In a sparse random corpus with bounded expected document size an"
   },
@@ -25554,6 +25571,23 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "**Sparse corpora never approach the binomial ceiling.**\n  `card_facesOfCard_le_corpus_mul`: in a `d`-bounded corpus the number of `q`-faces is at\n  most `|C| · C(d, q)`, a *document budget* independent of the theorem count; hence\n  `betti_lt_ceiling_of_sparse`, and concretely `sparse_betti_one_lt_ceiling`\n  (`β₁ < C(n,2)` for a pairwise corpus with at most `n` documents, `n ≥ 4`), which is\n  non-vacuous by `sparse_hypotheses_satisfiable`.",
+    "domain_bridges": [],
+    "domains": [],
+    "id": "fd_1701",
+    "lineage_refs": [],
+    "priority_score": 0.4302222222222222,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "5b26e37d",
+    "status": "available",
+    "timestamp": "2026-08-20T08:57:31.476640+00:00",
+    "title": "Sparse corpora never approach the binomial ceiling.*"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "**C4 (reward hacking is a covariance) — PROVED at first order.**\n  `RLHF.audit_gap_first_order`: `|𝔼_{π_β}f − 𝔼_p f − Cov_p(r,f)/β| ≤ 24 (R/β)² σ_p(f)`\n  for `|r| ≤ R ≤ β`, hence `RLHF.audit_gap_of_uncorrelated`: statistics uncorrelated\n  with the reward move only at order `β⁻²`.  The *sharp threshold* half of C4 (a phase\n  transition in `β_c`) is still open and is restated as N2 below.",
     "domain_bridges": [],
     "domains": [],
@@ -25792,6 +25826,23 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "The *engine* half is now proved:\n`DominationPacking.dominationNumber_le_mul_packingNumber_of_greedyCover` establishes\n`γ ≤ c·ρ` from `HasGreedyCover G c` for every `c`, with the exact criterion as the case `c = 1`\n(`hasGreedyCover_one_of_greedyDominator`).  What remains is the planar input: exhibiting\n`HasGreedyCover G 5` for planar `G`.",
+    "domain_bridges": [],
+    "domains": [],
+    "id": "fd_1695",
+    "lineage_refs": [],
+    "priority_score": 0.41620833333333335,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "61305688",
+    "status": "available",
+    "timestamp": "2026-08-20T08:57:10.451689+00:00",
+    "title": "The *engine* half is now proved:"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "The range `k ≤ N` cannot be shortened: `(0,2)` and `(1,1)` are bounded by `2`,\n    agree for `k ≤ 1`, and have different distributions (`powerSums_not_determined_of_lt`).\n    Exhaustive search (`ComputationalEvidence.md`, §8) finds `0` such pairs at `K = N` and many at\n    `K = N − 1`.",
     "domain_bridges": [],
     "domains": [],
@@ -25917,6 +25968,23 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "**Conformality is a hierarchy, not a single obstruction.**\n  `strict_hierarchy_of_local_conformality`: for every level `m ≥ 2` there is a corpus in\n  which every clique of at most `m` theorems has a common document while some clique of\n  `m + 1` theorems does not.  The catalogued three-theorem example is the case `m = 2`.",
+    "domain_bridges": [],
+    "domains": [],
+    "id": "fd_1699",
+    "lineage_refs": [],
+    "priority_score": 0.4106666666666667,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "5b26e37d",
+    "status": "available",
+    "timestamp": "2026-08-20T08:57:30.952481+00:00",
+    "title": "Conformality is a hierarchy, not a single obstruction.*"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Chebotarev's theorem that every square submatrix of the `p × p` DFT matrix\nis nonsingular, which in turn follows from a resultant/Vandermonde computation over `Q(ζ_p)`\nusing the irreducibility of the `p`-th cyclotomic polynomial — machinery that Mathlib already\ncontains (`Polynomial.cyclotomic_irreducible`, `IsPrimitiveRoot`).",
     "domain_bridges": [],
     "domains": [],
@@ -25933,7 +26001,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "367abe49",
     "description": "For the PTX-augmented optimum `q*_{β,γ}` with `γ > 0`,\n`‖q*_{β,γ} − p‖₁ = Θ(γ·‖d − p‖₁) + Θ(σ_p(r)/β)` as `β → ∞`: the pretraining mix-in\ncontributes a `β`-independent drift toward `d`, so `lim_{β→∞} q*_{β,γ} ≠ p` unless\n`d = p`, while the *reward-induced* part of the drift still obeys the `σ/β` law proved\nin cycle 2.",
     "domain_bridges": [],
     "domains": [],
@@ -25943,7 +26011,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "84bf9824",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-20T07:57:25.771403+00:00",
     "title": "For the PTX-augmented optimum `q*_{β,γ}` with `γ > 0`,"
   },
@@ -29830,5 +29898,159 @@
     "status": "available",
     "timestamp": "2026-08-20T07:57:25.515564+00:00",
     "title": "Both terms are now theorems with explicit constants, so the crossover is a"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "the one-dimensional theory (`Catalog/Bridges/DominationPackingInterval.lean`): the sharp local\n  packing bound `LocalPackingBound ℝ 4` (with `not_localPackingBound_real_three` showing `4` is\n  optimal for the local method), hence `γ ≤ 4·ρ` for unit interval graphs, and — via an\n  earliest-endpoint greedy producing a dominating set and a packing of equal size — the exact\n  result `γ(G) = ρ(G)` for **every interval graph**, unit interval graphs included;",
+    "domain_bridges": [],
+    "domains": [
+      "Combinatorics",
+      "Bridges"
+    ],
+    "id": "fd_1692",
+    "lineage_refs": [],
+    "priority_score": 0.4,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "61305688",
+    "status": "available",
+    "timestamp": "2026-08-20T08:57:09.665544+00:00",
+    "title": "the one-dimensional theory (`Catalog/Bridges/DominationPackingInterval.lean`): the sharp local"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "the forest theory, added in this cycle (`Catalog/Bridges/DominationPackingForest.lean`): the\n  abstract greedy criterion `HasGreedyDominator` (some vertex of every finite set has its whole\n  radius-`2` neighbourhood in that set dominated by one vertex), the theorem that the criterion\n  alone forces `γ(G) = ρ(G)`\n  (`dominationNumber_eq_packingNumber_of_greedyDominator`), the fact that interval graphs satisfy\n  it (`intervalRep_hasGreedyDominator`) and that **forests satisfy it**\n  (`hasGreedyDominator_of_isAcyclic`), giving the Meir–Moon theorem\n  `dominationNumber_eq_packingNumber_of_isAcyclic`: **`γ(F) = ρ(F)` for every finite forest**.\n  The criterion is not vacuous and not universal: `not_hasGreedyDominator_cycle4` shows the\n  `4`-cycle fails it, whence `not_isAcyclic_cycle4`.",
+    "domain_bridges": [],
+    "domains": [
+      "Combinatorics",
+      "Bridges"
+    ],
+    "id": "fd_1693",
+    "lineage_refs": [],
+    "priority_score": 0.4,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "61305688",
+    "status": "available",
+    "timestamp": "2026-08-20T08:57:09.942088+00:00",
+    "title": "the forest theory, added in this cycle (`Catalog/Bridges/DominationPackingForest.lean`): the"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "One direction is a theorem of this cycle\n(`dominationNumber_eq_packingNumber_of_greedyDominator`, which is hereditary because the\ncriterion quantifies over all finite vertex sets), and the converse is a finite search over\ninduced subgraphs; the `4`-cycle (`not_hasGreedyDominator_cycle4`) is already a machine-checked\nseparating example on the failing side.",
+    "domain_bridges": [],
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "fd_1694",
+    "lineage_refs": [],
+    "priority_score": 0.4,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "61305688",
+    "status": "available",
+    "timestamp": "2026-08-20T08:57:10.195440+00:00",
+    "title": "One direction is a theorem of this cycle"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "**Document size, not theorem count, bounds the support of the topology.** A `d`-bounded\n  corpus has no faces and no homology in dimensions `≥ d`\n  (`facesOfCard_eq_empty_of_bounded`, `HomologyProfile.beta_eq_zero_of_bounded`).",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_1696",
+    "lineage_refs": [],
+    "priority_score": 0.4,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "5b26e37d",
+    "status": "available",
+    "timestamp": "2026-08-20T08:57:30.174238+00:00",
+    "title": "Document size, not theorem count, bounds the support of the topology."
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "**The extremal `f`-vector is attained by the symmetric design.**\n  `isGreatest_card_facesOfCard_bounded`: among `d`-bounded corpora on `n` theorems the\n  maximum number of `q`-faces is exactly `C(n, q)` for `q ≤ d`, attained by the corpus of\n  all `d`-element documents.",
+    "domain_bridges": [],
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "fd_1697",
+    "lineage_refs": [],
+    "priority_score": 0.4,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "5b26e37d",
+    "status": "available",
+    "timestamp": "2026-08-20T08:57:30.435075+00:00",
+    "title": "The extremal `f`-vector is attained by the symmetric design.*"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "**Euler characteristic forces polynomial homology.**\n  `eulerChar_skeletonCorpus`: `χ = 1 - (-1)^d C(n-1, d)`.  Since only `d` Betti numbers can\n  be nonzero, `skeletonCorpus_exists_betti_pow_lower` gives\n  `(n - d)^d ≤ d! · d · β_k + d!` for some `k < d`: the extremal Betti number has order\n  `n^d`, matching the `n^{k+1}` shape of Conjecture 5 in the top surviving dimension.\n  `skeletonHomologyProfile` shows this class of profiles is nonempty.",
+    "domain_bridges": [],
+    "domains": [
+      "Combinatorics",
+      "Geometry"
+    ],
+    "id": "fd_1698",
+    "lineage_refs": [],
+    "priority_score": 0.4,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "5b26e37d",
+    "status": "available",
+    "timestamp": "2026-08-20T08:57:30.696574+00:00",
+    "title": "Euler characteristic forces polynomial homology.*"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "**Semantic labels are not recoverable from the incidence pattern.**\n  `no_uniform_recovery`: on a vertex-transitive corpus every renaming-equivariant recovery\n  rule outputs a constant labelling, so it disagrees with every labelling that separates two\n  theorems.  The witness is the same extremal design family, which is homologically rich\n  (`design_betti_one_pos`: `β₁ = C(n-1,2) > 0`), so the obstruction is symmetry, not a lack\n  of topology; `not_uniform_of_recovers` turns this into the statement that vertex metadata\n  is genuine extra information.",
+    "domain_bridges": [],
+    "domains": [
+      "Combinatorics",
+      "Logic"
+    ],
+    "id": "fd_1700",
+    "lineage_refs": [],
+    "priority_score": 0.4,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "5b26e37d",
+    "status": "available",
+    "timestamp": "2026-08-20T08:57:31.218077+00:00",
+    "title": "Semantic labels are not recoverable from the incidence pattern.*"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "corpora on `n` theorems whose documents have size at most `d`, the maximum of\n`β_{d-1}` is exactly `C(n-1, d)`, attained only by the complete `d`-uniform design up to\nisomorphism; and for `k < d - 1` the maximum of `β_k` is exactly `C(n-1, k+1)`.",
+    "domain_bridges": [],
+    "domains": [],
+    "id": "fd_1702",
+    "lineage_refs": [],
+    "priority_score": 0.4,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "5b26e37d",
+    "status": "available",
+    "timestamp": "2026-08-20T08:57:31.731739+00:00",
+    "title": "corpora on `n` theorems whose documents have size at most `d`, the maximum of"
   }
 ]
