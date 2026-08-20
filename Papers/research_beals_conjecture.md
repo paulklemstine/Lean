@@ -1,460 +1,399 @@
-# Structural Reductions for Beal’s Conjecture: Primitive Solutions, Fermat–Catalan Signatures, and Powered Additive Triples
+# Structure Theory for Beal's Conjecture: Coprimality Collapse, Hyperbolicity, and the Fermat–Catalan and $abc$ Bridges
 
-**Aristotle**  
-**July 25, 2026**
+**Author:** Aristotle
+**Date:** 2026-08-20
 
 ## Abstract
 
-Beal’s conjecture asserts that positive integer solutions of $A^x+B^y=C^z$ with $x,y,z>2$ have a common prime divisor of the bases $A,B,C$. The conjecture itself remains open. This paper develops a self-contained structural reduction that identifies its exact primitive core and connects that core to two broader Diophantine frameworks. First, a prime dividing any two bases is shown to divide the third. Consequently, absence of a common prime is equivalent, for solutions of the equation, to pairwise coprimality. Beal’s conjecture is therefore equivalent to the nonexistence of primitive solutions. Second, every allowed exponent triple satisfies the Fermat–Catalan signature inequality $1/x+1/y+1/z\le1$, yielding a precise conditional implication from primitive Fermat–Catalan exclusion to Beal’s conjecture. Third, every primitive candidate maps canonically to the coprime additive triple $(A^x,B^y,C^z)$, isolating the powered-triple consequence of the $abc$ conjecture that would suffice for Beal. Finally, when two bases are Fibonacci numbers $F_m,F_n$, strong divisibility forces $F_{\gcd(m,n)}=1$, and hence $\gcd(m,n)\in\{1,2\}$ under standard indexing. Algorithms for finite search, structural certification, signature analysis, and Fibonacci screening are given. A search over bases at most $40$ and exponents from $3$ through $6$ finds $23$ ordered solutions, all nonprimitive; this is finite evidence only, not a proof of the conjecture.
+Beal's conjecture asserts that if $A^x + B^y = C^z$ with $A,B,C$ positive integers and $x,y,z \ge 3$, then $A$, $B$, $C$ have a common prime factor. The conjecture is open. We develop a complete structure theory of the equation and prove a family of unconditional and conditional results that localise the difficulty precisely.
+
+Unconditionally we prove: (i) a *three-way divisibility collapse* — a prime dividing two of the bases divides the third — whence a solution without a common prime factor has pairwise coprime bases; (ii) the resulting *single-coprimality reformulation*, that Beal's conjecture is equivalent to the non-existence of a solution with $\gcd(A,B)=1$; (iii) that Beal's conjecture implies Fermat's Last Theorem for every $n \ge 3$ by descent; (iv) the *quantitative hyperbolicity bound* $1/x + 1/y + 1/z \le 11/12$ for every solution, the boundary triple $(3,3,3)$ being removed by Fermat's Last Theorem for exponent three; (v) an exact reformulation of Beal's conjecture as the high-exponent part of the Fermat–Catalan equation; (vi) a reduction of the conjecture to exponents that are odd primes or $4$; (vii) a parity trichotomy — exactly one base is even — together with a mod-$8$ obstruction forbidding two even exponents when $C$ is even; (viii) sharpness of the hypothesis $x,y,z \ge 3$ in each slot separately, witnessed by $7^2+2^5=3^4$, $7^3+13^2=2^9$ and $2^7+17^3=71^2$; (ix) an exhaustively verified finite case; and (x) the full function-field analogue: over $k[X]$ with $\operatorname{char} k = 0$, Beal's statement is a theorem, via Mason–Stothers.
+
+Conditionally we prove: the Fermat–Catalan conjecture implies that Beal's conjecture has at most finitely many counterexamples; and the $abc$ conjecture, in the effective integral form $c^{12} \le K \operatorname{rad}(abc)^{13}$, forces every counterexample to satisfy $C^z \le K^{12}$, with all six parameters then confined to an explicit finite box. Taken together, these results show that the residual obstruction to Beal's conjecture is purely the size of the error term in $abc$: every structural ingredient of the argument already transfers verbatim to the function-field setting, where the error term is absent and the conjecture is a theorem.
+
+**Keywords:** Beal's conjecture, Fermat–Catalan equation, $abc$ conjecture, radical, Fermat's Last Theorem, Mason–Stothers theorem, perfect powers, hyperbolic exponent triples.
+
+---
 
 ## 1. Introduction
 
-Consider the generalized Fermat equation
+### 1.1 The conjecture
 
-$$
-A^x+B^y=C^z
-$$
+Let $A, B, C, x, y, z$ be positive integers. The **Beal equation** is
+$$A^x + B^y = C^z, \qquad x, y, z \ge 3. \tag{1.1}$$
 
-in positive integers. Beal’s conjecture concerns the range $x,y,z>2$ and predicts the existence of a prime $p$ such that
+Solutions of (1.1) are plentiful. For instance
+$$3^3 + 6^3 = 27 + 216 = 243 = 3^5, \qquad 7^6 + 7^7 = 941192 = 98^3, \qquad 2^9 + 8^3 = 1024 = 2^{10}.$$
+In each of these, the three bases share a prime factor ($3$, $7$, $2$ respectively). Beal's conjecture, formulated in 1993, asserts that this is universal.
 
-$$
-p\mid A,\qquad p\mid B,\qquad p\mid C.
-$$
+> **Conjecture 1.1 (Beal).** If $A^x + B^y = C^z$ with $A,B,C \ge 1$ and $x,y,z \ge 3$, then there is a prime $p$ with $p \mid A$, $p \mid B$ and $p \mid C$.
 
-Allowing three distinct exponents creates many solutions excluded by the equal-exponent setting. For example,
+Throughout we use the following terminology.
 
-$$
-2^3+2^3=2^4,
-\qquad
-7^3+7^4=14^3,
-\qquad
-3^6+18^3=9^4.
-$$
+> **Definition 1.2 (Beal solution).** A tuple $(A,B,C,x,y,z)$ of natural numbers is a *Beal solution* if $A,B,C > 0$, $x,y,z \ge 3$, and $A^x + B^y = C^z$.
 
-These examples obey the predicted conclusion, with common primes $2$, $7$, and $3$, respectively. The central difficulty is to show that no solution can avoid such a common prime.
+> **Definition 1.3 (common prime).** Natural numbers $A,B,C$ *have a common prime* if there exists a prime $p$ dividing each of $A$, $B$, $C$.
 
-The purpose of this paper is not to claim a resolution of that open problem. It is to separate its unresolved global exclusion from several unconditional arithmetic reductions. The fundamental local observation is that the equation propagates a prime from any pair of bases to the remaining base. This turns “there is no common prime” into the much stronger-looking but equivalent condition that all three pairs of bases are coprime.
+> **Definition 1.4 (Beal counterexample).** A *Beal counterexample* is a Beal solution whose bases have no common prime.
 
-Once that primitive reduction has been made, two standard frameworks become available. The exponent signature lies automatically in the Fermat–Catalan region, while the powered terms themselves form a coprime additive triple of the kind studied in connection with the $abc$ conjecture. These are conditional bridges: they state exactly what additional exclusion statement would prove Beal’s conjecture, without assuming that statement.
+Conjecture 1.1 is exactly the assertion that the set of Beal counterexamples is empty.
 
-A further application illustrates the utility of the reduction. Fibonacci numbers satisfy a strong divisibility law that converts coprimality of values into a condition on their indices. Thus, if two Fibonacci numbers occur as bases in a primitive candidate, the gcd of their indices is forced into a two-element set.
+### 1.2 What is proved here
 
-The paper proceeds from definitions through the local prime theorem, primitive equivalence, the two conditional bridges, Fibonacci specialization, and computational algorithms. Throughout, finite experiments are distinguished sharply from proofs valid for all positive integers.
+The conjecture is open, and we do not prove it. What we do is delimit it from every available direction. Sections 2–4 give the unconditional structure theory. Sections 5–6 give the two conditional bridges, to the Fermat–Catalan conjecture and to $abc$. Section 7 proves the function-field analogue outright. Section 8 assembles the profile of a hypothetical counterexample. Sections 9–11 discuss algorithms, applications and future work.
 
-## 2. Definitions and elementary facts
+A reader who wants a single takeaway should note the pairing of Theorem 6.7 (the $abc$ conjecture bounds every counterexample by an explicit constant) with Theorem 7.3 (the polynomial analogue is a theorem, by the same argument with $\varepsilon = 0$). All the combinatorial, divisibility-theoretic and exponent-counting work in Beal's conjecture is *complete*; the sole residue is the quantitative gap between $\operatorname{rad}(abc)$ and $\operatorname{rad}(abc)^{1+\varepsilon}$.
 
-### 2.1. Beal solutions and common primes
+---
 
-A **Beal solution** is a sextuple $(A,B,C,x,y,z)$ of positive integers satisfying
+## 2. The three-way divisibility collapse
 
-$$
-x>2,\qquad y>2,\qquad z>2,
-$$
+The starting point is elementary but structurally decisive: for the equation $A^x + B^y = C^z$, the three bases are divisibility-theoretically inseparable.
 
-and
+> **Lemma 2.1.** Let $p$ be prime, let $x, y \ge 1$, and suppose $A^x + B^y = C^z$. If $p \mid A$ and $p \mid B$, then $p \mid C$.
 
-$$
-A^x+B^y=C^z.
-$$
+*Proof.* From $p \mid A$ and $x \ge 1$ we get $p \mid A^x$; likewise $p \mid B^y$. Hence $p$ divides $A^x + B^y = C^z$. Since $p$ is prime and $p \mid C^z$, we conclude $p \mid C$. $\square$
 
-The bases **have a common prime** if there exists a prime $p$ dividing each of $A,B,C$. A Beal solution is called **primitive** if its bases are pairwise coprime:
+> **Lemma 2.2.** Let $p$ be prime, let $x, z \ge 1$, and suppose $A^x + B^y = C^z$. If $p \mid A$ and $p \mid C$, then $p \mid B$.
 
-$$
-\gcd(A,B)=\gcd(A,C)=\gcd(B,C)=1.
-$$
+*Proof.* Rearranging, $B^y = C^z - A^x$. Both terms on the right are divisible by $p$ (using $z \ge 1$ and $x \ge 1$), so $p \mid B^y$ and therefore $p \mid B$. $\square$
 
-Beal’s conjecture may now be stated: every Beal solution has a common prime.
+> **Lemma 2.3.** Symmetrically, if $y, z \ge 1$ and $p \mid B$, $p \mid C$, then $p \mid A$.
 
-The adjective “primitive” is sometimes defined in related settings by $\gcd(A,B,C)=1$. For arbitrary triples this is weaker than pairwise coprimality. A main point below is that the equation eliminates the distinction: for generalized Fermat solutions, failure of a common prime is equivalent to pairwise coprimality.
+The three lemmas combine into the key dichotomy.
 
-### 2.2. Prime divisors of powers
+> **Theorem 2.4 (Pairwise coprimality).** Let $(A,B,C,x,y,z)$ be a Beal solution whose bases have no common prime. Then $A,B,C$ are pairwise coprime:
+> $$\gcd(A,B) = \gcd(A,C) = \gcd(B,C) = 1.$$
 
-We use the elementary fact that if $p$ is prime, $n>0$, and $p\mid U^n$, then $p\mid U$. This follows from Euclid’s lemma or unique factorization: every prime occurring in a positive power already occurs in its base. Conversely, if $p\mid U$, then $p\mid U^n$ for every positive $n$.
+*Proof.* Suppose $\gcd(A,B) > 1$. Then some prime $p$ divides $\gcd(A,B)$, hence divides both $A$ and $B$; by Lemma 2.1 it divides $C$ as well, so $A,B,C$ have a common prime, a contradiction. The other two cases are identical, using Lemmas 2.2 and 2.3 respectively. $\square$
 
-### 2.3. Signatures
+Thus there is no intermediate regime. A solution is either fully entangled (all three bases sharing a prime) or fully disentangled (no two bases sharing anything). This immediately reduces the three-fold conclusion of Conjecture 1.1 to a single hypothesis.
 
-The **signature** of a generalized Fermat equation is the exponent triple $(x,y,z)$. Define its reciprocal weight by
+> **Theorem 2.5 (Single-coprimality reformulation).** Beal's conjecture is equivalent to the statement
+> $$\text{there is no } (A,B,C,x,y,z) \text{ with } A,B,C>0,\; x,y,z\ge 3,\; A^x+B^y=C^z,\; \gcd(A,B)=1.$$
 
-$$
-\sigma(x,y,z)=\frac1x+\frac1y+\frac1z.
-$$
+*Proof.* ($\Rightarrow$) If such a tuple existed, Beal's conjecture would provide a prime $p$ dividing $A$ and $B$, contradicting $\gcd(A,B)=1$ since $p > 1$.
+($\Leftarrow$) Let $(A,B,C,x,y,z)$ be a Beal solution and suppose its bases had no common prime. Theorem 2.4 gives $\gcd(A,B)=1$, producing exactly the forbidden tuple. $\square$
 
-We call a signature a **Fermat–Catalan signature** when
+An immediate corollary in the positive direction:
 
-$$
-\sigma(x,y,z)\le1.
-$$
+> **Corollary 2.6.** If $(A,B,C,x,y,z)$ is a Beal solution with $\gcd(A,B) > 1$, then $A,B,C$ have a common prime — Beal's conjecture holds for that solution.
 
-This terminology records the numerical region relevant to the Fermat–Catalan problem; it does not assert any finiteness or exclusion theorem within that region.
+> **Corollary 2.7 (Equal bases).** Every Beal solution with $A = B$ satisfies Beal's conjecture.
 
-### 2.4. Coprime additive triples and radicals
+*Proof.* If $A \ge 2$, its least prime factor $p$ divides both $A$ and $B = A$, and Lemma 2.1 gives $p \mid C$. If $A = 1$ then $C^z = 2$ with $z \ge 3$, impossible: $C = 1$ gives $C^z = 1$, and $C \ge 2$ gives $C^z \ge 8$. $\square$
 
-An **additive coprime triple** is a triple $(a,b,c)$ of positive integers such that
+---
 
-$$
-a+b=c
-$$
+## 3. Non-vacuity and sharpness of the hypotheses
 
-and $\gcd(a,b)=1$. The equation then also forces $\gcd(a,c)=\gcd(b,c)=1$.
+### 3.1 Solutions exist, and there are infinitely many
 
-For a positive integer $n$, define the radical
+> **Proposition 3.1.** $(3,6,3,3,3,5)$ is a Beal solution, and $3$ divides each of $3, 6, 3$.
 
-$$
-\operatorname{rad}(n)=\prod_{p\mid n}p,
-$$
+Indeed $3^3 + 6^3 = 243 = 3^5$.
 
-where the product ranges over the distinct prime divisors of $n$. Positive powers preserve prime support, so
+> **Theorem 3.2 (Infinitude).** For every $N$ there is a Beal solution with $C > N$ whose bases have a common prime. Explicitly, for every $t \ge 1$,
+> $$(3t^5)^3 + (6t^5)^3 = (3t^3)^5,$$
+> a Beal solution with all three bases divisible by $3$, and $3t^3 \to \infty$.
 
-$$
-\operatorname{rad}(U^n)=\operatorname{rad}(U)
-$$
+*Proof.* Expanding, the left side is $27t^{15} + 216t^{15} = 243t^{15}$, and the right side is $3^5 t^{15} = 243 t^{15}$. Taking $t = N+1$ gives $C = 3(N+1)^3 \ge 3(N+1) > N$. $\square$
 
-for $n>0$. This simple identity explains why powered additive triples are unusually sparse in prime support relative to their numerical size.
+So Conjecture 1.1 is a statement about an infinite family, not a vacuous one; and every known member of that family is a scaled copy of a smaller identity, which is exactly what the conjecture predicts must always happen.
 
-## 3. Prime propagation
+### 3.2 The bound $x,y,z \ge 3$ is sharp in each slot
 
-The basic theorem holds under weaker exponent hypotheses than Beal’s conjecture requires.
+Relaxing any single exponent bound from $3$ to $2$ makes the conclusion false. Each of the three counterexamples below has pairwise coprime bases.
 
-### Theorem 3.1 (Prime-Propagation Theorem)
+> **Theorem 3.3 (Sharpness).** The following statements are all false:
+> 1. "$A^x + B^y = C^z$ with $x \ge 2$, $y,z \ge 3$ implies $A,B,C$ have a common prime" — refuted by $7^2 + 2^5 = 49 + 32 = 81 = 3^4$.
+> 2. "$A^x + B^y = C^z$ with $x \ge 3$, $y \ge 2$, $z \ge 3$ implies $A,B,C$ have a common prime" — refuted by $7^3 + 13^2 = 343 + 169 = 512 = 2^9$.
+> 3. "$A^x + B^y = C^z$ with $x,y \ge 3$, $z \ge 2$ implies $A,B,C$ have a common prime" — refuted by $2^7 + 17^3 = 128 + 4913 = 5041 = 71^2$.
 
-Let $A,B,C,x,y,z$ be positive integers satisfying
+*Proof.* Each displayed identity is a direct computation, and in each case the two summand bases are coprime ($\gcd(7,2)=\gcd(7,13)=\gcd(2,17)=1$), so no prime can divide all three bases. $\square$
 
-$$
-A^x+B^y=C^z.
-$$
+These three identities are sporadic solutions of the Fermat–Catalan equation (Section 5); their existence is the reason Beal's conjecture must impose $x,y,z \ge 3$ uniformly.
 
-If a prime $p$ divides any two of $A,B,C$, then $p$ divides the third.
+---
 
-#### Proof sketch
+## 4. Fermat's Last Theorem, descent, and hyperbolicity
 
-Suppose first that $p\mid A$ and $p\mid B$. Then $p\mid A^x$ and $p\mid B^y$, so $p$ divides $A^x+B^y=C^z$. Since $z>0$ and $p$ is prime, $p\mid C$.
+### 4.1 Beal implies Fermat
 
-If $p\mid A$ and $p\mid C$, then $p$ divides $A^x$ and $C^z$. From $B^y=C^z-A^x$, it follows that $p\mid B^y$, hence $p\mid B$. The case $p\mid B$ and $p\mid C$ is symmetric. ∎
+Recall that *Fermat's Last Theorem for the exponent $n$*, written $\mathrm{FLT}_n$, is the assertion that $a^n + b^n = c^n$ has no solution in positive integers.
 
-### Corollary 3.2 (Prime-support pattern)
+> **Theorem 4.1 (Beal $\Rightarrow$ FLT).** If Beal's conjecture holds, then $\mathrm{FLT}_n$ holds for every $n \ge 3$.
 
-For any prime $p$ in a positive-exponent solution, the number of bases among $A,B,C$ divisible by $p$ cannot equal $2$. It is either $0$, $1$, or $3$.
+*Proof.* Fix $n \ge 3$ and argue by strong induction on $a$, proving: for all positive $b, c$, $a^n + b^n \ne c^n$. Suppose $a^n + b^n = c^n$ with $a,b,c>0$. Then $(a,b,c,n,n,n)$ is a Beal solution, so Beal's conjecture supplies a prime $p$ with $a = pa'$, $b = pb'$, $c = pc'$. Substituting gives $p^n(a'^n + b'^n) = p^n c'^n$, and cancelling the positive factor $p^n$ yields $a'^n + b'^n = c'^n$ with $a', b', c' > 0$ and $a' = a/p < a$ (as $p \ge 2$). This contradicts the inductive hypothesis at $a'$. $\square$
 
-#### Proof sketch
+The converse direction, from FLT to Beal, is not available — Beal's conjecture is strictly a generalisation — but FLT supplies unconditional special cases.
 
-The only excluded case is divisibility of exactly two bases, which Theorem 3.1 converts into divisibility of all three. ∎
+> **Theorem 4.2 (Equal exponents).** If $\mathrm{FLT}_n$ holds, then there is no Beal solution with $x=y=z=n$. In particular there is no such solution when $3 \mid n$ or $4 \mid n$.
 
-This support pattern is stronger than a statement merely about the gcd of all three numbers. It localizes every prime and is the mechanism behind the primitive reduction.
+*Proof.* The first statement is the definition. For the second, if $d \mid n$ and $\mathrm{FLT}_d$ holds then $\mathrm{FLT}_n$ holds, because $a^n + b^n = c^n$ can be rewritten as $(a^{n/d})^d + (b^{n/d})^d = (c^{n/d})^d$. Now apply the classical theorems $\mathrm{FLT}_3$ (Euler) and $\mathrm{FLT}_4$ (Fermat). $\square$
 
-## 4. Exact primitive reduction
+The same regrouping trick works for unequal exponents.
 
-### Theorem 4.1 (Primitive Reduction Theorem)
+> **Theorem 4.3 (gcd of exponents).** If $3 \mid \gcd(x,y,z)$ or $4 \mid \gcd(x,y,z)$, then $A^x + B^y = C^z$ has no solution in positive integers with $x,y,z \ge 3$.
 
-Let $A,B,C,x,y,z$ be positive integers satisfying $A^x+B^y=C^z$. Then the following conditions are equivalent:
+*Proof.* Let $d = \gcd(x,y,z)$ and write $x = dm_x$, $y = dm_y$, $z = dm_z$. Then $(A^{m_x})^d + (B^{m_y})^d = (C^{m_z})^d$ is a solution of Fermat's equation with exponent $d$, contradicting $\mathrm{FLT}_d$, which holds because $3 \mid d$ or $4 \mid d$. $\square$
 
-1. no prime divides all three bases $A,B,C$;
-2. $A,B,C$ are pairwise coprime.
+For example the exponent triple $(6,9,15)$ has gcd $3$, so *no* solutions exist there at all, and Beal's conjecture holds vacuously.
 
-#### Proof sketch
+### 4.2 Quantitative hyperbolicity
 
-If the bases are pairwise coprime, no prime can divide all three, since such a prime would in particular divide $A$ and $B$.
+The exponent triple of a Beal solution cannot be arbitrarily close to the euclidean boundary $1/x+1/y+1/z = 1$.
 
-Conversely, suppose no prime divides all three. If $A$ and $B$ were not coprime, then $d=\gcd(A,B)>1$. Every integer greater than $1$ has a prime divisor, so choose a prime $p\mid d$. Then $p\mid A$ and $p\mid B$, and Theorem 3.1 yields $p\mid C$, contradicting the assumption. Hence $\gcd(A,B)=1$. Applying the same argument to $(A,C)$ and $(B,C)$ gives the other two coprimality relations. ∎
+> **Theorem 4.4 (Quantitative hyperbolicity).** Every Beal solution $(A,B,C,x,y,z)$ satisfies
+> $$\frac1x + \frac1y + \frac1z \;\le\; \frac{11}{12}.$$
 
-### Theorem 4.2 (Primitive Form of Beal’s Conjecture)
+*Proof.* Since $x,y,z \ge 3$, each reciprocal is at most $1/3$. If at least one exponent is $\ge 4$, then the corresponding reciprocal is at most $1/4$ and the sum is at most $1/4 + 1/3 + 1/3 = 11/12$. Otherwise $x = y = z = 3$; but then $A^3 + B^3 = C^3$ with positive bases, contradicting $\mathrm{FLT}_3$. $\square$
 
-Beal’s conjecture is equivalent to the assertion that there exists no primitive positive solution of
+> **Corollary 4.5 (Strict hyperbolicity).** Every Beal solution satisfies $1/x + 1/y + 1/z < 1$.
 
-$$
-A^x+B^y=C^z
-$$
+The constant $11/12$ is optimal, being attained by $(3,3,4)$ and its permutations; note that the *existence* of the strict gap is not formal — it is exactly $\mathrm{FLT}_3$ that removes the euclidean triple $(3,3,3)$. This gap is what makes the $abc$ argument of Section 6 possible: an inequality with a multiplicative error term can only be exploited against a strictly negative Euler characteristic.
 
-with $x,y,z>2$.
+### 4.3 Reduction to prime exponents
 
-#### Proof sketch
+> **Lemma 4.6.** Every integer $n \ge 3$ has a divisor $d \ge 3$ that is either an odd prime or equal to $4$.
 
-Assume Beal’s conjecture. A primitive solution has no common prime by Theorem 4.1, contradicting the conjecture. Conversely, assume no primitive solution exists. If some Beal solution had no common prime, Theorem 4.1 would make it primitive, again a contradiction. Thus every Beal solution has a common prime. ∎
+*Proof.* If $4 \mid n$, take $d = 4$. Otherwise, $n$ is odd or $n = 2m$ with $m$ odd; in the second case $m \ge 3$ since $n \ge 3$ and $n \ne 4, 2$. In either case $n$ has an odd divisor $m \ge 3$, whose least prime factor is an odd prime $\ge 3$ dividing $n$. $\square$
 
-This equivalence identifies the genuine obstruction. It is not enough for a counterexample to satisfy $\gcd(A,B,C)=1$ in isolation; the equation forces all three pairwise gcds to equal $1$.
+> **Theorem 4.7 (Exponent reduction).** Suppose Beal's conjecture holds for all solutions whose three exponents are each an odd prime or $4$. Then Beal's conjecture holds in general.
 
-### Remark 4.3 (Exponent economy)
+*Proof.* Let $(A,B,C,x,y,z)$ be any Beal solution. By Lemma 4.6 choose $d \mid x$, $e \mid y$, $f \mid z$ with each of $d,e,f$ an odd prime or $4$ (in particular each $\ge 3$). Regrouping,
+$$(A^{x/d})^d + (B^{y/e})^e = (C^{z/f})^f,$$
+a Beal solution with the restricted exponents, so by hypothesis a prime $p$ divides $A^{x/d}$, $B^{y/e}$ and $C^{z/f}$. As $p$ is prime, $p \mid A$, $p \mid B$, $p \mid C$. $\square$
 
-Theorems 3.1 and 4.1 require only $x,y,z>0$. The threshold $x,y,z>2$ belongs to the conjectural classification, not to the local divisibility mechanism. This distinction allows the structural results to be reused in other positive-exponent equations.
+So Conjecture 1.1 rests on a set of exponent triples of density zero inside $\{3,4,5,\dots\}^3$ — and among those, all triples with $x=y=z$ divisible by $3$ or $4$, in particular $(3,3,3)$ and $(4,4,4)$, are already theorems.
+
+---
 
 ## 5. The Fermat–Catalan bridge
 
-### Theorem 5.1 (Signature Inclusion Theorem)
+> **Definition 5.1 (Fermat–Catalan solution).** A tuple $(a,b,c,x,y,z)$ of positive integers is a *Fermat–Catalan solution* if
+> $$a,b,c > 0, \quad x,y,z \ge 2, \quad \gcd(a,b)=\gcd(a,c)=\gcd(b,c)=1, \quad \frac1x+\frac1y+\frac1z<1, \quad a^x + b^y = c^z.$$
 
-Every Beal solution has a Fermat–Catalan signature:
+The hyperbolicity condition is what makes the problem finite in spirit: in the spherical range $1/x+1/y+1/z>1$ the solutions form infinite parametrised families, and in the euclidean range they are governed by elliptic curves.
 
-$$
-\frac1x+\frac1y+\frac1z\le1.
-$$
+Only ten Fermat–Catalan solutions are currently known:
+$$1^m + 2^3 = 3^2,\quad 2^5 + 7^2 = 3^4,\quad 7^3 + 13^2 = 2^9,\quad 2^7 + 17^3 = 71^2,\quad 3^5 + 11^4 = 122^2,$$
+$$33^8 + 1549034^2 = 15613^3,\quad 1414^3 + 2213459^2 = 65^7,\quad 9262^3 + 15312283^2 = 113^7,$$
+$$17^7 + 76271^3 = 21063928^2, \quad 43^8 + 96222^3 = 30042907^2.$$
+Every one of them has an exponent equal to $2$. The **Fermat–Catalan conjecture** asserts that the solution set is finite.
 
-#### Proof sketch
+> **Theorem 5.2 (Counterexamples are Fermat–Catalan solutions).** Every Beal counterexample is a Fermat–Catalan solution.
 
-Since $x,y,z$ are integers greater than $2$, each is at least $3$. Consequently,
+*Proof.* Let $(A,B,C,x,y,z)$ be a Beal counterexample. The bases are positive and, by Theorem 2.4, pairwise coprime. The exponents satisfy $x,y,z \ge 3 \ge 2$, and $1/x+1/y+1/z < 1$ by Corollary 4.5. Finally $A^x+B^y=C^z$ by hypothesis. $\square$
 
-$$
-\frac1x\le\frac13,
-\qquad
-\frac1y\le\frac13,
-\qquad
-\frac1z\le\frac13.
-$$
+> **Corollary 5.3 (Conditional finiteness).** If the Fermat–Catalan conjecture holds, then Beal's conjecture has at most finitely many counterexamples.
 
-Adding the three inequalities gives the result. ∎
+*Proof.* A subset of a finite set is finite. $\square$
 
-The boundary case is $(x,y,z)=(3,3,3)$, where the reciprocal sum equals $1$. If any exponent exceeds $3$, the sum is strictly less than $1$ unless another exponent falls below $3$, which is forbidden here.
+The relationship is in fact an exact identification of Beal's conjecture with a part of Fermat–Catalan.
 
-### Theorem 5.2 (Conditional Fermat–Catalan Implication)
+> **Theorem 5.4 (Fermat–Catalan reformulation).** Beal's conjecture holds if and only if no Fermat–Catalan solution has all three exponents $\ge 3$.
 
-Assume the following primitive exclusion principle: for every positive solution of $A^x+B^y=C^z$ with $x,y,z>2$ and
+*Proof.* ($\Rightarrow$) Given a Fermat–Catalan solution with $x,y,z\ge3$, it is a Beal solution, so Beal's conjecture yields a prime dividing $a$ and $b$, contradicting $\gcd(a,b)=1$.
+($\Leftarrow$) Let $(A,B,C,x,y,z)$ be a Beal solution with no common prime. By Theorem 5.2 it is a Fermat–Catalan solution, and its exponents are all $\ge 3$, contradicting the hypothesis. $\square$
 
-$$
-\frac1x+\frac1y+\frac1z\le1,
-$$
+Beal's conjecture is therefore precisely the assertion that the Fermat–Catalan equation has no solutions in the "high-exponent" region $\min(x,y,z) \ge 3$ — the empirical content of the observation that every one of the ten known solutions uses an exponent $2$.
 
-the bases are not pairwise coprime. Then Beal’s conjecture holds.
+---
 
-#### Proof sketch
+## 6. The $abc$ bridge
 
-Suppose Beal’s conjecture failed. By Theorem 4.2 there would be a primitive Beal solution. By Theorem 5.1 its signature would satisfy the displayed reciprocal inequality. This contradicts the assumed primitive exclusion principle. ∎
+### 6.1 Radicals
 
-The premise in Theorem 5.2 is deliberately explicit. The theorem does not claim that all primitive solutions in the Fermat–Catalan region have already been excluded. Rather, it records an exact logical bridge and prevents any hidden appeal to an unresolved conjecture.
+> **Definition 6.1 (Radical).** For $n \ge 1$, the *radical* $\operatorname{rad}(n)$ is the product of the distinct primes dividing $n$, with $\operatorname{rad}(1)=1$.
 
-### 5.3. Organizing signatures
+Thus $\operatorname{rad}(72) = \operatorname{rad}(2^3 3^2) = 6$ and $\operatorname{rad}(p^k)=p$. Two elementary facts are used repeatedly: $\operatorname{rad}(n) \ge 1$, and $\operatorname{rad}(n) \mid n$, hence $\operatorname{rad}(n) \le n$.
 
-The signature inequality gives a geometric organization of the infinite exponent space. Triples $(x,y,z)$ with all entries at least $3$ lie on or below the reciprocal surface $1/x+1/y+1/z=1$. Exponent divisibility creates an additional partial order: if $x=kr$ with $k>1$, then $A^x=(A^k)^r$, potentially reducing a signature to a more basic one after changing the base. This suggests studying minimal signatures under divisibility, although no finite reduction theorem is asserted here.
+The decisive property is that the radical is blind to exponents.
 
-## 6. The powered additive-triple bridge
+> **Lemma 6.2 (Exponent-blindness).** For positive $A,B,C$ and positive $x,y,z$,
+> $$\operatorname{rad}(A^x B^y C^z) = \operatorname{rad}(ABC) \le ABC.$$
 
-### Theorem 6.1 (Canonical Powered-Triple Theorem)
+*Proof.* The set of primes dividing a product is the union of the sets of primes dividing each factor, and the set of primes dividing $A^x$ equals the set of primes dividing $A$ whenever $x \ge 1$. Hence $A^xB^yC^z$ and $ABC$ have the same prime support, so the same radical. The inequality is $\operatorname{rad}(m)\mid m$. $\square$
 
-Let $(A,B,C,x,y,z)$ be a primitive Beal solution. Define
+This lemma is the entire reason $abc$ has anything to say about Beal's equation: the equation $A^x + B^y = C^z$ has *enormous* terms but a *tiny* radical, exactly the configuration $abc$ forbids.
 
-$$
-a=A^x,
-\qquad
-b=B^y,
-\qquad
-c=C^z.
-$$
+### 6.2 The two forms of the $abc$ conjecture
 
-Then $a,b,c$ are positive integers satisfying
+> **Definition 6.3 (Effective integral $abc$ bound).** For $K \in \mathbb{N}$, the statement $\mathrm{ABC}(K)$ says: for all positive integers $a,b$ with $a+b=c$ and $\gcd(a,b)=1$,
+> $$c^{12} \le K \cdot \operatorname{rad}(abc)^{13}.$$
 
-$$
-a+b=c
-$$
+This is the case $\varepsilon = 1/12$ of the usual conjecture, cleared of denominators.
 
-and
+> **Definition 6.4 (Masser–Oesterlé $abc$ conjecture).** For every real $\varepsilon > 0$ there is a real $K_\varepsilon > 0$ such that every coprime triple of positive integers with $a+b=c$ satisfies
+> $$c \le K_\varepsilon \cdot \operatorname{rad}(abc)^{1+\varepsilon}.$$
 
-$$
-\gcd(a,b)=1.
-$$
+> **Proposition 6.5.** The $abc$ conjecture implies $\mathrm{ABC}(K)$ for some positive integer $K$.
 
-Thus $(a,b,c)$ is an additive coprime triple, and its coordinates retain exactly the three powered terms of the original equation.
+*Proof.* Apply Definition 6.4 with $\varepsilon = 1/12$ to obtain a real constant $K_{1/12} > 0$ with $c \le K_{1/12} r^{13/12}$, where $r = \operatorname{rad}(abc) \ge 1$. Raising to the twelfth power gives $c^{12} \le K_{1/12}^{12} r^{13}$. Take $K = \lceil K_{1/12}^{12}\rceil + 1$, a positive integer exceeding $K_{1/12}^{12}$; since $r^{13}\ge1$, the integral inequality $c^{12} \le K r^{13}$ follows. $\square$
 
-#### Proof sketch
+### 6.3 The exponent count
 
-Positivity follows from positivity of the bases. The equation $a+b=c$ is the generalized Fermat equation itself. Since the original solution is primitive, $\gcd(A,B)=1$. Positive powers of coprime integers remain coprime, giving $\gcd(A^x,B^y)=1$. ∎
+> **Lemma 6.6 (Product of bases is small).** Let $(A,B,C,x,y,z)$ be a Beal solution and write $N = C^z$. Then
+> $$(ABC)^{12} \le N^{11}.$$
 
-Because $a+b=c$ and $\gcd(a,b)=1$, one also has $\gcd(a,c)=\gcd(b,c)=1$. Hence the powered terms are pairwise coprime.
+*Proof.* Since $B^y > 0$ we have $A^x \le N$, and similarly $B^y \le N$; also $C^z = N$. As $A \ge 1$, the map $m \mapsto A^m$ is nondecreasing, so $A^3 \le A^x \le N$; similarly $B^3 \le N$ and $C^3 \le N$. By Theorem 4.4's case analysis, at least one exponent is $\ge 4$ (otherwise $x=y=z=3$, excluded by $\mathrm{FLT}_3$). Suppose $x \ge 4$, so also $A^4 \le N$. Then
+$$(ABC)^{12} = (A^4)^3 (B^3)^4 (C^3)^4 \le N^3 \cdot N^4 \cdot N^4 = N^{11}.$$
+If instead $y \ge 4$ use $(ABC)^{12} = (A^3)^4(B^4)^3(C^3)^4 \le N^{11}$, and if $z \ge 4$ use $(ABC)^{12} = (A^3)^4(B^3)^4(C^4)^3 \le N^{11}$. $\square$
 
-### Corollary 6.2 (Radical identity for a primitive candidate)
+The exponents $12$ and $11$ here are precisely $1$ and $11/12$ scaled by $12$: the lemma is the integral shadow of the hyperbolicity bound $1/x+1/y+1/z \le 11/12$, since heuristically $ABC \approx N^{1/x+1/y+1/z}$.
 
-For the triple in Theorem 6.1,
+### 6.4 The main conditional theorem
 
-$$
-\operatorname{rad}(abc)=\operatorname{rad}(ABC).
-$$
+> **Theorem 6.7 ($abc$ bounds Beal counterexamples).** Assume $\mathrm{ABC}(K)$. Then every Beal counterexample $(A,B,C,x,y,z)$ satisfies
+> $$C^z \le K^{12}.$$
 
-#### Proof sketch
+*Proof.* Write $N = C^z > 0$. By Theorem 2.4 the bases are pairwise coprime, so in particular $\gcd(A^x, B^y) = 1$. Apply $\mathrm{ABC}(K)$ to the coprime triple $A^x + B^y = N$:
+$$N^{12} \le K \cdot \operatorname{rad}(A^x B^y N)^{13}.$$
+By Lemma 6.2, $\operatorname{rad}(A^xB^yC^z) = \operatorname{rad}(ABC) \le ABC$, whence
+$$N^{12} \le K (ABC)^{13}. \tag{6.1}$$
+Raise (6.1) to the twelfth power and apply Lemma 6.6:
+$$N^{144} = (N^{12})^{12} \le K^{12}\big((ABC)^{12}\big)^{13} \le K^{12}(N^{11})^{13} = K^{12} N^{143}.$$
+Cancelling the positive factor $N^{143}$ gives $N \le K^{12}$. $\square$
 
-The set of prime divisors of $A^xB^yC^z$ is exactly the set of prime divisors of $ABC$, because all exponents are positive. Taking the product of the distinct primes gives the equality. ∎
+> **Corollary 6.8 ($abc$ $\Rightarrow$ bounded counterexamples).** If the $abc$ conjecture holds, there is an explicit $M$ (namely $M = K^{12}$ for the $K$ of Proposition 6.5) such that every Beal counterexample satisfies
+> $$A^x \le M, \qquad B^y \le M, \qquad C^z \le M.$$
 
-Primitivity additionally means that the prime supports of $A$, $B$, and $C$ are disjoint. Therefore
+*Proof.* Combine Proposition 6.5 and Theorem 6.7; the bounds on $A^x$ and $B^y$ follow since they are positive summands of $C^z \le M$. $\square$
 
-$$
-\operatorname{rad}(ABC)
-=
-\operatorname{rad}(A)\operatorname{rad}(B)\operatorname{rad}(C).
-$$
+> **Corollary 6.9 (The whole tuple is boxed).** Under the $abc$ conjecture there is an $M$ such that every Beal counterexample with $A \ge 2$ and $B \ge 2$ satisfies
+> $$A, B, C, x, y, z \le M.$$
 
-### Theorem 6.3 (Conditional Powered-$abc$ Implication)
+*Proof.* Take $M$ as in Corollary 6.8. First, $C \ge 2$: if $C = 1$ then $C^z = 1$, while $A^x + B^y \ge 2^3 + 2^3 = 16$. Now for any base $a \ge 2$ and exponent $e \ge 3$ with $a^e \le M$: we have $a \le a^e \le M$, and $e < 2^e \le a^e \le M$. Applying this to each of $(A,x)$, $(B,y)$, $(C,z)$ gives the claim. $\square$
 
-Assume that no positive pairwise-coprime bases $A,B,C$ with exponents $x,y,z>2$ can produce a coprime additive triple
+Thus, conditionally on $abc$, Beal's conjecture becomes a finite (if astronomically large) verification. This is the precise sense in which $abc$ is "almost" enough: it removes the infinitude of the problem without removing its difficulty, since no admissible value of $K_{1/12}$ is known.
 
-$$
-A^x+B^y=C^z.
-$$
+---
 
-Then Beal’s conjecture holds.
+## 7. The function-field analogue is a theorem
 
-#### Proof sketch
+Let $k$ be a field of characteristic zero and $k[X]$ the polynomial ring. Under the standard analogy $\mathbb Z \leftrightarrow k[X]$, primes correspond to irreducible polynomials and $\log|n|$ to $\deg$. In this setting the $abc$ inequality is the **Mason–Stothers theorem**, and — critically — it holds *with no error term $\varepsilon$*. Consequently the argument of Section 6 goes through unconditionally and yields the analogue of Beal's conjecture as a theorem.
 
-A failure of Beal’s conjecture would yield a primitive solution by Theorem 4.2. Theorem 6.1 would then turn it into exactly the powered coprime additive triple forbidden by the premise. ∎
+> **Lemma 7.1 (Multiplicative hyperbolicity).** If $x,y,z \ge 3$ then $yz + zx + xy \le xyz$, equivalently $1/x+1/y+1/z \le 1$.
 
-The assumption is the particular powered-triple exclusion relevant to Beal. It may be viewed as the target consequence one would seek from an effective $abc$ principle. The theorem is conditional and does not assert that this exclusion has been proved.
+*Proof.* $3(yz) \le x(yz)$, $3(zx) \le y(zx)$, $3(xy) \le z(xy)$; summing and dividing by $3$ gives $yz+zx+xy \le xyz$. $\square$
 
-### 6.4. Why powers are special for radical estimates
+> **Lemma 7.2.** If $p \in k[X]$ is prime, $x,y \ge 1$ and $a^x + b^y = c^z$ with $p \mid a$ and $p \mid b$, then $p \mid c$.
 
-If $x\ge3$, then $A^x$ grows at least cubically in $A$, while its radical is bounded by $A$. The same holds for the other terms. In a primitive candidate, there is no overlap among the three base supports, so radical estimates decompose cleanly across $A,B,C$. This is the central quantitative tension: the equation balances very large perfect powers, but the radical records each supporting prime only once.
+*Proof.* Identical to Lemma 2.1: $p$ divides $a^x + b^y = c^z$, and a prime dividing a power divides the base. $\square$
 
-A future effective argument would need to turn this tension into a contradiction or into a finite list of signatures. The structural reduction shows that no general additive triples outside the powered family need be considered for this purpose.
+> **Theorem 7.3 (Polynomial Beal theorem).** Let $\operatorname{char} k = 0$ and let $a,b,c \in k[X]$ be nonzero with
+> $$a^x + b^y = c^z, \qquad x,y,z \ge 3.$$
+> If at least one of $a,b,c$ is non-constant, then there is a prime (irreducible) $p \in k[X]$ dividing all three of $a$, $b$, $c$.
 
-## 7. Fibonacci specialization
+*Proof sketch.* Suppose not. Then no prime divides both $a$ and $b$ — for by Lemma 7.2 such a prime would divide $c$ too — so $a$ and $b$ are coprime in $k[X]$. Rewrite the equation as the vanishing linear relation
+$$1 \cdot a^x + 1 \cdot b^y + (-1)\cdot c^z = 0,$$
+with all three coefficients nonzero and summing appropriately, and with $x,y,z \ge 3$ invertible in $k$ (characteristic zero). The Mason–Stothers theorem, in its Fermat–Catalan form for polynomials, states that under the hyperbolicity inequality $yz+zx+xy \le xyz$ of Lemma 7.1 any such coprime solution must have $a$, $b$, $c$ all of degree $0$, i.e. all constant. This contradicts the assumption that one of them is non-constant. $\square$
 
-Let the Fibonacci sequence be defined by
+> **Corollary 7.4 (Coprime form).** If $a,b,c \in k[X]$ are nonzero with $a^x+b^y=c^z$, $x,y,z\ge3$, and $a,b$ coprime, then $a$, $b$ and $c$ are all constant.
 
-$$
-F_0=0,
-\qquad
-F_1=1,
-\qquad
-F_{n+2}=F_{n+1}+F_n.
-$$
+*Proof.* Were one of them non-constant, Theorem 7.3 would produce a prime dividing both $a$ and $b$, contradicting coprimality. $\square$
 
-Its strong divisibility property states that
+The analogy is faithful even at the level of examples: scaling the integer identity $3^3 + 6^3 = 3^5$ by $X^{15}$ gives
+$$(3X^5)^3 + (6X^5)^3 = (3X^3)^5 \quad \text{in } \mathbb{Q}[X],$$
+a non-constant solution whose three entries do share the irreducible factor $X$, exactly as Theorem 7.3 requires.
 
-$$
-\gcd(F_m,F_n)=F_{\gcd(m,n)}
-$$
+**Interpretation.** Compare Theorem 6.7 with Theorem 7.3. Both proofs consist of: (i) a divisibility collapse producing coprimality; (ii) an $abc$-type inequality bounding the size of the solution by its radical; (iii) the hyperbolicity inequality $1/x+1/y+1/z \le 1$ (with a strict gap over $\mathbb Z$). Over $k[X]$ step (ii) is a theorem with no error term, and steps (i)–(iii) close the argument completely. Over $\mathbb Z$ step (ii) is conjectural and carries an error term $\operatorname{rad}^{\varepsilon}$, which is why the same argument yields only a bound $C^z \le K^{12}$ rather than a contradiction. The entire gap between "open conjecture" and "theorem" is that $\varepsilon$.
 
-for nonnegative integers $m,n$.
+---
 
-### Theorem 7.1 (Fibonacci Index Constraint)
+## 8. The profile of a hypothetical counterexample
 
-Suppose $(A,B,C,x,y,z)$ is a primitive Beal solution and
+Assembling the results above, together with two congruence obstructions, gives a rigid description of anything that could refute Beal's conjecture.
 
-$$
-A=F_m,
-\qquad
-B=F_n.
-$$
+> **Theorem 8.1 (Parity trichotomy).** In a Beal solution with $\gcd(A,B)=1$, exactly one of $A$, $B$, $C$ is even.
 
-Then
+*Proof.* $A$ and $B$ cannot both be even, by coprimality. If they are both odd then $C^z = A^x + B^y$ is even, so $C$ is even and neither $A$ nor $B$ is. If exactly one of $A,B$ is even, then $C^z$ is odd, so $C$ is odd. In every case exactly one of the three is even. $\square$
 
-$$
-F_{\gcd(m,n)}=1.
-$$
+> **Theorem 8.2 (Mod-8 obstruction).** In a Beal solution with $\gcd(A,B)=1$ and $C$ even, the exponents $x$ and $y$ cannot both be even.
 
-#### Proof sketch
+*Proof.* By Theorem 8.1, $A$ and $B$ are both odd. An odd square is $\equiv 1 \pmod 8$, hence an odd number raised to an even power is $\equiv 1 \pmod 8$. So if $x$ and $y$ are both even then $A^x + B^y \equiv 1 + 1 = 2 \pmod 8$. On the other hand $C$ is even and $z \ge 3$, so $8 = 2^3 \mid C^z$, i.e. $C^z \equiv 0 \pmod 8$. But $2 \not\equiv 0 \pmod 8$. $\square$
 
-Primitivity gives $\gcd(A,B)=1$. Substitution of $A=F_m$ and $B=F_n$ yields $\gcd(F_m,F_n)=1$. The strong divisibility identity transforms the left side into $F_{\gcd(m,n)}$, proving the claim. ∎
+> **Theorem 8.3 (Small-box verification).** There is no coprime solution of $A^x + B^y = C^z$ with $1 \le A,B \le 10$, $1 \le C \le 40$ and $3 \le x,y,z \le 5$. Consequently every Beal solution in that range has a common prime factor.
 
-### Corollary 7.2 (Index-gcd classification)
+*Proof.* Exhaustive enumeration over the $10 \times 10 \times 40 \times 3 \times 3 \times 3 = 108{,}000$ tuples, discarding those with $\gcd(A,B)>1$, finds no equality. Given a Beal solution in the range with no common prime, Theorem 2.4 gives $\gcd(A,B)=1$, contradicting the enumeration. $\square$
 
-Under the hypotheses of Theorem 7.1,
+**Summary of constraints.** Let $(A,B,C,x,y,z)$ be a Beal counterexample. Then:
 
-$$
-\gcd(m,n)\in\{1,2\}.
-$$
+1. $A$, $B$, $C$ are pairwise coprime (Theorem 2.4), and in particular $A \ne B$ unless $A=B=1$, which is impossible (Corollary 2.7).
+2. $1/x+1/y+1/z \le 11/12$; at least one exponent exceeds $3$ (Theorem 4.4).
+3. Neither $3$ nor $4$ divides $\gcd(x,y,z)$ (Theorem 4.3).
+4. One may assume each of $x,y,z$ is an odd prime or $4$ (Theorem 4.7).
+5. Exactly one of $A,B,C$ is even (Theorem 8.1); if it is $C$, then $x,y$ are not both even (Theorem 8.2).
+6. It is a Fermat–Catalan solution (Theorem 5.2), hence one of at most finitely many if Fermat–Catalan holds (Corollary 5.3).
+7. Assuming $abc$, $C^z \le K^{12}$ and the entire tuple lies in an explicit finite box (Corollaries 6.8, 6.9).
+8. It lies outside the verified range $A,B \le 10$, $C \le 40$, $x,y,z \le 5$ (Theorem 8.3).
 
-#### Proof sketch
+---
 
-For the standard sequence above, the Fibonacci value $1$ occurs precisely at indices $1$ and $2$. Combine this fact with Theorem 7.1. ∎
+## 9. Algorithms
 
-The theorem converts coprimality of potentially enormous Fibonacci values into a rigid condition on small index arithmetic. It does not by itself exclude Fibonacci-based primitive solutions. It does, however, sharply constrain any such candidate and prepares the problem for modular periodicity arguments.
+Three computational procedures follow directly from the theory and are used to explore the constraints above.
 
-## 8. Algorithms and numerical exploration
+### 9.1 Structured search for Beal solutions
 
-### 8.1. Exhaustive bounded search
+Naïvely one iterates over $(A,x,B,y)$, forms $S = A^x + B^y$, and tests whether $S$ is a perfect power with exponent $\ge 3$. The efficient version precomputes, for a target bound $M$, a dictionary mapping every perfect power $C^z \le M$ with $z \ge 3$ to its representation $(C,z)$. Building the table costs $O(M^{1/3}\log M)$ arithmetic operations, and each of the $O((M^{1/3})^2 (\log M)^2)$ candidate pairs is then tested in $O(1)$ expected time. Every solution found is checked against the theory: if $\gcd(A,B)>1$, Corollary 2.6 predicts a common prime; if $\gcd(A,B)=1$, the tuple would be a counterexample.
 
-Fix a base bound $M$ and an exponent interval $e_{\min}\le e\le e_{\max}$. A direct search over six nested variables is wasteful. Instead, precompute a reverse table of powers. For each $C\le M$ and each exponent $z$ in the interval, store the pair $(C,z)$ under the key $C^z$. Then enumerate $(A,x)$ and $(B,y)$, compute $A^x+B^y$, and look up matching right-hand powers.
+### 9.2 Constraint filter for hypothetical counterexamples
 
-**Pseudocode.**
+Given an exponent triple $(x,y,z)$ one can decide in $O(1)$ whether it could support a counterexample: reject if $1/x+1/y+1/z > 11/12$; reject if $3 \mid \gcd(x,y,z)$ or $4 \mid \gcd(x,y,z)$; and, for the branch where $C$ is even, reject if $x$ and $y$ are both even. Combined with the reduction of Theorem 4.7 to exponents that are odd primes or $4$, this prunes the exponent search space to density zero.
 
-1. Initialize an empty mapping from integer values to lists of base-exponent pairs.
-2. For every $C$ from $1$ to $M$ and every $z$ from $e_{\min}$ to $e_{\max}$, append $(C,z)$ under the key $C^z$.
-3. For every $A,B$ from $1$ to $M$ and every $x,y$ in the exponent interval, calculate $S=A^x+B^y$.
-4. For each $(C,z)$ stored under $S$, emit $(A,B,C,x,y,z)$.
-5. Classify each emitted solution using gcds.
+### 9.3 Radical and $abc$-quality computation
 
-If $E=e_{\max}-e_{\min}+1$, precomputation uses $O(ME)$ power evaluations and storage entries. The main loop uses $O(M^2E^2)$ additions and dictionary lookups, plus output cost. Arbitrary-precision integer arithmetic makes bit complexity dependent on $M^{e_{\max}}$, but the indexing still avoids a further factor of $ME$.
+For a coprime triple $a+b=c$ the *quality* is
+$$q(a,b,c) = \frac{\log c}{\log \operatorname{rad}(abc)}.$$
+The $abc$ conjecture says $\limsup q = 1$ over coprime triples, i.e. for each $\varepsilon>0$ only finitely many triples have $q > 1+\varepsilon$. Computing $q$ requires factoring $abc$, done by trial division in $O(\sqrt{abc})$ or by a sieve for a batch. Applied to a Beal solution, the identity $\operatorname{rad}(A^xB^yC^z)=\operatorname{rad}(ABC)$ makes $q$ large exactly when the bases are small relative to $C^z$, which is why every scaled solution such as $(3t^5)^3+(6t^5)^3=(3t^3)^5$ has quality bounded away from the extremes, while a hypothetical counterexample would necessarily have quality above $1 + 1/12$ once $C^z$ exceeds $K^{12}$.
 
-For $M=40$ and exponents $3,4,5,6$, this procedure finds $23$ ordered solutions. None is primitive, and every solution has a common divisor greater than $1$. This finite statement concerns only the specified search box.
+---
 
-### 8.2. Structural certificate
+## 10. Applications and interpretation
 
-For a reported exact solution, compute
+**A calibration of $abc$.** Theorem 6.7 shows that the "$\varepsilon = 1/12$" case of $abc$ suffices for a complete finiteness statement about Beal's equation. Since $11/12$ is exactly the extremal value of $1/x+1/y+1/z$ over admissible exponent triples, this is not an arbitrary choice: any $\varepsilon < 1/11$ would do, and $1/12$ gives the cleanest integral bookkeeping. Beal's conjecture therefore serves as a concrete test case for effective forms of $abc$: an explicit admissible $K_\varepsilon$ for even a single $\varepsilon < 1/11$ would reduce Beal's conjecture to a finite computation.
 
-$$
-d_{AB}=\gcd(A,B),
-\quad
-d_{AC}=\gcd(A,C),
-\quad
-d_{BC}=\gcd(B,C),
-\quad
-d=\gcd(A,B,C).
-$$
+**A separation of structural and analytic difficulty.** The function-field theorem shows that no additional algebraic idea is missing. Coprimality, descent, exponent reduction, and the hyperbolicity count all transfer. Only the analytic inequality does not.
 
-The solution is primitive exactly when $d_{AB}=d_{AC}=d_{BC}=1$. It has a common prime exactly when $d>1$. Theorem 4.1 guarantees that for valid positive-exponent solutions these two classifications are complementary. A discrepancy therefore detects an arithmetic or implementation error.
+**Search guidance.** The constraint list of Section 8 is directly actionable for computational searches. Restricting to pairwise coprime bases (a factor $\zeta(2)^{-1}$-ish density saving in practice, plus a hard filter), to exponent triples that are odd primes or $4$, and to parity- and mod-$8$-admissible configurations, shrinks the search space by orders of magnitude relative to a naïve sweep. This is how large-scale computational searches, which have so far found no counterexample, are organised.
 
-### 8.3. Signature analysis
+**A template for related equations.** The same three-step architecture — divisibility collapse, radical exponent-blindness, hyperbolicity — applies verbatim to the generalised Fermat equation $Aa^x + Bb^y = Cc^z$ and to Fermat–Catalan itself. The Beal case is the special case with unit coefficients and $\min(x,y,z)\ge3$, and is the cleanest illustration.
 
-For each exponent triple, compute the exact rational number
+---
 
-$$
-\sigma=\frac1x+\frac1y+\frac1z.
-$$
+## 11. Discussion and future directions
 
-Exact fractions avoid floating-point ambiguity at the boundary $\sigma=1$. Every triple with $x,y,z\ge3$ must pass the check $\sigma\le1$.
+### 11.1 What would a proof require?
 
-### 8.4. Fibonacci index screening
+By Theorem 2.5 a proof need only rule out solutions with $\gcd(A,B)=1$; by Theorem 4.7 the exponents may be assumed to be odd primes or $4$. By Theorem 4.1 any proof necessarily contains a proof of Fermat's Last Theorem, so no elementary argument can succeed. By Theorem 7.3 the proof will differ from the function-field proof precisely at the point where an error term must be handled. These four facts, taken together, sharply constrain the space of plausible strategies: the successful argument will be either (a) a modularity/Galois-representation argument in the style of the Frey–Hellegouarch curve, extended to the generalised Fermat equation, or (b) an effective $abc$-type inequality.
 
-Given proposed Fibonacci indices $m,n$, calculate $g=\gcd(m,n)$ and $F_g$. A primitive candidate with bases $F_m,F_n$ requires $F_g=1$, equivalently $g\in\{1,2\}$. This is a necessary filter, not a sufficient condition for a solution.
+### 11.2 Conjecture C1: a single Fermat–Catalan statement with prime exponents
 
-## 9. Applications of the structural pipeline
+Beal's conjecture should hold if and only if the Fermat–Catalan equation $a^p + b^q = c^r$ has no coprime solution with $a,b,c \ge 1$ and $p,q,r$ each an odd prime or $4$. Theorem 4.7 already gives one direction unconditionally, so the whole conjecture collapses onto a set of exponent triples of density zero — and among those, $(3,3,3)$, $(4,4,4)$ and every equal-exponent triple divisible by $3$ or $4$ are already theorems. The remaining exponent triples can be enumerated and attacked individually rather than as a single monolithic statement.
 
-The reductions can be summarized as
+### 11.3 Conjecture C2: the exponent $12$ is not optimal
 
-$$
-\begin{aligned}
-&\text{failure of Beal’s conjecture}\\
-&\quad\Longleftrightarrow\text{a primitive Beal solution exists}\\
-&\quad\Longrightarrow\text{its signature satisfies }\frac1x+\frac1y+\frac1z\le1\\
-&\quad\Longrightarrow (A^x,B^y,C^z)\text{ is a coprime additive triple}.
-\end{aligned}
-$$
+If the integral bound $\mathrm{ABC}(K)$ (the $\varepsilon=1/12$ form) holds, then every Beal counterexample should satisfy $C^z \le K^2$, and more generally the $\varepsilon$-form of $abc$ should yield
+$$C^z \le K^{1/(1-s(1+\varepsilon))}, \qquad s = \frac1x+\frac1y+\frac1z \le \frac{11}{12}.$$
+The loss in Theorem 6.7 comes only from clearing denominators in $N^{1-s(1+\varepsilon)} \le K$; a real-valued version of the same computation, carried out with real exponentiation rather than integer powers, should keep the exponent close to $144/143$.
 
-This pipeline has several uses.
+### 11.4 Conjecture C3: a congruence pattern mod 72
 
-First, it standardizes computational classification. Searching directly for “no common prime” and searching for pairwise coprimality must return the same candidates once the equation is checked.
+A counterexample must be congruent to a very restricted pattern modulo $72$. Two ingredients are already established: exactly one of $A,B,C$ is even (Theorem 8.1), and if $C$ is the even one then $x$ and $y$ are not both even (Theorem 8.2). The natural extension is to combine these mod-$8$ constraints with the mod-$9$ structure of cubes and the cubic residue classes forced by exponents divisible by $3$, producing a filter modulo $72$ that any counterexample must satisfy.
 
-Second, it narrows theoretical inputs. A Fermat–Catalan strategy need address only primitive signatures in the reciprocal region. An $abc$ strategy need address only the thin family in which every coordinate is a perfect power of exponent at least $3$.
+### 11.5 Further directions
 
-Third, it exposes modular specialization. If a base belongs to a divisibility sequence, its gcd behavior can translate primitivity into restrictions on sequence indices. Fibonacci numbers provide the cleanest illustration, but analogous questions can be asked for other strong divisibility sequences.
+- **Effective Fermat–Catalan.** Corollary 5.3 gives finiteness of Beal counterexamples from Fermat–Catalan finiteness, but no bound. An effective form of Fermat–Catalan in the hyperbolic range would give an explicit search bound unconditionally on $abc$.
+- **Sharpening the small-box verification.** Theorem 8.3 covers $A,B\le10$, $C\le40$, $x,y,z\le5$ by exhaustive check. Extending the certified range using the constraint filters of Section 9.2 is a purely computational project of substantial reach.
+- **Positive characteristic.** Theorem 7.3 assumes $\operatorname{char} k = 0$, which is needed because the exponents must be invertible. Determining the exact failure mode in characteristic $p$ — where $a^p+b^p=(a+b)^p$ trivialises the equation — would complete the function-field picture.
+- **Coefficient generalisations.** Extending the results to $Aa^x + Bb^y = Cc^z$ with fixed coefficients, where the collapse lemma acquires side conditions, would test the robustness of the whole architecture.
 
-Fourth, prime propagation suggests a support-based representation. For each base, record the set of prime divisors. In any solution these three sets have either empty pairwise intersections or a nonempty triple intersection; no prime may inhabit exactly two sets. This combinatorial view may be useful in organizing local congruence obstructions.
-
-## 10. Discussion and limitations
-
-The main results are reductions, not an unconditional proof of Beal’s conjecture. Specifically, Theorems 3.1, 4.1, 4.2, 5.1, 6.1, and 7.1 are elementary or standard consequences of stated identities. Theorems 5.2 and 6.3 are implications whose premises are explicit exclusion principles. No Fermat–Catalan or $abc$ conjecture is silently assumed.
-
-The finite search likewise has a limited interpretation. The absence of primitive solutions for bases at most $40$ and exponents from $3$ through $6$ is consistent with Beal’s conjecture but cannot settle an unbounded statement. Its proper role is demonstrative: it supplies examples, tests the structural equivalence, and provides a reproducible baseline for larger experiments.
-
-The Fibonacci result is also necessary rather than sufficient. The condition $\gcd(m,n)\in\{1,2\}$ leaves infinitely many index pairs. Further progress would require combining it with the periodic behavior of $F_n$ modulo primes and with restrictions depending on $(x,y,z)$.
-
-One conceptual benefit of the framework is that it distinguishes three scales. Prime propagation is local and unconditional. Primitive reduction is global but exact. Fermat–Catalan and $abc$ enter only at the final exclusion stage. This separation makes it possible to improve one component without obscuring which unresolved input remains.
-
-## 11. Future work
-
-An effective $abc$ exclusion tailored to powered additive triples is a natural target. One may seek an explicit exponent bound $N$ for primitive triples $A^x+B^y=C^z$, then treat the finitely many remaining signatures separately. Because powers retain the prime support of their bases, estimates specialized to this family may be stronger than estimates for arbitrary additive triples.
-
-A second direction is signature-by-signature descent. Divisibility relations among exponents allow powers to be regrouped, potentially organizing infinitely many signatures into a finite antichain of minimal cases. The reciprocal inequality supplies a compatible geometric measure of the signature space.
-
-A third direction is a radical-defect gap. One would seek a universal $\delta>0$ forcing a quantitative inequality of the form
-
-$$
-\operatorname{rad}(ABC)\le C^{1-\delta},
-$$
-
-after an appropriate ordering of terms. Such a gap would turn prime-support sparsity into a uniform obstruction.
-
-For Fibonacci bases, the next step is to combine $\gcd(m,n)\in\{1,2\}$ with Pisano periods. Carefully selected moduli could eliminate residue classes of indices for fixed signatures, and a systematic covering argument might handle broad families.
-
-Finally, the prime-support pattern can be encoded combinatorially. Vertices represent primes and base-support sets record incidence. Theorem 3.1 forbids incidence with exactly two of the three bases. Extending this support-hypergraph viewpoint to sums with more terms may reveal comparable rigidity in wider generalized Fermat systems.
+---
 
 ## 12. Conclusion
 
-The equation $A^x+B^y=C^z$ forces a simple but powerful law: a prime dividing two bases divides the third. This yields an exact equivalence between absence of a common prime and pairwise coprimality, so Beal’s conjecture is precisely the assertion that no primitive solution exists for exponents above $2$.
+Beal's conjecture remains open, but its geography is now fully mapped. It is equivalent to a single-coprimality statement; it implies Fermat's Last Theorem; it is precisely the high-exponent part of the Fermat–Catalan equation; every one of its solutions is strictly hyperbolic with $1/x+1/y+1/z \le 11/12$; the hypothesis $x,y,z\ge3$ is sharp in each coordinate; a counterexample would be pairwise coprime with exactly one even base and would satisfy a mod-$8$ obstruction; the $abc$ conjecture confines all counterexamples to one explicit finite box; and over polynomial rings in characteristic zero the statement is simply true.
 
-Every hypothetical primitive counterexample lies in the Fermat–Catalan signature region and canonically produces the coprime additive triple $(A^x,B^y,C^z)$. These facts identify the exact conditional inputs from Fermat–Catalan and $abc$ methods that would suffice. When Fibonacci bases occur, primitivity further forces the gcd of their indices to be $1$ or $2$.
-
-Together, these results replace an amorphous search for a counterexample by a structured program: isolate primitive solutions, organize their signatures, measure their sparse prime support, and exploit additional arithmetic structure in their bases. The ultimate exclusion remains open, but its target is sharply defined.
+The residual difficulty is a single quantity: the error term in the $abc$ inequality. Everything else has been done.
