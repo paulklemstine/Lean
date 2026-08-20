@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "c0dccdf7",
-      "domain": "Probability",
-      "key_insight": "# Future directions\n\nConjecture A (the parity-gap conjecture) is now a theorem: `ParityGap.conjectureA` in\n`Catalog/Probability/ParityGap/ConjectureA.lean`, together with its equivalent analytic forms",
-      "quality_score": 0.88,
-      "sorry_count": 0,
-      "theorem_count": 89,
-      "timestamp": "2026-08-19T07:05:43",
-      "title": "Conjecture A (Parity-gap conjecture). For all `n ≥ 2`, all injective `S, T : Fin n → ZMod p`, the pa"
-    },
-    {
       "cycle_id": "8a3962f5",
       "domain": "MachineLearning",
       "key_insight": "# Future directions\n\nFive bold, testable conjectures produced by the analysis/critique stages of this cycle.\nEach is stated so that it can be falsified by a single counterexample or settled by a\nLean",
@@ -499,19 +489,19 @@
       "theorem_count": 118,
       "timestamp": "2026-08-20T23:41:31",
       "title": "The low-tail experiment."
+    },
+    {
+      "cycle_id": "42f28947",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — EML expressiveness after the depth/width cycle\n\nEverything below is *derived from* the theorems proved in\n`Catalog/Applications/EMLDepthWidthTradeoff.lean` and\n`Catalog/Applicati",
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "theorem_count": 68,
+      "timestamp": "2026-08-20T23:41:43",
+      "title": "EML Neural Network Expressiveness: Depth vs Width"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "832153cb",
-      "domain": "Physics",
-      "key_insight": "# Future Directions — Diophantine-Lattice Spectral Bounds (after cycle 11)\n\nCycles 10–11 closed three standing conjectures of the thread.  What is proved (all `sorry`-free,\nin `Catalog/Physics/Diophan",
-      "quality_score": 0.715855,
-      "sorry_count": 0,
-      "theorem_count": 101,
-      "timestamp": "2026-08-11T19:31:44",
-      "title": "Derived from the nine research cycles formalised in `Catalog/Novelty/Diophantine"
-    },
     {
       "cycle_id": "5ac3c62c",
       "domain": "NumberTheory",
@@ -2501,6 +2491,16 @@
       "theorem_count": 118,
       "timestamp": "2026-08-20T23:41:31",
       "title": "The low-tail experiment."
+    },
+    {
+      "cycle_id": "42f28947",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — EML expressiveness after the depth/width cycle\n\nEverything below is *derived from* the theorems proved in\n`Catalog/Applications/EMLDepthWidthTradeoff.lean` and\n`Catalog/Applicati",
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "theorem_count": 68,
+      "timestamp": "2026-08-20T23:41:43",
+      "title": "EML Neural Network Expressiveness: Depth vs Width"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-20T23:41:31",
+  "last_updated": "2026-08-20T23:41:43",
   "open_questions": [
     {
       "context": "Everything is proved; there are no `sorry`s and no new axioms.",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "6e253e5d",
-        "quality": 0.82,
-        "theorems": 109,
-        "title": "EML Learning Theory: Gradient Descent Convergence in the Tropical Limit"
-      },
-      {
         "cycle_id": "8fa1e5a5",
         "quality": 0.87,
         "theorems": 524,
@@ -3141,6 +3135,12 @@
         "quality": 0.664175,
         "theorems": 26,
         "title": "Rigidity gap for shallow product coins"
+      },
+      {
+        "cycle_id": "42f28947",
+        "quality": 0.85,
+        "theorems": 68,
+        "title": "EML Neural Network Expressiveness: Depth vs Width"
       }
     ],
     "Bridges": [
