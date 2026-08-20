@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "3eeb9235",
-      "domain": "Logic",
-      "key_insight": "# Future directions — price of universality (Phase A, Question 1)\n\nEach conjecture below is falsifiable, is stated so that it can be formalised in\nthe existing `UniversalRedundancy` framework\n(`Catalo",
-      "quality_score": 0.84,
-      "sorry_count": 0,
-      "theorem_count": 59,
-      "timestamp": "2026-08-18T13:57:55",
-      "title": "Compression Research A1: Price of universality — minimax redundancy of universal decompressors"
-    },
-    {
       "cycle_id": "13fee392",
       "domain": "MachineLearning",
       "key_insight": "# Future directions — bold, testable conjectures\n\nDerived from the analysis and adversarial review of the results now formalised\nin `Catalog/MachineLearning/BonferroniMarginals/`\n(`Core`, `Rigidity`,",
@@ -499,19 +489,19 @@
       "theorem_count": 65,
       "timestamp": "2026-08-20T10:47:56",
       "title": "reinforcement learning"
+    },
+    {
+      "cycle_id": "db2f2b2f",
+      "domain": "Physics",
+      "key_insight": "# FUTURE_DIRECTIONS — Quantum-Pythagorean-Walk\n\nDerived from what survived (and what failed) across the research cycles.\n\n**What survived.** The Berggren tree is a *complete, rigid* state space (bijec",
+      "quality_score": 0.9,
+      "sorry_count": 3,
+      "theorem_count": 426,
+      "timestamp": "2026-08-20T11:43:09",
+      "title": "Quantum-Pythagorean-Walk: Polynomial Time Integer Factorization via Tree Resonance"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "04a5f386",
-      "domain": "Probability",
-      "key_insight": "# Future Directions (thread th_ffe6cbbf)\n\nState of the thread after the present cycle.  Every statement marked \"**settled**\"\nis a sorry-free Lean 4 theorem in `Catalog/Probability/`, checked against t",
-      "quality_score": 0.718325,
-      "sorry_count": 0,
-      "theorem_count": 119,
-      "timestamp": "2026-08-11T07:49:22",
-      "title": "**Conjecture.** For every finite relational signature and finite model, there is"
-    },
     {
       "cycle_id": "a55e871b",
       "domain": "Physics",
@@ -2501,15 +2491,19 @@
       "theorem_count": 65,
       "timestamp": "2026-08-20T10:47:56",
       "title": "reinforcement learning"
+    },
+    {
+      "cycle_id": "db2f2b2f",
+      "domain": "Physics",
+      "key_insight": "# FUTURE_DIRECTIONS — Quantum-Pythagorean-Walk\n\nDerived from what survived (and what failed) across the research cycles.\n\n**What survived.** The Berggren tree is a *complete, rigid* state space (bijec",
+      "quality_score": 0.9,
+      "sorry_count": 3,
+      "theorem_count": 426,
+      "timestamp": "2026-08-20T11:43:09",
+      "title": "Quantum-Pythagorean-Walk: Polynomial Time Integer Factorization via Tree Resonance"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "252d7c91",
-      "domain": "Algebra",
-      "name": "qBinom_zero_succ",
-      "quality": 0.8
-    },
     {
       "cycle_id": "252d7c91",
       "domain": "Algebra",
@@ -2803,17 +2797,16 @@
       "domain": "Combinatorics",
       "name": "sum_pow_card",
       "quality": 0.74
+    },
+    {
+      "cycle_id": "db2f2b2f",
+      "domain": "Physics",
+      "name": "from",
+      "quality": 0.9
     }
   ],
-  "last_updated": "2026-08-20T10:47:56",
+  "last_updated": "2026-08-20T11:43:09",
   "open_questions": [
-    {
-      "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hn2⟩)",
-      "cycle_id": "27eaed26",
-      "domain": "Logic",
-      "sorry_count": 1,
-      "timestamp": "2026-07-27T01:25:35"
-    },
     {
       "context": "sorry",
       "cycle_id": "87772396",
@@ -3016,6 +3009,13 @@
       "domain": "Combinatorics",
       "sorry_count": 4,
       "timestamp": "2026-08-20T10:47:56"
+    },
+    {
+      "context": "--   Survived: H6–H9, all sorry-free.  Structural pattern: *every* obstruction found in; --   Survived: all five hypotheses, with no `sorry`. The unifying structural pattern is; No `sorry`; axioms are",
+      "cycle_id": "db2f2b2f",
+      "domain": "Physics",
+      "sorry_count": 3,
+      "timestamp": "2026-08-20T11:43:09"
     }
   ],
   "research_threads": {
@@ -3703,12 +3703,6 @@
     ],
     "Physics": [
       {
-        "cycle_id": "e0db545b",
-        "quality": 0.91,
-        "theorems": 202,
-        "title": "The Permutation Readout of Individual Orders, Closed"
-      },
-      {
         "cycle_id": "70d03dec",
         "quality": 0.78,
         "theorems": 75,
@@ -3761,6 +3755,12 @@
         "quality": 0.86,
         "theorems": 159,
         "title": "Planck-Foam-Topology: Quantum Fluctuation Geometry at 10^-35 Meters"
+      },
+      {
+        "cycle_id": "db2f2b2f",
+        "quality": 0.9,
+        "theorems": 426,
+        "title": "Quantum-Pythagorean-Walk: Polynomial Time Integer Factorization via Tree Resonan"
       }
     ],
     "Probability": [

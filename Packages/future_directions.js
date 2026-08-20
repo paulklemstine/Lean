@@ -9,7 +9,7 @@ window.FUTURE_DIRECTIONS = [
       "Novelty"
     ],
     "id": "fd_1569",
-    "phase": "B",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
@@ -18,18 +18,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "reinforcement learning"
   },
   {
-    "consumed_by_exp_id": "db2f2b2f",
+    "consumed_by_exp_id": "",
     "description": "Formalizes a quantum random walk on the Berggren Pythagorean tree where constructive interference at energy spectrum minima collapses the state onto factors of N.",
     "domains": [
       "Pythagorean",
       "Physics"
     ],
     "id": "pyth_factor_quantum_26037bbe",
-    "phase": "A",
     "priority_score": 0.99,
     "research_mode": "team",
     "source_exp_id": "pythagorean_factorization_breakthrough",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-07-23T20:10:45.864682+00:00",
     "title": "Quantum-Pythagorean-Walk: Polynomial Time Integer Factorization via Tree Resonance"
   },
@@ -77,20 +76,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-23T20:10:45.914797+00:00",
     "title": "EML-Pythagorean-Operator: Single-Neuron Neural Energy Guided Tree Traversal"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 4b03d5cc (Q=0.860), which proved 159 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalizes Wheeler's spacetime foam as a stochastic non-Hausdorff topological space at the Planck scale.",
-    "domains": [
-      "Physics"
-    ],
-    "id": "push_4b03d5cc_79178855",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "4b03d5cc",
-    "status": "available",
-    "timestamp": "2026-08-20T10:47:47.068108+00:00",
-    "title": "Deepening: Planck-Foam-Topology: Quantum Fluctuation Geometry at 10^-35 Meters"
   },
   {
     "consumed_by_exp_id": "",
@@ -147,6 +132,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-19T15:46:51.818344+00:00",
     "title": "Deepening: Both sides of the identity are already available as Lean theorems"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle db2f2b2f (Q=0.900), which proved 426 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalizes a quantum random walk on the Berggren Pythagorean tree where constructive interference at energy spectrum minima collapses the state onto factors of N.",
+    "domains": [
+      "Physics"
+    ],
+    "id": "push_db2f2b2f_01bff214",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "db2f2b2f",
+    "status": "available",
+    "timestamp": "2026-08-20T11:43:09.357163+00:00",
+    "title": "Deepening: Quantum-Pythagorean-Walk: Polynomial Time Integer Factorization via Tree Resonan"
   },
   {
     "consumed_by_exp_id": "",
@@ -1735,22 +1734,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Quantum Error Correction Bounds"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "The Fourier transform diagonalizes the Laplacian on R^n. The Laplace-Beltrami operator on S^n is diagonalized by spherical harmonics. Stereographic projection gives a conformal map S^n to R^n that modifies the metric by a conformal factor (1+|x|^2)^2/4. Define the stereographic Fourier transform: for f in L^2(S^n), set F(f)(k) = integral over S^n of f(x) * (1+|phi(x)|^2)^{-n/2} * e^{-2 pi i phi(x) * k} d sigma(x) where phi is the stereographic projection. Conjecture: The stereographic Fourier transform is an isometry L^2(S^n) to L^2(R^n) mapping spherical harmonics Y_l^m to generalized Hermite functions with explicit radial profiles. The transform preserves eigenvalues up to a conformal correction: Delta_{S^n} Y_l^m = -l(l+n-1) Y_l^m maps to Delta_{R^n}(F[Y_l^m]) = (-l(l+n-1) + n^2/4) F[Y_l^m] plus a lower-order correction. Test: derive the transform explicitly for n=2 and verify it sends Y_1^m to Hermite functions. Prove the Plancherel identity. Impact: enables Fourier analysis on spheres via classical Fourier analysis on R^n, with applications to quantum mechanics on curved spaces and computational harmonic analysis.",
-    "domains": [
-      "Geometry",
-      "Analysis",
-      "Physics"
-    ],
-    "id": "seed_091",
-    "priority_score": 0.87,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Stereographic Fourier Analysis: Spherical Harmonics via Plane Waves"
   },
   {
     "consumed_by_exp_id": "",
@@ -3706,6 +3689,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-15T03:13:13.753208+00:00",
     "title": "Close Proofs: SPLIT-COUNT-LAW: the complete symmetric fork channel is the split-coun"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle db2f2b2f (Q=0.900) proved 426 theorems in Physics but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalizes a quantum random walk on the Berggren Pythagorean tree where constructive interference at energy spectrum minima collapses the state onto factors of N.",
+    "domains": [
+      "Physics"
+    ],
+    "id": "sorry_fill_db2f2b2f_2c9a34de",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "db2f2b2f",
+    "status": "available",
+    "timestamp": "2026-08-20T11:43:09.622584+00:00",
+    "title": "Close Proofs: Quantum-Pythagorean-Walk: Polynomial Time Integer Factorization via Tr"
   },
   {
     "consumed_by_exp_id": "",
@@ -18919,6 +18916,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Quantify Conjecture 3\u2033 at fixed depth: for\n   every product coin of depth `n`, `\u2016A(\u03c8)\u2016\u00b2 \u2264 (1 \u2212 c)\u00b7|R|` with an explicit `c > 0`\n   depending only on `n` and `|R| \u2265 2`, i.e. the optimum is *never* attained by a coin that\n   does not already depend on `N`.  With `resonanceAmplitude_sq_eq_iff` this is now a\n   statement about the non-membership of the indicator in the product family, provable\n   already for `n = 2` by a direct computation.",
+    "domains": [],
+    "id": "fd_1711",
+    "priority_score": 0.4476666666666666,
+    "research_mode": "team",
+    "source_exp_id": "db2f2b2f",
+    "status": "available",
+    "timestamp": "2026-08-20T11:42:58.411516+00:00",
+    "title": "Rigidity gap for shallow product coins"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "`\u03a3_g |X^g|^k = (B_k + \u03a3_P (m_P \u2212 1))\u00b7|G|`\n    (`bell_defect_eq`): the excess of a moment over its Bell floor is `|G|` times the number of\n    *extra* orbits per pattern, and it vanishes exactly for `k`-transitive actions\n    (`sum_patternMultiplicity_sub_one_eq_zero_iff`).\n\n---\n\n\n\n## Open conjectures for the next cycle\n\n\n\n### Conjecture E\u2032 (the fibre spectrum is a strictly finer invariant)\n\n*The vector `(m_P)_P` of pattern multiplicities separates pairs of actions that the scalar moment\n`\u03a3_g |X^g|^k` cannot; and `m_P = 1` for all `P` with exactly `j` blocks iff the action is\n`j`-transitive (the block-graded refinement of the fibrewise criterion).*\n\nThe key insight is that the fibrewise criterion now proved treats all patterns at once, whereas the\ntransitivity hierarchy is graded by the number of blocks: restricting attention to the patterns\nwith `j` blocks should isolate exactly `j`-transitivity inside the `k`-tuple data, giving a\nspectrum of invariants between the moments.\n\nWhy now? The decomposition, the fibrewise criterion and the exact defect formula are proved\n(items 18\u201319), and cycle 3 also shows the scalar moment cannot separate actions (item 15), so the\nonly thing left to test is whether the refined vector can.\n\n\n\n### Conjecture F (Bell defect bounds the failure of transitivity)\n\n*The Bell defect `D_k(G,X) := \u03a3_g |X^g|^k \u2212 B_k|G| \u2265 0` satisfies: `D_k = 0 \u21d2 D_j = 0` for `j \u2264 k`\n(proved), and quantitatively `D_2 > 0 \u21d2 D_k \u2265 c_k \u00b7 D_2` for an explicit combinatorial constant\n`c_k` depending only on `k`.*\n\nThe key insight is that the defect counts non-singleton fibres of the orbit-to-pattern map with\nmultiplicity, and a failure of 2-transitivity is inherited by every longer tuple by padding with\nrepeated coordinates, which multiplies the excess by a controlled partition count.\n\nWhy now? Non-negativity, the implication `D_k = 0 \u21d2 D_j = 0`, and now the exact formula\n`D_k = |G|\u00b7\u03a3_P (m_P \u2212 1)` (item 19) are theorems; only the quantitative propagation between\ndifferent `k` is open, and it is now a statement about fibre sizes rather than about moments.\n\n\n\n### Conjecture G (how much labelling an injective aggregate must spend)\n\n*Every injective aggregate `A : (Fin m \u2192 QLaurent) \u2192 QLaurent` that is additive in each argument\nmust spread the coefficients over at least `m` pairwise disjoint infinite sets of exponents; in\nparticular no such aggregate has image contained in the series supported on a set of density\n`< 1/m`.*\n\nThe key insight is that cycle 3 identified symmetry as the obstruction, so what remains is a\ncounting bound: injectivity forces the aggregate to reserve, for each index, an infinite family of\nindependent coefficient slots, which is exactly what the interleaving construction does with the\nresidues mod `m`.\n\nWhy now? The dichotomy (interleaving injective, every symmetric aggregate non-injective) is proved;\nthe missing piece is a lower bound showing interleaving is not just *an* answer but essentially the\n*only* shape of answer.\n\n\n\n### Co",
     "domains": [
       "Combinatorics",
@@ -21851,14 +21860,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "The floor is sharp"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3b08d230",
     "description": "is a finitely supported `a : \u2115 \u2192 \u2124` with\n`\u2211 k \u00b7 a k = 24`; `b m = \u2211_{k \u2223 m} a k`; `headCoeff a = a\u2081(a\u2081+3)/2 + a\u2082` is the\nproved value of `c(1)` for the eta quotient `q \u00b7 (1/\u03b7_a) = \u220f_m (1 \u2212 q^m)^(\u2212b m)`.",
     "domains": [],
     "id": "fd_1662",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "0750e9d7",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-20T03:10:46.040710+00:00",
     "title": "is a finitely supported `a : \u2115 \u2192 \u2124` with"
   },

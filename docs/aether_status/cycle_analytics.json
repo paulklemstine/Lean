@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-20T10:48:00.243207+00:00",
+  "last_updated": "2026-08-20T11:43:18.097493+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -61092,6 +61092,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-08-20T10:48:00.089020+00:00",
       "title": "reinforcement learning"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Physics",
+      "duration_seconds": 3316.8845143318176,
+      "end_time": 1787226166.9183738,
+      "files_integrated": 4,
+      "job_id": "db2f2b2f",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.9,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.58,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.9,
+        "novelty": 0.9,
+        "proof_depth": 0.9,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.9,
+      "sorry_count": 3,
+      "sorry_density": 0.007042253521126761,
+      "start_time": 1787222850.0338595,
+      "strategy_count": 0,
+      "theorem_count": 426,
+      "theorem_novelty_disproof": 23,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 293,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-08-20T11:43:17.952949+00:00",
+      "title": "Quantum-Pythagorean-Walk: Polynomial Time Integer Factorization via Tree Resonance"
     }
   ]
 }
