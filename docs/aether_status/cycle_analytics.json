@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-20T05:47:31.216357+00:00",
+  "last_updated": "2026-08-20T07:06:56.816118+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -60834,6 +60834,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-08-20T05:47:31.009721+00:00",
       "title": "Deepening: The formal results in `Catalog/Applications/EMLQuantumActivation.lean` show that"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Applications",
+      "duration_seconds": 4758.891427278519,
+      "end_time": 1787209584.917844,
+      "files_integrated": 16,
+      "job_id": "52846ceb",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.82,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.544,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.82,
+        "novelty": 0.82,
+        "proof_depth": 0.82,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.82,
+      "sorry_count": 3,
+      "sorry_density": 0.012396694214876033,
+      "start_time": 1787204826.0264168,
+      "strategy_count": 0,
+      "theorem_count": 242,
+      "theorem_novelty_disproof": 13,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 136,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-08-20T07:06:56.600109+00:00",
+      "title": "Power-sum inversion"
     }
   ]
 }

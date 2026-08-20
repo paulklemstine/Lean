@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "a5150a29",
-      "domain": "Pythagorean",
-      "key_insight": "# FUTURE DIRECTIONS — after the character-agnostic Weil floor\n\nThis cycle closed, in Lean, the algebraic content of four of the five conjectures of the\nprevious cycle and refuted half of one of them.",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 52,
-      "timestamp": "2026-08-18T07:55:08",
-      "title": "The formal results in `Catalog/Tropical/JacobiSigned*.lean` settle the JACSIGN"
-    },
-    {
       "cycle_id": "9aa1e8d1",
       "domain": "Bridges",
       "key_insight": "# Future Directions — Arithmetic Geometry of Transformer Weight Lattices\n\nDerived from the Stage-3 analysis and the Stage-4 adversarial review of\n`Catalog/Bridges/QuantizedWeightLattices*.lean`, after",
@@ -499,19 +489,19 @@
       "theorem_count": 281,
       "timestamp": "2026-08-20T05:47:28",
       "title": "Deepening: The formal results in `Catalog/Applications/EMLQuantumActivation.lean` show that"
+    },
+    {
+      "cycle_id": "52846ceb",
+      "domain": "Applications",
+      "key_insight": "# Future directions — power-sum inversion\n\nFive falsifiable conjectures distilled from this cycle.  Each is stated so that it can be\nformalised directly on top of `Catalog/Applications/PowerSumInversi",
+      "quality_score": 0.82,
+      "sorry_count": 3,
+      "theorem_count": 242,
+      "timestamp": "2026-08-20T07:06:52",
+      "title": "Power-sum inversion"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "6b69485b",
-      "domain": "Cryptography",
-      "key_insight": "# Future directions: the radial lines of the Berggren star map\n\nThe formal results in `Catalog/Cryptography/BerggrenStars/` settle the *local* question that\nmotivated this cycle — why radial lines app",
-      "quality_score": 0.720175,
-      "sorry_count": 0,
-      "theorem_count": 95,
-      "timestamp": "2026-08-11T04:49:02",
-      "title": "Lines that appear when Berggren Pythagorean Triplet Tree is plotted on a Poincare half plane"
-    },
     {
       "cycle_id": "2c80b5b7",
       "domain": "Shared",
@@ -2501,15 +2491,19 @@
       "theorem_count": 281,
       "timestamp": "2026-08-20T05:47:28",
       "title": "Deepening: The formal results in `Catalog/Applications/EMLQuantumActivation.lean` show that"
+    },
+    {
+      "cycle_id": "52846ceb",
+      "domain": "Applications",
+      "key_insight": "# Future directions — power-sum inversion\n\nFive falsifiable conjectures distilled from this cycle.  Each is stated so that it can be\nformalised directly on top of `Catalog/Applications/PowerSumInversi",
+      "quality_score": 0.82,
+      "sorry_count": 3,
+      "theorem_count": 242,
+      "timestamp": "2026-08-20T07:06:52",
+      "title": "Power-sum inversion"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "7299371d",
-      "domain": "Combinatorics",
-      "name": "erdosGrahamProperty_of_finite",
-      "quality": 0.78
-    },
     {
       "cycle_id": "7299371d",
       "domain": "Combinatorics",
@@ -2803,17 +2797,16 @@
       "domain": "NumberTheory",
       "name": "from",
       "quality": 0.86
+    },
+    {
+      "cycle_id": "52846ceb",
+      "domain": "Applications",
+      "name": "from",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-20T05:47:28",
+  "last_updated": "2026-08-20T07:06:52",
   "open_questions": [
-    {
-      "context": "-    sorry+  have hcheck := primPart_check n (Finset.mem_Icc.mpr ⟨hn, hn2⟩)",
-      "cycle_id": "b3e5f77d",
-      "domain": "MachineLearning",
-      "sorry_count": 1,
-      "timestamp": "2026-07-26T19:32:32"
-    },
     {
       "context": "therefore left as `sorry` and flagged as open formalization targets in the; sorry; sorry",
       "cycle_id": "95478b50",
@@ -3016,6 +3009,13 @@
       "domain": "NumberTheory",
       "sorry_count": 3,
       "timestamp": "2026-08-20T05:47:28"
+    },
+    {
+      "context": "--   Survived: H6–H9, all sorry-free.  Structural pattern: *every* obstruction found in; --   Survived: all five hypotheses, with no `sorry`. The unifying structural pattern is; No `sorry`; axioms are",
+      "cycle_id": "52846ceb",
+      "domain": "Applications",
+      "sorry_count": 3,
+      "timestamp": "2026-08-20T07:06:52"
     }
   ],
   "research_threads": {
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "20cf0514",
-        "quality": 0.82,
-        "theorems": 55,
-        "title": "INTERVAL-HINT: the trace-set filter is exact (2^-omega pruning) but does not amp"
-      },
-      {
         "cycle_id": "aeab7c87",
         "quality": 0.88,
         "theorems": 60,
@@ -3141,6 +3135,12 @@
         "quality": 0.88,
         "theorems": 70,
         "title": "Both sides of the identity are already available as Lean theorems"
+      },
+      {
+        "cycle_id": "52846ceb",
+        "quality": 0.82,
+        "theorems": 242,
+        "title": "Power-sum inversion"
       }
     ],
     "Bridges": [

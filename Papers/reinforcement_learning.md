@@ -1,139 +1,129 @@
 # Computational evidence
 
-All numbers below were produced with Lean 4 `#eval` (IEEE `Float` arithmetic) on a two-point
-response space `Ω = {0,1}`, with
+All numbers below were produced with `#eval` on `Float` inside the project's Lean
+toolchain (Lean 4.28.0 / Mathlib), before the corresponding theorems were proved.
+They are exploratory only; the verified statements are the Lean theorems in
+`Catalog/Novelty/RLHF*.lean`, all of which compile without `sorry`.
+
+## 1. The Padé lower bound for `log`
+
+Conjecture (later `RLHF.log_ge_pade`): for `t > 0`,
 
 ```
-SFT reference   p = (0.30, 0.70)
-reward model    r = (1.00, 0.00)
-pretraining     d = (0.80, 0.20)
-KL temperature  β = 0.5
+log t ≥ R(t) := (5t² − 4t − 1) / (2t² + 4t).
 ```
 
-Policies are parametrized by their mass `t = q(0)` on the first response, and
+Values of `log t − R(t)`:
 
-```
-J_γ(t) = t·r₀ + (1−t)·r₁ − β·KL(q‖p) + γ·( d₀ log t + d₁ log(1−t) ).
-```
+| t | 0.1 | 0.5 | 0.9 | 1.0 | 1.5 | 2.0 | 10.0 |
+|---|-----|-----|-----|-----|-----|-----|------|
+| `log t − R(t)` | 0.9117 | 0.006853 | 0.0000034 | 0 | 0.000703 | 0.005647 | 0.3901 |
 
-The evidence stage is deliberately small: it is used only to sanity-check the four inequalities
-that the Lean development then proves in full generality.
+The defect vanishes to third order at `t = 1` — this is why the bound produces
+Pinsker's inequality with the *optimal* constant.  A first attempt with the
+denominator `2t + 1` instead of `t + 2` was falsified numerically at `t = 0.9`
+(defect `−1.8·10⁻⁶`), which is what led to the correct Padé form.
 
-## 1. Gibbs policy and free energy
+## 2. Sharpness of Pinsker's constant
 
-| quantity | value |
-|---|---|
-| `π_β(0) = p₀e^{r₀/β}/Z` | `0.760004` |
-| `F(r) = β log Z` | `0.535229` |
-| grid argmax of `J_0` over `t ∈ {0.001,…,0.999}` | `t* = 0.760`, `J = 0.535229` |
+Two-point family `q_ε = (1/2+ε, 1/2−ε)` against the uniform reference; the table
+shows `2 KL(q_ε ‖ q_0) / ‖q_ε − q_0‖₁²`:
 
-The `γ = 0` grid maximizer agrees with the closed-form Gibbs policy to the grid resolution,
-and the optimal value agrees with `β log Z` to 6 decimals — a numerical check of
-`RLHF.objective_gibbs` / `RLHF.variational_principle`.
+| ε | 0.2 | 0.1 | 0.05 | 0.01 | 0.001 |
+|---|-----|-----|------|------|-------|
+| ratio | 1.02854 | 1.00678 | 1.00167 | 1.000067 | 1.0000007 |
 
-## 2. The PTX optimum has no closed form but exists and is unique
+The ratio approaches `1` from above, consistent with `RLHF.pinsker` (ratio ≥ 1) and
+with the proved upper bound `1 + (8/3)ε²` (e.g. at `ε = 0.1`: `1.00678 ≤ 1.02667`).
 
-Grid maximization of `J_γ` (step `10⁻³`):
+## 3. Drift rate: `β^{-1/2}` versus `β^{-1}`
 
-| `γ` | `t*` | `J_γ(t*)` |
-|---|---|---|
-| `0.0` | `0.760` | `0.535229` |
-| `0.1` | `0.767` | `0.484806` |
-| `0.5` | `0.780` | `0.283873` |
-| `2.0` | `0.792` | `−0.467417` |
+Two-point model, uniform reference, reward `1_{true}`; exact drift is
+`(e^{1/β} − 1)/(e^{1/β} + 1)`:
 
-The maximizer moves monotonically towards the pretraining distribution `d₀ = 0.8` as `γ` grows,
-and no closed-form Gibbs formula reproduces these values (the stationarity condition is
-transcendental).  In every run the grid objective was unimodal — consistent with the strict
-concavity proved in `RLHF.objectivePTX_midpoint_gt`.
+| β | drift | `2/β` (proved upper bound) | `1/(3β)` (proved lower bound) | `√(2/β)` (Pinsker-only bound) |
+|---|-------|------|--------|--------|
+| 1 | 0.4621 | 2.000 | 0.3333 | 1.4142 |
+| 2 | 0.2449 | 1.000 | 0.1667 | 1.0000 |
+| 5 | 0.09967 | 0.4000 | 0.06667 | 0.6325 |
+| 10 | 0.04996 | 0.2000 | 0.03333 | 0.4472 |
+| 100 | 0.005000 | 0.02000 | 0.003333 | 0.14142 |
 
-## 3. Pythagorean drift bound (`RLHF.ptx_pythagorean`, `RLHF.ptx_drift_le`)
+The measured drift is `Θ(1/β)` and is bracketed by the two proved bounds, while the
+`√(2 range/β)` bound coming from Pinsker alone is off by an order of magnitude at
+large `β`.  This computation is what motivated the quadratic KL bound
+`RLHF.kl_gibbs_le_quadratic`.
 
-Reported as `(KL(q*‖π_β), (γ/β)·KL(d‖π_β), β·KL(q*‖π_β)+γ·KL(d‖q*), γ·KL(d‖π_β))`:
+## 4. Counterexample hunt
 
-| `γ` | `KL(q*‖π_β)` | bound `(γ/β)KL(d‖π_β)` | Pythagorean LHS | Pythagorean RHS |
-|---|---|---|---|---|
-| `0.1` | `0.000135` | `0.000914` | `0.000383` | `0.000457` |
-| `0.5` | `0.001118` | `0.004569` | `0.001155` | `0.002285` |
-| `2.0` | `0.002899` | `0.018278` | `0.001842` | `0.009139` |
+* Attempted pointwise bound `t log t − t + 1 ≥ 3(t−1)²/(2(2t+1))`: **false**
+  (fails at `t = 0.9`), replaced by the `(t+2)` denominator.
+* Attempted improvement of Pinsker's constant from `2` to `1.9`: falsified for
+  `ε ≤ 0.05` by the table in §2; this is now a theorem
+  (`RLHF.pinsker_constant_optimal`).
+* Attempted claim "drift `→ 0` as `β ↓ 0`": falsified — drift `→ 1`
+  (`RLHF.l1Dist_spike_tendsto_one`).
 
-Both inequalities hold with room to spare, and `KL(q*‖π_β) → 0` as `γ → 0`, matching
-`RLHF.ptx_drift_tendsto_zero`.
+No OEIS sequence is involved: all objects here are continuous.
 
-## 4. Gibbs–Bogoliubov–Feynman gap (`RLHF.freeEnergy_add_inner_le`, `freeEnergy_bregman_eq_kl`)
+---
 
-Gap `F(s) − F(r) − 𝔼_{π_r}[s − r]` for several alternative reward models `s`:
+# Cycles 2–3: variance constant and covariance expansion
 
-| `s` | gap |
-|---|---|
-| `(2.0, 0.0)` | `0.123704` |
-| `(0.0, 1.0)` | `0.834632` |
-| `(1.0, 0.0)` (= `r`) | `0.000000` |
-| `(3.0, −1.0)` | `0.583163` |
+## 5. Is the drift constant the range or the standard deviation?
 
-Non-negative always, and exactly zero at `s = r` — the supporting-hyperplane behaviour, and
-(by the Bregman identity) equal to `β·KL(π_r‖π_s)`.
+Scaled two-point model (uniform reference on `Bool`, reward `a · 1_{true}`), exact
+drift `tanh(a/(2β))`, reference standard deviation `σ = a/2`:
 
-## 5. Lipschitz / reward-hacking budget (`RLHF.freeEnergy_lipschitz`)
+| a | β | `σ/(2β)` (proved lower bound) | exact drift | `3σ/β` (proved upper bound) |
+|---|---|--------|--------|--------|
+| 1 | 1 | 0.2500 | 0.4621 | 1.500 |
+| 1 | 2 | 0.1250 | 0.2449 | 0.750 |
+| 1 | 10 | 0.02500 | 0.04996 | 0.150 |
+| 2 | 4 | 0.1250 | 0.2449 | 0.750 |
+| 0.5 | 5 | 0.02500 | 0.04996 | 0.150 |
 
-Reported as `(|F(r) − F(s)|, ‖r − s‖_∞)`:
+The drift depends on `(a, β)` only through `a/β` and sits inside the sandwich for
+every entry, which is exactly `RLHF.variance_constant_optimal`.
 
-| `s` | `|ΔF|` | `‖r−s‖_∞` |
-|---|---|---|
-| `(2.0, 0.0)` | `0.883709` | `1.000000` |
-| `(0.0, 1.0)` | `0.314624` | `1.000000` |
-| `(3.0, −1.0)` | `1.863176` | `2.000000` |
+How much smaller than the range can the variance be?  For the reward `1_{true}` and
+the reference `p(true) = ε`, the variance is `ε(1−ε)` while `range²/4 = 0.25`:
 
-The `1`-Lipschitz bound is respected and is nearly tight for large sup-norm perturbations
-(`1.863` vs `2.000`).
+| ε | `Var_p(r)` | `range(r)²/4` |
+|---|-----------|---------------|
+| 0.5 | 0.2500 | 0.25 |
+| 0.1 | 0.0900 | 0.25 |
+| 0.01 | 0.00990 | 0.25 |
+| 0.001 | 0.000999 | 0.25 |
 
-## 6. Strict midpoint concavity (`RLHF.objectivePTX_midpoint_gt`)
+So the variance-form bounds of `Novelty/RLHFVarianceDrift.lean` are unboundedly
+stronger than the range-form bounds of `Novelty/RLHFQuadraticDrift.lean` on rare-spike
+rewards — the regime that matters for safety-relevant rare behaviours.
 
-Gaps `J_γ((t₁+t₂)/2) − (J_γ(t₁)+J_γ(t₂))/2`:
+## 6. Is the audit gap a covariance?
 
-| `γ` | `(t₁,t₂)` | gap |
-|---|---|---|
-| `0.5` | `(0.2, 0.8)` | `0.207944` |
-| `0.5` | `(0.40, 0.45)` | `0.001428` |
-| `0.0` | `(0.1, 0.9)` | `0.184032` |
+Three responses, uniform reference, reward `r = (1, 0, −1)`.
 
-Strictly positive in all cases, including at `γ = 0`.
+Correlated statistic `f = (1, 0, 0)`, `Cov_p(r,f) = 1/3`:
 
-## 8. Stationarity, the self-consistent Gibbs form, and the anti-starvation floor
+| β | measured gap | `Cov_p(r,f)/β` | remainder |
+|---|--------------|----------------|-----------|
+| 1 | 0.331908 | 0.333333 | −0.001426 |
+| 2 | 0.173147 | 0.166667 | 0.006480 |
+| 5 | 0.068426 | 0.066667 | 0.001760 |
+| 20 | 0.016799 | 0.016667 | 0.000132 |
+| 100 | 0.003339 | 0.003333 | 0.000005 |
 
-Instance: `Ω = Bool`, `β = 1`, `γ = 0.5`, `r = (1, 0)`, `p = (0.5, 0.5)`, `d = (0.3, 0.7)`.
-Ternary search on the one-dimensional simplex gives the PPO-ptx optimum
+The remainder falls by a factor ≈ 25 when `β` grows by a factor 5: it is `Θ(β⁻²)`,
+matching `RLHF.audit_gap_first_order`.
 
-| quantity | value |
-|---|---|
-| `q*` | `(0.595481, 0.404519)` |
-| `J_γ(q*)` | `0.182608` |
-| score at `true` | `0.077135` |
-| score at `false` | `0.077135` |
-| score gap | `9.7 × 10⁻⁹` |
+Uncorrelated statistic `f = (1, −2, 1)`, `Cov_p(r,f) = 0`:
 
-The score is constant to search precision, as `RLHF.ptx_stationarity_iff` requires.  Feeding `q*`
-back through the self-consistent Gibbs map `q ↦ normalize(p · exp((r + γ d/q)/β))` returns
-`(0.5954812, 0.4045188)` — the fixed-point identity `RLHF.ptx_maximizer_iff_self_consistent`.
+| β | measured gap |
+|---|--------------|
+| 1 | 0.265815 |
+| 2 | 0.078412 |
+| 5 | 0.013201 |
+| 20 | 0.000833 |
 
-Anti-starvation floor with reward ceiling `M = 1`
-(`γ d y / (β log(1/p y) + M + γ − r y)`):
-
-| `y` | floor | `q* y` |
-|---|---|---|
-| `true` | `0.125718` | `0.595481` |
-| `false` | `0.159588` | `0.404519` |
-
-Both floors hold with a comfortable margin, consistent with `RLHF.ptx_no_starvation`; the margin
-suggests the constant is not optimal, which is next-cycle sub-conjecture 2 in
-`FUTURE_DIRECTIONS.md`.
-
-## 7. OEIS
-
-No integer sequence arises in this development (all objects are real-valued functionals on a
-simplex), so no OEIS lookup applies.
-
-**Status of this file.** These are floating-point explorations, *not* verified computations.
-Every claim they support is proved in full generality, `sorry`-free, in
-`Catalog/Algebra/RLHFTiltTorsorPTX.lean`, `Catalog/Algebra/RLHFPTXExistence.lean`,
-`Catalog/Algebra/RLHFPTXDrift.lean` and `Catalog/Algebra/RLHFStationarity.lean`.
+Again `Θ(β⁻²)` and never `Θ(β⁻¹)`, which is `RLHF.audit_gap_of_uncorrelated`.

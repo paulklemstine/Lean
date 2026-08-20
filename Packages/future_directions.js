@@ -823,6 +823,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 52846ceb (Q=0.820), which proved 242 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Two `\u2115`-valued functions on finite types bounded by `N` with equal\n    power sums for all `k \u2264 N` have equal value distributions (`count_eq_of_powerSums`), proved by\n    inverting a transposed Vandermonde system over `\u211a` with the nodes `0, 1, \u2026, N`.",
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_52846ceb_f3d83454",
+    "priority_score": 0.9199999999999999,
+    "research_mode": "team",
+    "source_exp_id": "52846ceb",
+    "status": "available",
+    "timestamp": "2026-08-20T07:06:53.293831+00:00",
+    "title": "Deepening: Power-sum inversion"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle f1fd8ff1 (Q=0.820), which proved 92 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: *For a graded `G`-set `Y = \u2a06_n Y_n` the generating function `\u03a3_n t_r(Y_n) q^n` is a rational\nfunction of `q` whenever the grades are eventually `r`-transitive, with denominator dividing\n`(1\u2212q)^{r+1}`.*",
     "domains": [
       "Physics"
@@ -1723,34 +1737,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle fff627f3 (Q=0.770), which proved 7 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Hilbert's Hotel has infinitely many rooms, each containing a prime number. Room n contains the n-th prime p_n. The manager can always accommodate a new guest (there are infinitely many primes). But what if the guests want to REARRANGE? Conjecture: For any permutation sigma of N, there exists a rearr",
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "push_fff627f3_7756fddb",
-    "priority_score": 0.87,
-    "research_mode": "team",
-    "source_exp_id": "fff627f3",
-    "status": "available",
-    "timestamp": "2026-07-18T12:16:03.050816+00:00",
-    "title": "Deepening: Hilbert's Hotel for Primes: An Infinite Hotel Where Every Guest Is Prime"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove that for every positive integer n, there exists a prime between n\u00b2 and (n+1)\u00b2. Formalize known partial results on prime gaps and connect to the Cram\u00e9r model of primes.",
-    "domains": [
-      "NumberTheory"
-    ],
-    "id": "seed_024",
-    "priority_score": 0.87,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Legendre's Conjecture"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove tight bounds on quantum error-correcting codes. Formalize the quantum Singleton bound, quantum Hamming bound, and construct optimal stabilizer codes. Connect to topological quantum computing.",
     "domains": [
       "Physics",
@@ -1758,7 +1744,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra"
     ],
     "id": "seed_039",
-    "priority_score": 0.87,
+    "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "available",
@@ -3657,6 +3643,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-15T13:51:07.140800+00:00",
     "title": "Close Proofs: The 'Only Bad Primes' Conjecture is False (elliptic curve denominators"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle 52846ceb (Q=0.820) proved 242 theorems in Applications but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Two `\u2115`-valued functions on finite types bounded by `N` with equal\n    power sums for all `k \u2264 N` have equal value distributions (`count_eq_of_powerSums`), proved by\n    inverting a transposed Vanderm",
+    "domains": [
+      "Applications"
+    ],
+    "id": "sorry_fill_52846ceb_e464f342",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "52846ceb",
+    "status": "available",
+    "timestamp": "2026-08-20T07:06:54.107020+00:00",
+    "title": "Close Proofs: Power-sum inversion"
   },
   {
     "consumed_by_exp_id": "",
@@ -19411,17 +19411,31 @@ window.FUTURE_DIRECTIONS = [
     "title": "C5.  Unimodality and log-concavity of the Gaussian row"
   },
   {
-    "consumed_by_exp_id": "52846ceb",
+    "consumed_by_exp_id": "",
     "description": "Two `\u2115`-valued functions on finite types bounded by `N` with equal\n    power sums for all `k \u2264 N` have equal value distributions (`count_eq_of_powerSums`), proved by\n    inverting a transposed Vandermonde system over `\u211a` with the nodes `0, 1, \u2026, N`.",
     "domains": [],
     "id": "fd_1433",
-    "phase": "A",
     "priority_score": 0.4043921568627451,
     "research_mode": "team",
     "source_exp_id": "286b3a0e",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-17T13:54:05.695599+00:00",
     "title": "Power-sum inversion"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**Conjecture.**  Let `A \u2286 \u2115` with `#A = m + 1` and let `f, g` be functions with values in `A`\nwhose power sums agree for all `k < m`.  If their value distributions differ then\n\n`|p_m(f) - p_m(g)| \u2265 \u220f_{a \u2208 A} \u220f_{b \u2208 A, b > a} (b - a) / D_A`\n\nfor an explicit `D_A` depending only on the nodal weights \u2014 i.e. the top-index gap is\nquantised, with the interval case `A = {0,\u2026,N}` giving the known bound `N!`.\n\n*The key insight is* that the count difference is an integer multiple of the nodal weight\nvector `w_a = \u220f_{b\u2260a}(a-b)\u207b\u00b9` (proved for `w` up to the kernel classification in\n`NearMissGeneralNodes` and constructed explicitly here as `intWeight`), so the top moment\nlives in the lattice generated by `1/w`.\n\n*Why now?*  `powerSums_below_card_insufficient` produces the extremal witness for every `A`;\nthe matching lower bound would show that the witness is not merely an example but the\nminimiser, generalising the catalog's `factorial_le_powerSum_gap` beyond intervals.",
+    "domains": [
+      "Combinatorics",
+      "Cryptography"
+    ],
+    "id": "fd_1682",
+    "priority_score": 0.40411764705882347,
+    "research_mode": "team",
+    "source_exp_id": "52846ceb",
+    "status": "available",
+    "timestamp": "2026-08-20T07:06:38.612794+00:00",
+    "title": "C2. Quantised separation on arbitrary node sets"
   },
   {
     "consumed_by_exp_id": "",
@@ -21477,16 +21491,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "Rigidity is proved and stated in terms of fibre cardinalities, which is exactly"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "18b02a30",
     "description": "Conjecture: for `q \u2265 2` and a prime `\u2113 \u2224 q`, the `\u2113`-adic valuation of `binom(n,k)_q` equals the\nnumber of carries when adding `k` and `n-k` in base `d`, where `d` is the multiplicative order of\n`q` modulo `\u2113`, plus a correction term counted by `v_\u2113(q^{d}-1)`.  Falsifiable at\n`q = 2, \u2113 = 5, n = 6, k = 3`, where `binom(6,3)_2 = 1395 = 3\u00b2 \u00b7 5 \u00b7 31` and the order of `2`\nmodulo `5` is `4`.\n*The key insight is* that `qFactZ_mul_qBinom` expresses `binom(n,k)_q` as an exact quotient of\n`q`-factorials, so the valuation question becomes a counting question about the multiples of `d`\nin an interval \u2014 the same combinatorics that proves Kummer's theorem.\n*Why now?*  The exactness of the division (`gaussBinom_eq_qBinom`) is the hypothesis every\nvaluation argument needs and was the missing ingredient before this cycle.",
     "domains": [
       "NumberTheory"
     ],
     "id": "fd_1632",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "252d7c91",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-19T19:40:10.729111+00:00",
     "title": "C4.  A `q`-analogue of Kummer's theorem"
   },
@@ -22065,5 +22080,47 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-20T05:47:14.947335+00:00",
     "title": "In even dimension at half filling"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**Conjecture.**  For the nodes `0, \u2026, N`, the `\u2113\u00b9`-norm of the inverse row at the node `0`\nis `lebesgueConst N 0 = N + 1`, and more generally\n`lebesgueConst N v = C(N, v) \u00b7 \u2211_{k} \u2026` is bounded by `2^N`, with the maximum attained at\nthe middle node.\n\n*The key insight is* that `L_0 = \u220f_{j=1}^{N} (1 - X/j)` has coefficients of alternating sign,\nso the `\u2113\u00b9`-norm of its coefficient vector is `|L_0(-1)| = \u220f_{j=1}^{N}(1 + 1/j) = N + 1`;\nsign alternation is exactly the statement that the elementary symmetric functions of the\npositive nodes are positive.\n\n*Why now?*  `count_eq_of_powerSums_close` already converts any bound on `\u039b_N(v)` into an\n*exact* recovery threshold `\u03b5 < 1/\u039b_N(v)` for noisy power sums; a closed form for `\u039b_N`\nturns that qualitative robustness statement into a usable error budget.",
+    "domains": [
+      "MachineLearning"
+    ],
+    "id": "fd_1681",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "52846ceb",
+    "status": "available",
+    "timestamp": "2026-08-20T07:06:38.315287+00:00",
+    "title": "C1. The Lebesgue constant of the interval nodes is exactly `2^N`-free: `\u039b_N(0) = N + 1`"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**Conjecture.**  For every `N` and every `v \u2264 N` there are bounded functions `f, g` and an\n`\u03b5 > 0` with `|p_k(f) - p_k(g)| \u2264 \u03b5` for all `k \u2264 N` and\n`|count_f(v) - count_g(v)| \u2265 c \u00b7 \u039b_N(v) \u00b7 \u03b5` for an absolute constant `c > 0`.\n\n*The key insight is* that the extremal input for the `\u2113\u00b9`-`\u2113^\u221e` duality bound used in\n`count_sub_le_of_powerSums_close` is the sign pattern of the inverse row, which is realised\nby the positive/negative split of the nodal weight vector \u2014 exactly the construction already\nformalised as `posPart` / `negPart`.\n\n*Why now?*  Together with C1 this would pin the conditioning of power-sum inversion\ncompletely, turning `count_eq_of_powerSums_close` from a sufficient criterion into a sharp\nthreshold.",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "fd_1683",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "52846ceb",
+    "status": "available",
+    "timestamp": "2026-08-20T07:06:38.899123+00:00",
+    "title": "C3. Noisy inversion is optimal: a matching lower bound for the stability estimate"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**Conjecture.**  Two diagonalisable rational matrices `A, B` (not assumed diagonal) whose\neigenvalues are natural numbers `\u2264 N` and which satisfy `tr(A^k) = tr(B^k)` for all `k \u2264 N`\nare conjugate over `\u211a\u0304`, and in fact have equal characteristic polynomials.\n\n*The key insight is* that `count_eq_of_traces` already gives equality of eigenvalue\nmultiplicities for the diagonal representatives, and the missing step is only the transfer\nfrom a diagonalisable matrix to its diagonalisation \u2014 a statement about `Matrix.IsDiag`\nconjugacy rather than about power sums.\n\n*Why now?*  `exists_equiv_of_powerSums` supplies precisely the index-set bijection needed to\nbuild the conjugating matrix, so the remaining work is packaging rather than new\nmathematics; it would upgrade the spectral corollary from diagonal matrices to the class\nthat actually occurs in applications.",
+    "domains": [
+      "Physics"
+    ],
+    "id": "fd_1684",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "52846ceb",
+    "status": "available",
+    "timestamp": "2026-08-20T07:06:39.189784+00:00",
+    "title": "C5. Trace rigidity for non-diagonal matrices with spectrum in `{0,\u2026,N}`"
   }
 ];
