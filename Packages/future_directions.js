@@ -108,16 +108,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Tree as a Solvable Model of the abc Conjecture \u2014 The Exact Quality Spectrum of a\u00b2+b\u00b2=c\u00b2"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "54700980",
     "description": "**Domain**: Pythagorean <-> NumberTheory\n\n**Hypothesis (MOONSHOT)**: The Berggren tree enumerates every primitive integer right triangle (a,b,c), and its area function A = ab/2 = mn(m\u00b2\u2212n\u00b2) over the Euclid seeds hits exactly the congruent numbers up to squarefree parts \u2014 n is congruent (the area of a rational right triangle) if and only if n is the squarefree part of the area of some node of the tree. The conjecture: the tree's proven structure theory (descent to (3,4,5), silver-ratio growth, groupoid) makes the tree a new, provably analyzable laboratory for the congruent number problem \u2014 in particular the density of congruent numbers (conjecturally about one half in each admissible residue class, open, and equivalent in depth to the rank distribution of the elliptic curves y\u00b2 = x\u00b3 \u2212 n\u00b2x) can be attacked through the statistical structure of the tree's area values.\n\n**Test**: Formalize the area function mn(m\u00b2\u2212n\u00b2) over the tree's Euclid seeds and prove the classical equivalence inside the tree formalism: the squarefree parts of node areas are exactly the congruent numbers. Then prove structure theorems: the distribution of squarefree parts along branches, the growth of the set of congruent numbers \u2264 X generated at depth \u2264 d, and the tree-side descent structure of the elliptic-curve correspondence (rational triangles \u2194 rational points on y\u00b2 = x\u00b3 \u2212 n\u00b2x). Stretch goal: an unconditional version of Tunnell's criterion for an explicit infinite family of n, or a proven density law for congruent numbers in a residue class.\n\n**Why now**: The congruent number problem is one of the oldest unsolved problems in mathematics (Bachet, 1621), and its complete solution is equivalent to the Birch\u2013Swinnerton-Dyer conjecture \u2014 a $1M Millennium Prize Problem. The catalog has fully formalized the tree (groupoid, hyperbolic geometry, silver speed limit) but has never studied its area function \u2014 the direct bridge to congruent numbers. The tree is the one structure in which the triangle side of the problem is completely explicit; every congruent number is visible in it.\n\n**If true**: The congruent number problem gains a concrete new laboratory: the tree's area statistics become a computable model for the BSD-linked density conjectures, and any proven density law or unconditional Tunnell family would be a major result on a Millennium-Prize-scale problem.\n\n**If false**: The tree's area function has no tractable structure (e.g., squarefree parts equidistributed with no exploitable pattern) \u2014 itself a sharp equidistribution theorem about the tree, and a precise statement of why the triangle side alone cannot see the elliptic-curve side.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_1787",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T03:17:34.069425+00:00",
     "title": "The Congruent Number Laboratory \u2014 The Berggren Tree's Area Function and the Birch\u2013Swinnerton-Dyer Frontier"
   },
@@ -190,6 +191,48 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T14:54:02.517783+00:00",
     "title": "FACT round-24 #4 \u2014 S\u2085/A\u2085 QUINTIC ENDPOINTS: the largest entropy collapses, the perfect group seals (paper 83)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-25 #3 \u2014 QUBIT-TRADE4 (paper 87, /tmp/exp_qubittrade4.py, /tmp/r25n3.log)\n\n**Verdict name: THE-STANDARD-CORNER-IS-OPTIMAL.**\n\n### Result\nThe third resource axis \u2014 **base re-draws k**, real Shor's escape from the per-N unlucky cap (paper 86) \u2014 completes the surface, and its total-cost accounting places the optimum at the textbook parameterization:\n\n- **H1 cap lift**: at t = wall, s = 5: k=1 \u2192 0.504, k=2 \u2192 0.735, k=4 \u2192 0.940 \u2014 following 1\u2212(1\u2212p\u2081m)^{ks} exactly (m \u2248 \u00bd mixed-role fraction).\n- **H2 three-way fungibility**: mean \u0394P = +0.18 per single-resource doubling across 12 mixed-axis steps, positive everywhere below saturation.\n- **H3 standard-corner optimality** (corrected accounting, disclosed): reaching P \u2265 0.3 costs G \u2248 k\u00b7s\u00b7t\u00b2 = **6400 at the full-register corner** vs 14440 at wall\u22122 and 51840 at wall\u22124 \u2014 shaving width costs exponential samples/re-draws against a quadratic saving.\n\n### Frontier (ii) closed\nPaper 47 threshold \u2192 paper 85 ramp \u2192 paper 86 cap \u2192 paper 87 optimum. **DEQUANT final form**: the fungibility surface exists, every point of it is quantum resource, its minimum sits at the standard corner, and no point approaches classical factoring complexity.\n\n### Population & method\n24 constructed controlled-order semiprimes (12 mixed-role / 12 same-role), K = 6 independent bases per N with fresh role structure, progression kernel from papers 85\u201386, cells t \u2208 {wall\u22124, \u22122, 0} \u00d7 s \u2208 {1, 5, 20} \u00d7 k \u2208 {1, 2, 4}, 20 trials each. Runtime ~30 s.\n\n### All 8 barriers\n(a) clean \u2014 horns pre-stated; H3's accounting bug found post-run and corrected from raw data (both numbers shown); (b) clean; (c) confronted \u2014 24 real semiprimes \u00d7 6 bases \u00d7 27 surface points; (d) clean \u2014 fixed seeds; (e) the substance \u2014 cap-lift and \u0394P quantified, bug disclosed; (f) controlled \u2014 machinery inherited from validated rounds; (g) fair \u2014 balanced role population by design, consistency with papers 85\u201386; (h) closure \u2014 no parameter tuning of Shor improves its total cost; classical complexity remains the only competition (barrier 8), aggregation prices every classical route (barrier 4).\n\nNow 422 experiments. Assessment v198. Paper 87.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3415",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T15:49:12.718353+00:00",
+    "title": "FACT round-25 #3 \u2014 QUBIT-TRADE4: the three-axis resource surface, standard-corner optimum (paper 87)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-25 #2 \u2014 QUBIT-TRADE3 (paper 86, /tmp/exp_qubittrade3.py, /tmp/r25n2h.log)\n\n**Verdict name: THE-RAMP-SURVIVES-CONTACT-WITH-FACTORS.**\n\n### Result\nThe fungibility ramp (paper 85) extends from abstract certification to **real factor extraction**: on constructed controlled-order semiprimes (r \u2208 {210, 310, 434, 510}), P_factor(s=1) climbs the same ladder \u2014 **0.018 / 0.056 / 0.158 / 0.181** across t = wall\u22124 \u2026 wall+2 \u2014 and samples compound as independence wherever the cap allows. One new structural element: a **per-N unlucky cap that sample count cannot move**.\n\n### The construction (invented this round)\nReal ord_N(a) is lcm(p\u22121, q\u22121)-scale (~2\u00b3\u2070) \u2014 register simulation impossible. Built controlled-order semiprimes instead: primes p \u2261 1 mod r directly, order-r elements by projection h^((p\u22121)/r), CRT-combined with randomized per-prime orders d_p, d_q \u2208 {r, r/2}. This surfaced a structural fact: **ord_p(a) = ord_q(a) exactly \u27f9 a^{r/2} \u2261 \u22121 mod both primes \u27f9 N never factors from period certificates** \u2014 the permanently-unlucky case real Shor escapes by re-drawing a.\n\n### Results\n- Ramp persists: P_factor(s=1) = 0.018 \u2192 0.181 along t; nocert share 0.003 at/above wall\u22122 (certification is not the bottleneck \u2014 paper 85's ramp).\n- Ladders track independence under the cap (wall\u22122: 0.056/0.204/0.471 \u2248 1\u2212(1\u22120.06)^s).\n- **Saturation \u2248 0.53** = cert-rate \u00d7 mixed-role fraction (~\u2154): the unlucky-half cap is per-N structural; s cannot push past it.\n- Taxonomy: spurious-or-partial certificates **0.844**, unlucky 0.109, factor 0.044, nocert 0.003 \u2014 the dominant classical burden is certificate filtering, which is exactly N-verification's role.\n\n### Method ledger (4 catches across 6 launches)\nOrder blow-up (naive r ~ 2\u00b3\u2070 unsimulatable); simultaneous-order search impossible (~10\u207b\u2077 density) \u2192 CRT construction; equal-order = permanent unluckiness (first measurements all-zero); infinite loop on odd half-orders + first-certificate early-return masking later splitting ones + a hardcoded verdict string replaced by data-computed output before any claim was made.\n\n### All 8 barriers\n(a) clean \u2014 horns pre-stated; the population design implements the cap rather than assuming it; (b) clean \u2014 no real-N ramp work in the Catalog; (c) confronted \u2014 actual semiprimes, exact orders, full gcd-based extraction; (d) clean \u2014 fixed seeds; (e) the substance \u2014 cap measured not assumed, taxonomy quantified, defects disclosed; (f) controlled \u2014 dishonest-verdict catch before any claim; (g) fair \u2014 shares consistent with paper 85 through the identical kernel; (h) relevance \u2014 Shor's short-register regime prices in samples linearly, capped by the unlucky-base structure that base re-drawing removes classically (barriers 4/8).\n\nNow 421 experiments. Assessment v197. Paper 86.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3416",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T15:49:12.719442+00:00",
+    "title": "FACT round-25 #2 \u2014 QUBIT-TRADE3: the fungibility ramp on real semiprimes (paper 86)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-25 #1 \u2014 QUBIT-TRADE2 (paper 85, /tmp/exp_qubittrade2.py, /tmp/r25n1g.log)\n\n**Verdict name: ONE-REGISTER-BIT-IS-WORTH-ONE-SAMPLE.**\n\n### Result\nThe qubit/sample phase diagram of Shor period-finding is a **fungibility ramp**, not a wall. The pre-stated vertical-wall hypothesis (odd r \u27f9 deterministic certification failure below t = 2log\u2082r) was **honestly refuted** by the correct measurement kernel: under the standard arithmetic-progression distribution P(k) = (1/Mq)\u00b7|sin(\u03c0Mkr/q)/sin(\u03c0kr/q)|\u00b2 (M \u2248 q/r), the per-sample certification rate follows **P\u2081 \u2248 ramp(q/r\u00b2)**, and samples compound it as P_s = 1\u2212(1\u2212P\u2081)^s. The measured exchange law: **t\\*(s) shifts by \u2212log\u2082 s** \u2014 one register bit is worth one sample.\n\n### The three measurements\n1. **The single-sample ramp**: P\u2081 rises smoothly with q/r\u00b2 through odd/mixed families (4\u00b7odd: 0.003 at q/r\u00b2 = 0.028 \u2192 0.36 at 0.905 \u2192 plateau \u2248 0.46); pure powers of two are flat-saturated (~0.5 at every ratio \u2014 peaks exactly on grid points).\n2. **Sample ladders out-of-sample**: P_s tracks 1\u2212(1\u2212P\u2081)^s tightly everywhere (odd prime at wall\u22121: P\u2081 = 0.725 \u2192 s=2: 0.940 vs predicted 0.924; 2\u00b7odd at wall\u22123: P\u2081 = 0.055 \u2192 s=20: 0.680 vs predicted 0.677).\n3. **The exchange law** (odd composite 1155, wall t = 21): t\\*(P\u22650.5) shifts {s=2: +0, s=5: \u22122, s=20: \u22124, s=100: \u22126} against \u2212log\u2082s = {\u22121, \u22122.3, \u22124.3, \u22126.6}. (s=1 never crosses 0.5: the saturation level P\u2081 \u2248 0.37 *is* the standard per-sample rate.)\n\n### The honest refutation\nThe stated-before-run mechanism (deterministic sub-wall failure for odd r) holds only for the WORST-case peak position; actual peak positions spread over [0, \u00bd], so certification succeeds at rate \u2248 q/r\u00b2. Round-14's \"10 samples fail\" was the deep-ramp limit (q/r\u00b2 \u2248 0). The refutation, not the confirmation, produced the round's law.\n\n### Method ledger (3 designed-check catches across 6 runs)\n1. **Wrong kernel**: contiguous-block Dirichlet instead of the progression kernel \u2014 flagged by its degenerate signature P(k=0) = 1 at q = r; the first vertical-wall table was an artifact of the wrong ensemble.\n2. **Post-processing swamp**: lcm-of-candidates dies on spurious small-denominator certificates; replaced by the clean CERTIFICATION STATISTIC (\u2203 sample whose CF passes 1/(2b\u00b2) with b = r \u2014 necessary condition for any post-processing; classical period-verification free).\n3. Degenerate regimes documented: pure powers of two at t = v\u2082(r) give uniform outcomes (entropy = log\u2082q, r-independent \u2014 genuinely no information).\n\n### All 8 barriers\n(a) clean \u2014 pre-stated hypothesis refuted by pre-registered measurement; replacement law validated out-of-sample on ladders; (b) clean \u2014 no exchange-rate work in the Catalog (nearest: our own paper 47); (c) confronted \u2014 exact distributions (no shortcuts), five structured periods, 300-trial cells; (d) clean \u2014 fixed seeds; (e) the substance \u2014 closed-form predictions vs MC \u00b10.03, full defect ledger disclosed; (f) controlled \u2014 every anomaly traced to root cause before proceeding; (g) fair \u2014 ladders are out-of-sample validations; families distinguished; (h) relevance \u2014 Shor's register can be shortened by paying samples linearly (1 bit \u2194 1 sample) until both explode together: the quantum advantage is preserved but quantitatively graded, sharpening DEQUANT beyond paper 47's binary threshold (barriers 4/8).\n\n### What this decides\nFrontier (ii) gains its quantitative face: the quantum channel's resource bound is a smooth two-dimensional trade-off curve with unit slope, not a threshold.\n\nNow 420 experiments. Assessment v196. Paper 85.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3417",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T15:49:12.720386+00:00",
+    "title": "FACT round-25 #1 \u2014 QUBIT-TRADE2: one register bit is worth one sample, the fungibility ramp (paper 85)"
   },
   {
     "consumed_by_exp_id": "",
@@ -34908,14 +34951,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Formal target: if a class `\ud835\udc9e \u2286 {G : i(G) \u2265 1/4}` is closed under 1-sums and closed under\ninduced subgraphs, then every `G \u2208 \ud835\udc9e` has fractional chromatic number `\u2264 4`."
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1210c28a",
     "description": "Formal target: define `IsCliqueSum` (sides meeting in a fixed `k`-clique `K`); prove\n`\u03b1(G) \u2265 \u03b1\u2081 + \u03b1\u2082 - 1` (an independent set meets a clique at most once) and\n`\u03c7(G) = max(\u03c7\u2081, \u03c7\u2082)` for `n \u2265 k`, with both statements failing for `n < k`.",
     "domains": [],
     "id": "fd_1622",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "0f708106",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-19T17:40:51.160593+00:00",
     "title": "Formal target: define `IsCliqueSum` (sides meeting in a fixed `k`-clique `K`); prove\n`\u03b1(G) \u2265 \u03b1\u2081 + \u03b1\u2082 - 1` (an independent set meets a clique at most once) and\n`\u03c7(G) = max(\u03c7\u2081, \u03c7\u2082)` for `n \u2265 k`, with bo"
   },
