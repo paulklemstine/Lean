@@ -1399,7 +1399,19 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
                         print(f"[Tick] Stray-close reopen failed for #{_d.github_issue}: {_re_e}")
                 # Self-heal: prune non-terminal github_injection zombies whose
                 # issue closed (kept being re-dispatched by stale clobbers).
-                pruned_issue_dirs = local_fd.prune_closed_issue_directions(open_issue_numbers)
+                # Each candidate closure is CONFIRMED per-issue first: a flaky
+                # `gh issue list` once made every injected issue look closed and
+                # mass-pruned live research (audit 2026-08-21).
+                def _confirm_issue_closed(n: int) -> bool:
+                    out = github_injector.run_gh_command(
+                        ["issue", "view", str(n), "--json", "state"])
+                    if not out:
+                        return False  # verification failed — spare the direction
+                    import json as _sj
+                    return _sj.loads(out).get("state", "").upper() == "CLOSED"
+
+                pruned_issue_dirs = local_fd.prune_closed_issue_directions(
+                    open_issue_numbers, verify_closure=_confirm_issue_closed)
                 if pruned_issue_dirs:
                     print(f"[Tick] Pruned {pruned_issue_dirs} closed-issue injected direction(s)")
                 injected = local_fd.dispatchable_injected_directions(

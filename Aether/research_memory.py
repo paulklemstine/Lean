@@ -1325,7 +1325,8 @@ class FutureDirectionsManager:
         return out
 
     def prune_closed_issue_directions(
-        self, open_issue_numbers, reason: str = None
+        self, open_issue_numbers, reason: str = None,
+        verify_closure=None,
     ) -> int:
         """Prune non-terminal github_injection directions whose issue is closed.
 
@@ -1334,6 +1335,12 @@ class FutureDirectionsManager:
         state — stale-manager clobbers or failed cleanups kept re-dispatching
         them. Any 'available'/'in_progress' direction whose github_issue is not
         in open_issue_numbers is marked pruned. Returns the number pruned.
+
+        verify_closure: optional callable (issue_number -> bool) that CONFIRMS
+        a closure directly per issue. The open-issue list can come back
+        incomplete from a GitHub flake — trusting it alone once mass-pruned
+        every injected direction mid-flight (audit 2026-08-21). When the
+        verifier errors or says 'not closed', the direction is spared.
         """
         open_set = {int(n) for n in open_issue_numbers}
         pruned_count = 0
@@ -1344,6 +1351,16 @@ class FutureDirectionsManager:
                 continue
             if d.github_issue and int(d.github_issue) in open_set:
                 continue
+            if verify_closure is not None and d.github_issue:
+                try:
+                    if not verify_closure(int(d.github_issue)):
+                        print(f"[FD] Spared #{d.github_issue} ({d.id}): "
+                              f"open-list miss but issue is not closed")
+                        continue
+                except Exception as _v_e:
+                    print(f"[FD] Spared #{d.github_issue} ({d.id}): "
+                          f"closure verification errored: {_v_e}")
+                    continue
             d.status = "pruned"
             d.prune_reason = reason or (
                 f"github issue #{d.github_issue} closed; direction superseded"

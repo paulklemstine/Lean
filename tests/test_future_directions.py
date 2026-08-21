@@ -452,3 +452,51 @@ class TestStrayCloseGuard:
         strays = mgr.stray_closed_injected_directions(
             open_issue_numbers=[158], live_job_ids={"other_job"})
         assert strays == []
+
+
+class TestClosureVerification:
+    """The self-heal must CONFIRM closures per-issue: a flaky open-issues list
+    once mass-pruned every injected direction mid-research (2026-08-21)."""
+
+    def _mgr_with_injected(self, tmpdir, issue, job_id=None):
+        from research_memory import FutureDirectionsManager
+
+        d = _injected_direction("fd_7001", issue=issue)
+        if job_id:
+            d["status"] = "in_progress"
+            d["consumed_by_exp_id"] = job_id
+        tmpdir = _write_pool(tmpdir, [d])
+        if job_id:
+            (Path(tmpdir) / "inflight_jobs.json").write_text(json.dumps(
+                {"proj": {"job_id": job_id, "status": "dispatched"}}))
+        return FutureDirectionsManager(Path(tmpdir))
+
+    def test_verifier_false_spares_direction(self):
+        mgr = self._mgr_with_injected(mkdtemp(), issue=167)
+        n = mgr.prune_closed_issue_directions(
+            open_issue_numbers=[],  # list says closed
+            verify_closure=lambda n_: False)  # per-issue truth: NOT closed
+        assert n == 0
+        assert mgr._directions[0].status == "available", (
+            "A list-miss must not prune when the issue is really open")
+
+    def test_verifier_error_spares_direction(self):
+        mgr = self._mgr_with_injected(mkdtemp(), issue=167)
+        def boom(n):
+            raise RuntimeError("gh down")
+        n = mgr.prune_closed_issue_directions(
+            open_issue_numbers=[], verify_closure=boom)
+        assert n == 0
+        assert mgr._directions[0].status == "available"
+
+    def test_verifier_true_prunes(self):
+        mgr = self._mgr_with_injected(mkdtemp(), issue=167)
+        n = mgr.prune_closed_issue_directions(
+            open_issue_numbers=[], verify_closure=lambda n_: True)
+        assert n == 1
+        assert mgr._directions[0].status == "pruned"
+
+    def test_no_verifier_keeps_legacy_behavior(self):
+        mgr = self._mgr_with_injected(mkdtemp(), issue=167)
+        n = mgr.prune_closed_issue_directions(open_issue_numbers=[])
+        assert n == 1  # legacy callers unchanged
