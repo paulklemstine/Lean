@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "d11810a4",
-      "domain": "Geometry",
-      "key_insight": "# Future Directions\n\n## What this cycle established\n\nAll results are in `Catalog/Geometry/`, are `sorry`-free, and use only the standard axioms\n(`propext`, `Classical.choice`, `Quot.sound`).\n\n* `Funda",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 57,
-      "timestamp": "2026-08-19T21:42:07",
-      "title": "Derived from the three files of this line of work:"
-    },
-    {
       "cycle_id": "2e28602b",
       "domain": "Physics",
       "key_insight": "# Future directions — inverse stereographic neural field theory\n\nDerived from the analysis and adversarial review of the results now proved in\n`Catalog/Physics/StereoNeuralFieldCalculus.lean`,\n`…Harmo",
@@ -499,19 +489,19 @@
       "theorem_count": 124,
       "timestamp": "2026-08-21T19:38:01",
       "title": "The Riemann Hypothesis for the Berggren Tree — A Zeta Function with a Provable Critical Line"
+    },
+    {
+      "cycle_id": "63cef724",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions — Möbius arithmetic, twist rings, and graded number theory\n\nThis cycle tested the \"Möbius integers\" conjecture literally, refuted five of its\nclaims, and relocated its surviving in",
+      "quality_score": 0.79,
+      "sorry_count": 0,
+      "theorem_count": 79,
+      "timestamp": "2026-08-21T19:38:14",
+      "title": "Arithmetic on the Moebius Band: A Number System with a Twist"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "0c649bb1",
-      "domain": "Physics",
-      "key_insight": "# Future Directions — after the derived-modulus corner\n\nThe formal results in `Catalog/Physics/DerivedModulus*.lean` close the\npolynomial (N-explicit) multi-modulus corner in a strong, classified form",
-      "quality_score": 0.85,
-      "sorry_count": 0,
-      "theorem_count": 109,
-      "timestamp": "2026-08-13T10:37:02",
-      "title": "The Derived-Modulus Corner, Closed"
-    },
     {
       "cycle_id": "db97959f",
       "domain": "Tropical",
@@ -2501,27 +2491,19 @@
       "theorem_count": 124,
       "timestamp": "2026-08-21T19:38:01",
       "title": "The Riemann Hypothesis for the Berggren Tree — A Zeta Function with a Provable Critical Line"
+    },
+    {
+      "cycle_id": "63cef724",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions — Möbius arithmetic, twist rings, and graded number theory\n\nThis cycle tested the \"Möbius integers\" conjecture literally, refuted five of its\nclaims, and relocated its surviving in",
+      "quality_score": 0.79,
+      "sorry_count": 0,
+      "theorem_count": 79,
+      "timestamp": "2026-08-21T19:38:14",
+      "title": "Arithmetic on the Moebius Band: A Number System with a Twist"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "63d0d6e2",
-      "domain": "Physics",
-      "name": "tailBar_eq_three_quarters",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "63d0d6e2",
-      "domain": "Physics",
-      "name": "lowTail_eq_five_eighths",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "6a8ae4e1",
-      "domain": "Shared",
-      "name": "chooseSeq_zero_index",
-      "quality": 0.85
-    },
     {
       "cycle_id": "6a8ae4e1",
       "domain": "Shared",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "nodesBelow_finite",
       "quality": 0.85
+    },
+    {
+      "cycle_id": "63cef724",
+      "domain": "MachineLearning",
+      "name": "moebRel_refl",
+      "quality": 0.79
+    },
+    {
+      "cycle_id": "63cef724",
+      "domain": "MachineLearning",
+      "name": "moebRel_symm",
+      "quality": 0.79
+    },
+    {
+      "cycle_id": "63cef724",
+      "domain": "MachineLearning",
+      "name": "moebRel_trans",
+      "quality": 0.79
     }
   ],
-  "last_updated": "2026-08-21T19:38:01",
+  "last_updated": "2026-08-21T19:38:14",
   "open_questions": [
     {
       "context": "Everything is proved; there are no `sorry`s and no new axioms.",
@@ -3517,12 +3517,6 @@
     ],
     "MachineLearning": [
       {
-        "cycle_id": "5ddbfca0",
-        "quality": 0.82,
-        "theorems": 92,
-        "title": "Round-6 Hypothesis Closures: The Noise-Floor Principle and the Trace-Lemma Front"
-      },
-      {
         "cycle_id": "d99b7790",
         "quality": 0.82,
         "theorems": 72,
@@ -3575,6 +3569,12 @@
         "quality": 0.85,
         "theorems": 61,
         "title": "reinforcement learning"
+      },
+      {
+        "cycle_id": "63cef724",
+        "quality": 0.79,
+        "theorems": 79,
+        "title": "Arithmetic on the Moebius Band: A Number System with a Twist"
       }
     ],
     "Novelty": [

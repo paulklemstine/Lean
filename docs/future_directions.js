@@ -18,36 +18,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Berggren Tree and the Langlands Program \u2014 Automorphic Forms on the 3-adic Boundary over Q(\u221a2)"
   },
   {
-    "consumed_by_exp_id": "532d78bc",
-    "description": "**Domain**: Pythagorean <-> NumberTheory\n\n**Hypothesis (MOONSHOT)**: The Berggren tree of primitive Pythagorean triples carries a zeta function whose analytic structure is governed by the spectral eigenvalues 3\u00b12\u221a2 of its hyperbolic generator \u2014 units of the ring of integers Z[\u221a2] of the real quadratic field Q(\u221a2) \u2014 and whose zeros are connected to the distribution of prime hypotenuses in the tree. The conjecture: the tree zeta function \u03a3_{nodes} c^{-s} (over hypotenuses c) has a meromorphic continuation whose critical line and zero structure are determined by the silver-ratio growth exponent, and the prime-hypotenuse counting function in the tree satisfies an analogue of the prime number theorem with an error term controlled by the zeros \u2014 a \"Riemann Hypothesis for the Berggren tree.\"\n\n**Test**: Formalize the tree zeta function and prove its abscissa of convergence is the silver ratio log(1+\u221a2). Establish its meromorphic continuation and compute its poles/zeros from the spectral structure of the generators (the Z[\u221a2] units 3\u00b12\u221a2). Prove a prime-hypotenuse counting law for the tree with an explicit error term, and characterize the location of the zeros (the \"critical line\") in terms of the tree's geometry.\n\n**Why now**: The catalog has exact growth (silver speed limit), spectral classification (eigenvalues 3\u00b12\u221a2, order mod p dividing p\u00b2\u22121), and counting (\u0398(H) Berggren-generated triples) \u2014 but no analytic object tying them together. The Riemann Hypothesis is the most famous open problem in mathematics; a rigorously constructed \"RH for the Berggren tree\" would be a genuinely new analytic-number-theory structure with a provable analogue of the critical line.\n\n**If true**: The Berggren tree acquires a zeta function with a provable analogue of the Riemann Hypothesis \u2014 an exactly solvable model of the RH phenomenon, unifying the tree's growth, spectral, and counting structure, and potentially illuminating the mechanism behind prime distribution.\n\n**If false**: The tree zeta function fails to have the predicted continuation or its zeros lie off the predicted line \u2014 itself a clean theorem about the analytic structure of the tree's counting function, and a concrete demonstration of where the RH mechanism can and cannot hold.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1773",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-20T23:42:10.362558+00:00",
-    "title": "The Riemann Hypothesis for the Berggren Tree \u2014 A Zeta Function with a Provable Critical Line"
-  },
-  {
-    "consumed_by_exp_id": "03b48eb6",
-    "description": "**Domain**: Pythagorean <-> Computation\n\n**Hypothesis (MOONSHOT)**: The inverse Collatz tree and the Berggren tree of primitive Pythagorean triples are two realizations of the SAME underlying ternary dynamics. The Collatz map is famously hard because its tree (under the inverse map) is a ternary tree with no known invariant; the Berggren tree is a ternary tree with a fully proven invariant \u2014 the Lorentz form a\u00b2+b\u00b2\u2212c\u00b2 and the silver-ratio growth exponent log(1+\u221a2). The conjecture: there is a transfer map from the Berggren tree's ternary branching onto the inverse-Collatz tree that carries the Lorentz invariant and the growth structure, giving the Collatz tree a conserved quantity it currently lacks.\n\n**Test**: Formalize the inverse Collatz tree as a ternary tree (each odd n has up to three preimages under the inverse map). Formalize the Berggren tree's proven machinery (Lorentz invariant, groupoid, silver-ratio growth). Construct an explicit map from Berggren triples to Collatz orbits and test whether the Lorentz form or a derived quantity is conserved along Collatz trajectories. Prove at least one structural theorem \u2014 e.g., that a Berggren-type invariant bounds the growth of a Collatz trajectory, or that the ternary branching of the two trees is isomorphic.\n\n**Why now**: The Collatz conjecture is one of the most famous open problems in mathematics \u2014 a true moonshot target. The catalog already carries a fully formalized ternary tree (Berggren) with exact invariants and growth. If the two trees are genuinely related, the solved Berggren structure becomes a new tool for the hardest open problem in discrete dynamics. Even a partial transfer would be history-making.\n\n**If true**: The Collatz tree gains a conserved Lorentz-type invariant and an exact growth bound, opening a genuinely new attack line on the Collatz conjecture \u2014 a result that would be among the most celebrated in mathematics.\n\n**If false**: The failure \u2014 proving the two ternary trees are NOT isomorphic, or that no Berggren-type invariant is conserved \u2014 is itself a sharp theorem explaining precisely why the Collatz tree resists the methods that work for Berggren, clarifying the boundary of what ternary-tree methods can achieve.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1774",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-20T23:42:10.363274+00:00",
-    "title": "The Collatz-Berggren Bridge \u2014 Transferring the Lorentz Invariant to the Inverse Collatz Tree"
-  },
-  {
     "consumed_by_exp_id": "a2c90992",
     "description": "**Domain**: Pythagorean <-> Algebra\n\n**Hypothesis (MOONSHOT)**: The Berggren groupoid \u2014 integral matrices preserving the Lorentz form a\u00b2+b\u00b2\u2212c\u00b2, living on the null cone \u2014 is a shadow of the arithmetic of the even Lorentzian Leech lattice II(25,1), the 26-dimensional lattice at the heart of Conway's \"holy construction,\" whose automorphism group hosts the Conway group Co0 and, through the moonshine module, the Monster \u2014 the largest sporadic simple group. The conjecture: the tree's combinatorial structure (nodes, branches, 3-adic boundary) is realized by the hole structure of the Leech lattice \u2014 deep holes \u2194 Niemeier lattices \u2014 so that the Berggren tree provides an explicit pythagorean parametrization of the Niemeier lattice family, and the groupoid embeds in the Lorentzian lattice's automorphism group, bridging Pythagorean triples to Monstrous moonshine.\n\n**Test**: Formalize the embedding of the (2,1)-signature null cone into II(25,1) and the action of the Berggren generators on the Lorentzian lattice. Prove or refute: (i) the groupoid embeds in the positive Lorentz group of II(25,1) \u2014 equivalently in the Conway group's Lorentzian extension; (ii) the tree's nodes and branches map to the deep-hole/Niemeier structure respecting the ternary branching; (iii) the McKay-Thompson trace series \u2014 whose moment structure the catalog already formalized via the Bell-criterion package \u2014 acquire a tree-parametrized organization.\n\n**Why now**: Monstrous moonshine \u2014 the j-function connection proved by Borcherds (Fields Medal) \u2014 is the most spectacular bridge in modern mathematics, and its natural habitat is precisely a Lorentzian lattice with null-cone structure: the same geometric substrate as the Berggren tree. The catalog's moonshine package built the trace-series and moment machinery; the Lorentzian-lattice bridge from the tree is the missing geometric link. Both structures are integral Lorentzian geometries, and the question of whether the tree's combinatorics lives in the Leech lattice's hole structure is the natural next moonshot.\n\n**If true**: A pythagorean parametrization of the Niemeier lattices and an embedding of the Berggren groupoid into the Monster's natural habitat \u2014 a bridge from the oldest mathematics (Pythagoras) to the most extraordinary object in group theory, with the tree as an explicit combinatorial model for the geometry of moonshine.\n\n**If false**: The groupoid does not embed, or the tree's branching does not match the hole structure \u2014 a precise theorem about which Lorentzian arithmetic the tree actually realizes, clarifying the boundary between elementary Pythagorean geometry and the Leech lattice's exceptional structure.\n",
     "domains": [
@@ -153,16 +123,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-24 #2 \u2014 BERGGREN-3ADIC: the tree position of the N-node is adically sealed (paper 81)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a977122a",
     "description": "## FACT round-24 #5 \u2014 D\u2085-QUINTIC (paper 84, /tmp/exp_d5quintic.py, /tmp/r24n5f.log)\n\n**Verdict name: THE-QUINTIC-ROW-COMPLETE.**\n\n### Result\nThe last untested transitive quintic group confirms the abelianization law **exactly** \u2014 and the round invented its own object: no literature polynomial was needed, because the type histogram IS the Chebotarev group readout. A scan of x\u2075+ax+b (|a|,|b| \u2264 60) found **four D\u2085 quintics in seconds**, each with square discriminant and the exact signature {[1\u2075]: \u22480.10, [5]: \u22480.40, [1,2,2]: \u22480.50}.\n\n### The subtlety: where D\u2085's C\u2082 lives\nD\u2085 \u2286 A\u2085 \u27f9 \u221adisc(f) \u2208 \u211a \u27f9 the abelianization's quadratic subfield K is **not** Q(\u221adisc). Theory locates it \u2014 splitting-field ramification = root-field ramification \u27f9 K = Q(\u221ad), d squarefree over f's ramified prime set \u2014 and candidate enumeration + Kronecker matching identifies **K = Q(\u221a\u22125) at agreement 1.0000, uniquely**, for x\u2075+20x+32 (m\\* = 20 = Q(\u221a\u22125)'s fundamental discriminant).\n\n### Results (all asserts green, 105 s)\n- Type rates within 0.002 of {1/10, 4/10, 5/10}; no non-D\u2085 type ever occurs; H(T) = 1.3610 bits.\n- Sign vs kron(\u22125, p): agreement **1.0000**.\n- **I(p mod 20; T) = 1.0000 vs law 1.0000 \u2014 exact to four decimals** (bias +0.0001 at the small conductor: the cleanest cell of the program).\n- Semiprime (400k MC): pair = **1.0000 vs null 1.0000** (z = +1.06); reflection-fork s-projection = **1.0000 vs Is(2)**; which-factor wall 0.0000.\n\n### THE COMPLETED QUINTIC TABLE\n| group | polynomial | G^ab | H(T) | I\u2081 measured | law | pair |\n|---|---|---|---|---|---|---|\n| C\u2085 | Q(\u03b6\u2081\u2081)\u207a | C\u2085 | 0.7219 | 0.7198 | 0.7219 \u2713 | Is(5) \u2713 |\n| **D\u2085** | **x\u2075+20x+32** | **C\u2082** | **1.3610** | **1.0000** | **1.0000 \u2713** | **1.0 \u2713** |\n| F\u2082\u2080 | x\u2075\u22122 | C\u2084 | 1.6805 | 1.4989 | 1.5000 \u2713 | 1.25 \u2713 |\n| A\u2085 | x\u2075+20x+16 | 1 | 1.6555 | **0** | 0 \u2713 | 0 \u2713 |\n| S\u2085 | x\u2075\u2212x\u22121 | C\u2082 | 2.5574 | 1.2158* | 1.0 \u2713 | 1.0 \u2713 |\n\n(*permutation-referenced at the sparse 2869-class dial.) One law, five groups, no exceptions \u2014 the gap always exactly E[H(coset|T)].\n\n### All 8 barriers\n(a) clean \u2014 predictions pre-stated conditional on identification; identification self-validating via Chebotarev histograms; (b) clean \u2014 no D\u2085 type-channel work in the Catalog; (c) confronted \u2014 real D\u2085 fields, histograms < 0.2% from class sizes, 400k MC; (d) clean \u2014 fixed seeds; (e) the substance \u2014 the program's cleanest cell (bias +0.0001); K-identification asserted at unique exact agreement; (f) controlled \u2014 three harness iterations disclosed (modulus-scan failure \u2192 theory-grounded candidate enumeration; even-numerator Jacobi bug \u2192 Kronecker helper); (g) fair \u2014 walls zero, coprime flat, controls are papers 78\u201382's reproduced values; (h) closure \u2014 symmetric (2), residue dial at m\\* = 20 (5), CRT-sealed (6), classical Galois/Kummer/reciprocity (8).\n\n### What closes\n**The transitive-quintic row is complete: 5/5 groups.** The type-channel program has measured every group structure it can name across degrees 2\u20135, always with the same outcome: I(p mod m\\*; T) = I(T; coset) exactly, the pair law verbatim, the gap exactly the type's coset-ambiguity entropy. Frontier: the quantum channel (QUBIT-TRADE phase diagram) and the barrier-4 converse.\n\nNow 419 experiments. Assessment v195. Paper 84.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3413",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T14:54:02.516407+00:00",
     "title": "FACT round-24 #5 \u2014 D\u2085-QUINTIC: the quintic row complete (paper 84)"
   },
@@ -403,6 +374,48 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T18:57:10.447566+00:00",
     "title": "FACT round-28 #2 \u2014 THE-GAP-LOCAL-METHOD: Fermat completes the locality taxonomy (paper 96)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-29 #1 \u2014 AUDIT-EXTENSION (paper 103, logs /tmp/audit_p{91,94,85}.log)\n\n**Verdict name: SIX-KEYSTONE-ZERO-DRIFT.**\n\n### Result\nPaper 97's reproducibility audit extended to three more keystones whose results carry independent weight:\n\n| keystone | recorded | fresh re-run | verdict |\n|---|---|---|---|\n| Paper 91 synergy | S\u2083a\u00d7S\u2083b +0.1290; A\u2084\u00d7D\u2084 +0.0049; overlap 0.9919 | **identical** | \u2713 |\n| Paper 94 capacity curve | deficits +0.000 through +6.372; I(6) = 11.5307 | **identical through k=6** | \u2713 |\n| Paper 85 ramp | P\u2081 \u2248 ramp(q/r\u00b2) | consistent intermediate values | partial* |\n\n*Paper 85's full ramp requires >110s (300 trials \u00d7 many cells); the re-run produced consistent intermediate values before timeout. The recorded full-run results stand on the original execution with stored seeds.\n\nCombined with paper 97's original audit (papers 80, 89, 92): **six keystone papers audited, zero drift across all fully-verified numbers**.\n\n### What this decides\nThe reproducibility claim now covers six keystones spanning the programme's diversity: the type-channel law table (80), the three-strata calibration (89), the battery capacity (92), the battery synergy decomposition (91), the capacity curve saturation (94), and the qubit/sample ramp (85, partial). Every fully-verified number reproduces exactly under stored seeds. The computational record is not an artifact of a single execution \u2014 it is a property of the deterministic pipelines.\n\nNow 438 experiments. Assessment v214. Paper 103.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3462",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T19:38:40.902152+00:00",
+    "title": "FACT round-29 #1 \u2014 AUDIT-EXTENSION: six keystones, zero drift (paper 103)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-30 #2 \u2014 SD-WALL-TEST (paper 102, /tmp/exp_sdwall.py, /tmp/r30n2.log)\n\n**Verdict name: THE-HINTED-VIEW-IS-BLIND.**\n\n### Result\nPaper 101's flagged (s,d)-view which-factor reading of **0.9663 bits** \u2014 tested against a 200-shuffle permutation null:\n\n| view | observed | null mean | null sd | z |\n|---|---|---|---|---|\n| product view (N mod 713) | 0.0153 | 0.0162 | 0.0008 | \u22121.04 |\n| **(s,d) view** | **0.9663** | **0.9648** | 0.0011 | **+1.36** |\n| joint labels | 0.0011 | 0.0008 | 0.0002 | +1.44 |\n\n**All three views sit inside their nulls.** The entire 0.97-bit (s,d)-view reading was sparse-plug-in inflation \u2014 the hint view's massive cell count against the sample size generates ~0.96 bits of pure estimator bias, which the null reproduces exactly.\n\n### What stands\nThe battery programme's factor-blindness now extends to its strongest view: the factor-residue hint view carrying 4.56 of the 4.60 label-entropy bits is factor-blind at permutation-null sensitivity (\u00b10.001 bits on this statistic). The chain \u2014 capacity (92), ceiling saturation (94), hint compounding (101), verified blindness on every view including the hinted one \u2014 is closed with no loose ends.\n\nNow 437 experiments. Assessment v213. Paper 102.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3463",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T19:38:40.903673+00:00",
+    "title": "FACT round-30 #2 \u2014 SD-WALL-TEST: the hinted view is factor-blind too (paper 102)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-30 #1 \u2014 HINT-VALUE-JOINT (paper 101, /tmp/exp_hintvaluejoint.py, /tmp/r30n1.log)\n\n**Verdict name: THE-HINTS-COMPOUND.**\n\n### Result\nWith the verified 36-label chaining (paper 100), the corrected 2-field joint hint value: **+2.4291 bits against the per-dial hint sum of +1.0288 \u2014 hint synergy +1.40 bits. Hints compound like capacities**, mirroring paper 92's capacity synergy (same mechanism: the CRT-joint modulus and the (s,d) pair each see all residues simultaneously).\n\n### The corrected joint hint table\n| view | bits |\n|---|---|\n| product view (hint-free) | 2.1314 (= paper 91 exact) |\n| sum view alone | 0.6432 |\n| gap view alone | 0.6496 |\n| (s,d) joint view | 4.5605 (99.1% of ceiling) |\n| **JOINT HINT VALUE** | **+2.4291** |\n\nBracketing confirmed: product < (s,d) \u2264 ceiling.\n\n### New flag (paper-93 discipline, not interpreted)\nThe (s,d)-view which-factor statistic reads **0.9663 bits** \u2014 the sparse-plug-in regime at its extreme (~508k residue-pair cells vs 30k samples). NOT interpreted this round; a permutation-null test is the immediate follow-up. Structural note: s,d are symmetric under p\u2194q, so any REAL leakage would be orientation-conditional and itself significant.\n\nNow 436 experiments. Assessment v212. Paper 101.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3464",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T19:38:40.905132+00:00",
+    "title": "FACT round-30 #1 \u2014 HINT-VALUE-JOINT: hints compound like capacities (paper 101)"
   },
   {
     "consumed_by_exp_id": "",
@@ -2137,20 +2150,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Quantum Entanglement Monogamy: CKW Inequality"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 2d8c7907 (Q=0.760), which proved 11 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize memory as a monoid homomorphism from experience streams to compressed representations. Prove that any such homomorphism satisfying a finite-memory bound must be lossy and that the information loss forms a submonoid. Show that targeted forgetting is equivalent to a quotient construction in ",
-    "domains": [
-      "Applications"
-    ],
-    "id": "push_2d8c7907_87a49a08",
-    "priority_score": 0.86,
-    "research_mode": "team",
-    "source_exp_id": "2d8c7907",
-    "status": "available",
-    "timestamp": "2026-07-19T16:07:13.673955+00:00",
-    "title": "Deepening: Memory Editing: When Forgetting Is a Mathematical Operation"
   },
   {
     "consumed_by_exp_id": "",
@@ -9529,24 +9528,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Percolation Threshold"
   },
   {
-    "consumed_by_exp_id": "63cef724",
-    "description": "The Moebius band M is obtained from [0,1] x R by identifying (0, y) ~ (1, -y). Define arithmetic on M: a point (x, y) on M represents the number y * (2x - 1) where x in [0,1] gives the sign and magnitude, and y gives the scale. This creates a number system where going around the band flips the sign. Define the Moebius integers Z_M as the image of Z in M under the embedding n -> (1/2 + 1/(2n), |n|). Then 1 and -1 are identified at the twist point (1, 1) = (0, -1), making Z_M a one-point compactification of Z with a single infinity. Conjecture: Z_M is a ring under the induced operations from R x R / ~, but it is NOT an integral domain because (1, 0) * (0, 1) = (0, 0) but neither factor is zero in Z_M. The prime factorization in Z_M has a unique 'twist prime' that encodes orientation, and every non-zero Moebius integer has a factorization of the form \u00b1p_1^{a_1} * ... * p_k^{a_k} where the overall sign is the twist. Test: factor the Moebius integers 6, -6, and 0 in Z_M. Verify that 6 = 2_+ * 3_+ and -6 = 2_- * 3_- = 2_+ * 3_+ * (-1) where -1 is the twist prime. Impact: arithmetic on a non-orientable surface creates a number system where orientation IS a prime \u2014 a number-theoretic analog of spin in physics.",
-    "domains": [
-      "Novelty",
-      "NumberTheory",
-      "Geometry",
-      "Algebra"
-    ],
-    "id": "seed_124",
-    "phase": "A",
-    "priority_score": 0.76,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Arithmetic on the Moebius Band: A Number System with a Twist"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Infinite chess is chess on an infinite board. It is known that there are positions where White can force checkmate but only in omega (the first infinite ordinal) moves. Conjecture: There exists a position on the infinite chess board where White can force checkmate in exactly omega^omega moves, but not in fewer. More precisely, define the game value v(P) of a position P as the smallest ordinal alpha such that White can force checkmate in at most alpha moves. The known results give positions with v(P) = omega. The conjecture is that v(P) can be arbitrarily large below omega^omega. The key construction: create a position where White must first solve a 'puzzle' that takes omega moves, and then another puzzle that takes omega moves for each of omega starting positions, giving omega^2 total moves. Iterating, one can reach omega^n for any n, and omega^omega by a diagonal argument. Test: construct explicit positions with game values omega, omega^2, omega^3, and omega^omega on the infinite board. Verify by computation that no strategy achieves checkmate in fewer moves. Impact: chess on an infinite board has transfinite game values \u2014 the complexity of checkmate goes beyond the finite ordinals into the transfinite.",
     "domains": [
@@ -11013,6 +10994,51 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Via the seed bijection, the tree zeta is a sum over primitive coprime pairs (m,n) with m+n odd of (m\u00b2+n\u00b2)^{-s}. Counting representations of an integer by such pairs should give an exact factorisation into \u03b6(s), L(s,\u03c7\u2084) and \u03b6(2s), providing the meromorphic continuation the mission asked for and identifying the tree's zeros with classical ones.\n\nFor Re s > 1, \u03a3_w c(w)^{-s} = \u00bc (\u03b6(s) L(s,\u03c7\u2084)/\u03b6(2s) \u2212 1); consequently the tree zeta continues meromorphically to \u2102 with a simple pole at s = 1, and its zeros are those of L(s,\u03c7\u2084) together with the poles of \u03b6(2s).\n\nProve a multiplicity formula for #{(m,n) : m\u00b2+n\u00b2 = c, coprime, m+n odd, n<m} in terms of the divisor-counting function r\u2082, then compare Dirichlet series termwise using Mathlib's \u03b6 and Dirichlet L-function API.\n\nThe Berggren tree zeta is an explicit product of classical L-functions, so 'RH for the Berggren tree' is exactly equivalent to RH for \u03b6 and L(\u00b7,\u03c7\u2084) \u2014 an exactly solvable dictionary rather than an independent problem.\n\nThe primitivity and parity constraints obstruct multiplicativity, isolating the tree zeta as a genuinely non-Eulerian Dirichlet series.",
+    "domains": [
+      "NumberTheory",
+      "Pythagorean"
+    ],
+    "id": "fd_3454",
+    "priority_score": 0.7102972972972974,
+    "research_mode": "team",
+    "source_exp_id": "532d78bc",
+    "status": "available",
+    "timestamp": "2026-08-21T19:37:43.952546+00:00",
+    "title": "Exact Dirichlet Factorisation of the Berggren Tree Zeta"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The depth-graded silver zeta (1 \u2212 3\u03b5^{-2s})^{-1} is an Ihara-type zeta of a 3-regular tree with edge length 2 log(1+\u221a2). Its pole set, now an exact theorem, should be the spectrum of a self-adjoint transfer operator attached to the Berggren substitution, giving a fully explicit Hilbert\u2013P\u00f3lya model.\n\nThere is a self-adjoint operator T on L\u00b2(\u211d/(\u03c0/log(1+\u221a2))\u2124) whose spectrum equals {Im s : 1 \u2212 3\u03b5^{-2s} = 0}, unitarily equivalent to the transfer operator of the substitution w \u21a6 {Lw, Mw, Rw} acting on \u2124[\u221a2]-scaled functions.\n\nConstruct T explicitly as multiplication after Fourier transform, formalize the unitary equivalence, and prove the spectrum coincides with the pole set proved in silver_denom_eq_zero_iff.\n\nThe Berggren critical line becomes an operator spectrum, an exactly solvable Hilbert\u2013P\u00f3lya model in which the mechanism is completely transparent.\n\nThe arithmetic pole set of the silver zeta is not of spectral origin, delimiting how far the Hilbert\u2013P\u00f3lya heuristic reaches for tree zetas.",
+    "domains": [
+      "Pythagorean",
+      "Physics"
+    ],
+    "id": "fd_3456",
+    "priority_score": 0.7102222222222223,
+    "research_mode": "team",
+    "source_exp_id": "532d78bc",
+    "status": "available",
+    "timestamp": "2026-08-21T19:37:44.862886+00:00",
+    "title": "Transfer-Operator Realisation of the Silver Critical Line"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Coordinatewise addition and multiplication both fail to descend to the Moebius quotient. We conjecture a single cohomological explanation: the seam is a Z/2-torsor and the obstruction to descending an algebraic operation is a nonzero class in H^1(Z/2; -), nonzero precisely when the associated line bundle is nontrivial.\n\nLet X be a topological ring and ~ the relation generated by a partial involution sigma on a subspace S with sigma acting by an orientation-reversing Z/2-torsor. Then a binary operation on X/~ lifting that of X exists iff the class of sigma in H^1(Z/2; X) vanishes; for the Moebius seam the class is nonzero.\n\nFormalise the Moebius instance first (already done in no_induced_add / no_induced_mul), then define the cocycle for a general partial involution and prove the equivalence for finite group actions.\n\nA single theorem subsuming all descent failures for quotients of number systems by twisted identifications.\n\nDescent failure is a purely combinatorial fundamental-domain phenomenon with no cohomological content.",
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_3461",
+    "priority_score": 0.7102222222222223,
+    "research_mode": "team",
+    "source_exp_id": "63cef724",
+    "status": "available",
+    "timestamp": "2026-08-21T19:38:09.632988+00:00",
+    "title": "Cohomological Obstruction to Descent Along Twisted Seams"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "No matrix realizes a Markoff Vieta move, in contrast with the linear Berggren action. The conjecture is that degree two is optimal and that the obstruction is a rank computation on finitely many Markoff base points.\n\nNo polynomial map of degree less than two in any linear coordinate system realizes the Vieta involution on the Markoff surface, and the quadratic realization is unique modulo the surface equation.\n\nSet up the general quadratic ansatz and solve the resulting linear system on a spanning set of Markoff triples.\n\nA clean statement of why the Lorentz half of the Berggren machinery cannot transport, valid for all coordinate changes.\n\nA hidden linearization exists, which would immediately import the Berggren hyperbolic geometry to the Markoff tree.",
     "domains": [
       "Geometry",
@@ -11025,6 +11051,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T09:53:12.460440+00:00",
     "title": "Optimal Nonlinearity Degree of the Vieta Involutions"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The silver abscissa failed for the full tree only because two of the three Berggren generators produce polynomially growing spines. Restricting to a subtree generated by hyperbolic words should restore the naive exponent log(branching)/log(spectral radius), turning the refuted conjecture into a true theorem with an explicit boundary.\n\nFor the subtree generated by two Berggren words that are hyperbolic as elements of SL\u2082(\u2124), the node zeta \u03a3 c(w)^{-s} has abscissa exactly log 2 / log \u03bb, with \u03bb the smaller spectral radius, and the series diverges at the abscissa.\n\nThe sandwich version is already formalized for the MM/MR subtree (abscissa inside [0.196, 0.757]); the remaining test is to replace the crude per-block bounds by an invariant-cone argument giving matching exponential rates, and deduce a single abscissa.\n\nThe silver-abscissa conjecture is true after removing the parabolic directions, so the refutation is sharp and the boundary between silver and arithmetic behaviour is exactly the presence of parabolic generators.\n\nEven purely hyperbolic subtrees inherit arithmetic abscissae, meaning the height grading is never controlled by spectral radii alone.",
+    "domains": [
+      "Pythagorean",
+      "Physics"
+    ],
+    "id": "fd_3457",
+    "priority_score": 0.7101428571428572,
+    "research_mode": "team",
+    "source_exp_id": "532d78bc",
+    "status": "available",
+    "timestamp": "2026-08-21T19:37:45.324718+00:00",
+    "title": "Purely Hyperbolic Subtrees Restore the Silver Abscissa"
   },
   {
     "consumed_by_exp_id": "",
@@ -11150,6 +11191,36 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The Berggren tree carries two gradings, depth and hypotenuse height. The two-variable series Z(u,s) = \u03a3_w u^{|w|} c(w)^{-s} interpolates between the purely silver generating function (1-3u)^{-1} at s = 0 and the arithmetic tree zeta of abscissa 1 at u = 1. Understanding its abscissa curve s\u2080(u) explains exactly how the silver exponent degenerates into the arithmetic one.\n\nFor 0 < u < 1 the series Z(u,s) = \u03a3_w u^{|w|} c(w)^{-s} converges precisely for s > s\u2080(u), where s\u2080(u) = log(3u)/(2 log(1+\u221a2)) for u \u2265 1/3 and s\u2080(u) < 0 for u < 1/3; s\u2080 is continuous, piecewise real-analytic, and non-smooth exactly at u = 1/3.\n\nFormalize Z(u,s) as a summable family over List (Fin 3); prove convergence for s > s\u2080(u) using hyp_le_silver_pow and 3^d words per depth, and divergence at s\u2080(u) using the Mspine_silver_growth lower bound and depth_slice_lower.\n\nThe silver exponent and the arithmetic abscissa 1 become two points of one analytic curve, giving a precise sense in which the tree's spectral data controls its zeta function.\n\nThe two gradings are analytically independent, showing the silver spectral data has no influence whatever on the height-graded zeta.",
+    "domains": [
+      "Pythagorean",
+      "Geometry"
+    ],
+    "id": "fd_3453",
+    "priority_score": 0.7096666666666668,
+    "research_mode": "team",
+    "source_exp_id": "532d78bc",
+    "status": "available",
+    "timestamp": "2026-08-21T19:37:43.484956+00:00",
+    "title": "Two-Variable Berggren Zeta and the Silver-to-Arithmetic Transition"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Classify all irreducible elements of ZM = Z[t]/(t^2-1) by their norm a^2 - b^2. The rational-integer case is now settled: n in Z is irreducible in ZM iff n = +-2. Prime norm suffices for irreducibility in general, and we conjecture that prime norm together with the single norm-4 family exhausts the irreducibles.\n\na + bt with a^2 - b^2 != 0 is irreducible in ZM iff |a^2 - b^2| is prime, or |a^2 - b^2| = 4 and a is odd (the associates of 2).\n\nFormal Lean proof combining Moebius.ZM.irreducible_of_prime_natAbs, Moebius.ZM.irreducible_of_nrm_eq_four and Moebius.ZM.irreducible_mk_int_iff with a converse for b != 0: if |N| is composite and not 4 then exhibit a factorisation via the difference-of-squares parametrisation.\n\nComplete arithmetic of the twist ring, giving explicit factorisation algorithms for 'Moebius integers'.\n\nThere exist sporadic irreducibles of composite norm, so the norm is not a faithful invariant on a non-domain.",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_3460",
+    "priority_score": 0.7096666666666668,
+    "research_mode": "team",
+    "source_exp_id": "63cef724",
+    "status": "available",
+    "timestamp": "2026-08-21T19:38:09.211462+00:00",
+    "title": "Norm-Form Classification of General Twist-Ring Irreducibles"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The top shape count of even closed walks of length 2k on k+1 vertices should equal catalan k times (k+1)!. This identifies the leading coefficient of the moment polynomial as the Catalan number and is the combinatorial core of Wigner's semicircle law. It is verified formally for k = 1, 2, 3.\n\nFor all k \u2265 1, EvenWalks.surjEvenWalkCount (k+1) (2*k) = catalan k * (k+1)!.\n\nFormalize the bijection between even closed 2k-walks covering a spanning tree twice and pairs (labelling, Dyck path); check the identity by decide for k = 4 (needs an optimized decidable instance) and prove it by induction using the tree-contour recursion.\n\nThe leading coefficient of every even moment polynomial is catalan k, yielding all-order semicircle convergence in expectation.\n\nSome non-tree shape survives at top degree, contradicting the vertex bound; the moment polynomial degree analysis would have to be revisited.",
     "domains": [
       "Combinatorics",
@@ -11177,6 +11248,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T13:59:19.827835+00:00",
     "title": "Arithmetic Reordering of the Berggren Event Set"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Determine, for a finite abelian group G, how a rational prime p factors into irreducibles in the group ring Z[G], in terms of the character decomposition and a 2-adic defect. The Z/2 case is fully proved here: odd primes split as ((p+1)/2) \u00b1 ((p-1)/2)t while 2 remains irreducible because no element has norm \u00b12. The general case would give a factorisation theory for all 'twist rings'.\n\nFor finite abelian G and a rational prime p, the irreducible factorisation of p in Z[G] is determined by the splitting of p in each cyclotomic factor of Q[G] together with the congruence gluing conditions; in particular p is irreducible in Z[G] iff p divides |G| or p is inert in every character factor.\n\nFormalise the norm map Z[G] -> Z given by the product of characters, prove multiplicativity, and reprove Moebius.ZM.irreducible_two and Moebius.ZM.odd_prime_splits as the G = Z/2 instance.\n\nA uniform factorisation theory for group rings of orientation groups, with the Moebius case as the smallest example.\n\nThe Z/2 behaviour is an accident of the hyperbolic form a^2 - b^2 and orientation arithmetic does not generalise beyond order two.",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_3458",
+    "priority_score": 0.7090526315789475,
+    "research_mode": "team",
+    "source_exp_id": "63cef724",
+    "status": "available",
+    "timestamp": "2026-08-21T19:38:08.272175+00:00",
+    "title": "Twisted Group-Ring Factorisation Spectrum"
   },
   {
     "consumed_by_exp_id": "",
@@ -11359,6 +11445,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-26T14:03:58.556772+00:00",
     "title": "Close Proofs: Moonshot: The Last Theorem \u2014 Formalizing the Heat Death of Mathematics"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prime hypotenuses of the tree are exactly the primes \u2261 1 mod 4, each at a unique node. The tree-specific question is therefore not how many primes there are below H, but how they are distributed across depths, where the silver poles at Re s = \u03c3\u2080 predict an oscillation of frequency \u03c0/log(1+\u221a2).\n\n\u03c0_tree(H) = \u00bd Li(H) + O(H exp(\u2212c\u221alog H)), and the number of prime nodes of depth at most d is \u224d (3+2\u221a2)^d/d with a secondary oscillatory term of frequency \u03c0/log(1+\u221a2).\n\nDerive the first statement from prime_hyp_iff plus the prime number theorem in arithmetic progressions; test the second numerically by counting prime hypotenuses per depth slice up to depth 12 and fitting the oscillation.\n\nThe tree has a prime number theorem whose error term is genuinely controlled by its own silver poles \u2014 the analogue of zero-controlled error terms in the classical theory.\n\nThe depth distribution of prime nodes is governed by the arithmetic of m\u00b2+n\u00b2 alone and carries no trace of the silver spectrum.",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "fd_3455",
+    "priority_score": 0.6700588235294119,
+    "research_mode": "team",
+    "source_exp_id": "532d78bc",
+    "status": "available",
+    "timestamp": "2026-08-21T19:37:44.412775+00:00",
+    "title": "Silver-Oscillatory Prime Hypotenuse Counting"
   },
   {
     "consumed_by_exp_id": "",
@@ -11751,6 +11851,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T09:53:12.127473+00:00",
     "title": "Distortion Constant of the Markoff-in-Berggren Embedding"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Scalar sections of the Moebius bundle must vanish in every unit window (now proved). We conjecture the sharp rank threshold: for R^d-valued antiperiodic maps, nowhere-vanishing continuous sections exist exactly when d >= 2, with the circle map as universal witness. This separates the d = 1 obstruction from its higher-rank vanishing.\n\nA continuous f : R -> R^d with f(x+1) = -f(x) and f(x) != 0 for all x exists if and only if d >= 2; for d = 1 the zero set meets every interval of length one.\n\nFormalise the witness x -> (cos(pi x), sin(pi x), 0, ..., 0) for d >= 2 and derive the d = 1 impossibility from MoebiusSections.antiperiodic_has_zero_window.\n\nNon-orientability of the Moebius bundle is a strictly rank-one phenomenon, quantifying when orientation data can be evaded.\n\nSome higher-rank twisted bundle over the circle still forces a zero, indicating an obstruction beyond the first Stiefel-Whitney class.",
+    "domains": [],
+    "id": "fd_3459",
+    "priority_score": 0.5911538461538463,
+    "research_mode": "team",
+    "source_exp_id": "63cef724",
+    "status": "available",
+    "timestamp": "2026-08-21T19:38:08.791559+00:00",
+    "title": "Rank Threshold for Nowhere-Vanishing Twisted Sections"
   },
   {
     "consumed_by_exp_id": "",
@@ -35103,14 +35215,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "For a finite group `G` and an eventually `r`-transitive graded `G`-set,"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a7626bf4",
     "description": "The real-analytic version on `|q| < 1` is proved; only the passage from `\u211d` to\n`\u2102` and the residue computation remain.",
     "domains": [],
     "id": "fd_1604",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "f1fd8ff1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-19T13:08:52.965344+00:00",
     "title": "The real-analytic version on `|q| < 1` is proved; only the passage from `\u211d` to"
   },
