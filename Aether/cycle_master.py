@@ -913,12 +913,9 @@ class CycleMaster:
                         try:
                             import json as _json
                             fd_list = _json.loads(fd_json_file.read_text(encoding="utf-8"))
-                            from research_memory import FutureDirection
                             for fd in fd_list:
                                 if isinstance(fd, dict) and "title" in fd and "description" in fd:
-                                    # add_direction takes a FutureDirection — the old
-                                    # kwargs call raised TypeError on every invocation
-                                    # and was swallowed (audit 2026-08-21).
+                                    from research_memory import FutureDirection
                                     fd_manager.add_direction(FutureDirection(
                                         id=fd_manager._next_id(),
                                         title=fd["title"],
@@ -1609,3 +1606,30 @@ async def main():
     config["catalog"]["root_dir"] = "../Catalog"
 
     # Enable Ollama Cloud fallback if CLI flag is set
+    master = CycleMaster(
+        config=config,
+        domains_config=domains_config,
+        workspace=Path(args.workspace).resolve(),
+    )
+
+    if args.single_cycle:
+        success = await master.run_single_cycle(
+            forced_domain=args.domain,
+            dry_run=args.dry_run,
+        )
+        sys.exit(0 if success else 1)
+    else:
+        loop = asyncio.get_event_loop()
+        for sig in (__import__("signal").SIGINT, __import__("signal").SIGTERM):
+            loop.add_signal_handler(sig, master.request_shutdown)
+        try:
+            await master.run_continuous(
+                parallel=args.parallel,
+                max_jobs=args.max_jobs,
+            )
+        except asyncio.CancelledError:
+            pass
+
+
+if __name__ == "__main__":
+    asyncio.run(main())
