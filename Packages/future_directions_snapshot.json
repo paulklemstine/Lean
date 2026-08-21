@@ -97,7 +97,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "75105c60",
     "description": "**Domain**: Pythagorean <-> Physics\n\n**Hypothesis (MOONSHOT)**: The Berggren tree of primitive Pythagorean triples is a discrete model of spacetime. The Lorentz form a²+b²−c² that the Berggren moves preserve is exactly the Minkowski metric of special relativity, and the tree lives on the null cone — the causal structure of spacetime. The conjecture: the Berggren tree is a causal set (a discrete, locally-finite poset of spacetime events ordered by causality) whose growth (silver-ratio exponent) reproduces the dimension and causal structure of 2+1-dimensional Minkowski space, and whose boundary is a model of the asymptotic structure of spacetime.\n\n**Test**: Formalize the Berggren tree as a causal set: nodes = events, tree edges = causal relations, the Lorentz form = the spacetime interval. Prove the tree satisfies the causal-set axioms (transitivity, local finiteness, no closed causal curves) and that its silver-ratio growth reproduces a well-defined spacetime dimension. Characterize the tree's boundary as a model of null infinity / the conformal boundary of Minkowski space, and connect the groupoid action to the Lorentz group of spacetime symmetries.\n\n**Why now**: Causal set theory is a serious, active approach to quantum gravity (Bombelli–Lee–Meyer–Sorkin): spacetime is a discrete causal poset, and the Lorentzian metric is recovered from its order. The catalog's Berggren tree is literally a structure on the null cone of Minkowski space with proven growth and a Lorentz-preserving groupoid — a ready-made candidate for a causal set. Connecting elementary Pythagorean triples to the fabric of spacetime is the ultimate moonshot.\n\n**If true**: The Berggren tree becomes a fully formalized causal set — a discrete model of 2+1-dimensional spacetime whose causal structure, dimension, and boundary are exactly computable — bridging Pythagorean triples to quantum gravity and giving causal set theory a concrete, provable example.\n\n**If false**: The tree fails the causal-set axioms (e.g., local finiteness fails, or the growth does not yield a consistent dimension) — a precise theorem about why this particular discrete structure is not a spacetime, clarifying what a causal set requires.\n",
     "domain_bridges": [],
     "domains": [
@@ -109,7 +109,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-20T23:42:10.361088+00:00",
     "title": "The Berggren Causal Set — Pythagorean Triples as a Discrete Model of Spacetime"
   },
@@ -447,25 +447,6 @@
     "status": "available",
     "timestamp": "2026-08-18T09:49:34.716388+00:00",
     "title": "Deepening: The `⇐` direction is proved (`FourierFA.uncertainty_eq_coset_modulation`); the `"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 60572a3f (Q=0.850), which proved 75 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: `Σ_g |X^g|^k = (B_k + Σ_P (m_P − 1))·|G|`\n    (`bell_defect_eq`): the excess of a moment over its Bell floor is `|G|` times the number of\n    *extra* orbits per pattern, and it vanishes exactly for `k`-transitive actions\n    (`sum_patternMultiplicity_sub_one_eq_zero_iff`).\n\n---\n\n\n\n## Open conjecture",
-    "domain_bridges": [],
-    "domains": [
-      "Combinatorics"
-    ],
-    "id": "push_60572a3f_43050b28",
-    "lineage_refs": [],
-    "priority_score": 0.95,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "60572a3f",
-    "status": "available",
-    "timestamp": "2026-08-19T09:49:59.558898+00:00",
-    "title": "Deepening: The Bell defect, counted exactly"
   },
   {
     "ambition_level": "grand_challenge",
@@ -2632,25 +2613,6 @@
     "status": "available",
     "timestamp": "",
     "title": "Quantum Entanglement Monogamy: CKW Inequality"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle f15cd85a (Q=0.768), which proved 14 theorems in Geometry. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
-    "domain_bridges": [],
-    "domains": [
-      "Geometry"
-    ],
-    "id": "push_f15cd85a_094e72fd",
-    "lineage_refs": [],
-    "priority_score": 0.86837,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "f15cd85a",
-    "status": "available",
-    "timestamp": "2026-08-02T22:20:26.804499+00:00",
-    "title": "Deepening: Perfect Cuboid (Euler Brick)"
   },
   {
     "ambition_level": "extension",
@@ -47480,7 +47442,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ec6993b5",
     "description": "Strict unimodality and the bracketing of the argmax are already theorems, so the\nonly missing ingredient is the explicit comparison of the two bracketing degrees.",
     "domain_bridges": [],
     "domains": [],
@@ -47490,7 +47452,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "2e28602b",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-19T22:41:47.421719+00:00",
     "title": "Strict unimodality and the bracketing of the argmax are already theorems, so the"
   },
