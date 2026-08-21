@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "6d98445d",
-      "domain": "Physics",
-      "key_insight": "# Future directions (thread `th_482524af`, cycle 2)\n\nThe results proved in this cycle live in\n\n* `Catalog/Physics/CollatzTwoStepSpectrum.lean` — the depth-two spectrum,\n* `Catalog/Physics/CollatzSpect",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 57,
-      "timestamp": "2026-08-19T19:40:40",
-      "title": "Future directions from cycle 4c2c71e5"
-    },
-    {
       "cycle_id": "a985d45a",
       "domain": "Combinatorics",
       "key_insight": "# FUTURE DIRECTIONS — after Cycle 5 (frame definability for `ModalSystem`)\n\nCycle 5 added the missing definability layer over the Cycle-1 `KFrame`/`sat` apparatus:\naxiom-to-relation correspondences (`",
@@ -499,19 +489,19 @@
       "theorem_count": 69,
       "timestamp": "2026-08-21T17:45:59",
       "title": "Sharper threshold certification"
+    },
+    {
+      "cycle_id": "df44f621",
+      "domain": "Combinatorics",
+      "key_insight": "# Future directions\n\nThis cycle turned the exact ensemble dichotomy of `Probability.WignerAllOrderParity`\ninto a self-contained combinatorial theory of *even closed walks*, and used it to push\nthe exa",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 52,
+      "timestamp": "2026-08-21T18:56:28",
+      "title": "The exact ensemble dichotomy"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "a3466461",
-      "domain": "Novelty",
-      "key_insight": "# Future directions — measuring the symmetry-breaking cost of factoring\n\nThe four files `Catalog/Novelty/SymmetryBreakingCost{Factoring,Kernel,Adaptive,Witness}.lean`\nturn the ISOLATION-COST experimen",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 65,
-      "timestamp": "2026-08-13T06:53:16",
-      "title": "The Symmetry-Breaking Cost of Factoring, Measured"
-    },
     {
       "cycle_id": "d8dbb938",
       "domain": "Combinatorics",
@@ -2501,27 +2491,19 @@
       "theorem_count": 69,
       "timestamp": "2026-08-21T17:45:59",
       "title": "Sharper threshold certification"
+    },
+    {
+      "cycle_id": "df44f621",
+      "domain": "Combinatorics",
+      "key_insight": "# Future directions\n\nThis cycle turned the exact ensemble dichotomy of `Probability.WignerAllOrderParity`\ninto a self-contained combinatorial theory of *even closed walks*, and used it to push\nthe exa",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 52,
+      "timestamp": "2026-08-21T18:56:28",
+      "title": "The exact ensemble dichotomy"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "254383ec",
-      "domain": "Cryptography",
-      "name": "Found_iff",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "254383ec",
-      "domain": "Cryptography",
-      "name": "searchCost_eq_budget_of_not_found",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "1a7b47b1",
-      "domain": "Pythagorean",
-      "name": "exists_unused_coordinate",
-      "quality": 0.82
-    },
     {
       "cycle_id": "1a7b47b1",
       "domain": "Pythagorean",
@@ -2803,9 +2785,27 @@
       "domain": "Cryptography",
       "name": "secureKeyRate_gt_of_cert_pade",
       "quality": 0.86
+    },
+    {
+      "cycle_id": "df44f621",
+      "domain": "Combinatorics",
+      "name": "snoc_eq_cons_succ",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "df44f621",
+      "domain": "Combinatorics",
+      "name": "isEvenWalk_iff_isEvenClosedWalk",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "df44f621",
+      "domain": "Combinatorics",
+      "name": "sum_indicator_eq_count",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-21T17:45:59",
+  "last_updated": "2026-08-21T18:56:28",
   "open_questions": [
     {
       "context": "Everything is proved; there are no `sorry`s and no new axioms.",
@@ -3207,12 +3207,6 @@
     ],
     "Combinatorics": [
       {
-        "cycle_id": "24da7a57",
-        "quality": 0.84,
-        "theorems": 69,
-        "title": "Round-11 Closures: The Definitive Closure of the Classical Surface"
-      },
-      {
         "cycle_id": "d8dbb938",
         "quality": 0.82,
         "theorems": 70,
@@ -3265,6 +3259,12 @@
         "quality": 0.76,
         "theorems": 37,
         "title": "The Bonferroni machinery"
+      },
+      {
+        "cycle_id": "df44f621",
+        "quality": 0.82,
+        "theorems": 52,
+        "title": "The exact ensemble dichotomy"
       }
     ],
     "Computation": [
