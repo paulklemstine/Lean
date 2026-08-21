@@ -1,7 +1,7 @@
 {
   "part": "6",
-  "archived_at": "2026-08-21T05:48:41Z",
-  "count": 56,
+  "archived_at": "2026-08-21T09:53:13Z",
+  "count": 57,
   "directions": [
     {
       "ambition_level": "extension",
@@ -2286,6 +2286,46 @@
       "decomposition_depth": 0,
       "source": "",
       "github_issue": 0
+    },
+    {
+      "id": "fd_1128",
+      "title": "Round-11 Closures: The Definitive Closure of the Classical Surface",
+      "description": "**Paper (factor3):** [ResearchOutput/NewMathematics/29_Round11_Closures.md](https://github.com/paulklemstine/factor3/blob/main/ResearchOutput/NewMathematics/29_Round11_Closures.md)\n\n---\n\n# Round-11 Closures: The Definitive Closure of the Classical Surface\n\n**Program:** Factoring research lab — round-11 subagent batch synthesis\n**Date:** 2026-08-11\n**Status:** Negative-results synthesis — round-11 attacks closed; eleven rounds complete (~50 hypotheses)\n\n---\n\n## Abstract\n\nAn eleventh brainstorm subagent attacked the deepest remaining possibilities\nafter the spectral extension: per-coefficient spectral objects, the\nhint-amplification feed, topological re-encodings, and constant-factor\noptimization. All four were tested and closed (experiments 348-351). The round\ndelivered the DEFINITIVE closure: the fingerprint carries ~0 mutual information\nwith (p+q) mod ell, so Coppersmith's hint-amplification channel has NO\nN-computable source (CFSIGMA). Combined with the spectral-wall sharpening\n(CIFINGER) and the topological seal (GROUPOID), the classical uniform\nhint-free attack surface is confirmed closed. Eleven subagent rounds (~50\nhypotheses) are now closed.\n\n---\n\n## 1. The batch at a glance\n\n| # | Hypothesis | Attack | Verdict |\n|---|-----------|--------|---------|\n| 1 | CIFINGER | cycle-index fingerprint (per-coefficient spectral) | refuted — informative entry at the order scale (~sqrt N) |\n| 2 | CFSIGMA | fingerprint -> Coppersmith feed (MI test) | refuted — feed STARVED (atomic-uniform) |\n| 3 | GROUPOID | orbit-count / homotopy cardinality | refuted — computing it requires phi(N) and the ords |\n| 4 | DRHO | Dickman-policy rho | refuted — no asymptotic gain, likely folklore |\n\n---\n\n## 2. CIFINGER (experiment 348): the spectral wall, per-coefficient\n\nThe cycle-index fingerprint M_d = (1/d) sum_{c|d} mu(d/c) F(c), F(c) =\ngcd(b^c - 1, N), is per-coefficient poly-log computable (NOT O(N)-sealed). But\nthe informative coefficient sits at d* = min(ord_p(b), ord_q(b)) ~ sqrt(N) for\ngeneric b (verified exactly; small only in the p-1-smoothness case). The Mobius\nstructure is genuinely new but relocates no information — the sqrt floor /\norder-seal. This is the sharpest statement of the spectral wall.\n\n---\n\n## 3. CFSIGMA (experiment 349): the hint feed is starved — the definitive closure\n\nCoppersmith amplifies any sigma-hat with |sigma-hat - (p+q)| < N^{1/4} in poly\ntime (the real unpriced channel), but it needs a source. Tested: the\nCI-fingerprint carries ~0 mutual information with (p+q) mod ell (correlations\n-0.27 to +0.08 across ell = 3..13, within noise). ord_p(b) and the induced\nstructure are empirically independent of p mod ell (atomic-uniform). The\nhint-amplification channel EXISTS but has NO N-computable source. This is the\nDEFINITIVE closure test: the classical surface is closed.\n\n---\n\n## 4. GROUPOID (experiment 350): topological re-encoding is as hard as factoring\n\nThe orbit-count identity C(b) = 1 + phi(N)/ord_N(b) + (p-1)/ord_p(b) +\n(q-1)/ord_q(b) is verified exactly, but computing C(b) requires phi(N) and the\nords (= factoring). Burnside's lemma re-sums the same sealed data.\nTopology/category theory gives re-encodings, not new computation — a clean\nnegative result for the topological school (barrier 4 / trace-lemma seal).\n\n---\n\n## 5. DRHO (experiment 351): no constant-factor gain\n\nDickman-policy rho (early-abort batch) gives a mean ratio ~1.95, not\nconsistently better than classic rho — no asymptotic gain, likely already in\nthe QS/MPQS/NFS early-abort folklore (barrier 2).\n\n---\n\n## 6. The definitive closure\n\nEleven subagent rounds (~50 hypotheses), 351 experiments, 29 papers: the\nclassical uniform hint-free attack surface is CONFIRMED closed. The round-11\nbatch closed the last unpriced channel's feed (CFSIGMA), sharpened the spectral\nwall (CIFINGER), sealed the topological school (GROUPOID), and priced the\nconstant-factor folklore (DRHO). The open frontier remains purely theoretical:\nthe barrier-4 proof, the quantum exception (localized to barrier 4), and hint\namplification (which requires an external hint no N-computable source provides).\n\n---\n\n*Related:* `25_Round10_Closures.md`, `26_Frontiers_Open_Problems.md`,\n`28_Spectral_FreeWitness.md`, `Factoring_Lab_Notebook.md` Parts 95-98.\n",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 1000.0,
+      "status": "completed",
+      "consumed_by_exp_id": "24da7a57",
+      "timestamp": "2026-08-12T00:55:57.842032+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.84,
+      "domain_quality_penalty": 0.0,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 2,
+      "last_attempt_time": "2026-08-12T13:12:28.139854+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 44
     }
   ]
 }

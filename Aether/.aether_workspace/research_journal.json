@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "57212186",
-      "domain": "NumberTheory",
-      "key_insight": "# Future Directions — RLHF/PTX alignment as arithmetic\n\nDerived from the analysis and adversarial review of the verified results in\n`Catalog/NumberTheory/RLHF*.lean`.  Each conjecture is falsifiable,",
-      "quality_score": 0.9,
-      "sorry_count": 5,
-      "theorem_count": 621,
-      "timestamp": "2026-08-19T15:46:41",
-      "title": "reinforcement learning"
-    },
-    {
       "cycle_id": "6bc62e41",
       "domain": "Applications",
       "key_insight": "# Future directions\n\nFive falsifiable conjectures growing out of this cycle.  Each is stated against the\ndefinitions now in `Catalog/Applications/PoissonSummationConverse.lean`,\n`Catalog/Applications/",
@@ -499,19 +489,19 @@
       "theorem_count": 143,
       "timestamp": "2026-08-21T09:53:06",
       "title": "p-adic Berggren Dynamics — The Tree of Pythagorean Triples as a p-adic Dynamical System"
+    },
+    {
+      "cycle_id": "315472d4",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions — Berggren ⟷ Markoff\n\n## Where this cycle ended up\n\nThe mission hypothesis (\"the Berggren ternary tree and the Markoff tree are isomorphic as\nLorentz-preserving ternary trees\") is",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 115,
+      "timestamp": "2026-08-21T09:53:19",
+      "title": "Markoff Tree Transfer — Carrying the Berggren Tree's Machinery to the Markoff Tree"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "219576b7",
-      "domain": "Computation",
-      "key_insight": "# Future Directions — the knot–number bridge after fifteen cycles\n\n## What is now proved (all sorry-free, `Catalog/Computation/AlexanderTorusKnot/`)\n\n1. **General torus knots** (`GeneralTorus.lean`).",
-      "quality_score": 0.9,
-      "sorry_count": 0,
-      "theorem_count": 7,
-      "timestamp": "2026-08-12T23:09:13",
-      "title": "A Knot-Number Theory Bridge (Alexander polynomial)"
-    },
     {
       "cycle_id": "24da7a57",
       "domain": "Combinatorics",
@@ -2501,27 +2491,19 @@
       "theorem_count": 143,
       "timestamp": "2026-08-21T09:53:06",
       "title": "p-adic Berggren Dynamics — The Tree of Pythagorean Triples as a p-adic Dynamical System"
+    },
+    {
+      "cycle_id": "315472d4",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions — Berggren ⟷ Markoff\n\n## Where this cycle ended up\n\nThe mission hypothesis (\"the Berggren ternary tree and the Markoff tree are isomorphic as\nLorentz-preserving ternary trees\") is",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 115,
+      "timestamp": "2026-08-21T09:53:19",
+      "title": "Markoff Tree Transfer — Carrying the Berggren Tree's Machinery to the Markoff Tree"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "5be71780",
-      "domain": "Shared",
-      "name": "rlhfMulti_le",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "5be71780",
-      "domain": "Shared",
-      "name": "rlhfMulti_eq_iff",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "5be71780",
-      "domain": "Shared",
-      "name": "fullPtxObj_le",
-      "quality": 0.85
-    },
     {
       "cycle_id": "d37c9a15",
       "domain": "MachineLearning",
@@ -2803,9 +2785,27 @@
       "domain": "Physics",
       "name": "signedSum_empty",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "315472d4",
+      "domain": "Cryptography",
+      "name": "bLevel_valid",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "315472d4",
+      "domain": "Cryptography",
+      "name": "bLevel_image_disjoint",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "315472d4",
+      "domain": "Cryptography",
+      "name": "bLevel_image_card",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-21T09:53:06",
+  "last_updated": "2026-08-21T09:53:19",
   "open_questions": [
     {
       "context": "Everything is proved; there are no `sorry`s and no new axioms.",
@@ -3331,12 +3331,6 @@
     ],
     "Cryptography": [
       {
-        "cycle_id": "09812d2e",
-        "quality": 0.6313436554247915,
-        "theorems": 64,
-        "title": "A Conditional-Impossibility Framework for Classical Factoring"
-      },
-      {
         "cycle_id": "fb76e61b",
         "quality": 0.85,
         "theorems": 84,
@@ -3389,6 +3383,12 @@
         "quality": 0.78,
         "theorems": 67,
         "title": "All the machinery — honesty, guarding, bounded search, the"
+      },
+      {
+        "cycle_id": "315472d4",
+        "quality": 0.82,
+        "theorems": 115,
+        "title": "Markoff Tree Transfer — Carrying the Berggren Tree's Machinery to the Markoff Tr"
       }
     ],
     "Geometry": [

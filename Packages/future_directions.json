@@ -42171,7 +42171,7 @@
       "depth_estimate": 3,
       "description": "Let `Λ ⊆ ℝ^d` be a full-rank lattice with basis matrix `B`. The data\n`|t(P + v) ∩ Λ|` for all real `t > 0` and all `v ∈ Λ` determines `1_P` almost everywhere, with\nconstants depending only on `λ_1(Λ)` and `λ_d(Λ)`; moreover, the sparse-grid probe reconstructs\n`1_P` using `O(1)` counting queries per probe point. Consequently, a \"lattice-count oracle\" for a\nsecret body `P` (as arises in lattice-based counting/`CVP`-style side channels) leaks `P` up to\nnull sets, with query complexity polynomial in the desired accuracy and in `λ_d/λ_1`.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Computation",
         "Cryptography"
@@ -44567,7 +44567,7 @@
       "depth_estimate": 3,
       "description": "For any `s ≠ t` bounded by `N` agreeing up to\n   order `K`, the integer vector `c = count_s − count_t` lies in the kernel of the\n   `(K+1) × (N+1)` Vandermonde matrix, and `card s ≥ ½‖c‖₁ ≥ ` the minimum of `½‖·‖₁` over\n   nonzero integer kernel vectors.  Conjecture: this lattice minimum equals `2^K` for\n   `N = K + 1` and equals `K + 1` for `N ≥ d(K)`, with no intermediate values other than\n   integers in `[K+1, 2^K]`.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Cryptography"
       ],
@@ -44687,7 +44687,7 @@
       "depth_estimate": 3,
       "description": "Between the critical alphabet `N = K + 1`, where\n   `m = 2^K`, and `N = d(K)`, where `m = K + 1`, the invariant appears to descend through few\n   values: for `K = 3` the verified/computed profile is `8, 6, 6, 4, 4, …`\n   (`ComputationalEvidence.md` §12), and `m(N,3) ≤ 6` for `N ≥ 5` is the theorem\n   `PowerSumIdealPTE.minCollisionCard_three_le_six`.  Conjecture: every intermediate value of\n   `m(·, K)` is of the form `½‖c‖₁` for a *vertex* of the kernel polytope, and the number of\n   distinct values taken by `m(·, K)` is `O(K)` rather than exponential.  *The key insight is*\n   that the descent is governed by the successive minima of the Vandermonde kernel lattice in\n   the `ℓ¹` norm, not by the arithmetic of individual PTE solutions.  *Why now?*  The `K = 2`\n   row is fully proved (`minCollisionCard_two_table`: only the values `4` and `3` occur) and\n   the `K = 3` row is now bracketed from both sides by theorems, so the first genuinely new\n   data point is `K = 4`, a search of the same size as the one already carried out.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Algebra",
         "Cryptography"
@@ -45750,7 +45750,7 @@
       "depth_estimate": 3,
       "description": "The unconditional counting separation and the conditional\ncryptographic separation are both formalized; the missing middle case would show\nthat the seed budget is a resource in its own right, not merely a proxy for\ninformation.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Combinatorics",
         "Cryptography"
@@ -46152,7 +46152,7 @@
       "depth_estimate": 3,
       "description": "Cycle 3 upgraded sharpness from \"the maximum is attained\" to \"every\nlattice value is attained\", and cycle 4 turned the maximum into an identification\ntheorem; the outstanding step is a *closure* description of `defectSet`, which is a\nfinite convex-geometry computation for each `q` and is falsifiable by one\nexhaustive rational scan.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Geometry",
         "Cryptography"
@@ -46234,7 +46234,7 @@
       "depth_estimate": 3,
       "description": "For fixed `q`, `defectSet δ k q = defectSet δ k' q` if and only if\n   `gcd(k,q) = gcd(k',q)` — the defect spectrum sees only the reduced denominator,\n   and sees it exactly.\n2. **(1a)** For `a` irrational with bounded continued-fraction partial quotients,\n   the attained defects in `[0, Lδ]` have gaps `O(1/n)` after `n` weight pairs —\n   a quantitative (three-distance) form of Conjecture 1.\n3. **(2a)** For the `b`-bit grid on `ℝ^N`, the number of codebook points inside the\n   basin `‖w − w*‖ ≤ √(Lδ/(μ2^b))` is `Θ((2^b L /(μ δ))^{N/2})`; below\n   `b = (1/2)log₂(L/μ)` this count drops to `1` and the lattice optimum can no\n   longer resolve the basin.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Cryptography"
       ],
@@ -48406,7 +48406,7 @@
       "depth_estimate": 3,
       "description": "The planar case is already an equality, proved and cross-checked\nnumerically (Section 3 of `ComputationalEvidence.md`); the only missing\ningredient is the inclusion–exclusion over the subspace lattice in dimension\n`k ≥ 3`, where the current data show the naive formula fails.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Cryptography"
       ],
@@ -49266,7 +49266,7 @@
       "depth_estimate": 3,
       "description": "form of the statement — `FourierFA.uncertainty_gap_of_not_dvd` shows the product jumps\nby at least `1` as soon as the support size leaves the divisor lattice — so the remaining content\nis exactly the metric estimate, and the proof is organised as an explicit chain of inequalities in\nwhich `le_antisymm` is the only step to be replaced.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Cryptography",
         "Logic"
@@ -51595,7 +51595,7 @@
       "depth_estimate": 3,
       "description": "The regular-action computation makes the \"one action is never enough\" half a theorem;\nwhat remains is a finite assembly argument over the subgroup lattice, all of whose ingredients\n(fixed-point counts, orbit counts) are already formalised in this thread.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Algebra",
         "Cryptography"
@@ -51914,7 +51914,7 @@
       "depth_estimate": 3,
       "description": "The bijection with the subgroup lattice is formalised, so the analytic side of the\nquestion is entirely eliminated; what remains is a clean statement about abelian groups that\ncan be attacked through the structure theorem, and refuted or confirmed by exhaustion for all\nabelian groups of order ≤ 64.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Algebra",
         "Cryptography"
@@ -52036,7 +52036,7 @@
       "depth_estimate": 3,
       "description": "the conjecture predicts that no finite non-lattice `S ⊆ ℤ` (e.g. `{0,1,4}`)\nadmits such a formula; test numerically with Gaussians.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Cryptography"
       ],
@@ -52835,7 +52835,7 @@
       "depth_estimate": 3,
       "description": "The case of entries in *any* imaginary quadratic order is now proved\nunconditionally (`not_mem_rigidityLocus_of_quadraticInt`), as is the case of any entries with\nintegral squared modulus; the remaining gap is precisely the transition from \"finitely many\nlattices, effectively\" to \"all algebraic entries\".",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Algebra",
         "Cryptography"
@@ -53034,7 +53034,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.**  Let `A ⊆ ℕ` with `#A = m + 1` and let `f, g` be functions with values in `A`\nwhose power sums agree for all `k < m`.  If their value distributions differ then\n\n`|p_m(f) - p_m(g)| ≥ ∏_{a ∈ A} ∏_{b ∈ A, b > a} (b - a) / D_A`\n\nfor an explicit `D_A` depending only on the nodal weights — i.e. the top-index gap is\nquantised, with the interval case `A = {0,…,N}` giving the known bound `N!`.\n\n*The key insight is* that the count difference is an integer multiple of the nodal weight\nvector `w_a = ∏_{b≠a}(a-b)⁻¹` (proved for `w` up to the kernel classification in\n`NearMissGeneralNodes` and constructed explicitly here as `intWeight`), so the top moment\nlives in the lattice generated by `1/w`.\n\n*Why now?*  `powerSums_below_card_insufficient` produces the extremal witness for every `A`;\nthe matching lower bound would show that the witness is not merely an example but the\nminimiser, generalising the catalog's `factorial_le_powerSum_gap` beyond intervals.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Combinatorics",
         "Cryptography"
@@ -53903,7 +53903,7 @@
       "depth_estimate": 3,
       "description": "**RG fixed points (cycle 2).** The claim that only `S = ∅` and `S = univ` are\n  fixed by the scale-halving flow is **false**: `latticeSet_two_mul_eq_iff`\n  proves the fixed lattice foams are exactly those of spacing `0`, i.e. the\n  single-branch-point foam `S = {0}`, and\n  `iInter_latticeSet_eq_singleton_zero` shows the tower of a nonzero lattice\n  converges to that foam rather than to the smooth one.  The limit is genuinely\n  non-Hausdorff (`not_t2Space_foam_latticeSet_zero`), with metric defect exactly\n  `2`.  Wheeler foam is therefore **RG-persistent**: coarse graining a lattice\n  foam never removes all branching.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Cryptography"
       ],
@@ -54057,7 +54057,7 @@
       "depth_estimate": 3,
       "description": "The entropy–geometry identity and the strict-inclusion structure of\nthe tower (`latticeSet_two_mul_ssubset`) are both proved, so this is a counting\nstatement about `⌊·⌋` rather than new topology.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Geometry",
         "Cryptography"
@@ -55431,7 +55431,7 @@
       "depth_estimate": 3,
       "description": "The master inequality is already formalised with `S` as a free parameter, so this\nis a purely arithmetic monotonicity statement about a formula that is in the library today;\nproving it converts \"the all-translate choice is best\" from an observation about two data\npoints into a theorem about the whole lattice of marginal choices.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Cryptography"
       ],
@@ -55589,7 +55589,7 @@
       "depth_estimate": 3,
       "description": "The `t = 2` case, with `H(2) = 1` proved *and* shown sharp for every\nsemiprime (`pmFrame_isLeast_neg_one`), is a complete base case; the induction\nstep is a statement about lattice-point multiplicities that `omega`/`nlinarith`\ncan attack once the region is written down.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "NumberTheory",
         "Cryptography"
@@ -56614,11 +56614,11 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "532d78bc",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -56630,7 +56630,7 @@
       ],
       "github_issue": 163,
       "id": "fd_1773",
-      "last_attempt_time": "2026-08-21T05:09:08.998092+00:00",
+      "last_attempt_time": "2026-08-21T09:54:29.138337+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -56645,7 +56645,7 @@
       "source": "github_injection",
       "source_exp_id": "github",
       "source_path": "github",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-08-20T23:42:10.362558+00:00",
       "title": "The Riemann Hypothesis for the Berggren Tree — A Zeta Function with a Provable Critical Line"
@@ -57260,7 +57260,7 @@
       "depth_estimate": 3,
       "description": "The same analysis applies to any Möbius-type tree of arithmetic objects: the Stern–Brocot tree of\nrationals, the Markov triple tree, and trees of solutions to other Pell-like and Vieta-jumping\nequations. In each case one may ask whether the branching/growth heuristic gives the right abscissa.\nThe prediction implied by the present work is that it never does when the tree bijects onto a\nlattice of full dimension.\n\n---",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Cryptography"
       ],
@@ -60719,7 +60719,7 @@
       "depth_estimate": 3,
       "description": "Formalize normal fans and prove that vertices of a full-dimensional lattice polytope correspond to maximal cones of its normal fan.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Cryptography"
       ],
@@ -62433,7 +62433,7 @@
       "depth_estimate": 3,
       "description": "Iterate recognizability to produce locally decoded addresses at every scale. Generalize the present one-dimensional divisibility argument to a rank-two lattice or expanding integer matrix.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "NumberTheory",
         "Cryptography"
@@ -66677,7 +66677,7 @@
       "depth_estimate": 3,
       "description": "Formalize a stream-cipher interface and show that observing an orbit suffix beginning at time `n` leaves at least `2^n` candidate exact-real seeds for every interior observed state.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Cryptography"
       ],
@@ -68190,7 +68190,7 @@
       "depth_estimate": 3,
       "description": "Define planar Euclidean isometries, lattices, discreteness, and compact quotient conditions. Only after these definitions should an exact 17-group classification theorem be attempted.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Cryptography"
@@ -68674,7 +68674,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** The two-variable HOMFLY polynomial admits a signed generating-function model using paths in a higher-dimensional lattice, with separate geometric statistics recording the two gradings and local forbidden structures determined by crossings.\n\nThe key insight is that the signed-state mechanism is independent of the number of gradings; replacing scalar area by a vector of lattice statistics should encode multivariable state-sum weights.\n\n**Why now?** The one-variable analysis cleanly separates the unavoidable sign data from the grading statistic. This supplies a controlled template for testing whether richer knot polynomials require genuinely new geometry or only additional lattice coordinates.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Geometry",
         "Cryptography"
@@ -70162,7 +70162,7 @@
       "depth_estimate": 3,
       "description": "Model the proposed key exchange carefully. In any single-base power semigroup, `(A^[a])^[b] = A^[(a+1)(b+1)-1]`; this exponent convention and associativity should be proved before making protocol claims.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Cryptography"
@@ -71604,7 +71604,7 @@
       "depth_estimate": 3,
       "description": "Study monotone provability/closure operators on complete lattices. Ordinary Knaster–Tarski fixed points should be kept conceptually distinct from the diagonal fixed point `G ↔ ¬Prov(G)` formalized here.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Cryptography",
         "Applications"
@@ -81394,7 +81394,7 @@
       "depth_estimate": 3,
       "description": "The lattice-point enumerator of a generalized parking-function polytope satisfies a\ndelete-and-contract recursion over cumulative profiles, and this recursion extends to\na valuative invariant on the associated generalized permutohedral subdivision.\n\nThe key insight is that coordinate slicing is a discrete valuation operation, while\nrank deletion identifies its chamberwise contraction rule.\n\nWhy now? Small-case slice tables already display a stable recursive stratification;\nan explicit gluing theorem would turn that evidence into a precise valuation formula.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Cryptography"
       ],
@@ -84971,7 +84971,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** For a monotone but not necessarily continuous self-observation\noperator, the least fixed point is reached by continuing the finite stages into\nthe transfinite: iterate along ordinals, take suprema at limits, and the least\nfixed point appears at a stage bounded by the cofinality of the underlying\nlattice; the least ordinal at which it appears (the *emergence rank*) is an\norder invariant of the operator.\n\nThe key insight is that the strict gap between the finite-stage supremum and the\nleast fixed point is not a defect but a *measure*: the discontinuity witnessed on\ntwo stacked limit levels has emergence rank exactly two, and stacking `k` limit\nlevels produces rank exactly `k`.\n\nWhy now? The finite-stage approximation theorem and its discontinuous witness\nisolate the precise place where finite emergence fails, giving a concrete first\nrung of a transfinite ladder that can now be defined and calibrated.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Cryptography",
         "MachineLearning"
@@ -85050,7 +85050,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** Among all monotone self-observation operators on a fixed complete\nlattice, those whose emergent state equals their least fixed point are precisely\nthe continuous ones; equivalently, \"finite rounds of observation suffice\" is not\nmerely sufficient but *characterises* continuity on lattices rich enough to\ncarry a limit level.\n\nThe key insight is that the discontinuous witness fails the finite-suffices\nproperty in the sharpest possible way — its emergent state is a fixed point of no\niterate — suggesting that the implication \"finite-suffices ⇒ continuous\" holds in\nfull generality, upgrading a one-directional theorem to an equivalence.\n\nWhy now? Having both the positive theorem (continuous ⇒ finite-suffices) and an\nexplicit failure in the discontinuous case, the remaining converse is the natural\nand testable completion of the picture.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Cryptography"
       ],
@@ -87609,7 +87609,7 @@
       "depth_estimate": 3,
       "description": "Hara–Slade lace-expansion results concern sufficiently high-dimensional lattices and mean-field asymptotics, not an exact square-lattice constant. A faithful development should first formalize convolution, the two-point function, susceptibility, the lace coefficients, and the bootstrap estimates, then derive the applicable high-dimensional asymptotics.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Cryptography"
@@ -88162,7 +88162,7 @@
       "depth_estimate": 3,
       "description": "Define key generation,\n   encryption, and decryption over `ZMod q`; connect the existing noise and\n   rounding lemmas to a full correctness theorem.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Cryptography"
       ],
@@ -88242,7 +88242,7 @@
       "depth_estimate": 3,
       "description": "Replace the abstract successive-minima spectrum by\n   actual Euclidean lattices; formalize dual lattices, smoothing parameters,\n   Gaussian mass bounds, and transference inequalities.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Geometry",
         "Cryptography"
@@ -91833,7 +91833,7 @@
       "depth_estimate": 3,
       "description": "Add block-length-dependent confidence, smoothing, authentication, and leakage terms. These distinguish the proved asymptotic threshold from the lower tolerable QBER of practical finite blocks.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Cryptography"
       ],
@@ -93527,7 +93527,7 @@
       "depth_estimate": 3,
       "description": "The exact connective constant of the square lattice is not known. The proposed value `(2 + √2) / 2` is ruled out in `Catalog/Tropical/SAW/ConnectiveConstant.lean`, since it is strictly below the proved lower bound `2`.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Tropical",
         "Cryptography"
@@ -94579,7 +94579,7 @@
       "depth_estimate": 3,
       "description": "Instantiate the finite IND-CPA experiment with complete Regev key generation, encryption, and decryption distributions. Prove correctness from the noise bounds and discharge each common-ideal hybrid premise from decisional LWE.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Cryptography"
@@ -96617,7 +96617,7 @@
       "depth_estimate": 3,
       "description": "Add tensor-product multiplication,\n   relinearization/key switching, and prove the corresponding phase and noise\n   formulas.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Cryptography"
       ],
@@ -96657,7 +96657,7 @@
       "depth_estimate": 3,
       "description": "Replace abstract finite PMFs with\n   executable samplers and prove each public-key and challenge-ciphertext game\n   hop from a formally stated decisional Ring-LWE assumption.  The current\n   `indCPA_of_decisional_ringLWE` theorem is the final reduction step and does\n   not claim an unconditional proof that Ring-LWE is hard.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Cryptography"
@@ -96698,7 +96698,7 @@
       "depth_estimate": 3,
       "description": "Formalize a bounded-depth decryption\n   circuit and show that the somewhat homomorphic evaluator can evaluate it on\n   encrypted secret-key bits.  This would discharge the abstract\n   `refresh_correct` field from concrete cryptographic hypotheses.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Cryptography",
         "Algebra"
@@ -101416,7 +101416,7 @@
       "depth_estimate": 3,
       "description": "prove the sharp bound `R_min ≥ 1/2`.  A promising route is a *strip* argument: for\n  `R < 1/2` consecutive cells of a path are king-neighbours and each crossing of a\n  lattice line `x = K` forces both endpoints within `R` of the line; a counting argument\n  in a two-row strip gives `2` cells per column against the `1/R > 2` hops per column\n  needed to advance one column.  The difficulty is to rule out paths that drift in both\n  coordinates.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Cryptography"
       ],
@@ -109476,7 +109476,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.**  For `n ≥ 1`, rule 110 has a configuration of minimal period `> 1` on\n`ZMod n` if and only if `4 ∣ n`.  The \"if\" direction is proved\n(`rule110_exists_minimalPeriod_two`); the \"only if\" direction is verified for\n`n ≤ 8` computationally.\n\n*The key insight is* that the smallest rule-110 glider has spatial period `4`, so all\nshort orbits should be pullbacks along `ZMod n → ZMod 4`, and the conjecture says that\nthe entire short-orbit structure of the universal rule on a torus is generated by a\nsingle four-cell pattern.\n\n*Why now?*  The simulation-embedding theorem `minimalPeriod_pull` gives one direction\nfor free, and it also says what a proof of the converse must produce: a retraction of\nthe periodic part of the dynamics onto the four-site lattice.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Cryptography",
         "Logic"
@@ -109558,7 +109558,7 @@
       "depth_estimate": 3,
       "description": "**Specification (to be formalised, then tested).**  Site: the category whose objects\nare the arcs `[i, i+ℓ]` of the cyclic lattice `ZMod n` and whose morphisms are\ninclusions, with the Grothendieck topology generated by finite covers by overlapping\narcs.  Presheaf: `F(U) = { partial configurations on U that satisfy the update\nequation at every site whose full neighbourhood lies in U }`, with restriction the\nobvious truncation.\n\n**Conjecture.**  `F` is a sheaf, and `Γ(ZMod n, F) ≅ V(g,n)`; moreover `F` is flasque\nif and only if `g` is right-transitive in the sense of\n`CAShiftsPolynomialsOrbits.RightTransitive`, so the `16` census rules are exactly the\nones with vanishing higher cohomology on the cyclic site.\n\n*The key insight is* that gluing partial fixed configurations across overlapping arcs\nis exactly the propagation argument used in\n`fixedPoints_eq_singleton_zero_of_right_transitive`, so the obstruction to gluing is\nthe failure of that local criterion.\n\n*Why now?*  The propagation lemma is already isolated and proved; the sheaf language\nwould turn it from an ad-hoc induction into a cohomological statement, and gives a\nconcrete falsifiable prediction (flasqueness ⇔ right transitivity) rather than a vague\nanalogy.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Geometry",
         "Cryptography"
@@ -109877,7 +109877,7 @@
       "depth_estimate": 3,
       "description": "The current file proves: equivalences transport diagonal codes and values,\ncoherent retractions lift codes, embeddings preserve values but not code-hood\n(explicit `Unit ↪ Bool` counterexample), bisimulations preserve only\nobservational equality (explicit parity counterexample).  Conjecture: these are\nthe only four levels — i.e. there is a four-element lattice of coherence laws\nsuch that each strictly weaker law admits a two-element counterexample and each\nlaw is necessary and sufficient for the corresponding transport statement.\n\n*The key insight is* that transport uses preservation of the evaluation table\nin both arguments simultaneously; dropping preservation in the second argument\nkills code-hood while preserving values, and dropping equality to a congruence\nkills values while preserving observations.\n\n*Why now?* Each level already has a proved positive statement and, where it\nfails, a minimal finite counterexample, so the remaining work is exactly the\ncompleteness of the lattice.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "NumberTheory",
         "Cryptography"
@@ -110845,7 +110845,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.**  For fixed `N`, the set of theories `{valSys V N : V}` ordered by\ninclusion is a complete lattice, with the meet of `valSys V N` and `valSys V' N` given\nby the pointwise disjunction of the valuations restricted to the worlds where they\nagree, and with the chain of §2's rigidity as its skeleton.  Moreover the depth-graded\nreflection conditions are *not* monotone along this order: there are `V, V'` with\n`valSys V' N ⊆ valSys V N` and strictly larger reflection depth on the smaller theory.\n\n**The key insight is** that inclusion between valuated theories was reduced this cycle\nto a *pointwise* condition on the valuations (`spectrumSys_inclusion_iff`: agreement at\nevery world of the smaller model), and pointwise conditions on `Bool`-valued functions\nare exactly what produces lattice structure — whereas reflection depth is a\n*non-local* functional of the valuation, hence has no reason to be monotone.\n\n**Why now?**  The inclusion criterion is proved for the one-parameter block family; the\ngeneral statement is the same argument with `blockVal w` replaced by an arbitrary `V`,\nusing `satV_blockVal_congr` in its general form.\n\n*Falsified by* two valuated theories with no greatest lower bound in the family, or by\na proof that reflection depth is monotone.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Cryptography",
         "Logic"
@@ -113314,7 +113314,7 @@
       "depth_estimate": 3,
       "description": "*For every base `b` and every digit length `n ≥ 2`, the kernel of the digit\nfunctional `w ↦ Σ w_{ij} b^{i+j}` on `n × n` integer matrices contains\n`(n-1)²`-many independent vectors of squared norm `2`, and consequently every\nrank-one target has a non-rank-one companion solution at squared distance `≤ 8`.*\n\n**The key insight is** that the `2 × 2` commutator `[[0,1],[-1,0]]` generalises to\nall \"anti-diagonal transpositions\" `E_{i,j+1} - E_{i+1,j}`, whose count grows\nquadratically while their norm stays constant — the target's norm grows, the\nnoise does not.\n**Why now?** The `2 × 2` case is fully proved in `Round7DigitLattice`\n(`exists_spurious_solution`); the general case is the same identity indexed by a\nlarger family, and it would turn the \"target sits at the Gaussian heuristic\"\nmeasurement into a theorem for all dimensions.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Cryptography"
       ],
@@ -115691,7 +115691,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** `I_pair(n) ≤ H(T_n) − H(T_n | pair)` is not tight, but the sharper law\n`I_pair(n) < log₂(number of divisors of n)` holds for all `n`, with the maximum of\n`I_pair` over `n ≤ N` attained at the `n ≤ N` maximising `τ(n)` weighted by `2`-adic depth\n(e.g. `n = 12` and `n = 24` dominate their neighbourhoods).\n\n*Status:* consistent with all enumerated data (`n ≤ 40`); no proof.\n\n**The key insight is** that the number of type states equals `τ(n)`, so the pair alphabet\nhas `τ(n)(τ(n)+1)/2` letters and the whole channel is a quotient of the divisor lattice of\n`n` — the capacity should therefore be governed by lattice invariants, not by `n` itself.\n\n**Why now?** `HT_divisor_formula` already expresses the marginal entropy purely in terms\nof the divisor lattice; the same technique applied to the *pair* law reduces the\nconjecture to an inequality between two divisor sums.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Cryptography",
         "Logic"
@@ -115732,7 +115732,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** For `Gal = (ℤ/f)ˣ` non-cyclic (composite `f`), the splitting type\n`T(p) = ord_f(p)` still gives `I(p mod f ; T) = H(T)` exactly, but the pair capacity is\n*strictly smaller* than the cyclic value of the same order: `I_pair(G) < I_pair(C_{|G|})`\nwhenever `G` is abelian non-cyclic.\n\n*Status:* untested here — the present development covers the cyclic case only.\n\n**The key insight is** that in a non-cyclic group many elements share the same order, so\nthe type map has larger fibres and the pair channel loses the discriminating power that\nthe cyclic order-lattice provides.\n\n**Why now?** The Lean development is stated for an arbitrary finite index set of\noccupation numbers (`Hlist`, `Ipair_eval`), so switching the underlying group from `ℤ/n`\nto `ℤ/a × ℤ/b` requires only a new enumeration, not new theory.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Cryptography"
@@ -116911,7 +116911,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.**  Let `h(p)` be any hint computable from `(N, p mod m)` alone.\nThen on the set `S_N` of candidates consistent with `N`, `h` cannot cut the\nsearch below the \"trace-set floor\" `|S_N| / m`; in particular no `N`-checkable\nhint of unbounded length beats a `log₂ m`-bit external hint.  Cycle I proves the\ndegenerate case (hint depending on `N` only: zero information,\n`worstCost_of_public`).\n\n*The key insight is* that checkability against public data is exactly\nfactorisation through a public quotient, and factorisation through a quotient is\nthe same phenomenon that makes public hints worthless — the floor is a fibre\ncount, not a cryptographic assumption.\n\n*Why now?*  `worstCost_of_public` gives the mechanism; the general version needs\nonly the product-of-quotients bound already used in `worstCost_pair_ge`.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Combinatorics",
         "Cryptography"
@@ -119061,11 +119061,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "df44f621",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -119075,7 +119075,7 @@
       "domains": [],
       "github_issue": 0,
       "id": "fd_3334",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-08-21T09:54:35.720950+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -119090,7 +119090,7 @@
       "source": "",
       "source_exp_id": "37827e5f",
       "source_path": "resplit_migration",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-08-21T06:29:35.300830+00:00",
       "title": "The exact ensemble dichotomy"
@@ -119590,7 +119590,7 @@
       "depth_estimate": 3,
       "description": "**Conjecture.** For every cell, `d·ctx/32 = max over seeds of k*`, up to one grid step —\nthe fitted constant `1/32` is a *worst-seed* constant, not an average-seed constant.\nTestable prediction: at every cell where a third seed is run, the knee is `≤` the law's\nvalue, and the fraction of seeds attaining it stays bounded away from `1`.\n\n*The key insight is* `KneeEnsemble.ensemble_max_is_safe`, `ensemble_max_is_least_safe`\nand `KneeLattice.knee_worstCase`: the only budget a sweep can certify is the maximum of\nthe measured knees — which is literally the knee of the pointwise-infimum (worst-case)\ncurve — so any \"safe\" law is by construction an upper envelope, and its apparent\nexactness at a single seed is the statement that that seed happened to be the worst one.\n\n*Why now?* Two seeds already exist at every cell of the grid after NET-44; a single third\nseed per cell turns the conjecture into a decisive measurement, and\n`KneeEnsemble.certified_budget_mono` says the certified budget can only move one way.\n\n---",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Geometry",
         "Cryptography"
@@ -124418,7 +124418,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 507d1ef0 (Q=0.830), which proved 54 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Investigate the ArXiv paper 'A Fourier-analytic Uniqueness Theorem for Lattice-point Enumerators' and formalize its key results. Abstract: We consider a bounded set $P \\subset \\mathbb{R}^d$ and the lattice-point enumerator $L_P(t) = |tP \\cap \\mathbb{Z}^d|$ for real $t > 0$. We show that if two bound",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Cryptography"
       ],
@@ -125512,14 +125512,14 @@
       "parent_direction": "",
       "priority_score": 0.8666899999999998,
       "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
+      "prune_reason": "tournament_rejected: The density claim is an immediate corollary of Stone-Weierstrass: the class of compositions of exp, log and field operations contains all polynomials, is a subalgebra of C([0,1]^n), and separates points, so uniform density is trivial and redundant with existing Mathlib machinery (ContinuousMap.Subalgebra.topologicalClosure / polynomial density). The remaining part -- 'approximation rate depends on depth' with 'explicit bounds for shallow networks' -- is ill-defined: no complexity/depth measure on EML expressions is specified, no target function class (smoothness, Sobolev, analytic) is fixed, and no norm-normalization of coefficients is given, so no precise theorem statement can be extracted.",
+      "pruned_at": "2026-08-21T09:53:21Z",
       "quarantined_until": "",
       "research_mode": "team",
       "source": "",
       "source_exp_id": "61e33133",
       "source_path": "EML Universal Approximation: Density of EML Functions",
-      "status": "available",
+      "status": "pruned",
       "thread_id": "",
       "timestamp": "2026-07-31T22:24:57.334382+00:00",
       "title": "Deepening: EML Universal Approximation: Density of EML Functions"
@@ -129632,14 +129632,14 @@
       "parent_direction": "",
       "priority_score": 0.86634,
       "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
+      "prune_reason": "tournament_rejected: Incoherent specification: the title announces a positive square-energy strengthening of Turan's theorem (spectral graph theory) while the body directs formalization of an unrelated paper on the distribution of determinant values of lattices in M_d(R) with algebraic entries. The two targets share no definitions, hypotheses, or proof machinery, and neither is stated precisely enough (no statement of the square-energy bound; no statement of the determinant-distribution theorem beyond a truncated abstract) to yield a well-posed Lean theorem.",
+      "pruned_at": "2026-08-21T09:53:21Z",
       "quarantined_until": "",
       "research_mode": "team",
       "source": "",
       "source_exp_id": "d54ed94e",
       "source_path": "ArXiv paper: A positive square-energy strengthening of Turán's theorem",
-      "status": "available",
+      "status": "pruned",
       "thread_id": "",
       "timestamp": "2026-07-28T22:27:31.627815+00:00",
       "title": "Deepening: ArXiv paper: A positive square-energy strengthening of Turán's theorem"
@@ -130445,7 +130445,7 @@
       "title": "Deepening: The Berggren Tree Zeta Function — Analytic Counting of Pythagorean Triples Gover"
     },
     {
-      "ambition_level": "extension",
+      "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
       "attempt_count": 0,
@@ -130470,7 +130470,7 @@
       "lineage_refs": [],
       "outcome_quality": 0.0,
       "parent_direction": "",
-      "priority_score": 0.8667599999999999,
+      "priority_score": 0.9,
       "proof_strategy": "",
       "prune_reason": "",
       "pruned_at": "",
@@ -147951,7 +147951,7 @@
       "depth_estimate": 3,
       "description": "Cycle 2c38bc1a (Q=0.700) proved 134 theorems in Cryptography but left 2 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Investigate the ArXiv paper 'Even smaller universal posets' and formalize its key results. Abstract: We show that for every $η>0$ and sufficiently large $n$, there exists a poset of size $2^{(1+η)n/2}",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Cryptography"
       ],
@@ -149129,6 +149129,7 @@
     "famous_subtask",
     "abduction_followup",
     "cross_domain_bridge",
+    "famous_subtask",
     "famous_subtask",
     "famous_subtask"
   ]
