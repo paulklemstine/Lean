@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "a23b48bf",
-      "domain": "Pythagorean",
-      "key_insight": "# Future directions — after closing the converse of finite Poisson summation\n\nThis cycle closed the open converse: the exact Poisson identity\n`|G| ∑_{x∈S} f = |S| ∑_{ψ∈S^⊥} f̂` holds for all `f` **iff",
-      "quality_score": 0.85,
-      "sorry_count": 0,
-      "theorem_count": 74,
-      "timestamp": "2026-08-19T23:36:56",
-      "title": "The \"if\" direction is proved (`FourierFA.poisson_summation`); the converse is open."
-    },
-    {
       "cycle_id": "daf80a32",
       "domain": "Algebra",
       "key_insight": "# Future directions — kernel patterns\n\nEach conjecture below is falsifiable, is stated so that it can be formalised directly on\ntop of the definitions in `Catalog/Algebra/KernelPatterns/`, and is *not",
@@ -499,19 +489,19 @@
       "theorem_count": 62,
       "timestamp": "2026-08-21T20:42:06",
       "title": "Bound the length of distinguishing experiments"
+    },
+    {
+      "cycle_id": "ef4f9365",
+      "domain": "MachineLearning",
+      "key_insight": "# Future directions — after the Berggren / Q(√2) / Langlands cycle\n\n## What this cycle established\n\n**Positive.**  There *is* a rigorous bridge from Pythagorean triples to the arithmetic of\n`ℚ(√2)`, a",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 181,
+      "timestamp": "2026-08-21T21:39:21",
+      "title": "The Berggren Tree and the Langlands Program — Automorphic Forms on the 3-adic Boundary over Q(√2)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "20cf0514",
-      "domain": "Applications",
-      "key_insight": "# Future directions — bold, testable conjectures from the interval-hint round\n\nThis round formalised the negative verdict for the trace-set (TRACEPROFILE)\nfilter: it is *exact* (`TraceSetFilter.add_me",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 55,
-      "timestamp": "2026-08-13T13:55:47",
-      "title": "INTERVAL-HINT: the trace-set filter is exact (2^-omega pruning) but does not amplify — residue filte"
-    },
     {
       "cycle_id": "9e8cd1f4",
       "domain": "Algebra",
@@ -2501,27 +2491,19 @@
       "theorem_count": 62,
       "timestamp": "2026-08-21T20:42:06",
       "title": "Bound the length of distinguishing experiments"
+    },
+    {
+      "cycle_id": "ef4f9365",
+      "domain": "MachineLearning",
+      "key_insight": "# Future directions — after the Berggren / Q(√2) / Langlands cycle\n\n## What this cycle established\n\n**Positive.**  There *is* a rigorous bridge from Pythagorean triples to the arithmetic of\n`ℚ(√2)`, a",
+      "quality_score": 0.83,
+      "sorry_count": 0,
+      "theorem_count": 181,
+      "timestamp": "2026-08-21T21:39:21",
+      "title": "The Berggren Tree and the Langlands Program — Automorphic Forms on the 3-adic Boundary over Q(√2)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "39ef81fe",
-      "domain": "Computation",
-      "name": "chromVal_mono_colors",
-      "quality": 0.8
-    },
-    {
-      "cycle_id": "39ef81fe",
-      "domain": "Computation",
-      "name": "descFactorial_le_chromVal",
-      "quality": 0.8
-    },
-    {
-      "cycle_id": "eccb3315",
-      "domain": "Computation",
-      "name": "zterm_eq_seedTerm",
-      "quality": 0.84
-    },
     {
       "cycle_id": "eccb3315",
       "domain": "Computation",
@@ -2803,9 +2785,27 @@
       "domain": "Pythagorean",
       "name": "obs_nil",
       "quality": 0.86
+    },
+    {
+      "cycle_id": "ef4f9365",
+      "domain": "MachineLearning",
+      "name": "cons_zero",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "ef4f9365",
+      "domain": "MachineLearning",
+      "name": "cons_succ",
+      "quality": 0.83
+    },
+    {
+      "cycle_id": "ef4f9365",
+      "domain": "MachineLearning",
+      "name": "shift_cons",
+      "quality": 0.83
     }
   ],
-  "last_updated": "2026-08-21T20:42:06",
+  "last_updated": "2026-08-21T21:39:21",
   "open_questions": [
     {
       "context": "Everything is proved; there are no `sorry`s and no new axioms.",
@@ -3517,12 +3517,6 @@
     ],
     "MachineLearning": [
       {
-        "cycle_id": "d99b7790",
-        "quality": 0.82,
-        "theorems": 72,
-        "title": "The CRT-Multiplicative Free-Witness Classification and the Trace Lemma"
-      },
-      {
         "cycle_id": "e67b8bbc",
         "quality": 0.78,
         "theorems": 54,
@@ -3575,6 +3569,12 @@
         "quality": 0.79,
         "theorems": 79,
         "title": "Arithmetic on the Moebius Band: A Number System with a Twist"
+      },
+      {
+        "cycle_id": "ef4f9365",
+        "quality": 0.83,
+        "theorems": 181,
+        "title": "The Berggren Tree and the Langlands Program — Automorphic Forms on the 3-adic Bo"
       }
     ],
     "Novelty": [
