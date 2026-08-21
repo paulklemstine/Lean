@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "c442a26f",
-      "domain": "Bridges",
-      "key_insight": "# Future directions — after Conjecture D (q-series rigidity / Molien-type dichotomy)\n\nCycle status.  Conjecture D is **settled** in `Catalog/Bridges/MolienQSeriesRigidity.lean`,\nin a form sharper than",
-      "quality_score": 0.88,
-      "sorry_count": 0,
-      "theorem_count": 91,
-      "timestamp": "2026-08-19T21:41:53",
-      "title": "Conjecture D (q-series rigidity / Molien-type dichotomy). The fixed-point q-series determines the or"
-    },
-    {
       "cycle_id": "d11810a4",
       "domain": "Geometry",
       "key_insight": "# Future Directions\n\n## What this cycle established\n\nAll results are in `Catalog/Geometry/`, are `sorry`-free, and use only the standard axioms\n(`propext`, `Classical.choice`, `Quot.sound`).\n\n* `Funda",
@@ -499,19 +489,19 @@
       "theorem_count": 135,
       "timestamp": "2026-08-21T18:56:44",
       "title": "The Pythagorean Hydra — Natural Independence for the Berggren Tree"
+    },
+    {
+      "cycle_id": "532d78bc",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — RH for the Berggren tree (Phase A, cycle v19c)\n\n## What this cycle established\n\nFormalised, `sorry`-free, in `Catalog/Novelty/`:\n\n1. **Core** (`BerggrenTreeZetaCore.lean`) — the",
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "theorem_count": 124,
+      "timestamp": "2026-08-21T19:38:01",
+      "title": "The Riemann Hypothesis for the Berggren Tree — A Zeta Function with a Provable Critical Line"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "6092c7cd",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions — Free-Witness Thresholds after the Separation Principle\n\nEverything below is derived from the verified results in\n`Catalog/Algebra/FreeWitnessTraceThreshold.lean`.  The organising",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 36,
-      "timestamp": "2026-08-13T08:51:14",
-      "title": "The Partial Free-Witness Threshold is the Trace, Closed"
-    },
     {
       "cycle_id": "0c649bb1",
       "domain": "Physics",
@@ -2501,27 +2491,19 @@
       "theorem_count": 135,
       "timestamp": "2026-08-21T18:56:44",
       "title": "The Pythagorean Hydra — Natural Independence for the Berggren Tree"
+    },
+    {
+      "cycle_id": "532d78bc",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — RH for the Berggren tree (Phase A, cycle v19c)\n\n## What this cycle established\n\nFormalised, `sorry`-free, in `Catalog/Novelty/`:\n\n1. **Core** (`BerggrenTreeZetaCore.lean`) — the",
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "theorem_count": 124,
+      "timestamp": "2026-08-21T19:38:01",
+      "title": "The Riemann Hypothesis for the Berggren Tree — A Zeta Function with a Provable Critical Line"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "f2707534",
-      "domain": "Probability",
-      "name": "exp_neg_le_cubic",
-      "quality": 0.92
-    },
-    {
-      "cycle_id": "f2707534",
-      "domain": "Probability",
-      "name": "exp_le_quartic",
-      "quality": 0.92
-    },
-    {
-      "cycle_id": "63d0d6e2",
-      "domain": "Physics",
-      "name": "tailBar_is_midpoint",
-      "quality": 0.82
-    },
     {
       "cycle_id": "63d0d6e2",
       "domain": "Physics",
@@ -2803,9 +2785,27 @@
       "domain": "Geometry",
       "name": "hh_bergA",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "532d78bc",
+      "domain": "Novelty",
+      "name": "seed_le_sqrt",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "532d78bc",
+      "domain": "Novelty",
+      "name": "seed_image_subset",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "532d78bc",
+      "domain": "Novelty",
+      "name": "nodesBelow_finite",
+      "quality": 0.85
     }
   ],
-  "last_updated": "2026-08-21T18:56:44",
+  "last_updated": "2026-08-21T19:38:01",
   "open_questions": [
     {
       "context": "Everything is proved; there are no `sorry`s and no new axioms.",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "ae5d2ae6",
-        "quality": 0.87,
-        "theorems": 29,
-        "title": "Compression Research A1: Price of universality — minimax redundancy of universal"
-      },
-      {
         "cycle_id": "4bf66c09",
         "quality": 0.88,
         "theorems": 41,
@@ -3637,6 +3631,12 @@
         "quality": 0.82,
         "theorems": 111,
         "title": "The Berggren Causal Set — Pythagorean Triples as a Discrete Model of Spacetime"
+      },
+      {
+        "cycle_id": "532d78bc",
+        "quality": 0.85,
+        "theorems": 124,
+        "title": "The Riemann Hypothesis for the Berggren Tree — A Zeta Function with a Provable C"
       }
     ],
     "NumberTheory": [

@@ -1,162 +1,164 @@
-# Arithmetic on the Möbius Band: When a Beautiful Number System Refuses to Exist
+# Arithmetic on the Möbius Band: When Orientation Tries to Become a Prime
 
-A Möbius band begins with one of topology’s simplest magic tricks. Take a strip of paper, give one end a half-turn, and tape the ends together. An ordinary loop has an inside and an outside; the Möbius band has only one continuous side. A traveler who follows its centerline returns to the starting place with left and right reversed.
+## A paper strip, a half twist, and a wild idea
 
-That reversal invites an irresistible question: can numbers live on the band? Perhaps a positive number could travel once around the loop and come back negative. Perhaps orientation itself could become an arithmetic ingredient—something like a new prime factor recording whether a number has been twisted.
+Take a strip of paper, give one end a half twist, and glue the ends together. You get the Möbius band: a surface with one side, one edge, and a famous refusal to be consistently oriented. Walk once around it carrying a little arrow — say, an arrow telling you which way is "up" — and when you return to your starting point the arrow is pointing the other way. Walk around twice and it is restored.
 
-It is a lovely proposal. It is also a lesson in how geometry disciplines algebra. Before asking whether a new number system has primes, zero divisors, or unique factorization, one must first check that its addition and multiplication are actually well defined. For the most direct Möbius construction, they are not.
+That flip is a small, sharp piece of mathematics. It is the reason a Möbius band cannot be painted with two colours, the reason a strip of movie film with a twist in it comes back inside-out, and — in physics — a rough cousin of the fact that a spin-$\tfrac12$ particle needs a $720^\circ$ rotation to return to itself. It is *holonomy*: a symmetry of order two that you pick up by going around a loop.
 
-## Building the band from coordinates
+Here is a tempting thought. Numbers also have a sign, and signs also flip. Could we *build* a number system on the Möbius band, in such a way that the geometric twist becomes the arithmetic minus sign? And could we go further: could the twist itself become a **prime number** — an irreducible atom of arithmetic, so that "orientation" would appear on the same footing as $2$, $3$, $5$, $7$?
 
-Represent points by pairs $(x,y)$ with $0\le x\le 1$ and $y\in\mathbb R$. The two vertical edges are glued with a sign reversal:
+That is the conjecture this article is about. Its slogan — *orientation is a prime* — is beautiful. It is also, as we shall see, false in a precise and instructive way. The story of exactly *how* it fails, and of the genuine object hiding behind it, is more interesting than the slogan.
 
-$$
-(0,y)\sim(1,-y).
-$$
+## The proposal, stated carefully
 
-Thus $(0,1)$ and $(1,-1)$ are two coordinate descriptions of one geometric point. The relation also identifies every point with itself and includes the reverse identification $(1,y)\sim(0,-y)$. These rules form an equivalence relation: they are reflexive, symmetric, and transitive. Consequently, the quotient really does describe the elementary Möbius endpoint gluing.
+Model the band concretely. Start with the infinite strip
+$$[0,1] \times \mathbb{R},$$
+whose points are pairs $(x,y)$: $x$ runs across the width, $y$ up the (infinite) fibre. Now glue the two ends with a twist by declaring
+$$(0,y) \sim (1,-y).$$
+Call the resulting space $M$. This is the Möbius band, drawn as an infinite line bundle over a circle: as you cross the seam, the fibre coordinate $y$ is reflected.
 
-The first theorem is therefore constructive and positive.
+The proposal has three parts.
 
-**Endpoint Identification Theorem.** For every real $y$, the representatives $(0,y)$ and $(1,-y)$ determine the same point of the Möbius quotient.
+**A number attached to each point.** Define the *value* of a point by
+$$\mathrm{val}(x,y) = y\,(2x-1).$$
+The factor $2x-1$ runs from $-1$ at the left edge to $+1$ at the right edge, so it plays the role of a sign, while $y$ supplies a scale.
 
-The subtlety is that gluing only relates opposite edges. It does not identify arbitrary sign changes. In particular, $(0,1)$ and $(0,-1)$ are not the same quotient point. This simple distinction becomes the decisive arithmetic test.
+**An embedding of the integers.** Send the integer $n$ to the point
+$$\mathrm{emb}(n) = \left(\tfrac12 + \tfrac1{2n},\ |n|\right),$$
+so that big positive $n$ lands near the middle-right and big negative $n$ near the middle-left. Call the image the *Möbius integers* $\mathbb{Z}_M$.
 
-## The representative-independence test
+**The conjectures.** That $\mathbb{Z}_M$ inherits a ring structure from coordinatewise addition and multiplication on $\mathbb{R}\times\mathbb{R}$; that $+1$ and $-1$ get glued together at the seam, so $\mathbb{Z}_M$ is a one-point compactification of $\mathbb{Z}$ with a single infinity; that the ring has zero divisors, witnessed by $(1,0)\cdot(0,1)=(0,0)$; and that in the resulting arithmetic the twist is a new prime, with $6 = 2_+\cdot 3_+$ while $-6 = 2_+ \cdot 3_+ \cdot (-1)$, the $-1$ being that "twist prime".
 
-Suppose we try to multiply points coordinate by coordinate:
+It is a wonderfully specific conjecture, which means it can be tested. So let us test it, claim by claim.
 
-$$
-(x,y)\odot(u,v)=(xu,yv).
-$$
+## What survives
 
-A quotient operation is legitimate only if changing representatives does not change the result. In symbols, whenever $a\sim a'$ and $b\sim b'$, one must have
+One piece is genuinely right, and it is the best piece.
 
-$$
-a\odot b\sim a'\odot b'.
-$$
+> **The value map descends.** If $(x,y)$ and $(x',y')$ are the same point of the Möbius band, then $y(2x-1) = y'(2x'-1)$. Hence $\mathrm{val}$ is a well-defined function on $M$.
 
-Take
+The check is one line: at the seam, $(0,y)$ has value $y\cdot(-1) = -y$, and its partner $(1,-y)$ has value $(-y)\cdot(+1) = -y$. The two minus signs — one from the geometry of the twist, one from the linear function $2x-1$ changing sign across the strip — cancel exactly.
 
-$$
-a=b=(0,1),\qquad a'=b'=(1,-1).
-$$
+This is not a coincidence; it is the definition of a *section of the Möbius line bundle*. The function $x \mapsto 2x-1$ is precisely a rule for choosing, in each fibre, a vector that reverses when you cross the seam. So the value map really does encode the twist. And the twist point is real: the point $(0,-1)$ and the point $(1,1)$ are literally the same point of $M$,
+$$\big[(0,-1)\big] = \big[(1,1)\big],$$
+which is the geometric heart of what the conjecture was reaching for.
 
-Both pairs of inputs represent the same quotient points because $(0,1)\sim(1,-1)$. Yet the products are
+Everything else, unfortunately, breaks.
 
-$$
-a\odot b=(0,1),\qquad a'\odot b'=(1,1).
-$$
+## Four failures, each with a lesson
 
-For these outputs to agree, the endpoint rule would require the second coordinate at $x=1$ to be the negative of the one at $x=0$. It is not: $1\ne-1$. Therefore the two outputs are inequivalent.
+### 1. There is no induced arithmetic
 
-**Multiplication Obstruction Theorem.** Coordinatewise multiplication is not independent of representatives and hence does not define multiplication on the Möbius quotient.
+The conjecture asks for ring operations "induced from $\mathbb{R}\times\mathbb{R}/\!\sim$". But coordinatewise addition simply does not survive the gluing. Consider the seam identity $[(0,1)] = [(1,-1)]$. If addition descended, adding each representative to itself would have to give the same point of $M$. It does not:
+$$(0,1)+(0,1) = (0,2), \qquad (1,-1)+(1,-1) = (2,-2),$$
+and $(0,2)$ and $(2,-2)$ are unrelated — the second point has $x = 2$, off the strip entirely, and the two are not equal. The same argument kills multiplication:
+$$(0,1)\cdot(0,1) = (0,1), \qquad (1,-1)\cdot(1,-1) = (1,1),$$
+and the seam glues $(1,1)$ to $(0,-1)$, not to $(0,1)$.
 
-The geometric reason is more illuminating than the calculation. Replacing one endpoint representative by the other introduces one sign reversal. Replacing both inputs introduces two reversals, which cancel in the product. But the output gluing expects one reversal. The parity of twisting has changed.
+> **No induced operations.** There is no binary operation on $M$ satisfying $f([p],[q]) = [p+q]$ for all $p,q$, and none satisfying $f([p],[q]) = [p\cdot q]$.
 
-Coordinatewise addition fails just as sharply. With the same representatives,
+The lesson is structural. The gluing $(0,y)\sim(1,-y)$ is *linear in the fibre coordinate and nothing at all in the base coordinate*: it identifies the fibre over $0$ with the fibre over $1$ by a reflection. Addition of the base coordinates has no meaning in that picture; the strip's width is a circle, not a group under the addition you inherit from $\mathbb{R}$. Non-orientability is a statement about the fibres, and only fibrewise operations have a chance.
 
-$$
-(0,1)+(0,1)=(0,2),\qquad (1,-1)+(1,-1)=(2,-2).
-$$
+### 2. The value map forgets almost everything
 
-The second result is not even on an endpoint eligible for the stated gluing, and it is not equivalent to the first.
+What number does the Möbius integer $n$ represent? Compute:
+$$\mathrm{val}\big(\mathrm{emb}(n)\big) = |n| \cdot \left(2\left(\tfrac12 + \tfrac1{2n}\right) - 1\right) = \frac{|n|}{n} = \operatorname{sign}(n).$$
 
-**Addition Obstruction Theorem.** Coordinatewise addition does not descend to the Möbius quotient.
+> **The embedding records only the sign.** For every nonzero integer $n$, the value of $\mathrm{emb}(n)$ is $+1$ if $n>0$ and $-1$ if $n<0$ (and $0$ for $n=0$).
 
-These two theorems stop the proposed ring before questions about its ring-theoretic behavior can begin. A calculation such as “two nonzero points multiply to zero” cannot prove the existence of zero divisors if the multiplication used in that calculation is not an operation on quotient points at all.
+So this "number system" cannot tell $2$ from $3$: both have value $1$. Whatever the Möbius integers are, they are not a faithful copy of $\mathbb{Z}$ with respect to the value map. The magnitude $|n|$ that was carefully placed in the fibre coordinate is cancelled, exactly, by the $1/n$ placed in the base coordinate.
 
-## An embedding that forgets magnitude
+### 3. Nothing is glued, and nothing is compactified
 
-A second proposal attempts to place the nonzero integers on the strip by assigning $n$ the pair
+The conjecture predicts that $1$ and $-1$ collide at the seam, producing a single point at infinity. Look at where they actually go:
+$$\mathrm{emb}(1) = (1,1), \qquad \mathrm{emb}(-1) = (0,1).$$
+Both sit on the seam — that much is right. But the seam glues $(0,y)$ to $(1,-y)$, so the partner of $(0,1)$ is $(1,-1)$, not $(1,1)$. The twist *reverses* the fibre coordinate, and both our points have fibre coordinate $+1$. They stay apart.
 
-$$
-\left(\frac12+\frac{1}{2n},\,|n|\right).
-$$
+> **The embedding is injective.** Distinct integers give distinct points of the Möbius band; in particular $[\mathrm{emb}(1)] \neq [\mathrm{emb}(-1)]$. Moreover the set of Möbius integers is unbounded (the fibre coordinate of $\mathrm{emb}(n)$ is $|n|$), hence not compact.
 
-The intended scalar interpretation of a point is
+So $\mathbb{Z}_M$ is, as a set, just $\mathbb{Z}$ again — with no point at infinity and no compactification. Ironically, the geometry did exactly the opposite of what was hoped: the twist that was supposed to *merge* $1$ and $-1$ is precisely what keeps them apart.
 
-$$
-V(x,y)=y(2x-1).
-$$
+### 4. The zero divisors are a mirage
 
-At first glance, the scale $|n|$ seems to preserve magnitude while the horizontal coordinate stores sign. Substitution reveals otherwise. For $n\ne0$,
+Finally, the proposed witness of non-domainhood: $(1,0)\cdot(0,1) = (0,0)$ with "neither factor zero". But apply the gluing rule with $y=0$: it says $(0,0) \sim (1,-0) = (1,0)$. In the Möbius band,
+$$\big[(1,0)\big] = \big[(0,0)\big].$$
+The alleged nonzero factor *is* zero. (And for good measure, $(1,0)$ is not the image of any integer under $\mathrm{emb}$: the only integer with fibre coordinate $0$ is $n=0$, whose base coordinate is not $1$.) The seam, which was supposed to create exotic zero divisors, instead pinches the zero section into a single circle — the classic picture of the Möbius band's core.
 
-$$
-\begin{aligned}
-V\left(\frac12+\frac{1}{2n},|n|\right)
-&=|n|\left(2\left(\frac12+\frac{1}{2n}\right)-1\right)\\
-&=|n|\left(\frac1n\right)\\
-&=\frac{|n|}{n}.
-\end{aligned}
-$$
+## Where the good idea actually lives
 
-Hence every positive integer is evaluated as $1$, and every negative integer as $-1$.
+Five claims, one confirmed and four refuted, might look like a dead end. It is not. The surviving intuition — *going around the band applies a symmetry of order two* — is completely sound; it was simply attached to the wrong algebraic object. Attach it correctly and a real ring appears.
 
-**Magnitude-Collapse Theorem.** Under the proposed scalar evaluation, all positive integers have value $1$ and all negative integers have value $-1$.
+Adjoin to the integers a formal symbol $t$, the "one lap around the band", subject only to the law that two laps do nothing:
+$$\mathbb{Z}_{\mathrm{tw}} := \mathbb{Z}[t]/(t^2-1) = \{a + bt : a,b \in \mathbb{Z}\}, \qquad (a+bt)(c+dt) = (ac+bd) + (ad+bc)t.$$
+This is the *twist ring*. It is a genuine commutative ring — nothing here fails to be well defined — and it turns out to be the algebraic shadow of non-orientability.
 
-This does not mean the coordinate pairs for $2$ and $3$ coincide. They do not:
+A concrete model makes everything computable. Send $a+bt$ to the pair of numbers $(a+b,\ a-b)$, its values under the two ways of interpreting $t$ (as $+1$ and as $-1$). This identifies the twist ring with
+$$\{(u,v) \in \mathbb{Z}\times\mathbb{Z} : u \equiv v \pmod 2\},$$
+where addition and multiplication are componentwise. The congruence $u \equiv v \pmod 2$ is the whole story: it is the integral gluing that stops the ring from splitting into two independent copies of $\mathbb{Z}$.
 
-$$
-\frac12+\frac14=\frac34,
-\qquad
-\frac12+\frac16=\frac23.
-$$
+Define the **norm** $N(a+bt) = a^2-b^2$, the product of those two coordinates. It is multiplicative: $N(zw) = N(z)N(w)$.
 
-The map into pairs can distinguish them. What fails is the claim that the pair represents the original real number through $V$. The construction remembers sign but erases magnitude at the level where magnitude was supposed to reappear.
+Now watch the conjecture's questions get real answers.
 
-There is also a basic domain issue: the displayed coordinate contains $1/n$, so it does not define an image for $n=0$. Zero requires a separate choice, and any claimed compactification must explain its topology rather than infer it from a formula that omits zero.
+**Is the twist a prime?** No — and it never could be. Since $t^2 = 1$, the element $t$ is its own inverse, hence a **unit**. Units are never prime; they are the invisible scaffolding of factorisation, not its atoms.
 
-## The fate of the “twist prime”
+> **The twist is a unit of order two.** $t^2 = 1$, $t \neq \pm 1$, and the full unit group is $\{1,-1,t,-t\}$, isomorphic to the Klein four-group $(\mathbb{Z}/2)^2$. An element is a unit exactly when its norm is $\pm 1$.
 
-The arithmetic examples now become ordinary signed-integer facts. For $6$,
+Orientation data is not a prime; it is a **grading**, and grading groups act by units. That single sentence is the corrected form of the conjecture's slogan.
 
-$$
-6=2\cdot3.
-$$
+**Are there zero divisors?** Yes — genuinely, this time:
+$$(1+t)(1-t) = 1 - t^2 = 0,$$
+with both factors nonzero. So the twist ring is *not* an integral domain, exactly as the conjecture wanted, though for the right reason and with the right witnesses.
 
-For $-6$, two negative factors do not work:
+> **The zero-divisor locus is the seam.** An element $a+bt$ is a zero divisor precisely when $N(a+bt) = a^2-b^2 = 0$, that is when $a = \pm b$: two lines through the origin. They are the algebraic image of the gluing $(0,y)\sim(1,-y)$.
 
-$$
-(-2)(-3)=6\ne-6.
-$$
+**How do numbers factor?** Here the twist ring does something startling. The parity condition forces every norm to be odd or divisible by $4$; in particular **no element has norm $\pm2$**. That single obstruction makes $2$ irreducible — but every odd number splits:
+$$2k+1 = \big((k+1) + kt\big)\big((k+1) - kt\big),$$
+since $(k+1)^2 - k^2 = 2k+1$. For instance
+$$3 = (2+t)(2-t),$$
+and both factors are irreducible because their norm, $3$, is prime.
 
-The corrected signed factorization is
+> **Classification.** An ordinary integer $n$ is irreducible in the twist ring if and only if $n = \pm 2$. Every odd $|n| \ge 3$ splits through the hyperbolic form $a^2-b^2$; every even $|n| \ge 4$ factors as $2\cdot(n/2)$; and even $0$ factors nontrivially, as $(1+t)(1-t)$.
 
-$$
--6=2\cdot3\cdot(-1).
-$$
+Run the conjecture's own test cases through this machine:
+$$6 = 2\,(2+t)(2-t)$$
+— **three** irreducible factors, not two — while
+$$-6 = (-1)\cdot 2\,(2+t)(2-t),$$
+the sign being a unit. And crucially, the sign is *not* the twist: $6t$ is a third element, equal to neither $6$ nor $-6$. Orientation and sign are independent symmetries; the unit group is a Klein four-group precisely because it contains both.
 
-It is tempting to call $-1$ a “twist prime,” but standard arithmetic gives it a different and more suitable role. A unit is an integer with a multiplicative inverse that is also an integer. The only integer units are $1$ and $-1$, since $uv=1$ for integers forces $|u|=|v|=1$. In particular, $-1$ is invertible and satisfies $(-1)^2=1$. It changes orientation without contributing irreducible magnitude.
+Finally, $0 = (1+t)(1-t)$: in this world, even zero has a factorisation.
 
-**Orientation-Unit Theorem.** The integer units are exactly $1$ and $-1$; therefore $-1$ is a unit, not a prime.
+**Does the twist split off?** One might hope the twist ring is secretly just $\mathbb{Z}\times\mathbb{Z}$ — the $+1$ world and the $-1$ world, side by side. It is not. Any element $e$ with $e^2 = e$ must have both coordinates in $\{0,1\}$, and the parity condition $u \equiv v \pmod 2$ then forces $(0,0)$ or $(1,1)$.
 
-This is not a disappointment. It is a better mathematical analogy. Orientation behaves like a reversible two-state symmetry. Applying it twice restores the original state. That is precisely the behavior of an order-two unit or a parity label, not of a prime factor.
+> **No nontrivial idempotents.** The only solutions of $e^2 = e$ in the twist ring are $0$ and $1$. Since $\mathbb{Z}\times\mathbb{Z}$ contains the idempotent $(1,0)$, the two rings are not isomorphic.
 
-Zero is different again. A finite product of nonzero integers can never equal zero. Therefore zero has no factorization as a finite product of nonzero prime factors. Its exceptional status cannot be repaired by assigning it a Möbius coordinate.
+So although $t^2 = 1$ makes the twist look like it should split into eigenspaces — and it does, over the rationals, where $\tfrac12(1\pm t)$ are idempotents — over the integers the extension is *nonsplit*. You cannot separate the two orientations with integer coefficients. Non-orientability leaves a fingerprint in arithmetic, and the fingerprint is a factor of $2$.
 
-## A quotient is a promise
+## Back to the band: functions that must vanish
 
-The lesson extends far beyond this strip. Whenever mathematics declares two descriptions equivalent, every operation on the resulting objects makes a promise: it will ignore which description was chosen. Clock arithmetic keeps that promise because replacing an integer by another with the same remainder does not alter the remainder of a sum or product. Fractions keep it because replacing $a/b$ by $ka/kb$ leaves addition and multiplication unchanged. Projective geometry and gauge theories impose the same discipline in more elaborate settings.
+The twist ring is not just an analogy; it computes the geometry. A section of the Möbius line bundle over the circle is a function $f:\mathbb{R}\to\mathbb{R}$ obeying
+$$f(x+1) = -f(x),$$
+an *antiperiodic* function; a section of the untwisted bundle is an ordinary periodic function, $f(x+1)=f(x)$. Write $P$ for the periodic functions and $A$ for the antiperiodic ones. Then
+$$P\cdot P \subseteq P, \qquad P \cdot A \subseteq A, \qquad A \cdot A \subseteq P, \qquad P \cap A = \{0\}.$$
+This is exactly a $\mathbb{Z}/2$-grading — the same $\mathbb{Z}/2$ whose group ring is the twist ring. Note what it says: $A$ is *not* a ring. The square of an antiperiodic function is periodic, not antiperiodic; $\cos(\pi x)$ is a section, and $\cos^2(\pi x)$ is not. Möbius sections form a module, never an algebra.
 
-The Möbius example is unusually vivid because the broken promise can be seen. At the seam, the same point wears two labels with opposite fiber signs. An operation that reads those signs without compensating for the change is reading the coordinate chart, not the geometric point. The counterexample is therefore not merely an inconvenient exception. It detects that the formula is attached to the description rather than to the object.
+The holonomy is computed by $t$: iterating antiperiodicity gives
+$$f(x+n) = (-1)^n f(x),$$
+and the sign is $+1$ exactly when $t^n = 1$ in the twist ring, i.e. exactly when $n$ is even. The algebra and the geometry agree on the nose.
 
-This also explains why checking ring axioms in the usual order would be misleading. Associativity, distributivity, and identities are properties of operations that already exist. Representative independence comes first. Only after it is proved does it make sense to ask whether an operation is associative or whether a nonzero element has an inverse. In quotient mathematics, well-definedness is the admission ticket to algebra.
+And then the punchline, which is where non-orientability becomes visible to the naked eye:
 
-## Why the failed construction points forward
+> **Every continuous section of the Möbius band vanishes — in every window of length one.** If $f$ is continuous and $f(x+1)=-f(x)$, then for every real $a$ there is a point $x \in [a,a+1]$ with $f(x)=0$.
 
-The obstruction tells us what the right algebra should look like. On a Möbius line bundle, fiberwise addition makes sense only within a single fiber. Multiplying two twisted quantities naturally removes the twist: two sign reversals cancel. In geometric language, the tensor square of the Möbius line bundle is untwisted.
+The proof is the intermediate value theorem, and it is irresistible: $f(a)$ and $f(a+1) = -f(a)$ have opposite signs, so $f$ must cross zero in between. The consequences cascade. The zero set is unbounded — indeed the interval $[0,n]$ contains at least $n$ zeros, one per window. No section is nowhere-vanishing, so the Möbius bundle is nontrivial. And no antiperiodic continuous function is ever invertible in the ring of continuous functions: all the units live in the even part.
 
-That suggests a graded algebra with two sectors. Let degree $0$ mean untwisted and degree $1$ mean twisted. Multiplication adds degrees modulo $2$:
+That last statement is the geometric twin of the algebraic one. In the twist ring, the twist $t$ *is* a unit but is *not* a prime. In the ring of functions, the odd part contains *no* units at all. Both are saying, in their own dialect: orientation is a grading. It labels things; it does not generate them.
 
-$$
-0+0=0,\qquad 0+1=1,\qquad 1+1=0.
-$$
+## What it was all for
 
-Now the cancellation that ruined coordinatewise multiplication becomes the central rule. The product of two twisted elements belongs to the untwisted sector rather than being forced back into the same Möbius band. This is closely related to the mathematics of parity, spin, group rings, and crossed products: orientation is stored as a symmetry or grading.
+The original conjecture wanted orientation to be a number-theoretic analogue of spin — a discrete, two-valued attribute that behaves like a prime factor. The corrected picture is arguably better, and it is the same picture physicists use. Spin is not a constituent of a particle; it is a label, a representation of a group of order two acting by units of modulus one. Likewise here: the twist is not an atom of factorisation but a symmetry acting on the atoms, and everything decomposes into an even part and an odd part that multiply according to $(+)(+) = (+)$, $(+)(-)=(-)$, $(-)(-)=(+)$.
 
-Another route is to transport arithmetic from a known ring through an explicit bijection. That can always put some ring structure on a set of the right cardinality, but geometry then asks a harder question: is the transported operation natural, continuous, or compatible with the band’s fibers? An arbitrary bijection may create algebra while destroying the very geometric meaning that motivated it.
+What we lose is a romantic slogan. What we gain is a small, complete, and slightly strange arithmetic: a commutative ring with four units and no domain property, where $2$ is irreducible and $3$ is not, where the norm $a^2-b^2$ can never equal $\pm 2$, where zero factors as $(1+t)(1-t)$, and where the impossibility of splitting into $\mathbb{Z}\times\mathbb{Z}$ is a purely integral shadow of the fact that a paper strip with a half twist has only one side.
 
-Finally, the integer map must choose its purpose. Is it meant to be injective? To evaluate to $n$? To approach one point at infinity? These are distinct design requirements. A corrected construction should state them separately and prove that they are compatible.
-
-The Möbius band does not yield the proposed number system by naïve coordinate arithmetic. Yet its refusal is productive. It teaches that quotient geometry demands representative-independent operations, that orientation is better modeled by a unit or a $\mathbb Z/2\mathbb Z$ grading, and that two twists belong in an untwisted sector. The dream survives, but in a more sophisticated form: not arithmetic pasted onto a twisted surface, but algebra organized by the twist itself.
+And it comes with a rule of thumb worth carrying into other problems. When a geometric symmetry of finite order appears in an algebraic setting, do not look for it among the primes. Look for it among the units — and then look for the grading it induces. That is where the twist has always been hiding.
