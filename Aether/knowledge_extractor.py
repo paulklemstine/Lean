@@ -4821,6 +4821,35 @@ Research mode: {concept.research_mode}
         except Exception as e:
             print(f"[Tick] Warning: could not reset direction back to available: {e}")
 
+    def _refund_attempt(self, job: ResearchJob) -> None:
+        """Give back the attempt_count consumed by a dispatch that failed for
+        infrastructure reasons (auth errors, outages) — the direction's research
+        merit had nothing to do with the failure, and a key outage must not be
+        able to push injected directions to their attempt cap (audit 2026-08-21:
+        one bad-key window burned #160's three attempts and retired it)."""
+        direction_id = getattr(job, "direction_id", "") or ""
+        if not direction_id:
+            return
+        try:
+            from research_memory import FutureDirectionsManager
+            fd_manager = FutureDirectionsManager(self.workspace)
+            for d in fd_manager._directions:
+                if d.id == direction_id:
+                    if d.attempt_count > 0:
+                        d.attempt_count -= 1
+                        fd_manager._save()
+                        print(f"[Tick] Refunded attempt for {direction_id} "
+                              f"(infra failure) -> attempts={d.attempt_count}")
+                    return
+        except Exception as e:
+            print(f"[Tick] Warning: could not refund attempt: {e}")
+
+    @staticmethod
+    def _is_auth_error(err: Any) -> bool:
+        """True when an exception looks like an Aristotle authentication failure."""
+        s = str(err).lower()
+        return "401" in s or "invalid api key" in s or "unauthorized" in s
+
     def _release_direction_back_to_available(self, job: ResearchJob) -> None:
         """Release the direction consumed by this job back to the available pool.
 

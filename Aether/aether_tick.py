@@ -1404,6 +1404,11 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
                         else:
                             extractor._release_direction(job)
                             print(f"[Tick] Dispatch failed for injected issue {job.concept.title[:60]}, direction released")
+                            # The dispatch_async failure reason is on the job;
+                            # refund the attempt when it was infra, not research.
+                            _err = str(getattr(job, "error_message", "") or "")
+                            if extractor._is_auth_error(_err):
+                                extractor._refund_attempt(job)
                     except Exception as inner_e:
                         print(f"[Tick] Inner error dispatching injected issue: {inner_e}")
                         import traceback
@@ -1450,6 +1455,9 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
                 else:
                     extractor._release_direction(job)
                     print(f"[Tick] Dispatch failed for {job.concept.title[:60]}, direction released")
+                    _err = str(getattr(job, "error_message", "") or "")
+                    if extractor._is_auth_error(_err):
+                        extractor._refund_attempt(job)
             except Exception as e:
                 if job is not None and (extractor._is_queue_full_error(e) or job.status == "dispatch_queued"):
                     print(f"[Tick] Aristotle queue full; leaving job {job.job_id[:8]} queued and stopping dispatch")
@@ -1460,6 +1468,8 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
                 elif job is not None:
                     extractor._release_direction(job)
                     print(f"[Tick] Dispatch error: {e}, direction released")
+                    if extractor._is_auth_error(e):
+                        extractor._refund_attempt(job)
                 else:
                     print(f"[Tick] Dispatch error before discovery: {e}")
 
@@ -1484,6 +1494,9 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
                 else:
                     extractor._release_direction(job)
                     print(f"[Tick] Dispatch failed for {job.concept.title[:60]}, direction released")
+                    _err = str(getattr(job, "error_message", "") or "")
+                    if extractor._is_auth_error(_err):
+                        extractor._refund_attempt(job)
             except Exception as e:
                 if job is not None and (extractor._is_queue_full_error(e) or job.status == "dispatch_queued"):
                     print(f"[Tick] Aristotle queue full; leaving job {job.job_id[:8]} queued and stopping dispatch")
@@ -1494,6 +1507,8 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
                 elif job is not None:
                     extractor._release_direction(job)
                     print(f"[Tick] Dispatch error: {e}, direction released")
+                    if extractor._is_auth_error(e):
+                        extractor._refund_attempt(job)
                 else:
                     print(f"[Tick] Dispatch error before discovery: {e}")
 

@@ -189,12 +189,27 @@ class AristotleSDKClient:
                 }
             except Exception as e:
                 error_str = str(e)
+                _lower = error_str.lower()
+                # Auth failures are NEVER the job's fault: a 401 storm (expired/
+                # revoked key) must not fail in-flight research — report
+                # non-terminal unreachability so jobs survive until the key is
+                # fixed (audit 2026-08-21: one 401 window dropped a live
+                # Phase A + Phase B pair and burned every queued direction).
+                if "401" in error_str or "invalid api key" in _lower or "unauthorized" in _lower:
+                    return {
+                        "project_id": project_id,
+                        "status": "unreachable",
+                        "percent_complete": 0,
+                        "complete": False,
+                        "has_files": False,
+                        "has_input": False,
+                        "error": f"auth error (non-terminal): {error_str}",
+                    }
                 # Don't treat transient network/API errors as terminal: SSL
                 # failures, timeouts, DNS hiccups, and 429/5xx responses all
                 # recover. Failing a job on one blip abandoned every in-flight
                 # project in a single tick while the remote research kept
                 # running (audit 2026-08-21).
-                _lower = error_str.lower()
                 _transient = (
                     "ssl" in _lower
                     or "certificate" in _lower
