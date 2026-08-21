@@ -108,21 +108,24 @@ class TestTournamentInjectedExemption:
             "Precondition: without the exemption, the injected direction sorts first"
         )
 
-    def test_apply_tournament_results_never_prunes_injected(self):
-        """apply_tournament_results must refuse to prune injected directions,
+    def test_apply_tournament_outcomes_never_prunes_injected(self):
+        """The LIVE tournament write-back (DirectionTournament.apply_tournament_outcomes,
+        called from knowledge_extractor) must refuse to prune injected directions,
         even if one somehow appears in the rejection list."""
-        from research_memory import FutureDirectionsManager
+        from direction_tournament import DirectionTournament
 
         directions = [_injected_direction("fd_1000", issue=157),
                       _regular_direction("fd_2000")]
         tmpdir = _write_pool(mkdtemp(), directions)
-        mgr = FutureDirectionsManager(tmpdir)
+        dt = DirectionTournament(workspace=tmpdir)
 
-        result = mgr.apply_tournament_results(
-            winners=[{"id": "fd_2000", "lean_stub": "theorem foo : True"}],
+        result = dt.apply_tournament_outcomes(
+            winners=[{"id": "fd_2000", "reason": "winner", "lean_stub": "theorem foo : True"}],
             rejections=[{"id": "fd_1000", "reason": "too speculative"}],
+            dispatched_ids={"fd_1000", "fd_2000"},
         )
 
+        mgr = dt.FutureDirectionsManager(tmpdir)
         injected = next(d for d in mgr._directions if d.id == "fd_1000")
         assert injected.status == "available", (
             f"Injected direction must never be pruned, got {injected.status}"
@@ -132,26 +135,30 @@ class TestTournamentInjectedExemption:
 
     def test_empty_rejection_reason_gets_default(self):
         """An empty/whitespace rejection reason must be replaced by the
-        default text — never recorded as a bare 'tournament_rejected: '."""
-        from research_memory import FutureDirectionsManager
+        default text — never recorded as a bare 'tournament_rejected: '.
+        Exercises the LIVE apply_tournament_outcomes path."""
+        from direction_tournament import DirectionTournament
 
         directions = [_regular_direction(f"fd_200{i}") for i in range(3)]
         tmpdir = _write_pool(mkdtemp(), directions)
-        mgr = FutureDirectionsManager(tmpdir)
+        dt = DirectionTournament(workspace=tmpdir)
 
-        mgr.apply_tournament_results(
+        dt.apply_tournament_outcomes(
             winners=[],
             rejections=[{"id": "fd_2000", "reason": ""},
                         {"id": "fd_2001", "reason": "   "},
-                        {"id": "fd_2002", "reason": "overlaps existing work"}],
+                        "fd_2002"],
+            dispatched_ids={"fd_2000", "fd_2001", "fd_2002"},
         )
 
+        mgr = dt.FutureDirectionsManager(tmpdir)
         d0 = next(d for d in mgr._directions if d.id == "fd_2000")
         d1 = next(d for d in mgr._directions if d.id == "fd_2001")
         d2 = next(d for d in mgr._directions if d.id == "fd_2002")
         assert d0.prune_reason == "tournament_rejected: rejected in aristotle tournament"
         assert d1.prune_reason == "tournament_rejected: rejected in aristotle tournament"
-        assert d2.prune_reason == "tournament_rejected: overlaps existing work"
+        # A bare ID string normalizes to reason="" -> default text, not bare colon
+        assert d2.prune_reason == "tournament_rejected: rejected in aristotle tournament"
 
 
 class TestOrphanCloserTruthfulMessage:

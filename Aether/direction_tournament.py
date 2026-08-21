@@ -225,7 +225,14 @@ class DirectionTournament:
         retired = 0
 
         winner_map = {e["id"]: e.get("reason", "") for e in [_normalize_entry(w) for w in winners]}
-        rejection_map = {e["id"]: e.get("reason", "rejected in aristotle tournament") for e in [_normalize_entry(r) for r in rejections]}
+        # An empty/whitespace reason (judge returned "" or the entry was a bare
+        # ID string normalized to reason="") must fall back to the default text,
+        # never be recorded as a bare "tournament_rejected: ".
+        _default_rejection = "rejected in aristotle tournament"
+        rejection_map = {
+            e["id"]: ((e.get("reason") or "").strip() or _default_rejection)
+            for e in [_normalize_entry(r) for r in rejections]
+        }
 
         for d in mgr._directions:
             if d.id in winner_map:
@@ -239,6 +246,10 @@ class DirectionTournament:
                 promoted += 1
             elif d.id in rejection_map:
                 if dispatched_ids is not None and d.id not in dispatched_ids:
+                    continue
+                # Owner-approved injected directions are never tournament-pruned:
+                # their issues are open and awaiting the dedicated dispatch path.
+                if getattr(d, "source", "") == "github_injection":
                     continue
                 d.status = "pruned"
                 d.prune_reason = f"tournament_rejected: {rejection_map[d.id]}"

@@ -140,15 +140,16 @@ External research directions are submitted as GitHub issues labeled
    path that may dispatch an injected direction. `select_direction_weighted`
    excludes injected directions unless it is explicitly given matching
    `open_issue_numbers` (see "Inverse-Frequency Domain Balancing" above).
-3. **Tournament exemption** (`get_candidate_batch` / `apply_tournament_results`):
-   injected directions are never tournament candidates and are never pruned by
-   tournament results. Their `priority_score=1000` would otherwise sort them to
-   the FRONT of every candidate batch (sorted by `-priority_score`), getting
-   them tournament-rejected — with empty justifications — before the dedicated
-   dispatch path ever ran (regression fixed 2026-08-21; issues #157/#159 were
-   closed unresearched this way, and `close_orphaned_issues` now reports the
-   true `prune_reason` instead of claiming "already processed" for pruned
-   directions).
+3. **Tournament exemption** (`get_candidate_batch` / `apply_tournament_outcomes`):
+   injected directions are never tournament candidates and the live tournament
+   write-back (`DirectionTournament.apply_tournament_outcomes`, called from
+   `knowledge_extractor.py`) never prunes them. Their `priority_score=1000`
+   would otherwise sort them to the FRONT of every candidate batch (sorted by
+   `-priority_score`), getting them tournament-rejected — with empty
+   justifications — before the dedicated dispatch path ever ran (regression
+   fixed 2026-08-21; issues #157/#159 were closed unresearched this way, and
+   `close_orphaned_issues` now reports the true `prune_reason` instead of
+   claiming "already processed" for pruned directions).
 4. **Self-heal** (`prune_closed_issue_directions`): any non-terminal injected
    direction whose issue has **closed** is marked `pruned`, so it can never be
    re-dispatched. Runs at tick start and inside the injected-dispatch block.
