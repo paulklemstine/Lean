@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "a985d45a",
-      "domain": "Combinatorics",
-      "key_insight": "# FUTURE DIRECTIONS — after Cycle 5 (frame definability for `ModalSystem`)\n\nCycle 5 added the missing definability layer over the Cycle-1 `KFrame`/`sat` apparatus:\naxiom-to-relation correspondences (`",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 101,
-      "timestamp": "2026-08-19T20:46:03",
-      "title": "Cycle 4 already provides the two witnesses and the joint-inconsistency"
-    },
-    {
       "cycle_id": "c442a26f",
       "domain": "Bridges",
       "key_insight": "# Future directions — after Conjecture D (q-series rigidity / Molien-type dichotomy)\n\nCycle status.  Conjecture D is **settled** in `Catalog/Bridges/MolienQSeriesRigidity.lean`,\nin a form sharper than",
@@ -499,19 +489,19 @@
       "theorem_count": 52,
       "timestamp": "2026-08-21T18:56:28",
       "title": "The exact ensemble dichotomy"
+    },
+    {
+      "cycle_id": "d588a53d",
+      "domain": "Geometry",
+      "key_insight": "# Future directions — after the Pythagorean Hydra\n\n## What this cycle established\n\nThe moonshot hypothesis was that the Berggren tree of primitive Pythagorean triples\ncarries a Kirby–Paris-style indep",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 135,
+      "timestamp": "2026-08-21T18:56:44",
+      "title": "The Pythagorean Hydra — Natural Independence for the Berggren Tree"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "d8dbb938",
-      "domain": "Combinatorics",
-      "key_insight": "# Future directions\n\nThe results close the question the investigation asked: a residue-dial family with conductor\nlcm `M*` adds at most a factor `M*/gcd(M*, m)` to a partial-key hint `p mod m`, that f",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 70,
-      "timestamp": "2026-08-13T06:53:28",
-      "title": "Residue Dials Cannot Amplify a Coppersmith Hint, Closed"
-    },
     {
       "cycle_id": "6092c7cd",
       "domain": "Algebra",
@@ -2501,27 +2491,19 @@
       "theorem_count": 52,
       "timestamp": "2026-08-21T18:56:28",
       "title": "The exact ensemble dichotomy"
+    },
+    {
+      "cycle_id": "d588a53d",
+      "domain": "Geometry",
+      "key_insight": "# Future directions — after the Pythagorean Hydra\n\n## What this cycle established\n\nThe moonshot hypothesis was that the Berggren tree of primitive Pythagorean triples\ncarries a Kirby–Paris-style indep",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 135,
+      "timestamp": "2026-08-21T18:56:44",
+      "title": "The Pythagorean Hydra — Natural Independence for the Berggren Tree"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "1a7b47b1",
-      "domain": "Pythagorean",
-      "name": "digest_bump_eq",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "1a7b47b1",
-      "domain": "Pythagorean",
-      "name": "of",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "f2707534",
-      "domain": "Probability",
-      "name": "exp_le_quadratic",
-      "quality": 0.92
-    },
     {
       "cycle_id": "f2707534",
       "domain": "Probability",
@@ -2803,9 +2785,27 @@
       "domain": "Combinatorics",
       "name": "sum_indicator_eq_count",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "d588a53d",
+      "domain": "Geometry",
+      "name": "uu_bergA",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "d588a53d",
+      "domain": "Geometry",
+      "name": "vv_bergA",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "d588a53d",
+      "domain": "Geometry",
+      "name": "hh_bergA",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-21T18:56:28",
+  "last_updated": "2026-08-21T18:56:44",
   "open_questions": [
     {
       "context": "Everything is proved; there are no `sorry`s and no new axioms.",
@@ -3393,12 +3393,6 @@
     ],
     "Geometry": [
       {
-        "cycle_id": "64406111",
-        "quality": 0.85,
-        "theorems": 72,
-        "title": "Round-10 Closures: The Exhaustion of the Classical Attack Surface"
-      },
-      {
         "cycle_id": "3ce74e62",
         "quality": 0.85,
         "theorems": 72,
@@ -3451,6 +3445,12 @@
         "quality": 0.72,
         "theorems": 143,
         "title": "p-adic Berggren Dynamics — The Tree of Pythagorean Triples as a p-adic Dynamical"
+      },
+      {
+        "cycle_id": "d588a53d",
+        "quality": 0.82,
+        "theorems": 135,
+        "title": "The Pythagorean Hydra — Natural Independence for the Berggren Tree"
       }
     ],
     "Logic": [

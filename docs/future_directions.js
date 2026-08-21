@@ -48,21 +48,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Collatz-Berggren Bridge \u2014 Transferring the Lorentz Invariant to the Inverse Collatz Tree"
   },
   {
-    "consumed_by_exp_id": "d588a53d",
-    "description": "**Domain**: Pythagorean <-> Logic\n\n**Hypothesis (MOONSHOT)**: The Berggren tree's proven descent structure \u2014 every primitive triple reduces to (3,4,5) by inverse Berggren moves, formalized in the catalog's groupoid \u2014 is the substrate for a Kirby-Paris-style independence phenomenon. The conjecture: there is a natural hydra-style game on the Berggren tree (Hercules chops a branch; the tree regrows by the Berggren moves' branching) whose termination is TRUE but UNPROVABLE in Peano Arithmetic \u2014 a \"Pythagorean Hydra\" \u2014 and, on the second front, the first-order theory of the tree with its address function (word \u2192 triple) is undecidable, realizing a Hilbert's-tenth/Matiyasevich phenomenon on the tree.\n\n**Test**: Formalize the descent/termination of the inverse-Berggren reduction (the groupoid package already proves connectivity to (3,4,5); establish well-foundedness of the descent order). Define the Pythagorean Hydra: chop a node; regrowth follows the Berggren generators' branching. Prove the game's termination in ZFC, then calibrate its proof-theoretic strength: show that the termination statement, or a natural parametrized variant (bounded-depth descent), is unprovable in PA by encoding a known independent principle (Goodstein / Kirby-Paris hydra) into the regrowth rule. Second front: encode Diophantine machines into the tree's addressing and prove undecidability of the tree's theory with the address function.\n\n**Why now**: Natural independence results \u2014 Goodstein's theorem, the Kirby-Paris Hydra, Paris-Harrington \u2014 are among the deepest discoveries of logic: simple, natural statements about concrete structures that are true but unprovable. The catalog's dark-mathematics line shows the system is already probing unprovability, and the tree's fully formalized descent structure (every triple \u2192 (3,4,5)) is exactly the well-founded substrate such phenomena live on. A Pythagorean Hydra would be a new natural independence result on a structure as classical as the Pythagorean triples themselves.\n\n**If true**: A new natural independence phenomenon: the termination of a Pythagorean-triple game unprovable in PA \u2014 joining Goodstein and the Hydra game in the short list of natural unprovability results, and showing that the arithmetic beneath Pythagoras's theorem already exceeds Peano's reach.\n\n**If false**: The game's termination is provable in PA (its strength is bounded) \u2014 itself a precise calibration theorem placing the tree's descent in the hierarchy of combinatorial principles, and mapping exactly which regrowth rules would be needed to reach independence.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1783",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T03:17:34.066635+00:00",
-    "title": "The Pythagorean Hydra \u2014 Natural Independence for the Berggren Tree"
-  },
-  {
     "consumed_by_exp_id": "a2c90992",
     "description": "**Domain**: Pythagorean <-> Algebra\n\n**Hypothesis (MOONSHOT)**: The Berggren groupoid \u2014 integral matrices preserving the Lorentz form a\u00b2+b\u00b2\u2212c\u00b2, living on the null cone \u2014 is a shadow of the arithmetic of the even Lorentzian Leech lattice II(25,1), the 26-dimensional lattice at the heart of Conway's \"holy construction,\" whose automorphism group hosts the Conway group Co0 and, through the moonshine module, the Monster \u2014 the largest sporadic simple group. The conjecture: the tree's combinatorial structure (nodes, branches, 3-adic boundary) is realized by the hole structure of the Leech lattice \u2014 deep holes \u2194 Niemeier lattices \u2014 so that the Berggren tree provides an explicit pythagorean parametrization of the Niemeier lattice family, and the groupoid embeds in the Lorentzian lattice's automorphism group, bridging Pythagorean triples to Monstrous moonshine.\n\n**Test**: Formalize the embedding of the (2,1)-signature null cone into II(25,1) and the action of the Berggren generators on the Lorentzian lattice. Prove or refute: (i) the groupoid embeds in the positive Lorentz group of II(25,1) \u2014 equivalently in the Conway group's Lorentzian extension; (ii) the tree's nodes and branches map to the deep-hole/Niemeier structure respecting the ternary branching; (iii) the McKay-Thompson trace series \u2014 whose moment structure the catalog already formalized via the Bell-criterion package \u2014 acquire a tree-parametrized organization.\n\n**Why now**: Monstrous moonshine \u2014 the j-function connection proved by Borcherds (Fields Medal) \u2014 is the most spectacular bridge in modern mathematics, and its natural habitat is precisely a Lorentzian lattice with null-cone structure: the same geometric substrate as the Berggren tree. The catalog's moonshine package built the trace-series and moment machinery; the Lorentzian-lattice bridge from the tree is the missing geometric link. Both structures are integral Lorentzian geometries, and the question of whether the tree's combinatorics lives in the Leech lattice's hole structure is the natural next moonshot.\n\n**If true**: A pythagorean parametrization of the Niemeier lattices and an embedding of the Berggren groupoid into the Monster's natural habitat \u2014 a bridge from the oldest mathematics (Pythagoras) to the most extraordinary object in group theory, with the tree as an explicit combinatorial model for the geometry of moonshine.\n\n**If false**: The groupoid does not embed, or the tree's branching does not match the hole structure \u2014 a precise theorem about which Lorentzian arithmetic the tree actually realizes, clarifying the boundary between elementary Pythagorean geometry and the Leech lattice's exceptional structure.\n",
     "domains": [
@@ -153,16 +138,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-24 #3 \u2014 QUINTIC-TYPE-CHANNEL: the abelianization law at degree five, F\u2082\u2080 and the first C\u2084 dial (paper 82)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a3b670e2",
     "description": "## FACT round-24 #2 \u2014 BERGGREN-3ADIC (paper 81, /tmp/exp_berggren3adic.py, /tmp/r24n2.log)\n\n**Verdict name: THE-TREE-POSITION-IS-ADICALLY-SEALED.**\n\n### Result\nThe Berggren tree position of the N-node (the Fermat pair of a semiprime, paper 56's exact embedding) carries **NO N-visible residue structure beyond the trace**. The channel decomposes into (i) a deterministic 3-adic skeleton that *restates* N mod 3 exactly, and (ii) a metric layer \u2014 branch letters, depth, path composition \u2014 that is **blind at every 3-adic level 3^k, k \u2264 6**. The Catalog's 3-adic Cantor boundary (#855) has no N-computable projection beyond the trace-set content.\n\n### The four horns (all stated before the run; all confirmed)\n- **H1 SKELETON (deterministic lemma)**: squares mod 3 = {0,1} + m\u22a5n \u27f9 N \u2261 1 \u27fa 3|n, N \u2261 2 \u27fa 3|m, N \u2261 0 \u27fa 3\u2224mn \u2014 agreement **40000/40000 = 100%**. And it RESTATES the trace: 3|n \u27fa q\u2261p mod 3 \u27fa N \u2261 p\u00b2 \u2261 1 mod 3, also **40000/40000** \u2014 zero information beyond N mod 3 (barrier 6).\n- **H2 PARENT-INTERVAL LAW (new exact lemma)**: the Berggren parent is decided by the ratio alone \u2014 m/n \u2208 (1,2) \u2192 T\u2081 = (n,2n\u2212m); (2,3) \u2192 T\u2082 = (n,m\u22122n); (3,\u221e) \u2192 T\u2083 = (m\u22122n,n). Verified on all **40000/40000** descents terminating exactly at root (2,1), plus **86,634 spot-checked steps** with child-map reconstruction (B\u2081(m,n)=(2m\u2212n,m), B\u2082=(2m+n,m), B\u2083=(m+2n,n)) exact on every step.\n- **H3 METRIC BLINDNESS**: I(N mod 3^k; b_t) at the 300-shuffle permutation null for every letter depth t \u2264 10 and level k \u2264 6; same for depth dB and composition (c\u2081,c\u2082,c\u2083). **Worst z = +2.51 across ~150 tests** (k=1: I(N mod 3; b\u2081) = 0.00004 vs null 0.00004, z = +0.04).\n- **H4 CONTROLS (live)**: trace lemma I(N mod 3; s mod 3) = **1.0000** exact (paper 50); I(ratio-band; b\u2081) = **1.4738 = H(b\u2081)** EXACTLY \u2014 the first branch letter is a deterministic function of the m/n band, whose recovery IS the factorization; corr(log dB, log gap) = \u22120.141 replicates paper 56's anti-correlation.\n\n### Sample\n40,000 random semiprimes (p,q uniform primes in [2\u00b9\u2076, 2\u00b2\u2074)), Miller-Rabin (12 bases), capped descents (5000 steps): twin-prime nodes n=1 descend stepwise in m and are censored \u2014 **42/40402 = 0.10%**, reported. Runtime 154 s.\n\n### Why this matters\n- Paper 56's orthogonality is sharpened from coordinate-level to **adic strength**: coordinates orthogonal AND position sealed.\n- Tree-adic dials join the closed residue-dial family (papers 54/70/72\u201374/77/79/80): no dial exceeds its trace-set content; the metric interior requires the factorization to read.\n- The gold-tier interference claim (#829, \"exact factorisation by interference of Pythagorean triples\", polynomial-time per its filename) has no formula in the index, but this result fences it: any such method must either smuggle the Fermat pair (circularity, barrier 6) or pay \u03a9(N) aggregation (barrier 4).\n\n### All 8 barriers\n(a) clean \u2014 four horns pre-stated, measurement object \u2260 instrument; (b) clean \u2014 no tree-position channel work in the Catalog (nearest: our own echo #707); (c) confronted \u2014 40k real semiprimes, 86,634 verified steps, ~150 null-tested channels; (d) clean \u2014 fixed seeds; (e) the substance \u2014 blindness asserted against empirical nulls, censoring reported, worst z +2.51 < 3 without multiplicity correction; (f) controlled \u2014 lemmas asserted at 100%, ALL_DONE marker; (g) fair \u2014 two live positive controls fire (trace 1.0000; band-determinism = H(b\u2081)); (h) closure \u2014 symmetric by construction, skeleton circular (6), metric layer needs factors (5/6), descent = classical Euclidean algorithm in disguise (8).\n\n### What closes\nThe Pythagorean-tree line is now closed at three strengths: embedding exact (paper 56), coordinates orthogonal (paper 56), position adically sealed (this paper). Frontier returns to the quantum channel (QUBIT-TRADE phase diagram) and the barrier-4 converse.\n\nNow 416 experiments. Assessment v192. Paper 81.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3412",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T13:59:52.031024+00:00",
     "title": "FACT round-24 #2 \u2014 BERGGREN-3ADIC: the tree position of the N-node is adically sealed (paper 81)"
   },
@@ -347,6 +333,76 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T17:46:25.961555+00:00",
     "title": "FACT round-27 #3 \u2014 JOINT-WALL-VERIFIED: the battery's factor-blindness stands, the wall was bias (paper 93)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-29 #2 \u2014 JOINT-ANOMALY-RECONCILED (paper 100, /tmp/exp_jointreconcile.py, /tmp/r29n2.log)\n\n**Verdict name: THE-ORIGINAL-STANDS.**\n\n### Result\nPaper 99's flagged 16\u00d7 anomaly **resolved**: paper 91's joint value of **2.1314 bits is CORRECT** \u2014 reproduced exactly by the clean-code cross-check \u2014 and paper 99's rebuild reading of 0.1353 was an **encoding artifact** in the rebuild's own label chaining.\n\n### The reconciliation (side-by-side, identical population)\n| construction | distinct labels | H(labels) | I(joint) |\n|---|---|---|---|\n| paper 91 (`pj = pc_a\u00b710000 + pc_b`) | **36** | 4.6006 | **2.1314** |\n| clean-code cross-check | 36 | 4.6006 | **2.1314** |\n| paper 99 rebuild (`\u00b710` compression) | **18** | 3.6073 | 0.5830 |\n\nThe rebuild's `\u00b710` frame for the S\u2083b code inside the `\u00b7100` frame for the S\u2083a code **collided distinct label pairs** \u2014 18 labels instead of 36, destroying 0.99 bits of label entropy and most of the measurable channel.\n\n### Resolution\n- Paper 91's 2.1314 **stands** (clean-code reproduction exact; marginals re-verified I(a) = I(b) = 1.0012).\n- Paper 99's flagged anomaly row is **retracted**; its per-dial routing tables (single-dial, no chaining) are unaffected and stand.\n- **Programme lesson**: chained integer label encodings must be width-checked against their field sizes \u2014 a `\u00b710` frame for a 3-valued code inside a `\u00b7100` frame for a 6-valued code silently merges classes. Paper 97's fresh-rerun audit practice is the detector.\n\nNow 435 experiments. Assessment v211. Paper 100.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3448",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T18:57:10.442005+00:00",
+    "title": "FACT round-29 #2 \u2014 JOINT-ANOMALY-RECONCILED: paper 91 stands, the rebuild collapsed (paper 100)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-29 #1 \u2014 THE-SUM-DIFFERENCE-SPLIT (paper 99, /tmp/exp_sumdiffsplit.py, /tmp/r29n1b.log)\n\n**Verdict name: THE-HINT-VALUE-IS-REAL.**\n\n### Result\nThe pre-stated reconstruction hypothesis \u2014 I(s,d jointly) = I(N mod m\\*; labels) \u2014 was **refuted in the interesting direction**: viewing the battery labels through the factor-residue pair (s, d) **exceeds** the product view.\n\n### The routing table (S\u2083a x\u00b3+x+1 @31; S\u2083b replicates)\n| view | bits | share |\n|---|---|---|\n| product-view (hint-free) = the channel | 1.0012 | 100% |\n| sum-view alone (s = p+q) | 0.0391 | 3.9% |\n| gap-view alone (d = q\u2212p) | 0.0387 | 3.9% |\n| full-residue view (s,d jointly) | 1.5201 | 152% |\n| **HINT VALUE = I(s,d) \u2212 I(N)** | **+0.5189** | |\n\nThe sum and gap residues **individually carry almost nothing** (~4% each) \u2014 but their combination carries more than the modulus's own product residue. The +0.52-bit difference is the **factor-residue hint value**: what knowing p and q mod 31 separately (a 10-bit hint) adds over reading N's residue. S\u2083b replicates (+0.5099). p\u2194q symmetry verified.\n\n### Why this matters\nThe hint value quantifies exactly how much label information is locked behind knowing the factor residues \u2014 information present in the labels, invisible from N, released only by a factor-residue hint. It bridges the battery capacity (papers 91\u201394) to COND-RANK's conditioning-capacity measurement, and explains the sub-ceiling gaps of papers 80\u201394 from the other side: ceiling H(T) counts label entropy; the product view counts what N's residue reaches; the hint value is the bridge.\n\n### Anomaly flagged\nThis script's joint-battery product-view reads 0.1353 against paper 91's 2.1314 for the nominally identical quantity \u2014 unresolved (likely a label-encoding difference in this quick rebuild); the joint row is not cited until reconciled. The per-dial tables are internally consistent across two independent computations within the run.\n\nNow 434 experiments. Assessment v210. Paper 99.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3449",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T18:57:10.443489+00:00",
+    "title": "FACT round-29 #1 \u2014 THE-SUM-DIFFERENCE-SPLIT: the factor-residue hint value (paper 99)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-28 #4 \u2014 BATTERY-UTILITY (paper 98, /tmp/exp_batteryutility.py, /tmp/r28n4b.log)\n\n**Verdict name: THE-LABELS-ARE-NOT-FILTERS.**\n\n### Result\nAn honest refutation-by-design-flaw round closing the battery arc. The attempt to convert the 6-dial battery's 12.7-bit capacity into candidate-set narrowing for p required a map **residue r mod m\\* \u2192 type of a prime \u2261 r mod m\\*** \u2014 and **that map does not exist**: primes in the same residue class carry different splitting types. This is precisely why every measured channel sits below its label-entropy ceiling (S\u2083a: I = 1.0012 vs H(T) = 2.2982 \u2014 the gap IS the within-class variation).\n\n### What happened\nThe utility tables were built by polynomial evaluation at r (does f(r) \u2261 0 mod m\\*?) \u2014 testing whether r itself is a root, not which type primes \u2261 r carry. The consistency assert caught true-p exclusions (6/150 via a quartic enumeration precedence bug; the cubic unions passed 0/150 only by covering nearly all residues). The diagnosis elevated the bug to the finding.\n\n### The corrected understanding\nThe battery's labels are statistics of the JOINT (p mod m\\*, q mod m\\*) draw, not functions of single residues. Utility must be stated Bayesianly: the label vector is a 12.7-bit posterior update on the joint residue vector (~20 bits) \u2014 exactly as the capacity law says. Converting that posterior into individual-candidate narrowing requires the per-prime type determination that IS the factoring problem. No-pinning consistency: constant-bounded posterior mass on joint residue vectors; no candidate filter without circularity.\n\nNow 433 experiments. Assessment v208/v209. Paper 98.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3450",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T18:57:10.444861+00:00",
+    "title": "FACT round-28 #4 \u2014 BATTERY-UTILITY: the labels are not filters (paper 98)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-28 #3 \u2014 REPRODUCIBILITY-AUDIT (paper 97, logs /tmp/audit_p{80,89,92}.log)\n\n**Verdict name: THE-NUMBERS-REPRODUCE.**\n\n### Why\nSeventeen experiment scripts written today lived only in /tmp \u2014 one reboot from oblivion \u2014 and no stored result had ever been re-run post-hoc. This round fixes the durability gap and audits reproducibility.\n\n### Preservation\nAll 17 scripts copied to `ResearchOutput/scripts/2026-08-21-resume/` and committed: type-channel law table (80), quintic endpoints (82), D\u2085 search (84), battery series (91\u201392), joint-wall verification (93), qubit/sample ramp series (85\u201387), converse plane (88\u201390), method-locality pair (95\u201396), Berggren-3adic (81).\n\n### Audit \u2014 three keystones, fresh runs, stored fixed seeds\n| keystone | recorded | fresh re-run | verdict |\n|---|---|---|---|\n| Paper 80 law table (7 fields) | S\u2083a/S\u2083b 1.0000; S\u2084 1.0100; A\u2084 0.9188; D\u2084 1.6555; V\u2084 0.8092; C\u2084 1.4989 | identical to 4 decimals on every row + type histograms + REVERSAL check | \u2713 |\n| Paper 80 semiprime legs | pairs 1.0001/1.0001/1.0034/0.4729; s-projs Is(2)/Is(2)/Is(3) | identical | \u2713 |\n| Paper 89 three strata | \u03b1_\u03c4 = 0.500; medians 19.30/19.36; \u03b1_\u03c1 on N = 0.261 | identical | \u2713 |\n| Paper 92 battery capacity | I(4-joint) = 8.2246; synergy +4.3146; marginal 1.0012 | identical | \u2713 |\n\n**Twelve recorded headline numbers; twelve exact reproductions. Zero drift.**\n\n### What this decides\nThe resumed programme's computational record is **reproducible by construction** \u2014 deterministic seeds and pipelines, demonstrated by fresh re-runs landing on the exact recorded values, with the scripts now durably in the repo.\n\nNow 432 experiments. Assessment v208. Paper 97.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3451",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T18:57:10.446222+00:00",
+    "title": "FACT round-28 #3 \u2014 REPRODUCIBILITY-AUDIT: every keystone reproduces bit-for-bit (paper 97)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-28 #2 \u2014 THE-GAP-LOCAL-METHOD (paper 96, /tmp/exp_gaplocal.py, /tmp/r28n2d.log)\n\n**Verdict name: THE-TAXONOMY-IS-COMPLETE.**\n\n### Result\nFermat \u2014 the one classical method never locality-classified \u2014 measured: its iteration count is **exactly (p+q)/2 \u2212 \u221aN** (identity 24/24 with per-draw instrumentation), and across balance ratios r = q/p \u2208 [2, 64] at fixed p the cost interpolates **352 \u2192 100 282 iterations** (in p-units 0.09 \u2192 24.50; at r = 64 the measured cost is 0.78 of the cofactor-linear limit p\u00b7(r\u22121)/2). Fermat is **GAP-LOCAL**: neither factor-local like \u03c1/ECM nor a scan like trial division, but a function of the gap alone.\n\n### The completed locality table\n| method | locality class | cost |\n|---|---|---|\n| trial division | p-linear | p |\n| Pollard \u03c1 | factor-local | \u221ap |\n| ECM | factor-local | sub-exp in p |\n| **Fermat** | **gap-local** | **(p+q)/2 \u2212 \u221aN** |\n\nFour methods, three locality classes \u2014 which methods see the factor (\u03c1, ECM), which see the gap (Fermat), and which see nothing but the scan (trial division).\n\n### Bonus finding: the degenerate square case\nThe r = 1 grid row exposed that when q lands on p itself (N = p\u00b2), Fermat's target a = p lies **below** its starting point \u230a\u221aN\u230b + 1 \u2014 plain Fermat has no true stopping point on prime squares and only exits by accidentally hitting an unrelated square (here after 8 372 232 iterations). CFRAC-style generalizations do not share the defect.\n\n### Method ledger\n(1) The first launch hung 7+ minutes in H1 \u2014 faulthandler stack dump found the root cause: **the fermat loop lacked its increment** (`a += 1` lost between drafts), spinning on a constant value; the standalone control with the increment ran instantly. (2) Stale assert constant (40 vs 24 draws) fixed.\n\nNow 431 experiments. Assessment v207. Paper 96.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3452",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T18:57:10.447566+00:00",
+    "title": "FACT round-28 #2 \u2014 THE-GAP-LOCAL-METHOD: Fermat completes the locality taxonomy (paper 96)"
   },
   {
     "consumed_by_exp_id": "",
@@ -1726,6 +1782,37 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Formalize the universal approximation theorem for ReLU networks. Prove depth-width tradeoffs: width-bounded networks of depth d can approximate functions that require exponential width at depth d-1. Construct explicit approximation rates for Sobolev functions.",
+    "domains": [
+      "MachineLearning",
+      "Analysis"
+    ],
+    "id": "fd_0684",
+    "priority_score": 0.9,
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-24T14:34:16.697830+00:00",
+    "title": "Universal Approximation: Quantitative Bounds"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize tropical curves as metric graphs. Prove the tropical Riemann-Roch theorem via chip-firing: r(D) - r(K-D) = deg(D) - g + 1. Construct explicit divisor classes on complete graphs and prove Baker-Norine's theorem.",
+    "domains": [
+      "Tropical",
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_0691",
+    "priority_score": 0.9,
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-24T14:34:16.697841+00:00",
+    "title": "Tropical Curves and Chip-Firing Games"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Formalizes Voiculescu's free probability: the free central limit theorem showing that normalized sums of freely independent identically distributed bounded random variables converge in distribution to the semicircle law, developed through the R-transform and free cumulants.",
     "domains": [
       "Probability",
@@ -2050,53 +2137,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Quantum Entanglement Monogamy: CKW Inequality"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize the no-cloning theorem in Lean 4 using the framework of C*-algebras. Prove the quantum teleportation protocol is correct. Formalize quantum entanglement measures and prove monogamy of entanglement for qubits.",
-    "domains": [
-      "Physics",
-      "Algebra",
-      "Computation"
-    ],
-    "id": "fd_0683",
-    "priority_score": 0.86,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-24T14:34:16.697828+00:00",
-    "title": "Quantum Information: No-Cloning and Teleportation"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize the universal approximation theorem for ReLU networks. Prove depth-width tradeoffs: width-bounded networks of depth d can approximate functions that require exponential width at depth d-1. Construct explicit approximation rates for Sobolev functions.",
-    "domains": [
-      "MachineLearning",
-      "Analysis"
-    ],
-    "id": "fd_0684",
-    "priority_score": 0.86,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-24T14:34:16.697830+00:00",
-    "title": "Universal Approximation: Quantitative Bounds"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize tropical curves as metric graphs. Prove the tropical Riemann-Roch theorem via chip-firing: r(D) - r(K-D) = deg(D) - g + 1. Construct explicit divisor classes on complete graphs and prove Baker-Norine's theorem.",
-    "domains": [
-      "Tropical",
-      "Algebra",
-      "Combinatorics"
-    ],
-    "id": "fd_0691",
-    "priority_score": 0.86,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-24T14:34:16.697841+00:00",
-    "title": "Tropical Curves and Chip-Firing Games"
   },
   {
     "consumed_by_exp_id": "",
@@ -10898,6 +10938,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The N-independent shape counts b(r,L) of surjective even closed walks should satisfy a finite linear recursion in L for fixed r, with an algebraic bivariate generating function. The shapes are Eulerian circuits of doubled connected multigraphs on r labelled vertices.\n\nFor each r there are constants c_1, ..., c_d with b(r, L+d) = c_1 b(r, L+d-1) + ... + c_d b(r, L) for all large L.\n\nCompute b(r,L) for r \u2264 4 and L \u2264 10 by exhaustive evaluation of the formal definition, fit a recursion, and prove it by a transfer-matrix argument on edge-multiplicity vectors.\n\nAll moments of the ensemble become effectively computable in closed form, order by order, with no new combinatorial input.\n\nThe shape counts are transcendental in nature and the moment polynomials must be attacked one order at a time.",
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_3441",
+    "priority_score": 0.7105000000000001,
+    "research_mode": "team",
+    "source_exp_id": "df44f621",
+    "status": "available",
+    "timestamp": "2026-08-21T18:56:16.029750+00:00",
+    "title": "Shape Generating Function for Even Closed Walks"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The max-cut averaging bound was proved this cycle both by counting and by local search, with an explicit iteration bound. The conjecture is that the Edwards improvement m/2 + (n-1)/4 for connected graphs is reachable inside the same subtraction-free exchange calculus, by flipping greedily along a spanning tree instead of appealing to spectral methods.\n\nEvery connected graph on n vertices with m edges has a cut S with 4*cut S >= 2*m + (n - 1).\n\nFormalize a spanning-tree greedy in Bridges/MaxCutLocalSearch.lean, derive the bound from the exchange identity cut_flip, and check tightness on K3, C5 and Petersen by evaluation.\n\nA verified Edwards bound strictly stronger than the averaging bound, obtained by finite means only.\n\nA connected graph all of whose locally maximal cuts equal m/2 would show the gain needs global spectral information.",
     "domains": [
       "Combinatorics",
@@ -10943,6 +10998,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The Pythagorean Hydra is flat (each head carries one natural number, its Berggren depth) and therefore lives at omega^omega. Iterating the address construction \u2014 heads that are Berggren words whose letters are themselves indexed by Berggren words \u2014 builds hydras of height n whose ordinal is a tower omega^omega^...^omega, with supremum epsilon_0. The conjecture is that the n-fold iterated Berggren hydra has exactly the strength of transfinite induction up to the n-th tower ordinal, so the family is unprovably terminating in PA in the limit.\n\nFor each n, the n-fold iterated Berggren hydra game terminates, provably in PA + TI(tower_n), and the union over all n has termination equivalent to TI(epsilon_0), hence unprovable in PA.\n\nFormalize the level-2 game (heads = pairs (word, word)) with the lexicographic potential on Multiset (Multiset Nat); prove termination and exhibit plays of length exceeding every phi k d.\n\nA genuine natural independence result whose objects are still Pythagorean triples, obtained by iterating the address map rather than by importing an abstract hydra.\n\nThe iteration collapses, showing that the freeness of the Berggren monoid caps the whole family at omega^omega \u2014 a strong structural rigidity statement.",
+    "domains": [
+      "Combinatorics",
+      "Logic"
+    ],
+    "id": "fd_3443",
+    "priority_score": 0.7102972972972974,
+    "research_mode": "team",
+    "source_exp_id": "d588a53d",
+    "status": "available",
+    "timestamp": "2026-08-21T18:56:34.315109+00:00",
+    "title": "Iterated Berggren Hydras and the Epsilon-Nought Barrier"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "No matrix realizes a Markoff Vieta move, in contrast with the linear Berggren action. The conjecture is that degree two is optimal and that the obstruction is a rank computation on finitely many Markoff base points.\n\nNo polynomial map of degree less than two in any linear coordinate system realizes the Vieta involution on the Markoff surface, and the quadratic realization is unique modulo the surface equation.\n\nSet up the general quadratic ansatz and solve the resulting linear system on a spanning set of Markoff triples.\n\nA clean statement of why the Lorentz half of the Berggren machinery cannot transport, valid for all coordinate changes.\n\nA hidden linearization exists, which would immediately import the Berggren hyperbolic geometry to the Markoff tree.",
     "domains": [
       "Geometry",
@@ -10985,6 +11055,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T16:51:23.265192+00:00",
     "title": "Vertex Sweep Characterisation of Strict Log-Concavity"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The address bijection identifies the Berggren tree with the free monoid on three letters, an automatic structure whose first-order theory is decidable. Adding the hypotenuse as a function symbol imports the Pell recurrences of the B-spine, which are not recognisable by finite automata. The conjecture is that this addition is exactly the boundary between decidability and undecidability for the theory of the tree.\n\nThe first-order theory of (PPT, bergA, bergB, bergC) is decidable, while the theory of (PPT, bergA, bergB, bergC, c) with c the hypotenuse function interprets Presburger arithmetic with a multiplicative predicate and is undecidable.\n\nFormalize the tree-automatic presentation via addr_bijective; for the negative half, define the B-spine hypotenuse sequence and encode squares as a definable predicate.\n\nThe Matiyasevich front of the original mission is answered exactly: undecidability appears not in the addressing, but in the arithmetic of hypotenuses.\n\nThe hypotenuse function stays automatic, and the entire Berggren structure is decidable \u2014 an unusually strong tameness statement for a Diophantine object.",
+    "domains": [
+      "Pythagorean",
+      "Logic"
+    ],
+    "id": "fd_3447",
+    "priority_score": 0.7100588235294119,
+    "research_mode": "team",
+    "source_exp_id": "d588a53d",
+    "status": "available",
+    "timestamp": "2026-08-21T18:56:35.994540+00:00",
+    "title": "Automatic Structure of the Berggren Tree with Hypotenuse"
   },
   {
     "consumed_by_exp_id": "",
@@ -11062,6 +11147,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T16:51:45.341729+00:00",
     "title": "Asymptotic Deletion Gain for Diagonal Ramsey Numbers"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The top shape count of even closed walks of length 2k on k+1 vertices should equal catalan k times (k+1)!. This identifies the leading coefficient of the moment polynomial as the Catalan number and is the combinatorial core of Wigner's semicircle law. It is verified formally for k = 1, 2, 3.\n\nFor all k \u2265 1, EvenWalks.surjEvenWalkCount (k+1) (2*k) = catalan k * (k+1)!.\n\nFormalize the bijection between even closed 2k-walks covering a spanning tree twice and pairs (labelling, Dyck path); check the identity by decide for k = 4 (needs an optimized decidable instance) and prove it by induction using the tree-contour recursion.\n\nThe leading coefficient of every even moment polynomial is catalan k, yielding all-order semicircle convergence in expectation.\n\nSome non-tree shape survives at top degree, contradicting the vertex bound; the moment polynomial degree analysis would have to be revisited.",
+    "domains": [
+      "Combinatorics",
+      "Algebra"
+    ],
+    "id": "fd_3439",
+    "priority_score": 0.7095116279069769,
+    "research_mode": "team",
+    "source_exp_id": "df44f621",
+    "status": "available",
+    "timestamp": "2026-08-21T18:56:15.187518+00:00",
+    "title": "Catalan Law for Top Walk Shapes"
   },
   {
     "consumed_by_exp_id": "",
@@ -11321,6 +11421,34 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Every normalised spectral moment of the symmetric Rademacher ensemble should converge to the corresponding semicircle moment. Polynomiality reduces this to a single leading coefficient, and the odd orders are already exact at finite N.\n\nFor every m, expect (normalizedMoment (W \u00b7) m) tends to WignerSemicircle.semicircleMoment m as N tends to infinity.\n\nCombine EvenWalks.evenClosedWalkCount_eq_sum_choose with the conjectured top shape count and take limits of the explicit rational function of N.\n\nThe moment method for the semicircle law is complete at all orders for this ensemble, with exact finite-N formulas at every order.\n\nEither the shape counts grow faster than the degree bound allows or the semicircle moments are not the limits, contradicting the verified orders 2, 4 and 6.",
+    "domains": [
+      "Physics"
+    ],
+    "id": "fd_3440",
+    "priority_score": 0.6695517241379312,
+    "research_mode": "team",
+    "source_exp_id": "df44f621",
+    "status": "available",
+    "timestamp": "2026-08-21T18:56:15.604128+00:00",
+    "title": "All-Order Semicircle Convergence in Expectation"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Every primitive Pythagorean triple has a unique address word over the three Berggren letters. Reading that word in a larger alphabet at each stage is a Goodstein-style base bump, and subtracting one letter is the Goodstein decrement. The conjecture is that the resulting sequence of triples always reaches (3,4,5), with termination equivalent to transfinite induction below omega^omega.\n\nFor every primitive Pythagorean triple t, the Pythagorean Goodstein sequence starting at t reaches (3,4,5) in finitely many steps, and this statement is equivalent over PRA to TI(omega^omega).\n\nDefine the base-bump on List BStep, prove termination by the ordinal assignment sum k^{position}, and compute the sequence for the first several triples in Lean by #eval.\n\nA Goodstein theorem whose objects are Pythagorean triples, with an exactly calibrated proof-theoretic strength.\n\nSome sequence cycles or diverges, which would contradict addr_injective and hence expose a hidden non-freeness of the tree.",
+    "domains": [
+      "Logic"
+    ],
+    "id": "fd_3445",
+    "priority_score": 0.6687142857142858,
+    "research_mode": "team",
+    "source_exp_id": "d588a53d",
+    "status": "available",
+    "timestamp": "2026-08-21T18:56:35.149597+00:00",
+    "title": "Pythagorean Goodstein Sequences via Address Base-Bumping"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "In homotopy type theory (HoTT), equal things can be equal in different ways \u2014 there can be multiple paths between two points. Apply this to cooking: two recipes can produce the same dish, but the paths (methods) may differ. The type of a dish is its flavor profile (a point in taste space R^n where n is the number of flavor dimensions). Two recipes are 'equal' if they produce the same flavor profile, but the path between them (the transformation from one recipe to another) may not be unique. Conjecture: The space of all recipes that produce a given flavor profile has the homotopy type of a CW-complex whose cells correspond to the possible ingredient substitutions. For example, the space of recipes that produce 'chocolate chip cookies' has the homotopy type of S^0 (two points: with nuts and without nuts), because the only binary choice is nuts/no-nuts. More complex dishes have higher homotopy groups: the space of recipes for 'curry' has pi_1 = Z (generated by the loop 'add more spice -> simmer -> add more coconut milk -> simmer -> add more spice'), representing the fundamental cycle of Indian cooking. Test: enumerate 100 recipes for chocolate chip cookies and compute the homotopy groups of the resulting simplicial complex. Impact: cooking is homotopy theory. Every dish is a point, every substitution is a path, and every cuisine is a homotopy type.",
     "domains": [
       "Novelty",
@@ -11566,6 +11694,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The two extreme spines of the tree are the centred-square spine A^n (hypotenuse 2n^2+6n+5) and the Pell/NSW spine B^n (hypotenuse 1,5,29,169,985,...). They should bracket the depth of every node: logarithmic below, square-root above. This converts the sharp hydra bound (k+1)^(depth+1) into an explicit bound in the hypotenuse.\n\nFor every primitive triple with odd first leg, log_{3+2sqrt2}(c) - 1 <= bergDepth (a,b,c) <= (sqrt(2c)-1)/2, with both bounds attained on the B- and A-spines respectively.\n\nProve c_parent >= (c-1)/6 and c_parent <= c - 2*sqrt(2c) + O(1) from the parent formula, then induct along the descent.\n\nAn effective, closed-form bound on the length of any Pythagorean battle in terms of the triple itself.\n\nThere are triples whose descent is anomalously long or short, revealing a new arithmetic invariant of the tree beyond the hypotenuse.",
+    "domains": [],
+    "id": "fd_3446",
+    "priority_score": 0.592979797979798,
+    "research_mode": "team",
+    "source_exp_id": "d588a53d",
+    "status": "available",
+    "timestamp": "2026-08-21T18:56:35.553837+00:00",
+    "title": "Depth-Hypotenuse Bracket for the Berggren Tree"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Over a fixed smallest coordinate x the Markoff Vieta dynamics is linear, given by an SL2(Z) matrix of trace 3x. For x = 1 and x = 2 these are the golden and silver dynamics, and the x = 2 branch coincides exactly with the Berggren silver spine. The conjecture is that every Markoff fibre is realized by a Berggren-type Pythagorean spine.\n\nFor every x that is the smallest entry of some Markoff triple, the trace-3x element of SL2(Z) governing the fibre is realized by a product of Berggren generators acting on a Pythagorean spine.\n\nFormalize orbits of markoffFiberMat x and compare with evalPair products; begin with x = 5 (trace 15).\n\nThe failed global transfer is replaced by a complete fibrewise dictionary between Pythagorean spines and Markoff branches.\n\nThe x = 1, 2 coincidences are sporadic, isolating exactly which quadratic units are shared by the two trees.",
     "domains": [],
     "id": "fd_3394",
@@ -11575,6 +11715,30 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T09:53:11.460248+00:00",
     "title": "Fibrewise Berggren Realization of Markoff Branches"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Allowing n regrown heads at move n (the Kirby-Paris convention) keeps termination \u2014 proved here via Dershowitz-Manna \u2014 but destroys the elementary bound. The conjecture is that the greedy strategy then takes ackermannian time, placing the game exactly at level F_omega of the fast-growing hierarchy: not primitive recursive, yet still provably terminating in PA.\n\nThe greedy stage-dependent Berggren battle from a single head of depth d has length at least A(d), the diagonal Ackermann function, and at most F_omega(c) for an explicit c.\n\nDefine the stage-indexed game StepsToStage and prove length >= A(d) by induction on d, matching the known analysis of flat hydras.\n\nA precise placement of a Pythagorean game at the Ackermann barrier: the first non-primitive-recursive phenomenon on the Berggren tree.\n\nThe stage dependence is absorbed by the potential, showing the game remains elementary and that branching alone can never leave the elementary class.",
+    "domains": [],
+    "id": "fd_3444",
+    "priority_score": 0.5921428571428572,
+    "research_mode": "team",
+    "source_exp_id": "d588a53d",
+    "status": "available",
+    "timestamp": "2026-08-21T18:56:34.745112+00:00",
+    "title": "Ackermannian Lower Bound for the Stage-Dependent Pythagorean Hydra"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Only the sign-flip involution and the identity x^2 = 1 were used to prove the ensemble dichotomy. Replacing the second by a general even moment sequence should turn the indicator of an even walk into a product of moments over edge multiplicities.\n\nFor independent symmetric entries with moments mu_j, E[tr W^L] = sum over closed L-walks of the product over edges of mu_(multiplicity).\n\nRefactor prod_entry_flipEdge_family and prod_entry_eq_one_of_even to carry a weight, then re-derive the counting theorems with the weight specialised to mu_j = 1.\n\nAll the counting results of this cycle apply verbatim to arbitrary symmetric sign-invariant ensembles, giving universality of the moment formulas.\n\nThe Rademacher case is special and the involution argument does not survive weighting, isolating exactly where independence is needed.",
+    "domains": [],
+    "id": "fd_3442",
+    "priority_score": 0.5917741935483872,
+    "research_mode": "team",
+    "source_exp_id": "df44f621",
+    "status": "available",
+    "timestamp": "2026-08-21T18:56:16.432364+00:00",
+    "title": "Weighted Dichotomy for General Symmetric Ensembles"
   },
   {
     "consumed_by_exp_id": "",
@@ -29704,19 +29868,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Statistical comparisons"
   },
   {
-    "consumed_by_exp_id": "df44f621",
-    "description": "For an arbitrary finite family of steps,\n   `expect_prod_entry_family` shows that the ensemble average of the walk monomial is\n   `1` when the family is loop-free with all edge multiplicities even, and `0`\n   otherwise. The vanishing half comes from the sign-flip involution\n   `prod_entry_flipEdge_family`; the surviving half from `prod_entry_eq_one_of_even`.\n   Consequently `expect_trace_pow_eq_sum_indicator` reduces **every** moment to a\n   count of even closed walks, and `expect_trace_pow_odd` proves that **all odd trace\n   moments vanish exactly, at every finite `N`** \u2014 no asymptotics. Normalised form:\n   `expect_normalizedMoment_odd`.",
-    "domains": [],
-    "id": "fd_3334",
-    "phase": "A",
-    "priority_score": 0.4483684210526315,
-    "research_mode": "team",
-    "source_exp_id": "37827e5f",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T06:29:35.300830+00:00",
-    "title": "The exact ensemble dichotomy"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "The `2 ^ k` computation and the sandwich theorem are already\nformalized; what is missing is only the graph decomposition, a combinatorial\nstatement about `SimpleGraph`/`Quiver` SCCs that Mathlib can support.",
     "domains": [
@@ -37023,14 +37174,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Stability and structure"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "16cb59c0",
     "description": "Prove that `trace(B^n)` counts rooted closed non-backtracking walks of length `n`.",
     "domains": [],
     "id": "fd_1979",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "6e1b10f7",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:22:04.774995+00:00",
     "title": "Prove that `trace(B^n)` counts rooted closed non-backtracking walks of length `n`."
   },
