@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "17d131fb",
-      "domain": "NumberTheory",
-      "key_insight": "# Future directions: after the refutation of Conjecture D10\n\nConjecture D10 (\"the Molien invariant is exactly the Burnside mark vector modulo scaling\")\nis **false**, and the reason is now precisely lo",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 85,
-      "timestamp": "2026-08-20T04:54:04",
-      "title": "Conjecture D10 (the Molien invariant is exactly the Burnside mark vector modulo scaling)"
-    },
-    {
       "cycle_id": "5c70a18c",
       "domain": "NumberTheory",
       "key_insight": "# Future directions: quantum EML activations, cycle 7 (final)\n\nThroughout, `t*` denotes the **quantum EML scalar-log root**: the unique positive real\nwith `‖log (1 + t i)‖ = 1`, i.e. the unique positi",
@@ -499,19 +489,19 @@
       "theorem_count": 102,
       "timestamp": "2026-08-21T23:38:40",
       "title": "General codiscrete construction"
+    },
+    {
+      "cycle_id": "663f5de8",
+      "domain": "Computation",
+      "key_insight": "# Future directions: the corrected-product torsor\n\nThis cycle turned `f ⋆ g = q · f · g` from a \"well-posed operation\" into a fully described\nalgebraic object: a torsion-free, uniquely divisible abeli",
+      "quality_score": 0.89,
+      "sorry_count": 0,
+      "theorem_count": 112,
+      "timestamp": "2026-08-21T23:38:53",
+      "title": "The corrected-product operation is now a proved closure property"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "b7a22960",
-      "domain": "Logic",
-      "key_insight": "# Future Directions — Boolean-Valued Multiverse Semantics (cycle 2 output)\n\nThe results of this cycle are in\n\n* `Catalog/Logic/Multiverse/BooleanValuedRealization.lean` — Boolean-valued\n  universe, ge",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 127,
-      "timestamp": "2026-08-13T18:15:13",
-      "title": "Construct a Boolean-valued universe whose generic quotients instantiate the abst"
-    },
     {
       "cycle_id": "f3293094",
       "domain": "Tropical",
@@ -2501,27 +2491,19 @@
       "theorem_count": 102,
       "timestamp": "2026-08-21T23:38:40",
       "title": "General codiscrete construction"
+    },
+    {
+      "cycle_id": "663f5de8",
+      "domain": "Computation",
+      "key_insight": "# Future directions: the corrected-product torsor\n\nThis cycle turned `f ⋆ g = q · f · g` from a \"well-posed operation\" into a fully described\nalgebraic object: a torsion-free, uniquely divisible abeli",
+      "quality_score": 0.89,
+      "sorry_count": 0,
+      "theorem_count": 112,
+      "timestamp": "2026-08-21T23:38:53",
+      "title": "The corrected-product operation is now a proved closure property"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "3026c1dd",
-      "domain": "Physics",
-      "name": "signedSum_empty",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "315472d4",
-      "domain": "Cryptography",
-      "name": "bLevel_valid",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "315472d4",
-      "domain": "Cryptography",
-      "name": "bLevel_image_disjoint",
-      "quality": 0.82
-    },
     {
       "cycle_id": "315472d4",
       "domain": "Cryptography",
@@ -2803,9 +2785,27 @@
       "domain": "Combinatorics",
       "name": "comp_cell",
       "quality": 0.79
+    },
+    {
+      "cycle_id": "663f5de8",
+      "domain": "Computation",
+      "name": "qSeries_mul_qInv",
+      "quality": 0.89
+    },
+    {
+      "cycle_id": "663f5de8",
+      "domain": "Computation",
+      "name": "qInv_mul_qSeries",
+      "quality": 0.89
+    },
+    {
+      "cycle_id": "663f5de8",
+      "domain": "Computation",
+      "name": "isNormalized_qInv_mul",
+      "quality": 0.89
     }
   ],
-  "last_updated": "2026-08-21T23:38:40",
+  "last_updated": "2026-08-21T23:38:53",
   "open_questions": [
     {
       "context": "-- count, which is not available in Mathlib.  Rather than leave an unproved `sorry` in the; sorry; sorry",
@@ -3269,12 +3269,6 @@
     ],
     "Computation": [
       {
-        "cycle_id": "a1e10693",
-        "quality": 0.82,
-        "theorems": 83,
-        "title": "Round-3 Hypothesis Closures: Five Novel Classical Factoring Hypotheses, Tested a"
-      },
-      {
         "cycle_id": "1b55f202",
         "quality": 0.79,
         "theorems": 145,
@@ -3327,6 +3321,12 @@
         "quality": 0.86,
         "theorems": 58,
         "title": "The invariant is now defined and proven to be a submonoid"
+      },
+      {
+        "cycle_id": "663f5de8",
+        "quality": 0.89,
+        "theorems": 112,
+        "title": "The corrected-product operation is now a proved closure property"
       }
     ],
     "Cryptography": [

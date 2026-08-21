@@ -3,103 +3,19 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "consumed_by_exp_id": "c98192f3",
-    "description": "## FACT round-28 #1 \u2014 METHOD-LOCALITY (paper 95, /tmp/exp_methodlocality.py, /tmp/r28n1b.log)\n\n**Verdict name: THE-METHODS-ARE-FACTOR-LOCAL.**\n\n### Result\nECM calibrated onto the plane for the first time, and the method stratum's internal structure measured: **\u03c1 and ECM are factor-local** (cost determined by a factor p, not by N); trial division is not.\n\n**H1 factor-locality at medians** (fixed p = 4093, q growing 2\u00b9\u2074 \u2192 2\u00b2\u00b3, 9 draws/cell): median flatness over 2\u00b2\u00b3 cofactor growth \u2014 **ECM \u00d72.16, \u03c1 \u00d71.40** (flat within method luck: ECM curve-restart scatter; \u03c1 Poisson around \u221ap \u2248 64).\n\n**H2/H3 p-scaling**, corrected slopes per log\u2082p (the script's slope print took log\u2082 of bit-lengths \u2014 disclosed, corrected from the printed medians):\n- Pollard \u03c1: **0.45** \u2014 the birthday bound \u221ap \u2713\n- trial division: **1.09** \u2014 linear in p, the definition face \u2713\n- ECM: **1.13** \u2014 locally power-like but constant-advantaged: at p = 2\u00b9\u2074 ECM needs 6 657 ops vs trial-div's 12 142 \u2014 already ahead, with sub-exponential bending beyond this window\n\n### Method ledger\nThe first single-draw design was statistically inadequate (\u03c1's cost spans 9\u2013136 iters per cell \u2014 flatness ratios compared single lucky/unlucky draws) \u2192 9-draw medians before any claim. Catalog scan same round: one new relevant entry (#856 Berggren causal set, no factorization claim).\n\nNow 430 experiments. Assessment v206. Paper 95.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3436",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T17:46:25.958797+00:00",
-    "title": "FACT round-28 #1 \u2014 METHOD-LOCALITY: ECM and rho track the factor, not the modulus (paper 95)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "## FACT round-27 #4 \u2014 BATTERY-SCALING (paper 94, /tmp/exp_batteryscaling.py, /tmp/r27n4b.log)\n\n**Verdict name: THE-CURVE-SATURATES-AT-THE-CEILING.**\n\n### Result\nThe battery extended to **six dials** (adding F\u2082\u2080 x\u2075\u22122 @5 and C\u2085 Q(\u03b6\u2081\u2081)\u207a @11; all conductors pairwise coprime, CRT modulus 31\u00b723\u00b79\u00b78\u00b75\u00b711). The nested-subset capacity curve:\n\n| dials | I(joint) | \u03a3 marginals | deficit | ceiling | % of ceiling |\n|---|---|---|---|---|---|\n| 1 | 1.0011 | 1.0011 | +0.000 | \u2014 | \u2014 |\n| 2 | 2.1334 | 2.0020 | +0.132 | 4.6063 | 46% |\n| 3 | 4.0242 | 2.4777 | +1.547 | 6.4947 | 62% |\n| 4 | 8.2412 | 3.9120 | +4.329 | 9.5434 | 86% |\n| 5 | 11.5307 | 5.1591 | +6.372 | 11.9557 | 96% |\n| **6** | **12.7235** | 5.3650 | **+7.359** | **12.7726** | **99.6%** |\n\n- **H1**: the additive deficit grows MONOTONICALLY (synergy compounds without bound short of the ceiling).\n- **H2**: every marginal reproduces its paper of origin.\n- **H3**: the 6-dial which-factor wall reads 0.3594 vs permutation-null 0.3591 (**z = +0.11**) \u2014 sparse-bias-dominated as at k=4; factor-blindness extends to k=6.\n\n### The battery-capacity law\n1. I(k-joint) \u2192 H(joint labels): the CRT-joint modulus sees all k residues simultaneously; the pair-label structure becomes nearly fully determined (99.6% at k=6).\n2. D(k) grows monotonically: marginal bookkeeping understates batteries progressively (7.36 bits = 3.7\u00d7 additive at k=6).\n3. The ceiling is the joint label entropy \u2014 population correlation between label blocks is all that remains.\n\n### Method notes disclosed\nRow-label off-by-one in the printout (cosmetic, corrected here); chained label code ~10\u00b9\u00b2 values requires np.unique-based entropy (bincount would allocate 5.6 TiB).\n\nNow 429 experiments. Assessment v205. Paper 94.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3437",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-21T17:46:25.960215+00:00",
-    "title": "FACT round-27 #4 \u2014 BATTERY-SCALING: the capacity curve saturates at the label-entropy ceiling (paper 94)"
-  },
-  {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0e0f4ea6",
     "description": "## FACT round-29 #2 \u2014 JOINT-ANOMALY-RECONCILED (paper 100, /tmp/exp_jointreconcile.py, /tmp/r29n2.log)\n\n**Verdict name: THE-ORIGINAL-STANDS.**\n\n### Result\nPaper 99's flagged 16\u00d7 anomaly **resolved**: paper 91's joint value of **2.1314 bits is CORRECT** \u2014 reproduced exactly by the clean-code cross-check \u2014 and paper 99's rebuild reading of 0.1353 was an **encoding artifact** in the rebuild's own label chaining.\n\n### The reconciliation (side-by-side, identical population)\n| construction | distinct labels | H(labels) | I(joint) |\n|---|---|---|---|\n| paper 91 (`pj = pc_a\u00b710000 + pc_b`) | **36** | 4.6006 | **2.1314** |\n| clean-code cross-check | 36 | 4.6006 | **2.1314** |\n| paper 99 rebuild (`\u00b710` compression) | **18** | 3.6073 | 0.5830 |\n\nThe rebuild's `\u00b710` frame for the S\u2083b code inside the `\u00b7100` frame for the S\u2083a code **collided distinct label pairs** \u2014 18 labels instead of 36, destroying 0.99 bits of label entropy and most of the measurable channel.\n\n### Resolution\n- Paper 91's 2.1314 **stands** (clean-code reproduction exact; marginals re-verified I(a) = I(b) = 1.0012).\n- Paper 99's flagged anomaly row is **retracted**; its per-dial routing tables (single-dial, no chaining) are unaffected and stand.\n- **Programme lesson**: chained integer label encodings must be width-checked against their field sizes \u2014 a `\u00b710` frame for a 3-valued code inside a `\u00b7100` frame for a 6-valued code silently merges classes. Paper 97's fresh-rerun audit practice is the detector.\n\nNow 435 experiments. Assessment v211. Paper 100.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3448",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T18:57:10.442005+00:00",
     "title": "FACT round-29 #2 \u2014 JOINT-ANOMALY-RECONCILED: paper 91 stands, the rebuild collapsed (paper 100)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "## FACT round-29 #1 \u2014 THE-SUM-DIFFERENCE-SPLIT (paper 99, /tmp/exp_sumdiffsplit.py, /tmp/r29n1b.log)\n\n**Verdict name: THE-HINT-VALUE-IS-REAL.**\n\n### Result\nThe pre-stated reconstruction hypothesis \u2014 I(s,d jointly) = I(N mod m\\*; labels) \u2014 was **refuted in the interesting direction**: viewing the battery labels through the factor-residue pair (s, d) **exceeds** the product view.\n\n### The routing table (S\u2083a x\u00b3+x+1 @31; S\u2083b replicates)\n| view | bits | share |\n|---|---|---|\n| product-view (hint-free) = the channel | 1.0012 | 100% |\n| sum-view alone (s = p+q) | 0.0391 | 3.9% |\n| gap-view alone (d = q\u2212p) | 0.0387 | 3.9% |\n| full-residue view (s,d jointly) | 1.5201 | 152% |\n| **HINT VALUE = I(s,d) \u2212 I(N)** | **+0.5189** | |\n\nThe sum and gap residues **individually carry almost nothing** (~4% each) \u2014 but their combination carries more than the modulus's own product residue. The +0.52-bit difference is the **factor-residue hint value**: what knowing p and q mod 31 separately (a 10-bit hint) adds over reading N's residue. S\u2083b replicates (+0.5099). p\u2194q symmetry verified.\n\n### Why this matters\nThe hint value quantifies exactly how much label information is locked behind knowing the factor residues \u2014 information present in the labels, invisible from N, released only by a factor-residue hint. It bridges the battery capacity (papers 91\u201394) to COND-RANK's conditioning-capacity measurement, and explains the sub-ceiling gaps of papers 80\u201394 from the other side: ceiling H(T) counts label entropy; the product view counts what N's residue reaches; the hint value is the bridge.\n\n### Anomaly flagged\nThis script's joint-battery product-view reads 0.1353 against paper 91's 2.1314 for the nominally identical quantity \u2014 unresolved (likely a label-encoding difference in this quick rebuild); the joint row is not cited until reconciled. The per-dial tables are internally consistent across two independent computations within the run.\n\nNow 434 experiments. Assessment v210. Paper 99.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3449",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-21T18:57:10.443489+00:00",
-    "title": "FACT round-29 #1 \u2014 THE-SUM-DIFFERENCE-SPLIT: the factor-residue hint value (paper 99)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "## FACT round-28 #4 \u2014 BATTERY-UTILITY (paper 98, /tmp/exp_batteryutility.py, /tmp/r28n4b.log)\n\n**Verdict name: THE-LABELS-ARE-NOT-FILTERS.**\n\n### Result\nAn honest refutation-by-design-flaw round closing the battery arc. The attempt to convert the 6-dial battery's 12.7-bit capacity into candidate-set narrowing for p required a map **residue r mod m\\* \u2192 type of a prime \u2261 r mod m\\*** \u2014 and **that map does not exist**: primes in the same residue class carry different splitting types. This is precisely why every measured channel sits below its label-entropy ceiling (S\u2083a: I = 1.0012 vs H(T) = 2.2982 \u2014 the gap IS the within-class variation).\n\n### What happened\nThe utility tables were built by polynomial evaluation at r (does f(r) \u2261 0 mod m\\*?) \u2014 testing whether r itself is a root, not which type primes \u2261 r carry. The consistency assert caught true-p exclusions (6/150 via a quartic enumeration precedence bug; the cubic unions passed 0/150 only by covering nearly all residues). The diagnosis elevated the bug to the finding.\n\n### The corrected understanding\nThe battery's labels are statistics of the JOINT (p mod m\\*, q mod m\\*) draw, not functions of single residues. Utility must be stated Bayesianly: the label vector is a 12.7-bit posterior update on the joint residue vector (~20 bits) \u2014 exactly as the capacity law says. Converting that posterior into individual-candidate narrowing requires the per-prime type determination that IS the factoring problem. No-pinning consistency: constant-bounded posterior mass on joint residue vectors; no candidate filter without circularity.\n\nNow 433 experiments. Assessment v208/v209. Paper 98.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3450",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-21T18:57:10.444861+00:00",
-    "title": "FACT round-28 #4 \u2014 BATTERY-UTILITY: the labels are not filters (paper 98)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "## FACT round-28 #3 \u2014 REPRODUCIBILITY-AUDIT (paper 97, logs /tmp/audit_p{80,89,92}.log)\n\n**Verdict name: THE-NUMBERS-REPRODUCE.**\n\n### Why\nSeventeen experiment scripts written today lived only in /tmp \u2014 one reboot from oblivion \u2014 and no stored result had ever been re-run post-hoc. This round fixes the durability gap and audits reproducibility.\n\n### Preservation\nAll 17 scripts copied to `ResearchOutput/scripts/2026-08-21-resume/` and committed: type-channel law table (80), quintic endpoints (82), D\u2085 search (84), battery series (91\u201392), joint-wall verification (93), qubit/sample ramp series (85\u201387), converse plane (88\u201390), method-locality pair (95\u201396), Berggren-3adic (81).\n\n### Audit \u2014 three keystones, fresh runs, stored fixed seeds\n| keystone | recorded | fresh re-run | verdict |\n|---|---|---|---|\n| Paper 80 law table (7 fields) | S\u2083a/S\u2083b 1.0000; S\u2084 1.0100; A\u2084 0.9188; D\u2084 1.6555; V\u2084 0.8092; C\u2084 1.4989 | identical to 4 decimals on every row + type histograms + REVERSAL check | \u2713 |\n| Paper 80 semiprime legs | pairs 1.0001/1.0001/1.0034/0.4729; s-projs Is(2)/Is(2)/Is(3) | identical | \u2713 |\n| Paper 89 three strata | \u03b1_\u03c4 = 0.500; medians 19.30/19.36; \u03b1_\u03c1 on N = 0.261 | identical | \u2713 |\n| Paper 92 battery capacity | I(4-joint) = 8.2246; synergy +4.3146; marginal 1.0012 | identical | \u2713 |\n\n**Twelve recorded headline numbers; twelve exact reproductions. Zero drift.**\n\n### What this decides\nThe resumed programme's computational record is **reproducible by construction** \u2014 deterministic seeds and pipelines, demonstrated by fresh re-runs landing on the exact recorded values, with the scripts now durably in the repo.\n\nNow 432 experiments. Assessment v208. Paper 97.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3451",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-21T18:57:10.446222+00:00",
-    "title": "FACT round-28 #3 \u2014 REPRODUCIBILITY-AUDIT: every keystone reproduces bit-for-bit (paper 97)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "## FACT round-28 #2 \u2014 THE-GAP-LOCAL-METHOD (paper 96, /tmp/exp_gaplocal.py, /tmp/r28n2d.log)\n\n**Verdict name: THE-TAXONOMY-IS-COMPLETE.**\n\n### Result\nFermat \u2014 the one classical method never locality-classified \u2014 measured: its iteration count is **exactly (p+q)/2 \u2212 \u221aN** (identity 24/24 with per-draw instrumentation), and across balance ratios r = q/p \u2208 [2, 64] at fixed p the cost interpolates **352 \u2192 100 282 iterations** (in p-units 0.09 \u2192 24.50; at r = 64 the measured cost is 0.78 of the cofactor-linear limit p\u00b7(r\u22121)/2). Fermat is **GAP-LOCAL**: neither factor-local like \u03c1/ECM nor a scan like trial division, but a function of the gap alone.\n\n### The completed locality table\n| method | locality class | cost |\n|---|---|---|\n| trial division | p-linear | p |\n| Pollard \u03c1 | factor-local | \u221ap |\n| ECM | factor-local | sub-exp in p |\n| **Fermat** | **gap-local** | **(p+q)/2 \u2212 \u221aN** |\n\nFour methods, three locality classes \u2014 which methods see the factor (\u03c1, ECM), which see the gap (Fermat), and which see nothing but the scan (trial division).\n\n### Bonus finding: the degenerate square case\nThe r = 1 grid row exposed that when q lands on p itself (N = p\u00b2), Fermat's target a = p lies **below** its starting point \u230a\u221aN\u230b + 1 \u2014 plain Fermat has no true stopping point on prime squares and only exits by accidentally hitting an unrelated square (here after 8 372 232 iterations). CFRAC-style generalizations do not share the defect.\n\n### Method ledger\n(1) The first launch hung 7+ minutes in H1 \u2014 faulthandler stack dump found the root cause: **the fermat loop lacked its increment** (`a += 1` lost between drafts), spinning on a constant value; the standalone control with the increment ran instantly. (2) Stale assert constant (40 vs 24 draws) fixed.\n\nNow 431 experiments. Assessment v207. Paper 96.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3452",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-21T18:57:10.447566+00:00",
-    "title": "FACT round-28 #2 \u2014 THE-GAP-LOCAL-METHOD: Fermat completes the locality taxonomy (paper 96)"
   },
   {
     "consumed_by_exp_id": "",
@@ -422,6 +338,90 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T22:42:58.234681+00:00",
     "title": "FACT round-32 #4 \u2014 UNIVERSAL-S3-FOURTH: four fields, one answer (paper 115)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-35 #7 \u2014 CYCLIC-CUBIC-CONDUCTOR-13 (paper 126)\n\n**Verdict name: THE-CYCLIC-CUBIC-IS-FULLY-PINNED-AT-CONDUCTOR-13.**\n\nCyclic cubic Q(zeta_13 + zeta_13^-1) (C3, conductor 13): only TWO types.\nH(T) = 0.9192 bits. I(p mod 13; T) = H(T) EXACTLY (full pinning).\nSemiprime pair 0.4702; which-factor 0.0001.\n\nNow 459 experiments. Assessment v228. Paper 126.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3517",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T23:39:20.826757+00:00",
+    "title": "FACT round-35 #7 \u2014 CYCLIC-CUBIC-CONDUCTOR-13: full pinning extends across conductors (paper 126)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-35 #6 \u2014 D5-HINT-VALUE (paper 125)\n\n**Verdict name: THE-D5-DIAL-CARRIES-A-HINT.**\n\nD5 x5+20x+32 at m*=320: HINT VALUE +0.6940 bits.\nNow 458 experiments. Assessment v235. Paper 125.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3518",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T23:39:20.828231+00:00",
+    "title": "FACT round-35 #6 \u2014 D5-HINT-VALUE: completing the D5 row (paper 125)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-35 #5 \u2014 HINT-VALUE-SCALING (paper 124)\n\n**Verdict name: HINTS-COMPOUND-WITH-DIMINISHING-RETURNS.**\n\nHint values compound: k=1 +0.52, k=2 +2.43, k=3 +3.19. Marginal gains positive but decreasing.\nNow 457 experiments. Assessment v234. Paper 124.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3519",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T23:39:20.829554+00:00",
+    "title": "FACT round-35 #5 \u2014 HINT-VALUE-SCALING: hints compound (paper 124)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-35 #4 \u2014 COMPOSITE-DIAL (paper 125)\n\n**Verdict name: THE-WHOLE-EXCEEDS-THE-SUM.**\n\nAn EMERGENCE phenomenon: three irreducible components each carry ~zero trace information individually, but their composite label carries 1.8170 bits at the semiprime level.\nNow 455 experiments. Assessment v235. Paper 125.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3520",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T23:39:20.830855+00:00",
+    "title": "FACT round-35 #4 \u2014 COMPOSITE-DIAL: emergence in the composite type channel (paper 125)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-35 #3 \u2014 THE-OCTIC-CYCLIC (paper 124)\n\n**Verdict name: FULL-PINNING-AT-DEGREE-8.**\n\nQ(zeta_17)+ degree 8, C8, conductor 17.\nH(T) = 1.7474 bits; I(p mod 17; T) = 1.7474 = H(T) EXACTLY (full pinning).\nFour types {1:12%, 2:12%, 4:25%, 8:50%} matching C8 structure.\nSemiprime pair 1.3097; which-factor 0.0002.\nDegree ladder extends to 8: every abelian field shows full pinning.\nNow 456 experiments. Assessment v234. Paper 124.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3521",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T23:39:20.832184+00:00",
+    "title": "FACT round-35 #3 \u2014 THE-OCTIC-CYCLIC: degree 8 completes the high-degree ladder (paper 124)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-35 #2 \u2014 UNIVERSAL-S3-FIFTH (paper 123)\n\n**Verdict name: FIVE-FIELDS-ONE-LAW.**\n\nA fifth independent S3 cubic \u2014 x3-4x+1 (disc = 229 prime) \u2014 confirms the type-channel law:\nI(p mod 229; T) = 1.0078, z=+263 (massive signal at conductor).\n\nFIVE-FIELDS-ONE-LAW: five independent S3 fields, five distinct discriminants, one universal result.\nNow 455 experiments. Assessment v233. Paper 123.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3522",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T23:39:20.833492+00:00",
+    "title": "FACT round-35 #2 \u2014 UNIVERSAL-S3-FIFTH: five fields, one law (paper 123)"
   },
   {
     "consumed_by_exp_id": "",
@@ -2154,20 +2154,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Quantum Entanglement Monogamy: CKW Inequality"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove that there are infinitely many primes of the form n\u00b2+1. Formalize Iwaniec's result on semi-primes of this form and connect to Friedlander-Iwaniec theorem on primes of form a\u00b2+b\u2074.",
-    "domains": [
-      "NumberTheory"
-    ],
-    "id": "seed_025",
-    "priority_score": 0.86,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Primes of the Form n\u00b2+1"
   },
   {
     "consumed_by_exp_id": "",
@@ -11107,6 +11093,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The proved finite binomial expansion makes every orbit invariant a polynomial of bounded degree in the iteration count, with weights that do not depend on the count. The conjecture is that this turns orbit membership for normalized series over a number field into a decidable question with an explicit bound on the witness. It would make the corrected-product dynamics algorithmically tractable level by level.\n\nFor normalized q-series f, g with coefficients in a fixed number field and f of depth k, the predicate 'exists n with g = f^{*n}' is decidable, and any witness n is bounded by an explicit function of k and the least level m at which f and g differ.\n\nFormalize the decision procedure: at each level m solve the single polynomial equation sum_{d <= m/k} c_d * binom(n,d) = coeffAt m g supplied by PoleOrderTorsor.Norm.exists_binomial_coeffs, and prove termination using PoleOrderTorsor.Norm.deepSubgroup_succ_lt.\n\nCorrected-product orbits become computationally comparable: orbit membership, orbit equality and the separating level all become effectively computable.\n\nThere are normalized series whose orbit invariants are identically degenerate at every level, which would contradict separatedness of the filtration and force a new invariant beyond the coefficient tower.",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_3512",
+    "priority_score": 0.7100588235294119,
+    "research_mode": "team",
+    "source_exp_id": "663f5de8",
+    "status": "available",
+    "timestamp": "2026-08-21T23:38:47.111122+00:00",
+    "title": "Decidability of Corrected-Product Orbit Membership"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Every recipe is an algorithm: it takes ingredients (inputs) and produces a dish (output). The question is: can you verify a good dish faster than you can cook it? This is exactly P vs NP, but in the kitchen. Define the verification time V(R) of a recipe R as the time it takes to taste the dish and determine if it's good. Define the cooking time C(R) as the time it takes to prepare the dish. Conjecture: For most traditional recipes, C(R) > V(R) \u2014 cooking takes longer than tasting (P != NP in the kitchen). But there exist 'quick recipes' where C(R) = V(R) \u2014 assemble-and-serve dishes like salads (P = NP in the kitchen). The interesting class is 'NP-hard recipes' \u2014 dishes where even VERifying the result is hard. Example: is the souffle risen? You can only verify by cutting it open, which destroys it. Theorem: souffle verification is co-NP-hard because determining if a souffle will rise requires simulating the thermodynamic process, which is PSPACE-hard. More formally: the souffle function S(ingredients, temperature, time) -> {risen, collapsed} requires computing the Navier-Stokes equations for the batter, which is PSPACE-hard. Test: classify 100 recipes by their C(R)/V(R) ratio. Verify that P = NP recipes have C = V, while P != NP recipes have C >> V. Impact: computational complexity is not abstract \u2014 it shows up in your kitchen. Some dishes are inherently harder to make than to verify.",
     "domains": [
       "Novelty",
@@ -11151,6 +11152,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T20:41:53.268239+00:00",
     "title": "Adaptivity Gap for Machine Experiments"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Only 8 of the 84 order-4 unital magmas attaining the maximal associativity defect (n-1)^3 arise from the proved shift construction. We conjecture a forbidden-pattern characterisation of all maximisers and an explicit counting formula. This would turn a sharp inequality into a structure theorem.\n\nA unital magma of order n >= 3 satisfies D = (n-1)^3 iff its product restricted to the non-units satisfies a finite forbidden-pattern condition generalising 'a*b = phi(b) with phi fixed-point-free'; the number of such labelled tables is 2 for n = 3 and 84 for n = 4, given in general by an explicit formula.\n\nExhaustively enumerate order-5 unital magmas attaining D = 64 (or sample if needed), extract the extremal tables, and formalise the resulting characterisation in Lean against ShiftMagma.defect_eq.\n\nExtremal magmas are completely classified and the sharpness theorem upgrades to a bijective count.\n\nThe extremal family is wilder than pattern-defined, indicating that maximal incoherence is not finitely axiomatisable.",
+    "domains": [
+      "Combinatorics",
+      "Logic"
+    ],
+    "id": "fd_3508",
+    "priority_score": 0.709969696969697,
+    "research_mode": "team",
+    "source_exp_id": "1632a2eb",
+    "status": "available",
+    "timestamp": "2026-08-21T23:38:27.233187+00:00",
+    "title": "Classification of Maximal-Defect Unital Magmas"
   },
   {
     "consumed_by_exp_id": "",
@@ -11361,6 +11377,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T22:42:22.337072+00:00",
     "title": "Perron-Frobenius Index Equals Degree Period"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Replacing \u2102 by a matrix algebra keeps the closure property and the filtration but destroys commutativity. The conjecture is that the resulting group is the one-unit group of the matrix power series ring, still torsion-free and divisible, with graded pieces the additive matrix algebra.\n\nFor any \u211a-algebra R, the R-valued normalized Laurent series form a group under f \u22c6 g = q f g, isomorphic to the one-units of R\u27e6X\u27e7; it is torsion-free, and divisible when R is a \u211a-algebra.\n\nRe-run the development with \u2102 replaced by a general \u211a-algebra R, checking which lemmas used commutativity (only the CommGroup axioms and the binomial series should).\n\nThe pole-order correction is a general phenomenon of valued rings, not special to scalar moonshine series.\n\nSome step genuinely needs commutativity or a field, pinpointing where the scalar theory is essential.",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_3516",
+    "priority_score": 0.7078275862068967,
+    "research_mode": "team",
+    "source_exp_id": "663f5de8",
+    "status": "available",
+    "timestamp": "2026-08-21T23:38:48.941203+00:00",
+    "title": "Matrix-Valued Corrected Products"
   },
   {
     "consumed_by_exp_id": "",
@@ -11662,6 +11693,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The associative-triple count is multiplicative under products of magmas. This turns the associativity density into a multiplicative invariant and suggests a Dirichlet generating function whose coefficients are powers of A(M), linking coherence defects to analytic bookkeeping.\n\nA(M^k) = A(M)^k for all k, hence 1 - d(M^k) = (1 - d(M))^k, and the generating function Z_M(s) = sum_k A(M)^k k^{-s} determines A(M); every non-associative magma is asymptotically totally non-associative under powering while its codiscrete bicategory stays coherent.\n\nIterate assocCount_prod in Lean to get A(M^k) = A(M)^k by induction and derive the density limit; check numerically for the order-3 maximiser.\n\nCoherence defects admit an Euler-product bookkeeping, connecting magma combinatorics to Dirichlet-series methods.\n\nMultiplicativity fails to extend beyond binary products, isolating a genuine obstruction in iterated products.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_3510",
+    "priority_score": 0.6694285714285716,
+    "research_mode": "team",
+    "source_exp_id": "1632a2eb",
+    "status": "available",
+    "timestamp": "2026-08-21T23:38:28.188301+00:00",
+    "title": "Euler Product for Associativity Density"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The Pell recursion of the spine has reciprocal characteristic polynomial 1 - 6X + X^2, which factors through the Satake-like parameters 3 +- 2 sqrt 2. Since these have product 1 rather than the residue norm 2, the resulting Dirichlet series is an L-function of a unit, not of an automorphic form; its analytic behaviour should be governed entirely by log(3 + 2 sqrt 2).\n\nThe Dirichlet series sum over n of c_n^{-s}, where c_n is the n-th spine hypotenuse, converges for Re(s) > 0, extends meromorphically, and its rightmost singularity is at s = 0 with the exponential scale log(3 + 2 sqrt 2) controlling the local expansion.\n\nUse the proved Binet formula to compare the series with the geometric series in (3+2 sqrt 2)^{-s} and formalize the resulting convergence and comparison estimates.\n\nGives an explicit non-automorphic L-function attached to the tree, sharply separating unit L-factors from Hilbert modular ones.\n\nThe comparison fails because of the correction term in Binet's formula, revealing arithmetic content beyond the leading eigenvalue.",
     "domains": [
       "Geometry"
@@ -11729,6 +11774,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T18:56:35.149597+00:00",
     "title": "Pythagorean Goodstein Sequences via Address Base-Bumping"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Hauptmoduln of genus-zero groups sit inside the corrected-product group, but the group operation should destroy modularity immediately. The conjecture asks that each complex one-parameter subgroup meets the modular locus in finitely many points, quantifying how far McKay-Thompson series are from being closed under the operation.\n\nFor a McKay-Thompson series T, the set {r : \u2102 | T^{\u22c6r} is the q-expansion of a hauptmodul} is finite (in fact {0,1}).\n\nCombine the coefficient scaling law coeffAt_cpow with the integrality and Hecke-type recursions satisfied by hauptmodul coefficients; contradiction for r outside a finite set.\n\nThe corrected product is a strictly non-modular operation: moonshine data generate free directions inside the group.\n\nThere is a hidden one-parameter family of modular functions, which would be a striking new structure.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_3514",
+    "priority_score": 0.6687142857142858,
+    "research_mode": "team",
+    "source_exp_id": "663f5de8",
+    "status": "available",
+    "timestamp": "2026-08-21T23:38:48.024786+00:00",
+    "title": "Transversality of the Modular Locus"
   },
   {
     "consumed_by_exp_id": "",
@@ -11803,6 +11862,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-18T00:42:35.429117+00:00",
     "title": "Close Proofs: The Sound of Pi: Musical Structure in Transcendental Constants"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Every set map between pointed magmas induces a pseudofunctor of codiscrete bicategories, and round trips are invisible to 2-cells. This suggests that the construction is a genuine 2-categorical left adjoint lifting Mathlib's adjunction between objects of a category and codiscrete categories.\n\nM |-> MagmaBicat M extends to a 2-functor from pointed sets to bicategories that is adjoint to taking the 1-cells of the unique object, and it is an equivalence onto one-object bicategories with codiscrete hom-categories.\n\nBuild the unit and counit in Lean using mapPseudofunctor, verify the triangle identities up to invertible modifications, and compare with CategoryTheory.Codiscrete.adj.\n\nThe codiscrete construction is characterised universally, so coherence-by-codiscreteness is not an ad hoc trick but a right/left adjoint phenomenon.\n\nCoherence data cannot be produced adjointly at the bicategorical level, indicating that pseudofunctoriality on all set maps is an accident of thinness.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_3511",
+    "priority_score": 0.6414285714285716,
+    "research_mode": "team",
+    "source_exp_id": "1632a2eb",
+    "status": "available",
+    "timestamp": "2026-08-21T23:38:28.621495+00:00",
+    "title": "Two-Categorical Codiscrete Adjunction"
   },
   {
     "consumed_by_exp_id": "",
@@ -12399,6 +12472,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Complete enumeration shows every value 0..27 occurs as the defect of an order-4 unital magma, while at order 3 the value 1 is impossible. We conjecture that this is the only gap in the entire family.\n\nFor n >= 4 every d with 0 <= d <= (n-1)^3 is the defect of some unital magma of order n; for n = 3 the attainable set is exactly {0,2,3,4,5,6,7,8}.\n\nFormalise the order-3 statement by decidable enumeration over the 81 tables, and prove the n >= 4 case by an explicit interpolating family of tables.\n\nThe defect is an unconstrained combinatorial statistic above order 3, so no hidden congruence obstructions exist beyond commutative parity.\n\nThere are further congruence obstructions on defect values, refining the parity theorem.",
+    "domains": [
+      "NumberTheory",
+      "Combinatorics"
+    ],
+    "id": "fd_3509",
+    "priority_score": 0.5624068550590863,
+    "research_mode": "team",
+    "source_exp_id": "1632a2eb",
+    "status": "available",
+    "timestamp": "2026-08-21T23:38:27.760098+00:00",
+    "title": "Defect Spectrum Gap at Order Three"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Let `p\u2081, \u2026, p\u2096` be distinct primes and `M = \u220f p\u1d62`. Among candidates `0 \u2264 n < M`, the checks `p\u1d62 \u2223 n` isolate `0`. Conjecture: in a standard PA sequent calculus, a balanced conjunction of these checks yields a backward certificate of size `O(k log M)`, while any certificate restricted to testing candidates one by one has size `\u03a9(M)`. The claim is falsifiable by explicit proof-size upper and lower bounds in the selected calculus.",
     "domains": [
       "NumberTheory",
@@ -12486,6 +12574,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T22:42:21.491235+00:00",
     "title": "Deterministic-Simulation Cost of a Numerical Semigroup"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Restricting to integer coefficients gives a subgroup of the corrected-product group which should remain torsion-free but lose divisibility. Measuring the failure computes the divisible hull of integral normalized series inside the full group.\n\nThe integral normalized series form a subgroup Norm(\u2124) that is torsion-free and not divisible; for the class 1A moonshine series J, J^{\u22c6(1/n)} has integral coefficients only for n = 1.\n\nFormalize Norm(\u2124) as the preimage of integral one-units and compute coeffAt (1/n)-powers level by level using coeffAt_cpow and the binomial coefficients Ring.choose (1/n) j.\n\nThe corrected product has an arithmetic refinement, with a computable denominators obstruction at each filtration level.\n\nIntegral one-units are already divisible, which would be a surprising arithmetic rigidity statement.",
+    "domains": [
+      "Algebra",
+      "NumberTheory"
+    ],
+    "id": "fd_3515",
+    "priority_score": 0.5618031274784696,
+    "research_mode": "team",
+    "source_exp_id": "663f5de8",
+    "status": "available",
+    "timestamp": "2026-08-21T23:38:48.481699+00:00",
+    "title": "Integral Sublattice and Failure of Divisibility"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The corrected-product group should be isomorphic to the additive group X*\u2102[[X]] via a formal logarithm, which would linearise the whole theory and upgrade the complex power operation into a genuine \u2102-module structure on normalized series.\n\nThere is a group isomorphism Norm \u2243* Multiplicative (X\u00b7\u2102\u27e6X\u27e7) given by f \u21a6 log (q\u00b7f), with inverse w \u21a6 q\u207b\u00b9 \u00b7 exp w.\n\nDefine log as substitution of (u-1) into \u03a3 (-1)^{m+1} X^m / m and prove exp (log u) = u for one-units, using PowerSeries.exp and the substitution API.\n\nTorsion-freeness, unique divisibility and the filtration all become statements about a \u211a-vector space; cpow becomes a scalar action.\n\nFormal exp/log fail to be mutually inverse in this setting, isolating a genuine multiplicative phenomenon not visible additively.",
+    "domains": [
+      "Algebra",
+      "NumberTheory"
+    ],
+    "id": "fd_3513",
+    "priority_score": 0.5611462718707586,
+    "research_mode": "team",
+    "source_exp_id": "663f5de8",
+    "status": "available",
+    "timestamp": "2026-08-21T23:38:47.566888+00:00",
+    "title": "Logarithmic Linearisation of the Corrected Product"
   },
   {
     "consumed_by_exp_id": "",
@@ -35746,19 +35864,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Every ingredient \u2014 the splitting, the unique shift"
   },
   {
-    "consumed_by_exp_id": "663f5de8",
-    "description": "The corrected-product operation is now a proved closure property\n(`PoleOrderTorsor.isNormalized_q_mul_mul`), which makes the question well posed: one can\niterate the operation inside a fully formal setting and look for the first invariant that\ndistinguishes the orbits.",
-    "domains": [],
-    "id": "fd_1628",
-    "phase": "A",
-    "priority_score": 0.4,
-    "research_mode": "team",
-    "source_exp_id": "ab33dc9e",
-    "status": "in_progress",
-    "timestamp": "2026-08-19T17:41:08.465462+00:00",
-    "title": "The corrected-product operation is now a proved closure property"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "honest uniqueness decoding through an explicitly constructed **intra-bucket index**\n  (`ScanScheme.honest_scanCode`, `ScanScheme.decode_eq_some_iff`);",
     "domains": [],
@@ -38059,19 +38164,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Toric grids"
   },
   {
-    "consumed_by_exp_id": "1632a2eb",
-    "description": "Package the construction for every unital magma, proving that codiscrete hom-categories turn arbitrary unit and associativity defects into coherent invertible 2-cells.",
-    "domains": [],
-    "id": "fd_2305",
-    "phase": "A",
-    "priority_score": 0.4,
-    "research_mode": "team",
-    "source_exp_id": "3d25b5ad",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T06:23:33.943571+00:00",
-    "title": "General codiscrete construction"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Prove a strictification result at the level of biequivalence, contrasting it with `no_strict_structure`, which rules out strictness on the fixed data but not replacement by an equivalent strict 2-category.",
     "domains": [],
@@ -38216,14 +38308,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Empirical DNA claims"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "71e110b3",
     "description": "Study fair schedules under arbitrary positive rate profiles and construct exact-rate disjoint batches using prefix sums.",
     "domains": [],
     "id": "fd_2419",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "227d6015",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:24:07.312987+00:00",
     "title": "Study fair schedules under arbitrary positive rate profiles and construct exact-rate disjoint batches using prefix sums."
   },
