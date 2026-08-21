@@ -488,12 +488,25 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
     # earlier than the injected-dispatch gate.
     try:
         import github_injector
+
+        def _confirm_issue_closed(n: int) -> bool:
+            # Per-issue confirmation: the open-issues list can come back
+            # incomplete from a GitHub flake, which once mass-pruned live
+            # research (audit 2026-08-21). Fail-safe: verification failure
+            # spares the direction.
+            out = github_injector.run_gh_command(
+                ["issue", "view", str(n), "--json", "state"])
+            if not out:
+                return False
+            import json as _sj
+            return _sj.loads(out).get("state", "").upper() == "CLOSED"
+
         open_issues = github_injector.fetch_injected_directions()
         open_nums = {int(i.get("number", 0)) for i in open_issues if i.get("number")}
-        if open_nums:
-            pruned_inj = fd_manager.prune_closed_issue_directions(open_nums)
-            if pruned_inj:
-                print(f"[Tick] Pruned {pruned_inj} closed-issue injected direction(s)")
+        pruned_inj = fd_manager.prune_closed_issue_directions(
+            open_nums, verify_closure=_confirm_issue_closed)
+        if pruned_inj:
+            print(f"[Tick] Pruned {pruned_inj} closed-issue injected direction(s)")
             pruned_ids = {
                 d.id for d in fd_manager._directions
                 if d.status == "pruned" and d.source == "github_injection"
