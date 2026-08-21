@@ -93,16 +93,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Euler Brick Tree \u2014 Berggren Descent and the Perfect Cuboid"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3cb644d1",
     "description": "**Domain**: Pythagorean <-> NumberTheory\n\n**Hypothesis (MOONSHOT)**: Every node of the Berggren tree is an abc triple: a\u00b2+b\u00b2=c\u00b2 is an instance of A+B=C, with quality q = log(c\u00b2)/log(rad(a\u00b2b\u00b2c\u00b2)). The tree is therefore the one infinite family of abc triples whose radicals, qualities, and descent structure are completely explicit \u2014 a solvable model of the abc conjecture. The conjecture: the quality spectrum of the tree is exactly computable \u2014 the supremum of quality over the tree exists, is attained or approached along an explicitly identifiable branch, and the quality distribution at depth n obeys an exact law governed by the silver-ratio growth \u2014 and the tree's descent machinery (every triple reduces to (3,4,5)) exports a canonical model of how quality transforms under abc-type descent.\n\n**Test**: Formalize rad(a\u00b2b\u00b2c\u00b2) and the quality q over the tree. Prove the exact quality spectrum: the supremum over the tree, the branches attaining or approaching it, and the asymptotic law of the quality distribution at depth n. Prove the \"tree abc theorem\": the sharp uniform bound q \u2264 2\u2212\u03b5 for the tree family with the best explicit \u03b5. Determine whether any tree triple approaches the record quality of the known abc hits (about 1.63), and characterize the tree's high-quality region.\n\n**Why now**: The abc conjecture is among the most consequential open problems in number theory (its claimed proof by Mochizuki remains disputed), and the catalog's Beal package already made the Beal\u2013Fermat-Catalan\u2013abc bridges precise \u2014 but never studied the tree's own quality structure. Every Pythagorean triple is an abc triple, so the tree is a ready-made, fully formalized solvable model; its exact quality spectrum would be the first complete quality theory for any natural infinite family of abc triples.\n\n**If true**: The first exactly-solved model of the abc phenomenon: a complete quality spectrum and distribution law for an infinite abc family, plus a descent-operator model isolating the mechanism of abc-type bounds \u2014 a concrete foothold for the general conjecture.\n\n**If false**: The quality spectrum has no computable structure (e.g., the supremum is not attained and the distribution does not converge) \u2014 itself a precise pathology theorem showing the abc mechanism resists even the most structured family, redirecting the general attack.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_1786",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T03:17:34.068756+00:00",
     "title": "The Tree as a Solvable Model of the abc Conjecture \u2014 The Exact Quality Spectrum of a\u00b2+b\u00b2=c\u00b2"
   },
@@ -161,6 +162,34 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T13:59:52.031024+00:00",
     "title": "FACT round-24 #2 \u2014 BERGGREN-3ADIC: the tree position of the N-node is adically sealed (paper 81)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-24 #5 \u2014 D\u2085-QUINTIC (paper 84, /tmp/exp_d5quintic.py, /tmp/r24n5f.log)\n\n**Verdict name: THE-QUINTIC-ROW-COMPLETE.**\n\n### Result\nThe last untested transitive quintic group confirms the abelianization law **exactly** \u2014 and the round invented its own object: no literature polynomial was needed, because the type histogram IS the Chebotarev group readout. A scan of x\u2075+ax+b (|a|,|b| \u2264 60) found **four D\u2085 quintics in seconds**, each with square discriminant and the exact signature {[1\u2075]: \u22480.10, [5]: \u22480.40, [1,2,2]: \u22480.50}.\n\n### The subtlety: where D\u2085's C\u2082 lives\nD\u2085 \u2286 A\u2085 \u27f9 \u221adisc(f) \u2208 \u211a \u27f9 the abelianization's quadratic subfield K is **not** Q(\u221adisc). Theory locates it \u2014 splitting-field ramification = root-field ramification \u27f9 K = Q(\u221ad), d squarefree over f's ramified prime set \u2014 and candidate enumeration + Kronecker matching identifies **K = Q(\u221a\u22125) at agreement 1.0000, uniquely**, for x\u2075+20x+32 (m\\* = 20 = Q(\u221a\u22125)'s fundamental discriminant).\n\n### Results (all asserts green, 105 s)\n- Type rates within 0.002 of {1/10, 4/10, 5/10}; no non-D\u2085 type ever occurs; H(T) = 1.3610 bits.\n- Sign vs kron(\u22125, p): agreement **1.0000**.\n- **I(p mod 20; T) = 1.0000 vs law 1.0000 \u2014 exact to four decimals** (bias +0.0001 at the small conductor: the cleanest cell of the program).\n- Semiprime (400k MC): pair = **1.0000 vs null 1.0000** (z = +1.06); reflection-fork s-projection = **1.0000 vs Is(2)**; which-factor wall 0.0000.\n\n### THE COMPLETED QUINTIC TABLE\n| group | polynomial | G^ab | H(T) | I\u2081 measured | law | pair |\n|---|---|---|---|---|---|---|\n| C\u2085 | Q(\u03b6\u2081\u2081)\u207a | C\u2085 | 0.7219 | 0.7198 | 0.7219 \u2713 | Is(5) \u2713 |\n| **D\u2085** | **x\u2075+20x+32** | **C\u2082** | **1.3610** | **1.0000** | **1.0000 \u2713** | **1.0 \u2713** |\n| F\u2082\u2080 | x\u2075\u22122 | C\u2084 | 1.6805 | 1.4989 | 1.5000 \u2713 | 1.25 \u2713 |\n| A\u2085 | x\u2075+20x+16 | 1 | 1.6555 | **0** | 0 \u2713 | 0 \u2713 |\n| S\u2085 | x\u2075\u2212x\u22121 | C\u2082 | 2.5574 | 1.2158* | 1.0 \u2713 | 1.0 \u2713 |\n\n(*permutation-referenced at the sparse 2869-class dial.) One law, five groups, no exceptions \u2014 the gap always exactly E[H(coset|T)].\n\n### All 8 barriers\n(a) clean \u2014 predictions pre-stated conditional on identification; identification self-validating via Chebotarev histograms; (b) clean \u2014 no D\u2085 type-channel work in the Catalog; (c) confronted \u2014 real D\u2085 fields, histograms < 0.2% from class sizes, 400k MC; (d) clean \u2014 fixed seeds; (e) the substance \u2014 the program's cleanest cell (bias +0.0001); K-identification asserted at unique exact agreement; (f) controlled \u2014 three harness iterations disclosed (modulus-scan failure \u2192 theory-grounded candidate enumeration; even-numerator Jacobi bug \u2192 Kronecker helper); (g) fair \u2014 walls zero, coprime flat, controls are papers 78\u201382's reproduced values; (h) closure \u2014 symmetric (2), residue dial at m\\* = 20 (5), CRT-sealed (6), classical Galois/Kummer/reciprocity (8).\n\n### What closes\n**The transitive-quintic row is complete: 5/5 groups.** The type-channel program has measured every group structure it can name across degrees 2\u20135, always with the same outcome: I(p mod m\\*; T) = I(T; coset) exactly, the pair law verbatim, the gap exactly the type's coset-ambiguity entropy. Frontier: the quantum channel (QUBIT-TRADE phase diagram) and the barrier-4 converse.\n\nNow 419 experiments. Assessment v195. Paper 84.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3413",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T14:54:02.516407+00:00",
+    "title": "FACT round-24 #5 \u2014 D\u2085-QUINTIC: the quintic row complete (paper 84)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-24 #4 \u2014 S\u2085/A\u2085 QUINTIC ENDPOINTS (paper 83, /tmp/exp_s5a5quintics.py, /tmp/r24n4k.log)\n\n**Verdict name: THE-TYPE-CHANNEL'S-TWO-EXTREMES.**\n\n### Result\nThe transitive-quintic row's two extremes confirm the abelianization law in opposite directions:\n\n- **S\u2085 via x\u2075\u2212x\u22121** (true disc **2869 = 19\u00b7151** \u2014 not the quartic's \u2212283): seven factorization types, **H(T) = 2.5574 bits \u2014 the largest type entropy measured in the program** \u2014 reduce to the single quadratic-residue bit of N mod 2869. Sign agreement 1.0000; **I\u2081 = 1.2157 sits exactly at its within-sign permutation null 1.2188 (z = \u22120.85)** \u2014 the raw excess over the law's 1.0000 is entirely sparse-dial plug-in bias (+0.2188). Semiprime pair = **1.0648 vs null 1.0639** (gap 0.0009); sign-fork s-projection = **1.0023 vs Is(2) = 1.0000**.\n- **A\u2085 via x\u2075+20x+16** (perfect group): **the complete four-state type channel is SEALED** \u2014 I(p mod m; T) at the permutation null for m \u2208 {3,7,11,31}, worst |z| = 1.72; semiprime pair = **0.0004 \u2248 0**; no odd-type readout ever occurs. 1.6555 bits of splitting entropy, and N cannot hear one of them from any residue direction. Paper 76's fork flatness, extended to the full channel.\n\n### The measurement ledger (6 defects caught by designed checks across 8 runs)\n1. [3,2] dictionary entry: (nr, nr\u2082) = (0,**2**), not (0,4) \u2014 one quadratic pair contributes two F_{p\u00b2}-roots (caught by the p=2 crash).\n2. Discriminant migration: disc(x\u2075\u2212x\u22121) = 2869, not \u2212283 (caught by repeated factors mod 151).\n3. Sign-encoding inversion: agreement 0.0000 = perfect anti-correlation = the law confirming itself through a flipped convention.\n4. Sparse-dial plug-in bias on the HEADLINE I\u2081 (+0.22 bits at a 2868-class dial) \u2014 fixed by permutation reference (the paper-70 lesson extended to primary quantities).\n5. Null design: permuting labels within strata DELETES the through-stratum coset channel; must permute the data.\n6. tid/string mismatch making strata \u2261 0 (a global shuffle masquerading as stratified).\n\nProtocol lessons adopted: every MI at large conductors is permutation-referenced; a null must preserve exactly the channel the law predicts and randomize only the finer assignment; exact 0/1 agreement flags encoding bugs before physics.\n\n### All 8 barriers\n(a) clean \u2014 parameter-free predictions (A\u2085's zero needs no tuning); (b) clean \u2014 no S\u2085/A\u2085 type-channel work in the Catalog; (c) confronted \u2014 real fields, histograms < 2% from class sizes, 400k MC, four moduli \u00d7 200-shuffle nulls; (d) clean \u2014 fixed seeds; (e) the substance \u2014 all comparisons permutation-referenced at large conductors, full defect ledger disclosed; (f) controlled \u2014 six defects caught by designed checks, final run ALL_DONE all-green; (g) fair \u2014 which-factor walls \u2264 0.0001, coprime flat, the A\u2085 zero self-controls against papers 78\u201382's live detections; (h) closure \u2014 symmetric (2), residue dial (5), CRT-sealed (6), classical Galois/reciprocity/Chebotarev (8).\n\n### What closes\nThe quintic row is measured on 4/5 groups (D\u2085 pending a verified polynomial); the abelianization law confirmed at EVERY abelianization type existing for degrees 2\u20135: trivial (A\u2085), C\u2082 (S\u2083/S\u2084/S\u2085), C\u2083 (A\u2084), C\u2084 (F\u2082\u2080), C\u2082\u00d7C\u2082 (D\u2084/V\u2084), C\u2099 (abelian controls). The type-channel program is complete at every tested group.\n\nNow 418 experiments. Assessment v194. Paper 83.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3414",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T14:54:02.517783+00:00",
+    "title": "FACT round-24 #4 \u2014 S\u2085/A\u2085 QUINTIC ENDPOINTS: the largest entropy collapses, the perfect group seals (paper 83)"
   },
   {
     "consumed_by_exp_id": "",
@@ -31344,14 +31373,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "An earlier form of this conjecture asserted"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "28aa3954",
     "description": "**single-voter exchange law.** From a profile `x` in the chamber of `i`,\n  changing the score of the *single* voter `j` to `x i + \u03b4 i \u2212 \u03b4 j` lands on the\n  wall between the chambers of `i` and `j` (`exchange_mem_wall`), and changing it\n  to `x i + \u03b4 i \u2212 \u03b4 j \u2212 \u03b5` with `\u03b5 > 0` lands in the open cell labelled `{j}`\n  (`single_voter_exchange`, a special case of\n  `decisiveSet_update_eq_singleton`).  Adjacency of top-dimensional cells is\n  therefore realized by one-voter exchanges, as conjectured.",
     "domains": [],
     "id": "fd_2913",
+    "phase": "A",
     "priority_score": 0.42987499999999995,
     "research_mode": "team",
     "source_exp_id": "785c09ab",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:26:53.717180+00:00",
     "title": "single-voter exchange law."
   },
@@ -35226,7 +35256,7 @@ window.FUTURE_DIRECTIONS = [
     "description": "Strict unimodality and the bracketing of the argmax are already theorems, so the\nonly missing ingredient is the explicit comparison of the two bracketing degrees.",
     "domains": [],
     "id": "fd_1652",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "2e28602b",
