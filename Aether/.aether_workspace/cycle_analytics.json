@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-21T09:53:23.231686+00:00",
+  "last_updated": "2026-08-21T10:47:45.405056+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -62422,6 +62422,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-08-21T09:53:23.020642+00:00",
       "title": "Markoff Tree Transfer \u2014 Carrying the Berggren Tree's Machinery to the Markoff Tree"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Bridges",
+      "duration_seconds": 3269.9788591861725,
+      "end_time": 1787309236.3388486,
+      "files_integrated": 5,
+      "job_id": "fe1191f5",
+      "outcome_quality": 0.88,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.88,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.571,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.88,
+        "novelty": 0.88,
+        "proof_depth": 0.88,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.88,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1787305966.3599894,
+      "strategy_count": 0,
+      "theorem_count": 251,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 219,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-08-21T10:47:45.193081+00:00",
+      "title": "Harmonic Measure on the Berggren Tree Boundary \u2014 Random Walks and the 3-adic Cantor Set"
     }
   ]
 }

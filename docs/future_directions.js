@@ -3,21 +3,6 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "consumed_by_exp_id": "fe1191f5",
-    "description": "**Domain**: Pythagorean <-> Probability\n\n**Hypothesis**: The boundary of the Berggren ternary tree of primitive Pythagorean triples is a 3-adic Cantor set, and a random walk on the tree (choosing among the three Berggren moves with probabilities p\u2081,p\u2082,p\u2083) converges to a harmonic measure on this boundary whose dimension and entropy are exactly computable. The conjecture: the harmonic measure of the random walk is a Bernoulli measure on the 3-adic boundary with entropy equal to the Shannon entropy H(p\u2081,p\u2082,p\u2083), and the spectral gap of the walk (the second eigenvalue of the associated Markov operator on the tree) is governed by the silver ratio log(1+\u221a2) structure of the tree's growth.\n\n**Test**: Formalize the boundary of the Berggren tree as the set of infinite words over the 3-letter alphabet {A,B,C}, i.e., the 3-adic Cantor set. Define the random walk with transition probabilities (p\u2081,p\u2082,p\u2083). Prove the harmonic measure is the product Bernoulli measure, compute its entropy and Hausdorff dimension, and compute the spectral gap of the Markov operator. Relate the return probabilities to the silver-ratio growth exponent already proven for the tree.\n\n**Why now**: The catalog has exact metric growth (silver speed limit), the groupoid structure, and the hyperbolic embedding \u2014 but no probabilistic/ergodic theory. Random walks on the Berggren tree are a natural, untouched probabilistic counterpart to the deterministic geometry, connecting to the theory of random walks on hyperbolic groups, harmonic measure, and the geometry of Cantor-set boundaries.\n\n**If true**: The Berggren tree becomes a fully understood example in the theory of random walks on hyperbolic trees \u2014 with exact harmonic measure, entropy, and spectral gap \u2014 a clean probabilistic companion to its deterministic geometry, with connections to the theory of free groups and their boundaries.\n\n**If false**: The harmonic measure fails to be Bernoulli (e.g., the boundary carries a non-product measure), which would reveal hidden structure in how the three moves distribute mass, itself a novel statement.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1757",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-20T22:45:47.164095+00:00",
-    "title": "Harmonic Measure on the Berggren Tree Boundary \u2014 Random Walks and the 3-adic Cantor Set"
-  },
-  {
     "consumed_by_exp_id": "b5bb3340",
     "description": "**Domain**: Pythagorean <-> Physics\n\n**Hypothesis (MOONSHOT)**: The Berggren groupoid of Pythagorean triples realizes topological quantum computation. The Berggren generators are integer matrices in the arithmetic of the Lorentz group SO(2,1) \u2245 PSL(2,\u211d), whose discrete subgroups contain braid-group representations; the hyperbolic generator with eigenvalues 3\u00b12\u221a2 acts on the tree boundary like a braid on a set of anyons. The conjecture: the action of the Berggren generators on the tree's boundary (3-adic Cantor set) provides a braiding of anyons whose resulting unitary transformations are dense in the relevant unitary group \u2014 the defining property of a universal topological quantum computer \u2014 and the tree's proven structure (silver-ratio growth, spectral classification) gives an exactly computable model of the braiding.\n\n**Test**: Formalize the action of the Berggren generators on the tree boundary and identify the braid-group representation they induce. Prove the image of the braid group under this representation is dense in the relevant unitary group (the topological-quantum-computation universality criterion). Compute the resulting anyonic braiding statistics from the spectral structure (eigenvalues 3\u00b12\u221a2, the Z[\u221a2] units) and show the tree's growth bounds the computational depth of a braid.\n\n**Why now**: Topological quantum computation (Freedman\u2013Kitaev\u2013Wang) is a leading proposal for fault-tolerant quantum computing, built on braid-group representations from topological field theory. The catalog's Berggren machinery \u2014 a Lorentz-preserving groupoid, a 3-adic boundary, and spectral units in Z[\u221a2] \u2014 is exactly the kind of structure known to host braid representations. A rigorous connection from Pythagorean triples to topological quantum computation would be a genuinely history-making bridge from elementary number theory to quantum technology.\n\n**If true**: The Berggren tree provides an exactly computable, fully formalized model of anyonic braiding and topological quantum computation \u2014 a concrete realization of a universal quantum computer from the arithmetic of Pythagorean triples, connecting the oldest mathematics to the newest technology.\n\n**If false**: The braid representation is not dense (the image is finite or thin), or the generators do not induce a braid action \u2014 a precise theorem about the representation theory of the Berggren groupoid, clarifying which topological structures the tree actually realizes.\n",
     "domains": [
@@ -78,16 +63,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Riemann Hypothesis for the Berggren Tree \u2014 A Zeta Function with a Provable Critical Line"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "03b48eb6",
     "description": "**Domain**: Pythagorean <-> Computation\n\n**Hypothesis (MOONSHOT)**: The inverse Collatz tree and the Berggren tree of primitive Pythagorean triples are two realizations of the SAME underlying ternary dynamics. The Collatz map is famously hard because its tree (under the inverse map) is a ternary tree with no known invariant; the Berggren tree is a ternary tree with a fully proven invariant \u2014 the Lorentz form a\u00b2+b\u00b2\u2212c\u00b2 and the silver-ratio growth exponent log(1+\u221a2). The conjecture: there is a transfer map from the Berggren tree's ternary branching onto the inverse-Collatz tree that carries the Lorentz invariant and the growth structure, giving the Collatz tree a conserved quantity it currently lacks.\n\n**Test**: Formalize the inverse Collatz tree as a ternary tree (each odd n has up to three preimages under the inverse map). Formalize the Berggren tree's proven machinery (Lorentz invariant, groupoid, silver-ratio growth). Construct an explicit map from Berggren triples to Collatz orbits and test whether the Lorentz form or a derived quantity is conserved along Collatz trajectories. Prove at least one structural theorem \u2014 e.g., that a Berggren-type invariant bounds the growth of a Collatz trajectory, or that the ternary branching of the two trees is isomorphic.\n\n**Why now**: The Collatz conjecture is one of the most famous open problems in mathematics \u2014 a true moonshot target. The catalog already carries a fully formalized ternary tree (Berggren) with exact invariants and growth. If the two trees are genuinely related, the solved Berggren structure becomes a new tool for the hardest open problem in discrete dynamics. Even a partial transfer would be history-making.\n\n**If true**: The Collatz tree gains a conserved Lorentz-type invariant and an exact growth bound, opening a genuinely new attack line on the Collatz conjecture \u2014 a result that would be among the most celebrated in mathematics.\n\n**If false**: The failure \u2014 proving the two ternary trees are NOT isomorphic, or that no Berggren-type invariant is conserved \u2014 is itself a sharp theorem explaining precisely why the Collatz tree resists the methods that work for Berggren, clarifying the boundary of what ternary-tree methods can achieve.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_1774",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-20T23:42:10.363274+00:00",
     "title": "The Collatz-Berggren Bridge \u2014 Transferring the Lorentz Invariant to the Inverse Collatz Tree"
   },
@@ -1891,34 +1877,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Quantum Entanglement Monogamy: CKW Inequality"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 627f5167 (Q=0.766), which proved 8 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize a type theory where types can refer to their own provability. Prove that such a system can express 'this proposition is provable but not provably provable' as a well-typed term. Show that reflective type theory properly extends Martin-Lof type theory and that its proof term language is exa",
-    "domains": [
-      "Computation"
-    ],
-    "id": "push_627f5167_0657914c",
-    "priority_score": 0.8662,
-    "research_mode": "team",
-    "source_exp_id": "627f5167",
-    "status": "available",
-    "timestamp": "2026-07-28T18:57:10.096537+00:00",
-    "title": "Deepening: Reflective Type Theory: Proving Things About Proving Things"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 362b8901 (Q=0.766), which proved 44 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the Risch algorithm for deciding if the integral of an EML function is an EML function. Prove the Risch theorem: integration in finite terms is decidable for EML functions. Implement the key steps: logarithmic part, exponential part, and algebraic part. Prove that the algorithm terminates ",
-    "domains": [
-      "Applications"
-    ],
-    "id": "push_362b8901_5bc594a1",
-    "priority_score": 0.8657699999999998,
-    "research_mode": "team",
-    "source_exp_id": "362b8901",
-    "status": "available",
-    "timestamp": "2026-08-03T11:53:32.213317+00:00",
-    "title": "Deepening: EML Integration in Finite Terms: The Risch Algorithm"
   },
   {
     "consumed_by_exp_id": "",
@@ -25604,6 +25562,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "* *Non-i.i.d. walks.* Replace the memoryless step law by a Markov chain on the three moves.\n  The harmonic measure should become a Gibbs measure on the boundary rather than a product\n  measure, with entropy the Markov entropy and dimension the corresponding ratio; ray rigidity\n  should survive with the transition matrix as the invariant.\n* *Arithmetic multifractality.* Study the spectrum of local dimensions of the harmonic measure\n  with respect to the *hypotenuse* metric rather than the 3-adic one; the entropy\u2013metric gap\n  suggests a genuinely nontrivial multifractal spectrum.\n* *Harmonic measure of subtrees.* The Pell spine of pure middle moves and other periodic rays\n  are natural distinguished points of the boundary. The local behaviour of the harmonic\n  measure near such points, and the associated conformal / Patterson\u2013Sullivan theory of the\n  hyperbolic embedding, are open.\n* *Groupoid and hyperbolic-embedding refinements.* Relating the harmonic measure to the\n  natural conformal density on the limit set of the embedded tree would explain the constant\n  `2/3` structurally rather than numerically.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_3400",
+    "priority_score": 0.506,
+    "research_mode": "team",
+    "source_exp_id": "fe1191f5",
+    "status": "available",
+    "timestamp": "2026-08-21T10:47:26.148136+00:00",
+    "title": "*Non-i.i.d."
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Define a dovetailed proof-search algorithm, prove that every valid finite derivation is eventually checked, and distinguish the number of candidate strings inspected from the number of distinct theorems emitted.",
     "domains": [
       "Algebra",
@@ -32874,14 +32846,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "C3.  The subgroup count as an invariant of the class field tower"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f87f1170",
     "description": "The formalized interval proves that the unique asymptotic threshold lies between `6.25%` and `12.5%`. A certified decimal enclosure near `11%` should be obtained from proved logarithm bounds rather than unchecked floating-point evaluation.",
     "domains": [],
     "id": "fd_2654",
+    "phase": "A",
     "priority_score": 0.40087500000000004,
     "research_mode": "team",
     "source_exp_id": "42b8568d",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:25:21.412081+00:00",
     "title": "Sharper threshold certification"
   },
@@ -38527,5 +38500,17 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T09:52:51.517738+00:00",
     "title": "Each conjecture below is falsifiable by a finite computation for any fixed small `p`."
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The Chernoff bound and the Bhattacharyya converse bracket the depth-`n` separation exponent.\nConjecture: the true exponent is the Chernoff information\n`C(P,Q) = \u2212log min_{0\u2264t\u22641} \u03a3_a p_a^t q_a^{1\u2212t}`, coinciding with the Bhattacharyya bound\nexactly when the optimising `t` is `1/2`.",
+    "domains": [],
+    "id": "fd_3399",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "fe1191f5",
+    "status": "available",
+    "timestamp": "2026-08-21T10:47:25.777846+00:00",
+    "title": "The Chernoff bound and the Bhattacharyya converse bracket the depth-`n` separation exponent."
   }
 ];

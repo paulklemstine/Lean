@@ -1,7 +1,7 @@
 {
   "part": "6",
-  "archived_at": "2026-08-21T09:53:13Z",
-  "count": 57,
+  "archived_at": "2026-08-21T10:47:26Z",
+  "count": 58,
   "directions": [
     {
       "ambition_level": "extension",
@@ -2326,6 +2326,46 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 44
+    },
+    {
+      "id": "fd_1131",
+      "title": "The Order x Jacobi Joint Law is N-Determined, Closed",
+      "description": "**Paper:** `ResearchOutput/NewMathematics/37_OrderJacobi_JointLaw.md` (factor3)\n**Experiment:** CONDORDER (#372), assessment v148.\n\n## Finding\nThe order × residue joint-quadrant of the combination grid (SCALECASCADE =\nresidue+order; SPECTRUNC = order+spectral; this = the JOINT LAW of ord_N(b) |\n(b/N)). The QR-order coupling (b/p)=1 ⟺ ord_p(b) | (p−1)/2 is EXACT (7000/7000\nverified) and the conditional bias is real (E[ord|J=+1]/E[ord|J=−1] ∈ 0.68–1.01).\n\n**Verified (14 primes, 30 near-equal-N semiprimes ~5×10⁶, 1500 samples each):**\n1. Coupling exact — a unit is a QR iff its order lies in the half-group.\n2. Conditional bias real — both-QR case forces both orders into half-groups.\n3. **BUT the law is N-determined:** corr of E[ord|J=±1] and ratio with\n   p, q, p+q, |p−q| all inside the permutation null (obs ≤ 0.31, 95th ≈ 0.34–0.41).\n4. Only structure = (p mod 4, q mod 4)-type residue dial = function of N mod 4.\n5. Computing the law requires ord_p, ord_q = the factors (barrier 6).\n\n## Why it collapses (barrier 5 + 6 + 8)\nThe joint law is a residue dial (barrier 5), circular to compute (barrier 6),\nand its bias mechanism is the p−1/q−1 order structure (barrier 8). Order ×\nresidue joint law adds nothing beyond N mod 4.\n\n## Verdict\nREFUTED. Combination grid now closed in the tested quadrants (SPECTRES,\nresidue+spectral, remains but predicted to collapse the same way). Classical\nuniform hint-free surface remains exhausted.\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 1000.0,
+      "status": "completed",
+      "consumed_by_exp_id": "579ae41a",
+      "timestamp": "2026-08-12T04:00:21.971556+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.82,
+      "domain_quality_penalty": 0.0,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 2,
+      "last_attempt_time": "2026-08-12T13:12:32.570847+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 53
     }
   ]
 }

@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "6bc62e41",
-      "domain": "Applications",
-      "key_insight": "# Future directions\n\nFive falsifiable conjectures growing out of this cycle.  Each is stated against the\ndefinitions now in `Catalog/Applications/PoissonSummationConverse.lean`,\n`Catalog/Applications/",
-      "quality_score": 0.88,
-      "sorry_count": 0,
-      "theorem_count": 70,
-      "timestamp": "2026-08-19T15:46:51",
-      "title": "Both sides of the identity are already available as Lean theorems"
-    },
-    {
       "cycle_id": "b8ad3057",
       "domain": "Shared",
       "key_insight": "# FUTURE DIRECTIONS — Sidon sets, after three research cycles\n\nThree cycles of the scientific-method loop produced, in `Catalog/Shared/`:\n\n* `SidonSetsErdosTuran.lean` — the Erdős–Turán sandwich `√(N/",
@@ -499,19 +489,19 @@
       "theorem_count": 115,
       "timestamp": "2026-08-21T09:53:19",
       "title": "Markoff Tree Transfer — Carrying the Berggren Tree's Machinery to the Markoff Tree"
+    },
+    {
+      "cycle_id": "fe1191f5",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions — Random Walks on the Berggren Tree\n\n## What this cycle settled\n\n* The boundary **is** a Cantor set, and the harmonic measure of the `(p₁,p₂,p₃)`-walk **is**\n  the Bernoulli produc",
+      "quality_score": 0.88,
+      "sorry_count": 0,
+      "theorem_count": 251,
+      "timestamp": "2026-08-21T10:47:42",
+      "title": "Harmonic Measure on the Berggren Tree Boundary — Random Walks and the 3-adic Cantor Set"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "24da7a57",
-      "domain": "Combinatorics",
-      "key_insight": "# Future Directions — bold, testable conjectures from the Round-11 closures\n\nDerived from what survived, and from what the proofs actually needed, in\n`Catalog/Combinatorics/Round11CycleIndexFingerprin",
-      "quality_score": 0.84,
-      "sorry_count": 0,
-      "theorem_count": 69,
-      "timestamp": "2026-08-13T00:05:25",
-      "title": "Round-11 Closures: The Definitive Closure of the Classical Surface"
-    },
     {
       "cycle_id": "fb76e61b",
       "domain": "Cryptography",
@@ -2501,27 +2491,19 @@
       "theorem_count": 115,
       "timestamp": "2026-08-21T09:53:19",
       "title": "Markoff Tree Transfer — Carrying the Berggren Tree's Machinery to the Markoff Tree"
+    },
+    {
+      "cycle_id": "fe1191f5",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions — Random Walks on the Berggren Tree\n\n## What this cycle settled\n\n* The boundary **is** a Cantor set, and the harmonic measure of the `(p₁,p₂,p₃)`-walk **is**\n  the Bernoulli produc",
+      "quality_score": 0.88,
+      "sorry_count": 0,
+      "theorem_count": 251,
+      "timestamp": "2026-08-21T10:47:42",
+      "title": "Harmonic Measure on the Berggren Tree Boundary — Random Walks and the 3-adic Cantor Set"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "d37c9a15",
-      "domain": "MachineLearning",
-      "name": "birkhoff_two_constraint_bound",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "d37c9a15",
-      "domain": "MachineLearning",
-      "name": "tvDist_le_tanh_hilbertDist",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "3b08d230",
-      "domain": "Tropical",
-      "name": "dvd_sigmaB",
-      "quality": 0.86
-    },
     {
       "cycle_id": "3b08d230",
       "domain": "Tropical",
@@ -2803,9 +2785,27 @@
       "domain": "Cryptography",
       "name": "bLevel_image_card",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "fe1191f5",
+      "domain": "Bridges",
+      "name": "prefixWord_length",
+      "quality": 0.88
+    },
+    {
+      "cycle_id": "fe1191f5",
+      "domain": "Bridges",
+      "name": "countM_prefixWord",
+      "quality": 0.88
+    },
+    {
+      "cycle_id": "fe1191f5",
+      "domain": "Bridges",
+      "name": "ae_freq_middle",
+      "quality": 0.88
     }
   ],
-  "last_updated": "2026-08-21T09:53:19",
+  "last_updated": "2026-08-21T10:47:42",
   "open_questions": [
     {
       "context": "Everything is proved; there are no `sorry`s and no new axioms.",
@@ -3145,12 +3145,6 @@
     ],
     "Bridges": [
       {
-        "cycle_id": "032d68e5",
-        "quality": 0.85,
-        "theorems": 92,
-        "title": "The 'Only Bad Primes' Conjecture is False (elliptic curve denominators)"
-      },
-      {
         "cycle_id": "2a357c10",
         "quality": 0.84,
         "theorems": 104,
@@ -3203,6 +3197,12 @@
         "quality": 0.87,
         "theorems": 99,
         "title": "Existence of δ-Dense Sets Avoiding Sumsets of Size ≥ (3+o(1)) log n / log(1/δ)"
+      },
+      {
+        "cycle_id": "fe1191f5",
+        "quality": 0.88,
+        "theorems": 251,
+        "title": "Harmonic Measure on the Berggren Tree Boundary — Random Walks and the 3-adic Can"
       }
     ],
     "Combinatorics": [
