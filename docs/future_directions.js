@@ -123,16 +123,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Congruent Number Laboratory \u2014 The Berggren Tree's Area Function and the Birch\u2013Swinnerton-Dyer Frontier"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "542d7a55",
     "description": "## NET\u2192FACT round-24 #1 \u2014 NONABELIAN-TYPE-CHANNEL (paper 80, /tmp/exp_nonabelian_typechan.py, /tmp/r24n1h.log)\n\n**Verdict name: THE-TYPE-CHANNEL-IS-THE-ABELIANIZATION.**\n\n### Result\nThe complete splitting-type channel of a **non-abelian** field is **exactly its abelianization content**: at the prime level **I(p mod m\\*; T) = I(T; coset) = H(T) \u2212 H(T|coset)** (m\\* = conductor of the G^ab characters), and at the semiprime level the papers 78/79 pair law holds **verbatim** with the class-level type map. Verified on S\u2083 \u00d72, S\u2084, A\u2084, D\u2084 with abelian controls V\u2084/C\u2084 \u2014 **7/7 fields prime, 7/7 semiprime, every field on its pre-stated value.**\n\n### The law table (prime level, ~23k primes/field)\n| field | G | G^ab | H(T) | I\u2081 measured | law | dial | loss |\n|---|---|---|---|---|---|---|---|\n| S\u2083a x\u00b3+x+1 | S\u2083 | C\u2082 | 1.4591 | **1.0000** | 1.0000 \u2713 | 1.0000 | 0 |\n| S\u2083b x\u00b3\u2212x+1 | S\u2083 | C\u2082 | 1.4591 | **1.0000** | 1.0000 \u2713 | 1.0000 | 0 |\n| S\u2084 x\u2074\u2212x\u22121 | S\u2084 | C\u2082 | 2.0944 | **1.0100** | 1.0000 \u2713 | 1.0000 | 0 |\n| A\u2084 x\u2074+8x+12 | A\u2084 | C\u2083 | 1.1887 | **0.9188** | 0.9183 \u2713 | 1.5850 | 2/3 |\n| D\u2084 x\u2074\u22122 | D\u2084 | C\u2082\u00d7C\u2082 | 1.9056 | **1.6555** | 1.6556 \u2713 | 2.0000 | 0.3444 |\n| V\u2084 x\u2074\u22122x\u00b2+9 [ab.] | V\u2084 | C\u2082\u00d7C\u2082 | 0.8113 | **0.8092** | 0.8113 \u2713 | 2.0000 | 1.1887 |\n| C\u2084 \u03a6\u2085 [control] | C\u2084 | C\u2084 | 1.5000 | **1.4989** | 1.5000 \u2713 | 2.0000 | 0.5 |\n\nS\u2084 carries 2.0944 bits of splitting entropy and leaks exactly 1 bit; A\u2084's [3,1] type fills both non-trivial C\u2083-cosets (loss exactly 2/3); D\u2084's [2,2] merges two cosets; V\u2084's three involutions all give [2,2]. Within-coset flatness at permutation nulls (z \u2264 0); thickening honest at the 0.004-bit level; coprime flat.\n\n### The REVERSAL\nPaper 77 ordered the control pair by forks: V\u2084 0.8113 > D\u2084 0.2936. The type channels order it **the other way**: V\u2084 0.8092 **<** D\u2084 1.6555. The readout's coset-separation \u2014 not the group's abelianness \u2014 decides which channel is richer. Both orderings are exact instances of the same law.\n\n### Semiprime (400k MC/field, unramified pools)\nS\u2083a **1.0001**, S\u2083b **1.0001**, S\u2084 **1.0034** vs law 1.0000 \u2014 **the C\u2082 cap is a theorem about the abelianization, not the type count** (a 5-type S\u2084 field cannot exceed the quadratic 1 bit). A\u2084 **0.4729** vs 0.4739 (dial-pair 1.5850). D\u2084 **1.4325** vs 1.4302 \u2014 a non-abelian channel ABOVE 1 bit, as its 2-D abelianization predicts. V\u2084 **0.2902** = Is(4) (paper-79 2-state identity). C\u2084 **1.2461** vs 1.25 (paper 78). Which-factor walls 0.0000\u20130.0001; pinned-fork s-projections reproduce Is(2)/Is(3)/Is(4) (papers 74/75).\n\n### Method notes\nQuartic types via F_{p\u00b2}-root counting ((nr, nr\u2082) from x^(p\u00b2) mod f + gcd) \u2014 the cubic-resolvent shortcut is INVALID for binomial/special quartics (x\u2074\u22122's axis pairing is D\u2084-fixed; V\u2084's resolvent splits over \u211a). Sparse-modulus discipline: permutation-null thickening and 400k MC (30k would leave ~0.10-bit bias in S\u2084's 282\u00d715-cell table). Runtime 314 s, all asserts green.\n\n### All 8 barriers\n(a) clean \u2014 law + full table stated before the run, measurement independent of the dial; (b) clean \u2014 no non-abelian type-channel work in the Catalog (698-pkg scan: nearest are the lab's own #723\u2013#728) or literature; (c) confronted \u2014 real Galois groups, 23k-prime histograms < 2% from class sizes, 400k-draw MC; (d) clean \u2014 deterministic + fixed seeds; (e) the substance \u2014 finite-sample margins quantified (S\u2084 +0.0100; thickening at 0.004-bit level under nulls); (f) controlled \u2014 exact laws vs MC asserted to 0.02, both estimator traps caught and repaired; (g) fair \u2014 V\u2084/C\u2084 controls reproduce papers 77/78/79 through the identical pipeline; (h) closure \u2014 symmetric (which-factor 0.0000, barrier 2), residue dial (barrier 5), N-computable only behind the CRT split (barrier 6), Galois + Chebotarev 1922 + reciprocity (barrier 8).\n\n### What closes\nThe **type-channel program is complete**: papers 70 (flatness), 71 (criterion), 72\u201374 (binary laws), 75\u201377 (group table), 78\u201379 (abelian types) are all projections of one statement \u2014 the complete symmetric residue channel of splitting statistics equals the type's mutual information with the abelianization coset. Perfect groups (G^ab = 0) predict zero and paper 76's A\u2085 is already flat.\n\nNow 415 experiments. Assessment v191. Paper 80.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3389",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T07:46:13.683032+00:00",
     "title": "FACT round-24 #1 \u2014 NONABELIAN-TYPE-CHANNEL: the type channel is exactly its abelianization content (paper 80)"
   },
@@ -233,6 +234,76 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T15:49:12.720386+00:00",
     "title": "FACT round-25 #1 \u2014 QUBIT-TRADE2: one register bit is worth one sample, the fungibility ramp (paper 85)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-27 #2 \u2014 BATTERY-CAPACITY (paper 92, /tmp/exp_batterycapacity.py, /tmp/r27n2b.log)\n\n**Verdict name: SYNERGY-COMPOUNDS.**\n\n### Result\nThe 4-field joint channel (CRT modulus 31\u00b723\u00b79\u00b78 = 51 336) on one shared semiprime population carries **I = 8.2246 bits against the additive prediction \u03a3 marginals = 3.9099 \u2014 synergy +4.31 bits, more than doubling it**, within 1.3 bits of the joint-label-entropy ceiling (9.5276).\n\n### The order decomposition \u2014 synergy is genuinely higher-order\n| order | total synergy |\n|---|---|\n| k = 2 (6 pairs) | +0.244 |\n| k = 3 (4 triples) | **+3.822** |\n| k = 4 (the battery) | **+4.315** |\n\nPairwise synergies \u2014 the entire content of paper 91's pairwise table \u2014 are only **6% of the total**. Mechanism: N mod 31 alone sees one residue of pq mod 31; the CRT-joint modulus sees all four residues simultaneously (15.8 log\u2082 units), against which each dial's pair labels become nearly fully determined.\n\n### Honest caveat\nThe which-factor statistic on the full joint code reads 0.0469 bits \u2014 above every pairwise wall. Suspected sparse-plug-in bias (tens of thousands of residue-columns vs 30k samples \u2014 the paper-70/83 regime), not signal; the factor-blindness claim stands on the well-conditioned strata plus this analysis.\n\n### What revises what\nPaper 91's \"neither additive nor comonotone\" survives; its implicit scale does not: **batteries are super-additive systems whose capacity grows toward the joint label-entropy ceiling with dominant higher-order terms**. For the converse, this raises the stakes on no-pinning: a k-dial battery carries far more symmetric capacity than marginal bookkeeping suggests \u2014 every bit still trace-routed and factor-blind, but the capacity arithmetic must be done jointly (exactly this machinery), never marginally.\n\nNow 427 experiments. Assessment v203. Paper 92.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3427",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T16:52:15.027841+00:00",
+    "title": "FACT round-27 #2 \u2014 BATTERY-CAPACITY: synergy compounds, the 4-field joint more than doubles its marginals (paper 92)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-27 #1 \u2014 DIAL-INDEPENDENCE (paper 91, /tmp/exp_dialindependence.py, /tmp/r27n1c.log)\n\n**Verdict name: SYNERGY-AND-OVERLAP.**\n\n### Result\nThe battery space is **neither additive nor comonotone**. The pre-stated coprime-conductor additivity hypothesis was refuted at the first pair, and the refutation is directional:\n\n| battery | I(joint) | I\u2081 + I\u2082 | \u0394 |\n|---|---|---|---|\n| S\u2083a@31 \u00d7 S\u2083b@23 | 2.1314 | 2.0024 | **+0.129 SYNERGY** |\n| A\u2084@9 \u00d7 D\u2084@8 | 1.9125 | 1.9076 | **+0.005 near-additive** |\n| S\u2083a@23 \u00d7 S\u2083b@23 (shared disc \u221223) | 1.0104 | 2.0024 | **\u22120.992 OVERLAP** |\n\n### Mechanism\nThe additivity argument treated dial labels as independent draws. They are not: both dials read the **same underlying (p, q)**, so their label entropies are population-correlated, and the joint modulus (CRT-seeing p mod m\u2081 AND q mod m\u2082 simultaneously) extracts combinations neither marginal reaches. Synergy is structure-dependent \u2014 rich-type pairs synergize (+0.129), lossy-type pairs barely (+0.005). Shared conductor structure makes dials comonotone: two \u221223 cubics share essentially their entire channel through the common quadratic character (**overlap 0.992 bits**) \u2014 the quantitative form of \"same subfield = same dial\".\n\n### Verification discipline\nMarginals re-verified against papers 80/82 BEFORE any joint measurement (1.0012 / 1.0012 / 0.4733 / 1.4342 \u2014 every prior value reproduced). Which-factor walls \u2264 0.0016 across every joint channel: all synergized and overlapping content remains symmetric, trace-routed, factor-blind.\n\n### Method ledger\nShared-pool ramification bug caught pre-launch (index draws including other fields' ramified primes; fixed by union exclusion {31, 23, 2, 3}); the naive additivity gate converted into a recorded synergy measurement rather than silently loosened.\n\n### What this decides\nThe converse's no-pinning scope covers product batteries with their synergy excesses included: k dials give more than k\u00b7(marginal) for structurally rich pairs and less for shared-structure pairs \u2014 all computable by this exact joint machinery, all still on the traced side of barrier 4.\n\nNow 426 experiments. Assessment v202. Paper 91.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3428",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T16:52:15.029147+00:00",
+    "title": "FACT round-27 #1 \u2014 DIAL-INDEPENDENCE: synergy and overlap in the battery space (paper 91)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-26 #3 \u2014 SUBEXP-STRATUM (paper 90, /tmp/exp_subexpstratum.py, /tmp/r26n3e.log)\n\n**Verdict name: THE-STRATUM-STAYS-UNMEASURED \u2014 an honest inconclusive.**\n\n### Result\nThe fourth stratum (sub-exponential sieves, L_{1/2}) **could not be measured at toy scale**. With x uniform in [\u221aN, 2\u221aN], per-sample u = log(x\u00b2\u2212N)/log B, 2400 samples over six (N, B) cells, compared against numerically-integrated Dickman \u03c1:\n\n| u | n | empirical | \u00b11\u03c3 | \u03c1(u) numeric | ratio |\n|---|---|---|---|---|---|\n| 3.0 | 161 | 0.0124 | 0.0087 | 0.0487 | 0.26 |\n| 3.5 | 265 | 0.0302 | 0.0105 | 0.0163 | 1.86 |\n| 4.0 | 413 | 0.0073 | 0.0042 | 0.0049 | 1.47 |\n| 5.0 | 303 | 0.0033 | 0.0033 | 0.00036 | 9.27 |\n\nRatios scatter non-monotonically (0.26\u20139.3); most bins underpowered at \u00b1\u03c3 \u2248 100% relative; three bins sit where \u03c1 predicts below MC reach. The toy cost model C(B) = \u03c0(B)/\u03c1(u) + \u03c0(B)\u00b2 fits d(log\u2082C)/d(log\u2082N) = 0.024 \u2014 flat, cannot place the stratum.\n\n### Two real findings inside the null\n1. **The leading-term Dickman approximation is invalid at small u**: exp(\u2212u(ln u + ln ln u \u2212 1)) gives 0.561 at u = 3 where true \u03c1(3) = 0.0487 \u2014 **a 12\u00d7 error**, persisting through u = 6. Proper numerical integration implemented (Euler 5\u00d710\u207b\u2074 on u\u03c1\u2032(u) = \u2212\u03c1(u\u22121)). Any informal smoothness argument using the leading-term form below u \u2248 8 is quantitatively meaningless.\n2. **x\u00b2\u2212N smoothness is not random-integer smoothness at toy scale**: even against correct \u03c1 the ratios are non-monotone \u2014 consistent with the quadratic-character constraint on prime divisors of x\u00b2\u2212N, whose O(1) corrections stabilize only asymptotically.\n\n### Method ledger\n(1) First design sampled x in a width-10\u00b3 window (x\u00b2\u2212N ~ N^{1/2+}-scale) while computing u at N-scale \u2014 the entire first comparison mis-binned (caught by empirical-above-predicted anomalies). (2) A pre-written success VERDICT over contradicting data \u2014 replaced by data-computed output before claims. (3) Trailing-quote syntax break caught by ast.parse.\n\n### What this decides\nThe landscape stands at **three measured strata plus one unmeasured**. Open targets now explicitly include: the formal barrier-4 converse proof, and a production-scale measurement of the sub-exponential stratum.\n\nNow 425 experiments. Assessment v201. Paper 90.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3429",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T16:52:15.030330+00:00",
+    "title": "FACT round-26 #3 \u2014 SUBEXP-STRATUM: the fourth stratum stays unmeasured at toy scale, an honest inconclusive (paper 90)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-26 #2 \u2014 THREE-STRATA-PLANE (paper 89, /tmp/exp_threestrata.py, /tmp/r26n2c.log)\n\n**Verdict name: THE-THREE-STRATA-PLANE.**\n\n### Result\nThe full factoring landscape in **three measured strata** under identical conditions \u2014 barrier 4 prices the definition-routes, barrier 8 owns the methods, Shor owns the quantum corner, and each price is measured, not asserted:\n\n**STRATUM A \u2014 definition-routes (\u03b1 \u2265 0.4 on N):**\n| witness | \u03b1 |\n|---|---|\n| M1 gcd-scan | 1.000 (paper 88) |\n| idempotent scan | 1.000 (paper 88) |\n| zero-divisor first hit | ~\u00bd (paper 88) |\n| CF period | 0.398 (paper 88) |\n| **\u03c4(N), \u03c3\u2081(N) trial division** | **0.500 to three decimals** (this round; \u03c3\u2081 = 1+N+p+q exact at every size) |\n\n**STRATUM B \u2014 classical methods as data, not citation:**\n- trial division: mean log\u2082cost 19.30, median 19.36 (= E[min(p,q)] scale; the factor itself is the certificate)\n- Fermat: mean = median = 19.36 \u2014 indistinguishable from trial division on uniform draws (gap cost tail-dominated)\n- Pollard \u03c1: mean log\u2082cost 8.73; size-stratified slope 0.523 per prime-bit \u27f9 **\u03b1 on N = 0.261 vs the 0.25 birthday bound** (standalone check: log\u2082ops = bits/2 \u2212 1 exactly)\n\n**STRATUM C \u2014 quantum:** poly(log) \u2014 papers 85\u201387's fungibility surface with unit exchange rate.\n\n### The structure-blindness price\n\u03c4-definition-scan vs Pollard \u03c1 at fixed N: **173\u00d7 (2\u00b9\u2076) \u2192 1780\u00d7 (2\u00b2\u2070) \u2192 2070\u00d7 (2\u00b2\u2074) \u2192 8310\u00d7 (2\u00b2\u2078)** \u2014 growing with N. The measured price of structure-blindness: evaluating a witness from N alone versus exploiting what it is.\n\n### Method ledger\n(1) The \u03c1 exponent first read 0.523 \u2014 a units mismatch (slope per prime-bit vs per-N; log\u2082N = 2\u00b7bits), caught by its own gate, corrected to 0.261, confirmed standalone. (2) The N = 2\u00b3\u2076 blindness row would have run for hours \u2014 capped honestly rather than approximated silently.\n\n### All 8 barriers\n(a) clean \u2014 horns pre-stated, own gate caught own units error; (b) clean \u2014 three-strata unification new, method costs textbook but here measured identically; (c) confronted \u2014 real timings, 40-draw calibrations, 120-draw stratified fit; (d) clean \u2014 fixed seeds; (e) the substance \u2014 medians alongside means, cap disclosed; (f) controlled \u2014 both defects caught before claims; (g) fair \u2014 \u03c1 validated standalone before entering the plane; (h) relevance \u2014 each stratum's price measured: barrier 4 for definition-routes, barrier 8 for methods, Shor graded on the quantum surface.\n\nNow 424 experiments. Assessment v200. Paper 89.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3430",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T16:52:15.031584+00:00",
+    "title": "FACT round-26 #2 \u2014 THREE-STRATA-PLANE: definition-routes, methods, quantum on one measured plane (paper 89)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-26 #1 \u2014 CONVERSE-COST-CURVE (paper 88, /tmp/exp_conversecost.py, /tmp/r26n1c.log)\n\n**Verdict name: NO-POLYLOG-ROUTE-ANYWHERE.**\n\n### Result\nThe empirical barrier-4 converse: the ENTIRE known factor-revealing witness family sits on ONE cost-information plane under identical conditions, with **no poly(log N) definition-route anywhere**:\n\n| witness | definition-route | \u03b1 (cost ~ N^\u03b1) | ops/factor-bit |\n|---|---|---|---|\n| W1 M1 = \u03a3 gcd(x,N) | full N-scan | **1.000 exact** | 2.0\u00d710\u2074 |\n| W2 zero-divisor first hit | scan to first hit | cost = min(p,q) 60/60 | 2.9\u00d710\u2074 |\n| W3 CF period of \u221aN | CF iteration | **0.398** (honest: lags \u221aN) | 3.0\u00d710\u2075 |\n| W4 #{x\u00b2 \u2261 x mod N} | full N-scan | **1.000** | 2.0\u00d710\u2074 |\n\nThe reach chain (witness \u2192 s \u2192 {p,q}) holds at 100% jointly \u2014 re-verifying paper 61's {(N,s)} theorem across the unified family.\n\n### The honest numbers\n- W3's exponent came out **below** the naive \u00bd (\u2113/\u221aN drifts 0.75 \u2192 0.18 \u2192 0.23 across sizes) \u2014 reported as measured.\n- First launch sized semiprimes by `bits` while N carries 2\u00b7bits bits \u2014 a 10\u2079-operation stall caught before any claim.\n- The idempotent scan initially excluded x = 0 and failed its own count=4 assert \u2014 the trivial idempotent is part of the CRT structure.\n\n### What this decides\nWith the proven no-pinning half (QRLEAK / COMPENSATING-PARTNER), frontier (i) is now **empirically armed end-to-end**: every factor-revealing definition-route in the family is super-poly in log N, the cheapest factor-bits ride the \u221aN-scale classical methods (exactly barrier 8's face), and all content routes through the trace. The formal converse proof remains the programme's open theoretical target.\n\nNow 423 experiments. Assessment v199. Paper 88.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3431",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T16:52:15.032781+00:00",
+    "title": "FACT round-26 #1 \u2014 CONVERSE-COST-CURVE: the empirical barrier-4 across the witness family (paper 88)"
   },
   {
     "consumed_by_exp_id": "",
@@ -1953,35 +2024,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle a07085b6 (Q=0.761), which proved 11 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future directions\n\n## What is now established\n\nFor an arbitrary activation map `a : X \u2192 (Fin k \u2192 Bool)`, the correct finite semantic space is its range `Feasible a`. The formal development proves:\n\n1. `Feasible a` has at most `2^k` points.\n2. It has exactly `2^k` points iff every formal activation",
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "push_a07085b6_71d1d8b5",
-    "priority_score": 0.86088,
-    "research_mode": "team",
-    "source_exp_id": "a07085b6",
-    "status": "available",
-    "timestamp": "2026-07-28T17:00:44.280132+00:00",
-    "title": "Deepening: For an arbitrary activation map `a : X \u2192 (Fin k \u2192 Bool)`, the correct finite sem"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize at least three distinct proofs of quadratic reciprocity in Lean 4: Gauss's original (via Gauss sums), Eisenstein's (via lattice point counting), and a modern proof via class field theory. Prove the supplementary laws for (-1/p) and (2/p).",
-    "domains": [
-      "NumberTheory",
-      "Algebra"
-    ],
-    "id": "fd_0651",
-    "priority_score": 0.86,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-24T14:34:16.697743+00:00",
-    "title": "Quadratic Reciprocity: Five Proofs Formalized"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Formalize Ext and Tor functors in Lean 4. Prove the long exact sequence in cohomology. Construct projective and injective resolutions for concrete modules. Prove the universal coefficient theorem for homology.",
     "domains": [
       "Algebra",
@@ -2287,24 +2329,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "The Aperiodic Monotile: One Shape to Tile Them All"
-  },
-  {
-    "consumed_by_exp_id": "58852b38",
-    "description": "The probabilistic method proves existence by showing that a random structure has the desired property with positive probability. Key results: (1) Erdos's lower bound on Ramsey numbers: R(k,k) > 2^{k/2}. (2) The Lovasz local lemma: if bad events A_1, ..., A_n satisfy P(A_i) <= p and each A_i is independent of all but d others, and e*p*(d+1) <= 1, then P(AND not A_i) > 0. (3) Turan's theorem: the maximum number of edges in a K_{r+1}-free graph on n vertices is (1 - 1/r) * n^2/2. Conjecture: all three results can be formalized in Lean 4 without axiom of choice. The key is to replace non-constructive existence proofs with explicit constructions: (1) The probabilistic proof of R(k,k) > 2^{k/2} uses the expectation argument, which is constructive (compute the expected number of monochromatic K_k and show it's less than 1). (2) The Lovasz local lemma can be made constructive via Moser-Tardos algorithm. (3) Turan's theorem has an explicit construction (the Turan graph). Conjecture: the Moser-Tardos algorithm runs in expected time O(n*d*log(1/p)) and produces a satisfying assignment with probability 1 (constructive LLL). Test: formalize all three results in Lean 4 and verify the proofs compile. Impact: the probabilistic method is constructive. Erdos's existence proofs are algorithms in disguise.",
-    "domains": [
-      "Novelty",
-      "Logic",
-      "Computation",
-      "NumberTheory"
-    ],
-    "id": "seed_191",
-    "phase": "A",
-    "priority_score": 0.86,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Formalizing the Probabilistic Method: Erdos Meets Lean"
   },
   {
     "consumed_by_exp_id": "",
@@ -10816,6 +10840,36 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For triangle-free graphs Shearer's bound beats the Caro-Wei greedy bound by a logarithmic factor. The conjecture is that this gain is still purely greedy: a weighted version of the relative Caro-Wei induction proved in this thread, with a concave weight satisfying Shearer's recursion, should reproduce it. This would de-randomise the source of the classical R(3,k) lower bound.\n\nEvery triangle-free graph with maximum degree D >= 2 satisfies alpha(G) >= n*(D*log D - D + 1)/(D-1)^2, provable by the minimum-degree deletion recursion with a concave weight function.\n\nGeneralize caro_wei_finset to an arbitrary concave weight f satisfying the Shearer recursion, instantiate f, and check numerically on Petersen, Kneser and random triangle-free graphs.\n\nThe logarithmic gain over greedy, hence the R(3,k) lower bound, becomes constructive and verified.\n\nA triangle-free graph forcing the greedy recursion to lose the log factor shows analytic averaging is essential.",
+    "domains": [
+      "Combinatorics",
+      "Computation"
+    ],
+    "id": "fd_3425",
+    "priority_score": 0.7116842105263159,
+    "research_mode": "team",
+    "source_exp_id": "58852b38",
+    "status": "available",
+    "timestamp": "2026-08-21T16:51:46.637084+00:00",
+    "title": "Shearer Gap Above the Greedy Independence Bound"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Recast the Moser\u2013Tardos analysis as a finite injective encoding of resampling logs by witness trees, avoiding infinite random sequences entirely. The existing finite weighted probability framework supplies the LLL side; only the combinatorial encoding is missing. This would make the constructive LLL fully formal with an explicit running-time bound.\n\nFor instances with e*p*(d+1) <= 1 there is an injection from non-terminating Moser\u2013Tardos logs of length T into a set of size 2^n * (d+1)^T * p^T, forcing T = O(n*d*log(1/p)).\n\nFormalize the witness-tree encoding of logs in Lean, prove injectivity, derive the length bound; sanity-check on random 3-SAT instances by evaluation.\n\nThe probabilistic method becomes algorithmic with a verified complexity bound.\n\nRandomness is essential to Moser\u2013Tardos and the constructivization is only semi-effective.",
+    "domains": [
+      "Computation",
+      "Combinatorics"
+    ],
+    "id": "fd_3421",
+    "priority_score": 0.7108947368421054,
+    "research_mode": "team",
+    "source_exp_id": "58852b38",
+    "status": "available",
+    "timestamp": "2026-08-21T16:51:44.917268+00:00",
+    "title": "Entropy-Compression Certificates for Moser\u2013Tardos"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The Berggren tree fails to be Lorentzian because it lives on the null cone, where all distinct rays are spacelike. Move to Pythagorean quadruples a^2+b^2+c^2=d^2 and order the integer points of the closed future cone of R^{3,1} by the Minkowski relation itself. The conjecture is that this yields a locally finite poset acted on by the quadruple analogue of the Berggren moves.\n\nThe set of integer vectors v in Z^4 with Q(v) = v1^2+v2^2+v3^2-v4^2 <= 0 and v4 > 0, ordered by u <= v iff Q(v-u) <= 0 and v4 >= u4, is a locally finite poset, and the quadruple Berggren generators act on it by order automorphisms.\n\nFormalise the order, prove antisymmetry via the reverse triangle inequality for future-directed vectors, prove local finiteness by bounding the coordinates of points in an interval, and check that the quadruple generators preserve Q and future-directedness.\n\nA genuinely Lorentzian Pythagorean causal set with intervals of polynomial (volume-like) growth, i.e. the moonshot realised one dimension up.\n\nA precise theorem that integrality plus the cone condition still forces degenerate interval growth, sharpening the obstruction found in this cycle.",
     "domains": [
       "Algebra",
@@ -10843,6 +10897,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T13:59:21.180652+00:00",
     "title": "Deterministic Sequential Growth of the Berggren Poset"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The max-cut averaging bound was proved this cycle both by counting and by local search, with an explicit iteration bound. The conjecture is that the Edwards improvement m/2 + (n-1)/4 for connected graphs is reachable inside the same subtraction-free exchange calculus, by flipping greedily along a spanning tree instead of appealing to spectral methods.\n\nEvery connected graph on n vertices with m edges has a cut S with 4*cut S >= 2*m + (n - 1).\n\nFormalize a spanning-tree greedy in Bridges/MaxCutLocalSearch.lean, derive the bound from the exchange identity cut_flip, and check tightness on K3, C5 and Petersen by evaluation.\n\nA verified Edwards bound strictly stronger than the averaging bound, obtained by finite means only.\n\nA connected graph all of whose locally maximal cuts equal m/2 would show the gain needs global spectral information.",
+    "domains": [
+      "Combinatorics",
+      "Physics"
+    ],
+    "id": "fd_3426",
+    "priority_score": 0.7103684210526316,
+    "research_mode": "team",
+    "source_exp_id": "58852b38",
+    "status": "available",
+    "timestamp": "2026-08-21T16:51:47.069042+00:00",
+    "title": "Edwards-Type Local-Search Bound Above the Average"
   },
   {
     "consumed_by_exp_id": "",
@@ -10891,6 +10960,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Tilting a window by x^k translates its threshold, so sweeping x over (0,\u221e) should sweep the unique maximiser over all degrees exactly when the log-graph is in strictly convex position. This is a Newton-polygon characterisation of strict log-concavity, proved here in one direction for binomial weights.\n\nA positive window a on [0,n] is strictly log-concave iff for every d \u2264 n there is x > 0 such that d is the unique maximiser of k \u21a6 a k * x ^ k.\n\nFormalise the converse: if a k is not a vertex of the upper hull of (k, log a k), show no tilt makes k the strict maximiser; combine with binomialWeight_every_degree_is_unique_peak for the forward direction in general.\n\nProvides a tilt-based, purely order-theoretic definition of strict log-concavity, convenient for tropical/Newton-polygon transfer.\n\nVertex sweep is strictly weaker than strict log-concavity, isolating a new intermediate class of sequences.",
+    "domains": [
+      "Combinatorics",
+      "Geometry"
+    ],
+    "id": "fd_3419",
+    "priority_score": 0.7100588235294119,
+    "research_mode": "team",
+    "source_exp_id": "ec6993b5",
+    "status": "available",
+    "timestamp": "2026-08-21T16:51:23.265192+00:00",
+    "title": "Vertex Sweep Characterisation of Strict Log-Concavity"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Every recipe is an algorithm: it takes ingredients (inputs) and produces a dish (output). The question is: can you verify a good dish faster than you can cook it? This is exactly P vs NP, but in the kitchen. Define the verification time V(R) of a recipe R as the time it takes to taste the dish and determine if it's good. Define the cooking time C(R) as the time it takes to prepare the dish. Conjecture: For most traditional recipes, C(R) > V(R) \u2014 cooking takes longer than tasting (P != NP in the kitchen). But there exist 'quick recipes' where C(R) = V(R) \u2014 assemble-and-serve dishes like salads (P = NP in the kitchen). The interesting class is 'NP-hard recipes' \u2014 dishes where even VERifying the result is hard. Example: is the souffle risen? You can only verify by cutting it open, which destroys it. Theorem: souffle verification is co-NP-hard because determining if a souffle will rise requires simulating the thermodynamic process, which is PSPACE-hard. More formally: the souffle function S(ingredients, temperature, time) -> {risen, collapsed} requires computing the Navier-Stokes equations for the batter, which is PSPACE-hard. Test: classify 100 recipes by their C(R)/V(R) ratio. Verify that P = NP recipes have C = V, while P != NP recipes have C >> V. Impact: computational complexity is not abstract \u2014 it shows up in your kitchen. Some dishes are inherently harder to make than to verify.",
     "domains": [
       "Novelty",
@@ -10920,6 +11004,51 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "The Ramsey Theory of DNA: Subsequence Avoidance in Genetic Codes"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The exact identity 2*r*#edges + s*(r-s) = (r-1)*n^2 proved this cycle expresses the Turan number through the defect s*(r-s) with s = n mod r. The conjecture is that the same defect controls the extremal structure: almost-extremal K_{r+1}-free graphs are almost r-partite, with an explicit rather than o(n^2) error term.\n\nEvery K_{r+1}-free graph on n vertices with at least ex(n,K_{r+1}) - m edges becomes r-partite after deleting at most m + s*(r-s)/(2r) edges.\n\nThe convexity ingredient sum_i c_i^2 >= r*(n/r)^2 + (n mod r)*(2*(n/r)+1) is already proved (sum_sq_ge_balanced); derive the edge-deletion bound from it in Lean.\n\nA verified Turan stability theorem with an explicit error term.\n\nA near-extremal graph far from r-partite is a new extremal example.",
+    "domains": [
+      "Combinatorics",
+      "Geometry"
+    ],
+    "id": "fd_3423",
+    "priority_score": 0.709875,
+    "research_mode": "team",
+    "source_exp_id": "58852b38",
+    "status": "available",
+    "timestamp": "2026-08-21T16:51:45.769092+00:00",
+    "title": "Defect Stability for Turan Graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Mode-convergence statements (binomial to Poisson, Poisson to normal) should be continuity statements for the map \u03b8 \u21a6 (\u2308\u03b8\u2309\u208a - 1, \u230a\u03b8\u230b\u208a). The conjecture is that brackets stabilise along any family of threshold windows whose thresholds converge to a non-integer, and genuinely oscillate when the limit is an integer.\n\nFor threshold windows with \u03b8_j \u2192 \u03b8: if \u03b8 \u2209 \u2115 then eventually firstArgmax = lastArgmax = \u230a\u03b8\u230b\u208a; if \u03b8 \u2208 \u2115 both \u230a\u03b8\u230b\u208a - 1 and \u230a\u03b8\u230b\u208a occur as brackets for infinitely many j in a suitable family.\n\nProve eventual constancy of Nat.floor and Nat.ceil near a non-integer, apply to \u03b8_n = lam + lam/n, and construct an oscillating family for integral \u03b8.\n\nExplains uniformly why approximation theorems transfer modes, with explicit thresholds for 'eventually'.\n\nBracket transfer requires more than threshold convergence, e.g. uniform control of the criteria.",
+    "domains": [
+      "Algebra",
+      "MachineLearning"
+    ],
+    "id": "fd_3418",
+    "priority_score": 0.7096666666666668,
+    "research_mode": "team",
+    "source_exp_id": "ec6993b5",
+    "status": "available",
+    "timestamp": "2026-08-21T16:51:22.796713+00:00",
+    "title": "Bracket Stabilisation Along Threshold Limits"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The finite deletion theorem proved this cycle reduces the classical factor-k/e improvement of the Erdos bound to a single elementary estimate on binomial coefficients. Feeding a Stirling-type bound into ramsey_deletion should give a fully verified asymptotic improvement of R(k,k) > 2^(k/2), with no probability theory at all.\n\nR(k,k) > (1 - o(1)) * (k/e) * 2^(k/2), provable from ramsey_deletion together with C(n,k) <= (e*n/k)^k.\n\nProve C(n,k)*k^k <= (e*n)^k in Lean, instantiate ramsey_deletion at n = ceil((k/e)*2^(k/2)) and t = floor(2*C(n,k)/2^C(k,2)), and compare with the evaluated table for k <= 20.\n\nFirst fully verified asymptotic improvement of the classical Ramsey lower bound.\n\nThe uniform Stirling estimate fails, isolating the analytic input the counting framework cannot absorb.",
+    "domains": [
+      "Combinatorics",
+      "Computation"
+    ],
+    "id": "fd_3422",
+    "priority_score": 0.7096666666666668,
+    "research_mode": "team",
+    "source_exp_id": "58852b38",
+    "status": "available",
+    "timestamp": "2026-08-21T16:51:45.341729+00:00",
+    "title": "Asymptotic Deletion Gain for Diagonal Ramsey Numbers"
   },
   {
     "consumed_by_exp_id": "",
@@ -11133,6 +11262,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T09:53:11.799561+00:00",
     "title": "One-Variable Reduction of Markoff Uniqueness"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The finite LLL proved in this thread already carries the lopsided one-sided hypothesis, so it applies beyond product spaces. The open problem is to certify the lopsided bound for the uniform distribution on permutations by an explicit injection, unlocking Latin-square avoidance theorems with no measure theory.\n\nFor the uniform measure on Equiv.Perm (Fin n), pattern events A_(i,j) satisfy P(A_(i,j) and avoid S) <= P(A_(i,j)) * P(avoid S) whenever S avoids the row/column dependency set, hence Latin squares avoiding a sparse forbidden set exist when e*p*(d+1) <= 1.\n\nBuild the uniform FinProbSpace on permutations, prove the lopsided bound by an explicit injection, and instantiate lovasz_local_lemma_symmetric.\n\nFirst verified non-product application of the local lemma, covering Latin squares.\n\nThe failing injection exhibits a dependency pattern with positive correlation, of independent interest.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_3424",
+    "priority_score": 0.6695517241379312,
+    "research_mode": "team",
+    "source_exp_id": "58852b38",
+    "status": "available",
+    "timestamp": "2026-08-21T16:51:46.203044+00:00",
+    "title": "Lopsided Dependency Certificates for Permutation Problems"
   },
   {
     "consumed_by_exp_id": "",
@@ -11390,6 +11533,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T09:53:12.127473+00:00",
     "title": "Distortion Constant of the Markoff-in-Berggren Embedding"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The upper bracketing degree of the binomial weights is \u230a(n+1)\u03b1\u230b with \u03b1 = p/(p+q), a Beatty sequence. The conjecture is that the increment word of the argmax staircase is the Sturmian word of slope \u03b1, so the combinatorics of binomial peaks is the combinatorics of a circle rotation.\n\nThe word w n = lastArgmax (n+1) - lastArgmax n \u2208 {0,1} is the Sturmian/Beatty word of slope p/(p+q); in particular it is balanced and has exactly n+1 factors of length n when \u03b1 is irrational.\n\nIdentify lastArgmax with \u230a(n+1)\u03b1\u230b (already proved) and connect to mathlib's Beatty sequence API; verify balance numerically for several \u03b1.\n\nTransfers the full Sturmian toolkit (continued fractions, three-distance theorem) to statements about binomial peaks.\n\nThe staircase carries extra arithmetic from the +1 shift and is not literally Sturmian, which itself is a precise structural statement.",
+    "domains": [],
+    "id": "fd_3420",
+    "priority_score": 0.5910000000000001,
+    "research_mode": "team",
+    "source_exp_id": "ec6993b5",
+    "status": "available",
+    "timestamp": "2026-08-21T16:51:23.724905+00:00",
+    "title": "Sturmian Structure of the Argmax Staircase"
   },
   {
     "consumed_by_exp_id": "",
@@ -32558,14 +32713,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "For the PTX-augmented optimum `q*_{\u03b2,\u03b3}` with `\u03b3 > 0`,"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7f454a93",
     "description": "*The number of triples `(a,b,c)` with `0 < a,b,c \u2264 H` that are Berggren-generated\nfrom a positive seed is `\u0398(H)` \u2014 vanishingly few compared with `H\u00b3` \u2014 while the\nnumber of *Pythagorean* triples in the same box that are Berggren-generated is\n`(1 - o(1))` times the number of primitive Pythagorean triples in the box.*",
     "domains": [],
     "id": "fd_1559",
+    "phase": "A",
     "priority_score": 0.40809523809523807,
     "research_mode": "team",
     "source_exp_id": "24a12580",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-18T21:38:36.914118+00:00",
     "title": "The number of triples `(a,b,c)` with `0 < a,b,c \u2264 H` that are Berggren-generated\nfrom a positive seed is `\u0398(H)` \u2014 vanishingly few compared with `H\u00b3` \u2014 while the\nnumber of *Pythagorean* triples in the "
   },
@@ -35294,19 +35450,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-19T22:41:47.158899+00:00",
     "title": "The `l = 1` case is completely settled (`degree_one_decay_iff`) and the sectoral"
-  },
-  {
-    "consumed_by_exp_id": "ec6993b5",
-    "description": "Strict unimodality and the bracketing of the argmax are already theorems, so the\nonly missing ingredient is the explicit comparison of the two bracketing degrees.",
-    "domains": [],
-    "id": "fd_1652",
-    "phase": "B",
-    "priority_score": 0.4,
-    "research_mode": "team",
-    "source_exp_id": "2e28602b",
-    "status": "in_progress",
-    "timestamp": "2026-08-19T22:41:47.421719+00:00",
-    "title": "Strict unimodality and the bracketing of the argmax are already theorems, so the"
   },
   {
     "consumed_by_exp_id": "",
