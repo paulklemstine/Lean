@@ -138,16 +138,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-24 #1 \u2014 NONABELIAN-TYPE-CHANNEL: the type channel is exactly its abelianization content (paper 80)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "97faef64",
     "description": "## FACT round-24 #3 \u2014 QUINTIC-TYPE-CHANNEL (paper 82, /tmp/exp_quintictypechan.py, /tmp/r24n3f.log)\n\n**Verdict name: THE-ABELIANIZATION-LAW-AT-DEGREE-FIVE.**\n\n### Result\nThe abelianization law (paper 80) holds at degree 5 on the program's **first C\u2084-abelianization object**: the Frobenius group **F\u2082\u2080 = AGL(1,5)** via x\u2075\u22122. Prime: **I(p mod 5; T) = 1.4989 vs pre-stated 1.5000** \u2014 H(T) = 1.6805 bits of quintic splitting entropy collapse through the 2-bit quartic dial, with the [1,4] type merging the two order-4 cosets {2,3} for a loss of **exactly 0.5 bit**. Semiprime: pair = **1.2462 vs class-enumeration law 1.2500**; and the [1,2,2]-fork (\u27fa p \u2261 4 mod 5) realizes **Is(4) as an order-4 pinned fork on a non-abelian field** (0.2915 vs 0.2947) \u2014 previously order-4 split-counts existed only on abelian V\u2084 and the joint-AND D\u2084 fork (paper 77).\n\n### The law table\n| field | G | G^ab | H(T) | I\u2081 measured | law | dial | loss |\n|---|---|---|---|---|---|---|---|\n| F\u2082\u2080 x\u2075\u22122 | F\u2082\u2080 | C\u2084 | 1.6805 | **1.4989** | 1.5000 \u2713 | 2.0000 | 0.5 |\n| C\u2085 Q(\u03b6\u2081\u2081)\u207a [control] | C\u2085 | C\u2085 | 0.7219 | **0.7198** | 0.7219 \u2713 | 3.3219 | 2.6 |\n\nSemiprime (400k MC): F\u2082\u2080 pair **1.2462** vs 1.2500 \u2713 (reads 1.25 of the 2-bit dial \u2014 the largest fraction of any merged-type field in the program); C\u2085 pair **0.2026** vs Is(5) = 0.2027 \u2713 (paper-79 f=11 reproduced). Which-factor walls 0.0000; coprime flat; within-coset flatness z = +0.00; thickening agrees to 0.0001.\n\n### The instructive failure (record as method)\nFirst run swapped the coset labels of the multiplier-3/-4 families relative to the C\u2084 valuation (V(3)=3, V(4)=2). **Invisible at the prime level** \u2014 both merged classes share type [1,4], so I\u2081 is unchanged \u2014 but it corrupted the pair enumeration (law 1.1250 vs true 1.2500). The 400k MC caught it: measured 1.2462 sat on the *corrected* value. **Lesson: the pair law is the discriminating test of coset bookkeeping precisely where type-merging hides it.** Method legacy: quintic type dictionary via F_{p\u00b2}-root counting is (5,5)/(1,1)/**(1,5)**/(0,0) \u2014 (1,5), not the quartic-carried (1,3): both quadratic pairs' roots live in F_{p\u00b2}\\F_p.\n\n### All 8 barriers\n(a) clean \u2014 four horns with exact values pre-stated; (b) clean \u2014 no quintic type-channel work in the Catalog; (c) confronted \u2014 real F\u2082\u2080 field, ~23k-prime histograms < 2% from class sizes, 400k MC; (d) clean \u2014 fixed seeds; (e) the substance \u2014 margins quantified (\u22120.0011/\u22120.0038/\u22120.0032), coset-swap episode documented; (f) controlled \u2014 four harness defects caught across five runs by asserts/MC-law disagreement; final run ALL_DONE all-green; (g) fair \u2014 C\u2085 abelian control reproduces paper 79 through the identical pipeline; (h) closure \u2014 symmetric (wall 0, barrier 2), residue dial (5), CRT-sealed (6), Kummer/affine classical (8).\n\n### What this decides\nThe abelianization law now spans **degrees 2\u20135** and abelianizations **C\u2082, C\u2083, C\u2084, C\u2082\u00d7C\u2082, C\u2099**: I(p mod m\\*; T) = I(T; coset), pair law verbatim, the type-vs-dial gap always exactly the entropy of the cosets the type cannot tell apart. The type-channel face of the program is complete at every tested group; the frontier returns to the quantum channel (QUBIT-TRADE) and the barrier-4 converse.\n\nNow 417 experiments. Assessment v193. Paper 82.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3411",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T13:59:52.029699+00:00",
     "title": "FACT round-24 #3 \u2014 QUINTIC-TYPE-CHANNEL: the abelianization law at degree five, F\u2082\u2080 and the first C\u2084 dial (paper 82)"
   },
@@ -304,6 +305,48 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T16:52:15.032781+00:00",
     "title": "FACT round-26 #1 \u2014 CONVERSE-COST-CURVE: the empirical barrier-4 across the witness family (paper 88)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-28 #1 \u2014 METHOD-LOCALITY (paper 95, /tmp/exp_methodlocality.py, /tmp/r28n1b.log)\n\n**Verdict name: THE-METHODS-ARE-FACTOR-LOCAL.**\n\n### Result\nECM calibrated onto the plane for the first time, and the method stratum's internal structure measured: **\u03c1 and ECM are factor-local** (cost determined by a factor p, not by N); trial division is not.\n\n**H1 factor-locality at medians** (fixed p = 4093, q growing 2\u00b9\u2074 \u2192 2\u00b2\u00b3, 9 draws/cell): median flatness over 2\u00b2\u00b3 cofactor growth \u2014 **ECM \u00d72.16, \u03c1 \u00d71.40** (flat within method luck: ECM curve-restart scatter; \u03c1 Poisson around \u221ap \u2248 64).\n\n**H2/H3 p-scaling**, corrected slopes per log\u2082p (the script's slope print took log\u2082 of bit-lengths \u2014 disclosed, corrected from the printed medians):\n- Pollard \u03c1: **0.45** \u2014 the birthday bound \u221ap \u2713\n- trial division: **1.09** \u2014 linear in p, the definition face \u2713\n- ECM: **1.13** \u2014 locally power-like but constant-advantaged: at p = 2\u00b9\u2074 ECM needs 6 657 ops vs trial-div's 12 142 \u2014 already ahead, with sub-exponential bending beyond this window\n\n### Method ledger\nThe first single-draw design was statistically inadequate (\u03c1's cost spans 9\u2013136 iters per cell \u2014 flatness ratios compared single lucky/unlucky draws) \u2192 9-draw medians before any claim. Catalog scan same round: one new relevant entry (#856 Berggren causal set, no factorization claim).\n\nNow 430 experiments. Assessment v206. Paper 95.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3436",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T17:46:25.958797+00:00",
+    "title": "FACT round-28 #1 \u2014 METHOD-LOCALITY: ECM and rho track the factor, not the modulus (paper 95)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-27 #4 \u2014 BATTERY-SCALING (paper 94, /tmp/exp_batteryscaling.py, /tmp/r27n4b.log)\n\n**Verdict name: THE-CURVE-SATURATES-AT-THE-CEILING.**\n\n### Result\nThe battery extended to **six dials** (adding F\u2082\u2080 x\u2075\u22122 @5 and C\u2085 Q(\u03b6\u2081\u2081)\u207a @11; all conductors pairwise coprime, CRT modulus 31\u00b723\u00b79\u00b78\u00b75\u00b711). The nested-subset capacity curve:\n\n| dials | I(joint) | \u03a3 marginals | deficit | ceiling | % of ceiling |\n|---|---|---|---|---|---|\n| 1 | 1.0011 | 1.0011 | +0.000 | \u2014 | \u2014 |\n| 2 | 2.1334 | 2.0020 | +0.132 | 4.6063 | 46% |\n| 3 | 4.0242 | 2.4777 | +1.547 | 6.4947 | 62% |\n| 4 | 8.2412 | 3.9120 | +4.329 | 9.5434 | 86% |\n| 5 | 11.5307 | 5.1591 | +6.372 | 11.9557 | 96% |\n| **6** | **12.7235** | 5.3650 | **+7.359** | **12.7726** | **99.6%** |\n\n- **H1**: the additive deficit grows MONOTONICALLY (synergy compounds without bound short of the ceiling).\n- **H2**: every marginal reproduces its paper of origin.\n- **H3**: the 6-dial which-factor wall reads 0.3594 vs permutation-null 0.3591 (**z = +0.11**) \u2014 sparse-bias-dominated as at k=4; factor-blindness extends to k=6.\n\n### The battery-capacity law\n1. I(k-joint) \u2192 H(joint labels): the CRT-joint modulus sees all k residues simultaneously; the pair-label structure becomes nearly fully determined (99.6% at k=6).\n2. D(k) grows monotonically: marginal bookkeeping understates batteries progressively (7.36 bits = 3.7\u00d7 additive at k=6).\n3. The ceiling is the joint label entropy \u2014 population correlation between label blocks is all that remains.\n\n### Method notes disclosed\nRow-label off-by-one in the printout (cosmetic, corrected here); chained label code ~10\u00b9\u00b2 values requires np.unique-based entropy (bincount would allocate 5.6 TiB).\n\nNow 429 experiments. Assessment v205. Paper 94.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3437",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T17:46:25.960215+00:00",
+    "title": "FACT round-27 #4 \u2014 BATTERY-SCALING: the capacity curve saturates at the label-entropy ceiling (paper 94)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-27 #3 \u2014 JOINT-WALL-VERIFIED (paper 93, /tmp/exp_jointwall.py, /tmp/r27n3c.log)\n\n**Verdict name: THE-WALL-WAS-BIAS.**\n\n### Result\nPaper 92's flagged joint which-factor reading of **0.0469 bits** \u2014 tested against a 200-shuffle permutation null on the exact 4-field CRT-chained code:\n\n| quantity | value |\n|---|---|\n| observed I(bigger; joint code) | 0.0469 bits |\n| permutation null mean | **0.0469** |\n| null sd | 0.0014 |\n| z | **+0.05** |\n\n**The entire reading is sparse-plug-in bias.** The battery programme's factor-blindness claim STANDS with its caveat converted into a verified statement: the full battery capacity (8.2246 bits at k = 4, ceiling 9.53) is symmetric trace-routed content with zero detectable which-factor leakage at null sensitivity (~\u00b10.003 bits).\n\nAlso verified in the same run: the 2-field joint wall (0.0011, inside its own null).\n\n### Method note\nProcess catch disclosed: the first verification build chained only two fields \u2014 testing the wrong object, trivially inside its null \u2014 before extending to the actual 4-field target. Lesson: verify the exact object, not a smaller cousin.\n\nNow 428 experiments. Assessment v204. Paper 93.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3438",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T17:46:25.961555+00:00",
+    "title": "FACT round-27 #3 \u2014 JOINT-WALL-VERIFIED: the battery's factor-blindness stands, the wall was bias (paper 93)"
   },
   {
     "consumed_by_exp_id": "",
@@ -1995,20 +2038,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle ed94092b (Q=0.767), which proved 16 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions\n\nThe general reconstruction conjecture remains open. The formal results in `Catalog/Combinatorics/Reconstruction.lean` suggest the following concrete next targets.\n\n1. **Regular-graph reconstruction.** If finite simple graphs `G` and `H`, each on at least three vertices, have the",
-    "domains": [
-      "Combinatorics"
-    ],
-    "id": "push_ed94092b_04a4eae4",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "ed94092b",
-    "status": "available",
-    "timestamp": "2026-08-01T09:30:07.467372+00:00",
-    "title": "Deepening: The general reconstruction conjecture remains open. The formal results in `Catal"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove the Coffman-Kundu-Wootters monogamy inequality for qubit entanglement: the sum of squared concurrences is bounded by the squared concurrence with the ancilla. Formalize concurrence as an entanglement measure and extend to n-qubit systems.",
     "domains": [
       "Physics",
@@ -2021,37 +2050,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Quantum Entanglement Monogamy: CKW Inequality"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize Ext and Tor functors in Lean 4. Prove the long exact sequence in cohomology. Construct projective and injective resolutions for concrete modules. Prove the universal coefficient theorem for homology.",
-    "domains": [
-      "Algebra",
-      "Topology"
-    ],
-    "id": "fd_0657",
-    "priority_score": 0.86,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-24T14:34:16.697762+00:00",
-    "title": "Homological Algebra: Derived Functors"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize cubical type theory primitives in Lean 4. Construct the interval type and path types. Prove function extensionality and the univalence axiom. Implement higher inductive types: circles, torus, suspension.",
-    "domains": [
-      "Logic",
-      "Topology",
-      "Algebra"
-    ],
-    "id": "fd_0678",
-    "priority_score": 0.86,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-24T14:34:16.697817+00:00",
-    "title": "Type Theory: Cubical Type Theory Foundations"
   },
   {
     "consumed_by_exp_id": "",
@@ -10930,6 +10928,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "A mean-value step turns an anchor of quality delta into an enclosure of width Theta(delta^2), while continued-fraction convergents give delta ~ q^-2 at cost q^2. Conjecturally this yields certified enclosures of width epsilon at cost O(epsilon^{-1/2}) for any simple root of an entropy-type function whose sign at rationals is decidable by an integer comparison. It matters because it identifies Diophantine approximation, not brute-force arithmetic, as the resource that buys certified precision.\n\nFor f real-analytic with simple root p* and integer-decidable sign at rationals of denominator b at cost O(b^2), a certified enclosure of width epsilon is obtainable at cost O(epsilon^{-1/2}).\n\nInstantiate the proved lemma BB84.newton_enclosure_step for a second threshold (six-state protocol) and measure achieved width against 4.9*(anchor error)^2.\n\nCertified constants in information theory become cheap: 20+ decimals at the cost of today's 8.\n\nSome obstruction (e.g. certificate size growth for non-binary entropies) limits the method to first-order gains.",
+    "domains": [
+      "Pythagorean",
+      "MachineLearning"
+    ],
+    "id": "fd_3432",
+    "priority_score": 0.7102972972972974,
+    "research_mode": "team",
+    "source_exp_id": "f87f1170",
+    "status": "available",
+    "timestamp": "2026-08-21T17:45:44.609543+00:00",
+    "title": "Quartic Certification Law for Entropy Thresholds"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "No matrix realizes a Markoff Vieta move, in contrast with the linear Berggren action. The conjecture is that degree two is optimal and that the obstruction is a rank computation on finitely many Markoff base points.\n\nNo polynomial map of degree less than two in any linear coordinate system realizes the Vieta involution on the Markoff surface, and the quadratic realization is unique modulo the surface equation.\n\nSet up the general quadratic ansatz and solve the resulting linear system on a spanning set of Markoff triples.\n\nA clean statement of why the Lorentz half of the Berggren machinery cannot transport, valid for all coordinate changes.\n\nA hidden linearization exists, which would immediately import the Berggren hyperbolic geometry to the Markoff tree.",
     "domains": [
       "Geometry",
@@ -11064,6 +11077,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T13:59:19.827835+00:00",
     "title": "Arithmetic Reordering of the Berggren Event Set"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The certified value r(a/b) equals (1/b) log of an explicit rational, i.e. a linear form in logarithms of integers. Baker-Wuestholz lower bounds for such forms, combined with the proved derivative bracket, should give an explicit c and mu with |p* - a/b| > c b^{-mu} for all rationals.\n\np* is transcendental and admits an effective irrationality measure mu < 10 with explicit constant.\n\nBound |2b log b - b log 2 - 2a log a - 2c log c| from below by a Baker-type estimate and divide by the certified derivative bracket [2.09045, 2.09047].\n\nThe first effective Diophantine statement about a cryptographic threshold constant.\n\nThe linear form degenerates for special (a,b), revealing unexpected algebraic relations among log 2, log a, log c.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_3434",
+    "priority_score": 0.7087142857142857,
+    "research_mode": "team",
+    "source_exp_id": "f87f1170",
+    "status": "available",
+    "timestamp": "2026-08-21T17:45:45.435226+00:00",
+    "title": "Effective Irrationality Measure for the BB84 Threshold"
   },
   {
     "consumed_by_exp_id": "",
@@ -11248,6 +11276,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "The Topology of Argumentation: Why Debates Have Holes"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The thresholds of BB84, the six-state protocol and their higher-dimensional analogues are zeros of Q-linear combinations of logarithms of rationals. The conjecture is that all are transcendental with unbounded continued-fraction partial quotients, and that each textbook percentage is a low-order convergent, as is verified here for 11/100 and p*.\n\nEvery QKD one-way threshold of the form 1 - a H_2(Q) - b H(f(Q)) = 0 with rational a,b is transcendental, and its convergents include the conventional percentage quoted in the literature.\n\nFormalize the six-state rate function, run the certificate scheme at denominators 100 and 10000, and compare the convergents of the resulting enclosure with 12.6 percent.\n\nA uniform explanation of why textbook QKD percentages are so short: they are convergents, hence optimal rational summaries.\n\nSome protocol has a badly approximable threshold, which would itself be a striking arithmetic phenomenon.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_3433",
+    "priority_score": 0.6698750000000001,
+    "research_mode": "team",
+    "source_exp_id": "f87f1170",
+    "status": "available",
+    "timestamp": "2026-08-21T17:45:45.027281+00:00",
+    "title": "Diophantine Genericity of QKD Threshold Spectra"
   },
   {
     "consumed_by_exp_id": "",
@@ -11509,6 +11551,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T13:59:20.272613+00:00",
     "title": "Celestial Density of the Berggren Boundary"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Finite-key BB84 analyses subtract O(sqrt(n)) statistical corrections from the asymptotic rate. Since the certificate lemmas already deliver explicit rational lower bounds for r at rational Q, a machine-checked finite-key statement of the form 'measured QBER at most 0.11002786 implies extractable length at least n r(Q) - O(sqrt n)' is within reach.\n\nFor every rational Q below the certified threshold there is an explicit rational rho(Q) > 0 and constant C with extractable key length at least n rho(Q) - C sqrt(n log(1/eps)).\n\nCombine secureKeyRate_gt_of_cert_pade with the leftover-hash bound already in the catalog and instantiate at Q = 11/100.\n\nEnd-to-end machine-checked QKD parameter tables, with no floating point anywhere in the chain.\n\nThe statistical corrections dominate at realistic n, showing the asymptotic threshold is the wrong figure of merit for deployment.",
+    "domains": [],
+    "id": "fd_3435",
+    "priority_score": 0.5932142857142858,
+    "research_mode": "team",
+    "source_exp_id": "f87f1170",
+    "status": "available",
+    "timestamp": "2026-08-21T17:45:45.843761+00:00",
+    "title": "Finite-Key Bounds on a Certified Asymptotic Core"
   },
   {
     "consumed_by_exp_id": "",
@@ -33196,19 +33250,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "C3.  The subgroup count as an invariant of the class field tower"
   },
   {
-    "consumed_by_exp_id": "f87f1170",
-    "description": "The formalized interval proves that the unique asymptotic threshold lies between `6.25%` and `12.5%`. A certified decimal enclosure near `11%` should be obtained from proved logarithm bounds rather than unchecked floating-point evaluation.",
-    "domains": [],
-    "id": "fd_2654",
-    "phase": "A",
-    "priority_score": 0.40087500000000004,
-    "research_mode": "team",
-    "source_exp_id": "42b8568d",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T06:25:21.412081+00:00",
-    "title": "Sharper threshold certification"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "The present result bounds accuracy once a decoder is supplied. The definability question asks when a decoder exists computably. A useful next theorem would separate fibre constancy from uniform effective representative selection on the range of the functional map.",
     "domains": [],
@@ -35186,14 +35227,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Every ingredient \u2014 the splitting, the unique shift"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "663f5de8",
     "description": "The corrected-product operation is now a proved closure property\n(`PoleOrderTorsor.isNormalized_q_mul_mul`), which makes the question well posed: one can\niterate the operation inside a fully formal setting and look for the first invariant that\ndistinguishes the orbits.",
     "domains": [],
     "id": "fd_1628",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "ab33dc9e",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-19T17:41:08.465462+00:00",
     "title": "The corrected-product operation is now a proved closure property"
   },

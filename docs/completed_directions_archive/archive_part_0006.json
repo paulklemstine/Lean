@@ -1,7 +1,7 @@
 {
   "part": "6",
-  "archived_at": "2026-08-21T16:51:47Z",
-  "count": 62,
+  "archived_at": "2026-08-21T17:45:46Z",
+  "count": 63,
   "directions": [
     {
       "ambition_level": "extension",
@@ -2526,6 +2526,46 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 46
+    },
+    {
+      "id": "fd_1141",
+      "title": "The Quantum Register Cannot Be Shrunk: QUBIT-TRADE, Closed",
+      "description": "**Paper:** `ResearchOutput/NewMathematics/47_QubitTrade_RegisterThreshold.md` (factor3)\n**Experiment:** QUBIT-TRADE (#382), assessment v158.\n\n## Finding\nCan Shor's order-finding register be truncated? Measuring only the top t bits of\nthe QFT outcome, is r = ord_N(a) recoverable with more samples? Verified (50\nsemiprimes, r ∈ [2^10, 2^22], honest CF post-processing):\n1. **t_min ≈ 2·log₂(r) exactly** (log₂r=14→27 vs 2·log₂r=28; 16→32 vs 32; 18→35\n   vs 36; 20→39 vs 40) — the CF must resolve k/r, needing error < 1/(2r²), i.e.\n   t > 2·log₂(r). The agent's predicted log r + O(log log r) is refuted.\n2. **Below t_min: classical collapse** — even 10 samples fail (t ≤ 26, 2·log₂r≈33).\n3. **Above t_min: qubit↔sample fungibility** — samples compensate gcd(k,r)>1.\n\n## Why it matters\nSince r ~ N for random bases, t_min ≈ 2·log₂(N) ≈ the full ℓ = 2⌈log₂N⌉ register.\n**Shor's register size is forced — the quantum channel cannot be shrunk by\ntruncation.** Reinforces DEQUANT: the quantum exception is irreducible at full\nregister size.\n\n## Verdict\nResource bound (frontier ii), no barrier bypass. Classical uniform hint-free\nsurface remains exhausted.\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 1000.0,
+      "status": "completed",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-08-12T05:10:44.745541+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.87,
+      "domain_quality_penalty": 0.0,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 2,
+      "last_attempt_time": "2026-08-12T13:13:16.260359+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 63
     }
   ]
 }

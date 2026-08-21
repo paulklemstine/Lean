@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "252d7c91",
-      "domain": "Algebra",
-      "key_insight": "# Future directions (thread `th_1d82f8a0`, cycle 2)\n\n## What this cycle proved\n\nTwo self-contained files in `Catalog/Algebra/`, both compiling with no `sorry` and using only\n`propext`, `Classical.choi",
-      "quality_score": 0.8,
-      "sorry_count": 0,
-      "theorem_count": 114,
-      "timestamp": "2026-08-19T19:40:27",
-      "title": "Two new self-contained files extend the conditional Hilbert-class-field interfac"
-    },
-    {
       "cycle_id": "6d98445d",
       "domain": "Physics",
       "key_insight": "# Future directions (thread `th_482524af`, cycle 2)\n\nThe results proved in this cycle live in\n\n* `Catalog/Physics/CollatzTwoStepSpectrum.lean` — the depth-two spectrum,\n* `Catalog/Physics/CollatzSpect",
@@ -499,19 +489,19 @@
       "theorem_count": 157,
       "timestamp": "2026-08-21T16:51:52",
       "title": "Formalizing the Probabilistic Method: Erdos Meets Lean"
+    },
+    {
+      "cycle_id": "f87f1170",
+      "domain": "Cryptography",
+      "key_insight": "# Future directions — certified thresholds in quantum cryptography\n\nDerived from the four research cycles in `Catalog/Cryptography/BB84/`\n(`ThresholdEnclosure`, `ThresholdNewtonRefinement`, `Threshold",
+      "quality_score": 0.86,
+      "sorry_count": 0,
+      "theorem_count": 69,
+      "timestamp": "2026-08-21T17:45:59",
+      "title": "Sharper threshold certification"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "579ae41a",
-      "domain": "Computation",
-      "key_insight": "# Future Directions — after the Order × Jacobi Joint Law\n\nThe verified results (all in `Catalog/Computation/OrderJacobiJointLaw.lean`,\n0 sorries) are:\n\n1. the QR–order coupling is an exact equivalence",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 407,
-      "timestamp": "2026-08-13T05:11:54",
-      "title": "The Order x Jacobi Joint Law is N-Determined, Closed"
-    },
     {
       "cycle_id": "a3466461",
       "domain": "Novelty",
@@ -2501,15 +2491,19 @@
       "theorem_count": 157,
       "timestamp": "2026-08-21T16:51:52",
       "title": "Formalizing the Probabilistic Method: Erdos Meets Lean"
+    },
+    {
+      "cycle_id": "f87f1170",
+      "domain": "Cryptography",
+      "key_insight": "# Future directions — certified thresholds in quantum cryptography\n\nDerived from the four research cycles in `Catalog/Cryptography/BB84/`\n(`ThresholdEnclosure`, `ThresholdNewtonRefinement`, `Threshold",
+      "quality_score": 0.86,
+      "sorry_count": 0,
+      "theorem_count": 69,
+      "timestamp": "2026-08-21T17:45:59",
+      "title": "Sharper threshold certification"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "254383ec",
-      "domain": "Cryptography",
-      "name": "mem_witnesses",
-      "quality": 0.78
-    },
     {
       "cycle_id": "254383ec",
       "domain": "Cryptography",
@@ -2803,9 +2797,15 @@
       "domain": "Bridges",
       "name": "card_closedNbhd",
       "quality": 0.89
+    },
+    {
+      "cycle_id": "f87f1170",
+      "domain": "Cryptography",
+      "name": "secureKeyRate_gt_of_cert_pade",
+      "quality": 0.86
     }
   ],
-  "last_updated": "2026-08-21T16:51:52",
+  "last_updated": "2026-08-21T17:45:59",
   "open_questions": [
     {
       "context": "Everything is proved; there are no `sorry`s and no new axioms.",
@@ -3331,12 +3331,6 @@
     ],
     "Cryptography": [
       {
-        "cycle_id": "fb76e61b",
-        "quality": 0.85,
-        "theorems": 84,
-        "title": "The Asymmetric CRT-Split of a^{N-1} is Factor-Blind, Closed"
-      },
-      {
         "cycle_id": "67289c0d",
         "quality": 0.82,
         "theorems": 74,
@@ -3389,6 +3383,12 @@
         "quality": 0.82,
         "theorems": 115,
         "title": "Markoff Tree Transfer — Carrying the Berggren Tree's Machinery to the Markoff Tr"
+      },
+      {
+        "cycle_id": "f87f1170",
+        "quality": 0.86,
+        "theorems": 69,
+        "title": "Sharper threshold certification"
       }
     ],
     "Geometry": [
