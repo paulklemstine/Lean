@@ -1343,6 +1343,42 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
                     print(f"[Tick] Pruned {pruned_issue_dirs} closed-issue injected direction(s)")
                 injected = local_fd.dispatchable_injected_directions(
                     open_issue_numbers, max_attempts=3)
+                # Cross-check against active inflight jobs: the dispatch gate only
+                # sees pool status, and the age-based stale recovery can flip an
+                # in_progress direction back to available while its job still runs
+                # (last_attempt_time is stamped at discover only). Dispatching it
+                # again means duplicate Aristotle spend + package overwrite.
+                _active_dir_ids = {getattr(_j, "direction_id", "") for _j in extractor.inflight.values()}
+                _active_issues = {getattr(_j, "github_issue", 0) for _j in extractor.inflight.values()}
+                _skipped_active = [d for d in injected
+                                   if d.id in _active_dir_ids or d.github_issue in _active_issues]
+                if _skipped_active:
+                    for d in _skipped_active:
+                        print(f"[Tick] Injected issue #{d.github_issue} already has an active job; skipping re-dispatch")
+                    injected = [d for d in injected
+                                if d.id not in _active_dir_ids and d.github_issue not in _active_issues]
+                # Attempt-cap terminal state: an injected direction that exhausted
+                # its dispatch attempts (e.g. during an Aristotle outage) while its
+                # issue is still open would strand forever — undispatchable, but
+                # never terminal, so no path ever closes the issue. Prune it here so
+                # close_orphaned_issues closes the issue with the honest reason.
+                _capped = [d for d in local_fd._directions
+                           if getattr(d, "source", "") == "github_injection"
+                           and d.status == "available"
+                           and d.attempt_count >= 3
+                           and d.github_issue in open_issue_numbers]
+                if _capped:
+                    for d in _capped:
+                        d.status = "pruned"
+                        d.prune_reason = (f"dispatch failed {d.attempt_count} times; "
+                                          f"attempt cap exhausted")
+                    local_fd._save()
+                    print(f"[Tick] Retired {len(_capped)} injected direction(s) at the "
+                          f"attempt cap; closing their issues")
+                    try:
+                        github_injector.close_orphaned_issues(extractor.workspace)
+                    except Exception as _cap_e:
+                        print(f"[Tick] Attempt-cap issue close failed: {_cap_e}")
                 for fd in injected:
                     local_inflight = extractor._count_inflight_dispatched()
                     server_running = await _safe_get_active_jobs_count(extractor.aristotle)
@@ -1470,7 +1506,7 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
     try:
         _active_jobs = []
         for _j in extractor.inflight.values():
-            if hasattr(_j, "status") and _j.status in ("preparing", "dispatched", "retry_queued"):
+            if hasattr(_j, "status") and _j.status in ("preparing", "dispatched", "retry_queued", "dispatch_queued", "B_dispatched"):
                 _active_jobs.append((
                     _j.job_id,
                     getattr(_j, "direction_id", None),

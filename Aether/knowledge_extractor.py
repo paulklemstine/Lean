@@ -77,6 +77,7 @@ class ResearchJob:
     status: str = "created"  # created → dispatched → completed → integrated
     dispatch_time: float = 0.0
     complete_time: float = 0.0
+    idle_pending_time: float = 0.0  # when the job first parked as IDLE-without-files
     result_lean: Optional[str] = None
     result_demo: Optional[str] = None
     result_paper: Optional[str] = None
@@ -1762,9 +1763,31 @@ Research mode: {concept.research_mode}
             # project to poll (their old project was dropped) and are owned by
             # the dispatch loop's drain step — polling them would hit a stale
             # project_id. They are keyed by job_id, not project_id.
+            # NOTE: idle_pending is deliberately NOT skipped — these jobs have
+            # a live project and must keep being polled (their comment once
+            # claimed "will keep polling" while both loops skipped them,
+            # stranding the job, its direction, and any injected issue forever).
             if job.status in ("completed", "failed", "integrated", "rejected",
-                              "idle_pending", "retry_queued", "dispatch_queued"):
+                              "retry_queued", "dispatch_queued"):
                 continue
+
+            # idle_pending bound: a job parked as IDLE-without-files is re-polled
+            # every tick, but if the server never produces files it would strand
+            # forever — never terminal, direction leaked, injected issue never
+            # closed. After a full wall-clock day idle, fail it and free everything
+            # (the end-of-tick prune then routes injected issues to closure).
+            if job.status == "idle_pending":
+                _idle_t0 = getattr(job, "idle_pending_time", 0.0) or 0.0
+                _idle_age = (now - _idle_t0) if _idle_t0 else 0.0
+                if _idle_age > max_cycle_seconds:
+                    print(f"[Poll] {pid[:8]} IDLE-PENDING TIMEOUT: no files for "
+                          f"{_idle_age/3600:.1f}h, failing and releasing")
+                    job.status = "failed"
+                    job.error_message = f"IDLE with no files for {_idle_age/3600:.1f}h"
+                    self.failed_count += 1
+                    self._release_direction(job)
+                    completed.append(job)
+                    continue
 
             # 1. Hard Cap (Wall-clock) - check before polling.
             # Guard on status == "dispatched" so a job already marked
@@ -1825,6 +1848,14 @@ Research mode: {concept.research_mode}
                 has_files = result.get("has_files", False)
                 is_complete = result.get("complete", False)
                 percent = result.get("percent_complete", 0) or 0
+
+                if status == "unreachable":
+                    # Transient Aristotle outage after retries: NOT terminal.
+                    # Failing here abandoned every in-flight job on one API blip
+                    # while the remote projects kept running (audit 2026-08-21).
+                    print(f"[Poll] {pid[:8]} Aristotle unreachable "
+                          f"({result.get('error')}) — keeping job dispatched for next tick")
+                    continue
 
                 if status == "error" or result.get("error"):
                     err_msg = str(result.get("error", "API error"))
@@ -1945,6 +1976,7 @@ Research mode: {concept.research_mode}
                     if job.status != "idle_pending":
                         print(f"[Poll] {pid[:8]} IDLE (no files yet) — keeping as idle_pending, "
                               f"slot freed for new dispatch but will keep polling")
+                        job.idle_pending_time = now
                     job.status = "idle_pending"
                     completed.append(job)
                 elif status == "RUNNING":

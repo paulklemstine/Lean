@@ -238,6 +238,11 @@ class DirectionTournament:
             if d.id in winner_map:
                 if dispatched_ids is not None and d.id not in dispatched_ids:
                     continue
+                # A candidate dispatched for real research between batch selection
+                # and outcome write-back is in_progress — never clobber it here
+                # (promoting it would invite a duplicate dispatch).
+                if d.status != "available":
+                    continue
                 d.status = "available"
                 d.priority_score = max(d.priority_score, 0.90)
                 if winner_map[d.id]:
@@ -250,6 +255,10 @@ class DirectionTournament:
                 # Owner-approved injected directions are never tournament-pruned:
                 # their issues are open and awaiting the dedicated dispatch path.
                 if getattr(d, "source", "") == "github_injection":
+                    continue
+                # Same in_progress guard: a candidate that started real research
+                # after batch selection must not be retired by a stale verdict.
+                if d.status != "available":
                     continue
                 d.status = "pruned"
                 d.prune_reason = f"tournament_rejected: {rejection_map[d.id]}"

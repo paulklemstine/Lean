@@ -104,11 +104,21 @@ class AristotleSDKClient:
                     pct = 100
                     try:
                         _tasks, _ = await project.get_tasks(limit=10)
-                        needs_resume = any(
+                        _bad = any(
                             getattr(t, "status", None) is not None
                             and t.status.name in ("OUT_OF_BUDGET", "COMPLETE_WITH_ERRORS")
                             for t in _tasks
                         )
+                        # A stale OUT_OF_BUDGET task from an earlier resume round
+                        # must not force a fresh paid resume once ANY task has
+                        # actually completed — that produced repeated paid
+                        # resumes of already-finished projects (audit 2026-08-21).
+                        _any_complete = any(
+                            getattr(t, "status", None) is not None
+                            and t.status.name == "COMPLETE"
+                            for t in _tasks
+                        )
+                        needs_resume = _bad and not _any_complete
                     except Exception:
                         pass
                 elif pct == 0 and project.status != ProjectStatus.IDLE:
@@ -165,11 +175,12 @@ class AristotleSDKClient:
                     print(f"[Aristotle] SSL error polling {project_id} (attempt {attempt+1}/{MAX_SSL_RETRIES}): {e}")
                     await asyncio.sleep(SSL_RETRY_DELAY)
                     continue
-                # Final attempt failed
+                # Final attempt failed — report NON-terminal unreachability so
+                # poll_all keeps the job dispatched instead of failing it.
                 print(f"[Aristotle] SSL error exhausted retries for {project_id}: {e}")
                 return {
                     "project_id": project_id,
-                    "status": "error",
+                    "status": "unreachable",
                     "percent_complete": 0,
                     "complete": False,
                     "has_files": False,
@@ -178,12 +189,40 @@ class AristotleSDKClient:
                 }
             except Exception as e:
                 error_str = str(e)
-                # Don't treat transient network/SSL errors as terminal
-                if "SSL" in error_str or "CERTIFICATE" in error_str or "ConnectionReset" in error_str:
-                    if attempt < MAX_SSL_RETRIES - 1:
-                        print(f"[Aristotle] Transient error polling {project_id} (attempt {attempt+1}/{MAX_SSL_RETRIES}): {e}")
-                        await asyncio.sleep(SSL_RETRY_DELAY)
-                        continue
+                # Don't treat transient network/API errors as terminal: SSL
+                # failures, timeouts, DNS hiccups, and 429/5xx responses all
+                # recover. Failing a job on one blip abandoned every in-flight
+                # project in a single tick while the remote research kept
+                # running (audit 2026-08-21).
+                _lower = error_str.lower()
+                _transient = (
+                    "ssl" in _lower
+                    or "certificate" in _lower
+                    or "connectionreset" in _lower
+                    or "timeout" in _lower
+                    or "timed out" in _lower
+                    or "connect" in _lower
+                    or "temporarily unavailable" in _lower
+                    or "rate limit" in _lower
+                    or " 429" in error_str or " 500" in error_str
+                    or " 502" in error_str or " 503" in error_str or " 504" in error_str
+                )
+                if _transient and attempt < MAX_SSL_RETRIES - 1:
+                    print(f"[Aristotle] Transient error polling {project_id} (attempt {attempt+1}/{MAX_SSL_RETRIES}): {e}")
+                    await asyncio.sleep(SSL_RETRY_DELAY)
+                    continue
+                if _transient:
+                    # Retries exhausted: non-terminal unreachability — the job
+                    # stays dispatched and is retried on the next poll pass.
+                    return {
+                        "project_id": project_id,
+                        "status": "unreachable",
+                        "percent_complete": 0,
+                        "complete": False,
+                        "has_files": False,
+                        "has_input": False,
+                        "error": f"transient error after {MAX_SSL_RETRIES} retries: {error_str}",
+                    }
                 return {
                     "project_id": project_id,
                     "status": "error",

@@ -250,6 +250,103 @@ class TestSaveResilience:
         assert not list(Path(tmpdir).glob("*.tmp")), "Atomic write must clean up its tmp file"
 
 
+class TestStaleRecoverySafety:
+    """Batch 2: stale recovery must never fight live jobs or failed records.
+
+    Audit 2026-08-21: age-based recovery re-dispatched injected directions
+    whose research chain outlived 24h from discover (live pool showed
+    attempt_count=47), and manager-internal recovery marked directions
+    completed for FAILED jobs, silently consuming their retry slot.
+    """
+
+    def _mgr(self, tmpdir, directions):
+        from research_memory import FutureDirectionsManager
+
+        _write_pool(tmpdir, directions)
+        return FutureDirectionsManager(Path(tmpdir))
+
+    def _in_progress(self, did, job_id, age_hours):
+        d = _regular_direction(did)
+        d["status"] = "in_progress"
+        d["consumed_by_exp_id"] = job_id
+        from datetime import datetime, timezone, timedelta
+
+        ts = datetime.now(timezone.utc) - timedelta(hours=age_hours)
+        d["last_attempt_time"] = ts.isoformat()
+        return d
+
+    def test_age_recovery_skips_active_inflight_jobs(self):
+        import json
+
+        tmpdir = mkdtemp()
+        d = self._in_progress("fd_4001", "job_live", age_hours=48)
+        tmpdir = _write_pool(tmpdir, [d])
+        # The job is still active in inflight_jobs.json
+        (Path(tmpdir) / "inflight_jobs.json").write_text(json.dumps(
+            {"proj1": {"job_id": "job_live", "status": "dispatched"}}))
+
+        mgr = self._mgr(tmpdir, [d])
+        recovered = mgr.recover_stale_directions(max_age_hours=24)
+
+        assert recovered == 0, "A direction with a live job must never be age-reset"
+        assert mgr._directions[0].status == "in_progress"
+
+    def test_age_recovery_releases_truly_stale(self):
+        tmpdir = mkdtemp()
+        d = self._in_progress("fd_4001", "job_gone", age_hours=48)
+        mgr = self._mgr(tmpdir, [d])
+
+        mgr.recover_stale_directions(max_age_hours=24)
+
+        # Construction-time internal recovery may release it first; either way
+        # the end state must be available (no live job, analytics, or grace).
+        assert mgr._directions[0].status == "available"
+
+    def test_internal_recovery_never_marks_failed_jobs_completed(self):
+        import json
+
+        tmpdir = mkdtemp()
+        d = self._in_progress("fd_4001", "job_failed", age_hours=48)
+        tmpdir = _write_pool(tmpdir, [d])
+        # Analytics recorded the job as FAILED
+        (Path(tmpdir) / "cycle_analytics.json").write_text(json.dumps(
+            {"records": [{"job_id": "job_failed", "failed": True,
+                          "error_message": "dispatch error"}]}))
+
+        mgr = self._mgr(tmpdir, [d])
+        mgr._recover_stale_directions()
+
+        assert mgr._directions[0].status == "available", (
+            "A failed job's direction must return to the pool, not be marked completed"
+        )
+
+    def test_tournament_outcomes_skip_in_progress_candidates(self):
+        """A candidate dispatched for real research after batch selection must
+        not be retired by the tournament's stale verdict."""
+        from datetime import datetime, timezone
+
+        from direction_tournament import DirectionTournament
+
+        d = _regular_direction("fd_5001")
+        d["status"] = "in_progress"
+        d["consumed_by_exp_id"] = "job_x"
+        # Fresh attempt time: without it, construction-time stale recovery
+        # releases the fixture before the tournament path runs.
+        d["last_attempt_time"] = datetime.now(timezone.utc).isoformat()
+        tmpdir = _write_pool(mkdtemp(), [d])
+        dt = DirectionTournament(workspace=tmpdir)
+
+        result = dt.apply_tournament_outcomes(
+            winners=[],
+            rejections=[{"id": "fd_5001", "reason": "weak"}],
+            dispatched_ids={"fd_5001"},
+        )
+
+        mgr = dt.FutureDirectionsManager(tmpdir)
+        assert mgr._directions[0].status == "in_progress"
+        assert result["retired"] == 0
+
+
 class TestOrphanCloserTruthfulMessage:
     """close_orphaned_issues must tell the truth about WHY an issue is closed.
 

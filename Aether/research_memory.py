@@ -592,6 +592,9 @@ class FutureDirectionsManager:
                 active_job_ids = set()
 
         # Analytics is the source of truth for "completed" jobs.
+        # Failed/rejected jobs are NOT completions: a direction whose job failed
+        # must fall through to the stale branch and return to the pool, not be
+        # marked completed (which silently consumes its research slot).
         completed_job_ids = set()
         analytics_path = self.workspace / "cycle_analytics.json"
         if analytics_path.exists():
@@ -599,7 +602,7 @@ class FutureDirectionsManager:
                 analytics = json.loads(analytics_path.read_text(encoding="utf-8"))
                 completed_job_ids = {
                     r.get("job_id", "") for r in analytics.get("records", [])
-                    if r.get("job_id")
+                    if r.get("job_id") and not r.get("failed")
                 }
             except Exception:
                 pass
@@ -1347,12 +1350,23 @@ class FutureDirectionsManager:
         return cleaned
 
     def recover_stale_directions(self, max_age_hours: int = 24) -> int:
-        """Reset in_progress directions older than max_age_hours back to available."""
+        """Reset in_progress directions older than max_age_hours back to available.
+
+        Directions whose job is still active in inflight_jobs.json are skipped:
+        last_attempt_time is only stamped at discover time, so a long-running
+        Phase A+Phase B chain can legitimately exceed max_age_hours — resetting
+        such a direction causes a duplicate dispatch (double Aristotle spend)
+        and a package overwrite (audit 2026-08-21; live pool showed injected
+        directions with attempt_count=47 from exactly this loop).
+        """
         from datetime import datetime, timezone, timedelta
+        active_job_ids = self._active_inflight_job_ids()
         cutoff = datetime.now(timezone.utc) - timedelta(hours=max_age_hours)
         recovered = 0
         for d in self._directions:
             if d.status == "in_progress":
+                if d.consumed_by_exp_id and d.consumed_by_exp_id in active_job_ids:
+                    continue  # job still running — never age-reset it
                 try:
                     time_str = d.last_attempt_time or d.timestamp
                     ts = datetime.fromisoformat(time_str)
@@ -1370,6 +1384,27 @@ class FutureDirectionsManager:
         if recovered:
             self._save()
         return recovered
+
+    def _active_inflight_job_ids(self) -> set:
+        """Job IDs currently present in inflight_jobs.json (best-effort)."""
+        inflight_path = self.workspace / "inflight_jobs.json"
+        if not inflight_path.exists():
+            return set()
+        try:
+            inflight_data = json.loads(inflight_path.read_text(encoding="utf-8"))
+            if isinstance(inflight_data, dict):
+                return {
+                    v.get("job_id", "") for v in inflight_data.values()
+                    if isinstance(v, dict) and v.get("job_id")
+                }
+            if isinstance(inflight_data, list):
+                return {
+                    j.get("job_id", "") for j in inflight_data
+                    if isinstance(j, dict) and j.get("job_id")
+                }
+        except Exception:
+            pass
+        return set()
 
     def adjust_direction_quality_feedback(
         self, domain: str, quality_score: float, proof_quality: str
