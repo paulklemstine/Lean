@@ -42130,7 +42130,7 @@
       "depth_estimate": 3,
       "description": "The lcm reduction is already formal, so a conditional proof needs only the\ntorus version of Artin's conjecture; the failures visible in the table of\n`ComputationalEvidence.md` (`p = 17, 29, 41, 59`) give a ready-made test set.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Logic"
       ],
@@ -42558,7 +42558,7 @@
       "depth_estimate": 3,
       "description": "For modal proof systems in the sense of `ModalSystem`, the following\nare equivalent for a consistent system `S` that proves the reflection schema:\n(a) `S` is closed under necessitation *and* proves the `K` schema;\n(b) the class of frames validating `S` consists exactly of frames in which every world\nis reflexive; and (c) `S` proves `□⊤ ∧ (□φ → □□φ)`, i.e. `S` contains `S4`.\nIn particular, *no* consistent self-sound system can be Löbian\n(`not_consistent_of_reflection_loeb`), and every consistent self-sound normal system\nis an extension of `S4`.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Logic"
       ],
@@ -42636,7 +42636,7 @@
       "depth_estimate": 3,
       "description": "The finite case is fully proved (`iterExt_sound_ncard`,\n`iterExt_has_unsound_world`); the transfinite case needs only a colimit construction on\n`KFrame`, and it would give a precise formal sense in which Tarski-style stratification\nof a truth/soundness predicate can be iterated through the ordinals without ever\nterminating.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.6,
+      "domain_quality_penalty": 0.7,
       "domains": [
         "Logic"
       ],
@@ -42676,7 +42676,7 @@
       "depth_estimate": 3,
       "description": "go through and shaped the conjectures\nbelow: (a) a *length-estimation* oracle (returning the number `K D y` but no\nprogram) could not be turned into an inverter without an extra closure axiom —\nour search-to-decision reduction genuinely needs the *conditional* (prefix)\npredicate; (b) the class-level equivalence needs honesty (`HonestIn`), and a\nnon-honest function can be one-way for trivial reasons.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Logic"
       ],
@@ -43614,7 +43614,7 @@
       "depth_estimate": 3,
       "description": "The shell constant is optimal: there exist `N` with `n` representations and\n   `N ≤ 114 (n−1)³ · (1 + o(1))`? — i.e. is the shell inequality ever nearly tight?\n   (Data suggest emphatically not; a proof that it is *never* tight for `n ≥ 3` would be\n   the first super-cubic lower bound.)",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Algebra",
         "Logic"
@@ -44133,7 +44133,7 @@
       "depth_estimate": 3,
       "description": "**Continuous budgets.** Extend the contamination curve from an ordinal ladder to a continuous\n  budget axis, where the window width becomes a quantile spread and centre-minimality becomes a\n  log-concavity hypothesis on the knee density.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.9999999999999999,
+      "domain_quality_penalty": 1.0,
       "domains": [
         "Geometry",
         "Logic"
@@ -44334,7 +44334,7 @@
       "depth_estimate": 3,
       "description": "The semantic theorem fixes the right hypotheses (local\nstratification) and the right boundary (`tautDen`, the liar), so a proof-theoretic\nversion now has a precise target and a known counterexample to respect.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Logic"
       ],
@@ -44414,7 +44414,7 @@
       "depth_estimate": 3,
       "description": "The abstract theory here is stated for an arbitrary index type of\nnames with an arbitrary denotation function, so an arithmetical instantiation is\na matter of supplying `ι := ℕ` and a `den` built from a Gödel numbering — no\nchange to the theorems is required.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.8999999999999999,
+      "domain_quality_penalty": 0.9999999999999999,
       "domains": [
         "Algebra",
         "Logic"
@@ -45274,7 +45274,7 @@
       "depth_estimate": 3,
       "description": "**C5 (growth of the Bell numbers) — partially proved.**\n  `two_pow_le_bell_succ : 2ⁿ ≤ bell (n+1)` (`KernelTwoBlocks.lean`) is now proved from the\n  two-block count, complementing `bell_lt_bell_succ`, `bell_monotone` and `le_bell`\n  (`BellMonotone.lean`).  In the present cycle this was strengthened to *super-multiplicativity*:\n  `KernelPattern.bell_mul_bell_le_bell_add : bell m * bell n ≤ bell (m + n)`, strict for positive\n  `m, n` (`bell_mul_bell_lt_bell_add`), with the consequences `bell n ^ k ≤ bell (n * k)` and\n  `2 ^ k ≤ bell (2 * k)` (`BellSuperMultiplicative.lean`).  The proof is the injection sending a\n  pair of equivalence relations on `A` and on `B` to the equivalence relation on `A ⊕ B` no block\n  of which crosses the two summands; the total relation witnesses strictness.  The sharp\n  asymptotics are folded into **D1** below.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Logic"
       ],
@@ -46273,7 +46273,7 @@
       "depth_estimate": 3,
       "description": "The audit theorems reduce the whole question to the purely continuous\nstatement above, and `convexOn_of_approxConvex_tower` already provides the `η → 0`\nboundary case that any proof must specialise to.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "Geometry",
         "Logic"
@@ -47026,7 +47026,7 @@
       "depth_estimate": 3,
       "description": "Open here; NP-membership is *proved* in the sense that the problem has a succinct\ncertificate and is decidable (`TriangularForest.decomposesIntoTwo_iff_exists_edgeColoring`,\n`TriangularForest.instDecidableDecomposesIntoTwo`).",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7,
+      "domain_quality_penalty": 0.7999999999999999,
       "domains": [
         "Algebra",
         "Logic"
@@ -47650,7 +47650,7 @@
       "depth_estimate": 3,
       "description": "Both endpoints are formal: `exists_runCost_ge_log` gives the\nconverse `log₂ n` and `bsDecode_cost_le` the achievability `log₂ n + 3`, so the\nconjecture is the statement that a definable integer gap equals `1`, testable by\n`#eval` on small codebooks before any proof is attempted.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Logic"
       ],
@@ -48327,7 +48327,7 @@
       "depth_estimate": 3,
       "description": "For all `n₁, n₂ ≥ 1` there exist distinct `a, b ≥ 0` and `y ∉ {a,b}` with\n   `n₁a² + n₂b² = y²`.  *(The `r = 2` case of Conjecture 1; probably provable by taking\n   `a = n₂ t`, `b` from a Pythagorean parametrisation.)*\n2. **(C2a)** For every `d ≤ 4` there are infinitely many `C` with\n   `ConicKernel.conicDefect 1 1 C = d`.  *(Strengthens `conicDefect_surjective` from\n   surjective to infinitely-often; the `d = 4` case asks for infinitely many `C` such that\n   `x² + y² = Cz²` has only the origin, i.e. infinitely many `C` with a prime\n   `≡ 3 mod 4` to an odd power.)*\n3. **(C4a)** For `p = 3` the set `{C : x³ + y³ = Cz³ realises ![0,0,2]}` is exactly\n   `{C : 2C² is a cube} ∖ {2}`, and this set is `{2^{3m+4}·u³ : m ≥ 0, u ≥ 1}` up to cubes.\n   *(A completely explicit description, decidable coefficient by coefficient.)*",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.7999999999999999,
+      "domain_quality_penalty": 0.8999999999999999,
       "domains": [
         "NumberTheory",
         "Logic"
@@ -49113,7 +49113,7 @@
       "depth_estimate": 3,
       "description": "Both endpoints of the interval are now theorems and the residual gap for odd `m` is\na *finite* combinatorial deficit (`minFac m − 2` widths), not an asymptotic one.  The pigeonhole\ncriterion `ParityGap.permCoeff_eq_zero_of_pigeonhole` is stated for an arbitrary classification of\nthe columns, so a proof for odd `m` only has to exhibit a better `(J, cls)` pair — no new\nmachinery is needed.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Combinatorics",
         "Logic"
@@ -49346,7 +49346,7 @@
       "depth_estimate": 3,
       "description": "form of the statement — `FourierFA.uncertainty_gap_of_not_dvd` shows the product jumps\nby at least `1` as soon as the support size leaves the divisor lattice — so the remaining content\nis exactly the metric estimate, and the proof is organised as an explicit chain of inequalities in\nwhich `le_antisymm` is the only step to be replaced.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Cryptography",
         "Logic"
@@ -52156,7 +52156,7 @@
       "depth_estimate": 3,
       "description": "A closed form for `∑_{k ≤ a} S(n,k)` for every fixed `a ≥ 4`.  The cases `a = 2` and\n   `a = 3` are now proved here (`card_orbits_binary`, `card_orbits_ternary`), and the\n   pattern of the two proofs — expand the truncated row, apply `stirling2_succ_succ` to each\n   term, and close with `omega` — suggests that for each fixed `a` the orbit count satisfies\n   the linear recurrence with characteristic roots `1, 2, …, a`; the conjecture is that this\n   holds uniformly in `a` and matches `∑_{j ≤ a} (-1)^{a-j} j^n / (j! (a-j)!)`.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Logic"
       ],
@@ -53034,7 +53034,7 @@
       "depth_estimate": 3,
       "description": "In even dimension at half filling\n(`2k = n`) the trace channel is empty, so the obstruction should *fail* to extend beyond the\nrow bound: there exists, for every `q > 64`, a traceless Gaussian-rational candidate that no\ncurrently available certificate excludes.  Falsifiable by producing an even-dimensional\nobstruction proof that does not narrow the enclosure.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Logic"
       ],
@@ -53825,7 +53825,7 @@
       "depth_estimate": 3,
       "description": "**Semantic labels are not recoverable from the incidence pattern.**\n  `no_uniform_recovery`: on a vertex-transitive corpus every renaming-equivariant recovery\n  rule outputs a constant labelling, so it disagrees with every labelling that separates two\n  theorems.  The witness is the same extremal design family, which is homologically rich\n  (`design_betti_one_pos`: `β₁ = C(n-1,2) > 0`), so the obstruction is symmetry, not a lack\n  of topology; `not_uniform_of_recovers` turns this into the statement that vertex metadata\n  is genuine extra information.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Combinatorics",
         "Logic"
@@ -54883,7 +54883,7 @@
       "depth_estimate": 3,
       "description": "Neurosymbolic systems must choose *which* logical rules to enforce\nunder a compute/utility budget; submodularity (now proved) is exactly the\nhypothesis that makes this a tractable optimisation problem.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Logic"
       ],
@@ -55551,7 +55551,7 @@
       "depth_estimate": 3,
       "description": "The third-moment layer is already formalised here\n(`sum_card_inter3_eq_sum_mult_cube`, `third_moment_identity`,\n`card_tripleCollision_mul_le`), obtained from the same localised Fubini lemma\n`sum_inter_sum_eq_sum_mult_mul`; the `h`-th moment machinery is a mechanical continuation of\nthat pattern, so the conjecture is decidable by formalisation rather than by new ideas.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Logic"
       ],
@@ -55791,7 +55791,7 @@
       "depth_estimate": 3,
       "description": "Replace the periodic checkpoint set `{n : k ∣ n}` by an arbitrary\nschedule `T : Finset ℕ → Prop` (decidable).  Conjecture: the compromised fraction\nof the window `(0, N]` is `1 - |T ∩ (0,N]| / N` for every `N`, and two schedules\n`T₁, T₂` give the same compromised fraction for **every** `N ≥ 1` if and only if\n`T₁ ∩ (0,∞) = T₂ ∩ (0,∞)`.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Combinatorics",
         "Logic"
@@ -56098,11 +56098,11 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "709e20fd",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -56114,7 +56114,7 @@
       ],
       "github_issue": 158,
       "id": "fd_1758",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-08-21T04:46:49.984579+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -56129,7 +56129,7 @@
       "source": "github_injection",
       "source_exp_id": "github",
       "source_path": "github",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-08-20T22:45:47.164850+00:00",
       "title": "p-adic Berggren Dynamics — The Tree of Pythagorean Triples as a p-adic Dynamical System"
@@ -56584,7 +56584,7 @@
       "depth_estimate": 3,
       "description": "**Domain**: Pythagorean <-> Physics\n\n**Hypothesis (MOONSHOT)**: The Berggren groupoid of Pythagorean triples realizes topological quantum computation. The Berggren generators are integer matrices in the arithmetic of the Lorentz group SO(2,1) ≅ PSL(2,ℝ), whose discrete subgroups contain braid-group representations; the hyperbolic generator with eigenvalues 3±2√2 acts on the tree boundary like a braid on a set of anyons. The conjecture: the action of the Berggren generators on the tree's boundary (3-adic Cantor set) provides a braiding of anyons whose resulting unitary transformations are dense in the relevant unitary group — the defining property of a universal topological quantum computer — and the tree's proven structure (silver-ratio growth, spectral classification) gives an exactly computable model of the braiding.\n\n**Test**: Formalize the action of the Berggren generators on the tree boundary and identify the braid-group representation they induce. Prove the image of the braid group under this representation is dense in the relevant unitary group (the topological-quantum-computation universality criterion). Compute the resulting anyonic braiding statistics from the spectral structure (eigenvalues 3±2√2, the Z[√2] units) and show the tree's growth bounds the computational depth of a braid.\n\n**Why now**: Topological quantum computation (Freedman–Kitaev–Wang) is a leading proposal for fault-tolerant quantum computing, built on braid-group representations from topological field theory. The catalog's Berggren machinery — a Lorentz-preserving groupoid, a 3-adic boundary, and spectral units in Z[√2] — is exactly the kind of structure known to host braid representations. A rigorous connection from Pythagorean triples to topological quantum computation would be a genuinely history-making bridge from elementary number theory to quantum technology.\n\n**If true**: The Berggren tree provides an exactly computable, fully formalized model of anyonic braiding and topological quantum computation — a concrete realization of a universal quantum computer from the arithmetic of Pythagorean triples, connecting the oldest mathematics to the newest technology.\n\n**If false**: The braid representation is not dense (the image is finite or thin), or the generators do not induce a braid action — a precise theorem about the representation theory of the Berggren groupoid, clarifying which topological structures the tree actually realizes.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Novelty"
       ],
@@ -57611,7 +57611,7 @@
       "depth_estimate": 3,
       "description": "The `⟸` direction is a short argument from the first-order condition;\nthe `⟹` direction is constructive on the line: `f` is obtained by integrating the monotone\nmultifunction `T⁻¹ − I`, and `firm_iff_monoLip` already supplies exactly the monotonicity\nneeded for that integral to exist.  `proj_unique_argmin` is the special case `f = indicator\nof [a,b]`, already proved.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Logic"
@@ -59744,14 +59744,14 @@
       "parent_direction": "",
       "priority_score": 0.9,
       "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
+      "prune_reason": "tournament_rejected: rejected in aristotle tournament",
+      "pruned_at": "2026-08-21T04:45:32Z",
       "quarantined_until": "",
       "research_mode": "team",
       "source": "",
       "source_exp_id": "39ef81fe",
       "source_path": "Graph Coloring with Emotions: The Chromatic Polynomial Meets Psychology",
-      "status": "available",
+      "status": "pruned",
       "thread_id": "",
       "timestamp": "2026-08-21T03:17:09.701111+00:00",
       "title": "Deepening: Graph Coloring with Emotions: The Chromatic Polynomial Meets Psychology"
@@ -59984,14 +59984,14 @@
       "parent_direction": "",
       "priority_score": 0.8689999999999999,
       "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
+      "prune_reason": "tournament_rejected: rejected in aristotle tournament",
+      "pruned_at": "2026-08-21T04:45:32Z",
       "quarantined_until": "",
       "research_mode": "team",
       "source": "",
       "source_exp_id": "3e30c45d",
       "source_path": "Isogeny-SIDH: Radical Isogeny Verification on Montgomery Curves",
-      "status": "available",
+      "status": "pruned",
       "thread_id": "",
       "timestamp": "2026-07-28T18:55:07.368117+00:00",
       "title": "Deepening: Isogeny-SIDH: Radical Isogeny Verification on Montgomery Curves"
@@ -61155,6 +61155,46 @@
       "thread_id": "",
       "timestamp": "2026-08-14T00:06:44.114509+00:00",
       "title": "Deepening: Round-6 Hypothesis Closures: The Noise-Floor Principle and the Trace-Lemma Front"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Building on cycle 5e41571a (Q=0.820), which proved 67 theorems in Logic. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Firm nonexpansiveness of the median-as-projection is proved\n(`proj_firmly_nonexpansive`); the characterisation is open.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Logic"
+      ],
+      "github_issue": 0,
+      "id": "push_5e41571a_0cd431ba",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.9199999999999999,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source": "",
+      "source_exp_id": "5e41571a",
+      "source_path": "Firm nonexpansiveness of the median-as-projection is proved",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-08-21T04:45:31.751608+00:00",
+      "title": "Deepening: Firm nonexpansiveness of the median-as-projection is proved"
     },
     {
       "ambition_level": "extension",
@@ -73001,11 +73041,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "b1ca83e2",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -73020,7 +73060,7 @@
       ],
       "github_issue": 0,
       "id": "seed_122",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-08-21T04:46:56.850590+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -73035,7 +73075,7 @@
       "source": "",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "",
       "title": "Tropical Cryptocurrency: Mining on the Min-Plus Semiring"
@@ -83543,7 +83583,7 @@
       "depth_estimate": 3,
       "description": "Cycle 11c9ff9f (Q=0.860) proved 90 theorems in Logic but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: For `k ≤ |X|` the orbit count splits\n    along patterns, `#(X^k/G) = Σ_P m_P` (`sum_patternMultiplicity`), with `m_P ≥ 1` for every\n    pattern (`one_le_patternMultiplicity`), and the action is `k`-tr",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Logic"
       ],
@@ -84223,7 +84263,7 @@
       "depth_estimate": 3,
       "description": "Cycle 615053e5 (Q=0.830) proved 128 theorems in Logic but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Construct a formal proof system where the soundness predicate appears inside the system it validates. Prove that such tangled hierarchies are unavoidable in any system that can reason about its own co",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.5,
+      "domain_quality_penalty": 0.6,
       "domains": [
         "Logic"
       ],
@@ -85038,7 +85078,6 @@
     "σ_{triples": 1
   },
   "selection_log": [
-    "famous_subtask",
     "cross_domain_bridge",
     "famous_subtask",
     "famous_subtask",
@@ -85057,6 +85096,7 @@
     "famous_subtask",
     "famous_subtask",
     "famous_subtask",
-    "abduction_followup"
+    "abduction_followup",
+    "famous_subtask"
   ]
 }
