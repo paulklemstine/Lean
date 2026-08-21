@@ -153,14 +153,21 @@ def inject_directions_into_memory(workspace_path: Path):
 
     return injected_count
 
-def close_injected_direction_with_comment(issue_number: int, comment: str):
-    """Close the GitHub issue and leave a comment with research results."""
+def close_injected_direction_with_comment(issue_number: int, comment: str) -> bool:
+    """Comment research results on the issue, then close it — but ONLY if the
+    comment provably landed. A silent comment failure followed by a close
+    produced unexplained bot closures (audit 2026-08-21). Returns True when
+    the issue was actually closed."""
     print(f"[GitHub Injector] Closing issue #{issue_number} with results...")
-    # First add a comment
-    run_gh_command(["issue", "comment", str(issue_number), "-b", comment])
-    # Then close the issue
+    comment_out = run_gh_command(
+        ["issue", "comment", str(issue_number), "-b", comment])
+    if comment_out is None:
+        print(f"[GitHub Injector] WARNING: comment on #{issue_number} failed "
+              f"— NOT closing so the record stays auditable")
+        return False
     run_gh_command(["issue", "close", str(issue_number)])
     print(f"[GitHub Injector] Closed issue #{issue_number}.")
+    return True
 
 def close_orphaned_issues(workspace_path: Path) -> int:
     """Close GitHub issues whose directions were consumed but the issue was never closed.
@@ -193,11 +200,14 @@ def close_orphaned_issues(workspace_path: Path) -> int:
     elif isinstance(data, dict):
         directions_list = data.get("directions", [])
 
-    # Find consumed injected directions with open GitHub issues
+    # Find consumed injected directions with open GitHub issues.
+    # Only COMPLETED directions authorize auto-close: a pruned direction was
+    # retired without research, and closing its issue hid the fact from the
+    # owner (audit 2026-08-21). Pruned directions' issues stay open.
     consumed_issues = {}
     for d in directions_list:
         if (d.get("source") == "github_injection"
-                and d.get("status") in ("completed", "pruned")
+                and d.get("status") == "completed"
                 and d.get("github_issue")):
             consumed_issues[d["github_issue"]] = d
 

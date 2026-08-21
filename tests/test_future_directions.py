@@ -376,7 +376,10 @@ class TestOrphanCloserTruthfulMessage:
             closed = github_injector.close_orphaned_issues(Path(tmpdir))
         return closed, comments
 
-    def test_tournament_rejected_issue_gets_truthful_comment(self):
+    def test_pruned_issue_not_auto_closed(self):
+        """A pruned direction's issue stays OPEN: it was retired without
+        research, and closing it hid that from the owner. Only completed
+        research authorizes an auto-close (2026-08-21 semantics)."""
         closed, comments = self._run_closer(mkdtemp(), {
             "id": "fd_0001", "title": "Rejected direction",
             "description": "x" * 100, "status": "pruned",
@@ -384,12 +387,18 @@ class TestOrphanCloserTruthfulMessage:
             "source": "github_injection", "github_issue": 42,
             "prune_reason": "tournament_rejected: too speculative",
         })
+        assert closed == 0
+        assert comments == [], "No retirement comment should be posted either"
+
+    def test_completed_issue_still_closes(self):
+        closed, comments = self._run_closer(mkdtemp(), {
+            "id": "fd_0002", "title": "Completed direction",
+            "description": "x" * 100, "status": "completed",
+            "source_exp_id": "github", "source_path": "github",
+            "source": "github_injection", "github_issue": 44,
+        })
         assert closed == 1
-        assert len(comments) == 1
-        assert "tournament_rejected" in comments[0], (
-            f"Comment must state the real reason, got: {comments[0]!r}"
-        )
-        assert "already processed" not in comments[0]
+        assert "already processed" in comments[0]
 
     def test_completed_issue_keeps_original_comment(self):
         closed, comments = self._run_closer(mkdtemp(), {

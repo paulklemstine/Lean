@@ -196,8 +196,11 @@ class TestGithubInjectorDedup:
              patch.object(github_injector, "close_injected_direction_with_comment", side_effect=mock_close):
             count = github_injector.close_orphaned_issues(Path(tmpdir))
 
-        assert count == 2, f"Expected 2 orphaned issues closed, got {count}"
-        assert set(closed_issues) == {99, 100}, f"Expected issues 99,100 closed, got {closed_issues}"
+        # 2026-08-21 semantics: only COMPLETED directions authorize auto-close.
+        # The pruned direction (issue 100) was retired without research — its
+        # issue stays open so the owner sees it.
+        assert count == 1, f"Expected 1 orphaned issue closed, got {count}"
+        assert set(closed_issues) == {99}, f"Expected only issue 99 closed, got {closed_issues}"
 
 
 class TestPhaseBGateParity:

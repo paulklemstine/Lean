@@ -162,7 +162,22 @@ def _close_github_issue_if_needed(job):
         else:
             return
 
-        github_injector.close_injected_direction_with_comment(issue_num, comment)
+        # Auto-close ONLY successful completions. A failed/rejected job posts
+        # its explanation but the issue STAYS OPEN — closing failures hid them
+        # from the owner and enabled the stray-closure cascade
+        # (audit 2026-08-21).
+        if st in ("failed", "error", "rejected"):
+            _posted = github_injector.run_gh_command(
+                ["issue", "comment", str(issue_num), "-b", comment])
+            if _posted is None:
+                print(f"[Tick] WARNING: failure comment on #{issue_num} failed "
+                      f"— issue left open, un-commented")
+            else:
+                print(f"[Tick] Posted failure explanation on #{issue_num}; "
+                      f"issue left open for the owner to decide")
+        else:
+            github_injector.close_injected_direction_with_comment(
+                issue_num, comment)
     except Exception as e:
         print(f"[Tick] Failed to close GitHub issue {issue_num}: {e}")
 
