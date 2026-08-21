@@ -78,16 +78,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Collatz-Berggren Bridge \u2014 Transferring the Lorentz Invariant to the Inverse Collatz Tree"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d588a53d",
     "description": "**Domain**: Pythagorean <-> Logic\n\n**Hypothesis (MOONSHOT)**: The Berggren tree's proven descent structure \u2014 every primitive triple reduces to (3,4,5) by inverse Berggren moves, formalized in the catalog's groupoid \u2014 is the substrate for a Kirby-Paris-style independence phenomenon. The conjecture: there is a natural hydra-style game on the Berggren tree (Hercules chops a branch; the tree regrows by the Berggren moves' branching) whose termination is TRUE but UNPROVABLE in Peano Arithmetic \u2014 a \"Pythagorean Hydra\" \u2014 and, on the second front, the first-order theory of the tree with its address function (word \u2192 triple) is undecidable, realizing a Hilbert's-tenth/Matiyasevich phenomenon on the tree.\n\n**Test**: Formalize the descent/termination of the inverse-Berggren reduction (the groupoid package already proves connectivity to (3,4,5); establish well-foundedness of the descent order). Define the Pythagorean Hydra: chop a node; regrowth follows the Berggren generators' branching. Prove the game's termination in ZFC, then calibrate its proof-theoretic strength: show that the termination statement, or a natural parametrized variant (bounded-depth descent), is unprovable in PA by encoding a known independent principle (Goodstein / Kirby-Paris hydra) into the regrowth rule. Second front: encode Diophantine machines into the tree's addressing and prove undecidability of the tree's theory with the address function.\n\n**Why now**: Natural independence results \u2014 Goodstein's theorem, the Kirby-Paris Hydra, Paris-Harrington \u2014 are among the deepest discoveries of logic: simple, natural statements about concrete structures that are true but unprovable. The catalog's dark-mathematics line shows the system is already probing unprovability, and the tree's fully formalized descent structure (every triple \u2192 (3,4,5)) is exactly the well-founded substrate such phenomena live on. A Pythagorean Hydra would be a new natural independence result on a structure as classical as the Pythagorean triples themselves.\n\n**If true**: A new natural independence phenomenon: the termination of a Pythagorean-triple game unprovable in PA \u2014 joining Goodstein and the Hydra game in the short list of natural unprovability results, and showing that the arithmetic beneath Pythagoras's theorem already exceeds Peano's reach.\n\n**If false**: The game's termination is provable in PA (its strength is bounded) \u2014 itself a precise calibration theorem placing the tree's descent in the hierarchy of combinatorial principles, and mapping exactly which regrowth rules would be needed to reach independence.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_1783",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T03:17:34.066635+00:00",
     "title": "The Pythagorean Hydra \u2014 Natural Independence for the Berggren Tree"
   },
@@ -34942,14 +34943,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "of the cycle-length monoids of a strongly connected"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "85ca8e3d",
     "description": "The invariant is now defined and proven to be a submonoid\n(`degreeMonoid`), two extremes (`{0}`, `\u2115`) and two nontrivial values (`n\u2115`, `\u27e82,3\u27e9`)\nare certified, so the general realisation problem can be attacked with the existing\n`iterR_add` machinery rather than being restated informally.",
     "domains": [],
     "id": "fd_1639",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "a985d45a",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-19T20:45:51.278589+00:00",
     "title": "The invariant is now defined and proven to be a submonoid"
   },
