@@ -489,6 +489,7 @@ class CycleMaster:
         print(f"[Prepare] Pi-Agent generating concept (exp={exp_id})...")
 
         concept = None
+        source_exp_ids = []  # bound even when no future-direction candidate is chosen
 
         # Try to use a future direction candidate first
         if future_direction_candidates:

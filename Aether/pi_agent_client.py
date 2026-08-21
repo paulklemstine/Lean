@@ -1460,7 +1460,10 @@ class PiAgentClient:
             if bridges:
                 bridge_idx = cycle % len(bridges)
                 b = bridges[bridge_idx]
-                d_a, d_b, syn = b['domain_a'], b['domain_b'], b['synonymy']
+                # find_missing_bridges returns (domain_a, domain_b, score)
+                # tuples — the old dict indexing raised TypeError on every
+                # bridge-mode concept generation (audit 2026-08-21).
+                d_a, d_b, syn = (b + (0.0,))[:3] if isinstance(b, tuple) else (b.get('domain_a'), b.get('domain_b'), b.get('synonymy', 0.0))
                 domain = normalize_domain(d_a)
                 concept_title = f"{d_a.lower()}_{d_b.lower()}_bridge"
                 concept_desc = f"Construct a bridge between {d_a} and {d_b} leveraging {syn:.1f} synonymy score."

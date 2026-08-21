@@ -2685,7 +2685,10 @@ Research mode: {concept.research_mode}
                 # to recompute and an outage-grade cached for the TTL would
                 # poison every future identical content (audit 2026-08-21).
                 try:
-                    _ec.set(_ec_key, {
+                    # EvalCache's write method is `put` — the old `.set` call
+                    # raised AttributeError on EVERY save, silently disabling
+                    # the entire eval cache since it shipped (audit 2026-08-21).
+                    _ec.put(_ec_key, {
                         "quality_score": job.quality_score,
                         "quality_assessment": job.quality_assessment,
                         "quality_detail": job.quality_detail.to_dict() if hasattr(job.quality_detail, 'to_dict') else None
@@ -5078,6 +5081,15 @@ Research mode: {concept.research_mode}
                             return
                     except Exception as e:
                         print(f"[Tournament] Warning: Failed to parse tournament results: {e}")
+
+                # Tournament jobs must NEVER fall through to generic direction
+                # splitting: their fd_text is a tournament report, not a research
+                # FUTURE_DIRECTIONS blob — splitting it pollutes the pool with
+                # junk directions (audit 2026-08-21).
+                if getattr(job, "direction_id", "") == "__direction_tournament__":
+                    print(f"[Tournament] No parsable results for {job.job_id[:8]}; "
+                          f"skipping generic direction extraction")
+                    return
 
                 # Section 2: Split the future_directions blob into individual
                 # directions before storing. This prevents whole-cycle merged

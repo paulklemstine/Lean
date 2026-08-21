@@ -21,14 +21,19 @@ def run_gh_command(args):
             capture_output=True,
             text=True,
             check=True,
-            cwd=str(repo_root)
+            cwd=str(repo_root),
+            timeout=60,
+            stdin=subprocess.DEVNULL,  # an expired token must fail fast, not prompt
         )
         return result.stdout
+    except subprocess.TimeoutExpired:
+        print(f"[GitHub Injector] Timeout running gh {' '.join(args)}", file=sys.stderr)
+        return None
     except subprocess.CalledProcessError as e:
         print(f"[GitHub Injector] Error running gh {' '.join(args)}: {e.stderr}", file=sys.stderr)
         return None
     except FileNotFoundError:
-        print("[GitHub Injector] Error: gh CLI is not installed or not in PATH.", file=sys.stderr)
+        print(f"[GitHub Injector] Error: gh CLI is not installed or not in PATH.", file=sys.stderr)
         return None
 
 def fetch_injected_directions():

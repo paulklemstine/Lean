@@ -353,10 +353,17 @@ class SmartIntegrator:
                 "content_preview": preview,
             })
 
-        # Call Pi-Agent for decisions
-        pi_decisions = self.classifier.pi_agent.analyze_diff_for_integration(
-            result_files, self.catalog_root
-        )
+        # Call Pi-Agent for decisions. The method does not exist on the agent
+        # (audit 2026-08-21) — degrade to empty decisions (rule-based paths
+        # below) instead of crashing the whole integration run.
+        try:
+            pi_decisions = self.classifier.pi_agent.analyze_diff_for_integration(
+                result_files, self.catalog_root
+            )
+        except AttributeError:
+            print("[SmartIntegrate] pi_agent.analyze_diff_for_integration is not "
+                  "available; falling back to rule-based placement")
+            pi_decisions = []
 
         # Apply Pi-Agent decisions
         for pd in pi_decisions:
