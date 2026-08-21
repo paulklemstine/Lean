@@ -429,10 +429,18 @@ class KnowledgeExtractor:
             return 0.25
 
         # Collect Phase A scores (see docstring).
+        # A_only records carry a baked-in phase_a_quality_score=0.0 from the
+        # analytics round-trip (CycleRecord default) — trusting key presence
+        # contaminated the pool with fake zeros and dragged the median down
+        # (audit 2026-08-21: all 308 A_only records had 0.0 vs real mean 0.616).
+        # A positive phase_a_quality_score is a real measurement; a genuine
+        # quality_score of 0.0 on an A-phase record is still a real (low) score.
         scores = []
         for r in records:
+            if r.get("failed"):
+                continue
             pa = r.get("phase_a_quality_score")
-            if pa is not None:
+            if pa is not None and float(pa) > 0:
                 scores.append(float(pa))
             elif r.get("phase") in (None, "A", "A_only"):
                 q = r.get("quality_score")
@@ -442,8 +450,17 @@ class KnowledgeExtractor:
             return 0.25
 
         n = len(records)
-        cache_bucket = n // 10
-        cache_version = 3  # bump when the formula/clamp changes
+        # Cache key must move when the underlying distribution moves: bucketing
+        # on record count alone froze the threshold permanently once
+        # cycle_analytics hit its 2000-record retention cap (audit 2026-08-21).
+        recent_fingerprint = ""
+        try:
+            recent_fingerprint = "|".join(
+                f"{float(s):.2f}" for s in sorted(scores[-50:]))
+        except Exception:
+            recent_fingerprint = str(len(scores))
+        cache_bucket = f"{n // 10}::{hash(recent_fingerprint) % 100000}"
+        cache_version = 4  # bump when the formula/clamp changes
         try:
             if cache_path.exists():
                 cache = _json.loads(cache_path.read_text())
@@ -2622,13 +2639,21 @@ Research mode: {concept.research_mode}
                 print(f"[Cache] eval cache read failed: {_e}")
         # Check if Aristotle provided a self-score JSON file
         if getattr(job, "aristotle_self_score", None) is not None:
-            job.quality_score = job.aristotle_self_score
-            has_sorry = "sorry" in job.result_lean
+            # Clamp: an unclamped self-score (e.g. 0-100 scale or negative)
+            # poisoned every downstream gate (audit 2026-08-21).
+            try:
+                job.quality_score = max(0.0, min(1.0, float(job.aristotle_self_score)))
+            except (TypeError, ValueError):
+                job.quality_score = 0.0
+            # Word-boundary match: substring "sorry" also matches identifiers
+            # like "sorry_count_zero" and misgraded clean proofs as partial.
+            has_sorry = bool(re.search(r"\bsorry\b", job.result_lean or ""))
             job.quality_assessment = {
                 "quality": "partial" if has_sorry else "substantial",
                 "should_retry": has_sorry,
                 "retry_strategy": "Fix remaining sorries." if has_sorry else "N/A",
                 "confidence": 1.0,
+                "llm_eval": False,  # heuristic self-score path — never cache it
                 "analysis": getattr(job, "aristotle_self_rationale", None) or f"Aristotle self-scored this result as {job.quality_score:.3f}."
             }
             print(f"[Evaluate] Bypassing evaluation, using Aristotle self-score: {job.quality_score:.3f} (has_sorry={has_sorry})")
@@ -2655,7 +2680,10 @@ Research mode: {concept.research_mode}
                     applications=0.5,
                     catalog_anchoring=0.5
                 )
-            if _ec and _ec_key:
+            if _ec and _ec_key and job.quality_assessment.get("llm_eval", True):
+                # Never cache heuristic/self-score assessments: they are cheap
+                # to recompute and an outage-grade cached for the TTL would
+                # poison every future identical content (audit 2026-08-21).
                 try:
                     _ec.set(_ec_key, {
                         "quality_score": job.quality_score,

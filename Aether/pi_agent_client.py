@@ -369,7 +369,7 @@ class PiAgentClient:
         self.openrouter_timeout: int = int(_or.get("timeout", 300))
 
         # Use max timeout for client connection, use per-request timeouts for operations
-        self.client = httpx.Client(timeout=httpx.Timeout(connect=30.0, read=172800.0, write=30.0, pool=30.0))
+        self.client = httpx.Client(timeout=httpx.Timeout(connect=30.0, read=7200.0, write=30.0, pool=30.0))
 
         # CatalogAnalyzer for reference selection
         self.catalog_analyzer: Optional[CatalogAnalyzer] = None
@@ -1001,7 +1001,7 @@ class PiAgentClient:
         raw = self._call_ollama(
             "You are a mathematical research analyst. Extract structured research directions from text.",
             analysis_prompt,
-            timeout=172800,
+            timeout=7200,
         )
 
         if raw and not raw.startswith(("[OLLAMA", "[API_")):
@@ -1289,11 +1289,11 @@ class PiAgentClient:
         # Cloud models often timeout on large prompts - local generator is faster
         if self.compact:
             # Cloud/compact mode: shorter timeout since we have local fallback
-            concept_raw = self._call_ollama(_DIRECTION_SYSTEM_PROMPT, user_prompt, timeout=172800)
+            concept_raw = self._call_ollama(_DIRECTION_SYSTEM_PROMPT, user_prompt, timeout=7200)
             parsed = self._parse_json_response(concept_raw) if concept_raw and not concept_raw.startswith("[OLLAMA") else None
         else:
             # Local model: give more time
-            concept_raw = self._call_ollama(_DIRECTION_SYSTEM_PROMPT, user_prompt, timeout=172800)
+            concept_raw = self._call_ollama(_DIRECTION_SYSTEM_PROMPT, user_prompt, timeout=7200)
             parsed = self._parse_json_response(concept_raw)
 
         if parsed:
@@ -1335,7 +1335,7 @@ class PiAgentClient:
                     "Return JSON with the same schema but a better 'concept_title'."
                 )
                 try:
-                    retry_raw = self._call_ollama(_DIRECTION_SYSTEM_PROMPT, user_prompt + retry_suffix, timeout=172800)
+                    retry_raw = self._call_ollama(_DIRECTION_SYSTEM_PROMPT, user_prompt + retry_suffix, timeout=7200)
                     retry_parsed = self._parse_json_response(retry_raw)
                     if retry_parsed and not self._is_generic_title(retry_parsed.get("concept_title", retry_parsed.get("title", ""))):
                         new_title = retry_parsed.get("concept_title", retry_parsed.get("title", concept.title))
@@ -3461,7 +3461,7 @@ make it beautiful to read.
             """)
             response = self._call_ollama(
                 "You are a senior mathematician evaluating research breakthroughs.",
-                prompt, timeout=172800.0,
+                prompt, timeout=7200.0,
                 category="breakthrough",
             )
             grade = response.strip().lower().split()[-1] if response.strip() else ""
@@ -3490,7 +3490,7 @@ make it beautiful to read.
         theorem_sigs: list,
         content_preview: str,
         structural_score: float,
-        timeout: int = 172800,
+        timeout: int = 7200,
     ) -> Optional[Dict[str, float]]:
         """LLM scores a Catalog file across 5 dimensions for FINAL/ promotion.
 
@@ -3614,7 +3614,7 @@ make it beautiful to read.
             }}
         """)
 
-        raw = self._call_ollama(_QUALITY_SYSTEM_PROMPT, user_prompt, timeout=172800,
+        raw = self._call_ollama(_QUALITY_SYSTEM_PROMPT, user_prompt, timeout=7200,
                                 category="eval")
         parsed = self._parse_json_response(raw)
 
@@ -3624,10 +3624,13 @@ make it beautiful to read.
                 "should_retry": parsed.get("should_retry", parsed.get("quality", "partial") == "partial"),
                 "retry_strategy": parsed.get("retry_strategy", ""),
                 "confidence": float(parsed.get("confidence", 0.5)),
+                "llm_eval": True,
                 "analysis": parsed.get("analysis", ""),
             }
 
-        # Fallback: heuristic evaluation
+        # Fallback: heuristic evaluation. Flagged llm_eval=False so callers never
+        # cache an outage/heuristic grade as if it were a real LLM evaluation
+        # (audit 2026-08-21).
         sorry_count = lean_preview.count("sorry")
         theorem_count = lean_preview.count("theorem ") + lean_preview.count("lemma ")
         def_count = len(re.findall(r'\b(?:def|structure|class|inductive|abbrev)\s+', lean_preview))
@@ -3638,6 +3641,7 @@ make it beautiful to read.
                 "should_retry": False,
                 "retry_strategy": "",
                 "confidence": 0.6,
+                "llm_eval": False,
                 "analysis": f"Fallback heuristic: no sorries, has theorems.",
             }
         elif sorry_count > 0 and theorem_count > 0:
@@ -3646,6 +3650,7 @@ make it beautiful to read.
                 "should_retry": True,
                 "retry_strategy": "Fill remaining sorries or simplify theorem.",
                 "confidence": 0.5,
+                "llm_eval": False,
                 "analysis": f"Fallback heuristic: has sorries and theorems.",
             }
         else:
@@ -3654,6 +3659,7 @@ make it beautiful to read.
                 "should_retry": True,
                 "retry_strategy": "Generate a more specific concept.",
                 "confidence": 0.4,
+                "llm_eval": False,
                 "analysis": "Fallback heuristic: no theorems found.",
             }
 

@@ -938,8 +938,21 @@ class QualityEvaluator:
         adversarial_result = self._run_adversarial_critic(
             lean_source, concept_title, concept_description, domains=domains
         )
-        adversarial_composite = adversarial_result.get("composite", 0.5)
+        adversarial_composite = adversarial_result.get("composite")
         primary_composite = primary_score.composite_with_domains(domains) if primary_score else 0.5
+
+        # Critic LLM failed — adjudicate on the primary alone rather than
+        # averaging in a fabricated neutral vote (audit 2026-08-21).
+        if adversarial_composite is None:
+            return {
+                "adjudicated_score": round(primary_composite, 4),
+                "primary_composite": round(primary_composite, 4),
+                "adversarial_composite": None,
+                "tiebreaker_composite": None,
+                "agreement": "critic_failed",
+                "delta": 0.0,
+            }
+
         delta = abs(primary_composite - adversarial_composite)
 
         # Step 2: Check disagreement
@@ -960,7 +973,19 @@ class QualityEvaluator:
             lean_source, concept_title, concept_description,
             primary_composite, adversarial_composite, domains=domains
         )
-        tiebreaker_composite = tiebreaker_result.get("composite", 0.5)
+        tiebreaker_composite = tiebreaker_result.get("composite")
+        if tiebreaker_composite is None:
+            # Tiebreaker failed: fall back to the two-judge average instead of
+            # letting a fabricated 0.5 decide the majority (audit 2026-08-21).
+            adjudicated = (primary_composite + adversarial_composite) / 2
+            return {
+                "adjudicated_score": round(adjudicated, 4),
+                "primary_composite": round(primary_composite, 4),
+                "adversarial_composite": round(adversarial_composite, 4),
+                "tiebreaker_composite": None,
+                "agreement": "tiebreaker_failed",
+                "delta": round(delta, 4),
+            }
 
         # Two-of-three voting: whichever side 2 of 3 judges agree with wins.
         # Compare tiebreaker distance to each judge to determine majority.
@@ -1050,7 +1075,10 @@ class QualityEvaluator:
         except Exception as e:
             print(f"[Adversarial] Critic evaluation failed: {e}")
 
-        return {"composite": 0.5}  # neutral fallback
+        # A failed critic must NOT vote: a fabricated neutral 0.5 silently
+        # averaged into the adjudicated score (audit 2026-08-21). The caller
+        # detects composite=None and adjudicates on the primary alone.
+        return {"composite": None, "failed": True}
 
     def _run_tiebreaker(
         self, lean_source: str, concept_title: str, concept_description: str,
