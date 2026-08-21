@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "ab33dc9e",
-      "domain": "Cryptography",
-      "key_insight": "# Future directions: bold, testable conjectures from the pole-order programme\n\nThe formal results of this phase live in `Catalog/Cryptography/PoleOrderSplitting.lean`,\n`PoleOrderValuationRigidity.lean",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 68,
-      "timestamp": "2026-08-19T17:41:12",
-      "title": "Pole-order obstruction"
-    },
-    {
       "cycle_id": "843dbe86",
       "domain": "Algebra",
       "key_insight": "# Future Directions — scan schemes after the exact optimum\n\nThe cycle just closed produced, with zero `sorry`s:\n\n* honest uniqueness decoding through an explicitly constructed **intra-bucket index**",
@@ -499,19 +489,19 @@
       "theorem_count": 111,
       "timestamp": "2026-08-21T13:59:28",
       "title": "The Berggren Causal Set — Pythagorean Triples as a Discrete Model of Spacetime"
+    },
+    {
+      "cycle_id": "ec6993b5",
+      "domain": "Shared",
+      "key_insight": "# Future directions: from the two bracketing degrees to a general peak calculus\n\nThis cycle closed the missing ingredient identified in the assignment: strict\nunimodality and the *existence* of a brac",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 72,
+      "timestamp": "2026-08-21T16:51:34",
+      "title": "Strict unimodality and the bracketing of the argmax are already theorems, so the"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "83939baf",
-      "domain": "Pythagorean",
-      "key_insight": "# Future directions — Barrier IV (the de-quantization frontier)\n\nDerived from the formalisation in\n`Catalog/Pythagorean/FactoringBarriers/Dequant/`.  Each conjecture is falsifiable\nand stated so that",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 63,
-      "timestamp": "2026-08-13T02:54:52",
-      "title": "The De-Quantization Frontier, Closed"
-    },
     {
       "cycle_id": "a46abb10",
       "domain": "Computation",
@@ -2501,27 +2491,19 @@
       "theorem_count": 111,
       "timestamp": "2026-08-21T13:59:28",
       "title": "The Berggren Causal Set — Pythagorean Triples as a Discrete Model of Spacetime"
+    },
+    {
+      "cycle_id": "ec6993b5",
+      "domain": "Shared",
+      "key_insight": "# Future directions: from the two bracketing degrees to a general peak calculus\n\nThis cycle closed the missing ingredient identified in the assignment: strict\nunimodality and the *existence* of a brac",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 72,
+      "timestamp": "2026-08-21T16:51:34",
+      "title": "Strict unimodality and the bracketing of the argmax are already theorems, so the"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "3ec7eb1a",
-      "domain": "Combinatorics",
-      "name": "mem_support_iff",
-      "quality": 0.76
-    },
-    {
-      "cycle_id": "3ec7eb1a",
-      "domain": "Combinatorics",
-      "name": "subset_support",
-      "quality": 0.76
-    },
-    {
-      "cycle_id": "3ec7eb1a",
-      "domain": "Combinatorics",
-      "name": "mult_pos_iff",
-      "quality": 0.76
-    },
     {
       "cycle_id": "fc85d14f",
       "domain": "Shared",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "applyStep_A",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "ec6993b5",
+      "domain": "Shared",
+      "name": "for",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "ec6993b5",
+      "domain": "Shared",
+      "name": "Nat",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "ec6993b5",
+      "domain": "Shared",
+      "name": "binomialWeight_pos",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-21T13:59:28",
+  "last_updated": "2026-08-21T16:51:34",
   "open_questions": [
     {
       "context": "Everything is proved; there are no `sorry`s and no new axioms.",
@@ -3889,12 +3889,6 @@
     ],
     "Shared": [
       {
-        "cycle_id": "525aecde",
-        "quality": 0.84,
-        "theorems": 70,
-        "title": "Fourier Analysis on Finite Groups"
-      },
-      {
         "cycle_id": "8993bd64",
         "quality": 0.81,
         "theorems": 81,
@@ -3947,6 +3941,12 @@
         "quality": 0.78,
         "theorems": 169,
         "title": "Topological Quantum Computation from the Berggren Groupoid — Anyonic Braiding on"
+      },
+      {
+        "cycle_id": "ec6993b5",
+        "quality": 0.82,
+        "theorems": 72,
+        "title": "Strict unimodality and the bracketing of the argmax are already theorems, so the"
       }
     ],
     "Tropical": [
