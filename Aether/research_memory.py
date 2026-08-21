@@ -1905,7 +1905,14 @@ class FutureDirectionsManager:
         retired = 0
 
         winner_map = {w["id"]: w.get("lean_stub", "") for w in winners if "id" in w}
-        rejection_map = {r["id"]: r.get("reason", "rejected in aristotle tournament") for r in rejections if "id" in r}
+        # An empty/whitespace reason (judge returned "" or the entry was a bare
+        # ID string normalized to reason="") must fall back to the default text,
+        # never be recorded as a bare "tournament_rejected: ".
+        _default_rejection = "rejected in aristotle tournament"
+        rejection_map = {
+            r["id"]: ((r.get("reason") or "").strip() or _default_rejection)
+            for r in rejections if "id" in r
+        }
 
         for d in self._directions:
             if d.id in winner_map:
@@ -1916,6 +1923,10 @@ class FutureDirectionsManager:
                 d.ambition_level = "grand_challenge"
                 promoted += 1
             elif d.id in rejection_map:
+                # Owner-approved injected directions are never tournament-pruned:
+                # their issues are open and awaiting the dedicated dispatch path.
+                if getattr(d, "source", "") == "github_injection":
+                    continue
                 d.status = "pruned"
                 d.prune_reason = f"tournament_rejected: {rejection_map[d.id]}"
                 d.pruned_at = datetime.now(timezone.utc).isoformat()

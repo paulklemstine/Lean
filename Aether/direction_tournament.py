@@ -52,10 +52,20 @@ class DirectionTournament:
         batch_size: int = 10,
         exclude_ids: Optional[List[str]] = None,
     ) -> List[Any]:
-        """Select a batch of available candidate directions for tournament evaluation."""
+        """Select a batch of available candidate directions for tournament evaluation.
+
+        github_injection directions (owner-approved GitHub issues) are never
+        candidates: they carry priority_score=1000, which would otherwise sort
+        them to the FRONT of every batch and get them tournament-rejected
+        before their dedicated dispatch path ever runs (issues #157/#159).
+        """
         mgr = self.FutureDirectionsManager(self.workspace)
         available = [d for d in mgr._directions if d.status == "available"]
-        
+
+        # Owner-approved injected directions are exempt from tournament pruning
+        available = [d for d in available
+                     if getattr(d, "source", "") != "github_injection"]
+
         if domain:
             available = [d for d in available if domain.lower() in [dom.lower() for dom in d.domains]]
 

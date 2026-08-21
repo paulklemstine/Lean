@@ -185,26 +185,35 @@ def close_orphaned_issues(workspace_path: Path) -> int:
         directions_list = data.get("directions", [])
 
     # Find consumed injected directions with open GitHub issues
-    consumed_issues = set()
+    consumed_issues = {}
     for d in directions_list:
         if (d.get("source") == "github_injection"
                 and d.get("status") in ("completed", "pruned")
                 and d.get("github_issue")):
-            consumed_issues.add(d["github_issue"])
+            consumed_issues[d["github_issue"]] = d
 
     if not consumed_issues:
         return 0
 
     # Check which of those issues are still open on GitHub
     closed_count = 0
-    for issue_num in consumed_issues:
+    for issue_num, direction in consumed_issues.items():
         try:
             output = run_gh_command(["issue", "view", str(issue_num), "--json", "state"])
             if not output:
                 continue
             info = json.loads(output)
             if info.get("state") == "OPEN":
-                comment = "Aether has already processed this direction. Closing as handled."
+                # Report honestly why the issue is being closed: a pruned
+                # direction was retired without research (e.g. tournament
+                # rejection), which is not the same as "already processed".
+                prune_reason = (direction.get("prune_reason") or "").strip()
+                if direction.get("status") == "pruned" and prune_reason:
+                    comment = (f"Aether retired this direction without research "
+                               f"({prune_reason}). Reopen with justification to "
+                               f"re-queue it.")
+                else:
+                    comment = "Aether has already processed this direction. Closing as handled."
                 close_injected_direction_with_comment(issue_num, comment)
                 closed_count += 1
         except Exception as e:
