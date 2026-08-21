@@ -403,6 +403,15 @@ def _print_running_jobs(extractor: "KnowledgeExtractor") -> None:
             title = getattr(j.concept, "title", "") or ""
         print(f"[Tick]   [{badge}] {getattr(j, 'job_id', '?')[:8]:>8} "
               f"{getattr(j, 'status', '?'):<15} {title[:64]}")
+    # Slot accounting: slot-holders vs queue depth. Directions showing
+    # in_progress include queued jobs — this line is the real Aristotle
+    # capacity picture (audit 2026-08-21: 14 in_progress directions read as
+    # 14 server jobs when only 5 slots were busy).
+    slot_holders = [j for j in running
+                    if getattr(j, "status", "") in ("preparing", "dispatched", "B_dispatched")]
+    queued_n = len(running) - len(slot_holders)
+    print(f"[Tick]   Aristotle slots busy: {len(slot_holders)}/6, "
+          f"queued awaiting a slot: {queued_n}")
 
 
 async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_slots: int = 0) -> None:
