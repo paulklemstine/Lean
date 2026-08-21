@@ -1,17 +1,8 @@
 pi_agent:
+  # Aristotle is the pipeline's only LLM (2026-08-21): local Ollama/OpenRouter
+  # tiers were removed.
   model: openai-large
-  ollama_base_url: http://127.0.0.1:11434
   timeout: 600
-  ollama_cloud:
-    enabled: false
-    api_key_env: OLLAMA_API_KEY
-    model: glm-5.1:cloud
-    base_url: https://ollama.com
-    timeout: 300
-  openrouter:
-    enabled: true
-    model: meta-llama/llama-3.3-70b-instruct:free
-    timeout: 300
   max_catalog_references: 5
   max_lines_per_reference: 60
   temperature: 0.85
@@ -389,7 +380,6 @@ features:
   enable_abduction_loop: false
   enable_external_signal: true
   enable_computational_stage: true
-  bypass_all_local_llm: true
 
 # LLM usage reduction levers. Modes: on/off (eval_cache, pruning_rules);
 # enabled/off for the skip-gates (lint_gate). See Aether/CLAUDE.md.

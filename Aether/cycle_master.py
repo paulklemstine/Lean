@@ -913,15 +913,20 @@ class CycleMaster:
                         try:
                             import json as _json
                             fd_list = _json.loads(fd_json_file.read_text(encoding="utf-8"))
+                            from research_memory import FutureDirection
                             for fd in fd_list:
                                 if isinstance(fd, dict) and "title" in fd and "description" in fd:
-                                    fd_manager.add_direction(
+                                    # add_direction takes a FutureDirection — the old
+                                    # kwargs call raised TypeError on every invocation
+                                    # and was swallowed (audit 2026-08-21).
+                                    fd_manager.add_direction(FutureDirection(
+                                        id=fd_manager._next_id(),
                                         title=fd["title"],
                                         description=fd["description"],
-                                        tags=fd.get("tags", []),
-                                        source=f"{exp_id}_json",
-                                        score=0.85,
-                                    )
+                                        source_exp_id=f"{exp_id}_json",
+                                        source_path="cycle_master_json",
+                                        priority_score=0.85,
+                                    ))
                                     fd_added += 1
                         except Exception as e:
                             print(f"[CycleMaster] Failed to parse future_directions.json: {e}")
@@ -1547,7 +1552,6 @@ async def main():
     parser.add_argument("--dry-run", action="store_true", help="Generate but do not dispatch")
     parser.add_argument("--parallel", action="store_true", help="Dispatch up to 6 jobs concurrently")
     parser.add_argument("--max-jobs", type=int, default=6, help="Max concurrent Aristotle jobs (default: 6)")
-    parser.add_argument("--ollama-cloud", action="store_true", help="Enable Ollama Cloud as fallback when Pollinations is depleted")
 
     args = parser.parse_args()
 
@@ -1605,33 +1609,3 @@ async def main():
     config["catalog"]["root_dir"] = "../Catalog"
 
     # Enable Ollama Cloud fallback if CLI flag is set
-    if args.ollama_cloud:
-        config.setdefault("pi_agent", {}).setdefault("ollama_cloud", {})["enabled"] = True
-
-    master = CycleMaster(
-        config=config,
-        domains_config=domains_config,
-        workspace=Path(args.workspace).resolve(),
-    )
-
-    if args.single_cycle:
-        success = await master.run_single_cycle(
-            forced_domain=args.domain,
-            dry_run=args.dry_run,
-        )
-        sys.exit(0 if success else 1)
-    else:
-        loop = asyncio.get_event_loop()
-        for sig in (__import__("signal").SIGINT, __import__("signal").SIGTERM):
-            loop.add_signal_handler(sig, master.request_shutdown)
-        try:
-            await master.run_continuous(
-                parallel=args.parallel,
-                max_jobs=args.max_jobs,
-            )
-        except asyncio.CancelledError:
-            pass
-
-
-if __name__ == "__main__":
-    asyncio.run(main())

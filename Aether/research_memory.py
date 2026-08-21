@@ -715,22 +715,34 @@ class FutureDirectionsManager:
             encoding="utf-8",
         )
 
-    def add_direction(self, direction: FutureDirection) -> None:
-        """Add a new future direction. Skips if a very similar title already exists."""
+    def add_direction(self, direction: FutureDirection) -> bool:
+        """Add a new future direction. Skips if a very similar title already exists.
+
+        Returns True when the direction was actually inserted, False when dedup
+        dropped it — so callers can count real adds instead of attempts."""
         # Fix auto-generated cycle-summary titles at ingestion time
         if direction.title.startswith("This research cycle") or direction.title.startswith("This cycle") or direction.title.startswith("This work"):
             direction.title = self._fix_auto_title(direction.title, direction.description)
         title_lower = direction.title.lower().strip()
+        title_tokens = set(re.findall(r'[a-z0-9]+', title_lower))
         for existing in self._directions:
             if existing.title.lower().strip() == title_lower:
-                return
+                return False
+            # Title token-overlap dedup: catches template families whose titles
+            # differ only in a word or two (audit 2026-08-21: 499 such pairs).
+            existing_tokens = set(re.findall(r'[a-z0-9]+', existing.title.lower()))
+            if title_tokens and existing_tokens:
+                overlap = len(title_tokens & existing_tokens) / max(
+                    1, min(len(title_tokens), len(existing_tokens)))
+                if overlap > 0.7:
+                    return False
             # Also skip if descriptions are very similar (>80% word overlap)
             existing_words = set(existing.description.lower().split())
             new_words = set(direction.description.lower().split())
             if existing_words and new_words:
                 overlap = len(existing_words & new_words) / max(len(existing_words), len(new_words))
                 if overlap > 0.8:
-                    return
+                    return False
         if not direction.timestamp:
             direction.timestamp = datetime.now(timezone.utc).isoformat()
         # Cap domains at 2 to prevent domain count inflation
@@ -752,24 +764,40 @@ class FutureDirectionsManager:
             pass
         self._directions.append(direction)
         self._save()
+        return True
 
     def _is_quality_direction(self, fd: FutureDirection) -> bool:
         """Quality gate for extracted directions.
 
         Rejects:
-        - descriptions shorter than 80 characters
         - generic titles (e.g. "Further Research", "Conjecture 4:")
+        - descriptions with no directional signal (future-oriented verbs or
+          conjecture markers) — a terse real conjecture passes, a padded recap
+          without direction does not (the old 80-char rule did the opposite)
         - directions that map only to Bridges with no proof strategy
         """
         from pi_agent_client import PiAgentClient
-        if len(fd.description) < 80:
-            return False
+        desc = fd.description or ""
         if PiAgentClient._is_generic_title(fd.title):
             return False
         # Bridges-only directions need a concrete proof strategy
         if set(fd.domains) == {"Bridges"} and not fd.proof_strategy.strip():
             return False
-        return True
+        direction_signals = (
+            "prove", "show", "extend", "formalize", "conjecture", "theorem",
+            "establish", "derive", "construct", "generalize", "resolve",
+            "develop", "investigate", "study", "open problem", "open question",
+            "hypothesis", "if true", "if false", "test",
+            "remains open", "remain open", "open.", "open)",
+            "future work", "next step", "classify", "compute",
+        )
+        has_signal = any(k in desc.lower() for k in direction_signals)
+        if len(desc) >= 120 and has_signal:
+            return True
+        if len(desc) >= 30 and has_signal and len(desc) < 120:
+            # Terse but genuinely directional (e.g. a one-sentence conjecture)
+            return True
+        return False
 
     def add_directions_from_text(
         self, text: str, source_exp_id: str, source_path: str

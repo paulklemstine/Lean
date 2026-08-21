@@ -15,7 +15,7 @@ bash Aether/.aether_workspace/git-hooks/install-hooks.sh
 ### Run the Research Loop
 
 ```bash
-cd Aether && python3 aether_tick.py --loop --ollama-cloud --max-inflight 9 --novelty-slots 3 --interval 1800 --serve --log .aether_workspace/aether.log
+cd Aether && python3 aether_tick.py --loop --max-inflight 9 --novelty-slots 3 --interval 1800 --serve --log .aether_workspace/aether.log
 ```
 
 This is the standard startup command. It runs continuously: each tick polls for completed jobs, integrates them, dispatches new ones, rebuilds the website (`update_index.py`), syncs to `docs/`, commits, and pushes to git. The `--serve` flag starts a local docs HTTP server at `http://localhost:8000`. The `--log` flag tees all output to a log file while still printing to the console.
@@ -25,7 +25,6 @@ This is the standard startup command. It runs continuously: each tick polls for 
 | `--max-inflight N` | 9 | Max concurrent Aristotle jobs |
 | `--novelty-slots N` | 3 | Dispatch slots reserved for novelty/wild directions |
 | `--interval SECONDS` | 21600 | Sleep between ticks (21600 = 6h, 1800 = 30min) |
-| `--ollama-cloud` | off | Enable Ollama cloud backend |
 | `--loop` | off | Run continuously (single tick otherwise) |
 | `--serve` | off | Start local docs HTTP server alongside Aether |
 | `--serve-port PORT` | 8000 | Docs server port |
@@ -33,7 +32,7 @@ This is the standard startup command. It runs continuously: each tick polls for 
 
 Single run (no loop):
 ```bash
-cd Aether && python3 aether_tick.py --ollama-cloud
+cd Aether && python3 aether_tick.py
 ```
 
 ### View the Knowledge Graph
@@ -242,10 +241,10 @@ All Aether output can be logged to a file with the `--log` flag. The `Tee` class
 
 ```bash
 # Log to aether.log (relative to the Aether directory)
-python3 aether_tick.py --loop --ollama-cloud --log .aether_workspace/aether.log
+python3 aether_tick.py --loop --log .aether_workspace/aether.log
 
 # Log to an absolute path
-python3 aether_tick.py --loop --ollama-cloud --log /var/log/aether.log
+python3 aether_tick.py --loop --log /var/log/aether.log
 
 # Tail the log live
 tail -f .aether_workspace/aether.log

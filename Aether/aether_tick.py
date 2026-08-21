@@ -879,6 +879,14 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
                     else:
                         break
                 
+                # Junk parent titles must not be amplified into 0.85+ children:
+                # a fragment like "is a finitely supported `a : ℕ → ℤ` with"
+                # became "Deepening: is a finitely supported..." at p=0.95
+                # (audit 2026-08-21).
+                from fd_splitter import clean_title as _clean_title
+                if not _clean_title(title_clean):
+                    raise ValueError(
+                        f"parent title is a junk fragment: {title_clean[:60]!r}")
                 follow_up_title = f"Deepening: {title_clean[:80]}"
                 follow_up_desc = (
                     f"Building on cycle {job.job_id[:8]} (Q={job.quality_score:.3f}), "
@@ -919,6 +927,10 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
                     else:
                         break
                 
+                from fd_splitter import clean_title as _clean_title
+                if not _clean_title(title_clean):
+                    raise ValueError(
+                        f"parent title is a junk fragment: {title_clean[:60]!r}")
                 fill_title = f"Close Proofs: {title_clean[:70]}"
                 fill_desc = (
                     f"Cycle {job.job_id[:8]} (Q={job.quality_score:.3f}) proved "
@@ -2500,7 +2512,6 @@ def main():
     parser.add_argument("--novelty-slots", type=int, default=2,
                         help="Number of dispatch slots reserved for novelty/wild directions (default: 2)")
     parser.add_argument("--config", type=str, default=None)
-    parser.add_argument("--ollama-cloud", action="store_true")
     parser.add_argument("--loop", action="store_true",
                         help="Run continuously, sleeping between ticks")
     parser.add_argument("--interval", type=int, default=21600,
@@ -2523,58 +2534,4 @@ def main():
     print(f"[Tick] Logging all output to {log_path}")
 
     # Build config
-    if args.ollama_cloud:
-        import yaml
-        config_path = Path(args.config) if args.config else Path(__file__).parent / "config.yaml"
-        config = yaml.safe_load(config_path.read_text(encoding="utf-8")) if config_path.exists() else {}
-        config.setdefault("pi_agent", {}).setdefault("ollama_cloud", {})["enabled"] = True
-        extractor = KnowledgeExtractor(config=config)
-    else:
-        extractor = KnowledgeExtractor(config_path=args.config)
-
-    if args.serve:
-        start_docs_server(args.serve_port)
-
-    if args.loop:
-        # Mtime watchdog: snapshot file mtimes at startup. If any core file's
-        # mtime advances, the user has committed code changes directly (bypassing
-        # git pull), and we need to restart to load them. The SHA256 watchdog
-        # only fires on git pull, which doesn't catch this case (Sonic cycle bug).
-        _startup_mtimes = _snapshot_core_mtimes()
-        global _core_files_changed
-        print(f"[Tick] Loop mode — interval={args.interval}s, max_inflight={args.max_inflight}")
-        while True:
-            _core_files_changed = False
-            print(f"\n{'='*60}")
-            print(f"[Tick] Aether tick starting at {datetime.now(timezone.utc).isoformat()}")
-            try:
-                asyncio.run(tick(extractor, args.max_inflight, args.novelty_slots))
-            except Exception as e:
-                print(f"[Tick] Tick error: {e}")
-                import traceback
-                traceback.print_exc()
-            rebuild_commit_push()
-
-            # Watchdog 1: if core Python files changed after git pull, restart
-            if _core_files_changed:
-                print("[Watchdog] Restarting Aether process due to core file changes (post-pull)...")
-                os.execv(sys.executable, [sys.executable] + sys.argv)
-
-            # Watchdog 2: mtime drift — catches direct file edits / commits
-            # that bypass git pull (e.g. user committing locally with `git commit`)
-            if _check_mtime_drift(_startup_mtimes):
-                print("[Watchdog] Restarting Aether process due to mtime drift...")
-                os.execv(sys.executable, [sys.executable] + sys.argv)
-
-            _wake = datetime.now() + timedelta(seconds=args.interval)
-            print(f"[Tick] Sleeping {args.interval}s until next tick at "
-                  f"{_wake.strftime('%H:%M')}...")
-            time.sleep(args.interval)
-    else:
-        print(f"[Tick] Aether tick starting — max_inflight={args.max_inflight}, novelty_slots={args.novelty_slots}")
-        asyncio.run(tick(extractor, args.max_inflight, args.novelty_slots))
-        rebuild_commit_push()
-
-
-if __name__ == "__main__":
     main()

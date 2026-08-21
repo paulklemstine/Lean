@@ -3,8 +3,9 @@
 Direction Tournament Module: Option B Implementation.
 
 Packages batches of candidate directions (e.g. 5-10 directions) into an Aristotle
-evaluation job. Aristotle selects the top winner directions, writes formal Lean 4
-theorem stubs for them, and provides formal mathematical reasons to retire rejected ones.
+evaluation job. Aristotle DECIDES which directions to keep and which to purge —
+each is judged on its own mathematical merit, with no fixed winner quota — and
+provides formal mathematical reasons to retire rejected ones.
 """
 
 import argparse
@@ -80,13 +81,14 @@ class DirectionTournament:
     def build_tournament_prompt(
         self,
         directions: List[Any],
-        target_winners: int = 2,
+        target_winners: int = 2,  # deprecated & ignored: keep/purge is merit-based
     ) -> str:
         """Construct a prompt for Aristotle to evaluate candidate directions.
 
         Each direction is judged on its own mathematical merit — there is no
-        fixed quota of winners. Aristotle returns a single JSON file
-        ``tournament_results.json`` with the winner and rejection IDs.
+        fixed quota of winners or rejections. Aristotle DECIDES which to keep
+        and which to purge, and returns a single JSON file
+        ``tournament_results.json`` with per-direction verdicts.
         """
         import json as _json
         candidates = []
@@ -105,10 +107,13 @@ class DirectionTournament:
             "  - Is it non-trivial, well-defined, and mathematically fruitful?\n",
             "  - Is it actionable — can it lead to real theorems and proofs?\n",
             "  - Is it original, or redundant with known results?\n",
-            "There is NO fixed number of winners. Accept every direction that is",
-            "genuinely worth pursuing and reject every direction that is trivial,",
-            "redundant, ill-defined, or unproductive. The winners list may be long",
-            "or short depending on the actual quality of the batch.\n",
+            "You DECIDE which directions to KEEP and which to PURGE. There is NO",
+            "fixed number of either: keep every direction that is genuinely worth",
+            "pursuing and purge every direction that is trivial, redundant,",
+            "ill-defined, or unproductive. Depending on the batch, you may keep",
+            f"all {len(directions)}, purge all {len(directions)}, or anything in",
+            "between — the split must reflect the actual quality you observe, not",
+            "a target ratio.\n",
             f"Evaluate the following {len(directions)} candidate conjectures:\n",
             "```json",
             _json.dumps(candidates, indent=2),
@@ -117,12 +122,16 @@ class DirectionTournament:
             "## INSTRUCTIONS\n",
             "Write a single file named ``tournament_results.json`` containing ONLY this JSON:\n",
             "```json",
-            '{"winners": ["<id1>", "<id2>"], "rejections": ["<id3>", "<id4>"]}',
+            '{"winners": ["<id>", "..."], '
+            '"rejections": [{"id": "<id>", "reason": "<specific mathematical justification>"}, "..."]}',
             "```\n",
             "Rules:",
             "- Use the exact candidate IDs (e.g. fd_0421, seed_007).",
             "- List ALL candidates — every ID must appear in either winners or rejections.",
-            "- Judge each direction on its own merit; do not force a fixed number of winners.",
+            "- Judge each direction on its own merit; do not force a fixed number",
+            "  of winners or rejections, and do not split evenly.",
+            "- Every rejection MUST carry a specific reason naming the mathematical",
+            "  defect (trivial, redundant with X, ill-defined because Y, ...).",
             "- Output the JSON file and nothing else. No Markdown commentary, no Lean code.",
         ]
 

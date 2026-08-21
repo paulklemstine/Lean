@@ -5136,44 +5136,26 @@ Research mode: {concept.research_mode}
                         f"directions from cycle {job.job_id}"
                     )
                 else:
-                    # Fallback: pure-recap writeup — store as merged blob
-                    title_line = ""
-                    for line in fd_text.split("\n"):
-                        line = line.strip()
-                        if (line and not line.startswith("#")
-                                and not line.startswith("-") and len(line) > 10):
-                            title_line = line[:80]
-                            break
-                    if not title_line:
-                        title_line = (
-                            f"Future directions from cycle {job.job_id[:8]}"
-                        )
-
-                    if hasattr(fd_manager, '_fix_auto_title'):
-                        title_line = fd_manager._fix_auto_title(
-                            title_line, fd_text
-                        )
-
-                    fd = FutureDirection(
-                        id=fd_manager._next_id(),
-                        title=title_line,
-                        description=fd_text,
-                        source_exp_id=job.job_id,
-                        source_path=(
-                            str(job.project_dir)
-                            if job.project_dir
-                            else "future_directions_md"
-                        ),
-                        domains=fd_manager._infer_domains(fd_text),
-                        depth_estimate=3,
-                        priority_score=0.75,
-                        thread_id=getattr(job, "thread_id", "") or "",
-                    )
-                    fd_manager.add_direction(fd)
-                    fd_added = 1
+                    # A document the splitter cannot split is a recap blob, not a
+                    # direction. It used to be stored whole as one 0.75-priority
+                    # pseudo-direction (520 of them polluted the pool — 33% of
+                    # available — audit 2026-08-21). Now: keep the text for the
+                    # record (synthesis + quarantine file) and add nothing.
+                    try:
+                        fd_manager.store_synthesis(job.job_id, fd_text)
+                    except Exception:
+                        pass
+                    try:
+                        q_dir = Path(self.workspace) / "unsplitted_fd"
+                        q_dir.mkdir(parents=True, exist_ok=True)
+                        (q_dir / f"{job.job_id[:16]}.md").write_text(
+                            fd_text, encoding="utf-8")
+                    except Exception:
+                        pass
+                    fd_added = 0
                     print(
-                        f"[Cycle] Added 1 merged future direction "
-                        f"from cycle {job.job_id}"
+                        f"[Cycle] future_directions text from cycle {job.job_id} "
+                        f"was not splittable — quarantined, not added to the pool"
                     )
             else:
                 print(f"[Cycle] No future directions found for cycle {job.job_id}")
@@ -5426,29 +5408,20 @@ Research mode: {concept.research_mode}
                                     except Exception:
                                         pass
                             if fd_text:
-                                # Use the entire future_directions text as one single entry
-                                title_line = ""
-                                for line in fd_text.split("\n"):
-                                    line = line.strip()
-                                    if line and not line.startswith("#") and not line.startswith("-") and len(line) > 10:
-                                        title_line = line[:80]
-                                        break
-                                if not title_line:
-                                    title_line = f"Future directions from cycle {job.job_id[:8]}"
-                                fd = FutureDirection(
-                                    id=fd_manager._next_id(),
-                                    title=title_line,
-                                    description=fd_text,
-                                    source_exp_id=job.job_id,
-                                    source_path=str(job.project_dir) if job.project_dir else "future_directions_md",
-                                    domains=fd_manager._infer_domains(fd_text),
-                                    depth_estimate=3,
-                                    priority_score=0.75,
-                                    thread_id=getattr(job, "thread_id", "") or "",
+                                # Route through the section-aware splitter like
+                                # every other ingestion path — the old inline
+                                # whole-blob store could silently re-flood the
+                                # pool with merged pseudo-directions
+                                # (audit 2026-08-21).
+                                from fd_splitter import split_directions_from_text
+                                split_count, _ = split_directions_from_text(
+                                    fd_manager, fd_text, source_exp_id=job.job_id,
+                                    source_path=str(job.project_dir)
+                                    if job.project_dir else "future_directions_md",
                                 )
-                                fd_manager.add_direction(fd)
-                                fd_added = 1
-                                print(f"[Continuous] Added 1 future direction from cycle {job.job_id}")
+                                fd_added = split_count
+                                print(f"[Continuous] Split future_directions into "
+                                      f"{fd_added} directions from cycle {job.job_id}")
                             else:
                                 print(f"[Continuous] No future directions found for cycle {job.job_id}")
                             for d in fd_manager._directions:

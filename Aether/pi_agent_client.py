@@ -308,66 +308,9 @@ class PiAgentClient:
         self.ollama_base_url = ollama_base_url or self.OLLAMA_BASE_URL
         self.ollama_model = ollama_model  # None means auto-detect from local Ollama
 
-        # Ollama Cloud fallback configuration
-        _ocr = ollama_cloud or {}
-        self.ollama_cloud_enabled: bool = bool(_ocr.get("enabled", False))
-        # Load API key: env var > api_key_file > .env file
-        _api_key_env = _ocr.get("api_key_env", "OLLAMA_API_KEY")
-        self.ollama_cloud_api_key: str = os.getenv(_api_key_env, "")
-        if not self.ollama_cloud_api_key:
-            # Try reading from api_key_file
-            _api_key_file = _ocr.get("api_key_file", "")
-            if _api_key_file:
-                try:
-                    self.ollama_cloud_api_key = Path(_api_key_file).read_text().strip()
-                    print(f"[Pi-Agent] Loaded Ollama Cloud API key from {_api_key_file}")
-                except Exception:
-                    pass
-        if not self.ollama_cloud_api_key:
-            # Try .env file in Aether directory
-            _dotenv = Path(__file__).parent / ".env"
-            if _dotenv.exists():
-                try:
-                    for line in _dotenv.read_text().splitlines():
-                        line = line.strip()
-                        if line.startswith(f"{_api_key_env}=") and not line.startswith("#"):
-                            self.ollama_cloud_api_key = line.split("=", 1)[1].strip().strip("\"'")
-                            break
-                except Exception:
-                    pass
-        self.ollama_cloud_model: str = _ocr.get("model", "gpt-oss:120b-cloud")
-        self.ollama_cloud_base_url: str = _ocr.get("base_url", "https://ollama.com").rstrip("/")
-        self.ollama_cloud_timeout: int = int(_ocr.get("timeout", 600))
-
-        # OpenRouter fallback configuration
-        _or = openrouter or {}
-        self.openrouter_enabled: bool = bool(_or.get("enabled", True))
-        _or_api_key_env = _or.get("api_key_env", "OPENROUTER_API_KEY")
-        self.openrouter_api_key: str = os.getenv(_or_api_key_env, "")
-        if not self.openrouter_api_key:
-            _or_api_key_file = _or.get("api_key_file", "")
-            if _or_api_key_file:
-                try:
-                    self.openrouter_api_key = Path(_or_api_key_file).read_text().strip()
-                    print(f"[Pi-Agent] Loaded OpenRouter API key from {_or_api_key_file}")
-                except Exception:
-                    pass
-        if not self.openrouter_api_key:
-            # Try .env file in Aether directory
-            _dotenv = Path(__file__).parent / ".env"
-            if _dotenv.exists():
-                try:
-                    for line in _dotenv.read_text().splitlines():
-                        line = line.strip()
-                        if line.startswith(f"{_or_api_key_env}=") and not line.startswith("#"):
-                            self.openrouter_api_key = line.split("=", 1)[1].strip().strip("\"'")
-                            break
-                except Exception:
-                    pass
-        self.openrouter_model: str = _or.get("model", "google/gemini-2.5-flash")
-        self.openrouter_base_url: str = _or.get("base_url", "https://openrouter.ai/api/v1").rstrip("/")
-        self.openrouter_timeout: int = int(_or.get("timeout", 300))
-
+        # Ollama/OpenRouter configuration removed (2026-08-21): Aristotle is
+        # the pipeline's only LLM. Constructor kwargs are accepted for caller
+        # compatibility but ignored.
         # Use max timeout for client connection, use per-request timeouts for operations
         self.client = httpx.Client(timeout=httpx.Timeout(connect=30.0, read=7200.0, write=30.0, pool=30.0))
 
@@ -409,383 +352,79 @@ class PiAgentClient:
         `category` tags the call for per-tick LLM accounting (eval/breakthrough/
         critic/critic_tiebreak/lint/pruning/other); defaults to "other".
         """
-        # Check if bypass_all_local_llm feature flag is enabled
+        # Aristotle is the pipeline's only LLM (2026-08-21): the local
+        # Ollama/OpenRouter tiers were removed. Every call returns the
+        # category-appropriate stub; callers' heuristic fallbacks are the
+        # production behavior.
+        import json
         try:
-            import yaml
-            import sys
-            is_testing = 'pytest' in sys.modules
-            with open("config.yaml", "r") as f:
-                cfg = yaml.safe_load(f)
-            if cfg.get("features", {}).get("bypass_all_local_llm", False) and not is_testing:
-                import json
-                if category == "eval":
-                    has_sorry = "sorry" in user
-                    return json.dumps({
-                        "quality": "partial" if has_sorry else "substantial",
-                        "should_retry": has_sorry,
-                        "retry_strategy": "Fix remaining sorries." if has_sorry else "",
-                        "confidence": 1.0,
-                        "analysis": "Bypassed LLM evaluation because bypass_all_local_llm is enabled."
-                    })
-                elif category == "breakthrough":
-                    return "incremental"
-                elif category == "critic":
-                    return json.dumps({
-                        "correctness": {"score": 1.0, "rationale": "Bypassed"},
-                        "novelty": {"score": 0.8, "rationale": "Bypassed"},
-                        "depth": {"score": 0.8, "rationale": "Bypassed"},
-                        "presentation": {"score": 0.8, "rationale": "Bypassed"},
-                        "proof_depth": 0.8,
-                        "cross_domain": 0.8,
-                        "artifact_richness": 0.0,
-                        "actionability": 0.0,
-                        "importance": 0.8,
-                        "usefulness": 0.8,
-                        "applications": 0.8,
-                        "catalog_anchoring": 0.8,
-                        "novelty_score": 0.8,
-                        "depth_score": 0.8,
-                        "fun": 8,
-                        "impact": 8,
-                        "solid": 8
-                    })
-                elif category == "abduction":
-                    return json.dumps({
-                        "title": "Bypassed Direction",
-                        "description": "Bypassed because bypass_all_local_llm is enabled.",
-                        "proof_strategy": "Bypassed"
-                    })
-                elif category == "thread_promise":
-                    return json.dumps({
-                        "promise_score": 0.8,
-                        "recommendation": "continue",
-                        "rationale": "Bypassed"
-                    })
-                elif category == "pruning":
-                    return json.dumps({
-                        "decisions": []
-                    })
-                else:
-                    return json.dumps({
-                        "title": "Bypassed",
-                        "description": "Bypassed",
-                        "proof_strategy": "Bypassed",
-                        "catalog_references": [],
-                        "domain_bridges": [],
-                        "ambition_level": "extension",
-                        "lean_theorem_stub": "Bypassed",
-                        "novelty_score": 0.8,
-                        "novelty": 8,
-                        "depth": 8,
-                        "impact": 8,
-                        "fun": 8,
-                        "solid": 8,
-                        "decisions": []
-                    })
-        except Exception as e:
-            print(f"[Pi-Agent] Bypass check failed: {e}")
-
-        # Phase 0 instrumentation: count every LLM dispatch by category.
-        try:
-            self.llm_stats["calls"]["total"] += 1
-            self.llm_stats["calls"][category] = self.llm_stats["calls"].get(category, 0) + 1
+            self.llm_stats["skipped"][category] = self.llm_stats["skipped"].get(category, 0) + 1
         except Exception:
             pass
-
-        # If user explicitly wants local Ollama (dev/testing), go straight there
-        if self.use_ollama:
-            return self._call_ollama_local(system, user, timeout=timeout)
-
-        # Tier 1: Ollama Cloud (only if enabled and configured)
-        if self.ollama_cloud_enabled and self.ollama_cloud_api_key:
-            print("[Pi-Agent] → calling Ollama Cloud")
-            cloud_result = self._call_ollama_cloud(system, user, timeout=timeout)
-            if not cloud_result.startswith(("[OLLAMA_CLOUD_ERROR", "[OLLAMA_CLOUD_TIMEOUT")):
-                return cloud_result
-            print(f"[Pi-Agent] Ollama Cloud failed ({cloud_result[:80]}), falling back to OpenRouter")
-        elif self.ollama_cloud_enabled and not self.ollama_cloud_api_key:
-            print("[Pi-Agent] Ollama Cloud enabled but no API key set")
-        else:
-            print("[Pi-Agent] Ollama Cloud not enabled")
-
-        # Tier 2: OpenRouter (only if enabled and configured)
-        if self.openrouter_enabled and self.openrouter_api_key:
-            print("[Pi-Agent] → calling OpenRouter")
-            or_result = self._call_openrouter(system, user, timeout=timeout)
-            if not or_result.startswith(("[OPENROUTER_ERROR", "[OPENROUTER_TIMEOUT")):
-                return or_result
-            print(f"[Pi-Agent] OpenRouter also failed ({or_result[:80]})")
-        elif self.openrouter_enabled and not self.openrouter_api_key:
-            print("[Pi-Agent] OpenRouter enabled but no API key set")
-        else:
-            print("[Pi-Agent] OpenRouter not enabled")
-
-        return "[API_ERROR] All API tiers failed (Ollama Cloud and OpenRouter exhausted/disabled)."
-
-    def _call_ollama_local(self, system: str, user: str, timeout: Optional[int] = None) -> str:
-        """Call a local Ollama instance via its OpenAI-compatible API.
-
-        If ollama_model is not explicitly set, auto-detects available models.
-        Tries models in order: configured model -> cloud model -> first available.
-        """
-        request_timeout = timeout or self.timeout
-
-        # Determine which model to use: explicit config > auto-detect
-        if self.ollama_model:
-            models_to_try = [self.ollama_model]
-        else:
-            # Auto-detect: try cloud model first, then discover local models
-            models_to_try = []
-            if self.model:
-                models_to_try.append(self.model)
-            # Try to discover available local models
-            try:
-                tags_resp = self.client.get(
-                    f"{self.ollama_base_url}/api/tags",
-                    timeout=10,
-                )
-                if tags_resp.status_code == 200:
-                    tags_data = tags_resp.json()
-                    local_models = [m["name"] for m in tags_data.get("models", [])]
-                    for m in local_models:
-                        if m not in models_to_try:
-                            models_to_try.append(m)
-            except Exception:
-                pass
-            if not models_to_try:
-                models_to_try = [self.model or "llama3"]
-
-        url = f"{self.ollama_base_url}/v1/chat/completions"
-
-        for model in models_to_try:
-            print(f"[Pi-Agent] → calling Ollama (model={model}, url={url}, timeout={request_timeout}s)")
-            payload = {
-                "model": model,
-                "messages": [
-                    {"role": "system", "content": system},
-                    {"role": "user", "content": user}
-                ],
-                "temperature": 0.85,
-            }
-
-            try:
-                response = self.client.post(
-                    url,
-                    json=payload,
-                    timeout=request_timeout,
-                )
-                # If model not found (404), try next model
-                if response.status_code == 404:
-                    print(f"[Pi-Agent] ← model '{model}' not found locally, trying next")
-                    continue
-                response.raise_for_status()
-                data = response.json()
-                content = data["choices"][0]["message"]["content"]
-
-                # Remember which model worked for future calls
-                self.ollama_model = model
-
-                response_preview = content[:500].replace('\n', ' ')
-                print(f"[Pi-Agent] ← Ollama response ({len(content)} chars, model={model})")
-                print(f"[Pi-Agent]   {response_preview}...")
-
-                return content
-            except httpx.TimeoutException:
-                print(f"[Pi-Agent] ← Ollama TIMEOUT with model={model} after {request_timeout}s")
-                # Don't try other models on timeout — it's a connectivity issue
-                return f"[OLLAMA_TIMEOUT: Request timed out after {request_timeout}s]"
-            except httpx.HTTPStatusError as e:
-                if e.response.status_code == 404:
-                    print(f"[Pi-Agent] ← model '{model}' not found locally, trying next")
-                    continue
-                err_msg = str(e)
-                if e.response:
-                    err_msg += f" - {e.response.text[:200]}"
-                print(f"[Pi-Agent] ← Ollama error: {err_msg}")
-                return f"[OLLAMA_ERROR: {err_msg}]"
-            except Exception as e:
-                err_msg = str(e)
-                if hasattr(e, 'response') and e.response:
-                    err_msg += f" - {e.response.text}"
-                print(f"[Pi-Agent] ← Ollama exception: {type(e).__name__}: {err_msg}")
-                return f"[OLLAMA_ERROR: {err_msg}]"
-
-        return f"[OLLAMA_ERROR: No available model found. Tried: {', '.join(models_to_try)}]"
-
-    def _call_ollama_cloud(self, system: str, user: str, timeout: Optional[int] = None) -> str:
-        """Call Ollama Cloud API as a fallback when Pollinations is depleted.
-
-        Uses the same OpenAI-compatible /v1/chat/completions endpoint as local
-        Ollama, but at the Ollama Cloud host with Bearer auth.
-        """
-        if not self.ollama_cloud_enabled or not self.ollama_cloud_api_key:
-            return "[OLLAMA_CLOUD_ERROR: Ollama Cloud not configured or API key missing]"
-
-        request_timeout = timeout or self.ollama_cloud_timeout
-        model = self.ollama_cloud_model
-        url = f"{self.ollama_cloud_base_url}/v1/chat/completions"
-        print(f"[Pi-Agent] → calling Ollama Cloud (model={model}, timeout={request_timeout}s)")
-
-        headers = {
-            "Authorization": f"Bearer {self.ollama_cloud_api_key}",
-            "Content-Type": "application/json",
-        }
-        payload = {
-            "model": model,
-            "messages": [
-                {"role": "system", "content": system},
-                {"role": "user", "content": user}
-            ],
-            "temperature": 0.85,
-        }
-
-        try:
-            response = self.client.post(
-                url,
-                headers=headers,
-                json=payload,
-                timeout=request_timeout,
-            )
-            response.raise_for_status()
-            data = response.json()
-            content = data["choices"][0]["message"]["content"]
-
-            response_preview = content[:500].replace('\n', ' ')
-            print(f"[Pi-Agent] ← Ollama Cloud response ({len(content)} chars)")
-            print(f"[Pi-Agent]   {response_preview}...")
-            return content
-        except httpx.TimeoutException:
-            print(f"[Pi-Agent] ← Ollama Cloud TIMEOUT after {request_timeout}s")
-            return f"[OLLAMA_CLOUD_TIMEOUT: Request timed out after {request_timeout}s]"
-        except Exception as e:
-            err_msg = str(e)
-            if hasattr(e, 'response') and e.response:
-                err_msg += f" - {e.response.text}"
-            print(f"[Pi-Agent] ← Ollama Cloud exception: {type(e).__name__}: {err_msg}")
-            return f"[OLLAMA_CLOUD_ERROR: {err_msg}]"
-
-    def _call_openrouter(self, system: str, user: str, timeout: Optional[int] = None) -> str:
-        """Call OpenRouter API as a fallback when other tiers fail.
-
-        If the primary model is a free model and fails, automatically falls back
-        to alternative free models (Qwen, Llama, or general free router) to handle
-        transient provider rate limits (429).
-        """
-        if not self.openrouter_enabled or not self.openrouter_api_key:
-            return "[OPENROUTER_ERROR: OpenRouter not configured or API key missing]"
-
-        request_timeout = timeout or self.openrouter_timeout
-        primary_model = self.openrouter_model
-        url = f"{self.openrouter_base_url}/chat/completions"
-
-        models_to_try = [primary_model]
-        if primary_model.endswith(":free"):
-            fallbacks = [
-                "meta-llama/llama-3.3-70b-instruct:free",
-                "openrouter/free"
-            ]
-            for f in fallbacks:
-                if f not in models_to_try:
-                    models_to_try.append(f)
-
-        headers = {
-            "Authorization": f"Bearer {self.openrouter_api_key}",
-            "Content-Type": "application/json",
-            "HTTP-Referer": "https://github.com/paulklemstine/Lean",
-            "X-Title": "Aether Research",
-        }
-
-        last_error = ""
-        for model in models_to_try:
-            print(f"[Pi-Agent] → calling OpenRouter (model={model}, timeout={request_timeout}s)")
-            payload = {
-                "model": model,
-                "messages": [
-                    {"role": "system", "content": system},
-                    {"role": "user", "content": user}
-                ],
-                "temperature": 0.85,
-            }
-
-            max_retries = 3
-            for attempt in range(max_retries):
-                try:
-                    response = self.client.post(
-                        url,
-                        headers=headers,
-                        json=payload,
-                        timeout=request_timeout,
-                    )
-                    response.raise_for_status()
-                    data = response.json()
-                    
-                    if data and "error" in data:
-                        err_msg = data["error"].get("message", str(data["error"])) if isinstance(data["error"], dict) else str(data["error"])
-                        raise Exception(f"OpenRouter returned 200 OK with error: {err_msg}")
-                        
-                    if not data or not data.get("choices"):
-                        raise Exception(f"OpenRouter returned empty or invalid choices. Data: {data}")
-                        
-                    message_obj = data["choices"][0].get("message") or {}
-                    content = message_obj.get("content") or ""
-    
-                    response_preview = content[:500].replace('\n', ' ')
-                    print(f"[Pi-Agent] ← OpenRouter response ({len(content)} chars, model={model})")
-                    print(f"[Pi-Agent]   {response_preview}...")
-                    return content
-                except httpx.TimeoutException:
-                    print(f"[Pi-Agent] ← OpenRouter TIMEOUT with model={model} after {request_timeout}s")
-                    last_error = f"[OPENROUTER_TIMEOUT: Request timed out after {request_timeout}s]"
-                    break
-                except httpx.HTTPStatusError as e:
-                    if e.response.status_code == 429:
-                        retry_after = 5
-                        err_msg_text = ""
-                        try:
-                            if 'Retry-After' in e.response.headers:
-                                retry_after = float(e.response.headers['Retry-After'])
-                            else:
-                                err_data = e.response.json()
-                                if err_data and isinstance(err_data.get('error'), dict):
-                                    err_msg_text = str(err_data['error'].get('message', ''))
-                                    if 'metadata' in err_data['error']:
-                                        retry_after = float(err_data['error']['metadata'].get('retry_after_seconds', 5))
-                        except Exception:
-                            err_msg_text = getattr(e.response, "text", "")
-                            
-                        print(f"[Pi-Agent] ← OpenRouter rate limited (429) on model={model}. Message: {err_msg_text}. Waiting {retry_after}s (attempt {attempt+1}/{max_retries})")
-                        
-                        if "free" in model.lower():
-                            print(f"[Pi-Agent] ← OpenRouter free model rate limited. Skipping retries.")
-                            last_error = f"[OPENROUTER_ERROR: Rate limited (free model skipped). {err_msg_text}]"
-                            break
-
-                        if retry_after > 120 or "limit reached" in err_msg_text.lower() or "limit" in err_msg_text.lower():
-                            print(f"[Pi-Agent] ← OpenRouter hard rate limit detected. Aborting retries.")
-                            last_error = f"[OPENROUTER_ERROR: Rate limited (hard limit). {err_msg_text}]"
-                            break
-                            
-                        time.sleep(retry_after + 0.5)
-                        if attempt < max_retries - 1:
-                            continue
-                        last_error = f"[OPENROUTER_ERROR: Rate limited after {max_retries} retries]"
-                        break
-                    
-                    err_msg = str(e)
-                    if hasattr(e, 'response') and e.response:
-                        err_msg += f" - {e.response.text}"
-                    print(f"[Pi-Agent] ← OpenRouter exception with model={model}: {type(e).__name__}: {err_msg}")
-                    last_error = f"[OPENROUTER_ERROR: {err_msg}]"
-                    break
-                except Exception as e:
-                    err_msg = str(e)
-                    if hasattr(e, 'response') and e.response:
-                        err_msg += f" - {e.response.text}"
-                    print(f"[Pi-Agent] ← OpenRouter exception with model={model}: {type(e).__name__}: {err_msg}")
-                    last_error = f"[OPENROUTER_ERROR: {err_msg}]"
-                    break
-
-        return last_error
+        if category == "eval":
+            has_sorry = "sorry" in user
+            return json.dumps({
+                "quality": "partial" if has_sorry else "substantial",
+                "should_retry": has_sorry,
+                "retry_strategy": "Fix remaining sorries." if has_sorry else "",
+                "confidence": 1.0,
+                "llm_eval": False,
+                "analysis": "Local LLM removed; Aristotle is the only evaluator."
+            })
+        elif category == "breakthrough":
+            return "incremental"
+        elif category == "critic":
+            return json.dumps({
+                "correctness": {"score": 1.0, "rationale": "Local LLM removed"},
+                "novelty": {"score": 0.8, "rationale": "Local LLM removed"},
+                "depth": {"score": 0.8, "rationale": "Local LLM removed"},
+                "presentation": {"score": 0.8, "rationale": "Local LLM removed"},
+                "proof_depth": 0.8,
+                "cross_domain": 0.8,
+                "artifact_richness": 0.0,
+                "actionability": 0.0,
+                "importance": 0.8,
+                "usefulness": 0.8,
+                "applications": 0.8,
+                "catalog_anchoring": 0.8,
+                "novelty_score": 0.8,
+                "depth_score": 0.8,
+                "fun": 8,
+                "impact": 8,
+                "solid": 8
+            })
+        elif category == "abduction":
+            return json.dumps({
+                "title": "Bypassed Direction",
+                "description": "Local LLM removed; Aristotle is the only LLM.",
+                "proof_strategy": "Bypassed"
+            })
+        elif category == "thread_promise":
+            return json.dumps({
+                "promise_score": 0.8,
+                "recommendation": "continue",
+                "rationale": "Local LLM removed"
+            })
+        elif category == "pruning":
+            return json.dumps({
+                "decisions": []
+            })
+        return json.dumps({
+            "title": "Bypassed",
+            "description": "Local LLM removed; Aristotle is the only LLM.",
+            "proof_strategy": "Bypassed",
+            "catalog_references": [],
+            "domain_bridges": [],
+            "ambition_level": "extension",
+            "lean_theorem_stub": "Bypassed",
+            "novelty_score": 0.8,
+            "novelty": 8,
+            "depth": 8,
+            "impact": 8,
+            "fun": 8,
+            "solid": 8,
+            "decisions": []
+        })
 
     def _parse_json_response(self, raw: str) -> Optional[Dict[str, Any]]:
         """Try to extract JSON from an LLM response.
@@ -2124,6 +1763,24 @@ class PiAgentClient:
             Write a `FUTURE_DIRECTIONS.md` that lists 3–5 **bold, testable** conjectures
             derived from Stage 3 and Stage 4. Each conjecture must include a
             "The key insight is..." sentence and a "Why now?" justification.
+
+            ADDITIONALLY — machine-readable directions block (REQUIRED). In
+            FUTURE_DIRECTIONS.md, after the prose sections, emit a fenced JSON
+            array named future_directions.json with one object per direction
+            (3–6 entries), each with exactly these keys:
+            ```json
+            [{"title": "<short noun-phrase name, NOT a sentence>",
+              "domain": "<one of: NumberTheory, Algebra, Geometry, Combinatorics, Computation, Physics, Probability, Cryptography, Logic, MachineLearning, Tropical, Bridges>",
+              "description": "<2-4 sentences: the conjecture, the approach, why it matters>",
+              "conjecture": "<the precise mathematical claim>",
+              "test": "<how to test or formalize it>",
+              "if_true": "<consequence if true>",
+              "if_false": "<consequence if false>",
+              "proof_strategy": "<sketch of the proof route>",
+              "catalog_references": ["<Catalog.lean.module>"]}]
+
+            Titles must be noun phrases ("Silver-Ratio Spectral Gap for Pell Spines"),
+            never sentences or recaps ("This cycle proved..." is forbidden).
 
             ### Perpetual Scientific Iteration (do not stop at first synthesis)
             When the research team comes together with results, do not stop. Treat the

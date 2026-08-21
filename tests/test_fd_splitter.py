@@ -73,7 +73,11 @@ class TestCleanTitle:
     def test_bare_number_rejected(self):
         assert clean_title("42.") is None
     def test_short_lowercase_rejected(self):
-        assert clean_title("horizontal cut") is None
+        # Sentence-starter fragments are rejected; technical lowercase noun
+        # phrases ("p-adic dynamics", "horizontal cut") are legitimately titles.
+        assert clean_title("we proved the theorem") is None
+        assert clean_title("this approach is nice") is None
+        assert clean_title("horizontal cut") is not None
     def test_valid_direction_kept(self):
         title = clean_title("Prove a generalization of the Riemann hypothesis")
         assert title is not None
@@ -288,3 +292,229 @@ but realistic hardware exhibits biased noise.
         added, _ = split_directions_from_text(mgr, blob, "test_cycle", "fd")
         assert added >= 2, f"Expected >=2 from merged blob, got {added}"
         assert all(d.source_exp_id == "test_cycle" for d in mgr._directions)
+
+
+# ── 2026-08-21 splitter overhaul: regression tests for the audited bugs ──
+
+import json
+import tempfile
+from pathlib import Path
+
+
+class _FakeMgr:
+    """Minimal manager stand-in exercising the real gates."""
+
+    def __init__(self):
+        from research_memory import FutureDirectionsManager
+        self._mgr = FutureDirectionsManager(Path(tempfile.mkdtemp()))
+        self.added = []
+
+    def _next_id(self):
+        return f"fd_t{len(self.added):04d}"
+
+    def _is_quality_direction(self, fd):
+        return self._mgr._is_quality_direction(fd)
+
+    def _compute_quality_score(self, fd):
+        return 0.6
+
+    def _extract_bold_field(self, body, name):
+        import re as _re
+        m = _re.search(rf'\*\*{name}\*\*:?\s*(.+)', body)
+        return m.group(1).strip() if m else None
+
+    def add_direction(self, fd):
+        from research_memory import FutureDirectionsManager
+        ok = self._mgr.add_direction(fd)
+        if ok:
+            self.added.append(fd)
+        return ok
+
+    @property
+    def directions(self):
+        return self._mgr._directions
+
+
+def _split(text):
+    from fd_splitter import split_directions_from_text
+    mgr = _FakeMgr()
+    count, _ = split_directions_from_text(mgr, text, source_exp_id="test")
+    return count, [d.title for d in mgr.added], mgr
+
+
+class TestBulletRegexFix:
+    def test_bold_runins_no_phantom_bullets(self):
+        """A document with bold run-ins but NO real bullets must not be
+        hijacked by the bullets stage (was: '**Conjecture.** text' matched)."""
+        text = (
+            "# Future Directions\n\n"
+            "## 1. Spectral gap for Pell spines\n\n"
+            "**Conjecture.** The silver-ratio potential has a spectral gap.\n\n"
+            "**Why now?** The machinery exists.\n\n"
+            "## 2. p-adic Berggren dynamics\n\n"
+            "**Conjecture.** The moves contract p-adically.\n"
+        )
+        count, titles, _ = _split(text)
+        assert count >= 2
+        for t in titles:
+            assert not t.startswith("**"), t
+            assert "Conjecture." not in t[:20] or "spectral" in t.lower(), t
+
+
+class TestCleanedTitlesStored:
+    def test_headers_path_strips_numbering(self):
+        text = (
+            "## 1. Certified finite-prefix null tests for pi\n\n"
+            "We will formalize a null test. The approach: prove the theorem "
+            "by constructing the finite prefix and extending it to all reals. "
+            "This is an open direction worth pursuing next.\n"
+        )
+        count, titles, _ = _split(text)
+        assert count == 1
+        assert not titles[0].startswith("1."), titles
+
+    def test_clean_title_v2_rejections(self):
+        from fd_splitter import clean_title
+        # narration fragments
+        assert clean_title("The file `Catalog/X.lean` now consists of ten files") is None
+        assert clean_title("The following are concrete conjectures") is None
+        assert clean_title("This work formalizes the notion") is None
+        # past-tense recaps
+        assert clean_title("The prime theorem is established for all n") is None
+        assert clean_title("Qualitative synchronized stabilization has been proved") is None
+        # multi-sentence
+        assert clean_title("First idea here. Second sentence follows") is None
+        # over-long
+        assert clean_title("x" * 130) is None
+        # good noun phrases still pass
+        assert clean_title("Silver-Ratio Spectral Gap for Pell Spines") is not None
+        assert clean_title("p-adic Dynamics of the Berggren Moves") is not None
+
+
+class TestRecapHandling:
+    def test_synthesis_section_stripped(self):
+        from fd_splitter import classify_header
+        assert classify_header("Synthesis") == "recap"
+        assert classify_header("Conclusions") == "recap"
+
+    def test_mixed_recap_header_keeps_items(self):
+        """A header containing a recap stem must NOT nuke real directions
+        inside the section (was: 'RESULT' in header deleted 4954 chars)."""
+        text = (
+            "# Results and Future Directions\n\n"
+            "1. **Pell spine rigidity** Extend the extremal rigidity to "
+            "higher spines. Prove the conjecture for all n and formalize "
+            "the growth bound in Lean.\n\n"
+            "2. **Totient arm classification** Classify the star arms by "
+            "Euler's totient. Show the count matches phi and generalize it.\n"
+        )
+        count, titles, _ = _split(text)
+        assert count >= 2, f"mixed-header items were nuked: {titles}"
+
+
+class TestJSONFirstBranch:
+    def test_json_block_parsed(self):
+        directions = [
+            {"title": "Silver-Ratio Spectral Gap",
+             "domain": "NumberTheory",
+             "description": "Prove the spectral gap for the silver potential along Pell spines.",
+             "conjecture": "The potential has a uniform gap.",
+             "test": "Formalize the bound in Lean.",
+             "if_true": "Growth exponent is exact.",
+             "if_false": "The spine is not extremal.",
+             "proof_strategy": "Window lemma + monotonicity.",
+             "catalog_references": ["Catalog.Pythagorean.BerggrenTrees"]},
+            {"title": "p-adic Contraction of Berggren Moves",
+             "domain": "NumberTheory",
+             "description": "Show the hyperbolic move contracts p-adically on the null cone.",
+             "conjecture": "Contraction holds for all odd p.",
+             "test": "Compute orbits mod p^k.",
+             "if_true": "p-adic fractal boundary.",
+             "if_false": "Orbits are dense.",
+             "proof_strategy": "Spectral classification mod p.",
+             "catalog_references": []},
+        ]
+        text = (
+            "## Synthesis\n\nThis cycle went well.\n\n"
+            "## Future Directions\n\nProse directions here that would "
+            "otherwise feed the low paths and could produce junk titles.\n\n"
+            "```json\n" + json.dumps(directions) + "\n```\n"
+        )
+        count, titles, mgr = _split(text)
+        assert count == 2, titles
+        assert titles[0] == "Silver-Ratio Spectral Gap"
+        d0 = mgr.added[0]
+        assert d0.proof_strategy == "Window lemma + monotonicity."
+        assert d0.catalog_references == ["Catalog.Pythagorean.BerggrenTrees"]
+        assert d0.priority_score >= 0.55  # high-fidelity floor
+
+    def test_no_json_falls_back_to_cascade(self):
+        text = (
+            "# Future Directions\n\n"
+            "1. **Plain numbered path** Prove the theorem by extending the "
+            "core result and formalizing the general case in Lean.\n"
+        )
+        count, titles, _ = _split(text)
+        assert count == 1
+
+
+class TestNumberedBoldDescriptionTruncation:
+    def test_last_item_does_not_swallow_document(self):
+        text = (
+            "## Future Directions\n\n"
+            "1. **First direction** Prove the first conjecture by extending "
+            "the core lemma and formalizing it.\n\n"
+            "2. **Second direction** Show the general case holds and "
+            "formalize the bound.\n\n"
+            "## Synthesis\n\nThis cycle deepened the theory considerably "
+            "and we proved many theorems.\n"
+        )
+        count, titles, mgr = _split(text)
+        assert count >= 2
+        last = mgr.added[-1]
+        assert "Synthesis" not in last.description
+        assert "deepened the theory" not in last.description
+
+
+class TestAddDirectionReturnsBool:
+    def test_true_on_insert_false_on_dedup(self):
+        from research_memory import FutureDirectionsManager, FutureDirection
+        mgr = FutureDirectionsManager(Path(tempfile.mkdtemp()))
+        fd = FutureDirection(id="fd_a1", title="Unique Direction Alpha",
+                             description="Prove the theorem about alpha.",
+                             source_exp_id="t", source_path="t")
+        assert mgr.add_direction(fd) is True
+        fd2 = FutureDirection(id="fd_a2", title="Unique Direction Alpha",
+                              description="Prove the theorem about alpha again.",
+                              source_exp_id="t", source_path="t")
+        assert mgr.add_direction(fd2) is False
+
+    def test_title_overlap_dedup(self):
+        from research_memory import FutureDirectionsManager, FutureDirection
+        mgr = FutureDirectionsManager(Path(tempfile.mkdtemp()))
+        fd = FutureDirection(id="fd_b1", title="Derived from the analysis of cycles",
+                             description="Prove the alpha bound.",
+                             source_exp_id="t", source_path="t")
+        assert mgr.add_direction(fd) is True
+        fd2 = FutureDirection(id="fd_b2", title="Derived from the analysis of cycles 2",
+                              description="Prove the beta bound.",
+                              source_exp_id="t", source_path="t")
+        assert mgr.add_direction(fd2) is False, "near-identical titles must dedup"
+
+
+class TestQualityGateSignals:
+    def test_terse_conjecture_passes(self):
+        from research_memory import FutureDirectionsManager, FutureDirection
+        mgr = FutureDirectionsManager(Path(tempfile.mkdtemp()))
+        fd = FutureDirection(id="fd_c1", title="Zeta Function Pole Count",
+                             description="Conjecture: the pole count is exactly two.",
+                             source_exp_id="t", source_path="t", domains=["NumberTheory"])
+        assert mgr._is_quality_direction(fd) is True
+
+    def test_padded_no_signal_fails(self):
+        from research_memory import FutureDirectionsManager, FutureDirection
+        mgr = FutureDirectionsManager(Path(tempfile.mkdtemp()))
+        fd = FutureDirection(id="fd_c2", title="Cycle Recap Notes",
+                             description=("This cycle deepened the theory. " * 10),
+                             source_exp_id="t", source_path="t", domains=["Algebra"])
+        assert mgr._is_quality_direction(fd) is False

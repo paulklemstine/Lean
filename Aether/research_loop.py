@@ -91,8 +91,6 @@ def main():
                         help="Seconds between polls (continuous mode)")
     parser.add_argument("--config", type=str, default=None,
                         help="Path to config.yaml")
-    parser.add_argument("--ollama-cloud", action="store_true",
-                        help="Enable Ollama Cloud as fallback when Pollinations is depleted")
     args = parser.parse_args()
 
     # Mirror all console output to a timestamped log file
@@ -106,59 +104,4 @@ def main():
     print(f"[Aether] Logging to {log_path}")
 
     # Enable Ollama Cloud fallback in config BEFORE constructing KnowledgeExtractor
-    if args.ollama_cloud:
-        import yaml
-        config_path = Path(args.config) if args.config else Path(__file__).parent / "config.yaml"
-        config = yaml.safe_load(config_path.read_text(encoding="utf-8")) if config_path.exists() else {}
-        config.setdefault("pi_agent", {}).setdefault("ollama_cloud", {})["enabled"] = True
-        extractor = KnowledgeExtractor(config=config)
-    else:
-        extractor = KnowledgeExtractor(config_path=args.config)
-
-    print("=" * 60)
-    print("AETHER: Autonomous Mathematical Knowledge Discovery Engine")
-    print("=" * 60)
-    print(f"  Catalog:  {extractor.catalog_root}")
-    print(f"  Pi model: {extractor.config.get('pi_agent', {}).get('model', 'unknown')}")
-    print(f"  Aristotle: configured = {bool(extractor.config.get('aristotle', {}).get('api_key'))}")
-    print(f"  Verified files: {len(list(extractor.catalog_root.glob('**/*.lean')))}")
-    print("=" * 60)
-
-    if args.dry_run:
-        job = extractor.discover(forced_domain=args.domain)
-        extractor.dispatch(job, dry_run=True)
-        print(f"\n[Dry Run] Would dispatch: {job.concept.title}")
-        print(f"  Domain: {job.concept.domain}")
-        print(f"  Mode: {job.concept.research_mode}")
-        print(f"  Novelty: {job.concept.novelty_estimate:.2f}")
-        print(f"  Breakthrough: {job.concept.breakthrough_potential:.2f}")
-        print(f"  Description: {job.concept.concept_description[:200]}...")
-
-    elif args.single_cycle:
-        print(f"\n[Single Cycle] Starting...")
-        job = extractor.run_single_cycle(forced_domain=args.domain)
-        print(f"\n[Complete] Status: {job.status}")
-        print(f"  Score: {job.quality_score:.3f}")
-        print(f"  Theorems: {job.theorem_count}, Sorries: {job.sorry_count}")
-        print(f"  Has demo: {bool(job.result_demo)}")
-        print(f"  Has paper: {bool(job.result_paper)}")
-
-    elif args.continuous:
-        print(f"\n[Continuous] max_inflight={args.max_inflight}, "
-              f"max_cycles={args.max_cycles}, poll={args.poll_interval}s")
-        asyncio.run(extractor.run_continuous(
-            max_inflight=args.max_inflight,
-            max_cycles=args.max_cycles,
-            poll_interval=args.poll_interval,
-        ))
-
-    else:
-        print("\nUse --single-cycle, --continuous, or --dry-run")
-        print("Examples:")
-        print("  python3 research_loop.py --dry-run")
-        print("  python3 research_loop.py --single-cycle --domain tropical")
-        print("  python3 research_loop.py --continuous --max-inflight 3")
-
-
-if __name__ == "__main__":
     main()

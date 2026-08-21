@@ -205,7 +205,7 @@ The following biases were removed:
 ### Local loop (no GitHub Actions minutes)
 
 ```bash
-cd Aether && python3 aether_tick.py --loop --ollama-cloud --max-inflight 6 --novelty-slots 2 --interval 1800 --serve
+cd Aether && python3 aether_tick.py --loop --max-inflight 6 --novelty-slots 2 --interval 1800 --serve
 ```
 
 This is the standard startup command. It runs continuously: each tick polls for completed jobs, integrates them, dispatches new ones, rebuilds the website (`update_index.py`), syncs to `docs/`, commits, and pushes to git. The `--serve` flag starts a local docs HTTP server at `http://localhost:8000`.
@@ -216,7 +216,7 @@ Other flags:
 - `--interval SECONDS` — sleep between ticks (default 21600 = 6h)
 - `--serve` — start local docs server alongside Aether
 - `--serve-port PORT` — docs server port (default 8000)
-- Single run (no loop): `python3 aether_tick.py --ollama-cloud`
+- Single run (no loop): `python3 aether_tick.py`
 
 ### Oracle Cloud Free Tier Deployment
 
