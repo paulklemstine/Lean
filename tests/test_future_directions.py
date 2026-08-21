@@ -161,6 +161,95 @@ class TestTournamentInjectedExemption:
         assert d2.prune_reason == "tournament_rejected: rejected in aristotle tournament"
 
 
+class TestSaveResilience:
+    """Batch 1 defuse: the auto-archive time bomb and the corrupt-JSON pool wipe.
+
+    Regression basis (audit 2026-08-21): the live archive contained a legacy
+    bare-list part (archive_part_0006.json); archive_completed_directions calls
+    .get() on it, the AttributeError escapes _save BEFORE the pool is written,
+    and every subsequent save fails permanently once a 51st direction completes.
+    Separately, _load's bare except turns one corrupt read of the 6.3MB pool
+    into a silent empty pool that the next save persists to git.
+    """
+
+    def _mgr(self, tmpdir, directions):
+        from research_memory import FutureDirectionsManager
+
+        _write_pool(tmpdir, directions)
+        return FutureDirectionsManager(Path(tmpdir))
+
+    def _completed(self, n, start=0):
+        dirs = [_regular_direction(f"fd_30{i:02d}") for i in range(start, start + n)]
+        for d in dirs:
+            d["status"] = "completed"
+        return dirs
+
+    def test_archive_survives_legacy_list_part(self):
+        """A legacy bare-list archive part must be normalized, not crash the archiver."""
+        import json
+
+        tmpdir = mkdtemp()
+        directions = self._completed(51)
+        tmpdir = _write_pool(tmpdir, directions)
+        archive_dir = Path(tmpdir) / "completed_directions_archive"
+        archive_dir.mkdir()
+        # Legacy part: bare JSON list, as archive_part_0006.json is on disk
+        legacy = [{"id": "fd_0001", "title": "old", "status": "completed"}]
+        (archive_dir / "archive_part_0001.json").write_text(json.dumps(legacy))
+
+        mgr = self._mgr(tmpdir, directions)
+        result = mgr.archive_completed_directions(keep_recent=50, max_per_file=200)
+
+        assert result["archived"] >= 1
+        # The legacy part must have been rewritten in dict format
+        data = json.loads((archive_dir / "archive_part_0001.json").read_text())
+        assert isinstance(data, dict) and "directions" in data
+
+    def test_save_persists_even_if_archiver_raises(self):
+        """An archiver exception must never block _save from persisting the pool."""
+        from research_memory import FutureDirectionsManager
+
+        tmpdir = mkdtemp()
+        directions = self._completed(51)
+        mgr = self._mgr(tmpdir, directions)
+        mgr.archive_completed_directions = lambda **kw: (_ for _ in ()).throw(
+            RuntimeError("boom"))
+
+        mgr._save()  # must not raise
+
+        import json
+        saved = json.loads((Path(tmpdir) / "future_directions.json").read_text())
+        assert len(saved["directions"]) == 51, "Pool must be persisted despite archiver failure"
+
+    def test_corrupt_pool_file_backed_up_with_loud_error(self):
+        """One corrupt read must leave a .corrupt- backup and print an error —
+        never silently proceed with an empty pool."""
+        import json as _json
+
+        from research_memory import FutureDirectionsManager
+
+        tmpdir = mkdtemp()
+        p = Path(tmpdir) / "future_directions.json"
+        p.write_text('{"directions": [ TRUNCATED')
+
+        mgr = FutureDirectionsManager(Path(tmpdir))  # must not raise
+
+        backups = list(Path(tmpdir).glob("future_directions.json.corrupt-*"))
+        assert backups, "Corrupt file must be preserved for forensics"
+        assert backups[0].read_text() == '{"directions": [ TRUNCATED'
+
+    def test_save_is_atomic_no_tmp_left(self):
+        """_save writes via tmp+rename: valid JSON lands, no .tmp siblings remain."""
+        import json
+
+        tmpdir = mkdtemp()
+        mgr = self._mgr(tmpdir, [_regular_direction("fd_3001")])
+        mgr._save()
+
+        assert json.loads((Path(tmpdir) / "future_directions.json").read_text())
+        assert not list(Path(tmpdir).glob("*.tmp")), "Atomic write must clean up its tmp file"
+
+
 class TestOrphanCloserTruthfulMessage:
     """close_orphaned_issues must tell the truth about WHY an issue is closed.
 

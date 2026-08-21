@@ -138,8 +138,12 @@ def inject_directions_into_memory(workspace_path: Path):
             data = directions_list
         else:
             data["directions"] = directions_list
-        
-        fd_file.write_text(json.dumps(data, indent=2), encoding="utf-8")
+
+        # Atomic write: same rationale as research_memory._save — a crash
+        # mid-write must never leave a truncated pool file for the next _load.
+        tmp_file = fd_file.with_name(fd_file.name + ".tmp")
+        tmp_file.write_text(json.dumps(data, indent=2), encoding="utf-8")
+        os.replace(tmp_file, fd_file)
         print(f"[GitHub Injector] Successfully injected {injected_count} directions into memory.")
 
     return injected_count

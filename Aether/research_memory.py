@@ -6,7 +6,10 @@ and guide future research toward novel ground.
 """
 
 import json
+import os
 import re
+import shutil
+import subprocess
 import time
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
@@ -406,7 +409,45 @@ class FutureDirectionsManager:
         self._recent_domain_counts: Dict[str, int] = {}  # domain -> count in recent completions
         self._recent_theme_keywords: Dict[str, int] = {}  # keyword -> count in recent completions
         self._selection_log: List[str] = []  # recent selected direction categories for 50/50 balancing
+        self._restoring_from_git = False  # guards the corrupt-file git-HEAD fallback
         self._load()
+
+    def _load_from_git_head(self) -> bool:
+        """Best-effort pool restore from the last committed copy of the file.
+
+        Used only when the on-disk pool JSON is corrupt: the git-tracked
+        Packages/future_directions.json at HEAD is the last known-good state.
+        """
+        try:
+            root = subprocess.run(
+                ["git", "-C", str(self._file.parent), "rev-parse", "--show-toplevel"],
+                capture_output=True, text=True, timeout=30, check=True,
+            ).stdout.strip()
+            if not root:
+                return False
+            rel = self._file.resolve().relative_to(Path(root)).as_posix()
+            blob = subprocess.run(
+                ["git", "-C", root, "show", f"HEAD:{rel}"],
+                capture_output=True, text=True, timeout=30, check=True,
+            ).stdout
+            if not blob.strip():
+                return False
+            backup = self._file.with_name(self._file.name + ".githead-restore")
+            backup.write_text(blob, encoding="utf-8")
+            original_file = self._file
+            self._file = backup
+            try:
+                self._load()
+            finally:
+                self._file = original_file
+                try:
+                    backup.unlink()
+                except Exception:
+                    pass
+            return bool(self._directions)
+        except Exception as e:
+            print(f"[FutureDirections] git-HEAD pool restore failed: {e}")
+            return False
 
     def _next_id(self) -> str:
         """Generate a unique direction ID by finding the max existing fd_NNNN and incrementing."""
@@ -481,13 +522,37 @@ class FutureDirectionsManager:
 
                 raw_selection_log = data.get("selection_log", [])
                 self._selection_log = raw_selection_log if isinstance(raw_selection_log, list) else []
-        except Exception:
+        except Exception as e:
+            # One corrupt read must NEVER silently wipe the ~2000-direction pool:
+            # preserve the corrupt bytes for forensics, restore the last committed
+            # copy when possible, and fail loudly either way.
+            print(f"[FutureDirections] ERROR: failed to parse {self._file}: {e}")
+            try:
+                stamp = time.strftime("%Y%m%dT%H%M%SZ")
+                shutil.copy2(self._file,
+                             self._file.with_name(self._file.name + f".corrupt-{stamp}"))
+                print(f"[FutureDirections] Corrupt pool preserved as "
+                      f"{self._file.name}.corrupt-{stamp}")
+            except Exception:
+                pass
             self._directions = []
             self._pruned = []
             self._cycle_syntheses = {}
             self._recent_domain_counts = {}
             self._recent_theme_keywords = {}
             self._selection_log = []
+            if not self._restoring_from_git:
+                self._restoring_from_git = True
+                try:
+                    if self._load_from_git_head():
+                        print(f"[FutureDirections] Pool restored from git HEAD "
+                              f"({len(self._directions)} directions)")
+                        return
+                finally:
+                    self._restoring_from_git = False
+            print("[FutureDirections] WARNING: proceeding with an EMPTY pool; "
+                  "the next save will overwrite the corrupt file")
+            return
         self._dedup_ids()
 
         # Recover stale in_progress directions whose jobs no longer exist
@@ -580,22 +645,31 @@ class FutureDirectionsManager:
     def _save(self) -> None:
         self.workspace.mkdir(parents=True, exist_ok=True)
         self._file.parent.mkdir(parents=True, exist_ok=True)
-        # Auto-archive completed directions if they exceed retention limit (50)
+        # Auto-archive completed directions if they exceed retention limit (50).
+        # An archiver failure must never block state persistence — the pool write
+        # below is the critical operation (audit 2026-08-21: an archive crash
+        # escaping _save left every direction stuck in_progress forever).
         completed_count = len([d for d in self._directions if d.status == "completed"])
         if completed_count > 50:
-            self.archive_completed_directions(keep_recent=50, max_per_file=200)
+            try:
+                self.archive_completed_directions(keep_recent=50, max_per_file=200)
+            except Exception as e:
+                print(f"[FutureDirections] WARNING: auto-archive failed (pool save "
+                      f"continues): {e}")
 
-        self._file.write_text(
-            json.dumps({
-                "directions": sorted([d.to_dict() for d in self._directions], key=lambda d: d.get("id", "")),
-                "pruned": sorted([d.to_dict() for d in self._pruned], key=lambda d: d.get("id", "")),
-                "cycle_syntheses": self._cycle_syntheses,
-                "recent_domain_counts": self._recent_domain_counts,
-                "recent_theme_keywords": self._recent_theme_keywords,
-                "selection_log": self._selection_log,
-            }, indent=2, ensure_ascii=False, sort_keys=True),
-            encoding="utf-8",
-        )
+        payload = json.dumps({
+            "directions": sorted([d.to_dict() for d in self._directions], key=lambda d: d.get("id", "")),
+            "pruned": sorted([d.to_dict() for d in self._pruned], key=lambda d: d.get("id", "")),
+            "cycle_syntheses": self._cycle_syntheses,
+            "recent_domain_counts": self._recent_domain_counts,
+            "recent_theme_keywords": self._recent_theme_keywords,
+            "selection_log": self._selection_log,
+        }, indent=2, ensure_ascii=False, sort_keys=True)
+        # Atomic write: a crash mid-write must never leave a truncated pool file
+        # behind (the next _load would otherwise face corrupt JSON).
+        tmp_file = self._file.with_name(self._file.name + ".tmp")
+        tmp_file.write_text(payload, encoding="utf-8")
+        os.replace(tmp_file, self._file)
         self._update_snapshot()
 
     def store_synthesis(self, exp_id: str, synthesis_text: str) -> None:
@@ -1518,15 +1592,25 @@ class FutureDirectionsManager:
         # Fill capacity in last existing archive file if space available
         if parts_data:
             last_file, last_data = parts_data[-1]
-            existing_items = last_data.get("directions", [])
+            # Normalize legacy parts: some on-disk parts are bare JSON lists
+            # (e.g. archive_part_0006.json); .get() on a list would crash the
+            # archiver — and with it every _save — at the 51st completion.
+            if isinstance(last_data, dict):
+                existing_items = list(last_data.get("directions", []))
+            else:
+                existing_items = list(last_data)
             space = max_per_file - len(existing_items)
             if space > 0:
                 chunk = items_to_write[:space]
                 items_to_write = items_to_write[space:]
                 existing_items.extend(chunk)
-                last_data["directions"] = existing_items
-                last_data["count"] = len(existing_items)
-                last_data["archived_at"] = time.strftime("%Y-%m-%dT%H:%M:%SZ")
+                # Always write the canonical dict payload, converting legacy parts
+                last_data = {
+                    "part": last_file.stem.split("_")[-1].lstrip("0") or "0",
+                    "archived_at": time.strftime("%Y-%m-%dT%H:%M:%SZ"),
+                    "count": len(existing_items),
+                    "directions": existing_items,
+                }
                 last_file.write_text(json.dumps(last_data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
                 archived_count += len(chunk)
 
