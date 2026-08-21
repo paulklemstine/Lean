@@ -1,123 +1,160 @@
-# The Partition Function of Symmetry
+# The Shape of Symmetry, One Grade at a Time
 
-## How counting "how symmetric" a growing family of objects is produces a rational function with a single pole
+## How counting orbits turns into a single rational function
 
-### Symmetry, graded by size
+Imagine a tower of rooms. Room $0$ is empty. Room $1$ holds one object, room $2$ holds two, room $3$ holds three, and so on forever. In each room a group of symmetries acts — shuffling the objects around, permuting them, rotating them, relabelling them. Now ask a question that sounds innocuous:
 
-Physicists have a habit that mathematicians have learned to imitate: when you have infinitely many things to count, don't count them one at a time. Pack them into a single generating function — a formal series
-$$Z(q) \;=\; \sum_{n \ge 0} a_n\, q^n$$
-whose coefficients are the counts and whose variable $q$ is a bookkeeping device. In statistical mechanics $Z$ is the partition function, $q$ is a fugacity, and the analytic behaviour of $Z$ — where it converges, where it blows up, how strong the blow-up is — encodes the collective behaviour of the system. Poles are phase transitions. The order of a pole is the strength of the transition.
+> In room $n$, how many *essentially different* ways are there to point at $r$ distinct objects?
 
-This article is about a partition function whose coefficients count *symmetry* rather than energy, and about a theorem which says that this partition function is astonishingly tame: it is always a rational function of $q$, and its only singularity is a single, simple pole at $q = 1$.
+"Essentially different" means: up to the symmetry available in that room. If the symmetry group can carry one choice of $r$ objects onto another, the two choices are the same choice as far as the room is concerned. Call the answer $t_r(Y_n)$ — the number of orbits of ordered $r$-tuples of distinct elements.
 
-Here is the setup. Let $G$ be a group — think of it as a collection of allowed transformations. Let $Y_0, Y_1, Y_2, \dots$ be a sequence of sets, each carrying an action of $G$: for every $g \in G$ and every $y \in Y_n$ there is a transformed element $g \cdot y \in Y_n$, compatibly with composition in $G$. We call the disjoint union $Y = \bigsqcup_n Y_n$ a **graded $G$-set**, and $Y_n$ its **grade $n$**. The index $n$ is meant to be a size, a level, a particle number — whatever a physicist would call a quantum number.
+You now have an infinite sequence of integers, one per room:
+$$t_r(Y_0),\; t_r(Y_1),\; t_r(Y_2),\; t_r(Y_3),\;\dots$$
 
-The examples are everywhere: $G$ the symmetries of a crystal acting on the set of configurations with $n$ defects; $G$ the group of a gauge theory acting on states with $n$ excitations; $G = \mathbb{Z}$ acting by translation on the residues modulo $n$; $G$ acting trivially, i.e. not at all, on a set of $n$ labelled positions. In every case there is a natural question: *how symmetric is grade $n$?*
+The claim this article is about is that this sequence, wild as it looks, is almost never wild at all. Package it into a single formal object, the **Hilbert series**
+$$H_r(q) \;=\; \sum_{n \ge 0} t_r(Y_n)\, q^n,$$
+and — provided the rooms eventually become symmetric enough — this infinite series collapses to a *rational function*: a ratio of two polynomials, with the denominator not merely rational but of a very specific shape, a power of $(1-q)$. Even more sharply: eventual $r$-transitivity forces the denominator all the way down to a single factor $1-q$.
 
-### Measuring symmetry with tuples
+That is the story. Getting there involves a beautiful three-way dictionary between group actions, finite differences, and power series, and it ends with a precise account of exactly how much symmetry buys you.
 
-There is a beautiful and classical way to make "how symmetric" precise, and it belongs to Camille Jordan and Émile Mathieu rather than to any physicist. Fix an integer $r \ge 0$. An **injective $r$-tuple** in a set $Y$ is a list $(y_1, \dots, y_r)$ of $r$ *distinct* elements of $Y$. The group $G$ acts on injective $r$-tuples entrywise: $g \cdot (y_1,\dots,y_r) = (g y_1, \dots, g y_r)$. This action is well defined because a group element is a bijection, so it cannot collapse distinct entries.
+---
 
-Now define
-$$t_r(Y) \;=\; \#\{\text{$G$-orbits of injective $r$-tuples in $Y$}\}.$$
+## What "enough symmetry" means
 
-This single number measures the $r$-th order symmetry of the action. The extreme case is worth spelling out. We say $G$ acts **$r$-transitively** on $Y$ if there is at least one injective $r$-tuple, and any injective $r$-tuple can be carried to any other by some group element. In other words: pick any $r$ distinct points and any other $r$ distinct points; there is a symmetry taking the first list to the second, in order.
+The relevant notion of "symmetric enough" is old and precise. A group $G$ acting on a set $Y$ is called **$r$-transitive** if, given any two ordered lists $(y_1,\dots,y_r)$ and $(z_1,\dots,z_r)$ of $r$ distinct elements of $Y$, there is a group element $g$ with $g\cdot y_i = z_i$ for every $i$ — and if such lists exist at all. One-transitivity is ordinary transitivity: any point can be moved to any other. Two-transitivity says any ordered pair of distinct points can be moved to any other ordered pair. And so on.
 
-**Transitivity Criterion.** *For every group $G$ acting on a set $Y$ and every $r \ge 0$, one has $t_r(Y) = 1$ if and only if $G$ acts $r$-transitively on $Y$.*
+The symmetric group $S_n$ acting on $\{1,\dots,n\}$ is $r$-transitive for every $r \le n$: you can send any list of $r$ distinct labels to any other, simply because you are allowed to permute arbitrarily. At the opposite extreme, the trivial group acting on $\{1,\dots,n\}$ moves nothing, so no two distinct lists are ever identified.
 
-The proof is short: $t_r(Y) = 1$ says the orbit space is a one-point set, which says simultaneously that there is at least one tuple and that all tuples are equivalent. But the criterion is what turns a qualitative notion — "very symmetric" — into a number we can put into a generating function.
+Here is the reformulation that drives everything:
 
-At the other extreme, if $G$ does nothing at all, every injective $r$-tuple is its own orbit, and $t_r(Y)$ is simply the number of injective $r$-tuples, namely the descending factorial
-$$|Y|^{\underline{r}} \;=\; |Y|\,(|Y|-1)\cdots(|Y|-r+1).$$
-And in general, since orbits partition the tuples, there is a universal ceiling:
+> **$r$-transitivity is exactly the statement $t_r(Y) = 1$.**
 
-**Growth Bound.** *For a finite $G$-set $Y$, $\;t_r(Y) \le |Y|^{\underline{r}}$.*
+If the group can move any $r$-tuple of distinct elements to any other, and at least one such tuple exists, then there is precisely one orbit. Conversely, one orbit means precisely that. The qualitative notion "enough symmetry" and the quantitative counter $t_r$ are the same thing, viewed from two sides. That single observation is the hinge on which the whole theorem swings, because it converts a statement about group actions into a statement about a sequence of integers being eventually equal to $1$.
 
-So $t_r$ lives between $1$ (maximal symmetry) and $|Y|^{\underline r}$ (no symmetry). It is a genuine order parameter.
+---
 
-### The partition function of transitivity
+## From sequences to series, and back
 
-For a graded $G$-set $Y = \bigsqcup_n Y_n$ we now form
-$$Z_r(q) \;=\; \sum_{n \ge 0} t_r(Y_n)\, q^n,$$
-which we might call the **transitivity partition function** at order $r$. The main result of this work concerns families that become highly symmetric once you go far enough up the grading — a very common situation, since large systems often acquire symmetries that small ones cannot support. Call the graded $G$-set **eventually $r$-transitive** if there is an index $N$ such that $G$ acts $r$-transitively on $Y_n$ for every $n \ge N$.
+Suppose you have a sequence $a_0, a_1, a_2, \dots$ of rational numbers and you want to know when its generating function $\sum_n a_n q^n$ is a rational function whose denominator is a power of $1-q$. There is a clean, entirely elementary answer, and it involves the humblest operator in mathematics: the **forward difference**
+$$(\Delta a)(n) \;=\; a(n+1) - a(n).$$
 
-**Rationality Theorem.** *If a graded $G$-set is eventually $r$-transitive from index $N$ on, then*
-$$(1-q)^{r+1} \, Z_r(q)$$
-*is a polynomial in $q$. Equivalently, $Z_r(q) = Q(q)/(1-q)^{r+1}$ for a polynomial $Q$ with integer coefficients, of degree at most $N + r$.*
+The forward difference is the discrete cousin of the derivative. Applying it to a constant sequence gives zero. Applying it to a linear sequence gives a constant. Applying it twice to a quadratic gives a constant, three times gives zero. In general, $\Delta^{r+1}$ annihilates every polynomial of degree at most $r$ — precisely the way the $(r+1)$-st derivative does.
 
-And in a genuinely analytic form, valid on the whole open unit disc:
+Now watch what multiplication by $1-q$ does to a generating function. If $A(q) = \sum_n a_n q^n$, then
+$$(1-q)\,A(q) \;=\; a_0 \;+\; \sum_{n \ge 0}\bigl(a_{n+1}-a_n\bigr) q^{n+1} \;=\; a_0 \;+\; q\sum_{n\ge0} (\Delta a)(n)\, q^n.$$
 
-**Analytic Form.** *Under the same hypothesis, for every real $q$ with $|q| < 1$ the series $Z_r(q)$ converges absolutely and*
-$$Z_r(q) \;=\; \sum_{n < N} t_r(Y_n)\, q^n \;+\; \frac{q^N}{1-q}.$$
-*Consequently $(1-q)\,Z_r(q) = (1-q)\sum_{n<N} t_r(Y_n) q^n + q^N$ is a polynomial expression in $q$.*
+**Multiplying the series by $1-q$ is differencing the sequence.** That single identity, verified by matching coefficients, is the entire engine. Iterate it $k$ times and you obtain:
 
-Read that formula as a physicist would. The finite sum is the *transient*: whatever irregular, low-symmetry behaviour the small grades exhibit, it contributes a polynomial and nothing more. The term $q^N/(1-q)$ is the *bulk*: once the system is $r$-transitive it contributes exactly $1$ to every coefficient forever, and an infinite string of $1$'s is precisely a simple pole at $q=1$ with residue $-1$. The partition function has one phase transition, at the critical fugacity $q = 1$, and it is of the mildest possible kind. Nothing else can happen. No other singularity, no essential singularity, no natural boundary.
+> **The Rationality Criterion.** For a sequence $a$ of rational numbers and an integer $k \ge 0$, the product $(1-q)^k \sum_n a_n q^n$ is a *polynomial* if and only if the $k$-th forward difference $\Delta^k a$ vanishes for all sufficiently large $n$.
 
-### The engine: a single power of $1-q$ is one difference
+Both directions are honest. Forward: if $\Delta^k a$ dies eventually, its generating function is a polynomial, and unwinding the identity $k$ times assembles a polynomial numerator. Backward: if $X\cdot \varphi$ is a polynomial then so is $\varphi$ (just shift the coefficients), and peeling off one factor of $1-q$ at a time reduces $k$ to $0$.
 
-Why should this be true, and why does the exponent $r+1$ appear? The mechanism is a piece of nineteenth-century calculus dressed in modern clothes. For a sequence $a = (a_n)$ define its **forward difference**
-$$(\Delta a)_n \;=\; a_{n+1} - a_n,$$
-the discrete derivative. Then a two-line computation on coefficients gives the identity that drives everything:
+There is nothing analytic here — no radius of convergence, no worry about whether the series converges. Everything happens in the ring of formal power series, where $1-q$ is invertible (its inverse is $1+q+q^2+\cdots$), so the equation "$(1-q)^k A(q) = P(q)$ for a polynomial $P$" genuinely does exhibit $A$ as the honest quotient $P(q)/(1-q)^k$.
 
-**Difference Identity.** *For any integer sequence $a$, in the ring of formal power series,*
-$$(1-q)\sum_{n\ge 0} a_n q^n \;=\; a_0 \;+\; q\sum_{n \ge 0} (\Delta a)_n q^n .$$
+---
 
-Multiplying by $1-q$ trades a power of the denominator for one differentiation. Iterate it $s$ times and you obtain a clean coefficient formula:
+## The main theorem, in one line
 
-**Coefficient Formula.** *For all $s, n \ge 0$, the coefficient of $q^{n+s}$ in $(1-q)^s \sum_k a_k q^k$ equals $(\Delta^s a)_n$.*
+Now combine the two halves.
 
-That is the whole theory in one line. A power series is a polynomial exactly when its coefficients eventually vanish. So:
+Suppose the grades of our tower are eventually $r$-transitive: there is some threshold $N$ such that for every $n \ge N$, the group acting on room $n$ is $r$-transitive on that room's elements. By the hinge observation, $t_r(Y_n) = 1$ for all $n \ge N$. So the sequence $t_r(Y_\bullet)$ is *eventually constant*. A constant sequence is killed by a single application of $\Delta$. By the Rationality Criterion with $k = 1$:
 
-**Exact Criterion.** *$(1-q)^s \sum_n a_n q^n$ is a polynomial if and only if the $s$-th forward difference $\Delta^s a$ vanishes from some index onwards.*
+> **Main Theorem.** If a graded $G$-set is eventually $r$-transitive, then
+> $$(1-q)\sum_{n\ge0} t_r(Y_n)\,q^n \;=\; P(q)$$
+> for some polynomial $P$. In particular $\sum_n t_r(Y_n) q^n$ is a rational function whose denominator divides $(1-q)^{r+1}$.
 
-Both directions hold, and that "if and only if" is the reason the theory is sharp rather than merely sufficient. Rationality with denominator $(1-q)^s$ is not an analytic accident: it is *literally the same statement* as the vanishing of a column in the difference table of the coefficients.
+Multiplying by the harmless extra factor $(1-q)^r$ recovers the $(1-q)^{r+1}$ form; the content is that the true denominator is the *single* factor $1-q$. Transitivity is a strong hypothesis, and this is its dividend: a simple pole and nothing more.
 
-From here the Rationality Theorem is immediate. Eventual $r$-transitivity says $t_r(Y_n) = 1$ for all $n \ge N$; a sequence that is eventually constant has $\Delta a$ eventually zero, so even $(1-q)^1$ clears the denominator, and a fortiori $(1-q)^{r+1}$ does. More generally the same argument proves the ambient statement:
+The numerator $P$ is not arbitrary. There is a rigid constraint on it:
 
-**Polynomial Coefficient Theorem.** *If $a_n = P(n)$ for all $n \ge N$, where $P$ is a polynomial of degree at most $r$, then $(1-q)^{r+1}\sum_n a_n q^n$ is a polynomial of degree at most $N + r$.*
+> **Residue Theorem.** With $P$ as above, $P(1) = 1$.
 
-This is because the $(r+1)$-st difference annihilates any polynomial of degree $\le r$ — the discrete analogue of "differentiate a cubic four times and you get zero".
+Why? Because the coefficients of $P$ telescope. The constant coefficient is $t_r(Y_0)$ and the coefficient of $q^{n+1}$ is the difference $t_r(Y_{n+1}) - t_r(Y_n)$; summing them all collapses to the eventual value of the sequence, which is $1$ by transitivity. Analytically this says the pole of $H_r$ at $q = 1$ is simple with residue $-1$. Combinatorially it says: however irregular the low grades are, the numerator's coefficients must sum to exactly one orbit. The numerator is a complete record of the "defect region" — the finitely many grades where transitivity has not yet kicked in — and $P(1)=1$ is the single global law it must obey.
 
-### Why $r+1$, and not less
+In the cleanest possible situation, where the grades below the threshold are so small that they carry no $r$-tuple of distinct elements at all, the numerator is forced to be a monomial:
 
-An exponent bound that can never be attained is a weak theorem. This one is attained, and there is a clean model that shows it. Take the binomial sequence $b_n = \binom{n+r}{r}$. Its generating function is exactly
-$$\sum_{n \ge 0}\binom{n+r}{r} q^n \;=\; \frac{1}{(1-q)^{r+1}},$$
-and the reason, in the language above, is that differencing a binomial coefficient lowers the top index by one, so $\Delta^r b$ is the constant sequence $1$ and $\Delta^{r+1} b = 0$ — but $\Delta^{s} b$ for $s \le r$ is a sequence of positive numbers that never dies. By the Exact Criterion, $(1-q)^s \sum_n b_n q^n$ fails to be a polynomial for every $s \le r$. The exponent $r+1$ is optimal.
+> **Exact Form.** If every grade $n \ge N$ is $r$-transitive and every grade $n < N$ contains no injective $r$-tuple, then
+> $$\sum_{n\ge0} t_r(Y_n)\,q^n \;=\; \frac{q^N}{1-q}.$$
 
-Better still, this extremal behaviour is realised by an honest graded $G$-set. Take $G$ arbitrary, take $Y_n$ to be a set of $n$ labelled points, and let $G$ act **trivially** — the maximally unsymmetric family. Then $t_r(Y_n) = n^{\underline r} = n(n-1)\cdots(n-r+1)$, a polynomial in $n$ of degree exactly $r$; its $r$-th difference is the constant $r!$ and its $(r+1)$-st difference vanishes. So the denominator is exactly $(1-q)^{r+1}$: no smaller power suffices. And, for $r \ge 1$, this family is never eventually $r$-transitive, so the two regimes — maximal symmetry and no symmetry — are genuinely disjoint, and the hypothesis of the Rationality Theorem is not vacuous.
+---
 
-Between the extremes lies a rich middle. Let $G$ be the integers acting by translation on $Y_n = \mathbb{Z}/n\mathbb{Z}$, the cyclic grade. Every grade is $1$-transitive: you can translate any residue to any other. So at order $r=1$ the partition function has a simple pole and nothing more. But at order $r=2$ the situation changes, because a translation preserves the *difference* of a pair, and conversely two pairs with the same nonzero difference are translates of each other. Hence the orbits of injective pairs are in bijection with the nonzero residues, and
-$$t_2(\mathbb{Z}/n\mathbb{Z}) \;=\; n - 1 .$$
-The counts grow linearly, so the first difference is the constant $1$ and the second difference vanishes: the partition function $\sum_n t_2(Y_n) q^n$ has denominator exactly $(1-q)^2$ — a genuine double pole, strictly between the transitive regime's $(1-q)$ and the general bound $(1-q)^3$ for $r = 2$. The order of the pole is measuring exactly how far the family is from being doubly transitive.
+## The example everyone should have in mind
 
-### Symmetry cascades downward
+Take room $n$ to be the set $\{1,\dots,n\}$ with the full symmetric group $S_n$ acting. Fix $r$. For $n < r$ there simply is no list of $r$ distinct elements: the room is too small, and $t_r = 0$. For $n \ge r$ the symmetric group is $r$-transitive, so $t_r = 1$. The sequence is
+$$0,0,\dots,0,1,1,1,\dots$$
+with the switch flipping at $n = r$, and the Hilbert series is exactly
+$$\sum_{n\ge0} t_r(Y_n)\,q^n \;=\; q^r + q^{r+1} + q^{r+2} + \cdots \;=\; \frac{q^r}{1-q}.$$
 
-One more structural fact makes the picture coherent. Suppose $G$ acts $r$-transitively on a finite set $Y$ and $k \le r$. Is $G$ also $k$-transitive? Yes:
+A simple pole at $q=1$, numerator $q^r$, and indeed $P(1) = 1$. The "defect region" is the block of grades $0,\dots,r-1$ that are too small to be interesting, and the numerator $q^r$ records exactly where the interesting behaviour begins.
 
-**Descent Theorem.** *On a finite $G$-set, $r$-transitivity implies $k$-transitivity for every $k \le r$.*
+---
 
-The proof is a small extension argument: given two injective $k$-tuples, extend each to an injective $r$-tuple by adding $r-k$ further distinct points (possible because $r$-transitivity forces $|Y| \ge r$), use $r$-transitivity to map one extension to the other, and restrict back to the first $k$ coordinates. Consequently, if a graded $G$-set is eventually $r$-transitive, then *all* the counts $t_0, t_1, \dots, t_r$ are eventually $1$, and even the total partition function $\sum_n \big(\sum_{k \le r} t_k(Y_n)\big) q^n$ is rational with denominator dividing $(1-q)^{r+1}$ — the coefficients being eventually the constant $r+1$.
+## What happens when you remove the symmetry
 
-### Reading it as a trace over the group
+Is the exponent $r+1$ in the general statement mere slack? No. Keep the very same rooms — $\{1,\dots,n\}$ again — but replace the symmetric group by the *trivial* group. Nothing moves. Every ordered list of $r$ distinct elements is its own orbit, so
+$$t_r(Y_n) \;=\; n(n-1)(n-2)\cdots(n-r+1) \;=\; r!\binom{n}{r},$$
+the falling factorial. This is a polynomial in $n$ of degree exactly $r$, and its generating function is
+$$\sum_{n\ge0} r!\binom{n}{r} q^n \;=\; \frac{r!\, q^r}{(1-q)^{r+1}}.$$
 
-There is a second, more physical way to see the coefficients, and it comes from Burnside's lemma, the orbit-counting principle. For a finite group $G$ acting on a finite set, the number of orbits is the average number of fixed points of the group elements. Applied to injective $r$-tuples:
+Here the pole at $q=1$ has order exactly $r+1$ — no smaller power of $1-q$ clears the series. The reason is Pascal's rule read backwards: differencing $\binom{n}{r}$ gives $\binom{n}{r-1}$, so it takes exactly $r$ differences to reach the constant sequence $1$ and one more to reach zero. After only $r$ differences you are left with the constant $1$, which never dies, so $(1-q)^r$ leaves a genuine pole behind.
 
-**Fixed-Point Identity.** *For a finite group $G$ acting on a finite set $Y$,*
-$$\sum_{g \in G} \#\mathrm{Fix}_r(g) \;=\; t_r(Y)\,|G|,$$
-*where $\mathrm{Fix}_r(g)$ is the set of injective $r$-tuples fixed entrywise by $g$.*
+So the two families sit at the two extremes of the same picture, with *identical underlying sets*:
 
-This recasts the whole story as a *sum over the group* rather than over configurations — exactly the move from a configuration-space partition function to a character sum or a sum over sectors. Each group element $g$ contributes its number of frozen $r$-tuples; the total is the orbit count times the order of the group. And now $r$-transitivity has a strikingly simple fixed-point signature:
+| Rooms | Group | $t_r(Y_n)$ | Hilbert series | Pole order |
+|---|---|---|---|---|
+| $\{1,\dots,n\}$ | $S_n$ | $0$ then $1$ | $q^r/(1-q)$ | $1$ |
+| $\{1,\dots,n\}$ | trivial | $r!\binom{n}{r}$ | $r!\,q^r/(1-q)^{r+1}$ | $r+1$ |
 
-**Degeneracy at Transitivity.** *If $G$ acts $r$-transitively on $Y$, then $\sum_{g \in G} \#\mathrm{Fix}_r(g) = |G|$: the average number of fixed injective $r$-tuples per group element is exactly $1$.*
+It is not the size of the rooms that determines the pole order. It is the symmetry. Transitivity collapses the denominator from $(1-q)^{r+1}$ all the way to $1-q$, and the bound $r+1$ is exactly right for the general case where transitivity is absent.
 
-Only the identity's share survives, on average. Feeding this back into the generating function gives the fixed-point form of the main theorem: for a graded $G$-set with finite grades that is eventually $r$-transitive, the series
-$$\sum_{n \ge 0}\Big(\sum_{g\in G} \#\mathrm{Fix}_r(g,\,Y_n)\Big) q^n$$
-is again rational with denominator dividing $(1-q)^{r+1}$, the coefficients settling at the constant $|G|$.
+---
 
-### What the theorem is really saying
+## A complete dictionary
 
-Strip away the machinery and the message is this. Symmetry, quantified by orbit counts of tuples and packaged into a generating function, cannot behave wildly. If a growing family of systems eventually acquires $r$-fold symmetry, then everything about the sequence of symmetry counts is captured by a finite amount of data — the transient values below the onset index $N$ — plus a universal tail. Analytically, this is one simple pole at $q=1$. Combinatorially, it is one column of zeros in a difference table. Physically, it is the statement that the approach to a symmetric phase is polynomial, never exotic.
+Once you see the difference operator at work, a much finer statement falls out. The number of differences it takes to annihilate a sequence is a measure of its complexity, and Newton's classical forward-difference formula reconstructs the sequence from those differences. If $\Delta^k a$ vanishes from index $N$ onwards, then for every $n \ge N$,
+$$a(n) \;=\; \sum_{j=0}^{k-1} (\Delta^j a)(N)\,\binom{n-N}{j}.$$
 
-And the converse direction gives the diagnostic that makes this useful in practice. Because the criterion is an equivalence, the *order of the pole at $q=1$* is an exact measurement: it is the least $s$ such that the $s$-th difference of the symmetry counts eventually vanishes. A simple pole means the family is eventually maximally symmetric at level $r$. A pole of order $s$ means the symmetry counts grow like a polynomial of degree $s-1$. A non-rational partition function — no pole order works — means the family never settles into any polynomial regime at all.
+This is the discrete Taylor expansion: the iterated differences at the base point play the role of derivatives, and the binomial coefficients play the role of the monomials $x^j/j!$. It is proved by induction on $k$ using the hockey-stick identity $\sum_{i<m}\binom{i}{j} = \binom{m}{j+1}$, which is the discrete fundamental theorem of calculus.
 
-We began with an analogy between a fugacity expansion and a symmetry count. The analogy turns out to be more than decorative: in both cases the location and order of the singularity is where the physics lives. Here we can say exactly where the singularity is, exactly how strong it is, and exactly what it is counting. That is a rare degree of control, and it comes from a single identity — that multiplying by $1-q$ is the same thing as taking a difference.
+Combining it with the Rationality Criterion produces a genuine three-way equivalence:
+
+> **Classification.** For a rational sequence $a$ and an integer $k \ge 0$, the following are equivalent:
+> 1. $(1-q)^k \sum_n a_n q^n$ is a polynomial;
+> 2. $\Delta^k a$ vanishes for all large $n$;
+> 3. beyond some index, $a$ is a rational linear combination of the $k$ shifted binomial functions $\binom{n-N}{0},\dots,\binom{n-N}{k-1}$.
+
+And since those binomial functions are exactly a basis for polynomials of degree $< k$, one gets the polished form: **the denominator $(1-q)^{r+1}$ suffices precisely when the sequence is eventually a polynomial in $n$ of degree at most $r$.** The universal example is $\binom{n}{r}$, whose generating function is exactly $q^r/(1-q)^{r+1}$ — proved not by any clever manipulation but purely from Pascal's rule $\Delta\binom{\cdot}{r+1} = \binom{\cdot}{r}$, iterated.
+
+The exponent in the denominator is therefore not a technical artefact. It is a *measurement*: it tells you the polynomial degree of the orbit-counting sequence, and hence how far the tower is from being transitive.
+
+---
+
+## A second, entirely different route
+
+There is another way to reach rationality that never mentions transitivity at all, and it comes from Burnside's orbit-counting lemma — the observation that the number of orbits of a finite group is the average number of fixed points:
+$$\sum_{g \in G} \bigl|\mathrm{Fix}(g)\bigr| \;=\; t_r(Y)\cdot |G|,$$
+where $\mathrm{Fix}(g)$ is the set of injective $r$-tuples left unchanged by $g$.
+
+Suppose now that a *fixed* finite group $G$ acts on every room, and that for each individual group element $g$, the number of $r$-tuples it fixes grows eventually like a polynomial in $n$ of degree at most $r$. Then averaging over $g$ makes $t_r(Y_n)$ itself eventually polynomial of degree at most $r$ — a *sum* of polynomials of degree $\le r$, divided by the constant $|G|$ — and the Classification immediately gives denominator $(1-q)^{r+1}$.
+
+This is a genuinely different hypothesis. Transitivity is a statement about the group being large; polynomial fixed-point growth is a statement about each element's fixed locus being tame. Neither implies the other, and both produce the same conclusion. Burnside's lemma is the bridge between them: it converts a group-theoretic average into a numerical sequence that the difference operator can chew on.
+
+---
+
+## Everything closes under sums and products
+
+Rationality with poles only at $q = 1$ is not a fragile property. The set of formal power series $f$ for which $(1-q)^k f$ is a polynomial for *some* $k$ forms a **subring** of the ring of formal power series: it contains all polynomials, and it is closed under addition, negation, and multiplication. The proofs are one line each. For a sum, use $(1-q)^{k+\ell}(f+g) = (1-q)^\ell\bigl[(1-q)^k f\bigr] + (1-q)^k\bigl[(1-q)^\ell g\bigr]$; for a product, $(1-q)^{k+\ell}fg = \bigl[(1-q)^k f\bigr]\bigl[(1-q)^\ell g\bigr]$. Pole orders simply add.
+
+The consequence for graded $G$-sets is immediate and pleasant: if two towers are eventually transitive at their respective levels, then the Cauchy product of their Hilbert series — the generating function you would attach to the graded product, where grade $n$ collects all pairs whose grades sum to $n$ — is again rational with a pole only at $q=1$, of order at most $2$. Rationality is a structural feature of the whole category, not an accident of individual examples.
+
+Another closure property, this time downward. Transitivity is nested: an $r$-transitive action is automatically $s$-transitive for every $s \le r$, because you can restrict any $r$-tuple to its first $s$ entries and every $s$-tuple extends. (The one thing to check is that the underlying set is large enough to host $r$-tuples in the first place, which the existence of one such tuple guarantees.) Therefore eventual $r$-transitivity does not just make one Hilbert series rational — it makes the entire **profile** $H_0, H_1, \dots, H_r$ rational, each with a simple pole at $q=1$ and each with numerator satisfying $P(1)=1$. You get $r+1$ theorems for the price of one.
+
+---
+
+## Why this matters
+
+Generating functions being rational is the combinatorialist's signal that something is finitely describable. A rational generating function with denominator a power of $1-q$ means the coefficient sequence eventually satisfies a linear recurrence with constant coefficients of a very special kind — indeed, it eventually *is* a polynomial. That is the shape of Hilbert functions in commutative algebra, of Ehrhart polynomials counting lattice points in dilated polytopes, of dimension counts in graded rings and modules. The theorem above says orbit counts in graded group actions join that family, and it identifies precisely what governs the pole order.
+
+The most striking part is the dichotomy. Two towers can have literally the same rooms and differ only in how much symmetry each room carries, and the difference registers as the *order of a pole*. Symmetry is not a soft, qualitative property here; it is a number you can read off the denominator of a rational function. Full symmetry: order $1$. No symmetry: order $r+1$, no better. Everything in between is measured by the degree of the polynomial that the orbit counts eventually follow.
+
+And the whole edifice rests on one identity a schoolchild could verify — that multiplying a power series by $1-q$ is the same as differencing its coefficients. From that, plus Pascal's rule, plus the observation that "transitive" means "one orbit", the entire theory unfolds.
