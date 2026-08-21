@@ -400,3 +400,46 @@ class TestOrphanCloserTruthfulMessage:
         })
         assert closed == 1
         assert comments == ["Aether has already processed this direction. Closing as handled."]
+
+
+class TestStrayCloseGuard:
+    """A comment-less issue closure must not kill live research.
+
+    Audit 2026-08-21: #162/#167/#169/#170 were retired because their issues
+    were found closed while their jobs were dispatched/queued.
+    """
+
+    def _mgr_with_live(self, tmpdir, issue, job_id):
+        import json
+
+        from research_memory import FutureDirectionsManager
+
+        d = _injected_direction("fd_6001", issue=issue)
+        d["status"] = "in_progress"
+        d["consumed_by_exp_id"] = job_id
+        # The job must be live in inflight_jobs.json, or construction-time
+        # stale recovery releases the fixture before the guard runs.
+        tmpdir = _write_pool(tmpdir, [d])
+        (Path(tmpdir) / "inflight_jobs.json").write_text(json.dumps(
+            {"proj": {"job_id": job_id, "status": "dispatched"}}))
+        return FutureDirectionsManager(Path(tmpdir))
+
+    def test_stray_closed_detected(self):
+        mgr = self._mgr_with_live(mkdtemp(), issue=167, job_id="job_live")
+        strays = mgr.stray_closed_injected_directions(
+            open_issue_numbers=[158, 159],  # 167 NOT open
+            live_job_ids={"job_live"},
+        )
+        assert len(strays) == 1 and strays[0].github_issue == 167
+
+    def test_open_issue_not_flagged(self):
+        mgr = self._mgr_with_live(mkdtemp(), issue=167, job_id="job_live")
+        strays = mgr.stray_closed_injected_directions(
+            open_issue_numbers=[167], live_job_ids={"job_live"})
+        assert strays == []
+
+    def test_dead_job_not_flagged(self):
+        mgr = self._mgr_with_live(mkdtemp(), issue=167, job_id="job_done")
+        strays = mgr.stray_closed_injected_directions(
+            open_issue_numbers=[158], live_job_ids={"other_job"})
+        assert strays == []

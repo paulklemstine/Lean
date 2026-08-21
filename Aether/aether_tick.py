@@ -1358,6 +1358,30 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
             else:
                 from research_memory import FutureDirectionsManager
                 local_fd = FutureDirectionsManager(extractor.workspace)
+                # Stray-close guard: an injected direction whose job is STILL
+                # live but whose issue was closed (manual stray, UI accident,
+                # comment-then-close with a failed comment) gets its issue
+                # REOPENED, not pruned — a comment-less close must not kill
+                # active research (audit 2026-08-21: #162/#167/#169/#170).
+                _active_job_ids = {
+                    getattr(_j, "job_id", "") for _j in extractor.inflight.values()
+                    if getattr(_j, "status", "") in ("preparing", "dispatched", "B_dispatched", "retry_queued", "dispatch_queued")
+                }
+                _stray = local_fd.stray_closed_injected_directions(
+                    open_issue_numbers, _active_job_ids)
+                for _d in _stray:
+                    print(f"[Tick] Stray-close guard: issue #{_d.github_issue} "
+                          f"closed but job for {_d.id} is live — reopening")
+                    try:
+                        github_injector.run_gh_command([
+                            "issue", "reopen", str(_d.github_issue)])
+                        github_injector.run_gh_command([
+                            "issue", "comment", str(_d.github_issue), "-b",
+                            "Reopened automatically: this issue was closed while "
+                            "its research job was still active. The job continues."])
+                        open_issue_numbers.add(int(_d.github_issue))
+                    except Exception as _re_e:
+                        print(f"[Tick] Stray-close reopen failed for #{_d.github_issue}: {_re_e}")
                 # Self-heal: prune non-terminal github_injection zombies whose
                 # issue closed (kept being re-dispatched by stale clobbers).
                 pruned_issue_dirs = local_fd.prune_closed_issue_directions(open_issue_numbers)

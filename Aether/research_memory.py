@@ -1299,6 +1299,31 @@ class FutureDirectionsManager:
             candidates.append(d)
         return candidates
 
+    def stray_closed_injected_directions(
+        self, open_issue_numbers, live_job_ids
+    ) -> List["FutureDirection"]:
+        """Injected directions whose issue was closed while their job is live.
+
+        A comment-less issue closure (manual stray, UI accident, failed comment
+        call before a close) must not kill research that is dispatched or
+        queued: the caller REOPENS the issue for these instead of letting the
+        self-heal prune them (audit 2026-08-21: #162/#167/#169/#170 were
+        retired this way mid-research).
+        """
+        open_set = {int(n) for n in open_issue_numbers}
+        live = {str(j) for j in live_job_ids}
+        out = []
+        for d in self._directions:
+            if getattr(d, "source", "") != "github_injection":
+                continue
+            if d.status not in ("available", "in_progress"):
+                continue
+            if not d.github_issue or int(d.github_issue) in open_set:
+                continue
+            if d.consumed_by_exp_id and str(d.consumed_by_exp_id) in live:
+                out.append(d)
+        return out
+
     def prune_closed_issue_directions(
         self, open_issue_numbers, reason: str = None
     ) -> int:
