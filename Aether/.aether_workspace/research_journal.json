@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "60572a3f",
-      "domain": "Combinatorics",
-      "key_insight": "# Future directions (after cycle 4: the Bell defect, graded by blocks)\n\n## What this cycle settled\n\n| conjecture | outcome |\n|---|---|\n| **E′**, block-graded half: *`m_P = 1` for all `P` with `j` bloc",
-      "quality_score": 0.85,
-      "sorry_count": 8,
-      "theorem_count": 75,
-      "timestamp": "2026-08-19T09:49:59",
-      "title": "The Bell defect, counted exactly"
-    },
-    {
       "cycle_id": "f46e1405",
       "domain": "Cryptography",
       "key_insight": "# Future Directions — the price of universality as a submodular functional\n\nThis cycle closed the quantitative half of the mission: the Shtarkov sum's\nincrement under adding one model is exactly the m",
@@ -499,19 +489,19 @@
       "theorem_count": 147,
       "timestamp": "2026-08-21T04:45:05",
       "title": "The Berggren Tree Zeta Function — Analytic Counting of Pythagorean Triples Governed by the Silver Ra"
+    },
+    {
+      "cycle_id": "21cbaba8",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions\n\nDerived from the results now formalised in `Catalog/Bridges/DenseSumsetLower/`\n(`Core.lean`, `Density.lean`, `Group.lean`, `Window.lean`, `Sharp.lean`, `Optimal.lean`,\n`Mission.le",
+      "quality_score": 0.87,
+      "sorry_count": 0,
+      "theorem_count": 99,
+      "timestamp": "2026-08-21T04:45:19",
+      "title": "Existence of δ-Dense Sets Avoiding Sumsets of Size ≥ (3+o(1)) log n / log(1/δ)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "869ec8f3",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions — the CRT-Split No-Go\n\nThree research cycles have been run on this thread.\n\n* **Cycle 1** produced Parts I–VI: the reveal mechanism (Facts 1 and 2), the three regimes, the\n  closur",
-      "quality_score": 0.627125,
-      "sorry_count": 0,
-      "theorem_count": 135,
-      "timestamp": "2026-08-12T00:08:59",
-      "title": "The CRT-Split No-Go: Why N-Alone Iteration Cannot Factor in Poly(log N)"
-    },
     {
       "cycle_id": "646c7606",
       "domain": "Novelty",
@@ -2501,21 +2491,19 @@
       "theorem_count": 147,
       "timestamp": "2026-08-21T04:45:05",
       "title": "The Berggren Tree Zeta Function — Analytic Counting of Pythagorean Triples Governed by the Silver Ra"
+    },
+    {
+      "cycle_id": "21cbaba8",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions\n\nDerived from the results now formalised in `Catalog/Bridges/DenseSumsetLower/`\n(`Core.lean`, `Density.lean`, `Group.lean`, `Window.lean`, `Sharp.lean`, `Optimal.lean`,\n`Mission.le",
+      "quality_score": 0.87,
+      "sorry_count": 0,
+      "theorem_count": 99,
+      "timestamp": "2026-08-21T04:45:19",
+      "title": "Existence of δ-Dense Sets Avoiding Sumsets of Size ≥ (3+o(1)) log n / log(1/δ)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "4b03d5cc",
-      "domain": "Physics",
-      "name": "notMem_siteSet_of_lt",
-      "quality": 0.86
-    },
-    {
-      "cycle_id": "4b03d5cc",
-      "domain": "Physics",
-      "name": "exists_seq_two_limits",
-      "quality": 0.86
-    },
     {
       "cycle_id": "4b03d5cc",
       "domain": "Physics",
@@ -2803,9 +2791,21 @@
       "domain": "Computation",
       "name": "one_le_hyp",
       "quality": 0.84
+    },
+    {
+      "cycle_id": "21cbaba8",
+      "domain": "Bridges",
+      "name": "sum_card_filter_shift",
+      "quality": 0.87
+    },
+    {
+      "cycle_id": "21cbaba8",
+      "domain": "Bridges",
+      "name": "exists_good_shift",
+      "quality": 0.87
     }
   ],
-  "last_updated": "2026-08-21T04:45:05",
+  "last_updated": "2026-08-21T04:45:19",
   "open_questions": [
     {
       "context": "Everything is proved; there are no `sorry`s and no new axioms.",
@@ -3145,12 +3145,6 @@
     ],
     "Bridges": [
       {
-        "cycle_id": "35640655",
-        "quality": 0.89,
-        "theorems": 2,
-        "title": "OR-DIAL-MAXIMUM: the semiprime OR dial has a global cap g(2)=0.3113 bits over ev"
-      },
-      {
         "cycle_id": "032d68e5",
         "quality": 0.85,
         "theorems": 92,
@@ -3203,6 +3197,12 @@
         "quality": 0.82,
         "theorems": 185,
         "title": "ArXiv paper: Domination-packing ratio for planar and unit disk graphs"
+      },
+      {
+        "cycle_id": "21cbaba8",
+        "quality": 0.87,
+        "theorems": 99,
+        "title": "Existence of δ-Dense Sets Avoiding Sumsets of Size ≥ (3+o(1)) log n / log(1/δ)"
       }
     ],
     "Combinatorics": [
