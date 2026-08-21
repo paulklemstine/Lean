@@ -1,175 +1,164 @@
-# The Tree That Isn't: What Happens to Pythagoras in Higher Dimensions
+# The Tree That Grew a Dimension
 
-## A perfect family tree
+## How a 2000-year-old equation branches out into higher space
 
-Everyone meets $3^2 + 4^2 = 5^2$ as a child. Fewer people meet the astonishing fact that *all* such triples — every pair of whole-number legs with a whole-number hypotenuse — can be grown from that single seed by three simple rules, like a plant from a cutting.
+### A tree made of triangles
 
-Call a triple $(a,b,c)$ of positive integers *Pythagorean* if $a^2+b^2=c^2$, and *primitive* if $a$, $b$, $c$ share no common factor. Now take any primitive triple and apply each of these three transformations:
+Every right triangle with whole-number sides hides inside a tree.
 
-$$
-(a,b,c)\;\longmapsto\;(-a+2b+2c,\;-2a+b+2c,\;-2a+2b+3c),
-$$
-$$
-(a,b,c)\;\longmapsto\;(a+2b+2c,\;2a+b+2c,\;2a+2b+3c),
-$$
-$$
-(a,b,c)\;\longmapsto\;(a-2b+2c,\;2a-b+2c,\;2a-2b+3c).
-$$
+That sentence would have delighted the ancients, and it is literally true. Start with the smallest such triangle, $(3,4,5)$. Apply three simple recipes — three fixed $3\times 3$ matrices of integers — and out come $(5,12,13)$, $(21,20,29)$, and $(15,8,17)$. Apply the same three recipes to each of those, and you get nine more. Keep going forever, and you obtain **every** primitive Pythagorean triple exactly once: an infinite, perfectly regular ternary tree, discovered by Berggren in 1934 and rediscovered many times since.
 
-Each output is again a primitive Pythagorean triple. Starting from $(3,4,5)$ they give $(5,12,13)$, $(21,20,29)$, $(15,8,17)$; iterate, and you sweep out an infinite, perfectly regular ternary tree that contains **every** primitive triple exactly once. This is the Berggren tree, and it is one of the small miracles of number theory: an infinite chaotic-looking set of Diophantine solutions turns out to be a rigid, three-branch family tree with a single ancestor.
+It is one of the tidiest facts in elementary number theory. Every node has exactly three children and exactly one parent. Nothing is missed, nothing is repeated. The tree is a machine that manufactures right triangles.
 
-The obvious question — the one a curious reader asks immediately — is: *what about higher dimensions?* A Pythagorean **quadruple** is a solution of
-$$
-a^2+b^2+c^2 = d^2,
-$$
-the integer points on a sphere of integer radius; the smallest is $(1,2,2,3)$, and $(2,3,6,7)$, $(1,4,8,9)$, $(4,4,7,9)$ follow. Is there a Berggren tree for these? For quintuples? For all $n$?
+But why *three*? Where does the ternary structure come from? And — the question that motivates everything below — what happens if we leave the plane?
 
-The answer, it turns out, is a beautifully sharp *yes, and no, and here is exactly why* — and the reason lives not in arithmetic but in geometry: in the geometry of the light cone and of hyperbolic space.
+### The equation that lives on a light cone
 
-## Pythagoras is a light cone
+The secret of Berggren's tree is that $a^2 + b^2 = c^2$ is not really a statement about triangles. It is a statement about **light**.
 
-Rewrite the Pythagorean equation as
-$$
-x_1^2+\cdots+x_n^2-y^2 = 0 .
-$$
-That expression is the **Lorentz form** of signature $(n,1)$ — the very quantity physicists use to measure spacetime intervals, with $y$ playing the role of time. Its zero set is the *light cone*, and a Pythagorean $n$-tuple is nothing more exotic than an integer point on it. Triples are the light cone of a $(2{+}1)$-dimensional universe; quadruples the light cone of a $(3{+}1)$-dimensional one — our own.
+Physicists write the geometry of spacetime with a quadratic form that has one minus sign:
+$$Q(x_1,\dots,x_n,y) = x_1^2 + \cdots + x_n^2 - y^2 .$$
+The set of vectors with $Q = 0$ is the *null cone* — in relativity, the set of directions light can travel. A Pythagorean triple $(a,b,c)$ is exactly an integer point on the null cone of the three-dimensional Lorentz form $x_1^2 + x_2^2 - y^2$. A Pythagorean *quadruple* $(a,b,c,d)$ with $a^2+b^2+c^2=d^2$ — the integer edge-lengths of a rectangular box with whole-number diagonal — is an integer point on the null cone one dimension up. And in general, a **primitive Pythagorean $n$-tuple** is a solution of
+$$x_1^2 + x_2^2 + \cdots + x_n^2 = y^2$$
+in positive integers with no common factor.
 
-What generates the tree, then? Any integer matrix $M$ that preserves the Lorentz form — that satisfies $M^{\mathsf T} J M = J$, where $J = \mathrm{diag}(1,\dots,1,-1)$ — must map integer light-cone points to integer light-cone points. (It also has determinant $\pm 1$, so it is invertible over the integers: these moves can always be undone.) So the whole question becomes: **which integral Lorentz symmetries do we have, and what tree do they generate?**
+Once you see the cone, the three Berggren recipes stop being magic. They are **reflections**: symmetries of the Lorentz form that happen to have integer entries, so they map integer points on the cone to integer points on the cone. Concretely, fix a pattern of signs $\varepsilon = (\varepsilon_1,\dots,\varepsilon_n)$, each $\varepsilon_i = \pm 1$. There is a reflection $R_\varepsilon$ acting on a null vector $(x; y)$ by
+$$k = \varepsilon\!\cdot\! x - y, \qquad R_\varepsilon(x;y) = (x_1 - \varepsilon_1 k,\ \dots,\ x_n - \varepsilon_n k;\ y - k).$$
+Everything about the tree is encoded in one number: the new height is
+$$y \longmapsto 2y - \varepsilon\!\cdot\! x .$$
+If $\varepsilon\cdot x < y$, the move makes the tuple **bigger** — it is a *child move*. If $\varepsilon\cdot x > y$, it makes it **smaller** — a *descent*, a step toward the root. And if $\varepsilon\cdot x = y$ exactly, the move does nothing at all: the reflection **fixes** the node.
 
-The Berggren moves have a hidden uniformity that this viewpoint reveals at once. Let $r = (1,1,\dots,1;1)$ be the all-ones vector. Its Lorentz square is $q(r)= n-1$, which is nonzero for $n\ge 2$, so we may reflect in it:
-$$
-s_r(v) \;=\; v - \frac{2\,\langle v,r\rangle}{n-1}\, r ,
-\qquad \langle v,r\rangle = x_1+\cdots+x_n-y .
-$$
-Because $r$ has all coordinates equal, this reflection simply subtracts *one and the same number* from every coordinate of $v$. Combine it with the $2^n$ ways of flipping the signs of the space coordinates and you get a finite family of moves. And now the punchline: the three Berggren matrices above are **exactly** $s_r$ composed with the three nontrivial sign patterns $(-,+)$, $(+,-)$, $(-,-)$ in dimension $n=2$. The fourth pattern, all-plus, is the *descent*: it takes a triple back toward the root. Three moves up, one move down — that is the whole tree, and it was a reflection in the light cone all along.
+For $n = 2$ there are $2^2 = 4$ sign patterns. Since $a + b > c$ for any right triangle (the triangle inequality!), the all-plus pattern always descends, and one can show the other three always ascend. Three children, one parent. *That is Berggren's tree, and that is why it is ternary.* The number 3 was never about triangles; it was $2^2 - 1$.
 
-## Why the ladder stops at four dimensions
+So: what is $2^3 - {}$ something? What does the tree look like for boxes instead of rectangles?
 
-Here the geometry starts talking back. The reflection subtracts $\frac{2(x_1+\cdots+x_n-y)}{n-1}$ from each coordinate. For this to keep integers integral we need $n-1$ to divide $2$. Thus:
+### The descent complex
 
-- $n = 2$ (triples): the shift is $2(a+b-c)$ — integral;
-- $n = 3$ (quadruples): the shift is $a+b+c-d$ — integral;
-- $n \ge 4$: the shift is a genuine fraction, and the reflection throws lattice points off the lattice. In dimension four, the innocent null vector $(1,1,1,1;2)$ is displaced by $4/3$ in each coordinate.
+Here is the organizing idea. A sign pattern is the same thing as the set $S$ of coordinates carrying a minus sign. So the collection of *descending* patterns at a node is a **family of subsets** of $\{1,\dots,n\}$. Call it the **descent complex** of the node. Its size, minus a correction for the neutral patterns, is exactly the number of parents; $2^n$ minus its size (with neutrals) is exactly the number of children. Everything about branching becomes combinatorics of a set system.
 
-**The Berggren mechanism exists in exactly two dimensions: $n = 2$ and $n = 3$.** Not for lack of cleverness — for an arithmetic reason as rigid as $3 \nmid 2$. This is the first surprise: the generalization does not extend indefinitely; it stops, precisely, at Pythagorean quadruples.
+Writing $\varepsilon\cdot x = \sum_i x_i - 2\sum_{i \in S} x_i$ makes two facts immediate.
 
-So the whole question narrows to one case, and it is the interesting one: spheres in three-space, integer radii, integer coordinates.
+**Downward Closure Theorem.** *If a sign pattern descends, so does every pattern obtained by turning some of its minus signs back into plus signs. Equivalently, the descent complex is downward closed: it is an abstract simplicial complex on the coordinate set.*
 
-## The quadruple machine
+Adding a coordinate to $S$ only decreases $\varepsilon\cdot x$ (the coordinates are non-negative), so descending is hardest for large $S$ — hence the faces of the complex are the *small* sets. That already smells like geometry: we have a simplicial complex attached to every integer point of a light cone.
 
-For quadruples, the reflection becomes charmingly concrete. Set $k = a+b+c-d$ and map
-$$
-(a,b,c,d) \;\longmapsto\; (a-k,\;b-k,\;c-k,\;d-k).
-$$
-That is a $4\times 4$ integer matrix, an honest symmetry of the Lorentz form of signature $(3,1)$, and an involution: doing it twice returns you home. Attach to it the sign flips and the permutations of $a,b,c$ and you get the higher-dimensional analogue of Berggren's move set.
+How big can its faces be? This is where the Pythagorean relation itself intervenes.
 
-Does it reach everything? Yes, and this is the first main theorem.
+**Dimension Bound Theorem.** *Let $x_1^2+\cdots+x_n^2 = y^2$ with all $x_i \ge 0$ and $y \ge 0$. If the sign set $S$ descends, then its complement has at least two elements:*
+$$\#S \le n-2 .$$
 
-> **Connectivity Theorem.** Every primitive Pythagorean quadruple with non-negative coordinates $a,b,c$ and positive $d$ can be obtained from the root $(1,0,0,1)$ by a finite sequence of the moves: the all-ones reflection, a sign change, and the permutations of the space coordinates. Conversely, every quadruple so obtained is primitive Pythagorean.
+The proof is a one-liner once you see it. Descending means $\sum_{i \notin S} x_i - \sum_{i\in S} x_i > y$, so in particular $\sum_{i \notin S} x_i > y$. But no single coordinate can exceed the height — $x_j^2 \le \sum_i x_i^2 = y^2$ — and the empty sum is $0 \le y$. So a set of coordinates whose sum beats the height must contain at least **two** indices. That's it. The Pythagorean relation, through the utterly elementary fact that each leg is shorter than the hypotenuse, caps the dimension of the descent complex.
 
-The proof is a descent, exactly in Berggren's spirit. Two facts do all the work. First, above the trivial height $d=1$, the shift $k=a+b+c-d$ is strictly positive: if $a+b+c\le d$ then squaring forces all pairwise products $ab, bc, ca$ to vanish, which for a *primitive* quadruple leaves only $(1,0,0,1)$ and its permutations. Second, the new height $d-k = 2d-(a+b+c)$ is always still positive, because $(a+b+c)^2 \le 3(a^2+b^2+c^2) = 3d^2 < 4d^2$. So the move strictly shrinks the height while preserving both the equation and the greatest common divisor; iterate, and you land on the root. Two invariants — the Lorentz form and the content (the gcd of the four entries) — are preserved by every move, so the primitive quadruples form a single connected orbit while, say, $(2,4,4,6)$ can never be reached from $(1,2,2,3)$.
+There is a sharper version, and it is the one that decides the shape of the quadruple tree:
 
-That is the good news, and it is genuinely the Berggren theorem one dimension up.
+**Disjoint Faces Theorem.** *If $S$ and $T$ are disjoint descending sets, then $\#(S \cup T)^c \ge 2$ as well.*
 
-## The bad news, which is better than the good news
+In dimension three this has a startling consequence. Two distinct singletons $\{i\}$ and $\{j\}$ are disjoint, and their union has complement of size $1$, contradicting the theorem. Hence:
 
-Berggren's structure is a *tree*, and a tree is more than connectivity: it demands that each node have exactly one parent. A "parent" here is a *descending* move — a sign pattern $\varepsilon \in \{\pm 1\}^n$ for which the reflection strictly decreases the height. For triples the height transforms as $c \mapsto 3c - 2(\varepsilon_1 a + \varepsilon_2 b)$, so descent means $\varepsilon_1 a + \varepsilon_2 b > c$. Since each leg of a triple is smaller than the hypotenuse, no pattern with a minus sign can beat $c$, while $a+b>c$ always holds. Hence:
+**Unique Descent Theorem (dimension three).** *A Pythagorean quadruple admits at most one descending single sign flip.*
 
-> **Uniqueness of parents for triples.** Every primitive Pythagorean triple with positive legs admits exactly one descending sign pattern, the all-plus one. Consequently three of the four patterns go *up*, and the Berggren graph is a tree with constant branching number three.
+### Six or seven
 
-Now run the same count for quadruples, where the height transforms as $d \mapsto 2d - (\varepsilon_1 a + \varepsilon_2 b + \varepsilon_3 c)$ and descent means $\varepsilon_1a+\varepsilon_2b+\varepsilon_3c > d$. Patterns with two or more minus signs are still hopeless, because each coordinate is at most $d$. The all-plus pattern still descends. But a pattern with a *single* minus sign — say $(-,+,+)$ — has a real chance: it descends exactly when $-a+b+c > d$, and with $a^2+b^2+c^2=d^2$ a little algebra converts that into something unexpectedly pretty:
+Now count. In dimension three there are $2^3 = 8$ sign patterns. The all-plus pattern always fails to raise the height (because $a+b+c > d$ always, and $a+b+c \geq d$ suffices). By the Unique Descent Theorem, at most one further pattern — necessarily a single flip — can fail to raise the height. So a node has one or two non-children, and therefore:
 
-> **Harmonic Branching Law.** For a Pythagorean quadruple with positive entries, the move with a minus sign on $a$ descends if and only if
-> $$a(b+c) < bc, \qquad\text{equivalently}\qquad \frac{1}{b}+\frac{1}{c} \;<\; \frac{1}{a}.$$
+**Exact Branching Theorem (dimension three).** *Every Pythagorean quadruple with positive coordinates has exactly $6$ or exactly $7$ children. It has $6$ precisely when one of the three single flips fails to raise the height, i.e. when*
+$$d \le -a+b+c \quad\text{or}\quad d \le a-b+c \quad\text{or}\quad d \le a+b-c,$$
+*and this condition is equivalent to the "harmonic" (Egyptian-fraction) inequality*
+$$a(b+c) \le bc \quad\text{or}\quad b(a+c) \le ac \quad\text{or}\quad c(a+b) \le ab,$$
+*that is,* $\tfrac1b + \tfrac1c \le \tfrac1a$ *or one of its permutations.*
 
-A question about a tree has turned into an Egyptian-fraction inequality. And the inequality is self-limiting: if $\frac1b+\frac1c<\frac1a$ then in particular $\frac1c < \frac1a$, and symmetric reasoning shows the condition cannot hold for two different coordinates at once. Therefore:
+That equivalence is the heart of the matter, and it is a genuinely surprising bridge: whether a node of the quadruple graph has six or seven children is decided not by its size, not by its congruence class, but by an inequality between the *reciprocals* of its space coordinates — the same kind of inequality that governs Egyptian fractions and Diophantine "unit fraction" problems.
 
-> **At most two parents.** Any two descending sign patterns other than the all-plus one coincide; a Pythagorean quadruple has at most two parents, and its branching number is $8-1=7$ or $8-2=6$.
+And both cases really happen, infinitely often. The quadruples
+$$(1,\; 2m,\; 2m^2,\; 2m^2+1) \qquad (m \ge 2)$$
+satisfy $1\cdot(2m+2m^2) \le 2m\cdot 2m^2$, so they always have **six** children. The quadruples
+$$(2m,\; 2m,\; 2m^2-1,\; 2m^2+1) \qquad (m \ge 2)$$
+— which one checks are primitive, since a common divisor would divide the difference $2$ of the last two coordinates yet both are odd — have **seven**.
 
-Is the second parent real, or a possibility that never occurs? It occurs infinitely often. Take, for each integer $m \ge 2$, the quadruple
-$$
-(1,\,2m,\,2m^2,\,2m^2+1),
-$$
-which is Pythagorean ($1 + 4m^2 + 4m^4 = (2m^2+1)^2$) and primitive because consecutive integers are coprime. Its harmonic test on the first coordinate reads $\frac{1}{2m}+\frac{1}{2m^2} < 1$ — true for $m\ge2$. So it has *two* parents:
-$$
-(2m-1,\,0,\,2m^2-2m,\,2m^2-2m+1) \quad\text{and}\quad (2m-1,\,2,\,2m^2-2m+2,\,2m^2-2m+3),
-$$
-both primitive, both of strictly smaller height, and — crucially — *different* heights, so they are genuinely distinct nodes. For $m=2$: the quadruple $(1,4,8,9)$ descends both to $(3,0,4,5)$ and to $(3,2,6,7)$.
+So here is the answer to our question, and it is not the one a naive analogy predicts. **The higher-dimensional Pythagorean graph is not a regular tree.** The beautiful ternary regularity of Berggren's tree does not survive the passage to boxes. What survives is something arguably better: an exact, arithmetic *rule* for the irregularity.
 
-Meanwhile the companion family
-$$
-(2m,\,2m,\,2m^2-1,\,2m^2+1)
-$$
-fails the harmonic test at every coordinate and has exactly one parent. Since both families climb past any bound:
+The mismatch is not chaos, though. Branching is bounded below in every dimension:
 
-> **Non-constancy of branching.** Above any height there exist primitive Pythagorean quadruples with a unique parent and primitive Pythagorean quadruples with two distinct parents. The branching number of the quadruple graph takes both values $6$ and $7$ infinitely often.
+**Universal Branching Bound.** *For every $n \ge 2$, a node with positive coordinates has at least $n+1$ children.*
 
-So the answer to the original question is crisp. The Berggren *mechanism* generalizes: reflection in the light cone, connectivity, descent, all survive in dimension three. The Berggren *tree* does not: the quadruple graph is a connected graph with cycles, not a tree, and its branching is genuinely irregular, governed by an arithmetic condition on reciprocals.
+Proof: by the Dimension Bound, any pattern whose minus-set has $\ge n-1$ elements cannot descend or stay neutral, so it must be a child; there are exactly $n+1$ such patterns (the full set and the $n$ sets missing one coordinate). For $n=2$ this gives $3$ — and the true value *is* $3$. **Berggren's tree is the minimally branching member of the family**, and its regularity is exactly the statement that in dimension two the descent complex has room for nothing but the empty face.
 
-## Horizontal edges: a phenomenon with no two-dimensional shadow
+### Dimension four: the complex acquires edges
 
-Between "goes up" and "goes down" there is a boundary case, and in dimension three the boundary is inhabited. When
-$$
-a(b+c) = bc, \qquad \text{i.e.}\qquad \frac1b+\frac1c = \frac1a,
-$$
-the corresponding move leaves the height **exactly unchanged**. It slides sideways across a level set instead of climbing or descending. The smallest example is the smallest quadruple of all: $(1,2,2,3)$, where $\frac12+\frac12 = \frac11$. Apply the move with a minus sign on the first coordinate and the height stays $3$. (What happens is that the reflection's shift collapses to zero, so the move reduces to the bare sign change $a \mapsto -a$ — an element of the move set that changes nothing about the height at all.)
+If the descent complex can only be a point-plus-vertex in dimension three, can it get genuinely two-dimensional? The Dimension Bound allows faces of size $n-2$; is that sharp?
 
-And these neutral nodes have a complete description. A short computation shows that the identity $(b+c-a)^2 - (a^2+b^2+c^2) = 2\bigl(bc-a(b+c)\bigr)$ makes the harmonic equation $a(b+c)=bc$ *equivalent* to $(b+c-a)^2 = a^2+b^2+c^2$. So: pick any two positive integers $b,c$ whose sum divides their product, set $a = bc/(b+c)$ and $d = b+c-a$, and you have manufactured a Pythagorean quadruple sitting exactly on the harmonic boundary — and every one of them arises this way. Taking $b=m+1$ and $c=m(m+1)$ gives the tidy infinite family
-$$
-\bigl(m,\;m+1,\;m(m+1),\;m(m+1)+1\bigr) \;=\; (1,2,2,3),\,(2,3,6,7),\,(3,4,12,13),\,(4,5,20,21),\dots
-$$
-Every member is primitive, and every member carries a horizontal move.
+In dimension four the answer is yes, and the proof runs through Pell's equation. Consider the quintuples
+$$(1,\,1,\,t,\,t\,;\,d), \qquad 1+1+t^2+t^2 = d^2, \text{ i.e. } d^2 - 2t^2 = 2 .$$
+Solutions are generated from $(t,d) = (1,2)$ by the automorphism $(t,d) \mapsto (3t+2d,\, 4t+3d)$ of the form $d^2 - 2t^2$, giving $(1,2), (7,10), (41,58), (239,338), \dots$ — a Pell ladder marching to infinity. For $t \ge 4$ the two-element sign set $S = \{1,2\}$ *descends*:
+$$-1-1+t+t = 2t-2 > d \iff (2t-2)^2 > 2t^2+2 \iff t^2-4t+1 > 0 .$$
+These quintuples are obviously primitive (they contain a $1$). So:
 
-For triples this cannot happen: for a primitive triple with positive legs and any sign pattern other than all-plus, the new hypotenuse $3c-2(\varepsilon_1a+\varepsilon_2b)$ is *strictly* larger than $c$ — never equal. The Berggren tree has no horizontal edges at all; the quadruple graph does. It is precisely the kind of structure that a tree cannot support, and its existence is the sharpest single statement of how the two-dimensional picture fails to survive.
+**Sharpness in Dimension Four.** *There are arbitrarily large primitive Pythagorean quintuples whose descent complex contains a two-element face — a parent reached by flipping two signs at once. The bound $\#S \le n-2$ is attained for $n=4$.*
 
-## Even so, there is a tree — you just have to choose it
+Two-element faces are *impossible* in dimension three. So the geometry genuinely thickens with the dimension: the higher trees have parents of higher and higher "codimension", and the descent complex, trivial for triangles and zero-dimensional for boxes, starts to have edges at $n=4$.
 
-Here is a consoling twist. Among the descending moves, one is always available and canonically distinguished: the all-plus one, which descends at *every* node above the root. Declare it *the* parent map. It preserves primitivity and non-negativity (taking absolute values afterwards), it strictly decreases the height above height one, and the nodes of height one are precisely the three permutations of the root $(1,0,0,1)$. Iterating it therefore terminates:
+### How fast does the tree grow?
 
-> **Canonical Spanning Tree Theorem.** The all-plus reflection, followed by taking absolute values of the space coordinates, maps primitive quadruples in the positive cone to primitive quadruples in the positive cone, strictly decreasing the height above one, and reaches a height-one node in finitely many steps. Its edges form a spanning tree of the quadruple graph rooted at $(1,0,0,1)$.
+The light cone is not just an algebraic object. Its projectivization is **hyperbolic space**: the null cone of the $(n+1)$-dimensional Lorentz form, projectivized, is the boundary sphere of the $(n+1)$-dimensional hyperbolic ball, and the integral Lorentz group acts by hyperbolic isometries. The height $y$ of a null vector is (up to normalization) an exponentiated Busemann function — a hyperbolic "distance from the centre". So each reflection move translates a node by a definite hyperbolic distance, and asking how fast the tree grows becomes a question about a *discrete group acting on hyperbolic space*.
 
-So the higher-dimensional object is not a tree, but it *contains* a canonical tree, over which extra "harmonic" edges are laid: the two-parent edges of the harmonic law and the horizontal edges of its boundary case. It is a tree with decoration — and the decoration is where the new arithmetic lives.
+One move multiplies the height by at most
+$$\rho_n = \frac{\sqrt{n}+1}{\sqrt{n}-1},$$
+a bound that is sharp on the real cone, attained at the symmetric point $x_1 = \cdots = x_n = y/\sqrt n$. Two of these numbers are old friends:
+$$\rho_2 = 3 + 2\sqrt2 = (1+\sqrt2)^2, \qquad \rho_3 = 2+\sqrt3 .$$
+The first is the square of the **silver ratio** — the classical growth constant of the Berggren tree. The second is its dimension-three replacement, and it is not an arbitrary algebraic number:
 
-## Silver ratios, hyperbolic space, and how fast the numbers grow
+**Fundamental Unit Theorem.** *Both constants are units of norm one in real quadratic orders: $(2+\sqrt3)(2-\sqrt3) = 1$ and $(3+2\sqrt2)(3-2\sqrt2)=1$. Moreover $2+\sqrt3$ is the smallest unit greater than $1$ with positive coordinates in $\mathbb{Z}[\sqrt3]$ — it is the fundamental unit. So $\log(2+\sqrt3)$ is the exact analogue for boxes of the silver-ratio exponent $\log(1+\sqrt2)$ for triangles.*
 
-Finally, the metric question: how fast do these numbers get big?
+Two further facts complete the picture, and they pull in opposite directions.
 
-Divide a Pythagorean $n$-tuple by its height. You land on the unit sphere $x_1^2+\cdots+x_n^2=1$ — the ideal boundary of hyperbolic $(n{+}1)$-space, seen as the boundary of the Poincaré ball. Every Pythagorean $n$-tuple is a *rational point of that sphere*, and the moves act on the sphere by Möbius transformations. For quadruples, if we write the **shadow**
-$$
-s = \frac{a+b+c}{d},
-$$
-then the reflection multiplies the height by exactly $2-s$ and moves boundary points by
-$$
-u \;\longmapsto\; \frac{u-s+1}{2-s}.
-$$
-Cauchy–Schwarz bounds the shadow: $s^2 \le 3$, so $|s|\le\sqrt3$ and the height multiplier lies in the annulus $[\,2-\sqrt3,\;2+\sqrt3\,]$. Nothing can grow faster than $2+\sqrt3$ per step, nor shrink faster than its reciprocal $2-\sqrt3$.
+First, **higher dimensions move slower**: $\rho_n$ is strictly decreasing in $n$ and tends to $1$ as $n \to \infty$, since $\rho_n = 1 + 2/(\sqrt n - 1)$. Each reflection displaces a node by less and less hyperbolic distance.
 
-The general statement is elegant:
+Second, **higher dimensions branch more**: from $3$ children to at least $6$.
 
-> **Sharp growth constant.** In dimension $n\ge 2$, one reflection move multiplies the height by at most
-> $$\rho_n = \frac{\sqrt n + 1}{\sqrt n - 1},$$
-> and this bound is attained on the real light cone. Moreover $\rho_n$ is an algebraic number of degree at most two: it is a root of $(n-1)X^2 - 2(n+1)X + (n-1)=0$.
+Which effect wins? The natural referee is the **critical exponent**, the number $\delta$ with $k = \rho^\delta$, i.e.
+$$\delta = \frac{\log k}{\log \rho},$$
+measuring how many nodes appear per unit of hyperbolic displacement — the discrete-group invariant that controls the Hausdorff dimension of the limit set and the convergence of the Poincaré series.
 
-Evaluate it. For $n=2$,
-$$
-\rho_2 = \frac{\sqrt2+1}{\sqrt2-1} = (1+\sqrt2)^2 = 3+2\sqrt2,
-$$
-the square of the **silver ratio** $1+\sqrt2$ — exactly the growth constant that governs the Berggren tree and, not coincidentally, the fundamental unit of $\mathbb{Z}[\sqrt2]$ and the continued fraction $[2;2,2,2,\dots]$. For $n=3$,
-$$
-\rho_3 = \frac{\sqrt3+1}{\sqrt3-1} = 2+\sqrt3 ,
-$$
-a root of $X^2-4X+1$, the fundamental unit of $\mathbb{Z}[\sqrt3]$ up to squaring and the continued fraction $[3;1,2,1,2,\dots]$'s cousin $[3;\overline{1,2}]$. The silver ratio of the classical tree has a genuine higher-dimensional sibling. The prediction that the growth exponent would be "an exactly computable algebraic number generalizing the silver ratio" is confirmed, with the explicit quadratic to prove it.
+**Growth Exponent Theorem.** *The Berggren tree has critical exponent $\log 3/\log(3+2\sqrt2) \approx 0.623 < 1$, while the quadruple graph has critical exponent at least $\log 6/\log(2+\sqrt3) \approx 1.361 > 1$. In particular the exponent crosses the value $1$ between dimension two and dimension three: the quadruple graph grows strictly faster than the Berggren tree.*
 
-There is one qualitative difference worth savouring. Growth *per step* is slower in dimension three ($2+\sqrt3 \approx 3.73$ versus $3+2\sqrt2\approx 5.83$), but there are more than twice as many moves at each node (six or seven children instead of three), and the boundary sphere is two-dimensional instead of one-dimensional. The count of quadruples up to height $X$ should therefore grow like $X^2$, whereas the count of triples grows like $X$ — the limit set of the reflection group fills the boundary sphere in both cases, and in dimension three that sphere simply has more room. Counting to height $400$ bears this out — the slope of $\log N(X)$ against $\log X$ comes out at $1.96$ for quadruples and $1.03$ for triples — but proving the quadratic law is one of the open problems this picture suggests.
+The extra branching more than compensates for the shorter steps. Boxes are richer than rectangles, and by a computable margin.
 
-## What the whole story says
+There is a delicate footnote. The constant $2+\sqrt3$ is sharp only over the *reals*. On the integer tree it is never attained:
 
-Strip away the technique and three lessons remain, each with the flavour of good mathematics: a clean generalization, a sharp obstruction, and a new invariant.
+**Strict Integral Growth.** *For every integral Pythagorean quadruple with non-negative coordinates and positive height, $a+b+c < \sqrt3\,d$ strictly, and hence every reflection move satisfies $d' < (2+\sqrt3)\,d$.*
 
-*The clean generalization.* Berggren's tree is not an arithmetic accident of triples. It is a reflection in the light cone of a Lorentz form, and reflections in light cones exist in every dimension. Connectivity, descent, invariants, hyperbolic boundary, algebraic growth constant — all of it transfers.
+The obstruction is pure irrationality: equality would force $a=b=c$ and $3a^2 = d^2$, impossible for $a \ne 0$ because $\sqrt3$ is irrational. So the growth constant is an unattained supremum — the integer tree presses against a wall built out of an irrational number, forever approaching, never touching.
 
-*The sharp obstruction.* The mechanism is integral only when $n-1 \mid 2$, so exactly for triples and quadruples. And within dimension three, uniqueness of the parent fails: the graph has infinitely many two-parent nodes and infinitely many horizontal edges. The beautiful rigid ternary tree really is a two-dimensional phenomenon.
+### Mirrors, and a divisor law
 
-*The new invariant.* What replaces uniqueness is not chaos but a different law — the Egyptian-fraction inequality $\frac1b+\frac1c<\frac1a$, whose equality case gives horizontal moves. Nothing in the classical theory hints at reciprocals; they appear only when you go up a dimension. Since the condition is scale-invariant, it is really a statement about a region on the unit sphere, which turns the combinatorial question "what fraction of quadruples have two parents?" into a measure-theoretic question about an explicit spherical region. Exhaustive enumeration finds about $64\%$ of nodes with two parents up to height $80$ and about $68\%$ up to height $400$, hinting at a definite limiting density awaiting proof.
+The last surprise concerns the patterns that do nothing at all. In dimension two, no reflection ever fixes a node: $\varepsilon\cdot x = y$ has no solutions among triples, and the group acts freely. In dimension three it does happen. The quadruple $(1,2,2,3)$ satisfies $-1+2+2 = 3$, so the reflection with a minus on the first coordinate leaves it exactly where it is.
 
-Integer points on spheres are not idle curiosities — they encode lattice directions, kissing configurations, and rational rotations of three-space, and a generation mechanism that produces all of them from $(1,0,0,1)$ by four elementary moves is a genuinely useful tool. But the deepest pleasure here is structural. Ask what happens to a beautiful theorem in higher dimensions and you rarely get a plain yes or no. You get a story: what survives (the geometry), what breaks (the tree), what the breakage is really made of (reciprocals), and the exact place where the ladder ends ($n=3$). The Berggren tree has a sibling, and the sibling is stranger and more interesting than the original.
+**Mirror Node Theorem.** *A reflection $R_\varepsilon$ fixes a node precisely when its sign pattern is height-neutral, $\varepsilon \cdot x = y$. Such nodes are exactly the lattice points lying on the mirror hyperplanes of the reflection group, and no node with positive coordinates lies on two different mirrors: apart from the all-plus generator, at most one generator can fix it. Stabilizers are therefore cyclic of order two.*
+
+These mirror nodes are the dimension-three replacement for the "star lines" of the planar theory, and there are infinitely many. The family
+$$\bigl(m,\; m+1,\; m(m+1),\; m^2+m+1\bigr)$$
+consists of primitive Pythagorean quadruples — primitive because any common divisor divides both $m$ and $m+1$ — each fixed by the reflection that flips the first coordinate, and each having exactly six children. (The example $(1,2,2,3)$ is the case $m=1$.) So mirror nodes are always of the *deficient*, six-fold type: sitting on a mirror costs you a child.
+
+And they obey an exact counting law. Suppose $-a+b+c = d$ and $a^2+b^2+c^2=d^2$. Put $p = b-a$, $q = c-a$. A two-line computation collapses the quadratic relation to
+$$pq = a^2, \qquad (a,b,c,d) = (a,\ a+p,\ a+q,\ a+p+q),$$
+and conversely every factorization $pq = a^2$ produces a mirror node. Hence:
+
+**Divisor Law for Mirror Nodes.** *The number of mirror nodes with first coordinate $a$ is exactly $\tau(a^2)$, the number of divisors of $a^2$.*
+
+For $a=2$ there are $\tau(4)=3$ of them: $(2,3,6,7)$, $(2,4,4,6)$, $(2,6,3,7)$. For $a=6$ there are $\tau(36)=9$. Since $\tau(a^2)$ is always odd — divisors of a square pair up except for $a$ itself — every $a$ has an odd number of mirror nodes, the unpaired one being the symmetric $(a, 2a, 2a, 3a)$. This is the higher-dimensional analogue of the arithmetic counting ("totient") laws of the classical planar theory, with the divisor function replacing the totient.
+
+### What it all means
+
+Step back and the shape of the generalization is clear, and it is neither the naive success nor the failure one might have expected.
+
+The Berggren tree does *not* generalize to a regular tree. What generalizes is a whole apparatus:
+
+- a **simplicial complex** — the descent complex — attached to every solution, downward closed and of dimension at most $n-3$;
+- a **branching count**, exactly $6$ or $7$ for boxes, decided by an Egyptian-fraction inequality, and bounded below by $n+1$ in general, with the Berggren case realizing the minimum;
+- a **hyperbolic embedding** in which each move is a bounded translation, with a sharp constant $\rho_n = (\sqrt n +1)/(\sqrt n -1)$ that is a quadratic unit, the fundamental unit $2+\sqrt3$ of $\mathbb{Z}[\sqrt3]$ when $n=3$;
+- a **growth exponent** that increases from dimension two to three, crossing $1$;
+- a **mirror geometry** of fixed nodes obeying a divisor law.
+
+Pythagorean quadruples are the integer edge-lengths of boxes with integer diagonals, and they are the same thing as integer points on a light cone in four-dimensional spacetime; they parametrize configurations in sphere-packing and kissing-number problems, appear in the arithmetic of quaternions, and index certain lattice directions used in crystallography and computer graphics. Any algorithm that needs to enumerate them can now do so with a guarantee: start at $(1,2,2,3)$, apply the eight signed reflections, discard the one or two that go down or stand still, and you will fan out through the solution set at a hyperbolic rate whose exponent is $\log 6/\log(2+\sqrt3)$ or better.
+
+Finally, the loveliest part of the story may be how *cheap* the key inequality is. Everything above — the dimension bound, the six-or-seven dichotomy, the uniqueness of the descending flip — rests on a single observation that a schoolchild can verify: **no leg of a right triangle is longer than the hypotenuse**. Push that trivial fact through $n$ dimensions and it becomes a bound on the dimension of a simplicial complex, which becomes a branching law, which becomes a growth exponent for a group acting on hyperbolic space. That is what a good generalization looks like: not a copy of the old theorem, but a reason for it.
