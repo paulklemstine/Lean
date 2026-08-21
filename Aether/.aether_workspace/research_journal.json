@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "7299371d",
-      "domain": "Combinatorics",
-      "key_insight": "# Future Directions — Erdős–Graham: exact coverings by distinct unit fractions\n\nThe formal development in `Catalog/Combinatorics/ErdosGraham*.lean` establishes:\nthe cardinality spectrum of exact Egypt",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 59,
-      "timestamp": "2026-08-19T14:54:22",
-      "title": "Erdos-Graham: Exact Coverings by Distinct Unit Fractions"
-    },
-    {
       "cycle_id": "57212186",
       "domain": "NumberTheory",
       "key_insight": "# Future Directions — RLHF/PTX alignment as arithmetic\n\nDerived from the analysis and adversarial review of the verified results in\n`Catalog/NumberTheory/RLHF*.lean`.  Each conjecture is falsifiable,",
@@ -499,19 +489,19 @@
       "theorem_count": 101,
       "timestamp": "2026-08-21T08:59:01",
       "title": "Higher-Dimensional Pythagorean Trees — Generalizing the Berggren Tree to Pythagorean Quadruples and "
+    },
+    {
+      "cycle_id": "1e89ff02",
+      "domain": "Geometry",
+      "key_insight": "# Future directions: p-adic Berggren dynamics\n\nThese conjectures grow out of the four Lean files produced in this cycle\n(`Catalog/Geometry/PadicBerggrenDynamics.lean`, `…NullCone.lean`, `…Orbits.lean`",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 143,
+      "timestamp": "2026-08-21T09:53:06",
+      "title": "p-adic Berggren Dynamics — The Tree of Pythagorean Triples as a p-adic Dynamical System"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "a055589e",
-      "domain": "Probability",
-      "key_insight": "# FUTURE DIRECTIONS — Structural Orthogonality Framework\n\n*Finalized after research cycle 3.*  Cycle 1 stated five conjectures; cycle 2\nclosed four of them (fully or in their reduction form); cycle 3",
-      "quality_score": 0.85,
-      "sorry_count": 0,
-      "theorem_count": 6,
-      "timestamp": "2026-08-12T22:09:52",
-      "title": "The Structural Orthogonality Framework (8 barriers)"
-    },
     {
       "cycle_id": "219576b7",
       "domain": "Computation",
@@ -2501,6 +2491,16 @@
       "theorem_count": 101,
       "timestamp": "2026-08-21T08:59:01",
       "title": "Higher-Dimensional Pythagorean Trees — Generalizing the Berggren Tree to Pythagorean Quadruples and "
+    },
+    {
+      "cycle_id": "1e89ff02",
+      "domain": "Geometry",
+      "key_insight": "# Future directions: p-adic Berggren dynamics\n\nThese conjectures grow out of the four Lean files produced in this cycle\n(`Catalog/Geometry/PadicBerggrenDynamics.lean`, `…NullCone.lean`, `…Orbits.lean`",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 143,
+      "timestamp": "2026-08-21T09:53:06",
+      "title": "p-adic Berggren Dynamics — The Tree of Pythagorean Triples as a p-adic Dynamical System"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-21T08:59:01",
+  "last_updated": "2026-08-21T09:53:06",
   "open_questions": [
     {
       "context": "Everything is proved; there are no `sorry`s and no new axioms.",
@@ -3393,12 +3393,6 @@
     ],
     "Geometry": [
       {
-        "cycle_id": "fb9255eb",
-        "quality": 0.627125,
-        "theorems": 87,
-        "title": "State the CSS dictionary with two classical codes precisely.: The mission"
-      },
-      {
         "cycle_id": "64406111",
         "quality": 0.85,
         "theorems": 72,
@@ -3451,6 +3445,12 @@
         "quality": 0.78,
         "theorems": 83,
         "title": "The upper bound is formalised (`exists_peel_stopping_time` together with"
+      },
+      {
+        "cycle_id": "1e89ff02",
+        "quality": 0.72,
+        "theorems": 143,
+        "title": "p-adic Berggren Dynamics — The Tree of Pythagorean Triples as a p-adic Dynamical"
       }
     ],
     "Logic": [
