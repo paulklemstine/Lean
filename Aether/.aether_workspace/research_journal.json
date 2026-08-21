@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "daf80a32",
-      "domain": "Algebra",
-      "key_insight": "# Future directions — kernel patterns\n\nEach conjecture below is falsifiable, is stated so that it can be formalised directly on\ntop of the definitions in `Catalog/Algebra/KernelPatterns/`, and is *not",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 142,
-      "timestamp": "2026-08-20T01:52:21",
-      "title": "Kernel patterns"
-    },
-    {
       "cycle_id": "9e83a721",
       "domain": "Algebra",
       "key_insight": "# Future directions\n\nDerived from the nine verified files of this run:\n\n* `Catalog/Algebra/RLHFTiltTorsorPTX.lean` — the alignment torsor, the Bregman identity\n  `F(s) − F(r) − 𝔼_{π_r}[s−r] = β·KL(π_r",
@@ -499,19 +489,19 @@
       "theorem_count": 181,
       "timestamp": "2026-08-21T21:39:21",
       "title": "The Berggren Tree and the Langlands Program — Automorphic Forms on the 3-adic Boundary over Q(√2)"
+    },
+    {
+      "cycle_id": "28aa3954",
+      "domain": "Pythagorean",
+      "key_insight": "# Future directions: the single-voter exchange law and its geometry\n\nThree research cycles were run on the tropical/social-choice chamber complex of\na min-plus aggregator `F x = min_{i ∈ S} (x i + δ i",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 49,
+      "timestamp": "2026-08-21T21:39:35",
+      "title": "single-voter exchange law."
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "9e8cd1f4",
-      "domain": "Algebra",
-      "key_insight": "# FUTURE DIRECTIONS — after QUBIT-TRADE (register threshold, closed)\n\nAll Lean files of this thread live in `Catalog/Algebra/QubitTrade/` and compile\nagainst mathlib4 (Lean 4.28.0) with **0 `sorry`s**",
-      "quality_score": 0.87,
-      "sorry_count": 0,
-      "theorem_count": 939,
-      "timestamp": "2026-08-13T15:21:48",
-      "title": "The Quantum Register Cannot Be Shrunk: QUBIT-TRADE, Closed"
-    },
     {
       "cycle_id": "6753d65f",
       "domain": "Bridges",
@@ -2501,27 +2491,19 @@
       "theorem_count": 181,
       "timestamp": "2026-08-21T21:39:21",
       "title": "The Berggren Tree and the Langlands Program — Automorphic Forms on the 3-adic Boundary over Q(√2)"
+    },
+    {
+      "cycle_id": "28aa3954",
+      "domain": "Pythagorean",
+      "key_insight": "# Future directions: the single-voter exchange law and its geometry\n\nThree research cycles were run on the tropical/social-choice chamber complex of\na min-plus aggregator `F x = min_{i ∈ S} (x i + δ i",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 49,
+      "timestamp": "2026-08-21T21:39:35",
+      "title": "single-voter exchange law."
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "eccb3315",
-      "domain": "Computation",
-      "name": "seedTerm_nonneg",
-      "quality": 0.84
-    },
-    {
-      "cycle_id": "eccb3315",
-      "domain": "Computation",
-      "name": "one_le_hyp",
-      "quality": 0.84
-    },
-    {
-      "cycle_id": "21cbaba8",
-      "domain": "Bridges",
-      "name": "sum_card_filter_shift",
-      "quality": 0.87
-    },
     {
       "cycle_id": "21cbaba8",
       "domain": "Bridges",
@@ -2803,9 +2785,27 @@
       "domain": "MachineLearning",
       "name": "shift_cons",
       "quality": 0.83
+    },
+    {
+      "cycle_id": "28aa3954",
+      "domain": "Pythagorean",
+      "name": "decisiveSet_subset_of_le",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "28aa3954",
+      "domain": "Pythagorean",
+      "name": "exchange_lower_bound",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "28aa3954",
+      "domain": "Pythagorean",
+      "name": "exchange_upper_bound",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-21T21:39:21",
+  "last_updated": "2026-08-21T21:39:35",
   "open_questions": [
     {
       "context": "Everything is proved; there are no `sorry`s and no new axioms.",
@@ -3827,12 +3827,6 @@
     ],
     "Pythagorean": [
       {
-        "cycle_id": "83939baf",
-        "quality": 0.82,
-        "theorems": 63,
-        "title": "The De-Quantization Frontier, Closed"
-      },
-      {
         "cycle_id": "39757711",
         "quality": 0.84,
         "theorems": 300,
@@ -3885,6 +3879,12 @@
         "quality": 0.86,
         "theorems": 62,
         "title": "Bound the length of distinguishing experiments"
+      },
+      {
+        "cycle_id": "28aa3954",
+        "quality": 0.82,
+        "theorems": 49,
+        "title": "single-voter exchange law."
       }
     ],
     "Shared": [
