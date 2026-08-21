@@ -3,159 +3,17 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "consumed_by_exp_id": "3cb644d1",
-    "description": "**Domain**: Pythagorean <-> NumberTheory\n\n**Hypothesis (MOONSHOT)**: Every node of the Berggren tree is an abc triple: a\u00b2+b\u00b2=c\u00b2 is an instance of A+B=C, with quality q = log(c\u00b2)/log(rad(a\u00b2b\u00b2c\u00b2)). The tree is therefore the one infinite family of abc triples whose radicals, qualities, and descent structure are completely explicit \u2014 a solvable model of the abc conjecture. The conjecture: the quality spectrum of the tree is exactly computable \u2014 the supremum of quality over the tree exists, is attained or approached along an explicitly identifiable branch, and the quality distribution at depth n obeys an exact law governed by the silver-ratio growth \u2014 and the tree's descent machinery (every triple reduces to (3,4,5)) exports a canonical model of how quality transforms under abc-type descent.\n\n**Test**: Formalize rad(a\u00b2b\u00b2c\u00b2) and the quality q over the tree. Prove the exact quality spectrum: the supremum over the tree, the branches attaining or approaching it, and the asymptotic law of the quality distribution at depth n. Prove the \"tree abc theorem\": the sharp uniform bound q \u2264 2\u2212\u03b5 for the tree family with the best explicit \u03b5. Determine whether any tree triple approaches the record quality of the known abc hits (about 1.63), and characterize the tree's high-quality region.\n\n**Why now**: The abc conjecture is among the most consequential open problems in number theory (its claimed proof by Mochizuki remains disputed), and the catalog's Beal package already made the Beal\u2013Fermat-Catalan\u2013abc bridges precise \u2014 but never studied the tree's own quality structure. Every Pythagorean triple is an abc triple, so the tree is a ready-made, fully formalized solvable model; its exact quality spectrum would be the first complete quality theory for any natural infinite family of abc triples.\n\n**If true**: The first exactly-solved model of the abc phenomenon: a complete quality spectrum and distribution law for an infinite abc family, plus a descent-operator model isolating the mechanism of abc-type bounds \u2014 a concrete foothold for the general conjecture.\n\n**If false**: The quality spectrum has no computable structure (e.g., the supremum is not attained and the distribution does not converge) \u2014 itself a precise pathology theorem showing the abc mechanism resists even the most structured family, redirecting the general attack.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1786",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T03:17:34.068756+00:00",
-    "title": "The Tree as a Solvable Model of the abc Conjecture \u2014 The Exact Quality Spectrum of a\u00b2+b\u00b2=c\u00b2"
-  },
-  {
-    "consumed_by_exp_id": "a977122a",
-    "description": "## FACT round-24 #5 \u2014 D\u2085-QUINTIC (paper 84, /tmp/exp_d5quintic.py, /tmp/r24n5f.log)\n\n**Verdict name: THE-QUINTIC-ROW-COMPLETE.**\n\n### Result\nThe last untested transitive quintic group confirms the abelianization law **exactly** \u2014 and the round invented its own object: no literature polynomial was needed, because the type histogram IS the Chebotarev group readout. A scan of x\u2075+ax+b (|a|,|b| \u2264 60) found **four D\u2085 quintics in seconds**, each with square discriminant and the exact signature {[1\u2075]: \u22480.10, [5]: \u22480.40, [1,2,2]: \u22480.50}.\n\n### The subtlety: where D\u2085's C\u2082 lives\nD\u2085 \u2286 A\u2085 \u27f9 \u221adisc(f) \u2208 \u211a \u27f9 the abelianization's quadratic subfield K is **not** Q(\u221adisc). Theory locates it \u2014 splitting-field ramification = root-field ramification \u27f9 K = Q(\u221ad), d squarefree over f's ramified prime set \u2014 and candidate enumeration + Kronecker matching identifies **K = Q(\u221a\u22125) at agreement 1.0000, uniquely**, for x\u2075+20x+32 (m\\* = 20 = Q(\u221a\u22125)'s fundamental discriminant).\n\n### Results (all asserts green, 105 s)\n- Type rates within 0.002 of {1/10, 4/10, 5/10}; no non-D\u2085 type ever occurs; H(T) = 1.3610 bits.\n- Sign vs kron(\u22125, p): agreement **1.0000**.\n- **I(p mod 20; T) = 1.0000 vs law 1.0000 \u2014 exact to four decimals** (bias +0.0001 at the small conductor: the cleanest cell of the program).\n- Semiprime (400k MC): pair = **1.0000 vs null 1.0000** (z = +1.06); reflection-fork s-projection = **1.0000 vs Is(2)**; which-factor wall 0.0000.\n\n### THE COMPLETED QUINTIC TABLE\n| group | polynomial | G^ab | H(T) | I\u2081 measured | law | pair |\n|---|---|---|---|---|---|---|\n| C\u2085 | Q(\u03b6\u2081\u2081)\u207a | C\u2085 | 0.7219 | 0.7198 | 0.7219 \u2713 | Is(5) \u2713 |\n| **D\u2085** | **x\u2075+20x+32** | **C\u2082** | **1.3610** | **1.0000** | **1.0000 \u2713** | **1.0 \u2713** |\n| F\u2082\u2080 | x\u2075\u22122 | C\u2084 | 1.6805 | 1.4989 | 1.5000 \u2713 | 1.25 \u2713 |\n| A\u2085 | x\u2075+20x+16 | 1 | 1.6555 | **0** | 0 \u2713 | 0 \u2713 |\n| S\u2085 | x\u2075\u2212x\u22121 | C\u2082 | 2.5574 | 1.2158* | 1.0 \u2713 | 1.0 \u2713 |\n\n(*permutation-referenced at the sparse 2869-class dial.) One law, five groups, no exceptions \u2014 the gap always exactly E[H(coset|T)].\n\n### All 8 barriers\n(a) clean \u2014 predictions pre-stated conditional on identification; identification self-validating via Chebotarev histograms; (b) clean \u2014 no D\u2085 type-channel work in the Catalog; (c) confronted \u2014 real D\u2085 fields, histograms < 0.2% from class sizes, 400k MC; (d) clean \u2014 fixed seeds; (e) the substance \u2014 the program's cleanest cell (bias +0.0001); K-identification asserted at unique exact agreement; (f) controlled \u2014 three harness iterations disclosed (modulus-scan failure \u2192 theory-grounded candidate enumeration; even-numerator Jacobi bug \u2192 Kronecker helper); (g) fair \u2014 walls zero, coprime flat, controls are papers 78\u201382's reproduced values; (h) closure \u2014 symmetric (2), residue dial at m\\* = 20 (5), CRT-sealed (6), classical Galois/Kummer/reciprocity (8).\n\n### What closes\n**The transitive-quintic row is complete: 5/5 groups.** The type-channel program has measured every group structure it can name across degrees 2\u20135, always with the same outcome: I(p mod m\\*; T) = I(T; coset) exactly, the pair law verbatim, the gap exactly the type's coset-ambiguity entropy. Frontier: the quantum channel (QUBIT-TRADE phase diagram) and the barrier-4 converse.\n\nNow 419 experiments. Assessment v195. Paper 84.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3413",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T14:54:02.516407+00:00",
-    "title": "FACT round-24 #5 \u2014 D\u2085-QUINTIC: the quintic row complete (paper 84)"
-  },
-  {
-    "consumed_by_exp_id": "1a4b5fe9",
-    "description": "## FACT round-25 #3 \u2014 QUBIT-TRADE4 (paper 87, /tmp/exp_qubittrade4.py, /tmp/r25n3.log)\n\n**Verdict name: THE-STANDARD-CORNER-IS-OPTIMAL.**\n\n### Result\nThe third resource axis \u2014 **base re-draws k**, real Shor's escape from the per-N unlucky cap (paper 86) \u2014 completes the surface, and its total-cost accounting places the optimum at the textbook parameterization:\n\n- **H1 cap lift**: at t = wall, s = 5: k=1 \u2192 0.504, k=2 \u2192 0.735, k=4 \u2192 0.940 \u2014 following 1\u2212(1\u2212p\u2081m)^{ks} exactly (m \u2248 \u00bd mixed-role fraction).\n- **H2 three-way fungibility**: mean \u0394P = +0.18 per single-resource doubling across 12 mixed-axis steps, positive everywhere below saturation.\n- **H3 standard-corner optimality** (corrected accounting, disclosed): reaching P \u2265 0.3 costs G \u2248 k\u00b7s\u00b7t\u00b2 = **6400 at the full-register corner** vs 14440 at wall\u22122 and 51840 at wall\u22124 \u2014 shaving width costs exponential samples/re-draws against a quadratic saving.\n\n### Frontier (ii) closed\nPaper 47 threshold \u2192 paper 85 ramp \u2192 paper 86 cap \u2192 paper 87 optimum. **DEQUANT final form**: the fungibility surface exists, every point of it is quantum resource, its minimum sits at the standard corner, and no point approaches classical factoring complexity.\n\n### Population & method\n24 constructed controlled-order semiprimes (12 mixed-role / 12 same-role), K = 6 independent bases per N with fresh role structure, progression kernel from papers 85\u201386, cells t \u2208 {wall\u22124, \u22122, 0} \u00d7 s \u2208 {1, 5, 20} \u00d7 k \u2208 {1, 2, 4}, 20 trials each. Runtime ~30 s.\n\n### All 8 barriers\n(a) clean \u2014 horns pre-stated; H3's accounting bug found post-run and corrected from raw data (both numbers shown); (b) clean; (c) confronted \u2014 24 real semiprimes \u00d7 6 bases \u00d7 27 surface points; (d) clean \u2014 fixed seeds; (e) the substance \u2014 cap-lift and \u0394P quantified, bug disclosed; (f) controlled \u2014 machinery inherited from validated rounds; (g) fair \u2014 balanced role population by design, consistency with papers 85\u201386; (h) closure \u2014 no parameter tuning of Shor improves its total cost; classical complexity remains the only competition (barrier 8), aggregation prices every classical route (barrier 4).\n\nNow 422 experiments. Assessment v198. Paper 87.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3415",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T15:49:12.718353+00:00",
-    "title": "FACT round-25 #3 \u2014 QUBIT-TRADE4: the three-axis resource surface, standard-corner optimum (paper 87)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "## FACT round-25 #2 \u2014 QUBIT-TRADE3 (paper 86, /tmp/exp_qubittrade3.py, /tmp/r25n2h.log)\n\n**Verdict name: THE-RAMP-SURVIVES-CONTACT-WITH-FACTORS.**\n\n### Result\nThe fungibility ramp (paper 85) extends from abstract certification to **real factor extraction**: on constructed controlled-order semiprimes (r \u2208 {210, 310, 434, 510}), P_factor(s=1) climbs the same ladder \u2014 **0.018 / 0.056 / 0.158 / 0.181** across t = wall\u22124 \u2026 wall+2 \u2014 and samples compound as independence wherever the cap allows. One new structural element: a **per-N unlucky cap that sample count cannot move**.\n\n### The construction (invented this round)\nReal ord_N(a) is lcm(p\u22121, q\u22121)-scale (~2\u00b3\u2070) \u2014 register simulation impossible. Built controlled-order semiprimes instead: primes p \u2261 1 mod r directly, order-r elements by projection h^((p\u22121)/r), CRT-combined with randomized per-prime orders d_p, d_q \u2208 {r, r/2}. This surfaced a structural fact: **ord_p(a) = ord_q(a) exactly \u27f9 a^{r/2} \u2261 \u22121 mod both primes \u27f9 N never factors from period certificates** \u2014 the permanently-unlucky case real Shor escapes by re-drawing a.\n\n### Results\n- Ramp persists: P_factor(s=1) = 0.018 \u2192 0.181 along t; nocert share 0.003 at/above wall\u22122 (certification is not the bottleneck \u2014 paper 85's ramp).\n- Ladders track independence under the cap (wall\u22122: 0.056/0.204/0.471 \u2248 1\u2212(1\u22120.06)^s).\n- **Saturation \u2248 0.53** = cert-rate \u00d7 mixed-role fraction (~\u2154): the unlucky-half cap is per-N structural; s cannot push past it.\n- Taxonomy: spurious-or-partial certificates **0.844**, unlucky 0.109, factor 0.044, nocert 0.003 \u2014 the dominant classical burden is certificate filtering, which is exactly N-verification's role.\n\n### Method ledger (4 catches across 6 launches)\nOrder blow-up (naive r ~ 2\u00b3\u2070 unsimulatable); simultaneous-order search impossible (~10\u207b\u2077 density) \u2192 CRT construction; equal-order = permanent unluckiness (first measurements all-zero); infinite loop on odd half-orders + first-certificate early-return masking later splitting ones + a hardcoded verdict string replaced by data-computed output before any claim was made.\n\n### All 8 barriers\n(a) clean \u2014 horns pre-stated; the population design implements the cap rather than assuming it; (b) clean \u2014 no real-N ramp work in the Catalog; (c) confronted \u2014 actual semiprimes, exact orders, full gcd-based extraction; (d) clean \u2014 fixed seeds; (e) the substance \u2014 cap measured not assumed, taxonomy quantified, defects disclosed; (f) controlled \u2014 dishonest-verdict catch before any claim; (g) fair \u2014 shares consistent with paper 85 through the identical kernel; (h) relevance \u2014 Shor's short-register regime prices in samples linearly, capped by the unlucky-base structure that base re-drawing removes classically (barriers 4/8).\n\nNow 421 experiments. Assessment v197. Paper 86.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3416",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-21T15:49:12.719442+00:00",
-    "title": "FACT round-25 #2 \u2014 QUBIT-TRADE3: the fungibility ramp on real semiprimes (paper 86)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "## FACT round-25 #1 \u2014 QUBIT-TRADE2 (paper 85, /tmp/exp_qubittrade2.py, /tmp/r25n1g.log)\n\n**Verdict name: ONE-REGISTER-BIT-IS-WORTH-ONE-SAMPLE.**\n\n### Result\nThe qubit/sample phase diagram of Shor period-finding is a **fungibility ramp**, not a wall. The pre-stated vertical-wall hypothesis (odd r \u27f9 deterministic certification failure below t = 2log\u2082r) was **honestly refuted** by the correct measurement kernel: under the standard arithmetic-progression distribution P(k) = (1/Mq)\u00b7|sin(\u03c0Mkr/q)/sin(\u03c0kr/q)|\u00b2 (M \u2248 q/r), the per-sample certification rate follows **P\u2081 \u2248 ramp(q/r\u00b2)**, and samples compound it as P_s = 1\u2212(1\u2212P\u2081)^s. The measured exchange law: **t\\*(s) shifts by \u2212log\u2082 s** \u2014 one register bit is worth one sample.\n\n### The three measurements\n1. **The single-sample ramp**: P\u2081 rises smoothly with q/r\u00b2 through odd/mixed families (4\u00b7odd: 0.003 at q/r\u00b2 = 0.028 \u2192 0.36 at 0.905 \u2192 plateau \u2248 0.46); pure powers of two are flat-saturated (~0.5 at every ratio \u2014 peaks exactly on grid points).\n2. **Sample ladders out-of-sample**: P_s tracks 1\u2212(1\u2212P\u2081)^s tightly everywhere (odd prime at wall\u22121: P\u2081 = 0.725 \u2192 s=2: 0.940 vs predicted 0.924; 2\u00b7odd at wall\u22123: P\u2081 = 0.055 \u2192 s=20: 0.680 vs predicted 0.677).\n3. **The exchange law** (odd composite 1155, wall t = 21): t\\*(P\u22650.5) shifts {s=2: +0, s=5: \u22122, s=20: \u22124, s=100: \u22126} against \u2212log\u2082s = {\u22121, \u22122.3, \u22124.3, \u22126.6}. (s=1 never crosses 0.5: the saturation level P\u2081 \u2248 0.37 *is* the standard per-sample rate.)\n\n### The honest refutation\nThe stated-before-run mechanism (deterministic sub-wall failure for odd r) holds only for the WORST-case peak position; actual peak positions spread over [0, \u00bd], so certification succeeds at rate \u2248 q/r\u00b2. Round-14's \"10 samples fail\" was the deep-ramp limit (q/r\u00b2 \u2248 0). The refutation, not the confirmation, produced the round's law.\n\n### Method ledger (3 designed-check catches across 6 runs)\n1. **Wrong kernel**: contiguous-block Dirichlet instead of the progression kernel \u2014 flagged by its degenerate signature P(k=0) = 1 at q = r; the first vertical-wall table was an artifact of the wrong ensemble.\n2. **Post-processing swamp**: lcm-of-candidates dies on spurious small-denominator certificates; replaced by the clean CERTIFICATION STATISTIC (\u2203 sample whose CF passes 1/(2b\u00b2) with b = r \u2014 necessary condition for any post-processing; classical period-verification free).\n3. Degenerate regimes documented: pure powers of two at t = v\u2082(r) give uniform outcomes (entropy = log\u2082q, r-independent \u2014 genuinely no information).\n\n### All 8 barriers\n(a) clean \u2014 pre-stated hypothesis refuted by pre-registered measurement; replacement law validated out-of-sample on ladders; (b) clean \u2014 no exchange-rate work in the Catalog (nearest: our own paper 47); (c) confronted \u2014 exact distributions (no shortcuts), five structured periods, 300-trial cells; (d) clean \u2014 fixed seeds; (e) the substance \u2014 closed-form predictions vs MC \u00b10.03, full defect ledger disclosed; (f) controlled \u2014 every anomaly traced to root cause before proceeding; (g) fair \u2014 ladders are out-of-sample validations; families distinguished; (h) relevance \u2014 Shor's register can be shortened by paying samples linearly (1 bit \u2194 1 sample) until both explode together: the quantum advantage is preserved but quantitatively graded, sharpening DEQUANT beyond paper 47's binary threshold (barriers 4/8).\n\n### What this decides\nFrontier (ii) gains its quantitative face: the quantum channel's resource bound is a smooth two-dimensional trade-off curve with unit slope, not a threshold.\n\nNow 420 experiments. Assessment v196. Paper 85.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3417",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-21T15:49:12.720386+00:00",
-    "title": "FACT round-25 #1 \u2014 QUBIT-TRADE2: one register bit is worth one sample, the fungibility ramp (paper 85)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "## FACT round-27 #2 \u2014 BATTERY-CAPACITY (paper 92, /tmp/exp_batterycapacity.py, /tmp/r27n2b.log)\n\n**Verdict name: SYNERGY-COMPOUNDS.**\n\n### Result\nThe 4-field joint channel (CRT modulus 31\u00b723\u00b79\u00b78 = 51 336) on one shared semiprime population carries **I = 8.2246 bits against the additive prediction \u03a3 marginals = 3.9099 \u2014 synergy +4.31 bits, more than doubling it**, within 1.3 bits of the joint-label-entropy ceiling (9.5276).\n\n### The order decomposition \u2014 synergy is genuinely higher-order\n| order | total synergy |\n|---|---|\n| k = 2 (6 pairs) | +0.244 |\n| k = 3 (4 triples) | **+3.822** |\n| k = 4 (the battery) | **+4.315** |\n\nPairwise synergies \u2014 the entire content of paper 91's pairwise table \u2014 are only **6% of the total**. Mechanism: N mod 31 alone sees one residue of pq mod 31; the CRT-joint modulus sees all four residues simultaneously (15.8 log\u2082 units), against which each dial's pair labels become nearly fully determined.\n\n### Honest caveat\nThe which-factor statistic on the full joint code reads 0.0469 bits \u2014 above every pairwise wall. Suspected sparse-plug-in bias (tens of thousands of residue-columns vs 30k samples \u2014 the paper-70/83 regime), not signal; the factor-blindness claim stands on the well-conditioned strata plus this analysis.\n\n### What revises what\nPaper 91's \"neither additive nor comonotone\" survives; its implicit scale does not: **batteries are super-additive systems whose capacity grows toward the joint label-entropy ceiling with dominant higher-order terms**. For the converse, this raises the stakes on no-pinning: a k-dial battery carries far more symmetric capacity than marginal bookkeeping suggests \u2014 every bit still trace-routed and factor-blind, but the capacity arithmetic must be done jointly (exactly this machinery), never marginally.\n\nNow 427 experiments. Assessment v203. Paper 92.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3427",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-21T16:52:15.027841+00:00",
-    "title": "FACT round-27 #2 \u2014 BATTERY-CAPACITY: synergy compounds, the 4-field joint more than doubles its marginals (paper 92)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "## FACT round-27 #1 \u2014 DIAL-INDEPENDENCE (paper 91, /tmp/exp_dialindependence.py, /tmp/r27n1c.log)\n\n**Verdict name: SYNERGY-AND-OVERLAP.**\n\n### Result\nThe battery space is **neither additive nor comonotone**. The pre-stated coprime-conductor additivity hypothesis was refuted at the first pair, and the refutation is directional:\n\n| battery | I(joint) | I\u2081 + I\u2082 | \u0394 |\n|---|---|---|---|\n| S\u2083a@31 \u00d7 S\u2083b@23 | 2.1314 | 2.0024 | **+0.129 SYNERGY** |\n| A\u2084@9 \u00d7 D\u2084@8 | 1.9125 | 1.9076 | **+0.005 near-additive** |\n| S\u2083a@23 \u00d7 S\u2083b@23 (shared disc \u221223) | 1.0104 | 2.0024 | **\u22120.992 OVERLAP** |\n\n### Mechanism\nThe additivity argument treated dial labels as independent draws. They are not: both dials read the **same underlying (p, q)**, so their label entropies are population-correlated, and the joint modulus (CRT-seeing p mod m\u2081 AND q mod m\u2082 simultaneously) extracts combinations neither marginal reaches. Synergy is structure-dependent \u2014 rich-type pairs synergize (+0.129), lossy-type pairs barely (+0.005). Shared conductor structure makes dials comonotone: two \u221223 cubics share essentially their entire channel through the common quadratic character (**overlap 0.992 bits**) \u2014 the quantitative form of \"same subfield = same dial\".\n\n### Verification discipline\nMarginals re-verified against papers 80/82 BEFORE any joint measurement (1.0012 / 1.0012 / 0.4733 / 1.4342 \u2014 every prior value reproduced). Which-factor walls \u2264 0.0016 across every joint channel: all synergized and overlapping content remains symmetric, trace-routed, factor-blind.\n\n### Method ledger\nShared-pool ramification bug caught pre-launch (index draws including other fields' ramified primes; fixed by union exclusion {31, 23, 2, 3}); the naive additivity gate converted into a recorded synergy measurement rather than silently loosened.\n\n### What this decides\nThe converse's no-pinning scope covers product batteries with their synergy excesses included: k dials give more than k\u00b7(marginal) for structurally rich pairs and less for shared-structure pairs \u2014 all computable by this exact joint machinery, all still on the traced side of barrier 4.\n\nNow 426 experiments. Assessment v202. Paper 91.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3428",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-21T16:52:15.029147+00:00",
-    "title": "FACT round-27 #1 \u2014 DIAL-INDEPENDENCE: synergy and overlap in the battery space (paper 91)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "## FACT round-26 #3 \u2014 SUBEXP-STRATUM (paper 90, /tmp/exp_subexpstratum.py, /tmp/r26n3e.log)\n\n**Verdict name: THE-STRATUM-STAYS-UNMEASURED \u2014 an honest inconclusive.**\n\n### Result\nThe fourth stratum (sub-exponential sieves, L_{1/2}) **could not be measured at toy scale**. With x uniform in [\u221aN, 2\u221aN], per-sample u = log(x\u00b2\u2212N)/log B, 2400 samples over six (N, B) cells, compared against numerically-integrated Dickman \u03c1:\n\n| u | n | empirical | \u00b11\u03c3 | \u03c1(u) numeric | ratio |\n|---|---|---|---|---|---|\n| 3.0 | 161 | 0.0124 | 0.0087 | 0.0487 | 0.26 |\n| 3.5 | 265 | 0.0302 | 0.0105 | 0.0163 | 1.86 |\n| 4.0 | 413 | 0.0073 | 0.0042 | 0.0049 | 1.47 |\n| 5.0 | 303 | 0.0033 | 0.0033 | 0.00036 | 9.27 |\n\nRatios scatter non-monotonically (0.26\u20139.3); most bins underpowered at \u00b1\u03c3 \u2248 100% relative; three bins sit where \u03c1 predicts below MC reach. The toy cost model C(B) = \u03c0(B)/\u03c1(u) + \u03c0(B)\u00b2 fits d(log\u2082C)/d(log\u2082N) = 0.024 \u2014 flat, cannot place the stratum.\n\n### Two real findings inside the null\n1. **The leading-term Dickman approximation is invalid at small u**: exp(\u2212u(ln u + ln ln u \u2212 1)) gives 0.561 at u = 3 where true \u03c1(3) = 0.0487 \u2014 **a 12\u00d7 error**, persisting through u = 6. Proper numerical integration implemented (Euler 5\u00d710\u207b\u2074 on u\u03c1\u2032(u) = \u2212\u03c1(u\u22121)). Any informal smoothness argument using the leading-term form below u \u2248 8 is quantitatively meaningless.\n2. **x\u00b2\u2212N smoothness is not random-integer smoothness at toy scale**: even against correct \u03c1 the ratios are non-monotone \u2014 consistent with the quadratic-character constraint on prime divisors of x\u00b2\u2212N, whose O(1) corrections stabilize only asymptotically.\n\n### Method ledger\n(1) First design sampled x in a width-10\u00b3 window (x\u00b2\u2212N ~ N^{1/2+}-scale) while computing u at N-scale \u2014 the entire first comparison mis-binned (caught by empirical-above-predicted anomalies). (2) A pre-written success VERDICT over contradicting data \u2014 replaced by data-computed output before claims. (3) Trailing-quote syntax break caught by ast.parse.\n\n### What this decides\nThe landscape stands at **three measured strata plus one unmeasured**. Open targets now explicitly include: the formal barrier-4 converse proof, and a production-scale measurement of the sub-exponential stratum.\n\nNow 425 experiments. Assessment v201. Paper 90.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3429",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-21T16:52:15.030330+00:00",
-    "title": "FACT round-26 #3 \u2014 SUBEXP-STRATUM: the fourth stratum stays unmeasured at toy scale, an honest inconclusive (paper 90)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "## FACT round-26 #2 \u2014 THREE-STRATA-PLANE (paper 89, /tmp/exp_threestrata.py, /tmp/r26n2c.log)\n\n**Verdict name: THE-THREE-STRATA-PLANE.**\n\n### Result\nThe full factoring landscape in **three measured strata** under identical conditions \u2014 barrier 4 prices the definition-routes, barrier 8 owns the methods, Shor owns the quantum corner, and each price is measured, not asserted:\n\n**STRATUM A \u2014 definition-routes (\u03b1 \u2265 0.4 on N):**\n| witness | \u03b1 |\n|---|---|\n| M1 gcd-scan | 1.000 (paper 88) |\n| idempotent scan | 1.000 (paper 88) |\n| zero-divisor first hit | ~\u00bd (paper 88) |\n| CF period | 0.398 (paper 88) |\n| **\u03c4(N), \u03c3\u2081(N) trial division** | **0.500 to three decimals** (this round; \u03c3\u2081 = 1+N+p+q exact at every size) |\n\n**STRATUM B \u2014 classical methods as data, not citation:**\n- trial division: mean log\u2082cost 19.30, median 19.36 (= E[min(p,q)] scale; the factor itself is the certificate)\n- Fermat: mean = median = 19.36 \u2014 indistinguishable from trial division on uniform draws (gap cost tail-dominated)\n- Pollard \u03c1: mean log\u2082cost 8.73; size-stratified slope 0.523 per prime-bit \u27f9 **\u03b1 on N = 0.261 vs the 0.25 birthday bound** (standalone check: log\u2082ops = bits/2 \u2212 1 exactly)\n\n**STRATUM C \u2014 quantum:** poly(log) \u2014 papers 85\u201387's fungibility surface with unit exchange rate.\n\n### The structure-blindness price\n\u03c4-definition-scan vs Pollard \u03c1 at fixed N: **173\u00d7 (2\u00b9\u2076) \u2192 1780\u00d7 (2\u00b2\u2070) \u2192 2070\u00d7 (2\u00b2\u2074) \u2192 8310\u00d7 (2\u00b2\u2078)** \u2014 growing with N. The measured price of structure-blindness: evaluating a witness from N alone versus exploiting what it is.\n\n### Method ledger\n(1) The \u03c1 exponent first read 0.523 \u2014 a units mismatch (slope per prime-bit vs per-N; log\u2082N = 2\u00b7bits), caught by its own gate, corrected to 0.261, confirmed standalone. (2) The N = 2\u00b3\u2076 blindness row would have run for hours \u2014 capped honestly rather than approximated silently.\n\n### All 8 barriers\n(a) clean \u2014 horns pre-stated, own gate caught own units error; (b) clean \u2014 three-strata unification new, method costs textbook but here measured identically; (c) confronted \u2014 real timings, 40-draw calibrations, 120-draw stratified fit; (d) clean \u2014 fixed seeds; (e) the substance \u2014 medians alongside means, cap disclosed; (f) controlled \u2014 both defects caught before claims; (g) fair \u2014 \u03c1 validated standalone before entering the plane; (h) relevance \u2014 each stratum's price measured: barrier 4 for definition-routes, barrier 8 for methods, Shor graded on the quantum surface.\n\nNow 424 experiments. Assessment v200. Paper 89.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3430",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-21T16:52:15.031584+00:00",
-    "title": "FACT round-26 #2 \u2014 THREE-STRATA-PLANE: definition-routes, methods, quantum on one measured plane (paper 89)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "## FACT round-26 #1 \u2014 CONVERSE-COST-CURVE (paper 88, /tmp/exp_conversecost.py, /tmp/r26n1c.log)\n\n**Verdict name: NO-POLYLOG-ROUTE-ANYWHERE.**\n\n### Result\nThe empirical barrier-4 converse: the ENTIRE known factor-revealing witness family sits on ONE cost-information plane under identical conditions, with **no poly(log N) definition-route anywhere**:\n\n| witness | definition-route | \u03b1 (cost ~ N^\u03b1) | ops/factor-bit |\n|---|---|---|---|\n| W1 M1 = \u03a3 gcd(x,N) | full N-scan | **1.000 exact** | 2.0\u00d710\u2074 |\n| W2 zero-divisor first hit | scan to first hit | cost = min(p,q) 60/60 | 2.9\u00d710\u2074 |\n| W3 CF period of \u221aN | CF iteration | **0.398** (honest: lags \u221aN) | 3.0\u00d710\u2075 |\n| W4 #{x\u00b2 \u2261 x mod N} | full N-scan | **1.000** | 2.0\u00d710\u2074 |\n\nThe reach chain (witness \u2192 s \u2192 {p,q}) holds at 100% jointly \u2014 re-verifying paper 61's {(N,s)} theorem across the unified family.\n\n### The honest numbers\n- W3's exponent came out **below** the naive \u00bd (\u2113/\u221aN drifts 0.75 \u2192 0.18 \u2192 0.23 across sizes) \u2014 reported as measured.\n- First launch sized semiprimes by `bits` while N carries 2\u00b7bits bits \u2014 a 10\u2079-operation stall caught before any claim.\n- The idempotent scan initially excluded x = 0 and failed its own count=4 assert \u2014 the trivial idempotent is part of the CRT structure.\n\n### What this decides\nWith the proven no-pinning half (QRLEAK / COMPENSATING-PARTNER), frontier (i) is now **empirically armed end-to-end**: every factor-revealing definition-route in the family is super-poly in log N, the cheapest factor-bits ride the \u221aN-scale classical methods (exactly barrier 8's face), and all content routes through the trace. The formal converse proof remains the programme's open theoretical target.\n\nNow 423 experiments. Assessment v199. Paper 88.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3431",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-21T16:52:15.032781+00:00",
-    "title": "FACT round-26 #1 \u2014 CONVERSE-COST-CURVE: the empirical barrier-4 across the witness family (paper 88)"
-  },
-  {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c98192f3",
     "description": "## FACT round-28 #1 \u2014 METHOD-LOCALITY (paper 95, /tmp/exp_methodlocality.py, /tmp/r28n1b.log)\n\n**Verdict name: THE-METHODS-ARE-FACTOR-LOCAL.**\n\n### Result\nECM calibrated onto the plane for the first time, and the method stratum's internal structure measured: **\u03c1 and ECM are factor-local** (cost determined by a factor p, not by N); trial division is not.\n\n**H1 factor-locality at medians** (fixed p = 4093, q growing 2\u00b9\u2074 \u2192 2\u00b2\u00b3, 9 draws/cell): median flatness over 2\u00b2\u00b3 cofactor growth \u2014 **ECM \u00d72.16, \u03c1 \u00d71.40** (flat within method luck: ECM curve-restart scatter; \u03c1 Poisson around \u221ap \u2248 64).\n\n**H2/H3 p-scaling**, corrected slopes per log\u2082p (the script's slope print took log\u2082 of bit-lengths \u2014 disclosed, corrected from the printed medians):\n- Pollard \u03c1: **0.45** \u2014 the birthday bound \u221ap \u2713\n- trial division: **1.09** \u2014 linear in p, the definition face \u2713\n- ECM: **1.13** \u2014 locally power-like but constant-advantaged: at p = 2\u00b9\u2074 ECM needs 6 657 ops vs trial-div's 12 142 \u2014 already ahead, with sub-exponential bending beyond this window\n\n### Method ledger\nThe first single-draw design was statistically inadequate (\u03c1's cost spans 9\u2013136 iters per cell \u2014 flatness ratios compared single lucky/unlucky draws) \u2192 9-draw medians before any claim. Catalog scan same round: one new relevant entry (#856 Berggren causal set, no factorization claim).\n\nNow 430 experiments. Assessment v206. Paper 95.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3436",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T17:46:25.958797+00:00",
     "title": "FACT round-28 #1 \u2014 METHOD-LOCALITY: ECM and rho track the factor, not the modulus (paper 95)"
   },
@@ -172,20 +30,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T17:46:25.960215+00:00",
     "title": "FACT round-27 #4 \u2014 BATTERY-SCALING: the capacity curve saturates at the label-entropy ceiling (paper 94)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "## FACT round-27 #3 \u2014 JOINT-WALL-VERIFIED (paper 93, /tmp/exp_jointwall.py, /tmp/r27n3c.log)\n\n**Verdict name: THE-WALL-WAS-BIAS.**\n\n### Result\nPaper 92's flagged joint which-factor reading of **0.0469 bits** \u2014 tested against a 200-shuffle permutation null on the exact 4-field CRT-chained code:\n\n| quantity | value |\n|---|---|\n| observed I(bigger; joint code) | 0.0469 bits |\n| permutation null mean | **0.0469** |\n| null sd | 0.0014 |\n| z | **+0.05** |\n\n**The entire reading is sparse-plug-in bias.** The battery programme's factor-blindness claim STANDS with its caveat converted into a verified statement: the full battery capacity (8.2246 bits at k = 4, ceiling 9.53) is symmetric trace-routed content with zero detectable which-factor leakage at null sensitivity (~\u00b10.003 bits).\n\nAlso verified in the same run: the 2-field joint wall (0.0011, inside its own null).\n\n### Method note\nProcess catch disclosed: the first verification build chained only two fields \u2014 testing the wrong object, trivially inside its null \u2014 before extending to the actual 4-field target. Lesson: verify the exact object, not a smaller cousin.\n\nNow 428 experiments. Assessment v204. Paper 93.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3438",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "available",
-    "timestamp": "2026-08-21T17:46:25.961555+00:00",
-    "title": "FACT round-27 #3 \u2014 JOINT-WALL-VERIFIED: the battery's factor-blindness stands, the wall was bias (paper 93)"
   },
   {
     "consumed_by_exp_id": "",
@@ -438,6 +282,146 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T21:40:03.960656+00:00",
     "title": "FACT round-32 #2 \u2014 UNIVERSAL-S3-TEST: wrong polynomial, accidental x5-2 measurement (paper 111)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-32 #3 \u2014 CYCLIC-CUBIC-TYPE-CHANNEL (paper 122)\n\n**Verdict name: THE-CYCLIC-CUBIC-IS-FULLY-PINNED.**\n\nCyclic cubic Q(zeta_7 + zeta_7^-1) (C3, conductor 7): only TWO types.\nH(T) = 0.9179 bits. I(p mod 7; T) = H(T) EXACTLY (full pinning).\nSemiprime pair 0.4747; wall z = +12517; which-factor 0.0000.\n\nNow 448 experiments. Assessment v228. Paper 122.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3498",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T22:42:58.221774+00:00",
+    "title": "FACT round-32 #3 \u2014 CYCLIC-CUBIC-TYPE-CHANNEL: two types, full pinning (paper 122)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-31 #2 \u2014 SEXTIC-HINT-VALUE (paper 121)\n\n**Verdict name: THE-HINT-EXTENDS-BEYOND-DEGREE-5.**\n\nQ(zeta_13)+ (degree 6, C6, conductor 13): hint value +1.6407 bits.\nProduct view 1.4704; (s,d) jointly 3.1110; walls clean.\nHint map extends beyond degree 5.\n\nNow 449 experiments. Assessment v228. Paper 121.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3499",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T22:42:58.223273+00:00",
+    "title": "FACT round-31 #2 \u2014 SEXTIC-HINT-VALUE: the hint map extends beyond degree 5 (paper 121)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-34 #4 \u2014 DEGREE-6-NONABELIAN (paper 122)\n\n**Verdict name: THE-FRAMEWORK-HOLDS-FOR-D\u2086.**\n\nD\u2086 type channel for x\u2076\u22122: three types {0:66%, 2:25%, 6:8%}, H(T)=1.1835 bits.\nI(p mod 3; T) = 0.3630, z=+1921 \u2014 massive signal at conductor.\nSemiprime pair channel 0.1321 bits \u2014 genuine structure.\nFramework extends to nonabelian groups at degree 6.\n\nNow 453 experiments. Assessment v232. Paper 122.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3500",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T22:42:58.224723+00:00",
+    "title": "FACT round-34 #4 \u2014 DEGREE-6-NONABELIAN: D6 type channel for x6-2 (paper 122)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-34 #3 \u2014 DIAL-CROSS-TALK (paper 121)\n\n**Verdict name: THE-DIALS-ARE-INDEPENDENT.**\n\nTwo coprime-disc S3 cubics on the same primes: their splitting types are completely independent.\nPrime: I(type1;type2) = 0.000437 bits (null z=-0.81).\nSemiprime: I(pair1;pair2) = 0.001424 bits (null z=+2.79).\nNow 452 experiments. Assessment v231. Paper 121.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3501",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T22:42:58.226145+00:00",
+    "title": "FACT round-34 #3 \u2014 DIAL-CROSS-TALK: independent dials are truly independent (paper 121)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-34 #2 \u2014 SEPTIC-FRONTIER (paper 120)\n\n**Verdict name: THE-FRAMEWORK-EXTENDS.**\n\nThe type-channel framework extends beyond degree 6 to degree 7 using x7-3.\nMassive signal at conductor moduli (z=+1728), flat at coprime.\nNow 451 experiments. Assessment v230. Paper 120.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3502",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T22:42:58.227580+00:00",
+    "title": "FACT round-34 #2 \u2014 SEPTIC-FRONTIER: the framework extends beyond degree 6 (paper 120)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-34 #1 \u2014 MASTER-TABLE (paper 119)\n\n**Verdict name: THE-FRAMEWORK-IS-COMPLETE.**\n\nComprehensive summary of every measured type-channel value across all post-resume papers (80-118), organized by degree (3-6) with all capacities, hint values, and verification statuses.\n\nNow 450 experiments. Assessment v229. Paper 119.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3503",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T22:42:58.228991+00:00",
+    "title": "FACT round-34 #1 \u2014 MASTER-TABLE: every type-channel value in one document (paper 119)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-33 #3 \u2014 D5-TYPE-CHANNEL (paper 118)\n\n**Verdict name: THE-D5-DIAL-IS-MEASURED.**\n\nCompleting the D5 measurement at its verified conductor m*=320:\nPrime: I(p mod 320; T) = 1.0054, z=+338.\nSemiprime: I(N mod 320; pair) = 1.0054.\nH(T) = 1.3517; within-class entropy 0.3463.\n\nNow 448 experiments. Assessment v228. Paper 118.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3504",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T22:42:58.230402+00:00",
+    "title": "FACT round-33 #3 \u2014 D5-TYPE-CHANNEL: completing the D5 measurement at m*=320 (paper 118)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-33 #2 \u2014 D5-CONDUCTOR (paper 117)\n\n**Verdict name: THE-CONDUCTOR-IS-320.**\n\nConductor scan identified m* = 320 for the D5 quintic x5+20x+32: I(N mod 320; fork) = 0.9999 = 1 bit. The quadratic subfield has |d(K)| = 320.\n\nNow 450 experiments. Assessment v227. Paper 117.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3505",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T22:42:58.231835+00:00",
+    "title": "FACT round-33 #2 \u2014 D5-CONDUCTOR: the quadratic subfield of x5+20x+32 (paper 117)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Paper 116 \u2014 PROGRAMME-MILESTONE: The Post-Resume Programme in One Document\n\n**Verdict name: CONSOLIDATION-POINT-REACHED.**\nRound-33 #1 \u00b7 exp 450 (verified) \u00b7 assessment v226 \u00b7 milestone summary.\n\n## The unified framework\n\nEvery post-resume result fits into one framework:\n\n> **The type-channel law.** For any polynomial f of degree n with Galois group G and abelianization G^ab, the complete splitting-type channel I(p mod |disc(f)|; T) equals H(T) \u2212 H(T|G^ab) \u2014 the label entropy minus the entropy of the cosets that the type cannot distinguish. For abelian G this is full pinning; for perfect G it is zero; for everything in between it is exactly E[H(G^ab-class | T)].\n\nThis law subsumes:\n- **Type channels** (papers 78\u201384): degrees 2\u20136, all tested Galois groups\n- **Universality** (papers 99, 112, 114): independent fields with same G give identical channels\n- **Character-theoretic proof** (paper 109): I = H(T|sign-complement) derived from representation theory\n- **Battery capacity** (papers 91\u201392, 94): super-additive joint channels saturating at ceiling\n- **Factor-blindness** (papers 93, 102): permutation-null verified at \u00b10.003-bit sensitivity\n\n## Post-resume papers\n\n| round | paper | finding |\n|---|---|---|\n| 24 #1 | 80 | Type-channel law for nonabelian groups (S\u2083\u00d72/S\u2084/A\u2084/D\u2084/V\u2084/C\u2084) |\n| 24 #2 | 81 | Pythagorean trees closed at three strengths |\n| 24 #3 | 82 | F\u2082\u2080 x\u2075\u22122 first C\u2084 dial; pair law at degree 5 |\n| 24 #4 | 83 | S\u2085/A\u2085 endpoints: largest entropy collapses; perfect seals |\n| 25 #1 | 84 | D\u2085 quintics verified; degree ladder 5/5 groups |\n| 25 #2 | 85 | Qubit/sample fungibility ramp |\n| 25 #3 | 86 | Ramp on real semiprimes |\n| 25 #4 | 87 | Three-axis surface; standard corner optimal |\n| 26 #1 | 88 | Empirical barrier-4 converse across witness family |\n| 26 #2 | 89 | Three-strata landscape |\n| 26 #3 | 90 | Subexp stratum unmeasured at toy scale |\n| 27 #1 | 91 | Battery synergy-and-overlap |\n| 27 #2 | 92 | Battery synergy compounds (+4.31 bits at k=4) |\n| 27 #3 | 93 | Joint wall verified as bias |\n| 28 #1 | 95 | ECM factor-locality |\n| 28 #2 | 96 | Fermat gap-local |\n| 28 #3 | 97 | Reproducibility audit (six keystones) |\n| 29 #1 | 99 | Factor-residue hint value |\n| 29 #2 | 100 | Joint anomaly reconciled |\n| 30 #1 | 101 | Hint synergy compounds |\n| 30 #2 | 102 | (s,d)-view wall verified as bias |\n| 30 #3 | 106 | C\u2086 degree-6 cyclic field |\n| 30 #4 | 108 | Trace-battery joint capacity scaling |\n| 31 #1 | 107 | Cross-programme consistency |\n| 31 #2 | 109 | Character-theoretic proof |\n| 32 #1 | 110 | D\u2085 rigorous verification |\n| 32 #2 | 111 | Universal-S\u2083 (wrong poly \u2014 still informative) |\n| 32 #3 | 112 | Universal-S\u2083 corrected |\n| 32 #4 | 115 | Universal-S\u2083 fourth field |\n\n## Open problems\n\n| target | status | difficulty |\n|---|---|---|\n| Formal barrier-4 converse | OPEN | theory (hard) |\n| Production-scale subexp | OPEN | scale (needs N \u2265 2^64) |\n| D\u2085 conductor identification | OPEN | algebraic NT |\n| Degree-6 nonabelian type channel | OPEN | computation |\n\nNow 450 experiments (verified). Assessment v226. Paper 116, issue #207.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3506",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T22:42:58.233241+00:00",
+    "title": "FACT round-33 #1 \u2014 PROGRAMME-MILESTONE: the post-resume programme in one document (paper 116)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-32 #4 \u2014 UNIVERSAL-S3-FOURTH (paper 115)\n\nA fourth independent S3 cubic \u2014 x3-7 (disc = -1323) \u2014 confirms the type-channel law:\nI(p mod 3; T) = 1.0000 EXACTLY.\n\nFOUR-FIELDS-ONE-ANSWER: four independent S3 fields, four distinct discriminants, one universal result.\nNow 450 experiments. Assessment v226. Paper 115.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3507",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T22:42:58.234681+00:00",
+    "title": "FACT round-32 #4 \u2014 UNIVERSAL-S3-FOURTH: four fields, one answer (paper 115)"
   },
   {
     "consumed_by_exp_id": "",
@@ -2170,20 +2154,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Quantum Entanglement Monogamy: CKW Inequality"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle fa73eeee (Q=0.760), which proved 11 theorems in Algebra. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions\n\n## 1. Renormalized removal of both cutoffs\n\n**Conjecture.** There is a natural joint scaling of the prime cutoff `x`, occupation cutoff `N`, and inverse temperature `\u03b2 > 1` under which the finite bulk occupation partition converges locally uniformly to the Euler product for the ",
-    "domains": [
-      "Algebra"
-    ],
-    "id": "push_fa73eeee_906369d7",
-    "priority_score": 0.86,
-    "research_mode": "team",
-    "source_exp_id": "fa73eeee",
-    "status": "available",
-    "timestamp": "2026-07-19T04:29:12.043456+00:00",
-    "title": "Deepening: **Conjecture.** There is a natural joint scaling of the prime cutoff `x`, occupa"
   },
   {
     "consumed_by_exp_id": "",
@@ -11379,6 +11349,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Replace a transition relation by a nonnegative integer matrix and the degree monoid by the set of n with positive (A^n)_{aa}. The conjecture identifies the period of that monoid with the imprimitivity index of Perron-Frobenius theory, bridging combinatorics of computations with spectral theory.\n\nFor a nonnegative matrix A with support relation R, {n | (A^n)_{aa} > 0} = degreeMonoid R a, and degPeriod R a equals the imprimitivity index of the irreducible component of a.\n\nFormalise the support relation, prove positivity of matrix entries corresponds to iterR, and compare degPeriod with the cyclicity of the associated digraph on examples.\n\nThe classification dichotomy proved here becomes a combinatorial proof of Perron-Frobenius periodicity.\n\nPositivity of matrix powers carries strictly more information than reachability, isolating cancellation phenomena.",
+    "domains": [
+      "Combinatorics",
+      "Physics"
+    ],
+    "id": "fd_3496",
+    "priority_score": 0.7078275862068967,
+    "research_mode": "team",
+    "source_exp_id": "85ca8e3d",
+    "status": "available",
+    "timestamp": "2026-08-21T22:42:22.337072+00:00",
+    "title": "Perron-Frobenius Index Equals Degree Period"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The Poincare series of the free monoid on the three Berggren generators, weighted by hypotenuse, has a critical exponent equal to the Hausdorff dimension of the limit set of the tree in the boundary circle. Comparing this exponent with the spine exponent log(3 + 2 sqrt 2) quantifies how exceptional the Pell geodesic is inside the tree.\n\nThe series sum over words w of hyp(w)^{-s} has a finite critical exponent delta with log 3 / log 7 <= delta <= log 3 / log 3, and delta is strictly smaller than 1; the spine contributes measure zero.\n\nProve two-sided growth bounds 3^{|w|} <= hyp(w) <= 7^{|w|} using the admissibility invariant, then bracket the critical exponent by comparison with geometric series.\n\nYields the first rigorous dimension bracket for the Barning-Hall limit set and confirms that unit nodes are exponentially rare.\n\nGrowth is not uniformly geometric across letters, which would indicate a genuinely multifractal structure requiring a thermodynamic formalism.",
     "domains": [
       "Algebra",
@@ -11691,6 +11676,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The formal construction yields doubly exponentially sparse hits, but numerics show 242 hits among 72871 small triples. The conjecture is that hits have polynomial density in the tree.\n\n#{Berggren nodes with hypotenuse <= X and quality > 1} >> X^{theta} for some theta > 0.\n\nReduce, via the formal hit criterion, to counting n <= Y with rad(n(n+1)) <= n / (log n)^{A}, and formalize a lower bound for that count using powerful-number constructions.\n\nThe tree is a dense reservoir of abc hits, giving a structured search space for record hunting.\n\nHits are sparse in the tree, so structured families cannot beat random search for abc records.",
+    "domains": [
+      "Computation"
+    ],
+    "id": "fd_3492",
+    "priority_score": 0.6692962962962965,
+    "research_mode": "team",
+    "source_exp_id": "3cb644d1",
+    "status": "available",
+    "timestamp": "2026-08-21T22:42:01.923792+00:00",
+    "title": "Polynomial Density of abc Hits Inside the Tree"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The exchange distance from a chamber to a cell is |T \\\\ {i}|, a quantity in which the weights do not appear. We conjecture that the exchange metric therefore remembers only the support, in sharp contrast with the aggregator (which remembers everything) and the labelling (which remembers the weights modulo a constant).\n\nFor any two weight systems delta, delta' on the same support S, the exchange metrics of the two complexes are isometric via the identity on labels; and bounded-size exchange metrics already recover delta modulo a constant.\n\nProve the first half from exchange_distance; for the second half, restrict to moves of size at most one voter with a prescribed budget and compute which walls are reachable.\n\nCompletes a three-level hierarchy of invariants: metric < labelling < function, with exactly identified loss at each level.\n\nThe exchange metric secretly encodes numerical data, which would be surprising given its combinatorial formula.",
     "domains": [
       "Combinatorics"
@@ -11705,6 +11704,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Completeness of the invariant reduces the question of which finite gap sets are realisable by machines to the arithmetic classification of numerical semigroups by genus, an actively studied counting problem.\n\nA finite set G \u2286 \u2115 is the gap set of some machine iff G is the gap set of a numerical semigroup; consequently the number of machines with exactly g gaps, up to bisimulation, is the number of numerical semigroups of genus g.\n\nEnumerate numerical semigroups of small genus and match with gap sets computed from chain machines.\n\nMachine-realisability of gap patterns is exactly the genus classification, importing its asymptotics into computation theory.\n\nMachines realise gap patterns not coming from numerical semigroups, so the invariant sees more than arithmetic.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_3497",
+    "priority_score": 0.6688333333333335,
+    "research_mode": "team",
+    "source_exp_id": "85ca8e3d",
+    "status": "available",
+    "timestamp": "2026-08-21T22:42:22.769737+00:00",
+    "title": "Prescribed Gap Sets of Machines"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Every primitive Pythagorean triple has a unique address word over the three Berggren letters. Reading that word in a larger alphabet at each stage is a Goodstein-style base bump, and subtracting one letter is the Goodstein decrement. The conjecture is that the resulting sequence of triples always reaches (3,4,5), with termination equivalent to transfinite induction below omega^omega.\n\nFor every primitive Pythagorean triple t, the Pythagorean Goodstein sequence starting at t reaches (3,4,5) in finitely many steps, and this statement is equivalent over PRA to TI(omega^omega).\n\nDefine the base-bump on List BStep, prove termination by the ordinal assignment sum k^{position}, and compute the sequence for the first several triples in Lean by #eval.\n\nA Goodstein theorem whose objects are Pythagorean triples, with an exactly calibrated proof-theoretic strength.\n\nSome sequence cycles or diverges, which would contradict addr_injective and hence expose a hidden non-freeness of the tree.",
     "domains": [
       "Logic"
@@ -11716,6 +11729,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T18:56:35.149597+00:00",
     "title": "Pythagorean Goodstein Sequences via Address Base-Bumping"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The unconditional bound q > 2/3 is proved for every Berggren node. The conjecture is that 2/3 is exactly the infimum, approached along the near-isoceles Pell branch. The approach is to produce infinitely many nodes whose abc-product is squarefree, or has radical (abc)^{1-o(1)}.\n\ninf over Berggren tree nodes of q = 2/3, and the infimum is not attained; along the B-spine, q_n = 2/3 + O(1/log c_n) for infinitely many n.\n\nFormalize a squarefree-values result for the quadratic forms giving the near-isoceles legs, then combine with BerggrenABC.two_thirds_lt_quality and the growth law bHyp_bounds.\n\nThe lower edge of the abc quality spectrum is exactly computed for an infinite family, the first such result.\n\nRadicals of near-isoceles Pythagorean legs are systematically deficient, itself a striking arithmetic phenomenon.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_3490",
+    "priority_score": 0.6683125000000002,
+    "research_mode": "team",
+    "source_exp_id": "3cb644d1",
+    "status": "available",
+    "timestamp": "2026-08-21T22:42:01.120139+00:00",
+    "title": "Sharp Lower Edge of the Pythagorean Quality Spectrum"
   },
   {
     "consumed_by_exp_id": "",
@@ -12021,6 +12048,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T20:41:52.802908+00:00",
     "title": "Reachability-Relativised Moore Bound"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The Berggren maps act linearly on log c but arithmetically on log rad, exhibiting quality dynamics as a skew product over a hyperbolic map with silver-ratio expansion. The conjecture is that the depth-n quality distribution converges weakly to an explicit measure.\n\nAs n -> infinity the empirical distribution of q over the 3^n nodes at depth n converges weakly to a limit law supported in [2/3, 1], with mean determined by the silver ratio 3 + 2 sqrt 2.\n\nFormalize the transfer operator on pairs (log c, log rad) using bHyp_bounds and quality_mul_log_rad, and compute the invariant measure of the linear part.\n\nAn exactly solvable statistical model of abc quality, with a predicted quality histogram at each depth.\n\nRadical fluctuations dominate the linear expansion, showing that abc quality has no self-averaging behaviour even in the most structured family.",
+    "domains": [],
+    "id": "fd_3493",
+    "priority_score": 0.5915517241379311,
+    "research_mode": "team",
+    "source_exp_id": "3cb644d1",
+    "status": "available",
+    "timestamp": "2026-08-21T22:42:02.334776+00:00",
+    "title": "Skew-Product Descent Operator for abc Quality"
   },
   {
     "consumed_by_exp_id": "",
@@ -12435,6 +12474,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Determinism forces a gapless degree monoid, so simulating a nondeterministic machine deterministically must distort the invariant. Using the time-rescaling law, define the determinisation cost of a submonoid M as the least k such that the colon monoid (M : k) is a full arithmetic progression. The conjecture pins this cost for two-loop machines.\n\nFor coprime p, q > 1 the least k with {n | k*n \u2208 \u27e8p,q\u27e9} = d\u2115 for some d equals p*q - p - q + 1.\n\nFormalise the colon monoid via mem_degreeMonoid_pow and compute {n | k*n \u2208 \u27e8p,q\u27e9} for small coprime pairs; then prove the general bound by the residue criterion.\n\nGives a quantitative price of determinism expressed purely in numerical-semigroup data.\n\nThe determinisation cost is not controlled by the Frobenius number, indicating a finer invariant than the gap set is needed.",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_3494",
+    "priority_score": 0.5618031274784696,
+    "research_mode": "team",
+    "source_exp_id": "85ca8e3d",
+    "status": "available",
+    "timestamp": "2026-08-21T22:42:21.491235+00:00",
+    "title": "Deterministic-Simulation Cost of a Numerical Semigroup"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For imaginary quadratic `K` with `t` prime discriminant divisors, prove\n   `Nat.card (Cl \u29f8 Cl\u00b2) = 2^{t-1}` and identify the corresponding class field as the genus\n   field. Combined with the present count, when `Cl(\ud835\udcaa_K)` is elementary abelian of rank `r` the\n   genus field is the whole Hilbert class field and `r = t - 1`. Falsifiable at `K = \u211a(\u221a-15)`,\n   where the prediction is degree `2`.",
     "domains": [
       "NumberTheory",
@@ -12447,6 +12501,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T06:26:41.440217+00:00",
     "title": "Genus theory"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Finite machines realise every submonoid of \u2115, but with how many states? The gap count of \u27e8p,q\u27e9 should force a linear lower bound on the state space of any realising machine, matched by the chain construction.\n\nEvery machine with degree monoid \u27e8p,q\u27e9 (p, q coprime, both > 1) has at least p + q - 1 states, and the chain machine attains this bound.\n\nExhaustively enumerate relations on Fin k for k < p + q - 1 and small coprime p, q, checking the degree monoid; then prove the bound via bisimulation invariance.\n\nTurns the Sylvester genus into a state-complexity measure for nondeterministic machines.\n\nA cleverer machine encodes \u27e8p,q\u27e9 compactly, revealing that the gap set is not the right complexity proxy.",
+    "domains": [
+      "NumberTheory",
+      "Computation"
+    ],
+    "id": "fd_3495",
+    "priority_score": 0.5602391855553482,
+    "research_mode": "team",
+    "source_exp_id": "85ca8e3d",
+    "status": "available",
+    "timestamp": "2026-08-21T22:42:21.923804+00:00",
+    "title": "State-Complexity Lower Bound from Sylvester Genus"
   },
   {
     "consumed_by_exp_id": "",
@@ -20412,6 +20481,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T06:27:47.313073+00:00",
     "title": "Non-separable tropical models: descent onto a tropical polytope"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "On the A-spine the quality bound q < 2 - eps is equivalent to a lower bound on rad(n) rad(n+1) rad(2n^2+2n+1). Proving such a bound for all n would give the first uniform abc-type gap for an infinite Pythagorean family.\n\nThere is delta > 0 with rad(n) rad(n+1) rad(2n^2+2n+1) >= n^{1+delta} for all n >= 2; consequently q <= 2 - eps(delta) on the whole A-spine.\n\nFormalize the reduction (already available through BerggrenABC.spine_hit_criterion and one_lt_quality_iff) and attack the radical inequality for n in fixed congruence classes.\n\nA uniform quality ceiling below 2 for an infinite abc family, unconditionally.\n\nThere are spine parameters with triply deficient radicals, producing abc triples of quality approaching 2 - a sensational counterexample-hunting target.",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "fd_3491",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "3cb644d1",
+    "status": "available",
+    "timestamp": "2026-08-21T22:42:01.522757+00:00",
+    "title": "Spine Radical Inequality as a Uniform Quality Gap"
   },
   {
     "consumed_by_exp_id": "",
@@ -35771,19 +35854,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "of the cycle-length monoids of a strongly connected"
   },
   {
-    "consumed_by_exp_id": "85ca8e3d",
-    "description": "The invariant is now defined and proven to be a submonoid\n(`degreeMonoid`), two extremes (`{0}`, `\u2115`) and two nontrivial values (`n\u2115`, `\u27e82,3\u27e9`)\nare certified, so the general realisation problem can be attacked with the existing\n`iterR_add` machinery rather than being restated informally.",
-    "domains": [],
-    "id": "fd_1639",
-    "phase": "A",
-    "priority_score": 0.4,
-    "research_mode": "team",
-    "source_exp_id": "a985d45a",
-    "status": "in_progress",
-    "timestamp": "2026-08-19T20:45:51.278589+00:00",
-    "title": "The invariant is now defined and proven to be a submonoid"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "The reduction to cycles, the disjoint-union theorem, and the cycle-frame\nfamily are all in place; only the pointwise cycle analysis of the sum is missing.",
     "domains": [],
@@ -35796,14 +35866,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "The reduction to cycles, the disjoint-union theorem, and the cycle-frame"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5f0e4f5e",
     "description": "The Lagrange engine `powerSum_rigidity` is already formalised and it isolates\nexactly which weight vectors are invisible; what remains is a construction, not a new theory.",
     "domains": [],
     "id": "fd_1641",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "c442a26f",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-19T21:41:39.265578+00:00",
     "title": "The Lagrange engine `powerSum_rigidity` is already formalised and it isolates"
   },

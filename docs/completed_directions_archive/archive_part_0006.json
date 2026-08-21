@@ -1,7 +1,7 @@
 {
   "part": "6",
-  "archived_at": "2026-08-21T21:39:29Z",
-  "count": 70,
+  "archived_at": "2026-08-21T22:42:23Z",
+  "count": 71,
   "directions": [
     {
       "ambition_level": "extension",
@@ -2846,6 +2846,46 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 67
+    },
+    {
+      "id": "fd_1153",
+      "title": "TRACEPROFILE: the trace s=p+q is the least-hidden symmetric invariant — 1 bit per prime exactly, s1=1-N1 theorem",
+      "description": "**Paper 50 (NewMathematics) — Experiment 385, assessment v161. Round-14 #7.**\n\n**Hypothesis:** the trace s = p+q (minimal factor-bearing witness) has a different information profile than the factor p — congruence-visible where p is congruence-invisible.\n\n**Experiment (k=12,14; 32 640–380 628 semiprime pairs; mod-m MI, CRT trace-set sizes, full pairwise bit matrix):**\n\n1. **Factor invisible, trace constrained EXACTLY:** I(p mod m; N mod m) ~ 0 for all m (zero-block extends to odd m); I(s mod m; N mod m) = 1.0000 bits at m=3, ~1.03–1.06 per odd prime, because s mod m is pinned to the trace-set {x+y mod m : xy=N} of size (m+1)/2.\n2. **JOINT LAW: exactly one bit per prime.** |S_{M#}|/M# = 2^{-omega(M#)} exactly (0.5011, 0.2509, 0.1260, ... each prime halves it) -> I(s mod M#; N) = omega(M#) bits, additively independent.\n3. **EXACT LOW-BIT THEOREM: s_1 = 1 - N_1** (holds 300000/300000 pairs; N_1 = p_1+q_1 mod 2, s_1 = p_1+q_1+1 mod 2). Partial: s_2 != N_2 with prob 0.754.\n4. **Trace is less superdense:** pairwise 2.32 bits vs H(s) = 12.6 -> 18.5–21.9% visible (factor: 5%), in exact low-bit relations + top-2 carry-out sliver.\n\n**Verdict:** the trace is the least-hidden symmetric invariant — the most accessible residue target — yet its visible bits are symmetric, cannot scale to pin s (needs M# >> e^{2^k}), and never isolate p or q. Barrier 2 + trace lemma confirmed at the information level. Not a factoring tool.\n\nFull paper: ResearchOutput/NewMathematics/50_TraceProfile_LeastHiddenInvariant.md",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 1000.0,
+      "status": "completed",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-08-12T05:49:32.576822+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.82,
+      "domain_quality_penalty": 0.6,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 2,
+      "last_attempt_time": "2026-08-12T13:14:08.827067+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 66
     }
   ]
 }
