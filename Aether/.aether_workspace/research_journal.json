@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "94e7c481",
-      "domain": "NumberTheory",
-      "key_insight": "# Future directions: bold, testable conjectures from the Beal cycle\n\nThe formalisation in `Catalog/NumberTheory/BealConjecture.lean`,\n`Catalog/NumberTheory/BealStructure.lean` and `Catalog/NumberTheor",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 56,
-      "timestamp": "2026-08-20T03:58:56",
-      "title": "Beal's Conjecture"
-    },
-    {
       "cycle_id": "17d131fb",
       "domain": "NumberTheory",
       "key_insight": "# Future directions: after the refutation of Conjecture D10\n\nConjecture D10 (\"the Molien invariant is exactly the Burnside mark vector modulo scaling\")\nis **false**, and the reason is now precisely lo",
@@ -499,19 +489,19 @@
       "theorem_count": 58,
       "timestamp": "2026-08-21T22:42:28",
       "title": "The invariant is now defined and proven to be a submonoid"
+    },
+    {
+      "cycle_id": "1632a2eb",
+      "domain": "Combinatorics",
+      "key_insight": "# Future directions\n\nDerived from the two verified files of this cycle:\n\n* `Catalog/Combinatorics/CodiscreteMagmaBicategory.lean` — every pointed magma `M` (no axioms)\n  yields a one-object bicategory",
+      "quality_score": 0.79,
+      "sorry_count": 0,
+      "theorem_count": 102,
+      "timestamp": "2026-08-21T23:38:40",
+      "title": "General codiscrete construction"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "c80347ac",
-      "domain": "Novelty",
-      "key_insight": "# Future directions — the Walsh/GF(2) face of the factoring barrier\n\nDerived from the Stage-3 analysis and Stage-4 critique of the results now proved in\n`Catalog/Novelty/WalshSpectralFlatness.lean` an",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 73,
-      "timestamp": "2026-08-13T18:14:59",
-      "title": "EMPIRICAL-DEGREE: the factoring function is spectrally flat — no low-degree parity of N approximates"
-    },
     {
       "cycle_id": "b7a22960",
       "domain": "Logic",
@@ -2501,27 +2491,19 @@
       "theorem_count": 58,
       "timestamp": "2026-08-21T22:42:28",
       "title": "The invariant is now defined and proven to be a submonoid"
+    },
+    {
+      "cycle_id": "1632a2eb",
+      "domain": "Combinatorics",
+      "key_insight": "# Future directions\n\nDerived from the two verified files of this cycle:\n\n* `Catalog/Combinatorics/CodiscreteMagmaBicategory.lean` — every pointed magma `M` (no axioms)\n  yields a one-object bicategory",
+      "quality_score": 0.79,
+      "sorry_count": 0,
+      "theorem_count": 102,
+      "timestamp": "2026-08-21T23:38:40",
+      "title": "General codiscrete construction"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "3d7df1d3",
-      "domain": "Shared",
-      "name": "bergC_eq_tripleMove",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "3026c1dd",
-      "domain": "Physics",
-      "name": "descendsOn_iff_height_lt",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "3026c1dd",
-      "domain": "Physics",
-      "name": "signedSum_eq_total_sub",
-      "quality": 0.82
-    },
     {
       "cycle_id": "3026c1dd",
       "domain": "Physics",
@@ -2803,9 +2785,27 @@
       "domain": "Computation",
       "name": "deterministic_sub_mem",
       "quality": 0.86
+    },
+    {
+      "cycle_id": "1632a2eb",
+      "domain": "Combinatorics",
+      "name": "cod_hom_unique",
+      "quality": 0.79
+    },
+    {
+      "cycle_id": "1632a2eb",
+      "domain": "Combinatorics",
+      "name": "cell_as",
+      "quality": 0.79
+    },
+    {
+      "cycle_id": "1632a2eb",
+      "domain": "Combinatorics",
+      "name": "comp_cell",
+      "quality": 0.79
     }
   ],
-  "last_updated": "2026-08-21T22:42:28",
+  "last_updated": "2026-08-21T23:38:40",
   "open_questions": [
     {
       "context": "-- count, which is not available in Mathlib.  Rather than leave an unproved `sorry` in the; sorry; sorry",
@@ -3207,12 +3207,6 @@
     ],
     "Combinatorics": [
       {
-        "cycle_id": "d8dbb938",
-        "quality": 0.82,
-        "theorems": 70,
-        "title": "Residue Dials Cannot Amplify a Coppersmith Hint, Closed"
-      },
-      {
         "cycle_id": "45ac3b9d",
         "quality": 0.78,
         "theorems": 58,
@@ -3265,6 +3259,12 @@
         "quality": 0.82,
         "theorems": 52,
         "title": "The exact ensemble dichotomy"
+      },
+      {
+        "cycle_id": "1632a2eb",
+        "quality": 0.79,
+        "theorems": 102,
+        "title": "General codiscrete construction"
       }
     ],
     "Computation": [
