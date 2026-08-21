@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "4ba8c40c",
-      "domain": "Novelty",
-      "key_insight": "# Future directions: emergent spacetime from entanglement\n\nFive bold, testable conjectures distilled from this cycle.  Each is stated so\nthat a counterexample would be a finite object, and each is phr",
-      "quality_score": 0.85,
-      "sorry_count": 0,
-      "theorem_count": 124,
-      "timestamp": "2026-08-19T13:09:17",
-      "title": "Emergent Spacetime from Quantum Entanglement"
-    },
-    {
       "cycle_id": "7299371d",
       "domain": "Combinatorics",
       "key_insight": "# Future Directions — Erdős–Graham: exact coverings by distinct unit fractions\n\nThe formal development in `Catalog/Combinatorics/ErdosGraham*.lean` establishes:\nthe cardinality spectrum of exact Egypt",
@@ -499,19 +489,19 @@
       "theorem_count": 156,
       "timestamp": "2026-08-21T05:48:53",
       "title": "Higher-Dimensional Pythagorean Trees — Generalizing the Berggren Tree to Pythagorean Quadruples and "
+    },
+    {
+      "cycle_id": "3026c1dd",
+      "domain": "Physics",
+      "key_insight": "# Future directions — higher-dimensional Pythagorean trees\n\nThe results proved in this cycle (`Catalog/Physics/HigherPythagoreanTrees/`) settle the\nqualitative shape of the generalisation:\n\n* the desc",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 101,
+      "timestamp": "2026-08-21T08:59:01",
+      "title": "Higher-Dimensional Pythagorean Trees — Generalizing the Berggren Tree to Pythagorean Quadruples and "
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "f566f199",
-      "domain": "Computation",
-      "key_insight": "# Future Directions — bold, testable conjectures from the QBOUND cycle\n\nDerived from what survived Stages 3–4 of this cycle. Each is falsifiable, and\neach names the Lean artefact it would extend.\n\n---",
-      "quality_score": 0.84,
-      "sorry_count": 0,
-      "theorem_count": 62,
-      "timestamp": "2026-08-12T17:19:36",
-      "title": "The Quantum-Classical Boundary in Integer Factorization"
-    },
     {
       "cycle_id": "a055589e",
       "domain": "Probability",
@@ -2501,27 +2491,19 @@
       "theorem_count": 156,
       "timestamp": "2026-08-21T05:48:53",
       "title": "Higher-Dimensional Pythagorean Trees — Generalizing the Berggren Tree to Pythagorean Quadruples and "
+    },
+    {
+      "cycle_id": "3026c1dd",
+      "domain": "Physics",
+      "key_insight": "# Future directions — higher-dimensional Pythagorean trees\n\nThe results proved in this cycle (`Catalog/Physics/HigherPythagoreanTrees/`) settle the\nqualitative shape of the generalisation:\n\n* the desc",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 101,
+      "timestamp": "2026-08-21T08:59:01",
+      "title": "Higher-Dimensional Pythagorean Trees — Generalizing the Berggren Tree to Pythagorean Quadruples and "
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "560d610e",
-      "domain": "Tropical",
-      "name": "shtarkovSum_ge_packing",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "560d610e",
-      "domain": "Tropical",
-      "name": "shtarkovSum_le_card_image",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "18b02a30",
-      "domain": "NumberTheory",
-      "name": "from",
-      "quality": 0.88
-    },
     {
       "cycle_id": "5be71780",
       "domain": "Shared",
@@ -2803,9 +2785,27 @@
       "domain": "Shared",
       "name": "bergC_eq_tripleMove",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "3026c1dd",
+      "domain": "Physics",
+      "name": "descendsOn_iff_height_lt",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "3026c1dd",
+      "domain": "Physics",
+      "name": "signedSum_eq_total_sub",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "3026c1dd",
+      "domain": "Physics",
+      "name": "signedSum_empty",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-21T05:48:53",
+  "last_updated": "2026-08-21T08:59:01",
   "open_questions": [
     {
       "context": "Everything is proved; there are no `sorry`s and no new axioms.",
@@ -3703,12 +3703,6 @@
     ],
     "Physics": [
       {
-        "cycle_id": "25d882e7",
-        "quality": 0.78,
-        "theorems": 53,
-        "title": "The Unreasonable Effectiveness of Wrong Theories"
-      },
-      {
         "cycle_id": "665c1eea",
         "quality": 0.83,
         "theorems": 90,
@@ -3761,6 +3755,12 @@
         "quality": 0.82,
         "theorems": 118,
         "title": "The low-tail experiment."
+      },
+      {
+        "cycle_id": "3026c1dd",
+        "quality": 0.82,
+        "theorems": 101,
+        "title": "Higher-Dimensional Pythagorean Trees — Generalizing the Berggren Tree to Pythago"
       }
     ],
     "Probability": [
