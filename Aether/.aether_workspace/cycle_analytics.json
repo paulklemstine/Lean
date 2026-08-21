@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-21T19:38:20.494890+00:00",
+  "last_updated": "2026-08-21T20:42:11.109607+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -62852,6 +62852,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-08-21T19:38:20.222605+00:00",
       "title": "Arithmetic on the Moebius Band: A Number System with a Twist"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 2,
+      "domain": "Pythagorean",
+      "duration_seconds": 3801.3620326519012,
+      "end_time": 1787344899.9587219,
+      "files_integrated": 4,
+      "job_id": "018e116a",
+      "outcome_quality": 0.86,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.86,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.562,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.86,
+        "novelty": 0.86,
+        "proof_depth": 0.86,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.86,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1787341098.5966892,
+      "strategy_count": 0,
+      "theorem_count": 62,
+      "theorem_novelty_disproof": 1,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 44,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-08-21T20:42:10.939110+00:00",
+      "title": "Bound the length of distinguishing experiments"
     }
   ]
 }

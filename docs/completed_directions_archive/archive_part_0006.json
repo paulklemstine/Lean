@@ -1,7 +1,7 @@
 {
   "part": "6",
-  "archived_at": "2026-08-21T19:38:09Z",
-  "count": 67,
+  "archived_at": "2026-08-21T20:41:53Z",
+  "count": 68,
   "directions": [
     {
       "ambition_level": "extension",
@@ -2726,6 +2726,46 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 57
+    },
+    {
+      "id": "fd_1148",
+      "title": "The Derived-Modulus Corner, Closed",
+      "description": "**Paper:** `ResearchOutput/NewMathematics/40_DerivedModulus_NoGo.md` (factor3)\n**Experiment:** MULTIMOD (#375), assessment v151.\n\n## Finding\nTest whether invariants of derived moduli M = poly(N) (N±1, N²±1, Φ₃(N), 2N±1)\ncarry factor signal about N = pq. Verified:\n1. **gcd(N, M) = 1 for every derived modulus** — they share nothing with N.\n2. **C(M) is a function of N** (corr 0.66–0.95 with N); the apparent corr with\n   p, p+q is the N-confound (p ≈ √N varies with N over a wide batch).\n3. **Factor-specific coordinate is noise:** corr(C(M), |p−q|) inside permutation\n   null everywhere (n=40 residual control: obs ≤ 0.26 vs 95th ≈ 0.29–0.31).\n4. **Degeneracy:** N±1 always even → lpf = 2.\n5. Computing C(M) for N²+1/Φ₃ needs M's fresh factorization (barrier 4).\n\n## Why it collapses (barrier 1 + 5 + 4)\nThe polynomial barrier (LLL) predicts exactly this: N-explicit moduli share only\nfinitely many primes with N, so their invariants are N-only (barrier 1/5). The\nlarge-M invariants need M's fresh factorization (barrier 4). The only way a\nsecond modulus helps is an EXTERNAL hint sharing a prime with N — the\nhint-amplification frontier.\n\n## Verdict\nREFUTED. Multi-modulus corner closed. Round-13 nearly complete (HALFPLANE,\nRANDOM-BQF, FETQ, CONDORDER, JACSIGN, KPOWER, MULTIMOD tested). Classical uniform\nhint-free surface remains exhausted.\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 1000.0,
+      "status": "completed",
+      "consumed_by_exp_id": "0c649bb1",
+      "timestamp": "2026-08-12T05:10:44.748176+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.85,
+      "domain_quality_penalty": 0.0,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 2,
+      "last_attempt_time": "2026-08-12T13:13:46.885633+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 56
     }
   ]
 }

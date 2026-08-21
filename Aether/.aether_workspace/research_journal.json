@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "2e28602b",
-      "domain": "Physics",
-      "key_insight": "# Future directions — inverse stereographic neural field theory\n\nDerived from the analysis and adversarial review of the results now proved in\n`Catalog/Physics/StereoNeuralFieldCalculus.lean`,\n`…Harmo",
-      "quality_score": 0.85,
-      "sorry_count": 0,
-      "theorem_count": 158,
-      "timestamp": "2026-08-19T22:42:00",
-      "title": "Inverse Stereographic Neural Field Theory"
-    },
-    {
       "cycle_id": "a23b48bf",
       "domain": "Pythagorean",
       "key_insight": "# Future directions — after closing the converse of finite Poisson summation\n\nThis cycle closed the open converse: the exact Poisson identity\n`|G| ∑_{x∈S} f = |S| ∑_{ψ∈S^⊥} f̂` holds for all `f` **iff",
@@ -499,19 +489,19 @@
       "theorem_count": 79,
       "timestamp": "2026-08-21T19:38:14",
       "title": "Arithmetic on the Moebius Band: A Number System with a Twist"
+    },
+    {
+      "cycle_id": "018e116a",
+      "domain": "Pythagorean",
+      "key_insight": "# Future Directions — bounding distinguishing experiments\n\nDerived from the verified results in `Catalog/Pythagorean/DistinguishingWordBound.lean`,\n`DistinguishingWordMoore.lean`, `DistinguishingWordS",
+      "quality_score": 0.86,
+      "sorry_count": 0,
+      "theorem_count": 62,
+      "timestamp": "2026-08-21T20:42:06",
+      "title": "Bound the length of distinguishing experiments"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "db97959f",
-      "domain": "Tropical",
-      "key_insight": "# FUTURE DIRECTIONS — after the Jacobi-signed Weil floor\n\nThe formal results in `Catalog/Tropical/JacobiSigned*.lean` settle the JACSIGN\nexperiment: the Jacobi-signed circle count `W(N) = ∑_{x²+y²=1}",
-      "quality_score": 0.86,
-      "sorry_count": 0,
-      "theorem_count": 75,
-      "timestamp": "2026-08-13T13:55:33",
-      "title": "The Jacobi-Signed Circle Count Escapes the Residue Dial, at the Weil Floor"
-    },
     {
       "cycle_id": "20cf0514",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 79,
       "timestamp": "2026-08-21T19:38:14",
       "title": "Arithmetic on the Moebius Band: A Number System with a Twist"
+    },
+    {
+      "cycle_id": "018e116a",
+      "domain": "Pythagorean",
+      "key_insight": "# Future Directions — bounding distinguishing experiments\n\nDerived from the verified results in `Catalog/Pythagorean/DistinguishingWordBound.lean`,\n`DistinguishingWordMoore.lean`, `DistinguishingWordS",
+      "quality_score": 0.86,
+      "sorry_count": 0,
+      "theorem_count": 62,
+      "timestamp": "2026-08-21T20:42:06",
+      "title": "Bound the length of distinguishing experiments"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "6a8ae4e1",
-      "domain": "Shared",
-      "name": "chooseSeq_zero",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "6a8ae4e1",
-      "domain": "Shared",
-      "name": "sdiff_choose",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "39ef81fe",
-      "domain": "Computation",
-      "name": "chromVal_antitone_edges",
-      "quality": 0.8
-    },
     {
       "cycle_id": "39ef81fe",
       "domain": "Computation",
@@ -2803,9 +2785,27 @@
       "domain": "MachineLearning",
       "name": "moebRel_trans",
       "quality": 0.79
+    },
+    {
+      "cycle_id": "018e116a",
+      "domain": "Pythagorean",
+      "name": "run_nil",
+      "quality": 0.86
+    },
+    {
+      "cycle_id": "018e116a",
+      "domain": "Pythagorean",
+      "name": "run_cons",
+      "quality": 0.86
+    },
+    {
+      "cycle_id": "018e116a",
+      "domain": "Pythagorean",
+      "name": "obs_nil",
+      "quality": 0.86
     }
   ],
-  "last_updated": "2026-08-21T19:38:14",
+  "last_updated": "2026-08-21T20:42:06",
   "open_questions": [
     {
       "context": "Everything is proved; there are no `sorry`s and no new axioms.",
@@ -3827,12 +3827,6 @@
     ],
     "Pythagorean": [
       {
-        "cycle_id": "64ac4ffd",
-        "quality": 0.78,
-        "theorems": 56,
-        "title": "Three Structural Barrier Theorems for Integer Factorization"
-      },
-      {
         "cycle_id": "83939baf",
         "quality": 0.82,
         "theorems": 63,
@@ -3885,6 +3879,12 @@
         "quality": 0.82,
         "theorems": 58,
         "title": "**Conjecture.** For a generic family of `r` min-plus keys on `k` coordinates wit"
+      },
+      {
+        "cycle_id": "018e116a",
+        "quality": 0.86,
+        "theorems": 62,
+        "title": "Bound the length of distinguishing experiments"
       }
     ],
     "Shared": [

@@ -18,36 +18,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Berggren Tree and the Langlands Program \u2014 Automorphic Forms on the 3-adic Boundary over Q(\u221a2)"
   },
   {
-    "consumed_by_exp_id": "a2c90992",
-    "description": "**Domain**: Pythagorean <-> Algebra\n\n**Hypothesis (MOONSHOT)**: The Berggren groupoid \u2014 integral matrices preserving the Lorentz form a\u00b2+b\u00b2\u2212c\u00b2, living on the null cone \u2014 is a shadow of the arithmetic of the even Lorentzian Leech lattice II(25,1), the 26-dimensional lattice at the heart of Conway's \"holy construction,\" whose automorphism group hosts the Conway group Co0 and, through the moonshine module, the Monster \u2014 the largest sporadic simple group. The conjecture: the tree's combinatorial structure (nodes, branches, 3-adic boundary) is realized by the hole structure of the Leech lattice \u2014 deep holes \u2194 Niemeier lattices \u2014 so that the Berggren tree provides an explicit pythagorean parametrization of the Niemeier lattice family, and the groupoid embeds in the Lorentzian lattice's automorphism group, bridging Pythagorean triples to Monstrous moonshine.\n\n**Test**: Formalize the embedding of the (2,1)-signature null cone into II(25,1) and the action of the Berggren generators on the Lorentzian lattice. Prove or refute: (i) the groupoid embeds in the positive Lorentz group of II(25,1) \u2014 equivalently in the Conway group's Lorentzian extension; (ii) the tree's nodes and branches map to the deep-hole/Niemeier structure respecting the ternary branching; (iii) the McKay-Thompson trace series \u2014 whose moment structure the catalog already formalized via the Bell-criterion package \u2014 acquire a tree-parametrized organization.\n\n**Why now**: Monstrous moonshine \u2014 the j-function connection proved by Borcherds (Fields Medal) \u2014 is the most spectacular bridge in modern mathematics, and its natural habitat is precisely a Lorentzian lattice with null-cone structure: the same geometric substrate as the Berggren tree. The catalog's moonshine package built the trace-series and moment machinery; the Lorentzian-lattice bridge from the tree is the missing geometric link. Both structures are integral Lorentzian geometries, and the question of whether the tree's combinatorics lives in the Leech lattice's hole structure is the natural next moonshot.\n\n**If true**: A pythagorean parametrization of the Niemeier lattices and an embedding of the Berggren groupoid into the Monster's natural habitat \u2014 a bridge from the oldest mathematics (Pythagoras) to the most extraordinary object in group theory, with the tree as an explicit combinatorial model for the geometry of moonshine.\n\n**If false**: The groupoid does not embed, or the tree's branching does not match the hole structure \u2014 a precise theorem about which Lorentzian arithmetic the tree actually realizes, clarifying the boundary between elementary Pythagorean geometry and the Leech lattice's exceptional structure.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1784",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T03:17:34.067416+00:00",
-    "title": "Moonshine from the Null Cone \u2014 The Berggren Groupoid, the Lorentzian Leech Lattice, and the Monster"
-  },
-  {
-    "consumed_by_exp_id": "8247d370",
-    "description": "**Domain**: Pythagorean <-> Geometry\n\n**Hypothesis (MOONSHOT)**: The space of Euler bricks (integer boxes whose three face diagonals are integral) carries a Berggren-style tree structure: a finite set of integer generators acts on bricks, producing every primitive Euler brick from finitely many seeds, with a descent theory reducing every brick to minimal ones \u2014 the perfect-cuboid analogue of the Berggren tree itself. The conjecture: the brick tree's structure theory settles the shape of the perfect cuboid question \u2014 either a perfect cuboid exists in the tree (reachable by bounded search along the tree's growth), or the tree's architecture yields a proof that the four simultaneous square conditions (three face diagonals and the space diagonal) obstruct each other along every branch.\n\n**Test**: Formalize Euler bricks as integer triples with three integral face diagonals; exhibit explicit generator transformations acting on bricks that preserve brick-hood and generate the primitive brick space from finitely many seeds (the catalog already proved the diagonal-cone reduction a\u00b2+b\u00b2+c\u00b2=2d\u00b2 and the rational parametrization of the normalized quadric \u2014 build the tree on top of that foundation). Prove the descent theory: every brick descends to a finite set of minimal bricks, the brick analogue of (3,4,5). Then either (i) exhibit a perfect cuboid, or (ii) prove a structural obstruction: the space-diagonal condition fails along every branch in a formally provable pattern.\n\n**Why now**: The perfect cuboid problem has been open since Euler's era and is one of the most famous unsolved problems of elementary number theory. The catalog's perfect-cuboid package completed the static geometry (the diagonal cone and the rational parametrization of the cuboid quadric); the dynamic, tree-like structure theory of the brick space is the missing piece, and the Berggren tree's proven machinery \u2014 generators, descent, exact growth \u2014 is exactly the template. A Berggren-style descent on bricks is the natural next move the corpus has set up but not taken.\n\n**If true**: Either the discovery of a perfect cuboid (settling a 300-year-old problem) or the first structural obstruction theorem \u2014 a proof that the brick tree's architecture forbids the four simultaneous square conditions, transforming the problem from search to structure.\n\n**If false**: The brick tree fails to have finitely-generated descent (primitive bricks require infinitely many seeds) \u2014 itself a sharp structure theorem distinguishing the brick world from the triple world, and a precise map of where the perfect-cuboid difficulty lives.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1785",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T03:17:34.068074+00:00",
-    "title": "The Euler Brick Tree \u2014 Berggren Descent and the Perfect Cuboid"
-  },
-  {
     "consumed_by_exp_id": "3cb644d1",
     "description": "**Domain**: Pythagorean <-> NumberTheory\n\n**Hypothesis (MOONSHOT)**: Every node of the Berggren tree is an abc triple: a\u00b2+b\u00b2=c\u00b2 is an instance of A+B=C, with quality q = log(c\u00b2)/log(rad(a\u00b2b\u00b2c\u00b2)). The tree is therefore the one infinite family of abc triples whose radicals, qualities, and descent structure are completely explicit \u2014 a solvable model of the abc conjecture. The conjecture: the quality spectrum of the tree is exactly computable \u2014 the supremum of quality over the tree exists, is attained or approached along an explicitly identifiable branch, and the quality distribution at depth n obeys an exact law governed by the silver-ratio growth \u2014 and the tree's descent machinery (every triple reduces to (3,4,5)) exports a canonical model of how quality transforms under abc-type descent.\n\n**Test**: Formalize rad(a\u00b2b\u00b2c\u00b2) and the quality q over the tree. Prove the exact quality spectrum: the supremum over the tree, the branches attaining or approaching it, and the asymptotic law of the quality distribution at depth n. Prove the \"tree abc theorem\": the sharp uniform bound q \u2264 2\u2212\u03b5 for the tree family with the best explicit \u03b5. Determine whether any tree triple approaches the record quality of the known abc hits (about 1.63), and characterize the tree's high-quality region.\n\n**Why now**: The abc conjecture is among the most consequential open problems in number theory (its claimed proof by Mochizuki remains disputed), and the catalog's Beal package already made the Beal\u2013Fermat-Catalan\u2013abc bridges precise \u2014 but never studied the tree's own quality structure. Every Pythagorean triple is an abc triple, so the tree is a ready-made, fully formalized solvable model; its exact quality spectrum would be the first complete quality theory for any natural infinite family of abc triples.\n\n**If true**: The first exactly-solved model of the abc phenomenon: a complete quality spectrum and distribution law for an infinite abc family, plus a descent-operator model isolating the mechanism of abc-type bounds \u2014 a concrete foothold for the general conjecture.\n\n**If false**: The quality spectrum has no computable structure (e.g., the supremum is not attained and the distribution does not converge) \u2014 itself a precise pathology theorem showing the abc mechanism resists even the most structured family, redirecting the general attack.\n",
     "domains": [
@@ -61,21 +31,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-08-21T03:17:34.068756+00:00",
     "title": "The Tree as a Solvable Model of the abc Conjecture \u2014 The Exact Quality Spectrum of a\u00b2+b\u00b2=c\u00b2"
-  },
-  {
-    "consumed_by_exp_id": "54700980",
-    "description": "**Domain**: Pythagorean <-> NumberTheory\n\n**Hypothesis (MOONSHOT)**: The Berggren tree enumerates every primitive integer right triangle (a,b,c), and its area function A = ab/2 = mn(m\u00b2\u2212n\u00b2) over the Euclid seeds hits exactly the congruent numbers up to squarefree parts \u2014 n is congruent (the area of a rational right triangle) if and only if n is the squarefree part of the area of some node of the tree. The conjecture: the tree's proven structure theory (descent to (3,4,5), silver-ratio growth, groupoid) makes the tree a new, provably analyzable laboratory for the congruent number problem \u2014 in particular the density of congruent numbers (conjecturally about one half in each admissible residue class, open, and equivalent in depth to the rank distribution of the elliptic curves y\u00b2 = x\u00b3 \u2212 n\u00b2x) can be attacked through the statistical structure of the tree's area values.\n\n**Test**: Formalize the area function mn(m\u00b2\u2212n\u00b2) over the tree's Euclid seeds and prove the classical equivalence inside the tree formalism: the squarefree parts of node areas are exactly the congruent numbers. Then prove structure theorems: the distribution of squarefree parts along branches, the growth of the set of congruent numbers \u2264 X generated at depth \u2264 d, and the tree-side descent structure of the elliptic-curve correspondence (rational triangles \u2194 rational points on y\u00b2 = x\u00b3 \u2212 n\u00b2x). Stretch goal: an unconditional version of Tunnell's criterion for an explicit infinite family of n, or a proven density law for congruent numbers in a residue class.\n\n**Why now**: The congruent number problem is one of the oldest unsolved problems in mathematics (Bachet, 1621), and its complete solution is equivalent to the Birch\u2013Swinnerton-Dyer conjecture \u2014 a $1M Millennium Prize Problem. The catalog has fully formalized the tree (groupoid, hyperbolic geometry, silver speed limit) but has never studied its area function \u2014 the direct bridge to congruent numbers. The tree is the one structure in which the triangle side of the problem is completely explicit; every congruent number is visible in it.\n\n**If true**: The congruent number problem gains a concrete new laboratory: the tree's area statistics become a computable model for the BSD-linked density conjectures, and any proven density law or unconditional Tunnell family would be a major result on a Millennium-Prize-scale problem.\n\n**If false**: The tree's area function has no tractable structure (e.g., squarefree parts equidistributed with no exploitable pattern) \u2014 itself a sharp equidistribution theorem about the tree, and a precise statement of why the triangle side alone cannot see the elliptic-curve side.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1787",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T03:17:34.069425+00:00",
-    "title": "The Congruent Number Laboratory \u2014 The Berggren Tree's Area Function and the Birch\u2013Swinnerton-Dyer Frontier"
   },
   {
     "consumed_by_exp_id": "542d7a55",
@@ -138,16 +93,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-24 #5 \u2014 D\u2085-QUINTIC: the quintic row complete (paper 84)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "04a8c3de",
     "description": "## FACT round-24 #4 \u2014 S\u2085/A\u2085 QUINTIC ENDPOINTS (paper 83, /tmp/exp_s5a5quintics.py, /tmp/r24n4k.log)\n\n**Verdict name: THE-TYPE-CHANNEL'S-TWO-EXTREMES.**\n\n### Result\nThe transitive-quintic row's two extremes confirm the abelianization law in opposite directions:\n\n- **S\u2085 via x\u2075\u2212x\u22121** (true disc **2869 = 19\u00b7151** \u2014 not the quartic's \u2212283): seven factorization types, **H(T) = 2.5574 bits \u2014 the largest type entropy measured in the program** \u2014 reduce to the single quadratic-residue bit of N mod 2869. Sign agreement 1.0000; **I\u2081 = 1.2157 sits exactly at its within-sign permutation null 1.2188 (z = \u22120.85)** \u2014 the raw excess over the law's 1.0000 is entirely sparse-dial plug-in bias (+0.2188). Semiprime pair = **1.0648 vs null 1.0639** (gap 0.0009); sign-fork s-projection = **1.0023 vs Is(2) = 1.0000**.\n- **A\u2085 via x\u2075+20x+16** (perfect group): **the complete four-state type channel is SEALED** \u2014 I(p mod m; T) at the permutation null for m \u2208 {3,7,11,31}, worst |z| = 1.72; semiprime pair = **0.0004 \u2248 0**; no odd-type readout ever occurs. 1.6555 bits of splitting entropy, and N cannot hear one of them from any residue direction. Paper 76's fork flatness, extended to the full channel.\n\n### The measurement ledger (6 defects caught by designed checks across 8 runs)\n1. [3,2] dictionary entry: (nr, nr\u2082) = (0,**2**), not (0,4) \u2014 one quadratic pair contributes two F_{p\u00b2}-roots (caught by the p=2 crash).\n2. Discriminant migration: disc(x\u2075\u2212x\u22121) = 2869, not \u2212283 (caught by repeated factors mod 151).\n3. Sign-encoding inversion: agreement 0.0000 = perfect anti-correlation = the law confirming itself through a flipped convention.\n4. Sparse-dial plug-in bias on the HEADLINE I\u2081 (+0.22 bits at a 2868-class dial) \u2014 fixed by permutation reference (the paper-70 lesson extended to primary quantities).\n5. Null design: permuting labels within strata DELETES the through-stratum coset channel; must permute the data.\n6. tid/string mismatch making strata \u2261 0 (a global shuffle masquerading as stratified).\n\nProtocol lessons adopted: every MI at large conductors is permutation-referenced; a null must preserve exactly the channel the law predicts and randomize only the finer assignment; exact 0/1 agreement flags encoding bugs before physics.\n\n### All 8 barriers\n(a) clean \u2014 parameter-free predictions (A\u2085's zero needs no tuning); (b) clean \u2014 no S\u2085/A\u2085 type-channel work in the Catalog; (c) confronted \u2014 real fields, histograms < 2% from class sizes, 400k MC, four moduli \u00d7 200-shuffle nulls; (d) clean \u2014 fixed seeds; (e) the substance \u2014 all comparisons permutation-referenced at large conductors, full defect ledger disclosed; (f) controlled \u2014 six defects caught by designed checks, final run ALL_DONE all-green; (g) fair \u2014 which-factor walls \u2264 0.0001, coprime flat, the A\u2085 zero self-controls against papers 78\u201382's live detections; (h) closure \u2014 symmetric (2), residue dial (5), CRT-sealed (6), classical Galois/reciprocity/Chebotarev (8).\n\n### What closes\nThe quintic row is measured on 4/5 groups (D\u2085 pending a verified polynomial); the abelianization law confirmed at EVERY abelianization type existing for degrees 2\u20135: trivial (A\u2085), C\u2082 (S\u2083/S\u2084/S\u2085), C\u2083 (A\u2084), C\u2084 (F\u2082\u2080), C\u2082\u00d7C\u2082 (D\u2084/V\u2084), C\u2099 (abelian controls). The type-channel program is complete at every tested group.\n\nNow 418 experiments. Assessment v194. Paper 83.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3414",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T14:54:02.517783+00:00",
     "title": "FACT round-24 #4 \u2014 S\u2085/A\u2085 QUINTIC ENDPOINTS: the largest entropy collapses, the perfect group seals (paper 83)"
   },
@@ -419,6 +375,90 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "## FACT round-31 #2 \u2014 INDEPENDENT-VERIFICATION (paper 109)\n\n**Verdict name: THE-CHARACTER-CAPTURES-EXACTLY-ONE-BIT.**\n\n### Result\nPaper 80's key result **proven from character theory** without Monte Carlo:\n\nFor S\u2083 x\u00b3+x+1 (disc = \u221231, G = S\u2083, G^ab = C\u2082):\n- Chebotarev densities: P('111') = 1/6, P('12') = 1/2, P('3') = 1/3 \u2192 H(T) = 1.4591 bits\n- The sign character (\u221231|p) determines even/odd Frobenius\n- H(type | sign) = (1/2)\u00b7H(1/3, 2/3) = 0.4591 (within-even-class split is residue-independent)\n- **I(p mod 31; type) = H(T) \u2212 H(T|sign) = 1.0000 EXACTLY**\n\nThe character captures exactly one bit of type entropy. The remaining 0.4591 bits are locked behind the non-abelian structure, inaccessible from any residue.\n\n### Mixed-type residues explained\nThe scan found 15 mixed-type residues \u2014 **expected and correct**: the sign character only separates even/odd Frobenius; within the even class, the split between identity and 3-cycles is residue-independent. The scan confirms the theory.\n\n### Generalization\nFor ANY field with G^ab = C\u2082: I(p mod |disc|; type) = 1 bit exactly. This includes all S\u2083, S\u2084, and S\u2085 fields measured in papers 80\u201384.\n\nNow 445 experiments. Assessment v220. Paper 109.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3470",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T20:42:26.609247+00:00",
+    "title": "FACT round-31 #2 \u2014 INDEPENDENT-VERIFICATION: the character captures exactly one bit (paper 109)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-30 #4 \u2014 TRACE-BATTERY (paper 108, /tmp/exp_tracebattery.py, /tmp/r30n4b.log)\n\n**Verdict name: THE-SCALING-IS-CONFIRMED.**\n\n### Result\nThe joint channel capacity for increasing subsets of the 6-dial battery, on a fresh independent population:\n\n| moduli subset | M | I(joint) |\n|---|---|---|\n| S\u2083a@31 + S\u2083b@23 | 713 | 7.9455 |\n| + A\u2084@9 | 6 417 | 10.4462 |\n| + D\u2084@8 | 51 336 | 12.1080 |\n\nPer-dial trace information varies enormously: C\u2085@11 carries 3.46 bits, S\u2083a@31 carries 0.04 \u2014 an 80\u00d7 range. Which-factor wall 0.4677 consistent with sparse-table bias.\n\nConfirms paper 94's battery-scaling results on an independent population.\n\nNow 444 experiments. Assessment v218/v219. Paper 108.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3471",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T20:42:26.610291+00:00",
+    "title": "FACT round-30 #4 \u2014 TRACE-BATTERY: joint capacity scaling confirmed (paper 108)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-31 #1 \u2014 CROSS-PROGRAMME-CONSISTENCY (paper 107)\n\n**Verdict name: ALL-CHECKS-PASS.**\n\n### Result\nEight cross-checked quantities across papers 80\u2013106, **zero inconsistencies**, max spread 0.0040 bits:\n\n| quantity | recordings | spread |\n|---|---|---|\n| S\u2083a@31 marginal | 1.0012, 1.0012 | 0.0000 |\n| S\u2083b@23 marginal | 1.0008, 1.0012 | 0.0004 |\n| A\u2084@9 marginal | 0.4733, 0.4733 | 0.0000 |\n| D\u2084@8 marginal | 1.4302, 1.4342 | 0.0040 |\n| S\u2083a\u00d7S\u2083b joint | 2.1314, 2.1314 | 0.0000 |\n| A\u2084\u00d7D\u2084 joint | 1.9125, 1.9125 | 0.0000 |\n| S\u2083a\u00d7S\u2083b overlap | 0.9919, 0.9919 | 0.0000 |\n| 4-field battery capacity | 8.2246, 8.2246 | 0.0000 |\n\n### Post-resume programme summary (27 papers, 80\u2013106)\n| topic | status |\n|---|---|\n| Type-channel law (degrees 2\u20136) | CONFIRMED |\n| Nonabelian type channels (10 groups) | LAW VERIFIED |\n| Battery space (k=2\u20136) | CHARACTERIZED |\n| Factor-blindness (all views) | VERIFIED |\n| Hint value (six dials) | MEASURED |\n| Quantum frontier | CLOSED |\n| Method stratum | MAPPED |\n| Three strata landscape | MEASURED |\n| Reproducibility (six keystones) | AUDITED |\n| Pythagorean trees | CLOSED |\n\nNow 443 experiments. Assessment v218. Paper 107.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3472",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T20:42:26.611134+00:00",
+    "title": "FACT round-31 #1 \u2014 CROSS-PROGRAMME-CONSISTENCY: all post-resume results verified (paper 107)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-30 #3 \u2014 CYCLIC-SEXTIC (paper 106, /tmp/exp_sextic.py, /tmp/r30n3c.log)\n\n**Verdict name: THE-LADDER-IS-COMPLETE.**\n\n### Result\nQ(\u03b6\u2081\u2083)\u207a (degree 6, Gal = C\u2086, conductor 13) confirms FULL PINNING: I(p mod 13; T) = H(T) = 1.9192 exactly. The degree ladder 2-3-4-5-6 is COMPLETE for abelian fields.\n\nTypes {1,2,3,6} at rates {1/6,1/6,1/3,1/3}. Semiprime I(N mod 13; pair) = 1.4704; wall z = +0.77.\n\nNow 442 experiments. Assessment v217. Paper 106.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3473",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T20:42:26.611881+00:00",
+    "title": "FACT round-30 #3 \u2014 CYCLIC-SEXTIC: degree 6 completes the type-channel ladder (paper 106)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-30 #2 \u2014 HINT-S-D-DECOMPOSITION (paper 105, /tmp/exp_hintsd.py, /tmp/r30n2b.log)\n\n**Verdict name: THE-ROUTING-IS-DIAL-DEPENDENT.**\n\n### Result\nThe universal-synergy hypothesis (paper 99's pattern extends to all dials) is **REFUTED**: the routing structure depends on the Galois group.\n\n| dial | s-carried | d-carried | s-d synergy | structure |\n|---|---|---|---|---|\n| S\u2083a@31 | 4.0% | 3.8% | +1.44 | combination-required |\n| S\u2083b@23 | 5.2% | 5.1% | +1.41 | combination-required |\n| A\u2084@9 | 161.6% | 213.9% | +0.01 | noise on near-zero channel |\n| **D\u2084@8** | **100.0%** | 75.2% | **\u22121.00** | **SUM-SUFFICIENT** |\n| F\u2082\u2080@5 | 165.0% | 122.2% | +0.41 | both exceed |\n| C\u2085@11 | 77.8% | 55.7% | +1.18 | combination-required |\n\n### The structural explanation\nD\u2084 is sum-sufficient because its type map is f(p mod 8): (p+q) mod 8 determines p mod 8 and q mod 8 uniquely (q = N\u00b7p\u207b\u00b9 mod 8), hence determines the type pair. S\u2083 fields require both residues because the Legendre symbol (\u0394|p) is not determined by (\u0394|p)+(\u0394|q).\n\nNow 441 experiments. Assessment v216. Paper 105.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3474",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T20:42:26.612613+00:00",
+    "title": "FACT round-30 #2 \u2014 HINT-S-D-DECOMPOSITION: the routing structure is dial-dependent (paper 105)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-30 #1 \u2014 HINT-TABLE-COMPLETION (paper 104, /tmp/exp_hinttable.py, /tmp/r30n1f.log)\n\n**Verdict name: THE-HINT-IS-UNIVERSAL.**\n\n### Result\nAll six dials show positive hint values I(s,d; labels) \u2212 I(N; labels):\n\n| dial | capacity I(N) | hint value | wall z |\n|---|---|---|---|\n| C\u2085@11 | 1.2062 | **+1.5896** | +0.30 |\n| F\u2082\u2080@5 | 0.2920 | **+0.9538** | \u22121.10 |\n| S\u2083a@31 | 1.0011 | +0.5201 | +0.67 |\n| S\u2083b@23 | 1.0008 | +0.5121 | +0.92 |\n| D\u2084@8 | 1.9999 | +0.5032 | \u22120.70 |\n| A\u2084@9 | 0.0015 | +0.0120 | +2.20 |\n\nTotal hint = 4.0908 bits on total capacity 5.5015 bits.\n\n### The independence finding\nHint-capacity correlation r = 0.256 \u2014 WEAK. Hint value and channel capacity are independent dial properties. C\u2085 has moderate capacity but the highest hint; D\u2084 has the highest capacity but moderate hint; A\u2084 is near-zero on both.\n\nNow 440 experiments. Assessment v215. Paper 104.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3475",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T20:42:26.613303+00:00",
+    "title": "FACT round-30 #1 \u2014 HINT-TABLE-COMPLETION: the six-dial hint-value table (paper 104)"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Formalizes a quantum random walk on the Berggren Pythagorean tree where constructive interference at energy spectrum minima collapses the state onto factors of N.",
     "domains": [
       "Pythagorean",
@@ -490,20 +530,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T04:45:20.134758+00:00",
     "title": "Deepening: Existence of \u03b4-Dense Sets Avoiding Sumsets of Size \u2265 (3+o(1)) log n / log(1/\u03b4)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 3b08d230 (Q=0.860), which proved 154 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: is a finitely supported `a : \u2115 \u2192 \u2124` with\n`\u2211 k \u00b7 a k = 24`; `b m = \u2211_{k \u2223 m} a k`; `headCoeff a = a\u2081(a\u2081+3)/2 + a\u2082` is the\nproved value of `c(1)` for the eta quotient `q \u00b7 (1/\u03b7_a) = \u220f_m (1 \u2212 q^m)^(\u2212b m)`.",
-    "domains": [
-      "Tropical"
-    ],
-    "id": "push_3b08d230_2e3b0fb7",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "3b08d230",
-    "status": "available",
-    "timestamp": "2026-08-20T16:51:24.394732+00:00",
-    "title": "Deepening: is a finitely supported `a : \u2115 \u2192 \u2124` with"
   },
   {
     "consumed_by_exp_id": "",
@@ -1810,22 +1836,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Formalize tropical curves as metric graphs. Prove the tropical Riemann-Roch theorem via chip-firing: r(D) - r(K-D) = deg(D) - g + 1. Construct explicit divisor classes on complete graphs and prove Baker-Norine's theorem.",
-    "domains": [
-      "Tropical",
-      "Algebra",
-      "Combinatorics"
-    ],
-    "id": "fd_0691",
-    "priority_score": 0.9,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-24T14:34:16.697841+00:00",
-    "title": "Tropical Curves and Chip-Firing Games"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Formalizes Voiculescu's free probability: the free central limit theorem showing that normalized sums of freely independent identically distributed bounded random variables converge in distribution to the semicircle law, developed through the R-transform and free cumulants.",
     "domains": [
       "Probability",
@@ -2138,6 +2148,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 8280a2b4 (Q=0.760), which proved 14 theorems in Algebra. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The Riemann-Roch theorem for graphs (Baker-Norine, 2007) states that for a divisor D on a graph G, l(D) - l(K_G - D) = deg(D) + 1 - g(G) where l(D) is the rank of D, K_G is the canonical divisor, and g(G) is the genus (cyclomatic number). The chip-firing game is a combinatorial model: vertices hold ",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "push_8280a2b4_941745de",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "8280a2b4",
+    "status": "available",
+    "timestamp": "2026-07-19T06:30:57.793286+00:00",
+    "title": "Deepening: The Riemann-Roch Theorem for Graphs: Chip-Firing and the Canonical Divisor"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove the Coffman-Kundu-Wootters monogamy inequality for qubit entanglement: the sum of squared concurrences is bounded by the squared concurrence with the ancilla. Formalize concurrence as an entanglement measure and extend to n-qubit systems.",
     "domains": [
       "Physics",
@@ -2150,20 +2174,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Quantum Entanglement Monogamy: CKW Inequality"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 8280a2b4 (Q=0.760), which proved 14 theorems in Algebra. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The Riemann-Roch theorem for graphs (Baker-Norine, 2007) states that for a divisor D on a graph G, l(D) - l(K_G - D) = deg(D) + 1 - g(G) where l(D) is the rank of D, K_G is the canonical divisor, and g(G) is the genus (cyclomatic number). The chip-firing game is a combinatorial model: vertices hold ",
-    "domains": [
-      "Algebra"
-    ],
-    "id": "push_8280a2b4_941745de",
-    "priority_score": 0.86,
-    "research_mode": "team",
-    "source_exp_id": "8280a2b4",
-    "status": "available",
-    "timestamp": "2026-07-19T06:30:57.793286+00:00",
-    "title": "Deepening: The Riemann-Roch Theorem for Graphs: Chip-Firing and the Canonical Divisor"
   },
   {
     "consumed_by_exp_id": "",
@@ -11146,6 +11156,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The refinement potential increases by at most one per input symbol regardless of which symbol is chosen, suggesting adaptive experimenters gain nothing in symbol count over the fixed suite. We conjecture a matching Omega(|S|+|T|) lower bound for any adaptive strategy.\n\nEvery adaptive distinguishing strategy for machines with |S|, |T| states requires, in the worst case, at least |S| + |T| - 2 input symbols; adaptivity provides no asymptotic saving.\n\nFormalise adaptive strategies as decision trees over inputs and outputs, and lower-bound their depth by the refinement potential of the extremal family.\n\nThe non-adaptive suite wordsUpTo (|S|+|T|-2) is optimal in symbol count, not merely sufficient.\n\nThere is an adaptive speed-up, which would give a genuinely new algorithmic primitive for conformance testing.",
+    "domains": [
+      "Combinatorics",
+      "Computation"
+    ],
+    "id": "fd_3467",
+    "priority_score": 0.709969696969697,
+    "research_mode": "team",
+    "source_exp_id": "018e116a",
+    "status": "available",
+    "timestamp": "2026-08-21T20:41:53.268239+00:00",
+    "title": "Adaptivity Gap for Machine Experiments"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The exact identity 2*r*#edges + s*(r-s) = (r-1)*n^2 proved this cycle expresses the Turan number through the defect s*(r-s) with s = n mod r. The conjecture is that the same defect controls the extremal structure: almost-extremal K_{r+1}-free graphs are almost r-partite, with an explicit rather than o(n^2) error term.\n\nEvery K_{r+1}-free graph on n vertices with at least ex(n,K_{r+1}) - m edges becomes r-partite after deleting at most m + s*(r-s)/(2r) edges.\n\nThe convexity ingredient sum_i c_i^2 >= r*(n/r)^2 + (n mod r)*(2*(n/r)+1) is already proved (sum_sq_ge_balanced); derive the edge-deletion bound from it in Lean.\n\nA verified Turan stability theorem with an explicit error term.\n\nA near-extremal graph far from r-partite is a new extremal example.",
     "domains": [
       "Combinatorics",
@@ -11266,6 +11291,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For metric observations the behavioural distance is a supremum over all words. We conjecture the supremum is attained at depth at most |S|+|T|-2, so the distance is computable by the same finite suite that decides equivalence, bridging quantitative bisimulation with the combinatorial refinement bound.\n\nFor machines with observations in a metric space, sup over all words of the observation distance equals the maximum over words of length at most |S| + |T| - 2.\n\nReplace the relation chain by the chain of epsilon-level sets and rerun the stabilisation argument uniformly in epsilon.\n\nQuantitative behavioural distances become finitely computable with the same complexity as qualitative equivalence.\n\nThere is a genuinely metric phenomenon (slow convergence) with no finite-depth witness, separating quantitative from qualitative testing.",
+    "domains": [
+      "Combinatorics",
+      "Computation"
+    ],
+    "id": "fd_3468",
+    "priority_score": 0.7089459459459461,
+    "research_mode": "team",
+    "source_exp_id": "018e116a",
+    "status": "available",
+    "timestamp": "2026-08-21T20:41:53.530292+00:00",
+    "title": "Bounded-Depth Realisation of Bisimulation Distance"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The certified value r(a/b) equals (1/b) log of an explicit rational, i.e. a linear form in logarithms of integers. Baker-Wuestholz lower bounds for such forms, combined with the proved derivative bracket, should give an explicit c and mu with |p* - a/b| > c b^{-mu} for all rationals.\n\np* is transcendental and admits an effective irrationality measure mu < 10 with explicit constant.\n\nBound |2b log b - b log 2 - 2a log a - 2c log c| from below by a Baker-type estimate and divide by the certified derivative bracket [2.09045, 2.09047].\n\nThe first effective Diophantine statement about a cryptographic threshold constant.\n\nThe linear form degenerates for special (a,b), revealing unexpected algebraic relations among log 2, log a, log c.",
     "domains": [
       "Algebra",
@@ -11278,6 +11318,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T17:45:45.435226+00:00",
     "title": "Effective Irrationality Measure for the BB84 Threshold"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "no_finite_test shows that no fixed finite suite separates arbitrary behaviours on an infinite input type. We conjecture the exact threshold: bounded-length suites work precisely up to length 2k-2 for k-state machines, and equivalence of computably presented infinite-state machines is Pi-0-1 complete.\n\nBehavioural equivalence of computably presented infinite-state Moore machines is Pi-0-1 complete, while for k-state machines a suite of words of length < lambda is complete iff lambda > 2k - 2.\n\nReduce halting to free-machine equivalence using freeMachine_obs_nil; for the finite half, combine testSuite_complete with the extremal family.\n\nA sharp dividing line between decidable finite-state testing and undecidable general behavioural equivalence, with an exact length threshold on the decidable side.\n\nSome restricted class of infinite-state machines admits finite test suites, which would be a surprising positive result.",
+    "domains": [
+      "Combinatorics",
+      "Computation"
+    ],
+    "id": "fd_3469",
+    "priority_score": 0.7075945945945947,
+    "research_mode": "team",
+    "source_exp_id": "018e116a",
+    "status": "available",
+    "timestamp": "2026-08-21T20:41:53.790157+00:00",
+    "title": "Complexity Threshold of the Infinite-State Barrier"
   },
   {
     "consumed_by_exp_id": "",
@@ -11445,6 +11500,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-26T14:03:58.556772+00:00",
     "title": "Close Proofs: Moonshot: The Last Theorem \u2014 Formalizing the Heat Death of Mathematics"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Unary Moore machines have eventually periodic behaviours, so the shortest distinguishing word is the first mismatch of two eventually periodic words. We conjecture the exact bound max(p1,p2) + q1 + q2 - gcd(q1,q2) - 1 in terms of preperiods and periods, refining the coarse |S|+|T|-2 estimate. This ties automata testing to word combinatorics.\n\nFor unary machines with rho-shapes (p1,q1) and (p2,q2), inequivalent initial states are separated by a word of length at most max(p1,p2) + q1 + q2 - gcd(q1,q2) - 1, and some pair attains it.\n\nFormalise a rho-decomposition of unary machines, then prove the bound by Fine-Wilf; validate by exhaustive enumeration for n,m <= 5 as in ComputationalEvidence.md.\n\nA tight, gcd-sensitive refinement of the Moore bound for unary alphabets, strictly stronger than |S|+|T|-2 whenever gcd(q1,q2) > 1.\n\nThe extremal pairs must use preperiods in an essential way, isolating a new combinatorial obstruction beyond Fine-Wilf.",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "fd_3465",
+    "priority_score": 0.6716486486486488,
+    "research_mode": "team",
+    "source_exp_id": "018e116a",
+    "status": "available",
+    "timestamp": "2026-08-21T20:41:52.535534+00:00",
+    "title": "Fine\u2013Wilf Calibration of Unary Distinguishing Length"
   },
   {
     "consumed_by_exp_id": "",
@@ -11839,6 +11908,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T18:56:16.432364+00:00",
     "title": "Weighted Dichotomy for General Symmetric Ensembles"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Only states reachable from the initial states can ever participate in an experiment, so the block-counting potential should be bounded by the reachable counts. We conjecture the bound r_S + r_T - 2 with r the reachable-state counts, which is strictly better for machines with dead states.\n\nIf r_S and r_T are the numbers of states reachable from s and t, then inequivalent s,t are separated by a word of length at most r_S + r_T - 2.\n\nInstantiate the abstract stabilisation theorem exists_stable_index on the subtype of reachable states of the disjoint union.\n\nThe bound becomes invariant under adding unreachable states, hence a genuine invariant of the behaviour rather than the presentation.\n\nReachability interacts with the refinement chain in an unexpected way, indicating the potential function must count unreachable blocks too.",
+    "domains": [],
+    "id": "fd_3466",
+    "priority_score": 0.5915517241379311,
+    "research_mode": "team",
+    "source_exp_id": "018e116a",
+    "status": "available",
+    "timestamp": "2026-08-21T20:41:52.802908+00:00",
+    "title": "Reachability-Relativised Moore Bound"
   },
   {
     "consumed_by_exp_id": "",
@@ -30711,19 +30792,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Naturality under weaker simulations"
   },
   {
-    "consumed_by_exp_id": "018e116a",
-    "description": "For machines with state sets `S` and `T`, inequivalent initial states should admit a distinguishing word whose length is bounded in terms of `|S| \u00b7 |T|`. Formalizing this would sharpen decidability into a finite test suite theorem and connect the positive finite-state result directly to `no_finite_test`, which shows that no fixed finite suite works for arbitrary functions on an infinite input type.",
-    "domains": [],
-    "id": "fd_2386",
-    "phase": "A",
-    "priority_score": 0.4390588235294117,
-    "research_mode": "team",
-    "source_exp_id": "ea214ad9",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T06:23:58.214591+00:00",
-    "title": "Bound the length of distinguishing experiments"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "**Conjecture.** The globally additive-avoiding greedy trajectory beginning at one is exactly the odd sequence: its term at index `n` is `2n+1`.\n\nThe key insight is that all sums of two earlier odd values are even, while the immediately preceding even candidate is forbidden as the sum of the initial one and the current value. **Why now?** The existence and growth-ceiling results isolate precisely the local admissibility argument needed for an induction, and the initial computations expose the parity invariant.",
     "domains": [],
@@ -39101,14 +39169,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Cycle-1 Conjecture 4 (smoothness dichotomy), first half \u2014 PROVED"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d7470f1b",
     "description": "Every finite rooted directed preorder is a bounded\n   (p-)morphic image of some `CWorld (Fin n) (Fin m)`, extending the proved special\n   cases `forgetSwitches` and `cardChain`.",
     "domains": [],
     "id": "fd_3181",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "b7a22960",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:28:31.079430+00:00",
     "title": "Filtration lemma"
   },
