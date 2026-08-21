@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "8a3962f5",
-      "domain": "MachineLearning",
-      "key_insight": "# Future directions\n\nFive bold, testable conjectures produced by the analysis/critique stages of this cycle.\nEach is stated so that it can be falsified by a single counterexample or settled by a\nLean",
-      "quality_score": 0.86,
-      "sorry_count": 0,
-      "theorem_count": 120,
-      "timestamp": "2026-08-19T07:54:38",
-      "title": "The number of triples `(a,b,c)` with `0 < a,b,c ≤ H` that are Berggren-generated\nfrom a positive see"
-    },
-    {
       "cycle_id": "18f8232d",
       "domain": "Bridges",
       "key_insight": "# Future directions — the price of universality (Phase A, Question 1)\n\nFinal state of the thread.  Two exact theories sit side by side:\n\n* **worst case (pointwise)**: minimax redundancy `= log₂ Cₛ`, t",
@@ -499,19 +489,19 @@
       "theorem_count": 68,
       "timestamp": "2026-08-20T23:41:43",
       "title": "EML Neural Network Expressiveness: Depth vs Width"
+    },
+    {
+      "cycle_id": "6a8ae4e1",
+      "domain": "Shared",
+      "key_insight": "# Future directions\n\nFive falsifiable conjectures produced by the research loop on\n`Catalog/Shared/GradedTransitivity/`.  Each is stated so that it can be\nattacked directly in Lean on top of the defin",
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "theorem_count": 76,
+      "timestamp": "2026-08-21T03:16:57",
+      "title": "For a graded `G`-set `Y = ⨆_n Y_n` the generating function `Σ_n t_r(Y_n) q^n` is a rational\nfunction"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "5ac3c62c",
-      "domain": "NumberTheory",
-      "key_insight": "# Future directions (Solomon zeta functions over arithmetic orders)\n\n## What this cycle added\n\nAll statements below are machine-checked and free of `sorry`; they live in\n`Catalog/NumberTheory/` and bu",
-      "quality_score": 0.7516700000000001,
-      "sorry_count": 0,
-      "theorem_count": 39,
-      "timestamp": "2026-08-11T19:33:15",
-      "title": "The formalization in `Catalog/Shared/SolomonZeta/` (mirrored in the buildable li"
-    },
     {
       "cycle_id": "9cee3a4c",
       "domain": "MachineLearning",
@@ -2501,27 +2491,19 @@
       "theorem_count": 68,
       "timestamp": "2026-08-20T23:41:43",
       "title": "EML Neural Network Expressiveness: Depth vs Width"
+    },
+    {
+      "cycle_id": "6a8ae4e1",
+      "domain": "Shared",
+      "key_insight": "# Future directions\n\nFive falsifiable conjectures produced by the research loop on\n`Catalog/Shared/GradedTransitivity/`.  Each is stated so that it can be\nattacked directly in Lean on top of the defin",
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "theorem_count": 76,
+      "timestamp": "2026-08-21T03:16:57",
+      "title": "For a graded `G`-set `Y = ⨆_n Y_n` the generating function `Σ_n t_r(Y_n) q^n` is a rational\nfunction"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "84bf9824",
-      "domain": "Novelty",
-      "name": "mean_sub",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "84bf9824",
-      "domain": "Novelty",
-      "name": "cov_sub_left",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "84bf9824",
-      "domain": "Novelty",
-      "name": "cov_div_left",
-      "quality": 0.85
-    },
     {
       "cycle_id": "61305688",
       "domain": "Bridges",
@@ -2803,9 +2785,27 @@
       "domain": "Physics",
       "name": "lowTail_eq_five_eighths",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "6a8ae4e1",
+      "domain": "Shared",
+      "name": "chooseSeq_zero_index",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "6a8ae4e1",
+      "domain": "Shared",
+      "name": "chooseSeq_zero",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "6a8ae4e1",
+      "domain": "Shared",
+      "name": "sdiff_choose",
+      "quality": 0.85
     }
   ],
-  "last_updated": "2026-08-20T23:41:43",
+  "last_updated": "2026-08-21T03:16:57",
   "open_questions": [
     {
       "context": "Everything is proved; there are no `sorry`s and no new axioms.",
@@ -3889,12 +3889,6 @@
     ],
     "Shared": [
       {
-        "cycle_id": "f2bb5930",
-        "quality": 0.72,
-        "theorems": 15,
-        "title": "CYCLIC-TYPE-CHANNEL (round-22 #2, experiment 413, assessment v189, paper 78)"
-      },
-      {
         "cycle_id": "ed381d4e",
         "quality": 0.78,
         "theorems": 48,
@@ -3947,6 +3941,12 @@
         "quality": 0.82,
         "theorems": 41,
         "title": "The one-parameter case is already a theorem here"
+      },
+      {
+        "cycle_id": "6a8ae4e1",
+        "quality": 0.85,
+        "theorems": 76,
+        "title": "For a graded `G`-set `Y = ⨆_n Y_n` the generating function `Σ_n t_r(Y_n) q^n` is"
       }
     ],
     "Tropical": [
