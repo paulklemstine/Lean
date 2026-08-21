@@ -1,78 +1,68 @@
 # Computational evidence
 
-All numbers below were produced by `#eval` inside the project
-(`Catalog/Physics/GradedTransitivityLabNotes.lean`, which compiles as part of the
-`Physics` library); the outputs are reproduced verbatim from the build log.  The three
-sampled entries of each difference table are additionally *proved* in that file
-(`D3_descSeq3`, `D4_descSeq3`, `D3_binom3`), so the tabulated pattern is machine checked
-on the sampled range and proved in general by the theorems in
-`Catalog/Physics/GradedTransitivityCore.lean`.
+All numbers below were produced by `#eval` inside the project's Lean/Mathlib
+environment (Lean 4.28.0), before the formal proofs were written.  They are
+exploratory data, not verification: every claim they suggested is proved
+formally in `Catalog/Shared/GradedTransitivity/`.
 
-Notation: `Δ` is the forward difference `(Δa)ₙ = aₙ₊₁ − aₙ`; the coefficient formula
-proved in the core file is `[q^{n+s}] ((1−q)^s · ∑ₖ aₖ qᵏ) = (Δ^s a)ₙ`, so "denominator
-divides `(1−q)^s`" is *equivalent* to "`Δ^s a` eventually vanishes".
+## 1. The two model graded `G`-sets
 
-## 1. Trivial action on `Yₙ = Fin n` (no symmetry at all)
+Both use the same underlying graded set `Y_n = Fin n`; they differ only in the
+acting group.
 
-Here `t r Yₙ = n^{\underline r}`.  For `r = 3`, `n = 0 … 9`:
+| grade `n`                                   | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 |
+|---------------------------------------------|---|---|---|---|---|---|---|---|---|
+| `t_2(Y_n)`, `G_n = Perm (Fin n)` (transitive) | 0 | 0 | 1 | 1 | 1 | 1 | 1 | 1 | 1 |
+| `t_3(Y_n)`, `G_n = Perm (Fin n)`              | 0 | 0 | 0 | 1 | 1 | 1 | 1 | 1 | 1 |
+| `t_2(Y_n)`, `G_n = ⊥` (trivial)               | 0 | 0 | 2 | 6 | 12| 20| 30| 42| 56|
+| `t_3(Y_n)`, `G_n = ⊥`                         | 0 | 0 | 0 | 6 | 24| 60|120|210|336|
+| `C(n,2)`                                     | 0 | 0 | 1 | 3 | 6 | 10| 15| 21| 28|
 
-| sequence | values |
-|---|---|
-| `t₃(Yₙ) = n(n−1)(n−2)` | 0, 0, 0, 6, 24, 60, 120, 210, 336, 504 |
-| `Δ t₃` | 0, 0, 6, 18, 36, 60, 90, 126, 168, 216 |
-| `Δ² t₃` | 0, 6, 12, 18, 24, 30, 36, 42, 48, 54 |
-| `Δ³ t₃` | 6, 6, 6, 6, 6, 6, 6, 6, 6, 6 |
-| `Δ⁴ t₃` | 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 |
+For the trivial group every injective `r`-tuple is its own orbit, so
+`t_r(Y_n) = n(n-1)⋯(n-r+1) = r!·C(n,r)` (the falling factorial); the `r = 2`
+row is `n(n-1)` (the pronic/oblong numbers shifted by one index) and the
+`r = 3` row is `n(n-1)(n-2)`.  No online OEIS lookup was available in this
+environment, so the sequences are identified here by closed form rather than
+by an OEIS id.
 
-`Δ³ ≡ 3! = 6 ≠ 0` and `Δ⁴ ≡ 0`: the denominator is **exactly** `(1−q)^4 = (1−q)^{r+1}`
-and no smaller power works.  Formalized as `not_denom_trivFin_pow_le` and `denom_trivFin`.
+## 2. Finite differences (the mechanism behind the theorem)
 
-## 2. Free rotation action of `ZMod n` on `Fin n`
+Forward differences of `t_2(Y_n) = n(n-1)` (trivial group):
 
-The action is free, so `t r Yₙ = n^{\underline r}/n`:
+```
+a      = [0, 0, 2, 6, 12, 20, 30, 42, 56]
+Δa     = [0, 2, 4, 6,  8, 10, 12, 14]
+Δ²a    = [2, 2, 2, 2,  2,  2,  2]
+Δ³a    = [0, 0, 0, 0,  0,  0]
+```
 
-| sequence | values (`n = 0 … 9`) |
-|---|---|
-| `t₁` | 0, 1, 1, 1, 1, 1, 1, 1, 1, 1 |
-| `t₂` | 0, 0, 1, 2, 3, 4, 5, 6, 7, 8 |
-| `t₃` | 0, 0, 0, 2, 6, 12, 20, 30, 42, 56 |
+`Δ³ = 0` but `Δ² ≠ 0`: exactly the predicted pole of order `3 = r+1` at `q=1`
+for `r = 2`, and the reason the exponent cannot be lowered.  For the
+symmetric-group family, `Δa = 0` already from the transitivity threshold on,
+which is why one factor of `(1-q)` suffices there.
 
-This family is eventually `1`-transitive (so `∑ₙ t₁ qⁿ = q/(1−q)`, denominator `(1−q)`),
-but never eventually `2`-transitive — a concrete separation between the hypotheses.  The
-same numbers are realized by a *fixed* group in the formalization: `Yₙ = ZMod (n+1)` with
-`ℤ` acting by translation, where `t₂(Yₙ) = n` is proved (`transCount_two_cycGrade`) and
-the denominator is shown to be exactly `(1−q)^2` (`denom_cycGrade_two`,
-`denom_cycGrade_two_not_one`).
-The general "never eventually `r`-transitive" phenomenon for actions with polynomially
-growing counts is formalized (for the trivial action) as
-`not_eventually_transitive_trivFin`.
+## 3. Denominator-clearing convolutions
 
-## 3. The extremal binomial model `C(n+r, r)`
+Coefficients of `(1-q)^k · ∑_n a_n qⁿ`, computed by convolution:
 
-For `r = 3` (the tetrahedral numbers, OEIS A000292; identification from standard
-references, no online lookup was performed):
+| series                                   | `k` | result (first 9 coefficients)      |
+|------------------------------------------|-----|------------------------------------|
+| `a_n = n(n-1)`  (trivial group, `r=2`)   | 3   | `[0,0,2,0,0,0,0,0,0]` → `2q²`      |
+| `a_n = n(n-1)`  (trivial group, `r=2`)   | 2   | `[0,0,2,2,2,2,2,2,2]` → **not** a polynomial |
+| `a_n = [n ≥ 2]` (symmetric group, `r=2`) | 1   | `[0,0,1,0,0,0,0,0,0]` → `q²`       |
 
-| sequence | values |
-|---|---|
-| `C(n+3,3)` | 1, 4, 10, 20, 35, 56, 84, 120, 165, 220 |
-| `Δ³` | 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 |
-| `Δ⁴` | 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 |
+These match the formal theorems `trivial_family_generating_function`
+(`(1-q)^{r+1}·H = r!·q^r`), `trivial_family_denominator_sharp`, and
+`perm_graded_gen` (`(1-q)·H = q^r`).
 
-`Δ³` is the all-ones sequence, i.e. `(1−q)^3 ∑ C(n+3,3) qⁿ = 1/(1−q)`, which is **not**
-polynomial, while `(1−q)^4 ∑ C(n+3,3) qⁿ = 1`.  Formalized as `gf_binom_denom` and
-`gf_binom_not_poly_of_pow_le`.
+## 4. Counterexample hunt
 
-## 4. A synthetic eventually `2`-transitive family
-
-`t₂ = 0, 0, 2, 1, 1, 1, 1, 1` gives `Δ t₂ = 0, 2, −1, 0, 0, 0, 0, 0`: a single power of
-`1 − q` clears the denominator, with numerator degree `≤ N + r`
-(`numerator_of_eventually_transitive`).
-
-## 5. Counterexample hunt
-
-We tested the universal claim "*eventual `r`-transitivity ⇒ denominator divides
-`(1−q)^{r+1}`*" against the three families above and found no counterexample; the
-regimes where the conclusion is tight (families 1 and 3) are exactly the ones where the
-hypothesis *fails*, which is proved in `not_eventually_transitive_trivFin`.  The failed
-attempt to lower the exponent below `r + 1` is recorded as a proved impossibility rather
-than as numerical evidence.
+The universal claim tested was: *eventual `r`-transitivity ⟹ `(1-q)` clears the
+Hilbert series.*  Sampling families with an arbitrary finite "defect region"
+(arbitrary values `t_r(Y_n)` for `n < N`, value `1` afterwards) never produced
+a non-polynomial numerator — consistent with the proof, since only the tail of
+the sequence controls the denominator.  The hunt did, however, immediately
+falsify the stronger guess *"`(1-q)` clears the series for every graded
+`G`-set with polynomially bounded `t_r`"*: the trivial-group family above is a
+counterexample, and this is now the formal theorem
+`trivial_family_denominator_sharp`.
