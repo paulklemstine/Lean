@@ -2,44 +2,6 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "b5bb3340",
-    "description": "**Domain**: Pythagorean <-> Physics\n\n**Hypothesis (MOONSHOT)**: The Berggren groupoid of Pythagorean triples realizes topological quantum computation. The Berggren generators are integer matrices in the arithmetic of the Lorentz group SO(2,1) ≅ PSL(2,ℝ), whose discrete subgroups contain braid-group representations; the hyperbolic generator with eigenvalues 3±2√2 acts on the tree boundary like a braid on a set of anyons. The conjecture: the action of the Berggren generators on the tree's boundary (3-adic Cantor set) provides a braiding of anyons whose resulting unitary transformations are dense in the relevant unitary group — the defining property of a universal topological quantum computer — and the tree's proven structure (silver-ratio growth, spectral classification) gives an exactly computable model of the braiding.\n\n**Test**: Formalize the action of the Berggren generators on the tree boundary and identify the braid-group representation they induce. Prove the image of the braid group under this representation is dense in the relevant unitary group (the topological-quantum-computation universality criterion). Compute the resulting anyonic braiding statistics from the spectral structure (eigenvalues 3±2√2, the Z[√2] units) and show the tree's growth bounds the computational depth of a braid.\n\n**Why now**: Topological quantum computation (Freedman–Kitaev–Wang) is a leading proposal for fault-tolerant quantum computing, built on braid-group representations from topological field theory. The catalog's Berggren machinery — a Lorentz-preserving groupoid, a 3-adic boundary, and spectral units in Z[√2] — is exactly the kind of structure known to host braid representations. A rigorous connection from Pythagorean triples to topological quantum computation would be a genuinely history-making bridge from elementary number theory to quantum technology.\n\n**If true**: The Berggren tree provides an exactly computable, fully formalized model of anyonic braiding and topological quantum computation — a concrete realization of a universal quantum computer from the arithmetic of Pythagorean triples, connecting the oldest mathematics to the newest technology.\n\n**If false**: The braid representation is not dense (the image is finite or thin), or the generators do not induce a braid action — a precise theorem about the representation theory of the Berggren groupoid, clarifying which topological structures the tree actually realizes.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1770",
-    "lineage_refs": [],
-    "priority_score": 1000.0,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-20T23:42:10.360277+00:00",
-    "title": "Topological Quantum Computation from the Berggren Groupoid — Anyonic Braiding on the Tree Boundary"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
-    "consumed_by_exp_id": "75105c60",
-    "description": "**Domain**: Pythagorean <-> Physics\n\n**Hypothesis (MOONSHOT)**: The Berggren tree of primitive Pythagorean triples is a discrete model of spacetime. The Lorentz form a²+b²−c² that the Berggren moves preserve is exactly the Minkowski metric of special relativity, and the tree lives on the null cone — the causal structure of spacetime. The conjecture: the Berggren tree is a causal set (a discrete, locally-finite poset of spacetime events ordered by causality) whose growth (silver-ratio exponent) reproduces the dimension and causal structure of 2+1-dimensional Minkowski space, and whose boundary is a model of the asymptotic structure of spacetime.\n\n**Test**: Formalize the Berggren tree as a causal set: nodes = events, tree edges = causal relations, the Lorentz form = the spacetime interval. Prove the tree satisfies the causal-set axioms (transitivity, local finiteness, no closed causal curves) and that its silver-ratio growth reproduces a well-defined spacetime dimension. Characterize the tree's boundary as a model of null infinity / the conformal boundary of Minkowski space, and connect the groupoid action to the Lorentz group of spacetime symmetries.\n\n**Why now**: Causal set theory is a serious, active approach to quantum gravity (Bombelli–Lee–Meyer–Sorkin): spacetime is a discrete causal poset, and the Lorentzian metric is recovered from its order. The catalog's Berggren tree is literally a structure on the null cone of Minkowski space with proven growth and a Lorentz-preserving groupoid — a ready-made candidate for a causal set. Connecting elementary Pythagorean triples to the fabric of spacetime is the ultimate moonshot.\n\n**If true**: The Berggren tree becomes a fully formalized causal set — a discrete model of 2+1-dimensional spacetime whose causal structure, dimension, and boundary are exactly computable — bridging Pythagorean triples to quantum gravity and giving causal set theory a concrete, provable example.\n\n**If false**: The tree fails the causal-set axioms (e.g., local finiteness fails, or the growth does not yield a consistent dimension) — a precise theorem about why this particular discrete structure is not a spacetime, clarifying what a causal set requires.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1771",
-    "lineage_refs": [],
-    "priority_score": 1000.0,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-20T23:42:10.361088+00:00",
-    "title": "The Berggren Causal Set — Pythagorean Triples as a Discrete Model of Spacetime"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
     "consumed_by_exp_id": "ef4f9365",
     "description": "**Domain**: Pythagorean <-> Algebra\n\n**Hypothesis (MOONSHOT)**: The Berggren groupoid of Pythagorean triples — generated by integer matrices preserving the Lorentz form a²+b²−c², with hyperbolic generator having eigenvalues 3±2√2 in the ring Z[√2] — is a realization of the arithmetic of the real quadratic field Q(√2), and its boundary (the 3-adic Cantor set) carries automorphic forms for a Hilbert modular group over Q(√2). The conjecture: the tree's boundary supports a Hecke algebra whose eigenforms are Hilbert modular forms, and the spectral action of the Berggren generators on this boundary realizes the Langlands correspondence for GL(2) over Q(√2).\n\n**Test**: Formalize the action of the Berggren generators on the tree boundary (3-adic Cantor set) and identify the arithmetic group they generate within GL(2, Z[√2]) / the Hilbert modular group of Q(√2). Construct the Hecke operators and prove the boundary carries a space of automorphic forms with a Hecke eigenbasis. Relate the spectral eigenvalues 3±2√2 (units of Z[√2]) to the Hecke eigenvalues, and connect the resulting L-functions to the Langlands correspondence.\n\n**Why now**: The Langlands program is the deepest structural program in modern number theory. The catalog's Berggren machinery — groupoid, spectral classification, Z[√2] units, 3-adic boundary — is precisely the raw material for a Hilbert modular / Langlands structure over a real quadratic field. A rigorous connection from the tree to automorphic forms would place the Berggren tree inside the Langlands program, a genuinely history-making bridge.\n\n**If true**: The Berggren tree becomes a concrete, fully formalized model of the Langlands correspondence over Q(√2) — an explicit realization of automorphic forms and Hecke theory on a tree boundary, connecting elementary Pythagorean triples to the deepest structure in number theory.\n\n**If false**: The boundary fails to carry the predicted Hecke structure, or the generators do not generate a Hilbert modular group — a precise theorem about the arithmetic group the tree actually realizes, clarifying its true place in the theory of automorphic forms.\n",
     "domain_bridges": [],
@@ -135,7 +97,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8247d370",
     "description": "**Domain**: Pythagorean <-> Geometry\n\n**Hypothesis (MOONSHOT)**: The space of Euler bricks (integer boxes whose three face diagonals are integral) carries a Berggren-style tree structure: a finite set of integer generators acts on bricks, producing every primitive Euler brick from finitely many seeds, with a descent theory reducing every brick to minimal ones — the perfect-cuboid analogue of the Berggren tree itself. The conjecture: the brick tree's structure theory settles the shape of the perfect cuboid question — either a perfect cuboid exists in the tree (reachable by bounded search along the tree's growth), or the tree's architecture yields a proof that the four simultaneous square conditions (three face diagonals and the space diagonal) obstruct each other along every branch.\n\n**Test**: Formalize Euler bricks as integer triples with three integral face diagonals; exhibit explicit generator transformations acting on bricks that preserve brick-hood and generate the primitive brick space from finitely many seeds (the catalog already proved the diagonal-cone reduction a²+b²+c²=2d² and the rational parametrization of the normalized quadric — build the tree on top of that foundation). Prove the descent theory: every brick descends to a finite set of minimal bricks, the brick analogue of (3,4,5). Then either (i) exhibit a perfect cuboid, or (ii) prove a structural obstruction: the space-diagonal condition fails along every branch in a formally provable pattern.\n\n**Why now**: The perfect cuboid problem has been open since Euler's era and is one of the most famous unsolved problems of elementary number theory. The catalog's perfect-cuboid package completed the static geometry (the diagonal cone and the rational parametrization of the cuboid quadric); the dynamic, tree-like structure theory of the brick space is the missing piece, and the Berggren tree's proven machinery — generators, descent, exact growth — is exactly the template. A Berggren-style descent on bricks is the natural next move the corpus has set up but not taken.\n\n**If true**: Either the discovery of a perfect cuboid (settling a 300-year-old problem) or the first structural obstruction theorem — a proof that the brick tree's architecture forbids the four simultaneous square conditions, transforming the problem from search to structure.\n\n**If false**: The brick tree fails to have finitely-generated descent (primitive bricks require infinitely many seeds) — itself a sharp structure theorem distinguishing the brick world from the triple world, and a precise map of where the perfect-cuboid difficulty lives.\n",
     "domain_bridges": [],
     "domains": [
@@ -147,7 +109,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T03:17:34.068074+00:00",
     "title": "The Euler Brick Tree — Berggren Descent and the Perfect Cuboid"
   },
@@ -207,6 +169,44 @@
     "status": "available",
     "timestamp": "2026-08-21T07:46:13.683032+00:00",
     "title": "FACT round-24 #1 — NONABELIAN-TYPE-CHANNEL: the type channel is exactly its abelianization content (paper 80)"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-24 #3 — QUINTIC-TYPE-CHANNEL (paper 82, /tmp/exp_quintictypechan.py, /tmp/r24n3f.log)\n\n**Verdict name: THE-ABELIANIZATION-LAW-AT-DEGREE-FIVE.**\n\n### Result\nThe abelianization law (paper 80) holds at degree 5 on the program's **first C₄-abelianization object**: the Frobenius group **F₂₀ = AGL(1,5)** via x⁵−2. Prime: **I(p mod 5; T) = 1.4989 vs pre-stated 1.5000** — H(T) = 1.6805 bits of quintic splitting entropy collapse through the 2-bit quartic dial, with the [1,4] type merging the two order-4 cosets {2,3} for a loss of **exactly 0.5 bit**. Semiprime: pair = **1.2462 vs class-enumeration law 1.2500**; and the [1,2,2]-fork (⟺ p ≡ 4 mod 5) realizes **Is(4) as an order-4 pinned fork on a non-abelian field** (0.2915 vs 0.2947) — previously order-4 split-counts existed only on abelian V₄ and the joint-AND D₄ fork (paper 77).\n\n### The law table\n| field | G | G^ab | H(T) | I₁ measured | law | dial | loss |\n|---|---|---|---|---|---|---|---|\n| F₂₀ x⁵−2 | F₂₀ | C₄ | 1.6805 | **1.4989** | 1.5000 ✓ | 2.0000 | 0.5 |\n| C₅ Q(ζ₁₁)⁺ [control] | C₅ | C₅ | 0.7219 | **0.7198** | 0.7219 ✓ | 3.3219 | 2.6 |\n\nSemiprime (400k MC): F₂₀ pair **1.2462** vs 1.2500 ✓ (reads 1.25 of the 2-bit dial — the largest fraction of any merged-type field in the program); C₅ pair **0.2026** vs Is(5) = 0.2027 ✓ (paper-79 f=11 reproduced). Which-factor walls 0.0000; coprime flat; within-coset flatness z = +0.00; thickening agrees to 0.0001.\n\n### The instructive failure (record as method)\nFirst run swapped the coset labels of the multiplier-3/-4 families relative to the C₄ valuation (V(3)=3, V(4)=2). **Invisible at the prime level** — both merged classes share type [1,4], so I₁ is unchanged — but it corrupted the pair enumeration (law 1.1250 vs true 1.2500). The 400k MC caught it: measured 1.2462 sat on the *corrected* value. **Lesson: the pair law is the discriminating test of coset bookkeeping precisely where type-merging hides it.** Method legacy: quintic type dictionary via F_{p²}-root counting is (5,5)/(1,1)/**(1,5)**/(0,0) — (1,5), not the quartic-carried (1,3): both quadratic pairs' roots live in F_{p²}\\F_p.\n\n### All 8 barriers\n(a) clean — four horns with exact values pre-stated; (b) clean — no quintic type-channel work in the Catalog; (c) confronted — real F₂₀ field, ~23k-prime histograms < 2% from class sizes, 400k MC; (d) clean — fixed seeds; (e) the substance — margins quantified (−0.0011/−0.0038/−0.0032), coset-swap episode documented; (f) controlled — four harness defects caught across five runs by asserts/MC-law disagreement; final run ALL_DONE all-green; (g) fair — C₅ abelian control reproduces paper 79 through the identical pipeline; (h) closure — symmetric (wall 0, barrier 2), residue dial (5), CRT-sealed (6), Kummer/affine classical (8).\n\n### What this decides\nThe abelianization law now spans **degrees 2–5** and abelianizations **C₂, C₃, C₄, C₂×C₂, Cₙ**: I(p mod m\\*; T) = I(T; coset), pair law verbatim, the type-vs-dial gap always exactly the entropy of the cosets the type cannot tell apart. The type-channel face of the program is complete at every tested group; the frontier returns to the quantum channel (QUBIT-TRADE) and the barrier-4 converse.\n\nNow 417 experiments. Assessment v193. Paper 82.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3411",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T13:59:52.029699+00:00",
+    "title": "FACT round-24 #3 — QUINTIC-TYPE-CHANNEL: the abelianization law at degree five, F₂₀ and the first C₄ dial (paper 82)"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-24 #2 — BERGGREN-3ADIC (paper 81, /tmp/exp_berggren3adic.py, /tmp/r24n2.log)\n\n**Verdict name: THE-TREE-POSITION-IS-ADICALLY-SEALED.**\n\n### Result\nThe Berggren tree position of the N-node (the Fermat pair of a semiprime, paper 56's exact embedding) carries **NO N-visible residue structure beyond the trace**. The channel decomposes into (i) a deterministic 3-adic skeleton that *restates* N mod 3 exactly, and (ii) a metric layer — branch letters, depth, path composition — that is **blind at every 3-adic level 3^k, k ≤ 6**. The Catalog's 3-adic Cantor boundary (#855) has no N-computable projection beyond the trace-set content.\n\n### The four horns (all stated before the run; all confirmed)\n- **H1 SKELETON (deterministic lemma)**: squares mod 3 = {0,1} + m⊥n ⟹ N ≡ 1 ⟺ 3|n, N ≡ 2 ⟺ 3|m, N ≡ 0 ⟺ 3∤mn — agreement **40000/40000 = 100%**. And it RESTATES the trace: 3|n ⟺ q≡p mod 3 ⟺ N ≡ p² ≡ 1 mod 3, also **40000/40000** — zero information beyond N mod 3 (barrier 6).\n- **H2 PARENT-INTERVAL LAW (new exact lemma)**: the Berggren parent is decided by the ratio alone — m/n ∈ (1,2) → T₁ = (n,2n−m); (2,3) → T₂ = (n,m−2n); (3,∞) → T₃ = (m−2n,n). Verified on all **40000/40000** descents terminating exactly at root (2,1), plus **86,634 spot-checked steps** with child-map reconstruction (B₁(m,n)=(2m−n,m), B₂=(2m+n,m), B₃=(m+2n,n)) exact on every step.\n- **H3 METRIC BLINDNESS**: I(N mod 3^k; b_t) at the 300-shuffle permutation null for every letter depth t ≤ 10 and level k ≤ 6; same for depth dB and composition (c₁,c₂,c₃). **Worst z = +2.51 across ~150 tests** (k=1: I(N mod 3; b₁) = 0.00004 vs null 0.00004, z = +0.04).\n- **H4 CONTROLS (live)**: trace lemma I(N mod 3; s mod 3) = **1.0000** exact (paper 50); I(ratio-band; b₁) = **1.4738 = H(b₁)** EXACTLY — the first branch letter is a deterministic function of the m/n band, whose recovery IS the factorization; corr(log dB, log gap) = −0.141 replicates paper 56's anti-correlation.\n\n### Sample\n40,000 random semiprimes (p,q uniform primes in [2¹⁶, 2²⁴)), Miller-Rabin (12 bases), capped descents (5000 steps): twin-prime nodes n=1 descend stepwise in m and are censored — **42/40402 = 0.10%**, reported. Runtime 154 s.\n\n### Why this matters\n- Paper 56's orthogonality is sharpened from coordinate-level to **adic strength**: coordinates orthogonal AND position sealed.\n- Tree-adic dials join the closed residue-dial family (papers 54/70/72–74/77/79/80): no dial exceeds its trace-set content; the metric interior requires the factorization to read.\n- The gold-tier interference claim (#829, \"exact factorisation by interference of Pythagorean triples\", polynomial-time per its filename) has no formula in the index, but this result fences it: any such method must either smuggle the Fermat pair (circularity, barrier 6) or pay Ω(N) aggregation (barrier 4).\n\n### All 8 barriers\n(a) clean — four horns pre-stated, measurement object ≠ instrument; (b) clean — no tree-position channel work in the Catalog (nearest: our own echo #707); (c) confronted — 40k real semiprimes, 86,634 verified steps, ~150 null-tested channels; (d) clean — fixed seeds; (e) the substance — blindness asserted against empirical nulls, censoring reported, worst z +2.51 < 3 without multiplicity correction; (f) controlled — lemmas asserted at 100%, ALL_DONE marker; (g) fair — two live positive controls fire (trace 1.0000; band-determinism = H(b₁)); (h) closure — symmetric by construction, skeleton circular (6), metric layer needs factors (5/6), descent = classical Euclidean algorithm in disguise (8).\n\n### What closes\nThe Pythagorean-tree line is now closed at three strengths: embedding exact (paper 56), coordinates orthogonal (paper 56), position adically sealed (this paper). Frontier returns to the quantum channel (QUBIT-TRADE phase diagram) and the barrier-4 converse.\n\nNow 416 experiments. Assessment v192. Paper 81.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3412",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T13:59:52.031024+00:00",
+    "title": "FACT round-24 #2 — BERGGREN-3ADIC: the tree position of the N-node is adically sealed (paper 81)"
   },
   {
     "ambition_level": "grand_challenge",
@@ -2537,44 +2537,6 @@
     "status": "available",
     "timestamp": "",
     "title": "Quantum Entanglement Monogamy: CKW Inequality"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 3cce8c08 (Q=0.766), which proved 19 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Model EML network training in the tropical limit (large weights) as piecewise-linear optimization. Prove that gradient descent on tropical EML functions converges to a tropical rational function that minimizes the tropical loss. Derive convergence rates and compare to ReLU networks.",
-    "domain_bridges": [],
-    "domains": [
-      "Applications"
-    ],
-    "id": "push_3cce8c08_da84e3cc",
-    "lineage_refs": [],
-    "priority_score": 0.86564,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "3cce8c08",
-    "status": "available",
-    "timestamp": "2026-08-01T21:16:58.258932+00:00",
-    "title": "Deepening: EML Learning Theory: Gradient Descent Convergence in the Tropical Limit"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 1c628216 (Q=0.762), which proved 15 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Compute the topological type of the Library of Babel: a space of all possible 410-page books. Prove that it is connected, totally disconnected under the Hamming metric, and has covering dimension 0. Determine the Kolmogorov complexity of a random book and prove that almost all books are incompressib",
-    "domain_bridges": [],
-    "domains": [
-      "Combinatorics"
-    ],
-    "id": "push_1c628216_12f3d7fc",
-    "lineage_refs": [],
-    "priority_score": 0.8617199999999999,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "1c628216",
-    "status": "available",
-    "timestamp": "2026-07-30T09:52:06.695169+00:00",
-    "title": "Deepening: Borges' Library of Babel: Combinatorics of Everything"
   },
   {
     "ambition_level": "extension",
@@ -14471,6 +14433,76 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Shared.HigherPythagorean.QuadrupleTree",
+      "Shared.HigherPythagorean.QuadrupleGroupoid",
+      "Novelty.BerggrenCausalSetPhysics"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The Berggren tree fails to be Lorentzian because it lives on the null cone, where all distinct rays are spacelike. Move to Pythagorean quadruples a^2+b^2+c^2=d^2 and order the integer points of the closed future cone of R^{3,1} by the Minkowski relation itself. The conjecture is that this yields a locally finite poset acted on by the quadruple analogue of the Berggren moves.\n\nThe set of integer vectors v in Z^4 with Q(v) = v1^2+v2^2+v3^2-v4^2 <= 0 and v4 > 0, ordered by u <= v iff Q(v-u) <= 0 and v4 >= u4, is a locally finite poset, and the quadruple Berggren generators act on it by order automorphisms.\n\nFormalise the order, prove antisymmetry via the reverse triangle inequality for future-directed vectors, prove local finiteness by bounding the coordinates of points in an interval, and check that the quadruple generators preserve Q and future-directedness.\n\nA genuinely Lorentzian Pythagorean causal set with intervals of polynomial (volume-like) growth, i.e. the moonshot realised one dimension up.\n\nA precise theorem that integrality plus the cone condition still forces degenerate interval growth, sharpening the obstruction found in this cycle.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_3406",
+    "lineage_refs": [],
+    "priority_score": 0.7107777777777778,
+    "proof_strategy": "Reverse Cauchy-Schwarz for future timelike vectors gives antisymmetry; interval finiteness follows from the bound on the time coordinate plus the compactness of the spatial slice of a bounded interval; equivariance is a matrix computation as in wordMat_lorentz.",
+    "research_mode": "team",
+    "source_exp_id": "75105c60",
+    "status": "available",
+    "timestamp": "2026-08-21T13:59:19.339046+00:00",
+    "title": "Quadruple Causal Cone in (3,1) Signature"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Novelty.BerggrenCausalSet",
+      "Novelty.BerggrenCausalSetGeometry"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Classical sequential growth builds a causal set one event at a time subject to Bell causality and discrete general covariance. The Berggren tree is a deterministic 3-fold growth process whose labelled invariants are now all exactly known, making it a concrete test case for the covariance axioms.\n\nThe Berggren growth process, viewed as a labelled sequential growth with birth rates supported on the three Berggren moves, satisfies discrete general covariance (the induced measure on unlabelled posets is independent of the labelling order) if and only if the three branch weights are equal.\n\nFormalise finite labelled growth histories to depth k as words, define the induced measure, and compare the measures of relabelled histories; the free-monoid theorem wordMat_injective makes the history space explicitly a ternary tree.\n\nA fully formalised, exactly solvable example of a covariant sequential growth model with computable interval and antichain statistics.\n\nAn explicit obstruction showing that tree-like growth is incompatible with discrete general covariance, which sharpens why physical growth models produce non-tree posets.",
+    "domain_bridges": [],
+    "domains": [
+      "Combinatorics",
+      "Logic"
+    ],
+    "id": "fd_3410",
+    "lineage_refs": [],
+    "priority_score": 0.7105000000000001,
+    "proof_strategy": "Because levels are antichains and intervals are chains, every unlabelled poset arising has a unique automorphism-free presentation, so the covariance condition reduces to a symmetric-function identity in the three weights.",
+    "research_mode": "team",
+    "source_exp_id": "75105c60",
+    "status": "available",
+    "timestamp": "2026-08-21T13:59:21.180652+00:00",
+    "title": "Deterministic Sequential Growth of the Berggren Poset"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Novelty.BerggrenCausalSetGeometry",
+      "Novelty.BerggrenCausalSetBoundary"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The three links at an event have Minkowski lengths 4(c-b)^2, 4(a-b)^2, 4(c-a)^2. The multiset of link lengths at depth k is therefore an exactly computable invariant. The conjecture pins its minimum.\n\nFor every k the minimum of the link lengths over all events of depth k equals 4, and it is attained exactly at the events of the pure middle (Pell) spine and their A-children.\n\nCompute the spectrum to depth 6, then prove the lower bound 4 by showing that each of |c-b|, |a-b|, |c-a| is a positive integer, and characterise equality by solving c-b = 1, a-b = ±1, c-a = 1 inside the tree.\n\nA complete description of the shortest scales of the discrete geometry, the analogue of a lattice spacing, together with the exact locus where it is attained.\n\nSome deeper branch achieves a smaller separation, which would contradict integrality, so the failure mode is a proof that the attaining locus is larger than the spine.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_3409",
+    "lineage_refs": [],
+    "priority_score": 0.7102972972972974,
+    "proof_strategy": "Integrality gives length >= 4 immediately; equality analysis reduces to the twin-leg equation a-b = ±1 and to c-b = 1 (triples of the form (2m+1, 2m(m+1), 2m(m+1)+1)), both of which are classical families that can be characterised inside the tree by induction on depth.",
+    "research_mode": "team",
+    "source_exp_id": "75105c60",
+    "status": "available",
+    "timestamp": "2026-08-21T13:59:20.735033+00:00",
+    "title": "Minimal Link Length Spectrum"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Cryptography.MarkoffTransfer.UniquenessAndNonlinearity",
       "Cryptography.BerggrenSpectral.LorentzAndTree"
     ],
@@ -14555,6 +14587,29 @@
     "status": "available",
     "timestamp": "",
     "title": "The Ramsey Theory of DNA: Subsequence Avoidance in Genetic Codes"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Novelty.BerggrenCausalSet",
+      "Bridges.BerggrenTrees.BerggrenPythagoreanCore"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Keep the events (primitive triples) but replace the tree order by an arithmetic one, using the hypotenuse as a global time function and a divisibility or congruence condition as the causal relation. The aim is a locally finite poset on the same set whose interval cardinalities grow polynomially of degree at least two.\n\nThere is a relation R on primitive Pythagorean triples, refining c_u < c_v, which is a locally finite partial order whose intervals of cosmic-time extent T have cardinality asymptotically proportional to T^d for some d >= 2.\n\nDefine candidate relations (e.g. u R v iff c_u divides c_v, or iff v is reachable by a word whose Lorentz matrix is congruent to the identity mod N), count intervals computationally to depth 6, then formalise the winning candidate's poset axioms and interval bounds.\n\nA Pythagorean causal set with a genuine Myrheim-Meyer dimension, separating 'the event set is fine' from 'the tree order is wrong'.\n\nEvidence that the arithmetic of primitive triples supports only tree-like (dimension one) causal orders, which would be a structural theorem about the Berggren monoid.",
+    "domain_bridges": [],
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_3407",
+    "lineage_refs": [],
+    "priority_score": 0.70925,
+    "proof_strategy": "Local finiteness from the cosmic-time bound plus the finiteness of triples with bounded hypotenuse; interval growth by counting triples with hypotenuse in a window, which is governed by the classical count of representations as a sum of two squares.",
+    "research_mode": "team",
+    "source_exp_id": "75105c60",
+    "status": "available",
+    "timestamp": "2026-08-21T13:59:19.827835+00:00",
+    "title": "Arithmetic Reordering of the Berggren Event Set"
   },
   {
     "ambition_level": "extension",
@@ -15117,6 +15172,26 @@
     "status": "available",
     "timestamp": "2026-08-21T06:29:02.517572+00:00",
     "title": "Tropical Perron–Frobenius in all dimensions"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Novelty.BerggrenCausalSetBoundary",
+      "Shared.BerggrenTrees.Parent_hyp_lt"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The celestial map sending an event to (a/c, b/c) is injective into the rational points of the unit circle, and the Pell spine converges to the irrational direction sqrt(2)/2. The conjecture is that the closure of the image is the whole open first-quadrant arc, so the conformal boundary of the causal set is all of null infinity in that sector.\n\nThe set { (a/c, b/c) : (a,b,c) a primitive Pythagorean triple with a,b,c > 0 } is dense in the open arc { (x,y) : x,y > 0, x^2+y^2 = 1 }.\n\nFormalise Berggren's completeness theorem (every primitive triple is a node of the tree, via descent using the parent map already formalised), then derive density from the Euclid parametrisation and density of the rationals.\n\nThe boundary of the Berggren causal set is exactly the celestial arc: a fully formalised discrete model of null infinity for the 2+1 null cone.\n\nThe image omits an arc, which would contradict the classical Euclid parametrisation and hence indicate an error in the descent, so the informative outcome is the completeness theorem itself.",
+    "domain_bridges": [],
+    "domains": [],
+    "id": "fd_3408",
+    "lineage_refs": [],
+    "priority_score": 0.5933870967741937,
+    "proof_strategy": "Descent: the parent map decreases the hypotenuse (parent_hyp_lt in the catalog) and preserves primitivity, so every primitive triple reaches (3,4,5); then Euclid seeds (m,n) with n/m dense in (0,1) give directions dense in the arc.",
+    "research_mode": "team",
+    "source_exp_id": "75105c60",
+    "status": "available",
+    "timestamp": "2026-08-21T13:59:20.272613+00:00",
+    "title": "Celestial Density of the Berggren Boundary"
   },
   {
     "ambition_level": "extension",
@@ -34965,6 +35040,106 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "**Conjecture.** The mod-2 obstruction is the first term of a full congruence filtration:\nfor every `k ≥ 1` the reduction of the Berggren group mod `2^k` is a proper subgroup of\n`GL(2, ℤ/2^k)`, and the resulting inverse limit is a proper open subgroup of `GL(2, ℤ₂)`\nwhose abelianization is exactly ℤ/2 — so ℤ/2 is the *only* anyon charge the tree can ever\ncarry, at every level of the congruence tower.\n\n*The key insight is* that braiding must preserve every congruence-level charge, so a single\nsurjection onto an abelian quotient at level `2` propagates upward and pins the whole\nprofinite completion. **Why now?** The level-2 case is already formalized\n(`berggren_mod_two`, `charge_mul`, `braid_pair_charge_eq`), and Mathlib's `ZMod` and\n`Subgroup.closure_induction` machinery makes the induction on `k` mechanical.",
+    "domain_bridges": [],
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_3401",
+    "lineage_refs": [],
+    "priority_score": 0.5,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "b5bb3340",
+    "status": "available",
+    "timestamp": "2026-08-21T13:58:55.745110+00:00",
+    "title": "Direction 1 — Congruence Obstruction Hierarchy for Berggren Braiding"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "**Conjecture.** The Berggren group is a *thin* subgroup of `GL(2,ℤ)`: infinite index, yet\nZariski-dense, with the counting exponent of hypotenuses along depth-`d` words governed by\n`log 9 / log(3+2√2)` — the ratio the two-sided depth bound `(d+2)² < c ≤ 5·9^d` already\nbrackets.\n\n*The key insight is* that the two extreme spines (polynomial `A`-spine, exponential\n`B`-spine) are the extremal geodesics of a hyperbolic word metric, so their exponents bound\nthe group's critical exponent from both sides. **Why now?** The extremal spines are proved\nand explicit (`aSpine_hyp`, `bSpine_recurrence`), so what remains is a counting argument\nrather than a search for the right objects.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_3402",
+    "lineage_refs": [],
+    "priority_score": 0.5,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "b5bb3340",
+    "status": "available",
+    "timestamp": "2026-08-21T13:58:56.189209+00:00",
+    "title": "Direction 2 — Silver-Ratio Pell Spine as a Thin-Group Certificate"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "**Conjecture.** Any braid representation whose matrix entries lie in ℤ[1/√2, i] and which\nis generated by matrices of finite order lands inside the Clifford group; hence no\narithmetic braid representation over the Berggren spectral field is dense in `U(2)`, and\nuniversality requires leaving the field ℚ(√2, i) (e.g. Fibonacci anyons over ℚ(√5)).\n\n*The key insight is* that the Clifford condition is a *closed* algebraic condition on the\nconjugation action on Pauli matrices, so it survives limits and constrains the whole closure\nof the generated monoid. **Why now?** The `Cliff` set, its closedness, its containment of\nthe Ising generators, and the exclusion of `T` are all already formalized\n(`isClosed_cliff`, `isingMonoid_le_cliff`, `tgate_not_cliff`).",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Physics"
+    ],
+    "id": "fd_3403",
+    "lineage_refs": [],
+    "priority_score": 0.5,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "b5bb3340",
+    "status": "available",
+    "timestamp": "2026-08-21T13:58:56.636519+00:00",
+    "title": "Direction 3 — Clifford Ceiling for Arithmetic Braid Representations"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "**Conjecture.** Replacing the silver unit `3+2√2` by the golden unit `(3+√5)/2` — i.e.\nusing a tree of *Markov* or Fibonacci-type triples instead of Pythagorean triples — yields\na generator pair satisfying the braid relation whose image *is* dense in `PU(2)`,\nreinstating the moonshot in a different arithmetic.\n\n*The key insight is* that density of a braid representation is governed by whether the\nassociated quantum dimension is a non-Clifford algebraic number, and `√5` is, while `√2` is\nnot. **Why now?** The negative side has been isolated exactly to the field: the obstruction\nproofs here (integrality, Clifford closure) are field-theoretic and transfer verbatim as\ntests for the golden case.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Physics"
+    ],
+    "id": "fd_3404",
+    "lineage_refs": [],
+    "priority_score": 0.5,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "b5bb3340",
+    "status": "available",
+    "timestamp": "2026-08-21T13:58:57.082682+00:00",
+    "title": "Direction 4 — Fibonacci Escape from the Pythagorean Tree"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "**Conjecture.** The two-sided bound `(d+2)² < c ≤ 5·9^d` is sharp in the strong sense that\nthe number of depth-`d` triples with hypotenuse below `X` is `Θ(X^{1/2})` for the\npolynomial sector and `Θ(log X)` for the exponential sector, giving a two-regime complexity\ndictionary: \"circuit depth\" in the tree is logarithmic in the hypotenuse exactly along the\nPell spine and square-root-like along the linear spine.\n\n*The key insight is* that the tree's word metric is bi-Lipschitz to `log c` only on the\nhyperbolic sector, and the parabolic `A`-spine is precisely the locus where this fails.\n**Why now?** Both extremes are already proved attained, so the remaining step is a counting\nestimate interpolating between them.\n\n---\n\n```json future_directions.json\n[\n  {\n    \"title\": \"Congruence Obstruction Hierarchy for Berggren Braiding\",\n    \"domain\": \"Algebra\",\n    \"description\": \"The proved mod-2 obstruction to braiding should extend to a full 2-adic congruence tower. At each level 2^k the Berggren image is conjecturally a proper subgroup of GL(2, Z/2^k), and the inverse limit is a proper open subgroup of GL(2, Z_2) with abelianization exactly Z/2. This would show that the Z/2 anyon charge is the unique topological charge of the tree at every congruence level, not an artifact of level 2.\",\n    \"conjecture\": \"For every k >= 1 the reduction mod 2^k of the Berggren group is a proper subgroup of GL(2, Z/2^k), and the closure in GL(2, Z_2) has abelianization Z/2.\",\n    \"test\": \"Formalize redHom_k : Matrix (Fin 2) (Fin 2) Z -> Matrix (Fin 2) (Fin 2) (ZMod (2^k)) and generalize berggren_mod_two by induction on k via Subgroup.closure_induction; exhibit an explicit element of GL(2, Z/2^k) outside the image.\",\n    \"if_true\": \"The tree supports only abelian Z/2 statistics at every 2-adic level, closing the braiding question completely.\",\n    \"if_false\": \"Some higher congruence level is surjective, meaning the level-2 charge is not stable and richer local statistics may exist.\",\n    \"proof_strategy\": \"Induct on k: lift the level-2 invariant subgroup {1, J} to a congruence subgroup generated by the images of U1, U2, U3, then apply closure induction with the multiplicative structure of the theta group.\",\n    \"catalog_references\": [\"Shared.BerggrenTQC.BraidObstruction\", \"Shared.BerggrenTQC.EuclidLift\"]\n  },\n  {\n    \"title\": \"Silver-Ratio Thinness Certificate for the Berggren Group\",\n    \"domain\": \"NumberTheory\",\n    \"description\": \"The Berggren group is conjecturally thin in GL(2,Z): Zariski dense but of infinite index. The proved two-sided depth bound brackets the growth exponent between the parabolic A-spine and the Pell B-spine with silver unit 3+2*sqrt(2). Pinning the critical exponent would quantify how sparse the Pythagorean tree is inside the modular group.\",\n    \"conjecture\": \"The Berggren group has infinite index in GL(2,Z) and its hypotenuse counting exponent is log 9 / log(3 + 2 sqrt 2).\",\n    \"test\": \"Count depth-d words with hypotenuse below X in Lean using the pr",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_3405",
+    "lineage_refs": [],
+    "priority_score": 0.5,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "b5bb3340",
+    "status": "available",
+    "timestamp": "2026-08-21T13:58:57.697183+00:00",
+    "title": "Direction 5 — Depth-Complexity Dictionary for Tree Circuits"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Replace algebraic spheres in `Type` by bundled topological spaces, equip the dependent product with the product topology, and establish the corresponding categorical product in `TopCat`.",
     "domain_bridges": [],
     "domains": [
@@ -40397,7 +40572,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "018e116a",
     "description": "For machines with state sets `S` and `T`, inequivalent initial states should admit a distinguishing word whose length is bounded in terms of `|S| · |T|`. Formalizing this would sharpen decidability into a finite test suite theorem and connect the positive finite-state result directly to `no_finite_test`, which shows that no fixed finite suite works for arbitrary functions on an infinite input type.",
     "domain_bridges": [],
     "domains": [],
@@ -40407,7 +40582,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "ea214ad9",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:23:58.214591+00:00",
     "title": "Bound the length of distinguishing experiments"
   },

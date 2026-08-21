@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "0f708106",
-      "domain": "Novelty",
-      "key_insight": "# Future directions\n\nDerived from the Stage 3/4 analysis of this cycle.  Each conjecture is falsifiable, and each\ncomes with the precise statement one would formalise next.\n\nEstablished this cycle (al",
-      "quality_score": 0.86,
-      "sorry_count": 0,
-      "theorem_count": 109,
-      "timestamp": "2026-08-19T17:41:03",
-      "title": "Both ingredients are already machine-checked (the sharp bound and 1-sum closure),"
-    },
-    {
       "cycle_id": "ab33dc9e",
       "domain": "Cryptography",
       "key_insight": "# Future directions: bold, testable conjectures from the pole-order programme\n\nThe formal results of this phase live in `Catalog/Cryptography/PoleOrderSplitting.lean`,\n`PoleOrderValuationRigidity.lean",
@@ -499,19 +489,19 @@
       "theorem_count": 169,
       "timestamp": "2026-08-21T13:59:12",
       "title": "Topological Quantum Computation from the Berggren Groupoid — Anyonic Braiding on the Tree Boundary"
+    },
+    {
+      "cycle_id": "75105c60",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — The Berggren Causal Set\n\n## Where this cycle ended up\n\nThe moonshot hypothesis (\"the Berggren tree of primitive Pythagorean triples is a discrete\nmodel of `2+1`-dimensional Minko",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 111,
+      "timestamp": "2026-08-21T13:59:28",
+      "title": "The Berggren Causal Set — Pythagorean Triples as a Discrete Model of Spacetime"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "5b29bc32",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions — the non-CRT-separable half-plane count\n\nEverything below is derived from the theorems proved in\n`Catalog/MachineLearning/HalfPlane*.lean` (all sorry-free).  Established facts,\nfo",
-      "quality_score": 0.86,
-      "sorry_count": 0,
-      "theorem_count": 98,
-      "timestamp": "2026-08-13T02:54:40",
-      "title": "The Non-CRT-Separable Half-Plane Circle Count, Closed"
-    },
     {
       "cycle_id": "83939baf",
       "domain": "Pythagorean",
@@ -2501,27 +2491,19 @@
       "theorem_count": 169,
       "timestamp": "2026-08-21T13:59:12",
       "title": "Topological Quantum Computation from the Berggren Groupoid — Anyonic Braiding on the Tree Boundary"
+    },
+    {
+      "cycle_id": "75105c60",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — The Berggren Causal Set\n\n## Where this cycle ended up\n\nThe moonshot hypothesis (\"the Berggren tree of primitive Pythagorean triples is a discrete\nmodel of `2+1`-dimensional Minko",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 111,
+      "timestamp": "2026-08-21T13:59:28",
+      "title": "The Berggren Causal Set — Pythagorean Triples as a Discrete Model of Spacetime"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "ce273a18",
-      "domain": "Geometry",
-      "name": "bodyVol_nonneg",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "ce273a18",
-      "domain": "Geometry",
-      "name": "volume_smul_ne_top",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "ce273a18",
-      "domain": "Geometry",
-      "name": "bodyVol_smul",
-      "quality": 0.78
-    },
     {
       "cycle_id": "3ec7eb1a",
       "domain": "Combinatorics",
@@ -2803,9 +2785,27 @@
       "domain": "Shared",
       "name": "bcons_injective",
       "quality": 0.78
+    },
+    {
+      "cycle_id": "75105c60",
+      "domain": "Novelty",
+      "name": "root_isEvent",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "75105c60",
+      "domain": "Novelty",
+      "name": "legs_lt_hyp",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "75105c60",
+      "domain": "Novelty",
+      "name": "applyStep_A",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-21T13:59:12",
+  "last_updated": "2026-08-21T13:59:28",
   "open_questions": [
     {
       "context": "Everything is proved; there are no `sorry`s and no new axioms.",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "81aa12f0",
-        "quality": 0.87,
-        "theorems": 135,
-        "title": "Emergent Spacetime from Quantum Entanglement"
-      },
-      {
         "cycle_id": "ae5d2ae6",
         "quality": 0.87,
         "theorems": 29,
@@ -3637,6 +3631,12 @@
         "quality": 0.85,
         "theorems": 61,
         "title": "For the PTX-augmented optimum `q*_{β,γ}` with `γ > 0`,"
+      },
+      {
+        "cycle_id": "75105c60",
+        "quality": 0.82,
+        "theorems": 111,
+        "title": "The Berggren Causal Set — Pythagorean Triples as a Discrete Model of Spacetime"
       }
     ],
     "NumberTheory": [
