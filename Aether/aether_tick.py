@@ -1526,10 +1526,18 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
 
 
 def _merge_direction_objects(d_ours: dict, d_theirs: dict) -> dict:
+    # Lifecycle precedence for pull races: terminal states must beat
+    # non-terminal ones no matter which side carries them, or a stale local
+    # "available" resurrects a direction the other writer already completed or
+    # pruned — and it gets re-dispatched (audit 2026-08-21).
+    _STATUS_RANK = {"available": 0, "in_progress": 1, "pruned": 2, "completed": 3}
     merged = dict(d_ours)
     for k, v in d_theirs.items():
         if k not in merged or merged[k] is None or merged[k] == "" or merged[k] == 0:
             merged[k] = v
+        elif k == "status":
+            if _STATUS_RANK.get(str(v), 0) > _STATUS_RANK.get(str(merged.get(k)), 0):
+                merged[k] = v
         elif k == "attempt_count":
             merged[k] = max(int(d_ours.get(k, 0) or 0), int(d_theirs.get(k, 0) or 0))
         elif k == "outcome_quality":
@@ -1626,9 +1634,47 @@ def resolve_json_conflict(file_path: Path) -> bool:
         if isinstance(theirs_json.get("cycle_syntheses"), dict):
             merged_syntheses.update(theirs_json["cycle_syntheses"])
 
+        # Merge the remaining pool sections — dropping them (as this resolver
+        # once did) silently discarded the pruned list and the domain-balancing
+        # statistics on every pull-race resolution (audit 2026-08-21).
+        merged_pruned = {}
+        for item in ours_json.get("pruned", []) or []:
+            if isinstance(item, dict):
+                merged_pruned[item.get("id") or str(item)] = item
+        for item in theirs_json.get("pruned", []) or []:
+            if isinstance(item, dict):
+                key = item.get("id") or str(item)
+                merged_pruned[key] = (_merge_direction_objects(merged_pruned[key], item)
+                                      if key in merged_pruned else item)
+
+        def _merge_counts(a, b):
+            out = dict(a) if isinstance(a, dict) else {}
+            if isinstance(b, dict):
+                for ck, cv in b.items():
+                    try:
+                        out[ck] = max(float(out.get(ck, 0) or 0), float(cv or 0))
+                    except (TypeError, ValueError):
+                        out[ck] = cv
+            return out
+
+        merged_domain_counts = _merge_counts(ours_json.get("recent_domain_counts"),
+                                             theirs_json.get("recent_domain_counts"))
+        merged_theme_keywords = _merge_counts(ours_json.get("recent_theme_keywords"),
+                                              theirs_json.get("recent_theme_keywords"))
+
+        merged_selection_log = []
+        for log_item in (ours_json.get("selection_log") or []) + (theirs_json.get("selection_log") or []):
+            if log_item not in merged_selection_log:
+                merged_selection_log.append(log_item)
+        merged_selection_log = merged_selection_log[-200:]
+
         final_json = {
             "cycle_syntheses": merged_syntheses,
-            "directions": sorted_directions
+            "directions": sorted_directions,
+            "pruned": list(merged_pruned.values()),
+            "recent_domain_counts": merged_domain_counts,
+            "recent_theme_keywords": merged_theme_keywords,
+            "selection_log": merged_selection_log,
         }
 
         file_path.write_text(json.dumps(final_json, indent=2) + "\n", encoding="utf-8")
@@ -1842,9 +1888,26 @@ def resolve_all_conflicts() -> bool:
     resolved_any = False
     for line in result.stdout.splitlines():
         if line.startswith("UU ") or line.startswith("AA ") or line.startswith("UD ") or line.startswith("DU ") or line.startswith("AU ") or line.startswith("UA "):
+            state = line[:2]
             path_str = line[3:].strip().strip('"')
             file_path = REPO_ROOT / path_str
             if not file_path.exists():
+                if state in ("DU", "UA"):
+                    # Deleted by us, modified/added by them: their side is the
+                    # data-preserving one. Leaving these unresolved aborts every
+                    # merge, so pushes stall tick after tick with no alert
+                    # (audit 2026-08-21).
+                    r = subprocess.run(
+                        ["git", "checkout", "--theirs", path_str],
+                        cwd=str(REPO_ROOT), capture_output=True, timeout=10
+                    )
+                    if r.returncode == 0:
+                        subprocess.run(
+                            ["git", "add", path_str],
+                            cwd=str(REPO_ROOT), capture_output=True, timeout=10
+                        )
+                        resolved_any = True
+                        print(f"[GitResolve] Restored theirs for delete/modify conflict: {path_str}")
                 continue
 
             success = False
@@ -2216,15 +2279,36 @@ def rebuild_commit_push() -> bool:
 
         pushed = False
         if merge_success:
-            push = subprocess.run(
-                ["git", "push", "origin", "master"], cwd=str(REPO_ROOT), capture_output=True, text=True, timeout=120
-            )
-            if push.returncode == 0:
-                print("[Tick] Changes committed and pushed to origin/master")
-                pushed = True
-            else:
-                print(f"[Tick] git push failed: {push.stderr}")
-                _short_err = push.stderr.replace('\n', ' ')[:200] if isinstance(push.stderr, str) else push.stderr.decode('utf-8', errors='replace').replace('\n', ' ')[:200]
+            for _push_attempt in range(1, 4):
+                push = subprocess.run(
+                    ["git", "push", "origin", "master"], cwd=str(REPO_ROOT), capture_output=True, text=True, timeout=120
+                )
+                if push.returncode == 0:
+                    print("[Tick] Changes committed and pushed to origin/master")
+                    pushed = True
+                    break
+                _push_err = push.stderr if isinstance(push.stderr, str) else push.stderr.decode('utf-8', errors='replace')
+                # Non-fast-forward: the other writer (local loop / Action) pushed
+                # first. Pull with the programmatic resolvers and retry instead of
+                # stalling every future tick behind a diverged master
+                # (audit 2026-08-21).
+                if _push_attempt < 3 and ("rejected" in _push_err or "fast-forward" in _push_err):
+                    print(f"[Tick] Push rejected (non-fast-forward) — pulling and retrying "
+                          f"({_push_attempt}/3)")
+                    subprocess.run(
+                        ["git", "pull", "--no-rebase", "origin", "master"],
+                        cwd=str(REPO_ROOT), capture_output=True, text=True, timeout=120
+                    )
+                    resolve_all_conflicts()
+                    subprocess.run(["git", "add", "-A"], cwd=str(REPO_ROOT), capture_output=True, timeout=120)
+                    # Commit the merge; "nothing to commit" is fine — retry the push either way.
+                    subprocess.run(
+                        ["git", "-c", "core.editor=true", "commit", "--no-edit"],
+                        cwd=str(REPO_ROOT), capture_output=True, text=True, timeout=180
+                    )
+                    continue
+                _short_err = _push_err.replace('\n', ' ')[:200]
+                print(f"[Tick] git push failed: {_push_err}")
                 print(f"[ALERT] git_publish_failed step=push rc={push.returncode} detail={_short_err}")
                 _webhook = os.environ.get("AETHER_ALERT_WEBHOOK")
                 if _webhook:
@@ -2234,6 +2318,7 @@ def rebuild_commit_push() -> bool:
                         urllib.request.urlopen(_req, timeout=5)
                     except Exception:
                         pass
+                break
         else:
             print("[Tick] Push skipped because merge was not successful")
 
