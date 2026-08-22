@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "4b03d5cc",
-      "domain": "Physics",
-      "key_insight": "# Future Directions — Planck-Foam Topology\n\n## Where the thread stands\n\nCycle 1 established the core theory (`Catalog/Physics/PlanckFoam*.lean`): a\ncomplete separation-axiom characterisation of Wheele",
-      "quality_score": 0.86,
-      "sorry_count": 0,
-      "theorem_count": 159,
-      "timestamp": "2026-08-20T10:47:46",
-      "title": "Planck-Foam-Topology: Quantum Fluctuation Geometry at 10^-35 Meters"
-    },
-    {
       "cycle_id": "39c3166e",
       "domain": "Combinatorics",
       "key_insight": "# Future directions\n\nDerived from the three research cycles formalized in\n`Catalog/Combinatorics/RLHFTensorization.lean`,\n`Catalog/Combinatorics/RLHFBooleanLattice.lean`,\n`Catalog/Combinatorics/RLHFBo",
@@ -499,19 +489,19 @@
       "theorem_count": 123,
       "timestamp": "2026-08-22T03:57:43",
       "title": "Prove that `trace(B^n)` counts rooted closed non-backtracking walks of length `n`."
+    },
+    {
+      "cycle_id": "a7626bf4",
+      "domain": "Physics",
+      "key_insight": "# Future Directions\n\nDerived from the analysis and adversarial review of this thread, whose verified (`sorry`-free,\ncompiling) output is:\n\n* `Catalog/Physics/GradedTransitivityComplex.lean` — passage",
+      "quality_score": 0.88,
+      "sorry_count": 0,
+      "theorem_count": 77,
+      "timestamp": "2026-08-22T04:50:15",
+      "title": "The real-analytic version on `|q| < 1` is proved; only the passage from `ℝ` to"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "d99b7790",
-      "domain": "MachineLearning",
-      "key_insight": "# Future directions: five falsifiable conjectures\n\nDerived from the analysis and adversarial review of the formalised results in\n`Catalog/MachineLearning/FreeWitnessTraceLemma.lean`,\n`FreeWitnessClass",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 72,
-      "timestamp": "2026-08-14T02:53:30",
-      "title": "The CRT-Multiplicative Free-Witness Classification and the Trace Lemma"
-    },
     {
       "cycle_id": "a1fe4956",
       "domain": "Algebra",
@@ -2501,27 +2491,19 @@
       "theorem_count": 123,
       "timestamp": "2026-08-22T03:57:43",
       "title": "Prove that `trace(B^n)` counts rooted closed non-backtracking walks of length `n`."
+    },
+    {
+      "cycle_id": "a7626bf4",
+      "domain": "Physics",
+      "key_insight": "# Future Directions\n\nDerived from the analysis and adversarial review of this thread, whose verified (`sorry`-free,\ncompiling) output is:\n\n* `Catalog/Physics/GradedTransitivityComplex.lean` — passage",
+      "quality_score": 0.88,
+      "sorry_count": 0,
+      "theorem_count": 77,
+      "timestamp": "2026-08-22T04:50:15",
+      "title": "The real-analytic version on `|q| < 1` is proved; only the passage from `ℝ` to"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "ec6993b5",
-      "domain": "Shared",
-      "name": "binomialWeight_pos",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "58852b38",
-      "domain": "Bridges",
-      "name": "degIn_mono",
-      "quality": 0.89
-    },
-    {
-      "cycle_id": "58852b38",
-      "domain": "Bridges",
-      "name": "degIn_univ",
-      "quality": 0.89
-    },
     {
       "cycle_id": "58852b38",
       "domain": "Bridges",
@@ -2803,9 +2785,27 @@
       "domain": "Algebra",
       "name": "exists_walk_of_dartChain",
       "quality": 0.86
+    },
+    {
+      "cycle_id": "a7626bf4",
+      "domain": "Physics",
+      "name": "count",
+      "quality": 0.88
+    },
+    {
+      "cycle_id": "a7626bf4",
+      "domain": "Physics",
+      "name": "refines_preserves_conclusion",
+      "quality": 0.88
+    },
+    {
+      "cycle_id": "a7626bf4",
+      "domain": "Physics",
+      "name": "refines_cost_lt",
+      "quality": 0.88
     }
   ],
-  "last_updated": "2026-08-22T03:57:43",
+  "last_updated": "2026-08-22T04:50:15",
   "open_questions": [
     {
       "context": "-- count, which is not available in Mathlib.  Rather than leave an unproved `sorry` in the; sorry; sorry",
@@ -3703,12 +3703,6 @@
     ],
     "Physics": [
       {
-        "cycle_id": "665c1eea",
-        "quality": 0.83,
-        "theorems": 90,
-        "title": "Moonshot: Warp Drive Spacetime — Alcubierre Metric Formalization"
-      },
-      {
         "cycle_id": "0b339d93",
         "quality": 0.78,
         "theorems": 123,
@@ -3761,6 +3755,12 @@
         "quality": 0.82,
         "theorems": 101,
         "title": "Higher-Dimensional Pythagorean Trees — Generalizing the Berggren Tree to Pythago"
+      },
+      {
+        "cycle_id": "a7626bf4",
+        "quality": 0.88,
+        "theorems": 77,
+        "title": "The real-analytic version on `|q| < 1` is proved; only the passage from `ℝ` to"
       }
     ],
     "Probability": [

@@ -1,6 +1,6 @@
 import Mathlib
-import Shared.ProofRefinement
-import Cryptography.NoetherianCertification
+import Catalog.Shared.ProofRefinement
+import Catalog.Cryptography.NoetherianCertification
 
 /-!
 # Self-Improving Cryptographic Certificates
