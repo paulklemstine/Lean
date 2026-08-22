@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "18b02a30",
-      "domain": "NumberTheory",
-      "key_insight": "# Future directions: after the `q`-analogue of Kummer's theorem\n\n## What is now proved (all `sorry`-free, in `Catalog/NumberTheory/QKummer/`)\n\n*Valuation side.*\n\n* the exact factorisation `[k]_q! [n-k",
-      "quality_score": 0.88,
-      "sorry_count": 3,
-      "theorem_count": 294,
-      "timestamp": "2026-08-20T14:00:28",
-      "title": "C4.  A `q`-analogue of Kummer's theorem"
-    },
-    {
       "cycle_id": "5be71780",
       "domain": "Shared",
       "key_insight": "# Future Directions — Neurosymbolic RLHF / PPO-ptx\n\nDerived from the four verified cycles in\n`Catalog/Shared/NeuroSymbolicRLHFObjective.lean`,\n`Catalog/Shared/NeuroSymbolicRLHFRobustness.lean`,\n`Catal",
@@ -499,19 +489,19 @@
       "theorem_count": 57,
       "timestamp": "2026-08-22T07:00:16",
       "title": "FACT round-29 #2 — JOINT-ANOMALY-RECONCILED: paper 91 stands, the rebuild collapsed (paper 100)"
+    },
+    {
+      "cycle_id": "a3ad9f21",
+      "domain": "Combinatorics",
+      "key_insight": "# Future directions — TRACE-BATTERY joint capacity (paper 108, round-30 #4)\n\nThe formal cycle established, for arbitrary finite populations and arbitrary\ndial batteries: monotone scaling of joint capa",
+      "quality_score": 0.82,
+      "sorry_count": 2,
+      "theorem_count": 63,
+      "timestamp": "2026-08-22T07:00:32",
+      "title": "FACT round-30 #4 — TRACE-BATTERY: joint capacity scaling confirmed (paper 108)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "13788cf3",
-      "domain": "Tropical",
-      "key_insight": "# FUTURE DIRECTIONS — after PLUSONE-SMOOTH-NULL (round 16 #2)\n\nThe formal results in `Catalog/Tropical/PlusOneWilliamsCore.lean` and\n`Catalog/Tropical/PlusOneSmoothNull.lean` isolate one mechanism beh",
-      "quality_score": 0.85,
-      "sorry_count": 0,
-      "theorem_count": 470,
-      "timestamp": "2026-08-14T08:46:05",
-      "title": "Exp 399 PLUSONE-SMOOTH-NULL (round-16 #2): the Williams p+1 weakness is residue-invisible, Lucas-seq"
-    },
     {
       "cycle_id": "8c90b348",
       "domain": "Shared",
@@ -2501,27 +2491,19 @@
       "theorem_count": 57,
       "timestamp": "2026-08-22T07:00:16",
       "title": "FACT round-29 #2 — JOINT-ANOMALY-RECONCILED: paper 91 stands, the rebuild collapsed (paper 100)"
+    },
+    {
+      "cycle_id": "a3ad9f21",
+      "domain": "Combinatorics",
+      "key_insight": "# Future directions — TRACE-BATTERY joint capacity (paper 108, round-30 #4)\n\nThe formal cycle established, for arbitrary finite populations and arbitrary\ndial batteries: monotone scaling of joint capa",
+      "quality_score": 0.82,
+      "sorry_count": 2,
+      "theorem_count": 63,
+      "timestamp": "2026-08-22T07:00:32",
+      "title": "FACT round-30 #4 — TRACE-BATTERY: joint capacity scaling confirmed (paper 108)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "63cef724",
-      "domain": "MachineLearning",
-      "name": "moebRel_symm",
-      "quality": 0.79
-    },
-    {
-      "cycle_id": "63cef724",
-      "domain": "MachineLearning",
-      "name": "moebRel_trans",
-      "quality": 0.79
-    },
-    {
-      "cycle_id": "018e116a",
-      "domain": "Pythagorean",
-      "name": "run_nil",
-      "quality": 0.86
-    },
     {
       "cycle_id": "018e116a",
       "domain": "Pythagorean",
@@ -2803,17 +2785,28 @@
       "domain": "Applications",
       "name": "chainPair_injective",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "a3ad9f21",
+      "domain": "Combinatorics",
+      "name": "joint_restrict",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "a3ad9f21",
+      "domain": "Combinatorics",
+      "name": "capacity_mono",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "a3ad9f21",
+      "domain": "Combinatorics",
+      "name": "capacity_strict_mono_of_separates",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-22T07:00:16",
+  "last_updated": "2026-08-22T07:00:32",
   "open_questions": [
-    {
-      "context": "-- count, which is not available in Mathlib.  Rather than leave an unproved `sorry` in the; sorry; sorry",
-      "cycle_id": "059cccbd",
-      "domain": "Probability",
-      "sorry_count": 4,
-      "timestamp": "2026-08-06T03:44:49"
-    },
     {
       "context": "`RhoDom.dominant_singleton_iff`, so it is not a self-contained restatement.  No `sorry`, no",
       "cycle_id": "43d8701a",
@@ -3016,6 +3009,13 @@
       "domain": "Computation",
       "sorry_count": 4,
       "timestamp": "2026-08-21T22:42:28"
+    },
+    {
+      "context": "The results proved here, all sorry-free:; All statements are sorry-free.",
+      "cycle_id": "a3ad9f21",
+      "domain": "Combinatorics",
+      "sorry_count": 2,
+      "timestamp": "2026-08-22T07:00:32"
     }
   ],
   "research_threads": {
@@ -3207,12 +3207,6 @@
     ],
     "Combinatorics": [
       {
-        "cycle_id": "45ac3b9d",
-        "quality": 0.78,
-        "theorems": 58,
-        "title": "The Higher-Power Reciprocity Channel, Closed"
-      },
-      {
         "cycle_id": "43f9870f",
         "quality": 0.84,
         "theorems": 77,
@@ -3265,6 +3259,12 @@
         "quality": 0.79,
         "theorems": 102,
         "title": "General codiscrete construction"
+      },
+      {
+        "cycle_id": "a3ad9f21",
+        "quality": 0.82,
+        "theorems": 63,
+        "title": "FACT round-30 #4 — TRACE-BATTERY: joint capacity scaling confirmed (paper 108)"
       }
     ],
     "Computation": [

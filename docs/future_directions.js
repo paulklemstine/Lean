@@ -283,21 +283,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-27 #3 \u2014 JOINT-WALL-VERIFIED: the battery's factor-blindness stands, the wall was bias (paper 93)"
   },
   {
-    "consumed_by_exp_id": "0e0f4ea6",
-    "description": "## FACT round-29 #2 \u2014 JOINT-ANOMALY-RECONCILED (paper 100, /tmp/exp_jointreconcile.py, /tmp/r29n2.log)\n\n**Verdict name: THE-ORIGINAL-STANDS.**\n\n### Result\nPaper 99's flagged 16\u00d7 anomaly **resolved**: paper 91's joint value of **2.1314 bits is CORRECT** \u2014 reproduced exactly by the clean-code cross-check \u2014 and paper 99's rebuild reading of 0.1353 was an **encoding artifact** in the rebuild's own label chaining.\n\n### The reconciliation (side-by-side, identical population)\n| construction | distinct labels | H(labels) | I(joint) |\n|---|---|---|---|\n| paper 91 (`pj = pc_a\u00b710000 + pc_b`) | **36** | 4.6006 | **2.1314** |\n| clean-code cross-check | 36 | 4.6006 | **2.1314** |\n| paper 99 rebuild (`\u00b710` compression) | **18** | 3.6073 | 0.5830 |\n\nThe rebuild's `\u00b710` frame for the S\u2083b code inside the `\u00b7100` frame for the S\u2083a code **collided distinct label pairs** \u2014 18 labels instead of 36, destroying 0.99 bits of label entropy and most of the measurable channel.\n\n### Resolution\n- Paper 91's 2.1314 **stands** (clean-code reproduction exact; marginals re-verified I(a) = I(b) = 1.0012).\n- Paper 99's flagged anomaly row is **retracted**; its per-dial routing tables (single-dial, no chaining) are unaffected and stand.\n- **Programme lesson**: chained integer label encodings must be width-checked against their field sizes \u2014 a `\u00b710` frame for a 3-valued code inside a `\u00b7100` frame for a 6-valued code silently merges classes. Paper 97's fresh-rerun audit practice is the detector.\n\nNow 435 experiments. Assessment v211. Paper 100.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3448",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T18:57:10.442005+00:00",
-    "title": "FACT round-29 #2 \u2014 JOINT-ANOMALY-RECONCILED: paper 91 stands, the rebuild collapsed (paper 100)"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "## FACT round-29 #1 \u2014 THE-SUM-DIFFERENCE-SPLIT (paper 99, /tmp/exp_sumdiffsplit.py, /tmp/r29n1b.log)\n\n**Verdict name: THE-HINT-VALUE-IS-REAL.**\n\n### Result\nThe pre-stated reconstruction hypothesis \u2014 I(s,d jointly) = I(N mod m\\*; labels) \u2014 was **refuted in the interesting direction**: viewing the battery labels through the factor-residue pair (s, d) **exceeds** the product view.\n\n### The routing table (S\u2083a x\u00b3+x+1 @31; S\u2083b replicates)\n| view | bits | share |\n|---|---|---|\n| product-view (hint-free) = the channel | 1.0012 | 100% |\n| sum-view alone (s = p+q) | 0.0391 | 3.9% |\n| gap-view alone (d = q\u2212p) | 0.0387 | 3.9% |\n| full-residue view (s,d jointly) | 1.5201 | 152% |\n| **HINT VALUE = I(s,d) \u2212 I(N)** | **+0.5189** | |\n\nThe sum and gap residues **individually carry almost nothing** (~4% each) \u2014 but their combination carries more than the modulus's own product residue. The +0.52-bit difference is the **factor-residue hint value**: what knowing p and q mod 31 separately (a 10-bit hint) adds over reading N's residue. S\u2083b replicates (+0.5099). p\u2194q symmetry verified.\n\n### Why this matters\nThe hint value quantifies exactly how much label information is locked behind knowing the factor residues \u2014 information present in the labels, invisible from N, released only by a factor-residue hint. It bridges the battery capacity (papers 91\u201394) to COND-RANK's conditioning-capacity measurement, and explains the sub-ceiling gaps of papers 80\u201394 from the other side: ceiling H(T) counts label entropy; the product view counts what N's residue reaches; the hint value is the bridge.\n\n### Anomaly flagged\nThis script's joint-battery product-view reads 0.1353 against paper 91's 2.1314 for the nominally identical quantity \u2014 unresolved (likely a label-encoding difference in this quick rebuild); the joint row is not cited until reconciled. The per-dial tables are internally consistent across two independent computations within the run.\n\nNow 434 experiments. Assessment v210. Paper 99.\n",
     "domains": [
@@ -394,21 +379,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T19:38:40.905132+00:00",
     "title": "FACT round-30 #1 \u2014 HINT-VALUE-JOINT: hints compound like capacities (paper 101)"
-  },
-  {
-    "consumed_by_exp_id": "a3ad9f21",
-    "description": "## FACT round-30 #4 \u2014 TRACE-BATTERY (paper 108, /tmp/exp_tracebattery.py, /tmp/r30n4b.log)\n\n**Verdict name: THE-SCALING-IS-CONFIRMED.**\n\n### Result\nThe joint channel capacity for increasing subsets of the 6-dial battery, on a fresh independent population:\n\n| moduli subset | M | I(joint) |\n|---|---|---|\n| S\u2083a@31 + S\u2083b@23 | 713 | 7.9455 |\n| + A\u2084@9 | 6 417 | 10.4462 |\n| + D\u2084@8 | 51 336 | 12.1080 |\n\nPer-dial trace information varies enormously: C\u2085@11 carries 3.46 bits, S\u2083a@31 carries 0.04 \u2014 an 80\u00d7 range. Which-factor wall 0.4677 consistent with sparse-table bias.\n\nConfirms paper 94's battery-scaling results on an independent population.\n\nNow 444 experiments. Assessment v218/v219. Paper 108.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3471",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T20:42:26.610291+00:00",
-    "title": "FACT round-30 #4 \u2014 TRACE-BATTERY: joint capacity scaling confirmed (paper 108)"
   },
   {
     "consumed_by_exp_id": "",
@@ -821,16 +791,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-35 #8 \u2014 CONJUGATE-S3-TEST: conjugate fields produce identical type channels (paper 127)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "113c03c3",
     "description": "Round-37 #4 (exp 466, assessment v241). FRONTIER (i) UPGRADED: the empirical converse curve of paper 88 is now a THEOREM for the entire congruence stratum.\n\n**Universal exact law**: Speedup(K,c) = 1/(1 \u2212 \u03b8 + \u03b8\u00b2), \u03b8 = |K_c|/\u03c6(M) \u2014 independent of the reading, the modulus's structure, character content, and the number of composed dials. **Universal cap 4/3**, attained exactly at \u03b8=1/2; trivial filters give exactly 1.\n\nConsequences:\n- n=3/n=5 caps are ALSO 4/3, attained at ANY half-density subset \u2014 Lemma B2 kills all internal structure (mixing character fibers cannot beat it).\n- **Batteries compose for free (CRT): battery cap still 4/3 < 2** \u2014 the 12.7235 measured battery bits buy \u2264 log2(4/3) = 0.41504 work-bits. Capacity bits and work bits are different currencies.\n- Corollary A2: which-factor blindness of residues (papers 93/102) becomes an IDENTITY under MA-1.\n\nMachine verification: Claim-A MC 1,065,538 samples max dev 0.000294 (\u03c7\u00b2 z=\u22121.67); exhaustive enumeration m=3/4/7/11 + batteries M=12/15/21/33 (all 2^20 subsets) \u2014 every max exactly 1.3333333333; real-semiprime sims within \u00b10.006 incl. structure-blindness controls; beat-the-cap attempt over top-40 sets: nothing approaches 2\u00d7.\n\nResidual gap to the FULL converse, precise: (1) positional/interval witnesses (paper 88 arms empirically); (2) superconstant-cost tests (factor-local methods escape scan-order framing); (3) effectivizing MA-1 at cryptographic sizes.\n\nProofs: ResearchOutput/scripts/2026-08-21-resume/proofs.md; machine checks verify.py/result.json; ledger of 5 self-caught errors incl. nearly reporting the asked \u22642 instead of the provable 4/3.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3542",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T01:52:37.374850+00:00",
     "title": "FACT round-37 #4 \u2014 CONVERSE-CAP-THEOREM: the barrier-4 converse proved for the residue-dial stratum, universal cap 4/3 (paper 132)"
   },
@@ -1197,6 +1168,62 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-22T05:43:53.958922+00:00",
     "title": "FACT round-40 #2 \u2014 ET-HINTS-THEORY: the crossing law \u2014 width can never substitute for reliability (paper 146)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-42 #1, cron iteration (exp 487, assessment v264). Paper 154's deferred ECM arm.\n\n**ECM-LITE-BIRTHDAY-SCALING**: sequential multiples j=3..B1=50 over random curves (explicitly NOT lcm-based true ECM) find 1200/1200 at k=16 and 1163/1200 at k=20 (3.1% censoring); across-k slope = **0.48 per log\u2082p** \u2014 birthday-bound scaling exactly as the lite structure predicts. H1's [0.6, 0.8] refuted FOR THE LITE VARIANT; true lcm-based ECM deferred.\n\nThe unified plane now holds FOUR methods on one population: td **0.84** / rho **0.52** / Fermat **0.50** / ECM-lite **0.48**.\n\nLedger: v1 instant-degenerate bug (j=2 running point equals base \u2192 zero denominator \u2192 every curve dead); fixed with explicit doubling.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp487_ecm_only.py + exp487_result.json, seed 20260921.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3604",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T07:00:59.863573+00:00",
+    "title": "FACT round-42 #1 \u2014 ECM-COMPLETION: the lite variant scales like rho (paper 155)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-41 #5, cron iteration (exp 486, assessment v263). Paper 132's residual item (2), first measurement.\n\n**UNIFIED-SLOPES-MEASURED** (honest partial \u2014 within-k fits confounded, ECM deferred): on ONE population (1500 balanced semiprimes per k \u2208 {16,20,24}), across-k scaling of E[T] per log\u2082p:\n- trial division **0.84** (near-linear; balanced draws compress vs paper 89's 1.09 uniform)\n- Pollard \u03c1 **0.52** \u2014 the birthday bound, replicating paper 89's 0.523\n- Fermat **0.50** \u2014 gap-locality re-confirmed\n\nWithin-k \u03b1 fits confounded and not cited; the negative Fermat slopes ARE the gap-locality signature appearing directly. ECM deferred.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp486_factor_local_et.py + exp486_result.json, seed 20260920.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3605",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T07:00:59.864906+00:00",
+    "title": "FACT round-41 #5 \u2014 FACTOR-LOCAL-ET: unified across-k scaling on one population (paper 154)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-41 #4, cron iteration (exp 485, assessment v262). The gating replication papers 150\u2013152 needed.\n\n**LIFT-DOES-NOT-REPLICATE**: across 5 fully independent populations (1200 Ns \u00d7 240 values each), mean \u0394R\u00b2(ph13) = **+0.0008 \u00b1 0.0053** (zero within noise); mean \u0394R\u00b2(pair coincidences) = **+0.0030 \u00b1 0.0119**; pair-vs-phase indistinguishable (+0.0022 \u00b1 0.0160); no baseline correlation (r = 0.06/0.09).\n\nThe +0.03 readings of exps 482r/484 were population luck (base R\u00b2 itself spans 0.56\u20130.62 across the same seeds). Papers 150/151/152 resolve fully: singleton phases, high-prime phases, AND pair coincidences all add ~nothing beyond the footprint dial. The split-ceiling excess remains unexplained by every tested encoding \u2014 possibly intrinsic to the dial family's same-window realized-divisibility information.\n\n**The footprint dial of paper 145 stands as the final form**: rate(N) \u2248 \u03b2\u2080 + \u03b2\u2081\u00b7w(N) + \u03b2\u2082\u00b7d(N), ~200 Euler tests per candidate, R\u00b2 \u2248 0.59 at u=2.5.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp485_multiseed_phase.py + exp485_result.json, seeds 20260910\u201314.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3606",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T07:00:59.866155+00:00",
+    "title": "FACT round-41 #4 \u2014 MULTISEED-PHASE: the lift class does not replicate (paper 153)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-41 #3, cron iteration (exp 484, assessment v261). Paper 150's redirect executed.\n\n**JOINT-ALIGN-TRANSFERS / H3-FAIL**: pair-coincidence features c_pq = #{j: p|v_j AND q|v_j} add **+0.0310** out-of-sample R\u00b2 (CI [0.010, 0.053]) over the footprint dial \u2014 clearing the pre-stated +0.03 \u2014 and **transfer cross-window at ratio 0.51** (> 0.5), unlike singleton phases' negative transfer in exp 482. Coincidence structure is window-position-invariant, exactly the pre-stated guess. Combined R\u00b2 = 0.634 (H3 misses by 0.016).\n\nFLAG: this implementation's re-run of the ph13 arm reads +0.0305 where exp 482 read +0.0082 \u2014 population variance or convention drift, unresolved; the pair result stands independently.\n\nThe split-ceiling excess has its first positive explanatory lever: intersection counts beyond union-counts and singleton offsets.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp484_joint_align.py + exp484_result.json, seed 20260903.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3607",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T07:00:59.867376+00:00",
+    "title": "FACT round-41 #3 \u2014 JOINT-ALIGN: cross-prime coincidences transfer where singleton phases fail (paper 152)"
   },
   {
     "consumed_by_exp_id": "",
@@ -2901,51 +2928,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Quantum Entanglement Monogamy: CKW Inequality"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove that the ground state degeneracy of a topologically ordered system on a genus-g surface is d^g for some integer d (the quantum dimension). Formalize the connection between ground state degeneracy, anyon braiding statistics, and topological quantum field theory.",
-    "domains": [
-      "Physics",
-      "Geometry"
-    ],
-    "id": "seed_311",
-    "priority_score": 0.86,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Topological Order: Anyon Statistics from Ground State Degeneracy"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove that the class of EML functions (compositions of exp, log, and field operations) is dense in C([0,1]^n) with respect to the uniform norm. Show that the approximation rate depends on the depth of the EML composition and derive explicit bounds for shallow networks.",
-    "domains": [
-      "EML",
-      "Analysis"
-    ],
-    "id": "seed_336",
-    "priority_score": 0.86,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "EML Universal Approximation: Density of EML Functions"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove that the Fisher information metric defines a Riemannian metric on the statistical manifold of probability distributions. Show that the Kullback-Leibler divergence is the geodesic distance in this metric for exponential families. Bridge: the Chentsov theorem characterizes the Fisher metric uniquely by its invariance under sufficient statistics.",
-    "domains": [
-      "Bridges",
-      "Physics"
-    ],
-    "id": "seed_348",
-    "priority_score": 0.86,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Bridge: Information Geometry Connecting Statistics and Differential Geometry"
   },
   {
     "consumed_by_exp_id": "",
@@ -12464,6 +12446,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Chaining r dials into one integer is injective precisely under a mixed-radix condition on the frame vector. Failure at any level collapses the label set by a computable factor, so a linear pass over the frames certifies or refutes an entire pipeline. This generalises the two-dial width criterion already proved.\n\nThe map (a_1,...,a_r) |-> sum_i a_i * M_i with a_i < B_i and M_1 = 1 is injective on the product of alphabets if and only if M_{i+1} >= B_i * M_i for all i; when the condition first fails at level i the image cardinality drops by the factor prod(B_j) / (M_{i+1}(B_i - 1)/M_i + B_i)-style expression inherited from the two-dial count.\n\nInduct on r, reducing to ChainedLabelWidth.chain_inj_of_lt at each level; formalise the count by iterating chain_image_eq_range.\n\nWhole-pipeline width certification becomes a single linear-time check with a Lean proof behind it.\n\nInjectivity would depend on the alphabet contents and not only on their sizes, which would make static width checking impossible and force run-time collision detection.",
+    "domains": [
+      "Logic"
+    ],
+    "id": "fd_3597",
+    "priority_score": 0.6697741935483873,
+    "research_mode": "team",
+    "source_exp_id": "0e0f4ea6",
+    "status": "available",
+    "timestamp": "2026-08-22T07:00:02.215654+00:00",
+    "title": "Mixed-Radix Width Calculus for Multi-Dial Chaining"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Ask when a single structural invariant generates all recoverable interpretations of a finite graph. The conjecture is that the degree interpretation is complete exactly for graphs whose automorphism orbits coincide with degree classes. This connects the definability boundary to graph reconstruction questions.\n\nFor a finite graph \u0393, every recoverable interpretation factors through the degree map iff any two vertices of equal degree lie in the same Aut(\u0393)-orbit.\n\nFormalise the two partitions (degree classes and orbits) as Setoids and prove the factorisation equivalence; test on the 3-path (positive) and on a vertex-transitive-looking but asymmetric regular graph (negative).\n\nDegree becomes a certified complete invariant for a precisely delimited class of graphs.\n\nThere are graphs where degree classes equal orbits yet some recoverable interpretation is not a function of degree, contradicting the orbit factorisation and forcing a re-examination of the orbit quotient.",
     "domains": [
       "Combinatorics"
@@ -12576,6 +12572,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Strict loss under merging means that any collision leaves a measurable trace in the label entropy of a full-support population. Comparing the measured label entropy against the declared alphabet product then detects collisions from a single run, with no cross-check needed.\n\nIf a population has full support on A x B and the measured label entropy is strictly below the entropy of the pair variable, then the encoding is non-injective; quantitatively the shortfall is at least 1/(A*B) bits per merged pair.\n\nCombine LabelEntropy.D_pos_of_two_positive with H_sub_H_push to derive the shortfall bound, then instantiate on the audited 4 x 9 population as in narrow_frame_strictly_loses.\n\nEvery past run in the ledger can be re-audited from its stored entropy value alone.\n\nSome collisions are entropy-neutral, which can only happen off full support, and the audit would need support certification first.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_3598",
+    "priority_score": 0.6695517241379312,
+    "research_mode": "team",
+    "source_exp_id": "0e0f4ea6",
+    "status": "available",
+    "timestamp": "2026-08-22T07:00:02.662470+00:00",
+    "title": "Single-Run Collision Detection by Entropy Shortfall"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The associative-triple count is multiplicative under products of magmas. This turns the associativity density into a multiplicative invariant and suggests a Dirichlet generating function whose coefficients are powers of A(M), linking coherence defects to analytic bookkeeping.\n\nA(M^k) = A(M)^k for all k, hence 1 - d(M^k) = (1 - d(M))^k, and the generating function Z_M(s) = sum_k A(M)^k k^{-s} determines A(M); every non-associative magma is asymptotically totally non-associative under powering while its codiscrete bicategory stays coherent.\n\nIterate assocCount_prod in Lean to get A(M^k) = A(M)^k by induction and derive the density limit; check numerically for the order-3 maximiser.\n\nCoherence defects admit an Euler-product bookkeeping, connecting magma combinatorics to Dirichlet-series methods.\n\nMultiplicativity fails to extend beyond binary products, isolating a genuine obstruction in iterated products.",
     "domains": [
       "Algebra"
@@ -12601,6 +12611,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-22T01:51:25.142392+00:00",
     "title": "Orbit-Wise Majority Repair Distance"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Measured joint capacities sit far below their CRT ceilings. We conjecture the shortfall is governed by the occupancy of a random table: with N samples and M joint cells, the attained alphabet is concentrated around M(1-(1-1/M)^N), and the capacity is within o(1) of log2 of that quantity. This turns the observed gap into a predictable law rather than an artefact.\n\nFor a battery whose joint reading is uniform on M cells and a sample of N i.i.d. individuals, the empirical capacity satisfies log2(M(1-(1-1/M)^N)) - o(1) <= I <= min(log2 N, log2 M) with probability tending to 1.\n\nFormalise the occupancy expectation and a Chernoff bound for the number of occupied cells, then combine with TraceBattery.H_le_log_card_img and a matching lower bound on H for near-uniform distributions.\n\nThe measured values 7.9455 / 10.4462 / 12.1080 become predictions of N alone, giving an independent estimate of the population size.\n\nThe shortfall encodes structure of the trace statistics (non-uniformity of dial readings), which would be a stronger and more interesting finding.",
+    "domains": [
+      "Computation"
+    ],
+    "id": "fd_3600",
+    "priority_score": 0.6694285714285716,
+    "research_mode": "team",
+    "source_exp_id": "a3ad9f21",
+    "status": "available",
+    "timestamp": "2026-08-22T07:00:23.593734+00:00",
+    "title": "Sparse-Table Capacity Law for Dial Batteries"
   },
   {
     "consumed_by_exp_id": "",
@@ -13049,6 +13073,30 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Subadditivity gives an upper budget but no explanation of why a 0.04-bit dial can add two bits to a joint reading. A chain rule, with conditional entropies defined fibrewise, would give matching lower bounds and quantify the redundancy between dials.\n\nH(joint over insert a S) = H(joint over S) + sum over fibres of the conditional entropy of dial a, and consequently H(joint) >= max_i H(dial i) with equality iff every other dial is a function of dial i.\n\nDefine conditional entropy by the fibrewise sum already isolated in H_split_fiberwise and prove the identity by rearranging that sum; derive the equality case from the equality case of data processing.\n\nPer-dial spread stops being paradoxical: joint gains are conditional, not marginal, informations.\n\nThe fibrewise decomposition is not additive, which would indicate an error in the empirical-measure model of capacity.",
+    "domains": [],
+    "id": "fd_3602",
+    "priority_score": 0.5917741935483872,
+    "research_mode": "team",
+    "source_exp_id": "a3ad9f21",
+    "status": "available",
+    "timestamp": "2026-08-22T07:00:24.493294+00:00",
+    "title": "Chain Rule Lower Bound for Heterogeneous Dial Batteries"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The entropy destroyed by a narrow chained frame is the mass-weighted average of log of fiber size, and for pj = a*M+b the fiber profile is an explicit arithmetic object. Computing it yields an exact worst-case loss for each frame triple (A,B,M), replacing the crude log2(max fiber) ceiling. This makes pre-registration of an encoding's information budget possible.\n\nFor M <= B and A >= 1 the fiber of the label n under (a,b) |-> M*a+b has size #{a < A : 0 <= n - M*a < B}, and the uniform-population entropy loss equals log2(A*B) - H of the induced label distribution, a rational-weight expression in A, B, M with maximum value log2(ceil(B/M)) attained at the central labels.\n\nFormalise the fiber-size formula in Lean on top of ChainedLabelWidth.chain_image_eq_range, then combine with LabelCollapseCeiling.D_le_mass_mul_logb_card and D_uniform_fiber to prove the exact loss identity; validate numerically over a grid of (A,B,M).\n\nEvery chained frame gets an a-priori information budget, so audits become a table lookup rather than a re-run.\n\nThe loss depends on more than the fiber profile, which would indicate an error in the deficit decomposition and force a re-examination of H_sub_H_push.",
+    "domains": [],
+    "id": "fd_3596",
+    "priority_score": 0.5916666666666668,
+    "research_mode": "team",
+    "source_exp_id": "0e0f4ea6",
+    "status": "available",
+    "timestamp": "2026-08-22T07:00:01.756354+00:00",
+    "title": "Closed-Form Collapse Loss for Arithmetic Frames"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Only states reachable from the initial states can ever participate in an experiment, so the block-counting potential should be bounded by the reachable counts. We conjecture the bound r_S + r_T - 2 with r the reachable-state counts, which is strictly better for machines with dead states.\n\nIf r_S and r_T are the numbers of states reachable from s and t, then inequivalent s,t are separated by a word of length at most r_S + r_T - 2.\n\nInstantiate the abstract stabilisation theorem exists_stable_index on the subtype of reachable states of the disjoint union.\n\nThe bound becomes invariant under adding unreachable states, hence a genuine invariant of the behaviour rather than the presentation.\n\nReachability interacts with the refinement chain in an unexpected way, indicating the potential function must count unreachable blocks too.",
     "domains": [],
     "id": "fd_3466",
@@ -13070,6 +13118,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T22:42:02.334776+00:00",
     "title": "Skew-Product Descent Operator for abc Quality"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Label merges can manufacture apparent conditional independence but can never hide a genuine dependence. Extending the data-processing inequality to conditional mutual information would show that all collision artifacts in routing tables are false negatives, never false positives, fixing the sign of every possible error in the reported tables.\n\nFor any labelling f and any joint weight on X x Y x Z, I(f(X);Y|Z) <= I(X;Y|Z), with equality for injective f; consequently a reported conditional independence may be an artifact while a reported dependence never is.\n\nSlice the conditional mutual information over z and apply the existing per-slice machinery (H_joint_sub and D_superadditive) uniformly in z.\n\nAll per-dial routing tables inherit a proven one-sided error guarantee.\n\nConditional readings would need independent verification, and the claim that the single-dial tables are unaffected by chaining bugs would require a separate argument.",
+    "domains": [],
+    "id": "fd_3599",
+    "priority_score": 0.5915517241379311,
+    "research_mode": "team",
+    "source_exp_id": "0e0f4ea6",
+    "status": "available",
+    "timestamp": "2026-08-22T07:00:03.109954+00:00",
+    "title": "One-Sidedness of Conditional-Independence Artifacts"
   },
   {
     "consumed_by_exp_id": "",
@@ -13118,6 +13178,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-22T03:07:55.119392+00:00",
     "title": "Log-Concavity of the Minimal Mass Invariant"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Binary capacity is a strictly monotone function of class imbalance, so a wall value is a sufficient statistic for the split. We conjecture that two independent populations whose walls agree within epsilon have imbalances agreeing within C epsilon, with an explicit C controlled by the derivative of binary entropy away from 1/2.\n\nFor p, q in [delta, 1/2], |binEntropy p - binEntropy q| >= c(delta) |p - q| with c(delta) = log((1-delta)/delta), hence |p-q| <= |I_1 - I_2| / c(delta).\n\nDifferentiate binEntropy (Mathlib provides the derivative) and apply the mean value theorem on [delta, 1/2]; combine with TraceBattery.binary_wall_inversion.\n\nThe reported 0.4677 becomes a testable claim about the split (about 9.96 percent) that any replication must reproduce.\n\nWall values would be insensitive to imbalance near 1/2, meaning the wall carries almost no information and should be dropped from the battery report.",
+    "domains": [],
+    "id": "fd_3603",
+    "priority_score": 0.5906521739130436,
+    "research_mode": "team",
+    "source_exp_id": "a3ad9f21",
+    "status": "available",
+    "timestamp": "2026-08-22T07:00:24.941866+00:00",
+    "title": "Which-Factor Wall as a Cross-Population Invariant"
   },
   {
     "consumed_by_exp_id": "",
@@ -13340,6 +13412,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T06:27:41.356055+00:00",
     "title": "(NC6 \u2014 the trace obstruction is the only obstruction.)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The bound capacity <= log2 of the product of moduli is sharp only for pairwise coprime moduli. For general batteries the joint alphabet of residue dials on a cyclic population is the lcm, not the product. We conjecture the exact ceiling is log2 lcm and that it is attained on the population Z/lcm.\n\nFor dials reading n mod m_i on a population contained in Z/L, the joint capacity is at most log2 lcm(m_1,...,m_k), with equality when the population is all of Z/lcm.\n\nRefine TraceBattery.capacity_le_logb_prod by replacing the piFinset bound with the image of the CRT map, and instantiate capacity_eq_logb_pop_of_injective on ZMod (lcm).\n\nThe reported ceilings 713 / 6417 / 51336 are correct exactly because 31, 23, 9, 8 are pairwise coprime; any future battery with repeated prime factors must use the lcm ceiling.\n\nSome population would exceed the lcm ceiling, contradicting the pigeonhole structure of residue dials.",
+    "domains": [
+      "NumberTheory",
+      "Combinatorics"
+    ],
+    "id": "fd_3601",
+    "priority_score": 0.5632628066067162,
+    "research_mode": "team",
+    "source_exp_id": "a3ad9f21",
+    "status": "available",
+    "timestamp": "2026-08-22T07:00:24.045117+00:00",
+    "title": "Exact CRT Ceiling via Least Common Multiple"
   },
   {
     "consumed_by_exp_id": "",
@@ -37248,14 +37335,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "is a finitely supported `a : \u2115 \u2192 \u2124` with"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "bb070ee4",
     "description": "The one-parameter case is already a theorem here\n(`headCoeff_pmFrame_ge_neg_one`), and the closed formula makes the general case a\nstatement about integer points in a two-dimensional region, i.e. amenable to\n`omega`/`nlinarith` once the balance and cycle-type constraints are formalized.",
     "domains": [],
     "id": "fd_1663",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "0750e9d7",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-20T03:10:46.297060+00:00",
     "title": "The one-parameter case is already a theorem here"
   },
