@@ -553,7 +553,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a3ad9f21",
     "description": "## FACT round-30 #4 — TRACE-BATTERY (paper 108, /tmp/exp_tracebattery.py, /tmp/r30n4b.log)\n\n**Verdict name: THE-SCALING-IS-CONFIRMED.**\n\n### Result\nThe joint channel capacity for increasing subsets of the 6-dial battery, on a fresh independent population:\n\n| moduli subset | M | I(joint) |\n|---|---|---|\n| S₃a@31 + S₃b@23 | 713 | 7.9455 |\n| + A₄@9 | 6 417 | 10.4462 |\n| + D₄@8 | 51 336 | 12.1080 |\n\nPer-dial trace information varies enormously: C₅@11 carries 3.46 bits, S₃a@31 carries 0.04 — an 80× range. Which-factor wall 0.4677 consistent with sparse-table bias.\n\nConfirms paper 94's battery-scaling results on an independent population.\n\nNow 444 experiments. Assessment v218/v219. Paper 108.\n",
     "domain_bridges": [],
     "domains": [
@@ -565,7 +565,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T20:42:26.610291+00:00",
     "title": "FACT round-30 #4 — TRACE-BATTERY: joint capacity scaling confirmed (paper 108)"
   },
@@ -1119,6 +1119,44 @@
     "status": "available",
     "timestamp": "2026-08-22T01:10:29.774651+00:00",
     "title": "FACT round-35 #8 — CONJUGATE-S3-TEST: conjugate fields produce identical type channels (paper 127)"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Round-37 #4 (exp 466, assessment v241). FRONTIER (i) UPGRADED: the empirical converse curve of paper 88 is now a THEOREM for the entire congruence stratum.\n\n**Universal exact law**: Speedup(K,c) = 1/(1 − θ + θ²), θ = |K_c|/φ(M) — independent of the reading, the modulus's structure, character content, and the number of composed dials. **Universal cap 4/3**, attained exactly at θ=1/2; trivial filters give exactly 1.\n\nConsequences:\n- n=3/n=5 caps are ALSO 4/3, attained at ANY half-density subset — Lemma B2 kills all internal structure (mixing character fibers cannot beat it).\n- **Batteries compose for free (CRT): battery cap still 4/3 < 2** — the 12.7235 measured battery bits buy ≤ log2(4/3) = 0.41504 work-bits. Capacity bits and work bits are different currencies.\n- Corollary A2: which-factor blindness of residues (papers 93/102) becomes an IDENTITY under MA-1.\n\nMachine verification: Claim-A MC 1,065,538 samples max dev 0.000294 (χ² z=−1.67); exhaustive enumeration m=3/4/7/11 + batteries M=12/15/21/33 (all 2^20 subsets) — every max exactly 1.3333333333; real-semiprime sims within ±0.006 incl. structure-blindness controls; beat-the-cap attempt over top-40 sets: nothing approaches 2×.\n\nResidual gap to the FULL converse, precise: (1) positional/interval witnesses (paper 88 arms empirically); (2) superconstant-cost tests (factor-local methods escape scan-order framing); (3) effectivizing MA-1 at cryptographic sizes.\n\nProofs: ResearchOutput/scripts/2026-08-21-resume/proofs.md; machine checks verify.py/result.json; ledger of 5 self-caught errors incl. nearly reporting the asked ≤2 instead of the provable 4/3.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3542",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T01:52:37.374850+00:00",
+    "title": "FACT round-37 #4 — CONVERSE-CAP-THEOREM: the barrier-4 converse proved for the residue-dial stratum, universal cap 4/3 (paper 132)"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Round-37 #3 (exp 461, assessment v240). THE DECISIVE UTILITY EXPERIMENT for the battery/type-channel programme.\n\n**REAL-FILTER-EQUALS-SHAM**: a Bayesian candidate filter built from the exact type-channel posterior is indistinguishable from a same-size coin-flip keep-set at every dial (d2 1 bit, d3, d5, bat2, bat4 3.49 bits): max |real − sham| = 0.0075 vs batch SD 0.0073. The ρ-grid shows the (apparent) gain is a function of keep-rate alone, indifferent to which classes are kept.\n\nHonest accounting: with each membership test priced at one division-equivalent on every candidate ≤ √N, EVERY filter — real or sham — runs at ~0.50x: a net 2x loss. No-fallback failure rates = 1/n exactly.\n\nMechanism: barrier 2 made algorithmic — the marginal posterior over the target's residue is flat no matter what N reveals about the joint, so posterior capacity cannot reweight candidates. 3.49 bits of measured battery capacity ride channels orthogonal to ordering decisions. Pre-stated 4/3x refuted (companion theory paper: under complete-procedure accounting the sharp cap is 1x).\n\nLedger (9 catches): two substantive cost-accounting bugs produced spurious >1.5x speedups — caught by SHAM CO-INFLATION + derivation; dummy dial v1 leaked 1 bit by reading its random table through the factors (not N-computable) — rebuilt public.\n\nDecides: type-channel/battery capacity has exactly zero conversion into trial-division speedup. The utility question opened by paper 98 is CLOSED quantitatively.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp461_posterior_filter.py (script + result.json), seed 20260821, 20k semiprimes/cell x 5 batches.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3543",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T01:52:37.376267+00:00",
+    "title": "FACT round-37 #3 — POSTERIOR-FILTER: real filter equals sham — battery capacity converts to zero factoring utility (paper 131)"
   },
   {
     "ambition_level": "grand_challenge",
@@ -3431,69 +3469,6 @@
     "status": "available",
     "timestamp": "",
     "title": "Quantum Entanglement Monogamy: CKW Inequality"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Prove the tropical Riemann-Roch theorem: for a tropical curve of genus g and a divisor D of degree d, the tropical rank r(D) satisfies r(D) - r(K-D) = d - g + 1. Formalize chip-firing and Baker-Norine theory.",
-    "domain_bridges": [],
-    "domains": [
-      "Tropical",
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "seed_048",
-    "lineage_refs": [],
-    "priority_score": 0.86,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Tropical Riemann-Roch Theorem"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Prove depth-width tradeoffs specific to EML activation exp(w*x+b) - log(w'*x+b'). Conjecture: An EML network of depth d and width w can approximate any Lipschitz function on [0,1]^n with error O((w*d)^{-2/n}) — matching ReLU rates but with smoother gradients. Test: prove the lower bound by constructing an EML network that approximates x^2 on [0,1] with error O(w^{-2}) using depth 2. Compare with ReLU's O(w^{-1}) rate.",
-    "domain_bridges": [],
-    "domains": [
-      "EML",
-      "MachineLearning",
-      "Analysis"
-    ],
-    "id": "seed_069",
-    "lineage_refs": [],
-    "priority_score": 0.86,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "EML Neural Network Expressiveness: Depth vs Width"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Use inverse stereographic projection S^n -> R^n as a cryptographic primitive. The forward map (point on sphere to plane) is easy, but recovering the original point from the plane projection requires the pole parameter. Conjecture: Finding the pole of stereographic projection from only (image set, projection point) is as hard as the shortest vector problem in a lattice. Test: formalize the reduction from SVP to pole-finding for n=2. Impact: a new geometric foundation for lattice-based cryptography.",
-    "domain_bridges": [],
-    "domains": [
-      "Geometry",
-      "Cryptography",
-      "Computation"
-    ],
-    "id": "seed_074",
-    "lineage_refs": [],
-    "priority_score": 0.86,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Inverse Stereographic Cryptography: Projection as One-Way Function"
   },
   {
     "ambition_level": "extension",
@@ -15376,6 +15351,30 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Catalog.NumberTheory.BerggrenLatticeBijection",
+      "Catalog.NumberTheory.BerggrenBoxCounting",
+      "Catalog.NumberTheory.CoprimePairDensity"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The proved Theta(H) bounds leave a factor-100 gap to the experimentally observed density 0.1592 ~ 1/(2*pi). The Euclid bijection reduces the count to visible lattice points of opposite parity in a quarter disc, where a Moebius-weighted Gauss circle argument should produce the exact constant with a square-root error term. Settling it converts a qualitative Theta into a sharp asymptotic law for the Berggren tree.\n\n#bergBox(H) = H/(2*pi) + O(sqrt(H) * log H); in particular #bergBox(H)/H tends to 1/(2*pi).\n\nFormalize the Moebius sieve on the coprimality condition in BerggrenBoxCounting.pairBox, combine with a quarter-disc lattice point estimate, and check the constant numerically against the tables in ComputationalEvidence.md.\n\nThe Theta(H) theorem upgrades to an exact asymptotic with an effective error term, and the primitive-Pythagorean-triple counting function inherits the same sharp constant.\n\nThe visible-point heuristic fails for the opposite-parity subfamily, indicating a parity obstruction invisible to the sieve and forcing a different Euler factor.",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean",
+      "Cryptography"
+    ],
+    "id": "fd_3532",
+    "lineage_refs": [],
+    "priority_score": 0.7102222222222223,
+    "proof_strategy": "Write #pairBox(H) as a sum over g of mu(g) times the count of opposite-parity pairs in the disc of radius sqrt(H)/g, evaluate each inner count by the Gauss circle estimate, and sum the Moebius series to 1/zeta(2) times the parity factor.",
+    "research_mode": "team",
+    "source_exp_id": "7f454a93",
+    "status": "available",
+    "timestamp": "2026-08-22T01:51:05.614406+00:00",
+    "title": "Lehmer Constant for the Berggren Box"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Cryptography.MarkoffTransfer.UniquenessAndNonlinearity",
       "Cryptography.BerggrenSpectral.LorentzAndTree"
     ],
@@ -15624,6 +15623,29 @@
     "status": "available",
     "timestamp": "2026-08-21T16:51:45.769092+00:00",
     "title": "Defect Stability for Turan Graphs"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Catalog.Applications.ExternalInterpretationGalois",
+      "Catalog.Applications.ExternalInterpretationLogicalInvariance"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "This cycle proved that a symmetry group is reconstructible from the interpretations it makes recoverable, provided interpretations may speak about configurations indexed by the whole carrier. The natural refinement bounds the arity: with only finitely many coordinates visible, one should recover the group only up to closure in the topology of pointwise convergence. This ties the definability boundary to the classical theory of closed permutation groups.\n\nFor a permutation group G on an arbitrary carrier, the group of permutations preserving every finite-arity G-recoverable interpretation equals the closure of G in the topology of pointwise convergence; in particular it equals G exactly when G is closed.\n\nFormalise finite-arity configurations as maps from Fin n, define the induced symGroup, and compare with a pointwise-convergence closure predicate; test on the finitary symmetric group inside Sym(natural numbers), whose closure is the full symmetric group.\n\nRecoverability determines the symmetry group exactly up to topological closure, giving a complete Galois theory of external interpretations.\n\nSome non-closed group is already determined by its finite-arity theory, meaning structural truth sees more than pointwise approximation.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_3541",
+    "lineage_refs": [],
+    "priority_score": 0.709875,
+    "proof_strategy": "One inclusion from continuity of preservation under pointwise limits; the other by adapting the membership interpretation memInterp to finite restrictions and extending partial agreements using the finite-arity kernel theorem.",
+    "research_mode": "team",
+    "source_exp_id": "11e84a32",
+    "status": "available",
+    "timestamp": "2026-08-22T01:51:25.516239+00:00",
+    "title": "Finitary Galois Closure of Interpretation Theories"
   },
   {
     "ambition_level": "extension",
@@ -15901,6 +15923,29 @@
     "status": "available",
     "timestamp": "2026-08-21T17:45:45.435226+00:00",
     "title": "Effective Irrationality Measure for the BB84 Threshold"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Catalog.Applications.ExternalInterpretationLogicalInvariance",
+      "Catalog.Applications.ExternalInterpretationDefinability"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Ask when recoverability from structural truth coincides with definability in a finitary invariant language on an infinite model. The conjecture is that the coincidence holds exactly for omega-categorical structures, whose orbit partitions are finite in each arity, and that the parity example proved in this cycle is the minimal obstruction. This would locate the definability boundary precisely inside classical model theory.\n\nFor a countable structure M with automorphism group G, every orbit-constant interpretation is definable by a parameter-free first-order formula iff the orbit partition of each finite power of M is finite (Ryll-Nardzewski), and otherwise an explicit orbit-constant undefinable interpretation exists.\n\nFormalise a finitary invariant language whose definable sets are finite unions of orbits with a fixed bound, prove the equivalence with finiteness of the orbit partition, and reuse parity_not_definable as the failure witness.\n\nThe boundary between recoverable and definable meaning is exactly the omega-categoricity line.\n\nThere is a structure with infinitely many orbits on which every orbit-constant interpretation is still finitarily definable, revealing a coarser criterion than orbit finiteness.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_3536",
+    "lineage_refs": [],
+    "priority_score": 0.7085882352941177,
+    "proof_strategy": "Show a finitary language defines only finite unions of orbits and their complements; conversely, with finitely many orbits every invariant set is such a union by the Boolean-generation theorem of this cycle.",
+    "research_mode": "team",
+    "source_exp_id": "11e84a32",
+    "status": "available",
+    "timestamp": "2026-08-22T01:51:23.602264+00:00",
+    "title": "Finitary Definability Boundary for Omega-Categorical Models"
   },
   {
     "ambition_level": "extension",
@@ -16289,6 +16334,28 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Catalog.NumberTheory.BerggrenTreeGeometry",
+      "Catalog.NumberTheory.BerggrenParabolicSpine"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The three Berggren generators split into one parabolic and two hyperbolic directions, which makes the ternary tree exponentially unbalanced. The maximal depth reachable inside a hypotenuse box should be governed purely by the parabolic spine and hence grow like sqrt(H), while a typical node sits at logarithmic depth. This quantifies how far the tree is from a balanced ternary tree.\n\nThe maximal Berggren word length among triples with hypotenuse at most H satisfies D(H) = (1/2 + o(1)) * sqrt(H), while the average depth is Theta(log H).\n\nProve that a word containing k non-parabolic letters has hypotenuse at least 5^k, deduce k = O(log H), and combine with the closed form 4(j+1)^2+1 for parabolic runs; compare with the measured D(10^5) = 222.\n\nThe tree has a canonical thin spine, giving a seed-independent sqrt(H) lower bound for any single-orbit count and an explicit height function for enumeration algorithms.\n\nMixed words would have to beat pure parabolic runs, contradicting the multiplicative growth of the hyperbolic generators.",
+    "domain_bridges": [],
+    "domains": [
+      "Computation"
+    ],
+    "id": "fd_3533",
+    "lineage_refs": [],
+    "priority_score": 0.6706635514018693,
+    "proof_strategy": "Induct on word length splitting at each hyperbolic letter, apply the proved bound hyp_bB_gt (factor > 5 per hyperbolic step) and hyp_bC_iterate (quadratic parabolic growth), then optimise the resulting product-sum tradeoff.",
+    "research_mode": "team",
+    "source_exp_id": "7f454a93",
+    "status": "available",
+    "timestamp": "2026-08-22T01:51:05.976839+00:00",
+    "title": "Square-Root Depth Profile of the Berggren Tree"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Catalog.Novelty.BerggrenTreePrimeHypotenuse",
       "Catalog.Novelty.BerggrenTreeCounting",
       "Catalog.Novelty.BerggrenTreeCriticalLine"
@@ -16308,6 +16375,28 @@
     "status": "available",
     "timestamp": "2026-08-21T19:37:44.412775+00:00",
     "title": "Silver-Oscillatory Prime Hypotenuse Counting"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Catalog.Applications.ExternalInterpretationDefinability",
+      "Catalog.Applications.ExternalInterpretationGraphs"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Stratify the orbit-counting language by the size of the orbits whose indicators are available. The conjecture is that each level is strictly more expressive than the previous one on suitable finite models, with the union being the full orbit language. This would turn the qualitative 'counting modalities are necessary' result into a quantitative definability rank.\n\nFor each k there is a finite model with a group action such that some interpretation is definable using orbit predicates of orbits of size ≤ k+1 but not using only those of size ≤ k; the union of all levels is the orbit language.\n\nDefine the languages L_k inductively in Lean, prove soundness and a separation example at each level (e.g. cyclic actions with orbits of prescribed sizes).\n\nDefinability of external meaning acquires a well-defined rank, refining the finite collapse theorem.\n\nBounded counting collapses at some finite level, meaning a single bounded modality suffices for all finite models.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_3537",
+    "lineage_refs": [],
+    "priority_score": 0.6700588235294119,
+    "proof_strategy": "Generalise countGen_of_invariantSet to a size-indexed induction; build separations from disjoint unions of cyclic actions with distinct orbit sizes.",
+    "research_mode": "team",
+    "source_exp_id": "11e84a32",
+    "status": "available",
+    "timestamp": "2026-08-22T01:51:23.985231+00:00",
+    "title": "Strict Hierarchy of Bounded Counting Modalities"
   },
   {
     "ambition_level": "extension",
@@ -16374,6 +16463,49 @@
     "status": "available",
     "timestamp": "2026-08-21T09:53:11.799561+00:00",
     "title": "One-Variable Reduction of Markoff Uniqueness"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Catalog.Applications.ExternalInterpretationGraphs"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Ask when a single structural invariant generates all recoverable interpretations of a finite graph. The conjecture is that the degree interpretation is complete exactly for graphs whose automorphism orbits coincide with degree classes. This connects the definability boundary to graph reconstruction questions.\n\nFor a finite graph Γ, every recoverable interpretation factors through the degree map iff any two vertices of equal degree lie in the same Aut(Γ)-orbit.\n\nFormalise the two partitions (degree classes and orbits) as Setoids and prove the factorisation equivalence; test on the 3-path (positive) and on a vertex-transitive-looking but asymmetric regular graph (negative).\n\nDegree becomes a certified complete invariant for a precisely delimited class of graphs.\n\nThere are graphs where degree classes equal orbits yet some recoverable interpretation is not a function of degree, contradicting the orbit factorisation and forcing a re-examination of the orbit quotient.",
+    "domain_bridges": [],
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "fd_3539",
+    "lineage_refs": [],
+    "priority_score": 0.6696666666666669,
+    "proof_strategy": "Use recoverable_factors_uniquely to reduce to comparing the orbit partition with the degree partition; build counterexamples from regular graphs with small automorphism groups.",
+    "research_mode": "team",
+    "source_exp_id": "11e84a32",
+    "status": "available",
+    "timestamp": "2026-08-22T01:51:24.764434+00:00",
+    "title": "Degree Completeness for Graph Interpretations"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Catalog.Applications.ExternalInterpretationAdditivity",
+      "Catalog.Applications.ExternalInterpretationLogicalInvariance"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The exponent ℓ(M) = |M| − #orbits measures how much external meaning structural truth destroys; this cycle proved it additive over disjoint unions and equal to the sum over orbits of (orbit size − 1). The remaining question is the behaviour under the diagonal action on a product, where orbit counts can exceed the product of the factor counts. A clean superadditivity law would complete the calculus of meaning loss for composite systems.\n\nFor nonempty finite G-models M and N with the diagonal action on M × N, ℓ(M × N) ≥ ℓ(M) + ℓ(N), with equality precisely when one factor is rigid or the point stabilisers of the two factors are mutually cofinal.\n\nFormalise the product action's orbit count via stabiliser intersections and compare with meaningLoss_eq_sum_orbits; test small cyclic and symmetric actions exhaustively by #eval before proving.\n\nMeaning loss becomes a computable superadditive invariant of group actions, composable across systems.\n\nComposite systems can lose less meaning than their parts, indicating destructive interference between symmetry groups.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_3538",
+    "lineage_refs": [],
+    "priority_score": 0.6696101694915256,
+    "proof_strategy": "Decompose both sides by meaningLoss_eq_sum_orbits and bound the orbit sizes of the diagonal action below by the maximum of the factor orbit sizes using the orbit-stabiliser theorem.",
+    "research_mode": "team",
+    "source_exp_id": "11e84a32",
+    "status": "available",
+    "timestamp": "2026-08-22T01:51:24.378297+00:00",
+    "title": "Superadditivity of Meaning Loss Under Product Actions"
   },
   {
     "ambition_level": "extension",
@@ -16462,6 +16594,27 @@
     "status": "available",
     "timestamp": "2026-08-21T23:38:28.188301+00:00",
     "title": "Euler Product for Associativity Density"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Catalog.Applications.ExternalInterpretationDefinability"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Quantify how far an arbitrary interpretation is from being recoverable. The conjecture is that the minimal number of reassignments equals the sum over orbits of the orbit size minus the largest value multiplicity, achieved by majority vote within each orbit. This yields an approximate version of the classification theorem.\n\nFor finite M and I : M → V, min over recoverable J of |{x : I x ≠ J x}| equals Σ_{orbits O} (|O| − max_v |{x ∈ O : I x = v}|).\n\nFormalise the repair distance as a Finset.card minimum over the recoverable subtype and prove matching upper and lower bounds orbit by orbit.\n\nThe definability boundary becomes robust: near-recoverable interpretations are quantitatively characterised.\n\nGlobal correlations between orbits would allow cheaper repairs than the orbit-local bound, revealing hidden structure in the orbit quotient.",
+    "domain_bridges": [],
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "fd_3540",
+    "lineage_refs": [],
+    "priority_score": 0.6694285714285716,
+    "proof_strategy": "Upper bound by exhibiting the majority-vote interpretation; lower bound by summing the per-orbit pigeonhole estimate over the orbit partition.",
+    "research_mode": "team",
+    "source_exp_id": "11e84a32",
+    "status": "available",
+    "timestamp": "2026-08-22T01:51:25.142392+00:00",
+    "title": "Orbit-Wise Majority Repair Distance"
   },
   {
     "ambition_level": "extension",
@@ -17274,6 +17427,30 @@
   },
   {
     "ambition_level": "extension",
+    "catalog_references": [
+      "Catalog.NumberTheory.BerggrenBoxCounting",
+      "Catalog.NumberTheory.BerggrenLatticeBijection",
+      "Catalog.NumberTheory.CoprimePairDensity"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The Theta(H) count proved here traces back to the fact that Euclid's parametrisation of Pythagorean triples uses two integer parameters of size sqrt(H). The same template should give Theta(H^{k/2}) for any Diophantine family with a k-parameter homogeneous quadratic parametrisation, in particular Theta(H^2) for primitive Pythagorean quadruples. This turns a counting theorem into a general exponent principle.\n\nFor a primitive family parametrised bijectively by k coprime integer parameters via forms of degree 2, the number of members inside the box [1,H]^d is Theta(H^{k/2}); for Pythagorean quadruples k = 4 and the count is Theta(H^2).\n\nFormalize the quadruple parametrisation (a,b,c,d) from four parameters, redo the injection into a parameter box, and instantiate the CoprimePairDensity argument in four variables.\n\nA single reusable counting template covers triples, quadruples and higher Lorentz trees, and the vanishing-density statement generalises to all dimensions.\n\nCoprimality or parity conditions in dimension four are not of product type, so the parameter box is not filled with positive density and the exponent drops.",
+    "domain_bridges": [],
+    "domains": [
+      "NumberTheory",
+      "Pythagorean"
+    ],
+    "id": "fd_3535",
+    "lineage_refs": [],
+    "priority_score": 0.5638733454728578,
+    "proof_strategy": "Copy the two-step scheme of BerggrenBoxCounting: an injection of the family into a k-dimensional parameter box of side sqrt(H) for the upper bound, and a density lower bound for admissible parameter tuples via a gcd sieve.",
+    "research_mode": "team",
+    "source_exp_id": "7f454a93",
+    "status": "available",
+    "timestamp": "2026-08-22T01:51:06.800700+00:00",
+    "title": "Dimension-Parameter Exponent Law for Pythagorean Boxes"
+  },
+  {
+    "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "The present formalization\n   proves the chain-complex dimension theorem over any field.  Realizing every\n   binary CSS chain complex by a *simplicial complex with its standard incidence\n   maps* is a substantially stronger representability claim and should not be\n   conflated with merely viewing matrices as abstract differentials.  Determine\n   necessary and sufficient representability conditions, or produce a minimal\n   counterexample.",
@@ -17435,6 +17612,29 @@
     "status": "available",
     "timestamp": "2026-08-21T21:39:00.730005+00:00",
     "title": "Bruhat-Tits Realization of the Ternary Pythagorean Boundary"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Catalog.NumberTheory.CoprimePairDensity",
+      "Catalog.NumberTheory.BerggrenBoxCounting"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The formalized coprime-pair lower bound uses the crude tail estimate sum_{g>=2} 1/g^2 <= 25/36, costing a factor of about 2.7 against the truth 6/pi^2. Replacing the tail by an explicit finite sum plus 1/G yields any constant below 2/pi^2 with a purely rational, kernel-checkable computation. This directly improves the box-counting lower bound.\n\nFor every epsilon > 0 there is an explicit finite computation proving #copOpp(X) >= (2/pi^2 - epsilon) X^2, and hence #bergBox(H) >= H/8 for H large.\n\nReplace CoprimePairDensity.sum_inv_sq_le by a decidable finite sum bound with parameter G, re-run bergBox_card_ge, and check the resulting constant.\n\nA fully elementary proof of a near-optimal lower bound for the number of primitive Pythagorean triples in a box, with no analytic input.\n\nThe sieve-by-gcd step, not the tail bound, is the true bottleneck, meaning the loss is structural and an inclusion-exclusion of higher order is required.",
+    "domain_bridges": [],
+    "domains": [
+      "NumberTheory",
+      "Logic"
+    ],
+    "id": "fd_3534",
+    "lineage_refs": [],
+    "priority_score": 0.5631715766612008,
+    "proof_strategy": "Bound the tail sum_{g>G} 1/g^2 by 1/G via telescoping, evaluate sum_{g=2}^{G} 1/g^2 as an exact rational by decide/norm_num, and propagate through the existing card_cop_ge chain.",
+    "research_mode": "team",
+    "source_exp_id": "7f454a93",
+    "status": "available",
+    "timestamp": "2026-08-22T01:51:06.343382+00:00",
+    "title": "Elementary Sieve Constant Refinement"
   },
   {
     "ambition_level": "extension",
@@ -42787,23 +42987,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "11e84a32",
-    "description": "**Conjecture.** An external interpretation is recoverable from structural truth exactly when it is constant on automorphism orbits and definable in the invariant language; for finite models, orbit constancy alone is sufficient after adding bounded counting modalities.\n\nThe key insight is that the meaning-collision example fails precisely because the interpretation does not factor through structural equivalence, suggesting orbit descent as the necessary condition and definability as the sufficient one.\n\n**Why now?** The collision theorem provides the negative half of a classification problem, while finite orbit decompositions offer a direct route to testing the proposed converse.",
-    "domain_bridges": [],
-    "domains": [],
-    "id": "fd_2155",
-    "lineage_refs": [],
-    "priority_score": 0.43887499999999996,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "198023c0",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T06:22:52.636952+00:00",
-    "title": "Definability boundary for external interpretations"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "**Conjecture.** For every relational set universe, quotienting set-codes by equality of membership observations produces an extensional universe that is universal among all extensional targets preserving and reflecting membership observations.\n\nThe key insight is that failed Extensionality is not an alternative membership law; it is nontrivial kernel data for the observation map. A universal property would turn the extensional shadow from a useful construction into a canonical reflection.\n\n**Why now?** The kernel characterization and extensionality of the represented observation shadow isolate exactly the equivalence relation that the quotient must collapse.",
     "domain_bridges": [],
@@ -45857,23 +46040,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "7f454a93",
-    "description": "*The number of triples `(a,b,c)` with `0 < a,b,c ≤ H` that are Berggren-generated\nfrom a positive seed is `Θ(H)` — vanishingly few compared with `H³` — while the\nnumber of *Pythagorean* triples in the same box that are Berggren-generated is\n`(1 - o(1))` times the number of primitive Pythagorean triples in the box.*",
-    "domain_bridges": [],
-    "domains": [],
-    "id": "fd_1559",
-    "lineage_refs": [],
-    "priority_score": 0.40809523809523807,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "24a12580",
-    "status": "in_progress",
-    "timestamp": "2026-08-18T21:38:36.914118+00:00",
-    "title": "The number of triples `(a,b,c)` with `0 < a,b,c ≤ H` that are Berggren-generated\nfrom a positive seed is `Θ(H)` — vanishingly few compared with `H³` — while the\nnumber of *Pythagorean* triples in the "
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Represent verification as a state transition that returns both a verdict and a residual dish. This would formally separate nondestructive certificates, destructive tests, and repeatable verification without assigning any of them an unsupported hardness label.",
     "domain_bridges": [],
@@ -48001,7 +48167,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e82f11a2",
     "description": "Both ingredients are already machine-checked (the sharp bound and 1-sum closure),\nso the conjecture reduces to an equality analysis of an existing induction rather than to new\ntheory.",
     "domain_bridges": [],
     "domains": [],
@@ -48011,7 +48177,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "ed687362",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-18T13:08:22.402394+00:00",
     "title": "Both ingredients are already machine-checked (the sharp bound and 1-sum closure),"
   },
