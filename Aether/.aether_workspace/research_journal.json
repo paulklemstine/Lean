@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "1e89ff02",
-      "domain": "Geometry",
-      "key_insight": "# Future directions: p-adic Berggren dynamics\n\nThese conjectures grow out of the four Lean files produced in this cycle\n(`Catalog/Geometry/PadicBerggrenDynamics.lean`, `…NullCone.lean`, `…Orbits.lean`",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 143,
-      "timestamp": "2026-08-21T09:53:06",
-      "title": "p-adic Berggren Dynamics — The Tree of Pythagorean Triples as a p-adic Dynamical System"
-    },
-    {
       "cycle_id": "315472d4",
       "domain": "Cryptography",
       "key_insight": "# Future Directions — Berggren ⟷ Markoff\n\n## Where this cycle ended up\n\nThe mission hypothesis (\"the Berggren ternary tree and the Markoff tree are isomorphic as\nLorentz-preserving ternary trees\") is",
@@ -499,19 +489,19 @@
       "theorem_count": 62,
       "timestamp": "2026-08-22T21:36:55",
       "title": "Rigidity gap for shallow product coins"
+    },
+    {
+      "cycle_id": "ccf34fd5",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions — Smooth Windows (Phase A v19c)\n\nThis cycle replaced the rectangular window of\n`Algebra.ReciprocalZeroHarmonics.WindowDichotomy` by a Gaussian/Schwartz window and proved the\nmodula",
+      "quality_score": 0.8,
+      "sorry_count": 0,
+      "theorem_count": 91,
+      "timestamp": "2026-08-22T23:36:16",
+      "title": "Smooth windows"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "ed381d4e",
-      "domain": "Shared",
-      "key_insight": "# Future Directions — collision factoring beyond the birthday bound\n\nDerived from the verified results in\n\n* `Catalog/Shared/ThreeSumFactorReveal.lean`\n* `Catalog/Shared/BirthdayBoundHierarchy.lean`\n*",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 48,
-      "timestamp": "2026-08-15T08:56:17",
-      "title": "The 3SUM-Birthday-Bound Hierarchy"
-    },
     {
       "cycle_id": "67289c0d",
       "domain": "Cryptography",
@@ -2501,27 +2491,19 @@
       "theorem_count": 62,
       "timestamp": "2026-08-22T21:36:55",
       "title": "Rigidity gap for shallow product coins"
+    },
+    {
+      "cycle_id": "ccf34fd5",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions — Smooth Windows (Phase A v19c)\n\nThis cycle replaced the rectangular window of\n`Algebra.ReciprocalZeroHarmonics.WindowDichotomy` by a Gaussian/Schwartz window and proved the\nmodula",
+      "quality_score": 0.8,
+      "sorry_count": 0,
+      "theorem_count": 91,
+      "timestamp": "2026-08-22T23:36:16",
+      "title": "Smooth windows"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "9d22f1f1",
-      "domain": "Physics",
-      "name": "disc_depressed_cubic",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "e82f11a2",
-      "domain": "MachineLearning",
-      "name": "needs",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "e82f11a2",
-      "domain": "MachineLearning",
-      "name": "simplex_le_one",
-      "quality": 0.82
-    },
     {
       "cycle_id": "e82f11a2",
       "domain": "MachineLearning",
@@ -2803,9 +2785,27 @@
       "domain": "Geometry",
       "name": "sum_normalised_indicator",
       "quality": 0.86
+    },
+    {
+      "cycle_id": "ccf34fd5",
+      "domain": "Algebra",
+      "name": "chi_zero",
+      "quality": 0.8
+    },
+    {
+      "cycle_id": "ccf34fd5",
+      "domain": "Algebra",
+      "name": "chi_add",
+      "quality": 0.8
+    },
+    {
+      "cycle_id": "ccf34fd5",
+      "domain": "Algebra",
+      "name": "chi_ne_zero",
+      "quality": 0.8
     }
   ],
-  "last_updated": "2026-08-22T21:36:55",
+  "last_updated": "2026-08-22T23:36:16",
   "open_questions": [
     {
       "context": "All proofs are complete; no `sorry`.; All proofs are complete; no `sorry`.",
@@ -3021,12 +3021,6 @@
   "research_threads": {
     "Algebra": [
       {
-        "cycle_id": "295ca744",
-        "quality": 0.86,
-        "theorems": 79,
-        "title": "ECM-PARITY: first positive symmetric residue shadow on the GENERIC elliptic orde"
-      },
-      {
         "cycle_id": "50be6807",
         "quality": 0.82,
         "theorems": 171,
@@ -3079,6 +3073,12 @@
         "quality": 0.85,
         "theorems": 57,
         "title": "The `L¹` bound integrates to a Fisher–Rao length bound* (previously\n  Conjecture"
+      },
+      {
+        "cycle_id": "ccf34fd5",
+        "quality": 0.8,
+        "theorems": 91,
+        "title": "Smooth windows"
       }
     ],
     "Applications": [
