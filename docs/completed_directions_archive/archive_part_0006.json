@@ -1,7 +1,7 @@
 {
   "part": "6",
-  "archived_at": "2026-08-22T14:38:39Z",
-  "count": 95,
+  "archived_at": "2026-08-22T15:36:00Z",
+  "count": 96,
   "directions": [
     {
       "ambition_level": "extension",
@@ -3846,6 +3846,47 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 143
+    },
+    {
+      "id": "seed_371",
+      "title": "EML Transseries: Asymptotic Expansions Beyond Power Series",
+      "description": "Formalize transseries as formal series in x, log(x), exp(x), exp(exp(x)), etc. Prove that the field of transseries is real closed. Show that every EML function has a transseries expansion that uniquely determines it. Prove the asymptotic comparison theorem: if two transseries agree to all orders, they are equal.",
+      "source_exp_id": "seed",
+      "source_path": "seed:manual_v2",
+      "domains": [
+        "EML",
+        "Logic"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 0.86,
+      "status": "completed",
+      "consumed_by_exp_id": "8fa1e5a5",
+      "timestamp": "",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.87,
+      "domain_quality_penalty": 0.5,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-08-16T00:37:45.686657+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "",
+      "github_issue": 0
     }
   ]
 }

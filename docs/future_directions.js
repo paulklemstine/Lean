@@ -1147,16 +1147,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-42 #1 \u2014 ECM-COMPLETION: the lite variant scales like rho (paper 155)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d221a4de",
     "description": "Round-41 #5, cron iteration (exp 486, assessment v263). Paper 132's residual item (2), first measurement.\n\n**UNIFIED-SLOPES-MEASURED** (honest partial \u2014 within-k fits confounded, ECM deferred): on ONE population (1500 balanced semiprimes per k \u2208 {16,20,24}), across-k scaling of E[T] per log\u2082p:\n- trial division **0.84** (near-linear; balanced draws compress vs paper 89's 1.09 uniform)\n- Pollard \u03c1 **0.52** \u2014 the birthday bound, replicating paper 89's 0.523\n- Fermat **0.50** \u2014 gap-locality re-confirmed\n\nWithin-k \u03b1 fits confounded and not cited; the negative Fermat slopes ARE the gap-locality signature appearing directly. ECM deferred.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp486_factor_local_et.py + exp486_result.json, seed 20260920.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3605",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T07:00:59.864906+00:00",
     "title": "FACT round-41 #5 \u2014 FACTOR-LOCAL-ET: unified across-k scaling on one population (paper 154)"
   },
@@ -1537,6 +1538,34 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-22T14:39:10.957753+00:00",
     "title": "FACT round-50 \u2014 DEGREE-11: full pinning at Q(zeta_23)+ completes the ladder through degree 11 (paper 180 addendum)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## NET-55 \u2014 limited-memory axis, round 8 (paper 140, ResearchOutput/exp_net55_1p5b_knee.py committed pre-run, /tmp/net55.log)\n\n**Verdict name: THE-KNEE-IS-SIZE-INVARIANT.**\n\n### Result\nQwen2.5-1.5B (3\u00d7 the parameters of the 0.5B, d=28 vs 24) on identical protocol (held-out wikitext, 24 windows/cell, bf16-storage/fp32-compute harness):\n\n| ctx | full acc | k\\* | 0.5B comparison |\n|---|---|---|---|\n| 512 | 0.4680 | **16** | identical (0.5B: 16) |\n| 1024 | 0.5004 | **16** | HALF (0.5B: 32; grid floor \u2014 could be lower) |\n\n- **P1 REFUTED decisively**: knees did not grow with 3\u00d7 parameters \u2014 they came in below the pre-registered floor ([24,48]@512, [32,96]@1024) at both contexts.\n- **P2 honestly UNMEASURED**: the crash-recovery harness rewrite dropped the per-layer stats block; the 1.5B tail map stays open.\n- **P3 CONFIRMED with a stronger reading**: ratio = 1.0 \u2014 not just sub-linear, FLAT.\n\nSweeps: 512 \u2014 8: 0.9727 \u2717, **16: 0.9896 \u2713**, 24: 0.9915, 32: 0.9969, 48: 0.9993, 64: 0.9988. 1024 \u2014 **16: 0.9806 \u2713**, 24: 0.9867, 32: 0.9881, 48: 0.9928, 64: 0.9927, 96: 0.9954, 128: 0.9974.\n\n### The emerging law\nReal-model lossless attention budget across everything measured: {16, 32, 24} @0.5B and {16, 16} @1.5B \u2014 a ~30-key budget covers every real model at every context, while the toy law predicted 384\u20131344 for these cells. The knee is set by the concentration structure of trained attention, not model capacity. **Deployment reading: the KV working-set budget does NOT scale with model size** \u2014 at larger models the binding constraint is weights (NET-52's quantization table), not cache.\n\n### Engineering record\nQwen2.5-1.5B's own fp16 forward NaNs on real text (verified pre-wrapper \u2014 bf16 storage mandatory on pre-bf16 GPUs); CPU-fp32 reference SIGILLs on this host; gate = HF-bf16-GPU reference captured pre-floatify with \u0394CE 0.0054 as the binding check and argmax-agreement 0.89 documented as near-tie flips across the 152k vocab.\n\n### All 8 barriers\n(a) clean \u2014 three horns pre-stated incl. the refuted one; (b) clean \u2014 size-transfer of sparsity knees not a measured law in Catalog or literature; (c) confronted \u2014 3\u00d7 scale jump measured; limits: two size points, grid floor at 16, one corpus, SE \u2248 0.3%, P2 unmeasured; (d) clean \u2014 held-out last 10%; (e) deterministic evals, gate calibration documented; (f) clean \u2014 finite-reference assert, ALL_DONE_NET55; (g) fair \u2014 same 0.98 bar as all real-model rounds; (h) DIRECT.\n\n### Next\nSub-16 addendum at 1024; 1.5B tail map (P2); 7B quantized-offload cell; oracle-to-policy eviction gap; corpus robustness.\n\nNow 55 network experiments. Assessment v55. Paper 140.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3679",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T15:36:32.739868+00:00",
+    "title": "NET-55: THE-KNEE-IS-SIZE-INVARIANT \u2014 Qwen2.5-1.5B posts k*={16,16} at ctx={512,1024}, identical-to-half the 0.5B knees; tripling parameters did not raise the lossless attention budget by one key"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-53 #1, cron iteration (exp 518). The zero-fit dial tested on uniform draws at bitlen 52 \u2014 highest bitlen \u00d7 regime combination yet measured.\n\n**CELL-CLOSED-DIAL-HOLDS**: Spearman(T, rate) = **0.793** / **0.808** / **0.808** across three seeds; all inside [0.55, 0.85]; pooled advantage over count +0.121 CI [0.103, 0.140].\n\nThe dial survives the intersection of regime-invariance and bitlen-stability at its highest tested point.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp518_t_dial_unif_52.py + exp518_result.json, seeds 20261090\u201392.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3680",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T15:36:32.741347+00:00",
+    "title": "FACT round-53 #1 \u2014 T-DIAL-UNIF-52: the dial survives uniform draws at bitlen 52 (paper 183 addendum)"
   },
   {
     "consumed_by_exp_id": "",
@@ -3272,20 +3301,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Quantum Entanglement Monogamy: CKW Inequality"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 6a88207a (Q=0.750), which proved 9 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Deja vu \u2014 the feeling that you've experienced something before \u2014 is a fixed point in a dynamical system. Model cognitive state as a function f: S -> S mapping current brain state to next brain state. A deja vu is a state s such that f^n(s) = s for some n > 0 \u2014 a periodic point of the cognitive dynam",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_6a88207a_4a7af066",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "6a88207a",
-    "status": "available",
-    "timestamp": "2026-07-26T05:37:18.961896+00:00",
-    "title": "Deepening: The Mathematics of Deja Vu: Fixed Points in Consciousness and Cognition"
   },
   {
     "consumed_by_exp_id": "",
@@ -26845,6 +26860,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "* **Fourier interpolation**: for *arbitrary* equal-size `A, B \u2286 Z/pZ` and any prescribed data `g`,\n  there is a **unique** signal vanishing off `A` whose transform matches `g` on `B`. This is\n  deterministic compressed sensing with no genericity hypothesis on the sampling pattern.\n* **Restricted surjectivity and injectivity**: the two inequality regimes of the same statement.\n* **Rank of an arbitrary minor**: total nonsingularity in rank form \u2014 every rectangular `A \u00d7 B`\n  minor has rank exactly `min |A| |B|`.\n* **Zero counting** \u2014 the \"fundamental theorem of algebra for the DFT\": a nonzero `f` has `f\u0302`\n  vanishing at strictly fewer than `|supp f|` frequencies.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_3678",
+    "priority_score": 0.5144444444444445,
+    "research_mode": "team",
+    "source_exp_id": "c08b5555",
+    "status": "available",
+    "timestamp": "2026-08-22T15:36:00.022352+00:00",
+    "title": "Cycle 3 \u2014 the linear-algebraic face of Chebotarev"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "**Conjecture.** Among all operators `r : Set (Literal Atom) \u2192 Literal Atom \u2192\nSet (Literal Atom)` satisfying \"success\" (`l \u2208 r B l`) and \"consistency preservation\",\n`revise` is the unique one satisfying the frame law of `reviseSeq_frame`\n(`p.1 \u2260 l.1 \u2192 (p \u2208 r B l \u2194 p \u2208 B)`); equivalently, the frame law plus success characterizes\n`revise` outright, with consistency preservation a consequence rather than an assumption.\n\n*Falsifiable content.* A second operator with success and the frame law that differs from\n`revise` on some state \u2014 necessarily differing only in whether `opposite l` is retracted.",
     "domains": [
       "Algebra"
@@ -34523,14 +34552,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "The degrees `1, 2, 3` are already proved this way (`degree_one_exact`,"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f49038d4",
     "description": "Define the *curvature* of the pool as\n`\u03ba = 1 \u2212 min\u2c7c (C(\u03a9) \u2212 C(\u03a9\u2216{j})) / C({j})` where `\u03a9` is the whole pool.\nConjecture: greedy library design achieves the factor `(1 \u2212 e^{\u2212\u03ba})/\u03ba`, and for\npools of sources that are pairwise at total-variation distance at most `\u03b4` one\nhas `\u03ba \u2264 \u03b4\u00b7|\u03a9|`, so nearly-identical model pools admit *nearly optimal* greedy\nlibraries.",
     "domains": [],
     "id": "fd_1596",
+    "phase": "A",
     "priority_score": 0.4211666666666667,
     "research_mode": "team",
     "source_exp_id": "f46e1405",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-19T10:46:59.962852+00:00",
     "title": "Define the *curvature* of the pool as\n`\u03ba = 1 \u2212 min\u2c7c (C(\u03a9) \u2212 C(\u03a9\u2216{j})) / C({j})` where `\u03a9` is the whole pool."
   },
@@ -35162,6 +35192,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "* **Chebotarev's theorem on the minors of the prime-order Fourier matrix**: *every* minor of the\n  prime-order DFT matrix is nonsingular. Established from scratch by an order-of-vanishing\n  argument: the integer polynomial `F(X) = det(X^{a_i b_j})`, shifted to `G(X) = F(X+1)`, has all\n  coefficients below `N = k(k-1)/2` equal to zero, and `(\u220f_{j<k} j!) \u00b7 G_N = V(a)\u00b7V(b)` is a\n  product of two Vandermonde determinants. If `F(\u03b6) = 0` then `\u03a6_p(X+1) \u2223 G`, and `\u03a6_p(1) = p`\n  forces `p \u2223 G_N`, contradicting `p \u2224 V(a)V(b)`.\n* **The additive uncertainty principle** itself.\n* **The exact converse**: *every* splitting `|A| + |B| = p + 1` is realised by some `f` with\n  `supp f = A` and `supp f\u0302 = B`.\n* **Sparse recovery and threshold sharpness**: `k`-sparse signals are determined by any `2k`\n  frequencies, and `2k` is optimal for every sampling pattern.\n* **Failure at modulus four**: primality is not decorative.",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "fd_3677",
+    "priority_score": 0.4077636452243313,
+    "research_mode": "team",
+    "source_exp_id": "c08b5555",
+    "status": "available",
+    "timestamp": "2026-08-22T15:35:59.568792+00:00",
+    "title": "Cycle 1 \u2014 the bound and its arithmetic input"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Represent verification as a state transition that returns both a verdict and a residual dish. This would formally separate nondestructive certificates, destructive tests, and repeatable verification without assigning any of them an unsupported hardness label.",
     "domains": [],
     "id": "fd_1892",
@@ -35682,19 +35726,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-17T09:01:31.838883+00:00",
     "title": "The `\u21d0` direction is proved (`FourierFA.uncertainty_eq_coset_modulation`); the `\u21d2`"
-  },
-  {
-    "consumed_by_exp_id": "c08b5555",
-    "description": "Open here; the multiplicative bound `|supp f| \u00b7 |supp f\u0302| \u2265 p` is proved\n(`FourierCyclic.uncertainty_zmod`), and it is strictly weaker (e.g. `|supp f| = |supp f\u0302| = \u221ap`\nwould satisfy the product bound but violate the sum bound).",
-    "domains": [],
-    "id": "fd_1409",
-    "phase": "A",
-    "priority_score": 0.4,
-    "research_mode": "team",
-    "source_exp_id": "525aecde",
-    "status": "in_progress",
-    "timestamp": "2026-08-17T09:01:32.094527+00:00",
-    "title": "Open here; the multiplicative bound `|supp f| \u00b7 |supp f\u0302| \u2265 p` is proved"
   },
   {
     "consumed_by_exp_id": "",

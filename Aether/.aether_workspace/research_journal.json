@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "f2707534",
-      "domain": "Probability",
-      "key_insight": "# Future directions\n\n## What is now proved\n\nAll statements below are formalised in `Catalog/Probability/` and compile\nagainst mathlib4 (Lean 4.28.0) with **no `sorry` and no extra axioms** (only\n`prop",
-      "quality_score": 0.92,
-      "sorry_count": 0,
-      "theorem_count": 115,
-      "timestamp": "2026-08-20T23:41:20",
-      "title": "Martingale-Concentration: Talagrand's Inequality on Product Spaces"
-    },
-    {
       "cycle_id": "63d0d6e2",
       "domain": "Physics",
       "key_insight": "# Future directions — after the low-tail experiment\n\nFive conjectures distilled from cycles 1–4 (`Catalog/Physics/LowTail*.lean`).  Each is\nfalsifiable by a finite computation or by a single further L",
@@ -499,19 +489,19 @@
       "theorem_count": 56,
       "timestamp": "2026-08-22T14:38:51",
       "title": "FACT round-37 #2 — SUBEXP-SCALE: the QS relation pool is random-equivalent at every scale (paper 130"
+    },
+    {
+      "cycle_id": "c08b5555",
+      "domain": "Shared",
+      "key_insight": "# Future directions — after the additive uncertainty principle on Z/pZ\n\n## What has been established\n\nThe previously open item was the *additive* uncertainty bound `|supp f| + |supp f̂| ≥ p + 1` for\np",
+      "quality_score": 0.93,
+      "sorry_count": 0,
+      "theorem_count": 68,
+      "timestamp": "2026-08-22T15:36:10",
+      "title": "Open here; the multiplicative bound `|supp f| · |supp f̂| ≥ p` is proved"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "c98081c2",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — after the Class-Wide No-Pinning Lemma\n\nThe verified core of this cycle (all in `Catalog/Novelty/NoPinning*.lean`, 0 sorries):\n\n* **No-pinning (class-wide).** For a target `N₀` an",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 73,
-      "timestamp": "2026-08-14T20:05:36",
-      "title": "The Class-Wide No-Pinning Lemma, Verified"
-    },
     {
       "cycle_id": "50be6807",
       "domain": "Algebra",
@@ -2501,27 +2491,19 @@
       "theorem_count": 56,
       "timestamp": "2026-08-22T14:38:51",
       "title": "FACT round-37 #2 — SUBEXP-SCALE: the QS relation pool is random-equivalent at every scale (paper 130"
+    },
+    {
+      "cycle_id": "c08b5555",
+      "domain": "Shared",
+      "key_insight": "# Future directions — after the additive uncertainty principle on Z/pZ\n\n## What has been established\n\nThe previously open item was the *additive* uncertainty bound `|supp f| + |supp f̂| ≥ p + 1` for\np",
+      "quality_score": 0.93,
+      "sorry_count": 0,
+      "theorem_count": 68,
+      "timestamp": "2026-08-22T15:36:10",
+      "title": "Open here; the multiplicative bound `|supp f| · |supp f̂| ≥ p` is proved"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "11e84a32",
-      "domain": "Applications",
-      "name": "meaningLoss_eq_zero_iff_rigid",
-      "quality": 0.87
-    },
-    {
-      "cycle_id": "5f0e4f5e",
-      "domain": "Applications",
-      "name": "exists_invisible_pow_of_seed",
-      "quality": 0.86
-    },
-    {
-      "cycle_id": "16cb59c0",
-      "domain": "Algebra",
-      "name": "and",
-      "quality": 0.86
-    },
     {
       "cycle_id": "16cb59c0",
       "domain": "Algebra",
@@ -2803,9 +2785,27 @@
       "domain": "Shared",
       "name": "one_lt_dickmanLead",
       "quality": 0.78
+    },
+    {
+      "cycle_id": "c08b5555",
+      "domain": "Shared",
+      "name": "on",
+      "quality": 0.93
+    },
+    {
+      "cycle_id": "c08b5555",
+      "domain": "Shared",
+      "name": "states",
+      "quality": 0.93
+    },
+    {
+      "cycle_id": "c08b5555",
+      "domain": "Shared",
+      "name": "sum_range_card_le",
+      "quality": 0.93
     }
   ],
-  "last_updated": "2026-08-22T14:38:51",
+  "last_updated": "2026-08-22T15:36:10",
   "open_questions": [
     {
       "context": "All proofs are complete; no `sorry`.; All proofs are complete; no `sorry`.",
@@ -3889,12 +3889,6 @@
     ],
     "Shared": [
       {
-        "cycle_id": "5792b548",
-        "quality": 0.88,
-        "theorems": 59,
-        "title": "Sharpness"
-      },
-      {
         "cycle_id": "3da67f84",
         "quality": 0.78,
         "theorems": 53,
@@ -3947,6 +3941,12 @@
         "quality": 0.78,
         "theorems": 56,
         "title": "FACT round-37 #2 — SUBEXP-SCALE: the QS relation pool is random-equivalent at ev"
+      },
+      {
+        "cycle_id": "c08b5555",
+        "quality": 0.93,
+        "theorems": 68,
+        "title": "Open here; the multiplicative bound `|supp f| · |supp f̂| ≥ p` is proved"
       }
     ],
     "Tropical": [
