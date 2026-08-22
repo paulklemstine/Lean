@@ -1,96 +1,86 @@
-# Computational evidence
+# Computational evidence (exploratory; not machine-checked)
 
-All numbers below were produced by `#eval` inside Lean 4 (mathlib4, toolchain v4.28.0),
-in `Catalog/MachineLearning/BerggrenBoxAudit.lean`, and are reproduced verbatim from the
-build log.  They are *evidence*, not proof; every claim that is asserted as a theorem is
-proved separately and `#print axioms`-checked (see the same file).
+These numbers were produced by a short exploratory script (direct enumeration in
+Python), *before* the Lean formalisation.  They are **not** part of the verified
+artifact: everything asserted in the `.lean` files is proved from scratch and
+compiles without `sorry`.  The tables below only motivated the constants that the
+Lean statements carry.
 
-## 1. Small cases: the Berggren tree in a box
+## 1. Counting the Berggren-generated triples in the box `[1,H]³`
 
-`nodeCount H` counts primitive Pythagorean triples with odd first leg and all entries
-`≤ H`, i.e. `#(boxNode H)`, computed directly from Euclid parameters.
+`#berg(H)` = triples obtained from the seed `(3,4,5)` by the three Berggren
+matrices, all coordinates `≤ H` (breadth-first enumeration).
+`#PPT_odd(H)` = primitive Pythagorean triples with odd first leg and `c ≤ H`
+(enumerated through the `(m,n)` parametrisation).
 
-| `H` | proved lower bound `H/128` | `nodeCount H` | proved upper bound `H` |
-|---|---|---|---|
-| 64 | 0 | 9 | 64 |
-| 128 | 1 | 20 | 128 |
-| 256 | 2 | 39 | 256 |
-| 512 | 4 | 83 | 512 |
-| 1024 | 8 | 161 | 1024 |
-| 2048 | 16 | 327 | 2048 |
-| 4096 | 32 | 652 | 4096 |
+| H | #berg(H) | #PPT_odd(H) | #berg(H)/H | proved upper bd `4H` | proved lower bd `H/200` | equal? |
+|---:|---:|---:|---:|---:|---:|:--|
+| 10 | 1 | 1 | 0.1000 | 40 | 0.05 | yes |
+| 50 | 7 | 7 | 0.1400 | 200 | 0.25 | yes |
+| 100 | 16 | 16 | 0.1600 | 400 | 0.50 | yes |
+| 500 | 80 | 80 | 0.1600 | 2000 | 2.50 | yes |
+| 1000 | 158 | 158 | 0.1580 | 4000 | 5.00 | yes |
+| 5000 | 792 | 792 | 0.1584 | 20000 | 25.0 | yes |
+| 10000 | 1593 | 1593 | 0.1593 | 40000 | 50.0 | yes |
+| 50000 | 7960 | 7960 | 0.1592 | 200000 | 250.0 | yes |
+| 100000 | 15919 | 15919 | 0.1592 | 400000 | 500.0 | yes |
 
-The two proved bounds (`boxNode_card_ge`, `boxNode_card_le`) bracket the data at every
-height, and the data grows visibly linearly — consistent with `Θ(H)`.
+Two observations, both of which became theorems:
 
-## 2. The linear constant
+* the two columns agree for every `H` tested — this is Berggren's completeness
+  theorem, formalised as `BerggrenTree.reach_iff_valid` and
+  `BerggrenBoxCounting.bergBox_eq_ppOddBox`;
+* the ratio `#berg(H)/H` stabilises near `0.1592 ≈ 1/(2π)` (the classical
+  Lehmer constant for primitive Pythagorean triples with `c ≤ H`), comfortably
+  inside the interval `[1/200, 4]` that the Lean theorems
+  `bergBox_card_ge` / `bergBox_card_le` establish unconditionally.
+  The count is therefore `Θ(H)`, hence `o(H³)`.
 
-`10000 · nodeCount H / H` (integer division):
+Related OEIS sequence: the number of primitive Pythagorean triples with
+hypotenuse `≤ 10^k` is A101929-adjacent; the asymptotic density `1/(2π)` is
+classical (Lehmer, 1900).  Our proof does **not** use it: only the effective
+two-sided bound is proved.
 
-| `H` | 256 | 1024 | 4096 | 16384 |
-|---|---|---|---|---|
-| ratio ×10⁴ | 1523 | 1572 | 1591 | 1588 |
+## 2. Coprime pairs of opposite parity (the arithmetic input)
 
-The classical constant is `1/(2π) = 0.159154…`, i.e. `1592` in these units.  The proved
-interval is `[1/128, 1] = [78, 10000]`, which comfortably contains it; the true constant
-sits near the *lower* end, confirming that the linear upper bound `H` is the crude side
-and the linear lower bound is the substantive one.
+`copOpp(X)` = pairs `1 ≤ n < m ≤ X`, `gcd(n,m) = 1`, `n+m` odd.
 
-## 3. Density of coprime opposite-parity pairs (the sieve input)
+| X | copOpp(X) | copOpp(X)/X² | proved lower bound `(11X²−36)/144` |
+|---:|---:|---:|---:|
+| 10 | 22 | 0.2200 | 7.4 |
+| 50 | 518 | 0.2072 | 190.7 |
+| 100 | 2040 | 0.2040 | 763.6 |
+| 500 | 50765 | 0.2031 | 19097.0 |
+| 1000 | 202861 | 0.2029 | 76388.6 |
 
-`10⁶ · #coprimePairs N / N²`:
+The true density is `2/π² ≈ 0.2026`; the elementary sieve bound proved in
+`CoprimePairDensity.card_copOpp_ge` gives `11/144 ≈ 0.0764`, i.e. it is off by a
+factor `≈ 2.65` but is completely explicit and needs no analytic input.
 
-| `N` | 16 | 64 | 256 | 512 |
-|---|---|---|---|---|
-| density ×10⁶ | 214843 | 206787 | 203430 | 203163 |
+## 3. Counterexample hunt / corner cases
 
-The limit is `2/π² = 0.2026423…`.  The theorem `card_coprimePairs_lower` proves the
-explicit bound `≥ 1/16 = 0.0625`, so the proved constant is about a factor `3.2` from
-optimal — as expected from the deliberately crude telescoping estimate
-`∑_{k≥3} k⁻² ≤ 1/2` (true value `π²/6 − 1 − 1/4 = 0.394934…`).
+* `H < 5`: the box contains no Berggren triple at all, so a lower bound of the
+  form `H ≤ c·#berg(H)` must assume `H ≥ 5`; the Lean statement carries exactly
+  this hypothesis.
+* Triples with **even** first leg (e.g. `(4,3,5)`) are primitive Pythagorean but
+  never occur in the tree; they are exactly the swaps of the tree elements.  This
+  is why `#ppBox(H) = 2 · #bergBox(H)` (theorem
+  `card_ppBox_eq_two_mul_card_bergBox`) rather than `#ppBox = #bergBox`.
+* Non-primitive triples such as `(6,8,10)` are in the box but never in the tree.
 
-## 4. Free growth of the tree
+## 4. Depth of the tree inside the box
 
-The three Euclid-coordinate branches `A(m,n) = (2m−n, m)`, `B(m,n) = (2m+n, m)`,
-`C(m,n) = (m+2n, n)` applied `4` times to the root `(2,1)` produce `3⁴ = 81` distinct
-parameter pairs (`#eval` returns `81`).  This is the numerical shadow of the proved
-freeness theorem `applyGens_root_injective`, and combined with §1 it is what forces
-`depth_forces_hypotenuse`: `81` nodes at depth `4` cannot all fit below height `81`.
+Maximal depth of a node with hypotenuse `≤ H`:
 
-## 5. OEIS
+| H | max depth | `log₆(H/5)` | `√H/2` |
+|---:|---:|---:|---:|
+| 100 | 5 | 1.67 | 5.0 |
+| 1000 | 20 | 2.96 | 15.8 |
+| 10000 | 69 | 4.24 | 50.0 |
+| 100000 | 222 | 5.53 | 158.1 |
 
-The counting sequence of §1 is the partial-sum sequence of the number of primitive
-Pythagorean triples by hypotenuse; the underlying "number of primitive Pythagorean
-triangles with hypotenuse `n`" sequence is A024361, and its partial sums grow like
-`n/(2π)`.  The parity-pair counts of §3 are the partial sums of Euler's totient restricted
-to opposite-parity pairs, with density `2/π²`; the unrestricted analogue is A015614
-(density `3/π²`).  No new integer sequence appears to be involved.
-
-## 6. Counterexample hunt
-
-* The claim "`#(Berggren triples in the box) = (1 − o(1)) · #(primitive triples in the
-  box)`" was tested for the **single** seed `(3,4,5)`: at every `H` the ratio is exactly
-  `1/2` (each primitive triple with an even first leg is missed).  This is not a
-  numerical accident; it is proved as `card_boxPPT_eq_two_mul`, and it *refutes* the
-  single-seed reading of the mission statement.
-* With the two seeds `(3,4,5)` and `(4,3,5)` the ratio is exactly `1` for every `H`
-  (`boxBerggren_eq_boxPPT`), which is stronger than `1 − o(1)`.
-* No counterexample was found to any statement that is asserted as a theorem below.
-
-## 7. Cycle 4: the ratios as statements about real numbers
-
-The set-level results of §6 were promoted to genuine ratio statements in
-`Catalog/MachineLearning/BerggrenBoxRatio.lean`, where the denominators are shown to be
-non-zero (`boxPPT_card_pos`, from the fact that the seed `(3,4,5)` itself lies in the cube
-whenever `H ≥ 5`):
-
-* `single_seed_ratio` : `#(boxNode H) / #(boxPPT H) = 1/2` in `ℝ`, for every `H ≥ 5`.
-* `two_seed_ratio`    : `#(boxNode H ∪ boxNodeSwap H) / #(boxPPT H) = 1` in `ℝ`, for every
-  `H ≥ 5`.
-* `boxPPT_card_theta` : `H ≤ 64 · #(boxPPT H)` and `#(boxPPT H) ≤ 2H` for `H ≥ 32`, so the
-  primitive Pythagorean triples of the cube are `Θ(H)` as well.
-* `boxPPT_density_zero` : `#(boxPPT H)/H³ → 0`.
-
-Numerically, `#(boxPPT H) = 2 · nodeCount H`, so the table of §1 doubles: at `H = 4096` the
-cube holds `4096³ ≈ 6.87 · 10^10` triples, of which `1304` are primitive Pythagorean and
-`652` are generated from the single seed `(3,4,5)`.
+The depth grows like `√H`, not like `log H`: the ternary tree is extremely
+unbalanced.  Both sides of this phenomenon are formalised in
+`BerggrenTreeGeometry.lean`: `hyp_le_of_reachIn` (`c ≤ 5·6^d`, so depth
+`≥ log₆(c/5)`) and `spine_reachIn` (a branch of depth `k` with hypotenuse only
+`4(k+1)²+1`).

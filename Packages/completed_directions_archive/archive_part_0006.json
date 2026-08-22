@@ -1,7 +1,7 @@
 {
   "part": "6",
-  "archived_at": "2026-08-21T23:38:49Z",
-  "count": 74,
+  "archived_at": "2026-08-22T01:07:29Z",
+  "count": 75,
   "directions": [
     {
       "ambition_level": "extension",
@@ -3006,6 +3006,46 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 71
+    },
+    {
+      "id": "fd_1160",
+      "title": "Exp 392 GCD-MOMENT: the semiprime gcd-moments M_k = sum gcd(x,N)^k are a closed trace-witness family — trace recoverable, never a factor (barriers 2/4/6/8)",
+      "description": "## GCD-MOMENT (exp 392, round-15 #1): the semiprime gcd-moments M_k = Σ_{x≤N} gcd(x,N)^k are a closed trace-witness family\n\n**Hypothesis tested.** The brainstorm's S2 = N²+3N+1+(N−1)s−s² recovers the trace s = p+q via an O(N) prefix mean. Does any moment k escape the free-witness barriers?\n\n**Result: CONFIRMED negative for factoring** (script: `/tmp/exp_gcdmoment.py`, verified by full enumeration 48/48 at k=1..4, 12/12 at k=5,6, plus symbolic expansion).\n\n**1. Exact closed forms in (N, s) alone (verified).** Via the Newton power sums P_j = p^j+q^j = s·P_{j−1} − N·P_{j−2}:\n> M_k = Σ_{x≤N} gcd(x,N)^k = Σ_{d|N} d^k φ(N/d) = **N^k + N·P_{k−1} − P_k + N − s + 1**\n\n| k | M_k |\n|---|-----|\n| 1 | 4N − 2s + 1 |\n| 2 | N² + 3N + 1 + (N−1)s − s² (= S2) |\n| 3 | N³ − 2N² + N s² + 3N s + N − s³ − s + 1 |\n| 4 | N⁴ − 3N²s − 2N² + N s³ + 4N s² + N − s⁴ − s + 1 |\n\n**2. Trace recovery is unique at every k.** Roots of P_k(s)−M_k = 0: k=1 {s}; k=2 {s, N−1−s}; k=3 {1−s, s, N−1}; k=4 {s, N+1}+complex. s is ALWAYS the unique root in (0, N/2] — all spurious roots are ≥ N−1−s > N/2 or negative, so the size cut s < N/2 disambiguates trivially. (The \"root ambiguity grows with k\" worry resolves to a non-issue; the cost is computing M_k.)\n\n**3. The genuine hierarchy is cost: N^{2k−1} samples to pin s.** Var(gcd(U,N)^k) ~ N^{2k−1} (the 1/N chance of gcd=N contributes N^k). Measured samples for s±1: k=1 ~4N (= the barrier-4 Ω(N) floor), k=2 ~N³, k=3 ~N⁵, k=4 ~N⁷. **k=1 = M1 = 4N−2s+1, an O(N) gcd-scan, is the optimal moment** — higher k are exponentially worse.\n\n**4. Barriers: 2/4/6/8.**\n- **Barrier 2 (symmetry):** M_k = F_k(N, s) for all k — p,q enter only through s and N. s alone never splits N; the trace is the ceiling of what a symmetric free witness can carry.\n- **Barrier 4 (free-witness aggregation):** Ω(N) gcd evaluations; sampling no better (k=1 ~4N).\n- **Barrier 6 (circular):** divisor form needs the factorization; closed form needs s; enumeration is Ω(N).\n- **Barrier 8 (known method):** M1 = Σ_{d|N} d·φ(N/d) is the classical gcd-sum / Jordan-totient identity; the whole family is a known-arithmetic-function specialization.\n\n**Reconfirms** TRACEPROFILE (\"trace least-hidden\") and QUERYWIT (threshold = Θ(p+q)): the trace s = p+q is the least-hidden — and here provably the ceiling — symmetric free witness, and it does not factor.\n\n**Recorded:** notebook Part 138, assessment v168 (392 experiments), paper 57 `57_GCDMoment_TraceWitnessHierarchy.md` (NewMathematics/).\n",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 1000.0,
+      "status": "completed",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-08-12T15:22:34.668786+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.9,
+      "domain_quality_penalty": 0.1,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-08-12T17:20:00.606517+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 73
     }
   ]
 }

@@ -2,6 +2,386 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
+    "consumed_by_exp_id": "03b48eb6",
+    "description": "**Domain**: Pythagorean <-> Computation\n\n**Hypothesis (MOONSHOT)**: The inverse Collatz tree and the Berggren tree of primitive Pythagorean triples are two realizations of the SAME underlying ternary dynamics. The Collatz map is famously hard because its tree (under the inverse map) is a ternary tree with no known invariant; the Berggren tree is a ternary tree with a fully proven invariant — the Lorentz form a²+b²−c² and the silver-ratio growth exponent log(1+√2). The conjecture: there is a transfer map from the Berggren tree's ternary branching onto the inverse-Collatz tree that carries the Lorentz invariant and the growth structure, giving the Collatz tree a conserved quantity it currently lacks.\n\n**Test**: Formalize the inverse Collatz tree as a ternary tree (each odd n has up to three preimages under the inverse map). Formalize the Berggren tree's proven machinery (Lorentz invariant, groupoid, silver-ratio growth). Construct an explicit map from Berggren triples to Collatz orbits and test whether the Lorentz form or a derived quantity is conserved along Collatz trajectories. Prove at least one structural theorem — e.g., that a Berggren-type invariant bounds the growth of a Collatz trajectory, or that the ternary branching of the two trees is isomorphic.\n\n**Why now**: The Collatz conjecture is one of the most famous open problems in mathematics — a true moonshot target. The catalog already carries a fully formalized ternary tree (Berggren) with exact invariants and growth. If the two trees are genuinely related, the solved Berggren structure becomes a new tool for the hardest open problem in discrete dynamics. Even a partial transfer would be history-making.\n\n**If true**: The Collatz tree gains a conserved Lorentz-type invariant and an exact growth bound, opening a genuinely new attack line on the Collatz conjecture — a result that would be among the most celebrated in mathematics.\n\n**If false**: The failure — proving the two ternary trees are NOT isomorphic, or that no Berggren-type invariant is conserved — is itself a sharp theorem explaining precisely why the Collatz tree resists the methods that work for Berggren, clarifying the boundary of what ternary-tree methods can achieve.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_1774",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-20T23:42:10.363274+00:00",
+    "title": "The Collatz-Berggren Bridge — Transferring the Lorentz Invariant to the Inverse Collatz Tree"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "a2c90992",
+    "description": "**Domain**: Pythagorean <-> Algebra\n\n**Hypothesis (MOONSHOT)**: The Berggren groupoid — integral matrices preserving the Lorentz form a²+b²−c², living on the null cone — is a shadow of the arithmetic of the even Lorentzian Leech lattice II(25,1), the 26-dimensional lattice at the heart of Conway's \"holy construction,\" whose automorphism group hosts the Conway group Co0 and, through the moonshine module, the Monster — the largest sporadic simple group. The conjecture: the tree's combinatorial structure (nodes, branches, 3-adic boundary) is realized by the hole structure of the Leech lattice — deep holes ↔ Niemeier lattices — so that the Berggren tree provides an explicit pythagorean parametrization of the Niemeier lattice family, and the groupoid embeds in the Lorentzian lattice's automorphism group, bridging Pythagorean triples to Monstrous moonshine.\n\n**Test**: Formalize the embedding of the (2,1)-signature null cone into II(25,1) and the action of the Berggren generators on the Lorentzian lattice. Prove or refute: (i) the groupoid embeds in the positive Lorentz group of II(25,1) — equivalently in the Conway group's Lorentzian extension; (ii) the tree's nodes and branches map to the deep-hole/Niemeier structure respecting the ternary branching; (iii) the McKay-Thompson trace series — whose moment structure the catalog already formalized via the Bell-criterion package — acquire a tree-parametrized organization.\n\n**Why now**: Monstrous moonshine — the j-function connection proved by Borcherds (Fields Medal) — is the most spectacular bridge in modern mathematics, and its natural habitat is precisely a Lorentzian lattice with null-cone structure: the same geometric substrate as the Berggren tree. The catalog's moonshine package built the trace-series and moment machinery; the Lorentzian-lattice bridge from the tree is the missing geometric link. Both structures are integral Lorentzian geometries, and the question of whether the tree's combinatorics lives in the Leech lattice's hole structure is the natural next moonshot.\n\n**If true**: A pythagorean parametrization of the Niemeier lattices and an embedding of the Berggren groupoid into the Monster's natural habitat — a bridge from the oldest mathematics (Pythagoras) to the most extraordinary object in group theory, with the tree as an explicit combinatorial model for the geometry of moonshine.\n\n**If false**: The groupoid does not embed, or the tree's branching does not match the hole structure — a precise theorem about which Lorentzian arithmetic the tree actually realizes, clarifying the boundary between elementary Pythagorean geometry and the Leech lattice's exceptional structure.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_1784",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T03:17:34.067416+00:00",
+    "title": "Moonshine from the Null Cone — The Berggren Groupoid, the Lorentzian Leech Lattice, and the Monster"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "8247d370",
+    "description": "**Domain**: Pythagorean <-> Geometry\n\n**Hypothesis (MOONSHOT)**: The space of Euler bricks (integer boxes whose three face diagonals are integral) carries a Berggren-style tree structure: a finite set of integer generators acts on bricks, producing every primitive Euler brick from finitely many seeds, with a descent theory reducing every brick to minimal ones — the perfect-cuboid analogue of the Berggren tree itself. The conjecture: the brick tree's structure theory settles the shape of the perfect cuboid question — either a perfect cuboid exists in the tree (reachable by bounded search along the tree's growth), or the tree's architecture yields a proof that the four simultaneous square conditions (three face diagonals and the space diagonal) obstruct each other along every branch.\n\n**Test**: Formalize Euler bricks as integer triples with three integral face diagonals; exhibit explicit generator transformations acting on bricks that preserve brick-hood and generate the primitive brick space from finitely many seeds (the catalog already proved the diagonal-cone reduction a²+b²+c²=2d² and the rational parametrization of the normalized quadric — build the tree on top of that foundation). Prove the descent theory: every brick descends to a finite set of minimal bricks, the brick analogue of (3,4,5). Then either (i) exhibit a perfect cuboid, or (ii) prove a structural obstruction: the space-diagonal condition fails along every branch in a formally provable pattern.\n\n**Why now**: The perfect cuboid problem has been open since Euler's era and is one of the most famous unsolved problems of elementary number theory. The catalog's perfect-cuboid package completed the static geometry (the diagonal cone and the rational parametrization of the cuboid quadric); the dynamic, tree-like structure theory of the brick space is the missing piece, and the Berggren tree's proven machinery — generators, descent, exact growth — is exactly the template. A Berggren-style descent on bricks is the natural next move the corpus has set up but not taken.\n\n**If true**: Either the discovery of a perfect cuboid (settling a 300-year-old problem) or the first structural obstruction theorem — a proof that the brick tree's architecture forbids the four simultaneous square conditions, transforming the problem from search to structure.\n\n**If false**: The brick tree fails to have finitely-generated descent (primitive bricks require infinitely many seeds) — itself a sharp structure theorem distinguishing the brick world from the triple world, and a precise map of where the perfect-cuboid difficulty lives.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_1785",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T03:17:34.068074+00:00",
+    "title": "The Euler Brick Tree — Berggren Descent and the Perfect Cuboid"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "54700980",
+    "description": "**Domain**: Pythagorean <-> NumberTheory\n\n**Hypothesis (MOONSHOT)**: The Berggren tree enumerates every primitive integer right triangle (a,b,c), and its area function A = ab/2 = mn(m²−n²) over the Euclid seeds hits exactly the congruent numbers up to squarefree parts — n is congruent (the area of a rational right triangle) if and only if n is the squarefree part of the area of some node of the tree. The conjecture: the tree's proven structure theory (descent to (3,4,5), silver-ratio growth, groupoid) makes the tree a new, provably analyzable laboratory for the congruent number problem — in particular the density of congruent numbers (conjecturally about one half in each admissible residue class, open, and equivalent in depth to the rank distribution of the elliptic curves y² = x³ − n²x) can be attacked through the statistical structure of the tree's area values.\n\n**Test**: Formalize the area function mn(m²−n²) over the tree's Euclid seeds and prove the classical equivalence inside the tree formalism: the squarefree parts of node areas are exactly the congruent numbers. Then prove structure theorems: the distribution of squarefree parts along branches, the growth of the set of congruent numbers ≤ X generated at depth ≤ d, and the tree-side descent structure of the elliptic-curve correspondence (rational triangles ↔ rational points on y² = x³ − n²x). Stretch goal: an unconditional version of Tunnell's criterion for an explicit infinite family of n, or a proven density law for congruent numbers in a residue class.\n\n**Why now**: The congruent number problem is one of the oldest unsolved problems in mathematics (Bachet, 1621), and its complete solution is equivalent to the Birch–Swinnerton-Dyer conjecture — a $1M Millennium Prize Problem. The catalog has fully formalized the tree (groupoid, hyperbolic geometry, silver speed limit) but has never studied its area function — the direct bridge to congruent numbers. The tree is the one structure in which the triangle side of the problem is completely explicit; every congruent number is visible in it.\n\n**If true**: The congruent number problem gains a concrete new laboratory: the tree's area statistics become a computable model for the BSD-linked density conjectures, and any proven density law or unconditional Tunnell family would be a major result on a Millennium-Prize-scale problem.\n\n**If false**: The tree's area function has no tractable structure (e.g., squarefree parts equidistributed with no exploitable pattern) — itself a sharp equidistribution theorem about the tree, and a precise statement of why the triangle side alone cannot see the elliptic-curve side.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_1787",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T03:17:34.069425+00:00",
+    "title": "The Congruent Number Laboratory — The Berggren Tree's Area Function and the Birch–Swinnerton-Dyer Frontier"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "542d7a55",
+    "description": "## NET→FACT round-24 #1 — NONABELIAN-TYPE-CHANNEL (paper 80, /tmp/exp_nonabelian_typechan.py, /tmp/r24n1h.log)\n\n**Verdict name: THE-TYPE-CHANNEL-IS-THE-ABELIANIZATION.**\n\n### Result\nThe complete splitting-type channel of a **non-abelian** field is **exactly its abelianization content**: at the prime level **I(p mod m\\*; T) = I(T; coset) = H(T) − H(T|coset)** (m\\* = conductor of the G^ab characters), and at the semiprime level the papers 78/79 pair law holds **verbatim** with the class-level type map. Verified on S₃ ×2, S₄, A₄, D₄ with abelian controls V₄/C₄ — **7/7 fields prime, 7/7 semiprime, every field on its pre-stated value.**\n\n### The law table (prime level, ~23k primes/field)\n| field | G | G^ab | H(T) | I₁ measured | law | dial | loss |\n|---|---|---|---|---|---|---|---|\n| S₃a x³+x+1 | S₃ | C₂ | 1.4591 | **1.0000** | 1.0000 ✓ | 1.0000 | 0 |\n| S₃b x³−x+1 | S₃ | C₂ | 1.4591 | **1.0000** | 1.0000 ✓ | 1.0000 | 0 |\n| S₄ x⁴−x−1 | S₄ | C₂ | 2.0944 | **1.0100** | 1.0000 ✓ | 1.0000 | 0 |\n| A₄ x⁴+8x+12 | A₄ | C₃ | 1.1887 | **0.9188** | 0.9183 ✓ | 1.5850 | 2/3 |\n| D₄ x⁴−2 | D₄ | C₂×C₂ | 1.9056 | **1.6555** | 1.6556 ✓ | 2.0000 | 0.3444 |\n| V₄ x⁴−2x²+9 [ab.] | V₄ | C₂×C₂ | 0.8113 | **0.8092** | 0.8113 ✓ | 2.0000 | 1.1887 |\n| C₄ Φ₅ [control] | C₄ | C₄ | 1.5000 | **1.4989** | 1.5000 ✓ | 2.0000 | 0.5 |\n\nS₄ carries 2.0944 bits of splitting entropy and leaks exactly 1 bit; A₄'s [3,1] type fills both non-trivial C₃-cosets (loss exactly 2/3); D₄'s [2,2] merges two cosets; V₄'s three involutions all give [2,2]. Within-coset flatness at permutation nulls (z ≤ 0); thickening honest at the 0.004-bit level; coprime flat.\n\n### The REVERSAL\nPaper 77 ordered the control pair by forks: V₄ 0.8113 > D₄ 0.2936. The type channels order it **the other way**: V₄ 0.8092 **<** D₄ 1.6555. The readout's coset-separation — not the group's abelianness — decides which channel is richer. Both orderings are exact instances of the same law.\n\n### Semiprime (400k MC/field, unramified pools)\nS₃a **1.0001**, S₃b **1.0001**, S₄ **1.0034** vs law 1.0000 — **the C₂ cap is a theorem about the abelianization, not the type count** (a 5-type S₄ field cannot exceed the quadratic 1 bit). A₄ **0.4729** vs 0.4739 (dial-pair 1.5850). D₄ **1.4325** vs 1.4302 — a non-abelian channel ABOVE 1 bit, as its 2-D abelianization predicts. V₄ **0.2902** = Is(4) (paper-79 2-state identity). C₄ **1.2461** vs 1.25 (paper 78). Which-factor walls 0.0000–0.0001; pinned-fork s-projections reproduce Is(2)/Is(3)/Is(4) (papers 74/75).\n\n### Method notes\nQuartic types via F_{p²}-root counting ((nr, nr₂) from x^(p²) mod f + gcd) — the cubic-resolvent shortcut is INVALID for binomial/special quartics (x⁴−2's axis pairing is D₄-fixed; V₄'s resolvent splits over ℚ). Sparse-modulus discipline: permutation-null thickening and 400k MC (30k would leave ~0.10-bit bias in S₄'s 282×15-cell table). Runtime 314 s, all asserts green.\n\n### All 8 barriers\n(a) clean — law + full table stated before the run, measurement independent of the dial; (b) clean — no non-abelian type-channel work in the Catalog (698-pkg scan: nearest are the lab's own #723–#728) or literature; (c) confronted — real Galois groups, 23k-prime histograms < 2% from class sizes, 400k-draw MC; (d) clean — deterministic + fixed seeds; (e) the substance — finite-sample margins quantified (S₄ +0.0100; thickening at 0.004-bit level under nulls); (f) controlled — exact laws vs MC asserted to 0.02, both estimator traps caught and repaired; (g) fair — V₄/C₄ controls reproduce papers 77/78/79 through the identical pipeline; (h) closure — symmetric (which-factor 0.0000, barrier 2), residue dial (barrier 5), N-computable only behind the CRT split (barrier 6), Galois + Chebotarev 1922 + reciprocity (barrier 8).\n\n### What closes\nThe **type-channel program is complete**: papers 70 (flatness), 71 (criterion), 72–74 (binary laws), 75–77 (group table), 78–79 (abelian types) are all projections of one statement — the complete symmetric residue channel of splitting statistics equals the type's mutual information with the abelianization coset. Perfect groups (G^ab = 0) predict zero and paper 76's A₅ is already flat.\n\nNow 415 experiments. Assessment v191. Paper 80.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3389",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T07:46:13.683032+00:00",
+    "title": "FACT round-24 #1 — NONABELIAN-TYPE-CHANNEL: the type channel is exactly its abelianization content (paper 80)"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "97faef64",
+    "description": "## FACT round-24 #3 — QUINTIC-TYPE-CHANNEL (paper 82, /tmp/exp_quintictypechan.py, /tmp/r24n3f.log)\n\n**Verdict name: THE-ABELIANIZATION-LAW-AT-DEGREE-FIVE.**\n\n### Result\nThe abelianization law (paper 80) holds at degree 5 on the program's **first C₄-abelianization object**: the Frobenius group **F₂₀ = AGL(1,5)** via x⁵−2. Prime: **I(p mod 5; T) = 1.4989 vs pre-stated 1.5000** — H(T) = 1.6805 bits of quintic splitting entropy collapse through the 2-bit quartic dial, with the [1,4] type merging the two order-4 cosets {2,3} for a loss of **exactly 0.5 bit**. Semiprime: pair = **1.2462 vs class-enumeration law 1.2500**; and the [1,2,2]-fork (⟺ p ≡ 4 mod 5) realizes **Is(4) as an order-4 pinned fork on a non-abelian field** (0.2915 vs 0.2947) — previously order-4 split-counts existed only on abelian V₄ and the joint-AND D₄ fork (paper 77).\n\n### The law table\n| field | G | G^ab | H(T) | I₁ measured | law | dial | loss |\n|---|---|---|---|---|---|---|---|\n| F₂₀ x⁵−2 | F₂₀ | C₄ | 1.6805 | **1.4989** | 1.5000 ✓ | 2.0000 | 0.5 |\n| C₅ Q(ζ₁₁)⁺ [control] | C₅ | C₅ | 0.7219 | **0.7198** | 0.7219 ✓ | 3.3219 | 2.6 |\n\nSemiprime (400k MC): F₂₀ pair **1.2462** vs 1.2500 ✓ (reads 1.25 of the 2-bit dial — the largest fraction of any merged-type field in the program); C₅ pair **0.2026** vs Is(5) = 0.2027 ✓ (paper-79 f=11 reproduced). Which-factor walls 0.0000; coprime flat; within-coset flatness z = +0.00; thickening agrees to 0.0001.\n\n### The instructive failure (record as method)\nFirst run swapped the coset labels of the multiplier-3/-4 families relative to the C₄ valuation (V(3)=3, V(4)=2). **Invisible at the prime level** — both merged classes share type [1,4], so I₁ is unchanged — but it corrupted the pair enumeration (law 1.1250 vs true 1.2500). The 400k MC caught it: measured 1.2462 sat on the *corrected* value. **Lesson: the pair law is the discriminating test of coset bookkeeping precisely where type-merging hides it.** Method legacy: quintic type dictionary via F_{p²}-root counting is (5,5)/(1,1)/**(1,5)**/(0,0) — (1,5), not the quartic-carried (1,3): both quadratic pairs' roots live in F_{p²}\\F_p.\n\n### All 8 barriers\n(a) clean — four horns with exact values pre-stated; (b) clean — no quintic type-channel work in the Catalog; (c) confronted — real F₂₀ field, ~23k-prime histograms < 2% from class sizes, 400k MC; (d) clean — fixed seeds; (e) the substance — margins quantified (−0.0011/−0.0038/−0.0032), coset-swap episode documented; (f) controlled — four harness defects caught across five runs by asserts/MC-law disagreement; final run ALL_DONE all-green; (g) fair — C₅ abelian control reproduces paper 79 through the identical pipeline; (h) closure — symmetric (wall 0, barrier 2), residue dial (5), CRT-sealed (6), Kummer/affine classical (8).\n\n### What this decides\nThe abelianization law now spans **degrees 2–5** and abelianizations **C₂, C₃, C₄, C₂×C₂, Cₙ**: I(p mod m\\*; T) = I(T; coset), pair law verbatim, the type-vs-dial gap always exactly the entropy of the cosets the type cannot tell apart. The type-channel face of the program is complete at every tested group; the frontier returns to the quantum channel (QUBIT-TRADE) and the barrier-4 converse.\n\nNow 417 experiments. Assessment v193. Paper 82.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3411",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T13:59:52.029699+00:00",
+    "title": "FACT round-24 #3 — QUINTIC-TYPE-CHANNEL: the abelianization law at degree five, F₂₀ and the first C₄ dial (paper 82)"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "a3b670e2",
+    "description": "## FACT round-24 #2 — BERGGREN-3ADIC (paper 81, /tmp/exp_berggren3adic.py, /tmp/r24n2.log)\n\n**Verdict name: THE-TREE-POSITION-IS-ADICALLY-SEALED.**\n\n### Result\nThe Berggren tree position of the N-node (the Fermat pair of a semiprime, paper 56's exact embedding) carries **NO N-visible residue structure beyond the trace**. The channel decomposes into (i) a deterministic 3-adic skeleton that *restates* N mod 3 exactly, and (ii) a metric layer — branch letters, depth, path composition — that is **blind at every 3-adic level 3^k, k ≤ 6**. The Catalog's 3-adic Cantor boundary (#855) has no N-computable projection beyond the trace-set content.\n\n### The four horns (all stated before the run; all confirmed)\n- **H1 SKELETON (deterministic lemma)**: squares mod 3 = {0,1} + m⊥n ⟹ N ≡ 1 ⟺ 3|n, N ≡ 2 ⟺ 3|m, N ≡ 0 ⟺ 3∤mn — agreement **40000/40000 = 100%**. And it RESTATES the trace: 3|n ⟺ q≡p mod 3 ⟺ N ≡ p² ≡ 1 mod 3, also **40000/40000** — zero information beyond N mod 3 (barrier 6).\n- **H2 PARENT-INTERVAL LAW (new exact lemma)**: the Berggren parent is decided by the ratio alone — m/n ∈ (1,2) → T₁ = (n,2n−m); (2,3) → T₂ = (n,m−2n); (3,∞) → T₃ = (m−2n,n). Verified on all **40000/40000** descents terminating exactly at root (2,1), plus **86,634 spot-checked steps** with child-map reconstruction (B₁(m,n)=(2m−n,m), B₂=(2m+n,m), B₃=(m+2n,n)) exact on every step.\n- **H3 METRIC BLINDNESS**: I(N mod 3^k; b_t) at the 300-shuffle permutation null for every letter depth t ≤ 10 and level k ≤ 6; same for depth dB and composition (c₁,c₂,c₃). **Worst z = +2.51 across ~150 tests** (k=1: I(N mod 3; b₁) = 0.00004 vs null 0.00004, z = +0.04).\n- **H4 CONTROLS (live)**: trace lemma I(N mod 3; s mod 3) = **1.0000** exact (paper 50); I(ratio-band; b₁) = **1.4738 = H(b₁)** EXACTLY — the first branch letter is a deterministic function of the m/n band, whose recovery IS the factorization; corr(log dB, log gap) = −0.141 replicates paper 56's anti-correlation.\n\n### Sample\n40,000 random semiprimes (p,q uniform primes in [2¹⁶, 2²⁴)), Miller-Rabin (12 bases), capped descents (5000 steps): twin-prime nodes n=1 descend stepwise in m and are censored — **42/40402 = 0.10%**, reported. Runtime 154 s.\n\n### Why this matters\n- Paper 56's orthogonality is sharpened from coordinate-level to **adic strength**: coordinates orthogonal AND position sealed.\n- Tree-adic dials join the closed residue-dial family (papers 54/70/72–74/77/79/80): no dial exceeds its trace-set content; the metric interior requires the factorization to read.\n- The gold-tier interference claim (#829, \"exact factorisation by interference of Pythagorean triples\", polynomial-time per its filename) has no formula in the index, but this result fences it: any such method must either smuggle the Fermat pair (circularity, barrier 6) or pay Ω(N) aggregation (barrier 4).\n\n### All 8 barriers\n(a) clean — four horns pre-stated, measurement object ≠ instrument; (b) clean — no tree-position channel work in the Catalog (nearest: our own echo #707); (c) confronted — 40k real semiprimes, 86,634 verified steps, ~150 null-tested channels; (d) clean — fixed seeds; (e) the substance — blindness asserted against empirical nulls, censoring reported, worst z +2.51 < 3 without multiplicity correction; (f) controlled — lemmas asserted at 100%, ALL_DONE marker; (g) fair — two live positive controls fire (trace 1.0000; band-determinism = H(b₁)); (h) closure — symmetric by construction, skeleton circular (6), metric layer needs factors (5/6), descent = classical Euclidean algorithm in disguise (8).\n\n### What closes\nThe Pythagorean-tree line is now closed at three strengths: embedding exact (paper 56), coordinates orthogonal (paper 56), position adically sealed (this paper). Frontier returns to the quantum channel (QUBIT-TRADE phase diagram) and the barrier-4 converse.\n\nNow 416 experiments. Assessment v192. Paper 81.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3412",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T13:59:52.031024+00:00",
+    "title": "FACT round-24 #2 — BERGGREN-3ADIC: the tree position of the N-node is adically sealed (paper 81)"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "a977122a",
+    "description": "## FACT round-24 #5 — D₅-QUINTIC (paper 84, /tmp/exp_d5quintic.py, /tmp/r24n5f.log)\n\n**Verdict name: THE-QUINTIC-ROW-COMPLETE.**\n\n### Result\nThe last untested transitive quintic group confirms the abelianization law **exactly** — and the round invented its own object: no literature polynomial was needed, because the type histogram IS the Chebotarev group readout. A scan of x⁵+ax+b (|a|,|b| ≤ 60) found **four D₅ quintics in seconds**, each with square discriminant and the exact signature {[1⁵]: ≈0.10, [5]: ≈0.40, [1,2,2]: ≈0.50}.\n\n### The subtlety: where D₅'s C₂ lives\nD₅ ⊆ A₅ ⟹ √disc(f) ∈ ℚ ⟹ the abelianization's quadratic subfield K is **not** Q(√disc). Theory locates it — splitting-field ramification = root-field ramification ⟹ K = Q(√d), d squarefree over f's ramified prime set — and candidate enumeration + Kronecker matching identifies **K = Q(√−5) at agreement 1.0000, uniquely**, for x⁵+20x+32 (m\\* = 20 = Q(√−5)'s fundamental discriminant).\n\n### Results (all asserts green, 105 s)\n- Type rates within 0.002 of {1/10, 4/10, 5/10}; no non-D₅ type ever occurs; H(T) = 1.3610 bits.\n- Sign vs kron(−5, p): agreement **1.0000**.\n- **I(p mod 20; T) = 1.0000 vs law 1.0000 — exact to four decimals** (bias +0.0001 at the small conductor: the cleanest cell of the program).\n- Semiprime (400k MC): pair = **1.0000 vs null 1.0000** (z = +1.06); reflection-fork s-projection = **1.0000 vs Is(2)**; which-factor wall 0.0000.\n\n### THE COMPLETED QUINTIC TABLE\n| group | polynomial | G^ab | H(T) | I₁ measured | law | pair |\n|---|---|---|---|---|---|---|\n| C₅ | Q(ζ₁₁)⁺ | C₅ | 0.7219 | 0.7198 | 0.7219 ✓ | Is(5) ✓ |\n| **D₅** | **x⁵+20x+32** | **C₂** | **1.3610** | **1.0000** | **1.0000 ✓** | **1.0 ✓** |\n| F₂₀ | x⁵−2 | C₄ | 1.6805 | 1.4989 | 1.5000 ✓ | 1.25 ✓ |\n| A₅ | x⁵+20x+16 | 1 | 1.6555 | **0** | 0 ✓ | 0 ✓ |\n| S₅ | x⁵−x−1 | C₂ | 2.5574 | 1.2158* | 1.0 ✓ | 1.0 ✓ |\n\n(*permutation-referenced at the sparse 2869-class dial.) One law, five groups, no exceptions — the gap always exactly E[H(coset|T)].\n\n### All 8 barriers\n(a) clean — predictions pre-stated conditional on identification; identification self-validating via Chebotarev histograms; (b) clean — no D₅ type-channel work in the Catalog; (c) confronted — real D₅ fields, histograms < 0.2% from class sizes, 400k MC; (d) clean — fixed seeds; (e) the substance — the program's cleanest cell (bias +0.0001); K-identification asserted at unique exact agreement; (f) controlled — three harness iterations disclosed (modulus-scan failure → theory-grounded candidate enumeration; even-numerator Jacobi bug → Kronecker helper); (g) fair — walls zero, coprime flat, controls are papers 78–82's reproduced values; (h) closure — symmetric (2), residue dial at m\\* = 20 (5), CRT-sealed (6), classical Galois/Kummer/reciprocity (8).\n\n### What closes\n**The transitive-quintic row is complete: 5/5 groups.** The type-channel program has measured every group structure it can name across degrees 2–5, always with the same outcome: I(p mod m\\*; T) = I(T; coset) exactly, the pair law verbatim, the gap exactly the type's coset-ambiguity entropy. Frontier: the quantum channel (QUBIT-TRADE phase diagram) and the barrier-4 converse.\n\nNow 419 experiments. Assessment v195. Paper 84.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3413",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T14:54:02.516407+00:00",
+    "title": "FACT round-24 #5 — D₅-QUINTIC: the quintic row complete (paper 84)"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "04a8c3de",
+    "description": "## FACT round-24 #4 — S₅/A₅ QUINTIC ENDPOINTS (paper 83, /tmp/exp_s5a5quintics.py, /tmp/r24n4k.log)\n\n**Verdict name: THE-TYPE-CHANNEL'S-TWO-EXTREMES.**\n\n### Result\nThe transitive-quintic row's two extremes confirm the abelianization law in opposite directions:\n\n- **S₅ via x⁵−x−1** (true disc **2869 = 19·151** — not the quartic's −283): seven factorization types, **H(T) = 2.5574 bits — the largest type entropy measured in the program** — reduce to the single quadratic-residue bit of N mod 2869. Sign agreement 1.0000; **I₁ = 1.2157 sits exactly at its within-sign permutation null 1.2188 (z = −0.85)** — the raw excess over the law's 1.0000 is entirely sparse-dial plug-in bias (+0.2188). Semiprime pair = **1.0648 vs null 1.0639** (gap 0.0009); sign-fork s-projection = **1.0023 vs Is(2) = 1.0000**.\n- **A₅ via x⁵+20x+16** (perfect group): **the complete four-state type channel is SEALED** — I(p mod m; T) at the permutation null for m ∈ {3,7,11,31}, worst |z| = 1.72; semiprime pair = **0.0004 ≈ 0**; no odd-type readout ever occurs. 1.6555 bits of splitting entropy, and N cannot hear one of them from any residue direction. Paper 76's fork flatness, extended to the full channel.\n\n### The measurement ledger (6 defects caught by designed checks across 8 runs)\n1. [3,2] dictionary entry: (nr, nr₂) = (0,**2**), not (0,4) — one quadratic pair contributes two F_{p²}-roots (caught by the p=2 crash).\n2. Discriminant migration: disc(x⁵−x−1) = 2869, not −283 (caught by repeated factors mod 151).\n3. Sign-encoding inversion: agreement 0.0000 = perfect anti-correlation = the law confirming itself through a flipped convention.\n4. Sparse-dial plug-in bias on the HEADLINE I₁ (+0.22 bits at a 2868-class dial) — fixed by permutation reference (the paper-70 lesson extended to primary quantities).\n5. Null design: permuting labels within strata DELETES the through-stratum coset channel; must permute the data.\n6. tid/string mismatch making strata ≡ 0 (a global shuffle masquerading as stratified).\n\nProtocol lessons adopted: every MI at large conductors is permutation-referenced; a null must preserve exactly the channel the law predicts and randomize only the finer assignment; exact 0/1 agreement flags encoding bugs before physics.\n\n### All 8 barriers\n(a) clean — parameter-free predictions (A₅'s zero needs no tuning); (b) clean — no S₅/A₅ type-channel work in the Catalog; (c) confronted — real fields, histograms < 2% from class sizes, 400k MC, four moduli × 200-shuffle nulls; (d) clean — fixed seeds; (e) the substance — all comparisons permutation-referenced at large conductors, full defect ledger disclosed; (f) controlled — six defects caught by designed checks, final run ALL_DONE all-green; (g) fair — which-factor walls ≤ 0.0001, coprime flat, the A₅ zero self-controls against papers 78–82's live detections; (h) closure — symmetric (2), residue dial (5), CRT-sealed (6), classical Galois/reciprocity/Chebotarev (8).\n\n### What closes\nThe quintic row is measured on 4/5 groups (D₅ pending a verified polynomial); the abelianization law confirmed at EVERY abelianization type existing for degrees 2–5: trivial (A₅), C₂ (S₃/S₄/S₅), C₃ (A₄), C₄ (F₂₀), C₂×C₂ (D₄/V₄), Cₙ (abelian controls). The type-channel program is complete at every tested group.\n\nNow 418 experiments. Assessment v194. Paper 83.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3414",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T14:54:02.517783+00:00",
+    "title": "FACT round-24 #4 — S₅/A₅ QUINTIC ENDPOINTS: the largest entropy collapses, the perfect group seals (paper 83)"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "1a4b5fe9",
+    "description": "## FACT round-25 #3 — QUBIT-TRADE4 (paper 87, /tmp/exp_qubittrade4.py, /tmp/r25n3.log)\n\n**Verdict name: THE-STANDARD-CORNER-IS-OPTIMAL.**\n\n### Result\nThe third resource axis — **base re-draws k**, real Shor's escape from the per-N unlucky cap (paper 86) — completes the surface, and its total-cost accounting places the optimum at the textbook parameterization:\n\n- **H1 cap lift**: at t = wall, s = 5: k=1 → 0.504, k=2 → 0.735, k=4 → 0.940 — following 1−(1−p₁m)^{ks} exactly (m ≈ ½ mixed-role fraction).\n- **H2 three-way fungibility**: mean ΔP = +0.18 per single-resource doubling across 12 mixed-axis steps, positive everywhere below saturation.\n- **H3 standard-corner optimality** (corrected accounting, disclosed): reaching P ≥ 0.3 costs G ≈ k·s·t² = **6400 at the full-register corner** vs 14440 at wall−2 and 51840 at wall−4 — shaving width costs exponential samples/re-draws against a quadratic saving.\n\n### Frontier (ii) closed\nPaper 47 threshold → paper 85 ramp → paper 86 cap → paper 87 optimum. **DEQUANT final form**: the fungibility surface exists, every point of it is quantum resource, its minimum sits at the standard corner, and no point approaches classical factoring complexity.\n\n### Population & method\n24 constructed controlled-order semiprimes (12 mixed-role / 12 same-role), K = 6 independent bases per N with fresh role structure, progression kernel from papers 85–86, cells t ∈ {wall−4, −2, 0} × s ∈ {1, 5, 20} × k ∈ {1, 2, 4}, 20 trials each. Runtime ~30 s.\n\n### All 8 barriers\n(a) clean — horns pre-stated; H3's accounting bug found post-run and corrected from raw data (both numbers shown); (b) clean; (c) confronted — 24 real semiprimes × 6 bases × 27 surface points; (d) clean — fixed seeds; (e) the substance — cap-lift and ΔP quantified, bug disclosed; (f) controlled — machinery inherited from validated rounds; (g) fair — balanced role population by design, consistency with papers 85–86; (h) closure — no parameter tuning of Shor improves its total cost; classical complexity remains the only competition (barrier 8), aggregation prices every classical route (barrier 4).\n\nNow 422 experiments. Assessment v198. Paper 87.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3415",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T15:49:12.718353+00:00",
+    "title": "FACT round-25 #3 — QUBIT-TRADE4: the three-axis resource surface, standard-corner optimum (paper 87)"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-25 #2 — QUBIT-TRADE3 (paper 86, /tmp/exp_qubittrade3.py, /tmp/r25n2h.log)\n\n**Verdict name: THE-RAMP-SURVIVES-CONTACT-WITH-FACTORS.**\n\n### Result\nThe fungibility ramp (paper 85) extends from abstract certification to **real factor extraction**: on constructed controlled-order semiprimes (r ∈ {210, 310, 434, 510}), P_factor(s=1) climbs the same ladder — **0.018 / 0.056 / 0.158 / 0.181** across t = wall−4 … wall+2 — and samples compound as independence wherever the cap allows. One new structural element: a **per-N unlucky cap that sample count cannot move**.\n\n### The construction (invented this round)\nReal ord_N(a) is lcm(p−1, q−1)-scale (~2³⁰) — register simulation impossible. Built controlled-order semiprimes instead: primes p ≡ 1 mod r directly, order-r elements by projection h^((p−1)/r), CRT-combined with randomized per-prime orders d_p, d_q ∈ {r, r/2}. This surfaced a structural fact: **ord_p(a) = ord_q(a) exactly ⟹ a^{r/2} ≡ −1 mod both primes ⟹ N never factors from period certificates** — the permanently-unlucky case real Shor escapes by re-drawing a.\n\n### Results\n- Ramp persists: P_factor(s=1) = 0.018 → 0.181 along t; nocert share 0.003 at/above wall−2 (certification is not the bottleneck — paper 85's ramp).\n- Ladders track independence under the cap (wall−2: 0.056/0.204/0.471 ≈ 1−(1−0.06)^s).\n- **Saturation ≈ 0.53** = cert-rate × mixed-role fraction (~⅔): the unlucky-half cap is per-N structural; s cannot push past it.\n- Taxonomy: spurious-or-partial certificates **0.844**, unlucky 0.109, factor 0.044, nocert 0.003 — the dominant classical burden is certificate filtering, which is exactly N-verification's role.\n\n### Method ledger (4 catches across 6 launches)\nOrder blow-up (naive r ~ 2³⁰ unsimulatable); simultaneous-order search impossible (~10⁻⁷ density) → CRT construction; equal-order = permanent unluckiness (first measurements all-zero); infinite loop on odd half-orders + first-certificate early-return masking later splitting ones + a hardcoded verdict string replaced by data-computed output before any claim was made.\n\n### All 8 barriers\n(a) clean — horns pre-stated; the population design implements the cap rather than assuming it; (b) clean — no real-N ramp work in the Catalog; (c) confronted — actual semiprimes, exact orders, full gcd-based extraction; (d) clean — fixed seeds; (e) the substance — cap measured not assumed, taxonomy quantified, defects disclosed; (f) controlled — dishonest-verdict catch before any claim; (g) fair — shares consistent with paper 85 through the identical kernel; (h) relevance — Shor's short-register regime prices in samples linearly, capped by the unlucky-base structure that base re-drawing removes classically (barriers 4/8).\n\nNow 421 experiments. Assessment v197. Paper 86.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3416",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T15:49:12.719442+00:00",
+    "title": "FACT round-25 #2 — QUBIT-TRADE3: the fungibility ramp on real semiprimes (paper 86)"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-25 #1 — QUBIT-TRADE2 (paper 85, /tmp/exp_qubittrade2.py, /tmp/r25n1g.log)\n\n**Verdict name: ONE-REGISTER-BIT-IS-WORTH-ONE-SAMPLE.**\n\n### Result\nThe qubit/sample phase diagram of Shor period-finding is a **fungibility ramp**, not a wall. The pre-stated vertical-wall hypothesis (odd r ⟹ deterministic certification failure below t = 2log₂r) was **honestly refuted** by the correct measurement kernel: under the standard arithmetic-progression distribution P(k) = (1/Mq)·|sin(πMkr/q)/sin(πkr/q)|² (M ≈ q/r), the per-sample certification rate follows **P₁ ≈ ramp(q/r²)**, and samples compound it as P_s = 1−(1−P₁)^s. The measured exchange law: **t\\*(s) shifts by −log₂ s** — one register bit is worth one sample.\n\n### The three measurements\n1. **The single-sample ramp**: P₁ rises smoothly with q/r² through odd/mixed families (4·odd: 0.003 at q/r² = 0.028 → 0.36 at 0.905 → plateau ≈ 0.46); pure powers of two are flat-saturated (~0.5 at every ratio — peaks exactly on grid points).\n2. **Sample ladders out-of-sample**: P_s tracks 1−(1−P₁)^s tightly everywhere (odd prime at wall−1: P₁ = 0.725 → s=2: 0.940 vs predicted 0.924; 2·odd at wall−3: P₁ = 0.055 → s=20: 0.680 vs predicted 0.677).\n3. **The exchange law** (odd composite 1155, wall t = 21): t\\*(P≥0.5) shifts {s=2: +0, s=5: −2, s=20: −4, s=100: −6} against −log₂s = {−1, −2.3, −4.3, −6.6}. (s=1 never crosses 0.5: the saturation level P₁ ≈ 0.37 *is* the standard per-sample rate.)\n\n### The honest refutation\nThe stated-before-run mechanism (deterministic sub-wall failure for odd r) holds only for the WORST-case peak position; actual peak positions spread over [0, ½], so certification succeeds at rate ≈ q/r². Round-14's \"10 samples fail\" was the deep-ramp limit (q/r² ≈ 0). The refutation, not the confirmation, produced the round's law.\n\n### Method ledger (3 designed-check catches across 6 runs)\n1. **Wrong kernel**: contiguous-block Dirichlet instead of the progression kernel — flagged by its degenerate signature P(k=0) = 1 at q = r; the first vertical-wall table was an artifact of the wrong ensemble.\n2. **Post-processing swamp**: lcm-of-candidates dies on spurious small-denominator certificates; replaced by the clean CERTIFICATION STATISTIC (∃ sample whose CF passes 1/(2b²) with b = r — necessary condition for any post-processing; classical period-verification free).\n3. Degenerate regimes documented: pure powers of two at t = v₂(r) give uniform outcomes (entropy = log₂q, r-independent — genuinely no information).\n\n### All 8 barriers\n(a) clean — pre-stated hypothesis refuted by pre-registered measurement; replacement law validated out-of-sample on ladders; (b) clean — no exchange-rate work in the Catalog (nearest: our own paper 47); (c) confronted — exact distributions (no shortcuts), five structured periods, 300-trial cells; (d) clean — fixed seeds; (e) the substance — closed-form predictions vs MC ±0.03, full defect ledger disclosed; (f) controlled — every anomaly traced to root cause before proceeding; (g) fair — ladders are out-of-sample validations; families distinguished; (h) relevance — Shor's register can be shortened by paying samples linearly (1 bit ↔ 1 sample) until both explode together: the quantum advantage is preserved but quantitatively graded, sharpening DEQUANT beyond paper 47's binary threshold (barriers 4/8).\n\n### What this decides\nFrontier (ii) gains its quantitative face: the quantum channel's resource bound is a smooth two-dimensional trade-off curve with unit slope, not a threshold.\n\nNow 420 experiments. Assessment v196. Paper 85.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3417",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T15:49:12.720386+00:00",
+    "title": "FACT round-25 #1 — QUBIT-TRADE2: one register bit is worth one sample, the fungibility ramp (paper 85)"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-27 #2 — BATTERY-CAPACITY (paper 92, /tmp/exp_batterycapacity.py, /tmp/r27n2b.log)\n\n**Verdict name: SYNERGY-COMPOUNDS.**\n\n### Result\nThe 4-field joint channel (CRT modulus 31·23·9·8 = 51 336) on one shared semiprime population carries **I = 8.2246 bits against the additive prediction Σ marginals = 3.9099 — synergy +4.31 bits, more than doubling it**, within 1.3 bits of the joint-label-entropy ceiling (9.5276).\n\n### The order decomposition — synergy is genuinely higher-order\n| order | total synergy |\n|---|---|\n| k = 2 (6 pairs) | +0.244 |\n| k = 3 (4 triples) | **+3.822** |\n| k = 4 (the battery) | **+4.315** |\n\nPairwise synergies — the entire content of paper 91's pairwise table — are only **6% of the total**. Mechanism: N mod 31 alone sees one residue of pq mod 31; the CRT-joint modulus sees all four residues simultaneously (15.8 log₂ units), against which each dial's pair labels become nearly fully determined.\n\n### Honest caveat\nThe which-factor statistic on the full joint code reads 0.0469 bits — above every pairwise wall. Suspected sparse-plug-in bias (tens of thousands of residue-columns vs 30k samples — the paper-70/83 regime), not signal; the factor-blindness claim stands on the well-conditioned strata plus this analysis.\n\n### What revises what\nPaper 91's \"neither additive nor comonotone\" survives; its implicit scale does not: **batteries are super-additive systems whose capacity grows toward the joint label-entropy ceiling with dominant higher-order terms**. For the converse, this raises the stakes on no-pinning: a k-dial battery carries far more symmetric capacity than marginal bookkeeping suggests — every bit still trace-routed and factor-blind, but the capacity arithmetic must be done jointly (exactly this machinery), never marginally.\n\nNow 427 experiments. Assessment v203. Paper 92.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3427",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T16:52:15.027841+00:00",
+    "title": "FACT round-27 #2 — BATTERY-CAPACITY: synergy compounds, the 4-field joint more than doubles its marginals (paper 92)"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-27 #1 — DIAL-INDEPENDENCE (paper 91, /tmp/exp_dialindependence.py, /tmp/r27n1c.log)\n\n**Verdict name: SYNERGY-AND-OVERLAP.**\n\n### Result\nThe battery space is **neither additive nor comonotone**. The pre-stated coprime-conductor additivity hypothesis was refuted at the first pair, and the refutation is directional:\n\n| battery | I(joint) | I₁ + I₂ | Δ |\n|---|---|---|---|\n| S₃a@31 × S₃b@23 | 2.1314 | 2.0024 | **+0.129 SYNERGY** |\n| A₄@9 × D₄@8 | 1.9125 | 1.9076 | **+0.005 near-additive** |\n| S₃a@23 × S₃b@23 (shared disc −23) | 1.0104 | 2.0024 | **−0.992 OVERLAP** |\n\n### Mechanism\nThe additivity argument treated dial labels as independent draws. They are not: both dials read the **same underlying (p, q)**, so their label entropies are population-correlated, and the joint modulus (CRT-seeing p mod m₁ AND q mod m₂ simultaneously) extracts combinations neither marginal reaches. Synergy is structure-dependent — rich-type pairs synergize (+0.129), lossy-type pairs barely (+0.005). Shared conductor structure makes dials comonotone: two −23 cubics share essentially their entire channel through the common quadratic character (**overlap 0.992 bits**) — the quantitative form of \"same subfield = same dial\".\n\n### Verification discipline\nMarginals re-verified against papers 80/82 BEFORE any joint measurement (1.0012 / 1.0012 / 0.4733 / 1.4342 — every prior value reproduced). Which-factor walls ≤ 0.0016 across every joint channel: all synergized and overlapping content remains symmetric, trace-routed, factor-blind.\n\n### Method ledger\nShared-pool ramification bug caught pre-launch (index draws including other fields' ramified primes; fixed by union exclusion {31, 23, 2, 3}); the naive additivity gate converted into a recorded synergy measurement rather than silently loosened.\n\n### What this decides\nThe converse's no-pinning scope covers product batteries with their synergy excesses included: k dials give more than k·(marginal) for structurally rich pairs and less for shared-structure pairs — all computable by this exact joint machinery, all still on the traced side of barrier 4.\n\nNow 426 experiments. Assessment v202. Paper 91.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3428",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T16:52:15.029147+00:00",
+    "title": "FACT round-27 #1 — DIAL-INDEPENDENCE: synergy and overlap in the battery space (paper 91)"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-26 #3 — SUBEXP-STRATUM (paper 90, /tmp/exp_subexpstratum.py, /tmp/r26n3e.log)\n\n**Verdict name: THE-STRATUM-STAYS-UNMEASURED — an honest inconclusive.**\n\n### Result\nThe fourth stratum (sub-exponential sieves, L_{1/2}) **could not be measured at toy scale**. With x uniform in [√N, 2√N], per-sample u = log(x²−N)/log B, 2400 samples over six (N, B) cells, compared against numerically-integrated Dickman ρ:\n\n| u | n | empirical | ±1σ | ρ(u) numeric | ratio |\n|---|---|---|---|---|---|\n| 3.0 | 161 | 0.0124 | 0.0087 | 0.0487 | 0.26 |\n| 3.5 | 265 | 0.0302 | 0.0105 | 0.0163 | 1.86 |\n| 4.0 | 413 | 0.0073 | 0.0042 | 0.0049 | 1.47 |\n| 5.0 | 303 | 0.0033 | 0.0033 | 0.00036 | 9.27 |\n\nRatios scatter non-monotonically (0.26–9.3); most bins underpowered at ±σ ≈ 100% relative; three bins sit where ρ predicts below MC reach. The toy cost model C(B) = π(B)/ρ(u) + π(B)² fits d(log₂C)/d(log₂N) = 0.024 — flat, cannot place the stratum.\n\n### Two real findings inside the null\n1. **The leading-term Dickman approximation is invalid at small u**: exp(−u(ln u + ln ln u − 1)) gives 0.561 at u = 3 where true ρ(3) = 0.0487 — **a 12× error**, persisting through u = 6. Proper numerical integration implemented (Euler 5×10⁻⁴ on uρ′(u) = −ρ(u−1)). Any informal smoothness argument using the leading-term form below u ≈ 8 is quantitatively meaningless.\n2. **x²−N smoothness is not random-integer smoothness at toy scale**: even against correct ρ the ratios are non-monotone — consistent with the quadratic-character constraint on prime divisors of x²−N, whose O(1) corrections stabilize only asymptotically.\n\n### Method ledger\n(1) First design sampled x in a width-10³ window (x²−N ~ N^{1/2+}-scale) while computing u at N-scale — the entire first comparison mis-binned (caught by empirical-above-predicted anomalies). (2) A pre-written success VERDICT over contradicting data — replaced by data-computed output before claims. (3) Trailing-quote syntax break caught by ast.parse.\n\n### What this decides\nThe landscape stands at **three measured strata plus one unmeasured**. Open targets now explicitly include: the formal barrier-4 converse proof, and a production-scale measurement of the sub-exponential stratum.\n\nNow 425 experiments. Assessment v201. Paper 90.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3429",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T16:52:15.030330+00:00",
+    "title": "FACT round-26 #3 — SUBEXP-STRATUM: the fourth stratum stays unmeasured at toy scale, an honest inconclusive (paper 90)"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-26 #2 — THREE-STRATA-PLANE (paper 89, /tmp/exp_threestrata.py, /tmp/r26n2c.log)\n\n**Verdict name: THE-THREE-STRATA-PLANE.**\n\n### Result\nThe full factoring landscape in **three measured strata** under identical conditions — barrier 4 prices the definition-routes, barrier 8 owns the methods, Shor owns the quantum corner, and each price is measured, not asserted:\n\n**STRATUM A — definition-routes (α ≥ 0.4 on N):**\n| witness | α |\n|---|---|\n| M1 gcd-scan | 1.000 (paper 88) |\n| idempotent scan | 1.000 (paper 88) |\n| zero-divisor first hit | ~½ (paper 88) |\n| CF period | 0.398 (paper 88) |\n| **τ(N), σ₁(N) trial division** | **0.500 to three decimals** (this round; σ₁ = 1+N+p+q exact at every size) |\n\n**STRATUM B — classical methods as data, not citation:**\n- trial division: mean log₂cost 19.30, median 19.36 (= E[min(p,q)] scale; the factor itself is the certificate)\n- Fermat: mean = median = 19.36 — indistinguishable from trial division on uniform draws (gap cost tail-dominated)\n- Pollard ρ: mean log₂cost 8.73; size-stratified slope 0.523 per prime-bit ⟹ **α on N = 0.261 vs the 0.25 birthday bound** (standalone check: log₂ops = bits/2 − 1 exactly)\n\n**STRATUM C — quantum:** poly(log) — papers 85–87's fungibility surface with unit exchange rate.\n\n### The structure-blindness price\nτ-definition-scan vs Pollard ρ at fixed N: **173× (2¹⁶) → 1780× (2²⁰) → 2070× (2²⁴) → 8310× (2²⁸)** — growing with N. The measured price of structure-blindness: evaluating a witness from N alone versus exploiting what it is.\n\n### Method ledger\n(1) The ρ exponent first read 0.523 — a units mismatch (slope per prime-bit vs per-N; log₂N = 2·bits), caught by its own gate, corrected to 0.261, confirmed standalone. (2) The N = 2³⁶ blindness row would have run for hours — capped honestly rather than approximated silently.\n\n### All 8 barriers\n(a) clean — horns pre-stated, own gate caught own units error; (b) clean — three-strata unification new, method costs textbook but here measured identically; (c) confronted — real timings, 40-draw calibrations, 120-draw stratified fit; (d) clean — fixed seeds; (e) the substance — medians alongside means, cap disclosed; (f) controlled — both defects caught before claims; (g) fair — ρ validated standalone before entering the plane; (h) relevance — each stratum's price measured: barrier 4 for definition-routes, barrier 8 for methods, Shor graded on the quantum surface.\n\nNow 424 experiments. Assessment v200. Paper 89.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3430",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T16:52:15.031584+00:00",
+    "title": "FACT round-26 #2 — THREE-STRATA-PLANE: definition-routes, methods, quantum on one measured plane (paper 89)"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-26 #1 — CONVERSE-COST-CURVE (paper 88, /tmp/exp_conversecost.py, /tmp/r26n1c.log)\n\n**Verdict name: NO-POLYLOG-ROUTE-ANYWHERE.**\n\n### Result\nThe empirical barrier-4 converse: the ENTIRE known factor-revealing witness family sits on ONE cost-information plane under identical conditions, with **no poly(log N) definition-route anywhere**:\n\n| witness | definition-route | α (cost ~ N^α) | ops/factor-bit |\n|---|---|---|---|\n| W1 M1 = Σ gcd(x,N) | full N-scan | **1.000 exact** | 2.0×10⁴ |\n| W2 zero-divisor first hit | scan to first hit | cost = min(p,q) 60/60 | 2.9×10⁴ |\n| W3 CF period of √N | CF iteration | **0.398** (honest: lags √N) | 3.0×10⁵ |\n| W4 #{x² ≡ x mod N} | full N-scan | **1.000** | 2.0×10⁴ |\n\nThe reach chain (witness → s → {p,q}) holds at 100% jointly — re-verifying paper 61's {(N,s)} theorem across the unified family.\n\n### The honest numbers\n- W3's exponent came out **below** the naive ½ (ℓ/√N drifts 0.75 → 0.18 → 0.23 across sizes) — reported as measured.\n- First launch sized semiprimes by `bits` while N carries 2·bits bits — a 10⁹-operation stall caught before any claim.\n- The idempotent scan initially excluded x = 0 and failed its own count=4 assert — the trivial idempotent is part of the CRT structure.\n\n### What this decides\nWith the proven no-pinning half (QRLEAK / COMPENSATING-PARTNER), frontier (i) is now **empirically armed end-to-end**: every factor-revealing definition-route in the family is super-poly in log N, the cheapest factor-bits ride the √N-scale classical methods (exactly barrier 8's face), and all content routes through the trace. The formal converse proof remains the programme's open theoretical target.\n\nNow 423 experiments. Assessment v199. Paper 88.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3431",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T16:52:15.032781+00:00",
+    "title": "FACT round-26 #1 — CONVERSE-COST-CURVE: the empirical barrier-4 across the witness family (paper 88)"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "c98192f3",
+    "description": "## FACT round-28 #1 — METHOD-LOCALITY (paper 95, /tmp/exp_methodlocality.py, /tmp/r28n1b.log)\n\n**Verdict name: THE-METHODS-ARE-FACTOR-LOCAL.**\n\n### Result\nECM calibrated onto the plane for the first time, and the method stratum's internal structure measured: **ρ and ECM are factor-local** (cost determined by a factor p, not by N); trial division is not.\n\n**H1 factor-locality at medians** (fixed p = 4093, q growing 2¹⁴ → 2²³, 9 draws/cell): median flatness over 2²³ cofactor growth — **ECM ×2.16, ρ ×1.40** (flat within method luck: ECM curve-restart scatter; ρ Poisson around √p ≈ 64).\n\n**H2/H3 p-scaling**, corrected slopes per log₂p (the script's slope print took log₂ of bit-lengths — disclosed, corrected from the printed medians):\n- Pollard ρ: **0.45** — the birthday bound √p ✓\n- trial division: **1.09** — linear in p, the definition face ✓\n- ECM: **1.13** — locally power-like but constant-advantaged: at p = 2¹⁴ ECM needs 6 657 ops vs trial-div's 12 142 — already ahead, with sub-exponential bending beyond this window\n\n### Method ledger\nThe first single-draw design was statistically inadequate (ρ's cost spans 9–136 iters per cell — flatness ratios compared single lucky/unlucky draws) → 9-draw medians before any claim. Catalog scan same round: one new relevant entry (#856 Berggren causal set, no factorization claim).\n\nNow 430 experiments. Assessment v206. Paper 95.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3436",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T17:46:25.958797+00:00",
+    "title": "FACT round-28 #1 — METHOD-LOCALITY: ECM and rho track the factor, not the modulus (paper 95)"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-27 #4 — BATTERY-SCALING (paper 94, /tmp/exp_batteryscaling.py, /tmp/r27n4b.log)\n\n**Verdict name: THE-CURVE-SATURATES-AT-THE-CEILING.**\n\n### Result\nThe battery extended to **six dials** (adding F₂₀ x⁵−2 @5 and C₅ Q(ζ₁₁)⁺ @11; all conductors pairwise coprime, CRT modulus 31·23·9·8·5·11). The nested-subset capacity curve:\n\n| dials | I(joint) | Σ marginals | deficit | ceiling | % of ceiling |\n|---|---|---|---|---|---|\n| 1 | 1.0011 | 1.0011 | +0.000 | — | — |\n| 2 | 2.1334 | 2.0020 | +0.132 | 4.6063 | 46% |\n| 3 | 4.0242 | 2.4777 | +1.547 | 6.4947 | 62% |\n| 4 | 8.2412 | 3.9120 | +4.329 | 9.5434 | 86% |\n| 5 | 11.5307 | 5.1591 | +6.372 | 11.9557 | 96% |\n| **6** | **12.7235** | 5.3650 | **+7.359** | **12.7726** | **99.6%** |\n\n- **H1**: the additive deficit grows MONOTONICALLY (synergy compounds without bound short of the ceiling).\n- **H2**: every marginal reproduces its paper of origin.\n- **H3**: the 6-dial which-factor wall reads 0.3594 vs permutation-null 0.3591 (**z = +0.11**) — sparse-bias-dominated as at k=4; factor-blindness extends to k=6.\n\n### The battery-capacity law\n1. I(k-joint) → H(joint labels): the CRT-joint modulus sees all k residues simultaneously; the pair-label structure becomes nearly fully determined (99.6% at k=6).\n2. D(k) grows monotonically: marginal bookkeeping understates batteries progressively (7.36 bits = 3.7× additive at k=6).\n3. The ceiling is the joint label entropy — population correlation between label blocks is all that remains.\n\n### Method notes disclosed\nRow-label off-by-one in the printout (cosmetic, corrected here); chained label code ~10¹² values requires np.unique-based entropy (bincount would allocate 5.6 TiB).\n\nNow 429 experiments. Assessment v205. Paper 94.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3437",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T17:46:25.960215+00:00",
+    "title": "FACT round-27 #4 — BATTERY-SCALING: the capacity curve saturates at the label-entropy ceiling (paper 94)"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-27 #3 — JOINT-WALL-VERIFIED (paper 93, /tmp/exp_jointwall.py, /tmp/r27n3c.log)\n\n**Verdict name: THE-WALL-WAS-BIAS.**\n\n### Result\nPaper 92's flagged joint which-factor reading of **0.0469 bits** — tested against a 200-shuffle permutation null on the exact 4-field CRT-chained code:\n\n| quantity | value |\n|---|---|\n| observed I(bigger; joint code) | 0.0469 bits |\n| permutation null mean | **0.0469** |\n| null sd | 0.0014 |\n| z | **+0.05** |\n\n**The entire reading is sparse-plug-in bias.** The battery programme's factor-blindness claim STANDS with its caveat converted into a verified statement: the full battery capacity (8.2246 bits at k = 4, ceiling 9.53) is symmetric trace-routed content with zero detectable which-factor leakage at null sensitivity (~±0.003 bits).\n\nAlso verified in the same run: the 2-field joint wall (0.0011, inside its own null).\n\n### Method note\nProcess catch disclosed: the first verification build chained only two fields — testing the wrong object, trivially inside its null — before extending to the actual 4-field target. Lesson: verify the exact object, not a smaller cousin.\n\nNow 428 experiments. Assessment v204. Paper 93.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3438",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T17:46:25.961555+00:00",
+    "title": "FACT round-27 #3 — JOINT-WALL-VERIFIED: the battery's factor-blindness stands, the wall was bias (paper 93)"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
     "consumed_by_exp_id": "0e0f4ea6",
     "description": "## FACT round-29 #2 — JOINT-ANOMALY-RECONCILED (paper 100, /tmp/exp_jointreconcile.py, /tmp/r29n2.log)\n\n**Verdict name: THE-ORIGINAL-STANDS.**\n\n### Result\nPaper 99's flagged 16× anomaly **resolved**: paper 91's joint value of **2.1314 bits is CORRECT** — reproduced exactly by the clean-code cross-check — and paper 99's rebuild reading of 0.1353 was an **encoding artifact** in the rebuild's own label chaining.\n\n### The reconciliation (side-by-side, identical population)\n| construction | distinct labels | H(labels) | I(joint) |\n|---|---|---|---|\n| paper 91 (`pj = pc_a·10000 + pc_b`) | **36** | 4.6006 | **2.1314** |\n| clean-code cross-check | 36 | 4.6006 | **2.1314** |\n| paper 99 rebuild (`·10` compression) | **18** | 3.6073 | 0.5830 |\n\nThe rebuild's `·10` frame for the S₃b code inside the `·100` frame for the S₃a code **collided distinct label pairs** — 18 labels instead of 36, destroying 0.99 bits of label entropy and most of the measurable channel.\n\n### Resolution\n- Paper 91's 2.1314 **stands** (clean-code reproduction exact; marginals re-verified I(a) = I(b) = 1.0012).\n- Paper 99's flagged anomaly row is **retracted**; its per-dial routing tables (single-dial, no chaining) are unaffected and stand.\n- **Programme lesson**: chained integer label encodings must be width-checked against their field sizes — a `·10` frame for a 3-valued code inside a `·100` frame for a 6-valued code silently merges classes. Paper 97's fresh-rerun audit practice is the detector.\n\nNow 435 experiments. Assessment v211. Paper 100.\n",
     "domain_bridges": [],
@@ -17,6 +397,82 @@
     "status": "in_progress",
     "timestamp": "2026-08-21T18:57:10.442005+00:00",
     "title": "FACT round-29 #2 — JOINT-ANOMALY-RECONCILED: paper 91 stands, the rebuild collapsed (paper 100)"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-29 #1 — THE-SUM-DIFFERENCE-SPLIT (paper 99, /tmp/exp_sumdiffsplit.py, /tmp/r29n1b.log)\n\n**Verdict name: THE-HINT-VALUE-IS-REAL.**\n\n### Result\nThe pre-stated reconstruction hypothesis — I(s,d jointly) = I(N mod m\\*; labels) — was **refuted in the interesting direction**: viewing the battery labels through the factor-residue pair (s, d) **exceeds** the product view.\n\n### The routing table (S₃a x³+x+1 @31; S₃b replicates)\n| view | bits | share |\n|---|---|---|\n| product-view (hint-free) = the channel | 1.0012 | 100% |\n| sum-view alone (s = p+q) | 0.0391 | 3.9% |\n| gap-view alone (d = q−p) | 0.0387 | 3.9% |\n| full-residue view (s,d jointly) | 1.5201 | 152% |\n| **HINT VALUE = I(s,d) − I(N)** | **+0.5189** | |\n\nThe sum and gap residues **individually carry almost nothing** (~4% each) — but their combination carries more than the modulus's own product residue. The +0.52-bit difference is the **factor-residue hint value**: what knowing p and q mod 31 separately (a 10-bit hint) adds over reading N's residue. S₃b replicates (+0.5099). p↔q symmetry verified.\n\n### Why this matters\nThe hint value quantifies exactly how much label information is locked behind knowing the factor residues — information present in the labels, invisible from N, released only by a factor-residue hint. It bridges the battery capacity (papers 91–94) to COND-RANK's conditioning-capacity measurement, and explains the sub-ceiling gaps of papers 80–94 from the other side: ceiling H(T) counts label entropy; the product view counts what N's residue reaches; the hint value is the bridge.\n\n### Anomaly flagged\nThis script's joint-battery product-view reads 0.1353 against paper 91's 2.1314 for the nominally identical quantity — unresolved (likely a label-encoding difference in this quick rebuild); the joint row is not cited until reconciled. The per-dial tables are internally consistent across two independent computations within the run.\n\nNow 434 experiments. Assessment v210. Paper 99.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3449",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T18:57:10.443489+00:00",
+    "title": "FACT round-29 #1 — THE-SUM-DIFFERENCE-SPLIT: the factor-residue hint value (paper 99)"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-28 #4 — BATTERY-UTILITY (paper 98, /tmp/exp_batteryutility.py, /tmp/r28n4b.log)\n\n**Verdict name: THE-LABELS-ARE-NOT-FILTERS.**\n\n### Result\nAn honest refutation-by-design-flaw round closing the battery arc. The attempt to convert the 6-dial battery's 12.7-bit capacity into candidate-set narrowing for p required a map **residue r mod m\\* → type of a prime ≡ r mod m\\*** — and **that map does not exist**: primes in the same residue class carry different splitting types. This is precisely why every measured channel sits below its label-entropy ceiling (S₃a: I = 1.0012 vs H(T) = 2.2982 — the gap IS the within-class variation).\n\n### What happened\nThe utility tables were built by polynomial evaluation at r (does f(r) ≡ 0 mod m\\*?) — testing whether r itself is a root, not which type primes ≡ r carry. The consistency assert caught true-p exclusions (6/150 via a quartic enumeration precedence bug; the cubic unions passed 0/150 only by covering nearly all residues). The diagnosis elevated the bug to the finding.\n\n### The corrected understanding\nThe battery's labels are statistics of the JOINT (p mod m\\*, q mod m\\*) draw, not functions of single residues. Utility must be stated Bayesianly: the label vector is a 12.7-bit posterior update on the joint residue vector (~20 bits) — exactly as the capacity law says. Converting that posterior into individual-candidate narrowing requires the per-prime type determination that IS the factoring problem. No-pinning consistency: constant-bounded posterior mass on joint residue vectors; no candidate filter without circularity.\n\nNow 433 experiments. Assessment v208/v209. Paper 98.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3450",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T18:57:10.444861+00:00",
+    "title": "FACT round-28 #4 — BATTERY-UTILITY: the labels are not filters (paper 98)"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-28 #3 — REPRODUCIBILITY-AUDIT (paper 97, logs /tmp/audit_p{80,89,92}.log)\n\n**Verdict name: THE-NUMBERS-REPRODUCE.**\n\n### Why\nSeventeen experiment scripts written today lived only in /tmp — one reboot from oblivion — and no stored result had ever been re-run post-hoc. This round fixes the durability gap and audits reproducibility.\n\n### Preservation\nAll 17 scripts copied to `ResearchOutput/scripts/2026-08-21-resume/` and committed: type-channel law table (80), quintic endpoints (82), D₅ search (84), battery series (91–92), joint-wall verification (93), qubit/sample ramp series (85–87), converse plane (88–90), method-locality pair (95–96), Berggren-3adic (81).\n\n### Audit — three keystones, fresh runs, stored fixed seeds\n| keystone | recorded | fresh re-run | verdict |\n|---|---|---|---|\n| Paper 80 law table (7 fields) | S₃a/S₃b 1.0000; S₄ 1.0100; A₄ 0.9188; D₄ 1.6555; V₄ 0.8092; C₄ 1.4989 | identical to 4 decimals on every row + type histograms + REVERSAL check | ✓ |\n| Paper 80 semiprime legs | pairs 1.0001/1.0001/1.0034/0.4729; s-projs Is(2)/Is(2)/Is(3) | identical | ✓ |\n| Paper 89 three strata | α_τ = 0.500; medians 19.30/19.36; α_ρ on N = 0.261 | identical | ✓ |\n| Paper 92 battery capacity | I(4-joint) = 8.2246; synergy +4.3146; marginal 1.0012 | identical | ✓ |\n\n**Twelve recorded headline numbers; twelve exact reproductions. Zero drift.**\n\n### What this decides\nThe resumed programme's computational record is **reproducible by construction** — deterministic seeds and pipelines, demonstrated by fresh re-runs landing on the exact recorded values, with the scripts now durably in the repo.\n\nNow 432 experiments. Assessment v208. Paper 97.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3451",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T18:57:10.446222+00:00",
+    "title": "FACT round-28 #3 — REPRODUCIBILITY-AUDIT: every keystone reproduces bit-for-bit (paper 97)"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-28 #2 — THE-GAP-LOCAL-METHOD (paper 96, /tmp/exp_gaplocal.py, /tmp/r28n2d.log)\n\n**Verdict name: THE-TAXONOMY-IS-COMPLETE.**\n\n### Result\nFermat — the one classical method never locality-classified — measured: its iteration count is **exactly (p+q)/2 − √N** (identity 24/24 with per-draw instrumentation), and across balance ratios r = q/p ∈ [2, 64] at fixed p the cost interpolates **352 → 100 282 iterations** (in p-units 0.09 → 24.50; at r = 64 the measured cost is 0.78 of the cofactor-linear limit p·(r−1)/2). Fermat is **GAP-LOCAL**: neither factor-local like ρ/ECM nor a scan like trial division, but a function of the gap alone.\n\n### The completed locality table\n| method | locality class | cost |\n|---|---|---|\n| trial division | p-linear | p |\n| Pollard ρ | factor-local | √p |\n| ECM | factor-local | sub-exp in p |\n| **Fermat** | **gap-local** | **(p+q)/2 − √N** |\n\nFour methods, three locality classes — which methods see the factor (ρ, ECM), which see the gap (Fermat), and which see nothing but the scan (trial division).\n\n### Bonus finding: the degenerate square case\nThe r = 1 grid row exposed that when q lands on p itself (N = p²), Fermat's target a = p lies **below** its starting point ⌊√N⌋ + 1 — plain Fermat has no true stopping point on prime squares and only exits by accidentally hitting an unrelated square (here after 8 372 232 iterations). CFRAC-style generalizations do not share the defect.\n\n### Method ledger\n(1) The first launch hung 7+ minutes in H1 — faulthandler stack dump found the root cause: **the fermat loop lacked its increment** (`a += 1` lost between drafts), spinning on a constant value; the standalone control with the increment ran instantly. (2) Stale assert constant (40 vs 24 draws) fixed.\n\nNow 431 experiments. Assessment v207. Paper 96.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3452",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-21T18:57:10.447566+00:00",
+    "title": "FACT round-28 #2 — THE-GAP-LOCAL-METHOD: Fermat completes the locality taxonomy (paper 96)"
   },
   {
     "ambition_level": "grand_challenge",
@@ -78,7 +534,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "77469890",
     "description": "## FACT round-31 #2 — INDEPENDENT-VERIFICATION (paper 109)\n\n**Verdict name: THE-CHARACTER-CAPTURES-EXACTLY-ONE-BIT.**\n\n### Result\nPaper 80's key result **proven from character theory** without Monte Carlo:\n\nFor S₃ x³+x+1 (disc = −31, G = S₃, G^ab = C₂):\n- Chebotarev densities: P('111') = 1/6, P('12') = 1/2, P('3') = 1/3 → H(T) = 1.4591 bits\n- The sign character (−31|p) determines even/odd Frobenius\n- H(type | sign) = (1/2)·H(1/3, 2/3) = 0.4591 (within-even-class split is residue-independent)\n- **I(p mod 31; type) = H(T) − H(T|sign) = 1.0000 EXACTLY**\n\nThe character captures exactly one bit of type entropy. The remaining 0.4591 bits are locked behind the non-abelian structure, inaccessible from any residue.\n\n### Mixed-type residues explained\nThe scan found 15 mixed-type residues — **expected and correct**: the sign character only separates even/odd Frobenius; within the even class, the split between identity and 3-cycles is residue-independent. The scan confirms the theory.\n\n### Generalization\nFor ANY field with G^ab = C₂: I(p mod |disc|; type) = 1 bit exactly. This includes all S₃, S₄, and S₅ fields measured in papers 80–84.\n\nNow 445 experiments. Assessment v220. Paper 109.\n",
     "domain_bridges": [],
     "domains": [
@@ -90,7 +546,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T20:42:26.609247+00:00",
     "title": "FACT round-31 #2 — INDEPENDENT-VERIFICATION: the character captures exactly one bit (paper 109)"
   },
@@ -573,6 +1029,101 @@
     "ambition_level": "grand_challenge",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Round-37 #2 (exp 465, assessment v239). Scale extension of paper 90's honest-inconclusive with the design flaws repaired: per-value u(v)=ln v/ln B, size-matched random control, N in {2^32..2^44}, matched-u ladder {2,3}, 1.2M smoothness tests (500x paper 90).\n\n**THE RELATION POOL IS RANDOM**: x2-N vs random gap = 1.00 at every scale (0.993-1.020). The quadratic-character constraint on prime divisors of x2-N is O(1)-invisible at reachable scale. Paper 90's non-monotone 0.26-9.27 scatter and its 'x2-N != random' finding were design artifacts (N-scale u-binning + underpower).\n\nFormal verdict H2 per the pre-stated rule: absolute ratio emp/rho = 0.877-0.913 at all scales — but carried EQUALLY by the random control: it is the Dickman model's finite-x correction (order ln ln v / ln v ~ 17-20% here), shrinking logarithmically (+2.6% relative per 12 bits of scale at u=2). Nothing about x2-N blocks convergence; it is just slow.\n\nLeading-term Dickman exp(-u(ln u + ln ln u - 1)) invalid until u ~ 14.75 (pre-stated guess u>=12 confirmed).\n\nDecides: the fourth stratum's INPUT STATISTICS are measured — relation pools are random-equivalent; the correct toy-scale smoothness model is rho(u) x (0.88-0.91); what remains unmeasured is purely the sieve's algorithmic advantage. Barriers 4/8 unchanged.\n\nLedger: v1 rho reference constants mis-recalled from memory beyond u=4 — caught by attested-anchor + Richardson self-check before contamination; 3x upstream agent timeouts, experiment completed inline by the coordinator.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp465_subexp_scale.py (script + result.json), seed 20260821.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3527",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T01:10:29.769307+00:00",
+    "title": "FACT round-37 #2 — SUBEXP-SCALE: the QS relation pool is random-equivalent at every scale (paper 130)"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Round-37 #1 (exp 464, assessment v238). First test of the hint programme's size axis.\n\n**SIZE-STABLE-PLATEAU**: hint value I((p mod m*, q mod m*); labels) − I(N mod m*; labels) is size-stable to ≤5.3% across factor sizes k=14→22 (a 16,384-fold span); abelian dials ≤1.6%, with abelian residual entropy EXACTLY 0 at every size (labels are residue functions there).\n\nHint table (bits): S3@31: 0.5584/0.5425/0.5415 (k=14/18/22); C3@7: 0.9115/0.9140/0.9169; D4@8: 1.0540/1.0536/1.0507; C5@11: 0.9030/0.9190/0.9268.\n\n**POOL-FLOOR EXCEPTION**: S3@k=10 reads 0.7423 vs plateau ~0.55 — diagnosed as prime-identity leakage through the pair-residue channel (75-prime pool = 2.5 primes/class; pair residue partially identifies the prime, which determines its type). Not a size law.\n\n**Which-factor wall held at all 16 dial×size cells** (max |z| = 1.55 vs conditional orientation-permutation null). Instrument lesson: the naive unconditional wall test would have falsely cried violation at |z| up to 4.7 — the conditional instrument holding (N mod m*, unordered pair) fixed was required.\n\nDecides: hint values transfer across factor sizes wherever the pool resolves the conductor's classes (observed floor ~30 primes/class) — every extrapolation of the hint programme from toy scale is safe. Barriers 2/5/8 re-verified along a new axis.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp464_hint_size.py, seed 20260821, n=15k semiprimes/cell, runtime 11.8 s.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3528",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T01:10:29.770873+00:00",
+    "title": "FACT round-37 #1 — HINT-SIZE-SCALING: hint value is size-stable across a 16,384x span (paper 129)"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-36 #1 — RAMIFIED-TYPE-CHANNEL (paper 128)\n\n**Verdict name: RAMIFIED-CONTRIBUTION-IS-NEGLIGIBLE.**\n\nRamified primes add negligible info: x2-3 ramified {2,3} gives I=1.0020 all vs 1.0000 unramified only.\n+0.002 bits from including two ramified primes out of thousands. Exclusion fully justified.\nNow 460 experiments. Assessment v237. Paper 128.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3529",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T01:10:29.772175+00:00",
+    "title": "FACT round-36 #1 — RAMIFIED-TYPE-CHANNEL: ramified contribution is negligible (paper 128)"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-35 #9 — BIQUADRATIC-TYPE-CHANNEL (paper 127)\n\n**Verdict name: THE-BIQUADRATIC-IS-FULLY-PINNED.**\n\nBiquadratic Q(sqrt2,sqrt3) via x4-10x2+1 (V4, conductor 24): only TWO types.\nH(T) = 0.8074 bits. I(p mod 24; T) = H(T) EXACTLY (full pinning).\nSemiprime pair 0.2909; which-factor 0.0001.\n\nNow 459 experiments. Assessment v236. Paper 127.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3530",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T01:10:29.773427+00:00",
+    "title": "FACT round-35 #9 — BIQUADRATIC-TYPE-CHANNEL: two types, full pinning (paper 127)"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "## FACT round-35 #8 — CONJUGATE-S3-TEST (paper 127)\n\n**Verdict name: THE-FIELD-NOT-THE-POLYNOMIAL.**\n\nConjugate S3 cubics with same disc -23: x3-x+1 and x3-x-1 produce EXACTLY identical type channels.\nI(p mod 23; T) = 1.000065 for BOTH — bit-for-bit identical to 6 decimal places.\nSemiprime pair channels agree within MC noise.\nConfirms the type-channel law depends on the FIELD, not the POLYNOMIAL.\n\nNow 455 experiments. Assessment v232. Paper 127.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3531",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T01:10:29.774651+00:00",
+    "title": "FACT round-35 #8 — CONJUGATE-S3-TEST: conjugate fields produce identical type channels (paper 127)"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Formalizes a quantum random walk on the Berggren Pythagorean tree where constructive interference at energy spectrum minima collapses the state onto factors of N.",
     "domain_bridges": [
       "Pythagorean <-> Physics"
@@ -656,25 +1207,6 @@
     "status": "available",
     "timestamp": "2026-07-23T20:10:45.914797+00:00",
     "title": "EML-Pythagorean-Operator: Single-Neuron Neural Energy Guided Tree Traversal"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 21cbaba8 (Q=0.870), which proved 99 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For any fixed δ ∈ (0,1) and sufficiently large n, there exists a subset S ⊂ [n] with |S| ≥ δn such that no A, B ⊂ ℕ with min{|A|,|B|} ≥ (3+o(1)) log n / log(1/δ) satisfy A+B ⊂ S.",
-    "domain_bridges": [],
-    "domains": [
-      "Bridges"
-    ],
-    "id": "push_21cbaba8_9b04a15f",
-    "lineage_refs": [],
-    "priority_score": 0.95,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "21cbaba8",
-    "status": "available",
-    "timestamp": "2026-08-21T04:45:20.134758+00:00",
-    "title": "Deepening: Existence of δ-Dense Sets Avoiding Sumsets of Size ≥ (3+o(1)) log n / log(1/δ)"
   },
   {
     "ambition_level": "grand_challenge",
@@ -2884,25 +3416,6 @@
     "ambition_level": "grand_challenge",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "Building on cycle ee626e30 (Q=0.760), which proved 14 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The shadowing lemma says that near an approximate orbit of a chaotic system, there exists a true orbit. In other words, every 'almost correct' trajectory of a chaotic map has a 'truly correct' trajectory nearby. This means that numerical errors in chaotic simulations are not bugs — they are SHADOWS ",
-    "domain_bridges": [],
-    "domains": [
-      "MachineLearning"
-    ],
-    "id": "push_ee626e30_e6136064",
-    "lineage_refs": [],
-    "priority_score": 0.9,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "ee626e30",
-    "status": "available",
-    "timestamp": "2026-07-18T03:54:54.432626+00:00",
-    "title": "Deepening: Chaos as a Computable Shadow: The Shadowing Lemma for Real Programs"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "Prove the Coffman-Kundu-Wootters monogamy inequality for qubit entanglement: the sum of squared concurrences is bounded by the squared concurrence with the ancilla. Formalize concurrence as an entanglement measure and extend to n-qubit systems.",
     "domain_bridges": [],
     "domains": [
@@ -2918,27 +3431,6 @@
     "status": "available",
     "timestamp": "",
     "title": "Quantum Entanglement Monogamy: CKW Inequality"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Formalize core HoTT results in Lean 4: the univalence axiom, higher inductive types, and the fundamental theorem of identity types. Prove that HoTT provides a constructive foundation for mathematics.",
-    "domain_bridges": [],
-    "domains": [
-      "Logic",
-      "Topology",
-      "Algebra"
-    ],
-    "id": "seed_040",
-    "lineage_refs": [],
-    "priority_score": 0.86,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Homotopy Type Theory Foundations"
   },
   {
     "ambition_level": "extension",
@@ -14861,6 +15353,29 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Pythagorean.GraphTheory.CliqueSumExact",
+      "Pythagorean.GraphTheory.CliqueSumSharpness"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "With alpha computed exactly for clique sums, the gap between alpha and the Lovasz theta function becomes testable under gluing. We conjecture that the gap is additive up to the same minus-two defect, bridging the combinatorial trace calculus with semidefinite relaxations. Small cases with C5-like sides are finite computations.\n\nFor a clique sum along a clique of size k, theta(G) - alpha(G) <= (theta(G_1) - alpha(G_1)) + (theta(G_2) - alpha(G_2)) + min(k, 2).\n\nCompute theta numerically for clique sums of two C5s glued along an edge and along a vertex, and compare with the exactly known alpha from the trace formula.\n\nThe trace calculus extends to spectral relaxations, giving gluing rules for Shannon capacity bounds.\n\nA numerical violation would show the theta function is not controlled by separator traces, isolating a genuinely spectral obstruction.",
+    "domain_bridges": [],
+    "domains": [
+      "Combinatorics",
+      "Physics"
+    ],
+    "id": "fd_3526",
+    "lineage_refs": [],
+    "priority_score": 0.7102222222222223,
+    "proof_strategy": "Build a block orthonormal representation from representations of the sides that agree on K, and bound the resulting theta value using the trace decomposition of alpha.",
+    "research_mode": "team",
+    "source_exp_id": "1210c28a",
+    "status": "available",
+    "timestamp": "2026-08-22T01:07:28.727503+00:00",
+    "title": "Clique-Sum Additivity of the Independence-Theta Gap"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Cryptography.MarkoffTransfer.UniquenessAndNonlinearity",
       "Cryptography.BerggrenSpectral.LorentzAndTree"
     ],
@@ -15206,6 +15721,29 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Pythagorean.GraphTheory.CliqueSumSharpness",
+      "Pythagorean.GraphTheory.CliqueSum"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Witness B shows chi(G) = max(chi_1, chi_2) fails precisely when the edges of the glueing clique are split between the sides, so each side needs fewer than k colours. We conjecture the failure is controlled by a defect d measuring how far K is from being a clique on the worse side, giving a two-sided estimate for weak clique sums. This interpolates between the weak and genuine settings.\n\nFor a weak clique sum with defect d = |K| - max(omega_1(K), omega_2(K)), one has max(chi_1, chi_2) <= chi(G) <= max(chi_1, chi_2) + d.\n\nEnumerate all weak clique sums on at most six vertices, record chi(G) - max(chi_1, chi_2) against d, then formalise the upper bound by extending the colour permutation to a partial matching on the split part.\n\nA quantitative bridge covering both the proved chi = max theorem (d = 0) and the Witness B failure (d = 1).\n\nThe data would reveal a second parameter, presumably the interaction pattern of the split edges, needed to control colouring of weak sums.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Bridges"
+    ],
+    "id": "fd_3525",
+    "lineage_refs": [],
+    "priority_score": 0.7096666666666668,
+    "proof_strategy": "Colour the sides, permute colours to agree on the unsplit part of K, and spend at most d fresh colours on the split vertices.",
+    "research_mode": "team",
+    "source_exp_id": "1210c28a",
+    "status": "available",
+    "timestamp": "2026-08-22T01:07:28.285387+00:00",
+    "title": "Split-Clique Defect Bound for Weak Clique Sums"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "MachineLearning.BerggrenUnitLocus",
       "MachineLearning.BerggrenSilverUnits",
       "MachineLearning.BerggrenCoprimeSieve"
@@ -15363,6 +15901,29 @@
     "status": "available",
     "timestamp": "2026-08-21T17:45:45.435226+00:00",
     "title": "Effective Irrationality Measure for the BB84 Threshold"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Pythagorean.GraphTheory.CliqueSumExact",
+      "Pythagorean.GraphTheory.CliqueSum"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Every induced subgraph of a clique sum is a clique sum of induced subgraphs along a sub-clique, so the proved colour-permutation transfer should upgrade from chi = max to full perfection. The numerical core chi = omega is already proved for clique sums here. Completing this gives a formal proof of a classical closure property used throughout perfect graph theory.\n\nIf G is a clique sum of G_1 and G_2 along K and both sides are perfect, then G is perfect.\n\nFormalise induced sub-clique-sums: for W a vertex subset, show IsCliqueSum holds for the restrictions with clique K cap W, then apply IsCliqueSum.chromaticNumber_eq_cliqueNum.\n\nA reusable formal building block for perfect graph theory in Lean, and a first Mathlib-ready closure theorem for clique sums.\n\nThe failure must come from restriction breaking the clique-on-each-side condition, which would identify a strictly larger class than perfect graphs closed under the weaker gluing.",
+    "domain_bridges": [],
+    "domains": [
+      "Combinatorics",
+      "Logic"
+    ],
+    "id": "fd_3523",
+    "lineage_refs": [],
+    "priority_score": 0.7084545454545456,
+    "proof_strategy": "Restriction lemma for IsCliqueSum, then apply the proved chromaticNumber_eq_max and cliqueNumOn_eq_max to each induced subgraph.",
+    "research_mode": "team",
+    "source_exp_id": "1210c28a",
+    "status": "available",
+    "timestamp": "2026-08-22T01:07:27.384637+00:00",
+    "title": "Hereditary Colour Transfer and Perfection of Clique Sums"
   },
   {
     "ambition_level": "extension",
@@ -15857,6 +16418,29 @@
     "status": "available",
     "timestamp": "2026-08-21T18:56:15.604128+00:00",
     "title": "All-Order Semicircle Convergence in Expectation"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Pythagorean.GraphTheory.FracTransversalConcentration",
+      "Pythagorean.GraphTheory.HypergraphTransversal",
+      "Pythagorean.GraphTheory.CliqueSum"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Witness A shows that alpha_1 + alpha_2 - 1 fails for k >= 2, with a loss of exactly one further vertex. We conjecture the loss disappears in the fractional relaxation: the fractional independence number satisfies the minus-one bound for every k. This would identify the minus-two defect as an integrality gap phenomenon rather than a structural one.\n\nFor every clique sum, alpha_f(G) >= alpha_f(G_1) + alpha_f(G_2) - 1, where alpha_f is the fractional independence number (LP relaxation over cliques).\n\nCompute alpha_f on Witness A and on all enumerated k = 2 and k = 3 shapes; then formalise using the fractional transversal machinery already in the catalog.\n\nThe minus-two loss is an integrality gap of exactly one, quantifying the LP-IP gap for clique sums.\n\nA fractional counterexample would show the loss is structural and would sharpen the trace calculus to fractional traces.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_3524",
+    "lineage_refs": [],
+    "priority_score": 0.6695517241379312,
+    "proof_strategy": "Take optimal fractional independent sets on each side, average their K-restrictions, and use that a fractional independent set puts total weight at most 1 on a clique.",
+    "research_mode": "team",
+    "source_exp_id": "1210c28a",
+    "status": "available",
+    "timestamp": "2026-08-22T01:07:27.834673+00:00",
+    "title": "Purely Integral Nature of the Minus-Two Defect"
   },
   {
     "ambition_level": "extension",
@@ -48548,23 +49132,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "1210c28a",
-    "description": "Formal target: define `IsCliqueSum` (sides meeting in a fixed `k`-clique `K`); prove\n`α(G) ≥ α₁ + α₂ - 1` (an independent set meets a clique at most once) and\n`χ(G) = max(χ₁, χ₂)` for `n ≥ k`, with both statements failing for `n < k`.",
-    "domain_bridges": [],
-    "domains": [],
-    "id": "fd_1622",
-    "lineage_refs": [],
-    "priority_score": 0.4,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "0f708106",
-    "status": "in_progress",
-    "timestamp": "2026-08-19T17:40:51.160593+00:00",
-    "title": "Formal target: define `IsCliqueSum` (sides meeting in a fixed `k`-clique `K`); prove\n`α(G) ≥ α₁ + α₂ - 1` (an independent set meets a clique at most once) and\n`χ(G) = max(χ₁, χ₂)` for `n ≥ k`, with bo"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Formal target: if every induced subgraph of `G₁` and of `G₂` satisfies `χ = ω`, then so does\nevery induced subgraph of `G = G₁ ⊕_v G₂`.",
     "domain_bridges": [],
@@ -53313,7 +53880,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "eb2ba545",
     "description": "prove *completeness* — every labelling is dominated by some DP run;",
     "domain_bridges": [],
     "domains": [],
@@ -53323,7 +53890,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "1d44d635",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:26:30.870721+00:00",
     "title": "prove *completeness* — every labelling is dominated by some DP run;"
   },

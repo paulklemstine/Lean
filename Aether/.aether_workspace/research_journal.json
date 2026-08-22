@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "5c70a18c",
-      "domain": "NumberTheory",
-      "key_insight": "# Future directions: quantum EML activations, cycle 7 (final)\n\nThroughout, `t*` denotes the **quantum EML scalar-log root**: the unique positive real\nwith `‖log (1 + t i)‖ = 1`, i.e. the unique positi",
-      "quality_score": 0.86,
-      "sorry_count": 3,
-      "theorem_count": 281,
-      "timestamp": "2026-08-20T05:47:28",
-      "title": "Deepening: The formal results in `Catalog/Applications/EMLQuantumActivation.lean` show that"
-    },
-    {
       "cycle_id": "52846ceb",
       "domain": "Applications",
       "key_insight": "# Future directions — power-sum inversion\n\nFive falsifiable conjectures distilled from this cycle.  Each is stated so that it can be\nformalised directly on top of `Catalog/Applications/PowerSumInversi",
@@ -499,19 +489,19 @@
       "theorem_count": 112,
       "timestamp": "2026-08-21T23:38:53",
       "title": "The corrected-product operation is now a proved closure property"
+    },
+    {
+      "cycle_id": "1210c28a",
+      "domain": "Pythagorean",
+      "key_insight": "# Future directions: clique sums as a gluing calculus for graph invariants\n\nThe cycle reported here formalised clique sums (`IsCliqueSum`, `IsWeakCliqueSum`) and\nestablished:\n\n* an independent set mee",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 81,
+      "timestamp": "2026-08-22T01:07:40",
+      "title": "Formal target: define `IsCliqueSum` (sides meeting in a fixed `k`-clique `K`); prove\n`α(G) ≥ α₁ + α₂"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "f3293094",
-      "domain": "Tropical",
-      "key_insight": "# Future Directions — tropical reading of the round-4 closures\n\nDerived from the analysis and adversarial review of the four Lean files in\n`Catalog/Tropical/` (`TropicalTorsionCensus`, `TropicalCensus",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 65,
-      "timestamp": "2026-08-13T21:10:03",
-      "title": "Round-4 Hypothesis Closures: Five Novel Attacks via Exotic Resources, Tested and Closed"
-    },
     {
       "cycle_id": "ab9891cb",
       "domain": "Logic",
@@ -2501,27 +2491,19 @@
       "theorem_count": 112,
       "timestamp": "2026-08-21T23:38:53",
       "title": "The corrected-product operation is now a proved closure property"
+    },
+    {
+      "cycle_id": "1210c28a",
+      "domain": "Pythagorean",
+      "key_insight": "# Future directions: clique sums as a gluing calculus for graph invariants\n\nThe cycle reported here formalised clique sums (`IsCliqueSum`, `IsWeakCliqueSum`) and\nestablished:\n\n* an independent set mee",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 81,
+      "timestamp": "2026-08-22T01:07:40",
+      "title": "Formal target: define `IsCliqueSum` (sides meeting in a fixed `k`-clique `K`); prove\n`α(G) ≥ α₁ + α₂"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "315472d4",
-      "domain": "Cryptography",
-      "name": "bLevel_image_card",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "fe1191f5",
-      "domain": "Bridges",
-      "name": "prefixWord_length",
-      "quality": 0.88
-    },
-    {
-      "cycle_id": "fe1191f5",
-      "domain": "Bridges",
-      "name": "countM_prefixWord",
-      "quality": 0.88
-    },
     {
       "cycle_id": "fe1191f5",
       "domain": "Bridges",
@@ -2803,9 +2785,27 @@
       "domain": "Computation",
       "name": "isNormalized_qInv_mul",
       "quality": 0.89
+    },
+    {
+      "cycle_id": "1210c28a",
+      "domain": "Pythagorean",
+      "name": "IsCliqueSum",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "1210c28a",
+      "domain": "Pythagorean",
+      "name": "IsIndepFinset",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "1210c28a",
+      "domain": "Pythagorean",
+      "name": "IsIndepFinset",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-21T23:38:53",
+  "last_updated": "2026-08-22T01:07:40",
   "open_questions": [
     {
       "context": "-- count, which is not available in Mathlib.  Rather than leave an unproved `sorry` in the; sorry; sorry",
@@ -3827,12 +3827,6 @@
     ],
     "Pythagorean": [
       {
-        "cycle_id": "39757711",
-        "quality": 0.84,
-        "theorems": 300,
-        "title": "ArXiv paper: Cayley Graphs Of Order $pqrs$ Are Hamiltonian"
-      },
-      {
         "cycle_id": "856336cf",
         "quality": 0.88,
         "theorems": 29,
@@ -3885,6 +3879,12 @@
         "quality": 0.82,
         "theorems": 49,
         "title": "single-voter exchange law."
+      },
+      {
+        "cycle_id": "1210c28a",
+        "quality": 0.82,
+        "theorems": 81,
+        "title": "Formal target: define `IsCliqueSum` (sides meeting in a fixed `k`-clique `K`); p"
       }
     ],
     "Shared": [
