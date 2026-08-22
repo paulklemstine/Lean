@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "6a8ae4e1",
-      "domain": "Shared",
-      "key_insight": "# Future directions\n\nFive falsifiable conjectures produced by the research loop on\n`Catalog/Shared/GradedTransitivity/`.  Each is stated so that it can be\nattacked directly in Lean on top of the defin",
-      "quality_score": 0.85,
-      "sorry_count": 0,
-      "theorem_count": 76,
-      "timestamp": "2026-08-21T03:16:57",
-      "title": "For a graded `G`-set `Y = ⨆_n Y_n` the generating function `Σ_n t_r(Y_n) q^n` is a rational\nfunction"
-    },
-    {
       "cycle_id": "39ef81fe",
       "domain": "Computation",
       "key_insight": "# Future Directions — Chromatic Polynomials and Emotional Diversity\n\nDerived from the Stage-3 analysis and Stage-4 critique of this cycle.  What is already settled:\n`emoChrom G = max χ(G) 3` (structur",
@@ -499,19 +489,19 @@
       "theorem_count": 171,
       "timestamp": "2026-08-22T17:37:04",
       "title": "FACT round-40 #1 — QR-RESIDUAL: footprint-weighted dial captures the residual (paper 145)"
+    },
+    {
+      "cycle_id": "113c03c3",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions — after the residue-dial converse\n\nProved in this cycle (all sorry-free, in `Catalog/Cryptography/ResidueDial/`):\n\n* the exact single-pass law `Speedup = 1/(1 − θ + θ²)`, derived f",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 84,
+      "timestamp": "2026-08-22T18:50:04",
+      "title": "FACT round-37 #4 — CONVERSE-CAP-THEOREM: the barrier-4 converse proved for the residue-dial stratum,"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "45ac3b9d",
-      "domain": "Combinatorics",
-      "key_insight": "# FUTURE DIRECTIONS — after closing the higher-power reciprocity channel\n\nWhat this cycle established, formally and sorry-free\n(`Catalog/Combinatorics/PowerResidueCriterion.lean`,\n`PowerResidueCircula",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 58,
-      "timestamp": "2026-08-14T22:48:13",
-      "title": "The Higher-Power Reciprocity Channel, Closed"
-    },
     {
       "cycle_id": "1b55f202",
       "domain": "Computation",
@@ -2501,21 +2491,19 @@
       "theorem_count": 171,
       "timestamp": "2026-08-22T17:37:04",
       "title": "FACT round-40 #1 — QR-RESIDUAL: footprint-weighted dial captures the residual (paper 145)"
+    },
+    {
+      "cycle_id": "113c03c3",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions — after the residue-dial converse\n\nProved in this cycle (all sorry-free, in `Catalog/Cryptography/ResidueDial/`):\n\n* the exact single-pass law `Speedup = 1/(1 − θ + θ²)`, derived f",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 84,
+      "timestamp": "2026-08-22T18:50:04",
+      "title": "FACT round-37 #4 — CONVERSE-CAP-THEOREM: the barrier-4 converse proved for the residue-dial stratum,"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "71e110b3",
-      "domain": "Novelty",
-      "name": "refines_cost_lt",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "eb2ba545",
-      "domain": "Logic",
-      "name": "sup",
-      "quality": 0.85
-    },
     {
       "cycle_id": "eb2ba545",
       "domain": "Logic",
@@ -2803,9 +2791,21 @@
       "domain": "MachineLearning",
       "name": "crt_prescribe",
       "quality": 0.89
+    },
+    {
+      "cycle_id": "113c03c3",
+      "domain": "Cryptography",
+      "name": "sum_ge_triangular",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "113c03c3",
+      "domain": "Cryptography",
+      "name": "schedule_sum_lower_bound",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-22T17:37:04",
+  "last_updated": "2026-08-22T18:50:04",
   "open_questions": [
     {
       "context": "All proofs are complete; no `sorry`.; All proofs are complete; no `sorry`.",
@@ -3331,12 +3331,6 @@
     ],
     "Cryptography": [
       {
-        "cycle_id": "79242ce3",
-        "quality": 0.82,
-        "theorems": 78,
-        "title": "The 'Only Bad Primes' Conjecture is False (elliptic curve denominators)"
-      },
-      {
         "cycle_id": "3b29df87",
         "quality": 0.82,
         "theorems": 110,
@@ -3389,6 +3383,12 @@
         "quality": 0.88,
         "theorems": 154,
         "title": "Ternary radius-one finite-window classification"
+      },
+      {
+        "cycle_id": "113c03c3",
+        "quality": 0.82,
+        "theorems": 84,
+        "title": "FACT round-37 #4 — CONVERSE-CAP-THEOREM: the barrier-4 converse proved for the r"
       }
     ],
     "Geometry": [

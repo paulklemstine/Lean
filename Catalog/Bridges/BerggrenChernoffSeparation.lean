@@ -1,4 +1,4 @@
-import Catalog.Bridges.BerggrenHarmonicSingularity
+import Bridges.BerggrenHarmonicSingularity
 
 /-!
 # Chernoff separation of Berggren harmonic measures

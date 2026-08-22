@@ -1,7 +1,7 @@
 {
   "part": "6",
-  "archived_at": "2026-08-22T17:36:57Z",
-  "count": 98,
+  "archived_at": "2026-08-22T18:49:52Z",
+  "count": 99,
   "directions": [
     {
       "ambition_level": "extension",
@@ -3970,6 +3970,48 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 150
+    },
+    {
+      "id": "seed_338",
+      "title": "EML Learning Theory: Gradient Descent Convergence in the Tropical Limit",
+      "description": "Model EML network training in the tropical limit (large weights) as piecewise-linear optimization. Prove that gradient descent on tropical EML functions converges to a tropical rational function that minimizes the tropical loss. Derive convergence rates and compare to ReLU networks.",
+      "source_exp_id": "seed",
+      "source_path": "seed:manual_v2",
+      "domains": [
+        "EML",
+        "Tropical",
+        "MachineLearning"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 0.83,
+      "status": "completed",
+      "consumed_by_exp_id": "6e253e5d",
+      "timestamp": "",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.82,
+      "domain_quality_penalty": 1.0,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-08-16T04:00:37.694719+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "",
+      "github_issue": 0
     }
   ]
 }

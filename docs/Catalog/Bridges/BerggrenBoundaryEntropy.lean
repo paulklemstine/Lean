@@ -1,4 +1,4 @@
-import Catalog.Bridges.BerggrenHarmonicMeasure
+import Bridges.BerggrenHarmonicMeasure
 
 /-!
 # Entropy and dimension of the harmonic measure on the Berggren boundary

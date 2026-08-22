@@ -2,7 +2,7 @@ import Mathlib
 import Bridges.NeuralCoding.MaxPlusDefs
 import Bridges.NeuralCoding.MaxPlusLemmas
 import Bridges.TropicalAlgebra.EigenvectorIteration
-import Speculative.AutoResearch.TropicalPerronCore
+import Speculative.AutoResearch.TropicalWalkPerron
 
 /-!
 # Tropical Perron-Frobenius Theorem
@@ -97,18 +97,19 @@ theorem exists_eigenvector_dim2
     For any `n × n` matrix over `ℝ` with `n > 0`, there exist `μ` and `v`
     satisfying the max-plus eigenvector equation `(M ⊗ v)ᵢ = μ + vᵢ`.
 
-    The proof is the Cuninghame-Green construction, carried out in
-    `Speculative.AutoResearch.TropicalPerronCore`: `μ` is the maximal cycle mean
-    `lam hn M`, and `v i` is the largest shifted weight `Wt l i i₀ - l · μ` of a walk
-    of length `l ≤ n` from `i` to a critical node `i₀`.  Cycle removal (pigeonhole
-    on a walk longer than `n`, together with the fact that every cycle has mean at
-    most `μ`) shows this potential satisfies the eigenvector equation exactly. -/
+    The `1×1` and `2×2` cases are proved above by direct construction and by the
+    intermediate value theorem.  The general case is the Cuninghame-Green
+    construction, carried out in `Speculative.AutoResearch.TropicalWalkPerron`:
+    `μ` is the maximal cycle mean, and `v` is the Kleene-star column at a node of a
+    critical cycle, i.e. the best weight of a walk into that node. -/
 theorem exists_maxPlusMul_eigenvector (hn : 0 < n)
     (M : Matrix (Fin n) (Fin n) ℝ) :
     ∃ (mu : ℝ) (v : Fin n → ℝ),
       (∀ i, maxPlusMul M v hn i = mu + v i) := by
-  obtain ⟨v, hv⟩ := TropPerron.exists_eigen_potential hn M
-  exact ⟨TropPerron.lam hn M, v, fun i => hv i⟩
+  haveI : Nonempty (Fin n) := ⟨⟨0, hn⟩⟩
+  obtain ⟨mu, v, hv⟩ :=
+    TropicalWalk.exists_tropical_eigenvector (V := Fin n) (fun i j => M i j)
+  exact ⟨mu, v, fun i => hv i⟩
 
 /-! ### Conditional bounded defect growth
 

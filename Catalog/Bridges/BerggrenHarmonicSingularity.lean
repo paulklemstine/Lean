@@ -1,5 +1,5 @@
-import Catalog.Bridges.BerggrenBoundaryEntropy
-import Catalog.Bridges.BerggrenBoundaryCantor
+import Bridges.BerggrenBoundaryEntropy
+import Bridges.BerggrenBoundaryCantor
 
 /-!
 # Rigidity of the family of Berggren harmonic measures

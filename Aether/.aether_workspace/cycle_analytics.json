@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-22T17:37:08.075736+00:00",
+  "last_updated": "2026-08-22T18:50:10.743089+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -64185,6 +64185,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-08-22T17:37:07.795951+00:00",
       "title": "FACT round-40 #1 \u2014 QR-RESIDUAL: footprint-weighted dial captures the residual (paper 145)"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Cryptography",
+      "duration_seconds": 4354.462906599045,
+      "end_time": 1787424542.2326303,
+      "files_integrated": 4,
+      "job_id": "113c03c3",
+      "outcome_quality": 0.82,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.82,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.544,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.82,
+        "novelty": 0.82,
+        "proof_depth": 0.82,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1787420187.7697237,
+      "strategy_count": 0,
+      "theorem_count": 84,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 78,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-08-22T18:50:10.401976+00:00",
+      "title": "FACT round-37 #4 \u2014 CONVERSE-CAP-THEOREM: the barrier-4 converse proved for the residue-dial stratum,"
     }
   ]
 }

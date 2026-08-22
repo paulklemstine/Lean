@@ -746,21 +746,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-35 #8 \u2014 CONJUGATE-S3-TEST: conjugate fields produce identical type channels (paper 127)"
   },
   {
-    "consumed_by_exp_id": "113c03c3",
-    "description": "Round-37 #4 (exp 466, assessment v241). FRONTIER (i) UPGRADED: the empirical converse curve of paper 88 is now a THEOREM for the entire congruence stratum.\n\n**Universal exact law**: Speedup(K,c) = 1/(1 \u2212 \u03b8 + \u03b8\u00b2), \u03b8 = |K_c|/\u03c6(M) \u2014 independent of the reading, the modulus's structure, character content, and the number of composed dials. **Universal cap 4/3**, attained exactly at \u03b8=1/2; trivial filters give exactly 1.\n\nConsequences:\n- n=3/n=5 caps are ALSO 4/3, attained at ANY half-density subset \u2014 Lemma B2 kills all internal structure (mixing character fibers cannot beat it).\n- **Batteries compose for free (CRT): battery cap still 4/3 < 2** \u2014 the 12.7235 measured battery bits buy \u2264 log2(4/3) = 0.41504 work-bits. Capacity bits and work bits are different currencies.\n- Corollary A2: which-factor blindness of residues (papers 93/102) becomes an IDENTITY under MA-1.\n\nMachine verification: Claim-A MC 1,065,538 samples max dev 0.000294 (\u03c7\u00b2 z=\u22121.67); exhaustive enumeration m=3/4/7/11 + batteries M=12/15/21/33 (all 2^20 subsets) \u2014 every max exactly 1.3333333333; real-semiprime sims within \u00b10.006 incl. structure-blindness controls; beat-the-cap attempt over top-40 sets: nothing approaches 2\u00d7.\n\nResidual gap to the FULL converse, precise: (1) positional/interval witnesses (paper 88 arms empirically); (2) superconstant-cost tests (factor-local methods escape scan-order framing); (3) effectivizing MA-1 at cryptographic sizes.\n\nProofs: ResearchOutput/scripts/2026-08-21-resume/proofs.md; machine checks verify.py/result.json; ledger of 5 self-caught errors incl. nearly reporting the asked \u22642 instead of the provable 4/3.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3542",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T01:52:37.374850+00:00",
-    "title": "FACT round-37 #4 \u2014 CONVERSE-CAP-THEOREM: the barrier-4 converse proved for the residue-dial stratum, universal cap 4/3 (paper 132)"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Round-37 #3 (exp 461, assessment v240). THE DECISIVE UTILITY EXPERIMENT for the battery/type-channel programme.\n\n**REAL-FILTER-EQUALS-SHAM**: a Bayesian candidate filter built from the exact type-channel posterior is indistinguishable from a same-size coin-flip keep-set at every dial (d2 1 bit, d3, d5, bat2, bat4 3.49 bits): max |real \u2212 sham| = 0.0075 vs batch SD 0.0073. The \u03c1-grid shows the (apparent) gain is a function of keep-rate alone, indifferent to which classes are kept.\n\nHonest accounting: with each membership test priced at one division-equivalent on every candidate \u2264 \u221aN, EVERY filter \u2014 real or sham \u2014 runs at ~0.50x: a net 2x loss. No-fallback failure rates = 1/n exactly.\n\nMechanism: barrier 2 made algorithmic \u2014 the marginal posterior over the target's residue is flat no matter what N reveals about the joint, so posterior capacity cannot reweight candidates. 3.49 bits of measured battery capacity ride channels orthogonal to ordering decisions. Pre-stated 4/3x refuted (companion theory paper: under complete-procedure accounting the sharp cap is 1x).\n\nLedger (9 catches): two substantive cost-accounting bugs produced spurious >1.5x speedups \u2014 caught by SHAM CO-INFLATION + derivation; dummy dial v1 leaked 1 bit by reading its random table through the factors (not N-computable) \u2014 rebuilt public.\n\nDecides: type-channel/battery capacity has exactly zero conversion into trial-division speedup. The utility question opened by paper 98 is CLOSED quantitatively.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp461_posterior_filter.py (script + result.json), seed 20260821, 20k semiprimes/cell x 5 batches.",
     "domains": [
@@ -1429,16 +1414,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-46 #1 \u2014 MID-PRIME-HUNT: prime-power hits carry the tight-u residual (paper 172)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "abf27a46",
     "description": "Round-49 #1, cron iteration (exp 511, assessment v284). Paper 175's bitlen-stability pushed to its limit.\n\n**T-DIAL-56-PARTIAL**: Spearman(T, rate) = **0.405** at bitlen 56 \u2014 BELOW the [0.55, 0.85] band. The dial DEGRADES because the smooth rate drops to **0.89%** (starved; 194/1200 Ns with ZERO hits). T still beats count by +0.093 (CI [0.042, 0.146]).\n\nThe bitlen-stability has a PRACTICAL FLOOR near bitlen ~54, beyond which the starved regime destroys rank resolution.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp511_t_dial_56.py + exp511_result.json, seed 20261030.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3662",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T13:02:58.897389+00:00",
     "title": "FACT round-49 #1 \u2014 T-DIAL-56: the bitlen-stability has a practical floor (paper 178)"
   },
@@ -1721,6 +1707,146 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-22T17:37:32.043186+00:00",
     "title": "FACT round-55 #1 \u2014 BALANCED-BKEY: the T-dial's decline is gradual, not a cliff (paper 182 addendum)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## NET-68 \u2014 limited-memory axis, round 21 (paper 153, ResearchOutput/exp_net68_domainjump.py, /tmp/net68.log)\n\n**Verdict name: CODE-NEEDS-FEWER-KEYS.**\n\n### Result\nDomain jump to Python source (10 CPython stdlib files; gate exact; identical harness/bar):\n\n| ctx | code k\\* | prose k\\* | code full acc | shift |\n|---|---|---|---|---|\n| 512 | **12** | 16 | 0.6296 | \u22124 keys |\n| 1024 | **16** | 20 | 0.6520 | \u22124 keys |\n\nCode sweeps @512: 4: 0.930 \u2717, 8: 0.969 \u2717, **12: 0.981 \u2713**, 16: 0.987, 20: 0.988, 24: 0.989.\n@1024: 8: 0.960 \u2717, 12: 0.976 \u2717, **16: 0.981 \u2713**, 20: 0.986, 24: 0.987.\n\n- **P1 CONFIRMED**: knees transfer within one fine step.\n- **P2 CONFIRMED**: exactly one fine-grid step (\u22124 keys) below prose at BOTH contexts \u2014 structure preserved.\n- **P3 REFUTED**.\n\n### The parameterized budget law\nk\\*(domain, context) = base(domain) + increment(scale) \u00d7 doublings(context), with base(prose)=16, base(code)=12, increments set by scale (NET-67). THIRD independent confirmation that accuracy level and knee position are independent quantities: code is EASIER to predict yet needs FEWER keys. Deployment: size KV by the largest-base domain present in mixed workloads.\n\n### All 8 barriers\n(a) clean \u2014 three horns pre-stated incl. the refuted P3; (b) clean; (c) confronted \u2014 limits: ONE code language, single-repo source, 24 windows stated; (d) clean per-corpus held-out splits; (e) deterministic; (f) clean \u2014 ALL_DONE_NET68; (g) fair \u2014 byte-identical harness except text; (h) DIRECT.\n\n### Next\nMath/non-English domains; increments at 4096; probe+recency hybrid on code; 7B quantized-offload cell.\n\nNow 68 network experiments. Assessment v68. Paper 153.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3709",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T18:51:45.072811+00:00",
+    "title": "NET-68: CODE-NEEDS-FEWER-KEYS \u2014 domain jump to Python shifts the knee chain down one fine step ({12,16} vs {16,20}); budget law now domain-parameterized"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-61 #1, cron iteration (exp 530). The highest-bitlen uniform measurement in the dial's validation grid.\n\n**U64-DIAL-HOLDS-COUNT-PARITY**: Spearman(T, rate) = **0.658** / **0.642** / **0.643** across three seeds on uniform draws at bitlen 64; pooled **0.648** CI [0.629, 0.665]. All inside [0.55, 0.85].\n\nH2's strict +0.05 bar met by 2/3 seeds but pooled CI low (0.049) misses it by 0.001 \u2014 recorded as count parity.\n\nThe zero-fit dial extends to bitlen 64 on uniform draws with the band intact \u2014 a gentle monotone decline from ~0.78 at bitlen 44 to ~0.65 at 64.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp530_t_dial_unif_64.py + exp530_result.json, seeds 20261140\u201342.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3710",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T18:51:45.074530+00:00",
+    "title": "FACT round-61 #1 \u2014 TDIAL-U64: the zero-fit dial holds at bitlen 64 with count parity (paper 185)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## NET-67 \u2014 limited-memory axis, round 20 (paper 152, ResearchOutput/exp_net67_sub20.py, /tmp/net67.log)\n\n**Verdict name: SCALE-HALVES-THE-CONTEXT-INCREMENT.**\n\n### Result\nTwo-point addendum (Qwen2.5-1.5B, ctx=2048; baseline drift-assert passed exactly 0.5132):\n\n| k | 14 | 18 |\n|---|---|---|\n| retained | 0.9757 \u2717 (~2 SE) | **0.9811 \u2713** |\n\n- **P1 CONFIRMED**: the knee is 18 \u2014 NET-66's coarse read of 20 was one fine point high.\n- **P2 REFUTED** accordingly.\n\n### The refined law\nComplete measured picture: 0.5B {16, 20, 24} \u2014 starts at 16, +4 keys per context doubling. 1.5B {16, 16, 18} \u2014 starts at 16, +2 keys per doubling (first increment 0, second +2). **Scale compresses both the level and the increments of the attention-budget curve.** The one-octave reading (NET-66) was a coarse-grid approximation; increment-halving is the finer truth. Deployment: a 20-key budget covers BOTH models to 2048 with margin.\n\n### All 8 barriers\n(a) clean \u2014 two horns pre-stated incl. the refuted P2; (b) clean; (c) confronted \u2014 two-point addendum stated; (d) clean; (e) deterministic drift-assert; (f) clean \u2014 ALL_DONE_NET67; (g) fair \u2014 same bar; (h) DIRECT.\n\n### Next\nIncrements at 4096; domain-jump corpora; 7B cell (does halving extend?).\n\nNow 67 network experiments. Assessment v67. Paper 152.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3711",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T18:51:45.076165+00:00",
+    "title": "NET-67: SCALE-HALVES-THE-CONTEXT-INCREMENT \u2014 1.5B knee at 2048 is 18 not 20; both models start at 16 keys, scale halves the +per-doubling increment (+4 -> +2)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## NET-66 \u2014 limited-memory axis, round 19 (paper 151, ResearchOutput/exp_net66_1p5b2048.py, /tmp/net66.log)\n\n**Verdict name: SCALE-DELAYS-CONTEXT-SENSITIVITY-BY-ONE-DOUBLING.**\n\n### Result\nThe 1.5B's first ctx=2048 cell (fine grid, gate identical to NET-55/65):\n\n| k | 8 | 12 | 16 | 20 | 24 | 32 |\n|---|---|---|---|---|---|---|\n| retained | 0.9597 \u2717 | 0.9715 \u2717 | **0.9785 \u2717 (razor)** | **0.9817 \u2713** | 0.9846 \u2713 | 0.9867 \u2713 |\n\n- **P1 CONFIRMED**: the flat chain breaks upward \u2014 k\\*(2048) = 20 > 16.\n- **P2 REFUTED**: flatness does not hold through 2048.\n- **P3 REFUTED**: 20 < the 0.5B's 24 at the same context \u2014 scale does not increase sensitivity either.\n\n### The one-octave law\nThe two chains: 0.5B {16, 20, 24} vs 1.5B {16, 16, 20}. The 1.5B curve equals the 0.5B curve shifted right by ONE CONTEXT DOUBLING (20 arrives at 1024 for the small model, at 2048 for the large). Scale POSTPONES context-sensitivity rather than eliminating or amplifying it. Budget tables gain a scale-shift form: a 16-key budget covers the 0.5B to 512 and the 1.5B to 1024.\n\n### All 8 barriers\n(a) clean \u2014 three horns pre-stated incl. two refuted; (b) clean \u2014 first 2048 cell at 1.5B; (c) confronted \u2014 razor k=16 fail (~1 SE) leaves bracket (16, 20] partially open; 12 windows stated; (d) clean; (e) deterministic baseline monotone (0.5132); (f) clean \u2014 ALL_DONE_NET66; (g) fair \u2014 same bar/harness as all real-model rounds; (h) DIRECT.\n\n### Next\nSub-20 addendum @2048; 0.5B @4096 (does its chain continue rising?); domain-jump corpora; 7B cell (does the shift extend?).\n\nNow 66 network experiments. Assessment v66. Paper 151.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3712",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T18:51:45.077817+00:00",
+    "title": "NET-66: SCALE-DELAYS-CONTEXT-SENSITIVITY-BY-ONE-DOUBLING \u2014 1.5B chain breaks at 2048 ({16,16,20}); broken curve equals the 0.5B shifted one octave (1.5B@2048 = 0.5B@1024 = 20)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## NET-65 \u2014 limited-memory axis, round 18 (paper 150, ResearchOutput/exp_net65_1p5bsub16.py, /tmp/net65.log)\n\n**Verdict name: SIXTEEN-IS-REAL.**\n\n### Result\nFine sweep below NET-55's grid floor (Qwen2.5-1.5B, ctx=1024, gate identical to NET-55; baseline bit-identical 0.5004):\n\n| k | 4 | 6 | 8 | 12 |\n|---|---|---|---|---|\n| retained | 0.9318 \u2717 | 0.9532 \u2717 | 0.9660 \u2717 | **0.9759 \u2717 (razor, ~2 SE)** |\n\n- **P1 REFUTED**: no sub-16 point passes \u2014 the knee does NOT decline with scale.\n- **P2 CONFIRMED**: k\\*(1024) = 16 exact, bracket (12, 16].\n\n### The refined scale law\n0.5B: {16, 20, 24} \u2014 the chain RISES with context. 1.5B: {16, 16} \u2014 FLAT. Larger models have more context-STABLE attention budgets, not fewer keys. New measurable: the CONTEXT-SENSITIVITY of the attention budget, which decreases with model scale in its first measured step. A 16-key budget covers both models to ctx=1024.\n\n### All 8 barriers\n(a) clean; (b) clean; (c) confronted \u2014 razor bracket (12, 16] stated; one corpus; (d) clean; (e) deterministic baseline-replicating; (f) clean \u2014 ALL_DONE_NET65; (g) fair \u2014 same bar/harness as NET-55; (h) DIRECT.\n\n### Next\n1.5B @2048 fine grid (does the flat chain break upward?); domain-jump corpora; 7B cell.\n\nNow 65 network experiments. Assessment v65. Paper 150.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3713",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T18:51:45.079451+00:00",
+    "title": "NET-65: SIXTEEN-IS-REAL \u2014 all sub-16 points fail on Qwen2.5-1.5B at ctx=1024 (knee exactly 16); scale flattens the context response: {16,20,24}@0.5B vs flat {16,16}@1.5B"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-58 #1, cron iteration (exp 528). The zero-fit dial tested on uniform draws at bitlen 52.\n\n**CELL-CLOSED-DIAL-HOLDS-UNIF-52**: Spearman(T, rate) = **0.698** / **0.697** / **0.720** across three seeds; all inside [0.55, 0.85]; pooled advantage over count +0.070 CI [0.046, 0.093].\n\nThe zero-fit dial survives uniform draws at bitlen 52 \u2014 its deployment envelope now covers balanced and uniform draws through bitlen 52.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp528_t_dial_unif_52.py + exp528_result.json, seeds 20261120\u201322.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3714",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T18:51:45.081062+00:00",
+    "title": "FACT round-58 #1 \u2014 TDIAL-U52: the dial survives uniform draws at bitlen 52 (paper 183 addendum)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## NET-64 \u2014 limited-memory axis, round 17 (paper 149, ResearchOutput/exp_net64_fine2048B.py, /tmp/net64.log)\n\n**Verdict name: THE-CORPUS-B-DISAGREEMENT-WAS-A-GRID-ARTIFACT.**\n\n### Result\nCorpus-B fine sweep at ctx=2048 (gate exact):\n\n| k | 20 | 24 | 28 | 32 |\n|---|---|---|---|---|\n| retained | 0.9790 \u2717 | **0.9832 \u2713** | 0.9853 \u2713 | 0.9862 \u2713 |\n\n**k\\*(2048) = 24 \u2014 IDENTICAL to corpus-A's fine knee.**\n\n- **P1 REFUTED**: no shard-level difference at long context \u2014 the fine knees match.\n- **P2 CONFIRMED**: corpus-B's coarse-grid 32 was a grid artifact.\n- **P3 REFUTED**: nothing \"between\".\n\n### The completed chain\nThe full 0.5B fine-grid chain **{16, 20, 24} at {512, 1024, 2048} now replicates EXACTLY across two disjoint wikitext shards at every cell** \u2014 every entry of the deployment table is dual-corpus-confirmed. Baseline note: corpus-B acc 0.4946 vs A's 0.4760 (shard-2 text is easier) yet identical knees \u2014 accuracy level and knee position are independent.\n\n### All 8 barriers\n(a) clean \u2014 three horns pre-stated incl. two refuted; (b) clean; (c) confronted \u2014 12 windows stated; (d) clean; (e) deterministic; (f) clean \u2014 ALL_DONE_NET63 marker (reused harness); (g) fair \u2014 byte-identical harness except corpus path; (h) DIRECT.\n\n### Next\nDomain-jump corpora (code/math); 1.5B fine grids; 7B quantized-offload cell.\n\nNow 64 network experiments. Assessment v64. Paper 149.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3715",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T18:51:45.082625+00:00",
+    "title": "NET-64: THE-CORPUS-B-DISAGREEMENT-WAS-A-GRID-ARTIFACT \u2014 corpus-B fine knee at 2048 is also 24; the {16,20,24} chain replicates exactly across both corpora at all three contexts"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## NET-63 \u2014 limited-memory axis, round 16 (paper 148, ResearchOutput/exp_net63_fine2048.py, /tmp/net63.log)\n\n**Verdict name: THE-2048-KNEE-IS-TWENTY-FOUR.**\n\n### Result\nFine sweep at ctx=2048 on corpus-A (gate exact; 12 windows):\n\n| k | 20 | 24 | 28 | 32 |\n|---|---|---|---|---|\n| retained | 0.9793 \u2717 | **0.9835 \u2713** | 0.9854 \u2713 | 0.9885 \u2713 |\n\n- **P1 REFUTED**: the knee is 24, not 28 \u2014 no fine point between 24 and 32 is the first pass.\n- **P2 CONFIRMED**: {16, 20, 24} strictly monotone on fine grids across all three contexts.\n- **P3 PARTIAL**: k=24's margin (+0.35 pts) is 7\u00d7 healthier than the original razor read; but k=28 passes, so 24 has close company.\n\n### Consequences\nThe deployment table's final entry is confirmed: **0.5B needs {16, 20, 24} keys at {512, 1024, 2048}** \u2014 strictly monotone, all inside the ~30-key budget. Corpus-B's coarse-grid 32 is isolated as a shard-or-window-count question that no longer threatens the chain. Quantization note: smooth bracketing at 2048 vs ON-grid landing at 1024 \u2014 grid behavior is context-dependent.\n\n### All 8 barriers\n(a) clean; (b) clean; (c) confronted \u2014 12 windows stated; (d) clean; (e) deterministic; (f) clean \u2014 ALL_DONE_NET63; (g) fair; (h) DIRECT.\n\n### Next\nCorpus-B fine sweep @2048; domain-jump corpora; 1.5B fine grids; 7B cell.\n\nNow 63 network experiments. Assessment v63. Paper 148.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3716",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T18:51:45.084247+00:00",
+    "title": "NET-63: THE-2048-KNEE-IS-TWENTY-FOUR \u2014 fine grid confirms k*(2048)=24 with healthy margins; 0.5B chain {16,20,24} strictly monotone across all contexts"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## NET-62 \u2014 limited-memory axis, round 15 (paper 147, ResearchOutput/exp_net62_sub16.py, /tmp/net62.log)\n\n**Verdict name: THE-KNEE-LANDS-ON-THE-FINE-GRID.**\n\n### Result\nFine sweep at ctx=1024 (oracle top-k, Qwen2.5-0.5B, 24 held-out windows; baseline 0.4627 bit-identical to three prior rounds):\n\n| k | 4 | 8 | 12 | 20 | 24 |\n|---|---|---|---|---|---|\n| retained | 0.8940 \u2717 | 0.9520 \u2717 | 0.9662 \u2717 | **0.9803 \u2713** | **0.9851 \u2713** |\n\n- **P1 CONFIRMED**: the knee is 20 \u2014 well below the coarse-grid 32.\n- **P2 CONFIRMED**: it lands exactly ON the fine-grid point 20.\n\n### Consequences\n1. The 0.5B chain is now **strictly monotone: {16, 20, 24}** across {512, 1024, 2048}, replacing the coarse {16, 32, 24}.\n2. NET-55's size-invariance SHARPENS: 1.5B's {16, 16} is flat-to-declining against a rising baseline.\n3. The 2048 corpus-B reading (32) looks like a coarse-grid artifact, not corpus sensitivity.\n4. The knee-quantizes-to-grid pattern (toy 112 mid-grid; 20 here) gains a third instance.\n\nDeployment: the 1024 entry moves from 32 to 20 keys.\n\n### All 8 barriers\n(a) clean \u2014 both horns confirmed; (b) clean; (c) confronted \u2014 finer grid, same model/corpus; 24 windows stated; (d) clean; (e) deterministic pre-stated grid; (f) clean \u2014 ALL_DONE_NET62; (g) fair \u2014 same bar/harness; (h) DIRECT.\n\n### Next\nFine grids at 512/2048; domain-jump corpora; 1.5B fine-grid; 7B cell.\n\nNow 62 network experiments. Assessment v62. Paper 147.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3717",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T18:51:45.085865+00:00",
+    "title": "NET-62: THE-KNEE-LANDS-ON-THE-FINE-GRID \u2014 0.5B knee at ctx=1024 is k*=20 (fine grid), chain now strictly monotone {16,20,24}; size-invariance sharpens; 2048 corpus-B reading was a coarse-grid artifact"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-57 #1, cron iteration (exp 527). The zero-fit dial tested on uniform draws at exact bitlen 48.\n\n**CELL-CLOSED-DIAL-HOLDS-UNIF-48B**: Spearman(T, rate) = **0.7291/0.7286/0.7087** across three seeds; all inside [0.55, 0.85]; pooled advantage +0.134 CI [0.113, 0.158].\n\nThe dial survives uniform draws at bitlen 48.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp527_t_dial_unif_48.py + exp527_result.json, seeds 20261110\u201312.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3718",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T18:51:45.087483+00:00",
+    "title": "FACT round-57 #1 \u2014 TDIAL-U48B: the zero-fit dial holds on uniform draws at bitlen 48 (paper 184)"
   },
   {
     "consumed_by_exp_id": "",
@@ -3424,54 +3550,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Quantum Entanglement Monogamy: CKW Inequality"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove Schanuel's conjecture: if z\u2081,...,z\u2099 are Q-linearly independent complex numbers, then the transcendence degree of {z\u2081,...,z\u2099,e^z\u2081,...,e^z\u2099} over Q is at least n. Formalize implications for the Lindemann-Weierstrass theorem.",
-    "domains": [
-      "NumberTheory",
-      "Analysis"
-    ],
-    "id": "seed_033",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Schanuel's Conjecture"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Persistent homology computes topological features of data at multiple scales. On spheres, the natural metric is the geodesic (spherical) distance, but existing algorithms assume Euclidean data. Use stereographic projection to transform spherical persistence to weighted Euclidean persistence. Define the stereographic persistence module for a point cloud X on S^n: for each filtration parameter epsilon, compute the Cech complex C_epsilon(X) on S^n using the spherical metric, then apply inverse stereographic projection to get a filtered complex on R^n with a conformal weight. Conjecture: The persistence diagram of a point cloud on S^n computed with the geodesic metric is equal to the persistence diagram of the projected point cloud on R^n computed with a conformally weighted distance d_w(x,y) = 2*d(x,y)/(1+d(x,y)^2/4). This equality holds because stereographic projection is a conformal isometry up to the conformal factor, and persistence diagrams are invariant under conformal transformations. This gives an O(N log N) algorithm for spherical persistence (vs O(N^2) for direct computation). Test: implement both methods and verify isometry of persistence diagrams for random spherical point clouds with N=50, 100, 200 points. Impact: fast, provably correct topological data analysis for spherical data, with applications to astrophysics (cosmic microwave background) and protein structure analysis.",
-    "domains": [
-      "Geometry",
-      "Computation",
-      "Topology"
-    ],
-    "id": "seed_092",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Inverse Stereographic Persistence: Topological Data Analysis on Spheres"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "What if the topology of a space depended on who is observing it? Define a phantom topology on a set X as a function T: O -> Top(X) that assigns to each observer o a topology T(o) on X. Two observers o1, o2 agree on an open set U if U is open in both T(o1) and T(o2). The phantom number of (X, T) is the minimum number of observers needed to determine the topology: if U is open in every T(o) that contains a point x, then U is a neighborhood of x in the 'real' topology. Conjecture: Every second-countable space (X, tau) admits a phantom representation with at most 2 observers (the real topology is the intersection of two phantom topologies). Moreover, every non-metrizable space requires at least 3 observers. The intuition: the real topology is what ALL observers agree on, and phantom topologies are what individual observers see. Like quantum mechanics, measurement changes the topology. Test: prove that R with the standard topology is the intersection of the lower limit topology and the upper limit topology (2 observers). Prove that the Zariski topology on R^2 requires at least 3 observers. Impact: a new notion of topology where the space itself depends on the observer \u2014 the mathematical formalization of 'reality depends on the observer'.",
-    "domains": [
-      "Novelty",
-      "Topology",
-      "Logic",
-      "Speculative"
-    ],
-    "id": "seed_110",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Phantom Topologies: Spaces That Change When You Look at Them"
   },
   {
     "consumed_by_exp_id": "",
@@ -12297,6 +12375,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The exact law assumes the target factor's residue class is uniform. Replacing uniformity by a distribution at total-variation distance \u0394 from uniform should perturb the cost by O(\u0394), giving an effective statement usable at cryptographic sizes with no mixing assumption.\n\nIf the target class distribution \u03bc satisfies \u2016\u03bc \u2212 U\u2016_TV \u2264 \u0394 then the normalized expected scan cost lies within \u0394 of 1 \u2212 \u03b8 + \u03b8\u00b2, hence the speedup is at most 4/3 + O(\u0394).\n\nRestate expectedScanCost with a general probability mass function and bound the difference by \u2016\u03bc \u2212 U\u2016_TV times the cost range; formalize in Lean over Finset sums.\n\nThe cap becomes effective and assumption-free given any explicit equidistribution bound.\n\nNon-uniform target classes are exploitable beyond 4/3, relocating the cryptanalytic resource into the distribution.",
+    "domains": [
+      "Combinatorics",
+      "Computation"
+    ],
+    "id": "fd_3705",
+    "priority_score": 0.7084545454545456,
+    "research_mode": "team",
+    "source_exp_id": "113c03c3",
+    "status": "available",
+    "timestamp": "2026-08-22T18:49:51.009514+00:00",
+    "title": "Discrepancy-Perturbed Dial Law"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Over WithBot weights the predicate 'is not bottom' should be a semiring morphism onto the Boolean semiring, so feasibility of a constrained dynamic program reduces to reachability in a support digraph. The conjecture is that the bottom-pattern of the walk matrices coincides with the Boolean powers of the support adjacency matrices. This turns the infeasibility criterion already proved (val_eq_bot_iff) into a purely combinatorial check.\n\nFor D : DPSpec S (WithBot W), val n s is not bottom iff there is a support path of length n from some state with non-bottom init to s, where s -> t at stage i iff step i s t is not bottom.\n\nDefine the support relation, prove that a sum is bottom iff a summand is and that a finite sup is bottom iff all arguments are, then induct on n; cross-check by decide on the maximum-weight independent set instance with an isolated forbidden state.\n\nInfeasibility detection for constrained DP reduces to Boolean matrix reachability and can be certified separately from optimisation.\n\nThe bottom-pattern carries strictly more information than reachability, so constrained DP feasibility is not purely combinatorial.",
     "domains": [
       "Combinatorics",
@@ -12427,6 +12520,30 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-01T04:21:53.479845+00:00",
     "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order."
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the sequence Initial term of sequence An. with terms 0,1,1,0,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,2,1,0,1,1,1,1,1,2,1,0,1,2,0,1,0,2,2,2,1,2,1,1,2,1,0,1,1,1,0,1,. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
+    "domains": [],
+    "id": "fd_3708",
+    "priority_score": 0.7,
+    "research_mode": "team",
+    "source_exp_id": "oeis:31214",
+    "status": "available",
+    "timestamp": "2026-08-22T18:51:43.217997+00:00",
+    "title": "OEIS sequence: Initial term of sequence An."
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the sequence Number of subsets of {1..n} whose product is equal to their sum. with terms 0,1,2,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,3. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
+    "domains": [],
+    "id": "fd_3719",
+    "priority_score": 0.7,
+    "research_mode": "team",
+    "source_exp_id": "oeis:326178",
+    "status": "available",
+    "timestamp": "2026-08-22T18:51:43.219746+00:00",
+    "title": "OEIS sequence: Number of subsets of {1..n} whose product is equal to their sum."
   },
   {
     "consumed_by_exp_id": "",
@@ -14055,6 +14172,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Batteries so far are read all at once. An adaptive scheduler interleaves dial readings and scanning. We conjecture adaptivity buys nothing, because the achievable cost is determined by the induced partition of the class space, which adaptivity cannot refine beyond the non-adaptive product partition.\n\nFor every adaptive dial-aware strategy over a battery there is a non-adaptive strategy with the same expected cost; the adaptive caps are therefore still 4/3 (single pass) and < 2 (expected position).\n\nModel an adaptive strategy as a decision tree over dial answers, formalize the induced partition, and extend schedule_sum_lower_bound from two branches to 2^d branches.\n\nThe converse extends to all scan-order algorithms with congruence oracles, adaptive or not.\n\nAdaptive scheduling is a genuine resource and the converse must be restricted to oblivious scans.",
+    "domains": [
+      "NumberTheory",
+      "Combinatorics"
+    ],
+    "id": "fd_3706",
+    "priority_score": 0.5629688434489444,
+    "research_mode": "team",
+    "source_exp_id": "113c03c3",
+    "status": "available",
+    "timestamp": "2026-08-22T18:49:51.432457+00:00",
+    "title": "Adaptive Battery Non-Advantage"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The infinitesimal bound \u2211|v\u1d62| \u2264 \u221a(\u2211v\u1d62\u00b2/p\u1d62) discards a variance term. Quantifying that defect converts the length inequality into an identity plus an explicit nonnegative functional, giving a quantitative rigidity statement for L\u00b9-efficient curves.\n\nThere is an absolute c > 0 with fisherRaoSpeed p v \u2212 \u2211\u1d62|v\u1d62| \u2265 c \u00b7 Var_p(|v|/p) for every strictly positive probability vector p and tangent vector v.\n\nProve the squared version by expanding the Cauchy\u2013Schwarz defect \u2211\u1d62 p\u1d62(|v\u1d62|/p\u1d62 \u2212 \u2211\u2c7c|v\u2c7c|)\u00b2 and comparing with the difference of square roots; calibrate c against arcsin r \u2212 r in the two-point family.\n\nL\u00b9-efficient curves are exactly those with velocity proportional to the distribution, a rigidity theorem for information geometry.\n\nThe deficiency must degenerate near the simplex boundary, indicating a weighted rather than absolute constant.",
     "domains": [
       "Geometry",
@@ -14067,6 +14199,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-22T13:45:38.559055+00:00",
     "title": "Cauchy\u2013Schwarz Deficiency for Information Speed"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The universal cap is 4/3 for single-pass scans and r for full reveals with r symbols. We conjecture a monotone one-parameter family of caps indexed by the fraction s of rejected classes the algorithm may skip for free, interpolating the two. This would say precisely how much of a sieve's advantage comes from skipping rather than from filtering.\n\nFor skip fraction s \u2208 [0,1] the maximal speedup of an r-block dial is C(r,s) = 1 / min_\u03b8 \u03a3_i \u03b8_i (\u03b8_i + (1-s)(\u03b8_1 + \u2026 + \u03b8_{i-1})), which is continuous and increasing in s, with C(r,0) = 2r/(r+1) and C(r,1) = r.\n\nDefine the s-cost in Lean as a Finset sum, prove the closed form by the same doubling identity used for prefixCost, and minimize by Cauchy\u2013Schwarz; verify exhaustively on rational density grids for r = 2,3,4 and s \u2208 {0, 1/4, 1/2, 3/4, 1}.\n\nAny claimed congruence speedup can be classified by its skip budget, and the 4/3-versus-2-versus-r confusion disappears.\n\nSkipping interacts with density in a non-monotone way, which would itself be a new phenomenon worth isolating.",
+    "domains": [
+      "Pythagorean",
+      "NumberTheory"
+    ],
+    "id": "fd_3703",
+    "priority_score": 0.5628557806959551,
+    "research_mode": "team",
+    "source_exp_id": "113c03c3",
+    "status": "available",
+    "timestamp": "2026-08-22T18:49:50.119638+00:00",
+    "title": "Skip-Budget Interpolation of the Dial Cap"
   },
   {
     "consumed_by_exp_id": "",
@@ -22416,6 +22563,34 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-22T17:36:56.461362+00:00",
     "title": "No-Free-Lunch Frontier for Modular-Reduction Features"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Reading a dial is free in the current law. Charging c per reading converts the cap into a profitability criterion: the absolute saving of a density-\u03b8 dial on an n-class scan is n(\u03b8 \u2212 \u03b8\u00b2), maximized at n/4. Superconstant-cost congruence tests are then provably unprofitable.\n\nWith reading cost c and baseline n, a dial of density \u03b8 is profitable iff c < n(\u03b8 \u2212 \u03b8\u00b2); in particular no dial with c \u2265 n/4 is ever profitable.\n\nAdd the cost term to expectedScanCost in Lean, maximize \u03b8 \u2212 \u03b8\u00b2 = 1/4 by completing the square, and compare against simulated trial division with explicit residue tests.\n\nResidual gap (2) \u2014 superconstant-cost tests \u2014 closes inside the scan-order framing.\n\nSome expensive local test pays for itself, locating a resource outside the classified set.",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "fd_3704",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "113c03c3",
+    "status": "available",
+    "timestamp": "2026-08-22T18:49:50.564367+00:00",
+    "title": "Zero-Profit Threshold for Cost-Charged Filters"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Binary dials have caps 4/3 (single pass) and 2 (expected position); r-ary single-pass dials have cap 2r/(r+1); r-ary full reveals have cap r. We conjecture a single two-parameter surface C(r, accounting) with these four corners, settling which constant any given cryptanalytic claim is about.\n\nUnder expected-position accounting an r-block dial has supremum speedup exactly r, approached but not attained, so C(r, position) = r and C(r, phase) = 2r/(r+1); the surface is jointly monotone.\n\nGeneralize the triangular-sum optimality lemma to r blocks and compute the optimum of \u03a3_i \u03b8_i (S_{i-1} + (\u03b8_i n + 1)/2); verify numerically for r \u2264 6 and n \u2264 10^4.\n\nA complete dictionary between accounting conventions and barrier constants.\n\nThe two refinements interact, revealing a genuinely new obstruction beyond the density-only law.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_3707",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "113c03c3",
+    "status": "available",
+    "timestamp": "2026-08-22T18:49:51.880892+00:00",
+    "title": "Two-Parameter Cap Surface for r-ary Dials"
   },
   {
     "consumed_by_exp_id": "",
@@ -39565,14 +39740,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Partial orders"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8d0007de",
     "description": "Prove that the rectangularly windowed tone equals a sinc-type expression, with value `2T` at resonance. This would quantify peak width and sidelobes rather than merely prove the peak center.",
     "domains": [],
     "id": "fd_2014",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "f2f32f44",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:22:14.312638+00:00",
     "title": "Exact off-resonance window formula"
   },

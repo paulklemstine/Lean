@@ -1,4 +1,4 @@
-import Catalog.Bridges.BerggrenHarmonicSingularity
+import Bridges.BerggrenHarmonicSingularity
 
 /-!
 # Ergodicity of the Berggren boundary shift
