@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "21cbaba8",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions\n\nDerived from the results now formalised in `Catalog/Bridges/DenseSumsetLower/`\n(`Core.lean`, `Density.lean`, `Group.lean`, `Window.lean`, `Sharp.lean`, `Optimal.lean`,\n`Mission.le",
-      "quality_score": 0.87,
-      "sorry_count": 0,
-      "theorem_count": 99,
-      "timestamp": "2026-08-21T04:45:19",
-      "title": "Existence of δ-Dense Sets Avoiding Sumsets of Size ≥ (3+o(1)) log n / log(1/δ)"
-    },
-    {
       "cycle_id": "5e41571a",
       "domain": "Logic",
       "key_insight": "# Future directions — median-as-projection, cycles 3–5\n\nThe results of this round are in `Catalog/Logic/KneeMedianProjection.lean` (the line),\n`Catalog/Logic/KneeMedianProjectionBox.lean` (`ℝⁿ` and th",
@@ -499,19 +489,19 @@
       "theorem_count": 131,
       "timestamp": "2026-08-22T19:36:34",
       "title": "NET-52: THE-TOY-FOUR-BIT-FLOOR-DOES-NOT-TRANSFER — per-channel RTN 4-bit costs +0.79 CE on Qwen2.5-0"
+    },
+    {
+      "cycle_id": "8828af22",
+      "domain": "Logic",
+      "key_insight": "# Future Directions — after the linear phase route closed at both prime ranges\n\n## What this cycle established (formally, 0 sorries)\n\nThe empirical thread reported that singleton root-position phases",
+      "quality_score": 0.79,
+      "sorry_count": 0,
+      "theorem_count": 63,
+      "timestamp": "2026-08-22T20:41:20",
+      "title": "FACT round-41 #2 — HIGH-PHASE: the linear phase route is closed at both prime ranges (paper 151)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "fefb96cd",
-      "domain": "Novelty",
-      "key_insight": "# FUTURE DIRECTIONS — TRACEPROFILE (Paper 50 / Experiment 385)\n\nThe verified results of this cycle are in `Catalog/Novelty/TraceProfile*.lean`:\n\n* `TraceProfileLowBits.lean` — the exact low bit `s₁ =",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 54,
-      "timestamp": "2026-08-15T03:13:27",
-      "title": "TRACEPROFILE: the trace s=p+q is the least-hidden symmetric invariant — 1 bit per prime exactly, s1="
-    },
     {
       "cycle_id": "70d03dec",
       "domain": "Physics",
@@ -2501,27 +2491,19 @@
       "theorem_count": 131,
       "timestamp": "2026-08-22T19:36:34",
       "title": "NET-52: THE-TOY-FOUR-BIT-FLOOR-DOES-NOT-TRANSFER — per-channel RTN 4-bit costs +0.79 CE on Qwen2.5-0"
+    },
+    {
+      "cycle_id": "8828af22",
+      "domain": "Logic",
+      "key_insight": "# Future Directions — after the linear phase route closed at both prime ranges\n\n## What this cycle established (formally, 0 sorries)\n\nThe empirical thread reported that singleton root-position phases",
+      "quality_score": 0.79,
+      "sorry_count": 0,
+      "theorem_count": 63,
+      "timestamp": "2026-08-22T20:41:20",
+      "title": "FACT round-41 #2 — HIGH-PHASE: the linear phase route is closed at both prime ranges (paper 151)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "77469890",
-      "domain": "NumberTheory",
-      "name": "uEnt_character",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "0e0f4ea6",
-      "domain": "Applications",
-      "name": "chain_def",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "0e0f4ea6",
-      "domain": "Applications",
-      "name": "chain_inj_of_lt",
-      "quality": 0.82
-    },
     {
       "cycle_id": "0e0f4ea6",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "NumberTheory",
       "name": "sub_div_le_log_div",
       "quality": 0.78
+    },
+    {
+      "cycle_id": "8828af22",
+      "domain": "Logic",
+      "name": "count",
+      "quality": 0.79
+    },
+    {
+      "cycle_id": "8828af22",
+      "domain": "Logic",
+      "name": "refines_preserves_conclusion",
+      "quality": 0.79
+    },
+    {
+      "cycle_id": "8828af22",
+      "domain": "Logic",
+      "name": "refines_cost_lt",
+      "quality": 0.79
     }
   ],
-  "last_updated": "2026-08-22T19:36:34",
+  "last_updated": "2026-08-22T20:41:20",
   "open_questions": [
     {
       "context": "All proofs are complete; no `sorry`.; All proofs are complete; no `sorry`.",
@@ -3455,12 +3455,6 @@
     ],
     "Logic": [
       {
-        "cycle_id": "d71114d5",
-        "quality": 0.79,
-        "theorems": 116,
-        "title": "NET-48: The direct test survives via the MEDIAN — k*=160 at (d=4, ctx=2048, seed"
-      },
-      {
         "cycle_id": "615053e5",
         "quality": 0.83,
         "theorems": 128,
@@ -3513,6 +3507,12 @@
         "quality": 0.85,
         "theorems": 65,
         "title": "prove *completeness* — every labelling is dominated by some DP run;"
+      },
+      {
+        "cycle_id": "8828af22",
+        "quality": 0.79,
+        "theorems": 63,
+        "title": "FACT round-41 #2 — HIGH-PHASE: the linear phase route is closed at both prime ra"
       }
     ],
     "MachineLearning": [

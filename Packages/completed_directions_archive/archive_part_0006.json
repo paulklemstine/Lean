@@ -1,7 +1,7 @@
 {
   "part": "6",
-  "archived_at": "2026-08-22T19:36:27Z",
-  "count": 101,
+  "archived_at": "2026-08-22T20:41:07Z",
+  "count": 102,
   "directions": [
     {
       "ambition_level": "extension",
@@ -4093,6 +4093,48 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 151
+    },
+    {
+      "id": "seed_058",
+      "title": "Alien Mathematics: Non-Standard Arithmetic",
+      "description": "Explore what theorems hold in non-standard models of arithmetic. Formalize ultrapower constructions, transfer principles, and prove which classical theorems survive in non-Archimedean settings.",
+      "source_exp_id": "seed",
+      "source_path": "seed:manual_v2",
+      "domains": [
+        "Speculative",
+        "Logic",
+        "Algebra"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 0.76,
+      "status": "completed",
+      "consumed_by_exp_id": "ade8206b",
+      "timestamp": "",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.85,
+      "domain_quality_penalty": 1.0,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-08-16T06:59:42.499207+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "",
+      "github_issue": 0
     }
   ]
 }

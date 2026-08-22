@@ -985,21 +985,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-39 #2 \u2014 QR-REPLICATION: the variance law is seed-robust (paper 140)"
   },
   {
-    "consumed_by_exp_id": "8828af22",
-    "description": "Round-41 #2, cron iteration (exp 483, assessment v260). Second half of the phase search.\n\n**LINEAR-PHASE-ROUTE-CLOSED**: high-prime phases (17 \u2264 p \u2264 97) add only +0.0215 same-window R\u00b2 (CI [\u22120.0025, +0.0429] \u2014 excludes the pre-stated +0.05); H3 fails (0.629 < 0.70). Unlike low-primes' negative transfer, the small high-prime gain is WINDOW-STABLE (cross/same = 0.92).\n\nWith paper 150: singleton root-position offsets carry no out-of-sample signal beyond the footprint dial anywhere in 3 \u2264 p \u2264 97. The split-ceiling excess remains unlocated \u2014 candidates narrow to interaction/joint-alignment encodings or intrinsic-to-family status.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp483_high_phase.py + exp483_result.json, seed 20260902.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3590",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T05:43:53.953350+00:00",
-    "title": "FACT round-41 #2 \u2014 HIGH-PHASE: the linear phase route is closed at both prime ranges (paper 151)"
-  },
-  {
     "consumed_by_exp_id": "ac59ff27",
     "description": "Round-41 #1, cron iteration (exp 482, assessment v259). Paper 147's named follow-up.\n\n**PHASE-SUBTHRESHOLD-LIFT / H3-FAIL**: root-position phases mod {3,5,7,11,13} (cos/sin + QR-indicator, extended to 29) add only +0.008/+0.004 out-of-sample R\u00b2 over the footprint dial (CIs span 0; phase-only WORSE than baseline at \u22120.077). **H2 CONFIRMED**: cross-window phase gain goes significantly negative \u2014 window-locality supported as the mechanism behind paper 147's split-ceiling excess. H3 refuted (R\u00b2 = 0.608 < 0.70).\n\nThe split-ceiling excess remains unexplained by any tested feature class \u2014 candidates narrow to higher-prime phase patterns or same-window leakage of realized-divisibility features (base dial drops 0.60 \u2192 0.40 cross-window).\n\nProvenance note: the agent's L0 audit voided the coordinator's inline quick attempt (cross-window arm trained and tested on the same half; wrong offset definition; encoding collision) \u2014 its clean reimplementation is authoritative.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp482_phase_features.py + exp482_result.json, seed 20260901.",
     "domains": [
@@ -1015,17 +1000,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-41 #1 \u2014 PHASE-FEATURES: low-prime phases are sub-threshold and window-local (paper 150)"
   },
   {
-    "consumed_by_exp_id": "5854b671",
+    "consumed_by_exp_id": "",
     "description": "Round-40 #5, cron iteration (exp 479, assessment v258). Composition test of papers 137 x 143/146.\n\n**H1 REFUTED \u2014 and the refutation maps the interval law's scope**: descending order reproduced at 5.23\u00d7 (anchor 5.19\u00d7), but the extracted 90% window is (\u03b1=0.9, \u03bc/M=0.79) \u2014 far outside paper 143's band \u2014 and committed scanning there recovers only **69.7%** of the gain; per-draw corr(desc, committed) = \u22120.32. Balance strata confirm the gradient (35.96\u00d7 local gain most-balanced quartile, <1 in low-M deciles).\n\nThe two-number law prices the SINGLE-WINDOW oracle family; real magnitude posteriors are multi-modal across balance strata \u2014 paper 137 remains the correct measurement object for position, 143/146/148 the theory for genuinely-interval oracles.\n\nFLAG: agent's DC1 analytic cross-check diverged (brute-force paths agree, 0 mismatches) \u2014 disclosed, analytic numbers unused.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp479_magnitude_interval.py + exp479_result.json, seed 20260831.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3592",
-    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-22T05:43:53.955756+00:00",
     "title": "FACT round-40 #5 \u2014 MAGNITUDE-INTERVAL: position information is not a single interval (paper 149)"
   },
@@ -1568,16 +1552,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-50 \u2014 DEGREE-12-COMPOSITE: full pinning at the first composite-order abelian group (paper 180)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a303e67d",
     "description": "## NET-61 \u2014 limited-memory axis, round 14 (paper 146, ResearchOutput/exp_net61_hybrid.py, /tmp/net61.log)\n\n**Verdict name: CONTENT-ADDITIVE-EVICTION-DOES-NOT-HELP.**\n\n### Result\nHybrid eviction score = z(accumulated usage) + \u03bb\u00b7z(static probe score), Qwen2.5-0.5B ctx=1024 (gate exact 1.0000; probes train-side):\n\n| B | \u03bb | retained |\n|---|---|---|\n| 64 | **0.0** | **0.9384** |\n| 64 | 0.25 | 0.9383 |\n| 64 | 1.0 | 0.9365 |\n| 64 | 4.0 | 0.9344 |\n| 32 | 1.0 | 0.9189 |\n| 128 | 1.0 | 0.9544 |\n\n- **P1 REFUTED**: no \u03bb > 0 beats \u03bb = 0 \u2014 the response is monotonically DECREASING in probe weight.\n- **P2 CONFIRMED**: \u03bb = 0 is optimal.\n- **P3 CONFIRMED**: best hybrid trails oracle@64 by 5.7 points.\n\nConsistency anchor: the \u03bb=0 arm reproduces NET-56's hybrid to FOUR DECIMALS (0.9384).\n\n### The law\nWith NET-56 (accumulation), NET-58 (content alone), and now content-additive hybrids, every cheap eviction-signal family is bounded \u22655.7 pts below oracle at matched budget: **the policy gap is robust to accumulation, recency, content, and their linear combinations.** Remaining routes are structural (usage-tracking quality, learned online predictors at scale \u2014 themselves bounded by NET-58's weak-probe ceiling) or accepting oracle-only claims as upper bounds.\n\n### All 8 barriers\n(a) clean \u2014 three horns pre-stated incl. the refuted P1; (b) confronted \u2014 score-combination hybrids exist in H2O variants; NEW = the measured monotone-degradation law + four-family bounding of the gap; (c) confronted \u2014 one model/context, linear probes, fixed recency window; (d) clean \u2014 train-side probes; (e) deterministic, \u03bb-grid pre-stated; (f) clean \u2014 ALL_DONE_NET61; (g) fair \u2014 identical harness/budgets/windows as NET-56/58; (h) DIRECT.\n\n### Next\nSub-16 addendum @1024 (running next); domain-jump corpora; 1.5B tail map; 7B quantized-offload cell.\n\nNow 61 network experiments. Assessment v61. Paper 146.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3695",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T17:37:32.032369+00:00",
     "title": "NET-61: CONTENT-ADDITIVE-EVICTION-DOES-NOT-HELP \u2014 hybrid z(acc)+lambda*z(probe) monotonically worse with probe weight; all four cheap signal families bounded >=5.7pts below oracle"
   },
@@ -1916,6 +1901,118 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-22T19:36:57.217605+00:00",
     "title": "NET-69: CONTENT-WEAKNESS-IS-DOMAIN-UNIVERSAL \u2014 probes recover only R2=0.32 on code too; probe-only loses to accumulation by 12pts; hybrid non-degrading (+0.3)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## NET-79 \u2014 limited-memory axis, round 30 (paper 163, ResearchOutput/exp_net79_1p5b4096.py, /tmp/net79.log)\n\n**Verdict name: THE-ACCELERATION-IS-UNIVERSAL.**\n\n### Result\nThe 1.5B's first ctx=4096 cell (fine grid; gate identical to NET-55/65/66):\n\n| k | 16 | 20 | 24 | 28 | 36 | 44 | 56 |\n|---|---|---|---|---|---|---|---|\n| retained | 0.960 \u2717 | 0.966 \u2717 | 0.972 \u2717 | 0.974 \u2717 | 0.977 \u2717 | 0.980 \u2717 | **0.985 \u2713** |\n\n**k\\*(1.5B@4096) = 56.**\n\n- **P1 REFUTED**: the shift does not delay the acceleration.\n- **P2 CONFIRMED dramatically**: the acceleration hits all scales \u2014 56 \u2265 48.\n- **P3 REFUTED**: no intermediate landing.\n\n### The complete two-scale \u00d7 four-context table\n\n| scale | @512 | @1024 | @2048 | @4096 | increments |\n|---|---|---|---|---|---|\n| 0.5B | 16 | 20 | 24 | **40** | +4, +4, **+16** |\n| 1.5B | 16 | 16 | 18 | **56** | 0, +2, **+38** |\n\nThe increments tell the story: the 0.5B accelerates from +4 to +16 (4\u00d7), while the 1.5B accelerates from +2 to +38 (**19\u00d7**). Scale doesn't just fail to delay the acceleration \u2014 it AMPLIFIES it. At short contexts the 1.5B needs fewer or equal keys; at 4096 it needs MORE (56 vs 40). The size relationship INVERTS past the phase transition.\n\n### Deployment consequence\nFor agentic workloads: bigger models are more memory-efficient per key at \u22642048 context but LESS efficient at \u22654096. Budget tables must include both scale AND context as independent parameters with a non-monotone interaction.\n\n### All 8 barriers\n(a) clean \u2014 three horns pre-stated incl. two refuted; (b) clean \u2014 first 1.5B 4096 cell; (c) confronted \u2014 limits: 2 windows (VRAM-bound), bf16 numerics, one corpus stated; (d) clean; (e) deterministic baseline-replicating (0.4937); (f) clean \u2014 ALL_DONE_NET79; (g) fair \u2014 same bar/harness as all real-model rounds; (h) DIRECT.\n\n### Next\nFine grid between 44 and 56; crossover localization; domain-jump @4096; 7B quantized-offload cell.\n\nNow 79 network experiments. Assessment v79. Paper 163.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3741",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T20:41:46.046363+00:00",
+    "title": "NET-79: THE-ACCELERATION-IS-UNIVERSAL \u2014 1.5B knee at 4096 is 56 (every point 16-44 fails); acceleration amplifies with scale (19x vs 4x); size relationship INVERTS past phase transition"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-68 #1, cron iteration (exp 536). The first band-miss in the uniform-ladder series.\n\n**DRIFT-INCONCLUSIVE**: pooled Spearman(T, rate) = **0.534** CI [0.509, 0.555] \u2014 below 0.55 for the first time; only 1/3 seeds above floor; CI straddles the wall.\n\nH2 PASS: T beats count by +0.059 CI [0.032, 0.083].\n\nLadder: 0.78 (44) \u2192 ~0.81 (52) \u2192 ~0.69 (56) \u2192 ~0.65 (64) \u2192 ~0.61 (68) \u2192 ~0.61 (72) \u2192 ~0.61 (76) \u2192 ~0.57 (80) \u2192 ~0.56 (84) \u2192 **~0.53 (88)**. The erosion continues.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp536_t_dial_unif_88.py + exp536_result.json + LEDGER.md, seeds 20261200\u201302.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3742",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T20:41:46.047984+00:00",
+    "title": "FACT round-68 #1 \u2014 TDIAL-U88: the dial drops below the floor at bitlen 88 (paper 189)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## NET-78 \u2014 limited-memory axis, round 29 (paper 162, ResearchOutput/exp_net78_0p5b4096.py, /tmp/net78.log)\n\n**Verdict name: THE-INCREMENT-ACCELERATES-AT-4096.**\n\n### Result\nThe 0.5B at ctx=4096 (6 held-out windows; gate exact):\n\n| k | 16 | 20 | 24 | 28 | 32 | 40 |\n|---|---|---|---|---|---|---|\n| retained | 0.959 \u2717 | 0.969 \u2717 | 0.975 \u2717 | 0.977 \u2717 | 0.979 \u2717 | **0.984 \u2713** |\n\n**k\\*(4096) = 40.** The increment from 2048 to 4096 is **+16** \u2014 a 4\u00d7 ACCELERATION over the +4/doubling that held through three previous doublings.\n\n- **P1 REFUTED**: k\\* \u2260 28 (the +4 increment does NOT continue).\n- **P2 REFUTED**: k\\* > 24 (no saturation).\n- **P3 CONFIRMED dramatically**: k\\* = 40 > 28.\n\n### The complete 0.5B chain\n{16, 20, 24, **40**} at {512, 1024, 2048, 4096}: increments +4, +4, **+16**.\n\n### The phase transition\nAttention budgets are context-stable for the first ~2000 tokens then become sharply more expensive. The linear-increment law that held through three doublings BREAKS at the fourth. This is the first evidence of a PHASE TRANSITION in context-sensitivity.\n\n### Deployment consequence\nA 24-key cache that works perfectly at ctx=2048 will FAIL at ctx=4096. Budget tables need a nonlinear term beyond 2048.\n\n### All 8 barriers\n(a) clean; (b) clean \u2014 first 4096 cell in-programme; (c) confronted \u2014 6 windows and grid gap stated; (d) clean; (e) deterministic; (f) clean \u2014 ALL_DONE_NET78; (g) fair; (h) DIRECT.\n\n### Next\nFine grid between 32 and 40; 1.5B @4096 (does the shift delay apply here?); domain-jump @4096; 7B quantized-offload cell.\n\nNow 78 network experiments. Assessment v78. Paper 162.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3743",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T20:41:46.049470+00:00",
+    "title": "NET-78: THE-INCREMENT-ACCELERATES-AT-4096 \u2014 knee jumps to k*=40 (increment +16/doubling vs prior +4); linear increment law breaks after three doublings; phase transition in context-sensitivity"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-67 #1, cron iteration (exp 535). The crossing test paper 187 queued.\n\n**APPROACHING-NOT-CROSSED**: pooled Spearman(T) = **0.558** [0.536, 0.581] at bitlen 84; per-seed 0.572/0.578/0.522; margin to floor +0.008. The dial does NOT drop decisively below 0.55 \u2014 the erosion is gradual, not a cliff.\n\nThe dial's signal degrades toward the floor on a gradual path.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp535_t_dial_unif_84.py + exp535_result.json, seeds 20261190\u201392.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3744",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T20:41:46.051034+00:00",
+    "title": "FACT round-67 #1 \u2014 TDIAL-U84-CROSS: approaching but not yet crossed (paper 188)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## NET-76 \u2014 limited-memory axis, round 28 (paper 161, ResearchOutput/exp_net76_frenchext512.py, /tmp/net76.log)\n\n**Verdict name: THE-DOMAIN-FACTOR-IS-MULTIPLICATIVE.**\n\n### Result\nExtended grid on French prose @ctx=512 (gate exact):\n\n| k | 24 | 28 | 32 | 36 | 44 |\n|---|---|---|---|---|---|\n| retained | 0.9716 \u2717 | 0.9772 \u2717 | **0.9813 \u2713** | 0.9848 \u2713 | 0.9879 \u2713 |\n\n**k\\*(fr@512) = 32**, completing the French chain {32, 40} with +8/doubling.\n\n### The complete five-domain \u00d7 two-context table\n\n| domain | factor | k\\*@512 | k\\*@1024 | increment/doubling |\n|---|---|---|---|---|\n| code | ~0.75\u00d7 | 12 | 12 | +0 |\n| prose-EN | 1.0\u00d7 | 16 | 20 | +4 |\n| math | ~1.0\u00d7 | 16 | 20 | +4 |\n| prose-DE | ~1.25\u00d7 | 20 | 24 | +4 |\n| **prose-FR** | **~2.0\u00d7** | **32** | **40** | **+8** |\n\nEach domain's ENTIRE budget curve scales by a single multiplicative factor applied to English prose's {16, 20}. One number per domain replaces a full grid measurement for any new domain within its family.\n\n### All 8 barriers\n(a) clean \u2014 three horns pre-stated incl. P2 confirmed; (b) clean; (c) confronted \u2014 five domains, two contexts, 0.5B only stated; (d) clean; (e) deterministic; (f) clean \u2014 ALL_DONE_NET76; (g) fair; (h) DIRECT.\n\n### Next\n4096 increments; more languages/domains; 7B scale test.\n\nNow 76 network experiments. Assessment v76. Paper 161.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3745",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T20:41:46.052527+00:00",
+    "title": "NET-76: THE-DOMAIN-FACTOR-IS-MULTIPLICATIVE \u2014 complete 5-domain \u00d7 2-context table: each domain's entire budget curve scales by one multiplicative factor (code 0.75x to FR 2.0x)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## NET-75 \u2014 limited-memory axis, round 27 (paper 160, ResearchOutput/exp_net75_frenchext.py, /tmp/net75.log)\n\n**Verdict name: THE-FRENCH-KNEE-IS-FORTY.**\n\n### Result\nExtended grid on French prose (corpus-B; gate exact):\n\n| k | 36 | 40 | 48 | 56 | 64 |\n|---|---|---|---|---|---|\n| retained | 0.9795 \u2717 | **0.9830 \u2713** | 0.9855 \u2713 | 0.9896 \u2713 | 0.9916 \u2713 |\n\n**k\\*(fr@1024) = 40 \u2014 exactly DOUBLE English prose's 20 at the same context.**\n\n- **P1 CONFIRMED**: the knee exists within the extended grid.\n- **P2 REFUTED**: it is 40, not the predicted ~28\u201332.\n\n### The five-domain table @1024\ncode=12, EN-prose=20, math=20, DE-prose=24, FR-prose=40. The tokenizer-tax is a domain-dependent MULTIPLIER (German +4, French \u00d72), not a fixed +4 step. The +4/doubling increment appears domain-universal. Combined with NET-73's TPW refutation: the mechanism is in HOW attention patterns are structured within each language, not how many tokens are used.\n\n### All 8 barriers\n(a) clean \u2014 two horns pre-stated incl. the refuted P2; (b) clean \u2014 first beyond-coarse-grid French measurement; (c) confronted \u2014 one source/context stated; (d) clean; (e) deterministic; (f) clean \u2014 ALL_DONE_NET75; (g) fair \u2014 byte-identical harness; (h) DIRECT.\n\n### Next\nFrench @512 extended grid; increments at 4096; more languages; 7B quantized-offload cell.\n\nNow 75 network experiments. Assessment v75. Paper 160.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3746",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T20:41:46.054044+00:00",
+    "title": "NET-75: THE-FRENCH-KNEE-IS-FORTY \u2014 extended grid pins k*(fr@1024)=40, exactly double English prose's 20; tokenizer-tax is a domain-dependent multiplier"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-66 #1, cron iteration (exp 534). The highest-bitlen uniform measurement.\n\n**U80-DIAL-HOLDS-COUNT-PARITY**: Spearman(T, rate) = **0.562** / **0.551** / **0.582** across three seeds on uniform draws at bitlen 80; pooled **0.565** CI [0.542, 0.587]. All inside [0.55, 0.85] but seed 20261181 clears the floor by only +0.001; every CI dips below 0.55 at its lower end.\n\nH2 count parity persists (pooled advantage +0.053 CI [0.030, 0.083]).\n\nThe next cell (bitlen 84) is the crossing test \u2014 whether rho_T drops below 0.55 decisively or stabilizes.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp534_t_dial_unif_80.py + exp534_result.json, seeds 20261180\u201382.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3747",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T20:41:46.055569+00:00",
+    "title": "FACT round-66 #1 \u2014 TDIAL-U80: the dial lands on the floor at bitlen 80 (paper 187)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## NET-74 \u2014 limited-memory axis, round 25 (paper 159, ResearchOutput/exp_net74_attnstructure.py, /tmp/net74.log)\n\n**Verdict name: TOP8-MASS-IS-THE-STRONGEST-STRUCTURAL-PREDICTOR.**\n\n### Result\nThree structural quantities per domain (5 domains, 3 sampled layers, 12 windows @ctx=512):\n\n| domain | entropy | top-8 mass | head agreement | k\\*@512 |\n|---|---|---|---|---|\n| code | 3.798 | 0.488 | 0.083 | **12** |\n| prose-en | 3.801 | 0.488 | 0.082 | **16** |\n| math | 3.615 | **0.526** | 0.086 | **16** |\n| prose-de | 3.752 | 0.502 | 0.080 | **20** |\n| prose-fr | 3.864 | **0.473** | 0.079 | **>24** |\n\nSpearman: entropy\u2194k\\* = \u22120.60; top8\u2194k\\* = **+0.80**; headvar\u2194k\\* = \u22120.40.\n\n- **P1 PARTIAL**: entropy anticorrelates (right sign) but below the \u22120.7 threshold.\n- **P2 CONFIRMED**: top-8 mass is the strongest correlate (+0.80 > 0.7).\n- **P3 REFUTED**: cross-head agreement ~8% everywhere \u2014 constant, not differentiator.\n\n### The mechanism finding\nThe POSITIVE sign means domains with MORE mass in their top-8 have HIGHER knees: the knee is set by the RESIDUAL spread after the top keys are captured, not by how concentrated the peak is. The mechanism lives in the TAIL of the attention distribution \u2014 how the non-top mass decays determines whether a small budget suffices. Head diversity is constant across all domains and cannot explain any part of the variation.\n\n### All 8 barriers\n(a) clean \u2014 three horns pre-stated incl. the refuted P3; (b) clean \u2014 first structural mechanism test; (c) confronted \u2014 5 domains, 3 sampled layers, n=4 stated; (d) clean; (e) deterministic; (f) clean \u2014 ALL_DONE_NET74 (cosmetic error after data); (g) fair \u2014 identical methodology across domains; (h) DIRECT.\n\n### Next\nTail-shape analysis (Pareto vs exponential decay per domain); sub-20 addendum @2048; 0.5B @4096; 7B cell.\n\nNow 74 network experiments. Assessment v74. Paper 159.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3748",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T20:41:46.057011+00:00",
+    "title": "NET-74: TOP8-MASS-IS-THE-STRONGEST-STRUCTURAL-PREDICTOR \u2014 Spearman(top8-mass, k*) = +0.80 strongest of three measures; knee set by residual tail spread, not head concentration"
   },
   {
     "consumed_by_exp_id": "",
@@ -3619,53 +3716,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Quantum Entanglement Monogamy: CKW Inequality"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Classify RT\u00b2\u2082 in the reverse mathematics hierarchy: prove it's strictly between ACA\u2080 and WKL\u2080 over RCA\u2080. Formalize Seetapun's theorem.",
-    "domains": [
-      "Logic",
-      "Computation"
-    ],
-    "id": "seed_236",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Reverse Mathematics: Ramsey's Theorem"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove that isomorphic mathematical structures can carry semantically different meanings that no formal system can distinguish. Formalize the concept of 'isomorphism of isomorphisms' and show that categorical equivalence preserves truth but not meaning. Connect to Hofstadter's Copycat architecture for analogical reasoning.",
-    "domains": [
-      "Novelty",
-      "Logic",
-      "Algebra"
-    ],
-    "id": "seed_254",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Isomorphisms of Meaning: When Structures Collide"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove information-theoretic bounds on mind uploading: the minimum description length of a human mind exceeds any computable compression of its neural connectome. Formalize the Bekenstein bound applied to neural computation and show that the Kolmogorov complexity of consciousness is at least quadratic in synapse count.",
-    "domains": [
-      "Novelty",
-      "Computation",
-      "Physics"
-    ],
-    "id": "seed_265",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Digital Immortality: Can a Mind Be Encoded?"
   },
   {
     "consumed_by_exp_id": "",
@@ -12413,6 +12463,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "An excess is 'intrinsic to the family' if no feature that respects the family's symmetries can separate it. Formalising intrinsic-ness as invariance under the symmetry group turns the vague status into a decidable question about class functions.\n\nIf the split-ceiling excess is invariant under the full relabelling group of the root-position family, then every encoding built from group-equivariant features has population gain exactly 0; the excess is then intrinsic in a precise sense.\n\nIdentify the acting group, verify that candidate encodings are equivariant, and apply the invariance theorem Rsq_reindex to the induced action.\n\nThe search for an encoding that captures the excess is provably futile within the equivariant class, and effort should move to symmetry-breaking features.\n\nThere is an equivariant feature with nonzero gain, and the construction itself is the missing encoding.",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_3740",
+    "priority_score": 0.7085882352941177,
+    "research_mode": "team",
+    "source_exp_id": "8828af22",
+    "status": "available",
+    "timestamp": "2026-08-22T20:41:07.571787+00:00",
+    "title": "Symmetry-Group Criterion for Intrinsic-to-Family Excess"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Every induced subgraph of a clique sum is a clique sum of induced subgraphs along a sub-clique, so the proved colour-permutation transfer should upgrade from chi = max to full perfection. The numerical core chi = omega is already proved for clique sums here. Completing this gives a formal proof of a classical closure property used throughout perfect graph theory.\n\nIf G is a clique sum of G_1 and G_2 along K and both sides are perfect, then G is perfect.\n\nFormalise induced sub-clique-sums: for W a vertex subset, show IsCliqueSum holds for the restrictions with clique K cap W, then apply IsCliqueSum.chromaticNumber_eq_cliqueNum.\n\nA reusable formal building block for perfect graph theory in Lean, and a first Mathlib-ready closure theorem for clique sums.\n\nThe failure must come from restriction breaking the clique-on-each-side condition, which would identify a strictly larger class than perfect graphs closed under the weaker gluing.",
     "domains": [
       "Combinatorics",
@@ -13176,6 +13241,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The zero-sum indicator on the k-fold product of a finite abelian group should be orthogonal to every predictor that is a sum of functions each omitting at least one coordinate. We proved the k = 2 and k = 3 cases; the general case follows the same conditional-mean argument. It matters because it tells an encoding search, in advance, exactly which degrees cannot possibly help.\n\nFor a finite abelian group G, k >= 2, y(x) = [x_1 + ... + x_k = 0] on G^k, and any family of functions h_S depending only on coordinates in S with |S| < k, cov(y, sum_S h_S) = 0 exactly; moreover the degree-1..(k-1) ceiling of y is 0 and the degree-k encoding attains R^2 = 1.\n\nFormalise by induction on the omitted coordinate: for fixed values of the coordinates in S, the conditional mean of y over the omitted coordinate is 1/|G|; conclude cov = 0 as in cov_triAlign_pairwise_eq_zero.\n\nAny joint-alignment excess of order k is provably invisible below degree k, so encoding rounds can be pruned to the single relevant degree.\n\nSome sub-degree encoding correlates with zero-sum alignment, which would expose an asymmetry between the group structure and the product measure worth isolating.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_3736",
+    "priority_score": 0.6695517241379312,
+    "research_mode": "team",
+    "source_exp_id": "8828af22",
+    "status": "available",
+    "timestamp": "2026-08-22T20:41:05.785437+00:00",
+    "title": "Degree-k Blindness for k-Fold Zero-Sum Alignment"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The associative-triple count is multiplicative under products of magmas. This turns the associativity density into a multiplicative invariant and suggests a Dirichlet generating function whose coefficients are powers of A(M), linking coherence defects to analytic bookkeeping.\n\nA(M^k) = A(M)^k for all k, hence 1 - d(M^k) = (1 - d(M))^k, and the generating function Z_M(s) = sum_k A(M)^k k^{-s} determines A(M); every non-associative magma is asymptotically totally non-associative under powering while its codiscrete bicategory stays coherent.\n\nIterate assocCount_prod in Lean to get A(M^k) = A(M)^k by induction and derive the density limit; check numerically for the order-3 maximiser.\n\nCoherence defects admit an Euler-product bookkeeping, connecting magma combinatorics to Dirichlet-series methods.\n\nMultiplicativity fails to extend beyond binary products, isolating a genuine obstruction in iterated products.",
     "domains": [
       "Algebra"
@@ -13668,6 +13747,30 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T18:56:35.553837+00:00",
     "title": "Depth-Hypotenuse Bracket for the Berggren Tree"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The quantity varr(addPart f)/varr f is an exact, computable property of a target that upper-bounds what any degree-1 encoding can ever achieve. Sorting a catalogue of number-theoretic targets by this statistic predicts, before any model is fitted, which ones a phase dial can move at all.\n\nAcross a catalogue of root-position targets, the measured out-of-sample degree-1 R^2 never exceeds the computed ceiling, and targets with ceiling below 0.05 never show a reproducible positive gain.\n\nCompute rowMean/colMean/addPart for each target on the population grid and compare the ceiling with the measured cross-window R^2.\n\nEncoding rounds can be scheduled by a cheap deterministic statistic instead of by search.\n\nMeasured gains above the computed ceiling would indicate that the fitted family is not degree-1 after all, localising a specification error.",
+    "domains": [],
+    "id": "fd_3739",
+    "priority_score": 0.5928260869565218,
+    "research_mode": "team",
+    "source_exp_id": "8828af22",
+    "status": "available",
+    "timestamp": "2026-08-22T20:41:07.127382+00:00",
+    "title": "Degree-1 Ceiling as a Pre-Fit Target Sorter"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Since the population gain of singleton phases is exactly zero, any measured same-window gain is finite-sample noise. The conjecture pins its size: expected apparent R^2 gain equals the number of dialled features divided by the sample size, up to lower-order terms. This converts an anomaly into a calibration check.\n\nFor a target with zero population correlation with a d-dimensional feature block, the expected same-window R^2 gain of ordinary least squares is d/n + o(d/n), and the cross-window gain has expectation 0.\n\nRe-run the exp 483 pipeline with d in {5,10,20,40} and n varied by subsampling; fit the measured gain against d/n and check the slope is 1 and the intercept 0.\n\nThe +0.0215 is fully accounted for as an estimator artefact and the residual excess must be sought at higher degree.\n\nSomething beyond ordinary overfitting is inflating the same-window gain, e.g. leakage between the window splits.",
+    "domains": [],
+    "id": "fd_3738",
+    "priority_score": 0.5922972972972974,
+    "research_mode": "team",
+    "source_exp_id": "8828af22",
+    "status": "available",
+    "timestamp": "2026-08-22T20:41:06.686499+00:00",
+    "title": "Overfit Scaling Law for a Provably Null Dial"
   },
   {
     "consumed_by_exp_id": "",
@@ -22744,6 +22847,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-22T19:36:06.100306+00:00",
     "title": "Ramification as the Unique Obstruction to Pinning"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For n = pq with coprime factors, ZMod n splits as a product, so an encoding at modulus n is a two-block encoding. The conjecture is that the degree-1 ceiling of a target factors through this splitting in a computable way. This turns 'which modulus to dial' into arithmetic rather than search.\n\nIf y on ZMod n x ZMod n is transported along the CRT equivalence to (ZMod p x ZMod q)^2, then varr(addPart y) is unchanged, and for alignment targets the ceiling is 0 for every divisor structure of n.\n\nCombine Rsq_reindex with varr_split; instantiate the CRT equivalence ZMod (p*q) ~ ZMod p x ZMod q from Mathlib and compute both sides for n = 15, 21, 91.\n\nComposite-modulus encodings inherit their ceilings from the prime factors, so the 3..97 scan already covers the composite range.\n\nComposite moduli carry structure absent at prime moduli, which would be a genuinely new dial for the next round.",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "fd_3737",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "8828af22",
+    "status": "available",
+    "timestamp": "2026-08-22T20:41:06.239277+00:00",
+    "title": "CRT Ceiling Arithmetic for Composite Moduli"
   },
   {
     "consumed_by_exp_id": "",
@@ -36497,14 +36614,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Extremes"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9068f5f1",
     "description": "are complete `G`-invariants of the equality pattern of a tuple, counted by\n   the Bell numbers `1, 1, 2, 5, 15, 52` (OEIS A000110), proved by `decide`.",
     "domains": [],
     "id": "fd_1431",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "286b3a0e",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-17T13:54:05.239324+00:00",
     "title": "Kernel patterns"
   },
@@ -38164,15 +38282,14 @@ window.FUTURE_DIRECTIONS = [
     "title": "The two ingredients are already formalized: the dominant-branch"
   },
   {
-    "consumed_by_exp_id": "e7c64fc7",
+    "consumed_by_exp_id": "",
     "description": "The Chebyshev upper bound `(2 + 8\u00b7errL2 N)/lam\u00b2` is proved\n(`measure_peak_set_le`), and the exact level-set computation only requires the\nalready-proved identity `norm_limitAmp` plus a change of variables.",
     "domains": [],
     "id": "fd_1636",
-    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "6d98445d",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-19T19:40:34.892295+00:00",
     "title": "The Chebyshev upper bound `(2 + 8\u00b7errL2 N)/lam\u00b2` is proved"
   },
