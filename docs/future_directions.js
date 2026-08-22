@@ -931,21 +931,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-38 #4 \u2014 EXTERNAL-HINT-FILTER: one scalar prices everything, the barrier-map triptych completes (paper 138)"
   },
   {
-    "consumed_by_exp_id": "43b197e4",
-    "description": "Round-40 #1, cron iteration (exp 477, assessment v254). Paper 144's honest remainder explained.\n\n**FOOTPRINT-WEIGHTS-CAPTURE-THE-RESIDUAL**: the theoretically-motivated feature \u03a3(2/p) over QR primes \u2264400 (each QR prime p divides ~2/p of the x\u00b2\u2212N values \u2014 two roots) lifts out-of-sample R\u00b2 from 0.3927 to **0.5691** (+0.176, bootstrap CI [0.120, 0.229]) at u=2.5, and 0.2063 \u2192 0.3078 (+0.102) at u=3.5. The direct mechanism feature (fraction of values divisible by p \u226413) adds independently; both together R\u00b2 = 0.5864.\n\nThe per-N yield dial's final form: two cheap features (~200 Euler tests + a mod count), R\u00b2 \u2248 0.59/0.34 out-of-sample. H3 (nothing systematic) refuted \u2014 the residual was real structure.\n\nBarriers: (5) all features are residue dials of METHOD input statistics \u2014 zero factor information; (8) QS calibration context.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp477_qr_residual.py + exp477_result.json, seed 20260829.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3574",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T04:50:57.567537+00:00",
-    "title": "FACT round-40 #1 \u2014 QR-RESIDUAL: footprint-weighted dial captures the residual (paper 145)"
-  },
-  {
     "consumed_by_exp_id": "78e6d19a",
     "description": "## NET-54 \u2014 limited-memory axis, round 6 (paper 139, /tmp/exp_net54_tailswap.py, /tmp/net54.log)\n\n**Verdict name: THE-TAIL-IS-LOAD-BEARING-BUT-UNPORTABLE.**\n\n### Result\nCausal layer transplants between Qwen2.5-0.5B **base** and **Instruct** (12 held-out windows @ctx=512; cross-parent prediction-agreement baseline 0.8327):\n\n| arm | \u0394CE vs host | agree w/ base | agree w/ instruct |\n|---|---|---|---|\n| base\u2190inst **L22/23** | +0.4652 | 0.5845 | 0.5443 |\n| base\u2190inst L10/11 | **+0.0043** | 0.9635 | 0.8385 |\n| inst\u2190base **L22/23** | +0.5455 | 0.5887 | 0.6289 |\n| inst\u2190base L10/11 | **\u22120.0164** | 0.8459 | 0.9495 |\n\n- **P1 REFUTED \u2014 the discovery**: tail swaps do NOT pull the hybrid toward the donor; they break agreement with BOTH parents (host-side agreement falls far below the cross-parent baseline). The tail carries no portable identity \u2014 it is entangled with upstream statistics.\n- **P2 CONFIRMED**: directions asymmetric (+0.465 vs +0.546), as NET-51's mid-stack hump predicts.\n- **P3 CONFIRMED**: worst hybrid within +0.55 nats \u2014 functional, but neither parent.\n\n### The convergence\nThree independent measurements on the same two layers: NET-50 (only far-from-tropical region), NET-51 (only high decision-divergence region), NET-54 (only non-transplantable region). And the bulk result is equally practical: **L10/11 transplant at literally zero measured cost \u2014 one direction slightly improves Instruct.**\n\n### Practical\nThe sharing boundary for multi-finetune serving on small VRAM is now causally established: share everything except the last two layers; re-run the tail per model; do not approximate or borrow it.\n\n### All 8 barriers\n(a) clean \u2014 three horns pre-stated incl. the refuted one; (b) confronted \u2014 layer-amputation literature exists; NEW = fine-tune-pair portability asymmetry with matched architecture and the both-parents-collapse signature; (c) confronted \u2014 real pretrained pair; limits: ONE pair, 12 windows, ctx=512, fp16, single-pair granularity; (d) clean \u2014 no training involved; (e) deterministic forwards, restore-by-construction before each arm; (f) clean \u2014 chunked CE identical to harness semantics, ALL_DONE_NET54; (g) fair \u2014 matched-width bulk controls, both directions; (h) DIRECT.\n\n### Next\nDose-response (one-layer and three-layer swaps); swap+recalibration (entanglement depth); 1.5B pair; does a compensated 4-bit tail stay personal? (GPTQ link).\n\nNow 54 network experiments. Assessment v54. Paper 139.\n",
     "domains": [
@@ -1317,16 +1302,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-43 #3 \u2014 COINCIDENCE-DEPTH: the pair features measure anti-coincidence (paper 163)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a35d92d0",
     "description": "Round-45 #2, cron iteration (exp 501, assessment v277). Paper 167's driver question answered.\n\n**NEITHER** \u2014 both pre-stated hypotheses fail; the truth is intermediate. Four-cell design (window {240, 960} \u00d7 u {2.5, 3.5}, 8 populations):\n- \u0394(240) = **+0.1073** [0.0973, 0.1148] \u2014 reproduces paper 167 on fresh seeds\n- \u0394(960) = **+0.0636** [0.0597, 0.0680]\n- D = **+0.0437** [0.0346, 0.0533] \u2014 excludes zero and the \u00b10.03 band\n\n**H1 FAIL**: 4\u00d7 values recover only 41% of the drop, not 'most'. **H2 FAIL**: not 'none' either. Reading: mostly intrinsic threshold reweighting, with a real ~41% minority from per-N rank resolution (the u=3.5 gain came from finer rate granularity \u2014 smooth mass per offset unchanged).\n\nNamed follow-up: decouple B from vmed (hold the strip bound fixed across u). Caveat: nested windows conflate sample size with bound growth.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp501_u_harden.py + exp501_result.json, seeds 20260970\u201377.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3633",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T09:43:33.956778+00:00",
     "title": "FACT round-45 #2 \u2014 U-HARDEN: the u-sensitivity is mostly intrinsic, partly resolution (paper 168)"
   },
@@ -1623,6 +1609,118 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-22T16:41:43.038020+00:00",
     "title": "FACT round-50 \u2014 DEGREE-12-COMPOSITE: full pinning at the first composite-order abelian group (paper 180)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## NET-61 \u2014 limited-memory axis, round 14 (paper 146, ResearchOutput/exp_net61_hybrid.py, /tmp/net61.log)\n\n**Verdict name: CONTENT-ADDITIVE-EVICTION-DOES-NOT-HELP.**\n\n### Result\nHybrid eviction score = z(accumulated usage) + \u03bb\u00b7z(static probe score), Qwen2.5-0.5B ctx=1024 (gate exact 1.0000; probes train-side):\n\n| B | \u03bb | retained |\n|---|---|---|\n| 64 | **0.0** | **0.9384** |\n| 64 | 0.25 | 0.9383 |\n| 64 | 1.0 | 0.9365 |\n| 64 | 4.0 | 0.9344 |\n| 32 | 1.0 | 0.9189 |\n| 128 | 1.0 | 0.9544 |\n\n- **P1 REFUTED**: no \u03bb > 0 beats \u03bb = 0 \u2014 the response is monotonically DECREASING in probe weight.\n- **P2 CONFIRMED**: \u03bb = 0 is optimal.\n- **P3 CONFIRMED**: best hybrid trails oracle@64 by 5.7 points.\n\nConsistency anchor: the \u03bb=0 arm reproduces NET-56's hybrid to FOUR DECIMALS (0.9384).\n\n### The law\nWith NET-56 (accumulation), NET-58 (content alone), and now content-additive hybrids, every cheap eviction-signal family is bounded \u22655.7 pts below oracle at matched budget: **the policy gap is robust to accumulation, recency, content, and their linear combinations.** Remaining routes are structural (usage-tracking quality, learned online predictors at scale \u2014 themselves bounded by NET-58's weak-probe ceiling) or accepting oracle-only claims as upper bounds.\n\n### All 8 barriers\n(a) clean \u2014 three horns pre-stated incl. the refuted P1; (b) confronted \u2014 score-combination hybrids exist in H2O variants; NEW = the measured monotone-degradation law + four-family bounding of the gap; (c) confronted \u2014 one model/context, linear probes, fixed recency window; (d) clean \u2014 train-side probes; (e) deterministic, \u03bb-grid pre-stated; (f) clean \u2014 ALL_DONE_NET61; (g) fair \u2014 identical harness/budgets/windows as NET-56/58; (h) DIRECT.\n\n### Next\nSub-16 addendum @1024 (running next); domain-jump corpora; 1.5B tail map; 7B quantized-offload cell.\n\nNow 61 network experiments. Assessment v61. Paper 146.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3695",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T17:37:32.032369+00:00",
+    "title": "NET-61: CONTENT-ADDITIVE-EVICTION-DOES-NOT-HELP \u2014 hybrid z(acc)+lambda*z(probe) monotonically worse with probe weight; all four cheap signal families bounded >=5.7pts below oracle"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-56 #1, cron iteration (exp 526, assessment v291). The previously-unmeasured intersection.\n\n**CELL-CLOSED-DIAL-HOLDS-UNIF-48**: Spearman(T, rate) = **0.7192/0.7202/0.7198** across 3 seeds on uniform draws at exact bitlen 48; T beats count by +0.098 to +0.145 everywhere; mean relation rate 12.5% (unstarved regime).\n\nCELL CLOSED: the zero-fit dial holds at the intersection of bitlen-scaling and regime-invariance.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp526_t_dial_bitlen.py + exp526_result.json, seeds 20261110\u201312.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3696",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T17:37:32.034003+00:00",
+    "title": "FACT round-56 #1 \u2014 TDIAL-BITLEN: the zero-fit dial holds at exact-bitlen-48 uniform (paper 183)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## NET-60 \u2014 limited-memory axis, round 13 (paper 145, ResearchOutput/exp_net60_pairs.py, /tmp/net60.log)\n\n**Verdict name: THE-EPISTASIS-LIVES-IN-THE-TAIL-PAIR.**\n\n### Result\nSix pair/triple ablations at k=16/layer (Qwen2.5-0.5B, ctx=512), each cost compared to the sum of its members' NET-59 solo costs:\n\n| arm | layers | retained | cost | \u03a3solo | class |\n|---|---|---|---|---|---|\n| **tail_22_23** | 22,23 | 0.9958 | **0.42 pts** | **0.06** | **SUPER 7\u00d7** |\n| bulk_12_15 | 12,15 | 0.9940 | 0.60 | 0.79 | sub |\n| front_0_1 | 0,1 | 0.9975 | 0.25 | 0.25 | \u2248additive |\n| mid_10_11 | 10,11 | 0.9960 | 0.40 | 0.28 | super 1.4\u00d7 |\n| cross_22_12 | 22,12 | 0.9941 | 0.59 | 0.60 | sub |\n| **triple_21_22_23** | 21,22,23 | 0.9924 | **0.76** | **0.19** | **SUPER 4\u00d7** |\n\n- **P1 CONFIRMED**: the tail pair is simultaneously the cheapest by solo sum and disproportionately costly jointly \u2014 7\u00d7 super-additive.\n- **P2 REFUTED**: three of six arms are super-additive.\n- **P3 CONFIRMED**: the tail triple compounds at 4\u00d7 and is the most costly arm.\n\n### The law\nThe last two layers function as a COORDINATED UNIT \u2014 co-adapted during pretraining; sparsifying either alone is absorbed, degrading both removes a joint capability no other pair exhibits. This causal signature matches the four correlational markers (NET-50 far-from-tropical, crystallization loss, NET-51 decision divergence, NET-54 unportability). **Prescription: treat the tail as ONE unit for bits/budgets \u2014 never differentiate between its members.**\n\n### All 8 barriers\n(a) clean \u2014 three horns pre-stated incl. the refuted P2; (b) clean \u2014 pairwise super-additivity maps for pretrained LLM attention not previously measured; (c) confronted \u2014 one context/model, k=16 granularity, five chosen pairs stated; (d) clean \u2014 held-out, no training; (e) deterministic, solo sums inherited from the committed NET-59 profile; (f) clean \u2014 ALL_DONE_NET60; (g) fair \u2014 identical budgets across arms; (h) DIRECT.\n\n### Next\n1.5B replication; deeper-tail units on larger models; probe+recency hybrid (NET-58 follow-up); domain-jump corpora.\n\nNow 60 network experiments. Assessment v60. Paper 145.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3697",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T17:37:32.035503+00:00",
+    "title": "NET-60: THE-EPISTASIS-LIVES-IN-THE-TAIL-PAIR \u2014 L22+L23 solo costs sum to 0.06pts but joint pruning costs 0.42pts (7x super-additive); the last two layers are one coordinated unit"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## NET-59 \u2014 limited-memory axis, round 12 (paper 144, ResearchOutput/exp_net59_perlayer.py, /tmp/net59.log)\n\n**Verdict name: NO-SINGLE-LAYER-IS-THE-BOTTLENECK.**\n\n### Result\nSolo-layer causal pruning profiles: for each of Qwen2.5-0.5B's 24 layers independently, oracle top-k applied ONLY to that layer (k=16 and k=32), all others full (ctx=512, 24 held-out windows):\n\n- **k=16 profile: spread 0.6 points.** Best 1.0013 (L13), worst 0.9953 (L12); every layer \u2265 0.995.\n- The identity tail: L21 0.9987, L22 0.9987, **L23 1.0008 \u2014 the BEST layer in the stack.**\n- k=32: even flatter (spread 0.5 pts).\n\n- **P1 TAIL-IS-CRITICAL REFUTED**: the tail is not individually fragile under top-k.\n- **P2 CONFIRMED trivially**: all layers \u2265 0.995.\n- **P3 NON-UNIFORM-MAP REFUTED**: the profile is remarkably uniform.\n\n### The epistasis resolution\nFour prior rounds established L22/L23 as categorically different: only far-from-tropical region (NET-50), highest crystallization loss, only cross-fine-tune decision divergence (NET-51), only unportable weights (NET-54), personal KV. Yet solo deletion costs \u2248 0. **The tail's role lives in interaction with upstream representations**, exactly as NET-54's swap-collapse showed directly. Additional structure: joint all-layer k=16 costs 1.7% (NET-50) vs ~4.8% if solo costs were additive \u2014 pruning interactions are SUB-ADDITIVE/redundant.\n\n### Design implication\nThere is no per-layer budget hierarchy to exploit for mixed-precision serving at this scale; differentiation must come from interaction-aware or policy-level criteria.\n\n### All 8 barriers\n(a) clean \u2014 three horns pre-stated incl. two refuted; (b) clean \u2014 causal solo profiles new in-programme; (c) confronted \u2014 limits: ONE context (512), solo-only granularity (pairs/joints open), 24 windows; (d) clean; (e) deterministic monotone profiles; (f) clean \u2014 gate exact, ALL_DONE_NET59; (g) fair \u2014 identical budgets per layer; (h) DIRECT.\n\n### Next\nPairwise/joint tail ablations; 1.5B replication; probe+recency hybrid; domain-jump corpora; 7B cell.\n\nNow 59 network experiments. Assessment v59. Paper 144.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3698",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T17:37:32.037042+00:00",
+    "title": "NET-59: NO-SINGLE-LAYER-IS-THE-BOTTLENECK \u2014 solo-layer top-k profiles are flat (all 24 layers within 0.6pts at k=16, tail L23 literally best); the tail's specialness is epistatic, not individual fragility"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-55 #2, cron iteration (exp 524, assessment v291). Completing the degree-12 semiprime arm.\n\n**D12-SEMIPRIME-CONFIRMED**: pair channel matches exact enumeration law (z = \u22120.88 inside null); split-count z = \u22120.91; which-factor wall HOLDS (sensitivity 0.0002 bits); T-dial replicates at Spearman 0.692.\n\nThe degree-12 structure is fully validated at both prime and semiprime levels.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp524_d12_semiprime.py + exp524_result.json, seeds 20261110\u201312.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3699",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T17:37:32.038600+00:00",
+    "title": "FACT round-55 #2 \u2014 D12-SEMIPRIME: the degree-12 semiprime pair channel matches law (paper 183)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## NET-58 \u2014 limited-memory axis, round 11 (paper 143, ResearchOutput/exp_net58_probe.py, /tmp/net58.log)\n\n**Verdict name: CONTENT-IS-A-WEAK-PREDICTOR-OF-IMPORTANCE.**\n\n### Result\nPer-(layer, kv-head) ridge probes (64-d post-rope key \u2192 log1p(total future attention), fit on TRAIN-side windows only) + streaming eviction by static probe score:\n\n| B | accumulated-HH (NET-56) | PROBE (this round) | oracle |\n|---|---|---|---|\n| 32 | 0.8633 | 0.8395 | 0.9913 |\n| 64 | 0.8822 | **0.8938** | 0.9953 |\n| 128 | 0.9189 | **0.9284** | \u2014 |\n\n- Probe R\u00b2: mean **0.329** (min 0.113, max 0.639; front-high/mid-low depth structure).\n- **P1 REFUTED**: at B=64 the probe closes only ~11% of the oracle gap (needed \u226533%); worse than accumulation at B=32.\n- **P2 CONFIRMED**: 10+ points to oracle remain at B=64.\n- **P3 CONFIRMED**: R\u00b2 is depth-structured.\n\n### The law\nA key's vector knows little about how much attention it will receive. With NET-56, this bounds ALL content-based KV-eviction policies: **importance is relational and positional, not intrinsic to key identity** \u2014 the oracle-to-policy gap is structural, not an engineering shortfall. Deployable caches must track usage online, keep recency (the dominant cheap signal), or accept ~10 points at aggressive budgets.\n\n### All 8 barriers\n(a) clean \u2014 three horns pre-stated incl. the refuted P1; (b) confronted \u2014 probe-based key importance exists in interpretability folklore; NEW = its measured CEILING as an eviction policy on the knee-measuring harness with the R\u00b2\u2192retained conversion; (c) confronted \u2014 linear probe class only, one model/context (nonlinear heads bounded by P2 logic unless near-perfect); (d) clean \u2014 train-side fits only; (e) deterministic closed-form; (f) clean \u2014 ALL_DONE_NET58; (g) fair \u2014 identical harness/budgets/windows as NET-56; (h) DIRECT.\n\n### Next\nPer-layer load-bearingness ablation (which layers' attention is actually load-bearing \u2014 running next); probe+recency hybrid; 1.5B tail map; 7B cell.\n\nNow 58 network experiments. Assessment v58. Paper 143.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3700",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T17:37:32.040067+00:00",
+    "title": "NET-58: CONTENT-IS-A-WEAK-PREDICTOR-OF-IMPORTANCE \u2014 linear probes recover only R2~0.33 of key future-attention; content-based eviction ~1pt over accumulation, 10pts below oracle; importance is relational, not intrinsic"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## NET-57 \u2014 limited-memory axis, round 10 (paper 142, ResearchOutput/exp_net57_corpusB.py, /tmp/net57.log)\n\n**Verdict name: THE-KNEES-ARE-CORPUS-ROBUST.**\n\n### Result\nIndependent corpus (wikitext-103-raw train shard **1**, disjoint from shard 0), byte-identical NET-49 harness, Qwen2.5-0.5B:\n\n| ctx | corpus-B k\\* | corpus-A k\\* | verdict |\n|---|---|---|---|\n| 512 | **16** | 16 | EXACT |\n| 1024 | **32** | 32 | EXACT |\n| 2048 (bonus) | **32** | 24 (razor +0.5 SE) | inside documented bracket |\n\nControls replicate to FOUR DECIMALS: random-k {0.1775, 0.3004} = corpus-A exactly; local-window within noise.\n\n### The law\nThe ~30-key lossless attention budget now holds across **3 contexts \u00d7 2 corpora \u00d7 2 model sizes**. The single-corpus limit carried since NET-49 is closed: the knee laws are properties of trained attention, not of the evaluation text. Joint reading at 2048: knee \u2248 24\u201332, corpus-insensitive within the grid.\n\n### All 8 barriers\n(a) clean \u2014 horns inherited from the pre-registered harness block; (b) clean; (c) confronted \u2014 this WAS the corpus test; remaining limits: both corpora wikitext-family (domain jump open), 24 windows/cell; (d) clean per-corpus held-out splits; (e) deterministic + 4-decimal cross-corpus control agreement as a measurement-validity result; (f) clean \u2014 gate exact, ALL_DONE, one stray-process OOM diagnosed and cleared before any recorded measurement; (g) fair \u2014 only the text changed; (h) DIRECT \u2014 licenses quoting the deployment table without per-domain re-measurement.\n\n### Next\nDomain-jump corpora (code/math/non-English); learned importance heads to close the NET-56 policy gap; per-layer budgets; 1.5B tail map; 7B quantized-offload cell.\n\nNow 57 network experiments. Assessment v57. Paper 142.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3701",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T17:37:32.041644+00:00",
+    "title": "NET-57: THE-KNEES-ARE-CORPUS-ROBUST \u2014 independent wikitext shard replicates the knees exactly ({16,32} at {512,1024}) with controls matching to four decimals; the ~30-key budget holds across 3 contexts x 2 corpora x 2 model sizes"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-55 #1, cron iteration (exp 523). The most comprehensive single-dial robustness sweep.\n\n**BKEY-MIXED-ZONE**: the T-dial's Spearman declines GRADUALLY with both bitlen and u \u2014 no cliff, no convention artifact, no threshold effect. Full 4-bitlen \u00d7 3-u grid: sp(T) ranges 0.53\u20130.79; decline is smooth and monotone in both variables.\n\nPaper 178's 'practical floor' at bitlen ~54 is a gradual transition, not a sharp edge.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp523_balanced_bkey.py + exp523_result.json, seeds 20261100\u201303.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3702",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T17:37:32.043186+00:00",
+    "title": "FACT round-55 #1 \u2014 BALANCED-BKEY: the T-dial's decline is gradual, not a cliff (paper 182 addendum)"
   },
   {
     "consumed_by_exp_id": "",
@@ -3326,49 +3424,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Quantum Entanglement Monogamy: CKW Inequality"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle b596d3d1 (Q=0.750), which proved 21 theorems in Pythagorean. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Two quantum particles are entangled if measuring one instantly affects the other. But entanglement is also a topological property: if you represent the state of two qubits as a curve in R^3, entanglement IS the linking number. Conjecture: For any pure state of two qubits |psi> in C^2 tensor C^2, the",
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "push_b596d3d1_6908f705",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "b596d3d1",
-    "status": "available",
-    "timestamp": "2026-07-18T13:21:34.658597+00:00",
-    "title": "Deepening: Quantum Entanglement as Algebraic Topology: The Linking Number Is Entanglement"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle ea214ad9 (Q=0.750), which proved 34 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize Rucker's 'Lifebox' concept: a person's identity is determined by their information content, not their physical substrate. Define: two systems are 'person-equivalent' if they produce the same outputs for all inputs (functional equivalence). Prove: if the brain is a finite-state automaton, t",
-    "domains": [
-      "Applications"
-    ],
-    "id": "push_ea214ad9_ee69a3ef",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "ea214ad9",
-    "status": "available",
-    "timestamp": "2026-07-22T04:48:46.692100+00:00",
-    "title": "Deepening: Rucker: The Lifebox \u2014 Information-Theoretic Identity"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove that the 3n+1 iteration eventually reaches 1 for all positive integers. Formalize partial results on density of convergent integers, stopping times, and connections to ergodic theory and p-adic dynamics.",
-    "domains": [
-      "NumberTheory",
-      "Computation"
-    ],
-    "id": "seed_006",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Collatz Conjecture"
   },
   {
     "consumed_by_exp_id": "",
@@ -12017,6 +12072,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The footprint weight is the exact first cumulant of the number of factor-base divisors of a sieve value. Conjecture: with the exact variance of D1, a concentration inequality forces the true relation yield to be monotone in the dial up to an explicit error term, converting the empirical regression into a proved inequality.\n\nThere is an explicit \u03b5(B, window) such that if qrWeight N\u2081 B \u2212 qrWeight N\u2082 B > \u03b5 then the expected number of factor-base hits per location for N\u2081 exceeds that for N\u2082.\n\nProve the mean identity per window (already available) and add a Chebyshev bound from the variance law; check numerically on random N with B = 100.\n\nThe dial acquires a proof-backed operational meaning for sieve calibration, not just a regression score.\n\nThe mapping from footprint to smoothness probability is non-monotone, indicating higher cumulants dominate at practical window sizes.",
+    "domains": [
+      "Computation",
+      "Pythagorean"
+    ],
+    "id": "fd_3694",
+    "priority_score": 0.7096666666666668,
+    "research_mode": "team",
+    "source_exp_id": "43b197e4",
+    "status": "available",
+    "timestamp": "2026-08-22T17:36:56.922596+00:00",
+    "title": "Monotone Yield Ordering from the Footprint Cumulant"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Deciding whether a poset is an image of a given cube is a constraint satisfaction problem over the cube's cells. We conjecture NP-completeness in general and tractability for bounded width, matching the empirical running-time profile of the search used in this cycle.\n\nDeciding sw(P) <= m is NP-complete, but solvable in polynomial time when the width of P is bounded.\n\nReduce 3-colourability or set cover to the cube-assignment problem; give a dynamic program along a chain decomposition for bounded width.\n\nNo closed-form formula for sw can be expected in general, which reframes Direction 1 as a bounded-width statement.\n\nA polynomial algorithm for sw exists and would likely produce the exact formula of Direction 1 constructively.",
     "domains": [
       "Computation",
@@ -13895,6 +13965,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "All features of the per-N yield dial factor through the residue vector of N modulo the factor-base primorial. The supremum of R\u00b2 over all functions of that vector is therefore a single well-defined quantity. Conjecture: the linear span of the per-prime indicators already attains it.\n\nsup over all f of R\u00b2(f(N mod P)) equals the R\u00b2 of the best linear combination of the indicators 1_{QR mod p}, p \u2264 B.\n\nFormalise conditional expectation over the finite pattern space using card_qr_pattern; compare best linear fit with best arbitrary fit on the 2^{|base|} pattern classes for small B.\n\nFeature engineering on residue statistics is closed: nothing beyond the per-prime indicators can help.\n\nThere exist interaction features (pairs of primes) with strictly greater explanatory power, which would be a concrete new dial.",
+    "domains": [
+      "Algebra",
+      "NumberTheory"
+    ],
+    "id": "fd_3691",
+    "priority_score": 0.56321796476909,
+    "research_mode": "team",
+    "source_exp_id": "43b197e4",
+    "status": "available",
+    "timestamp": "2026-08-22T17:36:55.516255+00:00",
+    "title": "Residue Sigma-Algebra Ceiling for Yield Prediction"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The Berggren tree is 3-regular and 3 = q+1 for q = 2, the residue cardinality at the ramified prime above 2 in Z[sqrt 2]. The conjecture is that the boundary Cantor set is equivariantly homeomorphic to P^1 of a local field with residue field of size 2, with the proved relations TU = 3 and (UT)^2 = 3(UT) becoming the Iwahori-Hecke relations of that tree.\n\nThere is a PGL(2)-equivariant homeomorphism from the boundary of the Berggren tree onto P^1(Q_2) carrying the transfer operator to the spherical Hecke operator at the prime 2.\n\nConstruct the Bruhat-Tits tree of PGL(2, Q_2) in Lean, build the address map from vertices to words, and verify that the constructed Hecke operator satisfies the already-proved relations.\n\nThe degenerate {0,3} spectrum is explained structurally as an Iwahori degeneration rather than as an accident of the transfer operator.\n\nThe Berggren boundary carries extra structure not visible on the Bruhat-Tits boundary, pinpointing where the analogy with p-adic groups breaks.",
     "domains": [
       "Algebra",
@@ -13922,6 +14007,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-22T01:51:06.343382+00:00",
     "title": "Elementary Sieve Constant Refinement"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The Hensel step proved for odd primes breaks at p = 2, where the derivative 2x is not invertible. For odd N the congruence x\u00b2 \u2261 N mod 2^k is solvable only when N \u2261 1 mod 8, and then has four roots for every k \u2265 3. Conjecture: the even prime therefore contributes a footprint 4/2^k, twice the odd density, and the yield dial needs a separate N mod 8 term.\n\nFor odd N and k \u2265 3, hitCount N (2^k) = 4 if N \u2261 1 (mod 8) (the vanishing case N \u2262 1 mod 8 is already proved as hitCount_two_pow_eq_zero); consequently the mean footprint of the even part of the factor base is 4\u00b7\u03a3_{3\u2264k} 2^{-k} on the residue class 1 mod 8 and 0 elsewhere.\n\nAdapt the lifting bijection of hitCount_pow_succ, replacing the unique-lift step by the two-lift step forced by the non-invertible derivative; check the counts by decide for 2^3, 2^4, 2^5 and N = 1, 9, 17, 3.\n\nThe dial gains an exactly computed, arithmetically distinct N mod 8 feature, a candidate explanation for a further slice of the residual.\n\nThe even prime's contribution is not a pure residue-class effect, which would make the 2-part of the sieve genuinely different from its odd part.",
+    "domains": [
+      "NumberTheory",
+      "Pythagorean"
+    ],
+    "id": "fd_3692",
+    "priority_score": 0.5631235609004032,
+    "research_mode": "team",
+    "source_exp_id": "43b197e4",
+    "status": "available",
+    "timestamp": "2026-08-22T17:36:56.001244+00:00",
+    "title": "Four-Root Two-Adic Footprint of the Even Prime"
   },
   {
     "consumed_by_exp_id": "",
@@ -22291,6 +22391,34 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The exact variance of the dial, \u03a3_{p \u2264 B} (p\u00b2\u22121)/p\u2074, converges as B \u2192 \u221e while its mean \u03a3 (p+1)/p\u00b2 diverges. The centred dial is therefore a sum of independent bounded terms with summable variances and must converge in law to a nondegenerate limit: an infinite Bernoulli convolution with weights 2/p and success probabilities (p+1)/(2p). Identifying that limit law turns the empirical spread of the feature into an arithmetic constant.\n\nThe centred dials qrWeight(\u00b7,B) \u2212 \u03a3_{p\u2264B}(p+1)/p\u00b2 converge in distribution as B \u2192 \u221e to a nondegenerate law of variance \u03a3_{p odd prime} (p\u00b2\u22121)/p\u2074, and that law is absolutely continuous.\n\nFormalise the finite-B distributions from card_qr_pattern, prove tightness from the uniform bound qrWeight_variance_lt_half, and compare the resulting characteristic function \u220f_p (1 \u2212 a_p + a_p\u00b7e^{2it/p}) with an empirical histogram over one period for B = 5, 7, 11, 13.\n\nThe dial has a universal limiting fluctuation profile, so calibration constants measured at one factor-base bound transfer to any other.\n\nThe limit is singular or degenerate, meaning the dial's fluctuation is dominated by finitely many small primes and the feature is effectively low-dimensional.",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "fd_3690",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "43b197e4",
+    "status": "available",
+    "timestamp": "2026-08-22T17:36:55.060786+00:00",
+    "title": "Bernoulli-Convolution Limit Law of the Centred QR Dial"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The dial-blindness theorem is an instance of a general symmetry principle: features invariant along arithmetic progressions cannot separate primes from semiprimes. Conjecture: every feature computed from finitely many residues of N modulo primes \u2264 B has AUC exactly 1/2 for that task.\n\nFor any F : (ZMod P) \u2192 \u211d and any n, there are primes q > n and semiprimes m > n with F(q mod P) = F(m mod P); consequently the induced ranking has AUC 1/2 on matched families.\n\nGeneralise qrWeight_blind_semiprime from qrWeight to an arbitrary function of the residue vector, then combine with the catalog AUC lemma auc_eq_half_of_blind.\n\nA clean frontier: residue-only features are provably useless for factor detection, and any positive result must use non-residue information.\n\nSome residue statistic would detect factor structure, contradicting Dirichlet-type equidistribution \u2014 a major surprise.",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "fd_3693",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "43b197e4",
+    "status": "available",
+    "timestamp": "2026-08-22T17:36:56.461362+00:00",
+    "title": "No-Free-Lunch Frontier for Modular-Reduction Features"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "**Conjecture.**  Let `f : \u211d \u2192 \u211d` be continuous and piecewise linear with exactly `r`\nkinks.  Then the minimal `k` for which there exist `a b c : Fin k \u2192 \u211d` and `p q : \u211d`\nwith `reluNet a b c p q = f` is exactly `r`.\n\n*The key insight is* that `reluNet_kink_witness` already converts a nonvanishing\ndiscrete second difference into a *distinct* unit whenever the test windows are\ndisjoint, so the lower bound `r \u2264 k` needs no convexity, no differentiability, and no\nsign pattern \u2014 only separation of the kinks; the matching upper bound is the telescoping\nconstruction used in `intervalStep_eq_four_relu`.\n\n*Why now?*  This cycle proved the two smallest instances (`r = 2` for the scalar\nclipped update, `r = 4` for the interval update) with the same mechanism, and\n`descent_step_relu_width_dichotomy` shows the width is a genuine invariant of the\ntropical minimizer geometry rather than an artifact of the formula.\n\n---",
     "domains": [
       "Geometry",
@@ -28818,6 +28946,66 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "**Conjecture.** Every radius-one rule over a finite alphabet whose global map is an\ninvolution on every finite cycle is, up to conjugation by a permutation of the alphabet and\nspatial reflection, of *marker-twist* form\n`g a b c = \u03c4_{P(a,c)} b`, where `P` is a predicate on the outer cells and `\u03c4_\u00b7` a family of\ninvolutive permutations of the alphabet each fixing the letters that make `P` visible in\nthe output.\n\nOf the 1 800 ternary reversible rules, exactly **82** are involutive; the counterexample\nfamilies of this cycle (`signRule`, `twistRule`) are all of marker-twist form, and\n`twistRule_selfDecoder` is precisely the statement that the marker survives the update.\n\n*The key insight is* that an involution must let the decoder read the marker *after* the\nupdate, so the twisting permutation is forced to fix the marker letters \u2014 a purely local\nfixed-point condition that converts a dynamical constraint (involutivity on all cycles)\ninto an algebraic one on a family of permutations.\n\n*Why now?* `Core.lean` already contains the exact tool that makes the forward direction\nroutine (`globalMap_involutive_of_selfDecoder`), and `cycleBijective_conj` gives the\nconjugation action under which the classification is to be stated; only the converse\n(involution \u21d2 marker form) is open, and it can be tested exhaustively on the 82 ternary\ninvolutions before being attempted in general.\n\n---",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_3686",
+    "priority_score": 0.5,
+    "research_mode": "team",
+    "source_exp_id": "ba827ea4",
+    "status": "available",
+    "timestamp": "2026-08-22T17:36:34.881143+00:00",
+    "title": "Direction 2 \u2014 Marker-Twist Universality for Involutive Rules"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**Conjecture.** The maximal *minimal decoder window* of a reversible radius-one rule over an\nalphabet of size `q` equals `2q` for all `q \u2265 3` (and is `1` for `q \u2264 2`).\n\nMeasured distribution for `q = 3`: windows `1, 2, 3, 4, 5, 6` occur for\n`18, 72, 774, 576, 216, 144` rules \u2014 maximum `6 = 2\u00b73` (`ComputationalEvidence.md`, \u00a74).\nThe Lean file `InverseRadius.lean` proves the first nontrivial instance: `gTwist` has a\nwindow-4 decoder and provably no window-3 decoder and no radius-one inverse.\n\n*The key insight is* that a decoder window of size `k` is a *deterministic pushdown* of the\npair graph: unreadable letters force the decoder to postpone its decision, and each\npostponement consumes one of the `q - 1` \"ambiguity classes\" that a reversible rule can\nmaintain, so the window can grow only linearly in `q`, never exponentially.\n\n*Why now?* Both the upper-bound mechanism (`cycleBijective_of_decoder4R`: a window-`k`\ndecoder proves reversibility at all lengths simultaneously) and the lower-bound mechanism\n(`gTwist_no_window3_decoder`, an exhaustive finite refutation) are already formalised and\ngeneralise verbatim to arbitrary `k`; the missing piece is a single uniform\n`cycleBijective_of_decoderK` lemma.\n\n---",
+    "domains": [
+      "Combinatorics",
+      "Computation"
+    ],
+    "id": "fd_3687",
+    "priority_score": 0.5,
+    "research_mode": "team",
+    "source_exp_id": "ba827ea4",
+    "status": "available",
+    "timestamp": "2026-08-22T17:36:35.363343+00:00",
+    "title": "Direction 3 \u2014 Inverse-Radius Growth Law"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**Conjecture.** The number `R(q)` of reversible radius-one rules over an alphabet of size\n`q` satisfies `R(q) = q! \u00b7 f(q)` with `f(2) = 3`, `f(3) = 300`, and `f` is\n*not* polynomial in `q`; moreover every reversible ternary rule lies in the orbit of an\nexplicitly describable list of marker-twist and affine rules under the group of order 12\ngenerated by alphabet permutations and spatial reflection.\n\n`R(2) = 6 = 2!\u00b73` and `R(3) = 1800 = 3!\u00b7300`.  The `3\u00b7q!` single-coordinate rules (three\nwindow positions times `q!` permutations) are always reversible, so `f(q) \u2265 3` with\nequality exactly at `q = 2`.\n\n*The key insight is* that reversibility is invariant under the two symmetries already\nformalised \u2014 `cycleBijective_conj` (relabelling the alphabet) and `cycleBijective_reflect`\n(reversing space) \u2014 so `R(q)` is a sum of orbit sizes of a `q! \u00d7 2` group action, and\ncomputing `R(4)` becomes feasible by enumerating orbit representatives rather than all\n`4^64` tables.\n\n*Why now?* The exact pair-graph criterion makes a single reversibility test cost `O(q\u2076)`\nbit operations, and the symmetry group cuts the `q = 4` search by a factor of ~48; the\nformal side already has the invariance lemmas, so an enumeration result could be certified\nby a Lean-checked criterion rather than trusted code.\n\n---",
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_3688",
+    "priority_score": 0.5,
+    "research_mode": "team",
+    "source_exp_id": "ba827ea4",
+    "status": "available",
+    "timestamp": "2026-08-22T17:36:35.854925+00:00",
+    "title": "Direction 4 \u2014 Exact Enumeration and the Orbit Structure of `R(q)`"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**Conjecture.** No reversible radius-one cellular automaton over a small alphabet can be a\nsecure round function: if the inverse has decoder window `k`, then `t` rounds have inverse\nwindow at most `k + 2(t-1)`, so the inverse of the `t`-fold map is again a cellular\nautomaton of radius `O(t)`, and the resulting cipher admits a chosen-ciphertext local\ninversion attack of complexity linear in the state size, uniformly in `t`.\n\n*The key insight is* that reversibility of a CA is *hereditarily local*: composition adds\nradii, so unlike an SPN, whose inverse becomes global after a few rounds, a reversible CA\nnever escapes a linear-in-`t` inverse radius \u2014 the very property that makes such automata\nattractive (cheap invertibility) is the property that destroys diffusion-based security.\n\n*Why now?* The formal ingredients are in place: `cycleBijective_of_decoder4R` shows how a\nwindow-`k` decoder certifies invertibility at all sizes at once, and the composition of two\ndecoders is a decoder of the summed window; making the attack statement precise turns a\nfolklore warning about CA-based cryptography into a theorem with an explicit constant.\n\n---\n\n```json future_directions.json\n[\n  {\n    \"title\": \"Quadratic Cycle-Length Barrier\",\n    \"domain\": \"Cryptography\",\n    \"description\": \"Reversibility of a radius-one cellular automaton is an infinite family of conditions, one per cycle length. The family is now proved to collapse to the lengths at most q^4; we conjecture that the sharp bound is q^2. Lowering the constant is the prerequisite for an exhaustive classification beyond the ternary alphabet, where q^4 is computationally out of reach.\",\n    \"conjecture\": \"For every alphabet of size q >= 2, a local rule g : A^3 -> A has bijective global map on every finite cycle if and only if its global map is injective on the cycles of length 1,...,q^2; the bound q^2 is attained at q = 2. (The weaker bound q^4 is already a proved theorem in Shortening.lean.)\",\n    \"test\": \"Refine the pigeonhole in exists_small_collision so that it ranges only over pair-graph states reachable while the two configurations still differ, and check that this set has size O(q^2). Numerically, compute the maximal first-failure length for q = 4 by BFS on the 256-vertex pair graph over orbit representatives.\",\n    \"if_true\": \"The finite test becomes small enough to run inside a proof assistant, so the ternary count 1800 becomes formally certifiable and classification at q = 4 becomes a feasible computation.\",\n    \"if_false\": \"There exist rules whose smallest bad cycle is superquadratic in q, exhibiting an unexpectedly long-range obstruction and pushing the true constant towards the proved bound q^4.\",\n    \"proof_strategy\": \"Reuse the proved splicing induction (periodic_loop, collision_of_loop, exists_small_collision) but run the pigeonhole over the difference-carrying subgraph only: track the pair of values at the leftmost differing position together with its context, show that at most O(q^2) such stat",
+    "domains": [
+      "Computation",
+      "Algebra"
+    ],
+    "id": "fd_3689",
+    "priority_score": 0.5,
+    "research_mode": "team",
+    "source_exp_id": "ba827ea4",
+    "status": "available",
+    "timestamp": "2026-08-22T17:36:36.473984+00:00",
+    "title": "Direction 5 \u2014 Diffusion Barrier for Radius-One Reversible Ciphers"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Replace algebraic spheres in `Type` by bundled topological spaces, equip the dependent product with the product topology, and establish the corresponding categorical product in `TopCat`.",
     "domains": [
       "Algebra",
@@ -32504,6 +32692,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "**Status of the ambient problem.** The *finiteness* of the test is no longer open: this\ncycle proves in Lean that cycle-bijectivity over an alphabet with `q` letters is decided by\nthe cycle lengths `1, \u2026, q\u2074` (`cycleBijectiveA_iff_upTo`, ternary form\n`cycleBijective_iff_upTo_81`).  What remains open is the sharp constant.\n\n**Conjecture.** The bound can be lowered from `q\u2074` to `q\u00b2`: a radius-one rule is bijective\non every finite cycle as soon as its global map is injective on the cycles of length\n`1, 2, \u2026, q\u00b2`; and `q\u00b2` is attained for `q = 2`.\n\nExhaustive computation gives maximal first-failure length `4 = 2\u00b2` for `q = 2` and `8` for\n`q = 3` (`ComputationalEvidence.md`, \u00a73), against the proved bound `q\u2074 = 81`.  The affine\nsharpness theorem `affine_eight_test_sharp` realises the value `8` in Lean, so for `q = 3`\nthe truth is pinched between `8` and `9`.\n\n*The key insight is* that in the splicing argument the pigeonhole is currently run over all\n`q\u2074` pair-graph states, whereas a difference between the two configurations can only be\ntransported through the states that are *reachable while the difference persists*; counting\nthose states \u2014 a pair `(x,x')` with `x \u2260 x'` together with one shared context letter \u2014\ngives roughly `q\u00b2` instead of `q\u2074`, which is exactly the conjectured bound.\n\n*Why now?* The whole infrastructure is in place and machine-checked: `HasCollision`\nconverts an injectivity failure into a periodic pair of sequences, `periodic_loop` and\n`collision_of_loop` perform the splice, and `exists_small_collision` runs the induction.\nImproving the constant is a matter of replacing the pigeonhole set, not of redoing the\nargument, and it would make the exhaustive `q = 4` classification computationally\nrealistic.",
+    "domains": [
+      "Combinatorics",
+      "Geometry"
+    ],
+    "id": "fd_3685",
+    "priority_score": 0.44006284718451755,
+    "research_mode": "team",
+    "source_exp_id": "ba827ea4",
+    "status": "available",
+    "timestamp": "2026-08-22T17:36:34.383185+00:00",
+    "title": "Direction 1 \u2014 Quadratic Cycle-Length Barrier"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "**Conjecture.** For a fixed `S\u2083` cubic field with discriminant `D`, the empirical mutual\ninformation computed from the primes below `X` satisfies\n`|I_X(p mod |D| ; T) - 1| = O(X^{-1/2 + \u03b5})` under GRH, and `O((log X)^{-A})` unconditionally.\n\n*The key insight is* that the mutual information is a smooth function of the four class\nfrequencies, so the Chebotarev error term transfers to the information with the same exponent up\nto a constant depending only on `|G|`.\n\n*Why now?* The catalog's `ChebotarevGeodesic*` files already formalise an error-exponent calculus\n(`HasErrorExponent`, `exponent_of_inverse_transform`), which is exactly the interface needed to\nturn a density error into an entropy error.",
     "domains": [
       "NumberTheory",
@@ -34413,14 +34616,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "\u2014 they hold for every finite family and"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "bc20ce21",
     "description": "In the eigenvalue model, add the hypothesis that the duality permutation\n   `\u03c3` is an involution with no fixed point carrying `\u03b1 = \u2212q^{n/2}`; conjecture that this\n   alone forces `\u220f \u03b1_i = q^m`, hence `\u03b5 = (\u22121)^d`.  The cycle-4 witnesses show the fixed\n   point `\u03b1 = +q^{n/2}` is exactly what flips the sign at `d = 1`.",
     "domains": [],
     "id": "fd_2963",
+    "phase": "A",
     "priority_score": 0.4250701754385965,
     "research_mode": "team",
     "source_exp_id": "786dcda9",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:27:11.537626+00:00",
     "title": "P2 (from K)"
   },
@@ -35007,19 +35211,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T06:21:32.494481+00:00",
     "title": "The proposed strict hierarchy collapses"
-  },
-  {
-    "consumed_by_exp_id": "ba827ea4",
-    "description": "For alphabet `Fin 3`,\n   classify all local rules `Fin 3 \u2192 Fin 3 \u2192 Fin 3 \u2192 Fin 3` whose global maps\n   are bijective on every nonempty finite cycle, and test the falsifiable claim\n   that every such rule is a single-coordinate rule followed by a permutation\n   of `Fin 3`.",
-    "domains": [],
-    "id": "fd_2757",
-    "phase": "A",
-    "priority_score": 0.41187500000000005,
-    "research_mode": "team",
-    "source_exp_id": "a7f30302",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T06:25:57.214701+00:00",
-    "title": "Ternary radius-one finite-window classification"
   },
   {
     "consumed_by_exp_id": "",

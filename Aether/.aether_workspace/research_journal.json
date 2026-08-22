@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "42f28947",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — EML expressiveness after the depth/width cycle\n\nEverything below is *derived from* the theorems proved in\n`Catalog/Applications/EMLDepthWidthTradeoff.lean` and\n`Catalog/Applicati",
-      "quality_score": 0.85,
-      "sorry_count": 0,
-      "theorem_count": 68,
-      "timestamp": "2026-08-20T23:41:43",
-      "title": "EML Neural Network Expressiveness: Depth vs Width"
-    },
-    {
       "cycle_id": "6a8ae4e1",
       "domain": "Shared",
       "key_insight": "# Future directions\n\nFive falsifiable conjectures produced by the research loop on\n`Catalog/Shared/GradedTransitivity/`.  Each is stated so that it can be\nattacked directly in Lean on top of the defin",
@@ -499,19 +489,19 @@
       "theorem_count": 154,
       "timestamp": "2026-08-22T17:36:48",
       "title": "Ternary radius-one finite-window classification"
+    },
+    {
+      "cycle_id": "43b197e4",
+      "domain": "MachineLearning",
+      "key_insight": "# Future directions — after the QR footprint dial (paper 145 cycle)\n\nThis cycle established, with machine-checked proofs:\n\n1. the \"each QR prime divides `2/p` of the values\" slogan is an **exact ident",
+      "quality_score": 0.89,
+      "sorry_count": 0,
+      "theorem_count": 171,
+      "timestamp": "2026-08-22T17:37:04",
+      "title": "FACT round-40 #1 — QR-RESIDUAL: footprint-weighted dial captures the residual (paper 145)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "beb0e52b",
-      "domain": "Probability",
-      "key_insight": "# Future directions: falsifiable conjectures from the fork-pinning formalization\n\nThe verified core is: for the uniform measure on a finite Galois group `G`, a fork `Y` satisfies\n`I(X;Y) = H(Y)` iff `",
-      "quality_score": 0.91,
-      "sorry_count": 0,
-      "theorem_count": 254,
-      "timestamp": "2026-08-14T21:48:03",
-      "title": "CYCLIC-CUBIC-FORK: fork-pinning ⟺ fork in the abelianization of the Galois closure (criterion verifi"
-    },
     {
       "cycle_id": "45ac3b9d",
       "domain": "Combinatorics",
@@ -2501,27 +2491,19 @@
       "theorem_count": 154,
       "timestamp": "2026-08-22T17:36:48",
       "title": "Ternary radius-one finite-window classification"
+    },
+    {
+      "cycle_id": "43b197e4",
+      "domain": "MachineLearning",
+      "key_insight": "# Future directions — after the QR footprint dial (paper 145 cycle)\n\nThis cycle established, with machine-checked proofs:\n\n1. the \"each QR prime divides `2/p` of the values\" slogan is an **exact ident",
+      "quality_score": 0.89,
+      "sorry_count": 0,
+      "theorem_count": 171,
+      "timestamp": "2026-08-22T17:37:04",
+      "title": "FACT round-40 #1 — QR-RESIDUAL: footprint-weighted dial captures the residual (paper 145)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "a7626bf4",
-      "domain": "Physics",
-      "name": "refines_cost_lt",
-      "quality": 0.88
-    },
-    {
-      "cycle_id": "71e110b3",
-      "domain": "Novelty",
-      "name": "count",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "71e110b3",
-      "domain": "Novelty",
-      "name": "refines_preserves_conclusion",
-      "quality": 0.82
-    },
     {
       "cycle_id": "71e110b3",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Cryptography",
       "name": "kernelInj1",
       "quality": 0.88
+    },
+    {
+      "cycle_id": "43b197e4",
+      "domain": "MachineLearning",
+      "name": "isQR_congr",
+      "quality": 0.89
+    },
+    {
+      "cycle_id": "43b197e4",
+      "domain": "MachineLearning",
+      "name": "qrWeight_congr",
+      "quality": 0.89
+    },
+    {
+      "cycle_id": "43b197e4",
+      "domain": "MachineLearning",
+      "name": "crt_prescribe",
+      "quality": 0.89
     }
   ],
-  "last_updated": "2026-08-22T17:36:48",
+  "last_updated": "2026-08-22T17:37:04",
   "open_questions": [
     {
       "context": "All proofs are complete; no `sorry`.; All proofs are complete; no `sorry`.",
@@ -3517,12 +3517,6 @@
     ],
     "MachineLearning": [
       {
-        "cycle_id": "094ca37a",
-        "quality": 0.82,
-        "theorems": 83,
-        "title": "Hyper-Awareness: 11-Dimensional Perception Vectors in Synthetic Neural Nets"
-      },
-      {
         "cycle_id": "7ee9f549",
         "quality": 0.78,
         "theorems": 78,
@@ -3575,6 +3569,12 @@
         "quality": 0.82,
         "theorems": 48,
         "title": "Both ingredients are already machine-checked (the sharp bound and 1-sum closure)"
+      },
+      {
+        "cycle_id": "43b197e4",
+        "quality": 0.89,
+        "theorems": 171,
+        "title": "FACT round-40 #1 — QR-RESIDUAL: footprint-weighted dial captures the residual (p"
       }
     ],
     "Novelty": [
