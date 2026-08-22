@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "39ef81fe",
-      "domain": "Computation",
-      "key_insight": "# Future Directions — Chromatic Polynomials and Emotional Diversity\n\nDerived from the Stage-3 analysis and Stage-4 critique of this cycle.  What is already settled:\n`emoChrom G = max χ(G) 3` (structur",
-      "quality_score": 0.8,
-      "sorry_count": 0,
-      "theorem_count": 90,
-      "timestamp": "2026-08-21T03:17:09",
-      "title": "Graph Coloring with Emotions: The Chromatic Polynomial Meets Psychology"
-    },
-    {
       "cycle_id": "eccb3315",
       "domain": "Computation",
       "key_insight": "# Future Directions — after the Berggren Tree Zeta Function\n\n## What this cycle established\n\n* **Structure.** The Berggren tree in Euclid-seed coordinates is a bijection from the set of words\n  in thr",
@@ -499,19 +489,19 @@
       "theorem_count": 84,
       "timestamp": "2026-08-22T18:50:04",
       "title": "FACT round-37 #4 — CONVERSE-CAP-THEOREM: the barrier-4 converse proved for the residue-dial stratum,"
+    },
+    {
+      "cycle_id": "a4769f7a",
+      "domain": "Bridges",
+      "key_insight": "# Future directions — cyclic cubic conductor 13 and the subfield channel\n\n## What is now proved (all `sorry`-free, in `Catalog/Bridges/`)\n\nCycles 1–2:\n\n* the **periodic transfer / uniform-cover** inva",
+      "quality_score": 0.9,
+      "sorry_count": 0,
+      "theorem_count": 194,
+      "timestamp": "2026-08-22T19:36:20",
+      "title": "FACT round-35 #7 — CYCLIC-CUBIC-CONDUCTOR-13: full pinning extends across conductors (paper 126)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "1b55f202",
-      "domain": "Computation",
-      "key_insight": "# Future directions: the cyclic splitting-type channel\n\nEach conjecture below is falsifiable by a single counterexample in the finite cyclic model\n`ℤ/n`, `T(x) = n / gcd(n, x)`, and each is already ve",
-      "quality_score": 0.79,
-      "sorry_count": 0,
-      "theorem_count": 145,
-      "timestamp": "2026-08-14T23:43:25",
-      "title": "CYCLIC-TYPE-CHANNEL (round-22 #2, experiment 413, assessment v189, paper 78)"
-    },
     {
       "cycle_id": "c94236ec",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 84,
       "timestamp": "2026-08-22T18:50:04",
       "title": "FACT round-37 #4 — CONVERSE-CAP-THEOREM: the barrier-4 converse proved for the residue-dial stratum,"
+    },
+    {
+      "cycle_id": "a4769f7a",
+      "domain": "Bridges",
+      "key_insight": "# Future directions — cyclic cubic conductor 13 and the subfield channel\n\n## What is now proved (all `sorry`-free, in `Catalog/Bridges/`)\n\nCycles 1–2:\n\n* the **periodic transfer / uniform-cover** inva",
+      "quality_score": 0.9,
+      "sorry_count": 0,
+      "theorem_count": 194,
+      "timestamp": "2026-08-22T19:36:20",
+      "title": "FACT round-35 #7 — CYCLIC-CUBIC-CONDUCTOR-13: full pinning extends across conductors (paper 126)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "eb2ba545",
-      "domain": "Logic",
-      "name": "add_sup",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "eb2ba545",
-      "domain": "Logic",
-      "name": "score_zero",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "77469890",
-      "domain": "NumberTheory",
-      "name": "uEnt_eq_logb_card_of_balanced",
-      "quality": 0.82
-    },
     {
       "cycle_id": "77469890",
       "domain": "NumberTheory",
@@ -2803,9 +2785,27 @@
       "domain": "Cryptography",
       "name": "schedule_sum_lower_bound",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "a4769f7a",
+      "domain": "Bridges",
+      "name": "catalog",
+      "quality": 0.9
+    },
+    {
+      "cycle_id": "a4769f7a",
+      "domain": "Bridges",
+      "name": "invStereo_on_circle",
+      "quality": 0.9
+    },
+    {
+      "cycle_id": "a4769f7a",
+      "domain": "Bridges",
+      "name": "invStereo_denom_pos",
+      "quality": 0.9
     }
   ],
-  "last_updated": "2026-08-22T18:50:04",
+  "last_updated": "2026-08-22T19:36:20",
   "open_questions": [
     {
       "context": "All proofs are complete; no `sorry`.; All proofs are complete; no `sorry`.",
@@ -3145,12 +3145,6 @@
     ],
     "Bridges": [
       {
-        "cycle_id": "c8991a0a",
-        "quality": 0.88,
-        "theorems": 294,
-        "title": "Topological-Algebraic Bridge: Fundamental Group as a Complete Invariant"
-      },
-      {
         "cycle_id": "286b3a0e",
         "quality": 0.89,
         "theorems": 145,
@@ -3203,6 +3197,12 @@
         "quality": 0.89,
         "theorems": 157,
         "title": "Formalizing the Probabilistic Method: Erdos Meets Lean"
+      },
+      {
+        "cycle_id": "a4769f7a",
+        "quality": 0.9,
+        "theorems": 194,
+        "title": "FACT round-35 #7 — CYCLIC-CUBIC-CONDUCTOR-13: full pinning extends across conduc"
       }
     ],
     "Combinatorics": [

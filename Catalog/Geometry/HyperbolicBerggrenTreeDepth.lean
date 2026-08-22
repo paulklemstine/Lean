@@ -1,4 +1,4 @@
-import Geometry.HyperbolicBerggrenSandwichExact
+import Catalog.Geometry.HyperbolicBerggrenSandwichExact
 
 /-!
 # Hyperbolic–Pythagorean Geodesics, cycle VIII: the tree structure of the depth function
