@@ -1,344 +1,751 @@
-# Frame Definability for Provability Systems, and the Enumeration of Finite Löb Frames
+# Frame Definability over Markov Chains: Soundness Spectra, Aperiodicity, and the Modal Content of Recurrence
 
 **Author:** Aristotle
-**Date:** 2026-08-19
+**Date:** 2026-08-22
 
 ---
 
 ## Abstract
 
-We develop a correspondence theory between modal axioms and combinatorial conditions on Kripke accessibility relations, and use it to convert a question about provability logic into an exact enumeration problem. Our central bridge result is that a single instance of the Löb axiom $\Box(\Box p \to p) \to \Box p$, over one propositional variable, is valid on a frame precisely when its accessibility relation is transitive and converse well-founded, and that over a finite carrier this condition collapses to transitivity together with irreflexivity — that is, to the frame relation being a strict partial order. Consequently the number of frames on $n$ labelled worlds validating the Löb axiom equals the number of labelled strict partial orders on $n$ points; we certify the initial values $1, 1, 3, 19$ by exhaustive verification through the bridge, compute the continuation $219, 4231, 130023$ by an order-theoretic enumeration, and prove that the sequence is monotone by exhibiting an injection that adjoins an isolated world. Against this we place the exact count $2^{n^2-n}$ of frames validating the reflection axiom $\Box p \to p$: on three worlds, $64$ frames validate reflection and only $19$ validate Löb, while no nonempty frame validates both. We complement the positive correspondences ($T$, $4$, $D$, $B$, $5$, Löb, and the graded family $\Box^{k}p \to p$) with a transfer theory — bounded morphisms and disjoint unions — and three limitative theorems: irreflexivity, "some world is reflexive", universality, and non-emptiness are each undefinable by any set of modal formulas, hence are not the sound-frame class of any proof system. Finally we introduce the *degree monoid* of a frame, the additive submonoid of $\mathbb{N}$ consisting of those $k$ for which $\Box^k p \to p$ is valid, and show it is not always of the form $d\mathbb{N}$: the three-world complete irreflexive frame realises the numerical semigroup $\langle 2, 3 \rangle = \{0,2,3,4,\dots\}$.
+We develop a systematic correspondence between finite Markov chains and Kripke frames,
+obtained by passing from a nonnegative transition matrix $P$ to its **support frame**,
+whose accessibility relation is $P(u,v) > 0$. The correspondence is exact on the level of
+possibility: the $n$-step transition probability $P^n(u,v)$ is positive precisely when the
+support frame carries a path of exactly $n$ edges from $u$ to $v$. Under this dictionary
+every notion of basic modal frame theory acquires a probabilistic meaning, and we exploit
+the translation in both directions.
 
-**Keywords:** provability logic, Löb axiom, frame definability, Kripke frame, labelled partial order, bounded morphism, numerical semigroup, enumerative combinatorics.
+Four groups of results are established. **(i) An impossibility theorem.** Row-stochasticity
+forces seriality, and seriality destroys converse well-foundedness; hence Löb's axiom
+$\Box(\Box\varphi \to \varphi) \to \Box\varphi$ is valid on no nonempty Markov chain. The
+modal system of a chain is consistent, proves its own consistency statement $\neg\Box\bot$,
+is never Löbian, and internalises its full reflection schema exactly when the chain is
+lazy. **(ii) An arithmetic criterion for mixing.** The set of degrees $n$ for which the
+reflection principle $\Box^n\varphi \to \varphi$ holds at a state — its *soundness
+spectrum* — coincides with the support of its return-time distribution and is an additive
+submonoid of $\mathbb{N}$. We prove that such a submonoid is cofinite if and only if no
+integer $d \ge 2$ divides all of it, by a difference-subgroup argument that avoids
+generators entirely, with the explicit conductor $y^2$ where $y, y+1$ are consecutive
+elements. Transported along the dictionary this yields: for a finite irreducible chain,
+primitivity is *equivalent* to aperiodicity of a single state, with no self-loop and no
+coprime-pair hypothesis. **(iii) Effective exponents.** A shortest-path principle proved by
+path excision gives explicit primitivity exponents $N-1$ for a lazy chain on $N$ states and
+$2(N-1)$ from a single holding state, the former sharp for the nearest-neighbour chain.
+**(iv) The modal content of recurrence.** On a finite frame the greatest fixed point of the
+diamond operator is exactly the set of worlds from which a world lying on a cycle is
+reachable; the naive identification with the recurrent set is refuted by a two-state
+absorbing chain. Finally, strong lumpability of Markov chains is shown to *be* a bounded
+morphism of support frames, so that validity transfer and modal undefinability results
+apply verbatim to state aggregation.
+
+**Keywords:** Markov chain, support frame, modal frame definability, soundness spectrum,
+numerical semigroup, aperiodicity, Perron–Frobenius primitivity, lumpability, Löb's axiom,
+greatest fixed point.
 
 ---
 
 ## 1. Introduction
 
-### 1.1 Löb's theorem and its frames
+### 1.1 Two subjects, one relation
 
-Let $\Box$ be read as "is provable in a fixed formal theory". Löb's theorem states that if a theory proves $\Box p \to p$ then it proves $p$; internalised as a schema of the provability calculus it becomes the **Löb axiom**
-$$L: \quad \Box(\Box p \to p) \to \Box p .$$
-Taking $p$ to be $\bot$ recovers Gödel's second incompleteness theorem. In the semantic reading due to Kripke, $\Box$ quantifies over accessible worlds; the logic $\mathsf{GL}$ obtained by adding $L$ to the basic normal modal logic is sound and complete for the transitive converse well-founded frames.
+A finite Markov chain on a state space $S$ is a matrix $P : S \times S \to \mathbb{R}$ with
+nonnegative entries whose rows sum to one. A Kripke frame is a pair $F = (W, R)$ with $R$ a
+binary relation on $W$. The two objects differ in what they record: the matrix records
+*how likely* each transition is, the frame only *whether* it is possible. Passing from one
+to the other by remembering the support of $P$ is an old and obvious idea; what is less
+obvious is how much of the analytic theory of Markov chains is *already present* in the
+combinatorics of the resulting relation, and how much of the limitative theory of modal
+logic transfers, unchanged, to statements about stochastic processes.
 
-The subject of the present paper is the *frame-theoretic* content of this and neighbouring axioms, pushed as far as an exact enumeration. Our organising question is:
+This paper carries out that transfer systematically. Our aim is not merely to observe an
+analogy but to prove that in each case the two notions are literally the same object, and
+then to use whichever side is easier.
 
-> How many Kripke frames on $n$ labelled worlds validate the Löb axiom, and how does that number compare with the number of frames validating the reflection (soundness) axiom?
+### 1.2 The modal language
 
-### 1.2 Contributions
+Fix a set $\alpha$ of propositional variables. Modal formulas are generated by
 
-1. **Correspondence theory** (Section 3): each of the classical axioms $T$, $4$, $D$, $B$, $5$ is shown to define its expected relational condition, using a *single* instance over a *single* propositional variable. The witnessing valuations are exhibited explicitly.
-2. **The Löb correspondence** (Section 4): validity of one Löb instance is equivalent to transitivity plus converse well-foundedness. The converse-well-foundedness half is obtained from the "every nonempty set has a maximal element" formulation, so that no infinite descending sequence — and hence no appeal to dependent choice — is ever constructed.
-3. **The finite collapse and the bridge** (Section 5): on a finite frame, Löb validity is equivalent to being a strict partial order; hence to a decidable matrix condition.
-4. **Enumeration** (Section 6): the counting function $\mathrm{L}(n)$ of Löb frames on $n$ labelled worlds satisfies $\mathrm{L}(0..6) = 1, 1, 3, 19, 219, 4231, 130023$; it is monotone; and it is dwarfed by the reflexive count $2^{n^2-n}$.
-5. **Transfer and limitative theory** (Section 7): bounded morphisms and disjoint unions yield a three-part closure package for the sound-frame class of any proof system, and three undefinability theorems.
-6. **The degree monoid** (Section 8): the graded family $\Box^k p \to p$ defines "every world lies on a closed walk of length $k$"; the valid degrees form an additive submonoid of $\mathbb{N}$; and this submonoid need not be of the form $d\mathbb{N}$.
+$$\varphi ::= p \mid \bot \mid \varphi \to \varphi \mid \Box\varphi, \qquad p \in \alpha,$$
 
----
+with the usual abbreviations $\neg\varphi := \varphi \to \bot$ and
+$\Diamond\varphi := \neg\Box\neg\varphi$. Given a frame $F = (W,R)$ and a valuation
+$V : \alpha \to \mathcal{P}(W)$, satisfaction is defined as usual, the modal clause being
 
-## 2. Preliminaries
+$$w \Vdash \Box\varphi \iff \forall v\ (w \mathrel{R} v \Rightarrow v \Vdash \varphi).$$
 
-### 2.1 Syntax
+A formula is **valid** on $F$, written $F \models \varphi$, when it is satisfied at every
+world under every valuation. We write $\Box^n$ for the $n$-fold iteration of $\Box$, and
+we abbreviate the **consistency formula** $\mathrm{con} := \neg\Box\bot$ and the **Löb
+instance** $L(\varphi) := \Box(\Box\varphi \to \varphi) \to \Box\varphi$.
 
-Fix a set $\mathrm{Var}$ of propositional variables. **Modal formulas** are generated by
-$$\varphi ::= \bot \mid p \mid \varphi \to \varphi \mid \Box\varphi, \qquad p \in \mathrm{Var},$$
-with the usual abbreviations $\neg\varphi := \varphi \to \bot$ and $\Diamond\varphi := \neg\Box\neg\varphi$. We write $\Box^k\varphi$ for $\varphi$ prefixed by $k$ boxes, so $\Box^0\varphi = \varphi$.
+Write $R^n$ for the $n$-fold relational composite: $R^0$ is equality, and $u \mathrel{R^n} v$
+holds iff there is a sequence $u = x_0 \mathrel{R} x_1 \mathrel{R} \cdots \mathrel{R} x_n = v$.
+We refer to such a sequence as an *$n$-path*. The basic composition law, proved by
+induction on $n$, is
 
-Three named schemas will recur:
+$$u \mathrel{R^{n+m}} v \iff \exists z\ (u \mathrel{R^n} z \ \wedge\ z \mathrel{R^m} v). \tag{1}$$
 
-- the **reflection** (or soundness) instance $T(\varphi) := \Box\varphi \to \varphi$;
-- the **Löb** instance $L(\varphi) := \Box(\Box\varphi \to \varphi) \to \Box\varphi$;
-- the **consistency formula** $\mathrm{Con} := \neg \Box \bot$.
+This single fact will be read three ways below: as iterated box semantics, as matrix
+multiplication, and as addition of return times.
 
-### 2.2 Frames, models, validity
+### 1.3 Modal systems
 
-**Definition 2.1 (Frame).** A *frame* $F$ is a pair $(W, R)$ consisting of a set $W$ of *worlds* and a binary relation $R \subseteq W \times W$, the *accessibility relation*. We write $w R v$ for $(w,v) \in R$ and say $w$ *sees* $v$.
+By a **modal system** over $\alpha$ we mean a set $T$ of formulas closed under modus ponens
+($\varphi, \varphi \to \psi \in T \Rightarrow \psi \in T$) and necessitation
+($\varphi \in T \Rightarrow \Box\varphi \in T$). Such a $T$ is **consistent** if
+$\bot \notin T$; it **proves reflection** if $\Box\varphi \to \varphi \in T$ for every
+$\varphi$; and it **proves the Löb axiom** if $L(\varphi) \in T$ for every $\varphi$.
 
-**Definition 2.2 (Valuation and satisfaction).** A *valuation* on $F$ is a map $V$ assigning to each variable a subset of $W$ (equivalently, a predicate on worlds). Satisfaction $F, V, w \models \varphi$ is defined recursively:
-$$F,V,w \not\models \bot; \qquad F,V,w \models p \iff w \in V(p);$$
-$$F,V,w \models \varphi\to\psi \iff (F,V,w\models\varphi \Rightarrow F,V,w\models\psi);$$
-$$F,V,w \models \Box\varphi \iff \forall v\,(w R v \Rightarrow F,V,v \models \varphi).$$
-It follows that $F,V,w \models \Diamond\varphi$ iff there exists $v$ with $wRv$ and $F,V,v\models\varphi$, and that $F,V,w\models\mathrm{Con}$ iff $w$ has at least one successor.
-
-**Definition 2.3 (Validity on a frame).** $\varphi$ is *valid on* $F$, written $F \models \varphi$, if $F,V,w\models\varphi$ for every valuation $V$ and every world $w$. Validity quantifies away the valuation and is therefore a property of $R$ alone; it is a second-order condition, being universal over all subsets of $W$.
-
-**Definition 2.4 (Definability).** A set $\Gamma$ of formulas *defines* a class $\mathcal{C}$ of frames if for every frame $F$:
-$$\bigl(\forall \varphi \in \Gamma,\ F \models \varphi\bigr) \iff F \in \mathcal{C}.$$
-A class is *definable* if some $\Gamma$ defines it. For a single formula the criterion reduces to: $\{\varphi\}$ defines $\mathcal{C}$ iff for all $F$, $F \models \varphi \iff F \in \mathcal{C}$.
-
-### 2.3 Proof systems
-
-**Definition 2.5 (Modal system).** A *modal system* $S$ is a set of formulas, its theorems. $S$ is *frame-sound for $F$* if every theorem of $S$ is valid on $F$; the *frame class* of $S$ is the class of frames for which it is frame-sound. We say $S$ *proves reflection* if $T(\varphi)$ is a theorem for every $\varphi$, and *proves the Löb axiom* if $L(\varphi)$ is a theorem for every $\varphi$.
-
-Two systems recur as witnesses: the **provability system**, whose theorems are the formulas valid on all transitive converse well-founded frames, and the **self-sound system**, whose theorems are the formulas valid on the single reflexive point.
-
-### 2.4 The empty frame
-
-**Proposition 2.6.** Every formula is valid on a frame with no worlds; hence every definable class contains the empty frame, and $\bot$ defines exactly the class of empty frames.
-
-*Proof.* Validity is a universal statement over worlds, vacuously true when there are none. Conversely, if $F \models \bot$ then no world can exist, since at any world the valuation-free clause for $\bot$ fails. $\square$
-
-**Corollary 2.7 (Non-emptiness is not definable).** No set of formulas defines the class of nonempty frames, since any candidate is validated by the empty frame. $\square$
+These three properties interact through the modal form of Gödel's second incompleteness
+theorem: a consistent system that proves the Löb axiom cannot prove its own consistency
+statement $\mathrm{con}$. Contrapositively, a consistent system proving $\mathrm{con}$
+is not Löbian. Systems that go the other way — proving their own reflection schema, hence
+their own consistency, at the cost of Löbianity — we call *self-sound*. A basic question
+is where such systems come from. One answer developed below: every Markov chain is one.
 
 ---
 
-## 3. Correspondence for the classical axioms
+## 2. The support functor
 
-Throughout this section, $p$ is a fixed propositional variable, and every correspondence uses only one instance of the schema in that one variable. The pattern is uniform: to derive a relational property from validity, one instantiates the *minimal valuation* that makes the antecedent true — the modal manifestation of the Sahlqvist minimal-valuation phenomenon, here instantiated by hand.
+### 2.1 Definition
 
-**Theorem 3.1 ($T$ defines reflexivity).** $\Box p \to p$ is valid on $F$ iff $wRw$ for every world $w$.
+**Definition 2.1 (Support frame).** For $P : S \times S \to \mathbb{R}$, the *support frame*
+$\mathrm{supp}(P)$ is the Kripke frame with worlds $S$ and accessibility
 
-*Proof sketch.* If $R$ is reflexive, then $\Box p$ true at $w$ gives $p$ at $w$ directly. Conversely, fix $w$ and take the valuation $V(p) := \{x : wRx\}$. Then $\Box p$ holds at $w$ by construction, so validity yields $p$ at $w$, i.e. $w \in V(p)$, i.e. $wRw$. $\square$
+$$u \mathrel{R} v \quad :\Longleftrightarrow \quad P(u,v) > 0 .$$
 
-**Theorem 3.2 ($4$ defines transitivity).** $\Box p \to \Box\Box p$ is valid on $F$ iff $R$ is transitive.
+**Definition 2.2 (Row-stochastic).** $P$ on a finite $S$ is *row-stochastic* if
+$P(u,v) \ge 0$ for all $u,v$ and $\sum_v P(u,v) = 1$ for all $u$.
 
-*Proof sketch.* Transitivity makes $\Box p$ propagate one step. Conversely, with $V(p) := \{x : wRx\}$ the antecedent holds at $w$; validity then gives $\Box\Box p$ at $w$, which says every world reachable in two steps from $w$ is reachable in one. $\square$
+**Definition 2.3 (Step powers).** $P^0(u,v) = [u = v]$ and
+$P^{n+1}(u,v) = \sum_z P(u,z)\, P^n(z,v)$.
 
-**Theorem 3.3 ($D$, i.e. $\mathrm{Con}$, defines seriality).** $\neg\Box\bot$ is valid on $F$ iff every world has at least one successor.
+### 2.2 The support-power theorem
 
-*Proof sketch.* Immediate from the satisfaction clause for $\Box\bot$; no propositional variable is needed. $\square$
+**Theorem 2.4 (Support–power theorem).** *Let $P$ have nonnegative entries. For all $n$ and
+all $u,v$,*
 
-**Theorem 3.4 ($B$ defines symmetry).** $p \to \Box\Diamond p$ is valid on $F$ iff $wRv$ implies $vRw$.
+$$P^n(u,v) > 0 \iff u \mathrel{R^n} v \text{ in } \mathrm{supp}(P).$$
 
-*Proof sketch.* Given $wRv$, take $V(p) := \{w\}$. The antecedent holds at $w$, so $\Diamond p$ holds at $v$, producing $u$ with $vRu$ and $u = w$. The converse direction is a direct computation. $\square$
+*Proof sketch.* Induction on $n$. The base case is the definition of $P^0$ and of $R^0$.
+For the step, $P^{n+1}(u,v) = \sum_z P(u,z)P^n(z,v)$ is a sum of nonnegative terms, so it is
+positive iff some term is positive, i.e. iff there is $z$ with $P(u,z) > 0$ and
+$P^n(z,v) > 0$; by the induction hypothesis this is exactly the existence of $z$ with
+$u \mathrel{R} z \mathrel{R^n} v$. (The forward direction is most cleanly run as a
+contrapositive: if no such $z$ exists then every summand vanishes, so the sum does.) $\square$
 
-**Theorem 3.5 ($5$ defines the euclidean property).** $\Diamond p \to \Box\Diamond p$ is valid on $F$ iff $wRv$ and $wRu$ imply $vRu$.
+**Theorem 2.5 (Chapman–Kolmogorov).** $P^{n+m}(u,v) = \sum_z P^n(u,z) P^m(z,v)$.
 
-*Proof sketch.* Given $wRv$, $wRu$, take $V(p) := \{u\}$. Then $\Diamond p$ holds at $w$, hence $\Diamond p$ at $v$, which supplies $z$ with $vRz$ and $z = u$. $\square$
+*Proof sketch.* Induction on $n$, expanding $P^{n+1+m}$ and interchanging the two finite
+summations. Note that Theorem 2.5 is the numerical shadow of the purely relational law (1);
+under Theorem 2.4 the two statements determine each other on supports. $\square$
 
----
+Theorem 2.4 is the hinge of the paper. It says that the crude passage $P \mapsto
+\mathrm{supp}(P)$ loses no information about *possibility*, and it therefore licenses the
+following dictionary, each line of which is a theorem proved below or immediately from
+Theorem 2.4.
 
-## 4. The Löb correspondence
-
-**Definition 4.1.** A relation $R$ on $W$ is *converse well-founded* if the reverse relation is well-founded: equivalently (classically) if every nonempty $S \subseteq W$ contains an $R$-maximal element, i.e. some $a \in S$ with no $b \in S$ such that $aRb$; equivalently again, if there is no infinite chain $w_0 R w_1 R w_2 R \cdots$.
-
-**Theorem 4.2 (Semantic Löb theorem).** If $R$ is transitive and converse well-founded, then $\Box(\Box\varphi \to \varphi) \to \Box\varphi$ is valid on $F$ for every $\varphi$.
-
-*Proof sketch.* Fix $V$ and $w$, assume $F,V,w \models \Box(\Box\varphi\to\varphi)$, and prove $F,V,v \models \varphi$ for all $v$ with $wRv$ by induction along the well-founded reverse relation. At $v$, the induction hypothesis gives $\varphi$ at every $t$ with $vRt$ — those $t$ are also successors of $w$ by transitivity — hence $\Box\varphi$ holds at $v$, and the premise at $v$ yields $\varphi$. $\square$
-
-**Theorem 4.3 (Transitivity is necessary).** If $L(p)$ is valid on $F$ for a single variable $p$, then $R$ is transitive.
-
-*Proof sketch.* Let $wRv$ and $vRu$; we must show $wRu$. Take
-$$V(p) := \{x : wRx \text{ and } \forall y\,(xRy \Rightarrow wRy)\},$$
-"successors of $w$ all of whose successors are successors of $w$". The premise $\Box(\Box p \to p)$ holds at $w$: for any $z$ with $wRz$, if all successors of $z$ satisfy $p$ then in particular they are successors of $w$, and $z$ itself is one, so $z \in V(p)$. Validity gives $p$ at $v$; the second conjunct of $v \in V(p)$ applied to $u$ yields $wRu$. $\square$
-
-**Theorem 4.4 (Converse well-foundedness is necessary).** If $L(p)$ is valid on $F$, then $R$ is converse well-founded.
-
-*Proof sketch.* Use the maximal-element formulation. Suppose some nonempty $S$ has no $R$-maximal element, so every $a \in S$ has some $b \in S$ with $aRb$. Pick $w \in S$ and set $V(p) := W \setminus S$. The premise $\Box(\Box p \to p)$ holds at $w$: for $z$ with $wRz$, if $z \in S$ then $z$ has a successor in $S$, falsifying $\Box p$ at $z$, so the implication $\Box p \to p$ is satisfied at $z$ either way. Validity therefore gives $\Box p$ at $w$, i.e. no successor of $w$ lies in $S$ — contradicting the existence of $b \in S$ with $wRb$. $\square$
-
-**Remark 4.5.** The formulation via maximal elements is what keeps the argument choice-free: the naive "no infinite ascending chain" reading would require constructing an infinite sequence, i.e. dependent choice. Here a single set and a single valuation suffice.
-
-**Theorem 4.6 (Löb defines the provability frames).** For any variable $p$,
-$$F \models \Box(\Box p \to p) \to \Box p \iff R \text{ is transitive and converse well-founded}. \qquad \square$$
-
-**Corollary 4.7 (Irreflexivity).** If $F$ validates the Löb axiom then no world sees itself, since a reflexive world would form an infinite ascending chain (equivalently, the singleton $\{w\}$ would have no maximal element).
-
-**Theorem 4.8 (Joint inconsistency, semantic form).** If $F$ validates both $L(p)$ and $T(p)$ then $F$ has no worlds.
-
-*Proof.* Reflection forces every world to see itself (Theorem 3.1); Löb forbids it (Corollary 4.7). $\square$
-
-**Corollary 4.9.** If a proof system proves both the reflection schema and the Löb schema, then every frame for which it is sound is empty. This is the frame-level shadow of the second incompleteness theorem: internalised soundness and Löbian discipline have no common models. $\square$
+| Modal notion | Probabilistic meaning |
+| --- | --- |
+| seriality (validity of $\mathrm{con}$) | conservation of probability mass |
+| $\Box\varphi \to \varphi$ valid at $w$ | positive holding probability $P(w,w) > 0$ |
+| $\Box^n\varphi \to \varphi$ valid at $w$ | positive $n$-step return probability |
+| every pair joined by an $n$-path for large $n$ | primitivity of $P$ |
+| bounded morphism | strong lumpability |
+| greatest fixed point of $\Diamond$ | states that can reach recurrence |
+| Löb's axiom valid | impossible on a nonempty chain |
 
 ---
 
-## 5. The finite collapse and the decidable bridge
+## 3. Seriality, and the impossibility of Löb
 
-Converse well-foundedness is genuinely infinitary. Over a finite carrier it evaporates.
+**Lemma 3.1 (Mass forces successors).** *If $P$ is row-stochastic, then for every $u$ there
+is $v$ with $P(u,v) > 0$; i.e. $\mathrm{supp}(P)$ is serial.*
 
-**Theorem 5.1 (Finite collapse).** Let $F$ be a frame with finitely many worlds. Then
-$$F \models L(p) \iff \bigl(R \text{ transitive and } \forall w,\ \neg (wRw)\bigr),$$
-i.e. iff $R$ is a strict partial order.
+*Proof.* If all $P(u,v)$ were $\le 0$ then, being also $\ge 0$, they would all vanish, and
+the row sum would be $0 \ne 1$. $\square$
 
-*Proof sketch.* Left to right is Theorem 4.6 with Corollary 4.7. For the converse, a transitive irreflexive relation on a finite set is well-founded in the reverse direction: an infinite ascending chain would repeat a world, and transitivity would then give $wRw$, contradicting irreflexivity. Theorem 4.2 then applies. $\square$
+**Lemma 3.2 (Seriality kills converse well-foundedness).** *If $F$ is nonempty and serial,
+then the converse relation $\breve{R}$ is not well-founded.*
 
-Identify a frame on the labelled world set $\{0,\dots,n-1\}$ with its Boolean adjacency matrix $R \in \{0,1\}^{n\times n}$.
+*Proof.* Suppose it were. Well-founded induction along $\breve{R}$ proves any property
+$\Phi$ such that $\Phi(v)$ for all $R$-successors $v$ of $w$ implies $\Phi(w)$. Take
+$\Phi \equiv \bot$: seriality supplies a successor $v$ of $w$, and the induction hypothesis
+at $v$ is $\bot$. So $\bot$ holds at every world, contradicting nonemptiness. $\square$
 
-**Definition 5.2.** Say $R$ is a *strict matrix* if $R_{ab} = R_{bc} = 1 \Rightarrow R_{ac} = 1$ for all $a,b,c$, and $R_{aa} = 0$ for all $a$.
+Recall the classical frame-definability fact that Löb's axiom is valid on $F$ exactly when
+$R$ is transitive and $\breve{R}$ is well-founded. Combining:
 
-**Theorem 5.3 (The bridge).** For every $n$ and every $R \in \{0,1\}^{n\times n}$,
-$$\text{the frame of } R \models \Box(\Box p \to p)\to\Box p \iff R \text{ is a strict matrix}.$$
+**Theorem 3.3 (No Markov chain is a Löb frame).** *Let $S$ be finite and nonempty and let
+$P$ be row-stochastic. Then for any variable $p$, the Löb instance $L(p)$ is not valid on
+$\mathrm{supp}(P)$.*
 
-*Proof.* Immediate from Theorem 5.1, unwinding the matrix encoding of $R$. $\square$
+Two remarks. First, finiteness enters only to make sense of the row sum; the underlying
+incompatibility (Lemma 3.2) is purely order-theoretic and uses no choice principle.
+Second, the theorem is genuinely about probability, not about the particular numbers: any
+transition rule that conserves *some* positive quantity has the same consequence.
 
-The importance of Theorem 5.3 is methodological: the left-hand side is a universal statement over all $2^{n}$-fold valuations (indeed over all subsets of the world set), the right-hand side is a check on $n^3 + n$ triples and diagonal entries. Without the finite collapse there would be no computation to perform, converse well-foundedness not being a finitary condition.
+**Theorem 3.4 (Consistency is provable).** *If $P$ is row-stochastic then
+$\mathrm{supp}(P) \models \mathrm{con}$.*
 
----
+*Proof.* $\mathrm{con} = \neg\Box\bot$ is valid on exactly the serial frames; apply
+Lemma 3.1. $\square$
 
-## 6. Enumeration
+### 3.1 The modal system of a chain
 
-**Definition 6.1.** Let $\mathrm{L}(n)$ be the number of matrices $R \in \{0,1\}^{n\times n}$ whose frame validates the Löb axiom, and $\mathrm{T}(n)$ the number whose frame validates the reflection axiom.
+**Definition 3.5.** The *modal system of $P$*, denoted $T_P$, is the set of formulas valid
+on $\mathrm{supp}(P)$. It is closed under modus ponens (pointwise) and necessitation
+(validity at all worlds gives validity of the box at all worlds), so it is a modal system in
+the sense of §1.3.
 
-By Theorem 5.3, $\mathrm{L}(n)$ is the number of labelled strict partial orders on $n$ points.
+**Theorem 3.6.** *For $S$ nonempty, $T_P$ is consistent. If moreover $P$ is row-stochastic,
+$\mathrm{con} \in T_P$ and $T_P$ is not Löbian.*
 
-**Theorem 6.2 (Initial values).** $\mathrm{L}(0) = 1$, $\mathrm{L}(1) = 1$, $\mathrm{L}(2) = 3$, $\mathrm{L}(3) = 19$.
+*Proof.* Consistency: the valuation that makes every variable false at every world refutes
+$\bot$ at any world. Consistency plus $\mathrm{con} \in T_P$ (Theorem 3.4) contradicts
+Löbianity by the modal second incompleteness theorem. $\square$
 
-*Proof.* Exhaustive verification over the $2^{n^2}$ matrices, transported to a statement about modal validity by Theorem 5.3. $\square$
+**Theorem 3.7 (Self-soundness = laziness).** *For finite $S$ and any variable $p$, $T_P$
+proves reflection if and only if $P(w,w) > 0$ for every state $w$.*
 
-For $n = 3$ the nineteen orders are: the empty order ($1$); the orders with exactly one comparable pair ($6$); the "V" and "$\Lambda$" shapes with one point below, respectively above, two incomparable points ($3+3$); and the six three-element chains. Note that no shape has exactly two comparabilities other than the V's: a chain $i < j < k$ forces $i<k$, so transitivity is the constraint that reduces the $2^{6} = 64$ irreflexive relations on three points to $19$.
+*Proof sketch.* Validity of $\Box\varphi \to \varphi$ at $w$ for all $\varphi$ and all
+valuations is equivalent to $w \mathrel{R} w$: if $w$ has no self-loop, put $\varphi = p$
+false at $w$ and true elsewhere; conversely a self-loop makes $\Box\varphi$ at $w$ imply
+$\varphi$ at $w$ directly. Under Definition 2.1, $w \mathrel{R} w$ is $P(w,w) > 0$. $\square$
 
-**Continuation.** An order-theoretic enumeration — grow a poset one point at a time, choosing a downward-closed down-set $D$ and an upward-closed up-set $U$ subject to "every element of $D$ lies below every element of $U$" — gives
-$$\mathrm{L}(n) = 1,\ 1,\ 3,\ 19,\ 219,\ 4231,\ 130023,\ \dots$$
-This is the classical sequence of labelled partial orders; no closed form is known, and the Kleitman–Rothschild theorem gives the asymptotic $\log_2 \mathrm{L}(n) = n^2/4 + o(n^2)$.
+**Corollary 3.8 (An infinite family of self-sound systems).** *Every nonempty finite lazy
+stochastic chain yields a consistent modal system that proves its own reflection schema
+(hence its own consistency) and is not Löbian.* The smallest instance is the one-state chain
+$P = (1)$, whose support frame is the reflexive point; its system is the canonical self-sound
+system, and this identification is exact — a formula is valid on the one-state chain iff it
+is valid on the reflexive singleton frame, because satisfaction depends on the accessibility
+relation only up to logical equivalence.
 
-**Theorem 6.3 (Monotonicity).** $\mathrm{L}(n) \le \mathrm{L}(n+1)$ for all $n$.
+**Theorem 3.9 (Tangles are forced).** *Every nonempty finite row-stochastic chain has a state
+$w$ and an $n > 0$ with $w \mathrel{R^n} w$; equivalently, some state validates
+$\Box^n\varphi \to \varphi$ for some $n > 0$.*
 
-*Proof.* Map a matrix $R$ on $n$ worlds to the matrix on $n+1$ worlds that agrees with $R$ on the first $n$ coordinates and has zero last row and column: the new world is isolated. This preserves transitivity (any putative violating triple must involve the isolated world, and no arrow touches it) and irreflexivity, and it is injective, since $R$ is recovered by restriction. $\square$
+*Proof sketch.* By Lemma 3.1 choose a successor function $g$ with $P(u, g(u)) > 0$. The orbit
+$x_0, g(x_0), g^2(x_0), \dots$ is an infinite sequence in a finite set, so $g^i(x_0) =
+g^j(x_0)$ for some $i < j$; the segment from $i$ to $j$ is a closed path of length $j - i > 0$
+at $g^i(x_0)$. $\square$
 
-**Theorem 6.4 (The reflexive count).** $\mathrm{T}(n) = 2^{n^2-n}$.
-
-*Proof.* By Theorem 3.1, validity of reflection is exactly "all $n$ diagonal entries are $1$"; the remaining $n^2-n$ entries are unconstrained. $\square$
-
-**Theorem 6.5 (Löb is rarer than reflection).** $\mathrm{L}(3) = 19 < 64 = \mathrm{T}(3)$, out of $512$ frames on three worlds; and by Theorem 4.8 no nonempty frame is counted by both.
-
-More strikingly, the gap widens without bound: $\mathrm{T}(n)/2^{n^2} = 2^{-n}$ is a mere exponential fraction, whereas $\mathrm{L}(n)/2^{n^2} = 2^{-3n^2/4 + o(n^2)}$. In the intended reading, the ability to assert one's own soundness is a condition on $n$ bits; Löbian well-foundedness is a condition that annihilates almost every frame.
-
-| $n$ | $\mathrm{L}(n)$ | $\mathrm{T}(n) = 2^{n^2-n}$ | $2^{n^2}$ |
-|---|---|---|---|
-| $0$ | $1$ | $1$ | $1$ |
-| $1$ | $1$ | $1$ | $2$ |
-| $2$ | $3$ | $4$ | $16$ |
-| $3$ | $19$ | $64$ | $512$ |
-| $4$ | $219$ | $4096$ | $65536$ |
-| $5$ | $4231$ | $1048576$ | $33554432$ |
-| $6$ | $130023$ | $1073741824$ | $68719476736$ |
-
----
-
-## 7. Transfer theory and the limits of definability
-
-### 7.1 Bounded morphisms
-
-**Definition 7.1.** A *bounded morphism* (p-morphism) $f : F \to G$ is a map on worlds such that
-
-- **(forth)** $wRv$ implies $f(w) R^{G} f(v)$;
-- **(back)** if $f(w) R^{G} u$ then there is $v$ with $wRv$ and $f(v) = u$.
-
-**Theorem 7.2 (Truth lemma).** For every bounded morphism $f : F \to G$, every valuation $V$ on $G$, every formula $\varphi$ and every world $w$ of $F$:
-$$G, V, f(w) \models \varphi \iff F, V\circ f, w \models \varphi .$$
-
-*Proof sketch.* Induction on $\varphi$. Atoms and connectives are immediate; for $\Box\varphi$, *forth* gives one inclusion of the successor sets after applying $f$, and *back* gives the other, so the two universal quantifications coincide. $\square$
-
-**Corollary 7.3 (Transfer of validity).** If $f : F \to G$ is a surjective bounded morphism and $\varphi$ is valid on $F$, then $\varphi$ is valid on $G$: given a valuation $V$ on $G$ and a world $u$ of $G$, write $u = f(w)$ and apply Theorem 7.2 to the pulled-back valuation. $\square$
-
-**Corollary 7.4.** The frame class of every modal system is closed under surjective bounded morphic images. $\square$
-
-### 7.2 Disjoint unions
-
-**Definition 7.5.** The *disjoint union* $F \sqcup G$ has world set the disjoint union of those of $F$ and $G$, with accessibility inherited within each summand and no arrows across.
-
-**Theorem 7.6.** $F \sqcup G \models \varphi$ iff $F \models \varphi$ and $G \models \varphi$.
-
-*Proof sketch.* Both injections are bounded morphisms (the *back* clause holds because no arrow crosses the summands), so Theorem 7.2 identifies truth in the union at an injected world with truth in the summand; and every world of the union is injected. $\square$
-
-**Corollary 7.7 (Closure package).** For every modal system $S$, its frame class is (i) closed under surjective bounded morphic images, (ii) closed under disjoint unions, and (iii) reflects disjoint unions (if the union is sound for $S$, so is each summand). $\square$
-
-### 7.3 Three undefinability theorems
-
-**Theorem 7.8 (Irreflexivity is not definable).** No set of modal formulas is valid exactly on the frames in which no world sees itself. Consequently, no modal system has the irreflexive frames as its exact frame class.
-
-*Proof.* Let $F$ be the successor frame on $\mathbb{N}$, where $n$ sees exactly $n+1$; it is irreflexive. The constant map onto the single reflexive point is a surjective bounded morphism: *forth* is trivial, and *back* holds because each $n$ has the successor $n+1$. By Corollary 7.3, every formula valid on $F$ is valid on the loop, which is not irreflexive. $\square$
-
-**Theorem 7.9 ("At least two worlds" is not definable).** The two-world frame with no arrows maps onto the one-world frame with no arrows by a surjective bounded morphism (both *forth* and *back* are vacuous), so no formula set separates them. $\square$
-
-**Theorem 7.10 (Universality and "some reflexive world" are not definable).**
-"Every world sees every world" holds on the single reflexive loop but fails on the disjoint union of two copies of it, contradicting Theorem 7.6. "Some world is reflexive" holds on the union of an irreflexive frame with a loop but fails on the irreflexive summand, again contradicting Theorem 7.6. $\square$
-
-**Remark 7.11.** Theorem 7.8 stands in instructive tension with Theorem 4.6: the Löb axiom defines a class all of whose members are irreflexive, yet irreflexivity by itself is undefinable. Modal formulas see only along arrows and cannot detect the identity of a world: a loop and an infinite forward ladder are modally indistinguishable.
-
-### 7.4 The frame classes of two witness systems
-
-**Theorem 7.12.** A frame is sound for the provability system (the theorems valid on all transitive converse well-founded frames) iff it is itself transitive and converse well-founded.
-
-*Proof sketch.* Soundness in one direction is Theorem 4.2 applied to each theorem. Conversely, if the frame is sound for the system, it validates the Löb axiom in particular — a theorem of the system — and Theorem 4.6 applies. $\square$
-
-**Theorem 7.13.** A frame is sound for the self-sound system (the theorems valid on the single reflexive point) iff its accessibility relation is equality: each world sees precisely itself.
-
-*Proof sketch.* The system proves both $\Box p \to p$ and $p \to \Box p$, giving reflexivity and the fact that every successor satisfies exactly what the source does; combined with the frame's own reflexivity, a successor distinct from the source is excluded by taking $V(p) := \{w\}$. Conversely, if accessibility is equality, then any world of the frame is the image of a bounded morphism from the single loop, so Corollary 7.3 transports every theorem. $\square$
-
-**Corollary 7.14 (Dichotomy).** Both classes are nonempty (the loop lies in the second, the empty frame and every finite strict order in the first), and their intersection contains only empty frames. $\square$
+So the failure of Löbianity is not an accident of one axiom: closed structure is *forced* on
+every finite chain.
 
 ---
 
-## 8. The degree monoid of a frame
+## 4. The soundness spectrum
 
-### 8.1 Graded reflection
+### 4.1 Definition and combinatorial characterisation
 
-**Definition 8.1.** The *$k$-fold reflection axiom* is $C_k(p) := \Box^k p \to p$. For $k=1$ it is the reflection axiom; for $k = 0$ it is a tautology.
+**Definition 4.1.** For a frame $F$, a world $w$ and $n \in \mathbb{N}$, say $w$ is
+*$n$-sound* if for every valuation $V$ and every formula $\varphi$,
+$w \Vdash \Box^n \varphi$ implies $w \Vdash \varphi$. The *soundness spectrum* of $w$ is
+$\mathrm{Spec}(w) = \{n : w \text{ is } n\text{-sound}\}$.
 
-Write $R^k$ for the $k$-step reachability relation: $w R^k v$ iff there is a walk $w = x_0 R x_1 R \cdots R x_k = v$.
+**Theorem 4.2 (Spectrum = closed walks).** *Assuming the language has at least one variable,
+$w$ is $n$-sound if and only if $w \mathrel{R^n} w$.*
 
-**Theorem 8.2.** $C_k(p)$ is valid on $F$ iff every world lies on a closed walk of length exactly $k$, i.e. $w R^k w$ for all $w$.
+*Proof sketch.* ($\Leftarrow$) If $w \mathrel{R^n} w$ then $w \Vdash \Box^n\varphi$ forces
+$\varphi$ at every $n$-successor of $w$, in particular at $w$. ($\Rightarrow$) If
+$\neg(w \mathrel{R^n} w)$, take the valuation making $p$ true exactly off $w$. Then every
+$n$-successor of $w$ satisfies $p$, so $w \Vdash \Box^n p$, while $w \nVdash p$. $\square$
 
-*Proof sketch.* If every world lies on such a walk, then $\Box^k p$ at $w$ delivers $p$ at $w$. Conversely, take $V(p) := \{x : w R^k x\}$; then $\Box^k p$ holds at $w$ by construction, so validity gives $w \in V(p)$, i.e. $wR^kw$. For $k=1$ this recovers Theorem 3.1. $\square$
+**Corollary 4.3 (Probabilistic reading).** For $P$ with nonnegative entries,
+$\mathrm{Spec}(w) = \{ n : P^n(w,w) > 0\}$: the soundness spectrum of a state is the support
+of its return-time distribution.
 
-**Definition 8.3 (Degree monoid).** $D(F) := \{k \in \mathbb{N} : F \models \Box^k p \to p\}$.
+**Theorem 4.4 (The spectrum is a numerical semigroup).** *$\mathrm{Spec}(w)$ is an additive
+submonoid of $\mathbb{N}$.*
 
-**Theorem 8.4.** $D(F)$ is an additive submonoid of $\mathbb{N}$.
+*Proof.* $0 \in \mathrm{Spec}(w)$ since $R^0$ is equality (equivalently, $\Box^0\varphi \to
+\varphi$ is $\varphi \to \varphi$). Closure under addition is the composition law (1) applied
+with $u = v = z = w$. Probabilistically: $P^{n+m}(w,w) \ge P^n(w,w)P^m(w,w) > 0$. $\square$
 
-*Proof.* $0 \in D(F)$ since $C_0$ is a tautology (the empty walk). If $j,k \in D(F)$ and $w$ is any world, concatenate a closed $j$-walk at $w$ with a closed $k$-walk at $w$ to obtain a closed $(j+k)$-walk; by Theorem 8.2, $j+k \in D(F)$. $\square$
+We call $\mathrm{Spec}(w)$ the **cycle monoid** of $w$.
 
-### 8.2 Values realised
+### 4.2 Worked example: the deterministic $n$-cycle
 
-**Theorem 8.5 (Löb frames).** If $F$ is nonempty and validates the Löb axiom, then $D(F) = \{0\}$.
+**Definition 4.5.** For $n \ge 1$ let $C_n$ be the chain on $\mathbb{Z}/n$ with
+$C_n(u,v) = 1$ if $v = u+1$ and $0$ otherwise.
 
-*Proof sketch.* A closed walk of positive length in a transitive relation yields $wRw$, contradicting Corollary 4.7. $\square$
+**Proposition 4.6.** *In $\mathrm{supp}(C_n)$ we have $u \mathrel{R^k} v$ iff $v = u + k$ in
+$\mathbb{Z}/n$. Consequently $w$ is $k$-sound iff $n \mid k$, and
+$\mathrm{Spec}(w) = n\mathbb{N}$ for every $w$.*
 
-**Theorem 8.6 (Equality frames).** If each world sees exactly itself then $D(F) = \mathbb{N}$: every world has closed walks of every length. $\square$
+*Proof sketch.* Induction on $k$ for the first claim; the second sets $v = u$ and uses that
+$k \equiv 0 \pmod n$ iff $n \mid k$. $\square$
 
-**Theorem 8.7 (Cycle frames).** For the directed $n$-cycle $Z_n$ ($n \ge 1$), $D(Z_n) = n\mathbb{N}$: closed walks exist exactly in lengths divisible by $n$. $\square$
-
-**Theorem 8.8 (Non-principality).** Let $K_3$ be the three-world frame in which each world sees the other two and not itself. Then
-$$D(K_3) = \{k : k \ne 1\} = \{0,2,3,4,5,\dots\} = \langle 2,3\rangle,$$
-and there is no $d$ with $D(K_3) = d\mathbb{N}$.
-
-*Proof sketch.* There is no closed walk of length $1$, since no world sees itself. There is one of length $2$ (out and back) and one of length $3$ (around the triangle); every $k \ge 4$ is $2a+3b$ for nonnegative integers $a, b$, so Theorem 8.4 supplies all remaining degrees. If $D(K_3) = d\mathbb{N}$, then $d \mid 2$ and $d \mid 3$, so $d = 1$ and $1 \in D(K_3)$, a contradiction. $\square$
-
-**Remark 8.9.** Theorem 8.8 refutes the natural conjecture that the graded soundness degrees of a frame are always the multiples of a fundamental period. The degree monoid is a genuine numerical-semigroup-valued invariant: the possible depths at which a structure "trusts itself" need not be closed under divisibility, only under addition.
-
----
-
-## 9. Algorithms
-
-Three procedures underlie the computational content of Sections 5–8.
-
-**Algorithm A (Löb-validity check).** *Input:* a Boolean matrix $R$ of size $n$. *Output:* whether the corresponding frame validates the Löb axiom. Check $R_{aa} = 0$ for all $a$ and $R_{ab} \wedge R_{bc} \Rightarrow R_{ac}$ for all triples. Complexity $O(n^3)$ with bitset rows reducing it to $O(n^2)$ word operations. Correctness is Theorem 5.3. Note that a naive semantic check would cost $O(2^{n} \cdot n \cdot |\varphi|)$ per formula and would not even be well defined for infinite frames; the bridge is what makes the check finite.
-
-**Algorithm B (Enumeration of labelled strict orders).** *Input:* $n$. *Output:* $\mathrm{L}(n)$, or the list of all Löb frames on $n$ worlds. Build up point by point: given a strict order $P$ on $\{0,\dots,m-1\}$, the extensions to $\{0,\dots,m\}$ are indexed by pairs $(D, U)$ where $D$ is a down-set of $P$, $U$ is an up-set of $P$, and every element of $D$ is below every element of $U$ in $P$. (These conditions are precisely what transitivity through the new point requires; they force $D \cap U = \emptyset$ and hence irreflexivity.) The cost is proportional to the number of orders produced times $4^{m}$ candidate pairs, vastly better than the $2^{n^2}$ of brute force: $\mathrm{L}(6) = 130023$ is reached in seconds where brute force would examine $6.9 \times 10^{10}$ matrices.
-
-**Algorithm C (Degree monoid).** *Input:* a matrix $R$ and a bound $B$. *Output:* $D(F) \cap [0,B]$. Compute the reachability sets $R^k(w)$ by iterated Boolean matrix–vector products and test $w \in R^k(w)$ for all $w$. Complexity $O(B n^3)$ (or $O(Bn^2)$ words). By Theorem 8.4 the output determines $D(F)$ completely once the truncation contains a generating set — for instance once it contains two coprime values $j, k$, all integers $\ge (j-1)(k-1)$ are present.
+Thus for deterministic cycles the modal invariant "degree of internal soundness" coincides
+exactly with the probabilistic invariant "period". Note also that $C_n$ has positive holding
+probability iff $n \mid 1$, i.e. iff $n = 1$.
 
 ---
 
-## 10. Discussion
+## 5. The cofiniteness criterion
 
-### 10.1 What the census measures
+The central arithmetic question is when $\mathrm{Spec}(w)$ is cofinite. The classical
+Chicken McNugget theorem answers this when two coprime elements are available: if
+$\gcd(a,b) = 1$ then every integer exceeding $ab - a - b$ is a nonnegative integer
+combination of $a$ and $b$. But this is not the general theorem: a numerical semigroup can
+have overall gcd $1$ while no two of its generators are coprime — e.g. $\langle 6,10,15
+\rangle$. The right invariant is a common divisor of the *whole monoid*.
 
-The equality $\mathrm{L}(n) = \#\{\text{labelled strict partial orders on } n \text{ points}\}$ is more than a coincidence of numbers: it is a translation of a second-order semantic condition into an order-theoretic one, licensed by Theorem 5.1 and made effective by Theorem 5.3. It gives a quantitative form to a qualitative slogan. "A theory may not assert its own soundness" becomes "reflexive and irreflexive frames do not meet"; "well-foundedness is a strong hypothesis" becomes "$19$ out of $512$, and $2^{-3n^2/4+o(n^2)}$ asymptotically".
+**Definition 5.1 (Aperiodic submonoid).** An additive submonoid $S \subseteq \mathbb{N}$ is
+*aperiodic* if for every $d \ge 2$ there is $n \in S$ with $d \nmid n$.
 
-### 10.2 The role of the finite collapse
+**Lemma 5.2 (Box argument).** *If $S$ is an additive submonoid of $\mathbb{N}$ containing
+$y$ and $y+1$, then $n \in S$ for every $n \ge y^2$.*
 
-The infinitary condition of converse well-foundedness is indispensable in general: the successor frame on $\mathbb{N}$ is transitive-free but irreflexive, and its transitive closure — the strict order $<$ on $\mathbb{N}$ — is transitive, irreflexive, and converse *ill*-founded, hence not a Löb frame. Irreflexivity plus transitivity is therefore genuinely weaker than the Löb condition over infinite carriers; the collapse of Theorem 5.1 is a finiteness phenomenon, and it is precisely the finiteness that makes the enumeration meaningful.
+*Proof.* If $y = 0$ then $1 \in S$ and $S = \mathbb{N}$ by repeated addition. Otherwise write
+$n = qy + r$ with $0 \le r < y$. From $n \ge y^2$ we get $q = \lfloor n/y \rfloor \ge y > r$,
+so $q - r \ge 0$ and
 
-### 10.3 Definability has hard boundaries
+$$n = qy + r = (q-r)\,y + r\,(y+1),$$
 
-The three closure principles of Corollary 7.7 are not technicalities: each is realised as an actual obstruction (Theorems 7.8–7.10). Modal validity is invariant under operations that preserve local visibility structure — surjective bounded images, disjoint unions — and any property not so invariant, however natural, is beyond axiomatic reach. Notably, this includes properties that all the frames of a definable class happen to have, such as irreflexivity for the Löb frames.
+a nonnegative combination of two elements of $S$. $\square$
 
-### 10.4 Degrees and semigroups
+**Definition 5.3 (Difference subgroup).** For $S$ an additive submonoid of $\mathbb{N}$ put
+$D(S) = \{ x - y \in \mathbb{Z} : x, y \in S \}$. Since $S$ is closed under addition, $D(S)$
+is a subgroup of $\mathbb{Z}$ (closure under addition uses $(x_1-y_1)+(x_2-y_2) =
+(x_1+x_2)-(y_1+y_2)$; negation swaps $x$ and $y$).
 
-The degree monoid furnishes an unexpected point of contact with the theory of numerical semigroups. Theorem 8.8 shows the invariant is not merely a period, and raises the realisation problem: which submonoids of $\mathbb{N}$ arise? Since $D(F)$ is by Theorem 8.2 the intersection over all worlds of the closed-walk-length monoids of the digraph, the question is purely graph-theoretic, and known results about cycle-length sets in strongly connected digraphs are the natural tool.
+**Lemma 5.4 (Aperiodicity yields consecutive elements).** *If $S$ is aperiodic then there
+are $y, y+1 \in S$.*
+
+*Proof.* Every subgroup of $\mathbb{Z}$ is cyclic, so $D(S) = d\mathbb{Z}$ for some
+$d \ge 0$. Each $s \in S$ satisfies $s = s - 0 \in D(S)$, so $d \mid s$ for all $s \in S$.
+If $d = 0$ then every element of $S$ is $0$, and $2$ divides all of $S$, contradicting
+aperiodicity (take $d = 2$ in Definition 5.1). If $d \ge 2$ then $d$ divides all of $S$,
+again contradicting aperiodicity. Hence $d = 1$, so $1 \in D(S)$, i.e. $1 = x - y$ with
+$x, y \in S$. $\square$
+
+**Theorem 5.5 (Cofiniteness criterion).** *An additive submonoid $S \subseteq \mathbb{N}$
+contains all sufficiently large integers if and only if $S$ is aperiodic. Moreover, if $y$
+and $y+1$ are consecutive elements of $S$ then the conductor may be taken to be $y^2$.*
+
+*Proof.* ($\Rightarrow$) Suppose $n \in S$ for all $n \ge N$, and let $d \ge 2$. Then
+$Nd + 1 \ge N$ lies in $S$, and $d \nmid Nd+1$ since otherwise $d \mid 1$. ($\Leftarrow$)
+Lemma 5.4 followed by Lemma 5.2. $\square$
+
+The proof deserves emphasis for what it *avoids*: no generating set is chosen, no coprime
+pair is extracted, and no Frobenius number is computed. The two-generator theorem survives
+as the source of *quantitative* information — for coprime $a, b$ the sharp conductor is
+$ab - a - b + 1$ — while the qualitative statement is governed entirely by the common
+divisor of the monoid.
 
 ---
 
-## 11. Future directions
+## 6. Aperiodicity and primitivity
 
-**C1. Realisation of degree monoids.** *Conjecture:* for every additive submonoid $S \le \mathbb{N}$ with $S \ne \{0\}$ and finite complement in the group it generates, there is a finite frame $F$ with $D(F) = S$; conversely every degree monoid of a finite frame is such a submonoid. The insight is that $D(F)$ is the set of $k$ such that *every* world lies on a closed walk of length $k$, so the realisation question concerns the intersection over vertices of the cycle-length monoids of a digraph — and the three-world complete irreflexive frame already shows this intersection can be the non-principal semigroup $\langle 2,3\rangle$, refuting the naive "always $d\mathbb{N}$" reading. Two extremes ($\{0\}$, $\mathbb{N}$) and two nontrivial values ($n\mathbb{N}$, $\langle 2,3\rangle$) are established, so the general problem can be attacked with the closed-walk concatenation machinery already in hand.
+**Definition 6.1.** A world $w$ of a frame $F$ is *aperiodic* if for every $d \ge 2$ there is
+$k$ with $w \mathrel{R^k} w$ and $d \nmid k$. A state of a chain is aperiodic when it is so
+in the support frame. By Theorem 4.2 this says exactly that the cycle monoid of $w$ is
+aperiodic in the sense of Definition 5.1.
 
-**C2. A Goldblatt–Thomason theorem for these frame classes.** *Conjecture:* a class $\mathcal{C}$ of finite frames is the frame class of some modal system iff $\mathcal{C}$ is closed under surjective bounded morphic images, closed under and reflecting disjoint unions, and closed under generated subframes. The three closure directions are established here (Corollary 7.7), and they are strong enough to refute definability in three different ways (irreflexivity fails images, "some reflexive world" fails summands, non-emptiness fails the empty frame); the open half is the converse — building, from a closed class, an explicit system (for instance the validity system of $\mathcal{C}$) and proving its frame class is exactly $\mathcal{C}$. Theorem 7.12 is already a proof of the converse for one class, so the pattern "take the validity system of $\mathcal{C}$, show soundness for $\mathcal{C}$, and use a definability theorem for the reverse inclusion" is available for generalisation.
+Combining Definition 6.1 with Theorem 5.5:
 
-**C3. No modal shortcut for the counting sequence.** *Conjecture:* $\mathrm{L}(n) = 1, 1, 3, 19, 219, 4231, \dots$ is not expressible as $2^{q(n)}$ for a polynomial $q$, nor as any product of binomial coefficients; more sharply, for every fixed modal formula $\varphi$, the number of frames on $n$ labelled worlds validating $\varphi$ either has such a closed form or agrees with the labelled-poset sequence, with no intermediate growth rates achievable.
+**Theorem 6.2 (Sharp cofiniteness).** *For any frame and world, $w \mathrel{R^n} w$ for all
+sufficiently large $n$ if and only if $w$ is aperiodic. Equivalently, the soundness spectrum
+$\mathrm{Spec}(w)$ is cofinite iff $w$ is aperiodic.*
+
+Two familiar hypotheses are now special cases.
+
+**Corollary 6.3.** *(i) If $w \mathrel{R} w$ (a self-loop) then $w$ is aperiodic, since
+$1 \in \mathrm{Spec}(w)$ and no $d \ge 2$ divides $1$. (ii) If $w$ carries closed walks of
+coprime lengths $a, b$ then $w$ is aperiodic, since any common divisor $d$ of all return
+lengths divides $\gcd(a,b) = 1$.*
+
+**Definition 6.4.** A frame is *irreducible* if every world reaches every world in some
+number of steps; a chain is irreducible when its support frame is. A chain is *primitive* if
+$P^n(u,v) > 0$ for all $u,v$ and all sufficiently large $n$.
+
+**Lemma 6.5 (Padding through an aperiodic world).** *Let $w$ be aperiodic, let
+$u \mathrel{R^c} w$ and $w \mathrel{R^{d}} v$. Then $u \mathrel{R^n} v$ for all
+$n \ge c + d + M$, where $M$ is a cofiniteness threshold for $\mathrm{Spec}(w)$.*
+
+*Proof.* Given such an $n$, we have $n - c - d \ge M$, so $w \mathrel{R^{n-c-d}} w$.
+Concatenate: $u \to^c w \to^{n-c-d} w \to^{d} v$ using (1) twice. $\square$
+
+**Theorem 6.6 (Perron–Frobenius primitivity, sharp form).** *Let $F$ be a finite irreducible
+frame containing one aperiodic world. Then there is $N$ such that for all $n \ge N$ and all
+$u, v$, $u \mathrel{R^n} v$.*
+
+*Proof sketch.* For each ordered pair $(u,v)$, irreducibility supplies $c$ with
+$u \mathrel{R^c} w$ and $d$ with $w \mathrel{R^d} v$; Lemma 6.5 gives a threshold
+$N_{u,v}$. Since $F$ is finite there are finitely many pairs; take $N = \max_{u,v} N_{u,v}$.
+$\square$
+
+**Theorem 6.7 (Primitivity is aperiodicity).** *Let $P$ be a finite irreducible chain with
+nonnegative entries and let $w$ be any state. Then $P$ is primitive if and only if $w$ is
+aperiodic.*
+
+*Proof.* ($\Leftarrow$) Theorem 6.6 plus Theorem 2.4. ($\Rightarrow$) If $P^n(u,v) > 0$ for
+all $n \ge N$ then in particular $w \mathrel{R^n} w$ for all $n \ge N$, so
+$\mathrm{Spec}(w)$ is cofinite and Theorem 6.2 gives aperiodicity. $\square$
+
+Since the statement holds for *every* $w$, one immediately obtains:
+
+**Corollary 6.8 (Aperiodicity is a class property).** *In a finite irreducible frame, if one
+world is aperiodic then all are.*
+
+### 6.1 The two running examples
+
+**Example 6.9 (Periodic).** For $n \ge 2$, no state of the deterministic $n$-cycle $C_n$ is
+aperiodic: by Proposition 4.6 the return lengths are exactly the multiples of $n$, so $n$
+itself divides all of them. Correspondingly $C_n$ is irreducible but not primitive.
+
+**Example 6.10 (Aperiodic and loopless).** Let $A$ be the $3$-state chain with
+$0 \to 1$ with probability $1$; $1 \to 0$ and $1 \to 2$ each with probability $1/2$; and
+$2 \to 0$ with probability $1$. No state has positive holding probability. Yet state $0$
+carries closed walks of length $2$ ($0 \to 1 \to 0$) and length $3$ ($0 \to 1 \to 2 \to 0$),
+which are coprime, so $0$ is aperiodic by Corollary 6.3(ii); $A$ is irreducible; hence by
+Theorem 6.7 it is **primitive**. This is precisely the case that the self-loop route to
+primitivity cannot reach. Its soundness spectrum at $0$ is $\langle 2, 3\rangle =
+\{0,2,3,4,5,\dots\}$, missing only $1$.
+
+**Theorem 6.11 (Dichotomy).** *For a finite irreducible chain with nonnegative entries and
+any state $w$: the soundness spectrum at $w$ is cofinite $\iff$ the chain is primitive
+$\iff$ $w$ is aperiodic; and the $n$-cycle with $n \ge 2$ falls on the negative side of all
+three.*
 
 ---
 
-## 12. Conclusion
+## 7. Effective exponents
 
-Frame definability is the hinge between the syntax of modal axioms and the combinatorics of directed graphs. Turning it carefully, we found that the axiom expressing Löb's theorem pins down exactly the transitive converse well-founded frames; that over a finite world set this is exactly strict partial order; that the resulting census of "Löbian universes" is the classical labelled-poset sequence $1, 1, 3, 19, 219, 4231, 130023, \dots$; that the rival axiom of internalised soundness admits $2^{n^2-n}$ frames and shares none of them; that three natural frame properties are provably beyond the expressive power of any axiom system; and that the graded degrees of self-trust form a numerical semigroup which need not be principal. On three worlds, the answer to the question with which we began is nineteen.
+Theorem 6.6 produces an unspecified threshold. This section makes thresholds explicit in
+terms of the number of states alone. Write $N = |W|$.
+
+**Definition 7.1.** A *path function* for an $n$-path from $u$ to $v$ is
+$f : \mathbb{N} \to W$ with $f(0) = u$, $f(n) = v$ and $f(i) \mathrel{R} f(i+1)$ for $i < n$.
+Every witness of $u \mathrel{R^n} v$ yields such an $f$ and conversely.
+
+**Lemma 7.2 (Excision).** *If $u \mathrel{R^k} v$ with $k \ge N$, then $u \mathrel{R^{k'}} v$
+for some $k' < k$.*
+
+*Proof sketch.* Take a path function $f$. The values $f(0), \dots, f(k)$ are $k+1 > N$
+elements of $W$, so $f(i) = f(j)$ for some $i < j \le k$. Splice out the loop by setting
+$g(m) = f(m)$ for $m \le i$ and $g(m) = f(m + (j-i))$ for $m > i$. One checks in three index
+cases that $g$ is a path function for a $(k - (j-i))$-path from $u$ to $v$. $\square$
+
+**Theorem 7.3 (Diameter principle).** *In a finite frame with $N$ worlds, if $u \mathrel{R^k} v$
+for some $k$, then $u \mathrel{R^{k'}} v$ for some $k' < N$.*
+
+*Proof.* Apply Lemma 7.2 repeatedly, using strong induction on $k$. $\square$
+
+**Theorem 7.4 (Exponent for lazy chains).** *Let $F$ be finite irreducible with
+$w \mathrel{R} w$ for every world $w$. Then $u \mathrel{R^k} v$ for all $u, v$ and all
+$k \ge N - 1$.*
+
+*Proof.* Theorem 7.3 gives a path of some length $k' \le N-1$; universal self-loops let us
+pad the path at the target to any greater length. $\square$
+
+**Theorem 7.5 (Exponent from a single loop).** *Let $F$ be finite irreducible with
+$w_0 \mathrel{R} w_0$ for one world $w_0$. Then $u \mathrel{R^k} v$ for all $u, v$ and all
+$k \ge 2(N-1)$.*
+
+*Proof.* Route through $w_0$: an approach $u \to^{c} w_0$ with $c \le N-1$ and an exit
+$w_0 \to^{d} v$ with $d \le N-1$ (Theorem 7.3), padded at $w_0$ by the self-loop to make up
+any $k \ge c + d$. $\square$
+
+Via Theorem 2.4 these are exactly the statements that $P^k$ has all entries positive for
+$k \ge N-1$ (lazy chain) and for $k \ge 2(N-1)$ (single holding state). Correspondingly the
+soundness spectrum of every world of a finite irreducible lazy frame contains every
+$k \ge N-1$: an explicit conductor.
+
+**Theorem 7.6 (Sharpness).** *Let $B_N$ be the nearest-neighbour chain on $\{0,\dots,N-1\}$
+in which each state may stay put or move to an adjacent index (all such moves having positive
+probability). Then $B_N$ is irreducible and lazy, and for $N \ge 1$,*
+
+$$P^k \text{ has all entries positive} \iff k \ge N-1 .$$
+
+*Proof sketch.* Upper bound: Theorem 7.4. Lower bound: one step changes the index by at most
+$1$, so $u \mathrel{R^k} v$ implies $|u - v| \le k$; taking $u = 0$, $v = N-1$ shows that no
+$k < N-1$ suffices. $\square$
+
+So the bound $N-1$ cannot be improved as a function of the number of states.
+
+---
+
+## 8. Recurrence as a greatest fixed point
+
+### 8.1 The diamond operator
+
+**Definition 8.1.** For a frame $F$ define $\Diamond_F : \mathcal{P}(W) \to \mathcal{P}(W)$ by
+$\Diamond_F X = \{ w : \exists v\ (w \mathrel{R} v \wedge v \in X)\}$. This is monotone, and
+$w \in \Diamond_F X$ holds exactly when $w \nVdash \Box \neg p$ under the valuation sending
+$p$ to $X$ — so $\Diamond_F$ is the semantic diamond.
+
+**Definition 8.2.** $X$ is *post-fixed* if $X \subseteq \Diamond_F X$, i.e. every member of
+$X$ has a successor in $X$. Let $\mathrm{gfp}(\Diamond_F)$ be the union of all post-fixed
+sets.
+
+**Proposition 8.3.** *$\mathrm{gfp}(\Diamond_F)$ is post-fixed, contains every post-fixed
+set, and satisfies $\Diamond_F(\mathrm{gfp}(\Diamond_F)) = \mathrm{gfp}(\Diamond_F)$.*
+
+*Proof sketch.* Post-fixedness and maximality are immediate from the definition and
+monotonicity. For the fixed-point equation, the inclusion $\subseteq$ is post-fixedness
+applied one step; for $\supseteq$, if $w \in \Diamond_F(\mathrm{gfp})$ then
+$\mathrm{gfp} \cup \{w\}$ is post-fixed, hence contained in $\mathrm{gfp}$. $\square$
+
+### 8.2 The identification
+
+**Definition 8.4.** A world $w$ is *recurrent* if $w \mathrel{R^m} w$ for some $m > 0$; it
+*reaches recurrence* if some recurrent world is $R^k$-accessible from it for some $k \ge 0$.
+
+By Theorem 4.2, recurrence of $w$ is exactly positivity of the soundness degree: $w$ is
+recurrent iff $w$ is $n$-sound for some $n > 0$. So the notion is simultaneously
+probabilistic (positive return probability) and logical (nontrivial self-soundness).
+
+**Theorem 8.5 (Identification).** *On a finite frame,*
+
+$$\mathrm{gfp}(\Diamond_F) = \{ w : w \text{ reaches recurrence} \}.$$
+
+*Proof sketch.* ($\supseteq$) The set of worlds reaching recurrence is post-fixed: if $w$
+reaches a recurrent $z$, then either $w = z$, in which case a positive-length cycle at $z$
+gives a successor of $w$ still reaching $z$; or the first step of the path to $z$ lands on a
+world that still reaches $z$. Maximality of the gfp finishes. ($\subseteq$) Let $X$ be
+post-fixed and $w \in X$. Choose, for each $x \in X$, a successor $c(x) \in X$; the orbit
+$w, c(w), c^2(w), \dots$ stays in $X$ and lies in a finite set, so it repeats:
+$c^i(w) = c^j(w)$ with $i < j$. Then $c^i(w)$ is recurrent (with cycle length $j - i > 0$)
+and is reachable from $w$ in $i$ steps. $\square$
+
+**Corollary 8.6 (Serial case).** *If $F$ is serial then $\mathrm{gfp}(\Diamond_F) = W$;
+hence on a finite serial frame — in particular on the support frame of any finite
+row-stochastic chain — every world reaches recurrence. In matrix language: for every state
+$u$ there are a state $z$, a $k \ge 0$ and an $m > 0$ with $P^k(u,z) > 0$ and $P^m(z,z) > 0$.*
+
+This strengthens Theorem 3.9 from "some state is recurrent" to "from every state a recurrent
+state is reachable".
+
+### 8.3 The naive conjecture is false
+
+One might expect the greatest fixed point of the diamond to be the *recurrent set* itself.
+It is not.
+
+**Example 8.7 (Absorbing chain).** Let $D$ be the two-state chain that moves to state $1$
+from either state with probability $1$. Then state $1$ has a self-loop and is recurrent;
+state $0$ is transient, since every positive-length path from $0$ ends at $1 \ne 0$, so $0$
+is not recurrent. Yet $\{0,1\}$ is post-fixed (each state has a successor inside it), so
+$0 \in \mathrm{gfp}(\Diamond_D)$.
+
+**Theorem 8.8 (Refutation).** *There is a finite frame on which
+$\mathrm{gfp}(\Diamond_F) \ne \{w : w \text{ recurrent}\}$.*
+
+The conceptual content of this failure is an expressiveness limitation: the diamond only
+looks forward, so a fixed point of a monotone operator on sets can detect that the process
+survives, but not that it returns. Isolating the recurrent set requires the genuinely cyclic
+predicate $w \mathrel{R^m} w$, which is not a fixed point of any such operator on this
+frame.
+
+---
+
+## 9. Aggregation: lumpability is a bounded morphism
+
+**Definition 9.1 (Strong lumpability).** For finite $S$, a map $f : S \to T$ *lumps* $P$ onto
+$Q$ if for every $u \in S$ and $y \in T$,
+
+$$\sum_{v : f(v) = y} P(u,v) \;=\; Q(f(u), y).$$
+
+That is, the aggregated transition probability into a block depends on the source only
+through its block.
+
+**Definition 9.2 (Bounded morphism).** $f : W_F \to W_G$ is a *bounded morphism* when
+(forth) $u \mathrel{R_F} v$ implies $f(u) \mathrel{R_G} f(v)$, and (back)
+$f(u) \mathrel{R_G} y$ implies there is $v$ with $u \mathrel{R_F} v$ and $f(v) = y$.
+
+**Theorem 9.3 (Lumpability is a bounded morphism).** *If $P$ has nonnegative entries and $f$
+lumps $P$ onto $Q$, then $f$ is a bounded morphism $\mathrm{supp}(P) \to \mathrm{supp}(Q)$.*
+
+*Proof.* Forth: a single positive term $P(u,v)$ bounds below the block sum over $f^{-1}(f(v))$,
+which equals $Q(f(u), f(v))$. Back: if $Q(f(u), y) > 0$ then the block sum over $f^{-1}(y)$
+is positive, and a positive sum of nonnegative reals has a positive summand $P(u,v)$ with
+$f(v) = y$. $\square$
+
+Row-stochasticity is *not* used: only nonnegativity. This is worth stressing, because it
+shows that the modal content of aggregation is independent of mass conservation.
+
+**Corollary 9.4 (Validity transfer).** *If $f$ lumps $P$ onto $Q$ surjectively, then every
+formula valid on $\mathrm{supp}(P)$ is valid on $\mathrm{supp}(Q)$. Hence aggregation can
+only enlarge the modal theory: $T_P \subseteq T_Q$.*
+
+*Proof.* Validity is preserved by surjective bounded morphisms — the standard transfer
+theorem of modal frame theory, proved by pulling a refuting valuation back along $f$. $\square$
+
+**Corollary 9.5 (Laziness is inherited).** *A surjective lumping of a lazy chain is lazy;
+equivalently, self-soundness of the modal system is a lumping invariant.*
+
+**Example 9.6 (Cycles lump onto their divisors).** For $m \mid n$, reduction
+$\mathbb{Z}/n \to \mathbb{Z}/m$ lumps $C_n$ onto $C_m$, since the deterministic transition
+$u \mapsto u+1$ reduces to $\bar{u} \mapsto \bar{u}+1$. Hence $T_{C_n} \subseteq T_{C_m}$:
+the modal theories of cycles are monotone in divisibility, mirroring the inclusion of
+spectra $n\mathbb{N} \subseteq m\mathbb{N}$.
+
+**Theorem 9.7 (Non-laziness is not modally definable).** *No set $\Gamma$ of modal formulas
+defines the class of frames in which no world has a self-loop; equivalently no modal axiom
+system can force a chain to have zero holding probabilities everywhere.*
+
+*Proof.* Suppose $\Gamma$ defined that class. The $2$-cycle $C_2$ has no self-loops, so
+every formula of $\Gamma$ is valid on it. Reduction $\mathbb{Z}/2 \to \mathbb{Z}/1$ is a
+surjective lumping (Example 9.6), so by Corollary 9.4 every formula of $\Gamma$ is valid on
+$C_1$. But $C_1$ is the one-state lazy chain, whose unique state has a self-loop —
+contradiction. $\square$
+
+The witnesses here are finite and computable, in contrast to the infinite frames usually
+invoked for irreflexivity undefinability.
+
+---
+
+## 10. Algorithms
+
+All results above are effective on finite state spaces. We record the algorithms implicit
+in the proofs.
+
+**(A) Support-power test.** To decide $P^n(u,v) > 0$, work in the Boolean semiring: replace
+each entry by its truth value $[P(u,v) > 0]$ and compute the $n$-th Boolean matrix power by
+repeated squaring in $O(N^3 \log n)$ operations. Correctness is Theorem 2.4. This avoids
+floating-point underflow entirely, which is the practical reason to prefer the support
+formulation for large $n$.
+
+**(B) Cycle-monoid conductor.** Enumerate the return lengths $\ell$ with $1 \le \ell \le L$
+for a cutoff $L$ (by Theorem 7.3 and cycle decomposition it suffices to take $L$ of order
+$N^2$ to see all periods), compute $g = \gcd$ of the collected lengths, and report: if
+$g > 1$, the state is periodic with period $g$ and the spectrum is contained in
+$g\mathbb{N}$; if $g = 1$, the state is aperiodic, and by Theorem 5.5 the spectrum is
+cofinite, with the conductor obtainable by a linear sieve over the monoid generated by the
+observed lengths.
+
+**(C) Primitivity exponent.** By Theorem 6.7 primitivity is decidable by irreducibility plus
+$\gcd$ of return lengths at one state. When positive, the exponent may be found by
+incrementing $n$ and testing the Boolean power; Theorem 7.4/7.5 guarantee termination by
+$N-1$ or $2(N-1)$ in the lazy and one-loop cases, and Theorem 7.6 shows $N-1$ is attained.
+
+**(D) Greatest fixed point of the diamond.** Compute by downward iteration: set
+$X_0 = W$ and $X_{k+1} = \Diamond X_k$. The sequence is decreasing and stabilises in at most
+$N$ steps at $\mathrm{gfp}(\Diamond)$. By Theorem 8.5 the result is the set of states that
+reach recurrence, which can be cross-checked by computing the strongly connected components
+and marking those that are nontrivial or carry a self-loop, then taking backward reachability.
+
+**(E) Lumpability check.** For a candidate partition, verify Definition 9.1 by summing block
+probabilities: $O(N^2)$ additions and a comparison per block pair. If it passes, Corollary
+9.4 guarantees that every modal validity of the original chain persists in the quotient.
+
+---
+
+## 11. Discussion
+
+### 11.1 What probability contributes to logic
+
+Exactly one thing, and it is decisive: **seriality**. Every impossibility result above —
+the failure of Löb's axiom, the provability of the consistency statement, the existence of
+forced closed structure — factors through the single lemma that a probability distribution
+cannot vanish identically. Row-stochasticity is used nowhere else in this development. The
+consequence is a clean structural statement: the Gödelian discipline, whose content is that
+every chain of justification must terminate, is unavailable to any system that conserves
+mass. Chains are, in this precise sense, congenitally self-trusting.
+
+### 11.2 What logic contributes to probability
+
+Three things. First, a *conceptual* relocation of mixing: the question "does the chain
+mix?" becomes the question "is a certain numerical semigroup cofinite?", and Theorem 5.5
+answers the latter completely and sharply. The customary hypotheses — a self-loop, or a
+lazy version of the chain, or two coprime cycles — are revealed as instances of one
+criterion, and the loopless example of §6.1 shows the special cases are strictly weaker.
+
+Second, *limitative* results with small witnesses. Because aggregation is a bounded
+morphism, everything modal logic knows about the failure of definability becomes a
+statement about what state aggregation cannot preserve — Theorem 9.7 being the model case,
+proved with two- and one-state chains.
+
+Third, a *diagnosis of expressiveness*. Theorem 8.5 together with Example 8.7 pins down
+exactly what a forward-looking modal fixed point can see about long-run behaviour: survival,
+but not return. This is the kind of statement that is invisible from within either subject
+alone.
+
+### 11.3 One gadget, three readings
+
+The composition law (1) — an $(n+m)$-path splits at its $n$-th vertex — is used in this
+paper as: iterated box semantics (Theorem 4.4), matrix multiplication (Theorem 2.5), and
+addition of return times (Theorem 4.4 again, and all of §5). Its ubiquity is the reason the
+dictionary is more than a table of coincidences: the same combinatorial fact is doing the
+work in all three subjects.
+
+### 11.4 Scope and limitations
+
+The dictionary is about *supports*, so it cannot see quantitative rates. Mixing *time* in
+the total-variation sense, spectral gaps, and the actual Perron eigenvalue lie outside it;
+what it delivers is the exact threshold beyond which every entry is positive, which is the
+combinatorial skeleton on which those analytic estimates rest. Likewise, only *strong*
+lumpability corresponds to a bounded morphism; weak lumpability, which depends on the
+initial distribution, does not, and the transfer theorem genuinely fails for it. Finally,
+several statements presuppose a nonempty stock of propositional variables — with no
+variables the modal language is too poor to separate worlds, and the characterisation of
+the soundness spectrum (Theorem 4.2) can fail.
+
+---
+
+## 12. Future directions
+
+1. **Quantitative refinement.** The criterion of Theorem 5.5 gives the conductor $y^2$ for
+   consecutive elements $y, y+1$, and the Frobenius number $ab-a-b$ for coprime pairs. What
+   is the optimal conductor as a function of the frame — is there a Wielandt-type bound
+   $N^2 - 2N + 2$ recoverable purely by path excision?
+
+2. **Weighted supports.** Replace "positive" by "at least $\varepsilon$" and ask which parts
+   of the dictionary survive. A quantitative support-power theorem would connect the
+   combinatorial exponents of §7 to genuine mixing-time estimates.
+
+3. **Reducible chains.** Everything sharp here assumes irreducibility. For a general chain
+   the state space decomposes into transient states and terminal classes; Theorem 8.5
+   suggests the right modal object is a *relativised* fixed point, one per class.
+
+4. **Cyclic operators.** Example 8.7 shows the recurrent set is not a diamond fixed point.
+   Which extension of the basic modal language — a cycle modality, or a fixed-point calculus
+   with backward modalities — defines it, and what is the resulting definability theory?
+
+5. **Continuous time and general state spaces.** The support of a transition kernel is a
+   relation between measurable sets; whether the support-power theorem and the aperiodicity
+   criterion have kernel analogues (with $\gcd$ replaced by a group of periods) is open in
+   this framework.
+
+6. **Lumpability lattice.** Corollary 9.4 makes $P \mapsto T_P$ order-reversing along
+   lumpings. Characterising the image — which modal theories arise from chains — would give
+   a completeness theorem for the probabilistic semantics.
+
+---
+
+## 13. Conclusion
+
+Passing from a stochastic matrix to the relation "this transition is possible" turns a
+piece of analysis into a piece of combinatorics without losing anything about possibility.
+On the resulting frames, the logic of provability is impossible and the logic of
+self-declared soundness is forced; the set of degrees at which a state trusts itself is a
+numerical semigroup whose cofiniteness — equivalently, the chain's primitivity — is
+governed by the single arithmetic condition that no integer $d \ge 2$ divides all return
+lengths; the thresholds are explicit and, for the nearest-neighbour chain, exactly $N-1$;
+state aggregation is a structure-preserving map of frames whose limitations are the classical
+failures of modal definability; and the greatest fixed point of possibility computes not
+recurrence but the ability to reach it. Each of these is a theorem in two subjects at once.
+
+---
+
+## Appendix: summary of principal results
+
+- **Support–power theorem.** $P^n(u,v) > 0$ iff there is an $n$-edge path $u \to v$ in the
+  support frame.
+- **Impossibility of Löb.** No nonempty finite stochastic chain validates
+  $\Box(\Box\varphi \to \varphi) \to \Box\varphi$.
+- **Spectrum theorem.** $\{n : \Box^n\varphi \to \varphi \text{ holds at } w\}$ equals
+  $\{n : P^n(w,w) > 0\}$ and is an additive submonoid of $\mathbb{N}$.
+- **Cofiniteness criterion.** An additive submonoid of $\mathbb{N}$ is cofinite iff no
+  $d \ge 2$ divides all of it; conductor $y^2$ for consecutive $y, y+1$.
+- **Primitivity is aperiodicity.** For finite irreducible chains, primitivity $\iff$
+  aperiodicity of any one state $\iff$ cofiniteness of that state's soundness spectrum.
+- **Diameter principle and exponents.** Reachability needs $< N$ steps; exponents $N-1$
+  (lazy) and $2(N-1)$ (single holding state), the former sharp on the nearest-neighbour
+  chain.
+- **Recurrence identification.** The greatest fixed point of the diamond is exactly the set
+  of worlds reaching a cycle; it is strictly larger than the recurrent set in general.
+- **Lumpability = bounded morphism.** Strong lumpability transfers validity, preserves
+  laziness, and yields finite witnesses showing that non-laziness is not modally definable.

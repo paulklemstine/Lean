@@ -1,31 +1,27 @@
 """
-Counting the Frames of Provability: numerical demonstrations
-============================================================
+Frame Definability over Markov Chains — numerical demonstrations.
+=================================================================
 
-This self-contained script demonstrates, by explicit computation, the results of
-the accompanying article and paper on frame definability for modal systems of
-provability.
+This script is a self-contained, dependency-free companion to the paper
+"Frame Definability over Markov Chains: Soundness Spectra, Aperiodicity,
+and the Modal Content of Recurrence".
 
-Background in one paragraph
----------------------------
-A *frame* on the world set W is a binary relation R on W ("w can see v").  A
-*valuation* assigns to each propositional variable the set of worlds where it is
-true; satisfaction is the usual Kripke clause, with the box read as "at every
-visible world".  A formula is *valid on a frame* when it is true at every world
-under every valuation.  The central correspondences demonstrated here are:
+It numerically exhibits, on explicit finite chains:
 
-  * The Loeb axiom  box(box p -> p) -> box p  is valid on F exactly when R is
-    transitive and converse well-founded; on a finite frame this collapses to
-    "transitive and irreflexive", i.e. R is a strict partial order.
-  * The reflection axiom  box p -> p  is valid on F exactly when R is reflexive.
-  * The n-fold reflection axiom  box^n p -> p  is valid on F exactly when every
-    world lies on a closed walk of length exactly n.
-
-Consequently the number of frames on n labelled worlds validating Loeb is the
-number of labelled strict partial orders on n points: 1, 1, 3, 19, 219, 4231,
-while the number validating reflection is 2^(n^2 - n).
-
-Everything below is computed from scratch; no third-party packages are needed.
+  1. The support-power theorem:  P^n(u,v) > 0  <=>  an n-edge path u -> v exists.
+  2. The soundness spectrum of a state = support of its return-time distribution,
+     and its closure under addition (a numerical semigroup).
+  3. The cofiniteness criterion: a submonoid of N is cofinite iff no d >= 2 divides
+     all of it — illustrated with <6,10,15>, whose gcd is 1 although no two
+     generators are coprime.
+  4. The deterministic n-cycle: spectrum exactly nN, hence periodic, hence not
+     primitive.
+  5. A loopless aperiodic 3-state chain that is nevertheless primitive.
+  6. Effective exponents: N-1 for lazy chains, 2(N-1) from a single holding state,
+     and the sharpness of N-1 on the nearest-neighbour chain.
+  7. Recurrence as a greatest fixed point: gfp(diamond) = "reaches recurrence",
+     strictly larger than the recurrent set on the absorbing chain.
+  8. Strong lumpability = bounded morphism: Z/n -> Z/m for m | n.
 
 Run:  python3 demo.py
 """
@@ -33,417 +29,1532 @@ Run:  python3 demo.py
 from __future__ import annotations
 
 from itertools import product
-from typing import Dict, FrozenSet, Iterable, List, Sequence, Set, Tuple
+from math import gcd
+from typing import Dict, List, Optional, Sequence, Set, Tuple
 
-# A frame on {0, ..., n-1} is stored as a tuple of n row-bitmasks:
-# bit j of rows[i] is set iff i sees j.
-Frame = Tuple[int, ...]
+Matrix = List[List[float]]
+BoolMatrix = List[List[bool]]
 
 
 # ----------------------------------------------------------------------------
-# Part 0.  Basic predicates on frames
+# Basic linear algebra on floats and on the Boolean semiring
 # ----------------------------------------------------------------------------
 
-
-def is_irreflexive(rows: Frame) -> bool:
-    """True iff no world sees itself."""
-    return all(not (row >> i) & 1 for i, row in enumerate(rows))
-
-
-def is_reflexive(rows: Frame) -> bool:
-    """True iff every world sees itself (validity of the reflection axiom)."""
-    return all((row >> i) & 1 for i, row in enumerate(rows))
+def mat_mul(a: Matrix, b: Matrix) -> Matrix:
+    """Ordinary real matrix product."""
+    n, m, k = len(a), len(b[0]), len(b)
+    return [[sum(a[i][t] * b[t][j] for t in range(k)) for j in range(m)] for i in range(n)]
 
 
-def is_transitive(rows: Frame) -> bool:
-    """True iff i sees j and j sees k implies i sees k."""
-    n = len(rows)
-    for i in range(n):
-        row = rows[i]
-        for j in range(n):
-            if (row >> j) & 1 and (rows[j] & ~row) != 0:
+def mat_pow(p: Matrix, n: int) -> Matrix:
+    """n-th power of a square real matrix (n >= 0)."""
+    size = len(p)
+    result: Matrix = [[1.0 if i == j else 0.0 for j in range(size)] for i in range(size)]
+    for _ in range(n):
+        result = mat_mul(result, p)
+    return result
+
+
+def support(p: Matrix) -> BoolMatrix:
+    """The support frame of P: u -> v iff P(u,v) > 0."""
+    return [[entry > 0.0 for entry in row] for row in p]
+
+
+def bool_mul(a: BoolMatrix, b: BoolMatrix) -> BoolMatrix:
+    """Boolean (OR/AND) matrix product: composition of relations."""
+    n, m, k = len(a), len(b[0]), len(b)
+    return [[any(a[i][t] and b[t][j] for t in range(k)) for j in range(m)] for i in range(n)]
+
+
+def bool_pow(r: BoolMatrix, n: int) -> BoolMatrix:
+    """n-th relational composite R^n; R^0 is the identity relation."""
+    size = len(r)
+    result: BoolMatrix = [[i == j for j in range(size)] for i in range(size)]
+    for _ in range(n):
+        result = bool_mul(result, r)
+    return result
+
+
+def path_exists(r: BoolMatrix, n: int, u: int, v: int) -> bool:
+    """Is there a path of exactly n edges from u to v?  (Theorem: 'support-power'.)"""
+    return bool_pow(r, n)[u][v]
+
+
+# ----------------------------------------------------------------------------
+# Spectra, periods, aperiodicity
+# ----------------------------------------------------------------------------
+
+def return_lengths(r: BoolMatrix, w: int, cutoff: int) -> List[int]:
+    """All n with 1 <= n <= cutoff such that w lies on a closed n-walk.
+
+    By the spectrum theorem this is exactly the set of degrees n > 0 for which the
+    reflection principle of degree n holds at w.
+    """
+    return [n for n in range(1, cutoff + 1) if path_exists(r, n, w, w)]
+
+
+def state_period(r: BoolMatrix, w: int, cutoff: int) -> int:
+    """gcd of the observed return lengths; 0 if the state never returns.
+
+    The state is aperiodic exactly when this gcd equals 1.
+    """
+    lengths = return_lengths(r, w, cutoff)
+    period = 0
+    for length in lengths:
+        period = gcd(period, length)
+    return period
+
+
+def monoid_generated(generators: Sequence[int], bound: int) -> Set[int]:
+    """All elements <= bound of the additive submonoid of N generated by `generators`."""
+    reachable: Set[int] = {0}
+    frontier: List[int] = [0]
+    while frontier:
+        x = frontier.pop()
+        for g in generators:
+            y = x + g
+            if y <= bound and y not in reachable:
+                reachable.add(y)
+                frontier.append(y)
+    return reachable
+
+
+def conductor(generators: Sequence[int], bound: int) -> Optional[int]:
+    """Least N such that every n with N <= n <= bound lies in the monoid, or None.
+
+    By the cofiniteness criterion such an N exists iff no d >= 2 divides all
+    generators, i.e. iff gcd(generators) == 1; otherwise None is returned.
+    """
+    g = 0
+    for x in generators:
+        g = gcd(g, x)
+    if g != 1:
+        return None
+    members = monoid_generated(generators, bound)
+    best: Optional[int] = None
+    for n in range(bound, -1, -1):
+        if n in members:
+            best = n
+        else:
+            break
+    return best
+
+
+def box_argument_threshold(y: int) -> int:
+    """The explicit conductor y^2 supplied by the box argument for {y, y+1} <= S."""
+    return y * y
+
+
+# ----------------------------------------------------------------------------
+# Irreducibility, primitivity, exponents
+# ----------------------------------------------------------------------------
+
+def is_irreducible(r: BoolMatrix, cutoff: int) -> bool:
+    """Every state reaches every state in at most `cutoff` steps."""
+    size = len(r)
+    reach = [[False] * size for _ in range(size)]
+    for n in range(cutoff + 1):
+        power = bool_pow(r, n)
+        for i, j in product(range(size), repeat=2):
+            reach[i][j] = reach[i][j] or power[i][j]
+    return all(reach[i][j] for i, j in product(range(size), repeat=2))
+
+
+def primitivity_exponent(r: BoolMatrix, cutoff: int) -> Optional[int]:
+    """Least N with R^n total (all entries true) for every N <= n <= cutoff, else None."""
+    size = len(r)
+    total: List[bool] = [
+        all(bool_pow(r, n)[i][j] for i, j in product(range(size), repeat=2))
+        for n in range(cutoff + 1)
+    ]
+    best: Optional[int] = None
+    for n in range(cutoff, -1, -1):
+        if total[n]:
+            best = n
+        else:
+            break
+    return best
+
+
+# ----------------------------------------------------------------------------
+# Recurrence and the greatest fixed point of the diamond
+# ----------------------------------------------------------------------------
+
+def diamond(r: BoolMatrix, x: Set[int]) -> Set[int]:
+    """States having some successor inside X."""
+    return {w for w in range(len(r)) if any(r[w][v] and v in x for v in range(len(r)))}
+
+
+def gfp_diamond(r: BoolMatrix) -> Set[int]:
+    """Greatest fixed point of the diamond, by downward iteration from the full set."""
+    current: Set[int] = set(range(len(r)))
+    while True:
+        nxt = diamond(r, current)
+        if nxt == current:
+            return current
+        current = nxt
+
+
+def recurrent_states(r: BoolMatrix, cutoff: int) -> Set[int]:
+    """States lying on a closed walk of positive length."""
+    return {w for w in range(len(r)) if return_lengths(r, w, cutoff)}
+
+
+def reaches_recurrent(r: BoolMatrix, cutoff: int) -> Set[int]:
+    """States from which some recurrent state is reachable."""
+    rec = recurrent_states(r, cutoff)
+    size = len(r)
+    out: Set[int] = set()
+    for u in range(size):
+        for n in range(cutoff + 1):
+            power = bool_pow(r, n)
+            if any(power[u][z] for z in rec):
+                out.add(u)
+                break
+    return out
+
+
+# ----------------------------------------------------------------------------
+# Lumpability
+# ----------------------------------------------------------------------------
+
+def is_lumpable(p: Matrix, q: Matrix, f: Sequence[int], tol: float = 1e-12) -> bool:
+    """Strong lumpability of P onto Q along the state map f."""
+    for u in range(len(p)):
+        for y in range(len(q)):
+            block_sum = sum(p[u][v] for v in range(len(p)) if f[v] == y)
+            if abs(block_sum - q[f[u]][y]) > tol:
                 return False
     return True
 
 
-def validates_loeb(rows: Frame) -> bool:
-    """Validity of the Loeb axiom on a *finite* frame: strict partial order."""
-    return is_transitive(rows) and is_irreflexive(rows)
-
-
-def validates_reflection(rows: Frame) -> bool:
-    """Validity of the reflection axiom box p -> p."""
-    return is_reflexive(rows)
-
-
-def all_frames(n: int) -> Iterable[Frame]:
-    """Enumerate all 2^(n^2) frames on n labelled worlds."""
-    full = 1 << n
-    for rows in product(range(full), repeat=n):
-        yield rows
+def is_bounded_morphism(rp: BoolMatrix, rq: BoolMatrix, f: Sequence[int]) -> bool:
+    """The 'forth' and 'back' conditions of a bounded morphism of support frames."""
+    forth = all(rq[f[u]][f[v]] for u in range(len(rp)) for v in range(len(rp)) if rp[u][v])
+    back = all(
+        any(rp[u][v] and f[v] == y for v in range(len(rp)))
+        for u in range(len(rp))
+        for y in range(len(rq))
+        if rq[f[u]][y]
+    )
+    return forth and back
 
 
 # ----------------------------------------------------------------------------
-# Part 1.  Brute-force counts (small n) and the exact reflexive count
+# Example chains
 # ----------------------------------------------------------------------------
 
-
-def loeb_frame_count_bruteforce(n: int) -> int:
-    """Count frames on n worlds validating Loeb, by exhaustive search."""
-    return sum(1 for rows in all_frames(n) if validates_loeb(rows))
-
-
-def reflexive_frame_count_bruteforce(n: int) -> int:
-    """Count frames on n worlds validating reflection, by exhaustive search."""
-    return sum(1 for rows in all_frames(n) if validates_reflection(rows))
+def cycle_chain(n: int) -> Matrix:
+    """Deterministic n-cycle on Z/n:  u -> u+1 with probability 1."""
+    return [[1.0 if j == (i + 1) % n else 0.0 for j in range(n)] for i in range(n)]
 
 
-def reflexive_frame_count_closed_form(n: int) -> int:
-    """Closed form: fix the n diagonal entries, the other n^2-n are free."""
-    return 1 << (n * n - n)
-
-
-# ----------------------------------------------------------------------------
-# Part 2.  Fast enumeration of labelled strict partial orders
-# ----------------------------------------------------------------------------
-#
-# Growing a poset one point at a time.  Suppose P is a strict partial order on
-# {0,...,m-1} and we add the point m with strict down-set D (things below m) and
-# strict up-set U (things above m).  The extension is again a strict partial
-# order iff
-#     (i)   D is downward closed in P,
-#     (ii)  U is upward closed in P,
-#     (iii) every element of D is below every element of U in P
-#           (this is what transitivity through the new point demands, and it
-#            forces D and U to be disjoint, hence irreflexivity).
-# This yields an enumeration whose cost is proportional to the number of posets
-# produced, rather than to 2^(n^2).
-
-
-def extensions(rows: Frame) -> Iterable[Frame]:
-    """All strict partial orders on m+1 points restricting to `rows` on m."""
-    m = len(rows)
-    down_closed: List[int] = []
-    up_closed: List[int] = []
-    universe = (1 << m) - 1
-    for s in range(1 << m):
-        # s is downward closed iff for every i in s, all predecessors of i are in s
-        ok_down = True
-        ok_up = True
-        for i in range(m):
-            if (s >> i) & 1:
-                preds = sum(1 << j for j in range(m) if (rows[j] >> i) & 1)
-                if preds & ~s:
-                    ok_down = False
-                succs = rows[i]
-                if succs & ~s:
-                    ok_up = False
-            if not (ok_down or ok_up):
-                break
-        if ok_down:
-            down_closed.append(s)
-        if ok_up:
-            up_closed.append(s)
-    for d in down_closed:
-        for u in up_closed:
-            if d & u:
-                continue
-            # every element of D must already be below every element of U
-            if any(
-                (d >> i) & 1 and (rows[i] & u) != u
-                for i in range(m)
-            ):
-                continue
-            new_rows = []
-            for i in range(m):
-                r = rows[i]
-                if (d >> i) & 1:  # i is below the new point m
-                    r |= 1 << m
-                new_rows.append(r)
-            new_rows.append(u & universe)  # the new point sees exactly U
-            yield tuple(new_rows)
-
-
-def enumerate_posets(n: int) -> List[Frame]:
-    """All labelled strict partial orders on {0,...,n-1}."""
-    current: List[Frame] = [()]
-    for _ in range(n):
-        nxt: List[Frame] = []
-        for p in current:
-            nxt.extend(extensions(p))
-        current = nxt
-    return current
-
-
-def loeb_frame_count(n: int) -> int:
-    """The number of frames on n labelled worlds validating the Loeb axiom."""
-    return len(enumerate_posets(n))
-
-
-# ----------------------------------------------------------------------------
-# Part 3.  Monotonicity: adjoining an isolated world
-# ----------------------------------------------------------------------------
-
-
-def adjoin_isolated_world(rows: Frame) -> Frame:
-    """Extend a frame on n worlds by one world that sees nothing and is unseen."""
-    return tuple(rows) + (0,)
-
-
-def check_monotonicity(n: int) -> Tuple[int, int, bool]:
-    """The map 'adjoin an isolated world' injects Loeb frames on n into n+1."""
-    small = enumerate_posets(n)
-    big = set(enumerate_posets(n + 1))
-    images = {adjoin_isolated_world(p) for p in small}
-    injective = len(images) == len(small)
-    return len(small), len(big), injective and images <= big
-
-
-# ----------------------------------------------------------------------------
-# Part 4.  Semantics: satisfaction and honest validity checking
-# ----------------------------------------------------------------------------
-#
-# We check validity of a formula on a small frame by brute force over all
-# 2^(number of variables * n) valuations, so the bridge theorems below are
-# tested semantically, not merely as matrix conditions.
-
-Formula = object  # formulas are nested tuples, see below
-# ('var', name) | ('bot',) | ('imp', a, b) | ('box', a)
-
-
-def sat(rows: Frame, val: Dict[str, int], w: int, phi) -> bool:
-    """Satisfaction of phi at world w; val maps a variable to a bitmask of worlds."""
-    tag = phi[0]
-    if tag == "bot":
-        return False
-    if tag == "var":
-        return bool((val[phi[1]] >> w) & 1)
-    if tag == "imp":
-        return (not sat(rows, val, w, phi[1])) or sat(rows, val, w, phi[2])
-    if tag == "box":
-        return all(
-            sat(rows, val, v, phi[1]) for v in range(len(rows)) if (rows[w] >> v) & 1
-        )
-    raise ValueError(f"unknown formula {phi!r}")
-
-
-def valid(rows: Frame, phi, variables: Sequence[str]) -> bool:
-    """Validity of phi on the frame: all worlds, all valuations."""
-    n = len(rows)
-    for assignment in product(range(1 << n), repeat=len(variables)):
-        val = dict(zip(variables, assignment))
-        if not all(sat(rows, val, w, phi) for w in range(n)):
-            return False
-    return True
-
-
-def box_iter(k: int, phi):
-    """The formula box^k phi."""
-    for _ in range(k):
-        phi = ("box", phi)
-    return phi
-
-
-P = ("var", "p")
-LOEB = ("imp", ("box", ("imp", ("box", P), P)), ("box", P))
-REFLECTION = ("imp", ("box", P), P)
-CONSISTENCY = ("imp", ("box", ("bot",)), ("bot",))  # not box bottom
-
-
-def cycle_axiom(k: int):
-    """The k-fold reflection axiom box^k p -> p."""
-    return ("imp", box_iter(k, P), P)
-
-
-# ----------------------------------------------------------------------------
-# Part 5.  The degree monoid of a frame
-# ----------------------------------------------------------------------------
-
-
-def has_closed_walk(rows: Frame, k: int, w: int) -> bool:
-    """True iff there is a walk of length exactly k from w back to w."""
-    reach = {w}
-    for _ in range(k):
-        reach = {v for u in reach for v in range(len(rows)) if (rows[u] >> v) & 1}
-    return w in reach
-
-
-def degree_set(rows: Frame, bound: int = 12) -> List[int]:
-    """Degrees k <= bound such that box^k p -> p is valid: every world on a k-walk."""
+def ap_chain() -> Matrix:
+    """Loopless aperiodic 3-state chain: 0->1; 1->0 or 1->2 each w.p. 1/2; 2->0."""
     return [
-        k
-        for k in range(bound + 1)
-        if all(has_closed_walk(rows, k, w) for w in range(len(rows)))
+        [0.0, 1.0, 0.0],
+        [0.5, 0.0, 0.5],
+        [1.0, 0.0, 0.0],
     ]
 
 
-def cycle_frame(n: int) -> Frame:
-    """The directed n-cycle 0 -> 1 -> ... -> n-1 -> 0."""
-    return tuple(1 << ((i + 1) % n) for i in range(n))
+def nbr_chain(n: int) -> Matrix:
+    """Nearest-neighbour chain on {0,...,n-1}: stay put or move to an adjacent index."""
+    p: Matrix = [[0.0] * n for _ in range(n)]
+    for i in range(n):
+        targets = [i] + ([i - 1] if i > 0 else []) + ([i + 1] if i + 1 < n else [])
+        for j in targets:
+            p[i][j] = 1.0 / len(targets)
+    return p
 
 
-def complete_irreflexive_frame(n: int) -> Frame:
-    """Every world sees every other world, and no world sees itself."""
-    return tuple(sum(1 << j for j in range(n) if j != i) for i in range(n))
+def lazy_cycle(n: int, hold: float = 0.5) -> Matrix:
+    """The n-cycle made lazy: stay put with probability `hold`, else advance."""
+    return [
+        [hold if j == i else (1.0 - hold if j == (i + 1) % n else 0.0) for j in range(n)]
+        for i in range(n)
+    ]
 
 
-def equality_frame(n: int) -> Frame:
-    """Each world sees exactly itself: n disjoint loops."""
-    return tuple(1 << i for i in range(n))
+def one_loop_cycle(n: int, hold: float = 0.5) -> Matrix:
+    """The n-cycle with a holding probability at state 0 only."""
+    p = cycle_chain(n)
+    p[0] = [hold if j == 0 else (1.0 - hold if j == 1 % n else 0.0) for j in range(n)]
+    return p
 
 
-# ----------------------------------------------------------------------------
-# Part 6.  Bounded morphisms: why irreflexivity is not definable
-# ----------------------------------------------------------------------------
-
-
-def is_bounded_morphism(src: Frame, tgt: Frame, f: Sequence[int]) -> bool:
-    """f preserves accessibility (forth) and reflects it up to preimages (back)."""
-    n, m = len(src), len(tgt)
-    for w in range(n):
-        for v in range(n):
-            if (src[w] >> v) & 1 and not (tgt[f[w]] >> f[v]) & 1:
-                return False  # forth fails
-        for u in range(m):
-            if (tgt[f[w]] >> u) & 1:
-                if not any((src[w] >> v) & 1 and f[v] == u for v in range(n)):
-                    return False  # back fails
-    return True
+def absorb_chain() -> Matrix:
+    """Two-state absorbing chain: from either state, jump to state 1 and stay."""
+    return [[0.0, 1.0], [0.0, 1.0]]
 
 
 # ----------------------------------------------------------------------------
-# Reporting
+# Demonstrations
 # ----------------------------------------------------------------------------
 
-
-def rule(title: str) -> None:
+def demo_support_power(max_n: int = 8) -> None:
+    print("=" * 78)
+    print("1. SUPPORT-POWER THEOREM:  P^n(u,v) > 0  <=>  an n-edge path u -> v exists")
+    print("=" * 78)
+    chains: Dict[str, Matrix] = {
+        "3-cycle": cycle_chain(3),
+        "loopless aperiodic chain": ap_chain(),
+        "nearest-neighbour chain on 4 states": nbr_chain(4),
+        "absorbing chain": absorb_chain(),
+    }
+    for name, p in chains.items():
+        r = support(p)
+        size = len(p)
+        agree = True
+        for n in range(max_n + 1):
+            numeric = mat_pow(p, n)
+            combinatorial = bool_pow(r, n)
+            for u, v in product(range(size), repeat=2):
+                if (numeric[u][v] > 1e-15) != combinatorial[u][v]:
+                    agree = False
+        print(f"  {name:38s}  agreement for 0 <= n <= {max_n}: {agree}")
     print()
-    print("=" * 72)
-    print(title)
-    print("=" * 72)
+
+
+def demo_spectrum(cutoff: int = 24) -> None:
+    print("=" * 78)
+    print("2. SOUNDNESS SPECTRA ARE NUMERICAL SEMIGROUPS")
+    print("=" * 78)
+    examples: List[Tuple[str, Matrix, int]] = [
+        ("4-cycle, state 0", cycle_chain(4), 0),
+        ("loopless aperiodic chain, state 0", ap_chain(), 0),
+        ("lazy 4-cycle, state 0", lazy_cycle(4), 0),
+    ]
+    for name, p, w in examples:
+        r = support(p)
+        spec = return_lengths(r, w, cutoff)
+        closed = all(
+            (a + b) in spec or a + b > cutoff for a in spec for b in spec
+        )
+        print(f"  {name}")
+        print(f"    spectrum ∩ [1,{cutoff}] = {spec}")
+        print(f"    period (gcd of return lengths) = {state_period(r, w, cutoff)}")
+        print(f"    closed under addition within the window: {closed}")
+    print()
+
+
+def demo_cofiniteness(bound: int = 80) -> None:
+    print("=" * 78)
+    print("3. COFINITENESS CRITERION: cofinite  <=>  no d >= 2 divides everything")
+    print("=" * 78)
+    families: List[Sequence[int]] = [(2, 3), (6, 10, 15), (3, 5, 7), (4, 6), (5,)]
+    for gens in families:
+        g = 0
+        for x in gens:
+            g = gcd(g, x)
+        cond = conductor(gens, bound)
+        pairwise = any(gcd(a, b) == 1 for a in gens for b in gens if a != b)
+        verdict = "cofinite" if g == 1 else f"contained in {g}N — NOT cofinite"
+        print(f"  <{', '.join(map(str, gens))}>")
+        print(f"    gcd = {g}; some coprime pair among generators: {pairwise}")
+        tail = f"observed conductor = {cond}" if cond is not None else "no conductor exists"
+        print(f"    {verdict}; {tail}")
+        if g == 1 and cond is not None:
+            members = sorted(monoid_generated(gens, bound))
+            consecutive = next(
+                (y for y in members if (y + 1) in members and y > 0), None
+            )
+            if consecutive is not None:
+                print(
+                    f"    least consecutive pair (y, y+1) = ({consecutive}, {consecutive + 1}); "
+                    f"box-argument threshold y^2 = {box_argument_threshold(consecutive)}"
+                )
+    print("  Note <6,10,15>: gcd 1 but NO two generators are coprime, so the")
+    print("  two-generator (Chicken McNugget) route does not apply — the general")
+    print("  criterion does.")
+    print()
+
+
+def demo_primitivity(cutoff: int = 30) -> None:
+    print("=" * 78)
+    print("4/5. PRIMITIVITY IS APERIODICITY")
+    print("=" * 78)
+    cases: List[Tuple[str, Matrix]] = [
+        ("deterministic 3-cycle", cycle_chain(3)),
+        ("deterministic 4-cycle", cycle_chain(4)),
+        ("loopless aperiodic 3-state chain", ap_chain()),
+        ("lazy 4-cycle", lazy_cycle(4)),
+        ("nearest-neighbour chain on 5 states", nbr_chain(5)),
+    ]
+    for name, p in cases:
+        r = support(p)
+        irr = is_irreducible(r, cutoff)
+        per = state_period(r, 0, cutoff)
+        exp = primitivity_exponent(r, cutoff)
+        selfloops = [w for w in range(len(p)) if p[w][w] > 0]
+        print(f"  {name}")
+        print(f"    irreducible: {irr};  period at state 0: {per};  self-loops at: {selfloops}")
+        print(
+            f"    primitive: {exp is not None}"
+            + (f" with exponent {exp}" if exp is not None else "")
+        )
+        assert irr is False or ((per == 1) == (exp is not None))
+    print("  The loopless chain is primitive with no holding probability anywhere:")
+    print("  aperiodicity, not a self-loop, is the real hypothesis.")
+    print()
+
+
+def demo_exponents(cutoff: int = 40) -> None:
+    print("=" * 78)
+    print("6. EFFECTIVE EXPONENTS AND THEIR SHARPNESS")
+    print("=" * 78)
+    print("  nearest-neighbour chain B_N: predicted exponent exactly N-1")
+    for n in range(1, 9):
+        r = support(nbr_chain(n))
+        exp = primitivity_exponent(r, cutoff)
+        print(f"    N = {n}:  measured exponent = {exp},  N-1 = {n - 1},  match: {exp == n - 1}")
+    print()
+    print("  lazy n-cycle (every state holds): bound N-1")
+    for n in range(2, 8):
+        r = support(lazy_cycle(n))
+        exp = primitivity_exponent(r, cutoff)
+        print(f"    N = {n}:  measured exponent = {exp} <= N-1 = {n - 1}: {exp is not None and exp <= n - 1}")
+    print()
+    print("  n-cycle with a single holding state: bound 2(N-1)")
+    for n in range(2, 8):
+        r = support(one_loop_cycle(n))
+        exp = primitivity_exponent(r, cutoff)
+        bound = 2 * (n - 1)
+        print(f"    N = {n}:  measured exponent = {exp} <= 2(N-1) = {bound}: {exp is not None and exp <= bound}")
+    print()
+
+
+def demo_recurrence(cutoff: int = 12) -> None:
+    print("=" * 78)
+    print("7. RECURRENCE AS A GREATEST FIXED POINT")
+    print("=" * 78)
+    cases: List[Tuple[str, Matrix]] = [
+        ("absorbing chain (0 -> 1, 1 -> 1)", absorb_chain()),
+        ("3-cycle", cycle_chain(3)),
+        ("loopless aperiodic chain", ap_chain()),
+    ]
+    for name, p in cases:
+        r = support(p)
+        g = gfp_diamond(r)
+        rec = recurrent_states(r, cutoff)
+        reach = reaches_recurrent(r, cutoff)
+        print(f"  {name}")
+        print(f"    greatest fixed point of the diamond : {sorted(g)}")
+        print(f"    states reaching recurrence          : {sorted(reach)}")
+        print(f"    recurrent states                    : {sorted(rec)}")
+        print(f"    gfp == reaches-recurrence : {g == reach}   gfp == recurrent : {g == rec}")
+    print("  On the absorbing chain state 0 is transient yet lies in the greatest")
+    print("  fixed point: the diamond sees survival, not return.")
+    print()
+
+
+def demo_lumpability(cutoff: int = 12) -> None:
+    print("=" * 78)
+    print("8. STRONG LUMPABILITY IS A BOUNDED MORPHISM")
+    print("=" * 78)
+    for n, m in [(6, 3), (6, 2), (4, 2), (2, 1), (6, 4)]:
+        p, q = cycle_chain(n), cycle_chain(m)
+        f = [i % m for i in range(n)]
+        lump = is_lumpable(p, q, f)
+        morph = is_bounded_morphism(support(p), support(q), f)
+        divides = n % m == 0
+        print(
+            f"  Z/{n} -> Z/{m} (m | n: {divides}):  lumpable = {lump},  "
+            f"bounded morphism = {morph},  agree = {lump == morph}"
+        )
+    print()
+    print("  Non-laziness is not modally definable: the 2-cycle has no holding")
+    print("  probability, it lumps surjectively onto the 1-cycle, and the 1-cycle does.")
+    p2, p1 = cycle_chain(2), cycle_chain(1)
+    f = [0, 0]
+    print(f"    2-cycle holding probabilities : {[p2[w][w] for w in range(2)]}")
+    print(f"    lumps onto 1-cycle            : {is_lumpable(p2, p1, f)}")
+    print(f"    1-cycle holding probability   : {p1[0][0]}")
+    print()
+    print("  Spectrum inclusion mirrors theory inclusion: for m | n, nN ⊆ mN.")
+    for n, m in [(6, 3), (6, 2), (4, 2)]:
+        sn = set(return_lengths(support(cycle_chain(n)), 0, cutoff))
+        sm = set(return_lengths(support(cycle_chain(m)), 0, cutoff))
+        print(f"    spectrum({n}-cycle) ⊆ spectrum({m}-cycle): {sn <= sm}   {sorted(sn)} ⊆ {sorted(sm)}")
+    print()
 
 
 def main() -> None:
-    rule("1.  The bridge: semantic Loeb validity = strict partial order")
-    print("For every frame on 3 worlds we compare")
-    print("  (a) validity of  box(box p -> p) -> box p  over all 8^3 valuations")
-    print("  (b) the matrix condition 'transitive and zero diagonal'.")
-    agree = 0
-    valid_count = 0
-    for rows in all_frames(3):
-        a = valid(rows, LOEB, ["p"])
-        b = validates_loeb(rows)
-        agree += a == b
-        valid_count += a
-    print(f"  frames tested            : {8 ** 3}")
-    print(f"  (a) and (b) agree on     : {agree} frames  (perfect agreement)")
-    print(f"  frames validating Loeb   : {valid_count}")
+    print()
+    print("FRAME DEFINABILITY OVER MARKOV CHAINS — NUMERICAL DEMONSTRATIONS")
+    print()
+    demo_support_power()
+    demo_spectrum()
+    demo_cofiniteness()
+    demo_primitivity()
+    demo_exponents()
+    demo_recurrence()
+    demo_lumpability()
+    print("All demonstrations completed.")
 
-    rule("2.  Counting the Loeb frames")
-    print(" n | Loeb frames | all frames | fraction")
+
+if __name__ == "__main__":
+    main()
+
+
+"""Aperiodicity test and conductor computation for a cycle monoid.
+
+The soundness spectrum of a state — equivalently, the support of its return-time
+distribution — is an additive submonoid of the natural numbers.  Such a submonoid
+contains every sufficiently large integer if and only if no integer d >= 2 divides all
+of it; equivalently, if and only if the gcd of its elements is 1.  This module tests
+that criterion and, when it holds, computes the exact conductor (the least N beyond
+which every integer belongs) together with the explicit theoretical bound y^2 obtained
+from the least pair of consecutive elements.
+"""
+
+from __future__ import annotations
+
+from math import gcd
+from typing import List, Optional, Sequence, Set, Tuple
+
+BoolMatrix = List[List[bool]]
+
+
+def bool_mul(a: BoolMatrix, b: BoolMatrix) -> BoolMatrix:
+    size = len(a)
+    return [
+        [any(a[i][t] and b[t][j] for t in range(size)) for j in range(size)]
+        for i in range(size)
+    ]
+
+
+def return_lengths(r: BoolMatrix, w: int, cutoff: int) -> List[int]:
+    """Return lengths 1 <= n <= cutoff of closed walks at w.  Cost O(cutoff * N^3)."""
+    size = len(r)
+    power: BoolMatrix = [[i == j for j in range(size)] for i in range(size)]
+    lengths: List[int] = []
+    for n in range(1, cutoff + 1):
+        power = bool_mul(power, r)
+        if power[w][w]:
+            lengths.append(n)
+    return lengths
+
+
+def period_of_state(r: BoolMatrix, w: int, cutoff: int) -> int:
+    """gcd of the observed return lengths; 0 if the state never returns."""
+    g = 0
+    for length in return_lengths(r, w, cutoff):
+        g = gcd(g, length)
+    return g
+
+
+def is_aperiodic(r: BoolMatrix, w: int, cutoff: int) -> bool:
+    """The state is aperiodic exactly when no d >= 2 divides all its return lengths."""
+    return period_of_state(r, w, cutoff) == 1
+
+
+def monoid_up_to(generators: Sequence[int], bound: int) -> Set[int]:
+    """Sieve the additive submonoid generated by `generators`, up to `bound`."""
+    reachable: Set[int] = {0}
+    for n in range(1, bound + 1):
+        if any(g <= n and (n - g) in reachable for g in generators):
+            reachable.add(n)
+    return reachable
+
+
+def conductor_and_bound(generators: Sequence[int]) -> Optional[Tuple[int, int]]:
+    """Return (exact conductor, theoretical bound y^2), or None if not cofinite.
+
+    The exact conductor is one more than the largest gap; the theoretical bound comes
+    from the box argument applied to the least consecutive pair (y, y+1) in the monoid.
+    """
+    g = 0
+    for x in generators:
+        g = gcd(g, x)
+    if g != 1:
+        return None
+    y_max = max(generators)
+    bound = y_max * y_max + y_max + 1
+    members = monoid_up_to(generators, bound)
+    gaps = [n for n in range(bound + 1) if n not in members]
+    exact = (max(gaps) + 1) if gaps else 0
+    consecutive = next(y for y in sorted(members) if y > 0 and (y + 1) in members)
+    return exact, consecutive * consecutive
+
+
+if __name__ == "__main__":
+    for gens in [(2, 3), (6, 10, 15), (3, 5, 7), (4, 6)]:
+        result = conductor_and_bound(gens)
+        if result is None:
+            print(f"<{gens}>: periodic, spectrum is not cofinite")
+        else:
+            exact, theoretical = result
+            print(f"<{gens}>: aperiodic; exact conductor {exact}, box bound {theoretical}")
+
+
+"""Support-power evaluation by Boolean repeated squaring.
+
+Decides positivity of the n-step transition probability P^n(u,v) for a nonnegative
+matrix P without ever multiplying a floating-point number, by working in the Boolean
+semiring on the support of P.  Correctness is the support-power theorem: P^n(u,v) > 0
+holds exactly when the support frame carries a path of exactly n edges from u to v.
+"""
+
+from __future__ import annotations
+
+from typing import List, Sequence
+
+BoolMatrix = List[List[bool]]
+Matrix = List[List[float]]
+
+
+def support(p: Sequence[Sequence[float]]) -> BoolMatrix:
+    """The support frame of P: u -> v iff P(u,v) > 0."""
+    return [[entry > 0.0 for entry in row] for row in p]
+
+
+def bool_identity(size: int) -> BoolMatrix:
+    """The identity relation, i.e. the 0-th relational power."""
+    return [[i == j for j in range(size)] for i in range(size)]
+
+
+def bool_mul(a: BoolMatrix, b: BoolMatrix) -> BoolMatrix:
+    """Boolean (OR/AND) matrix product = relational composition.  Cost O(N^3)."""
+    size = len(a)
+    return [
+        [any(a[i][t] and b[t][j] for t in range(size)) for j in range(size)]
+        for i in range(size)
+    ]
+
+
+def bool_pow_fast(r: BoolMatrix, n: int) -> BoolMatrix:
+    """R^n by binary exponentiation.  Cost O(N^3 log n) Boolean operations."""
+    size = len(r)
+    result = bool_identity(size)
+    base = [row[:] for row in r]
+    exponent = n
+    while exponent > 0:
+        if exponent & 1:
+            result = bool_mul(result, base)
+        base = bool_mul(base, base)
+        exponent >>= 1
+    return result
+
+
+def step_positive(p: Sequence[Sequence[float]], n: int, u: int, v: int) -> bool:
+    """True iff the n-step transition probability from u to v is strictly positive."""
+    return bool_pow_fast(support(p), n)[u][v]
+
+
+if __name__ == "__main__":
+    ap_chain: Matrix = [[0.0, 1.0, 0.0], [0.5, 0.0, 0.5], [1.0, 0.0, 0.0]]
     for n in range(7):
-        c = loeb_frame_count(n)
-        total = 1 << (n * n)
-        print(f" {n} | {c:11d} | {total:10d} | {c / total:.3e}")
-    print()
-    print("Brute-force cross-check for n <= 4:")
-    for n in range(5):
-        bf = loeb_frame_count_bruteforce(n)
-        fast = loeb_frame_count(n)
-        print(f"  n={n}: brute force {bf:5d}   fast enumeration {fast:5d}   "
-              f"{'match' if bf == fast else 'MISMATCH'}")
+        row = [
+            "+" if step_positive(ap_chain, n, u, v) else "."
+            for u in range(3)
+            for v in range(3)
+        ]
+        print(f"n = {n}:  " + " ".join(row))
 
-    rule("3.  Reflection is cheap, Loeb is rare")
-    print(" n | Loeb frames | reflexive frames 2^(n^2-n) | ratio")
-    for n in range(6):
-        loeb = loeb_frame_count(n)
-        refl = reflexive_frame_count_closed_form(n)
-        print(f" {n} | {loeb:11d} | {refl:26d} | {loeb / refl:.3e}")
-    print()
-    print("Brute-force check of the reflexive count for n <= 3:")
-    for n in range(4):
-        print(f"  n={n}: {reflexive_frame_count_bruteforce(n)} "
-              f"= 2^({n*n}-{n}) = {reflexive_frame_count_closed_form(n)}")
-    print()
-    print("On three worlds: 19 Loeb frames versus 64 reflexive frames out of 512.")
-    print("No NONEMPTY frame validates both: reflexivity and irreflexivity clash.")
-    both = [rows for rows in all_frames(3)
-            if validates_loeb(rows) and validates_reflection(rows)]
-    print(f"  frames on 3 worlds validating both axioms: {len(both)}")
 
-    rule("4.  Monotonicity: adjoining an isolated world")
-    for n in range(5):
-        small, big, ok = check_monotonicity(n)
-        print(f"  n={n}: {small:4d} Loeb frames inject into {big:5d} on n+1 worlds"
-              f"   [injective and into: {ok}]")
+"""Greatest fixed point of the diamond, and the states that reach recurrence.
 
-    rule("5.  The degree monoid: which axioms box^k p -> p hold")
-    frames = {
-        "3-cycle              ": cycle_frame(3),
-        "2-cycle              ": cycle_frame(2),
-        "equality frame (n=3) ": equality_frame(3),
-        "K3, complete irrefl. ": complete_irreflexive_frame(3),
-        "a Loeb frame (0->1)  ": (0b10, 0b00),
+For a finite frame the diamond operator sends a set X of states to the set of states
+having a successor inside X.  Its greatest fixed point is computed by downward
+iteration from the full state space, which stabilises after at most N rounds.  The
+identification theorem says the result is exactly the set of states from which some
+state lying on a cycle can be reached — strictly larger, in general, than the set of
+recurrent states, as the two-state absorbing chain shows.
+"""
+
+from __future__ import annotations
+
+from typing import List, Sequence, Set
+
+BoolMatrix = List[List[bool]]
+
+
+def support(p: Sequence[Sequence[float]]) -> BoolMatrix:
+    return [[entry > 0.0 for entry in row] for row in p]
+
+
+def diamond(r: BoolMatrix, x: Set[int]) -> Set[int]:
+    """States with at least one successor inside X."""
+    return {w for w in range(len(r)) if any(r[w][v] and v in x for v in range(len(r)))}
+
+
+def gfp_diamond(r: BoolMatrix) -> Set[int]:
+    """Downward iteration: X_0 = all states, X_{k+1} = diamond(X_k).  Cost O(N^3)."""
+    current: Set[int] = set(range(len(r)))
+    while True:
+        nxt = diamond(r, current)
+        if nxt == current:
+            return current
+        current = nxt
+
+
+def recurrent_states(r: BoolMatrix) -> Set[int]:
+    """States lying on a closed walk of positive length (transitive closure of R)."""
+    size = len(r)
+    reach = [row[:] for row in r]
+    for t in range(size):
+        for i in range(size):
+            if reach[i][t]:
+                for j in range(size):
+                    if reach[t][j]:
+                        reach[i][j] = True
+    return {w for w in range(size) if reach[w][w]}
+
+
+def reaches_recurrent(r: BoolMatrix) -> Set[int]:
+    """States from which some recurrent state is reachable (including in 0 steps)."""
+    size = len(r)
+    rec = recurrent_states(r)
+    reach = [[i == j or r[i][j] for j in range(size)] for i in range(size)]
+    for t in range(size):
+        for i in range(size):
+            if reach[i][t]:
+                for j in range(size):
+                    if reach[t][j]:
+                        reach[i][j] = True
+    return {u for u in range(size) if any(reach[u][z] for z in rec)}
+
+
+if __name__ == "__main__":
+    absorb = [[0.0, 1.0], [0.0, 1.0]]
+    r = support(absorb)
+    print("greatest fixed point :", sorted(gfp_diamond(r)))
+    print("reaches recurrence   :", sorted(reaches_recurrent(r)))
+    print("recurrent states     :", sorted(recurrent_states(r)))
+
+
+"""Decision procedure for primitivity, with the exact exponent.
+
+A finite chain with nonnegative entries is primitive when some power of its matrix has
+all entries strictly positive.  For an irreducible chain, primitivity is equivalent to
+aperiodicity of any single state, so the decision reduces to two combinatorial tests:
+irreducibility (reachability within N-1 steps, by the diameter principle) and a gcd of
+return lengths.  When the chain is primitive the exact exponent is found by scanning
+Boolean powers; termination is guaranteed by the bounds N-1 for a lazy chain and
+2(N-1) when a single state has positive holding probability.
+"""
+
+from __future__ import annotations
+
+from math import gcd
+from typing import List, Optional, Sequence
+
+BoolMatrix = List[List[bool]]
+
+
+def support(p: Sequence[Sequence[float]]) -> BoolMatrix:
+    return [[entry > 0.0 for entry in row] for row in p]
+
+
+def bool_mul(a: BoolMatrix, b: BoolMatrix) -> BoolMatrix:
+    size = len(a)
+    return [
+        [any(a[i][t] and b[t][j] for t in range(size)) for j in range(size)]
+        for i in range(size)
+    ]
+
+
+def is_irreducible(r: BoolMatrix) -> bool:
+    """Reachability closure: by the diameter principle N-1 steps suffice."""
+    size = len(r)
+    reach = [[i == j or r[i][j] for j in range(size)] for i in range(size)]
+    for t in range(size):
+        for i in range(size):
+            if reach[i][t]:
+                for j in range(size):
+                    if reach[t][j]:
+                        reach[i][j] = True
+    return all(reach[i][j] for i in range(size) for j in range(size))
+
+
+def period_of_state(r: BoolMatrix, w: int, cutoff: int) -> int:
+    size = len(r)
+    power: BoolMatrix = [[i == j for j in range(size)] for i in range(size)]
+    g = 0
+    for _ in range(cutoff):
+        power = bool_mul(power, r)
+        if power[w][w]:
+            g = gcd(g, _ + 1)
+        if g == 1:
+            break
+    return g
+
+
+def primitivity_exponent(p: Sequence[Sequence[float]], max_steps: Optional[int] = None) -> Optional[int]:
+    """Least N with every entry of P^n positive for all n >= N, or None if not primitive.
+
+    The chain is primitive iff it is irreducible and one state is aperiodic; the search
+    for the exponent is then bounded by a quadratic function of the number of states.
+    """
+    r = support(p)
+    size = len(r)
+    if size == 0:
+        return None
+    if not is_irreducible(r):
+        return None
+    cutoff = max_steps if max_steps is not None else max(1, size * size + size)
+    if period_of_state(r, 0, cutoff) != 1:
+        return None
+    power: BoolMatrix = [[i == j for j in range(size)] for i in range(size)]
+    for n in range(cutoff + 1):
+        if n > 0:
+            power = bool_mul(power, r)
+        if all(power[i][j] for i in range(size) for j in range(size)):
+            return n
+    return None
+
+
+def exponent_upper_bound(p: Sequence[Sequence[float]]) -> Optional[int]:
+    """The theoretical bound: N-1 if every state holds, 2(N-1) if exactly one does."""
+    size = len(p)
+    holding = [w for w in range(size) if p[w][w] > 0.0]
+    if len(holding) == size:
+        return size - 1
+    if holding:
+        return 2 * (size - 1)
+    return None
+
+
+if __name__ == "__main__":
+    ap = [[0.0, 1.0, 0.0], [0.5, 0.0, 0.5], [1.0, 0.0, 0.0]]
+    cyc = [[0.0, 1.0, 0.0], [0.0, 0.0, 1.0], [1.0, 0.0, 0.0]]
+    print("loopless aperiodic chain, exponent:", primitivity_exponent(ap))
+    print("deterministic 3-cycle, exponent   :", primitivity_exponent(cyc))
+
+
+"""Assemble PACKAGE.json from the individual deliverables in this repository."""
+
+from __future__ import annotations
+
+import json
+import os
+from typing import Any, Dict, List
+
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+ASSETS = os.path.join(ROOT, "package_assets")
+
+
+def read(path: str) -> str:
+    with open(path, "r", encoding="utf-8") as handle:
+        return handle.read()
+
+
+LEAN_FILES: List[str] = [
+    "Catalog/Probability/MarkovModalDefinability.lean",
+    "Catalog/Probability/MarkovLumpability.lean",
+    "Catalog/Probability/MarkovPrimitivity.lean",
+    "Catalog/Probability/MarkovFrobeniusSpectrum.lean",
+    "Catalog/Probability/MarkovAperiodicSpectrum.lean",
+    "Catalog/Probability/MarkovExponentBounds.lean",
+    "Catalog/Probability/MarkovRecurrenceFixedPoint.lean",
+]
+
+
+FUTURE_DIRECTIONS = """# Future Directions
+
+The programme carried out here develops frame definability for modal systems over
+Markov chains, with the support functor as the bridge. Seven groups of results are in
+place: the support functor together with matrix powers, Chapman-Kolmogorov, the
+support-power theorem identifying positivity of the n-step probability with n-step
+accessibility, the modal system attached to a matrix, and the impossibility of Loeb's
+axiom on any nonempty chain; strong lumpability as a bounded morphism, hence a
+validity-transfer principle, together with the computation that the soundness spectrum
+of the deterministic n-cycle is exactly the multiples of n; path padding, primitivity
+of irreducible lazy chains, and a trichotomy of soundness spectra; the observation that
+return lengths form an additive submonoid of the natural numbers, so that the
+two-generator (Chicken McNugget) theorem applies when two coprime cycle lengths are
+available, with no self-loop anywhere; the general criterion, namely that an additive
+submonoid of the natural numbers is cofinite if and only if no integer d >= 2 divides
+all of it, hence a soundness spectrum is cofinite exactly when the world is aperiodic
+and, for a finite irreducible chain, primitivity is equivalent to aperiodicity of one
+state; the quantitative layer, namely the diameter principle proved by pigeonhole plus
+path excision, the effective exponents N-1 for lazy chains and 2(N-1) from a single
+holding state, and a matching sharpness witness on the nearest-neighbour chain; and
+finally the greatest fixed point of the diamond on a finite frame, which is exactly the
+set of worlds reaching a cycle, so that from every state of a finite chain recurrence is
+reachable, while the naive identification of that fixed point with the recurrent set is
+refuted by an explicit absorbing chain.
+
+Four structural facts drive the directions below.
+
+* **Seriality is the fingerprint of probability.** Every impossibility result factors
+  through the lemma that a probability distribution cannot vanish identically;
+  row-stochasticity is used nowhere else. Conversely, the lumping morphism and the whole
+  path calculus use only nonnegativity.
+
+* **One combinatorial gadget, three readings.** The composition law for n-step
+  accessibility is simultaneously iterated-box semantics, matrix multiplication on
+  supports, and addition of return times.
+
+* **The self-loop is a shortcut, not the theorem.** The right invariant is the common
+  divisor of the whole cycle monoid, not a distinguished self-loop or a chosen pair of
+  coprime generators.
+
+* **Forward-looking fixed points cannot see return.** The gap between the greatest fixed
+  point of the diamond and the recurrent set is exactly transience.
+
+Concrete open directions:
+
+1. **Quantitative refinement.** The general criterion gives the conductor y^2 for a
+   consecutive pair y, y+1, and the Frobenius number ab - a - b for a coprime pair.
+   What is the optimal conductor as a function of the frame? Is a Wielandt-type bound
+   N^2 - 2N + 2 recoverable purely by path excision?
+
+2. **Weighted supports.** Replace "positive" by "at least epsilon" and ask which parts of
+   the dictionary survive. A quantitative support-power theorem would connect the
+   combinatorial exponents to genuine mixing-time estimates.
+
+3. **Reducible chains.** Everything sharp here assumes irreducibility. For a general chain
+   the state space decomposes into transient states and terminal classes; the fixed-point
+   identification suggests the right modal object is a relativised fixed point, one per
+   class.
+
+4. **Cyclic operators.** The recurrent set is not a fixed point of the diamond. Which
+   extension of the basic modal language - a cycle modality, or a fixed-point calculus
+   with backward modalities - defines it, and what is the resulting definability theory?
+
+5. **Continuous time and general state spaces.** The support of a transition kernel is a
+   relation between measurable sets; whether the support-power theorem and the
+   aperiodicity criterion have kernel analogues, with the gcd replaced by a group of
+   periods, is open in this framework.
+
+6. **Lumpability lattice.** Aggregation makes the assignment of a modal theory to a chain
+   order-reversing along lumpings. Characterising the image - which modal theories arise
+   from chains - would give a completeness theorem for the probabilistic semantics.
+"""
+
+
+def main() -> None:
+    demo_source = read(os.path.join(ROOT, "demo.py"))
+    lean_sources = [read(os.path.join(ROOT, path)) for path in LEAN_FILES]
+    lean_blob = "\n\n".join(
+        f"/- ===== {path} ===== -/\n{src}" for path, src in zip(LEAN_FILES, lean_sources)
+    )
+
+    package: Dict[str, Any] = {
+        "title": "Frame Definability over Markov Chains: Soundness Spectra, "
+                 "Aperiodicity, and the Modal Content of Recurrence",
+        "domain": "Probability",
+        "description": (
+            "A finite Markov chain is read as a Kripke frame through its support, and the "
+            "reading is exact: positivity of the n-step transition probability is n-step "
+            "accessibility. This yields the impossibility of Loeb's axiom on any nonempty "
+            "chain, an arithmetic criterion showing that primitivity of a finite irreducible "
+            "chain is equivalent to aperiodicity of a single state, sharp mixing exponents, "
+            "and the identification of the greatest fixed point of possibility with the "
+            "states that can reach recurrence."
+        ),
+        "authors": ["Aristotle"],
+        "date": "2026-08-22",
+        "key_results": [
+            "Support-power theorem: the n-step transition probability from u to v is "
+            "strictly positive exactly when the support frame carries a path of exactly n "
+            "edges from u to v.",
+            "No nonempty Markov chain is a provability frame: row-stochasticity forces "
+            "seriality, which destroys converse well-foundedness, so Loeb's axiom is valid "
+            "on no nonempty chain, while the chain's modal system proves its own consistency "
+            "statement and internalises its full reflection schema exactly when every state "
+            "has positive holding probability.",
+            "Cofiniteness criterion for numerical semigroups: an additive submonoid of the "
+            "natural numbers contains every sufficiently large integer if and only if no "
+            "integer d at least 2 divides all of it, with explicit conductor y squared for "
+            "consecutive elements y and y+1.",
+            "Primitivity is aperiodicity: for a finite irreducible chain, some power of the "
+            "matrix is strictly positive in every entry if and only if one - equivalently "
+            "every - state has return lengths with greatest common divisor one; no self-loop "
+            "and no coprime pair is needed.",
+            "Effective exponents and their sharpness: reachability in a frame with N worlds "
+            "needs fewer than N steps, giving primitivity exponents N-1 for a lazy chain and "
+            "2(N-1) from a single holding state, the former attained exactly by the "
+            "nearest-neighbour chain.",
+            "Recurrence identification: on a finite frame the greatest fixed point of the "
+            "diamond is exactly the set of worlds from which a world lying on a cycle is "
+            "reachable, and it is strictly larger than the recurrent set, as a two-state "
+            "absorbing chain shows.",
+        ],
+        "keywords": [
+            "Markov chain",
+            "support frame",
+            "modal frame definability",
+            "soundness spectrum",
+            "numerical semigroup",
+            "aperiodicity",
+            "Perron-Frobenius primitivity",
+            "lumpability",
+        ],
+        "article": read(os.path.join(ROOT, "ARTICLE.md")),
+        "research_paper": read(os.path.join(ROOT, "RESEARCH_PAPER.md")),
+        "research_paper_tex": read(os.path.join(ROOT, "RESEARCH_PAPER.tex")),
+        "demo": demo_source,
+        "demos": [
+            {
+                "name": "The Markov-Modal Dictionary Verified Numerically End to End",
+                "description": (
+                    "A dependency-free script that reproduces every quantitative claim of the "
+                    "development on explicit finite chains. It checks the agreement between "
+                    "positivity of real matrix powers and existence of paths of a given length; "
+                    "prints soundness spectra together with their periods and verifies closure "
+                    "under addition; tests the cofiniteness criterion on several numerical "
+                    "semigroups, including the semigroup generated by 6, 10 and 15, whose gcd is "
+                    "one although no two generators are coprime; classifies the deterministic "
+                    "n-cycle as periodic and the loopless three-state chain as primitive; "
+                    "measures primitivity exponents against the bounds N-1 and 2(N-1) and "
+                    "confirms that the nearest-neighbour chain attains N-1 exactly; compares the "
+                    "greatest fixed point of the diamond with the recurrent set on the absorbing "
+                    "chain; and verifies that strong lumpability and the bounded-morphism "
+                    "conditions agree on reductions between cycles."
+                ),
+                "code": demo_source,
+            }
+        ],
+        "algorithms": [
+            {
+                "name": "Boolean Repeated Squaring for the Support of a Matrix Power",
+                "description": (
+                    "Decides whether the n-step transition probability from u to v is strictly "
+                    "positive without performing a single floating-point multiplication. By the "
+                    "support-power theorem, positivity of the n-step probability is exactly the "
+                    "existence of a path of n edges in the support frame, so the computation may "
+                    "be carried out in the Boolean semiring, with logical OR for addition and "
+                    "logical AND for multiplication. Binary exponentiation then evaluates the "
+                    "n-th relational power in O(N^3 log n) Boolean operations for a state space "
+                    "of size N, against O(N^3 n) for naive iteration. Because no cancellation is "
+                    "possible in the Boolean semiring, the procedure is exact: it never suffers "
+                    "the underflow that destroys the numerical test for large n, which is the "
+                    "practical reason to prefer the support formulation. It underlies every other "
+                    "algorithm here, since spectra, irreducibility, primitivity exponents and "
+                    "fixed points are all read off Boolean powers."
+                ),
+                "pseudocode": (
+                    "INPUT : nonnegative matrix P of size N, exponent n, states u, v\n"
+                    "OUTPUT: TRUE iff the n-step probability from u to v is positive\n"
+                    "\n"
+                    "1.  R[i][j] <- (P[i][j] > 0)                       // support frame\n"
+                    "2.  Result  <- identity relation of size N          // R^0\n"
+                    "3.  Base    <- R\n"
+                    "4.  e       <- n\n"
+                    "5.  while e > 0 do\n"
+                    "6.      if e is odd then Result <- BooleanMul(Result, Base)\n"
+                    "7.      Base <- BooleanMul(Base, Base)\n"
+                    "8.      e <- floor(e / 2)\n"
+                    "9.  return Result[u][v]\n"
+                    "\n"
+                    "BooleanMul(A, B):\n"
+                    "  for i, j in 0..N-1:\n"
+                    "      C[i][j] <- OR over t of (A[i][t] AND B[t][j])\n"
+                    "  return C"
+                ),
+                "code": read(os.path.join(ASSETS, "alg_boolean_power.py")),
+            },
+            {
+                "name": "Aperiodicity Test and Conductor of the Cycle Monoid",
+                "description": (
+                    "Computes the soundness spectrum of a state, decides whether it is cofinite, "
+                    "and returns both the exact conductor and the theoretical bound. The "
+                    "underlying theorem is that an additive submonoid of the natural numbers "
+                    "contains every sufficiently large integer if and only if no integer d at "
+                    "least 2 divides all of it, equivalently if and only if the greatest common "
+                    "divisor of its elements is one. The test therefore collects return lengths "
+                    "by iterating Boolean powers, at cost O(cutoff times N^3), and folds them "
+                    "with the Euclidean algorithm; the running gcd can be checked after each "
+                    "step, so the loop exits as soon as it reaches one. When the gcd is one, a "
+                    "linear sieve over the monoid generated by the observed lengths finds the "
+                    "exact conductor in O(cutoff times number of generators) steps, and the "
+                    "least pair of consecutive elements y, y+1 gives the certified bound y "
+                    "squared coming from the box decomposition n = (q-r)y + r(y+1). The two "
+                    "numbers can differ widely: for the semigroup generated by 6, 10 and 15 the "
+                    "exact conductor is 30 while the box bound is 225."
+                ),
+                "pseudocode": (
+                    "INPUT : support relation R of size N, state w, cutoff L\n"
+                    "OUTPUT: period g; if g = 1 also the exact conductor and the bound y^2\n"
+                    "\n"
+                    " 1.  Lengths <- empty list ; Power <- identity relation ; g <- 0\n"
+                    " 2.  for n = 1 to L do\n"
+                    " 3.      Power <- BooleanMul(Power, R)\n"
+                    " 4.      if Power[w][w] then append n to Lengths ; g <- gcd(g, n)\n"
+                    " 5.      if g = 1 then break                       // aperiodic already\n"
+                    " 6.  if g = 0 then return \"state never returns\"\n"
+                    " 7.  if g > 1 then return (\"periodic with period\", g)\n"
+                    " 8.  B <- max(Lengths)^2 + max(Lengths) + 1         // safe sieve bound\n"
+                    " 9.  M <- {0} ; for n = 1 to B: if exists L in Lengths with n - L in M\n"
+                    "         then add n to M\n"
+                    "10.  Gaps <- { n <= B : n not in M }\n"
+                    "11.  exact <- max(Gaps) + 1 (or 0 if Gaps is empty)\n"
+                    "12.  y <- least positive element of M with y + 1 in M\n"
+                    "13.  return (\"aperiodic\", exact, y * y)"
+                ),
+                "code": read(os.path.join(ASSETS, "alg_aperiodicity.py")),
+            },
+            {
+                "name": "Decision Procedure for Primitivity with the Exact Exponent",
+                "description": (
+                    "Decides whether some power of a nonnegative matrix is strictly positive in "
+                    "every entry, and if so returns the least such power. The procedure exploits "
+                    "the equivalence, valid for finite irreducible chains, between primitivity "
+                    "and aperiodicity of a single state, so the expensive search over powers is "
+                    "only entered once two cheap combinatorial tests have passed. Irreducibility "
+                    "is decided by a Warshall-style transitive closure in O(N^3), which is "
+                    "correct because the diameter principle guarantees that anything reachable "
+                    "at all is reachable in fewer than N steps. Aperiodicity is the gcd test at "
+                    "an arbitrary state, legitimate because aperiodicity is a class property of "
+                    "an irreducible chain. Only then does the algorithm scan Boolean powers for "
+                    "the first totally positive one; termination is guaranteed, and the scan is "
+                    "bounded by N-1 when every state has positive holding probability and by "
+                    "2(N-1) when a single state does. The bound N-1 is attained exactly by the "
+                    "nearest-neighbour chain, so no better bound in terms of N alone exists."
+                ),
+                "pseudocode": (
+                    "INPUT : nonnegative matrix P of size N\n"
+                    "OUTPUT: least n with all entries of P^n positive, or NONE\n"
+                    "\n"
+                    " 1.  R <- support of P\n"
+                    " 2.  if not Irreducible(R) then return NONE\n"
+                    " 3.  g <- gcd of the return lengths at state 0 (see previous algorithm)\n"
+                    " 4.  if g != 1 then return NONE                     // periodic\n"
+                    " 5.  Power <- identity relation\n"
+                    " 6.  for n = 0 to N^2 + N do\n"
+                    " 7.      if n > 0 then Power <- BooleanMul(Power, R)\n"
+                    " 8.      if every entry of Power is TRUE then return n\n"
+                    " 9.  return NONE\n"
+                    "\n"
+                    "Irreducible(R):\n"
+                    "  Reach <- R with the diagonal added\n"
+                    "  for t, i, j: if Reach[i][t] and Reach[t][j] then Reach[i][j] <- TRUE\n"
+                    "  return TRUE iff every entry of Reach is TRUE\n"
+                    "\n"
+                    "Certified bounds: if P[w][w] > 0 for every w the answer is at most N-1;\n"
+                    "if P[w][w] > 0 for at least one w the answer is at most 2(N-1)."
+                ),
+                "code": read(os.path.join(ASSETS, "alg_primitivity_exponent.py")),
+            },
+            {
+                "name": "Greatest Fixed Point of the Diamond by Downward Iteration",
+                "description": (
+                    "Computes the greatest fixed point of the possibility operator on a finite "
+                    "frame, that is, the largest set of states each of which has a successor "
+                    "inside the set. Starting from the full state space and repeatedly applying "
+                    "the operator produces a decreasing sequence of sets, which must stabilise "
+                    "within N rounds since each non-final round removes at least one state; each "
+                    "round costs O(N^2), so the total cost is O(N^3). The identification theorem "
+                    "guarantees that the result is exactly the set of states from which some "
+                    "state lying on a cycle can be reached, and the routine cross-checks this by "
+                    "computing the recurrent states from the transitive closure and then their "
+                    "backward reachability set. The comparison exposes the failure of the naive "
+                    "conjecture: on the two-state absorbing chain, state 0 is transient yet "
+                    "belongs to the fixed point, because possibility only ever looks forward and "
+                    "so detects survival rather than return."
+                ),
+                "pseudocode": (
+                    "INPUT : support relation R of size N\n"
+                    "OUTPUT: greatest fixed point G of the diamond; recurrent set; reach set\n"
+                    "\n"
+                    " 1.  X <- { 0, 1, ..., N-1 }\n"
+                    " 2.  repeat\n"
+                    " 3.      Y <- { w : exists v with R[w][v] and v in X }\n"
+                    " 4.      if Y = X then break else X <- Y\n"
+                    " 5.  G <- X                                        // at most N rounds\n"
+                    " 6.  T <- transitive closure of R (Warshall)\n"
+                    " 7.  Rec <- { w : T[w][w] }                        // lies on a cycle\n"
+                    " 8.  T' <- reflexive transitive closure of R\n"
+                    " 9.  Reach <- { u : exists z in Rec with T'[u][z] }\n"
+                    "10.  assert G = Reach                              // identification theorem\n"
+                    "11.  return (G, Rec, Reach)"
+                ),
+                "code": read(os.path.join(ASSETS, "alg_gfp_diamond.py")),
+            },
+        ],
+        "visualizations": [
+            {
+                "name": "Soundness Spectra as Combs: Periods, Gaps and Conductors",
+                "description": (
+                    "For each of four example chains the script draws the set of degrees at "
+                    "which a chosen state satisfies the reflection principle, equivalently the "
+                    "set of lengths of closed walks at that state. A periodic state produces an "
+                    "evenly spaced comb whose spacing is its period; an aperiodic state produces "
+                    "a comb that becomes solid past its conductor, which is marked in red. The "
+                    "final example glues three loops of lengths 6, 10 and 15 to a common state: "
+                    "its gcd is one although no two of the loop lengths are coprime, so the "
+                    "spectrum is cofinite for a reason that the two-generator argument cannot "
+                    "supply."
+                ),
+                "code": read(os.path.join(ASSETS, "viz_spectrum.py")),
+            },
+            {
+                "name": "Fill-in of the Support of the n-Step Matrix",
+                "description": (
+                    "A side-by-side filmstrip of the supports of successive matrix powers for a "
+                    "periodic and an aperiodic chain. The deterministic four-cycle permutes a "
+                    "single positive diagonal forever and never becomes totally positive; the "
+                    "loopless three-state chain, which has no holding probability at any state, "
+                    "saturates at step five and stays saturated. Each filled cell is, by the "
+                    "support-power theorem, the existence of a walk of exactly that many edges "
+                    "between the two states."
+                ),
+                "code": read(os.path.join(ASSETS, "viz_power_fillin.py")),
+            },
+            {
+                "name": "Measured Primitivity Exponents Against the Certified Bounds",
+                "description": (
+                    "Measured exponents for three families of chains on N states are plotted "
+                    "against the two proved bounds. The nearest-neighbour chain traces the line "
+                    "N-1 exactly, showing that the bound for chains in which every state has "
+                    "positive holding probability cannot be improved as a function of the number "
+                    "of states; the lazy cycle stays on or under the same line; and the cycle "
+                    "with a single holding state traces 2(N-1), the bound obtained by routing an "
+                    "approach and an exit through the distinguished holding state."
+                ),
+                "code": read(os.path.join(ASSETS, "viz_exponent_sharpness.py")),
+            },
+        ],
+        "interactive_demos": [
+            {
+                "title": "The Markov Chain Modal Laboratory",
+                "description": (
+                    "A single, self-contained laboratory in which the reader draws a transition "
+                    "structure by clicking cells of an adjacency grid, or loads one of six "
+                    "presets, and watches every invariant of the theory recomputed live. The "
+                    "panels show: a state diagram with recurrent, transient-but-surviving and "
+                    "dead states colour-coded; a filmstrip of the supports of the first thirteen "
+                    "matrix powers, with totally positive powers ticked; the soundness spectrum "
+                    "of a chosen state drawn as a comb up to degree thirty, annotated with its "
+                    "period or, when aperiodic, with its conductor and the list of missing "
+                    "degrees; a mixing panel reporting irreducibility, primitivity, the measured "
+                    "exponent and the certified bounds N-1 or 2(N-1) together with the diameter "
+                    "principle; a logic panel translating the same structure into statements "
+                    "about what the chain can say about itself, including why a dead end is the "
+                    "one thing a stochastic matrix can never produce and why that makes the "
+                    "provability axiom unavailable; and a long-run panel comparing the greatest "
+                    "fixed point of possibility with the recurrent set, exhibiting the strict gap "
+                    "on the absorbing preset. Proofs and background are folded behind styled "
+                    "disclosure sections so that the surface remains readable for a newcomer "
+                    "while the full arguments are one click away."
+                ),
+                "html": read(os.path.join(ASSETS, "widget.html")),
+            }
+        ],
+        "interactive_layout": read(os.path.join(ASSETS, "interactive_layout.md")),
+        "lean_proofs": lean_blob,
+        "future_directions": FUTURE_DIRECTIONS,
+        "modules": {"demo": demo_source},
+        "lean_files": LEAN_FILES,
     }
-    for name, rows in frames.items():
-        degs = degree_set(rows, 12)
-        print(f"  {name}: valid degrees k <= 12 : {degs}")
-    print()
-    print("Semantic cross-check on K3 (all valuations, k = 0..4):")
-    k3 = complete_irreflexive_frame(3)
-    for k in range(5):
-        print(f"    box^{k} p -> p valid on K3 : {valid(k3, cycle_axiom(k), ['p'])}")
-    print("  So the degrees of K3 are {0, 2, 3, 4, ...} = <2,3>, a numerical")
-    print("  semigroup that is NOT the set of multiples of any single d.")
-    print("  Degrees are closed under addition: 2+2=4, 2+3=5, 3+3=6 all present.")
 
-    rule("6.  Bounded morphisms and the failure of definability")
-    two_cycle = cycle_frame(2)
-    loop = (0b1,)
-    f = [0, 0]
-    print("  Source: the 2-cycle 0 -> 1 -> 0 (irreflexive).")
-    print("  Target: the single reflexive loop (not irreflexive).")
-    print(f"  The constant map is a surjective bounded morphism : "
-          f"{is_bounded_morphism(two_cycle, loop, f)}")
-    print("  Validity transfers along surjective bounded morphisms, so no set of")
-    print("  modal formulas can define irreflexivity: an irreflexive frame maps")
-    print("  onto a reflexive one.")
-    print()
-    print("  Sanity check: every formula valid on the 2-cycle is valid on the loop.")
-    tests = {"Loeb": LOEB, "reflection": REFLECTION, "consistency": CONSISTENCY,
-             "box^2 p -> p": cycle_axiom(2)}
-    for name, phi in tests.items():
-        print(f"    {name:14s}: 2-cycle {valid(two_cycle, phi, ['p'])!s:5s} "
-              f" loop {valid(loop, phi, ['p'])!s:5s}")
+    out = os.path.join(ROOT, "PACKAGE.json")
+    with open(out, "w", encoding="utf-8") as handle:
+        json.dump(package, handle, indent=2, ensure_ascii=False)
+    print(f"wrote {out} ({os.path.getsize(out)} bytes)")
 
-    rule("7.  Disjoint unions: 'some world is reflexive' is not definable")
 
-    def disjoint_union(a: Frame, b: Frame) -> Frame:
-        na = len(a)
-        return tuple(a) + tuple(row << na for row in b)
+if __name__ == "__main__":
+    main()
 
-    succ2 = (0b10, 0b00)  # a two-point Loeb frame, no reflexive world
-    union = disjoint_union(succ2, loop)
-    print(f"  Frame A (0 -> 1)          : reflexive world? "
-          f"{any((succ2[i] >> i) & 1 for i in range(2))}")
-    print(f"  Frame B (single loop)     : reflexive world? True")
-    print(f"  A + B has a reflexive world, yet A does not; and a formula is valid")
-    print(f"  on A + B iff it is valid on both summands, so no axiom set can say")
-    print(f"  'some world is reflexive'.")
-    for name, phi in tests.items():
-        va, vb, vu = (valid(succ2, phi, ["p"]), valid(loop, phi, ["p"]),
-                      valid(union, phi, ["p"]))
-        print(f"    {name:14s}: A {va!s:5s} B {vb!s:5s} A+B {vu!s:5s}"
-              f"   (A+B = A and B: {vu == (va and vb)})")
 
-    rule("8.  The nineteen Loeb frames on three worlds")
-    for idx, rows in enumerate(sorted(enumerate_posets(3)), start=1):
-        edges = [f"{i}->{j}" for i in range(3) for j in range(3)
-                 if (rows[i] >> j) & 1]
-        print(f"  {idx:2d}. " + (", ".join(edges) if edges else "(no edges)"))
-    print()
-    print("Nineteen strict partial orders; equivalently nineteen frames on three")
-    print("worlds on which the Loeb axiom is valid under every valuation.")
+"""Visualisation: measured primitivity exponents against the theoretical bounds.
+
+Three families of chains on N states are compared with the bounds proved for them: the
+nearest-neighbour chain, for which the exponent is exactly N-1, so the lazy bound is
+attained; the lazy cycle, which also holds at every state and stays under N-1; and the
+cycle with a single holding state, whose exponent is bounded by 2(N-1) and, as the plot
+shows, meets that bound exactly.
+"""
+
+from __future__ import annotations
+
+from typing import Callable, Dict, List, Optional, Sequence
+
+import matplotlib.pyplot as plt
+
+Matrix = List[List[float]]
+BoolMatrix = List[List[bool]]
+
+
+def support(p: Sequence[Sequence[float]]) -> BoolMatrix:
+    return [[entry > 0.0 for entry in row] for row in p]
+
+
+def bool_mul(a: BoolMatrix, b: BoolMatrix) -> BoolMatrix:
+    size = len(a)
+    return [
+        [any(a[i][t] and b[t][j] for t in range(size)) for j in range(size)]
+        for i in range(size)
+    ]
+
+
+def primitivity_exponent(p: Sequence[Sequence[float]], cutoff: int = 80) -> Optional[int]:
+    r = support(p)
+    size = len(r)
+    power: BoolMatrix = [[i == j for j in range(size)] for i in range(size)]
+    for n in range(cutoff + 1):
+        if n > 0:
+            power = bool_mul(power, r)
+        if all(power[i][j] for i in range(size) for j in range(size)):
+            return n
+    return None
+
+
+def nbr_chain(n: int) -> Matrix:
+    p: Matrix = [[0.0] * n for _ in range(n)]
+    for i in range(n):
+        targets = [i] + ([i - 1] if i > 0 else []) + ([i + 1] if i + 1 < n else [])
+        for j in targets:
+            p[i][j] = 1.0 / len(targets)
+    return p
+
+
+def lazy_cycle(n: int) -> Matrix:
+    return [
+        [0.5 if j == i else (0.5 if j == (i + 1) % n else 0.0) for j in range(n)]
+        for i in range(n)
+    ]
+
+
+def one_loop_cycle(n: int) -> Matrix:
+    p: Matrix = [[1.0 if j == (i + 1) % n else 0.0 for j in range(n)] for i in range(n)]
+    p[0] = [0.5 if j == 0 else (0.5 if j == 1 % n else 0.0) for j in range(n)]
+    return p
+
+
+def main() -> None:
+    sizes = list(range(2, 13))
+    families: Dict[str, Callable[[int], Matrix]] = {
+        "nearest-neighbour chain": nbr_chain,
+        "lazy cycle": lazy_cycle,
+        "cycle with one holding state": one_loop_cycle,
+    }
+    fig, ax = plt.subplots(figsize=(8.5, 5.0))
+    colours = {"nearest-neighbour chain": "#2b6cb0",
+               "lazy cycle": "#2f855a",
+               "cycle with one holding state": "#b7791f"}
+    for name, builder in families.items():
+        exponents = [primitivity_exponent(builder(n)) for n in sizes]
+        ax.plot(sizes, exponents, "o-", color=colours[name], label=f"measured: {name}")
+    ax.plot(sizes, [n - 1 for n in sizes], "--", color="#718096",
+            label="bound $N-1$ (every state holds)")
+    ax.plot(sizes, [2 * (n - 1) for n in sizes], ":", color="#718096",
+            label="bound $2(N-1)$ (one holding state)")
+    ax.set_xlabel("number of states $N$")
+    ax.set_ylabel("primitivity exponent")
+    ax.set_title("Effective exponents and their sharpness")
+    ax.grid(alpha=0.25)
+    ax.legend(fontsize=9)
+    fig.tight_layout()
+    fig.savefig("exponent_sharpness.png", dpi=160)
+    print("wrote exponent_sharpness.png")
+
+
+if __name__ == "__main__":
+    main()
+
+
+"""Visualisation: how the support of the n-step matrix fills in.
+
+Two chains are compared side by side as n grows: the deterministic 4-cycle, which is
+irreducible but periodic, and the loopless 3-state chain with closed walks of lengths 2
+and 3, which is aperiodic.  Each cell shows whether the n-step transition probability is
+strictly positive, which by the support-power theorem is the existence of a path of
+exactly n edges.  The periodic chain permutes a single positive diagonal forever; the
+aperiodic chain becomes totally positive and stays so, at its primitivity exponent.
+"""
+
+from __future__ import annotations
+
+from typing import List, Sequence, Tuple
+
+import matplotlib.pyplot as plt
+
+Matrix = List[List[float]]
+BoolMatrix = List[List[bool]]
+
+
+def support(p: Sequence[Sequence[float]]) -> BoolMatrix:
+    return [[entry > 0.0 for entry in row] for row in p]
+
+
+def bool_mul(a: BoolMatrix, b: BoolMatrix) -> BoolMatrix:
+    size = len(a)
+    return [
+        [any(a[i][t] and b[t][j] for t in range(size)) for j in range(size)]
+        for i in range(size)
+    ]
+
+
+def powers(p: Sequence[Sequence[float]], up_to: int) -> List[BoolMatrix]:
+    r = support(p)
+    size = len(r)
+    power: BoolMatrix = [[i == j for j in range(size)] for i in range(size)]
+    out = [power]
+    for _ in range(up_to):
+        power = bool_mul(power, r)
+        out.append(power)
+    return out
+
+
+def cycle_chain(n: int) -> Matrix:
+    return [[1.0 if j == (i + 1) % n else 0.0 for j in range(n)] for i in range(n)]
+
+
+def ap_chain() -> Matrix:
+    return [[0.0, 1.0, 0.0], [0.5, 0.0, 0.5], [1.0, 0.0, 0.0]]
+
+
+def main() -> None:
+    up_to = 7
+    cases: List[Tuple[str, Matrix]] = [
+        ("deterministic 4-cycle (periodic, never primitive)", cycle_chain(4)),
+        ("loopless aperiodic 3-state chain (primitive at $n=5$)", ap_chain()),
+    ]
+    fig, axes = plt.subplots(len(cases), up_to + 1, figsize=(1.35 * (up_to + 1), 3.4))
+    for row, (name, p) in enumerate(cases):
+        mats = powers(p, up_to)
+        size = len(p)
+        for n, mat in enumerate(mats):
+            ax = axes[row][n]
+            grid = [[1.0 if mat[i][j] else 0.0 for j in range(size)] for i in range(size)]
+            ax.imshow(grid, cmap="Blues", vmin=0.0, vmax=1.4, interpolation="nearest")
+            ax.set_xticks([])
+            ax.set_yticks([])
+            total = all(mat[i][j] for i in range(size) for j in range(size))
+            ax.set_title(f"$n={n}$" + ("  ✓" if total else ""), fontsize=9,
+                         color="#22543d" if total else "#2d3748")
+            for spine in ax.spines.values():
+                spine.set_edgecolor("#cbd5e0")
+        axes[row][0].set_ylabel(name, rotation=0, ha="right", va="center", fontsize=9)
+    fig.suptitle("Support of the $n$-step matrix: a tick marks a totally positive power", fontsize=11)
+    fig.tight_layout(rect=(0.0, 0.0, 1.0, 0.93))
+    fig.savefig("power_fillin.png", dpi=160)
+    print("wrote power_fillin.png")
+
+
+if __name__ == "__main__":
+    main()
+
+
+"""Visualisation: soundness spectra as combs, with periods and conductors.
+
+For each example chain the script draws, for a chosen state, the set of degrees n at
+which the reflection principle of degree n holds — equivalently the set of n with
+positive n-step return probability.  A periodic state produces an evenly spaced comb
+whose spacing is the period; an aperiodic state produces a comb that becomes solid
+beyond its conductor, which is marked.
+"""
+
+from __future__ import annotations
+
+from math import gcd
+from typing import Dict, List, Sequence
+
+import matplotlib.pyplot as plt
+from matplotlib.patches import Rectangle
+
+Matrix = List[List[float]]
+BoolMatrix = List[List[bool]]
+
+
+def support(p: Sequence[Sequence[float]]) -> BoolMatrix:
+    return [[entry > 0.0 for entry in row] for row in p]
+
+
+def bool_mul(a: BoolMatrix, b: BoolMatrix) -> BoolMatrix:
+    size = len(a)
+    return [
+        [any(a[i][t] and b[t][j] for t in range(size)) for j in range(size)]
+        for i in range(size)
+    ]
+
+
+def spectrum(p: Sequence[Sequence[float]], w: int, cutoff: int) -> List[int]:
+    r = support(p)
+    size = len(r)
+    power: BoolMatrix = [[i == j for j in range(size)] for i in range(size)]
+    out: List[int] = [0]
+    for n in range(1, cutoff + 1):
+        power = bool_mul(power, r)
+        if power[w][w]:
+            out.append(n)
+    return out
+
+
+def cycle_chain(n: int) -> Matrix:
+    return [[1.0 if j == (i + 1) % n else 0.0 for j in range(n)] for i in range(n)]
+
+
+def ap_chain() -> Matrix:
+    return [[0.0, 1.0, 0.0], [0.5, 0.0, 0.5], [1.0, 0.0, 0.0]]
+
+
+def lazy_cycle(n: int) -> Matrix:
+    return [
+        [0.5 if j == i else (0.5 if j == (i + 1) % n else 0.0) for j in range(n)]
+        for i in range(n)
+    ]
+
+
+def six_ten_fifteen() -> Matrix:
+    """A chain whose state 0 has return lengths generated by 6, 10 and 15.
+
+    Three disjoint loops of lengths 6, 10 and 15 are attached to a common state 0.
+    Their gcd is 1 although no two of them are coprime, so the state is aperiodic and
+    the spectrum is cofinite, but the two-generator argument does not apply.
+    """
+    lengths = [6, 10, 15]
+    size = 1 + sum(length - 1 for length in lengths)
+    p: Matrix = [[0.0] * size for _ in range(size)]
+    index = 1
+    for length in lengths:
+        prev = 0
+        for _ in range(length - 1):
+            p[prev][index] = 1.0
+            prev = index
+            index += 1
+        p[prev][0] = 1.0
+    for i in range(size):
+        total = sum(p[i])
+        if total > 0:
+            p[i] = [x / total for x in p[i]]
+    return p
+
+
+def main() -> None:
+    cutoff = 40
+    chains: Dict[str, Matrix] = {
+        "deterministic 4-cycle": cycle_chain(4),
+        "loopless aperiodic 3-state chain": ap_chain(),
+        "lazy 4-cycle": lazy_cycle(4),
+        "three loops of lengths 6, 10, 15": six_ten_fifteen(),
+    }
+    fig, axes = plt.subplots(len(chains), 1, figsize=(11, 1.7 * len(chains)), sharex=True)
+    for ax, (name, p) in zip(axes, chains.items()):
+        spec = spectrum(p, 0, cutoff)
+        period = 0
+        for n in spec:
+            if n > 0:
+                period = gcd(period, n)
+        for n in range(cutoff + 1):
+            colour = "#2b6cb0" if n in spec else "#edf2f7"
+            ax.add_patch(Rectangle((n - 0.42, 0), 0.84, 1, facecolor=colour, edgecolor="white"))
+        if period == 1:
+            gaps = [n for n in range(cutoff + 1) if n not in spec]
+            cond = (max(gaps) + 1) if gaps else 0
+            ax.axvline(cond - 0.5, color="#c53030", linewidth=2)
+            ax.text(cond + 0.4, 0.5, f"conductor {cond}", color="#c53030",
+                    va="center", fontsize=9)
+            label = f"{name}\naperiodic (gcd 1)"
+        else:
+            label = f"{name}\nperiod {period}"
+        ax.set_xlim(-0.6, cutoff + 0.6)
+        ax.set_ylim(0, 1)
+        ax.set_yticks([])
+        ax.set_ylabel(label, rotation=0, ha="right", va="center", fontsize=9)
+        for spine in ax.spines.values():
+            spine.set_visible(False)
+    axes[-1].set_xlabel("degree $n$  (equivalently, return-time length)")
+    fig.suptitle("Soundness spectra: filled squares are the degrees $n$ at which the state trusts itself",
+                 fontsize=11)
+    fig.tight_layout(rect=(0.0, 0.0, 1.0, 0.95))
+    fig.savefig("spectra.png", dpi=160)
+    print("wrote spectra.png")
 
 
 if __name__ == "__main__":

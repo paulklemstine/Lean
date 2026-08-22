@@ -1,157 +1,267 @@
-# Nineteen Worlds Where Nothing Believes Itself
+# The Logic of a Shuffled Deck
 
-## A census of the universes in which mathematics can doubt
+## What a random walk knows about itself
 
-There is a sentence that mathematics can write about itself and cannot escape.
+Imagine a token hopping around a small set of rooms. In each room it consults a table of
+probabilities and jumps to a neighbouring room. This is a *Markov chain*: the workhorse
+of queueing theory, statistical physics, population genetics, PageRank, and card
+shuffling. Everything about it is contained in a square matrix $P$ whose entry $P(u,v)$
+is the chance of moving from room $u$ to room $v$ in one step, and whose rows sum to one
+because the token must go *somewhere*.
 
-In 1955, Martin Löb answered a question that Leon Henkin had posed a few years earlier, and his answer has haunted logic ever since. Suppose a formal theory strong enough to talk about its own proofs — arithmetic, say — manages to prove the statement "if I can prove $p$, then $p$ is true." One would think this is modest: it is merely a declaration of the theory's own soundness for the single sentence $p$. Löb showed that it is not modest at all. Any theory that proves "if $p$ is provable, then $p$" already proves $p$ outright.
+Now imagine a completely different subject: modal logic, the study of statements like
+"necessarily $\varphi$", written $\Box\varphi$. Since the 1950s the standard semantics
+for $\Box$ has been *possible worlds*: a set $W$ of worlds with an accessibility relation
+$R$, and the rule
 
-Write $\Box p$ for "$p$ is provable." Löb's theorem is the schema
-$$\Box(\Box p \to p) \to \Box p.$$
-Take $p$ to be a contradiction and you get Gödel's second incompleteness theorem as a one-line corollary: a consistent theory cannot prove that it does not prove a contradiction. Trusting yourself, in mathematics, is indistinguishable from being wrong.
+$$\Box\varphi \text{ is true at } w \quad\Longleftrightarrow\quad \varphi \text{ is true at every } v \text{ with } w \mathrel{R} v .$$
 
-This article is about a question that sounds almost frivolous next to that famous drama, and which turns out to have a startlingly concrete answer:
+Different constraints on $R$ validate different axioms, and the mapping between the two —
+which axioms force which shapes of relation — is called *frame definability*. It is the
+central technical machinery of the field.
 
-> **In how many small universes is the Löb axiom true?**
+These two worlds look unrelated. One is about numbers between $0$ and $1$; the other is
+about truth. This article is about a dictionary that makes them the *same subject*, and
+about what the dictionary buys you: a proof that no probabilistic system can obey the
+logic of provability; an exact arithmetic criterion for when a random walk mixes; sharp
+bounds on how long mixing takes; and a precise identification of what "eventually
+recurring" means as a logical fixed point.
 
-The answer for three worlds is **nineteen**. Not nineteen up to some equivalence, not nineteen in some limiting sense — nineteen exactly, out of the $512$ possible universes on three worlds. And the reason it is nineteen connects a theorem about self-reference to a classical problem in enumerative combinatorics: the counting of partial orders.
+## Step one: forget the numbers, keep the zeros
 
----
+The whole bridge rests on one deliberately crude move. Given the matrix $P$, throw away
+the actual probabilities and remember only which of them are nonzero. Define the
+**support frame** of $P$: the worlds are the states, and $u$ accesses $v$ exactly when
 
-## Worlds, arrows, and the shape of possibility
+$$P(u,v) > 0 .$$
 
-To make "universe" precise we use the standard picture of modal logic, due to Saul Kripke. A **frame** is a set of *worlds* together with an *accessibility relation*: an arrow $w \to v$ meaning "from $w$, the world $v$ is visible."
+That is, "$v$ is accessible from $u$" means "the token *can* go from $u$ to $v$".
 
-Fix a frame. A **valuation** decides, for each atomic proposition and each world, whether that proposition is true there. Once the valuation is fixed, complex formulas evaluate world by world in the obvious way, with a single new clause for the box:
-$$\Box \varphi \text{ is true at } w \quad \text{iff} \quad \varphi \text{ is true at every world visible from } w.$$
+This looks like a lossy simplification, and it is — but a remarkable amount survives it.
+The first result says that the loss is exactly zero as far as *possibility* is concerned:
 
-The move that makes this powerful is to *forget the valuation*. A formula is **valid on a frame** if it is true at every world under *every* valuation. Validity is therefore a property of the arrows alone — of the raw combinatorial shape of the frame, with all the propositional content quantified away.
+> **Support-Power Theorem.** For a matrix with nonnegative entries and any $n \ge 0$,
+> the $n$-step probability $P^n(u,v)$ is strictly positive if and only if the support
+> frame contains a path of exactly $n$ edges from $u$ to $v$.
 
-This is where modal logic turns into geometry. Each axiom carves out a class of shapes:
+The proof is an induction on $n$ using the recursion $P^{n+1}(u,v) = \sum_z P(u,z)P^n(z,v)$
+and the elementary fact that a sum of nonnegative reals is positive precisely when one of
+its summands is. Positivity of matrix powers *is* $n$-step accessibility. Every
+combinatorial statement about the frame is simultaneously a statement about where the
+chain can be after $n$ steps, and Chapman–Kolmogorov, $P^{n+m} = P^n P^m$, becomes the
+statement that paths concatenate.
 
-- The **reflection axiom** $\Box p \to p$ ("what is provable is true") is valid exactly when every world sees itself.
-- The **transitivity axiom** $\Box p \to \Box\Box p$ is valid exactly when visibility is transitive.
-- The **consistency formula** $\neg\Box\bot$ ("I do not prove a falsehood") is valid exactly when no world is a dead end.
-- The **symmetry axiom** $p \to \Box\Diamond p$ is valid exactly when the arrows come in pairs, and the **euclidean axiom** $\Diamond p \to \Box\Diamond p$ exactly when any two worlds visible from a common world see each other.
+## Step two: probability abhors a dead end
 
-Each of these correspondences is proved by a small, exact trick: to show that an axiom *forces* a property of the arrows, one produces the single most stubborn valuation, the one that will make the axiom fail if the arrows misbehave. For reflection at a world $w$, the stubborn valuation is "$p$ is true exactly at the worlds $w$ can see." Then $\Box p$ is automatically true at $w$; if the axiom is valid, $p$ must be true at $w$ as well; and by construction that means $w$ sees itself. One line, and a schema of logic has become a fact about a directed graph.
+The first consequence is a genuine impossibility theorem, and it comes from the most
+boring fact about probability distributions: they cannot be identically zero. If the row
+of $P$ at $u$ sums to $1$, some entry in it is positive, so *every* state of a chain has a
+successor. In modal jargon, the support frame of a stochastic matrix is **serial**.
 
----
+Seriality is the fingerprint of probability in this dictionary. It is also fatal to a
+famous axiom. In the logic of provability — the modal system GL, whose $\Box$ means "is
+provable in arithmetic" — the governing principle is **Löb's axiom**
 
-## What Löb's axiom asks of a universe
+$$\Box(\Box\varphi \to \varphi) \to \Box\varphi ,$$
 
-Now the deep case. What shape must a frame have for
-$$\Box(\Box p \to p) \to \Box p$$
-to be valid on it? The answer is the beautiful and slightly forbidding statement at the heart of provability logic:
+Gödel's second incompleteness theorem in modal dress. Löb's axiom is valid on exactly
+those frames that are transitive and *converse well-founded*: there is no infinite
+forward chain $w_0 R w_1 R w_2 R \cdots$. Every path must eventually stop dead.
+
+But a stochastic chain never stops. From every state there is somewhere to go, forever.
+So:
 
-> **Theorem (the Löb correspondence).** A single instance of the Löb axiom, over a single propositional variable, is valid on a frame $F$ exactly when the accessibility relation of $F$ is **transitive** and **converse well-founded** — that is, there is no infinite chain $w_0 \to w_1 \to w_2 \to \cdots$ of ever-further worlds.
+> **No nonempty Markov chain is a provability frame.** If $P$ is a stochastic matrix on a
+> nonempty finite state space, Löb's axiom is not valid on the support frame of $P$.
 
-Both directions require ingenuity.
+The mechanism is a two-line clash of quantifiers: converse well-foundedness would let us
+prove a falsehood at every world by well-founded induction, because seriality always
+offers another step. Conservation of probability mass and the discipline of Gödelian
+provability are simply incompatible. In this sense, the logic of a random walk is the
+exact opposite of the logic of a formal theory reasoning about itself.
 
-To see that transitivity and converse well-foundedness *suffice*, one argues by induction along the relation, running the induction backwards, from the far end. Converse well-foundedness is exactly the licence to do this. The induction says: if every world beyond $v$ already satisfies $p$, then the premise $\Box(\Box p \to p)$ delivers $p$ at $v$ itself. Since there is nowhere for the induction to fall off, $p$ holds everywhere visible, which is the conclusion $\Box p$.
+What a chain does instead is the *other* option. Every transition matrix $P$ manufactures
+a proof-system-like object whose "theorems" are the modal formulas valid on its support
+frame. Such a system is consistent, and when $P$ is stochastic it proves its own
+consistency statement $\neg\Box\bot$ — the very sentence Gödel says a sufficiently strong
+theory cannot prove about itself. There is no paradox: the price is that the system is
+not Löbian. And it internalises its full soundness schema $\Box\varphi \to \varphi$
+exactly when the chain is **lazy**, meaning every state has positive holding probability
+$P(w,w) > 0$. Laziness — the modeller's standard trick of letting the token sometimes
+stay put — is precisely self-declared soundness.
 
-To see that they are *necessary*, one again hunts for stubborn valuations. For transitivity the witness is
-$$x \mapsto \text{“$w$ sees $x$, and everything $x$ sees is also seen by $w$”},$$
-a valuation that makes the Löb premise true at $w$ for free, and whose conclusion at any successor $v$ says precisely that $v$'s successors are $w$'s successors — transitivity. For converse well-foundedness the witness is even simpler. Suppose some nonempty set $S$ of worlds has no maximal member, meaning each of its worlds sees another of its worlds. Interpret $p$ as "*not* in $S$." Then the premise $\Box(\Box p \to p)$ holds at every world of $S$ — because for any $z$ in $S$ there is a successor in $S$ that falsifies $\Box p$ vacuously — but the conclusion $\Box p$ fails, since some successor is in $S$. So a frame validating Löb can contain no such set: every nonempty set has a maximal element, which is exactly converse well-foundedness.
+## Step three: the spectrum of a state is a numerical semigroup
 
-That second argument is worth pausing over. The naive reading of "no infinite ascending chain" invites you to *build* an infinite chain, and building one requires infinitely many arbitrary choices. Recasting the condition as "every nonempty set has a maximal element" removes the choices entirely: one set, one valuation, one contradiction.
+Now zoom in on a single state $w$ and ask a subtler question. For which exponents $n$
+does the *reflection principle of degree $n$*,
 
-An immediate consequence: **a Löb frame is irreflexive.** No world sees itself, because a self-seeing world would be an infinite ascending chain all by itself. And so we arrive at the semantic face of Gödel's second theorem:
+$$\Box^n\varphi \to \varphi ,$$
 
-> **Theorem (the joint inconsistency).** No nonempty frame validates both the Löb axiom and the reflection axiom. Reflection demands that every world see itself; Löb forbids it. The only frame that can honour both is the empty one.
-
-The famous incompleteness result — a sound theory cannot internalise its own soundness — becomes, in this picture, a collision between two graph conditions: reflexive and irreflexive cannot both hold anywhere at all.
-
----
-
-## The collapse to combinatorics
-
-Converse well-foundedness is an infinitary condition: it talks about infinite chains, or equivalently about arbitrary subsets. But if the frame has only finitely many worlds, an infinite chain in a transitive relation must revisit a world, and revisiting a world in a transitive relation produces a loop. So on a finite frame the condition collapses:
-
-> **Theorem (the finite collapse).** On a frame with finitely many worlds, the Löb axiom is valid exactly when the accessibility relation is transitive and irreflexive — that is, exactly when it is a **strict partial order**.
-
-This is the sentence that turns provability logic into combinatorics. "Strict partial order" is one of the oldest structures in mathematics: a way of saying that some things come before others, consistently and without circularity — the divisibility of numbers, the inclusion of sets, the dependency graph of a construction project. And now: the possible universes of a theory that can doubt itself.
-
-So the census becomes a counting problem. A frame on the labelled worlds $\{1, \dots, n\}$ is nothing but an $n \times n$ matrix of zeros and ones; there are $2^{n^2}$ of them. How many validate Löb?
-
-> **Theorem (the bridge).** For a frame on $n$ labelled worlds with adjacency matrix $R$, validity of the Löb axiom — a statement quantifying over *all* valuations, an uncountable second-order condition — holds if and only if $R$ passes the finite check "$R$ is transitive and has zero diagonal."
-
-An infinite, second-order property has become a finite table lookup. And a table lookup can be performed:
-
-| worlds $n$ | frames validating Löb | all frames $2^{n^2}$ | fraction |
-|---|---|---|---|
-| $0$ | $1$ | $1$ | $1$ |
-| $1$ | $1$ | $2$ | $0.5$ |
-| $2$ | $3$ | $16$ | $0.19$ |
-| $3$ | $19$ | $512$ | $0.037$ |
-| $4$ | $219$ | $65\,536$ | $0.0033$ |
-| $5$ | $4231$ | $33\,554\,432$ | $0.00013$ |
-| $6$ | $130\,023$ | $6.9 \times 10^{10}$ | $0.0000019$ |
-
-The sequence $1, 1, 3, 19, 219, 4231, 130023, \dots$ is the count of labelled partial orders — a classical and famously irregular sequence in enumerative combinatorics, with no known closed form.
-
-Look at what happened. A count that grows in a way nobody has been able to express in closed form is *also* the number of finite universes in which mathematics can be honestly modest about its own powers. On three worlds there are nineteen such universes, and here they are, in full: the empty order; the six orders with a single strict inequality $i < j$; the six "V" shapes (one element below two others, or above two others); the six three-element chains $i < j < k$; and — a subtlety worth savouring — nothing else. There is no shape with exactly two comparabilities among three points other than the V's, because $i < j < k$ *forces* $i < k$ by transitivity. Transitivity is not a free constraint; it is what makes $19$ so much smaller than the $2^6 = 64$ irreflexive relations on three points.
-
----
-
-## Doubt is expensive; trust is cheap
-
-Set this against the other axiom. How many frames on $n$ worlds validate reflection $\Box p \to p$? The condition is just "every world sees itself," which fixes the $n$ diagonal entries and leaves the other $n^2 - n$ entries entirely free. So the count is exactly $2^{n^2-n}$: $1, 1, 4, 64, 4096, \dots$.
-
-On three worlds the tally is stark: **$64$ frames validate reflection, $19$ validate Löb, and $0$ validate both.**
-
-The asymmetry is not an accident of small numbers; it widens without limit. Reflexive frames are a fixed fraction $2^{-n}$ of everything, while Löb frames are a vanishing fraction — the number of labelled partial orders is known to be roughly $2^{n^2/4}$, the square root of the number of frames, in the exponent. Being *able to trust yourself* is a condition on $n$ bits. Being *rightly modest* is a condition that eliminates all but a vanishing sliver.
-
-There is one comforting regularity in the sliver. Given any Löb frame on $n$ worlds, adjoin an isolated world that sees nothing and is seen by nothing; the result is a Löb frame on $n+1$ worlds, and distinct frames stay distinct. So the sequence of counts is monotone increasing: doubt-friendly universes never become scarcer as you add room.
-
----
-
-## What logic cannot say
-
-Every result so far has the same form: an axiom, a shape. It is natural to hope that this works in reverse — that any reasonable shape can be pinned down by some collection of axioms. It cannot, and the reasons are structural and pretty.
-
-The key notion is a **bounded morphism** (also called a p-morphism): a map $f$ from the worlds of $F$ to the worlds of $G$ such that (i) if $w$ sees $v$ then $f(w)$ sees $f(v)$, and (ii) if $f(w)$ sees some $u$ in $G$, then $w$ sees some $v$ in $F$ with $f(v) = u$. Such a map is exactly a morphism of "local visibility structure," and it has a striking property: modal truth is preserved and reflected along it, so if $f$ is onto, then *every formula valid on $F$ is valid on $G$*.
-
-Now consider the frame whose worlds are the natural numbers, with $n$ seeing only $n+1$: a single infinite ladder, and irreflexive. Collapse the whole ladder to a single point. The collapse is a surjective bounded morphism, and its target is a single world that sees itself — reflexive. Therefore:
-
-> **Theorem (irreflexivity is not definable).** No set of modal formulas — no matter how large or how cleverly chosen — is valid exactly on the irreflexive frames. In particular, no proof system whatsoever has the irreflexive frames as its exact class of sound frames.
-
-This is a delicious tension with the Löb correspondence. The Löb axiom defines the transitive converse well-founded frames, all of which *are* irreflexive; yet irreflexivity on its own is beyond the reach of any axioms at all. Modal formulas can only see the world in front of them and along the arrows; they cannot see the identity of a world, and a loop looks exactly like an endless ladder if you can only look forward.
-
-Two further limits come from the disjoint union of frames — two frames side by side with no arrows between them. A formula is valid on the union exactly when it is valid on each part. Consequently **"every world sees every world" is not definable** (it holds on a single reflexive loop but fails on two such loops side by side), and neither is **"some world is reflexive"** (place a loop beside a Löb frame: the union has a reflexive world, the summand does not). Nor is **"there is at least one world"**: every formula, including $\bot$, is vacuously valid on the empty frame.
-
-Together these say something sharp about the expressive power of the language: the frame class of any modal proof system whatsoever must be closed under surjective bounded images, closed under disjoint unions, and must reflect disjoint unions. Three closure conditions, three impossibility theorems, no exceptions.
-
----
-
-## The surprise in the degrees
-
-The last chapter of the story starts with a graded version of trust. Instead of the single reflection axiom $\Box p \to p$, consider the family
-$$\Box^k p \to p \qquad (k = 0, 1, 2, \dots),$$
-"if $p$ is provable-in-$k$-nested-steps, then $p$." Reflection is the case $k = 1$. Each of these axioms has a clean shape:
-
-> **Theorem.** $\Box^k p \to p$ is valid on a frame exactly when every world lies on a closed walk of length exactly $k$ — a route of $k$ arrows returning to its origin.
-
-Collect the degrees that a given frame satisfies:
-$$D(F) = \{k \in \mathbb{N} : \Box^k p \to p \text{ is valid on } F\}.$$
-Since walks can be concatenated, $D(F)$ is closed under addition, and $0$ is always in it (the empty walk). So $D(F)$ is an additive submonoid of the natural numbers — an invariant of the frame, extracted purely from which axioms it validates.
-
-Which monoids arise? The extremes are what you would guess. A Löb frame has $D(F) = \{0\}$: it has no closed walks at all, so no positive degree of self-trust survives. A frame in which each world sees precisely itself has $D(F) = \mathbb{N}$: total, unrestricted self-trust. And the directed $n$-cycle has $D(F) = n\mathbb{N}$, the multiples of $n$, which suggests a tidy picture in which every frame's degrees are the multiples of some fundamental period.
-
-That tidy picture is false, and the smallest counterexample is charming. Take three worlds, each seeing the other two and not itself — the complete graph $K_3$ with both directions on every edge. There is no closed walk of length $1$ (no loops). There is a closed walk of length $2$: go out and come back. There is one of length $3$: go around the triangle. And once you have $2$ and $3$ you have every larger length. So
-$$D(K_3) = \{0, 2, 3, 4, 5, \dots\} = \langle 2, 3\rangle,$$
-the numerical semigroup generated by $2$ and $3$ — famously *not* the set of multiples of any single number, since it contains $2$ and $3$ but not $1$. Self-trust, graded by depth, is not organised by a single period. A theory can be trustworthy at depth two and depth three while failing at depth one, and no divisibility law explains the pattern.
-
----
-
-## Why this is more than bookkeeping
-
-Three morals, in increasing order of ambition.
-
-**Modal axioms are combinatorial constraints in disguise.** The Löb axiom is not merely *about* well-foundedness; on finite structures it *is* the strict-partial-order condition, exactly and decidably. That equivalence lets a question phrased with an unbounded quantifier over all valuations be settled by a finite check.
-
-**The scarcity of Löb frames quantifies a philosophical claim.** People often say that self-trust is "harder" than consistency. Here that is a ratio of integers: $19$ versus $64$ on three worlds, and a gap that grows super-exponentially.
-
-**Expressive power has hard edges.** Three closure principles — under surjective bounded images, under disjoint unions, and reflecting disjoint unions — bound what any axiom system can say. Irreflexivity, universality, the existence of a reflexive world, and non-emptiness all fall outside. It is not that we have not found the right axioms; there are none.
-
-The count $1, 1, 3, 19, 219, 4231, 130023, \dots$ has been studied for decades as a problem about ordering finite sets, and no formula for it is known. It is pleasant to learn that the same numbers answer a different question entirely: how many ways there are to build a small world in which a theory may reason about its own proofs without ever being able to vouch for them. Nineteen, when the world has three points.
+hold at $w$ for every formula $\varphi$ and every assignment of truth values? Call the set
+of such $n$ the **soundness spectrum** of $w$.
+
+There is a beautifully clean answer, and it is purely combinatorial: degree $n$ holds at
+$w$ if and only if $w$ lies on a closed walk of exactly $n$ steps. (One direction is
+immediate; the other takes the valuation making the variable false at $w$ and true
+everywhere else.) Under the support dictionary, this says the soundness spectrum of a
+state is the set
+
+$$\{\,n : P^n(w,w) > 0\,\},$$
+
+the support of its return-time distribution.
+
+And this set has algebra: if you can return in $n$ steps and in $m$ steps, you can return
+in $n+m$ steps by doing both. Together with the trivial return of length $0$, the spectrum
+is an **additive submonoid of $\mathbb{N}$** — a *numerical semigroup*, the object number
+theorists know from the Chicken McNugget problem. For the deterministic $n$-cycle, where
+the token marches $0 \to 1 \to \cdots \to n-1 \to 0$, the spectrum is exactly $n\mathbb{N}$:
+the modal degree of self-soundness coincides, on the nose, with the probabilistic
+*period*.
+
+## Step four: the sharp criterion
+
+Here is the question that organises everything. When is the spectrum **cofinite** — when
+does the chain eventually admit a return of *every* sufficiently large length?
+
+If two of the return lengths are coprime, say $a$ and $b$ with $\gcd(a,b)=1$, the classical
+Chicken McNugget theorem answers it: every integer greater than $ab - a - b$ is a
+nonnegative combination of $a$ and $b$. But that is not the real theorem, because a
+numerical semigroup can have overall gcd $1$ while *no two* of its generators are coprime
+— the semigroup generated by $6, 10, 15$ is the standard example. The correct criterion
+does not mention generators at all:
+
+> **Cofiniteness Criterion.** An additive submonoid $S \subseteq \mathbb{N}$ contains every
+> sufficiently large integer if and only if no integer $d \ge 2$ divides all of $S$.
+
+Call the right-hand condition **aperiodicity**. One direction is easy: a cofinite $S$
+contains $Nd+1$ for large $N$, which $d$ cannot divide. The other direction is where the
+idea lives. Instead of hunting for two coprime elements, form the group of *differences*
+
+$$D = \{\,x - y : x, y \in S\,\} \subseteq \mathbb{Z}.$$
+
+Every subgroup of $\mathbb{Z}$ is cyclic, so $D = d\mathbb{Z}$ for a single $d \ge 0$. Since
+$S \subseteq D$, this $d$ divides every element of $S$; aperiodicity rules out $d = 0$ and
+$d \ge 2$, leaving $d = 1$. So $1$ is a difference: $S$ contains two **consecutive**
+integers $y$ and $y+1$. And two consecutive elements suffice, by an argument you can do on
+a napkin. Given $n \ge y^2$, divide: $n = qy + r$ with $0 \le r < y$, and $n \ge y^2$ forces
+$q \ge y > r$. Then
+
+$$n = (q - r)\,y + r\,(y+1),$$
+
+a nonnegative combination of $y$ and $y+1$. So everything from $y^2$ on lies in $S$.
+
+Translated back through the dictionary, this is the sharp form of a cornerstone of
+Markov-chain theory. A finite chain is **irreducible** if every state can reach every
+state, and **primitive** if some power of $P$ has all entries strictly positive — the
+condition that makes the Perron–Frobenius theorem deliver convergence to a unique
+stationary distribution.
+
+> **Primitivity is Aperiodicity.** For a finite irreducible chain with nonnegative
+> entries, the following are equivalent: some power of $P$ is strictly positive in every
+> entry; and one — equivalently every — state is aperiodic, meaning no $d \ge 2$ divides
+> all of its return lengths.
+
+Textbook treatments usually reach primitivity by assuming a self-loop somewhere, and
+laziness is the standard engineering fix for a periodic chain. The criterion shows the
+self-loop is a *shortcut, not the theorem*. A self-loop is just the special case
+$1 \in S$; two coprime cycle lengths is the special case $\gcd = 1$; and the loopless
+$3$-state chain $0 \to 1 \to 0$, $1 \to 2 \to 0$ — which has closed walks of lengths $2$
+and $3$ and no holding probability anywhere — is primitive too, invisibly to the
+self-loop route. The $n$-cycle for $n \ge 2$ sits on the other side: $n$ divides every
+return length, the spectrum is $n\mathbb{N}$, and the chain never mixes.
+
+That aperiodicity at *one* state forces it at *all* states — the classical statement that
+periodicity is a class property — falls out as a corollary rather than being assumed.
+
+## Step five: how long is "eventually"?
+
+A cofiniteness statement with an unspecified threshold is unsatisfying; a modeller wants
+a number. The bounds come from a shortest-path principle proved by pure pigeonhole:
+
+> **Diameter Principle.** In a frame with $N$ worlds, if $v$ is reachable from $u$ at all,
+> it is reachable in fewer than $N$ steps.
+
+Present a path as a function from step indices to worlds; if it is at least $N$ steps long
+it visits some world twice, and excising the loop between the two visits leaves a shorter
+path. Iterate.
+
+From this, explicit exponents fall out. If every state of an $N$-state irreducible chain
+has positive holding probability, then $P^k$ is strictly positive in every entry for
+*every* $k \ge N - 1$: reach the target in fewer than $N$ steps, then idle. If only *one*
+state holds, route through it — an approach of length $< N$ and an exit of length $< N$ —
+and the exponent $2(N-1)$ works.
+
+And the first bound cannot be improved. On the **nearest-neighbour chain** on
+$\{0, 1, \dots, N-1\}$, where the token stays put or steps to an adjacent index, one step
+changes the index by at most one, so getting from $0$ to $N-1$ genuinely requires $N-1$
+steps. Its primitivity exponent is *exactly* $N-1$.
+
+## Step six: what the diamond computes
+
+One last question, and it has a twist. The dual of $\Box$ is the diamond
+$\Diamond\varphi = \neg\Box\neg\varphi$, "some accessible world satisfies $\varphi$". A set
+$X$ of states is a *post-fixed point* of the diamond when every member of $X$ has a
+successor in $X$; the union of all such sets is the **greatest fixed point** of the
+diamond, and it is genuinely a fixed point. Intuitively it should be the set of states
+from which the walk can go on forever — and on a finite state space, going on forever
+means repeating.
+
+The natural guess is that this greatest fixed point is the **recurrent** set: the states
+the chain returns to, which is what long-run behaviour is made of. That guess is *false*,
+and the counterexample is embarrassingly small. Take two states with the rule "jump to
+state $1$ and stay there". State $0$ is transient — the walk leaves and never comes back —
+but state $0$ certainly has an infinite forward path, so it belongs to the greatest fixed
+point. The correct statement inserts one word:
+
+> **Recurrence Identification.** On a finite frame, the greatest fixed point of the
+> diamond is exactly the set of worlds from which some world lying on a cycle is
+> reachable.
+
+One inclusion is a post-fixed-point argument; the other is another pigeonhole on the
+orbit of a choice of successors. The moral is a genuine limitation of modal expressiveness:
+the diamond only ever looks *forward*, so it can see that the walk survives, but it cannot
+see whether the walk comes *home*. Distinguishing "reaches recurrence" from "is recurrent"
+needs a cyclic operator, not a fixed point of a monotone one.
+
+Combined with seriality, this yields a clean statement about chains: on a finite
+stochastic chain, from *every* state one can reach a state with positive return
+probability. Not "somewhere there is a recurrent state", but "from everywhere you can get
+to one".
+
+## Step seven: aggregation is a morphism
+
+Practitioners routinely shrink a chain by merging states. The merge is legitimate — the
+aggregated process is again Markov — when the map $f$ on states is **strongly lumpable**:
+the total probability of moving from $u$ into the block $f^{-1}(y)$ depends on $u$ only
+through its own block. This is precisely the notion of a **bounded morphism** of frames,
+the structure-preserving map of modal logic: a positive transition maps to a positive
+transition (one summand bounds the block sum), and conversely a positive block sum must
+contain a positive summand. Strikingly, this uses only nonnegativity — row-stochasticity
+plays no role at all.
+
+The payoff is immediate. Modal validity transfers along surjective lumpings, so
+aggregating a chain can only *add* valid principles; and laziness — self-declared
+soundness — is inherited by every lumping. It also yields limitative results with tiny,
+computable witnesses. The $2$-cycle has no holding probability; it lumps onto the
+one-state chain, which does; and validity transfers. Hence:
+
+> **Non-laziness is not modally definable.** No collection of modal axioms can force a
+> chain to have zero holding probabilities.
+
+## Why this is more than an analogy
+
+The pattern behind all of it is that one combinatorial gadget — the existence of an
+$n$-edge path — has three simultaneous readings: iterated necessity in the logic,
+positivity of a matrix power in linear algebra, and addition of return times in number
+theory. Prove something once, and it is three theorems.
+
+Read one way, the results say what probability contributes to logic: seriality, and hence
+the impossibility of Gödelian self-reference in any conservative stochastic system. Read
+the other way, they say what logic contributes to probability: that mixing is a purely
+arithmetic condition on a numerical semigroup; that the standard laziness assumption is
+an artefact; that aggregation is a morphism whose limitations are the failures of modal
+definability; and that "the walk goes on forever" and "the walk comes home" are separated
+by exactly the expressive gap of the diamond.
+
+The token hopping between rooms turns out to have an opinion about its own soundness. The
+surprise is that it is always, and provably, an optimist.
