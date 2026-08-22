@@ -156,46 +156,6 @@ def split_sections(text: str) -> List[Tuple]:
 
 NUM_BOLD = re.compile(r'\d+\.\s+\*\*([^*]+?)\*\*\s*')
 BULLET = re.compile(r'(?m)^\s*[-•*]\s+')
-SUBHEAD = re.compile(r'#{2,4}\s+(.+?)\n(.*?)(?=#{2,4}|\Z)', re.DOTALL)
-
-def extract_items(body: str) -> List[Tuple[str, str]]:
-    """Extract (title, description) items from body text.
-    Priority: numbered-bold > bullets > subheaders."""
-    items = []
-    # numbered-bold
-    for m in NUM_BOLD.finditer(body):
-        title = m.group(1).strip().rstrip('.')
-        rem = body[m.end():]
-        nx = re.search(r'\n\s*\d+\.\s+\*\*', rem)
-        desc = (rem[:nx.start()] if nx else rem).strip()
-        if nx is None:
-            desc = re.split(r'\n\s*\n', desc, 1)[0] if '\n\n' in desc else desc.split('\n\n')[0] if '\n\n' in desc else desc
-        desc = desc.strip()[:3000]
-        if len(desc) > 30:
-            items.append((title, desc))
-    if items:
-        return items
-    # bullets
-    bullets = list(BULLET.finditer(body))
-    if bullets:
-        for i, b in enumerate(bullets):
-            end = bullets[i + 1].start() if i + 1 < len(bullets) else len(body)
-            raw = body[b.end():end].strip().split('\n\n')[0].strip()
-            if len(raw) > 80:
-                t = raw[:200].rstrip() + ("..." if len(raw) > 200 else "")
-                items.append((t, raw[:3000]))
-    if items:
-        return items
-    # subheaders
-    for m in SUBHEAD.finditer(body):
-        hdr, b = m.group(1).strip(), m.group(2).strip()
-        kw_check = (hdr + b).lower()
-        if (len(b) > 100 and
-                any(k in kw_check for k in
-                    ("prove", "conjecture", "extend", "formalize", "show",
-                     "establish", "theorem", "open", "future"))):
-            items.append((hdr[:200], b[:3000]))
-    return items
 
 
 def clean_title(t: Optional[str]) -> Optional[str]:

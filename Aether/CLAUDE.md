@@ -212,7 +212,7 @@ This is the standard startup command. It runs continuously: each tick polls for 
 
 Other flags:
 - `--max-inflight N` — max concurrent Aristotle jobs (default 6)
-- `--novelty-slots N` — dispatch slots reserved for Novelty directions (default 3)
+- `--novelty-slots N` — dispatch slots reserved for Novelty directions (default 2)
 - `--interval SECONDS` — sleep between ticks (default 21600 = 6h)
 - `--serve` — start local docs server alongside Aether
 - `--serve-port PORT` — docs server port (default 8000)

@@ -15,7 +15,7 @@ bash Aether/.aether_workspace/git-hooks/install-hooks.sh
 ### Run the Research Loop
 
 ```bash
-cd Aether && python3 aether_tick.py --loop --max-inflight 9 --novelty-slots 3 --interval 1800 --serve --log .aether_workspace/aether.log
+cd Aether && python3 aether_tick.py --loop --max-inflight 9 --novelty-slots 2 --interval 1800 --serve --log .aether_workspace/aether.log
 ```
 
 This is the standard startup command. It runs continuously: each tick polls for completed jobs, integrates them, dispatches new ones, rebuilds the website (`update_index.py`), syncs to `docs/`, commits, and pushes to git. The `--serve` flag starts a local docs HTTP server at `http://localhost:8000`. The `--log` flag tees all output to a log file while still printing to the console.

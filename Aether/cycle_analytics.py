@@ -255,50 +255,7 @@ class CycleAnalytics:
             "last_n": last_n,
         }
 
-    def get_quality_trend(self, last_n: int = 20) -> List[Dict[str, Any]]:
-        """Get quality scores over the last N cycles for trend display."""
-        recent = self.successful_records[-last_n:]
-        return [
-            {"cycle": r.cycle_n, "quality": r.quality_score, "domain": r.domain}
-            for r in recent
-        ]
 
-    def get_prompt_version_stats(self) -> Dict[str, Dict[str, float]]:
-        """Get quality statistics broken down by prompt version.
-
-        Returns dict mapping version (e.g. "v1", "v2", "v3") to:
-        - count: number of successful cycles
-        - avg_quality: average quality score
-        - best: best cycle quality
-        - recent_count: cycles in last 10
-        - recent_avg: average quality in last 10
-        """
-        from collections import defaultdict
-        per_version = defaultdict(list)
-        recent_per_version = defaultdict(list)
-        sorted_records = sorted(self.successful_records, key=lambda r: r.timestamp or "")
-
-        for r in sorted_records:
-            v = r.prompt_version or "unknown"
-            per_version[v].append(r.quality_score)
-
-        last_10 = sorted_records[-10:]
-        for r in last_10:
-            v = r.prompt_version or "unknown"
-            recent_per_version[v].append(r.quality_score)
-
-        result = {}
-        for v, scores in per_version.items():
-            result[v] = {
-                "count": len(scores),
-                "avg_quality": round(sum(scores) / len(scores), 4) if scores else 0.0,
-                "best": round(max(scores), 4) if scores else 0.0,
-                "recent_count": len(recent_per_version.get(v, [])),
-                "recent_avg": round(
-                    sum(recent_per_version[v]) / len(recent_per_version[v]), 4
-                ) if recent_per_version.get(v) else 0.0,
-            }
-        return result
 
     def get_phase_split_stats(self) -> Dict[str, Any]:
         """Get statistics for the two-phase (A: math, B: packaging) split.
@@ -361,34 +318,7 @@ class CycleAnalytics:
             }
         return stats
 
-    def get_domain_quality_trend(self, last_n: int = 50) -> Dict[str, List[Dict[str, Any]]]:
-        """Get quality trend over time per domain (rolling window of last_n records).
 
-        Returns dict mapping domain -> list of {cycle, quality, timestamp} entries,
-        sorted chronologically. Useful for dashboard trend charts.
-        """
-        from collections import defaultdict
-        domain_data = defaultdict(list)
-        recent = self.successful_records[-last_n:] if len(self.successful_records) > last_n else self.successful_records
-        for r in recent:
-            if r.domain and r.quality_score > 0:
-                domain_data[r.domain].append({
-                    "cycle": r.cycle_n,
-                    "quality": r.quality_score,
-                    "timestamp": r.timestamp,
-                })
-        # Sort each domain's entries by cycle
-        for dom in domain_data:
-            domain_data[dom].sort(key=lambda x: x["cycle"])
-        return dict(domain_data)
-
-    def get_sorry_density_trend(self, last_n: int = 50) -> List[Dict[str, Any]]:
-        """Get sorry density trend over recent cycles for dashboard chart."""
-        recent = self.successful_records[-last_n:] if len(self.successful_records) > last_n else self.successful_records
-        return [
-            {"cycle": r.cycle_n, "sorry_density": r.sorry_density, "domain": r.domain}
-            for r in recent
-        ]
 
     def get_breakthroughs(self, threshold: float = 0.8) -> List[CycleRecord]:
         """Return cycles with quality_score above threshold (breakthroughs)."""
@@ -469,75 +399,6 @@ class CycleAnalytics:
                 })
         return sorted(declining, key=lambda x: x["delta"])
 
-    def generate_digest(self, last_n: int = 20) -> Dict[str, Any]:
-        """Generate a discovery digest summarizing recent research activity.
-
-        Returns a dict with:
-          - top_cycles: best quality cycles in last_n
-          - domain_summary: per-domain stats
-          - breakthroughs: cycles with quality >= 0.8
-          - trends: quality direction per domain (improving/declining/stable)
-          - total_cycles, avg_quality, avg_duration
-        """
-        recent = self.successful_records[-last_n:] if len(self.successful_records) > last_n else self.successful_records
-        if not recent:
-            return {"total_cycles": 0, "digest": "No cycles recorded yet."}
-
-        qualities = [r.quality_score for r in recent if r.quality_score > 0]
-        durations = [r.duration_seconds for r in recent if r.duration_seconds > 0]
-
-        # Top cycles by quality
-        scored = sorted([r for r in recent if r.quality_score > 0],
-                         key=lambda r: r.quality_score, reverse=True)[:5]
-
-        # Domain summary
-        from collections import defaultdict
-        domain_data = defaultdict(list)
-        for r in recent:
-            if r.domain and r.quality_score > 0:
-                domain_data[r.domain].append(r.quality_score)
-
-        # Trends per domain
-        declining = self.detect_quality_decay(window=5, threshold=-0.05)
-        declining_domains = {d["domain"] for d in declining}
-        improving_domains = set()
-        for dom, scores in domain_data.items():
-            if len(scores) >= 3:
-                first_half = scores[:len(scores)//2]
-                second_half = scores[len(scores)//2:]
-                if first_half and second_half:
-                    if sum(second_half)/len(second_half) > sum(first_half)/len(first_half) + 0.03:
-                        improving_domains.add(dom)
-
-        # Breakthroughs
-        breakthroughs = [r for r in recent if r.quality_score >= 0.8]
-
-        return {
-            "total_cycles": len(self.records),
-            "recent_cycles": len(recent),
-            "avg_quality": round(sum(qualities) / len(qualities), 3) if qualities else 0.0,
-            "avg_duration_minutes": round(sum(durations) / len(durations) / 60, 1) if durations else 0,
-            "top_cycles": [
-                {"domain": r.domain, "quality": round(r.quality_score, 3),
-                 "theorems": r.theorem_count, "title": r.title[:60]}
-                for r in scored
-            ],
-            "domain_summary": {
-                dom: {"count": len(scores), "avg_quality": round(sum(scores)/len(scores), 3)}
-                for dom, scores in domain_data.items()
-            },
-            "breakthroughs": [
-                {"domain": r.domain, "quality": round(r.quality_score, 3),
-                 "theorems": r.theorem_count, "title": r.title[:60]}
-                for r in breakthroughs
-            ],
-            "trends": {
-                "improving": sorted(list(improving_domains)),
-                "declining": sorted(list(declining_domains)),
-                "stable": sorted([d for d in domain_data
-                                 if d not in improving_domains and d not in declining_domains]),
-            },
-        }
 
     def get_domain_correlations(self, min_cycles: int = 2) -> List[Dict[str, Any]]:
         """Find domain pairs that tend to produce quality together.

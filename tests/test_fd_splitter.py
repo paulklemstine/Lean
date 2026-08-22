@@ -3,7 +3,7 @@
 import sys, os
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'Aether'))
 
-from fd_splitter import infer_domains_v2, classify_header, split_sections, extract_items, clean_title
+from fd_splitter import infer_domains_v2, classify_header, split_sections, clean_title
 
 
 class TestInferDomainsV2:
@@ -122,37 +122,6 @@ class TestSplitSections:
         assert result[1][0] == 1
         assert result[1][1] == "First Section"
 
-
-class TestExtractItems:
-    def test_numbered_bold(self):
-        body = (
-            "1. **Prove Goldbach**\n"
-            "A detailed investigation of the Goldbach conjecture for all even numbers "
-            "greater than four, using analytic methods and sieve theory.\n\n"
-            "2. **Twin Prime**\n"
-            "Extend the bounded gaps result for twin primes to arbitrary admissible "
-            "patterns using the Maynard-Tao sieve framework.\n"
-        )
-        items = extract_items(body)
-        assert len(items) == 2
-        assert items[0][0] == "Prove Goldbach"
-        assert items[1][0] == "Twin Prime"
-
-    def test_bullets(self):
-        body = "- Extend the collatz conjecture to all even numbers with a rigorous bound\nthat is longer than eighty characters to pass the minimum length check\n\n- Study tropical methods for number theory applications\n"
-        items = extract_items(body)
-        assert len(items) >= 1
-        assert any("collatz" in t.lower() for t, _ in items)
-
-    def test_subheaders(self):
-        body = "## Prove something new\n\nWe will prove a new theorem about the Riemann zeta function\nthat extends existing results and opens new directions for future work\nin analytic number theory.\n"
-        items = extract_items(body)
-        assert len(items) == 1
-        assert "Prove something new" in items[0][0]
-
-    def test_empty_body(self):
-        items = extract_items("")
-        assert items == []
 
 
 class TestSplitDirectionsFromText:

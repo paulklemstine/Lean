@@ -3,11 +3,6 @@ pi_agent:
   # tiers were removed.
   model: openai-large
   timeout: 600
-  max_catalog_references: 5
-  max_lines_per_reference: 60
-  temperature: 0.85
-  top_p: 0.92
-  num_predict: 4096
   # ML bandit (Thompson sampling): auto-surfaces the best prompt variant.
   phase_a_bandit: false
   phase_a_prompt_weights:
@@ -371,13 +366,9 @@ arxiv:
   rate_limit_seconds: 3
   max_paper_chars: 40000
 git:
-  auto_push: true
   commit_template: 'AETHER v1.0 cycle #{cycle}: {concept_title}'
 features:
-  enable_threads: true
-  enable_specialized_critics: false
   enable_thread_promise_critic: false
-  enable_abduction_loop: false
   enable_external_signal: true
   enable_computational_stage: true
 
@@ -388,7 +379,6 @@ llm_reduction:
   critic_gate: off         # Phase 2: adversarial critic always runs (v1.0)
   lint_gate: enabled         # Phase 2: auto-accept all-good-.lean batch (low risk)
   eval_cache: on            # Phase 3: content-hash eval cache
-  pruning_rules: on         # Phase 4: rules-first pruning pre-filter
 
 # Stall/zombie handling for dispatched jobs. Aristotle exposes no
 # project-cancel API, so hung server-side projects can't be killed remotely;

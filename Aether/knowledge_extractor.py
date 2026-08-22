@@ -93,7 +93,6 @@ class ResearchJob:
     quality_score: float = 0.0
     quality_assessment: Optional[Dict] = None
     quality_detail: Optional[Any] = None  # 8-axis QualityScore from quality_evaluator
-    specialized_critic_scores: Optional[Dict[str, Any]] = None  # 4-axis critic scores
     sorry_count: int = 0
     theorem_count: int = 0
     theorem_novelty: Optional[Dict[str, int]] = None  # new/strengthening/duplicate/disproof/unknown counts
@@ -4084,19 +4083,6 @@ Research mode: {concept.research_mode}
         fd_manager.add_direction(direction)
         fd_manager._save()
         print(f"[Arc] Propagated arc {arc_id}: position {next_pos}/3 for {title} (priority={position_priorities[next_pos]})")
-
-    def _prune_catalog(self, batch_size: int = 10) -> None:
-        """Incrementally prune the Catalog — one batch per tick.
-
-        Groups Lean 4 files by semantic similarity, round-robins similarity
-        groups, and queries Pi-Agent to select canonical file and prune duplicates.
-        """
-        from catalog_pruner import CatalogPruner
-        pruner = CatalogPruner(self.catalog_root, self.pi_agent, self.workspace)
-        try:
-            pruner.prune(target_remove_count=batch_size)
-        except Exception as e:
-            print(f"[Prune] CatalogPruner execution failed: {e}")
 
 
     def _generate_bridge_directions_from_cycle(self, job: ResearchJob) -> None:
