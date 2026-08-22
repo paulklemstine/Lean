@@ -1090,16 +1090,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-41 #1 \u2014 PHASE-FEATURES: low-prime phases are sub-threshold and window-local (paper 150)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5854b671",
     "description": "Round-40 #5, cron iteration (exp 479, assessment v258). Composition test of papers 137 x 143/146.\n\n**H1 REFUTED \u2014 and the refutation maps the interval law's scope**: descending order reproduced at 5.23\u00d7 (anchor 5.19\u00d7), but the extracted 90% window is (\u03b1=0.9, \u03bc/M=0.79) \u2014 far outside paper 143's band \u2014 and committed scanning there recovers only **69.7%** of the gain; per-draw corr(desc, committed) = \u22120.32. Balance strata confirm the gradient (35.96\u00d7 local gain most-balanced quartile, <1 in low-M deciles).\n\nThe two-number law prices the SINGLE-WINDOW oracle family; real magnitude posteriors are multi-modal across balance strata \u2014 paper 137 remains the correct measurement object for position, 143/146/148 the theory for genuinely-interval oracles.\n\nFLAG: agent's DC1 analytic cross-check diverged (brute-force paths agree, 0 mismatches) \u2014 disclosed, analytic numbers unused.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp479_magnitude_interval.py + exp479_result.json, seed 20260831.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3592",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T05:43:53.955756+00:00",
     "title": "FACT round-40 #5 \u2014 MAGNITUDE-INTERVAL: position information is not a single interval (paper 149)"
   },
@@ -1494,6 +1495,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-22T13:02:58.900934+00:00",
     "title": "FACT round-48 #1 \u2014 MA1-EFFECTIVE: equidistribution holds to three significant figures (paper 176)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-49 #2, cron iteration (exp 512, assessment v285). Does the bitlen degradation continue?\n\n**T-DIAL-60-PLATEAU**: Spearman(T, rate) = **0.437** [0.393, 0.480] at bitlen 60 \u2014 the degradation PLATEAUS rather than continuing monotonically. Mean smooth rate stays at 0.89% (starved regime persists). T still beats count by +0.070.\n\nH1 (monotone continuation) REFUTED; H3 (recovery) REFUTED.\n\nThe dial's bitlen degradation reaches a floor at ~0.44 rather than vanishing \u2014 the QR-lottery signal stabilizes at its minimum rather than disappearing entirely.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp512_t_dial_60.py + exp512_result.json, seed 20261040.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3669",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T13:46:15.641520+00:00",
+    "title": "FACT round-49 #2 \u2014 T-DIAL-60: the degradation plateaus (paper 179)"
   },
   {
     "consumed_by_exp_id": "",
@@ -3197,50 +3212,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Quantum Entanglement Monogamy: CKW Inequality"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize three fundamental fixed point theorems in Lean 4. Prove Brouwer via Sperner's lemma, Banach via the contraction mapping iteration, and Schauder via Brouwer + compactness. Apply to existence proofs for ODEs and integral equations.",
-    "domains": [
-      "Analysis",
-      "Topology"
-    ],
-    "id": "fd_0663",
-    "priority_score": 0.85,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-24T14:34:16.697775+00:00",
-    "title": "Fixed Point Theorems: Brouwer, Banach, Schauder"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize the Jones polynomial via the Kauffman bracket. Prove invariance under Reidemeister moves. Compute Jones polynomials for the trefoil, figure-eight, and torus knots. Prove that the Jones polynomial detects the unknot for alternating knots.",
-    "domains": [
-      "Topology",
-      "Algebra"
-    ],
-    "id": "fd_0666",
-    "priority_score": 0.85,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-24T14:34:16.697784+00:00",
-    "title": "Knot Invariants: Jones Polynomial Formalization"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize Ramsey's theorem and prove tight bounds: R(3,3)=6, R(3,4)=9, R(4,4)=18. Prove the Erd\u0151s-Szekeres bound R(s,t) \u2264 C(s+t-2, s-1). Construct the best known lower bound via the probabilistic method. Formalize the Hales-Jewett theorem.",
-    "domains": [
-      "Combinatorics"
-    ],
-    "id": "fd_0670",
-    "priority_score": 0.85,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-24T14:34:16.697794+00:00",
-    "title": "Ramsey Theory: Bounds and Constructions"
   },
   {
     "consumed_by_exp_id": "",
@@ -11886,6 +11857,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The discrete bound by sums of Bhattacharyya angles is now proved. The remaining question is calibration: do those sums converge to the Fisher-Rao length as the partition mesh tends to zero? A positive answer identifies the Fisher-Rao length functional with the length structure of the spherical metric of the square-root embedding, and implies the geodesic lower bound.\n\nFor a C\u00b9 curve of strictly positive probability vectors on [a,b], the sums \u2211\u2096 2\u00b7arccos BC(p_{t_k}, p_{t_{k+1}}) over partitions converge to fisherRaoLength p v a b as the mesh tends to 0.\n\nEstablish the local expansion 2 arccos BC(p_s, p_t) = \u222b_s^t speed + O((t\u2212s)\u00b3) using the chord bound and the exact two-point evaluation, then sum over a partition and pass to the limit.\n\nThe Fisher-Rao length becomes the intrinsic length of the spherical metric, and the geodesic lower bound 2 arccos BC \u2264 length follows immediately.\n\nThe integral functional would not be the induced length of the Bhattacharyya angle metric, indicating that the definition of fisherRaoLength needs a different normalisation.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_3667",
+    "priority_score": 0.7097741935483872,
+    "research_mode": "team",
+    "source_exp_id": "c99dba13",
+    "status": "available",
+    "timestamp": "2026-08-22T13:45:39.138316+00:00",
+    "title": "Riemann Convergence of Bhattacharyya Angle Sums"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Mode-convergence statements (binomial to Poisson, Poisson to normal) should be continuity statements for the map \u03b8 \u21a6 (\u2308\u03b8\u2309\u208a - 1, \u230a\u03b8\u230b\u208a). The conjecture is that brackets stabilise along any family of threshold windows whose thresholds converge to a non-integer, and genuinely oscillate when the limit is an integer.\n\nFor threshold windows with \u03b8_j \u2192 \u03b8: if \u03b8 \u2209 \u2115 then eventually firstArgmax = lastArgmax = \u230a\u03b8\u230b\u208a; if \u03b8 \u2208 \u2115 both \u230a\u03b8\u230b\u208a - 1 and \u230a\u03b8\u230b\u208a occur as brackets for infinitely many j in a suitable family.\n\nProve eventual constancy of Nat.floor and Nat.ceil near a non-integer, apply to \u03b8_n = lam + lam/n, and construct an oscillating family for integral \u03b8.\n\nExplains uniformly why approximation theorems transfer modes, with explicit thresholds for 'eventually'.\n\nBracket transfer requires more than threshold convergence, e.g. uniform control of the criteria.",
     "domains": [
       "Algebra",
@@ -12752,6 +12738,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-22T03:57:30.469270+00:00",
     "title": "Chebyshev Recursion for Non-Backtracking Walk Matrices"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Aggregation rules on the simplex become maps of the positive orthant of a sphere under the square-root embedding. Combining the spherical contraction lemma of the Arrow\u2013Curvature file with the length functional proved here should show that Fisher-Lipschitz unanimous aggregators are strictly L\u00b9-contractive unless dictatorial.\n\nEvery continuous unanimous aggregation rule that does not increase Fisher\u2013Rao length is L\u00b9-contractive on pairs of distinct profiles, with contraction constant strictly below 1 unless the rule is a coordinate projection.\n\nFormalize Fisher-Lipschitz aggregation on the open simplex, apply l1_le_fisherRao_length to the image of a geodesic, and use cos_midpoint_ge_avg for the strict contraction.\n\nProvides a metric, curvature-driven version of Arrow-type impossibility inside the catalog.\n\nPositive curvature alone would not obstruct fair aggregation, isolating the combinatorial content of Arrow's theorem.",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "fd_3668",
+    "priority_score": 0.6696666666666669,
+    "research_mode": "team",
+    "source_exp_id": "c99dba13",
+    "status": "available",
+    "timestamp": "2026-08-22T13:45:39.602032+00:00",
+    "title": "Curvature Obstruction for Fisher-Lipschitz Aggregation"
   },
   {
     "consumed_by_exp_id": "",
@@ -13631,6 +13631,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The proved chord bound says the Euclidean chord of the square-root embedding is at most half the Fisher\u2013Rao length. The conjecture upgrades chord to arc: twice the Bhattacharyya angle is at most the length. This would identify the Fisher\u2013Rao distance on the simplex with the spherical distance of the square-root embedding, completing the classical picture inside a formal library.\n\nFor every C\u00b9 curve of strictly positive probability vectors on [a,b], 2\u00b7arccos(\u2211\u1d62 \u221a(p_a i \u00b7 p_b i)) \u2264 fisherRaoLength p v a b.\n\nFormalize by partitioning [a,b], applying sqrt_chord_le_half_fisherRao_length on each piece, converting chords to angles via 2\u00b7arcsin(chord/2), and passing to the limit with additivity (fisherRaoLength_add).\n\nThe Fisher\u2013Rao geodesic distance formula becomes available formally, and every divergence bounded by the angle inherits a length bound.\n\nSome curve would beat the spherical geodesic, contradicting the isometry of the square-root embedding; a failure would have to come from a defect in the length functional's definition.",
+    "domains": [
+      "Combinatorics",
+      "Geometry"
+    ],
+    "id": "fd_3665",
+    "priority_score": 0.5638197894319682,
+    "research_mode": "team",
+    "source_exp_id": "c99dba13",
+    "status": "available",
+    "timestamp": "2026-08-22T13:45:38.094627+00:00",
+    "title": "Spherical Geodesic Lower Bound for Fisher\u2013Rao Length"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The present formalization\n   proves the chain-complex dimension theorem over any field.  Realizing every\n   binary CSS chain complex by a *simplicial complex with its standard incidence\n   maps* is a substantially stronger representability claim and should not be\n   conflated with merely viewing matrices as abstract differentials.  Determine\n   necessary and sufficient representability conditions, or produce a minimal\n   counterexample.",
     "domains": [
       "Algebra",
@@ -13868,6 +13883,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T06:28:41.029005+00:00",
     "title": "Invisible targets classified for abelian groups"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The infinitesimal bound \u2211|v\u1d62| \u2264 \u221a(\u2211v\u1d62\u00b2/p\u1d62) discards a variance term. Quantifying that defect converts the length inequality into an identity plus an explicit nonnegative functional, giving a quantitative rigidity statement for L\u00b9-efficient curves.\n\nThere is an absolute c > 0 with fisherRaoSpeed p v \u2212 \u2211\u1d62|v\u1d62| \u2265 c \u00b7 Var_p(|v|/p) for every strictly positive probability vector p and tangent vector v.\n\nProve the squared version by expanding the Cauchy\u2013Schwarz defect \u2211\u1d62 p\u1d62(|v\u1d62|/p\u1d62 \u2212 \u2211\u2c7c|v\u2c7c|)\u00b2 and comparing with the difference of square roots; calibrate c against arcsin r \u2212 r in the two-point family.\n\nL\u00b9-efficient curves are exactly those with velocity proportional to the distribution, a rigidity theorem for information geometry.\n\nThe deficiency must degenerate near the simplex boundary, indicating a weighted rather than absolute constant.",
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_3666",
+    "priority_score": 0.5628557806959551,
+    "research_mode": "team",
+    "source_exp_id": "c99dba13",
+    "status": "available",
+    "timestamp": "2026-08-22T13:45:38.559055+00:00",
+    "title": "Cauchy\u2013Schwarz Deficiency for Information Speed"
   },
   {
     "consumed_by_exp_id": "",
@@ -40333,14 +40363,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Executable finite examples"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3fdce232",
     "description": "Model the public reconciliation transcript, prove correctness of the corrected keys, and account explicitly for transcript leakage.",
     "domains": [],
     "id": "fd_2652",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "42b8568d",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:25:20.895258+00:00",
     "title": "Information reconciliation"
   },
@@ -40799,19 +40830,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T06:26:46.481901+00:00",
     "title": "Exact value of `rootGap`"
-  },
-  {
-    "consumed_by_exp_id": "c99dba13",
-    "description": "*The `L\u00b9` bound integrates to a Fisher\u2013Rao length bound* (previously\n  Conjecture 5).  Now a theorem: `l1_le_fisherRao_length`.",
-    "domains": [],
-    "id": "fd_2910",
-    "phase": "A",
-    "priority_score": 0.4,
-    "research_mode": "team",
-    "source_exp_id": "0763cd86",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T06:26:52.397857+00:00",
-    "title": "The `L\u00b9` bound integrates to a Fisher\u2013Rao length bound* (previously\n  Conjecture 5)."
   },
   {
     "consumed_by_exp_id": "",

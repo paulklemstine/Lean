@@ -1,7 +1,7 @@
 {
   "part": "6",
-  "archived_at": "2026-08-22T13:02:25Z",
-  "count": 93,
+  "archived_at": "2026-08-22T13:45:39Z",
+  "count": 94,
   "directions": [
     {
       "ambition_level": "extension",
@@ -3766,6 +3766,46 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 131
+    },
+    {
+      "id": "fd_1293",
+      "title": "Compression Research A2: Learnable shared decompressors — model is free, model delta is not",
+      "description": "**Part of:** Research plan — *Compression Beyond the Pigeonhole Bound* (Phase A, Question 1: separating the decompressor from the data).\n\n## Research question\nA fixed pretrained model (e.g., an LLM) used as the shared decompressor + arithmetic-coded residual beats classical compressors on text by a wide margin. The open problem: **the transmitted model delta costs bits** — how do we amortize it?\n\n## Approach\n- Benchmark LLM-as-decompressor against gzip/bz2/context-mixing baselines (enwik8/9).\n- Investigate sparse / low-rank parameter patches (LoRA-style) as the transmitted program — how many bits to shift a shared decoder to a specific domain?\n- Design an amortized protocol: decompressor adapts across a *stream* of messages, paying the delta once.\n\n## Deliverable\nSOTA text-compression baseline under the 16 GB decode standard, plus an amortized model-delta protocol.\n\n## Falsifiability / gate\nMust beat classical baselines *losslessly* (decoded output exactly matches input) with the decoder fixed at deploy time. Any delta is part of the transmitted message.\n\n**Milestone:** M4.\n",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 1000.0,
+      "status": "completed",
+      "consumed_by_exp_id": "8da3e793",
+      "timestamp": "2026-08-15T05:50:03.463912+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.78,
+      "domain_quality_penalty": 0.4,
+      "prune_reason": "tournament_rejected: ",
+      "pruned_at": "2026-08-16T00:30:45Z",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-08-15T23:42:45.716379+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 127
     }
   ]
 }
