@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "db2f2b2f",
-      "domain": "Physics",
-      "key_insight": "# FUTURE_DIRECTIONS — Quantum-Pythagorean-Walk\n\nDerived from what survived (and what failed) across the research cycles.\n\n**What survived.** The Berggren tree is a *complete, rigid* state space (bijec",
-      "quality_score": 0.9,
-      "sorry_count": 3,
-      "theorem_count": 426,
-      "timestamp": "2026-08-20T11:43:09",
-      "title": "Quantum-Pythagorean-Walk: Polynomial Time Integer Factorization via Tree Resonance"
-    },
-    {
       "cycle_id": "367abe49",
       "domain": "Novelty",
       "key_insight": "# Future directions: next-cycle conjectures on PTX-augmented RLHF optima\n\nDerived from what survived and what failed in this cycle (see\n`Catalog/Novelty/RLHFPretrainingMixIn.lean` and `ComputationalEv",
@@ -499,19 +489,19 @@
       "theorem_count": 77,
       "timestamp": "2026-08-22T04:50:27",
       "title": "Study fair schedules under arbitrary positive rate profiles and construct exact-rate disjoint batche"
+    },
+    {
+      "cycle_id": "eb2ba545",
+      "domain": "Logic",
+      "key_insight": "# Future Directions — Completeness of Dynamic Programming\n\nThis cycle established, in full generality over a linearly ordered cancellative additive\nmonoid of weights and an arbitrary finite state spac",
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "theorem_count": 65,
+      "timestamp": "2026-08-22T05:43:11",
+      "title": "prove *completeness* — every labelling is dominated by some DP run;"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "9cc9a6e9",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions — Spectral Free-Witness, next cycle\n\nDerived from the analysis and adversarial review of this cycle's verified results\n(`Catalog/Algebra/SpectralFreeWitness.lean`, `…Walk.lean`, `…",
-      "quality_score": 0.82,
-      "sorry_count": 4,
-      "theorem_count": 42,
-      "timestamp": "2026-08-14T06:50:29",
-      "title": "The Spectral Free-Witness: Heat-Kernel Order Recovery"
-    },
     {
       "cycle_id": "7477e654",
       "domain": "Tropical",
@@ -2501,27 +2491,19 @@
       "theorem_count": 77,
       "timestamp": "2026-08-22T04:50:27",
       "title": "Study fair schedules under arbitrary positive rate profiles and construct exact-rate disjoint batche"
+    },
+    {
+      "cycle_id": "eb2ba545",
+      "domain": "Logic",
+      "key_insight": "# Future Directions — Completeness of Dynamic Programming\n\nThis cycle established, in full generality over a linearly ordered cancellative additive\nmonoid of weights and an arbitrary finite state spac",
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "theorem_count": 65,
+      "timestamp": "2026-08-22T05:43:11",
+      "title": "prove *completeness* — every labelling is dominated by some DP run;"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "df44f621",
-      "domain": "Combinatorics",
-      "name": "isEvenWalk_iff_isEvenClosedWalk",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "df44f621",
-      "domain": "Combinatorics",
-      "name": "sum_indicator_eq_count",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "d588a53d",
-      "domain": "Geometry",
-      "name": "uu_bergA",
-      "quality": 0.82
-    },
     {
       "cycle_id": "d588a53d",
       "domain": "Geometry",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "refines_cost_lt",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "eb2ba545",
+      "domain": "Logic",
+      "name": "sup",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "eb2ba545",
+      "domain": "Logic",
+      "name": "add_sup",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "eb2ba545",
+      "domain": "Logic",
+      "name": "score_zero",
+      "quality": 0.85
     }
   ],
-  "last_updated": "2026-08-22T04:50:27",
+  "last_updated": "2026-08-22T05:43:11",
   "open_questions": [
     {
       "context": "-- count, which is not available in Mathlib.  Rather than leave an unproved `sorry` in the; sorry; sorry",
@@ -3455,12 +3455,6 @@
     ],
     "Logic": [
       {
-        "cycle_id": "6a0dc5c0",
-        "quality": 0.82,
-        "theorems": 79,
-        "title": "NET-45: The s1 product chain survives at FIVE DOUBLINGS — k*=256 at (d=4, ctx=20"
-      },
-      {
         "cycle_id": "d71114d5",
         "quality": 0.79,
         "theorems": 116,
@@ -3513,6 +3507,12 @@
         "quality": 0.82,
         "theorems": 86,
         "title": "The Tree as a Solvable Model of the abc Conjecture — The Exact Quality Spectrum "
+      },
+      {
+        "cycle_id": "eb2ba545",
+        "quality": 0.85,
+        "theorems": 65,
+        "title": "prove *completeness* — every labelling is dominated by some DP run;"
       }
     ],
     "MachineLearning": [
