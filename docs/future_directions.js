@@ -961,16 +961,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-38 #4 \u2014 EXTERNAL-HINT-FILTER: one scalar prices everything, the barrier-map triptych completes (paper 138)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "43b197e4",
     "description": "Round-40 #1, cron iteration (exp 477, assessment v254). Paper 144's honest remainder explained.\n\n**FOOTPRINT-WEIGHTS-CAPTURE-THE-RESIDUAL**: the theoretically-motivated feature \u03a3(2/p) over QR primes \u2264400 (each QR prime p divides ~2/p of the x\u00b2\u2212N values \u2014 two roots) lifts out-of-sample R\u00b2 from 0.3927 to **0.5691** (+0.176, bootstrap CI [0.120, 0.229]) at u=2.5, and 0.2063 \u2192 0.3078 (+0.102) at u=3.5. The direct mechanism feature (fraction of values divisible by p \u226413) adds independently; both together R\u00b2 = 0.5864.\n\nThe per-N yield dial's final form: two cheap features (~200 Euler tests + a mod count), R\u00b2 \u2248 0.59/0.34 out-of-sample. H3 (nothing systematic) refuted \u2014 the residual was real structure.\n\nBarriers: (5) all features are residue dials of METHOD input statistics \u2014 zero factor information; (8) QS calibration context.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp477_qr_residual.py + exp477_result.json, seed 20260829.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3574",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T04:50:57.567537+00:00",
     "title": "FACT round-40 #1 \u2014 QR-RESIDUAL: footprint-weighted dial captures the residual (paper 145)"
   },
@@ -1337,6 +1338,62 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-22T08:49:15.377654+00:00",
     "title": "FACT round-43 #3 \u2014 COINCIDENCE-DEPTH: the pair features measure anti-coincidence (paper 163)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-45 #2, cron iteration (exp 501, assessment v277). Paper 167's driver question answered.\n\n**NEITHER** \u2014 both pre-stated hypotheses fail; the truth is intermediate. Four-cell design (window {240, 960} \u00d7 u {2.5, 3.5}, 8 populations):\n- \u0394(240) = **+0.1073** [0.0973, 0.1148] \u2014 reproduces paper 167 on fresh seeds\n- \u0394(960) = **+0.0636** [0.0597, 0.0680]\n- D = **+0.0437** [0.0346, 0.0533] \u2014 excludes zero and the \u00b10.03 band\n\n**H1 FAIL**: 4\u00d7 values recover only 41% of the drop, not 'most'. **H2 FAIL**: not 'none' either. Reading: mostly intrinsic threshold reweighting, with a real ~41% minority from per-N rank resolution (the u=3.5 gain came from finer rate granularity \u2014 smooth mass per offset unchanged).\n\nNamed follow-up: decouple B from vmed (hold the strip bound fixed across u). Caveat: nested windows conflate sample size with bound growth.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp501_u_harden.py + exp501_result.json, seeds 20260970\u201377.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3633",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T09:43:33.956778+00:00",
+    "title": "FACT round-45 #2 \u2014 U-HARDEN: the u-sensitivity is mostly intrinsic, partly resolution (paper 168)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-45 #1, cron iteration (exp 500, assessment v276). The queued 14-seed localization of paper 166's u=3.5 breach.\n\n**NEITHER \u2014 DECISIVE**: over 14 fresh populations, sp(3.5) mean = **0.6282 \u00b1 0.0041**, bootstrap CI [0.6204, 0.6363] EXCLUDES the 0.60 floor; **0/14 sub-floor seeds**; sd = 0.0155 (far under the tail threshold). H1 (center-below) and H2 (wide-tail) both refuted.\n\nWhat survives: the systematic paired u-drop \u2014 \u0394 = sp(2.5) \u2212 sp(3.5) = **+0.1057**, CI [0.0999, 0.1112], **14/14 positive**. Paper 166's sub-floor column was 240-Ns/population sampling noise; its deep-breach seed has no analogue at 5\u00d7 N.\n\nDial-hardening should target the uniform ~0.11 u-sensitivity loss (starved ~1.9% smooth-rate regime or bound-coverage mismatch), not seed outliers.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp500_u35_localize.py + exp500_result.json + ledger_exp500.jsonl, seeds 20260950\u201363.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3634",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T09:43:33.958262+00:00",
+    "title": "FACT round-45 #1 \u2014 U35-LOCALIZED: above the floor everywhere, degrades everywhere (paper 167)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-44 #2, cron iteration (exp 499, assessment v275). The adopted zero-fit dial's two validation axes, 20-cell grid, determinism verified.\n\n**REGIME-HOLDS-U-BREAKS**: \n- **H1 CONFIRMED**: uniform draws fully in-band on 5/5 populations (mean Spearman(T) = 0.713 \u2248 balanced's 0.717) despite N spanning 2^27\u20132^38.\n- **H2 REFUTED**: u=3.5 degrades SYSTEMATICALLY \u2014 every seed drops (sign test 5/5, p\u22480.03), one seed breaching deeply at 0.487; column mean below the band floor.\n- H3 REFUTED (4/5 joint).\n\n**Adopted**: deploy for uniform/heterogeneous draws at the paper-165 operating point u=2.5; do NOT deploy at tighter thresholds without recalibration. Queued: multi-seed bal@u=3.5 sweep.\n\nAnchor replicates paper 165 on five fresh seeds (0.7167 in [0.71, 0.76]).\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp499_t_dial_axes.py + exp499_result.json, seeds 20260940\u201344.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3635",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T09:43:33.959641+00:00",
+    "title": "FACT round-44 #2 \u2014 T-DIAL-AXES: regime holds, u breaks (paper 166)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-44 #1, cron iteration (exp 497, assessment v274). Paper 152's lesson applied prospectively.\n\n**DIAL-SEED-STABLE**: across 5 fully independent populations, per-seed Spearman(T, rate) = 0.7528/0.7363/0.7253/0.7235/0.7133 \u2014 all inside the pre-stated [0.60, 0.85] band; mean **0.7302 \u00b1 0.0067 (SE)**. T beats the bare QR-count by >0.05 on **5/5 seeds**.\n\nThe zero-fit dial's adoption (paper 164) stands without qualification. Lean run omitted the H2 rank-flip arm \u2014 disclosed.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp497_t_dial_stable.py + exp497_result.json, seeds 20260930\u201334.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3636",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T09:43:33.960986+00:00",
+    "title": "FACT round-44 #1 \u2014 T-DIAL-STABLE: the zero-fit dial is seed-stable (paper 165)"
   },
   {
     "consumed_by_exp_id": "",
@@ -3041,53 +3098,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Quantum Entanglement Monogamy: CKW Inequality"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize the GEB thesis: deep isomorphisms connect G\u00f6del's incompleteness, Escher's visual paradoxes, and Bach's fugues. Define: a 'GEB isomorphism' is a structure-preserving map between three domains: (1) a formal system, (2) a visual art form, (3) a musical form. Prove: the self-reference in G\u00f6del's theorem, Escher's 'Drawing Hands,' and Bach's 'Crab Canon' all instantiate the same fixed-point construction (Lawvere's fixed point theorem). Show: every GEB isomorphism factors through the Y combinator.",
-    "domains": [
-      "Novelty",
-      "Logic",
-      "Bridges"
-    ],
-    "id": "seed_402",
-    "priority_score": 0.86,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Hofstadter: G\u00f6del, Escher, Bach \u2014 Isomorphism Across Domains"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize tangled hierarchies \u2014 levels that are both above AND below each other. Define: a tangled hierarchy is a poset where there exist x, y such that x < y and y < x (a cycle). Prove: in dependent type theory, universe levels form an infinite hierarchy (Type_0 : Type_1 : Type_2 : ...) that is NOT tangled (it's well-founded). Show: with universe polymorphism, we can create apparent tangles (a term at level N can refer to level N+1). Conjecture: any consistent formalization of 'tangled hierarchies' requires abandoning either consistency or the hierarchy. Explore: Girard's paradox shows that Type:Type (the ultimate tangle) is inconsistent \u2014 formalize this in Lean.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "seed_405",
-    "priority_score": 0.86,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Hofstadter: Tangled Hierarchies in Type Theory"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize time-travel paradoxes in Lean 4. Define: a 'causal loop' is a sequence of events e1 -> e2 -> ... -> en -> e1 where each causes the next. Prove: the Novikov self-consistency principle (every event in a causal loop is self-consistent) is equivalent to the statement that the loop has a fixed point. Show: the grandfather paradox (kill your ancestor) violates self-consistency \u2014 prove it's impossible. Conjecture: every closed timelike curve in a G\u00f6del universe is self-consistent. Explore: formalize branching timelines (many-worlds time travel) \u2014 prove the traveler creates a new branch, not a paradox.",
-    "domains": [
-      "Novelty",
-      "Logic",
-      "Physics"
-    ],
-    "id": "seed_410",
-    "priority_score": 0.86,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Moonshot: Time-Travel Logic \u2014 Formalizing Causal Consistency"
   },
   {
     "consumed_by_exp_id": "",
@@ -11424,6 +11434,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The exact failure law uses only one property of the uniform codebook: an event that does not constrain a coordinate leaves that coordinate's collision probability equal to 1/M. Replacing uniformity by this axiom should extend the exact law to structured hash families.\n\nAny hash family closed under re-randomisation of a single coordinate and 2-wise independent satisfies P[failure] = 1 - (1 - 1/M)^k exactly; t-wise independent families satisfy it up to an additive O(k^{t+1}/M^t).\n\nAbstract ExactFailure.card_inter_collisionEvent_mul into a hypothesis on a general finite family of codebooks, and re-run the induction of card_noCollisionEvent_mul against it; test numerically on affine hash families over small fields.\n\nShannon's random-coding analysis becomes derandomisable with no loss, since small explicit families inherit the exact law.\n\nThe gap between structured and uniform families is quantified, isolating the exact cost of derandomisation.",
+    "domains": [
+      "Computation",
+      "Algebra"
+    ],
+    "id": "fd_3630",
+    "priority_score": 0.7103684210526316,
+    "research_mode": "team",
+    "source_exp_id": "175408d6",
+    "status": "available",
+    "timestamp": "2026-08-22T09:43:02.489235+00:00",
+    "title": "Conditional-Marginal Calculus for Non-Uniform Hash Families"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The three links at an event have Minkowski lengths 4(c-b)^2, 4(a-b)^2, 4(c-a)^2. The multiset of link lengths at depth k is therefore an exactly computable invariant. The conjecture pins its minimum.\n\nFor every k the minimum of the link lengths over all events of depth k equals 4, and it is attained exactly at the events of the pure middle (Pell) spine and their A-children.\n\nCompute the spectrum to depth 6, then prove the lower bound 4 by showing that each of |c-b|, |a-b|, |c-a| is a positive integer, and characterise equality by solving c-b = 1, a-b = \u00b11, c-a = 1 inside the tree.\n\nA complete description of the shortest scales of the discrete geometry, the analogue of a lattice spacing, together with the exact locus where it is attained.\n\nSome deeper branch achieves a smaller separation, which would contradict integrality, so the failure mode is a proof that the attaining locus is larger than the spine.",
     "domains": [
       "Algebra",
@@ -11831,6 +11856,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The pigeonhole converse bounds every encoder by M correct strings, while the exact law pins the random codebook's failure probability at 1-(1-1/M)^k. Comparing them turns the usual asymptotic rate statement into an exact threshold question about the least admissible codebook size.\n\nFor each epsilon in (0,1) the least M with 1-(1-1/M)^k <= epsilon equals ceil(k / ln(1/(1-epsilon))) + O(1), and no deterministic encoder achieves reliability 1-epsilon with fewer than (1-epsilon)|S| codewords.\n\nCompute the least M by #eval for many (k, epsilon) pairs, fit the constant, then formalise the two-sided estimate from the exact law together with AlmostLossless.converse_card_good_le.\n\nThe price of randomisation in almost-lossless coding is an explicit constant, not merely a Theta(1/epsilon) factor.\n\nThe threshold has a genuinely non-logarithmic correction, indicating a second-order effect invisible to the exact law.",
+    "domains": [
+      "Computation",
+      "Algebra"
+    ],
+    "id": "fd_3631",
+    "priority_score": 0.7097741935483872,
+    "research_mode": "team",
+    "source_exp_id": "175408d6",
+    "status": "available",
+    "timestamp": "2026-08-22T09:43:02.920531+00:00",
+    "title": "Exact Randomisation Threshold Against the Pigeonhole Converse"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Mode-convergence statements (binomial to Poisson, Poisson to normal) should be continuity statements for the map \u03b8 \u21a6 (\u2308\u03b8\u2309\u208a - 1, \u230a\u03b8\u230b\u208a). The conjecture is that brackets stabilise along any family of threshold windows whose thresholds converge to a non-integer, and genuinely oscillate when the limit is an integer.\n\nFor threshold windows with \u03b8_j \u2192 \u03b8: if \u03b8 \u2209 \u2115 then eventually firstArgmax = lastArgmax = \u230a\u03b8\u230b\u208a; if \u03b8 \u2208 \u2115 both \u230a\u03b8\u230b\u208a - 1 and \u230a\u03b8\u230b\u208a occur as brackets for infinitely many j in a suitable family.\n\nProve eventual constancy of Nat.floor and Nat.ceil near a non-integer, apply to \u03b8_n = lam + lam/n, and construct an oscillating family for integral \u03b8.\n\nExplains uniformly why approximation theorems transfer modes, with explicit thresholds for 'eventually'.\n\nBracket transfer requires more than threshold convergence, e.g. uniform control of the criteria.",
     "domains": [
       "Algebra",
@@ -12128,6 +12168,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-22T05:42:59.147436+00:00",
     "title": "Support Digraph Certificates for Constrained DP"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Collision events are diagonal hyperplanes in the discrete cube (Fin M)^alpha and the component law is the codimension formula for their intersections. This identifies the failure event with a coordinate subspace arrangement whose intersection lattice should be the partition lattice.\n\nThe intersection lattice of the collision-hyperplane arrangement over Z/M is isomorphic to the partition lattice of the index set, and the exact codebook success count is its characteristic polynomial evaluated at M.\n\nFormalise the map from collision patterns to set partitions using patternSetoid, prove it is a lattice isomorphism onto the partitions realised by the pattern, and compare characteristic polynomial evaluations with card_failSet_exact.\n\nThe almost-lossless analysis inherits the full Mobius-function toolkit of subspace arrangements, giving closed forms for all higher-order terms.\n\nThe discrete alphabet Z/M breaks the classical dictionary, marking a genuine difference between hashing arrangements and real subspace arrangements.",
+    "domains": [
+      "Combinatorics",
+      "Cryptography"
+    ],
+    "id": "fd_3632",
+    "priority_score": 0.7083125000000001,
+    "research_mode": "team",
+    "source_exp_id": "175408d6",
+    "status": "available",
+    "timestamp": "2026-08-22T09:43:03.358613+00:00",
+    "title": "Collision Hyperplane Arrangements and the Partition Lattice"
   },
   {
     "consumed_by_exp_id": "",
@@ -34576,14 +34631,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "The proposed strict hierarchy collapses"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ba827ea4",
     "description": "For alphabet `Fin 3`,\n   classify all local rules `Fin 3 \u2192 Fin 3 \u2192 Fin 3 \u2192 Fin 3` whose global maps\n   are bijective on every nonempty finite cycle, and test the falsifiable claim\n   that every such rule is a single-coordinate rule followed by a permutation\n   of `Fin 3`.",
     "domains": [],
     "id": "fd_2757",
+    "phase": "A",
     "priority_score": 0.41187500000000005,
     "research_mode": "team",
     "source_exp_id": "a7f30302",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:25:57.214701+00:00",
     "title": "Ternary radius-one finite-window classification"
   },
@@ -35915,19 +35971,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-18T03:09:00.743392+00:00",
     "title": "Both endpoints of the trade-off are now formal theorems in this"
-  },
-  {
-    "consumed_by_exp_id": "175408d6",
-    "description": "The Bonferroni machinery\n(`card_sum_le_card_biUnion_add_offDiag`, `card_doubleCollision_mul_le`) is\nalready formalised for arbitrary finite families, so the conjecture is a\nstatement about which *marginals* are fed into it.",
-    "domains": [],
-    "id": "fd_1479",
-    "phase": "A",
-    "priority_score": 0.4,
-    "research_mode": "team",
-    "source_exp_id": "be7c0bd7",
-    "status": "in_progress",
-    "timestamp": "2026-08-18T03:09:00.981652+00:00",
-    "title": "The Bonferroni machinery"
   },
   {
     "consumed_by_exp_id": "",

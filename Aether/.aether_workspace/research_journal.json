@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "3b08d230",
-      "domain": "Tropical",
-      "key_insight": "# Future directions\n\nFive bold, falsifiable conjectures distilled from the verified results in\n`Catalog/Tropical/EtaQuotient*.lean`.  Throughout, `a : ℕ → ℤ` is a finitely\nsupported exponent vector, `",
-      "quality_score": 0.86,
-      "sorry_count": 0,
-      "theorem_count": 154,
-      "timestamp": "2026-08-20T16:51:24",
-      "title": "is a finitely supported `a : ℕ → ℤ` with"
-    },
-    {
       "cycle_id": "a0dce043",
       "domain": "NumberTheory",
       "key_insight": "# Future directions (cycle 3)\n\nThis cycle attacked the *layer-4* stratum of the denominator tower for the Mordell curves\n`E_N : y² = x³ + N`.  What is now formalised, with complete proofs, in\n`Catalog",
@@ -499,19 +489,19 @@
       "theorem_count": 48,
       "timestamp": "2026-08-22T08:48:50",
       "title": "Both ingredients are already machine-checked (the sharp bound and 1-sum closure),"
+    },
+    {
+      "cycle_id": "175408d6",
+      "domain": "Geometry",
+      "key_insight": "# Future directions — \"which marginals feed the Bonferroni machinery\" (cycle v19c)\n\n## What this cycle established\n\nThe assignment observed that the Bonferroni machinery of\n`Catalog/Geometry/AlmostLos",
+      "quality_score": 0.87,
+      "sorry_count": 0,
+      "theorem_count": 46,
+      "timestamp": "2026-08-22T09:43:14",
+      "title": "The Bonferroni machinery"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "53eb02be",
-      "domain": "Bridges",
-      "key_insight": "# FUTURE DIRECTIONS — after SEQSMOOTH-NULL (Bridges, experiment 397)\n\nWhat the formal round established (all in\n`Catalog/Bridges/ModExpSmoothnessBlindness.lean`, 0 sorries):\n\n* the collision structure",
-      "quality_score": 0.86,
-      "sorry_count": 0,
-      "theorem_count": 85,
-      "timestamp": "2026-08-14T13:50:06",
-      "title": "Experiment 397: SEQSMOOTH-NULL — mod-exp sequence stats are smoothness-blind (AUC 0.500); p-1 weakne"
-    },
     {
       "cycle_id": "64406111",
       "domain": "Geometry",
@@ -2501,21 +2491,19 @@
       "theorem_count": 48,
       "timestamp": "2026-08-22T08:48:50",
       "title": "Both ingredients are already machine-checked (the sharp bound and 1-sum closure),"
+    },
+    {
+      "cycle_id": "175408d6",
+      "domain": "Geometry",
+      "key_insight": "# Future directions — \"which marginals feed the Bonferroni machinery\" (cycle v19c)\n\n## What this cycle established\n\nThe assignment observed that the Bonferroni machinery of\n`Catalog/Geometry/AlmostLos",
+      "quality_score": 0.87,
+      "sorry_count": 0,
+      "theorem_count": 46,
+      "timestamp": "2026-08-22T09:43:14",
+      "title": "The Bonferroni machinery"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "3cb644d1",
-      "domain": "Logic",
-      "name": "two_le_rad",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "3cb644d1",
-      "domain": "Logic",
-      "name": "rad_mul_le",
-      "quality": 0.82
-    },
     {
       "cycle_id": "85ca8e3d",
       "domain": "Computation",
@@ -2803,9 +2791,21 @@
       "domain": "MachineLearning",
       "name": "simplex_pair_le_one",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "175408d6",
+      "domain": "Geometry",
+      "name": "is",
+      "quality": 0.87
+    },
+    {
+      "cycle_id": "175408d6",
+      "domain": "Geometry",
+      "name": "sq_sum_card_le_card_biUnion_mul_sum_inter",
+      "quality": 0.87
     }
   ],
-  "last_updated": "2026-08-22T08:48:50",
+  "last_updated": "2026-08-22T09:43:14",
   "open_questions": [
     {
       "context": "All proofs are complete; no `sorry`.; All proofs are complete; no `sorry`.",
@@ -3393,12 +3393,6 @@
     ],
     "Geometry": [
       {
-        "cycle_id": "3ce74e62",
-        "quality": 0.85,
-        "theorems": 72,
-        "title": "Power-Sum GCD Factoring & Carmichael Periodicity"
-      },
-      {
         "cycle_id": "b3704634",
         "quality": 0.91,
         "theorems": 884,
@@ -3451,6 +3445,12 @@
         "quality": 0.82,
         "theorems": 135,
         "title": "The Pythagorean Hydra — Natural Independence for the Berggren Tree"
+      },
+      {
+        "cycle_id": "175408d6",
+        "quality": 0.87,
+        "theorems": 46,
+        "title": "The Bonferroni machinery"
       }
     ],
     "Logic": [
