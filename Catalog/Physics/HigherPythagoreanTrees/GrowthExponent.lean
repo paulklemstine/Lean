@@ -1,6 +1,6 @@
 import Mathlib
-import Catalog.Shared.HigherPythagorean.LorentzCore
-import Catalog.Shared.HigherPythagorean.HyperbolicBoundary
+import Shared.HigherPythagorean.LorentzCore
+import Shared.HigherPythagorean.HyperbolicBoundary
 
 /-!
 # The metric growth exponent of the higher-dimensional Pythagorean trees

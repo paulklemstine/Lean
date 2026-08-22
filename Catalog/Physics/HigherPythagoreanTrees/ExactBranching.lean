@@ -1,8 +1,8 @@
 import Mathlib
-import Catalog.Shared.Ispythquadruple.IsPythQuadruple
-import Catalog.Shared.HigherPythagorean.BranchingContrast
-import Catalog.Shared.HigherPythagorean.HarmonicLaw
-import Catalog.Physics.HigherPythagoreanTrees.DescentComplex
+import Shared.Ispythquadruple.IsPythQuadruple
+import Shared.HigherPythagorean.BranchingContrast
+import Shared.HigherPythagorean.HarmonicLaw
+import Physics.HigherPythagoreanTrees.DescentComplex
 
 /-!
 # Exact branching numbers: `3` in dimension two, `6` or `7` in dimension three

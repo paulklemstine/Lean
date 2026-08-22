@@ -1,6 +1,6 @@
 import Mathlib
-import Catalog.Shared.Ispythquadruple.IsPythQuadruple
-import Catalog.Shared.HigherPythagorean.BranchingContrast
+import Shared.Ispythquadruple.IsPythQuadruple
+import Shared.HigherPythagorean.BranchingContrast
 
 /-!
 # The descent complex of a Pythagorean `n`-tuple

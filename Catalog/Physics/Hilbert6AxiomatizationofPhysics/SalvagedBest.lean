@@ -1,78 +1,141 @@
-theorem cancel_left (a b c d : E)
-    (h1 : a ⊕ₑ b = some d) (h2 : a ⊕ₑ c = some d) : b = c := by
-  obtain ⟨ f, hf1, hf2 ⟩ := ( ‹EffectAlgebra E›.oplus_assoc a b ( ‹EffectAlgebra E›.ortho d ) d ( ‹EffectAlgebra E›.eone ) ) h1 ( ‹EffectAlgebra E›.oplus_ortho d );
-  obtain ⟨ g, hg1, hg2 ⟩ := ( ‹EffectAlgebra E›.oplus_assoc a c ( ‹EffectAlgebra E›.ortho d ) d ( ‹EffectAlgebra E›.eone ) ) h2 ( ‹EffectAlgebra E›.oplus_ortho d );
-  obtain ⟨ h_val, hh1, hh2 ⟩ := ( ‹EffectAlgebra E›.oplus_assoc b ( ‹EffectAlgebra E›.ortho d ) a f ( ‹EffectAlgebra E›.eone ) ) hf1 ( by
-    have := ‹EffectAlgebra E›.oplus_comm a f; aesop; )
-  obtain ⟨ k_val, hk1, hk2 ⟩ := ( ‹EffectAlgebra E›.oplus_assoc c ( ‹EffectAlgebra E›.ortho d ) a g ( ‹EffectAlgebra E›.eone ) ) hg1 ( by
-    exact ‹EffectAlgebra E›.oplus_comm _ _ ▸ hg2 )
-  generalize_proofs at *;
-  have h_eq : h_val = k_val := by
-    grind;
-  have h_eq : ‹EffectAlgebra E›.ortho b = h_val ∧ ‹EffectAlgebra E›.ortho c = h_val := by
-    exact ⟨ by simpa [ h_eq ] using ( ‹EffectAlgebra E›.ortho_unique b h_val hh2 ).symm, by simpa [ h_eq ] using ( ‹EffectAlgebra E›.ortho_unique c h_val ( by simpa [ h_eq ] using hk2 ) ).symm ⟩;
-  have h_eq : ‹EffectAlgebra E›.ortho (‹EffectAlgebra E›.ortho b) = b ∧ ‹EffectAlgebra E›.ortho (‹EffectAlgebra E›.ortho c) = c := by
-    grind +suggestions;
-  grind
+-- Repaired copy: this module was a stale, non-compiling duplicate of `Shared.Hilbert6AxiomatizationofPhysics.SalvagedBest`.
+-- Its content is synchronised with that (compiling) module.
+/-
+# Hilbert's 6th problem: effect algebras
 
--- Example: cancellation holds trivially for Bool (see boolEffectAlgebra below)
+Effect algebras are the standard order-theoretic axiomatization of the
+"unsharp observables" of quantum mechanics: a partial commutative monoid with
+an orthocomplement, of which the unit interval `[0,1] ⊂ ℝ` (the classical
+probabilities) and the two-element Boolean algebra are the basic models.
+
+This file was recovered from a fragment in which the class `EffectAlgebra`,
+the notation `⊕ₑ`, the order `ele`, and the morphism structure `EffectHom`
+were all missing.  They are supplied here, and every theorem is proved from
+the axioms with no `sorry`.
+-/
+import Mathlib
+
+/-- An **effect algebra**: a set with a partial, commutative, associative
+addition `⊕ₑ`, a zero, a unit, and an orthocomplement `ortho a` characterized
+as the unique element summing with `a` to the unit. -/
+class EffectAlgebra (E : Type*) where
+  /-- The partial addition; `none` means the sum is undefined. -/
+  oplus : E → E → Option E
+  /-- The zero effect. -/
+  ezero : E
+  /-- The unit effect. -/
+  eone : E
+  /-- The orthocomplement. -/
+  ortho : E → E
+  oplus_comm : ∀ a b, oplus a b = oplus b a
+  oplus_assoc : ∀ a b c d e, oplus a b = some d → oplus d c = some e →
+    ∃ f, oplus b c = some f ∧ oplus a f = some e
+  oplus_ezero : ∀ a, oplus a ezero = some a
+  oplus_ortho : ∀ a, oplus a (ortho a) = some eone
+  oplus_eone_eq_ezero : ∀ a b, oplus a eone = some b → a = ezero
+  ortho_unique : ∀ a b, oplus a b = some eone → ortho a = b
+
+export EffectAlgebra (oplus ezero eone ortho)
+
+@[inherit_doc EffectAlgebra.oplus] infixl:65 " ⊕ₑ " => oplus
+
+namespace EffectAlgebra
+
+variable {E : Type*} [EffectAlgebra E]
+
+/-- The canonical order on an effect algebra: `a ≤ b` iff `b` is `a` plus
+something. -/
+def ele (a b : E) : Prop := ∃ c, a ⊕ₑ c = some b
 
 /-! ## Theorem 2: Orthocomplement is an involution
 
 **PEGB**:
-- **P**roof: From a ⊕ ortho(a) = eone by commutativity ortho(a) ⊕ a = eone,
-  and by uniqueness of orthocomplement a = ortho(ortho(a)).
-- **E**xample: In Bool, not (not b) = b.
-- **G**eneralization: In any algebra with unique complements, the complement
-  operation is an involution.
-- **B**oundary: Fails without uniqueness — multiple complements break involutivity.
+- **P**roof: From `a ⊕ ortho a = eone`, commutativity gives `ortho a ⊕ a = eone`,
+  and uniqueness of the orthocomplement gives `ortho (ortho a) = a`.
+- **E**xample: In `Bool`, `not (not b) = b`.
+- **G**eneralization: In any algebra with unique complements, complementation
+  is an involution.
+- **B**oundary: Fails without uniqueness — multiple complements break
+  involutivity.
 -/
 
-/-
-The orthocomplement is an involution: ortho(ortho(a)) = a.
--/
-
+/-- The orthocomplement is an involution: `ortho (ortho a) = a`. -/
 theorem ortho_involutive (a : E) : ortho (ortho a) = a := by
-  rename_i h;
-  cases h;
-  grind
+  refine ortho_unique (ortho a) a ?_
+  rw [oplus_comm]
+  exact oplus_ortho a
 
-/-! ## Theorem 3: ortho(eone) = ezero and ortho(ezero) = eone -/
+/-! ## Theorem 1: Cancellation
 
-/-
-ortho(eone) = ezero.
+**PEGB**:
+- **P**roof: pass to orthocomplements twice, using associativity to move
+  `ortho d` across the sum; uniqueness of orthocomplements then forces
+  `ortho b = ortho c`, and involutivity gives `b = c`.
+- **E**xample: cancellation holds in `Bool` (see `boolEffectAlgebra` below).
+- **G**eneralization: every effect algebra is a cancellative partial monoid.
+- **B**oundary: cancellation genuinely uses `ortho_unique`; partial commutative
+  monoids without orthocomplements need not be cancellative.
 -/
 
-theorem ele_trans (a b c : E)
-    (h1 : ele a b) (h2 : ele b c) : ele a c := by
-  obtain ⟨ c₁, hc₁ ⟩ := h1
-  obtain ⟨ c₂, hc₂ ⟩ := h2
-  obtain ⟨ f, hf₁, hf₂ ⟩ := (‹EffectAlgebra E›.oplus_assoc a c₁ c₂ b c hc₁ hc₂)
-  use f
+/-- **Cancellation law**: if `a ⊕ b` and `a ⊕ c` are defined and equal, then
+`b = c`. -/
+theorem cancel_left (a b c d : E)
+    (h1 : a ⊕ₑ b = some d) (h2 : a ⊕ₑ c = some d) : b = c := by
+  obtain ⟨f, hf1, hf2⟩ := oplus_assoc a b (ortho d) d eone h1 (oplus_ortho d)
+  obtain ⟨g, hg1, hg2⟩ := oplus_assoc a c (ortho d) d eone h2 (oplus_ortho d)
+  have hfg : f = g := (ortho_unique a f hf2).symm.trans (ortho_unique a g hg2)
+  subst hfg
+  have hfa : f = ortho a := (ortho_unique a f hf2).symm
+  have hoa : ortho a ⊕ₑ a = some (eone : E) := by
+    rw [oplus_comm]; exact oplus_ortho a
+  obtain ⟨h, hh1, hh2⟩ := oplus_assoc b (ortho d) a f eone hf1 (hfa ▸ hoa)
+  obtain ⟨k, hk1, hk2⟩ := oplus_assoc c (ortho d) a f eone hg1 (hfa ▸ hoa)
+  have hhk : h = k := Option.some.inj (hh1.symm.trans hk1)
+  subst hhk
+  have hb : ortho b = h := ortho_unique b h hh2
+  have hc : ortho c = h := ortho_unique c h hk2
+  have hbc := congrArg ortho (hb.trans hc.symm)
+  rwa [ortho_involutive, ortho_involutive] at hbc
+
+/-! ## Theorem 3: `ortho eone = ezero` and `ortho ezero = eone` -/
+
+/-- The orthocomplement of the unit is zero. -/
+theorem ortho_eone : ortho (eone : E) = ezero :=
+  ortho_unique _ _ (oplus_ezero eone)
+
+/-- The orthocomplement of zero is the unit. -/
+theorem ortho_ezero : ortho (ezero : E) = eone := by
+  refine ortho_unique _ _ ?_
+  rw [oplus_comm]; exact oplus_ezero eone
+
+/-! ## Theorem 4: The canonical order is transitive -/
+
+/-- Transitivity of the canonical order, directly from associativity. -/
+theorem ele_trans (a b c : E) (h1 : ele a b) (h2 : ele b c) : ele a c := by
+  obtain ⟨c₁, hc₁⟩ := h1
+  obtain ⟨c₂, hc₂⟩ := h2
+  obtain ⟨f, _, hf₂⟩ := oplus_assoc a c₁ c₂ b c hc₁ hc₂
+  exact ⟨f, hf₂⟩
 
 /-! ## Theorem 5: Orthocomplement is order-reversing
 
 **PEGB**:
-- **P**roof: If a ≤ b, i.e. a ⊕ c = b for some c, then ortho(b) ⊕ c is
-  defined and equals ortho(a) minus something, giving ortho(b) ≤ ortho(a).
-- **E**xample: In [0,1], a ≤ b implies 1-b ≤ 1-a.
+- **P**roof: If `a ≤ b`, i.e. `a ⊕ c = b` for some `c`, then `c ⊕ ortho b` is
+  defined and equals `ortho a`, giving `ortho b ≤ ortho a`.
+- **E**xample: In `[0,1]`, `a ≤ b` implies `1-b ≤ 1-a`.
 - **G**eneralization: Orthocomplementation is an order-reversing involution
-  (antitone involution) on any effect algebra.
+  (an antitone involution) on any effect algebra.
 - **B**oundary: Requires the full effect algebra structure; fails for
   partial commutative monoids without orthocomplement.
 -/
 
-/-
-Orthocomplement reverses the natural order.
--/
-
+/-- Orthocomplement reverses the natural order. -/
 theorem ortho_antitone (a b : E) (h : ele a b) :
     ele (ortho b) (ortho a) := by
-  obtain ⟨ c, hc ⟩ := h;
-  rename_i h;
-  obtain ⟨ f, hf ⟩ := h.oplus_assoc a c ( h.ortho b ) b ( h.eone ) hc ( by
-    exact h.oplus_ortho b );
-  exact ⟨ c, by rw [ h.oplus_comm, hf.1, h.ortho_unique _ _ hf.2 ] ⟩
+  obtain ⟨c, hc⟩ := h
+  obtain ⟨f, hf1, hf2⟩ := oplus_assoc a c (ortho b) b eone hc (oplus_ortho b)
+  refine ⟨c, ?_⟩
+  rw [oplus_comm, hf1, ortho_unique a f hf2]
 
 /-! ## Theorem 6: Two-element Boolean effect algebra (Bool)
 
@@ -122,15 +185,97 @@ structure UnitInterval where
 namespace UnitInterval
 
 @[ext]
+theorem ext' {x y : UnitInterval} (h : x.val = y.val) : x = y := by
+  cases x; cases y; simpa using h
+
+/-- The unit interval is an effect algebra: `a ⊕ b = a + b` when `a + b ≤ 1`,
+undefined otherwise, with `ortho a = 1 - a`. -/
+noncomputable instance instEffectAlgebra : EffectAlgebra UnitInterval where
+  oplus a b := if h : a.val + b.val ≤ 1 then
+      some ⟨a.val + b.val, by have := a.ge_zero; have := b.ge_zero; linarith, h⟩ else none
+  ezero := ⟨0, le_refl 0, by norm_num⟩
+  eone := ⟨1, by norm_num, le_refl 1⟩
+  ortho a := ⟨1 - a.val, by have := a.le_one; linarith, by have := a.ge_zero; linarith⟩
+  oplus_comm := by
+    intro a b
+    simp only [add_comm a.val b.val]
+  oplus_assoc := by
+    intro a b c d e h1 h2
+    simp only [dite_eq_iff] at h1 h2
+    rcases h1 with ⟨hab, hd⟩ | ⟨_, hd⟩
+    swap
+    · exact absurd hd (by simp)
+    rcases h2 with ⟨hdc, he⟩ | ⟨_, he⟩
+    swap
+    · exact absurd he (by simp)
+    have hdv : d.val = a.val + b.val := by
+      have h := Option.some.inj hd; rw [← h]
+    have hev : e.val = d.val + c.val := by
+      have h := Option.some.inj he; rw [← h]
+    have hbc : b.val + c.val ≤ 1 := by
+      have := a.ge_zero; rw [hdv] at hdc; linarith
+    refine ⟨⟨b.val + c.val, by have := b.ge_zero; have := c.ge_zero; linarith, hbc⟩, ?_, ?_⟩
+    · simp only [dite_eq_iff]; exact Or.inl ⟨hbc, by first | rfl | trivial⟩
+    · simp only [dite_eq_iff]
+      refine Or.inl ⟨by rw [hdv] at hdc; linarith, ?_⟩
+      congr 1
+      ext
+      show a.val + (b.val + c.val) = e.val
+      rw [hev, hdv]; ring
+  oplus_ezero := by
+    intro a
+    have ha := a.le_one
+    simp only [dite_eq_iff]
+    refine Or.inl ⟨by show a.val + 0 ≤ 1; linarith, ?_⟩
+    congr 1
+    ext
+    show a.val + 0 = a.val
+    ring
+  oplus_ortho := by
+    intro a
+    simp only [dite_eq_iff]
+    refine Or.inl ⟨by show a.val + (1 - a.val) ≤ 1; linarith, ?_⟩
+    congr 1
+    ext
+    show a.val + (1 - a.val) = 1
+    ring
+  oplus_eone_eq_ezero := by
+    intro a b h
+    simp only [dite_eq_iff] at h
+    rcases h with ⟨h1, _⟩ | ⟨_, h2⟩
+    · have ha := a.ge_zero
+      have h1' : a.val + 1 ≤ 1 := h1
+      ext
+      show a.val = 0
+      linarith
+    · exact absurd h2 (by simp)
+  ortho_unique := by
+    intro a b h
+    simp only [dite_eq_iff] at h
+    rcases h with ⟨h1, h2⟩ | ⟨_, h2⟩
+    · have h3 : a.val + b.val = 1 := congrArg UnitInterval.val (Option.some.inj h2)
+      ext
+      show 1 - a.val = b.val
+      linarith
+    · exact absurd h2 (by simp)
+
+end UnitInterval
+
+/-! ## Theorem 8: morphisms preserve orthocomplements -/
+
+/-- A morphism of effect algebras: it preserves defined sums and the unit. -/
+structure EffectHom (E F : Type*) [EffectAlgebra E] [EffectAlgebra F] where
+  /-- The underlying function. -/
+  toFun : E → F
+  map_oplus : ∀ a b c, a ⊕ₑ b = some c → toFun a ⊕ₑ toFun b = some (toFun c)
+  map_eone : toFun eone = eone
 
 theorem EffectHom.map_ortho {E F : Type*} [EffectAlgebra E] [EffectAlgebra F]
     (f : EffectHom E F) (a : E) : f.toFun (ortho a) = ortho (f.toFun a) := by
-  rename_i h;
-  obtain ⟨ _, h₁, h₂ ⟩ := f;
-  rename_i f hf;
-  rename_i h₃;
-  have := h₃.oplus_ortho a;
-  exact h.ortho_unique _ _ ( by simpa [ h₂ ] using hf _ _ _ this )
+  have h : f.toFun a ⊕ₑ f.toFun (ortho a) = some (f.toFun eone) :=
+    f.map_oplus a (ortho a) eone (oplus_ortho a)
+  rw [f.map_eone] at h
+  exact (ortho_unique _ _ h).symm
 
 end EffectAlgebra
 
@@ -157,4 +302,3 @@ end EffectAlgebra
    is isomorphic to a Boolean effect algebra. Conjecture: Every finite
    commutative effect algebra is isomorphic to a power set EA 2^n.
 -/
-end UnitInterval

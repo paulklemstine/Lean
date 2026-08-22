@@ -1,4 +1,8 @@
+-- Repaired copy: this module was a stale, non-compiling duplicate of `Shared.AbstractAlgebra.SpbMatrix`.
+-- Its content is synchronised with that (compiling) module.
 import Mathlib
+
+open Matrix
 
 /-! # CatalogBuild.Shared.SpbMatrix
 

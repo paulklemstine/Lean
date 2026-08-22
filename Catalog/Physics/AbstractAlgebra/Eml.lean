@@ -1,3 +1,5 @@
+-- Repaired copy: this module was a stale, non-compiling duplicate of `Shared.AbstractAlgebra.Eml`.
+-- Its content is synchronised with that (compiling) module.
 import Mathlib
 
 /-! # CatalogBuild.Shared.Eml
@@ -8,6 +10,9 @@ Declarations: 17
 -/
 
 noncomputable section
+
+/-- The `eml` operation `eml a b = exp a - log b`. -/
+def eml (a b : ℝ) : ℝ := Real.exp a - Real.log b
 
 /-- [Section: # CatalogBuild.Shared.Eml
 Auto-generated from theorem catalog database.

@@ -45,7 +45,7 @@ Main results: `FourierEnergyFamilies.parabola_fourierEnergy`,
 -/
 
 import Mathlib
-import Catalog.Physics.FourierEnergySidon
+import Physics.FourierEnergySidon
 
 open Finset FourierAdd FourierEnergy
 open scoped Pointwise

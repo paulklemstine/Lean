@@ -1,7 +1,7 @@
 import Mathlib
-import Catalog.Shared.Ispythquadruple.IsPythQuadruple
-import Catalog.Shared.HigherPythagorean.LorentzCore
-import Catalog.Physics.HigherPythagoreanTrees.GrowthExponent
+import Shared.Ispythquadruple.IsPythQuadruple
+import Shared.HigherPythagorean.LorentzCore
+import Physics.HigherPythagoreanTrees.GrowthExponent
 
 /-!
 # The sharp growth constant is never attained on the integral tree

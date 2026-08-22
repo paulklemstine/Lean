@@ -1,3 +1,5 @@
+-- Repaired copy: this module was a stale, non-compiling duplicate of `Shared.AbstractAlgebra.Spb`.
+-- Its content is synchronised with that (compiling) module.
 import Mathlib
 
 /-! # CatalogBuild.Shared.Spb
@@ -8,6 +10,22 @@ Declarations: 25
 -/
 
 noncomputable section
+
+/-- The cross ratio of four reals. -/
+def crossRatio (a b c d : ℝ) : ℝ := ((a - c) * (b - d)) / ((a - d) * (b - c))
+
+/-- The SPB matrix `M(a) = !![1, a; -a, 1]`. -/
+def spbMat (a : ℝ) : Matrix (Fin 2) (Fin 2) ℝ := !![1, a; -a, 1]
+
+/-- The trace of the SPB matrix is `2`. -/
+theorem spbMat_trace (a : ℝ) : (spbMat a).trace = 2 := by
+  simp [spbMat, Matrix.trace_fin_two]
+  norm_num
+
+/-- The determinant of the SPB matrix is `1 + a²`. -/
+theorem spbMat_det (a : ℝ) : (spbMat a).det = 1 + a ^ 2 := by
+  simp [spbMat, Matrix.det_fin_two]
+  ring
 
 /-- [Section: ## Core Definitions] -/
 def spb (x y : ℝ) : ℝ := (x + y) / (1 - x * y)
@@ -36,11 +54,6 @@ theorem spb_cross_ratio_invariant (a b c d t : ℝ)
   · grind +splitImp;
   · unfold spb at *; simp_all +decide [ mul_comm ] ;
   · assumption
-
-theorem spb_jacobian (x a : ℝ) (h : 1 - x * a ≠ 0) :
-    (1 + a ^ 2) / (1 - x * a) ^ 2 =
-    (1 + spb x a ^ 2) / (1 + x ^ 2) := by
-  rw [ div_eq_div_iff ] <;> cases lt_or_gt_of_ne h <;> nlinarith [ cauchy_pullback x a h ] ;
 
 theorem spb_neg_first (x y : ℝ) : spb (-x) y = -(spb x (-y)) := by unfold spb; ring
 
@@ -98,9 +111,6 @@ theorem spb_three_body (x y z : ℝ) (h : 1 - x * y ≠ 0) :
     (1 - x * y) * (1 - spb x y * z) = 1 - x * y - (x + y) * z := by
   unfold spb; field_simp
 
-/-- [Section: ## Section 36: SPB Negation Symmetry] -/
-theorem spb_neg_comm (x y : ℝ) : -(spb x y) = spb (-x) (-y) := by rw [spb_odd]
-
 /-- [Section: ## Section 18: Involution Classification] -/
 theorem spb_involution_iff (a : ℝ) (h : 1 - a * a ≠ 0) :
     spb a a = 0 ↔ a = 0 := by
@@ -137,5 +147,20 @@ theorem spb_no_fixed_points (a : ℝ) (ha : a ≠ 0) (x : ℝ) (hd : 1 - x * a �
   rcases mul_eq_zero.mp this with h1 | h2
   · exact ha h1
   · nlinarith [sq_nonneg x]
+
+/-- The Cauchy pull-back identity behind the SPB Jacobian. -/
+theorem cauchy_pullback (x a : ℝ) (h : 1 - x * a ≠ 0) :
+    (1 + spb x a ^ 2) * (1 - x * a) ^ 2 = (1 + x ^ 2) * (1 + a ^ 2) := by
+  unfold spb
+  field_simp
+  ring
+
+theorem spb_jacobian (x a : ℝ) (h : 1 - x * a ≠ 0) :
+    (1 + a ^ 2) / (1 - x * a) ^ 2 =
+    (1 + spb x a ^ 2) / (1 + x ^ 2) := by
+  rw [ div_eq_div_iff ] <;> cases lt_or_gt_of_ne h <;> nlinarith [ cauchy_pullback x a h ] ;
+
+/-- [Section: ## Section 36: SPB Negation Symmetry] -/
+theorem spb_neg_comm (x y : ℝ) : -(spb x y) = spb (-x) (-y) := by rw [spb_odd]
 
 end

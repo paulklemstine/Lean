@@ -1,4 +1,4 @@
-import Catalog.Physics.CyclicTypeRootCountLossy
+import Physics.CyclicTypeRootCountLossy
 
 /-!
 # The divisor-lattice bound on the splitting-type channel
