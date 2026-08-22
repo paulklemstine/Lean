@@ -1,221 +1,309 @@
-# The Shapes That a Blurry Camera Cannot See
+# The Price of Being Invisible
 
-## A story about moments, differences, and the arithmetic of near misses
+## A story about ghosts, moments, and how cheaply a signal can hide
 
-Imagine a measuring device so crude that it reports only a handful of numbers about
-whatever you put in front of it. You place a distribution of masses along a ruler — some
-positive, some negative, sitting at the integer marks $0, 1, 2, \dots, N$ — and the device
-reports the total mass, then the total moment (mass times position), then the total second
-moment (mass times position squared), and so on, but only up to some cut-off. It sees the
-first $K$ numbers
-$$m_0, m_1, \dots, m_{K-1}, \qquad m_k = \sum_{j=0}^{N} e_j\, j^k,$$
-and then it stops.
+Imagine a measuring instrument so crude that it can report only a handful of
+numbers about whatever you place in front of it. Not the shape of the object,
+not its colour — just a short list of averages. It tells you the total amount
+of stuff, then the average position of that stuff, then the average of the
+squares of the positions, then the cubes, and so on, but only up to some
+fixed order. After that, its arithmetic runs out.
 
-A natural question, and one with a surprising amount of structure hiding behind it: **what
-can such a device not see?** Which configurations $e = (e_0, e_1, \dots, e_N)$ are
-*invisible*, in the sense that every one of the measurements $m_0, \dots, m_{K-1}$ comes
-back as exactly zero, even though the configuration itself is not zero at all?
+This is not a contrived device. It is essentially every instrument. A camera
+integrates light against a finite set of sensor responses. A digital filter
+sees a signal only through the frequencies it passes. A numerical quadrature
+rule evaluates an integral by matching polynomials up to a fixed degree. A
+tomograph, a spectrometer, a low-order Taylor model, a moment-matching
+compression scheme: each of them reduces a rich object to a truncated list of
+*moments*.
 
-This is not an idle question. The same equations turn up when you ask whether two different
-collections of whole numbers can have the same sum, the same sum of squares, the same sum
-of cubes, and so on — the classical *Prouhet–Tarry–Escott problem*, which has occupied
-number theorists since the nineteenth century. It turns up in numerical analysis, where the
-vanishing of low-order moments is exactly the condition that makes a finite-difference
-formula accurate to high order. It turns up in signal processing, where a filter with
-vanishing moments is a filter that annihilates polynomial trends — the defining property of
-a wavelet. And it turns up in coding and design theory, where "invisible to $K$ moments"
-becomes "indistinguishable to a $K$-dimensional test".
+And every such instrument has ghosts.
 
-The answer, it turns out, can be written down completely, and it is beautiful.
+A **ghost** is a nonzero configuration that the instrument reports as
+absolutely nothing. Formally, put integer weights $e_0, e_1, \dots, e_N$ at
+the positions $0, 1, \dots, N$ — think of $e_j$ as "how much stuff sits at
+position $j$", allowed to be negative (a deficit) as well as positive. The
+instrument reports the moments
 
----
+$$m_k(e) \;=\; \sum_{j=0}^{N} e_j \, j^k, \qquad k = 0, 1, 2, \dots, K-1,$$
 
-## The first thing you notice: there is nothing invisible if the camera is good enough
+with the usual convention $0^0 = 1$, so that $m_0$ is simply the total weight.
+Call $e$ **invisible to the window $K$** if all of these vanish:
+$m_0 = m_1 = \dots = m_{K-1} = 0$. The instrument sees a perfectly empty
+scene, yet something is there.
 
-If the device measures moments $m_0$ through $m_N$ — as many as there are positions on the
-ruler — then nothing is invisible. This is the classical Vandermonde/Lagrange fact: the
-matrix whose $(k,j)$ entry is $j^k$ has nonzero determinant, so the only configuration with
-all $N+1$ moments zero is the empty one. Call this the *rigidity principle*: a full window
-sees everything.
+Ghosts always exist. The classical one is the alternating binomial stencil,
+the $K$-th finite difference,
 
-So invisibility is entirely a phenomenon of **truncation**. The interesting regime is
-$K \le N$: fewer measurements than positions. The number of degrees of freedom left over is
-$N + 1 - K$, and one might hope that the invisible configurations form a space of exactly
-that dimension. They do — and, remarkably, they do so in a way that respects the integers.
+$$e_j = (-1)^{K-j}\binom{K}{j}, \qquad j = 0, 1, \dots, K,$$
 
----
+whose moments vanish for every $k < K$ — this is the calculus fact that the
+$K$-th difference annihilates polynomials of degree below $K$. So invisibility
+is easy. The interesting question is **how much it costs.**
 
-## The building block: alternating binomial spikes
+## Measuring the cost
 
-Here is the fundamental invisible configuration. Fix a window length $K$ and a starting
-position $i$. Put the weights
-$$(-1)^K,\ (-1)^{K-1}\binom{K}{1},\ (-1)^{K-2}\binom{K}{2},\ \dots,\ \binom{K}{K-1}\cdot(-1),\ 1$$
-at the positions $i, i+1, \dots, i+K$, and nothing anywhere else. Call this configuration
-$b^{(K,i)}$; its weight at position $i + d$ is $(-1)^{K-d}\binom{K}{d}$.
+The natural price tag is the total amount of material used:
 
-For $K = 2$ starting at $i = 0$, this is the pattern $(1, -2, 1)$ — the familiar second
-difference. For $K = 3$ it is $(-1, 3, -3, 1)$. These are exactly the coefficients of the
-$K$-th *forward difference operator*
-$$(\Delta^K f)(i) = \sum_{d=0}^{K} (-1)^{K-d}\binom{K}{d} f(i+d),$$
-and there is a fact every numerical analyst knows in their bones: **the $K$-th difference
-annihilates every polynomial of degree less than $K$.** Since the device's $k$-th
-measurement of $b^{(K,i)}$ is precisely $(\Delta^K x^k)(i)$, and $x^k$ has degree $k < K$,
-every measurement in the window returns zero. The spike is invisible.
+$$\operatorname{mass}(e) \;=\; \sum_{j=0}^N |e_j|.$$
 
-What happens one step past the window is just as clean. The $K$-th difference of $x^K$ is
-the constant $K!$, so
-$$m_K\big(b^{(K,i)}\big) = K!$$
-— *independently of where the spike is placed*. Every one of these building blocks hides
-perfectly inside the window and then announces itself, one step later, with exactly the same
-signal strength. There is a slick way to see all of this at once: encode a configuration
-$e$ as the polynomial $E(X) = \sum_j e_j X^j$. Then $b^{(K,i)}$ has generating polynomial
-$X^i (X-1)^K$, and the factor $(X-1)^K$ is precisely a $K$-fold root at $1$ — the algebraic
-avatar of $K$ vanishing moments.
+The binomial ghost is expensive. Its mass is $\sum_j \binom{K}{j} = 2^K$: to
+hide from a window of size $30$ you would need over a billion units of stuff.
+If that were the truth, ghosts would be a curiosity, not a threat — no real
+signal, no real error, no real adversary could afford them.
 
----
+But is it the truth? Can a ghost be cheap?
 
-## The structure theorem: that is all there is
+Write $\operatorname{minMass}(K)$ for the smallest possible mass of a nonzero
+integer weight vector invisible to the window $K$. The question is the growth
+of this single sequence. Three answers, one sharp and two approximate, are
+what this article is about:
 
-Between position $0$ and position $N$ there is room for exactly $N + 1 - K$ of these spikes:
-they can start at $i = 0, 1, \dots, N-K$. The main theorem says that they generate
-everything.
+- **A hard floor.** Invisibility of order $K$ always costs at least $2K$ units
+  of mass. Never less.
+- **The floor is real.** For every window size up to $10$, and for $12$, the
+  floor is attained exactly: there really are ghosts of mass exactly $2K$, and
+  we can write them down.
+- **A ceiling that collapses.** For *every* $K$, ghosts of mass at most
+  $24^{\lceil K/12 \rceil}$ exist. That is a growth rate of
+  $24^{1/12} \approx 1.3032$ per unit of window — a dramatic improvement on
+  the binomial rate $2$, and the exponent gap widens without limit.
 
-> **Structure Theorem.** Let $K \le N$. A configuration $e$ on the nodes $\{0,\dots,N\}$ is
-> invisible to the window $k < K$ if and only if it is a linear combination
-> $$e = \sum_{i=0}^{N-K} c_i\, b^{(K,i)}$$
-> of the shifted binomial spikes. The coefficients $c_i$ are unique. Moreover — and this is
-> the sharp part — **if $e$ has integer entries, the $c_i$ are integers too.**
+Between the floor $2K$ and the ceiling $1.3032^{K}$ lies the whole open
+problem. Let us see where each of the three comes from.
 
-Equivalently, in the polynomial language: $e$ is invisible to the window $k < K$ exactly
-when $(X-1)^K$ divides $E(X)$. The invisible configurations form a free module of rank
-$N+1-K$ with an explicit basis; over the rationals, the space of invisible vectors has
-dimension exactly $N + 1 - K$, dropping by one each time the window widens by one, until at
-$K = N$ it is a single line — the classical alternating binomial vector
-$\big((-1)^N\binom{N}{0}, \dots, \binom{N}{N}\big)$ — and at $K = N+1$ it collapses to zero,
-recovering the rigidity principle.
+## The floor: why $2K$, and not $K$
 
-The integrality claim deserves a moment. Rational statements about kernels rarely descend to
-the integers; usually you clear denominators and pick up a factor. Here the descent is free,
-and the reason is visible in the proof. Work downward from the top node. The only spike that
-reaches position $N$ is the last one, $b^{(K,N-K)}$, and its weight there is $1$ — not
-$\pm K!$, not a binomial coefficient, but exactly $1$. So the coefficient $c_{N-K}$ must
-equal $e_N$; subtract $e_N \cdot b^{(K,N-K)}$ and you have an invisible configuration living
-on $\{0,\dots,N-1\}$. Induct. **The induction never divides by anything.** The rigidity
-principle is used only in the base case, when the ruler has become shorter than the window
-and only the zero configuration survives.
+Split the ghost into its positive and negative halves. Let $s$ be the multiset
+containing each position $j$ repeated $e_j$ times when $e_j > 0$, and let $t$
+be the multiset containing each $j$ repeated $-e_j$ times when $e_j < 0$. Then
+the mass of $e$ is exactly the total number of elements in $s$ and $t$
+combined, and invisibility says something beautifully symmetric:
 
----
+> The two multisets $s$ and $t$ have **identical power sums**
+> $$\sum_{a \in s} a^k \;=\; \sum_{b \in t} b^k \qquad \text{for } k = 0, 1, \dots, K-1.$$
 
-## Near misses: the same theorem in the language of number theory
+The case $k = 0$ says the two sides have the same number of elements, call it
+$n$; then the mass is $2n$, and we must prove $n \ge K$.
 
-Now translate. An integer configuration splits into its positive and negative parts: read
-$e_j > 0$ as "put $e_j$ copies of the number $j$ into the bag $S$", and $e_j < 0$ as "put
-$|e_j|$ copies of $j$ into the bag $T$". Then $m_k(e) = 0$ says exactly
-$$\sum_{x \in S} x^k = \sum_{x \in T} x^k .$$
-Two different bags of whole numbers with the same sum, the same sum of squares, ..., the
-same sum of $(K-1)$-st powers. That is a **near miss** of order $K$ — a Prouhet–Tarry–Escott
-solution.
+Here is where an old identity does the work. Newton's identities express the
+*elementary symmetric functions* of a collection of numbers — the coefficients
+of the polynomial whose roots they are — recursively in terms of the power
+sums. Matching power sums up to order $K-1$ therefore forces the elementary
+symmetric functions to match up to the same order. In other words, the two
+monic polynomials
 
-The structure theorem now becomes a complete classification: *every* near miss on the range
-$\{0,\dots,N\}$ that survives $K$ power-sum tests is an integer combination of the shifted
-binomial pairs, and every such combination is a near miss. The smallest example is the
-translate pair itself. Take $K = 2$, positions $1,2,3$: the spike $(1,-2,1)$ says
-$$\{1, 3\} \ \text{versus}\ \{2, 2\}: \qquad 1 + 3 = 2 + 2, \qquad 1^0+3^0 = 2^0+2^0,$$
-and the two bags first diverge at squares, $1 + 9 = 10$ against $4 + 4 = 8$, with difference
-$2 = 2!$. Exactly the predicted first visible moment.
+$$F(X) = \prod_{a \in s}(X - a), \qquad G(X) = \prod_{b \in t}(X - b)$$
 
-Two further consequences fall out of the dictionary with no extra work. First, two bags with
-equal power sums up to order $K$ must have the same cardinality (that is just the $k=0$
-equation). Second — a genuinely arithmetic corollary — the alternating counts of the two
-bags must agree modulo $2^K$:
-$$\sum_{x \in S} (-1)^x \equiv \sum_{x \in T} (-1)^x \pmod{2^K},$$
-because evaluating the divisibility $(X-1)^K \mid E(X)$ at $X = -1$ yields a factor
-$(-2)^K$.
+agree in their top $K$ coefficients.
 
----
+Now suppose $n < K$. Both polynomials have degree $n$, and "agreeing in the
+top $K$ coefficients" then means agreeing in *all* of them: $F = G$. Two monic
+polynomials that are equal have the same roots with the same multiplicities,
+so $s = t$ — and then $e$ is the zero vector, not a ghost. Contradiction.
+Hence $n \ge K$ and
 
-## How cheap can invisibility be?
+$$\boxed{\operatorname{mass}(e) \;\ge\; 2K}$$
 
-If you must hide from $K$ measurements, how much *stuff* do you need? Two natural cost
-measures: the number of positions you occupy, and the total absolute weight
-$\ell^1(e) = \sum_j |e_j|$ — for near misses, the total number of integers in the two bags.
+for every nonzero ghost of window $K$. Half of the mass sits on each side, and
+each side needs at least $K$ points, because $K$ points is exactly the amount
+of freedom you need to fake $K$ moments.
 
-**Occupied positions.** You need at least $K+1$. Fewer would give a nonzero configuration on
-$K$ or fewer nodes killed by $K$ moment equations, contradicting rigidity on that smaller
-node set. The bound is sharp: the binomial spike occupies exactly $K+1$ positions. And the
-extremal case is completely rigid: if an invisible configuration sits on exactly $K+1$ nodes
-$S$, then its weights are forced, up to scale, to be the *divided-difference* weights
-$$e_i \prod_{j \in S,\, j \ne i} (i - j) = m_K(e).$$
-In particular no weight can vanish, the top moment $m_K(e)$ is nonzero (a minimal
-configuration is always visible immediately after the window), the signs alternate as you
-walk along the nodes, and any two invisible configurations supported on the same $K+1$ nodes
-are proportional. Minimality forces uniqueness.
+The argument is worth pausing over. Earlier attempts to bound the cost of
+invisibility counted *distinct positions*, which can never see the difference
+between a weight of $1$ and a weight of $100$ at the same place. Switching
+from sets of positions to multisets of "units of stuff" — and from moments to
+symmetric functions — is what turns a weak count into the exact law.
 
-**Total weight.** Since $\ell^1(e) \ge \#\{j : e_j \ne 0\}$, the same bound gives
-$\ell^1(e) \ge K+1$. But there is a parity phenomenon: for $K \ge 1$ the equation $m_0 = 0$
-forces the positive and negative masses to be equal, so $\ell^1(e)$ is always **even**. That
-upgrades the bound to $K+2$ whenever $K$ is even, and a finer argument — ruling out the
-rigid divided-difference configuration by showing its weights cannot all be small — pushes
-it to $K+2$ for every $K \ge 2$ and to $K+3$ for odd $K \ge 3$. These are sharp at
-$K = 1, 2, 3$: at $K = 3$ the configuration $(-1, 2, 0, -2, 1)$ on $\{0,1,2,3,4\}$ has total
-weight $6$, and as a near miss it is the classical
-$$\{1, 1, 4\} \quad \text{versus} \quad \{0, 3, 3\}, \qquad 1+1+4 = 0+3+3 = 6, \qquad
-1+1+16 = 0+9+9 = 18 .$$
+## Attaining the floor: two teams with identical statistics
 
-## The exponential conjecture, and why it is false
+Can a ghost be as cheap as $2K$? It can, precisely when a very classical
+object exists. A ghost of mass exactly $2K$ must consist of $K$ positions
+carrying $+1$ and $K$ different positions carrying $-1$, and the invisibility
+condition then reads: two disjoint sets of $K$ whole numbers,
 
-Here is where the story takes a turn. The obvious invisible configuration at window $K$ is
-the binomial spike, and its total weight is $\sum_d \binom{K}{d} = 2^K$. It is tempting —
-and it was conjectured — that this is optimal: that hiding from $K$ measurements should cost
-exponentially much.
+$$A = \{a_1, \dots, a_K\}, \qquad B = \{b_1, \dots, b_K\},$$
 
-**It is not.** The bound $\ell^1 \ge 2^K$ does hold for $K \le 2$, where $2^K$ is $2$ and
-$4$ and coincides with the linear bounds. But it fails for **every** $K \ge 3$, and it fails
-by an exponentially large factor. The mechanism is a *convolution* principle, and it is
-worth stating because it is the engine of the whole construction:
+with
 
-> **Convolution Theorem.** If $e$ is invisible to the window $K_e$ and $w$ is invisible to
-> the window $K_w$, then the convolution $(w * e)_j = \sum_a w_a\, e_{j-a}$ is invisible to
-> the window $K_e + K_w$; its first visible moment obeys the Leibniz-type rule
-> $$m_{K_e + K_w}(w * e) = \binom{K_e + K_w}{K_e}\, m_{K_e}(e)\, m_{K_w}(w) \ne 0,$$
-> and its total weight satisfies $\ell^1(w * e) \le \ell^1(w)\, \ell^1(e)$.
+$$a_1^k + \dots + a_K^k \;=\; b_1^k + \dots + b_K^k \qquad \text{for all } k = 1, \dots, K-1.$$
 
-Windows **add**; costs **multiply**. So start from the cheap $K = 3$ witness of weight $6$
-and convolve it with itself $n$ times: you get a configuration invisible to a window of
-length $3n$ whose total weight is at most $6^n$. Compare with the conjectured floor
-$2^{3n} = 8^n$. The ratio $(6/8)^n = (3/4)^n$ goes to zero: the true cost is not merely below
-$2^K$, it is below it by a factor that decays exponentially in $K$. Even the crude
-single-step version of the trick — the shift-difference $(\delta e)_j = e_{j-1} - e_j$, which
-widens the window by one and at most doubles the weight — already gives configurations of
-weight at most $6 \cdot 2^{K-3}$ at every window $K \ge 3$, comfortably under $2^K$.
+Two teams of $K$ players whose totals, sums of squares, sums of cubes, ...
+agree all the way up to the $(K-1)$-st power, and only diverge at the $K$-th.
+These are the **ideal Prouhet–Tarry–Escott configurations**, hunted since the
+nineteenth century.
 
-The moral is that *invisibility composes*. Whatever economy you can find at one scale, you
-can tensor it up; the exponent of the true growth rate is determined by the best small
-example you can find, not by the naive binomial one.
+They are astonishing objects. Here is the one of size $6$:
 
----
+$$\{0,5,6,16,17,22\} \quad\text{versus}\quad \{1,2,10,12,20,21\},$$
 
-## What we now know, and what we do not
+whose sums, sums of squares, cubes, fourth and fifth powers all coincide (at
+$66$, $1090$, $19\,998$, $385\,234$, $7\,632\,966$) and whose sixth powers
+finally differ ($154\,356\,970$ against $153\,752\,170$). And here is the one of size $12$, the largest known:
 
-Put together, the picture is this. The invisible configurations at window $K$ on $N+1$ nodes
-form a lattice of rank exactly $N + 1 - K$, freely generated by translates of a single
-object — the $K$-th difference stencil — with the integral structure coming for free. Every
-near miss in the Prouhet–Tarry–Escott sense on a bounded range is an integer combination of
-translates of a single binomial pair. Configurations of minimal support are completely rigid
-and are divided differences. And the cost of invisibility is at least linear in the window
-($\ell^1 \ge K + 2$, or $K + 3$ for odd $K \ge 3$, always even) and at most exponential with
-base strictly below $2$ (weight $\le 6^{K/3} \approx 1.817^K$).
+$$\{0, 11, 24, 65, 90, 129, 173, 212, 237, 278, 291, 302\}$$
+$$\text{versus}\quad \{3, 5, 30, 57, 104, 116, 186, 198, 245, 272, 297, 299\},$$
 
-Between $K + 3$ and $1.817^K$ lies the real question. The evidence points to a startlingly
-simple answer: that the true minimum is exactly $2K$ — twice the window. The proved bounds
-already coincide with $2K$ at $K = 1, 2, 3$, and the first genuine test is $K = 4$, where the
-truth appears to be $8$ against a proved floor of $6$. The upper half of that conjecture is
-equivalent to a famous open problem: the existence of *ideal* Prouhet–Tarry–Escott solutions
-of every degree, sought since 1851 and known only up to degree $12$.
+twelve numbers against twelve numbers, agreeing in eleven successive power
+sums — a coincidence of eleven simultaneous equations that no amount of
+casual searching would produce.
 
-That is a good place for a theory to arrive. What began as a question about a blurry
-camera — which mass distributions does it fail to register? — has an exact, integral,
-finitely-generated answer, and the answer reduces a century-old open problem in number theory
-to a statement about the cheapest possible element of an explicitly described lattice. The
-structure is fully understood; what remains is a search for the most economical point inside
-it.
+Such a configuration is exactly a ghost of minimal mass. Consequently:
+
+> **Attainment theorem.** $\operatorname{minMass}(K) = 2K$ if and only if an
+> ideal Prouhet–Tarry–Escott configuration of size $K$ exists.
+
+Explicit configurations are known for $K = 1, 2, \dots, 10$ and for $K = 12$,
+so the minimal mass is *exactly* $2K$ at each of those windows. At $K = 11$ —
+and this is not an accident of effort, it is a genuine century-old gap — no
+configuration is known. But the two bounds pin it down almost completely: the
+floor gives at least $22$, the size-$12$ configuration (restricted to a
+smaller window) gives at most $24$, and a parity argument rules out $23$. So
+
+$$\operatorname{minMass}(11) \in \{22, 24\},$$
+
+and it equals $22$ exactly when an ideal size-$11$ configuration exists. A
+famous open problem has become a two-valued question about a single explicit
+integer.
+
+There is also a rigidity phenomenon lurking. If a ghost achieves the minimum
+mass, its two sides cannot overlap at all: no position may carry both a
+positive and a negative contribution, no padding, no slack. The reason is
+pretty: at minimal size the two root polynomials $F$ and $G$ differ by a
+nonzero constant, so they can have no common root — and a shared position
+would be exactly that.
+
+## The ceiling: ghosts multiply
+
+The floor $2K$ is linear. The binomial ceiling $2^K$ is exponential. Which is
+closer to the truth? To push the ceiling down we need a way to manufacture
+ghosts for large windows out of ghosts for small ones, and there is a perfect
+tool: **convolution.**
+
+Encode a weight vector as a polynomial, $P_e(X) = \sum_j e_j X^j$. Two facts
+then become transparent.
+
+First, invisibility is divisibility:
+
+> A weight vector is invisible to the window $K$ exactly when $(X-1)^K$
+> divides its polynomial.
+
+(Differentiating $P_e$ and setting $X = 1$ recovers the moments, up to
+invertible triangular bookkeeping.) Second, the mass of $e$ is the sum of
+absolute values of the coefficients of $P_e$, and the coefficient sum of a
+product is at most the product of the coefficient sums. Multiplying
+polynomials therefore **adds windows and at worst multiplies masses**:
+
+$$\operatorname{minMass}(K_1 + K_2) \;\le\; \operatorname{minMass}(K_1)\cdot \operatorname{minMass}(K_2).$$
+
+(One must check the product is nonzero — over the integers it always is, but
+the formal argument tracks the *first surviving moment* of each factor, which
+multiplies to a nonzero top moment of the product.)
+
+Iterating a single ghost — a **seed** of window $K_0$ and mass $L$ — gives, at
+window $K_0 n$, a ghost of mass at most $L^n$. The growth base is
+$L^{1/K_0}$: the mass per unit of window.
+
+Now the arithmetic becomes a competition between seeds. The binomial stencil
+is the seed $(K_0, L) = (1, 2)$: base $2$. A previously used seed, the size-3
+configuration $\{1,5,6\}$ against $\{2,3,7\}$, has $(K_0, L) = (3, 6)$: base
+$6^{1/3} \approx 1.8171$. But the size-12 configuration is a far cheaper seed,
+$(K_0, L) = (12, 24)$, giving
+
+$$24^{1/12} \;\approx\; 1.3032 .$$
+
+Concretely, at the shared window $12n$ the older construction guaranteed mass
+$6^{4n} = 1296^n$, and the new one guarantees $24^n$ — smaller by exactly
+$54^n$. At window $36$, that is $7\,308$ actual units of mass against a
+previous guarantee of over two billion. (The construction even outperforms its
+own certificate: at window $24$ the guarantee is $576$ but the actual mass of
+the doubled seed, after cancellation between colliding terms, is $512$.)
+
+Rounding up to a multiple of $12$ gives a bound for every window at once, and
+so the sequence is bracketed:
+
+$$2K \;\le\; \operatorname{minMass}(K) \;\le\; 24^{\lceil K/12 \rceil}.$$
+
+Honesty requires a caveat that the mathematics itself supplies: the
+exponential ceiling only *improves* on the naive $2^K$ from $K = 13$ onwards.
+Below that, the explicit configurations are enormously better. The value of
+the ceiling is that it is uniform and unconditional, and that it improves
+automatically whenever anyone finds a better seed.
+
+## What the shape of the answer tells us
+
+Step back and look at the two ends of the bracket. The lower bound is linear.
+The upper bound is exponential with base $1.3032$. The gap is not a small
+technical annoyance; it is the whole question, and the machinery above tells
+us precisely what would close it.
+
+Every ideal configuration of size $n_0$ is a seed with mass $2n_0$, hence a
+growth base of $(2n_0)^{1/n_0}$. That quantity marches towards $1$:
+
+| size $n_0$ | seed mass | base $(2n_0)^{1/n_0}$ |
+|---:|---:|---:|
+| 3 | 6 | 1.8171 |
+| 12 | 24 | 1.3032 |
+| 30 | 60 | 1.1462 |
+| 120 | 240 | 1.0467 |
+| 1000 | 2000 | 1.0076 |
+
+So the conjecture that invisibility is *cheap* — that $\operatorname{minMass}(K)$
+grows only polynomially, indeed that it equals $2K$ for every $K$ — is
+*equivalent*, for this method, to the existence of ideal configurations of
+unbounded size. That is the central open problem of a subject over a century
+old. The composition machinery converts it into a pure existence question
+about integer polynomials: is there, for each $K$, a nonzero polynomial with
+integer coefficients divisible by $(X-1)^K$ whose coefficients sum (in
+absolute value) to only $2K$?
+
+That reformulation is itself a gift. The polynomial version needs no mention
+of power sums or moments at all:
+
+> **Polynomial mass theorem.** If $P$ is a nonzero polynomial with integer
+> coefficients divisible by $(X-1)^K$, then the sum of the absolute values of
+> its coefficients is at least $2K$; and $2K$ is attained for every
+> $K \le 10$ and for $K = 12$.
+
+And it suggests where to look. Convolution of ghosts is multiplication of
+polynomials, and the cheapest known high-order zeros come from sparse products
+such as $\prod_{i}(X^{a_i} - 1)$: each factor vanishes at $X = 1$, so $K$
+factors give a $K$-fold zero, and the only question is how much cancellation
+the exponents $a_i$ can be made to produce. With the lazy choice
+$a_i = 1, 2, \dots, K$ the mass at $K = 12$ is $72$ — already far below the
+binomial $4096$, though still triple the ideal $24$. Squeezing that gap is a
+question about coefficient cancellation in products of binomials, a subject
+with its own long history.
+
+## Why any of this matters outside number theory
+
+The window $K$ is a budget of moments, and every experiment has one. The
+theorem $\operatorname{mass} \ge 2K$ says: to fool a $K$-moment instrument you
+must expend at least $2K$ units of signal, split evenly between what you add
+and what you remove. That is a genuine, unconditional security guarantee for
+moment-based measurement — small perturbations cannot be invisible, and a
+budget of moments buys a proportional guarantee against ghosts.
+
+But the companion theorem is the warning: the guarantee is only *linear*.
+Ghosts of mass $1.3032^K$ exist for every $K$ — and are far cheaper than the
+$2^K$ that a naive analysis based on finite-difference stencils would suggest.
+Whether the true cost of hiding is linear, exponential, or somewhere between
+is undecided, and the undecided part is precisely a very old and very concrete
+question about whole numbers: *how many teams of players can share all their
+low-order statistics?*
+
+There is something appealing in that. A question about the robustness of
+measurement, stripped to its skeleton, turns out to be the Prouhet–Tarry–Escott
+problem in disguise. And the mathematics is arranged so that the moment anyone
+exhibits a set of thirteen numbers matching another thirteen in twelve power
+sums, the entire theory improves by itself — a new seed drops in, the base
+falls, and every bound downstream tightens without a line of argument being
+rewritten.
+
+Until then, the ledger reads:
+
+$$2K \;\le\; \operatorname{minMass}(K) \;\le\; 24^{\lceil K/12\rceil},$$
+
+with exact equality at the bottom for eleven of the first twelve windows, and
+a single stubborn integer — $\operatorname{minMass}(11)$, either $22$ or $24$ —
+standing between us and knowing the rest.

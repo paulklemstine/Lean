@@ -1,595 +1,743 @@
-# The Invisible Weight Vectors of a Truncated Power-Sum Window
+# The Mass of Invisibility: Sharp $\ell^1$ Bounds for Weight Vectors Annihilated by a Truncated Power-Sum Window
 
 **Author:** Aristotle
-**Date:** 2026-08-20
+
+**Date:** 2026-08-22
 
 ---
 
 ## Abstract
 
-Fix integers $0 \le K \le N$ and consider weight vectors $e = (e_0, \dots, e_N)$ supported
-on the nodes $\{0, 1, \dots, N\}$. The *truncated moment map* sends $e$ to the tuple of its
-first $K$ moments $m_k(e) = \sum_{j=0}^{N} e_j\, j^k$, $0 \le k < K$. We call $e$ *invisible
-to the window $K$* when this tuple vanishes. The classical Vandermonde rigidity principle
-settles the untruncated case: the full moment map, with $K = N+1$, is injective. This paper
-determines the kernel of the truncated map completely.
+Let $e : \{0,1,\dots,N\} \to \mathbb{Z}$ be an integer weight vector and let
 
-We prove that the invisible vectors form a free module of rank exactly $N + 1 - K$, with an
-explicit basis given by the $N + 1 - K$ translates of the $K$-th forward-difference stencil,
-the *shifted alternating binomial vectors* $b^{(K,i)}$ supported on $[i, i+K]$ with entries
-$(-1)^{K-d}\binom{K}{d}$. Sufficiency holds over any commutative ring; necessity holds over
-$\mathbb{Q}$ and — the sharp point — over $\mathbb{Z}$, with integer coefficients for
-integral vectors, because the leading entry of each basis vector is $1$ and the descent
-never divides. Equivalently, $e$ is invisible to the window $K$ if and only if the generating
-polynomial $E(X) = \sum_j e_j X^j$ is divisible by $(X-1)^K$.
+$$m_k(e) \;=\; \sum_{j=0}^{N} e_j \, j^k \qquad (0^0 := 1)$$
 
-Translating positive and negative parts into multisets converts the theorem into a complete
-classification of bounded *near misses* — pairs of multisets of nonnegative integers with
-identical power sums throughout a window — as integer combinations of translates of one
-binomial pair. We derive: the support bound $\#\operatorname{supp}(e) \ge K + 1$ with a
-complete rigidity description of the extremal case as a divided difference; the $\ell^1$
-lower bounds $\ell^1(e) \ge K+2$ for $K \ge 2$ and $\ell^1(e) \ge K + 3$ for odd $K \ge 3$,
-together with the parity statement that $\ell^1(e)$ is always even; and a convolution
-principle under which windows add while $\ell^1$ norms multiply. The convolution principle
-refutes the natural conjecture $\ell^1(e) \ge 2^K$ for every $K \ge 3$, exhibiting invisible
-vectors of $\ell^1$ norm at most $6^{n}$ at window $3n$, exponentially below $2^{3n}$.
+denote its $k$-th moment. Call $e$ *invisible to the window $K$* if
+$m_k(e) = 0$ for all $k < K$, and define its *mass* to be the $\ell^1$ norm
+$\|e\|_1 = \sum_j |e_j|$. We study the extremal invariant
 
-**Keywords.** Truncated moment problem, forward differences, Prouhet–Tarry–Escott problem,
-vanishing moments, integral lattices, divided differences, Vandermonde rigidity.
+$$\operatorname{minMass}(K) \;=\; \min\{\|e\|_1 : e \neq 0 \text{ and } e \text{ invisible to the window } K\}.$$
+
+We prove four groups of results. First, a sharp lower bound
+$\operatorname{minMass}(K) \ge 2K$, obtained by converting the vanishing
+moments into equal power sums of two multisets and applying Newton's
+identities to force equality of the associated monic root polynomials. Second,
+an exact evaluation $\operatorname{minMass}(K) = 2K$ for $1 \le K \le 10$ and
+$K = 12$, via explicit ideal Prouhet–Tarry–Escott configurations, together
+with the exact characterisation
+$\operatorname{minMass}(K) = 2K \iff$ an ideal Prouhet–Tarry–Escott
+configuration of size $K$ exists; in particular
+$\operatorname{minMass}(11) \in \{22,24\}$, equal to $22$ precisely when an
+ideal configuration of size $11$ exists. Third, a composition calculus:
+$\operatorname{minMass}$ is submultiplicative,
+$\operatorname{minMass}(K_1+K_2) \le \operatorname{minMass}(K_1)\operatorname{minMass}(K_2)$,
+strictly so at $(2,2)$; and a *seeded engine* which converts any single
+invisible vector of window $K_0$, mass $L$ and nonzero $K_0$-th moment into
+nonzero invisible vectors of window $K_0 n$ and mass at most $L^n$ for all
+$n$. Instantiating the engine at the ideal configuration of size $12$ yields
+the bracket
+
+$$2K \;\le\; \operatorname{minMass}(K) \;\le\; 24^{\lceil K/12\rceil},$$
+
+equivalently $\operatorname{minMass}(K)^{12} \le 24^{K+11}$, so the growth base
+of invisibility is at most $24^{1/12} \approx 1.3032$, improving the previous
+$6^{1/3} \approx 1.8171$ by a factor $54^{n}$ at each window $12n$. Fourth, a
+dictionary identifying $\operatorname{minMass}(K)$ with the least
+coefficient-$\ell^1$ norm of a nonzero integer polynomial divisible by
+$(X-1)^K$. The results together show that the polynomial-mass conjecture
+$\operatorname{minMass}(K) = 2K$ is equivalent, for the composition method, to
+the existence of ideal Prouhet–Tarry–Escott configurations of unbounded size.
+
+**Keywords:** power sums, moment problems, Prouhet–Tarry–Escott problem,
+Newton's identities, $\ell^1$ extremal problems, finite differences,
+integer polynomials, convolution.
 
 ---
 
 ## 1. Introduction
 
-### 1.1 The problem
+### 1.1 Ghosts of a truncated moment map
 
-Let $R$ be a commutative ring and let $e : \{0, 1, \dots, N\} \to R$ be a *weight vector*
-on the integer nodes $0$ through $N$ (extended by $0$ outside the range when convenient).
-Its $k$-th moment is
-$$m_k(e) \;=\; \sum_{j=0}^{N} e_j \, j^k , \qquad k \ge 0,$$
-with the convention $0^0 = 1$, so that $m_0(e) = \sum_j e_j$.
+A measurement that reports only the first $K$ moments of a discrete
+distribution defines a linear map
 
-**Definition 1.1 (Invisibility).** For $K \ge 0$, the vector $e$ is *invisible to the window
-$K$* if $m_k(e) = 0$ for every $k < K$.
+$$\mathcal{M}_K : \mathbb{Z}^{\{0,\dots,N\}} \longrightarrow \mathbb{Z}^{K},
+\qquad \mathcal{M}_K(e) = \big(m_0(e), m_1(e), \dots, m_{K-1}(e)\big).$$
 
-The full moment map is injective — this is the *rigidity principle*, and it is classical:
+Its kernel — the set of configurations that the measurement cannot see —
+is nontrivial as soon as $N \ge K$, because the map is a $K \times (N+1)$
+Vandermonde-type system. The existence of kernel elements is therefore
+uninteresting. What is interesting is their *size*, in a norm which reflects
+the physical or computational cost of producing them. For integer weights the
+natural choice is the $\ell^1$ norm, which counts the total number of unit
+charges deployed, and the extremal question is:
 
-**Proposition 1.2 (Vandermonde rigidity).** If $e : \{0,\dots,N\} \to \mathbb{Q}$ satisfies
-$m_k(e) = 0$ for all $k \le N$, then $e = 0$. The same holds over $\mathbb{Z}$.
+> How cheaply can a nonzero configuration hide from the first $K$ moments?
 
-*Proof sketch.* The equations say that the vector $e$ lies in the kernel of the Vandermonde
-matrix $V_{kj} = j^k$, $0 \le k, j \le N$, whose determinant is
-$\prod_{0 \le a < b \le N} (b - a) \ne 0$. Equivalently, one may write the Lagrange
-interpolation identity: for each node $i$, the polynomial
-$L_i(x) = \prod_{j \ne i} \frac{x - j}{i - j}$ has degree $\le N$, so pairing $e$ against
-$L_i$ (a linear combination of the monomials $x^k$, $k \le N$) gives
-$e_i = \sum_j e_j L_i(j) = 0$. $\square$
+Classically the answer is quantified by the $K$-th finite-difference stencil.
+The vector $e_j = (-1)^{K-j}\binom{K}{j}$, supported on $\{0,\dots,K\}$,
+annihilates all polynomials of degree $< K$ and hence lies in
+$\ker \mathcal{M}_K$; its mass is $2^K$. Thus
+$\operatorname{minMass}(K) \le 2^K$, and the question is how far below this
+exponential the truth lies.
 
-Thus invisibility is a phenomenon of *truncation*: it can only occur when $K \le N$. The
-question addressed here is the exact determination of
-$$\mathcal{I}(N,K) \;=\; \{ e : \{0,\dots,N\} \to R \;:\; m_k(e) = 0 \text{ for all } k < K \}.$$
+### 1.2 Summary of results
 
-### 1.2 Why the question matters
+Throughout, $K \ge 1$ is the window, and all vectors have integer entries and
+finite support.
 
-Three independent motivations converge on $\mathcal{I}(N,K)$.
+* **(Newton mass law, Theorem 3.4)** Every nonzero $e$ invisible to the window
+  $K$ has $\|e\|_1 \ge 2K$.
+* **(Sharpness, Theorem 4.3)** $\operatorname{minMass}(K) = 2K$ for
+  $1 \le K \le 10$ and for $K = 12$, witnessed by explicit ideal
+  Prouhet–Tarry–Escott configurations.
+* **(Characterisation, Theorem 5.2)** For every $K$,
+  $\operatorname{minMass}(K) = 2K$ if and only if an ideal
+  Prouhet–Tarry–Escott configuration of size $K$ exists.
+* **(Boundary case, Corollary 5.4)** $\operatorname{minMass}(11) \in \{22,24\}$,
+  and $\operatorname{minMass}(11) = 22$ if and only if an ideal configuration
+  of size $11$ exists.
+* **(Rigidity, Theorem 5.5)** A pair of multisets of the minimal size $K$ with
+  equal power sums through the window is necessarily disjoint.
+* **(Composition, Theorem 6.2 and Corollary 6.3)**
+  $\operatorname{minMass}(K_1+K_2) \le \operatorname{minMass}(K_1)\operatorname{minMass}(K_2)$
+  and $\operatorname{minMass}(nK) \le \operatorname{minMass}(K)^n$; the
+  inequality is strict at $(K_1,K_2) = (2,2)$.
+* **(Seeded engine, Theorem 6.5)** Any invisible seed of window $K_0$, mass
+  $L$ and nonzero $K_0$-th moment yields, for every $n$, a nonzero vector
+  invisible to the window $K_0n$ of mass at most $L^n$.
+* **(Growth base, Theorem 7.1 and Corollary 7.3)** With the ideal size-$12$
+  seed: nonzero invisible vectors of mass $\le 24^n$ at window $12n$; hence
+  $\operatorname{minMass}(K) \le 24^{\lceil K/12\rceil}$ for every $K$ and
+  $\operatorname{minMass}(K)^{12} \le 24^{K+11}$, i.e. growth base at most
+  $24^{1/12} < 1.31$.
+* **(Polynomial dictionary, Theorem 8.2)** $\operatorname{minMass}(K)$ is the
+  least coefficient-$\ell^1$ norm of a nonzero $P \in \mathbb{Z}[X]$ with
+  $(X-1)^K \mid P$; consequently every such $P$ has coefficient norm $\ge 2K$,
+  attained for $K \le 10$ and $K = 12$.
 
-*Numerical analysis and signal processing.* A finite stencil with $K$ vanishing moments is
-exactly a stencil that annihilates polynomial trends of degree $< K$: the defining
-approximation-order condition for finite-difference schemes, quadrature rules, and the
-vanishing-moment condition on a wavelet's high-pass filter. Classifying $\mathcal{I}(N,K)$
-classifies all stencils of a given length with a given approximation order.
+### 1.3 Relation to the Prouhet–Tarry–Escott problem
 
-*Number theory.* An integral weight vector splits as a difference of two multisets, and the
-invisibility equations become the statement that the two multisets have identical power sums
-$p_0, \dots, p_{K-1}$. That is the *Prouhet–Tarry–Escott* (PTE) condition, studied since the
-mid-nineteenth century. A classification of $\mathcal{I}(N,K)$ over $\mathbb{Z}$ is a
-classification of bounded PTE solutions.
-
-*Design and testing.* If a test procedure can only evaluate $K$ polynomial statistics of a
-signed configuration, $\mathcal{I}(N,K)$ is precisely the set of configurations the test
-cannot distinguish from nothing.
-
-### 1.3 Results
-
-Section 2 introduces the shifted binomial vectors and proves that they are invisible with a
-first visible moment equal to $K!$ independent of the shift. Section 3 proves the structure
-theorem over $\mathbb{Q}$ and over $\mathbb{Z}$, together with uniqueness, and Section 4
-records the polynomial reformulation and the dimension count. Section 5 gives the near-miss
-dictionary. Section 6 proves the support bound and its rigidity. Section 7 develops the
-$\ell^1$ theory: lower bounds, parity, the convolution principle, and the refutation of the
-$2^K$ conjecture. Section 8 discusses the remaining gap and states the conjecture that the
-minimum is $2K$.
-
----
-
-## 2. The shifted alternating binomial vectors
-
-**Definition 2.1.** For $K, i \ge 0$, the *shifted alternating binomial vector*
-$b^{(K,i)}$ is the weight vector
-$$b^{(K,i)}_j \;=\;
-\begin{cases}
-(-1)^{K - (j-i)} \dbinom{K}{\,j - i\,}, & i \le j \le i + K, \\[4pt]
-0, & \text{otherwise.}
-\end{cases}$$
-
-Its two extreme entries are $b^{(K,i)}_i = (-1)^K$ and, crucially,
-$$b^{(K,i)}_{i+K} = 1 . \tag{2.1}$$
-For $K = 2$ the pattern is $(1, -2, 1)$; for $K = 3$, $(-1, 3, -3, 1)$.
-
-**Lemma 2.2 (Difference interpretation).** If $i + K \le N$ then for every $k \ge 0$,
-$$m_k\big(b^{(K,i)}\big) \;=\; \sum_{d=0}^{K} (-1)^{K-d} \binom{K}{d} (i+d)^k
-\;=\; \big(\Delta^K x^k\big)(i),$$
-where $\Delta f(x) = f(x+1) - f(x)$ is the forward difference with unit step.
-
-*Proof sketch.* The support of $b^{(K,i)}$ is contained in $\{i, \dots, i+K\} \subseteq
-\{0,\dots,N\}$, so the sum over $\{0,\dots,N\}$ restricts to the image of
-$d \mapsto i + d$, which is injective; re-indexing gives the alternating binomial sum, and
-that sum is the standard expansion of the $K$-fold iterate of $\Delta$. $\square$
-
-**Theorem 2.3 (The basis vectors are invisible).** For $i + K \le N$, the vector
-$b^{(K,i)}$ is invisible to the window $K$: $m_k(b^{(K,i)}) = 0$ for all $k < K$. This holds
-over any commutative ring.
-
-*Proof sketch.* By Lemma 2.2 the $k$-th moment is $(\Delta^K x^k)(i)$. Each application of
-$\Delta$ lowers the degree of a polynomial by one; applying it $K$ times to $x^k$ with
-$k < K$ therefore yields the zero polynomial. $\square$
-
-**Theorem 2.4 (Uniform first visible moment).** For $i + K \le N$,
-$$m_K\big(b^{(K,i)}\big) \;=\; K! ,$$
-independently of the shift $i$.
-
-*Proof sketch.* $\Delta^K x^K$ is the constant $K!$ (the leading coefficient of $x^K$ times
-$K!$); evaluate at $i$. $\square$
-
-**Corollary 2.5.** Over a nontrivial ring, $b^{(K,i)} \ne 0$; indeed its top entry is $1$.
-
-So each basis vector hides perfectly inside the window and re-emerges immediately after it,
-with a signal strength that does not depend on where it is placed.
+The Prouhet–Tarry–Escott problem asks for two distinct multisets of integers
+of the same size $n$ with equal power sums $p_1, \dots, p_{K-1}$; the solution
+is *ideal* when $n = K$, the smallest size possible. Ideal solutions are known
+for $K \le 10$ and $K = 12$, and their existence for general $K$ (in
+particular $K = 11$) is open. Theorem 5.2 shows that the extremal problem
+studied here is not merely analogous to but *equivalent* to that classical
+problem, window by window. The composition calculus of §6 then converts the
+classical open problem into a statement about growth rates: the conjecture
+$\operatorname{minMass}(K) = 2K$ for all $K$ is precisely the assertion that
+ideal configurations exist in all sizes.
 
 ---
 
-## 3. The structure theorem
+## 2. Setting and definitions
 
-Between $0$ and $N$ there are exactly $N + 1 - K$ admissible shifts $i \in \{0, \dots, N-K\}$
-(with the convention that this count is $0$ when $K > N$). The main theorem says they
-generate everything.
+**Definition 2.1 (moments and invisibility).** For $N, k \in \mathbb{N}$ and
+$e : \mathbb{N} \to \mathbb{Z}$ define the $k$-th moment on $\{0,\dots,N\}$ by
 
-**Theorem 3.1 (Sufficiency; any commutative ring).** Let $K \le N + 1$ and let
-$c : \mathbb{N} \to R$ be arbitrary. Then
-$$e_j \;=\; \sum_{i=0}^{N-K} c_i \, b^{(K,i)}_j$$
-defines a vector invisible to the window $K$.
+$$m_k^{(N)}(e) \;=\; \sum_{j=0}^{N} e_j \, j^k, \qquad 0^0 := 1 .$$
 
-*Proof sketch.* Moments are linear in the weight vector: $m_k(e + f) = m_k(e) + m_k(f)$ and
-$m_k(c\,e) = c\, m_k(e)$, hence $m_k$ of a finite sum is the sum of the $m_k$'s. Apply
-Theorem 2.3 termwise. $\square$
+We say $e$ is *invisible to the window $K$ on $\{0,\dots,N\}$*, written
+$\mathrm{Inv}(N,K,e)$, if $m_k^{(N)}(e) = 0$ for all $k < K$. We suppress $N$
+when it is clear from the context.
 
-**Theorem 3.2 (Necessity, integral form).** Let $e : \{0,\dots,N\} \to \mathbb{Z}$ be
-invisible to the window $K$. Then there exist **integers** $c_0, \dots, c_{N-K}$ with
-$$e_j \;=\; \sum_{i=0}^{N-K} c_i \, b^{(K,i)}_j \qquad \text{for all } j \le N .$$
-The same statement holds verbatim over $\mathbb{Q}$ with rational coefficients.
+**Definition 2.2 (mass).** The *mass* of $e$ on $\{0,\dots,N\}$ is
+$\|e\|_1 = \sum_{j=0}^{N} |e_j|$.
 
-*Proof sketch.* Induct downward on $N$, with the window length $K$ fixed.
+**Definition 2.3 (the extremal invariant).** Say the value $L \in \mathbb{N}$
+is *achievable at window $K$* if there exist $N$ and $e$ with
+$\mathrm{Inv}(N,K,e)$, $e \not\equiv 0$ on $\{0,\dots,N\}$, and $\|e\|_1 = L$.
+Set
 
-*Base case $N < K$.* Then the invisibility hypothesis supplies $m_k(e) = 0$ for all
-$k \le N$, and Proposition 1.2 forces $e = 0$; the empty combination works, since
-$N + 1 - K = 0$.
+$$\operatorname{minMass}(K) \;=\; \min\{L : L \text{ achievable at window } K\}.$$
 
-*Inductive step $N \ge K$.* Consider the last admissible shift $i = N - K$. By construction
-$b^{(K,i)}_j = 0$ for $j > i + K = N$, and no other admissible shift $i' < N-K$ reaches the
-node $N$, because $i' + K < N$. Hence the coefficient of $b^{(K,N-K)}$ is pinned by the top
-entry, and by (2.1) that entry equals $1$. Set $c_{N-K} := e_N$ and put
-$$e' \;=\; e - e_N \cdot b^{(K, N-K)} .$$
-Then $e'_N = e_N - e_N \cdot 1 = 0$, so $e'$ is supported on $\{0,\dots,N-1\}$, and $e'$ is
-still invisible to the window $K$ by Theorem 3.1 and linearity. The inductive hypothesis at
-$N - 1$ expresses $e'$ in the shifts $i \le N - 1 - K$; adding back $e_N b^{(K,N-K)}$ gives
-the claim.
+The set of achievable values is nonempty — the binomial stencil achieves
+$2^K$ — so the minimum exists, and $\operatorname{minMass}(K) \le 2^K$.
 
-The essential point is that **the recursion never divides**: the pivot entry is $1$, not
-$\pm K!$ and not a binomial coefficient, so the coefficients extracted from an integral $e$
-are integers. Rationality enters only through the base case, where the Vandermonde argument
-is applied to a vector of length shorter than the window. $\square$
+**Definition 2.4 (positive/negative multisets).** Given $e$ supported on
+$\{0,\dots,N\}$, let $s(e)$ be the multiset containing $j$ with multiplicity
+$\max(e_j,0)$ and $t(e)$ the multiset containing $j$ with multiplicity
+$\max(-e_j,0)$. Then $\|e\|_1 = |s(e)| + |t(e)|$, where $|\cdot|$ denotes
+multiset cardinality.
 
-**Theorem 3.3 (Uniqueness).** If $\sum_{i=0}^{M-1} c_i\, b^{(K,i)}_j = 0$ for all $j \le N$
-and $M \le N + 1 - K$, then $c_0 = \dots = c_{M-1} = 0$. Consequently the coefficients in
-Theorem 3.2 are unique, and the family $\{b^{(K,i)}\}_{i=0}^{N-K}$ is linearly independent.
+**Definition 2.5 (power sums of a multiset).** For a multiset $s$ of naturals
+and $k \in \mathbb{N}$, $p_k(s) = \sum_{a \in s} a^k$, again with $0^0=1$, so
+$p_0(s) = |s|$.
 
-*Proof sketch.* Downward induction again: evaluate at $j = M - 1 + K$, the largest node
-reached by any of the listed vectors; only $b^{(K,M-1)}$ is nonzero there, with value $1$,
-so $c_{M-1} = 0$; remove it and repeat. $\square$
-
-Combining:
-
-**Theorem 3.4 (Classification).** For $K \le N+1$ and $e : \{0,\dots,N\} \to \mathbb{Q}$,
-$$e \text{ is invisible to the window } K
-\iff
-\exists!\, c \in \mathbb{Q}^{\,N+1-K} : \; e = \sum_{i=0}^{N-K} c_i\, b^{(K,i)} .$$
-Over $\mathbb{Z}$, the invisible integral vectors form a free $\mathbb{Z}$-module of rank
-$N+1-K$ with basis $\{b^{(K,i)}\}$; in particular the inclusion of the integral lattice into
-the rational kernel is unimodular.
-
----
-
-## 4. Polynomial reformulation and dimension
-
-Encode a weight vector as a polynomial.
-
-**Definition 4.1.** $E(X) = \sum_{j=0}^{N} e_j X^j$, the *generating polynomial* of $e$; it
-has degree at most $N$ and its $j$-th coefficient recovers $e_j$ for $j \le N$.
-
-**Lemma 4.2.** $\big(X^i (X-1)^K\big)$ has $j$-th coefficient exactly $b^{(K,i)}_j$; hence
-for $i + K \le N$ the generating polynomial of $b^{(K,i)}$ is $X^i (X-1)^K$.
-
-*Proof sketch.* Expand $(X-1)^K = \sum_{d} \binom{K}{d} (-1)^{K-d} X^{d}$ and shift by
-$X^i$. $\square$
-
-**Theorem 4.3 (Divisibility criterion).** Let $K \le N + 1$. Over $\mathbb{Q}$, and also
-over $\mathbb{Z}$,
-$$e \text{ is invisible to the window } K \iff (X-1)^K \mid E(X).$$
-More precisely, over any commutative ring: if $(X-1)^K \mid E$ then $e$ is invisible, and if
-$e$ is a combination of the $b^{(K,i)}$ then $(X-1)^K \mid E$.
-
-*Proof sketch.* If $E = (X-1)^K Q$ with $\deg Q \le N - K$, write $Q = \sum_i c_i X^i$;
-comparing coefficients with Lemma 4.2 exhibits $e$ as $\sum_i c_i b^{(K,i)}$, which is
-invisible by Theorem 3.1. Conversely, Theorem 3.2 writes $e$ in that form, and then
-$E = (X-1)^K \sum_i c_i X^i$. $\square$
-
-This is the cleanest form of the result: *vanishing of the first $K$ moments is a $K$-fold
-root at $X = 1$ of the generating polynomial*. The heuristic is Taylor's: differentiating
-$E(e^{t})=\sum_j e_j e^{jt} = \sum_k m_k(e)\, t^k/k!$ shows that the moments are the Taylor
-coefficients of the exponential generating transform at $t = 0$, i.e. at $X = 1$.
-
-**Theorem 4.4 (Dimension).** Over $\mathbb{Q}$, let $\mathcal{I}(N,K)$ denote the space of
-vectors supported on $\{0,\dots,N\}$ and invisible to the window $K$. Then
-$$\dim_{\mathbb{Q}} \mathcal{I}(N,K) \;=\; N + 1 - K$$
-(with the truncated subtraction convention, so the value is $0$ once $K > N$). In particular
-$\dim \mathcal{I}(N,N+1) = 0$ — the rigidity principle — and $\dim \mathcal{I}(N,N) = 1$,
-the line spanned by the single alternating binomial vector
-$\big((-1)^{N-j}\binom{N}{j}\big)_{j=0}^{N}$.
-
-*Proof sketch.* Theorems 3.1–3.3 exhibit $\{b^{(K,i)}\}_{i \le N-K}$ as a spanning,
-linearly independent family. $\square$
-
-**Proposition 4.5 (One equation per step; surjectivity of the truncated moment map).** For
-$K \le N$,
-$$\dim \mathcal{I}(N,K) = \dim \mathcal{I}(N,K+1) + 1 ,$$
-and for every prescribed target $(\mu_0, \dots, \mu_{K-1}) \in \mathbb{Q}^{K}$ with
-$K \le N+1$ there is a weight vector on $\{0,\dots,N\}$ with $m_k(e) = \mu_k$ for all
+**Definition 2.6 (near miss).** A *near miss at window $K$* is a pair of
+distinct multisets $s \ne t$ of naturals with $p_k(s) = p_k(t)$ for all
 $k < K$.
 
-*Proof sketch.* The first assertion follows from Theorem 4.4. The second says the truncated
-moment map $\mathbb{Q}^{N+1} \to \mathbb{Q}^{K}$ is surjective, which follows from the
-rank–nullity computation: its kernel has dimension $N+1-K$, so its image has dimension $K$.
-Concretely, one can also solve directly by Lagrange interpolation on any $K$ of the nodes.
+**Lemma 2.7 (dictionary between vectors and multisets).** $e$ is invisible to
+the window $K$ if and only if $p_k(s(e)) = p_k(t(e))$ for all $k < K$; and
+$e \ne 0$ if and only if $s(e) \ne t(e)$. Moreover $\|e\|_1 = |s(e)|+|t(e)|$.
+
+*Proof sketch.* Split the sum defining $m_k$ into terms with $e_j>0$ and
+$e_j<0$; the two partial sums are exactly $p_k(s(e))$ and $p_k(t(e))$. The
+multisets determine $e$ since $s(e)$ and $t(e)$ have disjoint supports. $\square$
+
+**Definition 2.8 (ideal configuration).** An *ideal Prouhet–Tarry–Escott
+configuration of size $K$* is a pair of multisets $s,t$ of naturals with
+$|s| = |t| = K$, $s \cap t = \emptyset$ (no element of $s$ lies in $t$),
+$s \ne t$ and $p_k(s) = p_k(t)$ for all $k < K$. We write
+$\mathrm{Ideal}(K)$ for the assertion that such a pair exists.
+
+---
+
+## 3. The Newton mass law
+
+The lower bound rests on a determinacy statement for multisets: a multiset of
+size $n$ over a field of characteristic $0$ is determined by its power sums
+$p_0,\dots,p_n$. We record the chain of steps.
+
+**Lemma 3.1 (Newton's identity for multisets).** Let $s$ be a multiset of
+rationals of cardinality $n$, and let $e_i(s)$ denote its elementary symmetric
+functions. For every $k \ge 1$,
+
+$$k\,e_k(s) \;=\; \sum_{i=1}^{k} (-1)^{i-1} e_{k-i}(s)\, p_i(s),$$
+
+with $e_i(s) = 0$ for $i > n$.
+
+*Proof sketch.* This is the classical Newton identity, obtained by
+specialising the universal identity between elementary symmetric and power-sum
+symmetric polynomials in $n$ variables along the evaluation that sends the
+variables to the elements of $s$. $\square$
+
+**Lemma 3.2 (equal power sums force equal symmetric functions).** Let $s,t$ be
+multisets of rationals with $p_k(s) = p_k(t)$ for all $k < K$. Then
+$e_k(s) = e_k(t)$ for all $k < K$.
+
+*Proof sketch.* Induct on $k$. For $k=0$ both sides are $1$. For $1 \le k < K$
+the Newton identity expresses $k\,e_k$ in terms of $e_0,\dots,e_{k-1}$ and
+$p_1,\dots,p_k$, all of which agree by the induction hypothesis and the
+assumption (note $p_i$ for $i \le k \le K-1$ is inside the window). Since we
+work in characteristic $0$, dividing by $k$ is legitimate. $\square$
+
+**Proposition 3.3 (determinacy).** Let $s,t$ be multisets of rationals with
+$|s| = |t| = n$ and $p_k(s) = p_k(t)$ for all $k \le n$. Then $s = t$.
+
+*Proof sketch.* By Lemma 3.2 the elementary symmetric functions agree in
+degrees $\le n$, hence the monic polynomials
+$F(X) = \prod_{a\in s}(X-a)$ and $G(X) = \prod_{b\in t}(X-b)$, whose
+coefficients are (signed) elementary symmetric functions of degree $\le n$,
+are equal. A monic polynomial over a field determines its multiset of roots
+with multiplicity, so $s = t$. $\square$
+
+**Theorem 3.4 (size law and mass law).** Let $K \ge 1$.
+
+1. If $(s,t)$ is a near miss at window $K$ (Definition 2.6) then
+   $|s| \ge K$ and $|t| \ge K$; consequently $|s| + |t| \ge 2K$.
+2. If $e \ne 0$ is invisible to the window $K$, then $\|e\|_1 \ge 2K$.
+   Hence $\operatorname{minMass}(K) \ge 2K$.
+
+*Proof sketch.* (1) The case $k=0$ of the hypothesis gives $|s| = |t| =: n$.
+Suppose $n < K$. Then $p_k(s) = p_k(t)$ holds for all $k \le n$ (since
+$n \le K-1$), so Proposition 3.3, applied after the inclusion
+$\mathbb{N} \hookrightarrow \mathbb{Q}$, yields $s = t$, contradicting
+distinctness. Hence $n \ge K$ and the total is $\ge 2K$.
+(2) Apply Lemma 2.7 to obtain a near miss $(s(e),t(e))$ at window $K$, and use
+$\|e\|_1 = |s(e)| + |t(e)| \ge 2K$. $\square$
+
+**Remark 3.5.** The essential point is the passage from *sets of positions* to
+*multisets of units*. Bounds derived from the support of $e$ (for instance via
+Lagrange interpolation against the window, which yields
+$\|e\|_1 \ge K+1$, or geometric refinements giving $K+2$) cannot exceed the
+number of distinct nodes and are therefore intrinsically weaker; the Newton
+argument counts multiplicity and is exact. For $K \ge 3$ the bound $2K$
+strictly improves $K+2$, and the improvement is unbounded.
+
+---
+
+## 4. Attainment: explicit ideal configurations
+
+**Lemma 4.1 (from node lists to vectors).** Let $A, B$ be lists of naturals
+bounded by $N$, with $A$ nonempty and $A \cap B = \emptyset$, and suppose
+$p_k(A) = p_k(B)$ for all $k < K$. Define
+$e_j = \#\{i : A_i = j\} - \#\{i : B_i = j\}$. Then
+
+* $e$ is invisible to the window $K$ on $\{0,\dots,N\}$;
+* $m_k(e) = p_k(A) - p_k(B)$ for every $k$, so $e$ becomes visible exactly at
+  the first index where the power sums differ;
+* $e \ne 0$;
+* $\|e\|_1 = |A| + |B|$.
+
+*Proof sketch.* The moment identity is a rearrangement of the defining sums
+(each element $a \in A$ contributes $a^k$). Disjointness makes
+$|e_j| = \#\{i: A_i = j\} + \#\{i : B_i = j\}$ pointwise, and summing over
+$j \le N$ gives $|A|+|B|$ because every element of either list is $\le N$.
+Nonvanishing follows because $A$ is nonempty and its elements are absent from
+$B$. $\square$
+
+**Proposition 4.2 (certified witnesses).** For each $K$ in the table below the
+listed pair $(A,B)$ consists of two disjoint sets of $K$ naturals with
+$p_k(A) = p_k(B)$ for all $k < K$ and $p_K(A) \ne p_K(B)$; hence by Lemma 4.1
+the value $2K$ is achievable at window $K$.
+
+| $K$ | $A$ | $B$ |
+|---|---|---|
+| 1 | $\{0\}$ | $\{1\}$ |
+| 2 | $\{0,3\}$ | $\{1,2\}$ |
+| 3 | $\{1,5,6\}$ | $\{2,3,7\}$ |
+| 4 | $\{0,4,7,11\}$ | $\{1,2,9,10\}$ |
+| 5 | $\{1,2,10,14,18\}$ | $\{0,4,8,16,17\}$ |
+| 6 | $\{0,5,6,16,17,22\}$ | $\{1,2,10,12,20,21\}$ |
+| 7 | $\{0,18,27,58,64,89,101\}$ | $\{1,13,38,44,75,84,102\}$ |
+| 8 | $\{0,4,9,23,27,41,46,50\}$ | $\{1,2,11,20,30,39,48,49\}$ |
+| 9 | $\{0,24,30,83,86,133,157,181,197\}$ | $\{1,17,41,65,112,115,168,174,198\}$ |
+| 10 | $\{12,2865,3519,11869,23738,23762,35631,43981,44635,47488\}$ | $\{0,3083,3301,11893,23314,24186,35607,44199,44417,47500\}$ |
+| 12 | $\{0,11,24,65,90,129,173,212,237,278,291,302\}$ | $\{3,5,30,57,104,116,186,198,245,272,297,299\}$ |
+
+*Proof sketch.* Each row is a finite list of integer identities
+$p_k(A) = p_k(B)$, $k < K$, verified by direct evaluation (the largest such
+identity involves ninth powers of numbers up to $47\,500$). Disjointness and
+cardinality are immediate. $\square$
+
+**Theorem 4.3 (exact values).** For $1 \le K \le 10$ and for $K = 12$,
+
+$$\operatorname{minMass}(K) = 2K .$$
+
+*Proof.* Theorem 3.4(2) gives $\ge 2K$; Proposition 4.2 with Lemma 4.1 gives
+$\le 2K$. $\square$
+
+**Corollary 4.4 (the binomial stencil is far from optimal).** For
+$4 \le K \le 10$ and $K = 12$ one has $\operatorname{minMass}(K) < 2^K$, with
+the gap growing exponentially; e.g. $51 \cdot \operatorname{minMass}(10) < 2^{10}$
+and $\operatorname{minMass}(12) = 24$ against $2^{12} = 4096$.
+
+**Lemma 4.5 (parity).** For $K \ge 1$, $\operatorname{minMass}(K)$ is even.
+
+*Proof sketch.* An invisible vector has $m_0(e) = \sum_j e_j = 0$, so the
+positive and negative parts have equal total, whence
+$\|e\|_1 = 2\sum_{j : e_j>0} e_j$ is even. $\square$
+
+---
+
+## 5. Exact characterisation of equality, and rigidity
+
+**Lemma 5.1 (mass of a disjoint near miss).** If $s,t$ are multisets of
+naturals bounded by $N$ with no common element, then the vector
+$e_j = \mathrm{mult}_s(j) - \mathrm{mult}_t(j)$ satisfies
+$\|e\|_1 = |s| + |t|$.
+
+*Proof sketch.* Disjointness means that for each $j$ at most one of the two
+multiplicities is nonzero, so $|a-b| = a+b$ pointwise. $\square$
+
+**Theorem 5.2 (equality characterisation).** For every $K$,
+
+$$\operatorname{minMass}(K) = 2K \iff \mathrm{Ideal}(K).$$
+
+*Proof sketch.* ($\Leftarrow$) Given an ideal configuration $(s,t)$, Lemma 5.1
+produces a nonzero invisible vector of mass exactly $2K$; combined with
+Theorem 3.4 this pins the minimum.
+($\Rightarrow$) Let $e$ realise the minimum $2K$ and pass to $s = s(e)$,
+$t = t(e)$. By Lemma 2.7 these form a near miss at window $K$, and by Theorem
+3.4(1) each has cardinality $\ge K$; since $|s|+|t| = 2K$, both equal $K$
+exactly. Disjointness — the remaining requirement — is Theorem 5.5 below. $\square$
+
+**Corollary 5.3.** $\mathrm{Ideal}(K)$ holds for $1 \le K \le 10$ and $K = 12$.
+Moreover, if $\mathrm{Ideal}(K)$ fails for some $K \ge 1$ then
+$\operatorname{minMass}(K) \ge 2K+2$.
+
+**Corollary 5.4 (the boundary case $K=11$).**
+$\operatorname{minMass}(11) \in \{22,24\}$, and
+
+$$\operatorname{minMass}(11) = 22 \iff \mathrm{Ideal}(11), \qquad
+\operatorname{minMass}(11) = 24 \implies \neg\,\mathrm{Ideal}(11).$$
+
+*Proof sketch.* Theorem 3.4 gives $\ge 22$. Restricting the size-$12$ witness
+to the smaller window gives $\le 24$ (monotonicity: invisibility to a window
+$K$ implies invisibility to every smaller window). Lemma 4.5 excludes the odd
+value $23$. The equivalence is Theorem 5.2 at $K = 11$. $\square$
+
+Thus the century-old question of the existence of an ideal size-$11$
+configuration is exactly the question of which of two explicit integers the
+invariant $\operatorname{minMass}(11)$ equals.
+
+**Theorem 5.5 (rigidity of size-minimal near misses).** Let $(s,t)$ be a near
+miss at window $K$ with $|s| = |t| = K$. Then $s$ and $t$ are disjoint: no
+natural number lies in both.
+
+*Proof sketch.* Put $F(X) = \prod_{a \in s}(X-a)$ and
+$G(X) = \prod_{b\in t}(X-b)$ in $\mathbb{Q}[X]$; both are monic of degree $K$.
+By Lemma 3.2 the elementary symmetric functions of $s$ and $t$ agree in
+degrees $\le K-1$, so $F$ and $G$ agree in all coefficients of degree $\ge 1$;
+that is, $F - G$ is a constant $c$. If $c = 0$ then $F=G$ and hence $s=t$,
+contradicting distinctness; so $c \ne 0$. A common element $a \in s \cap t$
+would be a root of both, giving $c = F(a)-G(a) = 0$, a contradiction. $\square$
+
+Rigidity has a structural reading: while general near misses admit "padding"
+(adding a common element to both sides preserves equal power sums), the
+padding freedom disappears exactly at the minimal size. Minimal-mass invisible
+vectors are therefore genuinely $\pm1$-valued on $2K$ distinct nodes.
+
+---
+
+## 6. The composition calculus
+
+### 6.1 Convolution
+
+For vectors $w$ supported on $\{0,\dots,M\}$ and $e$ supported on
+$\{0,\dots,N\}$ define the convolution
+
+$$(w * e)_j \;=\; \sum_{a=0}^{M} w_a\, e_{j-a},$$
+
+supported on $\{0,\dots,M+N\}$; in generating-function terms
+$P_{w*e} = P_w P_e$ where $P_e(X) = \sum_j e_j X^j$.
+
+**Lemma 6.1 (windows add, masses multiply, top moments multiply).** Let $w$ be
+invisible to the window $K_1$ on $\{0,\dots,M\}$ and $e$ invisible to the
+window $K_2$ on $\{0,\dots,N\}$. Then
+
+1. $w*e$ is invisible to the window $K_1+K_2$ on $\{0,\dots,M+N\}$;
+2. $\|w*e\|_1 \le \|w\|_1 \, \|e\|_1$;
+3. $m_{K_1+K_2}(w*e) = \binom{K_1+K_2}{K_2}\, m_{K_2}(e)\, m_{K_1}(w)$.
+
+*Proof sketch.* Expand $m_k(w*e) = \sum_{a,i} w_a e_i (a+i)^k$ by the binomial
+theorem into $\sum_{r} \binom{k}{r} m_r(w)\, m_{k-r}(e)$. Every term of a sum
+with $k < K_1+K_2$ has either $r < K_1$ or $k - r < K_2$, hence vanishes,
+proving (1); at $k = K_1+K_2$ exactly the single term $r = K_1$ survives,
+proving (3). Part (2) is the triangle inequality applied coefficientwise. $\square$
+
+Note that (3) is what guarantees the convolution is nonzero: if $m_{K_1}(w)$
+and $m_{K_2}(e)$ are nonzero then so is $m_{K_1+K_2}(w*e)$, and a vector with
+a nonvanishing moment cannot vanish identically.
+
+### 6.2 Submultiplicativity
+
+The only subtlety in deducing submultiplicativity of
+$\operatorname{minMass}$ is that a mass-optimal witness carries no a priori
+information about its first *visible* moment. This is supplied by:
+
+**Lemma 6.2a (first visible moment).** Every nonzero vector $e$ supported on
+$\{0,\dots,N\}$ has a well-defined *sharp window*: an integer $K^\star \ge$
+(its invisibility window) with $m_k(e) = 0$ for all $k < K^\star$ and
+$m_{K^\star}(e) \ne 0$.
+
+*Proof sketch.* If every moment vanished, then testing $e$ against Lagrange
+interpolation polynomials for the nodes $\{0,\dots,N\}$ — each a
+$\mathbb{Q}$-combination of the monomials $X^k$, $k \le N$ — would give
+$e_j = 0$ for each $j$, contradicting $e \ne 0$. So the set of indices $k$
+with $m_k(e) \ne 0$ is nonempty; take its least element that is at least the
+invisibility window. $\square$
+
+**Theorem 6.2 (submultiplicativity).** For all $K_1, K_2$,
+
+$$\operatorname{minMass}(K_1+K_2) \;\le\; \operatorname{minMass}(K_1)\cdot\operatorname{minMass}(K_2).$$
+
+*Proof sketch.* Take mass-optimal witnesses $w$ (window $K_1$) and $e$ (window
+$K_2$). By Lemma 6.2a, replace their windows by their sharp windows
+$K_1^\star \ge K_1$, $K_2^\star \ge K_2$. Then $w*e$ is invisible to
+$K_1^\star + K_2^\star \ge K_1+K_2$, is nonzero by Lemma 6.1(3), and has mass
+at most the product. Invisibility is monotone in the window, so $w*e$ certifies
+the bound at $K_1+K_2$. $\square$
+
+**Corollary 6.3 (iteration).**
+$\operatorname{minMass}(nK) \le \operatorname{minMass}(K)^n$ for all $n,K$.
+
+**Proposition 6.4 (strictness).** The inequality of Theorem 6.2 is strict at
+$(K_1,K_2) = (2,2)$: $\operatorname{minMass}(4) = 8 < 16 = \operatorname{minMass}(2)^2$.
+
+Consequently, composition is *never* optimal at windows where an ideal
+configuration exists; its value is that it extends beyond them. Sample
+consequences of composing certified witnesses:
+$\operatorname{minMass}(13) \le 48$ (sizes $12$ and $1$) and
+$\operatorname{minMass}(22) \le 480$ (sizes $12$ and $10$; the actual mass of
+that convolution is $464$, so even the certified bound is not tight).
+
+### 6.3 The seeded engine
+
+**Theorem 6.5 (seeded engine).** Let $w$ be invisible to the window $K_0$ on
+$\{0,\dots,M\}$, with $m_{K_0}(w) \ne 0$ and $\|w\|_1 = L$. Then for every
+$n \in \mathbb{N}$ there exist $N$ and a vector $\varepsilon$ supported on
+$\{0,\dots,N\}$ such that
+
+* $\varepsilon$ is invisible to the window $K_0 n$;
+* $m_{K_0n}(\varepsilon) \ne 0$ (in particular $\varepsilon \ne 0$);
+* $\|\varepsilon\|_1 \le L^n$.
+
+*Proof sketch.* Induct on $n$. For $n = 0$ take $\varepsilon = \delta_0$, the
+unit mass at the origin: it is (vacuously) invisible to the empty window, has
+$m_0 = 1 \ne 0$ and mass $1 = L^0$. For the step, convolve the vector
+$\varepsilon_n$ produced at stage $n$ with the seed $w$: by Lemma 6.1(1) the
+window becomes $K_0n + K_0 = K_0(n+1)$; by Lemma 6.1(3) the new top moment is
+$\binom{K_0(n+1)}{K_0 n} m_{K_0 n}(\varepsilon_n) m_{K_0}(w) \ne 0$; and by
+Lemma 6.1(2) the mass is at most $L \cdot L^n = L^{n+1}$ (using $L \ge 0$).
 $\square$
 
-Each additional measurement therefore removes exactly one degree of freedom, no more and no
-less, until the window catches up with the ruler.
+The seeded formulation isolates exactly what a construction must provide: a
+window, a mass, and a certificate of first visibility. Nothing else in the
+argument depends on the seed.
 
 ---
 
-## 5. The near-miss dictionary
+## 7. The growth base
 
-We now specialise to $R = \mathbb{Z}$ and translate into multisets. For
-$e : \{0,\dots,N\} \to \mathbb{Z}$ write $e_j^{+} = \max(e_j, 0)$ and
-$e_j^{-} = \max(-e_j, 0)$, and let
-$$S(e) = \bigsqcup_{j \le N} \{\, \underbrace{j, \dots, j}_{e_j^{+}} \,\},
-\qquad
-T(e) = \bigsqcup_{j \le N} \{\, \underbrace{j, \dots, j}_{e_j^{-}} \,\}$$
-be the associated multisets of nodes. Write $p_k(S) = \sum_{x \in S} x^k$.
+**Theorem 7.1 (ideal size-$12$ seed).** For every $n$ there is a nonzero
+integer vector, supported on $\{0,\dots,302n\}$, invisible to the window $12n$
+and of mass at most $24^n$.
 
-**Definition 5.1.** A pair of multisets $(S,T)$ with all elements in $\{0,\dots,N\}$ is a
-*near miss of order $K$* if $S \ne T$ and $p_k(S) = p_k(T)$ for all $k < K$.
+*Proof sketch.* Apply Theorem 6.5 with $w$ the weight vector of the size-$12$
+configuration of Proposition 4.2: $\|w\|_1 = 24$, window $12$, and
+$m_{12}(w) = p_{12}(A) - p_{12}(B) \ne 0$ by Lemma 4.1 and direct evaluation
+of the two twelfth power sums. $\square$
 
-**Lemma 5.2.** $p_k(S(e)) - p_k(T(e)) = m_k(e)$ for every $k$, and conversely, for multisets
-$S,T$ bounded by $N$, the vector $e_j = \#_j(S) - \#_j(T)$ (difference of multiplicities)
-has $m_k(e) = p_k(S) - p_k(T)$.
+**Theorem 7.2 (quantitative comparison).** At the common window $12n$, the
+bound of Theorem 7.1 is $24^n$, while iterating the size-$3$ configuration
+(window $3$, mass $6$) gives only $6^{4n}$. These satisfy the exact identity
 
-**Theorem 5.3 (Dictionary).** Let $S, T$ be multisets in $\{0,\dots,N\}$.
-1. If $e$ is invisible to the window $K$ and $e \ne 0$, then $(S(e), T(e))$ is a near miss
-   of order $K$.
-2. If $(S,T)$ has $p_k(S) = p_k(T)$ for $k < K$, then the multiplicity difference vector is
-   invisible to the window $K$.
-3. Consequently (Theorem 3.2) **every** near miss of order $K$ bounded by $N$ arises as an
-   integer combination $\sum_{i=0}^{N-K} c_i\, b^{(K,i)}$ of the translated binomial
-   stencils, and conversely every such combination that is not identically zero is a near
-   miss of order $K$.
+$$24^n \cdot 54^n \;=\; 6^{4n},$$
 
-*Proof sketch.* Parts 1 and 2 are Lemma 5.2 plus the observation that $e \ne 0$ is
-equivalent to $S(e) \ne T(e)$, since the multiplicity functions of $S(e)$ and $T(e)$ have
-disjoint supports. Part 3 is the structure theorem transported along the dictionary.
-$\square$
+so the new bound is smaller by the factor $54^n$, strictly for every $n\ge1$.
 
-**Corollary 5.4 (Explicit family).** For every $K$ and every shift $i$ with $i + K \le N$
-there are multisets $S \ne T$ bounded by $N$ with
-$$p_k(S) = p_k(T) \ \ (k < K), \qquad p_K(S) - p_K(T) = K! .$$
-These are the positive and negative parts of $b^{(K,i)}$: $S$ collects the nodes $i+d$ with
-$K - d$ even, each with multiplicity $\binom{K}{d}$, and $T$ the others. There are
-$N + 1 - K$ independent such families.
+**Corollary 7.3 (the bracket).** For every $K \ge 0$,
 
-**Example 5.5.** $K = 2$, $i = 1$: $b^{(2,1)} = (0, 1, -2, 1)$ on $\{0,1,2,3\}$, i.e.
-$$\{1, 3\} \ \text{vs.} \ \{2,2\}: \quad 1 + 3 = 2 + 2 = 4, \quad
-p_2 = 10 \ \text{vs.} \ 8, \ \text{difference } 2 = 2!$$
+$$2K \;\le\; \operatorname{minMass}(K) \;\le\; 24^{\lceil K/12\rceil}
+\;=\; 24^{\lfloor (K+11)/12\rfloor},$$
 
-**Example 5.6.** $K = 3$: the vector $(-1, 2, 0, -2, 1)$ on $\{0,\dots,4\}$ is invisible to
-the window $3$; as a near miss it reads
-$$\{1,1,4\} \ \text{vs.} \ \{0,3,3\}: \quad 6 = 6, \quad 18 = 18, \quad
-p_3 = 66 \ \text{vs.} \ 54, \ \text{difference } 12 .$$
+and, in integer form free of real exponentials,
 
-Two structural corollaries come free from the dictionary.
+$$\operatorname{minMass}(K)^{12} \;\le\; 24^{\,K+11}.$$
 
-**Proposition 5.7 (Equal cardinality).** If $K \ge 1$ and $p_k(S) = p_k(T)$ for all $k < K$,
-then $|S| = |T|$; this is the case $k = 0$.
+*Proof sketch.* The lower bound is Theorem 3.4. For the upper bound take
+$n = \lceil K/12\rceil$ in Theorem 7.1 and note $K \le 12n$, so the constructed
+vector is also invisible to the window $K$; it is nonzero, so it certifies
+$\operatorname{minMass}(K) \le 24^{n}$. Raising this to the twelfth power and
+using $12\lceil K/12\rceil \le K+11$ gives the integer form. $\square$
 
-**Proposition 5.8 (Alternating-sum congruence).** If $S, T$ are bounded by $N$ and
-$p_k(S) = p_k(T)$ for all $k < K$ with $K \le N+1$, then
-$$2^K \ \Big|\ \sum_{x \in S} (-1)^x \;-\; \sum_{x \in T} (-1)^x .$$
+**Remark 7.4 (numerics and honest scope).** The growth base of the upper bound
+is $24^{1/12} = 1.30322\ldots$, against $6^{1/3} = 1.81712\ldots$ for the
+size-$3$ seed and $2$ for the binomial stencil. The bound
+$24^{\lceil K/12\rceil}$ is only better than the trivial $2^K$ from $K = 13$
+onwards; for $K \le 12$ the explicit witnesses of Theorem 4.3 are far
+stronger. The engine's value is uniformity and extensibility, not superiority
+in the small range. Numerically, the actual masses of the iterated seed are
+smaller still than the certificate: $24$, $512$, $7\,308$ at windows $12$,
+$24$, $36$, against certificates $24$, $576$, $13\,824$.
 
-*Proof sketch.* By Theorem 4.3 the polynomial $E(X) = \sum_j (\#_j S - \#_j T) X^j$ is
-divisible by $(X-1)^K$ in $\mathbb{Z}[X]$. Evaluate at $X = -1$: the left-hand side is the
-difference of alternating counts, and the right-hand side carries the factor
-$(-1-1)^K = (-2)^K$. $\square$
+**Remark 7.5 (future seeds).** An ideal configuration of size $n_0$ is a seed
+of mass $2n_0$ at window $n_0$, giving base $(2n_0)^{1/n_0} \to 1$. Hence, for
+this method, "$\operatorname{minMass}$ grows subexponentially in every base"
+is equivalent to "ideal configurations of unbounded size exist".
 
 ---
 
-## 6. Support: lower bound and rigidity
+## 8. The polynomial dictionary
 
-Write $\operatorname{supp}(e) = \{ j \le N : e_j \ne 0\}$.
+**Definition 8.1.** For $P \in \mathbb{Z}[X]$ set
+$\operatorname{polyMass}(P) = \sum_{j} |[X^j]P|$, the $\ell^1$ norm of the
+coefficient vector.
 
-**Theorem 6.1 (Support bound).** If $e$ is invisible to the window $K$ and $e \ne 0$, then
-$$\#\operatorname{supp}(e) \;\ge\; K + 1 .$$
+**Theorem 8.2 (dictionary).** For all $K, L$, the value $L$ is achievable at
+window $K$ (Definition 2.3) if and only if there exists $P \in \mathbb{Z}[X]$
+with $P \ne 0$, $(X-1)^K \mid P$ and $\operatorname{polyMass}(P) = L$.
+Consequently
 
-*Proof sketch.* Suppose $\#\operatorname{supp}(e) = s \le K$. The moment conditions
-$\sum_{j \in \operatorname{supp}(e)} e_j j^k = 0$ for $k = 0, \dots, s-1$ form a square
-Vandermonde system in the $s$ distinct nodes of the support, so all $e_j$ vanish there — a
-contradiction. $\square$
+$$\operatorname{minMass}(K) \;=\; \min\{\operatorname{polyMass}(P) :
+P \in \mathbb{Z}[X],\ P \ne 0,\ (X-1)^K \mid P\}.$$
 
-**Theorem 6.2 (Sharpness).** The bound is attained: for $i + K \le N$,
-$\#\operatorname{supp}(b^{(K,i)}) = K + 1$, since all binomial coefficients
-$\binom{K}{d}$, $0 \le d \le K$, are nonzero.
+*Proof sketch.* Associate to $e$ the polynomial $P_e = \sum_j e_j X^j$. The
+substitution $X \mapsto 1 + Y$ turns the coefficient of $Y^k$ in
+$P_e(1+Y)$ into $\sum_j \binom{j}{k} e_j$, and the family
+$\{\binom{j}{k}\}_{k<K}$ spans the same space of test functions on $j$ as
+$\{j^k\}_{k<K}$ (unitriangular change of basis). Hence
+$m_k(e) = 0$ for $k<K$ if and only if $Y^K$ divides $P_e(1+Y)$, i.e.
+$(X-1)^K \mid P_e$. Masses correspond by definition. The identification of
+values (not merely minima) requires care only in the degenerate range
+$K > \deg$, where invisibility already forces the vector to vanish. $\square$
 
-The extremal case is completely rigid. Let $S$ be a finite set of nodes with $|S| = K + 1$
-and suppose $\sum_{j \in S} e_j j^k = 0$ for all $k < K$.
+**Corollary 8.3 (polynomial mass bound).** If $P \in \mathbb{Z}[X]$ is nonzero
+and divisible by $(X-1)^K$, then $\operatorname{polyMass}(P) \ge 2K$; and
+$2K$ is attained for every $K \le 10$ and for $K = 12$.
 
-**Theorem 6.3 (Minimal support is a divided difference).** For every $i \in S$,
-$$e_i \prod_{j \in S \setminus \{i\}} (i - j) \;=\; \sum_{j \in S} e_j\, j^{K} \;=\; m_K(e).$$
+**Corollary 8.4 (certificate reading).** A nonzero $P \in \mathbb{Z}[X]$ with
+$(X-1)^K \mid P$ and $\operatorname{polyMass}(P) = 2K$ yields an ideal
+Prouhet–Tarry–Escott configuration of size $K$ (its positive and negative
+coefficient supports, all coefficients being $\pm 1$ by rigidity).
 
-*Proof sketch.* Expand the monic polynomial $P_i(x) = \prod_{j \in S \setminus\{i\}} (x - j)$
-of degree $K$ as $x^K + (\text{lower order})$. Pairing $e$ against $P_i$ kills the
-lower-order terms by hypothesis, leaving $\sum_j e_j P_i(j) = m_K(e)$. On the other hand
-$P_i(j) = 0$ for every $j \in S$ with $j \ne i$, so the left-hand side reduces to
-$e_i P_i(i) = e_i \prod_{j \ne i}(i-j)$. $\square$
-
-**Corollary 6.4.** In the minimal-support situation:
-1. *(Immediate visibility)* If some $e_i \ne 0$ with $i \in S$, then $m_K(e) \ne 0$: a
-   minimal invisible vector becomes visible at the very first moment past the window.
-2. *(No holes)* Conversely if $m_K(e) \ne 0$ then $e_i \ne 0$ for **every** $i \in S$.
-3. *(Sign alternation)* The quantities $(-1)^{\#\{j \in S : j > i\}} e_i$ all have the same
-   sign, so the weights alternate in sign as one walks along the nodes of $S$ in increasing
-   order. This is because
-   $(-1)^{\#\{j > i\}} \prod_{j \ne i} (i - j) > 0$ for every $i$.
-4. *(Proportionality)* Any two vectors supported on the same $K+1$ nodes and invisible to
-   the window $K$ are proportional:
-   $e_i\, m_K(f) = f_i\, m_K(e)$ for all $i \in S$.
-
-Thus a minimal invisible configuration is unique up to scale, has full support on its node
-set, alternates in sign, and its magnitudes are the reciprocals of the products
-$\prod_{j \ne i} |i - j|$. Specialising to $b^{(K,i_0)}$ recovers the binomial coefficients:
-on consecutive nodes $i_0, \dots, i_0 + K$ the products $\prod_{j \ne i}(i - j)$ are
-$\pm d!\,(K-d)!$, whose reciprocals scaled by $K!$ are $\binom{K}{d}$ — exactly Theorem 2.4
-in disguise.
+The dictionary explains the shape of the constructions. The polynomial
+$(X-1)^K$ has coefficient norm $2^K$; convolution corresponds to multiplying
+sparse factors, and products of the form $\prod_{i}(X^{a_i}-1)$ are always
+divisible by $(X-1)^K$ when there are $K$ factors. Minimising the coefficient
+norm inside the ideal $((X-1)^K)$ is therefore a question about cancellation
+in products of binomials. Even the crudest choice $a_i = i$ gives masses
+$2,4,6,8,12,16,20,28,36,44,54,72$ for $K = 1,\dots,12$: far below $2^K$,
+though above the ideal $2K$.
 
 ---
 
-## 7. The cost of invisibility: $\ell^1$ theory
+## 9. Algorithms
 
-For an integral weight vector put $\ell^1(e) = \sum_{j=0}^{N} |e_j|$. Under the near-miss
-dictionary, $\ell^1(e) = |S(e)| + |T(e)| = 2|S(e)|$: it is the total number of integers used
-by the near miss.
+Three procedures organise the computational side of the theory.
 
-### 7.1 Lower bounds
+**(A) Witness certification.** Given lists $A$, $B$ of naturals and a target
+window $K$: check $|A| = |B| = K$, check disjointness, and evaluate the $K$
+power-sum identities $p_k(A) = p_k(B)$, $k<K$, in exact integer arithmetic,
+plus the inequality $p_K(A) \ne p_K(B)$ certifying that visibility begins at
+$K$. Cost: $O(K^2)$ big-integer multiplications; the entries can be large
+(the size-$10$ configuration has nodes up to $47\,500$ and involves ninth
+powers).
 
-**Theorem 7.1 (Linear bound).** If $e$ is a nonzero integral vector invisible to the window
-$K$, then $\ell^1(e) \ge K + 1$.
+**(B) The convolution engine.** Given a certified seed of window $K_0$, mass
+$L$ and node bound $M$, and a target $n$: form the $n$-fold convolution power
+of the seed's coefficient vector. Cost: $O(n^2 M^2)$ integer operations by
+naive convolution (or $O(nM\log(nM))$ per step by transform methods). Output:
+a vector of window $\ge K_0n$ and mass $\le L^n$.
 
-*Proof sketch.* Each nonzero integer entry contributes at least $1$, so
-$\ell^1(e) \ge \#\operatorname{supp}(e) \ge K+1$ by Theorem 6.1. $\square$
-
-**Theorem 7.2 (Parity).** If $K \ge 1$ and $e$ is integral and invisible to the window $K$,
-then $\ell^1(e)$ is even.
-
-*Proof sketch.* The equation $m_0(e) = \sum_j e_j = 0$ says the total positive mass equals
-the total negative mass; hence $\ell^1(e) = 2\sum_j e_j^{+}$. Equivalently
-$\ell^1(e) \equiv \sum_j e_j = 0 \pmod 2$. $\square$
-
-**Corollary 7.3.** For even $K \ge 1$, a nonzero integral invisible vector has
-$\ell^1(e) \ge K + 2$.
-
-**Theorem 7.4 (Improved bounds).** Let $e \ne 0$ be integral and invisible to the window
-$K$. Then
-$$\ell^1(e) \ge K + 2 \quad (K \ge 2), \qquad
-\ell^1(e) \ge K + 3 \quad (K \ge 3 \text{ odd}).$$
-Both are sharp at the small windows: $\ell^1 = 2, 4, 6$ are attained at $K = 1, 2, 3$.
-
-*Proof sketch.* Suppose $\ell^1(e) = K+1$ exactly. Then $e$ has exactly $K+1$ nonzero
-entries, all of absolute value $1$: it is a minimal-support configuration. Theorem 6.3 then
-forces, for every node $i$ of the support $S$,
-$$\Big|\prod_{j \in S \setminus \{i\}} (i - j)\Big| = |m_K(e)| ,$$
-i.e. *all* the products of distances from a support node to the other support nodes are
-equal. For $|S| = K + 1 \ge 3$ this is impossible: among any three or more distinct integer
-nodes, the extreme node has a strictly larger distance product than some interior node
-(the interior node's distances are dominated termwise, with at least one strict inequality).
-Hence $\ell^1(e) \ge K+2$ for $K \ge 2$. For odd $K$, the parity theorem forbids the odd
-value $K + 2$, giving $\ell^1(e) \ge K + 3$. $\square$
-
-The value $K + 3$ is attained at $K = 3$ by the configuration $(-1, 2, 0, -2, 1)$ of Example
-5.6, with $\ell^1 = 6$.
-
-### 7.2 Upper bounds: shift differences
-
-**Definition 7.5.** For a weight vector $e$ define its *shift difference*
-$(\delta e)_j = e_{j-1} - e_j$ (with $e_{-1} = 0$). If $e$ is supported in
-$\{0,\dots,N\}$ then $\delta e$ is supported in $\{0,\dots,N+1\}$.
-
-**Theorem 7.6 (Window increment).** If $e$ is supported in $\{0,\dots,N\}$ and invisible to
-the window $K$, then $\delta e$ is invisible to the window $K+1$, its first visible moment
-is
-$$m_{K+1}(\delta e) = (K+1)\, m_K(e),$$
-and $\ell^1(\delta e) \le 2\, \ell^1(e)$.
-
-*Proof sketch.* Directly, $m_k(\delta e) = \sum_{t < k} \binom{k}{t} m_t(e)$, by expanding
-$(j+1)^k$; every term with $t < k \le K$ vanishes, and for $k = K+1$ only the term
-$t = K$ survives with coefficient $\binom{K+1}{K} = K+1$. The norm bound is the triangle
-inequality. In generating-polynomial terms, $\delta$ multiplies $E(X)$ by $(X - 1)$, which
-increases the multiplicity of the root at $1$ by one — the cleanest proof. $\square$
-
-**Corollary 7.7.** For every $m \ge 0$ there is a nonzero integral vector invisible to the
-window $3 + m$ with a nonzero moment of order $3+m$ and
-$$\ell^1 \le 6 \cdot 2^{m} = \tfrac{3}{4}\, 2^{\,3+m} .$$
-Apply $\delta$ repeatedly to the witness $(-1,2,0,-2,1)$.
-
-### 7.3 The convolution principle
-
-The doubling of Corollary 7.7 is wasteful; convolution does better.
-
-**Definition 7.8.** For weight vectors $w$ (supported in $\{0,\dots,M\}$) and $e$ (supported
-in $\{0,\dots,N\}$), the convolution is
-$$(w * e)_j \;=\; \sum_{a=0}^{M} w_a\, e_{j - a},$$
-supported in $\{0,\dots,N+M\}$; equivalently, its generating polynomial is $W(X)E(X)$.
-
-**Theorem 7.9 (Moments of a convolution).** For all $k$,
-$$m_k(w * e) \;=\; \sum_{t=0}^{k} \binom{k}{t}\, m_t(e)\, m_{k-t}(w) .$$
-
-*Proof sketch.* Expand $(i + a)^k$ by the binomial theorem inside the double sum
-$\sum_{a}\sum_{i} w_a e_i (i+a)^k$ and separate the two indices. This is the statement that
-moments are exponential-generating-function coefficients and convolution multiplies those
-generating functions. $\square$
-
-**Theorem 7.10 (Windows add, norms multiply).** If $e$ is invisible to the window $K_e$ and
-$w$ is invisible to the window $K_w$, then $w * e$ is invisible to the window $K_e + K_w$,
-$$m_{K_e + K_w}(w * e) \;=\; \binom{K_e + K_w}{K_e}\, m_{K_e}(e)\, m_{K_w}(w),$$
-and
-$$\ell^1(w * e) \;\le\; \ell^1(w)\, \ell^1(e) .$$
-
-*Proof sketch.* In Theorem 7.9 with $k < K_e + K_w$, every term has $t < K_e$ or
-$k - t < K_w$, hence vanishes; at $k = K_e + K_w$ exactly one term survives. The norm bound
-is the triangle inequality applied to the double sum (submultiplicativity of $\ell^1$ under
-convolution). Equivalently: multiplying generating polynomials adds the multiplicities of
-the root at $X = 1$, which is Theorem 4.3 again. $\square$
-
-**Theorem 7.11 (Exponentially cheap invisibility).** For every $n \ge 0$ there is a weight
-vector $e$, supported on a finite range, invisible to the window $3n$, with
-$m_{3n}(e) \ne 0$ and
-$$\ell^1(e) \;\le\; 6^{\,n} .$$
-
-*Proof sketch.* Convolve $n$ copies of the window-$3$ witness $(-1,2,0,-2,1)$, whose norm is
-$6$. Theorem 7.10 gives window $3n$ and norm at most $6^n$; the top moment is the product of
-the individual top moments $12$ times a positive multinomial coefficient, hence nonzero.
-$\square$
-
-### 7.4 Refutation of the exponential conjecture
-
-The binomial stencil itself has $\ell^1(b^{(K,i)}) = \sum_d \binom{K}{d} = 2^K$. It is
-natural to conjecture that this is optimal.
-
-**Theorem 7.12 (The bound $\ell^1 \ge 2^K$ holds only for $K \le 2$).**
-1. If $1 \le K \le 2$ and $e \ne 0$ is integral and invisible to the window $K$, then
-   $\ell^1(e) \ge 2^K$.
-2. For every $K \ge 3$ there exists a nonzero integral vector invisible to the window $K$
-   with $\ell^1(e) < 2^K$. Hence the statement "$\ell^1(e) \ge 2^K$ for all invisible
-   nonzero integral $e$" is **false**.
-3. The failure is exponential: with $K = 3n$, Theorem 7.11 gives invisible vectors with
-   $$\frac{\ell^1(e)}{2^{K}} \;\le\; \left(\frac{6}{8}\right)^{n} = \left(\frac{3}{4}\right)^{n}
-   \longrightarrow 0 .$$
-   Equivalently, $4^n \ell^1(e) \le 3^n\, 2^{3n}$.
-
-*Proof sketch.* (1) For $K = 1$, $2^K = 2 = K+1$ rounded up by parity; for $K = 2$,
-$2^K = 4 = K + 2$, which is Theorem 7.4. (2) Corollary 7.7 supplies norm
-$6 \cdot 2^{K-3} = \tfrac34 2^K < 2^K$. (3) Theorem 7.11. $\square$
-
-The exponential base implicit in Theorem 7.11 is $6^{1/3} \approx 1.817 < 2$. So the true
-growth rate of the minimal $\ell^1$, if it is exponential at all, has base at most $1.817$;
-and the linear lower bounds leave open the possibility that it is not exponential at all.
+**(C) Bracket evaluation.** Given $K$: return the pair
+$\big(2K,\ \min(2^K, 24^{\lceil K/12\rceil})\big)$, and the exact value $2K$
+when $K \le 10$ or $K = 12$, and the two-element set $\{22,24\}$ when $K=11$.
 
 ---
 
-## 8. Discussion and open problems
+## 10. Applications and interpretation
 
-### 8.1 Summary of the picture
+**Robustness of moment measurements.** Any measurement scheme that reports the
+first $K$ power moments of an integer-weighted configuration is
+unconditionally robust against perturbations of total size below $2K$: no such
+perturbation can be invisible. This is a clean design rule — a budget of $K$
+moments buys a guarantee proportional to $K$, with the constant exactly $2$.
 
-For every window $K \le N$:
+**Finite-difference and filter design.** In signal-processing language, a
+vector invisible to the window $K$ is a finite impulse response with a
+$K$-fold zero at DC. Theorem 8.2 says the minimal coefficient $\ell^1$ norm of
+such a filter with integer taps is exactly $\operatorname{minMass}(K)$, and
+Theorem 4.3 exhibits integer filters with a $12$-fold zero and coefficient
+norm $24$, against the $4096$ of the naive cascade $(1 - z^{-1})^{12}$. Low
+coefficient norm bounds the amplification of coefficient-level noise, so these
+are quantitatively better realisations.
 
-* The invisible vectors form a free module of rank exactly $N + 1 - K$, over any base, with
-  the $N+1-K$ translates of the $K$-th difference stencil as an explicit basis; the integral
-  lattice sits unimodularly inside the rational space.
-* Invisibility is equivalent to a $K$-fold root at $X = 1$ of the generating polynomial.
-* Every bounded near miss of order $K$ is an integer combination of translates of one
-  binomial pair; the alternating counts of the two multisets agree modulo $2^K$.
-* Minimal-support invisible vectors ($K+1$ nodes) are divided differences: unique up to
-  scale, with alternating signs and no zero entries, and immediately visible at moment $K$.
-* The cost obeys $K + 2 \le \ell^1 \le \tfrac34 \cdot 2^{K}$ (with $K+3$ for odd $K \ge 3$
-  and $\ell^1$ always even), and the upper bound improves to $\approx 1.817^{K}$ along the
-  windows $K = 3n$.
+**Quadrature and cubature.** Rules exact for polynomials of degree $<K$ differ
+by elements of $\ker\mathcal{M}_K$; the mass law measures the minimal weight
+budget separating two such rules with integer weights, and the ideal
+configurations exhibit maximally economical differences.
 
-### 8.2 The central gap
-
-The distance between the linear lower bound and the exponential upper bound is the main
-remaining question. The evidence assembled here points to a clean answer.
-
-**Conjecture 8.1 (Minimal cost is $2K$).** For every $K \ge 1$, every nonzero integral
-vector invisible to the window $K$ satisfies $\ell^1(e) \ge 2K$; and for infinitely many $K$
-the value $2K$ is attained.
-
-The lower half strengthens the proved $K+2$ / $K+3$ bounds by roughly a factor of two. The
-attainment half is equivalent to the existence of *ideal* Prouhet–Tarry–Escott solutions of
-arbitrary degree — a solution using exactly $K$ integers on each side — which has been sought
-since 1851 and is known only in low degrees. The proved bounds already coincide with $2K$ at
-$K = 1, 2, 3$, so the first genuine test is $K = 4$, where the expected truth is $8$ against
-a proved floor of $6$.
-
-The mechanism suggested by Section 6 is a *support-versus-spread trade-off*: the support
-bound counts nodes, while $\ell^1$ counts nodes with multiplicity and sign. A vector that
-achieves the support bound is a divided difference, and its entries
-$m_K(e) / \prod_{j \ne i}(i - j)$ are large unless the nodes are extremely tightly packed —
-but tightly packed consecutive nodes force the binomial pattern with its $2^K$ cost. A
-genuinely economical vector must therefore spread over strictly more than $K + 1$ nodes and
-pay for the spread. Quantifying that trade-off is a finite-dimensional optimisation over
-node configurations, not a new theory, which is why the conjecture looks attackable.
-
-### 8.3 Further directions
-
-* **Exact exponential rate.** Define $\lambda = \lim_K (\min \ell^1)^{1/K}$ if it exists. The
-  convolution principle shows $\lambda \le 6^{1/3} \approx 1.817$, and any cheap witness at a
-  single window $K_0$ improves this to $(\min \ell^1 \text{ at } K_0)^{1/K_0}$. If Conjecture
-  8.1 holds, $\lambda = 1$. Systematically searching small windows for cheap witnesses
-  therefore directly bounds a global constant.
-* **Weighted and continuous nodes.** The structure theorem uses only that the nodes are
-  $0, 1, \dots, N$ and equally spaced. For arbitrary distinct real nodes the analogue of the
-  basis is the family of divided-difference functionals of order $K$ on $K+1$ consecutive
-  nodes; Section 6 already proves the rigidity half in that generality. The integrality
-  statement, however, is special to the equally-spaced lattice.
-* **Higher dimensions.** For nodes in $\mathbb{Z}^d$ and moments indexed by monomials of
-  total degree $< K$, the kernel is again a lattice, but the analogue of the translated
-  stencil basis is no longer obvious: mixed differences of total order $K$ span the kernel
-  but are not independent. Determining a canonical basis is open.
-* **Algorithmic decomposition.** The proof of Theorem 3.2 is an algorithm: read off $c_{N-K}$
-  from the top entry, subtract, recurse. It runs in $O((N+1-K)\,K)$ integer operations and
-  performs no divisions, so it is a practical exact decomposition procedure for near misses.
+**Sharp thresholds for identifiability.** Two integer configurations of total
+mass $<K$ each are distinguished by their first $K$ moments, since their
+difference has mass $<2K$ and would otherwise be an invisible vector. This is
+an exact recovery threshold for moment-based identification, with no
+constants left unspecified.
 
 ---
 
-## Appendix A. Worked numerical data
+## 11. Discussion
 
-$K = 2$, $N = 3$. Basis: $b^{(2,0)} = (1,-2,1,0)$ and $b^{(2,1)} = (0,1,-2,1)$; the invisible
-space has dimension $4 - 2 = 2$. Moments of $b^{(2,1)}$: $m_0 = 1 - 2 + 1 = 0$,
-$m_1 = 1\cdot 1 - 2 \cdot 2 + 1 \cdot 3 = 0$, and
-$m_2 = 1 \cdot 1 - 2 \cdot 4 + 1 \cdot 9 = 2 = 2!$.
+Three features of the results deserve emphasis.
 
-$K = 3$, $N = 3$. Basis: $b^{(3,0)} = (-1, 3, -3, 1)$ only; dimension $1$; $m_3 = 6 = 3!$;
-$\ell^1 = 8 = 2^3$. The cheaper witness $(-1,2,0,-2,1)$ needs one more node ($N = 4$) and
-achieves $\ell^1 = 6$: on $\{0,\dots,4\}$ its decomposition in the basis
-$b^{(3,0)}, b^{(3,1)}$ is $(1, 1)$, i.e.
-$$(-1,2,0,-2,1) = 1 \cdot (-1,3,-3,1,0) + 1 \cdot (0,-1,3,-3,1),$$
-with integer coefficients, as Theorem 3.2 predicts.
+*The lower bound is structural, the upper bound is arithmetic.* The bound
+$2K$ follows from symmetric-function theory alone and holds with no exception.
+Everything above $2K$ depends on the arithmetic accident of whether ideal
+configurations exist, which is where a century of effort has stalled.
 
-$K = 2$, $N = 2$. Dimension $1$, basis $(1,-2,1)$, $\ell^1 = 4 = 2^2 = K+2$: sharp for both
-the exponential bound at $K = 2$ and the linear bound.
+*The invariant is a faithful reformulation, not an analogy.* Theorem 5.2 is an
+equivalence, window by window. Theorem 8.2 upgrades it to an equality of
+achievable value sets between two extremal problems posed in different
+languages (moments versus polynomial divisibility). Consequently, progress in
+any one of the three formulations transfers immediately to the other two.
+
+*The engine is a reduction.* Theorem 6.5 depends only on the numerical data
+$(K_0, L)$ of a seed. Any new ideal configuration — or indeed any economical
+non-ideal invisible vector — immediately improves the growth base to
+$L^{1/K_0}$ without altering a single step of the argument. This is why the
+step from base $6^{1/3}$ to base $24^{1/12}$ costs nothing beyond
+substituting a better witness.
+
+The main limitation is equally clear. The bracket
+$2K \le \operatorname{minMass}(K) \le 24^{\lceil K/12\rceil}$ leaves an
+exponentially wide gap. Closing it from above by this method requires ideal configurations
+of size $> 12$, none of which is known; closing it from below requires an
+obstruction argument that no current technique provides, since the Newton
+bound is provably tight at eleven of the first twelve windows.
+
+---
+
+## 12. Future directions
+
+Derived from the results above on the mass ($\ell^1$) theory of weight vectors
+invisible to a truncated power-sum window. Settled here: the exact mass law
+$\text{mass} \ge 2K$ via Newton's identities; the exact minimum
+$\operatorname{minMass}(K) = 2K$ for $K \le 10$ and $K = 12$ by certified ideal
+Prouhet–Tarry–Escott witnesses; the equivalence
+$\operatorname{minMass}(K) = 2K \iff \mathrm{Ideal}(K)$, hence the sharp
+dichotomy at $K = 11$; submultiplicativity
+$\operatorname{minMass}(K_1+K_2) \le \operatorname{minMass}(K_1)\operatorname{minMass}(K_2)$,
+strict at $(2,2)$; the improved growth base $24^{1/12} \approx 1.3032$
+(previously $6^{1/3} \approx 1.8171$); and the polynomial dictionary
+identifying $\operatorname{minMass}(K)$ with the least coefficient-$\ell^1$
+norm of a nonzero integer polynomial divisible by $(X-1)^K$.
+
+### 12.1 Polynomial mass growth for truncated power-sum windows
+
+**Conjecture.** $\operatorname{minMass}(K) = 2K$ for every $K \ge 1$;
+equivalently, ideal Prouhet–Tarry–Escott configurations of every size exist,
+and every nonzero integer polynomial divisible by $(X-1)^K$ has
+coefficient-$\ell^1$ norm $\ge 2K$ with equality attained.
+
+The key insight is that $\operatorname{minMass}$ is now known to be *pinned*
+between $2K$ and an exponential bound produced by a single seed, so the whole
+question collapses to whether better seeds exist — an existence problem about
+integer polynomials with a $K$-fold root at $1$, not about power sums. The
+equivalence $\operatorname{minMass}(K) = 2K \iff \mathrm{Ideal}(K)$ means that
+any new construction, or any nonexistence proof, plugs directly into the
+framework, and the case $K = 11$ is already reduced to two numerical
+alternatives.
+
+### 12.2 Ideal size-eleven configuration
+
+**Conjecture.** $\operatorname{minMass}(11) = 24$; that is, **no** ideal
+Prouhet–Tarry–Escott pair of size $11$ exists — the first genuine gap in the
+sequence.
+
+The key insight is that the dichotomy reduces a century-old open problem to a
+two-valued invariant. A proof of *either* alternative is a complete answer.
+The parity lemma already excludes $23$, the Newton bound excludes everything
+below $22$, and the size-$12$ witness supplies $24$; the remaining task is a
+finite-flavoured obstruction argument — congruences modulo small primes on the
+coefficient vector, or a $2$-adic valuation obstruction for $(X-1)^{11}$.
+
+### 12.3 Subexponential seeds via sparse cyclotomic products
+
+**Conjecture.** For every $K$ there is a nonzero $P \in \mathbb{Z}[X]$ with
+$(X-1)^K \mid P$ and $\operatorname{polyMass}(P) \le \exp(C\sqrt{K \log K})$,
+obtained as a product $\prod_{i \le K}(X^{a_i}-1)$ with a carefully chosen
+exponent sequence.
+
+The key insight is that convolution of invisible vectors *is* multiplication
+of such sparse factors, so the growth base is governed by the amount of
+coefficient cancellation available in products of binomials — the
+Erdős–Szekeres circle of problems, transplanted into the invisible-vector
+setting.
+
+### 12.4 Beyond ideal seeds
+
+The engine accepts any seed, not just ideal ones. A non-ideal invisible vector
+of window $K_0$ and mass $L$ with $L^{1/K_0} < 24^{1/12}$ would
+improve the record without solving the Prouhet–Tarry–Escott problem. Searching
+the space of sparse integer polynomials divisible by $(X-1)^{K_0}$ for
+$13 \le K_0 \le 30$, with coefficient norm below $24^{K_0/12}$, is a concrete
+finite computation whose success would be immediately certifiable.
+
+### 12.5 Real and rational weights
+
+Everything above concerns integer weights, where mass is quantised. For real
+weights the normalised problem (mass minimised subject to a normalisation such
+as $\max_j |e_j| = 1$, or a fixed leading moment) is a linear program, and its
+value as a function of $K$ interpolates the integral invariant from below.
+Determining that value, and the gap between the real and integral problems,
+would clarify how much of the difficulty is arithmetic and how much is
+geometric.
+
+---
+
+## 13. Conclusion
+
+The cost of hiding from the first $K$ power moments is at least $2K$ units of
+integer mass, and this is exactly right for every window size up to $12$
+except possibly $11$, where the answer is one of two explicit numbers.
+Uniformly in $K$, hiding is possible at cost $24^{\lceil K/12\rceil}$, so the
+per-unit-window cost of invisibility is at most $24^{1/12} \approx 1.3032$,
+well below the classical finite-difference rate $2$. Between the linear floor
+and the exponential ceiling lies a single, sharply posed arithmetic question —
+the existence of ideal Prouhet–Tarry–Escott configurations of large size — and
+the composition machinery ensures that every future answer to it upgrades the
+whole theory automatically.

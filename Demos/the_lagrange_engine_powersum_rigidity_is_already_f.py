@@ -1,443 +1,361 @@
 """
-Invisible weight vectors of a truncated power-sum window: numerical demonstrations.
+The cost of invisibility: minimal mass of weight vectors annihilated by a
+truncated power-sum window.
 
-A weight vector e = (e_0, ..., e_N) on the nodes {0, 1, ..., N} has moments
+A weight vector is a finitely supported map e : {0, 1, ..., N} -> Z.  Its
+k-th moment is
 
-    m_k(e) = sum_{j=0}^{N} e_j * j^k          (with 0^0 = 1),
+        m_k(e) = sum_{j=0}^{N} e_j * j^k          (with 0^0 = 1),
 
-and is *invisible to the window K* when m_k(e) = 0 for every k < K.
+and e is *invisible to the window K* when m_k(e) = 0 for every k < K.  The
+*mass* of e is its l^1 norm, mass(e) = sum_j |e_j|.  The invariant studied
+here is
 
-This script demonstrates, by exact integer/rational computation:
+        minMass(K) = min { mass(e) : e nonzero and invisible to window K }.
 
-  1. the shifted alternating binomial stencils b^(K,i) are invisible, with first
-     visible moment m_K = K! independent of the shift;
-  2. the structure theorem: every invisible vector is an INTEGER combination of the
-     N + 1 - K stencils, recovered by a division-free descent;
-  3. the dimension count dim = N + 1 - K, checked against exact linear algebra;
-  4. the polynomial criterion: invisibility <=> (X - 1)^K divides sum_j e_j X^j;
-  5. the near-miss (Prouhet-Tarry-Escott) dictionary and the mod-2^K congruence on
-     alternating counts;
-  6. minimal-support rigidity: e_i * prod_{j != i} (i - j) = m_K(e), sign alternation;
-  7. the l1 theory: lower bounds K+1, K+2, K+3 (odd K), parity, and the refutation of
-     the conjecture l1 >= 2^K via shift differences and convolution.
+This script demonstrates, numerically:
 
-Self-contained: standard library only.
+  1. the Newton mass law   mass >= 2K;
+  2. the certified ideal Prouhet-Tarry-Escott witnesses attaining mass 2K
+     for every K <= 10 and for K = 12;
+  3. the polynomial dictionary: e is invisible to window K exactly when its
+     generating polynomial is divisible by (X - 1)^K;
+  4. the convolution (seeding) engine: windows add and masses multiply, so
+     a seed of window 12 and mass 24 yields, at window 12n, a nonzero
+     invisible vector of mass at most 24^n;
+  5. the resulting growth base 24^(1/12) ~ 1.3032, against the binomial
+     baseline 2 and the previous record 6^(1/3) ~ 1.8171;
+  6. the bracket   2K <= minMass(K) <= 24^ceil(K/12).
+
+Pure standard library; no dependencies.
 """
 
 from __future__ import annotations
 
-from fractions import Fraction
-from itertools import product
-from math import comb, factorial
+from math import gcd, log
 from typing import Dict, List, Sequence, Tuple
 
-Vector = List[int]
+# --------------------------------------------------------------------------
+# Certified ideal Prouhet-Tarry-Escott pairs (two disjoint sets of K naturals
+# with identical power sums p_0, ..., p_{K-1}).  Each yields an invisible
+# vector of mass exactly 2K, matching the Newton lower bound.
+# --------------------------------------------------------------------------
 
-# ----------------------------------------------------------------------------------
-# Moments
-# ----------------------------------------------------------------------------------
+IDEAL_PAIRS: Dict[int, Tuple[List[int], List[int]]] = {
+    1: ([0], [1]),
+    2: ([0, 3], [1, 2]),
+    3: ([1, 5, 6], [2, 3, 7]),
+    4: ([0, 4, 7, 11], [1, 2, 9, 10]),
+    5: ([1, 2, 10, 14, 18], [0, 4, 8, 16, 17]),
+    6: ([0, 5, 6, 16, 17, 22], [1, 2, 10, 12, 20, 21]),
+    7: ([0, 18, 27, 58, 64, 89, 101], [1, 13, 38, 44, 75, 84, 102]),
+    8: ([0, 4, 9, 23, 27, 41, 46, 50], [1, 2, 11, 20, 30, 39, 48, 49]),
+    9: ([0, 24, 30, 83, 86, 133, 157, 181, 197],
+        [1, 17, 41, 65, 112, 115, 168, 174, 198]),
+    10: ([12, 2865, 3519, 11869, 23738, 23762, 35631, 43981, 44635, 47488],
+         [0, 3083, 3301, 11893, 23314, 24186, 35607, 44199, 44417, 47500]),
+    12: ([0, 11, 24, 65, 90, 129, 173, 212, 237, 278, 291, 302],
+         [3, 5, 30, 57, 104, 116, 186, 198, 245, 272, 297, 299]),
+}
+
+SEED_A: List[int] = IDEAL_PAIRS[12][0]
+SEED_B: List[int] = IDEAL_PAIRS[12][1]
+
+
+# --------------------------------------------------------------------------
+# Basic vector / polynomial utilities
+# --------------------------------------------------------------------------
+
+def power_sum(nodes: Sequence[int], k: int) -> int:
+    """p_k(nodes) = sum of the k-th powers of the nodes (0^0 = 1)."""
+    return sum(1 if (k == 0) else a ** k for a in nodes)
+
+
+def weight_vector(a_nodes: Sequence[int], b_nodes: Sequence[int]) -> List[int]:
+    """The +1/-1 weight vector of a node pair, as a coefficient list."""
+    top = max(max(a_nodes), max(b_nodes))
+    e = [0] * (top + 1)
+    for a in a_nodes:
+        e[a] += 1
+    for b in b_nodes:
+        e[b] -= 1
+    return e
 
 
 def moment(e: Sequence[int], k: int) -> int:
     """m_k(e) = sum_j e_j * j^k, with the convention 0^0 = 1."""
-    total = 0
-    for j, ej in enumerate(e):
-        total += ej * (1 if (j == 0 and k == 0) else j**k)
-    return total
+    return sum(c * (1 if k == 0 else j ** k) for j, c in enumerate(e))
 
 
-def moments(e: Sequence[int], upto: int) -> List[int]:
-    """The list [m_0(e), ..., m_upto(e)]."""
-    return [moment(e, k) for k in range(upto + 1)]
+def mass(e: Sequence[int]) -> int:
+    """The l^1 mass sum_j |e_j|."""
+    return sum(abs(c) for c in e)
 
 
-def is_invisible(e: Sequence[int], K: int) -> bool:
-    """True iff m_k(e) = 0 for all k < K."""
-    return all(moment(e, k) == 0 for k in range(K))
+def window(e: Sequence[int], cap: int = 64) -> int:
+    """Largest K <= cap with m_k(e) = 0 for all k < K (the invisibility window)."""
+    k = 0
+    while k < cap and moment(e, k) == 0:
+        k += 1
+    return k
 
 
-def l1(e: Sequence[int]) -> int:
-    """The total absolute weight sum_j |e_j|."""
-    return sum(abs(x) for x in e)
-
-
-def support(e: Sequence[int]) -> List[int]:
-    """The list of nodes carrying a nonzero weight."""
-    return [j for j, x in enumerate(e) if x != 0]
-
-
-# ----------------------------------------------------------------------------------
-# The shifted alternating binomial stencils
-# ----------------------------------------------------------------------------------
-
-
-def bin_weight(K: int, i: int, N: int) -> Vector:
-    """b^(K,i) as a vector of length N+1: entry (-1)^(K-d) * C(K,d) at node i+d."""
-    e = [0] * (N + 1)
-    for d in range(K + 1):
-        if i + d <= N:
-            e[i + d] = (-1) ** (K - d) * comb(K, d)
-    return e
-
-
-def basis(N: int, K: int) -> List[Vector]:
-    """The N + 1 - K admissible stencils b^(K,0), ..., b^(K,N-K)."""
-    return [bin_weight(K, i, N) for i in range(max(0, N + 1 - K))]
-
-
-# ----------------------------------------------------------------------------------
-# The structure theorem: division-free descent
-# ----------------------------------------------------------------------------------
-
-
-def decompose(e: Sequence[int], N: int, K: int) -> List[int]:
-    """
-    Write an invisible vector as an integer combination of the stencils.
-
-    Descent from the top node: only b^(K,N-K) reaches node N, and its entry there is 1,
-    so the coefficient is forced to be e_N.  Subtract and recurse.  No division occurs,
-    which is exactly why integral vectors get integral coefficients.
-    """
-    work = list(e) + [0] * (N + 1 - len(e))
-    coeffs = [0] * max(0, N + 1 - K)
-    for i in range(len(coeffs) - 1, -1, -1):
-        c = work[i + K]
-        coeffs[i] = c
-        if c:
-            stencil = bin_weight(K, i, N)
-            work = [a - c * b for a, b in zip(work, stencil)]
-    if any(work):
-        raise ValueError("vector was not invisible to the window")
-    return coeffs
-
-
-def combine(coeffs: Sequence[int], N: int, K: int) -> Vector:
-    """Rebuild sum_i c_i * b^(K,i)."""
-    out = [0] * (N + 1)
-    for i, c in enumerate(coeffs):
-        for j, b in enumerate(bin_weight(K, i, N)):
-            out[j] += c * b
+def poly_mul(p: Sequence[int], q: Sequence[int]) -> List[int]:
+    """Convolution of coefficient lists = product of generating polynomials."""
+    out = [0] * (len(p) + len(q) - 1)
+    for i, a in enumerate(p):
+        if a:
+            for j, b in enumerate(q):
+                if b:
+                    out[i + j] += a * b
     return out
 
 
-# ----------------------------------------------------------------------------------
-# Exact rational rank, for the dimension check
-# ----------------------------------------------------------------------------------
+def divides_by_x_minus_one_pow(p: Sequence[int], k: int) -> bool:
+    """Test whether (X - 1)^k divides the integer polynomial p."""
+    cur = list(p)
+    for _ in range(k):
+        # synthetic division by (X - 1); remainder is the value at 1
+        if sum(cur) != 0:
+            return False
+        quot = [0] * (len(cur) - 1) if len(cur) > 1 else [0]
+        carry = 0
+        for idx in range(len(cur) - 1, 0, -1):
+            carry += cur[idx]
+            quot[idx - 1] = carry
+        cur = quot
+    return True
 
 
-def rank(rows: List[List[Fraction]]) -> int:
-    """Rank of an exact rational matrix by Gaussian elimination."""
-    mat = [row[:] for row in rows]
-    r = 0
-    ncols = len(mat[0]) if mat else 0
-    for c in range(ncols):
-        pivot = next((i for i in range(r, len(mat)) if mat[i][c] != 0), None)
-        if pivot is None:
+def binomial_stencil(k: int) -> List[int]:
+    """Coefficients of (X - 1)^k: the k-th finite-difference stencil, mass 2^k."""
+    p = [1]
+    for _ in range(k):
+        p = poly_mul(p, [-1, 1])
+    return p
+
+
+# --------------------------------------------------------------------------
+# 1.  The witnesses, and the Newton mass law mass >= 2K
+# --------------------------------------------------------------------------
+
+def check_ideal_pairs() -> None:
+    print("=" * 74)
+    print("1.  Ideal witnesses: minMass(K) = 2K for K <= 10 and K = 12")
+    print("=" * 74)
+    header = f"{'K':>3} {'|A|':>4} {'|B|':>4} {'p_k agree k<K':>14} {'p_K differs':>12} {'mass':>6} {'2K':>4}"
+    print(header)
+    for k, (a_nodes, b_nodes) in sorted(IDEAL_PAIRS.items()):
+        agree = all(power_sum(a_nodes, j) == power_sum(b_nodes, j) for j in range(k))
+        differs = power_sum(a_nodes, k) != power_sum(b_nodes, k)
+        disjoint = not (set(a_nodes) & set(b_nodes))
+        e = weight_vector(a_nodes, b_nodes)
+        assert agree and differs and disjoint
+        assert window(e) == k, (k, window(e))
+        assert mass(e) == 2 * k
+        print(f"{k:>3} {len(a_nodes):>4} {len(b_nodes):>4} {str(agree):>14} "
+              f"{str(differs):>12} {mass(e):>6} {2 * k:>4}")
+    print("\nAll witnesses verified: window exactly K, mass exactly 2K, sides disjoint.")
+    print("The Newton bound mass >= 2K is therefore attained at every listed K.\n")
+
+
+def newton_bound_sanity(max_k: int = 6, max_degree: int = 9) -> None:
+    """Brute-force confirmation of mass >= 2K on all small-degree polynomials.
+
+    Enumerates every integer polynomial of degree <= max_degree with
+    coefficients in {-1, 0, 1} and records the least mass observed among
+    those divisible by (X - 1)^K.
+    """
+    print("=" * 74)
+    print("2.  Brute-force check of the Newton law on small +-1 polynomials")
+    print("=" * 74)
+    best: Dict[int, int] = {}
+    total = 3 ** (max_degree + 1)
+    for code in range(1, total):
+        coeffs: List[int] = []
+        c = code
+        for _ in range(max_degree + 1):
+            coeffs.append((c % 3) - 1)
+            c //= 3
+        if not any(coeffs):
             continue
-        mat[r], mat[pivot] = mat[pivot], mat[r]
-        pv = mat[r][c]
-        mat[r] = [x / pv for x in mat[r]]
-        for i in range(len(mat)):
-            if i != r and mat[i][c] != 0:
-                f = mat[i][c]
-                mat[i] = [a - f * b for a, b in zip(mat[i], mat[r])]
-        r += 1
-    return r
+        w = window(coeffs, cap=max_k + 1)
+        m = mass(coeffs)
+        for k in range(1, min(w, max_k) + 1):
+            if k not in best or m < best[k]:
+                best[k] = m
+    print(f"{'K':>3} {'2K (proved lower bound)':>26} {'least mass found':>18}")
+    for k in range(1, max_k + 1):
+        found = best.get(k, None)
+        print(f"{k:>3} {2 * k:>26} {str(found):>18}")
+    print("\nNo polynomial ever beats 2K.  'None' means the search degree is too")
+    print("small to host any window-K example at all: the minimal witness for K = 4")
+    print("has degree 11, beyond the degree 9 enumerated here.\n")
 
 
-def invisible_dimension(N: int, K: int) -> int:
-    """dim of {e in Q^(N+1) : m_k(e) = 0 for k < K}, computed as (N+1) - rank."""
-    if K == 0:
-        return N + 1
-    rows = [
-        [Fraction(1 if (j == 0 and k == 0) else j**k) for j in range(N + 1)]
-        for k in range(K)
-    ]
-    return (N + 1) - rank(rows)
+# --------------------------------------------------------------------------
+# 3.  The polynomial dictionary
+# --------------------------------------------------------------------------
 
-
-# ----------------------------------------------------------------------------------
-# Polynomials (dense integer coefficient lists) for the divisibility criterion
-# ----------------------------------------------------------------------------------
-
-
-def poly_mul(a: Sequence[int], b: Sequence[int]) -> List[int]:
-    out = [0] * (len(a) + len(b) - 1)
-    for i, x in enumerate(a):
-        for j, y in enumerate(b):
-            out[i + j] += x * y
-    return out
-
-
-def x_minus_one_pow(K: int) -> List[int]:
-    """(X - 1)^K as a coefficient list."""
-    out = [1]
-    for _ in range(K):
-        out = poly_mul(out, [-1, 1])
-    return out
-
-
-def divides_x_minus_one_pow(e: Sequence[int], K: int) -> bool:
-    """True iff (X - 1)^K divides sum_j e_j X^j over the integers."""
-    rem = list(e)
-    div = x_minus_one_pow(K)  # monic of degree K
-    for deg in range(len(rem) - 1, K - 1, -1):
-        c = rem[deg]
-        if c:
-            for t, d in enumerate(div):
-                rem[deg - K + t] -= c * d
-    return not any(rem)
-
-
-# ----------------------------------------------------------------------------------
-# Near-miss dictionary
-# ----------------------------------------------------------------------------------
-
-
-def to_multisets(e: Sequence[int]) -> Tuple[List[int], List[int]]:
-    """Split an integer weight vector into the two multisets of a near miss."""
-    S: List[int] = []
-    T: List[int] = []
-    for j, x in enumerate(e):
-        if x > 0:
-            S.extend([j] * x)
-        elif x < 0:
-            T.extend([j] * (-x))
-    return S, T
-
-
-def power_sum(S: Sequence[int], k: int) -> int:
-    return sum(1 if (x == 0 and k == 0) else x**k for x in S)
-
-
-def alternating_count(S: Sequence[int]) -> int:
-    return sum((-1) ** x for x in S)
-
-
-# ----------------------------------------------------------------------------------
-# Cheap constructions: shift difference and convolution
-# ----------------------------------------------------------------------------------
-
-
-def shift_diff(e: Sequence[int]) -> Vector:
-    """(delta e)_j = e_{j-1} - e_j : widens the window by 1, at most doubles l1."""
-    padded = [0] + list(e)
-    ext = list(e) + [0]
-    return [a - b for a, b in zip(padded, ext)]
-
-
-def convolve(w: Sequence[int], e: Sequence[int]) -> Vector:
-    """Convolution: windows add, l1 norms multiply."""
-    out = [0] * (len(w) + len(e) - 1)
-    for a, wa in enumerate(w):
-        if wa:
-            for i, ei in enumerate(e):
-                out[a + i] += wa * ei
-    return out
-
-
-PTE3: Vector = [-1, 2, 0, -2, 1]  # window 3, l1 = 6, the near miss {1,1,4} vs {0,3,3}
-
-
-# ----------------------------------------------------------------------------------
-# Exhaustive minimal-l1 search over small windows
-# ----------------------------------------------------------------------------------
-
-
-def min_l1_bruteforce(K: int, N: int, bound: int = 3) -> Tuple[int, Vector]:
-    """
-    Exhaustive search for the cheapest nonzero invisible vector on {0..N} with entries
-    in [-bound, bound].  Exponential in N; used only for tiny cases.
-    """
-    best: Tuple[int, Vector] = (10**9, [])
-    for e in product(range(-bound, bound + 1), repeat=N + 1):
-        if any(e) and is_invisible(e, K):
-            c = l1(e)
-            if c < best[0]:
-                best = (c, list(e))
-    return best
-
-
-# ----------------------------------------------------------------------------------
-# Demonstrations
-# ----------------------------------------------------------------------------------
-
-
-def demo_stencils() -> None:
-    print("=" * 78)
-    print("1. The stencils b^(K,i) are invisible, with first visible moment K!")
-    print("=" * 78)
-    for K, N in [(2, 3), (3, 5), (4, 6)]:
-        for i in range(N + 1 - K):
-            b = bin_weight(K, i, N)
-            lows = [moment(b, k) for k in range(K)]
-            top = moment(b, K)
-            assert all(x == 0 for x in lows)
-            assert top == factorial(K)
-            print(
-                f"  K={K} N={N} i={i}: b = {b}"
-                f"  moments<K = {lows}  m_K = {top} = {K}! ,  l1 = {l1(b)} = 2^{K}"
-            )
-        print()
-
-
-def demo_structure() -> None:
-    print("=" * 78)
-    print("2. Structure theorem: integer decomposition by division-free descent")
-    print("=" * 78)
-    samples: List[Tuple[Vector, int, int]] = [
-        (PTE3, 4, 3),
-        ([0, 1, -2, 1], 3, 2),
-        ([1, -1, -3, 5, -2], 4, 2),
-        (convolve(PTE3, PTE3), 8, 6),
-    ]
-    for e, N, K in samples:
-        assert is_invisible(e, K), e
-        c = decompose(e, N, K)
-        assert combine(c, N, K) == list(e) + [0] * (N + 1 - len(e))
-        assert all(isinstance(x, int) for x in c)
-        print(f"  N={N} K={K}: e = {e}")
-        print(f"      integer coefficients over the {len(c)} stencils: {c}")
-        print(f"      (X-1)^{K} divides the generating polynomial: "
-              f"{divides_x_minus_one_pow(e, K)}")
+def polynomial_dictionary() -> None:
+    print("=" * 74)
+    print("3.  Invisibility = divisibility by (X - 1)^K")
+    print("=" * 74)
+    for k in (3, 4, 12):
+        a_nodes, b_nodes = IDEAL_PAIRS[k]
+        e = weight_vector(a_nodes, b_nodes)
+        ok = divides_by_x_minus_one_pow(e, k)
+        nope = divides_by_x_minus_one_pow(e, k + 1)
+        print(f"  K = {k:>2}:  (X-1)^{k} divides the witness: {ok};  "
+              f"(X-1)^{k + 1} divides it: {nope}")
+    print("\n  Baseline: the finite-difference stencil (X - 1)^K has mass 2^K.")
+    print(f"{'K':>3} {'mass of (X-1)^K':>18} {'minMass(K) = 2K':>18} {'ratio':>10}")
+    for k in (1, 2, 3, 4, 6, 8, 10, 12):
+        p = binomial_stencil(k)
+        print(f"{k:>3} {mass(p):>18} {2 * k:>18} {mass(p) / (2 * k):>10.2f}")
     print()
 
 
-def demo_dimension() -> None:
-    print("=" * 78)
-    print("3. Dimension of the invisible space equals N + 1 - K")
-    print("=" * 78)
-    print("     N \\ K " + "".join(f"{K:>6}" for K in range(0, 7)))
-    for N in range(0, 7):
-        row = []
-        for K in range(0, 7):
-            d = invisible_dimension(N, K)
-            assert d == max(0, N + 1 - K), (N, K, d)
-            row.append(d)
-        print(f"     N={N}   " + "".join(f"{d:>6}" for d in row))
-    print("     (each extra measurement removes exactly one degree of freedom)\n")
+# --------------------------------------------------------------------------
+# 4.  The convolution engine
+# --------------------------------------------------------------------------
+
+def convolution_engine(max_n: int = 3) -> None:
+    print("=" * 74)
+    print("4.  The seeded convolution engine: windows add, masses multiply")
+    print("=" * 74)
+    seed = weight_vector(SEED_A, SEED_B)
+    print(f"  seed: window {window(seed)}, mass {mass(seed)}, degree {len(seed) - 1}")
+    cur = [1]
+    print(f"{'n':>3} {'window (12n)':>13} {'actual mass':>13} {'bound 24^n':>13} "
+          f"{'old bound 6^(4n)':>18}")
+    for n in range(0, max_n + 1):
+        if n > 0:
+            cur = poly_mul(cur, seed)
+        w = window(cur, cap=12 * n + 4) if n > 0 else 0
+        divisible = divides_by_x_minus_one_pow(cur, 12 * n)
+        assert divisible
+        assert mass(cur) <= 24 ** n
+        print(f"{n:>3} {w:>13} {mass(cur):>13} {24 ** n:>13} {6 ** (4 * n):>18}")
+    print("\n  The n-th convolution power is invisible to the window 12n, is nonzero,")
+    print("  and has mass at most 24^n.  Cancellation between colliding monomials")
+    print("  makes the actual mass strictly smaller from n = 2 on (512 < 576,")
+    print("  7308 < 13824), so the certified bound is not even tight.  At the same")
+    print("  window the previous construction gave 6^(4n) = 1296^n; the guaranteed")
+    print("  improvement factor is 54^n.\n")
 
 
-def demo_near_miss() -> None:
-    print("=" * 78)
-    print("4. The near-miss (Prouhet-Tarry-Escott) dictionary")
-    print("=" * 78)
-    for e, K in [([0, 1, -2, 1], 2), (PTE3, 3), (bin_weight(4, 0, 4), 4)]:
-        S, T = to_multisets(e)
-        eq = [(power_sum(S, k), power_sum(T, k)) for k in range(K)]
-        assert all(a == b for a, b in eq)
-        gap = power_sum(S, K) - power_sum(T, K)
-        cong = (alternating_count(S) - alternating_count(T)) % (2**K)
-        assert cong == 0
-        print(f"  window K={K}:  {S}  vs  {T}")
-        print(f"      equal power sums p_0..p_{K-1}: {[a for a, _ in eq]}")
-        print(f"      first divergence p_{K}: {power_sum(S, K)} vs {power_sum(T, K)}"
-              f"  (difference {gap})")
-        print(f"      alternating counts agree mod 2^{K} = {2**K}: "
-              f"{alternating_count(S)} vs {alternating_count(T)}")
+# --------------------------------------------------------------------------
+# 5.  Growth bases and the bracket
+# --------------------------------------------------------------------------
+
+def growth_bases() -> None:
+    print("=" * 74)
+    print("5.  Growth bases")
+    print("=" * 74)
+    bases = {
+        "binomial stencil (X-1)^K": 2.0,
+        "previous record, seed (3, 6)": 6.0 ** (1.0 / 3.0),
+        "this work, seed (12, 24)": 24.0 ** (1.0 / 12.0),
+    }
+    for name, b in bases.items():
+        print(f"  {name:<32} base = {b:.6f}   (log base = {log(b):.6f})")
+    print("\n  Hypothetical future seeds: an ideal pair of size n0 has mass 2*n0,")
+    print("  hence base (2*n0)^(1/n0).")
+    print(f"{'n0':>5} {'seed mass 2*n0':>15} {'base (2n0)^(1/n0)':>20}")
+    for n0 in (3, 6, 12, 20, 30, 60, 120, 1000):
+        print(f"{n0:>5} {2 * n0:>15} {(2.0 * n0) ** (1.0 / n0):>20.6f}")
+    print("\n  The base tends to 1: ideal pairs of unbounded size would make the")
+    print("  minimal mass subexponential in every base.\n")
+
+
+def bracket_table(max_k: int = 30) -> None:
+    print("=" * 74)
+    print("6.  The bracket   2K <= minMass(K) <= 24^ceil(K/12)")
+    print("=" * 74)
+    known = {k: 2 * k for k in list(range(1, 11)) + [12]}
+    print(f"{'K':>4} {'lower 2K':>10} {'upper 24^ceil(K/12)':>22} "
+          f"{'binomial 2^K':>14} {'exact value':>13}")
+    for k in list(range(1, 14)) + [16, 22, 24, max_k]:
+        ceil_k = -(-k // 12)
+        upper = min(24 ** ceil_k, 2 ** k)
+        exact = str(known.get(k, "unknown"))
+        if k == 11:
+            exact = "22 or 24"
+        print(f"{k:>4} {2 * k:>10} {24 ** ceil_k:>22} {2 ** k:>14} {exact:>13}")
+    print("\n  The exponential upper bound only improves on the binomial 2^K from")
+    print("  K = 13 onwards; below that the explicit witnesses are far stronger.\n")
+
+
+# --------------------------------------------------------------------------
+# 7.  Submultiplicativity in action
+# --------------------------------------------------------------------------
+
+def submultiplicativity() -> None:
+    print("=" * 74)
+    print("7.  Submultiplicativity, and its strictness at (2, 2)")
+    print("=" * 74)
+    e2 = weight_vector(*IDEAL_PAIRS[2])
+    conv = poly_mul(e2, e2)
+    print(f"  minMass(2) = 4, so submultiplicativity certifies minMass(4) <= 16;")
+    print(f"  convolving the two witnesses in fact gives window {window(conv)} at mass "
+          f"{mass(conv)}.")
+    print(f"  But the ideal quadruple {IDEAL_PAIRS[4][0]} / {IDEAL_PAIRS[4][1]} "
+          f"has window 4 at mass {mass(weight_vector(*IDEAL_PAIRS[4]))}.")
+    print("  So minMass(4) = 8 < 16 = minMass(2)*minMass(2): composition is wasteful")
+    print("  exactly where genuine witnesses exist.\n")
+    e12 = weight_vector(*IDEAL_PAIRS[12])
+    e1 = weight_vector(*IDEAL_PAIRS[1])
+    c13 = poly_mul(e12, e1)
+    print(f"  Composing the size-12 and size-1 witnesses: window {window(c13, cap=20)}, "
+          f"mass {mass(c13)}  =>  minMass(13) <= 48.")
+    c22 = poly_mul(weight_vector(*IDEAL_PAIRS[12]), weight_vector(*IDEAL_PAIRS[10]))
+    print(f"  Composing the size-12 and size-10 witnesses: window {window(c22, cap=30)}, "
+          f"mass {mass(c22)} <= 480  =>  minMass(22) <= 480.\n")
+
+
+def sparse_binomial_products(max_k: int = 12) -> None:
+    print("=" * 74)
+    print("8.  Sparse products prod_i (X^{a_i} - 1): cheap high-order zeros")
+    print("=" * 74)
+    print("  Every factor X^a - 1 vanishes at X = 1, so a product of K of them is")
+    print("  divisible by (X - 1)^K.  Masses below are what cancellation achieves.")
+    print(f"{'K':>4} {'exponents':>28} {'mass':>8} {'2^K':>8} {'2K':>6}")
+    for k in range(1, max_k + 1):
+        exps = list(range(1, k + 1))
+        p = [1]
+        for a in exps:
+            factor = [0] * (a + 1)
+            factor[0] = -1
+            factor[a] = 1
+            p = poly_mul(p, factor)
+        assert divides_by_x_minus_one_pow(p, k)
+        shown = str(exps) if k <= 6 else f"1..{k}"
+        print(f"{k:>4} {shown:>28} {mass(p):>8} {2 ** k:>8} {2 * k:>6}")
     print()
-
-
-def demo_rigidity() -> None:
-    print("=" * 78)
-    print("5. Minimal-support rigidity: invisible vectors on K+1 nodes are divided")
-    print("   differences, with alternating signs and no zero entries")
-    print("=" * 78)
-    cases: List[Tuple[Vector, int]] = [
-        (bin_weight(3, 0, 3), 3),                  # consecutive nodes
-        ([2, 0, -3, 0, 0, 0, 1], 2),               # nodes 0, 2, 6
-    ]
-    for e, K in cases:
-        assert is_invisible(e, K)
-        S = support(e)
-        assert len(S) == K + 1
-        mK = moment(e, K)
-        print(f"  K={K}: e = {e}, support {S}, m_K = {mK}")
-        for i in S:
-            prod = 1
-            for j in S:
-                if j != i:
-                    prod *= i - j
-            assert e[i] * prod == mK
-            sign = (-1) ** sum(1 for j in S if j > i)
-            print(f"      node {i}: e_i * prod(i-j) = {e[i]} * {prod} = {e[i]*prod}"
-                  f"   normalised sign {sign * (1 if e[i] > 0 else -1)}")
-    print()
-
-
-def demo_l1_bounds() -> None:
-    print("=" * 78)
-    print("6. l1 lower bounds: >= K+1, always even, >= K+2 for K>=2, >= K+3 for odd K")
-    print("=" * 78)
-    for K, N in [(1, 3), (2, 4), (3, 5)]:
-        best, e = min_l1_bruteforce(K, N, bound=3)
-        floor_ = K + 1
-        if K >= 2:
-            floor_ = K + 2
-        if K >= 3 and K % 2 == 1:
-            floor_ = K + 3
-        assert best % 2 == 0 and best >= floor_
-        print(f"  K={K}, nodes 0..{N}: cheapest invisible vector {e} has l1 = {best}"
-              f"   (proved floor {floor_}, conjectured optimum 2K = {2*K})")
-    print()
-
-
-def demo_cheap_constructions() -> None:
-    print("=" * 78)
-    print("7. Cheap invisibility: the conjecture l1 >= 2^K is FALSE for every K >= 3")
-    print("=" * 78)
-    print("  (a) shift differences: window +1, l1 at most doubled")
-    e: Vector = PTE3
-    K = 3
-    print(f"      K={K}: l1 = {l1(e)}  vs  2^{K} = {2**K}   -> conjecture already fails")
-    for _ in range(5):
-        e = shift_diff(e)
-        K += 1
-        assert is_invisible(e, K) and moment(e, K) != 0
-        print(f"      K={K}: l1 = {l1(e):>6}  vs  2^{K} = {2**K:>6}"
-              f"   ratio {l1(e)/2**K:.4f}")
-    print()
-    print("  (b) convolution: windows add, l1 norms multiply -> base 6^(1/3) ~ 1.817")
-    conv: Vector = [1]
-    for n in range(1, 6):
-        conv = convolve(conv, PTE3)
-        K = 3 * n
-        assert is_invisible(conv, K) and moment(conv, K) != 0
-        assert l1(conv) <= 6**n
-        print(f"      n={n}: window K={K:>3}, l1 = {l1(conv):>7} <= 6^{n} = {6**n:>7}"
-              f",  2^K = {2**K:>10},  ratio {l1(conv)/2**K:.6f}")
-    print("      the ratio decays like (3/4)^n : the failure is exponential\n")
-
-
-def demo_convolution_top_moment() -> None:
-    print("=" * 78)
-    print("8. Leibniz rule for the first visible moment of a convolution")
-    print("=" * 78)
-    w = bin_weight(2, 0, 2)          # window 2, m_2 = 2
-    e = PTE3                         # window 3, m_3 = 12
-    c = convolve(w, e)
-    Ke, Kw = 3, 2
-    lhs = moment(c, Ke + Kw)
-    rhs = comb(Ke + Kw, Ke) * moment(e, Ke) * moment(w, Kw)
-    assert is_invisible(c, Ke + Kw) and lhs == rhs
-    print(f"  w = {w} (window {Kw}, m_{Kw} = {moment(w, Kw)})")
-    print(f"  e = {e} (window {Ke}, m_{Ke} = {moment(e, Ke)})")
-    print(f"  w*e = {c}: invisible to window {Ke+Kw},")
-    print(f"      m_{Ke+Kw}(w*e) = {lhs} = C({Ke+Kw},{Ke}) * "
-          f"{moment(e, Ke)} * {moment(w, Kw)} = {rhs}")
-    print(f"      l1(w*e) = {l1(c)} <= l1(w)*l1(e) = {l1(w)*l1(e)}\n")
 
 
 def main() -> None:
-    demo_stencils()
-    demo_structure()
-    demo_dimension()
-    demo_near_miss()
-    demo_rigidity()
-    demo_l1_bounds()
-    demo_cheap_constructions()
-    demo_convolution_top_moment()
-    print("All assertions passed.")
+    print(__doc__)
+    check_ideal_pairs()
+    newton_bound_sanity()
+    polynomial_dictionary()
+    convolution_engine()
+    growth_bases()
+    bracket_table()
+    submultiplicativity()
+    sparse_binomial_products()
+    print("=" * 74)
+    print("Summary")
+    print("=" * 74)
+    print("  * every nonzero vector invisible to the window K has mass at least 2K;")
+    print("  * mass exactly 2K is attained for K <= 10 and K = 12, and attainability")
+    print("    at a given K is equivalent to the existence of an ideal")
+    print("    Prouhet-Tarry-Escott pair of that size;")
+    print("  * minMass(11) is 22 or 24, and equals 22 exactly when an ideal pair of")
+    print("    size 11 exists;")
+    print("  * for every K, 2K <= minMass(K) <= 24^ceil(K/12), so the growth base of")
+    print(f"    invisibility is at most 24^(1/12) = {24 ** (1 / 12):.6f}.")
 
 
 if __name__ == "__main__":
