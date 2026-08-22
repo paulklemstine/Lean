@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "560d610e",
-      "domain": "Tropical",
-      "key_insight": "# Future directions — tropical Shtarkov sums of finite-state classes\n\nThe verified results of this cycle live in `Catalog/Tropical/Shtarkov/`:\n\n| file | content |\n|------|---------|\n| `Basic.lean` | `",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 93,
-      "timestamp": "2026-08-20T13:11:32",
-      "title": "The finite-state class and its bound were constructed this cycle"
-    },
-    {
       "cycle_id": "18b02a30",
       "domain": "NumberTheory",
       "key_insight": "# Future directions: after the `q`-analogue of Kummer's theorem\n\n## What is now proved (all `sorry`-free, in `Catalog/NumberTheory/QKummer/`)\n\n*Valuation side.*\n\n* the exact factorisation `[k]_q! [n-k",
@@ -499,19 +489,19 @@
       "theorem_count": 55,
       "timestamp": "2026-08-22T05:43:26",
       "title": "FACT round-31 #2 — INDEPENDENT-VERIFICATION: the character captures exactly one bit (paper 109)"
+    },
+    {
+      "cycle_id": "0e0f4ea6",
+      "domain": "Applications",
+      "key_insight": "# Future directions — from the round-29 joint-label reconciliation\n\n## What this cycle established\n\nFour Lean files in `Catalog/Applications/`:\n\n* `ChainedLabelWidth.lean` — the arithmetic of `pj = a·",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 57,
+      "timestamp": "2026-08-22T07:00:16",
+      "title": "FACT round-29 #2 — JOINT-ANOMALY-RECONCILED: paper 91 stands, the rebuild collapsed (paper 100)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "eaebe17a",
-      "domain": "Novelty",
-      "key_insight": "# Future directions — gcd moments as a trace-witness family\n\nDerived from what survived five full research cycles (seven Lean files, all `sorry`-free, all\naxioms standard: `propext`, `Classical.choice",
-      "quality_score": 0.9,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-08-14T08:45:51",
-      "title": "Exp 392 GCD-MOMENT: the semiprime gcd-moments M_k = sum gcd(x,N)^k are a closed trace-witness family"
-    },
     {
       "cycle_id": "13788cf3",
       "domain": "Tropical",
@@ -2501,27 +2491,19 @@
       "theorem_count": 55,
       "timestamp": "2026-08-22T05:43:26",
       "title": "FACT round-31 #2 — INDEPENDENT-VERIFICATION: the character captures exactly one bit (paper 109)"
+    },
+    {
+      "cycle_id": "0e0f4ea6",
+      "domain": "Applications",
+      "key_insight": "# Future directions — from the round-29 joint-label reconciliation\n\n## What this cycle established\n\nFour Lean files in `Catalog/Applications/`:\n\n* `ChainedLabelWidth.lean` — the arithmetic of `pj = a·",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 57,
+      "timestamp": "2026-08-22T07:00:16",
+      "title": "FACT round-29 #2 — JOINT-ANOMALY-RECONCILED: paper 91 stands, the rebuild collapsed (paper 100)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "532d78bc",
-      "domain": "Novelty",
-      "name": "seed_image_subset",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "532d78bc",
-      "domain": "Novelty",
-      "name": "nodesBelow_finite",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "63cef724",
-      "domain": "MachineLearning",
-      "name": "moebRel_refl",
-      "quality": 0.79
-    },
     {
       "cycle_id": "63cef724",
       "domain": "MachineLearning",
@@ -2803,9 +2785,27 @@
       "domain": "NumberTheory",
       "name": "uEnt_character",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "0e0f4ea6",
+      "domain": "Applications",
+      "name": "chain_def",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "0e0f4ea6",
+      "domain": "Applications",
+      "name": "chain_inj_of_lt",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "0e0f4ea6",
+      "domain": "Applications",
+      "name": "chainPair_injective",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-22T05:43:26",
+  "last_updated": "2026-08-22T07:00:16",
   "open_questions": [
     {
       "context": "-- count, which is not available in Mathlib.  Rather than leave an unproved `sorry` in the; sorry; sorry",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "f262016d",
-        "quality": 0.85,
-        "theorems": 87,
-        "title": "Compression Research B3: Almost-lossless / Monte Carlo compression"
-      },
-      {
         "cycle_id": "2afe0ce6",
         "quality": 0.82,
         "theorems": 63,
@@ -3141,6 +3135,12 @@
         "quality": 0.86,
         "theorems": 114,
         "title": "The Lagrange engine `powerSum_rigidity` is already formalised and it isolates"
+      },
+      {
+        "cycle_id": "0e0f4ea6",
+        "quality": 0.82,
+        "theorems": 57,
+        "title": "FACT round-29 #2 — JOINT-ANOMALY-RECONCILED: paper 91 stands, the rebuild collap"
       }
     ],
     "Bridges": [
