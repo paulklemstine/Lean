@@ -1,5 +1,5 @@
 import Mathlib
-import Logic.StrangeLoops.Core
+import Catalog.Logic.StrangeLoops.Core
 
 /-!
 # The Collatz statement and logical independence
