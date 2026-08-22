@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "3d7df1d3",
-      "domain": "Shared",
-      "key_insight": "# Future Directions — Higher-Dimensional Pythagorean Trees\n\nThe development settles the basic form of the hypothesis:\n\n* the Berggren mechanism *does* generalise to Pythagorean quadruples — the all-on",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 156,
-      "timestamp": "2026-08-21T05:48:53",
-      "title": "Higher-Dimensional Pythagorean Trees — Generalizing the Berggren Tree to Pythagorean Quadruples and "
-    },
-    {
       "cycle_id": "3026c1dd",
       "domain": "Physics",
       "key_insight": "# Future directions — higher-dimensional Pythagorean trees\n\nThe results proved in this cycle (`Catalog/Physics/HigherPythagoreanTrees/`) settle the\nqualitative shape of the generalisation:\n\n* the desc",
@@ -499,19 +489,19 @@
       "theorem_count": 55,
       "timestamp": "2026-08-22T21:36:32",
       "title": "NET-51: THE-KV-CORE-IS-SHARED-THE-TAIL-IS-PERSONAL — base-vs-Instruct keys near-identical everywhere"
+    },
+    {
+      "cycle_id": "3fdce232",
+      "domain": "Computation",
+      "key_insight": "# Future directions — information reconciliation, transcripts, and leakage\n\nThe formalised core (in `Catalog/Computation/InformationReconciliation*.lean`)\nestablishes, for binary keys `Key n = Fin n →",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 141,
+      "timestamp": "2026-08-22T21:36:44",
+      "title": "Information reconciliation"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "f2bb5930",
-      "domain": "Shared",
-      "key_insight": "# Future directions: the cyclic splitting-type channel\n\nFive falsifiable conjectures distilled from the current cycle.  Everything cited\nas *proved* below is a `sorry`-free Lean theorem in `Catalog/Sh",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-08-15T07:52:25",
-      "title": "CYCLIC-TYPE-CHANNEL (round-22 #2, experiment 413, assessment v189, paper 78)"
-    },
     {
       "cycle_id": "35640655",
       "domain": "Bridges",
@@ -2501,27 +2491,19 @@
       "theorem_count": 55,
       "timestamp": "2026-08-22T21:36:32",
       "title": "NET-51: THE-KV-CORE-IS-SHARED-THE-TAIL-IS-PERSONAL — base-vs-Instruct keys near-identical everywhere"
+    },
+    {
+      "cycle_id": "3fdce232",
+      "domain": "Computation",
+      "key_insight": "# Future directions — information reconciliation, transcripts, and leakage\n\nThe formalised core (in `Catalog/Computation/InformationReconciliation*.lean`)\nestablishes, for binary keys `Key n = Fin n →",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 141,
+      "timestamp": "2026-08-22T21:36:44",
+      "title": "Information reconciliation"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "a3ad9f21",
-      "domain": "Combinatorics",
-      "name": "capacity_strict_mono_of_separates",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "d7470f1b",
-      "domain": "Combinatorics",
-      "name": "representable_of_orderIso",
-      "quality": 0.86
-    },
-    {
-      "cycle_id": "d7470f1b",
-      "domain": "Combinatorics",
-      "name": "representable_prod",
-      "quality": 0.86
-    },
     {
       "cycle_id": "d7470f1b",
       "domain": "Combinatorics",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "margin_factor_two_is_sharp",
       "quality": 0.78
+    },
+    {
+      "cycle_id": "3fdce232",
+      "domain": "Computation",
+      "name": "Scheme",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "3fdce232",
+      "domain": "Computation",
+      "name": "Scheme",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "3fdce232",
+      "domain": "Computation",
+      "name": "Scheme",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-22T21:36:32",
+  "last_updated": "2026-08-22T21:36:44",
   "open_questions": [
     {
       "context": "All proofs are complete; no `sorry`.; All proofs are complete; no `sorry`.",
@@ -3269,12 +3269,6 @@
     ],
     "Computation": [
       {
-        "cycle_id": "1b55f202",
-        "quality": 0.79,
-        "theorems": 145,
-        "title": "CYCLIC-TYPE-CHANNEL (round-22 #2, experiment 413, assessment v189, paper 78)"
-      },
-      {
         "cycle_id": "6c757940",
         "quality": 0.89,
         "theorems": 152,
@@ -3327,6 +3321,12 @@
         "quality": 0.89,
         "theorems": 112,
         "title": "The corrected-product operation is now a proved closure property"
+      },
+      {
+        "cycle_id": "3fdce232",
+        "quality": 0.82,
+        "theorems": 141,
+        "title": "Information reconciliation"
       }
     ],
     "Cryptography": [

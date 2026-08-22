@@ -1,350 +1,345 @@
 """
-Rigidity gap for shallow product coins -- numerical demonstrations.
+Rigidity gap for shallow product coins: numerical demonstrations.
 
-Self-contained: standard library only (no numpy required).
+Pure-Python (standard library only), fully self-contained.
 
--------------------------------------------------------------------------------
-The mathematics being demonstrated
--------------------------------------------------------------------------------
-Fix finite registers A = {0,...,nA-1} and B = {0,...,nB-1} and a resonance set
-R subset of A x B.  A *coin* on a register is a normalised amplitude vector
-(sum of squared moduli = 1).  The resonance amplitude of the product coin
-f (x) g is
+Setting
+-------
+A *resonance set* R lives inside a finite state space X.  A *coin* is a weight
+function psi : X -> R with sum_x psi(x)^2 = 1, and its *resonance amplitude*
+against R is A_R(psi) = sum_{x in R} psi(x).  Cauchy-Schwarz gives
+A_R(psi)^2 <= |R|, with equality exactly for psi proportional to the indicator
+of R.
 
-    Amp(f, g) = sum_{(a,b) in R} f(a) g(b),
+A *product coin* on X = A x B is psi(a, b) = f(a) g(b) with ||f|| = ||g|| = 1.
+A resonance set R is a *combinatorial box* when it is closed under the
+rectangle rule: (a,b), (a',b') in R  ==>  (a,b') in R; equivalently R is the
+product of its two projections.
 
-and the resonance intensity is |Amp(f,g)|^2.
-
-  * Cauchy-Schwarz:            |Amp|^2 <= |R|                        (always)
-  * Boxes attain:              R = A0 x B0  =>  |Amp|^2 = |R| is achieved
-  * Rigidity gap (non-box R):  |Amp|^2 (3|R| + 1) <= 3|R|^2
-                               |Amp|^2 <= (1 - 1/(3|R|+1)) |R|
-                               |Amp|^2 <= |R| - 2/7
-  * Dichotomy:                 optimum attained  <=>  R is a box
-  * Row lower bound:           max_a |R_a| <= sup |Amp|^2
-  * L-shape {(0,0),(0,1),(1,0)}: sup |Amp|^2 = phi^2 = (3+sqrt 5)/2
-  * Diagonal {(0,0),(1,1)}:      sup |Amp|^2 = 1  (versus |R| = 2)
-  * Agreement set {x in {0,1}^n : x_i = x_j}: sup |Amp|^2 = 2^(n-2) = |R| / 2
-
-Since sup |Amp| over unit vectors equals the largest singular value of the 0/1
-matrix of R, the true optimum is computed here by pure-Python power iteration.
--------------------------------------------------------------------------------
+Main facts demonstrated here
+----------------------------
+1. The exact Cauchy-Schwarz defect identity
+       |R| - A_R(psi)^2 = |R| * sum_x (psi(x) - (A/|R|) 1_R(x))^2 .
+2. The product-coin defect identity
+       || M - t f g^T ||_F^2 = |R| - t^2 ,  t = A_R(f (x) g),
+   so that the best product amplitude squared is sigma_1(M)^2 and the true gap
+   is the singular tail sum_{k>=2} sigma_k(M)^2.
+3. Boxes attain the optimum exactly: A_R^2 = |R|.
+4. Every non-box loses at least the golden constant
+       gamma = (3 - sqrt 5) / 2 = 1/phi^2 = 0.381966...,
+   verified exhaustively over all subsets of 2x2, 3x3 and 4x3 grids.
+5. The L-shape {(0,0),(0,1),(1,0)} has exact product optimum
+       (3 + sqrt 5)/2 = phi^2 = 2.618034... = 3 - gamma,
+   so the golden constant is optimal.
+6. The crude bound |R| - 1/(9|R|) is valid but far from sharp.
+7. Depth-n: a full box in D^3 is matched exactly, a non-full-box is not.
 """
 
 from __future__ import annotations
 
-from fractions import Fraction
-from itertools import product
-import math
-from math import sqrt
-from typing import Dict, List, Optional, Sequence, Set, Tuple
+from itertools import combinations, product
+from math import cos, hypot, sin, sqrt
+from typing import Dict, Iterable, List, Sequence, Tuple
 
-Pair = Tuple[int, int]
 Matrix = List[List[float]]
-Vector = List[float]
+Cell = Tuple[int, int]
 
-PHI: float = (1.0 + sqrt(5.0)) / 2.0
-
-
-# ----------------------------------------------------------------------------
-# Basic constructions
-# ----------------------------------------------------------------------------
-def resonance_matrix(R: Set[Pair], n_a: int, n_b: int) -> Matrix:
-    """0/1 matrix M with M[a][b] = 1 iff (a, b) in R."""
-    return [[1.0 if (a, b) in R else 0.0 for b in range(n_b)] for a in range(n_a)]
-
-
-def is_box(R: Set[Pair]) -> bool:
-    """R is a box iff it is closed under recombining coordinates."""
-    for (a, _b) in R:
-        for (_a2, b2) in R:
-            if (a, b2) not in R:
-                return False
-    return True
-
-
-def non_box_witness(R: Set[Pair]) -> Optional[Tuple[Pair, Pair, Pair]]:
-    """Return ((a,b), (a',b'), (a,b')) with (a,b),(a',b') in R and (a,b') not in R."""
-    for (a, b) in sorted(R):
-        for (a2, b2) in sorted(R):
-            if (a, b2) not in R:
-                return (a, b), (a2, b2), (a, b2)
-    return None
-
-
-def rows(R: Set[Pair]) -> Dict[int, Set[int]]:
-    """The rows R_a = {b : (a,b) in R}."""
-    out: Dict[int, Set[int]] = {}
-    for (a, b) in R:
-        out.setdefault(a, set()).add(b)
-    return out
+GOLDEN_GAP: float = (3.0 - sqrt(5.0)) / 2.0        # gamma = 1/phi^2 = 0.381966...
+GOLDEN_OPT: float = (3.0 + sqrt(5.0)) / 2.0        # phi^2      = 2.618034...
 
 
 # ----------------------------------------------------------------------------
-# Optimal product coin: alternating maximisation == power iteration
+# Linear algebra: symmetric eigenvalues by cyclic Jacobi, singular values from
+# the eigenvalues of M^T M.  Self-contained, no external dependencies.
 # ----------------------------------------------------------------------------
-def _normalise(v: Vector) -> Vector:
-    nrm = sqrt(sum(t * t for t in v))
-    if nrm == 0.0:
-        raise ValueError("zero vector")
-    return [t / nrm for t in v]
+
+def transpose(m: Matrix) -> Matrix:
+    """Matrix transpose."""
+    return [list(col) for col in zip(*m)]
 
 
-def optimal_product_coin(
-    R: Set[Pair], n_a: int, n_b: int, sweeps: int = 4000, tol: float = 1e-15
-) -> Tuple[Vector, Vector, float]:
-    """
-    Maximise |sum_{(a,b) in R} f(a) g(b)| over unit vectors f, g.
+def matmul(a: Matrix, b: Matrix) -> Matrix:
+    """Ordinary matrix product."""
+    bt = transpose(b)
+    return [[sum(x * y for x, y in zip(row, col)) for col in bt] for row in a]
 
-    The maximum equals the top singular value of the resonance matrix; the
-    alternating update f <- Mg/||Mg||, g <- M^T f/||M^T f|| is power iteration
-    on M M^T and converges linearly with ratio sigma_2 / sigma_1.
-    Returns (f, g, amplitude) with amplitude = f^T M g = sigma_1.
-    """
-    M = resonance_matrix(R, n_a, n_b)
-    # start from the uniform-positive vector (Perron-Frobenius: optimum is >= 0)
-    g: Vector = _normalise([1.0] * n_b)
-    f: Vector = _normalise([1.0] * n_a)
-    prev = -1.0
+
+def symmetric_eigenvalues(a: Matrix, sweeps: int = 100, tol: float = 1e-14) -> List[float]:
+    """Eigenvalues of a real symmetric matrix by the cyclic Jacobi method."""
+    n = len(a)
+    s = [row[:] for row in a]
     for _ in range(sweeps):
-        Mg = [sum(M[a][b] * g[b] for b in range(n_b)) for a in range(n_a)]
-        if all(abs(t) < 1e-300 for t in Mg):
+        off = sqrt(sum(s[i][j] ** 2 for i in range(n) for j in range(n) if i != j))
+        if off < tol:
             break
-        f = _normalise(Mg)
-        Mtf = [sum(M[a][b] * f[a] for a in range(n_a)) for b in range(n_b)]
-        if all(abs(t) < 1e-300 for t in Mtf):
-            break
-        g = _normalise(Mtf)
-        cur = sum(f[a] * M[a][b] * g[b] for a in range(n_a) for b in range(n_b))
-        if abs(cur - prev) < tol:
-            break
-        prev = cur
-    amp = sum(f[a] * M[a][b] * g[b] for a in range(n_a) for b in range(n_b))
-    return f, g, amp
+        for p in range(n - 1):
+            for q in range(p + 1, n):
+                if abs(s[p][q]) < tol:
+                    continue
+                theta = (s[q][q] - s[p][p]) / (2.0 * s[p][q])
+                sign = 1.0 if theta >= 0.0 else -1.0
+                t = sign / (abs(theta) + sqrt(theta * theta + 1.0))
+                c = 1.0 / sqrt(t * t + 1.0)
+                sn = t * c
+                rot = [[1.0 if i == j else 0.0 for j in range(n)] for i in range(n)]
+                rot[p][p], rot[q][q] = c, c
+                rot[p][q], rot[q][p] = sn, -sn
+                s = matmul(matmul(transpose(rot), s), rot)
+    return sorted((s[i][i] for i in range(n)), reverse=True)
 
 
-def amplitude(R: Set[Pair], f: Sequence[float], g: Sequence[float]) -> float:
-    """Resonance amplitude of a given (real) product coin."""
-    return sum(f[a] * g[b] for (a, b) in R)
-
-
-# ----------------------------------------------------------------------------
-# Certified bounds
-# ----------------------------------------------------------------------------
-def multiplicative_bound(m: int) -> float:
-    """(1 - 1/(3m+1)) * m = 3 m^2 / (3m + 1): valid for every non-box R."""
-    return 3.0 * m * m / (3.0 * m + 1.0)
-
-
-def additive_bound(m: int) -> float:
-    """m - 2/7: valid for every non-box R (which necessarily has m >= 2)."""
-    return m - 2.0 / 7.0
-
-
-def row_lower_bound(R: Set[Pair]) -> int:
-    """max_a |R_a|: always achievable by an explicit product coin."""
-    rs = rows(R)
-    return max((len(v) for v in rs.values()), default=0)
-
-
-def report(name: str, R: Set[Pair], n_a: int, n_b: int) -> None:
-    m = len(R)
-    box = is_box(R)
-    _f, _g, amp = optimal_product_coin(R, n_a, n_b)
-    intensity = amp * amp
-    print(f"  {name}")
-    print(f"    |R| = {m}    box? {box}")
-    if not box:
-        w = non_box_witness(R)
-        assert w is not None
-        print(f"    non-box witness: {w[0]}, {w[1]} in R  but  {w[2]} not in R")
-    print(f"    Cauchy-Schwarz optimum  |R|                = {float(m):.6f}")
-    print(f"    true optimum            sup |Amp|^2        = {intensity:.6f}")
-    print(f"    row lower bound         max_a |R_a|        = {row_lower_bound(R)}")
-    if not box:
-        print(f"    certified mult. bound   3|R|^2/(3|R|+1)    = {multiplicative_bound(m):.6f}")
-        print(f"    certified add.  bound   |R| - 2/7          = {additive_bound(m):.6f}")
-        print(f"    observed deficiency     |R| - sup |Amp|^2  = {m - intensity:.6f}")
-        ok = intensity <= multiplicative_bound(m) + 1e-9 and intensity <= additive_bound(m) + 1e-9
-        print(f"    bounds respected: {ok}")
-    else:
-        print(f"    optimum attained (deficiency = {m - intensity:.2e})")
-    print()
+def singular_values(m: Matrix) -> List[float]:
+    """Singular values of a real matrix, in decreasing order."""
+    gram = matmul(transpose(m), m)
+    return [sqrt(max(0.0, lam)) for lam in symmetric_eigenvalues(gram)]
 
 
 # ----------------------------------------------------------------------------
-# Demonstrations
+# Resonance sets, coins, amplitudes
 # ----------------------------------------------------------------------------
-def demo_dichotomy() -> None:
-    print("=" * 78)
-    print("1. THE DICHOTOMY: perfect resonance <=> the resonance set is a box")
-    print("=" * 78)
-    print()
-    report("box  R = {0,1} x {0,1,2}", {(a, b) for a in range(2) for b in range(3)}, 2, 3)
-    report("box  R = {0,2} x {1,3}", {(a, b) for a in (0, 2) for b in (1, 3)}, 3, 4)
-    report("L-shape  R = {(0,0),(0,1),(1,0)}", {(0, 0), (0, 1), (1, 0)}, 2, 2)
-    report("diagonal R = {(0,0),(1,1)}", {(0, 0), (1, 1)}, 2, 2)
-    report("3x3 box minus a corner", {(a, b) for a in range(3) for b in range(3)} - {(2, 2)}, 3, 3)
-    report("3x3 identity pattern", {(0, 0), (1, 1), (2, 2)}, 3, 3)
+
+def indicator_matrix(cells: Iterable[Cell], rows: int, cols: int) -> Matrix:
+    """0/1 indicator matrix of a resonance set inside a rows x cols grid."""
+    m = [[0.0] * cols for _ in range(rows)]
+    for (i, j) in cells:
+        m[i][j] = 1.0
+    return m
 
 
-def demo_golden_lshape() -> None:
-    print("=" * 78)
-    print("2. THE GOLDEN L-SHAPE and the bracket for the universal constant")
-    print("=" * 78)
-    print()
-    L: Set[Pair] = {(0, 0), (0, 1), (1, 0)}
-    _f, _g, amp = optimal_product_coin(L, 2, 2)
-    print(f"  optimal intensity (power iteration) = {amp * amp:.12f}")
-    print(f"  phi^2 = (3 + sqrt 5)/2              = {PHI ** 2:.12f}")
-    print(f"  exact deficiency 3 - phi^2          = {3 - PHI ** 2:.12f}")
-    print()
-    # Exactly rational certificate: (45/53, 28/53) is a coin since 45^2+28^2=53^2.
-    p, q, h = Fraction(45, 53), Fraction(28, 53), 1
-    assert 45 * 45 + 28 * 28 == 53 * 53 == 2809
-    assert p * p + q * q == h
-    amp_q = p * p + p * q + q * p           # sum over the three L-shape cells
-    print(f"  rational golden coin (45/53, 28/53):  amplitude = {amp_q} = {float(amp_q):.9f}")
-    print(f"  intensity = {amp_q ** 2} = {float(amp_q ** 2):.9f}")
-    upper = Fraction(3) - amp_q ** 2
-    print(f"  hence the optimal universal additive constant c* satisfies")
-    print(f"      2/7 = {float(Fraction(2,7)):.9f}  <=  c*  <=  {upper} = {float(upper):.9f}")
-    print(f"  ratio of the two ends: {float(upper) / (2 / 7):.4f}")
-    print(f"  (the exact L-shape deficiency is (3 - sqrt 5)/2 = {(3 - sqrt(5)) / 2:.9f})")
-    print()
+def is_box(cells: Sequence[Cell]) -> bool:
+    """True iff the resonance set is closed under the rectangle rule."""
+    s = set(cells)
+    return all((a, bp) in s for (a, _b) in s for (_ap, bp) in s)
 
 
-def demo_gap_scan(max_side: int = 3) -> None:
-    print("=" * 78)
-    print("3. EXHAUSTIVE SCAN: every non-box subset of a small grid obeys the gap")
-    print("=" * 78)
-    print()
-    for n_a, n_b in ((2, 2), (2, 3), (3, 3)):
-        cells: List[Pair] = [(a, b) for a in range(n_a) for b in range(n_b)]
-        worst_def = float("inf")
-        worst_set: Set[Pair] = set()
-        n_nonbox = 0
-        violations = 0
-        for mask in range(1, 1 << len(cells)):
-            R = {cells[i] for i in range(len(cells)) if mask >> i & 1}
-            if is_box(R):
-                continue
-            n_nonbox += 1
-            m = len(R)
-            _f, _g, amp = optimal_product_coin(R, n_a, n_b, sweeps=500)
-            inten = amp * amp
-            if inten > multiplicative_bound(m) + 1e-8 or inten > additive_bound(m) + 1e-8:
-                violations += 1
-            deficiency = m - inten
-            if deficiency < worst_def:
-                worst_def, worst_set = deficiency, R
-        print(f"  grid {n_a} x {n_b}: {n_nonbox} non-box subsets scanned, {violations} violations")
-        print(f"    smallest observed deficiency = {worst_def:.9f}")
-        print(f"    attained by R = {sorted(worst_set)}")
-        print(f"    compare (3 - sqrt 5)/2 = {(3 - sqrt(5)) / 2:.9f}  and  2/7 = {2/7:.9f}")
-        print()
+def product_amplitude(cells: Iterable[Cell], f: Sequence[float], g: Sequence[float]) -> float:
+    """Resonance amplitude A_R(f (x) g) = sum_{(a,b) in R} f(a) g(b)."""
+    return sum(f[a] * g[b] for (a, b) in cells)
 
 
-def demo_depth_agreement(max_n: int = 8) -> None:
-    print("=" * 78)
-    print("4. ARBITRARY DEPTH: the agreement set {x in {0,1}^n : x_0 = x_1}")
-    print("=" * 78)
-    print()
-    print("   The gap constant 2/7 does not decay with the depth n, while the")
-    print("   true optimum is exactly half the Cauchy-Schwarz value.")
-    print()
-    print(f"   {'n':>3} {'|R|=2^(n-1)':>12} {'bound |R|-2/7':>15} {'true 2^(n-2)':>14} {'true loss':>12}")
-    for n in range(2, max_n + 1):
-        m = 2 ** (n - 1)
-        true_opt = 2.0 ** (n - 2)
-        print(f"   {n:>3} {m:>12} {additive_bound(m):>15.4f} {true_opt:>14.4f} {m - true_opt:>12.4f}")
-    print()
-    # Genuine brute force over depth-n product coins at small depth:
-    # each register coin is (cos t, sin t) with t on a grid of [0, pi/2].
-    steps = 16
-    angles = [k * (math.pi / 2) / steps for k in range(steps + 1)]
-    for n in (2, 3, 4):
-        words = list(product((0, 1), repeat=n))
-        agree = [w for w in words if w[0] == w[1]]
-        best = 0.0
-        for ts in product(angles, repeat=n):
-            coins = [(math.cos(t), math.sin(t)) for t in ts]
-            amp = 0.0
-            for w in agree:
-                term = 1.0
-                for k in range(n):
-                    term *= coins[k][w[k]]
-                amp += term
-            best = max(best, amp * amp)
-        exact = 2.0 ** (n - 2)
-        print(
-            f"   depth n = {n}: brute-force optimum {best:.6f}  vs  predicted 2^(n-2)"
-            f" = {exact:.6f}   (Cauchy-Schwarz value |R| = {2 ** (n - 1)})"
-        )
+def general_amplitude(cells: Iterable[Cell], psi: Dict[Cell, float]) -> float:
+    """Resonance amplitude of an arbitrary coin given as a dictionary."""
+    return sum(psi.get(c, 0.0) for c in cells)
+
+
+def best_product_amplitude_sq(cells: Sequence[Cell], rows: int, cols: int) -> float:
+    """max over unit product coins of A_R(f (x) g)^2 = sigma_1(M)^2."""
+    m = indicator_matrix(cells, rows, cols)
+    return singular_values(m)[0] ** 2
+
+
+def true_gap(cells: Sequence[Cell], rows: int, cols: int) -> float:
+    """|R| - best product amplitude squared = the singular tail of M."""
+    return len(cells) - best_product_amplitude_sq(cells, rows, cols)
+
+
+# ----------------------------------------------------------------------------
+# Demonstration 1: the exact Cauchy-Schwarz defect identity
+# ----------------------------------------------------------------------------
+
+def demo_defect_identity() -> None:
+    print("=" * 74)
+    print("1.  Exact Cauchy-Schwarz defect identity")
+    print("=" * 74)
+    rows, cols = 3, 3
+    cells: List[Cell] = [(0, 0), (0, 1), (1, 0), (2, 2)]
+    # an arbitrary (deliberately non-optimal) unit coin
+    raw = {(i, j): sin(1.0 + 2.7 * i + 0.9 * j) + 0.3 * cos(0.5 * i * j)
+           for i in range(rows) for j in range(cols)}
+    norm = sqrt(sum(v * v for v in raw.values()))
+    psi = {k: v / norm for k, v in raw.items()}
+
+    card = float(len(cells))
+    amp = general_amplitude(cells, psi)
+    lhs = card - amp ** 2
+    c = amp / card
+    rhs = card * sum((psi[(i, j)] - c * (1.0 if (i, j) in set(cells) else 0.0)) ** 2
+                     for i in range(rows) for j in range(cols))
+    print(f"  |R| = {card:.0f},  A_R(psi) = {amp:+.6f}")
+    print(f"  |R| - A^2                       = {lhs:.12f}")
+    print(f"  |R| * dist(psi, span 1_R)^2     = {rhs:.12f}")
+    print(f"  agreement to {abs(lhs - rhs):.2e}   (Cauchy-Schwarz is a Pythagoras theorem)")
     print()
 
 
-def demo_rows_and_squeeze() -> None:
-    print("=" * 78)
-    print("5. THE SQUEEZE: max_a |R_a| <= sup |Amp|^2 <= 3|R|^2 / (3|R| + 1)")
-    print("=" * 78)
-    print()
-    examples: List[Tuple[str, Set[Pair], int, int]] = [
-        ("L-shape", {(0, 0), (0, 1), (1, 0)}, 2, 2),
-        ("diagonal", {(0, 0), (1, 1)}, 2, 2),
-        ("staircase", {(0, 0), (0, 1), (1, 1), (1, 2), (2, 2)}, 3, 3),
-        ("3x3 minus corner", {(a, b) for a in range(3) for b in range(3)} - {(2, 2)}, 3, 3),
-        ("4x4 minus diagonal", {(a, b) for a in range(4) for b in range(4) if a != b}, 4, 4),
-    ]
-    print(f"   {'set':>18} {'|R|':>4} {'max|R_a|':>9} {'true':>10} {'mult bd':>10} {'add bd':>10}")
-    for name, R, n_a, n_b in examples:
-        m = len(R)
-        _f, _g, amp = optimal_product_coin(R, n_a, n_b)
-        print(
-            f"   {name:>18} {m:>4} {row_lower_bound(R):>9} {amp*amp:>10.5f} "
-            f"{multiplicative_bound(m):>10.5f} {additive_bound(m):>10.5f}"
-        )
+# ----------------------------------------------------------------------------
+# Demonstration 2: boxes attain the optimum exactly
+# ----------------------------------------------------------------------------
+
+def demo_box_attainment() -> None:
+    print("=" * 74)
+    print("2.  Boxes attain the Cauchy-Schwarz optimum |R| exactly")
+    print("=" * 74)
+    rows, cols = 4, 4
+    s_rows, t_cols = [0, 2, 3], [1, 3]
+    cells: List[Cell] = [(a, b) for a in s_rows for b in t_cols]
+    f = [1.0 / sqrt(len(s_rows)) if a in s_rows else 0.0 for a in range(rows)]
+    g = [1.0 / sqrt(len(t_cols)) if b in t_cols else 0.0 for b in range(cols)]
+    amp = product_amplitude(cells, f, g)
+    print(f"  R = {s_rows} x {t_cols},  |R| = {len(cells)},  is_box = {is_box(cells)}")
+    print(f"  normalised-indicator product coin:  A^2 = {amp ** 2:.12f}")
+    print(f"  spectral optimum sigma_1(M)^2      = {best_product_amplitude_sq(cells, rows, cols):.12f}")
+    print(f"  Cauchy-Schwarz optimum |R|         = {len(cells)}")
     print()
 
 
-def demo_diagonal_exact() -> None:
-    print("=" * 78)
-    print("6. THE TWO-POINT DIAGONAL: the exact optimum is 1, not |R| = 2")
-    print("=" * 78)
+# ----------------------------------------------------------------------------
+# Demonstration 3: the L-shape and the golden ratio
+# ----------------------------------------------------------------------------
+
+def demo_lshape() -> None:
+    print("=" * 74)
+    print("3.  The L-shape: exact product optimum (3 + sqrt 5)/2 = phi^2")
+    print("=" * 74)
+    cells: List[Cell] = [(0, 0), (0, 1), (1, 0)]
+    print("  R = {(0,0), (0,1), (1,0)},  indicator matrix  [[1,1],[1,0]]")
+    print(f"  is_box = {is_box(cells)},  |R| = {len(cells)}")
+
+    # the explicit optimal factors
+    u = (sqrt(5.0) - 1.0) / 2.0
+    n = sqrt((5.0 - sqrt(5.0)) / 2.0)
+    ell = sqrt((3.0 + sqrt(5.0)) / 2.0)
+    f = [1.0 / n, u / n]
+    g = [(1.0 + u) / (n * ell), 1.0 / (n * ell)]
+    print(f"  ||f||^2 = {f[0] ** 2 + f[1] ** 2:.12f},  ||g||^2 = {g[0] ** 2 + g[1] ** 2:.12f}")
+    amp_sq = product_amplitude(cells, f, g) ** 2
+    print(f"  explicit coin:            A^2 = {amp_sq:.12f}")
+    print(f"  spectral optimum:  sigma_1(M)^2 = {best_product_amplitude_sq(cells, 2, 2):.12f}")
+    print(f"  golden value       (3+sqrt5)/2 = {GOLDEN_OPT:.12f}")
+    print(f"  true gap  3 - phi^2            = {3.0 - amp_sq:.12f}")
+    print(f"  golden constant (3-sqrt5)/2    = {GOLDEN_GAP:.12f}")
+    print(f"  crude general bound  1/(9|R|)  = {1.0 / 27.0:.12f}   (valid, ~10x too small)")
     print()
-    D: Set[Pair] = {(0, 0), (1, 1)}
+
+    # brute-force confirmation by dense search over the unit circles
     best = 0.0
-    arg = (0.0, 0.0)
-    steps = 400
-    for i in range(steps + 1):
-        for j in range(steps + 1):
-            t = i / steps * (math.pi / 2)
-            s = j / steps * (math.pi / 2)
-            f = [math.cos(t), math.sin(t)]
-            g = [math.cos(s), math.sin(s)]
-            val = amplitude(D, f, g) ** 2
-            if val > best:
-                best, arg = val, (t, s)
-    print(f"  grid maximum over real coins:  {best:.9f}   at angles {arg[0]:.4f}, {arg[1]:.4f}")
-    print("  Lagrange identity: (p0 q0 + p1 q1)^2 = 1 - (p0 q1 - p1 q0)^2 <= 1")
-    print("  attained by f = g = (1, 0), and |R| - 1 = 1 unit of resonance is lost")
-    print("  (the universal theorem only guarantees a loss of 2/7 = 0.285714)")
+    steps = 2000
+    for i in range(steps):
+        th = 2.0 * 3.141592653589793 * i / steps
+        f2 = [cos(th), sin(th)]
+        # optimal g for fixed f is the normalised vector (M^T f)
+        v = [f2[0] * 1.0 + f2[1] * 1.0, f2[0] * 1.0 + f2[1] * 0.0]
+        nv = hypot(v[0], v[1])
+        if nv == 0.0:
+            continue
+        g2 = [v[0] / nv, v[1] / nv]
+        best = max(best, product_amplitude(cells, f2, g2) ** 2)
+    print(f"  brute-force maximisation over the unit circle: A^2_max = {best:.10f}")
+    print()
+
+
+# ----------------------------------------------------------------------------
+# Demonstration 4: exhaustive verification of the golden gap
+# ----------------------------------------------------------------------------
+
+def exhaustive_min_gap(rows: int, cols: int) -> Tuple[float, List[Cell]]:
+    """Minimum true gap over all non-box subsets of a rows x cols grid."""
+    all_cells: List[Cell] = [(i, j) for i in range(rows) for j in range(cols)]
+    best_gap = float("inf")
+    best_set: List[Cell] = []
+    for size in range(2, len(all_cells) + 1):
+        for subset in combinations(all_cells, size):
+            cs = list(subset)
+            if is_box(cs):
+                continue
+            gap = true_gap(cs, rows, cols)
+            if gap < best_gap - 1e-12:
+                best_gap, best_set = gap, cs
+    return best_gap, best_set
+
+
+def demo_exhaustive_sharpness() -> None:
+    print("=" * 74)
+    print("4.  Exhaustive check: every non-box loses at least (3-sqrt5)/2")
+    print("=" * 74)
+    for (rows, cols) in [(2, 2), (3, 2), (3, 3), (4, 3)]:
+        gap, witness = exhaustive_min_gap(rows, cols)
+        flag = "OK" if gap >= GOLDEN_GAP - 1e-9 else "VIOLATION"
+        print(f"  grid {rows}x{cols}:  min gap over non-boxes = {gap:.10f}   [{flag}]")
+        print(f"              extremal set = {sorted(witness)}")
+    print(f"  golden constant (3-sqrt5)/2 = {GOLDEN_GAP:.10f}")
+    print()
+
+
+# ----------------------------------------------------------------------------
+# Demonstration 5: the gap does not decay with |R|
+# ----------------------------------------------------------------------------
+
+def demo_gap_does_not_decay() -> None:
+    print("=" * 74)
+    print("5.  A single defect in a large box: the loss is an absolute constant")
+    print("=" * 74)
+    print("     n   |R|      true gap    golden bound    crude bound 1/(9|R|)")
+    print("    ---------------------------------------------------------------")
+    for n in range(2, 9):
+        # the full n x n box with one cell deleted: the smallest possible defect
+        cells: List[Cell] = [(i, j) for i in range(n) for j in range(n)
+                             if not (i == n - 1 and j == n - 1)]
+        gap = true_gap(cells, n, n)
+        print(f"    {n:2d}  {len(cells):4d}   {gap:11.7f}   {GOLDEN_GAP:11.7f}"
+              f"     {1.0 / (9 * len(cells)):11.7f}")
+    print("    the true gap stays above the golden constant, while the crude")
+    print("    bound 1/(9|R|) collapses towards zero.")
+    print()
+
+
+# ----------------------------------------------------------------------------
+# Demonstration 6: depth 3
+# ----------------------------------------------------------------------------
+
+def depth_amplitude(cells: Sequence[Tuple[int, ...]], factors: Sequence[Sequence[float]]) -> float:
+    """Amplitude of a depth-n product coin psi(x) = prod_i f_i(x_i)."""
+    total = 0.0
+    for x in cells:
+        term = 1.0
+        for i, xi in enumerate(x):
+            term *= factors[i][xi]
+        total += term
+    return total
+
+
+def demo_depth_three() -> None:
+    print("=" * 74)
+    print("6.  Depth 3 in {0,1}^3: full boxes are matched, others are not")
+    print("=" * 74)
+    # (a) a full box S0 x S1 x S2
+    supports = [[0, 1], [1], [0, 1]]
+    box_cells = [tuple(x) for x in product(*supports)]
+    factors = [[1.0 / sqrt(len(s)) if d in s else 0.0 for d in range(2)] for s in supports]
+    amp_sq = depth_amplitude(box_cells, factors) ** 2
+    print(f"  full box  {supports}:  |R| = {len(box_cells)},  A^2 = {amp_sq:.12f}")
+
+    # (b) delete one point: no longer a full box
+    broken = [c for c in box_cells if c != (1, 1, 1)]
+    # split off coordinate 0 and use the depth-2 spectral optimum
+    rows = 2
+    cols = 4
+
+    def flatten(x: Tuple[int, ...]) -> Cell:
+        return (x[0], 2 * x[1] + x[2])
+
+    flat = [flatten(x) for x in broken]
+    best = best_product_amplitude_sq(flat, rows, cols)
+    print(f"  broken box (one point deleted): |R| = {len(broken)}")
+    print(f"     best two-block product amplitude^2 = {best:.12f}")
+    print(f"     loss = {len(broken) - best:.12f}  >=  golden {GOLDEN_GAP:.12f}")
+    print("     (a depth-3 product coin is in particular a two-block product coin,")
+    print("      so it cannot do better than this.)")
     print()
 
 
 def main() -> None:
     print()
-    print("RIGIDITY GAP FOR SHALLOW PRODUCT COINS -- numerical demonstrations")
+    print("RIGIDITY GAP FOR SHALLOW PRODUCT COINS")
+    print("golden constant gamma = (3 - sqrt 5)/2 = {:.12f}".format(GOLDEN_GAP))
+    print("golden optimum      phi^2 = (3 + sqrt 5)/2 = {:.12f}".format(GOLDEN_OPT))
     print()
-    demo_dichotomy()
-    demo_golden_lshape()
-    demo_gap_scan()
-    demo_depth_agreement()
-    demo_rows_and_squeeze()
-    demo_diagonal_exact()
-    print("=" * 78)
-    print("All certified bounds were respected in every example above.")
-    print("=" * 78)
+    demo_defect_identity()
+    demo_box_attainment()
+    demo_lshape()
+    demo_exhaustive_sharpness()
+    demo_gap_does_not_decay()
+    demo_depth_three()
 
 
 if __name__ == "__main__":
