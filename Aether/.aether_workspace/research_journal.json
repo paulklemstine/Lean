@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "5be71780",
-      "domain": "Shared",
-      "key_insight": "# Future Directions — Neurosymbolic RLHF / PPO-ptx\n\nDerived from the four verified cycles in\n`Catalog/Shared/NeuroSymbolicRLHFObjective.lean`,\n`Catalog/Shared/NeuroSymbolicRLHFRobustness.lean`,\n`Catal",
-      "quality_score": 0.85,
-      "sorry_count": 6,
-      "theorem_count": 97,
-      "timestamp": "2026-08-20T14:00:42",
-      "title": "reinforcement learning"
-    },
-    {
       "cycle_id": "69ffd40e",
       "domain": "Applications",
       "key_insight": "# Future Directions\n\nDerived from the analysis and adversarial-review stages of this cycle.  Each conjecture is\nfalsifiable, is stated against definitions that already exist in\n`Catalog/Applications/I",
@@ -499,19 +489,19 @@
       "theorem_count": 63,
       "timestamp": "2026-08-22T07:00:32",
       "title": "FACT round-30 #4 — TRACE-BATTERY: joint capacity scaling confirmed (paper 108)"
+    },
+    {
+      "cycle_id": "d7470f1b",
+      "domain": "Combinatorics",
+      "key_insight": "# Future Directions — Clock-and-Switch Worlds\n\nDerived from the cycle recorded in `Catalog/Combinatorics/CWorldFiltration.lean`,\n`…Sharpness.lean`, `…SwitchlessChains.lean`, `…ClosureProperties.lean`,",
+      "quality_score": 0.86,
+      "sorry_count": 1,
+      "theorem_count": 101,
+      "timestamp": "2026-08-22T07:46:29",
+      "title": "Filtration lemma"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "8c90b348",
-      "domain": "Shared",
-      "key_insight": "# FUTURE DIRECTIONS — after CFPERIOD-NULL (Experiment 398)\n\nWhat is now formally settled in `Catalog/Shared/CFPeriodNull.lean`:\n\n1. the PQa state machine of `√N` and its four integral invariants\n   (`",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 47,
-      "timestamp": "2026-08-14T11:18:04",
-      "title": "Experiment 398: CFPERIOD-NULL — the continued-fraction period of sqrt(N) is a non-polynomial symmetr"
-    },
     {
       "cycle_id": "43e7ffcb",
       "domain": "Tropical",
@@ -2501,27 +2491,19 @@
       "theorem_count": 63,
       "timestamp": "2026-08-22T07:00:32",
       "title": "FACT round-30 #4 — TRACE-BATTERY: joint capacity scaling confirmed (paper 108)"
+    },
+    {
+      "cycle_id": "d7470f1b",
+      "domain": "Combinatorics",
+      "key_insight": "# Future Directions — Clock-and-Switch Worlds\n\nDerived from the cycle recorded in `Catalog/Combinatorics/CWorldFiltration.lean`,\n`…Sharpness.lean`, `…SwitchlessChains.lean`, `…ClosureProperties.lean`,",
+      "quality_score": 0.86,
+      "sorry_count": 1,
+      "theorem_count": 101,
+      "timestamp": "2026-08-22T07:46:29",
+      "title": "Filtration lemma"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "018e116a",
-      "domain": "Pythagorean",
-      "name": "run_cons",
-      "quality": 0.86
-    },
-    {
-      "cycle_id": "018e116a",
-      "domain": "Pythagorean",
-      "name": "obs_nil",
-      "quality": 0.86
-    },
-    {
-      "cycle_id": "ef4f9365",
-      "domain": "MachineLearning",
-      "name": "cons_zero",
-      "quality": 0.83
-    },
     {
       "cycle_id": "ef4f9365",
       "domain": "MachineLearning",
@@ -2803,17 +2785,28 @@
       "domain": "Combinatorics",
       "name": "capacity_strict_mono_of_separates",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "d7470f1b",
+      "domain": "Combinatorics",
+      "name": "representable_of_orderIso",
+      "quality": 0.86
+    },
+    {
+      "cycle_id": "d7470f1b",
+      "domain": "Combinatorics",
+      "name": "representable_prod",
+      "quality": 0.86
+    },
+    {
+      "cycle_id": "d7470f1b",
+      "domain": "Combinatorics",
+      "name": "representable_upperSet",
+      "quality": 0.86
     }
   ],
-  "last_updated": "2026-08-22T07:00:32",
+  "last_updated": "2026-08-22T07:46:29",
   "open_questions": [
-    {
-      "context": "`RhoDom.dominant_singleton_iff`, so it is not a self-contained restatement.  No `sorry`, no",
-      "cycle_id": "43d8701a",
-      "domain": "Novelty",
-      "sorry_count": 1,
-      "timestamp": "2026-08-06T10:05:24"
-    },
     {
       "context": "All proofs are complete; no `sorry`.; All proofs are complete; no `sorry`.",
       "cycle_id": "6c07c4d0",
@@ -3016,6 +3009,13 @@
       "domain": "Combinatorics",
       "sorry_count": 2,
       "timestamp": "2026-08-22T07:00:32"
+    },
+    {
+      "context": "Every theorem below is proved with no `sorry` and no `native_decide`.",
+      "cycle_id": "d7470f1b",
+      "domain": "Combinatorics",
+      "sorry_count": 1,
+      "timestamp": "2026-08-22T07:46:29"
     }
   ],
   "research_threads": {
@@ -3207,12 +3207,6 @@
     ],
     "Combinatorics": [
       {
-        "cycle_id": "43f9870f",
-        "quality": 0.84,
-        "theorems": 77,
-        "title": "The 'Only Bad Primes' Conjecture is False (elliptic curve denominators)"
-      },
-      {
         "cycle_id": "299127cc",
         "quality": 0.82,
         "theorems": 59,
@@ -3265,6 +3259,12 @@
         "quality": 0.82,
         "theorems": 63,
         "title": "FACT round-30 #4 — TRACE-BATTERY: joint capacity scaling confirmed (paper 108)"
+      },
+      {
+        "cycle_id": "d7470f1b",
+        "quality": 0.86,
+        "theorems": 101,
+        "title": "Filtration lemma"
       }
     ],
     "Computation": [

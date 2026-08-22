@@ -1,7 +1,7 @@
 {
   "part": "6",
-  "archived_at": "2026-08-22T07:00:25Z",
-  "count": 85,
+  "archived_at": "2026-08-22T07:46:19Z",
+  "count": 86,
   "directions": [
     {
       "ambition_level": "extension",
@@ -3446,6 +3446,46 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 90
+    },
+    {
+      "id": "fd_1213",
+      "title": "Wigner-Semicircle: Universality of the Spectral Distribution",
+      "description": "Formally proves the semicircle law for Wigner ensembles: the empirical spectral distribution of a random Hermitian matrix with independent entries converges in probability to the semicircle distribution as the dimension grows, establishing the universality of bulk eigenvalue statistics for random matrices.",
+      "source_exp_id": "human_brainstorm_2026-08-12",
+      "source_path": "future_directions_epic_2026-08-12.md",
+      "domains": [
+        "Probability"
+      ],
+      "proof_strategy": "Moment method for Gaussian Wigner matrices: compute E[tr(H^k)/n], bound the variance, and identify the moment sequence with Catalan numbers (free cumulants).",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 0.9,
+      "status": "completed",
+      "consumed_by_exp_id": "37827e5f",
+      "timestamp": "2026-08-13T03:21:12.263241+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.85,
+      "domain_quality_penalty": 0.2,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-08-16T03:14:02.421523+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "theorem wigner_semicircle (n : ℕ) (H : WignerEnsemble n) : (empirical_spectral_measure H) →ₚ semicircle_law",
+      "thread_id": "",
+      "category": "famous_subtask",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "",
+      "github_issue": 0
     }
   ]
 }

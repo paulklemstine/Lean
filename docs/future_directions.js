@@ -904,16 +904,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-37 #5 \u2014 DIAL-OVERLAP-LAW: partially overlapping dials are exactly one bit redundant (paper 133)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ae01533d",
     "description": "## NET-52 \u2014 limited-memory axis, round 4 (paper 137, /tmp/exp_net52_quant.py, /tmp/net52.log)\n\n**Verdict name: THE-TOY-FOUR-BIT-FLOOR-DOES-NOT-TRANSFER.**\n\n### Result\nNaive per-channel RTN quantization of all linear weights of Qwen2.5-0.5B (identical validated harness; baseline reproduced exactly 0.4460/2.8697):\n\n| arm | \u0394CE | retained acc |\n|---|---|---|\n| 8-bit | +0.0044 | 0.9985 |\n| 6-bit | +0.0353 | 0.9904 |\n| 5-bit | +0.1281 | 0.9620 |\n| **4-bit** | **+0.7879** | **0.7630** |\n| 3-bit | +9.2262 | 0.0367 |\n| 2-bit | +14.0588 | 0.0001 |\n| 4-bit first-12 layers | +0.3885 | 0.8904 |\n| 4-bit last-12 layers | +0.4054 | 0.8635 |\n| 4-bit group-128 | +0.3180 | 0.9060 |\n| 3-bit group-128 | +2.7220 | 0.3987 |\n\n- **P1 REFUTED SPECTACULARLY**: per-channel 4-bit costs +0.79 against a \u22640.05 prediction \u2014 the toy programme's compression floor (NET-11/14, \"per-channel uniform-4 = the optimum\") was an artifact of from-scratch toys and fails 16\u00d7 its budget on pretrained weights.\n- **P2 CONFIRMED weakly**: last-half worse than first-half (+0.41 vs +0.39) \u2014 NET-18's deeper-is-worse direction holds.\n- **P3 CONFIRMED dramatically**: 2-bit destroys the model (+14 CE).\n- **P4 CONFIRMED**: strictly monotone in mesh with 8-bit measurably nonzero \u2014 exactly what the catalogue's sharpness theorem (defect \u2264 2Lr, constant sharp) predicts.\n\n### Practical\nThe cliff structure: mild through 5 bits, severe at 4, catastrophic at 3 (per-channel). Grouping by 128 repairs ~60% of 4-bit damage and rescues 3-bit \u2014 precisely why production quantizers are group-wise, here measured cleanly for the programme. For a 6 GB host: RTN below 6 bits is not deployable; group-wise \u22654-bit is the entry point; further compression needs error compensation (GPTQ/AWQ), not scale choice.\n\n### All 8 barriers\n(a) clean \u2014 four horns pre-stated including the refuted one; (b) clean \u2014 exact constant structure new to the programme; (c) DECISIVE and honestly negative \u2014 this round IS the compression-axis transfer test; limits: ONE model, ctx=512, RTN-only (no GPTQ compensation yet), embeddings/norms unquantized; (d) clean \u2014 bit-exact deterministic evals; (e) clean \u2014 deltas \u2265 0.0004 resolvable, no noise-floor issue; (f) clean \u2014 baseline reproduced exactly, ALL_DONE_NET52; (g) fair \u2014 matched protocol/granularity across arms; (h) DIRECT \u2014 the (bits \u00d7 grouping) surface is the deployment table for fitting larger Qwen models into 6 GB VRAM.\n\n### Next\nGPTQ/AWQ-style compensation on these floors; joint weight+KV memory budgets; tail-aware mixed precision (quantize the NET-51 shared core harder than the personal tail).\n\nNow 52 network experiments. Assessment v52. Paper 137.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3560",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T03:58:05.368039+00:00",
     "title": "NET-52: THE-TOY-FOUR-BIT-FLOOR-DOES-NOT-TRANSFER \u2014 per-channel RTN 4-bit costs +0.79 CE on Qwen2.5-0.5B (16x the toy floor budget); group-128 halves it; depth gradient and mesh sharpness confirmed"
   },
@@ -1224,6 +1225,104 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-22T07:00:59.867376+00:00",
     "title": "FACT round-41 #3 \u2014 JOINT-ALIGN: cross-prime coincidences transfer where singleton phases fail (paper 152)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-43 #2, cron iteration (exp 493, assessment v271). Paper 154's noted follow-up.\n\n**DIAL-IS-DRAW-INVARIANT**: the per-N yield dial shows no variance-share dilution under genuinely unbalanced draws \u2014 augmented R\u00b2 = 0.5202 uniform vs 0.5251 balanced (identical within noise); Spearman(w, rate) = 0.666 vs 0.696; footprint weighting beats plain count by +0.16/+0.18 in both regimes. H2's dilution refuted in the good direction.\n\nThe QS triage form holds for realistic key-shape mix. Barriers 5/8 unchanged.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp492_uniform_dial.py + exp492_result.json, seed 20260924.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3613",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T07:46:53.277507+00:00",
+    "title": "FACT round-43 #2 \u2014 UNIFORM-DIAL: the yield dial is draw-regime-invariant (paper 162)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-43 #1, cron iteration (exp 491-full, assessment v270). Paper 160's refuted guess becomes exact law, verified to n=655360 at deviations \u22643e-6 (mpmath dps=50).\n\n**EXACT-CONSTANT-LAWS**:\n- **g\u00b7n\u00b2 \u2192 log\u2082e \u2212 1 = 0.442695** \u2014 no log factor at all\n- **X\u00b7n\u00b2 \u2192 2log\u2082e = 2.885390**\n- **A\u00b7n\u00b2/log\u2082n \u2192 1 exactly**\n- **(Is\u2212A)\u00b7n\u00b2 \u2192 2log\u2082e**\n- hence **X/g \u2192 2log\u2082e/(log\u2082e\u22121) = 6.51778**\n\nThe author's own pre-data scratch prediction (X/g\u21922, same as paper 160's H3) was refuted by its own exact table; corrected constants derived post-hoc, confirmed out-of-sample, labeled post-hoc.\n\nAlso: all four channels collapse at n=2 (g=A=0.311278 = the OR cap; Is=X=1); A/X sign flip exactly in (7,8); MC tie n=17 z=\u22120.10.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp491_full_table.py + exp491_full_result.json + table.csv + ledger.md.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3614",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T07:46:53.278990+00:00",
+    "title": "FACT round-43 #1 \u2014 TABLE-CLOSURE FULL: the exact asymptotic constants of the fork channels (paper 161)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-42 #6, cron iteration (exp 491, assessment v269).\n\n**TABLES-SHUT**: all four fork channels (g/OR, Is/split-count, A/AND, X/XOR) computed exactly for n = 2..25.\n- **H1 CONFIRMED**: Is \u2265 max(g,A,X) at every n (no violations); A \u2265 g everywhere; **A overtakes X exactly at n=8** \u2014 paper 74's crossover re-derived to the integer.\n- **H2 CONFIRMED**: every channel \u2192 0 (n=25 values recorded).\n- **H3 REFUTED**: the guessed asymptotic X/g \u2192 2 is wrong \u2014 X/g rises through 5.93 \u2192 6.43 over n=5..25 and has not settled; the measured ratio table replaces the guess.\n\nLedger: two-stage silent-garbage hunt disclosed (unnormalized entropy + non-summing distributions) \u2014 both produced plausible-looking wrong numbers until exact complement forms were imposed.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp491_table_closure.py + exp491_result.json.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3615",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T07:46:53.280353+00:00",
+    "title": "FACT round-42 #6 \u2014 TABLE-CLOSURE: the g/Is/A/X tables shut at n=25 (paper 160)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-42 #5, cron iteration (exp 486-full, assessment v268). The full version of paper 154's plane with bootstrap-CI pooled fits (n=6000/arm).\n\n**PLANE-MEASURED-ECM-WALL**: TD \u03b1 = **1.0009 [1.000, 1.002]** exact; \u03c1-balanced \u03b1 = **0.4994 [0.485, 0.510]** \u2014 birthday bound to three decimals; Fermat-uniform \u03b1 = **0.9932** = the exact p/2 law; arm-invariance first-order for td/\u03c1, Fermat strongly non-invariant as predicted.\n\n**HEADLINE: the ECM self-destruction wall** \u2014 when B1 \u2273 min(p,q), every Hasse-window order divides lcm(1..B1), all curves degenerate simultaneously, uncapped E[T] = \u221e. ECM refuses a single \u03b1 on toy range (\u22120.86 to +0.04); the honest object is {(\u03b1,c)(B1)} behind validity edge **B1 \u2272 min(p,q)/2**. H2b refuted: lpf/\u03c9 proxies capture none of ECM's drivers (powersmoothness across the 4\u221ap window does).\n\nCloses paper 132's residual item (2) with that qualification. Ledger: two superseded buggy runs disclosed; ECM denominator validated pre-data.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp486_full_plane.py + exp486_full_result.json, seed 20260920.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3616",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T07:46:53.281697+00:00",
+    "title": "FACT round-42 #5 \u2014 FACTOR-LOCAL-ET FULL: the plane measured, ECM's validity edge found (paper 159)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-42 #4, cron iteration (exp 490, assessment v267). Paper 154's deferred ECM column completed properly by its author-agent (marks exp487 SUPERSEDED).\n\n**ECM-PLANE-COMPLETION** (H1/H2/H3 confirmed):\n- ECM across-k \u03b1 = **0.761 (B1=50) / 0.718 (B1=250)** \u2014 strictly between \u03c1 and trial division.\n- Factor-locality SHARP: \u0394\u03b1 \u2264 0.03 for \u03c1/ECM under uniform-vs-balanced draws; only intercepts move. TD shifts 1.00 \u2192 1.14 replicating paper 89's 1.09.\n- H3 AT THE EDGE: c_ECM \u2212 c_\u03c1 = **+3.04 bits common-currency / 10.29\u00d7 wall time** \u2014 toy-scale overhead exactly at the order line.\n\nFull (\u03b1, c) table for five methods \u00d7 two regimes recorded. Ledger: \u03c1 cycle-lock pathology fixed; batched-gcd quantization had erased the \u221ap law (per-iteration gcd restored \u03b1=0.512 vs paper 154's 0.52).\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp490_ecm_completion.py + exp490_result.json, seed 20260921.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3617",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T07:46:53.283073+00:00",
+    "title": "FACT round-42 #4 \u2014 ECM-PLANE-COMPLETION: five methods, one population, one functional (paper 158)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-42 #3, cron iteration (exp 489, assessment v266).\n\n**FULL-PINNING-AT-DEGREE-SEVEN**: the cyclic degree-7 subfield of Q(\u03b6\u2082\u2089) (conductor 29, C\u2082\u2088/\u27e8g\u2077\u27e9 \u2245 C\u2087) confirms every pre-stated prediction \u2014 T(p)=1 iff dlog\u22610 mod 7; densities {1/7, 6/7}; I(p mod 29; T) = H(T) = 0.5917 EXACTLY (empirical 0.5914); semiprime pair 0.0112 vs law 0.0111; Is(7)-projection 0.1161 = Bin(2,1/7) closed form.\n\nLEDGER disclosure: the coordinator-supplied anchor 'Is(7)=0.0103' was actually G(7) (the OR channel) \u2014 caught by the measurement landing at 0.116.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp489_degree_seven.py + exp489_result.json, seed 20260923.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3618",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T07:46:53.284429+00:00",
+    "title": "FACT round-42 #3 \u2014 DEGREE-SEVEN: the ladder's last gap below ten (paper 157)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-42 #2, cron iteration (exp 488, assessment v265). Paper 155's deferred true-lcm ECM, paired against its lite sibling on identical populations.\n\n**LCM-SUPERSET-DOMINANCE**: lcm finds **1200/1200 at BOTH ks** (zero censoring vs lite's 37/45) and strictly contains lite's find set (all 45 lite-censored rescued, zero lost); per-curve success ~4.8\u00d7 higher; found-only meanT LOWER despite ~2.3\u00d7 more ops per curve; total-ops-to-factor advantage confirmed (1.92\u00d7). Across-k slope 0.398 \u2014 birthday-class, no toy-scale separation from L_p[1/2,\u221a2].\n\nAdopted: true-lcm as the lab's canonical stage-1 operator.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp488_true_ecm.py + exp488_result.json + exp488_LEDGER.md, seed 20260922.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3619",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T07:46:53.285748+00:00",
+    "title": "FACT round-42 #2 \u2014 TRUE-ECM: lcm arm strictly dominates (paper 156)"
   },
   {
     "consumed_by_exp_id": "",
@@ -2928,51 +3027,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Quantum Entanglement Monogamy: CKW Inequality"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove that Gelfand duality (commutative C*-algebras \u2245 locally compact Hausdorff spaces) fails for noncommutative C*-algebras, and that this failure defines 'noncommutative topology'. Bridge: the K-theory of a C*-algebra A equals the topological K-theory of its Gelfand spectrum when A is commutative. Prove the Bott periodicity theorem for K_0 and K_1.",
-    "domains": [
-      "Bridges",
-      "Geometry"
-    ],
-    "id": "seed_352",
-    "priority_score": 0.86,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Bridge: Noncommutative Geometry as a Generalization of Topology"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove that the tropical moduli space of genus-g curves M_g^trop is a metric graph with vertices corresponding to combinatorial types. Show that M_g^trop is the Berkovich skeleton of the classical M_g. Prove that the tropical Torelli map factors through the tropical Jacobian and that its fibers are finite.",
-    "domains": [
-      "Tropical",
-      "Geometry"
-    ],
-    "id": "seed_367",
-    "priority_score": 0.86,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Tropical Moduli Spaces: Curves and Their Tropical Counterparts"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize the attention mechanism A(Q,K,V) = softmax(QK^T / sqrt(d_k)) V. Prove that permutation-equivariant attention is a universal approximator of permutation-equivariant functions. Show that the attention kernel K(x,y) = exp(q(x)^T k(y) / sqrt(d)) defines a reproducing kernel Hilbert space. Prove that multi-head attention increases the rank of the attention matrix.",
-    "domains": [
-      "MachineLearning",
-      "Algebra"
-    ],
-    "id": "seed_376",
-    "priority_score": 0.86,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "ML Attention Mechanism: Formal Properties of Transformers"
   },
   {
     "consumed_by_exp_id": "",
@@ -11764,6 +11818,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Phase-augmented worlds represent exactly the finite rooted directed preorders whose clusters have at most c elements, and this bound is sharp. We conjecture that the corresponding modal logic is S4.2 together with a single cluster-width axiom, so that the combinatorial parameter c is modally definable.\n\nFor each c, a modal formula is valid on every CWorldC (Fin n) (Fin m) c iff it is derivable in S4.2 extended by the axiom asserting that every final cluster has at most c points.\n\nWrite the cluster-width axiom in the catalog's MFormula syntax, prove frame correspondence against clusterSize_eq_min_phases, then filtrate the canonical model.\n\nThe phase count becomes a modally definable invariant, giving a graded family of complete logics interpolating between S4.2 and the theory of preorders.\n\nCluster size is combinatorially sharp but modally invisible, which would separate frame invariants from definable ones in this setting.",
+    "domains": [
+      "Logic",
+      "Combinatorics"
+    ],
+    "id": "fd_3611",
+    "priority_score": 0.709875,
+    "research_mode": "team",
+    "source_exp_id": "d7470f1b",
+    "status": "available",
+    "timestamp": "2026-08-22T07:46:18.653098+00:00",
+    "title": "Bounded-Cluster Modal Completeness"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The proved upper bound trace(B^n) <= (#darts) q^n is matched, below the log_q N threshold, by a tree-covering lower bound. Combining the two should yield the Alon-Boppana inequality for the second adjacency eigenvalue of a connected (q+1)-regular graph.\n\nFor a connected (q+1)-regular graph on N vertices, lambda_2 >= 2 sqrt(q) - o(1) as N tends to infinity, derived from two-sided estimates on trace(B^n).\n\nProve the lower bound trace(B^n) >= N(q+1)q^{n-1}(1-o(1)) for n <= c log_q N by counting non-backtracking walks in the universal cover, then convert to eigenvalue estimates.\n\nA formal Alon-Boppana theorem, hence a formal benchmark for Ramanujan graphs.\n\nThe non-backtracking trace loses too much information below the girth threshold, and spectral lower bounds need the adjacency matrix directly.",
     "domains": [
       "Algebra",
@@ -11854,6 +11923,36 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For a random bounded poset on n points, we conjecture that the trivial upper bound n-1 on the switch number is asymptotically tight. The rank grading of a clock-and-switch world provides a potential function for a first-moment argument, and the proved cardinality bound is far too weak to explain the observed values.\n\nFor fixed p in (0,1), the random transitively closed bounded poset on n points has sw = (1 + o(1)) n with probability tending to 1.\n\nSample random bounded posets for n up to 8 and compute sw exhaustively; fit against n and against max(height, log2 n).\n\nThe worst-case bound card P - 1 proved here is also the typical case, so no better general construction exists.\n\nThere is a sublinear generic construction, presumably exploiting the cube's product structure more aggressively than a single climb.",
+    "domains": [
+      "Computation",
+      "Combinatorics"
+    ],
+    "id": "fd_3609",
+    "priority_score": 0.7096666666666668,
+    "research_mode": "team",
+    "source_exp_id": "d7470f1b",
+    "status": "available",
+    "timestamp": "2026-08-22T07:46:17.744066+00:00",
+    "title": "Linear Switch Number for Random Bounded Posets"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Deciding whether a poset is an image of a given cube is a constraint satisfaction problem over the cube's cells. We conjecture NP-completeness in general and tractability for bounded width, matching the empirical running-time profile of the search used in this cycle.\n\nDeciding sw(P) <= m is NP-complete, but solvable in polynomial time when the width of P is bounded.\n\nReduce 3-colourability or set cover to the cube-assignment problem; give a dynamic program along a chain decomposition for bounded width.\n\nNo closed-form formula for sw can be expected in general, which reframes Direction 1 as a bounded-width statement.\n\nA polynomial algorithm for sw exists and would likely produce the exact formula of Direction 1 constructively.",
+    "domains": [
+      "Computation",
+      "Combinatorics"
+    ],
+    "id": "fd_3612",
+    "priority_score": 0.7095909090909092,
+    "research_mode": "team",
+    "source_exp_id": "d7470f1b",
+    "status": "available",
+    "timestamp": "2026-08-22T07:46:19.104511+00:00",
+    "title": "Complexity Dichotomy for Bounded-Morphism Search"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The proved identity N(zeta v) = -(a-b)^2 turns the leg defect of a Pythagorean triple into a norm condition in Z[sqrt 2]. Classifying triples with fixed defect k therefore becomes the classification of elements of norm -k^2 modulo units, a finite class-group computation for each k.\n\nFor each k >= 1 the set of primitive Pythagorean triples with |a - b| = k is a finite union of unit orbits in Z[sqrt 2], the number of orbits being determined by the factorization of k in Z[sqrt 2]; for k = 1 there is exactly one orbit, the B-spine.\n\nFormalize the orbit correspondence and verify the predicted orbit counts for k = 1, 7, 17, 23 against an exhaustive tree search to depth 8.\n\nGives a complete arithmetic classification of near-isoceles Pythagorean triples in terms of ideal classes of Z[sqrt 2].\n\nSome defects admit triples outside any unit orbit, showing that the silver coordinate loses information away from the light cone.",
     "domains": [
       "Algebra",
@@ -11896,6 +11995,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T18:56:15.187518+00:00",
     "title": "Catalan Law for Top Walk Shapes"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The equality between the modal theory of clock-and-switch worlds and that of finite rooted directed posets is proved. We conjecture that this theory is exactly S4.2, giving a completeness theorem whose frames are products of a chain with a Boolean cube.\n\nA modal formula is derivable in S4.2 iff it is valid on every CWorld (Fin n) (Fin m).\n\nFormalise the finite model property for S4.2 (filtration of the canonical model) and compose it with valid_boundedPoset_iff_valid_cworld.\n\nS4.2 gets a purely combinatorial frame class inside the catalog's Kripke semantics.\n\nCube frames validate a proper extension of S4.2, and identifying the extra axiom would characterise distributive-lattice-like frames modally.",
+    "domains": [
+      "Combinatorics",
+      "Cryptography"
+    ],
+    "id": "fd_3610",
+    "priority_score": 0.7094285714285715,
+    "research_mode": "team",
+    "source_exp_id": "d7470f1b",
+    "status": "available",
+    "timestamp": "2026-08-22T07:46:18.195411+00:00",
+    "title": "Cube Frames and S4.2 Completeness"
   },
   {
     "consumed_by_exp_id": "",
@@ -12457,6 +12571,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-22T07:00:02.215654+00:00",
     "title": "Mixed-Radix Width Calculus for Multi-Dial Chaining"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The least number of switches sw(P) needed to represent a finite bounded poset P as a bounded morphic image of a Boolean cube is not determined by cardinality and height. We conjecture an exact formula in terms of a cover-branching profile counting the points that must be entered by a dedicated switch. This would turn the proved upper bound |P|-1 and the two lower bounds into a single exact invariant.\n\nsw(P) equals the maximum over maximal chains C of (|C| - 1) plus the number of points that must be entered from C by a single extra switch; in particular sw is not a function of (|P|, height P).\n\nExhaustively compute sw for all bounded posets on at most 7 points with the openness-pruned assignment search, and compare with the candidate formula; formalise the resulting upper bound as a refinement of representable_card_sub_one.\n\nThe greedy climb is optimal for every finite bounded poset and sw becomes a computable order invariant.\n\nThe gap between the cardinality and height bounds hides a genuinely new obstruction, most likely of width type.",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "fd_3608",
+    "priority_score": 0.6697289719626169,
+    "research_mode": "team",
+    "source_exp_id": "d7470f1b",
+    "status": "available",
+    "timestamp": "2026-08-22T07:46:17.286883+00:00",
+    "title": "Switch Number as an Order Invariant"
   },
   {
     "consumed_by_exp_id": "",
@@ -40350,14 +40478,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Exact value of `rootGap`"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c99dba13",
     "description": "*The `L\u00b9` bound integrates to a Fisher\u2013Rao length bound* (previously\n  Conjecture 5).  Now a theorem: `l1_le_fisherRao_length`.",
     "domains": [],
     "id": "fd_2910",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "0763cd86",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:26:52.397857+00:00",
     "title": "The `L\u00b9` bound integrates to a Fisher\u2013Rao length bound* (previously\n  Conjecture 5)."
   },
@@ -40504,19 +40633,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T06:28:18.702857+00:00",
     "title": "Cycle-1 Conjecture 4 (smoothness dichotomy), first half \u2014 PROVED"
-  },
-  {
-    "consumed_by_exp_id": "d7470f1b",
-    "description": "Every finite rooted directed preorder is a bounded\n   (p-)morphic image of some `CWorld (Fin n) (Fin m)`, extending the proved special\n   cases `forgetSwitches` and `cardChain`.",
-    "domains": [],
-    "id": "fd_3181",
-    "phase": "A",
-    "priority_score": 0.4,
-    "research_mode": "team",
-    "source_exp_id": "b7a22960",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T06:28:31.079430+00:00",
-    "title": "Filtration lemma"
   },
   {
     "consumed_by_exp_id": "",
