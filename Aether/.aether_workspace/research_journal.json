@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "367abe49",
-      "domain": "Novelty",
-      "key_insight": "# Future directions: next-cycle conjectures on PTX-augmented RLHF optima\n\nDerived from what survived and what failed in this cycle (see\n`Catalog/Novelty/RLHFPretrainingMixIn.lean` and `ComputationalEv",
-      "quality_score": 0.85,
-      "sorry_count": 0,
-      "theorem_count": 61,
-      "timestamp": "2026-08-20T13:11:21",
-      "title": "For the PTX-augmented optimum `q*_{β,γ}` with `γ > 0`,"
-    },
-    {
       "cycle_id": "560d610e",
       "domain": "Tropical",
       "key_insight": "# Future directions — tropical Shtarkov sums of finite-state classes\n\nThe verified results of this cycle live in `Catalog/Tropical/Shtarkov/`:\n\n| file | content |\n|------|---------|\n| `Basic.lean` | `",
@@ -499,19 +489,19 @@
       "theorem_count": 65,
       "timestamp": "2026-08-22T05:43:11",
       "title": "prove *completeness* — every labelling is dominated by some DP run;"
+    },
+    {
+      "cycle_id": "77469890",
+      "domain": "NumberTheory",
+      "key_insight": "# Future Directions — after \"the character captures exactly one bit\"\n\nThe cycle closed the target claim and then generalised past it: the one bit is `log₂ 2`, and the\ntheorem is `I(Frobenius class ; χ",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 55,
+      "timestamp": "2026-08-22T05:43:26",
+      "title": "FACT round-31 #2 — INDEPENDENT-VERIFICATION: the character captures exactly one bit (paper 109)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "7477e654",
-      "domain": "Tropical",
-      "key_insight": "# Future directions — after the asymmetric/symmetric divisibility dichotomy\n\nThe formal results of this run (all in `Catalog/Tropical/SmoothSelfHint*.lean`, 0\nsorries, only the standard axioms) are:",
-      "quality_score": 0.85,
-      "sorry_count": 0,
-      "theorem_count": 501,
-      "timestamp": "2026-08-14T08:45:35",
-      "title": "SMOOTH-SELFHINT-DENSITY: the p-1/ECM weakness is residue-invisible — asymmetric/symmetric divisibili"
-    },
     {
       "cycle_id": "eaebe17a",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 65,
       "timestamp": "2026-08-22T05:43:11",
       "title": "prove *completeness* — every labelling is dominated by some DP run;"
+    },
+    {
+      "cycle_id": "77469890",
+      "domain": "NumberTheory",
+      "key_insight": "# Future Directions — after \"the character captures exactly one bit\"\n\nThe cycle closed the target claim and then generalised past it: the one bit is `log₂ 2`, and the\ntheorem is `I(Frobenius class ; χ",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 55,
+      "timestamp": "2026-08-22T05:43:26",
+      "title": "FACT round-31 #2 — INDEPENDENT-VERIFICATION: the character captures exactly one bit (paper 109)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "d588a53d",
-      "domain": "Geometry",
-      "name": "vv_bergA",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "d588a53d",
-      "domain": "Geometry",
-      "name": "hh_bergA",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "532d78bc",
-      "domain": "Novelty",
-      "name": "seed_le_sqrt",
-      "quality": 0.85
-    },
     {
       "cycle_id": "532d78bc",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Logic",
       "name": "score_zero",
       "quality": 0.85
+    },
+    {
+      "cycle_id": "77469890",
+      "domain": "NumberTheory",
+      "name": "uEnt_eq_logb_card_of_balanced",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "77469890",
+      "domain": "NumberTheory",
+      "name": "card_fiber_of_surjective",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "77469890",
+      "domain": "NumberTheory",
+      "name": "uEnt_character",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-22T05:43:11",
+  "last_updated": "2026-08-22T05:43:26",
   "open_questions": [
     {
       "context": "-- count, which is not available in Mathlib.  Rather than leave an unproved `sorry` in the; sorry; sorry",
@@ -3641,12 +3641,6 @@
     ],
     "NumberTheory": [
       {
-        "cycle_id": "922db13f",
-        "quality": 0.82,
-        "theorems": 83,
-        "title": "NET-47: The third seed at ctx=1024 reveals a SPREAD not a two-point set — k*=112"
-      },
-      {
         "cycle_id": "bba7fa1e",
         "quality": 0.84,
         "theorems": 73,
@@ -3699,6 +3693,12 @@
         "quality": 0.82,
         "theorems": 98,
         "title": "The number of triples `(a,b,c)` with `0 < a,b,c ≤ H` that are Berggren-generated"
+      },
+      {
+        "cycle_id": "77469890",
+        "quality": 0.82,
+        "theorems": 55,
+        "title": "FACT round-31 #2 — INDEPENDENT-VERIFICATION: the character captures exactly one "
       }
     ],
     "Physics": [

@@ -396,21 +396,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-30 #1 \u2014 HINT-VALUE-JOINT: hints compound like capacities (paper 101)"
   },
   {
-    "consumed_by_exp_id": "77469890",
-    "description": "## FACT round-31 #2 \u2014 INDEPENDENT-VERIFICATION (paper 109)\n\n**Verdict name: THE-CHARACTER-CAPTURES-EXACTLY-ONE-BIT.**\n\n### Result\nPaper 80's key result **proven from character theory** without Monte Carlo:\n\nFor S\u2083 x\u00b3+x+1 (disc = \u221231, G = S\u2083, G^ab = C\u2082):\n- Chebotarev densities: P('111') = 1/6, P('12') = 1/2, P('3') = 1/3 \u2192 H(T) = 1.4591 bits\n- The sign character (\u221231|p) determines even/odd Frobenius\n- H(type | sign) = (1/2)\u00b7H(1/3, 2/3) = 0.4591 (within-even-class split is residue-independent)\n- **I(p mod 31; type) = H(T) \u2212 H(T|sign) = 1.0000 EXACTLY**\n\nThe character captures exactly one bit of type entropy. The remaining 0.4591 bits are locked behind the non-abelian structure, inaccessible from any residue.\n\n### Mixed-type residues explained\nThe scan found 15 mixed-type residues \u2014 **expected and correct**: the sign character only separates even/odd Frobenius; within the even class, the split between identity and 3-cycles is residue-independent. The scan confirms the theory.\n\n### Generalization\nFor ANY field with G^ab = C\u2082: I(p mod |disc|; type) = 1 bit exactly. This includes all S\u2083, S\u2084, and S\u2085 fields measured in papers 80\u201384.\n\nNow 445 experiments. Assessment v220. Paper 109.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3470",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T20:42:26.609247+00:00",
-    "title": "FACT round-31 #2 \u2014 INDEPENDENT-VERIFICATION: the character captures exactly one bit (paper 109)"
-  },
-  {
     "consumed_by_exp_id": "a3ad9f21",
     "description": "## FACT round-30 #4 \u2014 TRACE-BATTERY (paper 108, /tmp/exp_tracebattery.py, /tmp/r30n4b.log)\n\n**Verdict name: THE-SCALING-IS-CONFIRMED.**\n\n### Result\nThe joint channel capacity for increasing subsets of the 6-dial battery, on a fresh independent population:\n\n| moduli subset | M | I(joint) |\n|---|---|---|\n| S\u2083a@31 + S\u2083b@23 | 713 | 7.9455 |\n| + A\u2084@9 | 6 417 | 10.4462 |\n| + D\u2084@8 | 51 336 | 12.1080 |\n\nPer-dial trace information varies enormously: C\u2085@11 carries 3.46 bits, S\u2083a@31 carries 0.04 \u2014 an 80\u00d7 range. Which-factor wall 0.4677 consistent with sparse-table bias.\n\nConfirms paper 94's battery-scaling results on an independent population.\n\nNow 444 experiments. Assessment v218/v219. Paper 108.\n",
     "domains": [
@@ -765,16 +750,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-35 #2 \u2014 UNIVERSAL-S3-FIFTH: five fields, one law (paper 123)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a1194bd0",
     "description": "Round-37 #2 (exp 465, assessment v239). Scale extension of paper 90's honest-inconclusive with the design flaws repaired: per-value u(v)=ln v/ln B, size-matched random control, N in {2^32..2^44}, matched-u ladder {2,3}, 1.2M smoothness tests (500x paper 90).\n\n**THE RELATION POOL IS RANDOM**: x2-N vs random gap = 1.00 at every scale (0.993-1.020). The quadratic-character constraint on prime divisors of x2-N is O(1)-invisible at reachable scale. Paper 90's non-monotone 0.26-9.27 scatter and its 'x2-N != random' finding were design artifacts (N-scale u-binning + underpower).\n\nFormal verdict H2 per the pre-stated rule: absolute ratio emp/rho = 0.877-0.913 at all scales \u2014 but carried EQUALLY by the random control: it is the Dickman model's finite-x correction (order ln ln v / ln v ~ 17-20% here), shrinking logarithmically (+2.6% relative per 12 bits of scale at u=2). Nothing about x2-N blocks convergence; it is just slow.\n\nLeading-term Dickman exp(-u(ln u + ln ln u - 1)) invalid until u ~ 14.75 (pre-stated guess u>=12 confirmed).\n\nDecides: the fourth stratum's INPUT STATISTICS are measured \u2014 relation pools are random-equivalent; the correct toy-scale smoothness model is rho(u) x (0.88-0.91); what remains unmeasured is purely the sieve's algorithmic advantage. Barriers 4/8 unchanged.\n\nLedger: v1 rho reference constants mis-recalled from memory beyond u=4 \u2014 caught by attested-anchor + Richardson self-check before contamination; 3x upstream agent timeouts, experiment completed inline by the coordinator.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp465_subexp_scale.py (script + result.json), seed 20260821.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3527",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T01:10:29.769307+00:00",
     "title": "FACT round-37 #2 \u2014 SUBEXP-SCALE: the QS relation pool is random-equivalent at every scale (paper 130)"
   },
@@ -1127,6 +1113,90 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-22T04:50:57.574708+00:00",
     "title": "FACT round-39 #2 \u2014 QR-REPLICATION: the variance law is seed-robust (paper 140)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-41 #2, cron iteration (exp 483, assessment v260). Second half of the phase search.\n\n**LINEAR-PHASE-ROUTE-CLOSED**: high-prime phases (17 \u2264 p \u2264 97) add only +0.0215 same-window R\u00b2 (CI [\u22120.0025, +0.0429] \u2014 excludes the pre-stated +0.05); H3 fails (0.629 < 0.70). Unlike low-primes' negative transfer, the small high-prime gain is WINDOW-STABLE (cross/same = 0.92).\n\nWith paper 150: singleton root-position offsets carry no out-of-sample signal beyond the footprint dial anywhere in 3 \u2264 p \u2264 97. The split-ceiling excess remains unlocated \u2014 candidates narrow to interaction/joint-alignment encodings or intrinsic-to-family status.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp483_high_phase.py + exp483_result.json, seed 20260902.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3590",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T05:43:53.953350+00:00",
+    "title": "FACT round-41 #2 \u2014 HIGH-PHASE: the linear phase route is closed at both prime ranges (paper 151)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-41 #1, cron iteration (exp 482, assessment v259). Paper 147's named follow-up.\n\n**PHASE-SUBTHRESHOLD-LIFT / H3-FAIL**: root-position phases mod {3,5,7,11,13} (cos/sin + QR-indicator, extended to 29) add only +0.008/+0.004 out-of-sample R\u00b2 over the footprint dial (CIs span 0; phase-only WORSE than baseline at \u22120.077). **H2 CONFIRMED**: cross-window phase gain goes significantly negative \u2014 window-locality supported as the mechanism behind paper 147's split-ceiling excess. H3 refuted (R\u00b2 = 0.608 < 0.70).\n\nThe split-ceiling excess remains unexplained by any tested feature class \u2014 candidates narrow to higher-prime phase patterns or same-window leakage of realized-divisibility features (base dial drops 0.60 \u2192 0.40 cross-window).\n\nProvenance note: the agent's L0 audit voided the coordinator's inline quick attempt (cross-window arm trained and tested on the same half; wrong offset definition; encoding collision) \u2014 its clean reimplementation is authoritative.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp482_phase_features.py + exp482_result.json, seed 20260901.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3591",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T05:43:53.954629+00:00",
+    "title": "FACT round-41 #1 \u2014 PHASE-FEATURES: low-prime phases are sub-threshold and window-local (paper 150)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-40 #5, cron iteration (exp 479, assessment v258). Composition test of papers 137 x 143/146.\n\n**H1 REFUTED \u2014 and the refutation maps the interval law's scope**: descending order reproduced at 5.23\u00d7 (anchor 5.19\u00d7), but the extracted 90% window is (\u03b1=0.9, \u03bc/M=0.79) \u2014 far outside paper 143's band \u2014 and committed scanning there recovers only **69.7%** of the gain; per-draw corr(desc, committed) = \u22120.32. Balance strata confirm the gradient (35.96\u00d7 local gain most-balanced quartile, <1 in low-M deciles).\n\nThe two-number law prices the SINGLE-WINDOW oracle family; real magnitude posteriors are multi-modal across balance strata \u2014 paper 137 remains the correct measurement object for position, 143/146/148 the theory for genuinely-interval oracles.\n\nFLAG: agent's DC1 analytic cross-check diverged (brute-force paths agree, 0 mismatches) \u2014 disclosed, analytic numbers unused.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp479_magnitude_interval.py + exp479_result.json, seed 20260831.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3592",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T05:43:53.955756+00:00",
+    "title": "FACT round-40 #5 \u2014 MAGNITUDE-INTERVAL: position information is not a single interval (paper 149)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-40 #4, cron iteration (exp 481, assessment v257). Third and deepest of three mutually-consistent interval-hint results (with papers 143/146).\n\n**HEDGE-AND-CAPACITY**:\n- **T7 hedging hump**: E_opt(\u03b1) concave piecewise-linear \u2014 intermediate trust can be WORSE than both endpoints AND than no-hint (196.09 vs 171.17 measured). Partial trust is the most expensive regime.\n- **T8 placement ceilings**: cap = 2/(3x) centered/left, but **\u2192 1/x for RIGHT-placed windows** (truncated w reproduces min-of-two-uniforms) \u2014 placement doubles what width buys. Best cell: right x=1/16 \u03b1=1 \u2192 **14.69\u00d7**.\n- **Calibration gate**: uniform-given-hit hints exist only at tiny \u03b1 \u2014 that family can never reach magnitude-ordering gains.\n- Crossing for 5.19\u00d7: \u03b1* = 0.832 (x=1/64) \u2192 0.996 (x=1/8) \u2014 narrow AND near-certain.\n\nScope: interval hints escape paper 138's which-factor ceiling \u2014 order-action via direct J-correlation with MI(hint; factor)=0; the two functionals price orthogonally. Fermat named: 'start at \u221aN' = rightmost-interval commitment with CAL capacity \u2192 0.\n\nVerification: exhaustive permutations M=5\u20138 (gap 1.3e-16); MC max |z| = 2.343 over 40 configs. Ledger: complement-mass bug caught only by MC z=\u221272.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp481_proofs.md + exp481_verify.py + exp481_result.json, seed 20260824.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3593",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T05:43:53.956820+00:00",
+    "title": "FACT round-40 #4 \u2014 ET-HINTS-FULL: the hedging hump and placement-structured ceilings (paper 148)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-40 #3, cron iteration (exp 478, assessment v256).\n\n**DIAL-TRANSFERS**: the footprint-weighted yield dial fitted at bitlen 44 transfers to bitlen {48, 52} with calibration slopes 0.896/0.834 (80 values/N) and 0.912/0.834 (240 values/N) \u2014 all four cells in band. The direct divisibility feature d(N) stays independently significant in 12/12 cells (min |t| = 3.92). R\u00b2 rises substantially with relation count (0.41 \u2192 0.60 at u=2.5/bl48 for 80\u2192240 values).\n\nCaveat handled: the agent's first assembly had duplicated u-blocks and one out-of-band cell \u2014 caught by coordinator review, fixed surgically on demand; its ceiling column was definition-inconsistent with the lab convention and was NOT adopted.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp478_footprint_scale.py + exp478_result.json, seed 20260830.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3594",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T05:43:53.957883+00:00",
+    "title": "FACT round-40 #3 \u2014 FOOTPRINT-SCALE: the dial transfers across scale (paper 147)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-40 #2, cron iteration (exp 480, assessment v255). Paper 143's grid promoted to closed form.\n\n**HINT-COST-PRICED**: closed forms for baseline/committed/interleaved (closed = brute-exact at M=300, relgap 0.0; MC max |z|=1.52); **Bayes \u2261 Committed PROVEN** (two-valued posterior + rearrangement); interleaved strictly dominated everywhere.\n\n**THE CROSSING LAW**: reaching speedup s requires **\u03b1 > \u03b1_min(s) = 1 \u2212 2/(3s)** \u2014 a HARD RELIABILITY GATE regardless of width. For paper 137's measured 5.19\u00d7: \u03b1 > 0.87155; above the gate **\u03bc/M = \u03b1 \u2212 0.87155** (linear). Paper 137's magnitude gain \u2194 effective interval quality (\u03b1\u22480.90, \u03bc/M\u22480.028), matching exp 474's numerical estimate. **Width alone can never substitute for reliability.**\n\nConservative pricing: under w-anchored conditioning speedups move UP (7.62\u00d7 vs 5.56\u00d7) \u2014 the stipulated pricing understates real oracle value.\n\nLedger: 7 machine-caught errors incl. a Bayes block that marginalized instead of conditioning (degenerating to the hint-blind floor).\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp480_proofs.md + exp480_verify.py + exp480_result.json, seed 20260828.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3595",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T05:43:53.958922+00:00",
+    "title": "FACT round-40 #2 \u2014 ET-HINTS-THEORY: the crossing law \u2014 width can never substitute for reliability (paper 146)"
   },
   {
     "consumed_by_exp_id": "",
@@ -2831,54 +2901,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Quantum Entanglement Monogamy: CKW Inequality"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Extend topological space theory to include Conway's surreal numbers as the underlying set. Prove that the order topology on No is not first-countable and that every real open set has a surreal extension. Determine whether No is connected, compact, or paracompact in the interval topology.",
-    "domains": [
-      "Novelty",
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "seed_274",
-    "priority_score": 0.86,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Surreal Topology: Open Sets at Infinity"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove that any technological civilization must discover computational complexity independently of its biological substrate. Formalize a universal complexity hierarchy and prove that P vs NP is a theorem about the structure of computation itself, not about any particular model. Show that even hypercomputational civilizations face analogous barriers.",
-    "domains": [
-      "Novelty",
-      "Computation",
-      "Logic"
-    ],
-    "id": "seed_279",
-    "priority_score": 0.86,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Computational Complexity of Alien Civilizations"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize a type theory where types can refer to their own provability. Prove that such a system can express 'this proposition is provable but not provably provable' as a well-typed term. Show that reflective type theory properly extends Martin-Lof type theory and that its proof term language is exactly the modal mu-calculus.",
-    "domains": [
-      "Novelty",
-      "Logic",
-      "Computation"
-    ],
-    "id": "seed_285",
-    "priority_score": 0.86,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Reflective Type Theory: Proving Things About Proving Things"
   },
   {
     "consumed_by_exp_id": "",
@@ -11715,6 +11737,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For a stationary specification the walk matrices are max-plus powers of a fixed matrix, so the value function should grow linearly with slope the max-plus eigenvalue, up to a bounded correction. The degenerate constant-weight case is already proved. Establishing the general case imports max-plus Perron-Frobenius into the formal DP framework.\n\nFor a stationary DP specification with transition matrix A on a finite state space, there is \u03bb(A) and a bounded h with val n s \u2212 n \u2022 \u03bb(A) \u2212 h(s) \u2192 0, and optimal runs are eventually periodic with period dividing the cyclicity of the critical graph of A.\n\nFormalise the max-plus eigenvalue as the maximum cycle mean, prove val_const_step's generalisation for irreducible A, and verify numerically on random 3x3 and 4x4 integer matrices.\n\nLong-horizon DP values admit a closed asymptotic form, giving effective error bounds for truncated horizons.\n\nSome finite state DP has genuinely non-linear value growth, contradicting max-plus Perron-Frobenius and indicating a hidden hypothesis.",
+    "domains": [
+      "Combinatorics",
+      "Computation"
+    ],
+    "id": "fd_3584",
+    "priority_score": 0.709969696969697,
+    "research_mode": "team",
+    "source_exp_id": "eb2ba545",
+    "status": "available",
+    "timestamp": "2026-08-22T05:43:00.107886+00:00",
+    "title": "Max-Plus Spectral Asymptotics for Stationary DP"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The exact identity 2*r*#edges + s*(r-s) = (r-1)*n^2 proved this cycle expresses the Turan number through the defect s*(r-s) with s = n mod r. The conjecture is that the same defect controls the extremal structure: almost-extremal K_{r+1}-free graphs are almost r-partite, with an explicit rather than o(n^2) error term.\n\nEvery K_{r+1}-free graph on n vertices with at least ex(n,K_{r+1}) - m edges becomes r-partite after deleting at most m + s*(r-s)/(2r) edges.\n\nThe convexity ingredient sum_i c_i^2 >= r*(n/r)^2 + (n mod r)*(2*(n/r)+1) is already proved (sum_sq_ge_balanced); derive the edge-deletion bound from it in Lean.\n\nA verified Turan stability theorem with an explicit error term.\n\nA near-extremal graph far from r-partite is a new extremal example.",
     "domains": [
       "Combinatorics",
@@ -11982,6 +12019,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-22T01:07:27.384637+00:00",
     "title": "Hereditary Colour Transfer and Perfection of Clique Sums"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Over WithBot weights the predicate 'is not bottom' should be a semiring morphism onto the Boolean semiring, so feasibility of a constrained dynamic program reduces to reachability in a support digraph. The conjecture is that the bottom-pattern of the walk matrices coincides with the Boolean powers of the support adjacency matrices. This turns the infeasibility criterion already proved (val_eq_bot_iff) into a purely combinatorial check.\n\nFor D : DPSpec S (WithBot W), val n s is not bottom iff there is a support path of length n from some state with non-bottom init to s, where s -> t at stage i iff step i s t is not bottom.\n\nDefine the support relation, prove that a sum is bottom iff a summand is and that a finite sup is bottom iff all arguments are, then induct on n; cross-check by decide on the maximum-weight independent set instance with an isolated forbidden state.\n\nInfeasibility detection for constrained DP reduces to Boolean matrix reachability and can be certified separately from optimisation.\n\nThe bottom-pattern carries strictly more information than reachability, so constrained DP feasibility is not purely combinatorial.",
+    "domains": [
+      "Combinatorics",
+      "Algebra"
+    ],
+    "id": "fd_3582",
+    "priority_score": 0.7083125000000001,
+    "research_mode": "team",
+    "source_exp_id": "eb2ba545",
+    "status": "available",
+    "timestamp": "2026-08-22T05:42:59.147436+00:00",
+    "title": "Support Digraph Certificates for Constrained DP"
   },
   {
     "consumed_by_exp_id": "",
@@ -12370,6 +12422,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The characterisation isDPRun \u2194 endpoint-optimal has the shape of an adequacy theorem for a deduction system whose judgements are score bounds. The conjecture is that a finitely axiomatised system derives exactly the valid bounds, with normal derivations in bijection with DP runs and cut elimination corresponding to Bellman's optimality principle. This makes DP optimality certificates first-class proof objects.\n\nThere is a finitely axiomatised sequent system with judgements (n, s, w) such that \u22a2 (n, s, w) iff w \u2264 val n s, cut-free derivations correspond bijectively to DP runs ending at s, and cut elimination is exactly isDPRun_of_score_eq_val.\n\nDefine the deduction system inductively in Lean, prove soundness against score_le_val and completeness against exists_dpRun_ending, and prove a cut-elimination theorem.\n\nDP optimality becomes certifiable by small checkable proof terms rather than by recomputation.\n\nNo finitely axiomatised system captures the bounds, indicating that DP optimality is not finitely presentable as a logic.",
+    "domains": [
+      "Logic"
+    ],
+    "id": "fd_3585",
+    "priority_score": 0.6699696969696971,
+    "research_mode": "team",
+    "source_exp_id": "eb2ba545",
+    "status": "available",
+    "timestamp": "2026-08-22T05:43:00.666652+00:00",
+    "title": "Bellman Cut Elimination"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The thresholds of BB84, the six-state protocol and their higher-dimensional analogues are zeros of Q-linear combinations of logarithms of rationals. The conjecture is that all are transcendental with unbounded continued-fraction partial quotients, and that each textbook percentage is a low-order convergent, as is verified here for 11/100 and p*.\n\nEvery QKD one-way threshold of the form 1 - a H_2(Q) - b H(f(Q)) = 0 with rational a,b is transcendental, and its convergents include the conventional percentage quoted in the literature.\n\nFormalize the six-state rate function, run the certificate scheme at denominators 100 and 10000, and compare the convergents of the resulting enclosure with 12.6 percent.\n\nA uniform explanation of why textbook QKD percentages are so short: they are convergents, hence optimal rational summaries.\n\nSome protocol has a badly approximable threshold, which would itself be a striking arithmetic phenomenon.",
     "domains": [
       "Pythagorean"
@@ -12647,6 +12713,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T22:42:01.120139+00:00",
     "title": "Sharp Lower Edge of the Pythagorean Quality Spectrum"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The path-shaped completeness theorem should generalise to rooted finite trees, with the Chapman-Kolmogorov identity replaced by an interchange law between the sup over children and addition across siblings. The proof should reuse sup'_add and add_sup' unchanged, inducting on tree depth. This unifies Viterbi decoding with belief propagation on trees.\n\nFor a DP specification on a finite rooted tree assigning weights to parent-child state pairs, every labelling of the tree is dominated by a run of the bottom-up DP, and the bottom-up value is the greatest achievable score with a given root state.\n\nDefine an inductive rooted tree with a finite state space, define bottom-up val, and re-prove score_le_val, exists_dpRun_ending and dp_complete by structural induction.\n\nA single formal framework covers path and tree DP, and the tree-decomposition case becomes a corollary.\n\nThe interchange law fails without extra hypotheses, revealing that path DP completeness is genuinely one-dimensional.",
+    "domains": [
+      "Logic"
+    ],
+    "id": "fd_3583",
+    "priority_score": 0.6678275862068968,
+    "research_mode": "team",
+    "source_exp_id": "eb2ba545",
+    "status": "available",
+    "timestamp": "2026-08-22T05:42:59.650295+00:00",
+    "title": "Tree-Shaped Dynamic Programming Completeness"
   },
   {
     "consumed_by_exp_id": "",
@@ -20670,6 +20750,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T06:29:12.577008+00:00",
     "title": "Conjecture C1 (the `n`-coprime anti-factoring law)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**Conjecture.** For every `n \u2265 2` the residual entropy of the cycle type given the sign is\n`H(T | sign) = H(T) - 1`, and `H(T)` equals the entropy of the partition distribution\n`p(\u03bb) = 1 / z_\u03bb` with `z_\u03bb = \u220f i^{m_i} m_i!`; consequently\n`H(T) = log\u2082 n! - (1/n!) \u2211_{\u03bb \u22a2 n} (n!/z_\u03bb) log\u2082 (n!/z_\u03bb)` and\n`H(T) - 1 \u2192 \u221e` at rate `\u0398(log n)`.\n\n*The key insight is* that `1/z_\u03bb` is a probability distribution on partitions independent of the\nsign conditioning, so the entire non-abelian residual is the entropy of the Cauchy/Ewens measure at\nparameter `1`.\n\n*Why now?* `mutInfo_cycleType_sign_eq_one` already gives `H(T | sign) = H(T) - 1` for all `n`\n(`condEnt_eq_uEnt_sub_one`); what remains is the closed form of `H(T)` itself, for which Mathlib\nhas `Equiv.Perm.card_cycleType_eq` style counting available.",
+    "domains": [
+      "Combinatorics",
+      "Computation"
+    ],
+    "id": "fd_3586",
+    "priority_score": 0.55375,
+    "research_mode": "team",
+    "source_exp_id": "77469890",
+    "status": "available",
+    "timestamp": "2026-08-22T05:43:17.787082+00:00",
+    "title": "C2. The exact residual for `S\u2099`: `H(T) - 1` in closed form"
   },
   {
     "consumed_by_exp_id": "",
@@ -31725,6 +31820,36 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "**Conjecture.** For a fixed `S\u2083` cubic field with discriminant `D`, the empirical mutual\ninformation computed from the primes below `X` satisfies\n`|I_X(p mod |D| ; T) - 1| = O(X^{-1/2 + \u03b5})` under GRH, and `O((log X)^{-A})` unconditionally.\n\n*The key insight is* that the mutual information is a smooth function of the four class\nfrequencies, so the Chebotarev error term transfers to the information with the same exponent up\nto a constant depending only on `|G|`.\n\n*Why now?* The catalog's `ChebotarevGeodesic*` files already formalise an error-exponent calculus\n(`HasErrorExponent`, `exponent_of_inverse_transform`), which is exactly the interface needed to\nturn a density error into an entropy error.",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_3588",
+    "priority_score": 0.43980346792765995,
+    "research_mode": "team",
+    "source_exp_id": "77469890",
+    "status": "available",
+    "timestamp": "2026-08-22T05:43:18.665778+00:00",
+    "title": "C4. A quantitative Chebotarev-with-error version of the one-bit theorem"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**Conjecture.** For number fields `K\u2081, K\u2082` with Galois groups `G\u2081, G\u2082` and coprime discriminants,\nthe compositum has `I(class ; residue) = log\u2082 |G\u2081^ab| + log\u2082 |G\u2082^ab|`; the visible information is\nadditive while the total type entropy is *sub*additive, so the hidden fraction grows.\n\n*The key insight is* that `(G\u2081 \u00d7 G\u2082)^ab = G\u2081^ab \u00d7 G\u2082^ab`, so the abelian ceiling is additive by\n`uEnt` of a product read-out, whereas conjugacy classes multiply only up to the class-fusion of the\nproduct group.\n\n*Why now?* The catalog already contains a CRT/product law for the cyclic type channel\n(`Shared.CyclicTypeChannelProduct`, `Shared.CyclicTypeChannelCRTLaw`); this direction merges that\nline with the abelian-ceiling theorem proved here.",
+    "domains": [
+      "Algebra",
+      "NumberTheory"
+    ],
+    "id": "fd_3587",
+    "priority_score": 0.43951166626369526,
+    "research_mode": "team",
+    "source_exp_id": "77469890",
+    "status": "available",
+    "timestamp": "2026-08-22T05:43:18.226889+00:00",
+    "title": "C3. Multiplicativity of the visible bits over composita"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "**Conjecture.** Let a demon be an infinite decision tree with an almost surely finite\nstopping time `N` (rather than a tree of some finite depth `n`), every node dissipative at\n`\u0394F`.  Then the three displayed stopping-time bounds hold verbatim, and moreover\n`E[total work] \u2265 \u0394F\u00b7E[N]` requires no integrability hypothesis beyond `E[N] < \u221e`.\n\nThe stopping-time theorem covers every tree of *some* finite depth, uniformly in that\ndepth, which already forces the conclusion for the truncations `N \u2227 n` of an infinite tree.\nThe open content is the passage to the limit: is `lim_n E[W_{N\u2227n}] = E[W_N]`, or can a\ndemon smuggle work into the tail?  We expect uniform integrability to fail exactly when\n`E[N] = \u221e`, which would make this the horizon-free counterpart of the `T \u2192 0` analysis in\n\u00a75.\n\n*Falsifiable:* an infinite tree, all nodes Jarzynski compliant, with `E[N] < \u221e` and\n`E[total work] < \u0394F\u00b7E[N]`.",
     "domains": [],
     "id": "fd_2937",
@@ -32276,6 +32401,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T06:29:41.402435+00:00",
     "title": "C2. Adaptive grids collapse the bracket: bisection to a two-seed knee of width 1"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**Conjecture.** The pair `(H(T), I(T ; residue)) = (H(T), log\u2082 |G^ab|)` determines `G` among all\ntransitive subgroups of `S\u2085`, but fails first at degree `6`, where two non-isomorphic groups share\nboth invariants.\n\n*The key insight is* that `H(T)` sees only the class-size multiset while `I` sees only `|G^ab|`, so\nthe conjecture reduces to a finite check of the transitive group tables \u2014 a genuinely decidable\nquestion with a sharp expected boundary.\n\n*Why now?* Both invariants are now theorems rather than measurements, so the classification\nquestion is finite and formalisable; degree `\u2264 5` is already within reach of `decide`-style\nenumeration of `Perm (Fin 5)` subgroups.\n\n```json future_directions.json\n[\n  {\n    \"title\": \"Equality-Case Rigidity for the Abelian Ceiling\",\n    \"domain\": \"NumberTheory\",\n    \"description\": \"The abelian ceiling I \u2264 log\u2082|G^ab| is attained by the Frobenius class read-out. We conjecture the converse: only read-outs that recover the character attain it, with a quantitative defect bound. This turns the ceiling from an inequality into a characterisation of residue-visible invariants.\",\n    \"conjecture\": \"For a surjective character \u03c7 : G \u2192* C into an abelian group and any read-out w of the Frobenius class, I(class ; w) = log\u2082 |C| if and only if \u03c7 is a function of w; moreover log\u2082|C| - I is bounded below by a positive constant times the number of mixed fibres.\",\n    \"test\": \"Formalise as a strict-inequality companion to CyclicTypeChannel.mutInfo_le_logb_card_of_factors using uEnt_pos_of_ne and condEnt_pos_of_fiber_ne; test numerically on all read-outs of S\u2084 and A\u2084.\",\n    \"if_true\": \"Residue-visible invariants are exactly the character-recovering ones; the S\u2083 scan's mixed-type residues become a complete classification.\",\n    \"if_false\": \"There exist strictly coarser read-outs that still saturate the ceiling, so information saturation is weaker than character recovery.\",\n    \"proof_strategy\": \"Chain I \u2264 H(w) \u2264 H(\u03c7); equality in the second forces the fibres of \u03c7 to be unions of fibres of w by strict concavity, equality in the first forces H(\u03c7|w)=0.\",\n    \"catalog_references\": [\"Catalog.NumberTheory.AbelianQuotientCeiling\", \"Catalog.NumberTheory.CharacterOneBit\"]\n  },\n  {\n    \"title\": \"Closed Form for the Symmetric-Group Type Entropy\",\n    \"domain\": \"Combinatorics\",\n    \"description\": \"The residual H(T|sign) = H(T) - 1 is now a theorem for all S\u2099. What is missing is H(T) itself: the entropy of the partition distribution p(\u03bb) = 1/z_\u03bb. We conjecture the closed form and a \u0398(log n) growth rate for the hidden part.\",\n    \"conjecture\": \"H(T) = log\u2082 n! - (1/n!) \u03a3_{\u03bb \u22a2 n} (n!/z_\u03bb) log\u2082(n!/z_\u03bb) with z_\u03bb = \u220f i^{m_i} m_i!, and H(T) - 1 = \u0398(log n).\",\n    \"test\": \"Formalise the cycle-type counting law #{\u03c3 : cycleType \u03c3 = \u03bb} = n!/z_\u03bb in Lean and feed it into uEnt_eq_countSum; check the growth rate numerically for n \u2264 12.\",\n    \"if_true\": \"The non-abelian hidden entropy of a degree-n field grows like log n, quantifying how little a residue sees for",
+    "domains": [
+      "Algebra",
+      "NumberTheory"
+    ],
+    "id": "fd_3589",
+    "priority_score": 0.4388030050797809,
+    "research_mode": "team",
+    "source_exp_id": "77469890",
+    "status": "available",
+    "timestamp": "2026-08-22T05:43:19.267582+00:00",
+    "title": "C5. Information-theoretic detection of the Galois group"
   },
   {
     "consumed_by_exp_id": "",
@@ -34916,14 +35056,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "For modal proof systems in the sense of `ModalSystem`, the following"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0f0bd7f8",
     "description": "Cycle 4 already provides the two witnesses and the joint-inconsistency\ntheorem; what is missing is a Lean development of frame-definability for `ModalSystem`,\nwhich the `KFrame`/`sat` apparatus of Cycle 1 supports directly.",
     "domains": [],
     "id": "fd_1416",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "615053e5",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-17T09:57:44.570347+00:00",
     "title": "Cycle 4 already provides the two witnesses and the joint-inconsistency"
   },
@@ -40059,19 +40200,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T06:26:30.621713+00:00",
     "title": "prove *soundness* \u2014 every DP value is realised by some labelling;"
-  },
-  {
-    "consumed_by_exp_id": "eb2ba545",
-    "description": "prove *completeness* \u2014 every labelling is dominated by some DP run;",
-    "domains": [],
-    "id": "fd_2852",
-    "phase": "A",
-    "priority_score": 0.4,
-    "research_mode": "team",
-    "source_exp_id": "1d44d635",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T06:26:30.870721+00:00",
-    "title": "prove *completeness* \u2014 every labelling is dominated by some DP run;"
   },
   {
     "consumed_by_exp_id": "",
