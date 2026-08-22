@@ -1,5 +1,5 @@
-import Catalog.Computation.ReversibleSortingBennett
-import Catalog.Computation.FactorialNumberSystem
+import Computation.ReversibleSortingBennett
+import Computation.FactorialNumberSystem
 
 /-!
 # Sorting: decision-tree entropy, reversible history, and Landauer work
