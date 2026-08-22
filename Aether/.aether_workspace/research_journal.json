@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "eccb3315",
-      "domain": "Computation",
-      "key_insight": "# Future Directions — after the Berggren Tree Zeta Function\n\n## What this cycle established\n\n* **Structure.** The Berggren tree in Euclid-seed coordinates is a bijection from the set of words\n  in thr",
-      "quality_score": 0.84,
-      "sorry_count": 0,
-      "theorem_count": 147,
-      "timestamp": "2026-08-21T04:45:05",
-      "title": "The Berggren Tree Zeta Function — Analytic Counting of Pythagorean Triples Governed by the Silver Ra"
-    },
-    {
       "cycle_id": "21cbaba8",
       "domain": "Bridges",
       "key_insight": "# Future Directions\n\nDerived from the results now formalised in `Catalog/Bridges/DenseSumsetLower/`\n(`Core.lean`, `Density.lean`, `Group.lean`, `Window.lean`, `Sharp.lean`, `Optimal.lean`,\n`Mission.le",
@@ -499,19 +489,19 @@
       "theorem_count": 194,
       "timestamp": "2026-08-22T19:36:20",
       "title": "FACT round-35 #7 — CYCLIC-CUBIC-CONDUCTOR-13: full pinning extends across conductors (paper 126)"
+    },
+    {
+      "cycle_id": "ae01533d",
+      "domain": "NumberTheory",
+      "key_insight": "# FUTURE_DIRECTIONS — NET-52 formal layer (round-to-nearest arithmetic)\n\n## What this cycle established\n\nFive self-contained Lean files in `Catalog/NumberTheory/` turn the NET-52 measurements into\nthe",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 131,
+      "timestamp": "2026-08-22T19:36:34",
+      "title": "NET-52: THE-TOY-FOUR-BIT-FLOOR-DOES-NOT-TRANSFER — per-channel RTN 4-bit costs +0.79 CE on Qwen2.5-0"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "c94236ec",
-      "domain": "Novelty",
-      "key_insight": "# FUTURE DIRECTIONS — after the SPLIT-COUNT LAW\n\nThe formal results now live in seven files, all compiling with no `sorry` and on\nthe standard axioms only:\n\n* `Catalog/Novelty/SplitCountLaw.lean` — fi",
-      "quality_score": 0.92,
-      "sorry_count": 2,
-      "theorem_count": 226,
-      "timestamp": "2026-08-15T03:13:13",
-      "title": "SPLIT-COUNT-LAW: the complete symmetric fork channel is the split-count s ~ Bin(2,1/n), I(N mod f; s"
-    },
     {
       "cycle_id": "fefb96cd",
       "domain": "Novelty",
@@ -2501,15 +2491,19 @@
       "theorem_count": 194,
       "timestamp": "2026-08-22T19:36:20",
       "title": "FACT round-35 #7 — CYCLIC-CUBIC-CONDUCTOR-13: full pinning extends across conductors (paper 126)"
+    },
+    {
+      "cycle_id": "ae01533d",
+      "domain": "NumberTheory",
+      "key_insight": "# FUTURE_DIRECTIONS — NET-52 formal layer (round-to-nearest arithmetic)\n\n## What this cycle established\n\nFive self-contained Lean files in `Catalog/NumberTheory/` turn the NET-52 measurements into\nthe",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 131,
+      "timestamp": "2026-08-22T19:36:34",
+      "title": "NET-52: THE-TOY-FOUR-BIT-FLOOR-DOES-NOT-TRANSFER — per-channel RTN 4-bit costs +0.79 CE on Qwen2.5-0"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "77469890",
-      "domain": "NumberTheory",
-      "name": "card_fiber_of_surjective",
-      "quality": 0.82
-    },
     {
       "cycle_id": "77469890",
       "domain": "NumberTheory",
@@ -2803,9 +2797,15 @@
       "domain": "Bridges",
       "name": "invStereo_denom_pos",
       "quality": 0.9
+    },
+    {
+      "cycle_id": "ae01533d",
+      "domain": "NumberTheory",
+      "name": "sub_div_le_log_div",
+      "quality": 0.78
     }
   ],
-  "last_updated": "2026-08-22T19:36:20",
+  "last_updated": "2026-08-22T19:36:34",
   "open_questions": [
     {
       "context": "All proofs are complete; no `sorry`.; All proofs are complete; no `sorry`.",
@@ -3641,12 +3641,6 @@
     ],
     "NumberTheory": [
       {
-        "cycle_id": "57212186",
-        "quality": 0.9,
-        "theorems": 621,
-        "title": "reinforcement learning"
-      },
-      {
         "cycle_id": "0750e9d7",
         "quality": 0.84,
         "theorems": 102,
@@ -3699,6 +3693,12 @@
         "quality": 0.85,
         "theorems": 125,
         "title": "Aleph-1 Surface: Geometry Between Dimensions"
+      },
+      {
+        "cycle_id": "ae01533d",
+        "quality": 0.78,
+        "theorems": 131,
+        "title": "NET-52: THE-TOY-FOUR-BIT-FLOOR-DOES-NOT-TRANSFER — per-channel RTN 4-bit costs +"
       }
     ],
     "Physics": [

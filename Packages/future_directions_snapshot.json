@@ -819,25 +819,6 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "a4769f7a",
-    "description": "## FACT round-35 #7 — CYCLIC-CUBIC-CONDUCTOR-13 (paper 126)\n\n**Verdict name: THE-CYCLIC-CUBIC-IS-FULLY-PINNED-AT-CONDUCTOR-13.**\n\nCyclic cubic Q(zeta_13 + zeta_13^-1) (C3, conductor 13): only TWO types.\nH(T) = 0.9192 bits. I(p mod 13; T) = H(T) EXACTLY (full pinning).\nSemiprime pair 0.4702; which-factor 0.0001.\n\nNow 459 experiments. Assessment v228. Paper 126.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3517",
-    "lineage_refs": [],
-    "priority_score": 1000.0,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T23:39:20.826757+00:00",
-    "title": "FACT round-35 #7 — CYCLIC-CUBIC-CONDUCTOR-13: full pinning extends across conductors (paper 126)"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "## FACT round-35 #6 — D5-HINT-VALUE (paper 125)\n\n**Verdict name: THE-D5-DIAL-CARRIES-A-HINT.**\n\nD5 x5+20x+32 at m*=320: HINT VALUE +0.6940 bits.\nNow 458 experiments. Assessment v235. Paper 125.\n",
     "domain_bridges": [],
@@ -1138,25 +1119,6 @@
     "status": "available",
     "timestamp": "2026-08-22T03:08:29.731549+00:00",
     "title": "FACT round-37 #5 — DIAL-OVERLAP-LAW: partially overlapping dials are exactly one bit redundant (paper 133)"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
-    "consumed_by_exp_id": "ae01533d",
-    "description": "## NET-52 — limited-memory axis, round 4 (paper 137, /tmp/exp_net52_quant.py, /tmp/net52.log)\n\n**Verdict name: THE-TOY-FOUR-BIT-FLOOR-DOES-NOT-TRANSFER.**\n\n### Result\nNaive per-channel RTN quantization of all linear weights of Qwen2.5-0.5B (identical validated harness; baseline reproduced exactly 0.4460/2.8697):\n\n| arm | ΔCE | retained acc |\n|---|---|---|\n| 8-bit | +0.0044 | 0.9985 |\n| 6-bit | +0.0353 | 0.9904 |\n| 5-bit | +0.1281 | 0.9620 |\n| **4-bit** | **+0.7879** | **0.7630** |\n| 3-bit | +9.2262 | 0.0367 |\n| 2-bit | +14.0588 | 0.0001 |\n| 4-bit first-12 layers | +0.3885 | 0.8904 |\n| 4-bit last-12 layers | +0.4054 | 0.8635 |\n| 4-bit group-128 | +0.3180 | 0.9060 |\n| 3-bit group-128 | +2.7220 | 0.3987 |\n\n- **P1 REFUTED SPECTACULARLY**: per-channel 4-bit costs +0.79 against a ≤0.05 prediction — the toy programme's compression floor (NET-11/14, \"per-channel uniform-4 = the optimum\") was an artifact of from-scratch toys and fails 16× its budget on pretrained weights.\n- **P2 CONFIRMED weakly**: last-half worse than first-half (+0.41 vs +0.39) — NET-18's deeper-is-worse direction holds.\n- **P3 CONFIRMED dramatically**: 2-bit destroys the model (+14 CE).\n- **P4 CONFIRMED**: strictly monotone in mesh with 8-bit measurably nonzero — exactly what the catalogue's sharpness theorem (defect ≤ 2Lr, constant sharp) predicts.\n\n### Practical\nThe cliff structure: mild through 5 bits, severe at 4, catastrophic at 3 (per-channel). Grouping by 128 repairs ~60% of 4-bit damage and rescues 3-bit — precisely why production quantizers are group-wise, here measured cleanly for the programme. For a 6 GB host: RTN below 6 bits is not deployable; group-wise ≥4-bit is the entry point; further compression needs error compensation (GPTQ/AWQ), not scale choice.\n\n### All 8 barriers\n(a) clean — four horns pre-stated including the refuted one; (b) clean — exact constant structure new to the programme; (c) DECISIVE and honestly negative — this round IS the compression-axis transfer test; limits: ONE model, ctx=512, RTN-only (no GPTQ compensation yet), embeddings/norms unquantized; (d) clean — bit-exact deterministic evals; (e) clean — deltas ≥ 0.0004 resolvable, no noise-floor issue; (f) clean — baseline reproduced exactly, ALL_DONE_NET52; (g) fair — matched protocol/granularity across arms; (h) DIRECT — the (bits × grouping) surface is the deployment table for fitting larger Qwen models into 6 GB VRAM.\n\n### Next\nGPTQ/AWQ-style compensation on these floors; joint weight+KV memory budgets; tail-aware mixed precision (quantize the NET-51 shared core harder than the personal tail).\n\nNow 52 network experiments. Assessment v52. Paper 137.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3560",
-    "lineage_refs": [],
-    "priority_score": 1000.0,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T03:58:05.368039+00:00",
-    "title": "NET-52: THE-TOY-FOUR-BIT-FLOOR-DOES-NOT-TRANSFER — per-channel RTN 4-bit costs +0.79 CE on Qwen2.5-0.5B (16x the toy floor budget); group-128 halves it; depth gradient and mesh sharpness confirmed"
   },
   {
     "ambition_level": "grand_challenge",
@@ -2035,7 +1997,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "46700442",
     "description": "## NET-55 — limited-memory axis, round 8 (paper 140, ResearchOutput/exp_net55_1p5b_knee.py committed pre-run, /tmp/net55.log)\n\n**Verdict name: THE-KNEE-IS-SIZE-INVARIANT.**\n\n### Result\nQwen2.5-1.5B (3× the parameters of the 0.5B, d=28 vs 24) on identical protocol (held-out wikitext, 24 windows/cell, bf16-storage/fp32-compute harness):\n\n| ctx | full acc | k\\* | 0.5B comparison |\n|---|---|---|---|\n| 512 | 0.4680 | **16** | identical (0.5B: 16) |\n| 1024 | 0.5004 | **16** | HALF (0.5B: 32; grid floor — could be lower) |\n\n- **P1 REFUTED decisively**: knees did not grow with 3× parameters — they came in below the pre-registered floor ([24,48]@512, [32,96]@1024) at both contexts.\n- **P2 honestly UNMEASURED**: the crash-recovery harness rewrite dropped the per-layer stats block; the 1.5B tail map stays open.\n- **P3 CONFIRMED with a stronger reading**: ratio = 1.0 — not just sub-linear, FLAT.\n\nSweeps: 512 — 8: 0.9727 ✗, **16: 0.9896 ✓**, 24: 0.9915, 32: 0.9969, 48: 0.9993, 64: 0.9988. 1024 — **16: 0.9806 ✓**, 24: 0.9867, 32: 0.9881, 48: 0.9928, 64: 0.9927, 96: 0.9954, 128: 0.9974.\n\n### The emerging law\nReal-model lossless attention budget across everything measured: {16, 32, 24} @0.5B and {16, 16} @1.5B — a ~30-key budget covers every real model at every context, while the toy law predicted 384–1344 for these cells. The knee is set by the concentration structure of trained attention, not model capacity. **Deployment reading: the KV working-set budget does NOT scale with model size** — at larger models the binding constraint is weights (NET-52's quantization table), not cache.\n\n### Engineering record\nQwen2.5-1.5B's own fp16 forward NaNs on real text (verified pre-wrapper — bf16 storage mandatory on pre-bf16 GPUs); CPU-fp32 reference SIGILLs on this host; gate = HF-bf16-GPU reference captured pre-floatify with ΔCE 0.0054 as the binding check and argmax-agreement 0.89 documented as near-tie flips across the 152k vocab.\n\n### All 8 barriers\n(a) clean — three horns pre-stated incl. the refuted one; (b) clean — size-transfer of sparsity knees not a measured law in Catalog or literature; (c) confronted — 3× scale jump measured; limits: two size points, grid floor at 16, one corpus, SE ≈ 0.3%, P2 unmeasured; (d) clean — held-out last 10%; (e) deterministic evals, gate calibration documented; (f) clean — finite-reference assert, ALL_DONE_NET55; (g) fair — same 0.98 bar as all real-model rounds; (h) DIRECT.\n\n### Next\nSub-16 addendum at 1024; 1.5B tail map (P2); 7B quantized-offload cell; oracle-to-policy eviction gap; corpus robustness.\n\nNow 55 network experiments. Assessment v55. Paper 140.\n",
     "domain_bridges": [],
     "domains": [
@@ -2047,7 +2009,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T15:36:32.739868+00:00",
     "title": "NET-55: THE-KNEE-IS-SIZE-INVARIANT — Qwen2.5-1.5B posts k*={16,16} at ctx={512,1024}, identical-to-half the 0.5B knees; tripling parameters did not raise the lossless attention budget by one key"
   },
@@ -2487,6 +2449,139 @@
     "status": "available",
     "timestamp": "2026-08-22T18:51:45.087483+00:00",
     "title": "FACT round-57 #1 — TDIAL-U48B: the zero-fit dial holds on uniform draws at bitlen 48 (paper 184)"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "## NET-73 — limited-memory axis, round 26 (paper 158, ResearchOutput/exp_net73_tpw.py, /tmp/net73.log)\n\n**Verdict name: TOKENIZATION-DENSITY-DOES-NOT-EXPLAIN-THE-DOMAIN-SHIFT.**\n\n### Result\nTokens-per-word across 5 domains (Qwen's own BPE, 5000-word samples) correlated with known knees:\n\n| domain | TPW | k\\*@512 | expected from TPW |\n|---|---|---|---|\n| code | **1.950** | **12** | should be HIGHEST ✗ |\n| prose-de | 1.885 | 20 | second-highest ✓ |\n| prose-fr | 1.246 | **>32** | should be near-English ✗ |\n| math | 1.214 | 16 | near-English ✓ |\n| prose-en | 1.173 | 16 | lowest ✓ |\n\nSpearman ρ = **−0.40** (wrong sign); linear fit R² = **0.004**.\n\n- **P1 REFUTED**: rank correlation is negative, not ≥0.9.\n- **P2 REFUTED**: R² is zero, not ≥0.8.\n- **P3 CONFIRMED decisively**: TPW is insufficient — the mechanism is NOT tokenization density.\n\nFrench extended grid: k\\*(fr@512) ≤ 32 (the knee exists, just far above the original ceiling).\n\n### The law\nThe strongest counterexample kills the tokenization hypothesis: code has 1.66× English's TPW yet needs FEWER keys; French has ~1.07× English's TPW yet needs ≥2× more keys. The domain mechanism is NOT surface-level token counting — it is the RELATIONAL/SEMANTIC structure of attention patterns within each domain. NET-58/69 already bound those explanations as relational, not intrinsic to key identity.\n\n### All 8 barriers\n(a) clean — three horns pre-stated incl. two refuted; (b) clean — first mechanism-test for the domain shift; (c) confronted — 5 domains, 5000-word samples, one tokenizer stated; (d) clean; (e) deterministic; (f) clean — ALL_DONE_NET73; (g) fair; (h) DIRECT.\n\n### Next\nAttention-pattern structural analysis (what IS the domain mechanism?); sub-32 French @1024; 0.5B @4096; 7B cell.\n\nNow 73 network experiments. Assessment v73. Paper 158.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3729",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T19:36:57.211750+00:00",
+    "title": "NET-73: TOKENIZATION-DENSITY-DOES-NOT-EXPLAIN-THE-DOMAIN-SHIFT — Spearman(TPW,k*) = -0.40, R2 = 0.004; code highest TPW lowest knee, French near-English TPW highest knee"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "## NET-72 — limited-memory axis, round 25 (paper 157, ResearchOutput/exp_net72_french.py, /tmp/net72.log)\n\n**Verdict name: THE-FRENCH-KNEE-EXCEEDS-THE-GRID.**\n\n### Result\nDomain jump to French prose (gate exact; one Gutenberg source, second 404'd — honest limit):\n\n| ctx | best grid point | retained | verdict |\n|---|---|---|---|\n| 512 | 24 | **0.9648 ✗** | knee > 24 |\n| 1024 | 32 | **0.9680 ✗** | knee > 32 |\n\nFull acc: 0.584/0.591 (higher than prose's 0.446/0.461).\n\n- **ALL THREE HORNS REFUTED**: the domain shift exceeds +8 keys, far past every pre-stated bracket.\n- The accuracy/knee decoupling now has BOTH SIGNS: code easier AND fewer keys; math harder AND equal; French easier AND MORE keys.\n\n### The law\nThe domain-shift law is NOT a simple ±4 fine-step: language families differ by whole grid ranges. The four-domain table was complete for its four domains but does not interpolate to unseen languages. Mechanism hypothesis: the tax is TOKENIZATION-mediated (Qwen's tokenizer spends more tokens per French word, diluting each token's attention contribution) — testable via tokens-per-word measurement.\n\n### All 8 barriers\n(a) clean; (b) clean — first beyond-grid result; (c) confronted — one source, sub-knee ceiling stated; (d) clean; (e) deterministic; (f) clean — ALL_DONE_NET72; (g) fair — only text changed; (h) DIRECT — multilingual serving cannot interpolate budgets.\n\n### Next\nTokens-per-word mechanism test; extended grid {48, 64}; more languages; 7B cell.\n\nNow 72 network experiments. Assessment v72. Paper 157.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3730",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T19:36:57.212812+00:00",
+    "title": "NET-72: THE-FRENCH-KNEE-EXCEEDS-THE-GRID — no grid point reaches the bar on French prose (knee >24 @512, >32 @1024); domain shifts are NOT ±4 fine-steps"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Round-65 #1, cron iteration (exp 533). The highest-bitlen uniform measurement.\n\n**U76-DIAL-CONFIRMED**: Spearman(T, rate) = **0.593** / **0.618** / **0.612** across three seeds on uniform draws at bitlen 76; pooled **0.608** CI [0.588, 0.631]. All inside [0.55, 0.85]; T beats count by +0.073 CI [0.045, 0.097].\n\nThe zero-fit dial extends to bitlen 76 on uniform draws with the band intact — flat within noise from bitlen 72.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp533_t_dial_unif_76.py + exp533_result.json, seeds 20261170–72.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3731",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T19:36:57.213783+00:00",
+    "title": "FACT round-65 #1 — TDIAL-U76: the zero-fit dial holds at bitlen 76 (paper 186)"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "## NET-71 — limited-memory axis, round 24 (paper 156, ResearchOutput/exp_net71_nonenglish.py, /tmp/net71.log)\n\n**Verdict name: THE-TOKENIZER-TAX-IS-FOUR-KEYS.**\n\n### Result\nDomain jump to German prose (Goethe + classic; gate exact):\n\n| ctx | German k\\* | EN prose k\\* | shift |\n|---|---|---|---|\n| 512 | **20** | 16 | +4 keys |\n| 1024 | **24** | 20 | +4 keys |\n\nGerman sweeps @512: 4: 0.883 ✗, 8: 0.953 ✗, 12: 0.969 ✗, 16: 0.976 ✗ (~1.5 SE), **20: 0.983 ✓**, 24: 0.988. @1024: 8: 0.926 ✗, 12: 0.956 ✗, 16: 0.968 ✗, 20: 0.975 ✗, **24: 0.982 ✓**.\n\n- **P1 CONFIRMED**: exactly +4 keys at BOTH contexts — one fine-grid step up, mirroring code's −4 down.\n- **P2/P3 REFUTED**: the shift is a full step, not intermediate or zero.\n\n### The four-domain deployment table\nbase(code)=12, base(prose-EN)=16, base(math)=16, base(prose-DE)=20; +4/doubling increment UNIVERSAL across all domains and scales (scale-halving from NET-67 applies per-domain). Tokenizer-tax mechanism: German compounds pack more content per word → more positions needed per idea. Deployment: multilingual workloads need the highest-base budget; a 24-key cache covers ALL four domains to ctx=1024.\n\n### All 8 barriers\n(a) clean — three horns pre-stated incl. two refuted; (b) clean — first non-English leg; (c) confronted — German only, two classics stated; (d) clean per-corpus split; (e) deterministic; (f) clean — ALL_DONE_NET71; (g) fair — only text changed; (h) DIRECT.\n\n### Next\nMore languages; modern LaTeX; increments at 4096; 7B quantized-offload cell.\n\nNow 71 network experiments. Assessment v71. Paper 156.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3732",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T19:36:57.214749+00:00",
+    "title": "NET-71: THE-TOKENIZER-TAX-IS-FOUR-KEYS — German prose shifts knees up exactly one fine step ({20,24} vs {16,20}); four-domain deployment table complete"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "## NET-70 — limited-memory axis, round 23 (paper 155, ResearchOutput/exp_net70_mathdomain.py, /tmp/net70.log)\n\n**Verdict name: MATH-READS-AS-PROSE.**\n\n### Result\nDomain jump to mathematical text (Hardy + Hilbert, Gutenberg; gate exact):\n\n| ctx | math k\\* | prose k\\* | math full acc | prose full acc |\n|---|---|---|---|---|\n| 512 | **16** | 16 | 0.3262 | 0.4460 |\n| 1024 | **20** | 20 | 0.3418 | 0.4612 |\n\nMath sweeps @512: 4: 0.907 ✗, 8: 0.959 ✗, 12: 0.979 ✗ (~1 SE), **16: 0.987 ✓**, 20: 0.989, 24: 0.988. @1024: 8: 0.952 ✗, 12: 0.965 ✗, 16: 0.978 ✗ (~1.5 SE), **20: 0.983 ✓**, 24+: pass.\n\n- **P1 REFUTED**: math does NOT need more keys despite long-range symbolic references.\n- **P2 CONFIRMED trivially**: the chain is exactly prose's.\n- **P3 CONFIRMED**: knees match EXACTLY at both contexts despite a 12-point accuracy gap.\n\n### The three-domain deployment table\nbase(prose) = 16, base(code) = 12, base(math) = 16; increments set by scale (NET-67); shape preserved everywhere. THIRD+STRONGEST confirmation that prediction difficulty and attention-sparsity structure are independent: math is much harder to predict yet needs identical budgets. Deployment: prose+math workloads share one entry; only code shifts.\n\n### All 8 barriers\n(a) clean — three horns pre-stated incl. two refuted; (b) clean; (c) confronted — limits: classic-mathematics prose only (no modern LaTeX notation), one corpus mix, 24 windows stated; (d) clean; (e) deterministic; (f) clean — ALL_DONE_NET70; (g) fair — byte-identical harness except text; (h) DIRECT.\n\n### Next\nModern LaTeX/math notation; non-English domains; increments at 4096; 7B cell.\n\nNow 70 network experiments. Assessment v70. Paper 155.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3733",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T19:36:57.215710+00:00",
+    "title": "NET-70: MATH-READS-AS-PROSE — mathematical text leaves knees exactly at prose values ({16,20}) despite 12-pt lower accuracy; three-domain table complete (prose=16, code=12, math=16)"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Round-63 #1, cron iteration (exp 532). The highest-bitlen uniform measurement.\n\n**U72-DIAL-HOLDS-COUNT-PARITY**: Spearman(T, rate) = **0.605** / **0.606** / **0.603** across three seeds on uniform draws at bitlen 72; pooled **0.605** CI [0.586, 0.625]. All inside [0.55, 0.85]; count parity (advantage below +0.05).\n\nThe zero-fit dial extends to bitlen 72 on uniform draws with the band intact — a gentle\nmonotone decline from ~0.78 at bitlen 44 to ~0.61 at 72. Barriers: (5)/(8) unchanged.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp532_t_dial_unif_72.py + exp532_result.json, seeds 20261160–62.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3734",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T19:36:57.216675+00:00",
+    "title": "FACT round-63 #1 — TDIAL-U72: the zero-fit dial holds at bitlen 72 with count parity (paper 185)"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "## NET-69 — limited-memory axis, round 22 (paper 154, ResearchOutput/exp_net69_probe_code.py, /tmp/net69.log)\n\n**Verdict name: CONTENT-WEAKNESS-IS-DOMAIN-UNIVERSAL.**\n\n### Result\nNET-58/61 methodology on Python source (the strongest candidate for content-based importance):\n\n| arm | retained @B=64 |\n|---|---|\n| accumulated-HH | 0.9340 |\n| probe-only | **0.8149** |\n| hybrid λ=1 | 0.9371 |\n\nProbe R² on code: mean **0.3185** (min 0.1225, max 0.5921) vs prose mean 0.329.\n\n- **P1 REFUTED decisively**: R² identical to prose; probe-only LOSES by 12 pts.\n- **P2 CONFIRMED**: both clauses hold (R² ≤ 0.45, probe ≤ accumulated).\n- **P3 CONFIRMED**: hybrid +0.3 pts on code — non-degrading, contrasting prose's monotone harm.\n\n### The law\nImportance is relational in structured domains too: even where identifiers repeat and syntax is rigid, a key's vector carries almost no information about its future reception. The domain difference is in the interaction term only (content neutral on code vs harmful on prose). With NET-68: the code-domain picture is complete — fewer keys needed (12/16), content useless for choosing them, recency+accumulation still the deployable pair.\n\n### All 8 barriers\n(a) clean; (b) clean — first cross-domain probe comparison; (c) confronted — one language/repo stated; (d) clean; (e) deterministic; (f) clean — ALL_DONE_NET69; (g) fair — identical methodology/budgets as NET-58/61; (h) DIRECT.\n\n### Next\nMath/non-English domains; learned online predictors; increments at 4096; 7B cell.\n\nNow 69 network experiments. Assessment v69. Paper 154.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3735",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T19:36:57.217605+00:00",
+    "title": "NET-69: CONTENT-WEAKNESS-IS-DOMAIN-UNIVERSAL — probes recover only R2=0.32 on code too; probe-only loses to accumulation by 12pts; hybrid non-degrading (+0.3)"
   },
   {
     "ambition_level": "grand_challenge",
@@ -4798,68 +4893,6 @@
     "status": "available",
     "timestamp": "",
     "title": "Quantum Entanglement Monogamy: CKW Inequality"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "The Langlands program connects Galois groups (shapes) to automorphic forms (colors). Think of it this way: a Galois group is the group of symmetries of a shape (like the rotational symmetries of a polygon). An automorphic form is a coloring that respects the shape's symmetries (like a coloring of the polygon's vertices that is invariant under rotation). The Langlands correspondence says: for every 'shape' (Galois representation), there is a matching 'color' (automorphic form) and vice versa. Conjecture: This correspondence is a bijection between irreducible representations of Gal(Q_bar/Q) and cuspidal automorphic representations of GL_n over Q. For n=1, this is class field theory (every abelian extension of Q corresponds to a Dirichlet character). For n=2, this is the modularity theorem (every elliptic curve over Q corresponds to a weight-2 cusp form). The toddler version: each shape has exactly one matching color, and each color has exactly one matching shape. Test: verify the correspondence for all degree-2 extensions of Q up to discriminant 1000. Verify that each quadratic field Q(sqrt(d)) corresponds to a Dirichlet character chi_d via the correspondence chi_d(p) = (d/p) (Legendre symbol). Impact: Langlands is just shape-color matching. Shapes and colors are two ways of seeing the same mathematical object.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "NumberTheory",
-      "Algebra"
-    ],
-    "id": "seed_146",
-    "lineage_refs": [],
-    "priority_score": 0.85,
-    "proof_strategy": "State the Langlands correspondence for GL_2: there is a bijection between irreducible 2-dimensional Galois representations rho: Gal(Q_bar/Q) -> GL_2(C) and cuspidal automorphic representations of GL_2 over Q. For the toddler version: every quadratic field Q(sqrt(d)) corresponds to a Dirichlet character chi_d: (Z/DZ)* -> {±1} where D is the discriminant. Verify: for d = -1 (Q(i)), D = -4, chi_{-4}(n) = (-1)^{(n-1)/2} for odd n. For d = 2 (Q(sqrt(2))), D = 8, chi_8(n) = (-1)^{(n^2-1)/8}. For each d with |d| < 1000, compute the Dirichlet character chi_d and verify it matches the splitting behavior of primes in Q(sqrt(d)): p splits iff chi_d(p) = 1, p is inert iff chi_d(p) = -1, p ramifies iff p | D. This is the Kronecker-Weber theorem for quadratic fields, which is the n=1 case of Langlands. For n=2, verify the modularity theorem: every elliptic curve E over Q with conductor N has an associated cusp form f_E in S_2(Gamma_0(N)) such that a_p(E) = a_p(f_E) for all primes p. Test: verify for curves in the Cremona database up to conductor 1000.",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Langlands for Toddlers: Galois Groups as Shapes, Automorphic Forms as Colors"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Anyon braiding in topological quantum computing gives unitary matrices from the braid group B_n. The Jones representation rho_k: B_n -> U((k-1)(n-1)+1) at root of unity e^{2*pi*i/k} is conjectured to be universal for quantum computation when k >= 3 and n >= 4. Conjecture: the set of all braids in B_4 under the Jones representation at k=5 generates a dense subgroup of SU(3). More precisely, the image rho_5(B_4) is an infinite subgroup of SU(3) that is not contained in any proper closed subgroup. This means that topological quantum computing with Fibonacci anyons (k=5) is universal: any unitary in SU(3) can be approximated to arbitrary precision by braiding 4 anyons. The key: the Jones representation at k=5 gives 3x3 matrices, and the braid generators sigma_1, sigma_2, sigma_3 generate a dense subgroup of SU(3). Test: compute the Jones representation at k=5 for B_4, verify that sigma_1 * sigma_2 * sigma_3 has infinite order, and check that the group generated by sigma_1, sigma_2, sigma_3 is dense in SU(3) by the Solovay-Kitaev theorem. Impact: braiding anyons is universal for quantum computation. The braid group B_4 at k=5 is a quantum gate set.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Computation",
-      "Algebra"
-    ],
-    "id": "seed_168",
-    "lineage_refs": [],
-    "priority_score": 0.85,
-    "proof_strategy": "Define the braid group B_n = <sigma_1, ..., sigma_{n-1} | sigma_i * sigma_j = sigma_j * sigma_i for |i-j| > 1, sigma_i * sigma_{i+1} * sigma_i = sigma_{i+1} * sigma_i * sigma_{i+1}>. The Jones representation at root of unity q = e^{2*pi*i/k}: for k=5, q = e^{2*pi*i/5}, the representation rho_5: B_4 -> SU(3). Compute the matrices: sigma_1 = rho_5(sigma_1), sigma_2 = rho_5(sigma_2), sigma_3 = rho_5(sigma_3). These are 3x3 unitary matrices. Verify: (1) sigma_i * sigma_j = sigma_j * sigma_i for |i-j| > 1, (2) sigma_i * sigma_{i+1} * sigma_i = sigma_{i+1} * sigma_i * sigma_{i+1}. Check density: compute sigma_1 * sigma_2 * sigma_3 and verify it has infinite order (the trace is not a root of unity). Apply the Solovay-Kitaev theorem: if the group generated by sigma_1, sigma_2, sigma_3 contains a non-commuting pair and is infinite, then it is dense in SU(3). Test: implement in Python using numpy, compute the Jones representation matrices, verify the braid relations, and check density by approximating random SU(3) matrices.",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Topological Quantum Compiling: Braid Groups as Universal Gates"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Resolve Kaplansky's conjectures on group rings: no zero divisors, no idempotents other than 0/1, and no nontrivial units in K[G] for torsion-free G.",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Computation"
-    ],
-    "id": "seed_218",
-    "lineage_refs": [],
-    "priority_score": 0.85,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Kaplansky's Conjectures"
   },
   {
     "ambition_level": "extension",
@@ -13302,7 +13335,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "24924fba",
     "description": "A dataset with missing values is a sheaf on a poset: the poset is the set of feature subsets (ordered by inclusion), and the sheaf assigns to each feature subset the set of complete observations on those features. The missing data creates 'holes' in the sheaf: H^0 measures the global sections (complete observations) and H^1 measures the obstructions to patching local observations into global ones. Conjecture: For a dataset with missing rate r, the dimension of H^1 is approximately r * n * (r * log(1/r)), where n is the number of features. This means: the 'amount of missing information' grows super-linearly with the missing rate, and imputation is fundamentally harder than interpolation because H^1 > 0 means there is no consistent way to fill in the missing data. The sheaf-theoretic imputation: fill in missing values by finding the section s in H^0 that minimizes the coboundary delta(s) in H^1. This is the maximum likelihood imputation under the assumption that the data is locally consistent. Test: generate synthetic datasets with known ground truth, introduce missing values at rate r, compute H^0 and H^1 of the data sheaf, and verify dim(H^1) ~ r*n*r*log(1/r). Compare sheaf-theoretic imputation with standard methods (mean, KNN, MICE). Impact: missing data is a topological problem, and the sheaf cohomology tells you exactly how much information is lost and whether it can be recovered.",
     "domain_bridges": [],
     "domains": [
@@ -13316,7 +13349,7 @@
     "proof_strategy": "Define the data sheaf: for a dataset with n features and m observations, the poset P is the set of feature subsets S subset {1,...,n} ordered by inclusion. The sheaf F assigns to each S the set of observations that have all features in S present (complete rows restricted to columns in S). The restriction maps F(S) -> F(T) for T subset S are projections that drop columns in S\\T. Define H^0(F) = ker(delta_0) = global sections (observations complete on ALL features). Define H^1(F) = ker(delta_1)/im(delta_0) = obstructions to patching local observations into global ones. Compute delta_0 and delta_1 using the Cech complex. Estimate dim(H^1): for missing rate r and n features, each observation is missing r*n features on average. The expected number of complete observations is m*(1-r)^n (each feature present with probability 1-r). The obstruction dim(H^1) grows with the number of incompatible local patches. Each missing feature creates a potential obstruction. Estimated dim(H^1) ~ m * r * (1-(1-r)^n) ~ m * r * n * r for small r. Test: generate data from a known multivariate normal, introduce MCAR missing values at rate r, compute H^0 and H^1, fit dim(H^1) ~ C * r * n * r * log(1/r).",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Sheaf Cohomology of Data: The Topology of Missing Information"
   },
@@ -16664,6 +16697,51 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Catalog.NumberTheory.QuantL1TuranBridge",
+      "Catalog.NumberTheory.TuranMantel"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The L1 rounding energy of the mesh (1/q)Z equals the Mantel-Turan number floor(q^2/4). We conjecture the p-th moment gives a family of extremal numbers with an exact division-free identity for each p.\n\nFor every p >= 1 there are explicit polynomials P_p, R_p with 2^p (p+1) * sum_{j<q} min(j, q-j)^p = P_p(q) - R_p(q % 2).\n\nVerify by decide for p <= 4 and q <= 40, then prove by the same lower/upper half splitting plus Faulhaber sums.\n\nEvery Lp quantization energy is an exact extremal-combinatorial quantity, linking loss exponents to Turan-type numbers.\n\nOnly p = 1 admits a clean closed form, isolating the Mantel bridge as special.",
+    "domain_bridges": [],
+    "domains": [
+      "Combinatorics",
+      "Physics"
+    ],
+    "id": "fd_3727",
+    "lineage_refs": [],
+    "priority_score": 0.7092962962962964,
+    "proof_strategy": "Split the period at the midpoint, apply Faulhaber's formula on both halves, and match parities.",
+    "research_mode": "team",
+    "source_exp_id": "ae01533d",
+    "status": "available",
+    "timestamp": "2026-08-22T19:36:27.367290+00:00",
+    "title": "Higher-Moment Turan Numbers of the Mesh"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Catalog.NumberTheory.QuantMixedPrecision"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The continuous optimum of the mixed-precision cost is attained at a log-amplitude water-filling allocation. Real allocations must be integers, and the rounding of the allocation is itself a round-to-nearest problem, so the theory applies to itself.\n\nRounding the water-filling allocation to integers with total budget preserved costs at most a factor 2^{1/2} over the continuous optimum, and this factor is attained.\n\nFormalize the integer-constrained minimum in Lean for small n and prove the factor bound; check attainment on explicit amplitude profiles.\n\nA provably near-optimal integer mixed-precision schedule can be computed in one pass from weight statistics.\n\nInteger allocation needs combinatorial search, and greedy rounding can be far from optimal.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_3728",
+    "lineage_refs": [],
+    "priority_score": 0.7092962962962964,
+    "proof_strategy": "Bound each term by the rounding error of b_i, then apply the AM-GM optimum to the rounded allocation and compare.",
+    "research_mode": "team",
+    "source_exp_id": "ae01533d",
+    "status": "available",
+    "timestamp": "2026-08-22T19:36:27.725674+00:00",
+    "title": "Integrality Gap of Water-Filling Bit Allocation"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Novelty.BerggrenCausalSet",
       "Bridges.BerggrenTrees.BerggrenPythagoreanCore"
     ],
@@ -17791,6 +17869,28 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Catalog.NumberTheory.QuantMeshSharpness",
+      "Catalog.NumberTheory.QuantSawtoothBias"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Uncompensated RTN attains an l1 defect of n*Delta/2 exactly on coherent-sign configurations. Error feedback re-injects the signed residual, which should destroy coherence and reduce the worst case to O(sqrt(n)*Delta).\n\nFor the error-feedback quantizer with unit mesh, the accumulated defect over n coordinates is bounded by Delta/2 uniformly in n, and the resulting loss defect is O(sqrt(n)) rather than O(n).\n\nFormalize the error-feedback recursion in Lean and prove the running-residual invariant; validate numerically against per-channel RTN on the same tensors.\n\nCompensation dominates scale choice below the empirical cliff, with a proof rather than an experiment.\n\nThe coherent worst case survives compensation, and only outlier handling helps.",
+    "domain_bridges": [],
+    "domains": [
+      "Logic"
+    ],
+    "id": "fd_3726",
+    "lineage_refs": [],
+    "priority_score": 0.6696666666666669,
+    "proof_strategy": "Show the feedback residual stays in [-Delta/2, Delta/2] by induction, then telescope the partial sums.",
+    "research_mode": "team",
+    "source_exp_id": "ae01533d",
+    "status": "available",
+    "timestamp": "2026-08-22T19:36:26.984664+00:00",
+    "title": "Square-Root Law for Error-Feedback Quantization"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Novelty.FairScheduleBalancedTrees",
       "Novelty.FairScheduleTreeSchedules"
     ],
@@ -18096,6 +18196,27 @@
     "status": "available",
     "timestamp": "2026-08-22T08:48:46.137981+00:00",
     "title": "Non-Saturation of the Method-of-Types Bound"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Catalog.NumberTheory.QuantMeshSharpness"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The exact grouping gain identity says the repaired damage bound is half the total amplitude deficit. Hence the fraction of damage repaired by group-g quantization should equal one minus the ratio of mean group amplitude to global amplitude, a checkpoint statistic.\n\nFor a fixed tensor, the ratio (grouped worst-case bound)/(per-channel worst-case bound) equals mean_g(A_g)/max(A), and the measured cross-entropy repair tracks this ratio monotonically.\n\nCompute mean/max amplitude ratios per group size on a released checkpoint and compare with measured delta-CE repair across group sizes 32/64/128/256.\n\nGroup size can be chosen analytically from weight statistics, with no evaluation sweep.\n\nDamage is dominated by outlier channels rather than aggregate dispersion, favouring outlier-aware schemes.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_3725",
+    "lineage_refs": [],
+    "priority_score": 0.6692962962962965,
+    "proof_strategy": "Combine grouping_gain_eq with the amplitude monotonicity of the mesh, then bound the loss transfer by the Lipschitz argument.",
+    "research_mode": "team",
+    "source_exp_id": "ae01533d",
+    "status": "available",
+    "timestamp": "2026-08-22T19:36:26.622949+00:00",
+    "title": "Amplitude-Dispersion Law for Group-Wise Repair"
   },
   {
     "ambition_level": "extension",
@@ -19259,6 +19380,29 @@
   },
   {
     "ambition_level": "extension",
+    "catalog_references": [
+      "Bridges.CyclicSubfieldCyclicWall",
+      "Bridges.CyclicCubicWhichFactor"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The cyclic which-factor wall proved this cycle shows that a transitive shift fixing the public data forces exactly zero leakage. For a product of k primes with distinct splitting types the labelling should be a free S_k-torsor on the generic stratum, so the swap-invariant public data leaks nothing and every decoder succeeds with probability 1/k!.\n\nOn the stratum where all k splitting types are distinct, I(labelling ; (type multiset, N mod f)) = 0 and every decoder is correct on exactly a 1/k! fraction.\n\nInstantiate mutInfo_eq_zero_of_shift with the generators of a free S_k action on k-tuples of exponents, or generalize its hypotheses from one shift to a finite group acting freely.\n\nA sharp, dimension-free statement about factor-identification leakage for multi-prime RSA moduli.\n\nSome stratum admits partial identification, an exploitable structural leak worth quantifying.",
+    "domain_bridges": [],
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_3720",
+    "lineage_refs": [],
+    "priority_score": 0.5635033219176204,
+    "proof_strategy": "Replace transitivity of a single permutation pi by transitivity of a group of permutations of the value space; balance of fibres then follows from orbit-stabiliser exactly as in card_fiber_const.",
+    "research_mode": "team",
+    "source_exp_id": "a4769f7a",
+    "status": "available",
+    "timestamp": "2026-08-22T19:36:04.640753+00:00",
+    "title": "Symmetric-Group Which-Factor Walls for k-Almost-Primes"
+  },
+  {
+    "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "*[settled in cycle 4: the abelian half is proved, the identification with the one-parameter subgroup is false — see below]*  The centralizer of a\n   non-identity element of `ScalingMap` is abelian, and equals the image of the\n   one-parameter subgroup through it precisely when its exponent is not `1`;\n   for exponent `1` (pure dilations `y ↦ c y`) it is the full dilation\n   subgroup.  *The key insight is* that the infinitesimal statement proved in\n   cycle 3 (centralizer of a field is the line it spans) should integrate to the\n   group level, the exceptional case being the one where the flow has no fixed\n   point in `(0, ∞)`.  *Why now?*  `EMLScalingGroupDuality` already has the\n   group law, the trivial-centre theorem and the classification of involutions,\n   so the computation is a finite case analysis on `(coeff, expo)`.",
@@ -19481,6 +19625,29 @@
     "status": "available",
     "timestamp": "2026-08-22T17:36:56.001244+00:00",
     "title": "Four-Root Two-Adic Footprint of the Even Prime"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Bridges.CyclicSubfieldDefectIrrationality",
+      "Bridges.CyclicSubfieldPrimePower"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "This cycle proved that typeEntropy q is rational exactly at the prime q = 2. Combined with CRT additivity and the prime-power saturation law, the natural completion is that the type entropy of degree m is rational precisely when m is a power of two, the dyadic tower being the unique source of rational values.\n\nFor every m >= 1, typeEntropy m is rational if and only if m is a power of 2 (in which case it equals 2 - 2^{1-e} for m = 2^e).\n\nWrite typeEntropy m through typeEntropy_mul_of_coprime and typeEntropy_prime_pow_eq as a rational combination of log2 p and log2 (p-1) over p | m, then apply irrational_log_combination after proving that no cancellation between distinct primes can occur.\n\nA complete rationality classification of the cyclic splitting-type entropy, with the dyadic tower isolated as the only rational family.\n\nThere is a multiplicative coincidence between the numbers p and p-1 for distinct primes, itself a strong Diophantine statement.",
+    "domain_bridges": [],
+    "domains": [
+      "NumberTheory",
+      "Pythagorean"
+    ],
+    "id": "fd_3722",
+    "lineage_refs": [],
+    "priority_score": 0.5631235609004032,
+    "proof_strategy": "Reduce to a linear relation with rational coefficients among the logarithms of the integers p and p-1 for p | m, and rule it out by unique factorisation applied prime by prime.",
+    "research_mode": "team",
+    "source_exp_id": "a4769f7a",
+    "status": "available",
+    "timestamp": "2026-08-22T19:36:05.369650+00:00",
+    "title": "Dyadic Rationality Threshold for the Type Entropy"
   },
   {
     "ambition_level": "extension",
@@ -30813,6 +30980,72 @@
     "status": "available",
     "timestamp": "2026-08-22T18:49:51.880892+00:00",
     "title": "Two-Parameter Cap Surface for r-ary Dials"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Bridges.CyclicSubfieldPrimePower",
+      "Bridges.CyclicSubfieldCRT"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The prime-power saturation law turns the type entropy of a squarefree degree into a pure sum over primes. For the primorial degree P(x) that sum is governed by two classical Mertens estimates, predicting H = log2 x + log2 log x + c + o(1) with c approximately -1.9254.\n\nH(T_{P(x)}) - log2 x - log2 log x converges to an absolute constant c, where P(x) is the product of the primes up to x.\n\nFormalize H(T_{P(x)}) = sum over p <= x of (log2 p - ((p-1)/p) log2 (p-1)) from typeEntropy_prime_pow_eq and typeEntropy_mul_of_coprime, then bound the two prime sums.\n\nThe information content of the splitting type is doubly logarithmic in the conductor, so pinning stays bounded while the degree explodes.\n\nEither the reduction to a prime sum fails, or the Mertens cancellation is not uniform, pointing to an arithmetic obstruction in the channel.",
+    "domain_bridges": [],
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "fd_3721",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Apply the saturation law termwise, split the summand as log2(p/(p-1)) + log2(p-1)/p, and use Mertens' theorems for sum 1/p and sum log p / p.",
+    "research_mode": "team",
+    "source_exp_id": "a4769f7a",
+    "status": "available",
+    "timestamp": "2026-08-22T19:36:05.003832+00:00",
+    "title": "Mertens Growth Law for the Primorial Type Channel"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Bridges.CyclicSubfieldRenyiPrime",
+      "Bridges.CyclicSubfieldRenyi"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The prime-degree splitting-type channel is the two-point vector (1/q, (q-1)/q), whose Renyi entropy of every real order is now in closed form, and the orders 0, 1, 2 are strictly ordered with integer certificates. The conjecture upgrades those finitely many comparisons to strict monotonicity in the order parameter, with infimum log2(q/(q-1)).\n\nFor every prime q >= 3 the map a -> H_a(T_q) is strictly decreasing on (0, infinity) and tends to log2(q/(q-1)) as a tends to infinity.\n\nDifferentiate the closed form typeRenyi_prime_formula in a and identify the derivative with minus a Kullback-Leibler divergence between the escort distribution of order a and the original two-point vector; then prove strict positivity of that divergence for a non-uniform pair.\n\nThe whole Renyi spectrum of a cyclic prime-degree channel is pinned between one bit and log2(q/(q-1)), an effective two-sided bound uniform in the conductor.\n\nThe order profile is non-monotone somewhere, which for a two-point distribution would contradict the escort-divergence identity and reveal an error in the closed form.",
+    "domain_bridges": [],
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "fd_3723",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Write H_a = (1-a)^{-1} log2 S(a) with S(a) = p1^a + p2^a, compute d/da of the quotient, and reduce the sign to Jensen strictness for the escort weights; the discrete cases already proved supply sanity checks at a = 0, 1, 2.",
+    "research_mode": "team",
+    "source_exp_id": "a4769f7a",
+    "status": "available",
+    "timestamp": "2026-08-22T19:36:05.740986+00:00",
+    "title": "Continuous Renyi Monotonicity at Prime Degree"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Bridges.CyclicCubicConductor13",
+      "Bridges.CyclicSubfieldTypeChannel"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Pinning is exact on unramified classes because the type is a deterministic function of the residue. Enlarging the sample space by the single ramified prime p = f should degrade the identity by a computable amount of order (log f)/f, and by nothing else.\n\nWith the ramified class adjoined, H(T) - I(p mod f ; T) = Theta((log f)/f), and the difference is 0 exactly when the ramified class is removed.\n\nCompute the enlarged-channel entropies exactly with uEnt_eq_shannon for f = 7, 13, 19, 31 and fit the constant; then prove two-sided bounds.\n\nFull pinning becomes a theorem with an explicit error term, valid uniformly in the conductor.\n\nRamification interacts with the type distribution non-perturbatively, a genuinely new phenomenon.",
+    "domain_bridges": [],
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "fd_3724",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Treat the enlarged space as a one-point perturbation, expand uEnt_eq_shannon in 1/f, and control the log terms with the logb bounds already proved.",
+    "research_mode": "team",
+    "source_exp_id": "a4769f7a",
+    "status": "available",
+    "timestamp": "2026-08-22T19:36:06.100306+00:00",
+    "title": "Ramification as the Unique Obstruction to Pinning"
   },
   {
     "ambition_level": "extension",
