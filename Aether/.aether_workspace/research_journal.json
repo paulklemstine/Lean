@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "d37c9a15",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions — Neurosymbolic RLHF (PPO-ptx) research thread\n\nDerived from the analysis and adversarial review of this cycle.  Each\nconjecture is falsifiable, formalisable in the same finite fra",
-      "quality_score": 0.85,
-      "sorry_count": 5,
-      "theorem_count": 61,
-      "timestamp": "2026-08-20T15:50:23",
-      "title": "reinforcement learning"
-    },
-    {
       "cycle_id": "3b08d230",
       "domain": "Tropical",
       "key_insight": "# Future directions\n\nFive bold, falsifiable conjectures distilled from the verified results in\n`Catalog/Tropical/EtaQuotient*.lean`.  Throughout, `a : ℕ → ℤ` is a finitely\nsupported exponent vector, `",
@@ -499,19 +489,19 @@
       "theorem_count": 108,
       "timestamp": "2026-08-22T08:48:37",
       "title": "FACT round-32 #3 — UNIVERSAL-S3-EXTENDED: three fields, one answer (paper 114)"
+    },
+    {
+      "cycle_id": "e82f11a2",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions — rigidity and stability of the universality price\n\nThis cycle closed the equality analysis of the two sharp bounds `1 ≤ Cₛ ≤ #Θ`\nfor the Shtarkov sum of a finite source class, of",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 48,
+      "timestamp": "2026-08-22T08:48:50",
+      "title": "Both ingredients are already machine-checked (the sharp bound and 1-sum closure),"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "677413db",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions — after the extrinsic class-group corner\n\nCycle 1 proved the collapse at `D = -20` and `D = -84`; cycle 2 located its\nboundary at `D = -23`; cycle 3 proved the collapse is closed u",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 93,
-      "timestamp": "2026-08-14T12:04:19",
-      "title": "The Extrinsic Class-Group Representation Vector is a Residue Dial, Closed"
-    },
     {
       "cycle_id": "53eb02be",
       "domain": "Bridges",
@@ -2501,27 +2491,19 @@
       "theorem_count": 108,
       "timestamp": "2026-08-22T08:48:37",
       "title": "FACT round-32 #3 — UNIVERSAL-S3-EXTENDED: three fields, one answer (paper 114)"
+    },
+    {
+      "cycle_id": "e82f11a2",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions — rigidity and stability of the universality price\n\nThis cycle closed the equality analysis of the two sharp bounds `1 ≤ Cₛ ≤ #Θ`\nfor the Shtarkov sum of a finite source class, of",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 48,
+      "timestamp": "2026-08-22T08:48:50",
+      "title": "Both ingredients are already machine-checked (the sharp bound and 1-sum closure),"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "28aa3954",
-      "domain": "Pythagorean",
-      "name": "exchange_lower_bound",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "28aa3954",
-      "domain": "Pythagorean",
-      "name": "exchange_upper_bound",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "3cb644d1",
-      "domain": "Logic",
-      "name": "rad_le_self",
-      "quality": 0.82
-    },
     {
       "cycle_id": "3cb644d1",
       "domain": "Logic",
@@ -2803,9 +2785,27 @@
       "domain": "Physics",
       "name": "disc_depressed_cubic",
       "quality": 0.83
+    },
+    {
+      "cycle_id": "e82f11a2",
+      "domain": "MachineLearning",
+      "name": "needs",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "e82f11a2",
+      "domain": "MachineLearning",
+      "name": "simplex_le_one",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "e82f11a2",
+      "domain": "MachineLearning",
+      "name": "simplex_pair_le_one",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-22T08:48:37",
+  "last_updated": "2026-08-22T08:48:50",
   "open_questions": [
     {
       "context": "All proofs are complete; no `sorry`.; All proofs are complete; no `sorry`.",
@@ -3517,12 +3517,6 @@
     ],
     "MachineLearning": [
       {
-        "cycle_id": "e67b8bbc",
-        "quality": 0.78,
-        "theorems": 54,
-        "title": "Compression Research B1: Negative result — PRNGs cannot beat pigeonhole (proof +"
-      },
-      {
         "cycle_id": "094ca37a",
         "quality": 0.82,
         "theorems": 83,
@@ -3575,6 +3569,12 @@
         "quality": 0.83,
         "theorems": 181,
         "title": "The Berggren Tree and the Langlands Program — Automorphic Forms on the 3-adic Bo"
+      },
+      {
+        "cycle_id": "e82f11a2",
+        "quality": 0.82,
+        "theorems": 48,
+        "title": "Both ingredients are already machine-checked (the sharp bound and 1-sum closure)"
       }
     ],
     "Novelty": [

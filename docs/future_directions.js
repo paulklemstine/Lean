@@ -437,21 +437,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-30 #1 \u2014 HINT-TABLE-COMPLETION: the six-dial hint-value table (paper 104)"
   },
   {
-    "consumed_by_exp_id": "9d22f1f1",
-    "description": "## FACT round-32 #3 \u2014 UNIVERSAL-S3-EXTENDED (paper 114)\n\n**Verdict name: THREE-FIELDS-ONE-ANSWER.**\n\nA third independent S3 cubic \u2014 x3-3 (disc = -243) \u2014 confirms the type-channel law:\nI(p mod 3; T) = 1.0000 EXACTLY; semiprime pair channel = 1.0000.\n\nThree independent S3 fields, three distinct discriminants, one universal answer: the sign character captures exactly 1 bit, regardless of which polynomial realizes S3.\n\nNow 449 experiments. Assessment v225. Paper 114.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3486",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T21:40:03.956764+00:00",
-    "title": "FACT round-32 #3 \u2014 UNIVERSAL-S3-EXTENDED: three fields, one answer (paper 114)"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "## FACT round-30 #2 \u2014 HINT-S-D-DECOMPOSITION (paper 105, /tmp/exp_hintsd.py, /tmp/r30n2b.log)\n\n**Verdict name: THE-ROUTING-IS-DIAL-DEPENDENT.**\n\n### Result\nThe universal-synergy hypothesis (paper 99's pattern extends to all dials) is **REFUTED**: the routing structure depends on the Galois group.\n\n| dial | s-carried | d-carried | s-d synergy | structure |\n|---|---|---|---|---|\n| S\u2083a@31 | 4.0% | 3.8% | +1.44 | combination-required |\n| S\u2083b@23 | 5.2% | 5.1% | +1.41 | combination-required |\n| A\u2084@9 | 161.6% | 213.9% | +0.01 | noise on near-zero channel |\n| **D\u2084@8** | **100.0%** | 75.2% | **\u22121.00** | **SUM-SUFFICIENT** |\n| F\u2082\u2080@5 | 165.0% | 122.2% | +0.41 | both exceed |\n| C\u2085@11 | 77.8% | 55.7% | +1.18 | combination-required |\n\n### The structural explanation\nD\u2084 is sum-sufficient because its type map is f(p mod 8): (p+q) mod 8 determines p mod 8 and q mod 8 uniquely (q = N\u00b7p\u207b\u00b9 mod 8), hence determines the type pair. S\u2083 fields require both residues because the Legendre symbol (\u0394|p) is not determined by (\u0394|p)+(\u0394|q).\n\nNow 441 experiments. Assessment v216. Paper 105.\n",
     "domains": [
@@ -919,16 +904,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "NET-52: THE-TOY-FOUR-BIT-FLOOR-DOES-NOT-TRANSFER \u2014 per-channel RTN 4-bit costs +0.79 CE on Qwen2.5-0.5B (16x the toy floor budget); group-128 halves it; depth gradient and mesh sharpness confirmed"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6cdc8533",
     "description": "## NET-51 \u2014 limited-memory axis, round 3 (paper 136, /tmp/exp_net51_delta.py, /tmp/net51.log)\n\n**Verdict name: THE-KV-CORE-IS-SHARED-THE-TAIL-IS-PERSONAL.**\n\n### Result\nQwen2.5-0.5B **base** vs **Instruct** on identical held-out prompts (both capture forwards gated vs HF eager before measurement: argmax-agreement 0.9922 / 0.9971):\n\n- **Layer-0 keys EXACTLY identical** (cosK = 1.0000, rel-divergence 0.26%) \u2014 P1 EARLY-SHARE confirmed.\n- Every layer keeps cosK \u2265 0.976 (mean 0.990); values 0.94\u20130.99.\n- **P2 MONOTONE-DIVERGENCE REFUTED**: the fine-tune delta is a HUMP \u2014 relK climbs to 0.217 at L16 then falls back to ~0.16; hidden-state divergence peaks ~0.22 at L12\u201316.\n- Mean top-1 attention decision agreement 0.894 across layers \u2014 BUT it collapses to **0.568 (L22) / 0.627 (L23)** while those layers' K/V stay cosine-similar (0.983/0.988): vector similarity does NOT bound functional divergence.\n\n### The convergence\nThe SAME two tail layers that NET-50 measured as the only far-from-tropical region (Maslov gap medians 2.5\u20132.7) and the highest-crystallization region are where two fine-tunes of the same base make different attention decisions. Three independent measurements now agree: **the bulk of a transformer is shared machinery; the last two layers are where the model's identity lives.**\n\n### Practical\nA shared-KV multi-finetune server can share ~22/24 layers at \u22650.92 decision agreement; the tail must be per-model. This is the catalogue's amortized model-delta law (n\u00b7r + min(D,n)) made concrete for KV serving.\n\n### All 8 barriers\n(a) clean \u2014 three structural horns pre-stated; (b) confronted \u2014 task-vector/finetune-delta folklore exists; NEW content = exact hump constants, the decision-vs-vector dissociation at the tail, three-way convergence with our own tropical maps; (c) confronted \u2014 real pretrained pair; honest limits: ONE pair, ONE context, n=4 prompts, fp16 captures; (d) clean \u2014 no training involved; (e) cosine does not bound impact (why Part B exists); prompt variance uncharacterized; (f) clean \u2014 both forwards gated; two gate-caught bugs fixed before any measurement counted; (g) fair \u2014 each model scored under its own weights; (h) DIRECT \u2014 quantified sharing design for limited-VRAM multi-model serving.\n\n### Next\nCausal tail-swap test (exchange only L22/L23 between models); bigger pairs (1.5B/7B); SFT vs RLHF vs DPO tails; quantize-core-harder-than-tail (link to NET-52).\n\nNow 51 network experiments. Assessment v51. Paper 136.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3561",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T03:58:05.369374+00:00",
     "title": "NET-51: THE-KV-CORE-IS-SHARED-THE-TAIL-IS-PERSONAL \u2014 base-vs-Instruct keys near-identical everywhere (layer 0 exact), delta hump-shaped peaking mid-stack, but attention decisions diverge in exactly the L22/L23 diffuse tail"
   },
@@ -1323,6 +1309,34 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-22T07:46:53.285748+00:00",
     "title": "FACT round-42 #2 \u2014 TRUE-ECM: lcm arm strictly dominates (paper 156)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-43 #4, cron iteration (exp 495, assessment v273). The consolidation: is a NO-FIT closed-form dial available?\n\n**THEORY-DIAL-HOLDS**: T(N) = \u03a3 2/p over QR primes p \u2264 400 \u2014 pure first-principles footprint, ZERO fitted coefficients \u2014 achieves Spearman vs rate = **0.755 / 0.7264** (two independent implementations) and OOS R\u00b2 = **0.541 / 0.5335** with one global scale. T-only BEATS the 8-fitted-bit model (0.534 > 0.463).\n\n- H3 PASS STRONG in both runs: measured fractions add nothing over the bits \u2014 the indicator vector is SUFFICIENT (paper 163's lottery confirmed at the marginal level). Lottery table: mean n_p | QR = 2/p to four decimals; QNR exactly 0.\n- Cascade survival variant retired (underperforms T).\n- Combined model reaches R\u00b2 = 0.626 (+0.029 over paper-145 baseline).\n- Adopted: T as the closed-form dial; keep w's full p \u2264 400 support over bit truncation.\n\nThe per-N yield dial's final form is fully theory-derived. Barriers 5/8 unchanged.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp495_qrlotto_dial.py + exp495_result.json, seed 20260926.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3628",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T08:49:15.376150+00:00",
+    "title": "FACT round-43 #4 \u2014 QRLOTTO-DIAL: the zero-fit theory dial holds (paper 164)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-43 #3, cron iteration (exp 494, assessment v272). The mechanism question behind paper 152's pair features.\n\n**ANTI-COINCIDENCE**: measured pair coincidences run at only **23.5\u201328.4% of the independence prediction** across all ten pairs (e.g., 3\u00d711: 1.79 vs 6.71 predicted). The same N's root structures across different small primes are coupled through N itself \u2014 v_j's residue pattern is one object, not independent per-prime draws \u2014 so joint hits are strongly SUPPRESSED relative to independence.\n\nThe pair features are joint-absence / anti-coincidence statistics, not coincidence statistics. H2 also refuted: clumping variance adds nothing over pairs (+0.015 pair lift on this population, direction consistent with paper 152).\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp494_coincidence_depth.py + exp494_result.json, seed 20260925.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3629",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T08:49:15.377654+00:00",
+    "title": "FACT round-43 #3 \u2014 COINCIDENCE-DEPTH: the pair features measure anti-coincidence (paper 163)"
   },
   {
     "consumed_by_exp_id": "",
@@ -3027,52 +3041,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Quantum Entanglement Monogamy: CKW Inequality"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Many of Ramanujan's identities were discovered without proof and later verified. Define a 'Ramanujan oracle' R that maps statements to {true, false, unknown} with accuracy \u2265 95% on number-theoretic statements of length \u2264 100. Prove: such an oracle cannot be computable (by a counting argument). Conjecture: the 'intuitive leap' in mathematical discovery corresponds to a specific non-computable operation related to the jump operator in computability theory.",
-    "domains": [
-      "Novelty",
-      "Pythagorean"
-    ],
-    "id": "seed_390",
-    "priority_score": 0.86,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Speculative: Ramanujan-Style Intuition as Formalizable Meta-Reasoning"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize Cantor's hierarchy of infinities in Lean 4: aleph_0 (countable), aleph_1 (first uncountable), the continuum hypothesis (CH = aleph_1 = 2^aleph_0). Prove: the power set axiom guarantees strictly larger cardinals. Show: the Hartogs number of any set exists without AC. Explore: can we formalize large cardinals (measurable, supercompact) and their consistency strength hierarchy? Connect to Rucker's intuition that 'infinity is a place you can visit.'",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "seed_394",
-    "priority_score": 0.86,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Rucker: Infinity and the Mind \u2014 Formalizing Different Sizes of Infinity"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Explore whether non-human intelligence (alien, AI, evolved) would discover the same mathematics. Define: 'universal mathematics' as the set of theorems provable in ANY sufficiently expressive formal system. Prove: Peano arithmetic is universal (its theorems are a subset of every consistent extension). Show: the parallel postulate is NOT universal (non-Euclidean geometries exist). Conjecture: the Riemann Hypothesis IS universal (every sufficiently rich arithmetic system proves it or its negation). Explore: what would alien number theory look like? Would aliens discover primes?",
-    "domains": [
-      "Novelty",
-      "Logic",
-      "Physics"
-    ],
-    "id": "seed_400",
-    "priority_score": 0.86,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Rucker: Saucer Wisdom \u2014 Non-Human Mathematical Intuition"
   },
   {
     "consumed_by_exp_id": "",
@@ -11788,6 +11756,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Every Boolean readout of the splitting type gives a channel value; the conjecture is that the value 1 is attained only by the sign readout, and that the whole spectrum separates S3 from C3 and from degree-4 groups. This makes the one-bit verdict an extremal statement rather than a coincidence.\n\nFor an S3 cubic, max over Boolean readouts f of I(residue ; f(T)) = 1, attained uniquely at f = sign; for a cyclic cubic the maximum is log2 3 - 2/3 < 1.\n\nEnumerate the 2^(c-1) two-block partitions of conjugacy classes, compute each channel value with the closed-form surprisal lemmas of S3TypeChannelLossy, and compare.\n\nThe one-bit law is an extremal characterisation of the index-2 subgroup A3 inside S3.\n\nSome non-sign readout also reaches 1 bit, meaning the channel value does not pin down the quadratic resolvent.",
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_3621",
+    "priority_score": 0.709969696969697,
+    "research_mode": "team",
+    "source_exp_id": "9d22f1f1",
+    "status": "available",
+    "timestamp": "2026-08-22T08:48:25.079274+00:00",
+    "title": "Boolean Readout Spectrum of a Cubic Field"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The exact identity 2*r*#edges + s*(r-s) = (r-1)*n^2 proved this cycle expresses the Turan number through the defect s*(r-s) with s = n mod r. The conjecture is that the same defect controls the extremal structure: almost-extremal K_{r+1}-free graphs are almost r-partite, with an explicit rather than o(n^2) error term.\n\nEvery K_{r+1}-free graph on n vertices with at least ex(n,K_{r+1}) - m edges becomes r-partite after deleting at most m + s*(r-s)/(2r) edges.\n\nThe convexity ingredient sum_i c_i^2 >= r*(n/r)^2 + (n mod r)*(2*(n/r)+1) is already proved (sum_sq_ge_balanced); derive the edge-deletion bound from it in Lean.\n\nA verified Turan stability theorem with an explicit error term.\n\nA near-extremal graph far from r-partite is a new extremal example.",
     "domains": [
       "Combinatorics",
@@ -11935,6 +11918,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-22T07:46:17.744066+00:00",
     "title": "Linear Switch Number for Random Bounded Posets"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The all-pairs stability bound \u2211_{\u03b8\u2260\u03b8'} (1 \u2212 d_TV) \u2264 #\u0398(#\u0398\u22121)\u00b7(#\u0398 \u2212 C\u209b) is proved in this cycle; the conjecture is that the sharp constant is 2(#\u0398\u22121). The approach is a rearrangement argument on the sorted likelihood vector at each message. It would make rigidity of the maximal price quantitatively optimal.\n\nFor a finite source class, \u2211_{\u03b8\u2260\u03b8'} (1 \u2212 d_TV(p_\u03b8, p_\u03b8')) \u2264 2(#\u0398\u22121)\u00b7(#\u0398 \u2212 C\u209b), improving the proved constant #\u0398(#\u0398\u22121) by a factor #\u0398.\n\nFormalise in Lean by sorting the likelihood vector at each message and comparing \u2211_{i<j} a_j with (k\u22121)\u00b7\u2211_{j\u22652} a_j; test numerically on random rational classes first.\n\nRigidity of the upper endpoint becomes quantitative and dimension-free: the price of universality is controlled by the class's average statistical separation.\n\nThe overlap functional is genuinely one-dimensional and only extremal pairs matter, which would itself sharpen the picture.",
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_3624",
+    "priority_score": 0.7096666666666668,
+    "research_mode": "team",
+    "source_exp_id": "e82f11a2",
+    "status": "available",
+    "timestamp": "2026-08-22T08:48:44.632556+00:00",
+    "title": "Sharp Constant in All-Pairs Affinity Stability"
   },
   {
     "consumed_by_exp_id": "",
@@ -12403,6 +12401,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The redundancy\u2013capacity inequality I(w) \u2264 log\u2082 C\u209b is conjectured to be tight exactly when the normalised maximum likelihood law is itself a mixture of the class. The approach uses the compensation identity to express the gap as a relative entropy against NML. This would identify the geometric obstruction separating average-case and worst-case universal coding.\n\nFor a strictly positive finite class, sup_w I(w) = log\u2082 C\u209b iff nml lies in the convex hull of {p_\u03b8}, and the optimal prior equalises D(p_\u03b8 \u2016 nml).\n\nFormalise the equalisation condition in Lean on top of compensation_identity and mutualInfo_le_logb_shtarkovSum; check small classes numerically.\n\nThe two universality theories of the thread (worst-case and Bayes) are unified by a single convexity criterion.\n\nA strictly positive capacity gap exists for representable classes, isolating a new invariant of source classes.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_3625",
+    "priority_score": 0.6710769230769232,
+    "research_mode": "team",
+    "source_exp_id": "e82f11a2",
+    "status": "available",
+    "timestamp": "2026-08-22T08:48:45.105455+00:00",
+    "title": "Capacity-Shtarkov Equality via Mixture Representability"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The three Berggren generators split into one parabolic and two hyperbolic directions, which makes the ternary tree exponentially unbalanced. The maximal depth reachable inside a hypotenuse box should be governed purely by the parabolic spine and hence grow like sqrt(H), while a typical node sits at logarithmic depth. This quantifies how far the tree is from a balanced ternary tree.\n\nThe maximal Berggren word length among triples with hypotenuse at most H satisfies D(H) = (1/2 + o(1)) * sqrt(H), while the average depth is Theta(log H).\n\nProve that a word containing k non-parabolic letters has hypotenuse at least 5^k, deduce k = O(log H), and combine with the closed form 4(j+1)^2+1 for parabolic runs; compare with the measured D(10^5) = 222.\n\nThe tree has a canonical thin spine, giving a seed-independent sqrt(H) lower bound for any single-orbit count and an explicit height function for enumeration algorithms.\n\nMixed words would have to beat pure parabolic runs, contradicting the multiplicative growth of the hyperbolic generators.",
     "domains": [
       "Computation"
@@ -12571,6 +12583,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-22T07:00:02.215654+00:00",
     "title": "Mixed-Radix Width Calculus for Multi-Dial Chaining"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Strict submultiplicativity of the memoryless Shtarkov sum was proved here from a single deficient pair of constant strings. The conjecture upgrades it to a uniform constant factor, which would give a quantitative Fekete rate rather than mere convergence. The route is per-type accounting using the Bernoulli machinery already formalised.\n\nFor a binary alphabet and n\u2081, n\u2082 \u2265 1, C\u209b(n\u2081+n\u2082) \u2264 (3/4)\u00b7C\u209b(n\u2081)\u00b7C\u209b(n\u2082); hence log\u2082 C\u209b(n)/n \u2192 0.\n\nExtend maxLik_tied_const_le_quarter from constant strings to all pairs of strings with distinct empirical types, then sum the deficits over the type decomposition.\n\nA quantitative Fekete rate for universal compression of memoryless sources, with explicit constants.\n\nThe deficit is concentrated on few string pairs, indicating that the tied-product view is too coarse for rates.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_3626",
+    "priority_score": 0.6697741935483873,
+    "research_mode": "team",
+    "source_exp_id": "e82f11a2",
+    "status": "available",
+    "timestamp": "2026-08-22T08:48:45.570103+00:00",
+    "title": "Uniform Multiplicative Deficit for the Memoryless Price"
   },
   {
     "consumed_by_exp_id": "",
@@ -12784,6 +12810,34 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The residue modulus that realises the coupling bit should be exactly the conductor of the quadratic resolvent, i.e. |disc| stripped of square factors and adjusted at 2. Here it is verified for -243, -108 (modulus 3) and -23 (modulus 23).\n\nFor a non-cyclic cubic with discriminant d, the smallest modulus q such that the Frobenius sign bit is a function of p mod q equals the conductor of the quadratic field Q(sqrt d).\n\nFormalise the general step IsSquare(d * v^2 : ZMod p) iff IsSquare(d : ZMod p) (already proved as isSquare_mul_sq_iff) and combine with quadratic reciprocity for the squarefree kernel.\n\nThe channel modulus becomes computable from the polynomial alone, closing the loop between the algebraic and information-theoretic sides.\n\nSome cubic has a coupling bit visible at a smaller modulus, which would contradict the conductor-discriminant formula.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_3623",
+    "priority_score": 0.6692962962962965,
+    "research_mode": "team",
+    "source_exp_id": "9d22f1f1",
+    "status": "available",
+    "timestamp": "2026-08-22T08:48:25.959427+00:00",
+    "title": "Discriminant Kernel Determines the Channel Modulus"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The sufficient-statistic bound C\u209b \u2264 #\u03c3 is saturated exactly when every fibre of the statistic carries a full unit of maximum-likelihood mass. For memoryless sources this would require a parameter making the law uniform on a whole type class, which product laws cannot do for several types at once. Proving non-saturation would show the (n+1)^{#A} bound is never tight.\n\nFor #A \u2265 2 and n \u2265 1 the memoryless class satisfies C\u209b(n) < (n+1)^{#A}, with at least one unsaturated type fibre.\n\nUse shtarkovSum_eq_card_statistic_iff with T the empirical type map and exhibit one fibre whose maximum-likelihood mass is < 1.\n\nThe method-of-types upper bound is never attained, so the true constant in the Rissanen rate is strictly smaller.\n\nSome exotic class saturates all fibres, giving a new extremal family for universal coding.",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "fd_3627",
+    "priority_score": 0.6692962962962965,
+    "research_mode": "team",
+    "source_exp_id": "e82f11a2",
+    "status": "available",
+    "timestamp": "2026-08-22T08:48:46.137981+00:00",
+    "title": "Non-Saturation of the Method-of-Types Bound"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The exchange distance from a chamber to a cell is |T \\\\ {i}|, a quantity in which the weights do not appear. We conjecture that the exchange metric therefore remembers only the support, in sharp contrast with the aggregator (which remembers everything) and the labelling (which remembers the weights modulo a constant).\n\nFor any two weight systems delta, delta' on the same support S, the exchange metrics of the two complexes are isometric via the identity on labels; and bounded-size exchange metrics already recover delta modulo a constant.\n\nProve the first half from exchange_distance; for the second half, restrict to moves of size at most one voter with a prescribed budget and compute which walls are reachable.\n\nCompletes a three-level hierarchy of invariants: metric < labelling < function, with exactly identified loss at each level.\n\nThe exchange metric secretly encodes numerical data, which would be surprising given its combinatorial formula.",
     "domains": [
       "Combinatorics"
@@ -12837,6 +12891,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T23:38:48.024786+00:00",
     "title": "Transversality of the Modular Locus"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any Galois extension with group G, the Chebotarev channel from residue class to Frobenius class should carry exactly log2 of the index of the commutator subgroup. This unifies the S3 one-bit law with the cyclic-cubic log2 3 law already proved. It turns an information-theoretic constant into a group-theoretic invariant.\n\nI(residue mod conductor ; Frobenius class) = log2 [G : G'] for every finite Galois group G with the Chebotarev joint law.\n\nInstantiate S3General.Imut_eq_logb_card_of_coupling with D = G/G', B = conjugacy classes weighted by class size, and verify the balance hypotheses by decide for all transitive groups of degree at most 5.\n\nThe channel value becomes a computable invariant of the Galois group, and 1.0000 is exactly the signature of an index-2 commutator quotient.\n\nThere exist groups where the residue class sees more than the abelianisation, contradicting class field theory; the coupling model would need conductor-dependent corrections.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_3620",
+    "priority_score": 0.6687142857142858,
+    "research_mode": "team",
+    "source_exp_id": "9d22f1f1",
+    "status": "available",
+    "timestamp": "2026-08-22T08:48:24.639097+00:00",
+    "title": "Abelianised Frobenius Capacity Law"
   },
   {
     "consumed_by_exp_id": "",
@@ -21863,6 +21931,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-22T03:07:54.241280+00:00",
     "title": "Subexponential Seeds via Sparse Binomial Products"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Observing a product of k primes only through the unordered multiset of splitting types should still leak exactly one bit, for every k. The k=1 and k=2 cases are proved here with different type profiles, suggesting a convolution-stable mass balance.\n\nFor every k >= 1, I(residue class of n = p_1...p_k ; multiset of splitting types) = 1 exactly.\n\nDefine the k-fold multiset alphabet with multiplicities given by the multinomial expansion of the profile 1:3:2, prove the sign-product factors through the multiset, and apply the character channel law.\n\nFactorisation-type data never leaks more than one bit about a squarefree integer's quadratic character, at any number of factors.\n\nThere is a k at which the multiset readout becomes correlated beyond the sign, which would be a genuinely new arithmetic correlation.",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "fd_3622",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "9d22f1f1",
+    "status": "available",
+    "timestamp": "2026-08-22T08:48:25.519972+00:00",
+    "title": "k-Fold Semiprime Channel Saturation"
   },
   {
     "consumed_by_exp_id": "",
@@ -35209,14 +35291,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "The `\u21d0` direction is proved (`FourierFA.uncertainty_eq_coset_modulation`); the `\u21d2`"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c08b5555",
     "description": "Open here; the multiplicative bound `|supp f| \u00b7 |supp f\u0302| \u2265 p` is proved\n(`FourierCyclic.uncertainty_zmod`), and it is strictly weaker (e.g. `|supp f| = |supp f\u0302| = \u221ap`\nwould satisfy the product bound but violate the sum bound).",
     "domains": [],
     "id": "fd_1409",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "525aecde",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-17T09:01:32.094527+00:00",
     "title": "Open here; the multiplicative bound `|supp f| \u00b7 |supp f\u0302| \u2265 p` is proved"
   },
@@ -36228,19 +36311,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-18T13:08:22.193046+00:00",
     "title": "The odd case of existence is *proved*: `TriangularForest.sparsity_bound_attained`"
-  },
-  {
-    "consumed_by_exp_id": "e82f11a2",
-    "description": "Both ingredients are already machine-checked (the sharp bound and 1-sum closure),\nso the conjecture reduces to an equality analysis of an existing induction rather than to new\ntheory.",
-    "domains": [],
-    "id": "fd_1524",
-    "phase": "A",
-    "priority_score": 0.4,
-    "research_mode": "team",
-    "source_exp_id": "ed687362",
-    "status": "in_progress",
-    "timestamp": "2026-08-18T13:08:22.402394+00:00",
-    "title": "Both ingredients are already machine-checked (the sharp bound and 1-sum closure),"
   },
   {
     "consumed_by_exp_id": "",

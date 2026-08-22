@@ -1,79 +1,82 @@
-# Computational evidence — Bonferroni machinery and marginal selection
+# Computational evidence — cycle v19c, "which marginals feed the Bonferroni machinery"
 
-All numbers below were produced by `#eval` inside Lean 4 (Mathlib v4.28.0), i.e. by the
-kernel-compatible compiler on the same definitions that appear in
-`Catalog/Combinatorics/BonferroniMarginals.lean` (`mult`, `support`, `pairSum`,
-`doubleCollision`).  They are *exploratory data*, not proofs; every claim that survived them
-is proved separately in the Lean file with 0 sorries.
+All numbers below were produced inside the Lean project (`lake env lean` with
+`#eval`) by *brute-force enumeration of the entire codebook space*
+`H : α → Fin M`, so they are exact integer counts, not samples.  The two
+head-line rows are additionally checked by the Lean kernel in
+`Catalog/Geometry/ExactFailureMarginal.lean`
+(`failure_count_check_three_two`, `failure_count_check_four_three`, both `decide`).
 
-## 1. Exhaustive check of the machinery on all families `Fin 3 → Finset (Fin 4)`
+## 1. The exact failure count
 
-Ground set `Fin 4`, index set `Fin 3`, so `2^4 = 16` possible members and `16³ = 4096`
-families.  For each family we tested the three universal statements.
+Setting: `α = Fin n`, transmitted string `x = 0`, competitor set
+`D = univ.erase 0`, so `k = n - 1`.  `failSet` is the set of codebooks for
+which some competitor collides with `x`.
 
-| quantity | count (out of 4096) |
-|---|---|
-| families violating `∑ᵢ \|Aᵢ\| ≤ \|support\| + pairSum` | **0** |
-| families with **equality** in that inequality | 256 |
-| families violating `2·\|doubleCollision\| ≤ pairSum` | **0** |
-| families with equality `2·\|doubleCollision\| = pairSum ≠ 0` | 2145 |
-| families violating `(∑ᵢ \|Aᵢ\|)² ≤ \|support\|·(∑ᵢ \|Aᵢ\| + pairSum)` | **0** |
+Conjectured law (now proved as `ExactFailure.card_failSet_exact`):
 
-The equality count `256 = 4⁴` is exactly the number of pairwise disjoint families (each of
-the 4 points is placed in one of the 3 members or in none).  This is a numerical confirmation
-of the equality characterisation proved as `Bonferroni.sum_eq_iff_pairwiseDisjoint`.
+```
+|failSet| = M^n − (M−1)^k · M^{n−k},      k = |D|
+```
 
-Both sharpness observations were then turned into theorems
-(`doubleCollision_bound_sharp`, `bonferroni_can_be_strict`).
+| n | M | brute-force `|failSet|` | law prediction | agree |
+|---|---|------------------------|----------------|-------|
+| 2 | 2 | 2   | 4 − 1·2 = 2      | ✓ |
+| 3 | 2 | 6   | 8 − 1·2 = 6      | ✓ |
+| 3 | 3 | 15  | 27 − 4·3 = 15    | ✓ |
+| 4 | 2 | 14  | 16 − 1·2 = 14    | ✓ |
+| 4 | 3 | 57  | 81 − 8·3 = 57    | ✓ |
+| 5 | 2 | 30  | 32 − 1·2 = 30    | ✓ |
+| 3 | 4 | 28  | 64 − 9·4 = 28    | ✓ |
+| 4 | 4 | 148 | 256 − 27·4 = 148 | ✓ |
 
-## 2. Which marginals? Sidon sets in `ZMod N`
+No counterexample was found; the search covered every codebook in each of the
+eight spaces (up to 256 codebooks each).
 
-`maxSidon N` is the true maximum size of a Sidon set in `ZMod N`, computed by brute force
-over all subsets.  `maxAll N` is the largest `m` permitted by the **all-translate** output
-`m(m-1) ≤ N-1`; `maxSelf N` is the largest `m` permitted by the **self-translate** output
-`m³ ≤ (2m-1)N`.
+## 2. Comparison of the four bounds
 
-| N | maxSidon | maxAll (`S = G`) | maxSelf (`S = A`) |
-|---|---|---|---|
-| 2 | 1 | 1 | 1 |
-| 3 | 2 | 2 | 2 |
-| 4 | 2 | 2 | 2 |
-| 5 | 2 | 2 | 2 |
-| 6 | 2 | 2 | **3** |
-| 7 | 3 | 3 | 3 |
-| 8 | 3 | 3 | 3 |
-| 9 | 3 | 3 | 3 |
-| 10 | 3 | 3 | **4** |
-| 11 | 3 | 3 | **4** |
-| 12 | 3 | 3 | **4** |
-| 13 | 4 | 4 | 4 |
-| 14 | 4 | 4 | **5** |
-| 15 | 4 | 4 | **5** |
-| 16 | 4 | 4 | **5** |
-| 17 | 4 | 4 | **5** |
-| 18 | 4 | 4 | **5** |
-| 19 | 4 | 4 | **5** |
-| 20 | 4 | 4 | **6** |
-| 21 | 5 | 5 | **6** |
+Exact probability `P = |failSet| / M^n` against
 
-Observations.
+* Bonferroni (catalog, `AlmostLossless.failure_prob_lower_bound_real`): `k/(2M)`,
+  valid only when `2(k−1) ≤ M`;
+* second moment (new, `BonferroniMarginals.hashing_failure_prob_lower`): `k/(M+k−1)`, unconditional;
+* harmonic lower bound from the exact law (`ExactFailure.failure_prob_ge_harmonic`): `k/(M+k)`;
+* Shannon union bound (`ExactFailure.failure_prob_le_shannon`): `k/M`.
 
-* For every `N` in the range, `maxAll N = maxSidon N`: feeding **all** `|G|` translates into
-  the machinery is not merely sharp asymptotically, it predicts the exact extremal value on
-  this whole range.
-* `maxSelf` first overshoots at `N = 6` and the gap grows; asymptotically the two outputs are
-  `m ≲ √N` versus `m ≲ √(2N)`.
-* This is the numerical content of the pair
-  `all_translate_bound_implies_self_translate_bound` (the all-translate output always implies
-  the self-translate one) and `marginal_selection_strict` (at `N = 100, m = 13` the converse
-  fails), both proved in Lean.
+| n | M | k | `k/(2M)` | `k/(M+k−1)` | `k/(M+k)` | exact `P` | `k/M` |
+|---|---|---|----------|-------------|-----------|-----------|-------|
+| 2 | 2 | 1 | 1/4  | 1/2 | 1/3 | 1/2   | 1/2 |
+| 3 | 2 | 2 | 1/2  | 2/3 | 1/2 | 3/4   | 1   |
+| 3 | 3 | 2 | 1/3  | 1/2 | 2/5 | 5/9   | 2/3 |
+| 4 | 2 | 3 | 3/4  | 3/4 | 3/5 | 7/8   | 3/2 |
+| 4 | 3 | 3 | 1/2  | 3/5 | 1/2 | 19/27 | 1   |
+| 5 | 2 | 4 | 1*   | 4/5 | 2/3 | 15/16 | 2   |
+| 3 | 4 | 2 | 1/4  | 2/5 | 1/3 | 7/16  | 1/2 |
+| 4 | 4 | 3 | 3/8  | 1/2 | 3/7 | 37/64 | 3/4 |
 
-## 3. Counterexample hunt
+`*` the Bonferroni hypothesis `2(k−1) ≤ M` fails in that row (6 > 2), which is
+exactly why the entry exceeds the true probability there; in every row where the
+hypothesis holds the Bonferroni value is below the exact probability, and it is
+*always* below the second-moment value `k/(M+k−1)` — the numerical shadow of the
+proved comparison `BonferroniMarginals.chung_erdos_dominates_bonferroni`.
 
-* The universal claims of §1 were tested on the full `4096`-family space: no counterexample.
-* The Sidon marginal `#(translate A g ∩ translate A h) ≤ 1` for `g ≠ h` was checked implicitly
-  by the fact that no Sidon set in the table exceeds `maxAll`, and is proved in Lean
-  (`IsSidon.card_inter_translate_le_one`).
-* No OEIS sequence lookup was performed: the sequences appearing here (`maxSidon N` — the
-  cyclic-Sidon/perfect-difference-set growth) are used only as a sanity check against the two
-  bounds, and no new integer sequence is claimed.
+Observed ordering in every admissible row:
+`k/(2M) ≤ k/(M+k−1)` and `k/(M+k) ≤ P ≤ k/M`, with `P → 1` as `k/M → ∞`.
+
+## 3. Sharpness probe for the abstract marginal theorem
+
+The abstract theorem `card_biUnion_lower_of_marginals` reads
+`c·k·N ≤ m·|⋃A|·(c + m(k−1))`.  Enumerating the constant family
+`A i = {0} ⊆ Fin 2` with `m = c = N = 2` and `k = 3` gives
+LHS `= 2·3·2 = 12` and RHS `= 2·1·(2 + 2·2) = 12`: the inequality is *tight*.
+The same family has `2m|⋃A| = 4 < 6 = kN`, so the Bonferroni-shaped conclusion
+`|⋃A| ≥ kN/(2m)` is false without a pairwise hypothesis.  Both facts are
+kernel-checked (`marginal_bound_sharp`,
+`bonferroni_conclusion_fails_without_pairwise`, by `decide`).
+
+## 4. OEIS
+
+The exact counts for `M = 2` (2, 6, 14, 30, …) are `2^n − 2`, and for `M = 3`
+(15, 57, …) are `3^n − 2^{n−1}·3`; these are shifted forms of the familiar
+`a(n) = 2^n − 2` (A000918) and are recorded here only as a consistency check —
+no new sequence is claimed.
