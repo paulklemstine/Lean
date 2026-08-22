@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "5e41571a",
-      "domain": "Logic",
-      "key_insight": "# Future directions — median-as-projection, cycles 3–5\n\nThe results of this round are in `Catalog/Logic/KneeMedianProjection.lean` (the line),\n`Catalog/Logic/KneeMedianProjectionBox.lean` (`ℝⁿ` and th",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 67,
-      "timestamp": "2026-08-21T04:45:31",
-      "title": "Firm nonexpansiveness of the median-as-projection is proved"
-    },
-    {
       "cycle_id": "3d7df1d3",
       "domain": "Shared",
       "key_insight": "# Future Directions — Higher-Dimensional Pythagorean Trees\n\nThe development settles the basic form of the hypothesis:\n\n* the Berggren mechanism *does* generalise to Pythagorean quadruples — the all-on",
@@ -499,19 +489,19 @@
       "theorem_count": 63,
       "timestamp": "2026-08-22T20:41:20",
       "title": "FACT round-41 #2 — HIGH-PHASE: the linear phase route is closed at both prime ranges (paper 151)"
+    },
+    {
+      "cycle_id": "6cdc8533",
+      "domain": "Novelty",
+      "key_insight": "# FUTURE DIRECTIONS — after NET-51 (THE-KV-CORE-IS-SHARED-THE-TAIL-IS-PERSONAL)\n\n## What survived this cycle\n\n1. **The dissociation is a theorem, not an anomaly.** `cosine_near_one_decision_flip`\n   s",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 55,
+      "timestamp": "2026-08-22T21:36:32",
+      "title": "NET-51: THE-KV-CORE-IS-SHARED-THE-TAIL-IS-PERSONAL — base-vs-Instruct keys near-identical everywhere"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "70d03dec",
-      "domain": "Physics",
-      "key_insight": "# Future Directions — the cyclic splitting-type channel\n\nDerived from what survived and what failed in this cycle.  Each conjecture is falsifiable by a\nsingle computation on a cyclic order `n`; each i",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 75,
-      "timestamp": "2026-08-15T07:05:08",
-      "title": "CYCLIC-TYPE-CHANNEL (round-22 #2, experiment 413, assessment v189, paper 78)"
-    },
     {
       "cycle_id": "f2bb5930",
       "domain": "Shared",
@@ -2501,27 +2491,19 @@
       "theorem_count": 63,
       "timestamp": "2026-08-22T20:41:20",
       "title": "FACT round-41 #2 — HIGH-PHASE: the linear phase route is closed at both prime ranges (paper 151)"
+    },
+    {
+      "cycle_id": "6cdc8533",
+      "domain": "Novelty",
+      "key_insight": "# FUTURE DIRECTIONS — after NET-51 (THE-KV-CORE-IS-SHARED-THE-TAIL-IS-PERSONAL)\n\n## What survived this cycle\n\n1. **The dissociation is a theorem, not an anomaly.** `cosine_near_one_decision_flip`\n   s",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 55,
+      "timestamp": "2026-08-22T21:36:32",
+      "title": "NET-51: THE-KV-CORE-IS-SHARED-THE-TAIL-IS-PERSONAL — base-vs-Instruct keys near-identical everywhere"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "0e0f4ea6",
-      "domain": "Applications",
-      "name": "chainPair_injective",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "a3ad9f21",
-      "domain": "Combinatorics",
-      "name": "joint_restrict",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "a3ad9f21",
-      "domain": "Combinatorics",
-      "name": "capacity_mono",
-      "quality": 0.82
-    },
     {
       "cycle_id": "a3ad9f21",
       "domain": "Combinatorics",
@@ -2803,9 +2785,27 @@
       "domain": "Logic",
       "name": "refines_cost_lt",
       "quality": 0.79
+    },
+    {
+      "cycle_id": "6cdc8533",
+      "domain": "Novelty",
+      "name": "about",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "6cdc8533",
+      "domain": "Novelty",
+      "name": "strictTop_of_margin",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "6cdc8533",
+      "domain": "Novelty",
+      "name": "margin_factor_two_is_sharp",
+      "quality": 0.78
     }
   ],
-  "last_updated": "2026-08-22T20:41:20",
+  "last_updated": "2026-08-22T21:36:32",
   "open_questions": [
     {
       "context": "All proofs are complete; no `sorry`.; All proofs are complete; no `sorry`.",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "e8a76d4f",
-        "quality": 0.78,
-        "theorems": 109,
-        "title": "Compression Research B6: Compression ↔ one-way functions (the cryptography link)"
-      },
-      {
         "cycle_id": "cf8480d3",
         "quality": 0.85,
         "theorems": 32,
@@ -3637,6 +3631,12 @@
         "quality": 0.82,
         "theorems": 77,
         "title": "Study fair schedules under arbitrary positive rate profiles and construct exact-"
+      },
+      {
+        "cycle_id": "6cdc8533",
+        "quality": 0.78,
+        "theorems": 55,
+        "title": "NET-51: THE-KV-CORE-IS-SHARED-THE-TAIL-IS-PERSONAL — base-vs-Instruct keys near-"
       }
     ],
     "NumberTheory": [
