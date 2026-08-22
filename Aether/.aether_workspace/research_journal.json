@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "ce273a18",
-      "domain": "Geometry",
-      "key_insight": "# Future directions\n\nDerived from the four research cycles formalised in\n`Catalog/Geometry/PeelStoppingTime.lean`,\n`Catalog/Geometry/PeelSymmetryConstruction.lean`,\n`Catalog/Geometry/PeelStabilityConc",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 83,
-      "timestamp": "2026-08-20T17:46:30",
-      "title": "The upper bound is formalised (`exists_peel_stopping_time` together with"
-    },
-    {
       "cycle_id": "3ec7eb1a",
       "domain": "Combinatorics",
       "key_insight": "# Future directions — the marginal side of the Bonferroni machinery\n\nThe formalised results in `Catalog/Combinatorics/BonferroniMarginals.lean` isolate a clean\nseparation of concerns: the Bonferroni/C",
@@ -499,19 +489,19 @@
       "theorem_count": 148,
       "timestamp": "2026-08-22T11:36:24",
       "title": "FACT round-32 #3 — CYCLIC-CUBIC-TYPE-CHANNEL: two types, full pinning (paper 122)"
+    },
+    {
+      "cycle_id": "08e16c4e",
+      "domain": "NumberTheory",
+      "key_insight": "# Future Directions — Aleph-One Surface: Geometry Between Dimensions\n\nDerived from the verified results in\n`Catalog/NumberTheory/AlephOneSurfaceHausdorff.lean` (the `ℓ²` aleph-one surface:\n`dimH = ⊤`,",
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "theorem_count": 125,
+      "timestamp": "2026-08-22T11:36:38",
+      "title": "Aleph-1 Surface: Geometry Between Dimensions"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "83c80b79",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — De-Quantization Assessed: Shor's QFT Is Irreducible\n\nThe formalized results (`Catalog/Novelty/Shor*.lean`) establish, with zero\n`sorry`s:\n\n* the full Shor state has Schmidt rank",
-      "quality_score": 0.86,
-      "sorry_count": 0,
-      "theorem_count": 129,
-      "timestamp": "2026-08-14T15:14:33",
-      "title": "De-Quantization Assessed: Shor's QFT Is Irreducible"
-    },
     {
       "cycle_id": "295ca744",
       "domain": "Algebra",
@@ -2501,27 +2491,19 @@
       "theorem_count": 148,
       "timestamp": "2026-08-22T11:36:24",
       "title": "FACT round-32 #3 — CYCLIC-CUBIC-TYPE-CHANNEL: two types, full pinning (paper 122)"
+    },
+    {
+      "cycle_id": "08e16c4e",
+      "domain": "NumberTheory",
+      "key_insight": "# Future Directions — Aleph-One Surface: Geometry Between Dimensions\n\nDerived from the verified results in\n`Catalog/NumberTheory/AlephOneSurfaceHausdorff.lean` (the `ℓ²` aleph-one surface:\n`dimH = ⊤`,",
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "theorem_count": 125,
+      "timestamp": "2026-08-22T11:36:38",
+      "title": "Aleph-1 Surface: Geometry Between Dimensions"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "1632a2eb",
-      "domain": "Combinatorics",
-      "name": "cod_hom_unique",
-      "quality": 0.79
-    },
-    {
-      "cycle_id": "1632a2eb",
-      "domain": "Combinatorics",
-      "name": "cell_as",
-      "quality": 0.79
-    },
-    {
-      "cycle_id": "1632a2eb",
-      "domain": "Combinatorics",
-      "name": "comp_cell",
-      "quality": 0.79
-    },
     {
       "cycle_id": "663f5de8",
       "domain": "Computation",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "MI_le_left",
       "quality": 0.85
+    },
+    {
+      "cycle_id": "08e16c4e",
+      "domain": "NumberTheory",
+      "name": "boxSide_pos",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "08e16c4e",
+      "domain": "NumberTheory",
+      "name": "boxSide_le_one",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "08e16c4e",
+      "domain": "NumberTheory",
+      "name": "slab_apply",
+      "quality": 0.85
     }
   ],
-  "last_updated": "2026-08-22T11:36:24",
+  "last_updated": "2026-08-22T11:36:38",
   "open_questions": [
     {
       "context": "All proofs are complete; no `sorry`.; All proofs are complete; no `sorry`.",
@@ -3641,12 +3641,6 @@
     ],
     "NumberTheory": [
       {
-        "cycle_id": "bba7fa1e",
-        "quality": 0.84,
-        "theorems": 73,
-        "title": "Compression Research A1: Price of universality — minimax redundancy of universal"
-      },
-      {
         "cycle_id": "57212186",
         "quality": 0.9,
         "theorems": 621,
@@ -3699,6 +3693,12 @@
         "quality": 0.82,
         "theorems": 55,
         "title": "FACT round-31 #2 — INDEPENDENT-VERIFICATION: the character captures exactly one "
+      },
+      {
+        "cycle_id": "08e16c4e",
+        "quality": 0.85,
+        "theorems": 125,
+        "title": "Aleph-1 Surface: Geometry Between Dimensions"
       }
     ],
     "Physics": [

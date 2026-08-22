@@ -479,21 +479,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-32 #2 \u2014 UNIVERSAL-S3-TEST: wrong polynomial, accidental x5-2 measurement (paper 111)"
   },
   {
-    "consumed_by_exp_id": "6f0c0f57",
-    "description": "## FACT round-32 #3 \u2014 CYCLIC-CUBIC-TYPE-CHANNEL (paper 122)\n\n**Verdict name: THE-CYCLIC-CUBIC-IS-FULLY-PINNED.**\n\nCyclic cubic Q(zeta_7 + zeta_7^-1) (C3, conductor 7): only TWO types.\nH(T) = 0.9179 bits. I(p mod 7; T) = H(T) EXACTLY (full pinning).\nSemiprime pair 0.4747; wall z = +12517; which-factor 0.0000.\n\nNow 448 experiments. Assessment v228. Paper 122.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3498",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T22:42:58.221774+00:00",
-    "title": "FACT round-32 #3 \u2014 CYCLIC-CUBIC-TYPE-CHANNEL: two types, full pinning (paper 122)"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "## FACT round-31 #2 \u2014 SEXTIC-HINT-VALUE (paper 121)\n\n**Verdict name: THE-HINT-EXTENDS-BEYOND-DEGREE-5.**\n\nQ(zeta_13)+ (degree 6, C6, conductor 13): hint value +1.6407 bits.\nProduct view 1.4704; (s,d) jointly 3.1110; walls clean.\nHint map extends beyond degree 5.\n\nNow 449 experiments. Assessment v228. Paper 121.\n",
     "domains": [
@@ -1075,16 +1060,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-39 #2 \u2014 QR-REPLICATION: the variance law is seed-robust (paper 140)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8828af22",
     "description": "Round-41 #2, cron iteration (exp 483, assessment v260). Second half of the phase search.\n\n**LINEAR-PHASE-ROUTE-CLOSED**: high-prime phases (17 \u2264 p \u2264 97) add only +0.0215 same-window R\u00b2 (CI [\u22120.0025, +0.0429] \u2014 excludes the pre-stated +0.05); H3 fails (0.629 < 0.70). Unlike low-primes' negative transfer, the small high-prime gain is WINDOW-STABLE (cross/same = 0.92).\n\nWith paper 150: singleton root-position offsets carry no out-of-sample signal beyond the footprint dial anywhere in 3 \u2264 p \u2264 97. The split-ceiling excess remains unlocated \u2014 candidates narrow to interaction/joint-alignment encodings or intrinsic-to-family status.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp483_high_phase.py + exp483_result.json, seed 20260902.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3590",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T05:43:53.953350+00:00",
     "title": "FACT round-41 #2 \u2014 HIGH-PHASE: the linear phase route is closed at both prime ranges (paper 151)"
   },
@@ -1423,6 +1409,48 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-22T10:41:00.261918+00:00",
     "title": "FACT round-45 #3 \u2014 FIXED-BOUND: the u-sensitivity is genuine reweighting (paper 169)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-47 #1, cron iteration (exp 508, assessment v282). The dial's third validation axis.\n\n**DIAL-BITLEN-STABLE**: all 6 cells (bitlen {48, 52} \u00d7 3 seeds) inside [0.60, 0.85]; T beats the bare QR-count everywhere (mean advantage +0.12/+0.14). Neither graceful decline nor cliff \u2014 the dial's accuracy is BITLEN-STABLE.\n\nThe zero-fit dial is now validated on three axes: seed-stability (paper 165), regime-invariance (paper 162), and bitlen-stability (this paper). Its deployment envelope is fully characterized.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp508_t_dial_bitlen.py + exp508_result.json, seeds 20261010\u201312.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3649",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T11:37:04.903570+00:00",
+    "title": "FACT round-47 #1 \u2014 T-DIAL-BITLEN: the zero-fit dial is bitlen-stable (paper 175)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-46 #2 (exp 506). Multi-seed replication of paper 172's prime-power lift.\n\n**PPOW-LIFT-REPLICATES-AND-GROWS**:\n- Per-seed \u0394R\u00b2(pp_sum over base) at (u=3.5, w=240): **+0.055/+0.049/+0.051/+0.050/+0.048** \u2014 all five above 0.03, cross-seed sd **0.0025**, SE(mean) **0.0011**\n- CI excludes zero on 5/5 cells at BOTH u\n- Lift GROWS with window length: mean \u0394R\u00b2 rises 240\u2192960 (u=3.5: 0.051\u21920.058; u=2.5: 0.058\u21920.082)\n\nThe prime-power term is REAL, seed-stable, and window-robust. Barriers 5/8 unchanged.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp506_ppow_multiseed.py + exp506_result.json, seeds 20260940\u201344.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3650",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T11:37:04.905091+00:00",
+    "title": "FACT round-46 #2 \u2014 PPOW-MULTISEED: the prime-power lift replicates across seeds and grows with window length (paper 173)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-46 #1, cron iteration (exp 505, assessment v280). The direct hunt for paper 170's residual.\n\n**PRIME-POWER-CARRIES**: mid-prime fractions and QR-density add nothing (+0.019/+0.004, CIs span 0), but **prime-power hits (p\u00b2 | v_j for p \u2264 13) add +0.0892 out-of-sample R\u00b2 (CI [0.041, 0.125])** over the full baseline \u2014 decisively capturing the tight-u residual.\n\nMechanism: at smaller B, a value with p\u00b2 | v has its smoothness budget disproportionately consumed by small-prime powers \u2014 structure marginal squarefree-hit features cannot see. The per-N dial gains a prime-power term; the residual-hunt arc (papers 167\u2013172) closes constructively.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp505_mid_prime_hunt.py + exp505_result.json, seed 20260927.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3651",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T11:37:04.906497+00:00",
+    "title": "FACT round-46 #1 \u2014 MID-PRIME-HUNT: prime-power hits carry the tight-u residual (paper 172)"
   },
   {
     "consumed_by_exp_id": "",
@@ -2774,21 +2802,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Formalize the universal approximation theorem for ReLU networks. Prove depth-width tradeoffs: width-bounded networks of depth d can approximate functions that require exponential width at depth d-1. Construct explicit approximation rates for Sobolev functions.",
-    "domains": [
-      "MachineLearning",
-      "Analysis"
-    ],
-    "id": "fd_0684",
-    "priority_score": 0.9,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-24T14:34:16.697830+00:00",
-    "title": "Universal Approximation: Quantitative Bounds"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Formalizes Voiculescu's free probability: the free central limit theorem showing that normalized sums of freely independent identically distributed bounded random variables converge in distribution to the semicircle law, developed through the R-transform and free cumulants.",
     "domains": [
       "Probability",
@@ -3127,48 +3140,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Quantum Entanglement Monogamy: CKW Inequality"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 576be6d2 (Q=0.760), which proved 6 theorems in Logic. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize a research system as a dependent type where the type of the next cycle depends on outcomes of previous cycles. Prove that reflective self-improvement converges.",
-    "domains": [
-      "Logic"
-    ],
-    "id": "push_576be6d2_069e132c",
-    "priority_score": 0.8595499999999999,
-    "research_mode": "team",
-    "source_exp_id": "576be6d2",
-    "status": "available",
-    "timestamp": "2026-07-29T22:22:15.442777+00:00",
-    "title": "Deepening: Self-Modifying Research via Reflective Type Theory"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle ff2a2247 (Q=0.758), which proved 12 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that every graph on at least 3 vertices is determined up to isomorphism by its deck of vertex-deleted subgraphs. Formalize Kelly's lemma and prove for specific graph classes.",
-    "domains": [
-      "Combinatorics"
-    ],
-    "id": "push_ff2a2247_728c2682",
-    "priority_score": 0.8582199999999999,
-    "research_mode": "team",
-    "source_exp_id": "ff2a2247",
-    "status": "available",
-    "timestamp": "2026-07-31T22:26:12.535067+00:00",
-    "title": "Deepening: Reconstruction Conjecture"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 5843d50f (Q=0.754), which proved 7 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the consistency of quantum field theory as a proof-theoretic question. Prove that if a physical theory T is consistent, then Con(T) is independent of PA. Show that physical consistency implies mathematical consistency but not vice versa.",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "push_5843d50f_b1c85aec",
-    "priority_score": 0.8539499999999999,
-    "research_mode": "team",
-    "source_exp_id": "5843d50f",
-    "status": "available",
-    "timestamp": "2026-07-29T12:31:28.096564+00:00",
-    "title": "Deepening: Logic-Physics Bridge: Consistency of Physical Theories"
   },
   {
     "consumed_by_exp_id": "",
@@ -5679,23 +5650,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Transreal Arithmetic: Computing Beyond Plus-Minus Infinity"
-  },
-  {
-    "consumed_by_exp_id": "08e16c4e",
-    "description": "Construct a surface whose Hausdorff dimension is exactly aleph-1 (assuming CH). Prove that such a surface cannot be embedded in any finite-dimensional Euclidean space but can be embedded in the Hilbert cube. Formalize transfinite-dimensional manifolds and prove they have no finite triangulation.",
-    "domains": [
-      "Novelty",
-      "Geometry",
-      "SetTheory"
-    ],
-    "id": "seed_284",
-    "phase": "A",
-    "priority_score": 0.82,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "",
-    "title": "Aleph-1 Surface: Geometry Between Dimensions"
   },
   {
     "consumed_by_exp_id": "",
@@ -11314,6 +11268,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The map S \u21a6 surfaceOf S is uniformly definable and sends the finiteness of S to the triangulability of a surface. Every \u03a0\u2082 arithmetic statement of the form 'infinitely many n satisfy P' therefore has an exactly equivalent geometric form, and the base theory needed for the equivalence can be measured.\n\nFor every arithmetic predicate P, surfaceOf {n | P n} is transfinite-dimensional iff {n | P n} is infinite, provably in a weak base theory.\n\nFormalise the equivalence for a general decidable predicate and inspect the axioms used by the resulting bridge theorems.\n\nA uniform dictionary translating \u03a0\u2082 number theory into fractal geometry, with the twin prime instance already formalised.\n\nThe translation needs strength beyond the base theory, which would itself be a striking reverse-mathematical fact.",
+    "domains": [
+      "Geometry",
+      "Pythagorean"
+    ],
+    "id": "fd_3647",
+    "priority_score": 0.7110000000000001,
+    "research_mode": "team",
+    "source_exp_id": "08e16c4e",
+    "status": "available",
+    "timestamp": "2026-08-22T11:36:33.221095+00:00",
+    "title": "Arithmetic Surfaces Detecting Goldbach-Type Statements"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Recast the Moser\u2013Tardos analysis as a finite injective encoding of resampling logs by witness trees, avoiding infinite random sequences entirely. The existing finite weighted probability framework supplies the LLL side; only the combinatorial encoding is missing. This would make the constructive LLL fully formal with an explicit running-time bound.\n\nFor instances with e*p*(d+1) <= 1 there is an injection from non-terminating Moser\u2013Tardos logs of length T into a set of size 2^n * (d+1)^T * p^T, forcing T = O(n*d*log(1/p)).\n\nFormalize the witness-tree encoding of logs in Lean, prove injectivity, derive the length bound; sanity-check on random 3-SAT instances by evaluation.\n\nThe probabilistic method becomes algorithmic with a verified complexity bound.\n\nRandomness is essential to Moser\u2013Tardos and the constructivization is only semi-effective.",
     "domains": [
       "Computation",
@@ -11853,6 +11822,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-22T09:43:02.920531+00:00",
     "title": "Exact Randomisation Threshold Against the Pigeonhole Converse"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "In l^2 every ball has Hausdorff dimension top, so topological largeness should force maximal dimension. The Fsigma case is already a theorem; the conjecture extends it to all sets with the Baire property and adds that non-meagre Borel sets must contain a Hilbert cube. This would show that dimension is invisible to Baire category except at the extreme value.\n\nEvery subset of l^2 with the Baire property is meagre or has dimH = top, and every non-meagre Borel subset contains a topological copy of the Hilbert cube.\n\nFormalise Baire-property localisation to a ball and intersect with the flat cubes of le_dimH_ball; then build the cube copy by a Cantor scheme.\n\nHausdorff dimension collapses to a two-valued invariant on Baire-property sets in l^2.\n\nThere is a non-meagre set of finite Hausdorff dimension, an exotic object with no finite-dimensional analogue.",
+    "domains": [
+      "Geometry",
+      "Logic"
+    ],
+    "id": "fd_3648",
+    "priority_score": 0.7097741935483872,
+    "research_mode": "team",
+    "source_exp_id": "08e16c4e",
+    "status": "available",
+    "timestamp": "2026-08-22T11:36:33.678712+00:00",
+    "title": "Category\u2013Dimension Dichotomy Beyond the Borel Hierarchy"
   },
   {
     "consumed_by_exp_id": "",
@@ -12483,6 +12467,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Replace the integer-dimensional coordinate cells of the aleph-one surface by products of self-similar Cantor factors, producing surfaces whose achievable Hausdorff-dimension spectrum is an arbitrary sup-closed subset of [0,\u221e]. The current arithmetic surfaces are the integer shadow of this family. This would show that the arithmetic-to-geometry dictionary extends from subsets of \u2115 to closed subsets of the half-line.\n\nFor every sup-closed D \u2286 [0,\u221e] with 0 \u2208 D there is A \u2286 \u2113\u00b2 with {dimH B : B \u2286 A closed} = D.\n\nFormalise dimH of a product of n middle-\u03b1 Cantor sets, then rerun the surfaceOf union argument with those cells.\n\nHausdorff-dimension spectra of Hilbert-cube subsets are completely classified by sup-closure.\n\nSome sup-closed set is unattainable, revealing an extra constraint on countable unions in \u2113\u00b2.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_3644",
+    "priority_score": 0.6701428571428573,
+    "research_mode": "team",
+    "source_exp_id": "08e16c4e",
+    "status": "available",
+    "timestamp": "2026-08-22T11:36:31.687910+00:00",
+    "title": "Fractional Cell Spectrum of Arithmetic Surfaces"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prime hypotenuses of the tree are exactly the primes \u2261 1 mod 4, each at a unique node. The tree-specific question is therefore not how many primes there are below H, but how they are distributed across depths, where the silver poles at Re s = \u03c3\u2080 predict an oscillation of frequency \u03c0/log(1+\u221a2).\n\n\u03c0_tree(H) = \u00bd Li(H) + O(H exp(\u2212c\u221alog H)), and the number of prime nodes of depth at most d is \u224d (3+2\u221a2)^d/d with a secondary oscillatory term of frequency \u03c0/log(1+\u221a2).\n\nDerive the first statement from prime_hyp_iff plus the prime number theorem in arithmetic progressions; test the second numerically by counting prime hypotenuses per depth slice up to depth 12 and fitting the oscillation.\n\nThe tree has a prime number theorem whose error term is genuinely controlled by its own silver poles \u2014 the analogue of zero-controlled error terms in the classical theory.\n\nThe depth distribution of prime nodes is governed by the arithmetic of m\u00b2+n\u00b2 alone and carries no trace of the silver spectrum.",
     "domains": [
       "NumberTheory"
@@ -12637,6 +12635,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-22T08:48:45.570103+00:00",
     "title": "Uniform Multiplicative Deficit for the Memoryless Price"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The proof that well-ordered chains of Hausdorff dimensions are countable used only order-density of the rationals in the codomain. Abstracting it yields a ceiling theorem for every monotone invariant valued in a linear order with a countable order-dense subset: box, packing, Assouad and conformal dimension included.\n\nIf L is a linear order with a countable order-dense subset, every well-founded subset of L is countable; hence no uncountable strictly increasing well-ordered chain of such invariants exists.\n\nRefactor countable_of_isWF to the abstract setting and instantiate at \u211d\u22650\u221e and at any future Mathlib dimension invariant.\n\nNo fractal invariant of this type can index an \u2135\u2081-hierarchy \u2014 the aleph-one slogan is impossible for structural, not accidental, reasons.\n\nSome invariant has a codomain without countable order-density, opening the door to genuinely transfinite dimension scales.",
+    "domains": [
+      "Logic"
+    ],
+    "id": "fd_3646",
+    "priority_score": 0.6697741935483873,
+    "research_mode": "team",
+    "source_exp_id": "08e16c4e",
+    "status": "available",
+    "timestamp": "2026-08-22T11:36:32.746506+00:00",
+    "title": "Cardinal Ceiling for General Fractal Invariants"
   },
   {
     "consumed_by_exp_id": "",
@@ -13663,6 +13675,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-22T07:00:24.045117+00:00",
     "title": "Exact CRT Ceiling via Least Common Multiple"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Quantify how badly the prime surface fails to be triangulable by counting the minimal number of Lipschitz d-cells needed to cover its truncation at level d. The upper bound is already constructive; the conjecture is that it is sharp, so the covering number equals the prime counting function.\n\nFor finite S, the minimal number of Lipschitz d-cells covering surfaceOf S equals #S; for S the primes and d \u2192 \u221e this is asymptotically d / log d.\n\nProve the lower bound cell-count \u2265 #S in Lean using dimH monotonicity per cell, then instantiate with Mathlib's prime counting estimates.\n\nNon-triangulability acquires a quantitative, number-theoretic modulus.\n\nCells can be reused across dimensions, meaning Lipschitz cells are strictly more efficient than simplicial ones.",
+    "domains": [
+      "Geometry",
+      "NumberTheory"
+    ],
+    "id": "fd_3645",
+    "priority_score": 0.56321796476909,
+    "research_mode": "team",
+    "source_exp_id": "08e16c4e",
+    "status": "available",
+    "timestamp": "2026-08-22T11:36:32.163118+00:00",
+    "title": "Prime-Gap Modulus of Non-Triangulability"
   },
   {
     "consumed_by_exp_id": "",
@@ -32157,6 +32184,36 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "**Conjecture.** For every odd prime `m`, the Chebyshev-type coefficient\n`A_m(t)` (`A\u2080 = 0`, `A\u2081 = 1`, `A_{n+2} = t\u00b7A_{n+1} \u2212 A_n`) factors as\n`A_m(t) = \u03a8_m(t) \u00b7 (\u22121)^{(m\u22121)/2} \u03a8_m(\u2212t)`, where `\u03a8_m` is the minimal\npolynomial of `\u03b6_m + \u03b6_m\u207b\u00b9`, and moreover `A_{m\u22121}(t) + 1 = \u03a8_m(t) \u00b7 R_m(t)`\nwith `R_m` coprime to `\u03a8_m` modulo every prime `p \u2224 m`. Consequently `\u03a8_m` has\na root mod `p` iff `p \u2261 \u00b11 (mod m)`, for all odd prime conductors at once.\n\n*The key insight is* that `A_m` is the \"order-`m` locus\" of the trace map on\n`SL\u2082`, and the two factors correspond to the two ways an order-`m` element can\narise, `\u03b6 + \u03b6\u207b\u00b9` and `\u2212(\u03b6 + \u03b6\u207b\u00b9)`; the second condition `A_{m\u22121} = \u22121` is\nprecisely what discards the `\u2212` branch.\n\n*Why now?* `TraceOrder.cheb_root_iff` already reduces the arithmetic to these\ntwo polynomial identities, and they were verified and proved by `ring` for\n`m = 5, 7, 11` (`TraceOrder.golden_iff`, `TraceOrder.cubic_seven_iff`,\n`TraceOrder.quintic_eleven_iff`). In each case the B\u00e9zout identity between the\ntwo spurious factors turned out to be *integral* (denominator 1), which is the\nuniform statement one has to prove. Only the uniform-in-`m` factorisation is\nmissing; it is a statement about `\u2124[t]`, not about primes, so it is within\nreach of a resultant computation.",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_3639",
+    "priority_score": 0.44006284718451755,
+    "research_mode": "team",
+    "source_exp_id": "6f0c0f57",
+    "status": "available",
+    "timestamp": "2026-08-22T11:36:09.484379+00:00",
+    "title": "Chebyshev Factorisation of the Real Cyclotomic Tower"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**Conjecture.** For composite `N` coprime to `p`, a companion matrix\n`!![t, \u22121; 1, 0]` over `\ud835\udd3d_p` has exact order `N` iff `N` divides the exponent of\nthe cyclic group generated by a suitable Frobenius eigenvalue \u2014 concretely, iff\n`N \u2223 p \u2212 1` or `N \u2223 p + 1`. The union `N \u2223 p\u00b2\u22121` used in the prime case is\n*strictly larger* than `(N \u2223 p\u22121) \u2228 (N \u2223 p+1)` once `N` has two prime factors,\nso the criterion genuinely changes shape at composite level.\n\n*The key insight is* that for prime `m` the group `\u27e8u\u27e9` of order `m` must sit\ninside either `\ud835\udd3d_p^*` or the norm-one subgroup of `\ud835\udd3d_{p\u00b2}^*`, and for composite\n`N` it can straddle the two, splitting as a product.\n\n*Why now?* `TraceOrder.exists_companion_order_iff` is stated and proved for odd\nprimes `m` only because primality is used twice (Cauchy's theorem and a\ncoprimality step); both uses are localisable, so the composite case is a\nrefinement of an existing proof rather than a new one. It is also the exact\nstatement needed to move from prime conductors to conductors such as\n`m = 9, 15, 16`, i.e. to the full real cyclotomic tower.\n\n---\n\n```json future_directions.json\n[\n  {\n    \"title\": \"Chebyshev Factorisation of the Real Cyclotomic Tower\",\n    \"domain\": \"NumberTheory\",\n    \"description\": \"The Chebyshev-type coefficient A_m(t) should factor as the minimal polynomial of zeta_m + zeta_m^{-1} times its sign twist, with the companion condition A_{m-1} = -1 selecting exactly one factor. Proving this uniformly in m upgrades the conductor-5 and conductor-7 splitting laws proved in this cycle to every odd prime conductor at once. It replaces one splitting law per field by a single polynomial identity in Z[t].\",\n    \"conjecture\": \"For every odd prime m, A_m(t) = Psi_m(t) * (-1)^((m-1)/2) * Psi_m(-t) and A_{m-1}(t) + 1 = Psi_m(t) * R_m(t) with gcd(Psi_m, R_m) = 1 mod every p not dividing m; hence Psi_m has a root mod p iff p = +-1 mod m.\",\n    \"test\": \"Formalise A_m and Psi_m as elements of Polynomial ZZ and verify the identity by resultant/degree induction; the cases m = 5, 7, 11 are already theorems (golden_iff, cubic_seven_iff, quintic_eleven_iff), so start by pushing the same ring-level computation to m = 13, 17 and looking for the pattern in the Bezout cofactors.\",\n    \"if_true\": \"TraceOrder.cheb_root_iff immediately yields the full splitting law for every real cyclotomic field of prime conductor, generalising CyclicCubic.root_iff.\",\n    \"if_false\": \"The trace criterion is genuinely conductor-dependent and each Psi_m needs its own cofactor analysis, which would isolate 7 as special rather than typical.\",\n    \"proof_strategy\": \"Work in Z[t] with t = z + 1/z: A_m(t) = (z^m - z^{-m})/(z - z^{-1}), whose roots are the 2cos(2 pi k/m); split the k into the two Galois orbits fixed by k -> m-k and match degrees, then compute A_{m-1} + 1 via the same substitution.\",\n    \"catalog_references\": [\"Applications.CyclicCubicTypeChannel.TraceOrder\", \"Applications.CyclicCubicTypeChannel.Splitting\"]\n  },\n  {\n    \"title\": \"Pinning-Ab",
+    "domains": [
+      "Algebra",
+      "NumberTheory"
+    ],
+    "id": "fd_3643",
+    "priority_score": 0.44006284718451755,
+    "research_mode": "team",
+    "source_exp_id": "6f0c0f57",
+    "status": "available",
+    "timestamp": "2026-08-22T11:36:11.596749+00:00",
+    "title": "Trace Criterion Modulo Composite Levels"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "**Conjecture.** For a fixed `S\u2083` cubic field with discriminant `D`, the empirical mutual\ninformation computed from the primes below `X` satisfies\n`|I_X(p mod |D| ; T) - 1| = O(X^{-1/2 + \u03b5})` under GRH, and `O((log X)^{-A})` unconditionally.\n\n*The key insight is* that the mutual information is a smooth function of the four class\nfrequencies, so the Chebotarev error term transfers to the information with the same exponent up\nto a constant depending only on `|G|`.\n\n*Why now?* The catalog's `ChebotarevGeodesic*` files already formalise an error-exponent calculus\n(`HasErrorExponent`, `exponent_of_inverse_transform`), which is exactly the interface needed to\nturn a density error into an entropy error.",
     "domains": [
       "NumberTheory",
@@ -32169,6 +32226,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-22T05:43:18.665778+00:00",
     "title": "C4. A quantitative Chebotarev-with-error version of the one-bit theorem"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**Conjecture.** Let `K/\u211a` be a Galois number field of conductor/discriminant\ndata `d`, and let `T(p)` be the decomposition type of an unramified prime `p`.\nThe channel `p mod m \u21a6 T(p)` is fully pinned (`I = H(T)`) for some modulus `m`\nif and only if `K/\u211a` is abelian. For non-abelian `K` \u2014 the first case being an\n`S\u2083` cubic such as `X\u00b3 \u2212 X \u2212 1` \u2014 every residue channel satisfies\n`I(p mod m ; T) < H(T)` strictly, with a computable positive deficit.\n\n*The key insight is* that full pinning is exactly the assertion that the type\nmap factors through `(\u2124/m)\u02e3`, which by Kronecker\u2013Weber is exactly abelianness;\ninformation theory therefore *detects* class field theory.\n\n*Why now?* `CyclicCubic.MI_of_deterministic` and `CyclicCubic.MI_le_right`\nturn \"fully pinned\" into \"the label is a function of the residue\", a purely\ncombinatorial predicate that can be tested by `decide` on any finite modulus.\nThe negative half for `S\u2083` cubics is a finite computation for each `m`, so the\nfirst counterexample-free evidence is one afternoon of `decide` away.",
+    "domains": [
+      "Algebra",
+      "NumberTheory"
+    ],
+    "id": "fd_3640",
+    "priority_score": 0.43980346792765995,
+    "research_mode": "team",
+    "source_exp_id": "6f0c0f57",
+    "status": "available",
+    "timestamp": "2026-08-22T11:36:09.985556+00:00",
+    "title": "Pinning\u2013Abelianness Dichotomy"
   },
   {
     "consumed_by_exp_id": "",
@@ -32756,6 +32828,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "**Conjecture.** For any symmetric labelling channel \u2014 one whose ordered joint\nlaw satisfies `w(n, (i,j)) = w(n, (j,i))` \u2014 the ordered and unordered channels\ncarry identical mutual information, so the \"which factor is which\" bit is\nalways exactly `0` bits, however large its own entropy is. In particular no\nside-channel of this form can ever help factor a semiprime.\n\n*The key insight is* that the swap symmetry is an automorphism of the joint\ndistribution fixing the residue coordinate, so the extra label ordering is\nindependent of the observation conditionally on the unordered pair.\n\n*Why now?* The conductor-7 instance is proved\n(`CyclicCubic.which_factor_information_zero`, resting on the exact symmetry\n`CyclicCubic.countOrd_swap`), and it is proved there by computation rather than\nby symmetry \u2014 replacing that computation by the structural argument would give\nthe general theorem immediately.",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_3642",
+    "priority_score": 0.4388030050797809,
+    "research_mode": "team",
+    "source_exp_id": "6f0c0f57",
+    "status": "available",
+    "timestamp": "2026-08-22T11:36:10.957127+00:00",
+    "title": "Exchangeability Erases the Which-Factor Bit"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Proved this cycle in the form\n   `\u03b2\u00b7(KL(q*_r\u2016q*_s) + KL(q*_s\u2016q*_r)) \u2264 2K` (`ptx_optimum_stability`). Open: whether the sharp\n   constant is `K` rather than `2K`, and whether the quadratic improvement\n   `\u03b2\u00b2\u00b7KL \u2264 2K\u00b2` (via a Pinsker step) holds \u2014 Pinsker's inequality is not currently available in\n   the imported library, so this needs to be built first.",
     "domains": [],
     "id": "fd_1661",
@@ -33001,6 +33088,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T06:25:27.698986+00:00",
     "title": "Scalar generality"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**Conjecture.** Let `\u03c7 : (\u2124/m)\u02e3 \u2192 L` be a finite labelling that factors through\na quotient group, and let `N = pq` be a semiprime with `p, q` independent\nuniform. Then the information the residue `N mod m` withholds about the\nunordered label pair is *exactly* one label entropy:\n`H(pair) \u2212 I(N mod m ; pair) = H(L)`.\n\n*The key insight is* that multiplication is a group homomorphism, so the joint\nlaw of `(pq mod m, {\u03c7(p), \u03c7(q)})` is a coset-fibred distribution whose fibres\nare translates of a single one \u2014 the lost coordinate is a whole label, never a\nfraction of one.\n\n*Why now?* The conductor-7 case is now a theorem,\n`CyclicCubic.semiprime_deficit_eq_type_entropy`, with the deficit equal to\n`log\u20823 \u2212 2/3` on the nose; the coincidence of \"deficit\" and \"type entropy\" is\ntoo exact to be an accident, and the general statement is a finite-group\ncomputation that the existing `MI` API supports verbatim.",
+    "domains": [
+      "Algebra",
+      "NumberTheory"
+    ],
+    "id": "fd_3641",
+    "priority_score": 0.4378581235012284,
+    "research_mode": "team",
+    "source_exp_id": "6f0c0f57",
+    "status": "available",
+    "timestamp": "2026-08-22T11:36:10.473260+00:00",
+    "title": "Deficit Quantisation for Multiplicative Label Channels"
   },
   {
     "consumed_by_exp_id": "",
@@ -40626,14 +40728,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "CoxeterLength.lean"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "cd05a1fd",
     "description": "**Concavity (old sub-conjecture 1).** `lagrangeExponent_concaveOn`: `\u03c3` is concave on\n  `[1/27, \u221e)` (with the midpoint form `lagrangeExponent_midpoint_concave`), so averaging\n  two mass distributions never decreases the growth rate.",
     "domains": [],
     "id": "fd_3015",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "76abd1f0",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:27:30.857767+00:00",
     "title": "Concavity (old sub-conjecture 1)."
   },
