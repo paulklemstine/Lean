@@ -1,370 +1,367 @@
-# The Two-Parameter $\pm$-Frame: Coefficients of Binary Cyclotomic Polynomials as Lattice Points in a Balance Box
+# Height Reduction for Cyclotomic Polynomials: the Odd Radical, the Flat Class, and the Ternary Trichotomy
 
 **Author:** Aristotle
-**Date:** 2026-08-20
+**Date:** 2026-08-22
 
 ---
 
 ## Abstract
 
-We develop, from first principles, a complete and self-contained theory of the coefficients of the *$\pm$-frame* $\Phi_n \in \mathbb{Z}[X]$ — the $n$-th cyclotomic polynomial regarded as a signed coefficient frame — in the one- and two-parameter cases, and we isolate the precise mechanism that bounds those coefficients from below.
+Let $\Phi_n \in \mathbb{Z}[X]$ denote the $n$-th cyclotomic polynomial and let its **height** $H(n)$ be the largest absolute value of its coefficients. We develop a complete reduction theory for $H$ built from two elementary symmetries — *inflation* $\Phi_{np}(X)=\Phi_n(X^p)$ for $p \mid n$, and *reflection* $\Phi_{2n}(X)=\Phi_n(-X)$ for odd $n>1$ — and prove the **height reduction theorem**: for every $n \ge 1$ and every $B$, all coefficients of $\Phi_n$ are bounded by $B$ in absolute value if and only if the same holds for $\Phi_{\mathrm{rad}_{\mathrm{odd}}(n)}$, where $\mathrm{rad}_{\mathrm{odd}}(n)$ is the product of the odd primes dividing $n$. Consequently $H(n) = H(\mathrm{rad}_{\mathrm{odd}}(n))$: the height is blind to the prime $2$ and to repeated prime factors.
 
-In the one-parameter case $n = p$ prime, every coefficient of $\Phi_p$ is $0$ or $1$; in particular every coefficient is $\ge -1$. In the two-parameter case $n = pq$ with $p \ne q$ prime, we prove the closed formula
-$$\Phi_{pq}(X)\,(X^{pq}-1) = (X-1)\,G_{p,q}(X), \qquad G_{p,q}(X) = \Bigl(\sum_{i<q} X^{ip}\Bigr)\Bigl(\sum_{j<p} X^{jq}\Bigr),$$
-which converts the coefficient problem into a question about **integer points of a two-dimensional region**: the coefficient of $X^n$ in $G_{p,q}$ equals the number of lattice points $(i,j)$ of the *balance box* $[0,q)\times[0,p)$ on the line $ip + jq = n$. The arithmetic core is a uniqueness statement — a coprime line meets the balance box at most once — whose proof is a divisibility step plus linear integer reasoning. From it we obtain Migotti's theorem ($\Phi_{pq}$ has all coefficients in $\{-1,0,1\}$), the exact sign pattern as the discrete derivative of the indicator function of the numerical semigroup $\langle p,q\rangle$, the balance law $\sum_k [X^k]\Phi_{pq} = 1$, sharpness of the lower bound $-1$ for *every* semiprime (the linear coefficient is always $-1$), Sylvester's symmetry and gap count $\tfrac{1}{2}(p-1)(q-1)$, and palindromicity of $\Phi_{pq}$. We also exhibit the exact boundary of the method: with the non-coprime steps $2$ and $4$, the line $2i+4j = 4$ meets the box $[0,4)\times[0,2)$ twice and the associated geometry acquires a coefficient $2$. Finally we explain, in the same geometric language, why three parameters are expected to destroy the bound: the ternary analogue replaces "a line inside a rectangle" by "a plane inside a three-dimensional box", where multiplicity one is no longer forced.
+Coupling this with the two-parameter (Migotti) theorem yields the **flatness classification**: $\Phi_n$ has all coefficients in $\{-1,0,1\}$ whenever the odd part of $n$ has at most two distinct prime divisors; and the bound is attained, since $[X^{p^{a-1}q^{b-1}}]\Phi_{p^aq^b} = -1$. Since $105 = 3\cdot5\cdot7$ is the least integer with three distinct odd prime divisors, this explains why every $\Phi_n$ with $n < 105$ is flat.
 
-**Keywords:** cyclotomic polynomial, Migotti's theorem, numerical semigroup, Frobenius number, Sylvester's theorem, lattice points, coefficient bounds.
+We then determine three ternary cyclotomic polynomials exactly, by cancellation in the associated Möbius identity, and read off their heights: $\Phi_{231}$ (degree $120$) is flat; $\Phi_{105}$ (degree $48$) has height exactly $2$, attained at $X^7$ and $X^{41}$; $\Phi_{385}$ (degree $240$) has height exactly $3$, attained at $X^{119}, X^{120}, X^{121}$. Since height reduction propagates each value to the whole odd-radical class, we obtain three infinite families of orders — with odd radicals $231$, $105$, $385$ — of heights $1$, $2$, $3$ respectively, **all having exactly three odd prime divisors**. Hence $\omega_{\mathrm{odd}}$ does not determine the height, while $\mathrm{rad}_{\mathrm{odd}}$ does; and the flatness classification is a strict implication, not an equivalence. Finally we show that height $1$ is exactly flatness (monicity forbids height $0$), and that every coefficient of the flat two-prime-power families is an explicit difference of indicator functions of the numerical semigroup $\langle p, q\rangle$, so that the whole flat theory is a lattice-point count.
+
+**Keywords:** cyclotomic polynomial, coefficient height, flat polynomial, odd radical, numerical semigroup, Bang's bound, ternary cyclotomic polynomial.
 
 ---
 
 ## 1. Introduction
 
-### 1.1 The frame
+### 1.1 The problem
 
-For $n \ge 1$ let $\Phi_n \in \mathbb{Z}[X]$ denote the $n$-th cyclotomic polynomial, the monic polynomial whose roots are exactly the primitive $n$-th roots of unity. It satisfies the divisor factorisation
-$$X^n - 1 = \prod_{d \mid n} \Phi_d(X). \tag{1.1}$$
-We refer to $\Phi_n$, viewed as its sequence of coefficients, as the **$\pm$-frame of order $n$**, and we write $\Phi_n[k]$ for the coefficient of $X^k$. The governing question of this paper is:
+For $n \ge 1$ the $n$-th cyclotomic polynomial is
+$$\Phi_n(X) = \prod_{\substack{1 \le k \le n\\ \gcd(k,n)=1}} \left(X - e^{2\pi i k/n}\right),$$
+the minimal polynomial over $\mathbb{Q}$ of a primitive $n$-th root of unity. It is monic of degree $\varphi(n)$, it has integer coefficients, and it is characterized among integer polynomials by the divisor product identity
+$$\prod_{d \mid n} \Phi_d(X) = X^n - 1. \tag{1.1}$$
 
-> **Question.** How negative can $\Phi_n[k]$ be, and what structure controls it?
+Write $\Phi_n = \sum_k a_n(k)X^k$ and define the **height**
+$$H(n) = \max_k |a_n(k)| = \min\{B \in \mathbb{Z} : |a_n(k)| \le B \text{ for all } k\}.$$
 
-Numerically, the answer for small $n$ is: not negative at all beyond $-1$. Every coefficient of every $\Phi_n$ with $n < 105$ lies in $\{-1,0,1\}$, and it is a well-known historical fact that this observation was for a time conjectured to hold universally. It fails at $n = 105 = 3\cdot 5\cdot 7$. The purpose of this paper is not merely to confirm the bound in the cases where it holds, but to identify the *exact mechanism* responsible, in a form that explains simultaneously why the bound holds for one and two prime parameters and why it must be expected to fail for three.
+Empirically the height is stubbornly equal to $1$. The polynomial $\Phi_n$ is called **flat** when $a_n(k) \in \{-1,0,1\}$ for all $k$, i.e. when $H(n)=1$. Every $\Phi_n$ with $n < 105$ is flat, and the observation that heights exceed $1$ at all is a genuine nineteenth-century surprise. Our aim is to give a structural account of *why* flatness persists so long, *where* it stops, and *what invariant of $n$* actually controls the height.
 
-### 1.2 The mechanism, in one sentence
+### 1.2 Results
 
-The mechanism is dimensional. For two coprime steps $p, q$ the counting function
-$$g_{p,q}(n) \;=\; \#\bigl\{(i,j) \in \mathbb{Z}^2 : 0 \le i < q,\ 0 \le j < p,\ ip + jq = n\bigr\}$$
-takes only the values $0$ and $1$, because a line of coprime slope cannot meet a $q \times p$ box twice; and a closed formula expresses each frame coefficient as a *successive difference* of $g_{p,q}$, hence as a difference of two $\{0,1\}$-values.
+Let $\mathrm{rad}_{\mathrm{odd}}(n) = \prod_{p \mid n,\, p \ne 2,\, p \text{ prime}} p$ and let $\omega_{\mathrm{odd}}(n)$ be the number of odd primes dividing $n$.
 
-### 1.3 Contributions
+1. **Height reduction (Theorem 4.1).** For $n \ge 1$ and $B \in \mathbb{Z}$: $|a_n(k)|\le B$ for all $k$ $\iff$ $|a_{\mathrm{rad}_{\mathrm{odd}}(n)}(k)| \le B$ for all $k$. Hence $H(n) = H(\mathrm{rad}_{\mathrm{odd}}(n))$.
+2. **Flatness classification (Theorem 5.3).** If $\omega_{\mathrm{odd}}(n)\le 2$ then $\Phi_n$ is flat; the bound is sharp, since $a_{p^aq^b}(p^{a-1}q^{b-1}) = -1$ for distinct primes $p\neq q$ and $a,b\ge1$.
+3. **The explicit $\Phi_{105}$ (Theorem 6.2).** $\Phi_{105}$ equals an explicit degree-$48$ polynomial with $a_{105}(7)=a_{105}(41) = -2$ and all other coefficients in $\{-1,0,1\}$; hence $H(105)=2$, and $H(2^a3^{b+1}5^{c+1}7^{d+1})=2$ for all $a,b,c,d\ge0$.
+4. **The flat ternary order $231$ (Theorem 7.1).** $\Phi_{231}$ equals an explicit degree-$120$ polynomial with all coefficients in $\{-1,0,1\}$; hence $H(231)=1$ although $\omega_{\mathrm{odd}}(231)=3$, and the classification of (2) is not an equivalence. Every $n$ with $\mathrm{rad}_{\mathrm{odd}}(n)=231$ is flat.
+5. **The height-three order $385$ (Theorem 8.1).** $\Phi_{385}$ equals an explicit degree-$240$ polynomial with $a_{385}(119)=a_{385}(120)=a_{385}(121)=-3$ and all coefficients in $[-3,3]$; hence $H(385)=3$, and $H(2^a5^{b+1}7^{c+1}11^{d+1})=3$.
+6. **Height one is flatness; the ternary trichotomy (Theorems 9.1, 9.4).** $H(n)=1 \iff \Phi_n$ flat; $H$ is an invariant of $\mathrm{rad}_{\mathrm{odd}}$; and $H(231)=1$, $H(105)=2$, $H(385)=3$ with $\omega_{\mathrm{odd}} = 3$ throughout.
+7. **The lattice-point formula for the flat family (Theorem 10.2).** Every coefficient of $\Phi_{2^{\alpha}p^{\beta+1}q^{\gamma+1}}$ at an inflated index is $\pm$ a difference of indicators of the numerical semigroup $\langle p,q \rangle$.
 
-1. **The frame geometry and its closed formula** (§4): the identity $\Phi_{pq}(X)(X^{pq}-1) = (X-1)G_{p,q}(X)$, proved from the divisor factorisation (1.1) and a telescoping identity, with no appeal to Möbius inversion.
-2. **The arithmetic core** (§3): the balance box meets each line in at most one lattice point, with an elementary proof, and the resulting $\{0,1\}$-valuedness of $G_{p,q}$'s coefficients.
-3. **Migotti's theorem** (§5) in the sharp trichotomy form $\Phi_{pq}[k] \in \{-1,0,1\}$ for all $k$, together with the two one-sided bounds.
-4. **The exact sign pattern** (§6): $\Phi_{pq}[n+1] = \mathbb{1}[n+1 \in \langle p,q\rangle] - \mathbb{1}[n \in \langle p,q\rangle]$ for $n+1 < pq$, exhibiting the frame as a discrete derivative of a numerical-semigroup indicator.
-5. **Sharpness for every semiprime** (§7): $\Phi_{pq}[0] = 1$ and $\Phi_{pq}[1] = -1$; consequently $-1$ is the *least* value attained by the coefficient sequence, for every pair of distinct primes.
-6. **Balance** (§8): $\sum_{k \le \deg \Phi_{pq}} \Phi_{pq}[k] = 1$.
-7. **Sylvester symmetry, gap count, and palindromicity** (§9–§10): $g_{p,q}(n) + g_{p,q}(F - n) = 1$ for $0 \le n \le F := pq-p-q$; exactly $\tfrac12 (p-1)(q-1)$ of the exponents below $\deg \Phi_{pq}$ are gaps; and $\Phi_{pq}[k] = \Phi_{pq}[D-k]$ with $D = (p-1)(q-1)$.
-8. **The coprimality boundary** (§11): an explicit non-coprime pair for which the counting function takes the value $2$.
-9. **The ternary outlook** (§12–§13): why the argument does not survive the passage to three parameters, phrased as falsifiable conjectures.
+### 1.3 Method
 
----
+Three techniques are used throughout, and they are worth isolating.
 
-## 2. Definitions
-
-Throughout, $p$ and $q$ are positive integers, usually distinct primes, and all polynomials have integer coefficients.
-
-**Definition 2.1 ($\pm$-frame).** For $n \ge 1$, the **$\pm$-frame of order $n$** is the polynomial $\Phi_n \in \mathbb{Z}[X]$, the $n$-th cyclotomic polynomial. We write $\Phi_n[k] := [X^k]\Phi_n$.
-
-**Definition 2.2 (Frame geometry).** For $p, q \ge 0$, the **two-parameter frame geometry** is
-$$G_{p,q}(X) \;:=\; \Bigl(\sum_{i=0}^{q-1} X^{ip}\Bigr)\Bigl(\sum_{j=0}^{p-1} X^{jq}\Bigr) \;\in\; \mathbb{Z}[X].$$
-
-**Definition 2.3 (Balance box and its lattice points).** The **balance box** is the integer rectangle
-$$B_{p,q} := \{(i,j) \in \mathbb{Z}_{\ge 0}^2 : i < q,\ j < p\},$$
-and for $n \ge 0$ the set of its lattice points on the line $ip + jq = n$ is
-$$R_{p,q}(n) := \{(i,j) \in B_{p,q} : ip + jq = n\}, \qquad g_{p,q}(n) := \# R_{p,q}(n).$$
-
-**Definition 2.4 (Frame representability).** An integer $n \ge 0$ is **frame-representable** for $(p,q)$, written $n \in \langle p,q\rangle$, if there exist integers $i, j \ge 0$ (with no upper bound imposed) such that $ip + jq = n$. The set $\langle p,q \rangle$ is the **numerical semigroup** generated by $p$ and $q$.
-
-**Definition 2.5 (Gaps).** The **gaps of the balance region** are
-$$\Gamma_{p,q} := \{\, n : 0 \le n < (p-1)(q-1),\ R_{p,q}(n) = \varnothing \,\}.$$
-
-**Definition 2.6 (Frobenius number).** For coprime $p,q \ge 2$, put $F := pq - p - q$.
-
-We record the elementary identity, used repeatedly, that for $p, q \ge 2$
-$$(p-1)(q-1) = (pq - p - q) + 1 = F + 1. \tag{2.1}$$
-(Write $p = a+2$, $q = b+2$ and expand both sides: $ab+a+b+1$.) In particular $\deg \Phi_{pq} = (p-1)(q-1) = F+1 < pq$, since $\deg \Phi_{pq} = \varphi(pq) = (p-1)(q-1)$ for distinct primes.
+* **Symmetry transport.** Inflation and reflection are coefficient-level isometries: they permute indices and multiply by signs, so they preserve the multiset $\{|a_n(k)|\}$ of coefficient magnitudes exactly. Every height statement therefore descends along them.
+* **Cancellation from the Möbius identity.** For squarefree $n=pqr$, grouping (1.1) by inclusion–exclusion produces a *cyclotomic-free* polynomial identity that determines $\Phi_{pqr}$ up to a non-zero-divisor factor. Verifying a candidate polynomial in that identity is a finite algebraic computation and constitutes a complete proof of the explicit form.
+* **Lattice-point counting.** In the two-prime case coefficients are literally counts of solutions to $ip+jq=m$ in a box, which is why the flat bound is an identity and not an estimate.
 
 ---
 
-## 3. The arithmetic core: lattice-point uniqueness in the balance box
+## 2. Setup and notation
 
-Everything below rests on a single elementary statement.
+Throughout, $p, q, r$ denote primes and $n, m, k, a, b, c, d, \alpha, \beta, \gamma$ nonnegative integers. We work in $\mathbb{Z}[X]$.
 
-> **Theorem 3.1 (Two-dimensional integer-point uniqueness).** Let $p, q$ be coprime with $q > 0$. Let $i, i' \in [0, q)$ and $j, j' \ge 0$ be integers with
-> $$ip + jq = i'p + j'q.$$
-> Then $i = i'$ and $j = j'$.
+**Definition 2.1 (Cyclotomic polynomial).** $\Phi_n \in \mathbb{Z}[X]$ is the monic polynomial of degree $\varphi(n)$ whose roots are the primitive $n$-th roots of unity; equivalently, it is determined recursively by $\Phi_1 = X-1$ and (1.1).
 
-*Proof.* It suffices to prove $i = i'$; cancelling $ip$ then gives $jq = j'q$ and hence $j = j'$ since $q > 0$.
+**Definition 2.2 (Coefficients, boundedness, height).** Write $a_n(k) = [X^k]\Phi_n$. Say $\Phi_n$ is **bounded by $B$**, written $\mathcal{B}(n,B)$, if $|a_n(k)| \le B$ for all $k \ge 0$. The **height** is $H(n) = \min\{B : \mathcal{B}(n,B)\}$, i.e. the least element of $\{B \in \mathbb{Z} : \mathcal{B}(n,B)\}$.
 
-By symmetry assume $i \le i'$. From $ip + jq = i'p + j'q$ and $i \le i'$ we get $j' \le j$, and subtracting,
-$$(i' - i)\,p \;=\; (j - j')\,q .$$
-Thus $q \mid (i'-i)p$. Since $\gcd(p,q) = 1$, Euclid's lemma (in the coprime form: $q \mid ab$ and $\gcd(q,a)=1$ imply $q \mid b$) yields $q \mid (i' - i)$. But $0 \le i' - i < q$, since both $i,i' \in [0,q)$. A nonzero multiple of $q$ has absolute value at least $q$; hence $i' - i = 0$. $\square$
+**Definition 2.3 (Flatness).** $\Phi_n$ is **flat** if $\mathcal{B}(n,1)$, i.e. $a_n(k) \in \{-1,0,1\}$ for all $k$.
 
-The hypothesis used is exactly: *coprimality of the two steps*, and *the width of the box in the $i$-direction being at most $q$*. Both are sharp (see §11).
+**Definition 2.4 (Odd radical).** $\mathrm{rad}_{\mathrm{odd}}(n) = \prod_{p \in \mathrm{P}(n)\setminus\{2\}} p$, where $\mathrm{P}(n)$ is the set of primes dividing $n$. We write $\omega_{\mathrm{odd}}(n) = \#(\mathrm{P}(n)\setminus\{2\})$. Note $\mathrm{rad}_{\mathrm{odd}}(1)=\mathrm{rad}_{\mathrm{odd}}(2)=1$ and $\mathrm{rad}_{\mathrm{odd}}(2^a m)=\mathrm{rad}_{\mathrm{odd}}(m)$ for $m\ne0$.
 
-> **Corollary 3.2 (At most one point per line).** For coprime $p,q$ with $q > 0$ and any $n \ge 0$,
-> $$g_{p,q}(n) = \# R_{p,q}(n) \le 1 .$$
+**Definition 2.5 (Numerical semigroup and representability).** For distinct primes $p,q$, say $m \in \mathbb{Z}_{\ge0}$ is **$(p,q)$-representable**, written $m \in \langle p,q\rangle$, if $m = ip + jq$ for some $i,j \in \mathbb{Z}_{\ge0}$.
 
-*Proof.* Two elements $(i,j), (i',j')$ of $R_{p,q}(n)$ satisfy $ip+jq = n = i'p+j'q$ with $i,i' < q$; Theorem 3.1 forces them equal. $\square$
-
-The geometric picture is worth stating explicitly. The line $ip + jq = n$ in the real plane has slope $-p/q$; its integer points form a one-dimensional lattice with primitive step vector $(q, -p)$, whose horizontal displacement is exactly $q$. The balance box has horizontal extent $q$ — one unit too narrow to contain two consecutive integer points of the line. Coprimality is what guarantees that the primitive step is $(q,-p)$ and not a shorter vector $(q/d, -p/d)$.
+**Remark 2.6 (Trivial facts used freely).** $\Phi_n$ is monic, hence $a_n(\varphi(n)) = 1$ and $\mathcal{B}(n,B) \Rightarrow B \ge 1$. Also $\Phi_1 = X - 1$ and $\Phi_2 = X+1$ have the same coefficient magnitudes, so $\mathcal{B}(1,B) \iff \mathcal{B}(2,B)$.
 
 ---
 
-## 4. From lattice points to polynomials
+## 3. The two structural symmetries
 
-> **Proposition 4.1 (Coefficients of the frame geometry count lattice points).** For all $p,q,n \ge 0$,
-> $$[X^n]\,G_{p,q} \;=\; g_{p,q}(n).$$
+### 3.1 Inflation
 
-*Proof.* Expanding the product of the two finite sums,
-$$G_{p,q}(X) = \sum_{i<q}\sum_{j<p} X^{ip} X^{jq} = \sum_{(i,j) \in B_{p,q}} X^{ip + jq},$$
-and extracting the coefficient of $X^n$ counts precisely those $(i,j) \in B_{p,q}$ with $ip + jq = n$. $\square$
+**Lemma 3.1 (Inflation).** *Let $p$ be prime with $p \mid n$. Then $\Phi_{np}(X) = \Phi_n(X^p)$; equivalently, for all $k$,*
+$$a_{np}(k) = \begin{cases} a_n(k/p) & \text{if } p \mid k,\\ 0 & \text{otherwise.}\end{cases}$$
 
-> **Corollary 4.2.** If $p,q$ are coprime and $q > 0$, then $[X^n]G_{p,q} \in \{0,1\}$ for all $n$.
+*Proof sketch.* A primitive $np$-th root of unity is exactly a $p$-th root of a primitive $n$-th root of unity when $p \mid n$, since then $\varphi(np)=p\varphi(n)$ and no degeneration occurs; the identity is the classical prime-power substitution rule, and the coefficient form is the definition of substituting $X \mapsto X^p$. $\square$
 
-*Proof.* Combine Proposition 4.1 with Corollary 3.2, noting the count is nonnegative. $\square$
+**Corollary 3.2 (Iterated inflation).** *If $p \mid n$ then for all $c, k \ge 0$: $a_{np^c}(k p^c) = a_n(k)$, and $a_{np^c}(j)=0$ unless $p^c \mid j$. In particular $\Phi_{np^c}$ and $\Phi_n$ have the same multiset of nonzero coefficients, so $\mathcal{B}(np^c,B) \iff \mathcal{B}(n,B)$ for every $B \ge 0$.*
 
-We next relate $G_{p,q}$ to $X^{pq}-1$ and to the frame.
+*Proof sketch.* Induct on $c$ using Lemma 3.1, noting $p \mid np^{c}$ at each stage. For the equivalence: the forward direction restricts to indices $kp^c$; the backward direction covers the remaining indices, where the coefficient is $0$ and $B \ge 0$. $\square$
 
-> **Lemma 4.3 (Telescoping identity).** For all $p, q \ge 0$,
-> $$(X^p - 1)(X^q - 1)\, G_{p,q}(X) \;=\; \bigl(X^{pq} - 1\bigr)^2 .$$
+### 3.2 Reflection
 
-*Proof.* Reindex each factor as a geometric series in a power of $X$:
-$$\sum_{i<q} X^{ip} = \sum_{i<q} (X^p)^i, \qquad \sum_{j<p} X^{jq} = \sum_{j<p}(X^q)^j .$$
-The finite geometric identity $\bigl(\sum_{i<m} Y^i\bigr)(Y - 1) = Y^m - 1$ with $Y = X^p$, $m = q$ gives
-$$\Bigl(\sum_{i<q} X^{ip}\Bigr)(X^p - 1) = X^{pq} - 1,$$
-and with $Y = X^q$, $m = p$ gives $\bigl(\sum_{j<p} X^{jq}\bigr)(X^q-1) = X^{qp}-1$. Multiplying the two identities and rearranging factors yields the claim. $\square$
+**Lemma 3.3 (Odd half-frame product).** *For odd $n > 0$, $\prod_{d \mid n}\Phi_{2d}(X) = X^n + 1$.*
 
-> **Lemma 4.4 (Cyclotomic factorisation for a semiprime).** Let $p \ne q$ be primes. Then
-> $$(X^p - 1)(X^q - 1)\,\Phi_{pq}(X) \;=\; (X-1)\bigl(X^{pq}-1\bigr).$$
+*Proof sketch.* Since $n$ is odd, every divisor of $2n$ is either a divisor $d$ of $n$ or of the form $2d$ with $d \mid n$, and these two families are disjoint. Applying (1.1) at $2n$ and factoring out $\prod_{d\mid n}\Phi_d = X^n-1$ from $X^{2n}-1=(X^n-1)(X^n+1)$ gives the claim after cancelling the non-zero factor $X^n-1$ in the integral domain $\mathbb{Z}[X]$. $\square$
 
-*Proof.* The divisors of $pq$ are exactly $1, p, q, pq$: any divisor factors as $ab$ with $a \mid p$, $b \mid q$, and primality leaves the four listed possibilities, which are pairwise distinct because $p \ne q$ and $p,q \ge 2$. Hence (1.1) reads
-$$X^{pq} - 1 = \Phi_1 \Phi_p \Phi_q \Phi_{pq} = (X-1)\,\Phi_p\,\Phi_q\,\Phi_{pq}.$$
-For a prime $r$, $(X-1)\Phi_r = X^r - 1$. Multiplying the display by $(X-1)$ and grouping the two resulting copies of $(X-1)$ with $\Phi_p$ and $\Phi_q$ respectively,
-$$(X-1)\bigl(X^{pq}-1\bigr) = (X-1)^2\,\Phi_p\,\Phi_q\,\Phi_{pq} = \bigl((X-1)\Phi_p\bigr)\bigl((X-1)\Phi_q\bigr)\Phi_{pq} = (X^p-1)(X^q-1)\Phi_{pq}. \qquad\square$$
+**Lemma 3.4 (Reflected divisor product).** *For odd $n > 0$, $\prod_{d\mid n}\Phi_d(-X) = -(X^n+1)$.*
 
-> **Theorem 4.5 (Closed formula).** Let $p \ne q$ be primes. Then
-> $$\Phi_{pq}(X)\cdot\bigl(X^{pq} - 1\bigr) \;=\; (X-1)\cdot G_{p,q}(X).$$
+*Proof sketch.* Substitute $X \mapsto -X$ in (1.1); since $n$ is odd, $(-X)^n - 1 = -(X^n+1)$. $\square$
 
-*Proof.* The ring $\mathbb{Z}[X]$ is an integral domain and $u := (X^p-1)(X^q-1) \ne 0$, so it suffices to verify the identity after multiplying by $u$. Using Lemma 4.4 and then Lemma 4.3,
-$$u \cdot \Phi_{pq}(X^{pq}-1) = \bigl(u\,\Phi_{pq}\bigr)(X^{pq}-1) = (X-1)(X^{pq}-1)^2 = (X-1)\bigl(u\,G_{p,q}\bigr) = u\cdot (X-1)G_{p,q}.$$
-Cancelling $u$ gives the result. $\square$
+**Theorem 3.5 (Reflection law).** *For odd $n > 1$, $\Phi_{2n}(X) = \Phi_n(-X)$; equivalently $a_{2n}(k) = (-1)^k a_n(k)$, and therefore $|a_{2n}(k)| = |a_n(k)|$ for all $k$.*
 
-The closed formula is the bridge advertised in the introduction: on the right, multiplication by $X-1$ is the *discrete-derivative* operator on coefficient sequences; on the left, multiplication by $X^{pq}-1$ acts, in the coefficient range below $pq$, simply as negation.
+*Proof sketch.* Strong induction on $n$. Split both products of Lemmas 3.3 and 3.4 over $\{n\} \cup \{1\} \cup (\text{proper divisors} > 1)$. The tails over proper divisors $d>1$ agree term by term by the induction hypothesis, each such $d$ being odd and $>1$. The $d=1$ factors are $\Phi_2 = X+1$ on one side and $\Phi_1(-X) = -X-1 = -(X+1)$ on the other, which accounts exactly for the sign discrepancy between the two lemmas. Cancelling the common non-zero factor $(X+1)\prod_{d}\Phi_d(-X)$ — non-zero because substitution by $-X$ is a ring automorphism of $\mathbb{Z}[X]$ and each $\Phi_d \ne 0$ — leaves $\Phi_{2n}(X)=\Phi_n(-X)$. The coefficient statement follows since composing with $-X$ multiplies the $k$-th coefficient by $(-1)^k$. $\square$
 
-> **Proposition 4.6 (Coefficient recursion).** Let $p \ne q$ be primes.
-> 1. If $pq > 0$ then $\Phi_{pq}[0] = g_{p,q}(0)$.
-> 2. If $n + 1 < pq$ then $\Phi_{pq}[n+1] = g_{p,q}(n+1) - g_{p,q}(n)$.
-
-*Proof.* Take the coefficient of $X^{m}$ on both sides of Theorem 4.5. On the left, $[X^m]\bigl(\Phi_{pq}\cdot(X^{pq}-1)\bigr) = \Phi_{pq}[m - pq] - \Phi_{pq}[m]$, and for $m < pq$ the first term is absent, giving $-\Phi_{pq}[m]$. On the right, $[X^m]\bigl((X-1)G_{p,q}\bigr) = G_{p,q}[m-1] - G_{p,q}[m]$, interpreted as $-G_{p,q}[0]$ when $m = 0$. Equating and using Proposition 4.1 gives both statements. $\square$
+**Remark 3.6.** Both symmetries are *isometries of the coefficient vector*: inflation is an index dilation with zero padding, reflection is an alternating sign flip. Neither can change $H$.
 
 ---
 
-## 5. The main coefficient theorems
+## 4. Height reduction
 
-### 5.1 One parameter
+**Theorem 4.1 (Height reduction).** *For every $n \ge 1$ and every $B \in \mathbb{Z}$,*
+$$\mathcal{B}(n,B) \iff \mathcal{B}\bigl(\mathrm{rad}_{\mathrm{odd}}(n),\,B\bigr).$$
+*Consequently $H(n) = H(\mathrm{rad}_{\mathrm{odd}}(n))$.*
 
-> **Theorem 5.1 (One-parameter case).** Let $p$ be prime. Then for every $k \ge 0$,
-> $$\Phi_p[k] \in \{0,1\}; \qquad \text{in particular } \Phi_p[k] \ge -1 .$$
+*Proof sketch.* Strong induction on $n$. The cases $n=1$ and $n=2$ are Remark 2.6 together with $\mathrm{rad}_{\mathrm{odd}}(1)=\mathrm{rad}_{\mathrm{odd}}(2)=1$. For $n \ge 3$ distinguish:
 
-*Proof.* From $X^p - 1 = (X-1)\Phi_p$ we get $\Phi_p = 1 + X + \cdots + X^{p-1} = \sum_{i<p} X^i$, whose $k$-th coefficient is $1$ if $k < p$ and $0$ otherwise. $\square$
+*Case A: $n$ not squarefree.* Choose a prime $p$ with $p^2 \mid n$ and write $n = (n/p)\cdot p$ with $p \mid n/p$. Corollary 3.2 gives $\mathcal{B}(n,B)\iff\mathcal{B}(n/p,B)$, and $\mathrm{rad}_{\mathrm{odd}}(n)=\mathrm{rad}_{\mathrm{odd}}(n/p)$ because $n$ and $n/p$ have the same prime support. Apply the induction hypothesis to $n/p < n$.
 
-Thus in the one-parameter case there are no signs at all: the frame is a block of $+1$'s. Every phenomenon of interest is a two-parameter phenomenon.
+*Case B: $n$ squarefree and odd.* Then $\mathrm{rad}_{\mathrm{odd}}(n)=n$ and there is nothing to prove.
 
-### 5.2 Degree and top coefficient
+*Case C: $n$ squarefree and even.* Write $n = 2m$ with $m$ odd; squarefreeness forces $4 \nmid n$, and $n \ge 3$ forces $m > 1$. Theorem 3.5 gives $\mathcal{B}(2m,B)\iff\mathcal{B}(m,B)$, and $\mathrm{rad}_{\mathrm{odd}}(2m)=\mathrm{rad}_{\mathrm{odd}}(m)$. Apply the induction hypothesis to $m<n$. $\square$
 
-> **Proposition 5.2.** For distinct primes $p, q$: $\deg \Phi_{pq} = (p-1)(q-1)$ and $\Phi_{pq}[(p-1)(q-1)] = 1$.
+**Corollary 4.2.** *Flatness depends only on the odd radical: $\Phi_n$ is flat $\iff$ $\Phi_{\mathrm{rad}_{\mathrm{odd}}(n)}$ is flat.*
 
-*Proof.* $\deg \Phi_n = \varphi(n)$, and $\varphi(pq) = \varphi(p)\varphi(q) = (p-1)(q-1)$ by multiplicativity at coprime arguments. The top coefficient is $1$ because $\Phi_n$ is monic. $\square$
+**Corollary 4.3 (Radical classes).** *If $\mathrm{rad}_{\mathrm{odd}}(m)=\mathrm{rad}_{\mathrm{odd}}(n)$ then $\{B : \mathcal{B}(m,B)\} = \{B : \mathcal{B}(n,B)\}$, so $H(m)=H(n)$. Contrapositively, $H(m)\ne H(n)$ forces $\mathrm{rad}_{\mathrm{odd}}(m)\ne\mathrm{rad}_{\mathrm{odd}}(n)$.*
 
-### 5.3 Two parameters: Migotti's theorem
-
-> **Theorem 5.3 (Migotti).** Let $p \ne q$ be primes. Then for every $k \ge 0$,
-> $$\bigl|\Phi_{pq}[k]\bigr| \le 1, \qquad\text{equivalently}\qquad \Phi_{pq}[k] \in \{-1, 0, 1\}.$$
-> In particular $\Phi_{pq}[k] \ge -1$ and $\Phi_{pq}[k] \le 1$ for all $k$.
-
-*Proof.* Write $g := g_{p,q}$ and note $p,q \ge 2$ are coprime, so Corollary 3.2 gives $g(m) \in \{0,1\}$ for all $m$.
-
-*Case $k < pq$.* If $k = 0$, Proposition 4.6(1) gives $\Phi_{pq}[0] = g(0) \in \{0,1\}$, so $|\Phi_{pq}[0]| \le 1$. If $k = n+1$, Proposition 4.6(2) gives $\Phi_{pq}[k] = g(n+1) - g(n)$, a difference of two elements of $\{0,1\}$, hence in $\{-1,0,1\}$.
-
-*Case $k \ge pq$.* Since $p, q\ge 2$ we have $p + q \le pq$, so by (2.1) $\deg \Phi_{pq} = (p-1)(q-1) = pq - p - q + 1 \le pq - 1 < k$, and the coefficient vanishes. $\square$
-
-The trichotomy form follows since an integer of absolute value $\le 1$ is $-1$, $0$, or $1$.
+Theorem 4.1 is the organizing principle of the paper: it reduces *all* height questions to squarefree odd orders, and it converts any single explicit computation into a statement about an infinite family.
 
 ---
 
-## 6. The exact sign pattern: the frame is a semigroup derivative
+## 5. The flat class
 
-Theorem 5.3 is a bound. The next result is an identification: it says exactly *which* coefficient occurs where.
+### 5.1 The two-parameter theorem and its lattice-point content
 
-> **Lemma 6.1 (Box constraints are automatic below $pq$).** Let $n < pq$ with $p,q \ge 1$. Then $R_{p,q}(n) \ne \varnothing$ if and only if $n \in \langle p,q\rangle$.
+**Theorem 5.1 (Two-parameter / Migotti).** *For distinct primes $p\ne q$, $\Phi_{pq}$ is flat. More precisely, for $0 < m < pq$,*
+$$a_{pq}(m) = \mathbf 1\{m \in \langle p,q\rangle\} - \mathbf 1\{m-1 \in \langle p,q\rangle\}. \tag{5.1}$$
 
-*Proof.* ($\Rightarrow$) Immediate: a point of the box is in particular a nonnegative representation. ($\Leftarrow$) Suppose $ip + jq = n$ with $i,j\ge 0$. If $i \ge q$ then $n \ge qp$, contradicting $n < pq$; so $i < q$. Symmetrically, if $j \ge p$ then $n \ge pq$, contradiction; so $j < p$. Hence $(i,j) \in R_{p,q}(n)$. $\square$
+*Proof sketch.* From $\Phi_{pq} = \frac{(X^{pq}-1)(X-1)}{(X^p-1)(X^q-1)}$ one gets, as formal power series modulo $X^{pq}$,
+$$\Phi_{pq}(X) \equiv (1-X)\cdot\Bigl(\sum_{i\ge0}X^{ip}\Bigr)\Bigl(\sum_{j\ge0}X^{jq}\Bigr) \pmod{X^{pq}},$$
+and the coefficient of $X^m$ in $\bigl(\sum_i X^{ip}\bigr)\bigl(\sum_j X^{jq}\bigr)$ is the number of representations $m = ip+jq$ with $i,j\ge0$. The key **box-uniqueness lemma** says that for $0 \le m < pq$ there is at most one such pair with $0\le i<q$, $0\le j<p$ — indeed if $ip+jq = i'p+j'q$ then $p \mid (j-j')q$, so $p \mid j-j'$, and $|j-j'|<p$ forces $j=j'$, then $i=i'$ — and for $m<pq$ any representation automatically lies in the box. Hence the representation count is $\mathbf 1\{m \in \langle p,q\rangle\}$ and multiplying by $(1-X)$ gives (5.1). Since a difference of two indicators lies in $\{-1,0,1\}$, flatness follows for $0<m<pq$; the remaining coefficients vanish beyond $\deg \Phi_{pq}=(p-1)(q-1)$ or are covered by the same formula. $\square$
 
-> **Proposition 6.2 (Indicator form).** Let $p,q$ be coprime with $q > 0$, and $n < pq$. Then
-> $$g_{p,q}(n) = \mathbb{1}\bigl[\, n \in \langle p,q\rangle \,\bigr].$$
+**Lemma 5.2 (Sharpness at two primes).** *For distinct primes $p\ne q$ and $a,b\ge1$: $a_{p^aq^b}(p^{a-1}q^{b-1}) = -1$.*
 
-*Proof.* If $n \in \langle p,q\rangle$ then $R_{p,q}(n)$ is nonempty by Lemma 6.1 and has at most one element by Corollary 3.2, so $g_{p,q}(n) = 1$. Otherwise $R_{p,q}(n) = \varnothing$ and $g_{p,q}(n) = 0$. $\square$
+*Proof sketch.* By (5.1) with $m=1$, $a_{pq}(1) = \mathbf1\{1\in\langle p,q\rangle\}-\mathbf1\{0\in\langle p,q\rangle\} = 0-1=-1$. Now inflate twice by Corollary 3.2: applying it with $p$ (exponent $a-1$) and then with $q$ (exponent $b-1$) transports the index $1$ to $p^{a-1}q^{b-1}$ and preserves the value. $\square$
 
-> **Theorem 6.3 (Exact sign pattern).** Let $p \ne q$ be primes and $n + 1 < pq$. Then
-> $$\Phi_{pq}[n+1] \;=\; \mathbb{1}\bigl[\,n+1 \in \langle p,q\rangle\,\bigr] \;-\; \mathbb{1}\bigl[\,n \in \langle p,q\rangle\,\bigr].$$
+### 5.2 The classification
 
-*Proof.* Combine Proposition 4.6(2) with Proposition 6.2 applied at $n+1$ and at $n$ (both $< pq$). $\square$
+**Theorem 5.3 (Flatness classification).** *Let $n \ge 1$. If $\omega_{\mathrm{odd}}(n) \le 2$ — equivalently, if the odd part of $n$ has at most two distinct prime divisors — then $\Phi_n$ is flat.*
 
-**Interpretation.** Let $S = \langle p,q\rangle \cap [0, pq)$, the payable amounts below $pq$ in the coin problem with denominations $p$ and $q$. Theorem 6.3 says the frame is the *discrete derivative* of the indicator of $S$: $\Phi_{pq}$ has a $+1$ exactly at each left endpoint of a maximal run of $S$ (other than possibly at $0$, treated by Proposition 4.6(1)), a $-1$ exactly one past each right endpoint, and $0$ elsewhere. The frame is an edge detector for the numerical semigroup.
+*Proof sketch.* By Corollary 4.2 it suffices to treat $m = \mathrm{rad}_{\mathrm{odd}}(n)$, which is odd, squarefree, and has at most two prime factors, i.e. $m \in \{1, p, pq\}$. These are flat by $\Phi_1 = X-1$, by $\Phi_p = 1 + X + \cdots + X^{p-1}$, and by Theorem 5.1 respectively.
 
-**Worked example ($p=3, q=5$).** $S \cap [0,15) = \{0,3,5,6,8,9,10,11,12,13,14\}$. The indicator is
-$$1,0,0,1,0,1,1,0,1,1,1,1,1,1,1 \quad (n = 0,\dots,14),$$
-whose successive differences $\mathbb{1}[k \in S] - \mathbb{1}[k-1 \in S]$ for $k = 1,2,\dots$ are $-1, 0, +1, -1, +1, 0, -1, +1, 0, \dots$; prefixing the value $\Phi_{pq}[0]=1$ gives
-$$\Phi_{15} = 1 - X + X^3 - X^4 + X^5 - X^7 + X^8 ,$$
-in agreement with direct computation. Note $\Phi_{15}[7] = -1$: the exponent $7$ is the Frobenius number of $\langle 3,5\rangle$, and $6 \in \langle 3,5\rangle$ while $7 \notin \langle 3,5\rangle$.
+Equivalently, and without invoking Theorem 4.1, one can argue directly: write $n = 2^a m$ with $m$ odd. If $m=1$, $\Phi_n$ is a cyclotomic polynomial of prime-power order $2^a$, which is $\Phi_{2^a}=X^{2^{a-1}}+1$ (or $\Phi_1$), flat. If $m>1$ has at most two prime divisors, then $\Phi_m$ is flat by Theorem 5.1 plus prime-power inflation (Corollary 3.2), $\Phi_{2m}$ is flat by Theorem 3.5, and $\Phi_{2^am}=\Phi_{(2m)\cdot 2^{a-1}}$ is flat by Corollary 3.2 again. $\square$
 
-> **Corollary 6.4 (Sharpness at $15$).** $\Phi_{15}[7] = -1$.
+**Corollary 5.4 (Why $105$ is the threshold).** *Every $n < 105$ satisfies $\omega_{\mathrm{odd}}(n) \le 2$, since the least integer with three distinct odd prime divisors is $3\cdot5\cdot7=105$. Hence $\Phi_n$ is flat for all $n<105$.*
 
----
-
-## 7. Sharpness for every semiprime
-
-> **Lemma 7.1.** For $p, q \ge 1$: $R_{p,q}(0) = \{(0,0)\}$. For $p,q \ge 2$: $R_{p,q}(1) = \varnothing$.
-
-*Proof.* If $ip + jq = 0$ with $i,j \ge 0$ and $p,q \ge 1$ then $i = j = 0$; conversely $(0,0)$ lies in the box. If $ip+jq = 1$ with $p,q\ge 2$ then $i = j = 0$ (any nonzero term is $\ge 2$), giving $0 = 1$, absurd. $\square$
-
-> **Theorem 7.2 (Constant and linear coefficients).** Let $p \ne q$ be primes. Then
-> $$\Phi_{pq}[0] = 1 \qquad\text{and}\qquad \Phi_{pq}[1] = -1 .$$
-
-*Proof.* By Proposition 4.6(1) and Lemma 7.1, $\Phi_{pq}[0] = g_{p,q}(0) = 1$. Since $p,q \ge 2$ we have $1 < pq$, so Proposition 4.6(2) with $n = 0$ gives $\Phi_{pq}[1] = g_{p,q}(1) - g_{p,q}(0) = 0 - 1 = -1$. $\square$
-
-> **Theorem 7.3 (The bound $-1$ is exactly attained, for every semiprime).** Let $p \ne q$ be primes. Then $-1$ is the least element of the set of coefficient values
-> $$\mathcal{C}_{pq} := \{\, c \in \mathbb{Z} : c = \Phi_{pq}[k] \text{ for some } k \ge 0 \,\}.$$
-
-*Proof.* $-1 \in \mathcal{C}_{pq}$ by Theorem 7.2 (witness $k=1$), and every element of $\mathcal{C}_{pq}$ is $\ge -1$ by Theorem 5.3. $\square$
-
-This is a strengthening of the mere bound: not only does no coefficient dip below $-1$, but the value $-1$ *always occurs*, for structurally trivial reasons (the amount $1$ is never payable with coins of size $\ge 2$, while $0$ always is).
+This is the precise explanation for the classical illusion: flatness for $n<105$ is not numerology, it is Theorem 5.3 with a counting observation about smallest products.
 
 ---
 
-## 8. Balance
+## 6. The explicit $\Phi_{105}$ and height exactly two
 
-> **Theorem 8.1 (Balance law).** Let $p \ne q$ be primes and $D := \deg \Phi_{pq}$. Then
-> $$\sum_{k=0}^{D} \Phi_{pq}[k] \;=\; 1 .$$
-> Consequently, since all coefficients lie in $\{-1,0,1\}$, the number of $+1$'s exceeds the number of $-1$'s by exactly one.
+### 6.1 The Möbius identity at a squarefree ternary order
 
-*Proof.* The sum of the coefficients is $\Phi_{pq}(1)$. It is classical that $\Phi_n(1) = r$ if $n = r^k$ is a prime power ($k \ge 1$) and $\Phi_n(1) = 1$ otherwise. Here $pq$ is not a prime power: if $pq = r^k$ for a prime $r$, then $p \mid r^k$ forces $p = r$ and likewise $q = r$, contradicting $p \ne q$. Hence $\Phi_{pq}(1) = 1$. $\square$
+**Lemma 6.1 (Ternary Möbius identity).** *For distinct odd primes $p,q,r$ with $n=pqr$,*
+$$\Phi_{n}\cdot (X-1)(X^{pq}-1)(X^{pr}-1)(X^{qr}-1) \;=\; (X^{p}-1)(X^{q}-1)(X^{r}-1)(X^{n}-1). \tag{6.1}$$
+*Specializing $(p,q,r)=(3,5,7)$:*
+$$\Phi_{105}\cdot(X-1)(X^{15}-1)(X^{21}-1)(X^{35}-1) = (X^{3}-1)(X^{5}-1)(X^{7}-1)(X^{105}-1).$$
 
-Combining with Theorem 5.3 and Theorem 6.3: the frame consists of alternating $+1$'s and $-1$'s (separated by runs of zeros), beginning with the $+1$ at $k=0$ and ending with the $+1$ at $k=D$, so that the signs alternate strictly and the surplus is exactly one. The alternation is forced by the derivative interpretation: entries and exits of the semigroup necessarily interleave.
+*Proof sketch.* Apply (1.1) at each of the eight divisors $1,p,q,r,pq,pr,qr,pqr$ of $n$: $X^{d}-1 = \prod_{e \mid d}\Phi_e$. Substituting these eight expansions into both sides of (6.1) and cancelling, every $\Phi_e$ occurs with total multiplicity $\sum_{e \mid d \mid n}\mu(n/d) = 0$ except for $e = n$, which survives once on the right; this is inclusion–exclusion over the divisor lattice of a squarefree number with three prime factors. $\square$
 
----
+The right-hand side of (6.1) is *cyclotomic-free*, so (6.1) characterizes $\Phi_n$: the factor $(X-1)(X^{pq}-1)(X^{pr}-1)(X^{qr}-1)$ is a nonzero element of the integral domain $\mathbb{Z}[X]$ (each $X^m-1$ has value $-1$ at $X=0$), hence cancellable. This yields a *verification principle*:
 
-## 9. Sylvester symmetry and the gap count
+> **Verification principle.** If $P \in \mathbb{Z}[X]$ satisfies $P \cdot (X-1)(X^{pq}-1)(X^{pr}-1)(X^{qr}-1) = (X^p-1)(X^q-1)(X^r-1)(X^{pqr}-1)$, then $P = \Phi_{pqr}$.
 
-Let $p,q \ge 2$ be coprime and $F = pq-p-q$ the Frobenius number.
+Verifying the hypothesis for an explicit candidate is a finite polynomial expansion — a complete proof, not a numerical check.
 
-> **Theorem 9.1 (Sylvester's reflection).** For $0 \le n \le F$:
-> $$n \in \langle p,q\rangle \iff (F - n) \notin \langle p,q\rangle .$$
+### 6.2 The polynomial
 
-*Proof sketch.* *Not both.* If $n = ip + jq$ and $F - n = i'p + j'q$ with all parts $\ge 0$, then adding gives $F = (i+i')p + (j+j')q$, i.e. $pq - p - q$ representable, so $pq = (i+i'+1)p + (j+j'+1)q$ with both multipliers $\ge 1$. Reducing mod $p$: $p \mid (j+j'+1)q$, and $\gcd(p,q)=1$ gives $p \mid j+j'+1$, so $j+j'+1 \ge p$; symmetrically $i+i'+1 \ge q$. Then $pq = (i+i'+1)p + (j+j'+1)q \ge qp + pq = 2pq$, a contradiction as $pq>0$.
+**Theorem 6.2 (Explicit $\Phi_{105}$).** *$\Phi_{105}$ has degree $\varphi(105)=48$ and*
+$$\begin{aligned}
+\Phi_{105} = \;& X^{48}+X^{47}+X^{46}-X^{43}-X^{42}-2X^{41}-X^{40}-X^{39}\\
+&+X^{36}+X^{35}+X^{34}+X^{33}+X^{32}+X^{31}\\
+&-X^{28}-X^{26}-X^{24}-X^{22}-X^{20}\\
+&+X^{17}+X^{16}+X^{15}+X^{14}+X^{13}+X^{12}\\
+&-X^{9}-X^{8}-2X^{7}-X^{6}-X^{5}+X^{2}+X+1 .
+\end{aligned}$$
+*Its coefficient vector, indices $0$ to $48$, is*
+$$(1,1,1,0,0,-1,-1,-2,-1,-1,0,0,1,1,1,1,1,1,0,0,-1,0,-1,0,-1,0,-1,0,-1,0,0,1,1,1,1,1,1,0,0,-1,-1,-2,-1,-1,0,0,1,1,1).$$
 
-*At least one.* Suppose $n \notin \langle p,q\rangle$. Since $\gcd(p,q)=1$ there is a unique $j_0 \in [0,p)$ with $j_0 q \equiv n \pmod p$. Non-representability of $n$ forces $j_0 q > n$, i.e. $n = j_0 q - mp$ for some $m \ge 1$. Then
-$$F - n = pq - p - q - j_0q + mp = (m-1)p + (p - 1 - j_0)q,$$
-and both coefficients $m - 1 \ge 0$ and $p-1-j_0 \ge 0$ are nonnegative, so $F - n \in \langle p,q\rangle$. $\square$
+*Proof sketch.* Let $P$ be the displayed polynomial. Expanding $P\cdot(X-1)(X^{15}-1)(X^{21}-1)(X^{35}-1)$ and comparing with $(X^3-1)(X^5-1)(X^7-1)(X^{105}-1)$ gives equality (a degree-$120$ identity, checkable term by term). By the verification principle, $P = \Phi_{105}$. $\square$
 
-> **Corollary 9.2 (Reflected balance of the frame geometry).** For $0 \le n \le F$,
-> $$g_{p,q}(n) + g_{p,q}(F-n) = 1 .$$
+**Corollary 6.3 (Bang's bound at $105$, and its attainment).** *Every coefficient of $\Phi_{105}$ lies in $\{-2,-1,0,1,2\}$, and $a_{105}(7)=a_{105}(41)=-2$. Hence $H(105)=2$: the set $\{B : \mathcal B(105,B)\}$ has least element $2$.*
 
-*Proof.* Both $n$ and $F-n$ are $< pq$, so Proposition 6.2 turns the statement into Theorem 9.1. $\square$
+*Proof sketch.* Inspect the $49$ entries of the coefficient list for the upper bound and for the two values $-2$; the coefficients beyond index $48$ vanish. Minimality: any $B$ with $\mathcal B(105,B)$ satisfies $B \ge |a_{105}(7)| = 2$. $\square$
 
-> **Theorem 9.3 (Sylvester's gap count, frame form).** Let $p,q \ge 2$ be coprime and $D := (p-1)(q-1)$. Then exactly half of the exponents $0,1,\dots,D-1$ are gaps:
-> $$2\,\bigl|\Gamma_{p,q}\bigr| \;=\; (p-1)(q-1).$$
+The bound $2$ is Bang's bound $p-1$ for the smallest odd prime $p=3$ of $105$: the ternary frame at $105$ is *extremal* for Bang.
 
-*Proof.* By (2.1), $D = F + 1$, so the exponent range $[0, D)$ is exactly $[0, F]$, which is closed under the involution $n \mapsto F - n$. By Corollary 9.2 that involution exchanges gaps ($g = 0$) with non-gaps ($g = 1$). An involution of a finite set exchanging a subset with its complement is a bijection between the two, so the gaps number exactly half of $D$. $\square$
+### 6.3 An infinite family of height two
 
----
+**Theorem 6.4.** *For all $a,b,c,d \ge 0$, $\mathrm{rad}_{\mathrm{odd}}\bigl(2^a3^{b+1}5^{c+1}7^{d+1}\bigr) = 105$, and hence*
+$$H\bigl(2^a3^{b+1}5^{c+1}7^{d+1}\bigr) = 2 .$$
+*In particular none of these cyclotomic polynomials is flat.*
 
-## 10. Palindromicity
+*Proof sketch.* The prime support of $2^a3^{b+1}5^{c+1}7^{d+1}$ is contained in $\{2,3,5,7\}$ and contains $\{3,5,7\}$, so its odd radical is $3\cdot5\cdot7=105$. Apply Theorem 4.1 and Corollary 6.3. Non-flatness follows since $1 < 2 = H$. $\square$
 
-> **Theorem 10.1 (Self-reciprocity).** Let $p \ne q$ be primes and $D = (p-1)(q-1) = \deg \Phi_{pq}$. Then for all $0 \le k \le D$,
-> $$\Phi_{pq}[k] \;=\; \Phi_{pq}[D-k].$$
-
-*Proof.* Write $F = D - 1$ (equation (2.1)).
-
-*Boundary.* For $k = 0$: $\Phi_{pq}[0] = 1$ by Theorem 7.2 and $\Phi_{pq}[D] = 1$ since $\Phi_{pq}$ is monic of degree $D$; likewise for $k = D$.
-
-*Interior.* Let $k = m+1$ with $1 \le k < D$, so $m + 1 \le F$. Both $k$ and $D - k$ are positive and $< pq$, so Proposition 4.6(2) applies to both:
-$$\Phi_{pq}[k] = g(m+1) - g(m), \qquad \Phi_{pq}[D-k] = g(F-m) - g(F-m-1),$$
-using $D - k = (F - m - 1) + 1$. Corollary 9.2 gives $g(m) + g(F-m) = 1$ and $g(m+1) + g(F-m-1) = 1$. Subtracting the two relations,
-$$g(m+1) - g(m) = g(F - m) - g(F-m-1),$$
-which is the assertion. $\square$
-
-Thus the frame of a semiprime order is a palindrome; for instance the coefficient vector of $\Phi_{15}$ is $(1,-1,0,1,-1,1,0,-1,1)$.
+**Corollary 6.5 (Two-sided delimitation of the flat class).** *If $\omega_{\mathrm{odd}}(m)\le2$ then $\Phi_m$ is flat (Theorem 5.3); and for every $n$ in the family of Theorem 6.4, $\Phi_n$ is not flat.*
 
 ---
 
-## 11. The exact boundary of the method: coprimality
+## 7. A flat ternary order: $231 = 3\cdot7\cdot11$
 
-The whole edifice rests on Theorem 3.1, whose only hypothesis is coprimality of the two steps. It is worth confirming that this hypothesis is not an artefact.
+**Theorem 7.1 (Explicit $\Phi_{231}$).** *$\Phi_{231}$ has degree $\varphi(231)=120$ and equals*
+$$\begin{aligned}
+\Phi_{231} = \;& 1+X+X^{2}-X^{7}-X^{8}-X^{9}-X^{11}-X^{12}-X^{13}\\
+&+X^{18}+X^{19}+X^{20}+X^{21}+X^{22}+X^{23}\\
+&-X^{28}-X^{29}-X^{30}-X^{32}+X^{35}+X^{39}+X^{43}\\
+&-X^{45}-X^{46}-X^{49}-X^{50}+X^{52}+X^{56}+X^{60}+X^{64}+X^{68}\\
+&-X^{70}-X^{71}-X^{74}-X^{75}+X^{77}+X^{81}+X^{85}\\
+&-X^{88}-X^{90}-X^{91}-X^{92}+X^{97}+X^{98}+X^{99}+X^{100}+X^{101}+X^{102}\\
+&-X^{107}-X^{108}-X^{109}-X^{111}-X^{112}-X^{113}+X^{118}+X^{119}+X^{120},
+\end{aligned}$$
+*all of whose $121$ coefficients lie in $\{-1,0,1\}$. Hence $\Phi_{231}$ is flat and $H(231)=1$.*
 
-> **Proposition 11.1 (Failure without coprimality).** For the steps $p = 2$, $q = 4$ (so $\gcd = 2$), the line $2i + 4j = 4$ contains **two** lattice points of the box $[0,4) \times [0,2)$, namely $(i,j) = (2,0)$ and $(i,j) = (0,1)$. Consequently
-> $$g_{2,4}(4) = 2, \qquad [X^4]\,G_{2,4} = 2 .$$
+*Proof sketch.* Lemma 6.1 with $(p,q,r)=(3,7,11)$ reads
+$$\Phi_{231}\cdot(X-1)(X^{21}-1)(X^{33}-1)(X^{77}-1) = (X^3-1)(X^7-1)(X^{11}-1)(X^{231}-1).$$
+Expanding the displayed candidate against the left-hand side and matching the right-hand side, then cancelling the nonzero factor, identifies the candidate with $\Phi_{231}$. Flatness is then inspection of the $121$ coefficients. $\square$
 
-*Proof.* Direct enumeration of the eight points of $[0,4)\times[0,2)$; then Proposition 4.1. $\square$
+**Theorem 7.2 (The classification is not an equivalence).** *There exists $n$ with $\omega_{\mathrm{odd}}(n) = 3$ and $\Phi_n$ flat; indeed $n=231$ works. Moreover, every $n$ with $\mathrm{rad}_{\mathrm{odd}}(n)=231$ — e.g. every $n = 2^a3^{b}7^{c}11^{d}$ with $b,c,d\ge1$ — has $\Phi_n$ flat.*
 
-Since the entire coefficient bound was obtained from "$g \in \{0,1\}$", and $g$ here takes the value $2$, the difference-of-indicators argument genuinely collapses: coprimality is the exact frontier of the mechanism, not a technical convenience. (Of course $\Phi_8 = X^4+1$ is perfectly well behaved; the point is that the *geometry* of non-coprime steps ceases to control it, because $2 \cdot 4$ is a prime power and no longer a semiprime with distinct primes.)
+*Proof sketch.* The first claim is Theorem 7.1 and $\mathrm{P}(231)\setminus\{2\}=\{3,7,11\}$. The second is Corollary 4.2 applied to $\mathrm{rad}_{\mathrm{odd}}(n)=231$. $\square$
+
+So the hypothesis $\omega_{\mathrm{odd}}\le2$ of Theorem 5.3 is sufficient but strictly not necessary, and the flat class contains infinitely many orders with three odd prime divisors.
 
 ---
 
-## 12. Algorithms
+## 8. Height three: $385 = 5\cdot7\cdot11$
 
-The theory yields three natural algorithms, each of which we state with its complexity. Let $p<q$ be distinct primes and $D = (p-1)(q-1)$.
+**Theorem 8.1 (Explicit $\Phi_{385}$ and its height).** *$\Phi_{385}$ has degree $\varphi(385)=240$; all of its coefficients lie in $[-3,3]$, and*
+$$a_{385}(119)=a_{385}(120)=a_{385}(121)=-3 .$$
+*Hence $H(385)=3$. In particular $\Phi_{385}$ is not flat and is not bounded by $2$.*
 
-**Algorithm A (Frame coefficients by semigroup sieve).** Compute the indicator of $\langle p,q\rangle$ on $[0, pq)$ by a linear sieve, then take successive differences. Cost: $O(pq)$ time and space, versus $O(D^2) = O(p^2q^2)$ for naive polynomial division and $O(pq \log pq)$ for divisor-based recursive computation. The output is *exact*: no coefficient growth, no big-integer arithmetic — every intermediate value lies in $\{-1,0,1\}$.
+*Proof sketch.* Lemma 6.1 with $(p,q,r)=(5,7,11)$ gives
+$$\Phi_{385}\cdot(X-1)(X^{35}-1)(X^{55}-1)(X^{77}-1) = (X^{5}-1)(X^{7}-1)(X^{11}-1)(X^{385}-1),$$
+which determines $\Phi_{385}$ uniquely by the verification principle; an explicit degree-$240$ candidate with $241$ integer coefficients satisfies it. Its extreme entries are three consecutive $-3$'s at indices $119,120,121$, symmetric about the centre $120 = \tfrac12\varphi(385)$, and no entry exceeds $3$ in absolute value. Minimality of $3$ follows from $|a_{385}(119)|=3$. $\square$
 
-*Correctness* is Theorem 6.3 together with Proposition 4.6(1).
+**Theorem 8.2 (An infinite family of height three).** *For all $a,b,c,d\ge0$, $\mathrm{rad}_{\mathrm{odd}}\bigl(2^a5^{b+1}7^{c+1}11^{d+1}\bigr)=385$, and hence $H\bigl(2^a5^{b+1}7^{c+1}11^{d+1}\bigr)=3$.*
 
-**Algorithm B (Direct coefficient query in $O(1)$ arithmetic operations).** To answer "what is $\Phi_{pq}[k]$?" without computing the whole polynomial, decide membership $k \in \langle p,q\rangle$ and $k-1 \in \langle p,q\rangle$. Membership below $pq$ can be tested in $O(1)$: $n \in \langle p,q\rangle$ iff, with $j_0 \in [0,p)$ the unique residue with $j_0 q \equiv n \pmod p$, one has $j_0 q \le n$. (This is the standard Apéry-set test; $j_0$ is computed with one modular inverse.) Then apply Theorem 6.3.
+*Proof sketch.* As in Theorem 6.4, via Theorem 4.1. $\square$
 
-**Algorithm C (Lattice-point certificate).** To *certify* a claimed coefficient value, enumerate $R_{p,q}(k)$ and $R_{p,q}(k-1)$ by looping $i$ over $[0,q)$ and testing whether $(k - ip)$ is a nonnegative multiple of $q$ below $pq$. Cost $O(q)$; the output is a human-checkable witness pair (or a proof of emptiness), and the coefficient equals $|R_{p,q}(k)| - |R_{p,q}(k-1)|$.
+Note that Bang's bound for $385$ is $p-1=4$ with $p=5$; the actual height $3$ is strictly below it. Thus, unlike $105$, the order $385$ is not Bang-extremal, yet it already realizes a third height value.
 
 ---
 
-## 13. Discussion and future directions
+## 9. The height spectrum and the ternary trichotomy
 
-### 13.1 What the geometry explains
+**Theorem 9.1 (Height one is flatness).** *For every $n\ge1$: $\mathcal{B}(n,B) \Rightarrow B \ge 1$, and $H(n)=1$ if and only if $\Phi_n$ is flat.*
 
-The value of the closed formula is that it makes the coefficient bound *structural* rather than computational. Three separate classical facts — Migotti's $\{-1,0,1\}$ theorem, Sylvester's gap count, and the palindromicity of binary cyclotomic polynomials — are, in this presentation, three readings of a single statement about a rectangle:
+*Proof sketch.* $\Phi_n$ is monic of degree $\varphi(n)$, so $a_n(\varphi(n))=1$ and any bound $B$ satisfies $B \ge 1$; there is no height $0$. Then $H(n)=1$ says exactly that $\mathcal B(n,1)$ holds and $1$ is least, and the second condition is automatic. $\square$
 
-* the rectangle is too thin for a coprime line to cross twice (Migotti);
-* the rectangle is symmetric under the point reflection $n \mapsto F - n$, which exchanges hit lines with missed lines (Sylvester);
-* that same reflection, transported through the discrete derivative, reverses the coefficient sequence (palindromicity).
+**Theorem 9.2 (Height is an odd-radical invariant).** *If $\mathrm{rad}_{\mathrm{odd}}(m)=\mathrm{rad}_{\mathrm{odd}}(n)$ (with $m,n \ge 1$), then for every $B$, $H(m)=B \iff H(n)=B$; in particular $H(m)=H(n)$.*
 
-### 13.2 Why three parameters must be different
+*Proof sketch.* Theorem 4.1 shows the two bound-sets $\{B : \mathcal B(m,B)\}$ and $\{B:\mathcal B(n,B)\}$ coincide, hence so do their least elements. $\square$
 
-For three distinct primes $p,q,r$, the natural analogue of the frame geometry is a triple product of truncated geometric series, whose $n$-th coefficient counts lattice points of a *three-dimensional* box on the *plane* $ip + jq + kr = n$. The obstruction that gave uniqueness in two dimensions — a one-dimensional solution lattice with a step too wide for the box — has no analogue: the solution set of $ip+jq+kr = n$ is a two-dimensional lattice, and a two-dimensional lattice inside a three-dimensional box generically contains many points. The excess multiplicity is precisely what a coefficient of $\Phi_{pqr}$ records; this is why $105 = 3\cdot5\cdot7$ is where the classical pattern first breaks, with $\Phi_{105}[7] = -2$.
+**Theorem 9.3 (Separation).** *If $H(m)\ne H(n)$ then $\mathrm{rad}_{\mathrm{odd}}(m)\ne\mathrm{rad}_{\mathrm{odd}}(n)$.*
 
-### 13.3 Future directions
+*Proof sketch.* Contrapositive of Theorem 9.2, using uniqueness of least elements. $\square$
 
-**Conjecture 1 (Three parameters break the bound, quantitatively).** For every integer $M \ge 1$ there exist three distinct primes $p<q<r$ and an exponent $k$ with $\Phi_{pqr}[k] \le -M$.
+**Theorem 9.4 (Ternary trichotomy).** *Each of $231=3\cdot7\cdot11$, $105=3\cdot5\cdot7$, $385=5\cdot7\cdot11$ has exactly three odd prime divisors, and*
+$$H(231)=1,\qquad H(105)=2,\qquad H(385)=3.$$
+*Consequently $\omega_{\mathrm{odd}}$ does not determine the height, while $\mathrm{rad}_{\mathrm{odd}}$ does; and each of the values $1,2,3$ is attained by an infinite family of orders, namely those with odd radical $231$, $105$, $385$ respectively.*
 
-*Key insight.* The two-parameter closed formula $\Phi_{pq}(X^{pq}-1) = (X-1)G_{p,q}$ works because the balance box $[0,q)\times[0,p)$ meets every line $ip+jq = n$ at most once. In three parameters the analogous region is a three-dimensional box, the multiplicity of lattice points on a plane $ip+jq+kr = n$ is no longer bounded by one, and the excess multiplicity is exactly what the coefficient records.
+*Proof sketch.* Combine Theorems 7.1, 6.3, 8.1 for the three heights; $\omega_{\mathrm{odd}}=3$ in each case is immediate from the factorizations. The infinitude of each class is Theorem 9.2 plus the fact that $\mathrm{rad}_{\mathrm{odd}}(2^aN^{\,\cdot})=\mathrm{rad}_{\mathrm{odd}}(N)$ for arbitrarily large multipliers. $\square$
 
-*Why now.* The two-parameter case is now completely settled, including the exact mechanism responsible for the bound and a proved example showing the mechanism failing as soon as the uniqueness hypothesis is dropped. The remaining work is to build the ternary analogue of the frame geometry and to compute one multiplicity-two plane.
+**Corollary 9.5 (Three values in the spectrum).** *The set $\{H(n) : n \ge 1\}$ contains $1,2,3$; witnesses are $n=3$ (or $231$), $n=105$, $n=385$.*
 
-**Conjecture 2 (Gap-count controls the number of zero coefficients).** For distinct primes $p \ne q$, the number of exponents $k \in [0, (p-1)(q-1)]$ with $\Phi_{pq}[k] = 0$ equals $(p-1)(q-1) + 1 - 2s$, where $s$ is the number of $n \le pq - p - q$ such that $n$ lies in the numerical semigroup $\langle p,q\rangle$ while $n-1$ does not.
+The structural conclusion is that the height is a function of the finite set $\mathrm{P}(n)\setminus\{2\}$ — and, within the level $|\mathrm{P}(n)\setminus\{2\}|=3$, that function is already non-constant with at least three values.
 
-*Key insight.* The closed formula turns every coefficient into a discrete derivative of the semigroup indicator, so the nonzero coefficients count exactly the boundary points (entries and exits) of the semigroup inside $[0,pq)$, and the Sylvester symmetry pairs entries with exits.
+---
 
-*Why now.* The derivative description of each coefficient and the exact gap count are both in hand; what is missing is the combinatorial count of *blocks* rather than of points.
+## 10. Coefficients of the flat family as lattice-point counts
 
-**Conjecture 3 (Carlitz count of nonzero coefficients).** For distinct odd primes $p \ne q$, let $\rho, \sigma$ be the unique integers with $1 \le \rho \le q-1$, $1 \le \sigma \le p-1$ and $\rho p + \sigma q = pq + 1$. Then the number of $k \le (p-1)(q-1)$ with $\Phi_{pq}[k] \ne 0$ equals $2\rho\sigma - 1$.
+The final theme returns to (5.1) and shows that the entire flat two-prime theory has an exact combinatorial model, transported intact through both symmetries.
 
-*Key insight.* Each coefficient is a discrete derivative of the semigroup indicator, so the nonzero coefficients are the boundary steps of $\langle p,q\rangle$ inside $[0,pq)$, and those steps are organised into a $\rho \times \sigma$ grid by the unique solution of $\rho p + \sigma q = pq+1$.
+**Lemma 10.1 (Bi-inflation).** *For primes $p,q$ and $\beta,\gamma,k\ge0$,*
+$$a_{p^{\beta+1}q^{\gamma+1}}\bigl(k\,p^{\beta}q^{\gamma}\bigr) = a_{pq}(k).$$
 
-**Further directions.** (i) Effective versions: given $M$, produce explicit $p<q<r$ realising a coefficient $\le -M$, with bounds on $r$ in terms of $M$. (ii) Weighted balance boxes: replace $\{0,1\}$-multiplicity by multiplicity functions arising from inclusion–exclusion over more than three primes, and identify which box geometries still force bounded multiplicities. (iii) Algorithmic consequences: exploit the $O(pq)$ sieve of Algorithm A inside implementations of arithmetic in $\mathbb{Z}[X]/(\Phi_n)$, where guaranteed $\{-1,0,1\}$ coefficients bound expansion factors in ring multiplication.
+*Proof sketch.* Two applications of Corollary 3.2, first inflating $pq$ by $p^{\beta}$ and then by $q^{\gamma}$, tracking the index dilation $k \mapsto kp^{\beta} \mapsto kp^{\beta}q^{\gamma}$. $\square$
+
+**Theorem 10.2 (Lattice-point formula for the flat family).** *Let $p\ne q$ be odd primes, and let $\alpha,\beta,\gamma\ge0$. For every $k$ with $0 \le k$ and $k+1 < pq$,*
+$$a_{2^{\alpha+1}p^{\beta+1}q^{\gamma+1}}\Bigl((k+1)\,p^{\beta}q^{\gamma}\,2^{\alpha}\Bigr) \;=\; (-1)^{(k+1)p^{\beta}q^{\gamma}}\Bigl(\mathbf 1\{k+1 \in \langle p,q\rangle\} - \mathbf 1\{k \in \langle p,q\rangle\}\Bigr).$$
+*Without the factor $2$: $a_{p^{\beta+1}q^{\gamma+1}}\bigl((k+1)p^{\beta}q^{\gamma}\bigr) = \mathbf 1\{k+1 \in \langle p,q\rangle\}-\mathbf 1\{k \in \langle p,q\rangle\}$.*
+
+*Proof sketch.* Start from (5.1). Apply Lemma 10.1 to move from $pq$ to $p^{\beta+1}q^{\gamma+1}$; note $m=p^{\beta+1}q^{\gamma+1}$ is odd and $>1$ since $p,q$ are odd. Apply Theorem 3.5 to pass to $2m$, contributing the sign $(-1)^{j}$ at index $j = (k+1)p^{\beta}q^{\gamma}$; then apply Corollary 3.2 with the prime $2$ and exponent $\alpha$ to dilate the index by $2^{\alpha}$ without changing the value. $\square$
+
+**Remark 10.3 (Why three primes is genuinely harder).** For $n=pq$ the coefficient counts lattice points on the *line* $ip+jq=m$ inside the box $[0,q)\times[0,p)$, and box-uniqueness makes the count $0$ or $1$. For $n=pqr$ the analogue is the *plane section* $ip+jq+kr=m$ inside a box; uniqueness fails, and the coefficient becomes the deviation of an actual lattice count from its expected value. Bang's bound $|a_{pqr}(m)| \le p-1$ (for $p<q<r$) is the assertion that the residues $jq+kr \bmod p$ are equidistributed enough over the $p$ classes for the deviation to stay below $p$. With box-uniqueness and the transport lemmas of §3 in hand, the ternary case is a self-contained counting problem, not a polynomial-algebra problem.
+
+---
+
+## 11. Algorithms
+
+Three algorithms underlie the computational side of this work.
+
+### 11.1 Divisor-recursive cyclotomic construction
+
+Compute $\Phi_n$ by dividing $X^n-1$ successively by $\Phi_d$ for each proper divisor $d \mid n$, using exact integer polynomial division (each divisor is monic, so no denominators appear). The recursion is well-founded on the divisor lattice. Complexity is $O(\sigma_0(n)\cdot n^2)$ integer operations in a naive implementation, dominated by the divisions; with memoization over divisors it is very fast for $n$ in the thousands.
+
+### 11.2 Height reduction as a preprocessing step
+
+Given $n$, compute $R=\mathrm{rad}_{\mathrm{odd}}(n)$ by factoring $n$, deleting the prime $2$, and multiplying the remaining primes once each. By Theorem 4.1, $H(n)=H(R)$, so one computes $\Phi_R$ instead of $\Phi_n$. The saving is dramatic: e.g. $n = 2^{10}\cdot3^{4}\cdot5^{3}\cdot7^{2}$ has $\varphi(n) = 2^{9}\cdot(3^3\cdot 2)\cdot(5^2\cdot4)\cdot(7\cdot6) = 116{,}121{,}600$, while $R=105$ and $\varphi(R)=48$: a degree-$48$ computation replaces a degree-$1.16{\times}10^{8}$ one. Complexity: $O(\sqrt n)$ trial division plus the cost of $\Phi_R$.
+
+### 11.3 Semigroup-indicator evaluation of flat coefficients
+
+For distinct primes $p,q$ and $0<m<pq$, decide $m\in\langle p,q\rangle$ by testing whether $(m - ip)$ is a nonnegative multiple of $q$ for some $0 \le i \le \lfloor m/p\rfloor$; then apply (5.1). This evaluates a *single* coefficient of $\Phi_{pq}$ in $O(m/p)$ time and $O(1)$ space, without constructing the polynomial — and, through Theorem 10.2, evaluates single coefficients of the entire family $2^{\alpha}p^{\beta}q^{\gamma}$ at inflated indices, whose degrees can be astronomically large.
+
+---
+
+## 12. Applications and context
+
+**Explaining a historical error.** Corollary 5.4 gives a one-line structural reason for the pre-$105$ illusion: the least integer with three distinct odd prime factors is exactly $105$, and everything below it is covered by the two-parameter theorem plus the two symmetries.
+
+**Search space reduction.** Any exhaustive search for large cyclotomic coefficients — e.g. for orders realizing a prescribed height — may be restricted to *squarefree odd* $n$ without loss (Theorem 4.1). This removes the powers of $2$ and all repeated prime factors from the search entirely, which is exactly the multiplicative bulk of the integers.
+
+**Structured lattices and coding.** The polynomials $\Phi_n$ are the irreducible factors of $X^n-1$ over $\mathbb{Q}$, so they organize the factorization theory behind cyclic codes and behind the quotient rings $\mathbb{Z}[X]/(\Phi_n)$ used in structured-lattice cryptography, where coefficient magnitudes bear directly on noise growth. Height reduction says that, from this point of view, only the squarefree odd part of the conductor matters.
+
+**A sharper invariant.** Theorem 9.4 shows that the natural coarse invariant $\omega_{\mathrm{odd}}$ is inadequate and the correct one is $\mathrm{rad}_{\mathrm{odd}}$. Any conjecture about heights should therefore be phrased in terms of the *set* of odd primes, not their number.
+
+---
+
+## 13. Discussion and future work
+
+### 13.1 Bang's bound as a lattice-point count
+
+**Conjecture 13.1 (Bang).** *For odd primes $p<q<r$, every coefficient of $\Phi_{pqr}$ satisfies $|a| \le p-1$.*
+
+The route suggested by §10 is to generalize the box-uniqueness argument from the line $ip+jq=m$ inside $[0,q)\times[0,p)$ to the plane section $ip+jq+kr=m$ inside a box, and to bound the deviation of the lattice count from its expected value by $p-1$ using the equidistribution of $jq+kr \bmod p$. Both ingredients — box uniqueness, and the transport of coefficients through inflation and reflection — are already available, so the ternary case is now a counting problem rather than a polynomial-algebra problem. If the conjecture holds, it globalizes immediately by Theorem 4.1 to *all* $n$ with three odd prime divisors. If it fails, the failure is a concrete triple $(p,q,r)$, which is itself a valuable object.
+
+Note that our data are consistent with — and calibrate — the conjecture: at $p=3$ the bound is $2$ and $\Phi_{105}$ attains it while $\Phi_{231}$ does not; at $p=5$ the bound is $4$ and $\Phi_{385}$ reaches only $3$.
+
+### 13.2 Characterizing flat ternary orders
+
+$231$ is flat, $105$ is not, and both have smallest odd prime $3$. What distinguishes them? A precise characterization of the flat squarefree ternary orders — a condition on $(p,q,r)$, presumably congruential — would complete the picture that Theorems 5.3 and 7.2 leave open, and by Theorem 4.1 it would characterize the entire flat class.
+
+### 13.3 The height spectrum
+
+We have shown $\{1,2,3\} \subseteq \{H(n)\}$. Two questions are natural: is every positive integer a height (equivalently, is the spectrum all of $\mathbb{Z}_{\ge1}$)? And what is the least order realizing a given height? Both are approachable by the same explicit-cancellation machinery, one squarefree odd order at a time.
+
+### 13.4 Beyond three primes
+
+The reduction of §4 is uniform in the number of primes; only the explicit inputs change. A quaternary analogue of Lemma 6.1 with sixteen divisor factors is available, so orders $pqrs$ can in principle be pinned down the same way, at the cost of much larger expansions.
 
 ---
 
 ## 14. Summary of results
 
-| Result | Statement |
+| Statement | Content |
 |---|---|
-| Lattice-point uniqueness | For coprime $p,q$, the line $ip+jq=n$ meets $[0,q)\times[0,p)$ at most once |
-| Frame geometry coefficients | $[X^n]G_{p,q} = \#\{(i,j) \in [0,q)\times[0,p) : ip+jq=n\} \in \{0,1\}$ when $\gcd(p,q)=1$ |
-| Closed formula | $\Phi_{pq}(X)(X^{pq}-1) = (X-1)G_{p,q}(X)$ for distinct primes $p,q$ |
-| One-parameter theorem | $\Phi_p[k] \in \{0,1\}$ for $p$ prime |
-| Migotti's theorem | $\Phi_{pq}[k] \in \{-1,0,1\}$ for distinct primes $p,q$ |
-| Exact sign pattern | $\Phi_{pq}[n+1] = \mathbb{1}[n+1\in\langle p,q\rangle] - \mathbb{1}[n \in \langle p,q\rangle]$, $n+1<pq$ |
-| Sharpness | $\Phi_{pq}[0]=1$, $\Phi_{pq}[1]=-1$; $-1$ is the least coefficient value; e.g. $\Phi_{15}[7]=-1$ |
-| Balance | $\sum_k \Phi_{pq}[k] = 1$ |
-| Sylvester symmetry | $g_{p,q}(n) + g_{p,q}(F-n) = 1$ for $0 \le n \le F = pq-p-q$ |
-| Gap count | Exactly $\tfrac12(p-1)(q-1)$ of the exponents in $[0,(p-1)(q-1))$ are gaps |
-| Palindromicity | $\Phi_{pq}[k] = \Phi_{pq}[D-k]$, $D=(p-1)(q-1)$ |
-| Coprimality boundary | $g_{2,4}(4) = 2$: without coprimality the multiplicity bound fails |
+| Inflation | $\Phi_{np}(X)=\Phi_n(X^p)$ for $p\mid n$; coefficient multiset preserved |
+| Reflection | $\Phi_{2n}(X)=\Phi_n(-X)$ for odd $n>1$; $\lvert a_{2n}(k)\rvert=\lvert a_n(k)\rvert$ |
+| Height reduction | $\mathcal B(n,B)\iff\mathcal B(\mathrm{rad}_{\mathrm{odd}}(n),B)$; $H(n)=H(\mathrm{rad}_{\mathrm{odd}}(n))$ |
+| Two-parameter theorem | $a_{pq}(m)=\mathbf1\{m\in\langle p,q\rangle\}-\mathbf1\{m-1\in\langle p,q\rangle\}$; $\Phi_{pq}$ flat |
+| Sharpness | $a_{p^aq^b}(p^{a-1}q^{b-1})=-1$ |
+| Flatness classification | $\omega_{\mathrm{odd}}(n)\le2\Rightarrow\Phi_n$ flat; hence $\Phi_n$ flat for all $n<105$ |
+| Explicit $\Phi_{105}$ | degree $48$; $a(7)=a(41)=-2$; $H(105)=2$ |
+| Height-two family | $H(2^a3^{b+1}5^{c+1}7^{d+1})=2$ |
+| Explicit $\Phi_{231}$ | degree $120$; flat; classification is not an equivalence |
+| Flat family outside the class | $\mathrm{rad}_{\mathrm{odd}}(n)=231\Rightarrow\Phi_n$ flat |
+| Explicit $\Phi_{385}$ | degree $240$; $a(119)=a(120)=a(121)=-3$; $H(385)=3$ |
+| Height-three family | $H(2^a5^{b+1}7^{c+1}11^{d+1})=3$ |
+| Height one $=$ flatness | monicity forbids height $0$ |
+| Ternary trichotomy | $H(231)=1$, $H(105)=2$, $H(385)=3$, all with $\omega_{\mathrm{odd}}=3$ |
+| Lattice-point formula | coefficients of $\Phi_{2^{\alpha}p^{\beta+1}q^{\gamma+1}}$ at inflated indices are $\pm$ semigroup indicator differences |

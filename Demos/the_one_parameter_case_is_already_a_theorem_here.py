@@ -1,445 +1,380 @@
 """
-The two-parameter pm-frame: coefficients of binary cyclotomic polynomials
-as lattice points in a balance box.
+Cyclotomic coefficient heights: the odd radical, the flat class, and the ternary trichotomy.
 
-This self-contained script demonstrates, numerically, every result of the
-accompanying paper:
+This self-contained script demonstrates, numerically, every result of the accompanying
+paper:
 
-  1. Phi_p = 1 + X + ... + X^{p-1}  (one-parameter case: coefficients in {0,1}).
-  2. Coefficients of the frame geometry
-        G_{p,q}(X) = (sum_{i<q} X^{ip}) * (sum_{j<p} X^{jq})
-     count lattice points (i,j) of the balance box [0,q) x [0,p)
-     on the line i*p + j*q = n, and equal 0 or 1 when gcd(p,q) = 1.
-  3. The closed formula  Phi_{pq}(X) * (X^{pq} - 1) = (X - 1) * G_{p,q}(X).
-  4. Migotti's theorem: every coefficient of Phi_{pq} lies in {-1, 0, 1}.
-  5. Exact sign pattern: Phi_{pq}[n+1] = 1[n+1 in <p,q>] - 1[n in <p,q>].
-  6. Sharpness: Phi_{pq}[0] = 1 and Phi_{pq}[1] = -1 for every semiprime;
-     e.g. Phi_15[7] = -1.
-  7. Balance: the coefficients of Phi_{pq} sum to 1.
-  8. Sylvester symmetry and the gap count (p-1)(q-1)/2.
-  9. Palindromicity: Phi_{pq}[k] = Phi_{pq}[D - k], D = (p-1)(q-1).
- 10. The coprimality boundary: with steps 2 and 4 the line 2i + 4j = 4 meets
-     the box [0,4) x [0,2) twice, so the frame geometry acquires a 2.
- 11. The three-parameter breakdown: Phi_105 has the coefficient -2.
+  1.  Flatness holds for all orders n < 105 (the flatness classification), because
+      105 = 3 * 5 * 7 is the least integer with three distinct odd prime divisors.
+  2.  Inflation  Phi_{np}(X) = Phi_n(X^p)  for p | n, and
+      reflection  Phi_{2n}(X) = Phi_n(-X)  for odd n > 1.
+  3.  Height reduction:  H(n) = H(rad_odd(n)),  where rad_odd(n) is the product of the
+      odd primes dividing n.  The height is blind to the prime 2 and to repeated factors.
+  4.  The explicit Phi_105 (degree 48, height 2 attained at X^7 and X^41).
+  5.  The flat ternary order Phi_231 (degree 120, height 1) --- three odd primes, yet flat.
+  6.  The height-three order Phi_385 (degree 240, height 3 at X^119, X^120, X^121).
+  7.  The ternary trichotomy: heights 1, 2, 3 all occur at orders with exactly three
+      odd prime divisors.
+  8.  The lattice-point (numerical-semigroup) formula for coefficients of Phi_{pq} and
+      its transport to the whole family 2^a p^b q^c.
 
-Run with:  python3 demo.py
-Only the standard library is used.
+Only the Python standard library is used.  Run with:  python3 demo.py
 """
 
 from __future__ import annotations
 
 from typing import Dict, List, Tuple
 
-Poly = List[int]  # dense coefficient list, index = exponent
+Poly = List[int]  # dense coefficient list, index = exponent, low to high
 
 
-# --------------------------------------------------------------------------
-# Minimal integer polynomial arithmetic
-# --------------------------------------------------------------------------
+# ---------------------------------------------------------------------------
+# 1.  Elementary integer-polynomial arithmetic
+# ---------------------------------------------------------------------------
 
-
-def poly_trim(a: Poly) -> Poly:
-    """Remove trailing zero coefficients (keeping at least [0])."""
-    b = list(a)
-    while len(b) > 1 and b[-1] == 0:
-        b.pop()
-    return b
+def poly_trim(p: Poly) -> Poly:
+    """Remove trailing zero coefficients (keeping at least one entry)."""
+    q = list(p)
+    while len(q) > 1 and q[-1] == 0:
+        q.pop()
+    return q
 
 
 def poly_mul(a: Poly, b: Poly) -> Poly:
-    """Multiply two integer polynomials given as dense coefficient lists."""
-    out: Poly = [0] * (len(a) + len(b) - 1)
+    """Product of two integer polynomials, O(deg a * deg b)."""
+    out = [0] * (len(a) + len(b) - 1)
     for i, ai in enumerate(a):
-        if ai == 0:
-            continue
-        for j, bj in enumerate(b):
-            out[i + j] += ai * bj
+        if ai:
+            for j, bj in enumerate(b):
+                out[i + j] += ai * bj
     return poly_trim(out)
 
 
-def poly_sub(a: Poly, b: Poly) -> Poly:
-    """Subtract integer polynomials."""
-    n = max(len(a), len(b))
-    out = [0] * n
-    for i in range(n):
-        out[i] = (a[i] if i < len(a) else 0) - (b[i] if i < len(b) else 0)
-    return poly_trim(out)
+def poly_divmod_monic(num: Poly, den: Poly) -> Tuple[Poly, Poly]:
+    """Exact division by a MONIC integer polynomial: returns (quotient, remainder)."""
+    assert den[-1] == 1, "divisor must be monic"
+    rem = list(num)
+    d = len(den) - 1
+    if len(rem) - 1 < d:
+        return [0], poly_trim(rem)
+    quo = [0] * (len(rem) - d)
+    for i in range(len(rem) - 1, d - 1, -1):
+        c = rem[i]
+        quo[i - d] = c
+        if c:
+            for j in range(d + 1):
+                rem[i - d + j] -= c * den[j]
+    return poly_trim(quo), poly_trim(rem[:d] if d > 0 else [0])
 
 
-def poly_divexact(a: Poly, b: Poly) -> Poly:
-    """Exact division of integer polynomials (b must divide a, b monic-ish)."""
-    a = poly_trim(a)
-    b = poly_trim(b)
-    if b == [0]:
-        raise ZeroDivisionError("division by the zero polynomial")
-    quotient: Poly = [0] * max(1, len(a) - len(b) + 1)
-    rem = list(a)
-    lead = b[-1]
-    for shift in range(len(a) - len(b), -1, -1):
-        num = rem[shift + len(b) - 1]
-        if num == 0:
-            continue
-        if num % lead != 0:
-            raise ValueError("division is not exact")
-        c = num // lead
-        quotient[shift] = c
-        for i, bi in enumerate(b):
-            rem[shift + i] -= c * bi
-    if any(r != 0 for r in rem):
-        raise ValueError("division is not exact (nonzero remainder)")
-    return poly_trim(quotient)
-
-
-def poly_str(a: Poly, var: str = "X") -> str:
-    """Human-readable rendering of a dense integer polynomial."""
+def poly_str(p: Poly, var: str = "X") -> str:
+    """Human-readable rendering of a polynomial, high degree first."""
     terms: List[str] = []
-    for k in range(len(a) - 1, -1, -1):
-        c = a[k]
+    for k in range(len(p) - 1, -1, -1):
+        c = p[k]
         if c == 0:
             continue
-        if k == 0:
-            body = str(abs(c))
-        elif k == 1:
-            body = var if abs(c) == 1 else f"{abs(c)}{var}"
-        else:
-            body = f"{var}^{k}" if abs(c) == 1 else f"{abs(c)}{var}^{k}"
-        sign = "-" if c < 0 else "+"
-        terms.append(f" {sign} {body}")
+        mag = "" if abs(c) == 1 and k > 0 else str(abs(c))
+        power = "" if k == 0 else ("X" if k == 1 else f"X^{k}")
+        body = f"{mag}{'*' if mag and power else ''}{power}".replace("X", var)
+        terms.append(("- " if c < 0 else "+ ") + body)
     if not terms:
         return "0"
-    s = "".join(terms).strip()
-    return s[2:] if s.startswith("+ ") else s
+    head = terms[0]
+    head = head[2:] if head.startswith("+ ") else "-" + head[2:]
+    return " ".join([head] + terms[1:])
 
 
-# --------------------------------------------------------------------------
-# Cyclotomic polynomials by the divisor factorisation X^n - 1 = prod_{d|n} Phi_d
-# --------------------------------------------------------------------------
-
+# ---------------------------------------------------------------------------
+# 2.  Number-theoretic helpers
+# ---------------------------------------------------------------------------
 
 def divisors(n: int) -> List[int]:
     """All positive divisors of n, ascending."""
-    return [d for d in range(1, n + 1) if n % d == 0]
+    small, large = [], []
+    i = 1
+    while i * i <= n:
+        if n % i == 0:
+            small.append(i)
+            if i != n // i:
+                large.append(n // i)
+        i += 1
+    return small + large[::-1]
 
 
-def cyclotomic(n: int, cache: Dict[int, Poly] | None = None) -> Poly:
-    """The n-th cyclotomic polynomial Phi_n, as a dense coefficient list."""
-    if cache is None:
-        cache = {}
-    if n in cache:
-        return cache[n]
-    xn_minus_1: Poly = [0] * n + [1]
-    xn_minus_1[0] = -1
-    prod: Poly = [1]
-    for d in divisors(n):
-        if d < n:
-            prod = poly_mul(prod, cyclotomic(d, cache))
-    result = poly_divexact(xn_minus_1, prod)
-    cache[n] = result
+def prime_factors(n: int) -> List[int]:
+    """The distinct primes dividing n, ascending."""
+    out: List[int] = []
+    m, d = n, 2
+    while d * d <= m:
+        if m % d == 0:
+            out.append(d)
+            while m % d == 0:
+                m //= d
+        d += 1
+    if m > 1:
+        out.append(m)
+    return out
+
+
+def odd_radical(n: int) -> int:
+    """rad_odd(n) = product of the odd primes dividing n (1 if there are none)."""
+    r = 1
+    for p in prime_factors(n):
+        if p != 2:
+            r *= p
+    return r
+
+
+def euler_phi(n: int) -> int:
+    """Euler's totient, from the prime factorization."""
+    result = n
+    for p in prime_factors(n):
+        result = result // p * (p - 1)
     return result
 
 
-def coeff(a: Poly, k: int) -> int:
-    """Coefficient of X^k, with zeros beyond the degree."""
-    return a[k] if 0 <= k < len(a) else 0
+# ---------------------------------------------------------------------------
+# 3.  Cyclotomic polynomials by divisor recursion
+# ---------------------------------------------------------------------------
+
+_CYC_CACHE: Dict[int, Poly] = {}
 
 
-# --------------------------------------------------------------------------
-# The balance box and the frame geometry
-# --------------------------------------------------------------------------
+def cyclotomic(n: int) -> Poly:
+    """Phi_n as a dense integer coefficient list, via X^n - 1 divided by all Phi_d, d | n, d < n."""
+    if n in _CYC_CACHE:
+        return _CYC_CACHE[n]
+    num: Poly = [-1] + [0] * (n - 1) + [1]  # X^n - 1
+    for d in divisors(n):
+        if d < n:
+            num, rem = poly_divmod_monic(num, cyclotomic(d))
+            assert rem == [0], "divisor product identity failed"
+    _CYC_CACHE[n] = num
+    return num
 
 
-def rep_pairs(p: int, q: int, n: int) -> List[Tuple[int, int]]:
-    """Lattice points (i,j) of the box [0,q) x [0,p) with i*p + j*q = n."""
-    return [(i, j) for i in range(q) for j in range(p) if i * p + j * q == n]
+def height(n: int) -> int:
+    """H(n) = max |coefficient| of Phi_n."""
+    return max(abs(c) for c in cyclotomic(n))
 
 
-def lattice_count(p: int, q: int, n: int) -> int:
-    """g_{p,q}(n): the number of balance-box lattice points on i*p + j*q = n."""
-    return len(rep_pairs(p, q, n))
+def is_flat(n: int) -> bool:
+    """Phi_n has all coefficients in {-1, 0, 1}."""
+    return height(n) == 1
 
 
-def frame_geom(p: int, q: int) -> Poly:
-    """G_{p,q}(X) = (sum_{i<q} X^{ip}) * (sum_{j<p} X^{jq})."""
-    left: Poly = [0] * ((q - 1) * p + 1) if q > 0 else [0]
-    for i in range(q):
-        left[i * p] += 1
-    right: Poly = [0] * ((p - 1) * q + 1) if p > 0 else [0]
-    for j in range(p):
-        right[j * q] += 1
-    return poly_mul(poly_trim(left), poly_trim(right))
+# ---------------------------------------------------------------------------
+# 4.  Numerical semigroup <p, q> and the two-parameter coefficient formula
+# ---------------------------------------------------------------------------
 
-
-def in_semigroup(p: int, q: int, n: int) -> bool:
-    """Is n representable as i*p + j*q with i, j >= 0?  (Apery-set test.)"""
-    if n < 0:
+def is_representable(m: int, p: int, q: int) -> bool:
+    """True iff m = i*p + j*q for some nonnegative integers i, j."""
+    if m < 0:
         return False
-    for j in range(0, n // q + 1):
-        if (n - j * q) % p == 0:
+    for i in range(m // p + 1):
+        if (m - i * p) % q == 0:
             return True
     return False
 
 
-def frobenius_number(p: int, q: int) -> int:
-    """The Frobenius number pq - p - q of the coprime pair (p, q)."""
-    return p * q - p - q
+def semigroup_coefficient(m: int, p: int, q: int) -> int:
+    """The lattice-point formula for [X^m] Phi_{pq}, valid for 0 < m < p*q."""
+    return int(is_representable(m, p, q)) - int(is_representable(m - 1, p, q))
 
 
-# --------------------------------------------------------------------------
-# Algorithms from the paper
-# --------------------------------------------------------------------------
-
-
-def frame_coeffs_by_sieve(p: int, q: int) -> Poly:
-    """Algorithm A: coefficients of Phi_{pq} in O(pq) by a semigroup sieve.
-
-    Uses  Phi_{pq}[0] = 1  and  Phi_{pq}[k] = 1[k in <p,q>] - 1[k-1 in <p,q>].
+def family_coefficient(k: int, p: int, q: int, alpha: int, beta: int, gamma: int) -> Tuple[int, int]:
     """
-    n = p * q
-    reachable = [False] * n
-    reachable[0] = True
-    for m in range(n):
-        if not reachable[m]:
-            continue
-        if m + p < n:
-            reachable[m + p] = True
-        if m + q < n:
-            reachable[m + q] = True
-    degree = (p - 1) * (q - 1)
-    out: Poly = [0] * (degree + 1)
-    out[0] = 1 if reachable[0] else 0
-    for k in range(1, degree + 1):
-        out[k] = (1 if reachable[k] else 0) - (1 if reachable[k - 1] else 0)
-    return out
+    The transported lattice-point formula.
+
+    Returns (index, value): the coefficient of Phi_{2^(alpha+1) p^(beta+1) q^(gamma+1)}
+    at the inflated index (k+1) * p^beta * q^gamma * 2^alpha equals
+
+        (-1)^((k+1) p^beta q^gamma) * ( 1{k+1 in <p,q>} - 1{k in <p,q>} ).
+
+    Requires p != q odd primes and 0 <= k with k + 1 < p*q.
+    """
+    j = (k + 1) * p**beta * q**gamma
+    index = j * 2**alpha
+    sign = -1 if j % 2 else 1
+    return index, sign * semigroup_coefficient(k + 1, p, q)
 
 
-def frame_coeff_query(p: int, q: int, k: int) -> int:
-    """Algorithm B: a single coefficient of Phi_{pq} via semigroup membership."""
-    if k < 0 or k > (p - 1) * (q - 1):
-        return 0
-    if k == 0:
-        return 1
-    return int(in_semigroup(p, q, k)) - int(in_semigroup(p, q, k - 1))
+# ---------------------------------------------------------------------------
+# 5.  The demonstrations
+# ---------------------------------------------------------------------------
 
-
-def frame_coeff_certificate(p: int, q: int, k: int) -> Tuple[int, List, List]:
-    """Algorithm C: coefficient together with its lattice-point witnesses."""
-    hi = rep_pairs(p, q, k)
-    lo = rep_pairs(p, q, k - 1) if k >= 1 else []
-    return len(hi) - len(lo), hi, lo
-
-
-# --------------------------------------------------------------------------
-# Demonstrations
-# --------------------------------------------------------------------------
-
-
-def demo_one_parameter() -> None:
-    print("=" * 74)
-    print("1. ONE-PARAMETER CASE:  Phi_p = 1 + X + ... + X^{p-1}")
-    print("=" * 74)
-    for p in (2, 3, 5, 7, 11):
-        c = cyclotomic(p)
-        assert all(x in (0, 1) for x in c), "coefficients must be 0 or 1"
-        assert c == [1] * p
-        print(f"  Phi_{p:<3} = {poly_str(c)}")
-    print("  All coefficients lie in {0,1}; in particular all are >= -1.\n")
-
-
-def demo_lattice_counts() -> None:
-    print("=" * 74)
-    print("2. FRAME GEOMETRY COEFFICIENTS COUNT BALANCE-BOX LATTICE POINTS")
-    print("=" * 74)
-    p, q = 3, 5
-    g = frame_geom(p, q)
-    print(f"  p = {p}, q = {q}; balance box [0,{q}) x [0,{p}); G has degree {len(g)-1}")
-    print("     n | [X^n] G | lattice points (i,j) with i*p + j*q = n")
-    print("  -----+---------+----------------------------------------")
-    for n in range(len(g)):
-        pts = rep_pairs(p, q, n)
-        assert coeff(g, n) == len(pts)
-        assert len(pts) <= 1, "coprime lines meet the box at most once"
-        print(f"  {n:4d} | {coeff(g,n):7d} | {pts}")
-    print("  Every count is 0 or 1: the line is too steep to hit the box twice.\n")
-
-
-def demo_closed_formula() -> None:
-    print("=" * 74)
-    print("3. CLOSED FORMULA:  Phi_pq (X^pq - 1) = (X - 1) G_{p,q}")
-    print("=" * 74)
-    for p, q in ((3, 5), (5, 7), (3, 11), (7, 11)):
-        n = p * q
-        xn: Poly = [0] * n + [1]
-        xn[0] = -1
-        lhs = poly_mul(cyclotomic(n), xn)
-        rhs = poly_mul([-1, 1], frame_geom(p, q))
-        assert lhs == rhs, (p, q)
-        print(f"  p={p:2d}, q={q:2d}:  identity verified (degree {len(lhs)-1})")
+def demo_flat_below_105() -> None:
+    print("=" * 78)
+    print("1.  Flatness for every order below 105")
+    print("=" * 78)
+    bad = [n for n in range(1, 105) if not is_flat(n)]
+    print(f"    orders 1..104 with a coefficient outside {{-1,0,1}}: {bad}")
+    print(f"    least integer with three distinct odd prime divisors: 3*5*7 = {3*5*7}")
+    print(f"    height of Phi_105 = {height(105)}   <- the flat class stops here")
     print()
 
 
-def demo_migotti() -> None:
-    print("=" * 74)
-    print("4. MIGOTTI'S THEOREM:  coefficients of Phi_pq lie in {-1,0,1}")
-    print("=" * 74)
-    primes = [2, 3, 5, 7, 11, 13]
-    worst = 0
-    for a in range(len(primes)):
-        for b in range(a + 1, len(primes)):
-            p, q = primes[a], primes[b]
-            c = cyclotomic(p * q)
-            worst = min(worst, min(c))
-            assert all(abs(x) <= 1 for x in c), (p, q, c)
-    print(f"  Checked all products of two distinct primes from {primes}.")
-    print(f"  Every coefficient lies in {{-1,0,1}}; minimum observed = {worst}.")
-    print(f"  Phi_15 = {poly_str(cyclotomic(15))}")
-    print(f"  Phi_35 = {poly_str(cyclotomic(35))}\n")
+def demo_symmetries() -> None:
+    print("=" * 78)
+    print("2.  The two structural symmetries")
+    print("=" * 78)
+    print("    Inflation  Phi_{np}(X) = Phi_n(X^p)   for p | n:")
+    for n, p in [(15, 3), (15, 5), (105, 7), (12, 2)]:
+        lhs = cyclotomic(n * p)
+        inflated = [0] * ((len(cyclotomic(n)) - 1) * p + 1)
+        for k, c in enumerate(cyclotomic(n)):
+            inflated[k * p] = c
+        assert lhs == poly_trim(inflated)
+        print(f"      n = {n:4d}, p = {p}:  Phi_{n*p} = Phi_{n}(X^{p})   verified")
+    print("    Reflection  Phi_{2n}(X) = Phi_n(-X)   for odd n > 1:")
+    for n in [3, 5, 15, 21, 105, 231]:
+        lhs = cyclotomic(2 * n)
+        rhs = [c * (-1) ** k for k, c in enumerate(cyclotomic(n))]
+        assert lhs == poly_trim(rhs)
+        print(f"      n = {n:4d}:  Phi_{2*n}(X) = Phi_{n}(-X)   verified"
+              f"   (same |coefficients|, height {height(n)})")
+    print()
 
 
-def demo_sign_pattern() -> None:
-    print("=" * 74)
-    print("5. EXACT SIGN PATTERN:  a discrete derivative of a semigroup")
-    print("=" * 74)
+def demo_height_reduction() -> None:
+    print("=" * 78)
+    print("3.  Height reduction:  H(n) = H(rad_odd(n))")
+    print("=" * 78)
+    print(f"    {'n':>8} {'rad_odd(n)':>12} {'deg Phi_n':>10} {'deg Phi_rad':>12} {'H(n)':>6} {'H(rad)':>7}")
+    samples = [4, 8, 12, 16, 24, 45, 90, 105, 210, 315, 420, 231, 462, 385, 770, 1155]
+    for n in samples:
+        r = odd_radical(n)
+        hn, hr = height(n), height(r) if r > 0 else 1
+        assert hn == hr, "height reduction failed"
+        print(f"    {n:>8} {r:>12} {euler_phi(n):>10} {euler_phi(r):>12} {hn:>6} {hr:>7}")
+    print("    every row: H(n) == H(rad_odd(n))  -- the prime 2 and repeated factors are invisible")
+    print()
+
+
+def demo_explicit_105() -> None:
+    print("=" * 78)
+    print("4.  The explicit Phi_105 (degree 48, height exactly 2)")
+    print("=" * 78)
+    c = cyclotomic(105)
+    print(f"    degree                 : {len(c) - 1}  (= phi(105) = {euler_phi(105)})")
+    print(f"    coefficients (0..48)   : {c}")
+    extremes = [k for k, v in enumerate(c) if abs(v) == 2]
+    print(f"    coefficients of size 2 : indices {extremes}, values {[c[k] for k in extremes]}")
+    print(f"    height                 : {height(105)}  (= Bang's bound p-1 for p = 3)")
+    print(f"    expanded               : {poly_str(c)}")
+    print("    Moebius identity check :")
+    lhs = cyclotomic(105)
+    for m in (1, 15, 21, 35):
+        lhs = poly_mul(lhs, [-1] + [0] * (m - 1) + [1])
+    rhs: Poly = [1]
+    for m in (3, 5, 7, 105):
+        rhs = poly_mul(rhs, [-1] + [0] * (m - 1) + [1])
+    assert lhs == rhs
+    print("      Phi_105 * (X-1)(X^15-1)(X^21-1)(X^35-1) = (X^3-1)(X^5-1)(X^7-1)(X^105-1)  verified")
+    print("    infinite family        : H(2^a 3^b 5^c 7^d) = 2 for all a>=0, b,c,d>=1")
+    for a, b, c_, d in [(0, 1, 1, 1), (3, 2, 1, 1), (1, 1, 3, 2), (5, 2, 2, 2)]:
+        n = 2**a * 3**b * 5**c_ * 7**d
+        assert odd_radical(n) == 105
+        print(f"      n = 2^{a} 3^{b} 5^{c_} 7^{d} = {n:<10} rad_odd = 105,  H = 2  (deg Phi_n = {euler_phi(n)})")
+    print()
+
+
+def demo_flat_231() -> None:
+    print("=" * 78)
+    print("5.  A FLAT ternary order: 231 = 3 * 7 * 11")
+    print("=" * 78)
+    c = cyclotomic(231)
+    print(f"    degree           : {len(c) - 1}  (= phi(231) = {euler_phi(231)})")
+    print(f"    height           : {height(231)}   -> flat, although 231 has three odd primes")
+    print(f"    coefficient set  : {sorted(set(c))}")
+    print(f"    support          : {sum(1 for v in c if v != 0)} nonzero of {len(c)} coefficients")
+    print("    consequence      : 'at most two odd primes => flat' is an implication, NOT an")
+    print("                       equivalence; every n with rad_odd(n) = 231 is flat, e.g.")
+    for a, b, c_, d in [(0, 1, 1, 1), (2, 1, 2, 1), (1, 3, 1, 1)]:
+        n = 2**a * 3**b * 7**c_ * 11**d
+        assert odd_radical(n) == 231 and is_flat(n)
+        print(f"                         n = 2^{a} 3^{b} 7^{c_} 11^{d} = {n:<8} flat, deg Phi_n = {euler_phi(n)}")
+    print()
+
+
+def demo_385() -> None:
+    print("=" * 78)
+    print("6.  Height three: 385 = 5 * 7 * 11")
+    print("=" * 78)
+    c = cyclotomic(385)
+    print(f"    degree           : {len(c) - 1}  (= phi(385) = {euler_phi(385)})")
+    print(f"    height           : {height(385)}")
+    extremes = [k for k, v in enumerate(c) if abs(v) == 3]
+    print(f"    coefficients = -3: indices {extremes} (symmetric about the centre {(len(c)-1)//2})")
+    print(f"    Bang bound here  : p - 1 = 4 for p = 5, so 385 is NOT Bang-extremal")
+    print("    infinite family  : H(2^a 5^b 7^c 11^d) = 3 for all a>=0, b,c,d>=1")
+    for a, b, c_, d in [(0, 1, 1, 1), (2, 1, 1, 1), (1, 2, 1, 1)]:
+        n = 2**a * 5**b * 7**c_ * 11**d
+        assert odd_radical(n) == 385
+        print(f"      n = 2^{a} 5^{b} 7^{c_} 11^{d} = {n:<8} rad_odd = 385, H = 3, deg Phi_n = {euler_phi(n)}")
+    print()
+
+
+def demo_trichotomy() -> None:
+    print("=" * 78)
+    print("7.  The ternary trichotomy: three odd primes, three different heights")
+    print("=" * 78)
+    print(f"    {'order':>7} {'factorization':>16} {'#odd primes':>12} {'degree':>8} {'height':>7}")
+    for n, fac in [(231, "3 * 7 * 11"), (105, "3 * 5 * 7"), (385, "5 * 7 * 11")]:
+        w = len([p for p in prime_factors(n) if p != 2])
+        print(f"    {n:>7} {fac:>16} {w:>12} {euler_phi(n):>8} {height(n):>7}")
+    print("    => the NUMBER of odd primes does not determine the height;")
+    print("       the odd RADICAL does (equal odd radicals force equal heights).")
+    print("    height 1 is exactly flatness, since Phi_n is monic (no order has height 0).")
+    print()
+
+
+def demo_lattice_points() -> None:
+    print("=" * 78)
+    print("8.  Coefficients as lattice-point counts")
+    print("=" * 78)
     p, q = 3, 5
     c = cyclotomic(p * q)
-    print(f"  p = {p}, q = {q}; semigroup <p,q> = payable amounts with coins {p},{q}")
-    print("     k | k in <p,q> | k-1 in <p,q> | difference | Phi_15[k]")
-    print("  -----+------------+--------------+------------+----------")
-    for k in range(0, (p - 1) * (q - 1) + 1):
-        hi = in_semigroup(p, q, k)
-        lo = in_semigroup(p, q, k - 1) if k >= 1 else False
-        diff = int(hi) - int(lo) if k >= 1 else 1
-        assert diff == coeff(c, k)
-        print(f"  {k:4d} | {str(hi):>10} | {str(lo):>12} | {diff:10d} | {coeff(c,k):9d}")
-    F = frobenius_number(p, q)
-    print(f"  The Frobenius number is {F}; indeed Phi_15[{F}] = {coeff(c,F)} "
-          f"and Phi_15[{F-1}] = {coeff(c,F-1)}.\n")
-
-
-def demo_sharpness() -> None:
-    print("=" * 74)
-    print("6. SHARPNESS FOR EVERY SEMIPRIME:  Phi_pq[0] = 1 and Phi_pq[1] = -1")
-    print("=" * 74)
-    primes = [2, 3, 5, 7, 11, 13, 17]
-    for a in range(len(primes)):
-        for b in range(a + 1, len(primes)):
-            p, q = primes[a], primes[b]
-            c = cyclotomic(p * q)
-            assert coeff(c, 0) == 1 and coeff(c, 1) == -1, (p, q)
-    print(f"  Verified for all pairs from {primes}:")
-    print("  the amount 0 is always payable and 1 never is, so the linear")
-    print("  coefficient is 0 - 1 = -1.  Hence -1 is the least coefficient value.")
-    print(f"  Highlighted case:  Phi_15[7] = {coeff(cyclotomic(15), 7)}\n")
-
-
-def demo_balance() -> None:
-    print("=" * 74)
-    print("7. BALANCE LAW:  the coefficients of Phi_pq sum to 1")
-    print("=" * 74)
-    for p, q in ((3, 5), (5, 7), (3, 11), (11, 13)):
-        c = cyclotomic(p * q)
-        plus = sum(1 for x in c if x == 1)
-        minus = sum(1 for x in c if x == -1)
-        assert sum(c) == 1 and plus - minus == 1
-        print(f"  p={p:2d}, q={q:2d}:  #(+1) = {plus:3d}, #(-1) = {minus:3d}, "
-              f"sum = {sum(c)}")
+    print(f"    Phi_{p*q} = {poly_str(c)}")
+    print(f"    numerical semigroup <{p},{q}> below {p*q}: "
+          f"{[m for m in range(p*q) if is_representable(m, p, q)]}")
+    print(f"    {'m':>3} {'m in <p,q>':>11} {'m-1 in <p,q>':>13} {'formula':>8} {'true coeff':>11}")
+    for m in range(1, p * q):
+        f = semigroup_coefficient(m, p, q)
+        t = c[m] if m < len(c) else 0
+        assert f == t, "lattice-point formula failed"
+        print(f"    {m:>3} {str(is_representable(m,p,q)):>11} {str(is_representable(m-1,p,q)):>13}"
+              f" {f:>8} {t:>11}")
     print()
-
-
-def demo_sylvester() -> None:
-    print("=" * 74)
-    print("8. SYLVESTER SYMMETRY AND THE GAP COUNT")
-    print("=" * 74)
-    for p, q in ((3, 5), (5, 7), (3, 11), (7, 11)):
-        F = frobenius_number(p, q)
-        for n in range(F + 1):
-            assert lattice_count(p, q, n) + lattice_count(p, q, F - n) == 1
-        D = (p - 1) * (q - 1)
-        gaps = [n for n in range(D) if lattice_count(p, q, n) == 0]
-        assert 2 * len(gaps) == D
-        print(f"  p={p:2d}, q={q:2d}:  F = {F:3d}, D = {D:3d}, "
-              f"gaps = {len(gaps):3d} = D/2")
-    print("  For 3,5 the gaps below D = 8 are "
-          f"{[n for n in range(8) if lattice_count(3,5,n)==0]}\n")
-
-
-def demo_palindromicity() -> None:
-    print("=" * 74)
-    print("9. PALINDROMICITY:  Phi_pq[k] = Phi_pq[D - k]")
-    print("=" * 74)
-    for p, q in ((3, 5), (5, 7), (3, 13), (11, 13)):
-        c = cyclotomic(p * q)
-        D = (p - 1) * (q - 1)
-        assert all(coeff(c, k) == coeff(c, D - k) for k in range(D + 1))
-        print(f"  p={p:2d}, q={q:2d}:  self-reciprocal of degree {D}")
-    print(f"  Phi_15 coefficient vector: {cyclotomic(15)}\n")
-
-
-def demo_algorithms() -> None:
-    print("=" * 74)
-    print("10. ALGORITHMS:  sieve, O(1) query, and lattice-point certificate")
-    print("=" * 74)
-    p, q = 7, 11
-    exact = cyclotomic(p * q)
-    sieved = frame_coeffs_by_sieve(p, q)
-    assert sieved == exact
-    print(f"  Sieve reproduces Phi_{p*q} exactly (degree {(p-1)*(q-1)}).")
-    for k in (0, 1, 7, 11, 18, 30, 59, 60):
-        assert frame_coeff_query(p, q, k) == coeff(exact, k)
-    print("  Direct queries agree with the full computation.")
-    val, hi, lo = frame_coeff_certificate(3, 5, 7)
-    print(f"  Certificate for Phi_15[7]: points on 3i+5j=7 in the box: {hi}; "
-          f"on 3i+5j=6: {lo};")
-    print(f"  coefficient = |{len(hi)}| - |{len(lo)}| = {val}\n")
-
-
-def demo_coprimality_boundary() -> None:
-    print("=" * 74)
-    print("11. THE COPRIMALITY BOUNDARY:  steps 2 and 4")
-    print("=" * 74)
-    pts = rep_pairs(2, 4, 4)
-    g = frame_geom(2, 4)
-    assert len(pts) == 2 and coeff(g, 4) == 2
-    print(f"  Lattice points of [0,4) x [0,2) on 2i + 4j = 4:  {pts}")
-    print(f"  Hence [X^4] G_(2,4) = {coeff(g,4)} -- the multiplicity bound fails")
-    print("  as soon as the two steps are not coprime.\n")
-
-
-def demo_three_parameters() -> None:
-    print("=" * 74)
-    print("12. THREE PARAMETERS:  the bound breaks at 105 = 3 * 5 * 7")
-    print("=" * 74)
-    c105 = cyclotomic(105)
-    lo = min(c105)
-    where = [k for k, x in enumerate(c105) if x == lo]
-    assert lo == -2
-    print(f"  Phi_105 has degree {len(c105)-1} and minimum coefficient {lo}")
-    print(f"  attained at exponents {where}.")
-    for n in (3, 5, 7, 15, 21, 35, 105, 165, 195, 231, 385):
-        c = cyclotomic(n)
-        print(f"    n = {n:4d}:  min coeff = {min(c):3d},  max coeff = {max(c):3d}")
-    print("  Two coprime steps give a line in a rectangle (multiplicity 1);")
-    print("  three give a plane in a box, where multiplicity 1 is not forced.\n")
+    print("    Transport to the whole family 2^(a+1) p^(b+1) q^(c+1):")
+    for (a, b, g) in [(0, 0, 0), (1, 1, 0), (2, 0, 1)]:
+        n = 2 ** (a + 1) * p ** (b + 1) * q ** (g + 1)
+        cn = cyclotomic(n)
+        ok = True
+        for k in range(0, p * q - 1):
+            idx, val = family_coefficient(k, p, q, a, b, g)
+            actual = cn[idx] if idx < len(cn) else 0
+            ok = ok and (val == actual)
+        status = "all inflated indices match" if ok else "MISMATCH"
+        print(f"      n = 2^{a+1} {p}^{b+1} {q}^{g+1} = {n:<8} deg Phi_n = {euler_phi(n):<6} {status}")
+    print()
 
 
 def main() -> None:
     print()
-    print("#" * 74)
-    print("#  THE TWO-PARAMETER PM-FRAME: LATTICE POINTS IN A BALANCE BOX")
-    print("#" * 74)
+    print("CYCLOTOMIC COEFFICIENT HEIGHTS")
+    print("the odd radical, the flat class, and the ternary trichotomy")
     print()
-    demo_one_parameter()
-    demo_lattice_counts()
-    demo_closed_formula()
-    demo_migotti()
-    demo_sign_pattern()
-    demo_sharpness()
-    demo_balance()
-    demo_sylvester()
-    demo_palindromicity()
-    demo_algorithms()
-    demo_coprimality_boundary()
-    demo_three_parameters()
-    print("All assertions passed.")
+    demo_flat_below_105()
+    demo_symmetries()
+    demo_height_reduction()
+    demo_explicit_105()
+    demo_flat_231()
+    demo_385()
+    demo_trichotomy()
+    demo_lattice_points()
+    print("All demonstrations completed; every assertion above was checked numerically.")
 
 
 if __name__ == "__main__":

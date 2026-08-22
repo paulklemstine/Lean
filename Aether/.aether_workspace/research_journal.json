@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "3ec7eb1a",
-      "domain": "Combinatorics",
-      "key_insight": "# Future directions — the marginal side of the Bonferroni machinery\n\nThe formalised results in `Catalog/Combinatorics/BonferroniMarginals.lean` isolate a clean\nseparation of concerns: the Bonferroni/C",
-      "quality_score": 0.76,
-      "sorry_count": 0,
-      "theorem_count": 37,
-      "timestamp": "2026-08-20T17:46:40",
-      "title": "The Bonferroni machinery"
-    },
-    {
       "cycle_id": "fc85d14f",
       "domain": "Shared",
       "key_insight": "# Future directions — from the two-parameter ±-frame\n\nThe results proved in `Catalog/Shared/PMFrameTwoParameter.lean` reduce the\nquestion \"how negative can a coefficient of the ±-frame `Φ_n` be?\" to c",
@@ -499,19 +489,19 @@
       "theorem_count": 125,
       "timestamp": "2026-08-22T11:36:38",
       "title": "Aleph-1 Surface: Geometry Between Dimensions"
+    },
+    {
+      "cycle_id": "0f0bd7f8",
+      "domain": "Probability",
+      "key_insight": "# Future Directions — after Cycles 6–9 (Markov-chain frame definability for `ModalSystem`)\n\nThe mission asked for a Lean development of frame definability for Cycle 4's\n`ModalSystem`, carried by the `",
+      "quality_score": 0.9,
+      "sorry_count": 0,
+      "theorem_count": 152,
+      "timestamp": "2026-08-22T13:02:14",
+      "title": "Cycle 4 already provides the two witnesses and the joint-inconsistency"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "295ca744",
-      "domain": "Algebra",
-      "key_insight": "# FUTURE DIRECTIONS — ECM-PARITY (round-18 #1, experiment 404)\n\nThe cycle proved, with zero `sorry`s:\n\n| face | theorem |\n|---|---|\n| parity dichotomy | `ECMParity.two_dvd_curveCard_iff` |\n| Stickelbe",
-      "quality_score": 0.86,
-      "sorry_count": 0,
-      "theorem_count": 79,
-      "timestamp": "2026-08-14T16:15:07",
-      "title": "ECM-PARITY: first positive symmetric residue shadow on the GENERIC elliptic order (2|#E ⟺ cubic root"
-    },
     {
       "cycle_id": "e0db545b",
       "domain": "Physics",
@@ -2501,21 +2491,19 @@
       "theorem_count": 125,
       "timestamp": "2026-08-22T11:36:38",
       "title": "Aleph-1 Surface: Geometry Between Dimensions"
+    },
+    {
+      "cycle_id": "0f0bd7f8",
+      "domain": "Probability",
+      "key_insight": "# Future Directions — after Cycles 6–9 (Markov-chain frame definability for `ModalSystem`)\n\nThe mission asked for a Lean development of frame definability for Cycle 4's\n`ModalSystem`, carried by the `",
+      "quality_score": 0.9,
+      "sorry_count": 0,
+      "theorem_count": 152,
+      "timestamp": "2026-08-22T13:02:14",
+      "title": "Cycle 4 already provides the two witnesses and the joint-inconsistency"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "663f5de8",
-      "domain": "Computation",
-      "name": "qSeries_mul_qInv",
-      "quality": 0.89
-    },
-    {
-      "cycle_id": "663f5de8",
-      "domain": "Computation",
-      "name": "qInv_mul_qSeries",
-      "quality": 0.89
-    },
     {
       "cycle_id": "663f5de8",
       "domain": "Computation",
@@ -2803,9 +2791,21 @@
       "domain": "NumberTheory",
       "name": "slab_apply",
       "quality": 0.85
+    },
+    {
+      "cycle_id": "0f0bd7f8",
+      "domain": "Probability",
+      "name": "mem_of_consecutive",
+      "quality": 0.9
+    },
+    {
+      "cycle_id": "0f0bd7f8",
+      "domain": "Probability",
+      "name": "exists_consecutive_of_aperiodic",
+      "quality": 0.9
     }
   ],
-  "last_updated": "2026-08-22T11:36:38",
+  "last_updated": "2026-08-22T13:02:14",
   "open_questions": [
     {
       "context": "All proofs are complete; no `sorry`.; All proofs are complete; no `sorry`.",
@@ -3765,12 +3765,6 @@
     ],
     "Probability": [
       {
-        "cycle_id": "beb0e52b",
-        "quality": 0.91,
-        "theorems": 254,
-        "title": "CYCLIC-CUBIC-FORK: fork-pinning ⟺ fork in the abelianization of the Galois closu"
-      },
-      {
         "cycle_id": "8ed04a73",
         "quality": 0.85,
         "theorems": 78,
@@ -3823,6 +3817,12 @@
         "quality": 0.92,
         "theorems": 115,
         "title": "Martingale-Concentration: Talagrand's Inequality on Product Spaces"
+      },
+      {
+        "cycle_id": "0f0bd7f8",
+        "quality": 0.9,
+        "theorems": 152,
+        "title": "Cycle 4 already provides the two witnesses and the joint-inconsistency"
       }
     ],
     "Pythagorean": [
