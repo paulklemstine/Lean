@@ -2244,7 +2244,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3eae19ad",
     "description": "Round-61 #1, cron iteration (exp 530). The highest-bitlen uniform measurement in the dial's validation grid.\n\n**U64-DIAL-HOLDS-COUNT-PARITY**: Spearman(T, rate) = **0.658** / **0.642** / **0.643** across three seeds on uniform draws at bitlen 64; pooled **0.648** CI [0.629, 0.665]. All inside [0.55, 0.85].\n\nH2's strict +0.05 bar met by 2/3 seeds but pooled CI low (0.049) misses it by 0.001 — recorded as count parity.\n\nThe zero-fit dial extends to bitlen 64 on uniform draws with the band intact — a gentle monotone decline from ~0.78 at bitlen 44 to ~0.65 at 64.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp530_t_dial_unif_64.py + exp530_result.json, seeds 20261140–42.",
     "domain_bridges": [],
     "domains": [
@@ -2256,7 +2256,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T18:51:45.074530+00:00",
     "title": "FACT round-61 #1 — TDIAL-U64: the zero-fit dial holds at bitlen 64 with count parity (paper 185)"
   },
@@ -2867,6 +2867,63 @@
     "status": "available",
     "timestamp": "2026-08-22T22:39:30.338596+00:00",
     "title": "FACT round-60 #2 — PERNDIAL-48-52: the per-N dial transfers to bitlen 52 with partial degradation (paper 186)"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "## NET-89 — limited-memory axis, round 33 (paper 170, ResearchOutput/exp_net89_mixed.py, /tmp/net89.log)\n\n**Verdict name: THE-MIXED-DOMAIN-STARTS-LOW-AND-RISES-FAST.**\n\n### Result\nInterleaved ~500-char blocks of Python code + English prose (gate exact; Qwen2.5-0.5B fp32):\n\n| ctx | mixed k\\* | code k\\* | EN prose k\\* | mixed increment |\n|---|---|---|---|---|\n| 512 | **12** | 12 | 16 | — |\n| 1024 | **20** | 16 | 20 | **+8 (vs +4 for either pure domain)** |\n\nThe mixed domain starts at CODE's level and rises at DOUBLE the expected rate.\n\n- **P1 REFUTED**: not the midpoint of components.\n- **P2 PARTIAL**: reaches prose's level by 1024.\n- **P3 CONFIRMED IN SPIRIT**: the model adapts locally, but the adaptation means cross-domain attention requires more keys than either pure domain.\n\n### The finding\nMixed-domain attention has its OWN structure shaped by cross-domain query-key interactions — it is NOT simply a combination of component domains. The steeper increment reflects the cost of switching between content types within a context window.\n\n### All 8 barriers\n(a) clean; (b) clean — first mixed-domain measurement in-programme; (c) confronted — 50/50 ratio, one block size stated; (d) clean; (e) deterministic; (f) clean — ALL_DONE_NET89; (g) fair; (h) DIRECT — real workloads are always mixed-domain.\n\n### Next\nMixing-ratio sweep; block-size sensitivity; other language pairs; 1.5B mixed-domain; 7B cell.\n\nNow 90 network experiments. Assessment v90. Paper 170.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3776",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T23:36:49.794322+00:00",
+    "title": "NET-89: THE-MIXED-DOMAIN-STARTS-LOW-AND-RISES-FAST — interleaved code+prose knees {12,20}: starts at code's level but rises at double the expected rate"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "## NET-88 — limited-memory axis, round 32 (paper 169, ResearchOutput/exp_net88_de4096.py, /tmp/net88.log)\n\n**Verdict name: THE-TOKENIZER-TAX-EXPLODES.**\n\n### Result\nGerman prose at ctx=4096 (gate exact; 3 held-out windows):\n\n| k | 24 | 32 | 40 | 48 | 56 |\n|---|---|---|---|---|---|\n| retained | 0.953 ✗ | 0.966 ✗ | 0.973 ✗ | 0.975 ✗ | **0.976 ✗** |\n\n**ALL FIVE POINTS FAIL.** Even k=56 retains only 0.976 — well below the bar.\n\n- **P1 CONFIRMED dramatically**: the tokenizer-tax compounds with the acceleration.\n- **P2/P3 REFUTED**: the tax does NOT dissolve or stay intermediate — it EXPLODES.\n\n### The multiplicative law\nThe +4 fine-step tax at short contexts becomes ≥+16 at 4096 — a 4× AMPLIFICATION matching the increment acceleration exactly. Domain/language shifts and context acceleration are MULTIPLICATIVE: the phase transition magnifies language differences rather than washing them out.\n\n### Deployment consequence\nMultilingual agentic workloads face disproportionately growing KV costs for non-English languages as context extends beyond ~2000 tokens. Budget tables must include a language × context interaction term.\n\n### All 8 barriers\n(a) clean; (b) clean — first domain×acceleration interaction test; (c) confronted — one language pair, 3 windows stated; (d) clean; (e) deterministic; (f) clean — ALL_DONE_NET88; (g) fair — identical harness except text; (h) DIRECT.\n\n### Next\nFrench @4096 (does romance behave like germanic?); more languages @4096; 1.5B non-English @4096; 7B cell.\n\nNow 89 network experiments. Assessment v89. Paper 169.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3777",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T23:36:49.795485+00:00",
+    "title": "NET-88: THE-TOKENIZER-TAX-EXPLODES — German prose at 4096 needs >56 keys (all points fail); +4 fine-step tax becomes >=+16 at long context (4x amplification)"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Round-69 #2, cron iteration (exp 544). The first CI-separated band loss of the ladder.\n\n**TDIAL-U108-CONTINUES-FADE**: pooled Spearman(T, rate) = **0.488** CI [0.445, 0.534] — the ENTIRE CI below the 0.55 floor for the FIRST time. Fade decelerates toward a ~0.48 plateau (step delta −0.0125 vs prior −0.030/−0.043). T beats count by +0.092 CI [0.043, 0.139]. First seed heterogeneity of the ladder.\n\nThe dial drops decisively below the validated band at bitlen 108 — the fade is real and the CI now excludes the floor.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp544_t_dial_unif_108.py + exp544_result.json + run.log, seeds 20261210–12.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3778",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T23:36:49.796512+00:00",
+    "title": "FACT round-69 #2 — TDIAL-U108: the dial drops below the band at bitlen 108 (paper 191)"
   },
   {
     "ambition_level": "grand_challenge",
@@ -5178,66 +5235,6 @@
     "status": "available",
     "timestamp": "",
     "title": "Quantum Entanglement Monogamy: CKW Inequality"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Prove that the tropicalization of a variety V over a non-Archimedean field is the limit of V as the valuation goes to infinity. Bridge: the tropical fundamental theorem states that the tropicalization of V equals the corner locus of the tropical polynomial. Show that tropical intersection numbers equal classical intersection numbers (tropical Bezout).",
-    "domain_bridges": [],
-    "domains": [
-      "Bridges",
-      "Tropical"
-    ],
-    "id": "seed_354",
-    "lineage_refs": [],
-    "priority_score": 0.85,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Bridge: Tropical Geometry as a Limit of Classical Algebraic Geometry"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Formalize the Learning With Errors (LWE) problem and prove its reduction from worst-case lattice problems (GapSVP). Show that the Regev encryption scheme is IND-CPA secure under LWE. Prove that key exchange based on LWE achieves forward secrecy. Compute concrete security parameters for 128-bit security.",
-    "domain_bridges": [],
-    "domains": [
-      "Cryptography",
-      "Computation"
-    ],
-    "id": "seed_356",
-    "lineage_refs": [],
-    "priority_score": 0.85,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Post-Quantum Cryptography: Lattice-Based Key Exchange"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Define tropical schemes as semiring schemes over the tropical semiring. Prove that the tropical scheme associated to a tropical polynomial is the corner locus. Show that the structure sheaf of a tropical scheme satisfies the tropical gluing axiom. Connect to the Grothendieck scheme-theoretic approach to tropical geometry.",
-    "domain_bridges": [],
-    "domains": [
-      "Tropical",
-      "Algebra"
-    ],
-    "id": "seed_369",
-    "lineage_refs": [],
-    "priority_score": 0.85,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Tropical Schemes: Foundations of Tropical Algebraic Geometry"
   },
   {
     "ambition_level": "extension",
@@ -13041,7 +13038,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "575b8a0a",
     "description": "Formalize chess played on an infinite board. Prove that the king can always escape on an infinite board and determine which finite-piece configurations are forced mates. Develop a theory of infinite combinatorial game value and prove its relationship to ordinal game values.",
     "domain_bridges": [],
     "domains": [
@@ -13055,7 +13052,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Infinite-Dimensional Chess: Winning on the Hilbert Board"
   },
@@ -15595,6 +15592,30 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Algebra.SmoothWindows.GaborOperators",
+      "Algebra.SmoothWindows.GaussianWindow",
+      "Algebra.SmoothWindows.HarmonicGaborWindow"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The discrete Gabor transform of spectral data has a position spread and a frequency spread whose product is conjecturally bounded below by 1/(4π), with equality exactly on the Heisenberg orbit of the Gaussian window. The approach is to combine the already-formalised Fourier intertwining relations with the second moment of the Gaussian integral. It matters because it identifies the Gaussian window as the unique optimum rather than merely a convenient choice.\n\nFor every normalised window w with finite second moments, Δa(w)·Δξ(w) ≥ 1/(4π), with equality if and only if w lies in the gaborAct-orbit of gaussC s for some s > 0.\n\nFormalise the second moment ∫ x² exp(-b x²) dx = (1/2b)√(π/b) in Lean, define Δa and Δξ for the Gabor transform of Algebra.SmoothWindows.HarmonicGaborWindow, and prove the inequality via the Cauchy-Schwarz/commutator argument; check the equality case against gaborAct_gaborAtom.\n\nThe Gaussian window becomes the canonical, provably optimal window for the catalog's harmonic-sum detector, and the equality locus is a Heisenberg orbit, giving a group-theoretic classification of optimal windows.\n\nEither the discrete spreads are not the right invariants (the sums are not integrals) or the optimum is a non-Gaussian discrete window, which would be a genuinely new phenomenon for multiset-supported data.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_3766",
+    "lineage_refs": [],
+    "priority_score": 0.7106190476190477,
+    "proof_strategy": "Commutator identity [position, frequency] = i/(2π) transported through heisRep; Cauchy-Schwarz on the resulting quadratic form; equality forces a first-order ODE whose solutions are Gaussians; fourier_gaussC identifies the fixed ray.",
+    "research_mode": "team",
+    "source_exp_id": "ccf34fd5",
+    "status": "available",
+    "timestamp": "2026-08-22T23:36:05.952683+00:00",
+    "title": "Gaussian Extremality of the Discrete Gabor Uncertainty Product"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Novelty.BerggrenCausalSet",
       "Novelty.BerggrenCausalSetGeometry"
     ],
@@ -15874,6 +15895,29 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Algebra.SmoothWindows.PeakLocalization",
+      "Algebra.SmoothWindows.HarmonicGaborWindow"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The two-ordinate resolution criterion proved in this cycle should generalise: for m ordinates with minimum gap δ, a single inequality in g_{2s}(δ) should force the position profile to have exactly m local maxima. The approach exploits the two scale-doubling identities, which make the profile a polynomial in one variable per interfering pair. This turns a peak-finding heuristic into a theorem with an explicit constant.\n\nThere is an absolute constant C such that C·m·g_{2s}(δ)·max_i(1/4+t_i²) ≤ min_i(1/4+t_i²) implies posProfile S s has exactly m local maxima, one within o(s) of each t_i.\n\nFormalise the m = 3 case first, using posProfile_pair_at/posProfile_pair_mid as the model; then run the numerical scan of ComputationalEvidence.md on random m-tuples to calibrate C before attempting the induction on Multiset.\n\nThe Gaussian-windowed detector provably counts zeros, not just detects them, giving a formally verified peak counter for critical-line ordinate families.\n\nThe failure will exhibit a configuration where three ordinates conspire to create a fourth peak, which would be the first rigorous 'phantom zero' construction for smooth windows and would bound how far any window-based counter can be trusted.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_3768",
+    "lineage_refs": [],
+    "priority_score": 0.7102972972972974,
+    "proof_strategy": "Write posProfile as w_i-weighted sums of powers of u = g_{2s}(δ) via gaussWin_half_eq and gaussWin_eq_pow_four; bound the interference of the m-1 non-local terms by a geometric series; apply the derivative sign change argument on each interval between consecutive ordinates.",
+    "research_mode": "team",
+    "source_exp_id": "ccf34fd5",
+    "status": "available",
+    "timestamp": "2026-08-22T23:36:06.698843+00:00",
+    "title": "Multi-Ordinate Rayleigh Threshold for Gaussian Peak Counting"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Catalog.Novelty.BerggrenTreeCriticalLine",
       "Catalog.Novelty.BerggrenTreeSilverGrowth"
     ],
@@ -16084,6 +16128,31 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Algebra.SmoothWindows.ScaleSpace",
+      "Algebra.SmoothWindows.SchwartzDecay",
+      "Algebra.ReciprocalZeroHarmonics.Core",
+      "Algebra.ReciprocalZeroHarmonics.WindowDichotomy"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The wide-window limit recovers the catalog's harmonicSum; the conjecture is that the rate of convergence encodes the zero counting function, and that the whole scale space determines the zero family uniquely. The approach identifies gaussSpectral with a heat smoothing of the weighted counting measure and applies injectivity of the heat semigroup. It matters because it makes the smooth window a lossless, rather than merely convenient, reparametrisation of the data.\n\nFor a ConjSymm family with counting function N(T) ~ (T/2π)log(T/2πe), harmonicSum - gaussSpectral(S,s) ≍ (log s)/s² as s → ∞; moreover gaussSpectral(S,·) = gaussSpectral(S',·) on a nondegenerate interval implies S = S'.\n\nProve the injectivity half first for finite multisets by analytic continuation in 1/s², then test the asymptotic rate numerically against the first 10^4 ordinates before attempting the Mellin-transform argument.\n\nThe Gaussian scale space is a complete invariant of the zero family, so any statement about zeros can be restated as a statement about a single smooth function of one real variable.\n\nThere exist distinct zero families with the same scale space, which would exhibit an explicit kernel of the smoothing operator and bound what any window-based statistic can distinguish.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Physics"
+    ],
+    "id": "fd_3770",
+    "lineage_refs": [],
+    "priority_score": 0.7101428571428572,
+    "proof_strategy": "Write gaussSpectral(S,s) = ∫ exp(-πt²/s²) dμ_S(t) for the weighted counting measure μ_S; substitute u = 1/s² to obtain a Laplace transform in u; use uniqueness of Laplace transforms for injectivity and a Mellin/Tauberian argument with the known counting asymptotics for the rate.",
+    "research_mode": "team",
+    "source_exp_id": "ccf34fd5",
+    "status": "available",
+    "timestamp": "2026-08-22T23:36:07.454584+00:00",
+    "title": "Tauberian Converse for the Wide-Window Limit"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Cryptography.MarkoffTransfer.MarkoffFreeBinary",
       "Cryptography.MarkoffTransfer.BerggrenMarkoffTransfer"
     ],
@@ -16173,6 +16242,30 @@
     "status": "available",
     "timestamp": "2026-08-21T23:38:47.111122+00:00",
     "title": "Decidability of Corrected-Product Orbit Membership"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Algebra.SmoothWindows.Sidelobes",
+      "Algebra.SmoothWindows.GaussianWindow",
+      "Algebra.SmoothWindows.SchwartzDecay"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Define the spurious energy of a window as the sum of the scale-invariant sidelobe amplitudes of its Fourier transform. The conjecture is that this quantity is infinite exactly for windows with a boundary discontinuity and finite for Schwartz windows, making it a two-valued detector of smoothness. The approach is repeated integration by parts to convert the order of the boundary singularity into the polynomial order of the sidelobe envelope.\n\nE(w) = Σ_n ξ_n·‖𝓕w(ξ_n)‖ over the non-principal local maxima of ‖𝓕w‖ diverges for every compactly supported w that is not C^∞, and converges for every Schwartz w.\n\nExtend Algebra.SmoothWindows.Sidelobes from the indicator function to the family of B-spline windows (k-fold convolutions of rect), where the transfer function is sinc^k and the sidelobe amplitudes are explicit; check the divergence/convergence dichotomy against k.\n\nWindow quality becomes a single computable invariant, and 'peaks that are really sidelobes' get a sharp criterion independent of the data being analysed.\n\nThere is a compactly supported, non-smooth window with summable spurious energy, which would give a strictly better compactly supported detector than any Schwartz window — an outcome of independent practical interest.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Physics"
+    ],
+    "id": "fd_3767",
+    "lineage_refs": [],
+    "priority_score": 0.7100588235294119,
+    "proof_strategy": "Integrate by parts k times against exp(-2πiξt); boundary terms of order k give ξ^{-k} decay; sum over the explicit sidelobe frequencies as in sidelobeFreq; compare with Real.not_summable_one_div_natCast and Real.summable_one_div_nat_pow.",
+    "research_mode": "team",
+    "source_exp_id": "ccf34fd5",
+    "status": "available",
+    "timestamp": "2026-08-22T23:36:06.325898+00:00",
+    "title": "Spurious Sidelobe Energy as a Smoothness Invariant"
   },
   {
     "ambition_level": "extension",
@@ -16495,6 +16588,28 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Cryptography.UniversalRedundancyCurvature"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Real library design is constrained by budgets and architectures, not by cardinality alone. The conjecture is the matroid analogue of this cycle's results: greedy over any matroid of admissible libraries recovers at least 1/(1 + kappa) of the optimum for the Shtarkov price functional, degrading to 1/2 at maximal curvature and to exactness at kappa = 0.\n\nFor any matroid M on the pool Omega, the greedy library A produced by scanning models in order of marginal price satisfies shtarkov P A >= (1/(1 + curvature P Omega)) * shtarkov P B for every independent set B of M.\n\nFormalise matroid exchange for Finset bases in Lean and combine it with curvature_marginal_ge exactly as the uniform case combines it with the covering inequality.\n\nCurvature-aware library design extends to structured deployment constraints with a single scalar knob.\n\nThe uniform-matroid analysis of this cycle is special to cardinality constraints, isolating where the exchange property is essential.",
+    "domain_bridges": [],
+    "domains": [
+      "Combinatorics",
+      "Algebra"
+    ],
+    "id": "fd_3774",
+    "lineage_refs": [],
+    "priority_score": 0.7097741935483872,
+    "proof_strategy": "Pair up greedy and optimal elements by a matroid exchange bijection and charge each optimal element to its partner using the curvature inequality.",
+    "research_mode": "team",
+    "source_exp_id": "f49038d4",
+    "status": "available",
+    "timestamp": "2026-08-22T23:36:23.106608+00:00",
+    "title": "Matroid-Constrained Curved Library Design"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Shared.UnimodalArgmaxPoisson",
       "Shared.UnimodalArgmaxBinomial"
     ],
@@ -16747,6 +16862,29 @@
     "status": "available",
     "timestamp": "2026-08-22T04:50:04.208105+00:00",
     "title": "Twisted Reciprocity at the Roots of Unity"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Cryptography.UniversalRedundancyCurvature",
+      "Cryptography.UniversalRedundancyLibrary"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The conjectured greedy factor (1 - e^{-kappa})/kappa for the Shtarkov price functional is not implied by any single-step gap recursion. It should instead follow from a linear program in the vector of greedy gains, whose constraints are gain monotonicity, the submodular covering inequality at each step, and the curvature inequality for each already-chosen model. Establishing it would complete the curvature-dependent theory of universal decompressor library design.\n\nFor a pool Omega of curvature kappa and any target library B with |B| = n, every pool-restricted greedy run satisfies shtarkov P (A n) >= ((1 - exp (-kappa))/kappa) * shtarkov P B.\n\nFormalise the n inequalities already available (greedyGain_antitone, gap_le_curvature_gain, curvature_marginal_ge) as a finite system and exhibit explicit nonnegative multipliers, verified in Lean by nlinarith or an induction on a weighted potential.\n\nUniversal compression inherits the sharp Conforti-Cornuejols guarantee, interpolating exactly between exact optimality at kappa = 0 and 1 - 1/e at kappa = 1.\n\nThe curvature product proved here is the true worst-case decay for the Shtarkov functional and the classical factor fails outside the abstract submodular setting; a separating instance would be a new extremal example.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_3771",
+    "lineage_refs": [],
+    "priority_score": 0.7095517241379311,
+    "proof_strategy": "Guess the dual multipliers numerically on small n, then prove the resulting weighted-sum inequality by induction on the greedy step using the already-formalised generators.",
+    "research_mode": "team",
+    "source_exp_id": "f49038d4",
+    "status": "available",
+    "timestamp": "2026-08-22T23:36:22.053465+00:00",
+    "title": "LP-Certified Conforti–Cornuéjols Factor for Shtarkov Libraries"
   },
   {
     "ambition_level": "extension",
@@ -18349,6 +18487,28 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Cryptography.UniversalRedundancyCurvature",
+      "Cryptography.UniversalRedundancyCurvatureTV"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Curvature equal to 1 certifies that some model in the pool adds nothing on top of the others, and duplicated models force curvature 1. The conjecture is a quantitative converse making curvature a statistical test for model copying in a deployed pool, with sample complexity governed by the proved bound kappa >= 1 - (|Omega| - 1) delta.\n\nThere are constants such that any pool whose curvature is at most 1 - epsilon contains no pair of sources at total-variation distance below epsilon/(|Omega| - 1), and epsilon-accurate curvature estimation from samples requires O(|X| / epsilon^2) samples per model.\n\nThe exact two-source law curvature_pair (kappa = 1 - delta) already gives the pairwise statement; add an empirical-Shtarkov concentration bound to turn it into a sample-complexity claim.\n\nCurvature becomes an auditable statistic for detecting duplicated or distilled models in a pool.\n\nCurvature conflates duplication with other degeneracies, and a finer invariant separating them is needed.",
+    "domain_bridges": [],
+    "domains": [
+      "Computation"
+    ],
+    "id": "fd_3775",
+    "lineage_refs": [],
+    "priority_score": 0.6694285714285716,
+    "proof_strategy": "Apply the proved total-variation lower bound to the two-element subpool and use curvature_mono to transfer the conclusion to the full pool.",
+    "research_mode": "team",
+    "source_exp_id": "f49038d4",
+    "status": "available",
+    "timestamp": "2026-08-22T23:36:23.457463+00:00",
+    "title": "Curvature as a Model-Duplication Detector"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "MachineLearning.BerggrenSpineBinet",
       "MachineLearning.BerggrenUnitLocus"
     ],
@@ -19412,6 +19572,26 @@
   },
   {
     "ambition_level": "extension",
+    "catalog_references": [
+      "Cryptography.UniversalRedundancyCurvature",
+      "NumberTheory.UniversalRedundancyDiversity"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Shtarkov sums tensorise under independent repetition of the experiment. The conjecture is that the curvature of the k-fold product pool tends to zero exponentially in k at a rate given by the Chernoff separation of the sources, so greedy library design becomes asymptotically optimal for long blocks even for pools where it is not optimal per symbol.\n\nIf the sources of Omega are pairwise distinct then curvature of the k-fold product pool is at most C * exp(-c k) for constants depending only on the pool, hence the greedy gap is at most (|Omega| - 1) * C * exp(-c k) times the optimum.\n\nCombine the catalog tensorisation lemmas for Shtarkov sums with greedy_low_curvature_gap; verify the predicted rate numerically for two-source pools before formalising.\n\nGreedy universal decompressor libraries are asymptotically optimal in the block length, a strong practical guarantee.\n\nCurvature is not tensor-stable, which would identify a genuinely single-letter obstruction to greedy library design.",
+    "domain_bridges": [],
+    "domains": [],
+    "id": "fd_3773",
+    "lineage_refs": [],
+    "priority_score": 0.5896428571428572,
+    "proof_strategy": "Show the marginal ratio of a product pool factorises up to error terms controlled by the total-variation product bound, then apply the Chernoff estimate.",
+    "research_mode": "team",
+    "source_exp_id": "f49038d4",
+    "status": "available",
+    "timestamp": "2026-08-22T23:36:22.757901+00:00",
+    "title": "Curvature Decay for Tensor-Power Pools"
+  },
+  {
+    "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "The bounded search is now\n   formalized as the computable function `fermatSearch : ℕ → Option (ℕ × ℕ)`, together\n   with its soundness (`fermatSearch_sound`) and completeness (`fermatSearch_complete`)\n   theorems, upgrading the *existence* criterion to a *correct algorithm* theorem.\n   Remaining refinements: extract the returned `t` as an explicit `Nat.sqrt`-based\n   witness, and show `fermatSearch` returns `none` exactly on primes and prime powers'\n   trivial-only cases.",
@@ -19699,6 +19879,28 @@
     "status": "available",
     "timestamp": "2026-08-22T13:02:23.732172+00:00",
     "title": "Residue Criterion for Flat Ternary Frames"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Cryptography.UniversalRedundancyCurvature"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Curvature saturates at 1 as soon as the pool has more models than the alphabet has messages, so nontrivial curvature lives only below the capacity threshold |Omega| <= |X|. The conjecture is a matching construction: for every kappa in [0,1] and every pool size below the threshold there is a pool of probability mass functions realising exactly that curvature.\n\nFor all n <= |X| and all kappa in [0,1] there exists a pool Omega of n probability mass functions on X with curvature exactly kappa, and no such pool exists when n > |X|.\n\nThe impossibility half is the proved theorem curvature_eq_one_of_card_lt and the case n = 2 of the realisation half is the proved theorem exists_pool_curvature_eq; formalise the remaining sizes by an explicit family interpolating between disjointly supported models (kappa = 0) and duplicated models (kappa = 1).\n\nCurvature becomes a complete invariant of pool geometry below the capacity threshold, and low-curvature library design is exactly a coding problem.\n\nSome curvature values are unreachable, revealing a hidden quantisation of the achievable marginal ratios.",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry",
+      "Computation"
+    ],
+    "id": "fd_3772",
+    "lineage_refs": [],
+    "priority_score": 0.5635740617149453,
+    "proof_strategy": "Interpolate between a partition-supported pool and a duplicated pool and show the curvature moves continuously by computing the marginal ratios in closed form.",
+    "research_mode": "team",
+    "source_exp_id": "f49038d4",
+    "status": "available",
+    "timestamp": "2026-08-22T23:36:22.406961+00:00",
+    "title": "Pigeonhole Curvature-Capacity Threshold"
   },
   {
     "ambition_level": "extension",
@@ -20010,6 +20212,30 @@
     "status": "available",
     "timestamp": "2026-08-21T06:28:41.029005+00:00",
     "title": "Invisible targets classified for abelian groups"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Algebra.SmoothWindows.GaborOperators",
+      "Algebra.SmoothWindows.GaussianWindow",
+      "Algebra.SmoothWindows.ScaleSpace"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The Heisenberg group formalised here should sit as a normal subgroup inside a semidirect product with SL₂(ℝ) acting on chirped Gaussian windows. The approach is to add the chirp generator to the two existing generators (translation and modulation) and check the Weyl cocycle extends. This bridges the algebra of the window with the symplectic geometry of phase space.\n\nThe assignment s ↦ gaussC s extends to an SL₂(ℝ)-equivariant family of chirped Gaussians exp(-π(α+iβ)t²) intertwining the linear symplectic action on (a,b) with the Gabor transform, and Heis is normal in the resulting semidirect product.\n\nDefine the chirp operator in Lean, verify the cocycle condition against the existing Heis group instance, and check that the Fourier transform corresponds to the rotation by π/2 using fourier_gaussC and fourier_transOp/fourier_modOp.\n\ngaussSpectral becomes one coordinate of an equivariant family, and monotonicity in the width is revealed as the action of the diagonal one-parameter subgroup — a structural explanation, not a computation.\n\nThe obstruction will be a genuine cocycle class, which would show that the discrete (multiset-supported) Gabor transform has a metaplectic anomaly absent in the continuous theory.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_3769",
+    "lineage_refs": [],
+    "priority_score": 0.5630327484832426,
+    "proof_strategy": "Extend heisRep by the chirp multiplication operator; verify the three Bruhat relations; use fourier_gaussC to compute the action of the Weyl element on the Gaussian ray; conclude normality of Heis from the commutator formula modOp_transOp.",
+    "research_mode": "team",
+    "source_exp_id": "ccf34fd5",
+    "status": "available",
+    "timestamp": "2026-08-22T23:36:07.078696+00:00",
+    "title": "Metaplectic Extension of the Gabor Window Action"
   },
   {
     "ambition_level": "extension",
@@ -48214,23 +48440,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "f49038d4",
-    "description": "Define the *curvature* of the pool as\n`κ = 1 − minⱼ (C(Ω) − C(Ω∖{j})) / C({j})` where `Ω` is the whole pool.\nConjecture: greedy library design achieves the factor `(1 − e^{−κ})/κ`, and for\npools of sources that are pairwise at total-variation distance at most `δ` one\nhas `κ ≤ δ·|Ω|`, so nearly-identical model pools admit *nearly optimal* greedy\nlibraries.",
-    "domain_bridges": [],
-    "domains": [],
-    "id": "fd_1596",
-    "lineage_refs": [],
-    "priority_score": 0.4211666666666667,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "f46e1405",
-    "status": "in_progress",
-    "timestamp": "2026-08-19T10:46:59.962852+00:00",
-    "title": "Define the *curvature* of the pool as\n`κ = 1 − minⱼ (C(Ω) − C(Ω∖{j})) / C({j})` where `Ω` is the whole pool."
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Lower-index natural-coordinate coefficients\n   are defined by `((1 - α) / 2) C`, where `C` is the Amari–Chentsov cubic\n   tensor. The development proves e-flatness at `α = 1`, the dual\n   expectation-coordinate m-flatness at `α = -1`, opposite-alpha duality, and\n   the Levi–Civita midpoint identity.",
     "domain_bridges": [],
@@ -54849,23 +55058,6 @@
     "status": "available",
     "timestamp": "2026-08-21T06:22:14.535084+00:00",
     "title": "Finite Dirichlet polynomials"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "ccf34fd5",
-    "description": "Replace the rectangular window by a Schwartz or Gaussian window and prove the modulation/translation identity. Gaussian windows suppress the sidelobes that can masquerade as peaks.",
-    "domain_bridges": [],
-    "domains": [],
-    "id": "fd_2017",
-    "lineage_refs": [],
-    "priority_score": 0.4,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "f2f32f44",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T06:22:14.980450+00:00",
-    "title": "Smooth windows"
   },
   {
     "ambition_level": "extension",

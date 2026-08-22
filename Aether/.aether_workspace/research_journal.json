@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "315472d4",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions — Berggren ⟷ Markoff\n\n## Where this cycle ended up\n\nThe mission hypothesis (\"the Berggren ternary tree and the Markoff tree are isomorphic as\nLorentz-preserving ternary trees\") is",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 115,
-      "timestamp": "2026-08-21T09:53:19",
-      "title": "Markoff Tree Transfer — Carrying the Berggren Tree's Machinery to the Markoff Tree"
-    },
-    {
       "cycle_id": "fe1191f5",
       "domain": "Bridges",
       "key_insight": "# Future Directions — Random Walks on the Berggren Tree\n\n## What this cycle settled\n\n* The boundary **is** a Cantor set, and the harmonic measure of the `(p₁,p₂,p₃)`-walk **is**\n  the Bernoulli produc",
@@ -499,19 +489,19 @@
       "theorem_count": 91,
       "timestamp": "2026-08-22T23:36:16",
       "title": "Smooth windows"
+    },
+    {
+      "cycle_id": "f49038d4",
+      "domain": "Cryptography",
+      "key_insight": "# Future directions — curvature of universal-compression model pools\n\nThis cycle introduced the curvature `κ = 1 − min_{j∈Ω}(C(Ω) − C(Ω∖{j}))/C({j})`\nof a candidate pool for the Shtarkov-sum price fun",
+      "quality_score": 0.8,
+      "sorry_count": 0,
+      "theorem_count": 62,
+      "timestamp": "2026-08-22T23:36:27",
+      "title": "Define the *curvature* of the pool as\n`κ = 1 − minⱼ (C(Ω) − C(Ω∖{j})) / C({j})` where `Ω` is the who"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "67289c0d",
-      "domain": "Cryptography",
-      "key_insight": "# FUTURE DIRECTIONS — Singular Moduli Factoring after the √N Theorem\n\nThe formalisation in `Catalog/Cryptography/SingularModuli/` settles the basic\nquestion: the gcd-of-class-polynomial-values method",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 74,
-      "timestamp": "2026-08-15T10:47:01",
-      "title": "Singular Moduli Factoring and the √N Barrier"
-    },
     {
       "cycle_id": "a9efa47b",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 91,
       "timestamp": "2026-08-22T23:36:16",
       "title": "Smooth windows"
+    },
+    {
+      "cycle_id": "f49038d4",
+      "domain": "Cryptography",
+      "key_insight": "# Future directions — curvature of universal-compression model pools\n\nThis cycle introduced the curvature `κ = 1 − min_{j∈Ω}(C(Ω) − C(Ω∖{j}))/C({j})`\nof a candidate pool for the Shtarkov-sum price fun",
+      "quality_score": 0.8,
+      "sorry_count": 0,
+      "theorem_count": 62,
+      "timestamp": "2026-08-22T23:36:27",
+      "title": "Define the *curvature* of the pool as\n`κ = 1 − minⱼ (C(Ω) − C(Ω∖{j})) / C({j})` where `Ω` is the who"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "e82f11a2",
-      "domain": "MachineLearning",
-      "name": "simplex_pair_le_one",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "175408d6",
-      "domain": "Geometry",
-      "name": "is",
-      "quality": 0.87
-    },
-    {
-      "cycle_id": "175408d6",
-      "domain": "Geometry",
-      "name": "sq_sum_card_le_card_biUnion_mul_sum_inter",
-      "quality": 0.87
-    },
     {
       "cycle_id": "6f0c0f57",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Algebra",
       "name": "chi_ne_zero",
       "quality": 0.8
+    },
+    {
+      "cycle_id": "f49038d4",
+      "domain": "Cryptography",
+      "name": "envelope_singleton",
+      "quality": 0.8
+    },
+    {
+      "cycle_id": "f49038d4",
+      "domain": "Cryptography",
+      "name": "shtarkov_singleton",
+      "quality": 0.8
+    },
+    {
+      "cycle_id": "f49038d4",
+      "domain": "Cryptography",
+      "name": "shtarkov_insert_sub_le_singleton",
+      "quality": 0.8
     }
   ],
-  "last_updated": "2026-08-22T23:36:16",
+  "last_updated": "2026-08-22T23:36:27",
   "open_questions": [
     {
       "context": "All proofs are complete; no `sorry`.; All proofs are complete; no `sorry`.",
@@ -3331,12 +3331,6 @@
     ],
     "Cryptography": [
       {
-        "cycle_id": "3b29df87",
-        "quality": 0.82,
-        "theorems": 110,
-        "title": "Elliptic Curve Cryptography: Weil Pairing and BLS Signatures"
-      },
-      {
         "cycle_id": "93afd30b",
         "quality": 0.82,
         "theorems": 122,
@@ -3389,6 +3383,12 @@
         "quality": 0.82,
         "theorems": 84,
         "title": "FACT round-37 #4 — CONVERSE-CAP-THEOREM: the barrier-4 converse proved for the r"
+      },
+      {
+        "cycle_id": "f49038d4",
+        "quality": 0.8,
+        "theorems": 62,
+        "title": "Define the *curvature* of the pool as\n`κ = 1 − minⱼ (C(Ω) − C(Ω∖{j})) / C({j})` "
       }
     ],
     "Geometry": [
