@@ -829,21 +829,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-37 #5 \u2014 DIAL-OVERLAP-LAW: partially overlapping dials are exactly one bit redundant (paper 133)"
   },
   {
-    "consumed_by_exp_id": "6cdc8533",
-    "description": "## NET-51 \u2014 limited-memory axis, round 3 (paper 136, /tmp/exp_net51_delta.py, /tmp/net51.log)\n\n**Verdict name: THE-KV-CORE-IS-SHARED-THE-TAIL-IS-PERSONAL.**\n\n### Result\nQwen2.5-0.5B **base** vs **Instruct** on identical held-out prompts (both capture forwards gated vs HF eager before measurement: argmax-agreement 0.9922 / 0.9971):\n\n- **Layer-0 keys EXACTLY identical** (cosK = 1.0000, rel-divergence 0.26%) \u2014 P1 EARLY-SHARE confirmed.\n- Every layer keeps cosK \u2265 0.976 (mean 0.990); values 0.94\u20130.99.\n- **P2 MONOTONE-DIVERGENCE REFUTED**: the fine-tune delta is a HUMP \u2014 relK climbs to 0.217 at L16 then falls back to ~0.16; hidden-state divergence peaks ~0.22 at L12\u201316.\n- Mean top-1 attention decision agreement 0.894 across layers \u2014 BUT it collapses to **0.568 (L22) / 0.627 (L23)** while those layers' K/V stay cosine-similar (0.983/0.988): vector similarity does NOT bound functional divergence.\n\n### The convergence\nThe SAME two tail layers that NET-50 measured as the only far-from-tropical region (Maslov gap medians 2.5\u20132.7) and the highest-crystallization region are where two fine-tunes of the same base make different attention decisions. Three independent measurements now agree: **the bulk of a transformer is shared machinery; the last two layers are where the model's identity lives.**\n\n### Practical\nA shared-KV multi-finetune server can share ~22/24 layers at \u22650.92 decision agreement; the tail must be per-model. This is the catalogue's amortized model-delta law (n\u00b7r + min(D,n)) made concrete for KV serving.\n\n### All 8 barriers\n(a) clean \u2014 three structural horns pre-stated; (b) confronted \u2014 task-vector/finetune-delta folklore exists; NEW content = exact hump constants, the decision-vs-vector dissociation at the tail, three-way convergence with our own tropical maps; (c) confronted \u2014 real pretrained pair; honest limits: ONE pair, ONE context, n=4 prompts, fp16 captures; (d) clean \u2014 no training involved; (e) cosine does not bound impact (why Part B exists); prompt variance uncharacterized; (f) clean \u2014 both forwards gated; two gate-caught bugs fixed before any measurement counted; (g) fair \u2014 each model scored under its own weights; (h) DIRECT \u2014 quantified sharing design for limited-VRAM multi-model serving.\n\n### Next\nCausal tail-swap test (exchange only L22/L23 between models); bigger pairs (1.5B/7B); SFT vs RLHF vs DPO tails; quantize-core-harder-than-tail (link to NET-52).\n\nNow 51 network experiments. Assessment v51. Paper 136.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3561",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T03:58:05.369374+00:00",
-    "title": "NET-51: THE-KV-CORE-IS-SHARED-THE-TAIL-IS-PERSONAL \u2014 base-vs-Instruct keys near-identical everywhere (layer 0 exact), delta hump-shaped peaking mid-stack, but attention decisions diverge in exactly the L22/L23 diffuse tail"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "## NET-50 \u2014 limited-memory axis, round 2 (paper 135, /tmp/exp_net50_tropical.py, /tmp/net50.log)\n\n**Verdict name: THE-TROPICAL-LIMIT-IS-LOSSY-BUT-THE-RECOVERY-IS-FAST.**\n\n### Result\nPushing the NET-49 oracle top-k sweep down to the tropical limit on Qwen2.5-0.5B (same gates; forward validated exactly vs HF before measurement):\n\n| k | 512 | 1024 | 2048 |\n|---|---|---|---|\n| 1 | 0.3637 | 0.2885 | **0.2503** |\n| 2 | 0.7865 | 0.7398 | 0.7002 |\n| 4 | 0.9097 | 0.8906 | 0.8762 |\n| 8 | 0.9617 | 0.9485 | 0.9408 |\n| knee | **16 \u2713** | **32 \u2713** | **24 \u2713** |\n\n- **P1 CONFIRMED**: pure argmax attention is catastrophic everywhere and WORSE at longer context (0.364 \u2192 0.289 \u2192 0.250).\n- **P2 CONFIRMED**: k=2 recovers ~0.70\u20130.79, k=4 ~0.88\u20130.91 (razor over the 0.90 bar at 512), k=8 ~0.94\u20130.96.\n- **Knee chain {16, 32, 24} replicates NET-49 EXACTLY** \u2014 different script, different session: deterministic-eval reproducibility proven.\n\n### The Maslov-gap map (new measurement)\nPer-row LSE \u2212 max of causal scores, per layer: bulk medians **0.17\u20131.86 nats** (within log 8 \u2248 2.08) at 512/1024; at 2048 all bulk layers \u2264 1.46. The ONLY far-from-tropical region is the diffuse tail: **L22/L23 medians 2.33/2.16 \u2192 2.55/2.37 \u2192 2.69/2.52 across contexts**, p90 \u2248 3.4. Crystallization loss \u03a3p(1\u2212p): per-layer means **0.34\u20130.97** \u2014 P3's \"\u2264 0.25\" REFUTED honestly. Real attention carries heavy soft mass that is individually tiny but collectively load-bearing: top-k to 24 keys still retains \u226598%.\n\n### Practical reading\nThe deployable regime is **\"tropical core + thin soft correction\"**: pointer-style (k\u22481\u20134) caches sit far below the knee, but the measured recovery curve quantifies exactly what each added key buys (k=1\u21922: +0.34\u20130.45; k=2\u21924: +0.12\u20130.17; k=4\u21928: +0.05\u20130.07). This is the deployment-relevant curve for aggressive KV compression on small-VRAM hosts.\n\n### All 8 barriers\n(a) clean \u2014 cliff/recovery/budget horns pre-stated; (b) clean \u2014 argmax-limit sweeps + Maslov/crystallization budget measurements on a pretrained LM not in Catalog or literature as measured laws; (c) confronted \u2014 real-scale pretrained model, natural text; honest limit: ONE model; (d) clean \u2014 held-out last 10%, data-free selection; (e) SUBSTANCE + limits \u2014 cross-session exact replication of {16,32,24} is the strongest reproducibility evidence of the axis; P3's crystallization half honestly refuted; single model/corpus; (f) clean \u2014 exact validation gate, fp32 throughout, NO crash (ALL_DONE_NET50); (g) fair \u2014 full reference, same 0.98 bar; random-k/local-window controls inherited from NET-49 (not re-run here \u2014 noted); (h) DIRECT \u2014 sub-k\\* recovery curve is what an aggressive KV policy needs.\n\n### Next\nPer-layer ablation (prune ONLY L22/L23?); size transfer (1.5B / offloaded 7B); oracle-to-policy eviction gap; corpus robustness; weight quantization vs the 2Lr defect band (NET-52 next).\n\nNow 50 network experiments. Assessment v50. Paper 135.\n",
     "domains": [
@@ -1567,16 +1552,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "NET-61: CONTENT-ADDITIVE-EVICTION-DOES-NOT-HELP \u2014 hybrid z(acc)+lambda*z(probe) monotonically worse with probe weight; all four cheap signal families bounded >=5.7pts below oracle"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "beab348d",
     "description": "Round-56 #1, cron iteration (exp 526, assessment v291). The previously-unmeasured intersection.\n\n**CELL-CLOSED-DIAL-HOLDS-UNIF-48**: Spearman(T, rate) = **0.7192/0.7202/0.7198** across 3 seeds on uniform draws at exact bitlen 48; T beats count by +0.098 to +0.145 everywhere; mean relation rate 12.5% (unstarved regime).\n\nCELL CLOSED: the zero-fit dial holds at the intersection of bitlen-scaling and regime-invariance.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp526_t_dial_bitlen.py + exp526_result.json, seeds 20261110\u201312.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3696",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T17:37:32.034003+00:00",
     "title": "FACT round-56 #1 \u2014 TDIAL-BITLEN: the zero-fit dial holds at exact-bitlen-48 uniform (paper 183)"
   },
@@ -2013,6 +1999,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-22T20:41:46.057011+00:00",
     "title": "NET-74: TOP8-MASS-IS-THE-STRONGEST-STRUCTURAL-PREDICTOR \u2014 Spearman(top8-mass, k*) = +0.80 strongest of three measures; knee set by residual tail spread, not head concentration"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-69 #1, cron iteration (exp 538, PARTIAL \u2014 2/3 seeds before agent death). The highest-bitlen uniform measurement.\n\n**AT-THE-FLOOR**: Spearman(T, rate) = **0.563** / **0.556** across two completed seeds on uniform draws at bitlen 92 \u2014 both essentially AT the 0.55 floor (margins +0.006 and \u22120.001).\n\nThe dial's signal has eroded to its minimum, confirming the gradual erosion trend from paper 189.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp538_t_dial_unif_92.py + exp538_result.json, seeds 20261210\u201311 (third seed not measured).",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3757",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T21:37:22.153031+00:00",
+    "title": "FACT round-69 #1 \u2014 TDIAL-U92: the dial reaches the floor at bitlen 92 (paper 190, partial)"
   },
   {
     "consumed_by_exp_id": "",
@@ -3716,54 +3716,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Quantum Entanglement Monogamy: CKW Inequality"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Systematically negate the ZFC axioms and study the resulting anti-mathematics. Prove that not-Extensionality yields a theory of indistinguishable sets, not-Infinity yields hereditarily finite set theory, and not-Choice yields universes where every set is measurable. Determine which anti-axioms are consistent with each other.",
-    "domains": [
-      "Novelty",
-      "Logic",
-      "SetTheory"
-    ],
-    "id": "seed_275",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Anti-Mathematics: What If All Axioms Were Negated?"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Construct an alternate number theory where primes are replaced by a random subset of N with density n/log n. Prove which theorems survive (Dirichlet, PNT) and which collapse (unique factorization). Determine whether RH holds almost surely in this counterfactual universe.",
-    "domains": [
-      "Novelty",
-      "NumberTheory",
-      "Probability"
-    ],
-    "id": "seed_282",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Counterfactual Number Theory: What If Primes Were Random?"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Construct a category where composition is not associative but satisfies a controlled failure: (f circ g) circ h and f circ (g circ h) are naturally isomorphic but not equal. Prove that such almost-categories are exactly the bicategories and that every coherent loop-tolerant algebraic structure forms a higher category.",
-    "domains": [
-      "Novelty",
-      "Algebra",
-      "Bridges"
-    ],
-    "id": "seed_294",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Causal Loops in Category Theory: When Composition Loops Back"
   },
   {
     "consumed_by_exp_id": "",
@@ -11636,6 +11588,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Quantization noise enters the decision certificate exactly like a fine-tune delta. Allocating bits inversely to the per-layer margin should therefore be optimal for preserving decisions at fixed total memory.\n\nUnder a fixed total bit budget, the allocation minimizing the number of flipped top-1 decisions satisfies bits_k = c - log2(margin_k) + O(1), so the near-tropical core can be quantized strictly harder than the diffuse tail.\n\nFormalize the optimization with the perturbation-to-margin certificate; validate by quantizing a real stack layerwise and counting decision flips.\n\nA principled, measurable rule for mixed-precision serving of transformer stacks.\n\nDecision flips are dominated by error accumulation across layers rather than per-layer margins, pushing the analysis to the depth budget of C1.",
+    "domains": [
+      "Tropical",
+      "MachineLearning"
+    ],
+    "id": "fd_3751",
+    "priority_score": 0.7103684210526316,
+    "research_mode": "team",
+    "source_exp_id": "6cdc8533",
+    "status": "available",
+    "timestamp": "2026-08-22T21:36:19.077094+00:00",
+    "title": "Margin-Proportional Quantization Budget"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The three links at an event have Minkowski lengths 4(c-b)^2, 4(a-b)^2, 4(c-a)^2. The multiset of link lengths at depth k is therefore an exactly computable invariant. The conjecture pins its minimum.\n\nFor every k the minimum of the link lengths over all events of depth k equals 4, and it is attained exactly at the events of the pure middle (Pell) spine and their A-children.\n\nCompute the spectrum to depth 6, then prove the lower bound 4 by showing that each of |c-b|, |a-b|, |c-a| is a positive integer, and characterise equality by solving c-b = 1, a-b = \u00b11, c-a = 1 inside the tree.\n\nA complete description of the shortest scales of the discrete geometry, the analogue of a lattice spacing, together with the exact locus where it is attained.\n\nSome deeper branch achieves a smaller separation, which would contradict integrality, so the failure mode is a proof that the attaining locus is larger than the spine.",
     "domains": [
       "Algebra",
@@ -12283,6 +12250,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The formalised rigidity gap bounds the whole singular tail of a 0/1 indicator matrix away from zero by (3-sqrt5)/2. Exhaustive computation suggests the much stronger statement that already the second singular value alone obeys this floor. Proving it would give a clean spectral dichotomy for combinatorial rectangles.\n\nFor every 0/1 matrix M of rank at least two, sigma_2(M)^2 >= (3 - sqrt 5)/2, with equality exactly when the non-trivial part of M is a copy of the 2x2 matrix [[1,0],[1,1]].\n\nFormalise as a statement about Matrix (Fin m) (Fin n) Bool; test exhaustively for m,n <= 5 by exact characteristic-polynomial computation over a splitting field, then attempt a local 2x2 certificate proof mirroring golden_core.\n\nGives a spectral certificate for rank-one-ness of 0/1 matrices with an absolute constant, strengthening productCoin_amplitude_sq_le_golden from a Frobenius-tail bound to a single-eigenvalue bound.\n\nThere are 0/1 matrices of rank >= 2 with arbitrarily small second singular value, meaning the golden constant is genuinely a tail phenomenon and cannot be localised in one eigendirection.",
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_3756",
+    "priority_score": 0.7095277777777779,
+    "research_mode": "team",
+    "source_exp_id": "22ca7429",
+    "status": "available",
+    "timestamp": "2026-08-22T21:36:50.145879+00:00",
+    "title": "Second-Eigenvalue Floor for Zero-One Matrices"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The top shape count of even closed walks of length 2k on k+1 vertices should equal catalan k times (k+1)!. This identifies the leading coefficient of the moment polynomial as the Catalan number and is the combinatorial core of Wigner's semicircle law. It is verified formally for k = 1, 2, 3.\n\nFor all k \u2265 1, EvenWalks.surjEvenWalkCount (k+1) (2*k) = catalan k * (k+1)!.\n\nFormalize the bijection between even closed 2k-walks covering a spanning tree twice and pairs (labelling, Dyck path); check the identity by decide for k = 4 (needs an optimized decidable instance) and prove it by induction using the tree-contour recursion.\n\nThe leading coefficient of every even moment polynomial is catalan k, yielding all-order semicircle convergence in expectation.\n\nSome non-tree shape survives at top degree, contradicting the vertex bound; the moment polynomial degree analysis would have to be revisited.",
     "domains": [
       "Combinatorics",
@@ -12385,6 +12367,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T19:38:08.272175+00:00",
     "title": "Twisted Group-Ring Factorisation Spectrum"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Leakage of stacked reconciliation rounds is subadditive. We conjecture the exact deficiency is the dimension of the intersection of the two row spaces, making the inequality tight in general position. This would give an exact multi-round leakage formula rather than a bound.\n\nFor schemes S1, S2 on the same key length, rank(S1.stack S2) = rank S1 + rank S2 - dim(rowspace H1 \u2229 rowspace H2).\n\nProve the row-space version of Scheme.ker_stack and apply Submodule.finrank_sup_add_finrank_inf_eq to row spaces; check numerically on random binary matrices.\n\nMulti-round protocol leakage becomes exactly computable from pairwise round overlaps.\n\nSome subtler interaction between rounds exists, indicating leakage is not a rank invariant.",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_3753",
+    "priority_score": 0.7090000000000001,
+    "research_mode": "team",
+    "source_exp_id": "3fdce232",
+    "status": "available",
+    "timestamp": "2026-08-22T21:36:38.298465+00:00",
+    "title": "Rank-Intersection Deficiency of Composed Rounds"
   },
   {
     "consumed_by_exp_id": "",
@@ -13255,6 +13252,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Replace the layer count in serveCost by the covering number of the family of fine-tune tails at the margin scale. Models whose tails lie within eps of a common center can share the tail as well, giving the amortized law n*r + min(D,n).\n\nServing n fine-tunes with guaranteed decision agreement costs s + N(eps) * (L - s) memory, where N(eps) is the eps-covering number of the tail family in the coordinatewise sup metric, and this is optimal.\n\nFormalize the covering argument on top of shared_core_agreement_bound; measure N(eps) empirically for a family of fine-tunes of one base model.\n\nMulti-fine-tune serving cost is governed by the diversity of tails, not their number.\n\nTails are essentially in general position and per-model tail storage is unavoidable.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_3750",
+    "priority_score": 0.6695517241379312,
+    "research_mode": "team",
+    "source_exp_id": "6cdc8533",
+    "status": "available",
+    "timestamp": "2026-08-22T21:36:18.720679+00:00",
+    "title": "Covering-Number Serving Law"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The associative-triple count is multiplicative under products of magmas. This turns the associativity density into a multiplicative invariant and suggests a Dirichlet generating function whose coefficients are powers of A(M), linking coherence defects to analytic bookkeeping.\n\nA(M^k) = A(M)^k for all k, hence 1 - d(M^k) = (1 - d(M))^k, and the generating function Z_M(s) = sum_k A(M)^k k^{-s} determines A(M); every non-associative magma is asymptotically totally non-associative under powering while its codiscrete bicategory stays coherent.\n\nIterate assocCount_prod in Lean to get A(M^k) = A(M)^k by induction and derive the density limit; check numerically for the order-3 maximiser.\n\nCoherence defects admit an Euler-product bookkeeping, connecting magma combinatorics to Dirichlet-series methods.\n\nMultiplicativity fails to extend beyond binary products, isolating a genuine obstruction in iterated products.",
     "domains": [
       "Algebra"
@@ -13465,6 +13476,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Our converse shows any correct protocol needs V(n,t) distinguishable transcripts in the worst case. The conjecture upgrades this to an expected-length bound over a noise distribution, showing interaction (Cascade-style) saves at most O(1) bits. Approach: freeze one party's input to reduce interaction to a one-way code, then apply Kraft's inequality to the induced prefix-free encoding.\n\nFor every correct two-way reconciliation protocol on n-bit keys with correction radius t, the expected transcript length under errors uniform on the radius-t sphere is at least log2 V(n,t) - c for an absolute constant c.\n\nFormalise expected transcript length for a Protocol with a finite binary-string alphabet, and combine Protocol.transcript_injOn_ball with the Kraft inequality already in Computation.KraftConverse.\n\nAdaptive reconciliation protocols carry no asymptotic leakage advantage over syndrome coding.\n\nThere is a genuinely interactive protocol with sub-sphere-packing average leakage, which would be a new primitive for QKD post-processing.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_3752",
+    "priority_score": 0.6681612903225808,
+    "research_mode": "team",
+    "source_exp_id": "3fdce232",
+    "status": "available",
+    "timestamp": "2026-08-22T21:36:37.919525+00:00",
+    "title": "Interactive Advantage Collapse for Two-Way Reconciliation"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The path-shaped completeness theorem should generalise to rooted finite trees, with the Chapman-Kolmogorov identity replaced by an interchange law between the sup over children and addition across siblings. The proof should reuse sup'_add and add_sup' unchanged, inducting on tree depth. This unifies Viterbi decoding with belief propagation on trees.\n\nFor a DP specification on a finite rooted tree assigning weights to parent-child state pairs, every labelling of the tree is dominated by a run of the bottom-up DP, and the bottom-up value is the greatest achievable score with a given root state.\n\nDefine an inductive rooted tree with a finite state space, define bottom-up val, and re-prove score_le_val, exists_dpRun_ending and dp_complete by structural induction.\n\nA single formal framework covers path and tree DP, and the tree-decomposition case becomes a corollary.\n\nThe interchange law fails without extra hypotheses, revealing that path DP completeness is genuinely one-dimensional.",
     "domains": [
       "Logic"
@@ -13476,6 +13501,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-22T05:42:59.650295+00:00",
     "title": "Tree-Shaped Dynamic Programming Completeness"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "After reconciliation the key is uniform on a coset of the code. We conjecture a leftover-hash statement relative to that coset: hashing to \u2113 bits leaves guessing probability at most 2^(\u2113-(n-m)) for perfect schemes. This makes the reconciliation-then-amplification pipeline end-to-end verifiable.\n\nFor a perfect separating scheme and a 2-universal linear hash family G to \u2113 bits, max over strategies of the probability of guessing G(a) from (transcript, hash description) is at most 2^(\u2113-(n-m)) + \u03b5 with \u03b5 the usual smoothing term.\n\nInstantiate exists_large_fiber_pair with the hash as second component and count collisions within a single coset using Scheme.card_consistent_transcript.\n\nGives a fully formal secret-key-rate theorem n - m - O(log 1/\u03b5) for syndrome reconciliation.\n\nCoset structure interacts badly with universal hashing, forcing extra entropy loss in QKD post-processing.",
+    "domains": [
+      "Computation"
+    ],
+    "id": "fd_3754",
+    "priority_score": 0.6670000000000001,
+    "research_mode": "team",
+    "source_exp_id": "3fdce232",
+    "status": "available",
+    "timestamp": "2026-08-22T21:36:38.680366+00:00",
+    "title": "Coset Leftover Hashing After Reconciliation"
   },
   {
     "consumed_by_exp_id": "",
@@ -14713,6 +14752,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T22:42:21.923804+00:00",
     "title": "State-Complexity Lower Bound from Sylvester Genus"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The Maslov gap and the top-1 margin bound each other two-sidedly. Conjecture that for random score vectors the gap concentrates, producing a sharp threshold at margin ~ log n separating tropical (max-like) from diffuse (soft) layers.\n\nFor x with i.i.d. sub-Gaussian coordinates and top-1 margin m, the Maslov gap concentrates around log(1 + (n-1) E e^{-m}) with fluctuations O(1/sqrt n), so the tropical/diffuse boundary is a sharp threshold in m at log n.\n\nProve concentration for the Gaussian case in Lean using the two-sided bounds maslovGap_le_of_margin and margin_le_of_maslovGap, then check numerically against measured per-layer gap medians.\n\nCrystallization is a property of the margin distribution, not of the trained weights, and can be predicted before training.\n\nThe tail's large Maslov gap reflects weight structure and must be explained by the learned attention geometry.",
+    "domains": [
+      "Tropical",
+      "Geometry"
+    ],
+    "id": "fd_3749",
+    "priority_score": 0.5602391855553482,
+    "research_mode": "team",
+    "source_exp_id": "6cdc8533",
+    "status": "available",
+    "timestamp": "2026-08-22T21:36:18.360516+00:00",
+    "title": "Tropical Crystallization Threshold"
   },
   {
     "consumed_by_exp_id": "",
@@ -22861,6 +22915,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-22T20:41:06.239277+00:00",
     "title": "CRT Ceiling Arithmetic for Composite Moduli"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Using the exact identity residual entropy = n - rank H, the Shannon-limit statement for reconciliation becomes a question about achievable ranks of parity-check matrices with large minimum distance. We conjecture the Gilbert-Varshamov style family attains residual rate 1 - h(p) and that nothing beats it.\n\nFor every p in (0,1/2) there are schemes with m/n \u2192 h(p), t/n \u2192 p, separating, and residual min-entropy rate \u2192 1 - h(p); and no separating family with t/n \u2192 p has residual rate above 1 - h(p).\n\nProve a Gilbert-Varshamov existence lemma for binary matrices with prescribed kernel distance, then combine with Scheme.residual_min_entropy and Scheme.sphere_packing_leakage for the converse.\n\nA Shannon coding theorem stated entirely in transcript-leakage terms, fully formalised.\n\nThe transcript formulation is strictly weaker than the channel-coding formulation, isolating where the gap arises.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_3755",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "3fdce232",
+    "status": "available",
+    "timestamp": "2026-08-22T21:36:39.137532+00:00",
+    "title": "Exact Rate-Leakage Curve for Bit-Flip Channels"
   },
   {
     "consumed_by_exp_id": "",
@@ -32776,19 +32844,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Resolved in this cycle"
   },
   {
-    "consumed_by_exp_id": "22ca7429",
-    "description": "Quantify Conjecture 3\u2033 at fixed depth: for\n   every product coin of depth `n`, `\u2016A(\u03c8)\u2016\u00b2 \u2264 (1 \u2212 c)\u00b7|R|` with an explicit `c > 0`\n   depending only on `n` and `|R| \u2265 2`, i.e. the optimum is *never* attained by a coin that\n   does not already depend on `N`.  With `resonanceAmplitude_sq_eq_iff` this is now a\n   statement about the non-membership of the indicator in the product family, provable\n   already for `n = 2` by a direct computation.",
-    "domains": [],
-    "id": "fd_1711",
-    "phase": "A",
-    "priority_score": 0.4476666666666666,
-    "research_mode": "team",
-    "source_exp_id": "db2f2b2f",
-    "status": "in_progress",
-    "timestamp": "2026-08-20T11:42:58.411516+00:00",
-    "title": "Rigidity gap for shallow product coins"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "For both compilers in the Lean development,\n   there are explicit constants `A,B` such that the target syntax-tree size is\n   at most `A` times the source size plus `B`; moreover, the optimal leading\n   constant for the difference primitive is `3`.  A family of source terms\n   whose compiled size exceeds the proposed bound, or a compiler with a\n   strictly smaller asymptotic constant, falsifies the corresponding part.",
     "domains": [],
@@ -35477,14 +35532,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sharpness"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "00e7268d",
     "description": "All the surrounding infrastructure now exists in this development (primitive root\n`om`, character `ez`, Leibniz expansion, cyclotomic minimal polynomial); the one missing\ningredient is the Schur-polynomial specialisation `s_\u03bb(1,\u2026,1) = \u220f_{j<k}(t_k\u2212t_j)/(k\u2212j)`, which\nMathlib does not yet contain and which is a self-contained, reusable addition.",
     "domains": [],
     "id": "fd_1465",
+    "phase": "A",
     "priority_score": 0.41600000000000004,
     "research_mode": "team",
     "source_exp_id": "33519cdb",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-17T23:36:54.988368+00:00",
     "title": "All the surrounding infrastructure now exists in this development (primitive root"
   },
@@ -41114,19 +41170,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T06:25:18.574821+00:00",
     "title": "Executable finite examples"
-  },
-  {
-    "consumed_by_exp_id": "3fdce232",
-    "description": "Model the public reconciliation transcript, prove correctness of the corrected keys, and account explicitly for transcript leakage.",
-    "domains": [],
-    "id": "fd_2652",
-    "phase": "A",
-    "priority_score": 0.4,
-    "research_mode": "team",
-    "source_exp_id": "42b8568d",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T06:25:20.895258+00:00",
-    "title": "Information reconciliation"
   },
   {
     "consumed_by_exp_id": "",

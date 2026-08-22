@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "3026c1dd",
-      "domain": "Physics",
-      "key_insight": "# Future directions — higher-dimensional Pythagorean trees\n\nThe results proved in this cycle (`Catalog/Physics/HigherPythagoreanTrees/`) settle the\nqualitative shape of the generalisation:\n\n* the desc",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 101,
-      "timestamp": "2026-08-21T08:59:01",
-      "title": "Higher-Dimensional Pythagorean Trees — Generalizing the Berggren Tree to Pythagorean Quadruples and "
-    },
-    {
       "cycle_id": "1e89ff02",
       "domain": "Geometry",
       "key_insight": "# Future directions: p-adic Berggren dynamics\n\nThese conjectures grow out of the four Lean files produced in this cycle\n(`Catalog/Geometry/PadicBerggrenDynamics.lean`, `…NullCone.lean`, `…Orbits.lean`",
@@ -499,19 +489,19 @@
       "theorem_count": 141,
       "timestamp": "2026-08-22T21:36:44",
       "title": "Information reconciliation"
+    },
+    {
+      "cycle_id": "22ca7429",
+      "domain": "Geometry",
+      "key_insight": "# Future Directions — Rigidity gap for shallow product coins\n\nThis cycle formalised, in `Catalog/Geometry/ShallowProductCoin*.lean`:\n\n* the exact Cauchy–Schwarz defect identity and the rigidity charac",
+      "quality_score": 0.86,
+      "sorry_count": 0,
+      "theorem_count": 62,
+      "timestamp": "2026-08-22T21:36:55",
+      "title": "Rigidity gap for shallow product coins"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "35640655",
-      "domain": "Bridges",
-      "key_insight": "# FUTURE DIRECTIONS — after the OR-dial maximum and its multi-prime extension\n\nThe verified state of the thread (all in `Catalog/Bridges/ORDial*.lean`, 0 sorries, no added\naxioms, no `native_decide`):",
-      "quality_score": 0.89,
-      "sorry_count": 0,
-      "theorem_count": 2,
-      "timestamp": "2026-08-15T08:56:05",
-      "title": "OR-DIAL-MAXIMUM: the semiprime OR dial has a global cap g(2)=0.3113 bits over every class-rate profi"
-    },
     {
       "cycle_id": "ed381d4e",
       "domain": "Shared",
@@ -2501,27 +2491,19 @@
       "theorem_count": 141,
       "timestamp": "2026-08-22T21:36:44",
       "title": "Information reconciliation"
+    },
+    {
+      "cycle_id": "22ca7429",
+      "domain": "Geometry",
+      "key_insight": "# Future Directions — Rigidity gap for shallow product coins\n\nThis cycle formalised, in `Catalog/Geometry/ShallowProductCoin*.lean`:\n\n* the exact Cauchy–Schwarz defect identity and the rigidity charac",
+      "quality_score": 0.86,
+      "sorry_count": 0,
+      "theorem_count": 62,
+      "timestamp": "2026-08-22T21:36:55",
+      "title": "Rigidity gap for shallow product coins"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "d7470f1b",
-      "domain": "Combinatorics",
-      "name": "representable_upperSet",
-      "quality": 0.86
-    },
-    {
-      "cycle_id": "9d22f1f1",
-      "domain": "Physics",
-      "name": "vandermonde_prod_perm",
-      "quality": 0.83
-    },
-    {
-      "cycle_id": "9d22f1f1",
-      "domain": "Physics",
-      "name": "vandermonde_sq_perm_invariant",
-      "quality": 0.83
-    },
     {
       "cycle_id": "9d22f1f1",
       "domain": "Physics",
@@ -2803,9 +2785,27 @@
       "domain": "Computation",
       "name": "Scheme",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "22ca7429",
+      "domain": "Geometry",
+      "name": "is",
+      "quality": 0.86
+    },
+    {
+      "cycle_id": "22ca7429",
+      "domain": "Geometry",
+      "name": "sum_sq_normalised_indicator",
+      "quality": 0.86
+    },
+    {
+      "cycle_id": "22ca7429",
+      "domain": "Geometry",
+      "name": "sum_normalised_indicator",
+      "quality": 0.86
     }
   ],
-  "last_updated": "2026-08-22T21:36:44",
+  "last_updated": "2026-08-22T21:36:55",
   "open_questions": [
     {
       "context": "All proofs are complete; no `sorry`.; All proofs are complete; no `sorry`.",
@@ -3393,12 +3393,6 @@
     ],
     "Geometry": [
       {
-        "cycle_id": "b3704634",
-        "quality": 0.91,
-        "theorems": 884,
-        "title": "Teichmuller-Moduli: Analytic Structure of Riemann Surface Space"
-      },
-      {
         "cycle_id": "2ce26220",
         "quality": 0.82,
         "theorems": 77,
@@ -3451,6 +3445,12 @@
         "quality": 0.87,
         "theorems": 46,
         "title": "The Bonferroni machinery"
+      },
+      {
+        "cycle_id": "22ca7429",
+        "quality": 0.86,
+        "theorems": 62,
+        "title": "Rigidity gap for shallow product coins"
       }
     ],
     "Logic": [
