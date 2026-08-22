@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "39c3166e",
-      "domain": "Combinatorics",
-      "key_insight": "# Future directions\n\nDerived from the three research cycles formalized in\n`Catalog/Combinatorics/RLHFTensorization.lean`,\n`Catalog/Combinatorics/RLHFBooleanLattice.lean`,\n`Catalog/Combinatorics/RLHFBo",
-      "quality_score": 0.74,
-      "sorry_count": 4,
-      "theorem_count": 65,
-      "timestamp": "2026-08-20T10:47:56",
-      "title": "reinforcement learning"
-    },
-    {
       "cycle_id": "db2f2b2f",
       "domain": "Physics",
       "key_insight": "# FUTURE_DIRECTIONS — Quantum-Pythagorean-Walk\n\nDerived from what survived (and what failed) across the research cycles.\n\n**What survived.** The Berggren tree is a *complete, rigid* state space (bijec",
@@ -499,19 +489,19 @@
       "theorem_count": 77,
       "timestamp": "2026-08-22T04:50:15",
       "title": "The real-analytic version on `|q| < 1` is proved; only the passage from `ℝ` to"
+    },
+    {
+      "cycle_id": "71e110b3",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — fair schedules under arbitrary positive rate profiles\n\nThis cycle established, in machine-checked Lean 4 (files\n`Catalog/Novelty/FairSchedulePrefixBatches.lean`, `FairScheduleOpt",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 77,
+      "timestamp": "2026-08-22T04:50:27",
+      "title": "Study fair schedules under arbitrary positive rate profiles and construct exact-rate disjoint batche"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "a1fe4956",
-      "domain": "Algebra",
-      "key_insight": "# FUTURE DIRECTIONS — after Experiment 391 (Berggren–Price interlock)\n\nThe Pythagorean-tree line for factoring is now closed with exact statements\n(`Catalog/Algebra/BerggrenPriceInterlock/`, five file",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 106,
-      "timestamp": "2026-08-14T05:10:05",
-      "title": "Exp 391 BERGGREN-PRICE-INTERLOCK: every semiprime is a node of both Pythagorean trees — the N-node i"
-    },
     {
       "cycle_id": "9cc9a6e9",
       "domain": "Algebra",
@@ -2501,27 +2491,19 @@
       "theorem_count": 77,
       "timestamp": "2026-08-22T04:50:15",
       "title": "The real-analytic version on `|q| < 1` is proved; only the passage from `ℝ` to"
+    },
+    {
+      "cycle_id": "71e110b3",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — fair schedules under arbitrary positive rate profiles\n\nThis cycle established, in machine-checked Lean 4 (files\n`Catalog/Novelty/FairSchedulePrefixBatches.lean`, `FairScheduleOpt",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 77,
+      "timestamp": "2026-08-22T04:50:27",
+      "title": "Study fair schedules under arbitrary positive rate profiles and construct exact-rate disjoint batche"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "58852b38",
-      "domain": "Bridges",
-      "name": "card_closedNbhd",
-      "quality": 0.89
-    },
-    {
-      "cycle_id": "f87f1170",
-      "domain": "Cryptography",
-      "name": "secureKeyRate_gt_of_cert_pade",
-      "quality": 0.86
-    },
-    {
-      "cycle_id": "df44f621",
-      "domain": "Combinatorics",
-      "name": "snoc_eq_cons_succ",
-      "quality": 0.82
-    },
     {
       "cycle_id": "df44f621",
       "domain": "Combinatorics",
@@ -2803,9 +2785,27 @@
       "domain": "Physics",
       "name": "refines_cost_lt",
       "quality": 0.88
+    },
+    {
+      "cycle_id": "71e110b3",
+      "domain": "Novelty",
+      "name": "count",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "71e110b3",
+      "domain": "Novelty",
+      "name": "refines_preserves_conclusion",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "71e110b3",
+      "domain": "Novelty",
+      "name": "refines_cost_lt",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-22T04:50:15",
+  "last_updated": "2026-08-22T04:50:27",
   "open_questions": [
     {
       "context": "-- count, which is not available in Mathlib.  Rather than leave an unproved `sorry` in the; sorry; sorry",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "4bf66c09",
-        "quality": 0.88,
-        "theorems": 41,
-        "title": "Chebotarev's theorem that every square submatrix of the `p × p` DFT matrix"
-      },
-      {
         "cycle_id": "e8a76d4f",
         "quality": 0.78,
         "theorems": 109,
@@ -3637,6 +3631,12 @@
         "quality": 0.85,
         "theorems": 124,
         "title": "The Riemann Hypothesis for the Berggren Tree — A Zeta Function with a Provable C"
+      },
+      {
+        "cycle_id": "71e110b3",
+        "quality": 0.82,
+        "theorems": 77,
+        "title": "Study fair schedules under arbitrary positive rate profiles and construct exact-"
       }
     ],
     "NumberTheory": [

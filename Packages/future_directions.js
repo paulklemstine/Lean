@@ -680,16 +680,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-32 #4 \u2014 UNIVERSAL-S3-FOURTH: four fields, one answer (paper 115)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a4769f7a",
     "description": "## FACT round-35 #7 \u2014 CYCLIC-CUBIC-CONDUCTOR-13 (paper 126)\n\n**Verdict name: THE-CYCLIC-CUBIC-IS-FULLY-PINNED-AT-CONDUCTOR-13.**\n\nCyclic cubic Q(zeta_13 + zeta_13^-1) (C3, conductor 13): only TWO types.\nH(T) = 0.9192 bits. I(p mod 13; T) = H(T) EXACTLY (full pinning).\nSemiprime pair 0.4702; which-factor 0.0001.\n\nNow 459 experiments. Assessment v228. Paper 126.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3517",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T23:39:20.826757+00:00",
     "title": "FACT round-35 #7 \u2014 CYCLIC-CUBIC-CONDUCTOR-13: full pinning extends across conductors (paper 126)"
   },
@@ -1014,6 +1015,118 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-22T03:58:05.372817+00:00",
     "title": "FACT round-38 #4 \u2014 EXTERNAL-HINT-FILTER: one scalar prices everything, the barrier-map triptych completes (paper 138)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-40 #1, cron iteration (exp 477, assessment v254). Paper 144's honest remainder explained.\n\n**FOOTPRINT-WEIGHTS-CAPTURE-THE-RESIDUAL**: the theoretically-motivated feature \u03a3(2/p) over QR primes \u2264400 (each QR prime p divides ~2/p of the x\u00b2\u2212N values \u2014 two roots) lifts out-of-sample R\u00b2 from 0.3927 to **0.5691** (+0.176, bootstrap CI [0.120, 0.229]) at u=2.5, and 0.2063 \u2192 0.3078 (+0.102) at u=3.5. The direct mechanism feature (fraction of values divisible by p \u226413) adds independently; both together R\u00b2 = 0.5864.\n\nThe per-N yield dial's final form: two cheap features (~200 Euler tests + a mod count), R\u00b2 \u2248 0.59/0.34 out-of-sample. H3 (nothing systematic) refuted \u2014 the residual was real structure.\n\nBarriers: (5) all features are residue dials of METHOD input statistics \u2014 zero factor information; (8) QS calibration context.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp477_qr_residual.py + exp477_result.json, seed 20260829.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3574",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T04:50:57.567537+00:00",
+    "title": "FACT round-40 #1 \u2014 QR-RESIDUAL: footprint-weighted dial captures the residual (paper 145)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## NET-54 \u2014 limited-memory axis, round 6 (paper 139, /tmp/exp_net54_tailswap.py, /tmp/net54.log)\n\n**Verdict name: THE-TAIL-IS-LOAD-BEARING-BUT-UNPORTABLE.**\n\n### Result\nCausal layer transplants between Qwen2.5-0.5B **base** and **Instruct** (12 held-out windows @ctx=512; cross-parent prediction-agreement baseline 0.8327):\n\n| arm | \u0394CE vs host | agree w/ base | agree w/ instruct |\n|---|---|---|---|\n| base\u2190inst **L22/23** | +0.4652 | 0.5845 | 0.5443 |\n| base\u2190inst L10/11 | **+0.0043** | 0.9635 | 0.8385 |\n| inst\u2190base **L22/23** | +0.5455 | 0.5887 | 0.6289 |\n| inst\u2190base L10/11 | **\u22120.0164** | 0.8459 | 0.9495 |\n\n- **P1 REFUTED \u2014 the discovery**: tail swaps do NOT pull the hybrid toward the donor; they break agreement with BOTH parents (host-side agreement falls far below the cross-parent baseline). The tail carries no portable identity \u2014 it is entangled with upstream statistics.\n- **P2 CONFIRMED**: directions asymmetric (+0.465 vs +0.546), as NET-51's mid-stack hump predicts.\n- **P3 CONFIRMED**: worst hybrid within +0.55 nats \u2014 functional, but neither parent.\n\n### The convergence\nThree independent measurements on the same two layers: NET-50 (only far-from-tropical region), NET-51 (only high decision-divergence region), NET-54 (only non-transplantable region). And the bulk result is equally practical: **L10/11 transplant at literally zero measured cost \u2014 one direction slightly improves Instruct.**\n\n### Practical\nThe sharing boundary for multi-finetune serving on small VRAM is now causally established: share everything except the last two layers; re-run the tail per model; do not approximate or borrow it.\n\n### All 8 barriers\n(a) clean \u2014 three horns pre-stated incl. the refuted one; (b) confronted \u2014 layer-amputation literature exists; NEW = fine-tune-pair portability asymmetry with matched architecture and the both-parents-collapse signature; (c) confronted \u2014 real pretrained pair; limits: ONE pair, 12 windows, ctx=512, fp16, single-pair granularity; (d) clean \u2014 no training involved; (e) deterministic forwards, restore-by-construction before each arm; (f) clean \u2014 chunked CE identical to harness semantics, ALL_DONE_NET54; (g) fair \u2014 matched-width bulk controls, both directions; (h) DIRECT.\n\n### Next\nDose-response (one-layer and three-layer swaps); swap+recalibration (entanglement depth); 1.5B pair; does a compensated 4-bit tail stay personal? (GPTQ link).\n\nNow 54 network experiments. Assessment v54. Paper 139.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3575",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T04:50:57.568658+00:00",
+    "title": "NET-54: THE-TAIL-IS-LOAD-BEARING-BUT-UNPORTABLE \u2014 bulk layers transplant between fine-tunes at zero cost, tail L22/23 breaks agreement with BOTH parents; sharing boundary causally established"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-39 #6, cron iteration (exp 476, assessment v253). Full-scale validation of paper 142's predictor.\n\n**PER-N-PREDICTOR-REPLICATED**: base effect at all three scales (r = 0.497\u20130.521 u=2.5); H1 confirmed (R\u00b2=0.3041/slope 1.128 test at u=2.5); **transfer shape PERFECT \u2014 transfer R\u00b2 equals target-scale corr\u00b2 (0.2719 vs 0.2717)**; slopes in-band 4/4 cells. Weighted feature NULL (+0.009). Floor attribution: residual 1.31\u00d7 floor at u=2.5 (real structure remains), 1.05\u00d7 at u=3.5 (noise-bound).\n\nAdopted form: rate(N) \u2248 \u22120.0035 + 0.01156\u00b7QR(\u2264100) from ~20 Euler tests \u2014 a validated per-N sieve-yield dial for QS calibration. Barriers 5/8 intact.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp476_per_n_predictor_full.py + exp476_result.json, seed 20260827.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3576",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T04:50:57.569717+00:00",
+    "title": "FACT round-39 #6 \u2014 PER-N-PREDICTOR-FULL: shape transfers perfectly, level tracks each population (paper 144)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-39 #5, cron iteration (exp 474, assessment v252). Paper 138's stated residual priced.\n\n**INTERVAL-HINTS-TWO-NUMBERS**: under truthful conditioning (J ~ real min-law; oracle covers w.p. \u03b1), the committed procedure is Bayes-optimal in every cell and its speedup table is:\n\u03bc/M=0.02: 1.86/3.50/7.41/**29.13**\u00d7 at \u03b1=0.5/0.75/0.9/1.0 \u00b7 \u03bc/M=0.05: 13.12\u00d7 max \u00b7 \u03bc/M=0.10: 7.11\u00d7 \u00b7 \u03bc/M=0.20: 3.96\u00d7.\n\n**Crossing**: paper 137's magnitude-ordering gain (5.19\u00d7) equals an oracle knowing p's position within a 2\u20135%-wide window at ~90% reliability. External positional information IS a two-number law: coverage \u00d7 width.\n\nExact grid and MC agree (5.59 vs 5.70; 29.1 vs 34.0 \u2014 gaps disclosed). Ledger: v1 MC ignored \u03b1; v2's uniform-given-hit assumption inconsistent with the target law \u2014 exposed by model-vs-MC disagreement.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp474_et_hints.py + exp474_result.json, seed 20260828.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3577",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T04:50:57.570717+00:00",
+    "title": "FACT round-39 #5 \u2014 ET-HINTS: interval hints priced by coverage x width (paper 143)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## NET-53 \u2014 limited-memory axis, round 5 (paper 138, /tmp/exp_net53_gptq.py + /tmp/test_gptq.py regression gate, /tmp/net53.log)\n\n**Verdict name: COMPENSATION-WORKS-ON-THE-REAL-FLOORS.**\n\n### Result\nFaithful GPTQ (sequential layer-wise with input recapture, hooks on actual linear modules, group-aligned blocks, escalating-damping Cholesky retry; calibration train-side only) on Qwen2.5-0.5B:\n\n| arm | \u0394CE | retained acc |\n|---|---|---|\n| **GPTQ 4-bit g128 ALL** | **+0.1512** | **0.9546** |\n| GPTQ 4-bit g128 CORE (L0\u201321) | +0.1235 | 0.9641 |\n| GPTQ 3-bit g128 ALL | +1.1932 | 0.7086 |\n\nReference floors (NET-52): per-channel 4-bit +0.788 / grouped RTN 4-bit +0.318 / per-channel 6-bit +0.035.\n\n- **P1 CONFIRMED at the boundary**: +0.151 \u2264 0.15 by 0.001 \u2014 2.1\u00d7 better than grouped RTN.\n- **P2 REFUTED by a hair**: the \u22640.14 floor-approach bar missed.\n- **P3 REFUTED**: the L22/L23 \"personal tail\" increment is real (+0.0277) but only **18% of the compensated total**, not >25% \u2014 curvature-aware compensation shrinks the tail's disproportionate cost that RTN suffered.\n- **Bonus law**: the 3-bit ladder +9.23 \u2192 +2.72 \u2192 +1.19 mirrors the 4-bit ladder +0.79 \u2192 +0.32 \u2192 +0.15: each structural lever (grouping, then compensation) multiplies the previous floor down.\n\n### Deployment table for the 6 GB host\nper-channel RTN unusable below 6 bits \u00b7 grouped RTN viable at 4 (+0.32) \u00b7 **grouped GPTQ viable at 4 (+0.15), survivable at 3 (+1.19)** \u2014 all measured on one validated harness.\n\n### All 8 barriers\n(a) clean \u2014 three horns pre-stated incl. two refuted; (b) confronted \u2014 GPTQ is prior art (Frantar et al.); NEW = fixed-protocol ladder across RTN/group/GPTQ at matched bits, the tail-share quantification, and the compensation-shrinks-tail-cost finding; (c) confronted \u2014 real pretrained model; limits: ONE model, ctx=512, no act-order reordering, 16-sequence calibration; (d) clean \u2014 calibration train-side only; (e) deterministic evals, damping schedule fixed pre-run; (f) clean \u2014 exact baseline reproduction (0.4460/2.8697), ALL_DONE_NET53; (g) fair \u2014 shared reference/protocol/granularity across arms; (h) DIRECT \u2014 this IS the deployment-table cell.\n\nEngineering record: three silent-science hazards caught en route (container-vs-linear hook targets \u2014 found via width diagnostics; column-rank broadcasting; Cholesky PD under partially-quantized activations) \u2014 a single-matrix unit test (/tmp/test_gptq.py: GPTQ must beat RTN on layer output error) is retained as the regression gate.\n\n### Next\nact-order variant; joint weight+KV budget optimizer; tail-aware mixed precision (keep L22/L23 at higher bits per NET-51); size transfer to Qwen2.5-1.5B.\n\nNow 53 network experiments. Assessment v53. Paper 138.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3578",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T04:50:57.571700+00:00",
+    "title": "NET-53: COMPENSATION-WORKS-ON-THE-REAL-FLOORS \u2014 sequential GPTQ 4-bit group-128 lands at +0.151 dCE (2.1x better than grouped RTN); 3-bit rescued +9.23 -> +1.19; tail-share 18% < 25%"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-39 #4, cron iteration (exp 472, assessment v251). Lean validation of paper 139's actionable corollary.\n\n**PREDICTOR-AT-CEILING**: the minimal predictor rate(N) \u2248 \u03b2\u2080 + \u03b2\u2081\u00b7(QR-count of odd primes \u2264 100) \u2014 ~20 Euler-criterion tests \u2014 achieves R\u00b2 = 0.2998 (calib slope 1.003) at u=2.5 and 0.2246 (slope 0.896) at u=3.5 held-out; transfer to bitlen 44 at R\u00b2 0.23/0.17, slopes 0.84/0.79.\n\nH1/H2 formally FALSE by hair-width margins (u=3.5 misses the pre-stated bands by 0.025 / 0.012) \u2014 recorded as stated.\n\n**H3 DECISIVE**: residual variance is only 1.12\u20131.24\u00d7 the pure 60-draw binomial sampling floor \u2014 the single feature captures essentially ALL systematic per-N structure.\n\nCeiling analysis: max achievable R\u00b2 at 60 values/N \u2248 0.45/0.31 \u2014 the one-feature predictor reaches **66%/73% of ceiling**; richer features need more values per N first, not more features.\n\nBarrier lines: (5) residue dial predicting a METHOD'S input statistics \u2014 zero factor information; (8) QS calibration context.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp472_per_n_predictor.py + exp472_result.json, seed 20260827.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3579",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T04:50:57.572741+00:00",
+    "title": "FACT round-39 #4 \u2014 PER-N-PREDICTOR: one feature captures two-thirds of the achievable signal (paper 142)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-39 #3, cron iteration (exp 473, assessment v250). The abelian ladder's tenth rung.\n\n**FULL-PINNING-AT-DEGREE-TEN**: Q(\u03b6\u2081\u2081) full cyclotomic (degree 10, C\u2081\u2080 \u2245 (Z/11)^\u00d7, conductor 11) confirms every pre-stated prediction:\n- T(p) = ord\u2081\u2081(p) \u2208 {1,2,5,10}, densities {1/10, 1/10, 4/10, 4/10} on 295,946 unramified primes.\n- I(p mod 11; T) = H(T) = 1.7219 bits EXACTLY (per-class degenerate; thickening structural; coprime flat).\n- Polynomial cross-check 400/400 via factor-degree patterns \u2014 order-t elements act as 10/t cycles of length t: [1\u00b9\u2070]/[2\u2075]/[5,5]/[10].\n- Semiprime: I(N mod 11; pair) = 1.2002 vs fresh enumeration law 1.1999 and paper-78 closed-form anchor 1.2027; wall 0.0005; Is(10)-projection 0.0586 \u2014 new n=10 g/Is entries.\n\nThe abelian full-pinning law now spans degrees 2\u20136, 8, 9, 10 \u2014 real-subfield AND full-cyclotomic constructions, no exceptions.\n\nLedger: double-wrapped tuple comparison (400/400 false mismatches while PATTERN was perfect); residue-vs-type lookup; inline takeover after the channel's 6th agent death (the dying agent recovered the paper-78 anchor first \u2014 credited).\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp473_degree_ten.py + exp473_result.json, seed 20260823.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3580",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T04:50:57.573731+00:00",
+    "title": "FACT round-39 #3 \u2014 DEGREE-TEN: full pinning at the full cyclotomic Q(zeta_11) (paper 141)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-39 #2, cron iteration (exp 475, assessment v249). Fresh-seed audit of paper 139 (seed 20260826 vs original 20260821) \u2014 the reproducibility-audit discipline applied one firing after a seed-luck embarrassment (paper 136).\n\n**EVERY HEADLINE REPLICATES EXACTLY**:\n- Ensemble equality: emp_x2 \u2248 emp_rnd at all four cells (0.12859/0.12786, 0.02004/0.02023, 0.12854/0.12585, 0.02004/0.01869); QR-restricted randoms 32\u2013200\u00d7 lower.\n- Per-N correlations: 0.503/0.415/0.480/0.403 vs original 0.504/0.452/0.483/0.401 (max drift 0.037).\n- Decile spreads replicate (low/high 0.076\u20130.082 / 0.186\u20130.188 at u=2.5; 0.006\u20130.008 / 0.039\u20130.043 at u=3.5).\n\nVerdict: THE-QR-BITE-IS-VARIANCE is seed-robust; paper 139 stands without qualification; the per-N yield predictor's training target is stable (validation in flight as exp 472).\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp475_qr_replication.py + exp475_result.json, seed 20260826.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3581",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T04:50:57.574708+00:00",
+    "title": "FACT round-39 #2 \u2014 QR-REPLICATION: the variance law is seed-robust (paper 140)"
   },
   {
     "consumed_by_exp_id": "",
@@ -2718,53 +2831,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Quantum Entanglement Monogamy: CKW Inequality"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove the Yamabe problem on non-compact Riemannian manifolds: find a conformal metric of constant scalar curvature. Formalize the compact case and explore non-compact obstructions.",
-    "domains": [
-      "Geometry",
-      "Analysis"
-    ],
-    "id": "seed_237",
-    "priority_score": 0.86,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Yamabe Problem: Non-Compact Case"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize the hypothesis that consciousness is a fixed point of a self-modeling function: a system that models itself modeling itself. Prove that such fixed points exist in sufficiently rich Cartesian closed categories and that they exhibit strange-loop topology. Connect to the Yoneda lemma and self-reference in type theory.",
-    "domains": [
-      "Novelty",
-      "Logic",
-      "Bridges"
-    ],
-    "id": "seed_256",
-    "priority_score": 0.86,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Consciousness as Emergent Fixed Point"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove a theorem about the minimum information an observer must collect to reconstruct a dynamic social network with bounded error. Formalize the privacy-utility tradeoff as a rate-distortion problem and prove that perfect surveillance and perfect privacy are mutually exclusive in finite networks.",
-    "domains": [
-      "Novelty",
-      "Cryptography",
-      "Bridges"
-    ],
-    "id": "seed_263",
-    "priority_score": 0.86,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Surveillance Networks: Information-Theoretic Undetectability"
   },
   {
     "consumed_by_exp_id": "",
@@ -11317,6 +11383,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Additivity of the zeta-regularised residue under disjoint unions of graded G-sets is now a theorem. The conjecture is that the whole principal part is a ring-level invariant: the product grading of two graded G-sets is a Cauchy product of partition functions, so the Laurent moments of a product should be an explicit convolution of the moments of the factors. This would turn the residue into a homomorphism out of a Grothendieck ring rather than merely an additive invariant.\n\nFor eventually polynomial grade counts with polynomials P and Q, the product grading has grade counts eventually polynomial with polynomial R determined by the Cauchy product, and the Laurent moment vector of R is the convolution of the moment vectors of P and Q; in particular the residue of the product is a bilinear expression in the moments of the factors.\n\nFormalise the product grading of graded G-sets, compute its transitivity counts, and compare circleIntegral_polyZeta_moment applied to the product with the conjectured convolution of laurentMoment vectors.\n\nThe map from graded G-sets to principal parts at q = 1 becomes a homomorphism of rings, giving a genuine K-theoretic invariant of graded actions.\n\nThe Cauchy product mixes the entire part into the principal part, showing that the residue is additive but not multiplicative and locating the obstruction in the tail correction.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_3565",
+    "priority_score": 0.7103684210526316,
+    "research_mode": "team",
+    "source_exp_id": "a7626bf4",
+    "status": "available",
+    "timestamp": "2026-08-22T04:50:03.142648+00:00",
+    "title": "Residue Homomorphism on the Grothendieck Ring of Graded G-Sets"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The three links at an event have Minkowski lengths 4(c-b)^2, 4(a-b)^2, 4(c-a)^2. The multiset of link lengths at depth k is therefore an exactly computable invariant. The conjecture pins its minimum.\n\nFor every k the minimum of the link lengths over all events of depth k equals 4, and it is attained exactly at the events of the pure middle (Pell) spine and their A-children.\n\nCompute the spectrum to depth 6, then prove the lower bound 4 by showing that each of |c-b|, |a-b|, |c-a| is a positive integer, and characterise equality by solving c-b = 1, a-b = \u00b11, c-a = 1 inside the tree.\n\nA complete description of the shortest scales of the discrete geometry, the analogue of a lattice spacing, together with the exact locus where it is attained.\n\nSome deeper branch achieves a smaller separation, which would contradict integrality, so the failure mode is a proof that the attaining locus is larger than the spine.",
     "domains": [
       "Algebra",
@@ -11769,6 +11850,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Ehrhart-style reciprocity at the single pole q = 1 is now a theorem: polyZeta P at q inverse is minus the generating function of the negative grades. The conjecture is that the law is equivariant for the root-of-unity twist, so that for a quasi-polynomial grade count the inversion q to q inverse permutes the poles by negating the Fourier index while reflecting each section polynomial.\n\nFor a grade count that is eventually quasi-polynomial mod m with sections P_j, the continued partition function satisfies Z(q inverse) = -q times the continued partition function of the grade count with sections given by the reflected polynomials P_j(-X-1) read in reversed Fourier order; in particular the principal part at the pole zeta^k is carried to the principal part at zeta^{-k}.\n\nCombine polyZeta_inv_eq_comp with circleIntegral_twistPolyZeta: check that the twist q to w q commutes with inversion up to w to w inverse, then sum over the Fourier sections as in circleIntegral_multiPolyZeta.\n\nThe singularity divisor of a quasi-polynomial graded G-set carries an explicit involution, giving a duality between grade counts and their reflections that refines the residue calculus.\n\nInversion mixes the principal parts at different roots of unity, which would show that reciprocity is a phenomenon of the single pole at q = 1 and not of the divisor as a whole.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_3568",
+    "priority_score": 0.7095517241379311,
+    "research_mode": "team",
+    "source_exp_id": "a7626bf4",
+    "status": "available",
+    "timestamp": "2026-08-22T04:50:04.208105+00:00",
+    "title": "Twisted Reciprocity at the Roots of Unity"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The top shape count of even closed walks of length 2k on k+1 vertices should equal catalan k times (k+1)!. This identifies the leading coefficient of the moment polynomial as the Catalan number and is the combinatorial core of Wigner's semicircle law. It is verified formally for k = 1, 2, 3.\n\nFor all k \u2265 1, EvenWalks.surjEvenWalkCount (k+1) (2*k) = catalan k * (k+1)!.\n\nFormalize the bijection between even closed 2k-walks covering a spanning tree twice and pairs (labelling, Dyck path); check the identity by decide for k = 4 (needs an optimized decidable instance) and prove it by induction using the tree-contour recursion.\n\nThe leading coefficient of every even moment polynomial is catalan k, yielding all-order semicircle convergence in expectation.\n\nSome non-tree shape survives at top degree, contradicting the vertex bound; the moment polynomial degree analysis would have to be revisited.",
     "domains": [
       "Combinatorics",
@@ -12215,6 +12311,34 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For eventually periodic grade counts the residue spectrum at the m-th roots of unity is now proved to be a complete invariant of the grade germ. The conjecture extends this to quasi-polynomial grade counts, where each singularity carries a whole principal part instead of a single residue, and the section polynomials should be recoverable from those principal parts.\n\nTwo grade counts that are eventually quasi-polynomial mod m agree in all sufficiently large grades if and only if their partition functions have the same principal part at every m-th root of unity.\n\nTransport the laurentMoment computation along the twist q -> w q to obtain the moments at each pole, then invert the discrete Fourier transform coefficientwise as in eventuallyEq_of_residueSpectrum_eq.\n\nThe singularity divisor with principal parts becomes a complete classifying invariant of quasi-polynomial graded G-sets up to finitely many grades.\n\nSome nonzero quasi-polynomial grade count has vanishing principal parts everywhere on the unit circle, which would produce an entire partition function with quasi-polynomial coefficients.",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "fd_3566",
+    "priority_score": 0.6700588235294119,
+    "research_mode": "team",
+    "source_exp_id": "a7626bf4",
+    "status": "available",
+    "timestamp": "2026-08-22T04:50:03.493043+00:00",
+    "title": "Complete Singularity Divisor for Quasi-Polynomial Germs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Differencing floors of scaled prefix sums gives a candidate multi-client Bresenham counter that is realisable for k = 2 but can decrease for k >= 3. The conjecture is that realisability is governed by a simultaneous-jump condition on neighbouring Beatty sequences, hence by gcd conditions relating each prefix sum to the period.\n\nnestCnt r k is realisable by a schedule iff for every i < k the Beatty sequences of slopes pre_i/R and pre_{i+1}/R never increment at the same time step.\n\nFormalise the simultaneous-jump condition in Lean and prove both directions; validate against the census of k = 3 profiles with rates <= 4, where exactly 18 of 64 fail.\n\nA complete arithmetic classification of when prefix-sum floors define a schedule, generalising the k = 2 Bresenham theorem.\n\nThe obstruction is not purely pairwise, indicating a genuinely higher-order interaction between three or more prefix slopes.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_3570",
+    "priority_score": 0.6700588235294119,
+    "research_mode": "team",
+    "source_exp_id": "71e110b3",
+    "status": "available",
+    "timestamp": "2026-08-22T04:50:21.766327+00:00",
+    "title": "Arithmetic Criterion for Nested-Floor Schedulability"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "An argumentation framework AF = (A, R) consists of a set of arguments A and an attack relation R subset A x A. The preferred extensions of AF are the maximal admissible sets (subsets S of A that defend themselves against all attacks and are maximal with this property). Conjecture: the preferred extensions of AF form a simplicial complex K(AF) on the vertex set A. The homology groups H_n(K(AF)) measure the 'holes' in the argumentation structure. H_0 measures the number of connected components (independent debate threads). H_1 measures circular arguments (cycles where each argument attacks the next, and the last attacks the first). H_2 measures 'spheres' of arguments (3D cycles where arguments form a spherical shell). Conjecture: for any argumentation framework, the Euler characteristic chi(K(AF)) = |A| - |R| + sum_{n>=2} (-1)^n * dim(H_n) equals |preferred extensions| - |grounded extension size|. This connects the topology of the argument to its semantics. Test: construct K(AF) for 100 argumentation frameworks from debate transcripts, compute homology groups, and verify the Euler characteristic formula. Impact: arguments have topology. Circular arguments are 1-holes, and 3D argument spheres are 2-holes. The shape of a debate is a topological invariant.",
     "domains": [
       "Novelty",
@@ -12229,6 +12353,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "The Topology of Argumentation: Why Debates Have Holes"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "This thread proves that eventually quasi-polynomial grade counts give partition functions with finitely many, completely described singularities on the unit circle. The conjecture is the converse dichotomy: any other orbit-counting sequence of polynomial growth produces a function for which the unit circle is a natural boundary, so there is no intermediate behaviour.\n\nFor a grade count of polynomial growth, the generating function continues analytically past some arc of the unit circle if and only if the grade count is eventually quasi-polynomial.\n\nFormalise a lacunary family (for example grade counts supported on powers of two) and prove non-continuability by an Ostrowski-Hadamard gap argument; combine with the proved quasi-polynomial direction.\n\nAnalytic continuability becomes an exact characterisation of quasi-polynomial orbit growth, upgrading the residue calculus of this thread into a classification theorem.\n\nThere is an orbit-counting sequence that is not quasi-polynomial yet has a meromorphic continuation, which would reveal a new class of graded G-sets with computable residues.",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "fd_3567",
+    "priority_score": 0.6699696969696971,
+    "research_mode": "team",
+    "source_exp_id": "a7626bf4",
+    "status": "available",
+    "timestamp": "2026-08-22T04:50:03.844282+00:00",
+    "title": "Natural-Boundary Dichotomy for Orbit-Counting Series"
   },
   {
     "consumed_by_exp_id": "",
@@ -12285,6 +12423,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-22T03:57:30.469270+00:00",
     "title": "Chebyshev Recursion for Non-Backtracking Walk Matrices"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Two-client Bresenham service times realise the classical two-gap (Sturmian) structure. Composing Bresenham splittings along a tree of depth d should yield a gap spectrum of bounded size, quantifying how much regularity survives recursion.\n\nFor a splitting tree of depth d, the set of gaps between consecutive services of any fixed client has at most 2^d + 1 elements; for d = 1 it is exactly {floor(R/r), ceil(R/r)}.\n\nProve the d = 1 case in Lean from the existing waiting-window theorems, then induct on the tree using schedCnt_node_left/right; test the general bound by enumeration for d = 2, 3.\n\nRecursive Bresenham schedules are quasi-Sturmian, giving strong burstiness guarantees on top of the discrepancy bound.\n\nThe gap spectrum blows up, showing that low discrepancy does not imply bounded gap complexity.",
+    "domains": [
+      "Computation"
+    ],
+    "id": "fd_3572",
+    "priority_score": 0.6696346153846156,
+    "research_mode": "team",
+    "source_exp_id": "71e110b3",
+    "status": "available",
+    "timestamp": "2026-08-22T04:50:22.454893+00:00",
+    "title": "Gap Spectrum of Recursive Bresenham Words"
   },
   {
     "consumed_by_exp_id": "",
@@ -12467,6 +12619,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T23:38:48.024786+00:00",
     "title": "Transversality of the Modular Locus"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The greedy largest-lag rule appears to keep every client within one service unit of its ideal share for every rate profile and client count. The lead half of this is already proved; the lag half requires controlling cancellation among the other clients' leads. Establishing it would give a fully online, formally verified schedule matching the optimal Tijdeman-type discrepancy.\n\nFor all k, all positive rate profiles r with R = sum r_i, all i < k and all t: |R * count_i(t) - r_i * t| < R for the greedy largest-lag schedule.\n\nExtend Catalog/Novelty/FairScheduleGreedy.lean: strengthen glag_upper from (k-1)(R-1) to R-1 by an induction on t with a potential function on the sorted lag vector; falsify by an exhaustive search over profiles with k <= 6 and rates <= 12.\n\nAn explicit, online, formally verified unit-fair schedule for arbitrary positive rates, strictly better than the log-depth tree bound.\n\nA concrete profile where greedy fails, isolating the exact cancellation mechanism that Tijdeman-style constructions must repair.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_3569",
+    "priority_score": 0.6685882352941178,
+    "research_mode": "team",
+    "source_exp_id": "71e110b3",
+    "status": "available",
+    "timestamp": "2026-08-22T04:50:21.417515+00:00",
+    "title": "Unit-Fair Greedy Scheduling"
   },
   {
     "consumed_by_exp_id": "",
@@ -12779,6 +12945,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The only universal lower bound currently proved uses the first slot alone and is tight for the uniform profile. A pigeonhole argument over a full period should force strictly more accumulated error whenever no rate divides the period, closing part of the gap to the greedy upper bound.\n\nEvery schedule satisfies max_i sup_t |R*count_i(t) - r_i*t| >= R - max_i r_i + c(k) with c(k) unbounded, so the one-slot bound is not tight for k >= 3.\n\nSearch exhaustively over all schedules of one period for small k and R to compute the true optimum, then formalise the resulting pigeonhole argument in Lean.\n\nThe optimal fairness constant is strictly larger than the trivial bound, and round robin's optimality is special to the uniform profile.\n\nThe one-slot bound is already tight in general, and the greedy or tree upper bounds are correspondingly loose.",
+    "domains": [],
+    "id": "fd_3573",
+    "priority_score": 0.5920588235294119,
+    "research_mode": "team",
+    "source_exp_id": "71e110b3",
+    "status": "available",
+    "timestamp": "2026-08-22T04:50:22.803630+00:00",
+    "title": "Period-Wide Lower Bounds for Fair Schedules"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Only the sign-flip involution and the identity x^2 = 1 were used to prove the ensemble dichotomy. Replacing the second by a general even moment sequence should turn the indicator of an even walk into a product of moments over edge multiplicities.\n\nFor independent symmetric entries with moments mu_j, E[tr W^L] = sum over closed L-walks of the product over edges of mu_(multiplicity).\n\nRefactor prod_entry_flipEdge_family and prod_entry_eq_one_of_even to carry a weight, then re-derive the counting theorems with the weight specialised to mu_j = 1.\n\nAll the counting results of this cycle apply verbatim to arbitrary symmetric sign-invariant ensembles, giving universality of the moment formulas.\n\nThe Rademacher case is special and the involution argument does not survive weighting, isolating exactly where independence is needed.",
     "domains": [],
     "id": "fd_3442",
@@ -12860,6 +13038,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-22T03:07:55.119392+00:00",
     "title": "Log-Concavity of the Minimal Mass Invariant"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The tree discrepancy theorem charges exactly one unit per splitting level, so minimising discrepancy over splitting trees is a weighted-path-length problem. Huffman trees should therefore beat balanced trees on skewed profiles, replacing the log2(k) bound by an entropy bound.\n\nFor every positive rate profile there is a splitting tree whose recursive Bresenham schedule has normalised discrepancy at most 1 + H(r)/log 2, where H is the entropy of the normalised rates.\n\nDefine Huffman trees over STree in Lean, prove the weighted-path-length identity, and combine it with STree.tree_disc; compare numerically against bal_isFair on skewed profiles such as (1,1,1,100).\n\nScheduling discrepancy is bounded by an information-theoretic quantity, bridging source coding and fair queueing.\n\nPer-client discrepancy is not governed by average depth, so the level-charging bound of tree_disc must be non-uniform across clients.",
+    "domains": [],
+    "id": "fd_3571",
+    "priority_score": 0.5898275862068967,
+    "research_mode": "team",
+    "source_exp_id": "71e110b3",
+    "status": "available",
+    "timestamp": "2026-08-22T04:50:22.111848+00:00",
+    "title": "Huffman-Shaped Splitting Trees"
   },
   {
     "consumed_by_exp_id": "",
@@ -31204,14 +31394,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Resolved in this cycle"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "22ca7429",
     "description": "Quantify Conjecture 3\u2033 at fixed depth: for\n   every product coin of depth `n`, `\u2016A(\u03c8)\u2016\u00b2 \u2264 (1 \u2212 c)\u00b7|R|` with an explicit `c > 0`\n   depending only on `n` and `|R| \u2265 2`, i.e. the optimum is *never* attained by a coin that\n   does not already depend on `N`.  With `resonanceAmplitude_sq_eq_iff` this is now a\n   statement about the non-membership of the indicator in the product family, provable\n   already for `n = 2` by a direct computation.",
     "domains": [],
     "id": "fd_1711",
+    "phase": "A",
     "priority_score": 0.4476666666666666,
     "research_mode": "team",
     "source_exp_id": "db2f2b2f",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-20T11:42:58.411516+00:00",
     "title": "Rigidity gap for shallow product coins"
   },
@@ -36314,19 +36505,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "For a finite group `G` and an eventually `r`-transitive graded `G`-set,"
   },
   {
-    "consumed_by_exp_id": "a7626bf4",
-    "description": "The real-analytic version on `|q| < 1` is proved; only the passage from `\u211d` to\n`\u2102` and the residue computation remain.",
-    "domains": [],
-    "id": "fd_1604",
-    "phase": "A",
-    "priority_score": 0.4,
-    "research_mode": "team",
-    "source_exp_id": "f1fd8ff1",
-    "status": "in_progress",
-    "timestamp": "2026-08-19T13:08:52.965344+00:00",
-    "title": "The real-analytic version on `|q| < 1` is proved; only the passage from `\u211d` to"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "The cut side of the toy AdS/CFT dictionary is fully formalised\n(subadditivity, SSA, MMI, cyclic inequalities, nesting), and the elementary\nwormhole case is already verified (`pairModel_maxflow_eq_throat`); a formal\nmax-flow\u2013min-cut theorem would immediately convert every entropy inequality\nproved by surface recombination into a statement about threads, i.e. about",
     "domains": [
@@ -38993,19 +39171,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T06:24:02.542073+00:00",
     "title": "Empirical DNA claims"
-  },
-  {
-    "consumed_by_exp_id": "71e110b3",
-    "description": "Study fair schedules under arbitrary positive rate profiles and construct exact-rate disjoint batches using prefix sums.",
-    "domains": [],
-    "id": "fd_2419",
-    "phase": "A",
-    "priority_score": 0.4,
-    "research_mode": "team",
-    "source_exp_id": "227d6015",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T06:24:07.312987+00:00",
-    "title": "Study fair schedules under arbitrary positive rate profiles and construct exact-rate disjoint batches using prefix sums."
   },
   {
     "consumed_by_exp_id": "",
