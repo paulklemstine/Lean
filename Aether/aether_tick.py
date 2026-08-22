@@ -1386,20 +1386,33 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
             else:
                 from research_memory import FutureDirectionsManager
                 local_fd = FutureDirectionsManager(extractor.workspace)
+                # Per-issue closure verifier shared by the guard and the
+                # self-heal below. Fail-safe: verification failure spares the
+                # direction.
+                def _confirm_issue_closed(n: int) -> bool:
+                    out = github_injector.run_gh_command(
+                        ["issue", "view", str(n), "--json", "state"])
+                    if not out:
+                        return False
+                    import json as _sj
+                    return _sj.loads(out).get("state", "").upper() == "CLOSED"
+
                 # Stray-close guard: an injected direction whose job is STILL
                 # live but whose issue was closed (manual stray, UI accident,
                 # comment-then-close with a failed comment) gets its issue
-                # REOPENED, not pruned — a comment-less close must not kill
-                # active research (audit 2026-08-21: #162/#167/#169/#170).
+                # REOPENED, not pruned. Candidates from the flaky open-list are
+                # VERIFIED per-issue first: reopening an already-open issue
+                # every tick produced phantom-reopen noise (audit 2026-08-21).
                 _active_job_ids = {
                     getattr(_j, "job_id", "") for _j in extractor.inflight.values()
                     if getattr(_j, "status", "") in ("preparing", "dispatched", "B_dispatched", "retry_queued", "dispatch_queued")
                 }
-                _stray = local_fd.stray_closed_injected_directions(
+                _stray = [_d for _d in local_fd.stray_closed_injected_directions(
                     open_issue_numbers, _active_job_ids)
+                    if _confirm_issue_closed(int(_d.github_issue))]
                 for _d in _stray:
                     print(f"[Tick] Stray-close guard: issue #{_d.github_issue} "
-                          f"closed but job for {_d.id} is live — reopening")
+                          f"confirmed CLOSED while job for {_d.id} is live — reopening")
                     try:
                         github_injector.run_gh_command([
                             "issue", "reopen", str(_d.github_issue)])
@@ -1411,18 +1424,8 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
                     except Exception as _re_e:
                         print(f"[Tick] Stray-close reopen failed for #{_d.github_issue}: {_re_e}")
                 # Self-heal: prune non-terminal github_injection zombies whose
-                # issue closed (kept being re-dispatched by stale clobbers).
-                # Each candidate closure is CONFIRMED per-issue first: a flaky
-                # `gh issue list` once made every injected issue look closed and
-                # mass-pruned live research (audit 2026-08-21).
-                def _confirm_issue_closed(n: int) -> bool:
-                    out = github_injector.run_gh_command(
-                        ["issue", "view", str(n), "--json", "state"])
-                    if not out:
-                        return False  # verification failed — spare the direction
-                    import json as _sj
-                    return _sj.loads(out).get("state", "").upper() == "CLOSED"
-
+                # issue closed (kept being re-dispatched by stale clobbers),
+                # confirmed per-issue via the shared _confirm_issue_closed.
                 pruned_issue_dirs = local_fd.prune_closed_issue_directions(
                     open_issue_numbers, verify_closure=_confirm_issue_closed)
                 if pruned_issue_dirs:
