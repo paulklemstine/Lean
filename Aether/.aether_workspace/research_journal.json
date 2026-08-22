@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "61305688",
-      "domain": "Bridges",
-      "key_insight": "# Future directions: the domination–packing ratio\n\nThe verified results of this cycle (see `Catalog/Bridges/DominationPacking*.lean`) are:\n\n* `ρ(G) ≤ γ(G)` for all finite graphs, and the \"local cover\"",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 185,
-      "timestamp": "2026-08-20T08:57:23",
-      "title": "ArXiv paper: Domination-packing ratio for planar and unit disk graphs"
-    },
-    {
       "cycle_id": "5b26e37d",
       "domain": "Geometry",
       "key_insight": "# Future Directions: Topology of Theorem Networks (cycle 1)\n\nThis cycle replaced four informal claims of the research thread by theorems, and in doing\nso refuted one of its readings.  What is now prov",
@@ -499,19 +489,19 @@
       "theorem_count": 118,
       "timestamp": "2026-08-22T01:51:30",
       "title": "Definability boundary for external interpretations"
+    },
+    {
+      "cycle_id": "5f0e4f5e",
+      "domain": "Applications",
+      "key_insight": "# Future directions\n\nDerived from this cycle's results on the mass (`ℓ¹`) theory of weight vectors that are\ninvisible to a truncated power-sum window.  What was settled this cycle:\n\n* the exact mass l",
+      "quality_score": 0.86,
+      "sorry_count": 0,
+      "theorem_count": 114,
+      "timestamp": "2026-08-22T03:08:06",
+      "title": "The Lagrange engine `powerSum_rigidity` is already formalised and it isolates"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "c7164926",
-      "domain": "Tropical",
-      "key_insight": "# FUTURE DIRECTIONS — after the round-7 closures\n\nThe five Lean files added in `Catalog/Tropical/` make the round-7 verdicts\nprecise: the AGREEMENT aggregate collapses to `φ(N)/2` and to the Jacobi le",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 72,
-      "timestamp": "2026-08-13T23:09:59",
-      "title": "Round-7 Hypothesis Closures: Scoping the Noise-Floor Principle and the Trace-Lemma Frontier"
-    },
     {
       "cycle_id": "5ddbfca0",
       "domain": "MachineLearning",
@@ -2501,15 +2491,19 @@
       "theorem_count": 118,
       "timestamp": "2026-08-22T01:51:30",
       "title": "Definability boundary for external interpretations"
+    },
+    {
+      "cycle_id": "5f0e4f5e",
+      "domain": "Applications",
+      "key_insight": "# Future directions\n\nDerived from this cycle's results on the mass (`ℓ¹`) theory of weight vectors that are\ninvisible to a truncated power-sum window.  What was settled this cycle:\n\n* the exact mass l",
+      "quality_score": 0.86,
+      "sorry_count": 0,
+      "theorem_count": 114,
+      "timestamp": "2026-08-22T03:08:06",
+      "title": "The Lagrange engine `powerSum_rigidity` is already formalised and it isolates"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "75105c60",
-      "domain": "Novelty",
-      "name": "applyStep_A",
-      "quality": 0.82
-    },
     {
       "cycle_id": "ec6993b5",
       "domain": "Shared",
@@ -2803,9 +2797,15 @@
       "domain": "Applications",
       "name": "meaningLoss_eq_zero_iff_rigid",
       "quality": 0.87
+    },
+    {
+      "cycle_id": "5f0e4f5e",
+      "domain": "Applications",
+      "name": "exists_invisible_pow_of_seed",
+      "quality": 0.86
     }
   ],
-  "last_updated": "2026-08-22T01:51:30",
+  "last_updated": "2026-08-22T03:08:06",
   "open_questions": [
     {
       "context": "-- count, which is not available in Mathlib.  Rather than leave an unproved `sorry` in the; sorry; sorry",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "e46e79a5",
-        "quality": 0.86,
-        "theorems": 67,
-        "title": "OR-COLLAPSE-LAW: semiprime OR of a cyclic split-complete fork = g(n) = H((2n-1)/"
-      },
-      {
         "cycle_id": "f262016d",
         "quality": 0.85,
         "theorems": 87,
@@ -3141,6 +3135,12 @@
         "quality": 0.87,
         "theorems": 118,
         "title": "Definability boundary for external interpretations"
+      },
+      {
+        "cycle_id": "5f0e4f5e",
+        "quality": 0.86,
+        "theorems": 114,
+        "title": "The Lagrange engine `powerSum_rigidity` is already formalised and it isolates"
       }
     ],
     "Bridges": [

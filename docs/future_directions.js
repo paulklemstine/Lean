@@ -482,16 +482,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-30 #1 \u2014 HINT-TABLE-COMPLETION: the six-dial hint-value table (paper 104)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9d22f1f1",
     "description": "## FACT round-32 #3 \u2014 UNIVERSAL-S3-EXTENDED (paper 114)\n\n**Verdict name: THREE-FIELDS-ONE-ANSWER.**\n\nA third independent S3 cubic \u2014 x3-3 (disc = -243) \u2014 confirms the type-channel law:\nI(p mod 3; T) = 1.0000 EXACTLY; semiprime pair channel = 1.0000.\n\nThree independent S3 fields, three distinct discriminants, one universal answer: the sign character captures exactly 1 bit, regardless of which polynomial realizes S3.\n\nNow 449 experiments. Assessment v225. Paper 114.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3486",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T21:40:03.956764+00:00",
     "title": "FACT round-32 #3 \u2014 UNIVERSAL-S3-EXTENDED: three fields, one answer (paper 114)"
   },
@@ -858,6 +859,90 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-22T01:52:37.376267+00:00",
     "title": "FACT round-37 #3 \u2014 POSTERIOR-FILTER: real filter equals sham \u2014 battery capacity converts to zero factoring utility (paper 131)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-38 #3 (exp 467, assessment v246). Paper 132's open residual item (1), measured.\n\n**POSITION-PAYS-5.19X** (positional-cap guess <2x REFUTED): sqrt-descending visitation order \u2014 literally Fermat's order applied to divisibility tests \u2014 gives a sham-controlled **5.1936x** expected trial-division speedup (sham 1.65x; real/sham = 3.16x).\n\nTwo separable mechanisms with OPPOSITE gradients across balance strata q/p \u2208 {1\u20131.25, 1.25\u20132, 2\u20134}:\n(a) Fermat-type balance bet: **20.67\u00d7 / 4.74\u00d7 / 1.97\u00d7** \u2014 concentrated at near-squares;\n(b) learned range-truncation (finite-pool feasibility r \u2265 N/2^17 revealed by magnitude): 4.35\u00d7 / 4.73\u00d7 / **6.91\u00d7**.\n\nThe learned Bayes ordering (3.37x test-only) refuted the smooth-posterior collapse claim at the pool's truncation edge (the d1\u2261ascending designed check still passed 30000/30000). Honest computable frontier = plain sqrt-descending; the learned selector's edge was train-inflation.\n\nThe barrier map now reads: residues cap at 4/3 (theorem, paper 132); position pays 5.19x here (measurement, mechanism decomposed) \u2014 separated by exactly the uniform-marginal lemma's scope. Accounting: expected divisibility-test counts (information), not wall-clock.\n\nLedger (7) incl. ML#4 self-refutation disclosed and a vacuous feature caught.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp467_positional_filter.py + result.json, seed 20260821, n=30k \u00d7 5 batches.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3549",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T03:08:29.725146+00:00",
+    "title": "FACT round-38 #3 \u2014 POSITIONAL-FILTER: position pays 5.19x, the stratum beyond the residue cap is live (paper 137)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-38 #2 (exp 470, assessment v245). First direct measurement of the sieve's algorithmic advantage \u2014 paper 130's open residual.\n\n**H1 CONFIRMED**: the sieve's advantage over naive trial division is EXACTLY the constant survivor-filtering factor \u2014 A_total 13.68\u201320.51x across six cells (N up to 2^32), A/pi_FB flat at 0.12\u20130.22, no scale-emergent growth. Mechanism measured: ~100 divisions/value \u2192 ~2 log-adds/value + division of survivors only.\n\n**H2 REFUTED, refining paper 130**: the rho(u)x0.90 model overpredicts QS relation yield ~1.55x at u_med~3 (0/6 in band). Reading: p | x\u00b2\u2212N forces (N|p)=+1 EXACTLY \u2014 B-smoothness of relations lives on the QR-restricted prime pool, raising effective-u by lnB/(lnB\u2212ln2), predicting ratios 0.44\u20130.52 (observed 0.54\u20130.76, cross-cell corr 0.72). Paper 130's gap=1 stands at its measured regime (u\u2208[2,3], v\u22642^23); beyond it the pool is random-equivalent to QR-RESTRICTED integers.\n\nStretch: GF(2) elimination on collected relations actually factored N = 103764863 = 9127 \u00d7 11369. Independent brute-force subrange: 338/338 exact, advantage 14.07x vs full-window 15.29.\n\nLedger (9): two substantive bugs caught ONLY by the brute-force cross-check because the gate's prediction shared their omission (circular self-referential gates) \u2014 Hensel-lifted prime-power lines restored ~20% of relations; per-root inverse fix; mixed-base u inflation caught in smoke.\n\nFollow-up queued: direct x\u00b2\u2212N smoothness vs QR-restricted reference pool at u\u2208[3,4].\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp470_toy_qs_yield.py + exp470_verify.py + result.json, seed 20260821.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3550",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T03:08:29.726590+00:00",
+    "title": "FACT round-38 #2 \u2014 TOY-QS-YIELD: the sieve's advantage is the survivor filter; relation pool is QR-restricted random (paper 136)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-38 #1 (exp 469, assessment v244). The abelian ladder's ninth rung.\n\n**FULL-PINNING-AT-DEGREE-NINE**: Q(\u03b6\u2081\u2089)\u207a (degree 9, C\u2089, conductor 19) confirms every pre-stated prediction:\n- Types = coset orders in C\u2081\u2088/{\u00b11} \u2245 C\u2089; densities {1/9, 2/9, 6/9} matched to 2e-4 on 295,946 unramified primes.\n- I(p mod 19; T) = H(T) = 1.2244 bits EXACTLY (per-class degenerate; perm z = +0.00); thickening structural; coprime control flat.\n- Polynomial cross-check 400/400 via factor-degree PATTERNS over GF(p): [1\u2079]/[3,3,3]/[9] \u2014 the nr readout is lossy at degree 9 (orders 3 and 9 both fix zero roots; only the pattern separates them).\n- Semiprime: I(N mod 19; pair) = 0.5330 vs exact enumeration law 0.5302; which-factor extra 0.00053 (null); split-count projection 0.0746 \u2248 Is(9) \u2014 new n=9 entries of the g/Is tables.\n\nLedger: v1 crosscheck doubly wrong (order-3 Frobenius fixes ZERO roots; unvalidated hand Horner) \u2192 sympy patterns; min\u00b73+max pair-code collision caught live (paper-100 lesson); inline takeover after upstream agent timeout.\n\nThe abelian full-pinning law now spans degrees 2,3,4,5,6,8,9 \u2014 every rung measured, no exceptions.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp469_degree_nine.py + exp469_result.json, seed 20260821.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3551",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T03:08:29.727842+00:00",
+    "title": "FACT round-38 #1 \u2014 DEGREE-NINE: full pinning extends to Q(zeta_19)+ (paper 135)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-37 #6 (exp 463, assessment v243). First simultaneous re-measurement of the ENTIRE type-channel master table \u2014 15 canonical fields, one protocol, one seed, 295,946 unramified primes/field < 2^22, law values computed fresh from explicit permutation groups.\n\n**H0 \u2014 PRECISION HOLDS**: global max |I_meas \u2212 I_law| = **0.00048 bits**, 20x inside the pre-stated 0.01 budget. No flags.\n\n- Every recorded headline reproduced within max(0.01, 3\u03c3).\n- The one anomaly diagnosed: S3d's historical 1.0078 vs exact law 1.0000 (simultaneous remeasurement 0.9998\u00b10.001) = small-population plug-in bias on the sparse 229-class dial \u2014 not physics, not dictionary drift.\n- Fresh law constants matched hand-derived values to 6 decimals on all 10 groups (incl. D4 = 1.655639, A4 = 0.918296).\n- Controls: thickening \u22120.00044; coprime flatness below null bias floor on six fields; sympy ground truth 0 mismatches \u00d715 fields; abelian dictionaries 100%.\n\nThe lab's ~128-paper measurement record is internally consistent to 5e-4 bits \u2014 extending the reproducibility-audit line (papers 97/103) from stored-seed re-runs to cross-field simultaneous measurement.\n\nLedger: 7 catches, ALL before results (D4 generator \u2192 S4 closure exposed by hand constants; F20 seeded as C5; LSB/MSB exponent mismatch; q\u00b2|disc ramified test; ...).\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp463_precision.py + exp463_result.json + exp463_full_run.log, seed 20260821.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3552",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T03:08:29.729074+00:00",
+    "title": "FACT round-37 #6 \u2014 CHEBOTAREV-PRECISION: the master table reproduces simultaneously, max deviation 0.00048 bits (paper 134)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## NET-49 \u2014 limited-memory axis, round 1 (paper 134, /tmp/exp_net49_qwen_topk.py + exp_net49b_sub32.py, /tmp/net49.log + net49b.log)\n\n**Verdict name: THE-REAL-MODEL-KNEE-COLLAPSES-AND-SATURATES.**\n\n### Result\nOn a REAL PRETRAINED LLM \u2014 **Qwen2.5-0.5B** (24 layers, GQA kv=2), wikitext-103 held-out eval, fp32, forward validated EXACTLY against HF eager before any measurement (max|\u0394logit| = 0.0000) \u2014 the lossless attention knee is:\n\n| ctx | full acc | k\\* | toy product d\u00b7ctx/32 | ratio |\n|---|---|---|---|---|\n| 512 | 0.4460 | **16** | 384 | **1/24** |\n| 1024 | 0.4612 | **32** | 768 | **1/24** |\n| 2048 | 0.4787 | **24** | 1536 | **1/64** |\n\nScaling \u00d72.0 then **\u00d70.75 \u2014 sub-linear and already DECLINING**: P3 confirmed, P1 refuted 16\u00d7 beyond its floor, P2's linearity half-refuted (its concentration half held: k\\* \u2264 ctx/8 everywhere). **The DEPTH MULTIPLIER of the toy law collapses from d to ~1 on pretrained weights** \u2014 no compounding r(k)^d penalty binds trained attention.\n\n### Key numbers\n- Sweeps (retained): 512: 8 0.9617 \u2717, **16 0.9834 \u2713 (+0.44 SE razor)** \u2026 192 0.9997; 1024: 16 0.9771 \u2717 (\u22120.55 SE), **32 0.9912 \u2713** \u2026 384 1.0003; 2048: 4 0.8762 \u2717, 8 0.9408 \u2717, 16 0.9708 \u2717 (\u22122.5 SE), **24 0.9818 \u2713 (+0.5 SE razor, bracket (16, 24])**, 32 0.9867 \u2026 768 0.9997.\n- **Selection importance inflates an ORDER OF MAGNITUDE**: random-k gaps **+82.0/+71.8/+81.9/+70.0/+79.9/+68.0 pts** (the toy programme's entire range was +1.7\u201311.7); local-window gaps +40\u201355 pts \u2014 k=256 local reaches only **0.598 retained at 2048** while oracle top-k is 0.9867 with 8\u00d7 fewer keys.\n- **Depth-resolved concentration map (new measurement class)**: median-layer effective support \u2248 10\u201312 keys, context-INDEPENDENT across 512\u21922048 (toy: 46\u2192526); the ONLY diffuse attention lives in **L22/L23** (eff 51\u219283\u2192128.5 and 33\u219250\u219272, sub-linear growth; even L22@2048 is 3.9\u00d7 less diffuse than the toy MEAN layer); minimum at L16 (2.9 keys).\n- **Practical**: oracle working set = 24 of 2048 rows \u2192 **85\u00d7 fewer KV reads / 64\u00d7 fewer KV bytes per sequence**. Deployable policy needs a cheap selector \u2014 the oracle-to-policy gap is named as the next cell, not claimed.\n\n### All 8 barriers\n(a) clean \u2014 data-free oracle from the model's own scores; horns concerned position/scaling, not existence; (b) confronted \u2014 sparse/oracle attention and heavy-hitter eviction exist (H2O/StreamingLLM/SnapKV lineage); NEW content = measured laws: first transfer under this programme's fixed 0.98-retention protocol, the depth-multiplier collapse, the ctx/32-then-decline shape, the 10\u00d7 selection-gap inflation, the depth map \u2014 none in Catalog re-scan or literature; (c) CONFRONTED HEAD-ON \u2014 this IS the real-scale cell (pretrained 0.5B, natural web text, 151k vocab); honest limit: ONE model, ONE size; (d) clean \u2014 last 10% held out, zero training; (e) SUBSTANCE + limits \u2014 deterministic eval (addendum reproduced the baseline EXACTLY, 0.4787/2.6355), binomial SEs 0.17\u20130.35%, TWO razor-thin knees documented, the 1024 bracket (16, 32] un-pinned at 24 (the decline could be flat ~24), one model one corpus (Gutenberg rate-limited mid-round; wikitext fallback engaged automatically); (f) clean \u2014 validation gate passed exactly pre-measurement, fp32 throughout, loss tracks accuracy at every k, NO crash (ALL_DONE_NET49 + ALL_DONE_NET49B); (g) fair \u2014 full reference + the SAME 0.98 bar as all 48 prior rounds + random-k AND local-window at matched k, both dominated; (h) DIRECT \u2014 the axis's founding question answered with a 64\u00d7 KV-byte reduction at the knee vs the toy family's best-ever 12.8\u00d7 attention reading.\n\n### Next\n(1) per-layer pruning ablation \u2014 is L22's diffusion load-bearing? (2) size transfer \u2014 Qwen2.5-1.5B / quantized-offloaded 7B: does ~ctx/32 saturation persist? does the two-layer tail recur? (3) oracle-to-policy gap \u2014 online accumulated-score eviction vs this upper bound; (4) corpus robustness; (5) weight-quantization floors on the same harness (limited-memory iteration 2).\n\nNow 49 network experiments. Assessment v49. Paper 134.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3553",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T03:08:29.730320+00:00",
+    "title": "NET-49: THE-REAL-MODEL-KNEE-COLLAPSES-AND-SATURATES \u2014 on Qwen2.5-0.5B the lossless attention knee is {16,32,24} at ctx={512,1024,2048}, 24\u201364x below the toy law d*ctx/32, sub-linear and declining; selection importance inflates an order of magnitude"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-37 #5 (exp 462, assessment v242). The open cell between paper 91's coprime-synergy (+0.129) and shared-disc-redundancy (\u22120.99) is CLOSED.\n\n**H1 CONFIRMED \u2014 PARTIAL-OVERLAP-LAW**: two genuinely different S3 fields sharing their quadratic subfield are EXACTLY one bit redundant.\n\nPairs found by scanning 56,410 S3 cubics: d=\u22127: x\u00b3\u22125x\u22125 (disc \u2212175=\u22127\u00b75\u00b2) & x\u00b3\u22123x\u22125 (\u2212567=\u22127\u00b79\u00b2); d=\u22123: x\u00b3\u22126x\u22126 (\u2212108) & x\u00b3\u22123 (\u2212243). Measured deficits +0.9998/+0.9998/+1.0000 vs the 1-bit law (deviations \u2264 0.0002).\n\nDerivation committed BEFORE simulation: Gal(L\u2081L\u2082/Q) = S\u2083 \u00d7_{C\u2082} S\u2083 (order 18); co-information = H(C) \u2212 H(C|X) = 1.5 \u2212 0.5 exactly; all fiber-product correlation beyond the shared sign character confined to the residue-invisible \u03c7_d=+1 fiber. Joint Chebotarev distribution matches order-18 class proportions; off-diagonal mass 34,375 vs predicted 34,307.\n\nControls clean: coprime synergy reproduced (0.1300 vs lab 0.1290), conjugate pair at full redundancy, which-factor wall NULL on the new joint.\n\nInsights for the programme: (L11) MI signatures CANNOT distinguish partial-overlap from same-field pairs \u2014 discriminators are type-agreement (7/9 vs 1.0) and off-diagonal mass; sparse joint moduli distort plug-in MI badly (~\u00b10.5 bits at 2 samples/cell) \u2014 joints need ~100 samples/cell or explicit bias modeling; disc-value arguments are not field arguments (index\u00b2 trap caught live).\n\nThe overlap ladder is closed at the pair level: coprime (+synergy) / shared-subfield (exactly \u22121 bit) / same-field (full redundancy).\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp462_overlap_law.py + addendum462.py + result JSONs, seed 20260821.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3554",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T03:08:29.731549+00:00",
+    "title": "FACT round-37 #5 \u2014 DIAL-OVERLAP-LAW: partially overlapping dials are exactly one bit redundant (paper 133)"
   },
   {
     "consumed_by_exp_id": "",
@@ -2562,55 +2647,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Quantum Entanglement Monogamy: CKW Inequality"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "The Hausdorff dimension is normally a metric property, not a topological one. Investigate whether it can be made topological through the lens of fractal topology. Define the fractal topological dimension d_f(X) of a metric space X as the infimum of d such that X embeds in R^d with Hausdorff dimension preserved. Conjecture: For compact metric spaces, the Hausdorff dimension is a topological invariant modulo homeomorphisms that are bi-Lipschitz on a dense open set. More precisely, if X and Y are homeomorphic compact subsets of R^n, and the homeomorphism is bi-Lipschitz on a set of full Hausdorff dimension in X, then dim_H(X) = dim_H(Y). This would mean that fractal dimension is not just a metric accident but a topological invariant up to rough isometries. Test: compute d_f for the Sierpinski gasket (expected: 1 since connected, Hausdorff dimension log3/log2) and the Cantor set (expected: 0 since totally disconnected). Prove that the Koch curve and any bi-Lipschitz-equivalent curve have equal Hausdorff dimensions. Impact: elevates fractal dimension from a metric curiosity to a topological invariant, with applications to shape classification and topological data analysis.",
-    "domains": [
-      "Geometry",
-      "Topology",
-      "Analysis"
-    ],
-    "id": "seed_082",
-    "priority_score": 0.86,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Fractal Topology: Hausdorff Dimension as a Topological Invariant"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Neural field equations model macroscopic brain dynamics as PDEs on cortical surfaces. The cortical surface is topologically a sphere with cortical folds. Use inverse stereographic projection to transform neural field PDEs on S^2 into PDEs on R^2 with a conformal weight. Define a stereographic neural field as a function u: S^n to R satisfying Delta_{S^n} u = f(u) where Delta_{S^n} is the Laplace-Beltrami operator on the sphere. Under inverse stereographic projection, this becomes a PDE on R^n with a conformally modified Laplacian. Conjecture: The neural field equation on S^2 with Mexican-hat connectivity has exactly 2N+1 stable pattern solutions for interaction radius r, where N = floor(1/r). Under inverse stereographic projection, these correspond to N-fold symmetric patterns on R^2 that decay at infinity. The 2N+1 count comes from the representation theory of SO(3): each pattern of degree l has 2l+1 rotational variants, and the Mexican-hat kernel selects l = N. Test: prove the existence of 2N+1 patterns for r = 1/k (k=1,2,3) by constructing them as stereographic projections of spherical harmonics. Impact: a geometric theory of neural pattern formation with provable pattern counts, enabling predictions about visual hallucination patterns.",
-    "domains": [
-      "Geometry",
-      "MachineLearning",
-      "Physics"
-    ],
-    "id": "seed_090",
-    "priority_score": 0.86,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Inverse Stereographic Neural Field Theory"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Conway's surreal numbers are the largest ordered field, containing every real number and infinitely many infinities and infinitesimals. But what if a surreal number could be in SUPERPOSITION \u2014 simultaneously equal to multiple values until observed? Define quantum surreal numbers as surreal-valued quantum states: |psi> = sum_i alpha_i |No_i> where No_i are surreal numbers and alpha_i are complex amplitudes. Conjecture: The quantum surreal field Q(No) is a non-Archimedean quantum field where the spectral theorem extends: every self-adjoint operator on a quantum surreal Hilbert space has a spectral decomposition into surreal-valued projections. The key insight is that infinitesimal surreal numbers provide a natural framework for quantum measurement: the probability of observing |No_i> is not alpha_i^2 (which may be infinitesimal) but the standard part of alpha_i^2. Test: construct the quantum surreal number |psi> = (1/sqrt(2))|0> + (1/sqrt(2))|epsilon> where epsilon is an infinitesimal surreal, and prove that measuring |psi> gives 0 with probability st(1/2) = 1/2 and epsilon with probability st(1/2 * epsilon^2) = 0 \u2014 the infinitesimal is unobservable! Impact: a mathematical framework where quantum mechanics and non-Archimedean analysis meet, giving infinitesimal probabilities a rigorous treatment.",
-    "domains": [
-      "Novelty",
-      "Speculative",
-      "Algebra",
-      "Physics"
-    ],
-    "id": "seed_107",
-    "priority_score": 0.86,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Quantum Surreal Numbers: Superposition of All Real Numbers"
   },
   {
     "consumed_by_exp_id": "",
@@ -12040,6 +12076,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Invisible vectors obey two independent extremal bounds: at least K+1 nodes, and total mass at least 2K. Their extremisers differ (binomial vectors versus PTE pairs), suggesting a quantitative trade-off between narrow support and small mass.\n\nThere is c > 0 such that every nonzero window-K invisible vector satisfies (number of nonzero nodes) * log(mass) >= c K^2; in particular minimal-support vectors have mass at least 2^{cK}.\n\nProve the special case: a window-K invisible vector supported on exactly K+1 nodes has mass at least 2^K, using the divided-difference rigidity already formalised in InvisibleWeightsRigidity.\n\nThe two extremal problems of the catalog are unified by a single inequality and the binomial basis becomes provably optimal in the narrow-support regime.\n\nThere exist narrow, light invisible vectors, which would immediately improve the growth base via the convolution engine.",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "fd_3547",
+    "priority_score": 0.6711308411214955,
+    "research_mode": "team",
+    "source_exp_id": "5f0e4f5e",
+    "status": "available",
+    "timestamp": "2026-08-22T03:07:54.684616+00:00",
+    "title": "Mass-Support Uncertainty Principle"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The three Berggren generators split into one parabolic and two hyperbolic directions, which makes the ternary tree exponentially unbalanced. The maximal depth reachable inside a hypotenuse box should be governed purely by the parabolic spine and hence grow like sqrt(H), while a typical node sits at logarithmic depth. This quantifies how far the tree is from a balanced ternary tree.\n\nThe maximal Berggren word length among triples with hypotenuse at most H satisfies D(H) = (1/2 + o(1)) * sqrt(H), while the average depth is Theta(log H).\n\nProve that a word containing k non-parabolic letters has hypotenuse at least 5^k, deduce k = O(log H), and combine with the closed form 4(j+1)^2+1 for parabolic runs; compare with the measured D(10^5) = 222.\n\nThe tree has a canonical thin spine, giving a seed-independent sqrt(H) lower bound for any single-orbit count and an explicit height function for enumeration algorithms.\n\nMixed words would have to beat pure parabolic runs, contradicting the multiplicative growth of the hyperbolic generators.",
     "domains": [
       "Computation"
@@ -12152,6 +12202,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-22T01:51:24.378297+00:00",
     "title": "Superadditivity of Meaning Loss Under Product Actions"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The minimal coefficient-l1 norm of a nonzero integer polynomial divisible by (X-1)^K is conjectured to be exactly 2K for every K. The lower bound 2K is now a theorem via Newton's identities, and equality is equivalent to the existence of an ideal Prouhet-Tarry-Escott configuration of size K. Settling it would determine the exact cost of invisibility to a power-sum window of any length.\n\nFor every K >= 1, minMass K = 2K; equivalently an ideal PTE pair of size K exists for every K.\n\nExtend the certified witness table beyond K = 12 inside Catalog/Applications/PTEIdealWitnesses.lean, or prove a nonexistence obstruction that contradicts minMass K = 2K for some K.\n\nThe mass invariant is linear, the exponential upper bound 24^(K/12) is vacuous asymptotically, and the classical PTE existence problem is resolved affirmatively.\n\nSome window has minMass K >= 2K + 2, giving the first proven nonlinear jump in the invariant and the first proven nonexistence of an ideal PTE configuration.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_3544",
+    "priority_score": 0.6696101694915256,
+    "research_mode": "team",
+    "source_exp_id": "5f0e4f5e",
+    "status": "available",
+    "timestamp": "2026-08-22T03:07:53.368589+00:00",
+    "title": "Polynomial Mass Growth for Truncated Power-Sum Windows"
   },
   {
     "consumed_by_exp_id": "",
@@ -12690,6 +12754,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The invariant minMass is submultiplicative but not multiplicative (strict at (2,2)). We conjecture that the multiplicativity defect is always positive beyond the trivial windows and that the invariant is log-concave in the window length.\n\nminMass(K)^2 >= minMass(K-1) * minMass(K+1) for all K >= 2, and minMass K1 * minMass K2 > minMass (K1+K2) for all K1, K2 >= 2.\n\nCheck against the certified values 2,4,6,...,20,?,24 and against any new witness; formalise the general inequality by an interpolation argument on seeds.\n\nminMass has a Fekete limit computed by its small values, giving the exact growth base as an infimum over certified windows.\n\nSome window is anomalously expensive, which would localise the failure of the linear law to a specific K.",
+    "domains": [],
+    "id": "fd_3548",
+    "priority_score": 0.5906521739130436,
+    "research_mode": "team",
+    "source_exp_id": "5f0e4f5e",
+    "status": "available",
+    "timestamp": "2026-08-22T03:07:55.119392+00:00",
+    "title": "Log-Concavity of the Minimal Mass Invariant"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The bounded search is now\n   formalized as the computable function `fermatSearch : \u2115 \u2192 Option (\u2115 \u00d7 \u2115)`, together\n   with its soundness (`fermatSearch_sound`) and completeness (`fermatSearch_complete`)\n   theorems, upgrading the *existence* criterion to a *correct algorithm* theorem.\n   Remaining refinements: extract the returned `t` as an explicit `Nat.sqrt`-based\n   witness, and show `fermatSearch` returns `none` exactly on primes and prime powers'\n   trivial-only cases.",
     "domains": [
       "Pythagorean",
@@ -12957,6 +13033,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T06:28:41.029005+00:00",
     "title": "Invisible targets classified for abelian groups"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The certified value of minMass 11 is either 22 or 24, and it is 22 exactly when an ideal Prouhet-Tarry-Escott pair of size 11 exists. We conjecture the value is 24, i.e. no such pair exists. This would be the first proven gap in the ideal PTE sequence.\n\nminMass 11 = 24, equivalently no two disjoint multisets of 11 naturals share their power sums p_0,...,p_10.\n\nEither exhibit a size-11 ideal pair and discharge PTEIdeal.minMass_eleven_eq_22_iff, or prove a congruence obstruction for integer polynomials of l1 norm 22 divisible by (X-1)^11.\n\nPTEIdeal.minMass_ge_two_mul_add_two becomes unconditional at K = 11, exhibiting the first nonlinear value of the invariant.\n\nThe linear law minMass K = 2K extends through K = 12 without exception, strengthening the case for direction 1.",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_3545",
+    "priority_score": 0.5627588697648216,
+    "research_mode": "team",
+    "source_exp_id": "5f0e4f5e",
+    "status": "available",
+    "timestamp": "2026-08-22T03:07:53.803841+00:00",
+    "title": "Ideal Size-Eleven Configuration"
   },
   {
     "consumed_by_exp_id": "",
@@ -21161,6 +21252,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T22:42:01.522757+00:00",
     "title": "Spine Radical Inequality as a Uniform Quality Gap"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The seeded convolution engine converts any certified invisible seed into a global growth bound. We conjecture the existence of seeds whose mass is subexponential in the window, built as products of sparse binomials X^a - 1 with tuned exponents, driving the growth base to 1.\n\nFor every K there is a nonzero P in Z[X] with (X-1)^K dividing P and coefficient l1 norm at most exp(C sqrt(K log K)).\n\nSearch exponent sequences (a_1,...,a_K) minimising the l1 norm of the product, certify the best families in Lean, and feed them to PTEBase.exists_invisible_pow_of_seed.\n\nEvery exponential upper bound in the catalog collapses to subexponential, and the minimal-mass problem becomes a question of polynomial versus subexponential growth.\n\nThere is a genuine exponential barrier for products of sparse binomials, isolating cancellation, rather than divisibility, as the obstruction.",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "fd_3546",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "5f0e4f5e",
+    "status": "available",
+    "timestamp": "2026-08-22T03:07:54.241280+00:00",
+    "title": "Subexponential Seeds via Sparse Binomial Products"
   },
   {
     "consumed_by_exp_id": "",
@@ -35085,14 +35190,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Both endpoints of the trade-off are now formal theorems in this"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "175408d6",
     "description": "The Bonferroni machinery\n(`card_sum_le_card_biUnion_add_offDiag`, `card_doubleCollision_mul_le`) is\nalready formalised for arbitrary finite families, so the conjecture is a\nstatement about which *marginals* are fed into it.",
     "domains": [],
     "id": "fd_1479",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "be7c0bd7",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-18T03:09:00.981652+00:00",
     "title": "The Bonferroni machinery"
   },
@@ -36479,19 +36585,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-19T20:45:51.547602+00:00",
     "title": "The reduction to cycles, the disjoint-union theorem, and the cycle-frame"
-  },
-  {
-    "consumed_by_exp_id": "5f0e4f5e",
-    "description": "The Lagrange engine `powerSum_rigidity` is already formalised and it isolates\nexactly which weight vectors are invisible; what remains is a construction, not a new theory.",
-    "domains": [],
-    "id": "fd_1641",
-    "phase": "A",
-    "priority_score": 0.4,
-    "research_mode": "team",
-    "source_exp_id": "c442a26f",
-    "status": "in_progress",
-    "timestamp": "2026-08-19T21:41:39.265578+00:00",
-    "title": "The Lagrange engine `powerSum_rigidity` is already formalised and it isolates"
   },
   {
     "consumed_by_exp_id": "",

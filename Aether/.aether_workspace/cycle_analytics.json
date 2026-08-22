@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-22T01:51:36.274952+00:00",
+  "last_updated": "2026-08-22T03:08:12.428115+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -63282,6 +63282,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-08-22T01:51:36.052351+00:00",
       "title": "Definability boundary for external interpretations"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 2,
+      "domain": "Applications",
+      "duration_seconds": 4555.706319332123,
+      "end_time": 1787368050.2515597,
+      "files_integrated": 4,
+      "job_id": "5f0e4f5e",
+      "outcome_quality": 0.86,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.86,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.562,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.86,
+        "novelty": 0.86,
+        "proof_depth": 0.86,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.86,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1787363494.5452404,
+      "strategy_count": 0,
+      "theorem_count": 114,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 105,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-08-22T03:08:12.153179+00:00",
+      "title": "The Lagrange engine `powerSum_rigidity` is already formalised and it isolates"
     }
   ]
 }
