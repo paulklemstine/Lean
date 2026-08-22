@@ -143,53 +143,6 @@ class ResearchMemory:
                 "quality_detail": record.quality_detail,
             }) + "\n")
 
-    def has_been_explored(self, title: str, description: str) -> bool:
-        """Check if a concept has already been explored (exact match)."""
-        title_lower = title.lower()
-        desc_snippet = description.lower()[:100]
-        return title_lower in self._titles or desc_snippet in self._descriptions
-
-    def get_domain_history(self, domain: str, limit: int = 50) -> List[ExperimentRecord]:
-        """Get recent experiments in a domain."""
-        return [r for r in self._cache if r.domain == domain][-limit:]
-
-    def get_successful_titles(self, domain: str = "") -> Set[str]:
-        """Get titles of successful experiments."""
-        return {
-            r.concept_title.lower()
-            for r in self._cache
-            if r.status == "success" and (not domain or r.domain == domain)
-        }
-
-    def get_all_titles(self) -> Set[str]:
-        """Get all explored titles."""
-        return self._titles.copy()
-
-    def suggest_novel_direction(self, domain: str) -> str:
-        """Suggest a research direction based on history."""
-        history = self.get_domain_history(domain)
-        if not history:
-            return "Explore foundational theorems in this domain."
-
-        # Identify gaps: what hasn't been tried?
-        successful = [r for r in history if r.status == "success"]
-        failed = [r for r in history if r.status != "success"]
-
-        if len(successful) > len(failed):
-            return (
-                f"Domain {domain} has {len(successful)} successes. "
-                "Try pushing into adjacent domains or harder theorems."
-            )
-        elif len(failed) > len(successful):
-            return (
-                f"Domain {domain} has many failures. "
-                "Try simpler, more concrete theorems with stronger lemmas."
-            )
-        else:
-            return (
-                f"Domain {domain} is balanced. "
-                "Explore connections to other domains for cross-pollination."
-            )
 
     def build_exclusion_prompt(self) -> str:
         """Build a prompt fragment listing explored concepts to avoid."""
@@ -212,61 +165,6 @@ class ResearchMemory:
         for r in successes:
             lines.append(f"  - {r.concept_title}: {r.concept_description[:80]}...")
         return "\n".join(lines)
-
-    def get_trivial_count(self, domain: str = "") -> int:
-        """Count how many trivial proofs were produced."""
-        return sum(
-            1 for r in self._cache
-            if r.proof_quality == "trivial" and (not domain or r.domain == domain)
-        )
-
-    def get_best_prompts(self, domain: str, min_quality: str = "substantial") -> List[ExperimentRecord]:
-        """Return prompts that produced good results for a domain."""
-        quality_order = {"trivial": 0, "partial": 1, "substantial": 2}
-        min_score = quality_order.get(min_quality, 2)
-        results = []
-        for r in self._cache:
-            if r.domain == domain and r.prompt_text:
-                score = quality_order.get(r.proof_quality, 0)
-                if score >= min_score:
-                    results.append(r)
-        return results[-20:]  # most recent 20
-
-    def suggest_improved_prompt(self, failed_exp_id: str) -> str:
-        """Analyze a failed experiment and suggest prompt improvements."""
-        failed = next((r for r in self._cache if r.exp_id == failed_exp_id), None)
-        if not failed:
-            return ""
-        # Find successful experiments in the same domain
-        successes = [r for r in self._cache
-                     if r.domain == failed.domain
-                     and r.proof_quality in ("substantial", "partial")
-                     and r.prompt_text]
-        if not successes:
-            return ""
-        best = successes[-1]
-        lines = [
-            "PROMPT AUTORESEARCH ANALYSIS:",
-            f"Failed experiment: {failed.concept_title} ({failed.exp_id})",
-            f"Proof quality: {failed.proof_quality}",
-            f"Status: {failed.status}",
-            "",
-            "Best successful prompt in this domain:",
-            f"  Concept: {best.concept_title}",
-            f"  Quality: {best.proof_quality}",
-            f"  Prompt excerpt (first 500 chars): {best.prompt_text[:500]}...",
-            "",
-            "SUGGESTED IMPROVEMENTS:",
-            "1. Make the theorem statement more concrete — avoid True/Prop tautologies.",
-            "2. Reference specific mathlib lemmas or catalog theorems in the prompt.",
-            "3. Add a concrete numerical or structural constraint to the theorem.",
-            "4. Use the creativity directives to force a non-obvious proof strategy.",
-        ]
-        return "\n".join(lines)
-
-    def get_retry_history(self, original_exp_id: str) -> List[ExperimentRecord]:
-        """Get all retries for an original experiment."""
-        return [r for r in self._cache if r.retry_of == original_exp_id]
 
 
 @dataclass
@@ -846,22 +744,6 @@ class FutureDirectionsManager:
                 return remainder if remainder else title
         return title
 
-    def fix_existing_auto_titles(self) -> int:
-        """Fix all existing directions with auto-generated cycle-summary titles.
-
-        Returns the number of titles fixed.
-        """
-        fixed = 0
-        for d in self._directions:
-            if d.title.startswith("This research cycle") or d.title.startswith("This cycle") or d.title.startswith("This work"):
-                new_title = self._fix_auto_title(d.title, d.description)
-                if new_title != d.title:
-                    print(f"[TitleFix] \"{d.title[:60]}...\" → \"{new_title[:60]}\"")
-                    d.title = new_title
-                    fixed += 1
-        if fixed:
-            self._save()
-        return fixed
 
     @staticmethod
     def _extract_bold_field(body: str, field_name: str) -> str:
@@ -1206,17 +1088,6 @@ class FutureDirectionsManager:
                 break
         self._save()
 
-    def set_recent_domain_counts(self, counts: Dict[str, int]) -> None:
-        """Set recent domain completion counts from external tracking (e.g., catalog analysis)."""
-        self._recent_domain_counts = counts
-
-    def mark_direction_abandoned(self, direction_id: str) -> None:
-        """Mark a direction as abandoned (e.g., trivial proof).
-
-        Directions are no longer retried; abandoned directions become terminal
-        'failed' records so they are not re-dispatched.
-        """
-        self.mark_direction_failed(direction_id)
 
     def mark_direction_failed(self, direction_id: str) -> None:
         """Mark a direction as failed, but keep it available for future retries."""
@@ -1228,31 +1099,6 @@ class FutureDirectionsManager:
                 break
         self._save()
 
-    def get_direction_by_id(self, direction_id: str) -> Optional[FutureDirection]:
-        """Look up a direction by its ID (checking active memory first, then completed archives)."""
-        for d in self._directions:
-            if d.id == direction_id:
-                return d
-        # Search completed directions archives
-        archive_dir = self._file.parent / "completed_directions_archive"
-        if archive_dir.exists():
-            for af in sorted(archive_dir.glob("archive_part_*.json"), reverse=True):
-                try:
-                    adata = json.loads(af.read_text(encoding="utf-8"))
-                    for item in adata.get("directions", []):
-                        if item.get("id") == direction_id:
-                            return FutureDirection.from_dict(item)
-                except Exception:
-                    pass
-        return None
-
-    def mark_direction_available(self, direction_id: str) -> None:
-        """Reset a direction back to available so it can be retried."""
-        for d in self._directions:
-            if d.id == direction_id:
-                d.status = "available"
-                d.consumed_by_exp_id = ""
-        self._save()
 
     def release_consumed_direction(self, exp_id: str) -> None:
         """Release any direction marked in-progress by this exp_id back to available.
@@ -2061,27 +1907,6 @@ class FutureDirectionsManager:
             "pruned_details": [],
         }
 
-    def restore_direction(self, direction_id: str) -> bool:
-        """Restore a pruned direction back to available.
-
-        Returns True if the direction was found and restored.
-        """
-        for i, d in enumerate(self._pruned):
-            if d.id == direction_id:
-                d.status = "available"
-                d.prune_reason = ""
-                d.pruned_at = ""
-                d.consumed_by_exp_id = ""
-                self._directions.append(d)
-                self._pruned.pop(i)
-                self._save()
-                return True
-        return False
-
-    def get_pruned(self, limit: int = 50) -> List[FutureDirection]:
-        """Return pruned directions, most recently pruned first."""
-        return list(reversed(self._pruned[-limit:]))
-
 
 if __name__ == "__main__":
     import argparse
@@ -2101,8 +1926,6 @@ if __name__ == "__main__":
                          help="Show what would be pruned without actually pruning")
     prune_p.add_argument("--min-quality", type=float, default=0.0,
                          help="Minimum quality score threshold (0-1); prune directions below this")
-    prune_p.add_argument("--restore", type=str, default=None,
-                         help="Restore a pruned direction by ID")
 
     args = parser.parse_args()
     workspace = Path(".aether_workspace")
@@ -2132,19 +1955,15 @@ if __name__ == "__main__":
             print(f"  [{d.priority_score:.2f}] {d.title} ({d.status})")
     elif args.command == "prune":
         mgr = FutureDirectionsManager(workspace)
-        if args.restore:
-            success = mgr.restore_direction(args.restore)
-            print(f"Direction {args.restore} restored: {success}")
-        else:
-            result = mgr.prune_directions(
-                cap=args.cap,
-                dry_run=args.dry_run,
-                min_quality=args.min_quality,
-            )
-            print(json.dumps(result, indent=2))
-            if result["pruned_details"]:
-                print(f"\nPruned directions:")
-                for d in result["pruned_details"]:
-                    print(f"  [{d['quality_score']:.4f}] {d['id']}: {d['title']}")
+        result = mgr.prune_directions(
+            cap=args.cap,
+            dry_run=args.dry_run,
+            min_quality=args.min_quality,
+        )
+        print(json.dumps(result, indent=2))
+        if result["pruned_details"]:
+            print(f"\nPruned directions:")
+            for d in result["pruned_details"]:
+                print(f"  [{d['quality_score']:.4f}] {d['id']}: {d['title']}")
     else:
         parser.print_help()
