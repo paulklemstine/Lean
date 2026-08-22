@@ -1,4 +1,7 @@
+-- Repaired copy: this module was a stale, non-compiling duplicate of `Shared.CatalogbuildSharedSublevel.Sublevel`.
+-- Its content is synchronised with that (compiling) module.
 import Mathlib
+import Shared.CatalogbuildSharedE.E
 
 /-! # CatalogBuild.Shared.Sublevel
 

@@ -1,3 +1,5 @@
+-- Repaired copy: this module was a stale, non-compiling duplicate of `Shared.CatalogbuildSharedSpbhBounded.SpbH_bounded`.
+-- Its content is synchronised with that (compiling) module.
 import Mathlib
 
 /-! # CatalogBuild.Shared.SpbH_bounded
@@ -8,6 +10,9 @@ Declarations: 3
 -/
 
 noncomputable section
+
+/-- The hyperbolic speed-addition law `spbH u v = (u + v) / (1 + u v)`. -/
+def spbH (u v : ℝ) : ℝ := (u + v) / (1 + u * v)
 
 /-- [Section: # CatalogBuild.Shared.SpbH_bounded
 Auto-generated from theorem catalog database.

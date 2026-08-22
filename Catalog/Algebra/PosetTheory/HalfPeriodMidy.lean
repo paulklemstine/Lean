@@ -1,4 +1,4 @@
-import Catalog.Shared.HalfPeriodDigitSum
+import Shared.HalfPeriodDigitSum
 
 /-!
 # Generalized Midy's Theorem for Prime Reciprocals

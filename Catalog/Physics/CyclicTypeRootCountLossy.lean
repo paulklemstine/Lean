@@ -1,4 +1,4 @@
-import Catalog.Physics.CyclicTypeChannelPrime
+import Physics.CyclicTypeChannelPrime
 
 /-!
 # Root-count lossiness, in general: the binary readout loses information exactly at composites

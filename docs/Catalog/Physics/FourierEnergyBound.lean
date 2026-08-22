@@ -48,7 +48,7 @@ Main results:
 -/
 
 import Mathlib
-import Catalog.Shared.FourierAdditive
+import Shared.FourierAdditive
 
 open Finset FourierFA FourierAdd
 open scoped Pointwise RightActions

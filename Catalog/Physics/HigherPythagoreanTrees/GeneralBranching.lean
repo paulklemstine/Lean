@@ -1,5 +1,5 @@
 import Mathlib
-import Catalog.Physics.HigherPythagoreanTrees.DescentComplex
+import Physics.HigherPythagoreanTrees.DescentComplex
 
 /-!
 # A universal lower bound for the branching of the `n`-dimensional Pythagorean graph

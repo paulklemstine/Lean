@@ -1,4 +1,4 @@
-import Catalog.Physics.CyclicTypeTwoAdic
+import Physics.CyclicTypeTwoAdic
 
 /-!
 # The root-count readout dies: quantitative lossiness

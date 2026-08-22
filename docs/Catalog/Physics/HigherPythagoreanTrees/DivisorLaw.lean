@@ -1,8 +1,8 @@
 import Mathlib
-import Catalog.Shared.Ispythquadruple.IsPythQuadruple
-import Catalog.Shared.HigherPythagorean.QuadrupleTree
-import Catalog.Shared.HigherPythagorean.HarmonicLaw
-import Catalog.Physics.HigherPythagoreanTrees.MirrorFixedNodes
+import Shared.Ispythquadruple.IsPythQuadruple
+import Shared.HigherPythagorean.QuadrupleTree
+import Shared.HigherPythagorean.HarmonicLaw
+import Physics.HigherPythagoreanTrees.MirrorFixedNodes
 
 /-!
 # The divisor law for mirror nodes

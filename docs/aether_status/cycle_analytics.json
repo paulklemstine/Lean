@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-22T03:08:12.428115+00:00",
+  "last_updated": "2026-08-22T03:57:47.043862+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -63325,6 +63325,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-08-22T03:08:12.153179+00:00",
       "title": "The Lagrange engine `powerSum_rigidity` is already formalised and it isolates"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 2,
+      "domain": "Algebra",
+      "duration_seconds": 2925.352506160736,
+      "end_time": 1787371015.7391064,
+      "files_integrated": 5,
+      "job_id": "16cb59c0",
+      "outcome_quality": 0.86,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.86,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.562,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.86,
+        "novelty": 0.86,
+        "proof_depth": 0.86,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.86,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1787368090.3866003,
+      "strategy_count": 0,
+      "theorem_count": 123,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 94,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-08-22T03:57:46.737009+00:00",
+      "title": "Prove that `trace(B^n)` counts rooted closed non-backtracking walks of length `n`."
     }
   ]
 }

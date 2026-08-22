@@ -1,5 +1,5 @@
 import Mathlib
-import Catalog.Physics.HigherPythagoreanTrees.DescentComplex
+import Physics.HigherPythagoreanTrees.DescentComplex
 
 /-!
 # Dimension four: the descent complex acquires edges

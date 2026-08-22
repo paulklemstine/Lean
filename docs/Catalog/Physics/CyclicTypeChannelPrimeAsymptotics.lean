@@ -1,4 +1,4 @@
-import Catalog.Physics.CyclicTypeChannelPrime
+import Physics.CyclicTypeChannelPrime
 
 /-!
 # Quadratic decay of the prime-order cyclic type-pair channel

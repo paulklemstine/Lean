@@ -724,7 +724,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6f0c0f57",
     "description": "## FACT round-32 #3 — CYCLIC-CUBIC-TYPE-CHANNEL (paper 122)\n\n**Verdict name: THE-CYCLIC-CUBIC-IS-FULLY-PINNED.**\n\nCyclic cubic Q(zeta_7 + zeta_7^-1) (C3, conductor 7): only TWO types.\nH(T) = 0.9179 bits. I(p mod 7; T) = H(T) EXACTLY (full pinning).\nSemiprime pair 0.4747; wall z = +12517; which-factor 0.0000.\n\nNow 448 experiments. Assessment v228. Paper 122.\n",
     "domain_bridges": [],
     "domains": [
@@ -736,7 +736,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T22:42:58.221774+00:00",
     "title": "FACT round-32 #3 — CYCLIC-CUBIC-TYPE-CHANNEL: two types, full pinning (paper 122)"
   },
@@ -1271,6 +1271,101 @@
     "status": "available",
     "timestamp": "2026-08-22T03:08:29.731549+00:00",
     "title": "FACT round-37 #5 — DIAL-OVERLAP-LAW: partially overlapping dials are exactly one bit redundant (paper 133)"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "## NET-52 — limited-memory axis, round 4 (paper 137, /tmp/exp_net52_quant.py, /tmp/net52.log)\n\n**Verdict name: THE-TOY-FOUR-BIT-FLOOR-DOES-NOT-TRANSFER.**\n\n### Result\nNaive per-channel RTN quantization of all linear weights of Qwen2.5-0.5B (identical validated harness; baseline reproduced exactly 0.4460/2.8697):\n\n| arm | ΔCE | retained acc |\n|---|---|---|\n| 8-bit | +0.0044 | 0.9985 |\n| 6-bit | +0.0353 | 0.9904 |\n| 5-bit | +0.1281 | 0.9620 |\n| **4-bit** | **+0.7879** | **0.7630** |\n| 3-bit | +9.2262 | 0.0367 |\n| 2-bit | +14.0588 | 0.0001 |\n| 4-bit first-12 layers | +0.3885 | 0.8904 |\n| 4-bit last-12 layers | +0.4054 | 0.8635 |\n| 4-bit group-128 | +0.3180 | 0.9060 |\n| 3-bit group-128 | +2.7220 | 0.3987 |\n\n- **P1 REFUTED SPECTACULARLY**: per-channel 4-bit costs +0.79 against a ≤0.05 prediction — the toy programme's compression floor (NET-11/14, \"per-channel uniform-4 = the optimum\") was an artifact of from-scratch toys and fails 16× its budget on pretrained weights.\n- **P2 CONFIRMED weakly**: last-half worse than first-half (+0.41 vs +0.39) — NET-18's deeper-is-worse direction holds.\n- **P3 CONFIRMED dramatically**: 2-bit destroys the model (+14 CE).\n- **P4 CONFIRMED**: strictly monotone in mesh with 8-bit measurably nonzero — exactly what the catalogue's sharpness theorem (defect ≤ 2Lr, constant sharp) predicts.\n\n### Practical\nThe cliff structure: mild through 5 bits, severe at 4, catastrophic at 3 (per-channel). Grouping by 128 repairs ~60% of 4-bit damage and rescues 3-bit — precisely why production quantizers are group-wise, here measured cleanly for the programme. For a 6 GB host: RTN below 6 bits is not deployable; group-wise ≥4-bit is the entry point; further compression needs error compensation (GPTQ/AWQ), not scale choice.\n\n### All 8 barriers\n(a) clean — four horns pre-stated including the refuted one; (b) clean — exact constant structure new to the programme; (c) DECISIVE and honestly negative — this round IS the compression-axis transfer test; limits: ONE model, ctx=512, RTN-only (no GPTQ compensation yet), embeddings/norms unquantized; (d) clean — bit-exact deterministic evals; (e) clean — deltas ≥ 0.0004 resolvable, no noise-floor issue; (f) clean — baseline reproduced exactly, ALL_DONE_NET52; (g) fair — matched protocol/granularity across arms; (h) DIRECT — the (bits × grouping) surface is the deployment table for fitting larger Qwen models into 6 GB VRAM.\n\n### Next\nGPTQ/AWQ-style compensation on these floors; joint weight+KV memory budgets; tail-aware mixed precision (quantize the NET-51 shared core harder than the personal tail).\n\nNow 52 network experiments. Assessment v52. Paper 137.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3560",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T03:58:05.368039+00:00",
+    "title": "NET-52: THE-TOY-FOUR-BIT-FLOOR-DOES-NOT-TRANSFER — per-channel RTN 4-bit costs +0.79 CE on Qwen2.5-0.5B (16x the toy floor budget); group-128 halves it; depth gradient and mesh sharpness confirmed"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "## NET-51 — limited-memory axis, round 3 (paper 136, /tmp/exp_net51_delta.py, /tmp/net51.log)\n\n**Verdict name: THE-KV-CORE-IS-SHARED-THE-TAIL-IS-PERSONAL.**\n\n### Result\nQwen2.5-0.5B **base** vs **Instruct** on identical held-out prompts (both capture forwards gated vs HF eager before measurement: argmax-agreement 0.9922 / 0.9971):\n\n- **Layer-0 keys EXACTLY identical** (cosK = 1.0000, rel-divergence 0.26%) — P1 EARLY-SHARE confirmed.\n- Every layer keeps cosK ≥ 0.976 (mean 0.990); values 0.94–0.99.\n- **P2 MONOTONE-DIVERGENCE REFUTED**: the fine-tune delta is a HUMP — relK climbs to 0.217 at L16 then falls back to ~0.16; hidden-state divergence peaks ~0.22 at L12–16.\n- Mean top-1 attention decision agreement 0.894 across layers — BUT it collapses to **0.568 (L22) / 0.627 (L23)** while those layers' K/V stay cosine-similar (0.983/0.988): vector similarity does NOT bound functional divergence.\n\n### The convergence\nThe SAME two tail layers that NET-50 measured as the only far-from-tropical region (Maslov gap medians 2.5–2.7) and the highest-crystallization region are where two fine-tunes of the same base make different attention decisions. Three independent measurements now agree: **the bulk of a transformer is shared machinery; the last two layers are where the model's identity lives.**\n\n### Practical\nA shared-KV multi-finetune server can share ~22/24 layers at ≥0.92 decision agreement; the tail must be per-model. This is the catalogue's amortized model-delta law (n·r + min(D,n)) made concrete for KV serving.\n\n### All 8 barriers\n(a) clean — three structural horns pre-stated; (b) confronted — task-vector/finetune-delta folklore exists; NEW content = exact hump constants, the decision-vs-vector dissociation at the tail, three-way convergence with our own tropical maps; (c) confronted — real pretrained pair; honest limits: ONE pair, ONE context, n=4 prompts, fp16 captures; (d) clean — no training involved; (e) cosine does not bound impact (why Part B exists); prompt variance uncharacterized; (f) clean — both forwards gated; two gate-caught bugs fixed before any measurement counted; (g) fair — each model scored under its own weights; (h) DIRECT — quantified sharing design for limited-VRAM multi-model serving.\n\n### Next\nCausal tail-swap test (exchange only L22/L23 between models); bigger pairs (1.5B/7B); SFT vs RLHF vs DPO tails; quantize-core-harder-than-tail (link to NET-52).\n\nNow 51 network experiments. Assessment v51. Paper 136.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3561",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T03:58:05.369374+00:00",
+    "title": "NET-51: THE-KV-CORE-IS-SHARED-THE-TAIL-IS-PERSONAL — base-vs-Instruct keys near-identical everywhere (layer 0 exact), delta hump-shaped peaking mid-stack, but attention decisions diverge in exactly the L22/L23 diffuse tail"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "## NET-50 — limited-memory axis, round 2 (paper 135, /tmp/exp_net50_tropical.py, /tmp/net50.log)\n\n**Verdict name: THE-TROPICAL-LIMIT-IS-LOSSY-BUT-THE-RECOVERY-IS-FAST.**\n\n### Result\nPushing the NET-49 oracle top-k sweep down to the tropical limit on Qwen2.5-0.5B (same gates; forward validated exactly vs HF before measurement):\n\n| k | 512 | 1024 | 2048 |\n|---|---|---|---|\n| 1 | 0.3637 | 0.2885 | **0.2503** |\n| 2 | 0.7865 | 0.7398 | 0.7002 |\n| 4 | 0.9097 | 0.8906 | 0.8762 |\n| 8 | 0.9617 | 0.9485 | 0.9408 |\n| knee | **16 ✓** | **32 ✓** | **24 ✓** |\n\n- **P1 CONFIRMED**: pure argmax attention is catastrophic everywhere and WORSE at longer context (0.364 → 0.289 → 0.250).\n- **P2 CONFIRMED**: k=2 recovers ~0.70–0.79, k=4 ~0.88–0.91 (razor over the 0.90 bar at 512), k=8 ~0.94–0.96.\n- **Knee chain {16, 32, 24} replicates NET-49 EXACTLY** — different script, different session: deterministic-eval reproducibility proven.\n\n### The Maslov-gap map (new measurement)\nPer-row LSE − max of causal scores, per layer: bulk medians **0.17–1.86 nats** (within log 8 ≈ 2.08) at 512/1024; at 2048 all bulk layers ≤ 1.46. The ONLY far-from-tropical region is the diffuse tail: **L22/L23 medians 2.33/2.16 → 2.55/2.37 → 2.69/2.52 across contexts**, p90 ≈ 3.4. Crystallization loss Σp(1−p): per-layer means **0.34–0.97** — P3's \"≤ 0.25\" REFUTED honestly. Real attention carries heavy soft mass that is individually tiny but collectively load-bearing: top-k to 24 keys still retains ≥98%.\n\n### Practical reading\nThe deployable regime is **\"tropical core + thin soft correction\"**: pointer-style (k≈1–4) caches sit far below the knee, but the measured recovery curve quantifies exactly what each added key buys (k=1→2: +0.34–0.45; k=2→4: +0.12–0.17; k=4→8: +0.05–0.07). This is the deployment-relevant curve for aggressive KV compression on small-VRAM hosts.\n\n### All 8 barriers\n(a) clean — cliff/recovery/budget horns pre-stated; (b) clean — argmax-limit sweeps + Maslov/crystallization budget measurements on a pretrained LM not in Catalog or literature as measured laws; (c) confronted — real-scale pretrained model, natural text; honest limit: ONE model; (d) clean — held-out last 10%, data-free selection; (e) SUBSTANCE + limits — cross-session exact replication of {16,32,24} is the strongest reproducibility evidence of the axis; P3's crystallization half honestly refuted; single model/corpus; (f) clean — exact validation gate, fp32 throughout, NO crash (ALL_DONE_NET50); (g) fair — full reference, same 0.98 bar; random-k/local-window controls inherited from NET-49 (not re-run here — noted); (h) DIRECT — sub-k\\* recovery curve is what an aggressive KV policy needs.\n\n### Next\nPer-layer ablation (prune ONLY L22/L23?); size transfer (1.5B / offloaded 7B); oracle-to-policy eviction gap; corpus robustness; weight quantization vs the 2Lr defect band (NET-52 next).\n\nNow 50 network experiments. Assessment v50. Paper 135.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3562",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T03:58:05.370553+00:00",
+    "title": "NET-50: THE-TROPICAL-LIMIT-IS-LOSSY-BUT-THE-RECOVERY-IS-FAST — argmax attention retains only 0.25-0.36 on Qwen2.5-0.5B, k=4 recovers to ~0.9, knees {16,32,24} replicate NET-49 exactly; Maslov-gap map isolates the diffuse tail as the only far-from-tropical region"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Round-39 #1, cron iteration (exp 471, assessment v248). Paper 136's queued follow-up — and a correction of it.\n\n**Ensemble: the QR restriction carries NO penalty.** x²−N smoothness equals UNRESTRICTED-random smoothness at every cell (emp_x2 ≈ emp_rnd within noise; 0.87–0.99 of mean-ρ = paper 130's finite-x factor). Mechanism: (N|p)=+1 primes divide x²−N for TWO residue classes of x mod p — double rate on the halved pool compensates exactly. The pre-stated H1 refuted spectacularly: QR-pool-restricted randoms run 21–56× lower. Paper 136's effective-u story RETIRED.\n\n**Per-N variance is the real mechanism**: corr(per-N smooth rate, #{odd primes ≤100 that are QRs of N}) = 0.50/0.45/0.48/0.40 across cells; decile spread 2.4× at u=2.5 and **9.3×** at u=3.5.\n\nResolves paper 136's anomaly: its ONE-N-per-scale design sampled this variance (the 0.54–0.76 yield ratios were draw luck, not a systematic deficit). Actionable: per-N relation yield is cheaply predictable a priori from ~20 Euler-criterion tests.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp471_qr_smoothness.py + exp471_result.json, seed 20260821, 4 cells × 100k values.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3563",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T03:58:05.371702+00:00",
+    "title": "FACT round-39 #1 — QR-SMOOTHNESS: the QR bite is variance, not mean (paper 139)"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Round-38 #4 (exp 468, assessment v247). The third row of the barrier map, derived and machine-verified.\n\n**Master law**: Speedup(H) = 1/(1 − (1−θ)·P_hit) — ALL information acts through the single scalar P_hit. Paper 132's 4/3 cap is exactly the UNINFORMATIVE POINT of this law (H ⊥ p).\n\n- **Symmetry break located**: internal readings die on the fiber-uniformity step; a hint's likelihood lives on the non-c-measurable coordinate and survives it verbatim.\n- **Canonical partition law** 8/(7−2α): α=½ reproduces 4/3; α=1 gives only 8/5 < 2 — the WHICH-FACTOR CEILING: external hints capped at 2× per dial; beyond it only via ISOLATION-COST log₂π(√N) oracle queries (net-positive from t=5).\n- **Certain-hint ladder** 2^(t−2)/(1−2^(1−t)): two bit-losses identified (parity + which-factor).\n- **Trace hints** 2^(t−1)/C_t: GENERIC-RECOVERY's ~5×/bit is a constant divisor, not a rate penalty.\n- **Break-even** surface α*(θ,ε); internal filters tolerate ε ≤ 1/6, external up to 3/5.\n\nVerification: m=31/400k dev ≤0.0032 across α; χ(c)-split pointwise exact; exhaustive m=3..8 max dev 0.0089; ladder ratios 0.9986–1.0045; break-even verdicts 20/20.\n\nTHE COMPLETED MAP: residues cap 4/3 (theorem) | position 5.19× measured (paper 137) | external linear-in-bits with the 2× per-dial ceiling (theorem here). External info priced linearly — capacity synergy does not transfer to work bits.\n\nLedger: 9 self-caught errors incl. a label-space bug producing a flat-α artifact.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp468_proofs.md + exp468_verify.py + exp468_result.json, seed 20260821.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3564",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T03:58:05.372817+00:00",
+    "title": "FACT round-38 #4 — EXTERNAL-HINT-FILTER: one scalar prices everything, the barrier-map triptych completes (paper 138)"
   },
   {
     "ambition_level": "grand_challenge",
@@ -3583,69 +3678,6 @@
     "status": "available",
     "timestamp": "",
     "title": "Quantum Entanglement Monogamy: CKW Inequality"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "L-functions are the DNA of mathematics — each one encodes deep arithmetic information. But how many L-functions ARE there? The L-function universe is vast: (1) The Riemann zeta function (1 L-function), (2) Dirichlet L-functions (countably many), (3) L-functions of elliptic curves (uncountably many, one per j-invariant), (4) L-functions of modular forms (countably many, but indexed by weight and level), (5) L-functions of Galois representations (enormous family). Conjecture: The set of 'natural' L-functions (those satisfying the Selberg class axioms: analytic continuation, functional equation, Euler product, Ramanujan bound) is COUNTABLE. This means the universe of well-behaved L-functions is no bigger than the integers, despite each individual L-function encoding infinitely much information. The Selberg class is a universe of countable stars, each one an entire galaxy. Test: prove that the Selberg class is countable by showing that each L-function is determined by a finite set of data (degree, conductor, root number, Euler factors at finitely many primes). Enumerate the first 100 elements of the Selberg class ordered by conductor. Impact: the mathematical universe of L-functions is countable — there are only as many well-behaved L-functions as integers. Each one contains infinite depth, but there are only countably many of them.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "NumberTheory",
-      "Algebra",
-      "Analysis"
-    ],
-    "id": "seed_132",
-    "lineage_refs": [],
-    "priority_score": 0.86,
-    "proof_strategy": "Define the Selberg class S as the set of Dirichlet series L(s) = sum a_n/n^s satisfying: (1) Ramanujan bound |a_n| <= n^epsilon for epsilon > 0, (2) Analytic continuation to C except for a possible pole at s=1, (3) Functional equation relating L(s) to L(1-s), (4) Euler product L(s) = prod_p L_p(s). Prove S is countable: each L in S is determined by finitely many data because (a) the degree d_L is a positive integer, (b) the conductor q_L is a positive integer, (c) the Euler factors L_p(s) for p not dividing q_L are determined by the Ramanujan bound and the functional equation, and (d) there are finitely many primes dividing q_L. So L is determined by (d_L, q_L, epsilon_L, {L_p(s) : p | q_L}), a finite set of data. Since each piece of data is countable, S is countable. Test: enumerate elements of S by increasing conductor.",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "The L-Function Universe: A Cosmic Census of All L-Functions"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "In 2023, Smith et al. discovered 'the hat' — a single tile shape that tiles the plane but only aperiodically (no periodic tiling exists). This solved the aperiodic monotile problem. But deeper questions remain: How many distinct aperiodic monotiles exist? Conjecture: The set of aperiodic monotiles forms a 1-parameter family (the 'hat spectrum') parameterized by a continuous parameter t in [0,1] where t=0 gives the hat, t=1 gives the turtle (a known variant), and intermediate values give intermediate shapes. The key property: each shape in the hat spectrum tiles the plane aperiodically, and no two shapes in the spectrum admit a common periodic tiling. The boundary of the hat spectrum is the curve in R^2 that separates the region of aperiodic monotiles from the region of periodic tiles. This boundary is a piecewise-smooth curve determined by the constraint that the tile must enforce a hierarchical substitution rule. Test: parameterize the hat spectrum by interpolating between the hat and turtle, compute the substitution rule for each t, and verify that the substitution rule enforces aperiodicity for all t in [0,1]. Impact: aperiodic monotiles are not isolated curiosities — they form a continuous family, and the hat is just one point on the spectrum.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Geometry",
-      "Computation"
-    ],
-    "id": "seed_153",
-    "lineage_refs": [],
-    "priority_score": 0.86,
-    "proof_strategy": "Define the hat spectrum: for t in [0,1], the tile H_t is the convex hull of the 14 vertices of the hat tile with one edge parameterized by t. At t=0, H_0 is the hat. At t=1, H_1 is the turtle. For intermediate t, H_t is the interpolated shape. The substitution rule for H_t is a function of t: the tile H_t admits a substitution rule with expansion factor lambda(t) where lambda(0) = sqrt(3) + 2 (the hat expansion factor) and lambda(1) = sqrt(3) + 2 (the turtle expansion factor, same as the hat). Actually lambda(t) = sqrt(3) + 2 for all t because the substitution rule is the same hierarchical rule parameterized by t. Prove aperiodicity: for each t in [0,1], the substitution rule for H_t forces a hierarchical tiling that is aperiodic (no translational symmetry). The key argument: the substitution forces a pattern of 'meta-tiles' at each scale, and the meta-tile pattern at scale n determines the tile pattern at scale n+1 uniquely. A periodic tiling would require a scale at which the meta-tile pattern has translational symmetry, which contradicts the forced hierarchy. Test: implement the substitution rule for H_t for t = 0, 0.25, 0.5, 0.75, 1 and verify each produces an aperiodic tiling.",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "The Aperiodic Monotile: One Shape to Tile Them All"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Formalize the class group action on isogeny graphs of elliptic curves. Prove that CSIDH is a one-way function assuming hardness of computing isogenies.",
-    "domain_bridges": [],
-    "domains": [
-      "Cryptography",
-      "Algebra"
-    ],
-    "id": "seed_230",
-    "lineage_refs": [],
-    "priority_score": 0.86,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Isogeny-Based Cryptography: CSI-FiSh"
   },
   {
     "ambition_level": "extension",
@@ -7469,7 +7501,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "08e16c4e",
     "description": "Construct a surface whose Hausdorff dimension is exactly aleph-1 (assuming CH). Prove that such a surface cannot be embedded in any finite-dimensional Euclidean space but can be embedded in the Hilbert cube. Formalize transfinite-dimensional manifolds and prove they have no finite triangulation.",
     "domain_bridges": [],
     "domains": [
@@ -7483,7 +7515,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Aleph-1 Surface: Geometry Between Dimensions"
   },
@@ -15054,6 +15086,29 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Algebra.NonBacktracking.CycleMultiplicity",
+      "Algebra.NonBacktracking.HashimotoTrace"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The generating function of the proved trace counts should equal minus the logarithm of det(I - uB), and for regular graphs factor through the Ihara polynomial. The counting theorem reduces the identity to a bijection between cyclic non-backtracking words and multisets of primitive cycles.\n\nFor every finite simple graph, sum_{n>=1} trace(B^n) u^n / n = -log det(I - uB), and for (q+1)-regular graphs det(I - uB) = (1-u^2)^{|E|-|V|} det(I - uA + q u^2 I).\n\nUse the proved rotation stability of nbCycles to define the rotation action, prove that each orbit is generated by a primitive cyclic word, and compare coefficientwise with the power-sum expansion of the determinant.\n\nA fully formal Ihara zeta function with its Euler product becomes available over Mathlib.\n\nSome rotation orbits fail to be free, indicating that the primitive-cycle decomposition needs a stabiliser correction.",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean",
+      "Combinatorics"
+    ],
+    "id": "fd_3556",
+    "lineage_refs": [],
+    "priority_score": 0.7114126984126985,
+    "proof_strategy": "Compute orbit sizes of the rotation action on nbCycles as divisors of n, and identify the resulting Dirichlet-type convolution with the logarithmic derivative of a determinant.",
+    "research_mode": "team",
+    "source_exp_id": "16cb59c0",
+    "status": "available",
+    "timestamp": "2026-08-22T03:57:30.870534+00:00",
+    "title": "Ihara Determinant Identity via Cyclic Word Counting"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Bridges.LovaszLocalLemmaFinite",
       "Bridges.ErdosProbabilisticRamsey"
     ],
@@ -15564,6 +15619,30 @@
   },
   {
     "ambition_level": "extension",
+    "catalog_references": [
+      "Algebra.NonBacktracking.HashimotoTrace",
+      "Algebra.NonBacktracking.Monotonicity",
+      "Algebra.NonBacktracking.CycleMultiplicity"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For graphs of maximum degree at most three the non-backtracking trace sequence should determine the number of cycles of each length. The proved value at n = 3 (six times the number of triangles) is the first case, and the girth criterion pins the first nonzero index. This would make the Hashimoto trace a strictly finer invariant than the adjacency spectrum on this class.\n\nIf G and G' have maximum degree at most three and trace(B_G^n) = trace(B_{G'}^n) for all n, then G and G' have the same number of cycles of every length.\n\nCompute the trace sequences of adjacency-cospectral subcubic pairs and compare cycle counts; formally, set up the triangular system relating trace(B^n) to cycle counts of length at most n and prove its unipotence by induction on n.\n\nThe non-backtracking trace sequence is a cycle-spectrum invariant, strictly refining the adjacency spectrum on subcubic graphs.\n\nA cospectral subcubic pair with equal non-backtracking traces but different cycle counts exists, bounding how much combinatorial data the Hashimoto matrix retains.",
+    "domain_bridges": [],
+    "domains": [
+      "Combinatorics",
+      "Physics"
+    ],
+    "id": "fd_3559",
+    "lineage_refs": [],
+    "priority_score": 0.7100085470085471,
+    "proof_strategy": "Induct on n: the contribution of length-n cyclic non-backtracking words splits into words spanning a single n-cycle (2n each, by the proved multiplicity bound) and words revisiting edges, which in a subcubic graph are controlled by shorter cycles already determined by the induction hypothesis; monotonicity under graph inclusion controls the error terms.",
+    "research_mode": "team",
+    "source_exp_id": "16cb59c0",
+    "status": "available",
+    "timestamp": "2026-08-22T03:57:32.085878+00:00",
+    "title": "Cycle Spectrum Reconstruction for Subcubic Graphs"
+  },
+  {
+    "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Every recipe is an algorithm: it takes ingredients (inputs) and produces a dish (output). The question is: can you verify a good dish faster than you can cook it? This is exactly P vs NP, but in the kitchen. Define the verification time V(R) of a recipe R as the time it takes to taste the dish and determine if it's good. Define the cooking time C(R) as the time it takes to prepare the dish. Conjecture: For most traditional recipes, C(R) > V(R) — cooking takes longer than tasting (P != NP in the kitchen). But there exist 'quick recipes' where C(R) = V(R) — assemble-and-serve dishes like salads (P = NP in the kitchen). The interesting class is 'NP-hard recipes' — dishes where even VERifying the result is hard. Example: is the souffle risen? You can only verify by cutting it open, which destroys it. Theorem: souffle verification is co-NP-hard because determining if a souffle will rise requires simulating the thermodynamic process, which is PSPACE-hard. More formally: the souffle function S(ingredients, temperature, time) -> {risen, collapsed} requires computing the Navier-Stokes equations for the batter, which is PSPACE-hard. Test: classify 100 recipes by their C(R)/V(R) ratio. Verify that P = NP recipes have C = V, while P != NP recipes have C >> V. Impact: computational complexity is not abstract — it shows up in your kitchen. Some dishes are inherently harder to make than to verify.",
@@ -15696,6 +15775,29 @@
     "status": "available",
     "timestamp": "2026-08-22T01:51:25.516239+00:00",
     "title": "Finitary Galois Closure of Interpretation Theories"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Algebra.NonBacktracking.HashimotoTrace",
+      "Algebra.NonBacktracking.Girth"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The proved upper bound trace(B^n) <= (#darts) q^n is matched, below the log_q N threshold, by a tree-covering lower bound. Combining the two should yield the Alon-Boppana inequality for the second adjacency eigenvalue of a connected (q+1)-regular graph.\n\nFor a connected (q+1)-regular graph on N vertices, lambda_2 >= 2 sqrt(q) - o(1) as N tends to infinity, derived from two-sided estimates on trace(B^n).\n\nProve the lower bound trace(B^n) >= N(q+1)q^{n-1}(1-o(1)) for n <= c log_q N by counting non-backtracking walks in the universal cover, then convert to eigenvalue estimates.\n\nA formal Alon-Boppana theorem, hence a formal benchmark for Ramanujan graphs.\n\nThe non-backtracking trace loses too much information below the girth threshold, and spectral lower bounds need the adjacency matrix directly.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_3558",
+    "lineage_refs": [],
+    "priority_score": 0.7097741935483872,
+    "proof_strategy": "Use the regular row-sum lemma to identify B with the q-ary branching walk, count walks that do not close early, and apply the power-sum characterisation of the spectral radius.",
+    "research_mode": "team",
+    "source_exp_id": "16cb59c0",
+    "status": "available",
+    "timestamp": "2026-08-22T03:57:31.674468+00:00",
+    "title": "Alon-Boppana Bound from Non-Backtracking Trace Growth"
   },
   {
     "ambition_level": "extension",
@@ -16429,6 +16531,28 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Algebra.NonBacktracking.Girth",
+      "Algebra.NonBacktracking.CycleMultiplicity"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The first nonzero term of the trace sequence sits exactly at the girth, and computations on the pentagon, hexagon and Petersen graph show its value is 2*girth times the number of shortest cycles. The lower bound of this equality is proved; the upper bound needs a uniqueness statement for non-backtracking walks in 2-regular graphs.\n\nIf G contains a cycle then trace(B^{girth}) = 2 * girth * (number of cycles of length girth).\n\nShow that a closed non-backtracking walk of length equal to the girth spans exactly a shortest cycle, and that a non-backtracking walk in a 2-regular graph is determined by its first dart; then count fibres.\n\nThe Hashimoto trace sequence determines the girth and the number of shortest cycles.\n\nSome graph admits a cyclic non-backtracking word of girth length that is not a rotation or reversal of a shortest cycle, which would be a new combinatorial phenomenon.",
+    "domain_bridges": [],
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "fd_3557",
+    "lineage_refs": [],
+    "priority_score": 0.6701428571428573,
+    "proof_strategy": "Combine the proved edge-counting bound (a closed non-backtracking walk of length n forces a cycle of length at most n inside its own edge set) with 2-regular determinism to sandwich the fibre size at exactly 2 * girth.",
+    "research_mode": "team",
+    "source_exp_id": "16cb59c0",
+    "status": "available",
+    "timestamp": "2026-08-22T03:57:31.275702+00:00",
+    "title": "Exact Girth Multiplicity of the Non-Backtracking Trace"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Catalog.Novelty.BerggrenTreePrimeHypotenuse",
       "Catalog.Novelty.BerggrenTreeCounting",
       "Catalog.Novelty.BerggrenTreeCriticalLine"
@@ -16557,6 +16681,28 @@
     "status": "available",
     "timestamp": "2026-08-22T01:51:24.764434+00:00",
     "title": "Degree Completeness for Graph Interpretations"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Algebra.NonBacktracking.VertexCycles",
+      "Algebra.NonBacktracking.HashimotoTrace"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For (q+1)-regular graphs the matrices counting non-backtracking walks of length m between vertices should satisfy a three-term recursion A_{m+1} = A A_m - q A_{m-1}, making them Chebyshev-like polynomials in the adjacency matrix. This turns the dart-indexed Hashimoto matrix into a vertex-indexed polynomial calculus. It would give closed formulas for trace(B^n) in terms of the adjacency spectrum.\n\nFor a (q+1)-regular graph, A_1 = A, A_2 = A^2 - (q+1)I and A_{m+1} = A A_m - q A_{m-1}, where A_m counts non-backtracking walks of length m between vertices.\n\nFormalise A_m as a counting matrix using the vertex characterisation already proved, then prove the recursion by splitting a walk of length m+1 at its last step and correcting the single forbidden backtracking pattern.\n\ntrace(B^n) becomes computable from the adjacency spectrum alone for regular graphs, and Ramanujan bounds follow from Chebyshev estimates.\n\nThe correction term is not local, meaning non-backtracking counts genuinely need the dart-level matrix even in the regular case.",
+    "domain_bridges": [],
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "fd_3555",
+    "lineage_refs": [],
+    "priority_score": 0.6696666666666669,
+    "proof_strategy": "Induct on m using the vertex form of the trace theorem; the inclusion-exclusion for the forbidden pattern u_{i+2} = u_i contributes exactly the -q A_{m-1} term via the constant row sum q.",
+    "research_mode": "team",
+    "source_exp_id": "16cb59c0",
+    "status": "available",
+    "timestamp": "2026-08-22T03:57:30.469270+00:00",
+    "title": "Chebyshev Recursion for Non-Backtracking Walk Matrices"
   },
   {
     "ambition_level": "extension",
@@ -51961,23 +52107,6 @@
     "status": "available",
     "timestamp": "2026-08-21T06:22:00.781877+00:00",
     "title": "Stability and structure"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "16cb59c0",
-    "description": "Prove that `trace(B^n)` counts rooted closed non-backtracking walks of length `n`.",
-    "domain_bridges": [],
-    "domains": [],
-    "id": "fd_1979",
-    "lineage_refs": [],
-    "priority_score": 0.4,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "6e1b10f7",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T06:22:04.774995+00:00",
-    "title": "Prove that `trace(B^n)` counts rooted closed non-backtracking walks of length `n`."
   },
   {
     "ambition_level": "extension",

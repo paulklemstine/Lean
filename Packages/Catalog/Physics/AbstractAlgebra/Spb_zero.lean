@@ -1,4 +1,8 @@
+-- Repaired copy: this module was a stale, non-compiling duplicate of `Shared.AbstractAlgebra.Spb_zero`.
+-- Its content is synchronised with that (compiling) module.
 import Mathlib
+
+open Real
 
 /-! # CatalogBuild.Shared.Spb_zero
 
@@ -8,6 +12,9 @@ Declarations: 5
 -/
 
 noncomputable section
+
+/-- The speed-addition law `spb x y = (x + y) / (1 - x y)`. -/
+def spb (x y : ℝ) : ℝ := (x + y) / (1 - x * y)
 
 /-- [Section: # CatalogBuild.Shared.Spb_zero
 Auto-generated from theorem catalog database.

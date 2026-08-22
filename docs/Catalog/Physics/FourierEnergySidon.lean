@@ -35,7 +35,7 @@ Main results:
 -/
 
 import Mathlib
-import Catalog.Physics.FourierEnergyBound
+import Physics.FourierEnergyBound
 
 open Finset FourierFA FourierAdd
 open scoped Pointwise

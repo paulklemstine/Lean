@@ -1,4 +1,4 @@
-import Catalog.Physics.CyclicTypeChannelPrimeCore
+import Physics.CyclicTypeChannelPrimeCore
 
 /-!
 # The prime-order cyclic type-pair channel: closed form, sub-cap theorem, CRT additivity

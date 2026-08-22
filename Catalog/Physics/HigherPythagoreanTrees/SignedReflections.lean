@@ -1,8 +1,8 @@
 import Mathlib
-import Catalog.Shared.Ispythquadruple.IsPythQuadruple
-import Catalog.Shared.HigherPythagorean.QuadrupleTree
-import Catalog.Shared.HigherPythagorean.BranchingContrast
-import Catalog.Physics.HigherPythagoreanTrees.ExactBranching
+import Shared.Ispythquadruple.IsPythQuadruple
+import Shared.HigherPythagorean.QuadrupleTree
+import Shared.HigherPythagorean.BranchingContrast
+import Physics.HigherPythagoreanTrees.ExactBranching
 
 /-!
 # The finite generating set of dimension three: eight signed reflections

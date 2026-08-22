@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "5b26e37d",
-      "domain": "Geometry",
-      "key_insight": "# Future Directions: Topology of Theorem Networks (cycle 1)\n\nThis cycle replaced four informal claims of the research thread by theorems, and in doing\nso refuted one of its readings.  What is now prov",
-      "quality_score": 0.8,
-      "sorry_count": 0,
-      "theorem_count": 66,
-      "timestamp": "2026-08-20T08:57:36",
-      "title": "**Conjecture.** In a sparse random corpus with bounded expected document size an"
-    },
-    {
       "cycle_id": "4b03d5cc",
       "domain": "Physics",
       "key_insight": "# Future Directions — Planck-Foam Topology\n\n## Where the thread stands\n\nCycle 1 established the core theory (`Catalog/Physics/PlanckFoam*.lean`): a\ncomplete separation-axiom characterisation of Wheele",
@@ -499,19 +489,19 @@
       "theorem_count": 114,
       "timestamp": "2026-08-22T03:08:06",
       "title": "The Lagrange engine `powerSum_rigidity` is already formalised and it isolates"
+    },
+    {
+      "cycle_id": "16cb59c0",
+      "domain": "Algebra",
+      "key_insight": "# Future directions: the non-backtracking trace after the counting theorem\n\nThe formal development proves `trace(Bⁿ) = #{rooted closed non-backtracking walks of\nlength n}` in three equivalent shapes (",
+      "quality_score": 0.86,
+      "sorry_count": 0,
+      "theorem_count": 123,
+      "timestamp": "2026-08-22T03:57:43",
+      "title": "Prove that `trace(B^n)` counts rooted closed non-backtracking walks of length `n`."
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "5ddbfca0",
-      "domain": "MachineLearning",
-      "key_insight": "# FUTURE DIRECTIONS — after Round-6: the Noise-Floor Principle and the Trace-Lemma Frontier\n\nRound 6 closed the scalar and matrix theory of the noise floor: the minimum\nexcess risk of *every* spectral",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 92,
-      "timestamp": "2026-08-14T00:06:43",
-      "title": "Round-6 Hypothesis Closures: The Noise-Floor Principle and the Trace-Lemma Frontier"
-    },
     {
       "cycle_id": "d99b7790",
       "domain": "MachineLearning",
@@ -2501,21 +2491,19 @@
       "theorem_count": 114,
       "timestamp": "2026-08-22T03:08:06",
       "title": "The Lagrange engine `powerSum_rigidity` is already formalised and it isolates"
+    },
+    {
+      "cycle_id": "16cb59c0",
+      "domain": "Algebra",
+      "key_insight": "# Future directions: the non-backtracking trace after the counting theorem\n\nThe formal development proves `trace(Bⁿ) = #{rooted closed non-backtracking walks of\nlength n}` in three equivalent shapes (",
+      "quality_score": 0.86,
+      "sorry_count": 0,
+      "theorem_count": 123,
+      "timestamp": "2026-08-22T03:57:43",
+      "title": "Prove that `trace(B^n)` counts rooted closed non-backtracking walks of length `n`."
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "ec6993b5",
-      "domain": "Shared",
-      "name": "for",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "ec6993b5",
-      "domain": "Shared",
-      "name": "Nat",
-      "quality": 0.82
-    },
     {
       "cycle_id": "ec6993b5",
       "domain": "Shared",
@@ -2803,9 +2791,21 @@
       "domain": "Applications",
       "name": "exists_invisible_pow_of_seed",
       "quality": 0.86
+    },
+    {
+      "cycle_id": "16cb59c0",
+      "domain": "Algebra",
+      "name": "and",
+      "quality": 0.86
+    },
+    {
+      "cycle_id": "16cb59c0",
+      "domain": "Algebra",
+      "name": "exists_walk_of_dartChain",
+      "quality": 0.86
     }
   ],
-  "last_updated": "2026-08-22T03:08:06",
+  "last_updated": "2026-08-22T03:57:43",
   "open_questions": [
     {
       "context": "-- count, which is not available in Mathlib.  Rather than leave an unproved `sorry` in the; sorry; sorry",
@@ -3021,12 +3021,6 @@
   "research_threads": {
     "Algebra": [
       {
-        "cycle_id": "a1fe4956",
-        "quality": 0.82,
-        "theorems": 106,
-        "title": "Exp 391 BERGGREN-PRICE-INTERLOCK: every semiprime is a node of both Pythagorean "
-      },
-      {
         "cycle_id": "9cc9a6e9",
         "quality": 0.82,
         "theorems": 42,
@@ -3079,6 +3073,12 @@
         "quality": 0.88,
         "theorems": 103,
         "title": "reinforcement learning"
+      },
+      {
+        "cycle_id": "16cb59c0",
+        "quality": 0.86,
+        "theorems": 123,
+        "title": "Prove that `trace(B^n)` counts rooted closed non-backtracking walks of length `n"
       }
     ],
     "Applications": [

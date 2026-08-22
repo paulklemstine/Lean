@@ -1,4 +1,4 @@
-import Catalog.Physics.CyclicTypeFactorization
+import Physics.CyclicTypeFactorization
 
 /-!
 # The 2-adic type tower saturates at exactly two bits

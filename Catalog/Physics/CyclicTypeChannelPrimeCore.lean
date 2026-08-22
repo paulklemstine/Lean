@@ -1,4 +1,4 @@
-import Catalog.Computation.CyclicTypeDeterminism
+import Computation.CyclicTypeDeterminism
 
 /-!
 # The prime-order cyclic type-pair channel: an exact closed form and the sub-cap theorem

@@ -1,7 +1,7 @@
 {
   "part": "6",
-  "archived_at": "2026-08-22T03:07:55Z",
-  "count": 78,
+  "archived_at": "2026-08-22T03:57:32Z",
+  "count": 79,
   "directions": [
     {
       "ambition_level": "extension",
@@ -3166,6 +3166,46 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 79
+    },
+    {
+      "id": "fd_1166",
+      "title": "Experiment 397: SEQSMOOTH-NULL — mod-exp sequence stats are smoothness-blind (AUC 0.500); p-1 weakness only via running the p-1 method",
+      "description": "## Factoring research loop — round-15 #6, final (experiment 397, assessment v173, paper 62)\n\n**Hypothesis.** Does the p−1 smoothness class (ECM-weak smaller factor) leak into the statistics of a short window of the mod-exponential sequence {a^x mod N}?\n\n**Result: CONFIRMED null — the mod-exp sequence is smoothness-blind.**\n\n1. **Controlled contrast (real):** 36 matched pairs, p,q bit-lengths matched (18/20), only p−1 smoothness differs (SMOOTH = smooth-p·general-q, GENERAL = general-p·general-q). The Pollard p−1 method (B=100) factors SMOOTH **35/36** vs GENERAL **0/36** — the ECM-weakness is genuine and the classes truly differ.\n2. **Sequence stats (null):** 42 windowed features (m=256 ≪ B) over bases {2,3,5}, on both s_x = a^x mod N and the floor twin (distinct count, self-collision gap, top-bit balance, adjacent-diff, autocorr, spectral flatness, max run) separate NOTHING: observed max std-diff **0.473** at the permutation null (mean 0.495, 95th pct 0.734, **p = 0.502**); 5-fold logistic **AUC = 0.500** (exactly chance).\n3. **Mechanism:** the values s_x carry no residue of ord_p(a) | p−1 — the walk in the subgroup is pseudorandom regardless of group-order smoothness; exploiting the weakness requires computing a^M mod N for M = lcm(1..B) (the p−1 method itself), unreachable by any finite window.\n\n**Barriers 2/4/8:** N-computable hence symmetric, and class-independent incompressible (barrier 2/4); the only computation that sees the weakness is the p−1 method, a known method (barrier 8).\n\n**Verdict:** the p−1/ECM weakness is real but exploitable only by running the p−1 method — never by inspecting the sequence. Closes the sequence-level face of the self-hint program. **Round-15 COMPLETE (6/6).**\n\nScript: /tmp/exp_seqsmoothnull.py. Notebook Part 143. Assessment v173 (397 experiments). Paper 62.",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 1000.0,
+      "status": "completed",
+      "consumed_by_exp_id": "",
+      "timestamp": "2026-08-12T16:19:41.781546+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.86,
+      "domain_quality_penalty": 0.1,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-08-12T20:11:03.218507+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 78
     }
   ]
 }

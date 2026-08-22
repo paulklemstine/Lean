@@ -1,1 +1,3 @@
-../../Shared/TropicalEntropy/Defs.lean
+-- This file was a path pointer to `../../Shared/TropicalEntropy/Defs.lean` in the catalogue snapshot.
+-- The target module is not present in this snapshot, so the pointer is kept as a
+-- comment; the module is intentionally empty.

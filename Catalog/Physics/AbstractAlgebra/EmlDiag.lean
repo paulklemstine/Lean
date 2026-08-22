@@ -1,4 +1,8 @@
+-- Repaired copy: this module was a stale, non-compiling duplicate of `Shared.AbstractAlgebra.EmlDiag`.
+-- Its content is synchronised with that (compiling) module.
 import Mathlib
+
+open Set
 
 /-! # CatalogBuild.Shared.EmlDiag
 
@@ -8,6 +12,9 @@ Declarations: 3
 -/
 
 noncomputable section
+
+/-- The diagonal of `eml`: `emlDiag z = exp z - log z`. -/
+def emlDiag (z : ℝ) : ℝ := Real.exp z - Real.log z
 
 /-- [Section: # CatalogBuild.Shared.EmlDiag
 Auto-generated from theorem catalog database.

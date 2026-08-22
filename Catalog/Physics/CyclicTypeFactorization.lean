@@ -1,4 +1,4 @@
-import Catalog.Physics.CyclicTypeDivisorBound
+import Physics.CyclicTypeDivisorBound
 
 /-!
 # Prime-power decomposition of the splitting-type channel

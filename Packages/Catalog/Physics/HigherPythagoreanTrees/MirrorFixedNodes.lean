@@ -1,9 +1,9 @@
 import Mathlib
-import Catalog.Shared.Ispythquadruple.IsPythQuadruple
-import Catalog.Shared.HigherPythagorean.QuadrupleTree
-import Catalog.Shared.HigherPythagorean.HarmonicLaw
-import Catalog.Physics.HigherPythagoreanTrees.ExactBranching
-import Catalog.Physics.HigherPythagoreanTrees.SignedReflections
+import Shared.Ispythquadruple.IsPythQuadruple
+import Shared.HigherPythagorean.QuadrupleTree
+import Shared.HigherPythagorean.HarmonicLaw
+import Physics.HigherPythagoreanTrees.ExactBranching
+import Physics.HigherPythagoreanTrees.SignedReflections
 
 /-!
 # Mirror-fixed nodes: the star structure of the quadruple graph
