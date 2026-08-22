@@ -1,123 +1,306 @@
-# A Needle in a Cube: How Rare Are Pythagorean Triples, Really?
+# A Tree That Grows Every Right Triangle
 
-## The oldest equation still has secrets
+## How three matrices, a single seed, and a quarter of a circle explain why perfect right triangles are both everywhere and almost nowhere
 
-Everyone meets $3^2 + 4^2 = 5^2$ before they meet algebra. Draw a right triangle with legs $3$ and $4$, and the hypotenuse comes out a whole number: $5$. It feels like a small miracle, and it has felt that way for four thousand years — Babylonian scribes were tabulating such triples on clay before Pythagoras was born.
+Take a sheet of graph paper and try to draw a right triangle whose three sides
+are all whole numbers. If you have not seen the trick, this is surprisingly
+hard: almost every triangle you draw will have an irrational hypotenuse. The
+famous ones — $3,4,5$ and $5,12,13$ — feel like lucky accidents, isolated gems
+scattered through the integers.
 
-But here is a question those scribes could not have answered, and which turns out to have a beautifully sharp answer.
+They are not accidents. They are the nodes of a single tree.
 
-Take a big number $H$ — say a million — and imagine the cube of all integer triples
-$$\{(a,b,c) : 1 \le a, b, c \le H\}.$$
-There are $H^3$ of them: a quintillion when $H = 10^6$. How many are *primitive Pythagorean triples*, meaning $a^2 + b^2 = c^2$ with $a$ and $b$ sharing no common factor?
+In 1934 the Swedish mathematician B. Berggren discovered something remarkable:
+there are exactly three integer matrices which, applied over and over to the
+starting triangle $(3,4,5)$, generate *every* primitive right triangle exactly
+once. No triangle is missed. No triangle appears twice. The entire, apparently
+chaotic population of Pythagorean triples is in fact a perfectly regular ternary
+tree, growing from one seed.
 
-The answer, proved below, is that there are exactly **$\Theta(H)$** of them — a number that grows only *linearly* in $H$, not quadratically, not cubically. When $H = 10^6$ there are $318{,}278$ of them, against $10^{18}$ triples in the cube. That is one in three trillion. Right triangles with whole-number sides are not merely rare; they are rare to a degree that is hard to picture.
+This article is about a question you can ask once you know that: **if you draw a
+box, how much of the box does the tree fill?**
 
-And yet — this is the twist — those vanishingly few triples are *not* scattered at random. Every single one of them sits at a definite address in a single, perfectly regular, infinitely branching tree. The scarcity and the structure are two faces of the same theorem, and the point of this article is to show how they fit together.
+---
 
-## The tree that grows all right triangles
+## The three matrices
 
-In 1963 the Dutch mathematician B. Berggren (and, independently, A. Hall and F. Barning) noticed something astonishing. Write a triple as a column vector and apply the three matrices
-$$A = \begin{pmatrix} 1 & -2 & 2 \\ 2 & -1 & 2 \\ 2 & -2 & 3\end{pmatrix}, \quad
-B = \begin{pmatrix} 1 & 2 & 2 \\ 2 & 1 & 2 \\ 2 & 2 & 3\end{pmatrix}, \quad
-C = \begin{pmatrix} -1 & 2 & 2 \\ -2 & 1 & 2 \\ -2 & 2 & 3\end{pmatrix}.$$
+Write a triple as a column vector $(a,b,c)$, meaning the triangle with legs $a$
+and $b$ and hypotenuse $c$. Berggren's three matrices are
 
-Each of these maps a Pythagorean triple to another Pythagorean triple. Start at the seed $(3,4,5)$ and apply all three:
-$$A(3,4,5) = (5,12,13), \qquad B(3,4,5) = (21,20,29), \qquad C(3,4,5) = (15,8,17).$$
-Apply them again to each child, and again, forever. You get an infinite ternary tree — three children per node, $3^d$ nodes at depth $d$.
+$$
+B_1 = \begin{pmatrix} 1 & -2 & 2 \\ 2 & -1 & 2 \\ 2 & -2 & 3\end{pmatrix},
+\qquad
+B_2 = \begin{pmatrix} 1 & 2 & 2 \\ 2 & 1 & 2 \\ 2 & 2 & 3\end{pmatrix},
+\qquad
+B_3 = \begin{pmatrix} -1 & 2 & 2 \\ -2 & 1 & 2 \\ -2 & 2 & 3\end{pmatrix}.
+$$
 
-The Barning–Hall theorem says this tree misses nothing. Precisely:
+Feed them $(3,4,5)$ and watch:
 
-> **Completeness Theorem.** A triple $(a,b,c)$ appears in the tree grown from $(3,4,5)$ if and only if $a,b,c > 0$, $a^2 + b^2 = c^2$, $\gcd(a,b) = 1$, and $a$ is odd.
+$$
+B_1(3,4,5) = (5,12,13),\qquad B_2(3,4,5) = (21,20,29),\qquad B_3(3,4,5)=(15,8,17).
+$$
 
-Since in a primitive triple exactly one leg is odd (both legs odd would force $c^2 \equiv 2 \pmod 4$, which is impossible; both even would break primitivity), the mirrored tree grown from the swapped seed $(4,3,5)$ catches precisely the triples whose *first* leg is even. The two trees are disjoint, and together they contain **every** positive primitive Pythagorean triple exactly once.
+All three outputs are right triangles. Apply the matrices again to each of
+those and you get nine more; then twenty-seven; and so on forever. The first
+few generations look like this:
 
-So the entire, infinite, four-thousand-year-old zoo of primitive right triangles is generated by two seeds and three matrices, with no overlap and no omission. That is already remarkable. What we want to know is how *thinly* this tree spreads through space.
+```
+                       (3,4,5)
+        ┌─────────────────┼─────────────────┐
+    (5,12,13)         (21,20,29)        (15,8,17)
+   ┌────┼────┐       ┌────┼────┐      ┌────┼────┐
+(7,24,25) ...     (39,80,89) ...   (33,56,65) ...
+```
 
-## The magic change of coordinates
+Two facts make this a *theorem* rather than a curiosity.
 
-The three matrices above look forbidding. The key move — the one that makes everything else easy — is to stop looking at $(a,b,c)$ and look instead at the two numbers Euclid used two millennia earlier.
+**Closure.** Every triple the tree produces is a genuine primitive right
+triangle: the sides satisfy $a^2+b^2=c^2$, they are all positive, the two legs
+share no common factor, and — a detail that will matter enormously — the *first*
+leg $a$ is always odd. This is a direct algebraic check: if $a^2+b^2=c^2$ then
+expanding $B_i(a,b,c)$ and simplifying returns the Pythagorean identity again,
+and a short parity argument keeps the first coordinate odd.
 
-Euclid's recipe: given integers $m > n > 0$, set
-$$(a,b,c) = (m^2 - n^2,\; 2mn,\; m^2 + n^2).$$
-This is always a Pythagorean triple, and it is primitive with $a$ odd exactly when $\gcd(m,n) = 1$ and $m - n$ is odd (one of $m,n$ even, the other odd). Call such an $(m,n)$ an **admissible pair**. For example $(m,n) = (2,1)$ gives $(3,4,5)$.
+**Completeness.** Conversely, every positive primitive triple with odd first
+leg appears somewhere in the tree. This is the deep half, and it is proved by
+*descent*. Given such a triple $(a,b,c)$ that is not the seed, define its
+candidate parent's hypotenuse
 
-Now watch what happens to Berggren's matrices in these coordinates. A calculation of a few lines shows that they become *linear maps on the pair $(m,n)$*:
-$$A: (m,n) \mapsto (2m - n,\ m), \qquad B: (m,n) \mapsto (2m + n,\ m), \qquad C: (m,n) \mapsto (m + 2n,\ n).$$
+$$w = 3c - 2a - 2b.$$
 
-The cubic tangle of quadratic forms has collapsed into three tiny linear substitutions — and they are exactly the three branches of the Stern–Brocot tree of coprime pairs, the same structure that organises the rational numbers. The Berggren tree of right triangles and the Farey/Stern–Brocot tree of fractions are, in this precise sense, the same tree wearing different clothes.
+One shows $0 < w < c$: strictly smaller than what you started with. Two further
+linear forms,
 
-With this dictionary, the Completeness Theorem becomes a statement about coprime pairs, and it is proved by *descent*: given an admissible $(m,n)$ with $m > 2$, compare $m$ with $2n$ and $3n$. Exactly one of three things holds —
-$$n < m < 2n, \qquad 2n < m < 3n, \qquad 3n < m$$
-— because $m = 2n$ and $m = 3n$ are impossible ($m = 2n$ contradicts coprimality unless $n=1$, in which case $m-n$ is odd fails; $m = 3n$ likewise). In each case one inverts the corresponding generator to produce a strictly smaller admissible pair, and the descent terminates at $(2,1)$, the root.
+$$u = a + 2b - 2c, \qquad v = 2a + b - 2c,$$
 
-The very same trichotomy proves something stronger. Because the three inequalities are *disjoint*, you can read off the last letter of a node's address just by looking at it. Hence:
+decide *which* of the three inverse matrices to apply — their sign pattern
+selects a unique legal parent, and $(\pm u, \pm v, w)$ is again a positive
+primitive triple with odd first leg. Since the hypotenuse strictly decreases at
+every step and hypotenuses are positive integers, the descent must terminate,
+and the only place it can terminate is at $(3,4,5)$. Running the descent
+backwards writes the original triple as a word in $B_1,B_2,B_3$.
 
-> **Freeness Theorem.** Distinct words in the letters $A, B, C$ produce distinct nodes. The Berggren tree is a *free* ternary tree: every primitive triple with odd first leg has one and only one address.
+Put together: **the Berggren tree is exactly the set of positive primitive
+Pythagorean triples with odd first leg.** And the tree is *free*: two different
+words in the three matrices never produce the same triple, so each triple has
+exactly one address.
 
-No triple is ever reachable by two different routes. This is a rigidity statement, and it will shortly buy us something unexpected.
+---
 
-## Counting: the cube collapses to a disc
+## Now draw a box
 
-Now to the counting question. Which triples in the cube $[1,H]^3$ are Berggren-generated?
+Fix a height $H$ and consider the cube of integer points
 
-Take a node $(m^2 - n^2,\ 2mn,\ m^2 + n^2)$. For it to lie in the cube we need all three coordinates at most $H$. But $m^2 - n^2 < m^2 + n^2$ and $2mn < m^2 + n^2$ (since $(m-n)^2 > 0$), so the two leg conditions are *free*: only the hypotenuse condition bites. This gives an exact and rather beautiful identity:
+$$\{(a,b,c) : 1 \le a,b,c \le H\},$$
 
-> **Lattice-Point Formula.** Euclid's map is a bijection between the Berggren-generated triples in the cube $[1,H]^3$ and the set
-> $$\{(m,n) \in \mathbb{Z}^2 : 0 < n < m,\ \gcd(m,n)=1,\ m+n \text{ odd},\ m^2 + n^2 \le H\}.$$
+which contains $H^3$ triples. How many of those $H^3$ points are Berggren
+triangles?
 
-The three-dimensional cube condition has collapsed to a *single* disc condition. Counting Pythagorean triples in a box is literally a Gauss circle problem: count the lattice points in a quarter disc of radius $\sqrt{H}$, keeping only the visible ones (coprime) of opposite parity.
+The answer, sharp on both sides, is: **about $H$ of them — no more, no fewer, up
+to a constant factor.**
 
-From here the size is immediate to bound. Since $m^2 \le m^2 + n^2 \le H$ we get $m \le \sqrt H$, and $n < m$, so the number of pairs is at most $(\sqrt H)^2 = H$:
+$$\frac{H}{100} \;\le\; \#\{\text{tree triples in the box}\} \;\le\; \min\left(4H,\ \left(\lfloor\sqrt H\rfloor + 1\right)^2\right)
+\qquad (H \ge 5).$$
 
-> **Upper bound.** At most $H$ of the $H^3$ triples in the cube are Berggren-generated.
+Two very different arguments produce the two sides.
 
-The lower bound requires work, because we must show that coprimality and parity do not kill *too many* pairs. That is a sieve. Let $N = \lfloor\sqrt{H/2}\rfloor$; then every pair with $n<m\le N$ satisfies $m^2+n^2\le 2N^2 \le H$, so it lands in the disc. Among pairs $0 < n < m \le N$, exactly $\lfloor N/2\rfloor \cdot \lceil N/2 \rceil$ have $m+n$ odd — an exact formula, not an estimate. How many of those fail to be coprime? If $\gcd(m,n) = k > 1$ then $k$ must be **odd** (an even common divisor would make $m+n$ even), so $k \ge 3$, and the divisible pairs form a scaled copy of the same configuration at size $N/k$, of which there are at most $N^2/(4k^2)$. Summing over $k \ge 3$ and using the telescoping bound
-$$\sum_{k \ge 3} \frac{1}{k^2} \;\le\; \sum_{k\ge 3}\frac{1}{k(k-1)} \;=\; \frac12,$$
-the bad pairs occupy at most $N^2/8$, leaving at least $N^2/8 - N/4 \ge N^2/16$ good ones. Feeding this back:
+### The ceiling: a pair of squares
 
-> **Lower bound.** For $H \ge 32$, at least $H/128$ triples in the cube are Berggren-generated.
+Here is the trick that gives the upper bound. If $(a,b,c)$ is a primitive triple
+with $a$ odd, then
 
-Putting the two together: the count is $\Theta(H)$, squeezed between $H/128$ and $H$. And since $H/H^3 = 1/H^2 \to 0$:
+$$c + a = 2m^2, \qquad c - a = 2n^2$$
 
-> **Vanishing Density.** The fraction of the cube $[1,H]^3$ occupied by Berggren-generated triples — equivalently, by primitive Pythagorean triples — tends to $0$.
+for integers $m$ and $n$. (This follows from the classical parametrisation
+$a = m^2-n^2$, $b=2mn$, $c=m^2+n^2$.) So the map
 
-The constants $1/128$ and $1$ are honest but crude. Numerically the truth is startlingly clean. The count divided by $H$ converges:
+$$(a,b,c) \;\longmapsto\; (c+a,\ c-a)$$
+
+sends every tree triple in the box to a pair of *doubled squares*. It is
+injective: from $c+a$ and $c-a$ you recover $a$ and $c$, and then $b$ is
+determined by $b^2 = c^2-a^2$ with $b>0$. And if $c \le H$ then $m^2 \le H$ and
+$n^2 \le H$, so $m$ and $n$ each range over at most $\lfloor \sqrt H\rfloor + 1$
+values. Counting the target set gives at most $(\lfloor\sqrt H\rfloor+1)^2$
+triples — which, since $\lfloor\sqrt H\rfloor^2 \le H$, is at most $4H$.
+
+Notice how little work this is. Two subtractions turn a three-dimensional
+counting problem into a two-dimensional one, and the constraint "must be a
+square" collapses the dimension count from $H^2$ to $H$.
+
+### The floor: how many fractions are in lowest terms?
+
+The lower bound runs the parametrisation the other way. Take any pair of
+integers $1 \le n < m$ that are **coprime** and of **opposite parity** (one even,
+one odd). Then
+
+$$(m^2-n^2,\ 2mn,\ m^2+n^2)$$
+
+is a primitive triple with odd first leg, hence a node of the tree; and if
+$m^2+n^2 \le H$ it sits inside the box. Different pairs give different triples.
+So the question becomes: *how many coprime opposite-parity pairs fit in a
+quarter disc of radius $\sqrt H$?*
+
+This is a classical density question in disguise. The probability that two
+random integers are coprime is $6/\pi^2 \approx 0.608$ — a fact that goes back
+to Dirichlet. An effective, completely elementary version suffices here: among
+all pairs in a square $[1,X]^2$, the *non*-coprime ones are counted by
+overcounting, for each $g \ge 2$, the multiples of $g$; that gives at most
+$\sum_{g \ge 2} (X/g)^2 \le \tfrac{25}{36}X^2$ bad pairs, hence at least
+$\tfrac{11}{36}X^2$ coprime ones. Symmetry $n \leftrightarrow m$ costs another
+factor $2$, and discarding the same-parity pairs costs at most another factor
+$2$ (if $n$ and $m$ are both odd and coprime, then $\tfrac{m+n}2, \tfrac{m-n}2$
+is a coprime opposite-parity pair — an injection). Chaining these losses
+through the parametrisation gives the constant $1/100$. It is crude, but it is
+unconditional and explicit.
+
+### The consequence: a vanishing fraction
+
+The box has $H^3$ points; the tree contributes at most $4H$ of them. Therefore
+
+$$\frac{\#\{\text{tree triples in the box}\}}{H^3} \;\le\; \frac{4}{H} \;\longrightarrow\; 0.$$
+
+Perfect right triangles are **vanishingly rare**. If you throw a dart at the box
+$[1,H]^3$ for large $H$, your chance of hitting a Pythagorean triple decays like
+$1/H^2$. At $H = 20\,000$ there are $3186$ tree triples among $8\times10^{12}$
+lattice points — a proportion of about $4 \times 10^{-10}$.
+
+---
+
+## The twist: rare, but complete
+
+Rare among *all* triples — but that is only half the story, and it is the less
+interesting half. The original question also asked how the tree compares to the
+population it actually lives in: the primitive Pythagorean triples themselves.
+There the expectation was that the tree should capture a $(1-o(1))$ proportion
+of them.
+
+It does better. It captures **all** of them, exactly, with no error term.
+
+Here is why. In a primitive Pythagorean triple, exactly one of the two legs is
+odd. (Both cannot be even — they are coprime. Both cannot be odd, because then
+$c^2 \equiv 2 \pmod 4$, and no square is $2$ mod $4$.) The tree, we said,
+consists precisely of the triples whose *first* leg is odd. So swapping the two
+legs is a perfect pairing between the triples the tree contains and the triples
+it does not:
+
+**Every primitive Pythagorean triple in the box is in the tree, or becomes a
+tree triple after swapping its two legs.**
+
+Counting ordered triples, this says
+
+$$\#\{\text{primitive triples in the box}\} = 2 \cdot \#\{\text{tree triples in the box}\}.$$
+
+The "$1-o(1)$" in the original conjecture is really an exact $1$: as a set of
+*triangles* (unordered legs), the Berggren tree is not merely dense in the
+primitive Pythagorean triples — it *is* them.
+
+So the picture is a pleasing tension. The tree fills a vanishing sliver of the
+box, $\Theta(H)$ points out of $H^3$; and yet inside that sliver it misses
+nothing. The rarity is a statement about the ambient space; the completeness is
+a statement about the tree.
+
+---
+
+## What the constant really is
+
+The bounds above pin the count between $H/100$ and $H$. Computation says the
+truth is far more precise. The count of tree triples with all entries at most
+$H$ begins
 
 | $H$ | count | count$/H$ |
 |---|---|---|
-| $1{,}024$ | $161$ | $0.1572$ |
-| $16{,}384$ | $2{,}603$ | $0.15887$ |
-| $65{,}536$ | $10{,}428$ | $0.159119$ |
-| $1{,}000{,}000$ | $159{,}139$ | $0.159139$ |
+| $1\,000$ | $158$ | $0.1580$ |
+| $5\,000$ | $792$ | $0.1584$ |
+| $100\,000$ | $15\,919$ | $0.15919$ |
+| $400\,000$ | $63\,669$ | $0.159172$ |
+| $1\,000\,000\,000$ | $159\,154\,994$ | $0.15915499$ |
 
-That limit is $\tfrac{1}{2\pi} = 0.1591549\ldots$, and the Lattice-Point Formula explains exactly why. The quarter disc of radius $\sqrt H$ restricted to $n < m$ has area $\pi H/8$; the density of coprime opposite-parity lattice points in that wedge is $4/\pi^2$; and $\tfrac{\pi H}{8} \cdot \tfrac{4}{\pi^2} = \tfrac{H}{2\pi}$. Pythagoras meets Gauss meets Euler's $\zeta(2)$, in one line.
+and the ratio is converging, unmistakably, to
 
-## One seed or two? A sharp dichotomy
+$$\frac{1}{2\pi} = 0.15915494\ldots$$
 
-There is a subtlety worth being pedantic about, because it is the difference between a true theorem and a plausible-sounding false one.
+Where does $\pi$ come from in a problem about right triangles with integer
+sides? From the geometry hidden in the parametrisation. The counting problem is
+*exactly equivalent* — a bijection, not an estimate — to counting lattice points
+$(n,m)$ with $0 < n < m$, $\gcd(n,m)=1$, $n+m$ odd, and $m^2+n^2 \le H$. That is
+a count of **visible** points (points you can see from the origin, with nothing
+blocking the line of sight) in a **quarter disc** of radius $\sqrt H$, restricted
+to the wedge below the diagonal, filtered by parity. Assemble the three factors:
 
-Since the tree from $(3,4,5)$ catches exactly the odd-first-leg triples, and the leg swap $(a,b,c) \mapsto (b,a,c)$ is a bijection of the (symmetric!) cube exchanging the two families:
+$$\underbrace{\frac{\pi H}{8}}_{\text{area of the wedge}} \times
+\underbrace{\frac{6}{\pi^2}}_{\text{visible}} \times
+\underbrace{\frac{2}{3}}_{\text{opposite parity}} \;=\; \frac{H}{2\pi}.$$
 
-> **Exact Ratio Theorem.** For every $H \ge 5$, the number of triples in $[1,H]^3$ generated from the single seed $(3,4,5)$ is *exactly one half* of the number of primitive Pythagorean triples in the cube. Using both seeds $(3,4,5)$ and $(4,3,5)$, the ratio is *exactly one*.
+The area of the eighth-disc supplies the $\pi$ upstairs; the coprimality density
+$6/\pi^2$ — the reciprocal of $\zeta(2)$ — supplies a $\pi^2$ downstairs; and
+the parity filter, which among coprime pairs keeps two out of three, supplies
+the $2/3$. Everything cancels down to $1/(2\pi)$.
 
-So the natural informal claim — "almost all primitive triples in the box are Berggren-generated" — is, with one seed, not merely unproved but false: the ratio is pinned at $1/2$ forever. With two seeds it is not $1 - o(1)$ but a flat, exact $1$, for every single $H$. There is no error term at all. The truth is sharper than the guess in one direction and flatly contradicts it in the other, and that boundary is worth naming precisely.
+This is a Lehmer-type constant, and turning the heuristic into a theorem with an
+error term is the natural next target. The bijection with the visible-point
+count is already exact and unconditional; what remains is a Gauss circle problem
+carrying a Möbius weight, and one expects
 
-## Scarcity forces the tree to explode
+$$\#\{\text{tree triples in } [1,H]^3\} = \frac{H}{2\pi} + O\!\left(\sqrt H \log H\right).$$
 
-Finally, the two halves of the story — the rigidity of the tree and the scarcity of triples — collide to produce something neither could give alone.
+---
 
-The tree has $3^d$ nodes at depth $d$. By Freeness, those $3^d$ nodes are *distinct* triples. By the Upper Bound, at most $H$ distinct Berggren triples fit inside $[1,H]^3$. So pigeonhole:
+## Two speeds of growth
 
-> **Depth Forces Height.** If every node at depth $d$ of the Berggren tree has hypotenuse at most $H$, then $3^d \le H$. Equivalently, at every depth $d$ there exists a node whose hypotenuse is at least $3^d$.
+One last feature deserves mention, because it explains why the tree looks so
+lopsided when you draw it.
 
-Read that again: it is a *dynamical* statement — the branches of the tree race off to infinity at least exponentially fast, at rate $3$ — deduced from a *counting* statement about how few integer solutions there are. There is no room in the arithmetic for the geometry to grow slowly. The tree must sprint, because the target set is too thin to hold it.
+The three matrices do not grow triangles at the same rate. $B_2$ is
+*hyperbolic*: it multiplies the hypotenuse by more than $5$ each time — the exact
+expansion factor is the silver-ratio square $3+2\sqrt2 = 5.8284\ldots$, and the
+hypotenuses along the pure-$B_2$ branch are
 
-(The pigeonhole rate $3^d$ is not the last word on the constant: following the branch $B$ repeatedly sends $(m,n) \mapsto (2m+n, m)$, whose growth is governed by the root $1+\sqrt2$ of $x^2 = 2x+1$, so the largest node at depth $d$ has hypotenuse of order $(1+\sqrt2)^{2d} \approx 5.83^{\,d}$. What the counting argument delivers for free is the *shape* of the law — exponential growth, no slower than $3^d$ — from an input that mentions no dynamics whatsoever.)
+$$5,\quad 29,\quad 169,\quad 985,\quad 5741,\quad 33461,\ \ldots$$
 
-## Why any of this matters
+racing off exponentially. (These are alternate Pell numbers, and the triangles
+they carry, $(3,4,5), (21,20,29), (119,120,169), \ldots$, are the ones whose legs
+differ by one.)
 
-There is a genuinely modern reason to care. Tree-structured, exactly-parametrised families of integer solutions are the raw material for generating exact test data: cryptographic parameter search, exact-arithmetic benchmarks, and the training and evaluation of learned models that predict number-theoretic structure all need families that can be sampled *uniformly and provably*. The results here say precisely what "uniform sampling of primitive triples up to height $H$" means and costs: the target set has size $\tfrac{H}{2\pi}(1+o(1))$; it can be enumerated in $O(H)$ time directly from the disc description; and every element carries a unique address — a single finite word in a three-letter alphabet, recoverable from the triple itself by the read-off-the-last-letter trichotomy — which is exactly the kind of canonical serialisation a learning system needs if it is to have any hope of generalising.
+$B_3$, by contrast, is *unipotent* — parabolic. It has $1$ as its only
+eigenvalue, and it preserves the quantity $c - a$. Applying it $k$ times to
+$(3,4,5)$ gives a beautifully explicit family:
 
-More broadly, this is a small, complete case study in a pattern that recurs everywhere in mathematics. A set defined by an equation looks unstructured and is hopelessly sparse. Change coordinates, and the sparseness becomes a *dimension count* — three variables cut down to two, then to one radius — while the structure becomes a free monoid action. Once you have both, counting and dynamics start proving theorems about each other.
+$$\bigl(4(k+1)^2 - 1,\ \ 4(k+1),\ \ 4(k+1)^2 + 1\bigr) = (3,4,5), (15,8,17), (35,12,37), (63,16,65),\ldots$$
 
-Four thousand years after the clay tablets, the $3,4,5$ triangle still has that much to say.
+The hypotenuse grows only *quadratically* in the depth. So while a generic node
+at depth $d$ has hypotenuse at most $5 \cdot 6^d$, the parabolic spine reaches
+depth $k$ with hypotenuse just $4(k+1)^2+1$. Inside the box of height $H$ the
+tree therefore reaches depth of order $\sqrt H$ — and this is *seed-independent*:
+starting from any primitive triple with hypotenuse $c$, the parabolic orbit
+contributes at least $K$ distinct triangles to the box whenever $7K^2c \le H$.
+
+The resulting shape is extraordinarily unbalanced: at height $H = 100\,000$ the
+tree holds $15\,919$ triangles whose *typical* depth is about $15$ — logarithmic
+in $H$, as one expects from an exponentially branching structure — while its
+deepest node sits at depth $222$, out along a nearly-linear parabolic tendril.
+A dense exponential bush with a few long thin whiskers.
+
+---
+
+## Why this matters
+
+The story here is a small, complete instance of a pattern that recurs all over
+number theory. A set defined by a *rule of generation* (apply these matrices,
+starting here) turns out to coincide with a set defined by a *property*
+(primitive, Pythagorean, odd first leg) — and once you know that, the counting
+question migrates into geometry, where it becomes a question about visible
+lattice points in a disc, and $\pi$ appears out of nowhere.
+
+Along the way we get three quantitatively different answers to "how common are
+Pythagorean triples?", and all three are correct:
+
+- Among all integer triples in a box: **vanishingly rare**, a fraction $O(1/H^2)$.
+- Among triples in a box, counted linearly: **exactly $\Theta(H)$**, with density
+  approaching $1/(2\pi)$ per unit of height.
+- Among primitive Pythagorean triples: **all of them**, no exceptions, once you
+  allow the two legs to be written in either order.
+
+Rarity and completeness are not in conflict. They are answers to different
+questions — and knowing which question you are asking is, as usual, most of the
+mathematics.

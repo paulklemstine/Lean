@@ -1,350 +1,259 @@
 """
-Counting the Berggren tree in a box: numerical demonstrations.
-==============================================================
+Berggren-generated Pythagorean triples in a box: numerical demonstrations.
 
-This self-contained script demonstrates, numerically, every quantitative claim of
+This self-contained script illustrates, with explicit computation, the results of
 the accompanying paper:
 
-  1.  Linearisation.  The three Berggren matrices A, B, C acting on triples
-      (a, b, c) agree with the three linear maps
-          alpha(m, n) = (2m - n, m)
-          beta (m, n) = (2m + n, m)
-          gamma(m, n) = (m + 2n, n)
-      acting on Euclid parameters, under E(m, n) = (m^2 - n^2, 2mn, m^2 + n^2).
+  * The three Berggren matrices B1, B2, B3 acting on the seed (3,4,5) generate a
+    ternary tree whose nodes are *exactly* the positive primitive Pythagorean
+    triples (a,b,c) whose first leg a is odd.
 
-  2.  Completeness (Barning-Hall).  The tree grown from (3,4,5) is exactly the set
-      of positive primitive Pythagorean triples with odd first leg; the mirrored
-      tree from (4,3,5) is exactly those with even first leg.
+  * Writing  bergBox(H) = { (a,b,c) in the tree : a,b,c <= H }, we have
 
-  3.  Freeness.  Distinct words in {A,B,C}* give distinct triples, and the address
-      can be decoded from the triple by a trichotomy on m versus 2n and 3n.
+        H / 100  <=  #bergBox(H)  <=  min( 4H, (floor(sqrt(H)) + 1)^2 )     (H >= 5)
 
-  4.  Box counting.  |N(H)| lies in [H/128, H] for H >= 32, the exact lattice-point
-      formula |N(H)| = #{(m,n): 0<n<m, gcd=1, m+n odd, m^2+n^2 <= H} holds, and
-      |N(H)|/H -> 1/(2 pi) = 0.1591549...
+    so #bergBox(H) = Theta(H); in particular #bergBox(H)/H^3 -> 0, i.e. tree
+    triples are a vanishing fraction of the H^3 integer triples of the box.
 
-  5.  Exact ratios.  |N(H)| / |P(H)| = 1/2 exactly, and (|N(H)|+|N'(H)|)/|P(H)| = 1
-      exactly, for every H >= 5.
+  * #ppBox(H) = 2 * #bergBox(H), where ppBox(H) is the set of *all* ordered
+    primitive Pythagorean triples in the box.  Hence the tree captures every
+    primitive triple of the box up to swapping the two legs: the advertised
+    proportion "1 - o(1)" is in fact exactly 1.
 
-  6.  Depth forces height.  If every depth-d node has hypotenuse <= H then 3^d <= H.
+  * #bergBox(H) = #pairBox(H), the number of coprime, opposite-parity lattice
+    points (n,m) with 0 < n < m and m^2 + n^2 <= H (a "visible point" count in a
+    quarter disc).  Experimentally #bergBox(H)/H -> 1/(2*pi) = 0.159154...
 
 Run:  python3 demo.py
 """
 
 from __future__ import annotations
 
-from math import gcd, isqrt, pi, sqrt
-from typing import Dict, Iterator, List, Set, Tuple
+import math
+from math import gcd, isqrt, pi
+from typing import Dict, Iterator, List, Tuple
 
 Triple = Tuple[int, int, int]
-Pair = Tuple[int, int]
 
-# ---------------------------------------------------------------------------
-# 1.  The Berggren generators, in both coordinate systems
-# ---------------------------------------------------------------------------
+# --------------------------------------------------------------------------- #
+# 1. The three Berggren matrices
+# --------------------------------------------------------------------------- #
 
-BERGGREN_MATRICES: Dict[str, Tuple[Tuple[int, int, int], ...]] = {
-    "A": ((1, -2, 2), (2, -1, 2), (2, -2, 3)),
-    "B": ((1, 2, 2), (2, 1, 2), (2, 2, 3)),
-    "C": ((-1, 2, 2), (-2, 1, 2), (-2, 2, 3)),
-}
+B1: Tuple[Tuple[int, ...], ...] = ((1, -2, 2), (2, -1, 2), (2, -2, 3))
+B2: Tuple[Tuple[int, ...], ...] = ((1, 2, 2), (2, 1, 2), (2, 2, 3))
+B3: Tuple[Tuple[int, ...], ...] = ((-1, 2, 2), (-2, 1, 2), (-2, 2, 3))
 
-ROOT: Triple = (3, 4, 5)
-ROOT_SWAP: Triple = (4, 3, 5)
+SEED: Triple = (3, 4, 5)
 
 
-def apply_matrix(name: str, v: Triple) -> Triple:
-    """Apply the Berggren generator `name` to the triple `v`."""
-    m = BERGGREN_MATRICES[name]
-    return tuple(sum(m[i][j] * v[j] for j in range(3)) for i in range(3))  # type: ignore[return-value]
+def apply_matrix(matrix: Tuple[Tuple[int, ...], ...], t: Triple) -> Triple:
+    """Apply a 3x3 integer matrix to a triple, returning the image triple."""
+    a, b, c = t
+    return tuple(row[0] * a + row[1] * b + row[2] * c for row in matrix)  # type: ignore[return-value]
 
 
-def apply_word(word: str, v: Triple = ROOT) -> Triple:
-    """Apply a word in {A,B,C}* to `v`, left-to-right (first letter applied first)."""
-    for letter in word:
-        v = apply_matrix(letter, v)
-    return v
+def children(t: Triple) -> List[Triple]:
+    """The three Berggren children of a triple."""
+    return [apply_matrix(B1, t), apply_matrix(B2, t), apply_matrix(B3, t)]
 
 
-def euclid_triple(m: int, n: int) -> Triple:
-    """Euclid's map E(m, n) = (m^2 - n^2, 2mn, m^2 + n^2)."""
+# --------------------------------------------------------------------------- #
+# 2. Enumerating the tree inside a box
+# --------------------------------------------------------------------------- #
+
+def berg_box(H: int) -> List[Triple]:
+    """All Berggren-generated triples (a,b,c) with 0 < a,b,c <= H.
+
+    Because c > a and c > b for a Pythagorean triple, the box condition is just
+    c <= H; and every Berggren step strictly increases c, so a depth-first search
+    pruned at c > H is complete.
+    """
+    out: List[Triple] = []
+    stack: List[Triple] = [SEED]
+    while stack:
+        t = stack.pop()
+        if t[2] > H:
+            continue
+        out.append(t)
+        stack.extend(children(t))
+    return sorted(out)
+
+
+def pp_box(H: int) -> List[Triple]:
+    """All ordered primitive Pythagorean triples (a,b,c) with 0 < a,b,c <= H."""
+    out: List[Triple] = []
+    for c in range(1, H + 1):
+        for a in range(1, c):
+            b2 = c * c - a * a
+            b = isqrt(b2)
+            if b * b == b2 and 0 < b <= H and gcd(a, b) == 1:
+                out.append((a, b, c))
+    return sorted(out)
+
+
+def pair_box(H: int) -> List[Tuple[int, int]]:
+    """Coprime opposite-parity pairs (n,m), 0 < n < m, with m^2 + n^2 <= H."""
+    out: List[Tuple[int, int]] = []
+    mmax = isqrt(H)
+    for m in range(2, mmax + 1):
+        for n in range(1, m):
+            if m * m + n * n <= H and gcd(n, m) == 1 and (n + m) % 2 == 1:
+                out.append((n, m))
+    return sorted(out)
+
+
+def euclid(n: int, m: int) -> Triple:
+    """Euclid's parametrisation: (m^2 - n^2, 2mn, m^2 + n^2)."""
     return (m * m - n * n, 2 * m * n, m * m + n * n)
 
 
-def euclid_params(v: Triple) -> Pair:
-    """Inverse of E on positive triples: m = sqrt((a+c)/2), n = sqrt((c-a)/2)."""
-    a, _b, c = v
-    return (isqrt((a + c) // 2), isqrt((c - a) // 2))
+# --------------------------------------------------------------------------- #
+# 3. Demonstrations
+# --------------------------------------------------------------------------- #
 
-
-def alpha(m: int, n: int) -> Pair:
-    return (2 * m - n, m)
-
-
-def beta(m: int, n: int) -> Pair:
-    return (2 * m + n, m)
-
-
-def gamma(m: int, n: int) -> Pair:
-    return (m + 2 * n, n)
-
-
-EUCLID_GENERATORS = {"A": alpha, "B": beta, "C": gamma}
-
-
-def is_admissible(m: int, n: int) -> bool:
-    """0 < n < m, gcd(m,n) = 1, m - n odd."""
-    return 0 < n < m and gcd(m, n) == 1 and (m - n) % 2 == 1
-
-
-# ---------------------------------------------------------------------------
-# 2.  Predicates on triples
-# ---------------------------------------------------------------------------
-
-def is_ppt(v: Triple) -> bool:
-    """Positive primitive Pythagorean triple."""
-    a, b, c = v
-    return a > 0 and b > 0 and c > 0 and a * a + b * b == c * c and gcd(a, b) == 1
-
-
-def is_node(v: Triple) -> bool:
-    """Membership in the tree grown from (3,4,5): a PPT with odd first leg."""
-    return is_ppt(v) and v[0] % 2 == 1
-
-
-def is_node_swap(v: Triple) -> bool:
-    """Membership in the mirrored tree from (4,3,5): a PPT with odd second leg."""
-    return is_ppt(v) and v[1] % 2 == 1
-
-
-# ---------------------------------------------------------------------------
-# 3.  Counting in the box
-# ---------------------------------------------------------------------------
-
-def euclid_box(h: int) -> Iterator[Pair]:
-    """Visible opposite-parity lattice points of the quarter disc of radius sqrt(h)."""
-    for m in range(2, isqrt(h) + 1):
-        for n in range(1, m):
-            if (m + n) % 2 == 1 and gcd(m, n) == 1 and m * m + n * n <= h:
-                yield (m, n)
-
-
-def count_nodes(h: int) -> int:
-    """|N(H)|, via the exact lattice-point formula.  Cost O(H log H)."""
-    return sum(1 for _ in euclid_box(h))
-
-
-def count_nodes_bruteforce(h: int) -> int:
-    """|N(H)| by scanning the whole cube.  Cost Theta(H^3) -- tiny H only."""
-    total = 0
-    for a in range(1, h + 1):
-        for b in range(1, h + 1):
-            c2 = a * a + b * b
-            c = isqrt(c2)
-            if c * c == c2 and c <= h and is_node((a, b, c)):
-                total += 1
-    return total
-
-
-def count_ppt(h: int) -> int:
-    """|P(H)| = 2 |N(H)| (Halving Theorem)."""
-    return 2 * count_nodes(h)
-
-
-def count_coprime_parity_pairs(n_max: int) -> int:
-    """|Q(N)| = #{0 < n < m <= N : m+n odd, gcd(m,n)=1}."""
-    return sum(
-        1
-        for m in range(2, n_max + 1)
-        for n in range(1, m)
-        if (m + n) % 2 == 1 and gcd(m, n) == 1
-    )
-
-
-def count_parity_pairs(n_max: int) -> int:
-    """|P(N)| = floor(N/2) * floor((N+1)/2), checked against a direct count."""
-    return sum(1 for m in range(2, n_max + 1) for n in range(1, m) if (m + n) % 2 == 1)
-
-
-# ---------------------------------------------------------------------------
-# 4.  Address decoding (the descent trichotomy)
-# ---------------------------------------------------------------------------
-
-def decode_address(v: Triple) -> str:
-    """Unique word W in {A,B,C}* with W(3,4,5) = v.  Requires is_node(v)."""
-    if not is_node(v):
-        raise ValueError(f"{v} is not a node of the tree grown from (3,4,5)")
-    m, n = euclid_params(v)
-    letters: List[str] = []
-    while m > 2:
-        if m < 2 * n:
-            letters.append("A")
-            m, n = n, 2 * n - m
-        elif m < 3 * n:
-            letters.append("B")
-            m, n = n, m - 2 * n
-        else:
-            letters.append("C")
-            m, n = m - 2 * n, n
-    return "".join(reversed(letters))
-
-
-def generation(depth: int) -> List[Pair]:
-    """All Euclid parameter pairs at the given depth, in lexicographic word order."""
-    level: List[Pair] = [(2, 1)]
-    for _ in range(depth):
-        level = [f(m, n) for (m, n) in level for f in (alpha, beta, gamma)]
-    return level
-
-
-# ---------------------------------------------------------------------------
-# Demonstrations
-# ---------------------------------------------------------------------------
-
-def demo_linearisation() -> None:
+def show_tree(depth: int = 3) -> None:
     print("=" * 74)
-    print("1.  LINEARISATION:  matrix action  ==  linear action on Euclid parameters")
+    print("1.  The Berggren ternary tree rooted at (3,4,5)")
     print("=" * 74)
-    for m, n in [(2, 1), (3, 2), (4, 1), (5, 2), (7, 4)]:
-        v = euclid_triple(m, n)
-        for name, f in EUCLID_GENERATORS.items():
-            lhs = apply_matrix(name, v)
-            rhs = euclid_triple(*f(m, n))
-            assert lhs == rhs, (name, m, n, lhs, rhs)
-        print(f"  (m,n)=({m},{n})  E={v}   "
-              f"A->{apply_matrix('A', v)}  B->{apply_matrix('B', v)}  C->{apply_matrix('C', v)}")
-    print("  all three identities verified on every sample.\n")
-
-
-def demo_completeness(h: int = 400) -> None:
-    print("=" * 74)
-    print(f"2.  COMPLETENESS (Barning-Hall) inside the cube [1,{h}]^3")
-    print("=" * 74)
-    # grow the tree far enough to cover the box, then compare with brute force
-    grown: Set[Triple] = set()
-    frontier: List[Triple] = [ROOT]
-    while frontier:
+    level: List[Triple] = [SEED]
+    for d in range(depth + 1):
+        print(f"  depth {d}: " + ", ".join(str(t) for t in level[:9])
+              + ("  ..." if len(level) > 9 else ""))
         nxt: List[Triple] = []
-        for v in frontier:
-            if v[2] <= h:
-                grown.add(v)
-                nxt.extend(apply_matrix(g, v) for g in "ABC")
-        frontier = nxt
-    truth = {
-        (a, b, isqrt(a * a + b * b))
-        for a in range(1, h + 1)
-        for b in range(1, h + 1)
-        if isqrt(a * a + b * b) ** 2 == a * a + b * b
-        and isqrt(a * a + b * b) <= h
-        and is_node((a, b, isqrt(a * a + b * b)))
-    }
-    print(f"  tree nodes with hypotenuse <= {h}          : {len(grown)}")
-    print(f"  odd-first-leg primitive triples in the box : {len(truth)}")
-    print(f"  sets identical                             : {grown == truth}")
-    swapped = {(b, a, c) for (a, b, c) in grown}
-    print(f"  mirrored tree = leg-swap of the tree       : "
-          f"{all(is_node_swap(v) for v in swapped)}")
-    print(f"  the two trees are disjoint                 : "
-          f"{not any(is_node(v) and is_node_swap(v) for v in grown | swapped)}\n")
-
-
-def demo_freeness(depth: int = 7) -> None:
-    print("=" * 74)
-    print("3.  FREENESS:  distinct addresses give distinct triples")
-    print("=" * 74)
-    for d in range(1, depth + 1):
-        level = generation(d)
-        print(f"  depth {d}: 3^{d} = {3 ** d:>5} words, "
-              f"{len(set(level)):>5} distinct nodes, "
-              f"min c = {min(m * m + n * n for m, n in level):>9}, "
-              f"max c = {max(m * m + n * n for m, n in level):>9}")
-        assert len(set(level)) == 3 ** d
-    print("  (min matches 2d^2+6d+5, attained by A^d;  max ~ 4.975 * (1+sqrt2)^(2d),"
-          " attained by B^d)")
-    for v in [(3, 4, 5), (5, 12, 13), (21, 20, 29), (15, 8, 17), (697, 696, 985)]:
-        w = decode_address(v)
-        assert apply_word(w) == v
-        print(f"  address of {str(v):>18} = '{w if w else '(empty: the root)'}'")
+        for t in level:
+            nxt.extend(children(t))
+        level = nxt
+    print()
+    # every node is a primitive triple with odd first leg
+    ok = all(
+        a * a + b * b == c * c and gcd(a, b) == 1 and a % 2 == 1
+        for a, b, c in berg_box(2000)
+    )
+    print(f"  every node with c <= 2000 is primitive Pythagorean with odd leg a: {ok}")
     print()
 
 
-def demo_box_counting() -> None:
+def show_counts(bounds: Tuple[int, ...] = (5, 10, 50, 100, 500, 1000, 5000, 20000)) -> None:
     print("=" * 74)
-    print("4.  BOX COUNTING:  H/128 <= |N(H)| <= H,   |N(H)|/H -> 1/(2 pi)")
+    print("2.  Counting: Theta(H) bounds, the factor 2, and the lattice bijection")
     print("=" * 74)
-    print(f"  {'H':>9} {'H/128':>8} {'|N(H)|':>9} {'H':>9} {'|N(H)|/H':>10} "
-          f"{'|N(H)|/H^3':>12}")
-    for h in [64, 256, 1024, 4096, 16384, 65536, 262144, 1000000]:
-        k = count_nodes(h)
-        assert k <= h, "upper bound"
-        assert h < 32 or h <= 128 * k, "lower bound"
-        print(f"  {h:>9} {h // 128:>8} {k:>9} {h:>9} {k / h:>10.6f} {k / h ** 3:>12.3e}")
-    print(f"  limit predicted by the lattice-point formula: 1/(2 pi) = {1 / (2 * pi):.7f}")
-    # brute-force cross-check of the lattice-point formula on a small cube
-    for h in [50, 120, 300]:
-        assert count_nodes(h) == count_nodes_bruteforce(h)
-    print("  lattice-point formula cross-checked against a full cube scan "
-          "for H = 50, 120, 300.\n")
+    header = (f"{'H':>7} {'#berg':>7} {'H/100':>7} {'4H':>8} {'(sqrt+1)^2':>11} "
+              f"{'#pp':>7} {'#pair':>7} {'#berg/H':>9} {'#berg/H^3':>11}")
+    print(header)
+    print("-" * len(header))
+    for H in bounds:
+        bb = berg_box(H)
+        pb = pair_box(H)
+        pp = pp_box(H) if H <= 5000 else None
+        lo = H / 100.0
+        hi1 = 4 * H
+        hi2 = (isqrt(H) + 1) ** 2
+        assert H <= 100 * len(bb), "lower bound violated"
+        assert len(bb) <= min(hi1, hi2), "upper bound violated"
+        assert len(bb) == len(pb), "lattice bijection violated"
+        if pp is not None:
+            assert len(pp) == 2 * len(bb), "factor-two identity violated"
+        print(f"{H:>7} {len(bb):>7} {lo:>7.1f} {hi1:>8} {hi2:>11} "
+              f"{(len(pp) if pp is not None else -1):>7} {len(pb):>7} "
+              f"{len(bb)/H:>9.5f} {len(bb)/H**3:>11.3e}")
+    print()
+    print(f"  conjectured limit of #berg/H :  1/(2*pi) = {1/(2*pi):.6f}")
+    print()
 
 
-def demo_sieve() -> None:
+def show_bijection(H: int = 200) -> None:
     print("=" * 74)
-    print("5.  THE SIEVE:  N^2 <= 16 |Q(N)|,   |Q(N)|/N^2 -> 2/pi^2")
+    print("3.  The bijection (n,m) -> (m^2-n^2, 2mn, m^2+n^2) with H =", H)
     print("=" * 74)
-    print(f"  {'N':>6} {'|P(N)| exact':>13} {'|P(N)| formula':>15} {'|Q(N)|':>9} "
-          f"{'|Q(N)|/N^2':>11} {'16|Q|>=N^2':>11}")
-    for n_max in [16, 64, 256, 512, 1024]:
-        p_direct = count_parity_pairs(n_max)
-        p_formula = (n_max // 2) * ((n_max + 1) // 2)
-        q = count_coprime_parity_pairs(n_max)
-        assert p_direct == p_formula
-        assert n_max ** 2 <= 16 * q
-        print(f"  {n_max:>6} {p_direct:>13} {p_formula:>15} {q:>9} "
-              f"{q / n_max ** 2:>11.6f} {str(n_max ** 2 <= 16 * q):>11}")
-    print(f"  limiting density: 2/pi^2 = {2 / pi ** 2:.7f} "
-          f"(proved bound 1/16 = 0.0625)\n")
+    pairs = pair_box(H)
+    triples = set(berg_box(H))
+    images = {euclid(n, m) for (n, m) in pairs}
+    print(f"  #pairs = {len(pairs)},  #tree triples = {len(triples)},  "
+          f"images = tree: {images == triples}")
+    for (n, m) in pairs[:8]:
+        print(f"    (n,m) = ({n},{m})  ->  {euclid(n, m)}")
+    print()
 
 
-def demo_exact_ratios() -> None:
+def show_swap(H: int = 300) -> None:
     print("=" * 74)
-    print("6.  EXACT RATIOS:  one seed gives exactly 1/2, two seeds exactly 1")
+    print("4.  Every primitive triple of the box is in the tree up to a leg swap")
     print("=" * 74)
-    print(f"  {'H':>8} {'|N(H)|':>9} {'|P(H)|':>9} {'one seed':>10} {'two seeds':>10}")
-    for h in [5, 13, 50, 500, 5000, 50000, 500000]:
-        k = count_nodes(h)
-        p = count_ppt(h)
-        assert p == 2 * k
-        print(f"  {h:>8} {k:>9} {p:>9} {k / p:>10.6f} {(2 * k) / p:>10.6f}")
-    print("  the ratios are exact identities for every H >= 5, with no error term:")
-    print("  the single-seed claim '1 - o(1)' is FALSE (it is pinned at 1/2),")
-    print("  and the two-seed claim is understated (it is exactly 1).\n")
+    tree = set(berg_box(H))
+    bad = [t for t in pp_box(H) if t not in tree and (t[1], t[0], t[2]) not in tree]
+    print(f"  H = {H}:  #pp = {len(pp_box(H))},  #tree = {len(tree)},  "
+          f"exceptions = {len(bad)}")
+    odd_first = [t for t in pp_box(H) if t[0] % 2 == 1]
+    print(f"  primitive triples with odd first leg = {len(odd_first)} "
+          f"= #tree ({len(tree)}): {len(odd_first) == len(tree)}")
+    print()
 
 
-def demo_depth_forces_height(max_depth: int = 8) -> None:
+def show_depth_profile(H: int = 100000) -> None:
     print("=" * 74)
-    print("7.  DEPTH FORCES HEIGHT:  all depth-d hypotenuses <= H  ==>  3^d <= H")
+    print("5.  Depth profile: parabolic spine (quadratic) vs hyperbolic branch")
     print("=" * 74)
-    print(f"  {'d':>3} {'3^d':>8} {'max c at depth d':>18} {'slack factor':>13}")
-    for d in range(1, max_depth + 1):
-        level = generation(d)
-        cmax = max(m * m + n * n for m, n in level)
-        assert 3 ** d <= cmax, "the pigeonhole bound must hold"
-        print(f"  {d:>3} {3 ** d:>8} {cmax:>18} {cmax / 3 ** d:>13.3f}")
-    print(f"  the true exponential rate is (1+sqrt2)^2 = {(1 + sqrt(2)) ** 2:.4f} per level;")
-    print("  pigeonhole alone -- with no dynamics -- already forces rate 3.\n")
+    # the B3-spine
+    t: Triple = SEED
+    spine: List[Triple] = [t]
+    for _ in range(6):
+        t = apply_matrix(B3, t)
+        spine.append(t)
+    print("  B3-spine from (3,4,5):")
+    for k, s in enumerate(spine):
+        print(f"    depth {k}: {s}   predicted c = 4(k+1)^2+1 = {4*(k+1)**2+1}")
+    # the B2 branch
+    t = SEED
+    branch: List[Triple] = [t]
+    for _ in range(6):
+        t = apply_matrix(B2, t)
+        branch.append(t)
+    print("  B2-branch from (3,4,5): hypotenuses",
+          [s[2] for s in branch], " (ratios ->", f"{3+2*math.sqrt(2):.4f})")
+    # depth statistics inside the box
+    depths: Dict[int, int] = {}
+    stack: List[Tuple[Triple, int]] = [(SEED, 0)]
+    maxdepth = 0
+    total = 0
+    weighted = 0
+    while stack:
+        u, d = stack.pop()
+        if u[2] > H:
+            continue
+        depths[d] = depths.get(d, 0) + 1
+        maxdepth = max(maxdepth, d)
+        total += 1
+        weighted += d
+        for v in children(u):
+            stack.append((v, d + 1))
+    print(f"  H = {H}: nodes = {total}, max depth D(H) = {maxdepth} "
+          f"(sqrt(H)/2 = {isqrt(H)/2:.1f}), mean depth = {weighted/total:.2f} "
+          f"(log H = {math.log(H):.2f})")
+    print()
+
+
+def show_density_constant(H: int = 400000) -> None:
+    print("=" * 74)
+    print("6.  Towards the Lehmer-type constant  #bergBox(H)/H -> 1/(2*pi)")
+    print("=" * 74)
+    print(f"{'H':>8} {'#berg':>8} {'#berg/H':>10} {'1/(2pi)':>10} {'error*sqrt(H)':>15}")
+    Hs = [H // 32, H // 16, H // 8, H // 4, H // 2, H]
+    for h in Hs:
+        c = len(pair_box(h))          # equal to #bergBox(h), by the bijection
+        err = c / h - 1 / (2 * pi)
+        print(f"{h:>8} {c:>8} {c/h:>10.6f} {1/(2*pi):>10.6f} "
+              f"{err*math.sqrt(h):>15.4f}")
+    print()
 
 
 def main() -> None:
-    demo_linearisation()
-    demo_completeness()
-    demo_freeness()
-    demo_box_counting()
-    demo_sieve()
-    demo_exact_ratios()
-    demo_depth_forces_height()
-    print("=" * 74)
+    show_tree()
+    show_counts()
+    show_bijection()
+    show_swap()
+    show_depth_profile()
+    show_density_constant()
     print("All assertions passed.")
-    print("=" * 74)
 
 
 if __name__ == "__main__":

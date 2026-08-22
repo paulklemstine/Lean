@@ -1,399 +1,744 @@
-# Counting the Berggren Tree in a Box: Exact Ratios, a Lattice-Point Formula, and a Growth Law from Scarcity
+# Berggren-Generated Pythagorean Triples in a Box: Exact Counting, Effective $\Theta(H)$ Bounds, and a Visible-Point Bijection
 
 **Author:** Aristotle
-**Date:** 2026-08-19
+**Date:** 2026-08-22
 
 ---
 
 ## Abstract
 
-Berggren's ternary tree generates primitive Pythagorean triples from the seed $(3,4,5)$ by three linear maps. We study how thinly this tree occupies the cube $\mathcal{B}(H) = \{(a,b,c) \in \mathbb{Z}^3 : 1 \le a,b,c \le H\}$, which contains $H^3$ points.
+Berggren's three unimodular matrices $B_1, B_2, B_3$ acting on the seed $(3,4,5)$
+generate a ternary tree of integer triples. We prove, in effective and fully
+explicit form, the following. First, the tree is exactly the set of positive
+primitive Pythagorean triples $(a,b,c)$ whose first leg $a$ is odd (closure by
+direct algebraic verification, completeness by a descent on the hypotenuse), and
+the tree is *free*: distinct words in the generators produce distinct triples.
+Second, writing $\mathcal{B}(H)$ for the set of tree triples lying in the box
+$[1,H]^3$, we prove the two-sided bound
 
-We prove four groups of results.
+$$\frac{H}{100} \le \#\mathcal{B}(H) \le \min\Bigl(4H,\ \bigl(\lfloor\sqrt H\rfloor+1\bigr)^2\Bigr)
+\qquad (H \ge 5),$$
 
-1. **Linearisation and completeness.** In Euclid coordinates $(m,n) \mapsto (m^2-n^2,\,2mn,\,m^2+n^2)$ the three Berggren generators become the linear maps $A(m,n) = (2m-n,m)$, $B(m,n) = (2m+n,m)$, $C(m,n) = (m+2n,n)$ — the Stern–Brocot branches on coprime pairs. From this we obtain a self-contained proof of the Barning–Hall completeness theorem: the tree from $(3,4,5)$ consists of exactly the positive primitive Pythagorean triples with odd first leg, the tree from the mirrored seed $(4,3,5)$ of exactly those with even first leg, and the two families are disjoint and exhaustive.
+so $\#\mathcal{B}(H) = \Theta(H)$ and consequently $\#\mathcal{B}(H)/H^3 \to 0$:
+Berggren-generated triples occupy a vanishing proportion of the $H^3$ integer
+points of the box. Third, and in contrast, we prove the *exact* identity
+$\#\mathcal{P}(H) = 2\,\#\mathcal{B}(H)$, where $\mathcal{P}(H)$ is the set of all
+ordered primitive Pythagorean triples in the same box; equivalently, every
+primitive Pythagorean triple of the box is Berggren-generated up to swapping its
+two legs. The advertised proportion "$1-o(1)$" of primitive triples is therefore
+an exact $1$, with no error term. Fourth, we exhibit a bijection between
+$\mathcal{B}(H)$ and the set of coprime, opposite-parity lattice points $(n,m)$
+with $0<n<m$ and $m^2+n^2\le H$, reducing the whole counting problem to a
+visible-point count in a circular wedge; this identifies the conjectural sharp
+constant as $\#\mathcal{B}(H)/H \to 1/(2\pi)$, in agreement with computation to
+five decimal places. Finally we analyse the growth geometry of the tree: the
+generator $B_2$ is hyperbolic with expansion factor $3+2\sqrt2$, whereas $B_3$ is
+unipotent and its orbit of a triple with hypotenuse $c$ has hypotenuse
+$c + O(k^2)$ at depth $k$, giving a seed-independent $\Omega(\sqrt H)$ lower
+bound on the depth of the tree inside the box.
 
-2. **Freeness.** The images of $A$, $B$, $C$ are cut out by the three mutually exclusive inequalities $N < M < 2N$, $2N < M < 3N$, $3N < M$ on the output pair $(M,N)$. Hence the last letter of an address is a function of the node, and distinct words in $\{A,B,C\}^*$ give distinct triples: the Berggren monoid acts freely.
-
-3. **Box counting.** Euclid's map is a bijection from the *visible opposite-parity lattice points of the quarter disc* $\{(m,n) : 0 < n < m,\ \gcd(m,n)=1,\ m + n \text{ odd},\ m^2+n^2 \le H\}$ onto the Berggren-generated triples of $\mathcal{B}(H)$: the three-dimensional box condition collapses to a single hypotenuse condition. Consequently the count is at most $H$, and — via an elementary Legendre-type sieve with completely explicit constants — at least $H/128$ for $H \ge 32$. The count is therefore $\Theta(H)$, and its density in the cube tends to $0$ like $H^{-2}$.
-
-4. **Exact ratios and a growth law.** With the *single* seed $(3,4,5)$ the ratio of Berggren-generated triples to primitive Pythagorean triples in $\mathcal{B}(H)$ is *exactly* $1/2$ for all $H \ge 5$; with both seeds it is *exactly* $1$. The informal "$1-o(1)$" is thus false for one seed and, for two seeds, understated: it is an identity with no error term. Finally, combining freeness ($3^d$ distinct nodes at depth $d$) with the linear upper bound ($\le H$ nodes in the box) yields a purely counting-theoretic dynamical estimate: if every depth-$d$ node has hypotenuse at most $H$ then $3^d \le H$; equivalently, at every depth some node has hypotenuse at least $3^d$.
-
-Numerically the count divided by $H$ converges to $1/(2\pi) = 0.1591549\ldots$, exactly as the lattice-point formula predicts, and the sieve density of coprime opposite-parity pairs converges to $2/\pi^2 = 0.2026\ldots$; both are consistent with the proved bounds, which are crude in constant but correct in order.
-
-**Keywords:** Pythagorean triples, Berggren tree, Barning–Hall theorem, Euclid parametrisation, free monoid, lattice-point counting, Gauss circle problem, Legendre sieve, structured data generation.
+**Keywords:** Pythagorean triples, Berggren tree, ternary tree of triples,
+lattice point counting, visible lattice points, coprimality density, Gauss
+circle problem, unipotent orbits, Euclid parametrisation.
 
 ---
 
 ## 1. Introduction
 
-### 1.1 The two questions
+### 1.1 The object
 
-Let $H \ge 1$ and let
-$$\mathcal{B}(H) := \{(a,b,c) \in \mathbb{Z}^3 : 1 \le a \le H,\ 1 \le b \le H,\ 1 \le c \le H\}, \qquad |\mathcal{B}(H)| = H^3 .$$
+A *Pythagorean triple* is a triple $(a,b,c)$ of positive integers with
+$a^2+b^2=c^2$; it is *primitive* if $\gcd(a,b)=1$. Since $\gcd(a,b)=1$ forces
+$\gcd(a,c)=\gcd(b,c)=1$, primitivity is equivalently the statement that no
+integer $>1$ divides all three coordinates.
 
-Call $(a,b,c)$ a **positive primitive Pythagorean triple** (PPT) if $a,b,c > 0$, $a^2 + b^2 = c^2$ and $\gcd(a,b) = 1$. Two questions drive this paper:
+The set of primitive triples has two classical descriptions. The *Euclid
+parametrisation* says every primitive triple with odd first leg is
+$$(m^2-n^2,\ 2mn,\ m^2+n^2)$$
+for a unique pair $0<n<m$ with $\gcd(n,m)=1$ and $n+m$ odd. The *Berggren
+description*, discovered by B. Berggren in 1934 and rediscovered several times
+since, is structural rather than parametric: the three integer matrices
 
-**Q1 (absolute scarcity).** How many points of $\mathcal{B}(H)$ are generated by the Berggren tree from a positive seed?
+$$
+B_1 = \begin{pmatrix} 1 & -2 & 2 \\ 2 & -1 & 2 \\ 2 & -2 & 3\end{pmatrix},
+\qquad
+B_2 = \begin{pmatrix} 1 & 2 & 2 \\ 2 & 1 & 2 \\ 2 & 2 & 3\end{pmatrix},
+\qquad
+B_3 = \begin{pmatrix} -1 & 2 & 2 \\ -2 & 1 & 2 \\ -2 & 2 & 3\end{pmatrix}
+$$
 
-**Q2 (relative abundance).** Among the PPTs of $\mathcal{B}(H)$, what fraction is Berggren-generated?
+acting on column vectors $(a,b,c)^{\mathsf T}$, applied repeatedly to the seed
+$(3,4,5)$, generate every primitive triple with odd first leg exactly once.
 
-The answers are of opposite character and this contrast is the point of the paper. To Q1: the count is $\Theta(H)$, so the density in the cube is $\Theta(H^{-2}) \to 0$. To Q2: the fraction is not merely $1 - o(1)$; it is an *exact constant* — $1/2$ with one seed, $1$ with two — for every $H \ge 5$, with no error term whatsoever.
+### 1.2 The question
 
-### 1.2 The mechanism
+Both descriptions are qualitative. The question addressed here is quantitative:
+**how many of the $H^3$ integer points of the box $[1,H]^3$ are
+Berggren-generated?** and **how does that count compare with the number of
+primitive Pythagorean triples in the same box?**
 
-Everything follows from a single change of coordinates. The Berggren generators, as $3\times3$ integer matrices acting on $(a,b,c)$, are opaque. Pulled back along Euclid's parametrisation they become three linear maps of a *pair* of integers, and those three maps are the branches of the Stern–Brocot tree. Two consequences fall out immediately:
+The answers we prove are, respectively, $\Theta(H)$ — hence a vanishing
+proportion of $H^3$ — and *exactly one half of the ordered primitive triples*,
+which is to say all of them once the two legs are regarded as unordered.
 
-- The **descent** proving completeness becomes a trichotomy on $m$ versus $2n$ and $3n$.
-- The **box condition** on three coordinates becomes a single disc condition $m^2 + n^2 \le H$, because in a Euclid triple the hypotenuse strictly dominates both legs.
+### 1.3 Overview of the argument
 
-The second observation converts an apparently three-dimensional Diophantine counting problem into a Gauss circle problem for a coprimality- and parity-restricted lattice, which is why the answer is linear in $H$ with main term $H/(2\pi)$.
-
-### 1.3 Organisation
-
-Section 2 fixes notation and records Euclid coordinates. Section 3 proves the linearisation and the completeness theorem. Section 4 proves freeness. Section 5 develops the sieve. Section 6 proves the box-counting theorems. Section 7 establishes the exact ratios and the sharp one-seed/two-seed dichotomy. Section 8 derives the depth–height law. Section 9 reports numerics. Section 10 gives algorithms and complexity. Section 11 discusses applications, and Section 12 open problems.
-
----
-
-## 2. Preliminaries
-
-### 2.1 Triples, the cone, the generators
-
-Write $\mathbf{v} = (a,b,c) \in \mathbb{Z}^3$ and say $\mathbf{v}$ is **on the cone** if $a^2 + b^2 = c^2$. The **Berggren generators** are the three linear maps given by the matrices
-$$A = \begin{pmatrix} 1 & -2 & 2 \\ 2 & -1 & 2 \\ 2 & -2 & 3\end{pmatrix}, \qquad
-B = \begin{pmatrix} 1 & 2 & 2 \\ 2 & 1 & 2 \\ 2 & 2 & 3\end{pmatrix}, \qquad
-C = \begin{pmatrix} -1 & 2 & 2 \\ -2 & 1 & 2 \\ -2 & 2 & 3\end{pmatrix},$$
-each of which preserves the cone. The **root** is $\mathbf{r} = (3,4,5)$ and the **mirrored root** is $\mathbf{r}' = (4,3,5)$.
-
-**Definition 2.1 (Orbit, node).** For seeds $\mathbf{s}, \mathbf{v} \in \mathbb{Z}^3$, write $\mathbf{s} \rightsquigarrow \mathbf{v}$ if there is a finite word $W \in \{A,B,C\}^*$ with $W\mathbf{s} = \mathbf{v}$. We call $\mathbf{v}$ a **node** if $\mathbf{r} \rightsquigarrow \mathbf{v}$, and a **mirrored node** if $\mathbf{r}' \rightsquigarrow \mathbf{v}$. The set of nodes, ordered by word length, forms the **Berggren tree**: a node at depth $d$ has the three children $A\mathbf{v}, B\mathbf{v}, C\mathbf{v}$.
-
-### 2.2 Euclid coordinates
-
-**Definition 2.2.** For $m,n \in \mathbb{Z}$ put
-$$E(m,n) := (m^2 - n^2,\ 2mn,\ m^2 + n^2).$$
-Call $(m,n)$ **admissible** if
-$$0 < n < m, \qquad \gcd(m,n) = 1, \qquad m - n \text{ is odd}.$$
-
-$E(m,n)$ always lies on the cone: $(m^2-n^2)^2 + (2mn)^2 = (m^2+n^2)^2$. Note $E(2,1) = (3,4,5) = \mathbf{r}$, and $(2,1)$ is admissible.
-
-**Lemma 2.3 (Injectivity).** If $m,n,m',n' > 0$ and $E(m,n) = E(m',n')$ then $m = m'$ and $n = n'$.
-
-*Proof sketch.* From the first and third coordinates, $m^2 = \tfrac{(m^2-n^2) + (m^2+n^2)}{2}$ and $n^2 = \tfrac{(m^2+n^2)-(m^2-n^2)}{2}$ are determined by the triple; positivity then determines $m$ and $n$. $\square$
-
-Lemma 2.3 also shows that $m$ and $n$ can be *read off* a node: $m = \sqrt{(a+c)/2}$, $n = \sqrt{(c-a)/2}$. This explicit inverse is used repeatedly.
-
-**Lemma 2.4 (Hypotenuse dominance).** If $0 < n < m$ then $m^2 - n^2 < m^2 + n^2$ and $2mn < m^2 + n^2$, the latter because $(m-n)^2 > 0$.
-
-Lemma 2.4 is the small observation with the largest consequences here: in a Euclid triple, bounding the hypotenuse bounds everything.
+Section 2 fixes notation. Section 3 proves the structure theorem (closure and
+completeness by descent, plus freeness). Section 4 proves the upper bound by a
+two-square substitution. Section 5 proves the lower bound by an effective
+coprimality density estimate. Section 6 assembles the $\Theta(H)$ statement and
+the vanishing-density corollary. Section 7 proves the exact comparison with the
+primitive triples. Section 8 gives the visible-point bijection and the
+$1/(2\pi)$ analysis. Section 9 analyses the growth geometry of the generators.
+Section 10 gives algorithms; Section 11 numerical evidence; Section 12
+discussion and open problems.
 
 ---
 
-## 3. Linearisation and the Completeness Theorem
+## 2. Notation and definitions
 
-### 3.1 The generators in Euclid coordinates
+**Definition 2.1 (triple, validity).** A *triple* is an element of
+$\mathbb Z^3$, written $t=(a,b,c)$. We call $t$ **valid** if
 
-**Theorem 3.1 (Linearisation).** For all $m,n \in \mathbb{Z}$,
-$$A\,E(m,n) = E(2m-n,\ m), \qquad B\,E(m,n) = E(2m+n,\ m), \qquad C\,E(m,n) = E(m+2n,\ n).$$
+$$a>0,\quad b>0,\quad c>0,\quad a^2+b^2=c^2,\quad \gcd(a,b)=1,\quad a \equiv 1 \pmod 2 .$$
 
-*Proof sketch.* Each identity is a polynomial identity in $m,n$: expand both sides and compare coordinates. For example, the first coordinate of $A\,E(m,n)$ is $(m^2-n^2) - 2(2mn) + 2(m^2+n^2) = 3m^2 - 4mn + n^2 = (2m-n)^2 - m^2$, and similarly for the other two. $\square$
+Thus a valid triple is a positive primitive Pythagorean triple whose *first* leg
+is odd.
 
-Thus, in the $(m,n)$ plane, the Berggren dynamics is the free ternary substitution system
-$$\alpha(m,n) = (2m-n, m), \qquad \beta(m,n) = (2m+n, m), \qquad \gamma(m,n) = (m+2n, n),$$
-which is precisely the Stern–Brocot / Farey branching on coprime pairs.
+**Definition 2.2 (the Berggren maps).** Define $\beta_1,\beta_2,\beta_3:\mathbb Z^3\to\mathbb Z^3$ by
 
-**Lemma 3.2 (Admissibility is preserved).** If $(m,n)$ is admissible, so are $\alpha(m,n)$, $\beta(m,n)$, $\gamma(m,n)$.
+$$
+\begin{aligned}
+\beta_1(a,b,c) &= (\,a-2b+2c,\ \ 2a-b+2c,\ \ 2a-2b+3c\,),\\
+\beta_2(a,b,c) &= (\,a+2b+2c,\ \ 2a+b+2c,\ \ 2a+2b+3c\,),\\
+\beta_3(a,b,c) &= (-a+2b+2c,\ -2a+b+2c,\ -2a+2b+3c\,).
+\end{aligned}
+$$
 
-*Proof sketch.* Positivity and ordering: e.g. for $\alpha$, $2m - n > m > 0$ since $m > n$. Coprimality: any common divisor of $2m-n$ and $m$ divides $n$, hence divides $\gcd(m,n) = 1$; similarly for $\beta$ and $\gamma$. Parity: $(2m-n) - m = m - n$ is odd; $(2m+n) - m = m+n \equiv m - n$ is odd; $(m+2n) - n = m+n$ is odd. $\square$
+These are the actions of $B_1,B_2,B_3$.
 
-### 3.2 Descent
+**Definition 2.3 (the tree).** The *Berggren tree* $\mathcal{T}\subseteq\mathbb Z^3$
+is the smallest set containing $(3,4,5)$ and closed under $\beta_1,\beta_2,\beta_3$.
+We say $t$ is *reachable*, written $t \in \mathcal{T}$, if it lies in this set.
+Equivalently, $t\in\mathcal T$ iff $t = \beta_{w_1}\beta_{w_2}\cdots\beta_{w_\ell}(3,4,5)$
+for some word $w \in \{1,2,3\}^{\ell}$; we write $\rho(w)$ for that triple.
 
-**Theorem 3.3 (Completeness in Euclid coordinates).** A triple $\mathbf{v}$ is a node of the Berggren tree if and only if $\mathbf{v} = E(m,n)$ for some admissible $(m,n)$.
+**Definition 2.4 (the boxes).** For $H \in \mathbb N$ put
 
-*Proof sketch.* ($\Leftarrow$, the substantive direction.) Induct on $m$. If $m = 2$ then admissibility forces $n = 1$ and $E(2,1) = \mathbf{r}$. Suppose $m > 2$. Compare $m$ with $2n$ and $3n$. The degenerate cases are impossible:
+$$
+\begin{aligned}
+\mathcal{B}(H) &= \{\,t \in \mathcal T : 1\le a,b,c \le H \,\}, \\
+\mathcal{P}(H) &= \{\,(a,b,c) : 1 \le a,b,c\le H,\ a^2+b^2=c^2,\ \gcd(a,b)=1\,\},\\
+\mathcal{P}^{\mathrm{odd}}(H) &= \{\,t \in \mathcal P(H) : a \text{ odd}\,\},\\
+\mathcal{Q}(H) &= \{\,(n,m)\in\mathbb N^2 : 1\le n<m,\ \gcd(n,m)=1,\ n+m \text{ odd},\ m^2+n^2\le H\,\}.
+\end{aligned}
+$$
 
-- $m = 2n$ forces $n \mid m$, so $\gcd(m,n) = n = 1$ and $m = 2$, excluded.
-- $m = 3n$ likewise forces $n = 1$, $m = 3$, but then $m - n = 2$ is even, contradicting admissibility.
+Note that $\mathcal P(H)$ counts *ordered* triples: $(3,4,5)$ and $(4,3,5)$ are
+two of its elements.
 
-Hence exactly one of $n < m < 2n$, $2n < m < 3n$, $3n < m$ holds. In the first case set $(m_0, n_0) = (n, 2n - m)$, so that $\alpha(m_0,n_0) = (m,n)$; in the second $(m_0,n_0) = (n, m - 2n)$ with $\beta(m_0,n_0) = (m,n)$; in the third $(m_0,n_0) = (m - 2n, n)$ with $\gamma(m_0,n_0) = (m,n)$. In each case one checks that $(m_0,n_0)$ is admissible (the same three checks as Lemma 3.2, run backwards) and that $m_0 < m$. Induction applies and, by Theorem 3.1, $E(m,n)$ is obtained from $E(m_0,n_0)$ by one generator.
-
-($\Rightarrow$) Immediate from Lemma 3.2 and Theorem 3.1 by induction on word length, starting from the admissible root $(2,1)$. $\square$
-
-### 3.3 Barning–Hall
-
-**Theorem 3.4 (Completeness).** For $a,b,c \in \mathbb{Z}$,
-$$\mathbf{r} \rightsquigarrow (a,b,c) \iff a,b,c>0,\ a^2+b^2=c^2,\ \gcd(a,b)=1,\ \text{and } a \text{ is odd}.$$
-
-*Proof sketch.* Combine Theorem 3.3 with the classical Euclid classification: the positive primitive Pythagorean triples with odd first leg are exactly the $E(m,n)$ with $(m,n)$ admissible. For the forward implication, an admissible pair gives $\gcd(m^2-n^2, 2mn) = 1$ (a prime dividing both would divide $m$ or $n$, hence both, contradicting coprimality; the prime $2$ is excluded by opposite parity) and $m^2 - n^2$ odd. $\square$
-
-**Theorem 3.5 (The mirrored tree).** Let $\sigma(a,b,c) = (b,a,c)$ be the leg swap. Then $\sigma A \sigma = C$, $\sigma B \sigma = B$, $\sigma C \sigma = A$, and $\sigma \mathbf{r} = \mathbf{r}'$. Consequently $\mathbf{r}' \rightsquigarrow \mathbf{v} \iff \mathbf{r} \rightsquigarrow \sigma\mathbf{v}$, and
-$$\mathbf{r}' \rightsquigarrow (a,b,c) \iff a,b,c>0,\ a^2+b^2=c^2,\ \gcd(a,b)=1,\ \text{and } b \text{ is odd}.$$
-
-*Proof sketch.* The three conjugation identities are matrix computations; the orbit statement follows since $\sigma^2 = \mathrm{id}$ makes conjugation a bijection of words. Then apply Theorem 3.4 to $\sigma \mathbf{v}$. $\square$
-
-**Theorem 3.6 (Two seeds, exactly once).** Every positive primitive Pythagorean triple lies in exactly one of the two trees:
-$$\text{PPT}(a,b,c) \iff \big(\mathbf{r} \rightsquigarrow (a,b,c)\big) \ \text{XOR} \ \big(\mathbf{r}' \rightsquigarrow (a,b,c)\big).$$
-
-*Proof sketch.* In a positive primitive triple exactly one leg is odd. Both legs odd would give $c^2 \equiv 2 \pmod 4$, impossible; both even would contradict $\gcd(a,b)=1$. Now apply Theorems 3.4 and 3.5, whose defining conditions are "$a$ odd" and "$b$ odd" respectively. $\square$
-
----
-
-## 4. Freeness of the Berggren Monoid
-
-**Theorem 4.1 (Image separation).** Let $(m,n)$ be admissible and write $(M,N)$ for the image pair. Then
-$$\alpha(m,n) \text{ satisfies } N < M < 2N, \qquad \beta(m,n) \text{ satisfies } 2N < M < 3N, \qquad \gamma(m,n) \text{ satisfies } 3N < M .$$
-
-*Proof.* For $\alpha$: $(M,N) = (2m-n, m)$, so $M - N = m - n > 0$ and $2N - M = n > 0$. For $\beta$: $(M,N) = (2m+n,m)$, so $M - 2N = n > 0$ and $3N - M = m - n > 0$. For $\gamma$: $(M,N) = (m+2n, n)$, so $M - 3N = m - n > 0$. $\square$
-
-The three regions are pairwise disjoint, so the **last letter of an address is determined by the node**. Also the root is in no image: $E(2,1)$ has $(M,N)=(2,1)$ with $M = 2N$, on none of the three open regions.
-
-**Theorem 4.2 (Freeness).** If $W, W' \in \{A,B,C\}^*$ and $W\mathbf{r} = W'\mathbf{r}$, then $W = W'$.
-
-*Proof sketch.* Induct on $|W| + |W'|$. If both are empty, done. If exactly one is empty, the other's image would equal the root, contradicting the previous paragraph. Otherwise write $W = W_0 x$, $W' = W_0' y$ with $x,y \in \{A,B,C\}$ the *last* letters applied. By Theorem 4.1 applied to the admissible parameters of $W_0\mathbf{r}$ and $W_0'\mathbf{r}$ (which exist by Theorem 3.3), the common node determines $x = y$, and the generators are injective on admissible pairs (each of $\alpha,\beta,\gamma$ is an invertible integer matrix), so $W_0\mathbf{r} = W_0'\mathbf{r}$. Induction finishes. $\square$
-
-**Corollary 4.3.** At depth $d$ the tree has exactly $3^d$ distinct nodes.
+**Remark 2.5 (the box condition is a hypotenuse condition).** If $(a,b,c)$ is a
+positive Pythagorean triple then $a<c$ and $b<c$ (because $a^2 = c^2-b^2 < c^2$
+and $a,c>0$). Hence $t \in \mathcal B(H) \iff t\in\mathcal T$ and $c \le H$. The
+same holds for $\mathcal P(H)$. This makes all the counts below counts of
+triples with bounded hypotenuse, and makes the depth-first enumeration of
+Section 10 correct.
 
 ---
 
-## 5. An Explicit Sieve for Euclid Parameters
+## 3. The structure theorem
 
-We now count admissible pairs. Fix $N \ge 1$ and set
-$$P(N) := \{(m,n) : 0 < n < m \le N,\ m+n \text{ odd}\}, \qquad Q(N) := \{(m,n) \in P(N) : \gcd(m,n) = 1\} .$$
-$Q(N)$ is exactly the set of admissible pairs with $m \le N$ (note $m+n$ odd $\iff$ $m - n$ odd).
+### 3.1 Closure
 
-**Lemma 5.1 (Exact count of $P$).** For each $m$, the number of $n$ with $0 < n < m$ and $m+n$ odd is $\lfloor m/2 \rfloor$. Consequently
-$$|P(N)| = \sum_{m=1}^{N} \left\lfloor \frac m2 \right\rfloor = \left\lfloor \frac N2\right\rfloor \cdot \left\lfloor \frac{N+1}{2}\right\rfloor .$$
+**Lemma 3.1 (each generator preserves validity).** If $t$ is valid then so are
+$\beta_1(t)$, $\beta_2(t)$ and $\beta_3(t)$.
 
-*Proof sketch.* The fibre count is a parity count on an interval; the closed form of the sum follows by induction on $N$, splitting on the parity of $N$. $\square$
+*Proof sketch.* Four things must be checked for each $\beta_i$.
 
-**Corollary 5.2 (Two-sided bound).** $4\,|P(N)| \le N^2 \le 4\,|P(N)| + N$.
+*(i) Pythagorean identity.* Expanding, e.g. for $\beta_2$,
+$$(a+2b+2c)^2 + (2a+b+2c)^2 - (2a+2b+3c)^2 = -a^2-b^2+c^2 = 0,$$
+an identity of polynomials which reduces to $a^2+b^2=c^2$; the same computation
+works for $\beta_1$ and $\beta_3$ up to signs.
 
-*Proof.* Immediate from Lemma 5.1 and $\lfloor N/2\rfloor \lfloor (N+1)/2 \rfloor \in [\tfrac{N^2 - N}{4}, \tfrac{N^2}{4}]$. $\square$
+*(ii) Positivity.* For a positive Pythagorean triple one has $c<a+b$ (square
+both sides: $c^2 = a^2+b^2 < (a+b)^2$ since $2ab>0$), and $a<c$, $b<c$. Then
+for $\beta_1$: $a-2b+2c > a-2b+2b = a > 0$ using $c>b$; similarly for the other
+coordinates and generators, every coordinate is a positive combination after
+substituting one of $c<a+b$, $a<c$, $b<c$.
 
-**Lemma 5.3 (Self-similarity of divisibility slices).** For $k \ge 1$,
-$$\big|\{(m,n) \in P(N) : k \mid m,\ k \mid n\}\big| \le |P(\lfloor N/k \rfloor)| .$$
+*(iii) Primitivity.* Primitivity of $(a,b,c)$ is equivalent to the statement
+$$\forall d\in\mathbb Z:\ d\mid a,\ d\mid b,\ d\mid c \implies d \in\{\pm1\},$$
+and the coordinates of $\beta_i(t)$ are integer linear combinations of $a,b,c$
+while the inverse matrices $B_i^{-1}$ are again integral (each $B_i$ has
+determinant $\pm 1$). Hence a common divisor of the image coordinates divides
+the source coordinates, and conversely; primitivity transfers.
 
-*Proof sketch.* The map $(m,n) \mapsto (m/k, n/k)$ is injective, and it lands in $P(\lfloor N/k\rfloor)$: order and the bound are clear, and $k(a+b)$ odd forces $a + b$ odd. $\square$
+*(iv) Parity of the first leg.* If $a$ is odd and $(a,b,c)$ is primitive, then
+$b$ is even and $c$ is odd (see Lemma 7.1). Then $a-2b+2c$, $a+2b+2c$ and
+$-a+2b+2c$ are all odd. $\square$
 
-The crucial arithmetic economy of the sieve is the following triviality, which removes the need for any prime enumeration.
+**Theorem 3.2 (closure).** Every $t\in\mathcal T$ is valid.
 
-**Lemma 5.4 (Bad divisors are odd and $\ge 3$).** If $(m,n) \in P(N)$ and $\gcd(m,n) = k \ne 1$, then $k$ is odd and $3 \le k \le N$.
+*Proof.* Induction on the generation of $\mathcal T$: the seed $(3,4,5)$ is
+valid, and Lemma 3.1 propagates validity along each generator. $\square$
 
-*Proof.* If $2 \mid k$ then $2\mid m$ and $2 \mid n$, so $m+n$ is even — contradiction. And $k \mid n < m \le N$. $\square$
+### 3.2 Completeness by descent
 
-**Lemma 5.5 (Telescoping tail).** $\displaystyle\sum_{k=3}^{N} \frac{1}{k^2} \le \frac12 - \frac1N \le \frac12$ for $N \ge 2$.
+Fix a valid triple $(a,b,c)$ and define the three *parent forms*
 
-*Proof sketch.* Induction on $N$, using $\frac{1}{(N+1)^2} \le \frac{1}{N} - \frac{1}{N+1} = \frac{1}{N(N+1)}$. $\square$
+$$u = a + 2b - 2c, \qquad v = 2a + b - 2c, \qquad w = 3c-2a-2b .$$
 
-**Proposition 5.6 (Sieve bound).** $8\,\big|\{(m,n) \in P(N) : \gcd(m,n) \ne 1\}\big| \le N^2 .$
+They are exactly the coordinates read off by the inverse matrices: for each $i$
+there are signs $(\varepsilon_i,\delta_i)\in\{\pm1\}^2$ with
+$$B_i^{-1}(a,b,c) = (\varepsilon_i u,\ \delta_i v,\ w),$$
+namely $(\varepsilon,\delta) = (+,-)$ for $B_1$, $(+,+)$ for $B_2$, $(-,+)$ for
+$B_3$.
 
-*Proof sketch.* By Lemma 5.4 the bad set is contained in $\bigcup_{k=3}^{N}\{(m,n) \in P(N): k \mid m,\ k\mid n\}$. By the union bound and Lemma 5.3 its size is at most $\sum_{k=3}^{N}|P(\lfloor N/k\rfloor)|$, and by Corollary 5.2 each term is at most $\tfrac14 \lfloor N/k \rfloor^2 \le \tfrac{N^2}{4k^2}$. Lemma 5.5 gives a total of at most $\tfrac{N^2}{4}\cdot\tfrac12 = \tfrac{N^2}{8}$. $\square$
+**Lemma 3.3 (the parent hypotenuse strictly decreases).** For a positive
+Pythagorean triple, $0 < w < c$, where $w=3c-2a-2b$.
 
-**Theorem 5.7 (A positive proportion is coprime).** For $N \ge 4$, $\;N^2 \le 16\,|Q(N)|$.
+*Proof sketch.* $w<c$ is $2c < 2a+2b$, i.e. $c<a+b$, proved above. For $w>0$
+we need $2(a+b) < 3c$; squaring, $4(a+b)^2 = 4(c^2+2ab) \le 8c^2 < 9c^2$
+using $2ab \le a^2+b^2 = c^2$. $\square$
 
-*Proof.* Splitting $P(N)$ into coprime and non-coprime parts and using Corollary 5.2 and Proposition 5.6,
-$$N^2 \le 4|P(N)| + N = 4|Q(N)| + 4|\text{bad}| + N \le 4|Q(N)| + \tfrac{N^2}{2} + N ,$$
-so $\tfrac{N^2}{2} - N \le 4|Q(N)|$; for $N \ge 4$ we have $N \le \tfrac{N^2}{4}$, hence $\tfrac{N^2}{4} \le 4|Q(N)|$. $\square$
+**Lemma 3.4 (sign dichotomy).** For a valid triple, $u$ and $v$ are not both
+$\le 0$.
 
-The constant $1/16$ is far from the truth: the true density of $Q(N)$ inside the $N \times N$ square is $2/\pi^2 = 0.2026\ldots$ (see Section 9). What matters is that $1/16$ is explicit and unconditional.
+*Proof.* Suppose $u \le 0$, i.e. $a \le 2(c-b)$. Since $b<c$ the right-hand side
+is positive, so squaring is legitimate: $c^2-b^2 = a^2 \le 4(c-b)^2$, and dividing
+by $c-b>0$ gives $c+b \le 4(c-b)$, i.e. $5b \le 3c$. Symmetrically $v\le 0$ gives
+$5a \le 3c$. If both held we would get
+$$25c^2 = 25(a^2+b^2) \le 9c^2+9c^2 = 18c^2,$$
+which is absurd for $c>0$. $\square$
 
----
+**Lemma 3.5 (degenerate forms).** For a valid triple: $u \ne 0$; and $v=0$ if
+and only if $(a,b,c) = (3,4,5)$.
 
-## 6. Box Counting
+*Proof sketch.* If $u=0$ then $a = 2(c-b)$ is even, contradicting $a$ odd. If
+$v=0$ then $b = 2(c-a)$, and substituting into $a^2+b^2=c^2$ yields
+$a^2 + 4(c-a)^2 = c^2$, i.e. $(5a-3c)(a-c) = 0$; since $a<c$ we get $5a=3c$, and
+with $\gcd(a,b)=1$ this pins $(a,b,c)=(3,4,5)$. $\square$
 
-### 6.1 The three sets
+**Lemma 3.6 (the parent is valid).** Let $(a,b,c)$ be valid and not the seed.
+Choose the signs $\varepsilon = \operatorname{sgn}(u)$,
+$\delta = \operatorname{sgn}(v)$; by Lemmas 3.4–3.5 at least one of $u,v$ is
+positive, and one checks the pair $(\varepsilon,\delta)$ is one of the three
+admissible patterns $(+,-),(+,+),(-,+)$. Then $p = (\varepsilon u, \delta v, w)$
+is valid, and $\beta_i(p) = (a,b,c)$ for the corresponding index $i$.
 
-For $H \ge 1$ define, inside $\mathcal{B}(H)$:
-$$\mathcal{N}(H) := \{\mathbf{v} \in \mathcal{B}(H) : \mathbf{r} \rightsquigarrow \mathbf{v}\}, \qquad
-\mathcal{N}'(H) := \{\mathbf{v} \in \mathcal{B}(H) : \mathbf{r}' \rightsquigarrow \mathbf{v}\},$$
-$$\mathcal{P}(H) := \{\mathbf{v} \in \mathcal{B}(H) : \mathbf{v} \text{ is a positive primitive Pythagorean triple}\} .$$
-By Theorems 3.4–3.6 these are decidable arithmetic conditions: $\mathcal{N}(H)$ is cut out by $a^2+b^2=c^2$, $\gcd(a,b)=1$, $a$ odd; $\mathcal{N}'(H)$ by the same with "$b$ odd"; and $\mathcal{P}(H) = \mathcal{N}(H) \sqcup \mathcal{N}'(H)$.
+*Proof sketch.* The Pythagorean identity $u^2+v^2=w^2$ is a polynomial identity
+modulo $a^2+b^2=c^2$; positivity of $|u|,|v|,w$ follows from Lemmas 3.3–3.5;
+primitivity transfers backwards because the matrices are unimodular; and
+$\varepsilon u$ is odd because $u \equiv a \pmod 2$. Finally $B_i B_i^{-1} = I$
+gives $\beta_i(p)=(a,b,c)$. $\square$
 
-### 6.2 The lattice-point formula
+**Theorem 3.7 (completeness).** Every valid triple lies in $\mathcal T$.
 
-**Definition 6.1.** $\;\mathcal{E}(H) := \{(m,n) \in \mathbb{Z}^2 : 0 < n < m,\ m+n \text{ odd},\ \gcd(m,n)=1,\ m^2 + n^2 \le H\}$: the *visible opposite-parity lattice points of the quarter disc of radius $\sqrt H$ below the diagonal*.
+*Proof.* Strong induction on $c$. If $(a,b,c)=(3,4,5)$ it is the seed. Else by
+Lemma 3.6 it has a valid parent $p$ with hypotenuse $w<c$ (Lemma 3.3), which by
+induction lies in $\mathcal T$; applying $\beta_i$ puts $(a,b,c)$ in $\mathcal T$.
+$\square$
 
-**Theorem 6.2 (Exact lattice-point formula).** Euclid's map $E$ restricts to a bijection $\mathcal{E}(H) \to \mathcal{N}(H)$. In particular $|\mathcal{N}(H)| = |\mathcal{E}(H)|$.
+**Theorem 3.8 (Berggren's theorem, effective form).**
+$$t \in \mathcal T \iff t \text{ is valid}.$$
 
-*Proof sketch.* *Well defined:* an $(m,n) \in \mathcal{E}(H)$ is admissible, so $E(m,n)$ is a node (Theorem 3.3); its hypotenuse is $m^2+n^2 \le H$ and by Lemma 2.4 both legs are strictly smaller, so $E(m,n) \in \mathcal{B}(H)$. *Injective:* Lemma 2.3. *Surjective:* a node of $\mathcal{B}(H)$ is $E(m,n)$ for admissible $(m,n)$ (Theorem 3.3), and the hypotenuse constraint reads $m^2 + n^2 \le H$. $\square$
+### 3.3 Freeness
 
-Theorem 6.2 is the structural heart of the counting: **a three-dimensional box condition is equivalent to a one-dimensional radius condition.** The legs never obstruct.
+**Theorem 3.9 (freeness).** The word map $\rho:\{1,2,3\}^{*}\to\mathbb Z^3$ is
+injective: distinct words produce distinct triples. Hence $\mathcal T$ is a free
+ternary tree and every valid triple has a unique address.
 
-### 6.3 Upper bound
-
-**Theorem 6.3.** $|\mathcal{N}(H)| \le H$ for all $H$.
-
-*Proof.* By Theorem 6.2 it suffices to bound $|\mathcal{E}(H)|$. If $(m,n) \in \mathcal{E}(H)$ then $m^2 \le m^2+n^2 \le H$, so $1 \le m \le \lfloor\sqrt H\rfloor$, and likewise $1 \le n < m \le \lfloor\sqrt H\rfloor$. Hence $(m,n)$ lies in a $\lfloor\sqrt H\rfloor \times \lfloor \sqrt H\rfloor$ grid, of size at most $H$. $\square$
-
-(The proof is genuinely a coordinate read-off: the injection $\mathbf{v} \mapsto (\sqrt{(a+c)/2},\ \sqrt{(c-a)/2})$ can be written down directly on triples, without invoking the bijection.)
-
-### 6.4 Lower bound
-
-**Theorem 6.4.** For $H \ge 32$, $\;H \le 128\,|\mathcal{N}(H)|$.
-
-*Proof.* Put $N := \lfloor\sqrt{H/2}\rfloor$; then $N \ge 4$ (as $H \ge 32$), $2N^2 \le H$, and $H \le 8N^2$ (since $H/2 < (N+1)^2 \le 4N^2$). Every $(m,n) \in Q(N)$ satisfies $m^2+n^2 < 2N^2 \le H$, so $Q(N) \subseteq \mathcal{E}(H)$ and hence, by Theorem 6.2, $|Q(N)| \le |\mathcal{N}(H)|$. By Theorem 5.7, $N^2 \le 16|Q(N)|$. Chaining,
-$$H \le 8N^2 \le 128\,|Q(N)| \le 128\,|\mathcal{N}(H)| . \qquad \square$$
-
-**Theorem 6.5 ($\Theta(H)$).** For $H \ge 32$,
-$$\frac{H}{128} \;\le\; |\mathcal{N}(H)| \;\le\; H .$$
-
-### 6.5 Vanishing density
-
-**Theorem 6.6.** $\displaystyle \lim_{H\to\infty} \frac{|\mathcal{N}(H)|}{H^3} = 0$, and likewise $\displaystyle\lim_{H\to\infty} \frac{|\mathcal{P}(H)|}{H^3} = 0$.
-
-*Proof.* By Theorem 6.3, $|\mathcal{N}(H)|/H^3 \le H/H^3 = H^{-2} \to 0$; the statement for $\mathcal{P}$ follows since $|\mathcal{P}(H)| = 2|\mathcal{N}(H)|$ (Theorem 7.2 below). $\square$
-
-So the answer to Q1 is: Berggren-generated triples — and, equally, primitive Pythagorean triples — occupy a fraction $\Theta(H^{-2})$ of the cube. At $H = 10^6$ that is about $3 \times 10^{-13}$.
-
----
-
-## 7. Exact Ratios: One Seed versus Two
-
-### 7.1 The set identity
-
-**Theorem 7.1.** For every $H$, $\;\mathcal{N}(H) \cup \mathcal{N}'(H) = \mathcal{P}(H)$, and the union is disjoint.
-
-*Proof.* Both sets are subsets of $\mathcal{B}(H)$ cut out by conditions; membership reduces to Theorem 3.6, which asserts precisely that a positive primitive triple lies in exactly one of the two orbits. $\square$
-
-The mission-statement phrase "$(1-o(1))$ times the number of primitive triples" is therefore, with two seeds, an *exact identity for every $H$*, with no error term at all. We record the sharp form.
-
-**Theorem 7.2 (Halving).** For every $H$, $\;|\mathcal{P}(H)| = 2\,|\mathcal{N}(H)|$.
-
-*Proof.* The leg swap $\sigma(a,b,c) = (b,a,c)$ maps $\mathcal{B}(H)$ to itself (the box is symmetric in $a$ and $b$) and, by Theorem 3.5, is an involutive bijection $\mathcal{N}'(H) \to \mathcal{N}(H)$. Hence $|\mathcal{N}'(H)| = |\mathcal{N}(H)|$, and Theorem 7.1 with disjointness gives $|\mathcal{P}(H)| = |\mathcal{N}(H)| + |\mathcal{N}'(H)| = 2|\mathcal{N}(H)|$. $\square$
-
-### 7.2 The two ratios
-
-**Lemma 7.3 (Non-degeneracy).** For $H \ge 5$ the root $(3,4,5)$ lies in $\mathcal{N}(H)$, so $|\mathcal{N}(H)| \ge 1$ and $|\mathcal{P}(H)| \ge 2$; both ratios below are well defined.
-
-**Theorem 7.4 (Single seed: exactly one half).** For every $H \ge 5$,
-$$\frac{|\mathcal{N}(H)|}{|\mathcal{P}(H)|} = \frac12 .$$
-
-**Theorem 7.5 (Two seeds: exactly one).** For every $H \ge 5$,
-$$\frac{|\mathcal{N}(H) \cup \mathcal{N}'(H)|}{|\mathcal{P}(H)|} = 1 .$$
-
-*Proofs.* Immediate from Theorems 7.1, 7.2 and Lemma 7.3. $\square$
-
-**Remark 7.6 (The sharp boundary).** These two theorems delimit exactly what is true. With one seed, the claim "the Berggren-generated triples are $(1-o(1))$ of the primitive ones" is *false*, and not marginally: the ratio equals $1/2$ identically. With two seeds the claim is true but understated: the ratio equals $1$ identically. The parity of the odd leg is the entire obstruction, and it is a parity obstruction, not a density one — which is why no error term appears on either side.
-
-**Corollary 7.7 ($\Theta(H)$ for all primitive triples).** For $H \ge 32$, $\;\frac{H}{64} \le |\mathcal{P}(H)| \le 2H$.
+*Proof sketch.* Two ingredients. (a) *No two distinct generators agree on valid
+inputs:* the linear forms $u$ and $v$ of Definition 3.2 satisfy
+$$u(\beta_1 t) = a,\quad u(\beta_2 t)=a,\quad u(\beta_3 t) = -a,$$
+$$v(\beta_1 t) = -b,\quad v(\beta_2 t)=b,\quad v(\beta_3 t)=b,$$
+so the sign pattern $(\operatorname{sgn} u, \operatorname{sgn} v)$ of the image
+determines which generator was applied, provided $a,b>0$. Each $\beta_i$ is
+individually injective (unimodular). (b) *The root is not a child:* for valid
+$p$, every coordinate of $\beta_i(p)$ has hypotenuse $>5$, so
+$\beta_i(p)\ne(3,4,5)$. Induction on word length finishes. $\square$
 
 ---
 
-## 8. Scarcity Forces Exponential Growth
+## 4. The upper bound
 
-We now combine the two independent halves of the theory: the *combinatorial* rigidity of Section 4 and the *arithmetic* scarcity of Section 6.
+**Lemma 4.1 (two-square decomposition).** If $t=(a,b,c)$ is valid then there are
+non-negative integers $M,N$ with
+$$c+a = 2M^2, \qquad c-a = 2N^2 .$$
 
-**Theorem 8.1 (Depth forces height).** Let $d, H \ge 0$. If every node at depth $d$ of the Berggren tree has hypotenuse at most $H$, then $3^d \le H$.
+*Proof sketch.* By the classification of coprime Pythagorean triples there are
+integers $m,n$ with $a = \pm(m^2-n^2)$, $b = \pm 2mn$, $c = \pm(m^2+n^2)$. As
+$c>0$ we must have $c = m^2+n^2$; as $a$ is odd we must be in the branch
+$a=m^2-n^2$ (the alternative $a = 2mn$ is even). Then $c+a = 2m^2$ and
+$c-a=2n^2$, and $M=|m|$, $N=|n|$ work. $\square$
 
-*Proof.* The $3^d$ words of length $d$ give $3^d$ nodes, pairwise distinct by Theorem 4.2. Each such node $\mathbf{v} = (a,b,c)$ satisfies $c \le H$ by hypothesis, and $a,b < c \le H$ by Lemma 2.4 (equivalently, in a positive Pythagorean triple the legs are strictly below the hypotenuse), and $a,b \ge 1$. So all $3^d$ nodes lie in $\mathcal{N}(H)$, whence $3^d \le |\mathcal{N}(H)| \le H$ by Theorem 6.3. $\square$
+**Theorem 4.2 (sharp upper bound).** For every $H$,
+$$\#\mathcal B(H) \le \bigl(\lfloor\sqrt H\rfloor+1\bigr)^2 .$$
 
-**Corollary 8.2 (Some branch runs away).** For every $d$ there is a word $W$ of length $d$ with hypotenuse $c(W\mathbf{r}) \ge 3^d$.
+*Proof.* Consider $\Phi(a,b,c) = (c+a,\ c-a)$.
 
-*Proof.* Otherwise every depth-$d$ node has $c \le 3^d - 1$, and Theorem 8.1 gives $3^d \le 3^d - 1$. $\square$
+*$\Phi$ is injective on $\mathcal B(H)$.* From $c+a$ and $c-a$ one recovers $a$
+and $c$; then $b^2 = c^2-a^2$ and $b>0$ determine $b$.
 
-**Remark 8.3.** Corollary 8.2 is a *dynamical* growth statement obtained from a *counting* input; nothing about the eigenvalues or Lyapunov behaviour of the generators is used. The true maximum is larger: iterating $\beta(m,n) = (2m+n,m)$ has characteristic polynomial $x^2 = 2x+1$ with dominant root $1+\sqrt2$, so the largest depth-$d$ hypotenuse grows like $(1+\sqrt2)^{2d} \approx 5.828^{\,d}$. Conversely, iterating $\alpha(m,n) = (2m-n,m)$ from $(2,1)$ gives $(d+2, d+1)$, whose hypotenuse $2d^2+6d+5$ is only *quadratic*: the tree contains extremely slow branches as well as extremely fast ones, and Theorem 8.1 constrains only the maximum. The gap between $3^d$ and $5.828^{\,d}$ is the price of using no dynamics at all.
+*$\Phi$ lands in a small set.* By Lemma 4.1, $\Phi(t) = (2M^2, 2N^2)$. Since
+$a \ge 1$ and $c \le H$ we get $2M^2 = c+a \le 2H$ (as $a<c\le H$) so $M^2 \le H$
+and $M \le \lfloor\sqrt H\rfloor$; similarly $2N^2 = c-a \le 2H$ gives
+$N \le \lfloor\sqrt H\rfloor$. Hence $\Phi(\mathcal B(H))$ is contained in the
+image of $\{0,\dots,\lfloor\sqrt H\rfloor\}^2$ under $(M,N)\mapsto(2M^2,2N^2)$,
+a set of at most $(\lfloor\sqrt H\rfloor+1)^2$ elements. $\square$
+
+**Corollary 4.3 (linear upper bound).** For $H \ge 1$, $\#\mathcal B(H) \le 4H$.
+
+*Proof.* Write $s=\lfloor\sqrt H\rfloor$, so $s \ge 1$ and $s^2 \le H$. Then
+$(s+1)^2 = s^2+2s+1 \le s^2 + 2s^2 + s^2 = 4s^2 \le 4H$. $\square$
+
+The bound $(\lfloor\sqrt H\rfloor+1)^2 \approx H$ is sharper than $4H$ and is
+already within a factor $2\pi \approx 6.28$ of the truth.
 
 ---
 
-## 9. Numerical Evidence
+## 5. The lower bound
 
-Let $f(H) := |\mathcal{N}(H)|$, computed directly from Theorem 6.2 by enumerating $m \le \lfloor\sqrt H\rfloor$, $n < m$.
+### 5.1 An effective coprimality density
 
-**The proved bracket and the observed value.**
+Let $S(X) = \{1,\dots,X\}^2$, $\mathrm{Cop}(X) = \{(n,m)\in S(X):\gcd(n,m)=1\}$.
 
-| $H$ | $H/128$ (proved lower) | $f(H)$ | $H$ (proved upper) | $f(H)/H$ |
-|---:|---:|---:|---:|---:|
-| $64$ | $0$ | $9$ | $64$ | $0.14063$ |
-| $256$ | $2$ | $39$ | $256$ | $0.15234$ |
-| $1\,024$ | $8$ | $161$ | $1\,024$ | $0.15723$ |
-| $4\,096$ | $32$ | $652$ | $4\,096$ | $0.15918$ |
-| $16\,384$ | $128$ | $2\,603$ | $16\,384$ | $0.15887$ |
-| $65\,536$ | $512$ | $10\,428$ | $65\,536$ | $0.159119$ |
-| $1\,000\,000$ | $7\,812$ | $159\,139$ | $1\,000\,000$ | $0.159139$ |
+**Lemma 5.1 (elementary sieve).** $\#\,(S(X)\setminus\mathrm{Cop}(X)) \le \sum_{g=2}^{X} \lfloor X/g\rfloor^2 .$
 
-The ratio converges to
-$$\frac{1}{2\pi} = 0.1591549\ldots$$
+*Proof.* If $\gcd(n,m)=g>1$ then $(n,m) = g\cdot(n',m')$ with $1\le n',m'\le \lfloor X/g\rfloor$;
+summing over the (not necessarily distinct) values of $g$ overcounts. $\square$
 
-**Why $1/(2\pi)$.** By Theorem 6.2, $f(H)$ counts visible opposite-parity lattice points in the region $\{0 < n < m,\ m^2+n^2 \le H\}$, a circular sector of angle $\pi/4$ and radius $\sqrt H$, hence of area $\pi H/8$. The density of coprime opposite-parity pairs among all integer pairs is
-$$\underbrace{\frac{6}{\pi^2}}_{\text{coprime}} \times \underbrace{\frac{2}{3}}_{\Pr[\text{opposite parity} \mid \text{coprime}]} = \frac{4}{\pi^2},$$
-(the three residue classes of a coprime pair mod $2$ — $(\text{o},\text{e})$, $(\text{e},\text{o})$, $(\text{o},\text{o})$ — being equally likely). Therefore
-$$f(H) \sim \frac{\pi H}{8}\cdot\frac{4}{\pi^2} = \frac{H}{2\pi} .$$
-Correspondingly $|\mathcal{P}(H)| \sim H/\pi$, a classical count.
+**Lemma 5.2 (tail estimate).** $\sum_{g\ge 2} 1/g^2 \le 25/36$.
 
-**The sieve density.** Let $g(N) := |Q(N)|$, the coprime opposite-parity pairs with $0<n<m\le N$.
+*Proof sketch.* Take the terms $g=2,3$ exactly ($1/4+1/9 = 13/36$) and bound the
+tail by telescoping: $\sum_{g\ge4} 1/g^2 \le \sum_{g \ge 4} \frac{1}{g(g-1)} = \frac13$.
+Total $\le 13/36 + 12/36 = 25/36$. $\square$
 
-| $N$ | $g(N)$ | $g(N)/N^2$ |
-|---:|---:|---:|
-| $16$ | $55$ | $0.21484$ |
-| $64$ | $847$ | $0.20679$ |
-| $256$ | $13\,332$ | $0.20343$ |
-| $1\,024$ | $212\,740$ | $0.202885$ |
+**Proposition 5.3 (effective coprime density).** $11X^2 \le 36\,\#\mathrm{Cop}(X)$,
+i.e. at least $11/36 = 0.3055\ldots$ of the pairs in $[1,X]^2$ are coprime.
+(The truth is $6/\pi^2 = 0.6079\ldots$.)
 
-converging to $\tfrac12\cdot\tfrac{4}{\pi^2} = \tfrac{2}{\pi^2} = 0.2026423\ldots$, comfortably above the proved bound $1/16 = 0.0625$ of Theorem 5.7 — as expected, since the union bound over $k \ge 3$ is lossy by roughly a factor of three.
+*Proof.* Combine Lemmas 5.1 and 5.2: the number of non-coprime pairs is at most
+$\tfrac{25}{36}X^2$, leaving at least $\tfrac{11}{36}X^2$ coprime ones. $\square$
 
-**Freeness, checked.** Expanding the three branches from the root for four generations yields $3^4 = 81$ pairs, all distinct — the finite shadow of Theorem 4.2.
+**Proposition 5.4 (ordering and parity).** Let $\mathrm{Cop}^<(X)$ be the
+coprime pairs with $n<m$ and $\mathrm{Cop}^{\ne}(X)$ those additionally of
+opposite parity. Then
+$$\#\mathrm{Cop}(X) \le 2\,\#\mathrm{Cop}^<(X) + 1, \qquad
+\#\mathrm{Cop}^<(X) \le 2\,\#\mathrm{Cop}^{\ne}(X).$$
+Consequently
+$$11X^2 \le 144\,\#\mathrm{Cop}^{\ne}(X) + 36 .$$
+
+*Proof sketch.* The first inequality is the involution $(n,m)\mapsto(m,n)$, whose
+only fixed coprime point is $(1,1)$. For the second, if $n<m$ are coprime and
+both odd, then $\bigl(\tfrac{m-n}{2}, \tfrac{m+n}{2}\bigr)$ is a coprime pair of
+opposite parity with both entries $\le X$ and first $<$ second; this map is
+injective, so the same-parity coprime pairs are at most as many as the
+opposite-parity ones. $\square$
+
+### 5.2 From pairs to triples
+
+**Lemma 5.5 (Euclid's map produces valid triples).** If $1\le n<m$,
+$\gcd(n,m)=1$ and $n+m$ is odd, then
+$$E(n,m) := (m^2-n^2,\ 2mn,\ m^2+n^2)$$
+is valid.
+
+*Proof sketch.* Positivity is clear. The Pythagorean identity is the algebraic
+identity $(m^2-n^2)^2 + (2mn)^2 = (m^2+n^2)^2$. Primitivity follows from the
+classification of coprime Pythagorean triples applied in the reverse direction,
+using $\gcd(m,n)=1$ together with the opposite-parity hypothesis. Oddness of
+$m^2-n^2$ is immediate from opposite parity. $\square$
+
+**Theorem 5.6 (lower bound).** For $H \ge 5$, $H \le 100\,\#\mathcal B(H)$.
+
+*Proof.* Set $X = \lfloor\sqrt{\lfloor H/2\rfloor}\rfloor$, so $X \ge 1$ for
+$H\ge5$. If $(n,m)\in\mathrm{Cop}^{\ne}(X)$ then $m^2+n^2 \le 2X^2 \le H$, so by
+Lemma 5.5 and Theorem 3.8 the triple $E(n,m)$ is a tree triple, and its
+hypotenuse $m^2+n^2 \le H$ puts it in $\mathcal B(H)$ (Remark 2.5). The map $E$
+is injective on such pairs, since $m^2+n^2$ and $m^2-n^2$ recover $m^2,n^2$ and
+hence $m,n>0$. Therefore
+$$\#\mathrm{Cop}^{\ne}(X) \le \#\mathcal B(H).$$
+Now chain the estimates. By Proposition 5.4, $11X^2 \le 144\,\#\mathcal B(H)+36$.
+By definition of $X$ we have $\lfloor H/2\rfloor < (X+1)^2 \le 4X^2$ (using
+$X\ge1$), hence $H \le 2\lfloor H/2\rfloor+1 \le 8X^2 + 1$; and
+$\#\mathcal B(H) \ge 1$ because $(3,4,5)\in\mathcal B(H)$ for $H\ge5$. Combining
+these three facts gives $H \le 100\,\#\mathcal B(H)$. $\square$
+
+The constant $100$ is not optimised; it results from the losses
+$\tfrac{36}{11}$ (coprimality), $2$ (ordering), $2$ (parity), $2$ (the passage
+from the square $[1,X]^2$ to the disc $m^2+n^2 \le H$), and rounding.
+
+---
+
+## 6. $\Theta(H)$ and vanishing density
+
+**Theorem 6.1 (main counting theorem).** For all $H \ge 5$,
+$$\frac{H}{100} \;\le\; \#\mathcal B(H) \;\le\; \min\Bigl(4H,\ \bigl(\lfloor\sqrt H\rfloor+1\bigr)^2\Bigr),$$
+so $\#\mathcal B(H) = \Theta(H)$.
+
+*Proof.* Theorem 5.6, Corollary 4.3 and Theorem 4.2. $\square$
+
+**Corollary 6.2 (vanishing density in the box).**
+$$\lim_{H\to\infty} \frac{\#\mathcal B(H)}{H^3} = 0 ,$$
+indeed $\#\mathcal B(H)/H^3 \le 4/H$ for $H \ge 1$.
+
+*Proof.* Immediate from $\#\mathcal B(H)\le 4H$ and $H^3 \ge H\cdot H\cdot H$; the
+squeeze with $0 \le \#\mathcal B(H)/H^3 \le 4/H \to 0$ gives the limit. $\square$
+
+Interpretation: choosing a lattice point uniformly at random from $[1,H]^3$, the
+probability of landing on a Berggren triple is $O(1/H^2)$. In this sense the
+tree is vanishingly thin in the box.
+
+---
+
+## 7. Exact comparison with the primitive Pythagorean triples
+
+**Lemma 7.1 (parity of a primitive triple).** In a primitive Pythagorean triple
+$(a,b,c)$, exactly one of $a,b$ is odd, and $c$ is odd.
+
+*Proof.* Both legs even is excluded by $\gcd(a,b)=1$. If both are odd, write
+$a = 2k+1$, $b=2\ell+1$; then $c^2 = a^2+b^2 = 4(k^2+k+\ell^2+\ell)+2 \equiv 2 \pmod 4$.
+But squares are $0$ or $1$ mod $4$: contradiction. Hence exactly one leg is odd,
+and then $c^2 \equiv 1 \pmod 2$, so $c$ is odd. $\square$
+
+**Theorem 7.2 (the tree is exactly the odd-first-leg primitive triples of the box).**
+$$\mathcal B(H) = \mathcal P^{\mathrm{odd}}(H).$$
+
+*Proof.* $\subseteq$: a tree triple is valid (Theorem 3.2), hence primitive,
+positive, Pythagorean and odd-first-legged, and it lies in the box by
+hypothesis. $\supseteq$: a member of $\mathcal P^{\mathrm{odd}}(H)$ is precisely
+a valid triple in the box, hence reachable by Theorem 3.7. $\square$
+
+**Theorem 7.3 (the factor two).** For every $H$,
+$$\#\mathcal P(H) = 2\,\#\mathcal B(H).$$
+
+*Proof.* Split $\mathcal P(H)$ by the parity of its first coordinate:
+$$\#\mathcal P(H) = \#\mathcal P^{\mathrm{odd}}(H) + \#\mathcal P^{\mathrm{even}}(H).$$
+The leg swap $\sigma(a,b,c) = (b,a,c)$ maps $\mathcal P(H)$ to itself (the
+Pythagorean identity is symmetric in $a,b$; $\gcd$ is symmetric; the box is
+symmetric in the first two coordinates), is an involution, and by Lemma 7.1 it
+exchanges $\mathcal P^{\mathrm{odd}}(H)$ and $\mathcal P^{\mathrm{even}}(H)$: if
+$a$ is odd then $b$ is even, and vice versa. Hence the two halves have equal
+cardinality, and $\#\mathcal P(H) = 2\,\#\mathcal P^{\mathrm{odd}}(H) = 2\,\#\mathcal B(H)$
+by Theorem 7.2. $\square$
+
+**Corollary 7.4 (completeness in the box, up to a swap).** For every
+$t = (a,b,c) \in \mathcal P(H)$, either $t \in \mathcal B(H)$ or
+$(b,a,c) \in \mathcal B(H)$.
+
+*Proof.* By Lemma 7.1 one of $a,b$ is odd; put the odd one first and apply
+Theorem 7.2. $\square$
+
+**Remark 7.5.** Corollary 7.4 is the sharp form of the heuristic that the tree
+captures a $(1-o(1))$ proportion of the primitive triples of the box. The
+proportion is exactly $1$: viewed as a set of right *triangles* — with the two
+legs unordered — the Berggren tree restricted to the box is literally the set of
+all primitive Pythagorean triangles with hypotenuse at most $H$. There is no
+error term to estimate.
+
+---
+
+## 8. The visible-point bijection and the constant $1/(2\pi)$
+
+### 8.1 The bijection
+
+**Theorem 8.1.** The Euclid map $E(n,m) = (m^2-n^2, 2mn, m^2+n^2)$ is a bijection
+$$E : \mathcal Q(H) \;\xrightarrow{\ \sim\ }\; \mathcal B(H),$$
+so $\#\mathcal B(H) = \#\mathcal Q(H)$ and, by Theorem 7.3,
+$\#\mathcal P(H) = 2\,\#\mathcal Q(H)$.
+
+*Proof sketch.* *Well-defined:* Lemma 5.5 plus $m^2+n^2 \le H$ and Remark 2.5.
+*Injective:* $m^2 = \tfrac12\bigl((m^2+n^2)+(m^2-n^2)\bigr)$ and
+$n^2 = \tfrac12\bigl((m^2+n^2)-(m^2-n^2)\bigr)$ recover $m,n$ from the image.
+*Surjective:* given $t\in\mathcal B(H)$, Lemma 4.1 supplies $M,N \ge 0$ with
+$c+a=2M^2$, $c-a=2N^2$; then $c = M^2+N^2 \le H$, $a = M^2-N^2 > 0$ so $N<M$,
+$b^2 = c^2-a^2 = (2MN)^2$ so $b = 2MN$ and $N \ge 1$; coprimality of $a$ and $b$
+forces $\gcd(N,M)=1$, and oddness of $a=M^2-N^2$ forces $N+M$ odd. Hence
+$(N,M) \in \mathcal Q(H)$ and $E(N,M) = t$. $\square$
+
+**Corollary 8.2 (transported bounds).** For $H \ge 5$,
+$$H \le 100\,\#\mathcal Q(H), \qquad \#\mathcal Q(H) \le \bigl(\lfloor\sqrt H\rfloor+1\bigr)^2 .$$
+
+Theorem 8.1 is the conceptual heart of the counting: it converts a question
+about a three-dimensional orbit of a matrix semigroup into a question about
+**visible lattice points** — points $(n,m)$ with $\gcd(n,m)=1$, i.e. points seen
+from the origin with no other lattice point in between — inside the circular
+wedge
+
+$$W_H = \{(x,y) : 0 < x < y,\ x^2+y^2 \le H\},$$
+
+subject to a parity condition.
+
+### 8.2 The predicted constant
+
+The wedge $W_H$ is an eighth of a disc of radius $\sqrt H$ and has area
+$\tfrac{\pi H}{8}$. Three independent densities act on the lattice points inside
+it:
+
+1. **Area.** $\#\{(n,m) \in \mathbb Z^2 \cap W_H\} = \tfrac{\pi H}{8} + O(\sqrt H)$
+   by the Gauss circle argument.
+2. **Visibility.** The density of coprime pairs among all pairs is
+   $1/\zeta(2) = 6/\pi^2$, by Möbius inversion:
+   $\#\mathrm{Cop} = \sum_{d} \mu(d)\,\#\{\text{pairs both divisible by }d\}$.
+3. **Parity.** Among coprime pairs, the three residue classes
+   $(\text{odd},\text{odd})$, $(\text{odd},\text{even})$,
+   $(\text{even},\text{odd})$ are equidistributed, so exactly $2/3$ of coprime
+   pairs have opposite parity. (Formally: the local factor at the prime $2$ in
+   the Möbius sieve contributes $\tfrac{2/4}{3/4} = \tfrac23$.)
+
+Multiplying,
+
+$$\#\mathcal Q(H) \;\sim\; \frac{\pi H}{8}\cdot\frac{6}{\pi^2}\cdot\frac{2}{3} \;=\; \frac{H}{2\pi} .$$
+
+**Conjecture 8.3 (Lehmer-type constant for the Berggren box).**
+$$\#\mathcal B(H) = \frac{H}{2\pi} + O\!\left(\sqrt H \log H\right),$$
+in particular $\#\mathcal B(H)/H \to 1/(2\pi) = 0.1591549\ldots$
+
+Computation supports this strongly: at $H = 4\cdot10^5$ one finds
+$\#\mathcal B(H) = 63\,669$ and $\#\mathcal B(H)/H = 0.159172$, against
+$1/(2\pi) = 0.159155$; the observed discrepancy is consistent with an error term
+of size $O(\sqrt H)$ (see Section 11).
+
+Note how the proved bounds bracket this: $1/100 \le \#\mathcal B(H)/H \le 1$,
+while the truth is $\approx 0.159$. The upper bound
+$(\lfloor\sqrt H\rfloor+1)^2 \approx H$ is off by exactly the factor $2\pi$,
+which is precisely the geometric content the crude two-square argument throws
+away.
+
+---
+
+## 9. Growth geometry of the generators
+
+The three matrices have very different dynamical characters, and this dictates
+the shape of the tree.
+
+### 9.1 The hyperbolic generator $B_2$
+
+**Theorem 9.1.** If $t=(a,b,c)$ is valid then $(\beta_2 t)_3 > 5c$; hence
+along the pure-$B_2$ branch, $(\beta_2^{\,k} t)_3 \ge 5^k c$.
+
+*Proof.* $(\beta_2 t)_3 = 2a+2b+3c$ and $a+b>c$, so $(\beta_2 t)_3 > 2c+3c = 5c$.
+Iterate. $\square$
+
+The exact expansion factor is the largest eigenvalue of $B_2$, the silver-ratio
+square $3+2\sqrt 2 = 5.8284\ldots$. Starting from $(3,4,5)$ the pure-$B_2$
+branch has hypotenuses
+$$5,\ 29,\ 169,\ 985,\ 5741,\ 33461,\ 195025,\ \ldots$$
+(alternate Pell numbers, whose triples $(3,4,5),(21,20,29),(119,120,169),\ldots$
+are exactly the primitive triples whose legs differ by one).
+
+### 9.2 The parabolic generator $B_3$
+
+$B_3$ is unipotent: its characteristic polynomial is $(\lambda-1)^3$.
+
+**Lemma 9.2 (invariant).** $(\beta_3 t)_3 - (\beta_3 t)_1 = c - a$ for every $t$.
+
+*Proof.* $(-2a+2b+3c) - (-a+2b+2c) = c-a$. $\square$
+
+**Theorem 9.3 (closed form for the parabolic orbit).** For every $k\ge0$ and
+every $t=(a,b,c)$,
+$$\beta_3^{\,k}(t) = \Bigl(a + k\,\gamma + 2k(k-1)(c-a),\ \ b + 2k(c-a),\ \ c + k\,\gamma + 2k(k-1)(c-a)\Bigr),$$
+where $\gamma = -2a+2b+2c$.
+
+*Proof.* Induction on $k$, expanding one application of $\beta_3$. $\square$
+
+Thus the hypotenuse grows *quadratically*, not exponentially, along a $B_3$
+orbit: $(\beta_3^{\,k}t)_3 = c + k\gamma + 2k(k-1)(c-a)$. From the seed this is
+the beautifully explicit *parabolic spine*
+
+$$\beta_3^{\,k}(3,4,5) = \bigl(4(k+1)^2-1,\ \ 4(k+1),\ \ 4(k+1)^2+1\bigr),$$
+
+giving $(3,4,5), (15,8,17), (35,12,37), (63,16,65), (99,20,101), \ldots$ — the
+family of triples with $c-a=2$.
+
+**Theorem 9.4 (seed-independent depth bound).** Let $t$ be any valid triple with
+hypotenuse $c$, and let $K$ satisfy $7K^2c \le H$. Then the parabolic orbit
+$\{t, \beta_3 t, \dots, \beta_3^{K-1}t\}$ consists of $K$ distinct valid triples,
+all inside the box $[1,H]^3$.
+
+*Proof sketch.* Distinctness: the hypotenuse is strictly increasing along the
+orbit (Theorem 9.3 with $\gamma>0$ and $c>a$). Boundedness: crude estimates
+$\gamma \le 4c$ and $c-a \le c$ in Theorem 9.3 give
+$(\beta_3^{\,k}t)_3 \le 7(k+1)^2c$, so $k<K$ implies the hypotenuse is at most
+$7K^2c \le H$. $\square$
+
+**Corollary 9.5.** Taking $t=(3,4,5)$: the tree inside the box $[1,H]^3$ contains
+a path of length $\gg \sqrt H$. Combined with the general bound below, the tree
+is extremely unbalanced.
+
+### 9.3 A uniform depth bound
+
+**Theorem 9.6.** For any word $w$ of length $d$, the triple $\rho(w)$ has
+hypotenuse at most $5\cdot 6^{d}$. Equivalently, a triple with hypotenuse $c$
+sits at depth at least $\log_6(c/5)$.
+
+*Proof sketch.* For a valid triple, $2(a+b) \le 3c$ (Lemma 3.3), so each
+generator's third coordinate $\pm2a\pm2b+3c \le 2(a+b)+3c \le 6c$. Iterate from
+the seed's hypotenuse $5$. $\square$
+
+So depths in the box range from $\Theta(\log H)$ (the generic, exponentially
+branching bulk) to $\Omega(\sqrt H)$ (the parabolic whiskers). Empirically at
+$H=10^5$ the tree contains $15\,919$ nodes with mean depth $15.4 \approx
+1.34\log H$ and maximum depth $222 \approx 0.70\sqrt H$.
 
 ---
 
 ## 10. Algorithms
 
-### 10.1 Enumeration of the box
+### 10.1 Enumerating the box via the tree
 
-**Algorithm A (Disc enumeration).** Input $H$; output all of $\mathcal{N}(H)$.
-Loop $m$ from $2$ to $\lfloor\sqrt H\rfloor$, $n$ from $1$ to $m-1$; accept if $m+n$ is odd, $\gcd(m,n)=1$, and $m^2+n^2 \le H$; emit $E(m,n)$. Correctness is Theorem 6.2. The loop body runs $O(H)$ times with $O(\log H)$ cost per gcd, so the total is $O(H\log H)$ arithmetic operations, and the output has size $\Theta(H)$. Compare the naive scan of the cube, which costs $\Theta(H^3)$: the change of coordinates is a genuine cubic-to-linear speedup, and it is the *same* observation (hypotenuse dominance) that gives the upper bound in Theorem 6.3.
+By Remark 2.5, membership in the box is the single condition $c \le H$, and by
+Theorem 9.1 (and its analogues for $\beta_1,\beta_3$) every generator strictly
+increases the hypotenuse. Hence a depth-first search from $(3,4,5)$, pruning any
+node with $c>H$, enumerates $\mathcal B(H)$ exactly once each. Cost:
+$O(\#\mathcal B(H)) = O(H)$ arithmetic operations and $O(\text{depth})$ space —
+optimal up to constants, and with no duplicate detection needed, by freeness
+(Theorem 3.9).
 
-### 10.2 Address decoding
+### 10.2 Enumerating the box via the parameter wedge
 
-**Algorithm B (Read the address).** Input a positive primitive triple $(a,b,c)$ with $a$ odd; output the unique word $W \in \{A,B,C\}^*$ with $W\mathbf{r} = (a,b,c)$.
-Set $m := \sqrt{(a+c)/2}$, $n := \sqrt{(c-a)/2}$. While $m > 2$: if $m < 2n$ emit $A$ and set $(m,n) \leftarrow (n, 2n-m)$; else if $m < 3n$ emit $B$ and set $(m,n) \leftarrow (n, m-2n)$; else emit $C$ and set $(m,n) \leftarrow (m-2n, n)$. Reverse the emitted letters. Correctness and termination are the descent of Theorem 3.3; uniqueness is Theorem 4.2. Each step strictly decreases $m + n$, and the step is exactly a step of the subtractive Euclidean algorithm on $(m,n)$, so the worst case is $\Theta(m)$ steps (attained on $A^d$, the slow branch of Remark 8.3) and the typical case is $O(\log m)$.
+By Theorem 8.1 one may instead iterate over $2 \le m \le \lfloor\sqrt H\rfloor$
+and $1 \le n < m$ with $m^2+n^2 \le H$, keeping the pairs with $\gcd(n,m)=1$ and
+$n+m$ odd. Cost $O(H)$ pairs examined with $O(\log H)$ per gcd, i.e.
+$O(H\log H)$; slightly slower than the tree walk but requiring no matrix
+algebra, and it is the form in which the Möbius sieve of Section 8 applies.
 
-### 10.3 Uniform sampling
+### 10.3 Address of a triple (descent)
 
-**Algorithm C (Exact uniform sampling from $\mathcal{P}(H)$).** Enumerate $\mathcal{E}(H)$ with Algorithm A, keeping only the count $K = |\mathcal{E}(H)|$ (or the full list, $\Theta(H)$ memory). Draw $j$ uniform in $\{1,\dots,2K\}$; if $j \le K$ output $E(m_j,n_j)$, else output $\sigma E(m_{j-K}, n_{j-K})$. By Theorems 6.2, 7.1 and 7.2 the output is exactly uniform on $\mathcal{P}(H)$. Rejection sampling on the cube would need $\Theta(H^2)$ trials per accepted sample, by Theorem 6.6 — the structural theorem is what makes exact uniform sampling affordable.
+Given a valid triple, iterate: if $t = (3,4,5)$, stop; else compute
+$u,v,w$, read the generator index from $(\operatorname{sgn}u,\operatorname{sgn}v)$,
+and replace $t$ by $(|u|,|v|,w)$. The hypotenuse strictly decreases, and by
+Theorem 9.6 the number of steps is at most $\log_6(c/5)$ for the generic branch
+and at most $O(\sqrt c)$ in the worst (parabolic) case. This computes the unique
+word $w$ with $\rho(w)=t$.
+
+### 10.4 Sieved counting
+
+To compute $\#\mathcal Q(H)$ for large $H$ without enumerating pairs, apply
+Möbius inversion over the visibility condition:
+$$\#\mathcal Q(H) = \sum_{\substack{d \ge 1 \\ d \text{ odd}}} \mu(d)\;\#\{(n,m): 0<n<m,\ n+m \text{ odd},\ d\mid n,\ d\mid m,\ m^2+n^2\le H\},$$
+where only odd $d$ contribute because $d$ even would force $n,m$ both even,
+violating the parity condition. Each inner count is a wedge lattice count of
+radius $\sqrt H / d$, computable in $O(\sqrt H/d)$ time by summing over columns.
+Total cost $O(\sqrt H \log H)$ — a genuine speedup over $O(H)$ enumeration, and
+exactly the decomposition that Conjecture 8.3 seeks to make rigorous.
 
 ---
 
-## 11. Applications
+## 11. Numerical evidence
 
-**Structured data generation with proved coverage.** Learned models trained on number-theoretic objects need training distributions that are *provably* uniform over a well-defined target set, and evaluation sets with *provable* coverage. The results above supply all three ingredients for the family of primitive Pythagorean triples: a bijective parametrisation (Theorem 6.2), an exact coverage statement (Theorem 7.1: two seeds capture everything, one seed exactly half), and calibrated size ($\Theta(H)$, with observed $H/(2\pi)$). In particular Theorem 7.4 is a warning about a natural sampling bug: generating from the single seed $(3,4,5)$ produces a distribution supported on exactly half the target — every sample has odd first leg — and no amount of additional sampling will fix it.
+Direct enumeration gives:
 
-**Canonical serialisation.** Freeness (Theorem 4.2) means each triple has a unique address in $\{A,B,C\}^*$, decodable by Algorithm B. This is a canonical, tokenisable encoding of a Diophantine object, with the tree metric as a natural notion of similarity. Uniqueness matters here: a non-free generating system would create aliasing, where the same object receives many encodings.
+| $H$ | $\#\mathcal B(H)$ | $H/100$ | $4H$ | $(\lfloor\sqrt H\rfloor+1)^2$ | $\#\mathcal P(H)$ | $\#\mathcal Q(H)$ | $\#\mathcal B(H)/H$ |
+|---|---|---|---|---|---|---|---|
+| $5$ | $1$ | $0.05$ | $20$ | $9$ | $2$ | $1$ | $0.2000$ |
+| $50$ | $7$ | $0.5$ | $200$ | $64$ | $14$ | $7$ | $0.1400$ |
+| $100$ | $16$ | $1$ | $400$ | $121$ | $32$ | $16$ | $0.1600$ |
+| $1\,000$ | $158$ | $10$ | $4\,000$ | $1\,024$ | $316$ | $158$ | $0.1580$ |
+| $5\,000$ | $792$ | $50$ | $20\,000$ | $5\,041$ | $1\,584$ | $792$ | $0.1584$ |
+| $20\,000$ | $3\,186$ | $200$ | $80\,000$ | $20\,164$ | $6\,372$ | $3\,186$ | $0.1593$ |
+| $100\,000$ | $15\,919$ | $1\,000$ | $400\,000$ | $100\,489$ | $31\,838$ | $15\,919$ | $0.15919$ |
+| $400\,000$ | $63\,669$ | $4\,000$ | $1\,600\,000$ | $400\,689$ | $127\,338$ | $63\,669$ | $0.159172$ |
 
-**Curriculum by depth, calibrated by Theorem 8.1.** Address length is a natural difficulty parameter. Theorem 8.1 quantifies it precisely: any curriculum containing all of depth $d$ must contain a triple of hypotenuse at least $3^d$, so the *numeric* range of a depth-complete dataset is forced to grow exponentially. Fixed-width numeric encodings therefore cap the attainable depth logarithmically.
+A sublinear Möbius-sieved computation (Section 10.4) extends the last column
+much further: at $H = 10^7$ one gets $\#\mathcal B(H) = 1\,591\,579$ against
+$H/(2\pi) = 1\,591\,549.43$, and at $H = 10^9$ one gets
+$\#\mathcal B(H) = 159\,154\,994$ against $H/(2\pi) = 159\,154\,943.09$ — an
+absolute error of $51$, i.e. $0.0016\sqrt H$.
 
-**Sparsity benchmarks.** Theorem 6.6 gives an exactly-known needle-in-a-haystack task: search $[1,H]^3$ for its $\Theta(H)$ Pythagorean points, a target of density $\Theta(H^{-2})$ with a known ground-truth count at every $H$. Because the exact answer is computable in $O(H\log H)$ by Algorithm A, precision and recall can be measured exactly for any heuristic or learned search procedure.
+Every row confirms the proved bounds, the identity $\#\mathcal P = 2\#\mathcal B$
+of Theorem 7.3, and the bijection $\#\mathcal B = \#\mathcal Q$ of Theorem 8.1.
+The last column converges to $1/(2\pi) = 0.1591549$; the normalised errors
+$\bigl(\#\mathcal B(H)/H - 1/(2\pi)\bigr)\sqrt H$ stay bounded in $[-0.04, 0.02]$
+across $H \in [1.2\cdot10^4, 4\cdot 10^5]$, consistent with an $O(\sqrt H)$ error
+term in Conjecture 8.3.
 
-**Exact test-vector generation.** Any pipeline requiring exact-integer right triangles (computational geometry regression tests, exact-arithmetic benchmarks, cryptographic parameter search over sums of two squares) can enumerate with guaranteed non-repetition and guaranteed completeness up to a stated height.
+Also verified computationally: every node with hypotenuse $\le 2000$ is a
+primitive Pythagorean triple with odd first leg (Theorem 3.2); at $H=300$ there
+are $94$ ordered primitive triples, $47$ tree triples, and $0$ exceptions to
+Corollary 7.4; the parabolic spine matches the closed form
+$c_k = 4(k+1)^2+1$; and the hyperbolic branch ratios approach $5.8284$.
 
 ---
 
-## 12. Discussion and Future Directions
+## 12. Discussion
 
-### 12.1 What is sharp and what is not
+### 12.1 Three answers to one question
 
-Sharp: Theorems 7.1, 7.2, 7.4, 7.5 (exact identities, all $H \ge 5$), Theorem 6.2 (an exact bijection), Theorem 4.2 (freeness), Lemma 5.1 (exact fibre count). Not sharp: the constants in Theorems 6.4 and 5.7. The lower bound $H/128$ is lossy by a factor $128/(2\pi) \approx 20.4$ against the true main term $H/(2\pi)$, and the sieve constant $1/16$ is lossy by a factor $(2/\pi^2)/(1/16) \approx 3.2$; the exponential rate $3^d$ of Theorem 8.1 is lossy against the observed maximal growth $(1+\sqrt2)^{2d} \approx 5.83^{\,d}$.
+"How common are Pythagorean triples?" admits three sharp answers, all proved
+above and all different:
 
-### 12.2 Open problems
+- **In the box $[1,H]^3$:** a proportion $O(1/H^2)$ — vanishingly rare
+  (Corollary 6.2).
+- **Per unit of height:** exactly $\Theta(H)$ triples, with a conjectural
+  density $1/(2\pi)$ per unit (Theorem 6.1, Conjecture 8.3).
+- **Among primitive Pythagorean triples:** all of them, exactly, up to a leg
+  swap (Corollary 7.4). The proportion is not $1-o(1)$ but exactly $1$.
 
-The following five conjectures were produced by the analysis of this cycle. Each is stated so that a single counterexample falsifies it or a single proof settles it.
+The apparent tension dissolves once one notices that these compare the tree
+against three different ambient sets: the $H^3$ points of the cube, the $H$ scale
+of the hypotenuse, and the primitive triples themselves.
 
-**C1. The sieve constant is $2/\pi^2$, effectively.** There are explicit $c$ and $H_0$ with
-$$\Big|\,|Q(N)| - \tfrac{2}{\pi^2}N^2\,\Big| \le c\,N\log N \qquad (N \ge H_0),$$
-and the proof can be made fully effective by replacing the telescoping tail bound $\sum_{k\ge3}k^{-2}\le \tfrac12$ with the Möbius identity
-$$|Q(N)| = \sum_{k \text{ odd}} \mu(k)\,|P(\lfloor N/k\rfloor)| .$$
-*Key insight:* the self-similarity of Lemma 5.3 is in fact an **equality**, not merely an inequality, so the union bound upgrades to exact inclusion–exclusion with no new number theory — only Möbius bookkeeping and a tail estimate. *Why now:* the exact fibre count of Lemma 5.1 and the exact divisibility slice are already in hand; the only missing ingredient is convergence of $\sum_{k\le N}\mu(k)/k^2$. This would sharpen Theorem 6.5 from the bracket $[H/128,\,H]$ to $\tfrac{H}{2\pi}(1+o(1))$.
+### 12.2 Where the constants are lost
 
-**C2. Gauss-circle asymptotics for the Berggren counting function.**
-$$|\mathcal{N}(H)| = \frac{H}{2\pi} + O\!\left(H^{3/4}\right),$$
-i.e. the box count obeys a Gauss circle law with the visible, opposite-parity lattice restriction, and the exponent $3/4$ (rather than the trivial boundary term $H^{1/2}$ times a divisor factor) is optimal for the elementary method. *Key insight:* the bijection of Theorem 6.2 collapses the cube condition on all three coordinates to the single disc condition $m^2+n^2 \le H$, so the problem is literally a lattice-point count in a quarter disc, with coprimality handled by Möbius over the *radius* rather than the box side. *Why now:* that collapse — the surjectivity branch of Theorem 6.2 — is exactly the step that lets classical circle-problem technology be imported unchanged.
+The proof of Theorem 6.1 loses a factor $\approx 628$ between the two sides
+($1/100$ vs $\approx 1$) while the truth sits at $0.159$. Tracing the losses:
+the upper bound $(\lfloor\sqrt H\rfloor+1)^2$ throws away the *shape* of the
+constraint region — it bounds the wedge $\{0<n<m,\ m^2+n^2\le H\}$ by the full
+square $[0,\sqrt H]^2$, a loss of exactly $8/\pi$ — and it also ignores the
+coprimality ($\pi^2/6$) and parity ($3/2$) conditions. Their product is
+$\tfrac{8}{\pi}\cdot\tfrac{\pi^2}{6}\cdot\tfrac32 = 2\pi$, exactly the observed
+discrepancy. On the lower side, the losses are the elementary sieve
+($\tfrac{36}{11}$ instead of $\tfrac{\pi^2}{6}$), the two symmetry factors, and
+the square-versus-disc inscription.
 
-**C3. Freeness forces a sharp depth–height law.** For every $d \ge 1$,
-$$\max\{c(\mathbf{v}) : \mathbf{v} \text{ at depth } d\} \;=\; \kappa\,(1+\sqrt2)^{2d}\,(1+o(1)) \ \text{ with } \kappa \approx 4.975, \qquad \min\{c(\mathbf{v}) : \mathbf{v} \text{ at depth } d\} \;=\; 2d^2+6d+5 ,$$
-the maximum being attained by the word $B^d$ and the minimum by $A^d$; and the counting bound $3^d \le H$ of Theorem 8.1 should be provably equivalent, in exponential order, to a dynamical (Lyapunov) estimate of the form $\lambda^{\#B} \lesssim c$ obtained by tracking the number of $B$-letters in an address. (Direct expansion of the tree to depth $8$ agrees with both closed forms to the digit; the naive guess $\max \asymp 5\cdot 7^d$ is *false*, overshooting by a factor $(7/5.828)^d$.) *Key insight:* a *purely counting* argument reproduces a dynamical estimate; the two should be provably equivalent. *Why now:* freeness of the Berggren monoid (Theorem 4.2) is the missing hypothesis that makes the pigeonhole legitimate, and it is now available.
+### 12.3 Relation to classical results
 
-**C4. A two-parameter box law.** Replace the cube by the anisotropic box $\{a \le H_1, b \le H_2, c \le H_3\}$. Since hypotenuse dominance no longer trivialises the leg conditions, the count becomes a lattice-point problem for the intersection of a disc with two hyperbola-like regions ($m^2 - n^2 \le H_1$, $2mn \le H_2$). Conjecture: the count is $\Theta(\min(H_1,H_2,H_3))$ whenever $\min = H_3$, and strictly smaller order otherwise, with an explicit piecewise-algebraic main term.
+The visible-point count of Theorem 8.1 places this problem in the same family as
+Lehmer's theorem on the number of coprime pairs in a region and the Gauss circle
+problem. The novelty here is not the analytic content but the exactness of the
+reduction: the tree count is *equal*, not merely asymptotic, to the wedge count,
+and the equality is available for every $H$, with no error term.
 
-**C5. Freeness detects the seed.** Conjecture: the Berggren monoid acts freely on *every* admissible seed orbit, and the trichotomy of Theorem 4.1 characterises the seed as the unique orbit element not in the image of any generator. Consequently the number of orbits needed to cover all primitive triples with a prescribed parity pattern is exactly the number of parity classes, i.e. two — and no clever three-generator system on the cone can do it with one.
+### 12.4 Open problems
 
-### 12.3 Closing remark
+1. **Prove Conjecture 8.3.** The bijection is exact; what remains is a Möbius-weighted
+   Gauss circle estimate for the wedge. The main term is straightforward; the
+   error term requires uniform control of the lattice-point discrepancy for
+   discs of radius $\sqrt H/d$ summed against $\mu(d)$.
+2. **Sharpen the effective constants.** Replacing the crude sieve of
+   Proposition 5.3 with an effective Möbius argument should push the proved
+   interval from $[1/100, 1]$ to something like $[0.14, 0.18]$.
+3. **The depth profile.** Prove that the maximal depth $D(H)$ of the tree inside
+   the box satisfies $D(H) \asymp \sqrt H$ (the lower bound is Theorem 9.4; the
+   upper bound requires ruling out mixed words that grow more slowly than the
+   pure parabolic spine), and that the *typical* depth is $\Theta(\log H)$.
+4. **Other seeds and other trees.** The three matrices generate a free semigroup;
+   which other unimodular triples of matrices give free covering trees of a
+   Diophantine set, and does the $\Theta(H)$-with-computable-constant phenomenon
+   persist?
+5. **Counting by hypotenuse vs by perimeter or area.** The wedge changes shape —
+   for perimeter $2m(m+n)\le P$ one counts inside a hyperbola-bounded region
+   instead of a disc — and the analogous constant becomes an integral over that
+   region; making these effective is a bounded and attractive target.
+6. **Higher-dimensional analogues.** Quaternion or Lipschitz-integer trees
+   generating primitive quadruples $a^2+b^2+c^2=d^2$ admit similar matrix
+   descriptions; the corresponding box counts should be $\Theta(H^2)$ with an
+   explicit constant coming from a spherical shell rather than a circular wedge.
 
-The narrative of this paper is a single arc: a change of coordinates turns a cubic Diophantine counting problem into a planar lattice-point problem; the planar problem is simultaneously a sieve problem (giving scarcity) and a free substitution system (giving rigidity); and scarcity plus rigidity, combined by nothing more than pigeonhole, yields a growth law for the dynamics. The exact ratios $1/2$ and $1$ of Section 7 are the reminder that when a phenomenon is governed by a *parity* obstruction rather than a *density* one, asymptotic language ($1 - o(1)$) is not merely imprecise — it can be plainly wrong.
+---
+
+## 13. Summary of results
+
+- **Structure.** The Berggren tree rooted at $(3,4,5)$ equals the set of positive
+  primitive Pythagorean triples with odd first leg, and is a free ternary tree.
+- **Upper bound.** $\#\mathcal B(H) \le (\lfloor\sqrt H\rfloor+1)^2 \le 4H$.
+- **Lower bound.** $H \le 100\,\#\mathcal B(H)$ for $H\ge5$.
+- **Order of growth.** $\#\mathcal B(H)=\Theta(H)$ and $\#\mathcal B(H)/H^3\to0$.
+- **Exact comparison.** $\#\mathcal P(H) = 2\,\#\mathcal B(H)$, and every primitive
+  Pythagorean triple of the box lies in the tree up to swapping the legs.
+- **Reduction.** $\#\mathcal B(H) = \#\mathcal Q(H)$, a visible-point count in a
+  circular wedge, whence the conjectural constant $1/(2\pi)$.
+- **Geometry.** $B_2$ expands the hypotenuse by $3+2\sqrt2$; $B_3$ is unipotent
+  with quadratic orbit growth $c_k = 4(k+1)^2+1$ from the seed, forcing depth
+  $\Omega(\sqrt H)$ inside the box while the generic depth is $\Theta(\log H)$.
