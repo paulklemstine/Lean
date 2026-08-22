@@ -1,4 +1,4 @@
-import Catalog.Bridges.BerggrenHarmonicMeasure
+import Bridges.BerggrenHarmonicMeasure
 
 /-!
 # The Berggren boundary is a Cantor set

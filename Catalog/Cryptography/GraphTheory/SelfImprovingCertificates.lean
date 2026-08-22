@@ -1,6 +1,6 @@
 import Mathlib
-import Catalog.Shared.PosetTheory.ProofRefinement
-import Catalog.Cryptography.PosetTheory.NoetherianCertification
+import Shared.PosetTheory.ProofRefinement
+import Cryptography.PosetTheory.NoetherianCertification
 
 /-!
 # Self-Improving Cryptographic Certificates
