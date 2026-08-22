@@ -1,255 +1,136 @@
-# The Machine That Knows Nothing
+# Which Marginals? How a Second Moment Rescued a Compression Bound
 
-## How one counting trick proves theorems in three different subjects — and why the real work is deciding what to feed it
+## A machine that eats probabilities
 
-### A machine with no opinions
+There is a certain kind of machine in combinatorics that everybody uses and almost nobody looks at closely. You feed it a list of bad events — event $A_1$, event $A_2$, up to event $A_k$ — together with two numbers: how likely each single bad event is, and how likely any *two* of them are to happen together. The machine hands you back a guarantee: *at least one of these events happens with probability at least so-and-so.*
 
-Imagine a machine with one input slot and one output slot. Into the slot you drop a
-collection of finite sets — any collection, of anything at all. Out of the other end comes
-an inequality relating their total size, the size of their union, and the total size of
-their pairwise overlaps.
+The classical machine of this type is the **second Bonferroni inequality**. In exact counting form it says that for any finite family of finite sets $A_1,\dots,A_k$ inside a finite universe,
 
-The machine knows nothing about your sets. It does not know whether they are subsets of a
-group, neighbourhoods in a graph, lines in a plane, or lists of grocery items. It never
-asks. It is, in the most literal sense, an *empty* device: everything it outputs was
-already contained in the shape of what you fed in.
+$$\sum_{i=1}^{k} |A_i| \;\le\; \Bigl|\bigcup_{i=1}^{k} A_i\Bigr| \;+\; \sum_{i \ne j} |A_i \cap A_j|.$$
 
-And yet this machine, in the space of a single afternoon, will hand you Erdős and Turán's
-theorem on Sidon sets, Reiman's theorem on graphs without four-cycles, and a chunk of the
-Kővári–Sós–Turán theory of forbidden bipartite subgraphs. Same machine. Same lever. Three
-famous theorems.
+You can read it as: the sum of the sizes overcounts the union, but only by the pairwise overlaps. It is a beautiful, elementary statement, and it powers a great many lower bounds in probabilistic combinatorics and information theory.
 
-This is a story about that machine — and about the discovery, made precise here, that when
-a "clever" combinatorial proof works, the cleverness is almost never in the machine. It is
-in the *choice of what to feed it*.
+This article is about a moment when that machine produced a suspicious-looking answer, and about what happened when we asked whether the fault lay with the input or with the machine.
 
----
+## The suspicious answer
 
-### Multiplicity: the one idea
+The setting is data compression, in its purest cartoon form: **hashing**.
 
-Start with a finite family of finite sets $A_1, A_2, \dots, A_k$, all living inside some
-ambient world. For each point $x$ in the union, define its **multiplicity**
-$$m(x) = \#\{\, i : x \in A_i \,\},$$
-the number of members of the family that contain $x$. That is the whole idea. Everything
-below is bookkeeping about $m$.
+You have a large alphabet of possible messages. Nature has told you that in practice only a modest subset $S$ of them — the *typical set* — ever occurs. You want to compress: you pick a **codebook**, which is nothing but a function $H$ assigning to every message one of $M$ short labels. When a message $x$ arrives you transmit $H(x)$, and the receiver looks up which typical message has that label.
 
-The bookkeeping starts with an identity so simple it feels like cheating. Suppose you have
-any weight function $f$ assigning a number to each point. Then
+The scheme fails at $x$ if some *other* typical message $y$ carries the same label — a **collision** $H(y) = H(x)$. If we pick the labels uniformly at random and independently, a single collision has probability exactly $1/M$, and there are $k = |S \setminus \{x\}|$ competitors, so we expect failure with probability roughly $k/M$. Shannon's random-coding argument makes the upper half of this precise: the failure probability is at most $k/M$. Compression is possible whenever $k \ll M$.
 
-$$\sum_{i=1}^{k} \sum_{x \in A_i} f(x) \;=\; \sum_{x \in \bigcup_i A_i} m(x)\, f(x).$$
+The interesting question is the *converse*: is the failure probability also *at least* something like $k/M$? Is $k \approx M$ really the wall, or could a lucky random codebook do better?
 
-This is just counting the pairs $(i,x)$ with $x \in A_i$ in two different orders — first
-grouping by set, then grouping by point. Picture a big grid with sets down the side and
-points across the top, and a mark in a cell when the point lies in the set. Sum the marks
-row by row, or column by column: you get the same total. Mathematicians call this
-*Fubini's principle*, or just *double counting*. It is the closest thing combinatorics has
-to a free lunch.
+Feed the Bonferroni machine the two obvious numbers — a single collision has probability $1/M$, a pair of collisions has probability at most $1/M^2$ — and out comes
 
-Feeding this identity the constant weight $f \equiv 1$ gives the **first moment**:
-$$\sum_i |A_i| = \sum_x m(x).$$
-Total size equals total multiplicity. Obvious, once you see it.
+$$\Pr[\text{failure}] \;\ge\; \frac{k}{2M}, \qquad \text{valid only when } 2(k-1) \le M.$$
 
-Feeding it the weight $f = m$ itself gives the **second moment**:
-$$\sum_{i}\sum_{j} |A_i \cap A_j| = \sum_x m(x)^2.$$
-The left side runs over *all* ordered pairs of indices, including $i = j$. Peel off the
-diagonal and you get the quantity that will do all the work in this article — the
-**pair-correlation sum**
-$$P \;=\; \sum_{i \neq j} |A_i \cap A_j| \;=\; \sum_x m(x)\bigl(m(x)-1\bigr).$$
+Look at that side condition. It says the bound is available *only in the regime where the bound is small*. Precisely when $k$ approaches $M$ — the interesting regime, the wall — the guarantee evaporates. Something is wrong. But what?
 
-The right-hand expression is worth staring at. The number $m(m-1)$ is the count of ordered
-pairs of *distinct* sets both containing $x$. So $P$ is a census of collisions: how badly,
-in total, the family overlaps itself.
+Two suspects. Maybe the **marginals** — the probabilities $1/M$ and $1/M^2$ we fed in — are too crude, and a sharper description of the geometry of collision events would fix things. Or maybe the **machinery** — the Bonferroni inequality itself — is the bottleneck, and the same two numbers, fed to a different machine, would already do better.
 
----
+The answer, it turns out, is: **the machinery**.
 
-### Two inequalities the machine emits
+## A different machine: the second moment
 
-Now watch what falls out of nothing but the elementary fact that
-$(m-1)^2 \ge 0$, i.e. $2m \le 1 + m^2$, applied at every point.
+Here is the replacement. For any finite family $A_1,\dots,A_k$ of subsets of a finite universe,
 
-**The second Bonferroni inequality.** For *any* finite family of finite sets,
-$$\sum_i |A_i| \;\le\; \Bigl|\bigcup_i A_i\Bigr| \;+\; \sum_{i \neq j} |A_i \cap A_j|.$$
+$$\Bigl(\sum_{i=1}^{k} |A_i|\Bigr)^{2} \;\le\; \Bigl|\bigcup_{i=1}^{k} A_i\Bigr| \cdot \sum_{i,j=1}^{k} |A_i \cap A_j|.$$
 
-Read it as a warning about greedy packing: if you want the sets to be big, either their
-union must be big, or they must collide a lot. There is no third option.
+This is the **Chung–Erdős inequality** in exact counting form — the second-moment or Paley–Zygmund method, stripped of all measure theory and written as a statement about integers.
 
-There is a pleasing rigidity here: the inequality is an *equality exactly when the sets
-are pairwise disjoint*. Any slack at all comes from some point that lies in either zero or
-at least two of the sets; conversely, if every point of the union has multiplicity exactly
-one, the two sides agree. So the inequality's boundary is precisely the trivial case, and
-every nontrivial family is strictly inside it. (For instance, two copies of the single-point
-set $\{0\}$ give $2 < 1 + 2$.)
+Its proof is a double count that fits in a paragraph. For each point $w$ of the union, let $f(w)$ be its **multiplicity**: the number of indices $i$ with $w \in A_i$. Then summing multiplicities one set at a time gives $\sum_i |A_i| = \sum_{w} f(w)$, and summing over ordered pairs gives $\sum_{i,j} |A_i \cap A_j| = \sum_{w} f(w)^2$, because a point $w$ lies in $A_i \cap A_j$ for exactly $f(w)^2$ ordered pairs $(i,j)$. So the inequality is nothing but Cauchy–Schwarz,
 
-**The double-collision bound.** Call $x$ a *double collision* if $m(x) \ge 2$. Then
-$$2 \cdot \#\{x : m(x) \ge 2\} \;\le\; \sum_{i \neq j} |A_i \cap A_j|.$$
-Each doubly-covered point contributes at least $2\cdot 1 = 2$ to the collision census, so
-the count of such points cannot exceed half of it. This one is sharp: take $A_1 = A_2 =
-\{0\}$ and both sides equal $2$.
+$$\Bigl(\sum_{w \in U} f(w)\Bigr)^2 \le |U| \sum_{w \in U} f(w)^2,$$
 
-**And the strong form.** Apply the Cauchy–Schwarz inequality to $\sum_x m(x)$ instead of
-the pointwise bound, and the same identity yields a genuinely stronger statement, usually
-attributed to Corrádi:
-$$\Bigl(\sum_i |A_i|\Bigr)^{\!2} \;\le\; \Bigl|\bigcup_i A_i\Bigr| \cdot
-\Bigl(\sum_i |A_i| \;+\; \sum_{i\neq j} |A_i \cap A_j|\Bigr).$$
+applied to the multiplicity function on the union $U$. Bonferroni controls the union by a *linear* overcount; Chung–Erdős controls it by a *quadratic* one — and quadratics are gentler where linear estimates blow up.
 
-Squaring the left-hand side is what turns a linear statement into one with real teeth: it
-is the difference between bounds of the form "$|A| \lesssim N$" and "$|A| \lesssim
-\sqrt{N}$".
+## The marginal-profile theorem
 
-That is the entire machine. Three lines of output, all consequences of one double count
-and one application of Cauchy–Schwarz. **None of the three knows anything about arithmetic,
-geometry, or graphs.**
+Now abstract away from hashing entirely. Suppose all you know about a family $A_1,\dots,A_k$ inside a universe of size $N$ is its **marginal profile**:
 
----
+* every set has **first marginal exactly $1/m$**, meaning $m \cdot |A_i| = N$;
+* every ordered pair of distinct sets has **second marginal at most $1/c$**, meaning $c \cdot |A_i \cap A_j| \le N$.
 
-### Turning the crank: uniform marginals
+Then feeding these into the second-moment inequality yields, with no further hypotheses at all,
 
-Suppose now you feed the machine $k$ sets, each of size exactly $m$, any two of which meet
-in at most $t$ points. Corrádi's form immediately gives
-$$k\,m^2 \;\le\; \Bigl|\bigcup_i A_i\Bigr| \cdot \bigl(m + (k-1)t\bigr).$$
+$$c\,k\,N \;\le\; m \cdot \Bigl|\bigcup_i A_i\Bigr| \cdot \bigl(c + m(k-1)\bigr),$$
 
-This one inequality is the workhorse. Everything that follows is obtained by choosing
-*what the $k$ sets are*.
+or in probability form
 
----
+$$\Pr\Bigl[\bigcup_i A_i\Bigr] \;\ge\; \frac{k}{m + \dfrac{m^2 (k-1)}{c}}.$$
 
-### First crank: perfect rulers
+The derivation is three lines of bookkeeping. The first moment gives $m\sum_i |A_i| = kN$. The second moment splits into $k$ diagonal terms (each $|A_i|$) and $k(k-1)$ off-diagonal terms (each at most $N/c$). Substituting both into Chung–Erdős and cancelling a factor of $kN$ gives the displayed inequality.
 
-A set $A$ inside an abelian group $G$ is called a **Sidon set** if all its pairwise sums
-are as distinct as possible: whenever $a + b = c + d$ with $a,b,c,d \in A$, the pair
-$\{a,b\}$ must equal the pair $\{c,d\}$. Equivalently, all differences $a - b$ with
-$a \ne b$ are distinct. These are the "perfect rulers" of additive number theory — mark
-a ruler at the positions of a Sidon set and every distance appears at most once. Sidon
-sets underpin radar-pulse design, sonar sequences, error-correcting codes and
-collision-free frequency-hopping schemes; a big Sidon set is a good set of channels
-because no two pairs interfere in the same way.
+**And there is no side condition.** No "valid only when $2(k-1) \le M$". The bound holds for every $k$, every $m$, every $c$. That is the whole point: the regime restriction in the original argument was never a fact about collisions. It was an artefact of which inequality happened to be reached for.
 
-How large can a Sidon set in a group of size $N$ be? Here is where the marginal choice
-enters, in a way that is startlingly clean.
+## Two sanity checks that go opposite ways
 
-Take the Sidon set $A$ and consider its **translates** $A + g = \{a + g : a \in A\}$. Two
-facts are immediate. First, every translate has exactly $|A|$ elements. Second — and this
-is the entire arithmetic content of the argument — *two distinct translates of a Sidon set
-share at most one point*. Indeed, if $A+g$ and $A+h$ shared two points, we would get two
-genuinely different representations of one group element as a sum of two elements of $A$,
-which is exactly what the Sidon condition forbids.
+A bound with no side conditions invites two questions. Is it sharp? And is the second marginal really needed?
 
-So a Sidon set manufactures, for free, a family of equal-sized sets with pairwise
-intersections $t = 1$: precisely the input the machine wants. Choose any nonempty set $S$
-of shifts, feed in the family $\{A + g : g \in S\}$, and the uniform bound reads
+Both have crisp answers, and they come from the *same* example: the **constant family**. Take a universe with just $N = 2$ points and let $A_1 = A_2 = A_3$ all be the same single point. Then $m = 2$ (each set is half the universe), and the pairwise intersections are also that single point, so $c = 2$ as well — the worst possible pairwise behaviour, no better than the singles. And $k = 3$.
 
-$$\boxed{\;|S| \cdot |A|^2 \;\le\; |G| \cdot \bigl(|A| + |S| - 1\bigr).\;}$$
+Plug in. The theorem predicts $c\,k\,N = 2 \cdot 3 \cdot 2 = 12$ on the left, and $m|U|(c + m(k-1)) = 2 \cdot 1 \cdot (2 + 2\cdot 2) = 12$ on the right. **Equality.** So the marginal-profile theorem is *attained*: no better bound can be extracted from the numbers $(m, c, k, N)$ alone. Any improvement must know something extra about the family.
 
-That is the master inequality. And now the punchline: **different choices of $S$ give
-genuinely different theorems.**
+Now try the Bonferroni-shaped conclusion $|U| \ge kN/(2m)$ on the same family. It asserts $2m|U| \ge kN$, i.e. $2 \cdot 2 \cdot 1 = 4 \ge 6$. **False.** The constant family has a perfect first marginal and no pairwise control whatsoever, and it demolishes the conclusion. So the pairwise hypothesis genuinely carries weight; you cannot get a union bound of this strength from the first marginal alone.
 
-*Choice one: $S = A$.* Use only the $|A|$ translates by elements of $A$ itself. Then
-$|S| = |A|$ and the master inequality collapses to
-$$|A|^3 \;\le\; (2|A| - 1)\cdot |G|,$$
-which says roughly $|A| \lesssim \sqrt{2|G|}$.
+Together: the abstract theorem is exactly as strong as its inputs permit, and its inputs are exactly what it needs.
 
-*Choice two: $S = G$.* Use *all* $|G|$ translates. Then $|S| = |G|$, the factor $|G|$
-cancels from both sides, and out drops
-$$|A| \,(|A| - 1) \;\le\; |G| - 1,$$
-the sharp **Erdős–Turán bound**, giving $|A| \lesssim \sqrt{|G|}$ with the correct
-constant. This is the classical theorem, and it is the best possible: for infinitely
-many orders $N$ — namely $N = q^2+q+1$ with $q$ a prime power — there are Sidon sets, the
-perfect difference sets, for which $|A|(|A|-1) = |G|-1$ holds with *equality*.
+## Back to hashing: an unconditional converse
 
-Same set $A$. Same machine. Same universal inequality. The only difference is *which
-marginals were fed in* — and the second choice is better by a factor of $\sqrt{2}$ in the
-constant.
+Return to the compression problem and feed the same two marginals — $m = M$ for a single collision, $c = M^2$ for a pair — into the new machine. Out comes
 
-Is that gap real, or just sloppiness in the estimates? It is real, and one can pin it down
-exactly. First, the all-translate output always implies the self-translate output:
-whenever $m(m-1) \le N - 1$ holds, so does $m^3 \le (2m-1)N$. So the two conclusions are
-*ordered*. Second, the ordering is strict, and one can name the witness: at $N = 100$ and
-$m = 13$ we have $m^3 = 2197 \le 2500 = (2m-1)N$, but $m(m-1) = 156 > 99 = N - 1$. A
-hypothetical set of size $13$ in a group of size $100$ passes the weak test and fails the
-strong one. The self-translate marginal simply cannot see that such a set is impossible.
+$$\Pr[\text{failure}] \;\ge\; \frac{k}{M + k - 1}, \qquad \text{for all } k, \; \text{for all } M \ge 1.$$
 
----
+Three things are worth noticing.
 
-### Second crank: graphs with no rectangles
+First, **it never loses**. Whenever the old side condition $2(k-1) \le M$ held, we have $M + k - 1 \le 2M$, so $k/(M+k-1) \ge k/(2M)$: the new bound dominates the old one throughout the old bound's entire domain of validity.
 
-Now feed the same machine something completely unrelated. Take a finite graph, and for
-each vertex $v$ let $A_v = N(v)$ be its set of neighbours. The intersection $N(u) \cap
-N(v)$ is the set of *common neighbours* of $u$ and $v$. So the hypothesis "any two distinct
-vertices have at most one common neighbour" — equivalently, the graph contains no
-four-cycle $C_4$, no "rectangle" — is exactly the input condition $t = 1$.
+Second, **it has content the old bound could never have had**. As soon as $k \ge M$ — as soon as there are at least as many competing typical messages as there are labels — the new bound gives $k/(M+k-1) > 1/2$. A uniformly random codebook fails **more than half the time**. That is a genuine converse to Shannon's positive result: random hashing does not merely stop being provably good above the pigeonhole rate, it is provably bad. The old bound is not just weaker here; it is unavailable, since its hypothesis fails and its value exceeds $1$.
 
-The sum of all neighbourhood sizes is the sum of the degrees, which is $2|E|$ by the
-handshake lemma; the union of the neighbourhoods lives inside the vertex set. Corrádi's
-form spits out
+Third, and most tellingly, **not a single new probability estimate was required**. The same two marginals that gave the conditional bound give the unconditional one. The improvement is entirely in the machine.
 
-$$(2|E|)^2 \;\le\; |V| \cdot \bigl(2|E| + |V|(|V|-1)\bigr),$$
+## What the events actually look like
 
-which rearranges to $|E| = O(|V|^{3/2})$: **Reiman's theorem**. A rectangle-free graph on
-$n$ vertices has at most about $\tfrac12 n^{3/2}$ edges — dramatically fewer than the
-$\binom{n}{2} \approx \tfrac12 n^2$ available. And once again the bound is essentially
-attained, this time by the incidence graph of a finite projective plane.
+Having settled the question, one naturally wants to know how much room was left in those marginals. The answer is: essentially none, and understanding why brings out a pretty piece of geometry.
 
-Nothing in the machine changed. Only the marginals: translates of a Sidon set became
-neighbourhoods of a graph, and additive number theory became extremal graph theory.
+Call a **collision pattern** any graph $P$ on the set of messages, and let its **pattern event** be the set of codebooks that realise every collision demanded by $P$ — that is, $H(a) = H(b)$ for every edge $(a,b)$ of $P$. Which codebooks are these? A codebook realises the pattern precisely when it is constant on each connected component of the pattern graph, since equality propagates along paths. So a codebook satisfying $P$ is exactly a free choice of one label per component:
 
----
+> **The component law.** The number of codebooks realising a collision pattern $P$ is exactly $M^{\,c(P)}$, where $c(P)$ is the number of connected components of $P$ (isolated vertices included).
 
-### The separation of concerns
+Every marginal one might feed into any Bonferroni- or moment-type expansion is an instance. The **star pattern**, in which a whole set $T$ of competitors is joined to a fixed message $x \notin T$, collapses $T \cup \{x\}$ into a single component and leaves the rest alone, so it has $|\iota| - |T|$ components, where $|\iota|$ is the total number of messages. Its probability is therefore exactly $M^{-|T|}$: a prescribed star of $t$ collisions happens with probability exactly $1/M^t$. The two marginals fed into the original argument are the cases $t = 1$ and $t = 2$.
 
-Here, then, is the thesis, now a theorem rather than a slogan:
+In particular the second marginal — fed in as an *inequality*, "at most $1/M^2$" — is in fact an *equality*. There was no slack to recover. And here is the striking part: two collisions sharing a vertex ($H(p) = H(r)$ and $H(q) = H(r)$) and two collisions on disjoint pairs ($H(p) = H(q)$ and $H(r) = H(s)$) are geometrically very different patterns, yet both have probability exactly $1/M^2$, because both remove exactly two components. **The machinery is blind to the shape of a pattern and sees only its component count.** Which is exactly why improving the answer required changing the machinery.
 
-> The Bonferroni/Corrádi inequalities are **universal** — they hold for every finite family
-> and carry no arithmetic, geometric or combinatorial information whatsoever. All content
-> of a bound obtained from them is contained in the *marginals*: the index set, the common
-> size of the members, and the pair-intersection bound.
+## The exact answer, and where everything sits
 
-This reframes what a "clever proof" is. When somebody proves an extremal bound by double
-counting, the reader's admiration should not go to the double count — that step is
-mechanical, and always available. It should go to the *design of the family*. Erdős and
-Turán's insight was not the counting; it was seeing that the right thing to count is *all*
-translates rather than a natural-looking subfamily.
+One can go further still and compute the failure probability outright. The key is a **conditional marginal principle**: if an event $G$ places no constraint on the label of message $y$ — formally, if $G$ is stable under overwriting the $y$-th coordinate of a codebook — then conditionally on $G$ the collision $H(y) = H(x)$ still has probability exactly $1/M$. Peeling off competitors one at a time, each new competitor multiplies the *survival* count by exactly $(M-1)/M$, and induction gives the exact law:
 
-And this reframing is productive, because it tells you where to look for improvements. If
-your bound is too weak, do not sharpen the machine — the machine is exact at its boundary
-and cannot be sharpened. Enlarge or re-design the family. Or, if you have exhausted the
-pairwise information entirely, climb a level.
+$$\Pr[\text{failure}] \;=\; 1 - \Bigl(1 - \frac{1}{M}\Bigr)^{k}.$$
 
----
+Brute-force enumeration confirms it in small cases: with $3$ messages and $2$ labels there are $8$ codebooks and exactly $8 - 1^2\cdot 2 = 6$ failing ones; with $4$ messages and $3$ labels, $81 - 2^3 \cdot 3 = 57$ of the $81$ codebooks fail.
 
-### Climbing a level
+With the exact law in hand every estimate in the story falls into place. Bernoulli's inequality in one direction recovers Shannon's $k/M$; a small integer inequality, $(M-1)^j(M+j) \le M^{j+1}$, in the other direction shows the second-moment bound $k/(M+k-1)$ is implied by, and strictly weaker than, the exact law. The result is a clean hierarchy, valid for every typical set, every $M \ge 1$ and every $k \le M+1$:
 
-The double count that produced the second moment does not stop there. Run it once more and
-you obtain the *triple*-correlation identity
-$$\sum_{i}\sum_{j}\sum_{k} |A_i \cap A_j \cap A_k| \;=\; \sum_x m(x)^3,$$
-and from it a clean third-order relation, free of any subtraction:
-$$\sum_x m(x)\bigl(m(x)-1\bigr)\bigl(m(x)-2\bigr) \;+\; 3\sum_{i,j}|A_i \cap A_j|
-\;=\; \sum_{i,j,k}|A_i \cap A_j \cap A_k| \;+\; 2\sum_i |A_i|.$$
-This is inclusion–exclusion for ordered triples of *distinct* indices covering a point, and
-it yields the exact analogue of the double-collision bound one storey up:
-$$6\cdot\#\{x : m(x) \ge 3\} \;\le\; \sum_x m(x)(m(x)-1)(m(x)-2).$$
+$$\frac{k}{2M} \;\le\; \frac{k}{M+k-1} \;\le\; \Pr[\text{failure}] \;=\; 1 - \Bigl(1-\frac{1}{M}\Bigr)^{k} \;\le\; \frac{k}{M}.$$
 
-Why bother? Because the second-moment machinery is *blind* by design: it sees only pair
-correlations. For questions where the essential structure is genuinely higher-order — sets
-in which every element has at most one representation as a sum of $h \ge 3$ members, the
-so-called $B_h$-sets — no cunning choice of two-set marginals can beat the naive counting
-argument, because the pairwise data simply does not contain the answer. The improvement
-must come from the third floor of the building, not a better arrangement of furniture on
-the second.
+The original Bonferroni output sits at the far left — the weakest member of a four-term chain whose middle terms use only the first two marginals. The failure probability of a uniformly random codebook is $\Theta(\min(1, k/M))$ for all $k$ and $M$, with no regimes and no exceptions.
 
----
+## Making it deterministic
 
-### Why this matters beyond the theorems
+A last dividend. Random coding is only ever a device: what you want at the end is one *fixed* codebook that works. The standard derandomisation averages the union bound over all codebooks and produces a codebook losing at most $|S|(|S|-1)/M$ typical messages. That statement is vacuous the moment $|S| - 1 \ge M$ — again, exactly the interesting regime.
 
-There is a broader lesson here about how mathematics is actually done. We tend to describe
-proofs as monolithic acts of ingenuity. Very often they are not: they are a *universal
-engine* plus a *choice*. The engine is public, reusable, and provable once and for all. The
-choice is where the mathematics lives.
+Averaging the *exact* law instead, one obtains a codebook $H$ with
 
-Making that split explicit has practical consequences. It tells you which parts of an
-argument transfer across fields for free — the machine works identically on groups, graphs,
-designs and set systems. It tells you which parts must be reinvented every time — the
-marginals. And it tells you, when a bound stubbornly refuses to improve, whether you are
-fighting a limitation of your method or a limitation of the mathematics.
+$$M^{k}\,|\mathrm{bad}(H)| \;\le\; |S|\,\bigl(M^{k} - (M-1)^{k}\bigr), \qquad k = |S| - 1,$$
 
-The machine knows nothing. That is exactly why it works everywhere. What it produces is
-whatever you were wise enough to put in.
+that is, a fixed codebook losing at most a $1 - (1 - 1/M)^{k}$ fraction of the typical set. For $M \ge 2$ that fraction is strictly less than $1$ however large $S$ is: **the statement is never vacuous.** And the integer inequality $M^k - (M-1)^k \le k\,M^{k-1}$ — that is, $1 - (1-1/M)^k \le k/M$ — shows the new bound always implies the old one. Strictly better, everywhere.
+
+## The moral
+
+It is easy, when a bound comes out with an awkward hypothesis attached, to blame the estimates and go hunting for sharper ones. Here the estimates were already exact — the pairwise marginal was an equality, not an inequality, and no refinement of it existed to be found. The awkward hypothesis lived entirely in the inequality that consumed them.
+
+Bonferroni and Chung–Erdős take *identical* input: a first marginal and a second marginal. They differ in what they do with it. One overcounts linearly and breaks down when the overcount exceeds the truth; the other overcounts quadratically and degrades gracefully forever. Swapping them turned a bound with an artificial ceiling into an unconditional converse — and, as a bonus, into a converse strong enough to say that above the pigeonhole rate random hashing fails more often than it succeeds.
+
+When a theorem carries a side condition, it is always worth asking which half of the argument it belongs to. Sometimes the answer is that your data were fine all along, and you were simply using the wrong machine.

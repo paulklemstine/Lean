@@ -1,598 +1,447 @@
-# The Bonferroni Machinery and the Marginal Selection Principle
+# Which Marginals Feed the Machine? Second-Moment Union Bounds, Exact Collision Marginals, and an Unconditional Converse for Random Hashing
 
 **Author:** Aristotle
-**Date:** 2026-08-20
+**Date:** 2026-08-22
 
 ---
 
 ## Abstract
 
-We isolate and make precise a separation of concerns that is implicit in a large family of
-extremal counting arguments. For an arbitrary finite family $A_1,\dots,A_k$ of finite sets
-we develop a small collection of inequalities — the second Bonferroni inequality
-$\sum_i |A_i| \le |\bigcup_i A_i| + \sum_{i\neq j}|A_i \cap A_j|$, a double-collision
-bound $2\,\#\{x : m(x)\ge 2\} \le \sum_{i\neq j}|A_i \cap A_j|$, and the Cauchy–Schwarz
-strengthening $(\sum_i |A_i|)^2 \le |\bigcup_i A_i|\cdot(\sum_i|A_i| + \sum_{i\neq j}|A_i\cap A_j|)$
-of Corrádi — all of which descend from a single Fubini identity for the multiplicity
-function $m(x) = \#\{i : x\in A_i\}$. These statements are *universal*: they hold for every
-family and carry no arithmetic, geometric or structural information. We show that the
-Bonferroni inequality is an equality precisely for pairwise disjoint families, so the
-machinery is exact at its boundary and admits no strengthening at that level.
+Lower bounds on the probability of a union of events are commonly obtained by feeding two *marginals* — the probability of a single event and the probability of a pair of events — into the second Bonferroni inequality. Applied to the failure event of a uniformly random hashing codebook, this route yields the bound $\Pr[\text{failure}] \ge k/(2M)$ on $k$ competing messages and $M$ labels, but only in the regime $2(k-1) \le M$. We ask whether that regime restriction is a property of the marginals or of the inequality, and prove that it is a property of the inequality.
 
-It follows that any concrete extremal bound derived this way is determined entirely by the
-choice of *marginals* fed into the machinery — the index set, the common size of the
-members, and the pair-intersection bound. We turn that slogan into theorems. From one and
-the same Sidon set $A$ in a finite abelian group $G$ we derive a master inequality
-$$|S|\cdot|A|^2 \le |G|\cdot(|A| + |S| - 1)$$
-valid for every nonempty set $S$ of shifts, and analyse its two extreme instances: taking
-$S = A$ yields $|A|^3 \le (2|A|-1)|G|$, i.e. $|A| \lesssim \sqrt{2|G|}$, while taking
-$S = G$ yields the sharp Erdős–Turán bound $|A|(|A|-1) \le |G| - 1$, i.e.
-$|A| \lesssim \sqrt{|G|}$. We prove that these two outputs are *strictly ordered*: the
-sharp bound always implies the weaker one, and there are explicit parameters at which the
-weaker holds and the sharp fails. Feeding the same machinery the neighbourhood marginals of
-a graph with no two vertices having two common neighbours produces Reiman's bound
-$|E| = O(|V|^{3/2})$, a cross-domain instantiation with no change to the engine. Finally we
-develop the third-order layer — a triple-correlation identity and a triple-collision bound
-— which is the natural place to look for improvements invisible to pair correlations.
+We first establish, in exact counting form and for an arbitrary finite family of finite sets, the Chung–Erdős (second-moment) inequality $(\sum_i |A_i|)^2 \le |\bigcup_i A_i| \cdot \sum_{i,j} |A_i \cap A_j|$, by double counting the multiplicity function and applying Cauchy–Schwarz. From it we derive an abstract **marginal-profile theorem**: a family whose members each have measure exactly $1/m$ and whose distinct pairs each have measure at most $1/c$ satisfies $c\,k\,N \le m\,|\bigcup_i A_i|\,(c + m(k-1))$, with no restriction on the number $k$ of sets. We show the bound is attained by a constant family, hence unimprovable as a function of the profile $(m,c,k,N)$, and that the Bonferroni-shaped conclusion $|\bigcup_i A_i| \ge kN/(2m)$ *fails* for that same family, so the pairwise hypothesis is load-bearing.
 
-**Keywords:** Bonferroni inequalities, Corrádi's lemma, double counting, Sidon sets,
-Erdős–Turán bound, $C_4$-free graphs, Reiman's inequality, Kővári–Sós–Turán, multiplicity
-function, higher moments.
+Instantiating with the two hashing marginals gives $\Pr[\text{failure}] \ge k/(M+k-1)$ unconditionally; this dominates $k/(2M)$ throughout the Bonferroni regime $k \le M+1$, and yields a genuine converse to Shannon's random-coding bound: for $k \ge M$ a uniformly random codebook fails with probability strictly greater than $1/2$.
+
+We then compute all the relevant marginals exactly. A **component law** states that the number of codebooks realising an arbitrary prescribed collision pattern equals $M$ raised to the number of connected components of the pattern graph; consequently a prescribed star of $t$ collisions has probability exactly $M^{-t}$, the pairwise input above is an equality rather than an inequality, and vertex-sharing and vertex-disjoint pairs of collisions have the same marginal. A **conditional marginal principle** — a collision has conditional probability exactly $1/M$ given any event that does not constrain the relevant coordinate — yields the exact failure law $\Pr[\text{failure}] = 1 - (1-1/M)^k$, from which we recover the Shannon bound $k/M$ and the matching lower bound $k/(M+k)$, and establish the hierarchy
+$$\frac{k}{2M} \le \frac{k}{M+k-1} \le \Pr[\text{failure}] = 1-\Bigl(1-\tfrac1M\Bigr)^k \le \frac{k}{M}.$$
+Finally, averaging the exact law rather than the union bound produces a **derandomisation** that is never vacuous: some fixed codebook loses at most a $1-(1-1/M)^{|S|-1}$ fraction of the typical set, a bound that always implies the classical $|S|(|S|-1)/M$ estimate.
+
+**Keywords:** Chung–Erdős inequality, Bonferroni inequalities, second moment method, random hashing, almost-lossless source coding, collision patterns, derandomisation, converse bounds.
 
 ---
 
 ## 1. Introduction
 
-### 1.1 The phenomenon
+### 1.1 The problem
 
-A striking number of extremal theorems are proved by the following recipe.
+Let $\alpha$ be a finite alphabet of messages and let $M \ge 1$ be a number of labels. A **codebook** is a function $H : \alpha \to \{0,1,\dots,M-1\}$; the set of codebooks has cardinality $M^{|\alpha|}$, and "a uniformly random codebook" means the uniform measure on this finite set, equivalently independent uniform labels for distinct messages.
 
-1. Attach to the object of interest a family of finite sets.
-2. Observe that the sets are large and pairwise nearly disjoint.
-3. Conclude that there cannot be too many of them, or that the ambient space must be large.
+Fix a **typical set** $S \subseteq \alpha$ and a transmitted message $x \in S$. The codebook fails at $x$ if some other typical message shares its label:
+$$\mathrm{fail}(S,x,M) \;=\; \bigl\{\, H : \exists\, y \in S \setminus \{x\},\; H(y) = H(x) \,\bigr\}.$$
+Writing $k = |S \setminus \{x\}|$ for the number of competitors, Shannon's random-coding (union) bound gives $\Pr[\mathrm{fail}] \le k/M$: compression at $M \gg k$ labels succeeds with high probability.
 
-Step 3 is always the same. It is a double count, followed at most by an application of
-Cauchy–Schwarz. It is *completely insensitive* to what the sets are, where they live, or
-how they were produced. Steps 1 and 2 are where every trace of arithmetic, geometry or
-combinatorics resides.
+The converse direction — lower bounds on $\Pr[\mathrm{fail}]$ — is standardly obtained from the **second Bonferroni inequality**, which in exact counting form reads
+$$\sum_{i \in I} |A_i| \;\le\; \Bigl|\bigcup_{i\in I} A_i\Bigr| \;+\; \sum_{(i,j) \in I^{\mathrm{offdiag}}} |A_i \cap A_j| \tag{B}$$
+for an arbitrary finite family $(A_i)_{i \in I}$ of finite sets. Feeding (B) the two hashing marginals
 
-This paper makes that observation into mathematics. We call the apparatus behind step 3 the
-**Bonferroni machinery**, and the data supplied by steps 1–2 the **marginals**. We prove
-the machinery once, in maximal generality; we prove that it is tight at its natural
-boundary and hence not improvable at that level; and we then demonstrate — with two
-different marginal choices built from one and the same object — that the strength of the
-resulting theorem is a strictly increasing function of the marginals fed in, not of any
-ingenuity in the machinery.
+* **first marginal:** $M \cdot |\{H : H(y) = H(x)\}| = M^{|\alpha|}$, i.e. probability $1/M$;
+* **second marginal:** $M^2 \cdot |\{H : H(p) = H(r) = H(q)\}| \le M^{|\alpha|}$, i.e. probability at most $1/M^2$;
 
-### 1.2 Statement of the principle
+produces
+$$\Pr[\mathrm{fail}] \;\ge\; \frac{k}{2M}, \qquad \text{valid only when } 2(k-1) \le M. \tag{1.1}$$
 
-> **Marginal selection principle.** The Bonferroni/Corrádi inequalities are universal: they
-> hold for every finite family of finite sets and contain no information about the family
-> beyond its incidence pattern. Hence a concrete extremal bound obtained from them is a
-> function only of the marginals — the number of members, their common size, and the
-> pair-intersection bound. Improving such a bound requires changing the marginals (or
-> raising the order of the moment used), never the machinery.
+The side condition is unsatisfying. It restricts the conclusion to precisely the regime in which the conclusion is weak, and it disappears exactly where a converse would be interesting, namely as $k$ approaches and exceeds $M$.
 
-Sections 2–3 develop the machinery; Section 4 makes the principle quantitative for Sidon
-sets; Section 5 instantiates it in graph theory; Section 6 develops the third-order layer;
-Section 7 records sharpness data; Sections 8–9 discuss applications and open problems.
+### 1.2 The question, and the answer
 
-### 1.3 Notation
+Inequality (B) is stated for an *arbitrary* finite family. The hypothesis $2(k-1) \le M$ therefore cannot come from (B)'s generality; it must come either from the two marginals fed in or from the algebraic shape of (B) itself. This paper answers the question:
 
-Throughout, $\iota$ is a finite index set of cardinality $k$, $\alpha$ is a type with
-decidable equality, and $A : \iota \to \mathcal{P}_{\mathrm{fin}}(\alpha)$, written
-$i \mapsto A_i$, is a family of finite sets. We write $|X|$ or $\#X$ for cardinality. All
-quantities are natural numbers, and all identities below are stated so as to avoid
-truncated subtraction wherever it would matter.
+> **Is the regime restriction a property of the marginals, or of the machinery?**
+
+**Answer: of the machinery.** The identical two marginals, fed into the second-moment (Chung–Erdős) inequality instead of into (B), yield
+$$\Pr[\mathrm{fail}] \;\ge\; \frac{k}{M+k-1} \qquad \text{for all } k \text{ and all } M \ge 1, \tag{1.2}$$
+which dominates (1.1) throughout the regime where (1.1) is valid and remains informative — indeed remains greater than $1/2$ — when $k \ge M$.
+
+We complement this with a complete determination of the marginals themselves (Section 4), showing that no sharpening of the inputs was available: the second marginal is an equality, not an inequality. And we compute the failure probability exactly (Section 5), locating all bounds in a single hierarchy (Section 6), before applying the exact law to derandomisation (Section 7).
+
+### 1.3 Organisation
+
+Section 2 fixes notation. Section 3 develops the second-moment machinery and the abstract marginal-profile theorem, together with its sharpness and the necessity of the pairwise hypothesis. Section 4 computes exact marginals of arbitrary collision patterns via collapse maps and via the component law. Section 5 proves the conditional marginal principle and the exact failure law. Section 6 assembles the hierarchy of bounds. Section 7 treats exact derandomisation. Section 8 discusses algorithms and applications; Section 9 collects open directions.
 
 ---
 
-## 2. The machinery
+## 2. Setting and notation
 
-### 2.1 Multiplicity and support
+Throughout, $\iota$ and $\alpha$ denote finite index sets (of messages), $M \ge 1$ is the number of labels, and codebooks are functions into a fixed $M$-element label set, which we identify with $\mathbb{Z}/M$. The ambient probability space is the set of all $M^{|\alpha|}$ codebooks with the uniform measure; all "probabilities" below are ratios of cardinalities with denominator $M^{|\alpha|}$, and all statements are proved as exact statements about integers before being divided.
 
-**Definition 2.1 (Multiplicity).** For a family $A = (A_i)_{i\in\iota}$ and a point $x$,
-the *multiplicity* of $x$ is
-$$m_A(x) \;=\; \#\{\, i \in \iota : x \in A_i \,\}.$$
+**Definition 2.1 (Collision event).** For $p, q \in \iota$, the *collision event* is
+$$C(p,q) \;=\; \{\, H : \iota \to \mathbb{Z}/M \;\mid\; H(p) = H(q) \,\}.$$
 
-**Definition 2.2 (Support).** The *support* of the family is its union,
-$\operatorname{supp}(A) = \bigcup_{i\in\iota} A_i$.
+**Definition 2.2 (Star event).** For $T \subseteq \iota$ and $x \in \iota$, the *star event* is
+$$\mathrm{Star}(T,x) \;=\; \{\, H \mid H(y) = H(x) \text{ for all } y \in T \,\}.$$
 
-Two trivial but constantly used facts: $A_i \subseteq \operatorname{supp}(A)$ for every
-$i$, and $m_A(x) > 0$ if and only if $x \in \operatorname{supp}(A)$.
+**Definition 2.3 (Collision pattern and pattern event).** A *collision pattern* is a finite set $P \subseteq \iota \times \iota$ of ordered pairs, i.e. a directed graph on $\iota$; we always treat it as an undirected graph, since the event it defines is symmetric. Its *pattern event* is
+$$E(P) \;=\; \{\, H \mid H(a) = H(b) \text{ for all } (a,b) \in P \,\}.$$
 
-### 2.2 The Fubini identity
+**Definition 2.4 (Failure event and bad strings).** For $S \subseteq \alpha$ and $x \in S$,
+$$\mathrm{fail}(S,x) \;=\; \bigl\{ H \mid \exists\, y \in S\setminus\{x\},\; H(y)=H(x) \bigr\}, \qquad
+\mathrm{bad}(S,H) \;=\; \bigl\{ x \in S \mid \exists\, y \in S\setminus\{x\},\; H(y)=H(x) \bigr\}.$$
+Note the basic decomposition
+$$\mathrm{fail}(S,x) \;=\; \bigcup_{y \in S \setminus \{x\}} C(y,x), \tag{2.1}$$
+which is what makes union bounds the natural tool.
 
-Everything in this paper is a consequence of a single double count.
+**Definition 2.5 (No-collision event).** For $D \subseteq \iota$ and $x \in \iota$,
+$$\mathrm{NC}(D,x) \;=\; \{\, H \mid H(y) \ne H(x) \text{ for all } y \in D \,\},$$
+the complement of $\mathrm{fail}$ when $D = S \setminus \{x\}$.
 
-**Theorem 2.3 (Fubini for the incidence bipartite graph).** For every weight function
-$f : \alpha \to \mathbb{N}$,
-$$\sum_{i \in \iota} \; \sum_{x \in A_i} f(x) \;=\; \sum_{x \in \operatorname{supp}(A)} m_A(x)\, f(x).$$
-
-*Proof sketch.* Since $A_i \subseteq \operatorname{supp}(A)$, the inner sum may be extended
-to the support with the indicator of $A_i$ as a factor:
-$\sum_{x\in A_i} f(x) = \sum_{x \in \operatorname{supp}(A)} \mathbf{1}[x \in A_i]f(x)$.
-Exchanging the order of the two finite sums and collecting, for each fixed $x$, the
-constant $f(x)$ over the $m_A(x)$ indices $i$ with $x \in A_i$ gives the right-hand side.
-Equivalently: both sides count, with weight $f(x)$, the incidences $(i,x)$ with $x \in A_i$
-in the incidence bipartite graph between indices and points. $\square$
-
-We also record the *localised* version, needed for higher moments: for every finite set $s$
-and every weight $f$,
-$$\sum_{i\in\iota}\;\sum_{x \in s \cap A_i} f(x) \;=\; \sum_{x \in s} m_A(x)\, f(x).
-\tag{2.4}$$
-The proof is identical; the support plays no distinguished role, only the containment
-$s \cap A_i \subseteq s$.
-
-### 2.3 The first two moments
-
-**Corollary 2.5 (First moment).** $\displaystyle \sum_{i} |A_i| = \sum_{x \in \operatorname{supp}(A)} m_A(x)$.
-
-*Proof.* Theorem 2.3 with $f \equiv 1$. $\square$
-
-**Corollary 2.6 (Second moment).**
-$\displaystyle \sum_{i}\sum_{j} |A_i \cap A_j| = \sum_{x \in \operatorname{supp}(A)} m_A(x)^2$,
-the double sum running over all ordered pairs including the diagonal.
-
-*Proof sketch.* For fixed $i$, writing $|A_i \cap A_j| = \sum_{x \in A_i}\mathbf{1}[x\in A_j]$
-and summing over $j$ gives $\sum_j |A_i \cap A_j| = \sum_{x\in A_i} m_A(x)$. Now apply
-Theorem 2.3 with $f = m_A$. $\square$
-
-**Definition 2.7 (Pair-correlation sum).** The *off-diagonal pair-correlation sum* of the
-family is
-$$P(A) \;=\; \sum_{\substack{i,j \in \iota \\ i \neq j}} |A_i \cap A_j|.$$
-
-**Lemma 2.8 (Diagonal splitting).**
-$\displaystyle P(A) + \sum_i |A_i| = \sum_{x \in \operatorname{supp}(A)} m_A(x)^2.$
-
-*Proof.* The diagonal part of the double sum in Corollary 2.6 is
-$\sum_i |A_i \cap A_i| = \sum_i |A_i|$; the ordered index pairs split as diagonal plus
-off-diagonal. $\square$
-
-**Lemma 2.9 (Collision census).**
-$\displaystyle P(A) = \sum_{x \in \operatorname{supp}(A)} m_A(x)\bigl(m_A(x)-1\bigr).$
-
-*Proof.* Combine Corollary 2.5 and Lemma 2.8, using $m^2 - m = m(m-1)$ pointwise (valid in
-$\mathbb{N}$ for $m \ge 1$, which holds on the support). $\square$
-
-Lemma 2.9 is the conceptual heart: $P(A)$ counts *ordered pairs of distinct indices whose
-sets share a point*, aggregated over points.
-
-### 2.4 The two Bonferroni inequalities
-
-**Theorem 2.10 (Second Bonferroni inequality).** For every finite family of finite sets,
-$$\sum_{i} |A_i| \;\le\; \Bigl|\bigcup_i A_i\Bigr| \;+\; \sum_{i \neq j} |A_i \cap A_j|.$$
-
-*Proof sketch.* Pointwise on the support, $(m-1)^2 \ge 0$ gives $2m \le 1 + m^2$. Summing
-over $\operatorname{supp}(A)$ and using Corollary 2.5 on the left and Lemma 2.8 on the
-right yields
-$2\sum_i |A_i| \le |\operatorname{supp}(A)| + P(A) + \sum_i |A_i|$, i.e. the claim.
-$\square$
-
-The inequality is exact at a well-understood boundary.
-
-**Theorem 2.11 (Equality case).**
-$$\sum_i |A_i| = \Bigl|\bigcup_i A_i\Bigr| + \sum_{i\neq j}|A_i \cap A_j|
-\quad\Longleftrightarrow\quad
-A_i \cap A_j = \emptyset \text{ for all } i \neq j.$$
-
-*Proof sketch.* ($\Leftarrow$) If the family is pairwise disjoint then
-$|\bigcup_i A_i| = \sum_i |A_i|$ by additivity of cardinality over a disjoint union, and
-$P(A) = 0$ term by term.
-
-($\Rightarrow$) The pointwise inequality $2m \le 1+m^2$ is *strict* whenever $m \ne 1$. If
-some point $x$ of the support had $m_A(x) \ge 2$, summing would give a strict inequality in
-the proof of Theorem 2.10, contradicting equality. Hence every point of the support has
-multiplicity exactly $1$. But if $x \in A_i \cap A_j$ with $i \ne j$, then the two-element
-index set $\{i,j\}$ witnesses $m_A(x) \ge 2$, a contradiction. $\square$
-
-Theorem 2.11 is the precise sense in which the machinery cannot be improved *at this level*:
-the only families for which it loses nothing are the ones for which it says nothing.
-
-**Definition 2.12.** The *double-collision set* is
-$D(A) = \{x \in \operatorname{supp}(A) : m_A(x) \ge 2\}$.
-
-**Theorem 2.13 (Double-collision bound).** $\;2\,|D(A)| \le P(A)$.
-
-*Proof sketch.* By Lemma 2.9, $P(A) = \sum_{x\in\operatorname{supp}(A)} m(m-1)$, a sum of
-nonnegative terms. Restricting to $D(A)$ and using that $m \mapsto m(m-1)$ is increasing
-with value $2$ at $m = 2$, each of the $|D(A)|$ retained terms is at least $2$. $\square$
-
-### 2.5 The Cauchy–Schwarz strengthening
-
-**Theorem 2.14 (Corrádi's lemma).** For every finite family of finite sets,
-$$\Bigl(\sum_i |A_i|\Bigr)^{\!2} \;\le\; \Bigl|\bigcup_i A_i\Bigr| \cdot
-\Bigl(\sum_i |A_i| \;+\; \sum_{i\neq j}|A_i \cap A_j|\Bigr).$$
-
-*Proof sketch.* Cauchy–Schwarz in the form
-$\bigl(\sum_{x\in s} g(x)\bigr)^2 \le |s|\sum_{x\in s} g(x)^2$, applied with
-$s = \operatorname{supp}(A)$ and $g = m_A$, gives
-$\bigl(\sum_x m\bigr)^2 \le |\operatorname{supp}(A)|\sum_x m^2$. Rewrite the left side with
-Corollary 2.5 and the right side with Lemma 2.8. $\square$
-
-Theorem 2.14 dominates Theorem 2.10 in every application we consider: squaring the total
-size is what converts $|A| \lesssim N$ into $|A| \lesssim \sqrt{N}$.
+**Definition 2.6 (Off-diagonal).** For a finite index set $I$, $I^{\mathrm{offdiag}} = \{(i,j) \in I \times I : i \ne j\}$, of cardinality $|I|^2 - |I|$.
 
 ---
 
-## 3. Uniform marginals
+## 3. The second-moment machinery
 
-We now record, once and for all, the two output shapes produced by the most common marginal
-data: $k$ sets of common size $m$ with pairwise intersections at most $t$.
+### 3.1 The Chung–Erdős inequality in counting form
 
-**Theorem 3.1 (Linear output).** If $|A_i| \ge m$ for every $i$ and $|A_i \cap A_j| \le t$
-for all $i \ne j$, then
-$$k\,m \;\le\; \Bigl|\bigcup_i A_i\Bigr| \;+\; k(k-1)\,t .$$
+**Theorem 3.1 (Chung–Erdős, exact counting form).**
+*Let $\Omega$ be a finite set, $I$ a finite index set and $A : I \to \mathcal{P}(\Omega)$ a family of finite subsets. Then*
+$$\Bigl(\sum_{i \in I} |A_i|\Bigr)^{2} \;\le\; \Bigl|\bigcup_{i \in I} A_i\Bigr| \cdot \sum_{(i,j) \in I \times I} |A_i \cap A_j|.$$
 
-*Proof.* $\sum_i |A_i| \ge km$, and $P(A) \le k(k-1)t$ because the off-diagonal index set
-has exactly $k(k-1)$ elements. Insert both into Theorem 2.10. $\square$
+*Proof.* Write $U = \bigcup_{i \in I} A_i$ and define the **multiplicity function**
+$$f : \Omega \to \mathbb{N}, \qquad f(w) = \#\{ i \in I : w \in A_i \}.$$
+Since $A_i \subseteq U$ for every $i$, we may write $|A_i| = \sum_{w \in U} \mathbf{1}[w \in A_i]$, and exchanging the order of summation gives the **first-moment identity**
+$$\sum_{i \in I} |A_i| \;=\; \sum_{w \in U} f(w).$$
+Similarly, $|A_i \cap A_j| = \sum_{w\in U} \mathbf{1}[w \in A_i]\,\mathbf{1}[w \in A_j]$, and exchanging summation over the product index set gives the **second-moment identity**
+$$\sum_{(i,j) \in I\times I} |A_i \cap A_j| \;=\; \sum_{w \in U} \Bigl(\sum_{i\in I} \mathbf{1}[w \in A_i]\Bigr)^{2} \;=\; \sum_{w \in U} f(w)^2 .$$
+The claim is now precisely Cauchy–Schwarz applied to $f$ and the constant function $1$ on the finite set $U$:
+$\bigl(\sum_{w \in U} f(w)\bigr)^2 \le |U| \sum_{w \in U} f(w)^2$. $\square$
 
-**Theorem 3.2 (Quadratic output; Corrádi form).** If $k \ge 1$, $|A_i| = m$ for every $i$,
-and $|A_i \cap A_j| \le t$ for all $i \ne j$, then
-$$k\,m^2 \;\le\; \Bigl|\bigcup_i A_i\Bigr| \cdot \bigl(m + (k-1)t\bigr).$$
+Two remarks. First, the statement is an inequality between natural numbers; no measure theory, no normalisation, and no positivity hypotheses beyond finiteness are needed. Second, Theorem 3.1 is the *second-moment counterpart* of the Bonferroni inequality (B): both take as input the same data, $\sum_i |A_i|$ and $\sum_{i \ne j} |A_i \cap A_j|$, and both output a lower bound on $|U|$. Bonferroni bounds the overcount linearly; Chung–Erdős bounds it quadratically. The difference in behaviour is exactly the difference between the two shapes.
 
-*Proof sketch.* By Theorem 2.14 with $\sum_i |A_i| = km$ and $P(A) \le k(k-1)t$,
-$(km)^2 \le |\operatorname{supp}(A)|\,(km + k(k-1)t) = k\cdot|\operatorname{supp}(A)|(m+(k-1)t)$.
-Cancel one factor of $k > 0$. $\square$
+### 3.2 The marginal-profile theorem
 
-**Corollary 3.3 (Reiman / Kővári–Sós–Turán case $t=1$).** If $|A_i \cap A_j| \le 1$ for all
-$i \ne j$, then
-$$\Bigl(\sum_i |A_i|\Bigr)^{\!2} \;\le\; \Bigl|\bigcup_i A_i\Bigr|\cdot
-\Bigl(\sum_i |A_i| + k(k-1)\Bigr).$$
+We now isolate the abstract content: what a union bound can say knowing only the *marginal profile* of a family.
 
-The condition $t = 1$ is exactly the statement that the incidence structure between indices
-and points contains no $K_{2,2}$ — no "rectangle". Corollary 3.3 is therefore the abstract
-form of the Kővári–Sós–Turán argument for the forbidden complete bipartite graph
-$K_{2,2}$.
+**Definition 3.2 (Marginal profile).** Let $N \ge 1$ be the size of an ambient space, $I$ a finite index set of size $k$, and $A : I \to \mathcal{P}(\Omega)$ a family. We say $A$ has **first marginal exactly $1/m$** if $m\,|A_i| = N$ for all $i \in I$, and **second marginal at most $1/c$** if $c\,|A_i \cap A_j| \le N$ for all $(i,j) \in I^{\mathrm{offdiag}}$.
 
-Note what has and has not happened. Theorems 3.1–3.3 are still universal: they refer to no
-structure at all. Everything that will distinguish a good theorem from a mediocre one is
-the *choice of the family* whose $(k, m, t)$ we insert.
+**Theorem 3.3 (Marginal-profile lower bound).**
+*Let $A : I \to \mathcal{P}(\Omega)$ have first marginal exactly $1/m$ and second marginal at most $1/c$ relative to $N \ge 1$, and set $k = |I|$, $U = \bigcup_{i\in I} A_i$. Then*
+$$c\,k\,N \;\le\; m\,|U|\,\bigl(c + m(k-1)\bigr).$$
+*Equivalently, if $m, c \ge 1$,*
+$$\frac{|U|}{N} \;\ge\; \frac{c\,k}{m\,\bigl(c + m(k-1)\bigr)} \;=\; \frac{k}{m + \dfrac{m^{2}(k-1)}{c}}.$$
+***There is no restriction relating $k$, $m$ and $c$.***
 
----
+*Proof.* The case $k = 0$ is trivial, so assume $k \ge 1$. Put $T = \sum_{(i,j) \in I \times I} |A_i \cap A_j|$.
 
-## 4. The marginal selection principle for Sidon sets
+*First moment.* From $m|A_i| = N$ for each $i$,
+$$m \sum_{i \in I} |A_i| = kN. \tag{3.1}$$
 
-### 4.1 Sidon sets
+*Second moment.* Splitting $I \times I$ into its diagonal and off-diagonal parts and using $A_i \cap A_i = A_i$,
+$$T = \sum_{i \in I} |A_i| + \sum_{(i,j)\in I^{\mathrm{offdiag}}} |A_i \cap A_j|.$$
+The off-diagonal part has $k^2 - k$ terms, each of size at most $N/c$; multiplying through by $c$,
+$$c \sum_{(i,j)\in I^{\mathrm{offdiag}}} |A_i \cap A_j| \;\le\; (k^2-k)\,N.$$
+Multiplying the split identity by $mc$ and substituting (3.1) into the diagonal term gives
+$$mc\,T \;\le\; c\,(kN) + m\,(k^2-k)N. \tag{3.2}$$
 
-**Definition 4.1.** A finite subset $A$ of an abelian group $G$ is a **Sidon set** if for
-all $a,b,c,d \in A$ with $a + b = c + d$ we have $\{a,b\} = \{c,d\}$; equivalently, all
-differences $a - b$ with $a \ne b$ are distinct.
+*Combination.* Apply Theorem 3.1 and scale by $m^2 c$:
+$$c(kN)^2 \;\overset{(3.1)}{=}\; m^2 c\Bigl(\sum_i |A_i|\Bigr)^2 \;\le\; m^2 c\,|U|\,T \;=\; m|U| \cdot \bigl(mc\,T\bigr) \;\overset{(3.2)}{\le}\; m|U|\bigl(c\,kN + m(k^2-k)N\bigr).$$
+Since $k^2 - k = k(k-1)$, the right-hand side equals $(kN)\cdot m|U|(c + m(k-1))$, while the left-hand side equals $(kN)\cdot ckN$. Cancelling the positive factor $kN$ gives the claim. The probability form follows by dividing by $mN(c+m(k-1)) > 0$. $\square$
 
-Sidon sets are the "perfect rulers'' of additive combinatorics: every nonzero difference
-occurs at most once. Their study goes back to Sidon's work on Fourier series and to
-Erdős–Turán, and they appear in radar and sonar sequence design, in frequency-hopping
-schedules with no repeated interference pattern, and in the construction of
-self-orthogonal codes.
+The absence of a side condition is the crux. As $k \to \infty$ the bound degrades smoothly to $\approx c/(m^2)\cdot 1$ rather than becoming unavailable; there is no threshold at which it ceases to be a theorem.
 
-The classical question is: how large can a Sidon set in a group of order $N$ be? We answer
-it twice, with two different marginal choices, from the same universal machinery.
+### 3.3 Sharpness
 
-### 4.2 The Sidon marginal
+**Theorem 3.4 (The marginal bound is attained).**
+*There exist $\Omega$, $A$, $I$ and $(m,c,N)$ realising a marginal profile for which the inequality of Theorem 3.3 is an equality. Explicitly, take $\Omega$ of size $N = 2$, $m = c = 2$, and let $A_1 = A_2 = A_3$ all equal a fixed singleton (so $k = 3$). Then both sides equal $12$.*
 
-**Definition 4.2.** For $g \in G$ the *translate* is $A + g = \{a + g : a \in A\}$.
+*Proof.* Each $|A_i| = 1$, so $m|A_i| = 2 = N$: first marginal exactly $1/2$. Each pairwise intersection is the same singleton, so $c|A_i \cap A_j| = 2 \le N$: second marginal at most $1/2$. The union is the singleton, $|U| = 1$. Left side: $ckN = 2\cdot3\cdot2 = 12$. Right side: $m|U|(c+m(k-1)) = 2 \cdot 1 \cdot (2 + 2\cdot 2) = 12$. $\square$
 
-Two facts make translates ideal marginals. Trivially $|A+g| = |A|$, since translation is
-injective. The second is the entire arithmetic content of the section.
+Consequently **Theorem 3.3 cannot be improved as a function of $(m,c,k,N)$ alone**: any strengthening must use information about the family beyond its marginal profile. (Sanity check of the probability form on this example: $ck/(m(c+m(k-1))) = 6/(2\cdot 6) = 1/2 = |U|/N$.)
 
-**Theorem 4.3 (The Sidon marginal).** Let $A \subseteq G$ be a Sidon set and $g \ne h$ in
-$G$. Then
-$$|(A+g) \cap (A+h)| \le 1.$$
+### 3.4 Necessity of the pairwise input
 
-*Proof sketch.* Suppose $x$ and $y$ both lie in the intersection. Write
-$x = p + g = q + h$ and $y = p' + g = q' + h$ with $p,q,p',q' \in A$. Adding the first
-relation to the second after transposition and cancelling $g + h$ from both sides gives
-$$p + q' = q + p'.$$
-Since $A$ is Sidon, $\{p, q'\} = \{q, p'\}$. If $p = q$, then $p + g = x = q + h = p + h$
-forces $g = h$, contrary to hypothesis; so we are in the other case, $p = p'$, whence
-$x = p + g = p' + g = y$. Therefore the intersection has at most one element. $\square$
+**Theorem 3.5 (The second marginal is load-bearing).**
+*The Bonferroni-shaped conclusion $|U| \ge kN/(2m)$ — the shape of (1.1) — is false for a family with a perfect first marginal but no pairwise control. Explicitly, with the constant family of Theorem 3.4 ($N = m = 2$, $k = 3$, $|U| = 1$) one has $2m|U| = 4 < 6 = kN$.*
 
-So a Sidon set produces, at no cost, a family of equal-size sets with $t = 1$: exactly the
-input required by Corollary 3.3 and Theorem 3.2.
+*Proof.* Direct computation, as displayed. $\square$
 
-### 4.3 The master inequality
+Theorems 3.4 and 3.5 bracket the situation neatly. The first says no better conclusion can be drawn from the two marginals; the second says that dropping the pairwise marginal invalidates conclusions of this strength altogether. The two hypotheses of Theorem 3.3 are thus exactly the right ones.
 
-**Theorem 4.4 (Translate-family bound).** Let $G$ be a finite abelian group, $A \subseteq G$
-a Sidon set, and $S \subseteq G$ any nonempty set of shifts. Then
-$$|S| \cdot |A|^2 \;\le\; |G| \cdot \bigl(|A| + |S| - 1\bigr).$$
+### 3.5 The unconditional hashing bound
 
-*Proof sketch.* Apply Theorem 3.2 to the family $\{A + g\}_{g \in S}$, indexed by $S$. The
-parameters are $k = |S|$, $m = |A|$ and, by Theorem 4.3, $t = 1$. The conclusion reads
-$|S|\,|A|^2 \le |\operatorname{supp}| \cdot (|A| + (|S|-1))$, and the support is a subset of
-$G$, so $|\operatorname{supp}| \le |G|$. $\square$
+**Theorem 3.6 (Unconditional lower bound for random hashing).**
+*Let $S \subseteq \alpha$, $x \in S$, $M \ge 1$, and $k = |S \setminus \{x\}|$. Then*
+$$k \cdot M^{|\alpha|} \;\le\; |\mathrm{fail}(S,x)| \cdot (M + k - 1),$$
+*equivalently*
+$$\Pr[\mathrm{fail}] \;=\; \frac{|\mathrm{fail}(S,x)|}{M^{|\alpha|}} \;\ge\; \frac{k}{M+k-1},$$
+*with no restriction relating $k$ and $M$.*
 
-Theorem 4.4 is the complete content of the marginal-selection question for Sidon sets: it
-is a *one-parameter family of theorems*, indexed by the shift set $S$, and every double
-counting proof of a Sidon bound of this type is one of its instances.
+*Proof.* Apply Theorem 3.3 to the family $A_y = C(y,x)$ indexed by $y \in S\setminus\{x\}$, whose union is $\mathrm{fail}(S,x)$ by (2.1), with ambient size $N = M^{|\alpha|}$, first-marginal parameter $m = M$ (the first marginal is exact: $M\,|C(y,x)| = M^{|\alpha|}$ for $y \ne x$) and second-marginal parameter $c = M^2$ (from $M^2|C(p,x)\cap C(q,x)| \le M^{|\alpha|}$ for distinct $p,q \ne x$). Theorem 3.3 gives
+$$M^{2}\,k\,N \;\le\; M\,|\mathrm{fail}|\,\bigl(M^{2} + M(k-1)\bigr) \;=\; M^{2}\,\bigl(|\mathrm{fail}|\,(M+k-1)\bigr),$$
+and cancelling $M^2 > 0$ finishes. $\square$
 
-### 4.4 The two extremes
+**Theorem 3.7 (Domination of the Bonferroni bound).**
+*For $M \ge 1$ and $k \le M+1$ — i.e. throughout the Bonferroni regime $2(k-1)\le M$ and slightly beyond — one has*
+$$\frac{k}{2M} \;\le\; \frac{k}{M+k-1}.$$
 
-**Theorem 4.5 (All-translate marginals; Erdős–Turán).** For every Sidon set $A$ in a finite
-abelian group $G$,
-$$|A|\,(|A| - 1) \;\le\; |G| - 1.$$
+*Proof.* $k \le M+1$ gives $M + k - 1 \le 2M$, and both denominators are positive. $\square$
 
-*Proof sketch.* Take $S = G$ in Theorem 4.4, so $|S| = |G| > 0$. The inequality becomes
-$|G|\cdot|A|^2 \le |G|\cdot(|A| + |G| - 1)$; cancelling $|G|$ gives
-$|A|^2 \le |A| + |G| - 1$, i.e. $|A|^2 - |A| \le |G| - 1$. Rewriting
-$|A|^2 - |A| = |A|(|A|-1)$ (trivially true when $|A| = 0$) completes the proof. $\square$
+**Theorem 3.8 (A converse for random hashing above the pigeonhole rate).**
+*If $M \le k$ then*
+$$\Pr[\mathrm{fail}] \;>\; \frac{1}{2}.$$
 
-Asymptotically this says $|A| \le \tfrac12 + \sqrt{|G| - \tfrac34} = \sqrt{|G|}(1+o(1))$,
-and it is best possible: for $N = q^2+q+1$ with $q$ a prime power, Singer's perfect
-difference sets in $\mathbb{Z}_N$ are Sidon sets of size $q+1$, for which
-$|A|(|A|-1) = q(q+1) = N-1$ holds with equality.
+*Proof.* By Theorem 3.6 it suffices that $k/(M+k-1) > 1/2$, i.e. $2k > M+k-1$, i.e. $k > M-1$, which holds. $\square$
 
-**Theorem 4.6 (Self-translate marginals).** For every Sidon set $A$ in a finite abelian
-group $G$,
-$$|A|^3 \;\le\; (2|A| - 1)\cdot |G|.$$
-
-*Proof sketch.* If $A = \emptyset$ the claim is trivial. Otherwise take $S = A$ in Theorem
-4.4, so $|S| = |A| \ge 1$ and $|A| + (|A|-1) = 2|A| - 1$. The result is
-$|A|\cdot|A|^2 \le |G|(2|A|-1)$. $\square$
-
-Asymptotically Theorem 4.6 gives only $|A| \lesssim \sqrt{2|G|}$ — worse by a factor
-$\sqrt 2$. The two theorems come from the *same* Sidon set and the *same* machinery; the
-only difference is the shift set.
-
-### 4.5 The two outputs are strictly ordered
-
-Is the loss in Theorem 4.6 an artefact of crude estimation, or a genuine consequence of the
-weaker marginal choice? It is genuine, and we can locate it exactly by comparing the two
-outputs as arithmetic conditions on the pair $(N, m) = (|G|, |A|)$.
-
-**Theorem 4.7 (Domination).** For all natural numbers $m$ and $N$ with $N \ge 1$,
-$$m(m-1) \le N - 1 \;\Longrightarrow\; m^3 \le (2m-1)N .$$
-
-*Proof sketch.* The cases $m = 0$ and $m = 1$ are immediate ($0 \le 0$ and $1 \le N$). For
-$m = k+2$ with $k \ge 0$ the hypothesis says $N \ge (k+2)(k+1) + 1$, and the conclusion
-reads $(k+2)^3 \le (2k+3)N$. Substituting the lower bound for $N$ it suffices to check
-$(k+2)^3 \le (2k+3)\bigl((k+2)(k+1)+1\bigr)$, which expands to
-$k^3+6k^2+12k+8 \le 2k^3 + 13k^2 + 26k + 15$, true for all $k \ge 0$. $\square$
-
-**Theorem 4.8 (Strictness).** There exist $N, m \ge 1$ with
-$$m^3 \le (2m-1)N \quad\text{and}\quad m(m-1) > N-1 .$$
-Explicitly, $N = 100$, $m = 13$: indeed $13^3 = 2197 \le 2500 = 25 \cdot 100$, while
-$13 \cdot 12 = 156 > 99$.
-
-Together, Theorems 4.7 and 4.8 say that the self-translate output is a *strictly weaker*
-condition than the all-translate output. Concretely, a hypothetical Sidon set of size $13$
-in a group of order $100$ is not excluded by the self-translate marginals, but is excluded
-by the all-translate marginals. The gap between the two arguments is therefore a genuine
-feature of the marginal choice — a property of *which* family was fed in — and not slack
-introduced by any of the estimates in Sections 2–3.
-
-This is the marginal selection principle in its sharpest form: the machinery, being
-universal, contributes nothing to the comparison; the entire difference between a
-$\sqrt{2|G|}$ bound and a $\sqrt{|G|}$ bound is the decision to use $|G|$ translates rather
-than $|A|$.
-
-### 4.6 Why all translates are optimal, structurally
-
-There is a conceptual explanation for the optimality of $S = G$ which the arithmetic above
-merely confirms. When $S = G$ the family $\{A+g\}_{g\in G}$ is *translation invariant*: the
-group acts on it transitively, so every point of $G$ has exactly the same multiplicity,
-namely $|A|$. Cauchy–Schwarz is an equality precisely when the multiplicity function is
-constant. Thus the all-translate marginal is the unique choice for which the only
-inequality used in the derivation — Cauchy–Schwarz — is *tight*. Every other shift set
-produces a non-constant multiplicity function and therefore leaks.
-
-This suggests, and we state it below as a conjecture, that the ordering of the outputs is
-monotone in $S$ throughout, not merely between the two extremes.
+Theorem 3.8 is the qualitative payoff. The Bonferroni route can say nothing here: its hypothesis $2(k-1) \le M$ fails and its nominal value $k/(2M)$ can exceed $1$. The second-moment route, using *the same two marginals*, shows that a uniformly random codebook is more likely to fail than to succeed once the typical set has at least $M$ competitors — the random-coding analogue of the pigeonhole converse, and a genuine complement to Shannon's achievability result.
 
 ---
 
-## 5. A cross-domain instantiation: $C_4$-free graphs
+## 4. Which marginals? Exact marginals of arbitrary collision patterns
 
-The machinery is field-agnostic. We illustrate by feeding it marginals of an entirely
-different provenance.
+Sections 3.5–3.8 used only two marginals. It is natural to ask how much slack those two contained, and what all the higher marginals are. This section answers both: there is no slack, and all marginals are given by a single geometric law.
 
-Let $\Gamma$ be a finite simple graph on vertex set $V$ with edge set $E$. For $v \in V$
-write $N(v)$ for its neighbourhood. Then $N(u) \cap N(v)$ is the set of common neighbours
-of $u$ and $v$, so the condition
+### 4.1 Collapse maps
 
-$$|N(u) \cap N(v)| \le 1 \quad \text{for all } u \ne v \tag{5.1}$$
+**Definition 4.1 (Collapse event).** For $f : \iota \to \iota$, let
+$$\mathrm{Col}(f) \;=\; \{\, H \mid H(f(a)) = H(a) \text{ for all } a \in \iota \,\},$$
+the codebooks that are constant on the fibres of $f$, i.e. factor through $f$.
 
-says precisely that $\Gamma$ contains no four-cycle $C_4$ — no two vertices have two common
-neighbours.
+**Theorem 4.2 (Exact marginal of a collapse map).**
+*If $f$ is idempotent ($f\circ f = f$) then $|\mathrm{Col}(f)| = M^{\,|f(\iota)|}$.*
 
-**Theorem 5.2 (Reiman's inequality).** If $\Gamma$ satisfies (5.1), then
-$$\bigl(2|E|\bigr)^2 \;\le\; |V| \cdot \Bigl(2|E| + |V|\bigl(|V|-1\bigr)\Bigr).$$
-In particular $|E| = O(|V|^{3/2})$.
+*Proof.* Idempotence makes every element of the image a fixed point of $f$. The map $H \mapsto H|_{f(\iota)}$ is a bijection from $\mathrm{Col}(f)$ onto the set of all functions $f(\iota) \to \mathbb{Z}/M$: it is injective because $H(a) = H(f(a))$ recovers $H$ from its restriction, and surjective because for any $g : f(\iota) \to \mathbb{Z}/M$ the codebook $H(a) = g(f(a))$ lies in $\mathrm{Col}(f)$ (using $f(f(a)) = f(a)$) and restricts to $g$ (using $f(s) = s$ on the image). Hence $|\mathrm{Col}(f)| = M^{|f(\iota)|}$. $\square$
 
-*Proof sketch.* Feed the neighbourhood marginals $A_v = N(v)$, indexed by $v \in V$, into
-Corollary 3.3. The hypothesis $t = 1$ is exactly (5.1). The total size is
-$\sum_{v} |N(v)| = \sum_v \deg(v) = 2|E|$ by the handshake lemma. The support is a subset
-of $V$, so $|\operatorname{supp}| \le |V|$, and the number of indices is $|V|$. $\square$
+**Theorem 4.3 (Pattern marginal via a collapse presentation).**
+*Let $P$ be a collision pattern and $f : \iota \to \iota$ idempotent with (i) $f(a) = f(b)$ for every $(a,b) \in P$, and (ii) every $H \in E(P)$ constant on the fibres of $f$. Then $|E(P)| = M^{|f(\iota)|}$.*
 
-Writing $n = |V|$ and solving the quadratic gives
-$|E| \le \tfrac14\bigl(n + n\sqrt{4n-3}\bigr) \approx \tfrac12 n^{3/2}$, the classical
-Reiman bound; it is attained up to the constant by the incidence graph of a projective
-plane of order $q$, which has $n = 2(q^2+q+1)$ vertices and $(q+1)(q^2+q+1)$ edges.
+*Proof.* Condition (ii) gives $E(P) \subseteq \mathrm{Col}(f)$; condition (i) gives the reverse inclusion, since $H \in \mathrm{Col}(f)$ and $(a,b) \in P$ imply $H(a) = H(f(a)) = H(f(b)) = H(b)$. Apply Theorem 4.2. $\square$
 
-The point is not that Theorem 5.2 is new — it is not — but that its proof used *no new
-machinery whatsoever*. The engine from Section 2, which was developed with no thought of
-graphs, produced it as soon as we chose neighbourhoods as marginals. Sections 4 and 5
-differ only in step 1 of the recipe.
+### 4.2 The star marginal
 
----
+**Theorem 4.4 (Exact star marginal).**
+*If $T \subseteq \iota$ and $x \notin T$, then*
+$$|\mathrm{Star}(T,x)| \;=\; M^{\,|\iota| - |T|}, \qquad\text{i.e.}\qquad \Pr[\mathrm{Star}(T,x)] = M^{-|T|}.$$
 
-## 6. The third-order layer
+*Proof.* Let $f(a) = x$ for $a \in T$ and $f(a) = a$ otherwise. Since $x \notin T$, $f$ is idempotent, and its image is $\iota \setminus T$, of size $|\iota| - |T|$. A codebook lies in $\mathrm{Star}(T,x)$ exactly when it is constant on the fibres of $f$. Theorem 4.2 gives $M^{|\iota|-|T|}$; dividing by $M^{|\iota|}$ gives the probability. $\square$
 
-The Fubini identity is not tied to the second moment. Iterating it produces a
-triple-correlation theory, which is the natural place to look for information the pair
-correlations cannot see.
+Every marginal appearing in any Bonferroni-type or moment-type expansion of the failure event (2.1) is an instance of Theorem 4.4, since intersections of collision events all sharing the vertex $x$ are exactly star events.
 
-**Theorem 6.1 (Third moment).**
-$$\sum_{i}\sum_{j}\sum_{k} |A_i \cap A_j \cap A_k| \;=\; \sum_{x\in\operatorname{supp}(A)} m_A(x)^3 .$$
+**Corollary 4.5 (First marginal, exactly).** For $p \ne q$, $|C(p,q)| = M^{|\iota|-1}$: a prescribed collision has probability exactly $1/M$.
 
-*Proof sketch.* Apply the localised Fubini identity (2.4) three times. First, with
-$s = A_i \cap A_j$ and $f \equiv 1$, obtain
-$\sum_k |A_i \cap A_j \cap A_k| = \sum_{x \in A_i\cap A_j} m_A(x)$. Second, with $s = A_i$
-and $f = m_A$, obtain $\sum_j \sum_{x\in A_i \cap A_j} m_A(x) = \sum_{x\in A_i} m_A(x)^2$.
-Third, with $s = \operatorname{supp}(A)$ and $f = m_A^2$, and using
-$A_i = \operatorname{supp}(A)\cap A_i$, obtain the claim. $\square$
+**Corollary 4.6 (The second marginal is an equality).** For distinct $p,q,r$,
+$$M^{2}\,\bigl|C(p,r) \cap C(q,r)\bigr| \;=\; M^{|\iota|}.$$
+*Proof.* $C(p,r)\cap C(q,r) = \mathrm{Star}(\{p,q\},r)$ with $r \notin \{p,q\}$ and $|\{p,q\}| = 2$; apply Theorem 4.4. $\square$
 
-**Theorem 6.2 (Third-order Bonferroni identity).** With $m = m_A(x)$,
-$$\sum_{x\in\operatorname{supp}(A)} m(m-1)(m-2) \;+\; 3\sum_{i}\sum_{j}|A_i \cap A_j|
-\;=\; \sum_i\sum_j\sum_k |A_i\cap A_j\cap A_k| \;+\; 2\sum_i |A_i| .$$
+So the inequality fed into both the Bonferroni route and Theorem 3.6 loses nothing: there was no sharper second marginal to be found, and no refinement of the inputs could have removed the regime restriction. Only replacing the machine could.
 
-*Proof sketch.* Rewrite each of the four sums via Corollaries 2.5, 2.6 and Theorem 6.1, so
-that the statement becomes a pointwise identity on the support:
-$m(m-1)(m-2) + 3m^2 = m^3 + 2m$, which is $m^3 - 3m^2 + 2m + 3m^2 = m^3 + 2m$. The
-verification is by cases on $m \in \{0,1,2\}$ and $m \ge 3$, so that the truncated
-subtractions $m-1, m-2$ are the honest ones. $\square$
+**Theorem 4.7 (Two disjoint collisions are exactly independent).**
+*Let $p,q,r,s \in \iota$ with $p \ne q$, $r \ne s$, $p \ne r$, $p \ne s$, $q \ne r$. Then*
+$$M^{2}\,\bigl|C(p,q) \cap C(r,s)\bigr| \;=\; M^{|\iota|}.$$
+*(Note $q = s$ is permitted: only the two collapsed vertices $p, r$ need be distinct from each other and from their targets.)*
 
-The identity is stated with all subtractions confined to the single expression
-$m(m-1)(m-2)$ — the number of *ordered triples of distinct indices* whose sets all contain
-$x$. It is inclusion–exclusion at the third level, with no cancellation-induced sign
-issues.
+*Proof.* Let $f(a) = q$ if $a = p$, $f(a) = s$ if $a = r$, and $f(a) = a$ otherwise. The hypotheses make $f$ idempotent and identify its image as $\iota \setminus \{p,r\}$, of size $|\iota|-2$; and $C(p,q) \cap C(r,s) = \mathrm{Col}(f)$. Apply Theorem 4.2. $\square$
 
-**Definition 6.3.** The *triple-collision set* is
-$T(A) = \{x \in \operatorname{supp}(A) : m_A(x) \ge 3\}$.
+Corollary 4.6 and Theorem 4.7 concern geometrically very different configurations — a path of length two versus two disjoint edges — yet produce the same marginal $1/M^2$. This is the first hint of the general law.
 
-**Theorem 6.4 (Third-order collision bound).**
-$$6\,|T(A)| \;\le\; \sum_{x\in\operatorname{supp}(A)} m_A(x)\bigl(m_A(x)-1\bigr)\bigl(m_A(x)-2\bigr).$$
+### 4.3 The component law
 
-*Proof sketch.* Each $x \in T(A)$ contributes at least $3\cdot2\cdot1 = 6$ to the
-right-hand sum, and all terms are nonnegative. $\square$
+**Definition 4.8 (Pattern connectivity).** Let $\sim_P$ denote the equivalence relation on $\iota$ generated by the adjacency relation of $P$; its classes are the connected components of the pattern graph, isolated vertices included. Write $c(P)$ for the number of classes.
 
-This is the exact analogue of Theorem 2.13 one level up. For consistency we note the
-expected comparison: since $T(A) \subseteq D(A)$, Theorem 2.13 also gives
-$2|T(A)| \le P(A)$, and Theorem 6.4 is the stronger statement about $T(A)$ whenever
-multiplicities exceed $3$.
+**Lemma 4.9.** $H \in E(P)$ if and only if $H$ is constant on each $\sim_P$-class.
 
-The strategic significance is this. Theorems 2.10, 2.13 and 2.14 are all *second-moment*
-statements; they see only pair correlations. For extremal problems whose defining condition
-is genuinely of order $h \ge 3$ — for instance $B_h$-sets, in which every group element has
-at most one representation as an unordered sum of $h$ members — pair correlations already
-contain all the information the second-moment machinery can extract, and no reshuffling of
-two-set marginals can beat the naive count. The improvement, if it exists, must come from
-Theorems 6.1–6.4 and their higher analogues.
+*Proof.* If $H$ is constant on classes then in particular $H(a) = H(b)$ for every edge. Conversely, if $H$ respects every edge then the relation $\{(a,b) : H(a) = H(b)\}$ is an equivalence relation containing the adjacency relation of $P$, hence contains $\sim_P$; formally, induct over the generation of $\sim_P$ through its reflexive, symmetric and transitive steps. $\square$
+
+**Theorem 4.10 (The component law).**
+*For an arbitrary collision pattern $P$ on a finite $\iota$,*
+$$|E(P)| \;=\; M^{\,c(P)} .$$
+*Equivalently, a uniformly random codebook realises all collisions prescribed by $P$ with probability $M^{-(|\iota| - c(P))}$.*
+
+*Proof.* By Lemma 4.9, $E(P)$ is in bijection with the set of functions from the quotient $\iota/\!\sim_P$ to the label set: the forward map sends $H$ to the induced function on classes (well defined by Lemma 4.9), the inverse composes a function on classes with the quotient projection. The set of such functions has cardinality $M^{c(P)}$. $\square$
+
+Theorem 4.10 makes the collapse maps of Section 4.1 unnecessary in principle; they remain a convenient computational device for evaluating $c(P)$ in concrete families. Comparing the two computations even yields purely graph-theoretic corollaries.
+
+**Corollary 4.11 (Component count of a star, deduced from two enumerations).**
+*Let $T \subseteq \iota$, $x \notin T$, and let $P$ be the star pattern joining every $y \in T$ to $x$. If $M \ge 2$ then $c(P) = |\iota| - |T|$.*
+
+*Proof.* Theorem 4.10 gives $|E(P)| = M^{c(P)}$; Theorem 4.4 gives $|E(P)| = M^{|\iota|-|T|}$. For $M \ge 2$ the function $n \mapsto M^n$ is injective, so the exponents agree. $\square$
+
+**Structural conclusion.** The marginals available to *any* inclusion–exclusion-type machinery here are $M^{-(|\iota|-c(P))}$: they depend on the pattern only through its component count and are blind to its shape. Two collisions always cost a factor $M^{-2}$, whether or not they share a vertex. It follows that the regime restriction in (1.1) can be attributed neither to the coarseness of the inputs nor to hidden dependence structure among the events. It belongs to the inequality.
 
 ---
 
-## 7. Sharpness data
+## 5. The exact failure law
 
-Two small examples pin down the behaviour of the machinery at its extremes.
+Having determined all the marginals, one can go further and compute the failure probability outright. The mechanism is a conditional refinement of Corollary 4.5.
 
-**Proposition 7.1.** The double-collision bound is attained: for the constant family
-$A_0 = A_1 = \{0\}$ on two indices, $P(A) = 2$ and $|D(A)| = 1$, so $2|D(A)| = P(A) = 2$.
+**Definition 5.1 (Unconstrained at a coordinate).** An event $G$ of codebooks is *unconstrained at $y$* if it is stable under arbitrary overwriting of the $y$-th label: for every $H \in G$ and every label $v$, the codebook agreeing with $H$ off $y$ and taking value $v$ at $y$ also lies in $G$.
 
-**Proposition 7.2.** The Bonferroni inequality can be strict: for the same family,
-$\sum_i |A_i| = 2$ while $|\bigcup_i A_i| + P(A) = 1 + 2 = 3$.
+**Theorem 5.2 (Conditional collision marginal).**
+*Let $G$ be unconstrained at $y$, and let $y \ne x$. Then*
+$$M \cdot |G \cap C(y,x)| \;=\; |G|, \qquad\text{i.e.}\qquad \Pr[\,C(y,x) \mid G\,] = \frac 1M .$$
 
-Proposition 7.2 is consistent with Theorem 2.11 — the family is not pairwise disjoint — and
-together with Theorem 2.11 it shows that the equality condition genuinely bites: the
-inequality is strict for every family that is not trivially disjoint.
+*Proof.* Exhibit a bijection $(G \cap C(y,x)) \times (\mathbb{Z}/M) \to G$, $(K, v) \mapsto K^{y \mapsto v}$ (overwrite the $y$-th label by $v$). It lands in $G$ because $G$ is unconstrained at $y$. It is injective: from the image one reads off $v$ at coordinate $y$ and all other coordinates of $K$ directly, and $K(y)$ is recovered as $K(x)$, which is an off-$y$ coordinate, using $K \in C(y,x)$ and $y \ne x$. It is surjective: given $H \in G$, take $K = H^{y \mapsto H(x)}$ — which lies in $G$, and in $C(y,x)$ because $K(y) = H(x) = K(x)$ — and $v = H(y)$; then $K^{y \mapsto v} = H$. Counting gives $|G|\cdot 1 = |G \cap C(y,x)| \cdot M$. $\square$
 
----
+Taking $G$ to be the whole space recovers Corollary 4.5; the point is that the conditional statement survives arbitrary conditioning that leaves the coordinate $y$ free.
 
-## 8. Applications and algorithmic content
+**Lemma 5.3.** *If $y \notin D$ and $y \ne x$ then $\mathrm{NC}(D,x)$ is unconstrained at $y$.*
 
-**Sidon set search.** Theorem 4.5 bounds the search space for maximal Sidon sets in
-$\mathbb{Z}_N$: a Sidon set of size $m$ requires $N \ge m(m-1) + 1$. A greedy or
-backtracking search can therefore prune whenever the partial set already exceeds the
-admissible size, and the master inequality of Theorem 4.4 with intermediate $S$ furnishes
-weaker but cheaper tests. Exhaustive search with this cutoff recovers, for
-$N = 13, 21, 31, 57, 73$, Sidon sets for which Theorem 4.5 is an exact equality
-$|A|(|A|-1) = N-1$ — the classical perfect difference sets — confirming that the
-all-translate marginal is not merely better than the self-translate marginal but optimal.
+*Proof.* The constraints defining $\mathrm{NC}(D,x)$ involve only the coordinates in $D \cup \{x\}$, none of which is $y$. $\square$
 
-**Certificate checking for $C_4$-freeness.** Theorem 5.2 gives an $O(1)$ test that
-immediately refutes $C_4$-freeness of a graph whose edge count exceeds
-$\tfrac14(n + n\sqrt{4n-3})$, without inspecting the structure at all. This is the standard
-first line of defence in extremal graph computations.
+**Lemma 5.4 (One competitor at a time).** *If $y \notin D$ and $y \ne x$ then*
+$$M\,\bigl|\mathrm{NC}(D \cup \{y\},x)\bigr| \;=\; (M-1)\,\bigl|\mathrm{NC}(D,x)\bigr|.$$
 
-**Design theory and coding.** The uniform-marginal Theorem 3.2 is the Fisher-type
-inequality behind many packing bounds: a family of $k$ blocks of size $m$ in a $v$-point
-ground set with pairwise intersections at most $t$ satisfies $km^2 \le v(m + (k-1)t)$,
-which is the standard bound for constant-weight codes with prescribed maximum correlation.
+*Proof.* Write $G = \mathrm{NC}(D,x)$. Then $\mathrm{NC}(D\cup\{y\},x) = G \setminus (G \cap C(y,x))$, so its size is $|G| - |G\cap C(y,x)|$. By Lemma 5.3 and Theorem 5.2, $|G \cap C(y,x)| = |G|/M$; multiplying by $M$ gives $M|\mathrm{NC}(D\cup\{y\},x)| = M|G| - |G| = (M-1)|G|$. $\square$
 
-**A recipe.** The practical algorithm implicit in this paper is a three-line procedure:
-given an extremal question, (i) design a family whose members are large and pairwise almost
-disjoint; (ii) read off the triple $(k, m, t)$; (iii) substitute into Theorem 3.2. Step
-(iii) is mechanical. Steps (i)–(ii) are the mathematics.
+**Theorem 5.5 (Exact survival count).** *For $x \notin D$ and $k = |D|$,*
+$$M^{k}\,\bigl|\mathrm{NC}(D,x)\bigr| \;=\; (M-1)^{k}\,M^{|\iota|}.$$
 
----
+*Proof.* Induction on $D$. For $D = \varnothing$ the event is everything and both sides are $M^{|\iota|}$. The inductive step is Lemma 5.4 multiplied by $M^{|D|}$. $\square$
 
-## 9. Discussion and future directions
+**Theorem 5.6 (Exact failure law).** *For $S \subseteq \alpha$, $x \in S$, $k = |S\setminus\{x\}|$ and $M \ge 1$,*
+$$M^{k}\,|\mathrm{fail}(S,x)| \;+\; (M-1)^{k}\,M^{|\alpha|} \;=\; M^{k}\,M^{|\alpha|},$$
+*equivalently*
+$$\Pr[\mathrm{fail}] \;=\; 1 - \Bigl(1 - \frac{1}{M}\Bigr)^{k}.$$
 
-### 9.1 What the principle says and does not say
+*Proof.* The failure event is the complement of $\mathrm{NC}(S\setminus\{x\},x)$, so the two cardinalities sum to $M^{|\alpha|}$. Multiply by $M^k$ and substitute Theorem 5.5. Dividing by $M^{k+|\alpha|}$ gives the probability form. $\square$
 
-The marginal selection principle asserts that a bound obtained from Theorems 2.10–2.14 is a
-function of the marginals alone. It does *not* assert that every extremal bound arises this
-way — many do not, and Fourier-analytic and algebraic methods routinely beat double
-counting. What it does assert is that within the double-counting paradigm, effort spent
-optimising the inequality is wasted (Theorem 2.11 shows there is nothing to optimise), and
-effort spent choosing the family is the only thing that can pay.
+Brute-force enumeration of the full codebook space confirms the law in small cases: for $|\alpha| = 3$, $M = 2$, with every other message a competitor, the count is $2^3 - 1^2\cdot 2 = 6$ out of $8$; for $|\alpha| = 4$, $M = 3$, it is $3^4 - 2^3\cdot 3 = 57$ out of $81$.
 
-### 9.2 Monotonicity in the shift set
+**Corollary 5.7 (Shannon bound from the exact law).** $\Pr[\mathrm{fail}] \le k/M$.
 
-Section 4.6 suggests that Theorem 4.7 is the tip of a general phenomenon.
+*Proof.* Bernoulli's inequality $1 + k t \le (1+t)^k$ with $t = -1/M \ge -1$ gives $1 - k/M \le (1-1/M)^k$; substitute into Theorem 5.6. $\square$
 
-**Conjecture 9.1 (Marginal monotonicity).** For a Sidon set $A \subseteq G$ and shift sets
-$S \subseteq T$, the bound on $|A|$ extracted from
-$|T|\,|A|^2 \le |G|(|A| + |T| - 1)$ is at least as strong as the one extracted from $S$.
-Precisely: for all $N$ and all $1 \le k \le l \le N$,
-$$\max\{m : l\,m^2 \le N(m + l - 1)\} \;\le\; \max\{m : k\,m^2 \le N(m + k - 1)\}.$$
+**Corollary 5.8 (Matching lower bound).** $\Pr[\mathrm{fail}] \ge \dfrac{k}{M+k}$.
 
-The mechanism should be that the admissible region for $m$ shrinks monotonically as the
-number of marginals grows, because the constraint may be rewritten as
-$(m^2 - m)\big/\bigl(1 - \tfrac1k\bigr) \le \tfrac{N}{1}\cdot(\cdots)$ with the left side
-increasing in $k$. Establishing this converts "all translates is best" from an observation
-about two data points into a theorem about the whole lattice of marginal choices, and
-identifies the optimum as a consequence of translation invariance (constant multiplicity,
-hence tight Cauchy–Schwarz) rather than a numerical accident.
+*Proof.* Bernoulli with $t = 1/M$ gives $1 + k/M \le (1+1/M)^k$. Multiplying by $(1-1/M)^k \ge 0$ and using $\bigl((1+1/M)(1-1/M)\bigr)^k = (1 - 1/M^2)^k \le 1$ yields
+$$\Bigl(1+\frac kM\Bigr)\Bigl(1-\frac1M\Bigr)^{k} \le 1, \qquad\text{i.e.}\qquad \Bigl(1-\frac1M\Bigr)^{k} \le \frac{M}{M+k},$$
+and Theorem 5.6 converts this into $\Pr[\mathrm{fail}] \ge 1 - M/(M+k) = k/(M+k)$. $\square$
 
-### 9.3 $B_h$-sets: the exponent is set by the marginal
-
-**Conjecture 9.2.** Let $A \subseteq G$ be a $B_h$-set: every element of $G$ has at most one
-representation as an unordered sum of $h$ elements of $A$. Then feeding the machinery the
-$(h-1)$-fold sumset marginals $A_g = (A + \cdots + A) + g$ gives
-$$|A|^h \le h!\,|G| + O\bigl(|A|^{h-1}\bigr),$$
-and the constant obtained is exactly the one produced by the trivial counting argument.
-
-The heuristic is that Corrádi's inequality is a second-moment statement and can therefore
-see only pair correlations; for $B_h$ with $h \ge 3$ the pair-correlation marginal already
-carries the full information, which predicts that no choice of two-set marginals can beat
-the naive bound. Any improvement must come from an $h$-th moment version of the machinery —
-which is exactly what Theorems 6.1–6.4 begin to supply.
-
-### 9.4 Further questions
-
-- **Equality analysis at higher order.** Theorem 2.11 characterises equality in the second
-  Bonferroni inequality. What is the analogous characterisation for the third-order
-  identity of Theorem 6.2, and does it single out families with a $3$-design structure?
-- **Weighted marginals.** The Fubini identity accepts an arbitrary weight $f$. Choosing $f$
-  adapted to the problem (rather than $f \equiv 1$ or $f = m$) amounts to a weighted
-  Cauchy–Schwarz. Is there a systematic optimal choice of $f$ for a given marginal family?
-- **Non-abelian ambient groups.** Theorem 4.3 used commutativity only to rearrange
-  $p + q' = q + p'$. A careful two-sided version should give a translate marginal for
-  Sidon sets in non-abelian groups, and hence a bound of Erdős–Turán type there.
-- **Beyond intersections: the $K_{s,t}$ hierarchy.** Corollary 3.3 is the $K_{2,2}$ case of
-  Kővári–Sós–Turán. The general case counts $s$-subsets of members rather than pairs. Is
-  there a moment identity of the type of Theorem 6.1 whose specialisation reproduces the
-  general Kővári–Sós–Turán bound, thereby exhibiting the whole family as marginal choices
-  for one universal machine?
-
-### 9.5 Conclusion
-
-We have separated a common proof pattern into a universal component and a
-problem-specific component, proved the universal component in full generality, shown it to
-be exact at its boundary, and demonstrated — with a theorem, not an anecdote — that the two
-natural marginal choices for one and the same Sidon set yield strictly ordered conclusions.
-The same universal component, given graph-theoretic marginals, yields a classical bound in
-extremal graph theory. The moral for the practitioner is concrete: when your double
-counting bound is off by a constant factor, do not sharpen the inequality; change what you
-count.
+Together, $k/(M+k) \le \Pr[\mathrm{fail}] \le k/M$: random hashing fails with probability $\Theta(\min(1, k/M))$ for **all** $k$ and all $M \ge 1$, with no regime hypotheses.
 
 ---
 
-## References (classical background)
+## 6. The hierarchy of marginal-driven bounds
 
-The second Bonferroni inequality and the Cauchy–Schwarz strengthening are classical; the
-latter is often attributed to Corrádi. The bound $|A|(|A|-1) \le |G|-1$ for Sidon sets goes
-back to Erdős and Turán, with matching constructions due to Singer. The bound
-$|E| = O(|V|^{3/2})$ for $C_4$-free graphs is due to Reiman and is the $K_{2,2}$ case of
-the Kővári–Sós–Turán theorem. All statements in Sections 2–7 above are proved in full from
-first principles in the text and require no external input beyond finite cardinality
-arithmetic and the Cauchy–Schwarz inequality for finite sums.
+We now locate the second-moment bound (1.2) relative to the exact law. The arithmetic content is an integer Bernoulli inequality.
+
+**Lemma 6.1 (Integer Bernoulli).** *For $M \ge 1$ and $j \ge 0$,*
+$$(M-1)^{j}\,(M+j) \;\le\; M^{\,j+1}.$$
+
+*Proof.* Induction on $j$. For $j = 0$ both sides are $M$. For the step, it suffices to know $(M-1)(M+j+1) \le M(M+j)$, i.e. $M^2 + Mj - j - 1 \le M^2 + Mj$, which is clear; multiplying the inductive hypothesis $(M-1)^j(M+j) \le M^{j+1}$ by this and cancelling the positive factor $M+j$ gives $(M-1)^{j+1}(M+j+1) \le M^{j+2}$. $\square$
+
+**Theorem 6.2 (The exact law implies the second-moment bound).** *For $M \ge 1$ and $k \ge 0$,*
+$$\frac{k}{M+k-1} \;\le\; 1 - \Bigl(1-\frac1M\Bigr)^{k}.$$
+
+*Proof.* For $k = 0$ both sides are $0$; otherwise write $k = j+1$. Lemma 6.1 gives $(M-1)^j(M+j) \le M^{j+1}$; multiplying by $M-1 \ge 0$ yields $(M-1)^{j+1}(M+j) \le (M-1)M^{j+1}$, i.e.
+$$\Bigl(1-\frac1M\Bigr)^{j+1} = \frac{(M-1)^{j+1}}{M^{j+1}} \;\le\; \frac{M-1}{M+j} \;=\; 1 - \frac{j+1}{M+j}.$$
+Since $M + k - 1 = M + j$, this is the claim. $\square$
+
+**Theorem 6.3 (Full hierarchy).** *For every $S$, every $x \in S$, every $M \ge 1$ and every $k = |S\setminus\{x\}| \le M+1$,*
+$$\frac{k}{2M} \;\le\; \frac{k}{M+k-1} \;\le\; \Pr[\mathrm{fail}] \;=\; 1-\Bigl(1-\frac1M\Bigr)^{k} \;\le\; \frac{k}{M}.$$
+
+*Proof.* The first inequality is Theorem 3.7; the second is Theorem 6.2 combined with the exact law (Theorem 5.6); the equality is Theorem 5.6; the last is Corollary 5.7. $\square$
+
+The classical Bonferroni output is thus the weakest member of a four-term chain, and the middle terms use only the first two marginals. Only the leftmost inequality requires the hypothesis $k \le M+1$; the remaining terms hold unconditionally.
+
+---
+
+## 7. Exact derandomisation
+
+Random coding is a device; the object of interest is a fixed codebook. Classically one averages the union bound over all codebooks: since the expected number of typical messages lost is at most $|S|\cdot(|S|-1)/M$, some codebook loses at most that many. This is vacuous as soon as $|S| - 1 \ge M$ — again the interesting regime. Averaging the exact law instead never is.
+
+**Lemma 7.1 (Incidence double count).**
+$$\sum_{H} |\mathrm{bad}(S,H)| \;=\; \sum_{x \in S} |\mathrm{fail}(S,x)|,$$
+*the sum on the left over all $M^{|\alpha|}$ codebooks.*
+
+*Proof.* Both sides count incidences $(H,x)$ with $x \in S$ lost by $H$; exchange the order of summation. $\square$
+
+**Theorem 7.2 (Exact derandomisation).** *Let $S \subseteq \alpha$, $M \ge 1$ and $k = |S|-1$. There exists a codebook $H$ with*
+$$M^{k}\,|\mathrm{bad}(S,H)| \;\le\; |S|\,\bigl(M^{k} - (M-1)^{k}\bigr).$$
+
+*Proof.* For each $x \in S$, $|S \setminus \{x\}| = k$, so Theorem 5.6 gives $M^k|\mathrm{fail}(S,x)| = M^{|\alpha|}(M^k - (M-1)^k)$. Summing over $x \in S$ and applying Lemma 7.1,
+$$M^{k}\sum_{H} |\mathrm{bad}(S,H)| \;=\; |S|\,M^{|\alpha|}\bigl(M^k - (M-1)^k\bigr).$$
+Choose $H_0$ minimising $|\mathrm{bad}(S,H)|$; then $M^{|\alpha|}\,|\mathrm{bad}(S,H_0)| \le \sum_H |\mathrm{bad}(S,H)|$, and substituting and cancelling the positive factor $M^{|\alpha|}$ gives the claim. $\square$
+
+**Corollary 7.3 (Fractional form).** *If $S \ne \varnothing$ and $M \ge 1$, some codebook $H$ satisfies*
+$$\frac{|\mathrm{bad}(S,H)|}{|S|} \;\le\; 1 - \Bigl(1-\frac1M\Bigr)^{|S|-1}.$$
+
+For $M \ge 2$ the right-hand side is strictly less than $1$ for every $S$: the statement is **never vacuous**, however large the typical set. And it always implies the classical estimate:
+
+**Theorem 7.4 (The exact bound dominates the union bound).** *For all $M, k \ge 0$,*
+$$M^{k} \;\le\; (M-1)^{k} + k\,M^{k-1}, \qquad\text{i.e.}\qquad M^k - (M-1)^k \le k M^{k-1},$$
+*equivalently $1 - (1-1/M)^k \le k/M$.*
+
+*Proof.* Induction on $k$. The case $k=0$ is trivial. Assuming $M^n \le (M-1)^n + nM^{n-1}$, multiply by $M$:
+$$M^{n+1} \le M(M-1)^n + M\cdot nM^{n-1} \le M(M-1)^n + nM^n \le (M-1)^{n+1} + (n+1)M^n,$$
+where the last step uses $M(M-1)^n \le (M-1)^{n+1} + M^n$, which follows from $(M-1)^n \le M^n$. $\square$
+
+Thus the exact derandomisation is never worse than the classical one and is strictly better precisely where the classical one degenerates.
+
+---
+
+## 8. Algorithms and applications
+
+### 8.1 Algorithmic content
+
+Three computational procedures are implicit in the development.
+
+1. **Marginal-profile evaluation.** Given a family $A_1,\dots,A_k$ over a universe of size $N$ as bit-vectors, compute $m = N/|A_1|$, $c = \min_{i\ne j} \lfloor N/|A_i\cap A_j|\rfloor$, and output the certified lower bound $ck/(m(c+m(k-1)))$ on $|\bigcup A_i|/N$. The cost is $O(k^2 N/w)$ word operations for word size $w$, dominated by the pairwise intersections; the resulting bound is guaranteed by Theorem 3.3 and, by Theorem 3.4, cannot be improved without further information.
+
+2. **Component-law marginal computation.** Given a collision pattern $P$ on $n$ vertices with $|P|$ edges, compute $c(P)$ by union–find in $O((n+|P|)\,\alpha(n))$ time and output $\Pr[E(P)] = M^{-(n - c(P))}$ exactly, by Theorem 4.10. This replaces any enumeration over $M^n$ codebooks.
+
+3. **Greedy exact derandomisation.** Theorem 7.2 asserts existence; the standard method of conditional expectations turns it into an algorithm. Label the messages of $S$ one at a time; at each step choose the label minimising the conditional expectation of $|\mathrm{bad}(S,H)|$, which by the conditional marginal principle (Theorem 5.2) is computable in closed form from the current bin occupancies. The result is a fixed codebook achieving the bound of Corollary 7.3 in $O(|S|\,M)$ arithmetic operations.
+
+### 8.2 Applications
+
+**Converse bounds in source coding.** Theorem 3.8 supplies the statement that random binning is not merely unproven but actually *bad* above the pigeonhole rate: with $k \ge M$, failure has probability exceeding $1/2$. Together with the achievability bound $k/M$ this pins the operational threshold at $k \asymp M$ from both sides.
+
+**Load balancing and hash tables.** Theorem 5.6 is the exact probability that a designated key collides with at least one of $k$ others in a table with $M$ slots; Corollaries 5.7 and 5.8 sandwich it between $k/(M+k)$ and $k/M$ with no assumptions, and Corollary 7.3 gives an existence statement for a fixed hash function with a bounded fraction of colliding keys.
+
+**Union bounds in probabilistic combinatorics generally.** Theorem 3.3 is stated for arbitrary families and can be applied wherever a first and second marginal are available and the Bonferroni route stalls — for example to threshold phenomena where the number of events grows past the inverse first marginal, precisely the regime Bonferroni forbids.
+
+---
+
+## 9. Discussion and future work
+
+### 9.1 What was established
+
+The regime restriction $2(k-1) \le M$ in the classical converse is an artefact of the second Bonferroni inequality, not of the collision marginals. Three independent lines of evidence support this. (i) The same two marginals, fed to the Chung–Erdős inequality, give an unconditional bound (Theorem 3.6) that dominates the Bonferroni bound wherever the latter applies (Theorem 3.7) and remains informative above the pigeonhole rate (Theorem 3.8). (ii) The marginals themselves contain no slack: the second marginal is an equality (Corollary 4.6), and indeed *all* pattern marginals are computed exactly by the component law (Theorem 4.10). (iii) The abstract theorem extracted from the profile is attained (Theorem 3.4), while the pairwise hypothesis cannot be dropped (Theorem 3.5) — so the second-moment route uses exactly the available information, and uses all of it.
+
+Beyond the structural point, the exact failure law $1-(1-1/M)^k$ (Theorem 5.6) resolves the quantitative question completely, sandwiches the failure probability between $k/(M+k)$ and $k/M$ for all parameters, situates the classical bound at the bottom of a four-term hierarchy (Theorem 6.3), and yields a derandomisation that is never vacuous (Theorem 7.2, Corollary 7.3).
+
+### 9.2 Limitations
+
+The exact law relies on full independence of labels across messages: the survival recursion (Lemma 5.4) needs the no-collision event to be unconstrained at each fresh coordinate. Under $t$-wise independent hash families only the first $t$ marginals are guaranteed, and one is thrown back on inequalities of the type in Section 3 — which is precisely why Theorem 3.3, using only two marginals, matters beyond the fully independent case. Note that Theorem 3.6 needs *pairwise* independence only, so it applies verbatim to pairwise independent (e.g. universal) hash families, whereas the exact law does not.
+
+### 9.3 Future directions
+
+Several concrete directions follow.
+
+* **Higher-order profiles.** Theorem 3.3 uses the first two marginals. What is the optimal union lower bound from the first $t$ marginals, as a function of the profile alone? For $t = 2$ the answer is Theorem 3.3, by the sharpness example. The general question is a moment problem over multiplicity distributions on $\{0,1,\dots,k\}$ with prescribed first $t$ moments, and its answer would give the exact strength of $t$-wise independence in this setting.
+* **Non-uniform profiles.** Allowing $m_i$ and $c_{ij}$ to vary with the index yields a weighted Cauchy–Schwarz problem; identifying the extremal configurations there would extend the analysis to non-uniform source distributions.
+* **Beyond stars.** The component law makes all marginals available; using more than two of them in a Bonferroni-type expansion, or in a Lovász-local-lemma style argument on the pattern graph, may capture regimes where the second-moment bound is still lossy.
+* **Algorithmic derandomisation guarantees.** Making the conditional-expectation derandomisation of Section 8.1 rigorous end to end, with an exact accounting of the loss, would give a deterministic construction matching Corollary 7.3 exactly.
+
+### 9.4 Programme-level directions carried forward
+
+The wider research programme in which this work sits identified the following continuations.
+
+The immediate cycle established: the second-moment (Chung–Erdős) inequality in exact counting form for arbitrary finite families, and an abstract marginal-profile theorem — first marginal $1/m$ plus pairwise marginal at most $1/c$ giving $c\,k\,N \le m|\bigcup A|(c+m(k-1))$ with no restriction on $k$. Fed with the two collision marginals this yields $\Pr[\text{failure}] \ge k/(M+k-1)$, removing the hypothesis $2(k-1)\le M$, and gives a converse to Shannon: $\Pr[\text{failure}] > 1/2$ once $k \ge M$. The abstract bound is proved attained, and the pairwise marginal proved load-bearing. Exact marginals for arbitrary collision patterns follow via idempotent collapse maps: the star marginal $M^{|\iota|-|T|}$, the upgrade of the pairwise bound from $\le$ to $=$, and exact independence of two disjoint collisions. The conditional collision marginal ($1/M$ conditionally on any event not constraining the coordinate) gives the exact failure law $\Pr[\text{failure}] = 1-(1-1/M)^k$, and from it both the Shannon bound $k/M$ and a matching lower bound $k/(M+k)$.
+
+A second loop produced the component law — the marginal of an arbitrary pattern is $M$ to the number of connected components of the pattern graph, with no collapse map needed — a graph-theoretic corollary deducing the component count of a star from two independent enumerations, and the hierarchy theorem $k/(2M) \le k/(M+k-1) \le \Pr[\text{failure}] \le k/M$, which locates the classical Bonferroni output precisely.
+
+A third loop produced exact derandomisation: averaging the exact law instead of the union bound over all codebooks gives $M^k|\mathrm{bad}(H)| \le |S|(M^k-(M-1)^k)$ for some fixed $H$, i.e. a deterministic codebook losing at most a $1-(1-1/M)^{|S|-1}$ fraction of the typical set. The classical bound $|S|(|S|-1)/M$ is vacuous once $|S|-1 \ge M$; the new one never is, and the integer inequality $M^k - (M-1)^k \le kM^{k-1}$ proves it always implies the old one.
+
+Nothing in the plan turned out false, but two formulations had to change. In particular, a first draft of the abstract theorem attempted to *falsify* the second-moment conclusion using a constant family; that family in fact turns the abstract inequality into an equality, and what it falsifies is the stronger Bonferroni-shaped conclusion — which is how Theorems 3.4 and 3.5 came to be stated as a matched pair.
+
+---
+
+## 10. Summary of principal results
+
+| Result | Statement |
+|---|---|
+| Chung–Erdős counting form (Thm 3.1) | $(\sum_i \lvert A_i\rvert)^2 \le \lvert\bigcup_i A_i\rvert \cdot \sum_{i,j}\lvert A_i\cap A_j\rvert$ |
+| Marginal-profile bound (Thm 3.3) | first marginal $1/m$, pairwise $\le 1/c$ $\Rightarrow$ $ckN \le m\lvert U\rvert(c+m(k-1))$, all $k$ |
+| Sharpness (Thm 3.4) | attained with equality by a constant family ($m=c=N=2$, $k=3$) |
+| Necessity of pairwise input (Thm 3.5) | $\lvert U\rvert \ge kN/(2m)$ fails for that family |
+| Unconditional hashing converse (Thm 3.6) | $\Pr[\mathrm{fail}] \ge k/(M+k-1)$ for all $k, M$ |
+| Domination (Thm 3.7) | $k/(2M) \le k/(M+k-1)$ whenever $k \le M+1$ |
+| Converse above the rate (Thm 3.8) | $k \ge M \Rightarrow \Pr[\mathrm{fail}] > 1/2$ |
+| Star marginal (Thm 4.4) | $\lvert\mathrm{Star}(T,x)\rvert = M^{\lvert\iota\rvert - \lvert T\rvert}$, probability exactly $M^{-\lvert T\rvert}$ |
+| Component law (Thm 4.10) | $\lvert E(P)\rvert = M^{c(P)}$ for an arbitrary pattern $P$ |
+| Conditional marginal (Thm 5.2) | $\Pr[C(y,x)\mid G] = 1/M$ for $G$ unconstrained at $y$ |
+| Exact failure law (Thm 5.6) | $\Pr[\mathrm{fail}] = 1-(1-1/M)^k$ |
+| Sandwich (Cor 5.7, 5.8) | $k/(M+k) \le \Pr[\mathrm{fail}] \le k/M$, all $k, M$ |
+| Hierarchy (Thm 6.3) | $k/(2M) \le k/(M+k-1) \le \Pr[\mathrm{fail}] \le k/M$ for $k \le M+1$ |
+| Exact derandomisation (Thm 7.2, Cor 7.3) | some $H$ with $\lvert\mathrm{bad}(S,H)\rvert/\lvert S\rvert \le 1-(1-1/M)^{\lvert S\rvert-1}$ |
+| Domination of the union bound (Thm 7.4) | $M^k-(M-1)^k \le kM^{k-1}$ |
