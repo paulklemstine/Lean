@@ -1,41 +1,17 @@
-# The Additive Uncertainty Principle on Cyclic Groups of Prime Order: Equivalences, Regimes, and Boundaries
+# The Additive Uncertainty Principle on Cyclic Groups of Prime Order
 
 **Author:** Aristotle
-**Date:** 2026-08-17
+**Date:** 2026-08-22
 
 ---
 
 ## Abstract
 
-For a nonzero function $f$ on a finite cyclic group $\mathbb{Z}_n$ the Donoho–Stark
-uncertainty principle asserts the multiplicative bound
-$|\operatorname{supp} f| \cdot |\operatorname{supp} \hat f| \geq n$. When $n = p$ is prime, a strictly
-stronger *additive* bound $|\operatorname{supp} f| + |\operatorname{supp} \hat f| \geq p + 1$ is available.
-This paper develops the additive principle systematically: we delimit it from above and below,
-identify it with a classical determinantal statement, reduce it to a finite combinatorial
-criterion, and prove it outright in five explicit regimes.
+Let $p$ be a prime and let $f : \mathbb{Z}/p\mathbb{Z} \to \mathbb{C}$ be a nonzero function with discrete Fourier transform $\hat f(k) = \sum_x e^{-2\pi i kx/p} f(x)$. We give a complete and self-contained development of the *additive* uncertainty principle
+$$|\operatorname{supp} f| + |\operatorname{supp} \hat f| \;\ge\; p + 1,$$
+strictly stronger than the classical multiplicative bound $|\operatorname{supp} f|\cdot|\operatorname{supp}\hat f| \ge p$ that holds for every modulus. The engine is Chebotarev's theorem: for prime $p$, every square submatrix of the Fourier matrix $(\zeta^{xy})_{x,y \in \mathbb{Z}/p\mathbb{Z}}$, $\zeta$ a primitive $p$-th root of unity, is nonsingular. We present Frenkel's elementary proof of Chebotarev's theorem in full detail, based on the order of vanishing at $1$ of the integer polynomial $\det(X^{a_ib_j})$ and on the identity $\big(\prod_{j<k} j!\big)G_N = V(a)V(b)$ relating its critical coefficient to a product of Vandermonde determinants.
 
-Specifically, we show: (i) the additive bound implies the multiplicative one, while no
-arithmetic manipulation of the multiplicative bound can yield the additive one — for every
-$p \geq 5$ there exist admissible support cardinalities satisfying $ab \geq p$ and
-$a + b < p+1$, and the multiplicative bound in isolation yields only the square-root estimate
-$a + b \geq 2\sqrt{n}$; (ii) primality is indispensable — on $\mathbb{Z}_4$ the indicator of
-the subgroup $\{0,2\}$ attains the multiplicative bound with equality while violating the
-additive one; (iii) the additive bound is sharp at both endpoints, attained by Dirac deltas
-$(1 + p)$ and by characters $(p + 1)$; (iv) for every modulus the additive bound is
-*equivalent* to the nonsingularity of all square minors of the Fourier matrix
-$(\omega^{st})_{s,t}$ (Chebotarev's property), and equivalent in turn to a purely combinatorial
-statement about parity-weighted fibres of the exponent map
-$\sigma \mapsto \sum_j s_{\sigma(j)} t_j$ on the symmetric group; (v) the additive bound holds
-whenever $|\operatorname{supp} f| \leq 3$, whenever $|\operatorname{supp}\hat f| \leq 3$, whenever
-$|\operatorname{supp} f| \geq p - 3$, and whenever either the support or the spectrum is an arithmetic
-progression. As an application we derive a deterministic, universal sparse-recovery guarantee:
-any $k$-sparse function on $\mathbb{Z}_p$ is uniquely determined by its Fourier coefficients on
-*any* set of $2k$ frequencies.
-
-**Keywords:** uncertainty principle, discrete Fourier transform, cyclic group of prime order,
-Chebotarev's theorem, roots of unity, sparse recovery, compressed sensing, Vandermonde
-determinant.
+We then derive a family of consequences. (i) An **exact converse**: for *every* pair of subsets $A, B \subseteq \mathbb{Z}/p\mathbb{Z}$ with $|A| + |B| = p+1$ there exists $f$ with $\operatorname{supp} f = A$ and $\operatorname{supp}\hat f = B$; the inequality is therefore sharp at every boundary point, not merely in isolated examples. (ii) A **primality criterion**: for $n \ge 2$ the additive bound holds for all nonzero $f : \mathbb{Z}/n\mathbb{Z}\to\mathbb{C}$ if and only if $n$ is prime, with subgroup indicators supplying explicit counterexamples $|\operatorname{supp} f| + |\operatorname{supp}\hat f| = d + e \le n$ whenever $n = de$, $d,e \ge 2$. (iii) **Deterministic sparse recovery**: any $k$-sparse signal is determined by its Fourier data on an arbitrary set of $2k$ frequencies, and $2k-1$ frequencies never suffice, for any sampling pattern. (iv) A **Fourier interpolation theorem**: for arbitrary $A, B$ with $|A| = |B|$ and arbitrary prescribed data, there is a unique signal vanishing off $A$ whose transform matches the data on $B$; equivalently every rectangular $A\times B$ block of the Fourier matrix has rank exactly $\min(|A|,|B|)$. (v) A **zero-counting theorem**: for nonzero $f$, the transform $\hat f$ vanishes at strictly fewer than $|\operatorname{supp} f|$ frequencies.
 
 ---
 
@@ -43,599 +19,308 @@ determinant.
 
 ### 1.1 Setting and notation
 
-Fix an integer $n \geq 1$ and let $\mathbb{Z}_n$ denote the integers modulo $n$. Put
-$\omega = e^{2\pi i / n}$ and let
+Fix an integer $n \ge 2$ and write $\zeta_n = e^{-2\pi i / n}$, a primitive $n$-th root of unity. For $f : \mathbb{Z}/n\mathbb{Z} \to \mathbb{C}$ define the **discrete Fourier transform**
+$$\hat f(k) \;=\; \sum_{x \in \mathbb{Z}/n\mathbb{Z}} \zeta_n^{\,\overline{k}\,\overline{x}}\, f(x), \qquad k \in \mathbb{Z}/n\mathbb{Z},$$
+where $\overline{y} \in \{0,1,\dots,n-1\}$ is the canonical representative of $y$. The **support** is
+$$\operatorname{supp} f \;=\; \{x \in \mathbb{Z}/n\mathbb{Z} : f(x) \neq 0\},$$
+a finite set whose cardinality we denote $|\operatorname{supp} f|$. A signal is **$k$-sparse** if $|\operatorname{supp} f| \le k$.
 
-$$\chi : \mathbb{Z}_n \to \mathbb{C}^{\times}, \qquad \chi(a) = \omega^{\,\bar a},$$
+Concretely, $\hat f = M f$ where $M$ is the $n \times n$ **Fourier matrix** $M_{k,x} = \zeta_n^{\overline{k}\overline{x}}$. Since $M \overline{M}^{\,T} = nI$, the transform is invertible, so $f$ and $\hat f$ encode the same information.
 
-where $\bar a \in \{0, 1, \dots, n-1\}$ is the canonical representative of $a$. Then $\chi$ is
-a group homomorphism from $(\mathbb{Z}_n, +)$ to $(\mathbb{C}^\times, \cdot)$; for $n$ prime it
-is injective. We write $\omega^{a}$ for $\chi(a)$ when no confusion arises.
+### 1.2 The two uncertainty principles
 
-For $f : \mathbb{Z}_n \to \mathbb{C}$ the (unnormalised) discrete Fourier transform is
+The classical Donoho–Stark bound, valid for every modulus $n$ and every nonzero $f$, is multiplicative:
+$$|\operatorname{supp} f| \cdot |\operatorname{supp} \hat f| \;\ge\; n. \tag{1.1}$$
+It follows from the elementary estimate $\|\hat f\|_\infty \le \|f\|_1 \le |\operatorname{supp} f| \cdot \|f\|_\infty$ combined with the inverse transform. For prime moduli a strictly stronger, additive bound holds; it goes back to Tao's use of Chebotarev's theorem.
 
-$$\hat f(k) \;=\; \sum_{x \in \mathbb{Z}_n} \omega^{-kx}\, f(x), \qquad k \in \mathbb{Z}_n,$$
+**Theorem A (additive uncertainty principle).** *Let $p$ be prime and $f : \mathbb{Z}/p\mathbb{Z}\to\mathbb{C}$ nonzero. Then*
+$$|\operatorname{supp} f| + |\operatorname{supp}\hat f| \;\ge\; p + 1.$$
 
-and the support is $\operatorname{supp} f = \{x \in \mathbb{Z}_n : f(x) \neq 0\}$. Fourier inversion
-takes the form of a reflection identity,
+That Theorem A implies (1.1) is pure arithmetic: if $\alpha,\beta \ge 1$ and $\alpha + \beta \ge P + 1$ then $\alpha\beta \ge \alpha + \beta - 1 \ge P$, since $(\alpha - 1)(\beta - 1) \ge 0$. The converse implication fails, and quantifiably so.
 
-$$\hat{\hat f}(k) \;=\; n \, f(-k), \tag{1.1}$$
+**Proposition B (strict strengthening).** *For $p = 13$ the pair $|\operatorname{supp} f| = |\operatorname{supp}\hat f| = 4$ satisfies the multiplicative bound $4\cdot 4 = 16 \ge 13$, yet no nonzero $f : \mathbb{Z}/13\mathbb{Z}\to\mathbb{C}$ realises it, because $4 + 4 = 8 < 14$.*
 
-from which one reads off immediately that $|\operatorname{supp} \hat{\hat f}| = |\operatorname{supp} f|$ and
-that $f \neq 0 \Rightarrow \hat f \neq 0$. Identity $(1.1)$ is the source of all *duality*
-statements below: every theorem about supports has a mirror theorem about spectra.
+More generally, whenever $\sqrt{p} \le \alpha,\beta$ and $\alpha + \beta \le p$, the product bound permits a support pattern that the additive bound forbids; the balanced regime $\alpha = \beta \approx \sqrt p$ is exactly the region where the two statements differ most.
 
-### 1.2 The two uncertainty inequalities
+### 1.3 Overview
 
-**Product bound (Donoho–Stark).** *For every $n \geq 1$ and every $f : \mathbb{Z}_n \to
-\mathbb{C}$ with $f \neq 0$,*
-$$|\operatorname{supp} f| \cdot |\operatorname{supp} \hat f| \;\geq\; n .$$
+Section 2 states and proves Chebotarev's total nonsingularity theorem following Frenkel. Section 3 deduces Theorem A and its exact converse. Section 4 establishes the primality criterion. Section 5 develops the linear-algebraic consequences (interpolation, rank of minors, zero counting). Section 6 gives the sparse-recovery results and algorithms. Section 7 discusses scope, related phenomena, and open directions.
 
-**Additive bound.** *For every prime $p$ and every $f : \mathbb{Z}_p \to \mathbb{C}$ with
-$f \neq 0$,*
-$$|\operatorname{supp} f| + |\operatorname{supp} \hat f| \;\geq\; p + 1 .$$
-
-The additive bound is a prime-order phenomenon; it is due to Tao. This paper is an anatomy of
-the statement: what separates it from the product bound, why primality is needed, where it is
-attained, what it is equivalent to, and in which regimes it can currently be established from
-first principles.
-
-Throughout, when $p$ is prime we let $\mathrm{SU}(p)$ denote the assertion
-
-$$\mathrm{SU}(p): \qquad \forall f \neq 0, \quad |\operatorname{supp} f| + |\operatorname{supp} \hat f| \geq p+1,$$
-
-and $\mathrm{CP}(n)$ the assertion that every square submatrix of $(\omega^{st})_{s,t \in
-\mathbb{Z}_n}$ is nonsingular. Both make sense for arbitrary moduli, and Section 4 proves that
-they are equivalent for every modulus.
+Everything below is elementary in the sense that it uses only determinants, binomial identities, the irreducibility of the cyclotomic polynomial $\Phi_p$, and finite-dimensional linear algebra.
 
 ---
 
-## 2. Separating the two bounds
+## 2. Chebotarev's theorem on the minors of the prime Fourier matrix
 
-### 2.1 The additive bound is a strengthening
+### 2.1 Statement
 
-**Proposition 2.1.** *Let $a, b \geq 1$ be integers with $a + b \geq p+1$. Then $ab \geq p$.*
+**Theorem 2.1 (Chebotarev, 1926).** *Let $p$ be prime, let $\zeta \in \mathbb{C}$ be a primitive $p$-th root of unity, let $k \ge 0$, and let $a_1,\dots,a_k$ and $b_1,\dots,b_k$ be two sequences of pairwise distinct elements of $\{0,1,\dots,p-1\}$. Then*
+$$\det\big(\zeta^{\,a_i b_j}\big)_{1\le i,j\le k} \;\neq\; 0 .$$
 
-*Proof.* Since $a, b \geq 1$ we have $(a-1)(b-1) \geq 0$, i.e. $ab \geq a + b - 1 \geq p$.
-$\blacksquare$
+Equivalently: every square submatrix of the $p\times p$ Fourier matrix is invertible. We call this property **total nonsingularity**.
 
-Applying this with $a = |\operatorname{supp} f|$, $b = |\operatorname{supp}\hat f|$ (both at least $1$
-whenever $f \neq 0$) shows that $\mathrm{SU}(p)$ implies the Donoho–Stark bound for
-$\mathbb{Z}_p$.
+Primality is essential. For $n = 4$ and $\zeta = i$, rows $\{0,2\}$ and columns $\{0,2\}$ give $\begin{pmatrix} 1 & 1 \\ 1 & 1\end{pmatrix}$, singular. In general, if $n = de$ with $d,e\ge 2$, the block indexed by the annihilator pair $(e\mathbb{Z}/n, d\mathbb{Z}/n)$ is a rank-one all-ones matrix of size $\min(d,e) \ge 2$.
 
-### 2.2 The converse fails as pure arithmetic
+### 2.2 Frenkel's proof
 
-**Theorem 2.2 (No arithmetic implication).** *For every $p \geq 5$ there exist positive
-integers $a, b$ with*
-$$p \le ab \qquad \text{and} \qquad a + b < p+1 .$$
+Fix $a = (a_i)$ and $b = (b_j)$ as in the theorem and introduce the integer polynomial
+$$F(X) \;=\; \det\big(X^{\,a_i b_j}\big)_{i,j} \;\in\; \mathbb{Z}[X], \qquad G(X) \;=\; F(X+1).$$
+Set
+$$N \;=\; 0 + 1 + \cdots + (k-1) \;=\; \binom{k}{2}, \qquad \mathrm{sf}(k) \;=\; \prod_{j=0}^{k-1} j! \quad (\text{the superfactorial}),$$
+and let $V(a) = \prod_{i<j}(a_j - a_i)$ denote the Vandermonde determinant of $a$, i.e. $V(a) = \det(a_i^{\,j-1})_{i,j}$.
 
-*Proof.* Take $a = 2$ and $b = \lfloor (p+1)/2 \rfloor$. Then $2b \geq p$ (for $p$ odd,
-$2b = p+1$; for $p$ even, $2b = p$), so $ab \geq p$. And $a + b = 2 + \lfloor (p+1)/2 \rfloor
-< p+1$ precisely because $\lfloor (p+1)/2\rfloor < p - 1$ for $p \geq 5$. $\blacksquare$
+The proof rests on two lemmas about the coefficients of $G$, and one arithmetic lemma.
 
-Thus the additive bound is not obtainable from the multiplicative one by any inequality
-manipulation whatsoever: the pair of cardinalities $\big(2, \lfloor (p+1)/2\rfloor \big)$ is
-admissible for the product bound and inadmissible for the additive one. The same holds for the
-"balanced" profile $a = b = \lceil \sqrt p \rceil$, which satisfies $ab \geq p$ while
-$a + b \approx 2\sqrt p \ll p+1$.
+#### Step 1: coefficients of $G$ as signed sums of binomial coefficients
 
-### 2.3 What the product bound alone gives
+**Lemma 2.2.** *For every $d \ge 0$,*
+$$G_d \;:=\; [X^d]\,G(X) \;=\; \sum_{\sigma \in S_k} \operatorname{sgn}(\sigma)\binom{\sum_{i} a_{\sigma(i)}b_i}{d}.$$
 
-**Proposition 2.3.** *For all integers $x, y \geq 0$ one has $4xy \leq (x+y)^2$; consequently,
-for every $n \geq 1$ and every $f \neq 0$ on $\mathbb{Z}_n$,*
-$$\big(|\operatorname{supp} f| + |\operatorname{supp}\hat f|\big)^2 \;\geq\; 4n,
-\qquad\text{i.e.}\qquad |\operatorname{supp} f| + |\operatorname{supp}\hat f| \;\geq\; 2\sqrt n .$$
+*Proof.* By the Leibniz formula, $G(X) = \det((X+1)^{a_ib_j}) = \sum_\sigma \operatorname{sgn}(\sigma)\prod_i (X+1)^{a_{\sigma(i)}b_i} = \sum_\sigma \operatorname{sgn}(\sigma)(X+1)^{s_\sigma}$ where $s_\sigma = \sum_i a_{\sigma(i)}b_i$. Now extract the coefficient of $X^d$ from each $(X+1)^{s_\sigma}$. $\square$
 
-*Proof.* $(x+y)^2 - 4xy = (x-y)^2 \geq 0$; combine with the Donoho–Stark bound. $\blacksquare$
+#### Step 2: from binomials to alternating power sums
 
-The gap between $2\sqrt{p}$ and $p+1$ quantifies exactly how much stronger the additive
-principle is: the multiplicative bound recovers only the square root of the correct additive
-truth.
+Define the **alternating power sums**
+$$T_r \;=\; \sum_{\sigma \in S_k} \operatorname{sgn}(\sigma)\, s_\sigma^{\,r}, \qquad s_\sigma = \sum_i a_{\sigma(i)} b_i .$$
+Let $D_d(X) = X(X-1)\cdots(X-d+1) = \sum_{r=0}^{d} c_{d,r}X^r$ be the falling factorial, a monic polynomial of degree $d$ with integer coefficients, so that $d!\binom{y}{d} = D_d(y)$ for all integers $y$.
 
----
+**Lemma 2.3.** *For every $d\ge 0$,* $\;d!\, G_d = \sum_{r=0}^{d} c_{d,r} T_r$.
 
-## 3. Boundaries: primality and sharpness
+*Proof.* Multiply Lemma 2.2 by $d!$ and substitute $d!\binom{s_\sigma}{d} = D_d(s_\sigma) = \sum_r c_{d,r}s_\sigma^r$; interchange the two finite sums. $\square$
 
-### 3.1 Failure on a composite modulus
+#### Step 3: the alternating power sums vanish below the critical order
 
-**Theorem 3.1 (Primality is essential).** *Let $f : \mathbb{Z}_4 \to \mathbb{C}$ be the
-indicator of the subgroup $\{0,2\}$, i.e. $f(0) = f(2) = 1$, $f(1) = f(3) = 0$. Then $f \neq 0$
-and*
-$$|\operatorname{supp} f| \cdot |\operatorname{supp}\hat f| = 4, \qquad
-|\operatorname{supp} f| + |\operatorname{supp}\hat f| = 4 < 5 .$$
-*Thus the additive bound fails for the modulus $4$, while the multiplicative bound is attained
-with equality.*
+**Lemma 2.4 (multinomial expansion).** *For every $r \ge 0$,*
+$$T_r \;=\; \sum_{\substack{m : \{1,\dots,k\}\to\mathbb{Z}_{\ge0} \\ \sum_i m_i = r}} \binom{r}{m}\Big(\prod_i b_i^{\,m_i}\Big)\det\big(a_i^{\,m_j}\big)_{i,j},$$
+*where $\binom{r}{m} = r!/\prod_i m_i!$ is the multinomial coefficient.*
 
-*Proof.* With $\omega = i$ one computes $\hat f(k) = 1 + \omega^{-2k} = 1 + (-1)^{k}$, using
-$\omega^{-2} = -1$: the unique nontrivial square root of unity in $\mathbb{Z}_4$'s character
-group. Hence $\hat f(0) = \hat f(2) = 2$ and $\hat f(1) = \hat f(3) = 0$, so
-$\operatorname{supp} \hat f = \{0,2\} = \operatorname{supp} f$, of cardinality $2$ each. $\blacksquare$
+*Proof.* Expand $s_\sigma^r = \big(\sum_i a_{\sigma(i)}b_i\big)^r$ multinomially, obtaining $\sum_m \binom{r}{m}\prod_i (a_{\sigma(i)}b_i)^{m_i}$. Summing over $\sigma$ with signs and separating the $b$-factors gives $\sum_m \binom{r}{m}\prod_i b_i^{m_i}\sum_\sigma \operatorname{sgn}(\sigma)\prod_i a_{\sigma(i)}^{m_i}$, and the inner alternating sum is precisely the Leibniz expansion of $\det(a_i^{m_j})$. $\square$
 
-The mechanism is structural: an indicator of a subgroup $H \le G$ transforms into
-$|H|$ times the indicator of the annihilator $H^{\perp}$, and $|H| \cdot |H^\perp| = |G|$, so
-subgroup indicators always *attain* the Donoho–Stark bound. A group of prime order has no
-proper nontrivial subgroups, which removes the extremal family entirely — this is the first
-place where primality enters, and it is not the last.
+**Lemma 2.5.** *If the exponent vector $m$ is not injective then $\det(a_i^{m_j}) = 0$.*
 
-### 3.2 Sharpness at both endpoints
+*Proof.* If $m_{j_1} = m_{j_2}$ with $j_1 \ne j_2$, the matrix has two identical columns. $\square$
 
-Let $p$ be prime.
+**Lemma 2.6 (minimal sum of an injective vector).** *If $m : \{1,\dots,k\}\to\mathbb{Z}_{\ge 0}$ is injective then $\sum_i m_i \ge N = 0+1+\cdots+(k-1)$, with equality if and only if $\{m_1,\dots,m_k\} = \{0,1,\dots,k-1\}$.*
 
-**Theorem 3.2 (Delta functions).** *For $a \in \mathbb{Z}_p$ let $\delta_a$ be the indicator of
-$\{a\}$. Then $\hat{\delta_a}(k) = \omega^{-ka} \neq 0$ for all $k$, hence*
-$$|\operatorname{supp} \delta_a| + |\operatorname{supp} \hat{\delta_a}| \;=\; 1 + p .$$
+*Proof.* Induct on the largest element. For a finite set $S \subseteq \mathbb{Z}_{\ge0}$ with maximum $a$ and $S' = S\setminus\{a\}$, we have $S' \subseteq \{0,\dots,a-1\}$, so $|S'| \le a$; by induction $\sum_{x\in S'} x \ge \binom{|S'|}{2}$, whence $\sum_{x\in S} x \ge \binom{|S'|}{2} + a \ge \binom{|S'|}{2} + |S'| = \binom{|S|}{2}$. Equality forces $a = |S'| = |S|-1$ and equality for $S'$, i.e. $S = \{0,\dots,|S|-1\}$ by induction. $\square$
 
-*Proof.* Only the term $x = a$ survives in the defining sum; a root of unity is never zero, so
-$\operatorname{supp}\hat{\delta_a} = \mathbb{Z}_p$. $\blacksquare$
+**Proposition 2.7.** $T_r = 0$ *for every* $r < N$, *and consequently* $G_d = 0$ *for every* $d < N$.
 
-**Lemma 3.3 (Vanishing of the full character sum).** *For $p \geq 2$,
-$\sum_{y \in \mathbb{Z}_p} \omega^{y} = 0$.*
+*Proof.* By Lemma 2.4 only injective $m$ contribute (Lemma 2.5); by Lemma 2.6 an injective $m$ has $\sum m_i \ge N > r$, so no injective $m$ occurs in the sum defining $T_r$. Hence $T_r = 0$. Lemma 2.3 then gives $d!\,G_d = 0$ for $d < N$, and $d! \ne 0$. $\square$
 
-*Proof.* Re-index the sum over $\mathbb{Z}_p$ as $\sum_{m=0}^{p-1}\omega^{m}$ using the
-canonical representatives; this geometric sum equals $(\omega^p - 1)/(\omega - 1) = 0$ because
-$\omega^p = 1$ and $\omega \neq 1$. $\blacksquare$
+#### Step 4: the critical coefficient is a Vandermonde product
 
-**Theorem 3.4 (Characters).** *For $b \in \mathbb{Z}_p$ let $\chi_b(x) = \omega^{bx}$. Then*
-$$\hat{\chi_b}(k) = \begin{cases} p, & k = b, \\ 0, & k \neq b,\end{cases}
-\qquad\text{hence}\qquad
-|\operatorname{supp} \chi_b| + |\operatorname{supp}\hat{\chi_b}| = p + 1 .$$
+**Proposition 2.8.** $\mathrm{sf}(k)\, T_N = N!\, V(a)\, V(b)$, *and therefore*
+$$\mathrm{sf}(k)\; G_N \;=\; V(a)\,V(b).$$
 
-*Proof.* $\hat{\chi_b}(k) = \sum_x \omega^{-kx}\omega^{bx} = \sum_x \omega^{(b-k)x}$. If
-$k = b$ every term is $1$. If $k \neq b$ then $b - k$ is invertible modulo the prime $p$, so
-$x \mapsto (b-k)x$ permutes $\mathbb{Z}_p$ and the sum equals $\sum_y \omega^{y} = 0$ by Lemma
-3.3. $\blacksquare$
+*Proof.* By Lemmas 2.4–2.6, the only exponent vectors contributing to $T_N$ are the bijections $m : \{1,\dots,k\}\to\{0,\dots,k-1\}$, i.e. $m_j = \tau(j)-1$ for a permutation $\tau \in S_k$ (write $m = \theta_\tau$). For such $m$:
 
-So the additive inequality is attained at the two extreme sparsity profiles $(1, p)$ and
-$(p, 1)$ — and nowhere else can it be attained with a *balanced* profile, by Theorem 2.2's
-arithmetic.
+* $\det(a_i^{\,\theta_\tau(j)})$ is the Vandermonde matrix $\det(a_i^{\,j-1})$ with its columns permuted by $\tau$, hence equals $\operatorname{sgn}(\tau)V(a)$;
+* $\prod_i b_i^{\theta_\tau(i)}$ summed against $\operatorname{sgn}(\tau)$ over all $\tau$ reproduces $V(b)$, because $V(b) = \sum_\tau \operatorname{sgn}(\tau)\prod_i b_i^{\theta_\tau(i)}$ is exactly the Leibniz expansion of the transposed Vandermonde matrix;
+* the multinomial coefficient is $\binom{N}{\theta_\tau} = N!/\prod_j \theta_\tau(j)! = N!/\mathrm{sf}(k)$, independent of $\tau$.
+
+Assembling, $T_N = \frac{N!}{\mathrm{sf}(k)}\,V(a)\sum_\tau \operatorname{sgn}(\tau)\prod_i b_i^{\theta_\tau(i)} = \frac{N!}{\mathrm{sf}(k)}V(a)V(b)$. For the second identity apply Lemma 2.3 at $d = N$: all $T_r$ with $r<N$ vanish and $c_{N,N}=1$, so $N!\,G_N = T_N$; combine with the first identity and cancel $N! \neq 0$. $\square$
+
+#### Step 5: the arithmetic contradiction
+
+**Lemma 2.9.** *If $a_1,\dots,a_k$ are pairwise distinct elements of $\{0,\dots,p-1\}$ then $p \nmid V(a)$.*
+
+*Proof.* $V(a) = \prod_{i<j}(a_j - a_i)$ and $p$ is prime, so $p \mid V(a)$ would force $p \mid (a_j - a_i)$ for some $i<j$. But $0 < |a_j - a_i| < p$, a contradiction. $\square$
+
+*Proof of Theorem 2.1.* Suppose $\det(\zeta^{a_ib_j}) = 0$, i.e. $F(\zeta) = 0$. Since $\zeta$ is a primitive $p$-th root of unity, its minimal polynomial over $\mathbb{Q}$ is the cyclotomic polynomial $\Phi_p(X) = 1 + X + \cdots + X^{p-1}$, which is monic with integer coefficients; hence $\Phi_p \mid F$ in $\mathbb{Z}[X]$, say $F = \Phi_p H$. Shifting, $G(X) = F(X+1) = g(X)\,H(X+1)$ with $g(X) = \Phi_p(X+1)$.
+
+The constant coefficient of $g$ is $\Phi_p(1) = p \ne 0$, so $g$ has trailing degree $0$ and trailing coefficient $p$. By Propositions 2.7 and 2.8, $G$ has all coefficients below degree $N$ equal to $0$, and $G_N \ne 0$ (indeed $\mathrm{sf}(k)G_N = V(a)V(b) \ne 0$ by Lemma 2.9); so $G$ has trailing degree exactly $N$ and trailing coefficient $G_N$. Trailing coefficients are multiplicative, so
+$$G_N \;=\; p \cdot \big(\text{trailing coefficient of } H(X+1)\big),$$
+an integer multiple of $p$. Then $p \mid \mathrm{sf}(k) G_N = V(a)V(b)$, so $p$ divides $V(a)$ or $V(b)$, contradicting Lemma 2.9. $\blacksquare$
+
+**Remark 2.10.** The proof is constructive in spirit: it exhibits an explicit integer, $\mathrm{sf}(k)^{-1}V(a)V(b)$, which would have to be divisible by $p$ if the minor vanished. This gives a quantitative flavour: the "first nonzero jet" of $F$ at $X = 1$ is a Vandermonde product, and primality precisely blocks the divisibility that a vanishing minor would impose.
 
 ---
 
-## 4. The determinantal identity
+## 3. The additive uncertainty principle and its exact converse
 
-### 4.1 Chebotarev's property
+### 3.1 Proof of Theorem A
 
-**Definition 4.1.** For $n \geq 1$ let $\mathrm{CP}(n)$ be the statement: for every $m \geq 0$
-and all injective $S, T : \{1,\dots,m\} \to \mathbb{Z}_n$, the matrix
-$M_{S,T} = \big(\omega^{\,S_j T_k}\big)_{j,k=1}^{m}$ is nonsingular.
+*Proof of Theorem A.* Let $A = \operatorname{supp} f$ with $|A| = \alpha \ge 1$ and $B = \operatorname{supp}\hat f$ with $|B| = \beta$. Suppose for contradiction $\alpha + \beta \le p$. Then $|B^c| = p - \beta \ge \alpha$, so we may choose $R \subseteq B^c$ with $|R| = \alpha$. Because $\hat f$ vanishes on $B^c \supseteq R$ and $f$ vanishes off $A$,
+$$0 \;=\; \hat f(k) \;=\; \sum_{x \in A} \zeta^{\,\overline{k}\,\overline{x}} f(x) \qquad \text{for all } k \in R .$$
+This says the vector $(f(x))_{x\in A} \in \mathbb{C}^\alpha$ lies in the kernel of the $\alpha\times\alpha$ matrix $\big(\zeta^{\,\overline{k}\,\overline{x}}\big)_{k\in R,\, x\in A}$, which is a square submatrix of the Fourier matrix. By Theorem 2.1 that matrix is invertible, so $f|_A = 0$; since $f$ vanishes off $A$ too, $f = 0$, contradicting $f \ne 0$. $\blacksquare$
 
-That is: every square minor of the full Fourier matrix of $\mathbb{Z}_n$ is nonzero.
-Chebotarev's theorem is the assertion $\mathrm{CP}(p)$ for $p$ prime.
+### 3.2 Sharpness
 
-**Theorem 4.2 (Uncertainty $=$ nonsingularity).** *For every modulus $n \geq 1$,*
-$$\mathrm{CP}(n) \iff \mathrm{SU}(n),$$
-*where $\mathrm{SU}(n)$ denotes "$|\operatorname{supp} f| + |\operatorname{supp}\hat f| \geq n+1$ for all
-$f \neq 0$".*
+**Proposition 3.1 (extremal examples).** *Let $p$ be prime.*
+1. *For the delta $\delta_c(x) = [x = c]$ one has $|\operatorname{supp}\delta_c| = 1$ and $|\operatorname{supp}\widehat{\delta_c}| = p$, total $p+1$.*
+2. *For the constant $f \equiv 1$ one has $|\operatorname{supp} f| = p$ and $|\operatorname{supp}\hat f| = 1$, total $p+1$.*
 
-*Proof sketch.* ($\Rightarrow$) Suppose $f \neq 0$ violates the bound and let
-$A = \operatorname{supp} f$, $Z = \{k : \hat f(k) = 0\}$. Since $|Z| = n - |\operatorname{supp}\hat f|$, the
-violation $|A| + |\operatorname{supp}\hat f| \leq n$ reads $|A| \leq |Z|$. Choose $Z' \subseteq Z$ with
-$|Z'| = |A|$, enumerate $A$ as $T_1,\dots,T_m$ and $Z'$ as $z_1,\dots,z_m$, and set
-$S_j = -z_j$. The vector $v_k = f(T_k)$ is nonzero and satisfies
+*Proof.* $\widehat{\delta_c}(k) = \zeta^{\overline{k}\overline{c}}$ never vanishes, giving (1). For (2), $\hat f(k) = \sum_x \zeta^{\overline{k}\overline{x}}$ equals $p$ at $k=0$ and $0$ otherwise (geometric series). Alternatively, in each case the lower bound of Theorem A and the trivial upper bound $|\operatorname{supp}\hat f| \le p$ pin the total. $\square$
 
-$$\sum_{k} \omega^{\,S_j T_k} v_k \;=\; \sum_{x \in A} \omega^{-z_j x} f(x) \;=\; \hat f(z_j)
-\;=\; 0 \quad \text{for all } j,$$
+The much stronger fact is that the entire boundary is attained, in every position.
 
-so $M_{S,T} v = 0$ and $M_{S,T}$ is singular.
+**Theorem C (exact converse).** *Let $p$ be prime and let $A, B \subseteq \mathbb{Z}/p\mathbb{Z}$ satisfy $|A| + |B| = p+1$. Then there exists $f : \mathbb{Z}/p\mathbb{Z}\to\mathbb{C}$ with*
+$$\operatorname{supp} f = A \qquad\text{and}\qquad \operatorname{supp}\hat f = B .$$
 
-($\Leftarrow$) Suppose $M_{S,T}$ is singular for some injective $S, T$ of size $m$; take
-$v \neq 0$ in its kernel and define $f = \sum_k v_k \delta_{T_k}$, so that
-$\operatorname{supp} f \subseteq \{T_1,\dots,T_m\}$ and $|\operatorname{supp} f| \leq m$. For each $j$,
-$\hat f(-S_j) = \sum_k \omega^{S_j T_k} v_k = 0$, and the $m$ frequencies $-S_j$ are distinct,
-so $|\operatorname{supp} \hat f| \le n - m$. Hence
-$|\operatorname{supp} f| + |\operatorname{supp}\hat f| \le n$, contradicting $\mathrm{SU}(n)$. $\blacksquare$
+*Proof sketch.* Write $\alpha = |A| \ge 1$, $\beta = |B|$, so $|B^c| = p - \beta = \alpha - 1$. Consider the linear map
+$$\Psi : \{f : \operatorname{supp} f \subseteq A\} \longrightarrow \mathbb{C}^{B^c}, \qquad \Psi(f) = \big(\hat f(k)\big)_{k \in B^c},$$
+represented by the $(\alpha-1)\times\alpha$ matrix $\big(\zeta^{\overline{k}\overline{x}}\big)_{k\in B^c, x\in A}$. By Theorem 2.1 every $(\alpha-1)\times(\alpha-1)$ minor of this matrix is nonzero, so it has full row rank $\alpha-1$ and $\ker\Psi$ is one-dimensional. Let $f$ span the kernel.
 
-The equivalence is *unconditional in the modulus*, which yields, in combination with Theorem
-3.1:
+*The support of $f$ is all of $A$.* If $f(x_0) = 0$ for some $x_0 \in A$, then $f$ restricted to $A\setminus\{x_0\}$ is a nonzero kernel vector of the square $(\alpha-1)\times(\alpha-1)$ submatrix with columns $A\setminus\{x_0\}$, contradicting Theorem 2.1.
 
-**Corollary 4.3.** $\mathrm{CP}(4)$ *is false.* Explicitly, the minor of the Fourier matrix of
-$\mathbb{Z}_4$ on rows $\{0,2\}$ and columns $\{0,2\}$ is the all-ones $2\times 2$ matrix.
+*The support of $\hat f$ is all of $B$.* By construction $\hat f$ vanishes on $B^c$, so $\operatorname{supp}\hat f \subseteq B$. If the inclusion were strict, then $|\operatorname{supp} f| + |\operatorname{supp}\hat f| \le \alpha + \beta - 1 = p$, contradicting Theorem A (note $f \ne 0$). $\square$
 
-A useful *local* form of the forward implication, used repeatedly below, is:
+Two comments. First, Theorem C shows the additive principle is optimal *pointwise on its boundary*: no refinement of the form "$|\operatorname{supp} f| + |\operatorname{supp}\hat f| \ge p+1$, with extra constraints on the positions of the supports" can hold. Second, the argument produces $f$ by solving a single linear system; Section 6 turns this into an algorithm.
 
-**Proposition 4.4 (Local reduction).** *Let $f \neq 0$ on $\mathbb{Z}_n$ and set
-$m = |\operatorname{supp} f|$. If every $m \times m$ minor of the Fourier matrix of $\mathbb{Z}_n$ is
-nonsingular, then $|\operatorname{supp} f| + |\operatorname{supp} \hat f| \geq n+1$.*
+**Corollary 3.2 (the boundary is attained everywhere).** *For $p$ prime and every $\alpha$ with $1 \le \alpha \le p$, the pair $(\alpha, p+1-\alpha)$ is realised as $(|\operatorname{supp} f|,|\operatorname{supp}\hat f|)$, and moreover the two supports may be prescribed to be any sets of those two sizes.*
 
-This is the contrapositive of the construction in the ($\Rightarrow$) direction, applied at the
-single size $m$.
+*Proof.* Immediate from Theorem C. $\square$
 
-### 4.2 The unconditional case: generalised Vandermonde minors
-
-**Theorem 4.5 (Arithmetic-progression minors).** *Let $p$ be prime, $a, d \in \mathbb{Z}_p$
-with $d \neq 0$, and let $T : \{1,\dots,m\} \to \mathbb{Z}_p$ be injective. Then the minor with
-rows indexed by the arithmetic progression $a, a+d, \dots, a + (m-1)d$,*
-$$M_{j,k} = \omega^{\,(a + (j-1)d)\,T_k},$$
-*is nonsingular. The same holds with the roles of rows and columns exchanged.*
-
-*Proof.* Write $z_k = \omega^{\,d T_k}$ and $c_k = \omega^{\,a T_k}$. Then
-$M_{j,k} = c_k\, z_k^{\,j-1}$, i.e. $M = V(z)^{\mathsf T} \cdot \operatorname{diag}(c)$ where
-$V(z)$ is the Vandermonde matrix of the nodes $z_k$. Since $p$ is prime and $d \neq 0$, the map
-$t \mapsto \omega^{dt}$ is injective, so the $z_k$ are pairwise distinct and
-$\det V(z) = \prod_{j<k}(z_k - z_j) \neq 0$; and $\det \operatorname{diag}(c) = \prod_k c_k \neq 0$
-since roots of unity are nonzero. The transposed statement follows by taking determinants of
-transposes. $\blacksquare$
-
-This is the portion of Chebotarev's theorem that the classical polynomial method settles
-outright, and it powers all of Section 5.1.
+In particular the inequality of Theorem A cannot be improved for any admissible split of $p+1$, nor for any placement of the supports.
 
 ---
 
-## 5. Proved regimes
+## 4. Primality is necessary: a criterion
 
-Throughout this section $p$ is prime and $f : \mathbb{Z}_p \to \mathbb{C}$ is nonzero.
+Let $n \ge 2$ be arbitrary and suppose $n = de$ with $d, e \ge 1$. Write $\zeta = \zeta_n = e^{-2\pi i/n}$.
 
-### 5.1 Arithmetic-progression supports and the non-vanishing window
+**Definition 4.1.** The **subgroup indicator** $u_{n,d} : \mathbb{Z}/n\mathbb{Z}\to\mathbb{C}$ is the indicator of the subgroup $d\mathbb{Z}/n\mathbb{Z} = \{x : d \mid \overline{x}\}$:
+$$u_{n,d}(x) = \begin{cases} 1, & d \mid \overline{x},\\ 0,&\text{otherwise.}\end{cases}$$
 
-**Theorem 5.1 (No vanishing on a short progression).** *Let $a, d \in \mathbb{Z}_p$ with
-$d \neq 0$. Then there exists $j < |\operatorname{supp} f|$ with $\hat f(a + jd) \neq 0$. Equivalently,
-$\hat f$ cannot vanish identically on an arithmetic progression of length
-$|\operatorname{supp} f|$.*
+**Lemma 4.2 (support).** *If $n = de$ then $|\operatorname{supp} u_{n,d}| = e$.*
 
-*Proof.* Write $A = \operatorname{supp} f$, $z_x = \omega^{-dx}$ and $c_x = \omega^{-ax} f(x)$ for
-$x \in A$. Because $p$ is prime and $d \neq 0$, the values $z_x$ ($x \in A$) are pairwise
-distinct. A direct expansion gives
+*Proof.* The elements of $\{0,\dots,n-1\}$ divisible by $d$ are $0, d, 2d, \dots, (e-1)d$, and these are pairwise distinct modulo $n$. $\square$
 
-$$\hat f(a + jd) \;=\; \sum_{x \in A} \omega^{-(a + jd)x} f(x) \;=\; \sum_{x \in A} c_x\, z_x^{\,j}.$$
+**Lemma 4.3 (finite Poisson summation).** *If $n = de$ then for all $k$,*
+$$\widehat{u_{n,d}}(k) \;=\; \sum_{j=0}^{e-1}\big(\zeta^{\,\overline k\, d}\big)^{j} \;=\; \begin{cases} e, & e \mid \overline{k},\\ 0, & \text{otherwise.}\end{cases}$$
 
-Suppose this vanishes for all $j = 0, 1, \dots, |A| - 1$. Fix $x_0 \in A$ and let
-$L(X) = \prod_{x \in A \setminus \{x_0\}} (X - z_x)$, a polynomial of degree $|A| - 1$.
-Expanding $L$ in the monomial basis and taking the corresponding linear combination of the
-$|A|$ vanishing sums yields $\sum_{x \in A} c_x L(z_x) = 0$; but $L(z_x) = 0$ for
-$x \neq x_0$, so $c_{x_0} L(z_{x_0}) = 0$, and $L(z_{x_0}) = \prod_{x \neq x_0}(z_{x_0} - z_x)
-\neq 0$ by distinctness. Hence $c_{x_0} = 0$, i.e. $f(x_0) = 0$, contradicting
-$x_0 \in \operatorname{supp} f$. $\blacksquare$
+*Proof.* The first equality re-indexes the defining sum over the subgroup. Put $w = \zeta^{\overline{k}d}$. Since $\zeta$ is a primitive $n$-th root of unity, $w = 1$ iff $n \mid \overline{k}d$ iff $e \mid \overline{k}$. If $w = 1$ the geometric sum is $e$; otherwise $\sum_{j<e} w^j = (w^e-1)/(w-1) = 0$ because $w^e = \zeta^{\overline k d e} = \zeta^{\overline k n} = 1$. $\square$
 
-This is the Lagrange-interpolation form of Vandermonde nonsingularity: $|A|$ distinct geometric
-sequences are linearly independent already on a window of length $|A|$.
+**Corollary 4.4.** *If $n = de$ with $e \ge 1$ then $|\operatorname{supp}\widehat{u_{n,d}}| = d$: the transform of the indicator of a subgroup is a multiple of the indicator of its annihilator.*
 
-**Theorem 5.2 (Supports inside a progression).** *Suppose $\operatorname{supp} f$ is contained in an
-arithmetic progression $\{a + jd : 0 \le j < m\}$ with $d \neq 0$ and $m \leq p$. Then*
-$$|\operatorname{supp} \hat f| \;\geq\; p + 1 - m .$$
-*In particular, if $\operatorname{supp} f$ equals such a progression, then
-$|\operatorname{supp} f| + |\operatorname{supp}\hat f| \geq p+1$.*
+**Theorem D (primality criterion).** *Let $n \ge 2$. The additive uncertainty bound*
+$$|\operatorname{supp} f| + |\operatorname{supp}\hat f| \;\ge\; n+1 \quad\text{for all nonzero } f:\mathbb{Z}/n\mathbb{Z}\to\mathbb{C}$$
+*holds if and only if $n$ is prime.*
 
-*Proof.* Let $P(X) = \sum_{j=0}^{m-1} f(a + jd)\, X^{j}$, a nonzero polynomial of degree at most
-$m-1$ (nonzero because some $f(a+jd) \neq 0$; the parametrisation $j \mapsto a + jd$ is
-injective on $\{0,\dots,m-1\}$ since $m \le p$ and $d \neq 0$). Splitting the exponent,
-$-k(a+jd) = -ka + j(-kd)$, gives
+*Proof.* If $n$ is prime this is Theorem A. If $n$ is composite, write $n = de$ with $2 \le d$ and $2 \le e$ (possible for every composite $n \ge 4$: take $d$ any nontrivial divisor). Then $u_{n,d} \ne 0$ (it is $1$ at $0$) and by Lemmas 4.2, 4.4,
+$$|\operatorname{supp} u_{n,d}| + |\operatorname{supp}\widehat{u_{n,d}}| \;=\; e + d \;\le\; de \;=\; n \;<\; n+1,$$
+using $(d-1)(e-1)\ge 1$. $\blacksquare$
 
-$$\hat f(k) \;=\; \omega^{-ka}\, P\!\left(\omega^{-kd}\right) \qquad (k \in \mathbb{Z}_p).$$
+**Remark 4.5 (the failure is quantitatively worst at balanced factorisations).** The deficit is $n + 1 - (d+e) = de - d - e + 1 = (d-1)(e-1)$, maximised for balanced $d \approx e \approx \sqrt n$. In that case the additive bound fails by roughly $n - 2\sqrt n$, while the multiplicative bound is *exactly tight*: $d\cdot e = n$. Subgroup indicators are thus simultaneously the extremal examples for (1.1) and the fatal counterexamples for the additive bound.
 
-Since $\omega^{-ka} \neq 0$, each zero $k$ of $\hat f$ produces a root $\omega^{-kd}$ of $P$,
-and $k \mapsto \omega^{-kd}$ is injective. A nonzero polynomial of degree $\le m-1$ has at most
-$m-1$ roots, so $\hat f$ has at most $m-1$ zeros, i.e. at least $p - (m-1)$ nonzero values.
-$\blacksquare$
-
-**Theorem 5.3 (Dual version).** *If $\operatorname{supp}\hat f$ is an arithmetic progression (of
-nonzero common difference and length $\le p$), then $|\operatorname{supp} f| + |\operatorname{supp}\hat f|
-\geq p+1$.*
-
-*Proof.* Apply Theorem 5.2 to $g = \hat f$, which is nonzero, and use the reflection identity
-$(1.1)$: $|\operatorname{supp}\hat g| = |\operatorname{supp}\hat{\hat f}| = |\operatorname{supp} f|$. $\blacksquare$
-
-### 5.2 Small supports
-
-**Theorem 5.4 (At most two nonzero values).** *If $|\operatorname{supp} f| \leq 2$ then
-$|\operatorname{supp} f| + |\operatorname{supp}\hat f| \geq p+1$.*
-
-*Proof.* Suppose not; then, writing $Z$ for the zero set of $\hat f$, we get
-$|\operatorname{supp} f| \le |Z|$. If $|\operatorname{supp} f| = 1$, pick any $a \in Z$; then $\hat f$ vanishes
-on the length-$1$ progression $\{a\}$, contradicting Theorem 5.1 with $d = 1$. If
-$|\operatorname{supp} f| = 2$, pick distinct $a, b \in Z$; then $\hat f$ vanishes on the length-$2$
-progression $\{a, a + (b-a)\}$ with common difference $b - a \neq 0$, again contradicting
-Theorem 5.1. $\blacksquare$
-
-**Theorem 5.5 (At most three nonzero values).** *If $|\operatorname{supp} f| \le 3$ then
-$|\operatorname{supp} f| + |\operatorname{supp}\hat f| \geq p+1$.*
-
-The case $|\operatorname{supp} f| = 3$ is genuinely new relative to Section 5.1: a three-element subset
-of $\mathbb{Z}_p$ need not be an arithmetic progression. By Proposition 4.4 it suffices to
-prove:
-
-**Theorem 5.6 ($3\times 3$ Chebotarev).** *For distinct $S_1,S_2,S_3$ and distinct
-$T_1,T_2,T_3$ in $\mathbb{Z}_p$, the matrix $\big(\omega^{S_j T_k}\big)_{j,k=1}^{3}$ is
-nonsingular.*
-
-*Proof sketch.* The Leibniz expansion writes the determinant as a six-term signed sum of $p$-th
-roots of unity,
-
-$$\omega^{e_1} + \omega^{e_2} + \omega^{e_3} - \omega^{f_1} - \omega^{f_2} - \omega^{f_3},$$
-
-with $e_1 = S_1T_1 + S_2T_2 + S_3T_3$ and the remaining exponents obtained from the other five
-permutations. Distinctness of rows and columns forces one negative exponent, say $f_1$, to
-differ from all three positive ones (the differences $e_i - f_1$ factor as products
-$(S_j - S_k)(T_l - T_m)$ of nonzero elements of the field $\mathbb{Z}_p$). One then applies the
-criterion of Theorem 6.2: the coefficient vector of the sum, viewed as a rational function on
-residues, sums to $0$ and is nonzero at $f_1$, so the sum cannot vanish. $\blacksquare$
-
-**Theorem 5.7 (Duals and large supports).** *Each of the following implies
-$|\operatorname{supp} f| + |\operatorname{supp}\hat f| \geq p+1$:*
-1. *$|\operatorname{supp}\hat f| \le 3$;*
-2. *$|\operatorname{supp} f| \geq p - 3$.*
-
-*Proof.* (1) Apply Theorem 5.5 to $\hat f$ and use $(1.1)$. (2) If $|\operatorname{supp}\hat f| \le 3$
-apply (1); otherwise $|\operatorname{supp}\hat f| \geq 4$ and
-$|\operatorname{supp} f| + |\operatorname{supp}\hat f| \geq (p-3) + 4 = p+1$. $\blacksquare$
-
-### 5.3 Master statement
-
-**Theorem 5.8 (Known regimes).** *Let $p$ be prime and $f \neq 0$ on $\mathbb{Z}_p$. If any one
-of the following holds, then $|\operatorname{supp} f| + |\operatorname{supp}\hat f| \geq p+1$:*
-
-1. *$|\operatorname{supp} f| \le 3$;*
-2. *$|\operatorname{supp}\hat f| \le 3$;*
-3. *$|\operatorname{supp} f| \geq p - 3$;*
-4. *$\operatorname{supp} f$ is an arithmetic progression with nonzero common difference;*
-5. *$\operatorname{supp}\hat f$ is an arithmetic progression with nonzero common difference.*
-
-The union of these regimes covers every $f$ on $\mathbb{Z}_p$ for $p \le 7$ and, for larger
-$p$, everything except unstructured supports of intermediate size.
+**Example 4.6 ($n=4$).** $f = u_{4,2} = (1,0,1,0)$ has $\hat f = (2,0,2,0)$; both supports have size $2$, total $4 < 5$, while the product is $4 = n$.
 
 ---
 
-## 6. From analysis to combinatorics
+## 5. Linear-algebraic consequences
 
-### 6.1 Linear independence of roots of unity
+Throughout this section $p$ is prime and $\zeta$ is a primitive $p$-th root of unity.
 
-**Lemma 6.1.** *Let $p$ be prime and let $c : \mathbb{Z}_p \to \mathbb{Q}$. If
-$\sum_{r \in \mathbb{Z}_p} c_r\, \omega^{r} = 0$, then $c$ is constant.*
+**Definition 5.1.** For $A, B \subseteq \mathbb{Z}/p\mathbb{Z}$ let $M_{A,B}$ denote the $|B|\times|A|$ matrix (rows indexed by frequencies in $B$, columns by positions in $A$)
+$$\big(M_{A,B}\big)_{k,x} \;=\; \zeta^{\,\overline{k}\,\overline{x}}, \qquad k \in B,\ x\in A .$$
 
-*Proof sketch.* The minimal polynomial of $\omega$ over $\mathbb{Q}$ is the $p$-th cyclotomic
-polynomial $1 + X + \dots + X^{p-1}$. A rational polynomial $\sum_r c_r X^{r}$ of degree
-$< p$ vanishing at $\omega$ must therefore be a rational multiple of $1 + X + \dots + X^{p-1}$,
-which is exactly the statement that all coefficients are equal. $\blacksquare$
+**Theorem E (Fourier interpolation).** *Let $A, B \subseteq \mathbb{Z}/p\mathbb{Z}$ with $|A| = |B|$, and let $g : B \to \mathbb{C}$ be arbitrary. Then there is exactly one $f : \mathbb{Z}/p\mathbb{Z}\to\mathbb{C}$ with $f = 0$ off $A$ and $\hat f(k) = g(k)$ for all $k \in B$.*
 
-**Theorem 6.2 (Vanishing criterion).** *Let $c : \mathbb{Z}_p \to \mathbb{Q}$ satisfy
-$\sum_r c_r = 0$. If $c_{r_0} \neq 0$ for some $r_0$, then
-$\sum_r c_r \omega^{r} \neq 0$.*
+*Proof.* For $f$ vanishing off $A$ we have $\hat f(k) = \sum_{x\in A}\zeta^{\overline k \overline x}f(x)$, so the condition is the square linear system $M_{A,B}\,(f(x))_{x\in A} = (g(k))_{k\in B}$. By Theorem 2.1 the matrix $M_{A,B}$ is invertible; existence and uniqueness follow. $\square$
 
-*Proof.* If the sum vanished, Lemma 6.1 would give $c_r = c_{r_0}$ for all $r$, whence
-$0 = \sum_r c_r = p\, c_{r_0}$ and so $c_{r_0} = 0$. $\blacksquare$
+This is a deterministic interpolation statement with *no genericity hypothesis whatsoever* on the position of $A$ or $B$. Splitting into the two inequality regimes:
 
-### 6.2 The permutation criterion
+**Corollary 5.2 (restricted surjectivity).** *If $|B| \le |A|$, then for every $g$ there is an $f$ vanishing off $A$ with $\hat f|_B = g|_B$.* (Shrink $A$ to a subset $A'$ with $|A'| = |B|$ and apply Theorem E.)
 
-Fix $n \geq 1$ and injective $S, T : \{1,\dots,n\} \to \mathbb{Z}_p$. For a permutation
-$\sigma \in S_n$ define the **exponent**
+**Corollary 5.3 (restricted injectivity).** *If $|A| \le |B|$ and $f_1, f_2$ both vanish off $A$ with $\hat f_1|_B = \hat f_2|_B$, then $f_1 = f_2$.* (Shrink $B$ to $B'$ with $|B'| = |A|$ and apply uniqueness in Theorem E.)
 
-$$E_\sigma \;=\; \sum_{j=1}^n S_{\sigma(j)}\, T_j \;\in\; \mathbb{Z}_p ,$$
+**Theorem F (rank of an arbitrary minor).** *For all $A, B \subseteq \mathbb{Z}/p\mathbb{Z}$,* $\operatorname{rank} M_{A,B} = \min(|A|,|B|)$.
 
-and for $r \in \mathbb{Z}_p$ the **parity-weighted multiplicity**
+*Proof.* The rank is at most the number of rows and at most the number of columns, hence at most $r := \min(|A|,|B|)$. Conversely pick $A'\subseteq A$, $B'\subseteq B$ with $|A'| = |B'| = r$; the submatrix $M_{A',B'}$ is invertible by Theorem 2.1, so it contributes a nonzero $r\times r$ minor and $\operatorname{rank} M_{A,B}\ge r$. $\square$
 
-$$c_r \;=\; \sum_{\sigma : E_\sigma = r} \operatorname{sgn}(\sigma) \;\in\; \mathbb{Z}
-\;=\; \#\{\text{even } \sigma \text{ with } E_\sigma = r\} - \#\{\text{odd } \sigma \text{ with } E_\sigma = r\}.$$
+Theorem F is total nonsingularity in rank form: *every* rectangular block of the prime Fourier matrix has maximal rank. In compressed-sensing language, every column submatrix of the $p\times p$ Fourier matrix with at most $|B|$ columns is injective on $\mathbb{C}^{A}$ as soon as $|A|\le|B|$ — the spark of the Fourier matrix restricted to any $|B|$ rows is exactly $|B|+1$, the largest conceivable value.
 
-**Lemma 6.3 (Leibniz expansion).**
-$\displaystyle \det\big(\omega^{S_jT_k}\big)_{j,k} = \sum_{r \in \mathbb{Z}_p} c_r\, \omega^{r}$,
-*and for $n \geq 2$ one has $\sum_r c_r = \sum_{\sigma \in S_n}\operatorname{sgn}(\sigma) = 0$.*
+**Theorem G (zero counting; "fundamental theorem of algebra" for the DFT).** *For $p$ prime and $f \ne 0$,*
+$$\#\{k \in \mathbb{Z}/p\mathbb{Z} : \hat f(k) = 0\} \;<\; |\operatorname{supp} f| .$$
 
-*Proof.* The Leibniz formula gives $\det = \sum_\sigma \operatorname{sgn}(\sigma)
-\prod_j \omega^{S_{\sigma(j)}T_j} = \sum_\sigma \operatorname{sgn}(\sigma)\, \omega^{E_\sigma}$
-since $\chi$ is a character; grouping by exponent gives the first identity. The second is the
-standard fact that $S_n$ has equally many even and odd elements for $n \geq 2$. $\blacksquare$
+*Proof.* The zero set of $\hat f$ is the complement of $\operatorname{supp}\hat f$, of size $p - |\operatorname{supp}\hat f| \le p - (p+1-|\operatorname{supp} f|) = |\operatorname{supp} f| - 1$ by Theorem A. $\square$
 
-**Theorem 6.4 (Combinatorial criterion for Chebotarev).** *Let $n \geq 2$. Then*
-$$\det\big(\omega^{S_jT_k}\big)_{j,k} \neq 0 \iff \exists\, r \in \mathbb{Z}_p : c_r \neq 0 .$$
-
-*Proof.* ($\Leftarrow$) Combine Lemma 6.3 with Theorem 6.2. ($\Rightarrow$) If all $c_r$ vanish
-the determinant is $0$ by Lemma 6.3. $\blacksquare$
-
-Chebotarev's theorem — equivalently, by Theorem 4.2, the additive uncertainty principle — is
-therefore exactly the following finite statement: *for distinct rows and distinct columns, the
-map $\sigma \mapsto E_\sigma$ from $S_n$ to $\mathbb{Z}_p$ never distributes the permutations in
-perfect parity balance across all residues.*
-
-Two workable sufficient conditions follow immediately.
-
-**Corollary 6.5 (Odd fibre).** *If some residue $r$ has an odd number of preimages under
-$\sigma \mapsto E_\sigma$, then $c_r \neq 0$ and the minor is nonsingular.*
-
-*Proof.* $c_r$ is a sum of an odd number of terms each equal to $\pm 1$, hence odd, hence
-nonzero. $\blacksquare$
-
-**Corollary 6.6 (Unique realisation).** *If some permutation $\sigma_0$ realises its exponent
-uniquely — i.e. $E_\sigma = E_{\sigma_0}$ implies $\sigma = \sigma_0$ — then the minor is
-nonsingular, since $c_{E_{\sigma_0}} = \operatorname{sgn}(\sigma_0) = \pm 1$.*
-
-Corollary 6.6 is the practical engine behind the $2\times2$ and $3\times3$ cases: exhaustive
-computation shows that for $n \le 3$ a uniquely realised exponent always exists. For $n \geq 4$
-it may fail; the fibre structure becomes genuinely balanced-looking, and this is precisely
-where the general theorem resists elementary attack.
+Thus a $k$-sparse signal has a spectrum vanishing at most $k-1$ times, precisely as a nonzero polynomial of degree $k-1$ has at most $k-1$ roots. The analogy is exact: for $f$ supported on $\{x_1,\dots,x_k\}$, $\hat f(k)$ is the value at $\zeta^{\overline{k}}$ of the exponential sum $\sum_j f(x_j) z^{\overline{x_j}}$, and Theorem G says such a sparse "polynomial" cannot vanish at $k$ or more $p$-th roots of unity.
 
 ---
 
-## 7. Algorithms
+## 6. Deterministic sparse recovery
 
-The criterion of Theorem 6.4 turns non-vanishing of a transcendental determinant into an exact
-integer computation. Three algorithms follow.
+### 6.1 The recovery theorem and its sharp threshold
 
-### 7.1 Exact minor test by parity-weighted counting
+**Theorem H (sparse recovery).** *Let $p$ be prime, $k \ge 0$, and let $f, g : \mathbb{Z}/p\mathbb{Z}\to\mathbb{C}$ satisfy $|\operatorname{supp} f| \le k$ and $|\operatorname{supp} g|\le k$. If $S \subseteq \mathbb{Z}/p\mathbb{Z}$ has $|S| \ge 2k$ and $\hat f(s) = \hat g(s)$ for all $s\in S$, then $f = g$.*
 
-**Input:** a prime $p$, injective $S, T \in \mathbb{Z}_p^n$ with $n \geq 2$.
-**Output:** `True` iff $\det(\omega^{S_jT_k}) \neq 0$, computed with integers only.
+*Proof.* Let $h = f - g$ and suppose $h \ne 0$. Then $\operatorname{supp} h \subseteq \operatorname{supp} f \cup \operatorname{supp} g$, so $|\operatorname{supp} h| \le 2k$. By linearity $\hat h$ vanishes on $S$, so $|\operatorname{supp}\hat h| \le p - 2k$. Adding, $|\operatorname{supp} h| + |\operatorname{supp}\hat h| \le 2k + (p - 2k) = p < p+1$, contradicting Theorem A. $\square$
 
-```
-for each sigma in S_n:
-    e <- (sum_j S[sigma(j)] * T[j]) mod p
-    c[e] <- c[e] + sign(sigma)
-return  (some c[e] != 0)
-```
+Two features deserve emphasis. The sampling set $S$ is **arbitrary** — no randomness, no incoherence condition, no restricted isometry property, and no exceptional patterns. And the guarantee is **exact and universal**, not probabilistic.
 
-Complexity $O(n! \cdot n)$ time and $O(p)$ space. Crucially there is no floating-point error:
-the test is a decision about integers, so a machine answer is a proof.
+**Theorem I (the threshold $2k$ is optimal).** *Let $p$ be prime, $1 \le k$ with $2k \le p$, and let $S\subseteq\mathbb{Z}/p\mathbb{Z}$ be any set with $|S| = 2k-1$. Then there exist $f \ne g$, both $k$-sparse, with $\hat f(s) = \hat g(s)$ for all $s\in S$.*
 
-### 7.2 Exhaustive verification of Chebotarev's property at fixed size
+*Proof.* Choose $A \subseteq \mathbb{Z}/p\mathbb{Z}$ with $|A| = 2k$. The matrix $M_{A,S}$ has $2k-1$ rows and $2k$ columns, so it has a nonzero kernel vector; let $h$ be the corresponding signal supported in $A$, so $h \ne 0$ and $\hat h|_S = 0$. By Theorem 2.1 every $(2k-1)\times(2k-1)$ submatrix of $M_{A,S}$ is invertible, so in fact $h(x)\ne 0$ for every $x\in A$ (as in the proof of Theorem C). Partition $A = A_1 \sqcup A_2$ with $|A_1| = |A_2| = k$, and set
+$$f = h\cdot \mathbf{1}_{A_1}, \qquad g = -\,h\cdot\mathbf{1}_{A_2}.$$
+Then $f$ and $g$ are $k$-sparse, $f - g = h \ne 0$ so $f \ne g$, and $\hat f - \hat g = \hat h$ vanishes on $S$. $\square$
 
-Iterate the previous test over all $\binom{p}{n}^2$ pairs of row/column sets. Complexity
-$O(\binom{p}{n}^2 n!\,n)$. Carried out for $p \in \{5,7,11,13\}$ and $n \le 4$, this exact
-integer computation finds every minor nonsingular in those ranges — e.g. all $511{,}225$ minors
-of size $4$ for $p = 13$ (a finite check, not a proof for general $p$). It also quantifies the
-reach of the two shortcuts. For $p = 11$, $n = 4$ about $89\%$ of minors possess a singleton
-fibre and for $p = 13$, $n = 4$ about $91\%$; but for $p = 7$, $n = 4$ *none* does, so
-Corollary 6.6 is far from a general strategy. By contrast, in every configuration examined
-($p \le 13$, $n \le 4$) *some* fibre of the exponent map has odd cardinality, so Corollary 6.5
-applies throughout the computed range; whether this persists for all $p$ and $n$ is open, and it
-would imply the additive uncertainty principle in full. A further quantitative observation: the
-parity gap $\max_r |c_r|$ is never smaller than $1$ and is typically of order $n$ — e.g. its
-minimum over all $108{,}900$ minors of size $4$ for $p = 11$ is $2$.
+So $2k$ frequencies always suffice, $2k-1$ frequencies never do, and the transition is pattern-independent. This is an unusually clean state of affairs: in most sampling theories the sharp threshold depends on the geometry of the sampling set.
 
-### 7.3 Deterministic sparse recovery from $2k$ Fourier samples
+### 6.2 Algorithms
 
-**Input:** $p$ prime, sparsity $k$, any frequency set $\Omega$ with $|\Omega| = 2k$, and the
-values $\hat f|_\Omega$ of an unknown $k$-sparse $f$.
-**Output:** $f$.
+Theorem E is not only an existence statement, it is a recipe.
 
-```
-for each candidate support A of size k:
-    solve the overdetermined least-squares system  (omega^{-s x})_{s in Omega, x in A} v = fhat|_Omega
-    record the residual
-return the candidate with the smallest residual
-```
+**Algorithm 1 (support-constrained interpolation).** *Input:* prime $p$; sets $A, B$ with $|A| = |B| = m$; target data $g : B \to \mathbb{C}$. *Output:* the unique $f$ vanishing off $A$ with $\hat f|_B = g$.
+1. Build $M \in \mathbb{C}^{m\times m}$, $M_{k,x} = \zeta^{\overline{k}\overline{x}}$ for $k\in B$, $x \in A$.
+2. Solve $M c = g$ by Gaussian elimination with partial pivoting ($O(m^3)$ operations).
+3. Return $f$ defined by $f(x) = c_x$ for $x\in A$ and $f = 0$ elsewhere.
 
-The brute-force enumeration is $O(\binom{p}{k} k^2 |\Omega|)$ and is meant as a *uniqueness*
-demonstration rather than an efficient algorithm; the mathematical content, Theorem 8.1 below,
-is that the minimiser is unique and exact. In practice one replaces the enumeration by Prony's
-method or by $\ell^1$ minimisation, both of which are correct here precisely because the
-underlying minors are nonsingular.
+Correctness is Theorem E; the system is guaranteed solvable and nonsingular for *every* pair $(A,B)$ by Theorem 2.1.
+
+**Algorithm 2 (extremal-pair construction).** *Input:* prime $p$; sets $A, B$ with $|A|+|B| = p+1$. *Output:* $f$ with $\operatorname{supp} f = A$, $\operatorname{supp}\hat f = B$.
+1. Let $R = \mathbb{Z}/p\mathbb{Z}\setminus B$, of size $|A|-1$.
+2. Form $M \in \mathbb{C}^{(|A|-1)\times|A|}$ with $M_{k,x} = \zeta^{\overline k\overline x}$, $k \in R$, $x\in A$.
+3. Compute a nonzero kernel vector $c$ of $M$ ($O(|A|^3)$); concretely, $c_x = (-1)^{\mathrm{pos}(x)}\det(M \text{ with column } x \text{ deleted})$, a Cramer-style formula guaranteed to give nonzero entries.
+4. Return $f$ supported on $A$ with $f|_A = c$.
+
+The determinantal formula in step 3 makes the conclusion "all coordinates nonzero" manifest: the coordinates are exactly the $(|A|-1)\times(|A|-1)$ minors of $M$, all nonzero by Theorem 2.1.
+
+**Algorithm 3 (deterministic $k$-sparse recovery).** *Input:* prime $p$; sparsity $k$; frequency set $S$ with $|S| \ge 2k$; measured data $y = \hat f|_S$ of an unknown $k$-sparse $f$. *Output:* $f$.
+1. For each candidate support $A$ with $|A| = k$ (there are $\binom{p}{k}$), solve the least-squares/consistency problem $M_{A,S}c = y$; by Theorem F, $M_{A,S}$ has full column rank $k$, so the system has at most one solution.
+2. Return the unique consistent $(A, c)$.
+
+Correctness — in particular the uniqueness of the consistent candidate — is Theorem H. Step 1 is exponential in $k$ as written; the practical route in the classical $k$-sparse setting is Prony's method / the Berlekamp–Massey algorithm applied to $2k$ *consecutive* frequencies, which recovers the support as the roots of an annihilating polynomial in $O(k^2)$ or $O(k\log^2 k)$ operations. Theorem H should be read as the statement that *uniqueness* holds for arbitrary frequency sets, while efficient *algorithms* are classical for structured (e.g. arithmetic-progression) sampling sets.
 
 ---
 
-## 8. Application: deterministic sparse recovery
+## 7. Discussion
 
-**Theorem 8.1 (Universal $2k$-sample uniqueness).** *Let $p$ be prime, $k \geq 1$ with
-$2k \le p$, and suppose the additive uncertainty principle holds for every function with at
-most $2k$ nonzero values (unconditional for $k \le 1$ by Theorem 5.5, and available in all the
-regimes of Theorem 5.8; in general it is exactly the nonsingularity of the Fourier minors of
-size $\le 2k$). Let $\Omega \subseteq \mathbb{Z}_p$ be
-**any** set of $2k$ frequencies. If $f$ and $g$ are $k$-sparse and
-$\hat f|_{\Omega} = \hat g|_{\Omega}$, then $f = g$.*
+### 7.1 What the additive bound buys over the multiplicative bound
 
-*Proof.* Set $h = f - g$; then $|\operatorname{supp} h| \le 2k$ and $\hat h$ vanishes on $\Omega$, so
-$|\operatorname{supp}\hat h| \le p - 2k$. If $h \neq 0$ the additive bound gives
-$|\operatorname{supp} h| \geq (p+1) - (p - 2k) = 2k+1$, a contradiction. Hence $h = 0$. $\blacksquare$
+Both bounds constrain the achievable region $\mathcal{R}_p \subseteq \{1,\dots,p\}^2$ of pairs $(|\operatorname{supp} f|, |\operatorname{supp}\hat f|)$. The multiplicative bound gives the hyperbolic region $\alpha\beta\ge p$; the additive bound gives the half-plane $\alpha+\beta\ge p+1$, strictly inside it. The gap is largest in the balanced regime $\alpha\approx\beta\approx\sqrt p$, where the hyperbola permits a total as small as $2\sqrt p$ and the truth is $p+1$. Theorem C says every point of the boundary line $\alpha+\beta = p+1$ is attained, with supports in arbitrary prescribed positions, so the half-plane cannot be shrunk; by Theorem D the hyperbola is the correct description for the extremal composite case in the sense that subgroup indicators attain $\alpha\beta = n$.
 
-Equivalently, in the determinantal language: the $2k \times 2k$ submatrix of the Fourier matrix
-on rows $\Omega$ and any $2k$ columns is nonsingular, so the measurement operator is injective
-on $2k$-sparse vectors — the spark of the partial Fourier matrix of $\mathbb{Z}_p$ is maximal,
-namely $|\Omega| + 1$.
+### 7.2 Why primes
 
-Three features distinguish this from generic compressed-sensing guarantees:
+Every obstruction to the additive bound found in Section 4 is a subgroup. This is not a coincidence: a coset structure is the only way to make both a function and its transform sparse, because the transform of a subgroup indicator is supported on the annihilator, whose size is the index. Cyclic groups of prime order have no proper nontrivial subgroups, so there is no such structure available. The same phenomenon appears in Chebotarev's theorem: the degenerate minors modulo a composite $n$ are exactly the all-ones blocks indexed by annihilator pairs.
 
-* **Deterministic.** No randomness, no failure probability, no restricted-isometry hypothesis.
-* **Universal in the sampling pattern.** *Every* set of $2k$ frequencies works; hardware or
-  scheduling constraints on which frequencies are cheap to measure cost nothing.
-* **Optimal in the sample count.** $2k$ measurements are necessary: with only $2k-1$
-  frequencies the linear constraints have rank at most $2k-1$ on the $2k$-dimensional space of
-  vectors supported in a fixed set of $2k$ coordinates, so some nonzero $2k$-sparse $h$ has
-  $\hat h$ vanishing there; splitting $h = f - g$ into two $k$-sparse pieces defeats recovery.
-  The guarantee is therefore tight.
+### 7.3 The shape of Frenkel's argument
 
-This is why the phenomenon is of practical interest in high-dimensional data analysis: sparse
-spectral estimation, feature hashing into a prime number of buckets, sketching and dictionary
-design all benefit from a sampling pattern that is *guaranteed* to be non-degenerate, rather
-than one that is merely non-degenerate with high probability. The failure on $\mathbb{Z}_4$ is a
-warning of what non-prime lengths cost: there, sampling the frequency set $\{1,3\}$ conveys no
-information whatsoever about the subgroup indicator of $\{0,2\}$.
+Three ideas combine. (a) *Deformation*: replace the transcendental datum $\zeta$ by a variable, turning a vanishing determinant into a polynomial divisibility. (b) *Order of vanishing*: the shift $X \mapsto X+1$ puts the point of interest at the origin, and the determinant structure forces vanishing to order at least $N = \binom{k}{2}$, because surviving multinomial terms need pairwise distinct exponents. (c) *Identification of the leading jet*: the coefficient at the critical order is, up to the superfactorial, a product of two Vandermonde determinants, whose non-divisibility by $p$ is elementary. The proof uses nothing about $\zeta$ beyond the fact that $\Phi_p(1) = p$.
+
+The identity $\mathrm{sf}(k)\,G_N = V(a)V(b)$ deserves separate mention: it is a purely combinatorial statement about signed sums of binomial coefficients, independent of any root of unity, and can be checked numerically for small $k$.
+
+### 7.4 Related and contrasting results
+
+For the reals or the circle, uncertainty principles are inequalities about measures and variances (Heisenberg, Hardy, Beurling); on finite abelian groups they become counting statements. The multiplicative bound holds for all finite abelian groups. The additive bound is special to prime cyclic groups and, as Theorem D shows, characterises them among cyclic groups. Analogues over $\mathbb{Z}/p^m\mathbb{Z}$, over $(\mathbb{Z}/p\mathbb{Z})^d$, and over general finite abelian groups must therefore take a different, subgroup-sensitive form — for instance a bound in terms of the largest "sparse subgroup pair" available.
+
+### 7.5 Future directions
+
+* **Quantitative stability.** The recovery results here are exact-arithmetic statements. The natural next question is conditioning: what is the smallest singular value of $M_{A,B}$ for arbitrary $A, B$, and how does it degrade with $p$ and $|A|$? Chebotarev guarantees invertibility but no uniform lower bound, and known bounds decay rapidly; sharper estimates would convert exact recovery into noise-robust recovery.
+* **Group-theoretic generalisation.** Formulate and prove the sharp support inequality on an arbitrary finite abelian group $G$, presumably of the form $|\operatorname{supp} f| + |\operatorname{supp}\hat f|\ge \min_{H}\big(|H| + [G:H]\big)$ over subgroups $H$ compatible with the support, and identify the extremal functions as coset-modulated subgroup indicators.
+* **Effective algorithms for arbitrary sampling sets.** Theorem H gives uniqueness for arbitrary $S$ with $|S| = 2k$; Prony/Berlekamp–Massey gives efficiency for arithmetic progressions. Closing the gap — a polynomial-time recovery algorithm for arbitrary $S$ of size exactly $2k$ — is a concrete open problem.
+* **Higher-dimensional and non-abelian settings.** Total nonsingularity fails for $(\mathbb{Z}/p\mathbb{Z})^2$; classifying which minors of a general character table are nonsingular is an attractive question with representation-theoretic content.
+* **Structured refinements.** For supports with arithmetic structure (arithmetic progressions, Sidon sets, subgroups of $\mathbb{F}_p^\times$), one expects strengthenings of Theorem G with explicit descriptions of the zero sets of $\hat f$.
 
 ---
 
-## 9. Discussion
+## 8. Summary of the main results
 
-### 9.1 Where primality enters, three times
-
-It is instructive to track the hypothesis "$p$ prime" through the argument.
-
-1. **No subgroups.** The extremal family for Donoho–Stark consists of cosets of subgroups
-   (Theorem 3.1); prime order eliminates it.
-2. **Field structure.** $\mathbb{Z}_p$ is a field, so $x \mapsto dx$ is a bijection for
-   $d \neq 0$ (used in Lemma 3.3, Theorem 4.5, Theorem 5.1) and differences of distinct
-   elements are invertible (used in Theorem 5.6).
-3. **Cyclotomic rigidity.** The $p$-th cyclotomic polynomial is $1 + X + \dots + X^{p-1}$, so
-   the only rational relation among $1, \omega, \dots, \omega^{p-1}$ is the obvious one (Lemma
-   6.1). For composite $n$ there are many further relations — e.g. $1 + i^2 = 0$ in
-   $\mathbb{Z}_4$ — and these are exactly the relations that manufacture singular minors.
-
-The third point is the deepest, and it is the one that the combinatorial criterion isolates.
-
-### 9.2 The remaining case
-
-The parity criterion reduces everything to the fibre structure of the exponent map
-$\sigma \mapsto \sum_j S_{\sigma(j)}T_j$. All currently available sufficient conditions
-(singleton fibre, odd fibre) are about a single fibre in isolation. Numerical exploration shows
-that for $n \geq 4$ fibres can be large and even in size — and yet, in every configuration
-examined, at least one fibre of odd cardinality survives, which alone would settle the theorem.
-Proving that an odd fibre always exists, or otherwise finding an invariant that distinguishes
-even from odd permutations *inside* a fibre, is the missing step. Two candidates:
-
-* a *length* statistic — the Coxeter length of a permutation, which controls its sign and
-  respects the natural order structure on $\mathbb{Z}_p$ lifted to $\{0,\dots,p-1\}$;
-* a *valuation* statistic — the order of vanishing at $u = 0$ of the deformed determinant
-  $M(u) = \det\big((1+u)^{s_jt_k}\big)$, which filters the determinant by degree and converts
-  the problem into an identity between a generalised Vandermonde determinant and a Weyl-type
-  dimension formula.
-
-Both are made precise as conjectures in Section 10.
-
-### 9.3 Relation to classical results
-
-The multiplicative bound is Donoho–Stark's; the additive bound on prime cyclic groups is Tao's;
-the nonsingularity of all minors of the prime Fourier matrix is Chebotarev's, first proved in
-the 1920s. Theorem 4.2 makes the folklore identification of the last two *unconditional in the
-modulus*, which is what allows the $\mathbb{Z}_4$ counterexample to be read simultaneously as a
-statement about signals and as a statement about matrices. Theorem 8.1 is the deterministic
-sparse-recovery corollary familiar from compressed sensing on prime-length groups.
-
----
-
-## 10. Future directions
-
-The remaining open case is $4 \leq |\operatorname{supp} f| \leq p - 4$ with unstructured support and
-unstructured spectrum. Two bold, falsifiable conjectures organise the next steps.
-
-**Conjecture A (Parity-gap conjecture).** For all $n \geq 2$ and all injective
-$S, T : \{1,\dots,n\}\to\mathbb{Z}_p$, some parity-weighted multiplicity $c_r$ is nonzero; in
-fact $\max_r |c_r| \geq 1$ is attained at a residue of the form $\sum_j S_{\sigma(j)}T_j$ for a
-permutation $\sigma$ of *minimal Coxeter length* among those realising that exponent.
-
-The key insight is that the criterion of Theorem 6.4 reduces an analytic non-vanishing
-statement about roots of unity to a counting statement about $S_n$ acting on $\mathbb{Z}_p$, so
-the entire difficulty is concentrated in the fibres of $\sigma \mapsto \sum_j S_{\sigma(j)}T_j$
-— and the numerical data show the fibres are never parity-balanced. The uniqueness criterion
-(Corollary 6.6) already discharges every configuration in which one fibre is a singleton, which
-covers $n \le 3$ completely; what is missing is a combinatorial invariant distinguishing even
-from odd permutations inside a fibre, and the length statistic is the natural candidate,
-finitely checkable for $n = 4$.
-
-**Conjecture B ($(1-\omega)$-adic valuation conjecture).** Write
-$M(u) = \det\big((1+u)^{s_jt_k}\big) \in \mathbb{Z}[u]$. Then the order of vanishing of $M$ at
-$u = 0$ is exactly $n(n-1)/2$, and the leading coefficient equals
-
-$$\frac{\prod_{j<k}(s_k - s_j)(t_k - t_j)}{\prod_{j<k}(k-j)},$$
-
-an integer prime to $p$; consequently every minor of the Fourier matrix is nonsingular.
-
-The key insight is that the exponent-$u$ filtration of $\mathbb{Z}[u]$ refines the vanishing of
-the minor modulo the prime $(1-\omega)$ of $\mathbb{Z}[\omega]$, converting Chebotarev's theorem
-into an identity between a generalised Vandermonde determinant and a Weyl-type dimension form.
-
-Beyond these, natural extensions include: quantitative versions of the additive bound for
-$\varepsilon$-concentrated (rather than exactly supported) signals; the analogous question on
-$\mathbb{Z}_{p^2}$ and on products of distinct primes, where the subgroup obstruction returns in
-a controlled way; and algorithmic exploitation of maximal spark, in particular provably correct
-Prony-type reconstruction with worst-case rather than average-case guarantees.
-
----
-
-## 11. Conclusion
-
-The additive uncertainty principle $|\operatorname{supp} f| + |\operatorname{supp}\hat f| \geq p+1$ on
-$\mathbb{Z}_p$ is a genuinely stronger statement than the classical product bound, provably not
-reachable from it by arithmetic, and provably false without primality. It is sharp exactly at
-the delta/character endpoints; it is equivalent, for every modulus, to the nonsingularity of
-all minors of the Fourier matrix; and this in turn is equivalent to a finite statement about
-parity-weighted fibres of an exponent map on the symmetric group. Along this chain the
-principle is now established for supports or spectra of size at most three, for very large
-supports, and for arithmetic-progression supports or spectra, and it yields a deterministic,
-sampling-pattern-universal sparse-recovery guarantee at the optimal rate of $2k$ measurements.
-What remains is a single, sharply delineated combinatorial question about how permutations
-distribute across residues — a question that is finite, checkable, and now precisely posed.
+1. **Total nonsingularity (Chebotarev).** For $p$ prime and $\zeta$ a primitive $p$-th root of unity, every square submatrix of $(\zeta^{xy})$ is invertible.
+2. **Additive uncertainty principle.** For $p$ prime and $f\ne0$: $|\operatorname{supp} f| + |\operatorname{supp}\hat f| \ge p+1$; this implies, and is strictly stronger than, $|\operatorname{supp} f|\cdot|\operatorname{supp}\hat f|\ge p$.
+3. **Exact converse.** Every pair $A,B$ with $|A|+|B| = p+1$ is realised as $(\operatorname{supp} f, \operatorname{supp}\hat f)$.
+4. **Primality criterion.** For $n\ge2$ the additive bound holds for all nonzero $f$ on $\mathbb{Z}/n\mathbb{Z}$ iff $n$ is prime; for $n = de$ the subgroup indicator gives $|\operatorname{supp} f| + |\operatorname{supp}\hat f| = d+e\le n$.
+5. **Interpolation and rank.** For $|A| = |B|$, prescribed spectral data on $B$ is matched by a unique signal supported in $A$; in general $\operatorname{rank} M_{A,B} = \min(|A|,|B|)$.
+6. **Zero counting.** For $f \ne 0$, $\hat f$ vanishes at fewer than $|\operatorname{supp} f|$ frequencies.
+7. **Deterministic sparse recovery.** $k$-sparse signals are determined by their spectrum on any $2k$ frequencies, and for every set of $2k-1$ frequencies there are distinct $k$-sparse signals with identical data there.

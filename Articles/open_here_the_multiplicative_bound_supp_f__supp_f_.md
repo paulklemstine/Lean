@@ -1,266 +1,106 @@
-# The Sharpest Uncertainty: Why Prime Numbers Make Signals Impossible to Hide
+# You Cannot Hide in Both Places at Once
 
-## A signal cannot be small in two places at once
+## How a hundred-year-old fact about roots of unity gives the sharpest possible uncertainty principle — and hands us a recipe for perfect signal recovery
 
-Here is a fact you can feel in your bones. Strike a single, perfectly short click on a
-loudspeaker — an impulse lasting one sample and nothing more — and its frequency content is
-spread across the entire audible spectrum: a click is white, it has no pitch. Play instead a
-pure sine tone, perfectly concentrated at one frequency, and it must last forever; the moment
-you cut it off, its spectrum smears.
+### A signal and its ghost
 
-This trade-off is the *uncertainty principle*. In quantum mechanics it becomes Heisenberg's
-inequality between position and momentum. In signal processing it becomes a statement about a
-vector and its Fourier transform: they cannot both be concentrated.
+Take a string of $p$ numbers — a sound sample, a pixel row, a list of measurements — and think of it as a function $f$ on the clock $\mathbb{Z}/p\mathbb{Z}$, the integers modulo $p$. Alongside $f$ lives its shadow, the **discrete Fourier transform**
+$$\hat f(k) \;=\; \sum_{x \bmod p} e^{-2\pi i k x/p}\, f(x),$$
+which reports how much of each pure frequency $k$ the signal contains. The transform is a bijection: $f$ and $\hat f$ carry exactly the same information, packaged in two utterly different ways.
 
-The version this article is about lives in the most computational corner of the subject.
-Take a cyclic group of $p$ points — the integers modulo $p$, written $\mathbb{Z}_p$, which is
-what a length-$p$ FFT actually operates on. A signal is a function $f : \mathbb{Z}_p \to
-\mathbb{C}$, and its discrete Fourier transform is
+The two packagings are in tension. A signal concentrated at a single instant — a click, a delta spike — has a transform that is spread perfectly flat across all $p$ frequencies. A signal that is constant in time is a single spike in frequency. Squeeze a signal in time and it bulges in frequency. This is the *uncertainty principle*, the discrete cousin of Heisenberg's, and the crispest way to measure it is by counting **supports**: let $|\operatorname{supp} f|$ be the number of places where $f$ is nonzero, and $|\operatorname{supp}\hat f|$ the number of frequencies it actually uses.
 
-$$\hat f(k) \;=\; \sum_{x \in \mathbb{Z}_p} \omega^{-kx} f(x), \qquad
-\omega = e^{2\pi i / p}.$$
+The classical statement, true for every modulus $n$ and every nonzero $f$, is multiplicative:
+$$|\operatorname{supp} f| \cdot |\operatorname{supp}\hat f| \;\ge\; n .$$
+It is a beautiful inequality and it is not the whole story. When the modulus is **prime**, something dramatically stronger holds.
 
-Write $\operatorname{supp} f$ for the set of points where $f$ is nonzero, and $|\operatorname{supp} f|$ for
-how many there are. "Concentrated" now means "small support". The uncertainty principle should
-say: $f$ and $\hat f$ cannot both have small support.
+### The additive uncertainty principle
 
-There are two ways to say it, and the gap between them is the story.
+> **Theorem (additive uncertainty principle).** Let $p$ be prime and let $f : \mathbb{Z}/p\mathbb{Z} \to \mathbb{C}$ be nonzero. Then
+> $$|\operatorname{supp} f| + |\operatorname{supp}\hat f| \;\ge\; p+1 .$$
 
-## Two inequalities, and the chasm between them
+Sums, not products. To feel the difference, set $p = 13$ and imagine a signal occupying $4$ time slots whose transform occupies $4$ frequencies. The multiplicative bound is perfectly content: $4 \cdot 4 = 16 \ge 13$. The additive bound annihilates it: $4 + 4 = 8$, far below $14$. **No such signal exists.** In fact the additive bound implies the multiplicative one whenever both supports are nonempty — if $\alpha + \beta \ge p+1$ with $\alpha,\beta \ge 1$, then $\alpha\beta \ge \alpha + \beta - 1 \ge p$ — so the sum bound is a strict strengthening, never a trade.
 
-The classical statement, due to Donoho and Stark, holds for *any* length $n$:
+And the sum bound is *exactly* right. A delta spike at a point $c$ has $|\operatorname{supp} f| = 1$ and $|\operatorname{supp}\hat f| = p$: total $p+1$. The constant function reverses the roles: total $p+1$ again. But the sharpness runs far deeper than these two examples, and this is the part that still surprises me:
 
-> **Product bound.** If $f \neq 0$ on $\mathbb{Z}_n$, then
-> $|\operatorname{supp} f| \cdot |\operatorname{supp} \hat f| \;\geq\; n$.
+> **Theorem (exact converse).** Let $p$ be prime and let $A, B \subseteq \mathbb{Z}/p\mathbb{Z}$ be *any* two sets with $|A| + |B| = p+1$. Then there is a signal $f$ whose support is exactly $A$ and whose transform's support is exactly $B$.
 
-It is elegant, it is easy to state, and it is the workhorse of a great deal of signal
-processing. But it has a soft spot: it is happy with *balanced* signals. If $n = 10{,}000$, the
-product bound is perfectly content with a signal occupying $100$ time samples and $100$
-frequencies. Ten thousand equals one hundred times one hundred; no contradiction.
+Not "some sets of those sizes" — *every* pair of sets, in every position, of every admissible pair of sizes. The inequality $|\operatorname{supp} f| + |\operatorname{supp} \hat f| \ge p+1$ carves out a region of the plane, and every single point on its boundary is attained, by signals whose supports you may place wherever you like. There is nothing left to improve.
 
-Now restrict the length to a **prime** $p$. Something remarkable happens: the inequality
-upgrades from multiplicative to additive.
+### Why primality is not decoration
 
-> **Additive bound.** If $p$ is prime and $f \neq 0$ on $\mathbb{Z}_p$, then
-> $|\operatorname{supp} f| + |\operatorname{supp} \hat f| \;\geq\; p + 1$.
+It is tempting to think the primality hypothesis is a technical convenience. It is not; it is the whole mechanism. Consider $p$ replaced by $4$ and the signal $f = (1,0,1,0)$, the indicator of the even residues. Its transform is $(2,0,2,0)$. Both supports have size $2$, so the total is $4$, which is less than $4+1$. The additive bound is simply false modulo $4$. (The multiplicative bound survives: $2 \cdot 2 = 4$.)
 
-This is an entirely different animal. For $p \approx 10{,}000$, a signal with $100$ nonzero
-samples must now have at least $9{,}901$ nonzero Fourier coefficients. The balanced
-$100 \times 100$ profile is not merely suboptimal — it is *impossible*. On a prime-length
-group, sparsity in time and sparsity in frequency are not just in tension; they are in a
-zero-sum war, and the total budget is $p+1$.
+That example is the tip of a complete classification. If $n = de$ with $d, e \ge 2$, take $f$ to be the indicator of the subgroup $d\mathbb{Z}/n\mathbb{Z}$, which has $e$ elements. A finite Poisson summation — really just a geometric series — gives
+$$\hat f(k) = \begin{cases} e, & e \mid k,\\ 0, & \text{otherwise,}\end{cases}$$
+so $\hat f$ is supported exactly on the annihilator subgroup, of size $d$. The two supports total $d + e$, which for $d, e \ge 2$ is at most $de = n$: the bound fails, and it fails by a margin that grows with how balanced the factorisation is. Combining this with the prime case gives a clean dichotomy.
 
-How much stronger is the additive statement really? Exactly this much:
+> **Theorem (primality criterion).** For $n \ge 2$, the bound $|\operatorname{supp} f| + |\operatorname{supp}\hat f| \ge n+1$ holds for *every* nonzero $f : \mathbb{Z}/n\mathbb{Z} \to \mathbb{C}$ **if and only if** $n$ is prime.
 
-* **Additive implies multiplicative.** If $a, b \geq 1$ and $a + b \geq p+1$, then
-  $ab \geq p$. (Because $(a-1)(b-1) \geq 0$ gives $ab \geq a + b - 1 \geq p$.) So nothing is
-  lost by passing to the additive form.
-* **Multiplicative does not imply additive — ever.** For every $p \geq 5$ one can take
-  $a = 2$ and $b = \lfloor (p+1)/2 \rfloor$: then $ab \geq p$, so the product bound is
-  satisfied, while $a + b < p + 1$, so the additive bound is violated. The pair of
-  cardinalities is perfectly legal for Donoho–Stark and completely illegal additively. No
-  rearrangement of the product inequality, however clever, can ever produce the additive one.
-* **What the product bound alone buys you.** By the inequality of arithmetic and geometric
-  means, $4ab \le (a+b)^2$, so from $ab \geq p$ one gets only
-  $|\operatorname{supp} f| + |\operatorname{supp} \hat f| \geq 2\sqrt{p}$. That is roughly $200$ where the
-  truth is roughly $10{,}000$. The multiplicative bound sees a square root of the real
-  phenomenon.
+Subgroups are the enemy of uncertainty. A signal that is the indicator of a subgroup is simultaneously sparse in time and sparse in frequency, because the transform of a subgroup is (a multiple of) its annihilator. Prime cyclic groups have no proper subgroups other than the trivial one — nowhere for a signal to hide.
 
-So the additive bound is not a cosmetic improvement. It is a different order of magnitude.
+### The engine: every minor of the Fourier matrix is invertible
 
-## Primality is not decoration
+Where does the extra strength come from? From a fact about the Fourier matrix itself that is startling the first time you meet it.
 
-Why insist on prime length? Because the theorem is simply false otherwise, and the
-counterexample is as small and as clean as one could wish.
+Write $\zeta = e^{-2\pi i/p}$ and form the $p \times p$ matrix $M$ with entries $M_{x,y} = \zeta^{xy}$. Choose any $k$ rows and any $k$ columns — any at all, in any positions — and look at the resulting $k \times k$ block.
 
-Work in $\mathbb{Z}_4$ and let $f$ be the indicator of the subgroup $\{0,2\}$: that is
-$f(0) = f(2) = 1$ and $f(1) = f(3) = 0$. A two-line computation with the fourth root of unity
-$i$ gives $\hat f(k) = 1 + (-1)^{k}$, so $\hat f(0) = \hat f(2) = 2$ and
-$\hat f(1) = \hat f(3) = 0$. The transform of the subgroup is (twice) the indicator of the
-subgroup again.
+> **Theorem (Chebotarev, 1926).** For $p$ prime, every square submatrix of $(\zeta^{xy})_{x,y}$ has nonzero determinant.
 
-Count: $|\operatorname{supp} f| = |\operatorname{supp} \hat f| = 2$. The product is $4$, so the
-Donoho–Stark bound is satisfied *with equality*. The sum is $4$, but the additive bound would
-demand $4 + 1 = 5$. **It fails.**
+This "total nonsingularity" is spectacular and it is special to prime order. Modulo $4$, the $2\times 2$ block of rows $\{0,2\}$ and columns $\{0,2\}$ is $\begin{pmatrix}1&1\\1&1\end{pmatrix}$: singular. Modulo a prime, no configuration of rows and columns can produce a degeneracy.
 
-The reason is structural, and it is the reason primes matter everywhere in this subject:
-$\mathbb{Z}_4$ has a proper nontrivial subgroup, and a subgroup indicator is its own transform,
-up to scale. Such a function is maximally concentrated in both domains at once. A group of
-prime order has no proper nontrivial subgroups — nothing for a signal to hide inside — and this
-absence is precisely what the additive bound converts into arithmetic.
+Once you have Chebotarev, the uncertainty principle is three lines. Suppose $f \neq 0$ and $|\operatorname{supp} f| + |\operatorname{supp}\hat f| \le p$. Write $A = \operatorname{supp} f$, so the complement of $\operatorname{supp}\hat f$ has at least $|A|$ elements; pick $|A|$ of them and call the set $R$. Then $\hat f$ vanishes on $R$, which says precisely that the vector $(f(x))_{x \in A}$ lies in the kernel of the square submatrix with rows $R$ and columns $A$. That matrix is invertible, so $f$ vanishes on $A$ — that is, $f = 0$. Contradiction.
 
-## The bound is sharp — at both ends, and only there
+### Frenkel's proof: watching a polynomial vanish
 
-An inequality is interesting when it is achieved. This one is achieved twice over, at the two
-extremes of the scale.
+Chebotarev's theorem has several proofs; the most elementary — and the one that can be carried out with nothing but determinants, binomial coefficients and one fact about cyclotomic polynomials — is Péter Frenkel's. It is a lovely piece of mathematical accounting, and it goes like this.
 
-At one end, take the **Dirac delta** $\delta_a$, equal to $1$ at a single point $a$ and $0$
-elsewhere. Its transform is $\hat{\delta_a}(k) = \omega^{-ka}$: a unimodular number, never
-zero. So $|\operatorname{supp} \delta_a| = 1$ and $|\operatorname{supp} \hat{\delta_a}| = p$, and the sum is
-exactly $p + 1$. The click is white — and it is *exactly* as white as the theorem allows.
+Fix distinct residues $a_1,\dots,a_k$ and $b_1,\dots,b_k$ in $\{0,1,\dots,p-1\}$, and *promote the root of unity to a variable*: consider the integer polynomial
+$$F(X) \;=\; \det\!\left(X^{\,a_i b_j}\right)_{i,j}.$$
+Our determinant is $F(\zeta)$, and we want to prove it is nonzero. Suppose it vanishes. Since $\zeta$ is a primitive $p$-th root of unity, its minimal polynomial $\Phi_p(X) = 1 + X + \cdots + X^{p-1}$ must divide $F$.
 
-At the other end, take a **character** $\chi_b(x) = \omega^{bx}$, a pure discrete frequency.
-Its transform is $p$ at the frequency $b$ and $0$ everywhere else, because the sum of all
-$p$-th roots of unity vanishes:
-$\sum_{y \in \mathbb{Z}_p} \omega^{y} = \frac{\omega^p - 1}{\omega - 1} = 0.$
-So $|\operatorname{supp} \chi_b| = p$, $|\operatorname{supp} \hat{\chi_b}| = 1$, and again the sum is $p+1$.
-The pure tone lasts forever — exactly as long as the theorem allows.
+Now shift: let $G(X) = F(X+1)$. Two things about $G$ are decisive.
 
-Between these two poles the inequality is a genuine constraint, and understanding what happens
-in the middle is where the mathematics gets hard.
+**First**, $G$ vanishes to a precise order at $0$. Expanding the determinant, the coefficient of $X^d$ in $G$ is $\sum_\sigma \operatorname{sgn}(\sigma)\binom{\,\sum_i a_{\sigma(i)}b_i\,}{d}$, a signed sum of binomial coefficients. Converting binomials into powers via the falling factorial $X(X-1)\cdots(X-d+1)$, this coefficient is a combination of the *alternating power sums*
+$$T_r \;=\; \sum_{\sigma} \operatorname{sgn}(\sigma)\Big(\sum_i a_{\sigma(i)} b_i\Big)^{r}.$$
+Expand $T_r$ multinomially and you get a sum over exponent vectors $m = (m_1,\dots,m_k)$ with $\sum m_i = r$, each term carrying a determinant $\det(a_i^{m_j})$. If two entries of $m$ coincide, that determinant has two equal columns and dies. So only *injective* $m$ survive — and an injective vector of nonnegative integers has sum at least $0 + 1 + \cdots + (k-1) = N$, where $N = \binom{k}{2}$. Therefore $T_r = 0$ for all $r < N$, and every coefficient of $G$ below degree $N$ vanishes.
 
-## The hidden identity: uncertainty is a determinant
+**Second**, the first surviving coefficient is computable, and it is a product of two Vandermonde determinants. At $r = N$ the only surviving exponent vectors are the permutations of $(0,1,\dots,k-1)$; each contributes $\pm$ a Vandermonde determinant, the signs conspire, and the multinomial coefficients collapse to $N!/\prod_{j<k} j!$. The bookkeeping ends at the identity
+$$\Big(\prod_{j<k} j!\Big)\, G_N \;=\; V(a)\, V(b), \qquad V(a) = \prod_{i<j}(a_j - a_i),$$
+where $G_N$ is the $N$-th coefficient of $G$.
 
-Here is the conceptual heart of the story. The additive uncertainty principle looks like an
-analytic statement about sparse vectors. It is secretly a statement of pure linear algebra —
-in fact, one that predates it by eighty years.
+Now spring the trap. Because $\Phi_p(X) \mid F(X)$, we get $\Phi_p(X+1) \mid G(X)$. The constant term of $\Phi_p(X+1)$ is $\Phi_p(1) = p$. Trailing coefficients multiply, and $G$'s trailing term sits exactly in degree $N$; hence $p$ divides $G_N$, and therefore $p$ divides $V(a)V(b)$. But $V(a)$ is a product of differences $a_j - a_i$ of *distinct* residues drawn from $\{0,\dots,p-1\}$ — each such difference is nonzero and smaller than $p$ in absolute value, so none is divisible by $p$, and neither is the product. Contradiction. $\blacksquare$
 
-Form the $p \times p$ Fourier matrix $F$ with entries $F_{s,t} = \omega^{st}$. Pick any $n$
-rows and any $n$ columns and take the determinant of the resulting $n \times n$ block. Such a
-block is called a *minor*.
+The elegance is in the choreography: the shift $X \mapsto X+1$ converts "$\zeta$ is a root" into "$p$ divides a particular integer", and the combinatorics of injective exponent vectors identifies that integer as a Vandermonde product that primality forbids $p$ from dividing.
 
-> **Chebotarev's property.** Every square minor of the Fourier matrix of $\mathbb{Z}_p$ is
-> nonsingular.
+### From an inequality to an algorithm
 
-Chebotarev proved this in the 1920s for prime $p$; several beautiful proofs are known. What is
-worth spelling out is the exact relationship to uncertainty:
+Uncertainty principles look like prohibitions, but a prohibition on where information can hide is a licence to *recover* it. This is the philosophy behind compressed sensing, and in the prime cyclic setting it takes an unusually clean and completely deterministic form.
 
-> **Equivalence.** For every modulus $p$, the additive bound
-> $|\operatorname{supp} f| + |\operatorname{supp} \hat f| \geq p+1$ (for all $f \neq 0$) holds **if and only
-> if** every square minor of the Fourier matrix of $\mathbb{Z}_p$ is nonsingular.
+> **Theorem (sparse recovery).** Let $p$ be prime and let $f, g$ be signals each supported on at most $k$ points. If $\hat f$ and $\hat g$ agree on *any* set $S$ of $2k$ frequencies, then $f = g$.
 
-Both directions are short once you see the dictionary. A function $f$ violating the additive
-bound has support $A$ and a zero set of its transform that is at least as large as $A$; picking
-$|A|$ frequencies where $\hat f$ vanishes produces a square block of the Fourier matrix that
-kills the nonzero vector of values of $f$ — a singular minor. Conversely, a singular minor
-gives a nonzero kernel vector; place its entries on the chosen columns to build a function
-whose transform vanishes on the chosen rows, and count: you have manufactured a violator of the
-additive bound.
+The proof is one line of the uncertainty principle: $h = f - g$ has at most $2k$ nonzero entries, and $\hat h$ vanishes on $S$, so $|\operatorname{supp}\hat h| \le p - 2k$; the supports total at most $p$, and hence $h = 0$.
 
-The dictionary works for *any* modulus, so it also explains the $\mathbb{Z}_4$ failure from the
-other side: the Fourier matrix of $\mathbb{Z}_4$ does have a singular minor, namely
-$\begin{pmatrix} 1 & 1 \\ 1 & 1\end{pmatrix}$ obtained from rows $\{0,2\}$ and columns
-$\{0,2\}$ — the same subgroup, appearing again.
+The word *any* is what makes this remarkable. In generic compressed-sensing theorems, one must sample at random and accept a failure probability, or verify a restricted-isometry condition. Here, every sampling pattern of size $2k$ works, with certainty, for every $k$-sparse signal. And the threshold cannot be lowered:
 
-## Turning analysis into counting
+> **Theorem (threshold sharpness).** For every $k \ge 1$ with $2k \le p$ and *every* set $S$ of $2k-1$ frequencies, there exist distinct $k$-sparse signals $f \neq g$ with $\hat f = \hat g$ on $S$.
 
-Once uncertainty has been translated into "all minors are nonsingular", one can attack the
-determinant directly. Expand it by the Leibniz formula. Rows indexed by $s_1, \dots, s_n$ and
-columns by $t_1, \dots, t_n$ give
+So $2k$ measurements suffice, always, and $2k-1$ never do. There is no pattern-dependent middle ground.
 
-$$\det\left(\omega^{\,s_j t_k}\right)_{j,k} \;=\; \sum_{\sigma \in S_n}
-\operatorname{sgn}(\sigma)\, \omega^{\,E_\sigma}, \qquad
-E_\sigma = \sum_{j} s_{\sigma(j)}\, t_j \bmod p .$$
+The same total nonsingularity yields an interpolation theorem that reads like a Fourier-analytic Lagrange interpolation:
 
-Every term is a $p$-th root of unity with an integer sign. Collect equal exponents: for each
-residue $r \in \mathbb{Z}_p$, let $c_r$ be the number of even permutations with $E_\sigma = r$
-minus the number of odd ones. Then the determinant is $\sum_r c_r \omega^r$, and — because
-$n \geq 2$ means half the permutations are even and half are odd — the coefficients satisfy
-$\sum_r c_r = 0$.
+> **Theorem (Fourier interpolation).** Let $p$ be prime and $A, B \subseteq \mathbb{Z}/p\mathbb{Z}$ with $|A| = |B|$. For any prescribed values $g(k)$, $k \in B$, there is exactly one signal $f$ vanishing outside $A$ with $\hat f(k) = g(k)$ for all $k \in B$.
 
-Now bring in the one algebraic input that makes primality bite: over the rationals, the only
-linear relation among the $p$ roots of unity $1, \omega, \dots, \omega^{p-1}$ is that they sum
-to zero. (Equivalently: the minimal polynomial of $\omega$ is $1 + X + \dots + X^{p-1}$.) So a
-rational combination $\sum_r c_r \omega^r$ vanishes exactly when all the $c_r$ are *equal* —
-and if they also sum to zero, exactly when all of them are zero. Conclusion:
+Two inequality regimes fall out. If $|B| \le |A|$, prescribed frequency data on $B$ can always be matched by a signal living on $A$ (existence). If $|A| \le |B|$, the frequency data on $B$ determines such a signal completely (uniqueness). The square case is both at once. Stated in the language of matrices: **every** rectangular $A \times B$ block of the prime Fourier matrix has the maximum possible rank $\min(|A|,|B|)$ — total nonsingularity in rank form.
 
-> **Parity criterion.** For $n \geq 2$, the minor is nonsingular **if and only if** some
-> residue $r$ is hit by unequally many even and odd permutations under the exponent map
-> $\sigma \mapsto \sum_j s_{\sigma(j)} t_j$.
+There is even a "fundamental theorem of algebra" hiding here: for nonzero $f$, the number of frequencies at which $\hat f$ vanishes is *strictly less* than the number of time samples where $f$ is nonzero. A signal built from $k$ spikes has a spectrum with at most $k-1$ zeros — exactly the way a polynomial of degree $k-1$ has at most $k-1$ roots. That analogy is not decoration: the Fourier transform of a $k$-sparse signal *is* an exponential polynomial with $k$ terms, and total nonsingularity is the statement that such polynomials cannot vanish too often.
 
-An analytic non-vanishing question has become a finite counting question about the symmetric
-group acting on $\mathbb{Z}_p$. Two immediate consequences: if any residue is hit by an *odd*
-number of permutations, the signed count is odd, hence nonzero, hence the minor is nonsingular;
-and in particular if any permutation realises its exponent *uniquely*, we are done.
+### What to take away
 
-That last observation is enough to settle small minors completely. For $n \le 3$ one can check
-that a uniquely-realised exponent always exists — and a direct six-term argument confirms it:
-a determinant of a $3\times 3$ Fourier minor is $\omega^{e_1} + \omega^{e_2} + \omega^{e_3} -
-\omega^{f_1} - \omega^{f_2} - \omega^{f_3}$, and distinctness of the rows and columns forces
-one of the negative exponents to differ from all three positive ones, which makes the signed
-coefficient at that residue nonzero.
+Three ideas, tightly linked.
 
-## What is proved, and where the frontier lies
+*First*, arithmetic controls analysis. Whether a signal can be simultaneously sparse in time and in frequency depends on whether the modulus factors. Subgroups are hiding places, and primes have none.
 
-Assembling the pieces, the additive uncertainty principle on $\mathbb{Z}_p$ is now established
-outright in the following regimes. In every case $p$ is prime and $f \neq 0$:
+*Second*, rigidity is a resource. "Every minor is invertible" sounds like a curiosity about a specific matrix; it is in fact the precise reason why $2k$ arbitrary frequency measurements pin down a $k$-sparse signal with no randomness, no genericity assumption, and no failure probability.
 
-1. $|\operatorname{supp} f| \leq 3$ — at most three nonzero samples, with *no* structural assumption;
-2. $|\operatorname{supp} \hat f| \leq 3$ — the dual statement, at most three nonzero frequencies;
-3. $|\operatorname{supp} f| \geq p - 3$ — very spread-out signals;
-4. $\operatorname{supp} f$ is an arithmetic progression $a, a+d, \dots$ of any length;
-5. $\operatorname{supp} \hat f$ is an arithmetic progression of any length.
-
-Cases 4 and 5 come from the polynomial method: if the support sits inside a progression, then
-$\hat f(k) = \omega^{-ka} P(\omega^{-kd})$ for a nonzero polynomial $P$ of degree less than the
-length of the progression, and a polynomial of degree $m-1$ has at most $m-1$ roots. Since
-$k \mapsto \omega^{-kd}$ is injective for $d \neq 0$, the transform has at most $m-1$ zeros, so
-at least $p - m + 1$ nonzero values. Equivalently, and strikingly: **the Fourier transform of a
-nonzero signal can never vanish on an entire arithmetic progression of length
-$|\operatorname{supp} f|$.**
-
-Cases 1 and 2 come from the parity criterion via the nonsingularity of all $3 \times 3$ minors,
-and case 3 follows by playing off the dual bound against the trivial cap
-$|\operatorname{supp}| \leq p$.
-
-What remains is the middle: supports of size between $4$ and $p-4$, with no arithmetic
-structure and no structure in the spectrum. Numerically, no minor has ever failed — exhaustive
-checks over all $4 \times 4$ minors for $p = 7, 11, 13$ find every single one nonsingular, and
-for $p = 11$ about $89\%$ of them are settled by the cheap "uniquely realised exponent" test.
-(For $p = 7$ and $4 \times 4$ minors, remarkably, *none* is: the fibres are all large. On the
-other hand, in every configuration examined some residue is hit by an *odd* number of
-permutations, which would suffice — but nobody knows how to prove that this always happens.)
-The remaining fraction requires a genuinely new combinatorial invariant, and identifying it is
-the current frontier. Two concrete conjectures point the way: one predicts that the
-minimal-length permutation in each exponent fibre breaks the parity balance; the other predicts
-an exact valuation formula, saying that the polynomial $\det\big((1+u)^{s_j t_k}\big)$ vanishes
-to order exactly $n(n-1)/2$ at $u=0$, with leading coefficient a ratio of Vandermonde products
-that is an integer prime to $p$.
-
-## Why anyone outside pure mathematics should care
-
-Because the additive bound is the exact reason that *sparse recovery works at prime lengths*.
-
-Suppose a signal on $\mathbb{Z}_p$ has at most $k$ nonzero samples — a sparse spike train, a
-handful of active features, a few reflecting objects in a radar return — and you are allowed to
-measure only some of its Fourier coefficients. How many do you need to pin it down?
-
-The answer is $2k$, **and any $2k$ frequencies will do**. Here is the one-line proof. Suppose
-two $k$-sparse signals $f$ and $g$ agree on a set $\Omega$ of $2k$ frequencies. Their
-difference $h = f - g$ is at most $2k$-sparse and $\hat h$ vanishes on $\Omega$, so
-$|\operatorname{supp} \hat h| \leq p - 2k$. The additive bound then forces
-$|\operatorname{supp} h| \geq (p+1) - (p - 2k) = 2k + 1$, which is impossible unless $h = 0$. Hence
-$f = g$.
-
-The contrast with generic compressed sensing is the point. Standard results guarantee recovery
-from *random* measurements, with high probability, up to logarithmic factors. Here the
-guarantee is deterministic, exact and universal: no randomness, no failure probability, no
-logarithms, no conditions on which frequencies you sample. Choose any $2k$ of them — the first
-$2k$, a scattered set, whatever your hardware makes cheap — and the $k$-sparse signal is
-uniquely determined. That is a property of prime lengths and of nothing else; on
-$\mathbb{Z}_4$, sampling the frequencies $\{1,3\}$ tells you nothing at all about the subgroup
-indicator, whose transform is supported precisely on $\{0,2\}$.
-
-This is why the result matters well beyond harmonic analysis. Sparse recovery, feature hashing,
-spectral sketching and dictionary design all rest on knowing which measurement patterns are
-safe. On a prime-length group, the answer is: all of them.
-
-## The shape of the idea
-
-Step back and look at the chain of translations, because it is a small masterpiece of
-mathematical redirection.
-
-*A statement about how sparse a signal and its spectrum can simultaneously be* becomes
-*a statement that all minors of the Fourier matrix are invertible*, which becomes
-*a statement that a signed sum of roots of unity does not vanish*, which becomes — using the
-single fact that a prime cyclotomic polynomial is $1 + X + \dots + X^{p-1}$ —
-*a statement that the permutations of a finite set cannot distribute themselves in
-parity-perfect balance across the residues modulo $p$.*
-
-Analysis becomes linear algebra becomes algebraic number theory becomes combinatorics. At each
-step the problem gets more elementary and, curiously, no easier. What survives every
-translation is the primality: no subgroups to hide in, no rational relations among roots of
-unity beyond the obvious one, no way for a signal to be concentrated twice.
-
-The click is white. The tone is eternal. And on a prime-length group, everything in between
-pays the full price of $p+1$.
+*Third*, sharp theorems come with sharp converses. The additive bound is not merely tight in a couple of extremal examples: every admissible pair of support sets, in every position, actually occurs. When a boundary is entirely attained, you know the inequality has captured exactly the right phenomenon — and that is a rarer kind of certainty than most inequalities in analysis ever achieve.
