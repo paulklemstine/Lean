@@ -1446,7 +1446,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ac59ff27",
     "description": "Round-41 #1, cron iteration (exp 482, assessment v259). Paper 147's named follow-up.\n\n**PHASE-SUBTHRESHOLD-LIFT / H3-FAIL**: root-position phases mod {3,5,7,11,13} (cos/sin + QR-indicator, extended to 29) add only +0.008/+0.004 out-of-sample R² over the footprint dial (CIs span 0; phase-only WORSE than baseline at −0.077). **H2 CONFIRMED**: cross-window phase gain goes significantly negative — window-locality supported as the mechanism behind paper 147's split-ceiling excess. H3 refuted (R² = 0.608 < 0.70).\n\nThe split-ceiling excess remains unexplained by any tested feature class — candidates narrow to higher-prime phase patterns or same-window leakage of realized-divisibility features (base dial drops 0.60 → 0.40 cross-window).\n\nProvenance note: the agent's L0 audit voided the coordinator's inline quick attempt (cross-window arm trained and tested on the same half; wrong offset definition; encoding collision) — its clean reimplementation is authoritative.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp482_phase_features.py + exp482_result.json, seed 20260901.",
     "domain_bridges": [],
     "domains": [
@@ -1458,7 +1458,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T05:43:53.954629+00:00",
     "title": "FACT round-41 #1 — PHASE-FEATURES: low-prime phases are sub-threshold and window-local (paper 150)"
   },
@@ -1955,6 +1955,63 @@
     "status": "available",
     "timestamp": "2026-08-22T11:37:04.906497+00:00",
     "title": "FACT round-46 #1 — MID-PRIME-HUNT: prime-power hits carry the tight-u residual (paper 172)"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Round-49 #1, cron iteration (exp 511, assessment v284). Paper 175's bitlen-stability pushed to its limit.\n\n**T-DIAL-56-PARTIAL**: Spearman(T, rate) = **0.405** at bitlen 56 — BELOW the [0.55, 0.85] band. The dial DEGRADES because the smooth rate drops to **0.89%** (starved; 194/1200 Ns with ZERO hits). T still beats count by +0.093 (CI [0.042, 0.146]).\n\nThe bitlen-stability has a PRACTICAL FLOOR near bitlen ~54, beyond which the starved regime destroys rank resolution.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp511_t_dial_56.py + exp511_result.json, seed 20261030.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3662",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T13:02:58.897389+00:00",
+    "title": "FACT round-49 #1 — T-DIAL-56: the bitlen-stability has a practical floor (paper 178)"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Round-48 #2, cron iteration (exp 510, assessment v284). The intersection cell from papers 175 × 166.\n\n**DIAL-HOLDS-UNIFORM-HB**: Spearman(T, rate) = 0.686/0.656/0.553/0.561 across four cells (balanced/uniform × bitlen {44, 48}); T beats count by +0.06–0.10 everywhere, CI excludes zero.\n\nK-WASHOUT pilot: multiplier-randomized samplers destroy the QR dial channel entirely (averaging over k equidistributes the characters). Fixed k=1 CFRAC ladder required.\n\nTwo independent implementations agree; mid-run file collision documented and resolved.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp510_t_dial_unif_hb.py + exp510_result.json, seeds 20261020–23.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3663",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T13:02:58.899264+00:00",
+    "title": "FACT round-48 #2 — T-DIAL-UNIF-HB: the dial holds at the regime × bitlen intersection (paper 177)"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Round-48 #1, cron iteration (exp 509, assessment v283). Paper 132's residual gap item (3): effectivizing MA-1.\n\n**EQUIDISTRIBUTION-CONFIRMED**: max per-class deviation from Li(x)/φ(m) at x=2³⁰ = **0.000446** relative — well below 0.001; the 4/3 cap's constants hold to three significant figures.\n\nH2 SPLIT: worst class stable for m ∈ {3,4,7,8,11} but unstable for m ∈ {5,31}. H3 CONFIRMED: deviations shrink 6/7 moduli.\n\nPaper 132's converse constants are numerically robust at practical sizes: MA-1's equidistribution assumption introduces < 0.05% error into the 4/3 cap.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp509_lean.py + exp509_result_v2.json.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3664",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T13:02:58.900934+00:00",
+    "title": "FACT round-48 #1 — MA1-EFFECTIVE: equidistribution holds to three significant figures (paper 176)"
   },
   {
     "ambition_level": "grand_challenge",
@@ -4213,6 +4270,25 @@
     "ambition_level": "grand_challenge",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 5ac3c62c (Q=0.752), which proved 39 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future directions\n\nThe formalization in `Catalog/Shared/SolomonZeta/` (mirrored in the buildable library\n`Shared/SolomonZeta/`) now contains, all machine-checked and free of `sorry`:\n\n* the effective coefficient formula\n  `#Aut(X) · #{N ≤ M : M/N ≅ X} = Σ_{Y ≤ X} μ(Y, X) · #Hom(M, Y)`\n  (`autCard_",
+    "domain_bridges": [],
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "push_5ac3c62c_8786f230",
+    "lineage_refs": [],
+    "priority_score": 0.9,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "5ac3c62c",
+    "status": "available",
+    "timestamp": "2026-08-11T19:33:16.073298+00:00",
+    "title": "Deepening: The formalization in `Catalog/Shared/SolomonZeta/` (mirrored in the buildable li"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Building on cycle 8280a2b4 (Q=0.760), which proved 14 theorems in Algebra. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The Riemann-Roch theorem for graphs (Baker-Norine, 2007) states that for a divisor D on a graph G, l(D) - l(K_G - D) = deg(D) + 1 - g(G) where l(D) is the rank of D, K_G is the canonical divisor, and g(G) is the genus (cyclomatic number). The chip-firing game is a combinatorial model: vertices hold ",
     "domain_bridges": [],
     "domains": [
@@ -4247,82 +4323,6 @@
     "status": "available",
     "timestamp": "",
     "title": "Quantum Entanglement Monogamy: CKW Inequality"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle a062ecaf (Q=0.753), which proved 15 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Building on cycle 83a0d4e2 (Q=0.751), which proved 9 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Treat chaotic attractors (Lorenz, Henon, Rossler) as algebraic objects — not jus",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_a062ecaf_f94e748c",
-    "lineage_refs": [],
-    "priority_score": 0.85262,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "a062ecaf",
-    "status": "available",
-    "timestamp": "2026-08-11T16:22:30.798966+00:00",
-    "title": "Deepening: Strange Attractors as Algebraic Objects"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 5ac3c62c (Q=0.752), which proved 39 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future directions\n\nThe formalization in `Catalog/Shared/SolomonZeta/` (mirrored in the buildable library\n`Shared/SolomonZeta/`) now contains, all machine-checked and free of `sorry`:\n\n* the effective coefficient formula\n  `#Aut(X) · #{N ≤ M : M/N ≅ X} = Σ_{Y ≤ X} μ(Y, X) · #Hom(M, Y)`\n  (`autCard_",
-    "domain_bridges": [],
-    "domains": [
-      "NumberTheory"
-    ],
-    "id": "push_5ac3c62c_8786f230",
-    "lineage_refs": [],
-    "priority_score": 0.85167,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "5ac3c62c",
-    "status": "available",
-    "timestamp": "2026-08-11T19:33:16.073298+00:00",
-    "title": "Deepening: The formalization in `Catalog/Shared/SolomonZeta/` (mirrored in the buildable li"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 0dcd87ee (Q=0.751), which proved 67 theorems in Combinatorics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future directions\n\nThe new file `Catalog/Applications/SurveillanceNetworks/PrivacyThreshold.lean`\nsettles the \"sharp privacy threshold\" direction for binary network histories:\nperfectly private channels — deterministic or randomized — achieve worst-case\nHamming distortion `D` exactly when a single",
-    "domain_bridges": [],
-    "domains": [
-      "Combinatorics"
-    ],
-    "id": "push_0dcd87ee_0dc5c4ad",
-    "lineage_refs": [],
-    "priority_score": 0.851005,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "0dcd87ee",
-    "status": "available",
-    "timestamp": "2026-08-09T19:10:06.334823+00:00",
-    "title": "Deepening: The new file `Catalog/Applications/SurveillanceNetworks/PrivacyThreshold.lean`"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Formalize the representation theory of finite groups. Compute and verify character tables for S_3, S_4, S_5. Prove Burnside's theorem (groups of order p^a q^b are solvable). Formalize Maschke's theorem and Schur's lemma.",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra"
-    ],
-    "id": "fd_0656",
-    "lineage_refs": [],
-    "priority_score": 0.85,
-    "proof_strategy": "",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-24T14:34:16.697760+00:00",
-    "title": "Representation Theory: Character Tables of S_n"
   },
   {
     "ambition_level": "extension",
@@ -15173,6 +15173,30 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Probability.MarkovExponentBounds",
+      "Probability.MarkovAperiodicSpectrum",
+      "Probability.MarkovPrimitivity"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Cycle 8 made the primitivity threshold effective in the reflexive cases: card - 1 for a lazy frame (sharp) and 2*(card - 1) from a single self-loop. The remaining case is loopless aperiodicity, where the conjecture is Wielandt's bound n^2 - 2n + 2. The approach bounds the approach and exit legs by the diameter principle and the residual cost by the conductor of the cycle monoid.\n\nFor a finite irreducible KFrame F with n = card F.W >= 2 and an aperiodic world, iterR F k u v holds for all u, v and all k >= n^2 - 2n + 2; the Wielandt digraph on n vertices attains this exponent.\n\nProve by excision of closed paths that the cycle monoid at an aperiodic world is generated by simple cycle lengths at most n with gcd 1, prove a quadratic conductor bound for numerical semigroups with generators at most n, then absorb the two legs bounded by exists_iterR_lt_card; check sharpness by computing powers of the Wielandt digraph for n = 3, 4, 5.\n\nexists_uniform_primitive_of_aperiodic becomes fully effective and the modal path calculus reproves Wielandt's classical matrix bound.\n\nSome frame exceeds the classical exponent, which would locate an error in the identification of matrix-power positivity with iterR, i.e. in stepPow_pos_iff.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_3652",
+    "lineage_refs": [],
+    "priority_score": 0.7110769230769232,
+    "proof_strategy": "Adapt exists_shorter_iterR to closed paths so that the cycle monoid is generated by simple cycle lengths at most n; aperiodicity gives gcd 1; bound the conductor of such a numerical semigroup quadratically in n (the two-generator case is Chicken McNugget); then pad with iterR_of_aperiodic_pad. The shortcut via two consecutive return lengths at most n is refuted by the figure-eight of 5- and 8-cycles on 12 worlds, whose return monoid has first consecutive pair (15,16).",
+    "research_mode": "team",
+    "source_exp_id": "0f0bd7f8",
+    "status": "available",
+    "timestamp": "2026-08-22T13:02:00.488573+00:00",
+    "title": "Wielandt Exponent for Aperiodic Modal Primitivity"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Catalog.NumberTheory.AlephOneSurfaceHausdorff"
     ],
     "consumed_by_exp_id": "",
@@ -15656,6 +15680,54 @@
     "status": "available",
     "timestamp": "2026-08-21T19:37:45.324718+00:00",
     "title": "Purely Hyperbolic Subtrees Restore the Silver Abscissa"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Probability.MarkovRecurrenceFixedPoint",
+      "Probability.MarkovModalDefinability",
+      "Combinatorics.ModalFrameDefinabilityLimits"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Cycle 9 identified the greatest fixed point of the diamond with the set of worlds reaching a cycle and refuted its identification with the recurrent set. The successor conjecture is that this gap is essential: recurrence is undefinable in the basic modal language but definable by the tangled return relation. This fixes an expressiveness threshold for probabilistic reachability.\n\nNo set of basic modal formulas defines the class of pointed finite support frames whose point is recurrent; the recurrent set is the greatest set X such that every w in X lies on a positive-length cycle inside X.\n\nCollapse the absorbing two-state frame onto the one-state lazy frame by a surjective bounded morphism and apply Valid_of_boundedMorphism_surjective as in nonlazy_not_definable; for the positive half show the internally-cyclic sets form a complete lattice closed under unions.\n\nTransience is provably invisible to the basic modal language while recurrence is definable one level up, in Cycle 1's tangled formalism.\n\nA modal characterisation of recurrence exists, which would make the support of stationarity decidable by finitely many formulas.",
+    "domain_bridges": [],
+    "domains": [
+      "Cryptography",
+      "Logic"
+    ],
+    "id": "fd_3654",
+    "lineage_refs": [],
+    "priority_score": 0.7101428571428572,
+    "proof_strategy": "Undefinability by bounded-morphism transfer between absorbChain and the one-state loop; definability by closure of the internally-cyclic sets under arbitrary unions plus gfpDia_eq_reachesRecurrent.",
+    "research_mode": "team",
+    "source_exp_id": "0f0bd7f8",
+    "status": "available",
+    "timestamp": "2026-08-22T13:02:01.437776+00:00",
+    "title": "Modal Invisibility of Transience"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Probability.MarkovExponentBounds",
+      "Probability.MarkovLumpability",
+      "Probability.MarkovPrimitivity"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "No modal axiom set should define primitivity, nor bound the uniform primitivity exponent. Cycle 8 supplies, for each N, a frame whose exponent is exactly N, so the classes to be separated are now explicitly populated. This draws a sharp boundary around what correspondence theory expresses about mixing.\n\nFor every set Gamma of modal formulas and every natural N, Gamma defines neither the class of primitive support frames nor the class whose uniform primitivity exponent is at most N.\n\nFor each N take the nearest-neighbour chain on N+1 states, whose exponent is exactly N by nbrChain_exponent_eq, and collapse it by a surjective bounded morphism onto a lazy frame of smaller exponent; apply Valid_of_boundedMorphism_surjective.\n\nMixing is beyond modal axiomatisation, extending the limitative results from irreflexivity to quantitative dynamics.\n\nA modal scheme forcing primitivity would be a positive correspondence result and a proof-theoretic certificate of mixing.",
+    "domain_bridges": [],
+    "domains": [
+      "Logic",
+      "Bridges"
+    ],
+    "id": "fd_3655",
+    "lineage_refs": [],
+    "priority_score": 0.7101428571428572,
+    "proof_strategy": "Divisor lumpings of long cycles and the sharp nearest-neighbour family give, for every N, a pair of frames on opposite sides of the threshold but related by a surjective bounded morphism.",
+    "research_mode": "team",
+    "source_exp_id": "0f0bd7f8",
+    "status": "available",
+    "timestamp": "2026-08-22T13:02:01.906382+00:00",
+    "title": "Modal Undefinability of Mixing Thresholds"
   },
   {
     "ambition_level": "extension",
@@ -16438,6 +16510,29 @@
     "status": "available",
     "timestamp": "2026-08-21T17:45:45.435226+00:00",
     "title": "Effective Irrationality Measure for the BB84 Threshold"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Probability.MarkovLumpability",
+      "Combinatorics.ModalFrameDefinabilityLimits"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Strong lumpability yields a bounded morphism and hence an inclusion of modal theories. The conjecture is that the converse holds for finite chains, making the modal theory a complete invariant up to lumping and giving a logical decision procedure for state aggregation.\n\nFor finite chains P and Q with nonnegative entries, Thm(markovSystem P) is contained in Thm(markovSystem Q) if and only if the support frames are connected by a zig-zag of surjective bounded morphisms.\n\nProve Hennessy-Milner for image-finite KFrames in Lean, construct the bisimulation quotient of suppFrame P, and verify the equivalence by enumeration on all chains with at most four states.\n\nModal theory becomes a complete finite invariant for state aggregation, decidable by comparing finitely many formulas.\n\nThere exist modally equivalent finite chains with no lumping relation, pinpointing the expressive gap of the basic modal language on supports.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_3653",
+    "lineage_refs": [],
+    "priority_score": 0.7087142857142857,
+    "proof_strategy": "Forward direction is markovSystem_thm_of_lumpable; backward direction builds a characteristic formula per bisimulation class and reads the zig-zag off theory inclusion.",
+    "research_mode": "team",
+    "source_exp_id": "0f0bd7f8",
+    "status": "available",
+    "timestamp": "2026-08-22T13:02:00.958656+00:00",
+    "title": "Lumpability Galois Correspondence for Finite Chains"
   },
   {
     "ambition_level": "extension",
@@ -18296,6 +18391,27 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Catalog.Algebra.PMFrameHeightSpectrum",
+      "Catalog.Algebra.PMFrame385Height3",
+      "Catalog.Algebra.PMFrame231Flat"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The catalog now realises the heights 1, 2 and 3 by explicit orders 231, 105 and 385, each generating an infinite odd-radical class. The conjecture is that every positive integer occurs as the height of some cyclotomic frame, so the height function from squarefree odd radicals to positive integers is onto.\n\nFor every positive integer h there is a squarefree odd n with max_k |coeff k (cyclotomic n ℤ)| = h.\n\nSearch ternary and quaternary radicals for the smallest witness of each h up to h = 10; formalise each witness with the explicit-polynomial and Möbius-cancellation method used for Φ₁₀₅, Φ₂₃₁ and Φ₃₈₅.\n\nThe height is a complete surjective invariant onto the positive integers, and the odd-radical classes stratify the orders into infinitely many nonempty height classes.\n\nSome integer is skipped, which would be a surprising rigidity in the coefficient spectrum and a sharp constraint on any formula for A(n).",
+    "domain_bridges": [],
+    "domains": [],
+    "id": "fd_3658",
+    "lineage_refs": [],
+    "priority_score": 0.5917741935483872,
+    "proof_strategy": "Use Bang's bound A(Φ_{pqr}) ≤ p-1 as a ceiling and an explicit family attaining it; interpolate between consecutive heights by varying r modulo pq, controlling the coefficient by the numerical-semigroup indicator formula.",
+    "research_mode": "team",
+    "source_exp_id": "bb070ee4",
+    "status": "available",
+    "timestamp": "2026-08-22T13:02:23.250807+00:00",
+    "title": "Surjectivity of the Frame Height Function"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Applications.ChainedLabelWidth",
       "Applications.LabelCollapseCeiling"
     ],
@@ -18735,6 +18851,29 @@
   },
   {
     "ambition_level": "extension",
+    "catalog_references": [
+      "Catalog.Algebra.PMFrame231Flat",
+      "Catalog.Algebra.PMFrameSemigroupFormula"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Φ₂₃₁ is flat while Φ₁₀₅ has height two. The conjecture is that flatness of Φ_{pqr} is governed by an explicit congruence condition on r modulo pq, expressible through the inverse residues that appear in the semigroup description of the binary case.\n\nFor odd primes p<q<r, Φ_{pqr} is flat iff r ≡ ±1 (mod p*q) or an explicit linear condition on (q⁻¹ mod p, r⁻¹ mod p) holds.\n\nEnumerate ternary radicals below 10^5, tabulate flat ones, and fit the residue pattern; then formalise the resulting criterion against the verified examples Φ₁₀₅ and Φ₂₃₁.\n\nFlatness of ternary cyclotomic polynomials becomes decidable by a residue computation.\n\nThe counterexample sharpens the search for the true criterion and bounds its complexity.",
+    "domain_bridges": [],
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_3659",
+    "lineage_refs": [],
+    "priority_score": 0.563703751343374,
+    "proof_strategy": "Lift PMFrameSemigroup.coeff_pmFrame_family_indicator to three generators, express coefficients as differences of numerical-semigroup indicators for ⟨p,q,r⟩, and characterise when consecutive indicator differences never exceed one.",
+    "research_mode": "team",
+    "source_exp_id": "bb070ee4",
+    "status": "available",
+    "timestamp": "2026-08-22T13:02:23.732172+00:00",
+    "title": "Residue Criterion for Flat Ternary Frames"
+  },
+  {
+    "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "*[settled in cycle 4: the abelian half is proved, the identification with the one-parameter subgroup is false — see below]*  The centralizer of a\n   non-identity element of `ScalingMap` is abelian, and equals the image of the\n   one-parameter subgroup through it precisely when its exponent is not `1`;\n   for exponent `1` (pure dilations `y ↦ c y`) it is the full dilation\n   subgroup.  *The key insight is* that the infinitesimal statement proved in\n   cycle 3 (centralizer of a field is the line it spans) should integrate to the\n   group level, the exceptional case being the one where the flow has no fixed\n   point in `(0, ∞)`.  *Why now?*  `EMLScalingGroupDuality` already has the\n   group law, the trivial-centre theorem and the classification of involutions,\n   so the computation is a finite case analysis on `(coeff, expo)`.",
@@ -18776,6 +18915,30 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Catalog.Shared.PMFrameTwoParameter",
+      "Catalog.Algebra.PMFrameTernaryBoundary",
+      "Catalog.Algebra.PMFrame105Explicit"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Extend the binary lattice-point model to ternary orders: the coefficient of X^n in the frame geometry of (p,q,r) counts lattice points of a box on the plane ip+jq+kr=n. The conjecture is that the resulting count deviates from its mean by at most p-1, which is Bang's theorem. This turns a classical polynomial statement into a counting problem already half-formalised in the catalog.\n\nFor odd primes p < q < r and all k, |coeff k (cyclotomic (p*q*r) ℤ)| ≤ p - 1.\n\nFormalise the ternary frame geometry as the product of three truncated geometric series, prove a box-uniqueness lemma modulo p, and bound the alternating differences; test numerically on all p*q*r ≤ 10^4 first.\n\nBang's theorem enters the catalog and globalises to all orders with three odd prime divisors via height reduction.\n\nA concrete counterexample triple would contradict a classical theorem, indicating a modelling error to be localised.",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry",
+      "NumberTheory"
+    ],
+    "id": "fd_3656",
+    "lineage_refs": [],
+    "priority_score": 0.5633481507492952,
+    "proof_strategy": "Generalise PMFrame.repPair_unique from a line in a 2-box to a plane section of a 3-box; control the count by equidistribution of jq+kr modulo p; conclude by telescoping the coefficient recursion.",
+    "research_mode": "team",
+    "source_exp_id": "bb070ee4",
+    "status": "available",
+    "timestamp": "2026-08-22T13:02:22.266734+00:00",
+    "title": "Bang Bound via Plane Lattice Sections"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Combinatorics.TraceBatteryCapacity",
       "Combinatorics.DialThresholdSharpness"
     ],
@@ -18795,6 +18958,29 @@
     "status": "available",
     "timestamp": "2026-08-22T07:00:24.045117+00:00",
     "title": "Exact CRT Ceiling via Least Common Multiple"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Catalog.Algebra.PMFrame231Flat",
+      "Catalog.Algebra.PMFrameFlatClassification"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Flat ternary orders exist (231, 399) and each one lifts, by height reduction, to an infinite family 2^a p^b q^c r^d. The conjecture is that flat ternary radicals are not sporadic but have positive density among all ternary radicals.\n\nThe set { p*q*r : p<q<r odd primes, Φ_{pqr} flat } has positive relative density among ternary squarefree odd numbers.\n\nCount flat ternary radicals up to 10^6 and estimate the ratio; verify the lifting step formally with PMFrame231.flatFrame_of_oddRad_231 applied to further verified flat radicals.\n\nThe flat class is much larger than the ω_odd ≤ 2 class, and the classification proved here is only a first approximation.\n\nFlat ternary orders are sporadic and the ω_odd ≤ 2 classification is essentially optimal.",
+    "domain_bridges": [],
+    "domains": [
+      "NumberTheory",
+      "MachineLearning"
+    ],
+    "id": "fd_3661",
+    "lineage_refs": [],
+    "priority_score": 0.5632628066067162,
+    "proof_strategy": "Combine the residue criterion of direction 3 with a sieve over admissible residues of r modulo pq, then lift by height reduction.",
+    "research_mode": "team",
+    "source_exp_id": "bb070ee4",
+    "status": "available",
+    "timestamp": "2026-08-22T13:02:24.713482+00:00",
+    "title": "Positive Density of Flat Ternary Radicals"
   },
   {
     "ambition_level": "extension",
@@ -19049,6 +19235,29 @@
     "status": "available",
     "timestamp": "2026-08-21T06:25:56.522269+00:00",
     "title": "Arithmetic residue certificates"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Catalog.Algebra.PMFrameNegation",
+      "Catalog.Algebra.PMFrameHeightReduction"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Prime inflation and the reflection X ↦ -X preserve the multiset of absolute coefficient values, and together they collapse every order onto its odd radical. The conjecture is the converse: two orders with the same coefficient multiset must share an odd radical, making the odd radical a complete invariant.\n\nIf for all B, (∀k |coeff k Φ_m| ≤ B) ↔ (∀k |coeff k Φ_n| ≤ B) holds together with equality of coefficient multisets, then oddRad m = oddRad n.\n\nSearch for coincidences among coefficient multisets of Φ_n for n ≤ 10^4 with distinct odd radicals; formalise the negative result as a uniqueness theorem via degrees φ(n) and the semigroup formula.\n\nThe odd radical is a complete invariant of the coefficient multiset of a cyclotomic polynomial.\n\nAn accidental coincidence would be a new arithmetic identity between distinct cyclotomic families.",
+    "domain_bridges": [],
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_3660",
+    "lineage_refs": [],
+    "priority_score": 0.5623007453630992,
+    "proof_strategy": "Use φ(n) to pin the degree, then reconstruct the odd radical from the pattern of sign changes given by the numerical-semigroup indicators.",
+    "research_mode": "team",
+    "source_exp_id": "bb070ee4",
+    "status": "available",
+    "timestamp": "2026-08-22T13:02:24.230057+00:00",
+    "title": "Completeness of Inflation and Reflection"
   },
   {
     "ambition_level": "extension",
@@ -29948,6 +30157,29 @@
     "status": "available",
     "timestamp": "2026-08-22T08:48:25.519972+00:00",
     "title": "k-Fold Semiprime Channel Saturation"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Catalog.Algebra.PMFrameHeightReduction",
+      "Catalog.Algebra.PMFrameHeightCapstone",
+      "Catalog.Algebra.PMFrame385Height3"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Height reduction proves that the coefficient height of a cyclotomic polynomial depends only on the odd radical, and the values 1, 2, 3 are now realised formally by 231, 105, 385. The open half asks how the height grows along squarefree odd radicals with three prime factors, and whether it is unbounded there.\n\nThe height function is constant on fibres of the odd radical, and sup { A(Φ_{pqr}) : p<q<r odd primes } = ∞.\n\nCompute A(Φ_{pqr}) for all ternary radicals below 10^5 and fit growth; formally, iterate the explicit-polynomial method already used for Φ₁₀₅ and Φ₃₈₅ on families such as 5·7·r.\n\nHeights are a genuine odd-radical invariant with unbounded range on ternary orders.\n\nTernary heights would be uniformly bounded, contradicting the reduction or known growth results.",
+    "domain_bridges": [],
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "fd_3657",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Constancy is PMFrameHeight.frameBoundedBy_iff_oddRad; unboundedness needs an explicit family with growing coefficients, constructed from the semigroup formula plus a pigeonhole on residues.",
+    "research_mode": "team",
+    "source_exp_id": "bb070ee4",
+    "status": "available",
+    "timestamp": "2026-08-22T13:02:22.753774+00:00",
+    "title": "Odd-Radical Height Spectrum"
   },
   {
     "ambition_level": "extension",
@@ -48332,23 +48564,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "0f0bd7f8",
-    "description": "Cycle 4 already provides the two witnesses and the joint-inconsistency\ntheorem; what is missing is a Lean development of frame-definability for `ModalSystem`,\nwhich the `KFrame`/`sat` apparatus of Cycle 1 supports directly.",
-    "domain_bridges": [],
-    "domains": [],
-    "id": "fd_1416",
-    "lineage_refs": [],
-    "priority_score": 0.4,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "615053e5",
-    "status": "in_progress",
-    "timestamp": "2026-08-17T09:57:44.570347+00:00",
-    "title": "Cycle 4 already provides the two witnesses and the joint-inconsistency"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "The finite case is fully proved (`iterExt_sound_ncard`,\n`iterExt_has_unsound_world`); the transfinite case needs only a colimit construction on\n`KFrame`, and it would give a precise formal sense in which Tarski-style stratification\nof a truth/soundness predicate can be iterated through the ordinals without ever\nterminating.",
     "domain_bridges": [],
@@ -48759,7 +48974,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7b6bc4ee",
     "description": "The `d = 1` case is proved (`withParity_detects_single_flip` plus the\none-codeword converse); the general case needs only the Hamming ball counting\nlemma over `List Bool` of bounded length.",
     "domain_bridges": [],
     "domains": [],
@@ -48769,7 +48984,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "f262016d",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-17T18:57:33.687836+00:00",
     "title": "The `d = 1` case is proved (`withParity_detects_single_flip` plus the"
   },
@@ -51293,23 +51508,6 @@
     "status": "available",
     "timestamp": "2026-08-20T03:10:46.040710+00:00",
     "title": "is a finitely supported `a : ℕ → ℤ` with"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "bb070ee4",
-    "description": "The one-parameter case is already a theorem here\n(`headCoeff_pmFrame_ge_neg_one`), and the closed formula makes the general case a\nstatement about integer points in a two-dimensional region, i.e. amenable to\n`omega`/`nlinarith` once the balance and cycle-type constraints are formalized.",
-    "domain_bridges": [],
-    "domains": [],
-    "id": "fd_1663",
-    "lineage_refs": [],
-    "priority_score": 0.4,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "0750e9d7",
-    "status": "in_progress",
-    "timestamp": "2026-08-20T03:10:46.297060+00:00",
-    "title": "The one-parameter case is already a theorem here"
   },
   {
     "ambition_level": "extension",
