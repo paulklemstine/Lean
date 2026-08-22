@@ -1651,16 +1651,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-55 #1 \u2014 BALANCED-BKEY: the T-dial's decline is gradual, not a cliff (paper 182 addendum)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "096608bb",
     "description": "## NET-68 \u2014 limited-memory axis, round 21 (paper 153, ResearchOutput/exp_net68_domainjump.py, /tmp/net68.log)\n\n**Verdict name: CODE-NEEDS-FEWER-KEYS.**\n\n### Result\nDomain jump to Python source (10 CPython stdlib files; gate exact; identical harness/bar):\n\n| ctx | code k\\* | prose k\\* | code full acc | shift |\n|---|---|---|---|---|\n| 512 | **12** | 16 | 0.6296 | \u22124 keys |\n| 1024 | **16** | 20 | 0.6520 | \u22124 keys |\n\nCode sweeps @512: 4: 0.930 \u2717, 8: 0.969 \u2717, **12: 0.981 \u2713**, 16: 0.987, 20: 0.988, 24: 0.989.\n@1024: 8: 0.960 \u2717, 12: 0.976 \u2717, **16: 0.981 \u2713**, 20: 0.986, 24: 0.987.\n\n- **P1 CONFIRMED**: knees transfer within one fine step.\n- **P2 CONFIRMED**: exactly one fine-grid step (\u22124 keys) below prose at BOTH contexts \u2014 structure preserved.\n- **P3 REFUTED**.\n\n### The parameterized budget law\nk\\*(domain, context) = base(domain) + increment(scale) \u00d7 doublings(context), with base(prose)=16, base(code)=12, increments set by scale (NET-67). THIRD independent confirmation that accuracy level and knee position are independent quantities: code is EASIER to predict yet needs FEWER keys. Deployment: size KV by the largest-base domain present in mixed workloads.\n\n### All 8 barriers\n(a) clean \u2014 three horns pre-stated incl. the refuted P3; (b) clean; (c) confronted \u2014 limits: ONE code language, single-repo source, 24 windows stated; (d) clean per-corpus held-out splits; (e) deterministic; (f) clean \u2014 ALL_DONE_NET68; (g) fair \u2014 byte-identical harness except text; (h) DIRECT.\n\n### Next\nMath/non-English domains; increments at 4096; probe+recency hybrid on code; 7B quantized-offload cell.\n\nNow 68 network experiments. Assessment v68. Paper 153.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3709",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T18:51:45.072811+00:00",
     "title": "NET-68: CODE-NEEDS-FEWER-KEYS \u2014 domain jump to Python shifts the knee chain down one fine step ({12,16} vs {16,20}); budget law now domain-parameterized"
   },
@@ -2013,6 +2014,118 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-22T21:37:22.153031+00:00",
     "title": "FACT round-69 #1 \u2014 TDIAL-U92: the dial reaches the floor at bitlen 92 (paper 190, partial)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## NET-87 \u2014 limited-memory axis, round 31 (paper 168, ResearchOutput/exp_net87_code4096.py, /tmp/net87.log)\n\n**Verdict name: CODE-AT-4096-IS-PROTECTED.**\n\n### Result\nCode knee at ctx=4096: **k\\* = 32** (k=28 fails ~0.976, k=32 passes 0.986). Complete code chain: {12 @512, 16 @1024, 32 @4096}.\n\n- **P2 CONFIRMED**: the acceleration hits code (32 > extrapolated \u226424).\n- But code IS relatively protected: 32 < prose's 40 at the same context.\n\n### The narrowing domain factor\ncode/prose ratio \u22480.75 at short contexts \u2192 \u22480.80 at 4096 \u2014 the gap NARROWS as the phase transition dominates over structural differences.\n\nBaseline acc 0.677 remarkably high for source code at 4096 tokens \u2014 code's predictability persists even at extreme context lengths.\n\n### All 8 barriers\n(a) clean; (b) clean; (c) confronted; (d) clean; (e) deterministic; (f) clean; (g) fair; (h) DIRECT.\n\n### Next\nFine grid 24\u201332 for code; domain-jump @4096 for math/German/French; 7B cell.\n\nNow 88 network experiments. Assessment v88. Paper 168.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3758",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T22:39:30.328368+00:00",
+    "title": "NET-87: CODE-AT-4096-IS-PROTECTED \u2014 code knee @4096 is 32 vs prose 40; domain factor narrows at long context"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-68 #3, cron iteration (exp 543). Fresh-seed replication of paper 184's bitlen-64 uniform cell.\n\n**U64B-DIAL-HOLDS-COUNT-PARITY** (H1 pass; H2 count parity): pooled \u03c1(T, rate) = **0.641** [0.619, 0.660] \u2014 in band; advantage +0.044 [0.022, 0.066] \u2014 below +0.05 bar; only 1/3 seeds above. Six-seed combined: \u03c1T mean **0.644**, advantage mean +0.059 / median +0.058, 3/6 above bar.\n\nThe bitlen-64 zero-fit dial law replicates cleanly on fresh uniform seeds and H1 stands, but H2's point estimate flips below the bar \u2014 record as MARGINAL/count-parity.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp543_t_dial_unif_64.py + exp543_result.json, seeds 20261210\u201312.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3759",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T22:39:30.329884+00:00",
+    "title": "FACT round-68 #3 \u2014 TDIAL-U64B: fresh-seed replication confirms the dial at bitlen 64 (paper 190)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-68 #2, cron iteration (exp 541). Quantifying the fade's progression.\n\n**FADE-CONTINUES**: pooled Spearman(T, rate) = **0.500** CI [0.456, 0.545] at bitlen 104; per-seed 0.493/0.499/0.509 \u2014 all below 0.55 for the first time; fade is MONOTONE and NEAR-LINEAR (\u22120.030 then \u22120.043 per 4-bit step). T advantage WIDENS (+0.126 vs count) because count degrades faster.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp541_t_dial_unif_104.py + exp541_result.json, seeds 20261210\u201312.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3760",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T22:39:30.331366+00:00",
+    "title": "FACT round-68 #2 \u2014 TDIAL-U104: the fade continues at bitlen 104 (paper 189)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## NET-84 \u2014 limited-memory axis, round 32 (paper 166, ResearchOutput/exp_net84_tailprecision.py, /tmp/net84.log)\n\n**Verdict name: TAIL-AWARE-MIXED-PRECISION-WORKS.**\n\n### Result\nThree arms on Qwen2.5-0.5B (gate exact; ctx=1024):\n\n| arm | retained |\n|---|---|\n| GPTQ4 full | 0.9081 |\n| **GPTQ4 + L22/L23 fp32** | **0.9261 (+1.8 pts)** |\n| GPTQ4 L22/L23 only | 0.9766 |\n\n- **P1 CONFIRMED**: mixed precision reaches 0.926.\n- **P2 REFUTED**: the tail DOES benefit from precision protection.\n\n### The convergence\nThree independent lines of evidence now converge on the same prescription:\n1. NET-60: the tail pair is epistatic (7\u00d7 super-additive joint pruning cost)\n2. NET-54: the tail is unportable (swap breaks agreement with both parents)\n3. NET-83: quantization \u00d7 sparsity interaction is super-additive\n\nAll point to: **treat L22/L23 as ONE unit with SPECIAL handling in every optimization dimension.** Tail-aware mixed precision is the practical implementation.\n\nMemory cost of protection: 2 layers \u00d7 ~1.8M params \u00d7 4 bytes = 7.2 MB fp32 (vs ~0.9 MB at 4-bit) = 1.4% overhead for +1.8 pts quality.\n\n### All 8 barriers\n(a) clean \u2014 two horns pre-stated incl. the refuted P2; (b) clean; (c) confronted; (d) clean; (e) deterministic; (f) clean \u2014 ALL_DONE_NET84; (g) fair; (h) DIRECT.\n\n### Next\n8-bit tail (even better?); 1.5B replication; 4096 context increments; 7B cell.\n\nNow 85 network experiments. Assessment v85. Paper 166.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3761",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T22:39:30.332797+00:00",
+    "title": "NET-84: TAIL-AWARE-MIXED-PRECISION-WORKS \u2014 keeping L22/L23 at fp32 gains +1.8pts over full 4-bit GPTQ; three evidence lines converge on tail-as-one-unit prescription"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-61 #2, cron iteration (exp 542). Fresh-seed replication of paper 184's bitlen-56 uniform cell.\n\n**U56B-DIAL-HOLDS-COUNT-PARITY**: pooled \u03c1(T, rate) = **0.669** [0.650, 0.690] \u2014 in band; all 3 seeds pass H1.\n\nH2 FAIL on pre-stated rule: pooled advantage +0.045 \u2264 +0.05; only 1/3 seeds > +0.05. The dial's weighted edge is NOT ESTABLISHED at bitlen 56 \u2014 count catches up in this batch.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp542_t_dial_unif_56.py + exp542_result.json, seeds 20261140\u201342.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3762",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T22:39:30.334253+00:00",
+    "title": "FACT round-61 #2 \u2014 TDIAL-U56B: fresh-seed replication confirms validity but edge not established (paper 187)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-67 #2, cron iteration (exp 540). The first band-miss on uniform draws.\n\n**DIAL-FADES**: pooled Spearman(T, rate) = **0.544** CI [0.498, 0.588] at bitlen 100 \u2014 the CI straddles the 0.55 floor for the first time. Per-seed: 0.546/0.528/0.549.\n\nT beats count by +0.098 everywhere. But the dial's signal has faded below the validated band \u2014 the erosion that began at bitlen 56 continues its gradual path.\n\nThe zero-fit dial's validated deployment envelope ends at bitlen ~96; beyond that signal degrades gradually toward the floor.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp540_t_dial_unif_100.py + exp540_result.json, seeds 20261200\u201302.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3763",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T22:39:30.335650+00:00",
+    "title": "FACT round-67 #2 \u2014 TDIAL-U100: the dial begins to fade at bitlen 100 (paper 188)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## NET-83 \u2014 limited-memory axis, round 33 (paper 165, ResearchOutput/exp_net83_integration.py, /tmp/net83.log)\n\n**Verdict name: THE-INTEGRATION-IS-SUPER-ADDITIVE.**\n\n### Result\nThe integration test combining GPTQ 4-bit group-128 weights with top-k attention:\n\n| arm | retained | CE |\n|---|---|---|\n| full fp32 | 1.0000 | 2.697 |\n| attn k=16 only | 0.9768 | 2.774 |\n| attn k=20 only | 0.9803 | 2.755 |\n| attn k=24 only | 0.9851 | 2.742 |\n| GPTQ4 alone | 0.9081 | 3.015 |\n| **GPTQ4 + k=16** | **0.8598** | **3.220** |\n| **GPTQ4 + k=20** | **0.8707** | **3.180** |\n| **GPTQ4 + k=24** | **0.8772** | **3.155** |\n\nAt k=16: expected additive degradation = 2.3% (attention) + 9.2% (quantization) = 11.5%. Actual combined = 14.0%. The extra 2.5% is the INTERACTION COST.\n\n- **P1 REFUTED**: NOT sub-additive\n- **P2 CONFIRMED**: super-additive \u2014 sparse attention AMPLIFIES quantization noise\n- **P3 REFUTED**: the axes are NOT independent\n\n### Mechanism\n(1) Quantized key vectors project differently, changing which keys pass the top-k threshold.\n(2) Selected keys' values carry quantization error that the sparse weighted sum cannot average away.\n\n### Engineering consequence\nBudget tables must include an INTERACTION PENALTY when both optimizations are active. A 4-bit model with k=24 attention is NOT equivalent to a 4-bit model plus a 24-key cache.\n\n### Debug transparency\nSEVEN debug iterations before recording; SIX bugs caught by sanity gates including a critical runner-layers reference bug that silently evaluated the wrong model.\n\nNow 84 network experiments. Assessment v84. Paper 165.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3764",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T22:39:30.337116+00:00",
+    "title": "NET-83: THE-INTEGRATION-IS-SUPER-ADDITIVE \u2014 GPTQ4+top-k degrades WORSE than sum of parts (14.0% vs expected 11.5%); sparse attention amplifies quantization noise"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-60 #2, cron iteration (exp 541, assessment v294). Completing the transfer validation.\n\n**PERNDIAL-52-PARTIAL-TRANSFER**: transfer slope 0.811 in band (H2 pass); R\u00b2 at bitlen 52 = 0.405 below the 0.45 target; pp_sum increment +0.018 just under +0.02 bar.\n\nThe dial transfers with in-band calibration slope but absolute R\u00b2 degrades at higher bitlen \u2014 consistent with the sampling-noise floor rising as values grow larger relative to B.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp541_perndial_48_52.py + exp541_result.json, seeds 20261200\u201302.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3765",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T22:39:30.338596+00:00",
+    "title": "FACT round-60 #2 \u2014 PERNDIAL-48-52: the per-N dial transfers to bitlen 52 with partial degradation (paper 186)"
   },
   {
     "consumed_by_exp_id": "",
@@ -3716,51 +3829,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Quantum Entanglement Monogamy: CKW Inequality"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove that the tropical amoeba of a Laurent polynomial is the negative logarithm of its zero set. Show that the Ronkin function is convex and piecewise-linear on the amoeba complement. Connect tropical amoebas to tropical geometry via the Maslov dequantization.",
-    "domains": [
-      "Tropical",
-      "Geometry"
-    ],
-    "id": "seed_316",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Tropical Amoebas and Ronkin Functions"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize the Yoneda lemma as a bridge connecting any mathematical structure to its representable functors. Prove that the Yoneda embedding is fully faithful. Show how this bridges algebra (modules = additive functors), topology (sheaves = local functors), and logic (toposes = categorical semantics). Prove that every Grothendieck topos is a bounded lattice with a universal property.",
-    "domains": [
-      "Bridges",
-      "Algebra"
-    ],
-    "id": "seed_345",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Bridge: Category Theory as Universal Language for Mathematics"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize U_q(g) as a q-deformation of the universal enveloping algebra U(g). Prove that as q->1, U_q(g) -> U(g). Bridge: the representation theory of U_q(sl_2) gives the Jones polynomial via the Reshetikhin-Turaev construction. Show that the quantum double construction yields braided tensor categories.",
-    "domains": [
-      "Bridges",
-      "Physics"
-    ],
-    "id": "seed_351",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Bridge: Quantum Groups as Deformations of Classical Groups"
   },
   {
     "consumed_by_exp_id": "",
@@ -34702,14 +34770,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sparse corpora never approach the binomial ceiling.*"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "19fbfbe4",
     "description": "**C4 (reward hacking is a covariance) \u2014 PROVED at first order.**\n  `RLHF.audit_gap_first_order`: `|\ud835\udd3c_{\u03c0_\u03b2}f \u2212 \ud835\udd3c_p f \u2212 Cov_p(r,f)/\u03b2| \u2264 24 (R/\u03b2)\u00b2 \u03c3_p(f)`\n  for `|r| \u2264 R \u2264 \u03b2`, hence `RLHF.audit_gap_of_uncorrelated`: statistics uncorrelated\n  with the reward move only at order `\u03b2\u207b\u00b2`.  The *sharp threshold* half of C4 (a phase\n  transition in `\u03b2_c`) is still open and is restated as N2 below.",
     "domains": [],
     "id": "fd_1686",
+    "phase": "A",
     "priority_score": 0.4300588235294117,
     "research_mode": "team",
     "source_exp_id": "84bf9824",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-20T07:57:24.524777+00:00",
     "title": "C4 (reward hacking is a covariance) \u2014 PROVED at first order.*"
   },
