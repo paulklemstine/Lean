@@ -976,16 +976,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-40 #1 \u2014 QR-RESIDUAL: footprint-weighted dial captures the residual (paper 145)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "78e6d19a",
     "description": "## NET-54 \u2014 limited-memory axis, round 6 (paper 139, /tmp/exp_net54_tailswap.py, /tmp/net54.log)\n\n**Verdict name: THE-TAIL-IS-LOAD-BEARING-BUT-UNPORTABLE.**\n\n### Result\nCausal layer transplants between Qwen2.5-0.5B **base** and **Instruct** (12 held-out windows @ctx=512; cross-parent prediction-agreement baseline 0.8327):\n\n| arm | \u0394CE vs host | agree w/ base | agree w/ instruct |\n|---|---|---|---|\n| base\u2190inst **L22/23** | +0.4652 | 0.5845 | 0.5443 |\n| base\u2190inst L10/11 | **+0.0043** | 0.9635 | 0.8385 |\n| inst\u2190base **L22/23** | +0.5455 | 0.5887 | 0.6289 |\n| inst\u2190base L10/11 | **\u22120.0164** | 0.8459 | 0.9495 |\n\n- **P1 REFUTED \u2014 the discovery**: tail swaps do NOT pull the hybrid toward the donor; they break agreement with BOTH parents (host-side agreement falls far below the cross-parent baseline). The tail carries no portable identity \u2014 it is entangled with upstream statistics.\n- **P2 CONFIRMED**: directions asymmetric (+0.465 vs +0.546), as NET-51's mid-stack hump predicts.\n- **P3 CONFIRMED**: worst hybrid within +0.55 nats \u2014 functional, but neither parent.\n\n### The convergence\nThree independent measurements on the same two layers: NET-50 (only far-from-tropical region), NET-51 (only high decision-divergence region), NET-54 (only non-transplantable region). And the bulk result is equally practical: **L10/11 transplant at literally zero measured cost \u2014 one direction slightly improves Instruct.**\n\n### Practical\nThe sharing boundary for multi-finetune serving on small VRAM is now causally established: share everything except the last two layers; re-run the tail per model; do not approximate or borrow it.\n\n### All 8 barriers\n(a) clean \u2014 three horns pre-stated incl. the refuted one; (b) confronted \u2014 layer-amputation literature exists; NEW = fine-tune-pair portability asymmetry with matched architecture and the both-parents-collapse signature; (c) confronted \u2014 real pretrained pair; limits: ONE pair, 12 windows, ctx=512, fp16, single-pair granularity; (d) clean \u2014 no training involved; (e) deterministic forwards, restore-by-construction before each arm; (f) clean \u2014 chunked CE identical to harness semantics, ALL_DONE_NET54; (g) fair \u2014 matched-width bulk controls, both directions; (h) DIRECT.\n\n### Next\nDose-response (one-layer and three-layer swaps); swap+recalibration (entanglement depth); 1.5B pair; does a compensated 4-bit tail stay personal? (GPTQ link).\n\nNow 54 network experiments. Assessment v54. Paper 139.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3575",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T04:50:57.568658+00:00",
     "title": "NET-54: THE-TAIL-IS-LOAD-BEARING-BUT-UNPORTABLE \u2014 bulk layers transplant between fine-tunes at zero cost, tail L22/23 breaks agreement with BOTH parents; sharing boundary causally established"
   },
@@ -1394,6 +1395,34 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-22T09:43:33.960986+00:00",
     "title": "FACT round-44 #1 \u2014 T-DIAL-STABLE: the zero-fit dial is seed-stable (paper 165)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-45 #3, cron iteration (exp 503, assessment v279). Paper 169's named follow-up: can refitting the footprint weights at tight u recover the drop?\n\n**NO-RECAL-RECOVERY**: recalibrated OOS sp(3.5) = **0.6050** (CI [0.581, 0.626]) < 0.70 \u2014 and the refit lands BELOW the unrefit zero-fit dial (0.6288; paired gain **\u22120.0238**, 5/5 negative; recovery \u221224%). H2 CONFIRMED as annotation: \u03b2 rank-stability 0.869 split-half / 0.9433 LOPO \u2014 a consistent structural object that is informationally empty. The fitted \u03b2 is anti-correlated \u22120.93 with the theory 2/p profile.\n\nBitlen-48 transfer 0.5693 < 0.60 (H3 refuted).\n\nCombined with papers 167\u2013169, the drop is now doubly localized: genuine threshold reweighting whose content is NOT capturable by small-prime footprint features of any weighting. Paper 164's zero-form adoption stands WITHOUT QUALIFICATION; the lost content sits in mid primes (31\u2013356) and/or non-footprint structure.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp503_tight_u_recal.py + exp503_result.json + ledger_exp503.jsonl, seeds 20260990\u201399 + 20261000.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3637",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T10:41:00.260365+00:00",
+    "title": "FACT round-45 #3 \u2014 TIGHT-U-RECAL: reweighting cannot recover the tight-u drop (paper 170)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-45 #3, cron iteration (exp 502, assessment v278). Paper 168's named follow-up: decouple the strip bound from u.\n\n**REWEIGHTING-REAL**: with ONE strip pass to PB=4000 recording (remainder, maxp) \u2014 both u-thresholds read off the same decomposition \u2014 the fixed-bound drop is **+0.0578** (8 populations, sd 0.0138): **91% of paper 168's variable-B reference (+0.0636)**. H1 (attribution > 0.5) REFUTED at 9.1%; H2 CONFIRMED.\n\nThe u-sensitivity is genuine threshold reweighting \u2014 tighter u shifts which QR primes dominate the rate; bound-shrinkage contributes only ~9%. Paper 168's 'mostly intrinsic' reading confirmed and sharpened: dial deployments at tight u should recalibrate the footprint weights themselves, not adjust bounds.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp502_fixed_bound.py + exp502_result.json, seeds 20260980\u201387.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3638",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T10:41:00.261918+00:00",
+    "title": "FACT round-45 #3 \u2014 FIXED-BOUND: the u-sensitivity is genuine reweighting (paper 169)"
   },
   {
     "consumed_by_exp_id": "",
@@ -3098,50 +3127,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Quantum Entanglement Monogamy: CKW Inequality"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize Freeman Dyson's idea that intelligence grows without limit in the deep future. Define: 'intelligence growth rate' as the rate at which a civilization discovers new theorems. Prove: if the growth rate is superexponential (faster than 2^(2^n)), then the civilization discovers ALL theorems of ZFC in finite time (by compactness). Show: if the growth rate is merely exponential (2^n), then there exist theorems that are NEVER discovered (G\u00f6del). Conjecture: the growth rate is bounded by the physical computation limit (Bekenstein bound) at ~10^120 ops in the observable universe. Explore: does the intelligence explosion require new mathematics (theorems not expressible in current systems)?",
-    "domains": [
-      "Novelty",
-      "Logic",
-      "Computation"
-    ],
-    "id": "seed_414",
-    "priority_score": 0.86,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Moonshot: The Mathematics of Dyson's Intelligence Explosion"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 8e0a0c8a (Q=0.760), which proved 12 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize Tononi's Integrated Information Theory (IIT) as a rigorous mathematical framework. Prove that the maximum integrated information Phi of a system is the minimum information partition. Show that Phi is NP-hard to compute and construct polynomial-time approximations.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_8e0a0c8a_349033d0",
-    "priority_score": 0.85983,
-    "research_mode": "team",
-    "source_exp_id": "8e0a0c8a",
-    "status": "available",
-    "timestamp": "2026-08-02T11:45:37.914205+00:00",
-    "title": "Deepening: Consciousness as Integrated Information: Mathematical Foundations"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 064bb153 (Q=0.760), which proved 12 theorems in Geometry. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions: Geometry Beyond Integer Linking\n\n## 1. A real-valued Hopf-geometric concurrence functional\n\nThere exists a canonically normalized real-valued functional on the quaternionic Hopf geometry of a two-qubit state that is continuous, vanishes exactly on product states, and equals one ",
-    "domains": [
-      "Geometry"
-    ],
-    "id": "push_064bb153_37f2aaa6",
-    "priority_score": 0.85976,
-    "research_mode": "team",
-    "source_exp_id": "064bb153",
-    "status": "available",
-    "timestamp": "2026-08-02T22:17:55.338543+00:00",
-    "title": "Deepening: There exists a canonically normalized real-valued functional on the quaternionic"
   },
   {
     "consumed_by_exp_id": "",
@@ -39043,14 +39028,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Finite Dirichlet polynomials"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ccf34fd5",
     "description": "Replace the rectangular window by a Schwartz or Gaussian window and prove the modulation/translation identity. Gaussian windows suppress the sidelobes that can masquerade as peaks.",
     "domains": [],
     "id": "fd_2017",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "f2f32f44",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:22:14.980450+00:00",
     "title": "Smooth windows"
   },

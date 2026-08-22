@@ -1,0 +1,129 @@
+# Computational Evidence — CYCLIC-CUBIC-TYPE-CHANNEL (paper 122)
+
+Field: `K = ℚ(ζ₇ + ζ₇⁻¹)`, the cyclic cubic field of conductor 7, defined by
+`f(X) = X³ + X² − 2X − 1`.
+
+Everything below was used only to *choose* what to formalise. The verified
+statements are the Lean theorems in `Catalog/Applications/CyclicCubicTypeChannel/`;
+the tables here are exploratory scratch computations, not verification.
+
+## 1. Small-case factorisation of `f` mod `p` — only two types
+
+| p | p mod 7 | # roots of f mod p | factorisation type |
+|---|---------|--------------------|--------------------|
+| 2 | 2 | 0 | 3 (inert) |
+| 3 | 3 | 0 | 3 |
+| 5 | 5 | 0 | 3 |
+| 7 | – | – | ramified (`f ≡ (X−2)³`) |
+| 11 | 4 | 0 | 3 |
+| 13 | 6 | 3 | 1·1·1 (split) |
+| 17 | 3 | 0 | 3 |
+| 19 | 5 | 0 | 3 |
+| 23 | 2 | 0 | 3 |
+| 29 | 1 | 3 | 1·1·1 |
+| 31 | 3 | 0 | 3 |
+| 37 | 2 | 0 | 3 |
+| 41 | 6 | 3 | 1·1·1 |
+| 43 | 1 | 3 | 1·1·1 |
+| 47 | 5 | 0 | 3 |
+| 53 | 4 | 0 | 3 |
+| 59 | 3 | 0 | 3 |
+| 61 | 5 | 0 | 3 |
+| 67 | 4 | 0 | 3 |
+| 71 | 1 | 3 | 1·1·1 |
+| 73 | 3 | 0 | 3 |
+| 79 | 2 | 0 | 3 |
+
+Two observations drive the whole project, and both are now theorems:
+
+* the number of roots is always `0` or `3`, never `1`
+  (`CyclicCubic.splits_completely`: the twist `x ↦ x² − 2` permutes the roots
+  cyclically and is fixed-point-free on them);
+* "3 roots" happens exactly for `p ≡ ±1 (mod 7)`
+  (`CyclicCubic.root_iff`, and independently `TraceOrder.cubic_seven_iff`).
+
+## 2. Exact vs. experimental information quantities
+
+With `p mod 7` uniform on the six invertible classes (Chebotarev/Dirichlet),
+type `T ∈ {deg 1, deg 3}` has `P(deg 1) = 2/6 = 1/3`:
+
+| quantity | closed form (proved) | decimal | reported experiment |
+|---|---|---|---|
+| `H(T)` | `log₂3 − 2/3` | 0.9182958… | 0.9179 |
+| `I(p mod 7 ; T)` | `log₂3 − 2/3` | 0.9182958… | = H(T) (full pinning) |
+| `I(N mod 7 ; unordered type pair)`, `N = pq` | `log₂3 − 10/9` | 0.4738514… | 0.4747 |
+| `H(unordered pair)` | `2log₂3 − 16/9` | 1.3921472… | — |
+| `I(ordered) − I(unordered)` ("which factor") | `0` | 0.0000 | 0.0000 |
+| `H(which-factor bit)` | `4/9` | 0.4444444… | — |
+
+The experimental values agree with the exact closed forms to the accuracy one
+expects from a finite prime sample (`|0.9182958 − 0.9179| ≈ 4·10⁻⁴`,
+`|0.4738514 − 0.4747| ≈ 8·10⁻⁴`). The reported statistic "wall `z = +12517`"
+is a property of a particular finite experiment and is not formalisable as a
+theorem; it is not claimed anywhere in the Lean files.
+
+**New exact identity found while formalising** (now
+`CyclicCubic.semiprime_deficit_eq_type_entropy`):
+
+```
+H(unordered pair) − I(N mod 7 ; pair) = (2log₂3 − 16/9) − (log₂3 − 10/9)
+                                      = log₂3 − 2/3 = H(T).
+```
+
+The semiprime channel loses *exactly one type's worth of entropy* — numerically
+1.3921472 − 0.4738514 = 0.9182958. This was not visible in the experimental
+summary and is the sharpest quantitative statement in the project.
+
+## 3. Chebyshev/trace identities (checked, then proved)
+
+With `A₀ = 0, A₁ = 1, A_{n+2} = t·A_{n+1} − A_n`:
+
+| n | `A_n(t)` | factorisation |
+|---|----------|---------------|
+| 4 | `t³ − 2t` | — |
+| 5 | `t⁴ − 3t² + 1` | `(t² + t − 1)(t² − t − 1)` |
+| 6 | `t⁵ − 4t³ + 3t` | `A₆ + 1 = (t³ + t² − 2t − 1)(t² − t − 1)` |
+| 7 | `t⁶ − 5t⁴ + 6t² − 1` | `(t³ + t² − 2t − 1)(t³ − t² − 2t + 1)` |
+
+For conductor 11 the exact-rational computation gives
+
+```
+A₁₁ = t¹⁰ − 9t⁸ + 28t⁶ − 35t⁴ + 15t² − 1
+    = (t⁵+t⁴−4t³−3t²+3t+1)(t⁵−t⁴−4t³+3t²+3t−1)
+A₁₀ + 1 = (t⁹ − 8t⁷ + 21t⁵ − 20t³ + 5t) + 1
+        = (t⁵+t⁴−4t³−3t²+3t+1)(t⁴−t³−3t²+2t+1)
+```
+
+together with an **integral** Bézout identity between the two spurious factors,
+
+```
+(2t − t³)(t⁵−t⁴−4t³+3t²+3t−1) + (1 − 3t² + t⁴)(t⁴−t³−3t²+2t+1) = 1,
+```
+
+found by the extended Euclidean algorithm over `ℚ[t]` and observed to have
+denominator 1 — so the conductor-11 criterion has *no* exceptional prime. All
+of these identities were checked numerically first and are now proved by `ring`
+inside `TraceOrder.chebA_four … chebA_eleven` and used in
+`TraceOrder.golden_iff`, `TraceOrder.cubic_seven_iff` and
+`TraceOrder.quintic_eleven_iff`. The minimal polynomial
+of `ζ_m + ζ_m⁻¹` divides `A_m`, and the cofactor is its "sign twist"
+`±Ψ_m(−t)`; this is exactly why the trace criterion transfers between
+conductors.
+
+## 4. Counterexample hunt for the conductor-5 companion law
+
+`X² + X − 1` has a root mod `p` iff `p ≡ ±1 (mod 5)`; tested for all primes
+`p < 60` (`p ≠ 5`) with no exception:
+
+`(p, p mod 5, has root)`:
+`(2,2,F) (3,3,F) (7,2,F) (11,1,T) (13,3,F) (17,2,F) (19,4,T) (23,3,F) (29,4,T)
+(31,1,T) (37,2,F) (41,1,T) (43,3,F) (47,2,F) (53,3,F) (59,4,T)`
+
+Now proved for all primes as `TraceOrder.golden_iff`.
+
+## 5. OEIS
+
+The split primes for conductor 7 (`13, 29, 41, 43, 71, 83, 97, 113, …`) are the
+primes `≡ ±1 (mod 7)`; the corresponding type sequence is determined by
+`p mod 7` alone, which is precisely the full-pinning statement. No new integer
+sequence is generated by this project, so no OEIS identification is claimed.
