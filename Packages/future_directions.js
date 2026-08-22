@@ -1190,16 +1190,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-41 #3 \u2014 JOINT-ALIGN: cross-prime coincidences transfer where singleton phases fail (paper 152)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "aa2d71a2",
     "description": "Round-43 #2, cron iteration (exp 493, assessment v271). Paper 154's noted follow-up.\n\n**DIAL-IS-DRAW-INVARIANT**: the per-N yield dial shows no variance-share dilution under genuinely unbalanced draws \u2014 augmented R\u00b2 = 0.5202 uniform vs 0.5251 balanced (identical within noise); Spearman(w, rate) = 0.666 vs 0.696; footprint weighting beats plain count by +0.16/+0.18 in both regimes. H2's dilution refuted in the good direction.\n\nThe QS triage form holds for realistic key-shape mix. Barriers 5/8 unchanged.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp492_uniform_dial.py + exp492_result.json, seed 20260924.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3613",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T07:46:53.277507+00:00",
     "title": "FACT round-43 #2 \u2014 UNIFORM-DIAL: the yield dial is draw-regime-invariant (paper 162)"
   },
@@ -1566,6 +1567,62 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-22T15:36:32.741347+00:00",
     "title": "FACT round-53 #1 \u2014 T-DIAL-UNIF-52: the dial survives uniform draws at bitlen 52 (paper 183 addendum)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-54 #1, cron iteration (exp 523). The zero-fit dial's robustness envelope tested.\n\n**DIAL-ROBUST**: Spearman(T, rate) \u2265 0.53 at every tested bitlen \u00d7 u combination; T consistently beats the bare count by 0.10\u20130.15. No cliff, no breakdown, no convention artifact.\n\nThe zero-fit dial is ROBUST across the entire tested bitlen \u00d7 u envelope. Barriers: (5)/(8) unchanged.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp523_balanced_bkey.py + exp523_result.json, seeds 20261100+bitlen.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3681",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T16:41:43.033337+00:00",
+    "title": "FACT round-54 #1 \u2014 BALANCED-BKEY: the T-dial is robust across bitlen and u (paper 181)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "## NET-56 \u2014 limited-memory axis, round 9 (paper 141, ResearchOutput/exp_net56_policy.py, /tmp/net56.log)\n\n**Verdict name: THE-ORACLE-OVERSTATES-THE-DEPLOYABLE-WIN.**\n\n### Result\nCausally-honest streaming KV eviction (accumulated-score heavy-hitters, block-128, current block always cached, strict per-row causality) vs the omniscient oracle \u2014 same harness, same data, matched budgets (Qwen2.5-0.5B, ctx=1024):\n\n| arm | B=32 | B=64 | B=128 |\n|---|---|---|---|\n| ORACLE (per-row top-k) | **0.9913 \u2713** | **0.9953 \u2713** | \u2014 |\n| HH (accumulated, pure) | 0.8633 | 0.8822 | 0.9189 |\n| HYB (HH + recency) | 0.9205 | 0.9384 | 0.9605 |\n\n- **P1 CONFIRMED emphatically**: policy gap = 11.3 points at matched B=64 (not the \u22652% floor).\n- **P2 CONFIRMED**: recency beats pure accumulation everywhere (+5.7/+5.6/+4.2 pts).\n- **P3 REFUTED**: best-at-64 = 0.938 < 0.95; even a 12.5%-of-context cache tops out at 0.961.\n\nAnchor: oracle arms cross-replicate NET-49's knee to four decimals (0.9913 vs 0.9912 at k=32).\n\n### The law\nThe knee collapse (NET-49: knees {16,32,24}; NET-55: size-invariant) is real for an OMNISCIENT selector but does NOT transfer to online eviction: **trained attention is prunable in retrospect, not predictable in advance** \u2014 accumulated attention probability is a biased estimator of future importance. This is the measurable form of the catalogue's min-plus decoder-reliability barrier (no exponential reliability without assumptions). Deployment tables must be policy-adjusted; oracle quotes are upper bounds.\n\n### Engineering record\nSeven implementation variants were rejected by sanity gates before recording: two shape bugs; a stale kept-set that starved local context (retained 0.35\u20130.46); a per-block causal leak that let rows see their block's future (retained 2.06 > 1 \u2014 physically impossible); a strict-mask NaN; duplicate recency; and an unbound variable. The two invalid variants are retained in git history as bracketing negative controls. The recorded run passes retained\u2208(0,1), monotone budget response, and exact oracle replication.\n\n### All 8 barriers\n(a) clean \u2014 three horns pre-stated incl. the refuted P3; (b) confronted \u2014 H2O/heavy-hitter literature exists; NEW = the quantified oracle-to-policy gap measured on the very harness that established the knees; (c) confronted \u2014 limits: ONE model, ONE context, block-128 granularity, no learned importance heads; (d) clean \u2014 held-out data, no training; (e) deterministic evals, sanity-band acceptance documented; (f) clean \u2014 ALL_DONE_NET56; (g) fair \u2014 identical harness/data for both arms, budgets matched exactly; (h) DIRECT.\n\n### Next\nLearned importance heads (can a tiny predictor close the gap?); per-layer budgets; 1.5B replication; corpus robustness (next cell).\n\nNow 56 network experiments. Assessment v56. Paper 141.\n",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3682",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T16:41:43.034980+00:00",
+    "title": "NET-56: THE-ORACLE-OVERSTATES-THE-DEPLOYABLE-WIN \u2014 streaming heavy-hitter eviction retains 0.86-0.92 where the oracle posts 0.99+ at matched budgets; trained attention is prunable in retrospect, not predictable online"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-51 #3, cron iteration (exp 521). The last untested intersection.\n\n**CELL-CLOSED-DIAL-HOLDS-60**: Spearman(T, rate) = **0.669** [0.634, 0.705] on uniform draws at bitlen 60 \u2014 inside [0.55, 0.85]; T beats count by **+0.151** [0.107, 0.193].\n\nThe dial's deployment envelope now covers balanced and uniform draws through bitlen 60.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp521_t_dial_60_unif.py + exp521_result.json, seed 20261050.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3683",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T16:41:43.036530+00:00",
+    "title": "FACT round-51 #3 \u2014 T-DIAL-60-UNIF: the dial survives uniform draws at bitlen 60 (paper 184)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-50 (exp 520). The first composite-order Galois group rung.\n\n**FULL-PINNING-AT-DEGREE-12**: Q(\u03b6\u2085\u2086)\u207a degree 12, G\u207a = C\u2086\u00d7C\u2082 (non-cyclic), conductor 56 \u2014 selected from ten \u03c6(f)=24 candidates by pre-stated rule.\n\nI(p mod 56; T) = H(T) = 1.7296 bits EXACTLY (gap 0.0, machine-exact); type densities {1/12, 1/4, 1/6, 1/2} match Chebotarev; orbit purity 12/12; perm z=+48,419; poly cross-check 160/160; semiprime pair channel matches exact enumeration law.\n\nThe abelian ladder now covers its FIRST non-cyclic composite-order group, extending beyond cyclic fields to C\u2086\u00d7C\u2082.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp520_degree_12.py + exp520_result.json, seed 20261060.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3684",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T16:41:43.038020+00:00",
+    "title": "FACT round-50 \u2014 DEGREE-12-COMPOSITE: full pinning at the first composite-order abelian group (paper 180)"
   },
   {
     "consumed_by_exp_id": "",
@@ -2917,38 +2974,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Formalize the Kantorovich optimal transport problem. Prove existence of optimal transport maps (Brenier's theorem for quadratic cost). Formalize Wasserstein distances and prove the Wasserstein GAN convergence properties.",
-    "domains": [
-      "MachineLearning",
-      "Analysis",
-      "Geometry"
-    ],
-    "id": "fd_0687",
-    "priority_score": 0.9,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-24T14:34:16.697835+00:00",
-    "title": "Optimal Transport and Wasserstein Distances"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize the Schnorr identification protocol in Lean 4. Prove completeness, soundness, and honest-verifier zero-knowledge. Formalize the Fiat-Shamir heuristic for non-interactive proofs. Prove security in the random oracle model.",
-    "domains": [
-      "Cryptography",
-      "Logic",
-      "Computation"
-    ],
-    "id": "fd_0690",
-    "priority_score": 0.9,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-24T14:34:16.697840+00:00",
-    "title": "Zero-Knowledge Proofs: Schnorr Protocol"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Formalizes Voiculescu's free probability: the free central limit theorem showing that normalized sums of freely independent identically distributed bounded random variables converge in distribution to the semicircle law, developed through the R-transform and free cumulants.",
     "domains": [
       "Probability",
@@ -3301,20 +3326,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Quantum Entanglement Monogamy: CKW Inequality"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 71fc60c7 (Q=0.750), which proved 23 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Elementary cellular automata (ECAs) are the 256 rules that update a 1D binary array based on its 3-cell neighborhood. Rule 110 is Turing-complete. But ECAs can also be viewed as polynomial maps over GF(2): the state s = (s_0, s_1, ..., s_{n-1}) is a vector over GF(2), and the update rule is s -> f(s",
-    "domains": [
-      "Applications"
-    ],
-    "id": "push_71fc60c7_46a0b17a",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "71fc60c7",
-    "status": "available",
-    "timestamp": "2026-07-18T09:05:18.164692+00:00",
-    "title": "Deepening: Cellular Automata as Algebraic Geometry: Wolfram's Rules Meet Grothendieck"
   },
   {
     "consumed_by_exp_id": "",
@@ -40853,14 +40864,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Define equivalences of causal structures and prove invariance of `Phi` under equivalence."
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "347a400e",
     "description": "prove that this function is a *class function up to inversion*, i.e. invariant under\n  `g \u21a6 g\u207b\u00b9` (using `x \u21a6 x\u207b\u00b9` on the connection set) and under automorphisms of `G`\n  preserving `S`; this would explain the orbit structure visible in the census;",
     "domains": [],
     "id": "fd_2847",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "3652ac9b",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:26:29.023814+00:00",
     "title": "prove that this function is a *class function up to inversion*, i.e."
   },
