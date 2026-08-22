@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-22T13:45:57.915690+00:00",
+  "last_updated": "2026-08-22T14:38:54.224714+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -64013,6 +64013,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-08-22T13:45:57.612439+00:00",
       "title": "The `L\u00b9` bound integrates to a Fisher\u2013Rao length bound* (previously\n  Conjecture 5)."
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Shared",
+      "duration_seconds": 3126.098273038864,
+      "end_time": 1787409482.2853549,
+      "files_integrated": 4,
+      "job_id": "a1194bd0",
+      "outcome_quality": 0.78,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.78,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.526,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.78,
+        "novelty": 0.78,
+        "proof_depth": 0.78,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1787406356.1870818,
+      "strategy_count": 0,
+      "theorem_count": 56,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 48,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-08-22T14:38:53.953031+00:00",
+      "title": "FACT round-37 #2 \u2014 SUBEXP-SCALE: the QS relation pool is random-equivalent at every scale (paper 130"
     }
   ]
 }

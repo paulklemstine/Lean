@@ -690,21 +690,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-35 #2 \u2014 UNIVERSAL-S3-FIFTH: five fields, one law (paper 123)"
   },
   {
-    "consumed_by_exp_id": "a1194bd0",
-    "description": "Round-37 #2 (exp 465, assessment v239). Scale extension of paper 90's honest-inconclusive with the design flaws repaired: per-value u(v)=ln v/ln B, size-matched random control, N in {2^32..2^44}, matched-u ladder {2,3}, 1.2M smoothness tests (500x paper 90).\n\n**THE RELATION POOL IS RANDOM**: x2-N vs random gap = 1.00 at every scale (0.993-1.020). The quadratic-character constraint on prime divisors of x2-N is O(1)-invisible at reachable scale. Paper 90's non-monotone 0.26-9.27 scatter and its 'x2-N != random' finding were design artifacts (N-scale u-binning + underpower).\n\nFormal verdict H2 per the pre-stated rule: absolute ratio emp/rho = 0.877-0.913 at all scales \u2014 but carried EQUALLY by the random control: it is the Dickman model's finite-x correction (order ln ln v / ln v ~ 17-20% here), shrinking logarithmically (+2.6% relative per 12 bits of scale at u=2). Nothing about x2-N blocks convergence; it is just slow.\n\nLeading-term Dickman exp(-u(ln u + ln ln u - 1)) invalid until u ~ 14.75 (pre-stated guess u>=12 confirmed).\n\nDecides: the fourth stratum's INPUT STATISTICS are measured \u2014 relation pools are random-equivalent; the correct toy-scale smoothness model is rho(u) x (0.88-0.91); what remains unmeasured is purely the sieve's algorithmic advantage. Barriers 4/8 unchanged.\n\nLedger: v1 rho reference constants mis-recalled from memory beyond u=4 \u2014 caught by attested-anchor + Richardson self-check before contamination; 3x upstream agent timeouts, experiment completed inline by the coordinator.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp465_subexp_scale.py (script + result.json), seed 20260821.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3527",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T01:10:29.769307+00:00",
-    "title": "FACT round-37 #2 \u2014 SUBEXP-SCALE: the QS relation pool is random-equivalent at every scale (paper 130)"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Round-37 #1 (exp 464, assessment v238). First test of the hint programme's size axis.\n\n**SIZE-STABLE-PLATEAU**: hint value I((p mod m*, q mod m*); labels) \u2212 I(N mod m*; labels) is size-stable to \u22645.3% across factor sizes k=14\u219222 (a 16,384-fold span); abelian dials \u22641.6%, with abelian residual entropy EXACTLY 0 at every size (labels are residue functions there).\n\nHint table (bits): S3@31: 0.5584/0.5425/0.5415 (k=14/18/22); C3@7: 0.9115/0.9140/0.9169; D4@8: 1.0540/1.0536/1.0507; C5@11: 0.9030/0.9190/0.9268.\n\n**POOL-FLOOR EXCEPTION**: S3@k=10 reads 0.7423 vs plateau ~0.55 \u2014 diagnosed as prime-identity leakage through the pair-residue channel (75-prime pool = 2.5 primes/class; pair residue partially identifies the prime, which determines its type). Not a size law.\n\n**Which-factor wall held at all 16 dial\u00d7size cells** (max |z| = 1.55 vs conditional orientation-permutation null). Instrument lesson: the naive unconditional wall test would have falsely cried violation at |z| up to 4.7 \u2014 the conditional instrument holding (N mod m*, unordered pair) fixed was required.\n\nDecides: hint values transfer across factor sizes wherever the pool resolves the conductor's classes (observed floor ~30 primes/class) \u2014 every extrapolation of the hint programme from toy scale is safe. Barriers 2/5/8 re-verified along a new axis.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp464_hint_size.py, seed 20260821, n=15k semiprimes/cell, runtime 11.8 s.",
     "domains": [
@@ -1147,16 +1132,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-40 #2 \u2014 ET-HINTS-THEORY: the crossing law \u2014 width can never substitute for reliability (paper 146)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9b10b60b",
     "description": "Round-42 #1, cron iteration (exp 487, assessment v264). Paper 154's deferred ECM arm.\n\n**ECM-LITE-BIRTHDAY-SCALING**: sequential multiples j=3..B1=50 over random curves (explicitly NOT lcm-based true ECM) find 1200/1200 at k=16 and 1163/1200 at k=20 (3.1% censoring); across-k slope = **0.48 per log\u2082p** \u2014 birthday-bound scaling exactly as the lite structure predicts. H1's [0.6, 0.8] refuted FOR THE LITE VARIANT; true lcm-based ECM deferred.\n\nThe unified plane now holds FOUR methods on one population: td **0.84** / rho **0.52** / Fermat **0.50** / ECM-lite **0.48**.\n\nLedger: v1 instant-degenerate bug (j=2 running point equals base \u2192 zero denominator \u2192 every curve dead); fixed with explicit doubling.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp487_ecm_only.py + exp487_result.json, seed 20260921.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3604",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T07:00:59.863573+00:00",
     "title": "FACT round-42 #1 \u2014 ECM-COMPLETION: the lite variant scales like rho (paper 155)"
   },
@@ -1509,6 +1495,48 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-22T13:46:15.641520+00:00",
     "title": "FACT round-49 #2 \u2014 T-DIAL-60: the degradation plateaus (paper 179)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-52 #1, cron iteration (exp 517). The zero-fit dial's regime-invariance extends to bitlen 48.\n\n**DIAL-HOLDS-UNIFORM-48**: Spearman(T, rate) = **0.777** / **0.755** / **0.801** across three seeds on uniform draws at bitlen 48 \u2014 all inside [0.55, 0.85]; T beats the bare QR-count by +0.09 to +0.13 on every seed.\n\nThe zero-fit dial's deployment envelope now covers balanced and uniform draws at bitlens 44\u201352 with confirmed seed-stability, regime-invariance, and bitlen-stability.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp517_t_dial_unif_48.py + exp517_result.json, seeds 20261080\u201382.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3674",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T14:39:10.954810+00:00",
+    "title": "FACT round-52 #1 \u2014 T-DIAL-UNIF-48: the zero-fit dial holds on uniform draws at bitlen 48 (paper 182)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-51 #1, cron iteration (exp 515, assessment v283). The full augmented dial tested across 5 fresh populations.\n\n**EXTENDED-DIAL-ABSENT**: the prime-power feature's contribution does NOT replicate \u2014 \u0394R\u00b2(pp) \u2248 0 on all 5 populations. Per-seed R\u00b2(augmented) at u=3.5: [0.490, 0.555, 0.428, 0.532, 0.508] \u2014 mean **0.502**, only 1/5 above the 0.55 target. The +0.089 from paper 172 was population-specific.\n\nTransfer slope 0.898 in band; combined model reaches R\u00b2 = 0.634 at u=2.5. The per-N dial's best validated form remains the paper-145 footprint dial (w + qrc).\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp515_extended_dial.py + exp515_result.json, seeds 20261060\u201364.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3675",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T14:39:10.956328+00:00",
+    "title": "FACT round-51 #1 \u2014 EXTENDED-DIAL: the prime-power feature does not replicate (paper 181)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Round-50 (exp 513). The abelian ladder's eleventh rung.\n\n**FULL-PINNING-AT-DEGREE-11**: Q(\u03b6\u2082\u2083)\u207a confirms every pre-stated prediction:\n- T(p)=1 iff dlog\u22610 mod 11; densities {1/11, 10/11}; H(T)=0.4395 bits\n- I(p mod 29; T) = H(T) EXACTLY (perm z>1000, per-class degenerate)\n- Semiprime pair Bin(2,1/11) \u03c7\u00b2=0.08; Is(11)=0.116\n\nThe abelian full-pinning law is UNIVERSAL: every degree 2\u201311 tested and confirmed with no exceptions.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp513_degree_11.py + exp513_result.json, seed 20261050.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_3676",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-08-22T14:39:10.957753+00:00",
+    "title": "FACT round-50 \u2014 DEGREE-11: full pinning at Q(zeta_23)+ completes the ladder through degree 11 (paper 180 addendum)"
   },
   {
     "consumed_by_exp_id": "",
@@ -2860,6 +2888,38 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Formalize the Kantorovich optimal transport problem. Prove existence of optimal transport maps (Brenier's theorem for quadratic cost). Formalize Wasserstein distances and prove the Wasserstein GAN convergence properties.",
+    "domains": [
+      "MachineLearning",
+      "Analysis",
+      "Geometry"
+    ],
+    "id": "fd_0687",
+    "priority_score": 0.9,
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-24T14:34:16.697835+00:00",
+    "title": "Optimal Transport and Wasserstein Distances"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the Schnorr identification protocol in Lean 4. Prove completeness, soundness, and honest-verifier zero-knowledge. Formalize the Fiat-Shamir heuristic for non-interactive proofs. Prove security in the random oracle model.",
+    "domains": [
+      "Cryptography",
+      "Logic",
+      "Computation"
+    ],
+    "id": "fd_0690",
+    "priority_score": 0.9,
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-24T14:34:16.697840+00:00",
+    "title": "Zero-Knowledge Proofs: Schnorr Protocol"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Formalizes Voiculescu's free probability: the free central limit theorem showing that normalized sums of freely independent identically distributed bounded random variables converge in distribution to the semicircle law, developed through the R-transform and free cumulants.",
     "domains": [
       "Probability",
@@ -3212,52 +3272,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "",
     "title": "Quantum Entanglement Monogamy: CKW Inequality"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize the Kantorovich optimal transport problem. Prove existence of optimal transport maps (Brenier's theorem for quadratic cost). Formalize Wasserstein distances and prove the Wasserstein GAN convergence properties.",
-    "domains": [
-      "MachineLearning",
-      "Analysis",
-      "Geometry"
-    ],
-    "id": "fd_0687",
-    "priority_score": 0.85,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-24T14:34:16.697835+00:00",
-    "title": "Optimal Transport and Wasserstein Distances"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize the Schnorr identification protocol in Lean 4. Prove completeness, soundness, and honest-verifier zero-knowledge. Formalize the Fiat-Shamir heuristic for non-interactive proofs. Prove security in the random oracle model.",
-    "domains": [
-      "Cryptography",
-      "Logic",
-      "Computation"
-    ],
-    "id": "fd_0690",
-    "priority_score": 0.85,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-24T14:34:16.697840+00:00",
-    "title": "Zero-Knowledge Proofs: Schnorr Protocol"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 227d6015 (Q=0.750), which proved 19 theorems in NumberTheory. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize Freeman Dyson's idea that intelligence grows without limit in the deep future. Define: 'intelligence growth rate' as the rate at which a civilization discovers new theorems. Prove: if the growth rate is superexponential (faster than 2^(2^n)), then the civilization discovers ALL theorems of",
-    "domains": [
-      "NumberTheory"
-    ],
-    "id": "push_227d6015_c2607b53",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "227d6015",
-    "status": "available",
-    "timestamp": "2026-07-22T14:30:05.202834+00:00",
-    "title": "Deepening: Moonshot: The Mathematics of Dyson's Intelligence Explosion"
   },
   {
     "consumed_by_exp_id": "",
@@ -12052,6 +12066,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The upper bound Psi(x,B) <= (log2 x + 1)^pi(B) proved here comes from an injection into exponent vectors. The same correspondence gives a lower bound by counting lattice points under the hyperplane sum e_i log p_i <= log x, yielding an unconditional two-sided estimate with no Dickman input at all.\n\nPsi(x,B) equals, up to a factor bounded by a function of pi(B) alone, the number of nonnegative integer vectors (e_p)_{p <= B} with sum e_p log p <= log x, i.e. the volume of a simplex of dimension pi(B) with side log x / log p.\n\nFormalise the bijection between B-smooth integers in [1,x] and lattice points of the simplex, then compare with exact Psi values (12, 34, 141, 733 computed here).\n\nAn unconditional, Dickman-free proof that the smooth pool is polylogarithmic at fixed B and grows subexponentially in the trade-off regime.\n\nThe lattice-point count must overcount by more than a pi(B)-dependent factor, exposing a genuinely arithmetic (non-combinatorial) input to smooth counting.",
+    "domains": [
+      "Combinatorics",
+      "Cryptography"
+    ],
+    "id": "fd_3673",
+    "priority_score": 0.7094285714285715,
+    "research_mode": "team",
+    "source_exp_id": "a1194bd0",
+    "status": "available",
+    "timestamp": "2026-08-22T14:38:38.909789+00:00",
+    "title": "Two-Sided Exponent-Vector Sandwich for Smooth Counts"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Keep the events (primitive triples) but replace the tree order by an arithmetic one, using the hypotenuse as a global time function and a divisibility or congruence condition as the causal relation. The aim is a locally finite poset on the same set whose interval cardinalities grow polynomially of degree at least two.\n\nThere is a relation R on primitive Pythagorean triples, refining c_u < c_v, which is a locally finite partial order whose intervals of cosmic-time extent T have cardinality asymptotically proportional to T^d for some d >= 2.\n\nDefine candidate relations (e.g. u R v iff c_u divides c_v, or iff v is reachable by a word whose Lorentz matrix is congruent to the identity mod N), count intervals computationally to depth 6, then formalise the winning candidate's poset axioms and interval bounds.\n\nA Pythagorean causal set with a genuine Myrheim-Meyer dimension, separating 'the event set is fine' from 'the tree order is wrong'.\n\nEvidence that the arithmetic of primitive triples supports only tree-like (dimension one) causal orders, which would be a structural theorem about the Berggren monoid.",
     "domains": [
       "NumberTheory",
@@ -12626,6 +12655,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-22T05:43:00.666652+00:00",
     "title": "Bellman Cut Elimination"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "High-precision computation shows the leading term L(u) = exp(-u(ln u + ln ln u - 1)) overshoots the Dickman function by a factor that grows with u (12.5 at u=2, 31 at u=14.75, 602 at u=40), so the leading term is only ever accurate in the exponent. The conjecture pins down the growth of that ratio.\n\nL(u)/rho(u) = (1+o(1)) * sqrt(2*pi*u) * exp(u*(ln ln u - 1)/ln u) * C(u) with C(u) slowly varying and bounded between 1 and 4 for 10 <= u <= 100.\n\nExtend the interval power-series computation of rho to u = 200 at 200-digit precision and fit ln(L/rho) - ln(sqrt(2 pi u)) - u(ln ln u - 1)/ln u; formalise the proved base case rho(u) = 1 - ln u on (1,2].\n\nGives a usable finite-u correction factor for smoothness estimates in sieve parameter selection, replacing the leading term.\n\nThe ratio has a genuinely different shape, indicating the saddle-point expansion of rho needs a further term at reachable u.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_3670",
+    "priority_score": 0.6699696969696971,
+    "research_mode": "team",
+    "source_exp_id": "a1194bd0",
+    "status": "available",
+    "timestamp": "2026-08-22T14:38:37.609482+00:00",
+    "title": "Second-Order Ratio Law for the Dickman Leading Term"
   },
   {
     "consumed_by_exp_id": "",
@@ -13916,6 +13959,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Since the average hit count of any sieve map is pinned to |domain|/|targets|, no single-prime measurement can separate the x^2-N pool from a random pool. Any real deviation must live in the joint law of admissibility and hit patterns across two or more primes at fixed N. This turns a vague randomness question into a sharp two-prime independence statement.\n\nFor fixed N and distinct odd primes p, q not dividing N, the events 'p divides x^2-N' and 'q divides x^2-N' are exactly independent for x uniform mod pq, and hence the smooth-density model factorises exactly over the factor base.\n\nProve the CRT product formula for the joint hit count mod pq, then measure higher-order (three-prime, prime-power) correlations empirically against the proved two-prime baseline.\n\nThe Dickman-style independence heuristic for the sieve is exact at the level of the factor base, and the only remaining error is the finite-x correction.\n\nA measurable cross-prime correlation exists, which is the first genuine non-randomness of the relation pool and would change sieve yield predictions.",
+    "domains": [
+      "Pythagorean",
+      "NumberTheory"
+    ],
+    "id": "fd_3671",
+    "priority_score": 0.5627588697648216,
+    "research_mode": "team",
+    "source_exp_id": "a1194bd0",
+    "status": "available",
+    "timestamp": "2026-08-22T14:38:38.047533+00:00",
+    "title": "Cross-Prime Correlation as the Sole Non-Random Degree of Freedom"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "No `EMLExpr` denotes `Real.sin` on\n   all of `\u211d` (and likewise for `Real.cos`).  A proof route is to formalize the\n   one-variable consequence of o-minimality of the real exponential field:\n   the zero set of an exp-log term is a finite union of points and intervals,\n   whereas the zeros of sine form an infinite discrete set.  A single explicit\n   expression whose evaluation equals sine everywhere would falsify this.",
     "domains": [
       "Applications",
@@ -13973,6 +14031,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T06:22:20.305851+00:00",
     "title": "Formalize CSS distance, not only graph girth"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The formal end-to-end result here needs only |A|+1 smooth relations, where A is the set of admissible primes. Combining it with an effective density statement for quadratic residues among the primes up to B would convert the folklore factor-2 saving of the quadratic sieve into a theorem with an explicit error term.\n\nFor every non-square N and every B >= B0(N), |A(N,B)| = pi(B)/2 + O(sqrt(B) log(B|N|) / log B), hence pi(B)/2 + O(...) + 1 smooth relations provably suffice to produce a congruence of squares.\n\nFormalise the character-sum count of primes p <= B with (N|p) = 1 under GRH or via Chebotarev with an effective error, then plug into qs_congruence_of_squares.\n\nA fully proved relation-count bound for the quadratic sieve, halving the classical unconditional requirement.\n\nThe admissible set is not equidistributed for some N, which would itself be a striking arithmetic phenomenon.",
+    "domains": [
+      "NumberTheory",
+      "Pythagorean"
+    ],
+    "id": "fd_3672",
+    "priority_score": 0.5626556040185317,
+    "research_mode": "team",
+    "source_exp_id": "a1194bd0",
+    "status": "available",
+    "timestamp": "2026-08-22T14:38:38.475935+00:00",
+    "title": "Effective Admissible-Half Relation Bound"
   },
   {
     "consumed_by_exp_id": "",
@@ -37530,14 +37603,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "The two ingredients are already formalized: the dominant-branch"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e7c64fc7",
     "description": "The Chebyshev upper bound `(2 + 8\u00b7errL2 N)/lam\u00b2` is proved\n(`measure_peak_set_le`), and the exact level-set computation only requires the\nalready-proved identity `norm_limitAmp` plus a change of variables.",
     "domains": [],
     "id": "fd_1636",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "6d98445d",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-19T19:40:34.892295+00:00",
     "title": "The Chebyshev upper bound `(2 + 8\u00b7errL2 N)/lam\u00b2` is proved"
   },

@@ -1,7 +1,7 @@
 {
   "part": "6",
-  "archived_at": "2026-08-22T13:45:39Z",
-  "count": 94,
+  "archived_at": "2026-08-22T14:38:39Z",
+  "count": 95,
   "directions": [
     {
       "ambition_level": "extension",
@@ -3806,6 +3806,46 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 127
+    },
+    {
+      "id": "fd_1303",
+      "title": "NET-36: The Attention-Cost Grid Is Now Two-Seed Everywhere — k*=d·ctx/32 Holds at Every Measured (depth × context) Cell",
+      "description": "## Question\n\nNET-15/16/17/20/33/34 established k* = d·ctx/32 at a second seed in most of the (d × ctx) grid. Two cells remained single-seed, at the grid's extreme corners: **d=16 @ ctx=128** (NET-17, s0 only, predicting k*=4d=64) and **ctx=512 @ d=4** (NET-35, s1 only, predicting k*=d·ctx/32=64). Do both land exactly at fresh second seeds, making the measured grid two-seed everywhere?\n\n## Method\n\nByte-identical harness to NET-15/17/20/33/34/35 — CausalTF dm=64, 4 heads, 5 Gutenberg novels, vocab 4097, contiguous 90/10 split, 2000 AdamW steps — at **d=16 seed=1 @ ctx=128** (1078s train) AND **d=4 seed=2 @ ctx=512** (2706s train). Per cell: full-acc eval → concentration (eff support) → top-k sweep → random-k control (seed 12345). k* = smallest k with retained ≥ 0.98·full. **Predictions stated before the run: k* = 64 both** (4d and d·ctx/32). Script /tmp/exp_net_attncost_grid.py; log /tmp/net36.log.\n\n## Results\n\n| cell | predicted | k sweep (retained) | k* | verdict |\n|---|---|---|---|---|\n| d=16, ctx=128, s1 | 4d = 64 | 8→0.858 16→0.922 32→0.970 ✗ 64→**0.996** ✓ 96→0.999 128→1.000 | **64** | EXACT |\n| d=4, ctx=512, s2 | d·ctx/32 = 64 | 16→0.965 ✗ 32→0.976 ✗ 64→**0.985** ✓ 128→0.993 256→0.998 384→1.000 | **64** | EXACT |\n\n- **Both cells land EXACT on k* = 64.** The depth leg k*=4d now holds at **all three depths × two seeds** (16/32/64 at d=4/8/16 @ ctx=128); the context leg holds to **4× context at two seeds** (64 @ ctx=512 d=4 s1+s2). **Every measured cell of the (d × ctx) grid is now two-seed**; the deployable lever speedup = 32/d (8× at d=4) is seed-independent at every measured corner.\n- **P3 refinement — NET-35's long-context margin erosion does NOT reproduce at s2:** the ctx=512 pass is 0.985 (margin 0.005 — healthy) vs s1's 0.983 (margin 0.003 ≈ 2 SE). The margin at 512 is **seed-fluctuating ±0.002**, not systematically eroding; the retained curve is still ~0.005–0.01 below 128/256 at both seeds (mild long-context depression, knee unaffected). Re-check at ctx=1024.\n- **Concentration reproduces to three significant figures:** eff support 152.11 = 152.11 (s1 vs s2), top-32 0.533/0.532, per-position 20.41–20.45 / 133.23–133.37 / 281.20–281.46. Depth-drift continues at d=16 (eff 52.73; 46.6→50.2→52.7).\n- **Selection importance survives:** random-k gaps cell A +10.0/+6.0 (largest yet), cell B +7.6/+5.2.\n- Eight-model full-acc set 0.1571–0.1620, k*-irrelevant.\n\n## Barriers\n\n(a) circularity — no, both predictions stated before the run, k* from each model's own trained attention; (b) known-method — no, two-seed grid-completion of an established law (Catalog re-scan: no prior work); (c) toy-scale — confronted, the grid's extreme corners (deepest d=16, longest ctx=512), real causal word LM, 4097 vocab, held-out loss+acc; (d) leakage — none, held-out last-10%, data-free top-k; (e) variance — the round's content, both last single-seed cells closed, concentration reproduces to 0.001; remaining non-threatening: ctx=512 at d=8/16, d=8 @ ctx=256 s0 corner, ctx=1024; (f) measurement — clean, k=384 recovers full loss exactly, retained 1.000 = re-normalization MC saturation, seed-2 margins exceed binom SE; (g) baselines — fair, full-attention reference + random-k control at same k, same bar; (h) relevance — strengthened, the speedup lever is seed-independent at every measured corner.\n\n## Verdict\n\n**GRID-COMPLETION CONFIRMED** — every measured cell of the (d × ctx) grid is now two-seed. The attention-cost law k* = d·ctx/32 (speedup 32/d, context-invariant) is seed-independent at every measured corner; no per-instance re-measurement needed within the measured grid.\n\nOpen: ctx=1024 (margin-erosion re-check, ~3.2h); ctx=512 at d=8/16; d=8 @ ctx=256 s0 corner. Paper 80. Round-net-36, assessment v36.",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 1000.0,
+      "status": "completed",
+      "consumed_by_exp_id": "8ed04a73",
+      "timestamp": "2026-08-15T10:47:21.208244+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.85,
+      "domain_quality_penalty": 0.2,
+      "prune_reason": "tournament_rejected: ",
+      "pruned_at": "2026-08-16T00:37:26Z",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-08-16T00:31:07.197568+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 143
     }
   ]
 }

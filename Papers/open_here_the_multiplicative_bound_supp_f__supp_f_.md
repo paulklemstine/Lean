@@ -1,72 +1,80 @@
 # Computational evidence — additive uncertainty on `ZMod n`
 
-All computations below were run with exact permutation combinatorics or double-precision
-DFTs (tolerance `1e-9`) before the Lean formalisation.  They are *evidence*, not proof:
-every claim that is asserted in the deliverable is proved in Lean without `sorry`
-(see `Catalog/MachineLearning/PrimeUncertainty/`).
+*All numbers below come from exploratory floating-point computation and are **not** machine-checked.
+The machine-checked statements are the Lean theorems in `Catalog/Shared/ChebotarevMinors.lean`,
+`Catalog/Shared/FourierUncertaintySum.lean` and
+`Catalog/Shared/FourierUncertaintySumApplications.lean`, which carry no `sorry`.*
 
-## 1. Minimum of `|supp f| + |supp f̂|` over 0/1 indicators
+## 1. Are all minors of the DFT matrix nonzero? (Chebotarev)
 
-For each modulus `n` we minimised `|supp f| + |supp f̂|` over all `2^n − 1` nonempty
-indicator functions.
+For each modulus `n` we computed `|det (ω^{st})_{s∈S, t∈T}|` for **all** pairs of equal-size
+subsets `S, T ⊆ {0,…,n-1}`, with `ω = e^{-2πi/n}`, and recorded the minimum.
 
-| `n`  | min sum | `n + 1` | additive bound holds? |
-|------|---------|---------|-----------------------|
-| 3    | 4       | 4       | yes (tight)           |
-| 4    | **4**   | 5       | **no** (`A = {0,2}`)  |
-| 5    | 6       | 6       | yes (tight)           |
-| 6    | **5**   | 7       | **no**                |
-| 7    | 8       | 8       | yes (tight)           |
-| 8    | **6**   | 9       | **no**                |
-| 9    | **6**   | 10      | **no**                |
-| 11   | 12      | 12      | yes (tight)           |
-| 12   | **7**   | 13      | **no**                |
+| n  | prime? | min ⎮det⎮ over all minors | attained at |
+|----|--------|---------------------------|-------------|
+| 2  | prime      | 1        | k=1 |
+| 3  | prime      | 1        | k=1 |
+| 4  | composite  | **0**    | k=2, S=T={0,2} |
+| 5  | prime      | 1        | k=1 |
+| 6  | composite  | **0**    | k=2, S={0,2}, T={0,3} |
+| 7  | prime      | 0.867767 | k=2, S={1,3}, T={2,5} |
+| 8  | composite  | **0**    | k=2, S={0,2}, T={0,4} |
+| 9  | composite  | **0**    | k=2, S={0,3}, T={0,3} |
+| 11 | prime      | 0.316145 | k=4, S={2,5,6,9}, T={1,4,7,10} |
 
-The minimum equals exactly `n + 1` for every prime in the range and drops strictly below
-`n + 1` for every composite.  The extremal cases at a prime are `|supp f| = 1`
-(Dirac delta) and `|supp f| = n` (character) — both are formalised as
-`sum_bound_sharp_delta` and `sum_bound_sharp_character`.
+The minimum is bounded away from `0` exactly at the primes; every composite modulus produces a
+genuinely singular minor, always of the "subgroup / coset" shape.  This is the numerical shadow of
+Chebotarev's theorem, formalised as `Chebotarev.det_pow_ne_zero`, and of its failure for composite
+moduli, formalised in the concrete case `n = 4` as
+`FourierCyclic.uncertainty_sum_fails_at_four`.
 
-The composite witness `n = 4`, `A = {0, 2}` (an index-2 subgroup, `|supp f| = |supp f̂| = 2`)
-is formalised as `sum_bound_fails_zmod_four`.
+## 2. Is the bound `|supp f| + |supp f̂| ≥ n + 1` attained for every sparsity?
 
-## 2. Chebotarev test: minimum modulus of a DFT minor
+For each prime `p` and each `k` we built the extremal signal predicted by the theory: take
+`A = {0,…,k-1}` as the spatial support and force the transform to vanish at the `k-1`
+frequencies `{0,…,k-2}`; the resulting homogeneous system has a nonzero kernel vector `f`.
+Measured supports:
 
-Minimum of `|det (ω^{st})_{s∈S,t∈T}|` over all pairs of equal-size subsets:
+| p  | (k, ⎮supp f⎮, ⎮supp f̂⎮) for k = 1 … p |
+|----|----------------------------------------|
+| 5  | (1,1,5) (2,2,4) (3,3,3) (4,4,2) (5,5,1) |
+| 7  | (1,1,7) (2,2,6) (3,3,5) (4,4,4) (5,5,3) (6,6,2) (7,7,1) |
+| 11 | (1,1,11) … (6,6,6) … (11,11,1) |
+| 13 | (1,1,13) … (7,7,7) … (13,13,1) |
 
-| `n`  | min &#124;det&#124; | attained at |
-|------|--------------|-------------|
-| 4    | 0            | `S = T = {0,2}` |
-| 5    | 1.000        | — |
-| 6    | 0            | `S = {0,2}, T = {0,3}` |
-| 7    | 0.868        | `S = {1,3}, T = {2,5}` |
-| 8    | 0            | `S = {0,2}, T = {0,4}` |
-| 9    | 0            | `S = {0,3}, T = {0,3}` |
-| 11   | 0.316        | `S = {2,5,6,9}, T = {1,4,7,10}` |
+In every single instance `|supp f| + |supp f̂| = p + 1` exactly, and the spatial support came out
+*full* (`= k`, no accidental cancellation), which is precisely the phenomenon proved in
+`FourierCyclic.exists_supp_eq_of_card_add_card`.
 
-Consistent with `chebotarev_iff_sumUncertainty`: singular minors exist exactly for the
-composite moduli, i.e. exactly where the additive bound fails.
+## 3. Counterexample hunt for the additive bound
 
-## 3. The parity-weighted exponent criterion
+No violation of `|supp f| + |supp f̂| ≥ p + 1` was found for prime `p ≤ 13` in the searches above,
+and the failure mode at composite `n` is always a subgroup indicator: for `n = 4`,
+`f = 1_{\{0,2\}}` gives `f̂ = 2·1_{\{0,2\}}`, hence `2 + 2 = 4 < 5`, while the multiplicative bound
+`2·2 ≥ 4` survives.  This is the boundary case proved in Lean.
 
-For every pair `(S, T)` of `n`-subsets we computed the coefficients
+## 4. Separation between the sum and the product bound
 
-`c_r = #{σ even : ∑_j s_j t_{σ(j)} ≡ r} − #{σ odd : …}`  (mod `p`).
+The product bound allows `|supp f| = |supp f̂| ≈ √p`; the sum bound forbids it.  The smallest
+prime where the two disagree with equal supports is `p = 13`, `|supp f| = |supp f̂| = 4`
+(`16 ≥ 13` but `8 < 14`), which is the regime excluded by
+`FourierCyclic.uncertainty_sum_strictly_stronger`.
 
-* `p = 5, 7` and `n = 3`; `p = 7, 11, 13` and `n = 4`; `p = 11`, `n = 5`:
-  **no** pair ever produced `c ≡ 0`, in agreement with Chebotarev's theorem and with
-  `chebotarev_criterion`.
-* For `n = 3` **every** pair admits a permutation whose exponent is realised uniquely
-  (`0` failures out of `100` for `p=5` and `1225` for `p=7`).  This is exactly the mechanism
-  used by the Lean proof `det_fin_three_ne_zero`.
-* For `n ≥ 4` uniqueness fails frequently (all `1225` pairs for `p = 7`, `12100/108900`
-  for `p = 11`, `46644/511225` for `p = 13`), so the `n = 3` argument does **not** extend
-  verbatim; the maximal `|c_r|` observed for `n = 4` ranges over `1 … 6`.  This is the precise
-  obstruction discussed in `FUTURE_DIRECTIONS.md`.
+## Addendum (later cycles): the composite defect `min_{d ∣ n} (d + n/d)`
 
-## 4. Strictness of the product bound
+For each `n` the subgroup indicator of `d · ZMod n` (with `n = d · e`) has
+`|supp f| + |supp f̂| = e + d`, so `min_{d ∣ n, d < n} (d + n/d)` is a *proved* upper bound for
+the uncertainty minimum on `ZMod n` (this is the content of
+`FourierCyclic.dftZMod_subgroupIndicator`; the divisor `d = 1` recovers the Dirac delta and the
+value `n + 1`).  Tabulating that quantity:
 
-`|supp f| · |supp f̂| ≥ p` allows `|supp f| = |supp f̂| = ⌈√p⌉`; e.g. for `p = 11` the pair
-`(3, 4)` satisfies `12 ≥ 11` but `3 + 4 = 7 < 12`.  Formalised in general as
-`product_bound_does_not_imply_sum_bound` (any `p ≥ 5`), with the converse implication
-`product_bound_of_sum_bound` proved as well.
+| n  | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 |
+|----|---|---|---|---|---|---|---|---|----|----|----|----|----|----|----|----|----|
+| min| 3 | 4 | 4 | 6 | 5 | 8 | 6 | 6 | 7  | 12 | 7  | 14 | 9  | 8  | 8  | 18 | 9  |
+
+The value is `n + 1` exactly at the primes `2, 3, 5, 7, 11, 13, 17` and strictly smaller at every
+composite — matching `FourierCyclic.uncertainty_sum_iff_prime`, which is the Lean-verified
+statement that the additive bound holds for all nonzero signals precisely when `n` is prime.
+Whether this upper bound is also the exact minimum for composite `n` is left open as Direction 2
+of `FUTURE_DIRECTIONS.md`; the table above is an arithmetic evaluation of the divisor formula, not
+a verified computation of the true minimum.

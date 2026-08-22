@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "1a7b47b1",
-      "domain": "Pythagorean",
-      "key_insight": "# Future Directions — Tropical Cryptocurrency (cycle 1 output)\n\nThis cycle settled, in Lean 4, the first three conjectures of the previous cycle\n(with one of them *refuted and corrected*), and added a",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 58,
-      "timestamp": "2026-08-20T21:43:57",
-      "title": "**Conjecture.** For a generic family of `r` min-plus keys on `k` coordinates wit"
-    },
-    {
       "cycle_id": "f2707534",
       "domain": "Probability",
       "key_insight": "# Future directions\n\n## What is now proved\n\nAll statements below are formalised in `Catalog/Probability/` and compile\nagainst mathlib4 (Lean 4.28.0) with **no `sorry` and no extra axioms** (only\n`prop",
@@ -499,19 +489,19 @@
       "theorem_count": 57,
       "timestamp": "2026-08-22T13:45:51",
       "title": "The `L¹` bound integrates to a Fisher–Rao length bound* (previously\n  Conjecture 5)."
+    },
+    {
+      "cycle_id": "a1194bd0",
+      "domain": "Shared",
+      "key_insight": "# Future Directions\n\nDerived from this cycle's results in `Catalog/Shared/QSRelationPoolRandom.lean`,\n`QSPoolKernelSymmetry.lean`, `SievePolynomialUniversality.lean`,\n`SmoothCountSparsity.lean`, `Dick",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 56,
+      "timestamp": "2026-08-22T14:38:51",
+      "title": "FACT round-37 #2 — SUBEXP-SCALE: the QS relation pool is random-equivalent at every scale (paper 130"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "8590e003",
-      "domain": "Probability",
-      "key_insight": "# FUTURE DIRECTIONS — CM-ECM-GENERAL (`j = 0` curve over `ℚ(√−3)`)\n\n## What this cycle established\n\n* **Rational 3-torsion degeneracy.** `3 ∣ #E_{j0}(𝔽_p)` for every prime `p > 3`,\n  proved by realisi",
-      "quality_score": 0.87,
-      "sorry_count": 0,
-      "theorem_count": 122,
-      "timestamp": "2026-08-14T19:21:28",
-      "title": "CM-ECM-GENERAL: rational-torsion degeneracy, union-dilution law, 3-adic Hecke visibility (Q(sqrt(-3)"
-    },
     {
       "cycle_id": "c98081c2",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 57,
       "timestamp": "2026-08-22T13:45:51",
       "title": "The `L¹` bound integrates to a Fisher–Rao length bound* (previously\n  Conjecture 5)."
+    },
+    {
+      "cycle_id": "a1194bd0",
+      "domain": "Shared",
+      "key_insight": "# Future Directions\n\nDerived from this cycle's results in `Catalog/Shared/QSRelationPoolRandom.lean`,\n`QSPoolKernelSymmetry.lean`, `SievePolynomialUniversality.lean`,\n`SmoothCountSparsity.lean`, `Dick",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 56,
+      "timestamp": "2026-08-22T14:38:51",
+      "title": "FACT round-37 #2 — SUBEXP-SCALE: the QS relation pool is random-equivalent at every scale (paper 130"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "7f454a93",
-      "domain": "NumberTheory",
-      "name": "mem_ppBox",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "11e84a32",
-      "domain": "Applications",
-      "name": "card_orbits_sum",
-      "quality": 0.87
-    },
-    {
-      "cycle_id": "11e84a32",
-      "domain": "Applications",
-      "name": "meaningLoss_sum",
-      "quality": 0.87
-    },
     {
       "cycle_id": "11e84a32",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Algebra",
       "name": "l1Dist_comm",
       "quality": 0.85
+    },
+    {
+      "cycle_id": "a1194bd0",
+      "domain": "Shared",
+      "name": "rhoTwo_lt_one",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "a1194bd0",
+      "domain": "Shared",
+      "name": "rhoTwo_pos",
+      "quality": 0.78
+    },
+    {
+      "cycle_id": "a1194bd0",
+      "domain": "Shared",
+      "name": "one_lt_dickmanLead",
+      "quality": 0.78
     }
   ],
-  "last_updated": "2026-08-22T13:45:51",
+  "last_updated": "2026-08-22T14:38:51",
   "open_questions": [
     {
       "context": "All proofs are complete; no `sorry`.; All proofs are complete; no `sorry`.",
@@ -3889,12 +3889,6 @@
     ],
     "Shared": [
       {
-        "cycle_id": "8993bd64",
-        "quality": 0.81,
-        "theorems": 81,
-        "title": "Compression Research B6: Compression ↔ one-way functions (the cryptography link)"
-      },
-      {
         "cycle_id": "5792b548",
         "quality": 0.88,
         "theorems": 59,
@@ -3947,6 +3941,12 @@
         "quality": 0.82,
         "theorems": 72,
         "title": "Strict unimodality and the bracketing of the argmax are already theorems, so the"
+      },
+      {
+        "cycle_id": "a1194bd0",
+        "quality": 0.78,
+        "theorems": 56,
+        "title": "FACT round-37 #2 — SUBEXP-SCALE: the QS relation pool is random-equivalent at ev"
       }
     ],
     "Tropical": [
