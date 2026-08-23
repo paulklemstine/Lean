@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "7f454a93",
-      "domain": "NumberTheory",
-      "key_insight": "# Future Directions — Berggren Tree Box Counting\n\nDerived from the verified results in\n\n* `Catalog/NumberTheory/CoprimePairDensity.lean`\n* `Catalog/NumberTheory/BerggrenTreeCompleteness.lean`\n* `Catal",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 98,
-      "timestamp": "2026-08-22T01:51:18",
-      "title": "The number of triples `(a,b,c)` with `0 < a,b,c ≤ H` that are Berggren-generated\nfrom a positive see"
-    },
-    {
       "cycle_id": "11e84a32",
       "domain": "Applications",
       "key_insight": "# Future Directions — Definability Boundary for External Interpretations\n\n## What this cycle settled\n\nThe conjecture under test was:\n\n> An external interpretation is recoverable from structural truth",
@@ -499,19 +489,19 @@
       "theorem_count": 115,
       "timestamp": "2026-08-23T13:47:36",
       "title": "NET-71: THE-TOKENIZER-TAX-IS-FOUR-KEYS — German prose shifts knees up exactly one fine step ({20,24}"
+    },
+    {
+      "cycle_id": "7797dc46",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions — Known versus unresolved cards\n\nThe cycle just completed established, with machine-checked proofs:\n\n* the **splitting theorem** `E[total payoff] = d` for `d` resolved cards plus a",
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "theorem_count": 95,
+      "timestamp": "2026-08-23T15:37:18",
+      "title": "Known versus unresolved cards."
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "2a357c10",
-      "domain": "Bridges",
-      "key_insight": "# Future directions — NET-43 bridge (final, after cycles 1–6)\n\nVerified base (all `sorry`-free, all in `Catalog/Bridges/`, all main theorems checked with\n`#print axioms` to use only `propext`, `Classi",
-      "quality_score": 0.84,
-      "sorry_count": 1,
-      "theorem_count": 104,
-      "timestamp": "2026-08-16T07:46:03",
-      "title": "NET-43: The Deepest Rung Is Two-Seed 256 (k\\*=256 reproduces EXACTLY at seed=2; both honest limits c"
-    },
     {
       "cycle_id": "6c757940",
       "domain": "Computation",
@@ -2501,27 +2491,19 @@
       "theorem_count": 115,
       "timestamp": "2026-08-23T13:47:36",
       "title": "NET-71: THE-TOKENIZER-TAX-IS-FOUR-KEYS — German prose shifts knees up exactly one fine step ({20,24}"
+    },
+    {
+      "cycle_id": "7797dc46",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions — Known versus unresolved cards\n\nThe cycle just completed established, with machine-checked proofs:\n\n* the **splitting theorem** `E[total payoff] = d` for `d` resolved cards plus a",
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "theorem_count": 95,
+      "timestamp": "2026-08-23T15:37:18",
+      "title": "Known versus unresolved cards."
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "aa2d71a2",
-      "domain": "Combinatorics",
-      "name": "wcov_comm",
-      "quality": 0.74
-    },
-    {
-      "cycle_id": "aa2d71a2",
-      "domain": "Combinatorics",
-      "name": "wcov_eq_raw",
-      "quality": 0.74
-    },
-    {
-      "cycle_id": "aa2d71a2",
-      "domain": "Combinatorics",
-      "name": "wcov_eq_half_double_sum",
-      "quality": 0.74
-    },
     {
       "cycle_id": "bc20ce21",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Logic",
       "name": "exists_perturbation_lowering_knee",
       "quality": 0.78
+    },
+    {
+      "cycle_id": "7797dc46",
+      "domain": "MachineLearning",
+      "name": "must",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "7797dc46",
+      "domain": "MachineLearning",
+      "name": "for",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "7797dc46",
+      "domain": "MachineLearning",
+      "name": "E_def",
+      "quality": 0.85
     }
   ],
-  "last_updated": "2026-08-23T13:47:36",
+  "last_updated": "2026-08-23T15:37:18",
   "open_questions": [
     {
       "context": "All proofs are complete; no `sorry`.; All proofs are complete; no `sorry`.",
@@ -3517,12 +3517,6 @@
     ],
     "MachineLearning": [
       {
-        "cycle_id": "7199d5c0",
-        "quality": 0.82,
-        "theorems": 84,
-        "title": "Compression Research A1: Price of universality — minimax redundancy of universal"
-      },
-      {
         "cycle_id": "33519cdb",
         "quality": 0.78,
         "theorems": 70,
@@ -3575,6 +3569,12 @@
         "quality": 0.82,
         "theorems": 75,
         "title": "prove that this function is a *class function up to inversion*, i.e."
+      },
+      {
+        "cycle_id": "7797dc46",
+        "quality": 0.85,
+        "theorems": 95,
+        "title": "Known versus unresolved cards."
       }
     ],
     "Novelty": [
