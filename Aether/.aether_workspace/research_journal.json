@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "ef4f9365",
-      "domain": "MachineLearning",
-      "key_insight": "# Future directions — after the Berggren / Q(√2) / Langlands cycle\n\n## What this cycle established\n\n**Positive.**  There *is* a rigorous bridge from Pythagorean triples to the arithmetic of\n`ℚ(√2)`, a",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 181,
-      "timestamp": "2026-08-21T21:39:21",
-      "title": "The Berggren Tree and the Langlands Program — Automorphic Forms on the 3-adic Boundary over Q(√2)"
-    },
-    {
       "cycle_id": "28aa3954",
       "domain": "Pythagorean",
       "key_insight": "# Future directions: the single-voter exchange law and its geometry\n\nThree research cycles were run on the tropical/social-choice chamber complex of\na min-plus aggregator `F x = min_{i ∈ S} (x i + δ i",
@@ -499,19 +489,19 @@
       "theorem_count": 86,
       "timestamp": "2026-08-23T08:50:02",
       "title": "FACT round-61 #1 — TDIAL-U64: the zero-fit dial holds at bitlen 64 with count parity (paper 185)"
+    },
+    {
+      "cycle_id": "0ef4aed2",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — after round-65 #1 (TDIAL-U76, exp 533)\n\n## What this cycle settled\n\nFour Lean files (`Catalog/Novelty/ZeroFitDialU76.lean`,\n`ZeroFitDialPerturbation.lean`, `ZeroFitDialEffectiveB",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 67,
+      "timestamp": "2026-08-23T09:44:21",
+      "title": "FACT round-65 #1 — TDIAL-U76: the zero-fit dial holds at bitlen 76 (paper 186)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "9c680c24",
-      "domain": "Tropical",
-      "key_insight": "# Future Directions — tropical theory of boundary-token width\n\nDerived from the results in `Catalog/Tropical/NeuralNetworks/EOSWidth*.lean`\n(analysis stage: what survived, what failed, and why).\n\n## W",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 86,
-      "timestamp": "2026-08-16T00:30:32",
-      "title": "NET-26 (paper 70): EOS-WIDTH-DISTRIBUTION-SHIFT — the EOS-width \"threshold\" is a one-sided P(cure) d"
-    },
     {
       "cycle_id": "802e1378",
       "domain": "NumberTheory",
@@ -2501,21 +2491,19 @@
       "theorem_count": 86,
       "timestamp": "2026-08-23T08:50:02",
       "title": "FACT round-61 #1 — TDIAL-U64: the zero-fit dial holds at bitlen 64 with count parity (paper 185)"
+    },
+    {
+      "cycle_id": "0ef4aed2",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — after round-65 #1 (TDIAL-U76, exp 533)\n\n## What this cycle settled\n\nFour Lean files (`Catalog/Novelty/ZeroFitDialU76.lean`,\n`ZeroFitDialPerturbation.lean`, `ZeroFitDialEffectiveB",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 67,
+      "timestamp": "2026-08-23T09:44:21",
+      "title": "FACT round-65 #1 — TDIAL-U76: the zero-fit dial holds at bitlen 76 (paper 186)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "8828af22",
-      "domain": "Logic",
-      "name": "count",
-      "quality": 0.79
-    },
-    {
-      "cycle_id": "8828af22",
-      "domain": "Logic",
-      "name": "refines_preserves_conclusion",
-      "quality": 0.79
-    },
     {
       "cycle_id": "8828af22",
       "domain": "Logic",
@@ -2803,9 +2791,21 @@
       "domain": "Novelty",
       "name": "spNest_eq_ssR_coarse",
       "quality": 0.85
+    },
+    {
+      "cycle_id": "0ef4aed2",
+      "domain": "Novelty",
+      "name": "nested_ge_one_sided",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "0ef4aed2",
+      "domain": "Novelty",
+      "name": "u76_not_explained_by_response_ties",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-23T08:50:02",
+  "last_updated": "2026-08-23T09:44:21",
   "open_questions": [
     {
       "context": "All proofs are complete; no `sorry`.; All proofs are complete; no `sorry`.",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "4ba8c40c",
-        "quality": 0.85,
-        "theorems": 124,
-        "title": "Emergent Spacetime from Quantum Entanglement"
-      },
-      {
         "cycle_id": "0f708106",
         "quality": 0.86,
         "theorems": 109,
@@ -3637,6 +3631,12 @@
         "quality": 0.85,
         "theorems": 86,
         "title": "FACT round-61 #1 — TDIAL-U64: the zero-fit dial holds at bitlen 64 with count pa"
+      },
+      {
+        "cycle_id": "0ef4aed2",
+        "quality": 0.82,
+        "theorems": 67,
+        "title": "FACT round-65 #1 — TDIAL-U76: the zero-fit dial holds at bitlen 76 (paper 186)"
       }
     ],
     "NumberTheory": [

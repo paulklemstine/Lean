@@ -1616,16 +1616,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "NET-66: SCALE-DELAYS-CONTEXT-SENSITIVITY-BY-ONE-DOUBLING \u2014 1.5B chain breaks at 2048 ({16,16,20}); broken curve equals the 0.5B shifted one octave (1.5B@2048 = 0.5B@1024 = 20)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4be48a30",
     "description": "## NET-65 \u2014 limited-memory axis, round 18 (paper 150, ResearchOutput/exp_net65_1p5bsub16.py, /tmp/net65.log)\n\n**Verdict name: SIXTEEN-IS-REAL.**\n\n### Result\nFine sweep below NET-55's grid floor (Qwen2.5-1.5B, ctx=1024, gate identical to NET-55; baseline bit-identical 0.5004):\n\n| k | 4 | 6 | 8 | 12 |\n|---|---|---|---|---|\n| retained | 0.9318 \u2717 | 0.9532 \u2717 | 0.9660 \u2717 | **0.9759 \u2717 (razor, ~2 SE)** |\n\n- **P1 REFUTED**: no sub-16 point passes \u2014 the knee does NOT decline with scale.\n- **P2 CONFIRMED**: k\\*(1024) = 16 exact, bracket (12, 16].\n\n### The refined scale law\n0.5B: {16, 20, 24} \u2014 the chain RISES with context. 1.5B: {16, 16} \u2014 FLAT. Larger models have more context-STABLE attention budgets, not fewer keys. New measurable: the CONTEXT-SENSITIVITY of the attention budget, which decreases with model scale in its first measured step. A 16-key budget covers both models to ctx=1024.\n\n### All 8 barriers\n(a) clean; (b) clean; (c) confronted \u2014 razor bracket (12, 16] stated; one corpus; (d) clean; (e) deterministic baseline-replicating; (f) clean \u2014 ALL_DONE_NET65; (g) fair \u2014 same bar/harness as NET-55; (h) DIRECT.\n\n### Next\n1.5B @2048 fine grid (does the flat chain break upward?); domain-jump corpora; 7B cell.\n\nNow 65 network experiments. Assessment v65. Paper 150.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3713",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T18:51:45.079451+00:00",
     "title": "NET-65: SIXTEEN-IS-REAL \u2014 all sub-16 points fail on Qwen2.5-1.5B at ctx=1024 (knee exactly 16); scale flattens the context response: {16,20,24}@0.5B vs flat {16,16}@1.5B"
   },
@@ -1713,21 +1714,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-08-22T19:36:57.212812+00:00",
     "title": "NET-72: THE-FRENCH-KNEE-EXCEEDS-THE-GRID \u2014 no grid point reaches the bar on French prose (knee >24 @512, >32 @1024); domain shifts are NOT \u00b14 fine-steps"
-  },
-  {
-    "consumed_by_exp_id": "0ef4aed2",
-    "description": "Round-65 #1, cron iteration (exp 533). The highest-bitlen uniform measurement.\n\n**U76-DIAL-CONFIRMED**: Spearman(T, rate) = **0.593** / **0.618** / **0.612** across three seeds on uniform draws at bitlen 76; pooled **0.608** CI [0.588, 0.631]. All inside [0.55, 0.85]; T beats count by +0.073 CI [0.045, 0.097].\n\nThe zero-fit dial extends to bitlen 76 on uniform draws with the band intact \u2014 flat within noise from bitlen 72.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp533_t_dial_unif_76.py + exp533_result.json, seeds 20261170\u201372.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3731",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T19:36:57.213783+00:00",
-    "title": "FACT round-65 #1 \u2014 TDIAL-U76: the zero-fit dial holds at bitlen 76 (paper 186)"
   },
   {
     "consumed_by_exp_id": "e4ce2d9a",
@@ -3796,34 +3782,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-19T09:49:59.891226+00:00",
     "title": "Close Proofs: The Bell defect, counted exactly"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Cycle 615053e5 (Q=0.830) proved 128 theorems in Logic but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Construct a formal proof system where the soundness predicate appears inside the system it validates. Prove that such tangled hierarchies are unavoidable in any system that can reason about its own co",
-    "domains": [
-      "Logic"
-    ],
-    "id": "sorry_fill_615053e5_522e308e",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "615053e5",
-    "status": "available",
-    "timestamp": "2026-08-17T09:57:58.295784+00:00",
-    "title": "Close Proofs: Tangled Hierarchies: Proof Systems That Reference Their Own Soundness"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Cycle 64406111 (Q=0.850) proved 72 theorems in Geometry but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: **Paper (factor3):** [ResearchOutput/NewMathematics/25_Round10_Closures.md](https://github.com/paulklemstine/factor3/blob/main/ResearchOutput/NewMathematics/25_Round10_Closures.md)\n\n---\n\n# Round-10 Cl",
-    "domains": [
-      "Geometry"
-    ],
-    "id": "sorry_fill_64406111_5c5b78c0",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "64406111",
-    "status": "available",
-    "timestamp": "2026-08-14T15:14:21.519032+00:00",
-    "title": "Close Proofs: Round-10 Closures: The Exhaustion of the Classical Attack Surface"
   },
   {
     "consumed_by_exp_id": "",
@@ -12866,6 +12824,34 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The dominant-block law bounds the Spearman ceiling by the largest tie class alone. We conjecture that the bound is attained exactly by the profile consisting of one block of size M and n-M singletons, making the inequality an equality case theorem over integer partitions.\n\nFor all n >= 2 and 1 <= M <= n, the minimum of rho^2 over tie profiles of n with maximal block M equals 1 - (M^3-M)/(n^3-n), attained uniquely at [M,1,...,1].\n\nExhaustive search over partitions for n <= 60, then a Lean exchange argument using superadditivity of m -> m^3 - m.\n\nGives the exact attainable dial range for every statistic, sharpening every exclusion result in the catalog.\n\nSome intermediate profile beats the singleton completion, revealing a second-order term in the attenuation law.",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "fd_3825",
+    "priority_score": 0.6712758620689657,
+    "research_mode": "team",
+    "source_exp_id": "0ef4aed2",
+    "status": "available",
+    "timestamp": "2026-08-23T09:44:08.421437+00:00",
+    "title": "Extremal Profiles for the Dominant-Block Bound"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The rank-perturbation Lipschitz law is symmetric in the two rank vectors, so corruption can be spent on either side. We conjecture that splitting the budget between the statistic and the response is exactly twice as efficient as spending it on one side.\n\nThe minimum number of transpositions needed to move rho by delta, when transpositions may act on either rank vector, is ceil(delta*n/12), half the one-sided cost ceil(delta*n/6).\n\nExhaustive optimisation over rank pairs for n <= 10, then a Lean proof of the matching bound.\n\nHalves the empirical corruption estimate for the observed drop, to about n/300.\n\nOne-sided corruption is optimal, indicating an asymmetry in Spearman's response to rank noise.",
+    "domains": [
+      "Logic"
+    ],
+    "id": "fd_3827",
+    "priority_score": 0.6712758620689657,
+    "research_mode": "team",
+    "source_exp_id": "0ef4aed2",
+    "status": "available",
+    "timestamp": "2026-08-23T09:44:09.129157+00:00",
+    "title": "Two-Sided Corruption Optimality"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "cheap_signal_le_oracle bounds every cheap signal by the oracle but gives no size. The exchange kernel localises all lost value in the symmetric difference between the kept set and the oracle set, suggesting the gap equals a sum over score-versus-utility inversions crossing the budget boundary.\n\nFor any score s with kept set S and oracle set O at budget B, retained v O - retained v S = sum over the matched pairs of O\\S and S\\O of the utility differences, and this equals the total weight of boundary inversions of s against v.\n\nState the matched-pair decomposition in Lean using a sorted pairing of O\\S with S\\O and prove equality, then evaluate the statistic on the measured retention tables.\n\nThe 5.7-point gap becomes a measurable inversion count, turning a policy comparison into a signal-quality statistic.\n\nGap size depends on more than pairwise inversions, so per-slot signal diagnostics cannot predict policy loss.",
     "domains": [
       "Algebra"
@@ -12905,6 +12891,34 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-22T08:48:45.105455+00:00",
     "title": "Capacity-Shtarkov Equality via Mixture Representability"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Model the observed dial as a 2-adic statistic seen through a random rank-corruption channel of intensity theta. The p-adic ceiling law then predicts an effective base p(theta) that grows from 2 as theta increases, and the measured 6.97 fixes theta. This would convert the descriptive effective base into a generative mechanism.\n\nThere is a strictly increasing map p : [0,1) -> [2, infinity) with p(0) = 2 such that the expected Spearman coefficient of a 2-adic statistic under a Bernoulli(theta) transposition channel equals 3p(theta)/(p(theta)^2+p(theta)+1), and p(theta) = 2/(1-theta)^2 + O(theta^3).\n\nFormalise the channel as a distribution over rank vectors, compute E[Sigma d^2] exactly using the transposition increment identity, and compare with the p-adic ceiling law.\n\nThe dial becomes a calibrated thermometer for corruption intensity, and the base-7 finding acquires a mechanism.\n\nRank corruption is the wrong channel and the attenuation must come from response noise correlated with the statistic.",
+    "domains": [
+      "Computation"
+    ],
+    "id": "fd_3824",
+    "priority_score": 0.6710582524271846,
+    "research_mode": "team",
+    "source_exp_id": "0ef4aed2",
+    "status": "available",
+    "timestamp": "2026-08-23T09:44:08.058775+00:00",
+    "title": "Bernoulli Corruption Channel for the Effective Base"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The tie-attenuation law is the top eigenvalue of the block-averaging projector acting on centred rank space. Extending the ssR/ssS decomposition to the full spectrum should give a ladder of canonical correlations, of which the recorded dial is only the first rung.\n\nFor a tie profile with blocks m_1,...,m_k the canonical correlations between the midrank vector and any refining response are the square roots of the eigenvalues of the block-averaging projector, whose multiset is determined by the profile alone.\n\nFormalise the projector on the rank space of a profile, compute its spectrum for small profiles, and match against ssR/ssS.\n\nTurns the single dial into a spectral fingerprint that identifies the tie profile, not just its ceiling.\n\nThe response enters beyond the projector, meaning the one-sided law hides response-dependent structure.",
+    "domains": [
+      "Physics"
+    ],
+    "id": "fd_3828",
+    "priority_score": 0.6710000000000002,
+    "research_mode": "team",
+    "source_exp_id": "0ef4aed2",
+    "status": "available",
+    "timestamp": "2026-08-23T09:44:09.491486+00:00",
+    "title": "Spectral Ladder of the Tie-Attenuation Law"
   },
   {
     "consumed_by_exp_id": "",
@@ -13920,6 +13934,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-23T07:48:08.026859+00:00",
     "title": "Collapse of Prefix-Measurable Properties"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The finite-size correction to the p-adic ceiling decays like p^{-2b}, uniformly in the base. Hence every valuation-type dial saturates well before the bitlens used in the FACT rounds, and any residual bitlen dependence is diagnostic of a non-tie mechanism.\n\nFor all p >= 2 and b >= 40, rho^2(p,b) - 3p/(p^2+p+1) < 10^{-24}.\n\nStrengthen padic_ceiling_close to a uniform numeric statement and instantiate at b = 40.\n\nProvides a one-line falsification test for every future bitlen sweep in the programme.\n\nSome base has anomalously slow saturation, contradicting the closed form.",
+    "domains": [],
+    "id": "fd_3826",
+    "priority_score": 0.5930769230769232,
+    "research_mode": "team",
+    "source_exp_id": "0ef4aed2",
+    "status": "available",
+    "timestamp": "2026-08-23T09:44:08.770735+00:00",
+    "title": "Uniform Bitlen Saturation for Valuation Statistics"
   },
   {
     "consumed_by_exp_id": "",
@@ -37080,14 +37106,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Every index-two subgroup of any group is the kernel of a surjection"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f099f0f6",
     "description": "`\u03a3_{g\u2208G} |X^g|^k = |G| \u00b7 #(X^k/G)` for every `k`\n   (`sum_fixedPoints_pow_eq_orbits_mul_card`); `k = 1` is Burnside, `k = 2` is the rank of the\n   permutation action.",
     "domains": [],
     "id": "fd_1425",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "286b3a0e",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-17T13:54:03.885731+00:00",
     "title": "Moment hierarchy"
   },

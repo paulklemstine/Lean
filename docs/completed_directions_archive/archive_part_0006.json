@@ -1,7 +1,7 @@
 {
   "part": "6",
-  "archived_at": "2026-08-23T08:49:48Z",
-  "count": 118,
+  "archived_at": "2026-08-23T09:44:09Z",
+  "count": 119,
   "directions": [
     {
       "ambition_level": "extension",
@@ -4747,6 +4747,46 @@
       "decomposition_depth": 0,
       "source": "",
       "github_issue": 0
+    },
+    {
+      "id": "fd_1755",
+      "title": "The Berggren Tree Zeta Function — Analytic Counting of Pythagorean Triples Governed by the Silver Ratio",
+      "description": "**Domain**: Pythagorean <-> NumberTheory\n\n**Hypothesis**: The distribution of hypotenuses (and legs) over the Berggren ternary tree of primitive Pythagorean triples is governed by an exactly computable analytic object — a \"tree zeta function\" — whose abscissa of convergence and pole structure are determined by the silver ratio log(1+√2) growth exponent already proven for the tree. The conjecture: the Dirichlet series Σ_{triples in tree} c^{-s} (summed over the hypotenuse c of each node, or over the nodes at depth n with their growth) has an abscissa of convergence computable from the silver ratio, and the count of nodes with hypotenuse ≤ H satisfies an exact asymptotic law with an explicit exponent.\n\n**Test**: Formalize the depth-n layer of the Berggren tree (3ⁿ nodes) and the distribution of hypotenuses within it. Define the tree zeta function and prove its abscissa of convergence is governed by the silver-ratio growth exponent. Prove an asymptotic law for the number of Berggren-generated triples with hypotenuse ≤ H (the catalog already has the Θ(H) count of Berggren-generated triples vs. H³ total — sharpen this to an exact asymptotic with the silver-ratio exponent). Relate the zeta function to the known spectral structure of the generators (eigenvalues 3±2√2).\n\n**Why now**: The catalog has exact metric growth (silver speed limit), exact counting (Θ(H) Berggren-generated triples), and spectral classification — but no analytic-number-theory object tying them together. A tree zeta function would unify the growth, counting, and spectral results into a single analytic object, connecting to the theory of zeta functions of graphs, trees, and dynamical systems.\n\n**If true**: The Berggren tree acquires a zeta function with a silver-ratio abscissa of convergence, unifying its growth, counting, and spectral structure — a clean analytic-number-theory companion to the existing geometric and algebraic results, with connections to Ihara zeta functions and the zeta functions of trees.\n\n**If false**: The Dirichlet series fails to have a meromorphic continuation or its abscissa is not the silver ratio, which is itself a sharp statement about the analytic structure of the tree's counting function.\n",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 1000.0,
+      "status": "completed",
+      "consumed_by_exp_id": "eccb3315",
+      "timestamp": "2026-08-20T22:45:47.162437+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.84,
+      "domain_quality_penalty": 0.0,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-08-20T22:46:21.918179+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 161
     }
   ]
 }
