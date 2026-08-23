@@ -2054,5 +2054,6 @@
   "7797dc46": "known_versus_unresolved_cards.json",
   "f099f0f6": "moment_hierarchy.json",
   "4caf1d72": "escape_criterion_iteration.json",
-  "43ad4483": "a_radix_growth_threshold.json"
+  "43ad4483": "a_radix_growth_threshold.json",
+  "6f1d7e50": "cut_indexed_defects.json"
 }

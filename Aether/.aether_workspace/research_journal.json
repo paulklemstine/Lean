@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "16cb59c0",
-      "domain": "Algebra",
-      "key_insight": "# Future directions: the non-backtracking trace after the counting theorem\n\nThe formal development proves `trace(Bⁿ) = #{rooted closed non-backtracking walks of\nlength n}` in three equivalent shapes (",
-      "quality_score": 0.86,
-      "sorry_count": 0,
-      "theorem_count": 123,
-      "timestamp": "2026-08-22T03:57:43",
-      "title": "Prove that `trace(B^n)` counts rooted closed non-backtracking walks of length `n`."
-    },
-    {
       "cycle_id": "a7626bf4",
       "domain": "Physics",
       "key_insight": "# Future Directions\n\nDerived from the analysis and adversarial review of this thread, whose verified (`sorry`-free,\ncompiling) output is:\n\n* `Catalog/Physics/GradedTransitivityComplex.lean` — passage",
@@ -499,19 +489,19 @@
       "theorem_count": 75,
       "timestamp": "2026-08-23T16:44:29",
       "title": "Escape criterion iteration"
+    },
+    {
+      "cycle_id": "43ad4483",
+      "domain": "Physics",
+      "key_insight": "# Future Directions — radix-growth thresholds and iterated logarithms\n\nDerived from the verified results in `Catalog/Physics/RadixGrowthThreshold.lean`\n(all theorems there compile with `import Mathlib",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 56,
+      "timestamp": "2026-08-23T17:35:38",
+      "title": "A radix-growth threshold"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "8fa1e5a5",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — EML Transseries\n\nThe formal results of this cycle live in `Catalog/Applications/EML/`:\n\n| file | content |\n|---|---|\n| `TransseriesEMLBase.lean` | the rank group `Rank = ℝ ×ₗ (ℝ",
-      "quality_score": 0.87,
-      "sorry_count": 0,
-      "theorem_count": 524,
-      "timestamp": "2026-08-16T10:39:48",
-      "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
-    },
     {
       "cycle_id": "3b29df87",
       "domain": "Cryptography",
@@ -2501,27 +2491,19 @@
       "theorem_count": 75,
       "timestamp": "2026-08-23T16:44:29",
       "title": "Escape criterion iteration"
+    },
+    {
+      "cycle_id": "43ad4483",
+      "domain": "Physics",
+      "key_insight": "# Future Directions — radix-growth thresholds and iterated logarithms\n\nDerived from the verified results in `Catalog/Physics/RadixGrowthThreshold.lean`\n(all theorems there compile with `import Mathlib",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 56,
+      "timestamp": "2026-08-23T17:35:38",
+      "title": "A radix-growth threshold"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "d221a4de",
-      "domain": "Probability",
-      "name": "mean_le",
-      "quality": 0.88
-    },
-    {
-      "cycle_id": "d221a4de",
-      "domain": "Probability",
-      "name": "mean_sqrt_sq_le_mean",
-      "quality": 0.88
-    },
-    {
-      "cycle_id": "9b10b60b",
-      "domain": "Geometry",
-      "name": "addChain_le_two_pow",
-      "quality": 0.79
-    },
     {
       "cycle_id": "9b10b60b",
       "domain": "Geometry",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "orbit_succ",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "43ad4483",
+      "domain": "Physics",
+      "name": "V_zero",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "43ad4483",
+      "domain": "Physics",
+      "name": "V_succ",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "43ad4483",
+      "domain": "Physics",
+      "name": "tower_zero",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-23T16:44:29",
+  "last_updated": "2026-08-23T17:35:38",
   "open_questions": [
     {
       "context": "All proofs are complete; no `sorry`.; All proofs are complete; no `sorry`.",
@@ -3703,12 +3703,6 @@
     ],
     "Physics": [
       {
-        "cycle_id": "f1fd8ff1",
-        "quality": 0.82,
-        "theorems": 92,
-        "title": "For a graded `G`-set `Y = ⨆_n Y_n` the generating function `Σ_n t_r(Y_n) q^n` is"
-      },
-      {
         "cycle_id": "6d98445d",
         "quality": 0.82,
         "theorems": 57,
@@ -3761,6 +3755,12 @@
         "quality": 0.86,
         "theorems": 93,
         "title": "Parity-corrected asymptotics for the information-free game"
+      },
+      {
+        "cycle_id": "43ad4483",
+        "quality": 0.82,
+        "theorems": 56,
+        "title": "A radix-growth threshold"
       }
     ],
     "Probability": [
