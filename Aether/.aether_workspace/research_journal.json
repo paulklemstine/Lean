@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "eb2ba545",
-      "domain": "Logic",
-      "key_insight": "# Future Directions — Completeness of Dynamic Programming\n\nThis cycle established, in full generality over a linearly ordered cancellative additive\nmonoid of weights and an arbitrary finite state spac",
-      "quality_score": 0.85,
-      "sorry_count": 0,
-      "theorem_count": 65,
-      "timestamp": "2026-08-22T05:43:11",
-      "title": "prove *completeness* — every labelling is dominated by some DP run;"
-    },
-    {
       "cycle_id": "77469890",
       "domain": "NumberTheory",
       "key_insight": "# Future Directions — after \"the character captures exactly one bit\"\n\nThe cycle closed the target claim and then generalised past it: the one bit is `log₂ 2`, and the\ntheorem is `I(Frobenius class ; χ",
@@ -499,19 +489,19 @@
       "theorem_count": 101,
       "timestamp": "2026-08-23T18:49:38",
       "title": "NET-70: MATH-READS-AS-PROSE — mathematical text leaves knees exactly at prose values ({16,20}) despi"
+    },
+    {
+      "cycle_id": "620a1130",
+      "domain": "Tropical",
+      "key_insight": "# Future Directions — temporal lags versus pitch intervals\n\nThis cycle established a complete separation of the two variables that the original\n\"lag 12 ≈ octave\" reading conflated:\n\n* the **temporal**",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 111,
+      "timestamp": "2026-08-23T18:49:52",
+      "title": "Separate temporal and pitch lags"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "37827e5f",
-      "domain": "Probability",
-      "key_insight": "# Future Directions — Wigner Semicircle Universality\n\nThis file closes the current research cycle. Section 0 records **what the cycle\nsettled** (all of it formally proved, `sorry`-free); the remaining",
-      "quality_score": 0.85,
-      "sorry_count": 0,
-      "theorem_count": 21,
-      "timestamp": "2026-08-16T13:45:35",
-      "title": "Wigner-Semicircle: Universality of the Spectral Distribution"
-    },
     {
       "cycle_id": "be4e28d2",
       "domain": "Shared",
@@ -2501,27 +2491,19 @@
       "theorem_count": 101,
       "timestamp": "2026-08-23T18:49:38",
       "title": "NET-70: MATH-READS-AS-PROSE — mathematical text leaves knees exactly at prose values ({16,20}) despi"
+    },
+    {
+      "cycle_id": "620a1130",
+      "domain": "Tropical",
+      "key_insight": "# Future Directions — temporal lags versus pitch intervals\n\nThis cycle established a complete separation of the two variables that the original\n\"lag 12 ≈ octave\" reading conflated:\n\n* the **temporal**",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 111,
+      "timestamp": "2026-08-23T18:49:52",
+      "title": "Separate temporal and pitch lags"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "a303e67d",
-      "domain": "Combinatorics",
-      "name": "cache_after_miss",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "347a400e",
-      "domain": "MachineLearning",
-      "name": "walkCount_mul_pos",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "347a400e",
-      "domain": "MachineLearning",
-      "name": "mem_reachableSubgroup",
-      "quality": 0.82
-    },
     {
       "cycle_id": "347a400e",
       "domain": "MachineLearning",
@@ -2803,9 +2785,27 @@
       "domain": "Combinatorics",
       "name": "not_serves_both",
       "quality": 0.78
+    },
+    {
+      "cycle_id": "620a1130",
+      "domain": "Tropical",
+      "name": "sq_sub_cast",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "620a1130",
+      "domain": "Tropical",
+      "name": "intervalEnergy_eq_sum_sq",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "620a1130",
+      "domain": "Tropical",
+      "name": "intervalEnergy_eq_second_moment",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-23T18:49:38",
+  "last_updated": "2026-08-23T18:49:52",
   "open_questions": [
     {
       "context": "All proofs are complete; no `sorry`.; All proofs are complete; no `sorry`.",
@@ -3951,12 +3951,6 @@
     ],
     "Tropical": [
       {
-        "cycle_id": "c7164926",
-        "quality": 0.78,
-        "theorems": 72,
-        "title": "Round-7 Hypothesis Closures: Scoping the Noise-Floor Principle and the Trace-Lem"
-      },
-      {
         "cycle_id": "7477e654",
         "quality": 0.85,
         "theorems": 501,
@@ -4009,6 +4003,12 @@
         "quality": 0.86,
         "theorems": 154,
         "title": "is a finitely supported `a : ℕ → ℤ` with"
+      },
+      {
+        "cycle_id": "620a1130",
+        "quality": 0.82,
+        "theorems": 111,
+        "title": "Separate temporal and pitch lags"
       }
     ]
   }

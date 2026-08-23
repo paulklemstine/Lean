@@ -2244,7 +2244,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e2b6aade",
     "description": "## NET-62 — limited-memory axis, round 15 (paper 147, ResearchOutput/exp_net62_sub16.py, /tmp/net62.log)\n\n**Verdict name: THE-KNEE-LANDS-ON-THE-FINE-GRID.**\n\n### Result\nFine sweep at ctx=1024 (oracle top-k, Qwen2.5-0.5B, 24 held-out windows; baseline 0.4627 bit-identical to three prior rounds):\n\n| k | 4 | 8 | 12 | 20 | 24 |\n|---|---|---|---|---|---|\n| retained | 0.8940 ✗ | 0.9520 ✗ | 0.9662 ✗ | **0.9803 ✓** | **0.9851 ✓** |\n\n- **P1 CONFIRMED**: the knee is 20 — well below the coarse-grid 32.\n- **P2 CONFIRMED**: it lands exactly ON the fine-grid point 20.\n\n### Consequences\n1. The 0.5B chain is now **strictly monotone: {16, 20, 24}** across {512, 1024, 2048}, replacing the coarse {16, 32, 24}.\n2. NET-55's size-invariance SHARPENS: 1.5B's {16, 16} is flat-to-declining against a rising baseline.\n3. The 2048 corpus-B reading (32) looks like a coarse-grid artifact, not corpus sensitivity.\n4. The knee-quantizes-to-grid pattern (toy 112 mid-grid; 20 here) gains a third instance.\n\nDeployment: the 1024 entry moves from 32 to 20 keys.\n\n### All 8 barriers\n(a) clean — both horns confirmed; (b) clean; (c) confronted — finer grid, same model/corpus; 24 windows stated; (d) clean; (e) deterministic pre-stated grid; (f) clean — ALL_DONE_NET62; (g) fair — same bar/harness; (h) DIRECT.\n\n### Next\nFine grids at 512/2048; domain-jump corpora; 1.5B fine-grid; 7B cell.\n\nNow 62 network experiments. Assessment v62. Paper 147.\n",
     "domain_bridges": [],
     "domains": [
@@ -2256,7 +2256,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T18:51:45.085865+00:00",
     "title": "NET-62: THE-KNEE-LANDS-ON-THE-FINE-GRID — 0.5B knee at ctx=1024 is k*=20 (fine grid), chain now strictly monotone {16,20,24}; size-invariance sharpens; 2048 corpus-B reading was a coarse-grid artifact"
   },
@@ -2278,25 +2278,6 @@
     "status": "available",
     "timestamp": "2026-08-22T18:51:45.087483+00:00",
     "title": "FACT round-57 #1 — TDIAL-U48B: the zero-fit dial holds on uniform draws at bitlen 48 (paper 184)"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
-    "consumed_by_exp_id": "86b92df3",
-    "description": "## NET-70 — limited-memory axis, round 23 (paper 155, ResearchOutput/exp_net70_mathdomain.py, /tmp/net70.log)\n\n**Verdict name: MATH-READS-AS-PROSE.**\n\n### Result\nDomain jump to mathematical text (Hardy + Hilbert, Gutenberg; gate exact):\n\n| ctx | math k\\* | prose k\\* | math full acc | prose full acc |\n|---|---|---|---|---|\n| 512 | **16** | 16 | 0.3262 | 0.4460 |\n| 1024 | **20** | 20 | 0.3418 | 0.4612 |\n\nMath sweeps @512: 4: 0.907 ✗, 8: 0.959 ✗, 12: 0.979 ✗ (~1 SE), **16: 0.987 ✓**, 20: 0.989, 24: 0.988. @1024: 8: 0.952 ✗, 12: 0.965 ✗, 16: 0.978 ✗ (~1.5 SE), **20: 0.983 ✓**, 24+: pass.\n\n- **P1 REFUTED**: math does NOT need more keys despite long-range symbolic references.\n- **P2 CONFIRMED trivially**: the chain is exactly prose's.\n- **P3 CONFIRMED**: knees match EXACTLY at both contexts despite a 12-point accuracy gap.\n\n### The three-domain deployment table\nbase(prose) = 16, base(code) = 12, base(math) = 16; increments set by scale (NET-67); shape preserved everywhere. THIRD+STRONGEST confirmation that prediction difficulty and attention-sparsity structure are independent: math is much harder to predict yet needs identical budgets. Deployment: prose+math workloads share one entry; only code shifts.\n\n### All 8 barriers\n(a) clean — three horns pre-stated incl. two refuted; (b) clean; (c) confronted — limits: classic-mathematics prose only (no modern LaTeX notation), one corpus mix, 24 windows stated; (d) clean; (e) deterministic; (f) clean — ALL_DONE_NET70; (g) fair — byte-identical harness except text; (h) DIRECT.\n\n### Next\nModern LaTeX/math notation; non-English domains; increments at 4096; 7B cell.\n\nNow 70 network experiments. Assessment v70. Paper 155.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3733",
-    "lineage_refs": [],
-    "priority_score": 1000.0,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T19:36:57.215710+00:00",
-    "title": "NET-70: MATH-READS-AS-PROSE — mathematical text leaves knees exactly at prose values ({16,20}) despite 12-pt lower accuracy; three-domain table complete (prose=16, code=12, math=16)"
   },
   {
     "ambition_level": "grand_challenge",
@@ -3796,6 +3777,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 620a1130 (Q=0.820), which proved 111 theorems in Tropical. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Autocorrelation at sequence lag 12 compares digit positions twelve time steps apart; it does not measure a twelve-semitone interval. To study musical intervals, use the distribution of `|dᵢ - dⱼ|` (or pitch classes modulo 12) for a clearly specified pair of positions.",
+    "domain_bridges": [],
+    "domains": [
+      "Tropical"
+    ],
+    "id": "push_620a1130_b97b87a3",
+    "lineage_refs": [],
+    "priority_score": 0.9199999999999999,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "620a1130",
+    "status": "available",
+    "timestamp": "2026-08-23T18:49:53.243282+00:00",
+    "title": "Deepening: Separate temporal and pitch lags"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Proves modularity of two-dimensional odd irreducible Galois representations over finite fields for low weight and level conditions.",
     "domain_bridges": [],
     "domains": [
@@ -5112,27 +5112,6 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "Standard proof theory treats proofs as timeless: once proved, always proved. But in practice, proofs are discovered in time, and their dependencies form a temporal order. Formalize a temporal logic of proofs where the modal operator Box means provably established by time t. Conjecture: The temporal provability logic TGL (Temporal Godel-Lob) is decidable and strictly extends GL with the axiom Box A implies Box Box Diamond A (if provable now, provably will be provable at any future time). The key insight is that provability in PA is Sigma_1-complete: if PA proves A, then PA proves that PA proves A. Adding temporality creates a system where proof discovery has a well-defined causal order, and future provability can be reasoned about. Test: prove the arithmetical completeness of TGL relative to Peano Arithmetic with a time-stamped provability predicate. Show that the temporal paradox this statement will be provable tomorrow but not today is refutable in TGL. Impact: a new logic for reasoning about proof discovery in time, with applications to proof mining and automated theorem proving where proof order matters.",
-    "domain_bridges": [],
-    "domains": [
-      "Logic",
-      "Computation",
-      "Speculative"
-    ],
-    "id": "seed_083",
-    "lineage_refs": [],
-    "priority_score": 0.84,
-    "proof_strategy": "Extend Godel-Lob provability logic GL with temporal operators: Box A means A is provable now, Diamond A means A will be provable. Define axiom schema: Box(Box A implies Box Box A) and (Box A and Diamond B implies Diamond(A and B)). Prove TGL is consistent (interpret in PA with time-stamped provability Prov(n, A) = there exists a PA-proof of A with at most n steps). Prove TGL is decidable via finite model property. Test: show that the temporal paradox this statement will be provable tomorrow but not today is refutable.",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Temporal Logic of Proofs: When You Prove Something Matters"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "Sphere packing on S^n (how many non-overlapping caps of radius r fit?) is a fundamental geometric problem with applications to error-correcting codes and signal processing. Use stereographic projection to transform spherical packing to a weighted packing problem on R^n. Define the stereographic packing number N(n,r) as the maximum number of non-overlapping spherical caps of geodesic radius r that fit on S^n. Conjecture: N(n,r) satisfies N(n,r) = (1+O(r^2)) * V_n/V_n(r) where V_n is the volume of S^n and V_n(r) is the volume of a cap, and the O(r^2) correction is explicitly computable from the conformal factor (1+|x|^2)^2/4 of the stereographic projection. More precisely, N(n,r) <= (2/cos(r))^n * V_n/V_n(r). The factor (2/cos(r))^n comes from the maximum conformal distortion of the stereographic projection: a cap of geodesic radius r is mapped to a Euclidean disk whose area differs from the cap area by at most this factor. Test: prove this bound for n=2 and verify it against the known optimal packings (icosahedral: N(2,pi/6) = 12, cuboctahedral: N(2,pi/4) = 6, tetrahedral: N(2,pi/3) = 4). Impact: explicit, computable sphere packing bounds on spheres via classical packing theory on R^n, with applications to spherical codes and molecular geometry.",
     "domain_bridges": [],
     "domains": [
@@ -5966,7 +5945,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "bb435065",
     "description": "Conway's surreal numbers No form the largest totally ordered field, containing all real numbers, all ordinals, and all infinitesimals. But No is a proper class, not a set. What topology does it have? Conjecture: No has a unique topology making it a connected, locally connected, locally compact, complete ordered field. This topology is NOT the order topology (which makes No totally disconnected). Instead, it is the 'interval topology' generated by open intervals (a,b) = {x in No : a < x < b} where a,b are arbitrary surreal numbers. The interval topology on No is connected because between any two surreals a < b there are infinitely many surreals, and No has no gaps (every Dedekind cut is filled). Moreover, No is contractible in this topology — every surreal number can be continuously deformed to 0 via the homotopy H(x,t) = x * {t | 0} where {t | 0} is the surreal number between t and 0. Test: prove that No with the interval topology is connected. Prove that it is locally compact (every surreal has a neighborhood basis of intervals with surreal endpoints). Prove that No is contractible. Compute the fundamental group: pi_1(No) = 0 (trivial, since No is contractible). Impact: the largest ordered field has a natural topology that makes it contractible — every surreal number is connected to every other by a continuous path.",
     "domain_bridges": [],
     "domains": [
@@ -5981,7 +5960,7 @@
     "proof_strategy": "Define the interval topology on No: a basis of open sets is {(a,b) : a,b in No, a < b}. Prove No is connected: if No = U union V with U,V disjoint open, take a in U, b in V, a < b. Then (a,b) intersects both U and V, contradicting disjointness. Actually, No with interval topology IS disconnected (intervals with surreal endpoints can be partitioned). The correct topology: the 'convex topology' where open sets are unions of convex subsets. Prove No is connected in the convex topology because every interval {x : a < x < b} is connected (convex). Prove local compactness: every point has a neighborhood basis of intervals with finite-length endpoints. Prove contractibility: H(x,t) = x * t for t in [0,1] (using the Conway normal form). Compute pi_1(No) = 0. Test: verify the interval topology is strictly finer than the order topology for infinitesimal neighborhoods.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "",
     "title": "Surreal Topology: What Topology Does the Field of Surreal Numbers Have?"
   },
@@ -14763,6 +14742,28 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Tropical.MusicalDigits.MinPlusIntervalMatrix"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The interval matrix of a melody window is idempotent in the min-plus matrix semiring, hence equal to its own Kleene star. We conjecture a full tropical Perron-Frobenius description: eigenvalue zero, eigenspace spanned by the columns, and a transposition-invariance classification of melodies with equal eigenspaces.\n\nFor every window, the tropical eigenvalue of the interval matrix is the tropical unit, its eigenspace is the tropical span of its columns, and two windows share an eigenspace iff their digit multisets agree up to a common additive shift.\n\nFormalize tropical eigenvectors for Matrix (Fin n) (Fin n) (Tropical (WithTop N)) and prove A * v = v for columns v of A using intervalMatrix_idempotent.\n\nMelody windows acquire a canonical tropical invariant, independent of any temporal lag statistic.\n\nIdempotency is not enough to pin down the eigenspace and additional metric hypotheses on the digit alphabet are needed.",
+    "domain_bridges": [],
+    "domains": [
+      "Tropical",
+      "Algebra"
+    ],
+    "id": "fd_3875",
+    "lineage_refs": [],
+    "priority_score": 0.711360655737705,
+    "proof_strategy": "Columns of an idempotent min-plus matrix are fixed vectors by A * A = A; classification then reduces to reconstructing a distance matrix from its Kleene star, i.e. to a one-dimensional embedding argument.",
+    "research_mode": "team",
+    "source_exp_id": "620a1130",
+    "status": "available",
+    "timestamp": "2026-08-23T18:49:46.720273+00:00",
+    "title": "Min-Plus Spectral Theory of Interval Matrices"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "MachineLearning.CayleyCensusMoments"
     ],
     "consumed_by_exp_id": "",
@@ -17436,6 +17437,27 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Tropical.MusicalDigits.TropicalLagSpectrum"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Unison lags of an infinite digit melody are closed under gcd. On a finite window of length n this fails below the Fine-Wilf threshold p + q - gcd(p,q). We conjecture the sharp finite-window statement and its extremal examples for digit alphabets.\n\nIf a window of n consecutive digits has periods p and q and n >= p + q - gcd(p,q), then it has period gcd(p,q); for n = p + q - gcd(p,q) - 1 there is a decimal counterexample.\n\nState periodicity relative to a window in Lean and adapt IsPeriod.sub with index-range side conditions; construct the extremal words explicitly for small p, q and verify by decide.\n\nEmpirical periodicity claims about finite digit samples acquire an exact sample-size threshold.\n\nFinite-window periodicity is strictly weaker than expected and needs a different invariant, e.g. the windowed lag spectrum.",
+    "domain_bridges": [],
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "fd_3873",
+    "lineage_refs": [],
+    "priority_score": 0.6714375000000001,
+    "proof_strategy": "Induct on p + q; from periods p < q derive the period q - p on a shortened window, tracking the length bookkeeping that produces the threshold.",
+    "research_mode": "team",
+    "source_exp_id": "620a1130",
+    "status": "available",
+    "timestamp": "2026-08-23T18:49:45.771218+00:00",
+    "title": "Fine-Wilf Threshold for Digit Windows"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Pythagorean.DigitPeriodicityDichotomy"
     ],
     "consumed_by_exp_id": "",
@@ -19528,6 +19550,26 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Tropical.MusicalDigits.AutocorrelationMomentBridge",
+      "Tropical.MusicalDigits.NullIntervalDistribution"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Pitch-class reduction modulo twelve is injective on decimal digits, so octave equivalence is vacuous there, but it fails from base thirteen on. We conjecture a sharp threshold with quantitative divergence of the interval-class and interval histograms.\n\nPitch-class reduction is injective on base-b digits iff b <= 12; for b >= 13 there are melodies whose interval-class and interval histograms differ in total variation by at least (b - 12)/b.\n\nGeneralize pitchClass_inj_of_lt to arbitrary bases, then construct explicit melodies in base b >= 13 whose folded histogram collapses two distinct interval values.\n\nMod-12 analyses of digit melodies are provably content-free precisely in the bases used by decimal studies.\n\nOctave folding carries information even below base thirteen, which would change how interval classes should be reported.",
+    "domain_bridges": [],
+    "domains": [],
+    "id": "fd_3876",
+    "lineage_refs": [],
+    "priority_score": 0.5922972972972974,
+    "proof_strategy": "Injectivity is Nat.mod_eq_of_lt; failure uses the pair (0, 12); the total-variation bound counts the digit pairs whose distance exceeds eleven.",
+    "research_mode": "team",
+    "source_exp_id": "620a1130",
+    "status": "available",
+    "timestamp": "2026-08-23T18:49:47.188327+00:00",
+    "title": "Base Threshold for Octave-Equivalence Faithfulness"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Cryptography.MarkoffTransfer.SilverBranchTransfer",
       "Cryptography.BerggrenSpectral.Generators"
     ],
@@ -20122,6 +20164,29 @@
     "status": "available",
     "timestamp": "2026-08-21T06:26:51.351710+00:00",
     "title": "Topological realisation"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Tropical.MusicalDigits.IntervalDistributionRealizability",
+      "Tropical.MusicalDigits.TropicalLagSpectrum"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The inverse theorem realizes any prescribed interval histogram at a single lag. The next question is joint control at two lags. We conjecture free joint realizability for coprime lags and a tropical obstruction otherwise.\n\nFor coprime k, l >= 1 and admissible histograms N_k, N_l of equal mass there is a decimal melody realizing both simultaneously; for l = 2k the support of N_l is forced into [0, 2 max supp N_k].\n\nExtend the interleave construction to a Chinese-remainder indexing of positions and prove the counting lemma for the product window; derive the obstruction from maxInterval_add_le.\n\nNo pair of lag statistics can certify structure in a digit expansion, closing the methodological question raised by lag-12 claims.\n\nThere is a genuine multi-lag invariant of digit melodies, which would be the first real statistic in this family.",
+    "domain_bridges": [],
+    "domains": [
+      "NumberTheory",
+      "Tropical"
+    ],
+    "id": "fd_3874",
+    "lineage_refs": [],
+    "priority_score": 0.5639882318186371,
+    "proof_strategy": "Use CRT to split positions into independent threads for coprime lags; for dependent lags use the tropical triangle inequality on the lag monoid to bound the joint support.",
+    "research_mode": "team",
+    "source_exp_id": "620a1130",
+    "status": "available",
+    "timestamp": "2026-08-23T18:49:46.247435+00:00",
+    "title": "Joint Realizability at Coprime Lags"
   },
   {
     "ambition_level": "extension",
@@ -46558,6 +46623,26 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "**Conjecture:** the map `domain ↦ knee-curve` has finite image over natural text\ndomains at fixed model and context, and the number of deployment entries needed\nfor a fleet is the interval-cover number of that image — so fleets never need\nmore than `⌈(k_max − k_min)/(δ+1)⌉ + 1` cache sizes, with equality only for\narithmetic ladders.\n*The key insight is* that the covering side of our min–max is greedy and\nanchor-free, so the fleet cost depends only on the spread of knees, never on how\nmany domains sit inside it.\n*Why now?* The three-domain table is already `{12, 16}`; adding LaTeX-heavy\nmath, code-with-comments and non-English prose is a direct falsification test of\n\"finite image, small spread\".",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_3871",
+    "lineage_refs": [],
+    "priority_score": 0.44025048324266974,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "86b92df3",
+    "status": "available",
+    "timestamp": "2026-08-23T18:49:23.787028+00:00",
+    "title": "D4 — Sparsity classes are a coarse quotient of domains"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "**Conjecture.** For every odd prime `m`, the Chebyshev-type coefficient\n`A_m(t)` (`A₀ = 0`, `A₁ = 1`, `A_{n+2} = t·A_{n+1} − A_n`) factors as\n`A_m(t) = Ψ_m(t) · (−1)^{(m−1)/2} Ψ_m(−t)`, where `Ψ_m` is the minimal\npolynomial of `ζ_m + ζ_m⁻¹`, and moreover `A_{m−1}(t) + 1 = Ψ_m(t) · R_m(t)`\nwith `R_m` coprime to `Ψ_m` modulo every prime `p ∤ m`. Consequently `Ψ_m` has\na root mod `p` iff `p ≡ ±1 (mod m)`, for all odd prime conductors at once.\n\n*The key insight is* that `A_m` is the \"order-`m` locus\" of the trace map on\n`SL₂`, and the two factors correspond to the two ways an order-`m` element can\narise, `ζ + ζ⁻¹` and `−(ζ + ζ⁻¹)`; the second condition `A_{m−1} = −1` is\nprecisely what discards the `−` branch.\n\n*Why now?* `TraceOrder.cheb_root_iff` already reduces the arithmetic to these\ntwo polynomial identities, and they were verified and proved by `ring` for\n`m = 5, 7, 11` (`TraceOrder.golden_iff`, `TraceOrder.cubic_seven_iff`,\n`TraceOrder.quintic_eleven_iff`). In each case the Bézout identity between the\ntwo spurious factors turned out to be *integral* (denominator 1), which is the\nuniform statement one has to prove. Only the uniform-in-`m` factorisation is\nmissing; it is a statement about `ℤ[t]`, not about primes, so it is within\nreach of a resultant computation.",
     "domain_bridges": [],
     "domains": [
@@ -46913,6 +46998,26 @@
     "status": "available",
     "timestamp": "2026-08-21T06:23:57.599487+00:00",
     "title": "Energy conditions"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "**Conjecture:** any eviction policy whose score is a function of the token\nsequence alone (not of the model's loss) has retained quality bounded by the\ndemand-quantile curve, so no policy can beat the knee; and the gap to the oracle\nis exactly the mass of windows whose demand exceeds the budget.\n*The key insight is* that our exact tail criterion `knee_le_iff_tail_small`\nalready expresses retained quality as a tail count, which is policy-independent.\n*Why now?* It would unify NET-61 (`λ = 0` optimal) with NET-70 (domain-invariant\nknees) under a single tail-counting bound, and both halves are now formalised.\n\n```json future_directions.json\n[\n  {\n    \"title\": \"Concatenation Law for Demand Quantiles\",\n    \"domain\": \"Combinatorics\",\n    \"description\": \"Mixing curves traps the knee between constituent knees; concatenating corpora instead adds demand multisets. The conjecture gives a sub-additivity law for the knee of a union of workloads at shifted gates, with an equality criterion in terms of tail dominance. It removes the corpus-mixing ratio from every deployment argument.\",\n    \"conjecture\": \"For workloads D1, D2 with window counts n1, n2 and gates g1, g2, the union satisfies knee(D1 ⊎ D2, g) ≤ max(knee(D1,g1), knee(D2,g2)) whenever g ≤ (n1*g1 + n2*g2)/(n1+n2), with equality iff the upper-tail counting function of one demand multiset dominates the other's above that budget.\",\n    \"test\": \"Formalise Workload union (Sum type index) in Catalog/Combinatorics/KneeInvariance.lean, prove agreeCount_union = agreeCount D1 + agreeCount D2, then transport via knee_le_iff.\",\n    \"if_true\": \"Deployment budgets for mixed corpora are computable from per-corpus knees alone, closing NET-70 barrier (c).\",\n    \"if_false\": \"Mixing creates genuinely new demand structure, and per-corpus sweeps are not composable — every fleet mix needs its own measurement.\",\n    \"proof_strategy\": \"agreeCount is additive over a disjoint union; divide by n1+n2 to express the union curve as a convex combination, then apply the Galois adjunction knee_le_iff at the averaged gate.\",\n    \"catalog_references\": [\"Catalog.Combinatorics.KneeInvariance\", \"Catalog.Combinatorics.KneeQuantile\"]\n  },\n  {\n    \"title\": \"Tail-Histogram Criterion for Knee Coincidence\",\n    \"domain\": \"Combinatorics\",\n    \"description\": \"Because the knee is an order statistic, two domains share all knees exactly when their upper-tail counting functions agree. Restricting to a gate window gives a band version. This replaces a full budget sweep by a single demand histogram per corpus.\",\n    \"conjecture\": \"knee(D,g) = knee(E,g) for all g in [g0,g1] iff the tail counts #{i : demand_i > k} of D and E agree for every k in the band of ranks determined by [g0,g1].\",\n    \"test\": \"Prove both directions from knee_eq_demandQuantile and knee_le_iff_tail_small; instantiate on the NET-70 profiles to recover math_reads_as_prose_512 without the sweep.\",\n    \"if_true\": \"Domain comparisons cost one histogram instead of a six-point sweep, making",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_3872",
+    "lineage_refs": [],
+    "priority_score": 0.4390607000557497,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "86b92df3",
+    "status": "available",
+    "timestamp": "2026-08-23T18:49:24.449118+00:00",
+    "title": "D5 — A difficulty-blind lower bound for eviction policies"
   },
   {
     "ambition_level": "extension",
@@ -47440,6 +47545,23 @@
     "status": "available",
     "timestamp": "2026-08-21T06:29:41.402435+00:00",
     "title": "C2. Adaptive grids collapse the bracket: bisection to a two-seed knee of width 1"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "**Conjecture:** two domains have equal knees at *all* gates iff their demand\nmultisets have equal upper-tail counting functions, and equal knees on a gate\n*window* of width `w` iff the counting functions agree on the corresponding\ncount band.  Hence \"MATH-READS-AS-PROSE\" is testable with a single tail\nhistogram, without any sweep.\n*The key insight is* that the knee is an order statistic, so agreement of knees\non an interval of gates is exactly agreement of the inverse distribution\nfunction on the corresponding interval of ranks.\n*Why now?* It converts a 6-point sweep per cell into one histogram per corpus,\nmaking the 7B cell and the non-English domains affordable.",
+    "domain_bridges": [],
+    "domains": [],
+    "id": "fd_3869",
+    "lineage_refs": [],
+    "priority_score": 0.43887499999999996,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "86b92df3",
+    "status": "available",
+    "timestamp": "2026-08-23T18:49:22.805817+00:00",
+    "title": "D2 — Knee stability is equivalent to tail-exchangeability"
   },
   {
     "ambition_level": "extension",
@@ -48398,6 +48520,23 @@
     "status": "available",
     "timestamp": "2026-08-21T06:22:17.760205+00:00",
     "title": "Classify every finite-birthday surreal"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "NET-67 reports \"increments set by scale\"; NET-70 reports `+4` from 512 to 1024\nfor both prose and math.  **Conjecture:** the map `ctx ↦ knee(ctx)` satisfies\n`knee(2c) = knee(c) + δ(c)` with `δ` depending only on the model, not on the\ndomain, and `δ` is itself the knee of the *conditional* demand profile of the\nnewly visible positions.\n*The key insight is* that the extra context contributes an independent block of\ndemands, so the quantile of the concatenated profile shifts by the quantile of\nthe increment block — a cocycle identity for `knee` under context doubling.\n*Why now?* Two contexts already pin the additive shape; a third (4096) would\nfalsify or confirm the cocycle, and the formal shift law `knee_shift` is already\nin place to state it.",
+    "domain_bridges": [],
+    "domains": [],
+    "id": "fd_3870",
+    "lineage_refs": [],
+    "priority_score": 0.4336666666666666,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "86b92df3",
+    "status": "available",
+    "timestamp": "2026-08-23T18:49:23.297257+00:00",
+    "title": "D3 — The increment law is a translation cocycle"
   },
   {
     "ambition_level": "extension",
@@ -50098,23 +50237,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "620a1130",
-    "description": "Autocorrelation at sequence lag 12 compares digit positions twelve time steps apart; it does not measure a twelve-semitone interval. To study musical intervals, use the distribution of `|dᵢ - dⱼ|` (or pitch classes modulo 12) for a clearly specified pair of positions.",
-    "domain_bridges": [],
-    "domains": [],
-    "id": "fd_1816",
-    "lineage_refs": [],
-    "priority_score": 0.4110350877192982,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "9f14a31b",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T06:21:20.081786+00:00",
-    "title": "Separate temporal and pitch lags"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "**Conformality is a hierarchy, not a single obstruction.**\n  `strict_hierarchy_of_local_conformality`: for every level `m ≥ 2` there is a corpus in\n  which every clique of at most `m` theorems has a common document while some clique of\n  `m + 1` theorems does not.  The catalogued three-theorem example is the case `m = 2`.",
     "domain_bridges": [],
@@ -50213,6 +50335,25 @@
     "status": "available",
     "timestamp": "2026-08-21T06:23:55.840502+00:00",
     "title": "Stratified truth"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "We proved that mixing *curves* traps the knee between the constituent knees.\nConcatenating *corpora* is a different operation: the demand multisets add.\n**Conjecture:** for the union of two workloads with window counts `n₁, n₂`,\n`knee(union, g) ≤ max(knee(D₁, g₁), knee(D₂, g₂))` whenever\n`g ≤ (n₁g₁ + n₂g₂)/(n₁+n₂)`, with equality iff one demand multiset dominates the\nother in the tail region.\n*The key insight is* that the union's agreement curve is the `n`-weighted\naverage of the constituents', so the quantile of the union is squeezed by the\nconstituents' quantiles at *shifted* gates.\n*Why now?* Barrier (c) of NET-70 lists \"one corpus mix\" as the main external\nlimit; a proved concatenation law removes the mixing ratio from the deployment\nargument entirely.",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_3868",
+    "lineage_refs": [],
+    "priority_score": 0.4091165438481678,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "86b92df3",
+    "status": "available",
+    "timestamp": "2026-08-23T18:49:22.341173+00:00",
+    "title": "D1 — Sub-additivity of the knee under corpus concatenation"
   },
   {
     "ambition_level": "extension",
