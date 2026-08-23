@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "3cb644d1",
-      "domain": "Logic",
-      "key_insight": "# Future directions: the Berggren tree as a solvable model of `abc`\n\n## What this cycle established\n\nThe Berggren ternary tree of primitive Pythagorean triples is a fully explicit family of `abc`\ntrip",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 86,
-      "timestamp": "2026-08-21T22:42:14",
-      "title": "The Tree as a Solvable Model of the abc Conjecture — The Exact Quality Spectrum of a²+b²=c²"
-    },
-    {
       "cycle_id": "85ca8e3d",
       "domain": "Computation",
       "key_insight": "# Future directions — the degree-monoid invariant of transition systems\n\nThis cycle turned the informal \"realisation problem\" for the degree monoid into proved\nmathematics, in `Catalog/Computation/`:",
@@ -499,19 +489,19 @@
       "theorem_count": 93,
       "timestamp": "2026-08-23T10:41:17",
       "title": "Parity-corrected asymptotics for the information-free game"
+    },
+    {
+      "cycle_id": "04d3a29d",
+      "domain": "Cryptography",
+      "key_insight": "# Future directions: the guarded transfer principle\n\nThis cycle formalised, in `Catalog/Cryptography/Transreal/`, the following:\n\n* `Core.lean` — the four-constructor carrier `Transreal = fin ℝ | pinf",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 104,
+      "timestamp": "2026-08-23T11:36:10",
+      "title": "Guarded transfer principle for real analysis"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "66af3cc3",
-      "domain": "NumberTheory",
-      "key_insight": "# Future directions — bold, testable conjectures from the NET-31 formalization\n\nThe two Lean files\n(`Catalog/NumberTheory/BoundaryBlockInternalization.lean`,\n`Catalog/NumberTheory/BoundaryBlockCollect",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 71,
-      "timestamp": "2026-08-16T00:37:25",
-      "title": "NET-31: Internalization is a seed-fixed trait among cures — same 4 seeds dependent at k=2 and k=3; N"
-    },
     {
       "cycle_id": "dc071269",
       "domain": "NumberTheory",
@@ -2501,27 +2491,19 @@
       "theorem_count": 93,
       "timestamp": "2026-08-23T10:41:17",
       "title": "Parity-corrected asymptotics for the information-free game"
+    },
+    {
+      "cycle_id": "04d3a29d",
+      "domain": "Cryptography",
+      "key_insight": "# Future directions: the guarded transfer principle\n\nThis cycle formalised, in `Catalog/Cryptography/Transreal/`, the following:\n\n* `Core.lean` — the four-constructor carrier `Transreal = fin ℝ | pinf",
+      "quality_score": 0.82,
+      "sorry_count": 0,
+      "theorem_count": 104,
+      "timestamp": "2026-08-23T11:36:10",
+      "title": "Guarded transfer principle for real analysis"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "6cdc8533",
-      "domain": "Novelty",
-      "name": "margin_factor_two_is_sharp",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "3fdce232",
-      "domain": "Computation",
-      "name": "Scheme",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "3fdce232",
-      "domain": "Computation",
-      "name": "Scheme",
-      "quality": 0.82
-    },
     {
       "cycle_id": "3fdce232",
       "domain": "Computation",
@@ -2803,9 +2785,27 @@
       "domain": "Physics",
       "name": "surv_nonneg_real",
       "quality": 0.86
+    },
+    {
+      "cycle_id": "04d3a29d",
+      "domain": "Cryptography",
+      "name": "fin_mul_pinf_eq",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "04d3a29d",
+      "domain": "Cryptography",
+      "name": "fin_mul_ninf_eq",
+      "quality": 0.82
+    },
+    {
+      "cycle_id": "04d3a29d",
+      "domain": "Cryptography",
+      "name": "pinf_mul_fin_eq",
+      "quality": 0.82
     }
   ],
-  "last_updated": "2026-08-23T10:41:17",
+  "last_updated": "2026-08-23T11:36:10",
   "open_questions": [
     {
       "context": "All proofs are complete; no `sorry`.; All proofs are complete; no `sorry`.",
@@ -3331,12 +3331,6 @@
     ],
     "Cryptography": [
       {
-        "cycle_id": "93afd30b",
-        "quality": 0.82,
-        "theorems": 122,
-        "title": "Berggren-Spectral-Eigenvalues: Modular Energy Resonance for RSA Integer Factoriz"
-      },
-      {
         "cycle_id": "507d1ef0",
         "quality": 0.83,
         "theorems": 54,
@@ -3389,6 +3383,12 @@
         "quality": 0.8,
         "theorems": 62,
         "title": "Define the *curvature* of the pool as\n`κ = 1 − minⱼ (C(Ω) − C(Ω∖{j})) / C({j})` "
+      },
+      {
+        "cycle_id": "04d3a29d",
+        "quality": 0.82,
+        "theorems": 104,
+        "title": "Guarded transfer principle for real analysis"
       }
     ],
     "Geometry": [
