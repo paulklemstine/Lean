@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "28aa3954",
-      "domain": "Pythagorean",
-      "key_insight": "# Future directions: the single-voter exchange law and its geometry\n\nThree research cycles were run on the tropical/social-choice chamber complex of\na min-plus aggregator `F x = min_{i ∈ S} (x i + δ i",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 49,
-      "timestamp": "2026-08-21T21:39:35",
-      "title": "single-voter exchange law."
-    },
-    {
       "cycle_id": "3cb644d1",
       "domain": "Logic",
       "key_insight": "# Future directions: the Berggren tree as a solvable model of `abc`\n\n## What this cycle established\n\nThe Berggren ternary tree of primitive Pythagorean triples is a fully explicit family of `abc`\ntrip",
@@ -499,19 +489,19 @@
       "theorem_count": 67,
       "timestamp": "2026-08-23T09:44:21",
       "title": "FACT round-65 #1 — TDIAL-U76: the zero-fit dial holds at bitlen 76 (paper 186)"
+    },
+    {
+      "cycle_id": "b8859dfd",
+      "domain": "Physics",
+      "key_insight": "# Future Directions — Parity-corrected asymptotics for the information-free game\n\nThis cycle established, with complete Lean 4 proofs and no `sorry`, that the\ninformation-free werewolf/village game ha",
+      "quality_score": 0.86,
+      "sorry_count": 0,
+      "theorem_count": 93,
+      "timestamp": "2026-08-23T10:41:17",
+      "title": "Parity-corrected asymptotics for the information-free game"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "802e1378",
-      "domain": "NumberTheory",
-      "key_insight": "# Future directions (derived from the NET-27 formalisation)\n\nThe three files\n`Catalog/NumberTheory/EOSWidthMonotoneRamp.lean`,\n`Catalog/NumberTheory/EOSExclusiveDimGenericity.lean`,\n`Catalog/NumberThe",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 46,
-      "timestamp": "2026-08-16T00:30:44",
-      "title": "NET-27 (paper 71): EOS-WIDTH-SHIFT-IS-A-MONOTONE-RAMP — P(cure) ramps 25→33→83→100→100% as exclusive"
-    },
     {
       "cycle_id": "66af3cc3",
       "domain": "NumberTheory",
@@ -2501,27 +2491,19 @@
       "theorem_count": 67,
       "timestamp": "2026-08-23T09:44:21",
       "title": "FACT round-65 #1 — TDIAL-U76: the zero-fit dial holds at bitlen 76 (paper 186)"
+    },
+    {
+      "cycle_id": "b8859dfd",
+      "domain": "Physics",
+      "key_insight": "# Future Directions — Parity-corrected asymptotics for the information-free game\n\nThis cycle established, with complete Lean 4 proofs and no `sorry`, that the\ninformation-free werewolf/village game ha",
+      "quality_score": 0.86,
+      "sorry_count": 0,
+      "theorem_count": 93,
+      "timestamp": "2026-08-23T10:41:17",
+      "title": "Parity-corrected asymptotics for the information-free game"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "8828af22",
-      "domain": "Logic",
-      "name": "refines_cost_lt",
-      "quality": 0.79
-    },
-    {
-      "cycle_id": "6cdc8533",
-      "domain": "Novelty",
-      "name": "about",
-      "quality": 0.78
-    },
-    {
-      "cycle_id": "6cdc8533",
-      "domain": "Novelty",
-      "name": "strictTop_of_margin",
-      "quality": 0.78
-    },
     {
       "cycle_id": "6cdc8533",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "u76_not_explained_by_response_ties",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "b8859dfd",
+      "domain": "Physics",
+      "name": "surv_eq_wallis_mul",
+      "quality": 0.86
+    },
+    {
+      "cycle_id": "b8859dfd",
+      "domain": "Physics",
+      "name": "surv_mul_succ_real",
+      "quality": 0.86
+    },
+    {
+      "cycle_id": "b8859dfd",
+      "domain": "Physics",
+      "name": "surv_nonneg_real",
+      "quality": 0.86
     }
   ],
-  "last_updated": "2026-08-23T09:44:21",
+  "last_updated": "2026-08-23T10:41:17",
   "open_questions": [
     {
       "context": "All proofs are complete; no `sorry`.; All proofs are complete; no `sorry`.",
@@ -3703,12 +3703,6 @@
     ],
     "Physics": [
       {
-        "cycle_id": "2e6124e7",
-        "quality": 0.88,
-        "theorems": 100,
-        "title": "The inequality itself is proved"
-      },
-      {
         "cycle_id": "f1fd8ff1",
         "quality": 0.82,
         "theorems": 92,
@@ -3761,6 +3755,12 @@
         "quality": 0.83,
         "theorems": 108,
         "title": "FACT round-32 #3 — UNIVERSAL-S3-EXTENDED: three fields, one answer (paper 114)"
+      },
+      {
+        "cycle_id": "b8859dfd",
+        "quality": 0.86,
+        "theorems": 93,
+        "title": "Parity-corrected asymptotics for the information-free game"
       }
     ],
     "Probability": [

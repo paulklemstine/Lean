@@ -1746,16 +1746,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "NET-70: MATH-READS-AS-PROSE \u2014 mathematical text leaves knees exactly at prose values ({16,20}) despite 12-pt lower accuracy; three-domain table complete (prose=16, code=12, math=16)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "58176b8d",
     "description": "Round-63 #1, cron iteration (exp 532). The highest-bitlen uniform measurement.\n\n**U72-DIAL-HOLDS-COUNT-PARITY**: Spearman(T, rate) = **0.605** / **0.606** / **0.603** across three seeds on uniform draws at bitlen 72; pooled **0.605** CI [0.586, 0.625]. All inside [0.55, 0.85]; count parity (advantage below +0.05).\n\nThe zero-fit dial extends to bitlen 72 on uniform draws with the band intact \u2014 a gentle\nmonotone decline from ~0.78 at bitlen 44 to ~0.61 at 72. Barriers: (5)/(8) unchanged.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp532_t_dial_unif_72.py + exp532_result.json, seeds 20261160\u201362.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3734",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T19:36:57.216675+00:00",
     "title": "FACT round-63 #1 \u2014 TDIAL-U72: the zero-fit dial holds at bitlen 72 with count parity (paper 185)"
   },
@@ -3757,20 +3758,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Cycle 43f9870f (Q=0.840) proved 77 theorems in Combinatorics but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: **Summary.** The conjecture that for E_N: y\u00b2 = x\u00b3 + N with N = pq, the\ndenominators of x(nP) are divisible only by {2, 3, p, q} (the primes dividing\n\u0394 = -432N\u00b2) is mathematically FALSE.\n\n**Counterexam",
-    "domains": [
-      "Combinatorics"
-    ],
-    "id": "sorry_fill_43f9870f_2be28bbc",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "43f9870f",
-    "status": "available",
-    "timestamp": "2026-08-15T13:51:07.140800+00:00",
-    "title": "Close Proofs: The 'Only Bad Primes' Conjecture is False (elliptic curve denominators"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Cycle 60572a3f (Q=0.850) proved 75 theorems in Combinatorics but left 8 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: `\u03a3_g |X^g|^k = (B_k + \u03a3_P (m_P \u2212 1))\u00b7|G|`\n    (`bell_defect_eq`): the excess of a moment over its Bell floor is `|G|` times the number of\n    *extra* orbits per pattern, and it vanishes exactly for `k",
     "domains": [
       "Combinatorics"
@@ -3785,26 +3772,12 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Cycle 6753d65f (Q=0.890) proved 92 theorems in Bridges but left 2 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: **Paper:** `ResearchOutput/NewMathematics/41_ResidueLeakage_DirichletNoPruning.md` (factor3)\n**Experiment:** QRLEAK (#376), assessment v152.\n\n## Finding\nThe QR fingerprint F_K(N) = [(a_i|N)] over the ",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "sorry_fill_6753d65f_9b479a86",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "6753d65f",
-    "status": "available",
-    "timestamp": "2026-08-13T15:22:02.456534+00:00",
-    "title": "Close Proofs: The Residue-Leakage Curve and the Dirichlet No-Pruning Theorem, Closed"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Cycle 8993bd64 (Q=0.810) proved 81 theorems in Shared but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: **Part of:** Research plan \u2014 *Compression Beyond the Pigeonhole Bound* (Phase B, Question 2: can random number generators help?).\n\n## Research question\nWorst-case short-program-finding is **provably h",
     "domains": [
       "Shared"
     ],
     "id": "sorry_fill_8993bd64_584612e0",
-    "priority_score": 0.85,
+    "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "8993bd64",
     "status": "available",
@@ -30062,6 +30035,49 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "**Conjecture.**  For every wolf count `k \u2265 2` there is a rational function `R_k` of degree\n`\u2308(k-2)/2\u2309` over degree `\u2308(k-2)/2\u2309` such that, for every odd population `n \u2265 k`,\n\n`n \u00b7 (k \u00b7 surv n \u2212 failProb (n\u2212k) k) = R_k(n)`,   with   `R_k(\u221e) = C(k,2) = k(k\u22121)/2`.\n\nThe first five instances, found by exact rational computation, are\n`R_2 = 1`, `R_3 = 3`, `R_4(n) = (6n\u221213)/(n\u22122)`, `R_5(n) = (10n\u221225)/(n\u22122)`,\n`R_6(n) = (15n\u00b2\u2212105n+183)/((n\u22122)(n\u22124))`.\n\n**The key insight is** that the defect recursion\n`(v+k+3)\u00b7D(v+2,k+1) = (k+1)\u00b7D(v+1,k) + (v+2)\u00b7D(v,k+1)` is *free of the survival product*:\nthe union-bound term cancels identically because the survival ladder and the population\nladder step in lockstep, so on the odd-population fibre \u2014 where the `surv`-valued\ninhomogeneity is absent \u2014 the recursion closes inside the field of rational functions of\n`n`, and the degree can only grow by one every two steps.\n\n**Why now?**  We have just proved the exact `k = 2` and `k = 3` cases\n(`failProb_two_wolves_odd`, `failProb_three_wolves_odd`), proved the sharp upper bound\n`n\u00b7D \u2264 C(k,2)` for all `k` (`defect_scaled_le`), and verified the shape of `R_4, R_5, R_6`\nin exact arithmetic.  The only missing ingredient is a closed recursion for the coefficient\nvectors of `R_k`, which the defect recursion supplies directly.\n\n*If true*: the odd-population game is solved in closed form for every fixed `k`, and\n`n\u00b7D \u2192 C(k,2)` follows immediately, upgrading `defect_scaled_le` from an inequality to an\nasymptotic equality.  *If false*: the defect must carry a transcendental (Wallis-type)\ncomponent even on the odd fibre, which would be a genuinely surprising asymmetry.\n\n---",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_3829",
+    "priority_score": 0.5,
+    "research_mode": "team",
+    "source_exp_id": "b8859dfd",
+    "status": "available",
+    "timestamp": "2026-08-23T10:41:03.712500+00:00",
+    "title": "Direction 1 \u2014 Rational-Function Ladder for Odd-Population Defects"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**Conjecture.**  On the *even*-population fibre no such rational description exists: for\nevery `k \u2265 3` the scaled defect satisfies\n\n`n \u00b7 (k \u00b7 surv n \u2212 failProb (n\u2212k) k) = S_k(n) \u00b7 surv (n\u22122)`\n\nwith `S_k` rational and `S_k(\u221e) = c_k > 0`, so that the even-population defect is\n`\u0398(n^{-1/2})` and is *not* a rational function of `n`.\n\nThe first cases, proved this cycle, are `S_2 = 0`, `S_3 = 1`, `S_4 = 4`\n(`defect_two_wolves_even`, `defect_three_wolves_even`, `defect_four_wolves_even`).\n\n**The key insight is** that the two parity fibres of the recursion are not symmetric: the\nodd fibre is fed by boundary data at `v = 1` (the \"one villager left\" absorbing state,\nwhere `failProb = 1` exactly), whereas the even fibre is fed at `v = 0`, whose value\n`k\u00b7surv k \u2212 1` still carries the survival product \u2014 so the Wallis irrationality survives on\none fibre and is annihilated on the other.\n\n**Why now?**  The three base cases are already theorems, and `defect_recursion` reduces the\ngeneral statement to an induction on `k` alone.  Combined with Direction 1 this would give\na complete two-fibre solution of the game.\n\n*If true*: the parity dichotomy is not merely a difference of constants but a difference of\n*arithmetic type* \u2014 rational on one fibre, Wallis-transcendental on the other.\n*If false*: some `k` has a rational even-fibre defect, which would force a hidden algebraic\nrelation among the central binomial coefficients.\n\n---",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_3830",
+    "priority_score": 0.5,
+    "research_mode": "team",
+    "source_exp_id": "b8859dfd",
+    "status": "available",
+    "timestamp": "2026-08-23T10:41:04.239910+00:00",
+    "title": "Direction 2 \u2014 Wallis Obstruction on the Even Fibre"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**Conjecture.**  Consider the family of information-free games in which, after a day that\nmisses a wolf, exactly `d \u2265 1` villagers are removed at night.  Then the population drops\nby `d+1` per round, the conserved quantity is the population mod `d+1`, and the rescaled\nwolf-win probability has exactly `d+1` distinct subsequential limits\n`c_0, \u2026, c_d` with\n\n`c_j / c_0 = \u0393-quotients of the form \u0393(1 \u2212 j/(d+1))/\u0393(1 + j/(d+1))`,\n\nspecializing at `d = 1` to the ratio `\u03c0/2` proved this cycle.\n\n**The key insight is** that the survival product along a step-`(d+1)` ladder is a ratio of\nGamma functions by the Gauss multiplication formula, and the parity (more precisely, the\nresidue class mod `d+1`) selects which shift of the Gamma argument appears \u2014 the Wallis\n`\u03c0/2` being the reflection-formula value at `d = 1`.\n\n**Why now?**  The `d = 1` case is fully proved (`parity_constant_ratio`,\n`tendsto_parity_ratio`, `not_tendsto_scaled_failProb`), and the proof factors entirely\nthrough the identity `surv n \u00b7 surv (n+1) = 1/(n+1)` (`surv_mul_succ_gen`), whose\nstep-`(d+1)` analogue is an immediate telescoping computation.  Mathlib now contains enough\n`Real.Gamma` API to close the resulting limit.\n\n*If true*: the `\u03c0/2` gap is one member of a Gamma-valued family, and \"parity\" is revealed as\na shadow of the reflection formula.  *If false*: the `d = 1` case is exceptional, which\nwould point to a hidden extra symmetry of the alternating day/night structure.\n\n---",
+    "domains": [
+      "Computation",
+      "Logic"
+    ],
+    "id": "fd_3831",
+    "priority_score": 0.5,
+    "research_mode": "team",
+    "source_exp_id": "b8859dfd",
+    "status": "available",
+    "timestamp": "2026-08-23T10:41:04.765779+00:00",
+    "title": "Direction 3 \u2014 Universality of the `\u03c0/2` Parity Gap"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Replace algebraic spheres in `Type` by bundled topological spaces, equip the dependent product with the product topology, and establish the corresponding categorical product in `TopCat`.",
     "domains": [
       "Algebra",
@@ -33705,6 +33721,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "**Conjecture.**  For every wolf count `k \u2265 1` and every population `n`, the quantity\n`n \u00b7 (failProb (n\u2212k) k / k)\u00b2` lies strictly below `1` when `n` is even and at or above `1`\nwhen `n` is odd \u2014 that is, the separator `1 = \u221a(2/\u03c0) \u00b7 \u221a(\u03c0/2)` proved for `k = 1`\n(`failProb_sq_parity_even`, `failProb_sq_parity_odd`) governs *every* wolf count, at every\nfinite population, with no asymptotics.\n\n**The key insight is** that the separator is exactly the geometric mean of the two limiting\nconstants (`parity_constants_geometric_mean`), and the identity\n`surv n \u00b7 surv (n+1) = 1/(n+1)` says the survival ladder is *self-reciprocal* about that\nmean \u2014 a symmetry that the union bound preserves up to the `C(k,2)/n` defect, which is\nprecisely the size needed for the inequality to survive division by `k`.\n\n**Why now?**  The `k = 1` case is proved by a purely rational certificate, and\n`defect_scaled_le` supplies exactly the quantitative control on `failProb / k` needed to\npropagate the argument to general `k`.  The remaining step is a comparison between\n`C(k,2)/(kn)` and the gap `1 \u2212 n\u00b7surv n\u00b2`, both now explicitly bounded.\n\n*If true*: the parity dichotomy holds pointwise, not just asymptotically, for the whole\nfamily \u2014 an unusually strong form of a \"two expansions\" statement.  *If false*: there is a\nsmall-`n`, large-`k` window in which the union-bound defect overwhelms the separator, and\nlocating it would pin down the exact regime of validity of the inclusion\u2013exclusion\nheuristic.\n\n---\n\n```json future_directions.json\n[\n  {\n    \"title\": \"Rational-Function Ladder for Odd-Population Defects\",\n    \"domain\": \"Probability\",\n    \"description\": \"The scaled union-bound defect of the information-free werewolf game appears, on the odd-population fibre, to be an explicit rational function of the population whose limit is the binomial coefficient C(k,2). Exact rational computation gives R_2 = 1, R_3 = 3, R_4(n) = (6n-13)/(n-2), R_5(n) = (10n-25)/(n-2), R_6(n) = (15n^2-105n+183)/((n-2)(n-4)). Establishing the pattern would solve the odd-population game in closed form for every fixed wolf count.\",\n    \"conjecture\": \"For every k >= 2 there is a rational function R_k of degree ceil((k-2)/2) over degree ceil((k-2)/2) with R_k(infinity) = k(k-1)/2 such that for every odd population n >= k one has n * (k * surv n - failProb (n-k) k) = R_k(n).\",\n    \"test\": \"Extend the exact-closed-form ladder in Exact.lean / SecondOrder.lean to k = 4, 5, 6 by induction along the defect recursion defect_recursion, and verify the coefficient recursion by exact rational evaluation for k up to 10 and n up to 200.\",\n    \"if_true\": \"The odd-population game is solved in closed form for every fixed k, and n*defect -> C(k,2) follows, upgrading defect_scaled_le from an inequality to an asymptotic equality.\",\n    \"if_false\": \"The defect carries a transcendental Wallis component even on the odd fibre, revealing an unexpected asymmetry between the two parity fibres.\",\n    \"proof_strategy\": \"Use defect_recursion, which",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_3832",
+    "priority_score": 0.44050379192117534,
+    "research_mode": "team",
+    "source_exp_id": "b8859dfd",
+    "status": "available",
+    "timestamp": "2026-08-23T10:41:05.526322+00:00",
+    "title": "Direction 5 \u2014 Finite-Population Separator as a Geometric Mean"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "**Conjecture.** For every odd prime `m`, the Chebyshev-type coefficient\n`A_m(t)` (`A\u2080 = 0`, `A\u2081 = 1`, `A_{n+2} = t\u00b7A_{n+1} \u2212 A_n`) factors as\n`A_m(t) = \u03a8_m(t) \u00b7 (\u22121)^{(m\u22121)/2} \u03a8_m(\u2212t)`, where `\u03a8_m` is the minimal\npolynomial of `\u03b6_m + \u03b6_m\u207b\u00b9`, and moreover `A_{m\u22121}(t) + 1 = \u03a8_m(t) \u00b7 R_m(t)`\nwith `R_m` coprime to `\u03a8_m` modulo every prime `p \u2224 m`. Consequently `\u03a8_m` has\na root mod `p` iff `p \u2261 \u00b11 (mod m)`, for all odd prime conductors at once.\n\n*The key insight is* that `A_m` is the \"order-`m` locus\" of the trace map on\n`SL\u2082`, and the two factors correspond to the two ways an order-`m` element can\narise, `\u03b6 + \u03b6\u207b\u00b9` and `\u2212(\u03b6 + \u03b6\u207b\u00b9)`; the second condition `A_{m\u22121} = \u22121` is\nprecisely what discards the `\u2212` branch.\n\n*Why now?* `TraceOrder.cheb_root_iff` already reduces the arithmetic to these\ntwo polynomial identities, and they were verified and proved by `ring` for\n`m = 5, 7, 11` (`TraceOrder.golden_iff`, `TraceOrder.cubic_seven_iff`,\n`TraceOrder.quintic_eleven_iff`). In each case the B\u00e9zout identity between the\ntwo spurious factors turned out to be *integral* (denominator 1), which is the\nuniform statement one has to prove. Only the uniform-in-`m` factorisation is\nmissing; it is a statement about `\u2124[t]`, not about primes, so it is within\nreach of a resultant computation.",
     "domains": [
       "NumberTheory",
@@ -33998,19 +34029,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T06:21:52.095620+00:00",
     "title": "Complementation as a free involution"
-  },
-  {
-    "consumed_by_exp_id": "b8859dfd",
-    "description": "**Conjecture.** For every fixed wolf count `k`, the information-free village win probabilities have two distinct asymptotic expansions according to the parity of the initial population, with a common leading limit but different first-order corrections.\n\nThe key insight is that daytime and nighttime villager losses occur in pairs after a miss, preserving a parity trace until absorption. **Why now?** Exact values from seven through twenty players show a stable even/odd oscillation that the proposed single quadratic scaling cannot capture.",
-    "domains": [],
-    "id": "fd_1959",
-    "phase": "A",
-    "priority_score": 0.4390588235294117,
-    "research_mode": "team",
-    "source_exp_id": "c83ba873",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T06:21:57.945539+00:00",
-    "title": "Parity-corrected asymptotics for the information-free game"
   },
   {
     "consumed_by_exp_id": "",
@@ -41187,14 +41205,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Empirical DNA claims"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6f1d7e50",
     "description": "Introduce finite tensor-network cut data and prove a\n   finite cut-wise Singleton inequality before investigating equality with entropy.",
     "domains": [],
     "id": "fd_2432",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "c612ec41",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:24:11.053522+00:00",
     "title": "Cut-indexed defects"
   },

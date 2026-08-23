@@ -1,7 +1,7 @@
 {
   "part": "6",
-  "archived_at": "2026-08-23T09:44:09Z",
-  "count": 119,
+  "archived_at": "2026-08-23T10:41:05Z",
+  "count": 120,
   "directions": [
     {
       "ambition_level": "extension",
@@ -4787,6 +4787,46 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 161
+    },
+    {
+      "id": "fd_1757",
+      "title": "Harmonic Measure on the Berggren Tree Boundary — Random Walks and the 3-adic Cantor Set",
+      "description": "**Domain**: Pythagorean <-> Probability\n\n**Hypothesis**: The boundary of the Berggren ternary tree of primitive Pythagorean triples is a 3-adic Cantor set, and a random walk on the tree (choosing among the three Berggren moves with probabilities p₁,p₂,p₃) converges to a harmonic measure on this boundary whose dimension and entropy are exactly computable. The conjecture: the harmonic measure of the random walk is a Bernoulli measure on the 3-adic boundary with entropy equal to the Shannon entropy H(p₁,p₂,p₃), and the spectral gap of the walk (the second eigenvalue of the associated Markov operator on the tree) is governed by the silver ratio log(1+√2) structure of the tree's growth.\n\n**Test**: Formalize the boundary of the Berggren tree as the set of infinite words over the 3-letter alphabet {A,B,C}, i.e., the 3-adic Cantor set. Define the random walk with transition probabilities (p₁,p₂,p₃). Prove the harmonic measure is the product Bernoulli measure, compute its entropy and Hausdorff dimension, and compute the spectral gap of the Markov operator. Relate the return probabilities to the silver-ratio growth exponent already proven for the tree.\n\n**Why now**: The catalog has exact metric growth (silver speed limit), the groupoid structure, and the hyperbolic embedding — but no probabilistic/ergodic theory. Random walks on the Berggren tree are a natural, untouched probabilistic counterpart to the deterministic geometry, connecting to the theory of random walks on hyperbolic groups, harmonic measure, and the geometry of Cantor-set boundaries.\n\n**If true**: The Berggren tree becomes a fully understood example in the theory of random walks on hyperbolic trees — with exact harmonic measure, entropy, and spectral gap — a clean probabilistic companion to its deterministic geometry, with connections to the theory of free groups and their boundaries.\n\n**If false**: The harmonic measure fails to be Bernoulli (e.g., the boundary carries a non-product measure), which would reveal hidden structure in how the three moves distribute mass, itself a novel statement.\n",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 1000.0,
+      "status": "completed",
+      "consumed_by_exp_id": "fe1191f5",
+      "timestamp": "2026-08-20T22:45:47.164095+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.88,
+      "domain_quality_penalty": 0.0,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-08-21T05:49:34.700558+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 159
     }
   ]
 }
