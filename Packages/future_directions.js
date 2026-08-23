@@ -1631,16 +1631,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-58 #1 \u2014 TDIAL-U52: the dial survives uniform draws at bitlen 52 (paper 183 addendum)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c38d70d3",
     "description": "## NET-64 \u2014 limited-memory axis, round 17 (paper 149, ResearchOutput/exp_net64_fine2048B.py, /tmp/net64.log)\n\n**Verdict name: THE-CORPUS-B-DISAGREEMENT-WAS-A-GRID-ARTIFACT.**\n\n### Result\nCorpus-B fine sweep at ctx=2048 (gate exact):\n\n| k | 20 | 24 | 28 | 32 |\n|---|---|---|---|---|\n| retained | 0.9790 \u2717 | **0.9832 \u2713** | 0.9853 \u2713 | 0.9862 \u2713 |\n\n**k\\*(2048) = 24 \u2014 IDENTICAL to corpus-A's fine knee.**\n\n- **P1 REFUTED**: no shard-level difference at long context \u2014 the fine knees match.\n- **P2 CONFIRMED**: corpus-B's coarse-grid 32 was a grid artifact.\n- **P3 REFUTED**: nothing \"between\".\n\n### The completed chain\nThe full 0.5B fine-grid chain **{16, 20, 24} at {512, 1024, 2048} now replicates EXACTLY across two disjoint wikitext shards at every cell** \u2014 every entry of the deployment table is dual-corpus-confirmed. Baseline note: corpus-B acc 0.4946 vs A's 0.4760 (shard-2 text is easier) yet identical knees \u2014 accuracy level and knee position are independent.\n\n### All 8 barriers\n(a) clean \u2014 three horns pre-stated incl. two refuted; (b) clean; (c) confronted \u2014 12 windows stated; (d) clean; (e) deterministic; (f) clean \u2014 ALL_DONE_NET63 marker (reused harness); (g) fair \u2014 byte-identical harness except corpus path; (h) DIRECT.\n\n### Next\nDomain-jump corpora (code/math); 1.5B fine grids; 7B quantized-offload cell.\n\nNow 64 network experiments. Assessment v64. Paper 149.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3715",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T18:51:45.082625+00:00",
     "title": "NET-64: THE-CORPUS-B-DISAGREEMENT-WAS-A-GRID-ARTIFACT \u2014 corpus-B fine knee at 2048 is also 24; the {16,20,24} chain replicates exactly across both corpora at all three contexts"
   },
@@ -1685,21 +1686,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-22T18:51:45.087483+00:00",
     "title": "FACT round-57 #1 \u2014 TDIAL-U48B: the zero-fit dial holds on uniform draws at bitlen 48 (paper 184)"
-  },
-  {
-    "consumed_by_exp_id": "258afb8b",
-    "description": "## NET-72 \u2014 limited-memory axis, round 25 (paper 157, ResearchOutput/exp_net72_french.py, /tmp/net72.log)\n\n**Verdict name: THE-FRENCH-KNEE-EXCEEDS-THE-GRID.**\n\n### Result\nDomain jump to French prose (gate exact; one Gutenberg source, second 404'd \u2014 honest limit):\n\n| ctx | best grid point | retained | verdict |\n|---|---|---|---|\n| 512 | 24 | **0.9648 \u2717** | knee > 24 |\n| 1024 | 32 | **0.9680 \u2717** | knee > 32 |\n\nFull acc: 0.584/0.591 (higher than prose's 0.446/0.461).\n\n- **ALL THREE HORNS REFUTED**: the domain shift exceeds +8 keys, far past every pre-stated bracket.\n- The accuracy/knee decoupling now has BOTH SIGNS: code easier AND fewer keys; math harder AND equal; French easier AND MORE keys.\n\n### The law\nThe domain-shift law is NOT a simple \u00b14 fine-step: language families differ by whole grid ranges. The four-domain table was complete for its four domains but does not interpolate to unseen languages. Mechanism hypothesis: the tax is TOKENIZATION-mediated (Qwen's tokenizer spends more tokens per French word, diluting each token's attention contribution) \u2014 testable via tokens-per-word measurement.\n\n### All 8 barriers\n(a) clean; (b) clean \u2014 first beyond-grid result; (c) confronted \u2014 one source, sub-knee ceiling stated; (d) clean; (e) deterministic; (f) clean \u2014 ALL_DONE_NET72; (g) fair \u2014 only text changed; (h) DIRECT \u2014 multilingual serving cannot interpolate budgets.\n\n### Next\nTokens-per-word mechanism test; extended grid {48, 64}; more languages; 7B cell.\n\nNow 72 network experiments. Assessment v72. Paper 157.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3730",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T19:36:57.212812+00:00",
-    "title": "NET-72: THE-FRENCH-KNEE-EXCEEDS-THE-GRID \u2014 no grid point reaches the bar on French prose (knee >24 @512, >32 @1024); domain shifts are NOT \u00b14 fine-steps"
   },
   {
     "consumed_by_exp_id": "e4ce2d9a",
@@ -3404,6 +3390,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Prove the invariant subspace theorem for compact operators on Hilbert spaces (Aronszajn-Smith). Formalize Lomonosov's theorem: operators commuting with a nonzero compact operator have invariant subspaces. Explore the Enflo-Read counterexample structure.",
+    "domains": [
+      "Analysis",
+      "Algebra"
+    ],
+    "id": "fd_0661",
+    "priority_score": 0.9,
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-07-24T14:34:16.697771+00:00",
+    "title": "Invariant Subspace Problem: Special Cases"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Formalizes Voiculescu's free probability: the free central limit theorem showing that normalized sums of freely independent identically distributed bounded random variables converge in distribution to the semicircle law, developed through the R-transform and free cumulants.",
     "domains": [
       "Probability",
@@ -3758,20 +3759,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Cycle db2f2b2f (Q=0.900) proved 426 theorems in Physics but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalizes a quantum random walk on the Berggren Pythagorean tree where constructive interference at energy spectrum minima collapses the state onto factors of N.",
-    "domains": [
-      "Physics"
-    ],
-    "id": "sorry_fill_db2f2b2f_2c9a34de",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "db2f2b2f",
-    "status": "available",
-    "timestamp": "2026-08-20T11:43:09.622584+00:00",
-    "title": "Close Proofs: Quantum-Pythagorean-Walk: Polynomial Time Integer Factorization via Tr"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'A Chain-Level Borsuk--Ulam Obstruction Proof of Norine's Antipodal-Coloring Conjecture' and formalize its key results. Abstract: We prove Norine's conjecture: every red--blue edge-coloring of the \\(n\\)-dimensional hypercube \\(Q_n\\), \\(n\\geq2\\), in which antipodal edges have opposite colors contains a monochromatic path joining some vertex to its antipode. From a hypothetical counterexample we construct an antipodally equivariant, augmentation-preserving chain map from the cellular chains of the cubical boundary of a cube to subdivision-invariant polyhedral chains on a sphere of one lower dimension. A purely algebraic chain-level Borsuk--Ulam obstruction rules out this map.",
     "domains": [
       "Algebra",
@@ -3786,36 +3773,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-22T03:54:11.648214+00:00",
     "title": "ArXiv paper: A Chain-Level Borsuk--Ulam Obstruction Proof of Norine's Antipodal-Coloring Conjecture"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize the theory of continued fractions in Lean 4: convergents, best rational approximations, Hurwitz's theorem (|\u03b1 - p/q| < 1/(\u221a5 q\u00b2) for infinitely many p/q). Prove Liouville's theorem on transcendental numbers via Diophantine approximation bounds.",
-    "domains": [
-      "NumberTheory",
-      "Analysis"
-    ],
-    "id": "fd_0650",
-    "priority_score": 0.84,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-24T14:34:16.697740+00:00",
-    "title": "Continued Fractions and Diophantine Approximation"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove the invariant subspace theorem for compact operators on Hilbert spaces (Aronszajn-Smith). Formalize Lomonosov's theorem: operators commuting with a nonzero compact operator have invariant subspaces. Explore the Enflo-Read counterexample structure.",
-    "domains": [
-      "Analysis",
-      "Algebra"
-    ],
-    "id": "fd_0661",
-    "priority_score": 0.84,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-07-24T14:34:16.697771+00:00",
-    "title": "Invariant Subspace Problem: Special Cases"
   },
   {
     "consumed_by_exp_id": "",
@@ -11968,6 +11925,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "A security theorem quantified over output distributions whose collision probability is below the uniform value 2^{-\u2113} is vacuous. This thread found and repaired exactly such a defect in the catalog's privacy-amplification bound. The conjecture is that a single general satisfiability criterion decides vacuity for the whole family of R\u00e9nyi-2 / min-entropy / guessing-probability hypotheses.\n\nA hypothesis of the form \u2211 p^2 \u2264 f(\u2113,k) over normalized p on 2^\u2113 points is satisfiable iff f(\u2113,k) \u2265 2^{-\u2113}, and every leftover-hash statement with f(\u2113,k) < 2^{-\u2113} is vacuous.\n\nProve the general iff in Lean (one direction is collision_ge_uniform, the other the uniform witness), then apply it mechanically to each collision-style hypothesis in the catalog.\n\nA reusable audit lemma that certifies non-vacuity of cryptographic statements, protecting future formalizations from the same defect.\n\nSome hypothesis shape admits satisfiability below the uniform collision value, which would contradict Cauchy\u2013Schwarz and hence indicate a mis-statement of the normalization.",
+    "domains": [
+      "Combinatorics",
+      "Computation"
+    ],
+    "id": "fd_3844",
+    "priority_score": 0.7097741935483872,
+    "research_mode": "team",
+    "source_exp_id": "242b27e9",
+    "status": "available",
+    "timestamp": "2026-08-23T13:03:30.851473+00:00",
+    "title": "Cauchy\u2013Schwarz Vacuity Audit for Leftover-Hash Hypotheses"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Mode-convergence statements (binomial to Poisson, Poisson to normal) should be continuity statements for the map \u03b8 \u21a6 (\u2308\u03b8\u2309\u208a - 1, \u230a\u03b8\u230b\u208a). The conjecture is that brackets stabilise along any family of threshold windows whose thresholds converge to a non-integer, and genuinely oscillate when the limit is an integer.\n\nFor threshold windows with \u03b8_j \u2192 \u03b8: if \u03b8 \u2209 \u2115 then eventually firstArgmax = lastArgmax = \u230a\u03b8\u230b\u208a; if \u03b8 \u2208 \u2115 both \u230a\u03b8\u230b\u208a - 1 and \u230a\u03b8\u230b\u208a occur as brackets for infinitely many j in a suitable family.\n\nProve eventual constancy of Nat.floor and Nat.ceil near a non-integer, apply to \u03b8_n = lam + lam/n, and construct an oscillating family for integral \u03b8.\n\nExplains uniformly why approximation theorems transfer modes, with explicit thresholds for 'eventually'.\n\nBracket transfer requires more than threshold convergence, e.g. uniform control of the criteria.",
     "domains": [
       "Algebra",
@@ -12895,6 +12867,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-22T01:51:05.976839+00:00",
     "title": "Square-Root Depth Profile of the Berggren Tree"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Localizing the transcendental BB84 threshold by integer certificates costs certificate bit-length proportional to (a+c)\u00b7log(a+c) per decimal digit of the QBER denominator. The conjecture is an exact yield law relating certificate size to certified digits, making certificate cost predictable rather than empirical.\n\nCertifying d decimal digits of Q* requires certificates of bit-length \u0398(10^d \u00b7 d), and no scheme based on comparing (a+c)^(2(a+c)) with 2^(a+c)\u00b7a^(2a)\u00b7c^(2c) can do better.\n\nMeasure certificate bit-lengths at denominators 10^2, 10^3, 10^4 (already present in the catalog) and 10^5; fit, then prove the lower bound via the two Lipschitz bounds, which convert digit accuracy into an explicit two-sided rate margin.\n\nCertificate cost for QKD parameter tables becomes predictable, and the four-decimal enclosure is provably near-optimal for its size.\n\nA sub-exponential certification scheme exists, which would be a significant improvement in machine-checked transcendental localization.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_3842",
+    "priority_score": 0.6704576271186442,
+    "research_mode": "team",
+    "source_exp_id": "242b27e9",
+    "status": "available",
+    "timestamp": "2026-08-23T13:03:29.815666+00:00",
+    "title": "Digit Yield of Integer Threshold Certificates"
   },
   {
     "consumed_by_exp_id": "",
@@ -13873,17 +13859,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "Order Transfer and the Transreal Intermediate Value Theorem"
   },
   {
-    "consumed_by_exp_id": "242b27e9",
-    "description": "Finite-key BB84 analyses subtract O(sqrt(n)) statistical corrections from the asymptotic rate. Since the certificate lemmas already deliver explicit rational lower bounds for r at rational Q, a machine-checked finite-key statement of the form 'measured QBER at most 0.11002786 implies extractable length at least n r(Q) - O(sqrt n)' is within reach.\n\nFor every rational Q below the certified threshold there is an explicit rational rho(Q) > 0 and constant C with extractable key length at least n rho(Q) - C sqrt(n log(1/eps)).\n\nCombine secureKeyRate_gt_of_cert_pade with the leftover-hash bound already in the catalog and instantiate at Q = 11/100.\n\nEnd-to-end machine-checked QKD parameter tables, with no floating point anywhere in the chain.\n\nThe statistical corrections dominate at realistic n, showing the asymptotic threshold is the wrong figure of merit for deployment.",
+    "consumed_by_exp_id": "",
+    "description": "The proved two-sided law brackets the break-even block size between C\u00b2ln(1/\u03b5)/(44\u03b4\u00b2) and C\u00b2ln(1/\u03b5)/(9\u03b4\u00b2) with \u03b4 = Q*\u2212Q. Both constants are lossy because each replaces the entropy derivative log((1\u2212Q*)/Q*) by a rational bound valid on a whole interval. Evaluating the derivative at the certified enclosure of Q* should collapse the ratio to 1 + O(10\u207b\u2074), upgrading the \u0398-bracket to a certified asymptotic constant.\n\nFor Q in [1/10, Q*), n*(Q) = C\u00b2ln(1/\u03b5)/(K\u00b2\u03b4\u00b2)\u00b7(1 + O(\u03b4)) with K = 2log\u2082((1\u2212Q*)/Q*) rational to four decimals, and the certified upper and lower constants differ by less than 1 %.\n\nRe-run breakeven_ge_of_gap and breakeven_le_of_gap with the Lipschitz constants instantiated on [Q, Q*] using the enclosure Q* \u2208 (0.1100, 0.1101) rather than on [1/10, 1/5]; check numerically against the direct computation n* \u2248 1.25\u00b710\u00b9\u00b9 at Q = 11 %.\n\nA closed-form deployment rule with a certified constant, not merely a scaling law.\n\nThe remaining slack is intrinsic to the \u221an accounting rather than to the entropy estimate, which would localize the loss in the AEP correction term.",
     "domains": [],
-    "id": "fd_3435",
-    "phase": "A",
+    "id": "fd_3843",
     "priority_score": 0.5932142857142858,
     "research_mode": "team",
-    "source_exp_id": "f87f1170",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T17:45:45.843761+00:00",
-    "title": "Finite-Key Bounds on a Certified Asymptotic Core"
+    "source_exp_id": "242b27e9",
+    "status": "available",
+    "timestamp": "2026-08-23T13:03:30.361893+00:00",
+    "title": "Unit Constant Ratio for the Break-Even Law"
   },
   {
     "consumed_by_exp_id": "",
@@ -13956,6 +13941,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-22T20:41:07.127382+00:00",
     "title": "Degree-1 Ceiling as a Pre-Fit Target Sorter"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The finite-key machinery here is parametric in the rational rate rho and in the threshold zero Q*, so a certified positive rate for two-way post-processing above 11 % QBER would immediately extend the whole parameter table and the two-sided break-even law. The conjecture is that the same integer-certificate technique certifies positivity of the advantage-distillation rate up to roughly 20 % QBER.\n\nFor the two-way advantage-distillation rate r\u2082(Q), there are integer certificates proving r\u2082(Q) > 0 for every rational Q \u2264 0.19, and the corresponding break-even block sizes obey the same \u0398((Q\u2082*\u2212Q)^{-2}) law.\n\nDefine r\u2082 in Lean, derive its rational form analogous to secureKeyRate_ratio_eq, and search for the optimal pair (m, num/den) of the hybrid certificate at Q = 0.15, 0.18, 0.19.\n\nThe certified QKD parameter table extends past the one-way threshold, and the deployment moral (finite-key corrections dominate) is shown to be threshold-independent.\n\nTwo-way protocols have a genuinely different finite-key structure, isolating where the O(\u221an) accounting of this thread stops applying.",
+    "domains": [],
+    "id": "fd_3845",
+    "priority_score": 0.5923214285714287,
+    "research_mode": "team",
+    "source_exp_id": "242b27e9",
+    "status": "available",
+    "timestamp": "2026-08-23T13:03:31.346795+00:00",
+    "title": "Advantage Distillation Above the One-Way Threshold"
   },
   {
     "consumed_by_exp_id": "",
@@ -23461,6 +23458,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The hybrid dyadic\u2013Pad\u00e9 certificate log(N/D) \u2265 m\u00b7log 2 + 2(y\u22121)/(y+1) with y = N/(2^m\u00b7D) is now proved, with residual error cubic in y\u22121. Iterating the Pad\u00e9 step on successive square roots, using log y = 2^k\u00b7log(y^{1/2^k}), should shrink the residual like 4^{-k} at a certificate cost linear in 2^k. This would give the tightest rational key-rate certificates obtainable from a fixed integer budget.\n\nFor every rational QBER a/(a+c) and every k, the k-fold iterated root certificate lower-bounds the key rate with relative error O(4^{-k}), each step being a single integer comparison between N^{2^k} and a dyadic multiple of D^{2^k}.\n\nFormalize log(N/D) = 2^k\u00b7log((N/D)^{1/2^k}) and apply log_pade_lower at each level on top of secureKeyRate_ge_of_cert_hybrid; instantiate at Q = 10 % and 11 % for k = 1, 2, 3 and compare with the exact values 0.0620088 and 1.68084e-4 bits.\n\nA uniform, arbitrarily sharp certificate calculus for all rational QBERs, superseding both parent schemes.\n\nThe Pad\u00e9 residual does not compose across roots, isolating an obstruction to iterated rational certification of transcendental rates.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_3841",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "242b27e9",
+    "status": "available",
+    "timestamp": "2026-08-23T13:03:29.331855+00:00",
+    "title": "Geometric Convergence of Iterated Root Certificates"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "**Conjecture.**  Let `f : \u211d \u2192 \u211d` be continuous and piecewise linear with exactly `r`\nkinks.  Then the minimal `k` for which there exist `a b c : Fin k \u2192 \u211d` and `p q : \u211d`\nwith `reluNet a b c p q = f` is exactly `r`.\n\n*The key insight is* that `reluNet_kink_witness` already converts a nonvanishing\ndiscrete second difference into a *distinct* unit whenever the test windows are\ndisjoint, so the lower bound `r \u2264 k` needs no convexity, no differentiability, and no\nsign pattern \u2014 only separation of the kinks; the matching upper bound is the telescoping\nconstruction used in `intervalStep_eq_four_relu`.\n\n*Why now?*  This cycle proved the two smallest instances (`r = 2` for the scalar\nclipped update, `r = 4` for the interval update) with the same mechanism, and\n`descent_step_relu_width_dichotomy` shows the width is a genuine invariant of the\ntropical minimizer geometry rather than an artifact of the formula.\n\n---",
     "domains": [
       "Geometry",
@@ -26087,6 +26098,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-23T11:36:17.602640+00:00",
     "title": "D2. The base is a concentration invariant"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The key insight is that the bound `knee \u2265 tau\u00b2/C` needs no tokenizer, no domain\nlabel and no notion of \"word\": it is computed from the attention weights alone,\nand it is sharp on the flat profile, so it cannot be improved as a function of\nthe collision mass. Why now? Attention maps are already logged in the existing\nsweeps, so the collision mass costs one extra reduction per head; the immediate\ntest is whether French exhibits a smaller collision mass than English at the\nsame context length, and whether the ratio of collision masses tracks the ratio\nof knees across all five domains. If it does, budget provisioning becomes a\nmeasurement on the model rather than a per-language calibration campaign.",
+    "domains": [
+      "MachineLearning"
+    ],
+    "id": "fd_3840",
+    "priority_score": 0.5172222222222222,
+    "research_mode": "team",
+    "source_exp_id": "258afb8b",
+    "status": "available",
+    "timestamp": "2026-08-23T13:03:10.236301+00:00",
+    "title": "Collision mass as a domain-free knee predictor"
   },
   {
     "consumed_by_exp_id": "",
@@ -37670,14 +37695,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "All the ingredients are formalised and sorry-free here: the factor group lemma"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3a849502",
     "description": "The breakdown theorem is formalised and the two measured normalised distributions\nare encoded (`isMedian_ratios16`, `isMedian_ratios8`); the only missing ingredient is the\nsharpness half, which is a finite computation on the measured triples.",
     "domains": [],
     "id": "fd_1493",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "6ba84571",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-18T05:45:46.093221+00:00",
     "title": "The breakdown theorem is formalised and the two measured normalised distributions"
   },

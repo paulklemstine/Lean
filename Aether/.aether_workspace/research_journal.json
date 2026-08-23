@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "663f5de8",
-      "domain": "Computation",
-      "key_insight": "# Future directions: the corrected-product torsor\n\nThis cycle turned `f ⋆ g = q · f · g` from a \"well-posed operation\" into a fully described\nalgebraic object: a torsion-free, uniquely divisible abeli",
-      "quality_score": 0.89,
-      "sorry_count": 0,
-      "theorem_count": 112,
-      "timestamp": "2026-08-21T23:38:53",
-      "title": "The corrected-product operation is now a proved closure property"
-    },
-    {
       "cycle_id": "1210c28a",
       "domain": "Pythagorean",
       "key_insight": "# Future directions: clique sums as a gluing calculus for graph invariants\n\nThe cycle reported here formalised clique sums (`IsCliqueSum`, `IsWeakCliqueSum`) and\nestablished:\n\n* an independent set mee",
@@ -499,19 +489,19 @@
       "theorem_count": 72,
       "timestamp": "2026-08-23T13:03:22",
       "title": "NET-72: THE-FRENCH-KNEE-EXCEEDS-THE-GRID — no grid point reaches the bar on French prose (knee >24 @"
+    },
+    {
+      "cycle_id": "242b27e9",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Finite-Key Bounds on a Certified Asymptotic Core\n\nThis thread produced five Lean files in `Catalog/Applications/`, all sorry-free:\n\n* `BB84FiniteKeyBounds.lean` — the Padé `[1/1]",
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "theorem_count": 55,
+      "timestamp": "2026-08-23T13:03:36",
+      "title": "Finite-Key Bounds on a Certified Asymptotic Core"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "8da3e793",
-      "domain": "Tropical",
-      "key_insight": "# Future directions — Compression beyond the pigeonhole bound (Tropical / min-plus track)\n\nDerived from the verified results in `Catalog/Tropical/CompressionDelta/`\n(`Core`, `Amortization`, `Pigeonhol",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 73,
-      "timestamp": "2026-08-16T04:00:14",
-      "title": "Compression Research A2: Learnable shared decompressors — model is free, model delta is not"
-    },
     {
       "cycle_id": "8ed04a73",
       "domain": "Probability",
@@ -2501,15 +2491,19 @@
       "theorem_count": 72,
       "timestamp": "2026-08-23T13:03:22",
       "title": "NET-72: THE-FRENCH-KNEE-EXCEEDS-THE-GRID — no grid point reaches the bar on French prose (knee >24 @"
+    },
+    {
+      "cycle_id": "242b27e9",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Finite-Key Bounds on a Certified Asymptotic Core\n\nThis thread produced five Lean files in `Catalog/Applications/`, all sorry-free:\n\n* `BB84FiniteKeyBounds.lean` — the Padé `[1/1]",
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "theorem_count": 55,
+      "timestamp": "2026-08-23T13:03:36",
+      "title": "Finite-Key Bounds on a Certified Asymptotic Core"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "ccf34fd5",
-      "domain": "Algebra",
-      "name": "chi_ne_zero",
-      "quality": 0.8
-    },
     {
       "cycle_id": "f49038d4",
       "domain": "Cryptography",
@@ -2803,9 +2797,15 @@
       "domain": "Novelty",
       "name": "knee_ge_of_collision",
       "quality": 0.78
+    },
+    {
+      "cycle_id": "242b27e9",
+      "domain": "Applications",
+      "name": "binEntropy_lipschitz_lower",
+      "quality": 0.85
     }
   ],
-  "last_updated": "2026-08-23T13:03:22",
+  "last_updated": "2026-08-23T13:03:36",
   "open_questions": [
     {
       "context": "All proofs are complete; no `sorry`.; All proofs are complete; no `sorry`.",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "69ffd40e",
-        "quality": 0.86,
-        "theorems": 127,
-        "title": "The Lagrange engine `powerSum_rigidity` is already formalised and it isolates"
-      },
-      {
         "cycle_id": "4494e9cb",
         "quality": 0.664175,
         "theorems": 26,
@@ -3141,6 +3135,12 @@
         "quality": 0.82,
         "theorems": 91,
         "title": "NET-68: CODE-NEEDS-FEWER-KEYS — domain jump to Python shifts the knee chain down"
+      },
+      {
+        "cycle_id": "242b27e9",
+        "quality": 0.85,
+        "theorems": 55,
+        "title": "Finite-Key Bounds on a Certified Asymptotic Core"
       }
     ],
     "Bridges": [
