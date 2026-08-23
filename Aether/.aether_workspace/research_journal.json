@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "532d78bc",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — RH for the Berggren tree (Phase A, cycle v19c)\n\n## What this cycle established\n\nFormalised, `sorry`-free, in `Catalog/Novelty/`:\n\n1. **Core** (`BerggrenTreeZetaCore.lean`) — the",
-      "quality_score": 0.85,
-      "sorry_count": 0,
-      "theorem_count": 124,
-      "timestamp": "2026-08-21T19:38:01",
-      "title": "The Riemann Hypothesis for the Berggren Tree — A Zeta Function with a Provable Critical Line"
-    },
-    {
       "cycle_id": "63cef724",
       "domain": "MachineLearning",
       "key_insight": "# Future Directions — Möbius arithmetic, twist rings, and graded number theory\n\nThis cycle tested the \"Möbius integers\" conjecture literally, refuted five of its\nclaims, and relocated its surviving in",
@@ -499,19 +489,19 @@
       "theorem_count": 9,
       "timestamp": "2026-08-23T07:02:41",
       "title": "Concavity (old sub-conjecture 1)."
+    },
+    {
+      "cycle_id": "50edc087",
+      "domain": "Pythagorean",
+      "key_insight": "# Future directions\n\nDerived from the Stage-3 analysis and Stage-4 critique of this cycle.  What survived: the\nwhole grafting programme — digit recovery (`Pyth.digits_ofDigits`), lacunary irrationalit",
+      "quality_score": 0.8,
+      "sorry_count": 0,
+      "theorem_count": 129,
+      "timestamp": "2026-08-23T07:48:19",
+      "title": "Do not infer infinite-digit laws from finite prefixes"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "79242ce3",
-      "domain": "Cryptography",
-      "key_insight": "# Future directions\n\nDerived from the verified results in\n`Catalog/Cryptography/MordellDenominators/` (all statements there are proved in\nLean 4 with no `sorry`), together with the exploratory data in",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 78,
-      "timestamp": "2026-08-15T19:41:15",
-      "title": "The 'Only Bad Primes' Conjecture is False (elliptic curve denominators)"
-    },
     {
       "cycle_id": "603eb18a",
       "domain": "NumberTheory",
@@ -2501,27 +2491,19 @@
       "theorem_count": 9,
       "timestamp": "2026-08-23T07:02:41",
       "title": "Concavity (old sub-conjecture 1)."
+    },
+    {
+      "cycle_id": "50edc087",
+      "domain": "Pythagorean",
+      "key_insight": "# Future directions\n\nDerived from the Stage-3 analysis and Stage-4 critique of this cycle.  What survived: the\nwhole grafting programme — digit recovery (`Pyth.digits_ofDigits`), lacunary irrationalit",
+      "quality_score": 0.8,
+      "sorry_count": 0,
+      "theorem_count": 129,
+      "timestamp": "2026-08-23T07:48:19",
+      "title": "Do not infer infinite-digit laws from finite prefixes"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "43b197e4",
-      "domain": "MachineLearning",
-      "name": "isQR_congr",
-      "quality": 0.89
-    },
-    {
-      "cycle_id": "43b197e4",
-      "domain": "MachineLearning",
-      "name": "qrWeight_congr",
-      "quality": 0.89
-    },
-    {
-      "cycle_id": "43b197e4",
-      "domain": "MachineLearning",
-      "name": "crt_prescribe",
-      "quality": 0.89
-    },
     {
       "cycle_id": "113c03c3",
       "domain": "Cryptography",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "lagrangeExponent_concaveOn",
       "quality": 0.72
+    },
+    {
+      "cycle_id": "50edc087",
+      "domain": "Pythagorean",
+      "name": "ofDigits_add",
+      "quality": 0.8
+    },
+    {
+      "cycle_id": "50edc087",
+      "domain": "Pythagorean",
+      "name": "altBase_le",
+      "quality": 0.8
+    },
+    {
+      "cycle_id": "50edc087",
+      "domain": "Pythagorean",
+      "name": "altSeq_le",
+      "quality": 0.8
     }
   ],
-  "last_updated": "2026-08-23T07:02:41",
+  "last_updated": "2026-08-23T07:48:19",
   "open_questions": [
     {
       "context": "All proofs are complete; no `sorry`.; All proofs are complete; no `sorry`.",
@@ -3827,12 +3827,6 @@
     ],
     "Pythagorean": [
       {
-        "cycle_id": "856336cf",
-        "quality": 0.88,
-        "theorems": 29,
-        "title": "Kernel patterns"
-      },
-      {
         "cycle_id": "a5150a29",
         "quality": 0.82,
         "theorems": 52,
@@ -3885,6 +3879,12 @@
         "quality": 0.82,
         "theorems": 81,
         "title": "Formal target: define `IsCliqueSum` (sides meeting in a fixed `k`-clique `K`); p"
+      },
+      {
+        "cycle_id": "50edc087",
+        "quality": 0.8,
+        "theorems": 129,
+        "title": "Do not infer infinite-digit laws from finite prefixes"
       }
     ],
     "Shared": [
