@@ -1734,16 +1734,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "NET-69: CONTENT-WEAKNESS-IS-DOMAIN-UNIVERSAL \u2014 probes recover only R2=0.32 on code too; probe-only loses to accumulation by 12pts; hybrid non-degrading (+0.3)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "df24b765",
     "description": "## NET-79 \u2014 limited-memory axis, round 30 (paper 163, ResearchOutput/exp_net79_1p5b4096.py, /tmp/net79.log)\n\n**Verdict name: THE-ACCELERATION-IS-UNIVERSAL.**\n\n### Result\nThe 1.5B's first ctx=4096 cell (fine grid; gate identical to NET-55/65/66):\n\n| k | 16 | 20 | 24 | 28 | 36 | 44 | 56 |\n|---|---|---|---|---|---|---|---|\n| retained | 0.960 \u2717 | 0.966 \u2717 | 0.972 \u2717 | 0.974 \u2717 | 0.977 \u2717 | 0.980 \u2717 | **0.985 \u2713** |\n\n**k\\*(1.5B@4096) = 56.**\n\n- **P1 REFUTED**: the shift does not delay the acceleration.\n- **P2 CONFIRMED dramatically**: the acceleration hits all scales \u2014 56 \u2265 48.\n- **P3 REFUTED**: no intermediate landing.\n\n### The complete two-scale \u00d7 four-context table\n\n| scale | @512 | @1024 | @2048 | @4096 | increments |\n|---|---|---|---|---|---|\n| 0.5B | 16 | 20 | 24 | **40** | +4, +4, **+16** |\n| 1.5B | 16 | 16 | 18 | **56** | 0, +2, **+38** |\n\nThe increments tell the story: the 0.5B accelerates from +4 to +16 (4\u00d7), while the 1.5B accelerates from +2 to +38 (**19\u00d7**). Scale doesn't just fail to delay the acceleration \u2014 it AMPLIFIES it. At short contexts the 1.5B needs fewer or equal keys; at 4096 it needs MORE (56 vs 40). The size relationship INVERTS past the phase transition.\n\n### Deployment consequence\nFor agentic workloads: bigger models are more memory-efficient per key at \u22642048 context but LESS efficient at \u22654096. Budget tables must include both scale AND context as independent parameters with a non-monotone interaction.\n\n### All 8 barriers\n(a) clean \u2014 three horns pre-stated incl. two refuted; (b) clean \u2014 first 1.5B 4096 cell; (c) confronted \u2014 limits: 2 windows (VRAM-bound), bf16 numerics, one corpus stated; (d) clean; (e) deterministic baseline-replicating (0.4937); (f) clean \u2014 ALL_DONE_NET79; (g) fair \u2014 same bar/harness as all real-model rounds; (h) DIRECT.\n\n### Next\nFine grid between 44 and 56; crossover localization; domain-jump @4096; 7B quantized-offload cell.\n\nNow 79 network experiments. Assessment v79. Paper 163.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3741",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T20:41:46.046363+00:00",
     "title": "NET-79: THE-ACCELERATION-IS-UNIVERSAL \u2014 1.5B knee at 4096 is 56 (every point 16-44 fails); acceleration amplifies with scale (19x vs 4x); size relationship INVERTS past phase transition"
   },
@@ -2114,6 +2115,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-18T09:49:34.716388+00:00",
     "title": "Deepening: The `\u21d0` direction is proved (`FourierFA.uncertainty_eq_coset_modulation`); the `"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle f099f0f6 (Q=0.850), which proved 64 theorems in Logic. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: `\u03a3_{g\u2208G} |X^g|^k = |G| \u00b7 #(X^k/G)` for every `k`\n   (`sum_fixedPoints_pow_eq_orbits_mul_card`); `k = 1` is Burnside, `k = 2` is the rank of the\n   permutation action.",
+    "domains": [
+      "Logic"
+    ],
+    "id": "push_f099f0f6_84ed3327",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "f099f0f6",
+    "status": "available",
+    "timestamp": "2026-08-23T15:37:33.084029+00:00",
+    "title": "Deepening: Moment hierarchy"
   },
   {
     "consumed_by_exp_id": "",
@@ -3776,21 +3791,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-22T03:54:11.648214+00:00",
     "title": "ArXiv paper: A Chain-Level Borsuk--Ulam Obstruction Proof of Norine's Antipodal-Coloring Conjecture"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove the Kakeya conjecture: a Besicovitch set in R\u207f has Hausdorff dimension n. Formalize the connection to restriction estimates and additive combinatorics.",
-    "domains": [
-      "Geometry",
-      "Analysis"
-    ],
-    "id": "seed_035",
-    "priority_score": 0.84,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Kakeya Conjecture"
   },
   {
     "consumed_by_exp_id": "",
@@ -10935,6 +10935,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The feedback recursion proved here gives the harmonic value H_u for a deck of distinct cards. For a deck with repeated card types we conjecture that stagewise fair odds still give value zero, and that under unit scoring the greedy 'call a most-frequent remaining type' strategy is optimal with an explicit stagewise value. This covers real card counting, where suits repeat.\n\nFor a deck given by a multiset of multiplicities r_1,...,r_m, the stagewise-fair-odds value is 0 for every admissible strategy, and the greedy strategy maximises the unit-scoring value, whose value is the expected sum over stages of (max remaining multiplicity)/(cards remaining).\n\nGeneralise expScore from Finset alpha to a multiset state, reprove expScore_step, and check optimality by exhaustive dynamic programming for all multiplicity vectors with total size at most 7.\n\nCard counting with repeated ranks is fully solved at the level of exact expectations, and the fair-odds invariance is confirmed to be independent of deck composition.\n\nGreedy is not optimal, which would mean that deliberately naming a rarer type buys information worth more than the immediate hit probability.",
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_3851",
+    "priority_score": 0.7115074626865673,
+    "research_mode": "team",
+    "source_exp_id": "7797dc46",
+    "status": "available",
+    "timestamp": "2026-08-23T15:37:05.568124+00:00",
+    "title": "Greedy Optimality for Multiset Decks with Feedback"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The generating function of the proved trace counts should equal minus the logarithm of det(I - uB), and for regular graphs factor through the Ihara polynomial. The counting theorem reduces the identity to a bijection between cyclic non-backtracking words and multisets of primitive cycles.\n\nFor every finite simple graph, sum_{n>=1} trace(B^n) u^n / n = -log det(I - uB), and for (q+1)-regular graphs det(I - uB) = (1-u^2)^{|E|-|V|} det(I - uA + q u^2 I).\n\nUse the proved rotation stability of nbCycles to define the rotation action, prove that each orbit is generated by a primitive cyclic word, and compare coefficientwise with the power-sum expansion of the determinant.\n\nA fully formal Ihara zeta function with its Euler product becomes available over Mathlib.\n\nSome rotation orbits fail to be free, indicating that the primitive-cycle decomposition needs a stabiliser correction.",
     "domains": [
       "Pythagorean",
@@ -11097,6 +11112,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T13:59:19.339046+00:00",
     "title": "Quadruple Causal Cone in (3,1) Signature"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The No-Free-Lunch theorem proved here uses a label-flip involution and the uniform prior over targets. For a general prior we conjecture that the maximal achievable off-training edge equals the expected total-variation distance between the posterior label distribution and its flip. This turns a qualitative impossibility result into an exact quantitative one and identifies flip-invariance as the precise obstruction to learning.\n\nFor any prior P on targets X -> Bool, any training set T and any x not in T, the supremum over learners depending only on the T-labels of the expected +-1 score at x equals E_{labels on T} |P(f x = true | labels) - P(f x = false | labels)|.\n\nFormalise the conditional posterior for a finite prior, prove the upper bound by the flip pairing and the lower bound by the plug-in MAP learner, and verify numerically on all priors supported on at most four targets over X = Fin 3.\n\nLearnability off the training set is exactly measured by the flip-asymmetry of the prior, unifying No Free Lunch with Bayes-optimality in one identity.\n\nThe optimal learner extracts more than the pairwise flip defect, indicating that higher-order structure of the prior is exploitable.",
+    "domains": [
+      "Algebra",
+      "MachineLearning"
+    ],
+    "id": "fd_3853",
+    "priority_score": 0.7106562500000001,
+    "research_mode": "team",
+    "source_exp_id": "7797dc46",
+    "status": "available",
+    "timestamp": "2026-08-23T15:37:06.521987+00:00",
+    "title": "Total-Variation Law for the No-Free-Lunch Edge"
   },
   {
     "consumed_by_exp_id": "",
@@ -12827,6 +12857,34 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For the action of G on G/H the rank should equal the number of (H,H)-double cosets, converting the second moment into a subgroup invariant. Combined with the proved rank splitting this would compute #(offDiag/G) as the number of nontrivial double cosets.\n\n#((G/H \u00d7 G/H)/G) = #(H \\\\ G / H) for every subgroup H of a finite group G.\n\nCompose the proved suborbit bijection with a map from H-orbits on G/H to double cosets, sending the orbit of bH to H b H, and verify well-definedness and injectivity using Mathlib's Doset API.\n\nBurnside moments compute double-coset counts, giving \u2211_g |(G/H)^g|^2 = |H \\\\ G / H| \u00b7 |G|.\n\nThe map fails to be injective, indicating a normality obstruction worth isolating.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_3857",
+    "priority_score": 0.6710000000000002,
+    "research_mode": "team",
+    "source_exp_id": "f099f0f6",
+    "status": "available",
+    "timestamp": "2026-08-23T15:37:27.153959+00:00",
+    "title": "Double-Coset Rank of Coset Actions"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The proved sandwich |X|^k \u2264 |G|\u00b7o_k \u2264 |G|\u00b7|X|^k pins the exponential growth rate of the hierarchy at |X|. The conjecture sharpens this to an exact second-order expansion controlled by the second largest fixed-point count, making the hierarchy a spectral probe of the action.\n\n|G|\u00b7o_k = |X|^k + m\u00b7r^k + O(s^k) where r is the largest fixed-point count among nonidentity elements, m the number of elements attaining it, and s < r.\n\nSplit the moment sum by the value of |X^g| and bound the tail; formalise as an inequality with explicit constants rather than an asymptotic statement.\n\nOrbit counts on tuples determine the fixed-point spectrum of the action, an inverse-problem statement.\n\nCancellation among elements with equal fixed-point counts would have to be exhibited, contradicting positivity.",
+    "domains": [
+      "Physics"
+    ],
+    "id": "fd_3856",
+    "priority_score": 0.6709166666666668,
+    "research_mode": "team",
+    "source_exp_id": "f099f0f6",
+    "status": "available",
+    "timestamp": "2026-08-23T15:37:26.671132+00:00",
+    "title": "Asymptotic Shape of Orbit Counts"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The three Berggren generators split into one parabolic and two hyperbolic directions, which makes the ternary tree exponentially unbalanced. The maximal depth reachable inside a hypotenuse box should be governed purely by the parabolic spine and hence grow like sqrt(H), while a typical node sits at logarithmic depth. This quantifies how far the tree is from a balanced ternary tree.\n\nThe maximal Berggren word length among triples with hypotenuse at most H satisfies D(H) = (1/2 + o(1)) * sqrt(H), while the average depth is Theta(log H).\n\nProve that a word containing k non-parabolic letters has hypotenuse at least 5^k, deduce k = O(log H), and combine with the closed form 4(j+1)^2+1 for parabolic runs; compare with the measured D(10^5) = 222.\n\nThe tree has a canonical thin spine, giving a seed-independent sqrt(H) lower bound for any single-orbit count and an explicit height function for enumeration algorithms.\n\nMixed words would have to beat pure parabolic runs, contradicting the multiplicative growth of the hyperbolic generators.",
     "domains": [
       "Computation"
@@ -13927,6 +13985,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The k-th orbit count on tuples should be the Stirling transform of the orbit counts on injective tuples, generalising the proved rank splitting o_2 = o_1 + #(offDiag/G). This exhibits the moment hierarchy as the moment sequence whose factorial moments are the injective-tuple counts.\n\nFor every finite G-set X and every k, #((X^k)/G) = \u2211_{j\u2264k} S(k,j) \u00b7 #(Inj(Fin j, X)/G), where S(k,j) are Stirling numbers of the second kind.\n\nDecompose Fin k \u2192 X over the kernel setoid, prove that each kernel class is G-equivariantly isomorphic to the injective tuples on the quotient, and count.\n\nGives exact formulas for o_k from finitely many invariants d_1,\u2026,d_k, and recovers rank splitting as the case k = 2.\n\nSome kernel classes fail to be G-stable, which would reveal an error in the equivariant decomposition of tuple space.",
+    "domains": [],
+    "id": "fd_3855",
+    "priority_score": 0.5927272727272728,
+    "research_mode": "team",
+    "source_exp_id": "f099f0f6",
+    "status": "available",
+    "timestamp": "2026-08-23T15:37:26.067421+00:00",
+    "title": "Stirling Transform of the Orbit Hierarchy"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Every domain measured so far pays 4 extra keys per context doubling. The conjecture is that a long-range-structured corpus breaks this, and that the failure is observable as a crossover of budget laws rather than as a small deviation, at which point the mixed-workload envelope leaves the class of budget laws entirely.\n\nThere is a corpus whose increment differs from 4; for any such corpus no exchange law relates it to the ladder, and the envelope of it with German prose is not a budget law.\n\nMeasure one long-range corpus (LaTeX with cross-references) at ctx 512, 1024 and 2048; formally, check the hypotheses of Catalog.NET71.exchange_fails_of_inc_ne and of NET68's envelope_not_a_law against the fitted increments.\n\nDeployment tables become genuinely two-dimensional: no single base-plus-increment law can size a mixed workload, and the crossover context must be computed per pair of domains.\n\nThe universal increment survives its sharpest test, promoting it from a fitted regularity to a candidate scale law of the architecture.",
     "domains": [],
     "id": "fd_3850",
@@ -14587,6 +14657,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Our harmonic theorem computes the informed player's value at the uniform prior. We conjecture that the uniform prior is the exact minimiser of that value over all priors on arrangements, so maximal uncertainty is the adversary's optimum. The value functional is a sum of expected posterior maxima and should be Schur-convex.\n\nFor every prior P on the u! arrangements, the optimal feedback value V(P) under unit scoring satisfies V(P) >= V(uniform) = H_u, with equality iff P is uniform; and V is Schur-convex in P.\n\nCompute V(P) by dynamic programming over posteriors for u <= 5 on a grid of priors, including all priors supported on two arrangements, and test the majorization order.\n\nThe 'no edge from uncertainty' slogan upgrades to a variational principle: uniform shuffling is the unique worst case for any predictor.\n\nSome structured prior is harder to predict than the uniform one, which would identify a new class of adversarial shuffles.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_3852",
+    "priority_score": 0.5634663195620967,
+    "research_mode": "team",
+    "source_exp_id": "7797dc46",
+    "status": "available",
+    "timestamp": "2026-08-23T15:37:06.038795+00:00",
+    "title": "Schur-Convexity of the Informed Player's Value"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "*[settled in cycle 4: the abelian half is proved, the identification with the one-parameter subgroup is false \u2014 see below]*  The centralizer of a\n   non-identity element of `ScalingMap` is abelian, and equals the image of the\n   one-parameter subgroup through it precisely when its exponent is not `1`;\n   for exponent `1` (pure dilations `y \u21a6 c y`) it is the full dilation\n   subgroup.  *The key insight is* that the infinitesimal statement proved in\n   cycle 3 (centralizer of a field is the line it spans) should integrate to the\n   group level, the exceptional case being the one where the flow has no fixed\n   point in `(0, \u221e)`.  *Why now?*  `EMLScalingGroupDuality` already has the\n   group law, the trivial-centre theorem and the classification of involutions,\n   so the computation is a finite case analysis on `(coeff, expo)`.",
     "domains": [
       "Algebra",
@@ -15064,6 +15149,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T23:38:27.760098+00:00",
     "title": "Defect Spectrum Gap at Order Three"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that the number of equivalence relations on Fin n satisfies the Bell recurrence, hence equals Mathlib's Nat.bell n. The approach decomposes a partition of Fin (n+1) by the block containing the last element, matching the recurrence's binomial sum. This closes an explicit TODO in Mathlib and upgrades all Bell-number results here to statements about Nat.bell.\n\nNat.card (Setoid (Fin n)) = Nat.bell n for all n.\n\nFormalise the bijection Setoid (Fin (n+1)) \u2243 \u03a3 (s : Finset (Fin n)), Setoid ((Fin n) \\ s) and compare cardinalities with Nat.bell_succ.\n\npartitionCount_log_convex becomes log-convexity of Nat.bell, and sum_fixedPoints_perm_pow becomes the classical Poisson moment theorem in Mathlib's own vocabulary.\n\nMathlib's Nat.bell would not count partitions, indicating an indexing mismatch in its definition that must be documented.",
+    "domains": [
+      "Combinatorics",
+      "Geometry"
+    ],
+    "id": "fd_3854",
+    "priority_score": 0.5624068550590863,
+    "research_mode": "team",
+    "source_exp_id": "f099f0f6",
+    "status": "available",
+    "timestamp": "2026-08-23T15:37:25.569101+00:00",
+    "title": "Bell Recurrence via Orbit Surgery"
   },
   {
     "consumed_by_exp_id": "",
@@ -35941,14 +36041,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "The two-parameter case is now fully formal, including the exact"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b391d382",
     "description": "Replace each natural-number cost by a function of encoded input size. Define eventual domination and polynomial bounds, then determine which parts of the barycenter theorem survive pointwise and asymptotically. This is the minimum framework needed before making a genuine P-versus-NP analogy.",
     "domains": [],
     "id": "fd_1890",
+    "phase": "A",
     "priority_score": 0.41916666666666663,
     "research_mode": "team",
     "source_exp_id": "12b45ad4",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:21:40.212035+00:00",
     "title": "Asymptotic cost families"
   },
@@ -37188,19 +37289,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-17T13:53:43.516724+00:00",
     "title": "Every index-two subgroup of any group is the kernel of a surjection"
-  },
-  {
-    "consumed_by_exp_id": "f099f0f6",
-    "description": "`\u03a3_{g\u2208G} |X^g|^k = |G| \u00b7 #(X^k/G)` for every `k`\n   (`sum_fixedPoints_pow_eq_orbits_mul_card`); `k = 1` is Burnside, `k = 2` is the rank of the\n   permutation action.",
-    "domains": [],
-    "id": "fd_1425",
-    "phase": "A",
-    "priority_score": 0.4,
-    "research_mode": "team",
-    "source_exp_id": "286b3a0e",
-    "status": "in_progress",
-    "timestamp": "2026-08-17T13:54:03.885731+00:00",
-    "title": "Moment hierarchy"
   },
   {
     "consumed_by_exp_id": "",
@@ -40476,19 +40564,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T06:21:33.227965+00:00",
     "title": "Separate three empirical quantities: reach, semantic diversity, and observed\n   transmission failures."
-  },
-  {
-    "consumed_by_exp_id": "7797dc46",
-    "description": "**Known versus unresolved cards.** If `d` cards are predicted with certainty and `u` cards are fair guesses, expected payoff is exactly `d`; uncertainty itself supplies no positive edge.",
-    "domains": [],
-    "id": "fd_1869",
-    "phase": "A",
-    "priority_score": 0.4,
-    "research_mode": "team",
-    "source_exp_id": "717f7483",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T06:21:34.905074+00:00",
-    "title": "Known versus unresolved cards."
   },
   {
     "consumed_by_exp_id": "",

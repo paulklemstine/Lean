@@ -2339,7 +2339,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "df24b765",
     "description": "## NET-79 — limited-memory axis, round 30 (paper 163, ResearchOutput/exp_net79_1p5b4096.py, /tmp/net79.log)\n\n**Verdict name: THE-ACCELERATION-IS-UNIVERSAL.**\n\n### Result\nThe 1.5B's first ctx=4096 cell (fine grid; gate identical to NET-55/65/66):\n\n| k | 16 | 20 | 24 | 28 | 36 | 44 | 56 |\n|---|---|---|---|---|---|---|---|\n| retained | 0.960 ✗ | 0.966 ✗ | 0.972 ✗ | 0.974 ✗ | 0.977 ✗ | 0.980 ✗ | **0.985 ✓** |\n\n**k\\*(1.5B@4096) = 56.**\n\n- **P1 REFUTED**: the shift does not delay the acceleration.\n- **P2 CONFIRMED dramatically**: the acceleration hits all scales — 56 ≥ 48.\n- **P3 REFUTED**: no intermediate landing.\n\n### The complete two-scale × four-context table\n\n| scale | @512 | @1024 | @2048 | @4096 | increments |\n|---|---|---|---|---|---|\n| 0.5B | 16 | 20 | 24 | **40** | +4, +4, **+16** |\n| 1.5B | 16 | 16 | 18 | **56** | 0, +2, **+38** |\n\nThe increments tell the story: the 0.5B accelerates from +4 to +16 (4×), while the 1.5B accelerates from +2 to +38 (**19×**). Scale doesn't just fail to delay the acceleration — it AMPLIFIES it. At short contexts the 1.5B needs fewer or equal keys; at 4096 it needs MORE (56 vs 40). The size relationship INVERTS past the phase transition.\n\n### Deployment consequence\nFor agentic workloads: bigger models are more memory-efficient per key at ≤2048 context but LESS efficient at ≥4096. Budget tables must include both scale AND context as independent parameters with a non-monotone interaction.\n\n### All 8 barriers\n(a) clean — three horns pre-stated incl. two refuted; (b) clean — first 1.5B 4096 cell; (c) confronted — limits: 2 windows (VRAM-bound), bf16 numerics, one corpus stated; (d) clean; (e) deterministic baseline-replicating (0.4937); (f) clean — ALL_DONE_NET79; (g) fair — same bar/harness as all real-model rounds; (h) DIRECT.\n\n### Next\nFine grid between 44 and 56; crossover localization; domain-jump @4096; 7B quantized-offload cell.\n\nNow 79 network experiments. Assessment v79. Paper 163.\n",
     "domain_bridges": [],
     "domains": [
@@ -2351,7 +2351,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T20:41:46.046363+00:00",
     "title": "NET-79: THE-ACCELERATION-IS-UNIVERSAL — 1.5B knee at 4096 is 56 (every point 16-44 fails); acceleration amplifies with scale (19x vs 4x); size relationship INVERTS past phase transition"
   },
@@ -2860,6 +2860,25 @@
     "status": "available",
     "timestamp": "2026-08-18T09:49:34.716388+00:00",
     "title": "Deepening: The `⇐` direction is proved (`FourierFA.uncertainty_eq_coset_modulation`); the `"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle f099f0f6 (Q=0.850), which proved 64 theorems in Logic. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: `Σ_{g∈G} |X^g|^k = |G| · #(X^k/G)` for every `k`\n   (`sum_fixedPoints_pow_eq_orbits_mul_card`); `k = 1` is Burnside, `k = 2` is the rank of the\n   permutation action.",
+    "domain_bridges": [],
+    "domains": [
+      "Logic"
+    ],
+    "id": "push_f099f0f6_84ed3327",
+    "lineage_refs": [],
+    "priority_score": 0.95,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "f099f0f6",
+    "status": "available",
+    "timestamp": "2026-08-23T15:37:33.084029+00:00",
+    "title": "Deepening: Moment hierarchy"
   },
   {
     "ambition_level": "grand_challenge",
@@ -5107,26 +5126,6 @@
     "status": "available",
     "timestamp": "2026-07-22T03:54:11.648214+00:00",
     "title": "ArXiv paper: A Chain-Level Borsuk--Ulam Obstruction Proof of Norine's Antipodal-Coloring Conjecture"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Prove the Kakeya conjecture: a Besicovitch set in Rⁿ has Hausdorff dimension n. Formalize the connection to restriction estimates and additive combinatorics.",
-    "domain_bridges": [],
-    "domains": [
-      "Geometry",
-      "Analysis"
-    ],
-    "id": "seed_035",
-    "lineage_refs": [],
-    "priority_score": 0.84,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Kakeya Conjecture"
   },
   {
     "ambition_level": "extension",
@@ -14736,6 +14735,28 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "MachineLearning.KnownUnresolvedCards.FeedbackGame"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The feedback recursion proved here gives the harmonic value H_u for a deck of distinct cards. For a deck with repeated card types we conjecture that stagewise fair odds still give value zero, and that under unit scoring the greedy 'call a most-frequent remaining type' strategy is optimal with an explicit stagewise value. This covers real card counting, where suits repeat.\n\nFor a deck given by a multiset of multiplicities r_1,...,r_m, the stagewise-fair-odds value is 0 for every admissible strategy, and the greedy strategy maximises the unit-scoring value, whose value is the expected sum over stages of (max remaining multiplicity)/(cards remaining).\n\nGeneralise expScore from Finset alpha to a multiset state, reprove expScore_step, and check optimality by exhaustive dynamic programming for all multiplicity vectors with total size at most 7.\n\nCard counting with repeated ranks is fully solved at the level of exact expectations, and the fair-odds invariance is confirmed to be independent of deck composition.\n\nGreedy is not optimal, which would mean that deliberately naming a rarer type buys information worth more than the immediate hit probability.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_3851",
+    "lineage_refs": [],
+    "priority_score": 0.7115074626865673,
+    "proof_strategy": "Exchange argument on the recursion tree: swapping the first call to a maximal-multiplicity type can only increase the immediate term while leaving the successor states majorised.",
+    "research_mode": "team",
+    "source_exp_id": "7797dc46",
+    "status": "available",
+    "timestamp": "2026-08-23T15:37:05.568124+00:00",
+    "title": "Greedy Optimality for Multiset Decks with Feedback"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Algebra.NonBacktracking.CycleMultiplicity",
       "Algebra.NonBacktracking.HashimotoTrace"
     ],
@@ -14984,6 +15005,29 @@
     "status": "available",
     "timestamp": "2026-08-21T13:59:19.339046+00:00",
     "title": "Quadruple Causal Cone in (3,1) Signature"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "MachineLearning.KnownUnresolvedCards.NoFreeLunch",
+      "MachineLearning.KnownUnresolvedCards.Basic"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The No-Free-Lunch theorem proved here uses a label-flip involution and the uniform prior over targets. For a general prior we conjecture that the maximal achievable off-training edge equals the expected total-variation distance between the posterior label distribution and its flip. This turns a qualitative impossibility result into an exact quantitative one and identifies flip-invariance as the precise obstruction to learning.\n\nFor any prior P on targets X -> Bool, any training set T and any x not in T, the supremum over learners depending only on the T-labels of the expected +-1 score at x equals E_{labels on T} |P(f x = true | labels) - P(f x = false | labels)|.\n\nFormalise the conditional posterior for a finite prior, prove the upper bound by the flip pairing and the lower bound by the plug-in MAP learner, and verify numerically on all priors supported on at most four targets over X = Fin 3.\n\nLearnability off the training set is exactly measured by the flip-asymmetry of the prior, unifying No Free Lunch with Bayes-optimality in one identity.\n\nThe optimal learner extracts more than the pairwise flip defect, indicating that higher-order structure of the prior is exploitable.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "MachineLearning"
+    ],
+    "id": "fd_3853",
+    "lineage_refs": [],
+    "priority_score": 0.7106562500000001,
+    "proof_strategy": "Pair each target with its flip at x: the learner is constant on the pair, so its score on the pair is the signed mass difference; summing gives the upper bound, and the MAP learner attains it pairwise.",
+    "research_mode": "team",
+    "source_exp_id": "7797dc46",
+    "status": "available",
+    "timestamp": "2026-08-23T15:37:06.521987+00:00",
+    "title": "Total-Variation Law for the No-Free-Lunch Edge"
   },
   {
     "ambition_level": "extension",
@@ -17607,6 +17651,48 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Logic.MomentHierarchy"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For the action of G on G/H the rank should equal the number of (H,H)-double cosets, converting the second moment into a subgroup invariant. Combined with the proved rank splitting this would compute #(offDiag/G) as the number of nontrivial double cosets.\n\n#((G/H × G/H)/G) = #(H \\\\ G / H) for every subgroup H of a finite group G.\n\nCompose the proved suborbit bijection with a map from H-orbits on G/H to double cosets, sending the orbit of bH to H b H, and verify well-definedness and injectivity using Mathlib's Doset API.\n\nBurnside moments compute double-coset counts, giving ∑_g |(G/H)^g|^2 = |H \\\\ G / H| · |G|.\n\nThe map fails to be injective, indicating a normality obstruction worth isolating.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_3857",
+    "lineage_refs": [],
+    "priority_score": 0.6710000000000002,
+    "proof_strategy": "Apply orbits_prod_eq_orbits_stabilizer to reduce to H-orbits on G/H, then match those orbits with Doset.quotient.",
+    "research_mode": "team",
+    "source_exp_id": "f099f0f6",
+    "status": "available",
+    "timestamp": "2026-08-23T15:37:27.153959+00:00",
+    "title": "Double-Coset Rank of Coset Actions"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Logic.MomentHierarchy"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The proved sandwich |X|^k ≤ |G|·o_k ≤ |G|·|X|^k pins the exponential growth rate of the hierarchy at |X|. The conjecture sharpens this to an exact second-order expansion controlled by the second largest fixed-point count, making the hierarchy a spectral probe of the action.\n\n|G|·o_k = |X|^k + m·r^k + O(s^k) where r is the largest fixed-point count among nonidentity elements, m the number of elements attaining it, and s < r.\n\nSplit the moment sum by the value of |X^g| and bound the tail; formalise as an inequality with explicit constants rather than an asymptotic statement.\n\nOrbit counts on tuples determine the fixed-point spectrum of the action, an inverse-problem statement.\n\nCancellation among elements with equal fixed-point counts would have to be exhibited, contradicting positivity.",
+    "domain_bridges": [],
+    "domains": [
+      "Physics"
+    ],
+    "id": "fd_3856",
+    "lineage_refs": [],
+    "priority_score": 0.6709166666666668,
+    "proof_strategy": "Group the sum over g by the value a_g, use Finset.sum_le_sum on the tail with a_g ≤ s, and combine with the identity term.",
+    "research_mode": "team",
+    "source_exp_id": "f099f0f6",
+    "status": "available",
+    "timestamp": "2026-08-23T15:37:26.671132+00:00",
+    "title": "Asymptotic Shape of Orbit Counts"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Catalog.NumberTheory.BerggrenTreeGeometry",
       "Catalog.NumberTheory.BerggrenParabolicSpine"
     ],
@@ -19289,6 +19375,26 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Logic.MomentHierarchy",
+      "Logic.MomentHierarchyBell"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The k-th orbit count on tuples should be the Stirling transform of the orbit counts on injective tuples, generalising the proved rank splitting o_2 = o_1 + #(offDiag/G). This exhibits the moment hierarchy as the moment sequence whose factorial moments are the injective-tuple counts.\n\nFor every finite G-set X and every k, #((X^k)/G) = ∑_{j≤k} S(k,j) · #(Inj(Fin j, X)/G), where S(k,j) are Stirling numbers of the second kind.\n\nDecompose Fin k → X over the kernel setoid, prove that each kernel class is G-equivariantly isomorphic to the injective tuples on the quotient, and count.\n\nGives exact formulas for o_k from finitely many invariants d_1,…,d_k, and recovers rank splitting as the case k = 2.\n\nSome kernel classes fail to be G-stable, which would reveal an error in the equivariant decomposition of tuple space.",
+    "domain_bridges": [],
+    "domains": [],
+    "id": "fd_3855",
+    "lineage_refs": [],
+    "priority_score": 0.5927272727272728,
+    "proof_strategy": "Partition Fin k → X by Setoid.ker, use the SubMulAction of injective tuples, apply Burnside levelwise and sum.",
+    "research_mode": "team",
+    "source_exp_id": "f099f0f6",
+    "status": "available",
+    "timestamp": "2026-08-23T15:37:26.067421+00:00",
+    "title": "Stirling Transform of the Orbit Hierarchy"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Catalog.Logic.NET71DiagonalRigidity",
       "Catalog.Applications.NET68BudgetTorsor",
       "Catalog.Applications.NET68DomainJumpBudgetLaw"
@@ -20303,6 +20409,29 @@
   },
   {
     "ambition_level": "extension",
+    "catalog_references": [
+      "MachineLearning.KnownUnresolvedCards.FeedbackGame",
+      "MachineLearning.KnownUnresolvedCards.Basic"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Our harmonic theorem computes the informed player's value at the uniform prior. We conjecture that the uniform prior is the exact minimiser of that value over all priors on arrangements, so maximal uncertainty is the adversary's optimum. The value functional is a sum of expected posterior maxima and should be Schur-convex.\n\nFor every prior P on the u! arrangements, the optimal feedback value V(P) under unit scoring satisfies V(P) >= V(uniform) = H_u, with equality iff P is uniform; and V is Schur-convex in P.\n\nCompute V(P) by dynamic programming over posteriors for u <= 5 on a grid of priors, including all priors supported on two arrangements, and test the majorization order.\n\nThe 'no edge from uncertainty' slogan upgrades to a variational principle: uniform shuffling is the unique worst case for any predictor.\n\nSome structured prior is harder to predict than the uniform one, which would identify a new class of adversarial shuffles.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_3852",
+    "lineage_refs": [],
+    "priority_score": 0.5634663195620967,
+    "proof_strategy": "Write V(P) as a supremum of linear functionals of P (one per deterministic strategy tree), hence convex; then use permutation symmetry plus convexity to conclude Schur-convexity and minimality at the flat point.",
+    "research_mode": "team",
+    "source_exp_id": "7797dc46",
+    "status": "available",
+    "timestamp": "2026-08-23T15:37:06.038795+00:00",
+    "title": "Schur-Convexity of the Informed Player's Value"
+  },
+  {
+    "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "*[settled in cycle 4: the abelian half is proved, the identification with the one-parameter subgroup is false — see below]*  The centralizer of a\n   non-identity element of `ScalingMap` is abelian, and equals the image of the\n   one-parameter subgroup through it precisely when its exponent is not `1`;\n   for exponent `1` (pure dilations `y ↦ c y`) it is the full dilation\n   subgroup.  *The key insight is* that the infinitesimal statement proved in\n   cycle 3 (centralizer of a field is the line it spans) should integrate to the\n   group level, the exceptional case being the one where the flow has no fixed\n   point in `(0, ∞)`.  *Why now?*  `EMLScalingGroupDuality` already has the\n   group law, the trivial-centre theorem and the classification of involutions,\n   so the computation is a finite case analysis on `(coeff, expo)`.",
@@ -21010,6 +21139,29 @@
     "status": "available",
     "timestamp": "2026-08-21T23:38:27.760098+00:00",
     "title": "Defect Spectrum Gap at Order Three"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Logic.MomentHierarchyBell",
+      "Logic.MomentHierarchy"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Prove that the number of equivalence relations on Fin n satisfies the Bell recurrence, hence equals Mathlib's Nat.bell n. The approach decomposes a partition of Fin (n+1) by the block containing the last element, matching the recurrence's binomial sum. This closes an explicit TODO in Mathlib and upgrades all Bell-number results here to statements about Nat.bell.\n\nNat.card (Setoid (Fin n)) = Nat.bell n for all n.\n\nFormalise the bijection Setoid (Fin (n+1)) ≃ Σ (s : Finset (Fin n)), Setoid ((Fin n) \\ s) and compare cardinalities with Nat.bell_succ.\n\npartitionCount_log_convex becomes log-convexity of Nat.bell, and sum_fixedPoints_perm_pow becomes the classical Poisson moment theorem in Mathlib's own vocabulary.\n\nMathlib's Nat.bell would not count partitions, indicating an indexing mismatch in its definition that must be documented.",
+    "domain_bridges": [],
+    "domains": [
+      "Combinatorics",
+      "Geometry"
+    ],
+    "id": "fd_3854",
+    "lineage_refs": [],
+    "priority_score": 0.5624068550590863,
+    "proof_strategy": "Induct on n; classify a partition of Fin (n+1) by the block containing the top element; sum over the size of that block using Finset.sum_pow_mul_eq_max_pow-style counting and Nat.bell_succ.",
+    "research_mode": "team",
+    "source_exp_id": "f099f0f6",
+    "status": "available",
+    "timestamp": "2026-08-23T15:37:25.569101+00:00",
+    "title": "Bell Recurrence via Orbit Surgery"
   },
   {
     "ambition_level": "extension",
@@ -49256,7 +49408,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b391d382",
     "description": "Replace each natural-number cost by a function of encoded input size. Define eventual domination and polynomial bounds, then determine which parts of the barycenter theorem survive pointwise and asymptotically. This is the minimum framework needed before making a genuine P-versus-NP analogy.",
     "domain_bridges": [],
     "domains": [],
@@ -49266,7 +49418,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "12b45ad4",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:21:40.212035+00:00",
     "title": "Asymptotic cost families"
   },
@@ -50982,23 +51134,6 @@
     "status": "available",
     "timestamp": "2026-08-17T13:53:43.516724+00:00",
     "title": "Every index-two subgroup of any group is the kernel of a surjection"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "f099f0f6",
-    "description": "`Σ_{g∈G} |X^g|^k = |G| · #(X^k/G)` for every `k`\n   (`sum_fixedPoints_pow_eq_orbits_mul_card`); `k = 1` is Burnside, `k = 2` is the rank of the\n   permutation action.",
-    "domain_bridges": [],
-    "domains": [],
-    "id": "fd_1425",
-    "lineage_refs": [],
-    "priority_score": 0.4,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "286b3a0e",
-    "status": "in_progress",
-    "timestamp": "2026-08-17T13:54:03.885731+00:00",
-    "title": "Moment hierarchy"
   },
   {
     "ambition_level": "extension",
@@ -55483,23 +55618,6 @@
     "status": "available",
     "timestamp": "2026-08-21T06:21:33.227965+00:00",
     "title": "Separate three empirical quantities: reach, semantic diversity, and observed\n   transmission failures."
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "7797dc46",
-    "description": "**Known versus unresolved cards.** If `d` cards are predicted with certainty and `u` cards are fair guesses, expected payoff is exactly `d`; uncertainty itself supplies no positive edge.",
-    "domain_bridges": [],
-    "domains": [],
-    "id": "fd_1869",
-    "lineage_refs": [],
-    "priority_score": 0.4,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "717f7483",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T06:21:34.905074+00:00",
-    "title": "Known versus unresolved cards."
   },
   {
     "ambition_level": "extension",

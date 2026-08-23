@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "11e84a32",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Definability Boundary for External Interpretations\n\n## What this cycle settled\n\nThe conjecture under test was:\n\n> An external interpretation is recoverable from structural truth",
-      "quality_score": 0.87,
-      "sorry_count": 0,
-      "theorem_count": 118,
-      "timestamp": "2026-08-22T01:51:30",
-      "title": "Definability boundary for external interpretations"
-    },
-    {
       "cycle_id": "5f0e4f5e",
       "domain": "Applications",
       "key_insight": "# Future directions\n\nDerived from this cycle's results on the mass (`ℓ¹`) theory of weight vectors that are\ninvisible to a truncated power-sum window.  What was settled this cycle:\n\n* the exact mass l",
@@ -499,19 +489,19 @@
       "theorem_count": 95,
       "timestamp": "2026-08-23T15:37:18",
       "title": "Known versus unresolved cards."
+    },
+    {
+      "cycle_id": "f099f0f6",
+      "domain": "Logic",
+      "key_insight": "# Future Directions — Burnside Moment Hierarchy\n\nDerived from the analysis and adversarial review of the five research cycles recorded in\n`Catalog/Logic/MomentHierarchy.lean` (core hierarchy) and\n`Cat",
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "theorem_count": 64,
+      "timestamp": "2026-08-23T15:37:32",
+      "title": "Moment hierarchy"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "6c757940",
-      "domain": "Computation",
-      "key_insight": "# Future Directions — Sheaf-Theoretic Data Integration\n\nAll results below are in `Catalog/Computation/`, compile against Mathlib\n(Lean 4, toolchain `v4.28.0`) with **zero `sorry`** and only the standa",
-      "quality_score": 0.89,
-      "sorry_count": 0,
-      "theorem_count": 152,
-      "timestamp": "2026-08-16T09:42:56",
-      "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
-    },
     {
       "cycle_id": "6e253e5d",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 95,
       "timestamp": "2026-08-23T15:37:18",
       "title": "Known versus unresolved cards."
+    },
+    {
+      "cycle_id": "f099f0f6",
+      "domain": "Logic",
+      "key_insight": "# Future Directions — Burnside Moment Hierarchy\n\nDerived from the analysis and adversarial review of the five research cycles recorded in\n`Catalog/Logic/MomentHierarchy.lean` (core hierarchy) and\n`Cat",
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "theorem_count": 64,
+      "timestamp": "2026-08-23T15:37:32",
+      "title": "Moment hierarchy"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "bc20ce21",
-      "domain": "Applications",
-      "name": "Cycles",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "bc20ce21",
-      "domain": "Applications",
-      "name": "yields",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "bc20ce21",
-      "domain": "Applications",
-      "name": "is",
-      "quality": 0.82
-    },
     {
       "cycle_id": "78e6d19a",
       "domain": "Probability",
@@ -2803,9 +2785,27 @@
       "domain": "MachineLearning",
       "name": "E_def",
       "quality": 0.85
+    },
+    {
+      "cycle_id": "f099f0f6",
+      "domain": "Logic",
+      "name": "mem_fixedBy_pi",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "f099f0f6",
+      "domain": "Logic",
+      "name": "card_fixedBy_pi",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "f099f0f6",
+      "domain": "Logic",
+      "name": "mem_fixedBy_prod",
+      "quality": 0.85
     }
   ],
-  "last_updated": "2026-08-23T15:37:18",
+  "last_updated": "2026-08-23T15:37:32",
   "open_questions": [
     {
       "context": "All proofs are complete; no `sorry`.; All proofs are complete; no `sorry`.",
@@ -3455,12 +3455,6 @@
     ],
     "Logic": [
       {
-        "cycle_id": "11c9ff9f",
-        "quality": 0.86,
-        "theorems": 90,
-        "title": "Fibre spectrum (Conjecture E, first half, closed)"
-      },
-      {
         "cycle_id": "c4b3dd3f",
         "quality": 0.86,
         "theorems": 63,
@@ -3513,6 +3507,12 @@
         "quality": 0.78,
         "theorems": 115,
         "title": "NET-71: THE-TOKENIZER-TAX-IS-FOUR-KEYS — German prose shifts knees up exactly on"
+      },
+      {
+        "cycle_id": "f099f0f6",
+        "quality": 0.85,
+        "theorems": 64,
+        "title": "Moment hierarchy"
       }
     ],
     "MachineLearning": [
