@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "018e116a",
-      "domain": "Pythagorean",
-      "key_insight": "# Future Directions — bounding distinguishing experiments\n\nDerived from the verified results in `Catalog/Pythagorean/DistinguishingWordBound.lean`,\n`DistinguishingWordMoore.lean`, `DistinguishingWordS",
-      "quality_score": 0.86,
-      "sorry_count": 0,
-      "theorem_count": 62,
-      "timestamp": "2026-08-21T20:42:06",
-      "title": "Bound the length of distinguishing experiments"
-    },
-    {
       "cycle_id": "ef4f9365",
       "domain": "MachineLearning",
       "key_insight": "# Future directions — after the Berggren / Q(√2) / Langlands cycle\n\n## What this cycle established\n\n**Positive.**  There *is* a rigorous bridge from Pythagorean triples to the arithmetic of\n`ℚ(√2)`, a",
@@ -499,19 +489,19 @@
       "theorem_count": 88,
       "timestamp": "2026-08-23T07:48:35",
       "title": "NET-73: TOKENIZATION-DENSITY-DOES-NOT-EXPLAIN-THE-DOMAIN-SHIFT — Spearman(TPW,k*) = -0.40, R2 = 0.00"
+    },
+    {
+      "cycle_id": "3eae19ad",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — after the U64 zero-fit dial cycle\n\nTwo research cycles were run on the round-61 #1 record\n(`U64-DIAL-HOLDS-COUNT-PARITY`, exp 530).\n\n**Cycle 1** produced the *tie-attenuation law",
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "theorem_count": 86,
+      "timestamp": "2026-08-23T08:50:02",
+      "title": "FACT round-61 #1 — TDIAL-U64: the zero-fit dial holds at bitlen 64 with count parity (paper 185)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "f0c2b697",
-      "domain": "Logic",
-      "key_insight": "# FUTURE DIRECTIONS — after NET-25 (DENSE-FINAL-STEP-IS-THE-CURE)\n\nThe three catalog files\n(`Catalog/Logic/DenseFinalStepCarryChain.lean`,\n`Catalog/Logic/DenseFinalStepBoundaryConditioning.lean`,\n`Cat",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 41,
-      "timestamp": "2026-08-15T22:46:35",
-      "title": "NET-25 (paper 69): DENSE-FINAL-STEP-IS-THE-CURE — the stateful-carry-cell cure was the dense EOS (fi"
-    },
     {
       "cycle_id": "9c680c24",
       "domain": "Tropical",
@@ -2501,27 +2491,19 @@
       "theorem_count": 88,
       "timestamp": "2026-08-23T07:48:35",
       "title": "NET-73: TOKENIZATION-DENSITY-DOES-NOT-EXPLAIN-THE-DOMAIN-SHIFT — Spearman(TPW,k*) = -0.40, R2 = 0.00"
+    },
+    {
+      "cycle_id": "3eae19ad",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — after the U64 zero-fit dial cycle\n\nTwo research cycles were run on the round-61 #1 record\n(`U64-DIAL-HOLDS-COUNT-PARITY`, exp 530).\n\n**Cycle 1** produced the *tie-attenuation law",
+      "quality_score": 0.85,
+      "sorry_count": 0,
+      "theorem_count": 86,
+      "timestamp": "2026-08-23T08:50:02",
+      "title": "FACT round-61 #1 — TDIAL-U64: the zero-fit dial holds at bitlen 64 with count parity (paper 185)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "a4769f7a",
-      "domain": "Bridges",
-      "name": "invStereo_on_circle",
-      "quality": 0.9
-    },
-    {
-      "cycle_id": "a4769f7a",
-      "domain": "Bridges",
-      "name": "invStereo_denom_pos",
-      "quality": 0.9
-    },
-    {
-      "cycle_id": "ae01533d",
-      "domain": "NumberTheory",
-      "name": "sub_div_le_log_div",
-      "quality": 0.78
-    },
     {
       "cycle_id": "8828af22",
       "domain": "Logic",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "cumMass_le_one",
       "quality": 0.78
+    },
+    {
+      "cycle_id": "3eae19ad",
+      "domain": "Novelty",
+      "name": "wsum_eq",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "3eae19ad",
+      "domain": "Novelty",
+      "name": "spBlock_eq",
+      "quality": 0.85
+    },
+    {
+      "cycle_id": "3eae19ad",
+      "domain": "Novelty",
+      "name": "spNest_eq_ssR_coarse",
+      "quality": 0.85
     }
   ],
-  "last_updated": "2026-08-23T07:48:35",
+  "last_updated": "2026-08-23T08:50:02",
   "open_questions": [
     {
       "context": "All proofs are complete; no `sorry`.; All proofs are complete; no `sorry`.",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "5297c534",
-        "quality": 0.86,
-        "theorems": 49,
-        "title": "The `⇐` direction is proved (`FourierFA.uncertainty_eq_coset_modulation`); the `"
-      },
-      {
         "cycle_id": "4ba8c40c",
         "quality": 0.85,
         "theorems": 124,
@@ -3637,6 +3631,12 @@
         "quality": 0.72,
         "theorems": 9,
         "title": "Concavity (old sub-conjecture 1)."
+      },
+      {
+        "cycle_id": "3eae19ad",
+        "quality": 0.85,
+        "theorems": 86,
+        "title": "FACT round-61 #1 — TDIAL-U64: the zero-fit dial holds at bitlen 64 with count pa"
       }
     ],
     "NumberTheory": [

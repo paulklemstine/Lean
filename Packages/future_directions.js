@@ -1586,21 +1586,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "NET-68: CODE-NEEDS-FEWER-KEYS \u2014 domain jump to Python shifts the knee chain down one fine step ({12,16} vs {16,20}); budget law now domain-parameterized"
   },
   {
-    "consumed_by_exp_id": "3eae19ad",
-    "description": "Round-61 #1, cron iteration (exp 530). The highest-bitlen uniform measurement in the dial's validation grid.\n\n**U64-DIAL-HOLDS-COUNT-PARITY**: Spearman(T, rate) = **0.658** / **0.642** / **0.643** across three seeds on uniform draws at bitlen 64; pooled **0.648** CI [0.629, 0.665]. All inside [0.55, 0.85].\n\nH2's strict +0.05 bar met by 2/3 seeds but pooled CI low (0.049) misses it by 0.001 \u2014 recorded as count parity.\n\nThe zero-fit dial extends to bitlen 64 on uniform draws with the band intact \u2014 a gentle monotone decline from ~0.78 at bitlen 44 to ~0.65 at 64.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp530_t_dial_unif_64.py + exp530_result.json, seeds 20261140\u201342.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3710",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T18:51:45.074530+00:00",
-    "title": "FACT round-61 #1 \u2014 TDIAL-U64: the zero-fit dial holds at bitlen 64 with count parity (paper 185)"
-  },
-  {
     "consumed_by_exp_id": "499e80a3",
     "description": "## NET-67 \u2014 limited-memory axis, round 20 (paper 152, ResearchOutput/exp_net67_sub20.py, /tmp/net67.log)\n\n**Verdict name: SCALE-HALVES-THE-CONTEXT-INCREMENT.**\n\n### Result\nTwo-point addendum (Qwen2.5-1.5B, ctx=2048; baseline drift-assert passed exactly 0.5132):\n\n| k | 14 | 18 |\n|---|---|---|\n| retained | 0.9757 \u2717 (~2 SE) | **0.9811 \u2713** |\n\n- **P1 CONFIRMED**: the knee is 18 \u2014 NET-66's coarse read of 20 was one fine point high.\n- **P2 REFUTED** accordingly.\n\n### The refined law\nComplete measured picture: 0.5B {16, 20, 24} \u2014 starts at 16, +4 keys per context doubling. 1.5B {16, 16, 18} \u2014 starts at 16, +2 keys per doubling (first increment 0, second +2). **Scale compresses both the level and the increments of the attention-budget curve.** The one-octave reading (NET-66) was a coarse-grid approximation; increment-halving is the finer truth. Deployment: a 20-key budget covers BOTH models to 2048 with margin.\n\n### All 8 barriers\n(a) clean \u2014 two horns pre-stated incl. the refuted P2; (b) clean; (c) confronted \u2014 two-point addendum stated; (d) clean; (e) deterministic drift-assert; (f) clean \u2014 ALL_DONE_NET67; (g) fair \u2014 same bar; (h) DIRECT.\n\n### Next\nIncrements at 4096; domain-jump corpora; 7B cell (does halving extend?).\n\nNow 67 network experiments. Assessment v67. Paper 152.\n",
     "domains": [
@@ -1616,16 +1601,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "NET-67: SCALE-HALVES-THE-CONTEXT-INCREMENT \u2014 1.5B knee at 2048 is 18 not 20; both models start at 16 keys, scale halves the +per-doubling increment (+4 -> +2)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ae5769e6",
     "description": "## NET-66 \u2014 limited-memory axis, round 19 (paper 151, ResearchOutput/exp_net66_1p5b2048.py, /tmp/net66.log)\n\n**Verdict name: SCALE-DELAYS-CONTEXT-SENSITIVITY-BY-ONE-DOUBLING.**\n\n### Result\nThe 1.5B's first ctx=2048 cell (fine grid, gate identical to NET-55/65):\n\n| k | 8 | 12 | 16 | 20 | 24 | 32 |\n|---|---|---|---|---|---|---|\n| retained | 0.9597 \u2717 | 0.9715 \u2717 | **0.9785 \u2717 (razor)** | **0.9817 \u2713** | 0.9846 \u2713 | 0.9867 \u2713 |\n\n- **P1 CONFIRMED**: the flat chain breaks upward \u2014 k\\*(2048) = 20 > 16.\n- **P2 REFUTED**: flatness does not hold through 2048.\n- **P3 REFUTED**: 20 < the 0.5B's 24 at the same context \u2014 scale does not increase sensitivity either.\n\n### The one-octave law\nThe two chains: 0.5B {16, 20, 24} vs 1.5B {16, 16, 20}. The 1.5B curve equals the 0.5B curve shifted right by ONE CONTEXT DOUBLING (20 arrives at 1024 for the small model, at 2048 for the large). Scale POSTPONES context-sensitivity rather than eliminating or amplifying it. Budget tables gain a scale-shift form: a 16-key budget covers the 0.5B to 512 and the 1.5B to 1024.\n\n### All 8 barriers\n(a) clean \u2014 three horns pre-stated incl. two refuted; (b) clean \u2014 first 2048 cell at 1.5B; (c) confronted \u2014 razor k=16 fail (~1 SE) leaves bracket (16, 20] partially open; 12 windows stated; (d) clean; (e) deterministic baseline monotone (0.5132); (f) clean \u2014 ALL_DONE_NET66; (g) fair \u2014 same bar/harness as all real-model rounds; (h) DIRECT.\n\n### Next\nSub-20 addendum @2048; 0.5B @4096 (does its chain continue rising?); domain-jump corpora; 7B cell (does the shift extend?).\n\nNow 66 network experiments. Assessment v66. Paper 151.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3712",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T18:51:45.077817+00:00",
     "title": "NET-66: SCALE-DELAYS-CONTEXT-SENSITIVITY-BY-ONE-DOUBLING \u2014 1.5B chain breaks at 2048 ({16,16,20}); broken curve equals the 0.5B shifted one octave (1.5B@2048 = 0.5B@1024 = 20)"
   },
@@ -3771,20 +3757,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Cycle 11c9ff9f (Q=0.860) proved 90 theorems in Logic but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: For `k \u2264 |X|` the orbit count splits\n    along patterns, `#(X^k/G) = \u03a3_P m_P` (`sum_patternMultiplicity`), with `m_P \u2265 1` for every\n    pattern (`one_le_patternMultiplicity`), and the action is `k`-tr",
-    "domains": [
-      "Logic"
-    ],
-    "id": "sorry_fill_11c9ff9f_c1dbe19e",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "11c9ff9f",
-    "status": "available",
-    "timestamp": "2026-08-18T03:08:55.242135+00:00",
-    "title": "Close Proofs: Fibre spectrum (Conjecture E, first half, closed)"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Cycle 18b02a30 (Q=0.880) proved 294 theorems in NumberTheory but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Conjecture: for `q \u2265 2` and a prime `\u2113 \u2224 q`, the `\u2113`-adic valuation of `binom(n,k)_q` equals the\nnumber of carries when adding `k` and `n-k` in base `d`, where `d` is the multiplicative order of\n`q` m",
     "domains": [
       "NumberTheory"
@@ -3813,26 +3785,12 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Cycle 52846ceb (Q=0.820) proved 242 theorems in Applications but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Two `\u2115`-valued functions on finite types bounded by `N` with equal\n    power sums for all `k \u2264 N` have equal value distributions (`count_eq_of_powerSums`), proved by\n    inverting a transposed Vanderm",
-    "domains": [
-      "Applications"
-    ],
-    "id": "sorry_fill_52846ceb_e464f342",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "52846ceb",
-    "status": "available",
-    "timestamp": "2026-08-20T07:06:54.107020+00:00",
-    "title": "Close Proofs: Power-sum inversion"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Cycle 60572a3f (Q=0.850) proved 75 theorems in Combinatorics but left 8 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: `\u03a3_g |X^g|^k = (B_k + \u03a3_P (m_P \u2212 1))\u00b7|G|`\n    (`bell_defect_eq`): the excess of a moment over its Bell floor is `|G|` times the number of\n    *extra* orbits per pattern, and it vanishes exactly for `k",
     "domains": [
       "Combinatorics"
     ],
     "id": "sorry_fill_60572a3f_a0a9c53d",
-    "priority_score": 0.85,
+    "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "60572a3f",
     "status": "available",
@@ -11608,6 +11566,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Cycle 3 refuted the truncation explanation by computing the capped ceiling exactly, so the remaining structural freedom is non-nested (crossing) block structures. The conjecture is that the nested law acquires an explicit defect term governed by the crossing mass of the two set partitions. It matters because only crossing pairs can now produce a dial as low as 0.648 from two individually high-ceiling profiles.\n\nFor crossing block structures the squared Spearman coefficient equals the nested value minus a nonnegative defect determined by the meet of the two partitions in the partition lattice, and readings near 0.648 require crossing mass above 0.3.\n\nFormalise the coefficient for an arbitrary pair of set partitions of the rank set, expand the covariance over meet blocks, and evaluate on small crossing examples exactly in Lean.\n\nEvery low dial reading with high individual ceilings certifies a crossing dependence between statistic and response.\n\nThe nested law extends verbatim and the partition lattice plays no role.",
+    "domains": [
+      "Combinatorics",
+      "Cryptography"
+    ],
+    "id": "fd_3822",
+    "priority_score": 0.7102972972972974,
+    "research_mode": "team",
+    "source_exp_id": "3eae19ad",
+    "status": "available",
+    "timestamp": "2026-08-23T08:49:47.778914+00:00",
+    "title": "Crossing Statistic-Response Partition Defect"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The depth-graded silver zeta (1 \u2212 3\u03b5^{-2s})^{-1} is an Ihara-type zeta of a 3-regular tree with edge length 2 log(1+\u221a2). Its pole set, now an exact theorem, should be the spectrum of a self-adjoint transfer operator attached to the Berggren substitution, giving a fully explicit Hilbert\u2013P\u00f3lya model.\n\nThere is a self-adjoint operator T on L\u00b2(\u211d/(\u03c0/log(1+\u221a2))\u2124) whose spectrum equals {Im s : 1 \u2212 3\u03b5^{-2s} = 0}, unitarily equivalent to the transfer operator of the substitution w \u21a6 {Lw, Mw, Rw} acting on \u2124[\u221a2]-scaled functions.\n\nConstruct T explicitly as multiplication after Fourier transform, formalize the unitary equivalence, and prove the spectrum coincides with the pole set proved in silver_denom_eq_zero_iff.\n\nThe Berggren critical line becomes an operator spectrum, an exactly solvable Hilbert\u2013P\u00f3lya model in which the mechanism is completely transparent.\n\nThe arithmetic pole set of the silver zeta is not of spectral origin, delimiting how far the Hilbert\u2013P\u00f3lya heuristic reaches for tree zetas.",
     "domains": [
       "Pythagorean",
@@ -14697,6 +14670,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-23T07:48:27.706061+00:00",
     "title": "Censored-Knee Dichotomy for French Prose"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The tie-attenuation functional is built from the power sum p_3 of a partition, which is Schur-convex, so the dial should be strictly order-reversing for the dominance order on partitions. This bridges rank-correlation attenuation with symmetric-function theory.\n\nIf lambda dominates mu as partitions of n then rho^2(lambda) <= rho^2(mu), with equality iff the partitions have equal third power sum; the refinement order case is already proved.\n\nProve Schur-convexity of Sum lambda_i^3 and combine with the closed form of spearmanSq_eq; check all partitions of n <= 9 by exact enumeration in Lean.\n\nTie profiles are totally ordered by a classical combinatorial invariant, giving sharp best and worst case dials for any fixed number of classes.\n\nDominance is too coarse and the dial requires the full multiset of block sizes.",
+    "domains": [
+      "Combinatorics",
+      "Geometry"
+    ],
+    "id": "fd_3823",
+    "priority_score": 0.5633481507492952,
+    "research_mode": "team",
+    "source_exp_id": "3eae19ad",
+    "status": "available",
+    "timestamp": "2026-08-23T08:49:48.158662+00:00",
+    "title": "Dominance Order Monotonicity of Tie Attenuation"
   },
   {
     "consumed_by_exp_id": "",
@@ -36254,14 +36242,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Conformality is a hierarchy, not a single obstruction.*"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "43ad4483",
     "description": "For generalized weights `V\u2080 = 1` and `V\u2096\u208a\u2081 = r(V\u2096)V\u2096`, assume `r` is monotone and `r(x) \u2265 2`.  The least `k` with `n < V\u2096` is `O(log* n)` if `r(x) \u2265 2^x` for all sufficiently large `x`; it is not `O(log* n)` when `r(x) \u2264 x^C` for some fixed `C` and all sufficiently large `x`.",
     "domains": [],
     "id": "fd_2551",
+    "phase": "A",
     "priority_score": 0.4104509803921569,
     "research_mode": "team",
     "source_exp_id": "e3956c60",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:24:48.391048+00:00",
     "title": "A radix-growth threshold"
   },
