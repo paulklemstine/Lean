@@ -1473,16 +1473,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-50 \u2014 DEGREE-12-COMPOSITE: full pinning at the first composite-order abelian group (paper 180)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3be10ac1",
     "description": "Round-56 #1, cron iteration (exp 526, assessment v291). The previously-unmeasured intersection.\n\n**CELL-CLOSED-DIAL-HOLDS-UNIF-48**: Spearman(T, rate) = **0.7192/0.7202/0.7198** across 3 seeds on uniform draws at exact bitlen 48; T beats count by +0.098 to +0.145 everywhere; mean relation rate 12.5% (unstarved regime).\n\nCELL CLOSED: the zero-fit dial holds at the intersection of bitlen-scaling and regime-invariance.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp526_t_dial_bitlen.py + exp526_result.json, seeds 20261110\u201312.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3696",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T17:37:32.034003+00:00",
     "title": "FACT round-56 #1 \u2014 TDIAL-BITLEN: the zero-fit dial holds at exact-bitlen-48 uniform (paper 183)"
   },
@@ -1599,21 +1600,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-08-22T18:51:45.077817+00:00",
     "title": "NET-66: SCALE-DELAYS-CONTEXT-SENSITIVITY-BY-ONE-DOUBLING \u2014 1.5B chain breaks at 2048 ({16,16,20}); broken curve equals the 0.5B shifted one octave (1.5B@2048 = 0.5B@1024 = 20)"
-  },
-  {
-    "consumed_by_exp_id": "4be48a30",
-    "description": "## NET-65 \u2014 limited-memory axis, round 18 (paper 150, ResearchOutput/exp_net65_1p5bsub16.py, /tmp/net65.log)\n\n**Verdict name: SIXTEEN-IS-REAL.**\n\n### Result\nFine sweep below NET-55's grid floor (Qwen2.5-1.5B, ctx=1024, gate identical to NET-55; baseline bit-identical 0.5004):\n\n| k | 4 | 6 | 8 | 12 |\n|---|---|---|---|---|\n| retained | 0.9318 \u2717 | 0.9532 \u2717 | 0.9660 \u2717 | **0.9759 \u2717 (razor, ~2 SE)** |\n\n- **P1 REFUTED**: no sub-16 point passes \u2014 the knee does NOT decline with scale.\n- **P2 CONFIRMED**: k\\*(1024) = 16 exact, bracket (12, 16].\n\n### The refined scale law\n0.5B: {16, 20, 24} \u2014 the chain RISES with context. 1.5B: {16, 16} \u2014 FLAT. Larger models have more context-STABLE attention budgets, not fewer keys. New measurable: the CONTEXT-SENSITIVITY of the attention budget, which decreases with model scale in its first measured step. A 16-key budget covers both models to ctx=1024.\n\n### All 8 barriers\n(a) clean; (b) clean; (c) confronted \u2014 razor bracket (12, 16] stated; one corpus; (d) clean; (e) deterministic baseline-replicating; (f) clean \u2014 ALL_DONE_NET65; (g) fair \u2014 same bar/harness as NET-55; (h) DIRECT.\n\n### Next\n1.5B @2048 fine grid (does the flat chain break upward?); domain-jump corpora; 7B cell.\n\nNow 65 network experiments. Assessment v65. Paper 150.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3713",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T18:51:45.079451+00:00",
-    "title": "NET-65: SIXTEEN-IS-REAL \u2014 all sub-16 points fail on Qwen2.5-1.5B at ctx=1024 (knee exactly 16); scale flattens the context response: {16,20,24}@0.5B vs flat {16,16}@1.5B"
   },
   {
     "consumed_by_exp_id": "c38d70d3",
@@ -3753,23 +3739,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-07-22T03:54:11.648214+00:00",
     "title": "ArXiv paper: A Chain-Level Borsuk--Ulam Obstruction Proof of Norine's Antipodal-Coloring Conjecture"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Mathematics is full of impossibility theorems \u2014 things that CANNOT be done. But impossibility theorems are themselves beautiful mathematical objects. Catalog and interconnect the great impossibilities: (1) Squaring the circle (pi is transcendental, Lindemann 1882). (2) Trisecting the angle (cos 20 degrees has degree 3 over Q, Wantzel 1837). (3) Doubling the cube (cube root of 2 has degree 3, Wantzel 1837). (4) Solving the quintic by radicals (A_5 is not solvable, Abel-Ruffini 1824). (5) The Borsuk-Ulam impossibility (every continuous map S^n -> R^n has a point where f(x) = f(-x)). (6) Arrow's impossibility (no voting system is simultaneously fair, complete, and non-dictatorial). (7) Heisenberg's uncertainty (Delta x * Delta p >= hbar/2). Conjecture: These impossibility theorems are connected by a deep structural principle \u2014 each one arises because a certain group action is not free. Squaring the circle fails because Gal(Q(pi)/Q) acts freely. Solving the quintic fails because A_5 acts freely on the roots. Arrow's theorem fails because the symmetric group acts freely on preferences. Heisenberg fails because the Heisenberg group acts freely on phase space. The unified principle: a task is impossible iff the relevant group action is free. Test: verify that each impossibility theorem corresponds to a free group action. Prove the converse: if a group G acts freely on a set X, then there exists a G-equivariant task that is impossible on X. Impact: all impossibility is the same impossibility \u2014 every CAN'T is a reflection of a free group action.",
-    "domains": [
-      "Novelty",
-      "Algebra",
-      "Geometry",
-      "Logic"
-    ],
-    "id": "seed_120",
-    "priority_score": 0.84,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "",
-    "title": "Impossibility Results for Fun: Things That Cannot Be Done (But We Try Anyway)"
   },
   {
     "consumed_by_exp_id": "",
@@ -15620,6 +15589,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T06:26:58.606300+00:00",
     "title": "Learnability"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**Conjecture.** For a sorted attention profile that is asymptotically Zipf with exponent $s > 1$,\nthe knee at gate $\\tau$ satisfies $k^*(n) = \\Theta\\big((1-\\tau)^{-1/(s-1)}\\big)$ uniformly in $n$,\nso that two knee measurements at different gates determine $s$ up to $o(1)$.\n\n*The key insight is* that the tail criterion converts the gate slack $1 - \\tau$ into a tail-mass\nbudget, and for a power-law tail the inverse of the tail function is again a power law with\nexponent $1/(s-1)$.\n\n*Why now?* The tail criterion is already established and gate-general; the missing ingredient is a\nmatching lower bound via integral comparison.\n\n**Test.** Establish matching upper and lower bounds for the Zipf knee and check numerically that\nthe measured grid ($0.9318$ / $0.9532$ / $0.9660$ / $0.9759$) pins $s \\in [2.2, 2.3]$.\n\n**If true:** a knee sweep measures a spectral exponent of the model's attention, turning the knee\ninto a model-internal observable. **If false:** the knee depends on more than the tail exponent,\nand the profile must be described by at least two parameters.",
+    "domains": [
+      "Algebra",
+      "Physics"
+    ],
+    "id": "fd_3887",
+    "priority_score": 0.5577272727272726,
+    "research_mode": "team",
+    "source_exp_id": "4be48a30",
+    "status": "available",
+    "timestamp": "2026-08-23T22:39:09.314632+00:00",
+    "title": "Spectral-exponent read-off (the knee as a spectrometer)"
   },
   {
     "consumed_by_exp_id": "",
@@ -34204,6 +34188,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "**Conjecture.** For any finite family of context-stable heads the merged budget equals the maximum\nof the per-head budgets exactly \u2014 not merely up to the sandwich between the smallest and largest\nper-head knee \u2014 and is therefore independent of the number of heads.\n\n**Test.** Measure per-head knees separately and check that the model-level knee coincides with the\nworst head's, across head counts and context lengths.",
+    "domains": [],
+    "id": "fd_3888",
+    "priority_score": 0.4398260869565217,
+    "research_mode": "team",
+    "source_exp_id": "4be48a30",
+    "status": "available",
+    "timestamp": "2026-08-23T22:39:09.773169+00:00",
+    "title": "Head-count invariance of the budget"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "**Conjecture.** For a fixed `S\u2083` cubic field with discriminant `D`, the empirical mutual\ninformation computed from the primes below `X` satisfies\n`|I_X(p mod |D| ; T) - 1| = O(X^{-1/2 + \u03b5})` under GRH, and `O((log X)^{-A})` unconditionally.\n\n*The key insight is* that the mutual information is a smooth function of the four class\nfrequencies, so the Chebotarev error term transfers to the information with the same exponent up\nto a constant depending only on `|G|`.\n\n*Why now?* The catalog's `ChebotarevGeodesic*` files already formalise an error-exponent calculus\n(`HasErrorExponent`, `exponent_of_inverse_transform`), which is exactly the interface needed to\nturn a density error into an entropy error.",
     "domains": [
       "NumberTheory",
@@ -34638,14 +34634,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "C3. The `log K` warm-up delay is unavoidable *on average*, not just in the worst case"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5e49148f",
     "description": "**Statement.** Call a layer `\u03b4`-equivariant if its weight matrix is within `\u03b4` (entrywise) of\nthe hyperoctahedral-equivariant subspace. Then every `\u03b4`-equivariant injective ReLU layer on\n`\u211d\u00b9\u00b9` has frame lower constant `\u03b1 = O(\u03b4\u00b2)`; equivalently, approximate hypercube symmetry\nforces an approximate information bottleneck with an explicit modulus.\n\n**The key insight is** that `hyperoctahedral_rigidity` shows the equivariant subspace is\n`1`-dimensional (scalars), so an equivariant-plus-perturbation layer is a scalar map plus a\n`\u03b4`-small operator, and the scalar part contributes nothing to distinguishing percepts after\nrectification along the flipped coordinates.\n\n**Why now?** The exact rigidity statement (dimension `1` versus `121`) is now proved, which\nturns the qualitative \"symmetry destroys 11-dimensional processing\" slogan into a perturbation\nquestion with a well-posed constant.\n\n**Falsifier.** A family of `\u03b4`-equivariant injective layers with frame constant bounded below\nindependently of `\u03b4`.\n\n---",
     "domains": [],
     "id": "fd_3387",
+    "phase": "A",
     "priority_score": 0.4390588235294117,
     "research_mode": "team",
     "source_exp_id": "094ca37a",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:29:56.864203+00:00",
     "title": "Conjecture D \u2014 symmetry/losslessness incompatibility is quantitative"
   },
@@ -36355,15 +36352,14 @@ window.FUTURE_DIRECTIONS = [
     "title": "The two-parameter case is now fully formal, including the exact"
   },
   {
-    "consumed_by_exp_id": "b391d382",
+    "consumed_by_exp_id": "",
     "description": "Replace each natural-number cost by a function of encoded input size. Define eventual domination and polynomial bounds, then determine which parts of the barycenter theorem survive pointwise and asymptotically. This is the minimum framework needed before making a genuine P-versus-NP analogy.",
     "domains": [],
     "id": "fd_1890",
-    "phase": "A",
     "priority_score": 0.41916666666666663,
     "research_mode": "team",
     "source_exp_id": "12b45ad4",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-21T06:21:40.212035+00:00",
     "title": "Asymptotic cost families"
   },

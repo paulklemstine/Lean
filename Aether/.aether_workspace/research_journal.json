@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "a3ad9f21",
-      "domain": "Combinatorics",
-      "key_insight": "# Future directions — TRACE-BATTERY joint capacity (paper 108, round-30 #4)\n\nThe formal cycle established, for arbitrary finite populations and arbitrary\ndial batteries: monotone scaling of joint capa",
-      "quality_score": 0.82,
-      "sorry_count": 2,
-      "theorem_count": 63,
-      "timestamp": "2026-08-22T07:00:32",
-      "title": "FACT round-30 #4 — TRACE-BATTERY: joint capacity scaling confirmed (paper 108)"
-    },
-    {
       "cycle_id": "d7470f1b",
       "domain": "Combinatorics",
       "key_insight": "# Future Directions — Clock-and-Switch Worlds\n\nDerived from the cycle recorded in `Catalog/Combinatorics/CWorldFiltration.lean`,\n`…Sharpness.lean`, `…SwitchlessChains.lean`, `…ClosureProperties.lean`,",
@@ -499,19 +489,19 @@
       "theorem_count": 107,
       "timestamp": "2026-08-23T20:40:20",
       "title": "The breakdown theorem is formalised and the two measured normalised distributions"
+    },
+    {
+      "cycle_id": "4be48a30",
+      "domain": "Shared",
+      "key_insight": "# Future directions — the attention-budget knee\n\n## What is now established\n\nA model-free theory of the measured object — the top-$k$ retained attention mass, its knee\n$k^*(n)$, and the context sensit",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 51,
+      "timestamp": "2026-08-23T22:39:22",
+      "title": "NET-65: SIXTEEN-IS-REAL — all sub-16 points fail on Qwen2.5-1.5B at ctx=1024 (knee exactly 16); scal"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "d4bd7c02",
-      "domain": "Logic",
-      "key_insight": "# Future directions — bold, testable conjectures from the NET-44 formalisation\n\nEverything below is derived from the theorems proved in\n\n* `Catalog/Logic/KneeFluctuationTwoSeed.lean` (knee predicate,",
-      "quality_score": 0.8,
-      "sorry_count": 0,
-      "theorem_count": 83,
-      "timestamp": "2026-08-16T16:43:01",
-      "title": "NET-44: The Last Context-Extrapolation Cell Is Two-Seed and the Knee Fluctuates (k\\*=96 at (d=4, ctx"
-    },
     {
       "cycle_id": "b3704634",
       "domain": "Geometry",
@@ -2501,15 +2491,19 @@
       "theorem_count": 107,
       "timestamp": "2026-08-23T20:40:20",
       "title": "The breakdown theorem is formalised and the two measured normalised distributions"
+    },
+    {
+      "cycle_id": "4be48a30",
+      "domain": "Shared",
+      "key_insight": "# Future directions — the attention-budget knee\n\n## What is now established\n\nA model-free theory of the measured object — the top-$k$ retained attention mass, its knee\n$k^*(n)$, and the context sensit",
+      "quality_score": 0.78,
+      "sorry_count": 0,
+      "theorem_count": 51,
+      "timestamp": "2026-08-23T22:39:22",
+      "title": "NET-65: SIXTEEN-IS-REAL — all sub-16 points fail on Qwen2.5-1.5B at ctx=1024 (knee exactly 16); scal"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "50edc087",
-      "domain": "Pythagorean",
-      "name": "altSeq_le",
-      "quality": 0.8
-    },
     {
       "cycle_id": "0c164125",
       "domain": "Applications",
@@ -2803,9 +2797,15 @@
       "domain": "Computation",
       "name": "diffCount_nil_left",
       "quality": 0.82
+    },
+    {
+      "cycle_id": "4be48a30",
+      "domain": "Shared",
+      "name": "here",
+      "quality": 0.78
     }
   ],
-  "last_updated": "2026-08-23T20:40:20",
+  "last_updated": "2026-08-23T22:39:22",
   "open_questions": [
     {
       "context": "All proofs are complete; no `sorry`.; All proofs are complete; no `sorry`.",
@@ -3889,12 +3889,6 @@
     ],
     "Shared": [
       {
-        "cycle_id": "3da67f84",
-        "quality": 0.78,
-        "theorems": 53,
-        "title": "Pole-order obstruction"
-      },
-      {
         "cycle_id": "b8ad3057",
         "quality": 0.85,
         "theorems": 69,
@@ -3947,6 +3941,12 @@
         "quality": 0.93,
         "theorems": 68,
         "title": "Open here; the multiplicative bound `|supp f| · |supp f̂| ≥ p` is proved"
+      },
+      {
+        "cycle_id": "4be48a30",
+        "quality": 0.78,
+        "theorems": 51,
+        "title": "NET-65: SIXTEEN-IS-REAL — all sub-16 points fail on Qwen2.5-1.5B at ctx=1024 (kn"
       }
     ],
     "Tropical": [
